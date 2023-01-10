@@ -2,107 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7711C664CF2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 21:04:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 115AC664E04
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 22:29:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231396AbjAJUEK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Jan 2023 15:04:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55906 "EHLO
+        id S234206AbjAJV3S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Jan 2023 16:29:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231612AbjAJUEI (ORCPT
+        with ESMTP id S232833AbjAJV3Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Jan 2023 15:04:08 -0500
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F15886386;
-        Tue, 10 Jan 2023 12:04:07 -0800 (PST)
+        Tue, 10 Jan 2023 16:29:16 -0500
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E8F65CF86;
+        Tue, 10 Jan 2023 13:29:10 -0800 (PST)
+Received: by mail-pj1-x102b.google.com with SMTP id h7-20020a17090aa88700b00225f3e4c992so17902433pjq.1;
+        Tue, 10 Jan 2023 13:29:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1673381048; x=1704917048;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=0CSXNulnrjqH2NRnYz9TTFqaC5stRQx/H3xu/uz5K/U=;
-  b=E071fvEMgUqO+XWpejCPDBTKGP6rn2sSfwbu6dz77buYsbP99UJhp5vn
-   ESoRWwliFlGxtTIibbiwfjaDV7f8Rtwyz0ZoBsk+b4cgbp1KWD5ZVVQ98
-   pQaA2fMOmHL3oiMphWodom4IZo63otP89FPho2kU3VgTb314zEP1IeE3u
-   k=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 10 Jan 2023 12:04:06 -0800
-X-QCInternal: smtphost
-Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jan 2023 12:04:06 -0800
-Received: from quicinc.com (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 10 Jan
- 2023 12:04:05 -0800
-Date:   Tue, 10 Jan 2023 12:04:03 -0800
-From:   Guru Das Srinagesh <quic_gurus@quicinc.com>
-To:     Bjorn Andersson <andersson@kernel.org>
-CC:     Sibi Sankar <quic_sibis@quicinc.com>, <agross@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <robh+dt@kernel.org>,
-        <konrad.dybcio@somainline.org>, <robimarko@gmail.com>
-Subject: Re: [PATCH V7 2/2] firmware: qcom: scm: Add wait-queue handling logic
-Message-ID: <20230110200403.GA23567@quicinc.com>
-References: <20230110063745.16739-1-quic_sibis@quicinc.com>
- <20230110063745.16739-3-quic_sibis@quicinc.com>
- <20230110081410.GB2082@quicinc.com>
- <20230110175437.pfnhn3zdlzxnymts@builder.lan>
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ww/wSmvr3k1evMYET/bp6trdFG64eYICnW875bycRj8=;
+        b=CCgZWPuWSBttrXnRXZbS8iC4aN+Aau60QJBgZPiWSORv8+dEzapGDIMmiMg0TlBknL
+         Al+dyjFFmkvbQ8rgPSsDtx/Vm02bYxdsPlM9Sa9gKrP1EjLefqBa4ulX/2RObwrZW7ay
+         a+pYBnM5nAhKXuXGsELpeNXhU/mPabU2iEVAU5HzuT8TSVKmCGBW6q1sXxyCHEIP43GG
+         fAYmkmpOvzY0aL+nzYypi5k2AfVLd6vrwSADOaqncv/imIZ/Q5SCPeGkN2xCQahFE7P4
+         cq6QJfLTcvs5b/l3nglsLlXwWPDTV+r4VW5nnUqlRr7yVPoPUOQd2hexbhR2FGCAOREz
+         IZRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Ww/wSmvr3k1evMYET/bp6trdFG64eYICnW875bycRj8=;
+        b=UU7b9TgLs6S5ScX0oTtzu/q0UocYtAthIUhF/HkT1DH8dNG5Yvc2s0aclggp9j8zP+
+         ClsWU1Nj3H7F3ycLrP58PSN1FXWg+53asBNlJZsR41Whv8Hp0p/dIlEXstCNsMdvrjhA
+         /wOKLK/Rc5qo3WWXbjRVGREH4dXqAA8ahz12g3delAygMQJ8ejsvEmrAmKJcR9rfvgGV
+         lyOcPslJtTEiI5V1xLi90kfQr9sPPKnJhPX/dXaRhRxxx3guRf9JuwRMjh8pKenM4PZq
+         fIp2xbSQZ5SxdqCCYyv//0ih53b4U0rAZS4z7owFpBKbzgOxdL+IS1x9USFH3w8CQq7I
+         wwfw==
+X-Gm-Message-State: AFqh2krFb+DDqKfLgVNy0/rlO0yONDeuxtTE9JWrfnPQvUegQcxDonuL
+        x43eVCq0qaBrIc8/vwaT9uU=
+X-Google-Smtp-Source: AMrXdXvkRSXydWegDtiIcTPIVygJ7XqwuvTRfFb3Q/Yts4DuDVkJxsJ0AWg0r/ZcAz2R8ccvVQ0eyQ==
+X-Received: by 2002:a17:902:8c89:b0:193:62a:80c8 with SMTP id t9-20020a1709028c8900b00193062a80c8mr17111420plo.45.1673386149390;
+        Tue, 10 Jan 2023 13:29:09 -0800 (PST)
+Received: from localhost ([2a00:79e1:abd:4a00:2703:3c72:eb1a:cffd])
+        by smtp.gmail.com with ESMTPSA id jd6-20020a170903260600b001897de9bae3sm8568294plb.204.2023.01.10.13.29.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Jan 2023 13:29:09 -0800 (PST)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Chia-I Wu <olvaffe@gmail.com>, Emma Anholt <emma@anholt.net>,
+        Dan Carpenter <error27@gmail.com>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm/gpu: Fix potential double-free
+Date:   Tue, 10 Jan 2023 13:28:59 -0800
+Message-Id: <20230110212903.1925878-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20230110175437.pfnhn3zdlzxnymts@builder.lan>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Jan 10 2023 11:54, Bjorn Andersson wrote:
-> On Tue, Jan 10, 2023 at 12:14:11AM -0800, Guru Das Srinagesh wrote:
-> > On Jan 10 2023 12:07, Sibi Sankar wrote:
-> > 
-> > ...
-> > 
-> > > +static int __scm_smc_do_quirk_handle_waitq(struct device *dev, struct arm_smccc_args *waitq,
-> > > +					   struct arm_smccc_res *res)
-> > > +{
-> > > +	int ret;
-> > > +	struct arm_smccc_args resume;
-> > > +	u32 wq_ctx, smc_call_ctx, flags;
-> > > +	struct arm_smccc_args *smc = waitq;
-> > > +
-> > > +	do {
-> > > +		__scm_smc_do_quirk(smc, res);
-> > > +
-> > > +		if (res->a0 == QCOM_SCM_WAITQ_SLEEP) {
-> > > +			wq_ctx = res->a1;
-> > > +			smc_call_ctx = res->a2;
-> > > +			flags = res->a3;
-> > > +
-> > > +			if (!dev)
-> > > +				return -EPROBE_DEFER;
-> > > +
-> > > +			ret = qcom_scm_lookup_completion(wq_ctx);
-> > 
-> > I see that this function has been created in response to Bjorn's comment [1]
-> > about avoiding the dev_get_drvdata() call, but I would prefer to not use this
-> > function as it hides the fact that the wait_for_completion() is occurring here.
-> > 
-> 
-> My reasoning here is that I don't want the waiting for the completion
-> that happen in one part of the driver and the completion happening in a
-> completely different one.
+From: Rob Clark <robdclark@chromium.org>
 
-ACK.
+If userspace was calling the MSM_SET_PARAM ioctl on multiple threads to
+set the COMM or CMDLINE param, it could trigger a race causing the
+previous value to be kfree'd multiple times.  Fix this by serializing on
+the gpu lock.
 
-Thank you.
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c |  4 ++++
+ drivers/gpu/drm/msm/msm_gpu.c           |  2 ++
+ drivers/gpu/drm/msm/msm_gpu.h           | 12 ++++++++++--
+ 3 files changed, 16 insertions(+), 2 deletions(-)
 
-Guru Das.
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index 57586c794b84..3605f095b2de 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -352,6 +352,8 @@ int adreno_set_param(struct msm_gpu *gpu, struct msm_file_private *ctx,
+ 		/* Ensure string is null terminated: */
+ 		str[len] = '\0';
+ 
++		mutex_lock(&gpu->lock);
++
+ 		if (param == MSM_PARAM_COMM) {
+ 			paramp = &ctx->comm;
+ 		} else {
+@@ -361,6 +363,8 @@ int adreno_set_param(struct msm_gpu *gpu, struct msm_file_private *ctx,
+ 		kfree(*paramp);
+ 		*paramp = str;
+ 
++		mutex_unlock(&gpu->lock);
++
+ 		return 0;
+ 	}
+ 	case MSM_PARAM_SYSPROF:
+diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+index bfef659d3a5c..7537e7b3a452 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.c
++++ b/drivers/gpu/drm/msm/msm_gpu.c
+@@ -336,6 +336,8 @@ static void get_comm_cmdline(struct msm_gem_submit *submit, char **comm, char **
+ 	struct msm_file_private *ctx = submit->queue->ctx;
+ 	struct task_struct *task;
+ 
++	WARN_ON(!mutex_is_locked(&submit->gpu->lock));
++
+ 	/* Note that kstrdup will return NULL if argument is NULL: */
+ 	*comm = kstrdup(ctx->comm, GFP_KERNEL);
+ 	*cmd  = kstrdup(ctx->cmdline, GFP_KERNEL);
+diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
+index a771f56ed70f..fc1c0d8611a8 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.h
++++ b/drivers/gpu/drm/msm/msm_gpu.h
+@@ -375,10 +375,18 @@ struct msm_file_private {
+ 	 */
+ 	int sysprof;
+ 
+-	/** comm: Overridden task comm, see MSM_PARAM_COMM */
++	/**
++	 * comm: Overridden task comm, see MSM_PARAM_COMM
++	 *
++	 * Accessed under msm_gpu::lock
++	 */
+ 	char *comm;
+ 
+-	/** cmdline: Overridden task cmdline, see MSM_PARAM_CMDLINE */
++	/**
++	 * cmdline: Overridden task cmdline, see MSM_PARAM_CMDLINE
++	 *
++	 * Accessed under msm_gpu::lock
++	 */
+ 	char *cmdline;
+ 
+ 	/**
+-- 
+2.38.1
+
