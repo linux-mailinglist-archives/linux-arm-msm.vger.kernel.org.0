@@ -2,120 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 10672664C6C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 20:26:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 02C71664C92
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 20:34:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239844AbjAJT03 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Jan 2023 14:26:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35984 "EHLO
+        id S231596AbjAJTeo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Jan 2023 14:34:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239094AbjAJT0A (ORCPT
+        with ESMTP id S231612AbjAJTem (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Jan 2023 14:26:00 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60F822DEA
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 11:25:59 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id p3-20020a05600c1d8300b003d9ee5f125bso6225680wms.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 11:25:59 -0800 (PST)
+        Tue, 10 Jan 2023 14:34:42 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FB4B55853
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 11:34:40 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id d17so12891423wrs.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 11:34:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=KG+ZRdx/AOYiB34HBS6JIzEWXifHlhhKkRS2/AG8Kls=;
-        b=aO6OOYOFAYcz+jNA7/5iAEQ/Fd7Sf7hD41vVsxVDhVJe9nut3NRqVio2PG0Qjqbwfq
-         OYzfsPoxsN/hNOJC9/zr+cXBQ7WiwZbPNCzbZpDbGHDhWpMYhhOa6q7rWixxhLchwlNg
-         pFJd28RWY1Dzh7lYHh7phTkcFJxNvLhNssZUSW9H2PH1AdRZQvJ6f2RfFuh8h5mPdM5T
-         6OaWlwfd/VCVdTcqkaSIW/dWdfamTbKXV4nYJYZib8cFZl+8FSLQoazMWWpIGCvxEDZz
-         1JFmjDr/wPUZRkz9ezlrF+5q/NR1pvZY6gI/ub+ByXmYNaAlgIWsi+GwcAOF8jZO0/8D
-         OigA==
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mKtuniFIzy7OJ8t1BPYmK/NgDRSjhX2Ks6TsmLUmwAk=;
+        b=IGMFR6HOp2nJ0B8DUk6bMuZBUWadoqX+CDMsRtkeoM7k+50UtCZ4WPHL5f8SNldRPQ
+         Xzi/OH+KqD48bJmUcqZVv79Z2FFVZehgekmRqdgsyiFKi+1arVxvrK8Ha1cDo/4K12FX
+         e+nHwKTckHnMPSBXvoKhclMmNTzH8fL5+uW1Jh44wLXwxwMUEVs/b2IIN3t/DDig1Rhq
+         uknbhrqne5P9uhR3zx4Kg8oCLF9pILTVpBh0f99JnVUMx9a073nEqjuS/sBUJVIHmCsc
+         J8duv3dTc1dDDFtmnHOJIaSM4sbUL2ZfaKSIhj+0j3sQzT0b2BItpkvPYlJPMdHbD+hj
+         BGsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KG+ZRdx/AOYiB34HBS6JIzEWXifHlhhKkRS2/AG8Kls=;
-        b=4bbgYN9hM5TUlWSlYsBIl+YGnwt5gDDUYPn+mdfXbBjMObTJyxRbKJm8BfOzAwUv5w
-         SWIJkPhJo6QguMh2lzPY9QN5/9f73KLSwX17AgRA9+dVbs4t0Ycp4ww71oPx1HdneXyq
-         bxyCqEBxuflNNJP1wzG8NOn/4Snci1wqnCWVW1w3a5aYrq1VU1DJfGCjAxdGkd6qmRoD
-         iWconVV2oXTbErGaPBgLbcoWWS2JeD+hyJlZQHGI7NXOlg+iMbi6xWK8Sa/rQyvLa3Ta
-         fmBKKVplnjXmM3c3kGUWJnmZ802ZBfXdjbfav+TOGHCEpp7vG4xrC6KAUkGPaO+SnVFu
-         Mu1w==
-X-Gm-Message-State: AFqh2kpa05UNXK6cW5zpQVYKyQQqPVyQy/7iFJyhm3UzvtP0O2S+CEZB
-        +sIxx8r6xjmsavxr0XO8LVUh4g==
-X-Google-Smtp-Source: AMrXdXuVIXPcscWYpIaTc+DxxOGWLCOMIhe4CqqanKd+UEQ5kvLOcQRNLCXuaCGlYEpO9t7/ux5wAw==
-X-Received: by 2002:a05:600c:1911:b0:3d9:8635:a916 with SMTP id j17-20020a05600c191100b003d98635a916mr47086737wmq.9.1673378757980;
-        Tue, 10 Jan 2023 11:25:57 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id i8-20020a05600c354800b003cf894dbc4fsm17175575wmq.25.2023.01.10.11.25.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Jan 2023 11:25:56 -0800 (PST)
-Message-ID: <0453b098-91db-1918-38ae-a7db0408460c@linaro.org>
-Date:   Tue, 10 Jan 2023 20:25:54 +0100
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mKtuniFIzy7OJ8t1BPYmK/NgDRSjhX2Ks6TsmLUmwAk=;
+        b=m4i3/v1G7BvsRVDW4ez4faSWK9Sp2XSvWAOg81mWYiA9QdskF+Z3mTXjAYnVlQ/hSB
+         +N3K36kDmz3NwjUTL6BJZyK82kaKZS/wiq2XnbCOtlqD+NBr5a0UPkPSnKJFxjnwY+ni
+         gc/BHPCxM0xQtvWAegvtOv3sIX0uIGMpMDiuR4R72ybLnPJSsn1nwFY60nfG2U/f1+uY
+         JoEN+KBvjrF+UP9WI5+b0Ngd89rRPrgYYP2+ZLTACl1VkAY7zrJOZcnggDhHyq4Bvius
+         wzqnSK06hM6LI/hRwXQzkTt1ee95OryDAQ7UxiA1QFFz4TMySfG57OvGQae0ZOOdUgBo
+         cSjQ==
+X-Gm-Message-State: AFqh2kooUL/JoYd1fNfNzPNz8c7JmjunF66y0+3igA9C0xKGNpIjckOt
+        YD4y5+9t48oVgc8ADGvsZvrJUQ==
+X-Google-Smtp-Source: AMrXdXsF/Enu3nB/R+hEIdP9Ap2ZCYdAorLT8QjHXpburlLgdLD0e1Yk82gz4NTvWd0CyB4K7V6uiQ==
+X-Received: by 2002:a5d:5a99:0:b0:236:8fa4:71db with SMTP id bp25-20020a5d5a99000000b002368fa471dbmr59384623wrb.1.1673379279261;
+        Tue, 10 Jan 2023 11:34:39 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id f3-20020adfdb43000000b00236883f2f5csm12222271wrj.94.2023.01.10.11.34.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Jan 2023 11:34:38 -0800 (PST)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Date:   Tue, 10 Jan 2023 20:34:33 +0100
+Subject: [PATCH 1/2] arm64: defconfig: enable SM8550 DISPCC clock driver
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: msm8916-zhihe: Add initial device
- tree for zhihe Wifi/LTE dongle UFI-001C and uf896
-Content-Language: en-US
-To:     forbidden405@foxmail.com, 'Andy Gross' <agross@kernel.org>,
-        'Bjorn Andersson' <andersson@kernel.org>,
-        'Konrad Dybcio' <konrad.dybcio@linaro.org>,
-        'Rob Herring' <robh+dt@kernel.org>,
-        'Krzysztof Kozlowski' <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     'Jaime Breva' <jbreva@nayarsystems.com>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        'Nikita Travkin' <nikita@trvn.ru>
-References: <20230110155014.31664-1-forbidden405@foxmail.com>
- <tencent_A7FA00B086BB0EFFDC1C64744FF85DAD2B06@qq.com>
- <8530aeef-8fdb-ede7-700e-856e5cbc6a5b@linaro.org>
- <tencent_98E029F744FE85B9FD68B570A45A01743F07@qq.com>
- <f909c1b0-97db-cc33-fa27-c5e901f11956@linaro.org>
- <tencent_235CAC16001D1C38CE7D86BF7B0E365A2105@qq.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <tencent_235CAC16001D1C38CE7D86BF7B0E365A2105@qq.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20230110-topic-sm8550-upstream-display-defconfig-v1-1-9941c8083f10@linaro.org>
+References: =?utf-8?q?=3C20230110-topic-sm8550-upstream-display-defconfig-v1?=
+ =?utf-8?q?-0-9941c8083f10=40linaro=2Eorg=3E?=
+In-Reply-To: =?utf-8?q?=3C20230110-topic-sm8550-upstream-display-defconfig-v?=
+ =?utf-8?q?1-0-9941c8083f10=40linaro=2Eorg=3E?=
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.11.1
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/01/2023 19:58, forbidden405@foxmail.com wrote:
-> I removed Cc temporary because I had sent them the same email once. No need
-> to send the email to them again.
-> 
->> On 10/01/2023 19:30 krzysztof.kozlowski@linaro.org wrote:
-> 
->> You install this kernel with DTB on some device so clearly you have such
->> device
->> in hand, right? It has then some manufacturer, some company. If it is USB
->> stick
->> as you said, then it has even vendor ID, which might be or might not be
->> real.
-> 
-> The vendor extracted from `/system/build.prop` and USB vendor ID is fake,
-> even IMEI is stolen from some other mobile phones. Seems like the vendor
-> deliberately tries to be anonymous. Some people had tried to extract info
-> from stock firmware and on the Internet. But until now, we have no clear
-> evidence to know the manufacturer.
+Build the Qualcomm SM8550 Display Clock Controller driver
 
-Then I am not sure if we want to support such devices mainline. It is
-not only anonymity but simply not following standards and practices.
-What's more there is no guarantee what this device is. If there is no
-known manufacturer, anytime another device from anyone can claim it is
-also uf896. IOW, what guarantees you have that other person who has
-something looking like "uf896" actually has something the same as you
-and can use your DTB?
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+ arch/arm64/configs/defconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-I don't know how to reasonably support entirely unknown devices.
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index 851e8f9be06d..004c379eced7 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -1107,6 +1107,7 @@ CONFIG_SDM_GPUCC_845=y
+ CONFIG_SDM_VIDEOCC_845=y
+ CONFIG_SDM_DISPCC_845=y
+ CONFIG_SM_DISPCC_8250=y
++CONFIG_SM_DISPCC_8550=y
+ CONFIG_SM_GCC_6115=y
+ CONFIG_SM_GCC_8350=y
+ CONFIG_SM_GCC_8450=y
 
-Best regards,
-Krzysztof
-
+-- 
+2.34.1
