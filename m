@@ -2,82 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4148166495A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 19:20:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B7C06649D0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 19:25:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239207AbjAJSUt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Jan 2023 13:20:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59314 "EHLO
+        id S234562AbjAJSZy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Jan 2023 13:25:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239288AbjAJSUJ (ORCPT
+        with ESMTP id S239259AbjAJSZU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Jan 2023 13:20:09 -0500
-Received: from out203-205-221-192.mail.qq.com (out203-205-221-192.mail.qq.com [203.205.221.192])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C79D4CE2F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 10:17:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
-        s=s201512; t=1673374675;
-        bh=TO5uIw7LawmTRUVg1uOWAoT8iMzgTp3NUNuLS9n+qFw=;
-        h=From:To:References:In-Reply-To:Subject:Date;
-        b=rpHqwePUdnF4j5fyJuu6+iPZawZ0FJ3CAusIWVCljBtjz6AaGeS4h7s7imCagYr98
-         qvXzecrrS7UCcdFsSZROLGLtFJm9ByAa9Y1TFB/qbQ4BqlsTqEPHlWakMUo2Is4gkt
-         tfzqyze/ox7IO2YjBO8jJuvr3HGdiC1e/jwB+1ZY=
-Received: from DESKTOPZMX ([2409:8a4c:808f:5b0:d92f:83a8:9ac7:4de5])
-        by newxmesmtplogicsvrszc1-0.qq.com (NewEsmtp) with SMTP
-        id 474A6EB3; Wed, 11 Jan 2023 02:17:52 +0800
-X-QQ-mid: xmsmtpt1673374672tjhvya1qy
-Message-ID: <tencent_98E029F744FE85B9FD68B570A45A01743F07@qq.com>
-X-QQ-XMAILINFO: NJRsSVeNb6U+epZkfnlGQVAFskOSIaqZ6s4RfLzRaOB8PUX6bvtmSKJes7jgZh
-         rrdYabgWm5MneQOrWKYq4czEB27cTdk7t21B80s///zWH4m1jFjHLuEFdjQKiE4QXxa+hNv7sFC+
-         0a6B1HwdHiRLh5iTBPwsSU5SVVxzXagmawtAmZgLh3gQS0t8vuNh8FkY6fbkqRG5VID65J/1UN+s
-         6i4CStYOfG2WVC9EbSZxahxGJo4hjxf63wzOHAI/LxGrtDNM9yGobnzwm2BcGhyRQQZqRZSejDnL
-         6y1wEz/vXCPMsI9LFm7uM6tmtOU+c/sTE7dGwPYUk8amci/Ns7b0Q9bVecXYzvM0ifddEVh1EJnv
-         ZlXlL+jg4Pt0s2eLwBMO7Voick5cjR81oPGJYXsKR+CzmA0ePTeSqjnYmGJr1YzajQGP+VCt11Kr
-         p+wrelDQgdYS48WRmyPlyD2QXH1qrKtk56N9l025XswifLovLA8KlMZw9l9kn84k4b8m0Cwt4YQO
-         jnsRi+jf0Rj+whfTEr1BtvA3QB2q+8Tog3NRf1fRblMVH1o3giXciEO2vpNDdxX8+NK1rFSVAnxb
-         0KKRnpMBwWSjHR06tM1+gQBIkw36NeK2F5aG+RESR561y8VvBhDJggsjYAo6J6QUGHagdkuRToo1
-         eO+CgPqpyzlbmfPc6JP3MOirlF4vLSBOwsAGnbbQXPFN7e3RPYKYSydMbe++baJ8pkeOaf/GyH1A
-         EaZt1F3Rvwwn0nYjuf6UmpLJWOCgNtlw9Lh3sCO8Zj7+a4LveSxrn1wLGQBgxOk6fLVw9GKdxdYk
-         NphvFhb+HA1f1bE8OcabWmSpB8gfMpwY5I/Q8dvJbXC60TxXOgViAYNgL9O+NdL/neFqkvmC4rDc
-         W5nvjCu91m1FOd1zSsA9gJoYcxhbI4C5pxbrsVh/DoiGFI7jdTSmn1L4vkoWqjeHfIRk/BVr+W2c
-         NvOUaxFWI=
-From:   <forbidden405@foxmail.com>
-To:     "'Krzysztof Kozlowski'" <krzysztof.kozlowski@linaro.org>,
-        "'Andy Gross'" <agross@kernel.org>,
-        "'Bjorn Andersson'" <andersson@kernel.org>,
-        "'Konrad Dybcio'" <konrad.dybcio@linaro.org>,
-        "'Rob Herring'" <robh+dt@kernel.org>,
-        "'Krzysztof Kozlowski'" <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20230110155014.31664-1-forbidden405@foxmail.com> <tencent_A7FA00B086BB0EFFDC1C64744FF85DAD2B06@qq.com> <8530aeef-8fdb-ede7-700e-856e5cbc6a5b@linaro.org>
-In-Reply-To: <8530aeef-8fdb-ede7-700e-856e5cbc6a5b@linaro.org>
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: msm8916-zhihe: Add initial device tree for zhihe Wifi/LTE dongle UFI-001C and uf896
-Date:   Wed, 11 Jan 2023 02:17:49 +0800
-X-OQ-MSGID: <04fd01d9251f$da0e89a0$8e2b9ce0$@foxmail.com>
+        Tue, 10 Jan 2023 13:25:20 -0500
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16D5D8E9B4;
+        Tue, 10 Jan 2023 10:22:05 -0800 (PST)
+Received: by mail-pg1-x535.google.com with SMTP id 141so8850101pgc.0;
+        Tue, 10 Jan 2023 10:22:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ogmFOZWIzMj+3duLrX2EZxxcGOpiQSLfwLDfrMyX4OM=;
+        b=iTBfyH3WDaC7OnWboyWtpdRAh2d4mpfK+qixKoD9Q0ueYMxJIRO2z6FJCJhJl+tyKb
+         FXzKhD87IMvMRgbJlA3TPk7VHbUW+NH+kFN6Uzjy2dXkUTtyVUkjGdjGBkbZIELB6Xq9
+         yanOd9AyVREOZyuM1AlouGJO6wdflEYt5lHTemDontXABXAK2fp/pEzB1FyTZizl/Yy4
+         GxO/FX3h9RQTiKwW0hfNkyT4aFyDj41XGvYoGKmuV9liaoyvM6x5+xNwY/Khd/XUtWjy
+         gWExAJSr3G3rJGMGIs9E3mhcVvY7yDIJNKSGySbH5d7XhZodjW5E8hAJQjXjePueeMyw
+         aCNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ogmFOZWIzMj+3duLrX2EZxxcGOpiQSLfwLDfrMyX4OM=;
+        b=nVkDw8FoQvmQ/eZuLwbj6tsaFkyxTxIT3ghKoaRnv6KbvhrIIq2XtgPcvWPph0MlWn
+         PmOX4saJnUqdWI1/8j06BQNXQtSaN35Y6yaFlUA8ycyPrblHfhwVmlwW8tR0gzKmSNuV
+         BumfVZUh1yPPEU1tSpj93/Qyz1X6u3C3zvX8WismKjR+RGvxtQFIBy8qaeoZ0LxgGUFQ
+         EUFm6UvQfDGv5RE+afH5OfJTkpDZ5DQpXi9R+8mwtdrIxNTU8J3K/7RqWwv8dhGkwaSt
+         kJEkO0D8c5gB2Sv8JHpXaN9/c7CDVwm0ynhjFSaZ50RJ/9roRoXQNn/SR7ZmiIP/xuZ6
+         pS9w==
+X-Gm-Message-State: AFqh2kpLxZ6oROsZDZyBksA8UsTD/xFXjv6XOVwmhIZrNXbKTxrwsGyB
+        cWqLmi71D31m6r2NzDZEC20=
+X-Google-Smtp-Source: AMrXdXtQ5GUYXPLIFkdMD5Z6fjHsPDPbiLd3VACxOqDo5SU3z6yDVttD03dV+GYCTOyCEd7P0t0WUQ==
+X-Received: by 2002:a05:6a00:c5:b0:582:6173:c6c5 with SMTP id e5-20020a056a0000c500b005826173c6c5mr36566828pfj.14.1673374924464;
+        Tue, 10 Jan 2023 10:22:04 -0800 (PST)
+Received: from localhost ([2a00:79e1:abd:4a00:2703:3c72:eb1a:cffd])
+        by smtp.gmail.com with ESMTPSA id a28-20020aa78e9c000000b005774f19b41csm8369815pfr.88.2023.01.10.10.22.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Jan 2023 10:22:04 -0800 (PST)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Chia-I Wu <olvaffe@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-kernel@vger.kernel.org (open list),
+        Sean Paul <sean@poorly.run>
+Subject: [PATCH 0/3] drm/msm/gpu: Devfreq fixes+tuning
+Date:   Tue, 10 Jan 2023 10:21:44 -0800
+Message-Id: <20230110182150.1911031-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: zh-cn
-Thread-Index: AQEO7BERPzOKD8mdDN9nK2Zc/pFyZgG3SCqUAZiImfcCrwVvdA==
-X-Spam-Status: No, score=1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,HELO_DYNAMIC_IPADDR,RCVD_IN_DNSWL_NONE,RDNS_DYNAMIC,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: *
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks for your review, but I don't know how to deal with such a 
-device with unknown vendor. Do you have any idea and show me
-some possible solutions? If "zhihe" is dropped, what can be a substitute?
+From: Rob Clark <robdclark@chromium.org>
 
-Best regards,
-Yang
+Rob Clark (3):
+  drm/msm/gpu: Add devfreq tuning debugfs
+  drm/msm/gpu: Bypass PM QoS constraint for idle clamp
+  drm/msm/gpu: Add default devfreq thresholds
 
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c |   2 +-
+ drivers/gpu/drm/msm/msm_debugfs.c     |  12 +++
+ drivers/gpu/drm/msm/msm_drv.h         |   9 ++
+ drivers/gpu/drm/msm/msm_gpu.h         |  15 ++-
+ drivers/gpu/drm/msm/msm_gpu_devfreq.c | 148 ++++++++++++--------------
+ 5 files changed, 99 insertions(+), 87 deletions(-)
+
+-- 
+2.38.1
 
