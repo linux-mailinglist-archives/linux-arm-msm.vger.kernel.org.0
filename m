@@ -2,121 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0FB3F66421C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 14:43:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8153E664227
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 14:44:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232031AbjAJNmm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Jan 2023 08:42:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38146 "EHLO
+        id S233720AbjAJNog (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Jan 2023 08:44:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233345AbjAJNm0 (ORCPT
+        with ESMTP id S233813AbjAJNo0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Jan 2023 08:42:26 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08C0219035
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 05:42:25 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id k26-20020a05600c1c9a00b003d972646a7dso11885449wms.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 05:42:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=MGbKZAPhkZ2R7/9QlZ2i8Jsx/I0EQ9QpVPkx3ehuGKU=;
-        b=m5K2jGbW11x7SiC4SRJdU1Xnu+QTxJ90yOvfQfXbIllKWLnxPluf5cXagaUCcSB8az
-         KaufKo5VuxhoKpth9JuokSmW9zYHpPocM9eJm64RiQWwObporx1qaVR97F9dO7OGh8qu
-         ELkkfLVc5l/JUHnNtPaDm7N0m5ny81EJZgyTSKiY4F0hgyIQaWi0Fw1dW/Wjj38qjZxJ
-         qnIyNNiCnX2BYKMRcqQlgRwsghqzaZ7UGUpiVEqIKSui5K3o1Cjyy7EHankS3Y/4iIcw
-         JZv+qu30CMRIDZwKDKav6dqqYucgSR96R0tkkRczwGANkTk3DV4iM8MazTX8m1Oi9jAN
-         aezA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MGbKZAPhkZ2R7/9QlZ2i8Jsx/I0EQ9QpVPkx3ehuGKU=;
-        b=5ikkFlt2o2db7Xi4j83mjNyE7kLltFQdjfgzbYTz1Qad7gr7om0EVIJAuskB/gTjRH
-         sK0nMFlx2uJYXc7Wu90FkHT9gybseJ86ARtX/JIykzmISYK6eRk+KhMs1oU0PrcH4b1f
-         AK4j50c5eBi94D2+bJGMflX/mpRPVB6wu2qDWCdrvaAw3EtP3LiZIo1+ZAqRLLt/Yowp
-         4rLzBGkQP44Xg3OwulcyZUbtoYilI7MqfXK9UbGhz5djhnroxHCfiIiokw5hI+uTIcxk
-         Bng/4Q5BGkXRT3GVcpZ6wxwwS10X69OEsjI2Bt7anoJQzlZ2+Mu5a7QgxWAwqKShz/L9
-         CUBA==
-X-Gm-Message-State: AFqh2kodOTKGeJJ7ksV8Kaj0zF1fvF2P9KtySPIKwKfyjtgiyRtjKkSp
-        sFex6BcWtXkM6279X0Na06m/ejb9QkL9h7TqXN0=
-X-Google-Smtp-Source: AMrXdXvfbnzV+4koE/3oFipxv/xZcE7zMLQw61KlbwJc16F86WyQagi21JYo6QSrnCpQfOuajTcLew==
-X-Received: by 2002:a05:600c:348b:b0:3d1:fcb4:4074 with SMTP id a11-20020a05600c348b00b003d1fcb44074mr59542962wmq.22.1673358143611;
-        Tue, 10 Jan 2023 05:42:23 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id p21-20020a7bcc95000000b003c65c9a36dfsm14576725wma.48.2023.01.10.05.42.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Jan 2023 05:42:23 -0800 (PST)
-Message-ID: <bde66389-619b-771d-1956-43059f8e4d5a@linaro.org>
-Date:   Tue, 10 Jan 2023 13:42:21 +0000
+        Tue, 10 Jan 2023 08:44:26 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C9E41A3A6;
+        Tue, 10 Jan 2023 05:44:25 -0800 (PST)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30A7WFZ4005591;
+        Tue, 10 Jan 2023 13:44:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=q5eiY7y80BpaK9CbsvAvraGpL2YrZqpEBL/Z6QbslMY=;
+ b=d3w5tJtaeX02jzCHak1gY1pnoN/Xm4TNupdiSH1ZEJE/OXAtSONDkkHIwoONOktJYTm1
+ tQ5odKp2nRVjSqanQjEt/2p1VaQ++cJzwakJB03iaSTsBvPAbKUaYaUyPRgWO6AMsxrE
+ 8QgsU5lolBbQOHPKwuYlQDUZX7VPoqb4ePkX93cE90OHINVCNMbigYBOViM9TjL38/o5
+ fCEDwAyTXfxMFN4XnaG3nBzL3mIezYG/XE/qsD+XY7h6fTAUyYJcagmnqYKOZQHzNMTn
+ msOnN/Amd7pTalG9VRdRtWmyMDEQ5+Ky0RZubXLp+IdBECocT+6cg5YmQFkZ97NQmLfh aw== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n0ssh9snj-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 10 Jan 2023 13:44:03 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30ADi2J9025851
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 10 Jan 2023 13:44:02 GMT
+Received: from [10.50.61.82] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 10 Jan
+ 2023 05:43:57 -0800
+Message-ID: <09e06270-6b97-c0e9-e2f3-e6208def0f0b@quicinc.com>
+Date:   Tue, 10 Jan 2023 19:13:36 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: [PATCH v2 4/7] arm64: dts: qcom: Add msm8939 SoC
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH V0 1/1] soc: qcom: dcc: Add QAD, Cti-trigger and
+ Bootconfig support for DCC
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        djakov@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        benl@squareup.com, shawn.guo@linaro.org, fabien.parent@linaro.org,
-        leo.yan@linaro.org, dmitry.baryshkov@linaro.org,
-        Jun Nie <jun.nie@linaro.org>,
-        James Willcox <jwillcox@squareup.com>,
-        Joseph Gates <jgates@squareup.com>,
-        Max Chen <mchen@squareup.com>, Zac Crosby <zac@squareup.com>,
-        Vincent Knecht <vincent.knecht@mailoo.org>,
-        Stephan Gerhold <stephan@gerhold.net>
-References: <20230103010904.3201835-1-bryan.odonoghue@linaro.org>
- <20230103010904.3201835-5-bryan.odonoghue@linaro.org>
- <6e594438-843a-d03e-5276-d6316a9dc2c0@linaro.org>
- <88d66834-ca80-888b-e56e-7694e84b6eae@linaro.org>
- <411a1a02-568e-3695-0a24-0681fbe9f265@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <411a1a02-568e-3695-0a24-0681fbe9f265@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     kernel test robot <lkp@intel.com>, Andy Gross <agross@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>
+CC:     <oe-kbuild-all@lists.linux.dev>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>, <vkoul@kernel.org>
+References: <8337e5672559b197a13699d2c0ee69f18f6167a6.1673247689.git.quic_schowdhu@quicinc.com>
+ <202301092313.RPU8Nsb1-lkp@intel.com>
+From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+In-Reply-To: <202301092313.RPU8Nsb1-lkp@intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: t_jh1-gxTbi42ERcKkQb2TxCxLaLvo4T
+X-Proofpoint-ORIG-GUID: t_jh1-gxTbi42ERcKkQb2TxCxLaLvo4T
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2023-01-10_04,2023-01-10_03,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
+ priorityscore=1501 phishscore=0 spamscore=0 clxscore=1011 suspectscore=0
+ adultscore=0 impostorscore=0 bulkscore=0 malwarescore=0 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2301100085
+X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_SBL_CSS,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/01/2023 13:24, Krzysztof Kozlowski wrote:
-> On 10/01/2023 14:14, Bryan O'Donoghue wrote:
->> On 03/01/2023 09:14, Krzysztof Kozlowski wrote:
->>> ../arch/arm64/boot/dts/qcom/msm8939.dtsi:1825.23-1842.5: Warning
->>> (simple_bus_reg): /soc@0/mmc@7824000: simple-bus unit address format
->>> error, expected "7824900
->>
->> For the record the driver consuming this dt entry requires the host regs
->> to come first followed by the core
->>
->> sdhc_1: mmc@7824000 {
->>           compatible = "qcom,msm8916-sdhci", "qcom,sdhci-msm-v4";
->>           reg = <0x07824900 0x11c>, <0x07824000 0x800>;
->>           reg-names = "hc", "core";
->> }
->>
->> If I change this and the msm8916 to
+
+
+On 1/9/2023 8:58 PM, kernel test robot wrote:
+> Hi Souradeep,
 > 
-> That's not the solution. The warning is saying that unit address does
-> not match your reg. You need to correct unit address.
+> I love your patch! Yet something to improve:
 > 
-> Best regards,
-> Krzysztof
+> [auto build test ERROR on next-20230109]
+> [cannot apply to clk/clk-next soc/for-next linus/master v6.2-rc3 v6.2-rc2 v6.2-rc1 v6.2-rc3]
+> [If your patch is applied to the wrong git tree, kindly drop us a note.
+> And when submitting patch, we suggest to use '--base' as documented in
+> https://git-scm.com/docs/git-format-patch#_base_tree_information]
+> 
+> url:    https://github.com/intel-lab-lkp/linux/commits/Souradeep-Chowdhury/soc-qcom-dcc-Add-QAD-Cti-trigger-and-Bootconfig-support-for-DCC/20230109-181920
+> patch link:    https://lore.kernel.org/r/8337e5672559b197a13699d2c0ee69f18f6167a6.1673247689.git.quic_schowdhu%40quicinc.com
+> patch subject: [PATCH V0 1/1] soc: qcom: dcc: Add QAD, Cti-trigger and Bootconfig support for DCC
+> config: powerpc-allmodconfig
+> compiler: powerpc-linux-gcc (GCC) 12.1.0
+> reproduce (this is a W=1 build):
+>          wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+>          chmod +x ~/bin/make.cross
+>          # https://github.com/intel-lab-lkp/linux/commit/887ce0321641a448b3c53ad5e3f5b05a47c83ae9
+>          git remote add linux-review https://github.com/intel-lab-lkp/linux
+>          git fetch --no-tags linux-review Souradeep-Chowdhury/soc-qcom-dcc-Add-QAD-Cti-trigger-and-Bootconfig-support-for-DCC/20230109-181920
+>          git checkout 887ce0321641a448b3c53ad5e3f5b05a47c83ae9
+>          # save the config file
+>          mkdir build_dir && cp config build_dir/.config
+>          COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=powerpc olddefconfig
+>          COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=powerpc SHELL=/bin/bash
+> 
+> If you fix the issue, kindly add following tag where applicable
+> | Reported-by: kernel test robot <lkp@intel.com>
+> 
+> All errors (new ones prefixed by >>, old ones prefixed by <<):
+> 
+>>> ERROR: modpost: "xbc_node_get_child" [drivers/soc/qcom/dcc.ko] undefined!
+>>> ERROR: modpost: "xbc_node_get_next" [drivers/soc/qcom/dcc.ko] undefined!
+>>> ERROR: modpost: "xbc_node_find_value" [drivers/soc/qcom/dcc.ko] undefined!
+>>> ERROR: modpost: "xbc_node_get_data" [drivers/soc/qcom/dcc.ko] undefined!
+>>> ERROR: modpost: "xbc_node_find_subkey" [drivers/soc/qcom/dcc.ko] undefined!
 > 
 
-Is it not the case that the unit-address should match the first reg and 
-that the first reg should also be the lowest address ?
 
----
-bod
+Thanks for reporting the issue. 'select BOOT_CONFIG' should be added to 
+'config QCOM_DCC' configuration option as well. Will be taken care in 
+the next version.
+
