@@ -2,538 +2,274 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A46266396B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 07:38:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9AC3C66399B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 07:57:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229727AbjAJGir (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Jan 2023 01:38:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54346 "EHLO
+        id S235424AbjAJG5b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Jan 2023 01:57:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235172AbjAJGio (ORCPT
+        with ESMTP id S235593AbjAJG52 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Jan 2023 01:38:44 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 632E0167CF;
-        Mon,  9 Jan 2023 22:38:43 -0800 (PST)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30A24CCE011340;
-        Tue, 10 Jan 2023 06:38:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=4ifpfJ4czFoI59wgCzeWXn9EJjC4RGtrhlPglKYiBCI=;
- b=Ue1OJEtAYZCDsYxpCX6EhLk0pJTxcBEERrvQdWPnoOHVnyCUKqAM2cbsiZMuqcrXarA2
- 6UQYmZ0c+w15P3vI5M2E1F13j1bxhkEgIeKQ6jUHZKggI1IMK7RLBSnemOSkIW8pW89t
- JiBRYYVl/gbsFRCZ8Oza2HvzSUPpcIAyCn/vurVJNptDhCRmFPR1qh6hdbPEXy5Em0iF
- r0cP7NANIrB3SEcTb+xhThlQU2tS+1U4N1JJbDXsUXBIfhGgLjNb2XzLNxFJ2VbOJPBw
- K/tDXuSKHi6uvpOyUL0y4unk8tr+7pANJRTq/hjFzw4RXJMJrlidGBcmOYQKmVatCuOT ag== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3my1wu4vve-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 10 Jan 2023 06:38:36 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30A6cZa3000477
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 10 Jan 2023 06:38:35 GMT
-Received: from blr-ubuntu-87.ap.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Mon, 9 Jan 2023 22:38:32 -0800
-From:   Sibi Sankar <quic_sibis@quicinc.com>
-To:     <andersson@kernel.org>
-CC:     <agross@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <robh+dt@kernel.org>,
-        <konrad.dybcio@somainline.org>, <robimarko@gmail.com>,
-        <quic_gurus@quicinc.com>, Sibi Sankar <quic_sibis@quicinc.com>
-Subject: [PATCH V7 2/2] firmware: qcom: scm: Add wait-queue handling logic
-Date:   Tue, 10 Jan 2023 12:07:45 +0530
-Message-ID: <20230110063745.16739-3-quic_sibis@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230110063745.16739-1-quic_sibis@quicinc.com>
-References: <20230110063745.16739-1-quic_sibis@quicinc.com>
+        Tue, 10 Jan 2023 01:57:28 -0500
+Received: from EUR01-HE1-obe.outbound.protection.outlook.com (mail-he1eur01on2072.outbound.protection.outlook.com [40.107.13.72])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD22B41A50
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Jan 2023 22:57:21 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=C7cXS86e/fFd+4UmmBbqeWCWqtq4hCMaGWNwnGLcpbFYkqYc4qq4kHr9DUf5rEmnJ490XhEmNPgQj/dzGUsdxvQiDEv1y/Ik/pL9ytbwmqlmAXHMb9rOhyNnIp1msG9mpV3ta0T/jrWaxmlacnroezRj+N0MlXCrlWCxNNWvqDsGekgvFOma37P1Cj+6qwWvFJpP3HoL9xBOau0iJrwBAxN5z8tO8736Q7ox0EnHUphKP1IHEUdEoeHH+OTKqOGQzlTukS1ra2Bx/Xn9ySJL5w+lgTiKyhJrZTcql+oARFh7kg9hvFHkSNe74A7BJdxn/aicNrHq2/PZNHo1U2mpmQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=mx359cZl4hZK2a48xEsAq4Tl4CBNZZpuGFy1afnICAU=;
+ b=PdeFUF79KXBBstvYo2biQliSNnpuDt3XFoV/uOHLD4pwRRKnkvoBaQnmsKizr17fdBm39DRXs5ON8xn/VilhlhiJ5D3eetkouB+JHEJPB6eWbAJ28O3tk8LPQfDKHXatSV8OSdVw2q/7Wj7QuCwx1Ci08Ta+6j7Lfv0RQ76sB9P0eIFGMNnHGzSGcAP+9bQvUvA5uRr/Fxt03hLJDBWxs2XmUseNwZHYI+m8riP+zQFs21OAlxGsbRncIWtvgBTOiRKQsaEus+Ivgb/RlyddC2L+h6pMoGtSsGTevxuaPrzjH7hmcYCkzElRQl0dgzO5/8qkYnUhRjrBShV2tYaSnw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector2-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=mx359cZl4hZK2a48xEsAq4Tl4CBNZZpuGFy1afnICAU=;
+ b=OnflrgL8X4BEaRcMclv6CCqPdMLKmZgj/qq/uO7Hv4nqoYFm6SDxmJlE6pJKGIfV9iWCHecedNSi4BuW+IzdeoDKHmyFw4EtE5y4MxCiqK/PNwp89C9W4TXiSDYNId5WtooN7ENWr+GpfOdWqfANLLfTF5H0CNesMCYscrDn/xM=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from VI1PR0402MB3902.eurprd04.prod.outlook.com
+ (2603:10a6:803:22::27) by PAXPR04MB8621.eurprd04.prod.outlook.com
+ (2603:10a6:102:218::13) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5986.18; Tue, 10 Jan
+ 2023 06:57:16 +0000
+Received: from VI1PR0402MB3902.eurprd04.prod.outlook.com
+ ([fe80::738c:a9cb:7b8b:4033]) by VI1PR0402MB3902.eurprd04.prod.outlook.com
+ ([fe80::738c:a9cb:7b8b:4033%5]) with mapi id 15.20.5986.018; Tue, 10 Jan 2023
+ 06:57:16 +0000
+Date:   Tue, 10 Jan 2023 08:57:12 +0200
+From:   Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Tomi Valkeinen <tomba@kernel.org>,
+        dri-devel@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v3 0/7] drm/bridge_connector: perform HPD enablement
+ automatically
+Message-ID: <20230110065712.lgjnmb66s4tlpoly@fsr-ub1664-121.ea.freescale.net>
+References: <20221102180705.459294-1-dmitry.baryshkov@linaro.org>
+ <20230109162140.yelgy2da7aqa6sqv@fsr-ub1664-121.ea.freescale.net>
+ <323ec70e-4613-c0e9-0b39-ad2a0a76673d@linaro.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <323ec70e-4613-c0e9-0b39-ad2a0a76673d@linaro.org>
+X-ClientProxiedBy: AM0PR04CA0009.eurprd04.prod.outlook.com
+ (2603:10a6:208:122::22) To VI1PR0402MB3902.eurprd04.prod.outlook.com
+ (2603:10a6:803:22::27)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: fVoqwO2FHuZJvl2EOAJGjLZ4yA0meRiC
-X-Proofpoint-GUID: fVoqwO2FHuZJvl2EOAJGjLZ4yA0meRiC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2023-01-10_01,2023-01-09_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
- malwarescore=0 clxscore=1015 mlxscore=0 priorityscore=1501 impostorscore=0
- spamscore=0 lowpriorityscore=0 phishscore=0 suspectscore=0 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301100042
-X-Spam-Status: No, score=0.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-        version=3.4.6
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: VI1PR0402MB3902:EE_|PAXPR04MB8621:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6ca58e5a-6bfd-4e9f-f442-08daf2d7e88a
+X-MS-Exchange-SharedMailbox-RoutingAgent-Processed: True
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: yNyN4zRKve084AnlFnKnhLbW7+uoigXMM+SNIHbycaqaXJ4hYMXXzYeP9ROICJNwKVklpyaCm6mBcOc2F8PgCNBkDIdJnJC6zJR9OCH3p08spYEGAKRCiLsqtHGvb5HqtZ9UuTrQtZ2JGxxzj9xpHE6h+caqJQ5eTtIEbWeIakjSY6CxUgXxn7lW7T3oMiDmk+h85X1DOlQAhNWx1UUV5oJTDOuQYVPZc55J2gsYFBT1im+NeAo0mYejor93IPwOlQ+3xBfm1AP+jLgDJxSB0jMi3YXYBl2/9/CXFiqJgaiSKOZz1hbOGcAcu741KPPwOLoEvFN33ARtPSaMypP0i2L/uEJxklqWEpO8FDgMoGxiHz6I0lSRQN4V7TBOeqBvs7p52x8wiU0BXJtmoUUAxhCCCMz8n0BxyfD6XticTD9136hBFg2k51PdHlW7mfsaZJB8HNa8GJkuKjkwYR8Vzj1mU/9Zfx270lHZzVDwrkfZ1nvtp9TC5AyQxqMP23r0dMXsRH/YZ86t216JTbxbV28wNdJ8o9q6F6epD2Ljj41R2msCpszEWK7Zh7ib7bElrI8zrmhZPvGZuGwvYYIQcep3khdoyVsR2gtkLTG/BYPRg5v4F1F133Sf1qCX4vJw1UgRC0idUQIqxWbvYq+Cxw==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VI1PR0402MB3902.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(346002)(376002)(366004)(136003)(39860400002)(396003)(451199015)(8936002)(2906002)(5660300002)(45080400002)(41300700001)(7416002)(4326008)(6916009)(8676002)(66556008)(316002)(66946007)(66476007)(44832011)(54906003)(26005)(9686003)(6512007)(1076003)(38100700002)(86362001)(186003)(83380400001)(478600001)(6506007)(6486002)(53546011)(6666004);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?xDKH4u/PqWgz3AEV3dULz3P6lTBW2chaUQ40u9iE9Beig1NWnJ/SBRAa1+P/?=
+ =?us-ascii?Q?qd6gGVXuNfYHQobi3NBJT+Ldshc9rBmHTSajEpIHVwIe+ABWRsWYGACrV9RA?=
+ =?us-ascii?Q?GWZd+cdBRLlxo0uCTfTD76JS63NmMxr+zE22QjHL7V2yjS+1Eq9wdxM/t59n?=
+ =?us-ascii?Q?7TrCRlW2/SVqdQnIuOt/AsFhJAw82+WDqYGdKnjSZuRcQds81jCHA8b13ar1?=
+ =?us-ascii?Q?TG6kl+2aOaXykwjoCDv+qLXLAvXwInRct6m5ooWCHPd31hnlL8Vn9JljYf6r?=
+ =?us-ascii?Q?+wKA6uyUpnP/20V0BGGidJlYUgTu/njB/SoSHC+//R8r1dHr5+yd/x52XJDy?=
+ =?us-ascii?Q?nKal9YzXQE//gV2q510jxySYLfW7skXHF/SGVPww97LtS/0JFJhLFV87RoLz?=
+ =?us-ascii?Q?Eu70NiZtKnxxXeYt40oT4+Hn98TZBv66wKhhE7+APUmSNu1752Wf3u+m+KIV?=
+ =?us-ascii?Q?FkGDOhDAZiyIWtuF+fTT+ZqTf9t3xNHj5m+j0T3e2x8Ozhyf5A5E5qKPdLc8?=
+ =?us-ascii?Q?QicIyzdDF401i9AkjbKUwES6nHgCY7E/7MKOrc9N7ZqesfMU79BaPR3u3JVQ?=
+ =?us-ascii?Q?HxkYJ1bA1tuceHvzTvl1oNxYr29lwD06MGBcvNcdE/QZGd/mzoRJlUhrEeLW?=
+ =?us-ascii?Q?/kKF6B4hGAqgg5KCUxlfkRCPGz29Tghksx3bNnL2xYa1psFj9Sq9w0oodWXb?=
+ =?us-ascii?Q?7v7xXtJWqx2Nt79XdFxohZrqAuFrPA8VC6852ZAyDZHwMMZZGSMs6YWwtFeE?=
+ =?us-ascii?Q?c6A12mjn4wP6/zzKWl5aabJU0rf+e5FZyxTNXnl54NQN+qhTiOzDb7yqqnUI?=
+ =?us-ascii?Q?T2xnxCdaaB727IK1/XJ/F7a/MHQbQg/9L1peoT6sJUNoQpcVQeU5xszF2NQT?=
+ =?us-ascii?Q?WXS9aqPhrFLKszah/GqS0E4kTOH40LxJggLk/h9dVBuVMc1nLaMMnNdSqGJs?=
+ =?us-ascii?Q?RSGuer4nTK+rHYlRGV1DZT0dcMT5zRmm7CRiEmVqY1Fn2BCzyq/I0jHtjifF?=
+ =?us-ascii?Q?DY58YMEOwmwJE2ShP4puQbns6Ca94a1AsG6VcXm7j25j9zcLLu1/6g1k42r0?=
+ =?us-ascii?Q?CDZXJcXNPXG+AkSZDSIIGLk7g7eJUcfrFGB1FEpNqpvU3l9U6ZX50fc1+M+5?=
+ =?us-ascii?Q?OzV9bdlnmaYaCxuHdSgi4sr++AVahaHD2TvY9KewEwi7/Aq3dFd07ZSmpSm4?=
+ =?us-ascii?Q?Q2zD57HBBIb7YeoU+V/p9FXfVe+Q42/lQPy71rVYmDHY5JoaR72egyMhgqTM?=
+ =?us-ascii?Q?cTbet1nLUuDXTH9clpXSuNzR5BcjObMLnvP5LEMy/2EYzkQSvfITsUO9rWC2?=
+ =?us-ascii?Q?PSrnTplA/UeexTHmea0oVmE29FKY9dEO2cXsKToxMPJgAhnonmX6ueXorqgo?=
+ =?us-ascii?Q?hSIilIOciI6s+LX+VNcYhIQOaL10mG4CukfgoHHbFl/iA7vDaDgdD3fnzkvu?=
+ =?us-ascii?Q?WU2vqgwBJQQEWKmMtmSNrm5BXSHrTBtCtVlG0YYzoX5eAk7HnP4nUkpB5oWV?=
+ =?us-ascii?Q?SQznGrvX4z8OHHKodIsADbgTzO5qdJaEFSdzaVaxEvmi2GMQR/SpUIRHMb3v?=
+ =?us-ascii?Q?mGkQSvanS9SLVU5e91N15TiWqxPOWvTOXCbHPrph+YzU97rHwnNr1euWaPmx?=
+ =?us-ascii?Q?VA=3D=3D?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6ca58e5a-6bfd-4e9f-f442-08daf2d7e88a
+X-MS-Exchange-CrossTenant-AuthSource: VI1PR0402MB3902.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jan 2023 06:57:16.6219
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ASH73FG+lD9MgO+DUigwqFZBuvS6QkEaiFxDBFJi2OGoSnJGdtvX4RAn/9W4q2cpyDC2fp29sqDTXfifv1o41A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR04MB8621
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Guru Das Srinagesh <quic_gurus@quicinc.com>
+Hi,
 
-When the firmware (FW) supports multiple requests per VM, multiple requests
-from the same/different VM can reach the firmware at the same time. Since
-the firmware currently being used has limited resources, it guards them
-with a resource lock and puts requests on a wait-queue internally and
-signals to HLOS that it is doing so. It does this by returning a new return
-value in addition to success or error: SCM_WAITQ_SLEEP. A sleeping SCM call
-can be woken up by an interrupt that the FW raises.
+On Mon, Jan 09, 2023 at 10:26:28PM +0200, Dmitry Baryshkov wrote:
+> Hi,
+> 
+> On 09/01/2023 18:21, Laurentiu Palcu wrote:
+> > Hi Dmitry,
+> > 
+> > It looks like there are some issues with this patchset... :/ I just
+> > fetched the drm-tip and, with these patches included, the "Hot plug
+> > detection already enabled" warning is back for i.MX DCSS.
+> 
+> Could you please provide a backtrace?
 
-  1) SCM_WAITQ_SLEEP:
+Sure, see below:
 
-  	When an SCM call receives this return value instead of success
-  	or error, FW has placed this call on a wait-queue and has signalled
-	HLOS to put it to non-interruptible sleep.
+------------[ cut here ]------------
+Hot plug detection already enabled
+WARNING: CPU: 2 PID: 9 at drivers/gpu/drm/drm_bridge.c:1257 drm_bridge_hpd_enable+0x94/0x9c [drm]
+Modules linked in: videobuf2_memops snd_soc_simple_card snd_soc_simple_card_utils fsl_imx8_ddr_perf videobuf2_common snd_soc_imx_spdif adv7511 etnaviv imx8m_ddrc imx_dcss mc cec nwl_dsi gov
+CPU: 2 PID: 9 Comm: kworker/u8:0 Not tainted 6.2.0-rc2-15208-g25b283acd578 #6
+Hardware name: NXP i.MX8MQ EVK (DT)
+Workqueue: events_unbound deferred_probe_work_func
+pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : drm_bridge_hpd_enable+0x94/0x9c [drm]
+lr : drm_bridge_hpd_enable+0x94/0x9c [drm]
+sp : ffff800009ef3740
+x29: ffff800009ef3740 x28: ffff000009331f00 x27: 0000000000001000
+x26: 0000000000000020 x25: ffff800001148ed8 x24: ffff00000a8fe000
+x23: 00000000fffffffd x22: ffff000005086348 x21: ffff800001133ee0
+x20: ffff00000550d800 x19: ffff000005086288 x18: 0000000000000006
+x17: 0000000000000000 x16: ffff8000096ef008 x15: 97ffff2891004260
+x14: 2a1403e194000000 x13: 97ffff2891004260 x12: 2a1403e194000000
+x11: 7100385f29400801 x10: 0000000000000aa0 x9 : ffff800008112744
+x8 : ffff000000250b00 x7 : 0000000000000003 x6 : 0000000000000011
+x5 : 0000000000000000 x4 : ffff0000bd986a48 x3 : 0000000000000001
+x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff000000250000
+Call trace:
+ drm_bridge_hpd_enable+0x94/0x9c [drm]
+ drm_bridge_connector_enable_hpd+0x2c/0x3c [drm_kms_helper]
+ drm_kms_helper_poll_enable+0x94/0x10c [drm_kms_helper]
+ drm_helper_probe_single_connector_modes+0x1a8/0x510 [drm_kms_helper]
+ drm_client_modeset_probe+0x204/0x1190 [drm]
+ __drm_fb_helper_initial_config_and_unlock+0x5c/0x4a4 [drm_kms_helper]
+ drm_fb_helper_initial_config+0x54/0x6c [drm_kms_helper]
+ drm_fbdev_client_hotplug+0xd0/0x140 [drm_kms_helper]
+ drm_fbdev_generic_setup+0x90/0x154 [drm_kms_helper]
+ dcss_kms_attach+0x1c8/0x254 [imx_dcss]
+ dcss_drv_platform_probe+0x90/0xfc [imx_dcss]
+ platform_probe+0x70/0xcc
+ really_probe+0xc4/0x2e0
+ __driver_probe_device+0x80/0xf0
+ driver_probe_device+0xe0/0x164
+ __device_attach_driver+0xc0/0x13c
+ bus_for_each_drv+0x84/0xe0
+ __device_attach+0xa4/0x1a0
+ device_initial_probe+0x1c/0x30
+ bus_probe_device+0xa4/0xb0
+ deferred_probe_work_func+0x90/0xd0
+ process_one_work+0x200/0x474
+ worker_thread+0x74/0x43c
+ kthread+0xfc/0x110
+ ret_from_fork+0x10/0x20
+---[ end trace 0000000000000000 ]---
 
-	Along with this return value, FW also passes to HLOS `wq_ctx` -
-	a unique number (UID) identifying the wait-queue that it has put
-	the call on, internally. This is to help HLOS with its own
-	bookkeeping to wake this sleeping call later.
+Cheers,
+Laurentiu
 
-	Additionally, FW also passes to HLOS `smc_call_ctx` - a UID
-	identifying the SCM call thus being put to sleep. This is also
-	for HLOS' bookkeeping to wake this call up later.
-
-	These two additional values are passed via the a1 and a2
-	registers.
-
-	N.B.: The "ctx" in the above UID names = "context".
-
-The handshake mechanism that HLOS uses to talk to FW about wait-queue
-operations involves two new SMC calls.
-
-  1) get_wq_ctx():
-
-    	Arguments: 	None
-    	Returns:	wq_ctx, flags, more_pending
-
-    	Get the wait-queue context, and wake up either one or all of the
-    	sleeping SCM calls associated with that wait-queue.
-
-    	Additionally, repeat this if there are more wait-queues that are
-    	ready to have their requests woken up (`more_pending`).
-
-  2) wq_resume(smc_call_ctx):
-
-  	Arguments:	smc_call_ctx
-
-  	HLOS needs to issue this in response to receiving an
-  	IRQ, passing to FW the same smc_call_ctx that FW
-  	receives from HLOS via the get_wq_ctx() call.
-
-(The mechanism to wake a SMC call back up is described in detail below)
-
- VM_1                     VM_2                            Firmware
-   │                        │                                 │
-   │                        │                                 │
-   │                        │                                 │
-   │                        │                                 │
-   │      REQUEST_1         │                                 │
-   ├────────────────────────┼─────────────────────────────────┤
-   │                        │                                 │
-   │                        │                              ┌──┼──┐
-   │                        │                              │  │  │
-   │                        │     REQUEST_2                │  │  │
-   │                        ├──────────────────────────────┼──┤  │
-   │                        │                              │  │  │Resource
-   │                        │                              │  │  │is busy
-   │                        │       {WQ_SLEEP}             │  │  │
-   │                        │◄─────────────────────────────┼──┤  │
-   │                        │  wq_ctx, smc_call_ctx        │  │  │
-   │                        │                              └──┼──┘
-   │   REQUEST_1 COMPLETE   │                                 │
-   │◄───────────────────────┼─────────────────────────────────┤
-   │                        │                                 │
-   │                        │         IRQ                     │
-   │                        │◄─-------------------------------│
-   │                        │                                 │
-   │                        │      get_wq_ctx()               │
-   │                        ├────────────────────────────────►│
-   │                        │                                 │
-   │                        │                                 │
-   │                        │◄────────────────────────────────┤
-   │                        │   wq_ctx, flags, and            │
-   │                        │        more_pending             │
-   │                        │                                 │
-   │                        │                                 │
-   │                        │ wq_resume(smc_call_ctx)         │
-   │                        ├────────────────────────────────►│
-   │                        │                                 │
-   │                        │                                 │
-   │                        │      REQUEST_2 COMPLETE         │
-   │                        │◄────────────────────────────────┤
-   │                        │                                 │
-   │                        │                                 │
-
-With the exception of get_wq_ctx(), the other SMC call wq_resume() can
-return WQ_SLEEP (these nested rounds of WQ_SLEEP are not shown in the
-above diagram for the sake of simplicity). Therefore, introduce a new
-do-while loop to handle multiple WQ_SLEEP return values for the same
-parent SCM call.
-
-Request Completion in the above diagram refers to either a success
-return value (zero) or error (and not SMC_WAITQ_SLEEP)
-
-Also add the interrupt handler that wakes up a sleeping SCM call.
-
-Signed-off-by: Guru Das Srinagesh <quic_gurus@quicinc.com>
-Co-developed-by: Sibi Sankar <quic_sibis@quicinc.com>
-Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
----
-
-v7:
-- Move lookup + wait_for_completion into a single function in qcom_scm [Bjorn]
-- Simplify completion retrieval [Bjorn]
-
-v6:
-- Fix misc. nits in the scm driver [Krzysztof]
-
-v5:
-- Handle the wake_one/wake_all flags [Guru]
-- Rename flag handler to qcom_scm_waitq_wakeup [Bjorn]
-- Resume scm call can return ebusy as well handle that scenario by retrying
-  the original smc call and not the resume call
-
-v4:
-- platform_set_drvdata will be used by __scm_smc_do_quirk_handle_waitq to
-  get access to scm struct from device so retain it
-- Use a single completion as it satisfies all of the current usecases [Bjorn]
-- Inline scm_get_wq_ctx [Bjorn]
-- Convert all pr_err to dev_err [Bjorn]
-- Handle idr_destroy in a thread safe manner [Bjorn]
-- Misc. Style fixes [Bjorn]
-
-v3:
-- Fixup irq handling so as not to affect SoCs without the interrupt.
-- Fix warnings reported by kernel test-bot.
-
- drivers/firmware/qcom_scm-smc.c | 90 ++++++++++++++++++++++++++++++---
- drivers/firmware/qcom_scm.c     | 89 +++++++++++++++++++++++++++++++-
- drivers/firmware/qcom_scm.h     |  8 +++
- 3 files changed, 179 insertions(+), 8 deletions(-)
-
-diff --git a/drivers/firmware/qcom_scm-smc.c b/drivers/firmware/qcom_scm-smc.c
-index d111833364ba..30999f04749c 100644
---- a/drivers/firmware/qcom_scm-smc.c
-+++ b/drivers/firmware/qcom_scm-smc.c
-@@ -52,29 +52,101 @@ static void __scm_smc_do_quirk(const struct arm_smccc_args *smc,
- 	} while (res->a0 == QCOM_SCM_INTERRUPTED);
- }
- 
--static void __scm_smc_do(const struct arm_smccc_args *smc,
--			 struct arm_smccc_res *res, bool atomic)
-+static void fill_wq_resume_args(struct arm_smccc_args *resume, u32 smc_call_ctx)
- {
--	int retry_count = 0;
-+	memset(resume->args, 0, sizeof(resume->args[0]) * ARRAY_SIZE(resume->args));
-+
-+	resume->args[0] = ARM_SMCCC_CALL_VAL(ARM_SMCCC_STD_CALL,
-+					ARM_SMCCC_SMC_64, ARM_SMCCC_OWNER_SIP,
-+					SCM_SMC_FNID(QCOM_SCM_SVC_WAITQ, QCOM_SCM_WAITQ_RESUME));
-+
-+	resume->args[1] = QCOM_SCM_ARGS(1);
-+
-+	resume->args[2] = smc_call_ctx;
-+}
-+
-+int scm_get_wq_ctx(u32 *wq_ctx, u32 *flags, u32 *more_pending)
-+{
-+	int ret;
-+	struct arm_smccc_args get_wq_ctx = {0};
-+	struct arm_smccc_res get_wq_res;
-+
-+	get_wq_ctx.args[0] = ARM_SMCCC_CALL_VAL(ARM_SMCCC_STD_CALL,
-+				ARM_SMCCC_SMC_64, ARM_SMCCC_OWNER_SIP,
-+				SCM_SMC_FNID(QCOM_SCM_SVC_WAITQ, QCOM_SCM_WAITQ_GET_WQ_CTX));
-+
-+	/* Guaranteed to return only success or error, no WAITQ_* */
-+	__scm_smc_do_quirk(&get_wq_ctx, &get_wq_res);
-+	ret = get_wq_res.a0;
-+	if (ret)
-+		return ret;
-+
-+	*wq_ctx = get_wq_res.a1;
-+	*flags  = get_wq_res.a2;
-+	*more_pending = get_wq_res.a3;
-+
-+	return 0;
-+}
-+
-+static int __scm_smc_do_quirk_handle_waitq(struct device *dev, struct arm_smccc_args *waitq,
-+					   struct arm_smccc_res *res)
-+{
-+	int ret;
-+	struct arm_smccc_args resume;
-+	u32 wq_ctx, smc_call_ctx, flags;
-+	struct arm_smccc_args *smc = waitq;
-+
-+	do {
-+		__scm_smc_do_quirk(smc, res);
-+
-+		if (res->a0 == QCOM_SCM_WAITQ_SLEEP) {
-+			wq_ctx = res->a1;
-+			smc_call_ctx = res->a2;
-+			flags = res->a3;
-+
-+			if (!dev)
-+				return -EPROBE_DEFER;
-+
-+			ret = qcom_scm_lookup_completion(wq_ctx);
-+			if (ret)
-+				return ret;
-+
-+			fill_wq_resume_args(&resume, smc_call_ctx);
-+			smc = &resume;
-+		}
-+	} while (res->a0 == QCOM_SCM_WAITQ_SLEEP);
-+
-+	return 0;
-+}
-+
-+static int __scm_smc_do(struct device *dev, struct arm_smccc_args *smc,
-+			struct arm_smccc_res *res, bool atomic)
-+{
-+	int ret, retry_count = 0;
- 
- 	if (atomic) {
- 		__scm_smc_do_quirk(smc, res);
--		return;
-+		return 0;
- 	}
- 
- 	do {
- 		mutex_lock(&qcom_scm_lock);
- 
--		__scm_smc_do_quirk(smc, res);
-+		ret = __scm_smc_do_quirk_handle_waitq(dev, smc, res);
- 
- 		mutex_unlock(&qcom_scm_lock);
- 
-+		if (ret)
-+			return ret;
-+
- 		if (res->a0 == QCOM_SCM_V2_EBUSY) {
- 			if (retry_count++ > QCOM_SCM_EBUSY_MAX_RETRY)
- 				break;
- 			msleep(QCOM_SCM_EBUSY_WAIT_MS);
- 		}
- 	}  while (res->a0 == QCOM_SCM_V2_EBUSY);
-+
-+	return 0;
- }
- 
- 
-@@ -83,7 +155,7 @@ int __scm_smc_call(struct device *dev, const struct qcom_scm_desc *desc,
- 		   struct qcom_scm_res *res, bool atomic)
- {
- 	int arglen = desc->arginfo & 0xf;
--	int i;
-+	int i, ret;
- 	dma_addr_t args_phys = 0;
- 	void *args_virt = NULL;
- 	size_t alloc_len;
-@@ -135,13 +207,17 @@ int __scm_smc_call(struct device *dev, const struct qcom_scm_desc *desc,
- 		smc.args[SCM_SMC_LAST_REG_IDX] = args_phys;
- 	}
- 
--	__scm_smc_do(&smc, &smc_res, atomic);
-+	/* ret error check follows after args_virt cleanup*/
-+	ret = __scm_smc_do(dev, &smc, &smc_res, atomic);
- 
- 	if (args_virt) {
- 		dma_unmap_single(dev, args_phys, alloc_len, DMA_TO_DEVICE);
- 		kfree(args_virt);
- 	}
- 
-+	if (ret)
-+		return ret;
-+
- 	if (res) {
- 		res->result[0] = smc_res.a1;
- 		res->result[1] = smc_res.a2;
-diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-index cdbfe54c8146..19ac506a9b1f 100644
---- a/drivers/firmware/qcom_scm.c
-+++ b/drivers/firmware/qcom_scm.c
-@@ -4,6 +4,7 @@
-  */
- #include <linux/platform_device.h>
- #include <linux/init.h>
-+#include <linux/interrupt.h>
- #include <linux/cpumask.h>
- #include <linux/export.h>
- #include <linux/dma-mapping.h>
-@@ -13,6 +14,7 @@
- #include <linux/qcom_scm.h>
- #include <linux/of.h>
- #include <linux/of_address.h>
-+#include <linux/of_irq.h>
- #include <linux/of_platform.h>
- #include <linux/clk.h>
- #include <linux/reset-controller.h>
-@@ -33,6 +35,7 @@ struct qcom_scm {
- 	struct clk *iface_clk;
- 	struct clk *bus_clk;
- 	struct icc_path *path;
-+	struct completion waitq_comp;
- 	struct reset_controller_dev reset;
- 
- 	/* control access to the interconnect path */
-@@ -63,6 +66,9 @@ static const u8 qcom_scm_cpu_warm_bits[QCOM_SCM_BOOT_MAX_CPUS] = {
- 	BIT(2), BIT(1), BIT(4), BIT(6)
- };
- 
-+#define QCOM_SMC_WAITQ_FLAG_WAKE_ONE	BIT(0)
-+#define QCOM_SMC_WAITQ_FLAG_WAKE_ALL	BIT(1)
-+
- static const char * const qcom_scm_convention_names[] = {
- 	[SMC_CONVENTION_UNKNOWN] = "unknown",
- 	[SMC_CONVENTION_ARM_32] = "smc arm 32",
-@@ -1325,11 +1331,79 @@ bool qcom_scm_is_available(void)
- }
- EXPORT_SYMBOL(qcom_scm_is_available);
- 
-+static struct completion *qcom_scm_lookup_wq(struct qcom_scm *scm, u32 wq_ctx)
-+{
-+	/* assert wq_ctx is zero */
-+	if (wq_ctx != 0) {
-+		dev_err(scm->dev, "No waitqueue found for wq_ctx %d\n", wq_ctx);
-+		return ERR_PTR(-EINVAL);
-+	}
-+
-+	return &scm->waitq_comp;
-+}
-+
-+int qcom_scm_lookup_completion(u32 wq_ctx)
-+{
-+	struct completion *wq = NULL;
-+
-+	wq = qcom_scm_lookup_wq(__scm, wq_ctx);
-+	if (IS_ERR(wq))
-+		return PTR_ERR(wq);
-+
-+	wait_for_completion(wq);
-+
-+	return 0;
-+}
-+
-+static int qcom_scm_waitq_wakeup(struct qcom_scm *scm, unsigned int wq_ctx, bool wake_all)
-+{
-+	struct completion *wq_to_wake;
-+
-+	wq_to_wake = qcom_scm_lookup_wq(scm, wq_ctx);
-+	if (IS_ERR(wq_to_wake))
-+		return PTR_ERR(wq_to_wake);
-+
-+	if (wake_all)
-+		complete_all(wq_to_wake);
-+	else
-+		complete(wq_to_wake);
-+
-+	return 0;
-+}
-+
-+static irqreturn_t qcom_scm_irq_handler(int irq, void *data)
-+{
-+	int ret;
-+	struct qcom_scm *scm = data;
-+	u32 wq_ctx, flags, more_pending = 0;
-+
-+	do {
-+		ret = scm_get_wq_ctx(&wq_ctx, &flags, &more_pending);
-+		if (ret) {
-+			dev_err(scm->dev, "GET_WQ_CTX SMC call failed: %d\n", ret);
-+			goto out;
-+		}
-+
-+		if (flags != QCOM_SMC_WAITQ_FLAG_WAKE_ONE &&
-+		    flags != QCOM_SMC_WAITQ_FLAG_WAKE_ALL) {
-+			dev_err(scm->dev, "Invalid flags found for wq_ctx: %u\n", flags);
-+			goto out;
-+		}
-+
-+		ret = qcom_scm_waitq_wakeup(scm, wq_ctx, !!(flags & QCOM_SMC_WAITQ_FLAG_WAKE_ALL));
-+		if (ret)
-+			goto out;
-+	} while (more_pending);
-+
-+out:
-+	return IRQ_HANDLED;
-+}
-+
- static int qcom_scm_probe(struct platform_device *pdev)
- {
- 	struct qcom_scm *scm;
- 	unsigned long clks;
--	int ret;
-+	int irq, ret;
- 
- 	scm = devm_kzalloc(&pdev->dev, sizeof(*scm), GFP_KERNEL);
- 	if (!scm)
-@@ -1402,6 +1476,19 @@ static int qcom_scm_probe(struct platform_device *pdev)
- 	__scm = scm;
- 	__scm->dev = &pdev->dev;
- 
-+	init_completion(&__scm->waitq_comp);
-+
-+	irq = platform_get_irq(pdev, 0);
-+	if (irq < 0) {
-+		if (irq != -ENXIO)
-+			return irq;
-+	} else {
-+		ret = devm_request_threaded_irq(__scm->dev, irq, NULL, qcom_scm_irq_handler,
-+						IRQF_ONESHOT, "qcom-scm", __scm);
-+		if (ret < 0)
-+			return dev_err_probe(scm->dev, ret, "Failed to request qcom-scm irq\n");
-+	}
-+
- 	__get_convention();
- 
- 	/*
-diff --git a/drivers/firmware/qcom_scm.h b/drivers/firmware/qcom_scm.h
-index db3d08a01209..018e9867d55a 100644
---- a/drivers/firmware/qcom_scm.h
-+++ b/drivers/firmware/qcom_scm.h
-@@ -60,6 +60,9 @@ struct qcom_scm_res {
- 	u64 result[MAX_QCOM_SCM_RETS];
- };
- 
-+int qcom_scm_lookup_completion(u32 wq_ctx);
-+int scm_get_wq_ctx(u32 *wq_ctx, u32 *flags, u32 *more_pending);
-+
- #define SCM_SMC_FNID(s, c)	((((s) & 0xFF) << 8) | ((c) & 0xFF))
- extern int __scm_smc_call(struct device *dev, const struct qcom_scm_desc *desc,
- 			  enum qcom_scm_convention qcom_convention,
-@@ -129,6 +132,10 @@ extern int scm_legacy_call(struct device *dev, const struct qcom_scm_desc *desc,
- #define QCOM_SCM_SMMU_CONFIG_ERRATA1		0x03
- #define QCOM_SCM_SMMU_CONFIG_ERRATA1_CLIENT_ALL	0x02
- 
-+#define QCOM_SCM_SVC_WAITQ			0x24
-+#define QCOM_SCM_WAITQ_RESUME			0x02
-+#define QCOM_SCM_WAITQ_GET_WQ_CTX		0x03
-+
- /* common error codes */
- #define QCOM_SCM_V2_EBUSY	-12
- #define QCOM_SCM_ENOMEM		-5
-@@ -137,6 +144,7 @@ extern int scm_legacy_call(struct device *dev, const struct qcom_scm_desc *desc,
- #define QCOM_SCM_EINVAL_ARG	-2
- #define QCOM_SCM_ERROR		-1
- #define QCOM_SCM_INTERRUPTED	1
-+#define QCOM_SCM_WAITQ_SLEEP	2
- 
- static inline int qcom_scm_remap_error(int err)
- {
--- 
-2.17.1
-
+> 
+> > 
+> > After a short investigation, it seems that we end up calling
+> > drm_bridge_hpd_enable() from both drm_kms_helper_poll_init() and
+> > drm_fbdev_generic_setup(), hence the warning.
+> > 
+> > There are drivers using the drm_bridge_connector API that also call
+> > drm_kms_helper_poll_init() followed by drm_fbdev_generic_setup(). So,
+> > they might experience the same behavior, unless I'm missing something...
+> > :/
+> > 
+> > Also, even if drm_fbdev_generic_setup() is not called in the driver
+> > initialization, the warning will still appear the first time the
+> > GETCONNECTOR ioctl is called, because that'll call
+> > drm_helper_probe_single_connector_modes() helper which will eventually
+> > call drm_bridge_hpd_enable().
+> > 
+> > Any idea?
+> > 
+> > Cheers,
+> > Laurentiu
+> > 
+> > On Wed, Nov 02, 2022 at 09:06:58PM +0300, Dmitry Baryshkov wrote:
+> > >  From all the drivers using drm_bridge_connector only iMX/dcss and OMAP
+> > > DRM driver do a proper work of calling
+> > > drm_bridge_connector_en/disable_hpd() in right places. Rather than
+> > > teaching each and every driver how to properly handle
+> > > drm_bridge_connector's HPD, make that automatic.
+> > > 
+> > > Add two additional drm_connector helper funcs: enable_hpd() and
+> > > disable_hpd(). Make drm_kms_helper_poll_* functions call them (as this
+> > > is the time where the drm_bridge_connector's functions are called by the
+> > > drivers too).
+> > > 
+> > > Changes since v2:
+> > >   - Fixed a typo in the commit message of the second patch.
+> > > 
+> > > Changes since v1:
+> > >   - Rebased on top of v6.1-rc1
+> > >   - Removed the drm_bridge_connector_enable_hpd() from
+> > >     drm_bridge_connector_init()
+> > >   - Removed extra underscore prefix from
+> > >     drm_bridge_connector_en/disable_hpd() helpers
+> > > 
+> > > Dmitry Baryshkov (7):
+> > >    drm/poll-helper: merge drm_kms_helper_poll_disable() and _fini()
+> > >    drm/probe-helper: enable and disable HPD on connectors
+> > >    drm/bridge_connector: rely on drm_kms_helper_poll_* for HPD enablement
+> > >    drm/imx/dcss: stop using drm_bridge_connector_en/disable_hpd()
+> > >    drm/msm/hdmi: stop using drm_bridge_connector_en/disable_hpd()
+> > >    drm/omap: stop using drm_bridge_connector_en/disable_hpd()
+> > >    drm/bridge_connector: drop drm_bridge_connector_en/disable_hpd()
+> > > 
+> > >   drivers/gpu/drm/drm_bridge_connector.c   | 27 +++-------------
+> > >   drivers/gpu/drm/drm_probe_helper.c       | 40 ++++++++++++++++++-----
+> > >   drivers/gpu/drm/imx/dcss/dcss-dev.c      |  4 ---
+> > >   drivers/gpu/drm/imx/dcss/dcss-kms.c      |  2 --
+> > >   drivers/gpu/drm/msm/hdmi/hdmi.c          |  2 --
+> > >   drivers/gpu/drm/omapdrm/omap_drv.c       | 41 ------------------------
+> > >   include/drm/drm_bridge_connector.h       |  2 --
+> > >   include/drm/drm_modeset_helper_vtables.h | 22 +++++++++++++
+> > >   8 files changed, 59 insertions(+), 81 deletions(-)
+> > > 
+> > > -- 
+> > > 2.35.1
+> > > 
+> 
+> -- 
+> With best wishes
+> Dmitry
+> 
