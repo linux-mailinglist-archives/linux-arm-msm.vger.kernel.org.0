@@ -2,65 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 33EA966418A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 14:22:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 39AB7664187
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 14:22:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232052AbjAJNWU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Jan 2023 08:22:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48694 "EHLO
+        id S232250AbjAJNWS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Jan 2023 08:22:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232431AbjAJNWO (ORCPT
+        with ESMTP id S233175AbjAJNWP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Jan 2023 08:22:14 -0500
+        Tue, 10 Jan 2023 08:22:15 -0500
 Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 971611BE88
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 05:22:13 -0800 (PST)
-Received: by mail-lf1-x136.google.com with SMTP id m6so18357230lfj.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 05:22:13 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4990CFC
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 05:22:14 -0800 (PST)
+Received: by mail-lf1-x136.google.com with SMTP id d30so13468153lfv.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 05:22:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WS3uiF3saExdVOPAm+E+mNqQzuR/x6HaROiD24WIjGA=;
-        b=Sgd1NZEV/X99sRRp/xISipY2qfos6uYFzLwUg7xkyMdlDFVkmF/KkYs5J+4+NBEW6G
-         4ntoLimettJNyJYCTWf4Y6VDQ0A3b1gdZrBnXUncERGXuVVDLXBcbyBdAnY6y3y6mI2q
-         oa3/rq60Exe7dMxc+dpT5LPekk0k0h3o2vITJFjqK+gJNURzsKzrbz72sOW2FXgZkvqW
-         qGW6coQ7EBLfh+4a2gTXWU4rOhM6iwsj1Rnjx7wh2lU1vppsCYSJGMu6E2kJdOIcvjQ9
-         ziMAyMhGFLbZIzgKGDlEbLPb+F7LjAL1xWB0DhjN6xg7JEUCwasXz6xMPPjJYfoJ1HvL
-         nZgA==
+        bh=SBGFAAvIVTLZ7wqBvBmVy/pQHR3/8reooL4uATi89Cw=;
+        b=FkWAEBxxlG5RsGMbU5xcWURg67RBGiBuoFzUEUXnCzwp3GvhXviQTKJl7I0/xkqtrM
+         lCcUAMsbL4FICzuEPK8W0wmzI235jwBMXkFqrnNnupMQTccptUhp1352WHAXCv7KzKAJ
+         VCzWrnPo+rI31kM+4eTT5bAHvEGCGcFwt4w4kVGhWj+ETxQavdtt9PrvxLNYdU3jF5eO
+         s7rsC1FCGMP4nwE9bLIvw1CGJF841FXXnjr4Htm8EO9cXA3naGowVYSzdgv//+sDsW4M
+         KSuetIM9jOEN/n74iA9rXhEM8o7EREIUpb63mYz8kvPkXoX9AzVzCYoe8G+yDNskCC0J
+         0YNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WS3uiF3saExdVOPAm+E+mNqQzuR/x6HaROiD24WIjGA=;
-        b=6s6DbJpKixGPHFJ0M9vsHYL0xaB/uChCxbzTCkHrQt6mBCZUr7wp+XqpuwNdJUvxm2
-         QItzl+cAxOy9bjb8ecex0iqnUhtu+jrkvQCp/hHTJmu6VHaLz1+YuDocRaesLWMeu2bz
-         3fKfAMK3a5Gx+MkHC47A4imix4nZzNSBpgK1UYy5DRAWWgJqomEDbc1/ejII6FSAiFMp
-         zJGadmIjknaKprsNdJqIxDj1BviWGyu8tR1hF3e2Ztcra2Mv/agZyyRb054/XM2VG+6e
-         hO/lyY5EnA1NXt2IDJu41LeGkiHn3P3POzKu9tBr2pQdAU8ZoXGtuF0x/PUvNPmHW/w3
-         VW1A==
-X-Gm-Message-State: AFqh2krKZrOIRu5IgApr1OpsM7dd21NcqC/gdD3Z0a4X/qqD8g/z+Y4O
-        Tgfm6/Rt65kUGILQARqMz12413usibaOQ/ss
-X-Google-Smtp-Source: AMrXdXtxCKQLEcW+N26GfLLdnUjIe1zqm3w8OX+yed29UIn/qg7GPktkgGIdZWv7uvqkquAmXBb91w==
-X-Received: by 2002:a05:6512:2987:b0:4b1:3960:4cf8 with SMTP id du7-20020a056512298700b004b139604cf8mr17722967lfb.28.1673356931585;
-        Tue, 10 Jan 2023 05:22:11 -0800 (PST)
+        bh=SBGFAAvIVTLZ7wqBvBmVy/pQHR3/8reooL4uATi89Cw=;
+        b=Y0COWXoIRDit0JN4V2h2j0Svs66uSXcvc1qgTPtkLJ4SxQhyWerrMlr7mQpRSTUHjL
+         7sofPQ/t430da85fM3pBo/5DjkuyThpGsiHwlo2QiIIykLYhagp125RloHtmPqCiU4kz
+         bzm1ZBqjydlHZFqTfL4JfYbW6m/FoaOH+aUrQrje5HehU75vT/flUqixMS/EcHEjl9Dv
+         aof1Yf+4ZDMgjWoGKos99y1aSHhSzJ8S2/G/zHJvxomrK1h6aLuLVfM4glS5HNeHYtcT
+         dQOf4S+xn8mwqih8XTdRjxEU68JGv0VB3eTPA5jO9gZmJXfr8w5dgT1SzfPV0fPZL2bi
+         2eFA==
+X-Gm-Message-State: AFqh2kpiR8+6Ee40xM5V5zZgPhzTu9g05Q+Yt2npGBEcGkA8RVk1gcJ+
+        pC0oZ0NF0BoZXgKJB9VRaUbaY62NrkND9Aqq
+X-Google-Smtp-Source: AMrXdXvC7XZax+njuxplEpw3sgGlTM3D74JxCma76jB1oZsRFp7gCGpQo6K4LnjB6fYUFPpNCY+0NA==
+X-Received: by 2002:a19:2d0f:0:b0:4cc:7c51:bf47 with SMTP id k15-20020a192d0f000000b004cc7c51bf47mr2504986lfj.22.1673356933091;
+        Tue, 10 Jan 2023 05:22:13 -0800 (PST)
 Received: from localhost.localdomain (abxi45.neoplus.adsl.tpnet.pl. [83.9.2.45])
-        by smtp.gmail.com with ESMTPSA id w4-20020a19c504000000b004b5812207dbsm2183000lfe.201.2023.01.10.05.22.10
+        by smtp.gmail.com with ESMTPSA id w4-20020a19c504000000b004b5812207dbsm2183000lfe.201.2023.01.10.05.22.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Jan 2023 05:22:11 -0800 (PST)
+        Tue, 10 Jan 2023 05:22:12 -0800 (PST)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
         agross@kernel.org, krzysztof.kozlowski@linaro.org
 Cc:     marijn.suijten@somainline.org, bryan.odonoghue@linaro.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 03/10] interconnect: qcom: rpm: Always set QoS params on QNoC
-Date:   Tue, 10 Jan 2023 14:21:55 +0100
-Message-Id: <20230110132202.956619-4-konrad.dybcio@linaro.org>
+        Georgi Djakov <djakov@kernel.org>, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2 04/10] interconnect: qcom: rpm: Add support for specifying channel num
+Date:   Tue, 10 Jan 2023 14:21:56 +0100
+Message-Id: <20230110132202.956619-5-konrad.dybcio@linaro.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110132202.956619-1-konrad.dybcio@linaro.org>
 References: <20230110132202.956619-1-konrad.dybcio@linaro.org>
@@ -76,66 +75,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On newer SoCs, QoS parameters and RPM bandwidth requests are wholly
-separate. Setting one should only depend on the description of the
-interconnect node and not whether the other is present. If we don't
-vote through RPM, QoS parameters should be set regardless, as we're
-requesting additional bandwidth by setting the interconnect clock
-rates.
+Some nodes, like EBI0 (DDR) or L3/LLCC, may be connected over more than
+one channel. This should be taken into account in bandwidth calcualtion,
+as we're supposed to feed msmbus with the per-channel bandwidth. Add
+support for specifying that and use it during bandwidth aggregation.
 
-With NoC (the old-SoC bus type), this is not the case and they are
-mutually exclusive (so, the current upstream logic is correct).
-
-For BIMC however, newer SoCs expect QoS params to be always set
-(like QNoC) whereas older ones (like MSM8998) hang up completely when
-doing so, hence this will be addressed in the next commit.
-
-The Fixes tag references the commit in which this logic was added, it
-has since been shuffled around to a different file, but it's the one
-where it originates from.
-
-Fixes: f80a1d414328 ("interconnect: qcom: Add SDM660 interconnect provider driver")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/interconnect/qcom/icc-rpm.c | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ drivers/interconnect/qcom/icc-rpm.c | 7 ++++++-
+ drivers/interconnect/qcom/icc-rpm.h | 2 ++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
-index cd1eab3d93ba..0516b74abdc7 100644
+index 0516b74abdc7..3207b4c99d04 100644
 --- a/drivers/interconnect/qcom/icc-rpm.c
 +++ b/drivers/interconnect/qcom/icc-rpm.c
-@@ -246,15 +246,27 @@ static int qcom_icc_rpm_set(int mas_rpm_id, int slv_rpm_id, u64 sum_bw)
- static int __qcom_icc_set(struct icc_node *n, struct qcom_icc_node *qn,
- 			  u64 sum_bw)
+@@ -336,6 +336,7 @@ static void qcom_icc_bus_aggregate(struct icc_provider *provider,
  {
-+	struct qcom_icc_provider *qp = to_qcom_provider(n->provider);
-+	bool vote_ap, vote_rpm;
- 	int ret;
+ 	struct icc_node *node;
+ 	struct qcom_icc_node *qn;
++	u64 sum_avg[QCOM_ICC_NUM_BUCKETS];
+ 	int i;
  
--	if (!qn->qos.ap_owned) {
--		/* send bandwidth request message to the RPM processor */
-+	if (qp->type == QCOM_ICC_QNOC) {
-+		vote_ap = true;
-+		vote_rpm = true;
-+	} else {
-+		vote_ap = qn->qos.ap_owned;
-+		vote_rpm = !vote_ap;
-+	}
-+
-+	if (vote_rpm) {
-+		/* Send bandwidth request message to the RPM processor */
- 		ret = qcom_icc_rpm_set(qn->mas_rpm_id, qn->slv_rpm_id, sum_bw);
- 		if (ret)
- 			return ret;
--	} else if (qn->qos.qos_mode != -1) {
--		/* set bandwidth directly from the AP */
-+	}
-+
-+	if (vote_ap && qn->qos.qos_mode != NOC_QOS_MODE_INVALID) {
-+		/* Set QoS params from the AP */
- 		ret = qcom_icc_qos_set(n, sum_bw);
- 		if (ret)
- 			return ret;
+ 	/* Initialise aggregate values */
+@@ -353,7 +354,11 @@ static void qcom_icc_bus_aggregate(struct icc_provider *provider,
+ 	list_for_each_entry(node, &provider->nodes, node_list) {
+ 		qn = node->data;
+ 		for (i = 0; i < QCOM_ICC_NUM_BUCKETS; i++) {
+-			agg_avg[i] += qn->sum_avg[i];
++			if (qn->channels)
++				sum_avg[i] = div_u64(qn->sum_avg[i], qn->channels);
++			else
++				sum_avg[i] = qn->sum_avg[i];
++			agg_avg[i] += sum_avg[i];
+ 			agg_peak[i] = max_t(u64, agg_peak[i], qn->max_peak[i]);
+ 		}
+ 	}
+diff --git a/drivers/interconnect/qcom/icc-rpm.h b/drivers/interconnect/qcom/icc-rpm.h
+index 3762648f9d47..eb51680f890d 100644
+--- a/drivers/interconnect/qcom/icc-rpm.h
++++ b/drivers/interconnect/qcom/icc-rpm.h
+@@ -66,6 +66,7 @@ struct qcom_icc_qos {
+  * @id: a unique node identifier
+  * @links: an array of nodes where we can go next while traversing
+  * @num_links: the total number of @links
++ * @channels: number of channels at this node (e.g. DDR channels)
+  * @buswidth: width of the interconnect between a node and the bus (bytes)
+  * @sum_avg: current sum aggregate value of all avg bw requests
+  * @max_peak: current max aggregate value of all peak bw requests
+@@ -78,6 +79,7 @@ struct qcom_icc_node {
+ 	u16 id;
+ 	const u16 *links;
+ 	u16 num_links;
++	u16 channels;
+ 	u16 buswidth;
+ 	u64 sum_avg[QCOM_ICC_NUM_BUCKETS];
+ 	u64 max_peak[QCOM_ICC_NUM_BUCKETS];
 -- 
 2.39.0
 
