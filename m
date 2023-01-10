@@ -2,177 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0FF8B664CC0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 20:46:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1CEEF664CDB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 20:56:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232620AbjAJTqg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Jan 2023 14:46:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48472 "EHLO
+        id S231363AbjAJT4u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Jan 2023 14:56:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232214AbjAJTqf (ORCPT
+        with ESMTP id S233383AbjAJT4a (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Jan 2023 14:46:35 -0500
-Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14C343D9EC;
-        Tue, 10 Jan 2023 11:46:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1673379994; x=1704915994;
-  h=message-id:date:mime-version:to:cc:references:from:
-   subject:in-reply-to:content-transfer-encoding;
-  bh=KqQe3X8R2+M4ca8Y3nt3MFKKLU33LTTi3NG9IoqqMpY=;
-  b=YCLK7wPX/YybJccre6Tdprp7RuVNpQyGfDG4+VCqNbXt7nRG0Kn/Wqxn
-   9rwB2tCceIueG7xZ1K8CJ5HyEOOUlkkfyteVxvIz/0c6BhtN8oCdCT/Ro
-   AB7HcVFsVlbGm/YLyiPH9oVDhxXN0eutnTwsyhGZZ+im668hwS4Arrzn+
-   k2wcO2KVxcxtnmNWaz6T681WGEqJhSwgVtxMSB4JfVi6eO4H6O0mhDlMS
-   tC4kDCJfWu7geKlR/5rvBy5O3qtj27NoTIPqILcA/cEqXHXf2XGIawrLa
-   7N3aMVTgJd2g231Xxo2rbkqmPGkQSon4cvKLa4f5MhoNw88uYcHyPMbR4
-   Q==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10586"; a="385550319"
-X-IronPort-AV: E=Sophos;i="5.96,315,1665471600"; 
-   d="scan'208";a="385550319"
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jan 2023 11:46:33 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10586"; a="831113342"
-X-IronPort-AV: E=Sophos;i="5.96,315,1665471600"; 
-   d="scan'208";a="831113342"
-Received: from mattu-haswell.fi.intel.com (HELO [10.237.72.199]) ([10.237.72.199])
-  by orsmga005.jf.intel.com with ESMTP; 10 Jan 2023 11:46:28 -0800
-Message-ID: <cefcc5c6-6a91-c737-252a-edf596f77473@linux.intel.com>
-Date:   Tue, 10 Jan 2023 21:47:47 +0200
+        Tue, 10 Jan 2023 14:56:30 -0500
+X-Greylist: delayed 14658 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 10 Jan 2023 11:56:28 PST
+Received: from out203-205-251-27.mail.qq.com (out203-205-251-27.mail.qq.com [203.205.251.27])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 975D4B2F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 11:56:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
+        s=s201512; t=1673380586;
+        bh=dJPGXGPq9KBTulCLSUFI/aPlBFSMKa1WhssKqzEZC2Y=;
+        h=From:To:Cc:References:In-Reply-To:Subject:Date;
+        b=HmP87M7NpUUqziR/hEVmK12OJ+3uRtiOswSbpiRb+a+bK8bKvhlgJFquGmECqxUH4
+         OIh28pThK1DqsSpZo053oMcfuwoXrPi3M3rVM9PJ/5VOLhv62rNrCmaC8s0xwT1QRg
+         wZyhjypCn6NZmW8MT9WdRElKy4puD267EYDU9dA8=
+Received: from DESKTOPZMX ([2409:8a4c:808f:5b0:d92f:83a8:9ac7:4de5])
+        by newxmesmtplogicsvrszc2-0.qq.com (NewEsmtp) with SMTP
+        id E1732C31; Wed, 11 Jan 2023 03:56:23 +0800
+X-QQ-mid: xmsmtpt1673380583tnsq6la7s
+Message-ID: <tencent_2068AC70F1DA5AF46F600C7718FEB1B98307@qq.com>
+X-QQ-XMAILINFO: MyIXMys/8kCt2HZBdB6iDcLNo7CbPXDbza3p17qBezTWrUQVdW2Q3oewXlL3EV
+         qF9NvGfZROeL8z0kjtTlanFxyq9wOmhX2Hjq5zNa14eI2w2Nmgr67WoFxzTNvN/zxSCxwSp3mZrO
+         6DppnI4pXqVCeNt+kkJ9nYZnn+myKjTg1+JwSCxzVHpqenX1fsgb6CRM5Hb1rP5tYeGw8RMj94WG
+         iAyP8wn4sZ1xlA8S5HpCMDkaHJFiuNPKZ6l8VMcqRdA+oAvMO//8lMXmrNsumzWzxiPaLh/CiiUv
+         p4kAF6DP5qwRlkiQurQbNuS1Fa0xO4V7vTsFVjqVCXajzEW3NeIZrSBomFTUr959VMYZeCiB3pu2
+         cQl0E9zvbFn6qnh0b/U2m3Ma90IeMxPnwfvTOCw6iVH5FK0kz7RFt39rJfbjZzgRB/p9+GQ4v+q/
+         HKPZo4XgUSF48+p9wPAILGmuhy0I3k2JTH5dwJ+BPf4g+kvCbI6rdhlKjz1jrZ41A1VbXdMt9VCn
+         VUWJiJemz3COU0CNiJ0p7QpXXCsosuIN3imMpTPXyZJd/4fGo40QAxmrl5887Q3XLEvP/vGMj49n
+         ME87hWjUVuKWzT46eqnSw+bffJuEJ7VFga9sOnXO2l3CMweUZegDffl8s9TSVS5z88RWozv3Bds2
+         gFoa+r81IUAfEOWeJe6LiD4bYKj9II+JuNAT6VsC/ZKhuS5cA2lDLS9slCDCHjP+wPFMLmfIef/W
+         Ata/4vtutveO7KNnrFLwXwcKSzfdXh407Kt462NpIier2sj85NLIyI+TYhI/SaBDun5H8UxjHBda
+         q4TK9smcaW6OMUPqwS7tChi3M7gDCkRFJTs32z3/ZqOkQcHLSZF4ltGmqjAtgtD28IAxnR1OTYQw
+         ulSWkR4GMZtO6U3AP6BR+zwx5anOaKnqOZTIVUIs/vYrsAcGT477Aa+NsYPEAZSI09vXwTRnhcj5
+         AMxmwuBiEh8bBeT3yJmJ901g9NX3Q8a9xuDLjq6sTlqHAw2tLoR5j52OjfHm0h2Z9BOwB0fvvWfA
+         q7nnOqow==
+From:   <forbidden405@foxmail.com>
+To:     "'Krzysztof Kozlowski'" <krzysztof.kozlowski@linaro.org>,
+        "'Andy Gross'" <agross@kernel.org>,
+        "'Bjorn Andersson'" <andersson@kernel.org>,
+        "'Konrad Dybcio'" <konrad.dybcio@linaro.org>,
+        "'Rob Herring'" <robh+dt@kernel.org>,
+        "'Krzysztof Kozlowski'" <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Cc:     "'Jaime Breva'" <jbreva@nayarsystems.com>,
+        <~postmarketos/upstreaming@lists.sr.ht>,
+        "'Nikita Travkin'" <nikita@trvn.ru>
+References: <20230110155014.31664-1-forbidden405@foxmail.com> <tencent_A7FA00B086BB0EFFDC1C64744FF85DAD2B06@qq.com> <8530aeef-8fdb-ede7-700e-856e5cbc6a5b@linaro.org> <tencent_98E029F744FE85B9FD68B570A45A01743F07@qq.com> <f909c1b0-97db-cc33-fa27-c5e901f11956@linaro.org> <tencent_235CAC16001D1C38CE7D86BF7B0E365A2105@qq.com> <0453b098-91db-1918-38ae-a7db0408460c@linaro.org>
+In-Reply-To: <0453b098-91db-1918-38ae-a7db0408460c@linaro.org>
+Subject: RE: [PATCH 3/3] arm64: dts: qcom: msm8916-zhihe: Add initial device tree for zhihe Wifi/LTE dongle UFI-001C and uf896
+Date:   Wed, 11 Jan 2023 03:56:23 +0800
+X-OQ-MSGID: <000301d9252d$9f377c70$dda67550$@foxmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Firefox/102.0 Thunderbird/102.4.2
-Content-Language: en-US
-To:     Wesley Cheng <quic_wcheng@quicinc.com>,
-        srinivas.kandagatla@linaro.org, mathias.nyman@intel.com,
-        perex@perex.cz, broonie@kernel.org, lgirdwood@gmail.com,
-        andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        gregkh@linuxfoundation.org, Thinh.Nguyen@synopsys.com,
-        bgoswami@quicinc.com, tiwai@suse.com, robh+dt@kernel.org,
-        agross@kernel.org, Alan Stern <stern@rowland.harvard.edu>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-usb@vger.kernel.org, quic_jackp@quicinc.com,
-        quic_plai@quicinc.com
-References: <20221223233200.26089-1-quic_wcheng@quicinc.com>
- <20221223233200.26089-8-quic_wcheng@quicinc.com>
- <7dfe215b-4cc7-f95f-17c3-563c0120151a@linux.intel.com>
- <f7f80320-02bb-a573-dd95-b6d58c260624@quicinc.com>
- <5f54c5a3-caf0-2920-e90f-68124ed2e06c@linux.intel.com>
- <d1334e58-1126-c068-d211-8fd3b7dcbf17@quicinc.com>
-From:   Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: Re: [RFC PATCH 07/14] usb: host: xhci: Add XHCI secondary interrupter
- support
-In-Reply-To: <d1334e58-1126-c068-d211-8fd3b7dcbf17@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: zh-cn
+Thread-Index: AQEO7BERPzOKD8mdDN9nK2Zc/pFyZgG3SCqUAZiImfcCstHu6AF93epXAffz5noBRJuEca/Wk39w
+X-Spam-Status: No, score=3.0 required=5.0 tests=BAYES_20,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,HELO_DYNAMIC_IPADDR,RCVD_IN_DNSWL_NONE,RDNS_DYNAMIC,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: **
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 9.1.2023 22.24, Wesley Cheng wrote:
-> Hi Mathias,
+On 10/01/2023 20:32, krzysztof.kozlowski@linaro.org wrote:
 > 
-> On 1/2/2023 8:38 AM, Mathias Nyman wrote:
->> On 29.12.2022 23.14, Wesley Cheng wrote:
->>> Hi Mathias,
->>>
->>> On 12/28/2022 7:47 AM, Mathias Nyman wrote:
->>>> On 24.12.2022 1.31, Wesley Cheng wrote:
->>>>> Implement the XHCI operations for allocating and requesting for a secondary
->>>>> interrupter.  The secondary interrupter can allow for events for a
->>>>> particular endpoint to be routed to a separate event ring.  The event
->>>>> routing is defined when submitting a transfer descriptor to the USB HW.
->>>>> There is a specific field which denotes which interrupter ring to route the
->>>>> event to when the transfer is completed.
->>>>>
->>>>> An example use case, such as audio packet offloading can utilize a separate
->>>>> event ring, so that these events can be routed to a different processor
->>>>> within the system.  The processor would be able to independently submit
->>>>> transfers and handle its completions without intervention from the main
->>>>> processor.
->>>>>
->>>>
->>>> Adding support for more xHCI interrupters than just the primary one make sense for
->>>> both the offloading and virtualization cases.
->>>>
->>>> xHCI support for several interrupters was probably added to support virtualization,
->>>> to hand over usb devices to virtual machines and give them their own event ring and
->>>> MSI/MSI-X vector.
->>>>
->>>> In this offloading case you probably want to avoid xHC interrupts from this device
->>>> completely, making sure it doesn't wake up the main CPU unnecessarily.
->>>>
->>>> So is the idea here to let xhci driver set up the new interrupter, its event ring,
->>>> and the endpoint transfer rings. Then pass the address of the endpoint transfer rings
->>>> and the new event ring to the separate processor.
->>>>
->>>> This separate processor then both polls the event ring for new events, sets its dequeue
->>>> pointer, clears EHB bit, and queues new TRBs on the transfer ring.
->>>>
->>>> so xhci driver does not handle any events for the audio part, and no audio data URBs
->>>> are sent to usb core?
->>>
->>> Your entire description is correct.  To clarify, the interfaces which are non-audio will still be handled by the main processor.  For example, a USB headset can have a HID interface as well for volume control.  The HID interface will still be handled by the main processor, and events routed to the main event ring.
->>>
->>>>
->>>> How about the control part?
->>>> Is the control endpoint for this device still handled normally by usb core/xhci?
->>>>
->>>
->>> Control transfers are always handled on the main processor.  Only audio interface's endpoints.
->>
->> Good to know, that means interrupter should be chosen per endpoint, not per device.
->>
->>>
->>>> For the xhci parts I think we should start start by adding generic support for several
->>>> interrupters, then add parts needed for offloading.
->>>
->> I can split up the patchsets to add interrupters first, then adding the offloading APIs in a separate patch.
->>
->>
->> I started looking at supporting secondary interrupters myself.
->> Let me work on that part a bit first. We have a bit different end goals.
->> I want to handle interrupts from a secondary interrupter, while this audio offload
->> really just wants to mask some interrupts.
->>
-> 
-> I was looking at how we could possibly split up the XHCI secondary interrupter, and offloading parts.  Since the XHCI secondary interrupter is a feature that is defined in the XHCI spec (and we aren't doing anything outside of what is defined), I was thinking of having a separate XHCI driver (ie xhci-sec.c/h) that can be used to define all APIs related to setting up the event ring and ring management. (interrupt support can be added here)  This aligns a bit with what Alan suggested, and removing the APIs in the USB HCD, since this is XHCI specific stuff. ( https://lore.kernel.org/linux-usb/Y6zwZOquZOTZfnvP@rowland.harvard.edu/ )
+> Then I am not sure if we want to support such devices mainline. It is not
+only
+> anonymity but simply not following standards and practices.
+> What's more there is no guarantee what this device is. If there is no
+known
+> manufacturer, anytime another device from anyone can claim it is also
+uf896.
+> IOW, what guarantees you have that other person who has something looking
+> like "uf896" actually has something the same as you and can use your DTB?
 
-Already started working on the interrupter, that part fits well into current driver.
-
-Code (untested, will be randomly rebased etc) can be found in my feature_interrupters branch:
-git://git.kernel.org/pub/scm/linux/kernel/git/mnyman/xhci.git feature_interrupters
-https://git.kernel.org/pub/scm/linux/kernel/git/mnyman/xhci.git/log/?h=feature_interrupters
-
-First step turns current event ring into a primary interrupter.
-last patch is a test implementation for creating and freeing new secondary interrupters.
-
-> 
-> For the offloading part, I think this is a bit more dependent on how different platforms implement it.  To use more of a generic approach like how Albert suggested here:
-> 
-> https://patchwork.kernel.org/project/linux-usb/list/?series=704174
-> 
-> Basically to give vendors the ability to define their own sequences/callbacks, and from which the XHCI driver will call into. (if needed)  These would need to be a separate set of XHCI drivers as well.
-> 
-> Do you think this is a proper model for us to go with, so that we can allow for vendors to easily add functionality?  Appreciate the inputs.
-
-I'm not convinced that overriding different xhci memory allocation functions is the best solution.
-I think xhci driver will need to know which endpoints are offloaded.
-maybe usb class driver could register an "offloader" with xhci for a usb device.
-
-Trying to figure out what this xhci offload API would look like.
-The dsp needs at least dma address of an event ring, and offloaded endpoint rings.
-Is there anything else that the dsp would directly need to take care of, or can
-we just export some xhci functions for starting/stopping endpoints, and update event deq?
-
-Thanks
--Mathias
+There is a label printed (i.e. ufi001c or uf896 or something else but not
+getting mainlined now) on the board, different models have different
+labels(and different board design). And currently I know all ufi001c(even
+some other models) shares the same device tree, as a downstream device tree
+has been tested by thousands of people. I'm not familiar with uf896 as it is
+owned by Nikita Travkin and tested by him. The device sells very well and
+many people will benefit from mainlining.
 
