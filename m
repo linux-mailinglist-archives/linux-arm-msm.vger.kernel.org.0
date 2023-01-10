@@ -2,107 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7DE9D663F1F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 12:15:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B8A79663F92
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 12:56:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238307AbjAJLP3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Jan 2023 06:15:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55456 "EHLO
+        id S232100AbjAJL4V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Jan 2023 06:56:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238319AbjAJLO4 (ORCPT
+        with ESMTP id S233271AbjAJL4T (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Jan 2023 06:14:56 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6F9ABC87
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 03:14:00 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id bg13-20020a05600c3c8d00b003d9712b29d2so11551396wmb.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 03:14:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=byzaHY9S+oShQWBngYVKK72BgJrgTaFL6r1XXCa5Cac=;
-        b=qZrF2pxgYqEodaEHP0eflMlLhHy9HKhD0zdbD2Ln9gKj1Q76fmIrPROViaVviZOfyK
-         XvnBMJYsPR2XsZU1HhBVUx2+xsqVzarMSg9UISlaklZBgu1zYfQkWtb0nQdSzHXM4pha
-         KIf0t/oiuy+NQ1lLffx8lejW/+i04WNaFcekYiGOy+Z0eZDlhQHOdg9nZlxLR4AjkaSa
-         zV14hZmuYvASOcMjj9Io/pHUBOxRlU/aJJaRJ4fKJrLjF/ns8IeuJlHu37oH6Ta0iFPt
-         EfjcrmHTKiTjuHCTZaPIygfNqscOVQW/iIs2dkpsbfPlrfAE/1EwvZi2RUJcAQMUdeOk
-         cKKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=byzaHY9S+oShQWBngYVKK72BgJrgTaFL6r1XXCa5Cac=;
-        b=1WEpJ0k31FVErSUPgZuRxZMzpxtpgclCFYt+oYmVHzh3Bh6/qIF51QIwy2P1KRbrLp
-         hL0Jobk4vVhgPEbTpD5CBykgNDuAG7yLORUAgMniSiEWCZClTWV9nLTz9lZ4WORxTmIs
-         akbCow/Tskbx6gsxWp18hD57MA6CaGESJIs6sGWzD+G3hvm6b4OL+SgzGj+1806nqqqB
-         NoU3mEub/yjaNT5yG6Xgh9tN/wdkYuXmhegJoLNXYbOAnJHBulh9O8d97ALEmS3Q6y2a
-         mqb15v3puCw6Cjmo+CRu896ZduWNqtwRJHowCCBPeHf+KZcArN9tBwrHxJFAMPa8IKEM
-         vD4g==
-X-Gm-Message-State: AFqh2koak1vN7e7Qfx1ff70OwJatU7s+mDjb/u1BvB2kB4ShL6z9Id7s
-        ol9/lNqaHsIFkWPu0zx+0xvAPw==
-X-Google-Smtp-Source: AMrXdXtvbyL/pAj1buoF/cYse8hZ0Zfl2/Q3ohyf3RDP86x08llOJ52VB7fM58elrPOT7fOMrSLC7A==
-X-Received: by 2002:a05:600c:c0d:b0:3d9:7667:c0e4 with SMTP id fm13-20020a05600c0c0d00b003d97667c0e4mr40509783wmb.31.1673349239402;
-        Tue, 10 Jan 2023 03:13:59 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id f28-20020a05600c491c00b003d9bd56e9c1sm13710436wmp.11.2023.01.10.03.13.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Jan 2023 03:13:58 -0800 (PST)
-Message-ID: <81ddfb99-7f75-6e59-c824-89e84fc1fad1@linaro.org>
-Date:   Tue, 10 Jan 2023 12:13:57 +0100
+        Tue, 10 Jan 2023 06:56:19 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F69A15F1C;
+        Tue, 10 Jan 2023 03:56:18 -0800 (PST)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30A9stBk016840;
+        Tue, 10 Jan 2023 11:56:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=szV5uSi2lewecbhIhUNYInP6JwNl6YUB0TxKUWgBMj8=;
+ b=COlt0u4omcrTXpav+cWJ8qbFQw4Fsk/b1pVIf0i7L3/x/LzrJ6wPeiz0x98SWjVb+axa
+ 83gSpdG3ImWUMwowfF7ONXtVPnUEpufh6efQtWuvkPkJsdkuvPLNV0jYHLONHMRX7Yum
+ nbSC3aaCL8oKTk12HQEwKZy2LrZ7dh2QgIjbajiyK+j6l9ddqNqv5osPrqqtyGV0mXc3
+ NRvY0YOF7z3rgW3jbkVCxz/mQ6LkiRY5Stg79XgwrTaX0xryrEnzmZuW2dXpmDSczb7b
+ MbrFUU5Z6xG3nnLlDzAHsLR5RZ7q6lkb3iUu9aD6f4Ep77aksfrCyrhpjtdVyBAiCWVP mA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n13cngk7v-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 10 Jan 2023 11:56:14 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30ABuDqL028238
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 10 Jan 2023 11:56:13 GMT
+Received: from [10.50.61.82] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 10 Jan
+ 2023 03:56:10 -0800
+Message-ID: <e2ac0fa4-28f0-f4d8-e02a-b2a5d6131a48@quicinc.com>
+Date:   Tue, 10 Jan 2023 17:26:07 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v2 8/8] arm64: dts: qcom: sc7280: audioreach: Disable
- legacy path clock nodes
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH V0 1/1] bootconfig: Increase max size of bootconfig from
+ 32 KB to 256 KB for DCC support
 Content-Language: en-US
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_rohkumar@quicinc.com, srinivas.kandagatla@linaro.org,
-        dianders@chromium.org, swboyd@chromium.org, judyhsiao@chromium.org,
-        konrad.dybcio@linaro.org, mka@chromium.org
-References: <1672925875-2107-1-git-send-email-quic_srivasam@quicinc.com>
- <1672925875-2107-9-git-send-email-quic_srivasam@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1672925875-2107-9-git-send-email-quic_srivasam@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+To:     "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+CC:     <linux-kernel@vger.kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        "Sai Prakash Ranjan" <quic_saipraka@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>
+References: <cover.1673261071.git.quic_schowdhu@quicinc.com>
+ <654357bcbfd3974072a558c494a51edafaa73e1a.1673261071.git.quic_schowdhu@quicinc.com>
+ <20230110001820.5ca81344286f614ed4ccec77@kernel.org>
+From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+In-Reply-To: <20230110001820.5ca81344286f614ed4ccec77@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: -35SDsFvE0ty9eDrUPpPm93SYwHNP34g
+X-Proofpoint-GUID: -35SDsFvE0ty9eDrUPpPm93SYwHNP34g
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2023-01-10_03,2023-01-10_03,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
+ priorityscore=1501 spamscore=0 suspectscore=0 bulkscore=0 impostorscore=0
+ lowpriorityscore=0 mlxscore=0 mlxlogscore=986 adultscore=0 malwarescore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301100072
+X-Spam-Status: No, score=0.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/01/2023 14:37, Srinivasa Rao Mandadapu wrote:
-> Disable legacy path clock nodes to avoid conflicts with audioreach
-> clock node.
+
+
+On 1/9/2023 8:48 PM, Masami Hiramatsu (Google) wrote:
+> On Mon, 9 Jan 2023 20:01:05 +0530
+> Souradeep Chowdhury <quic_schowdhu@quicinc.com> wrote:
 > 
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Tested-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-> ---
->  .../boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi   | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
+>> Increasing the memory size of bootconfig to be able to handle a max number of
+>> 8192 nodes to be fitted in memory size of 256KB.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
-> index 175ed9c..a88b305 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
-> @@ -190,3 +190,15 @@
->  &swr1 {
->  	resets = <&lpasscc LPASS_AUDIO_SWR_TX_CGCR>;
->  };
-> +
-> +&lpass_aon {
+> Sorry, but you missed the 'xbc_node::data' stores the index of the data and
+> that is uint16_t. So the XBC_DATA_MAX is fixed limitation.
+> 
+> The number of nodes (XBC_NODE_MAX) can be expanded because I just decided it
+> to keep the pre-compiled array size ~8KB. Maybe expanding it to 64KB just
+> increase the size of kernel on init memory (and freed after boot).
+> 
+> Could you tell me why you need such a big data for your DCC?
+> 
+> Thank you,
 
-Not ordered.
+DCC is a debugging tool used in qcom which is needed to debug crashes
+that can happen at boot-time. For debugging purposes a large number of
+registers need to be configured in DCC driver which is to be fed via the
+bootconfig file. For that we need to expand the nodes as well as memory
+for using bootconfig.
+Can you let us know the changes that you suggest for doing the same? Is 
+it fine to just increase the XBC_NODE_MAX, do we also need to
+change the uint16_t to u32 for proper storing of index values?
 
-Best regards,
-Krzysztof
 
+> 
+>>
+>> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+>> ---
+>>   include/linux/bootconfig.h | 6 +++---
+>>   1 file changed, 3 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/include/linux/bootconfig.h b/include/linux/bootconfig.h
+>> index 1611f9d..64d233b 100644
+>> --- a/include/linux/bootconfig.h
+>> +++ b/include/linux/bootconfig.h
+>> @@ -55,11 +55,11 @@ struct xbc_node {
+>>   } __attribute__ ((__packed__));
+>>   
+>>   #define XBC_KEY		0
+>> -#define XBC_VALUE	(1 << 15)
+>> -/* Maximum size of boot config is 32KB - 1 */
+>> +#define XBC_VALUE	(1 << 18)
+>> +/* Maximum size of boot config is 256KB - 1 */
+>>   #define XBC_DATA_MAX	(XBC_VALUE - 1)
+>>   
+>> -#define XBC_NODE_MAX	1024
+>> +#define XBC_NODE_MAX	8192
+>>   #define XBC_KEYLEN_MAX	256
+>>   #define XBC_DEPTH_MAX	16
+>>   
+>> -- 
+>> 2.7.4
+>>
+> 
+> 
