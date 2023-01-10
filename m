@@ -2,174 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E8B396644FB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 16:35:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 09E96664564
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Jan 2023 16:54:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232644AbjAJPez (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Jan 2023 10:34:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42418 "EHLO
+        id S238747AbjAJPyp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Jan 2023 10:54:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232464AbjAJPes (ORCPT
+        with ESMTP id S234632AbjAJPyX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Jan 2023 10:34:48 -0500
-Received: from mail-oa1-x33.google.com (mail-oa1-x33.google.com [IPv6:2001:4860:4864:20::33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 111F114D38;
-        Tue, 10 Jan 2023 07:34:47 -0800 (PST)
-Received: by mail-oa1-x33.google.com with SMTP id 586e51a60fabf-1322d768ba7so12490429fac.5;
-        Tue, 10 Jan 2023 07:34:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=aALJ1+6b5A4lyvQQ5kPDXbutVahUhVTXhBlHzFelYpk=;
-        b=i6n470Ce+W8oxpPwNBChX5RaFXJ3U23JN6QGshiLXPAPCLB3Vl7bRDfWfXEGqT8Vhn
-         oG4B5kAhBbdnfMjH8a5QJB9H/4UUQ2f9dZuV8msyDrodGKrifhB64Df0ZuFKKrPIiEq1
-         OCE+K0XbyQyPzg2bAsjB6v4j567tKH6yOWOogo8W975GwHjBuBSXSam22iLhScIjOqlC
-         Dv8iP4kFVnJ6x3wdBPZesdbf7Atc2MGJuSMNBM9y+gUTwAYvxF/q3SfzKO2qSWBmmR+D
-         Q9weB6DalU7I8RZ5BbMAvFekdRBevNNzIa0BQDlAW3SOsnv+pA1Ylb4jTWAISmqwg/W2
-         /Q9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=aALJ1+6b5A4lyvQQ5kPDXbutVahUhVTXhBlHzFelYpk=;
-        b=4Ga+Z1gjuJLWbXecdpdNvxiA0yGkZJ+V/3li3v5YM+vlkc7AbJnLoQfBmO89Ri6Ehx
-         LRntj5jc0Pr87i/nsSglgzawxzKeNF8FbKNBCLOK9Zx/CwH/Pn7uxBi6rohIghUy+S0j
-         ihxL3zUS6jcenBhPkjtjY+5z1rwnz/4eLi3M21MVRNeKe7FqY32EL+jdkIfwjzQXBo7V
-         zFt9/qVUICh+HcbEdDzeyDCg/mmhkytSTDsyG5DO2goleHPRFztLnqbTJDyCvIGCJ9T1
-         anmiJ+VAycTxZMfZAZ9R/6ovld2qzOGOJWcEhKDUTibZED5iyd2ZbyHeTMdv2RKQNESx
-         a+8A==
-X-Gm-Message-State: AFqh2kotkSVXTHBIzubGq08M26aCvhFvuWZ9wj6QHBRAP9ZeuQ/QHfQO
-        WJGVMSXnbIZDjLhy/nN0HpHTia8ZtQs1dFTNgJk=
-X-Google-Smtp-Source: AMrXdXvn1xRON1Kd8a0qV7Mrhm6vYwZcsKzzIkhhNKV5lkac3FN/6IpCOpNBj8E7gJ1EQBg4vrMMdWCHfSH7GIiy1oo=
-X-Received: by 2002:a05:6870:cb98:b0:15b:96b8:e2be with SMTP id
- ov24-20020a056870cb9800b0015b96b8e2bemr326656oab.38.1673364886323; Tue, 10
- Jan 2023 07:34:46 -0800 (PST)
+        Tue, 10 Jan 2023 10:54:23 -0500
+X-Greylist: delayed 196 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 10 Jan 2023 07:54:21 PST
+Received: from out162-62-57-49.mail.qq.com (out162-62-57-49.mail.qq.com [162.62.57.49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76F454C72E;
+        Tue, 10 Jan 2023 07:54:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
+        s=s201512; t=1673366057;
+        bh=3fg3syAbmIaZWNk40gjo2tn+vj9YYWyQmPN36W7+evE=;
+        h=From:To:Cc:Subject:Date;
+        b=M6Q9HWQQjHhp5NyWsMQyO97J6Hr+HMz2XKr6RPqhDXY4BOO75UZpdgmOQxsb+5WMd
+         IuPcZ+X/ClLkzhuA4BaTZp9HQNAHhSXj7Dd7vTAmQ6EffNbVD09e8Z7YPVg8CMMsg8
+         qWNevyhu68DL/N/WzPFlUALkw/2n6cQY9T+zkKx8=
+Received: from localhost.localdomain ([2409:8a4c:808f:5b0:d92f:83a8:9ac7:4de5])
+        by newxmesmtplogicsvrszb6-0.qq.com (NewEsmtp) with SMTP
+        id C9A3CA11; Tue, 10 Jan 2023 23:50:26 +0800
+X-QQ-mid: xmsmtpt1673365826tygdrm88h
+Message-ID: <tencent_1CF967E6E0A317C2036BA5D18D813DDCD909@qq.com>
+X-QQ-XMAILINFO: OQwUWlGGdA3tdg1KQ62p4QXK3Fc8nVzKJhAyXM2+bl41VENpqZmjzl8/RO9e8j
+         FzqwGTwpg0GCREkeYw2NoXA7qjFdMn6inhQRBAdnXcAQuxcpsfL/a0T/l6SLxPmYCQdwmD+g6Q6q
+         aBrorB0OYw65zl/OD7NVIJAnE7voHyAs/wc2gWG538tsv+RO3hhZppQIdZsK/9YeMENFeIqTAbcg
+         dZjmphTJw4KQhcAdiy7AHi8SFq3Y5oxw9TxBqLLGNnV1sESr0coWXgM9ld+yPx0NqYxSKfYDlSMz
+         yziiK1Kp0vajkpqtqTcSYU6+W3Q94FfPwJEtMBhKcvrQCyFl6Zz/s1SEPcMfbsYLIfC3fGq8deyN
+         vK+9VZKfX3KVA1pEL3xlDNzFrJku+ei1phCtsclS8NaDxXaEMCNL0IcJusefIT++K/pUwJSZpJnk
+         4jG1WVGXfKF9lxxiqpcowAKWpraeZ/vvSmwGqnj5cGGv9Ny+8jheSnpUK9t/9TTt27QxS24Evw1f
+         lXEbmVG4ZRtMeIbM1JREY5rePYFIE0u/wxh9L1Cs6bziBoQ3TJGWFhs0nt6IK5E+tvKfhgjiz8ph
+         SsMg9qqxyPIGWVfMZ0Qp1EfUy91PdQqO16T2D/zRbN5SoLOxB2j1rA+IcapfxakAkGcCAJQPtaQB
+         mINPwjky+rg29Mf3fV11N4H/tHb5kG1kRMz7ad6xs3fAsoj00gycodYUQdT0VeGrHjIxsQzmZf36
+         LoefqKEckSZsOIpVoD9+GmFJRjE6neg+au/51ddcwj+Pghsl0zz46rlljsuSo+gQtCYEn1UBbfLn
+         2xpTxzcVD1TJVGTdbVHrewf/0DbYFijIZa11jApMnNvom1/rYnH6ZfQ3OlR+zJz+5yqLqgDYqWOB
+         quYljBVMNCAOfxYZTQIDIHR2tsP6JoIv18t65/YtwgtReQ7zVvJyDsA8W24gLKKE/i+h/pfoWg4y
+         LPF0eTzhYXIl/ymaGeKrCRtmM+k2rzQB/LPDPrjgcB08ai7J+ZIAqPRhAUY6PP2o3vYjWGYC1BMR
+         Oz1GUlCA==
+From:   Yang Xiwen <forbidden405@foxmail.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Jaime Breva <jbreva@nayarsystems.com>,
+        Nikita Travkin <nikita@trvn.ru>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Yang Xiwen <forbidden405@foxmail.com>
+Subject: [PATCH 0/3] Support for various MSM8916-based USB sticks
+Date:   Tue, 10 Jan 2023 23:50:11 +0800
+X-OQ-MSGID: <20230110155014.31664-1-forbidden405@foxmail.com>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-References: <20230109222547.1368644-1-joel@joelfernandes.org>
-In-Reply-To: <20230109222547.1368644-1-joel@joelfernandes.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 10 Jan 2023 07:34:41 -0800
-Message-ID: <CAF6AEGsH21bb6ihE41UR-jODL0C8fVVg9=ODj-Ksd7CnZaYzDw@mail.gmail.com>
-Subject: Re: [PATCH v2 RESEND] adreno: Shutdown the GPU properly
-To:     "Joel Fernandes (Google)" <joel@joelfernandes.org>
-Cc:     linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Ricardo Ribalda <ribalda@chromium.org>,
-        Ross Zwisler <zwisler@kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Chia-I Wu <olvaffe@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-msm@vger.kernel.org, Sean Paul <sean@poorly.run>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,HELO_DYNAMIC_IPADDR,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        RDNS_DYNAMIC,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 9, 2023 at 2:25 PM Joel Fernandes (Google)
-<joel@joelfernandes.org> wrote:
->
-> During kexec on ARM device, we notice that device_shutdown() only calls
-> pm_runtime_force_suspend() while shutting down the GPU. This means the GPU
-> kthread is still running and further, there maybe active submits.
->
-> This causes all kinds of issues during a kexec reboot:
->
-> Warning from shutdown path:
->
-> [  292.509662] WARNING: CPU: 0 PID: 6304 at [...] adreno_runtime_suspend+0x3c/0x44
-> [  292.509863] Hardware name: Google Lazor (rev3 - 8) with LTE (DT)
-> [  292.509872] pstate: 80400009 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> [  292.509881] pc : adreno_runtime_suspend+0x3c/0x44
-> [  292.509891] lr : pm_generic_runtime_suspend+0x30/0x44
-> [  292.509905] sp : ffffffc014473bf0
-> [...]
-> [  292.510043] Call trace:
-> [  292.510051]  adreno_runtime_suspend+0x3c/0x44
-> [  292.510061]  pm_generic_runtime_suspend+0x30/0x44
-> [  292.510071]  pm_runtime_force_suspend+0x54/0xc8
-> [  292.510081]  adreno_shutdown+0x1c/0x28
-> [  292.510090]  platform_shutdown+0x2c/0x38
-> [  292.510104]  device_shutdown+0x158/0x210
-> [  292.510119]  kernel_restart_prepare+0x40/0x4c
->
-> And here from GPU kthread, an SError OOPs:
->
-> [  192.648789]  el1h_64_error+0x7c/0x80
-> [  192.648812]  el1_interrupt+0x20/0x58
-> [  192.648833]  el1h_64_irq_handler+0x18/0x24
-> [  192.648854]  el1h_64_irq+0x7c/0x80
-> [  192.648873]  local_daif_inherit+0x10/0x18
-> [  192.648900]  el1h_64_sync_handler+0x48/0xb4
-> [  192.648921]  el1h_64_sync+0x7c/0x80
-> [  192.648941]  a6xx_gmu_set_oob+0xbc/0x1fc
-> [  192.648968]  a6xx_hw_init+0x44/0xe38
-> [  192.648991]  msm_gpu_hw_init+0x48/0x80
-> [  192.649013]  msm_gpu_submit+0x5c/0x1a8
-> [  192.649034]  msm_job_run+0xb0/0x11c
-> [  192.649058]  drm_sched_main+0x170/0x434
-> [  192.649086]  kthread+0x134/0x300
-> [  192.649114]  ret_from_fork+0x10/0x20
->
-> Fix by calling adreno_system_suspend() in the device_shutdown() path.
->
-> [ Applied Rob Clark feedback on fixing adreno_unbind() similarly, also
->   tested as above. ]
->
-> Cc: Rob Clark <robdclark@chromium.org>
-> Cc: Steven Rostedt <rostedt@goodmis.org>
-> Cc: Ricardo Ribalda <ribalda@chromium.org>
-> Cc: Ross Zwisler <zwisler@kernel.org>
-> Signed-off-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+The vendor is unknown. Zhihe is a widely used name to refer to such
+sticks in some forums.
 
-Reviewed-by: Rob Clark <robdclark@gmail.com>
+Yang Xiwen (3):
+  dt-bindings: vendor-prefixes: add zhihe
+  dt-bindings: qcom: Ducument bindings for new msm8916-zhihe-uf896 and
+    msm8916-zhihe-ufi001c
+  arm64: dts: qcom: msm8916-zhihe: Add initial device tree for zhihe
+    Wifi/LTE dongle UFI-001C and uf896
 
-> ---
->  drivers/gpu/drm/msm/adreno/adreno_device.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> index 628806423f7d..36f062c7582f 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> @@ -551,13 +551,14 @@ static int adreno_bind(struct device *dev, struct device *master, void *data)
->         return 0;
->  }
->
-> +static int adreno_system_suspend(struct device *dev);
->  static void adreno_unbind(struct device *dev, struct device *master,
->                 void *data)
->  {
->         struct msm_drm_private *priv = dev_get_drvdata(master);
->         struct msm_gpu *gpu = dev_to_gpu(dev);
->
-> -       pm_runtime_force_suspend(dev);
-> +       WARN_ON_ONCE(adreno_system_suspend(dev));
->         gpu->funcs->destroy(gpu);
->
->         priv->gpu_pdev = NULL;
-> @@ -609,7 +610,7 @@ static int adreno_remove(struct platform_device *pdev)
->
->  static void adreno_shutdown(struct platform_device *pdev)
->  {
-> -       pm_runtime_force_suspend(&pdev->dev);
-> +       WARN_ON_ONCE(adreno_system_suspend(&pdev->dev));
->  }
->
->  static const struct of_device_id dt_match[] = {
-> --
-> 2.39.0.314.g84b9a713c41-goog
->
+ .../devicetree/bindings/arm/qcom.yaml         |   2 +
+ .../devicetree/bindings/vendor-prefixes.yaml  |   2 +
+ arch/arm64/boot/dts/qcom/Makefile             |   2 +
+ .../boot/dts/qcom/msm8916-zhihe-uf896.dts     |  41 +++
+ .../boot/dts/qcom/msm8916-zhihe-ufi001c.dts   |  39 +++
+ arch/arm64/boot/dts/qcom/msm8916-zhihe.dtsi   | 246 ++++++++++++++++++
+ 6 files changed, 332 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8916-zhihe-uf896.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8916-zhihe-ufi001c.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8916-zhihe.dtsi
+
+-- 
+2.39.0
+
