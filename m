@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CF6FC66635C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 20:15:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A118666355
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 20:15:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229687AbjAKTPQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Jan 2023 14:15:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59096 "EHLO
+        id S235549AbjAKTPL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Jan 2023 14:15:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235030AbjAKTO7 (ORCPT
+        with ESMTP id S231972AbjAKTPB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Jan 2023 14:14:59 -0500
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 102493DBED
+        Wed, 11 Jan 2023 14:15:01 -0500
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F6323E0C0
         for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 11:14:58 -0800 (PST)
-Received: by mail-lj1-x234.google.com with SMTP id g14so17014386ljh.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 11:14:57 -0800 (PST)
+Received: by mail-lj1-x233.google.com with SMTP id x37so17047120ljq.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 11:14:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=qnO47DUEwN//XThycfEdpAbdWEvh77T3LIosKiAxmXQ=;
-        b=rIShkYakHyEndgpFPEx8c/mV1M7z06AugUVKSo7J4Pya1+TGDnRWXk4vX66XQAWLtE
-         lx6DIi+y8VGUZIVjL522QS2T/Lw28zY0rS5qZ8DheJvCMUNMhHFEN61nGjAWRCkMWjBk
-         kbvpj2lBiu/jPIbHxT+6y+9jwG8laWIrRwPGFFi4E78+O9VQ8B4ywgzgtfDwfzRqbzAa
-         R/Q3ZElOtA3cB3NCMtN98FuB4PpDIPu6HDvBozNlCnE8RtLY9kKv9UIy/VicQv1leLAL
-         /2IEs6GHjxj1uzVrXUeolvnpC/N3pLxpzeN4QImDiXzMR1dHlB5ekDYrNIyA6n0jhJTn
-         PBEg==
+        bh=dPcZBzHD7ae6hkELFAHD+D8x2hKPutj+3M3d+IlT3KQ=;
+        b=UMv7/eMyntz4XC/n0FQobQsKOnZQOAAYdZD9dw3Q3LzNgH71k0ft+Iqir/z2+HF71I
+         zOnDFjw0DTI+biMwLY/eQLXThEOF2Xzv2OoufOF1WV0kPt/+imGpxihOFw4THOplbGPT
+         0Ts7mtKSZReDkPU2MUcOEmwPAvX99rtX754/l89mElokerv1nguqcGty0yzfos9RHjiu
+         cwQhGRlSZVNusrCB/tJJYE1WsQ4xAAxD0vmHEpPb+RRN0Hruw7xSNqKaRv+/AMIpX+lG
+         Usiw2D4N4Vx+2n7BcT1tReSttWk0BGwrqFBz9URDKSZbMfzzfhh7XufNQJFrLRKiRzi1
+         nNVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=qnO47DUEwN//XThycfEdpAbdWEvh77T3LIosKiAxmXQ=;
-        b=1o1zFxmZIYlkr1Hp+hpB2V3U3O3JsuAGHsfKIZn/7eyZa3iU857vcz2tRN1BsiWMjh
-         WMlOwqhCahq+tsxpVxq7UoltCt0W3DPOgGq0d/6CS+xx05Wxc16LyDdwtGMADyqxF1Pe
-         fp1krfiyQBm2V5Tv0BObweXS5WvW74B6dCmG3zooN5YyjttM7Onk64GeLDxb1+FEb+Ks
-         uOew/UqIHA1x9rbGA5q9izU5CkPJY7iLEJlXubwTb0tIYQWNDPzypbCh/Vv7VmLuf31Z
-         ZzdDRb3Uu8AeCPTWqJiO+0Cfyq/g1wj0kkfy2Agmzj7Af3+loXYfAmg61p2hdCD7Qcpr
-         dWgA==
-X-Gm-Message-State: AFqh2kqOypPB+mbG70FYQmFWW4PVwfdmmFDwV6e6Kw/aH3SQ608ujYrN
-        O8VSwToM7EEKXqESH3wMZw9pVA==
-X-Google-Smtp-Source: AMrXdXvx0DRu2+CA6xRA5IFr/WBd1wZwaDOy+Wzlq5t+NYgswAsi1LDZw6/CIT0a55v8qx0dbbcnbQ==
-X-Received: by 2002:a05:651c:220b:b0:279:f1df:97a6 with SMTP id y11-20020a05651c220b00b00279f1df97a6mr24826788ljq.7.1673464496242;
+        bh=dPcZBzHD7ae6hkELFAHD+D8x2hKPutj+3M3d+IlT3KQ=;
+        b=e3/VJ8JmvdI1nH1iegNKqfjiBmMzdWJizrDqgIxrtnk413h5KP9KgBsEUOY6V8cyzn
+         XkBq+QK3XgpfV8MYXm453MgGexMZNxdp4a/Ze/w/US088TVAKD+zsOLte/il7D8v/OzD
+         SyU3OrL+Z4EUDbklbKMs9asraG6IZqUZkqHsxMU+96pRwDhjEGDndDssIBnlo03Iwt7H
+         hGDKCQAMZoaXg6Nr8O8aN4qbwdlI6Un3wcwugoemqlyHxKIbJYtCZQq9zRnKFkI0nExB
+         PzaE4xfDS/Jpxys4QaD8VccfL7lA5S59fwZu6MPz50m1M2WglZ4mliKCLnf32MWkVpAs
+         hQng==
+X-Gm-Message-State: AFqh2kom6IX4cfC+nnJJ/bnPpOlpJ2w5Q+Gfl+Ygaa/DOHiAGGl9PgAV
+        F4qMGqXY/vzAjRp4Uy37bliAkw==
+X-Google-Smtp-Source: AMrXdXuapSySspddRmgkrBvUeYqYXvuI/qlqdHQcrDRWca5y/BcX5TCLFKVsmrpgEhlHLopnJUHIwQ==
+X-Received: by 2002:a2e:b52a:0:b0:27f:fff4:a6c8 with SMTP id z10-20020a2eb52a000000b0027ffff4a6c8mr7328861ljm.48.1673464496896;
         Wed, 11 Jan 2023 11:14:56 -0800 (PST)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id r7-20020a2e8e27000000b00289873cce0bsm76343ljk.14.2023.01.11.11.14.55
+        by smtp.gmail.com with ESMTPSA id r7-20020a2e8e27000000b00289873cce0bsm76343ljk.14.2023.01.11.11.14.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Jan 2023 11:14:55 -0800 (PST)
+        Wed, 11 Jan 2023 11:14:56 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -62,9 +62,9 @@ To:     Andy Gross <agross@kernel.org>,
         Jassi Brar <jassisinghbrar@gmail.com>
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 2/4] dt-bindings: mailbox: qcom: add #clock-cells to msm8996 example
-Date:   Wed, 11 Jan 2023 22:14:51 +0300
-Message-Id: <20230111191453.2509468-3-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 3/4] mailbox: qcom-apcs-ipc: enable APCS clock device for MSM8996
+Date:   Wed, 11 Jan 2023 22:14:52 +0300
+Message-Id: <20230111191453.2509468-4-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20230111191453.2509468-1-dmitry.baryshkov@linaro.org>
 References: <20230111191453.2509468-1-dmitry.baryshkov@linaro.org>
@@ -80,26 +80,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the #clock-cells property to the MSM8996 example, as the APCS block
-is going to provide the `sys_apcs_aux' clock to the consumers.
+MSM8996 also has the clock-related part of the APCS mailbox device.
+Follow the usual pattern and create a child device to handle these
+clocks.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- .../devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml       | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/mailbox/qcom-apcs-ipc-mailbox.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
-index b8a44ef0540f..5e7c83345774 100644
---- a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
-+++ b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
-@@ -141,6 +141,7 @@ examples:
-         reg = <0x9820000 0x1000>;
+diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+index 0e9f9cba8668..bd61dacb44ba 100644
+--- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
++++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+@@ -42,7 +42,7 @@ static const struct qcom_apcs_ipc_data msm8994_apcs_data = {
+ };
  
-         #mbox-cells = <1>;
-+        #clock-cells = <0>;
-     };
+ static const struct qcom_apcs_ipc_data msm8996_apcs_data = {
+-	.offset = 16, .clk_name = NULL
++	.offset = 16, .clk_name = "qcom-apcs-msm8996-clk"
+ };
  
-     rpm-glink {
+ static const struct qcom_apcs_ipc_data apps_shared_apcs_data = {
 -- 
 2.30.2
 
