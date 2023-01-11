@@ -2,192 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A0A19665CA8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 14:34:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CDCA5665D6A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 15:14:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238429AbjAKNd7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Jan 2023 08:33:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54460 "EHLO
+        id S238218AbjAKOOQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Jan 2023 09:14:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238740AbjAKNcw (ORCPT
+        with ESMTP id S236599AbjAKOOP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Jan 2023 08:32:52 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C122365BA;
-        Wed, 11 Jan 2023 05:31:40 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id CE676B81BDE;
-        Wed, 11 Jan 2023 13:31:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82012C433D2;
-        Wed, 11 Jan 2023 13:31:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1673443897;
-        bh=Z/FI02OooQV8N4EP0yXnfH5rMZ+Q6kh03FM7KDMyPqA=;
-        h=From:To:Cc:Subject:Date:From;
-        b=fYg/meIua4viTvHgOS3Jz6tZ87QvToH088WFNyl2gvZnv6Y7asRIJkiT3DEp5vU5n
-         ej4yrE+BV4PzLAojYrEjUMVLVpFaZzxR5IF6/R/Hz/7wKwDclhUraz2kDs3TvJBdJi
-         jmGu1tG82lRqQv0R8DVneYMu0FX05lF3KIf1wdEJwk3C6IR+68uE01+Lj5gyE/UnvC
-         WKGdQ4OWhV2J15A/awG5T8Hd18zydaLjT2IZ6OVs+Q0H9p6zhtEpVf9HQ/phutM2uJ
-         aSVEMCSmFGS2fBCiefuN/jjFdpMqi5032CDwB2/2jMDu6lBe4HPXccZZNDI7imxCmj
-         NvjAvq8to4W4w==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1pFbCf-0008HK-Rp; Wed, 11 Jan 2023 14:31:41 +0100
-From:   Johan Hovold <johan+linaro@kernel.org>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Wed, 11 Jan 2023 09:14:15 -0500
+Received: from out162-62-57-210.mail.qq.com (out162-62-57-210.mail.qq.com [162.62.57.210])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B73FD5FF3;
+        Wed, 11 Jan 2023 06:14:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
+        s=s201512; t=1673446449;
+        bh=FSKqGBNrgKQCak0MyFaGE4iEHv/JDgMhWdF5s45tZpg=;
+        h=From:To:Cc:Subject:Date;
+        b=Pthr5uSYh/6PJTMcW/60Yfp6fY5SY+qP3LzhmqioFalLQs678cfyuBT1YVLS5oqGQ
+         +zNIVuSkP2LOJHDxTqMuvd0yTqbkPKPmp7aMhk7sWmqXnYcd8XyXJKryvVbfXk8cpL
+         OR88swWg2M6xixyjhYx7GYxLbaXtlm3sdodgpS/w=
+Received: from localhost.localdomain ([111.60.247.106])
+        by newxmesmtplogicsvrszc2-1.qq.com (NewEsmtp) with SMTP
+        id 37731CEB; Wed, 11 Jan 2023 22:13:55 +0800
+X-QQ-mid: xmsmtpt1673446435t2vx4gzx7
+Message-ID: <tencent_D178F84C6D097A3CB089BB3F7FD45C67B406@qq.com>
+X-QQ-XMAILINFO: ONLymQk6scaO6hvmk8/TxESbge0m43Ptvb4kt/ty8040BWjBTDdu2uA3PE8Vfp
+         43jjvlRjKcvarrCyZCsPgwqZC4ieGNwLRuyoP5VFmbKHrO9ZUbHU7SaVlZWjFbs3D7yT/fP9zTN0
+         xur+9WF6KedPhRUwaVS90aNo164yJUvy6S6q+juGFqea47E/fTtQjhGBa2SQPUfc/i1qu3nEIGmD
+         cNJ3uElwm30D1hrvk8Ess88zaUD0/t1olCOSpPmttj2cF0jhqO6ikvHKpykPXgUeDLuzU6pwaycu
+         z7m9arrwrJGzUf8GgxSWweXK0eshDUoQCvmdIlIBnkJiJb4KaehqM/yW/0YCKGdEpjFmAujzfYzA
+         Dt6rHsXJXeXMTkKq6lcwgl/rZ+dYfDVTueHctuD9iXPoxY1k1RowjhdTqLdFDVVhkVbdv4+cwHtv
+         /zJ4/bCDQJ5NJ/NHFWbiODuj631ZOyFZUPL9hUK0dxtBt/JPsXiYeiQvk0ajTdlOBgKIY1dePIIR
+         1qOCFNevR0wSfOmRG4rIKrkSm8/cUb54QbBJN+6i4odW5IMgXHjkl/wmrd5loeoJz317XhhpNQLc
+         pEUddzJD6iKLMfl4E/lYnvBz+9Ng8vSq+Hh3cqEtme44P80wv7wdl8+HgLUHUaC1S+M6D/oj9BQY
+         Er0taDksV3YJjE2186eM0NBCqD8+ynZOsNwfuFTK1MWNetzzxTcKVKnay+oS0w7qOX3ELFAwkUl9
+         K+JkZbc4orlizFPvWG80nY/FR2nXjr5mEizuhXdTWDxl2gN0jw8Ua3nFC6x93ySGbcJp5W955q0U
+         h7LUCmGEbCRlRyNN/IFducVfsCNpEaEriI66ZyG+6aGitdazgu2wwR2/5Gh8T0yHb8Sz0uAmPJSd
+         ggTQU2toko8iXDLXiT/FEV3z5kNDAWLeSVLYgc7XGlv7tUHPW870HXR1Dcn027J+uyqebwehrg6I
+         mS0YfSUhfARSPk40kqT1R/Qmgcggs4DnOBVrOPphUPbWH4ngOA0TXgKx3/4E6Y
+From:   Yang Xiwen <forbidden405@foxmail.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH] arm64: dts: qcom: sc8280xp-x13s: enable eDP display
-Date:   Wed, 11 Jan 2023 14:31:28 +0100
-Message-Id: <20230111133128.31813-1-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.38.2
+        linux-kernel@vger.kernel.org
+Cc:     Jaime Breva <jbreva@nayarsystems.com>,
+        Nikita Travkin <nikita@trvn.ru>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Yang Xiwen <forbidden405@foxmail.com>
+Subject: [PATCH v2 0/3] Support for MSM8916-based UFi ufi001c and uf896
+Date:   Wed, 11 Jan 2023 22:13:08 +0800
+X-OQ-MSGID: <20230111141311.14682-1-forbidden405@foxmail.com>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,HELO_DYNAMIC_IPADDR,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        RDNS_DYNAMIC,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the eDP display on MDSS0 DP3, including backlight control.
+Managed to get the real vendor for these devices.
 
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
+Yang Xiwen (3):
+  dt-bindings: vendor-prefixes: add thwc
+  dt-bindings: qcom: Document msm8916-thwc-uf896 and ufi001c
+  arm64: dts: qcom: msm8916-thwc: Add initial device tree for Tong Heng
+    Wei Chuang Wifi/LTE dongle UFI-001C and uf896
 
-This one depends on the sc8280xp display patches:
+ .../devicetree/bindings/arm/qcom.yaml         |   2 +
+ .../devicetree/bindings/vendor-prefixes.yaml  |   2 +
+ arch/arm64/boot/dts/qcom/Makefile             |   2 +
+ .../boot/dts/qcom/msm8916-thwc-uf896.dts      |  41 +++
+ .../boot/dts/qcom/msm8916-thwc-ufi001c.dts    |  39 +++
+ arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi     | 246 ++++++++++++++++++
+ 6 files changed, 332 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8916-thwc-uf896.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8916-thwc-ufi001c.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi
 
-	https://lore.kernel.org/lkml/20230111035906.2975494-1-quic_bjorande@quicinc.com/T/#mbcdfc826df6683a71d80bab5d86645ba81b02d52
-
-Johan
-
-
- .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 75 ++++++++++++++++++-
- 1 file changed, 73 insertions(+), 2 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-index 23c1ca44ec11..ef17ef90d1f0 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -47,7 +47,7 @@ wcd938x: audio-codec {
- 		#sound-dai-cells = <1>;
- 	};
- 
--	backlight {
-+	backlight: backlight {
- 		compatible = "pwm-backlight";
- 		pwms = <&pmc8280c_lpg 3 1000000>;
- 		enable-gpios = <&pmc8280_1_gpios 8 GPIO_ACTIVE_HIGH>;
-@@ -72,6 +72,22 @@ switch-lid {
- 		};
- 	};
- 
-+	vreg_edp_3p3: regulator-edp-3p3 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VCC3LCD";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&tlmm 25 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&edp_reg_en>;
-+
-+		regulator-boot-on;
-+	};
-+
- 	vreg_edp_bl: regulator-edp-bl {
- 		compatible = "regulator-fixed";
- 
-@@ -259,7 +275,6 @@ vreg_l6b: ldo6 {
- 			regulator-max-microvolt = <880000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 			regulator-boot-on;
--			regulator-always-on;	/* FIXME: VDD_A_EDP_0_0P9 */
- 		};
- 	};
- 
-@@ -340,6 +355,55 @@ vreg_l9d: ldo9 {
- 	};
- };
- 
-+&dispcc0 {
-+	status = "okay";
-+};
-+
-+&mdss0 {
-+	status = "okay";
-+};
-+
-+&mdss0_dp3 {
-+	compatible = "qcom,sc8280xp-edp";
-+
-+	data-lanes = <0 1 2 3>;
-+
-+	status = "okay";
-+
-+	aux-bus {
-+		panel {
-+			compatible = "edp-panel";
-+
-+			backlight = <&backlight>;
-+			power-supply = <&vreg_edp_3p3>;
-+
-+			ports {
-+				port {
-+					edp_panel_in: endpoint {
-+						remote-endpoint = <&mdss0_dp3_out>;
-+					};
-+				};
-+			};
-+		};
-+	};
-+
-+	ports {
-+		port@1 {
-+			reg = <1>;
-+			mdss0_dp3_out: endpoint {
-+				remote-endpoint = <&edp_panel_in>;
-+			};
-+		};
-+	};
-+};
-+
-+&mdss0_dp3_phy {
-+	vdda-phy-supply = <&vreg_l6b>;
-+	vdda-pll-supply = <&vreg_l3b>;
-+
-+	status = "okay";
-+};
-+
- &pcie2a {
- 	perst-gpios = <&tlmm 143 GPIO_ACTIVE_LOW>;
- 	wake-gpios = <&tlmm 145 GPIO_ACTIVE_LOW>;
-@@ -902,6 +966,13 @@ hastings_reg_en: hastings-reg-en-state {
- &tlmm {
- 	gpio-reserved-ranges = <70 2>, <74 6>, <83 4>, <125 2>, <128 2>, <154 7>;
- 
-+	edp_reg_en: edp-reg-en-state {
-+		pins = "gpio25";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-disable;
-+	};
-+
- 	hall_int_n_default: hall-int-n-state {
- 		pins = "gpio107";
- 		function = "gpio";
 -- 
-2.38.2
+2.39.0
 
