@@ -2,78 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 77CD56659F4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 12:24:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 31E436659FF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 12:26:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232319AbjAKLYa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Jan 2023 06:24:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53950 "EHLO
+        id S232343AbjAKLZi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Jan 2023 06:25:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232344AbjAKLYU (ORCPT
+        with ESMTP id S233509AbjAKLZC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Jan 2023 06:24:20 -0500
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F41917052
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 03:24:13 -0800 (PST)
-Received: by mail-pf1-x434.google.com with SMTP id i65so7697191pfc.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 03:24:13 -0800 (PST)
+        Wed, 11 Jan 2023 06:25:02 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5A1A10FC9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 03:25:01 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id v2so3698282wrw.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 03:25:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=4E7LXVeMTXBOr35S4gFhTPaaqu2rDKrbKMzVXIhGQao=;
-        b=LD3ulaCuMTQsKiuagMew8X7Z9p6wuiNusp5U9mLqnGSfhmPt6Uh7gNKHAh4Jk+162Y
-         YKxxJ1ASYRJCSniu0b7/Jt8XdA11yC3V0llKAAR2hB4NYK8z9MJE+oJrvMe0BafHTH3x
-         wbmHZLBpAkEwkqXVXnr0Q/OnEU486IJJSnLnNE+BHiBAe5yDcDEatU7OtpWsdcHnsKnf
-         OJfg+TMwAcWKNGqxdQ8/kZSf9qUIRHYvOGFfON7VgPIDn1RbK8gABFIyGf9wLWdRp7Nf
-         jBITO+NHG+qX/MlMPU9HbAUt1iIZt5pypDn6fzXonWbt/zv0TSDq8254o3AkCCTb52er
-         lb6w==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qbdDKI4Ey6JY+q0XVlpG88pauoONaYof/XvXYc94UzA=;
+        b=Qhw27iT/0tu/MU2cQXm2Dr6zbSB2A3n5D989VL7VYjalRm1qn5xDYtaN9B+c5b6Hm+
+         K0qEVuZubWBPIcqPkvyvmdi11MhcjWkQ2Xo1N1fVK/XfdPZ8cqYcGvjUzE7oht1/Uwt2
+         nc3t/s0O0DpjCietGC8WAYerFzWjjr7IxgndJbu993xkE29Y9HmZ630ur4auKA9K8ozL
+         WrbeJIOv0urwLcFvMNKe4s8rOsEjL7C5CVgnazM9yTNuuZCkKHnsss5O0mUuUSQEa+4A
+         D6sqEjQ73+Bh2zmdJCwE8iBFCxwIC/DodX518Q3mxomziX5LCuewJaHxwAKa+vJsCnjB
+         j+1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4E7LXVeMTXBOr35S4gFhTPaaqu2rDKrbKMzVXIhGQao=;
-        b=GNsQ8YVhn+aYC+ZknAwzktyEarrcbFmjf76lSJ4y5/ZsyOtqfgsIrZP4Pudc3HO5a2
-         SBbtglxjm6pCMUsSvYPQiGJS5zm0o+9RD8v7gAUvScAtxVi7QG3MpdOARCn2LQ6YMneI
-         bigcJ05mRvF8eWM2NHBr+Tu8/mP8NjknU/C5NBjfk3yaUhbyN0eYGqrad6SURtSb2K3e
-         jMkUKrMiCH7dlVHijRixA//sVmIksbbuQZL0b9jlJJTWcJpvtCAmidE4QRomy1PCfAp3
-         02tya4A8+HPfY11yqkuU3f0sEwlwGhs52Kz5r81AKRYBotJCCgh6XEwjCpwdOfVmWHyA
-         1K6w==
-X-Gm-Message-State: AFqh2ko3tds+qVIraF5g3pkwZL00PKI34AIqagHe2jltKB3PYXdR5rr/
-        z5wHoTjWXc1SzHTs+GafSg+3
-X-Google-Smtp-Source: AMrXdXumpb0lRMGhQmyoqCMCAtV9YiuVEbpsjqP2P4ZKSfNlM0jL174iQC00vUui/+RTFggHIHMfKg==
-X-Received: by 2002:a05:6a00:1382:b0:586:a3a9:6163 with SMTP id t2-20020a056a00138200b00586a3a96163mr19309301pfg.28.1673436253083;
-        Wed, 11 Jan 2023 03:24:13 -0800 (PST)
-Received: from thinkpad ([117.217.177.1])
-        by smtp.gmail.com with ESMTPSA id p128-20020a625b86000000b00580d25a2bb2sm5236085pfb.108.2023.01.11.03.24.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Jan 2023 03:24:12 -0800 (PST)
-Date:   Wed, 11 Jan 2023 16:54:03 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Sibi Sankar <quic_sibis@quicinc.com>
-Cc:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        robh+dt@kernel.org, robin.murphy@arm.com, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, konrad.dybcio@somainline.org,
-        amit.pundir@linaro.org, regressions@leemhuis.info,
-        sumit.semwal@linaro.org, will@kernel.org, catalin.marinas@arm.com,
-        hch@lst.de
-Subject: Re: [PATCH V2 05/11] remoteproc: qcom_q6v5_mss: revert "map/unmap
- metadata region before/after use"
-Message-ID: <20230111112403.GB4873@thinkpad>
-References: <20230109034843.23759-1-quic_sibis@quicinc.com>
- <20230109034843.23759-6-quic_sibis@quicinc.com>
- <20230109081832.GA4966@thinkpad>
- <92a32081-a521-33c7-72bd-fb8cb307c5bc@quicinc.com>
+        bh=qbdDKI4Ey6JY+q0XVlpG88pauoONaYof/XvXYc94UzA=;
+        b=Fi0fr6ZtbCkyzII2hskmLyz/gt0d5yAG1uG6pcFxrv30mHZKj5/2Db7ToKDMTEKyVT
+         Mp5U06JgIpC1x0dXIw8TcCuwvqGTF4oNhsfHidXzJ5bI2lhGUIvZI57hSNW9qzu1NMSr
+         eqVz2mFxzo488FIbdTfPG9Gen3XAxSiF42MRHJ3nhd+DXZrfQvTCbuY/4U1SNJeZoy5X
+         k2vaIcRtK7fjjIver62wVacA+2TZAEeizCvJqIXApm0FgRBsdQneYGaaCW7e3zcxKqGs
+         jep7vCRFVnqtefSMIXug0llR/w0F9WjR8Ed2qOXPy8L4rFS2CEiwoK1+ws7SQ+hlMCIC
+         PbDg==
+X-Gm-Message-State: AFqh2koix/wUKgEhUjaPM7NSPqFttbgvPJqLdzPFK2QT5PsLTgXs8j52
+        Rs95YjUTDGGmqB8JGnstXjFkUA==
+X-Google-Smtp-Source: AMrXdXs+MEEL6QPXWp25IjjQP0ytvbLLgmYxzxdMAWuUKHHACK6fUF60Dkt6yH8ZKfS6vurGKMKxag==
+X-Received: by 2002:adf:dc81:0:b0:293:fff0:63b3 with SMTP id r1-20020adfdc81000000b00293fff063b3mr24022963wrj.4.1673436300202;
+        Wed, 11 Jan 2023 03:25:00 -0800 (PST)
+Received: from [192.168.10.46] (146725694.box.freepro.com. [130.180.211.218])
+        by smtp.googlemail.com with ESMTPSA id q16-20020adff950000000b002bcaa47bf78sm4253734wrr.26.2023.01.11.03.24.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Jan 2023 03:24:59 -0800 (PST)
+Message-ID: <a315e420-5fa4-21c4-e297-42480ebfa2bd@linaro.org>
+Date:   Wed, 11 Jan 2023 12:24:58 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH] thermal/drivers/qcom: Remove duplicate set next trip
+ point interrupt code
+Content-Language: en-US
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     rafael@kernel.org, dmitry.baryshkov@linaro.org,
+        konrad.dybcio@linaro.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20230110103420.2430518-1-daniel.lezcano@kernel.org>
+ <20230110181328.el2kicyrg2j554c2@builder.lan>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+In-Reply-To: <20230110181328.el2kicyrg2j554c2@builder.lan>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <92a32081-a521-33c7-72bd-fb8cb307c5bc@quicinc.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -82,123 +82,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 09, 2023 at 03:30:22PM +0530, Sibi Sankar wrote:
-> Hey Mani,
-> Thanks for taking time to review the series.
+On 10/01/2023 19:13, Bjorn Andersson wrote:
+> On Tue, Jan 10, 2023 at 11:34:20AM +0100, Daniel Lezcano wrote:
+>> From: Daniel Lezcano <daniel.lezcano@linaro.org>
+>>
+>> The tsens driver reprogram the next trip points in the irq
+>> handler. This function then call thermal_zone_device_update().
+>>
+>> However, thermal_zone_device_update() calls thermal_zone_set_trips()
+>> and from there it calls the backend 'set_trips' ops. This one in turn
+>> reprogram the next trip points (low/high).
+>>
+>> Consequently, the code setting the next trip points interrupt in the
+>> interrupt handle is not needed and could be removed.
+>>
 > 
-> On 1/9/23 13:48, Manivannan Sadhasivam wrote:
-> > + Christoph
-> > 
-> > Hi Sibi,
-> > 
-> > On Mon, Jan 09, 2023 at 09:18:37AM +0530, Sibi Sankar wrote:
-> > > This reverts commit fc156629b23a21181e473e60341e3a78af25a1d4.
-> > > 
-> > > The memory region allocated using dma_alloc_attr with no kernel mapping
-> > > attribute set would still be a part of the linear kernel map. Hence as a
-> > > precursor to using reserved memory for modem metadata region, revert back
-> > > to the simpler way of dynamic memory allocation.
-> > > 
-> > > Suggested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> > 
-> > Christoph already submitted a patch that reverts fc156629b23a:
-> > https://lore.kernel.org/linux-arm-msm/20221223092703.61927-2-hch@lst.de/
 > 
-> Having ^^ revert as part of the this series makes more sense. I'll
-> just replace my patch with ^^ in the next re-spin.
+> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 > 
+>> Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+>> Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+> 
+> The last one should be the address you sent your patch from, and that
+> was the first one. So I think you should drop this one.
 
-That makes sense to me.
+Thanks for the review. I'll remove the duplicated SoB.
 
-Thanks,
-Mani
+   -- Daniel
 
-> > 
-> > Thanks,
-> > Mani
-> > 
-> > > ---
-> > >   drivers/remoteproc/qcom_q6v5_mss.c | 38 +++++-------------------------
-> > >   1 file changed, 6 insertions(+), 32 deletions(-)
-> > > 
-> > > diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-> > > index 2f4027664a0e..e2f765f87ec9 100644
-> > > --- a/drivers/remoteproc/qcom_q6v5_mss.c
-> > > +++ b/drivers/remoteproc/qcom_q6v5_mss.c
-> > > @@ -10,7 +10,6 @@
-> > >   #include <linux/clk.h>
-> > >   #include <linux/delay.h>
-> > >   #include <linux/devcoredump.h>
-> > > -#include <linux/dma-map-ops.h>
-> > >   #include <linux/dma-mapping.h>
-> > >   #include <linux/interrupt.h>
-> > >   #include <linux/kernel.h>
-> > > @@ -961,52 +960,27 @@ static void q6v5proc_halt_axi_port(struct q6v5 *qproc,
-> > >   static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw,
-> > >   				const char *fw_name)
-> > >   {
-> > > -	unsigned long dma_attrs = DMA_ATTR_FORCE_CONTIGUOUS | DMA_ATTR_NO_KERNEL_MAPPING;
-> > > -	unsigned long flags = VM_DMA_COHERENT | VM_FLUSH_RESET_PERMS;
-> > > -	struct page **pages;
-> > > -	struct page *page;
-> > > +	unsigned long dma_attrs = DMA_ATTR_FORCE_CONTIGUOUS;
-> > >   	dma_addr_t phys;
-> > >   	void *metadata;
-> > >   	int mdata_perm;
-> > >   	int xferop_ret;
-> > >   	size_t size;
-> > > -	void *vaddr;
-> > > -	int count;
-> > > +	void *ptr;
-> > >   	int ret;
-> > > -	int i;
-> > >   	metadata = qcom_mdt_read_metadata(fw, &size, fw_name, qproc->dev);
-> > >   	if (IS_ERR(metadata))
-> > >   		return PTR_ERR(metadata);
-> > > -	page = dma_alloc_attrs(qproc->dev, size, &phys, GFP_KERNEL, dma_attrs);
-> > > -	if (!page) {
-> > > +	ptr = dma_alloc_attrs(qproc->dev, size, &phys, GFP_KERNEL, dma_attrs);
-> > > +	if (!ptr) {
-> > >   		kfree(metadata);
-> > >   		dev_err(qproc->dev, "failed to allocate mdt buffer\n");
-> > >   		return -ENOMEM;
-> > >   	}
-> > > -	count = PAGE_ALIGN(size) >> PAGE_SHIFT;
-> > > -	pages = kmalloc_array(count, sizeof(struct page *), GFP_KERNEL);
-> > > -	if (!pages) {
-> > > -		ret = -ENOMEM;
-> > > -		goto free_dma_attrs;
-> > > -	}
-> > > -
-> > > -	for (i = 0; i < count; i++)
-> > > -		pages[i] = nth_page(page, i);
-> > > -
-> > > -	vaddr = vmap(pages, count, flags, pgprot_dmacoherent(PAGE_KERNEL));
-> > > -	kfree(pages);
-> > > -	if (!vaddr) {
-> > > -		dev_err(qproc->dev, "unable to map memory region: %pa+%zx\n", &phys, size);
-> > > -		ret = -EBUSY;
-> > > -		goto free_dma_attrs;
-> > > -	}
-> > > -
-> > > -	memcpy(vaddr, metadata, size);
-> > > -
-> > > -	vunmap(vaddr);
-> > > +	memcpy(ptr, metadata, size);
-> > >   	/* Hypervisor mapping to access metadata by modem */
-> > >   	mdata_perm = BIT(QCOM_SCM_VMID_HLOS);
-> > > @@ -1036,7 +1010,7 @@ static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw,
-> > >   			 "mdt buffer not reclaimed system may become unstable\n");
-> > >   free_dma_attrs:
-> > > -	dma_free_attrs(qproc->dev, size, page, phys, dma_attrs);
-> > > +	dma_free_attrs(qproc->dev, size, ptr, phys, dma_attrs);
-> > >   	kfree(metadata);
-> > >   	return ret < 0 ? ret : 0;
-> > > -- 
-> > > 2.17.1
-> > > 
-> > 
 
 -- 
-மணிவண்ணன் சதாசிவம்
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
+
