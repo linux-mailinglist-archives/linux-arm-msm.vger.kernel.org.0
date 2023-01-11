@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A2B0B666467
+	by mail.lfdr.de (Postfix) with ESMTP id EE15F666468
 	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 21:05:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235383AbjAKUFY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Jan 2023 15:05:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35184 "EHLO
+        id S236109AbjAKUFZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Jan 2023 15:05:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235724AbjAKUFA (ORCPT
+        with ESMTP id S235916AbjAKUFB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Jan 2023 15:05:00 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 269DB3FA04
+        Wed, 11 Jan 2023 15:05:01 -0500
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E98E43A0E
         for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 12:01:32 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id b3so25217521lfv.2
+Received: by mail-lf1-x12e.google.com with SMTP id b3so25217572lfv.2
         for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 12:01:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=1uDJixWMEWwAoquEM2fmrMSD+ELeFhPO7LIvd7FIubM=;
-        b=eWXRvxqJZ7aYhKu/v06MeiKPmhqHPk8fNedeNDEUEAF9SQEYPa2uQkO7InJPvnjuJb
-         feXuhU7kW7wAg/6ds/ZVQedX5bI2LIPM6/J03VcgRHoVw8Cw4aQ6PYyTy+OQ/mspeOxv
-         e4z0HmCllau/emIPBCL8LaQ1z1aPmoTle4LABqtu4ERL5DJ9e2IEjzBb05OOsYEOHuWZ
-         UIgY+0P4FtCDLYuCb9YNSNAOfxm/u4KCuyeHRojl7K7b6D/Dj/FVQnj5CPM028WNoPVJ
-         RZqqQoaZvwnDd1GxkI/YitD1ePAikdGWwtgwfC2q7WDIouKgchkBGDmJPfT62kcI9Exq
-         ALdw==
+        bh=nqckWVN1EW8nGGVGrmVxxAgycA7grXm6YjyhUvZ/LK8=;
+        b=xNeCu+Rd5QdYA1QA4uQJj3yUife2h+H/5njbViWSLG8bRuzhVLviqXXG1z68mQn5FF
+         FkLWHYJ4xaQx8zC6hgZgva0rD4kZM5rH/3ymMNCXxOFkmjv5cDudmwIbcJhu97ZgqdHk
+         ydg9KWAPob4n8DxiGzobiKXxlg/qsaBEv3iqbg2cBFu256OE2AuHUPZlzY/aVl3jrYyv
+         gtB+rZJlUYfmISasC2RUVxXLQRP3lux/TgYPMSBcvMdqBClcNjCb7z8+4Eh++1Ls22N2
+         dFpMpzQcIYXxlt4bkU+qiH4dPuadHdy2lPwVvR1lHBpPCVcy5W3Qi8elR6y1iDw7LX8S
+         DOYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=1uDJixWMEWwAoquEM2fmrMSD+ELeFhPO7LIvd7FIubM=;
-        b=e0LsCpeDRjz7OEiz4Urrjsmiw+0jPlcJvHFel8umMPF50MFedBchiz2QMHFCaLKeyO
-         J6O3Wt6W6U03Bq2r4Z6ANx80vj7yhONXJ06hjcorET3HNm8mztYoNEKfMGp/12XCPIgE
-         l9wfXPTek0hS3d4y+8Kq8L+PVy6e1fWiWF5XhGO9K3XTc/8S5kBvvFQxdsA2mcQyqZrz
-         2gX53bM5dfzT7xQrRpqIqBtvb4OIHYZorucy71kaFumsHVGpHik1pUv3/A2DVKYx5jG8
-         ACQ7lzq/7XiVfF+YRFPszD4+Iz+oSjmWILTMDwIogIS6mtJGbgC3fAPjFsDIPv/v7ovz
-         iCcg==
-X-Gm-Message-State: AFqh2kr/EfBFDK9m0pe7Zk5yy30QlJc9wJyVb9W5VZIIVRfj9821X7o8
-        JU+OKz0g5iNZe7E6hxWDCiy2iw==
-X-Google-Smtp-Source: AMrXdXuKdjJCzpN3YBm3cLpLrOJ9v5mNchPoBZ58C+Y3o8M3JoxJYvtkEA7OoFuvQcdsiA4sJwXsiA==
-X-Received: by 2002:a05:6512:1307:b0:4cb:3d40:93ff with SMTP id x7-20020a056512130700b004cb3d4093ffmr11560911lfu.58.1673467290559;
-        Wed, 11 Jan 2023 12:01:30 -0800 (PST)
+        bh=nqckWVN1EW8nGGVGrmVxxAgycA7grXm6YjyhUvZ/LK8=;
+        b=LMyMEO+kRF2oAKsJfonvL/v+J2fppzNbhlb6RfU1UWxNEX00PxBo9pD6y+sMYQ4bOT
+         o0uy2jVhsM4mIvXNBE8/mqzLkq3Co+N38MUBZ1eBSXq54O7ayMBFWO0ZtL0k7O4l/Fv5
+         ipsPBkOF5TzBDqXynjnW8z2WnYQhr+lkdSLddBeIXx+4bFRGsHaOHANC4NzshITPMAlJ
+         n84E97HeIg6yrdX6u3ZpC9vaYYlDpQYoLDNEemqObPahonph7u4eS+MeD5DolnB9JX1N
+         IPlvvci5q53kBLv1NGKpH4v4roN17ODo9KBylZsq4V0JVfbnsn5d8aC1t5P5c2ZApdXZ
+         5dlQ==
+X-Gm-Message-State: AFqh2krjDVbU+8qJAGNfo+FLpUipeQ488+qqnq7VJjejz+cUIun6BzC/
+        wU2O8j4OxIU2e27gFrYV6Ioybw==
+X-Google-Smtp-Source: AMrXdXtC1qHCdqhA1iA1ASNLgcAUL6h47wf6APDkjpPlzBB0dwMR54IXsBxt/TSb574g4Zi8vXOkwA==
+X-Received: by 2002:a19:5517:0:b0:4b5:6042:d136 with SMTP id n23-20020a195517000000b004b56042d136mr19079107lfe.22.1673467291291;
+        Wed, 11 Jan 2023 12:01:31 -0800 (PST)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id v20-20020a05651203b400b004b4e6dab30esm2881437lfp.222.2023.01.11.12.01.29
+        by smtp.gmail.com with ESMTPSA id v20-20020a05651203b400b004b4e6dab30esm2881437lfp.222.2023.01.11.12.01.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 11 Jan 2023 12:01:30 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
@@ -61,9 +61,9 @@ To:     Andy Gross <agross@kernel.org>,
         Taniya Das <quic_tdas@quicinc.com>
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org
-Subject: [PATCH v2 02/14] clk: qcom: clk-alpha-pll: program PLL_TEST/PLL_TEST_U if required
-Date:   Wed, 11 Jan 2023 23:01:16 +0300
-Message-Id: <20230111200128.2593359-3-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 03/14] clk: qcom: cpu-8996: correct PLL programming
+Date:   Wed, 11 Jan 2023 23:01:17 +0300
+Message-Id: <20230111200128.2593359-4-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20230111200128.2593359-1-dmitry.baryshkov@linaro.org>
 References: <20230111200128.2593359-1-dmitry.baryshkov@linaro.org>
@@ -78,30 +78,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Program PLL_TEST and PLL_TEST_U registers if required by the pll
-configuration.
+Change PLL programming to follow the downstream setup.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/clk/qcom/clk-alpha-pll.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/clk/qcom/clk-cpu-8996.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-index f9e4cfd7261c..e266379427f2 100644
---- a/drivers/clk/qcom/clk-alpha-pll.c
-+++ b/drivers/clk/qcom/clk-alpha-pll.c
-@@ -358,6 +358,11 @@ void clk_alpha_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
+diff --git a/drivers/clk/qcom/clk-cpu-8996.c b/drivers/clk/qcom/clk-cpu-8996.c
+index ee76ef958d31..ed8cb558e1aa 100644
+--- a/drivers/clk/qcom/clk-cpu-8996.c
++++ b/drivers/clk/qcom/clk-cpu-8996.c
+@@ -93,12 +93,9 @@ static const u8 prim_pll_regs[PLL_OFF_MAX_REGS] = {
+ static const u8 alt_pll_regs[PLL_OFF_MAX_REGS] = {
+ 	[PLL_OFF_L_VAL] = 0x04,
+ 	[PLL_OFF_ALPHA_VAL] = 0x08,
+-	[PLL_OFF_ALPHA_VAL_U] = 0x0c,
+ 	[PLL_OFF_USER_CTL] = 0x10,
+-	[PLL_OFF_USER_CTL_U] = 0x14,
+ 	[PLL_OFF_CONFIG_CTL] = 0x18,
+ 	[PLL_OFF_TEST_CTL] = 0x20,
+-	[PLL_OFF_TEST_CTL_U] = 0x24,
+ 	[PLL_OFF_STATUS] = 0x28,
+ };
  
- 	regmap_update_bits(regmap, PLL_USER_CTL(pll), mask, val);
+@@ -106,8 +103,10 @@ static const u8 alt_pll_regs[PLL_OFF_MAX_REGS] = {
  
-+	clk_alpha_pll_write_config(regmap, PLL_TEST_CTL(pll),
-+						config->test_ctl_val);
-+	clk_alpha_pll_write_config(regmap, PLL_TEST_CTL_U(pll),
-+						config->test_ctl_hi_val);
-+
- 	if (pll->flags & SUPPORTS_FSM_MODE)
- 		qcom_pll_set_fsm_mode(regmap, PLL_MODE(pll), 6, 0);
- }
+ static const struct alpha_pll_config hfpll_config = {
+ 	.l = 60,
+-	.config_ctl_val = 0x200d4aa8,
++	.config_ctl_val = 0x200d4828,
+ 	.config_ctl_hi_val = 0x006,
++	.test_ctl_val = 0x1c000000,
++	.test_ctl_hi_val = 0x00004000,
+ 	.pre_div_mask = BIT(12),
+ 	.post_div_mask = 0x3 << 8,
+ 	.post_div_val = 0x1 << 8,
 -- 
 2.30.2
 
