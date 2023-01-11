@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 84277666525
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 21:58:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 839F6666528
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 21:59:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231801AbjAKU56 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Jan 2023 15:57:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57014 "EHLO
+        id S234433AbjAKU7S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Jan 2023 15:59:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57148 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232291AbjAKU55 (ORCPT
+        with ESMTP id S234740AbjAKU6p (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Jan 2023 15:57:57 -0500
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7202D60DC
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 12:57:55 -0800 (PST)
-Received: by mail-lj1-x22f.google.com with SMTP id o7so16965281ljj.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 12:57:55 -0800 (PST)
+        Wed, 11 Jan 2023 15:58:45 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A281C16
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 12:58:44 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id j17so25428278lfr.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 12:58:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=O0xPaw/Uyv/k7eUrz3wz2tQnGPVLOhSDaCGzsFiBw08=;
-        b=PHIrZLjfwQAfYFzBCB3qVyPbnK1UiAST6v9IF2VJ6YKqoAC01RRoqjljm6PRgbRZDd
-         ypU2+ap8fjPZFZe3s8HzwEjsudpvb01z4yudhBAF4KidIwbrCefrHsHfJnYlp76AeMHE
-         0VKnSp4Lxa+VwFicuaHHWuQBNumLGAAtDqtRyqBeok+kxVXJX95Q/S/BWzYv5J/DjQld
-         Rv3wZBgf4V3QdRSXsVuQ1LVHHq0jFC899VORqneigPbZtC091iHHy1BZ05rSoyVaxT2K
-         zzpsd7gsKdnkck7tMdLoYTLZj6wVxiBlB3kS5/OuR5NYwwBpJwhHMnQNTRWjajhIrrG5
-         vKrQ==
+        bh=U1qg3MzVfQG7C7y0cUB5oRHh9eT6BZD3jl2UT/xoGjs=;
+        b=BvukW3P64NhAhmFOm28uOJJbV90VwwhrXhNwfSVTFohbNNNbzgFvhJEMYD9s5MWibw
+         yYjHEmRWN7luvJPpSEbN64flIBPbU+t3OiALXa7xLhwXRb7qU/nM3umY24B65ulcWfNz
+         xqDf74wSfKBMJSvoFZWVdZCEovpGtZ6ntrJL3Ifhi+GXNP1GUxQes1OTMQBRVTynQg/U
+         7EcFB5NNbEkOmRQT9m0Eddx6imponcd8xK9ER0eNp75I2Rga/2Nvh+Vc2DUE4AenkcHu
+         X4f3SQYdcWlb5dMv4n2Zxv6cphWtdsydbEy1Ey4tUmoKPw6WMS5cnWjvBZB4gHAzEdWP
+         9eAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=O0xPaw/Uyv/k7eUrz3wz2tQnGPVLOhSDaCGzsFiBw08=;
-        b=LfrVI8yzAxLbQS1xblE8i9LtwMOhxbavr/xqfQP8OZbSeI6e04Km0ZYfoPqcLZ8W6H
-         wTJoUQmHSZGEKUQMt/7Y8PMzfHprG1ELg8WaFLpQJg1HdHoEzW/DmWoD3DZwqQOxUtE4
-         b0jU9+GUldvJzyySIUoyDYhD9aA1yKlAxj8L14iEIeJ5PRd9XiJ7dEG/3FYnYuNvBQXR
-         xFeXPzP9izopm0LkGMkDqEAAFjwMvsG9JoDKvzqX5ZQyxEvOuVa6A5QAQDi4zyAH1QHl
-         7iDkEaQkAOLUMO96cEaFz4yXCnIrLDkkMTwPzXRdV8nifR/wuW2D05dovl5vcvOZ8kbr
-         aWhA==
-X-Gm-Message-State: AFqh2koGQAZyIYFdZG9GJCG95wSl+fBpg5m1dq+gW2pxFqfTjB2AbXYX
-        Xop6gPXUPTsgTcRUolX/vG7O7A==
-X-Google-Smtp-Source: AMrXdXsEzTvPWySwtT0sjwtm3wmAb+qXxyrINFUu3Oi/DvpWybE9NFSsVAgUYtI6XN9ic879EQiMrQ==
-X-Received: by 2002:a2e:82cd:0:b0:27a:c0f:30be with SMTP id n13-20020a2e82cd000000b0027a0c0f30bemr18932726ljh.35.1673470673802;
-        Wed, 11 Jan 2023 12:57:53 -0800 (PST)
+        bh=U1qg3MzVfQG7C7y0cUB5oRHh9eT6BZD3jl2UT/xoGjs=;
+        b=eOQDO46mAbQvUuVezL8im4x5+fBTGApBUj1rZuIff/HS2tSQA22eJgFEwwlMfL0Bj0
+         E0XoLFNqFA28aOcg3uySrY6fF+0HMT9RwbJQI+10xxj+FR2Q+JqE7ZjNmolQmisQ0D3Y
+         GvjOlnFfmmtsxN9VE8jSm/OUTwBkPQb59Wi6dy1Yar4NBaODnVqc/8DA1EG4fZneNKie
+         ZcbYYcII5KNpKutmk2pXvayQw20V86ucBr7ju33lbOS2y01BHXV4P6cbz45YDgOTtX8O
+         XnWRfk5VIeeUhdJX0tN5ZYrQTEm+XNlOL2YmBN564AKO8nbJ2J37kd2mHLGBsK9BdOjQ
+         04YA==
+X-Gm-Message-State: AFqh2koYItSFDzkCQNZlIE+sAPypJxmfxjlfrxJjkTGhb+PTSq+1szR6
+        wn6XkeL2SY25PHbz5LWKdoIMsw==
+X-Google-Smtp-Source: AMrXdXsSS5FclZVCexFPArBynZHjA700yX0BGqWI6iWjVOOucKnolvHb1Gz7toaVKu+g4Xq99+4Fxw==
+X-Received: by 2002:a05:6512:3e24:b0:4cb:c11:d01f with SMTP id i36-20020a0565123e2400b004cb0c11d01fmr19983280lfv.22.1673470722512;
+        Wed, 11 Jan 2023 12:58:42 -0800 (PST)
 Received: from [192.168.1.101] (abym53.neoplus.adsl.tpnet.pl. [83.9.32.53])
-        by smtp.gmail.com with ESMTPSA id t5-20020a05651c204500b0027ff129de9fsm1889764ljo.24.2023.01.11.12.57.49
+        by smtp.gmail.com with ESMTPSA id x3-20020a056512078300b004b40c2fccfdsm2898708lfr.59.2023.01.11.12.58.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Jan 2023 12:57:51 -0800 (PST)
-Message-ID: <cdf3b086-2fed-0207-f018-a21bab54faf2@linaro.org>
-Date:   Wed, 11 Jan 2023 21:57:48 +0100
+        Wed, 11 Jan 2023 12:58:41 -0800 (PST)
+Message-ID: <9a3071e1-0e3f-ae87-0574-7659c52bc884@linaro.org>
+Date:   Wed, 11 Jan 2023 21:58:39 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
-Subject: Re: [PATCH 02/13] clk: qcom: cpu-8996: correct PLL programming
+Subject: Re: [PATCH 03/13] clk: qcom: cpu-8996: fix the init clock rate
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -68,9 +68,9 @@ To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org
 References: <20230111192004.2509750-1-dmitry.baryshkov@linaro.org>
- <20230111192004.2509750-3-dmitry.baryshkov@linaro.org>
+ <20230111192004.2509750-4-dmitry.baryshkov@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230111192004.2509750-3-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230111192004.2509750-4-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -86,42 +86,27 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 11.01.2023 20:19, Dmitry Baryshkov wrote:
-> Change PLL programming to follow the downstream setup.
+> Change PLL programming to let both power and performance cluster clocks
+> to start from the maximum common frequency.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Can you point me to the source of this? My local random msm-3.18 has this at 60.
 
 Konrad
->  drivers/clk/qcom/clk-cpu-8996.c | 7 +++----
->  1 file changed, 3 insertions(+), 4 deletions(-)
+>  drivers/clk/qcom/clk-cpu-8996.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 > diff --git a/drivers/clk/qcom/clk-cpu-8996.c b/drivers/clk/qcom/clk-cpu-8996.c
-> index ee76ef958d31..ed8cb558e1aa 100644
+> index ed8cb558e1aa..d51965fda56d 100644
 > --- a/drivers/clk/qcom/clk-cpu-8996.c
 > +++ b/drivers/clk/qcom/clk-cpu-8996.c
-> @@ -93,12 +93,9 @@ static const u8 prim_pll_regs[PLL_OFF_MAX_REGS] = {
->  static const u8 alt_pll_regs[PLL_OFF_MAX_REGS] = {
->  	[PLL_OFF_L_VAL] = 0x04,
->  	[PLL_OFF_ALPHA_VAL] = 0x08,
-> -	[PLL_OFF_ALPHA_VAL_U] = 0x0c,
->  	[PLL_OFF_USER_CTL] = 0x10,
-> -	[PLL_OFF_USER_CTL_U] = 0x14,
->  	[PLL_OFF_CONFIG_CTL] = 0x18,
->  	[PLL_OFF_TEST_CTL] = 0x20,
-> -	[PLL_OFF_TEST_CTL_U] = 0x24,
->  	[PLL_OFF_STATUS] = 0x28,
->  };
->  
-> @@ -106,8 +103,10 @@ static const u8 alt_pll_regs[PLL_OFF_MAX_REGS] = {
+> @@ -102,7 +102,7 @@ static const u8 alt_pll_regs[PLL_OFF_MAX_REGS] = {
+>  /* PLLs */
 >  
 >  static const struct alpha_pll_config hfpll_config = {
->  	.l = 60,
-> -	.config_ctl_val = 0x200d4aa8,
-> +	.config_ctl_val = 0x200d4828,
+> -	.l = 60,
+> +	.l = 54,
+>  	.config_ctl_val = 0x200d4828,
 >  	.config_ctl_hi_val = 0x006,
-> +	.test_ctl_val = 0x1c000000,
-> +	.test_ctl_hi_val = 0x00004000,
->  	.pre_div_mask = BIT(12),
->  	.post_div_mask = 0x3 << 8,
->  	.post_div_val = 0x1 << 8,
+>  	.test_ctl_val = 0x1c000000,
