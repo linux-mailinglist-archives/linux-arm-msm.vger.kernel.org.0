@@ -2,113 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E9CB96655AE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 09:04:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B480E6655CB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 09:16:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235993AbjAKIEE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Jan 2023 03:04:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60598 "EHLO
+        id S229688AbjAKIQa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Jan 2023 03:16:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236094AbjAKID1 (ORCPT
+        with ESMTP id S231861AbjAKIQU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Jan 2023 03:03:27 -0500
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41B50EB4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 00:03:04 -0800 (PST)
-Received: by mail-ej1-x62c.google.com with SMTP id az20so15737875ejc.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 00:03:04 -0800 (PST)
+        Wed, 11 Jan 2023 03:16:20 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C56E64D7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 00:16:19 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id t5so9814311wrq.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 00:16:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=BKlqJr8rxgngLJH6pqdTtSMxFqepSX+OLChFw1pfl0U=;
-        b=blHHl0EYlvw4R9xi6a9b4tjVJ9lf81N3J1kYhMT9oBSK0Xk//e/pyIvK3VQbsnLag9
-         tY0aktQb0V42doBIH8mHFK18/oW+HbQ+uvZgOqV9yIbLLiwbHDYSGKeyym2P5pH2IE+b
-         Q6IGT6YUO1d3EpQLWOK2LcJUWijPt/CSGfgiKEOxjvpKY9lFBzp++YBRVJifiKWaP8d0
-         F0m+J8D/HI1J+LrJnsKsY6jec/FpbSVUvy9g6JqhunljFzAvIr0Ca490Knsq155WRhhe
-         7WR2/A1iHTmdLffzTmG/mq9HLKY87RUboLj4F+Qjr5CA7hzBAa87nO76rbA3hWMTCXKG
-         kQsQ==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=HIGwyVQacqiHb5bf3hpUUrqzBySRCldHEdV+xtBD5sA=;
+        b=EKk9qUiQTIrBaOvEvy/s/zn+iaENgDwFbD3XwA1nXJV5sDoHVOMYJIR1vwT8CIly+v
+         2fSciw+lxv3FdxmiykmSKVe74DTutWreBK0qvg1q1DvOv0ewSafJKeYe/GXCVHDsfRrX
+         xZg2M/ATLQSZgRs3WzZ0/QdKOabiXm5uuhU4j5VWiyzR3IkGL4We+W2+wYwiz6PvxLZq
+         +FJiGHSIjP2cXDjnvIq33rBRIQxXdnJ4FUOFjcslROnGh8k6tcSbyaqydDdSD05G86/c
+         AwbqUH281aGBOQ83ij6k2iV8JBJEDCpqdivNAwLcZf24xvargjnKnnsMSo5iX/Tl/7qT
+         xqNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BKlqJr8rxgngLJH6pqdTtSMxFqepSX+OLChFw1pfl0U=;
-        b=JUSKkAgNHh0+6/Pfy31HtRcpqPqQmOU8Atj1Dh/jonYm6ggi398B+fCPge1q7guPcQ
-         Yo/JxyRl8BVGTnjCUFHFg7A0ha3hVIOUhmxUYn9fX/qiyyJeaEai4kF4gJuNpCjxk3ZH
-         YoXzhRR0k0QH1DgPPcJKskkt5qzyCwHANpJV+XJSknnT/Jsyg5Hg7jhOVDoC5eVfQYX4
-         j1r4Kus5+Yo90pByJqF6py8oAL6MVTvDsLSptoSAh2CQp5HpS98pkc/uEp86EVqwM86o
-         QVZgdpdOemsZB90JwVKJCXa/Ks4tLC4mZrEdcdDbv6uphMcgUWHAL/gV9gswJos2vj1z
-         1qDQ==
-X-Gm-Message-State: AFqh2kq/aD0RUsOfA2tZubcylmmJ3NJSLqzO9KRujfNfsIg6S1zVa0vv
-        m9PtR1JG3ikOTcuXBxwSC8OYwQ==
-X-Google-Smtp-Source: AMrXdXt+2nJWMOvqwxVyelsYWGLeubGj6/701M/dwq7OgNEENmB3vGAspsD5YiGlJ9GyVdc1kd7CBg==
-X-Received: by 2002:a17:907:a481:b0:7c0:c1cc:c68 with SMTP id vp1-20020a170907a48100b007c0c1cc0c68mr60357776ejc.6.1673424182728;
-        Wed, 11 Jan 2023 00:03:02 -0800 (PST)
-Received: from hackbox.lan ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id k23-20020a17090632d700b00837ac146a53sm5876522ejk.23.2023.01.11.00.03.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Jan 2023 00:03:02 -0800 (PST)
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: [PATCH] arm64: defconfig: Enable GCC, TCSRCC, pinctrl and interconnect for SM8550
-Date:   Wed, 11 Jan 2023 10:02:54 +0200
-Message-Id: <20230111080254.1181325-1-abel.vesa@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=HIGwyVQacqiHb5bf3hpUUrqzBySRCldHEdV+xtBD5sA=;
+        b=TQPD9GFh4ut5K5tVpkosWNosc0st469NeZ+l3GsfIoyn1QPC0SFGCjpozf9mRtK9Da
+         V8p8PrytIst1ltoGaUOE9xqnwHicNFf2ns3DQdVag5X4sZThZ1s9339NPz5SpInPRqFB
+         ESmZOqldYWqziRrhqdag4FssjIdEZiPEffZGE4BgS3wwMat20/He6kuSbMv9ECeLZTza
+         vSm82mjuTgmpIJKN4LiEQs2J3eJPyyK6GnT5xqRq2GrHN46mtLXFOUDDestyCgzMHaUG
+         21h/n9TKSTTilszoGcQCAOOLv3f4CxvoF9vwqAEdmuT+31zLclNnGwCQ3WL8BMQR0g8Z
+         y8QA==
+X-Gm-Message-State: AFqh2krWsDqA8ssC61LvCXZVhA7wVWWOUi8Z8XrJgfhTQ+bLtOqe4MKQ
+        cP/uqgeCqex8aVW87RdJAXtGwA==
+X-Google-Smtp-Source: AMrXdXtUpF24A+u0sOYmPxS/LiKCYBp0pEkJLZuU7KrwEwxgcZGkYFjo4y+fowz3eKAtReULW95HNw==
+X-Received: by 2002:a5d:53cb:0:b0:27c:84c4:5913 with SMTP id a11-20020a5d53cb000000b0027c84c45913mr33014574wrw.30.1673424977839;
+        Wed, 11 Jan 2023 00:16:17 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id t17-20020a05600001d100b00241d21d4652sm13035441wrx.21.2023.01.11.00.16.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Jan 2023 00:16:17 -0800 (PST)
+Message-ID: <ebafbfd1-cd5a-2ef8-a0ee-685c67235816@linaro.org>
+Date:   Wed, 11 Jan 2023 09:16:15 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH] dt-bindings: arm: qcom: add board-id/msm-id for MSM8956,
+ SDM636 and SM4250
+Content-Language: en-US
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20221214150605.173346-1-krzysztof.kozlowski@linaro.org>
+ <20221214152915.wshz4odyqcupo6xw@SoMainline.org>
+ <65ccd0c9-8bd9-fc3c-ef33-78b905adf294@linaro.org>
+ <20230111043000.6svnos6u4ynwxjgv@builder.lan>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230111043000.6svnos6u4ynwxjgv@builder.lan>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the SM8550 GCC, TCSRCC, interconnect and pinctrl drivers as built-in.
-All of these are necessary for the Qualcomm SM8550 platform to boot
-to shell.
+On 11/01/2023 05:30, Bjorn Andersson wrote:
+> On Wed, Dec 14, 2022 at 05:45:49PM +0100, Krzysztof Kozlowski wrote:
+>> On 14/12/2022 16:29, Marijn Suijten wrote:
+>>> On 2022-12-14 16:06:05, Krzysztof Kozlowski wrote:
+>>>> Allow qcom,board-id and qcom,msm-id leagcy properties on these older
+>>>> platforms: MSM8956, SDM636 and SM4250.  Also mention more OnePlus
+>>>> devices using modified qcom,board-id field.
+>>>>
+>>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>>
+>>> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+>>>
+>>>> ---
+>>>>  Documentation/devicetree/bindings/arm/qcom.yaml | 5 +++++
+>>>>  1 file changed, 5 insertions(+)
+>>>>
+>>>> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+>>>> index d45e2129fce3..cfb7f5caf606 100644
+>>>> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+>>>> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+>>>> @@ -925,15 +925,18 @@ allOf:
+>>>>                - qcom,apq8026
+>>>>                - qcom,apq8094
+>>>>                - qcom,apq8096
+>>>> +              - qcom,msm8956
+>>>
+>>> I am certain this (and msm8976) were added in [1] but it somehow got
+>>> lost when that was merged as 05c0c38dc752 ("dt-bindings: arm: qcom:
+>>> Document msm8956 and msm8976 SoC and devices")?
+>>>
+>>> Should we also add qcom,msm8976 or only when a user for that board is
+>>> added?
+>>
+>> Bjorn,
+>> You need to fix your scripts. It's not the first time when applied patch
+>> is changed and its pieces are gone.
+>>
+> 
+> I don't have any script that automagically solves merge conflicts, so if
+> you prefer to avoid the occasional mistake I can start reject your
+> patches as soon as they don't apply 100% cleanly.
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- arch/arm64/configs/defconfig | 4 ++++
- 1 file changed, 4 insertions(+)
+I vote for this (unless for really trivial cases). The submitter should
+know better how to resolve the conflict (through rebase) than you.
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 4aeba64e9034..2793b5420a14 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -565,6 +565,7 @@ CONFIG_PINCTRL_SM8150=y
- CONFIG_PINCTRL_SM8250=y
- CONFIG_PINCTRL_SM8350=y
- CONFIG_PINCTRL_SM8450=y
-+CONFIG_PINCTRL_SM8550=y
- CONFIG_PINCTRL_LPASS_LPI=m
- CONFIG_GPIO_ALTERA=m
- CONFIG_GPIO_DAVINCI=y
-@@ -1114,6 +1115,8 @@ CONFIG_SM_DISPCC_8250=y
- CONFIG_SM_GCC_6115=y
- CONFIG_SM_GCC_8350=y
- CONFIG_SM_GCC_8450=y
-+CONFIG_SM_GCC_8550=y
-+CONFIG_SM_TCSRCC_8550=y
- CONFIG_SM_GPUCC_8150=y
- CONFIG_SM_GPUCC_8250=y
- CONFIG_SM_VIDEOCC_8250=y
-@@ -1344,6 +1347,7 @@ CONFIG_INTERCONNECT_QCOM_SM8150=m
- CONFIG_INTERCONNECT_QCOM_SM8250=m
- CONFIG_INTERCONNECT_QCOM_SM8350=m
- CONFIG_INTERCONNECT_QCOM_SM8450=y
-+CONFIG_INTERCONNECT_QCOM_SM8550=y
- CONFIG_HTE=y
- CONFIG_HTE_TEGRA194=y
- CONFIG_HTE_TEGRA194_TEST=m
--- 
-2.34.1
+Best regards,
+Krzysztof
 
