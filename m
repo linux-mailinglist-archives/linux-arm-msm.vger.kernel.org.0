@@ -2,175 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 87CF06662DC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 19:35:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 47C186662FB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 19:47:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232212AbjAKSfT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Jan 2023 13:35:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40146 "EHLO
+        id S235225AbjAKSrS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Jan 2023 13:47:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232680AbjAKSfS (ORCPT
+        with ESMTP id S235030AbjAKSrR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Jan 2023 13:35:18 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB5131005C;
-        Wed, 11 Jan 2023 10:35:16 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id d30so19980441lfv.8;
-        Wed, 11 Jan 2023 10:35:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Fp1sOF8ngdpO8Gze+a9HDRnyky/d5MXRdBa+hgAZWjE=;
-        b=nwBfdFCN74hmamqn5uTT6DqKYCdaP+PQXwuMT/R2WwxMMYbO+Sn7mM5Rt/aPimQclE
-         aPVxJBS03GdtVQvvtEfB8JHdpzie3qhGJeb+bKzQjU2kFE0iJmOXlm0ur++c3o+0KLfZ
-         HQnf8tBRl1PnNtV5pFf+SF0ELjNmtRLF7pxvqqTbtjpmL4BuArULPK2Z/OQn+TuVsoFz
-         GO4JoEdWGhPpEtTlOUKsyc9oKWXuBwpuctYaX8A9+Ds9yOywxMCvP0kkNGR+kTToV9j/
-         KW0gy75l8yaB3FDOXmmnQEYU76Q8tiymL+4pjXpd/h8naWAZiIeiiseYOZWPKoQvngeu
-         hMnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Fp1sOF8ngdpO8Gze+a9HDRnyky/d5MXRdBa+hgAZWjE=;
-        b=T96ai2JGl4opWk+FU7wrnG1eatp4If/Xr1ft6BsgX9hXBbtZTbhzR0wQ1ki1L4muuN
-         p/IQo9mx4t3Gqk2rjMN17sKB+QNPpgh5K8Wc4FKAfaeJwgNG+27q/g6AbfSvCuvLrw7h
-         6NF+pz56eanlsVw4mi6UpqUANDEG8YJwW5zGqplWj2e3GVNXaQPY7AUdhBab8NDYzGKN
-         3B/bsFFjaV4k7/2ErF7lAHHHQqE+6wYDoueuH1rUE3JqiDumNJBcilkrzPZUKY2kS3Yw
-         OLro+hdC34pHY7fz0M6+tjxKiWPhDGBM4hHWBpAkWDxSB0rDZNas8tnisSLrpoR4Y3R0
-         dCVQ==
-X-Gm-Message-State: AFqh2kqQXj8NNYIetTWeA1MMX/NpSSbMFyMzfyonrglG6YuXB2OjhVxm
-        xaa3raPVTndBDpy1gJG7T6bTzCcj6yj45g==
-X-Google-Smtp-Source: AMrXdXvpC3qUv6qekugrxfoha94O4qIbbttTcvnts1TboJ49oZN6CqMIPS7SpJS55YJBwG6JZ2DaHQ==
-X-Received: by 2002:a05:6512:108f:b0:4a4:68b8:c2e4 with SMTP id j15-20020a056512108f00b004a468b8c2e4mr23692376lfg.59.1673462115112;
-        Wed, 11 Jan 2023 10:35:15 -0800 (PST)
-Received: from i-vetokaappi.home.lan (dsl-hkibng42-56733b-36.dhcp.inet.fi. [86.115.59.36])
-        by smtp.gmail.com with ESMTPSA id m5-20020a056512358500b004cb35b31b96sm2837826lfr.257.2023.01.11.10.35.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Jan 2023 10:35:14 -0800 (PST)
-From:   =?UTF-8?q?Matti=20Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        =?UTF-8?q?Matti=20Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Wed, 11 Jan 2023 13:47:17 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B9F92F791;
+        Wed, 11 Jan 2023 10:47:16 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id DD6FA61DD5;
+        Wed, 11 Jan 2023 18:47:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B17EEC433D2;
+        Wed, 11 Jan 2023 18:47:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1673462835;
+        bh=LUwdBfI+Io1ch2RMgaYtsm8GKXDVco8UDikkgJQf+ZQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=uXT8KfXho7j5kLBrgXM5KTMKZlxJ1XRrtNULrZhtIeZHOxYqO76VH6GQIM4aUCqxS
+         /1KVTTVBBI+fPA1B8+DKQcqEu8NUL3M+i2y0SYVG6F7mjhH/HZ8ewoTUKl+9A0KvPq
+         7QQa6/8v8mTk/vtgZqXC46ITMwt+axPqlXBgtnRasbae3oDKJLuciRHu2dHypmyhzJ
+         zj5vvJOUCuemAmTo8IRncAYSSqAiIk8CK7XCE4LvheH4UqI9xv/tPworzAFvjav/hd
+         iJau6pARr5asjBQX9tnQUDQrpeb3+3IlgXYIegji3bUAaUk3o1iBx8lb+JEpvnjss0
+         I7kM8112dBDzw==
+Date:   Wed, 11 Jan 2023 12:47:12 -0600
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2] ARM: dts: qcom: apq8026-samsung-matisse-wifi: Add display backlight
-Date:   Wed, 11 Jan 2023 20:35:01 +0200
-Message-Id: <20230111183502.706151-1-matti.lehtimaki@gmail.com>
-X-Mailer: git-send-email 2.34.1
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v7 2/4] arm64: dts: qcom: sc8280xp-crd: Enable EDP
+Message-ID: <20230111184712.krrcsg7fto464e7a@builder.lan>
+References: <20230111035906.2975494-1-quic_bjorande@quicinc.com>
+ <20230111035906.2975494-3-quic_bjorande@quicinc.com>
+ <Y764pvrxF9Z8tgKU@hovoldconsulting.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y764pvrxF9Z8tgKU@hovoldconsulting.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Uses ti,lp8556 backlight with clk-pwm.
+On Wed, Jan 11, 2023 at 02:24:54PM +0100, Johan Hovold wrote:
+> On Tue, Jan 10, 2023 at 07:59:04PM -0800, Bjorn Andersson wrote:
+> > From: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > 
+> > The SC8280XP CRD has a EDP display on MDSS0 DP3, enable relevant nodes
+> > and link it together with the backlight control.
+> > 
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> > ---
+> > 
+> > Changes since v6:
+> > - None
+> > 
+> >  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 73 ++++++++++++++++++++++-
+> >  1 file changed, 72 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+> > index 551768f97729..db12d8678861 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+> > +++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+> > @@ -20,7 +20,7 @@ aliases {
+> >  		serial0 = &qup2_uart17;
+> >  	};
+> >  
+> > -	backlight {
+> > +	backlight: backlight {
+> >  		compatible = "pwm-backlight";
+> >  		pwms = <&pmc8280c_lpg 3 1000000>;
+> >  		enable-gpios = <&pmc8280_1_gpios 8 GPIO_ACTIVE_HIGH>;
+> > @@ -34,6 +34,22 @@ chosen {
+> >  		stdout-path = "serial0:115200n8";
+> >  	};
+> >  
+> > +	vreg_edp_3p3: regulator-edp-3p3 {
+> > +		compatible = "regulator-fixed";
+> > +
+> > +		regulator-name = "VREG_EDP_3P3";
+> 
+> Looks like you forgot to change this to "VCC3LCD" which should be the
+> net name.
+> 
 
-Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
----
-This patch was part of the series
-https://lore.kernel.org/linux-arm-msm/20230106114403.275865-1-matti.lehtimaki@gmail.com/
-which already had the other patches applied.
+That's because it's not called VCC3LCD on the CRD.
 
-Changes in v2:
-  - Add empty line between subnodes
-  - Move pwm node to correct place
-  - Reorder pinctrl properties
----
- .../dts/qcom-apq8026-samsung-matisse-wifi.dts | 61 +++++++++++++++++++
- 1 file changed, 61 insertions(+)
+> > +		regulator-min-microvolt = <3300000>;
+> > +		regulator-max-microvolt = <3300000>;
+> > +
+> > +		gpio = <&tlmm 25 GPIO_ACTIVE_HIGH>;
+> > +		enable-active-high;
+> > +
+> > +		pinctrl-names = "default";
+> > +		pinctrl-0 = <&edp_reg_en>;
+> > +
+> > +		regulator-boot-on;
+> > +	};
+> > +
+> >  	vreg_edp_bl: regulator-edp-bl {
+> >  		compatible = "regulator-fixed";
+> 
+> > @@ -494,6 +559,12 @@ hastings_reg_en: hastings-reg-en-state {
+> >  &tlmm {
+> >  	gpio-reserved-ranges = <74 6>, <83 4>, <125 2>, <128 2>, <154 7>;
+> >  
+> > +	edp_reg_en: edp-reg-en-state {
+> > +		pins = "gpio25";
+> > +		function = "gpio";
+> > +		drive-strength = <16>;
+> 
+> 'bias-disable' as well?
+> 
 
-diff --git a/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts b/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
-index 15b9590ba07b..91b860e24681 100644
---- a/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
-+++ b/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
-@@ -80,6 +80,55 @@ key-volume-up {
- 		};
- 	};
- 
-+	i2c-backlight {
-+		compatible = "i2c-gpio";
-+		sda-gpios = <&tlmm 20 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
-+		scl-gpios = <&tlmm 21 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
-+
-+		pinctrl-0 = <&backlight_i2c_default_state>;
-+		pinctrl-names = "default";
-+
-+		i2c-gpio,delay-us = <4>;
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		backlight@2c {
-+			compatible = "ti,lp8556";
-+			reg = <0x2c>;
-+
-+			dev-ctrl = /bits/ 8 <0x80>;
-+			init-brt = /bits/ 8 <0x3f>;
-+			pwm-period = <100000>;
-+
-+			pwms = <&backlight_pwm 0 100000>;
-+			pwm-names = "lp8556";
-+
-+			rom-a0h {
-+				rom-addr = /bits/ 8 <0xa0>;
-+				rom-val = /bits/ 8 <0x44>;
-+			};
-+
-+			rom-a1h {
-+				rom-addr = /bits/ 8 <0xa1>;
-+				rom-val = /bits/ 8 <0x6c>;
-+			};
-+
-+			rom-a5h {
-+				rom-addr = /bits/ 8 <0xa5>;
-+				rom-val = /bits/ 8 <0x24>;
-+			};
-+		};
-+	};
-+
-+	backlight_pwm: pwm {
-+		compatible = "clk-pwm";
-+		#pwm-cells = <2>;
-+		clocks = <&mmcc CAMSS_GP0_CLK>;
-+		pinctrl-0 = <&backlight_pwm_default_state>;
-+		pinctrl-names = "default";
-+	};
-+
- 	reg_tsp_1p8v: regulator-tsp-1p8v {
- 		compatible = "regulator-fixed";
- 		regulator-name = "tsp_1p8v";
-@@ -418,6 +467,18 @@ accel_int_default_state: accel-int-default-state {
- 		bias-disable;
- 	};
- 
-+	backlight_i2c_default_state: backlight-i2c-default-state {
-+		pins = "gpio20", "gpio21";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	backlight_pwm_default_state: backlight-pwm-default-state {
-+		pins = "gpio33";
-+		function = "gp0_clk";
-+	};
-+
- 	muic_int_default_state: muic-int-default-state {
- 		pins = "gpio67";
- 		function = "gpio";
--- 
-2.34.1
+Sound like a good idea, adding that as I'm picking up the patches.
 
+Regards,
+Bjorn
+
+> > +	};
+> > +
+> >  	kybd_default: kybd-default-state {
+> >  		disable-pins {
+> >  			pins = "gpio102";
+> 
+> Looks good otherwise,
+> 
+> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+> 
+> Johan
