@@ -2,119 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C62B665901
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 11:27:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C14A5665916
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 11:33:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233056AbjAKK1S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Jan 2023 05:27:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51268 "EHLO
+        id S229961AbjAKKdL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Jan 2023 05:33:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236508AbjAKK1L (ORCPT
+        with ESMTP id S234175AbjAKKdI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Jan 2023 05:27:11 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53AB525D1;
-        Wed, 11 Jan 2023 02:27:06 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E0A3F61941;
-        Wed, 11 Jan 2023 10:27:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 501D1C43392;
-        Wed, 11 Jan 2023 10:27:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1673432825;
-        bh=h8TxIxPqDFkhpYbcLfoV6BQoG0WhTrglcCMN9K0uJt8=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=N6AM/R958N4u18XHrq8UNFqyP70G0+gFwMjnQ7yqMsG47nguqfl6pW+209xvjJbjo
-         rbyiV1w6ouyXKlZ7pR08EkBzODxgmNUTobWEUTrURUNmsiM/RuXCO9kxLqze0HyhcR
-         S6C/niQFotI+kRCFg/uXnEq6zKAWOBRw0nS0DWmyZjAkNvygext7RU932qc4NbjrQS
-         KV0HgZHWYoLzmXVOUeoidM1prvbzJLc7G6Y56qtqNpZx4XmtMUCyuFD3A2CAvUgequ
-         zGm3mij0lsMIAscKAhWH2v20gJAspQzMm0kSukOEDurAvSSWc71hsGMCkJQLn4kfXu
-         IsWN6cuZdIQww==
-Received: by mail-lf1-f42.google.com with SMTP id bt23so22774660lfb.5;
-        Wed, 11 Jan 2023 02:27:05 -0800 (PST)
-X-Gm-Message-State: AFqh2krQ8TFnT+Z/YleYZcefXtraDE3YjVmnsLc3pWlSuq4zzep5cC78
-        A1BxxR70hX9Bv4y1rCjJBVyBNhgrk+YYDgSS260=
-X-Google-Smtp-Source: AMrXdXsLArq0Wo9nCQp1TG2fDBNEKyKeOcVuKtJtKzZgvOKKPRl44qz6sy8RasrBp5p6S+z6L6lslWMdW/csV0WAiDQ=
-X-Received: by 2002:a05:6512:15a3:b0:4bc:bdf5:f163 with SMTP id
- bp35-20020a05651215a300b004bcbdf5f163mr3731265lfb.583.1673432823315; Wed, 11
- Jan 2023 02:27:03 -0800 (PST)
+        Wed, 11 Jan 2023 05:33:08 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0C446321;
+        Wed, 11 Jan 2023 02:33:07 -0800 (PST)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30B8wwxd006816;
+        Wed, 11 Jan 2023 10:33:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=1oF420EDxAicWGUXE/uXSiSuvzCuEmIK+W0MR2J+zgY=;
+ b=jIJ0tJQ0PF1PJ9qmhGGKUSakG1ihGRz7ii85luuFSf63p06XejrXXN2Kb98KRFqLY0uT
+ 6Vkpr9nz445QwIU+KGGiQmnbpj8ZJb3NroQguokKcfu+fK1Pv/b2v8jhV0vqDjBkMdLm
+ v+dDaP21YxJxqBtW9BVSv10sjZP016MC/Bx6SqinrIpINO3RyO3hfyzgzaX3VA1v9U2f
+ TXSdzhpRvMAPsojRKLgSXUbea+ZCNX86/EZZi/EpQcEE83fPeeUVM33UBHGnJF0VK36s
+ RJnPp4ZyOtfAkFph4uXJHQBApMDWohEsqJeEua5q681dFTdnkCoDCjMeuPUTtB75JAhS SQ== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n1k6a0yeb-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 11 Jan 2023 10:33:04 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30BAX3aX008255
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 11 Jan 2023 10:33:03 GMT
+Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 11 Jan
+ 2023 02:33:00 -0800
+Message-ID: <d7f9a6be-ced8-b3b1-7940-580e71c6cb06@quicinc.com>
+Date:   Wed, 11 Jan 2023 16:02:51 +0530
 MIME-Version: 1.0
-References: <63bc16ce.IBWX7dhtPEB7dLIq%lkp@intel.com> <CAMj1kXGAf7ikEU5jLoik0xrOde0xBg0yJkOo5=PtEtNXoUxMXA@mail.gmail.com>
-In-Reply-To: <CAMj1kXGAf7ikEU5jLoik0xrOde0xBg0yJkOo5=PtEtNXoUxMXA@mail.gmail.com>
-From:   Ard Biesheuvel <ardb@kernel.org>
-Date:   Wed, 11 Jan 2023 11:26:52 +0100
-X-Gmail-Original-Message-ID: <CAMj1kXH1GHmhc=SZDRFV2GOpncnn1rmbr8AZhiS8iDc6u+1ATQ@mail.gmail.com>
-Message-ID: <CAMj1kXH1GHmhc=SZDRFV2GOpncnn1rmbr8AZhiS8iDc6u+1ATQ@mail.gmail.com>
-Subject: Re: [linux-next:master] BUILD REGRESSION 543b9b2fe10b2e12b8d773af65314d322f91e479
-To:     kernel test robot <lkp@intel.com>
-Cc:     Andrew Morton <akpm@linux-foundation.org>,
-        speakup@linux-speakup.org, linux-usb@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        dri-devel@lists.freedesktop.org,
-        Linux Memory Management List <linux-mm@kvack.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH] arm64: dts: qcom: sm8450: Add TCSR halt register space
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1673428818-26112-1-git-send-email-quic_mojha@quicinc.com>
+ <ab6a99da-e91b-20de-3126-3f1f94ce277b@linaro.org>
+ <c5dc8042-717b-22eb-79f6-d18ab10d6685@linaro.org>
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <c5dc8042-717b-22eb-79f6-d18ab10d6685@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: rB1f-Es52DChQWHHcSfLcnNu_tjCx04-
+X-Proofpoint-GUID: rB1f-Es52DChQWHHcSfLcnNu_tjCx04-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2023-01-11_04,2023-01-11_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
+ lowpriorityscore=0 impostorscore=0 phishscore=0 clxscore=1015
+ malwarescore=0 mlxscore=0 priorityscore=1501 spamscore=0 bulkscore=0
+ mlxlogscore=901 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301110080
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 9 Jan 2023 at 15:38, Ard Biesheuvel <ardb@kernel.org> wrote:
->
-> On Mon, 9 Jan 2023 at 14:31, kernel test robot <lkp@intel.com> wrote:
-> >
-> > tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git master
-> > branch HEAD: 543b9b2fe10b2e12b8d773af65314d322f91e479  Add linux-next specific files for 20230109
-> >
-> > Error/Warning: (recently discovered and may have been fixed)
-> >
-> > aarch64-linux-ld: ID map text too big or misaligned
->
-> This is caused by linker veneers ('stubs') that are emitted into the
-> ID map text section:
->
->  *(.idmap.text)
->  .idmap.text    0xffffffc018c04000       0x38 arch/arm64/kernel/hyp-stub.o
->  .idmap.text    0xffffffc018c04038       0x28 arch/arm64/kernel/sleep.o
->                 0xffffffc018c04038                cpu_resume
->  .idmap.text    0xffffffc018c04060       0x38 arch/arm64/kernel/cpu-reset.o
->                 0xffffffc018c04060                cpu_soft_restart
->  .idmap.text    0xffffffc018c04098      0x468 arch/arm64/kernel/head.o
->                 0xffffffc018c04098                init_kernel_el
->                 0xffffffc018c04290                secondary_holding_pen
->                 0xffffffc018c042c8                secondary_entry
->                 0xffffffc018c043c4                __enable_mmu
->                 0xffffffc018c0440c                __cpu_secondary_check52bitva
->  .idmap.text    0xffffffc018c04500      0x3c4 arch/arm64/mm/proc.o
->                 0xffffffc018c04500                cpu_do_resume
->                 0xffffffc018c045a8                idmap_cpu_replace_ttbr1
->                 0xffffffc018c045d4                idmap_kpti_install_ng_mappings
->                 0xffffffc018c047bc                __cpu_setup
->  *fill*         0xffffffc018c048c4        0x4
->  .idmap.text.stub
->                 0xffffffc018c048c8     0xf7c8 linker stubs
->                 0xffffffc018c1c8c8                __idmap_text_end = .
->
-> It seems unlikely that the entire .idmap.text.stub section is
-> dedicated to veneers for code in .idmap.text, and the linker probably
-> dumps them here because the next output section is non-executable.
->
+Hi,
 
+On 1/11/2023 3:30 PM, Krzysztof Kozlowski wrote:
+> On 11/01/2023 10:59, Krzysztof Kozlowski wrote:
+>> On 11/01/2023 10:20, Mukesh Ojha wrote:
+>>> Add TCSR register space and refer it from scm node, so that
+>>> it can be used by SCM driver.
+>>>
+>>> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+>>> ---
+>>>   arch/arm64/boot/dts/qcom/sm8450.dtsi | 6 ++++++
+>>>   1 file changed, 6 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>> index 5704750..e0fa733 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>> @@ -270,6 +270,7 @@
+>>>   	firmware {
+>>>   		scm: scm {
+>>>   			compatible = "qcom,scm-sm8450", "qcom,scm";
+>>> +			qcom,dload-mode = <&tcsr 0x13000>;
+>>>   			interconnects = <&aggre2_noc MASTER_CRYPTO 0 &mc_virt SLAVE_EBI1 0>;
+>>>   			#reset-cells = <1>;
+>>>   		};
+>>> @@ -1986,6 +1987,11 @@
+>>>   			#hwlock-cells = <1>;
+>>>   		};
+>>>   
+>>> +		tcsr: syscon@1fc0000 {
+>>> +			compatible = "syscon";
+>>
+>> This is not allowed by itself.
+> 
+> Eh, that was not proper English... I wanted to say: This is not allowed
+> on its own. You need specific compatible. ALWAYS.
 
-I bisected this to
+Sorry, it was my first DT patch, I did not run dtbs_check.
+Thanks for correcting.
 
-commit 5e5ff73c2e5863f93fc5fd78d178cd8f2af12464
-Author: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-Date:   Mon Oct 17 20:04:50 2022 +0530
+I think, i have missed adding qcom,tcsr-sm8450 in
+Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
+also need to add qcom,tcsr-sm8450 in above compatible.
 
-    asm-generic/io: Add _RET_IP_ to MMIO trace for more accurate debug info
-
-which seems entirely unrelated, but looks like it may be causing the
-number of direct calls (and therefore the number of trampolines) to
-increase, causing the ID map to blow up like it does.
+-Mukesh
+> 
+>> You should have warnings when running
+>> dtbs_check.
+>>
+>> Best regards,
+>> Krzysztof
+>>
+> 
+> Best regards,
+> Krzysztof
+> 
