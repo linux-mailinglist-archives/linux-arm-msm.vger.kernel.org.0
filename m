@@ -2,76 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F2D9566650A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 21:51:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 84277666525
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 21:58:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233101AbjAKUvh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Jan 2023 15:51:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54130 "EHLO
+        id S231801AbjAKU56 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Jan 2023 15:57:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230055AbjAKUvg (ORCPT
+        with ESMTP id S232291AbjAKU55 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Jan 2023 15:51:36 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A12E53C71D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 12:51:34 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id m6so25364550lfj.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 12:51:34 -0800 (PST)
+        Wed, 11 Jan 2023 15:57:57 -0500
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7202D60DC
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 12:57:55 -0800 (PST)
+Received: by mail-lj1-x22f.google.com with SMTP id o7so16965281ljj.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 12:57:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DZVlKUhfc1i9OxoybHYHtIAo0AKIGGWqWJ2gIpTCzIM=;
-        b=kosm8WJAxa8BwkKSfwwtXUZBKOjT5y21Dgn4xSAyNiKMjLtvJebhittim222BCFcDz
-         +PtlOyLO9W/2+Mb+X9B+wjU85DUUwuF4LbU8QCpKkV65w+Amx3YkO3E9eksvnRagUuP5
-         grlIxhZX8Tfily2HjjxLjkWz+xukRrh1Ai8XaxW5hzoxisjtqtIZ3UqSf5Ge4csjcpfc
-         bSpx9kGbwb+p5HFthnYHqDFbGt3d3eqshaI/Q4yybHvSEdUuPADE6GcMSYmNq8PXE0NH
-         7EVIhinKn4SIi3n0OL6ber55n5YD+zSKHl3DrGDj+k/xV5rmFn1k16x0t6Mjw5Zv1YzQ
-         y3oA==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=O0xPaw/Uyv/k7eUrz3wz2tQnGPVLOhSDaCGzsFiBw08=;
+        b=PHIrZLjfwQAfYFzBCB3qVyPbnK1UiAST6v9IF2VJ6YKqoAC01RRoqjljm6PRgbRZDd
+         ypU2+ap8fjPZFZe3s8HzwEjsudpvb01z4yudhBAF4KidIwbrCefrHsHfJnYlp76AeMHE
+         0VKnSp4Lxa+VwFicuaHHWuQBNumLGAAtDqtRyqBeok+kxVXJX95Q/S/BWzYv5J/DjQld
+         Rv3wZBgf4V3QdRSXsVuQ1LVHHq0jFC899VORqneigPbZtC091iHHy1BZ05rSoyVaxT2K
+         zzpsd7gsKdnkck7tMdLoYTLZj6wVxiBlB3kS5/OuR5NYwwBpJwhHMnQNTRWjajhIrrG5
+         vKrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DZVlKUhfc1i9OxoybHYHtIAo0AKIGGWqWJ2gIpTCzIM=;
-        b=PaeqUmuiJD0cRWrhJU1f/vJ598u1swMSnJ1pFBRMisJmsCzxjbMwA9FA7e3gGQmBco
-         gzop4aoRYGNd/RR/GT69cJ+DL9nPdXqmD8esa2L10sk+IQSOTTwHOaAJQmXEqueN2wDN
-         IoVHNBR+Sp4deSBLRmsgPvR93qIluXkAhKjtnYDGtgwn1N9lAwqlxEBqM3+tq68Hccg4
-         pnODsayN8Pg5O95VdBvHo+pbIZqE12alxw/IvHF1Z6wOkcqAlLDIHdDkfw2RqOrCqEpj
-         KFYmaDFWWNr1yarffdzpOVNtGzfm2BUGzcDiWItJvzd9EKpnGhduoSADOwdDYExQfT3X
-         Lssg==
-X-Gm-Message-State: AFqh2kqC4YQgV+0+hNR6+3HC0brpUCrOYdhKFyLFCNt7MQDW+3U/fEHt
-        mlLexN+rvwjInOBSumhj7gxMeXnj6lKMvTy7
-X-Google-Smtp-Source: AMrXdXtL5bdHP+x3aZHb+F3kZF22VcBLLNZjyCGBmsJj4EEn23qL9UCqWMZuOG9S4FRGVBOZppIAKw==
-X-Received: by 2002:a19:f514:0:b0:4b5:61e8:8934 with SMTP id j20-20020a19f514000000b004b561e88934mr18782486lfb.64.1673470292525;
-        Wed, 11 Jan 2023 12:51:32 -0800 (PST)
-Received: from localhost.localdomain (abym53.neoplus.adsl.tpnet.pl. [83.9.32.53])
-        by smtp.gmail.com with ESMTPSA id q11-20020a056512210b00b004cc9042c9cfsm928888lfr.158.2023.01.11.12.51.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Jan 2023 12:51:31 -0800 (PST)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=O0xPaw/Uyv/k7eUrz3wz2tQnGPVLOhSDaCGzsFiBw08=;
+        b=LfrVI8yzAxLbQS1xblE8i9LtwMOhxbavr/xqfQP8OZbSeI6e04Km0ZYfoPqcLZ8W6H
+         wTJoUQmHSZGEKUQMt/7Y8PMzfHprG1ELg8WaFLpQJg1HdHoEzW/DmWoD3DZwqQOxUtE4
+         b0jU9+GUldvJzyySIUoyDYhD9aA1yKlAxj8L14iEIeJ5PRd9XiJ7dEG/3FYnYuNvBQXR
+         xFeXPzP9izopm0LkGMkDqEAAFjwMvsG9JoDKvzqX5ZQyxEvOuVa6A5QAQDi4zyAH1QHl
+         7iDkEaQkAOLUMO96cEaFz4yXCnIrLDkkMTwPzXRdV8nifR/wuW2D05dovl5vcvOZ8kbr
+         aWhA==
+X-Gm-Message-State: AFqh2koGQAZyIYFdZG9GJCG95wSl+fBpg5m1dq+gW2pxFqfTjB2AbXYX
+        Xop6gPXUPTsgTcRUolX/vG7O7A==
+X-Google-Smtp-Source: AMrXdXsEzTvPWySwtT0sjwtm3wmAb+qXxyrINFUu3Oi/DvpWybE9NFSsVAgUYtI6XN9ic879EQiMrQ==
+X-Received: by 2002:a2e:82cd:0:b0:27a:c0f:30be with SMTP id n13-20020a2e82cd000000b0027a0c0f30bemr18932726ljh.35.1673470673802;
+        Wed, 11 Jan 2023 12:57:53 -0800 (PST)
+Received: from [192.168.1.101] (abym53.neoplus.adsl.tpnet.pl. [83.9.32.53])
+        by smtp.gmail.com with ESMTPSA id t5-20020a05651c204500b0027ff129de9fsm1889764ljo.24.2023.01.11.12.57.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Jan 2023 12:57:51 -0800 (PST)
+Message-ID: <cdf3b086-2fed-0207-f018-a21bab54faf2@linaro.org>
+Date:   Wed, 11 Jan 2023 21:57:48 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH 02/13] clk: qcom: cpu-8996: correct PLL programming
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] cpufreq: qcom-hw: Ensure only freq-domain regs are counted in num_domains
-Date:   Wed, 11 Jan 2023 21:51:25 +0100
-Message-Id: <20230111205125.1860858-2-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230111205125.1860858-1-konrad.dybcio@linaro.org>
-References: <20230111205125.1860858-1-konrad.dybcio@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20230111192004.2509750-1-dmitry.baryshkov@linaro.org>
+ <20230111192004.2509750-3-dmitry.baryshkov@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230111192004.2509750-3-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS
         autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -80,76 +83,45 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In preparation for CPRh-aware OSM programming, change the probe
-function so that we determine the number of frequency domains by
-counting the number of reg-names entries that begin with
-"freq-domain", as the aforementioned changes require introduction
-of non-freq-domain register spaces.
 
-Fixes: 1a6a8b0080b0 ("cpufreq: qcom-hw: Fix reading "reg" with address/size-cells != 2")
-Fixes: 054a3ef683a1 ("cpufreq: qcom-hw: Allocate qcom_cpufreq_data during probe")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/cpufreq/qcom-cpufreq-hw.c | 34 ++++++++++++++++++++++---------
- 1 file changed, 24 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-index 9505a812d6a1..89d5ed267399 100644
---- a/drivers/cpufreq/qcom-cpufreq-hw.c
-+++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-@@ -651,8 +651,9 @@ static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
- 	struct device *dev = &pdev->dev;
- 	struct device_node *soc_node;
- 	struct device *cpu_dev;
-+	const char *reg_name;
- 	struct clk *clk;
--	int ret, i, num_domains, reg_sz;
-+	int ret, i, num_reg_names, num_domains = 0;
- 
- 	clk = clk_get(dev, "xo");
- 	if (IS_ERR(clk))
-@@ -684,19 +685,32 @@ static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
- 	if (!soc_node)
- 		return -EINVAL;
- 
--	ret = of_property_read_u32(soc_node, "#address-cells", &reg_sz);
--	if (ret)
-+	num_reg_names = of_property_count_strings(dev->of_node, "reg-names");
-+	if (num_reg_names <= 0) {
-+		ret = num_reg_names ? num_reg_names : -ENODATA;
- 		goto of_exit;
-+	}
- 
--	ret = of_property_read_u32(soc_node, "#size-cells", &i);
--	if (ret)
--		goto of_exit;
-+	for (i = 0; i < num_reg_names; i++) {
-+		ret = of_property_read_string_index(dev->of_node, "reg-names", i, &reg_name);
-+		if (ret < 0)
-+			goto of_exit;
- 
--	reg_sz += i;
-+		/*
-+		 * Check if the i-th reg is a freq-domain base, no need to add 1
-+		 * more byte for idx, as sizeof counts \0 whereas strlen does not.
-+		 */
-+		if (strlen(reg_name) == sizeof("freq-domain")) {
-+			/* Check if this reg-name begins with "freq-domain" */
-+			if (!strncmp(reg_name, "freq-domain", sizeof("freq-domain") - 1))
-+				num_domains++;
-+		}
-+	}
- 
--	num_domains = of_property_count_elems_of_size(dev->of_node, "reg", sizeof(u32) * reg_sz);
--	if (num_domains <= 0)
--		return num_domains;
-+	if (num_domains <= 0) {
-+		ret = -EINVAL;
-+		goto of_exit;
-+	}
- 
- 	qcom_cpufreq.data = devm_kzalloc(dev, sizeof(struct qcom_cpufreq_data) * num_domains,
- 					 GFP_KERNEL);
--- 
-2.39.0
+On 11.01.2023 20:19, Dmitry Baryshkov wrote:
+> Change PLL programming to follow the downstream setup.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
+Konrad
+>  drivers/clk/qcom/clk-cpu-8996.c | 7 +++----
+>  1 file changed, 3 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/clk-cpu-8996.c b/drivers/clk/qcom/clk-cpu-8996.c
+> index ee76ef958d31..ed8cb558e1aa 100644
+> --- a/drivers/clk/qcom/clk-cpu-8996.c
+> +++ b/drivers/clk/qcom/clk-cpu-8996.c
+> @@ -93,12 +93,9 @@ static const u8 prim_pll_regs[PLL_OFF_MAX_REGS] = {
+>  static const u8 alt_pll_regs[PLL_OFF_MAX_REGS] = {
+>  	[PLL_OFF_L_VAL] = 0x04,
+>  	[PLL_OFF_ALPHA_VAL] = 0x08,
+> -	[PLL_OFF_ALPHA_VAL_U] = 0x0c,
+>  	[PLL_OFF_USER_CTL] = 0x10,
+> -	[PLL_OFF_USER_CTL_U] = 0x14,
+>  	[PLL_OFF_CONFIG_CTL] = 0x18,
+>  	[PLL_OFF_TEST_CTL] = 0x20,
+> -	[PLL_OFF_TEST_CTL_U] = 0x24,
+>  	[PLL_OFF_STATUS] = 0x28,
+>  };
+>  
+> @@ -106,8 +103,10 @@ static const u8 alt_pll_regs[PLL_OFF_MAX_REGS] = {
+>  
+>  static const struct alpha_pll_config hfpll_config = {
+>  	.l = 60,
+> -	.config_ctl_val = 0x200d4aa8,
+> +	.config_ctl_val = 0x200d4828,
+>  	.config_ctl_hi_val = 0x006,
+> +	.test_ctl_val = 0x1c000000,
+> +	.test_ctl_hi_val = 0x00004000,
+>  	.pre_div_mask = BIT(12),
+>  	.post_div_mask = 0x3 << 8,
+>  	.post_div_val = 0x1 << 8,
