@@ -2,147 +2,183 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 47C186662FB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 19:47:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A82A66634C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 20:14:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235225AbjAKSrS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Jan 2023 13:47:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45990 "EHLO
+        id S234754AbjAKTOX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Jan 2023 14:14:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235030AbjAKSrR (ORCPT
+        with ESMTP id S233160AbjAKTOV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Jan 2023 13:47:17 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B9F92F791;
-        Wed, 11 Jan 2023 10:47:16 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id DD6FA61DD5;
-        Wed, 11 Jan 2023 18:47:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B17EEC433D2;
-        Wed, 11 Jan 2023 18:47:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1673462835;
-        bh=LUwdBfI+Io1ch2RMgaYtsm8GKXDVco8UDikkgJQf+ZQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=uXT8KfXho7j5kLBrgXM5KTMKZlxJ1XRrtNULrZhtIeZHOxYqO76VH6GQIM4aUCqxS
-         /1KVTTVBBI+fPA1B8+DKQcqEu8NUL3M+i2y0SYVG6F7mjhH/HZ8ewoTUKl+9A0KvPq
-         7QQa6/8v8mTk/vtgZqXC46ITMwt+axPqlXBgtnRasbae3oDKJLuciRHu2dHypmyhzJ
-         zj5vvJOUCuemAmTo8IRncAYSSqAiIk8CK7XCE4LvheH4UqI9xv/tPworzAFvjav/hd
-         iJau6pARr5asjBQX9tnQUDQrpeb3+3IlgXYIegji3bUAaUk3o1iBx8lb+JEpvnjss0
-         I7kM8112dBDzw==
-Date:   Wed, 11 Jan 2023 12:47:12 -0600
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v7 2/4] arm64: dts: qcom: sc8280xp-crd: Enable EDP
-Message-ID: <20230111184712.krrcsg7fto464e7a@builder.lan>
-References: <20230111035906.2975494-1-quic_bjorande@quicinc.com>
- <20230111035906.2975494-3-quic_bjorande@quicinc.com>
- <Y764pvrxF9Z8tgKU@hovoldconsulting.com>
+        Wed, 11 Jan 2023 14:14:21 -0500
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6022215711
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 11:14:20 -0800 (PST)
+Received: by mail-lj1-x229.google.com with SMTP id p25so10848761ljn.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 11:14:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=kfqBVq1gDLvWthBTlgZfuovTqtIjzay1A8lWapbrzn4=;
+        b=kHygLqOY2rfNvnHYmTm+NpCUpD6CX8fe4tByACYTv4sHedxTdwZzKkqzPrqIsa+ygy
+         IcXwY4/UfFSMN5lG8GF4Gfd/ZaZUbZFwKukU8kdbnKYFYGLuhKNMB3JPhJaVAn40Mrb3
+         uslBriQjUXUE+AW2KsgYvLqoZ4d0ccl4Xm6asBVG/Xk8Pwc8DwBhTsq8qPZhJ+ZkQZ//
+         QbkHpN6eVkhoV0vUGcRuM+5wrIkoHiyGbGXVBI6/MgRcrOWL4u6oBJbtHVDw/yynOkOv
+         6V6wHwYAWdlC/FyH39CmzK0hWwEjhF3Sw0I/BJO7uqd2/UDRt8utoULJ5FBW3/yOt/Sy
+         WGnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=kfqBVq1gDLvWthBTlgZfuovTqtIjzay1A8lWapbrzn4=;
+        b=CeOjtLunHIdPUQDe9GuS/l6QCXcKR5ma2Qnwxrx06fMVtZvUPHRnjdPICwHDD69ON6
+         RThxqdTFySIXVm3fPX+QfChI7cPeO1uwBa0wf/deZC5tFj1cV5FChjg+PDJEQct0v8+2
+         z/SAePAGbe3MDfkqXZyPLWEcDoMEKzGGR4MA7hj8jaXVbx9/kkBg6IUX0VQePdRODxG6
+         2NUwVdzC8Bqhx2YFiJszMTK1k2Zdi6jKIF441IUtkErN9fHZ6SbrSv8yYKh8Of1+ukU2
+         5keAjgNZHTAaBvTWdhLRqKDcNwGtVo+MX6+PWbBKmX4ISY7eUW2bLs4GzDpulZNvW5FD
+         D38A==
+X-Gm-Message-State: AFqh2krFS4iUWt+6Hj0V5/BpGpeNnZ30cIiEFQ8ZI4HjStSkwv/jrjju
+        90+d3QQQWX0Nlqy8j1LT/tbKnw==
+X-Google-Smtp-Source: AMrXdXtigFiZ8QzSYmZ8FUgGlOuy4VAUFnAPp23B2cUbOwUMCjegOgOevtUhOZlyaQUMRuc5LDDqtw==
+X-Received: by 2002:a2e:a613:0:b0:277:794:ae14 with SMTP id v19-20020a2ea613000000b002770794ae14mr19541025ljp.28.1673464458748;
+        Wed, 11 Jan 2023 11:14:18 -0800 (PST)
+Received: from [192.168.1.101] (abym53.neoplus.adsl.tpnet.pl. [83.9.32.53])
+        by smtp.gmail.com with ESMTPSA id r16-20020a2e94d0000000b00283f2ddc308sm1488864ljh.137.2023.01.11.11.14.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Jan 2023 11:14:15 -0800 (PST)
+Message-ID: <43c8200a-bec0-6d5f-cf32-568b86a1f0c6@linaro.org>
+Date:   Wed, 11 Jan 2023 20:14:11 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y764pvrxF9Z8tgKU@hovoldconsulting.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v2] ARM: dts: qcom: apq8026-samsung-matisse-wifi: Add
+ display backlight
+Content-Language: en-US
+To:     =?UTF-8?Q?Matti_Lehtim=c3=a4ki?= <matti.lehtimaki@gmail.com>,
+        linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230111183502.706151-1-matti.lehtimaki@gmail.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230111183502.706151-1-matti.lehtimaki@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 11, 2023 at 02:24:54PM +0100, Johan Hovold wrote:
-> On Tue, Jan 10, 2023 at 07:59:04PM -0800, Bjorn Andersson wrote:
-> > From: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > 
-> > The SC8280XP CRD has a EDP display on MDSS0 DP3, enable relevant nodes
-> > and link it together with the backlight control.
-> > 
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> > ---
-> > 
-> > Changes since v6:
-> > - None
-> > 
-> >  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 73 ++++++++++++++++++++++-
-> >  1 file changed, 72 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> > index 551768f97729..db12d8678861 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> > +++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> > @@ -20,7 +20,7 @@ aliases {
-> >  		serial0 = &qup2_uart17;
-> >  	};
-> >  
-> > -	backlight {
-> > +	backlight: backlight {
-> >  		compatible = "pwm-backlight";
-> >  		pwms = <&pmc8280c_lpg 3 1000000>;
-> >  		enable-gpios = <&pmc8280_1_gpios 8 GPIO_ACTIVE_HIGH>;
-> > @@ -34,6 +34,22 @@ chosen {
-> >  		stdout-path = "serial0:115200n8";
-> >  	};
-> >  
-> > +	vreg_edp_3p3: regulator-edp-3p3 {
-> > +		compatible = "regulator-fixed";
-> > +
-> > +		regulator-name = "VREG_EDP_3P3";
-> 
-> Looks like you forgot to change this to "VCC3LCD" which should be the
-> net name.
-> 
 
-That's because it's not called VCC3LCD on the CRD.
 
-> > +		regulator-min-microvolt = <3300000>;
-> > +		regulator-max-microvolt = <3300000>;
-> > +
-> > +		gpio = <&tlmm 25 GPIO_ACTIVE_HIGH>;
-> > +		enable-active-high;
-> > +
-> > +		pinctrl-names = "default";
-> > +		pinctrl-0 = <&edp_reg_en>;
-> > +
-> > +		regulator-boot-on;
-> > +	};
-> > +
-> >  	vreg_edp_bl: regulator-edp-bl {
-> >  		compatible = "regulator-fixed";
+On 11.01.2023 19:35, Matti Lehtimäki wrote:
+> Uses ti,lp8556 backlight with clk-pwm.
 > 
-> > @@ -494,6 +559,12 @@ hastings_reg_en: hastings-reg-en-state {
-> >  &tlmm {
-> >  	gpio-reserved-ranges = <74 6>, <83 4>, <125 2>, <128 2>, <154 7>;
-> >  
-> > +	edp_reg_en: edp-reg-en-state {
-> > +		pins = "gpio25";
-> > +		function = "gpio";
-> > +		drive-strength = <16>;
-> 
-> 'bias-disable' as well?
-> 
+> Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Sound like a good idea, adding that as I'm picking up the patches.
-
-Regards,
-Bjorn
-
-> > +	};
-> > +
-> >  	kybd_default: kybd-default-state {
-> >  		disable-pins {
-> >  			pins = "gpio102";
+Konrad
+> This patch was part of the series
+> https://lore.kernel.org/linux-arm-msm/20230106114403.275865-1-matti.lehtimaki@gmail.com/
+> which already had the other patches applied.
 > 
-> Looks good otherwise,
+> Changes in v2:
+>   - Add empty line between subnodes
+>   - Move pwm node to correct place
+>   - Reorder pinctrl properties
+> ---
+>  .../dts/qcom-apq8026-samsung-matisse-wifi.dts | 61 +++++++++++++++++++
+>  1 file changed, 61 insertions(+)
 > 
-> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-> 
-> Johan
+> diff --git a/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts b/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
+> index 15b9590ba07b..91b860e24681 100644
+> --- a/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
+> +++ b/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
+> @@ -80,6 +80,55 @@ key-volume-up {
+>  		};
+>  	};
+>  
+> +	i2c-backlight {
+> +		compatible = "i2c-gpio";
+> +		sda-gpios = <&tlmm 20 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
+> +		scl-gpios = <&tlmm 21 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
+> +
+> +		pinctrl-0 = <&backlight_i2c_default_state>;
+> +		pinctrl-names = "default";
+> +
+> +		i2c-gpio,delay-us = <4>;
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		backlight@2c {
+> +			compatible = "ti,lp8556";
+> +			reg = <0x2c>;
+> +
+> +			dev-ctrl = /bits/ 8 <0x80>;
+> +			init-brt = /bits/ 8 <0x3f>;
+> +			pwm-period = <100000>;
+> +
+> +			pwms = <&backlight_pwm 0 100000>;
+> +			pwm-names = "lp8556";
+> +
+> +			rom-a0h {
+> +				rom-addr = /bits/ 8 <0xa0>;
+> +				rom-val = /bits/ 8 <0x44>;
+> +			};
+> +
+> +			rom-a1h {
+> +				rom-addr = /bits/ 8 <0xa1>;
+> +				rom-val = /bits/ 8 <0x6c>;
+> +			};
+> +
+> +			rom-a5h {
+> +				rom-addr = /bits/ 8 <0xa5>;
+> +				rom-val = /bits/ 8 <0x24>;
+> +			};
+> +		};
+> +	};
+> +
+> +	backlight_pwm: pwm {
+> +		compatible = "clk-pwm";
+> +		#pwm-cells = <2>;
+> +		clocks = <&mmcc CAMSS_GP0_CLK>;
+> +		pinctrl-0 = <&backlight_pwm_default_state>;
+> +		pinctrl-names = "default";
+> +	};
+> +
+>  	reg_tsp_1p8v: regulator-tsp-1p8v {
+>  		compatible = "regulator-fixed";
+>  		regulator-name = "tsp_1p8v";
+> @@ -418,6 +467,18 @@ accel_int_default_state: accel-int-default-state {
+>  		bias-disable;
+>  	};
+>  
+> +	backlight_i2c_default_state: backlight-i2c-default-state {
+> +		pins = "gpio20", "gpio21";
+> +		function = "gpio";
+> +		drive-strength = <2>;
+> +		bias-disable;
+> +	};
+> +
+> +	backlight_pwm_default_state: backlight-pwm-default-state {
+> +		pins = "gpio33";
+> +		function = "gp0_clk";
+> +	};
+> +
+>  	muic_int_default_state: muic-int-default-state {
+>  		pins = "gpio67";
+>  		function = "gpio";
