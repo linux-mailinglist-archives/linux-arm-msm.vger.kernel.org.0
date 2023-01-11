@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 48D1F665B16
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 13:11:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3DF5E665B24
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 13:14:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233820AbjAKMLn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Jan 2023 07:11:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33408 "EHLO
+        id S229672AbjAKMO0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Jan 2023 07:14:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233683AbjAKMLQ (ORCPT
+        with ESMTP id S239334AbjAKMNo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Jan 2023 07:11:16 -0500
+        Wed, 11 Jan 2023 07:13:44 -0500
 Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2579FAE7D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 04:11:14 -0800 (PST)
-Received: by mail-lf1-x129.google.com with SMTP id f34so23165476lfv.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 04:11:14 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C3726557
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 04:13:39 -0800 (PST)
+Received: by mail-lf1-x129.google.com with SMTP id bt23so23170935lfb.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 04:13:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=LQ3ejIIcNy5wNB2nAKCgYVyxVsxuI4AQbfdxuKZTncs=;
-        b=yzSKfAiK6TVY86KqttCyW4EQY4cuqxw12pIH2DKrHqVKzaS6B5W/DDJo19vaO/pFZj
-         FlSUFtmlAdG5QdSPQJmT45aW8BAOT7SaygC+XgZEKHOv4JjmlaoIQ8lQDdML8219vYnC
-         OGQO40HhaBVKYOVkZTpI0OmU/dzkx6kKQLEutjiolI6lDlnk/dfO/qEyU0IT7zKOUyGu
-         2x1/15ULi/MC1sEi2MrfvQb/1IC4ZUMYPZVjuKSrwStWhyk9Qy4zv+Q7zU+4BnNr2A9c
-         XPODEUFLvylGpIFeF+QPEZ7xxdOsdJSfZlF3W60pp0ndfwkrSxk7BkWVUtbXl7+tev44
-         D4ag==
+        bh=N01GqMhg99YMVbIVfYT5Yff2jZDnYTTUg1UAgZGvEcE=;
+        b=iqCvlvwxpHx47f9Ui6Pqz0Euzs6dlwr6ocNDN872ZRLbQzOAr9glsfw6IMMy7wZW3U
+         /diCrIcxA1oeh2xsoGd1HmTkgFr6sZYtR1r225WCrhd/OC69PLSxg+SXX9Yeo4HGVs9I
+         aZ1fC4d8YdHOpvXqGIjro64SD7feRJYoIgax6Amg88suHygDSpK2yOCgTSDAnlEvlqtG
+         eE0ZL4VZzFL0ierXK6dHXYszV59rIncoYynTx+JYVFzIixLsjJU/axw7/2mgnjcnk2rl
+         xUc3bL7wJhmCzfXILyBHKJ7VFpZRGIP/xzEOquvgVZ1M071/oAUkejmPWoMJTk4bqIk1
+         sNeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LQ3ejIIcNy5wNB2nAKCgYVyxVsxuI4AQbfdxuKZTncs=;
-        b=gNUaH5RHIj2Cco3pGiKHLbRUly6UNxzkG9c5C9x0tosQUEmtWMofw0hqxlKV2BTyuB
-         4lkqbuCaNaTJ7cnZ7mmMw/uBzY2Vnvj8AMWpMmcztmGlIPU3FREXfnd57eeSBhbmxdAp
-         ZMrA6dl+vJ7V0/oPitYLO8HCcdeAOtl24eYJ9exl9WsAw/7PqGU9y28Y+wGoZeLV76gJ
-         lBd4dvd08oEBkcfR9/lj6FKpD4MCwKOKmHu0M8g5qRYXxR98bJLkK5WYR/v2O8Xpn+3O
-         buy/e/5C4Ags5UTugDKiIofGXwRHBeBEQGJ7A9h58ATgxULksNpx8uCjr3Hi6sHUNzSg
-         YHmw==
-X-Gm-Message-State: AFqh2kqZHBGcckLFBtHJJ1oGHTjuSWi+D8WN9yw0kiPjjrbermIBtzcG
-        SAo2YdWNIZiyii+Dd1YiVU5NxmuROu0jOKx9
-X-Google-Smtp-Source: AMrXdXsh19qIUk8Xn6V/5zPoR81BBWhrcSr8hpmf/IQukJLnkIBiA2tECGl5ikFvVdZLDCE+ErpoBw==
-X-Received: by 2002:a05:6512:400d:b0:4b5:936e:69df with SMTP id br13-20020a056512400d00b004b5936e69dfmr23711772lfb.53.1673439072523;
-        Wed, 11 Jan 2023 04:11:12 -0800 (PST)
+        bh=N01GqMhg99YMVbIVfYT5Yff2jZDnYTTUg1UAgZGvEcE=;
+        b=C3uYHTzvYxqDOzY29HzZM6azV/oVAZteNqeVGDPRSWigSoSIXtENgmCBwOHwhMkKgf
+         7c4l6mh2bn6KhyvAI7gO/fEi0gET7FIEw9MdX2srPaZ0sczEeoBo1EvS9TDceoRJrLiZ
+         uuUrcqLqEkLbClGJ+VFGiAAUpTKNUjQ+gT3Ip+p5A5BkZJ2XBmB7xaNmoEHhVUBpRkhs
+         DBlrlXu/9plljvFD94zGqg2wpjAWNfuCTczw6ZYShGAZcBWSDEIl6k/dc0KLgKkBy4xl
+         R1Qd6z3YasIHp3CKeL6UPUz0KDAXlRXU5gh/RNPSwqECWGi4R0gAlHjK2f0WEo9dN/r0
+         Y3RQ==
+X-Gm-Message-State: AFqh2kobKHj4XDbzEIrT7pkZWE4GDjLY5M4Xk0bCPeu1PmUIE+xxagff
+        lhG+miSo9VU061uy1vstRjo4ZQ==
+X-Google-Smtp-Source: AMrXdXu7BUdGtjg28KV2X2UxialiRxiO3PFOL2RqE1tWoFqnSVGRpKZccvc9zR6v0iBEG5PjY9FN/A==
+X-Received: by 2002:a05:6512:2a90:b0:4ac:b7bf:697a with SMTP id dt16-20020a0565122a9000b004acb7bf697amr2258602lfb.4.1673439217485;
+        Wed, 11 Jan 2023 04:13:37 -0800 (PST)
 Received: from [192.168.1.101] (abxi45.neoplus.adsl.tpnet.pl. [83.9.2.45])
-        by smtp.gmail.com with ESMTPSA id b4-20020a2e8484000000b00286dbab9a87sm725097ljh.91.2023.01.11.04.11.11
+        by smtp.gmail.com with ESMTPSA id q6-20020a056512210600b004aa0870b5e5sm2702193lfr.147.2023.01.11.04.13.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Jan 2023 04:11:12 -0800 (PST)
-Message-ID: <2bcb3e4e-9a81-73f5-7820-06432ec062c5@linaro.org>
-Date:   Wed, 11 Jan 2023 13:11:10 +0100
+        Wed, 11 Jan 2023 04:13:36 -0800 (PST)
+Message-ID: <e095a785-4dc3-2703-0567-7a759e3a73f2@linaro.org>
+Date:   Wed, 11 Jan 2023 13:13:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
-Subject: Re: [PATCH v7 2/4] arm64: dts: qcom: sc8280xp-crd: Enable EDP
+Subject: Re: [PATCH v7 3/4] arm64: dts: qcom: sa8295-adp: Enable DP instances
 Content-Language: en-US
 To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -64,9 +64,9 @@ Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
 References: <20230111035906.2975494-1-quic_bjorande@quicinc.com>
- <20230111035906.2975494-3-quic_bjorande@quicinc.com>
+ <20230111035906.2975494-4-quic_bjorande@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230111035906.2975494-3-quic_bjorande@quicinc.com>
+In-Reply-To: <20230111035906.2975494-4-quic_bjorande@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,8 +83,13 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 On 11.01.2023 04:59, Bjorn Andersson wrote:
 > From: Bjorn Andersson <bjorn.andersson@linaro.org>
 > 
-> The SC8280XP CRD has a EDP display on MDSS0 DP3, enable relevant nodes
-> and link it together with the backlight control.
+> The SA8295P ADP has, among other interfaces, six MiniDP connectors which
+> are connected to MDSS0 DP2 and DP3, and MDSS1 DP0 through DP3.
+That's a lot of displayports..
+
+> 
+> Enable Display Clock controllers, MDSS instanced, MDPs, DP controllers,
+> DP PHYs and link them all together.
 > 
 > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
@@ -96,46 +101,121 @@ Konrad
 > Changes since v6:
 > - None
 > 
->  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 73 ++++++++++++++++++++++-
->  1 file changed, 72 insertions(+), 1 deletion(-)
+>  arch/arm64/boot/dts/qcom/sa8295p-adp.dts | 243 ++++++++++++++++++++++-
+>  1 file changed, 241 insertions(+), 2 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> index 551768f97729..db12d8678861 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> @@ -20,7 +20,7 @@ aliases {
->  		serial0 = &qup2_uart17;
->  	};
->  
-> -	backlight {
-> +	backlight: backlight {
->  		compatible = "pwm-backlight";
->  		pwms = <&pmc8280c_lpg 3 1000000>;
->  		enable-gpios = <&pmc8280_1_gpios 8 GPIO_ACTIVE_HIGH>;
-> @@ -34,6 +34,22 @@ chosen {
+> diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+> index 84cb6f3eeb56..c35e16b087b8 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+> @@ -23,6 +23,90 @@ aliases {
+>  	chosen {
 >  		stdout-path = "serial0:115200n8";
 >  	};
->  
-> +	vreg_edp_3p3: regulator-edp-3p3 {
-> +		compatible = "regulator-fixed";
 > +
-> +		regulator-name = "VREG_EDP_3P3";
-> +		regulator-min-microvolt = <3300000>;
-> +		regulator-max-microvolt = <3300000>;
+> +	dp2-connector {
+> +		compatible = "dp-connector";
+> +		label = "DP2";
+> +		type = "mini";
 > +
-> +		gpio = <&tlmm 25 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
+> +		hpd-gpios = <&tlmm 20 GPIO_ACTIVE_HIGH>;
 > +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&edp_reg_en>;
-> +
-> +		regulator-boot-on;
+> +		port {
+> +			dp2_connector_in: endpoint {
+> +				remote-endpoint = <&mdss1_dp0_phy_out>;
+> +			};
+> +		};
 > +	};
 > +
->  	vreg_edp_bl: regulator-edp-bl {
->  		compatible = "regulator-fixed";
+> +	dp3-connector {
+> +		compatible = "dp-connector";
+> +		label = "DP3";
+> +		type = "mini";
+> +
+> +		hpd-gpios = <&tlmm 45 GPIO_ACTIVE_HIGH>;
+> +
+> +		port {
+> +			dp3_connector_in: endpoint {
+> +				remote-endpoint = <&mdss1_dp1_phy_out>;
+> +			};
+> +		};
+> +	};
+> +
+> +	edp0-connector {
+> +		compatible = "dp-connector";
+> +		label = "EDP0";
+> +		type = "mini";
+> +
+> +		hpd-gpios = <&tlmm 2 GPIO_ACTIVE_HIGH>;
+> +
+> +		port {
+> +			edp0_connector_in: endpoint {
+> +				remote-endpoint = <&mdss0_dp2_phy_out>;
+> +			};
+> +		};
+> +	};
+> +
+> +	edp1-connector {
+> +		compatible = "dp-connector";
+> +		label = "EDP1";
+> +		type = "mini";
+> +
+> +		hpd-gpios = <&tlmm 3 GPIO_ACTIVE_HIGH>;
+> +
+> +		port {
+> +			edp1_connector_in: endpoint {
+> +				remote-endpoint = <&mdss0_dp3_phy_out>;
+> +			};
+> +		};
+> +	};
+> +
+> +	edp2-connector {
+> +		compatible = "dp-connector";
+> +		label = "EDP2";
+> +		type = "mini";
+> +
+> +		hpd-gpios = <&tlmm 7 GPIO_ACTIVE_HIGH>;
+> +
+> +		port {
+> +			edp2_connector_in: endpoint {
+> +				remote-endpoint = <&mdss1_dp2_phy_out>;
+> +			};
+> +		};
+> +	};
+> +
+> +	edp3-connector {
+> +		compatible = "dp-connector";
+> +		label = "EDP3";
+> +		type = "mini";
+> +
+> +		hpd-gpios = <&tlmm 6 GPIO_ACTIVE_HIGH>;
+> +
+> +		port {
+> +			edp3_connector_in: endpoint {
+> +				remote-endpoint = <&mdss1_dp3_phy_out>;
+> +			};
+> +		};
+> +	};
+>  };
 >  
-> @@ -228,6 +244,55 @@ vreg_l9d: ldo9 {
+>  &apps_rsc {
+> @@ -159,13 +243,168 @@ vreg_l7g: ldo7 {
+>  
+>  		vreg_l8g: ldo8 {
+>  			regulator-name = "vreg_l8g";
+> -			regulator-min-microvolt = <880000>;
+> -			regulator-max-microvolt = <880000>;
+> +			regulator-min-microvolt = <912000>;
+> +			regulator-max-microvolt = <912000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l11g: ldo11 {
+> +			regulator-name = "vreg_l11g";
+> +			regulator-min-microvolt = <912000>;
+> +			regulator-max-microvolt = <912000>;
+>  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>  		};
 >  	};
 >  };
 >  
@@ -143,47 +223,146 @@ Konrad
 > +	status = "okay";
 > +};
 > +
+> +&dispcc1 {
+> +	status = "okay";
+> +};
+> +
 > +&mdss0 {
 > +	status = "okay";
 > +};
 > +
-> +&mdss0_dp3 {
-> +	compatible = "qcom,sc8280xp-edp";
-> +
+> +&mdss0_dp2 {
 > +	data-lanes = <0 1 2 3>;
 > +
 > +	status = "okay";
 > +
-> +	aux-bus {
-> +		panel {
-> +			compatible = "edp-panel";
-> +			power-supply = <&vreg_edp_3p3>;
-> +
-> +			backlight = <&backlight>;
-> +
-> +			ports {
-> +				port {
-> +					edp_panel_in: endpoint {
-> +						remote-endpoint = <&mdss0_dp3_out>;
-> +					};
-> +				};
+> +	ports {
+> +		port@1 {
+> +			reg = <1>;
+> +			mdss0_dp2_phy_out: endpoint {
+> +				remote-endpoint = <&edp0_connector_in>;
 > +			};
 > +		};
 > +	};
+> +};
+> +
+> +&mdss0_dp2_phy {
+> +	vdda-phy-supply = <&vreg_l8g>;
+> +	vdda-pll-supply = <&vreg_l3g>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&mdss0_dp3 {
+> +	data-lanes = <0 1 2 3>;
+> +
+> +	status = "okay";
 > +
 > +	ports {
 > +		port@1 {
 > +			reg = <1>;
-> +			mdss0_dp3_out: endpoint {
-> +				remote-endpoint = <&edp_panel_in>;
+> +			mdss0_dp3_phy_out: endpoint {
+> +				remote-endpoint = <&edp1_connector_in>;
 > +			};
 > +		};
 > +	};
 > +};
 > +
 > +&mdss0_dp3_phy {
-> +	vdda-phy-supply = <&vreg_l6b>;
-> +	vdda-pll-supply = <&vreg_l3b>;
+> +	vdda-phy-supply = <&vreg_l8g>;
+> +	vdda-pll-supply = <&vreg_l3g>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&mdss1 {
+> +	status = "okay";
+> +};
+> +
+> +&mdss1_dp0 {
+> +	data-lanes = <0 1 2 3>;
+> +
+> +	status = "okay";
+> +
+> +	ports {
+> +		port@1 {
+> +			reg = <1>;
+> +			mdss1_dp0_phy_out: endpoint {
+> +				remote-endpoint = <&dp2_connector_in>;
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +&mdss1_dp0_phy {
+> +	vdda-phy-supply = <&vreg_l11g>;
+> +	vdda-pll-supply = <&vreg_l3g>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&mdss1_dp1 {
+> +	data-lanes = <0 1 2 3>;
+> +
+> +	status = "okay";
+> +
+> +	ports {
+> +		port@1 {
+> +			reg = <1>;
+> +			mdss1_dp1_phy_out: endpoint {
+> +				remote-endpoint = <&dp3_connector_in>;
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +&mdss1_dp1_phy {
+> +	vdda-phy-supply = <&vreg_l11g>;
+> +	vdda-pll-supply = <&vreg_l3g>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&mdss1_dp2 {
+> +	data-lanes = <0 1 2 3>;
+> +
+> +	status = "okay";
+> +
+> +	ports {
+> +		port@1 {
+> +			reg = <1>;
+> +			mdss1_dp2_phy_out: endpoint {
+> +				remote-endpoint = <&edp2_connector_in>;
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +&mdss1_dp2_phy {
+> +	vdda-phy-supply = <&vreg_l11g>;
+> +	vdda-pll-supply = <&vreg_l3g>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&mdss1_dp3 {
+> +	data-lanes = <0 1 2 3>;
+> +
+> +	status = "okay";
+> +
+> +	ports {
+> +		port@1 {
+> +			reg = <1>;
+> +			mdss1_dp3_phy_out: endpoint {
+> +				remote-endpoint = <&edp3_connector_in>;
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +&mdss1_dp3_phy {
+> +	vdda-phy-supply = <&vreg_l11g>;
+> +	vdda-pll-supply = <&vreg_l3g>;
 > +
 > +	status = "okay";
 > +};
@@ -191,16 +370,3 @@ Konrad
 >  &pcie2a {
 >  	perst-gpios = <&tlmm 143 GPIO_ACTIVE_LOW>;
 >  	wake-gpios = <&tlmm 145 GPIO_ACTIVE_LOW>;
-> @@ -494,6 +559,12 @@ hastings_reg_en: hastings-reg-en-state {
->  &tlmm {
->  	gpio-reserved-ranges = <74 6>, <83 4>, <125 2>, <128 2>, <154 7>;
->  
-> +	edp_reg_en: edp-reg-en-state {
-> +		pins = "gpio25";
-> +		function = "gpio";
-> +		drive-strength = <16>;
-> +	};
-> +
->  	kybd_default: kybd-default-state {
->  		disable-pins {
->  			pins = "gpio102";
