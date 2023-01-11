@@ -2,92 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BED2D6663F9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 20:49:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DA996666403
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 20:49:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230429AbjAKTs3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Jan 2023 14:48:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50002 "EHLO
+        id S235157AbjAKTtb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Jan 2023 14:49:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50760 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231191AbjAKTsO (ORCPT
+        with ESMTP id S235265AbjAKTtM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Jan 2023 14:48:14 -0500
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9443F61;
-        Wed, 11 Jan 2023 11:48:07 -0800 (PST)
-Received: from g550jk.localnet (mobiledyn-62-240-134-128.mrsn.at [62.240.134.128])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 76FD0CC3A1;
-        Wed, 11 Jan 2023 19:48:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1673466486; bh=rsOZZ2Ln+JMozd3x8JmeFsooYZX8jZpZTbWXHGDAW20=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=PGM1W1+RqDKTo5OpqZU9lc/tFiWV6NxJ/AW4tHcHn/naz5PTV4P5t7uHrZ6ICT/y6
-         M0FqkU67SEXFdimjMBJG1+WPuSKVDt4CYNcWw/KfZe1QbbSe2OlJNK7skBuNJgZKSE
-         KS6YAZra8LAp4m1eBR/RvcFyocMb0Mq+lvvldWos=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     linux-arm-msm@vger.kernel.org,
-        Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/5] dt-bindings: cpufreq: cpufreq-qcom-hw: Add missing
- compatibles
-Date:   Wed, 11 Jan 2023 20:48:01 +0100
-Message-ID: <4899603.LvFx2qVVIh@g550jk>
-In-Reply-To: <20221016090035.565350-1-luca@z3ntu.xyz>
-References: <20221016090035.565350-1-luca@z3ntu.xyz>
+        Wed, 11 Jan 2023 14:49:12 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF218C6D;
+        Wed, 11 Jan 2023 11:49:10 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 7F98361E10;
+        Wed, 11 Jan 2023 19:49:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 598A4C433EF;
+        Wed, 11 Jan 2023 19:49:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1673466549;
+        bh=4i9bzDj0YZu4xqrGKHzS6bTWaQtXMywORIB8RQxbUa8=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=oeD40Rg3/mDgKLqO1a4D8VSfEkuE6nPZKvlw0cozmVRxvp4SsrhEFSqk9m84cZRW2
+         MzLGoO6EU3obULc1Ao1yaXBQpZYy5LVnmgDmVhXff2XjUonGFQuVdf0PwQmhrn/dH6
+         YBIl9mdSqg4VaF0ETjOLzfuR2FUIZbGQ9a/tAIqWoDOa3p3zGxMsD8Mtl0j8LI0K4l
+         VrgxtWXpU41wGDu1rtDoj6/B+SDl03Kwd8FTWsS2crvo3dpniXETI5Asj8HXmr/MVR
+         MIUWKlF/qjZCpzEu3iwcgl9Q7LwGoOf7U19bgoyEuub/denKtsdSgdOU78O5TUsmAP
+         2RgOzx1rCF3xw==
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     catalin.marinas@arm.com, will@kernel.org, abel.vesa@linaro.org
+Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] arm64: defconfig: Enable GCC, TCSRCC, pinctrl and interconnect for SM8550
+Date:   Wed, 11 Jan 2023 13:48:59 -0600
+Message-Id: <167346654439.2315924.14452766872188532223.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.37.1
+In-Reply-To: <20230111080254.1181325-1-abel.vesa@linaro.org>
+References: <20230111080254.1181325-1-abel.vesa@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,DKIM_INVALID,
-        DKIM_SIGNED,FROM_SUSPICIOUS_NTLD,SPF_HELO_NONE,SPF_PASS,
-        T_PDS_OTHER_BAD_TLD autolearn=no autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Viresh,
-
-gentle bump, I hope this patch could get applied in-time for the next merge 
-window.
-
-Regards
-Luca
-
-On Sonntag, 16. Oktober 2022 11:00:30 CET Luca Weiss wrote:
-> Document the cpufreq-epss compatibles currently used in the tree, plus
-> the sc7280 which will be added in a separate commit.
+On Wed, 11 Jan 2023 10:02:54 +0200, Abel Vesa wrote:
+> Add the SM8550 GCC, TCSRCC, interconnect and pinctrl drivers as built-in.
+> All of these are necessary for the Qualcomm SM8550 platform to boot
+> to shell.
 > 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> ---
->  .../devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml          | 4 ++++
->  1 file changed, 4 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
-> b/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml index
-> 24fa3d87a40b..d6af29ee889a 100644
-> --- a/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
-> +++ b/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
-> @@ -25,8 +25,12 @@ properties:
->        - description: v2 of CPUFREQ HW (EPSS)
->          items:
->            - enum:
-> +              - qcom,sc7280-cpufreq-epss
-> +              - qcom,sc8280xp-cpufreq-epss
->                - qcom,sm6375-cpufreq-epss
->                - qcom,sm8250-cpufreq-epss
-> +              - qcom,sm8350-cpufreq-epss
-> +              - qcom,sm8450-cpufreq-epss
->            - const: qcom,cpufreq-epss
-> 
->    reg:
 
+Applied, thanks!
 
+[1/1] arm64: defconfig: Enable GCC, TCSRCC, pinctrl and interconnect for SM8550
+      commit: 62d8b7f90084b697fff4be7d62b128a6c3b2a60c
 
-
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
