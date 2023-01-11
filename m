@@ -2,74 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3527A6663D2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 20:38:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5568F6663E6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 20:45:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233714AbjAKTiY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Jan 2023 14:38:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44006 "EHLO
+        id S231510AbjAKTpC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Jan 2023 14:45:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229968AbjAKTiX (ORCPT
+        with ESMTP id S231191AbjAKToM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Jan 2023 14:38:23 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DA39261D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 11:38:22 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id k8so1613782wrc.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 11:38:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FkqVAtwaXUJN30F43tmdYS4wEBs5LlIZ9Pxk9TLASQg=;
-        b=Cqp3qAECJSQESfGWSDUzE5d0q4Z9xsQhmzgJMVZpboVMTxBIxHNHSTXx4z/FlE2Q3M
-         TD2UjVccZB+izCXogHPwLmSWh5jQJgEUKmor0rChjBa8Ns5MriQjfEa4Y45Mi0YMJilr
-         7fLN6hs4dTVpuwWZLNF8fxI5IRR4w9FcgHck33/6oYwpY7iGAHZ0q/J9CVzU0nM4clf6
-         mpXa0MRg7L+1gBBt8xpozm7O7ISxU27c64iUH3qVukrRW4koqUvypFt72MjyvL0RMiDc
-         jM1DX9p0aR5G8QAQYKZ1a0Mii5NBs9KD0JcWiJyrcBhB7hLN+paeP8QE+75gnAtMjcQX
-         Id8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FkqVAtwaXUJN30F43tmdYS4wEBs5LlIZ9Pxk9TLASQg=;
-        b=qilbyxcfRrLzO8KK6L/4Hm20oMYNDnwg1xxyydu9JA//OEsMWl27EHjcTwAkq9lpil
-         8C+GA7cm8qF7gg6WlrWaiC3DnA08JDr9Gc3pxxuCSLQr8HozphbT6n2JObAk9UjW33gI
-         HwEv1B4qQ9HVoNLVjFRmehpaw2uO/zkQOtmWwoVgWiWeXt3iDaJm2QyiGLfq9UqMMtJk
-         Jeq7t0RkJ7wJZZldSVJuM+j5cxIRK+D+/lC5jCfgGedxDyBabz7B44Xsxp75M/gN/b3Q
-         /x4LZeWJrBx8TzCu9rHbNpL0eZgzY+OU8rJENP0gqtVC0OdcH0gu2cPuFqvxojefpyHh
-         QI7g==
-X-Gm-Message-State: AFqh2kr6N1U1ialqFwev85blMEZda0ixH/J++pk3k7h8J3X3+jQ/2LwJ
-        kIO06JjKSYc1C2cC4CqAet+BjQ==
-X-Google-Smtp-Source: AMrXdXtgMD6jjEFg5JmHUP5HY2qI9Z1cnmbhuONxWekwQeR+8SoZiuAPwPXC42vtiLnaec1s6kMQXQ==
-X-Received: by 2002:a5d:4884:0:b0:242:3812:f948 with SMTP id g4-20020a5d4884000000b002423812f948mr45904286wrq.24.1673465900805;
-        Wed, 11 Jan 2023 11:38:20 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:f574:f2aa:e30a:bb87? ([2a01:e0a:982:cbb0:f574:f2aa:e30a:bb87])
-        by smtp.gmail.com with ESMTPSA id t13-20020adfe10d000000b002b6bcc0b64dsm1962785wrz.4.2023.01.11.11.38.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Jan 2023 11:38:20 -0800 (PST)
-Message-ID: <1d065d98-9b14-d8af-d77d-f309ae0b51a4@linaro.org>
-Date:   Wed, 11 Jan 2023 20:38:19 +0100
+        Wed, 11 Jan 2023 14:44:12 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A9B53F450;
+        Wed, 11 Jan 2023 11:42:20 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 46576B81CC7;
+        Wed, 11 Jan 2023 19:42:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A087C433EF;
+        Wed, 11 Jan 2023 19:42:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1673466138;
+        bh=CGtIp75QkZOm9daNCxrZn31MoEyt/e14zeOWzGLBgyk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=MlNmGo85z+RCRIYBJGLs5A+r59DG6j12Em/e09tDKP+126V/nbQ9wfQ1JygRd85Sx
+         RNy9dzgRrK32nrriXDmSXFl2BDQlSlpgqwGTdAfnlBsDsYEkAAy4wRIALR61O6e+po
+         epytBSFbLfzVQMhhFQcoCbqKxODcsv1V3sqvwyr2B9ulH5xPn7iK0329yeJwrg6KVq
+         PLQ4RmSW09Ghbkz5e8huiPwemxfrSoiG6Wp2V9GHqELgPXevmwYrBdT8VN6tZhvban
+         1ogEUnWNmcHqnLxdt6JRW24X8RrmDq8453D6ezv3UmrLHBQBKwa4Zb5UfM8AnlHL0w
+         Kkdl+4GITdFpw==
+Date:   Wed, 11 Jan 2023 13:42:15 -0600
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Stephan Gerhold <stephan@gerhold.net>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+Subject: Re: [PATCH 3/4] dt-bindings: arm: qcom,ids: Add a bunch of older SoCs
+Message-ID: <20230111194215.kpxjlv3pgniyoglr@builder.lan>
+References: <20230104115348.25046-1-stephan@gerhold.net>
+ <20230104115348.25046-4-stephan@gerhold.net>
+ <20230108214052.GA313089-robh@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.6.1
-Subject: Re: [PATCH 1/2] arm64: defconfig: enable SM8550 DISPCC clock driver
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20230110-topic-sm8550-upstream-display-defconfig-v1-0-9941c8083f10@linaro.org>
- <20230110-topic-sm8550-upstream-display-defconfig-v1-1-9941c8083f10@linaro.org>
- <20230111192815.tyavlhr4nwyblpj7@builder.lan>
-Content-Language: fr
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-In-Reply-To: <20230111192815.tyavlhr4nwyblpj7@builder.lan>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230108214052.GA313089-robh@kernel.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,40 +59,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Le 11/01/2023 à 20:28, Bjorn Andersson a écrit :
-> On Tue, Jan 10, 2023 at 08:34:33PM +0100, Neil Armstrong wrote:
->> Build the Qualcomm SM8550 Display Clock Controller driver
->>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
->>   arch/arm64/configs/defconfig | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
->> index 851e8f9be06d..004c379eced7 100644
->> --- a/arch/arm64/configs/defconfig
->> +++ b/arch/arm64/configs/defconfig
->> @@ -1107,6 +1107,7 @@ CONFIG_SDM_GPUCC_845=y
->>   CONFIG_SDM_VIDEOCC_845=y
->>   CONFIG_SDM_DISPCC_845=y
->>   CONFIG_SM_DISPCC_8250=y
->> +CONFIG_SM_DISPCC_8550=y
+On Sun, Jan 08, 2023 at 03:40:52PM -0600, Rob Herring wrote:
+> On Wed, Jan 04, 2023 at 12:53:47PM +0100, Stephan Gerhold wrote:
+> > Sync the SoC IDs in qcom,ids.h with relevant entries from Qualcomm's LK
+> > bootloader [1] that is used for almost all older Qualcomm SoCs.
+> > 
+> > Several of these are already supported, e.g.:
+> >   - MSM8960 -> APQ8060, MSM8260, ...
+> >   - MSM8976 -> APQ8076
+> >   - MSM8956 -> APQ8056
+> > Others are currently being worked on, e.g.:
+> >   - MSM8909(W) -> APQ8009(W), MSM8905, MSM8209, ...
+> >   - MSM8939 -> MSM8239, ...
+> > 
+> > And even all remaining ones added are close enough to what is already
+> > supported so that future support is realistic (if someone steps up to
+> > do the work).
+> > 
+> > Add all of them at once to avoid having to add them one by one in the
+> > future. This will also benefit other projects making use of the same
+> > dt-bindings, e.g. bootloaders where adding support for all these SoCs
+> > is a bit easier than on Linux.
 > 
-> Now that power-domains will probe defer properly, could we make this =m?
+> The promise was in accepting the properties upstream is we'd only be 
+> adding these for bootloaders with dtbs that we can't otherwise update or 
+> change. Do all of those meet this criteria? Seems unlikely.
+> 
 
-Sure, will change for v2.
+Independent of the question about qcom,msm-id and qcom,board-id, I would
+like these constants for the socinfo driver (as shown in patch 4).
+
+Would you prefer that we keep a separate list in Linux?
 
 Thanks,
-Neil
-
-> 
-> Regards,
-> Bjorn
-> 
->>   CONFIG_SM_GCC_6115=y
->>   CONFIG_SM_GCC_8350=y
->>   CONFIG_SM_GCC_8450=y
->>
->> -- 
->> 2.34.1
-
+Bjorn
