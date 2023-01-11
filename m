@@ -2,467 +2,214 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E491665D6D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 15:14:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 22317665D8F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 15:19:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238514AbjAKOOY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Jan 2023 09:14:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57572 "EHLO
+        id S231720AbjAKOTf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Jan 2023 09:19:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33564 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236599AbjAKOOX (ORCPT
+        with ESMTP id S239336AbjAKOTW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Jan 2023 09:14:23 -0500
-Received: from out162-62-57-210.mail.qq.com (out162-62-57-210.mail.qq.com [162.62.57.210])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD53638B4;
-        Wed, 11 Jan 2023 06:14:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
-        s=s201512; t=1673446457;
-        bh=WeAfG4q7lscsbUtzVg64kqY5IfCJe6Z4UI1XTaa+95M=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=vyaHVrHvAm0tS9JiSoVZ/vqOv7WMXNSotk5MHCRxuc9wypuwaHn9P1FXaGzPsJyr/
-         kj0URfXjp7ncYS7r+I5c8kNAcxd5smu++WY1g2PEH3PtwHMYUCs4ONOfxQzlE5hIQO
-         BaauUdOEminWqXseKo1+TbXYaxJBV/c56GZIW2yc=
-Received: from localhost.localdomain ([111.60.247.106])
-        by newxmesmtplogicsvrszc2-1.qq.com (NewEsmtp) with SMTP
-        id 37731CEB; Wed, 11 Jan 2023 22:13:55 +0800
-X-QQ-mid: xmsmtpt1673446454t2pfeo66q
-Message-ID: <tencent_F934F7427EB7B986E8AF70A95A397436E007@qq.com>
-X-QQ-XMAILINFO: Md8NwmqZYy3fbANy6RbzLrwah382LG/Bqb3hJJQps1++cwqE2CbVfTWMLQ3Mq7
-         Eeq8AY6dPPl95QXgxE3xvM4x/SC0WmH+OuqIV4nxUxPpoJ7Zg4USLrdILJV4DaP8SS73Bh2dOZue
-         jBURo+oR8N/3bGRTn8wNVMUlasKFl8/MCofj9Sav9LfTEQBHGARKmcd0gKoqgCS/Mk7qFzObRWhe
-         uc9lUSIdQlkW3FUVCz38ZS9JP2KWWe7izEnLJADDflGi7uwr6hl+S9u2Wk0PyZpQYUn3wv7YWOcI
-         wAJJym2pj6T+xB/iM7/IlzHil/sOq49UMKE+qVJ3SDazDfnr8zgYYkfpWoC+/04iXWHgdEY437Vs
-         n1+D/QfCxvXF7u9PKb5xn6cqTX60wlfSEtl+2Tsob05126F29LKHoVqnfcsOZVN30UoCAuQ8efhk
-         3a2kUmkB0RNA3XarP0zq3LHT5xaN8Z41+20hHh0JElXIPt8bKp8xgUM4yrL/1C2DMUe68ecMq8tO
-         j6JlDEKgfXID8WMSeHF9h4pvm8T22y51GUtuLgd5PrZ8druzaDqaVYShj9hU1maTmEdrJ0QyUZdd
-         +LY38uUtQjnH/Xp4soTjo8sVqK7qmzlZzJriagSg8SdOy/jZKs9EDRC/IV17EprMyHL1BDmUJiR7
-         LXW2PrA965B1e9YSZxoYBZ28dYKWyhddzqwTq7exMYO/3M2P/xvRyelN6B4+hP7hkec2sks793r3
-         hbzOTk3reZ896MhVg4G9XDso5Vif6E/SK2Eqcvq1PMVG9YF3OXliEJoTXpJOwBHd/heXlKpp5yA1
-         lPi4rj5oZdPwjfCSzJG7nRAksBt8IJNbNdMPBLDr9hSkSz0I/VEGgrmcCldJPnWa9E2yrNdWnzwP
-         C892ORSeYwCxG02dm125Qs/ZtyfLlzlr+XjRNr8Gl4+6RQcwRS3pxxkuiCCuJBTYV5K+cD4GGBK8
-         Bht4d//ZbqbHCdMHctuVLIdDK3o1Ms3ddC4s6JgkArINyjPfpGZVIoojNzhkM3DAeGdwBkg1VQte
-         xhQNoWqQ==
-From:   Yang Xiwen <forbidden405@foxmail.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Wed, 11 Jan 2023 09:19:22 -0500
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 937F31A21D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 06:19:07 -0800 (PST)
+Received: by mail-lj1-x230.google.com with SMTP id s25so16163670lji.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 06:19:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=negcME7L5mzW504DM5wehfUKj/rBMEPX2/Ij5qP2IFA=;
+        b=uWgIbQtjTcvBrKQAsUApNwxI/zw6U+NukxmgEEEdPJv+W/DkbwbxhAw08+XPvMLeJu
+         GqC78oUj4KNKHRDmL1l71ogzipW3eo9vjfbdntiqgTCgERuABh0f6vp2lyNgls5DngCs
+         6LHxm6eSDf5QaZAnrGCBs8qi4wxQdzKq7Rm1YX4aOBc3eQdiTBvjDfZ7+KZSnUPApvCO
+         BUWVFpiF0cFiit4kXwjjlFCO3zKahVBleIojcMYAn12bBSG7JASRvTP3llCSkysUK/BX
+         O+w9Yd2cRQaFX5xbaLhPvycxLvq6vzG1RFEdDENlHK99W6snHv4DZLXA/Q+05Q1e3N5E
+         jDuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=negcME7L5mzW504DM5wehfUKj/rBMEPX2/Ij5qP2IFA=;
+        b=sTanhVNLKtRrUO0BpbwwqlbUQy1TYLBQPeKQKPU9zJegJFE3mZWVwcXFtYenqEc58e
+         gr/AfTuTprq5UhSmaP2fsWEdQk28k2pT8XqqjZC1vD8DLFdlTd3fLSZ3ftMfkKTqGiul
+         +c4nnHdzw9BXKpqiW7wre30D6E3mSpXDE7GVkwrpYp92DbWWuQC27YTIsl5FIF5CgZ8R
+         wFb5fPjVla6ZRV2JKtJ8CwT+oM57PHvYY0Iyc/vNYIWp+j/wnVX8bAd81YSCd9QoC/hl
+         0PQFjBerSiu3LtbxOIBkuYgE4YIv99JquZd9KsuIj6y1oKNZ9N6fiItpUMUhSqq8PG24
+         gb+Q==
+X-Gm-Message-State: AFqh2kpfwVTq4I5ZNWJAlyyrBS/qK9yv/VG3i1relhyj6+oJC71fAnRB
+        yUikMJaI4CvR6yl0aTO8gN0XWw==
+X-Google-Smtp-Source: AMrXdXtgGoIZRzWYSY2YS8X6pnzeWNrP/mW9QLoFdIF6dzhxUBhZr3XkUx8xrTn8iPVc63pstUO7mg==
+X-Received: by 2002:a2e:a54a:0:b0:287:4fb8:8016 with SMTP id e10-20020a2ea54a000000b002874fb88016mr2353477ljn.7.1673446745785;
+        Wed, 11 Jan 2023 06:19:05 -0800 (PST)
+Received: from [192.168.1.101] (abym53.neoplus.adsl.tpnet.pl. [83.9.32.53])
+        by smtp.gmail.com with ESMTPSA id s9-20020a056512214900b004b5a4cf69dfsm2726216lfr.261.2023.01.11.06.19.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Jan 2023 06:19:04 -0800 (PST)
+Message-ID: <3fa1968a-405c-6838-71c6-697f170b8c0a@linaro.org>
+Date:   Wed, 11 Jan 2023 15:19:01 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-x13s: enable eDP display
+Content-Language: en-US
+To:     Johan Hovold <johan+linaro@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Cc:     Jaime Breva <jbreva@nayarsystems.com>,
-        Nikita Travkin <nikita@trvn.ru>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Yang Xiwen <forbidden405@foxmail.com>
-Subject: [PATCH v2 3/3] arm64: dts: qcom: msm8916-thwc: Add initial device tree for Tong Heng Wei Chuang Wifi/LTE dongle UFI-001C and uf896
-Date:   Wed, 11 Jan 2023 22:13:11 +0800
-X-OQ-MSGID: <20230111141311.14682-4-forbidden405@foxmail.com>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230111141311.14682-1-forbidden405@foxmail.com>
-References: <20230111141311.14682-1-forbidden405@foxmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,HELO_DYNAMIC_IPADDR,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        RDNS_DYNAMIC,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Level: *
+References: <20230111133128.31813-1-johan+linaro@kernel.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230111133128.31813-1-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This commit adds support for the ufi-001C and uf896 WiFi/LTE dongle made by
-Tong Heng Wei Chuang based on MSM8916.
-uf896 is another variant for the usb stick. The board design
-differs by using different gpios for the keys and leds.
 
-Note: The original firmware does not support 64-bit OS. It is necessary
-to flash 64-bit TZ firmware to boot arm64.
 
-Currently supported:
-- All CPU cores
-- Buttons
-- LEDs
-- Modem
-- SDHC
-- USB Device Mode
-- UART
+On 11.01.2023 14:31, Johan Hovold wrote:
+> Enable the eDP display on MDSS0 DP3, including backlight control.
+> 
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Co-developed-by: Jaime Breva <jbreva@nayarsystems.com>
-Signed-off-by: Jaime Breva <jbreva@nayarsystems.com>
-Co-developed-by: Nikita Travkin <nikita@trvn.ru>
-Signed-off-by: Nikita Travkin <nikita@trvn.ru>
-Signed-off-by: Yang Xiwen <forbidden405@foxmail.com>
----
- arch/arm64/boot/dts/qcom/Makefile             |   2 +
- .../boot/dts/qcom/msm8916-thwc-uf896.dts      |  41 +++
- .../boot/dts/qcom/msm8916-thwc-ufi001c.dts    |  39 +++
- arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi     | 246 ++++++++++++++++++
- 4 files changed, 328 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/msm8916-thwc-uf896.dts
- create mode 100644 arch/arm64/boot/dts/qcom/msm8916-thwc-ufi001c.dts
- create mode 100644 arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi
-
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index b42362c7be1bf..523dbe6d06be8 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -21,6 +21,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-e7.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-grandmax.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-j5.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-serranove.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-thwc-uf896.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-thwc-ufi001c.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt88047.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-motorola-potter.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-xiaomi-daisy.dtb
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-thwc-uf896.dts b/arch/arm64/boot/dts/qcom/msm8916-thwc-uf896.dts
-new file mode 100644
-index 0000000000000..79447ca48dd3a
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/msm8916-thwc-uf896.dts
-@@ -0,0 +1,41 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+
-+/dts-v1/;
-+
-+#include "msm8916-ufi.dtsi"
-+
-+/ {
-+	model = "uf896 4G Modem Stick";
-+	compatible = "thwc,uf896", "qcom,msm8916";
-+};
-+
-+&button_restart {
-+	gpios = <&msmgpio 35 GPIO_ACTIVE_LOW>;
-+};
-+
-+&led_r {
-+	gpios = <&msmgpio 82 GPIO_ACTIVE_HIGH>;
-+};
-+
-+&led_g {
-+	gpios = <&msmgpio 83 GPIO_ACTIVE_HIGH>;
-+	function = LED_FUNCTION_WLAN;
-+};
-+
-+&led_b {
-+	gpios = <&msmgpio 81 GPIO_ACTIVE_HIGH>;
-+	function = LED_FUNCTION_WAN;
-+};
-+
-+&button_default {
-+	pins = "gpio35";
-+	bias-pull-up;
-+};
-+
-+&gpio_leds_default {
-+	pins = "gpio81", "gpio82", "gpio83";
-+};
-+
-+&sim_ctrl_default {
-+	pins = "gpio1", "gpio2";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-thwc-ufi001c.dts b/arch/arm64/boot/dts/qcom/msm8916-thwc-ufi001c.dts
-new file mode 100644
-index 0000000000000..700cf81cbf8c0
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/msm8916-thwc-ufi001c.dts
-@@ -0,0 +1,39 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+
-+/dts-v1/;
-+
-+#include "msm8916-ufi.dtsi"
-+
-+/ {
-+	model = "ufi-001c/ufi-001b 4G Modem Stick";
-+	compatible = "thwc,ufi001c", "qcom,msm8916";
-+};
-+
-+&button_restart {
-+	gpios = <&msmgpio 37 GPIO_ACTIVE_HIGH>;
-+};
-+
-+&led_r {
-+	gpios = <&msmgpio 22 GPIO_ACTIVE_HIGH>;
-+};
-+
-+&led_g {
-+	gpios = <&msmgpio 21 GPIO_ACTIVE_HIGH>;
-+};
-+
-+&led_b {
-+	gpios = <&msmgpio 20 GPIO_ACTIVE_HIGH>;
-+};
-+
-+&button_default {
-+	pins = "gpio37";
-+	bias-pull-down;
-+};
-+
-+&gpio_leds_default {
-+	pins = "gpio20", "gpio21", "gpio22";
-+};
-+
-+&sim_ctrl_default {
-+	pins = "gpio1", "gpio2";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi b/arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi
-new file mode 100644
-index 0000000000000..286768d0fbe70
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi
-@@ -0,0 +1,246 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+
-+#include "msm8916-pm8916.dtsi"
-+
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/leds/common.h>
-+
-+/ {
-+	chassis-type = "embedded";
-+
-+	aliases {
-+		serial0 = &blsp1_uart2;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0";
-+	};
-+
-+	reserved-memory {
-+		mpss_mem: mpss@86800000 {
-+			reg = <0x0 0x86800000 0x0 0x5500000>;
-+			no-map;
-+		};
-+
-+		gps_mem: gps@8bd00000 {
-+			reg = <0x0 0x8bd00000 0x0 0x200000>;
-+			no-map;
-+		};
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+
-+		pinctrl-0 = <&button_default>;
-+		pinctrl-names = "default";
-+
-+		label = "GPIO Buttons";
-+
-+		/* gpio is board-specific */
-+		button_restart: button-restart {
-+			label = "Restart";
-+			linux,code = <KEY_RESTART>;
-+		};
-+	};
-+
-+	leds {
-+		compatible = "gpio-leds";
-+
-+		pinctrl-0 = <&gpio_leds_default>;
-+		pinctrl-names = "default";
-+
-+		/* GPIOs are board-specific */
-+		led_r: led-r {
-+			color = <LED_COLOR_ID_RED>;
-+			default-state = "on";
-+			function = LED_FUNCTION_INDICATOR;
-+		};
-+
-+		led_g: led-g {
-+			color = <LED_COLOR_ID_GREEN>;
-+			default-state = "off";
-+			function = LED_FUNCTION_INDICATOR;
-+		};
-+
-+		led_b: led-b {
-+			color = <LED_COLOR_ID_BLUE>;
-+			default-state = "off";
-+			function = LED_FUNCTION_INDICATOR;
-+		};
-+	};
-+};
-+
-+&bam_dmux {
-+	status = "okay";
-+};
-+
-+&bam_dmux_dma {
-+	status = "okay";
-+};
-+
-+&blsp1_uart2 {
-+	status = "okay";
-+};
-+
-+/* Remove &dsi_phy0 from clocks to make sure that gcc probes with display disabled */
-+&gcc {
-+	clocks = <&xo_board>, <&sleep_clk>, <0>, <0>, <0>, <0>, <0>;
-+};
-+
-+&mpss {
-+	pinctrl-0 = <&sim_ctrl_default>;
-+	pinctrl-names = "default";
-+
-+	status = "okay";
-+};
-+
-+&pm8916_usbin {
-+	status = "okay";
-+};
-+
-+&pronto {
-+	status = "okay";
-+};
-+
-+&sdhc_1 {
-+	pinctrl-0 = <&sdc1_clk_on &sdc1_cmd_on &sdc1_data_on>;
-+	pinctrl-1 = <&sdc1_clk_off &sdc1_cmd_off &sdc1_data_off>;
-+	pinctrl-names = "default", "sleep";
-+
-+	status = "okay";
-+};
-+
-+&usb {
-+	extcon = <&pm8916_usbin>;
-+	dr_mode = "peripheral";
-+
-+	status = "okay";
-+};
-+
-+&usb_hs_phy {
-+	extcon = <&pm8916_usbin>;
-+};
-+
-+&smd_rpm_regulators {
-+	vdd_l1_l2_l3-supply = <&pm8916_s3>;
-+	vdd_l4_l5_l6-supply = <&pm8916_s4>;
-+	vdd_l7-supply = <&pm8916_s4>;
-+
-+	s3 {
-+		regulator-min-microvolt = <1200000>;
-+		regulator-max-microvolt = <1300000>;
-+	};
-+
-+	s4 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <2100000>;
-+	};
-+
-+	l1 {
-+		regulator-min-microvolt = <1225000>;
-+		regulator-max-microvolt = <1225000>;
-+	};
-+
-+	l2 {
-+		regulator-min-microvolt = <1200000>;
-+		regulator-max-microvolt = <1200000>;
-+	};
-+
-+	l4 {
-+		regulator-min-microvolt = <2050000>;
-+		regulator-max-microvolt = <2050000>;
-+	};
-+
-+	l5 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+	};
-+
-+	l6 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+	};
-+
-+	l7 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+	};
-+
-+	l8 {
-+		regulator-min-microvolt = <2850000>;
-+		regulator-max-microvolt = <2900000>;
-+	};
-+
-+	l9 {
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+	};
-+
-+	l10 {
-+		regulator-min-microvolt = <2700000>;
-+		regulator-max-microvolt = <2800000>;
-+	};
-+
-+	l11 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <2950000>;
-+		regulator-system-load = <200000>;
-+		regulator-allow-set-load;
-+	};
-+
-+	l12 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <2950000>;
-+	};
-+
-+	l13 {
-+		regulator-min-microvolt = <3075000>;
-+		regulator-max-microvolt = <3075000>;
-+	};
-+
-+	l14 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <3300000>;
-+	};
-+
-+	l15 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <3300000>;
-+	};
-+
-+	l16 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <3300000>;
-+	};
-+
-+	l17 {
-+		regulator-min-microvolt = <2850000>;
-+		regulator-max-microvolt = <2850000>;
-+	};
-+
-+	l18 {
-+		regulator-min-microvolt = <2700000>;
-+		regulator-max-microvolt = <2700000>;
-+	};
-+};
-+
-+&msmgpio {
-+	/* pins are board-specific */
-+	button_default: button-default-state {
-+		function = "gpio";
-+		drive-strength = <2>;
-+	};
-+
-+	gpio_leds_default: gpio-leds-default-state {
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	sim_ctrl_default: sim-ctrl-default-state {
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+		output-low;
-+	};
-+};
--- 
-2.39.0
-
+Konrad
+> 
+> This one depends on the sc8280xp display patches:
+> 
+> 	https://lore.kernel.org/lkml/20230111035906.2975494-1-quic_bjorande@quicinc.com/T/#mbcdfc826df6683a71d80bab5d86645ba81b02d52
+> 
+> Johan
+> 
+> 
+>  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 75 ++++++++++++++++++-
+>  1 file changed, 73 insertions(+), 2 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> index 23c1ca44ec11..ef17ef90d1f0 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> @@ -47,7 +47,7 @@ wcd938x: audio-codec {
+>  		#sound-dai-cells = <1>;
+>  	};
+>  
+> -	backlight {
+> +	backlight: backlight {
+>  		compatible = "pwm-backlight";
+>  		pwms = <&pmc8280c_lpg 3 1000000>;
+>  		enable-gpios = <&pmc8280_1_gpios 8 GPIO_ACTIVE_HIGH>;
+> @@ -72,6 +72,22 @@ switch-lid {
+>  		};
+>  	};
+>  
+> +	vreg_edp_3p3: regulator-edp-3p3 {
+> +		compatible = "regulator-fixed";
+> +
+> +		regulator-name = "VCC3LCD";
+> +		regulator-min-microvolt = <3300000>;
+> +		regulator-max-microvolt = <3300000>;
+> +
+> +		gpio = <&tlmm 25 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&edp_reg_en>;
+> +
+> +		regulator-boot-on;
+> +	};
+> +
+>  	vreg_edp_bl: regulator-edp-bl {
+>  		compatible = "regulator-fixed";
+>  
+> @@ -259,7 +275,6 @@ vreg_l6b: ldo6 {
+>  			regulator-max-microvolt = <880000>;
+>  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>  			regulator-boot-on;
+> -			regulator-always-on;	/* FIXME: VDD_A_EDP_0_0P9 */
+>  		};
+>  	};
+>  
+> @@ -340,6 +355,55 @@ vreg_l9d: ldo9 {
+>  	};
+>  };
+>  
+> +&dispcc0 {
+> +	status = "okay";
+> +};
+> +
+> +&mdss0 {
+> +	status = "okay";
+> +};
+> +
+> +&mdss0_dp3 {
+> +	compatible = "qcom,sc8280xp-edp";
+> +
+> +	data-lanes = <0 1 2 3>;
+> +
+> +	status = "okay";
+> +
+> +	aux-bus {
+> +		panel {
+> +			compatible = "edp-panel";
+> +
+> +			backlight = <&backlight>;
+> +			power-supply = <&vreg_edp_3p3>;
+> +
+> +			ports {
+> +				port {
+> +					edp_panel_in: endpoint {
+> +						remote-endpoint = <&mdss0_dp3_out>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +	};
+> +
+> +	ports {
+> +		port@1 {
+> +			reg = <1>;
+> +			mdss0_dp3_out: endpoint {
+> +				remote-endpoint = <&edp_panel_in>;
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +&mdss0_dp3_phy {
+> +	vdda-phy-supply = <&vreg_l6b>;
+> +	vdda-pll-supply = <&vreg_l3b>;
+> +
+> +	status = "okay";
+> +};
+> +
+>  &pcie2a {
+>  	perst-gpios = <&tlmm 143 GPIO_ACTIVE_LOW>;
+>  	wake-gpios = <&tlmm 145 GPIO_ACTIVE_LOW>;
+> @@ -902,6 +966,13 @@ hastings_reg_en: hastings-reg-en-state {
+>  &tlmm {
+>  	gpio-reserved-ranges = <70 2>, <74 6>, <83 4>, <125 2>, <128 2>, <154 7>;
+>  
+> +	edp_reg_en: edp-reg-en-state {
+> +		pins = "gpio25";
+> +		function = "gpio";
+> +		drive-strength = <16>;
+> +		bias-disable;
+> +	};
+> +
+>  	hall_int_n_default: hall-int-n-state {
+>  		pins = "gpio107";
+>  		function = "gpio";
