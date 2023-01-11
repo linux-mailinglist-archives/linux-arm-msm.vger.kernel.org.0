@@ -2,213 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D1E8666230
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 18:42:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1422A66627A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 19:06:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234896AbjAKRmD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Jan 2023 12:42:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38706 "EHLO
+        id S234808AbjAKSF4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Jan 2023 13:05:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235353AbjAKRlk (ORCPT
+        with ESMTP id S234623AbjAKSFy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Jan 2023 12:41:40 -0500
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCDA4C2F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 09:40:38 -0800 (PST)
-Received: by mail-pl1-x62f.google.com with SMTP id p24so17508527plw.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 09:40:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=KpkaVTQGXazamk/VxjWqp4ydb0LD0blsaD+1AXj4yEY=;
-        b=MjIMA5Ai8yWDh5T4BrRO6rExGL4rJ7QVwUKkkXRN6G2QrfhUCZP/KCPkE54+hFTu2/
-         xPxq49fXLlszJ2KPOzI29AYUVeQNaomwOe6GjiKd5bevhEB55kHUhLyyo9j1bzvCmMF/
-         vAa73q5kY5CZ7lthIYeYQufj/c4d6QGrFrQrl4EtknbCioz7uwXrbeAjtpkA84A0E+e4
-         ctmS0BzLb2bXekbHNuHo/Q6oPT5rxbtM08mh8BH1Abxf6SrK+brSljPr73p6kPRJwZBu
-         DFbV2LMTjjMJD8tR5iCIEM+smmc3HSWIOQkXB1kBxdKqW01vsOBMJq23xYDOeR4nVEhF
-         1BLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KpkaVTQGXazamk/VxjWqp4ydb0LD0blsaD+1AXj4yEY=;
-        b=ENYGBpQ3T01KK82Xx4xFsZjBr1DOgHcuWq+NeA3+I2kzesCG1af1dqIcYwTnmsmBcQ
-         agdNxh6zpfVK7ZkQsUebI+RKOTDyOd7yr6YF/iMaonHpgxd2TP6el5Tp9gHW5Qup1Dua
-         WPfHOFLlVk5aZQ15T23g/BwhXKr/n7Stg5fM2jlHdrdgc8XaUoNSe637jzd7fOpEGzXt
-         oaG1aQ166mMW0eHr4VhwD9Kz3Bzt4ojSnrsiEy1OE33CCxej6YE+VApMbfpdVUMG5y1a
-         sLg+EEDUAR/yHOere6atpX3zDEaOQrJ//ub19po0RAWFdw2siYMZLQi/IzhXBZa7NvgK
-         OTUw==
-X-Gm-Message-State: AFqh2krHWQ5gInSU3g4pwnGh7CZ0cbegNwmlFvFTV3e2Dz83v1ffvT4d
-        Zx6XD9K1YZY+2jzcCLqeeD0d
-X-Google-Smtp-Source: AMrXdXs+856ScIt9zQEEdg5PRmzDH9Y23S1wO2tLMxfcc3V2SMzAdwVZ8eM26ECcWBh/scrfTHzCfA==
-X-Received: by 2002:a05:6a21:70cb:b0:ad:ceba:1bdc with SMTP id xd11-20020a056a2170cb00b000adceba1bdcmr78229590pzb.16.1673458838288;
-        Wed, 11 Jan 2023 09:40:38 -0800 (PST)
-Received: from thinkpad ([117.217.177.1])
-        by smtp.gmail.com with ESMTPSA id d21-20020a630e15000000b0047781f8ac17sm8703105pgl.77.2023.01.11.09.40.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Jan 2023 09:40:37 -0800 (PST)
-Date:   Wed, 11 Jan 2023 23:10:29 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Sibi Sankar <quic_sibis@quicinc.com>
-Cc:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        robh+dt@kernel.org, konrad.dybcio@somainline.org,
-        amit.pundir@linaro.org, regressions@leemhuis.info,
-        sumit.semwal@linaro.org, will@kernel.org, catalin.marinas@arm.com,
-        robin.murphy@arm.com
-Subject: Re: [PATCH V3 05/10] remoteproc: qcom_q6v5_mss: Use a carveout to
- authenticate modem headers
-Message-ID: <20230111174029.GE4873@thinkpad>
-References: <20230111114337.24782-1-quic_sibis@quicinc.com>
- <20230111114337.24782-6-quic_sibis@quicinc.com>
- <20230111115422.GD4873@thinkpad>
- <d714a068-ee48-2a86-4d54-173312d9720e@quicinc.com>
+        Wed, 11 Jan 2023 13:05:54 -0500
+Received: from out162-62-58-211.mail.qq.com (out162-62-58-211.mail.qq.com [162.62.58.211])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3D4115F27;
+        Wed, 11 Jan 2023 10:05:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
+        s=s201512; t=1673460340;
+        bh=AV9Go+xHCdsoX9TINfpzQ7oy2kjUbf39EKCEUBJfj0U=;
+        h=From:To:Cc:Subject:Date;
+        b=ejms4cozp3pmCgI/JjFqB8yuR5tuunsSe24MVSaGYgxChDOGsg8hcwF+aO2p9ThG5
+         Dgj7CKlQvHg2ZND38f0K3PTvUTiTmm2lObCoiKLK8dcyBNwP9BarUFHzOf296Kk603
+         dtvSfnSW+ayyIjlEAdzrZNlz6LYwB1gbFwPLIZLw=
+Received: from localhost.localdomain ([111.60.247.106])
+        by newxmesmtplogicsvrsza10-0.qq.com (NewEsmtp) with SMTP
+        id 14F2600F; Thu, 12 Jan 2023 02:05:15 +0800
+X-QQ-mid: xmsmtpt1673460315tjyf90zqs
+Message-ID: <tencent_0F1C483464F866AD2DFA08F0BB3B0FFFC406@qq.com>
+X-QQ-XMAILINFO: Mu4fz8q1FCY3qQbmfCHUQmOmsTIPVLpe8FtYVnEgJLa9EBzoN4D4KXlmFUkAgb
+         RacKQt2fXT4nL9Bh1i2fuRENxAGqjdXGhWrLkRltnQO/GgV1StiwWgAIuQVayHc2lO3/NDc9vZE1
+         +NtDjhStK04Ox5f2rtNeIe0rVQhi0uaxuwJJ/xzO2i77nQ3kSTnpMwEP77BYSaHel3dd9jQAnk//
+         5rcCPWCdr9jRwAGoS6EUwGDXHK23RDH/kf54iEEmCRAi6tjbiDv4pbbnC8Mj/owjYrqsoSXnzu+V
+         /dYJR2MFM5SgximmqgUgbm/xHMnxnlQmWxdU80N/CPhub+6esRZVf79V+//8fnCsdQSmqUHWgowx
+         7+68vRcrUDLZn5U3jnCm2CEOvk3Cm5FDh+4RC9yssA4ZdsruNHR/srn2DBWxkff+8BZDQ53+jGjv
+         /1pJ3q93evXxT/q+VFRqyTyXJsS3+96QKqdicKSIGoQ5tzzbHvfAWbo0Ce4ybaSzjbEJnpzWb2RE
+         6+HwqUXkilURkRTZEL48IAS/Hr5YCJzdGuEqN0cW9AV7SB6MJf2I51K3kAB4BwCr3kVlJhfNbRb5
+         4jwFEdHG3+QRBrt7tEFhdJkDNBp8zDK1ukCrsllkjP9l6yLLzYrTxZ+SmPUTx6JI9shEaI5f1TRi
+         9VP/SuEq1VwTNuNymB8+Wl7scsTb2XM7JfxTCrcJKukXR2L4UvheTWIh99SJptLTZKBvk1NBXrku
+         gz7d5lP+BKjrsDNggkMBaKNn0dwTjgtygvP/tnRri7nEniInHnueXqpJifv9CdD7o7Dh2gvukHhx
+         jkzoKvnVh8sdU9Xgdz3Pt1J8e6f/3Mpw4Hcp4f/DR/AoX47ZwiR40dwF5pGkhAWG3cMWNYBpV9b9
+         K4Og9aT8R/2ZMAcKeD/1L3wck8Vo6rZYHP/+M+eQ3FxmXmzYwAkN+kqfjZE9BK3p3NZel9BpmZRY
+         AWYilsKpyU8U+zUtsy6xIx+UIQxU1nxkYUNeWmta4/xeq8oc7z8Q==
+From:   Yang Xiwen <forbidden405@foxmail.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Yang Xiwen <forbidden405@foxmail.com>,
+        Jaime Breva <jbreva@nayarsystems.com>,
+        Nikita Travkin <nikita@trvn.ru>,
+        ~postmarketos/upstreaming@lists.sr.ht
+Subject: [PATCH v3 0/3] Support for MSM8916-based UFi ufi001c and uf896
+Date:   Thu, 12 Jan 2023 02:03:19 +0800
+X-OQ-MSGID: <20230111180322.21874-1-forbidden405@foxmail.com>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <d714a068-ee48-2a86-4d54-173312d9720e@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,HELO_DYNAMIC_IPADDR,RCVD_IN_DNSWL_NONE,RDNS_DYNAMIC,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 11, 2023 at 05:58:49PM +0530, Sibi Sankar wrote:
-> Hey Mani,
-> 
-> Thanks for taking time to review the series.
-> 
-> On 1/11/23 17:24, Manivannan Sadhasivam wrote:
-> > On Wed, Jan 11, 2023 at 05:13:32PM +0530, Sibi Sankar wrote:
-> > > Any access to the dynamically allocated metadata region by the application
-> > > processor after assigning it to the remote Q6 will result in a XPU
-> > > violation. Fix this by replacing the dynamically allocated memory region
-> > > with a no-map carveout and unmap the modem metadata memory region before
-> > > passing control to the remote Q6.
-> > > 
-> > > Reported-and-tested-by: Amit Pundir <amit.pundir@linaro.org>
-> > > Fixes: 6c5a9dc2481b ("remoteproc: qcom: Make secure world call for mem ownership switch")
-> > > Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> > 
-> > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > 
-> > > ---
-> > > 
-> > > v3:
-> > >   * Drop revert no_kernel_mapping since it's already on the list [Mani]
-> > 
-> > I thought you are going to include Christoph's patch into your series. That way
-> > all the patches will be in the same series, makig life easier for Bjorn.
-> > 
-> 
-> Since there were multiple patches in Christoph's original series, I
-> decided I'll just drop the revert and have it depends on instead.
-> 
+These devices are equipped with 512MB RAM, 4/8GB eMMC and MSM8916.
+This series introduces support for them and adds a dtsi for the class of
+MSM8916-based UFIs.
 
-There is only one patch in that series and that was independent of the
-remoteproc change. So, it should be fine to include the revert patch to this
-series.
+v3:
+- Sort vendor-prefixes alphebatically
+v2:
+- Managed to get the real vendor
+- Remove some reduntant descriptions
+- Rename dtsi more formally
 
-Thanks,
-Mani
+Yang Xiwen (3):
+  dt-bindings: vendor-prefixes: add thwc
+  dt-bindings: qcom: Document msm8916-thwc-uf896 and ufi001c
+  arm64: dts: qcom: msm8916-thwc: Add initial device trees
 
-> 
-> > Thanks,
-> > Mani
-> > 
-> > >   * kfree metadata from the branch for parity
-> > > 
-> > >   drivers/remoteproc/qcom_q6v5_mss.c | 48 ++++++++++++++++++++++++++----
-> > >   1 file changed, 42 insertions(+), 6 deletions(-)
-> > > 
-> > > diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-> > > index e2f765f87ec9..e25d44e20ae7 100644
-> > > --- a/drivers/remoteproc/qcom_q6v5_mss.c
-> > > +++ b/drivers/remoteproc/qcom_q6v5_mss.c
-> > > @@ -215,6 +215,7 @@ struct q6v5 {
-> > >   	size_t mba_size;
-> > >   	size_t dp_size;
-> > > +	phys_addr_t mdata_phys;
-> > >   	phys_addr_t mpss_phys;
-> > >   	phys_addr_t mpss_reloc;
-> > >   	size_t mpss_size;
-> > > @@ -973,15 +974,29 @@ static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw,
-> > >   	if (IS_ERR(metadata))
-> > >   		return PTR_ERR(metadata);
-> > > -	ptr = dma_alloc_attrs(qproc->dev, size, &phys, GFP_KERNEL, dma_attrs);
-> > > -	if (!ptr) {
-> > > -		kfree(metadata);
-> > > -		dev_err(qproc->dev, "failed to allocate mdt buffer\n");
-> > > -		return -ENOMEM;
-> > > +	if (qproc->mdata_phys) {
-> > > +		phys = qproc->mdata_phys;
-> > > +		ptr = memremap(qproc->mdata_phys, size, MEMREMAP_WC);
-> > > +		if (!ptr) {
-> > > +			kfree(metadata);
-> > > +			dev_err(qproc->dev, "unable to map memory region: %pa+%zx\n",
-> > > +				&qproc->mdata_phys, size);
-> > > +			return -EBUSY;
-> > > +		}
-> > > +	} else {
-> > > +		ptr = dma_alloc_attrs(qproc->dev, size, &phys, GFP_KERNEL, dma_attrs);
-> > > +		if (!ptr) {
-> > > +			kfree(metadata);
-> > > +			dev_err(qproc->dev, "failed to allocate mdt buffer\n");
-> > > +			return -ENOMEM;
-> > > +		}
-> > >   	}
-> > >   	memcpy(ptr, metadata, size);
-> > > +	if (qproc->mdata_phys)
-> > > +		memunmap(ptr);
-> > > +
-> > >   	/* Hypervisor mapping to access metadata by modem */
-> > >   	mdata_perm = BIT(QCOM_SCM_VMID_HLOS);
-> > >   	ret = q6v5_xfer_mem_ownership(qproc, &mdata_perm, false, true,
-> > > @@ -1010,7 +1025,8 @@ static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw,
-> > >   			 "mdt buffer not reclaimed system may become unstable\n");
-> > >   free_dma_attrs:
-> > > -	dma_free_attrs(qproc->dev, size, ptr, phys, dma_attrs);
-> > > +	if (!qproc->mdata_phys)
-> > > +		dma_free_attrs(qproc->dev, size, ptr, phys, dma_attrs);
-> > >   	kfree(metadata);
-> > >   	return ret < 0 ? ret : 0;
-> > > @@ -1893,6 +1909,26 @@ static int q6v5_alloc_memory_region(struct q6v5 *qproc)
-> > >   	qproc->mpss_phys = qproc->mpss_reloc = r.start;
-> > >   	qproc->mpss_size = resource_size(&r);
-> > > +	if (!child) {
-> > > +		node = of_parse_phandle(qproc->dev->of_node, "memory-region", 2);
-> > > +	} else {
-> > > +		child = of_get_child_by_name(qproc->dev->of_node, "metadata");
-> > > +		node = of_parse_phandle(child, "memory-region", 0);
-> > > +		of_node_put(child);
-> > > +	}
-> > > +
-> > > +	if (!node)
-> > > +		return 0;
-> > > +
-> > > +	ret = of_address_to_resource(node, 0, &r);
-> > > +	of_node_put(node);
-> > > +	if (ret) {
-> > > +		dev_err(qproc->dev, "unable to resolve metadata region\n");
-> > > +		return ret;
-> > > +	}
-> > > +
-> > > +	qproc->mdata_phys = r.start;
-> > > +
-> > >   	return 0;
-> > >   }
-> > > -- 
-> > > 2.17.1
-> > > 
-> > 
+ .../devicetree/bindings/arm/qcom.yaml         |   2 +
+ .../devicetree/bindings/vendor-prefixes.yaml  |   2 +
+ arch/arm64/boot/dts/qcom/Makefile             |   2 +
+ .../boot/dts/qcom/msm8916-thwc-uf896.dts      |  41 +++
+ .../boot/dts/qcom/msm8916-thwc-ufi001c.dts    |  39 +++
+ arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi     | 246 ++++++++++++++++++
+ 6 files changed, 332 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8916-thwc-uf896.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8916-thwc-ufi001c.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi
 
 -- 
-மணிவண்ணன் சதாசிவம்
+2.39.0
+
