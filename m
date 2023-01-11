@@ -2,78 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C14A5665916
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 11:33:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EFDE1665945
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 11:45:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229961AbjAKKdL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Jan 2023 05:33:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53444 "EHLO
+        id S232323AbjAKKpS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Jan 2023 05:45:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234175AbjAKKdI (ORCPT
+        with ESMTP id S238542AbjAKKpA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Jan 2023 05:33:08 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0C446321;
-        Wed, 11 Jan 2023 02:33:07 -0800 (PST)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30B8wwxd006816;
-        Wed, 11 Jan 2023 10:33:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=1oF420EDxAicWGUXE/uXSiSuvzCuEmIK+W0MR2J+zgY=;
- b=jIJ0tJQ0PF1PJ9qmhGGKUSakG1ihGRz7ii85luuFSf63p06XejrXXN2Kb98KRFqLY0uT
- 6Vkpr9nz445QwIU+KGGiQmnbpj8ZJb3NroQguokKcfu+fK1Pv/b2v8jhV0vqDjBkMdLm
- v+dDaP21YxJxqBtW9BVSv10sjZP016MC/Bx6SqinrIpINO3RyO3hfyzgzaX3VA1v9U2f
- TXSdzhpRvMAPsojRKLgSXUbea+ZCNX86/EZZi/EpQcEE83fPeeUVM33UBHGnJF0VK36s
- RJnPp4ZyOtfAkFph4uXJHQBApMDWohEsqJeEua5q681dFTdnkCoDCjMeuPUTtB75JAhS SQ== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n1k6a0yeb-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 11 Jan 2023 10:33:04 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30BAX3aX008255
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 11 Jan 2023 10:33:03 GMT
-Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 11 Jan
- 2023 02:33:00 -0800
-Message-ID: <d7f9a6be-ced8-b3b1-7940-580e71c6cb06@quicinc.com>
-Date:   Wed, 11 Jan 2023 16:02:51 +0530
+        Wed, 11 Jan 2023 05:45:00 -0500
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83F822718
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 02:44:58 -0800 (PST)
+Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits))
+        (No client certificate requested)
+        (Authenticated sender: kholk11)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id E0F116602D91;
+        Wed, 11 Jan 2023 10:44:56 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1673433897;
+        bh=WskYTWI7lWES23Pmas9JEiHG2wrjhjTKjlsjMummKE0=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=LX3GlsrU0lHg4XfGepuBQbPB+9rL66pjJxqjog+shuZzbhRuZfTmBHfpBNS5oABY/
+         7Ols9GI8BJ43S43YRIgxvNdBbpMSZsXjlx2jTSPSI948smLY5DkwVGGpMKlB2Jx9oB
+         4rfpd+lRUYSWXb6+Xa7W6yCTVFyiIrDQzNhag1YdcC6fX6Vc95UIPFOly9ZoSx9Y/Z
+         HY9oTRs62RPJkqVN3hO6Y2Tnuvt9BiKOJ4bxclqZJ1+ysAW0dbo6deN6EV35cA6e0F
+         miS4MejiFbJqi8N0u191on4xv6vrfne6PZ/v8sdhhCMEuWtxVmkULKPHEw+YQvEl2S
+         O80gFiI2IjjpQ==
+Message-ID: <26aa4f87-31c3-ec09-bb29-4abf16ab3019@collabora.com>
+Date:   Wed, 11 Jan 2023 11:44:53 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH] arm64: dts: qcom: sm8450: Add TCSR halt register space
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH v8 0/5] Add support for Core Power Reduction v3, v4 and
+ Hardened
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1673428818-26112-1-git-send-email-quic_mojha@quicinc.com>
- <ab6a99da-e91b-20de-3126-3f1f94ce277b@linaro.org>
- <c5dc8042-717b-22eb-79f6-d18ab10d6685@linaro.org>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <c5dc8042-717b-22eb-79f6-d18ab10d6685@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     marijn.suijten@somainline.org
+References: <20230110175605.1240188-1-konrad.dybcio@linaro.org>
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+In-Reply-To: <20230110175605.1240188-1-konrad.dybcio@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: rB1f-Es52DChQWHHcSfLcnNu_tjCx04-
-X-Proofpoint-GUID: rB1f-Es52DChQWHHcSfLcnNu_tjCx04-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2023-01-11_04,2023-01-11_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
- lowpriorityscore=0 impostorscore=0 phishscore=0 clxscore=1015
- malwarescore=0 mlxscore=0 priorityscore=1501 spamscore=0 bulkscore=0
- mlxlogscore=901 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301110080
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
         SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -83,59 +59,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Il 10/01/23 18:56, Konrad Dybcio ha scritto:
+> Changes in v8:
+> - Overtake this series from AGdR
 
-On 1/11/2023 3:30 PM, Krzysztof Kozlowski wrote:
-> On 11/01/2023 10:59, Krzysztof Kozlowski wrote:
->> On 11/01/2023 10:20, Mukesh Ojha wrote:
->>> Add TCSR register space and refer it from scm node, so that
->>> it can be used by SCM driver.
->>>
->>> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
->>> ---
->>>   arch/arm64/boot/dts/qcom/sm8450.dtsi | 6 ++++++
->>>   1 file changed, 6 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
->>> index 5704750..e0fa733 100644
->>> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
->>> @@ -270,6 +270,7 @@
->>>   	firmware {
->>>   		scm: scm {
->>>   			compatible = "qcom,scm-sm8450", "qcom,scm";
->>> +			qcom,dload-mode = <&tcsr 0x13000>;
->>>   			interconnects = <&aggre2_noc MASTER_CRYPTO 0 &mc_virt SLAVE_EBI1 0>;
->>>   			#reset-cells = <1>;
->>>   		};
->>> @@ -1986,6 +1987,11 @@
->>>   			#hwlock-cells = <1>;
->>>   		};
->>>   
->>> +		tcsr: syscon@1fc0000 {
->>> +			compatible = "syscon";
->>
->> This is not allowed by itself.
-> 
-> Eh, that was not proper English... I wanted to say: This is not allowed
-> on its own. You need specific compatible. ALWAYS.
+Hi Konrad,
+thanks for taking care of this series - I didn't really have time to perform more
+work on it, so I really appreciate you stepping in.
 
-Sorry, it was my first DT patch, I did not run dtbs_check.
-Thanks for correcting.
+> - Apply all review comments from v7 except Vladimir's request to
+>    not create the include/ header; it will be strictly necessary for
+>    OSM-aware cpufreq_hw programming, which this series was more or
+>    less created just for..
+> - Drop QCS404 dtsi change, account for not breaking backwards compat
+>    in [3/5]
+> - Add type phandle type reference to acc-syscon in [1/5]
+> - Update AGdR's email addresses for maintainer entries
+> - Add [2/5] to make dt_binding_check happy
+> - Separate the CPRh DT addition from cpufreq_hw addition, sort and
+>    properly indent new nodes
+> - Drop CPR yaml conversion, that happened in meantime
+> - Reorder the patches to make a bit more sense
+> - Tested again on MSM8998 Xperia XZ Premium (Maple)
+> - I take no responsibility for AGdR's cheeky jokes, only the code!
 
-I think, i have missed adding qcom,tcsr-sm8450 in
-Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
-also need to add qcom,tcsr-sm8450 in above compatible.
+I can take full responsibility for any cheeky jokes :-)
 
--Mukesh
-> 
->> You should have warnings when running
->> dtbs_check.
->>
->> Best regards,
->> Krzysztof
->>
-> 
-> Best regards,
-> Krzysztof
-> 
+Cheers,
+Angelo
+
