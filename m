@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 839F6666528
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 21:59:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3271E66652F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 22:00:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234433AbjAKU7S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Jan 2023 15:59:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57148 "EHLO
+        id S231841AbjAKVAg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Jan 2023 16:00:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234740AbjAKU6p (ORCPT
+        with ESMTP id S234808AbjAKVAN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Jan 2023 15:58:45 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A281C16
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 12:58:44 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id j17so25428278lfr.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 12:58:44 -0800 (PST)
+        Wed, 11 Jan 2023 16:00:13 -0500
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96D9B3FA2B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 12:59:29 -0800 (PST)
+Received: by mail-lf1-x129.google.com with SMTP id f34so25373126lfv.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 12:59:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=U1qg3MzVfQG7C7y0cUB5oRHh9eT6BZD3jl2UT/xoGjs=;
-        b=BvukW3P64NhAhmFOm28uOJJbV90VwwhrXhNwfSVTFohbNNNbzgFvhJEMYD9s5MWibw
-         yYjHEmRWN7luvJPpSEbN64flIBPbU+t3OiALXa7xLhwXRb7qU/nM3umY24B65ulcWfNz
-         xqDf74wSfKBMJSvoFZWVdZCEovpGtZ6ntrJL3Ifhi+GXNP1GUxQes1OTMQBRVTynQg/U
-         7EcFB5NNbEkOmRQT9m0Eddx6imponcd8xK9ER0eNp75I2Rga/2Nvh+Vc2DUE4AenkcHu
-         X4f3SQYdcWlb5dMv4n2Zxv6cphWtdsydbEy1Ey4tUmoKPw6WMS5cnWjvBZB4gHAzEdWP
-         9eAQ==
+        bh=QyAJuZFFqvNr/D0h9ACf61BFr27KTfRszm5K4wFIax0=;
+        b=t+WMkvoI5qbVVsxNumMG0KmrmXohDtZwIH6eNGnDNpg11o8yw1vxIuc17VxlcziMGd
+         2iXmy+9Wa572VBn+sReHTD01NTMJgMynx+Mg3qotHIlDghUv/FhKMThgiJsDbZ4aPNie
+         fWVGH2YSzRr7DjogQsgkvN79UyXl/J9flenWpP0/g2KXl3E1H6VucPTof0xeekBnOxnr
+         T90PpbAta1tDEQAzChpCkIBnxJnDx36MioeghS5Ksdo+uQsAKmUkP9v+JwLIwlYRtc5/
+         OSRH9tZUxp0GiQj0nsq7L7BnjzMoRFerFCFfPPK5H8PDqUHcJnZQOsO4j6tc9/8qk1Kg
+         KXzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=U1qg3MzVfQG7C7y0cUB5oRHh9eT6BZD3jl2UT/xoGjs=;
-        b=eOQDO46mAbQvUuVezL8im4x5+fBTGApBUj1rZuIff/HS2tSQA22eJgFEwwlMfL0Bj0
-         E0XoLFNqFA28aOcg3uySrY6fF+0HMT9RwbJQI+10xxj+FR2Q+JqE7ZjNmolQmisQ0D3Y
-         GvjOlnFfmmtsxN9VE8jSm/OUTwBkPQb59Wi6dy1Yar4NBaODnVqc/8DA1EG4fZneNKie
-         ZcbYYcII5KNpKutmk2pXvayQw20V86ucBr7ju33lbOS2y01BHXV4P6cbz45YDgOTtX8O
-         XnWRfk5VIeeUhdJX0tN5ZYrQTEm+XNlOL2YmBN564AKO8nbJ2J37kd2mHLGBsK9BdOjQ
-         04YA==
-X-Gm-Message-State: AFqh2koYItSFDzkCQNZlIE+sAPypJxmfxjlfrxJjkTGhb+PTSq+1szR6
-        wn6XkeL2SY25PHbz5LWKdoIMsw==
-X-Google-Smtp-Source: AMrXdXsSS5FclZVCexFPArBynZHjA700yX0BGqWI6iWjVOOucKnolvHb1Gz7toaVKu+g4Xq99+4Fxw==
-X-Received: by 2002:a05:6512:3e24:b0:4cb:c11:d01f with SMTP id i36-20020a0565123e2400b004cb0c11d01fmr19983280lfv.22.1673470722512;
-        Wed, 11 Jan 2023 12:58:42 -0800 (PST)
+        bh=QyAJuZFFqvNr/D0h9ACf61BFr27KTfRszm5K4wFIax0=;
+        b=BaAKPF9cuRnN1mNS06j7zYK2XBQGt4goF3G6kCvUZJWhNyJnFsyDXbeq6G1cc2gQFi
+         RLpaYsDwLQzSKWaJPVhPZGd0U4WokiJiNyZrLdP5x6ErUpRkJ64fpY02SdLqVPi4YHGN
+         IACGTRrAM5MMV47M/pSfn73aQ+z57SpnUq10QsytAharKAEtnc01jW6FXtz0H36HtJG5
+         Tc1wT2CVeSHyOVe7xMPxlyRRt7dbfwq2u9cEZQOWWsOxMAfWEYKneO7tDMG/kWz8Q5zF
+         saAiwdwBOCfl4Gv0AEUgrRtYtPjT3AIXfWPJgV2OvBPX8pylQApVzHsNAf64/NRgDEm2
+         xRXA==
+X-Gm-Message-State: AFqh2kp/T6r+eBpYQH5ZRoIoJInwgZ+v4dz+0/HoOHd9spdyHihjzs+w
+        zKLy6AFvuefknq6VBPaW5fAznQ==
+X-Google-Smtp-Source: AMrXdXsiWTd7xOhayDmMPUpBu/+3bKoKxSX+g/AzagGPc8JkGbMcyCEUuA/auPNDUd2uKVcuhw1aMQ==
+X-Received: by 2002:a05:6512:2805:b0:4b5:a53f:ac18 with SMTP id cf5-20020a056512280500b004b5a53fac18mr24232292lfb.69.1673470767738;
+        Wed, 11 Jan 2023 12:59:27 -0800 (PST)
 Received: from [192.168.1.101] (abym53.neoplus.adsl.tpnet.pl. [83.9.32.53])
-        by smtp.gmail.com with ESMTPSA id x3-20020a056512078300b004b40c2fccfdsm2898708lfr.59.2023.01.11.12.58.40
+        by smtp.gmail.com with ESMTPSA id c3-20020ac25f63000000b0049f54c5f2a4sm2894980lfc.229.2023.01.11.12.59.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Jan 2023 12:58:41 -0800 (PST)
-Message-ID: <9a3071e1-0e3f-ae87-0574-7659c52bc884@linaro.org>
-Date:   Wed, 11 Jan 2023 21:58:39 +0100
+        Wed, 11 Jan 2023 12:59:26 -0800 (PST)
+Message-ID: <33a6bf2c-bb93-c183-3915-5b90b72e4503@linaro.org>
+Date:   Wed, 11 Jan 2023 21:59:25 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
-Subject: Re: [PATCH 03/13] clk: qcom: cpu-8996: fix the init clock rate
+Subject: Re: [PATCH 04/13] clk: qcom: cpu-8996: support using GPLL0 as SMUX
+ input
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -68,9 +69,9 @@ To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org
 References: <20230111192004.2509750-1-dmitry.baryshkov@linaro.org>
- <20230111192004.2509750-4-dmitry.baryshkov@linaro.org>
+ <20230111192004.2509750-5-dmitry.baryshkov@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230111192004.2509750-4-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230111192004.2509750-5-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -86,27 +87,65 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 11.01.2023 20:19, Dmitry Baryshkov wrote:
-> Change PLL programming to let both power and performance cluster clocks
-> to start from the maximum common frequency.
+> In some cases the driver might need using GPLL0 to drive CPU clocks.
+> Bring it in through the sys_apcs_aux clock.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
-Can you point me to the source of this? My local random msm-3.18 has this at 60.
+Oh that's new.. downstream doesn't talk about this..
 
 Konrad
->  drivers/clk/qcom/clk-cpu-8996.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  drivers/clk/qcom/clk-cpu-8996.c | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
 > 
 > diff --git a/drivers/clk/qcom/clk-cpu-8996.c b/drivers/clk/qcom/clk-cpu-8996.c
-> index ed8cb558e1aa..d51965fda56d 100644
+> index d51965fda56d..0e0c00d44c6f 100644
 > --- a/drivers/clk/qcom/clk-cpu-8996.c
 > +++ b/drivers/clk/qcom/clk-cpu-8996.c
-> @@ -102,7 +102,7 @@ static const u8 alt_pll_regs[PLL_OFF_MAX_REGS] = {
->  /* PLLs */
+> @@ -12,6 +12,8 @@
+>   *                              +-------+
+>   *               XO             |       |
+>   *           +------------------>0      |
+> + *               SYS_APCS_AUX   |       |
+> + *           +------------------>3      |
+>   *                              |       |
+>   *                    PLL/2     | SMUX  +----+
+>   *                      +------->1      |    |
+> @@ -310,20 +312,29 @@ static const struct clk_ops clk_cpu_8996_pmux_ops = {
+>  	.determine_rate = clk_cpu_8996_pmux_determine_rate,
+>  };
 >  
->  static const struct alpha_pll_config hfpll_config = {
-> -	.l = 60,
-> +	.l = 54,
->  	.config_ctl_val = 0x200d4828,
->  	.config_ctl_hi_val = 0x006,
->  	.test_ctl_val = 0x1c000000,
+> +static const struct parent_map smux_parent_map[] = {
+> +	{ .cfg = 0, }, /* xo */
+> +	{ .cfg = 1, }, /* pll */
+> +	{ .cfg = 3, }, /* sys_apcs_aux */
+> +};
+> +
+>  static const struct clk_parent_data pwrcl_smux_parents[] = {
+>  	{ .fw_name = "xo" },
+>  	{ .hw = &pwrcl_pll_postdiv.hw },
+> +	{ .fw_name = "sys_apcs_aux" },
+>  };
+>  
+>  static const struct clk_parent_data perfcl_smux_parents[] = {
+>  	{ .fw_name = "xo" },
+>  	{ .hw = &perfcl_pll_postdiv.hw },
+> +	{ .fw_name = "sys_apcs_aux" },
+>  };
+>  
+>  static struct clk_regmap_mux pwrcl_smux = {
+>  	.reg = PWRCL_REG_OFFSET + MUX_OFFSET,
+>  	.shift = 2,
+>  	.width = 2,
+> +	.parent_map = smux_parent_map,
+>  	.clkr.hw.init = &(struct clk_init_data) {
+>  		.name = "pwrcl_smux",
+>  		.parent_data = pwrcl_smux_parents,
+> @@ -337,6 +348,7 @@ static struct clk_regmap_mux perfcl_smux = {
+>  	.reg = PERFCL_REG_OFFSET + MUX_OFFSET,
+>  	.shift = 2,
+>  	.width = 2,
+> +	.parent_map = smux_parent_map,
+>  	.clkr.hw.init = &(struct clk_init_data) {
+>  		.name = "perfcl_smux",
+>  		.parent_data = perfcl_smux_parents,
