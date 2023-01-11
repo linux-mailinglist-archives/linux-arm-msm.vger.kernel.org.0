@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F2022665433
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 07:04:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A13F665435
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 07:04:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235691AbjAKGEQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Jan 2023 01:04:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57768 "EHLO
+        id S235482AbjAKGES (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Jan 2023 01:04:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231361AbjAKGEL (ORCPT
+        with ESMTP id S235539AbjAKGEM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Jan 2023 01:04:11 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AEB8B7D6
+        Wed, 11 Jan 2023 01:04:12 -0500
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95CBBB7E1
         for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 22:04:07 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id f34so21901541lfv.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 22:04:06 -0800 (PST)
+Received: by mail-lf1-x133.google.com with SMTP id bf43so21944529lfb.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Jan 2023 22:04:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PW4JYNWiYq9bE+2bC5NYpOaosg0SySsEGmX3Ei9VgRo=;
-        b=fPtdC2Ax0gOgYtfH6EfRwxYN03hK/T9yG8IIp1U11Q/y6ecRW/fhmPfcT8rXoiGtCX
-         7enJCwd5cBwIxbjOci/h0P7734aDRlWrSWndl3HVSPtuI+Pr13zWETyTe5/sUmNeL/ZB
-         TCjv52XYQ+oVfu+WhSONmrn21tllDBaXUgJ1c1WUjVnEk3mz0NNY7M9DLqcDRCh7uPCC
-         qOc0tycmuJfdtdXgASxaMDW//YFPG5j5qp+GEH3+/UnHT7CVaCkCAoLZVDLNiqrkEXcu
-         UtFCF74yt0w6wk0d+ouu977Z8//7k5F7NkKg9KlIP9XySA/saDQRI3+MYF4IpVjcDOu7
-         9N6A==
+        bh=VI1IjcklbSGHdzMZQLrZQtp9sC0C8UYZ9TXhuVnVOeE=;
+        b=UvNrwS1nE0zTNCKfCLOucEvCCNbFqK0zZ8jGnubOy6FYoYLOXpAexb+SXEbIuQ/mSN
+         c9dVXv40vZWK6VKYBeJytoHqSjTw5y7byscETmHX5H/AhUJvNO4Vn685Mtszz5TMt8ZT
+         lbjrn48b9lkMj2ZpNaOgWEBKrOdTJW7tH8OM+Pd0THftQlO7M0YogR+enWFbvWi8JioN
+         TOUYAgtzfSIw3AJ0ns9WXfLjGZAxay0dLZHMQ7tSmvCb6dT9tqj6RannwOdPmkE+U/6D
+         pbTQ6NFXULUwXd0VzcSfWNDqi5Vtgc6fgbBGGKKWOTelgki3u1iO5dzy5/zzKk7KpCf+
+         YhTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=PW4JYNWiYq9bE+2bC5NYpOaosg0SySsEGmX3Ei9VgRo=;
-        b=N0NZ3EgdzvfqB6yrmShDs2Elp7HwS2XNud6LWv9wRMasKj2/KGzLKTNhN2lL2Ju/Jp
-         I0VuQq9rXlcLuGapJ9PxQadcYjnzjGex8iWEP2UlOoDjYh86vJTQp8pSC2N3syE7UYzj
-         rwzzoX/+fcpzX7nKzv8VjBJe8QAFg+ZRQmAHNmF4v6r2G7cIFGNwfr4YCFHjdJf6RZML
-         uzd8WrmXbHECBxyXGLHAjUoUQtNm/3G87NTg1nfCQkdx3Ojx3GOl+NhtvuCLDJba3Ct4
-         uRRbEgZTUdZXpNNvqb76n8iTloByikpEqf+cBOIaQdfhAm5mHd8RQtAWArrQI9oHd1RE
-         GSbQ==
-X-Gm-Message-State: AFqh2krN+kCk52br9tL0fwYbi7fpG1sHGWYmU8K6217BJZ+JEy5LkTH7
-        Aaqp97napZBEzOcLZacfTorhuA==
-X-Google-Smtp-Source: AMrXdXut9r3eDheC3RtMM/HTeuxNf2t3gCE2JD5dayDI8MQSTHr7dbY6U9VyymvZrzPXOw7U5dy6eA==
-X-Received: by 2002:a05:6512:2390:b0:4b5:649a:9105 with SMTP id c16-20020a056512239000b004b5649a9105mr25563804lfv.65.1673417045400;
-        Tue, 10 Jan 2023 22:04:05 -0800 (PST)
+        bh=VI1IjcklbSGHdzMZQLrZQtp9sC0C8UYZ9TXhuVnVOeE=;
+        b=RsvUBQ7vXTM4tv8pjTfeOGm+GW167DBZf1P4PNGwRkcmAyHYRdx3o+NJo1DMafklhW
+         c7jo5gnCsZOOqm5g/myKROhH0FAhIuqv2plX58b9xmIOQQzosqvtkYrOTb8qrOficEoP
+         OSLSNRNCbUaJgVOVYcQg4hykoBfjJSEZhWtrTgIwLYUwRe/FZI8y6JU4azywLsg4mM1N
+         BGJh+ZcalB0JMfhggpnnKNQT/ozfX6NkA5dejEGIbIOx95nG1ZYXrgSnYiiJcbDiDHnB
+         1by6T8ePr9DSweuaPoYFLiw6+zWTCyrwNK9KKbd+vJLyT77S4K0HUeexugljNPdyXEP1
+         izmA==
+X-Gm-Message-State: AFqh2kpw2jEMfa+7/iHpPG2SNpFQn8KcaSLwn0rIODud8jrcXA+JNYzP
+        kE5yBrCRVvipzlg/sKiGgjlRIQ==
+X-Google-Smtp-Source: AMrXdXudRo9G46nQq7ighKR3srBHJMPiYkzlOrkLLk+9ANLddeq20aigTdp0OQJWJ5BEf636mwwcTw==
+X-Received: by 2002:a05:6512:130f:b0:4cb:654:5337 with SMTP id x15-20020a056512130f00b004cb06545337mr2539738lfu.49.1673417046012;
+        Tue, 10 Jan 2023 22:04:06 -0800 (PST)
 Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id b7-20020a056512070700b004cb143f7391sm2524607lfs.258.2023.01.10.22.04.04
+        by smtp.gmail.com with ESMTPSA id b7-20020a056512070700b004cb143f7391sm2524607lfs.258.2023.01.10.22.04.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 10 Jan 2023 22:04:05 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
@@ -62,9 +62,9 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v3 02/12] dt-bindings: clock: qcom,gcc-apq8084: add GCC_MMSS_GPLL0_CLK_SRC
-Date:   Wed, 11 Jan 2023 08:03:52 +0200
-Message-Id: <20230111060402.1168726-3-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v3 03/12] dt-bindings: clock: qcom,mmcc: define clocks/clock-names for APQ8084
+Date:   Wed, 11 Jan 2023 08:03:53 +0200
+Message-Id: <20230111060402.1168726-4-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230111060402.1168726-1-dmitry.baryshkov@linaro.org>
 References: <20230111060402.1168726-1-dmitry.baryshkov@linaro.org>
@@ -80,27 +80,80 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add GCC_MMSS_GPLL0_CLK_SRC, the branch clock gating gpll0 clock for the
-multimedia subsystem.
+Define clock/clock-names properties of the MMCC device node to be used
+on APQ8084 platform.
 
 Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- include/dt-bindings/clock/qcom,gcc-apq8084.h | 1 +
- 1 file changed, 1 insertion(+)
+ .../devicetree/bindings/clock/qcom,mmcc.yaml  | 44 ++++++++++++++++++-
+ 1 file changed, 42 insertions(+), 2 deletions(-)
 
-diff --git a/include/dt-bindings/clock/qcom,gcc-apq8084.h b/include/dt-bindings/clock/qcom,gcc-apq8084.h
-index 7f657cf8cc8a..a985248d6332 100644
---- a/include/dt-bindings/clock/qcom,gcc-apq8084.h
-+++ b/include/dt-bindings/clock/qcom,gcc-apq8084.h
-@@ -339,6 +339,7 @@
- #define GCC_PCIE_1_MSTR_AXI_CLK				330
- #define GCC_PCIE_1_PIPE_CLK				331
- #define GCC_PCIE_1_SLV_AXI_CLK				332
-+#define GCC_MMSS_GPLL0_CLK_SRC				333
+diff --git a/Documentation/devicetree/bindings/clock/qcom,mmcc.yaml b/Documentation/devicetree/bindings/clock/qcom,mmcc.yaml
+index cf04d791093f..acf0c923c24f 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,mmcc.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,mmcc.yaml
+@@ -32,11 +32,11 @@ properties:
  
- /* gdscs */
- #define USB_HS_HSIC_GDSC				0
+   clocks:
+     minItems: 8
+-    maxItems: 10
++    maxItems: 13
+ 
+   clock-names:
+     minItems: 8
+-    maxItems: 10
++    maxItems: 13
+ 
+   '#clock-cells':
+     const: 1
+@@ -137,6 +137,46 @@ allOf:
+             - const: edp_link_clk
+             - const: edp_vco_div
+ 
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,mmcc-apq8084
++    then:
++      properties:
++        clocks:
++          items:
++            - description: Board XO source
++            - description: Board sleep source
++            - description: MMSS GPLL0 voted clock
++            - description: GPLL0 clock
++            - description: GPLL0 voted clock
++            - description: GPLL1 clock
++            - description: DSI phy instance 0 dsi clock
++            - description: DSI phy instance 0 byte clock
++            - description: DSI phy instance 1 dsi clock
++            - description: DSI phy instance 1 byte clock
++            - description: HDMI phy PLL clock
++            - description: eDP phy PLL link clock
++            - description: eDP phy PLL vco clock
++
++        clock-names:
++          items:
++            - const: xo
++            - const: sleep_clk
++            - const: mmss_gpll0_vote
++            - const: gpll0
++            - const: gpll0_vote
++            - const: gpll1
++            - const: dsi0pll
++            - const: dsi0pllbyte
++            - const: dsi1pll
++            - const: dsi1pllbyte
++            - const: hdmipll
++            - const: edp_link_clk
++            - const: edp_vco_div
++
+   - if:
+       properties:
+         compatible:
 -- 
 2.39.0
 
