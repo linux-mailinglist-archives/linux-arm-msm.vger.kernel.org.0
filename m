@@ -2,47 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 58FE2665341
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 06:19:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B2419665345
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 06:19:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235783AbjAKFTD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Jan 2023 00:19:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56692 "EHLO
+        id S235809AbjAKFTG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Jan 2023 00:19:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229814AbjAKFRz (ORCPT
+        with ESMTP id S229592AbjAKFR7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Jan 2023 00:17:55 -0500
+        Wed, 11 Jan 2023 00:17:59 -0500
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2170C13D58;
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F02FF13D62;
         Tue, 10 Jan 2023 21:09:47 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id B054161A38;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 8C0FC61A35;
+        Wed, 11 Jan 2023 05:09:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57187C433F1;
         Wed, 11 Jan 2023 05:09:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B332C433EF;
-        Wed, 11 Jan 2023 05:09:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1673413786;
-        bh=duOA8MEL6AgWZExGNdiAbw+EGmRbgHWfQbfiipbIX88=;
+        s=k20201202; t=1673413787;
+        bh=I+5Qhk1YGIPItiodgq6H4vX2IEHQ/URpEnwNpNjAFuk=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=rpa2IpNyrIEemZ6v/yMQa08g+WoNDx7Q/ahRD2GdeoN94NHBKzaB5/NgpFjyRjox7
-         GU4ZOlOdi/IGaNmnYDkw9TKSTIk7qIWkx0hIFZsTB8zk0PW2oK31WocwvEC2+Lc+Xc
-         kUzFsbSV3p+PaRc6zF5GjZ7VwN2bgfhI7qmDH6MKKNVOpDW+gQMLsZi6MqaxfMXsjg
-         dyjPzyoq7Z6Aa2M0UzffkL3XLAuhXCRZPvoEB4he9Jfldb03v/w+Suv/GDtBQBlsZH
-         mbVocHzYVZk7kXT/NOhIGRcjHC5oCvzPbK7SGxRMocbdorDCaQIQEvLBIdDhx/2Fl+
-         zV4D/pMuZT13Q==
+        b=e7AjA8P5/3CzgPXBfuUNDo8ykEP4a8mlFfPMnETH0/FUKtcUoOW0li213AD7NttKf
+         z+zXia8GKhvaHLiDz9v9Drx3KMpp44xyDth6Rz27IE1OZ3CyA6rbZ0KGb3GVz/qdLJ
+         c0z3GVnFsnTezHRvfFsaIUHB17EpzFEdfaW4wFjifrO02XXeYN/X5+2Aih8mlSP6Qj
+         Q6tw7OwMOuL6AGMvXySBlrq6Btat6vNl3OISODgUTximqlO18/h4v418qzPZJlWP8m
+         PK+NUww4v7edDStcn0vfIM7JC8ryxVyk84bmJquITRYQWVk9b63d5+NMJ5/eSf7DC5
+         azeGTtgZAXf1A==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     dmitry.baryshkov@linaro.org, konrad.dybcio@linaro.org,
-        agross@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        robh+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: msm8996-oneplus-common: drop vdda-supply from DSI PHY
-Date:   Tue, 10 Jan 2023 23:09:10 -0600
-Message-Id: <167341377741.2246479.16732390534923425103.b4-ty@kernel.org>
+To:     quic_tdas@quicinc.com, dmitry.baryshkov@linaro.org,
+        konrad.dybcio@linaro.org, agross@kernel.org,
+        mturquette@baylibre.com, sboyd@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: Re: [PATCH] clk: qcom: gcc-msm8974: switch from sleep_clk_src to sleep_clk
+Date:   Tue, 10 Jan 2023 23:09:11 -0600
+Message-Id: <167341377731.2246479.9359454249644729965.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20230109042406.312047-1-dmitry.baryshkov@linaro.org>
-References: <20230109042406.312047-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20221228203725.3131237-1-dmitry.baryshkov@linaro.org>
+References: <20221228203725.3131237-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -55,15 +55,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 9 Jan 2023 06:24:06 +0200, Dmitry Baryshkov wrote:
-> 14nm DSI PHY has the only supply, vcca. Drop the extra vdda-supply.
+On Wed, 28 Dec 2022 22:37:25 +0200, Dmitry Baryshkov wrote:
+> gcc-msm8974 uses the registered sleep_clk_src clock, which is just a 1:1
+> fixed factor clock register on top of the board's sleep_clk. Switch the
+> driver to use the board sleep_clk directly.
 > 
 > 
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: msm8996-oneplus-common: drop vdda-supply from DSI PHY
-      commit: 1de4e112b97c77efb5cbee39db8541e33dd2b0d5
+[1/1] clk: qcom: gcc-msm8974: switch from sleep_clk_src to sleep_clk
+      commit: e09327d7be354e2fbc9232b1906b993ead872431
 
 Best regards,
 -- 
