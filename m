@@ -2,371 +2,214 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3DF5E665B24
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 13:14:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EBEA9665B5D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 13:29:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229672AbjAKMO0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Jan 2023 07:14:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34290 "EHLO
+        id S232202AbjAKM3T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Jan 2023 07:29:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239334AbjAKMNo (ORCPT
+        with ESMTP id S229478AbjAKM3S (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Jan 2023 07:13:44 -0500
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C3726557
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 04:13:39 -0800 (PST)
-Received: by mail-lf1-x129.google.com with SMTP id bt23so23170935lfb.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 04:13:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=N01GqMhg99YMVbIVfYT5Yff2jZDnYTTUg1UAgZGvEcE=;
-        b=iqCvlvwxpHx47f9Ui6Pqz0Euzs6dlwr6ocNDN872ZRLbQzOAr9glsfw6IMMy7wZW3U
-         /diCrIcxA1oeh2xsoGd1HmTkgFr6sZYtR1r225WCrhd/OC69PLSxg+SXX9Yeo4HGVs9I
-         aZ1fC4d8YdHOpvXqGIjro64SD7feRJYoIgax6Amg88suHygDSpK2yOCgTSDAnlEvlqtG
-         eE0ZL4VZzFL0ierXK6dHXYszV59rIncoYynTx+JYVFzIixLsjJU/axw7/2mgnjcnk2rl
-         xUc3bL7wJhmCzfXILyBHKJ7VFpZRGIP/xzEOquvgVZ1M071/oAUkejmPWoMJTk4bqIk1
-         sNeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=N01GqMhg99YMVbIVfYT5Yff2jZDnYTTUg1UAgZGvEcE=;
-        b=C3uYHTzvYxqDOzY29HzZM6azV/oVAZteNqeVGDPRSWigSoSIXtENgmCBwOHwhMkKgf
-         7c4l6mh2bn6KhyvAI7gO/fEi0gET7FIEw9MdX2srPaZ0sczEeoBo1EvS9TDceoRJrLiZ
-         uuUrcqLqEkLbClGJ+VFGiAAUpTKNUjQ+gT3Ip+p5A5BkZJ2XBmB7xaNmoEHhVUBpRkhs
-         DBlrlXu/9plljvFD94zGqg2wpjAWNfuCTczw6ZYShGAZcBWSDEIl6k/dc0KLgKkBy4xl
-         R1Qd6z3YasIHp3CKeL6UPUz0KDAXlRXU5gh/RNPSwqECWGi4R0gAlHjK2f0WEo9dN/r0
-         Y3RQ==
-X-Gm-Message-State: AFqh2kobKHj4XDbzEIrT7pkZWE4GDjLY5M4Xk0bCPeu1PmUIE+xxagff
-        lhG+miSo9VU061uy1vstRjo4ZQ==
-X-Google-Smtp-Source: AMrXdXu7BUdGtjg28KV2X2UxialiRxiO3PFOL2RqE1tWoFqnSVGRpKZccvc9zR6v0iBEG5PjY9FN/A==
-X-Received: by 2002:a05:6512:2a90:b0:4ac:b7bf:697a with SMTP id dt16-20020a0565122a9000b004acb7bf697amr2258602lfb.4.1673439217485;
-        Wed, 11 Jan 2023 04:13:37 -0800 (PST)
-Received: from [192.168.1.101] (abxi45.neoplus.adsl.tpnet.pl. [83.9.2.45])
-        by smtp.gmail.com with ESMTPSA id q6-20020a056512210600b004aa0870b5e5sm2702193lfr.147.2023.01.11.04.13.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Jan 2023 04:13:36 -0800 (PST)
-Message-ID: <e095a785-4dc3-2703-0567-7a759e3a73f2@linaro.org>
-Date:   Wed, 11 Jan 2023 13:13:35 +0100
+        Wed, 11 Jan 2023 07:29:18 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E65BFCF5;
+        Wed, 11 Jan 2023 04:29:17 -0800 (PST)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30BBa5W0001599;
+        Wed, 11 Jan 2023 12:29:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=WwmrrFyOLXw8SVs6+MY0KxGQRNOSaDQCUny1d/ABA90=;
+ b=ZhntcEhfVWtqXzW5HyQr0V3IDhawqPJ+rbMMcjli9RvlHxxNWR9V0fe/a/ROf2B9+VYq
+ ptMUvM4F0gqYh6ChLhQCIrd26HHZMzvVkLSBRwvFEG/H7C9bYjrfs1fCsl/RmtCA4qPZ
+ yTy6zVnx7PT424PlPkxWexjPr7F9DhIgxM02+/RtfETCy69afT084m96IdmTE4sCsrJR
+ Ji5E048AaoHKXGI7cYDETEHIJBLvFJuKs3xOI+RW+gTkygv+87LKwZJ+YbX5vFb/Utc8
+ I3pBMS/vwgvpuxPc5eMHqi/Kby8HmNr5knuQuUDFKS9nXeArQUzgeXQhN0kZmYXCjPLb xw== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n1k7qs77t-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 11 Jan 2023 12:29:03 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30BCT2X7010849
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 11 Jan 2023 12:29:02 GMT
+Received: from [10.79.43.91] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 11 Jan
+ 2023 04:28:57 -0800
+Message-ID: <d714a068-ee48-2a86-4d54-173312d9720e@quicinc.com>
+Date:   Wed, 11 Jan 2023 17:58:49 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v7 3/4] arm64: dts: qcom: sa8295-adp: Enable DP instances
+ Thunderbird/102.2.2
+Subject: Re: [PATCH V3 05/10] remoteproc: qcom_q6v5_mss: Use a carveout to
+ authenticate modem headers
 Content-Language: en-US
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Johan Hovold <johan@kernel.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-References: <20230111035906.2975494-1-quic_bjorande@quicinc.com>
- <20230111035906.2975494-4-quic_bjorande@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230111035906.2975494-4-quic_bjorande@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CC:     <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <agross@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <robh+dt@kernel.org>, <konrad.dybcio@somainline.org>,
+        <amit.pundir@linaro.org>, <regressions@leemhuis.info>,
+        <sumit.semwal@linaro.org>, <will@kernel.org>,
+        <catalin.marinas@arm.com>, <robin.murphy@arm.com>
+References: <20230111114337.24782-1-quic_sibis@quicinc.com>
+ <20230111114337.24782-6-quic_sibis@quicinc.com>
+ <20230111115422.GD4873@thinkpad>
+From:   Sibi Sankar <quic_sibis@quicinc.com>
+In-Reply-To: <20230111115422.GD4873@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: zb_zpxvd69ozebbdJCDftacfBiPFGQYo
+X-Proofpoint-ORIG-GUID: zb_zpxvd69ozebbdJCDftacfBiPFGQYo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2023-01-11_05,2023-01-11_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 phishscore=0
+ suspectscore=0 priorityscore=1501 mlxlogscore=999 lowpriorityscore=0
+ adultscore=0 malwarescore=0 clxscore=1015 impostorscore=0 mlxscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301110091
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hey Mani,
+
+Thanks for taking time to review the series.
+
+On 1/11/23 17:24, Manivannan Sadhasivam wrote:
+> On Wed, Jan 11, 2023 at 05:13:32PM +0530, Sibi Sankar wrote:
+>> Any access to the dynamically allocated metadata region by the application
+>> processor after assigning it to the remote Q6 will result in a XPU
+>> violation. Fix this by replacing the dynamically allocated memory region
+>> with a no-map carveout and unmap the modem metadata memory region before
+>> passing control to the remote Q6.
+>>
+>> Reported-and-tested-by: Amit Pundir <amit.pundir@linaro.org>
+>> Fixes: 6c5a9dc2481b ("remoteproc: qcom: Make secure world call for mem ownership switch")
+>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> 
+> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> 
+>> ---
+>>
+>> v3:
+>>   * Drop revert no_kernel_mapping since it's already on the list [Mani]
+> 
+> I thought you are going to include Christoph's patch into your series. That way
+> all the patches will be in the same series, makig life easier for Bjorn.
+> 
+
+Since there were multiple patches in Christoph's original series, I
+decided I'll just drop the revert and have it depends on instead.
 
 
-On 11.01.2023 04:59, Bjorn Andersson wrote:
-> From: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Thanks,
+> Mani
 > 
-> The SA8295P ADP has, among other interfaces, six MiniDP connectors which
-> are connected to MDSS0 DP2 and DP3, and MDSS1 DP0 through DP3.
-That's a lot of displayports..
-
+>>   * kfree metadata from the branch for parity
+>>
+>>   drivers/remoteproc/qcom_q6v5_mss.c | 48 ++++++++++++++++++++++++++----
+>>   1 file changed, 42 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+>> index e2f765f87ec9..e25d44e20ae7 100644
+>> --- a/drivers/remoteproc/qcom_q6v5_mss.c
+>> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
+>> @@ -215,6 +215,7 @@ struct q6v5 {
+>>   	size_t mba_size;
+>>   	size_t dp_size;
+>>   
+>> +	phys_addr_t mdata_phys;
+>>   	phys_addr_t mpss_phys;
+>>   	phys_addr_t mpss_reloc;
+>>   	size_t mpss_size;
+>> @@ -973,15 +974,29 @@ static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw,
+>>   	if (IS_ERR(metadata))
+>>   		return PTR_ERR(metadata);
+>>   
+>> -	ptr = dma_alloc_attrs(qproc->dev, size, &phys, GFP_KERNEL, dma_attrs);
+>> -	if (!ptr) {
+>> -		kfree(metadata);
+>> -		dev_err(qproc->dev, "failed to allocate mdt buffer\n");
+>> -		return -ENOMEM;
+>> +	if (qproc->mdata_phys) {
+>> +		phys = qproc->mdata_phys;
+>> +		ptr = memremap(qproc->mdata_phys, size, MEMREMAP_WC);
+>> +		if (!ptr) {
+>> +			kfree(metadata);
+>> +			dev_err(qproc->dev, "unable to map memory region: %pa+%zx\n",
+>> +				&qproc->mdata_phys, size);
+>> +			return -EBUSY;
+>> +		}
+>> +	} else {
+>> +		ptr = dma_alloc_attrs(qproc->dev, size, &phys, GFP_KERNEL, dma_attrs);
+>> +		if (!ptr) {
+>> +			kfree(metadata);
+>> +			dev_err(qproc->dev, "failed to allocate mdt buffer\n");
+>> +			return -ENOMEM;
+>> +		}
+>>   	}
+>>   
+>>   	memcpy(ptr, metadata, size);
+>>   
+>> +	if (qproc->mdata_phys)
+>> +		memunmap(ptr);
+>> +
+>>   	/* Hypervisor mapping to access metadata by modem */
+>>   	mdata_perm = BIT(QCOM_SCM_VMID_HLOS);
+>>   	ret = q6v5_xfer_mem_ownership(qproc, &mdata_perm, false, true,
+>> @@ -1010,7 +1025,8 @@ static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw,
+>>   			 "mdt buffer not reclaimed system may become unstable\n");
+>>   
+>>   free_dma_attrs:
+>> -	dma_free_attrs(qproc->dev, size, ptr, phys, dma_attrs);
+>> +	if (!qproc->mdata_phys)
+>> +		dma_free_attrs(qproc->dev, size, ptr, phys, dma_attrs);
+>>   	kfree(metadata);
+>>   
+>>   	return ret < 0 ? ret : 0;
+>> @@ -1893,6 +1909,26 @@ static int q6v5_alloc_memory_region(struct q6v5 *qproc)
+>>   	qproc->mpss_phys = qproc->mpss_reloc = r.start;
+>>   	qproc->mpss_size = resource_size(&r);
+>>   
+>> +	if (!child) {
+>> +		node = of_parse_phandle(qproc->dev->of_node, "memory-region", 2);
+>> +	} else {
+>> +		child = of_get_child_by_name(qproc->dev->of_node, "metadata");
+>> +		node = of_parse_phandle(child, "memory-region", 0);
+>> +		of_node_put(child);
+>> +	}
+>> +
+>> +	if (!node)
+>> +		return 0;
+>> +
+>> +	ret = of_address_to_resource(node, 0, &r);
+>> +	of_node_put(node);
+>> +	if (ret) {
+>> +		dev_err(qproc->dev, "unable to resolve metadata region\n");
+>> +		return ret;
+>> +	}
+>> +
+>> +	qproc->mdata_phys = r.start;
+>> +
+>>   	return 0;
+>>   }
+>>   
+>> -- 
+>> 2.17.1
+>>
 > 
-> Enable Display Clock controllers, MDSS instanced, MDPs, DP controllers,
-> DP PHYs and link them all together.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
-> 
-> Changes since v6:
-> - None
-> 
->  arch/arm64/boot/dts/qcom/sa8295p-adp.dts | 243 ++++++++++++++++++++++-
->  1 file changed, 241 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> index 84cb6f3eeb56..c35e16b087b8 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> @@ -23,6 +23,90 @@ aliases {
->  	chosen {
->  		stdout-path = "serial0:115200n8";
->  	};
-> +
-> +	dp2-connector {
-> +		compatible = "dp-connector";
-> +		label = "DP2";
-> +		type = "mini";
-> +
-> +		hpd-gpios = <&tlmm 20 GPIO_ACTIVE_HIGH>;
-> +
-> +		port {
-> +			dp2_connector_in: endpoint {
-> +				remote-endpoint = <&mdss1_dp0_phy_out>;
-> +			};
-> +		};
-> +	};
-> +
-> +	dp3-connector {
-> +		compatible = "dp-connector";
-> +		label = "DP3";
-> +		type = "mini";
-> +
-> +		hpd-gpios = <&tlmm 45 GPIO_ACTIVE_HIGH>;
-> +
-> +		port {
-> +			dp3_connector_in: endpoint {
-> +				remote-endpoint = <&mdss1_dp1_phy_out>;
-> +			};
-> +		};
-> +	};
-> +
-> +	edp0-connector {
-> +		compatible = "dp-connector";
-> +		label = "EDP0";
-> +		type = "mini";
-> +
-> +		hpd-gpios = <&tlmm 2 GPIO_ACTIVE_HIGH>;
-> +
-> +		port {
-> +			edp0_connector_in: endpoint {
-> +				remote-endpoint = <&mdss0_dp2_phy_out>;
-> +			};
-> +		};
-> +	};
-> +
-> +	edp1-connector {
-> +		compatible = "dp-connector";
-> +		label = "EDP1";
-> +		type = "mini";
-> +
-> +		hpd-gpios = <&tlmm 3 GPIO_ACTIVE_HIGH>;
-> +
-> +		port {
-> +			edp1_connector_in: endpoint {
-> +				remote-endpoint = <&mdss0_dp3_phy_out>;
-> +			};
-> +		};
-> +	};
-> +
-> +	edp2-connector {
-> +		compatible = "dp-connector";
-> +		label = "EDP2";
-> +		type = "mini";
-> +
-> +		hpd-gpios = <&tlmm 7 GPIO_ACTIVE_HIGH>;
-> +
-> +		port {
-> +			edp2_connector_in: endpoint {
-> +				remote-endpoint = <&mdss1_dp2_phy_out>;
-> +			};
-> +		};
-> +	};
-> +
-> +	edp3-connector {
-> +		compatible = "dp-connector";
-> +		label = "EDP3";
-> +		type = "mini";
-> +
-> +		hpd-gpios = <&tlmm 6 GPIO_ACTIVE_HIGH>;
-> +
-> +		port {
-> +			edp3_connector_in: endpoint {
-> +				remote-endpoint = <&mdss1_dp3_phy_out>;
-> +			};
-> +		};
-> +	};
->  };
->  
->  &apps_rsc {
-> @@ -159,13 +243,168 @@ vreg_l7g: ldo7 {
->  
->  		vreg_l8g: ldo8 {
->  			regulator-name = "vreg_l8g";
-> -			regulator-min-microvolt = <880000>;
-> -			regulator-max-microvolt = <880000>;
-> +			regulator-min-microvolt = <912000>;
-> +			regulator-max-microvolt = <912000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l11g: ldo11 {
-> +			regulator-name = "vreg_l11g";
-> +			regulator-min-microvolt = <912000>;
-> +			regulator-max-microvolt = <912000>;
->  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->  		};
->  	};
->  };
->  
-> +&dispcc0 {
-> +	status = "okay";
-> +};
-> +
-> +&dispcc1 {
-> +	status = "okay";
-> +};
-> +
-> +&mdss0 {
-> +	status = "okay";
-> +};
-> +
-> +&mdss0_dp2 {
-> +	data-lanes = <0 1 2 3>;
-> +
-> +	status = "okay";
-> +
-> +	ports {
-> +		port@1 {
-> +			reg = <1>;
-> +			mdss0_dp2_phy_out: endpoint {
-> +				remote-endpoint = <&edp0_connector_in>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +&mdss0_dp2_phy {
-> +	vdda-phy-supply = <&vreg_l8g>;
-> +	vdda-pll-supply = <&vreg_l3g>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&mdss0_dp3 {
-> +	data-lanes = <0 1 2 3>;
-> +
-> +	status = "okay";
-> +
-> +	ports {
-> +		port@1 {
-> +			reg = <1>;
-> +			mdss0_dp3_phy_out: endpoint {
-> +				remote-endpoint = <&edp1_connector_in>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +&mdss0_dp3_phy {
-> +	vdda-phy-supply = <&vreg_l8g>;
-> +	vdda-pll-supply = <&vreg_l3g>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&mdss1 {
-> +	status = "okay";
-> +};
-> +
-> +&mdss1_dp0 {
-> +	data-lanes = <0 1 2 3>;
-> +
-> +	status = "okay";
-> +
-> +	ports {
-> +		port@1 {
-> +			reg = <1>;
-> +			mdss1_dp0_phy_out: endpoint {
-> +				remote-endpoint = <&dp2_connector_in>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +&mdss1_dp0_phy {
-> +	vdda-phy-supply = <&vreg_l11g>;
-> +	vdda-pll-supply = <&vreg_l3g>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&mdss1_dp1 {
-> +	data-lanes = <0 1 2 3>;
-> +
-> +	status = "okay";
-> +
-> +	ports {
-> +		port@1 {
-> +			reg = <1>;
-> +			mdss1_dp1_phy_out: endpoint {
-> +				remote-endpoint = <&dp3_connector_in>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +&mdss1_dp1_phy {
-> +	vdda-phy-supply = <&vreg_l11g>;
-> +	vdda-pll-supply = <&vreg_l3g>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&mdss1_dp2 {
-> +	data-lanes = <0 1 2 3>;
-> +
-> +	status = "okay";
-> +
-> +	ports {
-> +		port@1 {
-> +			reg = <1>;
-> +			mdss1_dp2_phy_out: endpoint {
-> +				remote-endpoint = <&edp2_connector_in>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +&mdss1_dp2_phy {
-> +	vdda-phy-supply = <&vreg_l11g>;
-> +	vdda-pll-supply = <&vreg_l3g>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&mdss1_dp3 {
-> +	data-lanes = <0 1 2 3>;
-> +
-> +	status = "okay";
-> +
-> +	ports {
-> +		port@1 {
-> +			reg = <1>;
-> +			mdss1_dp3_phy_out: endpoint {
-> +				remote-endpoint = <&edp3_connector_in>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +&mdss1_dp3_phy {
-> +	vdda-phy-supply = <&vreg_l11g>;
-> +	vdda-pll-supply = <&vreg_l3g>;
-> +
-> +	status = "okay";
-> +};
-> +
->  &pcie2a {
->  	perst-gpios = <&tlmm 143 GPIO_ACTIVE_LOW>;
->  	wake-gpios = <&tlmm 145 GPIO_ACTIVE_LOW>;
