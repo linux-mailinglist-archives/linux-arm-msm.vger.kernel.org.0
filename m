@@ -2,81 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1455F66579C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 10:36:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 303A76657AE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 10:38:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232667AbjAKJf5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Jan 2023 04:35:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37468 "EHLO
+        id S231747AbjAKJit (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Jan 2023 04:38:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37578 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230282AbjAKJfL (ORCPT
+        with ESMTP id S232486AbjAKJha (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Jan 2023 04:35:11 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D506ED98;
-        Wed, 11 Jan 2023 01:34:20 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30B7X1sn029595;
-        Wed, 11 Jan 2023 09:34:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=mvSen0YPktxZ6yY811DDXcSx4nAy7KzBUaW4BDWH8SE=;
- b=WjX12aX1Co7bHatr4Rakla7oHxjAM4fhKpkRCO/7rbiu2gImE7sP+6LHD+hqwMO8ynZ9
- 8CleY31OUMdVfmtMt6I2KH/dF1u+HSdhxrGPpVjKbcm0lpf93qH8Fgp/dLd7UYevTFCz
- e3D5zgjIxzAci8/Te3Nm1D8OqYRe6l4k/Tvbe/zs+VxpzVPY4tSNKpnBBAMiGlXGohVL
- YuWyYB0hP0lcrukRoDlaZwwl/knvGQNNpq7FOy6t6awCgxWwSwdBQVtJ/duSKP77mw5d
- nLQ1fDumH9C2d0apzKxnyuC/DBzrnJWlfrGQjE1fh7+pqQKAx2a7D1owUwI8BiGxq7Rf /g== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n1kxhgtys-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 11 Jan 2023 09:34:12 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30B9YCG0004761
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 11 Jan 2023 09:34:12 GMT
-Received: from [10.79.43.91] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 11 Jan
- 2023 01:34:08 -0800
-Message-ID: <8ede3a51-179d-986b-ea02-d698c8bda284@quicinc.com>
-Date:   Wed, 11 Jan 2023 15:04:05 +0530
+        Wed, 11 Jan 2023 04:37:30 -0500
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A0F52AEB
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 01:36:16 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id k22-20020a05600c1c9600b003d1ee3a6289so12149531wms.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 01:36:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=agrBGzLEfDLBSaCHOLwWqzPW8aLKgXJ9Qn5pOrzQb5Y=;
+        b=L1ew/2SCwJ61mAaiVWmR/o/h0rvj5/f8oWZHWzHzYRw3DibCnHMEDLdOE6f3JibAv4
+         TIbFr3b6wleD09DJbyz69vNg50+ZP+SzNowSevdxBHlyMEYmtkEs/cfgpI3fBLmNFK7R
+         nj/kwt7wwkxVeqOcx6fTIfreTT7aXZpE185iHv1G3KCJnJjK4GbWVrbx2EC8H+LPLZO4
+         cbbthMcG4ULnar4283XFnePmqly+AR2Whbt32lHWAYJi4KAkQCudsQm8EvBNcH5Pn4bV
+         LGXG9pwErge9lO8e+ELGjblOWgaA8i8KSoo0pcm6JEtRNmzguwM2yBmgb+xfeuMicRhs
+         VcVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=agrBGzLEfDLBSaCHOLwWqzPW8aLKgXJ9Qn5pOrzQb5Y=;
+        b=YbULa1EtmBGAYuycZ7dLRTBTtQF7qNi4psUOG/3jq7WzDgwPkJDitu1tfmfM4D2IOK
+         +DULMnm9a7h/kN4C3JZHHI/lGDAXqD/2LgV1Onw/8YL4YfU14PQKeZjw4dnCCATYrix7
+         bjv+2d7WnD/E7vK27GWoCOtd3RpeuLyNLSMK+mdzmxhmks2kZg0ikDYPLDReG56lrD8d
+         R74cHxIAyxJ9FxE4jnV9EEzvI+UsWvsWbfWCiKno3mLtjHCNlqSz6Cb894m3Sjv+WBIp
+         34uW/i10UbVkU92eqBHrB8kOX/0qZwvGuVqPiJ/deodPByP0gx4613l1xVqkWfJPTn6W
+         jv1g==
+X-Gm-Message-State: AFqh2kp1Xj3BJxA8HR5oYpyrIvg7xTixrz0goCN/g1ARfkwgbvLmNQiV
+        xhc5tam6sZ9a55v2+I5RvjhZBQ==
+X-Google-Smtp-Source: AMrXdXur2VYSsIb72rrxWp6CTmFDaeh2Stw30IqyKOpakPOnkVDT29DdV1AQ6EJLmwgaYmiy5MRsiw==
+X-Received: by 2002:a05:600c:4d25:b0:3d3:5b7a:1791 with SMTP id u37-20020a05600c4d2500b003d35b7a1791mr62592799wmp.41.1673429776076;
+        Wed, 11 Jan 2023 01:36:16 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id he5-20020a05600c540500b003d9ed40a512sm13601488wmb.45.2023.01.11.01.36.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Jan 2023 01:36:15 -0800 (PST)
+Message-ID: <603f9c39-3e36-bb44-2305-1d37fe033dd5@linaro.org>
+Date:   Wed, 11 Jan 2023 10:36:12 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH V7 2/2] firmware: qcom: scm: Add wait-queue handling logic
+ Thunderbird/102.6.1
+Subject: Re: [PATCH 1/7] dt-bindings: arm64: ipq9574: Add binding descriptions
+ for clock and reset
 Content-Language: en-US
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        <andersson@kernel.org>
-CC:     <agross@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <robh+dt@kernel.org>,
-        <konrad.dybcio@somainline.org>, <robimarko@gmail.com>,
-        <quic_gurus@quicinc.com>
-References: <20230110063745.16739-1-quic_sibis@quicinc.com>
- <20230110063745.16739-3-quic_sibis@quicinc.com>
- <b7470966-55f6-fee7-0014-2aae3048612e@linaro.org>
-From:   Sibi Sankar <quic_sibis@quicinc.com>
-In-Reply-To: <b7470966-55f6-fee7-0014-2aae3048612e@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: zehQERBPI6N38mewlHPKkysqyWt98-lR
-X-Proofpoint-ORIG-GUID: zehQERBPI6N38mewlHPKkysqyWt98-lR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2023-01-11_04,2023-01-10_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
- phishscore=0 priorityscore=1501 spamscore=0 bulkscore=0 adultscore=0
- clxscore=1011 suspectscore=0 malwarescore=0 mlxlogscore=970
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301110073
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+To:     devi priya <quic_devipriy@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
+        sboyd@kernel.org, linus.walleij@linaro.org,
+        catalin.marinas@arm.com, will@kernel.org, p.zabel@pengutronix.de,
+        shawnguo@kernel.org, arnd@arndb.de, marcel.ziswiler@toradex.com,
+        dmitry.baryshkov@linaro.org, nfraprado@collabora.com,
+        broonie@kernel.org, tdas@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
+        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
+        quic_poovendh@quicinc.com
+References: <20230110121316.24892-1-quic_devipriy@quicinc.com>
+ <20230110121316.24892-2-quic_devipriy@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230110121316.24892-2-quic_devipriy@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,257 +88,87 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Srini,
+On 10/01/2023 13:13, devi priya wrote:
+> Adding support for the global clock controller found on
+> IPQ9574 based devices
 
-Thanks for taking time to review the series.
-
-On 1/10/23 17:44, Srinivas Kandagatla wrote:
-> Hi Sibi,
-> 
-> Few minor comments below,
-> 
-> On 10/01/2023 06:37, Sibi Sankar wrote:
->> From: Guru Das Srinagesh <quic_gurus@quicinc.com>
->>
->> When the firmware (FW) supports multiple requests per VM, multiple 
->> requests
->> from the same/different VM can reach the firmware at the same time. Since
->> the firmware currently being used has limited resources, it guards them
->> with a resource lock and puts requests on a wait-queue internally and
->> signals to HLOS that it is doing so. It does this by returning a new 
->> return
->> value in addition to success or error: SCM_WAITQ_SLEEP. A sleeping SCM 
->> call
->> can be woken up by an interrupt that the FW raises.
->>
-> ...
-> 
->>   drivers/firmware/qcom_scm-smc.c | 90 ++++++++++++++++++++++++++++++---
->>   drivers/firmware/qcom_scm.c     | 89 +++++++++++++++++++++++++++++++-
->>   drivers/firmware/qcom_scm.h     |  8 +++
->>   3 files changed, 179 insertions(+), 8 deletions(-)
->>
->> diff --git a/drivers/firmware/qcom_scm-smc.c 
->> b/drivers/firmware/qcom_scm-smc.c
->> index d111833364ba..30999f04749c 100644
->> --- a/drivers/firmware/qcom_scm-smc.c
->> +++ b/drivers/firmware/qcom_scm-smc.c
-> ...
->> +static int __scm_smc_do_quirk_handle_waitq(struct device *dev, struct 
->> arm_smccc_args *waitq,
->> +                       struct arm_smccc_res *res)
->> +{
->> +    int ret;
->> +    struct arm_smccc_args resume;
->> +    u32 wq_ctx, smc_call_ctx, flags;
->> +    struct arm_smccc_args *smc = waitq;
->> +
->> +    do {
->> +        __scm_smc_do_quirk(smc, res);
->> +
->> +        if (res->a0 == QCOM_SCM_WAITQ_SLEEP) {
->> +            wq_ctx = res->a1;
->> +            smc_call_ctx = res->a2;
->> +            flags = res->a3;
->> +
->> +            if (!dev)
->> +                return -EPROBE_DEFER;
-> 
-> why are we checking dev pointer in the middle of the call?
-> A comment here would really help readers.
-
-Given that we no longer use drv_data to pass around scm struct,
-the check is no longer required. I'll drop it in the next re-spin.
+Subject: drop second/last, redundant "bindings descriptions for". The
+"dt-bindings" prefix is already stating that these are bindings.
 
 > 
->> +
->> +            ret = qcom_scm_lookup_completion(wq_ctx);
->> +            if (ret)
->> +                return ret;
->> +
->> +            fill_wq_resume_args(&resume, smc_call_ctx);
->> +            smc = &resume;
->> +        }
->> +    } while (res->a0 == QCOM_SCM_WAITQ_SLEEP);
->> +
->> +    return 0;
->> +}
->> +
-> ...
->> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
->> index cdbfe54c8146..19ac506a9b1f 100644
->> --- a/drivers/firmware/qcom_scm.c
->> +++ b/drivers/firmware/qcom_scm.c
->> @@ -4,6 +4,7 @@
->>    */
->>   #include <linux/platform_device.h>
->>   #include <linux/init.h>
->> +#include <linux/interrupt.h>
->>   #include <linux/cpumask.h>
->>   #include <linux/export.h>
->>   #include <linux/dma-mapping.h>
->> @@ -13,6 +14,7 @@
->>   #include <linux/qcom_scm.h>
->>   #include <linux/of.h>
->>   #include <linux/of_address.h>
->> +#include <linux/of_irq.h>
->>   #include <linux/of_platform.h>
->>   #include <linux/clk.h>
->>   #include <linux/reset-controller.h>
+> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
+> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
+> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
+> ---
+>  .../bindings/clock/qcom,gcc-other.yaml        |   4 +
+>  .../devicetree/bindings/clock/qcom,gcc.yaml   |   9 +-
+>  include/dt-bindings/clock/qcom,gcc-ipq9574.h  | 226 ++++++++++++++++++
+>  include/dt-bindings/reset/qcom,gcc-ipq9574.h  | 164 +++++++++++++
+>  4 files changed, 402 insertions(+), 1 deletion(-)
+>  create mode 100644 include/dt-bindings/clock/qcom,gcc-ipq9574.h
+>  create mode 100644 include/dt-bindings/reset/qcom,gcc-ipq9574.h
 > 
-> include <linux/completion.h> ??
-> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
+> index 2e8acca64af1..cc563d640336 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
+> @@ -18,6 +18,8 @@ description: |
+>      include/dt-bindings/clock/qcom,gcc-ipq4019.h
+>      include/dt-bindings/clock/qcom,gcc-ipq6018.h
+>      include/dt-bindings/reset/qcom,gcc-ipq6018.h
+> +    include/dt-bindings/clock/qcom,gcc-ipq9574.h
+> +    include/dt-bindings/reset/qcom,gcc-ipq9574.h
+>      include/dt-bindings/clock/qcom,gcc-msm8953.h
+>      include/dt-bindings/clock/qcom,gcc-mdm9607.h
+>      include/dt-bindings/clock/qcom,gcc-mdm9615.h
+> @@ -34,6 +36,8 @@ properties:
+>        - qcom,gcc-mdm9607
+>        - qcom,gcc-msm8953
+>        - qcom,gcc-mdm9615
+> +      - qcom,gcc-ipq9574
 
-ack
+Incorrect order but anyway let's switch to new naming style just like
+SM8550 and SA8775p.
 
-> 
->> @@ -33,6 +35,7 @@ struct qcom_scm {
->>       struct clk *iface_clk;
->>       struct clk *bus_clk;
->>       struct icc_path *path;
->> +    struct completion waitq_comp;
->>       struct reset_controller_dev reset;
->>       /* control access to the interconnect path */
->> @@ -63,6 +66,9 @@ static const u8 
->> qcom_scm_cpu_warm_bits[QCOM_SCM_BOOT_MAX_CPUS] = {
->>       BIT(2), BIT(1), BIT(4), BIT(6)
->>   };
->> +#define QCOM_SMC_WAITQ_FLAG_WAKE_ONE    BIT(0)
->> +#define QCOM_SMC_WAITQ_FLAG_WAKE_ALL    BIT(1)
->> +
->>   static const char * const qcom_scm_convention_names[] = {
->>       [SMC_CONVENTION_UNKNOWN] = "unknown",
->>       [SMC_CONVENTION_ARM_32] = "smc arm 32",
->> @@ -1325,11 +1331,79 @@ bool qcom_scm_is_available(void)
->>   }
->>   EXPORT_SYMBOL(qcom_scm_is_available);
->> +static struct completion *qcom_scm_lookup_wq(struct qcom_scm *scm, 
->> u32 wq_ctx)
->> +{
->> +    /* assert wq_ctx is zero */ > +    if (wq_ctx != 0) {
-> 
-> Is this correct? looks like zero is the only valid one.
-> 
-> I thought wq_ctx was a unique number (UID).
+> +
 
-Currently the SMC calls from the kernel scm driver are still serialized
-and firmware only supports a single wq_ctx. This is expected to change
-in the future, will document it the comments.
+Not related change.
+
+>  
+>  required:
+>    - compatible
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+> index 7129fbcf2b6c..5a71268538e6 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+> @@ -24,6 +24,14 @@ properties:
+>    '#power-domain-cells':
+>      const: 1
+>  
+> +  clocks:
+> +    minItems: 1
+> +    maxItems: 8
+> +
+> +  clock-names:
+> +    minItems: 1
+> +    maxItems: 8
+
+This does not look correct, neither related.
+> +
+>    reg:
+>      maxItems: 1
+>  
+> @@ -35,7 +43,6 @@ required:
+>    - reg
+>    - '#clock-cells'
+>    - '#reset-cells'
+> -  - '#power-domain-cells'
+
+Eee? Why? What's this?
 
 
-> 
->> +        dev_err(scm->dev, "No waitqueue found for wq_ctx %d\n", wq_ctx);
->> +        return ERR_PTR(-EINVAL);
->> +    }
->> +
->> +    return &scm->waitq_comp;
->> +}
->> +
->> +int qcom_scm_lookup_completion(u32 wq_ctx)
->> +{
->> +    struct completion *wq = NULL;
->> +
->> +    wq = qcom_scm_lookup_wq(__scm, wq_ctx);
->> +    if (IS_ERR(wq))
->> +        return PTR_ERR(wq);
->> +
->> +    wait_for_completion(wq);
-> 
-> We can potentially block here forever without a timeout.
-> 
 
-yeah potentially until a hung task timeout. This is what
-we want since we can't make additional scm calls anyway.
 
-> As you are reusing completion, I have not seen any reinitialization of 
-> completion, this could potentially return above line without waiting at 
-> all.
+Best regards,
+Krzysztof
 
-A complete would paired with a single waiter, so additional
-completes would be neccessary for it to go through without
-waiting.
-
-> 
->> +
->> +    return 0;
->> +}
->> +
->> +static int qcom_scm_waitq_wakeup(struct qcom_scm *scm, unsigned int 
->> wq_ctx, bool wake_all)
->> +{
->> +    struct completion *wq_to_wake;
->> +
->> +    wq_to_wake = qcom_scm_lookup_wq(scm, wq_ctx);
->> +    if (IS_ERR(wq_to_wake))
->> +        return PTR_ERR(wq_to_wake);
->> +
->> +    if (wake_all)
->> +        complete_all(wq_to_wake);
->> +    else
->> +        complete(wq_to_wake);
-> 
->> +
->> +    return 0;
->> +}
->> +
->> +static irqreturn_t qcom_scm_irq_handler(int irq, void *data)
->> +{
->> +    int ret;
->> +    struct qcom_scm *scm = data;
->> +    u32 wq_ctx, flags, more_pending = 0;
->> +
->> +    do {
->> +        ret = scm_get_wq_ctx(&wq_ctx, &flags, &more_pending);
->> +        if (ret) {
->> +            dev_err(scm->dev, "GET_WQ_CTX SMC call failed: %d\n", ret);
->> +            goto out;
->> +        }
->> +
->> +        if (flags != QCOM_SMC_WAITQ_FLAG_WAKE_ONE &&
->> +            flags != QCOM_SMC_WAITQ_FLAG_WAKE_ALL) {
->> +            dev_err(scm->dev, "Invalid flags found for wq_ctx: %u\n", 
->> flags);
->> +            goto out;
->> +        }
->> +
->> +        ret = qcom_scm_waitq_wakeup(scm, wq_ctx, !!(flags & 
->> QCOM_SMC_WAITQ_FLAG_WAKE_ALL));
->> +        if (ret)
->> +            goto out;
->> +    } while (more_pending);
->> +
->> +out:
->> +    return IRQ_HANDLED;
->> +}
->> +
->>   static int qcom_scm_probe(struct platform_device *pdev)
->>   {
->>       struct qcom_scm *scm;
->>       unsigned long clks;
->> -    int ret;
->> +    int irq, ret;
->>       scm = devm_kzalloc(&pdev->dev, sizeof(*scm), GFP_KERNEL);
->>       if (!scm)
->> @@ -1402,6 +1476,19 @@ static int qcom_scm_probe(struct 
->> platform_device *pdev)
->>       __scm = scm;
->>       __scm->dev = &pdev->dev;
->> +    init_completion(&__scm->waitq_comp);
->> +
->> +    irq = platform_get_irq(pdev, 0);
->> +    if (irq < 0) {
->> +        if (irq != -ENXIO)
->> +            return irq;
->> +    } else {
->> +        ret = devm_request_threaded_irq(__scm->dev, irq, NULL, 
->> qcom_scm_irq_handler,
->> +                        IRQF_ONESHOT, "qcom-scm", __scm);
->> +        if (ret < 0)
->> +            return dev_err_probe(scm->dev, ret, "Failed to request 
->> qcom-scm irq\n");
->> +    }
->> +
->>       __get_convention();
->>       /*
-> 
-> --srini
