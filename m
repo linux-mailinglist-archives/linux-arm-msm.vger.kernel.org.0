@@ -2,162 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 73A116650F1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 02:11:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 98585665124
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 02:35:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234653AbjAKBLF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Jan 2023 20:11:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35456 "EHLO
+        id S231151AbjAKBfB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Jan 2023 20:35:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53872 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234881AbjAKBLD (ORCPT
+        with ESMTP id S231324AbjAKBfA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Jan 2023 20:11:03 -0500
-Received: from cstnet.cn (smtp25.cstnet.cn [159.226.251.25])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id ED73B6342;
-        Tue, 10 Jan 2023 17:10:58 -0800 (PST)
-Received: from localhost.localdomain (unknown [124.16.138.125])
-        by APP-05 (Coremail) with SMTP id zQCowADn7+9wDL5jjEwfDA--.50119S2;
-        Wed, 11 Jan 2023 09:10:08 +0800 (CST)
-From:   Jiasheng Jiang <jiasheng@iscas.ac.cn>
-To:     dianders@chromium.org
-Cc:     dmitry.baryshkov@linaro.org, robdclark@gmail.com,
-        quic_abhinavk@quicinc.com, sean@poorly.run, airlied@gmail.com,
-        daniel@ffwll.ch, marijn.suijten@somainline.org, vkoul@kernel.org,
-        marex@denx.de, vladimir.lypak@gmail.com,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Subject: [PATCH v2] drm/msm/dsi: Drop the redundant fail label
-Date:   Wed, 11 Jan 2023 09:10:06 +0800
-Message-Id: <20230111011006.6238-1-jiasheng@iscas.ac.cn>
-X-Mailer: git-send-email 2.25.1
-MIME-Version: 1.0
+        Tue, 10 Jan 2023 20:35:00 -0500
+Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52BF2643F;
+        Tue, 10 Jan 2023 17:34:59 -0800 (PST)
+Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-15085b8a2f7so14109479fac.2;
+        Tue, 10 Jan 2023 17:34:59 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=AZ8qZH8g2P/GvUCukVOBByRWsKJyz8oeDnn8zouTKWQ=;
+        b=HN0zENtLb78Y0NRXrOHHlC8R1rCeG669Y7PT6WR59/BeIndBRkz4DvqewhkRF1OhtK
+         xvVRsDPa5WGdfzgXtzgCsSRKlInQrY6i5uNmbaTNcm2+hRpQBuvlO1c7v0fTqlovrXWR
+         Ms4ksUpRlT5EFuuqFKfDhqECLFoXh8Qr6hTA7ZImTV/k2kaV5/Z4K7EfHA+sHeNTo6m4
+         0jXA+/ubeYWmo4sJuOQ39HlPKUYAfHoILxq5Am2LwJ1bXI9oXM+/eRVKDOiARydqH3y6
+         K2IIButylP69I6uq8CQnhTALh4nBo0fq6rNXgoQIdLWPs5gVcvPBNLSLKsrrpwzzCQXt
+         t4Yw==
+X-Gm-Message-State: AFqh2kr2kvz7AR7aWrC0tr59O8zhS3XEqW7G2cm1RsG0FpqSrz543N8/
+        oh9ivpIuir7SQiPIaIyzpHizxFWuDA==
+X-Google-Smtp-Source: AMrXdXvqILYWghRppCgFmNY+vFQzDVnby7uXqaQy6S+JG3SPnNRgPdF7gs4P6cAl6PiURbO+smZLgQ==
+X-Received: by 2002:a05:6870:b304:b0:15b:95f2:6d34 with SMTP id a4-20020a056870b30400b0015b95f26d34mr2411613oao.28.1673400898475;
+        Tue, 10 Jan 2023 17:34:58 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id em33-20020a0568705ba100b0014fd7e7c3fesm6581572oab.27.2023.01.10.17.34.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Jan 2023 17:34:58 -0800 (PST)
+Received: (nullmailer pid 3441158 invoked by uid 1000);
+        Wed, 11 Jan 2023 01:34:56 -0000
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: zQCowADn7+9wDL5jjEwfDA--.50119S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxGw4ktry8uFWxGw1xCrWrAFb_yoW5Gw18pr
-        yaqFsrtrW0yws2krW7JF17A3WrKF4fGa48G34UCwnrAw1ayw4UXF4Dua10ga48t3y8uw4U
-        Kanaya4rWF1Utr7anT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-        9KBjDU0xBIdaVrnRJUUUvK14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-        rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
-        1l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26F4j
-        6r4UJwA2z4x0Y4vEx4A2jsIE14v26F4j6r4UJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gr
-        1j6F4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv
-        7VC0I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r
-        1j6r4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02
-        628vn2kIc2xKxwCY02Avz4vE14v_KwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbV
-        WUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF
-        67kF1VAFwI0_GFv_WrylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42
-        IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF
-        0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxh
-        VjvjDU0xZFpf9x0JUChFxUUUUU=
-X-Originating-IP: [124.16.138.125]
-X-CM-SenderInfo: pmld2xxhqjqxpvfd2hldfou0/
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+MIME-Version: 1.0
+From:   Rob Herring <robh@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     marijn.suijten@somainline.org, linux-kernel@vger.kernel.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        krzysztof.kozlowski@linaro.org,
+        angelogioacchino.delregno@collabora.com, agross@kernel.org,
+        andersson@kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>
+In-Reply-To: <20230110175605.1240188-2-konrad.dybcio@linaro.org>
+References: <20230110175605.1240188-1-konrad.dybcio@linaro.org>
+ <20230110175605.1240188-2-konrad.dybcio@linaro.org>
+Message-Id: <167340066308.3433046.8913949739772474512.robh@kernel.org>
+Subject: Re: [PATCH v8 1/5] dt-bindings: soc: qcom: cpr3: Add bindings for CPR3 driver
+Date:   Tue, 10 Jan 2023 19:34:56 -0600
+X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Drop the redundant fail label and change the "goto fail" into "return ret"
-since they are the same.
 
-Reviewed-by: Doug Anderson <dianders@chromium.org>
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
----
-Changelog:
+On Tue, 10 Jan 2023 18:56:01 +0100, Konrad Dybcio wrote:
+> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> 
+> Add the bindings for the CPR3 driver to the documentation.
+> 
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> [Konrad: Add type reference to acc-syscon; update AGdR's email]
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  .../bindings/soc/qcom/qcom,cpr3.yaml          | 242 ++++++++++++++++++
+>  1 file changed, 242 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.yaml
+> 
 
-v1 -> v2:
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-1. No change of the error handling of the irq_of_parse_and_map.
----
- drivers/gpu/drm/msm/dsi/dsi_host.c | 24 ++++++++----------------
- 1 file changed, 8 insertions(+), 16 deletions(-)
+yamllint warnings/errors:
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 89aadd3b3202..de615c505def 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -1883,8 +1883,7 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
- 
- 	msm_host = devm_kzalloc(&pdev->dev, sizeof(*msm_host), GFP_KERNEL);
- 	if (!msm_host) {
--		ret = -ENOMEM;
--		goto fail;
-+		return -ENOMEM;
- 	}
- 
- 	msm_host->pdev = pdev;
-@@ -1893,31 +1892,28 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
- 	ret = dsi_host_parse_dt(msm_host);
- 	if (ret) {
- 		pr_err("%s: failed to parse dt\n", __func__);
--		goto fail;
-+		return ret;
- 	}
- 
- 	msm_host->ctrl_base = msm_ioremap_size(pdev, "dsi_ctrl", &msm_host->ctrl_size);
- 	if (IS_ERR(msm_host->ctrl_base)) {
- 		pr_err("%s: unable to map Dsi ctrl base\n", __func__);
--		ret = PTR_ERR(msm_host->ctrl_base);
--		goto fail;
-+		return PTR_ERR(msm_host->ctrl_base);
- 	}
- 
- 	pm_runtime_enable(&pdev->dev);
- 
- 	msm_host->cfg_hnd = dsi_get_config(msm_host);
- 	if (!msm_host->cfg_hnd) {
--		ret = -EINVAL;
- 		pr_err("%s: get config failed\n", __func__);
--		goto fail;
-+		return -EINVAL;
- 	}
- 	cfg = msm_host->cfg_hnd->cfg;
- 
- 	msm_host->id = dsi_host_get_id(msm_host);
- 	if (msm_host->id < 0) {
--		ret = msm_host->id;
- 		pr_err("%s: unable to identify DSI host index\n", __func__);
--		goto fail;
-+		return msm_host->id;
- 	}
- 
- 	/* fixup base address by io offset */
-@@ -1927,19 +1923,18 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
- 					    cfg->regulator_data,
- 					    &msm_host->supplies);
- 	if (ret)
--		goto fail;
-+		return ret;
- 
- 	ret = dsi_clk_init(msm_host);
- 	if (ret) {
- 		pr_err("%s: unable to initialize dsi clks\n", __func__);
--		goto fail;
-+		return ret;
- 	}
- 
- 	msm_host->rx_buf = devm_kzalloc(&pdev->dev, SZ_4K, GFP_KERNEL);
- 	if (!msm_host->rx_buf) {
--		ret = -ENOMEM;
- 		pr_err("%s: alloc rx temp buf failed\n", __func__);
--		goto fail;
-+		return -ENOMEM;
- 	}
- 
- 	ret = devm_pm_opp_set_clkname(&pdev->dev, "byte");
-@@ -1983,9 +1978,6 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
- 
- 	DBG("Dsi Host %d initialized", msm_host->id);
- 	return 0;
--
--fail:
--	return ret;
- }
- 
- void msm_dsi_host_destroy(struct mipi_dsi_host *host)
--- 
-2.25.1
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.example.dtb: opp-table-cprh: opp3:qcom,opp-fuse-level:0: [2, 3] is too long
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230110175605.1240188-2-konrad.dybcio@linaro.org
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
 
