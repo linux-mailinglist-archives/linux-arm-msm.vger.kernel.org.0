@@ -2,133 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B480E6655CB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 09:16:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 319D46655E9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 09:22:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229688AbjAKIQa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Jan 2023 03:16:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38076 "EHLO
+        id S230369AbjAKIWU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Jan 2023 03:22:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231861AbjAKIQU (ORCPT
+        with ESMTP id S231448AbjAKIWT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Jan 2023 03:16:20 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C56E64D7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 00:16:19 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id t5so9814311wrq.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 00:16:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=HIGwyVQacqiHb5bf3hpUUrqzBySRCldHEdV+xtBD5sA=;
-        b=EKk9qUiQTIrBaOvEvy/s/zn+iaENgDwFbD3XwA1nXJV5sDoHVOMYJIR1vwT8CIly+v
-         2fSciw+lxv3FdxmiykmSKVe74DTutWreBK0qvg1q1DvOv0ewSafJKeYe/GXCVHDsfRrX
-         xZg2M/ATLQSZgRs3WzZ0/QdKOabiXm5uuhU4j5VWiyzR3IkGL4We+W2+wYwiz6PvxLZq
-         +FJiGHSIjP2cXDjnvIq33rBRIQxXdnJ4FUOFjcslROnGh8k6tcSbyaqydDdSD05G86/c
-         AwbqUH281aGBOQ83ij6k2iV8JBJEDCpqdivNAwLcZf24xvargjnKnnsMSo5iX/Tl/7qT
-         xqNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HIGwyVQacqiHb5bf3hpUUrqzBySRCldHEdV+xtBD5sA=;
-        b=TQPD9GFh4ut5K5tVpkosWNosc0st469NeZ+l3GsfIoyn1QPC0SFGCjpozf9mRtK9Da
-         V8p8PrytIst1ltoGaUOE9xqnwHicNFf2ns3DQdVag5X4sZThZ1s9339NPz5SpInPRqFB
-         ESmZOqldYWqziRrhqdag4FssjIdEZiPEffZGE4BgS3wwMat20/He6kuSbMv9ECeLZTza
-         vSm82mjuTgmpIJKN4LiEQs2J3eJPyyK6GnT5xqRq2GrHN46mtLXFOUDDestyCgzMHaUG
-         21h/n9TKSTTilszoGcQCAOOLv3f4CxvoF9vwqAEdmuT+31zLclNnGwCQ3WL8BMQR0g8Z
-         y8QA==
-X-Gm-Message-State: AFqh2krWsDqA8ssC61LvCXZVhA7wVWWOUi8Z8XrJgfhTQ+bLtOqe4MKQ
-        cP/uqgeCqex8aVW87RdJAXtGwA==
-X-Google-Smtp-Source: AMrXdXtUpF24A+u0sOYmPxS/LiKCYBp0pEkJLZuU7KrwEwxgcZGkYFjo4y+fowz3eKAtReULW95HNw==
-X-Received: by 2002:a5d:53cb:0:b0:27c:84c4:5913 with SMTP id a11-20020a5d53cb000000b0027c84c45913mr33014574wrw.30.1673424977839;
-        Wed, 11 Jan 2023 00:16:17 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id t17-20020a05600001d100b00241d21d4652sm13035441wrx.21.2023.01.11.00.16.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Jan 2023 00:16:17 -0800 (PST)
-Message-ID: <ebafbfd1-cd5a-2ef8-a0ee-685c67235816@linaro.org>
-Date:   Wed, 11 Jan 2023 09:16:15 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH] dt-bindings: arm: qcom: add board-id/msm-id for MSM8956,
- SDM636 and SM4250
-Content-Language: en-US
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Wed, 11 Jan 2023 03:22:19 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 478A15FD9;
+        Wed, 11 Jan 2023 00:22:17 -0800 (PST)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30B81HIh024541;
+        Wed, 11 Jan 2023 08:22:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=4FYnXEeJ5EbrufiM75NTGqsaVjICHmXYbKsx49ByQdI=;
+ b=eX/q+DEJ+VuCbi7B5tfIukmUEGak9ES6hwQJ7h32uwGWLZDizz9EyWfoU1RwaCMVP2bv
+ x4VuS6h29tkAEdbw92BTs47ZrYD/5M9ba1cf0okIOTZPQWasIAa4ljyKhtsbJ6XL8jVt
+ H6i5wiGUkKVOgMbuSKioElwVqOrqxAoQ/qV1W2MqSTFHh6ECkjgS7kLMYUaRyvbzvqvk
+ cUR8LZt1OMi3EQmprsiNnQllRGRCorIRDOu5FyD9TvFQ8Z2nXh71a2Ef/Vol5sDSpPq6
+ p6Dg+U0b8uz8NaGQh+KkzqvTn/XJ/6JCHG4vl5qiUTspd8PV2L41XV6uVlzYnWivLYWY Eg== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n1kbq8rf0-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 11 Jan 2023 08:22:06 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30B8M56m021299
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 11 Jan 2023 08:22:05 GMT
+Received: from hu-namajain-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Wed, 11 Jan 2023 00:22:02 -0800
+From:   Naman Jain <quic_namajain@quicinc.com>
+To:     Bjorn Andersson <andersson@kernel.org>,
         Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20221214150605.173346-1-krzysztof.kozlowski@linaro.org>
- <20221214152915.wshz4odyqcupo6xw@SoMainline.org>
- <65ccd0c9-8bd9-fc3c-ef33-78b905adf294@linaro.org>
- <20230111043000.6svnos6u4ynwxjgv@builder.lan>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230111043000.6svnos6u4ynwxjgv@builder.lan>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+CC:     Naman Jain <quic_namajain@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_pkondeti@quicinc.com>
+Subject: [PATCH 0/2] soc: qcom: socinfo: Add fields in sysfs custom attributes
+Date:   Wed, 11 Jan 2023 13:51:39 +0530
+Message-ID: <20230111082141.18109-1-quic_namajain@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Qfu1kxRbu6pTRd8W7l5SAV9RV9154VRD
+X-Proofpoint-ORIG-GUID: Qfu1kxRbu6pTRd8W7l5SAV9RV9154VRD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2023-01-11_03,2023-01-10_03,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ suspectscore=0 mlxlogscore=867 spamscore=0 malwarescore=0 adultscore=0
+ mlxscore=0 impostorscore=0 phishscore=0 clxscore=1011 bulkscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301110062
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/01/2023 05:30, Bjorn Andersson wrote:
-> On Wed, Dec 14, 2022 at 05:45:49PM +0100, Krzysztof Kozlowski wrote:
->> On 14/12/2022 16:29, Marijn Suijten wrote:
->>> On 2022-12-14 16:06:05, Krzysztof Kozlowski wrote:
->>>> Allow qcom,board-id and qcom,msm-id leagcy properties on these older
->>>> platforms: MSM8956, SDM636 and SM4250.  Also mention more OnePlus
->>>> devices using modified qcom,board-id field.
->>>>
->>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>>
->>> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
->>>
->>>> ---
->>>>  Documentation/devicetree/bindings/arm/qcom.yaml | 5 +++++
->>>>  1 file changed, 5 insertions(+)
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
->>>> index d45e2129fce3..cfb7f5caf606 100644
->>>> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
->>>> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
->>>> @@ -925,15 +925,18 @@ allOf:
->>>>                - qcom,apq8026
->>>>                - qcom,apq8094
->>>>                - qcom,apq8096
->>>> +              - qcom,msm8956
->>>
->>> I am certain this (and msm8976) were added in [1] but it somehow got
->>> lost when that was merged as 05c0c38dc752 ("dt-bindings: arm: qcom:
->>> Document msm8956 and msm8976 SoC and devices")?
->>>
->>> Should we also add qcom,msm8976 or only when a user for that board is
->>> added?
->>
->> Bjorn,
->> You need to fix your scripts. It's not the first time when applied patch
->> is changed and its pieces are gone.
->>
-> 
-> I don't have any script that automagically solves merge conflicts, so if
-> you prefer to avoid the occasional mistake I can start reject your
-> patches as soon as they don't apply 100% cleanly.
+This series adds support to have SoC info fields available in sysfs
+to enable the use of these nodes in userland scripts and test scripts.
+This is to provide the interface to these scripts to find the details of
+parts present in the SoC and decide to execute a set of shell commands,
+that are supported/required for these parts. The decision to extend sysfs
+interface is taken as debugfs is not mounted by default and the use cases
+for this information are not essentially for debug.
 
-I vote for this (unless for really trivial cases). The submitter should
-know better how to resolve the conflict (through rebase) than you.
+The patches add the following changes:
+1. Restructure the code to make the scope of socinfo variable, from
+   function to file. Also, make the socinfo variable name more descriptive.
+2. Extend the sysfs custom attributes to incorporate fields introduced in
+   socinfo format version 2 to 6. Add name mappings for hw_platform field
+   to make the sysfs information more descriptive.
 
-Best regards,
-Krzysztof
+Support for versions 7 and above will be added in future patchsets.
+
+Also, patch 2 depends on patch 1 in the series.
+
+Naman Jain (2):
+  soc: qcom: socinfo: Change socinfo variable name and scope
+  soc: qcom: socinfo: Add sysfs attributes for fields in v2-v6
+
+ drivers/soc/qcom/socinfo.c | 261 +++++++++++++++++++++++++++++++------
+ 1 file changed, 223 insertions(+), 38 deletions(-)
+
+-- 
+2.17.1
 
