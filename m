@@ -2,163 +2,198 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C5A86655FE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 09:26:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 85BB1665667
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 09:45:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229881AbjAKIZc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Jan 2023 03:25:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42156 "EHLO
+        id S231998AbjAKIpc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Jan 2023 03:45:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230407AbjAKIZB (ORCPT
+        with ESMTP id S229516AbjAKIpG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Jan 2023 03:25:01 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B35E13D1B;
-        Wed, 11 Jan 2023 00:24:47 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Wed, 11 Jan 2023 03:45:06 -0500
+Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FB5E38B8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 00:45:02 -0800 (PST)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id D6DC0B81B32;
-        Wed, 11 Jan 2023 08:24:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86039C433EF;
-        Wed, 11 Jan 2023 08:24:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1673425484;
-        bh=ZHWrxxWG1aa1/gmTv0VNeABPQiucbBgJ8zRbl6lL6xc=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=AhGeMCUAwQXovFMb5lPuZ/+om2PC8LTFyPG/wQhzudJkTKPHJ2CA4FYOENEj4xyJ5
-         CZTrOF4ED5iVPJ/wxKx4qJHVOWdL+lTfJvuDhXtHj8JysZWCIMqMJLJxl1kDq4J1/E
-         0B9hJ7vfLJGz/i8o+zYe5jUCLF0eGfxaXmImW5b+RKXS17gf48BYEbGNM7VVtpSQ6V
-         91oel9Wm+HNegzQq0YM6c7on+xAyPp9SOEw8jX5XeWUaEUBt3/eyBiLMFKkx/ytu9v
-         e2Giu/sXpsRY7szj+wDbGRdCUfYDhzsLDo6qFmEtnKRSadXL8X2oFzFF+g77/BrBUq
-         4aK21TcrRftxg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1pFWPd-0005Oa-Dc; Wed, 11 Jan 2023 09:24:45 +0100
-From:   Johan Hovold <johan+linaro@kernel.org>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Eric Chanudet <echanude@redhat.com>,
-        Andrew Halaney <ahalaney@redhat.com>,
-        Brian Masney <bmasney@redhat.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 2/2] arm64: dts: qcom: sa8450p-pmics: rename pmic labels
-Date:   Wed, 11 Jan 2023 09:23:31 +0100
-Message-Id: <20230111082331.20641-3-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.38.2
-In-Reply-To: <20230111082331.20641-1-johan+linaro@kernel.org>
-References: <20230111082331.20641-1-johan+linaro@kernel.org>
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 9299D3EF12;
+        Wed, 11 Jan 2023 09:44:59 +0100 (CET)
+Date:   Wed, 11 Jan 2023 09:44:58 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [RFC PATCH 1/4] drm/msm/mdss: convert UBWC setup to use match
+ data
+Message-ID: <20230111084458.wcwzipew3ny7fpno@SoMainline.org>
+References: <20221208000850.312548-1-dmitry.baryshkov@linaro.org>
+ <20221208000850.312548-2-dmitry.baryshkov@linaro.org>
+ <047cd859-7141-d52f-4989-847fd2ada002@quicinc.com>
+ <b66de0ab-a31b-c86a-c1d0-c9a5f98c4f85@linaro.org>
+ <5aa47cf1-0589-4830-c1fb-22e15bac974a@quicinc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <5aa47cf1-0589-4830-c1fb-22e15bac974a@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The SA8540P PMICs are named PMM8540. Rename the devicetree source labels
-to reflect this.
+On 2023-01-09 12:32:18, Abhinav Kumar wrote:
+<snip>
+> >> On 12/7/2022 4:08 PM, Dmitry Baryshkov wrote:
+<snip>
+> >>> +struct msm_mdss_data {
+> >>> +    u32 ubwc_version;
+> >>> +    u32 ubwc_swizzle;
+> >>> +    u32 ubwc_static;
+> >>> +    u32 highest_bank_bit;
+> >>> +    u32 macrotile_mode;
+> >>> +};
 
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- arch/arm64/boot/dts/qcom/sa8540p-pmics.dtsi | 24 ++++++++++-----------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+This magic struct could really use some documentation, otherwise users
+will have no idea what fields to set (or omit) nor what values to use.
+For example decoder 2.0 seems to only use ubwc_static as a sort of magic
+"we don't know what the bits in UBWC_STATIC mean", whereas decoder 3.0
+reconstructs this field entirely from the other parameters.  Decoder 4.0
+however does the same, but _also_ embeds this uwbc_static magic value
+back into the register value....?
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8540p-pmics.dtsi b/arch/arm64/boot/dts/qcom/sa8540p-pmics.dtsi
-index 8c393f0bd6a8..1221be89b3de 100644
---- a/arch/arm64/boot/dts/qcom/sa8540p-pmics.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8540p-pmics.dtsi
-@@ -8,7 +8,7 @@
- #include <dt-bindings/spmi/spmi.h>
- 
- &spmi_bus {
--	pm8450a: pmic@0 {
-+	pmm8540a: pmic@0 {
- 		compatible = "qcom,pm8150", "qcom,spmi-pmic";
- 		reg = <0x0 SPMI_USID>;
- 		#address-cells = <1>;
-@@ -22,62 +22,62 @@ rtc@6000 {
- 			wakeup-source;
- 		};
- 
--		pm8450a_gpios: gpio@c000 {
-+		pmm8540a_gpios: gpio@c000 {
- 			compatible = "qcom,pm8150-gpio", "qcom,spmi-gpio";
- 			reg = <0xc000>;
- 			gpio-controller;
--			gpio-ranges = <&pm8450a_gpios 0 0 10>;
-+			gpio-ranges = <&pmm8540a_gpios 0 0 10>;
- 			#gpio-cells = <2>;
- 			interrupt-controller;
- 			#interrupt-cells = <2>;
- 		};
- 	};
- 
--	pm8450c: pmic@4 {
-+	pmm8540c: pmic@4 {
- 		compatible = "qcom,pm8150", "qcom,spmi-pmic";
- 		reg = <0x4 SPMI_USID>;
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 
--		pm8450c_gpios: gpio@c000 {
-+		pmm8540c_gpios: gpio@c000 {
- 			compatible = "qcom,pm8150-gpio", "qcom,spmi-gpio";
- 			reg = <0xc000>;
- 			gpio-controller;
--			gpio-ranges = <&pm8450c_gpios 0 0 10>;
-+			gpio-ranges = <&pmm8540c_gpios 0 0 10>;
- 			#gpio-cells = <2>;
- 			interrupt-controller;
- 			#interrupt-cells = <2>;
- 		};
- 	};
- 
--	pm8450e: pmic@8 {
-+	pmm8540e: pmic@8 {
- 		compatible = "qcom,pm8150", "qcom,spmi-pmic";
- 		reg = <0x8 SPMI_USID>;
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 
--		pm8450e_gpios: gpio@c000 {
-+		pmm8540e_gpios: gpio@c000 {
- 			compatible = "qcom,pm8150-gpio", "qcom,spmi-gpio";
- 			reg = <0xc000>;
- 			gpio-controller;
--			gpio-ranges = <&pm8450e_gpios 0 0 10>;
-+			gpio-ranges = <&pmm8540e_gpios 0 0 10>;
- 			#gpio-cells = <2>;
- 			interrupt-controller;
- 			#interrupt-cells = <2>;
- 		};
- 	};
- 
--	pm8450g: pmic@c {
-+	pmm8540g: pmic@c {
- 		compatible = "qcom,pm8150", "qcom,spmi-pmic";
- 		reg = <0xc SPMI_USID>;
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 
--		pm8450g_gpios: gpio@c000 {
-+		pmm8540g_gpios: gpio@c000 {
- 			compatible = "qcom,pm8150-gpio", "qcom,spmi-gpio";
- 			reg = <0xc000>;
- 			gpio-controller;
--			gpio-ranges = <&pm8450g_gpios 0 0 10>;
-+			gpio-ranges = <&pmm8540g_gpios 0 0 10>;
- 			#gpio-cells = <2>;
- 			interrupt-controller;
- 			#interrupt-cells = <2>;
--- 
-2.38.2
+Also read on below about checking "compatibility" between this struct
+and the decoder version, and why I feel this struct (versus mandatory
+function arguments) makes this struct less robust.
 
+> >>>   struct msm_mdss {
+> >>>       struct device *dev;
+> >>> @@ -40,6 +48,7 @@ struct msm_mdss {
+> >>>           unsigned long enabled_mask;
+> >>>           struct irq_domain *domain;
+> >>>       } irq_controller;
+> >>> +    const struct msm_mdss_data *mdss_data;
+> >>>       struct icc_path *path[2];
+> >>>       u32 num_paths;
+> >>>   };
+> >>> @@ -180,46 +189,40 @@ static int _msm_mdss_irq_domain_add(struct 
+> >>> msm_mdss *msm_mdss)
+> >>>   #define UBWC_3_0 0x30000000
+> >>>   #define UBWC_4_0 0x40000000
+> >>> -static void msm_mdss_setup_ubwc_dec_20(struct msm_mdss *msm_mdss,
+> >>> -                       u32 ubwc_static)
+> >>> +static void msm_mdss_setup_ubwc_dec_20(struct msm_mdss *msm_mdss)
+> >>>   {
+> >>> -    writel_relaxed(ubwc_static, msm_mdss->mmio + UBWC_STATIC);
+> >>> +    const struct msm_mdss_data *data = msm_mdss->mdss_data;
+> >>> +
+> >>> +    writel_relaxed(data->ubwc_static, msm_mdss->mmio + UBWC_STATIC);
+> >>>   }
+> >>> -static void msm_mdss_setup_ubwc_dec_30(struct msm_mdss *msm_mdss,
+> >>> -                       unsigned int ubwc_version,
+> >>> -                       u32 ubwc_swizzle,
+> >>> -                       u32 highest_bank_bit,
+> >>> -                       u32 macrotile_mode)
+> >>> +static void msm_mdss_setup_ubwc_dec_30(struct msm_mdss *msm_mdss)
+> >>>   {
+> >>> -    u32 value = (ubwc_swizzle & 0x1) |
+> >>> -            (highest_bank_bit & 0x3) << 4 |
+> >>> -            (macrotile_mode & 0x1) << 12;
+> >>> +    const struct msm_mdss_data *data = msm_mdss->mdss_data;
+> >>> +    u32 value = (data->ubwc_swizzle & 0x1) |
+> >>> +            (data->highest_bank_bit & 0x3) << 4 |
+> >>> +            (data->macrotile_mode & 0x1) << 12;
+> >>> -    if (ubwc_version == UBWC_3_0)
+> >>> +    if (data->ubwc_version == UBWC_3_0)
+> >>>           value |= BIT(10);
+> >>> -    if (ubwc_version == UBWC_1_0)
+> >>> +    if (data->ubwc_version == UBWC_1_0)
+> >>>           value |= BIT(8);
+> >>>       writel_relaxed(value, msm_mdss->mmio + UBWC_STATIC);
+> >>>   }
+> >>> -static void msm_mdss_setup_ubwc_dec_40(struct msm_mdss *msm_mdss,
+> >>> -                       unsigned int ubwc_version,
+> >>> -                       u32 ubwc_swizzle,
+> >>> -                       u32 ubwc_static,
+> >>> -                       u32 highest_bank_bit,
+> >>> -                       u32 macrotile_mode)
+> >>> +static void msm_mdss_setup_ubwc_dec_40(struct msm_mdss *msm_mdss)
+> >>>   {
+> >>> -    u32 value = (ubwc_swizzle & 0x7) |
+> >>> -            (ubwc_static & 0x1) << 3 |
+> >>> -            (highest_bank_bit & 0x7) << 4 |
+> >>> -            (macrotile_mode & 0x1) << 12;
+> >>> +    const struct msm_mdss_data *data = msm_mdss->mdss_data;
+> >>> +    u32 value = (data->ubwc_swizzle & 0x7) |
+> >>> +            (data->ubwc_static & 0x1) << 3 |
+> >>> +            (data->highest_bank_bit & 0x7) << 4 |
+> >>> +            (data->macrotile_mode & 0x1) << 12;
+> >>>       writel_relaxed(value, msm_mdss->mmio + UBWC_STATIC);
+> >>> -    if (ubwc_version == UBWC_3_0) {
+> >>> +    if (data->ubwc_version == UBWC_3_0) {
+> >>>           writel_relaxed(1, msm_mdss->mmio + UBWC_CTRL_2);
+> >>>           writel_relaxed(0, msm_mdss->mmio + UBWC_PREDICTION_MODE);
+> >>>       } else {
+> >>> @@ -232,6 +235,7 @@ static int msm_mdss_enable(struct msm_mdss 
+> >>> *msm_mdss)
+> >>>   {
+> >>>       int ret;
+> >>>       u32 hw_rev;
+> >>> +    u32 ubwc_dec_hw_version;
+> >>>       /*
+> >>>        * Several components have AXI clocks that can only be turned 
+> >>> on if
+> >>> @@ -250,53 +254,36 @@ static int msm_mdss_enable(struct msm_mdss 
+> >>> *msm_mdss)
+> >>>        * HW_REV requires MDSS_MDP_CLK, which is not enabled by the 
+> >>> mdss on
+> >>>        * mdp5 hardware. Skip reading it for now.
+> >>>        */
+> >>> -    if (msm_mdss->is_mdp5)
+> >>> +    if (msm_mdss->is_mdp5 || !msm_mdss->mdss_data)
+> >>>           return 0;
+> >>>       hw_rev = readl_relaxed(msm_mdss->mmio + HW_REV);
+> 
+> hw_rev is not used anymore now so why not just drop that reg read 
+> altogether.
+> 
+> >>>       dev_dbg(msm_mdss->dev, "HW_REV: 0x%x\n", hw_rev);
+> >>> +
+> >>> +    ubwc_dec_hw_version = readl_relaxed(msm_mdss->mmio + 
+> >>> UBWC_DEC_HW_VERSION);
+> 
+> If we are going to tie UBWC version to the HW compatible match, then 
+> even this register read can be skipped and instead you can add 
+> ubwc_dec_hw_version to your match data struct and skip this read as well.
+
+I have suggested in IRC to keep this register read, and utilize it to at
+least sanity check the configuration.  You are right that the DPU HW
+version already describes what UWBC decoder version is used, but we're
+are already questioning whether it was ported correctly for SM6115.  A
+WARN() that catches a mismatch between what was written in the "catalog"
+(or this match table) versus what the hardware reports would have gone a
+long way.
+
+This is especially relevant with the new struct where fields are
+(un)used depending on the UBWC HW decoder version, making for an extra
+exercise to the developer to double-check whether their struct values
+are taken into account or not (or if used ones are accidentally
+omitted).
+
+- Marijn
+
+> That way we get rid of all register reads in this path which have 
+> continuously bugged us with crashes.
+
+<snip>
