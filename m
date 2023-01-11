@@ -2,59 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 06D57665FF4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 17:03:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D51F56660D8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 17:42:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232361AbjAKQDt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Jan 2023 11:03:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49008 "EHLO
+        id S232212AbjAKQmw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Jan 2023 11:42:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235644AbjAKQDl (ORCPT
+        with ESMTP id S231334AbjAKQma (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Jan 2023 11:03:41 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8F7CDF89;
-        Wed, 11 Jan 2023 08:03:40 -0800 (PST)
+        Wed, 11 Jan 2023 11:42:30 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7753A6363
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 08:41:43 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6CB2B61D78;
-        Wed, 11 Jan 2023 16:03:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8219C433F0;
-        Wed, 11 Jan 2023 16:03:39 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 1991D61D3D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 16:41:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 778E6C433F1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 16:41:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1673453019;
-        bh=C8MTWqDAAuM3kPKERqcLzORwc/4RvPJZmDvRGVKEQDg=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Q/x9MBxV8T5qriIIqYM+X8RJPf2R2jRdvsKZdoWYg9QxqzbKpwFb+Oo7n6w7qU0xT
-         8SvMfJnF362D7/oDhyrwR9CpdDxPuCNwgGt9bGruY6SnOTnWX+jXN+xpx7nAUAKSR9
-         uHY3ETBiZpY1AJbDXGn7iCGf45hCn4zLveNA7BhNhc6pYmv151gGxVuMhxb3zLrs9P
-         V3E8pJR9Vz3amgN5L4ZVdoXQnXZwPSHdKALmeh3cP2yV81+1xgqDV8cjUbqXUNJ2az
-         BErMDgcJsgp1i54n3O04nUzVpjKKj4iliEWyV030gucocVHPBk4/15eTuKZn1qnGLn
-         WNZU7DC6YH7uQ==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1pFdZo-0001sU-HH; Wed, 11 Jan 2023 17:03:44 +0100
-From:   Johan Hovold <johan+linaro@kernel.org>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Eric Chanudet <echanude@redhat.com>,
-        Andrew Halaney <ahalaney@redhat.com>,
-        Brian Masney <bmasney@redhat.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH v2 2/2] arm64: dts: qcom: sa8540p-pmics: rename pmic labels
-Date:   Wed, 11 Jan 2023 17:03:35 +0100
-Message-Id: <20230111160335.7175-3-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.38.2
-In-Reply-To: <20230111160335.7175-1-johan+linaro@kernel.org>
-References: <20230111160335.7175-1-johan+linaro@kernel.org>
+        s=k20201202; t=1673455302;
+        bh=HAiGsZVdZ7bRLRhnBgYD+v8uX7S+LNMDjafB7ePSsPE=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=srRV6h7579FD9/vtNnis7ZrO/GqsYNLwbmDaz24PDJNMbgv7klXK5jutPYQbMun9x
+         tBedsxB0fRKJeMO7hY8AQ3SO1b2q+cBiisk6pMe1/sPCLKTuo+QNncc9KX/fishber
+         +rzZlvNLXfbt65doUfW4pk1HT/ke7Uxreq4UdPet3DkhVoEEEPfB+wI1k6jj6RknOg
+         JR5KN6Op46lVZRYRSS0rxHJwTZLq9d2vWDzQMottX/72pmUV38GoE3W3ncKbd15/E4
+         E247tYUiGwI3bP1a4HpfHkIx4MJqQyoGqJCspRsPfmDlBVgMU0khNACZMd5/wDjuq8
+         NvAbeyRXfFo8g==
+Received: by mail-vs1-f47.google.com with SMTP id t10so5721943vsr.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 08:41:42 -0800 (PST)
+X-Gm-Message-State: AFqh2kqsM0tTLDI2HtKwg7N20I2HABSyayChbWkEmnztc5FKLZWolKYf
+        Fp6ijMjCyQzMfQoO0V0JFxCd3zFC8E6k6k04EDOnvQ==
+X-Google-Smtp-Source: AMrXdXvGpcHrbGd1IktlEVtMp91mJzkaHY2rmPBAfofBvI8ZkhzTqUJSC534yKEI2uGlNiqT2NU+6cYF8rHr+kVIjU4=
+X-Received: by 2002:a05:6102:374d:b0:3d0:af13:3b6 with SMTP id
+ u13-20020a056102374d00b003d0af1303b6mr1504766vst.65.1673455301431; Wed, 11
+ Jan 2023 08:41:41 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230110103420.2430518-1-daniel.lezcano@kernel.org>
+In-Reply-To: <20230110103420.2430518-1-daniel.lezcano@kernel.org>
+From:   Amit Kucheria <amitk@kernel.org>
+Date:   Wed, 11 Jan 2023 22:11:30 +0530
+X-Gmail-Original-Message-ID: <CAHLCerOcDkUfb_SA6_XcrpYY9Zj2rmC973jApBpPJyXwEh1wVw@mail.gmail.com>
+Message-ID: <CAHLCerOcDkUfb_SA6_XcrpYY9Zj2rmC973jApBpPJyXwEh1wVw@mail.gmail.com>
+Subject: Re: [PATCH] thermal/drivers/qcom: Remove duplicate set next trip
+ point interrupt code
+To:     Daniel Lezcano <daniel.lezcano@linaro.org>
+Cc:     rafael@kernel.org, dmitry.baryshkov@linaro.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -64,104 +67,88 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The SA8540P PMICs are named PMM8540. Rename the devicetree source labels
-to reflect this.
+On Tue, Jan 10, 2023 at 4:04 PM Daniel Lezcano
+<daniel.lezcano@linaro.org> wrote:
+>
+> From: Daniel Lezcano <daniel.lezcano@linaro.org>
+>
+> The tsens driver reprogram the next trip points in the irq
+> handler. This function then call thermal_zone_device_update().
+>
+> However, thermal_zone_device_update() calls thermal_zone_set_trips()
+> and from there it calls the backend 'set_trips' ops. This one in turn
+> reprogram the next trip points (low/high).
+>
+> Consequently, the code setting the next trip points interrupt in the
+> interrupt handle is not needed and could be removed.
+>
+> Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+> Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
 
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Eric Chanudet <echanude@redhat.com>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- arch/arm64/boot/dts/qcom/sa8540p-pmics.dtsi | 24 ++++++++++-----------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+Acked-by: Amit Kucheria <amitk@kernel.org>
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8540p-pmics.dtsi b/arch/arm64/boot/dts/qcom/sa8540p-pmics.dtsi
-index 8c393f0bd6a8..1221be89b3de 100644
---- a/arch/arm64/boot/dts/qcom/sa8540p-pmics.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8540p-pmics.dtsi
-@@ -8,7 +8,7 @@
- #include <dt-bindings/spmi/spmi.h>
- 
- &spmi_bus {
--	pm8450a: pmic@0 {
-+	pmm8540a: pmic@0 {
- 		compatible = "qcom,pm8150", "qcom,spmi-pmic";
- 		reg = <0x0 SPMI_USID>;
- 		#address-cells = <1>;
-@@ -22,62 +22,62 @@ rtc@6000 {
- 			wakeup-source;
- 		};
- 
--		pm8450a_gpios: gpio@c000 {
-+		pmm8540a_gpios: gpio@c000 {
- 			compatible = "qcom,pm8150-gpio", "qcom,spmi-gpio";
- 			reg = <0xc000>;
- 			gpio-controller;
--			gpio-ranges = <&pm8450a_gpios 0 0 10>;
-+			gpio-ranges = <&pmm8540a_gpios 0 0 10>;
- 			#gpio-cells = <2>;
- 			interrupt-controller;
- 			#interrupt-cells = <2>;
- 		};
- 	};
- 
--	pm8450c: pmic@4 {
-+	pmm8540c: pmic@4 {
- 		compatible = "qcom,pm8150", "qcom,spmi-pmic";
- 		reg = <0x4 SPMI_USID>;
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 
--		pm8450c_gpios: gpio@c000 {
-+		pmm8540c_gpios: gpio@c000 {
- 			compatible = "qcom,pm8150-gpio", "qcom,spmi-gpio";
- 			reg = <0xc000>;
- 			gpio-controller;
--			gpio-ranges = <&pm8450c_gpios 0 0 10>;
-+			gpio-ranges = <&pmm8540c_gpios 0 0 10>;
- 			#gpio-cells = <2>;
- 			interrupt-controller;
- 			#interrupt-cells = <2>;
- 		};
- 	};
- 
--	pm8450e: pmic@8 {
-+	pmm8540e: pmic@8 {
- 		compatible = "qcom,pm8150", "qcom,spmi-pmic";
- 		reg = <0x8 SPMI_USID>;
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 
--		pm8450e_gpios: gpio@c000 {
-+		pmm8540e_gpios: gpio@c000 {
- 			compatible = "qcom,pm8150-gpio", "qcom,spmi-gpio";
- 			reg = <0xc000>;
- 			gpio-controller;
--			gpio-ranges = <&pm8450e_gpios 0 0 10>;
-+			gpio-ranges = <&pmm8540e_gpios 0 0 10>;
- 			#gpio-cells = <2>;
- 			interrupt-controller;
- 			#interrupt-cells = <2>;
- 		};
- 	};
- 
--	pm8450g: pmic@c {
-+	pmm8540g: pmic@c {
- 		compatible = "qcom,pm8150", "qcom,spmi-pmic";
- 		reg = <0xc SPMI_USID>;
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 
--		pm8450g_gpios: gpio@c000 {
-+		pmm8540g_gpios: gpio@c000 {
- 			compatible = "qcom,pm8150-gpio", "qcom,spmi-gpio";
- 			reg = <0xc000>;
- 			gpio-controller;
--			gpio-ranges = <&pm8450g_gpios 0 0 10>;
-+			gpio-ranges = <&pmm8540g_gpios 0 0 10>;
- 			#gpio-cells = <2>;
- 			interrupt-controller;
- 			#interrupt-cells = <2>;
--- 
-2.38.2
-
+> ---
+>  drivers/thermal/qcom/tsens.c | 46 +-----------------------------------
+>  1 file changed, 1 insertion(+), 45 deletions(-)
+>
+> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+> index b5b136ff323f..58693ee8c430 100644
+> --- a/drivers/thermal/qcom/tsens.c
+> +++ b/drivers/thermal/qcom/tsens.c
+> @@ -472,52 +472,8 @@ static irqreturn_t tsens_irq_thread(int irq, void *data)
+>                         continue;
+>                 if (!tsens_threshold_violated(priv, hw_id, &d))
+>                         continue;
+> -               ret = get_temp_tsens_valid(s, &temp);
+> -               if (ret) {
+> -                       dev_err(priv->dev, "[%u] %s: error reading sensor\n",
+> -                               hw_id, __func__);
+> -                       continue;
+> -               }
+>
+> -               spin_lock_irqsave(&priv->ul_lock, flags);
+> -
+> -               tsens_read_irq_state(priv, hw_id, s, &d);
+> -
+> -               if (d.up_viol &&
+> -                   !masked_irq(hw_id, d.up_irq_mask, tsens_version(priv))) {
+> -                       tsens_set_interrupt(priv, hw_id, UPPER, disable);
+> -                       if (d.up_thresh > temp) {
+> -                               dev_dbg(priv->dev, "[%u] %s: re-arm upper\n",
+> -                                       hw_id, __func__);
+> -                               tsens_set_interrupt(priv, hw_id, UPPER, enable);
+> -                       } else {
+> -                               trigger = true;
+> -                               /* Keep irq masked */
+> -                       }
+> -               } else if (d.low_viol &&
+> -                          !masked_irq(hw_id, d.low_irq_mask, tsens_version(priv))) {
+> -                       tsens_set_interrupt(priv, hw_id, LOWER, disable);
+> -                       if (d.low_thresh < temp) {
+> -                               dev_dbg(priv->dev, "[%u] %s: re-arm low\n",
+> -                                       hw_id, __func__);
+> -                               tsens_set_interrupt(priv, hw_id, LOWER, enable);
+> -                       } else {
+> -                               trigger = true;
+> -                               /* Keep irq masked */
+> -                       }
+> -               }
+> -
+> -               spin_unlock_irqrestore(&priv->ul_lock, flags);
+> -
+> -               if (trigger) {
+> -                       dev_dbg(priv->dev, "[%u] %s: TZ update trigger (%d mC)\n",
+> -                               hw_id, __func__, temp);
+> -                       thermal_zone_device_update(s->tzd,
+> -                                                  THERMAL_EVENT_UNSPECIFIED);
+> -               } else {
+> -                       dev_dbg(priv->dev, "[%u] %s: no violation:  %d\n",
+> -                               hw_id, __func__, temp);
+> -               }
+> +               thermal_zone_device_update(s->tzd, THERMAL_EVENT_UNSPECIFIED);
+>
+>                 if (tsens_version(priv) < VER_0_1) {
+>                         /* Constraint: There is only 1 interrupt control register for all
+> --
+> 2.34.1
+>
