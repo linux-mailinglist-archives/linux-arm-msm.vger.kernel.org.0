@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5DF0C6665DF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 22:52:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 786856665E3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 22:55:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235851AbjAKVwt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Jan 2023 16:52:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52726 "EHLO
+        id S235878AbjAKVzq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Jan 2023 16:55:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235891AbjAKVwp (ORCPT
+        with ESMTP id S231417AbjAKVzn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Jan 2023 16:52:45 -0500
+        Wed, 11 Jan 2023 16:55:43 -0500
 Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D02F942E12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 13:52:42 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id bf43so25608064lfb.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 13:52:42 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12E6D62F0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 13:55:42 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id m6so25591095lfj.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 13:55:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=pJS+rsmsg5fd5Th9BLno2eG5ZG6dUTrzqHL7v8HGNqY=;
-        b=iPPqRYy2ljejftbYFVmEj8vK8aQsrh7L3hafx0V9lBnjzVfJL6nGHY68gjo+FWCJBJ
-         Zm5+gfqoAInDbv16j1vJkEeTbyUy0ZD6G/8thSQ9UvBT7fZ4pZFPlr2ja4IN1w83/rVT
-         q3Ap1Z1PZhzAKBD9H1H7k4Nn9rE+pu6mnfFgevb/fJufTwnmWRFxJqa+xgv8adfMqrzr
-         9KepTJGjKvMPAt232+djDeI+bO2yT+C4EHrZzpX6zIeoi9htRA7SMIt7NDcqe5Iiq/Ub
-         7+p0Rvy1QvzAigYYIE0lJjQwBE9Nc3r8BU2Wv8QnxQFyKBLergK4Jq4EoXAElRH+N2Hq
-         1NrA==
+        bh=Vz9fH9Cm2rsPnHnwubyzz/DzCG761azlSWcLfjwE5SI=;
+        b=AB1R0wYXVlrakO1cS/aAAFNrQVH60TlbVcn2TYFGdqQ37efmImnPkGm35zPpWBn5zt
+         UByKhfbGn+IPAlQxfbSfXtMNkxo1IQJrX0nfWiH8KFr11OIsrx2WVYTBvNHYlx1E8pi1
+         9P05VKU/foc+Po19Op2YNL9TePBz9acwu6A+IAd/7d6EHTndgoXrTObFk6mKlCM0R2SB
+         8JJgUaeMxPebkWcrSefVkOxBRlTgwlxKef5EsHtXN65b3U5HbNEARH70JZijtJF9AKe8
+         xGaXCzW1V/scMAcbZ2bANCDPvMesg8tduGwL9QWDGe6A3rYz66T8LMwGHM1bbniOa5tX
+         5sOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pJS+rsmsg5fd5Th9BLno2eG5ZG6dUTrzqHL7v8HGNqY=;
-        b=LjK7ylN8HU31kPytRRfgI2T2jaIlAkdxqNJLINNCey54HGt4jiW6+O+dSFMAYpPY5/
-         vhLTU6iGbQ43yFWgFllxEN6wQSyYB9rfTy/Mes0LR/m34AvrOI5zlq/F5I4hjHMbIjxf
-         4gT7g7OMQuweOnEQnFtqP2j4YRoiyBd+LJWfv7sYNA70Ky2RDFv7lYNo8XPzu7Tazfli
-         BakLZzrwSSkgfcpQfFNf/HiVS1TiyENoyc/0ulHaBUyI25cPQy20WkiGwrdG6K7iybZF
-         K35V9mDMxM3M5y/z7E17QaNrQN0rMrEECg8mljeIRxT2FCSCodJ/+yY7J6ImF0im8Cfi
-         iAFQ==
-X-Gm-Message-State: AFqh2kp/kbJbrPNkocNmyXO3ZSLOu9oYjqd7X9PbLxSvYThP7DIYpFMc
-        /9FwQceYk3OZrJQ1NMKjGD7YAg==
-X-Google-Smtp-Source: AMrXdXu/7kf+EAh6ZGwPywWuZ+QeQRnXXd1Q7qzb8+EYHzcrWcnuXO/gzEsscPB+UM4UEfRQsOWuJQ==
-X-Received: by 2002:a05:6512:695:b0:4b5:2bbc:e119 with SMTP id t21-20020a056512069500b004b52bbce119mr35624538lfe.65.1673473961185;
-        Wed, 11 Jan 2023 13:52:41 -0800 (PST)
+        bh=Vz9fH9Cm2rsPnHnwubyzz/DzCG761azlSWcLfjwE5SI=;
+        b=pmQkVv6ARv/6GnAkJZXc+SiObY45sW0b6QxiUT+4d7g8GFFfrF838DlA9XD5knAVL8
+         yw9oIC8QDtxQz/KtxTV1dOzb7thwAAcyhKHzDk/X/qrLK5pVyOn3FadmB5BigZVK/aVC
+         0jzSb/kW2l1aUYIR5zlqqLEr7qDPeqv2R3EqAVSzoWgq58m/CVZ/V9PwhQ9tMRpngJ46
+         q08j+Py0tUeM7QXi81zpRDrMbW5smy21g7AUT2bBbryShGErSsR0Lk7jaBwmJcFMJJIK
+         ld42oi9H+EchMhlLk5xVt+zoib3CQ968d5RLHBvB2nrBX00eaDhZIa6qGImdaKpV92sE
+         n55Q==
+X-Gm-Message-State: AFqh2kpk/i4J/wxhYbvgdtK2oQQg/SqDUdJPrqwn/YBFw39g7QSGgSck
+        0JtOILZ/7fYb6rECPNtk3KW8AQ==
+X-Google-Smtp-Source: AMrXdXvyV27ADWXM0w/pygDar6cso2ZMM7vIGkO9rCVVdiub7JYaKkPjYZU5NnbTyeiplXt0B7KGjg==
+X-Received: by 2002:a05:6512:3c8d:b0:4ca:b51b:2bb3 with SMTP id h13-20020a0565123c8d00b004cab51b2bb3mr23522453lfv.39.1673474140440;
+        Wed, 11 Jan 2023 13:55:40 -0800 (PST)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id e12-20020ac2546c000000b004ca0ea7af24sm2909772lfn.174.2023.01.11.13.52.40
+        by smtp.gmail.com with ESMTPSA id q18-20020a05651232b200b004cb358444e9sm2936394lfe.204.2023.01.11.13.55.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Jan 2023 13:52:40 -0800 (PST)
-Message-ID: <39c01d7b-eee4-ceb7-f7c4-7862c5527f33@linaro.org>
-Date:   Wed, 11 Jan 2023 23:52:39 +0200
+        Wed, 11 Jan 2023 13:55:40 -0800 (PST)
+Message-ID: <38745a30-0502-3a1d-4376-9d10471cf780@linaro.org>
+Date:   Wed, 11 Jan 2023 23:55:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH 04/13] clk: qcom: cpu-8996: support using GPLL0 as SMUX
- input
+Subject: Re: [PATCH 05/13] clk: qcom: cpu-8996: skip ACD init if the setup is
+ valid
 Content-Language: en-GB
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -69,95 +69,68 @@ To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org
 References: <20230111192004.2509750-1-dmitry.baryshkov@linaro.org>
- <20230111192004.2509750-5-dmitry.baryshkov@linaro.org>
- <33a6bf2c-bb93-c183-3915-5b90b72e4503@linaro.org>
+ <20230111192004.2509750-6-dmitry.baryshkov@linaro.org>
+ <e3c3449c-dd20-05fd-fd7d-b863d9f66426@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <33a6bf2c-bb93-c183-3915-5b90b72e4503@linaro.org>
+In-Reply-To: <e3c3449c-dd20-05fd-fd7d-b863d9f66426@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/01/2023 22:59, Konrad Dybcio wrote:
+On 11/01/2023 23:00, Konrad Dybcio wrote:
 > 
 > 
 > On 11.01.2023 20:19, Dmitry Baryshkov wrote:
->> In some cases the driver might need using GPLL0 to drive CPU clocks.
->> Bring it in through the sys_apcs_aux clock.
+>> Check whether L2 registers contain correct values and skip programming
+>> if they are valid. This follows the code present downstream.
 >>
 >> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 >> ---
-> Oh that's new.. downstream doesn't talk about this..
+> Once again, my random local msm-3.18 doesn't do this, can you show
+> me the downstream source for this?
 
-It does, but under the hood of the init procedure. See:
-
-         /* Select GPLL0 for 300MHz for the perf cluster */
-         writel_relaxed(0xC, vbases[APC1_BASE] + MUX_OFFSET);
-
+https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/blob/LA.UM.7.5.r1-05300-8x96.0/drivers/clk/msm/clock-cpu-8996.c#L856
 
 > 
 > Konrad
->>   drivers/clk/qcom/clk-cpu-8996.c | 12 ++++++++++++
->>   1 file changed, 12 insertions(+)
+>>   drivers/clk/qcom/clk-cpu-8996.c | 6 ++++++
+>>   1 file changed, 6 insertions(+)
 >>
 >> diff --git a/drivers/clk/qcom/clk-cpu-8996.c b/drivers/clk/qcom/clk-cpu-8996.c
->> index d51965fda56d..0e0c00d44c6f 100644
+>> index 0e0c00d44c6f..7e5246ca7e7f 100644
 >> --- a/drivers/clk/qcom/clk-cpu-8996.c
 >> +++ b/drivers/clk/qcom/clk-cpu-8996.c
->> @@ -12,6 +12,8 @@
->>    *                              +-------+
->>    *               XO             |       |
->>    *           +------------------>0      |
->> + *               SYS_APCS_AUX   |       |
->> + *           +------------------>3      |
->>    *                              |       |
->>    *                    PLL/2     | SMUX  +----+
->>    *                      +------->1      |    |
->> @@ -310,20 +312,29 @@ static const struct clk_ops clk_cpu_8996_pmux_ops = {
->>   	.determine_rate = clk_cpu_8996_pmux_determine_rate,
->>   };
+>> @@ -472,10 +472,15 @@ static void __iomem *base;
+>>   static void qcom_cpu_clk_msm8996_acd_init(void __iomem *base)
+>>   {
+>>   	u64 hwid;
+>> +	u32 val;
+>>   	unsigned long flags;
 >>   
->> +static const struct parent_map smux_parent_map[] = {
->> +	{ .cfg = 0, }, /* xo */
->> +	{ .cfg = 1, }, /* pll */
->> +	{ .cfg = 3, }, /* sys_apcs_aux */
->> +};
+>>   	spin_lock_irqsave(&qcom_clk_acd_lock, flags);
+>>   
+>> +	val = kryo_l2_get_indirect_reg(L2ACDTD_REG);
+>> +	if (val == 0x00006a11)
+>> +		goto out;
 >> +
->>   static const struct clk_parent_data pwrcl_smux_parents[] = {
->>   	{ .fw_name = "xo" },
->>   	{ .hw = &pwrcl_pll_postdiv.hw },
->> +	{ .fw_name = "sys_apcs_aux" },
->>   };
+>>   	hwid = read_cpuid_mpidr() & CPU_AFINITY_MASK;
 >>   
->>   static const struct clk_parent_data perfcl_smux_parents[] = {
->>   	{ .fw_name = "xo" },
->>   	{ .hw = &perfcl_pll_postdiv.hw },
->> +	{ .fw_name = "sys_apcs_aux" },
->>   };
+>>   	kryo_l2_set_indirect_reg(L2ACDTD_REG, 0x00006a11);
+>> @@ -492,6 +497,7 @@ static void qcom_cpu_clk_msm8996_acd_init(void __iomem *base)
+>>   		writel(0xf, base + PERFCL_REG_OFFSET + SSSCTL_OFFSET);
+>>   	}
 >>   
->>   static struct clk_regmap_mux pwrcl_smux = {
->>   	.reg = PWRCL_REG_OFFSET + MUX_OFFSET,
->>   	.shift = 2,
->>   	.width = 2,
->> +	.parent_map = smux_parent_map,
->>   	.clkr.hw.init = &(struct clk_init_data) {
->>   		.name = "pwrcl_smux",
->>   		.parent_data = pwrcl_smux_parents,
->> @@ -337,6 +348,7 @@ static struct clk_regmap_mux perfcl_smux = {
->>   	.reg = PERFCL_REG_OFFSET + MUX_OFFSET,
->>   	.shift = 2,
->>   	.width = 2,
->> +	.parent_map = smux_parent_map,
->>   	.clkr.hw.init = &(struct clk_init_data) {
->>   		.name = "perfcl_smux",
->>   		.parent_data = perfcl_smux_parents,
+>> +out:
+>>   	spin_unlock_irqrestore(&qcom_clk_acd_lock, flags);
+>>   }
+>>   
 
 -- 
 With best wishes
