@@ -2,75 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 89B906659B0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 12:05:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 421BB6659EE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Jan 2023 12:23:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232319AbjAKLFi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Jan 2023 06:05:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43336 "EHLO
+        id S230407AbjAKLXx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Jan 2023 06:23:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232437AbjAKLFd (ORCPT
+        with ESMTP id S232062AbjAKLXg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Jan 2023 06:05:33 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 930382649
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 03:05:31 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id k22-20020a05600c1c9600b003d1ee3a6289so12334308wms.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 03:05:31 -0800 (PST)
+        Wed, 11 Jan 2023 06:23:36 -0500
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A2219F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 03:23:35 -0800 (PST)
+Received: by mail-pl1-x629.google.com with SMTP id 17so16503108pll.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 03:23:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=nI6TmedA3bBtWw0iWBdVWzklstq2fzCdNWRkOyK90aM=;
-        b=MIbPMoDFQpXJnkYpst7gbyXfRCptyzZ1QJ+xcxilEfba6xL2gWM0D23DCFFT3iR0QA
-         9TQIxqeD30/Yi/W7e963uP+SByqqpsZsWRJe3xogcCKpXBEq06CaKAfS24/gRPcg3X42
-         6cldBLgnbCuuHCmcgRN4ZkphRuZ1o5tCe9wkareuBQLJDju8erivKQF9c2zbw4r6Q+cp
-         L745uO4dTa97V6AFhoKHx1SFl2k03N/NIwJOTTmV3jWHAjiMaYlruCwxpjkBvp22LiPO
-         bHsCd2a2pLpLWGL7Z+NW0YrfhicqQ3a9MFZHsepY+V4onmQ2HryUVIft3LEnhK0CaGfa
-         WTlg==
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=NdOgn1yCYJAyY06Gupgzi8+hM+Xp+RpyK1OnwHdM6Og=;
+        b=vy3Yu4DtcL96gccpDy/joOJ/lLj+h1IShOJMXAy1yh/hO/NvznzlkNUxewqnzk9VkW
+         EMHlz6Rr6/ILIwne8BiEO8wFVCh49WEfMwvvYp/5XskhLwbN6wig2ngBuf58jE6EfgdZ
+         rs++Kj55GRKD7q5G6x4vW8bPon5PkcE8yraczc8svUxhl4DlXy943PAOBRQ0XIeg64G9
+         48l44Jvluszb6Wq4uEhvg63Ly3FFJIkbB2+toC1JWE2Fqx52HpthyXA3yYW/ohMoQXlv
+         Zlu12NiFaRumyTHQTikCImxBRHtL2kxxL3JsmNbg9c8SY9ejUkTOOc/9aPScHxdIY0VY
+         LHVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nI6TmedA3bBtWw0iWBdVWzklstq2fzCdNWRkOyK90aM=;
-        b=qJP/8O2TlSMlq7sZ/wkTbL6tpsJB4c/SqW+mz0KcWaM5u0WPgr7MyqyN8aGzGEQtJR
-         g1AdHZOAXAXdXgOBtSD5TQZhS4hK+g5KNxIKuteiKALhNko6xJFmSPt+4CYR8K65XSkh
-         jlES5ZQtyTMkHsPBQRPYlNTSpYF4y3yUMsCFwA+jSpaOvh/j5vo/bO6alC9POwhXKM8V
-         pe5+4lefeWZIVwhcnsNwbOpjCbXNE1aZBlQQD1xpkdvuDjO/92RssGJ5TUy7D/nn+nM1
-         KRL+3FTon5MMLFwCCHPDt2ukoDm5BllmBYBUWAvFJHMFiWlViUjH2NGFeO8K5tlrNvwy
-         AI1A==
-X-Gm-Message-State: AFqh2kpjhdKsCSxnv0YJVNyK0Zf/Xfmj/RkwdS/nwv2cNKoAI47aZYg1
-        XSmXZiOU41Zr0lqjCLMzuJliEQ==
-X-Google-Smtp-Source: AMrXdXv+xpJ6Z4H9tDgiAiZbtZVebAraSoT8X3gbLtj/4gT1G1FXxsn1P9IKLHr5xB0QwDCzweVlYA==
-X-Received: by 2002:a05:600c:1911:b0:3d9:8635:a916 with SMTP id j17-20020a05600c191100b003d98635a916mr49031679wmq.9.1673435130098;
-        Wed, 11 Jan 2023 03:05:30 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id x7-20020a05600c188700b003c701c12a17sm21353305wmp.12.2023.01.11.03.05.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Jan 2023 03:05:29 -0800 (PST)
-Message-ID: <5d8cb46a-e2bc-a066-ecf4-9daaba33b6ec@linaro.org>
-Date:   Wed, 11 Jan 2023 11:05:28 +0000
+        bh=NdOgn1yCYJAyY06Gupgzi8+hM+Xp+RpyK1OnwHdM6Og=;
+        b=2NM4o1O24Y4QxYhzmXQfoiMutRZVAH+PGreHgwgKFvNyO5j4mkHbpFbghfH2ETvkc3
+         glouHvYQm7aK1NSmNazEWk1zw69C5iGHPJM8yAvCT///v/Q4anzb5wV+8OhDECaU3q18
+         5KmHikT8lxbiE6s+wsb6IO8qYIOzH9zrIR6PhKtpPKIIDxTmOD6AbryQSdOJL6Wp4fVl
+         ol6LIgTZLzYWvmSFysvPYH4P4EiqlnLtaYeMcmyQ5I71jYLuc2TONqqvdppPBp/aGqm5
+         vVBw83OldHDeEbtvuK8eWlzbij9/wkhESjiMNo5g/TXgcfnnLIbSLfcxtl1qSSbRu/q0
+         d07g==
+X-Gm-Message-State: AFqh2kp6puc18p2OsCcaE5+8TyvndIZzUGO4Jg8gJS5+2+TVb7IZHGRV
+        AI3FvrwdxDkoDG/3j2ZjpGDn
+X-Google-Smtp-Source: AMrXdXsjMOamYa8/f02u2xtM4J9oNufkjaCTGrGv0jSv1qMVhosBp/2ZhTx8Haic2yN1xI8jYctqfg==
+X-Received: by 2002:a17:903:3286:b0:193:1952:5a45 with SMTP id jh6-20020a170903328600b0019319525a45mr5187962plb.19.1673436214834;
+        Wed, 11 Jan 2023 03:23:34 -0800 (PST)
+Received: from thinkpad ([117.217.177.1])
+        by smtp.gmail.com with ESMTPSA id jg7-20020a17090326c700b0019324fbec59sm7633311plb.41.2023.01.11.03.23.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Jan 2023 03:23:33 -0800 (PST)
+Date:   Wed, 11 Jan 2023 16:53:24 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Sibi Sankar <quic_sibis@quicinc.com>
+Cc:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        robh+dt@kernel.org, robin.murphy@arm.com, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, konrad.dybcio@somainline.org,
+        amit.pundir@linaro.org, regressions@leemhuis.info,
+        sumit.semwal@linaro.org, will@kernel.org, catalin.marinas@arm.com
+Subject: Re: [PATCH V2 06/11] remoteproc: qcom_q6v5_mss: Use a carveout to
+ authenticate modem headers
+Message-ID: <20230111112324.GA4873@thinkpad>
+References: <20230109034843.23759-1-quic_sibis@quicinc.com>
+ <20230109034843.23759-7-quic_sibis@quicinc.com>
+ <20230109083231.GB4966@thinkpad>
+ <7552f8a1-9503-de7c-a6d4-46452ef78ece@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: [PATCH v2 06/10] interconnect: qcom: rpm: Rename icc desc clocks
- to bus_blocks
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org, Georgi Djakov <djakov@kernel.org>,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230110132202.956619-1-konrad.dybcio@linaro.org>
- <20230110132202.956619-7-konrad.dybcio@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20230110132202.956619-7-konrad.dybcio@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7552f8a1-9503-de7c-a6d4-46452ef78ece@quicinc.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,26 +80,127 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/01/2023 13:21, Konrad Dybcio wrote:
-> Rename the "clocks" (and _names) fields of qcom_icc_desc to
-> "bus_clocks" in preparation for introducing handling of clocks that
-> need to be enabled but not voted on with aggregate frequency.
+On Mon, Jan 09, 2023 at 03:35:31PM +0530, Sibi Sankar wrote:
+> Hey Mani,
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> On 1/9/23 14:02, Manivannan Sadhasivam wrote:
+> > On Mon, Jan 09, 2023 at 09:18:38AM +0530, Sibi Sankar wrote:
+> > > Any access to the dynamically allocated metadata region by the application
+> > > processor after assigning it to the remote Q6 will result in a XPU
+> > > violation. Fix this by replacing the dynamically allocated memory region
+> > > with a no-map carveout and unmap the modem metadata memory region before
+> > > passing control to the remote Q6.
+> > > 
+> > > Reported-and-tested-by: Amit Pundir <amit.pundir@linaro.org>
+> > > Fixes: 6c5a9dc2481b ("remoteproc: qcom: Make secure world call for mem ownership switch")
+> > > Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> > > ---
+> > > 
+> > > v2:
+> > >   * Revert no_kernel_mapping [Mani/Robin]
+> > > 
+> > >   drivers/remoteproc/qcom_q6v5_mss.c | 48 ++++++++++++++++++++++++++----
+> > >   1 file changed, 42 insertions(+), 6 deletions(-)
+> > > 
+> > > diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+> > > index e2f765f87ec9..b7a158751cef 100644
+> > > --- a/drivers/remoteproc/qcom_q6v5_mss.c
+> > > +++ b/drivers/remoteproc/qcom_q6v5_mss.c
+> > > @@ -215,6 +215,7 @@ struct q6v5 {
+> > >   	size_t mba_size;
+> > >   	size_t dp_size;
+> > > +	phys_addr_t mdata_phys;
+> > >   	phys_addr_t mpss_phys;
+> > >   	phys_addr_t mpss_reloc;
+> > >   	size_t mpss_size;
+> > > @@ -973,15 +974,29 @@ static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw,
+> > >   	if (IS_ERR(metadata))
+> > >   		return PTR_ERR(metadata);
+> > > -	ptr = dma_alloc_attrs(qproc->dev, size, &phys, GFP_KERNEL, dma_attrs);
+> > > -	if (!ptr) {
+> > > -		kfree(metadata);
+> > > -		dev_err(qproc->dev, "failed to allocate mdt buffer\n");
+> > > -		return -ENOMEM;
+> > > +	if (qproc->mdata_phys) {
+> > > +		phys = qproc->mdata_phys;
+> > > +		ptr = memremap(qproc->mdata_phys, size, MEMREMAP_WC);
+> > > +		if (!ptr) {
+> > > +			dev_err(qproc->dev, "unable to map memory region: %pa+%zx\n",
+> > > +				&qproc->mdata_phys, size);
+> > > +			ret = -EBUSY;
+> > > +			goto free_dma_attrs;
+> > 
+> > There is no memory to free at this point.
+> 
+> we would just free the metadata in the no-map carveout scenario since
+> mdata_phys wouldn't be NULL. I can do a kfree(metadata) directly from
+> this branch and return as well if you think it makes things more
+> readable.
+> 
 
-I'd like to further review the clock changes you need to rebase onto 
-linux-next
+Oops, I missed that. But yeah it is confusing too with the current way of
+freeing metadata. I'd suggest using a separate label instead.
 
-Applying: interconnect: qcom: rpm: Rename icc provider num_clocks to 
-num_bus_clocks
-error: patch failed: drivers/interconnect/qcom/icc-rpm.h:23
-error: drivers/interconnect/qcom/icc-rpm.h: patch does not apply
-Patch failed at 0004 interconnect: qcom: rpm: Rename icc provider 
-num_clocks to num_bus_clocks
-hint: Use 'git am --show-current-patch=diff' to see the failed patch
-When you have resolved this problem, run "git am --continue".
-If you prefer to skip this patch, run "git am --skip" instead.
-To restore the original branch and stop patching, run "git am --abort".
+Thanks,
+Mani
 
----
-bod
+> > 
+> > Thanks,
+> > Mani
+> > 
+> > > +		}
+> > > +	} else {
+> > > +		ptr = dma_alloc_attrs(qproc->dev, size, &phys, GFP_KERNEL, dma_attrs);
+> > > +		if (!ptr) {
+> > > +			kfree(metadata);
+> > > +			dev_err(qproc->dev, "failed to allocate mdt buffer\n");
+> > > +			return -ENOMEM;
+> > > +		}
+> > >   	}
+> > >   	memcpy(ptr, metadata, size);
+> > > +	if (qproc->mdata_phys)
+> > > +		memunmap(ptr);
+> > > +
+> > >   	/* Hypervisor mapping to access metadata by modem */
+> > >   	mdata_perm = BIT(QCOM_SCM_VMID_HLOS);
+> > >   	ret = q6v5_xfer_mem_ownership(qproc, &mdata_perm, false, true,
+> > > @@ -1010,7 +1025,8 @@ static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw,
+> > >   			 "mdt buffer not reclaimed system may become unstable\n");
+> > >   free_dma_attrs:
+> > > -	dma_free_attrs(qproc->dev, size, ptr, phys, dma_attrs);
+> > > +	if (!qproc->mdata_phys)
+> > > +		dma_free_attrs(qproc->dev, size, ptr, phys, dma_attrs);
+> > >   	kfree(metadata);
+> > >   	return ret < 0 ? ret : 0;
+> > > @@ -1893,6 +1909,26 @@ static int q6v5_alloc_memory_region(struct q6v5 *qproc)
+> > >   	qproc->mpss_phys = qproc->mpss_reloc = r.start;
+> > >   	qproc->mpss_size = resource_size(&r);
+> > > +	if (!child) {
+> > > +		node = of_parse_phandle(qproc->dev->of_node, "memory-region", 2);
+> > > +	} else {
+> > > +		child = of_get_child_by_name(qproc->dev->of_node, "metadata");
+> > > +		node = of_parse_phandle(child, "memory-region", 0);
+> > > +		of_node_put(child);
+> > > +	}
+> > > +
+> > > +	if (!node)
+> > > +		return 0;
+> > > +
+> > > +	ret = of_address_to_resource(node, 0, &r);
+> > > +	of_node_put(node);
+> > > +	if (ret) {
+> > > +		dev_err(qproc->dev, "unable to resolve metadata region\n");
+> > > +		return ret;
+> > > +	}
+> > > +
+> > > +	qproc->mdata_phys = r.start;
+> > > +
+> > >   	return 0;
+> > >   }
+> > > -- 
+> > > 2.17.1
+> > > 
+> > 
+
+-- 
+மணிவண்ணன் சதாசிவம்
