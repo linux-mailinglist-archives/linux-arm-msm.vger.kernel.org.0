@@ -2,125 +2,193 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C4250666E40
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 10:30:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F31F666E39
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 10:29:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231873AbjALJa0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Jan 2023 04:30:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43774 "EHLO
+        id S239847AbjALJ3p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Jan 2023 04:29:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240154AbjALJ3T (ORCPT
+        with ESMTP id S239942AbjALJ2y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Jan 2023 04:29:19 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C574FB7D1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 01:24:32 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id k8so2937887wrc.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 01:24:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=8y93oKqpxvzE8rWdKpZl4lXsP+t5rguSGLhBVaBJc0g=;
-        b=WThEKA9gNJkYP7HmfQRADIQADz/supXgAp8M0Ch0b6QgcTSLJkoTNqCmwTRX5X0SFi
-         kWLSC9p7vL1U7COb9FN0upXxHQvW1YaHNZG0Rm/3K39kC1FmfT++a58cAQvSdEXcOz3l
-         byKBbuHvDH/zGgVyrfqHwjMAtcMbF8MIWinhnfGRb2gx20+ScqjVIky1aQL1mQvrHKfk
-         dFNmAr/uC27SuThkEmoqIE7eIvkZn1E8UBGpko8Y80IroOFuTCCC87rbaRDFOT/BvHoa
-         0rZIGLbPgWEAI6r3Uj7Y/KSbN5KKovXNJeU+KSlU6IYGe6Se5dvi9Il2t9xC8MMw+al1
-         SFlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8y93oKqpxvzE8rWdKpZl4lXsP+t5rguSGLhBVaBJc0g=;
-        b=fIAQzIsiCWm9y52JrFs310Qw9j1HJfxfO7MkaJWKsbxryev/sXsUO+/+FHWPmMWOEA
-         Jf8Qyaprg4GgRBCkMCGGXfCm1QirANP6KIz6F0D6qavOQ4wZPA+twIyXb8j+P6F0hCsB
-         1/wwF90x7fBkbfOU23+rmz53pWX0+TfwxpSKzMLgFRezxS+3vqQLoCWzco49nQCrJ9GF
-         vumi7lb2PntBnRoSy77iu1XbMX8a4a+0ypEiUXxS0OhGyEgL7siiFHsXwM3cCxPejGve
-         Iy+RlBiReL/DVpSC5TnbDkOab1DXkFvSak6oGfP3JfZPpc8SkzpabL+S6HjrZ3RxUubU
-         9cKA==
-X-Gm-Message-State: AFqh2krE80GIYoycRjlZIA6XvrxGQQ4uBFeEPLFrDasrCuivWcgNiVIz
-        Djps6LlOfSeVwBwM3NRDnnyhZQ==
-X-Google-Smtp-Source: AMrXdXuXd7dZBWw2m7FDxQZJt+AcbAClVVx1WZ3nCqqtcl5YstgfIvERZe4/zGu+w87qgXyMfElBYw==
-X-Received: by 2002:a05:6000:54a:b0:2bd:6490:8c5f with SMTP id b10-20020a056000054a00b002bd64908c5fmr6062877wrf.23.1673515471297;
-        Thu, 12 Jan 2023 01:24:31 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:3b9e:7554:4633:9a59? ([2a01:e0a:982:cbb0:3b9e:7554:4633:9a59])
-        by smtp.gmail.com with ESMTPSA id x2-20020adff642000000b002a01e64f7a1sm16255730wrp.88.2023.01.12.01.24.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Jan 2023 01:24:30 -0800 (PST)
-Message-ID: <ed9eb076-7a81-8892-a509-9105cbc3c128@linaro.org>
-Date:   Thu, 12 Jan 2023 10:24:30 +0100
+        Thu, 12 Jan 2023 04:28:54 -0500
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FF03F019;
+        Thu, 12 Jan 2023 01:23:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1673515400; x=1705051400;
+  h=message-id:date:mime-version:to:cc:references:from:
+   subject:in-reply-to:content-transfer-encoding;
+  bh=KCmtELpXeP5LskyWbQS213aTgoVkvOKnKp0NJZDzsjE=;
+  b=Zcw8rWabGAEtN+04M46VUCzXJJtwsWRiknfjwOrDmqWQU6P981sSSqSo
+   7XF8N6YvAFa0xYIiVJ2dwspNq8EOPtre2OgRg+2htCzl+DkzfdYhpo8x2
+   6cqPk6/1+X/DE3as5WxsMuigZoFgwEn9Ulg+OKssXbfUFeSDgDRhEHN23
+   Voi37RYdJEo36vkpzCvbOznsO1ZtbHu1N4sQO93Zcs78G0haXJoU3xqzr
+   p+8CeYvHibhfWuqcLhDQGryoGH9SnGum5sP7P8t1ryNLAgQbz0KSc3nsa
+   47QXrXL7RqYqiGedT3oui5g/+vio/wT97Xm2qgUJGkZbbBJzLDbo+9ir8
+   A==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10586"; a="324889911"
+X-IronPort-AV: E=Sophos;i="5.96,319,1665471600"; 
+   d="scan'208";a="324889911"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Jan 2023 01:23:19 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10586"; a="690053909"
+X-IronPort-AV: E=Sophos;i="5.96,319,1665471600"; 
+   d="scan'208";a="690053909"
+Received: from mattu-haswell.fi.intel.com (HELO [10.237.72.199]) ([10.237.72.199])
+  by orsmga001.jf.intel.com with ESMTP; 12 Jan 2023 01:23:14 -0800
+Message-ID: <d9cb0835-9514-c5b6-695d-1027b238078c@linux.intel.com>
+Date:   Thu, 12 Jan 2023 11:24:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v2 02/13] drm/bridge: lt9611: fix HPD reenablement
+ Firefox/102.0 Thunderbird/102.4.2
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>
-Cc:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org
-References: <20230108165656.136871-1-dmitry.baryshkov@linaro.org>
- <20230108165656.136871-3-dmitry.baryshkov@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <20230108165656.136871-3-dmitry.baryshkov@linaro.org>
+To:     Wesley Cheng <quic_wcheng@quicinc.com>,
+        srinivas.kandagatla@linaro.org, mathias.nyman@intel.com,
+        perex@perex.cz, broonie@kernel.org, lgirdwood@gmail.com,
+        andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        gregkh@linuxfoundation.org, Thinh.Nguyen@synopsys.com,
+        bgoswami@quicinc.com, tiwai@suse.com, robh+dt@kernel.org,
+        agross@kernel.org, Alan Stern <stern@rowland.harvard.edu>,
+        Albert Wang <albertccwang@google.com>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-usb@vger.kernel.org, quic_jackp@quicinc.com,
+        quic_plai@quicinc.com
+References: <20221223233200.26089-1-quic_wcheng@quicinc.com>
+ <20221223233200.26089-8-quic_wcheng@quicinc.com>
+ <7dfe215b-4cc7-f95f-17c3-563c0120151a@linux.intel.com>
+ <f7f80320-02bb-a573-dd95-b6d58c260624@quicinc.com>
+ <5f54c5a3-caf0-2920-e90f-68124ed2e06c@linux.intel.com>
+ <d1334e58-1126-c068-d211-8fd3b7dcbf17@quicinc.com>
+ <cefcc5c6-6a91-c737-252a-edf596f77473@linux.intel.com>
+ <23a2b82e-4f4f-66e2-2c60-3613ffe7912f@quicinc.com>
+ <23037fab-1a9e-66c1-8e90-d94b213c8c7d@quicinc.com>
+From:   Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: Re: [RFC PATCH 07/14] usb: host: xhci: Add XHCI secondary interrupter
+ support
+In-Reply-To: <23037fab-1a9e-66c1-8e90-d94b213c8c7d@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/01/2023 17:56, Dmitry Baryshkov wrote:
-> The driver will reset the bridge in the atomic_pre_enable(). However
-> this will also drop the HPD interrupt state. Instead of resetting the
-> bridge, properly wake it up. This fixes the HPD interrupt delivery after
-> the disable/enable cycle.
+On 11.1.2023 5.11, Wesley Cheng wrote:
+> Hi Mathias,
 > 
-> Fixes: 23278bf54afe ("drm/bridge: Introduce LT9611 DSI to HDMI bridge")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/bridge/lontium-lt9611.c | 10 ++++++++--
->   1 file changed, 8 insertions(+), 2 deletions(-)
+> On 1/10/2023 12:03 PM, Wesley Cheng wrote:
+>> Hi Mathias,
+>>
+>> On 1/10/2023 11:47 AM, Mathias Nyman wrote:
+>>> On 9.1.2023 22.24, Wesley Cheng wrote:
+>>>> Hi Mathias,
+>>>>
+>>>> On 1/2/2023 8:38 AM, Mathias Nyman wrote:
+>>>>> On 29.12.2022 23.14, Wesley Cheng wrote:
+>>>>>> Hi Mathias,
+>>>>>>
+>>>>>> On 12/28/2022 7:47 AM, Mathias Nyman wrote:
+>>>>>>> On 24.12.2022 1.31, Wesley Cheng wrote:
+>>>>>>>> Implement the XHCI operations for allocating and requesting for a secondary
+>>>>>>>> interrupter.  The secondary interrupter can allow for events for a
+>>>>>>>> particular endpoint to be routed to a separate event ring.  The event
+>>>>>>>> routing is defined when submitting a transfer descriptor to the USB HW.
+>>>>>>>> There is a specific field which denotes which interrupter ring to route the
+>>>>>>>> event to when the transfer is completed.
+>>>>>>>>
+>>>>>>>> An example use case, such as audio packet offloading can utilize a separate
+>>>>>>>> event ring, so that these events can be routed to a different processor
+>>>>>>>> within the system.  The processor would be able to independently submit
+>>>>>>>> transfers and handle its completions without intervention from the main
+>>>>>>>> processor.
+>>>>>>>>
+>>>>>>>
+>>>>>>> Adding support for more xHCI interrupters than just the primary one make sense for
+>>>>>>> both the offloading and virtualization cases.
+>>>>>>>
+>>>>>>> xHCI support for several interrupters was probably added to support virtualization,
+>>>>>>> to hand over usb devices to virtual machines and give them their own event ring and
+>>>>>>> MSI/MSI-X vector.
+>>>>>>>
+>>>>>>> In this offloading case you probably want to avoid xHC interrupts from this device
+>>>>>>> completely, making sure it doesn't wake up the main CPU unnecessarily.
+>>>>>>>
+>>>>>>> So is the idea here to let xhci driver set up the new interrupter, its event ring,
+>>>>>>> and the endpoint transfer rings. Then pass the address of the endpoint transfer rings
+>>>>>>> and the new event ring to the separate processor.
+>>>>>>>
+>>>>>>> This separate processor then both polls the event ring for new events, sets its dequeue
+>>>>>>> pointer, clears EHB bit, and queues new TRBs on the transfer ring.
+>>>>>>>
+>>>>>>> so xhci driver does not handle any events for the audio part, and no audio data URBs
+>>>>>>> are sent to usb core?
+>>>>>>
+>>>>>> Your entire description is correct.  To clarify, the interfaces which are non-audio will still be handled by the main processor. For example, a USB headset can have a HID interface as well for volume control.  The HID interface will still be handled by the main processor, and events routed to the main event ring.
+>>>>>>
+>>>>>>>
+>>>>>>> How about the control part?
+>>>>>>> Is the control endpoint for this device still handled normally by usb core/xhci?
+>>>>>>>
+>>>>>>
+>>>>>> Control transfers are always handled on the main processor.  Only audio interface's endpoints.
+>>>>>
+>>>>> Good to know, that means interrupter should be chosen per endpoint, not per device.
+>>>>>
+>>>>>>
+>>>>>>> For the xhci parts I think we should start start by adding generic support for several
+>>>>>>> interrupters, then add parts needed for offloading.
+>>>>>>
+>>>>> I can split up the patchsets to add interrupters first, then adding the offloading APIs in a separate patch.
+>>>>>
+>>>>>
+>>>>> I started looking at supporting secondary interrupters myself.
+>>>>> Let me work on that part a bit first. We have a bit different end goals.
+>>>>> I want to handle interrupts from a secondary interrupter, while this audio offload
+>>>>> really just wants to mask some interrupts.
+>>>>>
+>>>>
+>>>> I was looking at how we could possibly split up the XHCI secondary interrupter, and offloading parts.  Since the XHCI secondary interrupter is a feature that is defined in the XHCI spec (and we aren't doing anything outside of what is defined), I was thinking of having a separate XHCI driver (ie xhci-sec.c/h) that can be used to define all APIs related to setting up the event ring and ring management. (interrupt support can be added here)  This aligns a bit with what Alan suggested, and removing the APIs in the USB HCD, since this is XHCI specific stuff. ( https://lore.kernel.org/linux-usb/Y6zwZOquZOTZfnvP@rowland.harvard.edu/ )
+>>>
+>>> Already started working on the interrupter, that part fits well into current driver.
+>>>
+>>> Code (untested, will be randomly rebased etc) can be found in my feature_interrupters branch:
+>>> git://git.kernel.org/pub/scm/linux/kernel/git/mnyman/xhci.git feature_interrupters
+>>> https://git.kernel.org/pub/scm/linux/kernel/git/mnyman/xhci.git/log/?h=feature_interrupters
+>>
+>> Oh perfect, let me take a look.  Thanks for this!
+>>
 > 
-> diff --git a/drivers/gpu/drm/bridge/lontium-lt9611.c b/drivers/gpu/drm/bridge/lontium-lt9611.c
-> index 2714184cc53f..58f39b279217 100644
-> --- a/drivers/gpu/drm/bridge/lontium-lt9611.c
-> +++ b/drivers/gpu/drm/bridge/lontium-lt9611.c
-> @@ -856,12 +856,18 @@ static enum drm_mode_status lt9611_bridge_mode_valid(struct drm_bridge *bridge,
->   static void lt9611_bridge_pre_enable(struct drm_bridge *bridge)
->   {
->   	struct lt9611 *lt9611 = bridge_to_lt9611(bridge);
-> +	static const struct reg_sequence reg_cfg[] = {
-> +		{ 0x8102, 0x12 },
-> +		{ 0x8123, 0x40 },
-> +		{ 0x8130, 0xea },
-> +		{ 0x8011, 0xfa },
-> +	};
->   
->   	if (!lt9611->sleep)
->   		return;
->   
-> -	lt9611_reset(lt9611);
-> -	regmap_write(lt9611->regmap, 0x80ee, 0x01);
-> +	regmap_multi_reg_write(lt9611->regmap,
-> +			       reg_cfg, ARRAY_SIZE(reg_cfg));
->   
->   	lt9611->sleep = false;
->   }
+> I actually tried to see if I could get our audio offloading to work with your current series.  (I understand its still work in progress)  I did have to make some changes to expose the APIs to our class driver, but I wanted to let you know about one of the issues I saw when developing my implementation, because I am seeing the same behavior w/ yours. (and there's a discrepancy w/ what's stated in the XHCI spec :))
+> 
+> So the reason why my initial submission did the event ring allocation and set up before the run/stop bit was set, is that I found that when writing to the ir_set->erst_base in this scenario (for the secondary interrupter), it lead to a SMMU fault from the DWC3 controller.  One thing I noticed, was that the SMMU fault address was the lower 32 bits of the segment table base address allocated.  The XHCI driver utilizes the xhci_write_64() api which first writes the lower 32 bits then the upper 32 bits.  The XHCI spec states that:
+> 
+> Table 5-41: Event Ring Segment Table Base Address Register Bit Definitions (ERSTBA)
+> 
+> "Event Ring Segment Table Base Address Register – RW. Default = ‘0’. This field defines the
+> high order bits of the start address of the Event Ring Segment Table.
+> Writing this register sets the Event Ring State Machine:EREP Advancement to the Start state.
+> Refer to Figure 4-12 for more information.
+> **For Secondary Interrupters: This field may be modified at any time.**"
+> 
+> I'm not sure if this is an issue with the specific controller we're using, so maybe I will wait until you can give this a try on your set up.  However, it doesn't seem to be true that we can write the ERSTBA any time we want to.  My assumption is that once I made the lower 32 bit write, the controller attempted to enable the Event Ring State machine (Figure 4-12), and this led to a SMMU fault, since the upper 64 bits haven't been written.  I also did some bit banging manually as well (using devmem) and any time I write to the secondary ring ERSTBA register it generates a fault. (before any offloading has started)
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Tried on an Intel host and it seems to work fine.
+I created a few secondary interrupters while xHC was running without issues.
+DMA mask is 64 bits.
+Only created the interrupters, no events on those new event rings, and didn't actually
+check that the values written to ERSTBA were 64 bit.
+
+Does temporarily setting DMA mask to 32 bits while allocating erst help in your case?
+
+Thanks
+Mathias
+
