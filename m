@@ -2,69 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A7AF1667F7A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 20:44:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C1069667F81
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 20:45:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232819AbjALToi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Jan 2023 14:44:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34464 "EHLO
+        id S233104AbjALTp3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Jan 2023 14:45:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237536AbjALToG (ORCPT
+        with ESMTP id S231566AbjALToe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Jan 2023 14:44:06 -0500
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 898CF32259
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 11:35:16 -0800 (PST)
-Received: by mail-lf1-x133.google.com with SMTP id bp15so29897919lfb.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 11:35:16 -0800 (PST)
+        Thu, 12 Jan 2023 14:44:34 -0500
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7A6913D18
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 11:36:30 -0800 (PST)
+Received: by mail-lf1-x134.google.com with SMTP id d30so25010338lfv.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 11:36:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=to:subject:message-id:date:user-agent:from:references:in-reply-to
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=yAYjynh/JlSA73SJ+NClSDWR2Z+GwEtREPC4s1NxZeM=;
-        b=GHFE1mgKGNMBi88jxaIEXnLBn3cC2pHb7pcv7ZbbS07IdBfH/fjwvLPsOOf4lRc2Ji
-         jROi2YaMBZ+BWsbmsa2ANMyBuL41Uca0hOqE1zJFuGSsF9ZFE7s78WymunKIONPk/Mjs
-         QxRIizM2TyP/lO0Q1RmLmGTakDIsbT5HT4gB8=
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QP7ZDXy/vz6h2E8Aw8jzhMKk5b2tVMVMs8kkY7DjRxg=;
+        b=VRa1lYmLZwBt9u8EhEFY9jOztdyhUc0rbhIsKErJjegBmGKvqae+ioHuWXiDv8ojQs
+         VlENQvWkzosriREEEtozgXWWfl2TYj+fITtabr02X4YmTjsxazE8spp0ZSVPe17AF+0X
+         Kf++ghoP05TZk5uCbVqQ4pz8Ihs3X6acl8/V2BC9zwxAM7bcjHXKeSHrYOXCD3wmXeZX
+         L4vzc9sup3I3A+2RRNz29LyV3BXZWW9cdvn1IgEczE5Hsv/XyXDC0rNvAl0kQsgdRV8O
+         2fpL+QlmoVN5qFyfEgD9on8glRvlVvMVbwnRpaFg9M06xeZiV+rObea1NNJzF+hKYPgZ
+         n4/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:user-agent:from:references:in-reply-to
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yAYjynh/JlSA73SJ+NClSDWR2Z+GwEtREPC4s1NxZeM=;
-        b=WpBEEkCDmqvOJXECVDijOFIDHGVJw4VL7WWy6On+572PHzI6HtWRqG/2ddJyy19aka
-         x0URYLGPaeQ5HY1drPk1loXPT9f/1iYxx3JzVq8Y3E9sUPQSCvFd/rtpfV3Oh7czHaPG
-         i5ET+Qz+ylZEftYBGiiYxQilVfnr5Koltvn+6Z+RyfjKsGdOUACqG2HYmL10p3yPWg4C
-         leArNLk4otAY8nzWGxmiPaLk4aRu8T16FbtuEa40vOf5xPU10pgiK+rDNDTl0N6vOy2k
-         5AXoB4o/Ts79JM7Uc6kNxJZpVm9tk+Eg4nkHZYNQ3uED1kYOIYNlJumk3yNCrQ5eCwk5
-         Dtmg==
-X-Gm-Message-State: AFqh2kpqaqzLlpp0zF+HWtVrj8lBFUvIi2tF0xdejrmQaKScBlFv31xX
-        dk35tRQFMAk0HTMP0mtzEZC9YHKr756X+057rzZTLg==
-X-Google-Smtp-Source: AMrXdXsiV4/qvAwCS2YzjkQkBI2pWHnV74UvffxWaNqCcnh7r+wpnwzqtGa37hxSn3pp+XeRTd+rObR64w2TTviCRQc=
-X-Received: by 2002:a05:6512:ba1:b0:4b5:5f2d:1458 with SMTP id
- b33-20020a0565120ba100b004b55f2d1458mr3475453lfv.253.1673552114933; Thu, 12
- Jan 2023 11:35:14 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 12 Jan 2023 11:35:14 -0800
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QP7ZDXy/vz6h2E8Aw8jzhMKk5b2tVMVMs8kkY7DjRxg=;
+        b=hxaUr1r6uFc293YRR37koSV2PvGgSceEn0fTjZZ/YmjNRvlfKN5GdF9b7FuxtXMIFJ
+         hupsSZnjkvie8adSGmly1jxqgmzwTLYjnOh1TL3fpC5eI5I3hydIa0B7iEWTh5utYexN
+         aiTjKxo+lpbSZ903OU4k0yZDhEItJcLNbRo5ETTDG49Bqs8zTozjmnwuTUata2wA0I2y
+         OwvhhliN9qZNMVxaDMqjY3XZShAdBgyjLWdaHwf3/vHxb+v0djmfLIRA9HjpGN6uxuQ9
+         XGgyHc1eIaW6uUxCuJ5dfScLuFvFTS2HJssy8dgHJC4QS5Das1kBlOPMSuk1g8iVPW6f
+         r40Q==
+X-Gm-Message-State: AFqh2kpvu8v9BFor73R+XfwNcqpeboJuQggiO1M2Qf9FL34ZxrDx+zeU
+        yx1eh9d8bwiJKSMPqcnNf4me+g==
+X-Google-Smtp-Source: AMrXdXuCP2iZ9ad22QlH8IWK4c8i8Rc8dMqOQZuciPiR9xdgK9SnFECFIPl7JvZMmqyyu5q35RCHjw==
+X-Received: by 2002:a05:6512:33c4:b0:4cc:53e2:5387 with SMTP id d4-20020a05651233c400b004cc53e25387mr10413221lfg.50.1673552189189;
+        Thu, 12 Jan 2023 11:36:29 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id k17-20020a05651210d100b004ab2cb8deb5sm3403247lfg.18.2023.01.12.11.36.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 Jan 2023 11:36:28 -0800 (PST)
+Message-ID: <790207ad-9184-577a-ed0f-55e04b26aa09@linaro.org>
+Date:   Thu, 12 Jan 2023 21:36:28 +0200
 MIME-Version: 1.0
-In-Reply-To: <6cea0a3f-08de-47d5-99d1-74b0d8c7b732@quicinc.com>
-References: <1672849297-3116-1-git-send-email-quic_srivasam@quicinc.com>
- <1672849297-3116-5-git-send-email-quic_srivasam@quicinc.com>
- <CAE-0n51AZCa9K_uY=ikTLqV-g_MsSA6Lv=Zq1LMrF-wVhR8_pg@mail.gmail.com> <6cea0a3f-08de-47d5-99d1-74b0d8c7b732@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Thu, 12 Jan 2023 11:35:14 -0800
-Message-ID: <CAE-0n52ahKMzk0ho5jG1wxebm3ZE+Wfu_BunCaTR1WhN+J5jpw@mail.gmail.com>
-Subject: Re: [RESEND v3 4/4] clk: qcom: lpasscc-sc7280: Add resets for audioreach
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        agross@kernel.org, andersson@kernel.org, broonie@kernel.org,
-        konrad.dybcio@somainline.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mturquette@baylibre.com,
-        quic_plai@quicinc.com, quic_rohkumar@quicinc.com,
-        robh+dt@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH v4 0/3] add color management support for the crtc
+Content-Language: en-GB
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        Kalyan Thota <quic_kalyant@quicinc.com>
+Cc:     linux-kernel@vger.kernel.org, robdclark@chromium.org,
+        dianders@chromium.org, swboyd@chromium.org,
+        quic_vpolimer@quicinc.com, quic_abhinavk@quicinc.com
+References: <1669021695-4397-1-git-send-email-quic_kalyant@quicinc.com>
+ <167330408778.609993.9217470869804308069.b4-ty@linaro.org>
+In-Reply-To: <167330408778.609993.9217470869804308069.b4-ty@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,46 +78,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Srinivasa Rao Mandadapu (2023-01-11 23:53:23)
->
-> On 1/12/2023 2:54 AM, Stephen Boyd wrote:
-> Thanks for your time Stephen!!!
-> > Quoting Srinivasa Rao Mandadapu (2023-01-04 08:21:37)
-> >> diff --git a/drivers/clk/qcom/lpasscc-sc7280.c b/drivers/clk/qcom/lpasscc-sc7280.c
-> >> index 85dd5b9..1efb72d 100644
-> >> --- a/drivers/clk/qcom/lpasscc-sc7280.c
-> >> +++ b/drivers/clk/qcom/lpasscc-sc7280.c
-> >> @@ -102,6 +104,18 @@ static const struct qcom_cc_desc lpass_qdsp6ss_sc7280_desc = {
-> >>          .num_clks = ARRAY_SIZE(lpass_qdsp6ss_sc7280_clocks),
-> >>   };
-> >>
-> >> +static const struct qcom_reset_map lpass_cc_sc7280_resets[] = {
-> >> +       [LPASS_AUDIO_SWR_RX_CGCR] =  { 0xa0, 1 },
-> >> +       [LPASS_AUDIO_SWR_TX_CGCR] =  { 0xa8, 1 },
-> >> +       [LPASS_AUDIO_SWR_WSA_CGCR] = { 0xb0, 1 },
-> > Why are we adding these resets again? These are already exposed in
-> > lpassaudiocc-sc7280.c
->
-> As explained in previous versions, legacy path nodes are not being used
-> in ADSP based platforms, due to conflicts.
+On 10/01/2023 01:43, Dmitry Baryshkov wrote:
+> 
+> On Mon, 21 Nov 2022 01:08:12 -0800, Kalyan Thota wrote:
+>> Add color management support for the crtc provided there are
+>> enough dspps that can be allocated from the catalog
+>>
+>> Kalyan Thota (3):
+>>    drm/msm/disp/dpu1: pin 1 crtc to 1 encoder
+>>    drm/msm/disp/dpu1: add helper to know if display is builtin
+>>    drm/msm/disp/dpu1: add color management support for the crtc
+>>
+>> [...]
+> 
+> Applied, thanks!
+> 
+> [1/3] drm/msm/disp/dpu1: pin 1 crtc to 1 encoder
+>        https://gitlab.freedesktop.org/lumag/msm/-/commit/a4d6f8253645
+> [2/3] drm/msm/disp/dpu1: add helper to know if display is builtin
+>        https://gitlab.freedesktop.org/lumag/msm/-/commit/4cb6b1eebb92
+> [3/3] drm/msm/disp/dpu1: add color management support for the crtc
+>        https://gitlab.freedesktop.org/lumag/msm/-/commit/c48c475bd75a
 
-What is legacy path nodes?
+These patches break sc7180 in a bad way, as the SoC is short on SSPP 
+units. I'm going to carve these patches out and wait for better solution 
+for the color management issue.
 
->
-> Hence lpasscc node alone being used exclusively in ADSP based solution,
-> resets are added.
+> 
+> Best regards,
 
-I think I understand..
+-- 
+With best wishes
+Dmitry
 
->
-> In probe also, these reset controls are enabled based on
-> "qcom,adsp-pil-mode" property.
->
-
-but now I'm super confused! Please help me! We shouldn't have two
-different device nodes for the same physical hardware registers.
-Instead, we should have one node. The "qcom,adsp-pil-mode" property was
-supposed to indicate the different mode of operation.
-
-Maybe the audio clk and reset drivers on sc7280 are duplicating each
-other and one of them can be removed?
