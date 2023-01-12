@@ -2,106 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 46668666752
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 00:58:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A19A666981
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 04:16:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233358AbjAKX6L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Jan 2023 18:58:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44172 "EHLO
+        id S235581AbjALDQ2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Jan 2023 22:16:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232344AbjAKX6K (ORCPT
+        with ESMTP id S235863AbjALDQ0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Jan 2023 18:58:10 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5B0134D4D;
-        Wed, 11 Jan 2023 15:58:08 -0800 (PST)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30BNh0WV022981;
-        Wed, 11 Jan 2023 23:58:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Pq6DfPp2nmGGS2yFb2eHqopjSlvHS130z7zBWea5UTw=;
- b=lS/vQvbpcsy48KCoRePbN2MrQ84jFixRJVAtnFg60ev7WQcwCtun/hJOLqXepPjiI5FL
- q1mbrkjLH4oWDSx3r4TIqGnLlWeFMXT3Dcg38B3EW0hkAcXWrqgtaRwp1xq4+Bg+u4mN
- bwTe9V2zVhTHNYGwn5Vg1t1PoY1PknXb1ws8JCRdDKuDl1Jn30x7rYbKP+be0RoJTCbq
- 5rRTsK03IMOVVPGZpqh2TLVwS+xuPnBAj6EkAURGkikL8ZP59De8lgClLBstjyRN8PeS
- 2awBrOr7YY4i4eNprLDTpO1Qq4xBqs9m4q6iPEVkmDdsv6kJsP5qu0CGFbD55td4Z3xy vg== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n1ky4jgw8-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 11 Jan 2023 23:58:01 +0000
-Received: from nasanex01a.na.qualcomm.com ([10.52.223.231])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30BNw1fL030122
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 11 Jan 2023 23:58:01 GMT
-Received: from [10.110.116.113] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 11 Jan
- 2023 15:58:00 -0800
-Message-ID: <0794d7b5-2eb9-f11f-56bc-bf9d702022df@quicinc.com>
-Date:   Wed, 11 Jan 2023 15:58:00 -0800
+        Wed, 11 Jan 2023 22:16:26 -0500
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27FF3DECE
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 19:16:25 -0800 (PST)
+Received: by mail-pf1-x435.google.com with SMTP id 200so6704921pfx.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 19:16:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=vLgPPN/4BKYUAbBjp/lumqd5Fur98RZfMwe+XyGuCwQ=;
+        b=bjXrKiCPcZ1mnQB/Agf1ffHwErEiwRmfS6XnouNbhPpnaIuZaCD09u1ys66wou6XEw
+         aaPN9EXY0LAew2P3ohjpZskr5qgSGp3QaLiFdo16ELAMQe1VMt2aDRFOXNSQHo3pLGL8
+         uhqGa2RHwvcDX/6hf9PzbxTyGzLpCINmbGeTT91OqvzD4gSMnKgoriAVNyN5ZvivE85/
+         AGSowIYMVw6BgLRHWI0MWlNIA6Bhoot5jzNw319eFU6V/CTTG7vSIb3sV5D2EGdjEurl
+         oMsTt2sAycgXCq3NPWK5lv9Xp3FO+pLxWSEwZLtNwqG3lIi8OA9g5y3VEmmE4xN1LRUO
+         xkbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vLgPPN/4BKYUAbBjp/lumqd5Fur98RZfMwe+XyGuCwQ=;
+        b=d4bScz+ye9aZyOC0Hize96MWmyCPIbydxkiDIoWzGz6Qed6GG5OM71uGjV6OjFgwBJ
+         3f0wFfvHMt0HGUD/kWLX0r0dhyMSQRfKbDqmcfGO1ZRRhb33vffY9n5xGSc7uGtVqPTP
+         lBgiMBo+hcnA4UqIJYTzay3JhVidnMtsyN53WS92oYrCVI8kbIBb3t+vi7sV5gmytYH8
+         hr8X4vBeUOpVXecW4ovyZ/fRQmTazHixpdLXvEvfj1/M/fLNM6whflJiwFj1yqW8ntZh
+         lqp/bp04Ei3bRLYgVrS/ourKqqvDV7MYf0NSNe3GwD5vwyCzK9X+FOAQCfAWA7+Z7nso
+         LZMQ==
+X-Gm-Message-State: AFqh2krtcgyDCJZdOwtkgItGsRdhYu8zZeRzwNWKqP/cxECctzFYxG+k
+        XOtaAAM4lNovp9hrQp4B2hQ5Y+PiFj81zz1l
+X-Google-Smtp-Source: AMrXdXu0yK+AtehwqkneInZrjlawWZChNyitggarUNAuCygfbreHfMWSkCNhz90t8Dh3rmThDleTEA==
+X-Received: by 2002:a62:38d8:0:b0:588:4739:9a23 with SMTP id f207-20020a6238d8000000b0058847399a23mr12688063pfa.15.1673493384626;
+        Wed, 11 Jan 2023 19:16:24 -0800 (PST)
+Received: from localhost ([122.172.82.107])
+        by smtp.gmail.com with ESMTPSA id 63-20020a621942000000b0056d98e359a5sm10660750pfz.165.2023.01.11.19.16.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Jan 2023 19:16:23 -0800 (PST)
+Date:   Thu, 12 Jan 2023 08:46:21 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Luca Weiss <luca@z3ntu.xyz>
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/5] dt-bindings: cpufreq: cpufreq-qcom-hw: Add missing
+ compatibles
+Message-ID: <20230112031621.rphz4zu63ibul374@vireshk-i7>
+References: <20221016090035.565350-1-luca@z3ntu.xyz>
+ <4899603.LvFx2qVVIh@g550jk>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH 2/2] soc: qcom: socinfo: Add sysfs attributes for fields
- in v2-v6
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Naman Jain <quic_namajain@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Andy Gross" <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_pkondeti@quicinc.com>
-References: <20230111082141.18109-1-quic_namajain@quicinc.com>
- <20230111082141.18109-3-quic_namajain@quicinc.com>
- <08ffedc3-3104-18fc-4813-287eccd1fdca@linaro.org>
-From:   Trilok Soni <quic_tsoni@quicinc.com>
-In-Reply-To: <08ffedc3-3104-18fc-4813-287eccd1fdca@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: sSt9gh7AJiqRztRnuBZLPmURgNNLcAD3
-X-Proofpoint-GUID: sSt9gh7AJiqRztRnuBZLPmURgNNLcAD3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2023-01-11_10,2023-01-11_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- malwarescore=0 bulkscore=0 spamscore=0 clxscore=1015 priorityscore=1501
- mlxscore=0 mlxlogscore=696 adultscore=0 phishscore=0 suspectscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301110176
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4899603.LvFx2qVVIh@g550jk>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 1/11/2023 3:19 PM, Dmitry Baryshkov wrote:
-> On 11/01/2023 10:21, Naman Jain wrote:
->> Add support in sysfs custom attributes for fields in socinfo version
->> v2-v6. This is to support SoC based operations in userland scripts
->> and test scripts. Also, add name mappings for hw-platform type to
->> make the sysfs information more descriptive.
+On 11-01-23, 20:48, Luca Weiss wrote:
+> Hi Viresh,
 > 
-> Please include a patch documenting your additions to 
-> Documentation/ABI/testing/sysfs-devices-soc. Please describe usecases 
-> for new attributes and their applicability to non-Qualcomm boards.
-> 
-> Note, that testing scripts can access debugfs entries without any issues.
+> gentle bump, I hope this patch could get applied in-time for the next merge 
+> window.
 
-The commit text mentions the "userland" scripts and it could mean the 
-product OS like Android or Yocto having the applications using these 
-/sysfs entries. Naman, please clarify if the vendor application layer in 
-the Android is using these Entries to make decisions based on the 
-platforms / soc information?
+I thought Bjorn applied this patch long back. But now that I look back
+at his email, he applied 2/5 and replied to 1/5, probably because
+there wasn't a cover-letter available :(
 
----Trilok Soni
+Sorry for the confusion, applied now.
+
+-- 
+viresh
