@@ -2,104 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C825A6672FE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 14:16:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B64466738E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 14:51:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229748AbjALNQw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Jan 2023 08:16:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56800 "EHLO
+        id S229767AbjALNvO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Jan 2023 08:51:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230077AbjALNQt (ORCPT
+        with ESMTP id S232277AbjALNvM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Jan 2023 08:16:49 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 266403894
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 05:16:46 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id ay12-20020a05600c1e0c00b003d9ea12bafcso11146113wmb.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 05:16:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20210112.gappssmtp.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=B/XEAQRleT1IlhUju2ODygdLpb0Yjm0cKss4Fd8mbWs=;
-        b=8KCdORxa4sltIzkkCwovv3Vi8R44lmL5pLpaqpI4LMA7qNOGvn7wuMCa9E6LhLvkRC
-         WdfQCnVMVicU0wisHf5wPD9GL/C6b4YrStpZ+6jAO5xPcmUAGbJmONUd3GOgk8RzElD1
-         xIfbeVVp99xH7vCKLhdSrG+s238rVbla9TkgdpA23OGmBKopQ1T/XmNR6EG/0YxD4oP8
-         NMERybGD2ura1HTp9xtFk+dG3HX7QTbH1og+u+JXzA1HcW8etbxVRkZxXeCa5dxvpdIx
-         r9VdG9oirrrQ4JGUVucujtY9NNRnxO3E6WjhyaVsfVYqn3ZxJVL7zsmqmDur/g+isKXA
-         2ctQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=B/XEAQRleT1IlhUju2ODygdLpb0Yjm0cKss4Fd8mbWs=;
-        b=m+v7z3D+ihU5mp01XNtFojZfmAjlAfDbCxBoHgkC4hZz9En3DlLHc/JDz95n6QvE2s
-         KAmtdSWphWt9lFkvkCUYeZ/TJ328OZDZzSjB3ccFCGq+GGyoc+YP7o35yXbH0pBXzWsd
-         OzYMO1/CWp/DZ1F/wMI3q8X4jNxo74GDnnC+b34/UTE5uWa9SSdgPYoRNuX1+/hc4BTh
-         5yuiXUFQgrUZX74riQE/QNuBF2W323Lyr2d3tZGfNsYHjdeP6AkMZ710CUq+wtjSVbh4
-         guffvZNAzemU86GE8P5r3oiaKsxj3HOC6T39TTncnZXBjqgG5UnaGFkdXgOpuAgKKKWu
-         m5nQ==
-X-Gm-Message-State: AFqh2krO+BNShg38sumw9HzEsXOdnXVihB15eeIAwd5+FbVcNumgCBKX
-        jph51PElksN8iIM/1UKOji+5kA==
-X-Google-Smtp-Source: AMrXdXu7weo2fUVafMIgAIp1lRxEQO77KFYppaiJx8aSCN6gxldryrSeh/67F5ZiE2pCb2hCaF2BoQ==
-X-Received: by 2002:a05:600c:601d:b0:3d6:4ba9:c111 with SMTP id az29-20020a05600c601d00b003d64ba9c111mr55143004wmb.40.1673529404666;
-        Thu, 12 Jan 2023 05:16:44 -0800 (PST)
-Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:d8:37a9:b9c7:ec8a])
-        by smtp.gmail.com with ESMTPSA id o5-20020a05600c510500b003b4ff30e566sm8765204wms.3.2023.01.12.05.16.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Jan 2023 05:16:44 -0800 (PST)
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] dt-bindings: mailbox: qcom-ipcc: document the sa8775p platform
-Date:   Thu, 12 Jan 2023 14:16:36 +0100
-Message-Id: <20230112131636.359402-1-brgl@bgdev.pl>
-X-Mailer: git-send-email 2.37.2
+        Thu, 12 Jan 2023 08:51:12 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CA8E48CE8;
+        Thu, 12 Jan 2023 05:51:11 -0800 (PST)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30CBUk4S005946;
+        Thu, 12 Jan 2023 13:51:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=GWcgX7wro4WH+QvKYlhCgbkIZhVUk8U7As6tF7aDP14=;
+ b=K8Nl4+BKPuJiYd5HEmS8baG+8x4Je66RwRTiWvMK0nNy03S2g21VQPQpkd4qtYJJmfWs
+ FjpPrBwx+QLH3HimNE7p85JWbPxcRUhn0VMSy0jsAqiJHYVF52YRkBaH7aTTU4yOxm6j
+ f/l/WSGKY18AaCi0C4oBKOY9y5eTAcz7p1wYQzNsJvZ53KaT9VP9xldkVw/WZ8J2aGjB
+ jdbwzSVnouA/EMMLYDhf/lTylP1KcP5WEiMkz7QMYAlPhfJAOSyTkA5qBiwvahZOaxGO
+ tlyAoJVfJYg8kit9IFtK0qyyuPZos89n2HLv1EER+lV1rTKwW9VlSHde513rhmDhL+3W RA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n2edurrvs-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 12 Jan 2023 13:51:08 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30CDp1ZK009450
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 12 Jan 2023 13:51:01 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Thu, 12 Jan 2023 05:51:01 -0800
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+CC:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH] arm64: dts: qcom: sc8280xp: Use MMCX for all DP controllers
+Date:   Thu, 12 Jan 2023 05:50:55 -0800
+Message-ID: <20230112135055.3836555-1-quic_bjorande@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: IC-zvcfGofhwhHGTeEnz9xcAZw2vItMQ
+X-Proofpoint-ORIG-GUID: IC-zvcfGofhwhHGTeEnz9xcAZw2vItMQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2023-01-12_08,2023-01-12_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ mlxlogscore=999 mlxscore=0 phishscore=0 clxscore=1011 adultscore=0
+ bulkscore=0 impostorscore=0 spamscore=0 suspectscore=0 malwarescore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301120100
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+While MDSS_GDSC is a subdomain of MMCX, Linux does not respect this
+relationship and sometimes invokes sync_state on the rpmhpd (MMCX)
+before the DisplayPort controller has had a chance to probe.
 
-Add a compatible for the ipcc on sa8775p platforms.
+The result when this happens is that the power is lost to the multimedia
+subsystem between the probe of msm_drv and the DisplayPort controller -
+which results in an irrecoverable state.
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+While this is an implementation problem, this aligns the power domain
+setting of the one DP instance with that of all the others.
+
+Fixes: 57d6ef683a15 ("arm64: dts: qcom: sc8280xp: Define some of the display blocks")
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 ---
-Sending it separately for easier pick-up into the right tree.
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml b/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
-index f5c73437fef4..de56640cecca 100644
---- a/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
-+++ b/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
-@@ -24,6 +24,7 @@ properties:
-   compatible:
-     items:
-       - enum:
-+          - qcom,sa8775p-ipcc
-           - qcom,sc7280-ipcc
-           - qcom,sc8280xp-ipcc
-           - qcom,sm6350-ipcc
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+index 4f4353f84cba..4511fd939c91 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+@@ -2533,7 +2533,7 @@ mdss0_dp3: displayport-controller@aea0000 {
+ 				interrupts = <15>;
+ 				phys = <&mdss0_dp3_phy>;
+ 				phy-names = "dp";
+-				power-domains = <&dispcc0 MDSS_GDSC>;
++				power-domains = <&rpmhpd SC8280XP_MMCX>;
+ 
+ 				assigned-clocks = <&dispcc0 DISP_CC_MDSS_DPTX3_LINK_CLK_SRC>,
+ 						  <&dispcc0 DISP_CC_MDSS_DPTX3_PIXEL0_CLK_SRC>;
 -- 
-2.37.2
+2.37.3
 
