@@ -2,52 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9CC00667D34
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 19:00:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 35C11667DD0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 19:20:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238723AbjALSAv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Jan 2023 13:00:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39958 "EHLO
+        id S240575AbjALSUG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Jan 2023 13:20:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239157AbjALSAK (ORCPT
+        with ESMTP id S240629AbjALSSz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Jan 2023 13:00:10 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D28295C1E1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 09:20:19 -0800 (PST)
+        Thu, 12 Jan 2023 13:18:55 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41F6960FC;
+        Thu, 12 Jan 2023 09:51:32 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 7047B620B8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 17:20:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B593C433F0;
-        Thu, 12 Jan 2023 17:20:18 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D1ED9620E5;
+        Thu, 12 Jan 2023 17:51:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C551DC433EF;
+        Thu, 12 Jan 2023 17:51:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1673544018;
-        bh=ioz1RqoqcnSRvilJYQimZjnLUOcmOmHK0LDKxDQhJPo=;
+        s=k20201202; t=1673545891;
+        bh=lvNaruzURY6N1iADoLOUBP6m+krDZ1q4OvF3FENwHWw=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Obra7E1jtoGFumhx7UDbukxYwKj1XTmsLXLK4YtVD0cv4+YAFAaHIYMN2Tt0+Yrgc
-         oGiitobkTO4gjrw/HBuSJS3zvsRJgMhNedrYdqd0+zkPD6A/Bp826iuawowPG/xpOh
-         l+A3OSOfmsC0zWZgc+TwCSu1dsTig+pl3SGcCuFp0g3Y+OEXiCKZ09z/m9reGvKqs9
-         pk4Wh5KCWzX1xfg9P504ZA8KGeGRU2bmwtzqXjNQ1Q4nakVkmvnecS62C7uPfk+wKu
-         w3nmgxm+Q6l2I0prpoWZnY5mLlc/9xbLHs+nudoAvyxatCGvxkBgeDZMiuLflKYXfX
-         uP39b1GDS0vhQ==
-Date:   Thu, 12 Jan 2023 22:50:15 +0530
+        b=afDS8FQDUxrdrN/Mh+8UHDcuI601ipjIAglx5CvqRWJsiiCxCRHB/LMTqnrOHSibc
+         veg325c7UXQYXftxgJT9HfXamqAxDtFqQ4FGgBnRWnpPrTjsTefw9/fyep1TFT05u6
+         yNp3GcbuT3VR5MgGPJjQUC8edclJJA67zFjV58804nP53h4unNGoFQtwppo4UtNsUy
+         7rqhiFCpfDgzEfSylj+AmLRqm+QH3YibtAdmecPjkvccQe8tNtkIy0eZEGtxsnncM4
+         +C3jier5+Y9GOEc1Ye3E5doocCt3PD3VC9ZvPrigbptsd/Hx93u+x7R3ZqJJMGfrtT
+         fvBaHZjz48bwg==
+Date:   Thu, 12 Jan 2023 23:20:23 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Luca Weiss <luca.weiss@fairphone.com>,
+        linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Kishon Vijay Abraham I <kishon@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: Re: [PATCH v3 00/13] phy: qcom-qmp: rework register layout tables
-Message-ID: <Y8BBTx4tgvOChl66@matsya>
-References: <20221110192248.873973-1-dmitry.baryshkov@linaro.org>
+        linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 2/3] phy: qcom-qmp-combo: Add config for SM6350
+Message-ID: <Y8BIX+js1ircJyb9@matsya>
+References: <20221130081430.67831-1-luca.weiss@fairphone.com>
+ <20221130081430.67831-2-luca.weiss@fairphone.com>
+ <Y6xP4YRAp68TfxFi@hovoldconsulting.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221110192248.873973-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <Y6xP4YRAp68TfxFi@hovoldconsulting.com>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -57,16 +61,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10-11-22, 22:22, Dmitry Baryshkov wrote:
-> Rework register layout tables in QMP PHY drivers to use defined symbolic
-> names rather than bare numbers. Also rename each register layout array
-> to name the exact QMP version. While doing this, drop few unused
-> registers and apply other misc cleanups.
+On 28-12-22, 15:17, Johan Hovold wrote:
+> Luca, Vinod,
+> 
+> On Wed, Nov 30, 2022 at 09:14:28AM +0100, Luca Weiss wrote:
+> > Add the tables and config for the combo phy found on SM6350.
+> > 
+> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> > ---
+> > Changes since v2:
+> > * Drop dp_txa/dp_txb changes, not required
+> > * Fix dp_dp_phy offset
+> > 
+> >  drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 126 ++++++++++++++++++++++
+> >  1 file changed, 126 insertions(+)
+> > 
+> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> > index 77052c66cf70..6ac0c68269dc 100644
+> > --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> > +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> 
+> > @@ -975,6 +1039,19 @@ static const char * const sc7180_usb3phy_reset_l[] = {
+> >  	"phy",
+> >  };
+> >  
+> > +static const struct qmp_combo_offsets qmp_combo_offsets_v3 = {
+> > +	.com		= 0x0000,
+> > +	.txa		= 0x1200,
+> > +	.rxa		= 0x1400,
+> > +	.txb		= 0x1600,
+> > +	.rxb		= 0x1800,
+> > +	.usb3_serdes	= 0x1000,
+> > +	.usb3_pcs_misc	= 0x1a00,
+> > +	.usb3_pcs	= 0x1c00,
+> > +	.dp_serdes	= 0x1000,
+> 
+> I would have expected this to be 0x2000 as that's what the older
+> platforms have been using for the dp serdes table so far. Without access
+> to any documentation it's hard to tell whether everyone's just been
+> cargo-culting all along or if there's actually something there at offset
+> 0x2000.
+> 
+> Vinod, could you shed some light on this as presumably you have access
+> to some documentation?
+> 
+> > +	.dp_dp_phy	= 0x2a00,
 
-Applied, thanks
-
-This gave me a bit of conflict (patch4, 13), which I was able to
-resolve, but please check things are okay
+No sorry, I dont have access to this version...
 
 -- 
 ~Vinod
