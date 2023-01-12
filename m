@@ -2,145 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB2AA667F73
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 20:44:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A7AF1667F7A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 20:44:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233054AbjALToI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Jan 2023 14:44:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33810 "EHLO
+        id S232819AbjALToi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Jan 2023 14:44:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239204AbjALTnw (ORCPT
+        with ESMTP id S237536AbjALToG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Jan 2023 14:43:52 -0500
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 028CDFCC4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 11:33:54 -0800 (PST)
-Received: by mail-lj1-x233.google.com with SMTP id bx6so20459825ljb.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 11:33:53 -0800 (PST)
+        Thu, 12 Jan 2023 14:44:06 -0500
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 898CF32259
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 11:35:16 -0800 (PST)
+Received: by mail-lf1-x133.google.com with SMTP id bp15so29897919lfb.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 11:35:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1JIYsMoXBydeWSn636wmG/Lb0+3KtaflCFgpsVqKASE=;
-        b=qbrF/2QjIGACx037/GJu0XQQcZ1Y3hPaMwOzChvkOLdToaTqaiN4h2QOJc9QgTq2i/
-         WDSgTjY9P/FNpiuJoM5wPVLAz9GT0a945L5MAGu42sDfYya0i7UbcDgXwt4flH7UPLfh
-         8xIk7FFcJLUy5HS1asOTzx6v1zrirnNfs8IJAZ9Sk65shK24W+/ucRe0EbRKntUhWULc
-         v2P+3CoYAuOVzE+CI+Zks73+sD6up7ltZtXiAM+73xNuLMFlfBSfnNxW3MK2EIQO5vG7
-         c71f8rgNmCGMhusBMu6InU+O3AFVX7t+S8NzsIKAlgOBKKf5HDHzainln9Y0vcsEmU1q
-         FCBw==
+        d=chromium.org; s=google;
+        h=to:subject:message-id:date:user-agent:from:references:in-reply-to
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=yAYjynh/JlSA73SJ+NClSDWR2Z+GwEtREPC4s1NxZeM=;
+        b=GHFE1mgKGNMBi88jxaIEXnLBn3cC2pHb7pcv7ZbbS07IdBfH/fjwvLPsOOf4lRc2Ji
+         jROi2YaMBZ+BWsbmsa2ANMyBuL41Uca0hOqE1zJFuGSsF9ZFE7s78WymunKIONPk/Mjs
+         QxRIizM2TyP/lO0Q1RmLmGTakDIsbT5HT4gB8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1JIYsMoXBydeWSn636wmG/Lb0+3KtaflCFgpsVqKASE=;
-        b=gJ6pi83oCZ+Ei9ims8SrdMiOm8wcyjKHWcnMkHWVNH1cxetrIDt2llJyaW3sXPIL3n
-         gm4aF1hTgEyEmKzauOXdy3aUnu8nGS1uoXsheSsYxSWC2JwFIyQR7J31BPyuvidlP2C6
-         AtiI54DhdasjK3dJf6EcjmX3/C8NDmj5n5g+e8S/OngvYkeAJ/37WcgBIfoyqMHNSJ8G
-         lTAmT6XwWRNZTv09Q1I78IohMz5hAJrApvp7Jeot8BGq8660KR+AMT29JFTB6ETS41/b
-         Kgn6uEmH72I2MaTKeFWeYchHuwXsWMAXwDSaHbq2Krv6CmNqlCqusMG0aym0VHnJE2rA
-         GfZg==
-X-Gm-Message-State: AFqh2kpj0K12q/c9DllMcP+MZQVtdoFTIAUUOI75QMgM1Y1oQxZ/OP+r
-        DVVt+r5YsbDFoH+YziW5ROzeFg==
-X-Google-Smtp-Source: AMrXdXv3+ZSf9y1ilQIM6yrNYmOcMkr/mWVjVGi348euRwBv5qEqZ0+ZJ0/epNcIXFHgpqqxpAod+g==
-X-Received: by 2002:a2e:80c9:0:b0:287:d8ce:6c9d with SMTP id r9-20020a2e80c9000000b00287d8ce6c9dmr2860076ljg.4.1673552032393;
-        Thu, 12 Jan 2023 11:33:52 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id v25-20020a2e87d9000000b00288470f3145sm906564ljj.36.2023.01.12.11.33.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Jan 2023 11:33:52 -0800 (PST)
-Message-ID: <cf968a25-02f7-d402-530b-eb379b707e54@linaro.org>
-Date:   Thu, 12 Jan 2023 21:33:51 +0200
+        h=to:subject:message-id:date:user-agent:from:references:in-reply-to
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yAYjynh/JlSA73SJ+NClSDWR2Z+GwEtREPC4s1NxZeM=;
+        b=WpBEEkCDmqvOJXECVDijOFIDHGVJw4VL7WWy6On+572PHzI6HtWRqG/2ddJyy19aka
+         x0URYLGPaeQ5HY1drPk1loXPT9f/1iYxx3JzVq8Y3E9sUPQSCvFd/rtpfV3Oh7czHaPG
+         i5ET+Qz+ylZEftYBGiiYxQilVfnr5Koltvn+6Z+RyfjKsGdOUACqG2HYmL10p3yPWg4C
+         leArNLk4otAY8nzWGxmiPaLk4aRu8T16FbtuEa40vOf5xPU10pgiK+rDNDTl0N6vOy2k
+         5AXoB4o/Ts79JM7Uc6kNxJZpVm9tk+Eg4nkHZYNQ3uED1kYOIYNlJumk3yNCrQ5eCwk5
+         Dtmg==
+X-Gm-Message-State: AFqh2kpqaqzLlpp0zF+HWtVrj8lBFUvIi2tF0xdejrmQaKScBlFv31xX
+        dk35tRQFMAk0HTMP0mtzEZC9YHKr756X+057rzZTLg==
+X-Google-Smtp-Source: AMrXdXsiV4/qvAwCS2YzjkQkBI2pWHnV74UvffxWaNqCcnh7r+wpnwzqtGa37hxSn3pp+XeRTd+rObR64w2TTviCRQc=
+X-Received: by 2002:a05:6512:ba1:b0:4b5:5f2d:1458 with SMTP id
+ b33-20020a0565120ba100b004b55f2d1458mr3475453lfv.253.1673552114933; Thu, 12
+ Jan 2023 11:35:14 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 12 Jan 2023 11:35:14 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH v3 2/3] phy: qcom-qmp-combo: Add config for SM6350
-Content-Language: en-GB
-To:     Vinod Koul <vkoul@kernel.org>, Johan Hovold <johan@kernel.org>
-Cc:     Luca Weiss <luca.weiss@fairphone.com>,
-        linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20221130081430.67831-1-luca.weiss@fairphone.com>
- <20221130081430.67831-2-luca.weiss@fairphone.com>
- <Y6xP4YRAp68TfxFi@hovoldconsulting.com> <Y8BIX+js1ircJyb9@matsya>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <Y8BIX+js1ircJyb9@matsya>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+In-Reply-To: <6cea0a3f-08de-47d5-99d1-74b0d8c7b732@quicinc.com>
+References: <1672849297-3116-1-git-send-email-quic_srivasam@quicinc.com>
+ <1672849297-3116-5-git-send-email-quic_srivasam@quicinc.com>
+ <CAE-0n51AZCa9K_uY=ikTLqV-g_MsSA6Lv=Zq1LMrF-wVhR8_pg@mail.gmail.com> <6cea0a3f-08de-47d5-99d1-74b0d8c7b732@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Thu, 12 Jan 2023 11:35:14 -0800
+Message-ID: <CAE-0n52ahKMzk0ho5jG1wxebm3ZE+Wfu_BunCaTR1WhN+J5jpw@mail.gmail.com>
+Subject: Re: [RESEND v3 4/4] clk: qcom: lpasscc-sc7280: Add resets for audioreach
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        agross@kernel.org, andersson@kernel.org, broonie@kernel.org,
+        konrad.dybcio@somainline.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mturquette@baylibre.com,
+        quic_plai@quicinc.com, quic_rohkumar@quicinc.com,
+        robh+dt@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/01/2023 19:50, Vinod Koul wrote:
-> On 28-12-22, 15:17, Johan Hovold wrote:
->> Luca, Vinod,
->>
->> On Wed, Nov 30, 2022 at 09:14:28AM +0100, Luca Weiss wrote:
->>> Add the tables and config for the combo phy found on SM6350.
->>>
->>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->>> ---
->>> Changes since v2:
->>> * Drop dp_txa/dp_txb changes, not required
->>> * Fix dp_dp_phy offset
->>>
->>>   drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 126 ++++++++++++++++++++++
->>>   1 file changed, 126 insertions(+)
->>>
->>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
->>> index 77052c66cf70..6ac0c68269dc 100644
->>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
->>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
->>
->>> @@ -975,6 +1039,19 @@ static const char * const sc7180_usb3phy_reset_l[] = {
->>>   	"phy",
->>>   };
->>>   
->>> +static const struct qmp_combo_offsets qmp_combo_offsets_v3 = {
->>> +	.com		= 0x0000,
->>> +	.txa		= 0x1200,
->>> +	.rxa		= 0x1400,
->>> +	.txb		= 0x1600,
->>> +	.rxb		= 0x1800,
->>> +	.usb3_serdes	= 0x1000,
->>> +	.usb3_pcs_misc	= 0x1a00,
->>> +	.usb3_pcs	= 0x1c00,
->>> +	.dp_serdes	= 0x1000,
->>
->> I would have expected this to be 0x2000 as that's what the older
->> platforms have been using for the dp serdes table so far. Without access
->> to any documentation it's hard to tell whether everyone's just been
->> cargo-culting all along or if there's actually something there at offset
->> 0x2000.
+Quoting Srinivasa Rao Mandadapu (2023-01-11 23:53:23)
+>
+> On 1/12/2023 2:54 AM, Stephen Boyd wrote:
+> Thanks for your time Stephen!!!
+> > Quoting Srinivasa Rao Mandadapu (2023-01-04 08:21:37)
+> >> diff --git a/drivers/clk/qcom/lpasscc-sc7280.c b/drivers/clk/qcom/lpasscc-sc7280.c
+> >> index 85dd5b9..1efb72d 100644
+> >> --- a/drivers/clk/qcom/lpasscc-sc7280.c
+> >> +++ b/drivers/clk/qcom/lpasscc-sc7280.c
+> >> @@ -102,6 +104,18 @@ static const struct qcom_cc_desc lpass_qdsp6ss_sc7280_desc = {
+> >>          .num_clks = ARRAY_SIZE(lpass_qdsp6ss_sc7280_clocks),
+> >>   };
+> >>
+> >> +static const struct qcom_reset_map lpass_cc_sc7280_resets[] = {
+> >> +       [LPASS_AUDIO_SWR_RX_CGCR] =  { 0xa0, 1 },
+> >> +       [LPASS_AUDIO_SWR_TX_CGCR] =  { 0xa8, 1 },
+> >> +       [LPASS_AUDIO_SWR_WSA_CGCR] = { 0xb0, 1 },
+> > Why are we adding these resets again? These are already exposed in
+> > lpassaudiocc-sc7280.c
+>
+> As explained in previous versions, legacy path nodes are not being used
+> in ADSP based platforms, due to conflicts.
 
-usb3_serdes is 0x1000, so dp_serdes equal to 0x1000 is definitely an typo.
+What is legacy path nodes?
 
-Judging from the downstream dtsi, the DP PHY starts at offset 0x2000. So 
-dp_serdes is equal to 0x2000, dp_phy = 0x2a00, ln_tx1 = 0x2200, ln_tx2 = 
-0x2600.
+>
+> Hence lpasscc node alone being used exclusively in ADSP based solution,
+> resets are added.
 
->>
->> Vinod, could you shed some light on this as presumably you have access
->> to some documentation?
->>
->>> +	.dp_dp_phy	= 0x2a00,
-> 
-> No sorry, I dont have access to this version...
-> 
+I think I understand..
 
--- 
-With best wishes
-Dmitry
+>
+> In probe also, these reset controls are enabled based on
+> "qcom,adsp-pil-mode" property.
+>
 
+but now I'm super confused! Please help me! We shouldn't have two
+different device nodes for the same physical hardware registers.
+Instead, we should have one node. The "qcom,adsp-pil-mode" property was
+supposed to indicate the different mode of operation.
+
+Maybe the audio clk and reset drivers on sc7280 are duplicating each
+other and one of them can be removed?
