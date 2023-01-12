@@ -2,98 +2,332 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 542466669B9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 04:42:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 688B76669C3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 04:46:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235699AbjALDmj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Jan 2023 22:42:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39970 "EHLO
+        id S235573AbjALDqR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Jan 2023 22:46:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235045AbjALDmh (ORCPT
+        with ESMTP id S236039AbjALDqQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Jan 2023 22:42:37 -0500
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD00244352
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 19:42:36 -0800 (PST)
-Received: by mail-lf1-x12e.google.com with SMTP id bf43so26578074lfb.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 19:42:36 -0800 (PST)
+        Wed, 11 Jan 2023 22:46:16 -0500
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C606658A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 19:46:12 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id d30so21678732lfv.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 19:46:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=jLHtoE959u40G0xbX28KrB8L8Do3FTdLcmezZ+Ohpr8=;
-        b=YpauyFYgXE4dRDmivNFp/j2H4FoZtQkEFypYGteVIZ2dMLikBrHLjmTkAae4+PLlWg
-         +URvMWTOiZNnIhBoBb8E+XemGxzDOMd8QFlg5YXQFQkL/20Eubtu8MK/mHfHVH9mVUTm
-         lkaAmXvrD+wN4YqYIStIPe6MMVHDYPXPgpBBKUTBL4SgKZG4aThbi/HPlEiwZivM1YOJ
-         RFt4IVrY6x8P05m+hbN8xKPrQgva4UaZ0Y08qrkuaHUAJy5QT6NTTV3fYBWK4iFzxKak
-         3atssbaNGxv42pnWPaDDh5OKHiKDj1bPlNUS0qvCPsOyS8BlYXWWY/lniu2y24XhThMx
-         it4g==
+        bh=Y8dOW5pRnm76DXQ7mSIq/E9mwEicC9WVIGYw1/nEyxU=;
+        b=SrSc7Ok98mcZB4uw0ovIUIL4fPuoVdyZf2xGbEyL2IH18eiFkudK4vuHXjsmQKgCru
+         p9lXW/XHlHJill3+Xcuhi3lU87KUyHwx39BRIEMWFPEEzrKcabYbCm2c54u1nJYNLShw
+         meFPxMBikDk0rUFWsPVjVbvc1QF5aIbYh7NMME6Tz986tm/cvL4xMyaxoDt6kjqmvRaU
+         Ld6MHSAC87CYJfjRLC4V3aLAyqPOKbs8cmkUz0Bak6CdKPZ+BjfwBNy45KzhYrCy3c10
+         H3661D3RxFPpdl89OqA06vsNgffRMuAXWYiZqVobv6m6q1P4ei1F+5ri8VE7Pf1jjNZ7
+         FyWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jLHtoE959u40G0xbX28KrB8L8Do3FTdLcmezZ+Ohpr8=;
-        b=RKvrtzvplUGv6J55Ap2ttYlFl895gFNjuo5isCxJZ/TaUAe9YR2rEGxijTx8XUkhFO
-         afFhuOVA0dx0lAt5uLRmOUKTf0yFwrgJBNnKnvhTOi7kqjJK2Qgl5LY9OOMaOQXRSbTk
-         j299cEr0Ey6fzwnqODVjZCzO6xovipfpWHMSUei7DpxWz1MDadM/4pmfC33U9tLXLN+K
-         iK9Tg4nGLpR1usqWjJwwkt2/37/DZR+DfprdEyBj0C5tcKDJhuSFL4XLcbGnihOPfIKl
-         XPz5ct1vM79WOaNNKCJjidC0DNQIge34+2E0mUbNBzPXH3n92a2U1TqAzbch/3jLbBrr
-         Fw3w==
-X-Gm-Message-State: AFqh2kqJvZzBvc7np4lHbd93GMxvy72nxJZ4JokGLd44OBvEKSEZ1oyj
-        EIuj9daW/Wbokt5IAJ2/vJULKIAtER5GI8bA
-X-Google-Smtp-Source: AMrXdXuAjlLyWrwlXPju1jhRFwVMDKZBuI77Lkwtin61RZmeiNOZGX9nHS19HZduB4tcQ9jqucCMDw==
-X-Received: by 2002:a05:6512:6d6:b0:4a4:68b9:609b with SMTP id u22-20020a05651206d600b004a468b9609bmr25117729lff.38.1673494955164;
-        Wed, 11 Jan 2023 19:42:35 -0800 (PST)
+        bh=Y8dOW5pRnm76DXQ7mSIq/E9mwEicC9WVIGYw1/nEyxU=;
+        b=OLiWiYfahmGUQEMrZWpLGdO519uAzbjMz0SO7HjVR7ycReYRnMBtHvYi49V3fRWtfJ
+         wUOzdrWvRXxTa/4SQ0nyNosGN7uD+sQXA2pdS20P8SIkOaSBYHy0CJTSfMfJhRZ4hUKx
+         Fz1noAPLtgaA3CvoqdZRyBkFNSwIZOwB2/DvEkTbs/pweLzaqgsalCecnzk6VRlmlv93
+         1yyTrQVoMPgb8wxpsIefT2ceZYxxZjejcAu7XY5LURMU+mAGwh/MFC+IfHFLH+BrNFXX
+         Sb0j2fhUnB34XEN1xwrCPJ+wFqNOckgi1YDEV0DF6uNwrz6HsVOyH5LxWWTuj91rJ767
+         ZRug==
+X-Gm-Message-State: AFqh2kp4Bmh0MIxkqg7My9RXAMtsYKaCoGE/DFDvNCmln5tstkkdsYq6
+        UnCUycPwY9YeTEy0EvZaouDD7Q==
+X-Google-Smtp-Source: AMrXdXtNqgbo3bWwww9N1TTda93aPV9HOIQW7H7jN1UHMm1J5cw89WqUlfXV4ivVrhaDZqubXTKPWA==
+X-Received: by 2002:a05:6512:3b99:b0:4a4:68b9:608c with SMTP id g25-20020a0565123b9900b004a468b9608cmr25955520lfv.23.1673495170904;
+        Wed, 11 Jan 2023 19:46:10 -0800 (PST)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id v10-20020a056512348a00b004a4731f75a5sm3033409lfr.250.2023.01.11.19.42.34
+        by smtp.gmail.com with ESMTPSA id 2-20020ac25f02000000b0048b365176d9sm3052440lfq.286.2023.01.11.19.46.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Jan 2023 19:42:34 -0800 (PST)
-Message-ID: <c3265c78-7ea7-04ab-13e4-65f79fbf9cd0@linaro.org>
-Date:   Thu, 12 Jan 2023 05:42:33 +0200
+        Wed, 11 Jan 2023 19:46:10 -0800 (PST)
+Message-ID: <00cebe7d-ae3d-8772-c206-cd3ce6a275c1@linaro.org>
+Date:   Thu, 12 Jan 2023 05:46:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH] drm/msm/dpu: Remove some unused variables
+Subject: Re: [RESEND PATCH 1/2] clk: qcom: clk-rcg2: introduce support for
+ multiple conf for same freq
 Content-Language: en-GB
-To:     Jiapeng Chong <jiapeng.chong@linux.alibaba.com>,
-        robdclark@gmail.com
-Cc:     quic_abhinavk@quicinc.com, sean@poorly.run, airlied@gmail.com,
-        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, Abaci Robot <abaci@linux.alibaba.com>
-References: <20230112033823.24901-1-jiapeng.chong@linux.alibaba.com>
+To:     Christian Marangi <ansuelsmth@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Robert Marko <robimarko@gmail.com>
+References: <20230111194250.15793-1-ansuelsmth@gmail.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230112033823.24901-1-jiapeng.chong@linux.alibaba.com>
+In-Reply-To: <20230111194250.15793-1-ansuelsmth@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/01/2023 05:38, Jiapeng Chong wrote:
-> Variables 'sc8280xp_regdma' and 'sm8350_regdma' are defined in the
-> dpu_hw_catalog.c file, but not used elsewhere, so remove these unused
-> variables.
-> 
-> drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c:2029:37: warning: unused variable 'sc8280xp_regdma'.
-> drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c:2053:37: warning: unused variable 'sm8350_regdma'.
-> 
-> Link: https://bugzilla.openanolis.cn/show_bug.cgi?id=3722
-> Reported-by: Abaci Robot <abaci@linux.alibaba.com>
-> Signed-off-by: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 16 ----------------
->   1 file changed, 16 deletions(-)
+Hi,
 
-NAK, the patch should change catalog entries to use correct regdma 
-entries instead of deleting them.
+On 11/01/2023 21:42, Christian Marangi wrote:
+> Some RCG frequency can be reached by multiple configuration.
+> 
+> We currently declare multiple configuration for the same frequency but
+> that is not supported and always the first configuration will be taken.
+> 
+> These multiple configuration are needed as based on the current parent
+> configuration, it may be needed to use a different configuration to
+> reach the same frequency.
+> 
+> To handle this introduce 2 new macro, FM and C.
+> 
+> - FM is used to declare an empty freq_tbl with just the frequency and an
+>    array of confs to insert all the config for the provided frequency.
+> 
+> - C is used to declare a fre_conf where src, pre_div, m and n are
+>    provided.
+> 
+> The driver is changed to handle this special freq_tbl and select the
+> correct config by calculating the final rate and deciding based on the
+> one that is less different than the requested one.
+
+I gave this a thought.
+
+First some generic thought about RCG2 risen by your patch. I'll talk 
+about the CEIL functions, but the same applies to FLOOR ones.
+
+The clk_rcg2_determine_rate() / freq_tbl_determine_rate() determines the 
+best supported rate and and selects a best parent. Good. Then CCF will 
+pass the determined target rate, parent index and parent rate either to 
+clk_rcg2_set_rate() or to the clk_rcg2_set_rate_and_parent() depending 
+on whether it determines that the parent should be switched or not. So 
+far so good.
+
+However then the __clk_rcg2_set_rate() will perform the same search 
+again, taking care of FLOOR or CEIL, completely ignoring the fact that 
+rate passed is already known to be the supported rate, so we can just 
+look for it and ignoring the provided parent (or a note from CCF that 
+the parent should remain the same).
+
+This worked correctly in the single-possible-configuration case, however 
+it IMHO becames fragile in the multiple-possible-configuration case. 
+Consider CCF switching the parent rate during the clk_set_rate() call. 
+Then the second lookup might end up selecting _different_ parent/mnd 
+configuration.
+
+Thus said, I'd suggest first changing clk_rcg2_set_rate/and_parent(). 
+Make it look up the exact configuration without the rounding (it is 
+unnecessary anyway). This would require something like 
+qcom_find_freq_exact(). Or just loop over the table in 
+__clk_rcg2_set_rate().
+
+Then for your case make it actually use the provided parent index (or 
+the current parent in the .set_rate() case). This will make sure that we 
+follow CCF decisions instead of making them on our own.
+
+Finally for your usecase to work correcly you need to select correct 
+rate+parent in the .determine_rate callback.
+
+We know that the freq_table is sorted already. Add a loop to 
+_freq_tbl_determine_rate() policy switchcase to check next table entries 
+determing if their parent rate is better than the parent rate of the 
+selected entry.
+
+> 
+> Tested-by: Robert Marko <robimarko@gmail.com>
+> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> ---
+>   drivers/clk/qcom/clk-rcg.h  | 14 ++++++-
+>   drivers/clk/qcom/clk-rcg2.c | 84 +++++++++++++++++++++++++++++++++----
+>   2 files changed, 88 insertions(+), 10 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/clk-rcg.h b/drivers/clk/qcom/clk-rcg.h
+> index 01581f4d2c39..18f4f7b59f36 100644
+> --- a/drivers/clk/qcom/clk-rcg.h
+> +++ b/drivers/clk/qcom/clk-rcg.h
+> @@ -7,7 +7,17 @@
+>   #include <linux/clk-provider.h>
+>   #include "clk-regmap.h"
+>   
+> -#define F(f, s, h, m, n) { (f), (s), (2 * (h) - 1), (m), (n) }
+> +#define F(f, s, h, m, n) { (f), (s), (2 * (h) - 1), (m), (n), 0, NULL }
+> +
+> +#define FM(_f, _confs) { .freq = (_f), .confs_num = ARRAY_SIZE(_confs), .confs = (_confs) }
+> +#define C(s, h, m, n) { (s), (2 * (h) - 1), (m), (n) }
+> +
+> +struct freq_conf {
+> +	u8 src;
+> +	u8 pre_div;
+> +	u16 m;
+> +	u16 n;
+> +};
+>   
+>   struct freq_tbl {
+>   	unsigned long freq;
+> @@ -15,6 +25,8 @@ struct freq_tbl {
+>   	u8 pre_div;
+>   	u16 m;
+>   	u16 n;
+> +	int confs_num;
+> +	const struct freq_conf *confs;
+>   };
+>   
+>   /**
+> diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+> index 76551534f10d..7d3b59ec2b50 100644
+> --- a/drivers/clk/qcom/clk-rcg2.c
+> +++ b/drivers/clk/qcom/clk-rcg2.c
+> @@ -209,11 +209,60 @@ clk_rcg2_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
+>   	return __clk_rcg2_recalc_rate(hw, parent_rate, cfg);
+>   }
+>   
+> +static void
+> +clk_rcg2_select_conf(struct clk_hw *hw, struct freq_tbl *f_tbl,
+> +		     const struct freq_tbl *f, unsigned long req_rate)
+> +{
+> +	unsigned long best_rate = 0, parent_rate, rate;
+> +	const struct freq_conf *conf, *best_conf;
+> +	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
+> +	struct clk_hw *p;
+> +	int index, i;
+> +
+> +	/* Search in each provided config the one that is near the wanted rate */
+> +	for (i = 0, conf = f->confs; i < f->confs_num; i++, conf++) {
+> +		index = qcom_find_src_index(hw, rcg->parent_map, conf->src);
+> +		if (index < 0)
+> +			continue;
+> +
+> +		p = clk_hw_get_parent_by_index(hw, index);
+> +		if (!p)
+> +			continue;
+> +
+> +		parent_rate =  clk_hw_get_rate(p);
+> +		rate = calc_rate(parent_rate, conf->n, conf->m, conf->n, conf->pre_div);
+> +
+> +		if (rate == req_rate) {
+> +			best_conf = conf;
+> +			break;
+> +		}
+> +
+> +		if (abs(req_rate - rate) < abs(best_rate - rate)) {
+> +			best_rate = rate;
+> +			best_conf = conf;
+> +		}
+> +	}
+> +
+> +	/*
+> +	 * Very unlikely.
+> +	 * Force the first conf if we can't find a correct config.
+> +	 */
+> +	if (unlikely(i == f->confs_num))
+> +		best_conf = f->confs;
+> +
+> +	/* Apply the config */
+> +	f_tbl->src = best_conf->src;
+> +	f_tbl->pre_div = best_conf->pre_div;
+> +	f_tbl->m = best_conf->m;
+> +	f_tbl->n = best_conf->n;
+> +}
+> +
+>   static int _freq_tbl_determine_rate(struct clk_hw *hw, const struct freq_tbl *f,
+>   				    struct clk_rate_request *req,
+>   				    enum freq_policy policy)
+>   {
+>   	unsigned long clk_flags, rate = req->rate;
+> +	struct freq_tbl f_tbl;
+>   	struct clk_hw *p;
+>   	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
+>   	int index;
+> @@ -232,7 +281,15 @@ static int _freq_tbl_determine_rate(struct clk_hw *hw, const struct freq_tbl *f,
+>   	if (!f)
+>   		return -EINVAL;
+>   
+> -	index = qcom_find_src_index(hw, rcg->parent_map, f->src);
+> +	f_tbl = *f;
+> +	/*
+> +	 * A single freq may be reached by multiple configuration.
+> +	 * Try to find the bast one if we have this kind of freq_table.
+> +	 */
+> +	if (f->confs)
+> +		clk_rcg2_select_conf(hw, &f_tbl, f, rate);
+> +
+> +	index = qcom_find_src_index(hw, rcg->parent_map, f_tbl.src);
+>   	if (index < 0)
+>   		return index;
+>   
+> @@ -242,18 +299,18 @@ static int _freq_tbl_determine_rate(struct clk_hw *hw, const struct freq_tbl *f,
+>   		return -EINVAL;
+>   
+>   	if (clk_flags & CLK_SET_RATE_PARENT) {
+> -		rate = f->freq;
+> -		if (f->pre_div) {
+> +		rate = f_tbl.freq;
+> +		if (f_tbl.pre_div) {
+>   			if (!rate)
+>   				rate = req->rate;
+>   			rate /= 2;
+> -			rate *= f->pre_div + 1;
+> +			rate *= f_tbl.pre_div + 1;
+>   		}
+>   
+> -		if (f->n) {
+> +		if (f_tbl.n) {
+>   			u64 tmp = rate;
+> -			tmp = tmp * f->n;
+> -			do_div(tmp, f->m);
+> +			tmp = tmp * f_tbl.n;
+> +			do_div(tmp, f_tbl.m);
+>   			rate = tmp;
+>   		}
+>   	} else {
+> @@ -261,7 +318,7 @@ static int _freq_tbl_determine_rate(struct clk_hw *hw, const struct freq_tbl *f,
+>   	}
+>   	req->best_parent_hw = p;
+>   	req->best_parent_rate = rate;
+> -	req->rate = f->freq;
+> +	req->rate = f_tbl.freq;
+>   
+>   	return 0;
+>   }
+> @@ -357,6 +414,7 @@ static int __clk_rcg2_set_rate(struct clk_hw *hw, unsigned long rate,
+>   {
+>   	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
+>   	const struct freq_tbl *f;
+> +	struct freq_tbl f_tbl;
+>   
+>   	switch (policy) {
+>   	case FLOOR:
+> @@ -372,7 +430,15 @@ static int __clk_rcg2_set_rate(struct clk_hw *hw, unsigned long rate,
+>   	if (!f)
+>   		return -EINVAL;
+>   
+> -	return clk_rcg2_configure(rcg, f);
+> +	f_tbl = *f;
+> +	/*
+> +	 * A single freq may be reached by multiple configuration.
+> +	 * Try to find the best one if we have this kind of freq_table.
+> +	 */
+> +	if (f->confs)
+> +		clk_rcg2_select_conf(hw, &f_tbl, f, rate);
+> +
+> +	return clk_rcg2_configure(rcg, &f_tbl);
+>   }
+>   
+>   static int clk_rcg2_set_rate(struct clk_hw *hw, unsigned long rate,
 
 -- 
 With best wishes
