@@ -2,73 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 688B76669C3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 04:46:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 610BA6669E1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 05:00:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235573AbjALDqR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Jan 2023 22:46:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41480 "EHLO
+        id S236117AbjALEAT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Jan 2023 23:00:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236039AbjALDqQ (ORCPT
+        with ESMTP id S235699AbjALEAQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Jan 2023 22:46:16 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C606658A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 19:46:12 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id d30so21678732lfv.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 19:46:12 -0800 (PST)
+        Wed, 11 Jan 2023 23:00:16 -0500
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5ED5E45667
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 20:00:13 -0800 (PST)
+Received: by mail-lf1-x134.google.com with SMTP id bf43so26620007lfb.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Jan 2023 20:00:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Y8dOW5pRnm76DXQ7mSIq/E9mwEicC9WVIGYw1/nEyxU=;
-        b=SrSc7Ok98mcZB4uw0ovIUIL4fPuoVdyZf2xGbEyL2IH18eiFkudK4vuHXjsmQKgCru
-         p9lXW/XHlHJill3+Xcuhi3lU87KUyHwx39BRIEMWFPEEzrKcabYbCm2c54u1nJYNLShw
-         meFPxMBikDk0rUFWsPVjVbvc1QF5aIbYh7NMME6Tz986tm/cvL4xMyaxoDt6kjqmvRaU
-         Ld6MHSAC87CYJfjRLC4V3aLAyqPOKbs8cmkUz0Bak6CdKPZ+BjfwBNy45KzhYrCy3c10
-         H3661D3RxFPpdl89OqA06vsNgffRMuAXWYiZqVobv6m6q1P4ei1F+5ri8VE7Pf1jjNZ7
-         FyWA==
+        bh=5EVhIygjFXI/wEoux14pr0fCdUTfx0iiJBUloQllnVI=;
+        b=Xyrya5U/NSLY9sRln6RfP1MnF8iETi9sdYaEYQ3HOPpDcBIMdx7sYtCsIMF0NIQp8a
+         PmlRe/AZTNHVl5dEKFw5BVzkBCLifL0RJD4rYy4kkm8V4FodOS4jGGNbHCyu+XNSBhgQ
+         ZsYBUD6nT/9AY5rR7XpXiBMZu+ATk3qaMRGSVA/XvSoC801HMzBSKwh5WuHkKWVX3/Hm
+         lTHqk9K5TvTtvm/wcOkCYSJpFPuMrEHvkXvOHEeSPYwYSPs2Hc696i/R4b8Pl8vqjAYH
+         W+jq6L4ikY5/LRdQQCyYyomDfb7abVEEEYCYX3zLqQZ81EGgY3BGoVdPAoL9aHk98QDG
+         O7Cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y8dOW5pRnm76DXQ7mSIq/E9mwEicC9WVIGYw1/nEyxU=;
-        b=OLiWiYfahmGUQEMrZWpLGdO519uAzbjMz0SO7HjVR7ycReYRnMBtHvYi49V3fRWtfJ
-         wUOzdrWvRXxTa/4SQ0nyNosGN7uD+sQXA2pdS20P8SIkOaSBYHy0CJTSfMfJhRZ4hUKx
-         Fz1noAPLtgaA3CvoqdZRyBkFNSwIZOwB2/DvEkTbs/pweLzaqgsalCecnzk6VRlmlv93
-         1yyTrQVoMPgb8wxpsIefT2ceZYxxZjejcAu7XY5LURMU+mAGwh/MFC+IfHFLH+BrNFXX
-         Sb0j2fhUnB34XEN1xwrCPJ+wFqNOckgi1YDEV0DF6uNwrz6HsVOyH5LxWWTuj91rJ767
-         ZRug==
-X-Gm-Message-State: AFqh2kp4Bmh0MIxkqg7My9RXAMtsYKaCoGE/DFDvNCmln5tstkkdsYq6
-        UnCUycPwY9YeTEy0EvZaouDD7Q==
-X-Google-Smtp-Source: AMrXdXtNqgbo3bWwww9N1TTda93aPV9HOIQW7H7jN1UHMm1J5cw89WqUlfXV4ivVrhaDZqubXTKPWA==
-X-Received: by 2002:a05:6512:3b99:b0:4a4:68b9:608c with SMTP id g25-20020a0565123b9900b004a468b9608cmr25955520lfv.23.1673495170904;
-        Wed, 11 Jan 2023 19:46:10 -0800 (PST)
+        bh=5EVhIygjFXI/wEoux14pr0fCdUTfx0iiJBUloQllnVI=;
+        b=EXXf//O3G4FVMBiLs/ELXscgTYh0Tr7DE4B1xOMZkm69EHQmlxl8Nj8RgR/EoeqREk
+         Hgrkfk5ehYsV908ia0ZrpIKp/Xu/QQkddbk81q64m9w3BpDoKlJWvkcfGYw1Wc+lFkU5
+         YFVMOYst+fIt5NV1iGPs2XuEmstIUD8QrvUSgMcwYgfCeU8AxkUKPbHpKaguO9ymH63s
+         dEMWPY4Iu1CFlcQwKULtmmQXe0uUO237cB6rIvHPhUtSnROH3R3xlNdlmnxyIp96AJGI
+         LCzF+8QLzgO7wL+zzpPCAHqEoK9K1zwbJrCP0pVDQXxiBbCd3Fu2JCzYFy/YG8qFucEx
+         aybQ==
+X-Gm-Message-State: AFqh2kpQ57Xc74B8TFXuV44qNak+GRpKWR0IEdT522io3rsQ8JNvAfAi
+        IWClVzCuoIBto5266ZIW1a9gaA==
+X-Google-Smtp-Source: AMrXdXudJ6zq35HX6LsvmUjQfgdbWkNYChpGbSjoQYJvDsgM9+AJHJISaSV38xz2ki3wZGsoSiVeNg==
+X-Received: by 2002:a05:6512:340d:b0:4b6:ec96:bb9a with SMTP id i13-20020a056512340d00b004b6ec96bb9amr26246255lfr.60.1673496011595;
+        Wed, 11 Jan 2023 20:00:11 -0800 (PST)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id 2-20020ac25f02000000b0048b365176d9sm3052440lfq.286.2023.01.11.19.46.10
+        by smtp.gmail.com with ESMTPSA id y4-20020a0565123f0400b004cc590975f7sm3051138lfa.183.2023.01.11.20.00.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Jan 2023 19:46:10 -0800 (PST)
-Message-ID: <00cebe7d-ae3d-8772-c206-cd3ce6a275c1@linaro.org>
-Date:   Thu, 12 Jan 2023 05:46:09 +0200
+        Wed, 11 Jan 2023 20:00:10 -0800 (PST)
+Message-ID: <f851bca5-d0e1-fe40-9b06-e6f2af37cce0@linaro.org>
+Date:   Thu, 12 Jan 2023 06:00:10 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [RESEND PATCH 1/2] clk: qcom: clk-rcg2: introduce support for
- multiple conf for same freq
+Subject: Re: [PATCH v6 2/6] dt-bindings: arm: msm: Convert and split kpss-acc
+ driver Documentation to yaml
 Content-Language: en-GB
 To:     Christian Marangi <ansuelsmth@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Robert Marko <robimarko@gmail.com>
-References: <20230111194250.15793-1-ansuelsmth@gmail.com>
+        Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org
+References: <20230110183259.19142-1-ansuelsmth@gmail.com>
+ <20230110183259.19142-3-ansuelsmth@gmail.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230111194250.15793-1-ansuelsmth@gmail.com>
+In-Reply-To: <20230110183259.19142-3-ansuelsmth@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -81,253 +84,221 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On 11/01/2023 21:42, Christian Marangi wrote:
-> Some RCG frequency can be reached by multiple configuration.
+On 10/01/2023 20:32, Christian Marangi wrote:
+> Convert kpss-acc driver Documentation to yaml.
+> The original Documentation was wrong all along. Fix it while we are
+> converting it.
+> The example was wrong as kpss-acc-v2 should only expose the regs but we
+> don't have any driver that expose additional clocks. The kpss-acc driver
+> is only specific to v1. For this exact reason, split the Documentation
+> to 2 different schema, v1 as clock-controller and v2 for
+> power-controller as per msm-3.10 specification, the exposed regs handle
+> power domains.
 > 
-> We currently declare multiple configuration for the same frequency but
-> that is not supported and always the first configuration will be taken.
-> 
-> These multiple configuration are needed as based on the current parent
-> configuration, it may be needed to use a different configuration to
-> reach the same frequency.
-> 
-> To handle this introduce 2 new macro, FM and C.
-> 
-> - FM is used to declare an empty freq_tbl with just the frequency and an
->    array of confs to insert all the config for the provided frequency.
-> 
-> - C is used to declare a fre_conf where src, pre_div, m and n are
->    provided.
-> 
-> The driver is changed to handle this special freq_tbl and select the
-> correct config by calculating the final rate and deciding based on the
-> one that is less different than the requested one.
-
-I gave this a thought.
-
-First some generic thought about RCG2 risen by your patch. I'll talk 
-about the CEIL functions, but the same applies to FLOOR ones.
-
-The clk_rcg2_determine_rate() / freq_tbl_determine_rate() determines the 
-best supported rate and and selects a best parent. Good. Then CCF will 
-pass the determined target rate, parent index and parent rate either to 
-clk_rcg2_set_rate() or to the clk_rcg2_set_rate_and_parent() depending 
-on whether it determines that the parent should be switched or not. So 
-far so good.
-
-However then the __clk_rcg2_set_rate() will perform the same search 
-again, taking care of FLOOR or CEIL, completely ignoring the fact that 
-rate passed is already known to be the supported rate, so we can just 
-look for it and ignoring the provided parent (or a note from CCF that 
-the parent should remain the same).
-
-This worked correctly in the single-possible-configuration case, however 
-it IMHO becames fragile in the multiple-possible-configuration case. 
-Consider CCF switching the parent rate during the clk_set_rate() call. 
-Then the second lookup might end up selecting _different_ parent/mnd 
-configuration.
-
-Thus said, I'd suggest first changing clk_rcg2_set_rate/and_parent(). 
-Make it look up the exact configuration without the rounding (it is 
-unnecessary anyway). This would require something like 
-qcom_find_freq_exact(). Or just loop over the table in 
-__clk_rcg2_set_rate().
-
-Then for your case make it actually use the provided parent index (or 
-the current parent in the .set_rate() case). This will make sure that we 
-follow CCF decisions instead of making them on our own.
-
-Finally for your usecase to work correcly you need to select correct 
-rate+parent in the .determine_rate callback.
-
-We know that the freq_table is sorted already. Add a loop to 
-_freq_tbl_determine_rate() policy switchcase to check next table entries 
-determing if their parent rate is better than the parent rate of the 
-selected entry.
-
-> 
-> Tested-by: Robert Marko <robimarko@gmail.com>
 > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
 > ---
->   drivers/clk/qcom/clk-rcg.h  | 14 ++++++-
->   drivers/clk/qcom/clk-rcg2.c | 84 +++++++++++++++++++++++++++++++++----
->   2 files changed, 88 insertions(+), 10 deletions(-)
+>   .../bindings/arm/msm/qcom,kpss-acc.txt        | 49 -------------
+>   .../bindings/clock/qcom,kpss-acc-v1.yaml      | 72 +++++++++++++++++++
+>   .../bindings/power/qcom,kpss-acc-v2.yaml      | 47 ++++++++++++
+>   3 files changed, 119 insertions(+), 49 deletions(-)
+>   delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.txt
+>   create mode 100644 Documentation/devicetree/bindings/clock/qcom,kpss-acc-v1.yaml
+>   create mode 100644 Documentation/devicetree/bindings/power/qcom,kpss-acc-v2.yaml
 > 
-> diff --git a/drivers/clk/qcom/clk-rcg.h b/drivers/clk/qcom/clk-rcg.h
-> index 01581f4d2c39..18f4f7b59f36 100644
-> --- a/drivers/clk/qcom/clk-rcg.h
-> +++ b/drivers/clk/qcom/clk-rcg.h
-> @@ -7,7 +7,17 @@
->   #include <linux/clk-provider.h>
->   #include "clk-regmap.h"
->   
-> -#define F(f, s, h, m, n) { (f), (s), (2 * (h) - 1), (m), (n) }
-> +#define F(f, s, h, m, n) { (f), (s), (2 * (h) - 1), (m), (n), 0, NULL }
+> diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.txt b/Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.txt
+> deleted file mode 100644
+> index 7f696362a4a1..000000000000
+> --- a/Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.txt
+> +++ /dev/null
+> @@ -1,49 +0,0 @@
+> -Krait Processor Sub-system (KPSS) Application Clock Controller (ACC)
+> -
+> -The KPSS ACC provides clock, power domain, and reset control to a Krait CPU.
+> -There is one ACC register region per CPU within the KPSS remapped region as
+> -well as an alias register region that remaps accesses to the ACC associated
+> -with the CPU accessing the region.
+> -
+> -PROPERTIES
+> -
+> -- compatible:
+> -	Usage: required
+> -	Value type: <string>
+> -	Definition: should be one of:
+> -			"qcom,kpss-acc-v1"
+> -			"qcom,kpss-acc-v2"
+> -
+> -- reg:
+> -	Usage: required
+> -	Value type: <prop-encoded-array>
+> -	Definition: the first element specifies the base address and size of
+> -		    the register region. An optional second element specifies
+> -		    the base address and size of the alias register region.
+> -
+> -- clocks:
+> -        Usage: required
+> -        Value type: <prop-encoded-array>
+> -        Definition: reference to the pll parents.
+> -
+> -- clock-names:
+> -        Usage: required
+> -        Value type: <stringlist>
+> -        Definition: must be "pll8_vote", "pxo".
+> -
+> -- clock-output-names:
+> -	Usage: optional
+> -	Value type: <string>
+> -	Definition: Name of the output clock. Typically acpuX_aux where X is a
+> -		    CPU number starting at 0.
+> -
+> -Example:
+> -
+> -	clock-controller@2088000 {
+> -		compatible = "qcom,kpss-acc-v2";
+> -		reg = <0x02088000 0x1000>,
+> -		      <0x02008000 0x1000>;
+> -		clocks = <&gcc PLL8_VOTE>, <&gcc PXO_SRC>;
+> -		clock-names = "pll8_vote", "pxo";
+> -		clock-output-names = "acpu0_aux";
+> -	};
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,kpss-acc-v1.yaml b/Documentation/devicetree/bindings/clock/qcom,kpss-acc-v1.yaml
+> new file mode 100644
+> index 000000000000..a466e4e8aacd
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,kpss-acc-v1.yaml
+> @@ -0,0 +1,72 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/clock/qcom,kpss-acc-v1.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +#define FM(_f, _confs) { .freq = (_f), .confs_num = ARRAY_SIZE(_confs), .confs = (_confs) }
-> +#define C(s, h, m, n) { (s), (2 * (h) - 1), (m), (n) }
+> +title: Krait Processor Sub-system (KPSS) Application Clock Controller (ACC) v1
 > +
-> +struct freq_conf {
-> +	u8 src;
-> +	u8 pre_div;
-> +	u16 m;
-> +	u16 n;
-> +};
->   
->   struct freq_tbl {
->   	unsigned long freq;
-> @@ -15,6 +25,8 @@ struct freq_tbl {
->   	u8 pre_div;
->   	u16 m;
->   	u16 n;
-> +	int confs_num;
-> +	const struct freq_conf *confs;
->   };
->   
->   /**
-> diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-> index 76551534f10d..7d3b59ec2b50 100644
-> --- a/drivers/clk/qcom/clk-rcg2.c
-> +++ b/drivers/clk/qcom/clk-rcg2.c
-> @@ -209,11 +209,60 @@ clk_rcg2_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
->   	return __clk_rcg2_recalc_rate(hw, parent_rate, cfg);
->   }
->   
-> +static void
-> +clk_rcg2_select_conf(struct clk_hw *hw, struct freq_tbl *f_tbl,
-> +		     const struct freq_tbl *f, unsigned long req_rate)
-> +{
-> +	unsigned long best_rate = 0, parent_rate, rate;
-> +	const struct freq_conf *conf, *best_conf;
-> +	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
-> +	struct clk_hw *p;
-> +	int index, i;
+> +maintainers:
+> +  - Christian Marangi <ansuelsmth@gmail.com>
 > +
-> +	/* Search in each provided config the one that is near the wanted rate */
-> +	for (i = 0, conf = f->confs; i < f->confs_num; i++, conf++) {
-> +		index = qcom_find_src_index(hw, rcg->parent_map, conf->src);
-> +		if (index < 0)
-> +			continue;
+> +description:
+> +  The KPSS ACC provides clock, power domain, and reset control to a Krait CPU.
+> +  There is one ACC register region per CPU within the KPSS remapped region as
+> +  well as an alias register region that remaps accesses to the ACC associated
+> +  with the CPU accessing the region. ACC v1 is currently used as a
+> +  clock-controller for enabling the cpu and hanling the aux clocks.
 > +
-> +		p = clk_hw_get_parent_by_index(hw, index);
-> +		if (!p)
-> +			continue;
+> +properties:
+> +  compatible:
+> +    const: qcom,kpss-acc-v1
 > +
-> +		parent_rate =  clk_hw_get_rate(p);
-> +		rate = calc_rate(parent_rate, conf->n, conf->m, conf->n, conf->pre_div);
+> +  reg:
+> +    items:
+> +      - description: Base address and size of the register region
+> +      - description: Optional base address and size of the alias register region
+> +    minItems: 1
 > +
-> +		if (rate == req_rate) {
-> +			best_conf = conf;
-> +			break;
-> +		}
+> +  clocks:
+> +    minItems: 2
+> +    maxItems: 2
 > +
-> +		if (abs(req_rate - rate) < abs(best_rate - rate)) {
-> +			best_rate = rate;
-> +			best_conf = conf;
-> +		}
-> +	}
+> +  clock-names:
+> +    items:
+> +      - const: pll8_vote
+> +      - const: pxo
 > +
-> +	/*
-> +	 * Very unlikely.
-> +	 * Force the first conf if we can't find a correct config.
-> +	 */
-> +	if (unlikely(i == f->confs_num))
-> +		best_conf = f->confs;
+> +  clock-output-names:
+> +    description: Name of the aux clock. Krait can have at most 4 cpu.
+> +    enum:
+> +      - acpu0_aux
+> +      - acpu1_aux
+> +      - acpu2_aux
+> +      - acpu3_aux
 > +
-> +	/* Apply the config */
-> +	f_tbl->src = best_conf->src;
-> +	f_tbl->pre_div = best_conf->pre_div;
-> +	f_tbl->m = best_conf->m;
-> +	f_tbl->n = best_conf->n;
-> +}
+> +  '#clock-cells':
+> +    const: 0
 > +
->   static int _freq_tbl_determine_rate(struct clk_hw *hw, const struct freq_tbl *f,
->   				    struct clk_rate_request *req,
->   				    enum freq_policy policy)
->   {
->   	unsigned long clk_flags, rate = req->rate;
-> +	struct freq_tbl f_tbl;
->   	struct clk_hw *p;
->   	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
->   	int index;
-> @@ -232,7 +281,15 @@ static int _freq_tbl_determine_rate(struct clk_hw *hw, const struct freq_tbl *f,
->   	if (!f)
->   		return -EINVAL;
->   
-> -	index = qcom_find_src_index(hw, rcg->parent_map, f->src);
-> +	f_tbl = *f;
-> +	/*
-> +	 * A single freq may be reached by multiple configuration.
-> +	 * Try to find the bast one if we have this kind of freq_table.
-> +	 */
-> +	if (f->confs)
-> +		clk_rcg2_select_conf(hw, &f_tbl, f, rate);
+> +required:
+> +  - compatible
+> +  - reg
+> +  - clocks
+> +  - clock-names
+> +  - clock-output-names
+> +  - '#clock-cells'
 > +
-> +	index = qcom_find_src_index(hw, rcg->parent_map, f_tbl.src);
->   	if (index < 0)
->   		return index;
->   
-> @@ -242,18 +299,18 @@ static int _freq_tbl_determine_rate(struct clk_hw *hw, const struct freq_tbl *f,
->   		return -EINVAL;
->   
->   	if (clk_flags & CLK_SET_RATE_PARENT) {
-> -		rate = f->freq;
-> -		if (f->pre_div) {
-> +		rate = f_tbl.freq;
-> +		if (f_tbl.pre_div) {
->   			if (!rate)
->   				rate = req->rate;
->   			rate /= 2;
-> -			rate *= f->pre_div + 1;
-> +			rate *= f_tbl.pre_div + 1;
->   		}
->   
-> -		if (f->n) {
-> +		if (f_tbl.n) {
->   			u64 tmp = rate;
-> -			tmp = tmp * f->n;
-> -			do_div(tmp, f->m);
-> +			tmp = tmp * f_tbl.n;
-> +			do_div(tmp, f_tbl.m);
->   			rate = tmp;
->   		}
->   	} else {
-> @@ -261,7 +318,7 @@ static int _freq_tbl_determine_rate(struct clk_hw *hw, const struct freq_tbl *f,
->   	}
->   	req->best_parent_hw = p;
->   	req->best_parent_rate = rate;
-> -	req->rate = f->freq;
-> +	req->rate = f_tbl.freq;
->   
->   	return 0;
->   }
-> @@ -357,6 +414,7 @@ static int __clk_rcg2_set_rate(struct clk_hw *hw, unsigned long rate,
->   {
->   	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
->   	const struct freq_tbl *f;
-> +	struct freq_tbl f_tbl;
->   
->   	switch (policy) {
->   	case FLOOR:
-> @@ -372,7 +430,15 @@ static int __clk_rcg2_set_rate(struct clk_hw *hw, unsigned long rate,
->   	if (!f)
->   		return -EINVAL;
->   
-> -	return clk_rcg2_configure(rcg, f);
-> +	f_tbl = *f;
-> +	/*
-> +	 * A single freq may be reached by multiple configuration.
-> +	 * Try to find the best one if we have this kind of freq_table.
-> +	 */
-> +	if (f->confs)
-> +		clk_rcg2_select_conf(hw, &f_tbl, f, rate);
+> +additionalProperties: false
 > +
-> +	return clk_rcg2_configure(rcg, &f_tbl);
->   }
->   
->   static int clk_rcg2_set_rate(struct clk_hw *hw, unsigned long rate,
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,gcc-ipq806x.h>
+> +
+> +    clock-controller@2088000 {
+> +      compatible = "qcom,kpss-acc-v1";
+> +      reg = <0x02088000 0x1000>, <0x02008000 0x1000>;
+> +      clocks = <&gcc PLL8_VOTE>, <&pxo_board>;
+> +      clock-names = "pll8_vote", "pxo";
+> +      clock-output-names = "acpu0_aux";
+> +      #clock-cells = <0>;
+> +    };
+> +
+> +...
+> diff --git a/Documentation/devicetree/bindings/power/qcom,kpss-acc-v2.yaml b/Documentation/devicetree/bindings/power/qcom,kpss-acc-v2.yaml
+> new file mode 100644
+> index 000000000000..91af95569ae6
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/power/qcom,kpss-acc-v2.yaml
+> @@ -0,0 +1,47 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/power/qcom,kpss-acc-v2.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Krait Processor Sub-system (KPSS) Application Clock Controller (ACC) v2
+> +
+> +maintainers:
+> +  - Christian Marangi <ansuelsmth@gmail.com>
+> +
+> +description:
+> +  The KPSS ACC provides clock, power domain, and reset control to a Krait CPU.
+> +  There is one ACC register region per CPU within the KPSS remapped region as
+> +  well as an alias register region that remaps accesses to the ACC associated
+> +  with the CPU accessing the region. ACC v2 is currently used as a
+> +  power-controller for enabling the cpu.
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,kpss-acc-v2
+> +
+> +  reg:
+> +    items:
+> +      - description: Base address and size of the register region
+> +      - description: Optional base address and size of the alias register region
+> +    minItems: 1
+> +
+> +  '#power-domain-cells':
+> +    const: 0
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - '#power-domain-cells'
+
+This dictates that if at some point we implement the kps-acc-v2 driver, 
+it will return a single power domain. I can not confirm that this would 
+be the case. I see that you want to migrate from the clock-controller as 
+the acc-v2 doesn't provide clocks. I'd suggest instead using the neutral 
+`power-manager@...` node name. It doesn't demand anything, so we can 
+drop the (unused and unsupported) #power-domain-cells property.
+
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    power-controller@f9088000 {
+> +      compatible = "qcom,kpss-acc-v2";
+> +      reg = <0xf9088000 0x1000>,
+> +            <0xf9008000 0x1000>;
+> +      #power-domain-cells = <0>;
+> +    };
+> +...
 
 -- 
 With best wishes
