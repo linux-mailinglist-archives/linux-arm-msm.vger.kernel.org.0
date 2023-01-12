@@ -2,191 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A5755666CC2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 09:44:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CF544666D09
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 09:54:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239820AbjALIoq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Jan 2023 03:44:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37612 "EHLO
+        id S235689AbjALIyE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Jan 2023 03:54:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239272AbjALIn6 (ORCPT
+        with ESMTP id S236034AbjALIxH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Jan 2023 03:43:58 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3AB63AABE
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 00:43:15 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id bs20so17338182wrb.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 00:43:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=3Zb2prwX5ewnpgdzGw19Cc+Sw5XwnAa7NXe+OMV8jKw=;
-        b=NmjCWa3o41jWihWfacB/vaadHdW6R3wPXPz0YoS1Zy9ajcSo8AHwhhmMNLzzZ9Jzch
-         2s4zuWUU/tHZ5amGoQUBnaTLZYVtTL2gSh4uwB/BJUU3kHVRM+JkRzMQ4Y7r0rWk7Qpo
-         FUB6IZYahv/m2gRJd8OmTl7puOGMtRtZ7SUaGolpuFDuMYD0u/7/6auSAaE0fdvXjqlT
-         Tn/D+vlpVXPY30VyWCtFaCc8jRO0Ht3cDydmjac+ztFDNiCo5dxZAU8QXJ6ZBNYVUBDn
-         Y+CzH18vNNsCGIjIC71JzXpqo1xkrGILS/qFAb3l4BhQ/NcvOI7ERU+HfeajEw93paYw
-         V9/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3Zb2prwX5ewnpgdzGw19Cc+Sw5XwnAa7NXe+OMV8jKw=;
-        b=yiXL/wulQO1wwzKNet0UnbTDqwH6cSOqCqCeQGN8Bwoqbu6aLKHDVqoFe56cF2SnJD
-         AXebigUQrf0GaCZv7SdBsE0N3nouvZr7+oO7h4j5zKncJzRk9tmY7Bh6U/n7xfooEB6d
-         OpgSIPr75S8aBrM3fiIFzBVAj6G0oP6HrZTtj50cA7yiM6rO7O99pfYqlCEFTC/l+HO5
-         9RwNzicX2Rq/1wL4SWEJTWZUMQwnhTUDYuX8BT5owYVX3c5FAdyN3cu8mggiEXghTJ07
-         VY10d+qNwFRaTMRGHOmOvoIChPJM1s9Fn0pEldpFGjzCwQgrx7+DwZwJ67DSmb6zfgyj
-         N9+A==
-X-Gm-Message-State: AFqh2kq/++w11bZLV3UfwBepcKpoPnFqrNchveNIwFNiLmZfLeYk8q8f
-        1bLehJ3rGUCBoBnqbrEw7J9nPg==
-X-Google-Smtp-Source: AMrXdXsejK532QbrJU+qy0oL4K+xygxwTovkVl1SS4XhjsKm22GDtCxbtqsPwWLfArk8pblgJRfzcQ==
-X-Received: by 2002:a5d:5908:0:b0:2bb:dd87:3482 with SMTP id v8-20020a5d5908000000b002bbdd873482mr11003508wrd.39.1673512994127;
-        Thu, 12 Jan 2023 00:43:14 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:3b9e:7554:4633:9a59? ([2a01:e0a:982:cbb0:3b9e:7554:4633:9a59])
-        by smtp.gmail.com with ESMTPSA id w4-20020a5d4b44000000b002366dd0e030sm15645501wrs.68.2023.01.12.00.43.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Jan 2023 00:43:13 -0800 (PST)
-Message-ID: <c0ab0802-bced-34ac-c25f-f80ef17d7a41@linaro.org>
-Date:   Thu, 12 Jan 2023 09:43:13 +0100
+        Thu, 12 Jan 2023 03:53:07 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C192D3;
+        Thu, 12 Jan 2023 00:52:05 -0800 (PST)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30C82YEV032159;
+        Thu, 12 Jan 2023 08:51:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=vaaXR6/xLkXfr+cdrvDTRu6EKhyxTeql7XGBY3p8j5Q=;
+ b=G1F09zrNKvnVjMTT448WSCBa18uF8aCRNBUAlx/czYS9dxCN7CEK8LETI3l5tB568G75
+ mg5C+9r4Ikcc+dM46rjvmtLWMmNrL8SB9Y0E8axesjbpmG+qJAHLqjxQLPW1wKAauI9N
+ qqi3p/flNNyN80koMiFGhIEZVZdYNdyr7NxIQjPwuW2zaoHzuB2K3Xd7mM7EPApsoawh
+ 9/kfkYgccZXe9R0x3UBRIb3/GG9obdtK+lGZm5TD0nOzk60H+jgokrVhwGXMp2HwFQT3
+ 9bK/r3p9xXCbdAaGUYGiQEuLGTndvxVgYmC9zouJrKi30UNdOHZo3NA6l9OzDr5iWB0y ZA== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n1m6p38mc-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 12 Jan 2023 08:51:56 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30C8ptkS008059
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 12 Jan 2023 08:51:55 GMT
+Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Thu, 12 Jan 2023 00:51:52 -0800
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Mukesh Ojha <quic_mojha@quicinc.com>
+Subject: [PATCH 1/2] arm64: dts: qcom: sm8450: Add TCSR halt register space
+Date:   Thu, 12 Jan 2023 14:21:41 +0530
+Message-ID: <1673513501-29938-1-git-send-email-quic_mojha@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-From:   neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v2 12/13] drm/bridge: lt9611: stop filtering modes via the
- table
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>
-Cc:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org
-References: <20230108165656.136871-1-dmitry.baryshkov@linaro.org>
- <20230108165656.136871-13-dmitry.baryshkov@linaro.org>
- <c03235b1-85d1-1e55-b8c2-9a553887145f@linaro.org>
- <1b29bbef-1ee3-654c-bb58-c8fcf3b876a0@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <1b29bbef-1ee3-654c-bb58-c8fcf3b876a0@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: txpHnp4PFXodNVrk9QuQ9ybv9x0U-bqD
+X-Proofpoint-GUID: txpHnp4PFXodNVrk9QuQ9ybv9x0U-bqD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2023-01-12_04,2023-01-11_03,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 suspectscore=0
+ mlxscore=0 bulkscore=0 lowpriorityscore=0 malwarescore=0 mlxlogscore=875
+ clxscore=1015 spamscore=0 phishscore=0 priorityscore=1501 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2301120061
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/01/2023 16:37, Dmitry Baryshkov wrote:
-> On 11/01/2023 12:57, Neil Armstrong wrote:
->> On 08/01/2023 17:56, Dmitry Baryshkov wrote:
->>> The lt9611 bridge can support different modes, it makes no sense to list
->>> them in the table. Drop the table and check the number of interfaces
->>> using the fixed value.
->>>
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->>>   drivers/gpu/drm/bridge/lontium-lt9611.c | 41 +++----------------------
->>>   1 file changed, 4 insertions(+), 37 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/bridge/lontium-lt9611.c b/drivers/gpu/drm/bridge/lontium-lt9611.c
->>> index 82af1f954cc6..df9f015aa3a0 100644
->>> --- a/drivers/gpu/drm/bridge/lontium-lt9611.c
->>> +++ b/drivers/gpu/drm/bridge/lontium-lt9611.c
->>> @@ -84,24 +84,6 @@ static const struct regmap_config lt9611_regmap_config = {
->>>       .num_ranges = ARRAY_SIZE(lt9611_ranges),
->>>   };
->>> -struct lt9611_mode {
->>> -    u16 hdisplay;
->>> -    u16 vdisplay;
->>> -    u8 vrefresh;
->>> -    u8 lanes;
->>> -    u8 intfs;
->>> -};
->>> -
->>> -static struct lt9611_mode lt9611_modes[] = {
->>> -    { 3840, 2160, 30, 4, 2 }, /* 3840x2160 24bit 30Hz 4Lane 2ports */
->>> -    { 1920, 1080, 60, 4, 1 }, /* 1080P 24bit 60Hz 4lane 1port */
->>> -    { 1920, 1080, 30, 3, 1 }, /* 1080P 24bit 30Hz 3lane 1port */
->>> -    { 1920, 1080, 24, 3, 1 },
->>> -    { 720, 480, 60, 4, 1 },
->>> -    { 720, 576, 50, 2, 1 },
->>> -    { 640, 480, 60, 2, 1 },
->>> -};
->>> -
->>>   static struct lt9611 *bridge_to_lt9611(struct drm_bridge *bridge)
->>>   {
->>>       return container_of(bridge, struct lt9611, bridge);
->>> @@ -603,21 +585,6 @@ static int lt9611_regulator_enable(struct lt9611 *lt9611)
->>>       return 0;
->>>   }
->>> -static struct lt9611_mode *lt9611_find_mode(const struct drm_display_mode *mode)
->>> -{
->>> -    int i;
->>> -
->>> -    for (i = 0; i < ARRAY_SIZE(lt9611_modes); i++) {
->>> -        if (lt9611_modes[i].hdisplay == mode->hdisplay &&
->>> -            lt9611_modes[i].vdisplay == mode->vdisplay &&
->>> -            lt9611_modes[i].vrefresh == drm_mode_vrefresh(mode)) {
->>> -            return &lt9611_modes[i];
->>> -        }
->>> -    }
->>> -
->>> -    return NULL;
->>> -}
->>> -
->>>   static enum drm_connector_status lt9611_bridge_detect(struct drm_bridge *bridge)
->>>   {
->>>       struct lt9611 *lt9611 = bridge_to_lt9611(bridge);
->>> @@ -832,12 +799,12 @@ static enum drm_mode_status lt9611_bridge_mode_valid(struct drm_bridge *bridge,
->>>                                const struct drm_display_info *info,
->>>                                const struct drm_display_mode *mode)
->>>   {
->>> -    struct lt9611_mode *lt9611_mode = lt9611_find_mode(mode);
->>>       struct lt9611 *lt9611 = bridge_to_lt9611(bridge);
->>> -    if (!lt9611_mode)
->>> -        return MODE_BAD;
->>> -    else if (lt9611_mode->intfs > 1 && !lt9611->dsi1)
->>> +    if (mode->hdisplay >= 3840 && drm_mode_vrefresh(mode) >= 31)
->>
->> Isn't 31 a typo ?
-> 
-> Maybe I should change that to drm_mode_vrefresh(mode) > 30. The chip supports 3840x2160-30, but doesn't promise to support anything above that.
+Add TCSR register space and refer it from scm node, so that
+it can be used by SCM driver.
 
-Yep >= 31 is valid, but > 30 seems more logical.
+Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+---
+ arch/arm64/boot/dts/qcom/sm8450.dtsi | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-Concerning the hdisplay check, shouldn't be separate ?
-
-You should switch to:
-if (mode->hdisplay > 3840)
-    return MODE_BAD_WIDTH;
-
-if (mode->hdisplay == 3840 && drm_mode_vrefresh(mode) > 30)
-    return MODE_CLOCK_HIGH;
-
-Isn't there limits on vdisplay aswell ?
-
-Neil
-
-> 
->>
->>> +        return MODE_CLOCK_HIGH;
->>> +
->>> +    if (mode->hdisplay > 2000 && !lt9611->dsi1_node)
->>>           return MODE_PANEL;
->>>       else
->>>           return MODE_OK;
->>
-> 
+diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+index 5704750..e0fa733 100644
+--- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+@@ -270,6 +270,7 @@
+ 	firmware {
+ 		scm: scm {
+ 			compatible = "qcom,scm-sm8450", "qcom,scm";
++			qcom,dload-mode = <&tcsr 0x13000>;
+ 			interconnects = <&aggre2_noc MASTER_CRYPTO 0 &mc_virt SLAVE_EBI1 0>;
+ 			#reset-cells = <1>;
+ 		};
+@@ -1986,6 +1987,11 @@
+ 			#hwlock-cells = <1>;
+ 		};
+ 
++		tcsr: syscon@1fc0000 {
++			compatible = "syscon";
++			reg = <0x0 0x1fc0000 0x0 0x30000>;
++		};
++
+ 		usb_1_hsphy: phy@88e3000 {
+ 			compatible = "qcom,sm8450-usb-hs-phy",
+ 				     "qcom,usb-snps-hs-7nm-phy";
+-- 
+2.7.4
 
