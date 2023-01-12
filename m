@@ -2,139 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E51A4666BD7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 08:53:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C5AC666C1E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 09:10:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232408AbjALHxn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Jan 2023 02:53:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38812 "EHLO
+        id S236603AbjALIKp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Jan 2023 03:10:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239582AbjALHxl (ORCPT
+        with ESMTP id S236554AbjALIKo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Jan 2023 02:53:41 -0500
+        Thu, 12 Jan 2023 03:10:44 -0500
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D35732D3;
-        Wed, 11 Jan 2023 23:53:40 -0800 (PST)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30C507nG031933;
-        Thu, 12 Jan 2023 07:53:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Z2E17IM8wAOkzE3bOMcYE5ko48avJ+SntFtszHOnGuc=;
- b=SiifzYuwUFICBPEh5dFp+77i6wvq0Imjzup0t8Vj9EPRcgPSkSLUFZN4i3FM2sCHgafq
- bWnHN9gr+GqHyifPlzcIAdtN5pOFyctKOKS3cz5MKtssfYUYac7Kf5rd6NUWzmWlGCc4
- gg7unVrCIzL1K5kcf7nbZiWLHovIETI0rIkJ1PkJP1Xa2BUfHyYC4DUz59UtA/M85l6M
- DPyVEyvfFuMvwS/NyPAFv9sPtYbO9FSgZJ9rDpslxHqs25WhoplWy8+5mHafQHLM9q5Y
- hVTAp+vxSQcIbzqXDykbnxr29Qo1Y/jVk20G3PWhmmtKiVuwR1DhZNvMMcXsxVhobxz1 cw== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n1kbqbaxq-1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1163D6395;
+        Thu, 12 Jan 2023 00:10:42 -0800 (PST)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30C82O0p013512;
+        Thu, 12 Jan 2023 08:10:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=SIYJpAAG6As/Bgis/MRqHbo9HU5RVgHPKvoCYrjcUPc=;
+ b=ixw23CdFnje/F0ycCnMVDyaLgkRaBbl5+Y8i4GdwYNBPilndDJyK9HK3T0+o4LxW3GJ+
+ PWEtcHsYOke/fjWK89kp9wa8WFznZbr2wyiTwQWoLydFhFTBO8umJ0QUBSoIxZNB//yU
+ wgX5U5OeMlNFaQSqywCz1Ow5AhQ+hZTtEK8erzHoMlGySO6Zt9PX+MEWzml3qtI1KBYB
+ Ui4vhmmV8YZt4wcm30Ky6mUxnN23vWUo7npLz1gMhVXjhXZQinQgulQiufFNU3jZZbib
+ yCLXBoywsJCwP8uLqHoXLXWoVi7KliXktCUwjYx8QT7Wsc5E+xf2sOJTqow+XeBwyEEd Cw== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n1kaxbc9p-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 12 Jan 2023 07:53:31 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30C7rUru013433
+        Thu, 12 Jan 2023 08:10:39 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30C8AcRR029089
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 12 Jan 2023 07:53:30 GMT
-Received: from [10.216.26.58] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 11 Jan
- 2023 23:53:26 -0800
-Message-ID: <6cea0a3f-08de-47d5-99d1-74b0d8c7b732@quicinc.com>
-Date:   Thu, 12 Jan 2023 13:23:23 +0530
+        Thu, 12 Jan 2023 08:10:38 GMT
+Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Thu, 12 Jan 2023 00:10:35 -0800
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Mukesh Ojha <quic_mojha@quicinc.com>
+Subject: [PATCH v2 1/2] dt-bindings: mfd: qcom,tcsr: Add compatible for sm8450
+Date:   Thu, 12 Jan 2023 13:40:13 +0530
+Message-ID: <1673511014-4721-1-git-send-email-quic_mojha@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [RESEND v3 4/4] clk: qcom: lpasscc-sc7280: Add resets for
- audioreach
-Content-Language: en-US
-To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <broonie@kernel.org>,
-        <konrad.dybcio@somainline.org>,
-        <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <mturquette@baylibre.com>,
-        <quic_plai@quicinc.com>, <quic_rohkumar@quicinc.com>,
-        <robh+dt@kernel.org>
-References: <1672849297-3116-1-git-send-email-quic_srivasam@quicinc.com>
- <1672849297-3116-5-git-send-email-quic_srivasam@quicinc.com>
- <CAE-0n51AZCa9K_uY=ikTLqV-g_MsSA6Lv=Zq1LMrF-wVhR8_pg@mail.gmail.com>
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Organization: Qualcomm
-In-Reply-To: <CAE-0n51AZCa9K_uY=ikTLqV-g_MsSA6Lv=Zq1LMrF-wVhR8_pg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: SKRscNP94S3IzVaPS207vQZG7rWJWdq_
-X-Proofpoint-ORIG-GUID: SKRscNP94S3IzVaPS207vQZG7rWJWdq_
+X-Proofpoint-ORIG-GUID: jG2cqLHONoZfYw7H-SZZlZS6S-NvUzh4
+X-Proofpoint-GUID: jG2cqLHONoZfYw7H-SZZlZS6S-NvUzh4
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
  definitions=2023-01-12_04,2023-01-11_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- suspectscore=0 mlxlogscore=999 spamscore=0 malwarescore=0 adultscore=0
- mlxscore=0 impostorscore=0 phishscore=0 clxscore=1015 bulkscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301120055
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
+ impostorscore=0 lowpriorityscore=0 adultscore=0 priorityscore=1501
+ spamscore=0 malwarescore=0 suspectscore=0 mlxlogscore=825 phishscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301120057
 X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Document the qcom,tcsr-sm8450 compatible.
 
-On 1/12/2023 2:54 AM, Stephen Boyd wrote:
-Thanks for your time Stephen!!!
-> Quoting Srinivasa Rao Mandadapu (2023-01-04 08:21:37)
->> The clock gating control for TX/RX/WSA core bus clocks would be required
->> to be reset(moved from hardware control) from audio core driver. Thus
->> add the support for the reset clocks in audioreach based clock driver.
->>
->> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
->> Tested-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
->> ---
->>   drivers/clk/qcom/lpasscc-sc7280.c | 23 +++++++++++++++++++++++
->>   1 file changed, 23 insertions(+)
->>
->> diff --git a/drivers/clk/qcom/lpasscc-sc7280.c b/drivers/clk/qcom/lpasscc-sc7280.c
->> index 85dd5b9..1efb72d 100644
->> --- a/drivers/clk/qcom/lpasscc-sc7280.c
->> +++ b/drivers/clk/qcom/lpasscc-sc7280.c
->> @@ -12,10 +12,12 @@
->>   #include <linux/regmap.h>
->>
->>   #include <dt-bindings/clock/qcom,lpass-sc7280.h>
->> +#include <dt-bindings/clock/qcom,lpassaudiocc-sc7280.h>
->>
->>   #include "clk-regmap.h"
->>   #include "clk-branch.h"
->>   #include "common.h"
->> +#include "reset.h"
->>
->>   static struct clk_branch lpass_top_cc_lpi_q6_axim_hs_clk = {
->>          .halt_reg = 0x0,
->> @@ -102,6 +104,18 @@ static const struct qcom_cc_desc lpass_qdsp6ss_sc7280_desc = {
->>          .num_clks = ARRAY_SIZE(lpass_qdsp6ss_sc7280_clocks),
->>   };
->>
->> +static const struct qcom_reset_map lpass_cc_sc7280_resets[] = {
->> +       [LPASS_AUDIO_SWR_RX_CGCR] =  { 0xa0, 1 },
->> +       [LPASS_AUDIO_SWR_TX_CGCR] =  { 0xa8, 1 },
->> +       [LPASS_AUDIO_SWR_WSA_CGCR] = { 0xb0, 1 },
-> Why are we adding these resets again? These are already exposed in
-> lpassaudiocc-sc7280.c
+Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+---
+Change in v2:
+  - Considering here it as v2 as this patch came out from comment
+    made on its v1 https://lore.kernel.org/lkml/c5dc8042-717b-22eb-79f6-d18ab10d6685@linaro.org/
 
-As explained in previous versions, legacy path nodes are not being used 
-in ADSP based platforms, due to conflicts.
+ Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-Hence lpasscc node alone being used exclusively in ADSP based solution, 
-resets are added.
-
-In probe also, these reset controls are enabled based on 
-"qcom,adsp-pil-mode" property.
+diff --git a/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml b/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
+index adcae6c..bdf7ab4 100644
+--- a/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
++++ b/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
+@@ -37,6 +37,7 @@ properties:
+           - qcom,tcsr-msm8960
+           - qcom,tcsr-msm8974
+           - qcom,tcsr-msm8996
++          - qcom,tcsr-sm8450
+       - const: syscon
+ 
+   reg:
+-- 
+2.7.4
 
