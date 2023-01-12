@@ -2,61 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 46C9A667CF9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 18:50:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D3CE667CFC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 18:51:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231919AbjALRug (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Jan 2023 12:50:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36314 "EHLO
+        id S234531AbjALRvn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Jan 2023 12:51:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234748AbjALRuD (ORCPT
+        with ESMTP id S234248AbjALRuw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Jan 2023 12:50:03 -0500
+        Thu, 12 Jan 2023 12:50:52 -0500
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63627F58F;
-        Thu, 12 Jan 2023 09:10:10 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8505030547;
+        Thu, 12 Jan 2023 09:11:30 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 0C3FF620E1;
-        Thu, 12 Jan 2023 17:10:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3D15C433F0;
-        Thu, 12 Jan 2023 17:10:08 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 1C9B6620E2;
+        Thu, 12 Jan 2023 17:11:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2A86C433EF;
+        Thu, 12 Jan 2023 17:11:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1673543409;
-        bh=1+WjOSDdXrMcNMcQy+7IiCob8iRltz4E0DW08K4gihM=;
+        s=k20201202; t=1673543489;
+        bh=wGqSSUxokKljpXDAZgu+rOwnQLNJ0q0o/BKGpJxolX8=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=GMS95Q66LnC8a7WsDjfSyYqdyrXCQ3RrEi8R1YCt3IJ//JufSgDZHjtuj2ws0Ln1F
-         Meo8GPbBy4HnyXbf1q6kmef6qHKrJF856c3A1qPTSl/ARPf+zkeOz6OYT0cVkAPz1K
-         t5gq426zbo5qz09v1CGcFdMg15A7bXe6fenhB4HcFo/DotKvbkbfhqEbMTTsl3Zhaw
-         oeT74RPVHtzRq6UF7smKYe03Od+zv8spOgEEncrQEssRAfakq7uV0ROP0eis67EXaB
-         3OALPDIk4/1C2R9tgC51ojH40guMf25vJYZrrF+99QSDbb4tlB9AmnsRxYguHa2eSz
-         B4S4N744El33w==
-Date:   Thu, 12 Jan 2023 22:40:05 +0530
+        b=h24o3Or9w6yeWnIZfAja/eIea6a5MIYmk1rIWXHaPEkUIKCSyIwyV4l4a0wabv4Jm
+         4YEgIeQT2KFqd/irpxZfk+p9nEaoy238e1ctA9xEsRTVBWB9TivXHCIkHqI1n0ojZT
+         8hfPPoobR/Gg3md9qhqk3PwxLChNPGhOr1xN58Al+P3CPUP4jTBr8j9EFs4stfgMQc
+         53Q+UTIObjcDRmp6npEjjBlnmNACRthADQb8GUNQI9TXTsL/hq/F2+KJ6CmAejpQ80
+         YxiHDtPRfJpmnaEnqH/TdfNO01jSVWD4LERW6RX2UK3vpYQF/crSNuOBMXtS9dYd/W
+         7PXJcsPiLhbjw==
+Date:   Thu, 12 Jan 2023 22:41:25 +0530
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
         Philipp Zabel <p.zabel@pengutronix.de>,
-        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         devicetree@vger.kernel.org
-Subject: Re: [PATCH v4 0/8] PCI/phy: Add support for PCI on sm8350 platform
-Message-ID: <Y8A+7fYn7LEAxZjq@matsya>
-References: <20221118233242.2904088-1-dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v3 0/2] phy: qualcomm: pcie2: register as clock provider
+Message-ID: <Y8A/PdhFMAvbQfVl@matsya>
+References: <20221229115932.3312318-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221118233242.2904088-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20221229115932.3312318-1-dmitry.baryshkov@linaro.org>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -66,16 +60,11 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19-11-22, 01:32, Dmitry Baryshkov wrote:
-> SM8350 is one of the recent Qualcomm platforms which lacks PCIe support.
-> Use sm8450 PHY tables to add support for the PCIe hosts on Qualcomm SM8350 platform.
-> 
-> Note: the PCIe0 table is based on the lahaina-v2.1.dtsi file, so it
-> might work incorrectly on earlier SoC revisions.
+On 29-12-22, 13:59, Dmitry Baryshkov wrote:
+> On Qualcomm QCS404 platform the PCIe2 PHY provides PIPE clock to the gcc
+> (Global Clock Controller). Register the PHY as clock provider.
 
-Applied 2, 4-6 to phy/next
-
-Thanks
+Applied, thanks
 
 -- 
 ~Vinod
