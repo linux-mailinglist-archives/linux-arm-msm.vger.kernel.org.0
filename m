@@ -2,64 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AA15D666E4C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 10:32:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 92481666E52
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 10:34:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235770AbjALJcS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Jan 2023 04:32:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47328 "EHLO
+        id S231620AbjALJeK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Jan 2023 04:34:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240236AbjALJbZ (ORCPT
+        with ESMTP id S240090AbjALJc4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Jan 2023 04:31:25 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E3131A807
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 01:27:08 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id h16so17433426wrz.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 01:27:08 -0800 (PST)
+        Thu, 12 Jan 2023 04:32:56 -0500
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 307713AB2C
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 01:28:05 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id j16-20020a05600c1c1000b003d9ef8c274bso10146488wms.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 01:28:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:organization:references:cc:to
          :content-language:subject:reply-to:from:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=QSEIhlWHvAZaW6UKLsgzkNyGZuKx+U0pt2A72T4kA0U=;
-        b=Afz0Kqjc5bY8KuKWMkSI9opBOiopFMcls0+32vim85vpVHHTLweyrp/qRPadFTQWZW
-         JpcgKbds88VyEQ+LDEGCT2KiNbfSteQj80WQvmVistaRE7XaiLtPtvmWAKNz245x4JLo
-         X0qUiNlMc6bFkowFojklC4+y1+2QupLYXierO4yTq4hA2v0KVFRhGWqlXD4/p75I6gd3
-         GK0IQcO205Ea3sT+xAWE0xuqCeje2vogRQ0GcC5pMI1CBkEdckxbXoV73KhwJavuqgfN
-         4oo+b3V6mpsjdVExhoFAhfQZTFqrzRGIxvBK+Cr3UkV2i/XkVGxqehGShKV3eoim1qAA
-         Iysw==
+        bh=bE4oQCcZATgYswFNXjiN1PSYvEeSqVFFTUEgVcCHRqY=;
+        b=WLFz0SjPniOmuuhOSq+y9zKQAgHClwh20BdVYXd2Umlja+eunpiFmc7s4kRtI42i+d
+         zsnRwdmemcr0uWpc5ln/7xC4tvfHa9q8taCiKhXFHVGwldR/cvFgYqkpQC+ApK+xYW5X
+         E9k27xRHWDgSmWUl32GFnSYvceHlHhBpZNR6o7Rd8Q65PgYJuwfFeK3RMUnm7AmrgE8B
+         v3HPtaqezo5VwCsQXK//0JgmLTlKD4monuuDMLiDIbOesJcEXoITlXHhRdKVOokTROSp
+         nP8o+IqDYx+qgbRkN4BXC1sP2+v7bkxfUFDUnCBicq8WafK5E9RrOulGiHlW60hvuUoj
+         WSSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:organization:references:cc:to
          :content-language:subject:reply-to:from:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=QSEIhlWHvAZaW6UKLsgzkNyGZuKx+U0pt2A72T4kA0U=;
-        b=H+CfiSLqUIjLxOVGwtqywNuG5QNapcBg50+1gQASULTIbMLuYtY7zQFjgBS+ZMM1hk
-         LCo7xCwABBK1zn3ny4ITUlF4DrSNTG0aC6yDWeYOAcZ4rubj6r1DxJbm3awE8D7CnR2P
-         YsVlIw9rswYKW0NHzehj0+gl4b9UBG1fE9gOa66f8ahrotdTN1/Wa212ryTRA9bsU/0A
-         BX51sT3/XhBEnAzBprpy08znX1J7oKguqTzWOhXH2IAXB9Er561jVo1nUJuQspg1YpBH
-         xIf9R3esY1L1ZnHAHIuzBiCgd8w9iQtpiN47EopUWlD3ie74PpFhSPS87ASEqBo37DAW
-         GpkQ==
-X-Gm-Message-State: AFqh2kpY0YwRFUyzfTaCtZNbHNUZDX6zcptj3XmE4KWskN9xq5nK9hwG
-        YZyaqY3D3xkCyHWNBpoeI7rwlg==
-X-Google-Smtp-Source: AMrXdXuNRsIItkqMfwS//Sj29c/EC9qU8GAYdV+ryEweIF8taUsEbKBh+wtFM3S10VRLabmbl1dO3Q==
-X-Received: by 2002:a05:6000:80b:b0:29a:c631:e3ff with SMTP id bt11-20020a056000080b00b0029ac631e3ffmr25588539wrb.53.1673515626801;
-        Thu, 12 Jan 2023 01:27:06 -0800 (PST)
+        bh=bE4oQCcZATgYswFNXjiN1PSYvEeSqVFFTUEgVcCHRqY=;
+        b=hCqs8Roj0/Kv9O3nODvjQoedV2SGTLaZ3pBgK9KFBn1x8pMIa7V+skPPcvIo7yfL2G
+         EwjlbswhLsDNm71XSh/nUr+bGXxROCGZYbou58Gvo1zdrJJsBBmRSS3C7RROtv34hK6z
+         VqMmwgymT5dyDJ6UIzboNhApEk26xrfvVgyvOaAS7i04Q3hBgBlEm4U1pT+xXeVEvE63
+         uKnBxvfcQive7c43PRA1OpSZ/JcXMT2B+uBy/TEecn0eDutr4CY9hbE1eTFSkdVrcfZx
+         YRvAAySgWKlC78aeE+2j06IbooWxuZ4lE2MggbeRJ31yChRlp5HUrWNO+N3Cwvw9btD0
+         2WYA==
+X-Gm-Message-State: AFqh2kqaSk0AjZlWa5YV/nw1/O6KRrwZzuHmgAIb453LZKq26LjN+Abm
+        vSJBl6aDzAK5OWlugNtM6XsVEw==
+X-Google-Smtp-Source: AMrXdXuPWI+yg3atLG0k05sqkYIWUkReEqRYzDSBlD2E+8z9mFSN57rM5bbZX3yhPmwmm9H3tSGnDg==
+X-Received: by 2002:a05:600c:1e8c:b0:3d6:2952:679b with SMTP id be12-20020a05600c1e8c00b003d62952679bmr54348403wmb.34.1673515683704;
+        Thu, 12 Jan 2023 01:28:03 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:982:cbb0:3b9e:7554:4633:9a59? ([2a01:e0a:982:cbb0:3b9e:7554:4633:9a59])
-        by smtp.gmail.com with ESMTPSA id l6-20020a5d4bc6000000b0027323b19ecesm15852287wrt.16.2023.01.12.01.27.05
+        by smtp.gmail.com with ESMTPSA id p3-20020a05600c358300b003d1f2c3e571sm28585178wmq.33.2023.01.12.01.28.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Jan 2023 01:27:06 -0800 (PST)
-Message-ID: <2e3a1a03-f1b6-e3d2-8565-04cf8c9136c4@linaro.org>
-Date:   Thu, 12 Jan 2023 10:27:05 +0100
+        Thu, 12 Jan 2023 01:28:03 -0800 (PST)
+Message-ID: <1fc55e78-d5a2-c16d-0178-2195fe09d8ae@linaro.org>
+Date:   Thu, 12 Jan 2023 10:28:02 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
 From:   Neil Armstrong <neil.armstrong@linaro.org>
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v2 04/13] drm/bridge: lt9611: fix programming of video
- modes
+Subject: Re: [PATCH v2 05/13] drm/bridge: lt9611: fix clock calculation
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Vinod Koul <vkoul@kernel.org>,
@@ -72,9 +71,9 @@ Cc:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         linux-arm-msm@vger.kernel.org
 References: <20230108165656.136871-1-dmitry.baryshkov@linaro.org>
- <20230108165656.136871-5-dmitry.baryshkov@linaro.org>
+ <20230108165656.136871-6-dmitry.baryshkov@linaro.org>
 Organization: Linaro Developer Services
-In-Reply-To: <20230108165656.136871-5-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230108165656.136871-6-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -87,27 +86,96 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 08/01/2023 17:56, Dmitry Baryshkov wrote:
-> Program the upper part of the hfront_porch into the proper register.
+> Instead of having several fixed values for the pcr register, calculate
+> it before programming. This allows the bridge to support most of the
+> display modes.
 > 
 > Fixes: 23278bf54afe ("drm/bridge: Introduce LT9611 DSI to HDMI bridge")
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->   drivers/gpu/drm/bridge/lontium-lt9611.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+>   drivers/gpu/drm/bridge/lontium-lt9611.c | 32 +++++++++++--------------
+>   1 file changed, 14 insertions(+), 18 deletions(-)
 > 
 > diff --git a/drivers/gpu/drm/bridge/lontium-lt9611.c b/drivers/gpu/drm/bridge/lontium-lt9611.c
-> index deb503ca956a..f377052a45a4 100644
+> index f377052a45a4..e2799a0df8f8 100644
 > --- a/drivers/gpu/drm/bridge/lontium-lt9611.c
 > +++ b/drivers/gpu/drm/bridge/lontium-lt9611.c
-> @@ -187,7 +187,8 @@ static void lt9611_mipi_video_setup(struct lt9611 *lt9611,
->   
->   	regmap_write(lt9611->regmap, 0x8319, (u8)(hfront_porch % 256));
->   
-> -	regmap_write(lt9611->regmap, 0x831a, (u8)(hsync_porch / 256));
-> +	regmap_write(lt9611->regmap, 0x831a, (u8)(hsync_porch / 256) |
-> +						((hfront_porch / 256) << 4));
+> @@ -192,8 +192,9 @@ static void lt9611_mipi_video_setup(struct lt9611 *lt9611,
 >   	regmap_write(lt9611->regmap, 0x831b, (u8)(hsync_porch % 256));
 >   }
 >   
+> -static void lt9611_pcr_setup(struct lt9611 *lt9611, const struct drm_display_mode *mode)
+> +static void lt9611_pcr_setup(struct lt9611 *lt9611, const struct drm_display_mode *mode, unsigned int postdiv)
+>   {
+> +	unsigned int pcr_m = mode->clock * 5 * postdiv / 27000;
+>   	const struct reg_sequence reg_cfg[] = {
+>   		{ 0x830b, 0x01 },
+>   		{ 0x830c, 0x10 },
+> @@ -236,24 +237,14 @@ static void lt9611_pcr_setup(struct lt9611 *lt9611, const struct drm_display_mod
+>   	else
+>   		regmap_multi_reg_write(lt9611->regmap, reg_cfg, ARRAY_SIZE(reg_cfg));
+>   
+> -	switch (mode->hdisplay) {
+> -	case 640:
+> -		regmap_write(lt9611->regmap, 0x8326, 0x14);
+> -		break;
+> -	case 1920:
+> -		regmap_write(lt9611->regmap, 0x8326, 0x37);
+> -		break;
+> -	case 3840:
+> -		regmap_write(lt9611->regmap, 0x8326, 0x37);
+> -		break;
+> -	}
+> +	regmap_write(lt9611->regmap, 0x8326, pcr_m);
+>   
+>   	/* pcr rst */
+>   	regmap_write(lt9611->regmap, 0x8011, 0x5a);
+>   	regmap_write(lt9611->regmap, 0x8011, 0xfa);
+>   }
+>   
+> -static int lt9611_pll_setup(struct lt9611 *lt9611, const struct drm_display_mode *mode)
+> +static int lt9611_pll_setup(struct lt9611 *lt9611, const struct drm_display_mode *mode, unsigned int *postdiv)
+>   {
+>   	unsigned int pclk = mode->clock;
+>   	const struct reg_sequence reg_cfg[] = {
+> @@ -271,12 +262,16 @@ static int lt9611_pll_setup(struct lt9611 *lt9611, const struct drm_display_mode
+>   
+>   	regmap_multi_reg_write(lt9611->regmap, reg_cfg, ARRAY_SIZE(reg_cfg));
+>   
+> -	if (pclk > 150000)
+> +	if (pclk > 150000) {
+>   		regmap_write(lt9611->regmap, 0x812d, 0x88);
+> -	else if (pclk > 70000)
+> +		*postdiv = 1;
+> +	} else if (pclk > 70000) {
+>   		regmap_write(lt9611->regmap, 0x812d, 0x99);
+> -	else
+> +		*postdiv = 2;
+> +	} else {
+>   		regmap_write(lt9611->regmap, 0x812d, 0xaa);
+> +		*postdiv = 4;
+> +	}
+>   
+>   	/*
+>   	 * first divide pclk by 2 first
+> @@ -895,14 +890,15 @@ static void lt9611_bridge_mode_set(struct drm_bridge *bridge,
+>   {
+>   	struct lt9611 *lt9611 = bridge_to_lt9611(bridge);
+>   	struct hdmi_avi_infoframe avi_frame;
+> +	unsigned int postdiv;
+>   	int ret;
+>   
+>   	lt9611_bridge_pre_enable(bridge);
+>   
+>   	lt9611_mipi_input_digital(lt9611, mode);
+> -	lt9611_pll_setup(lt9611, mode);
+> +	lt9611_pll_setup(lt9611, mode, &postdiv);
+>   	lt9611_mipi_video_setup(lt9611, mode);
+> -	lt9611_pcr_setup(lt9611, mode);
+> +	lt9611_pcr_setup(lt9611, mode, postdiv);
+>   
+>   	ret = drm_hdmi_avi_infoframe_from_display_mode(&avi_frame,
+>   						       &lt9611->connector,
+
 
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
