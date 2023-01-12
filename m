@@ -2,209 +2,188 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C2CF667950
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 16:32:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D9BD667962
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 16:35:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231759AbjALPcF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Jan 2023 10:32:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47418 "EHLO
+        id S240402AbjALPfY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Jan 2023 10:35:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229887AbjALPbW (ORCPT
+        with ESMTP id S240383AbjALPeo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Jan 2023 10:31:22 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D006F14D00
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 07:23:37 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id bp15so28906355lfb.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 07:23:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wtWGEx2XwnoDW6PQDY/ot+B1VrWS9wU0ZiX/llUoAaA=;
-        b=ue9VmefVO6jfaf70+1DqmhVYQTk8bnzJyMmxnbf+cee2hcxUOR47s3Zw6pW+m3DrDk
-         bkMnoRp75PzD9brcfG5e9I62cblT8YfewaJqUTcCVZ9CwUM8bKBmAc0FJZAJow00lH46
-         UKKS6k5VX8wmWlyTHXE9E6GbY07SJc6ArY6Vv16BLdOFqGKqvDWhMw/SDmHvvF2Wmxwi
-         Q0JypFkF1CZoB8PolMuR94KPJe0izLXTAaZoDuG2NKPyL9z3TjxSaHZJp+iRtf17mjlA
-         S7Cwe9SHghELDsG+uR23ulYil1uIrgkqxMwZQU1HCi015gN79rQeRddDZc34hBYIgiHX
-         lkjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wtWGEx2XwnoDW6PQDY/ot+B1VrWS9wU0ZiX/llUoAaA=;
-        b=4HP1ort2ehEdQeN74MrucqiciZEM/Em03rYK3unRWQUNEZw4/rfYSlisr81XYD0Hc8
-         ff2UM77NeQO6QCWfht2o9yUIqWbQUAVfGUNJITYwUDKrnDD2hkFB6Hv2V9/SI+W66yJi
-         xSD/BQeeM1HeC86IdazYe+38W/iI7VyXGe2tHjMMRFRnGaHut2kNvxSZwinoQOBHTKIQ
-         h3X9zwjg7WxssTi/3U3e3q78k/TjF3g+mbkIfYg80aKXRa2BpsJ54BisJ0/9BAkI82Dy
-         JrUg+4S+z1Um3zTwlYZ1BcU//qT06PcHFRiDghGRR2/JO1GvH20QQ0EKO95txHtuuWhB
-         8/ig==
-X-Gm-Message-State: AFqh2kodBG6DE4uieMaGMBIVgcOu8AZbGga5mxqxpFEgF1I0zSlJ9pHr
-        Qtp5OHYeGYSwdbllfy+pNKMkRg==
-X-Google-Smtp-Source: AMrXdXuop/JByMaI5zq/a2w1JusRq+v/9YHgm9Cyg29ZBByaOJKx6IRRlUdxGdYFAWzOiD6UMqwPMg==
-X-Received: by 2002:a05:6512:1049:b0:4b6:edce:a192 with SMTP id c9-20020a056512104900b004b6edcea192mr24967979lfb.4.1673537016172;
-        Thu, 12 Jan 2023 07:23:36 -0800 (PST)
-Received: from [192.168.1.101] (abym53.neoplus.adsl.tpnet.pl. [83.9.32.53])
-        by smtp.gmail.com with ESMTPSA id u1-20020ac258c1000000b004ce4e945b73sm63548lfo.86.2023.01.12.07.23.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Jan 2023 07:23:34 -0800 (PST)
-Message-ID: <fbec2272-e9b8-207d-e2ce-2f2011640d33@linaro.org>
-Date:   Thu, 12 Jan 2023 16:23:32 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH 4/4] clk: qcom: add the driver for the MSM8996 APCS clocks
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
+        Thu, 12 Jan 2023 10:34:44 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C22C3625E8;
+        Thu, 12 Jan 2023 07:25:18 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 1B7F4B81E85;
+        Thu, 12 Jan 2023 15:25:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 042BDC433F0;
+        Thu, 12 Jan 2023 15:25:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1673537103;
+        bh=GQl+TWZ0lnrDJO8A5lwHu11g+ftYrH3VhsAL3ZgMFWk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=tlzFMbN/JXIzWEoNTyGumTKR4PUw5Vc7B1E/cMDEoZje0fAkYNiTVUPTjedti/jFj
+         r9i8ScD0tlLJwVa4KxzNZj4fyG38McIKeALAC6D4zHRXYc9mCsZTKZ8t/48Sfn+uBT
+         ZSgfPfEJUaMNQ9tu2yGA7ZQdP1ZY4wePfeCkafomtEKjfPRDf/yAgNaWDec66b46MA
+         rVemYgJkFZTvOIiin6NWDKsJPUAvgkl0WhrOVqOe8Y1dXFHneqJ8aCCPBg1IQv0m4E
+         /mbHUx5O/8YQaVEeDBWM09YI+w3Bar2QkzV0GisihpLDV8I3ExtVaGXISJGQvDnokH
+         eotab+39gC3tg==
+Date:   Thu, 12 Jan 2023 09:25:01 -0600
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230111191453.2509468-1-dmitry.baryshkov@linaro.org>
- <20230111191453.2509468-5-dmitry.baryshkov@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230111191453.2509468-5-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] arm64: dts: qcom: sm8550: Add UFS host controller
+ and phy nodes
+Message-ID: <20230112152501.lwamtdsuufobof3c@builder.lan>
+References: <20230112135926.1572191-1-abel.vesa@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230112135926.1572191-1-abel.vesa@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 11.01.2023 20:14, Dmitry Baryshkov wrote:
-> Add a simple driver handling the APCS clocks on MSM8996. For now it
-> supports just a single aux clock, linking GPLL0 to CPU and CBF clocks.
+On Thu, Jan 12, 2023 at 03:59:25PM +0200, Abel Vesa wrote:
+> Add UFS host controller and PHY nodes.
 > 
-> Note, there is little sense in registering sys_apcs_aux as a child of
-> gpll0. The PLL is always-on. And listing the gpll0 as a property of the
-> apcs would delay its probing until the GCC has been probed (while we
-> would like for the apcs to be probed as early as possible).
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
->  drivers/clk/qcom/Makefile       |  2 +-
->  drivers/clk/qcom/apcs-msm8996.c | 77 +++++++++++++++++++++++++++++++++
->  2 files changed, 78 insertions(+), 1 deletion(-)
->  create mode 100644 drivers/clk/qcom/apcs-msm8996.c
 > 
-> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
-> index f18c446a97ea..ca2f586edb3e 100644
-> --- a/drivers/clk/qcom/Makefile
-> +++ b/drivers/clk/qcom/Makefile
-> @@ -52,7 +52,7 @@ obj-$(CONFIG_MSM_MMCC_8998) += mmcc-msm8998.o
->  obj-$(CONFIG_QCOM_A53PLL) += a53-pll.o
->  obj-$(CONFIG_QCOM_A7PLL) += a7-pll.o
->  obj-$(CONFIG_QCOM_CLK_APCS_MSM8916) += apcs-msm8916.o
-> -obj-$(CONFIG_QCOM_CLK_APCC_MSM8996) += clk-cpu-8996.o
-> +obj-$(CONFIG_QCOM_CLK_APCC_MSM8996) += apcs-msm8996.o clk-cpu-8996.o
->  obj-$(CONFIG_QCOM_CLK_APCS_SDX55) += apcs-sdx55.o
->  obj-$(CONFIG_QCOM_CLK_RPM) += clk-rpm.o
->  obj-$(CONFIG_QCOM_CLK_RPMH) += clk-rpmh.o
-> diff --git a/drivers/clk/qcom/apcs-msm8996.c b/drivers/clk/qcom/apcs-msm8996.c
-> new file mode 100644
-> index 000000000000..2e9959974ed9
-> --- /dev/null
-> +++ b/drivers/clk/qcom/apcs-msm8996.c
-> @@ -0,0 +1,77 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Qualcomm APCS clock controller driver
-> + *
-> + * Copyright (c) 2022, Linaro Limited
-> + * Author: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> + */
+> Changes since v1:
+>  * dropped ufs_mem_phy_lanes child node, like Johan suggested
+>  * addressed Konrad comments.
+> 
+>  arch/arm64/boot/dts/qcom/sm8550.dtsi | 78 ++++++++++++++++++++++++++--
+>  1 file changed, 75 insertions(+), 3 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> index 59756ec11564..d20b5fbcb2c3 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> @@ -649,9 +649,9 @@ gcc: clock-controller@100000 {
+>  				 <0>,
+>  				 <0>,
+>  				 <0>,
+> -				 <0>,
+> -				 <0>,
+> -				 <0>,
+> +				 <&ufs_mem_phy 0>,
+> +				 <&ufs_mem_phy 1>,
+> +				 <&ufs_mem_phy 2>,
+>  				 <0>;
+>  		};
+>  
+> @@ -1571,6 +1571,78 @@ crypto: crypto@1de0000 {
+>  			interconnect-names = "memory";
+>  		};
+>  
+> +		ufs_mem_phy: phy@1d80000 {
+> +			compatible = "qcom,sm8550-qmp-ufs-phy";
+> +			reg = <0x0 0x01d80000 0x0 0x2000>;
+> +			clock-names = "ref", "qref";
+> +			clocks = <&gcc GCC_UFS_PHY_PHY_AUX_CLK>,
+> +				 <&tcsr TCSR_UFS_CLKREF_EN>;
 > +
-> +#include <linux/bits.h>
-> +#include <linux/clk.h>
-> +#include <linux/clk-provider.h>
-> +#include <linux/delay.h>
-> +#include <linux/module.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/regmap.h>
+> +			power-domains = <&gcc UFS_MEM_PHY_GDSC>;
 > +
-> +#define APCS_AUX_OFFSET	0x50
+> +			resets = <&ufs_mem_hc 0>;
+> +			reset-names = "ufsphy";
 > +
-> +#define APCS_AUX_DIV_MASK GENMASK(17, 16)
-> +#define APCS_AUX_DIV_2 0x1
+> +			#address-cells = <2>;
+> +			#size-cells = <2>;
 > +
-> +static int qcom_apcs_msm8996_clk_probe(struct platform_device *pdev)
-> +{
-> +	struct device *dev = &pdev->dev;
-> +	struct device *parent = dev->parent;
-> +	struct regmap *regmap;
-> +	struct clk_hw *hw;
-> +	unsigned int val;
-> +	int ret = -ENODEV;
+> +			#phy-cells = <0>;
 > +
-> +	regmap = dev_get_regmap(parent, NULL);
-> +	if (!regmap) {
-> +		dev_err(dev, "failed to get regmap: %d\n", ret);
-> +		return ret;
-> +	}
+> +			#clock-cells = <1>;
 > +
-> +	regmap_read(regmap, APCS_AUX_OFFSET, &val);
-> +	regmap_update_bits(regmap, APCS_AUX_OFFSET, APCS_AUX_DIV_MASK,
-> +			   FIELD_PREP(APCS_AUX_DIV_MASK, APCS_AUX_DIV_2));
-> +
-> +	/* Hardware mandated delay */
-> +	udelay(5);
-> +
-> +	/*
-> +	 * Register the clock as fixed rate instead of being a child of gpll0
-> +	 * to let the driver register probe as early as possible.
-> +	 */
-Not sure.. you should keep a vote in GPLL0_ao supplied by XO_A
-and perhaps it would be a better idea to move RPMCC (+deps) and
-GCC to very early initcalls since there's a need for that..
+> +			ranges;
 
-Maybe it would even allow us to shave some miliseconds from
-boot times, at less things would defer!
+Isn't this a leftover from the older binding?
 
-Konrad
-> +	hw = devm_clk_hw_register_fixed_rate(dev, "sys_apcs_aux", NULL, 0, 300000000);
-> +	if (IS_ERR(hw))
-> +		return PTR_ERR(hw);
 > +
-> +	return devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get, hw);
-> +}
+> +			status = "disabled";
+> +		};
 > +
-> +static struct platform_driver qcom_apcs_msm8996_clk_driver = {
-> +	.probe = qcom_apcs_msm8996_clk_probe,
-> +	.driver = {
-> +		.name = "qcom-apcs-msm8996-clk",
-> +	},
-> +};
-> +
-> +/* Register early enough to fix the clock to be used for other cores */
-> +static int __init qcom_apcs_msm8996_clk_init(void)
-> +{
-> +	return platform_driver_register(&qcom_apcs_msm8996_clk_driver);
-> +}
-> +postcore_initcall(qcom_apcs_msm8996_clk_init);
-> +
-> +static void __exit qcom_apcs_msm8996_clk_exit(void)
-> +{
-> +	platform_driver_unregister(&qcom_apcs_msm8996_clk_driver);
-> +}
-> +module_exit(qcom_apcs_msm8996_clk_exit);
-> +
-> +MODULE_AUTHOR("Dmitry Baryshkov <dmitry.baryshkov@linaro.org>");
-> +MODULE_LICENSE("GPL v2");
-"GPL"
+> +		ufs_mem_hc: ufshc@1d84000 {
 
-> +MODULE_DESCRIPTION("Qualcomm MSM8996 APCS clock driver");
+ufs@ I believe.
+
+> +			compatible = "qcom,sm8550-ufshc", "qcom,ufshc",
+> +				     "jedec,ufs-2.0";
+> +			reg = <0x0 0x01d84000 0x0 0x3000>;
+> +			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
+> +			phys = <&ufs_mem_phy>;
+> +			phy-names = "ufsphy";
+> +			lanes-per-direction = <2>;
+> +			#reset-cells = <1>;
+> +			resets = <&gcc GCC_UFS_PHY_BCR>;
+> +			reset-names = "rst";
+> +
+> +			power-domains = <&gcc UFS_PHY_GDSC>;
+> +
+> +			iommus = <&apps_smmu 0x60 0x0>;
+> +
+> +			interconnects = <&aggre1_noc MASTER_UFS_MEM 0 &mc_virt SLAVE_EBI1 0>,
+> +					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_UFS_MEM_CFG 0>;
+> +
+> +			interconnect-names = "ufs-ddr", "cpu-ufs";
+> +			clock-names = "core_clk",
+> +				      "bus_aggr_clk",
+> +				      "iface_clk",
+> +				      "core_clk_unipro",
+> +				      "ref_clk",
+> +				      "tx_lane0_sync_clk",
+> +				      "rx_lane0_sync_clk",
+> +				      "rx_lane1_sync_clk";
+> +			clocks = <&gcc GCC_UFS_PHY_AXI_CLK>,
+> +				 <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
+> +				 <&gcc GCC_UFS_PHY_AHB_CLK>,
+> +				 <&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
+> +				 <&rpmhcc RPMH_LN_BB_CLK3>,
+
+ref_clk here represents the refclk to the memory device, which I believe
+is what is the thing you have as <&tcsrcc TCSR_UFS_PAD_CLKREF_EN>.
+
+> +				 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
+> +				 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
+> +				 <&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
+> +			freq-table-hz =
+> +				<75000000 300000000>,
+
+GCC_UFS_PHY_AXI_CLK requires SM8550_CX (UFS_PHY_GDSC) to be voted to
+nominal, so please ensure that this is done. (e.g. using required-opps)
+
+Thanks,
+Bjorn
+
+> +				<0 0>,
+> +				<0 0>,
+> +				<75000000 300000000>,
+> +				<100000000 403000000>,
+> +				<0 0>,
+> +				<0 0>,
+> +				<0 0>;
+> +			status = "disabled";
+> +		};
+> +
+>  		tcsr_mutex: hwlock@1f40000 {
+>  			compatible = "qcom,tcsr-mutex";
+>  			reg = <0 0x01f40000 0 0x20000>;
+> -- 
+> 2.34.1
+> 
