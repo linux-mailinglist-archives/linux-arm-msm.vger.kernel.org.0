@@ -2,71 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D1203666E91
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 10:46:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 192EE666E9C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 10:48:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239856AbjALJqV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Jan 2023 04:46:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58152 "EHLO
+        id S237323AbjALJsK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Jan 2023 04:48:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60488 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232027AbjALJpP (ORCPT
+        with ESMTP id S238056AbjALJrX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Jan 2023 04:45:15 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FC4F390
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 01:42:51 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id g10so12765268wmo.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 01:42:51 -0800 (PST)
+        Thu, 12 Jan 2023 04:47:23 -0500
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A9D650F51
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 01:43:49 -0800 (PST)
+Received: by mail-pl1-x62e.google.com with SMTP id d3so19663735plr.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 01:43:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GKI1e/olZBE0WNap4KRNex2ej5kGh0U21AghWA1HZZY=;
-        b=mhI4jZF2UWjIt5yn0A46WNh3DSj7ZLdq1/IQEf+JYT6eDplIwKZgWI5uwkJG87y4J0
-         vfIAu4WMX7HCYcvuGNjYWE6d3tfDUtT3MILGfpx2K5jFfLmSZugT6Ruu20QlDMnMWste
-         FVuUU13M6t24rxMkszhFtY7lwZoFZF1ANvD3c5c+dZeQNSZcvGHl18oIx4R0cJvFYa+j
-         TFOKtJtH8hhiA07zERYZXteQByvutOE/Gpv77PTyRCI17UKiBrItEMnb+//02sIjWB75
-         lNRLml8tVdC7aLGJxjCF+aZz2FaBUUPdBW8rlcc85jWT7fHT+YmFO4+NKXxCEkgTJfhE
-         ykIA==
+        d=sartura.hr; s=sartura;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=BCnOI57UTMuZBY8ttuWaWyhOE2RAr35dNvKJuI2jpjo=;
+        b=ygbcPKK4FYbKlI0784ZnOo3Y1vhA15ypnakMPlk672u1KjbUYgoAYZVLpiQ2CsCD1n
+         pMeo6j6iE/90fiCxgCTTpAy5wkqUWqw9LE5VhJfDFor1q8M1aeZW5tV+XmSid6ZaPkoH
+         BilQqYsq37+eAf2Ws9aLkY8HxoVp+hpJapgAZID6KWrJjz4mdj6rv4iJiD+1NNPTRF1L
+         fLf5iznch9aVN9mjHJtbZUBtiroso/RJsPwAEjs+eyJWkekbsyJWP3DUnAtrXRudnR3x
+         i0N54hDX7EgHZFV9L0UGmgr12AHpE3QGISYtuQ0DYCJpg5Cr/d8vUikXiQb3tXH3HPtn
+         jLGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GKI1e/olZBE0WNap4KRNex2ej5kGh0U21AghWA1HZZY=;
-        b=BFpXyQXd9zxyPMzxswh0xmZuKyK4krZZNuqG8X+puV4O0i1DW7vq+Uha57XgXj4H0R
-         jNA879DXGN6QlGGITfVAlPct6OArrMH71Yf4imVzS9N5hm7+Q5XMtAUA0Tq1O4QWMKOc
-         drLQ6xEwq2hDJwTp5A9b2Wkxb83bXDk75Y4FuIzrgQWEc1Jf/wFE7nz63HoseQah0+Td
-         BJU9xSq4WnUdQoHIoScTqLO5JIBtQGAylHu40qFHrnJTb4Tx7ZjrPtPl2/fRai+ZKD95
-         PRLjyoE1hHErUNCbLOvDWZg3WcEnttzro2i3DvGBZn0qGOqUzTO5rPTcCfqJVFkcrYtV
-         AOGQ==
-X-Gm-Message-State: AFqh2kqY8WD42qDuNbLv/XyGGEkEhJ1lzstsDPp/AIQLIfY29Za8Luta
-        9BeBHEtOAlp4YINjVlT2SL5E9BTAvFF14+GT
-X-Google-Smtp-Source: AMrXdXvTSEtuIufSTAXNipVi8Ox6she5RGRw851IDFVjB/ccbB+Imd6hG4OKVbX2sQZldpGwb9HcXA==
-X-Received: by 2002:a05:600c:4f02:b0:3d9:f217:6f6b with SMTP id l2-20020a05600c4f0200b003d9f2176f6bmr10421251wmq.33.1673516569772;
-        Thu, 12 Jan 2023 01:42:49 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id l14-20020a05600c4f0e00b003d96c811d6dsm28047649wmq.30.2023.01.12.01.42.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Jan 2023 01:42:49 -0800 (PST)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Thu, 12 Jan 2023 10:42:46 +0100
-Subject: [PATCH v2 2/2] arm64: defconfig: enable Visionox VTDR6130 DSI Panel driver
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BCnOI57UTMuZBY8ttuWaWyhOE2RAr35dNvKJuI2jpjo=;
+        b=QldNCs5DvHFO9llZ+L3vrN8WJVpetI58I2Wymwc0KCnCyL88CgAnEUAcVq5QOs4gCr
+         cWCkacfSJWUaKCUZydUsEv1XuGJBT2pKE+JWMErcqyFuStb/qGAODHEno3YvYYNYegPP
+         ERMwlBA+pfmkt7Q+ZMPV6AL2WgNHmxmnGMLxjVhDKreKKyfJURcmoBOsgN6Eg5zzjGP/
+         FuijVm+HowiSkB9sLNXuKZ6+G3fRxkr0/QhXAFrdKtAzAijViBbXGXLInFwdhPWcPx6k
+         GIskb1VuUe417pQHrTgCQEVW65n7ZNnFxsGkc3WAxkW7FsgR0YlStZ9d9Z1oYk3jnjCN
+         fRbQ==
+X-Gm-Message-State: AFqh2kqJw46XCEG3Xy5jiali5bS31oVkdaj0BnO04SLMqU+GdeaMOwHs
+        T9m3+cTqiQm7KTbqJISzLvDLD5yioykzsH/LNhpx9A==
+X-Google-Smtp-Source: AMrXdXueoMMev/WBFF9vUihTNyWPTMJxjr2hVS/wMKsdd4Z2hy1m7ecn34yBd4kpcw5X3go5dMJsCg4sMDlHq8PGPsU=
+X-Received: by 2002:a17:90b:48cf:b0:226:164f:522e with SMTP id
+ li15-20020a17090b48cf00b00226164f522emr3948204pjb.22.1673516628746; Thu, 12
+ Jan 2023 01:43:48 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230110-topic-sm8550-upstream-display-defconfig-v2-2-c29b9714c85f@linaro.org>
-References: =?utf-8?q?=3C20230110-topic-sm8550-upstream-display-defconfig-v2?=
- =?utf-8?q?-0-c29b9714c85f=40linaro=2Eorg=3E?=
-In-Reply-To: =?utf-8?q?=3C20230110-topic-sm8550-upstream-display-defconfig-v?=
- =?utf-8?q?2-0-c29b9714c85f=40linaro=2Eorg=3E?=
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.11.1
+References: <20221105194943.826847-1-robimarko@gmail.com> <20221105194943.826847-2-robimarko@gmail.com>
+ <20221107174727.GA7535@thinkpad> <87cz9xcqbd.fsf@kernel.org>
+ <877czn8c2n.fsf@kernel.org> <CA+HBbNFCFtJwzN=6SCsWnDmAjPkmxE4guH1RrLc+-HByLcVVXA@mail.gmail.com>
+ <87k02jzgkz.fsf@kernel.org> <CA+HBbNHi0zTeV0DRmwLjZu+XzUQEZQNnSpBMeQeUPiBu3v-2BQ@mail.gmail.com>
+ <87358hyp3x.fsf@kernel.org> <CA+HBbNGdOrOiCxhSouZ6uRPRnZmsBSAL+wWpLkczMK9cO8Mczg@mail.gmail.com>
+ <877cxsdrax.fsf@kernel.org>
+In-Reply-To: <877cxsdrax.fsf@kernel.org>
+From:   Robert Marko <robert.marko@sartura.hr>
+Date:   Thu, 12 Jan 2023 10:43:37 +0100
+Message-ID: <CA+HBbNGbg88_3FDu+EZhqMj0UKb8Ja_vyYsxGtmJ_HGt4fNVBQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] wifi: ath11k: use unique QRTR instance ID
+To:     Kalle Valo <kvalo@kernel.org>
+Cc:     Manivannan Sadhasivam <mani@kernel.org>,
+        Robert Marko <robimarko@gmail.com>, davem@davemloft.net,
+        edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
+        gregkh@linuxfoundation.org, elder@linaro.org,
+        hemantk@codeaurora.org, quic_jhugo@quicinc.com,
+        quic_qianyu@quicinc.com, bbhatt@codeaurora.org,
+        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        ath11k@lists.infradead.org, linux-wireless@vger.kernel.org,
+        netdev@vger.kernel.org, ansuelsmth@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -76,25 +78,59 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Build the Visionox VTDR6130 DSI Panel driver as module
+On Thu, Jan 12, 2023 at 10:40 AM Kalle Valo <kvalo@kernel.org> wrote:
+>
+> Robert Marko <robert.marko@sartura.hr> writes:
+>
+> > On Wed, Jan 11, 2023 at 6:10 PM Kalle Valo <kvalo@kernel.org> wrote:
+> >>
+> >> Robert Marko <robert.marko@sartura.hr> writes:
+> >>
+> >> >> Really sorry, I just didn't manage to get this finalised due to other
+> >> >> stuff and now I'm leaving for a two week vacation :(
+> >> >
+> >> > Any news regarding this, I have a PR for ipq807x support in OpenWrt
+> >> > and the current workaround for supporting AHB + PCI or multiple PCI
+> >> > cards is breaking cards like QCA6390 which are obviously really
+> >> > popular.
+> >>
+> >> Sorry, came back only on Monday and trying to catch up slowly. But I
+> >> submitted the RFC now:
+> >>
+> >> https://patchwork.kernel.org/project/linux-wireless/patch/20230111170033.32454-1-kvalo@kernel.org/
+> >
+> > Great, thanks for that.
+> >
+> > Does it depend on firmware-2 being available?
+>
+> The final solution for the users will require firmware-2.bin. But for a
+> quick test you can omit the feature bit test by replacing
+> "test_bit(ATH11K_FW_FEATURE_MULTI_QRTR_ID, ab->fw.fw_features)" with
+> "true". Just make sure that the firmware release you are using supports
+> this feature, I believe only recent QCN9074 releases do that.
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+Hi,
+I was able to test on IPQ8074+QCN9074 yesterday by just bypassing the
+test and it worked.
+Sideffect is that until firmware-2.bin is available cards like QCA6390
+wont work like with my
+hack.
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index c9011e1438c0..7bbf628ab80c 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -765,6 +765,7 @@ CONFIG_DRM_PANEL_MANTIX_MLAF057WE51=m
- CONFIG_DRM_PANEL_RAYDIUM_RM67191=m
- CONFIG_DRM_PANEL_SITRONIX_ST7703=m
- CONFIG_DRM_PANEL_TRULY_NT35597_WQXGA=m
-+CONFIG_DRM_PANEL_VISIONOX_VTDR6130=m
- CONFIG_DRM_LONTIUM_LT8912B=m
- CONFIG_DRM_LONTIUM_LT9611=m
- CONFIG_DRM_LONTIUM_LT9611UXC=m
+Regards,
+Robert
+>
+> --
+> https://patchwork.kernel.org/project/linux-wireless/list/
+>
+> https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+
+
 
 -- 
-2.34.1
+Robert Marko
+Staff Embedded Linux Engineer
+Sartura Ltd.
+Lendavska ulica 16a
+10000 Zagreb, Croatia
+Email: robert.marko@sartura.hr
+Web: www.sartura.hr
