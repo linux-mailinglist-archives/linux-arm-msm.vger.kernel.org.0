@@ -2,76 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 74EC5668469
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 21:53:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E60D6684A3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 21:55:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229640AbjALUxn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Jan 2023 15:53:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55462 "EHLO
+        id S240774AbjALUza (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Jan 2023 15:55:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234715AbjALUwz (ORCPT
+        with ESMTP id S240507AbjALUxa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Jan 2023 15:52:55 -0500
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BC64140DF;
-        Thu, 12 Jan 2023 12:26:49 -0800 (PST)
-Received: by mail-lj1-x234.google.com with SMTP id e13so20617099ljn.0;
-        Thu, 12 Jan 2023 12:26:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gXlB/bZiimr5FYAvYPtyx+e44PGlouVF773DQKNVaAE=;
-        b=KkNSzQzfA67TmwsfbdAVs4WCGiyC7+LCSt0akDNM6nST42U9p4eWyU5nxyF/Qe647y
-         48Xy1KR32rxinmxaSUnvlrM5oYRyz0iVfeQVYFOhSFSsqISaz7pk8mJAmisNM4xYKuIl
-         Ue6iub+ZjFtQG1ze/Pl3LANYD5HOBRrLjtYvba3e9DInEfQiYOV1qx3HAG2oiJ6mY/99
-         FitUMIESDy+gSk313GfxIji0M+9sHk6Z8Ne6OQ05p+B1QBVVPgjVO+zVKwUCV3pu1dJP
-         MI3Lr5OKrjTz9WSwNQTiPkVqzhidjSnfgRESh9rSg7Yy6bHb5ZNrddlks1oMrSpDq8at
-         MiBg==
+        Thu, 12 Jan 2023 15:53:30 -0500
+Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C31A1089;
+        Thu, 12 Jan 2023 12:35:12 -0800 (PST)
+Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-15ed38a9b04so1536968fac.8;
+        Thu, 12 Jan 2023 12:35:12 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gXlB/bZiimr5FYAvYPtyx+e44PGlouVF773DQKNVaAE=;
-        b=2HCvLEfw5r8gAeEM2gBGARBUj1rlRAKsGsDwSRnKbE0nPcCIoa+TN0OS9GnwHJhF9T
-         1k3gVUAA2KIZhLuAfJs3AFmVgRXb6UzSqm7PToGQwUhxTGE3XPLvhsPrJjVGy46WmzP/
-         D0YVMjReiRV5gInFDg5cqdgsVnknJ1fgN6olD1ULSm533viTiWmYsNj4LfZVxmlcGefd
-         yz/zH9mQcnkh+8UfKUHk6HTcy9IvYuQeoztD8JgiEIW3aNfnIXmxY4OgeU9uo+E1OTVw
-         zVvaSrakVlz1+bvR1rV1JydYxL70hBg1rcBUEuj969sCaPRTY/DdTV+NA3oYqiunmr1w
-         muAA==
-X-Gm-Message-State: AFqh2kqzGoMpj90sxeyT7xz7i8tDu+z5jpIJHZVfhOv9xN64trTwRlz8
-        sMm5UrooCw8+3WwOps2QUcKueL0+u2eldg==
-X-Google-Smtp-Source: AMrXdXuogxge0UTiQ6Eh6++mppOLta2QqwMJDQujvMwpoT1NLDmXmSsdCOmytdHi8wYTIY6TyInaqA==
-X-Received: by 2002:a2e:a989:0:b0:285:91da:54d1 with SMTP id x9-20020a2ea989000000b0028591da54d1mr5382629ljq.37.1673555207747;
-        Thu, 12 Jan 2023 12:26:47 -0800 (PST)
-Received: from i-vetokaappi.home.lan (dsl-hkibng42-56733b-36.dhcp.inet.fi. [86.115.59.36])
-        by smtp.gmail.com with ESMTPSA id k6-20020a2eb746000000b00281350bb5fbsm2346731ljo.2.2023.01.12.12.26.46
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MmZnK0zcd3SZBoh1Xw2femsbyB+99nacCuPNrhyq6IQ=;
+        b=Me0fPrNWg/z9VRH4GeXXx0uJI+VGzcy9i6ovYdZsdgboSo5kMBpXFD6gbu3bbRSi2O
+         CfrpN+nKGeot03Or3VRnZ06Gct3wlXuoHoEbHXhljPTgtjos4Yro5JMbRSyfsuYjwKDj
+         U3ijXYY4+SnRW+T8Pjb3IB9uEfoMb1Yg/vYz2Uz3dYd5iS68xj8XYY7EWcIg+EI+/9Cw
+         9UGQugkRpJVhJGOpSGKMJfjGx9pJaZR1PaNnd1Bqg3lXTBrDhDFf1Qr7llrUZmJY/U03
+         zQ0cjPC6W9032PfGB3woa5o3HR+LCWECyq3UXcchiUsbrZzu36l8TjUjjcwFggZUk42K
+         RBtg==
+X-Gm-Message-State: AFqh2kqTBNFZE431wMOGwvEEHorUiaxNKA3FkrKncVunBmvG3FZEikfz
+        +iVR2kYykVYoNq9sn8E7Hg==
+X-Google-Smtp-Source: AMrXdXsDOJuiqYdPLKP9TKilnRemC7vk9UtW4q4G/aO9LEhHzGkejleFhZpNLoVp7E2epL1sPxtnZQ==
+X-Received: by 2002:a05:6870:4694:b0:148:b4a:5285 with SMTP id a20-20020a056870469400b001480b4a5285mr44872309oap.12.1673555711772;
+        Thu, 12 Jan 2023 12:35:11 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id x18-20020a4ac592000000b004a3543fbfbbsm8774978oop.14.2023.01.12.12.35.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Jan 2023 12:26:47 -0800 (PST)
-From:   =?UTF-8?q?Matti=20Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        =?UTF-8?q?Matti=20Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>,
-        Andy Gross <agross@kernel.org>,
+        Thu, 12 Jan 2023 12:35:11 -0800 (PST)
+Received: (nullmailer pid 91475 invoked by uid 1000);
+        Thu, 12 Jan 2023 20:35:10 -0000
+Date:   Thu, 12 Jan 2023 14:35:10 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Avri Altman <avri.altman@wdc.com>,
         Bjorn Andersson <andersson@kernel.org>,
+        Bart Van Assche <bvanassche@acm.org>,
+        linux-scsi@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 8/8] ARM: dts: qcom: apq8026-samsung-matisse-wifi: Enable modem
-Date:   Thu, 12 Jan 2023 22:26:11 +0200
-Message-Id: <20230112202612.791455-9-matti.lehtimaki@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230112202612.791455-1-matti.lehtimaki@gmail.com>
-References: <20230112202612.791455-1-matti.lehtimaki@gmail.com>
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: ufs: qcom,ufs: document required-opps
+Message-ID: <167355570878.90919.6440456968214920595.robh@kernel.org>
+References: <20221228124331.258416-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221228124331.258416-1-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,55 +71,16 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable modem remoteproc on samsung,matisse-wifi.
 
-Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
----
- .../boot/dts/qcom-apq8026-samsung-matisse-wifi.dts  | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+On Wed, 28 Dec 2022 13:43:31 +0100, Krzysztof Kozlowski wrote:
+> UFS device node on SC8280XP uses required-opps:
+> 
+>   sc8280xp-crd.dtb: ufs@1d84000: Unevaluated properties are not allowed ('required-opps' was unexpected)
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
 
-diff --git a/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts b/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
-index 91b860e24681..c84ae3e2a602 100644
---- a/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
-+++ b/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
-@@ -10,6 +10,8 @@
- #include "qcom-pm8226.dtsi"
- 
- /delete-node/ &adsp_region;
-+/delete-node/ &mba_region;
-+/delete-node/ &mpss_region;
- /delete-node/ &smem_region;
- 
- / {
-@@ -165,12 +167,12 @@ framebuffer@3200000 {
- 			no-map;
- 		};
- 
--		mpss@8400000 {
-+		mpss_region: mpss@8400000 {
- 			reg = <0x08400000 0x1f00000>;
- 			no-map;
- 		};
- 
--		mba@a300000 {
-+		mba_region: mba@a300000 {
- 			reg = <0x0a300000 0x100000>;
- 			no-map;
- 		};
-@@ -279,6 +281,13 @@ touchscreen@4a {
- 	};
- };
- 
-+&modem {
-+	mx-supply = <&pm8226_l3>;
-+	pll-supply = <&pm8226_l8>;
-+
-+	status = "okay";
-+};
-+
- &rpm_requests {
- 	regulators {
- 		compatible = "qcom,rpm-pm8226-regulators";
--- 
-2.34.1
-
+Applied, thanks!
