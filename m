@@ -2,120 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C0E05666D3A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 10:00:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BC6CE666DFE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 10:25:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235788AbjALJAA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Jan 2023 04:00:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50106 "EHLO
+        id S240006AbjALJZp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Jan 2023 04:25:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239860AbjALI5s (ORCPT
+        with ESMTP id S240004AbjALJZT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Jan 2023 03:57:48 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D87738AC9;
-        Thu, 12 Jan 2023 00:55:26 -0800 (PST)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30C7sRmO004043;
-        Thu, 12 Jan 2023 08:55:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=/v2CdOrf4Z17VR11u6HItm6Vj0VBzlrchZCCWtJrPCI=;
- b=EmtIVpaWPM2eCOUs1AglbUlhmhMbiwXr2ds3AqWYfaXgIgh2qU+9U6IcOjzFZmi3Nzj1
- tzNjayk94FmhsuP5R/9Ujax1VjpMM0GcyxxwDXiP6ywlIWEXDGcY7U8HcD017nDqh6QM
- EczQyE4dCJzTX4J7fLJ4su3b2fPlNsvI46QZh2DnZHOf8US8J0R2VjnK4S3qL0YtYugp
- SWmcWs/mjdbt6n+KAkhi4Il9FWtwrDb6ray6Gg+9Wo+7XsXfdfoF05RidtQ46Mybr6/J
- aNcS6vLkr/X460xXSKS+bqNPSP2y4wWlBeF0wgyqczyLJItLGOn6g8O0yGq2xq9myp0f ow== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n1km2ka87-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 12 Jan 2023 08:55:22 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30C8tLYC029701
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 12 Jan 2023 08:55:21 GMT
-Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Thu, 12 Jan 2023 00:55:18 -0800
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Mukesh Ojha <quic_mojha@quicinc.com>
-Subject: [PATCH v3 2/2] arm64: dts: qcom: sm8450: Add TCSR halt register space
-Date:   Thu, 12 Jan 2023 14:24:57 +0530
-Message-ID: <1673513697-30173-2-git-send-email-quic_mojha@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1673513697-30173-1-git-send-email-quic_mojha@quicinc.com>
-References: <1673513697-30173-1-git-send-email-quic_mojha@quicinc.com>
+        Thu, 12 Jan 2023 04:25:19 -0500
+X-Greylist: delayed 916 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 12 Jan 2023 01:14:07 PST
+Received: from m13101.mail.163.com (m13101.mail.163.com [220.181.13.101])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 3FD1A5AC7A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 01:14:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+        s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
+        Message-ID; bh=DTlVCsACkosA40+UL2Cx6wAyr3jb/5hrs9h8dtBq4zQ=; b=S
+        eXzUe0/A272UqsCwHkxmAGfkGhuURi66SR5bhMhoraqFf+pc9Mq6lMLxxdxme2G4
+        Z+HV082yF6nIv5o/vZUJMcWgbWA4cEoCfdUGXYo5xZ5lc2ix+Yv319P/teE75Txl
+        lu6/V83hjd0wpEVpshgqnz7z1XtKwy1IRcrPixp7oc=
+Received: from slark_xiao$163.com ( [43.134.191.38] ) by
+ ajax-webmail-wmsvr101 (Coremail) ; Thu, 12 Jan 2023 16:58:37 +0800 (CST)
+X-Originating-IP: [43.134.191.38]
+Date:   Thu, 12 Jan 2023 16:58:37 +0800 (CST)
+From:   "Slark Xiao" <slark_xiao@163.com>
+To:     mani@kernel.org, manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re:[PATCH] bus: mhi: host: Update mhi driver description
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20220708(c4627114)
+ Copyright (c) 2002-2023 www.mailtech.cn 163com
+In-Reply-To: <20221229011358.15874-1-slark_xiao@163.com>
+References: <20221229011358.15874-1-slark_xiao@163.com>
+X-NTES-SC: AL_QuycAfmavEEq4SKQYOkXmE8bgOg9UcK3vPgv3YdfP5k0vSv29zIZTEB9A0rSzcOrGRi0jye0SRZV6MV5fbJoWaOU2vUm+PEhCtG1pmq9EN9V
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=GBK
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 9qUDvZZ-1HEfQace3VvbGZ3zJiHKr1Ku
-X-Proofpoint-GUID: 9qUDvZZ-1HEfQace3VvbGZ3zJiHKr1Ku
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2023-01-12_04,2023-01-11_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
- mlxscore=0 mlxlogscore=846 malwarescore=0 bulkscore=0 lowpriorityscore=0
- phishscore=0 spamscore=0 adultscore=0 suspectscore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2301120062
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+Message-ID: <5b95162c.5aa8.185a533db68.Coremail.slark_xiao@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: ZcGowAAXMQG9y79jBN0AAA--.4330W
+X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/1tbiNRXzZGI0bAGcOgACso
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_INVALID,
+        DKIM_SIGNED,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add TCSR register space and refer it from scm node, so that
-it can be used by SCM driver.
-
-Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
----
-Change in v3:
-  - Align with new format of compatible for Qcom SoC.
-
-Changes in v2:
-  - Added SoC compatible based on comment made by krzysztof in v1.
-
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 5704750..d9f7a9b 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -270,6 +270,7 @@
- 	firmware {
- 		scm: scm {
- 			compatible = "qcom,scm-sm8450", "qcom,scm";
-+			qcom,dload-mode = <&tcsr 0x13000>;
- 			interconnects = <&aggre2_noc MASTER_CRYPTO 0 &mc_virt SLAVE_EBI1 0>;
- 			#reset-cells = <1>;
- 		};
-@@ -1986,6 +1987,11 @@
- 			#hwlock-cells = <1>;
- 		};
- 
-+		tcsr: syscon@1fc0000 {
-+			compatible = "qcom,sm8450-tcsr", "syscon";
-+			reg = <0x0 0x1fc0000 0x0 0x30000>;
-+		};
-+
- 		usb_1_hsphy: phy@88e3000 {
- 			compatible = "qcom,sm8450-usb-hs-phy",
- 				     "qcom,usb-snps-hs-7nm-phy";
--- 
-2.7.4
-
+SGkgTWFuaSwKTm8gcmVzcG9uc2Ugb2Ygc2VuZGluZyBlbWFpbCB0byBtYW5pQGtlcm5lbC5vcmcu
+IFRoaXMgZW1haWwgYWRkcmVzcwp3YXMgZ2VuZXJhdGVkIGJ5IHNjcmlwdHMvZ2V0X21haW50YWlu
+ZXIucGwuCgpBdCAyMDIyLTEyLTI5IDA5OjEzOjU4LCAiU2xhcmsgWGlhbyIgPHNsYXJrX3hpYW9A
+MTYzLmNvbT4gd3JvdGU6Cj5UaGlzIHNob3VsZCBiZSBhIG1pc3Rha2UuIE1ISSBjb250YWlucyAi
+SG9zdCBJbnRlcmZhY2UiCj5hbHJlYWR5LiBTbyB3ZSBzaGFsbCB1cGRhdGUgIk1ISSIgdG8gIk1v
+ZGVtIiBhbmQgdGhlIGZ1bGwKPm5hbWUgc2hhbGwgYmUgIk1vZGVtIEhvc3QgSW50ZXJmYWNlIi4K
+Pgo+U2lnbmVkLW9mZi1ieTogU2xhcmsgWGlhbyA8c2xhcmtfeGlhb0AxNjMuY29tPgo+LS0tCj4g
+ZHJpdmVycy9idXMvbWhpL2hvc3QvaW5pdC5jIHwgMiArLQo+IDEgZmlsZSBjaGFuZ2VkLCAxIGlu
+c2VydGlvbigrKSwgMSBkZWxldGlvbigtKQo+Cj5kaWZmIC0tZ2l0IGEvZHJpdmVycy9idXMvbWhp
+L2hvc3QvaW5pdC5jIGIvZHJpdmVycy9idXMvbWhpL2hvc3QvaW5pdC5jCj5pbmRleCBiZjY3MmRl
+MzUxMzEuLjczMDczMzVjNGZkMSAxMDA2NDQKPi0tLSBhL2RyaXZlcnMvYnVzL21oaS9ob3N0L2lu
+aXQuYwo+KysrIGIvZHJpdmVycy9idXMvbWhpL2hvc3QvaW5pdC5jCj5AQCAtMTQ0OSw0ICsxNDQ5
+LDQgQEAgcG9zdGNvcmVfaW5pdGNhbGwobWhpX2luaXQpOwo+IG1vZHVsZV9leGl0KG1oaV9leGl0
+KTsKPiAKPiBNT0RVTEVfTElDRU5TRSgiR1BMIHYyIik7Cj4tTU9EVUxFX0RFU0NSSVBUSU9OKCJN
+SEkgSG9zdCBJbnRlcmZhY2UiKTsKPitNT0RVTEVfREVTQ1JJUFRJT04oIk1vZGVtIEhvc3QgSW50
+ZXJmYWNlIik7Cj4tLSAKPjIuMTcuMQo=
