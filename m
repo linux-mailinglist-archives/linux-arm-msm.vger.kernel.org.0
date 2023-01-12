@@ -2,166 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A0BD666B98
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 08:31:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 636A2666BC5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 08:46:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236730AbjALHbb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Jan 2023 02:31:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55206 "EHLO
+        id S239645AbjALHqc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Jan 2023 02:46:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236366AbjALHba (ORCPT
+        with ESMTP id S236578AbjALHqM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Jan 2023 02:31:30 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0B4823D;
-        Wed, 11 Jan 2023 23:31:25 -0800 (PST)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30C77KTV011184;
-        Thu, 12 Jan 2023 07:30:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=JxSLuuwJdixLMUVDdjnyixo00L0lkVae3W4i6JzZ1xs=;
- b=d/LsU2Igs3TZy/cXwy5isBSis/by9EqmkrtCNP3s+4rkmJl7zL/z5NnHo26OVw/YbuhS
- pOZuCnotWtOdfOQ3HiZjvxzyhJ6lXCJSaFk+PqViTKlZgF3CB5ip0VUQmXeDqWYI3789
- D0IS7ri6I4jxyfG1790VA5BfWqlsHu/ZXwCLpTJDJ6sDGYDm14ub67fnrzKdqdkDg8u0
- SKESylFV9xiUZE4BgmMJm4W6y3h1tgQhE5dg1IcKVGdU4t0MkkTc2FzhKCdRQc+1TyzI
- bVcfnxBmIG1pfLe3UTuEKrVBW40Yc43L4pe7fkllemIf6oKyTMekJYZUnYxpNp6k2K8Y 2A== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n1k5k37sa-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 12 Jan 2023 07:30:35 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30C7UXoN023815
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 12 Jan 2023 07:30:33 GMT
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Wed, 11 Jan 2023 23:30:28 -0800
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>, <lgirdwood@gmail.com>,
-        <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
-        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
-        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <linux-kernel@vger.kernel.org>,
-        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
-        <devicetree@vger.kernel.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Subject: [PATCH] ASoC: qdsp6: audioreach: Add ADSP ready check
-Date:   Thu, 12 Jan 2023 13:00:17 +0530
-Message-ID: <1673508617-27410-1-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        Thu, 12 Jan 2023 02:46:12 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E27D4BD46;
+        Wed, 11 Jan 2023 23:45:34 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id E4D0661F7A;
+        Thu, 12 Jan 2023 07:45:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47346C433D2;
+        Thu, 12 Jan 2023 07:45:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1673509533;
+        bh=EWBwBnYK0xV+Glxx6Z/EVTFLlwix0VJtnazOnfUdeT4=;
+        h=From:To:Cc:Subject:Date:From;
+        b=png2WOfLLGAoQpqEDt0S1ahBd/UXNg2eTnPhqBrr3UFBw0pUuIpbz8PDj8dHTzk7M
+         hDh1Hc5sqKnyoL0m/XyHVCSUID+usEJn0HFDrSLFYJPRJQPq8nIP3MgJteS47Z+nQ6
+         n5YhtLTM1L1VdpvRAgxkTQo00qqbxf76Uos+/H6tH4rBY2Dx/eF/oGKGy5v6VHqMHR
+         QMMgEziJ1bFKC5EB7JkO+F87e1ju44YA12X9VL4m72kHBcoIt/Hi+ItrZJfd64MdTx
+         gWeqd6ukyh0i7S93LQh3CNRwFFH9O5q9evm0Ijgxhh6I2wb0y4JecGQ32jOeh+PZaV
+         z+ucHcpXizerA==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan+linaro@kernel.org>)
+        id 1pFsHL-0003Bl-Hm; Thu, 12 Jan 2023 08:45:39 +0100
+From:   Johan Hovold <johan+linaro@kernel.org>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH] arm64: dts: qcom: sc8280xp-crd: allow vreg_l3b to be disabled
+Date:   Thu, 12 Jan 2023 08:45:03 +0100
+Message-Id: <20230112074503.12185-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.38.2
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: elNRcLsPaMwYRWWPSUwy8R_nOuDkGfj2
-X-Proofpoint-GUID: elNRcLsPaMwYRWWPSUwy8R_nOuDkGfj2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2023-01-12_04,2023-01-11_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 spamscore=0
- priorityscore=1501 suspectscore=0 adultscore=0 mlxlogscore=999
- clxscore=1011 bulkscore=0 mlxscore=0 phishscore=0 lowpriorityscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301120052
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Check for SPF readiness in prm driver probe to avoid race conditions
-during ADSP pil loading.
-This patch is to avoid, sending requests to ADSP before it's
-power domains are up and ready.
+The vreg_l3b supply is used by the eDP, UFS and USB1 PHYs which are now
+described by the devicetree so that the regulator no longer needs to be
+marked always-on.
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Tested-by: Ratna Deepthi Kudaravalli <rkudarav@qti.qualcomm.com>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 ---
- sound/soc/qcom/qdsp6/q6apm.c | 13 +++++++++++++
- sound/soc/qcom/qdsp6/q6apm.h |  2 ++
- sound/soc/qcom/qdsp6/q6prm.c |  4 ++++
- 3 files changed, 19 insertions(+)
+ arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/sound/soc/qcom/qdsp6/q6apm.c b/sound/soc/qcom/qdsp6/q6apm.c
-index 5beb898..8a7dfd2 100644
---- a/sound/soc/qcom/qdsp6/q6apm.c
-+++ b/sound/soc/qcom/qdsp6/q6apm.c
-@@ -27,6 +27,8 @@ struct apm_graph_mgmt_cmd {
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+index db12d8678861..e5e75cc2c670 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+@@ -150,7 +150,6 @@ vreg_l3b: ldo3 {
+ 			regulator-max-microvolt = <1200000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 			regulator-boot-on;
+-			regulator-always-on;
+ 		};
  
- #define APM_GRAPH_MGMT_PSIZE(p, n) ALIGN(struct_size(p, sub_graph_id_list, n), 8)
- 
-+struct q6apm *g_apm;
-+
- int q6apm_send_cmd_sync(struct q6apm *apm, struct gpr_pkt *pkt, uint32_t rsp_opcode)
- {
- 	gpr_device_t *gdev = apm->gdev;
-@@ -143,6 +145,15 @@ static void q6apm_put_audioreach_graph(struct kref *ref)
- 	kfree(graph);
- }
- 
-+bool q6apm_is_adsp_ready(void)
-+{
-+	if (g_apm && g_apm->state)
-+		return true;
-+
-+	return false;
-+}
-+EXPORT_SYMBOL_GPL(q6apm_is_adsp_ready);
-+
- static int q6apm_get_apm_state(struct q6apm *apm)
- {
- 	struct gpr_pkt *pkt;
-@@ -658,6 +669,8 @@ static int apm_probe(gpr_device_t *gdev)
- 
- 	idr_init(&apm->modules_idr);
- 
-+	g_apm = apm;
-+
- 	q6apm_get_apm_state(apm);
- 
- 	ret = devm_snd_soc_register_component(dev, &q6apm_audio_component, NULL, 0);
-diff --git a/sound/soc/qcom/qdsp6/q6apm.h b/sound/soc/qcom/qdsp6/q6apm.h
-index 273f978..7005be9 100644
---- a/sound/soc/qcom/qdsp6/q6apm.h
-+++ b/sound/soc/qcom/qdsp6/q6apm.h
-@@ -145,4 +145,6 @@ struct audioreach_module *q6apm_find_module_by_mid(struct q6apm_graph *graph,
- void q6apm_set_fe_dai_ops(struct snd_soc_dai_driver *dai_drv);
- int q6apm_graph_get_rx_shmem_module_iid(struct q6apm_graph *graph);
- 
-+bool q6apm_is_adsp_ready(void);
-+
- #endif /* __APM_GRAPH_ */
-diff --git a/sound/soc/qcom/qdsp6/q6prm.c b/sound/soc/qcom/qdsp6/q6prm.c
-index 8aa1a21..3aa63aa 100644
---- a/sound/soc/qcom/qdsp6/q6prm.c
-+++ b/sound/soc/qcom/qdsp6/q6prm.c
-@@ -12,6 +12,7 @@
- #include <linux/soc/qcom/apr.h>
- #include <dt-bindings/soc/qcom,gpr.h>
- #include <dt-bindings/sound/qcom,q6dsp-lpass-ports.h>
-+#include "q6apm.h"
- #include "q6prm.h"
- #include "audioreach.h"
- 
-@@ -226,6 +227,9 @@ static int prm_probe(gpr_device_t *gdev)
- 	init_waitqueue_head(&cc->wait);
- 	dev_set_drvdata(dev, cc);
- 
-+	if (!q6apm_is_adsp_ready())
-+		return -EPROBE_DEFER;
-+
- 	return devm_of_platform_populate(dev);
- }
- 
+ 		vreg_l4b: ldo4 {
 -- 
-2.7.4
+2.38.2
 
