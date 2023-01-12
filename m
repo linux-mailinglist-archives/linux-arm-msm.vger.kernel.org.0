@@ -2,149 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D27C0666D64
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 10:05:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 68BBB666DF7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 10:24:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239922AbjALJFW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Jan 2023 04:05:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53918 "EHLO
+        id S239000AbjALJYK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Jan 2023 04:24:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239926AbjALJE1 (ORCPT
+        with ESMTP id S230430AbjALJXq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Jan 2023 04:04:27 -0500
-Received: from mail-vs1-xe2e.google.com (mail-vs1-xe2e.google.com [IPv6:2607:f8b0:4864:20::e2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A499C52C6A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 01:00:03 -0800 (PST)
-Received: by mail-vs1-xe2e.google.com with SMTP id d66so5951729vsd.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 01:00:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20210112.gappssmtp.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=gJ23laUZs6KjNqXK2XFx5Pb9Rdas9/1BF4+iDdlfsBo=;
-        b=potZArkto3X9RVVqwM4wpGy6V4Wa/PD0N5YvFlZlzTqb1a3taJrikQ15ozA6/uHamB
-         Vo4ZBvDEKy02cf18Vumh3WYXWg00mb9FSEvPVXuzEurzirwgBOCPGNMk6DqKRBwF1lWM
-         zJ2k4P6XKKj0AN40zWG56gc5r4zuvoClmK+VpPEUeWV11IsyTbjmVbF/bJitI0cq/reE
-         oT9qbJG5WATueXzsj2n87o6/xsfwyRWdsXHK3NF8tEDvIMnogjB7gq++af8yeFqKUtvz
-         9cA+46rt+zbMaDw9dM3F6XT/Smi3H/DrHY1agDBAUJ3e18avqvyWnNHQts9ROiOQls74
-         nMkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gJ23laUZs6KjNqXK2XFx5Pb9Rdas9/1BF4+iDdlfsBo=;
-        b=V3XubXlyyvQ26VoBJrie5FifND05mgf0/wzvUh/tsZ+aieuuNJ9f+2QqrjtlPXdCwg
-         jfkBWl8D7Lhyqh2O/Z/enYjQiyZ1MHArAIT56P+9/998EbOwQjs2PnbfciyhzJFXmhTt
-         FPhhDIjOVQT0wh7gz/Q/OhwtuoetGFNfixUdmdgCCYzOJsYTdGCK1K304Zqv1IR/xZBz
-         8ecDSipim7FZSRTPvqIEsIoyFPoFk4fkZx1Y7poGYFdZyUaGEknRwg6LLdqwGSgJalZ6
-         DWyyFM5vs5rrTOGni9Rn2V7hYHEW1PSLzAyzBWAIGmawF+/VvPtvqhtlirTgduF+ubJ0
-         3z0w==
-X-Gm-Message-State: AFqh2kqJEohk+KUR3NRimwg2fwu0IdbWT9GrMRnDsrzx+v7PJox+tagY
-        NWw4WsV0jgyXZaNzlUw4IT1T8OJtXKSkgmhVWrXDaQ==
-X-Google-Smtp-Source: AMrXdXviWdXojdoV3bFd8Xvbc8Okp/bpO2EoZvp3ZRkSFSZoAkdlPpXJVnkL8JErHGCzjRR9Pyodq2a1TjuQy9hfXnw=
-X-Received: by 2002:a67:e111:0:b0:3ce:8fa9:1ec4 with SMTP id
- d17-20020a67e111000000b003ce8fa91ec4mr5712836vsl.73.1673514002505; Thu, 12
- Jan 2023 01:00:02 -0800 (PST)
+        Thu, 12 Jan 2023 04:23:46 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1A1D58FAB;
+        Thu, 12 Jan 2023 01:13:15 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 5416EB81DE8;
+        Thu, 12 Jan 2023 09:13:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6F4CC433F2;
+        Thu, 12 Jan 2023 09:13:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1673514793;
+        bh=kEGTvDm5segAcaadzq0wJ5MfNW2R7JZZKdchDCKJD0E=;
+        h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+        b=e6PtrDaTa+SrVnqR0EL9ZA1/+axqXM3X5ItynF6qLmzEgYLuMdC8iQZq9B6bun8AU
+         aUGczTnlCC/jSO8DenY7D2DZKCoBFjA9IpO5d2jMeUarSi9mNDPOgaTcfxODkdP9dH
+         4T0FkjXaO8jJrFUVp6I/SttzFIxR2qdhRqJ4FsZEzuOr0K6ghtBAs1WnrR5YRPKm02
+         JE5A/6cVFCv7+2UqZ79O/EbVgpGq7XoZCU7gYoj3VdojGYXAkslFxryJ6PAoQjdfTz
+         8FJ5NMfi4yFPcsnkJ1OmGYcxpwU4/FeR93AcEJ8Nq3Wty9URzwBicsXNyrZiGMcqa5
+         j6KPiO3f+5zdg==
+From:   Kalle Valo <kvalo@kernel.org>
+To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     Baochen Qiang <quic_bqiang@quicinc.com>,
+        manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ath11k@lists.infradead.org
+Subject: Re: [PATCH] bus: mhi: host: Change the log levels for SYS_ERR event
+References: <20230104021445.47484-1-quic_bqiang@quicinc.com>
+        <CAOCk7NpGBD-2nHFBE3a4WxNb4XPhEV3uoCDz1J9ArbaOE7Vscg@mail.gmail.com>
+Date:   Thu, 12 Jan 2023 11:13:09 +0200
+In-Reply-To: <CAOCk7NpGBD-2nHFBE3a4WxNb4XPhEV3uoCDz1J9ArbaOE7Vscg@mail.gmail.com>
+        (Jeffrey Hugo's message of "Tue, 3 Jan 2023 19:41:44 -0700")
+Message-ID: <87fscgdska.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20221229155030.418800-1-brgl@bgdev.pl>
-In-Reply-To: <20221229155030.418800-1-brgl@bgdev.pl>
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-Date:   Thu, 12 Jan 2023 09:59:51 +0100
-Message-ID: <CAMRc=McPdvZFJ4DhgAQ9rPOD3Xi89nrA3ZrgZtA33PjptQuPxA@mail.gmail.com>
-Subject: Re: [PATCH v6 00/14] serial: qcom-geni-serial: implement support for
- SE DMA
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, Alex Elder <elder@kernel.org>,
-        =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Dec 29, 2022 at 4:50 PM Bartosz Golaszewski <brgl@bgdev.pl> wrote:
->
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->
-> The goal of this series is to update the qcom-geni-serial driver to use
-> the DMA mode of the QUPv3 serial engine. This is accomplished by the last
-> patch in the series. The previous ones contain either various tweaks,
-> reworks and refactoring or prepare the driver for adding DMA support.
->
-> More work will follow on the serial engine in order to reduce code
-> redundancy among its users and add support for SE DMA to the qcom GENI
-> SPI driver.
->
-> v5 -> v6:
-> - move patch 12/14 to the front of the series and mark it as a fix
-> - rebase on top of v6.2-rc1 (there were some updates to the driver)
->
-> v4 -> v5:
-> - split patch 8/13 into two: one for splitting out the chunk sending code
->   and one for refactoring it (for easier review)
-> - when stopping uart: disable the irq first before stopping transfers in
->   progress, otherwise we rist rescheduling additional transfers after
->   interrupt
-> - make types even nore consistent in qcom_geni_serial_send_chunk_fifo()
->
-> v3 -> v4:
-> - don't assign NULL (even cast) to variables of type dma_addr_t
-> - refactor checking the SE_GENI_STATUS into two inline functions
-> - drop min_t() in favor of regular min() after adding some consistency to types
-> - check if the abort command was successful and emit a message if not when
->   stopping TX in DMA mode
->
-> v2 -> v3:
-> - drop devres patches from the series
->
-> v1 -> v2:
-> - turn to_dev_uport() macro into a static inline function
-> - use CIRC_CNT_TO_END() and uart_xmit_advance() where applicable and don't
->   handle xmit->tail directly
-> - drop sizeof() where BYTES_PER_FIFO_WORD can be used
-> - further refactor qcom_geni_serial_handle_tx_fifo()
-> - collect review tags
->
-> Bartosz Golaszewski (14):
->   tty: serial: qcom-geni-serial: stop operations in progress at shutdown
->   tty: serial: qcom-geni-serial: drop unneeded forward definitions
->   tty: serial: qcom-geni-serial: remove unused symbols
->   tty: serial: qcom-geni-serial: align #define values
->   tty: serial: qcom-geni-serial: improve the to_dev_port() macro
->   tty: serial: qcom-geni-serial: remove stray newlines
->   tty: serial: qcom-geni-serial: refactor qcom_geni_serial_isr()
->   tty: serial: qcom-geni-serial: remove unneeded tabs
->   tty: serial: qcom-geni-serial: split out the FIFO tx code
->   tty: serial: qcom-geni-serial: refactor
->     qcom_geni_serial_send_chunk_fifo()
->   tty: serial: qcom-geni-serial: drop the return value from handle_rx
->   tty: serial: qcom-geni-serial: use of_device_id data
->   soc: qcom-geni-se: add more symbol definitions
->   tty: serial: qcom-geni-serial: add support for serial engine DMA
->
->  drivers/tty/serial/qcom_geni_serial.c | 626 +++++++++++++++++---------
->  include/linux/qcom-geni-se.h          |   3 +
->  2 files changed, 413 insertions(+), 216 deletions(-)
->
-> --
-> 2.37.2
->
+Jeffrey Hugo <jeffrey.l.hugo@gmail.com> writes:
 
-It's been two weeks without any further comments, can this be picked
-up now into the serial tree?
+> Why was this not sent to the MHI mailing list?
+>
+> On Tue, Jan 3, 2023 at 7:19 PM Baochen Qiang <quic_bqiang@quicinc.com> wrote:
+>>
+>> Currently no log printed when SYS_ERR happens, this makes
+>> debug quite hard, so change log level to make it noisy.
+>
+> You are going to need to explain this more.
+> There are two drivers in the upstream kernel that are MHI clients -
+> pci_generic and ath11k.
+> I'm assuming that you care about ath11k because you included that mail list.
+> In ath11k_mhi_op_status_cb() I see a warning message printed when the
+> syserr callback is triggered.
+> I see something similar in pci_generic.
+>
+> Looks like a log is printed when SYS_ERR happens in all possible
+> scenarios, so I don't understand the point of this change.
+> Particularly given that dev_dbg messages can be trivially enabled.
 
-Bart
+Also the error messages are not very informative, especially if there
+are three identical messages it's hard to track down which code path is
+triggering them. If these are changed to error messages, I would prefer
+to improve them as well.
+
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
