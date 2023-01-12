@@ -2,157 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DDBC06686E8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 23:28:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 42540668738
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 23:47:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240653AbjALW14 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Jan 2023 17:27:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43426 "EHLO
+        id S232674AbjALWrU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Jan 2023 17:47:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240517AbjALW1X (ORCPT
+        with ESMTP id S232665AbjALWrP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Jan 2023 17:27:23 -0500
-X-Greylist: delayed 623 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 12 Jan 2023 14:24:43 PST
-Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [81.169.146.170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5CD26256;
-        Thu, 12 Jan 2023 14:24:41 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1673562270; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=sP/ffea2VXzs5ctiBhBZtOrqKvTVucMFvkJmgkUrhJk88hDr4sSgS+qrfSqp5ULl0O
-    jX4g64LhxSww7YdAxXSR1SmUf79NS8mKrdddKgcrsOtaHcRYmzxWqXjJ9i5AZaMiAXBy
-    fuI2OQAE8xImpy6ZWK3Mmfd5GXeT+dbRSi/WoMnI2fmoYQ2Y+23zNeAYRrd0SYpqJ769
-    4MG9k1pDeAUO+dL6PcKYqLVaRkwWMz+nqGmQht70v8O27gt7rYdsSpx8VO8yhaFyezvV
-    HIU4UPHWNKts+bp1+aO3fE1qLBEwH86i31hB1xWGpkmwKXFIgJZa9rPwBDZGu8pq3BNe
-    gAzw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1673562270;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=JTbqY/0foCfnZ+vBedvPjIQxwUaNY5Vwj25lmnUspGI=;
-    b=dGkRfq9BfnPmHYD76sp2At7cdX5hZHBSo/WGQfIyN2XAbLwW0GTnBmRfSewCfXWK4A
-    prp8PLJel+KBlINvm17Iq/UQZxDTr95SaxoulbFWKsnzqbYWOVfM4PDQQYNYsTAm57pZ
-    sZlJxgBaUf7N6VCpIp/GGOVlZ7LcgsiWHCkLdt5KerV2pZ0MH3a1ajRufRo2GtIVmNFm
-    f3ZPZCQdTdMfYd2ZSHqLlk9V644Z2h5BdgnDGcRKUYZJ4S1qdPPrjbnr74mnhJV05rj4
-    I7rWcgMZRT50nPfK1a8a4HuoLvbsOKU61MXvTbgOlloPZ5a+3SZWkBFCAJ6+3bOgrbFb
-    I69Q==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo02
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1673562270;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=JTbqY/0foCfnZ+vBedvPjIQxwUaNY5Vwj25lmnUspGI=;
-    b=JEaMP74h0BCDJkkracrxXH4SCFbBzdjwbNSLdOCYwvIo18Vj4tmuXDtu2N6/Eoimlt
-    K60huBA6F3lUutcOuG+RD9ypAxAQGQiPKQEdEod0RtcuEyUeq+3H72rm1iUsZOl/WRdY
-    AHZbEzwyXdTHlmVCZTKkpAIy0JgUv65l4+QQPbSV1VbYxKXCTaonc+Jx+RjWQIqg4vRw
-    IwIyteVZAXkBg4U49HeVZOArIcQSbP+nkk3i9cL7exbVFGuQC/PKLVHsJhcInz/HuFNN
-    L0GBZWUA8OJEJ7g4FPyDDheyPwr9Ttx1PWdIozQCezrGCcBYLlM1X5ElBWEKBo/fDck4
-    ZiJg==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJAhdlWwfGjtQ=="
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 48.6.2 DYNA|AUTH)
-    with ESMTPSA id yacdeez0CMOU4hN
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Thu, 12 Jan 2023 23:24:30 +0100 (CET)
-Date:   Thu, 12 Jan 2023 23:24:29 +0100
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Matti =?iso-8859-1?Q?Lehtim=E4ki?= <matti.lehtimaki@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Luca Weiss <luca@z3ntu.xyz>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 7/8] ARM: dts: qcom: msm8226: Add modem remoteproc node
-Message-ID: <Y8CInQ8UJdEen33p@gerhold.net>
-References: <20230112202612.791455-1-matti.lehtimaki@gmail.com>
- <20230112202612.791455-8-matti.lehtimaki@gmail.com>
+        Thu, 12 Jan 2023 17:47:15 -0500
+Received: from mail-oa1-x32.google.com (mail-oa1-x32.google.com [IPv6:2001:4860:4864:20::32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95E5BF64
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 14:47:13 -0800 (PST)
+Received: by mail-oa1-x32.google.com with SMTP id 586e51a60fabf-15027746720so20500045fac.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 14:47:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=FQUwPv/TMyXJrNzfCcwmEvY/QdFqohc2tALE1xmmzVM=;
+        b=om+f6raMoRk1heKxqHNySh0DV96srUosmJsC04L7Nyr2ihmjajq+tPA3goALZ4ynX0
+         0eETcEId6DBKdSrGTFkEuCUISndR7vD1tABN7vsW6EA/xl6PiGq09c6h0Iavjyra8pEu
+         R/Vp9Xa1xyeoFgbKPJEHxkV4L0GDCpn9JqHb62FysvcpxgB7hE5CEY++UnushXTx+LCp
+         aVS3DJQzX1vTFdaapDi5ikREJtENmHKcxTvUzxFqGyPRHsi1nJ4O1ArI6+9qSAXK/JXW
+         yocDO2wOCZqP7GEYrfiek0g289CmMskGZfL4PSV8JBHE5rD+W5VLSWQqxL7apwCxqPvH
+         QoNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=FQUwPv/TMyXJrNzfCcwmEvY/QdFqohc2tALE1xmmzVM=;
+        b=mEJ+LsMvBBnX0N4eNem7n+B3YFddpPSWGc+vKPezVTyM+buL4uzmRQP2NgdQZc9JvX
+         0XROZMbK0XNllpOfYECWj9Kpq7sSqUQyLDEwrdy4J7H6O1huyP9Z2ZfsXC5YNWJIDIJj
+         W46BntpHx6orLjhi3k10w2ZHYBV9Sc/t573VMOYMhtJyiRsyi6JZvg6K1Bts72QmUlEr
+         UwPXbSzmphGIjcpZ786XRcfpOu9HAn/HWL0DVYviH5Wp4Nzy8n449fzRSc5me2aM0jlS
+         ycKqOLvh2O09Dxwb6q/TB+MtfGrfxGvDVGqdvzfHn3IRmfD2Cc+bTEH0VpDFSmVO3rVc
+         6EUA==
+X-Gm-Message-State: AFqh2kpv/VZgNoQ6jsJnD2z6y52KILSZHtXTGGuMk16oXYYtH9ytJaiY
+        LQUY2+XRY0yWimteeiFSWXvwIyyteDufbkvFgM0=
+X-Google-Smtp-Source: AMrXdXvdZptTCsXrHi4BTk//sSbh/jnXYupMny8L1cXQkzTKzWGrFLrL6ndL5Yx77FuXhtnFkr2ea4eIUTBbzgkrI58=
+X-Received: by 2002:a05:6870:cb98:b0:15b:96b8:e2be with SMTP id
+ ov24-20020a056870cb9800b0015b96b8e2bemr922634oab.38.1673563632873; Thu, 12
+ Jan 2023 14:47:12 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230112202612.791455-8-matti.lehtimaki@gmail.com>
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Thu, 12 Jan 2023 14:47:07 -0800
+Message-ID: <CAF6AEGv7=in_MHW3kdkhqh7ZFoVCmnikmr29YYHCXR=7aOEneg@mail.gmail.com>
+Subject: [pull] drm/msm: drm-msm-fixes-2023-01-12 for v6.3-rc4
+To:     Dave Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 12, 2023 at 10:26:10PM +0200, Matti Lehtimäki wrote:
-> From: Luca Weiss <luca@z3ntu.xyz>
-> 
-> Add a node for the modem remoteproc found on MSM8226.
-> 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> Co-developed-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
-> Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
-> ---
->  arch/arm/boot/dts/qcom-msm8226.dtsi | 86 +++++++++++++++++++++++++++++
->  1 file changed, 86 insertions(+)
-> 
-> diff --git a/arch/arm/boot/dts/qcom-msm8226.dtsi b/arch/arm/boot/dts/qcom-msm8226.dtsi
-> index 2639167c8976..34ea9cf46ae0 100644
-> --- a/arch/arm/boot/dts/qcom-msm8226.dtsi
-> +++ b/arch/arm/boot/dts/qcom-msm8226.dtsi
-> [...]
-> @@ -620,6 +655,57 @@ rpm_msg_ram: sram@fc428000 {
->  			reg = <0xfc428000 0x4000>;
->  		};
->  
-> +		modem: remoteproc@fc880000 {
-> +			compatible = "qcom,msm8226-mss-pil";
-> +			reg = <0xfc880000 0x100>,
-> +			      <0xfc820000 0x020>;
-> +			reg-names = "qdsp6", "rmb";
-> +
-> +			interrupts-extended = <&intc GIC_SPI 24 IRQ_TYPE_EDGE_RISING>,
-> +					      <&modem_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
-> +					      <&modem_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
-> +					      <&modem_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
-> +					      <&modem_smp2p_in 3 IRQ_TYPE_EDGE_RISING>;
-> +			interrupt-names = "wdog", "fatal", "ready", "handover", "stop-ack";
-> +
-> +			clocks = <&gcc GCC_MSS_Q6_BIMC_AXI_CLK>,
-> +				 <&gcc GCC_MSS_CFG_AHB_CLK>,
-> +				 <&gcc GCC_BOOT_ROM_AHB_CLK>,
-> +				 <&xo_board>;
-> +			clock-names = "iface", "bus", "mem", "xo";
-> +
-> +			resets = <&gcc GCC_MSS_RESTART>;
-> +			reset-names = "mss_restart";
-> +
-> +			power-domains = <&rpmpd MSM8226_VDDCX>;
-> +			power-domain-names = "cx";
-> +
-> +			qcom,ext-bhs-reg = <&tcsr_regs_1 0x194>;
-> +			qcom,halt-regs = <&tcsr_regs_1 0x180 0x200 0x280>;
-> +
-> +			qcom,smem-states = <&modem_smp2p_out 0>;
-> +			qcom,smem-state-names = "stop";
-> +
-> +			status = "disabled";
-> +
-> +			mba {
-> +				memory-region = <&mba_region>;
-> +			};
-> +
-> +			mpss {
-> +				memory-region = <&mpss_region>;
-> +			};
+Hi Dave,
 
-Please prefer using memory-region with two items in the node above, as
-suggested in the DT schema:
+A few fixes for the v6.3 cycle.  Summary below.
 
-			memory-region = <&mba_region>, <&mpss_region>;
+The following changes since commit 8d1d17d47eaebe4466459846d07e4ba8953fa585:
 
-Thanks,
-Stephan
+  Merge branches 'msm-next-lumag-core', 'msm-next-lumag-dpu',
+'msm-next-lumag-dp', 'msm-next-lumag-dsi', 'msm-next-lumag-hdmi' and
+'msm-next-lumag-mdp5' into msm-next-lumag (2022-11-26 12:06:29 +0200)
+
+are available in the Git repository at:
+
+  https://gitlab.freedesktop.org/drm/msm.git tags/drm-msm-fixes-2023-01-12
+
+for you to fetch changes up to f4a75b5933c998e60fd812a7680e0971eb1c7cee:
+
+  drm/msm/a6xx: Avoid gx gbit halt during rpm suspend (2023-01-05
+15:13:16 -0800)
+
+----------------------------------------------------------------
+msm-fixes for v6.3-rc4
+
+Display Fixes:
+
+- Fix the documentation for dpu_encoder_phys_wb_init() and
+  dpu_encoder_phys_wb_setup_fb() APIs to address doc warnings
+- Remove vcca-supply and vdds-supply as mandatory for 14nm PHY and
+  10nm PHY DT schemas respectively as they are not present on some
+  SOCs using these PHYs
+- Add the dsi-phy-regulator-ldo-mode to dsi-phy-28nm.yaml as it was
+  missed out during txt to yaml migration
+- Remove operating-points-v2 and power-domain as a required property
+  for the DSI controller as thats not the case for every SOC
+- Fix the description from display escape clock to display core
+  clock in the dsi controller yaml
+- Fix the memory leak for mdp1-mem path for the cases when we return
+  early after failing to get mdp0-mem ICC paths for msm
+- Fix error handling path in msm_hdmi_dev_probe() to release the phy
+  ref count when devm_pm_runtime_enable() fails
+- Fix the dp_aux_isr() routine to make sure it doesnt incorrectly
+  signal the aux transaction as complete if the ISR was not an AUX
+  isr. This fixes a big hitter stability bug on chromebooks.
+- Add protection against null pointer dereference when there is no
+  kms object as in the case of headless adreno GPU in the shutdown
+  path.
+
+GPU Fixes:
+
+- a5xx: fix quirks to actually be a bitmask and not overwrite each
+  other
+- a6xx: fix gx halt sequence to avoid 1000ms hang on some devices
+- kexec shutdown fix
+- fix potential double free
+
+----------------------------------------------------------------
+Adam Skladowski (1):
+      dt-bindings: display: msm: Rename mdss node name in example
+
+Akhil P Oommen (1):
+      drm/msm/a6xx: Avoid gx gbit halt during rpm suspend
+
+Bryan O'Donoghue (4):
+      dt-bindings: msm: dsi-phy-28nm: Add missing qcom,
+dsi-phy-regulator-ldo-mode
+      dt-bindings: msm: dsi-controller-main: Fix operating-points-v2 constraint
+      dt-bindings: msm: dsi-controller-main: Fix power-domain constraint
+      dt-bindings: msm: dsi-controller-main: Fix description of core clock
+
+Christophe JAILLET (1):
+      drm/msm/hdmi: Fix the error handling path of msm_hdmi_dev_probe()
+
+Dmitry Baryshkov (1):
+      drm/msm: another fix for the headless Adreno GPU
+
+Konrad Dybcio (3):
+      dt-bindings: msm/dsi: Don't require vcca-supply on 14nm PHY
+      dt-bindings: msm/dsi: Don't require vdds-supply on 10nm PHY
+      drm/msm/adreno: Make adreno quirks not overwrite each other
+
+Kuogee Hsieh (1):
+      drm/msm/dp: do not complete dp_aux_cmd_fifo_tx() if irq is not
+for aux transfer
+
+Miaoqian Lin (1):
+      drm/msm/dpu: Fix memory leak in msm_mdss_parse_data_bus_icc_path
+
+Yang Li (1):
+      drm/msm/dpu: Fix some kernel-doc comments
+
+ .../bindings/display/msm/dsi-controller-main.yaml         |  4 +---
+ .../devicetree/bindings/display/msm/dsi-phy-10nm.yaml     |  1 -
+ .../devicetree/bindings/display/msm/dsi-phy-14nm.yaml     |  1 -
+ .../devicetree/bindings/display/msm/dsi-phy-28nm.yaml     |  4 ++++
+ .../bindings/display/msm/qcom,qcm2290-mdss.yaml           |  2 +-
+ .../devicetree/bindings/display/msm/qcom,sm6115-mdss.yaml |  2 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c                     | 15 +++++++++------
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c                     |  7 +++++++
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.h                     |  1 +
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h                   | 10 ++++------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c       |  3 +--
+ drivers/gpu/drm/msm/dp/dp_aux.c                           |  4 ++++
+ drivers/gpu/drm/msm/hdmi/hdmi.c                           | 12 ++++++++++--
+ drivers/gpu/drm/msm/msm_drv.c                             |  2 +-
+ drivers/gpu/drm/msm/msm_mdss.c                            |  6 ++++--
+ 15 files changed, 48 insertions(+), 26 deletions(-)
