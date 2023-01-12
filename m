@@ -2,173 +2,255 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 42540668738
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 23:47:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 47DB46687FB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 00:53:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232674AbjALWrU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Jan 2023 17:47:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54388 "EHLO
+        id S238133AbjALXxk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Jan 2023 18:53:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232665AbjALWrP (ORCPT
+        with ESMTP id S237200AbjALXxg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Jan 2023 17:47:15 -0500
-Received: from mail-oa1-x32.google.com (mail-oa1-x32.google.com [IPv6:2001:4860:4864:20::32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95E5BF64
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 14:47:13 -0800 (PST)
-Received: by mail-oa1-x32.google.com with SMTP id 586e51a60fabf-15027746720so20500045fac.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 14:47:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=FQUwPv/TMyXJrNzfCcwmEvY/QdFqohc2tALE1xmmzVM=;
-        b=om+f6raMoRk1heKxqHNySh0DV96srUosmJsC04L7Nyr2ihmjajq+tPA3goALZ4ynX0
-         0eETcEId6DBKdSrGTFkEuCUISndR7vD1tABN7vsW6EA/xl6PiGq09c6h0Iavjyra8pEu
-         R/Vp9Xa1xyeoFgbKPJEHxkV4L0GDCpn9JqHb62FysvcpxgB7hE5CEY++UnushXTx+LCp
-         aVS3DJQzX1vTFdaapDi5ikREJtENmHKcxTvUzxFqGyPRHsi1nJ4O1ArI6+9qSAXK/JXW
-         yocDO2wOCZqP7GEYrfiek0g289CmMskGZfL4PSV8JBHE5rD+W5VLSWQqxL7apwCxqPvH
-         QoNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FQUwPv/TMyXJrNzfCcwmEvY/QdFqohc2tALE1xmmzVM=;
-        b=mEJ+LsMvBBnX0N4eNem7n+B3YFddpPSWGc+vKPezVTyM+buL4uzmRQP2NgdQZc9JvX
-         0XROZMbK0XNllpOfYECWj9Kpq7sSqUQyLDEwrdy4J7H6O1huyP9Z2ZfsXC5YNWJIDIJj
-         W46BntpHx6orLjhi3k10w2ZHYBV9Sc/t573VMOYMhtJyiRsyi6JZvg6K1Bts72QmUlEr
-         UwPXbSzmphGIjcpZ786XRcfpOu9HAn/HWL0DVYviH5Wp4Nzy8n449fzRSc5me2aM0jlS
-         ycKqOLvh2O09Dxwb6q/TB+MtfGrfxGvDVGqdvzfHn3IRmfD2Cc+bTEH0VpDFSmVO3rVc
-         6EUA==
-X-Gm-Message-State: AFqh2kpv/VZgNoQ6jsJnD2z6y52KILSZHtXTGGuMk16oXYYtH9ytJaiY
-        LQUY2+XRY0yWimteeiFSWXvwIyyteDufbkvFgM0=
-X-Google-Smtp-Source: AMrXdXvdZptTCsXrHi4BTk//sSbh/jnXYupMny8L1cXQkzTKzWGrFLrL6ndL5Yx77FuXhtnFkr2ea4eIUTBbzgkrI58=
-X-Received: by 2002:a05:6870:cb98:b0:15b:96b8:e2be with SMTP id
- ov24-20020a056870cb9800b0015b96b8e2bemr922634oab.38.1673563632873; Thu, 12
- Jan 2023 14:47:12 -0800 (PST)
+        Thu, 12 Jan 2023 18:53:36 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83BEF5D434;
+        Thu, 12 Jan 2023 15:53:35 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id E9E65B815FA;
+        Thu, 12 Jan 2023 23:53:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 896BFC433D2;
+        Thu, 12 Jan 2023 23:53:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1673567612;
+        bh=ZI8k44b6vA0SNkTgF4tI5V/ADqEolyTUYI+fC7Jcmuk=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=bpPiJb+W7TpzDtyjBnxkj1daJPsx7uAMQYHUfHl+VNmwj8n9SoK+Aoa34w4pzGfqh
+         5ijDvKjhgSR+w5PBLWE76vHYz9VxrtxxdBqUZojX8vDm+7JQLk/o+WV9FsYhJVNyQ6
+         ho1KxPKUo0AuJfWZsSlU9vPcwmB9Yia+N6v8E+U5eBIzB83wmVFiQYVUfo6qCpEFcF
+         zj5I8JUhcnZm2oS61f/FXmqFC0i1l1EmU3Z1ULZDGKVPtqKw1mwuWdEYzXjxsnT6i5
+         170rn4nJo9dp72OiV8/ZvyaSLZ+oP60LXedAfBWMR7AnZtdphYGzMh32XdfMxCZT8y
+         gvjodiJH8t88Q==
+Message-ID: <fd150fa2b35e1e07808e3d1e67e1def7.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Thu, 12 Jan 2023 14:47:07 -0800
-Message-ID: <CAF6AEGv7=in_MHW3kdkhqh7ZFoVCmnikmr29YYHCXR=7aOEneg@mail.gmail.com>
-Subject: [pull] drm/msm: drm-msm-fixes-2023-01-12 for v6.3-rc4
-To:     Dave Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20221227132507.2506-1-quic_kathirav@quicinc.com>
+References: <20221227132507.2506-1-quic_kathirav@quicinc.com>
+Subject: Re: [PATCH V4] clk: qcom: clk-alpha-pll: Add support for Stromer PLLs
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Varadarajan Narayanan <quic_varada@quicinc.com>,
+        Sricharan R <quic_srichara@quicinc.com>,
+        Kathiravan T <quic_kathirav@quicinc.com>
+To:     Kathiravan T <quic_kathirav@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mturquette@baylibre.com
+Date:   Thu, 12 Jan 2023 15:53:30 -0800
+User-Agent: alot/0.10
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dave,
+Quoting Kathiravan T (2022-12-27 05:25:07)
+> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alph=
+a-pll.c
+> index f9e4cfd7261c..29866100df08 100644
+> --- a/drivers/clk/qcom/clk-alpha-pll.c
+> +++ b/drivers/clk/qcom/clk-alpha-pll.c
+> @@ -204,9 +204,24 @@ const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] =3D {
+>                 [PLL_OFF_CONFIG_CTL] =3D 0x1C,
+>                 [PLL_OFF_STATUS] =3D 0x20,
+>         },
+> +       [CLK_ALPHA_PLL_TYPE_STROMER] =3D {
+> +               [PLL_OFF_L_VAL] =3D 0x08,
+> +               [PLL_OFF_ALPHA_VAL] =3D 0x10,
+> +               [PLL_OFF_ALPHA_VAL_U] =3D 0x14,
+> +               [PLL_OFF_USER_CTL] =3D 0x18,
+> +               [PLL_OFF_USER_CTL_U] =3D 0x1c,
+> +               [PLL_OFF_CONFIG_CTL] =3D 0x20,
+> +               [PLL_OFF_CONFIG_CTL_U] =3D 0xff,
+> +               [PLL_OFF_TEST_CTL] =3D 0x30,
+> +               [PLL_OFF_TEST_CTL_U] =3D 0x34,
+> +               [PLL_OFF_STATUS] =3D 0x28,
+> +       },
+>  };
+>  EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
+> =20
+> +static unsigned long
+> +alpha_pll_round_rate(unsigned long rate, unsigned long prate, u32 *l, u6=
+4 *a,
 
-A few fixes for the v6.3 cycle.  Summary below.
+Is this necessary?
 
-The following changes since commit 8d1d17d47eaebe4466459846d07e4ba8953fa585:
+> +                    u32 alpha_width);
+>  /*
+>   * Even though 40 bits are present, use only 32 for ease of calculation.
+>   */
+> @@ -215,6 +230,8 @@ EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
+>  #define ALPHA_BITWIDTH         32U
+>  #define ALPHA_SHIFT(w)         min(w, ALPHA_BITWIDTH)
+> =20
+> +#define        ALPHA_PLL_STATUS_REG_SHIFT      8
+> +
+>  #define PLL_HUAYRA_M_WIDTH             8
+>  #define PLL_HUAYRA_M_SHIFT             8
+>  #define PLL_HUAYRA_M_MASK              0xff
+> @@ -325,7 +342,7 @@ static void clk_alpha_pll_write_config(struct regmap =
+*regmap, unsigned int reg,
+>  void clk_alpha_pll_configure(struct clk_alpha_pll *pll, struct regmap *r=
+egmap,
+>                              const struct alpha_pll_config *config)
+>  {
+> -       u32 val, mask;
+> +       u32 val, val_u, mask, mask_u;
+> =20
+>         regmap_write(regmap, PLL_L_VAL(pll), config->l);
+>         regmap_write(regmap, PLL_ALPHA_VAL(pll), config->alpha);
+> @@ -355,14 +372,85 @@ void clk_alpha_pll_configure(struct clk_alpha_pll *=
+pll, struct regmap *regmap,
+>         mask |=3D config->pre_div_mask;
+>         mask |=3D config->post_div_mask;
+>         mask |=3D config->vco_mask;
+> +       mask |=3D config->alpha_en_mask;
+> +       mask |=3D config->alpha_mode_mask;
+> =20
+>         regmap_update_bits(regmap, PLL_USER_CTL(pll), mask, val);
+> =20
+> +       /* Stromer APSS PLL does not enable LOCK_DET by default, so enabl=
+e it */
 
-  Merge branches 'msm-next-lumag-core', 'msm-next-lumag-dpu',
-'msm-next-lumag-dp', 'msm-next-lumag-dsi', 'msm-next-lumag-hdmi' and
-'msm-next-lumag-mdp5' into msm-next-lumag (2022-11-26 12:06:29 +0200)
+Instead of adding these things to clk_alpha_pll_configure() can you
+introduce another api like clk_stromer_pll_configure() that sets these
+values unconditionally? That way we don't have to think or worry about
+the other alpha PLLs (of which there are many).
 
-are available in the Git repository at:
+> +       val_u =3D config->status_reg_val << ALPHA_PLL_STATUS_REG_SHIFT;
+> +       val_u |=3D config->lock_det;
+> +
+> +       mask_u =3D config->status_reg_mask;
+> +       mask_u |=3D config->lock_det;
+> +
+> +       if (val_u)
+> +               regmap_update_bits(regmap, PLL_USER_CTL_U(pll), mask_u, v=
+al_u);
+> +
+> +       if (config->test_ctl_val)
+> +               regmap_write(regmap, PLL_TEST_CTL(pll), config->test_ctl_=
+val);
+> +
+> +       if (config->test_ctl_hi_val)
+> +               regmap_write(regmap, PLL_TEST_CTL_U(pll), config->test_ct=
+l_hi_val);
+> +
+>         if (pll->flags & SUPPORTS_FSM_MODE)
+>                 qcom_pll_set_fsm_mode(regmap, PLL_MODE(pll), 6, 0);
+>  }
+>  EXPORT_SYMBOL_GPL(clk_alpha_pll_configure);
+> =20
+> +static int clk_alpha_pll_stromer_determine_rate(struct clk_hw *hw,
+> +                                               struct clk_rate_request *=
+req)
+> +{
+> +       u32 l;
+> +       u64 a;
+> +
+> +       req->rate =3D alpha_pll_round_rate(req->rate, req->best_parent_ra=
+te,
+> +                                        &l, &a, ALPHA_REG_BITWIDTH);
+> +
+> +       return 0;
+> +}
+> +
+> +static int clk_alpha_pll_stromer_set_rate(struct clk_hw *hw, unsigned lo=
+ng rate,
+> +                                         unsigned long prate)
+> +{
+> +       struct clk_alpha_pll *pll =3D to_clk_alpha_pll(hw);
+> +       u32 l;
+> +       int ret;
+> +       u64 a;
+> +
+> +       rate =3D alpha_pll_round_rate(rate, prate, &l, &a, ALPHA_REG_BITW=
+IDTH);
+> +
+> +       regmap_write(pll->clkr.regmap, PLL_L_VAL(pll), l);
+> +       regmap_write(pll->clkr.regmap, PLL_ALPHA_VAL(pll), a);
+> +       regmap_write(pll->clkr.regmap, PLL_ALPHA_VAL_U(pll),
+> +                    a >> ALPHA_BITWIDTH);
+> +
+> +       regmap_update_bits(pll->clkr.regmap, PLL_USER_CTL(pll),
+> +                          PLL_ALPHA_EN, PLL_ALPHA_EN);
+> +
+> +       if (!clk_hw_is_enabled(hw))
+> +               return 0;
+> +
+> +       /*
+> +        * Stromer PLL supports Dynamic programming.
+> +        * It allows the PLL frequency to be changed on-the-fly without f=
+irst
+> +        * execution of a shutdown procedure followed by a bring up proce=
+dure.
+> +        */
+> +
 
-  https://gitlab.freedesktop.org/drm/msm.git tags/drm-msm-fixes-2023-01-12
+Drop newline above please.
 
-for you to fetch changes up to f4a75b5933c998e60fd812a7680e0971eb1c7cee:
+> +       regmap_update_bits(pll->clkr.regmap, PLL_MODE(pll), PLL_UPDATE,
+> +                          PLL_UPDATE);
+> +
+> +       ret =3D wait_for_pll_update(pll);
+> +       if (ret)
+> +               return ret;
+> +
+> +       ret =3D wait_for_pll_enable_lock(pll);
+> +       if (ret)
+> +               return ret;
+> +
+> +       return 0;
 
-  drm/msm/a6xx: Avoid gx gbit halt during rpm suspend (2023-01-05
-15:13:16 -0800)
+Just use
 
-----------------------------------------------------------------
-msm-fixes for v6.3-rc4
+	return wait_for_pll_enable_lock(pll);
 
-Display Fixes:
+> +}
+> +
+>  static int clk_alpha_pll_hwfsm_enable(struct clk_hw *hw)
+>  {
+>         int ret;
+> @@ -1013,6 +1101,16 @@ const struct clk_ops clk_alpha_pll_hwfsm_ops =3D {
+>  };
+>  EXPORT_SYMBOL_GPL(clk_alpha_pll_hwfsm_ops);
+> =20
+> +const struct clk_ops clk_alpha_pll_stromer_ops =3D {
+> +       .enable =3D clk_alpha_pll_enable,
+> +       .disable =3D clk_alpha_pll_disable,
+> +       .is_enabled =3D clk_alpha_pll_is_enabled,
+> +       .recalc_rate =3D clk_alpha_pll_recalc_rate,
+> +       .determine_rate =3D clk_alpha_pll_stromer_determine_rate,
+> +       .set_rate =3D clk_alpha_pll_stromer_set_rate,
+> +};
+> +EXPORT_SYMBOL_GPL(clk_alpha_pll_stromer_ops);
+> +
+>  const struct clk_ops clk_alpha_pll_fixed_trion_ops =3D {
+>         .enable =3D clk_trion_pll_enable,
+>         .disable =3D clk_trion_pll_disable,
+> diff --git a/drivers/clk/qcom/clk-alpha-pll.h b/drivers/clk/qcom/clk-alph=
+a-pll.h
+> index 2bdae362c827..1d122919e275 100644
+> --- a/drivers/clk/qcom/clk-alpha-pll.h
+> +++ b/drivers/clk/qcom/clk-alpha-pll.h
+> @@ -1,5 +1,5 @@
+>  /* SPDX-License-Identifier: GPL-2.0 */
+> -/* Copyright (c) 2015, 2018, The Linux Foundation. All rights reserved. =
+*/
+> +/* Copyright (c) 2015, 2018, 2021 The Linux Foundation. All rights reser=
+ved. */
 
-- Fix the documentation for dpu_encoder_phys_wb_init() and
-  dpu_encoder_phys_wb_setup_fb() APIs to address doc warnings
-- Remove vcca-supply and vdds-supply as mandatory for 14nm PHY and
-  10nm PHY DT schemas respectively as they are not present on some
-  SOCs using these PHYs
-- Add the dsi-phy-regulator-ldo-mode to dsi-phy-28nm.yaml as it was
-  missed out during txt to yaml migration
-- Remove operating-points-v2 and power-domain as a required property
-  for the DSI controller as thats not the case for every SOC
-- Fix the description from display escape clock to display core
-  clock in the dsi controller yaml
-- Fix the memory leak for mdp1-mem path for the cases when we return
-  early after failing to get mdp0-mem ICC paths for msm
-- Fix error handling path in msm_hdmi_dev_probe() to release the phy
-  ref count when devm_pm_runtime_enable() fails
-- Fix the dp_aux_isr() routine to make sure it doesnt incorrectly
-  signal the aux transaction as complete if the ISR was not an AUX
-  isr. This fixes a big hitter stability bug on chromebooks.
-- Add protection against null pointer dereference when there is no
-  kms object as in the case of headless adreno GPU in the shutdown
-  path.
-
-GPU Fixes:
-
-- a5xx: fix quirks to actually be a bitmask and not overwrite each
-  other
-- a6xx: fix gx halt sequence to avoid 1000ms hang on some devices
-- kexec shutdown fix
-- fix potential double free
-
-----------------------------------------------------------------
-Adam Skladowski (1):
-      dt-bindings: display: msm: Rename mdss node name in example
-
-Akhil P Oommen (1):
-      drm/msm/a6xx: Avoid gx gbit halt during rpm suspend
-
-Bryan O'Donoghue (4):
-      dt-bindings: msm: dsi-phy-28nm: Add missing qcom,
-dsi-phy-regulator-ldo-mode
-      dt-bindings: msm: dsi-controller-main: Fix operating-points-v2 constraint
-      dt-bindings: msm: dsi-controller-main: Fix power-domain constraint
-      dt-bindings: msm: dsi-controller-main: Fix description of core clock
-
-Christophe JAILLET (1):
-      drm/msm/hdmi: Fix the error handling path of msm_hdmi_dev_probe()
-
-Dmitry Baryshkov (1):
-      drm/msm: another fix for the headless Adreno GPU
-
-Konrad Dybcio (3):
-      dt-bindings: msm/dsi: Don't require vcca-supply on 14nm PHY
-      dt-bindings: msm/dsi: Don't require vdds-supply on 10nm PHY
-      drm/msm/adreno: Make adreno quirks not overwrite each other
-
-Kuogee Hsieh (1):
-      drm/msm/dp: do not complete dp_aux_cmd_fifo_tx() if irq is not
-for aux transfer
-
-Miaoqian Lin (1):
-      drm/msm/dpu: Fix memory leak in msm_mdss_parse_data_bus_icc_path
-
-Yang Li (1):
-      drm/msm/dpu: Fix some kernel-doc comments
-
- .../bindings/display/msm/dsi-controller-main.yaml         |  4 +---
- .../devicetree/bindings/display/msm/dsi-phy-10nm.yaml     |  1 -
- .../devicetree/bindings/display/msm/dsi-phy-14nm.yaml     |  1 -
- .../devicetree/bindings/display/msm/dsi-phy-28nm.yaml     |  4 ++++
- .../bindings/display/msm/qcom,qcm2290-mdss.yaml           |  2 +-
- .../devicetree/bindings/display/msm/qcom,sm6115-mdss.yaml |  2 +-
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c                     | 15 +++++++++------
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c                     |  7 +++++++
- drivers/gpu/drm/msm/adreno/a6xx_gpu.h                     |  1 +
- drivers/gpu/drm/msm/adreno/adreno_gpu.h                   | 10 ++++------
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c       |  3 +--
- drivers/gpu/drm/msm/dp/dp_aux.c                           |  4 ++++
- drivers/gpu/drm/msm/hdmi/hdmi.c                           | 12 ++++++++++--
- drivers/gpu/drm/msm/msm_drv.c                             |  2 +-
- drivers/gpu/drm/msm/msm_mdss.c                            |  6 ++++--
- 15 files changed, 48 insertions(+), 26 deletions(-)
+2022 or 2023?
