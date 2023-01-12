@@ -2,46 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BE6AA668438
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 21:49:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 26750668440
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 21:50:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240218AbjALUt0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Jan 2023 15:49:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50630 "EHLO
+        id S231218AbjALUuR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Jan 2023 15:50:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229997AbjALUtB (ORCPT
+        with ESMTP id S231905AbjALUty (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Jan 2023 15:49:01 -0500
-Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B40AACE2;
-        Thu, 12 Jan 2023 12:17:33 -0800 (PST)
-Received: by mail-ot1-f44.google.com with SMTP id f88-20020a9d03e1000000b00684c4041ff1so1512292otf.8;
-        Thu, 12 Jan 2023 12:17:33 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=btQgNlSBjxnAMfAgJUU4z0y9PbJwjBme41/xmNEEuGA=;
-        b=Mznfe7AL9kCXU4n3oBzZ0E6faDcDoiAN79hZHijEZFO99CXnCpa99u0FOSj0Sh/RqV
-         xfpbFGmTAqfFBza90Kr1kVQj0P1yvERK65zGz6cMKP+YBFT+OZanOwTHS1ypClItJ2o6
-         wBd0aDYgj2iA+p4FCpGE1J7u/WCgJESy9OX/4dJmZI22gEuIMZDoz1OIcdE5WDAPaLRg
-         CSepo/EBjet/I0rkBBrPpnfn6sJCP+C144YknRPnzUKOR/Zn5H0dMyK+WPh22reSXEnQ
-         0ruCZeLMKteRjhbhHPr5Gl1xQL6F9Tj/RjEgn+hv9saN3H9ZIi4iDQk34wU3JCCxuJBo
-         S/hA==
-X-Gm-Message-State: AFqh2krDrzes0DxxrBppsMMKXnBXEILvCcXyOP0Yn54aB2nbrN9JA75n
-        RdBsDCVNA6PbYLNi7eKJYQssc5aw6Q==
-X-Google-Smtp-Source: AMrXdXsvoztJqd/eb5qZ/ouK+S7+DwWqBpSTfqKEUq4UCgOXLgjAGJh0KcCLYcdUZmNvMX5SjmeNEQ==
-X-Received: by 2002:a9d:127:0:b0:684:ccc3:1569 with SMTP id 36-20020a9d0127000000b00684ccc31569mr726710otu.0.1673554652850;
-        Thu, 12 Jan 2023 12:17:32 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id 73-20020a9d04cf000000b00684a10970adsm4261695otm.16.2023.01.12.12.17.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Jan 2023 12:17:32 -0800 (PST)
-Received: (nullmailer pid 4061816 invoked by uid 1000);
-        Thu, 12 Jan 2023 20:17:31 -0000
-Date:   Thu, 12 Jan 2023 14:17:31 -0600
+        Thu, 12 Jan 2023 15:49:54 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A408859D3D;
+        Thu, 12 Jan 2023 12:19:49 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 1DDF2B81FAF;
+        Thu, 12 Jan 2023 20:19:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1BB1C433D2;
+        Thu, 12 Jan 2023 20:19:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1673554786;
+        bh=pYVPEWz52mQGIdPq/+TQa2RMsC8oqbfKajVUb1wSmYk=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=h/5iAelPBdt7CwSabtsLKTmhZfybFkn3RdYW8aF7UjaAPWEFtAvdYZNDn0dNA2dpU
+         5cKsVlODFviQpb8QAlSbOgvi4FM+1ip7mHDEeBd+mF+CaOSmhBmGfpaC/5RUqJMyzT
+         xOvzW+UFmoEIp7h7TwQxU0mo2WkS1D20FxhzBcJA06scRdLqXvvhat30S//IQsXQ9y
+         rnEDcgcZ5Vnlf/k2dC92ZzZY+Ar8GIPB44bu56HmhQ9X4Md2LuD7NbmDNgHrL85SrF
+         B1zFPs0aFRCpUifKVi+3HMmeFPfiA7MySmUa/TMsC1wJmCu5PC4NMmHauyzDQ2ICFi
+         MSkRoq4PdAXJA==
+Received: by mail-vs1-f41.google.com with SMTP id 186so14945914vsz.13;
+        Thu, 12 Jan 2023 12:19:46 -0800 (PST)
+X-Gm-Message-State: AFqh2kogOK11zgNq+oGTlbJsok1huDGmK084X+YV26w632DX4Dd0IR63
+        wO+Lz9vXgb7Tf5wu7nmSJkTIkjm9kHBvGSUG/Q==
+X-Google-Smtp-Source: AMrXdXvK8sBcTracywKQtauoGjyEmrc99wysitQrJ3h7LGjdCX42CXjGmUS7hQKYwr67TrzO326kbBG4qwwfXRNHHX4=
+X-Received: by 2002:a05:6102:3b03:b0:3d0:b955:e0af with SMTP id
+ x3-20020a0561023b0300b003d0b955e0afmr2332081vsu.26.1673554785707; Thu, 12 Jan
+ 2023 12:19:45 -0800 (PST)
+MIME-Version: 1.0
+References: <20230111114337.24782-1-quic_sibis@quicinc.com>
+ <20230111114337.24782-4-quic_sibis@quicinc.com> <20230112201731.GA4038840-robh@kernel.org>
+In-Reply-To: <20230112201731.GA4038840-robh@kernel.org>
 From:   Rob Herring <robh@kernel.org>
+Date:   Thu, 12 Jan 2023 14:19:34 -0600
+X-Gmail-Original-Message-ID: <CAL_Jsq++hB0s-VmAKWdDbp79UY+-ryAfBnmzMB4_iS++GGEeHQ@mail.gmail.com>
+Message-ID: <CAL_Jsq++hB0s-VmAKWdDbp79UY+-ryAfBnmzMB4_iS++GGEeHQ@mail.gmail.com>
+Subject: Re: [PATCH V3 03/10] dt-bindings: remoteproc: qcom,sc7180-mss-pil:
+ Update memory-region
 To:     Sibi Sankar <quic_sibis@quicinc.com>
 Cc:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
         manivannan.sadhasivam@linaro.org, agross@kernel.org,
@@ -50,73 +58,53 @@ Cc:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
         amit.pundir@linaro.org, regressions@leemhuis.info,
         sumit.semwal@linaro.org, will@kernel.org, catalin.marinas@arm.com,
         robin.murphy@arm.com
-Subject: Re: [PATCH V3 03/10] dt-bindings: remoteproc: qcom,sc7180-mss-pil:
- Update memory-region
-Message-ID: <20230112201731.GA4038840-robh@kernel.org>
-References: <20230111114337.24782-1-quic_sibis@quicinc.com>
- <20230111114337.24782-4-quic_sibis@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230111114337.24782-4-quic_sibis@quicinc.com>
-X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 11, 2023 at 05:13:30PM +0530, Sibi Sankar wrote:
-> The dynamic memory region used for metadata authentication would still
-> be a part of the kernel mapping and any access to this region by the
-> application processor after assigning it to the remote Q6 will result
-> in a XPU violation. This is fixed by using a no-map carveout instead.
-> Update the bindings to reflect the addition of the new modem metadata
-> carveout on SC7180 SoC.
-> 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> ---
-> 
-> v3:
->  * remove double space [Krzysztof]
->  * Pickup R-b
-> 
-> v2:
->  * Pad commit message to explain bindings break [Krzysztof]
->  * Split dt/bindings per SoC  [Krzysztof] 
-> 
->  .../devicetree/bindings/remoteproc/qcom,sc7180-mss-pil.yaml    | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sc7180-mss-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sc7180-mss-pil.yaml
-> index e4a7da8020f4..b1402bef0ebe 100644
-> --- a/Documentation/devicetree/bindings/remoteproc/qcom,sc7180-mss-pil.yaml
-> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,sc7180-mss-pil.yaml
-> @@ -95,6 +95,7 @@ properties:
->      items:
->        - description: MBA reserved region
->        - description: modem reserved region
-> +      - description: metadata reserved region
+On Thu, Jan 12, 2023 at 2:17 PM Rob Herring <robh@kernel.org> wrote:
+>
+> On Wed, Jan 11, 2023 at 05:13:30PM +0530, Sibi Sankar wrote:
+> > The dynamic memory region used for metadata authentication would still
+> > be a part of the kernel mapping and any access to this region by the
+> > application processor after assigning it to the remote Q6 will result
+> > in a XPU violation. This is fixed by using a no-map carveout instead.
+> > Update the bindings to reflect the addition of the new modem metadata
+> > carveout on SC7180 SoC.
+> >
+> > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> > ---
+> >
+> > v3:
+> >  * remove double space [Krzysztof]
+> >  * Pickup R-b
+> >
+> > v2:
+> >  * Pad commit message to explain bindings break [Krzysztof]
+> >  * Split dt/bindings per SoC  [Krzysztof]
+> >
+> >  .../devicetree/bindings/remoteproc/qcom,sc7180-mss-pil.yaml    | 3 ++-
+> >  1 file changed, 2 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sc7180-mss-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sc7180-mss-pil.yaml
+> > index e4a7da8020f4..b1402bef0ebe 100644
+> > --- a/Documentation/devicetree/bindings/remoteproc/qcom,sc7180-mss-pil.yaml
+> > +++ b/Documentation/devicetree/bindings/remoteproc/qcom,sc7180-mss-pil.yaml
+> > @@ -95,6 +95,7 @@ properties:
+> >      items:
+> >        - description: MBA reserved region
+> >        - description: modem reserved region
+> > +      - description: metadata reserved region
+>
+> Based on dtbs_check, looks like you need 'minItems: 2'.
 
-Based on dtbs_check, looks like you need 'minItems: 2'.
+NM, I see those are all sc7180.
 
->  
->    firmware-name:
->      $ref: /schemas/types.yaml#/definitions/string-array
-> @@ -223,7 +224,7 @@ examples:
->                          <&rpmhpd SC7180_MSS>;
->          power-domain-names = "cx", "mx", "mss";
->  
-> -        memory-region = <&mba_mem>, <&mpss_mem>;
-> +        memory-region = <&mba_mem>, <&mpss_mem>, <&mdata_mem>;
->  
->          qcom,qmp = <&aoss_qmp>;
->  
-> -- 
-> 2.17.1
-> 
+Acked-by: Rob Herring <robh@kernel.org>
