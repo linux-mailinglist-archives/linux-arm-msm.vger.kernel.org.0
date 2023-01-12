@@ -2,56 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 636A2666BC5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 08:46:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E51A4666BD7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 08:53:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239645AbjALHqc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Jan 2023 02:46:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32774 "EHLO
+        id S232408AbjALHxn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Jan 2023 02:53:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236578AbjALHqM (ORCPT
+        with ESMTP id S239582AbjALHxl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Jan 2023 02:46:12 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E27D4BD46;
-        Wed, 11 Jan 2023 23:45:34 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E4D0661F7A;
-        Thu, 12 Jan 2023 07:45:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47346C433D2;
-        Thu, 12 Jan 2023 07:45:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1673509533;
-        bh=EWBwBnYK0xV+Glxx6Z/EVTFLlwix0VJtnazOnfUdeT4=;
-        h=From:To:Cc:Subject:Date:From;
-        b=png2WOfLLGAoQpqEDt0S1ahBd/UXNg2eTnPhqBrr3UFBw0pUuIpbz8PDj8dHTzk7M
-         hDh1Hc5sqKnyoL0m/XyHVCSUID+usEJn0HFDrSLFYJPRJQPq8nIP3MgJteS47Z+nQ6
-         n5YhtLTM1L1VdpvRAgxkTQo00qqbxf76Uos+/H6tH4rBY2Dx/eF/oGKGy5v6VHqMHR
-         QMMgEziJ1bFKC5EB7JkO+F87e1ju44YA12X9VL4m72kHBcoIt/Hi+ItrZJfd64MdTx
-         gWeqd6ukyh0i7S93LQh3CNRwFFH9O5q9evm0Ijgxhh6I2wb0y4JecGQ32jOeh+PZaV
-         z+ucHcpXizerA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1pFsHL-0003Bl-Hm; Thu, 12 Jan 2023 08:45:39 +0100
-From:   Johan Hovold <johan+linaro@kernel.org>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH] arm64: dts: qcom: sc8280xp-crd: allow vreg_l3b to be disabled
-Date:   Thu, 12 Jan 2023 08:45:03 +0100
-Message-Id: <20230112074503.12185-1-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.38.2
+        Thu, 12 Jan 2023 02:53:41 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D35732D3;
+        Wed, 11 Jan 2023 23:53:40 -0800 (PST)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30C507nG031933;
+        Thu, 12 Jan 2023 07:53:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=Z2E17IM8wAOkzE3bOMcYE5ko48avJ+SntFtszHOnGuc=;
+ b=SiifzYuwUFICBPEh5dFp+77i6wvq0Imjzup0t8Vj9EPRcgPSkSLUFZN4i3FM2sCHgafq
+ bWnHN9gr+GqHyifPlzcIAdtN5pOFyctKOKS3cz5MKtssfYUYac7Kf5rd6NUWzmWlGCc4
+ gg7unVrCIzL1K5kcf7nbZiWLHovIETI0rIkJ1PkJP1Xa2BUfHyYC4DUz59UtA/M85l6M
+ DPyVEyvfFuMvwS/NyPAFv9sPtYbO9FSgZJ9rDpslxHqs25WhoplWy8+5mHafQHLM9q5Y
+ hVTAp+vxSQcIbzqXDykbnxr29Qo1Y/jVk20G3PWhmmtKiVuwR1DhZNvMMcXsxVhobxz1 cw== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n1kbqbaxq-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 12 Jan 2023 07:53:31 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30C7rUru013433
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 12 Jan 2023 07:53:30 GMT
+Received: from [10.216.26.58] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 11 Jan
+ 2023 23:53:26 -0800
+Message-ID: <6cea0a3f-08de-47d5-99d1-74b0d8c7b732@quicinc.com>
+Date:   Thu, 12 Jan 2023 13:23:23 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [RESEND v3 4/4] clk: qcom: lpasscc-sc7280: Add resets for
+ audioreach
+Content-Language: en-US
+To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <broonie@kernel.org>,
+        <konrad.dybcio@somainline.org>,
+        <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <mturquette@baylibre.com>,
+        <quic_plai@quicinc.com>, <quic_rohkumar@quicinc.com>,
+        <robh+dt@kernel.org>
+References: <1672849297-3116-1-git-send-email-quic_srivasam@quicinc.com>
+ <1672849297-3116-5-git-send-email-quic_srivasam@quicinc.com>
+ <CAE-0n51AZCa9K_uY=ikTLqV-g_MsSA6Lv=Zq1LMrF-wVhR8_pg@mail.gmail.com>
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Organization: Qualcomm
+In-Reply-To: <CAE-0n51AZCa9K_uY=ikTLqV-g_MsSA6Lv=Zq1LMrF-wVhR8_pg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: SKRscNP94S3IzVaPS207vQZG7rWJWdq_
+X-Proofpoint-ORIG-GUID: SKRscNP94S3IzVaPS207vQZG7rWJWdq_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2023-01-12_04,2023-01-11_03,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ suspectscore=0 mlxlogscore=999 spamscore=0 malwarescore=0 adultscore=0
+ mlxscore=0 impostorscore=0 phishscore=0 clxscore=1015 bulkscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301120055
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -59,27 +87,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The vreg_l3b supply is used by the eDP, UFS and USB1 PHYs which are now
-described by the devicetree so that the regulator no longer needs to be
-marked always-on.
 
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 1 -
- 1 file changed, 1 deletion(-)
+On 1/12/2023 2:54 AM, Stephen Boyd wrote:
+Thanks for your time Stephen!!!
+> Quoting Srinivasa Rao Mandadapu (2023-01-04 08:21:37)
+>> The clock gating control for TX/RX/WSA core bus clocks would be required
+>> to be reset(moved from hardware control) from audio core driver. Thus
+>> add the support for the reset clocks in audioreach based clock driver.
+>>
+>> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+>> Tested-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+>> ---
+>>   drivers/clk/qcom/lpasscc-sc7280.c | 23 +++++++++++++++++++++++
+>>   1 file changed, 23 insertions(+)
+>>
+>> diff --git a/drivers/clk/qcom/lpasscc-sc7280.c b/drivers/clk/qcom/lpasscc-sc7280.c
+>> index 85dd5b9..1efb72d 100644
+>> --- a/drivers/clk/qcom/lpasscc-sc7280.c
+>> +++ b/drivers/clk/qcom/lpasscc-sc7280.c
+>> @@ -12,10 +12,12 @@
+>>   #include <linux/regmap.h>
+>>
+>>   #include <dt-bindings/clock/qcom,lpass-sc7280.h>
+>> +#include <dt-bindings/clock/qcom,lpassaudiocc-sc7280.h>
+>>
+>>   #include "clk-regmap.h"
+>>   #include "clk-branch.h"
+>>   #include "common.h"
+>> +#include "reset.h"
+>>
+>>   static struct clk_branch lpass_top_cc_lpi_q6_axim_hs_clk = {
+>>          .halt_reg = 0x0,
+>> @@ -102,6 +104,18 @@ static const struct qcom_cc_desc lpass_qdsp6ss_sc7280_desc = {
+>>          .num_clks = ARRAY_SIZE(lpass_qdsp6ss_sc7280_clocks),
+>>   };
+>>
+>> +static const struct qcom_reset_map lpass_cc_sc7280_resets[] = {
+>> +       [LPASS_AUDIO_SWR_RX_CGCR] =  { 0xa0, 1 },
+>> +       [LPASS_AUDIO_SWR_TX_CGCR] =  { 0xa8, 1 },
+>> +       [LPASS_AUDIO_SWR_WSA_CGCR] = { 0xb0, 1 },
+> Why are we adding these resets again? These are already exposed in
+> lpassaudiocc-sc7280.c
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-index db12d8678861..e5e75cc2c670 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-@@ -150,7 +150,6 @@ vreg_l3b: ldo3 {
- 			regulator-max-microvolt = <1200000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 			regulator-boot-on;
--			regulator-always-on;
- 		};
- 
- 		vreg_l4b: ldo4 {
--- 
-2.38.2
+As explained in previous versions, legacy path nodes are not being used 
+in ADSP based platforms, due to conflicts.
+
+Hence lpasscc node alone being used exclusively in ADSP based solution, 
+resets are added.
+
+In probe also, these reset controls are enabled based on 
+"qcom,adsp-pil-mode" property.
 
