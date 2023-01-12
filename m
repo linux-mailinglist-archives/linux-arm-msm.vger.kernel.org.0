@@ -2,79 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E34076679D8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 16:51:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DC17A6679E9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Jan 2023 16:53:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240548AbjALPvc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Jan 2023 10:51:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35788 "EHLO
+        id S234131AbjALPxp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Jan 2023 10:53:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240408AbjALPvH (ORCPT
+        with ESMTP id S229524AbjALPxX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Jan 2023 10:51:07 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98E406B5CC
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 07:40:04 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id y25so28980015lfa.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 07:40:04 -0800 (PST)
+        Thu, 12 Jan 2023 10:53:23 -0500
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 843E3DF1D
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 07:41:55 -0800 (PST)
+Received: by mail-lf1-x12e.google.com with SMTP id y25so28988459lfa.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 07:41:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=cr1Vb7XnTgf4fs3HVo5BDDjci9DqVFe2hWS5y4jRr2A=;
-        b=XNvOiJZ2eRkpR9J3VDIeYG8XTKeidPcLs7FuW8DCfsLWIX6ArduaZiqfmE4+XucSTy
-         mGLJzUysm8WoYA7BUUVXkk3m4dnxAv13+12Va6XievsjxKSP3XpRvjra6SdGdvSHBK1X
-         Lwgf+el73+6DozOxf4hEKmaUuvbIPNSR19on6tAPxzv3/NkwyhaGrWh3Twg7CXCldBmc
-         MfaGPXepasaFrfxGFUzUYp9CC658vwMJOvv8yM/WtQ3yT28OeGsSbro+OLOCujJ24l/x
-         kJlJnKz2RL6EJ0SttzZr9s4RuZ+6C1XZjXlJNDe9+/QiSFE2g7yjVAg0nB+ShGKbL1Db
-         MVYQ==
+        bh=VvVJkpynNn6IA1P//L3YcO7yOYdHOM5TGw7F2BW1HfI=;
+        b=mZWf1t9tcyeMA4GQXcr8qTcdv/+TqM/BqV5iKqOE4y36tTw81YCsd9DwsTWmqmATMc
+         AsCQwj+j4RhhGoFWCypPO6gwZe7gNrQ+rEJpsUwvo4v1+rQ5etZSLfo5zKUX1NN9adCa
+         K8PI0tEg+HxUEeMK6+eybaJ8n3GKQSkJd2cZ0YvkfW6eElvJmy91/yk96w71yp5AEKfT
+         onTtLLpRppF0eRpuoeD17TIapXgfjIVQs5MjULq63CuI3w0bdGuE9zNjqMVOmAf9ptCN
+         nrlkdfmWRWEZCy98bH9MP3G9uCXJ5AlYZO8s5TiFo7Mh2ppOWitQyNS0XBJ7fCScklwi
+         pqgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cr1Vb7XnTgf4fs3HVo5BDDjci9DqVFe2hWS5y4jRr2A=;
-        b=zYz9O7UE0bZNuhLX4x7lA2epxlZXO/+eTn4uvy0egPUdJSrbQmlLcXv6lo2GZN4i+q
-         on81XCbI2TXIJnpDXOrdUY6YNLpP0rypysa4hUAu0oL9CAabaTjDH67zAJJF9IYNGpEx
-         p3FHpTxv9CKq47B0KOPoffctN6rNjWI4B6PPOTmlOqRDZoMo9nGklLcWbXO6HX65+mhO
-         gbbI4oBoL1G5WGwiPDNtWa9q+s8QhNOp7Mi6N98Aq3jK6kbr5wrHB4rKNJkBOFtkHu6f
-         haRZDx+8P2g7tu6YRVSqbFCfd+xBGXZDVnXRZGcH10i7yDAITRJJ9mRXgJT9QlBkhCGV
-         hN6Q==
-X-Gm-Message-State: AFqh2krtkqv4Imxb73os25jAq2S3mQzUxdrU7I4R8FRNdMCMR4kenr8j
-        EHtJuzkB6J9T93+mTnB2Rv3EGQ==
-X-Google-Smtp-Source: AMrXdXufOhitOsT6TMIJd08mwU786LJ1KvuT0yyRTRrhXIYXJThrcYscaF5om7jvhVIQkmwsn4d5Lw==
-X-Received: by 2002:a05:6512:6d0:b0:4b5:d:efb2 with SMTP id u16-20020a05651206d000b004b5000defb2mr24349862lff.14.1673537998546;
-        Thu, 12 Jan 2023 07:39:58 -0800 (PST)
+        bh=VvVJkpynNn6IA1P//L3YcO7yOYdHOM5TGw7F2BW1HfI=;
+        b=jHMV7tIlx57Z8a4xpAbi3i7vckrcCFJ0UwBrKMuuYzFJBOqUzAxxCUZ/TIADqafRkK
+         rmiC8qTvB1r1e2KRdiSzJFAltBW4azjVxmupUUcc9IbWUxBmhW/LD+xMOLCwEEGh03W1
+         iXF4FNd/5kdJJTHBf9fJi7ukIAEvt2NY/jaAkafcRrKD2ebctvysSf9vd0J0cTDZ+uLi
+         Mkz67RVorXaiSDvBSrE6VMTFgddOC6B+QFha1fC4Xb/hz24pq707tXXvv3QzVnWSJzks
+         bSNo9WABGz0S58XCQFxLdv0UqXmQ0qNhNPjOMcudp7mqxoN6R8z0Sz+tn4fhlMMh8LFW
+         qTCw==
+X-Gm-Message-State: AFqh2koumJZpu3d7OCXIZq1Y+7dIRf3hsQGBs39q2dqtekBFxm9+bZqc
+        4hs6IQQCc9ntdWshsK+9Lh0r/nBmFaMqZCzc
+X-Google-Smtp-Source: AMrXdXu+pSZjQKg6YWKPpwwT1Cd28e2/W6qw8KqQ+mgP9Ohv6zo0OgYdcKPEM9ehempAL9hiEPw07g==
+X-Received: by 2002:a05:6512:2213:b0:4bb:7028:f6b6 with SMTP id h19-20020a056512221300b004bb7028f6b6mr25214095lfu.49.1673538114309;
+        Thu, 12 Jan 2023 07:41:54 -0800 (PST)
 Received: from [192.168.1.101] (abym53.neoplus.adsl.tpnet.pl. [83.9.32.53])
-        by smtp.gmail.com with ESMTPSA id y1-20020a0565123f0100b004cb0256116csm3326103lfa.26.2023.01.12.07.39.56
+        by smtp.gmail.com with ESMTPSA id y3-20020ac24463000000b004ceb053c3ebsm41710lfl.179.2023.01.12.07.41.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Jan 2023 07:39:57 -0800 (PST)
-Message-ID: <719bfea0-0aea-fbab-3ffa-3f6c330f16d2@linaro.org>
-Date:   Thu, 12 Jan 2023 16:39:54 +0100
+        Thu, 12 Jan 2023 07:41:52 -0800 (PST)
+Message-ID: <7dec47af-0981-7d70-3926-69419f5d1c8e@linaro.org>
+Date:   Thu, 12 Jan 2023 16:41:50 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
-Subject: Re: [PATCH 4/5] arm64: dts: qcom: msm8996: add CBF device entry
+Subject: Re: [PATCH 2/2] cpufreq: qcom-hw: Ensure only freq-domain regs are
+ counted in num_domains
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        krzysztof.kozlowski@linaro.org, marijn.suijten@somainline.org,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230111195754.2593134-1-dmitry.baryshkov@linaro.org>
- <20230111195754.2593134-5-dmitry.baryshkov@linaro.org>
- <3cd04f83-94df-931c-728a-f015ad05d876@linaro.org>
- <fdd82d5f-d66b-b297-ed28-f44e9806e020@linaro.org>
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230111205125.1860858-1-konrad.dybcio@linaro.org>
+ <20230111205125.1860858-2-konrad.dybcio@linaro.org>
+ <20230112153704.6d37dygm4yfexdq6@builder.lan>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <fdd82d5f-d66b-b297-ed28-f44e9806e020@linaro.org>
+In-Reply-To: <20230112153704.6d37dygm4yfexdq6@builder.lan>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS
@@ -87,49 +87,91 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 12.01.2023 16:38, Dmitry Baryshkov wrote:
-> On 12/01/2023 17:05, Konrad Dybcio wrote:
+On 12.01.2023 16:37, Bjorn Andersson wrote:
+> On Wed, Jan 11, 2023 at 09:51:25PM +0100, Konrad Dybcio wrote:
+>> In preparation for CPRh-aware OSM programming, change the probe
+>> function so that we determine the number of frequency domains by
+>> counting the number of reg-names entries that begin with
+>> "freq-domain", as the aforementioned changes require introduction
+>> of non-freq-domain register spaces.
 >>
->>
->> On 11.01.2023 20:57, Dmitry Baryshkov wrote:
->>> Add device tree node for the CBF clock.
->>>
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->>>   arch/arm64/boot/dts/qcom/msm8996.dtsi | 7 +++++++
->>>   1 file changed, 7 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
->>> index 37ebd8a3b2c8..e5a638b85ffc 100644
->>> --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
->>> @@ -3558,6 +3558,13 @@ saw3: syscon@9a10000 {
->>>               reg = <0x09a10000 0x1000>;
->>>           };
->>>   +        cbf: clock-controller@9a11000 {
->>> +            compatible = "qcom,msm8996-cbf";
->>> +            reg = <0x09a11000 0x10000>;
->>> +            clocks = <&rpmcc RPM_SMD_BB_CLK1>, <&apcs_glb>;
->> Shouldn't this be RPM_SMD_XO_A_CLK_SRC? I don't see BB_CLK
->> referenced *anywhere* downstream, other than being defined
->> in the 8996 GCC driver..
 > 
-> Good question. On the schematics I have the CXO input is connected to the BBCLK1 PMIC pin.
-I guess it's a question of how RPM resolves this internally.. I
-think I was once told that you just ask RPM nicely to turn on
-the clock and everything is handled for you from there on,
-so perhaps we don't need to poke at BBCLK manually if it's only
-used as XO parent?
+> Requiring reg-names would break backwards compatibility with at least
+> sc7280 and sm6115.
+Ouch, you're correct..
+
+Does checking for reg-names and applying the code flow proposed in this
+patch if found and the existing one if not sound good?
 
 Konrad
 > 
->>
->> Konrad
->>
->>> +            #clock-cells = <0>;
->>> +        };
->>> +
->>>           intc: interrupt-controller@9bc0000 {
->>>               compatible = "qcom,msm8996-gic-v3", "arm,gic-v3";
->>>               #interrupt-cells = <3>;
+> Regards,
+> Bjorn
 > 
+>> Fixes: 1a6a8b0080b0 ("cpufreq: qcom-hw: Fix reading "reg" with address/size-cells != 2")
+>> Fixes: 054a3ef683a1 ("cpufreq: qcom-hw: Allocate qcom_cpufreq_data during probe")
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+>>  drivers/cpufreq/qcom-cpufreq-hw.c | 34 ++++++++++++++++++++++---------
+>>  1 file changed, 24 insertions(+), 10 deletions(-)
+>>
+>> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+>> index 9505a812d6a1..89d5ed267399 100644
+>> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
+>> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+>> @@ -651,8 +651,9 @@ static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
+>>  	struct device *dev = &pdev->dev;
+>>  	struct device_node *soc_node;
+>>  	struct device *cpu_dev;
+>> +	const char *reg_name;
+>>  	struct clk *clk;
+>> -	int ret, i, num_domains, reg_sz;
+>> +	int ret, i, num_reg_names, num_domains = 0;
+>>  
+>>  	clk = clk_get(dev, "xo");
+>>  	if (IS_ERR(clk))
+>> @@ -684,19 +685,32 @@ static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
+>>  	if (!soc_node)
+>>  		return -EINVAL;
+>>  
+>> -	ret = of_property_read_u32(soc_node, "#address-cells", &reg_sz);
+>> -	if (ret)
+>> +	num_reg_names = of_property_count_strings(dev->of_node, "reg-names");
+>> +	if (num_reg_names <= 0) {
+>> +		ret = num_reg_names ? num_reg_names : -ENODATA;
+>>  		goto of_exit;
+>> +	}
+>>  
+>> -	ret = of_property_read_u32(soc_node, "#size-cells", &i);
+>> -	if (ret)
+>> -		goto of_exit;
+>> +	for (i = 0; i < num_reg_names; i++) {
+>> +		ret = of_property_read_string_index(dev->of_node, "reg-names", i, &reg_name);
+>> +		if (ret < 0)
+>> +			goto of_exit;
+>>  
+>> -	reg_sz += i;
+>> +		/*
+>> +		 * Check if the i-th reg is a freq-domain base, no need to add 1
+>> +		 * more byte for idx, as sizeof counts \0 whereas strlen does not.
+>> +		 */
+>> +		if (strlen(reg_name) == sizeof("freq-domain")) {
+>> +			/* Check if this reg-name begins with "freq-domain" */
+>> +			if (!strncmp(reg_name, "freq-domain", sizeof("freq-domain") - 1))
+>> +				num_domains++;
+>> +		}
+>> +	}
+>>  
+>> -	num_domains = of_property_count_elems_of_size(dev->of_node, "reg", sizeof(u32) * reg_sz);
+>> -	if (num_domains <= 0)
+>> -		return num_domains;
+>> +	if (num_domains <= 0) {
+>> +		ret = -EINVAL;
+>> +		goto of_exit;
+>> +	}
+>>  
+>>  	qcom_cpufreq.data = devm_kzalloc(dev, sizeof(struct qcom_cpufreq_data) * num_domains,
+>>  					 GFP_KERNEL);
+>> -- 
+>> 2.39.0
+>>
