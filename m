@@ -2,160 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B3C706696F3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 13:29:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 542CC6697CB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 13:57:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232204AbjAMM3Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 07:29:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58352 "EHLO
+        id S241108AbjAMM5K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 07:57:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37012 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241221AbjAMM2D (ORCPT
+        with ESMTP id S233066AbjAMM4c (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 07:28:03 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AFCA1B9F3;
-        Fri, 13 Jan 2023 04:25:32 -0800 (PST)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30DAbvXY003163;
-        Fri, 13 Jan 2023 12:24:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=FLKDNmDTs22NYoQdmcaDLbxot9m4TNetlGOYrtzw2mQ=;
- b=nnJ0sV30so+/JEIQKgP/kW0G9rFAYGXq2FjM6Dd5OrtbHbuusoDFphJASUVUiQceWpe3
- IyMbPGjwM2bp1W9FvJYVwYJupYnFaFmM8slPpZ2PDQYStzebzMTElUQ1lzwAW71bjPkC
- u8PSPYuTRgvBhHIHOiuFHyKmdabTV+l1rl5vpMVz1Jh1pxxXhajcog70JGMNMATjigq5
- F4/1TRvGHhG961eWlyaSLx/wtr7oYCZHbEBTqv3KsoPr8RWrORF1EPtSYROMgOAFgHNw
- o/DSaOQW7cgcrmBp1n3b8rZ3J80bAFKcNPGtG2BFvk6SJoN6ASERYbGyfBqERZaRM7cN qA== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n351f8j90-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 13 Jan 2023 12:24:41 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30DCOetc001712
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 13 Jan 2023 12:24:40 GMT
-Received: from [10.50.57.3] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Fri, 13 Jan
- 2023 04:24:31 -0800
-Message-ID: <90484f63-bd72-f3a4-b1c5-d3830c2245d0@quicinc.com>
-Date:   Fri, 13 Jan 2023 17:54:22 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 1/7] dt-bindings: arm64: ipq9574: Add binding descriptions
- for clock and reset
-To:     Rob Herring <robh@kernel.org>
-CC:     <tdas@codeaurora.org>, <quic_kathirav@quicinc.com>,
-        <dmitry.baryshkov@linaro.org>, <quic_gokulsri@quicinc.com>,
-        <nfraprado@collabora.com>, <linux-arm-msm@vger.kernel.org>,
-        <quic_poovendh@quicinc.com>, <robh+dt@kernel.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <andersson@kernel.org>, <arnd@arndb.de>, <sboyd@kernel.org>,
-        <broonie@kernel.org>, <will@kernel.org>,
-        <quic_sjaganat@quicinc.com>, <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-clk@vger.kernel.org>, <quic_srichara@quicinc.com>,
-        <linux-gpio@vger.kernel.org>, <p.zabel@pengutronix.de>,
-        <catalin.marinas@arm.com>, <marcel.ziswiler@toradex.com>,
-        <linus.walleij@linaro.org>, <konrad.dybcio@linaro.org>,
-        <mturquette@baylibre.com>, <shawnguo@kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
-        <agross@kernel.org>
-References: <20230110121316.24892-1-quic_devipriy@quicinc.com>
- <20230110121316.24892-2-quic_devipriy@quicinc.com>
- <167335661700.1967953.6789968437095688240.robh@kernel.org>
-Content-Language: en-US
-From:   Devi Priya <quic_devipriy@quicinc.com>
-In-Reply-To: <167335661700.1967953.6789968437095688240.robh@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: EDSnF2RVtGWsYcqRMoJXvr-AVfLhZTKG
-X-Proofpoint-ORIG-GUID: EDSnF2RVtGWsYcqRMoJXvr-AVfLhZTKG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-13_05,2023-01-13_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
- clxscore=1011 impostorscore=0 mlxlogscore=999 spamscore=0
- lowpriorityscore=0 bulkscore=0 priorityscore=1501 malwarescore=0
- mlxscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301130083
-X-Spam-Status: No, score=0.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-        version=3.4.6
+        Fri, 13 Jan 2023 07:56:32 -0500
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23D17644D
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 04:44:37 -0800 (PST)
+Received: by mail-ej1-x631.google.com with SMTP id qk9so52074670ejc.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 04:44:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8OOC27K7Y2ptjYPzn9J84UKXhXNaGs+2+3QP8eAlxaY=;
+        b=pUA1nJpe3s3/r+1jR/HvDxL86lB35wsDaplQQAp76H6FzBPa7EZIWA82FYqfkw/0M9
+         CiC6cJVzRtUBbFyQ67LeiKzQDQQJtY/YnoC3tSDieBHH0IPnp1B1wKAKeLJAbEhqVbSF
+         nsmqi32z3hjRFtKNGSJiMCaiAHPhrwPySsulklkIJeMTDMbOMfaMK39XkVai/IW6/nDk
+         6+xspbv718zPXAdILY7m6G9/SrNBsaUFDlZG30CeqDjHa5i1Sgv2bCJwywd3LmgH/oTU
+         VpRanzfBvGKm040l65LUvwwtxjMlnS+Vy9Nr0B7Chdrd1GocUt6R5nVzI3b4g0xY+g6U
+         R7aQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=8OOC27K7Y2ptjYPzn9J84UKXhXNaGs+2+3QP8eAlxaY=;
+        b=VVTpdcbuTds6ye5sOvSFNOI94wt1o6I5yUZp9U3uxD9Qrs059qyYQCehCvoLRW4eYo
+         FW+rw2Z//+rD8y/RU/ymameRsgWwbqh5549JpqZU7phVI/kCWYSyd4ktxK/kQ+r2/Bim
+         KsEwh16lWa5HDO+3g3ynr74paWowicheYzQS22N/RwY5wp+VVvcmiC9CNqFcVMqGF1Jb
+         isosVpE/7gioaM8XwvV+mznkCuFVcjSF9FSrPSr8u+WE+1h/W/q4JHYj4ZnJhRZlS9ym
+         sYA9/t3pIx1ShaZk4Jz/E81sV2E7VZvmF0jQBwGfU1vGnmByWaorGkKNv4CLQVRGDCVA
+         Jahw==
+X-Gm-Message-State: AFqh2koAmCt18u2d91a6S8ATzpazKOEFPjrhlLYGjS5P6ix6ZmO7EerB
+        yyRRGjlAksD8sOBXHH5kK9aiQA==
+X-Google-Smtp-Source: AMrXdXuox8jSaU89IemSpCgGuF+ll4JguwINiL4epNVqWhEbZZEIWdgixPDtTiIYIAQIxUAntpWlUw==
+X-Received: by 2002:a17:907:10d0:b0:85e:f910:71b6 with SMTP id rv16-20020a17090710d000b0085ef91071b6mr9134132ejb.51.1673613875663;
+        Fri, 13 Jan 2023 04:44:35 -0800 (PST)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id k26-20020a508ada000000b00487fc51c532sm8369038edk.33.2023.01.13.04.44.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 13 Jan 2023 04:44:35 -0800 (PST)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Fri, 13 Jan 2023 13:44:34 +0100
+Message-Id: <CPR2LS3SJQ3I.Z7UY505COG3@otso>
+Cc:     <linux-arm-msm@vger.kernel.org>,
+        <~postmarketos/upstreaming@lists.sr.ht>,
+        <phone-devel@vger.kernel.org>, "Andy Gross" <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        "Kishon Vijay Abraham I" <kishon@kernel.org>,
+        <linux-phy@lists.infradead.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v3 2/3] phy: qcom-qmp-combo: Add config for SM6350
+From:   "Luca Weiss" <luca.weiss@fairphone.com>
+To:     "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
+        "Vinod Koul" <vkoul@kernel.org>, "Johan Hovold" <johan@kernel.org>
+X-Mailer: aerc 0.14.0
+References: <20221130081430.67831-1-luca.weiss@fairphone.com>
+ <20221130081430.67831-2-luca.weiss@fairphone.com>
+ <Y6xP4YRAp68TfxFi@hovoldconsulting.com> <Y8BIX+js1ircJyb9@matsya>
+ <cf968a25-02f7-d402-530b-eb379b707e54@linaro.org>
+In-Reply-To: <cf968a25-02f7-d402-530b-eb379b707e54@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Dmitry,
 
+On Thu Jan 12, 2023 at 8:33 PM CET, Dmitry Baryshkov wrote:
+> On 12/01/2023 19:50, Vinod Koul wrote:
+> > On 28-12-22, 15:17, Johan Hovold wrote:
+> >> Luca, Vinod,
+> >>
+> >> On Wed, Nov 30, 2022 at 09:14:28AM +0100, Luca Weiss wrote:
+> >>> Add the tables and config for the combo phy found on SM6350.
+> >>>
+> >>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> >>> ---
+> >>> Changes since v2:
+> >>> * Drop dp_txa/dp_txb changes, not required
+> >>> * Fix dp_dp_phy offset
+> >>>
+> >>>   drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 126 +++++++++++++++++++=
++++
+> >>>   1 file changed, 126 insertions(+)
+> >>>
+> >>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/=
+qualcomm/phy-qcom-qmp-combo.c
+> >>> index 77052c66cf70..6ac0c68269dc 100644
+> >>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> >>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> >>
+> >>> @@ -975,6 +1039,19 @@ static const char * const sc7180_usb3phy_reset_=
+l[] =3D {
+> >>>   	"phy",
+> >>>   };
+> >>>  =20
+> >>> +static const struct qmp_combo_offsets qmp_combo_offsets_v3 =3D {
+> >>> +	.com		=3D 0x0000,
+> >>> +	.txa		=3D 0x1200,
+> >>> +	.rxa		=3D 0x1400,
+> >>> +	.txb		=3D 0x1600,
+> >>> +	.rxb		=3D 0x1800,
+> >>> +	.usb3_serdes	=3D 0x1000,
+> >>> +	.usb3_pcs_misc	=3D 0x1a00,
+> >>> +	.usb3_pcs	=3D 0x1c00,
+> >>> +	.dp_serdes	=3D 0x1000,
+> >>
+> >> I would have expected this to be 0x2000 as that's what the older
+> >> platforms have been using for the dp serdes table so far. Without acce=
+ss
+> >> to any documentation it's hard to tell whether everyone's just been
+> >> cargo-culting all along or if there's actually something there at offs=
+et
+> >> 0x2000.
+>
+> usb3_serdes is 0x1000, so dp_serdes equal to 0x1000 is definitely an typo=
+.
+>
+> Judging from the downstream dtsi, the DP PHY starts at offset 0x2000. So=
+=20
+> dp_serdes is equal to 0x2000, dp_phy =3D 0x2a00, ln_tx1 =3D 0x2200, ln_tx=
+2 =3D=20
+> 0x2600.
 
-On 1/10/2023 6:59 PM, Rob Herring wrote:
-> 
-> On Tue, 10 Jan 2023 17:43:10 +0530, devi priya wrote:
->> Adding support for the global clock controller found on
->> IPQ9574 based devices
->>
->> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
->> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
->> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
->> ---
->>   .../bindings/clock/qcom,gcc-other.yaml        |   4 +
->>   .../devicetree/bindings/clock/qcom,gcc.yaml   |   9 +-
->>   include/dt-bindings/clock/qcom,gcc-ipq9574.h  | 226 ++++++++++++++++++
->>   include/dt-bindings/reset/qcom,gcc-ipq9574.h  | 164 +++++++++++++
->>   4 files changed, 402 insertions(+), 1 deletion(-)
->>   create mode 100644 include/dt-bindings/clock/qcom,gcc-ipq9574.h
->>   create mode 100644 include/dt-bindings/reset/qcom,gcc-ipq9574.h
->>
-> 
-> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> on your patch (DT_CHECKER_FLAGS is new in v5.13):
-> 
-> yamllint warnings/errors:
-> 
-> dtschema/dtc warnings/errors:
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,sm8550-gcc.example.dtb: clock-controller@100000: clocks: [[4294967295, 0], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295, 0], [4294967295, 1], [4294967295, 2], [4294967295]] is too long
-> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,sm8550-gcc.yaml
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,sm8550-gcc.example.dtb: clock-controller@100000: Unevaluated properties are not allowed ('#clock-cells', '#power-domain-cells', '#reset-cells', 'reg' were unexpected)
-> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,sm8550-gcc.yaml
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,gcc-sc8280xp.example.dtb: clock-controller@100000: clocks: [[4294967295, 0], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295]] is too long
-> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,gcc-sc8280xp.yaml
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,gcc-sc8280xp.example.dtb: clock-controller@100000: Unevaluated properties are not allowed ('#clock-cells', '#power-domain-cells', '#reset-cells', 'reg' were unexpected)
-> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,gcc-sc8280xp.yaml
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,gcc-sc7280.example.dtb: clock-controller@100000: clocks: [[4294967295, 0], [4294967295, 1], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295], [4294967295]] is too long
-> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,gcc-sc7280.yaml
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,gcc-sc7280.example.dtb: clock-controller@100000: clock-names: ['bi_tcxo', 'bi_tcxo_ao', 'sleep_clk', 'pcie_0_pipe_clk', 'pcie_1_pipe_clk', 'ufs_phy_rx_symbol_0_clk', 'ufs_phy_rx_symbol_1_clk', 'ufs_phy_tx_symbol_0_clk', 'usb3_phy_wrapper_gcc_usb30_pipe_clk'] is too long
-> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,gcc-sc7280.yaml
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,gcc-sc7280.example.dtb: clock-controller@100000: Unevaluated properties are not allowed ('#clock-cells', '#power-domain-cells', '#reset-cells', 'reg' were unexpected)
-> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,gcc-sc7280.yaml
-> 
-> doc reference errors (make refcheckdocs):
-> 
-> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230110121316.24892-2-quic_devipriy@quicinc.com
-> 
-> The base for the series is generally the latest rc1. A different dependency
-> should be noted in *this* patch.
-> 
-> If you already ran 'make dt_binding_check' and didn't see the above
-> error(s), then make sure 'yamllint' is installed and dt-schema is up to
-> date:
-> 
-> pip3 install dtschema --upgrade
-> 
-> Please check and re-submit after running the above command yourself. Note
-> that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-> your schema. However, it must be unset to test all examples with your schema.
-> 
-Sure, will check
+Can you share how you got to the 0x2000 offset? You can see my
+(potentially wrong) reasoning for 0x1000 a few messages ago[0].
 
-Best Regards,
-Devi Priya
+The only 0x2000-something I could find now while looking at it again is
+"#define USB3_DP_PHY_DP_DP_PHY_PD_CTL 0x2a18" which becomes
+USB3_DP_DP_PHY_PD_CTL in the driver but this is seemingly not used at
+all in my msm-4.19 tree.
+
+Also if you have any idea on how to test it at runtime without actually
+having to get all the type-C functionality up I'd be happy to try that.
+Unfortunately I believe there's still quite some bits missing to
+actually get DP out via the USB-C port - which I imagine would trigger
+the PHY setup.
+
+[0] https://lore.kernel.org/linux-arm-msm/CPDIYQ3SSY3E.I0Y0NMIED0WO@otso/
+
+Regards
+Luca
+
+>
+> >>
+> >> Vinod, could you shed some light on this as presumably you have access
+> >> to some documentation?
+> >>
+> >>> +	.dp_dp_phy	=3D 0x2a00,
+> >=20
+> > No sorry, I dont have access to this version...
+> >=20
+>
+> --=20
+> With best wishes
+> Dmitry
+
