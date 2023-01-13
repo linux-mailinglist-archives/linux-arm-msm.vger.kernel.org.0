@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A4A45669E1F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 17:29:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C7FB5669E0E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 17:28:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230303AbjAMQ2w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 11:28:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44110 "EHLO
+        id S229602AbjAMQ2r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 11:28:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229585AbjAMQ2Q (ORCPT
+        with ESMTP id S229873AbjAMQ2R (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 11:28:16 -0500
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C5747F44E
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 08:22:50 -0800 (PST)
-Received: by mail-ej1-x62c.google.com with SMTP id l22so23766969eja.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 08:22:50 -0800 (PST)
+        Fri, 13 Jan 2023 11:28:17 -0500
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB3CC7ECBB
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 08:22:51 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id ud5so53511342ejc.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 08:22:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=U/o3cDhl1VDCIhimkK4z4B4fUtw4xpL6u2a+ZhDH/qY=;
-        b=q5bwqIYKcVlpXQx7yfIVzB2kWsP0AsMOz3CSBAyQxwpf63kGPfnklzoPexGpbe7m9t
-         x9dx7vHCHobX2zhyhx22gqU3++27hxNy6YWX+2qyd22/Q7IL1a6Xaa70K3LHYEbdyu4h
-         QGHfjd5vky6vaFzz311KgJErqqKrAH+UUgvo5Mq1CAZenMx5zhPpjFRsZRGtskuTRONo
-         O7LhS6Fy/ywaNxCgCrhCAZHUO/olRMi5nwLHpyfLS7oOchL3MccQ0KOKNz7fzqjsYAE4
-         6ywV3i/mMz4iMhDvokA3CAZWblcWAS4ATYVRFhJvl8Hpg4/Icagy8mlTuWmGSsM9Hwfb
-         H46A==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7d41l0HM2BfF3mxFfhv8kgpjTHwRckZQ3XW8jzXEKtA=;
+        b=djioHbVFvUz5qObOlYiGdTQALHhMYuwE/IMrkCTY51GlXpqU0Jf1lCUkAXYKBi292o
+         rXVpN/kFyEU9DT79ZrY3AZsBcDamrRqdSv7thn7OpU4gMh9ECOnVZE1Wtpj0KRXOi4Cl
+         CXxZtotfZVoQTK9soDEdwVYefGn/j1lXCyZ86ZeRhxBV3cq73uFHGIxXKXPX+5I84+hU
+         kN0CXcnhXxJjOnhbAxiV9NNNh9BS310S4dRiC3FG0+nMPyGyo+6ogIA3wBCWNfdel9/9
+         RPPxxNciVd/fWYM8v/O9Zt6dxglRxPzsNvyj0D8t+CHgOj96vAqpHSdaJwqyoLpzALIw
+         BAXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=U/o3cDhl1VDCIhimkK4z4B4fUtw4xpL6u2a+ZhDH/qY=;
-        b=ZVYgpJna6s9wN8Lqj/dEN4eTZW47txykbx0FI1KatAUjDeM2qv2DehhIojxf5Ia57p
-         yv2ljLGN3Gg265yM1AGu8Ufwyehb7Ja8VBJH+Yo9gyQX3IlNf0pRmgIdnXkaXvoMnxza
-         zSSnyq7KQYNHPf0urYPTEGMZxvBvVL7xohMjka2h480CTI/5ae3gBs1/DDpTtNlnkH18
-         WdzEgPr3qsTU9aRtSynAV7Xiof6DHT+uUBR4e99GpZbXGw87t77NVqoU7CT4kdbPJGYf
-         6nUersPMu1EYoqlyMipUJBfuqnULFaNCkRQrT2N4gyKgl8esZBQquzZhdo4nUvFL65Ze
-         ICjQ==
-X-Gm-Message-State: AFqh2kqY9qKbfLLFJUJGgF0rSYg1tM2daTFEZ3oReqIPM+ysr1luw+U6
-        4mGOqGOC7LzjlD+D6ZwvG3EXJ1Pmegm4ojhE
-X-Google-Smtp-Source: AMrXdXsEB9DBeXGM8m6kmN4csDLoYQGbHXzkjVvECMuguflfw8lprXbS7Ov+fnTmjSUMOZSUi0obEg==
-X-Received: by 2002:a17:906:b00c:b0:7c4:fa17:7202 with SMTP id v12-20020a170906b00c00b007c4fa177202mr68035056ejy.33.1673626968525;
-        Fri, 13 Jan 2023 08:22:48 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7d41l0HM2BfF3mxFfhv8kgpjTHwRckZQ3XW8jzXEKtA=;
+        b=nMlEA8wIhZ5UeGvigI0/Z2cMzPdZFfaES1tOkOQJr7i3V4+H8fLqJSH/jdxS4521/Y
+         4xBSjCCxlsqa1HygfL9R7vgmTQtGGx0ww7zR6mEmzvsaWIwcXj+gWWKIHwNo8lRxVygR
+         o/7JxznBzXFRwE8QYlClzUX/6RL4Xs1H1RwcROKyuuZFMLcAtjLdzjVRdqxJRmeHs1LV
+         QFLiu/oUxBZ+85TX8c08sQbLp+Rf2A0WqR95AvJ0z4URKfMJ6U+HhaOmI7Gmlt5aok3j
+         VNgNBGdHWSh4Z+bWk5MZn9Ev7l3wo7If4/7NMHf8uPGb58aNjLqpPxT1FwtQRJxKAGlP
+         JdzQ==
+X-Gm-Message-State: AFqh2ko9eGM5gPu8XtQrrUeTYhmOdKv3FI0s5iXGpqj4gOhoNHA29pHw
+        /YrfLB6EWv3u5ldbdkUSsSxcJg==
+X-Google-Smtp-Source: AMrXdXtTUjoz3dWiA0ZESis4pRBEtW4cYZ+lfJFUZ/DDZIZdwyn9tSNRE/YzZO7FQ1+XiPg7Sq5qzw==
+X-Received: by 2002:a17:906:a186:b0:82d:e2a6:4b0d with SMTP id s6-20020a170906a18600b0082de2a64b0dmr67249105ejy.18.1673626970314;
+        Fri, 13 Jan 2023 08:22:50 -0800 (PST)
 Received: from krzk-bin.. ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id q1-20020a17090676c100b007c0d4d3a0c1sm8739479ejn.32.2023.01.13.08.22.46
+        by smtp.gmail.com with ESMTPSA id q1-20020a17090676c100b007c0d4d3a0c1sm8739479ejn.32.2023.01.13.08.22.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Jan 2023 08:22:48 -0800 (PST)
+        Fri, 13 Jan 2023 08:22:50 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -58,44 +59,245 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 1/6] arm64: dts: qcom: sm8250: drop unused clock-frequency from rx-macro
-Date:   Fri, 13 Jan 2023 17:22:40 +0100
-Message-Id: <20230113162245.117324-1-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 2/6] arm64: dts: qcom: sdm845: move WCD9340 codec to separate file
+Date:   Fri, 13 Jan 2023 17:22:41 +0100
+Message-Id: <20230113162245.117324-2-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20230113162245.117324-1-krzysztof.kozlowski@linaro.org>
+References: <20230113162245.117324-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Neither qcom,sm8250-lpass-rx-macro bindings nor the driver use
-"clock-frequency" property.
-
-  sm8250-mtp.dtb: rxmacro@3200000: Unevaluated properties are not allowed ('clock-frequency' was unexpected)
+WCD9340 codec node is not a property of the SoC, but board.  Move it to
+separate file and include it in the specific boards.  On all others,
+keep the Slimbus node disabled as it is empty.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 1 -
- 1 file changed, 1 deletion(-)
+ .../boot/dts/qcom/sdm845-audio-wcd9340.dtsi   | 69 +++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts    |  1 +
+ .../qcom/sdm845-xiaomi-beryllium-common.dtsi  |  1 +
+ .../boot/dts/qcom/sdm845-xiaomi-polaris.dts   |  1 +
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          | 60 +---------------
+ .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts |  1 +
+ .../boot/dts/qcom/sdm850-samsung-w737.dts     |  1 +
+ 7 files changed, 75 insertions(+), 59 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/sdm845-audio-wcd9340.dtsi
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index f614992709d2..b22569101314 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -2301,7 +2301,6 @@ rxmacro: rxmacro@3200000 {
- 			clock-names = "mclk", "npl", "macro", "dcodec", "fsgen";
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-audio-wcd9340.dtsi b/arch/arm64/boot/dts/qcom/sdm845-audio-wcd9340.dtsi
+new file mode 100644
+index 000000000000..5bcce7d0d709
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/sdm845-audio-wcd9340.dtsi
+@@ -0,0 +1,69 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * SDM845 SoC device tree source
++ *
++ * Copyright (c) 2018, The Linux Foundation. All rights reserved.
++ */
++
++&slim {
++	status = "okay";
++
++	slim@1 {
++		reg = <1>;
++		#address-cells = <2>;
++		#size-cells = <0>;
++
++		wcd9340_ifd: ifd@0,0 {
++			compatible = "slim217,250";
++			reg = <0 0>;
++		};
++
++		wcd9340: codec@1,0 {
++			compatible = "slim217,250";
++			reg = <1 0>;
++			slim-ifc-dev = <&wcd9340_ifd>;
++
++			#sound-dai-cells = <1>;
++
++			interrupts-extended = <&tlmm 54 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-controller;
++			#interrupt-cells = <1>;
++
++			#clock-cells = <0>;
++			clock-frequency = <9600000>;
++			clock-output-names = "mclk";
++			qcom,micbias1-microvolt = <1800000>;
++			qcom,micbias2-microvolt = <1800000>;
++			qcom,micbias3-microvolt = <1800000>;
++			qcom,micbias4-microvolt = <1800000>;
++
++			#address-cells = <1>;
++			#size-cells = <1>;
++
++			wcdgpio: gpio-controller@42 {
++				compatible = "qcom,wcd9340-gpio";
++				gpio-controller;
++				#gpio-cells = <2>;
++				reg = <0x42 0x2>;
++			};
++
++			swm: swm@c85 {
++				compatible = "qcom,soundwire-v1.3.0";
++				reg = <0xc85 0x40>;
++				interrupts-extended = <&wcd9340 20>;
++
++				qcom,dout-ports = <6>;
++				qcom,din-ports = <2>;
++				qcom,ports-sinterval-low = /bits/ 8  <0x07 0x1f 0x3f 0x7 0x1f 0x3f 0x0f 0x0f>;
++				qcom,ports-offset1 = /bits/ 8 <0x01 0x02 0x0c 0x6 0x12 0x0d 0x07 0x0a>;
++				qcom,ports-offset2 = /bits/ 8 <0x00 0x00 0x1f 0x00 0x00 0x1f 0x00 0x00>;
++
++				#sound-dai-cells = <1>;
++				clocks = <&wcd9340>;
++				clock-names = "iface";
++				#address-cells = <2>;
++				#size-cells = <0>;
++			};
++		};
++	};
++};
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+index 6b355589edb3..3726465acbde 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+@@ -11,6 +11,7 @@
+ #include <dt-bindings/sound/qcom,q6afe.h>
+ #include <dt-bindings/sound/qcom,q6asm.h>
+ #include "sdm845.dtsi"
++#include "sdm845-audio-wcd9340.dtsi"
+ #include "pm8998.dtsi"
+ #include "pmi8998.dtsi"
  
- 			#clock-cells = <0>;
--			clock-frequency = <9600000>;
- 			clock-output-names = "mclk";
- 			#sound-dai-cells = <1>;
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
+index 64de4ed9b0c8..e530a676b250 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
+@@ -7,6 +7,7 @@
+ #include <dt-bindings/sound/qcom,q6afe.h>
+ #include <dt-bindings/sound/qcom,q6asm.h>
+ #include "sdm845.dtsi"
++#include "sdm845-audio-wcd9340.dtsi"
+ #include "pm8998.dtsi"
+ #include "pmi8998.dtsi"
+ 
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
+index a80c3dd9a2da..f81619c8a3ba 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
+@@ -13,6 +13,7 @@
+ #include <dt-bindings/sound/qcom,q6afe.h>
+ #include <dt-bindings/sound/qcom,q6asm.h>
+ #include "sdm845.dtsi"
++#include "sdm845-audio-wcd9340.dtsi"
+ #include "pm8998.dtsi"
+ #include "pmi8998.dtsi"
+ #include "pm8005.dtsi"
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 4c256431280a..f9b1d7a60fd6 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -3831,65 +3831,7 @@ slim: slim-ngd@171c0000 {
+ 			iommus = <&apps_smmu 0x1806 0x0>;
+ 			#address-cells = <1>;
+ 			#size-cells = <0>;
+-
+-			slim@1 {
+-				reg = <1>;
+-				#address-cells = <2>;
+-				#size-cells = <0>;
+-
+-				wcd9340_ifd: ifd@0,0 {
+-					compatible = "slim217,250";
+-					reg = <0 0>;
+-				};
+-
+-				wcd9340: codec@1,0 {
+-					compatible = "slim217,250";
+-					reg = <1 0>;
+-					slim-ifc-dev = <&wcd9340_ifd>;
+-
+-					#sound-dai-cells = <1>;
+-
+-					interrupts-extended = <&tlmm 54 IRQ_TYPE_LEVEL_HIGH>;
+-					interrupt-controller;
+-					#interrupt-cells = <1>;
+-
+-					#clock-cells = <0>;
+-					clock-frequency = <9600000>;
+-					clock-output-names = "mclk";
+-					qcom,micbias1-microvolt = <1800000>;
+-					qcom,micbias2-microvolt = <1800000>;
+-					qcom,micbias3-microvolt = <1800000>;
+-					qcom,micbias4-microvolt = <1800000>;
+-
+-					#address-cells = <1>;
+-					#size-cells = <1>;
+-
+-					wcdgpio: gpio-controller@42 {
+-						compatible = "qcom,wcd9340-gpio";
+-						gpio-controller;
+-						#gpio-cells = <2>;
+-						reg = <0x42 0x2>;
+-					};
+-
+-					swm: swm@c85 {
+-						compatible = "qcom,soundwire-v1.3.0";
+-						reg = <0xc85 0x40>;
+-						interrupts-extended = <&wcd9340 20>;
+-
+-						qcom,dout-ports = <6>;
+-						qcom,din-ports = <2>;
+-						qcom,ports-sinterval-low = /bits/ 8  <0x07 0x1f 0x3f 0x7 0x1f 0x3f 0x0f 0x0f>;
+-						qcom,ports-offset1 = /bits/ 8 <0x01 0x02 0x0c 0x6 0x12 0x0d 0x07 0x0a>;
+-						qcom,ports-offset2 = /bits/ 8 <0x00 0x00 0x1f 0x00 0x00 0x1f 0x00 0x00>;
+-
+-						#sound-dai-cells = <1>;
+-						clocks = <&wcd9340>;
+-						clock-names = "iface";
+-						#address-cells = <2>;
+-						#size-cells = <0>;
+-					};
+-				};
+-			};
++			status = "disabled";
  		};
+ 
+ 		lmh_cluster1: lmh@17d70800 {
+diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+index d9581f4440b3..5586c95aa1ff 100644
+--- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
++++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+@@ -13,6 +13,7 @@
+ #include <dt-bindings/sound/qcom,q6afe.h>
+ #include <dt-bindings/sound/qcom,q6asm.h>
+ #include "sdm850.dtsi"
++#include "sdm845-audio-wcd9340.dtsi"
+ #include "pm8998.dtsi"
+ 
+ /*
+diff --git a/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts b/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
+index 6730804f4e3e..40223704a2c7 100644
+--- a/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
++++ b/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
+@@ -14,6 +14,7 @@
+ #include <dt-bindings/sound/qcom,q6afe.h>
+ #include <dt-bindings/sound/qcom,q6asm.h>
+ #include "sdm850.dtsi"
++#include "sdm845-audio-wcd9340.dtsi"
+ #include "pm8998.dtsi"
+ 
+ /*
 -- 
 2.34.1
 
