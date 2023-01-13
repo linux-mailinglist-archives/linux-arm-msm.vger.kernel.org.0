@@ -2,70 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F75C668897
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 01:36:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E7206688CD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 02:01:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239713AbjAMAg3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Jan 2023 19:36:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43024 "EHLO
+        id S232125AbjAMBBR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Jan 2023 20:01:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234765AbjAMAgQ (ORCPT
+        with ESMTP id S233341AbjAMBBQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Jan 2023 19:36:16 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 931BD6133A;
-        Thu, 12 Jan 2023 16:36:11 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id A2118B8203E;
-        Fri, 13 Jan 2023 00:36:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25BBCC433EF;
-        Fri, 13 Jan 2023 00:36:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1673570168;
-        bh=aRG0HqCnMaQxo0ef4kIoeT8KHMrF7fFixGKcmhALUUQ=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=E/xs7eefPpg+eduQl8Ta0vx/8uvc6YQIw4PZw+m+VYunc2Wwv3ZR01u7Q8NcKWEvr
-         WXGzyMCHNKmg1mYV2k2oHEPjK+6HuFSVrFKhKHs0uEmr5Cz6upnvPCtXkD/YNbt9R2
-         nkMw4OW99pznHodGoBDNLHWsRLvOY+FvyqNrbtlG4ZiCtcQUnHsWeP2l6jw7pLV58u
-         jveDwtnxwIhWOBfFzhI4o3QMcfcoxGLZvudMCILFpQoFkvJbjiN/VfW+RVy4I9MDcK
-         Rf09eQvn+wAptRVEYRYolj+Qf6bm1RHges5j9xCAdX8BKGy90lF/rKVV8HUUuJM3dN
-         K6ULa3P7SAjeQ==
-Message-ID: <5fd524b02f3b9c8f53ce026a0c3cb89f.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+        Thu, 12 Jan 2023 20:01:16 -0500
+Received: from out162-62-58-211.mail.qq.com (out162-62-58-211.mail.qq.com [162.62.58.211])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0510E65BD
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 17:01:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
+        s=s201512; t=1673571670;
+        bh=5YVu9mqcRPbCqohsQNwc03vAe6oCgMQmSEOp7fMl/DM=;
+        h=From:To:Cc:References:In-Reply-To:Subject:Date;
+        b=A6MrL/sn5q7p3/sPOTgjq7oPc8SK7wVp7eLeZ5alnDzVjBkOHlsyt23kxYfp6naq0
+         M0jkXgfideZLgH7MZoz6Z+WtBO8Yic1LhArAVJf0j+G8X926BpWx+ijbBFnjMLjCqs
+         7qS9cpLUQp3Pe6Xll3VVwHkGZYwvQyhvrc2rUK14=
+Received: from DESKTOPZMX ([111.60.247.106])
+        by newxmesmtplogicsvrszc5-0.qq.com (NewEsmtp) with SMTP
+        id 462CC10; Fri, 13 Jan 2023 09:01:06 +0800
+X-QQ-mid: xmsmtpt1673571666tgdfgcdep
+Message-ID: <tencent_D4DA0F74026037777CFE86B9EEE8E870F807@qq.com>
+X-QQ-XMAILINFO: MZHbDvTHakKc4qRpdkAgWdtQzh8SftSzsSF49B8tJh2GsdhDIVBgF/KEngk2Im
+         kJsFBXUjyEoA61nx+0YG+bixUddlyXv6BHDXDQE3LYfXbs3uKd96SWXCuFXuLl7bs0G/aReVNeH2
+         1YX5Rgejip6klhwQdyfrsvVF20qBo5GxKfcX9zMCv3d7CJ6ERIE7MuONTEZC9VlXYhjQpTRF4Y2o
+         ODeo2WYE4ebfZ05FIFhmbn6+pHIJGEl96BHexmkXM0PVop9fKYWAE116FhIFiJF9gjymj0olq9B4
+         gmmEA6bFXH6iRksyY+vPKOhppH1svndSemZSRV6bGIe4dSDtnwgdjld0nUFXV8QRhMxvFF6BzCRJ
+         cyg7QU5g4rvL+Gpo2i5JbQ8s2yNu+9I6wl+saMHtLS03Ddxjlejp9RVWEP/7WDwnc+ZTf4YJFSfG
+         G0M1nUto8LhkkG95g4604rhRuGFCHFK5xpm5e2aCniFAEDXAOIqYW3k3xCCjTfS2cTCHw8onGcsM
+         N88lJDomTzzLMm+Bq7P9h5MACEQpszDbluzgeqK2WEjEb9FqgugUbbgqT0MzDbyHkykgVPtD8BrI
+         TjEAwk22USga4cxNvmprms+zvF2CjKF6JBDNby9xocA2mm8fmiTZTpXnHjNlgGWEpz4EGajy6a1i
+         fPshe44VO8EqupBtPY3qWK+nYu7hKxbIQpX3oir5q7lwEQSK39QpeZO7Rxs20P0d99VtRzo5HOJK
+         GT3Y8NNs3w+1TtIpXnxA14cpsgpil3RxLhriQPUCHMO8deB7Tv0UZy7Vk0aMbW2A6g9wbcQ5jIae
+         S75D7wPiHfiFcNK4WIfqgf3AvxOdI4BJ7TLozpeztt7KFqky5SCyaT1sqJFobQaOX8SlKUM7rqnS
+         i9uXoeuY1QZaXBxnCvQT/qq/+qCaFp444qzVWIo4llz6Ht3cg0dZx3mZH8419zCIVk0M/glAcd
+From:   <forbidden405@foxmail.com>
+To:     "'Konrad Dybcio'" <konrad.dybcio@linaro.org>,
+        "'Andy Gross'" <agross@kernel.org>,
+        "'Bjorn Andersson'" <andersson@kernel.org>,
+        "'Rob Herring'" <robh+dt@kernel.org>,
+        "'Krzysztof Kozlowski'" <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Cc:     "'Jaime Breva'" <jbreva@nayarsystems.com>,
+        "'Nikita Travkin'" <nikita@trvn.ru>,
+        <~postmarketos/upstreaming@lists.sr.ht>
+References: <20230111141311.14682-1-forbidden405@foxmail.com> <tencent_F934F7427EB7B986E8AF70A95A397436E007@qq.com> <86e30740-6f12-1ef9-376f-85ce3fbca7b4@linaro.org>
+In-Reply-To: <86e30740-6f12-1ef9-376f-85ce3fbca7b4@linaro.org>
+Subject: RE: [PATCH v2 3/3] arm64: dts: qcom: msm8916-thwc: Add initial device tree for Tong Heng Wei Chuang Wifi/LTE dongle UFI-001C and uf896
+Date:   Fri, 13 Jan 2023 09:00:44 +0800
+X-OQ-MSGID: <000801d926ea$858c56b0$90a50410$@foxmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20221228185237.3111988-16-dmitry.baryshkov@linaro.org>
-References: <20221228185237.3111988-1-dmitry.baryshkov@linaro.org> <20221228185237.3111988-16-dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH v2 15/16] clk: qcom: mmcc-msm8998: get rid of test clock
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-Date:   Thu, 12 Jan 2023 16:36:06 -0800
-User-Agent: alot/0.10
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: zh-cn
+Thread-Index: AQKxbg4WubPzuE7WFcN4pGL8ECeU5QJyz/rKAUsDSSqszQolEA==
+X-Spam-Status: No, score=1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,HELO_DYNAMIC_IPADDR,RCVD_IN_DNSWL_NONE,RDNS_DYNAMIC,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dmitry Baryshkov (2022-12-28 10:52:36)
-> The test clock apparently it's not used by anyone upstream. Remove it.
->=20
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
+On 11.01.2023 16:13, Konrad Dybcio wrote:
+> > +&sim_ctrl_default {
+> > +	pins = "gpio1", "gpio2";
+> Identical between both boards, move to common please.
 
-Reviewed-by: Stephen Boyd <sboyd@kernel.org>
+It is just happened to be identical for these two boards, but not true 
+For many other devices that will be supported sooner or later.
+
+Best regards,
+Yang
+
+
