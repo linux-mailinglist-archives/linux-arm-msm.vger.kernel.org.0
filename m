@@ -2,115 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E27866A3A1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 20:47:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6912166A3C0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 20:55:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229712AbjAMTri (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 14:47:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33506 "EHLO
+        id S229876AbjAMTzZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 14:55:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229673AbjAMTrg (ORCPT
+        with ESMTP id S230397AbjAMTzV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 14:47:36 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 314F4149EB
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 11:47:35 -0800 (PST)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30DJ0GtA012883;
-        Fri, 13 Jan 2023 19:47:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=dmlmlQdSy2YQY/IyIvySte+wae8MW0Uxj5BinG8r1HM=;
- b=TWDOMyIDrvca5H5/I0XScQ+759p80YrmqYdk2/ddbet3vXy7r9z0Sixmhgx4vhKjnI+G
- L+sc/sRMtipnyhJVTAyUsNaUIr5r4BOgdJ43YK8MCUahlfHYaWcX51dlPX9RK9P0pH5P
- VLUraf7k92nU+nryU4Upes19nFKRAeBj/80bbZzASSsmLPonMiVPN8ARLBU/sayhohl/
- sm71tHKrYK8CSaN8WiK+sodKUphqWFlnP6LLYfaLUpG+7rScjDKn6PwbrmVndbeIeJOX
- Tq0ciVVc2wBCy78p6/Jm/s9rUhH/Kut8szgpCTNZpi4YHrbjUOqTEbDveY9ydaSUwVD9 cQ== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n2wun2aan-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 13 Jan 2023 19:47:28 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30DJlRDp008826
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 13 Jan 2023 19:47:28 GMT
-Received: from [10.110.70.165] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Fri, 13 Jan
- 2023 11:47:27 -0800
-Message-ID: <eae9b5ee-3bf3-8fd4-6d8f-6ac265859ec6@quicinc.com>
-Date:   Fri, 13 Jan 2023 11:47:26 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [RFC PATCH 2/4] drm/msm/mdss: correct the ubwc version for sm6115
- platform
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        Fri, 13 Jan 2023 14:55:21 -0500
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F40C287F3B
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 11:55:18 -0800 (PST)
+Received: by mail-lf1-x136.google.com with SMTP id bp15so34538283lfb.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 11:55:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=9oeSZuMYd3LT/X1OwhODYATjxB9rKtWVz8sj+tiVyDM=;
+        b=s8Xuhkn6J3YR0r9ytJG+bvRtWlfjL2HMGuRaAs7PZNcUpwIMe6Mkfz+O/BB+Z8F2K8
+         dV4bTJGmPEd3FqaEXFxmv8jlSymaPrpacDLL0NUpZcYz5GP2K8eOg81cvlf3m8kjKJc9
+         wHS9RnQojaU1392xafWiYvzGJG5VLgOhr0kxnF+nL6Q8FDZRCWMXgUnGYSVksR4M5ay5
+         Din/RF1J/fNsTY0gy74uvfG0zy+XyoomPAjSP1/fgZVt/UZqdBpNFNqZ6wZ3L/c53bDz
+         tAGmHwwoyMu04kg+GanVStuBJ/Y/Os9e3AwR3UVUw++K6x0zX7NLEryUNZnJp1wPj6A1
+         SMIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9oeSZuMYd3LT/X1OwhODYATjxB9rKtWVz8sj+tiVyDM=;
+        b=lCVOcBEIAtmBeI9UkEAqb+On9kqd+bQFUiJFiRIFDAmXwEYmsBE818g8ThJSCioz3s
+         ilnBtQ9rQejXq4D8V3mb6B7kWu/x0giZvCUMukjZTixEi9J2XT6CfHIS8yifVjU+1XQc
+         bMtyx5V6ANR10KPM5mSTSOXfgJuRlLSFxeYVBPzXm6WE67pjD1NHWayaEh+XQxVXk/5b
+         SIC4FVZeE+c38RazQq0vnoOidfPTylzImaLna1Oyg/PMBkPhCBKZNrQLBlJ07NApQRaX
+         SdG6s7xYQ2MAb6rh6cH4gFJeXPuVt8dlKpDtV7s3zFL9wswQFIAe10P8g9k5vcXDwVaC
+         y8bQ==
+X-Gm-Message-State: AFqh2kp2LYmcLzbEAk/SY/Wz+VfEs6X2RvFUrJ8uPIpCMXK9fzKpx9ff
+        nhapjB5jNrm6NaW2Rywt9lUIfg==
+X-Google-Smtp-Source: AMrXdXtOMhPcxZbViTRDR5rm438/yzfLeEWOC1d3C55CfWj1jPzEPgX8IGxx6d72TAe3R8s8COhfTQ==
+X-Received: by 2002:a19:8c51:0:b0:4b6:ed1d:38e9 with SMTP id i17-20020a198c51000000b004b6ed1d38e9mr316540lfj.64.1673639717301;
+        Fri, 13 Jan 2023 11:55:17 -0800 (PST)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id q21-20020a0565123a9500b004d272bf56b5sm193904lfu.223.2023.01.13.11.55.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Jan 2023 11:55:16 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20221208000850.312548-1-dmitry.baryshkov@linaro.org>
- <20221208000850.312548-3-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20221208000850.312548-3-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: -vnqsb1RxSkxiG2tJEqkVzismKovB77J
-X-Proofpoint-GUID: -vnqsb1RxSkxiG2tJEqkVzismKovB77J
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-13_10,2023-01-13_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- clxscore=1015 phishscore=0 malwarescore=0 spamscore=0 bulkscore=0
- mlxscore=0 priorityscore=1501 adultscore=0 suspectscore=0 impostorscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301130134
-X-Spam-Status: No, score=0.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-        version=3.4.6
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>
+Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
+Subject: [PATCH] phy: qualcomm: qmp-ufs: rename qmp_ufs_offsets_v5 to qmp_ufs_offsets
+Date:   Fri, 13 Jan 2023 21:55:15 +0200
+Message-Id: <20230113195515.407866-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+All currently known QMP UFS PHYs have the same offsets for register
+sub-regions. Instead of using qmp_ufs_offsets_v5 for older generations
+of PHYs, rename the offsets struct instance to remove _v5 suffix.
 
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-On 12/7/2022 4:08 PM, Dmitry Baryshkov wrote:
-> According to the vendor DT, sm6115 has UBWC 1.0, not 2.0.
-> 
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+index d2f3cba625b8..72eb37669e6c 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+@@ -625,7 +625,7 @@ static const char * const qmp_phy_vreg_l[] = {
+ 	"vdda-phy", "vdda-pll",
+ };
+ 
+-static const struct qmp_ufs_offsets qmp_ufs_offsets_v5 = {
++static const struct qmp_ufs_offsets qmp_ufs_offsets = {
+ 	.serdes		= 0,
+ 	.pcs		= 0xc00,
+ 	.tx		= 0x400,
+@@ -658,7 +658,7 @@ static const struct qmp_phy_cfg msm8996_ufs_cfg = {
+ static const struct qmp_phy_cfg sc8280xp_ufsphy_cfg = {
+ 	.lanes			= 2,
+ 
+-	.offsets		= &qmp_ufs_offsets_v5,
++	.offsets		= &qmp_ufs_offsets,
+ 
+ 	.serdes_tbl		= sm8350_ufsphy_serdes_tbl,
+ 	.serdes_tbl_num		= ARRAY_SIZE(sm8350_ufsphy_serdes_tbl),
+@@ -698,7 +698,7 @@ static const struct qmp_phy_cfg sdm845_ufsphy_cfg = {
+ static const struct qmp_phy_cfg sm6115_ufsphy_cfg = {
+ 	.lanes			= 1,
+ 
+-	.offsets		= &qmp_ufs_offsets_v5,
++	.offsets		= &qmp_ufs_offsets,
+ 
+ 	.serdes_tbl		= sm6115_ufsphy_serdes_tbl,
+ 	.serdes_tbl_num		= ARRAY_SIZE(sm6115_ufsphy_serdes_tbl),
+-- 
+2.39.0
 
-Can you please point me to which file you are referring to?
-
-The internal docs I have are still showing 2.0.
-
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/msm_mdss.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
-> index 2219c1bd59a9..4401f945b966 100644
-> --- a/drivers/gpu/drm/msm/msm_mdss.c
-> +++ b/drivers/gpu/drm/msm/msm_mdss.c
-> @@ -532,7 +532,7 @@ static const struct msm_mdss_data sm8150_data = {
->   };
->   
->   static const struct msm_mdss_data sm6115_data = {
-> -	.ubwc_version = UBWC_2_0,
-> +	.ubwc_version = UBWC_1_0,
->   	.ubwc_swizzle = 7,
->   	.ubwc_static = 0x11f,
->   };
