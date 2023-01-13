@@ -2,121 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F89B668ACD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 05:21:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D6550668ADB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 05:29:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235584AbjAMEVW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Jan 2023 23:21:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41770 "EHLO
+        id S229982AbjAME3Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Jan 2023 23:29:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237640AbjAMEU3 (ORCPT
+        with ESMTP id S232777AbjAME1x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Jan 2023 23:20:29 -0500
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F2F6669BB
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 20:16:29 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id bu8so31368155lfb.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 20:16:29 -0800 (PST)
+        Thu, 12 Jan 2023 23:27:53 -0500
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D1CC65ACD
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 20:23:24 -0800 (PST)
+Received: by mail-lf1-x12a.google.com with SMTP id d30so26494618lfv.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 20:23:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=URtOFWc4Y3NxXCjmj7AoFN5jaz8UOuGFeVdCsjgAKHQ=;
-        b=n15d5i1b2JsF8ap0e3rcuLaCuH0PeyokVa8wCGGEM6lsGiHuwi14ThJo3h8e2SEiW8
-         nnYqZQNvmtOucAd0ruIgTM1aZ9q14Hise7ZkAm+ZzrSkH1t3XL1CDVG/CTAMZW1DFm/a
-         B1CNMhEK5uOwnpzNZVvFQK+kaeXJMG+2+/26d3UVJa/CR/Mo0MefuRbIZg+XPjgdhK1D
-         NNa5VEo7/TdHA7cTcpdJ1tGsYDEU2O+Ujr6NonQbNjr46FuBM+qMyTB8ZXP3ACz7cTj1
-         IvqWFbenwDmwH9Pzw0fsHNEANVJdvsBMEvW+7JMD9FNNoPGG8op4yyBW2IL3P3CFahCO
-         bu+Q==
+        bh=E3qVpAD4e4r2YgJT6QopKVtu7JfoDub68cT+znrlhg8=;
+        b=g1sA+mRdgmsO8AavsUumHfQvlLAtB4VWYXXDCq1VVzPS/3nhZ0fXsMdyNXfCxkN4Px
+         NAkp+2C1iN5sx/f49xoGjCrPBJHCZyugZ6Xt+Ox1mjao5V9sWHSK8LFAXfzHbwXtg3nC
+         H4FqkcaaJHGoG+b6f00MIrTH95LvcwhSwWN068Gjcn9WOVVt9I3JUxVLsfW6Jjnb7JQU
+         ErjD5maMc0S8NBiEn8iG5SD0lq5Txbq+ivp8B85ILpdPAwfObjm0jin09Z0p6ZcQf0yG
+         Hq/ueqdpP2iEvYF3/VcAX1wr8GoVyfYfUf9wYdVJGsB5VgePWFw5C79Xkp3HcNOR+YhV
+         t87A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=URtOFWc4Y3NxXCjmj7AoFN5jaz8UOuGFeVdCsjgAKHQ=;
-        b=GoB6b/9KKG7TGGaOlj5MOhH86q8nAEwRJ2qGVyAz8bzr0QV/s0a6lBl1HIkkduPYcV
-         OgbY4JUdYt73rrICPBQANwF4nZlGeua9c0nsZFuDyE2bVbzN1mGKdKIlrzllrR9bgDzu
-         KRqWla2+KQwY3wEbc+uTewuqofgaQFg9swnukJMiHWhF5xRvJk79AoiITJeRzXtPbnHG
-         12rL56y8wxS3M6jNXkw/ezielyZDFvvK9EdewoP8aT3C/fQdQolri1l3u3SrGn0HSb/v
-         qjWtQbV93/MbtLHn9dJ1qEAvz7rAAWUBbRjAjaU1ODoFiyemy7rI1pE67ok0nVTIuszj
-         6VQA==
-X-Gm-Message-State: AFqh2kqS920D2iVmUBrLX3x3pBafLiqorMHNxi70xCChHPDdXWFimUP4
-        wgg92EIG/wvuKUhhvVprmj3yAYBn0KMxZbW1
-X-Google-Smtp-Source: AMrXdXvRHpkZJ1xwVK3MJlzWO9Gyuyj2XbYT3Ctq3VNKQBgDU1Ogv3R+JLOhJKYOu2PWtREwf7STIA==
-X-Received: by 2002:a05:6512:38cc:b0:4a4:68b9:19f0 with SMTP id p12-20020a05651238cc00b004a468b919f0mr18223586lft.24.1673583387558;
-        Thu, 12 Jan 2023 20:16:27 -0800 (PST)
-Received: from [192.168.1.101] (abym53.neoplus.adsl.tpnet.pl. [83.9.32.53])
-        by smtp.gmail.com with ESMTPSA id p18-20020a19f012000000b004cc9e4bc00esm922753lfc.2.2023.01.12.20.16.25
+        bh=E3qVpAD4e4r2YgJT6QopKVtu7JfoDub68cT+znrlhg8=;
+        b=J/eK9AKduLMZcLgON/g6rfE3kpGeUXmPgoBHOA/+MfZMiPQYdquW9Q+dy5MtLuM964
+         OVrz3xbN/pfdgZkRGQdRL+w0dO6D+Z+2qk/Ja991rgYZWs1YNMrf7nYdZngZWRxII75D
+         6bYxc3OyxRe7FhZVQWqxBTfvIMO5kHNGRDqVUrCuCAtOAv+H0Ls+V/H3iw1cEgtvubTm
+         C49uqak6XBiushkGNJv8tzRI6MkrAoNt7Y1sx43D1v8uQLQKJxf+LNYYfzqLuO6NiTWn
+         Anu3ISl6TATG5XPLXwG9GdycsAB+yvZtMpuTaD7abX7jNWr3OgRXNhv1JLfZoanb70fZ
+         Drwg==
+X-Gm-Message-State: AFqh2kpt1gsJDPrT9j7NtfkN22d7VmXYXJ7cKczRZWgKHyKeYaMh7MWd
+        ANQMos1eoU9E6hBn2tTDpMVzK/BYD4AXeBoj
+X-Google-Smtp-Source: AMrXdXv/7anjVIOUNJ+YbJdMSEKH2cBrncksS4VLSL3bLyFOCJQTjCjx5DOLn66H/eEOHhRBYmPXnQ==
+X-Received: by 2002:a05:6512:2316:b0:4ce:e95c:f300 with SMTP id o22-20020a056512231600b004cee95cf300mr918390lfu.39.1673583803336;
+        Thu, 12 Jan 2023 20:23:23 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id a26-20020a056512201a00b004ce437fe97dsm392242lfb.102.2023.01.12.20.23.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Jan 2023 20:16:26 -0800 (PST)
-Message-ID: <d457ed7e-bfb3-b31d-72c5-ed8130e5c37e@linaro.org>
-Date:   Fri, 13 Jan 2023 05:16:25 +0100
+        Thu, 12 Jan 2023 20:23:22 -0800 (PST)
+Message-ID: <eea1c5dc-6bc5-4246-f0e1-0c790de9f078@linaro.org>
+Date:   Fri, 13 Jan 2023 06:23:22 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH] clk: qcom: Remove need for clk_ignore_unused on sc8280xp
-Content-Language: en-US
+ Thunderbird/102.6.0
+Subject: Re: [PATCH] drm/msm: Initialize mode_config earlier
+Content-Language: en-GB
 To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Abel Vesa <abel.vesa@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Johan Hovold <johan@kernel.org>
+Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         linux-kernel@vger.kernel.org
-References: <20230113041038.4188995-1-quic_bjorande@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230113041038.4188995-1-quic_bjorande@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+References: <20230113041051.4189063-1-quic_bjorande@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230113041051.4189063-1-quic_bjorande@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The subject could be more in the likes of "use disable_unused sync_state"..
-
-On 13.01.2023 05:10, Bjorn Andersson wrote:
-> With the transition of disabling unused clocks at sync_state, rather
-> than late_initcall() it's now possible to drop clk_ignore_unused and
-> unused clock disabled once client drivers have probed. Do this on
-> SC8280XP.
+On 13/01/2023 06:10, Bjorn Andersson wrote:
+> Invoking drm_bridge_hpd_notify() on a drm_bridge with a HPD-enabled
+> bridge_connector ends up in drm_bridge_connector_hpd_cb() calling
+> drm_kms_helper_hotplug_event(), which assumes that the associated
+> drm_device's mode_config.funcs is a valid pointer.
 > 
+> But in the MSM DisplayPort driver the HPD enablement happens at bind
+> time and mode_config.funcs is initialized late in msm_drm_init(). This
+> means that there's a window for hot plug events to dereference a NULL
+> mode_config.funcs.
+> 
+> Move the assignment of mode_config.funcs before the bind, to avoid this
+> scenario.
+
+Cam we make DP driver not to report HPD events until the enable_hpd() 
+was called? I think this is what was fixed by your internal_hpd patchset.
+
+> 
+> Reported-by: Johan Hovold <johan@kernel.org>
 > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 > ---
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
->  drivers/clk/qcom/dispcc-sc8280xp.c | 1 +
->  drivers/clk/qcom/gcc-sc8280xp.c    | 1 +
->  2 files changed, 2 insertions(+)
+>   drivers/gpu/drm/msm/msm_drv.c | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
 > 
-> diff --git a/drivers/clk/qcom/dispcc-sc8280xp.c b/drivers/clk/qcom/dispcc-sc8280xp.c
-> index 167470beb369..c84a6481b879 100644
-> --- a/drivers/clk/qcom/dispcc-sc8280xp.c
-> +++ b/drivers/clk/qcom/dispcc-sc8280xp.c
-> @@ -3199,6 +3199,7 @@ static struct platform_driver disp_cc_sc8280xp_driver = {
->  	.driver = {
->  		.name = "disp_cc-sc8280xp",
->  		.of_match_table = disp_cc_sc8280xp_match_table,
-> +		.sync_state = clk_sync_state_disable_unused,
->  	},
->  };
->  
-> diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
-> index b3198784e1c3..f4fdc5b9663c 100644
-> --- a/drivers/clk/qcom/gcc-sc8280xp.c
-> +++ b/drivers/clk/qcom/gcc-sc8280xp.c
-> @@ -7441,6 +7441,7 @@ static struct platform_driver gcc_sc8280xp_driver = {
->  	.driver = {
->  		.name = "gcc-sc8280xp",
->  		.of_match_table = gcc_sc8280xp_match_table,
-> +		.sync_state = clk_sync_state_disable_unused,
->  	},
->  };
->  
+> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+> index ee2f60b6f09b..7ac670f3e6ab 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.c
+> +++ b/drivers/gpu/drm/msm/msm_drv.c
+> @@ -438,6 +438,9 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
+>   
+>   	drm_mode_config_init(ddev);
+>   
+> +	ddev->mode_config.funcs = &mode_config_funcs;
+> +	ddev->mode_config.helper_private = &mode_config_helper_funcs;
+> +
+>   	ret = msm_init_vram(ddev);
+>   	if (ret)
+>   		return ret;
+> @@ -479,9 +482,6 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
+>   
+>   	drm_helper_move_panel_connectors_to_head(ddev);
+>   
+> -	ddev->mode_config.funcs = &mode_config_funcs;
+> -	ddev->mode_config.helper_private = &mode_config_helper_funcs;
+> -
+>   	for (i = 0; i < priv->num_crtcs; i++) {
+>   		/* initialize event thread */
+>   		priv->event_thread[i].crtc_id = priv->crtcs[i]->base.id;
+
+-- 
+With best wishes
+Dmitry
+
