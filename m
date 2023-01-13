@@ -2,80 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B2BA669C50
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 16:31:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CA973669C6A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 16:33:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230290AbjAMPbg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 10:31:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53214 "EHLO
+        id S229457AbjAMPdo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 10:33:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229738AbjAMPbP (ORCPT
+        with ESMTP id S230077AbjAMPdU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 10:31:15 -0500
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07BA593C35
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 07:24:30 -0800 (PST)
-Received: by mail-lf1-x133.google.com with SMTP id b3so33611890lfv.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 07:24:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=X5neXXvR4xShgIQ+mBGlETi+Hmx/OfLeRgPrvDQqsMM=;
-        b=lgYwpaRKm0lkoFxPYt4FB+s3m286q8Altyh+EMp/DStxeiUb4AVUHZputDOFj5ejeR
-         Om03kDdoWEB6MtHZVZjoJJNJbZX8OFhwNNg0i5NbvEX41WIPVj0p3z4oxTxH2EqnqhLD
-         WkBQT96hDUI9UN6I43VG4wo0+NDg9fZx+XV7ZvSC50fSPav4/c7XPM0+AL+wJpujt/8F
-         p2UoCfQ+K+qtC3w8WurMjPaduDbAn0oKREFn8OnnfkcT9OyeXQeuhQtv3BxU+gB+FTzl
-         oRqIMOlQ2/3WVF0J/3ZGwKkpCeiW2WGE2KqDoXtjlRqg07Fz2iCG+0MUpld2slkdbeG8
-         7TfQ==
+        Fri, 13 Jan 2023 10:33:20 -0500
+Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33DC89423A;
+        Fri, 13 Jan 2023 07:26:54 -0800 (PST)
+Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-12c8312131fso22639322fac.4;
+        Fri, 13 Jan 2023 07:26:54 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=X5neXXvR4xShgIQ+mBGlETi+Hmx/OfLeRgPrvDQqsMM=;
-        b=jc1Qhg737wuC190oK16wxuKpwIuHZ8sYzV04QrNPwIUpooBE0CLuRRj980y5wHRqJh
-         AucAk3g+UUCsBBv7jtQ4/ipjO4QPDUIAKnSdFWKpsVReJYQkj+hKzcA9a5klaK7/vI5G
-         mMImCN1z6wVhR3X1SyaKG1UueL7v/ZWXOoHcXVlixWV5E8q2FleLGauqnIwcXWvNj1g6
-         9WS+IaJlBYgoKnseJ0ASO/HkQIZn20RA53qdWDfQnBkmfQmCEIjncrnKTSpTdz7Incg9
-         HQ2lAW0g9dHzYb8Mck1MBZDuaSmEuTrBruqjNyzda9T1iJ1/3Rd7sr8QfTgn9bRlnDoL
-         Q/TQ==
-X-Gm-Message-State: AFqh2kqEIiDcHawwrZFi/cgzslJUrxFdfP0yytL3dASJTt6Z/C6vuS84
-        c1gj+wXz+kcXt7FRDmPlW8amvQ==
-X-Google-Smtp-Source: AMrXdXvAg3JiBLhBzGE5SuTRLQ5LoXvDpRYLITqKt41wh2MJYE/w8yrIo3AaWGcX9fSggjw86D7F2A==
-X-Received: by 2002:ac2:53b0:0:b0:4cc:a108:ca0a with SMTP id j16-20020ac253b0000000b004cca108ca0amr41337lfh.46.1673623468437;
-        Fri, 13 Jan 2023 07:24:28 -0800 (PST)
-Received: from [192.168.1.101] (abym53.neoplus.adsl.tpnet.pl. [83.9.32.53])
-        by smtp.gmail.com with ESMTPSA id x2-20020a056512130200b004a8f824466bsm3886305lfu.188.2023.01.13.07.24.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Jan 2023 07:24:27 -0800 (PST)
-Message-ID: <552e75a9-179a-7720-3d37-59f1846266b1@linaro.org>
-Date:   Fri, 13 Jan 2023 16:24:25 +0100
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=0PbROUEuIJk+HQe91NY18FTTLvUzGQXQDtdY40/ABZE=;
+        b=nu9IWNcY7xo7v/v/EMifLvQYzgEOpL94Ga6v0ECuGHM1fqcWd8w/WZNHxtaEIhsZaI
+         6Z6G+EQoEzaeMFXSjCRWSAf9zxHPtgFFQoqcfnsqloYoKBBGiUnnVe/2IPfXhADEqolH
+         txayA1FISMh798xZEQHZZFn7VrdcptMP6uCmTbwasNMAZzsGcDYud1lNkNaQ5GFPjaMi
+         92crlmkInW4YUTszXpczoz5HQsdvZcOLNEH0oKgfktXAd0Bfj3K0U/RSHlj72dDCiTs0
+         O/gp4k9yhd/SAZnBvDguBjXGopDor3n5ab7LKvTzTKcAizqAwUOp/bgKY3u6SympyABO
+         FXNQ==
+X-Gm-Message-State: AFqh2kqI0jHuSvoqcI8skDUYR9HGAWsOPNcj36icQ0XQ1zjgbv5DaQpV
+        azeRPCp+a9tFC0+SqKLuXg==
+X-Google-Smtp-Source: AMrXdXs3qrRsk35e5aDRYxcFeHO8M4hoHtTtK5NTH7ZKCs86bZQy6UFOAiOsRQojs+jf/ClrcsasKQ==
+X-Received: by 2002:a05:6870:c905:b0:15e:ef68:67cf with SMTP id hj5-20020a056870c90500b0015eef6867cfmr1226310oab.59.1673623613356;
+        Fri, 13 Jan 2023 07:26:53 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id m34-20020a056870562200b00143ae7d4ccesm10612793oao.45.2023.01.13.07.26.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Jan 2023 07:26:53 -0800 (PST)
+Received: (nullmailer pid 2224492 invoked by uid 1000);
+        Fri, 13 Jan 2023 15:26:52 -0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH 3/6] regulator: qcom_smd: Add MP5496 regulators
-Content-Language: en-US
-To:     devi priya <quic_devipriy@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, lgirdwood@gmail.com, broonie@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
-        quic_poovendh@quicinc.com
-References: <20230113150310.29709-1-quic_devipriy@quicinc.com>
- <20230113150310.29709-4-quic_devipriy@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230113150310.29709-4-quic_devipriy@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+From:   Rob Herring <robh@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        devicetree@vger.kernel.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        dri-devel@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
+        Andy Gross <agross@kernel.org>, Daniel Vetter <daniel@ffwll.ch>
+In-Reply-To: <20230113083720.39224-5-dmitry.baryshkov@linaro.org>
+References: <20230113083720.39224-1-dmitry.baryshkov@linaro.org>
+ <20230113083720.39224-5-dmitry.baryshkov@linaro.org>
+Message-Id: <167362341911.2212079.15291287366051593468.robh@kernel.org>
+Subject: Re: [PATCH v6 04/11] dt-bindings: display/msm: rename mdss nodes to
+ display-subsystem
+Date:   Fri, 13 Jan 2023 09:26:52 -0600
+X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -83,60 +74,42 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-
-On 13.01.2023 16:03, devi priya wrote:
-> Adding support for PMIC MP5496 on IPQ9574 SoC
+On Fri, 13 Jan 2023 10:37:13 +0200, Dmitry Baryshkov wrote:
+> Follow the 'generic names' rule and rename mdss nodes to
+> display-subsystem.
 > 
-> Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
-Please simply extend the existing MP5496 support with this
-S1 regulator. If you don't explicitly define and set voltages
-for the other vregs, they will not be probed.
-
-Konrad
->  drivers/regulator/qcom_smd-regulator.c | 16 ++++++++++++++++
->  1 file changed, 16 insertions(+)
+>  .../devicetree/bindings/display/msm/mdss-common.yaml      | 8 ++++++++
+>  .../devicetree/bindings/display/msm/qcom,mdss.yaml        | 5 ++++-
+>  2 files changed, 12 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/regulator/qcom_smd-regulator.c b/drivers/regulator/qcom_smd-regulator.c
-> index 9f2b58458841..1eb17d378897 100644
-> --- a/drivers/regulator/qcom_smd-regulator.c
-> +++ b/drivers/regulator/qcom_smd-regulator.c
-> @@ -767,6 +767,15 @@ static const struct regulator_desc mp5496_ldoa2 = {
->  	.ops = &rpm_mp5496_ops,
->  };
->  
-> +static const struct regulator_desc ipq9574_mp5496_smpa1 = {
-> +	.linear_ranges = (struct linear_range[]) {
-> +		REGULATOR_LINEAR_RANGE(600000, 0, 37, 12500),
-> +	},
-> +	.n_linear_ranges = 1,
-> +	.n_voltages = 38,
-> +	.ops = &rpm_mp5496_ops,
-> +};
-> +
->  static const struct regulator_desc pm2250_lvftsmps = {
->  	.linear_ranges = (struct linear_range[]) {
->  		REGULATOR_LINEAR_RANGE(320000, 0, 269, 4000),
-> @@ -799,6 +808,11 @@ static const struct rpm_regulator_data rpm_mp5496_regulators[] = {
->  	{}
->  };
->  
-> +static const struct rpm_regulator_data rpm_ipq9574_mp5496_regulators[] = {
-> +	{ "s1", QCOM_SMD_RPM_SMPA, 1, &ipq9574_mp5496_smpa1, "s1" },
-> +	{}
-> +};
-> +
->  static const struct rpm_regulator_data rpm_pm2250_regulators[] = {
->  	{ "s1", QCOM_SMD_RPM_SMPA, 1, &pm2250_lvftsmps, "vdd_s1" },
->  	{ "s2", QCOM_SMD_RPM_SMPA, 2, &pm2250_lvftsmps, "vdd_s2" },
-> @@ -1320,6 +1334,8 @@ static const struct rpm_regulator_data rpm_pms405_regulators[] = {
->  };
->  
->  static const struct of_device_id rpm_of_match[] = {
-> +	{ .compatible = "qcom,rpm-ipq9574-mp5496-regulators",
-> +		.data = &rpm_ipq9574_mp5496_regulators },
->  	{ .compatible = "qcom,rpm-mp5496-regulators", .data = &rpm_mp5496_regulators },
->  	{ .compatible = "qcom,rpm-pm2250-regulators", .data = &rpm_pm2250_regulators },
->  	{ .compatible = "qcom,rpm-pm6125-regulators", .data = &rpm_pm6125_regulators },
+
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm6115-mdss.example.dtb: mdss@5e00000: $nodename:0: 'mdss@5e00000' does not match '^display-subsystem@[0-9a-f]+$'
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm6115-mdss.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.example.dtb: mdss@5e00000: $nodename:0: 'mdss@5e00000' does not match '^display-subsystem@[0-9a-f]+$'
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230113083720.39224-5-dmitry.baryshkov@linaro.org
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
