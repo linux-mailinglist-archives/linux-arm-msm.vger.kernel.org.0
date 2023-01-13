@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 599F366A513
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 22:21:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D63A66A511
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 22:21:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229992AbjAMVVV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 16:21:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57086 "EHLO
+        id S230007AbjAMVVU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 16:21:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230411AbjAMVVG (ORCPT
+        with ESMTP id S229998AbjAMVVH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 16:21:06 -0500
+        Fri, 13 Jan 2023 16:21:07 -0500
 Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5964288DD6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 13:21:05 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id f34so34813307lfv.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 13:21:05 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37D6088DDC
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 13:21:06 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id j17so34863412lfr.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 13:21:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=tTQShJXOSeSWVAzHkEXUIIDyr/KPTLwtNcNNqe4LAsA=;
-        b=myjxbRmS1er0kDxiwYviTZnZGssUomNTifZxwW+sOutYQsz9WyTTPFeIZv738IWb3g
-         jtByFcnXEF3frxswGxVRFhlkqcznxpJ91plj4yHXRQ4ZLsIIxLCetrqT1Tm0F6UCljKU
-         MgKpUgWUwJs4Iysf3BaEXTClHhdSBxE1gwC3T/0yrH96T85g1G7m2T8lJiinToKZG9zg
-         h/fTkPsu/7BXgdDAI/7dkjq/gN2plYN0ayAxvHKX3l6jvqXIazP4v1YpKpY8VVr/sv6L
-         MOp9R2rex9KVFfU89bLPeUd5RSutuPQ3B4ZtIJyYeT976h7aB9MG/WGg2+DjQxmyAVCe
-         oq9A==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bpyz2dI2IEWxtPn5OOZkau5aG7TwHghPb62KuzuT3OU=;
+        b=PqMeNQKeM1Wd8enwt9bNqCoOzBGJiiN+Del6b8f7S/4Z+N72qacvgMiRiUWAj7mMmH
+         uX5mLDbIYC2+eoSmEgDqAYpmtllkjChOVFvi4yL1IiO9PN5zXV3D7wyiDxLoAimLmXZX
+         MXRQrkIQokGNq3uSbUUNV09nJMXLMM9cJ6lWw/usQcrhimIXLKB3gVo8Bmf7eAsRIYiq
+         T2zm5NkW9Oc50KB/uR6IPJpsgxzyJBshfVltBlJ/VVNS69QGDWhf7Lq8tzLjVu0Bkrgj
+         zxe0tVBAaQMS/fOluPjMDbZRTFNGC16u1sCqYB9c8wJ67bRrDKtGqDL/gT4r/QOHOIIQ
+         JRZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=tTQShJXOSeSWVAzHkEXUIIDyr/KPTLwtNcNNqe4LAsA=;
-        b=dhvsmoY1Pi8CYexAaTf2BO7kOBYN9iB4rBLTAmJqMbg5xLQAQDVPHd60vTMdiQIIrD
-         6aUDzKBkE/YjPGfSOyfdo8DIQeL7gHLRGWKlvAfhHUTvKxaxxE/DPm0IqqylLcyG/1hR
-         8oszFfWdyh0s2o3olX5qVglplhYb7pXp8a2szXKo2eH7L98scU1nZNmsqrU4TVp9u3wd
-         NPUQcZrWy91mULLuR9S7oxnZnHentd0vBfQDnqb2+gPnflWG1jKfwGKAk/FeV+5jOH8r
-         Qcsq4kL1vluVEBCx4mjyR9EkB0/uxU8wdj85h/3suEMK8jvAj5FQNWHmxQ6EYVtnZEfj
-         W6zg==
-X-Gm-Message-State: AFqh2kr2/mKQhCMslAGgEQcThiCF+O+dwneJIYoXSHFfMW2Dp/lhMKqD
-        U2lcP8vZOusn3i0sFom9f/4Klw==
-X-Google-Smtp-Source: AMrXdXuoTqOsnf22kuXjsZrWlNrjinyvm7Q8uvjT9bfULjz2v2DgkY13vt1SJ7xm+YeZdMSLF8mbuQ==
-X-Received: by 2002:a05:6512:2302:b0:4a4:68b8:f4f1 with SMTP id o2-20020a056512230200b004a468b8f4f1mr28746817lfu.55.1673644863739;
-        Fri, 13 Jan 2023 13:21:03 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bpyz2dI2IEWxtPn5OOZkau5aG7TwHghPb62KuzuT3OU=;
+        b=ypgKV7vt4ZGfFum6rlcJWGmylDpZ9zEyjV9tTFlq4ynO+xKF8qygfrO+h3e0Vu3j1v
+         VQlPRbKlIiFmuM+WsM0zaZ9g1BUM6Ps2fUITYDnE/Y6nEoaQGKBq2ZZlD0l6BEOmCJJf
+         XgNw2i0temK7G4XyBDmADjZlBKYyfWYdjuyBmDnPbxcvLrqgcVmLzte7j4JCdCoaLisv
+         WdYYcFdxoXAa4nQbS/p8FmSclgbENdkbvyBvWvrJIxQu2BR69beYqTLal0ACJ/F/LBSj
+         SfsgT5tp0VTly1+TyEEqBpB6U+4r2PRraE5CM7jPs0zWGHR4IWhf789Wry6TT16I7Ygy
+         7eSQ==
+X-Gm-Message-State: AFqh2krcTyEUsMzp1gUwpjCWBvWSUGKJJ0+s9jkE5tX/S5zW8l0H4040
+        ozjeyW3wIblkKKd73GuwGQiwfQ==
+X-Google-Smtp-Source: AMrXdXsbuIaRUET/eHo42N9cM6jodSQvlXKjhMYJ+pU3c/InTbqAwHuB1ZBuEdCszUbOtS8xLeQ66g==
+X-Received: by 2002:a05:6512:1688:b0:4ca:fa75:a64a with SMTP id bu8-20020a056512168800b004cafa75a64amr24280429lfb.0.1673644864594;
+        Fri, 13 Jan 2023 13:21:04 -0800 (PST)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id t24-20020ac25498000000b004d39af98b04sm80602lfk.19.2023.01.13.13.21.02
+        by smtp.gmail.com with ESMTPSA id t24-20020ac25498000000b004d39af98b04sm80602lfk.19.2023.01.13.13.21.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Jan 2023 13:21:03 -0800 (PST)
+        Fri, 13 Jan 2023 13:21:04 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -57,10 +58,12 @@ To:     Andy Gross <agross@kernel.org>,
         Kishon Vijay Abraham I <kishon@kernel.org>
 Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: [PATCH 1/2] phy: qcom-qmp-combo: remove QPHY_PCS_LFPS_RXTERM_IRQ_STATUS reg
-Date:   Fri, 13 Jan 2023 23:21:01 +0200
-Message-Id: <20230113212102.421491-1-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 2/2] phy: qcom-qmp-combo: rework regs layout arrays
+Date:   Fri, 13 Jan 2023 23:21:02 +0200
+Message-Id: <20230113212102.421491-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.0
+In-Reply-To: <20230113212102.421491-1-dmitry.baryshkov@linaro.org>
+References: <20230113212102.421491-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -72,44 +75,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The QPHY_PCS_LFPS_RXTERM_IRQ_STATUS register is not used, remove it from
-register layout.
+Use symbolic names for the values inside reg layout arrays. New register
+names are added following the PCS register layout that is used by the
+particular PHY.
+
+Note: ipq8074 tables appear to use a mixture of v2 and v3 registers.
+This might need additional fixes.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 5 -----
- 1 file changed, 5 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 24 +++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
 diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-index 521ea3ce6b83..ee35bcd2bdb5 100644
+index ee35bcd2bdb5..1f022e580407 100644
 --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
 +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-@@ -59,9 +59,6 @@
- /* QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR register bits */
- #define IRQ_CLEAR				BIT(0)
+@@ -102,23 +102,23 @@ enum qphy_reg_layout {
+ };
  
--/* QPHY_PCS_LFPS_RXTERM_IRQ_STATUS register bits */
--#define RCVR_DETECT				BIT(0)
--
- /* QPHY_V3_PCS_MISC_CLAMP_ENABLE register bits */
- #define CLAMP_EN				BIT(0) /* enables i/o clamp_n */
- 
-@@ -99,7 +96,6 @@ enum qphy_reg_layout {
- 	QPHY_PCS_STATUS,
- 	QPHY_PCS_AUTONOMOUS_MODE_CTRL,
- 	QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR,
--	QPHY_PCS_LFPS_RXTERM_IRQ_STATUS,
- 	QPHY_PCS_POWER_DOWN_CONTROL,
- 	/* Keep last to ensure regs_layout arrays are properly initialized */
- 	QPHY_LAYOUT_SIZE
-@@ -112,7 +108,6 @@ static const unsigned int qmp_v3_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
- 	[QPHY_PCS_POWER_DOWN_CONTROL]	= 0x04,
- 	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= 0x0d8,
- 	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR]  = 0x0dc,
--	[QPHY_PCS_LFPS_RXTERM_IRQ_STATUS] = 0x170,
+ static const unsigned int qmp_v3_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
+-	[QPHY_SW_RESET]			= 0x00,
+-	[QPHY_START_CTRL]		= 0x08,
+-	[QPHY_PCS_STATUS]		= 0x174,
+-	[QPHY_PCS_POWER_DOWN_CONTROL]	= 0x04,
+-	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= 0x0d8,
+-	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR]  = 0x0dc,
++	[QPHY_SW_RESET]			= QPHY_V3_PCS_SW_RESET,
++	[QPHY_START_CTRL]		= QPHY_V3_PCS_START_CONTROL,
++	[QPHY_PCS_STATUS]		= QPHY_V3_PCS_PCS_STATUS,
++	[QPHY_PCS_POWER_DOWN_CONTROL]	= QPHY_V3_PCS_POWER_DOWN_CONTROL,
++	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= QPHY_V3_PCS_AUTONOMOUS_MODE_CTRL,
++	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR] = QPHY_V3_PCS_LFPS_RXTERM_IRQ_CLEAR,
  };
  
  static const unsigned int qmp_v4_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
+-	[QPHY_SW_RESET]			= 0x00,
+-	[QPHY_START_CTRL]		= 0x44,
+-	[QPHY_PCS_STATUS]		= 0x14,
+-	[QPHY_PCS_POWER_DOWN_CONTROL]	= 0x40,
++	[QPHY_SW_RESET]			= QPHY_V4_PCS_SW_RESET,
++	[QPHY_START_CTRL]		= QPHY_V4_PCS_START_CONTROL,
++	[QPHY_PCS_STATUS]		= QPHY_V4_PCS_PCS_STATUS1,
++	[QPHY_PCS_POWER_DOWN_CONTROL]	= QPHY_V4_PCS_POWER_DOWN_CONTROL,
+ 
+ 	/* In PCS_USB */
+-	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= 0x008,
+-	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR] = 0x014,
++	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= QPHY_V4_PCS_USB3_AUTONOMOUS_MODE_CTRL,
++	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR] = QPHY_V4_PCS_USB3_LFPS_RXTERM_IRQ_CLEAR,
+ };
+ 
+ static const struct qmp_phy_init_tbl qmp_v3_usb3_serdes_tbl[] = {
 -- 
 2.39.0
 
