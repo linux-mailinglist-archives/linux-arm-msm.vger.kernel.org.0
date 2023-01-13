@@ -2,164 +2,192 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 02FC3669825
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 14:14:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DEF25669852
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 14:20:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239903AbjAMNOY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 08:14:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46266 "EHLO
+        id S241857AbjAMNUJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 08:20:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241317AbjAMNNr (ORCPT
+        with ESMTP id S241875AbjAMNTi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 08:13:47 -0500
-Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0041684626
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 05:01:53 -0800 (PST)
-Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-4c15c4fc8ccso283237227b3.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 05:01:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=eGYWQmNHYzBdoQRygVglKx5yAwCnlfXDS08gHugHenM=;
-        b=QMHQpYbG1zxr3p3UKJ+wgp+CpyAGbvXD5qnPCovIbUovAAHioJ31d7eksVwBcNhbDM
-         Vy+AclT+9o3C6V3i9n/BCuW9Nf/KbvnR3/lnyzd3xueCE96WMzArNSKsxfW2myhj3sDj
-         V4CPuIHuwgp2SGpf2TuT+pI1AwrUVzpuGlBnC2QPMfEkxtuJ3dBWEDryZkx6XIAjmKNq
-         qPIri36oDxH+gqeoQZw8u3MzLVfLLQQg7LUa78WmNZ6D6my8+UgtGM4cjfb2qgLfXjKu
-         7IYgaFC604WKwUE7jb+GGSQ0j/EGcekLMysgir6AElQ7zexJCvbqt/M8mbI4+APGTJva
-         SobQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=eGYWQmNHYzBdoQRygVglKx5yAwCnlfXDS08gHugHenM=;
-        b=AjIeDqA+45zqM9wmGei8kq6wxjm7Aui4VhefwVMzKO3IfoGpx2NYkV021CNjIHB77Y
-         TPGbf3/tbSl/7p2x6uCxh8Cd0hKpGscEKlFYw9TDNT5J6rgJ4Po+bVfawak0Y6qmsxLG
-         n5DQ5OrwhGjoQCq8hw2CIOBxZWCenav6sA0Hh05sDlYukvoiUmKJua6824/5g4jA/ot/
-         U/BMI9aHIwPS3pCpNyojo8U8v59D9EhYd8zeoBezRoSR4QjM8oCTXD0jRNf52EvH4GjQ
-         gtaDva8pkTMBOd0MoKVexropQfJ4oNctOZPVUP69OVBjb2D51BzE6YWXfXveNIRFFoR9
-         00+g==
-X-Gm-Message-State: AFqh2kqLos262O8RceL2l25wQf0a7kGC6DqMUXfFYILGoFWWveGKl5eB
-        evFjcNxWrsKRB5AQXLudnBoJnYNPYNyRZ1qv9jxzqfsqkofKRrp+5vrqcw==
-X-Google-Smtp-Source: AMrXdXsddOWoGnFZQINZnkBaGOB3nb1k2Yj3MDGckb0nfDcLAZ4K2UfHWcQKNw3CEaoMTFNvm5Ci0yiwpQSZqrZAhZ4=
-X-Received: by 2002:a0d:e3c3:0:b0:432:2458:f6ca with SMTP id
- m186-20020a0de3c3000000b004322458f6camr3760074ywe.138.1673614912824; Fri, 13
- Jan 2023 05:01:52 -0800 (PST)
+        Fri, 13 Jan 2023 08:19:38 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F1E3103;
+        Fri, 13 Jan 2023 05:09:51 -0800 (PST)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30DBlBka032516;
+        Fri, 13 Jan 2023 13:09:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=Pcu7qTXYqJaD0IKb069b6gojgn9RycIXtUdyV8gwfqs=;
+ b=jbXxzjDLc8UvPo+TzSLsh5rg/bOG0nvPXi2cuVYXa8dvwMt3vzSol4VuHC5jpNqS5gbY
+ zqzc99QbpkaHoHIaZBLD7a5+J6ywFAzRHUr6og18+gyp/mG1JN0dbG8g0uaM+hf+WZ5u
+ tcc/V5wdkHwhnPTGRqTbaOSYoYQx0ZALZRmWCYyi/dkBm+qGDxoEtjv6VRJz59QJqRf9
+ d5qs4V9K6GujwQWtMG9zaEwyv/A2rUpv4nHzgaWuWVGhi7yAC/Zj++qGPOKOV/1+R5Zi
+ RgN0CEHqh3mZaW9AlindClvymxg/xft6T78eatQ72rjoddFu8xrm6qKWwJdEG6VfgABI qQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n32wu90wj-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 13 Jan 2023 13:09:00 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30DD8uvv007975
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 13 Jan 2023 13:08:56 GMT
+Received: from [10.50.57.3] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Fri, 13 Jan
+ 2023 05:08:48 -0800
+Message-ID: <bd52102b-6b01-2659-09ec-238463b0eb82@quicinc.com>
+Date:   Fri, 13 Jan 2023 18:38:45 +0530
 MIME-Version: 1.0
-References: <20221130081430.67831-1-luca.weiss@fairphone.com>
- <20221130081430.67831-2-luca.weiss@fairphone.com> <Y6xP4YRAp68TfxFi@hovoldconsulting.com>
- <Y8BIX+js1ircJyb9@matsya> <cf968a25-02f7-d402-530b-eb379b707e54@linaro.org> <CPR2LS3SJQ3I.Z7UY505COG3@otso>
-In-Reply-To: <CPR2LS3SJQ3I.Z7UY505COG3@otso>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 13 Jan 2023 15:01:41 +0200
-Message-ID: <CAA8EJpoOMMALHz7ysft6KvQaYhGWPD+xZiUjOTrC8CA_y81n-w@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] phy: qcom-qmp-combo: Add config for SM6350
-To:     Luca Weiss <luca.weiss@fairphone.com>
-Cc:     Vinod Koul <vkoul@kernel.org>, Johan Hovold <johan@kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH 1/7] dt-bindings: arm64: ipq9574: Add binding descriptions
+ for clock and reset
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <linus.walleij@linaro.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <p.zabel@pengutronix.de>, <shawnguo@kernel.org>, <arnd@arndb.de>,
+        <marcel.ziswiler@toradex.com>, <dmitry.baryshkov@linaro.org>,
+        <nfraprado@collabora.com>, <broonie@kernel.org>,
+        <tdas@codeaurora.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
+        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
+        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_poovendh@quicinc.com>
+References: <20230110121316.24892-1-quic_devipriy@quicinc.com>
+ <20230110121316.24892-2-quic_devipriy@quicinc.com>
+ <603f9c39-3e36-bb44-2305-1d37fe033dd5@linaro.org>
+From:   Devi Priya <quic_devipriy@quicinc.com>
+In-Reply-To: <603f9c39-3e36-bb44-2305-1d37fe033dd5@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 3qn-0KVstC7QwFw_lMeGphGaiX0YT-GO
+X-Proofpoint-ORIG-GUID: 3qn-0KVstC7QwFw_lMeGphGaiX0YT-GO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-13_06,2023-01-13_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
+ mlxlogscore=999 spamscore=0 clxscore=1011 lowpriorityscore=0
+ suspectscore=0 impostorscore=0 priorityscore=1501 mlxscore=0 phishscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301130088
+X-Spam-Status: No, score=0.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 13 Jan 2023 at 14:44, Luca Weiss <luca.weiss@fairphone.com> wrote:
->
-> Hi Dmitry,
->
-> On Thu Jan 12, 2023 at 8:33 PM CET, Dmitry Baryshkov wrote:
-> > On 12/01/2023 19:50, Vinod Koul wrote:
-> > > On 28-12-22, 15:17, Johan Hovold wrote:
-> > >> Luca, Vinod,
-> > >>
-> > >> On Wed, Nov 30, 2022 at 09:14:28AM +0100, Luca Weiss wrote:
-> > >>> Add the tables and config for the combo phy found on SM6350.
-> > >>>
-> > >>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> > >>> ---
-> > >>> Changes since v2:
-> > >>> * Drop dp_txa/dp_txb changes, not required
-> > >>> * Fix dp_dp_phy offset
-> > >>>
-> > >>>   drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 126 ++++++++++++++++++++++
-> > >>>   1 file changed, 126 insertions(+)
-> > >>>
-> > >>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> > >>> index 77052c66cf70..6ac0c68269dc 100644
-> > >>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> > >>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> > >>
-> > >>> @@ -975,6 +1039,19 @@ static const char * const sc7180_usb3phy_reset_l[] = {
-> > >>>           "phy",
-> > >>>   };
-> > >>>
-> > >>> +static const struct qmp_combo_offsets qmp_combo_offsets_v3 = {
-> > >>> + .com            = 0x0000,
-> > >>> + .txa            = 0x1200,
-> > >>> + .rxa            = 0x1400,
-> > >>> + .txb            = 0x1600,
-> > >>> + .rxb            = 0x1800,
-> > >>> + .usb3_serdes    = 0x1000,
-> > >>> + .usb3_pcs_misc  = 0x1a00,
-> > >>> + .usb3_pcs       = 0x1c00,
-> > >>> + .dp_serdes      = 0x1000,
-> > >>
-> > >> I would have expected this to be 0x2000 as that's what the older
-> > >> platforms have been using for the dp serdes table so far. Without access
-> > >> to any documentation it's hard to tell whether everyone's just been
-> > >> cargo-culting all along or if there's actually something there at offset
-> > >> 0x2000.
-> >
-> > usb3_serdes is 0x1000, so dp_serdes equal to 0x1000 is definitely an typo.
-> >
-> > Judging from the downstream dtsi, the DP PHY starts at offset 0x2000. So
-> > dp_serdes is equal to 0x2000, dp_phy = 0x2a00, ln_tx1 = 0x2200, ln_tx2 =
-> > 0x2600.
->
-> Can you share how you got to the 0x2000 offset? You can see my
-> (potentially wrong) reasoning for 0x1000 a few messages ago[0].
->
-> The only 0x2000-something I could find now while looking at it again is
-> "#define USB3_DP_PHY_DP_DP_PHY_PD_CTL 0x2a18" which becomes
-> USB3_DP_DP_PHY_PD_CTL in the driver but this is seemingly not used at
-> all in my msm-4.19 tree.
-
-Quite simple: see [1]. DP_PLL is at +0x2000
-
-[1] https://android.googlesource.com/kernel/msm-extra/devicetree/+/refs/heads/android-msm-bramble-4.19-android11-qpr1/qcom/lagoon-sde-pll.dtsi#27
-
-Anyway, having DP serdes at the space as USB3 serdes would mean that
-one would be setting USB3 PLL when trying to enable DP. So I could
-have said even w/o looking at the dtsi that dp serdes can _not_ be at
-0x1000.
-
->
-> Also if you have any idea on how to test it at runtime without actually
-> having to get all the type-C functionality up I'd be happy to try that.
-> Unfortunately I believe there's still quite some bits missing to
-> actually get DP out via the USB-C port - which I imagine would trigger
-> the PHY setup.
-
-Unfortunately, I don't have a recipe to test this.
-
->
-> [0] https://lore.kernel.org/linux-arm-msm/CPDIYQ3SSY3E.I0Y0NMIED0WO@otso/
->
-> Regards
-> Luca
 
 
--- 
-With best wishes
-Dmitry
+On 1/11/2023 3:06 PM, Krzysztof Kozlowski wrote:
+> On 10/01/2023 13:13, devi priya wrote:
+>> Adding support for the global clock controller found on
+>> IPQ9574 based devices
+> 
+> Subject: drop second/last, redundant "bindings descriptions for". The
+> "dt-bindings" prefix is already stating that these are bindings.
+Sure, will do
+> 
+>>
+>> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
+>> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
+>> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
+>> ---
+>>   .../bindings/clock/qcom,gcc-other.yaml        |   4 +
+>>   .../devicetree/bindings/clock/qcom,gcc.yaml   |   9 +-
+>>   include/dt-bindings/clock/qcom,gcc-ipq9574.h  | 226 ++++++++++++++++++
+>>   include/dt-bindings/reset/qcom,gcc-ipq9574.h  | 164 +++++++++++++
+>>   4 files changed, 402 insertions(+), 1 deletion(-)
+>>   create mode 100644 include/dt-bindings/clock/qcom,gcc-ipq9574.h
+>>   create mode 100644 include/dt-bindings/reset/qcom,gcc-ipq9574.h
+>>
+>> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
+>> index 2e8acca64af1..cc563d640336 100644
+>> --- a/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
+>> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
+>> @@ -18,6 +18,8 @@ description: |
+>>       include/dt-bindings/clock/qcom,gcc-ipq4019.h
+>>       include/dt-bindings/clock/qcom,gcc-ipq6018.h
+>>       include/dt-bindings/reset/qcom,gcc-ipq6018.h
+>> +    include/dt-bindings/clock/qcom,gcc-ipq9574.h
+>> +    include/dt-bindings/reset/qcom,gcc-ipq9574.h
+>>       include/dt-bindings/clock/qcom,gcc-msm8953.h
+>>       include/dt-bindings/clock/qcom,gcc-mdm9607.h
+>>       include/dt-bindings/clock/qcom,gcc-mdm9615.h
+>> @@ -34,6 +36,8 @@ properties:
+>>         - qcom,gcc-mdm9607
+>>         - qcom,gcc-msm8953
+>>         - qcom,gcc-mdm9615
+>> +      - qcom,gcc-ipq9574
+> 
+> Incorrect order but anyway let's switch to new naming style just like
+> SM8550 and SA8775p.
+okay
+> 
+>> +
+> 
+> Not related change.
+> 
+Understood, will remove
+>>   
+>>   required:
+>>     - compatible
+>> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+>> index 7129fbcf2b6c..5a71268538e6 100644
+>> --- a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+>> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+>> @@ -24,6 +24,14 @@ properties:
+>>     '#power-domain-cells':
+>>       const: 1
+>>   
+>> +  clocks:
+>> +    minItems: 1
+>> +    maxItems: 8
+>> +
+>> +  clock-names:
+>> +    minItems: 1
+>> +    maxItems: 8
+> 
+> This does not look correct, neither related.
+Okay
+>> +
+>>     reg:
+>>       maxItems: 1
+>>   
+>> @@ -35,7 +43,6 @@ required:
+>>     - reg
+>>     - '#clock-cells'
+>>     - '#reset-cells'
+>> -  - '#power-domain-cells'
+> 
+> Eee? Why? What's this?
+Sure, will address it accordingly
+> 
+> 
+> 
+> 
+> Best regards,
+> Krzysztof
+> 
+
+Best regards,
+Devi Priya
