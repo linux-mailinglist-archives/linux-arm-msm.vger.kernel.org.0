@@ -2,120 +2,199 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 75C5E669140
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 09:37:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AB371669158
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 09:41:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240691AbjAMIhr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 03:37:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47226 "EHLO
+        id S231199AbjAMIl3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 03:41:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240722AbjAMIho (ORCPT
+        with ESMTP id S239644AbjAMIlY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 03:37:44 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C36CC69B0E
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 00:37:42 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id j17so32135774lfr.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 00:37:42 -0800 (PST)
+        Fri, 13 Jan 2023 03:41:24 -0500
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6A0C6E427
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 00:40:52 -0800 (PST)
+Received: by mail-ej1-x632.google.com with SMTP id ud5so50688077ejc.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 00:40:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vfkoFa2aWXIMsvEye5R5adifXz0BMNct0gxornememI=;
-        b=AoAqetfS3RLSABRWAprBoSvGGLyiZySm4fIcetmApEPKeEHb9Xb+CUSZd4monuRWN3
-         cv5N99BpPaHPXosXS9WhmAbXBtgyIC6L7RyZhzV6M+GmZW+viutz8TDEsm65YTurvDJo
-         Q6uVHe5eaP+gbVMRA5W9XCvMdh9kLaJGWR12rzYbN7AA/pZbg41VnQDe0DvG1qpaCK4q
-         jhhzqL6HhHAOspmYHEvbaBJQO/WeV+a8y+Ho+fSMtN5uzgyl+opY4O5iHAnor+MOSWcv
-         /1Fmj7mfg4DW3mnCq5K23O+r30+VvXB3t6KNbSSTYgyAO3bJpoIqKUnwbwiNeB8LU/eB
-         Uuuw==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=M1kAdR9rbZYNZXDKJv3ISJYLqHwPDHk2VkOZ3geBEyA=;
+        b=IyzI+KqVwuPIvysUj+B5SbnwTT63oHItMo4rUftc2DjjCbZPivdNWYWuha40eoTll9
+         yGBBcEeuY/h5i1k7YAMDNlurpHbp5Ne/kDfmmjCoTUJzVX0d8/FgREivFrGiPjiAhy+a
+         ksVf7qU5Q2+5A/JZEjT/srZuCtGCJAewJCzSkOCmHcWhK3ajvi/L2+E/tPH129oRZd3d
+         ufuZ4f8gyYVJolCN/i754L1KyR9x7bB+2+I8VsE5ZovuFyM73MscPZ85nu330rj/xGSH
+         /KtR+ZRyqkTfZGH0vMcSqkIX8wL+FIL8B0jDMdiDGzc9C9mEdn4c3VcAqOZhOK2H/sIK
+         7/rA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vfkoFa2aWXIMsvEye5R5adifXz0BMNct0gxornememI=;
-        b=fjpvVEYslI5xyjqy46qCwImfM0azEkfQGey+kCwpWx/Ws6W2zIkAdHk6Fixamb5gZv
-         GsILoy7pbSCEPX8GjPHQdeiSyj+iERKGfrtxG//7hElHrRRIKNWlcWKVjnY4MHf1WpTt
-         U6cjNw5fendKB7Ft+Rsl1t69gRhj7qv0mpafM5Yt+bvRrUATNRfxWBu0sf55eVPbLRD3
-         qBOvBOsPhEH1KW067aTb3sEZ7SKzUT5ERL83XQ7VNpTDylUVClc91yekOZsJLftqtUx6
-         KvaqXX0RWmHqf5gpZyRuR4rLqlJBqEF5pgcwDaFGHAa6HD1f53lVwt6xELJqgLlXQMWY
-         1XCg==
-X-Gm-Message-State: AFqh2krmdh9PTh/zZwdukemOlLyoEmumGvpki//W4DPiCpaUU1nOCZ18
-        vnVgc97xYLWZIW8Z3dHmSagxSw==
-X-Google-Smtp-Source: AMrXdXv50Vl5IXHjr9MKDidF5CnW105R55HzZ4q3U0nm6Zs3daEjfdbXxBNi+8HL79VJDe0zZLBeJg==
-X-Received: by 2002:ac2:4bcb:0:b0:4bb:8d56:d859 with SMTP id o11-20020ac24bcb000000b004bb8d56d859mr23664966lfq.6.1673599061082;
-        Fri, 13 Jan 2023 00:37:41 -0800 (PST)
-Received: from eriador.lumag.spb.ru ([194.204.33.9])
-        by smtp.gmail.com with ESMTPSA id o6-20020a05651205c600b004994117b0fdsm3748038lfo.281.2023.01.13.00.37.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Jan 2023 00:37:40 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=M1kAdR9rbZYNZXDKJv3ISJYLqHwPDHk2VkOZ3geBEyA=;
+        b=B6RoDoNaAMwPnksAVRABLTcTj/zLSWG7ja/mnrFvQiFWjZj939XL8Eey6H93BxaZeB
+         VoxJ1F/bEiOjVtiqp330XgtxCqYnSDRS4TM8xGtMinhll6peADxRRuyJ8m3iZYyx6iBt
+         EHX6ARkcmRkUi6QqYYjGWZbFCJfOdiuJgXV5R91lYqI7Q3DBvnU7mEGGq1q/SXjc0KgR
+         GlifCmRqaNdOovRb66Fcb3YHUmkrdfm7Hs5iA2oA0+7nV2+B4bnEIhN1zlTxCVMEaU8G
+         6vAfpLqye3foYDA70gYa4iwkq/TsX/RuxlTwdqMhatmMNy/oNvhtD9fOJFS9SepM2JsB
+         JHyg==
+X-Gm-Message-State: AFqh2krDkoRAw6B717Vn3y3tBmBr/ADPpzncpAhVB0/bXCsqViSF406z
+        IiooOhMRe4p9J+PNR2yaal6iiA==
+X-Google-Smtp-Source: AMrXdXsxFF1ElWv2D/C3zAI3Fn+eRM5/QDh+mR3xzsWJdREWOX7Zq5GkJ/I9W5FIyGJdmZruw9SP+g==
+X-Received: by 2002:a17:907:d302:b0:84d:34b0:e955 with SMTP id vg2-20020a170907d30200b0084d34b0e955mr19252302ejc.69.1673599251440;
+        Fri, 13 Jan 2023 00:40:51 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id r1-20020a17090609c100b007e0e2e35205sm8363900eje.143.2023.01.13.00.40.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 13 Jan 2023 00:40:51 -0800 (PST)
+Message-ID: <fc2deca7-36c6-bdf6-27ec-21ec6020b170@linaro.org>
+Date:   Fri, 13 Jan 2023 09:40:49 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH 1/8] dt-bindings: remoteproc: qcom,msm8916-mss-pil: Add
+ MSM8226
+Content-Language: en-US
+To:     =?UTF-8?Q?Matti_Lehtim=c3=a4ki?= <matti.lehtimaki@gmail.com>,
+        linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH v6 11/11] ARM: dts: qcom: rename mdp nodes to display-controller
-Date:   Fri, 13 Jan 2023 10:37:20 +0200
-Message-Id: <20230113083720.39224-12-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230113083720.39224-1-dmitry.baryshkov@linaro.org>
-References: <20230113083720.39224-1-dmitry.baryshkov@linaro.org>
-MIME-Version: 1.0
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230112202612.791455-1-matti.lehtimaki@gmail.com>
+ <20230112202612.791455-2-matti.lehtimaki@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230112202612.791455-2-matti.lehtimaki@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Follow the schema change and rename mdp nodes to generic name
-'display-controller'.
+On 12/01/2023 21:26, Matti Lehtimäki wrote:
+> Adds support for platforms with only single power domain.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm/boot/dts/qcom-apq8064.dtsi | 2 +-
- arch/arm/boot/dts/qcom-msm8974.dtsi | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+Add
+https://elixir.bootlin.com/linux/v5.17.1/source/Documentation/process/submitting-patches.rst#L95
 
-diff --git a/arch/arm/boot/dts/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom-apq8064.dtsi
-index e045edeb5736..95705703fe8f 100644
---- a/arch/arm/boot/dts/qcom-apq8064.dtsi
-+++ b/arch/arm/boot/dts/qcom-apq8064.dtsi
-@@ -1493,7 +1493,7 @@ hdmi_phy: phy@4a00400 {
- 			status = "disabled";
- 		};
- 
--		mdp: mdp@5100000 {
-+		mdp: display-controller@5100000 {
- 			compatible = "qcom,mdp4";
- 			reg = <0x05100000 0xf0000>;
- 			interrupts = <GIC_SPI 75 IRQ_TYPE_LEVEL_HIGH>;
-diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
-index 2e46a8b6bb14..3c725ada52c0 100644
---- a/arch/arm/boot/dts/qcom-msm8974.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
-@@ -1577,7 +1577,7 @@ mdss: display-subsystem@fd900000 {
- 			#size-cells = <1>;
- 			ranges;
- 
--			mdp: mdp@fd900000 {
-+			mdp: display-controller@fd900000 {
- 				compatible = "qcom,msm8974-mdp5", "qcom,mdp5";
- 				reg = <0xfd900100 0x22000>;
- 				reg-names = "mdp_phys";
--- 
-2.39.0
+> Adds support for external power block headswitch (BHS) registers
+
+Add.
+Full stop.
+
+> 
+> Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+> ---
+>  .../remoteproc/qcom,msm8916-mss-pil.yaml      | 41 +++++++++++++++++--
+>  1 file changed, 37 insertions(+), 4 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,msm8916-mss-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,msm8916-mss-pil.yaml
+> index 6e6e69ad9cd7..6a921f2711b2 100644
+> --- a/Documentation/devicetree/bindings/remoteproc/qcom,msm8916-mss-pil.yaml
+> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,msm8916-mss-pil.yaml
+> @@ -17,6 +17,7 @@ properties:
+>    compatible:
+>      oneOf:
+>        - enum:
+> +          - qcom,msm8226-mss-pil
+>            - qcom,msm8909-mss-pil
+>            - qcom,msm8916-mss-pil
+>            - qcom,msm8953-mss-pil
+> @@ -70,16 +71,17 @@ properties:
+>      items:
+>        - description: CX proxy power domain (control handed over after startup)
+>        - description: MX proxy power domain (control handed over after startup)
+> +                     (not valid for qcom,msm8226-mss-pil)
+>        - description: MSS proxy power domain (control handed over after startup)
+>                       (only valid for qcom,msm8953-mss-pil)
+> -    minItems: 2
+> +    minItems: 1
+>  
+>    power-domain-names:
+>      items:
+>        - const: cx
+> -      - const: mx
+> +      - const: mx # not valid for qcom,msm8226-mss-pil
+>        - const: mss # only valid for qcom,msm8953-mss-pil
+> -    minItems: 2
+> +    minItems: 1
+>  
+>    pll-supply:
+>      description: PLL proxy supply (control handed over after startup)
+> @@ -106,6 +108,15 @@ properties:
+>      items:
+>        - const: stop
+>  
+> +  qcom,ext-bhs-reg:
+> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+> +    description: External power block headswitch (BHS) register
+> +                 (only valid for qcom,msm8226-mss-pil)
+> +    items:
+> +      - items:
+> +          - description: phandle to external BHS syscon region
+> +          - description: offset to the external BHS register
+> +
+>    qcom,halt-regs:
+>      $ref: /schemas/types.yaml#/definitions/phandle-array
+>      description:
+> @@ -205,13 +216,35 @@ allOf:
+
+in this block:
+qcom,ext-bhs-reg: false
+
+>        required:
+>          - power-domains
+>          - power-domain-names
+> -    else:
+> +
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,msm8909-mss-pil
+> +              - qcom,msm8916-mss-pil
+> +              - qcom,msm8974-mss-pil
+> +    then:
+>        properties:
+>          power-domains:
+>            maxItems: 2
+>          power-domain-names:
+>            maxItems: 2
+
+         qcom,ext-bhs-reg: false
+>  
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          const: qcom,msm8226-mss-pil
+> +    then:
+> +      properties:
+> +        power-domains:
+> +          maxItems: 1
+> +        power-domain-names:
+> +          maxItems: 1
+> +      required:
+> +        - qcom,ext-bhs-reg
+> +
+>    - if:
+>        properties:
+>          compatible:
+
+Best regards,
+Krzysztof
 
