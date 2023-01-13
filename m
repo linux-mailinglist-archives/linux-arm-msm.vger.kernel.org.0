@@ -2,192 +2,349 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FCD5669280
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 10:11:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 17824669352
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 10:52:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240941AbjAMJLG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 04:11:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43708 "EHLO
+        id S232707AbjAMJwd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 04:52:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240657AbjAMJKZ (ORCPT
+        with ESMTP id S241016AbjAMJwI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 04:10:25 -0500
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8860076214
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 01:07:55 -0800 (PST)
-Received: by mail-lf1-x12e.google.com with SMTP id g13so32220502lfv.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 01:07:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aNU5vbwi8kesZ/PK2S0aMAB2OBF5X1de5BdV3sczaOc=;
-        b=dsGR7Kj1Tt3BbMwlnb0omrdUBPVj6KE/1nHaMrn+rjH8F/MojYpCRdJCgSt0Cs6slx
-         b3nJba5Kfko2Wldw558DF8nu4p/VoXwaLw2ig2iyisY6LxP/BnwAKnsQZPZQNcow0vwr
-         J8zC3Q6ck60HkTJQbfaTKk3Cg15RWYB1uQHzWZs+8+c1h/oC45+Ed6flqGwa5VIGi4UE
-         np++jymXHhYZ1C7+jKH9a6B6/NWWfWOjeeLIDvJGe3YHRsIwD2DZHb/uGIj5gPdPlN9p
-         xL9ZNVKMNwz5jbR+3nLZ+rTUlFv4Cf2F62tWvk/fonEjFpjgkjf2lIrzWTcGd/9B3wN+
-         uBFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=aNU5vbwi8kesZ/PK2S0aMAB2OBF5X1de5BdV3sczaOc=;
-        b=IkUaqrce4LnDvRpytLyKgLLBMGCgxZ8p4DHuTZ3WMLVaDq9+x4L6mA9WEjepXQ5NsS
-         kJaMusO/9RDWeyroH3cI3yLKfYsZK/E31lPn/w1zssjHpKgbiKeS2E93Zf4dFl/WXcxn
-         2Sl8U8zVlZFaa+glPCb5QekERmQh1eQpfha1w0/pdvcrN2VMXoePBBQ+0ahVXWhuUpsN
-         Hb9KwVVVHozAl54yzqsURhcdOA3njl2wpdHhDvSCPIwEPPofSNtfsktNq8CtJnZG1fM7
-         FSYG6jgS04w+lSfU6dxXvCgJ6tzuygv7QKV/P9Td475kzJl+yQ0wTF4qkeUWmMA1/j5M
-         SP9w==
-X-Gm-Message-State: AFqh2kqEEMVwkBUgrKF1Eu1vZTgjM+fSWh9YMdVUBbCiorPCROgD7SEa
-        ffSvMp9pnlyynG8bvo+Bo8yqANWVwTnVNtqy7fc=
-X-Google-Smtp-Source: AMrXdXvS4QG/QOeOl+ud5xWwZgd9EDmJTRDthbzjEJzSZfX236IXTwIktpbaWLo+T6y1+KLpDPAPdQ==
-X-Received: by 2002:a05:6512:2a85:b0:4cc:7c51:bf46 with SMTP id dt5-20020a0565122a8500b004cc7c51bf46mr6316556lfb.63.1673600875100;
-        Fri, 13 Jan 2023 01:07:55 -0800 (PST)
-Received: from eriador.lumag.spb.ru ([194.204.33.9])
-        by smtp.gmail.com with ESMTPSA id d4-20020a05651233c400b004947a12232bsm3735296lfg.275.2023.01.13.01.07.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Jan 2023 01:07:54 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Fri, 13 Jan 2023 04:52:08 -0500
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE3BA65AE4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 01:47:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1673603248; x=1705139248;
+  h=from:to:cc:subject:in-reply-to:references:date:
+   message-id:mime-version;
+  bh=/OJphNwmnuvzfQX7YY0/+gaBIELxqzO2J6GTnXIHD9E=;
+  b=cKBD1MEtTWMIBgQXS80oQZN5Y7nkjcwFN/1V9qsGBrr7QqvsBVEX1yy7
+   aD2SYA1hoxE6rUvXhjqQqrSY5SJakCwj4zQnwTL8w/qVAtZqWh6XilXyV
+   egRswtGr9spvaROLUetsEfN6vGsbrQuh7mbJJydWPKowTs2PM39myVFUf
+   yz8PsBzCnue37Zl1P2JFmw5SeNa8GWMdPOxIPe0gd1CUHarK8oUpQ1adW
+   /r9sUt5n8tienRDwapBFoCyhJJlyl4dJ1p3wyLG3n8VOg7CywQmpn0MtX
+   phecTSFDs0iBFa3ut4sHIbpoPRXCh99HVoRmjeriPLgBCubtSfY/YbpFa
+   w==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10588"; a="388455017"
+X-IronPort-AV: E=Sophos;i="5.97,213,1669104000"; 
+   d="scan'208";a="388455017"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jan 2023 01:47:28 -0800
+X-IronPort-AV: E=McAfee;i="6500,9779,10588"; a="690451497"
+X-IronPort-AV: E=Sophos;i="5.97,213,1669104000"; 
+   d="scan'208";a="690451497"
+Received: from cbyrne6-mobl3.ger.corp.intel.com (HELO localhost) ([10.252.27.177])
+  by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jan 2023 01:47:24 -0800
+From:   Jani Nikula <jani.nikula@linux.intel.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>
+Cc:     freedreno@lists.freedesktop.org,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Sean Paul <sean@poorly.run>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH v2 4/4] clk: qcom: add the driver for the MSM8996 APCS clocks
-Date:   Fri, 13 Jan 2023 11:07:39 +0200
-Message-Id: <20230113090739.45805-5-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230113090739.45805-1-dmitry.baryshkov@linaro.org>
-References: <20230113090739.45805-1-dmitry.baryshkov@linaro.org>
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        dri-devel@lists.freedesktop.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm@vger.kernel.org,
+        Marek Szyprowski <m.szyprowski@samsung.com>
+Subject: Re: [PATCH] drm/probe_helper: sort out poll_running vs poll_enabled
+In-Reply-To: <CAA8EJpr2QZTZdD7-qCmz8LmwVbPXfT09ZegOdQ8JEuYToYm45A@mail.gmail.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+References: <20230112154247.1532202-1-dmitry.baryshkov@linaro.org>
+ <20230113071218.kzlb5rdbdipopr2o@fsr-ub1664-121.ea.freescale.net>
+ <CAA8EJpr2QZTZdD7-qCmz8LmwVbPXfT09ZegOdQ8JEuYToYm45A@mail.gmail.com>
+Date:   Fri, 13 Jan 2023 11:47:22 +0200
+Message-ID: <87a62mg40l.fsf@intel.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a simple driver handling the APCS clocks on MSM8996. For now it
-supports just a single aux clock, linking GPLL0 to CPU and CBF clocks.
+On Fri, 13 Jan 2023, Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+> On Fri, 13 Jan 2023 at 09:12, Laurentiu Palcu
+> <laurentiu.palcu@oss.nxp.com> wrote:
+>>
+>> Hi Dmitry,
+>>
+>> On Thu, Jan 12, 2023 at 05:42:47PM +0200, Dmitry Baryshkov wrote:
+>> > There are two flags attemting to guard connector polling:
+>> > poll_enabled and poll_running. While poll_enabled semantics is clearly
+>> > defined and fully adhered (mark that drm_kms_helper_poll_init() was
+>> > called and not finalized by the _fini() call), the poll_running flag
+>> > doesn't have such clearliness.
+>> >
+>> > This flag is used only in drm_helper_probe_single_connector_modes() to
+>> > guard calling of drm_kms_helper_poll_enable, it doesn't guard the
+>> > drm_kms_helper_poll_fini(), etc. Change it to only be set if the polling
+>> > is actually running. Tie HPD enablement to this flag.
+>> >
+>> > This fix the following warning reported after merging the HPD series:
+>>
+>> s/fix/fixes/
+>>
+>> >
+>> > Hot plug detection already enabled
+>> > WARNING: CPU: 2 PID: 9 at drivers/gpu/drm/drm_bridge.c:1257 drm_bridge_hpd_enable+0x94/0x9c [drm]
+>> > Modules linked in: videobuf2_memops snd_soc_simple_card snd_soc_simple_card_utils fsl_imx8_ddr_perf videobuf2_common snd_soc_imx_spdif adv7511 etnaviv imx8m_ddrc imx_dcss mc cec nwl_dsi gov
+>> > CPU: 2 PID: 9 Comm: kworker/u8:0 Not tainted 6.2.0-rc2-15208-g25b283acd578 #6
+>> > Hardware name: NXP i.MX8MQ EVK (DT)
+>> > Workqueue: events_unbound deferred_probe_work_func
+>> > pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+>> > pc : drm_bridge_hpd_enable+0x94/0x9c [drm]
+>> > lr : drm_bridge_hpd_enable+0x94/0x9c [drm]
+>> > sp : ffff800009ef3740
+>> > x29: ffff800009ef3740 x28: ffff000009331f00 x27: 0000000000001000
+>> > x26: 0000000000000020 x25: ffff800001148ed8 x24: ffff00000a8fe000
+>> > x23: 00000000fffffffd x22: ffff000005086348 x21: ffff800001133ee0
+>> > x20: ffff00000550d800 x19: ffff000005086288 x18: 0000000000000006
+>> > x17: 0000000000000000 x16: ffff8000096ef008 x15: 97ffff2891004260
+>> > x14: 2a1403e194000000 x13: 97ffff2891004260 x12: 2a1403e194000000
+>> > x11: 7100385f29400801 x10: 0000000000000aa0 x9 : ffff800008112744
+>> > x8 : ffff000000250b00 x7 : 0000000000000003 x6 : 0000000000000011
+>> > x5 : 0000000000000000 x4 : ffff0000bd986a48 x3 : 0000000000000001
+>> > x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff000000250000
+>> > Call trace:
+>> >  drm_bridge_hpd_enable+0x94/0x9c [drm]
+>> >  drm_bridge_connector_enable_hpd+0x2c/0x3c [drm_kms_helper]
+>> >  drm_kms_helper_poll_enable+0x94/0x10c [drm_kms_helper]
+>> >  drm_helper_probe_single_connector_modes+0x1a8/0x510 [drm_kms_helper]
+>> >  drm_client_modeset_probe+0x204/0x1190 [drm]
+>> >  __drm_fb_helper_initial_config_and_unlock+0x5c/0x4a4 [drm_kms_helper]
+>> >  drm_fb_helper_initial_config+0x54/0x6c [drm_kms_helper]
+>> >  drm_fbdev_client_hotplug+0xd0/0x140 [drm_kms_helper]
+>> >  drm_fbdev_generic_setup+0x90/0x154 [drm_kms_helper]
+>> >  dcss_kms_attach+0x1c8/0x254 [imx_dcss]
+>> >  dcss_drv_platform_probe+0x90/0xfc [imx_dcss]
+>> >  platform_probe+0x70/0xcc
+>> >  really_probe+0xc4/0x2e0
+>> >  __driver_probe_device+0x80/0xf0
+>> >  driver_probe_device+0xe0/0x164
+>> >  __device_attach_driver+0xc0/0x13c
+>> >  bus_for_each_drv+0x84/0xe0
+>> >  __device_attach+0xa4/0x1a0
+>> >  device_initial_probe+0x1c/0x30
+>> >  bus_probe_device+0xa4/0xb0
+>> >  deferred_probe_work_func+0x90/0xd0
+>> >  process_one_work+0x200/0x474
+>> >  worker_thread+0x74/0x43c
+>> >  kthread+0xfc/0x110
+>> >  ret_from_fork+0x10/0x20
+>> > ---[ end trace 0000000000000000 ]---
+>> >
+>> > Reported-by: Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>
+>> > Fixes: c8268795c9a9 ("drm/probe-helper: enable and disable HPD on connectors")
+>> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> > ---
+>> >  drivers/gpu/drm/drm_probe_helper.c | 110 +++++++++++++++++------------
+>> >  1 file changed, 63 insertions(+), 47 deletions(-)
+>> >
+>> > diff --git a/drivers/gpu/drm/drm_probe_helper.c b/drivers/gpu/drm/drm_probe_helper.c
+>> > index 7973f2589ced..ef919d95fea6 100644
+>> > --- a/drivers/gpu/drm/drm_probe_helper.c
+>> > +++ b/drivers/gpu/drm/drm_probe_helper.c
+>> > @@ -222,6 +222,45 @@ drm_connector_mode_valid(struct drm_connector *connector,
+>> >       return ret;
+>> >  }
+>> >
+>> > +static void drm_kms_helper_disable_hpd(struct drm_device *dev)
+>> > +{
+>> > +     struct drm_connector *connector;
+>> > +     struct drm_connector_list_iter conn_iter;
+>> > +
+>> > +     drm_connector_list_iter_begin(dev, &conn_iter);
+>> > +     drm_for_each_connector_iter(connector, &conn_iter) {
+>> > +             const struct drm_connector_helper_funcs *funcs =
+>> > +                     connector->helper_private;
+>> > +
+>> > +             if (funcs && funcs->disable_hpd)
+>> > +                     funcs->disable_hpd(connector);
+>> > +     }
+>> > +     drm_connector_list_iter_end(&conn_iter);
+>> > +}
+>> > +
+>> > +static bool drm_kms_helper_enable_hpd(struct drm_device *dev)
+>> > +{
+>> > +     bool poll = false;
+>> > +     struct drm_connector *connector;
+>> > +     struct drm_connector_list_iter conn_iter;
+>> > +
+>> > +     drm_connector_list_iter_begin(dev, &conn_iter);
+>> > +     drm_for_each_connector_iter(connector, &conn_iter) {
+>> > +             const struct drm_connector_helper_funcs *funcs =
+>> > +                     connector->helper_private;
+>> > +
+>> > +             if (funcs && funcs->disable_hpd)
+>> > +                     funcs->disable_hpd(connector);
+>>
+>> I believe this is not right. You probably wanted to use enable_hpd
+>> instead of disable_hpd on these two lines? Otherwise HPD would not work
+>> at all.
+>
+> Argh. Too many refactorings. I'll check that it works correctly and
+> respin.
 
-Note, there is little sense in registering sys_apcs_aux as a child of
-gpll0. The PLL is always-on. And listing the gpll0 as a property of the
-apcs would delay its probing until the GCC has been probed (while we
-would like for the apcs to be probed as early as possible).
+Please Cc: intel-gfx@lists.freedesktop.org on the respin to run this on
+our CI.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/clk/qcom/Makefile       |  2 +-
- drivers/clk/qcom/apcs-msm8996.c | 76 +++++++++++++++++++++++++++++++++
- 2 files changed, 77 insertions(+), 1 deletion(-)
- create mode 100644 drivers/clk/qcom/apcs-msm8996.c
+Thanks,
+Jani.
 
-diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
-index f18c446a97ea..ca2f586edb3e 100644
---- a/drivers/clk/qcom/Makefile
-+++ b/drivers/clk/qcom/Makefile
-@@ -52,7 +52,7 @@ obj-$(CONFIG_MSM_MMCC_8998) += mmcc-msm8998.o
- obj-$(CONFIG_QCOM_A53PLL) += a53-pll.o
- obj-$(CONFIG_QCOM_A7PLL) += a7-pll.o
- obj-$(CONFIG_QCOM_CLK_APCS_MSM8916) += apcs-msm8916.o
--obj-$(CONFIG_QCOM_CLK_APCC_MSM8996) += clk-cpu-8996.o
-+obj-$(CONFIG_QCOM_CLK_APCC_MSM8996) += apcs-msm8996.o clk-cpu-8996.o
- obj-$(CONFIG_QCOM_CLK_APCS_SDX55) += apcs-sdx55.o
- obj-$(CONFIG_QCOM_CLK_RPM) += clk-rpm.o
- obj-$(CONFIG_QCOM_CLK_RPMH) += clk-rpmh.o
-diff --git a/drivers/clk/qcom/apcs-msm8996.c b/drivers/clk/qcom/apcs-msm8996.c
-new file mode 100644
-index 000000000000..7e46ea8ed444
---- /dev/null
-+++ b/drivers/clk/qcom/apcs-msm8996.c
-@@ -0,0 +1,76 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Qualcomm APCS clock controller driver
-+ *
-+ * Copyright (c) 2022, Linaro Limited
-+ * Author: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-+ */
-+
-+#include <linux/bits.h>
-+#include <linux/clk-provider.h>
-+#include <linux/delay.h>
-+#include <linux/module.h>
-+#include <linux/platform_device.h>
-+#include <linux/regmap.h>
-+
-+#define APCS_AUX_OFFSET	0x50
-+
-+#define APCS_AUX_DIV_MASK GENMASK(17, 16)
-+#define APCS_AUX_DIV_2 0x1
-+
-+static int qcom_apcs_msm8996_clk_probe(struct platform_device *pdev)
-+{
-+	struct device *dev = &pdev->dev;
-+	struct device *parent = dev->parent;
-+	struct regmap *regmap;
-+	struct clk_hw *hw;
-+	unsigned int val;
-+	int ret = -ENODEV;
-+
-+	regmap = dev_get_regmap(parent, NULL);
-+	if (!regmap) {
-+		dev_err(dev, "failed to get regmap: %d\n", ret);
-+		return ret;
-+	}
-+
-+	regmap_read(regmap, APCS_AUX_OFFSET, &val);
-+	regmap_update_bits(regmap, APCS_AUX_OFFSET, APCS_AUX_DIV_MASK,
-+			   FIELD_PREP(APCS_AUX_DIV_MASK, APCS_AUX_DIV_2));
-+
-+	/* Hardware mandated delay */
-+	udelay(5);
-+
-+	/*
-+	 * Register the clock as fixed rate instead of being a child of gpll0
-+	 * to let the driver register probe as early as possible.
-+	 */
-+	hw = devm_clk_hw_register_fixed_rate(dev, "sys_apcs_aux", NULL, 0, 300000000);
-+	if (IS_ERR(hw))
-+		return PTR_ERR(hw);
-+
-+	return devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get, hw);
-+}
-+
-+static struct platform_driver qcom_apcs_msm8996_clk_driver = {
-+	.probe = qcom_apcs_msm8996_clk_probe,
-+	.driver = {
-+		.name = "qcom-apcs-msm8996-clk",
-+	},
-+};
-+
-+/* Register early enough to fix the clock to be used for other cores */
-+static int __init qcom_apcs_msm8996_clk_init(void)
-+{
-+	return platform_driver_register(&qcom_apcs_msm8996_clk_driver);
-+}
-+postcore_initcall(qcom_apcs_msm8996_clk_init);
-+
-+static void __exit qcom_apcs_msm8996_clk_exit(void)
-+{
-+	platform_driver_unregister(&qcom_apcs_msm8996_clk_driver);
-+}
-+module_exit(qcom_apcs_msm8996_clk_exit);
-+
-+MODULE_AUTHOR("Dmitry Baryshkov <dmitry.baryshkov@linaro.org>");
-+MODULE_LICENSE("GPL");
-+MODULE_DESCRIPTION("Qualcomm MSM8996 APCS clock driver");
+
+>
+>>
+>> Thanks,
+>> Laurentiu
+>>
+>> > +
+>> > +             if (connector->polled & (DRM_CONNECTOR_POLL_CONNECT |
+>> > +                                      DRM_CONNECTOR_POLL_DISCONNECT))
+>> > +                     poll = true;
+>> > +     }
+>> > +     drm_connector_list_iter_end(&conn_iter);
+>> > +
+>> > +     return poll;
+>> > +}
+>> > +
+>> >  #define DRM_OUTPUT_POLL_PERIOD (10*HZ)
+>> >  /**
+>> >   * drm_kms_helper_poll_enable - re-enable output polling.
+>> > @@ -241,26 +280,14 @@ drm_connector_mode_valid(struct drm_connector *connector,
+>> >  void drm_kms_helper_poll_enable(struct drm_device *dev)
+>> >  {
+>> >       bool poll = false;
+>> > -     struct drm_connector *connector;
+>> > -     struct drm_connector_list_iter conn_iter;
+>> >       unsigned long delay = DRM_OUTPUT_POLL_PERIOD;
+>> >
+>> > -     if (!dev->mode_config.poll_enabled || !drm_kms_helper_poll)
+>> > +     if (!dev->mode_config.poll_enabled ||
+>> > +         !drm_kms_helper_poll ||
+>> > +         dev->mode_config.poll_running)
+>> >               return;
+>> >
+>> > -     drm_connector_list_iter_begin(dev, &conn_iter);
+>> > -     drm_for_each_connector_iter(connector, &conn_iter) {
+>> > -             const struct drm_connector_helper_funcs *funcs =
+>> > -                     connector->helper_private;
+>> > -
+>> > -             if (funcs && funcs->enable_hpd)
+>> > -                     funcs->enable_hpd(connector);
+>> > -
+>> > -             if (connector->polled & (DRM_CONNECTOR_POLL_CONNECT |
+>> > -                                      DRM_CONNECTOR_POLL_DISCONNECT))
+>> > -                     poll = true;
+>> > -     }
+>> > -     drm_connector_list_iter_end(&conn_iter);
+>> > +     poll = drm_kms_helper_enable_hpd(dev);
+>> >
+>> >       if (dev->mode_config.delayed_event) {
+>> >               /*
+>> > @@ -279,6 +306,8 @@ void drm_kms_helper_poll_enable(struct drm_device *dev)
+>> >
+>> >       if (poll)
+>> >               schedule_delayed_work(&dev->mode_config.output_poll_work, delay);
+>> > +
+>> > +     dev->mode_config.poll_running = true;
+>> >  }
+>> >  EXPORT_SYMBOL(drm_kms_helper_poll_enable);
+>> >
+>> > @@ -567,10 +596,7 @@ int drm_helper_probe_single_connector_modes(struct drm_connector *connector,
+>> >       }
+>> >
+>> >       /* Re-enable polling in case the global poll config changed. */
+>> > -     if (drm_kms_helper_poll != dev->mode_config.poll_running)
+>> > -             drm_kms_helper_poll_enable(dev);
+>> > -
+>> > -     dev->mode_config.poll_running = drm_kms_helper_poll;
+>> > +     drm_kms_helper_poll_enable(dev);
+>> >
+>> >       if (connector->status == connector_status_disconnected) {
+>> >               DRM_DEBUG_KMS("[CONNECTOR:%d:%s] disconnected\n",
+>> > @@ -710,8 +736,12 @@ static void output_poll_execute(struct work_struct *work)
+>> >       changed = dev->mode_config.delayed_event;
+>> >       dev->mode_config.delayed_event = false;
+>> >
+>> > -     if (!drm_kms_helper_poll)
+>> > +     if (!drm_kms_helper_poll &&
+>> > +         dev->mode_config.poll_running) {
+>> > +             drm_kms_helper_disable_hpd(dev);
+>> > +             dev->mode_config.poll_running = false;
+>> >               goto out;
+>> > +     }
+>> >
+>> >       if (!mutex_trylock(&dev->mode_config.mutex)) {
+>> >               repoll = true;
+>> > @@ -808,30 +838,6 @@ bool drm_kms_helper_is_poll_worker(void)
+>> >  }
+>> >  EXPORT_SYMBOL(drm_kms_helper_is_poll_worker);
+>> >
+>> > -static void drm_kms_helper_poll_disable_fini(struct drm_device *dev, bool fini)
+>> > -{
+>> > -     struct drm_connector *connector;
+>> > -     struct drm_connector_list_iter conn_iter;
+>> > -
+>> > -     if (!dev->mode_config.poll_enabled)
+>> > -             return;
+>> > -
+>> > -     if (fini)
+>> > -             dev->mode_config.poll_enabled = false;
+>> > -
+>> > -     drm_connector_list_iter_begin(dev, &conn_iter);
+>> > -     drm_for_each_connector_iter(connector, &conn_iter) {
+>> > -             const struct drm_connector_helper_funcs *funcs =
+>> > -                     connector->helper_private;
+>> > -
+>> > -             if (funcs && funcs->disable_hpd)
+>> > -                     funcs->disable_hpd(connector);
+>> > -     }
+>> > -     drm_connector_list_iter_end(&conn_iter);
+>> > -
+>> > -     cancel_delayed_work_sync(&dev->mode_config.output_poll_work);
+>> > -}
+>> > -
+>> >  /**
+>> >   * drm_kms_helper_poll_disable - disable output polling
+>> >   * @dev: drm_device
+>> > @@ -848,7 +854,12 @@ static void drm_kms_helper_poll_disable_fini(struct drm_device *dev, bool fini)
+>> >   */
+>> >  void drm_kms_helper_poll_disable(struct drm_device *dev)
+>> >  {
+>> > -     drm_kms_helper_poll_disable_fini(dev, false);
+>> > +     if (dev->mode_config.poll_running)
+>> > +             drm_kms_helper_disable_hpd(dev);
+>> > +
+>> > +     cancel_delayed_work_sync(&dev->mode_config.output_poll_work);
+>> > +
+>> > +     dev->mode_config.poll_running = false;
+>> >  }
+>> >  EXPORT_SYMBOL(drm_kms_helper_poll_disable);
+>> >
+>> > @@ -886,7 +897,12 @@ EXPORT_SYMBOL(drm_kms_helper_poll_init);
+>> >   */
+>> >  void drm_kms_helper_poll_fini(struct drm_device *dev)
+>> >  {
+>> > -     drm_kms_helper_poll_disable_fini(dev, true);
+>> > +     if (!dev->mode_config.poll_enabled)
+>> > +             return;
+>> > +
+>> > +     drm_kms_helper_poll_disable(dev);
+>> > +
+>> > +     dev->mode_config.poll_enabled = false;
+>> >  }
+>> >  EXPORT_SYMBOL(drm_kms_helper_poll_fini);
+>> >
+>> > --
+>> > 2.39.0
+>> >
+
 -- 
-2.39.0
-
+Jani Nikula, Intel Open Source Graphics Center
