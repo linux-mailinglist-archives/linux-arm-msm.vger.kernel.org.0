@@ -2,138 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EE023669B99
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 16:14:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CFE38669BA6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 16:15:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229503AbjAMPNw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 10:13:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34220 "EHLO
+        id S229436AbjAMPPG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 10:15:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34332 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229877AbjAMPNZ (ORCPT
+        with ESMTP id S229873AbjAMPN4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 10:13:25 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C7AAEA6;
-        Fri, 13 Jan 2023 07:04:06 -0800 (PST)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30DBw6IC009428;
-        Fri, 13 Jan 2023 15:04:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=1AihPbpUYyAXungFjjIU4AiL076pidUG87b7y21Ybz0=;
- b=ZFgDWMB7dY5KgxCFEn7O1UN5qiuPwKmHS0A+7LV8S23cqgIIxIBArmuRaTh8K8J9DrzF
- MGZyX+CZGDvWefEvVWAoec0Zga7izUzM95g8tEiNrz/wkgyuYyuPm/kPossfK14yMVJi
- phrsulHjnTkmdqv5WCqeo/f9GVbRapkDuMst/dMiKxVYqdduXl2hNQPk9/Lfl1sMTypR
- RjQPKpR5419yumUKE0Uutzz5AdSDHHcZOus1Fxr0SefMVwIXg5bSVq5ubMXqYd52WqIU
- j5Ge4xI/zEv3uKn+zRRjeFrhk4nz1nuZQHpgOlT9hHUYj5t8t5205MJokKjkz6OX9eRV JA== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n2wun1sc4-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 13 Jan 2023 15:04:02 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30DF41ES028067
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 13 Jan 2023 15:04:01 GMT
-Received: from devipriy-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Fri, 13 Jan 2023 07:03:56 -0800
-From:   devi priya <quic_devipriy@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <lgirdwood@gmail.com>,
-        <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
-        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
-        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
-        <quic_poovendh@quicinc.com>
-Subject: [PATCH 6/6] regulator: qcom_smd: Add support to define the bootup voltage
-Date:   Fri, 13 Jan 2023 20:33:10 +0530
-Message-ID: <20230113150310.29709-7-quic_devipriy@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230113150310.29709-1-quic_devipriy@quicinc.com>
-References: <20230113150310.29709-1-quic_devipriy@quicinc.com>
+        Fri, 13 Jan 2023 10:13:56 -0500
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F3DC7EC87
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 07:05:36 -0800 (PST)
+Received: by mail-lj1-x22d.google.com with SMTP id g14so22683891ljh.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 07:05:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gfCT28FCbQrY32iGHKuf0fPbE9jzwWTkTnjnRxrb20U=;
+        b=Zp0s16o3sQ4APW3gerIzyuXEb6qETgU4J7bwRJmj1stYMiqNpaitxpSLPu74UNSndW
+         GhGA0gyk/2bXcq1IHLcMU7oWBh4iSAGhsV1Jz5aV0UqGN30fcSJ686koWZg4TPsLVnOA
+         86QTvvGMjXrRIycEn46gMTXtuSptuQAoogL/VhsmP8yzf3EzGECvfSmWReYJKMAfVcc0
+         EpXltxInKh86k9/I5m2RLk+WJgn9O/Rdgw5nP9sgNTWOQUw2KAyz8mg+3Qp2+aw3rDYY
+         kgFNvfp7UuLNHR8w5e3fT5zN9/+oBGTjKIp7UCmOqGxfKLYsP/WFyLEO5VAV5ARFH56R
+         ac5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gfCT28FCbQrY32iGHKuf0fPbE9jzwWTkTnjnRxrb20U=;
+        b=5Q9NnZs8qM4n96OQcJGnkIDbi52eA9SV9ZJi0HGLkGdVh3mV+nTQ+8Q0B4uN4AjC2B
+         Wq1A6GcQpcAnrILWstAV4yO7v14oMaCy89TD3WQ7ND3i4ecmwAxG3d7Qb8lflHyYt/mZ
+         5zSFv5IqaEI7eKlCW4VKL40/jmwql4oOikEuDOq96cW/ueJ4YBmbkXcFMKVhIrqdhR3W
+         NvGT1oix7rk1ZdBnMy/N7f3vG0D67Rp/p4jPCLrXWUwuVGU9/4rxo1JpRLTVDcW5kGKo
+         pCFO5PNeXEsbP9KvMx7J0nbPZr2e1jfJlz4rAAU4uzMzT2yAhky9klddtjIfK8Og0PJk
+         9HoA==
+X-Gm-Message-State: AFqh2kpGvJntlMLhbOReS22GSoivZoGuQZ7REDzjYr2C3M3m5Mi/eWsF
+        qJD5+Ukgodjldgw1ZjXyqI5zYQ==
+X-Google-Smtp-Source: AMrXdXvFzWxeuBB1ZFxrX2CcWicgc3JY6xGrdvgsXt/LSY4sD3TIm2IiV24qO5V1+SmnRPlVFuHrfQ==
+X-Received: by 2002:a2e:aa93:0:b0:284:254a:9d5a with SMTP id bj19-20020a2eaa93000000b00284254a9d5amr5761404ljb.39.1673622334638;
+        Fri, 13 Jan 2023 07:05:34 -0800 (PST)
+Received: from [192.168.1.101] (abym53.neoplus.adsl.tpnet.pl. [83.9.32.53])
+        by smtp.gmail.com with ESMTPSA id u27-20020a2eb81b000000b00281068cd497sm2569212ljo.119.2023.01.13.07.05.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 13 Jan 2023 07:05:32 -0800 (PST)
+Message-ID: <e9025ca7-c955-5c49-ce66-701e9639129b@linaro.org>
+Date:   Fri, 13 Jan 2023 16:05:29 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: jhnIEHoRYdRqRK6TlIV5tlFtX1FWF53D
-X-Proofpoint-GUID: jhnIEHoRYdRqRK6TlIV5tlFtX1FWF53D
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-13_07,2023-01-13_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- clxscore=1015 phishscore=0 malwarescore=0 spamscore=0 bulkscore=0
- mlxscore=0 priorityscore=1501 adultscore=0 suspectscore=0 impostorscore=0
- mlxlogscore=905 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301130099
-X-Spam-Status: No, score=0.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH 1/6] dt-bindings: clock: Add YAML schemas for QCOM A73 PLL
+Content-Language: en-US
+To:     devi priya <quic_devipriy@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
+        sboyd@kernel.org, jassisinghbrar@gmail.com,
+        catalin.marinas@arm.com, will@kernel.org, shawnguo@kernel.org,
+        arnd@arndb.de, marcel.ziswiler@toradex.com,
+        dmitry.baryshkov@linaro.org, nfraprado@collabora.com,
+        broonie@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
+        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
+        quic_poovendh@quicinc.com
+References: <20230113143647.14961-1-quic_devipriy@quicinc.com>
+ <20230113143647.14961-2-quic_devipriy@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230113143647.14961-2-quic_devipriy@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Kernel does not know the initial voltage set by the bootloaders.
-During regulator registration, the voltage variable is just declared
-and it is zero. Based on that, the regulator framework considers current
-the voltage as zero and tries to bring up each regulator to minimum
-the supported voltage.
 
-This introduces a dip in the voltage during kernel boot and gets
-stabilized once the voltage scaling comes into picture.
 
-To avoid the voltage dip, adding support to define the
-bootup voltage set by the boodloaders and based on it, regulator
-framework understands that proper voltage is already set
+On 13.01.2023 15:36, devi priya wrote:
+> Add schema for primary CPU PLL found on few Qualcomm platforms.
+> 
+> Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
+> ---
+Doesn't this belong in Documentation/devicetree/bindings/clock/qcom,a53pll.yaml?
 
-Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-Signed-off-by: devi priya <quic_devipriy@quicinc.com>
----
- drivers/regulator/qcom_smd-regulator.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+It looks identical, so it may be as simple as adding your
+new compatible there..
 
-diff --git a/drivers/regulator/qcom_smd-regulator.c b/drivers/regulator/qcom_smd-regulator.c
-index 1eb17d378897..49a36b07397c 100644
---- a/drivers/regulator/qcom_smd-regulator.c
-+++ b/drivers/regulator/qcom_smd-regulator.c
-@@ -800,6 +800,7 @@ struct rpm_regulator_data {
- 	u32 id;
- 	const struct regulator_desc *desc;
- 	const char *supply;
-+	int boot_uV; /* To store the bootup voltage set by bootloaders */
- };
- 
- static const struct rpm_regulator_data rpm_mp5496_regulators[] = {
-@@ -809,7 +810,7 @@ static const struct rpm_regulator_data rpm_mp5496_regulators[] = {
- };
- 
- static const struct rpm_regulator_data rpm_ipq9574_mp5496_regulators[] = {
--	{ "s1", QCOM_SMD_RPM_SMPA, 1, &ipq9574_mp5496_smpa1, "s1" },
-+	{ "s1", QCOM_SMD_RPM_SMPA, 1, &ipq9574_mp5496_smpa1, "s1", 875000 },
- 	{}
- };
- 
-@@ -1394,6 +1395,9 @@ static int rpm_regulator_init_vreg(struct qcom_rpm_reg *vreg, struct device *dev
- 	vreg->type	= rpm_data->type;
- 	vreg->id	= rpm_data->id;
- 
-+	if (rpm_data->boot_uV)
-+		vreg->uV = rpm_data->boot_uV;
-+
- 	memcpy(&vreg->desc, rpm_data->desc, sizeof(vreg->desc));
- 	vreg->desc.name = rpm_data->name;
- 	vreg->desc.supply_name = rpm_data->supply;
--- 
-2.17.1
-
+Konrad
+>  .../bindings/clock/qcom,a73pll.yaml           | 52 +++++++++++++++++++
+>  1 file changed, 52 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,a73pll.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,a73pll.yaml b/Documentation/devicetree/bindings/clock/qcom,a73pll.yaml
+> new file mode 100644
+> index 000000000000..a0e81094db8d
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,a73pll.yaml
+> @@ -0,0 +1,52 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/clock/qcom,a73pll.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm A73 PLL clock
+> +
+> +maintainers:
+> +  - Bjorn Andersson <andersson@kernel.org>
+> +
+> +description:
+> +  The A73 PLL on few Qualcomm platforms is the main CPU PLL used for
+> +  frequencies above 1GHz.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,ipq9574-a73pll
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  '#clock-cells':
+> +    const: 0
+> +
+> +  clocks:
+> +    items:
+> +      - description: board XO clock
+> +
+> +  clock-names:
+> +    items:
+> +      - const: xo
+> +
+> +  operating-points-v2: true
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - '#clock-cells'
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    a73pll: clock@b116000 {
+> +            compatible = "qcom,ipq9574-a73pll";
+> +            reg = <0x0b116000 0x40>;
+> +            #clock-cells = <0>;
+> +            clocks = <&xo_board_clk>;
+> +            clock-names = "xo";
+> +    };
