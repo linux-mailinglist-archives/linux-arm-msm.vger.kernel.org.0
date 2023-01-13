@@ -2,138 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F545669995
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 15:07:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 736526699A6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 15:14:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241796AbjAMOHr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 09:07:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60518 "EHLO
+        id S233035AbjAMOOD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 09:14:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241882AbjAMOGz (ORCPT
+        with ESMTP id S241837AbjAMONL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 09:06:55 -0500
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 901C86E410;
-        Fri, 13 Jan 2023 06:03:35 -0800 (PST)
-Received: by mail-oi1-x233.google.com with SMTP id j130so17755970oif.4;
-        Fri, 13 Jan 2023 06:03:35 -0800 (PST)
+        Fri, 13 Jan 2023 09:13:11 -0500
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C6E58B741
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 06:09:17 -0800 (PST)
+Received: by mail-lf1-x133.google.com with SMTP id d30so28374218lfv.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 06:09:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QutA8fHBQTxFnKX6Y2E+CKgWtbt+S8/vaN1GoJ/uma8=;
-        b=YKgcetQBfchjYhkxCnaFULOgrZeKVQtCUVZnkdXSMs5JizvJwFK8eNUdvWIHtzLUP4
-         MURxZuVa8VMOBF/aWfGMkqN+jaZZBdCNRcZKj//RBj0qYGU+7OcvRRtCzBe/Eslmn2f1
-         NtMpRQ+ZtIdiQ1exfcLH74grLho9jMMvF1c+CzYdzB2iqON1sbg0L12Rgy7MyzSVzGX2
-         SJBj5HPOqEvNpV2vKhplurXJZBEN5zXDiHwANbyPY4OJwwdV50oJCbF7aC0hkIbIMYeq
-         FzUJ2Cg15Xi22BG0UmTZkEYj7KiTAz/gqwsIEU41X8OvX76VC75QtFRLcnxu62CcklCu
-         XNnA==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OfrzdcPiy0Hdw6/iAuT57+/JJ2SqLT2P5GR8aVHlsBE=;
+        b=F2cwr/7t0vbK+L6PYtAxhaLvwsLRI0ZhLXwirF0roTu2m3XHYo7sWFuS3843dXxrTO
+         MeFmV91b8shFyG5WPe+lj5TMjpJhUgudf5S98IiAdu/2TYtdAtecY2d/IXfWv2p3V93p
+         /5itVkT9JUEPJQkx8yDUxajV5tzHZaHqTqV0b7C/4QZXj8xot1zV9N4OK+vQE13EcltN
+         q2lo5KO+SUWayyM1X/vMdGPU+n17nBOC/yjcYUAiaWZ3IRYqrkuGGX68O+PMRJe5qhnV
+         9aiRXZMD5OvIWJfhPG1zpHlC8pelB93ZWH3QnOT2UpbSXh+EV+WfmUNiKae2V3O1ET9w
+         nPUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QutA8fHBQTxFnKX6Y2E+CKgWtbt+S8/vaN1GoJ/uma8=;
-        b=rkXroa0R+LaxYqDKzYrhh4Ided0Te0t4RldanxWQX7vFuq6XFTyKDj4aRdEDDoUpkk
-         LCMUb+j6f3cb3DdnOA7jwfES1GrM0DzePBv9X6AnxX9VrWhAwL5DnGsW5qjNs1LfGhGA
-         3GmtSqjJA2mi3gJ1B6+p9oCvxitkSogsQba/q7yPWQoaEJ9UXf/6izkwLB6vwuMQKacK
-         7iyIxSVho3VPh0N1tuslSSK4WRloZoeH7nj85bp5XKIVXO9BGBcguW2+F96UJn/BQHNt
-         qYB9CtMIJQjJqqjNw+uul6kemDneoxevD+PUYKb0u31BLTS6lsGZ455p/ULYFv0ubS4k
-         RRJw==
-X-Gm-Message-State: AFqh2kpX3r+BhqDctRNHG0gXsOBqzkw18XNxVydluWocqRJxqz/2Y3u5
-        dVsadP6r2SwsLkj6O/1F1VY=
-X-Google-Smtp-Source: AMrXdXsZpwz3t+cwCWsi7vgosB3GCWdqQwkzNWgwVO3CJtxmy/bCR8oLEgtKXY/top1u7+cm73oPmg==
-X-Received: by 2002:a05:6808:e83:b0:364:8f2c:186c with SMTP id k3-20020a0568080e8300b003648f2c186cmr3675955oil.7.1673618614855;
-        Fri, 13 Jan 2023 06:03:34 -0800 (PST)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id h16-20020a9d7990000000b0066ec4e2b396sm5302099otm.53.2023.01.13.06.03.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Jan 2023 06:03:34 -0800 (PST)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date:   Fri, 13 Jan 2023 06:03:33 -0800
-From:   Guenter Roeck <linux@roeck-us.net>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-watchdog@vger.kernel.org,
-        Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH v2 7/7] dt-bindings: watchdog: allow "timer" as node name
-Message-ID: <20230113140333.GG1606649@roeck-us.net>
-References: <20230113103346.29381-1-krzysztof.kozlowski@linaro.org>
- <20230113103346.29381-8-krzysztof.kozlowski@linaro.org>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OfrzdcPiy0Hdw6/iAuT57+/JJ2SqLT2P5GR8aVHlsBE=;
+        b=RR0biHx8bDREFpL2Vv80xGIckgFlExkLfkC8yWzvfuQ5Z7DbfOyoNt6u+/kloG/lvT
+         sAZY731c/S1cfZRi8HVwPdvI6CFYC4GDU4BzMwajI4Jl7ejIuE84dKTt+OJkcqRRNQjn
+         ZJb8AKLwlqZSqViJmxPKbSjirzzm1AAVTV5l/rx61XxPB/e4DYcTdaiyVZmZB9PSZGjB
+         l5AGd3n5tLgc4KiFkGXDsgntop/ZPPTiGEjM9tRPl1KgWKXH01xkFlmWVnp8JuMiLuYO
+         eZxnRI2KZl1oUoVFal/icQ18pstcNiaZ/3QG/n4VMZBzQqH4jD730zT2hkO1RvZ4EoWL
+         +EXA==
+X-Gm-Message-State: AFqh2kq+hVwxDwiiNWsUoffTYasoiqc/5+w2DcGDxZ6BzdTtGy/8bw9I
+        wp914BSt8BFq+HW1JICYFs/PUNVOrN9sDLKz
+X-Google-Smtp-Source: AMrXdXvunA8ofEpb3NUFW69utzpsdsMGWpLOu9/MW73tfbAgLPZG81qCR96G0UeK0ij1v0xBFC8p5A==
+X-Received: by 2002:a05:6512:1049:b0:4b6:edce:a192 with SMTP id c9-20020a056512104900b004b6edcea192mr26400332lfb.4.1673618955757;
+        Fri, 13 Jan 2023 06:09:15 -0800 (PST)
+Received: from [192.168.1.101] (abym53.neoplus.adsl.tpnet.pl. [83.9.32.53])
+        by smtp.gmail.com with ESMTPSA id d23-20020a056512369700b004cc86bc8f22sm2389754lfs.90.2023.01.13.06.09.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 13 Jan 2023 06:09:12 -0800 (PST)
+Message-ID: <9bdf757d-1fa0-106f-eb77-7f2a8593213f@linaro.org>
+Date:   Fri, 13 Jan 2023 15:09:02 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230113103346.29381-8-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH 2/7] clk: qcom: Add Global Clock Controller driver for
+ IPQ9574
+Content-Language: en-US
+To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
+        sboyd@kernel.org, linus.walleij@linaro.org,
+        catalin.marinas@arm.com, will@kernel.org, p.zabel@pengutronix.de,
+        shawnguo@kernel.org, arnd@arndb.de, marcel.ziswiler@toradex.com,
+        dmitry.baryshkov@linaro.org, nfraprado@collabora.com,
+        broonie@kernel.org, tdas@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
+        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
+        quic_poovendh@quicinc.com
+References: <20230110121316.24892-1-quic_devipriy@quicinc.com>
+ <20230110121316.24892-3-quic_devipriy@quicinc.com>
+ <de346d71-1fe7-e357-d220-d4468e4bb933@linaro.org>
+ <afd2e5c8-fa5a-ac1f-4ede-4ab1f91c0d0d@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <afd2e5c8-fa5a-ac1f-4ede-4ab1f91c0d0d@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 13, 2023 at 11:33:46AM +0100, Krzysztof Kozlowski wrote:
-> On some SoCs the watchdog device is actually mixed with timer, e.g.
-> the qcom,msm-timer on older Qualcomm SoCs where this is actually one
-> hardware block responsible for both system timer and watchdog.
-> 
-> Allow calling such device nodes as "timer".
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> 
 
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
 
-> ---
+On 13.01.2023 14:21, Devi Priya wrote:
 > 
-> Changes since v1:
-> 1. Add tag.
 > 
-> See also:
-> https://lore.kernel.org/linux-arm-msm/20221212163532.142533-1-krzysztof.kozlowski@linaro.org/T/#t
-> 
-> which causes warnings:
-> 
-> qcom-msm8960-cdp.dtb: timer@200a000: $nodename:0: 'timer@200a000' does not match '^watchdog(@.*|-[0-9a-f])?$'
->   From schema: Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
-> ---
->  Documentation/devicetree/bindings/watchdog/watchdog.yaml | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/watchdog/watchdog.yaml b/Documentation/devicetree/bindings/watchdog/watchdog.yaml
-> index fccae0d00110..519b48889eb1 100644
-> --- a/Documentation/devicetree/bindings/watchdog/watchdog.yaml
-> +++ b/Documentation/devicetree/bindings/watchdog/watchdog.yaml
-> @@ -14,9 +14,14 @@ description: |
->    This document describes generic bindings which can be used to
->    describe watchdog devices in a device tree.
->  
-> +select:
-> +  properties:
-> +    $nodename:
-> +      pattern: "^watchdog(@.*|-[0-9a-f])?$"
-> +
->  properties:
->    $nodename:
-> -    pattern: "^watchdog(@.*|-[0-9a-f])?$"
-> +    pattern: "^(timer|watchdog)(@.*|-[0-9a-f])?$"
->  
->    timeout-sec:
->      description:
-> -- 
-> 2.34.1
-> 
+> On 1/10/2023 6:07 PM, Konrad Dybcio wrote:
+>>
+>>
+>> On 10.01.2023 13:13, devi priya wrote:
+>>> Add Global Clock Controller (GCC) driver for ipq9574 based devices
+>>>
+>>> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
+>>> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
+>>> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
+>>> ---
+[...]
+
+>>> +static struct clk_branch gcc_blsp1_qup6_i2c_apps_clk = {
+>>> +    .halt_reg = 0x07024,
+>>> +    .clkr = {
+>>> +        .enable_reg = 0x07024,
+>>> +        .enable_mask = BIT(0),
+>>> +        .hw.init = &(struct clk_init_data) {
+>>> +            .name = "gcc_blsp1_qup6_i2c_apps_clk",
+>>> +            .parent_hws = (const struct clk_hw *[]) {
+>>> +                    &blsp1_qup6_i2c_apps_clk_src.clkr.hw },
+>>> +            .num_parents = 1,
+>>> +            .flags = CLK_SET_RATE_PARENT | CLK_IGNORE_UNUSED,
+>> Sounds very much like a hack..
+> Got it, will remove the clock entry as it is not being used in linux
+I'm not sure removing it is the best option, somebody might have a
+funky board where they use this particular QUP for I2C for whatever
+reason and then the clock would have to be re-added..
+
+Thanks for addressing all of the review comments so thoroughly!
+
+Konrad
