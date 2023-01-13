@@ -2,116 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6912166A3C0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 20:55:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8DD7F66A3E2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 21:10:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229876AbjAMTzZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 14:55:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38502 "EHLO
+        id S230007AbjAMUKy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 15:10:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230397AbjAMTzV (ORCPT
+        with ESMTP id S230088AbjAMUKx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 14:55:21 -0500
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F40C287F3B
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 11:55:18 -0800 (PST)
-Received: by mail-lf1-x136.google.com with SMTP id bp15so34538283lfb.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 11:55:18 -0800 (PST)
+        Fri, 13 Jan 2023 15:10:53 -0500
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D77A7892C7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 12:10:51 -0800 (PST)
+Received: by mail-pf1-x434.google.com with SMTP id 200so10818327pfx.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 12:10:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=9oeSZuMYd3LT/X1OwhODYATjxB9rKtWVz8sj+tiVyDM=;
-        b=s8Xuhkn6J3YR0r9ytJG+bvRtWlfjL2HMGuRaAs7PZNcUpwIMe6Mkfz+O/BB+Z8F2K8
-         dV4bTJGmPEd3FqaEXFxmv8jlSymaPrpacDLL0NUpZcYz5GP2K8eOg81cvlf3m8kjKJc9
-         wHS9RnQojaU1392xafWiYvzGJG5VLgOhr0kxnF+nL6Q8FDZRCWMXgUnGYSVksR4M5ay5
-         Din/RF1J/fNsTY0gy74uvfG0zy+XyoomPAjSP1/fgZVt/UZqdBpNFNqZ6wZ3L/c53bDz
-         tAGmHwwoyMu04kg+GanVStuBJ/Y/Os9e3AwR3UVUw++K6x0zX7NLEryUNZnJp1wPj6A1
-         SMIw==
+        bh=u9yUG8p2AvsCrfrOo0UvzT5Iu4BONOHKRQnB72b9ZJU=;
+        b=uHkwhfvgcFrY265BN+JmcPVnnegGsSZSRHjT558d0FZMEPTETlx205iydLJkvMIvJw
+         kYDrf940r/W9uH94T/0Skd8Gw3sfcXr4liP8jTos00gu/6Gbsc9vO5qj6crsVBHJxGIF
+         tC3FU6hWnhGMlzUih7vi5n4Jc8oUHDKbCfzSFoQP2maXznteBaq5vLD0x9rJqKVlnBew
+         WTfBEdmjAtDqxav5S8LmXyeeoiaOLO8c1UzRXGFhb6Lp2trrOeu9ynBtukjjP5NPrRmP
+         TmIa9p3syCRnxYx6wYKT6BL3usc1YRI3uD6fl4VQRxXYLNMCewUU05OsfABcI7Ku4xio
+         Evlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=9oeSZuMYd3LT/X1OwhODYATjxB9rKtWVz8sj+tiVyDM=;
-        b=lCVOcBEIAtmBeI9UkEAqb+On9kqd+bQFUiJFiRIFDAmXwEYmsBE818g8ThJSCioz3s
-         ilnBtQ9rQejXq4D8V3mb6B7kWu/x0giZvCUMukjZTixEi9J2XT6CfHIS8yifVjU+1XQc
-         bMtyx5V6ANR10KPM5mSTSOXfgJuRlLSFxeYVBPzXm6WE67pjD1NHWayaEh+XQxVXk/5b
-         SIC4FVZeE+c38RazQq0vnoOidfPTylzImaLna1Oyg/PMBkPhCBKZNrQLBlJ07NApQRaX
-         SdG6s7xYQ2MAb6rh6cH4gFJeXPuVt8dlKpDtV7s3zFL9wswQFIAe10P8g9k5vcXDwVaC
-         y8bQ==
-X-Gm-Message-State: AFqh2kp2LYmcLzbEAk/SY/Wz+VfEs6X2RvFUrJ8uPIpCMXK9fzKpx9ff
-        nhapjB5jNrm6NaW2Rywt9lUIfg==
-X-Google-Smtp-Source: AMrXdXtOMhPcxZbViTRDR5rm438/yzfLeEWOC1d3C55CfWj1jPzEPgX8IGxx6d72TAe3R8s8COhfTQ==
-X-Received: by 2002:a19:8c51:0:b0:4b6:ed1d:38e9 with SMTP id i17-20020a198c51000000b004b6ed1d38e9mr316540lfj.64.1673639717301;
-        Fri, 13 Jan 2023 11:55:17 -0800 (PST)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id q21-20020a0565123a9500b004d272bf56b5sm193904lfu.223.2023.01.13.11.55.16
+        bh=u9yUG8p2AvsCrfrOo0UvzT5Iu4BONOHKRQnB72b9ZJU=;
+        b=Ehum83xkGFkQsCsTCq0TjKug9IQbEUpDgT0vyVE3LBUQN7TDdQuNGAQ62abnofKkA7
+         K0az0PPw0ZWfYI/NWz6Cr5kqtn9SZXjxG3AA8j4ue3bwPWdSFq2LhwXIXjinM7BJH2L5
+         BVbLTMePNgVnT0BfAgFen+JP+/uHvqyJ1YqmQNMNVGEKfdfirqhaYHAScHBHQ0TQZOUn
+         9AaQNilRgmhBhvWK5tyIZ6Nq7CX6h1a5wmo4XguXJ5JcahX5ZSe/Rqf9zKCXcXOoKYNb
+         voJtFxE126OZsWSUY2XUMEKMYt3ichRZ8fDTR/0nm44rzLwxlqHsVA6uVyRsF88GaHeJ
+         YM7g==
+X-Gm-Message-State: AFqh2kpSCOlavS/0xNYPG3vmiePi9nM+hRNB/GFqVPPVYdPZWnrjzSqy
+        nyPFuu/lRXuS2aSvTuH06FBGP6wxuzLqPf+/
+X-Google-Smtp-Source: AMrXdXuBmRg5x89s/bNnjYQ24z0JAk4eLcvnOHCMH2vbSmq8KX+62vt7rBR7qCTY26F+dfD+4N0e6Q==
+X-Received: by 2002:a62:84d0:0:b0:58b:bc3a:6234 with SMTP id k199-20020a6284d0000000b0058bbc3a6234mr3325205pfd.11.1673640650860;
+        Fri, 13 Jan 2023 12:10:50 -0800 (PST)
+Received: from localhost.localdomain ([2401:4900:1c60:63d3:2d69:9f71:187e:f085])
+        by smtp.gmail.com with ESMTPSA id d63-20020a623642000000b0057691fb0d37sm13983740pfa.193.2023.01.13.12.10.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Jan 2023 11:55:16 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>
-Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: [PATCH] phy: qualcomm: qmp-ufs: rename qmp_ufs_offsets_v5 to qmp_ufs_offsets
-Date:   Fri, 13 Jan 2023 21:55:15 +0200
-Message-Id: <20230113195515.407866-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.0
+        Fri, 13 Jan 2023 12:10:50 -0800 (PST)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
+        bhupesh.sharma@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+Subject: [PATCH] dt-bindings: qcom: geni-se: Fix '#address-cells' & '#size-cells' related dt-binding error
+Date:   Sat, 14 Jan 2023 01:40:38 +0530
+Message-Id: <20230113201038.267449-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-All currently known QMP UFS PHYs have the same offsets for register
-sub-regions. Instead of using qmp_ufs_offsets_v5 for older generations
-of PHYs, rename the offsets struct instance to remove _v5 suffix.
+Fix the following '#address-cells' & '#size-cells' related
+dt-binding error:
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+   $ make dtbs_check
+
+   From schema: Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
+        arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dtb: geniqup@4ac0000:
+		#address-cells:0:0: 2 was expected
+	From schema: Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
+
+Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-index d2f3cba625b8..72eb37669e6c 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-@@ -625,7 +625,7 @@ static const char * const qmp_phy_vreg_l[] = {
- 	"vdda-phy", "vdda-pll",
- };
+diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
+index ab4df02052853..7ffce3b676641 100644
+--- a/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
++++ b/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
+@@ -36,10 +36,10 @@ properties:
+     maxItems: 2
  
--static const struct qmp_ufs_offsets qmp_ufs_offsets_v5 = {
-+static const struct qmp_ufs_offsets qmp_ufs_offsets = {
- 	.serdes		= 0,
- 	.pcs		= 0xc00,
- 	.tx		= 0x400,
-@@ -658,7 +658,7 @@ static const struct qmp_phy_cfg msm8996_ufs_cfg = {
- static const struct qmp_phy_cfg sc8280xp_ufsphy_cfg = {
- 	.lanes			= 2,
+   "#address-cells":
+-    const: 2
++    enum: [ 1, 2 ]
  
--	.offsets		= &qmp_ufs_offsets_v5,
-+	.offsets		= &qmp_ufs_offsets,
+   "#size-cells":
+-    const: 2
++    enum: [ 1, 2 ]
  
- 	.serdes_tbl		= sm8350_ufsphy_serdes_tbl,
- 	.serdes_tbl_num		= ARRAY_SIZE(sm8350_ufsphy_serdes_tbl),
-@@ -698,7 +698,7 @@ static const struct qmp_phy_cfg sdm845_ufsphy_cfg = {
- static const struct qmp_phy_cfg sm6115_ufsphy_cfg = {
- 	.lanes			= 1,
+   ranges: true
  
--	.offsets		= &qmp_ufs_offsets_v5,
-+	.offsets		= &qmp_ufs_offsets,
- 
- 	.serdes_tbl		= sm6115_ufsphy_serdes_tbl,
- 	.serdes_tbl_num		= ARRAY_SIZE(sm6115_ufsphy_serdes_tbl),
 -- 
-2.39.0
+2.38.1
 
