@@ -2,105 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E30266940C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 11:24:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D85C669426
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 11:32:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241219AbjAMKYz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 05:24:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60850 "EHLO
+        id S240122AbjAMKc3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 05:32:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241236AbjAMKYH (ORCPT
+        with ESMTP id S238911AbjAMKc2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 05:24:07 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 245E876800
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 02:24:03 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id co23so20618065wrb.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 02:24:03 -0800 (PST)
+        Fri, 13 Jan 2023 05:32:28 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95BA01A214
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 02:32:26 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id bi26-20020a05600c3d9a00b003d3404a89faso556144wmb.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 02:32:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ZqtzVGrTtS3gFp/fjZnt8TYVU0rki/TedO/gvVXrUY4=;
-        b=G5hh/TbPPPGivzK06Wtaxl14ltYQwgD5aXXykZJdDfWzyAAd/zBWf8ff23AcE7Zt1R
-         aenC0OhRMdY8PRZ0AoMYXlnKjqk9/b9Q0WCgf4R110gKXkzsCvOP4lJuvimohBuhWXps
-         9CokOm+E97paJOr1PdZT2xX+kc8zEM/BeNZfFZ2i/W3gJUdtYknCeWoXLEkWo9fISM5I
-         df0HYA1041aloE5naRoVk32wT6sbHkXGdVYZ8/1Ch3qLjeBR9TL0e2F6AbRFVkqxMllk
-         SxvRbfsb9YvwH7HF2ZZak9AIL2xGIOaSFZZKRmOEcBaL8f7dfVIM1VMbT9saEmH4PAuI
-         BRtQ==
+        bh=E1J8TfKxAjLsngCXA1LT3+4bWkI4/Q+xp3QooUAGOuk=;
+        b=T4M1NdyXaxR6388FMBG02ClrQy9ReLVGnEOYWVJIk9mFSiMWC9/9wjBVKyYbfGtk7J
+         T5F+B4J8lrhlxI7yX9zsjYRsP7BA90+JZyIeHMiXj56IOHopFisR6Hd+dw971jDcrAoB
+         BfveftaiyHVE6kaaZ4qSyYIJvjxcT9txx1lm0CYx8LmcAubWQVMellpPEijh+4H+HjIT
+         wqnD2RPzMM/NDwZiJqNCg7ZOX86VoEL7a10TUWY8I3wz23iI66LXjtA+FAr1f/GWBbWI
+         KZvD9uoAbAMOhgftRnf35pUmbVOxWMld38FKYD+vKmFlIWfM24e9aaGjxZeMUnikQZ5B
+         ZuGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZqtzVGrTtS3gFp/fjZnt8TYVU0rki/TedO/gvVXrUY4=;
-        b=P1VGwSIPZpg9s7zYgwuqJJpCSfeSU5a2BkVtUnD9VTLexfKtBoLzf7ZY9L9maxc1Q5
-         YBwSr/F0clqY+4VIELDu9/eurVs7pdGNlYfaQ3umxucz/NXpKXUh23sggxVDcGN3kXSN
-         cT7zabW3n5tbUQwzK9Kh3mtO6KeBQXBxIpYP4sSH0oXe7rj+H6yftIz0NPolZafXvBbi
-         h9IruZEwnsCF75j0L/FWES5wSMh+uQol/HmG7gFAIstNPm3ZNqh/yhjAWG2HAgIoSfvR
-         UqXk4LIZr0xhhzognYQA1dRUOYmaUS1DMXpQlqtMzGMIeOgQcjUuxCb+l56mvJnjXWPc
-         Dbcw==
-X-Gm-Message-State: AFqh2kpaKgrkplaVzoeDknisTPaMiK//jyrhFCPZbpJPBlUgCqZ0l4Jz
-        aD0aykHcXole1q5TpPR+nHiRMQ==
-X-Google-Smtp-Source: AMrXdXsGzXFr+tg/hsqZNC+jjJ/VyyEaElf0gsWdPvvSkpheloNgqqRHLCKCVYcPwFbmUPPheX/EAA==
-X-Received: by 2002:a05:6000:1e04:b0:273:e385:1a89 with SMTP id bj4-20020a0560001e0400b00273e3851a89mr48740996wrb.67.1673605441963;
-        Fri, 13 Jan 2023 02:24:01 -0800 (PST)
+        bh=E1J8TfKxAjLsngCXA1LT3+4bWkI4/Q+xp3QooUAGOuk=;
+        b=0Tr+WGZ7LSOwjno7N5ZQWm1xPy8vbzGxCmnhYurHvrHYSP7lneqK+tJ7QJJjNvLsWL
+         R9AhsZDIvWWNfepmYpCDEF6aq9zI3J0nvOZk1RMrPgVEa6FmU1vLuGWtowGPJbZ4ml6t
+         Czg2cmtnC5OYdFwvbcdnqhV5vjekqxfnfTiZ1PL7YcUbVtGw6HirgoT1McGvDsuy+BoU
+         53lYNqilo6yZWoZVUTKBK2Q8XzRkULGOlBnMMRu6n78+HgUuhJPA/IOQjDfYdQ93YwUL
+         Mwfjp4LFhUzdhR8z7q0floOhFtwqPERsglQwpvLtVcxC1xoAQOyth8CFzCEo3gcdjNSQ
+         CZJw==
+X-Gm-Message-State: AFqh2kpcr88Qxenx0ExAdKLjS3p22OkLTlPRmnLmcDP9oKKjtL28SSmS
+        93tv0ewbZ3GFuPPGVsp5zkZENg==
+X-Google-Smtp-Source: AMrXdXvc19MzVMs/4VLbtrwXz6shnUPJHbn4ZA0zMjQfi5xsmL+BiV4BaWO8N3Qp0oyFEHAeChVyqw==
+X-Received: by 2002:a05:600c:1d97:b0:3da:268c:32e0 with SMTP id p23-20020a05600c1d9700b003da268c32e0mr396142wms.21.1673605945081;
+        Fri, 13 Jan 2023 02:32:25 -0800 (PST)
 Received: from [192.168.10.46] (146725694.box.freepro.com. [130.180.211.218])
-        by smtp.googlemail.com with ESMTPSA id n10-20020a5d6b8a000000b002425787c5easm18496811wrx.96.2023.01.13.02.24.00
+        by smtp.googlemail.com with ESMTPSA id o19-20020a05600c339300b003cff309807esm27048167wmp.23.2023.01.13.02.32.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Jan 2023 02:24:01 -0800 (PST)
-Message-ID: <7f58c70f-3ccc-429b-ab98-86948743855e@linaro.org>
-Date:   Fri, 13 Jan 2023 11:24:00 +0100
+        Fri, 13 Jan 2023 02:32:24 -0800 (PST)
+Message-ID: <ad21be61-98e3-2a47-cc0c-108839531bfd@linaro.org>
+Date:   Fri, 13 Jan 2023 11:32:23 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.2
-Subject: Re: [RESEND PATCH] dt-bindings: thermal: qcom-spmi-adc-tm5: add
- qcom,adc-tm7
+Subject: Re: [PATCH v6 00/20] thermal/drivers/tsens: specify nvmem cells in DT
+ rather than parsing them manually
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>
+Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
         linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Rob Herring <robh@kernel.org>
-References: <20230113090107.18498-1-krzysztof.kozlowski@linaro.org>
+        devicetree@vger.kernel.org
+References: <20230101194034.831222-1-dmitry.baryshkov@linaro.org>
+ <cdebb6a9-0bc3-70ef-53ef-4a48ead869da@linaro.org>
 From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-In-Reply-To: <20230113090107.18498-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <cdebb6a9-0bc3-70ef-53ef-4a48ead869da@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/01/2023 10:01, Krzysztof Kozlowski wrote:
-> The qcom,adc-tm7 compatible is already used in PMK8350 so add it to the
-> Qualcomm PMIC Thermal Monitoring ADC.  Based on downstream sources, the
-> new compatible for TM7 differs from older TM5 by allowing configuring
-> per sensor decimation, time measurement and number of sample averaging -
-> unlike one configuration per entire device.  This was not reflected in
-> the bindings, therefore comment the new compatible as incomplete as it
-> might change and its ABI is no stable.
+On 13/01/2023 07:29, Dmitry Baryshkov wrote:
+> On 01/01/2023 21:40, Dmitry Baryshkov wrote:
+>> Historically the tsens driver fetches the calibration data as a blob and
+>> then parses the blob on its own. This results in semi-duplicated code
+>> spreading over the platform-specific functions.
+>>
+>> This patch series changes tsens calibration code to per-value nvmem
+>> cells rather than parsing the blob in the driver. For backwards
+>> compatibility the old code is left in place for msm8916, msm8974 and
+>> qcs404, the platforms which have in-tree DT files. For all other
+>> affected platforms the old parsing code has been dropped as a part of
+>> this series.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Acked-by: Rob Herring <robh@kernel.org>
-> ---
-> 
-> Resending because it is waiting for half a year.
+> Amit, Thara. This has been lingering for quite some time whout any 
+> attention from your side. Could you please review the patchseries? Thank 
+> you!
 
-Applied, thanks
+I think this series has been long enough on the mailing list.
+
+I've applied patches 1 -> 14
+
+Thanks
 
 -- 
 <http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
