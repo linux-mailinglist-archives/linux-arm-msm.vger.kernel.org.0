@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C5FF669E02
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 17:28:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BE6FF669E16
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 17:28:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230146AbjAMQ21 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 11:28:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42766 "EHLO
+        id S229512AbjAMQ2u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 11:28:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230023AbjAMQ2F (ORCPT
+        with ESMTP id S229697AbjAMQ2H (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 11:28:05 -0500
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 122057D273
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 08:22:20 -0800 (PST)
-Received: by mail-ej1-x633.google.com with SMTP id qk9so53498376ejc.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 08:22:19 -0800 (PST)
+        Fri, 13 Jan 2023 11:28:07 -0500
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF3697D9FF
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 08:22:21 -0800 (PST)
+Received: by mail-ej1-x634.google.com with SMTP id vm8so53466423ejc.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 08:22:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=M9oKZpLB3KLxNjht49zMQ5zevFbZ/bcUUbDkM3FfyYA=;
-        b=yz/VebqfEp1bmhZjr9FNC1ihtfQnR9SeGG3hAJziFTTvriFYLQCyTY3TTjL93C5MKA
-         hla/sInL4jnIB1nKZJAyFRBaHSvNdGSCqqZ1I7hDPhrRKfuTr+RoZB1E0MKx7oZVY64h
-         iKU+DDNYQwUUUhZ92UbsIUHk8by803W17KKNdpFFLyZgiCP0zpkV0zdfePV1+aUnlNHc
-         6vaJvgT3KNT60pZ6cszElSPhqfX9BBB4po46IhOvJkB6fmZ8MogstCBzywuA0vKjrhle
-         hSB+ykAAJ6lFL+C/Tnf1soGmRB9OLBE4I3n0/uFJOonGnzDcY/PYQW1z6MZUl6Se2Ndm
-         garQ==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qphHuiI3995fMsqnotERxhZjaBqWPqwflOdlSfg7u7A=;
+        b=M0oeeTuTJxcCGIov8N7a9cwJEF4PjtMbQry9x4/Ou4MJXCTqdNMqWZr6QMBzxEvR3Q
+         /o2AX3Wgl5g/LLXrR5xx1Eqqlnnnk0xz2r3wX1kagWU0kdGGXqJM5LLjToKoZ0RCg3YS
+         p5Mx4oi8ib1cMAX2BoxdZifdW8Wtv+iAXKXUVhSMAFcbIMQ1bkBa12/uDXMOGZDtXUJs
+         6bgrTY3h5uXShC9oOArHaau4Ps5tLxOhrV4kDx34vuq/zuMZEhFflJmn6IkLSDPR3YK7
+         uoZFUrQs2ipkn6EgPcQCCJ5zTBEiCytplQS/Oi8PB/TWMKUvOo7EkFzetCxVDWC2aaba
+         ooNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=M9oKZpLB3KLxNjht49zMQ5zevFbZ/bcUUbDkM3FfyYA=;
-        b=qAEnApdHdVZThhQS+qYq2LYq7MZdjuGYTXQZrkA2StJb537vlI6LGtpJxQ1lC2hH5Q
-         UTx7L34BGgW5FvRh5vSx7ylnK9Tn5MxdQu45L//Ia0CyyIqxNjgiFM2LYaFdmvRDQ66J
-         EZR1bABd/kYU+Bznm2S2IVUrI/2gC6ztAIOxx0Isap2/Rb+HBVPGLz5tgG9nmhKhtKAn
-         uqGJmFvJWUUFDkRGVfVNgXLZBJaBGcMDLL5BRe/Kx/f/jBrwGz825bewg9aDYXfvL7P/
-         I4HBib6yqNc5d/nZIT+awvtkuY0YwnyPS/IdELiMh+Lq2rIjnsfKYraBV8eigcwdjqAG
-         fBXg==
-X-Gm-Message-State: AFqh2krPr/DABWNhcNMXHFyjFUVGy2wynLloIeydZCFYQTsxwHC6U/8q
-        1hJX+mfYjxGkGnGfdAMCmxol9g==
-X-Google-Smtp-Source: AMrXdXvd45K78hFtMbn/TLgUzGtyghVKPnuwBJk4k2UCCXd5I59g2iRZLy7eqsLZ58B/VpDHcrS18Q==
-X-Received: by 2002:a17:906:7fc3:b0:7c1:10b8:e6a4 with SMTP id r3-20020a1709067fc300b007c110b8e6a4mr65343071ejs.19.1673626938650;
-        Fri, 13 Jan 2023 08:22:18 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qphHuiI3995fMsqnotERxhZjaBqWPqwflOdlSfg7u7A=;
+        b=1Q71FBlJXFvdRr4uSb2yYi0cPFlR8qM89p/GI1O6i5cPxutGBEAAlj8dCr86XWiGdp
+         Tb8M1BYUeFIVDS6ygCOqia9C1ZGK8pTqtp2Z6hZxwjezB9NZnlsOy5mudATbxG3TiRx/
+         Xg0FEhrjXfqcBlTEJOwHB5POMpioYqqsRlFZv4T5QoLZnpbRO57AOQVjcRI1HtFT2Aza
+         PprD/YDiyKJ//E/7RF2842tRjdt9qMM7h9gB6yRieV3AEa8CqXlmk5YRyD/cHApjK8zj
+         ZHANmoMHKCCmBFvEkvjESpGxgvZaTXp/YxM8GJLiA2ZfIWCBEDoxdgox8Cu78/JXof5r
+         gNXg==
+X-Gm-Message-State: AFqh2kq0iWzbz5fh2+vSqZHY8PWPSfIMSC4wnCdVPdH4xuA0hkvlt7Br
+        CiYzSPbxk54K6eStrNJYdImMhQ==
+X-Google-Smtp-Source: AMrXdXtz10DQ/GMKG5X8oHVUlAN1dqCKvaugAKT3DKU7zmqlYytG/RBEMle5ksnPhyux6qTtte0urw==
+X-Received: by 2002:a17:906:eda2:b0:84d:4712:9c42 with SMTP id sa2-20020a170906eda200b0084d47129c42mr19114978ejb.56.1673626940618;
+        Fri, 13 Jan 2023 08:22:20 -0800 (PST)
 Received: from krzk-bin.. ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id o11-20020a170906768b00b0084d242d07ffsm8376737ejm.8.2023.01.13.08.22.17
+        by smtp.gmail.com with ESMTPSA id o11-20020a170906768b00b0084d242d07ffsm8376737ejm.8.2023.01.13.08.22.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Jan 2023 08:22:18 -0800 (PST)
+        Fri, 13 Jan 2023 08:22:20 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         Banajit Goswami <bgoswami@quicinc.com>,
@@ -62,54 +63,46 @@ To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 1/3] ASoC: dt-bindings: qcom,wsa881x: Allow sound-name-prefix
-Date:   Fri, 13 Jan 2023 17:22:12 +0100
-Message-Id: <20230113162214.117261-1-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 2/3] ASoC: dt-bindings: qcom,wcd934x: Describe slim-ifc-dev
+Date:   Fri, 13 Jan 2023 17:22:13 +0100
+Message-Id: <20230113162214.117261-2-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20230113162214.117261-1-krzysztof.kozlowski@linaro.org>
+References: <20230113162214.117261-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Reference common DAI properties to fix:
-
-  sdm845-db845c.dtb: speaker@0,1: 'sound-name-prefix' does not match any of the regexes: 'pinctrl-[0-9]+'
+The "slim-ifc-dev" property should not be just "true", because it allows
+any type.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- Documentation/devicetree/bindings/sound/qcom,wsa881x.yaml | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ Documentation/devicetree/bindings/sound/qcom,wcd934x.yaml | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/sound/qcom,wsa881x.yaml b/Documentation/devicetree/bindings/sound/qcom,wsa881x.yaml
-index d702b489320f..ac03672ebf6d 100644
---- a/Documentation/devicetree/bindings/sound/qcom,wsa881x.yaml
-+++ b/Documentation/devicetree/bindings/sound/qcom,wsa881x.yaml
-@@ -15,6 +15,9 @@ description: |
-   Their primary operating mode uses a SoundWire digital audio
-   interface. This binding is for SoundWire interface.
+diff --git a/Documentation/devicetree/bindings/sound/qcom,wcd934x.yaml b/Documentation/devicetree/bindings/sound/qcom,wcd934x.yaml
+index 184e8ccbdd13..39b27126cfc1 100644
+--- a/Documentation/devicetree/bindings/sound/qcom,wcd934x.yaml
++++ b/Documentation/devicetree/bindings/sound/qcom,wcd934x.yaml
+@@ -28,7 +28,9 @@ properties:
+     description: GPIO spec for reset line to use
+     maxItems: 1
  
-+allOf:
-+  - $ref: dai-common.yaml#
-+
- properties:
-   compatible:
-     const: sdw10217201000
-@@ -39,7 +42,7 @@ required:
-   - "#thermal-sensor-cells"
-   - "#sound-dai-cells"
+-  slim-ifc-dev: true
++  slim-ifc-dev:
++    description: IFC device interface
++    $ref: /schemas/types.yaml#/definitions/phandle
  
--additionalProperties: false
-+unevaluatedProperties: false
- 
- examples:
-   - |
+   clocks:
+     maxItems: 1
 -- 
 2.34.1
 
