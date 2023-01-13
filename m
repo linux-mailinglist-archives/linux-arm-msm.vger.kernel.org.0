@@ -2,116 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 33512669EA8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 17:48:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 09828669EC2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 17:53:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230057AbjAMQsJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 11:48:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35712 "EHLO
+        id S229553AbjAMQxX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 11:53:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229511AbjAMQrT (ORCPT
+        with ESMTP id S229868AbjAMQws (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 11:47:19 -0500
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B715C7BCC6;
-        Fri, 13 Jan 2023 08:45:03 -0800 (PST)
-Received: by mail-ej1-x62a.google.com with SMTP id hw16so41768452ejc.10;
-        Fri, 13 Jan 2023 08:45:03 -0800 (PST)
+        Fri, 13 Jan 2023 11:52:48 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46B7A78274
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 08:49:47 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id v10so30727025edi.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 08:49:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZSzg8ro4VicBsd4Z6YxYop5coys1WHe/3Ul2C/JMj58=;
-        b=iL3CqfCmDWIfqj8iaZc9rPyCV2YPsBuDEozU94ki+7XD4R0RT+Kh5o8qmygei5yHdF
-         eLJA4LegAfQsvVHVrTFTSI8DfNaFwJT3nTx6RyBpAl4DuGeFJQN9KEC1s5fYvFu7ubRu
-         QwLwMLNZpNJLghiKsV6J30uZD2lg0pW8rf0MXarJoMm6/gGkzwg0kZDU66cKzMVA1t87
-         15hsoepyRlZSRAKxNezL4LOx4CTzU3BafwZ6ZxtMva8cNjoV3FKrWMNeaaqMuF6HvfCq
-         +iT0ToavwrrgLj8tVZs+MUuPj1GUIY3bLmB+Wm67+coFFGWubGl29mKPG4WM312D8uds
-         Gm6g==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=E0Hwf435NI9x+XW4Wj0FsZq4Qu4oztZjGcQONywLmh8=;
+        b=L8lwqLpWBsOLOn8/6W0GxhxaHljuv6GWrzyiwr6PVLBp3jXW+Cx4znhTaYzLaimrx6
+         KtwfOQ8X3Gu31WqI4Xp9+2n8rVkmg7NqWbcmopvl/Z+n+GEs40IYQyd54NBG2kIUCoPA
+         eVTz77cX3BTCM6m3IrEgg1/evqc8cxilBhCM/S9K4VlOnFsVug3CBLOG4witg3Lg9EzW
+         bSwvz9FccElsNA/i3Uhs1cEgNveli9D/I2SJk2RgOg4AVA8PVSfNBJod2kyPllvIMoil
+         mi469QB7XMmhAIXRld78pqVadUrnCIKyBl5+kOHmI/of2PFdfHYEnESU0Z9xx9oFAx7p
+         vqjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZSzg8ro4VicBsd4Z6YxYop5coys1WHe/3Ul2C/JMj58=;
-        b=pL9sgTbblHvYxfgAdh27xinVODkhnKS2EqnmUgc651e/PwaOHR8g/B7kxYmGDwW/ba
-         KZTwn5soin/zieMuJFCzKbWAW5kgGGgYkw3eveCi/KMxqup3H+HNBazMLwggw1vRX5HE
-         7BsThZ1hVFX5iFkeeoHyDCx4s4T/KhjJrT/oYpfH2nq6ns0Mco5QjalgxMgHe+mDud4q
-         hwMdk7S1Z8Kqo2ghC2ISxrv845USKK3Jn9Emv2mHjxD6Yy3O6gZ+MqVQBiOBEMiNGX3r
-         7LGLpK7TdLIigI8UGiW6mbd9l77GjLiZ3h9lycZm8ij7pTqea+GJyA4noBT0p272aodl
-         O7Cw==
-X-Gm-Message-State: AFqh2kpCfTyUHtaarvvCqfgyWtKb9NmrIzyuED0OXeN4gm7ZB3KI05Wo
-        z74g94qlCjSr7jfMLz8vThmifWeKeCqlCw==
-X-Google-Smtp-Source: AMrXdXsKNJd2j8ldjOFQzjdF0s0MkRvf9VWdq5hj7FDnJ97o4yTcaNfmrBKrsU+GlumFI5iEsecz4w==
-X-Received: by 2002:a17:906:5dad:b0:7c0:dfba:54d3 with SMTP id n13-20020a1709065dad00b007c0dfba54d3mr11846198ejv.20.1673628303265;
-        Fri, 13 Jan 2023 08:45:03 -0800 (PST)
-Received: from fedora.. (dh207-97-147.xnet.hr. [88.207.97.147])
-        by smtp.googlemail.com with ESMTPSA id sb25-20020a1709076d9900b007b2a58e31dasm8777831ejc.145.2023.01.13.08.45.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Jan 2023 08:45:02 -0800 (PST)
-From:   Robert Marko <robimarko@gmail.com>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        bhelgaas@google.com, lpieralisi@kernel.org, robh@kernel.org,
-        kw@linux.com, krzysztof.kozlowski+dt@linaro.org, mani@kernel.org,
-        svarbanov@mm-sol.com, shawn.guo@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Robert Marko <robimarko@gmail.com>
-Subject: [PATCH v2 9/9] arm64: dts: qcom: ipq8074: correct PCIe QMP PHY output clock names
-Date:   Fri, 13 Jan 2023 17:44:49 +0100
-Message-Id: <20230113164449.906002-9-robimarko@gmail.com>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230113164449.906002-1-robimarko@gmail.com>
-References: <20230113164449.906002-1-robimarko@gmail.com>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=E0Hwf435NI9x+XW4Wj0FsZq4Qu4oztZjGcQONywLmh8=;
+        b=jYJcNwX3KnabOxQm79JcUqvpqArDtYR/sG+NRHEF+t5J73Uis8Y5pmR3PJsjLCidgm
+         FewgSejfSgqaQKosyjNroli1Vnllh+NLZacDncTt5+t7grHAEnWDUGOM/ZzyfZR7TSHe
+         BBYf5guXGOZuerD5KR10nOHmCSXlBJul8C02w244kFiYfBCNtSWCmsQk74L5XkPCT0u9
+         F4IqXogAOGLhk7VN673S+MKgHWRwbMu0qle8CP2g4fVd8n2Oxuxe9rlLl/eib7MIB8Lg
+         s4C5vRUOSn23/1idvuf6btbogThFV/WHf32p4NW6xB2Db0DnUpLYqv0ZCnWksVWJaiBW
+         kYhA==
+X-Gm-Message-State: AFqh2kq50jXR+s35Hu9Bv5Fr2OLN25Whq9OdQfeTy0dw8Dp5fdthQBie
+        FUvAFCJ9ngE1VocTYnJ12rqjeA==
+X-Google-Smtp-Source: AMrXdXtpIsmBMd0PLUTqbePBHzOiSxh9soqvgLUnTlOwzhQlxgDe0YF+PTLlO5KRRmPFZRyCKGrP1A==
+X-Received: by 2002:aa7:df17:0:b0:499:d297:334e with SMTP id c23-20020aa7df17000000b00499d297334emr10427423edy.20.1673628585847;
+        Fri, 13 Jan 2023 08:49:45 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id h26-20020a0564020e9a00b0045ce419ecffsm8320724eda.58.2023.01.13.08.49.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 13 Jan 2023 08:49:45 -0800 (PST)
+Message-ID: <5c046bb8-3d74-04c2-f32e-b6fd450f80fc@linaro.org>
+Date:   Fri, 13 Jan 2023 17:49:43 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH 2/2] Revert "dt-bindings: power: rpmpd: Add SM4250
+ support"
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     marijn.suijten@somainline.org, linux-kernel@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org
+References: <20230113152232.2624545-1-konrad.dybcio@linaro.org>
+ <20230113152232.2624545-2-konrad.dybcio@linaro.org>
+ <e1782f36-5a28-1fe4-47d5-b3bc00317b57@linaro.org>
+ <92b7955c-bcac-20ad-ccde-3eef17f092b6@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <92b7955c-bcac-20ad-ccde-3eef17f092b6@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Current PCIe QMP PHY output name were changed in ("arm64: dts: qcom: Fix
-IPQ8074 PCIe PHY nodes") however it did not account for the fact that GCC
-driver is relying on the old names to match them as they are being used as
-the parent for the gcc_pcie0_pipe_clk and gcc_pcie1_pipe_clk.
+On 13/01/2023 17:36, Konrad Dybcio wrote:
+> 
+> 
+> On 13.01.2023 17:33, Krzysztof Kozlowski wrote:
+>> On 13/01/2023 16:22, Konrad Dybcio wrote:
+>>> SM4250 and SM6115 use a shared device tree and the RPMPDs are
+>>> identical. There's no need for a separate entry, so remove it.
+>>>
+>>> This reverts commit 45ac44ed10e58cf9b510e6552317ed7d2602346f.
+>>>
+>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>> ---
+>>>  .../devicetree/bindings/power/qcom,rpmpd.yaml          |  1 -
+>>>  include/dt-bindings/power/qcom-rpmpd.h                 | 10 ----------
+>>>  2 files changed, 11 deletions(-)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
+>>> index 633d49884019..5bb9f59d196f 100644
+>>> --- a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
+>>> +++ b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
+>>> @@ -39,7 +39,6 @@ properties:
+>>>        - qcom,sdm845-rpmhpd
+>>>        - qcom,sdx55-rpmhpd
+>>>        - qcom,sdx65-rpmhpd
+>>> -      - qcom,sm4250-rpmpd
+>>
+>> Yet, dedicated compatibles are usually recommended. Maybe this should be
+>> used with fallback:
+>> "qcom,sm4250-rpmpd", "qcom,sm6115-rpmpd"
+> The compatible has never been used so far and it's really the
+> same situation as SDM630/660 AFAIK, so I don't think it makes
+> much sense.
 
-This broke parenting as GCC could not find the parent clock, so fix it by
-changing to the names that driver is expecting.
+OK, assuming these are almost the same SoCs in that aspect:
 
-Fixes: 942bcd33ed45 ("arm64: dts: qcom: Fix IPQ8074 PCIe PHY nodes")
-Signed-off-by: Robert Marko <robimarko@gmail.com>
----
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index 74eecca4f9e3..c6cbeb66c0e7 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -257,7 +257,7 @@ pcie_phy0: phy@84200 {
- 				#clock-cells = <0>;
- 				clocks = <&gcc GCC_PCIE0_PIPE_CLK>;
- 				clock-names = "pipe0";
--				clock-output-names = "pcie_0_pipe_clk";
-+				clock-output-names = "pcie20_phy0_pipe_clk";
- 			};
- 		};
- 
-@@ -285,7 +285,7 @@ pcie_phy1: phy@8e200 {
- 				#clock-cells = <0>;
- 				clocks = <&gcc GCC_PCIE1_PIPE_CLK>;
- 				clock-names = "pipe0";
--				clock-output-names = "pcie_1_pipe_clk";
-+				clock-output-names = "pcie20_phy1_pipe_clk";
- 			};
- 		};
- 
--- 
-2.39.0
+Best regards,
+Krzysztof
 
