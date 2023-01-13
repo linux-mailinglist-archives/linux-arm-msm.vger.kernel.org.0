@@ -2,52 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AE0E866A12A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 18:52:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 68D4D66A138
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 18:55:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229462AbjAMRwC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 12:52:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58542 "EHLO
+        id S230428AbjAMRzM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 12:55:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229978AbjAMRvk (ORCPT
+        with ESMTP id S229924AbjAMRyw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 12:51:40 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2074688A21;
-        Fri, 13 Jan 2023 09:44:22 -0800 (PST)
+        Fri, 13 Jan 2023 12:54:52 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53E32A25C0;
+        Fri, 13 Jan 2023 09:47:02 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 22C6E622C8;
-        Fri, 13 Jan 2023 17:44:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1E8FC433EF;
-        Fri, 13 Jan 2023 17:44:20 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 17E96B8163F;
+        Fri, 13 Jan 2023 17:46:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9445DC433F0;
+        Fri, 13 Jan 2023 17:46:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1673631861;
-        bh=/TvEdaQnixfTBRY60kd1Sqb49/Ul7/Ctq0AxWaiJKDU=;
+        s=k20201202; t=1673632012;
+        bh=pFf9JzNDw/gaL2e3i3Xnx474o61Ef0Q3FesKXT12MKI=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=CNLq1Swlnx3kKr+nR2rzwo+GXUG8Zp76/g2O+kc50d8VeyLm92uCYYIW1htMfB9Gb
-         6x8VQ3IHqxI4vx9bWoW3MQVpMwJP/ii2A/hefduydZCAf0OqCocTJzPlm1DOj9BJsb
-         dv6oniJ4DBtn8H2OWZXwSlOO/sJdyJbsxftU1BwMR3JNvUEVhMNcCg3RocbBlHY6bj
-         qHZWRF4W34holfYLRYDR0UHuWg3uHQBHBz+y82P4lb8Kb94jmYg4q9vIUxWCqg06UZ
-         qr7Pa23V9iJOWBYsRBEP2+OfhH4fSGmJTaqIDxCiQDWMyizkI7uO/uxmrqf48IIbIu
-         zf3YkIGl4+QfA==
-Date:   Fri, 13 Jan 2023 23:13:45 +0530
+        b=rXG37IuzqXeblx0Q4yCL2l6kUzV0wWRZNSp0Dzt+svPoJUb1FbU28nY6kt/sG8Kql
+         Z4cR+JAjJxGM/fKWAXuRn2SDQWR9ZdZGQMCxM1lpXJTXvsFAqSObzojq2dSPM3yp1G
+         +A0D/CsyjQqGpPB7V/vN+VlILDJR6dScdYSd37HZ8rlhayVWgX4/AnrWjy/io0hxFu
+         5Cb32uzgJw0555wayt4RkW76EuRS4MjxE7Yc+OqwRjP0SjHZGdjBH22OI+/rqmyHbK
+         jh5jRCaiURL1LOWAOQbMtTzvR66Lm1sL9PWprcSmLCabDs5jq1JrJbTiYURfYSMH8G
+         n6kwJ6skDpcxg==
+Date:   Fri, 13 Jan 2023 23:16:15 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-phy@lists.infradead.org, shawn.guo@linaro.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        agross@kernel.org, bhupesh.linux@gmail.com,
-        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski@linaro.org, andersson@kernel.org,
-        konrad.dybcio@somainline.org
-Subject: Re: [PATCH 0/3] Add Qualcomm SM6115 and SM4250 USB3 PHY support
-Message-ID: <Y8GYUWF/LHqGzlE/@matsya>
-References: <20221213122843.454845-1-bhupesh.sharma@linaro.org>
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Michael Srba <Michael.Srba@seznam.cz>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] Revert "phy: qualcomm: usb28nm: Add MDM9607 init
+ sequence"
+Message-ID: <Y8GY51Cfkj7o1MJs@matsya>
+References: <20221214223733.648167-1-marijn.suijten@somainline.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221213122843.454845-1-bhupesh.sharma@linaro.org>
+In-Reply-To: <20221214223733.648167-1-marijn.suijten@somainline.org>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -57,10 +68,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13-12-22, 17:58, Bhupesh Sharma wrote:
-> The series adds support for USB3 PHY found on SM6115 and SM4250 SoCs.
+On 14-12-22, 23:37, Marijn Suijten wrote:
+> This reverts commit 557a28811c7e0286d3816842032db5eb7bb5f156.
+> 
+> This commit introduced an init sequence from downstream DT [1] in the
+> driver.  As mentioned by the comment above the HSPHY_INIT_CFG macro for
+> this sequence:
+> 
+>     /*
+>      * The macro is used to define an initialization sequence.  Each tuple
+>      * is meant to program 'value' into phy register at 'offset' with 'delay'
+>      * in us followed.
+>      */
+> 
+> Instead of corresponding to offsets into the phy register, the sequence
+> read by the downstream driver [2] is passed into ulpi_write [3] which
+> crafts the address-value pair into a new value and writes it into the
+> same register at USB_ULPI_VIEWPORT [4].  In other words, this init
+> sequence is programmed into the hardware in a totally different way than
+> downstream and is unlikely to achieve the desired result, if the hsphy
+> is working at all.
+> 
+> An alternative method needs to be found to write these init values at
+> the desired location.  Fortunately mdm9607 did not land upstream yet [5]
+> and should have its compatible revised to use the generic one, instead
+> of a compatible that writes wrong data to the wrong registers.
 
-Applied, thanks
+Applied after adding missing subsystem tag, thanks
 
 -- 
 ~Vinod
