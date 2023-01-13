@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 112C066911D
+	by mail.lfdr.de (Postfix) with ESMTP id 6672F66911E
 	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 09:37:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231342AbjAMIh0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 03:37:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46828 "EHLO
+        id S232730AbjAMIh2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 03:37:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230258AbjAMIhZ (ORCPT
+        with ESMTP id S231416AbjAMIh1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 03:37:25 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CE7C1C921
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 00:37:24 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id f34so32085544lfv.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 00:37:24 -0800 (PST)
+        Fri, 13 Jan 2023 03:37:27 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB11A1C921
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 00:37:25 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id m6so32084719lfj.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 00:37:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=89Zd6mgRw6i6pS7UmAmLfKTihhoi7hZ3v4ZY4evNfNU=;
-        b=Md/c6o4xFP/rPyTe1JxNVDFfvvxKjrHwRmQThWtvoxAemn7Qw8PDih/X4Ij3SBmKTQ
-         oOorr2DP3DubEBXYQL/WtT7gBPCMt27Ux5W7KJ7ebUV+ZjMJjrPxLqsvRexkwvYM5qHR
-         Qjk+RbtTNyBgHucoN3BkReQ3KFIV7dbIgSJq+bn68jku+e5rcHuFPCkbPkNSou5OEMBT
-         NnlUBaudHvINOiesk1gOQmJrNcarT8ZYvUxASFNNrW7SQU/4PaJYx4uh0fkrMk1I+5Zo
-         ToBm8065LUIaLfVossiVto5Ljal1qU9nYZb0LhK0pqAgV+FYb5PT6uRRZnQ8/dGNZnke
-         qFZA==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PuuV5qgQd4Fgkeunhvdr07DY11Pz1HgjuVIDnSta5VY=;
+        b=P3ZqPL8IERqprJ05nefCOxrXXsRbjfraaJ2J3K99BEf2yB8oBzWfpNaA2B4mZnmNzn
+         boThwJ4e0ZPlg5XEFXMPoQIUXzackVVlWgduSmHKSppZdw2AMSL7d9RCHIROfPHbnIs/
+         BQsjmbZCuZ/axxau4qaHdj14j34JhpUYUwq+PkLIcw7I/0oNV84hpYGYB0CRwhUaFxlJ
+         OZONd4vvv+lLr5l6zjmkazCI8a+rJbVyKnVCK6Q444NjygXHrXKaAi5OWxaqbY0o/Ksf
+         +HYUvHh4FBuhiKjqtegDvC1fwo8u439ZLP3gIEXPmBtbNQbhY+a0D2G7uvJlB2r7A4ye
+         T4tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=89Zd6mgRw6i6pS7UmAmLfKTihhoi7hZ3v4ZY4evNfNU=;
-        b=tK1kqm7RBAPDiQSK5SL9qKDaUd7CRkNkwMQmVO8VBrntp3lnFk10Z5Ortwc3GtQ0io
-         rWaBs8DLnnHyKHeYqHxG/YVekRLrAjBFelMqTyWhiMPfsanq36wjpVCNopY8A7kWGFAj
-         DFu+EmDWBkwbcVXqzJjTiJj35AezL301v32lVFVaCCklNppdmBsc88GCD5tFMZOhxG2E
-         l12Bmxj/HzEJsMedD9WWALTZLW92d2+eN+1591bx/WqHVL/Urw0x1nSQ2o31zBfuYPgL
-         tPJLa69z5m3VpVGBjezJFYIF8ihRrAJVSnjpelKeFfX0EMB/j1zaKsESmGlJyiKUMWAx
-         nrtg==
-X-Gm-Message-State: AFqh2koVt2a4dAo8EAyFg+cBdqb8DQBNQeHOeCrTPGFid3UlCWnazuNx
-        Mc7eu8OrS/UgnN1hx37Apeie8A==
-X-Google-Smtp-Source: AMrXdXsKRL8Wgn2I3YnZYNfAI4H1YVtupP4j3ohwao7d05G23ww7r7+efpyZW+XbzlG5m+TiV3Av2A==
-X-Received: by 2002:a05:6512:40f:b0:4ce:e95c:f2ff with SMTP id u15-20020a056512040f00b004cee95cf2ffmr790411lfk.18.1673599042611;
-        Fri, 13 Jan 2023 00:37:22 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=PuuV5qgQd4Fgkeunhvdr07DY11Pz1HgjuVIDnSta5VY=;
+        b=aU7v06O3tN/rE2Dpir+LddtQX/IeqzhYvMSt1Ml9HN322CnJe8E5Fvh/AmDjA+nuR6
+         q3VT3SzCWtwwCDeX4LW7/49mR98IO6cuAhlb7BO5vhxQ1klP0H2y4OMy8+ATc7FINHbO
+         a4DZhWVX5DxTM/hFa/BYPDwO0v9c4lo1yhBXa/apKX2FLhawM3hnKMmphNG0J2Tneott
+         /fFlc5Xf+GVMkWlvHIl3OqZAqZGpMHETu0JAo80VGU663/tbgZ5lwtiyIbffd7SyZeNU
+         Ohc4TrKj3jZd1z+y+TK6iBavlK9CcGKzgfWbs+nhDxs/VHqP4l0s3+mCgnaT4HqX0om2
+         KM6g==
+X-Gm-Message-State: AFqh2kocKJCLoMZJBkryIx5Mt4UTpq9EqLpLzQ8Mr4JYE71cEz1cQqaC
+        qwpnWqvDLWKkVMeT1bQQImgJug==
+X-Google-Smtp-Source: AMrXdXv0o0M6JB3Tnt/2KB08GcXj7B7SyVfKrhhuoyFsml6j+I/UFUjTc9BEmuElMCq5Pw/hIjLuyA==
+X-Received: by 2002:a05:6512:12d5:b0:4d1:3b7c:286c with SMTP id p21-20020a05651212d500b004d13b7c286cmr327637lfg.41.1673599044067;
+        Fri, 13 Jan 2023 00:37:24 -0800 (PST)
 Received: from eriador.lumag.spb.ru ([194.204.33.9])
-        by smtp.gmail.com with ESMTPSA id o6-20020a05651205c600b004994117b0fdsm3748038lfo.281.2023.01.13.00.37.21
+        by smtp.gmail.com with ESMTPSA id o6-20020a05651205c600b004994117b0fdsm3748038lfo.281.2023.01.13.00.37.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Jan 2023 00:37:22 -0800 (PST)
+        Fri, 13 Jan 2023 00:37:23 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -62,81 +63,322 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v6 00/11] dt-bindings: display/msm: rework MDP5 and MDSS schema
-Date:   Fri, 13 Jan 2023 10:37:09 +0200
-Message-Id: <20230113083720.39224-1-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v6 01/11] dt-bindings: display/msm: convert MDP5 schema to YAML format
+Date:   Fri, 13 Jan 2023 10:37:10 +0200
+Message-Id: <20230113083720.39224-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.0
+In-Reply-To: <20230113083720.39224-1-dmitry.baryshkov@linaro.org>
+References: <20230113083720.39224-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Krzysztof asked me to merge all pending MDSS/MDP5/DPU patches to a
-single series to ease review and to let one to see the whole picture.
+Convert the mdp5.txt into the yaml format. Changes to the existing (txt) schema:
+ - MSM8996 has additional "iommu" clock, define it separately
+ - Add new properties used on some of platforms:
+   - interconnects, interconnect-names
+   - iommus
+   - power-domains
+   - operating-points-v2, opp-table
 
-This combines three series: MDP5 schema conversion, mdss/mdp renaming
-and addition of the "core" clock to the MDSS device node.
-
-Changes since v5:
-- Merged in the mdss/mdp node renaming and core clock series
-- Fixed the formatting of descriptions in qcom,mdp5 schema.
-
-Changes since v4:
-- Adjust qcom,mdss.yaml to follow the addition of per-SoC compatibles
-
-Changes since v3:
-- Drop MSM8998 completely, it conflicts with qcom,msm8998-dpu.yaml
-
-Changes since v2:
-- Fix MSM8998 compatible list: "qcom,msm8998-dpu", "msm,mdp5" to allow
-  handling this device by either of the drivers.
-
-Changes since v1:
-- Renamed mdp@ to display-controller@ in the example (Krzysztof)
-- Extended ports description to mention possible ports (Krzysztof)
-- Fixed ports@ regexp to limit to just four ports (Krzysztof)
-- Included patches adding per-SoC compat strings to the schema and to
-  dtsi files.
-
-
-Dmitry Baryshkov (11):
-  dt-bindings: display/msm: convert MDP5 schema to YAML format
-  dt-bindings: display/msm: add SoC-specific compats to qcom,mdp5.yaml
-  dt-bindings: display/msm: add core clock to the mdss bindings
-  dt-bindings: display/msm: rename mdss nodes to display-subsystem
-  dt-bindings: display/msm: rename mdp nodes to display-controller
-  ARM: dts: qcom-msm8974: add SoC specific compat string to mdp5 node
-  arm64: dts: qcom: add SoC specific compat strings to mdp5 nodes
-  arm64: dts: qcom: rename mdss nodes to display-subsystem
-  ARM: dts: qcom-msm8974: rename mdss node to display-subsystem
-  arm64: dts: qcom: rename mdp nodes to display-controller
-  ARM: dts: qcom: rename mdp nodes to display-controller
-
- .../bindings/display/msm/dpu-common.yaml      |   8 +
- .../devicetree/bindings/display/msm/mdp5.txt  | 132 ---------------
- .../bindings/display/msm/mdss-common.yaml     |   8 +
- .../bindings/display/msm/qcom,mdp5.yaml       | 156 ++++++++++++++++++
- .../bindings/display/msm/qcom,mdss.yaml       |  51 ++++--
- arch/arm/boot/dts/qcom-apq8064.dtsi           |   2 +-
- arch/arm/boot/dts/qcom-msm8974.dtsi           |   6 +-
- arch/arm64/boot/dts/qcom/msm8916.dtsi         |   6 +-
- arch/arm64/boot/dts/qcom/msm8953.dtsi         |   4 +-
- arch/arm64/boot/dts/qcom/msm8996.dtsi         |   6 +-
- arch/arm64/boot/dts/qcom/sc7180.dtsi          |   2 +-
- arch/arm64/boot/dts/qcom/sdm630.dtsi          |   6 +-
- arch/arm64/boot/dts/qcom/sdm660.dtsi          |   2 +
- arch/arm64/boot/dts/qcom/sdm845.dtsi          |   2 +-
- arch/arm64/boot/dts/qcom/sm8250.dtsi          |   2 +-
- 15 files changed, 230 insertions(+), 163 deletions(-)
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ .../devicetree/bindings/display/msm/mdp5.txt  | 132 -----------------
+ .../bindings/display/msm/qcom,mdp5.yaml       | 138 ++++++++++++++++++
+ 2 files changed, 138 insertions(+), 132 deletions(-)
  delete mode 100644 Documentation/devicetree/bindings/display/msm/mdp5.txt
  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,mdp5.yaml
 
+diff --git a/Documentation/devicetree/bindings/display/msm/mdp5.txt b/Documentation/devicetree/bindings/display/msm/mdp5.txt
+deleted file mode 100644
+index 65d03c58dee6..000000000000
+--- a/Documentation/devicetree/bindings/display/msm/mdp5.txt
++++ /dev/null
+@@ -1,132 +0,0 @@
+-Qualcomm adreno/snapdragon MDP5 display controller
+-
+-Description:
+-
+-This is the bindings documentation for the MDP5 display
+-controller found in SoCs like MSM8974, APQ8084, MSM8916, MSM8994 and MSM8996.
+-
+-MDP5:
+-Required properties:
+-- compatible:
+-  * "qcom,mdp5" - MDP5
+-- reg: Physical base address and length of the controller's registers.
+-- reg-names: The names of register regions. The following regions are required:
+-  * "mdp_phys"
+-- interrupts: Interrupt line from MDP5 to MDSS interrupt controller.
+-- clocks: device clocks. See ../clocks/clock-bindings.txt for details.
+-- clock-names: the following clocks are required.
+--   * "bus"
+--   * "iface"
+--   * "core"
+--   * "vsync"
+-- ports: contains the list of output ports from MDP. These connect to interfaces
+-  that are external to the MDP hardware, such as HDMI, DSI, EDP etc (LVDS is a
+-  special case since it is a part of the MDP block itself).
+-
+-  Each output port contains an endpoint that describes how it is connected to an
+-  external interface. These are described by the standard properties documented
+-  here:
+-	Documentation/devicetree/bindings/graph.txt
+-	Documentation/devicetree/bindings/media/video-interfaces.txt
+-
+-  The availability of output ports can vary across SoC revisions:
+-
+-  For MSM8974 and APQ8084:
+-	 Port 0 -> MDP_INTF0 (eDP)
+-	 Port 1 -> MDP_INTF1 (DSI1)
+-	 Port 2 -> MDP_INTF2 (DSI2)
+-	 Port 3 -> MDP_INTF3 (HDMI)
+-
+-  For MSM8916:
+-	 Port 0 -> MDP_INTF1 (DSI1)
+-
+-  For MSM8994 and MSM8996:
+-	 Port 0 -> MDP_INTF1 (DSI1)
+-	 Port 1 -> MDP_INTF2 (DSI2)
+-	 Port 2 -> MDP_INTF3 (HDMI)
+-
+-Optional properties:
+-- clock-names: the following clocks are optional:
+-  * "lut"
+-  * "tbu"
+-  * "tbu_rt"
+-
+-Example:
+-
+-/ {
+-	...
+-
+-	mdss: mdss@1a00000 {
+-		compatible = "qcom,mdss";
+-		reg = <0x1a00000 0x1000>,
+-		      <0x1ac8000 0x3000>;
+-		reg-names = "mdss_phys", "vbif_phys";
+-
+-		power-domains = <&gcc MDSS_GDSC>;
+-
+-		clocks = <&gcc GCC_MDSS_AHB_CLK>,
+-			 <&gcc GCC_MDSS_AXI_CLK>,
+-			 <&gcc GCC_MDSS_VSYNC_CLK>;
+-		clock-names = "iface",
+-			      "bus",
+-			      "vsync"
+-
+-		interrupts = <0 72 0>;
+-
+-		interrupt-controller;
+-		#interrupt-cells = <1>;
+-
+-		#address-cells = <1>;
+-		#size-cells = <1>;
+-		ranges;
+-
+-		mdp: mdp@1a01000 {
+-			compatible = "qcom,mdp5";
+-			reg = <0x1a01000 0x90000>;
+-			reg-names = "mdp_phys";
+-
+-			interrupt-parent = <&mdss>;
+-			interrupts = <0 0>;
+-
+-			clocks = <&gcc GCC_MDSS_AHB_CLK>,
+-				 <&gcc GCC_MDSS_AXI_CLK>,
+-				 <&gcc GCC_MDSS_MDP_CLK>,
+-				 <&gcc GCC_MDSS_VSYNC_CLK>;
+-			clock-names = "iface",
+-				      "bus",
+-				      "core",
+-				      "vsync";
+-
+-			ports {
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				port@0 {
+-					reg = <0>;
+-					mdp5_intf1_out: endpoint {
+-						remote-endpoint = <&dsi0_in>;
+-					};
+-				};
+-			};
+-		};
+-
+-		dsi0: dsi@1a98000 {
+-			...
+-			ports {
+-				...
+-				port@0 {
+-					reg = <0>;
+-					dsi0_in: endpoint {
+-						remote-endpoint = <&mdp5_intf1_out>;
+-					};
+-				};
+-				...
+-			};
+-			...
+-		};
+-
+-		dsi_phy0: dsi-phy@1a98300 {
+-			...
+-		};
+-	};
+-};
+diff --git a/Documentation/devicetree/bindings/display/msm/qcom,mdp5.yaml b/Documentation/devicetree/bindings/display/msm/qcom,mdp5.yaml
+new file mode 100644
+index 000000000000..5e3cd7abf046
+--- /dev/null
++++ b/Documentation/devicetree/bindings/display/msm/qcom,mdp5.yaml
+@@ -0,0 +1,138 @@
++# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/display/msm/qcom,mdp5.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Adreno/Snapdragon Mobile Display controller (MDP5)
++
++description:
++  MDP5 display controller found in SoCs like MSM8974, APQ8084, MSM8916, MSM8994
++  and MSM8996.
++
++maintainers:
++  - Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
++  - Rob Clark <robdclark@gmail.com>
++
++properties:
++  compatible:
++    const: qcom,mdp5
++
++  reg:
++    maxItems: 1
++
++  reg-names:
++    items:
++      - const: mdp_phys
++
++  interrupts:
++    maxItems: 1
++
++  clocks:
++    minItems: 4
++    maxItems: 7
++
++  clock-names:
++    oneOf:
++      - minItems: 4
++        items:
++          - const: iface
++          - const: bus
++          - const: core
++          - const: vsync
++          - const: lut
++          - const: tbu
++          - const: tbu_rt
++        #MSM8996 has additional iommu clock
++      - items:
++          - const: iface
++          - const: bus
++          - const: core
++          - const: iommu
++          - const: vsync
++
++  interconnects:
++    minItems: 1
++    items:
++      - description: Interconnect path from mdp0 (or a single mdp) port to the data bus
++      - description: Interconnect path from mdp1 port to the data bus
++      - description: Interconnect path from rotator port to the data bus
++
++  interconnect-names:
++    minItems: 1
++    items:
++      - const: mdp0-mem
++      - const: mdp1-mem
++      - const: rotator-mem
++
++  iommus:
++    items:
++      - description: apps SMMU with the Stream-ID mask for Hard-Fail port0
++
++  power-domains:
++    maxItems: 1
++
++  operating-points-v2: true
++  opp-table:
++    type: object
++
++  ports:
++    $ref: /schemas/graph.yaml#/properties/ports
++    description: >
++      Contains the list of output ports from DPU device. These ports
++      connect to interfaces that are external to the DPU hardware,
++      such as DSI, DP etc. MDP5 devices support up to 4 ports:
++      one or two DSI ports, HDMI and eDP.
++
++    patternProperties:
++      "^port@[0-3]+$":
++        $ref: /schemas/graph.yaml#/properties/port
++
++    # at least one port is required
++    required:
++      - port@0
++
++required:
++  - compatible
++  - reg
++  - reg-names
++  - clocks
++  - clock-names
++  - ports
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,gcc-msm8916.h>
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    display-controller@1a01000 {
++        compatible = "qcom,mdp5";
++        reg = <0x1a01000 0x90000>;
++        reg-names = "mdp_phys";
++
++        interrupt-parent = <&mdss>;
++        interrupts = <0>;
++
++        clocks = <&gcc GCC_MDSS_AHB_CLK>,
++                 <&gcc GCC_MDSS_AXI_CLK>,
++                 <&gcc GCC_MDSS_MDP_CLK>,
++                 <&gcc GCC_MDSS_VSYNC_CLK>;
++        clock-names = "iface",
++                      "bus",
++                      "core",
++                      "vsync";
++
++        ports {
++            #address-cells = <1>;
++            #size-cells = <0>;
++
++            port@0 {
++                reg = <0>;
++                endpoint {
++                    remote-endpoint = <&dsi0_in>;
++                };
++            };
++        };
++    };
++...
 -- 
 2.39.0
 
