@@ -2,178 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A992669904
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 14:49:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8BC5D669915
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 14:52:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241634AbjAMNtU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 08:49:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46950 "EHLO
+        id S241863AbjAMNwt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 08:52:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51288 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241898AbjAMNsw (ORCPT
+        with ESMTP id S241347AbjAMNwU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 08:48:52 -0500
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75D05B12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 05:43:59 -0800 (PST)
-Received: by mail-lj1-x22c.google.com with SMTP id bn6so22490806ljb.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 05:43:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0dvIgWqDWY/1LgfOS7GGbiamPI1bZCecZCmejiag2nM=;
-        b=H9SX8B/JRlvpSfhw6j/Fdm2vUS6GUe9mWXyE1mFqOBCa+u3ykx9Ar2nN4qhhFrg0Nh
-         FqDUFeSmXpLnHm8KyhmJPkTctimDeEMM145ZfYmdcnkKCEx5o7tn43zO0JjoFQjZxEWa
-         FBfnTQSQnO+ZOUm2xqmeMpUNRmvXT93EHLaZpUp5xqun0vs7vWqQ3Tf5zJ3PLp6V5dez
-         V8HBZWsbA/7SLX9EHMJ55WhsuYN1Q8pXiCMe3Kv1n6OczMQkpwqI5Znnk1qwFeCwRtz1
-         Kz90X+SUW0iA1aMFbuUKbGCqceq4be4Tam19VsTm7vayd+YHfueiPkzMmvAQqgX1S61f
-         TWfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0dvIgWqDWY/1LgfOS7GGbiamPI1bZCecZCmejiag2nM=;
-        b=rMjI06lCxu42WnV1RkxCtEuaIr7v1g3L/wNA5Oo7s9smvk155l1uKrq1aichtJDXz/
-         6O3Rhdyir1bYYIcF2qoBGlEyY7o4HkMn1Zf6al8zODsn3RDBD6o8bFfIO5lpsQkFID+i
-         fTxjVPR9ZlRcZTvnQXVNTFBcYPIEFnvmTlxNV1RJHFAmnAo+tmYjZA5d++7dNywb9TRz
-         sXzbe8pRpmG3trXsrei991VW3ulELjYm0di9vHlnS+g7XOmX9outD+0mI5UuUpWjnswT
-         XJqKvICFw07npX2ZadVdG7oNHm8CNgrjLK+J8C1fN9tHBazZPweRL4D/8CJKGFF4/eZN
-         eu2w==
-X-Gm-Message-State: AFqh2kqPZ2mpqPb0YvY0vZaZYj27lqIgfwqsfSoH7pmh8jNHJLKwB29F
-        tAyfWDsytvMsNTwFy7KjiiqAx9uqv8fmF9+R
-X-Google-Smtp-Source: AMrXdXsjw/R9fTAkGVJOeAERoJ3QoqbCXdUYTxmMFXKDVL0gMFGgPEKCbLCCaq6fIYJiYvtRZ5bQfg==
-X-Received: by 2002:a2e:954b:0:b0:27f:ca62:5fb4 with SMTP id t11-20020a2e954b000000b0027fca625fb4mr19568500ljh.14.1673617437794;
-        Fri, 13 Jan 2023 05:43:57 -0800 (PST)
-Received: from [192.168.1.101] (abym53.neoplus.adsl.tpnet.pl. [83.9.32.53])
-        by smtp.gmail.com with ESMTPSA id k16-20020a05651c10b000b0027fb9e64bd0sm2571401ljn.86.2023.01.13.05.43.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Jan 2023 05:43:56 -0800 (PST)
-Message-ID: <1ebbd129-5b84-b649-a36d-f9030b26cb5c@linaro.org>
-Date:   Fri, 13 Jan 2023 14:43:55 +0100
+        Fri, 13 Jan 2023 08:52:20 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F28CB687BF;
+        Fri, 13 Jan 2023 05:49:06 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 69BDD61DE6;
+        Fri, 13 Jan 2023 13:49:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B432DC433F0;
+        Fri, 13 Jan 2023 13:49:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1673617745;
+        bh=jbCnZtB+5zZ9PoSDkY6kEzzfCJcEPrRIqB+juM/kNJw=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=i5lTeu5xY2oN+T0eTAFbwFxN/mkGgmj3R1uqHdYoY5NLOx2Vi8JJYCGlq9H244KuV
+         KORCNCzrEsMtBrwiP+Rag2BjZ03N/T3fck1lMU5vHyuGRmRtV039ot2ypE4/v6xpC2
+         CVr+p8ehHmk5c4JTWKzlXcnRYvl+vntmdLRqPqFjB24ZgYXmJfytaAFriPeYxTRaTF
+         EzFzGcdfYKkmi6gBMRnzWCk7eMJAyxklVz4Mv2q6uc4BlH1vOZSgC3rGt6V3ZnoGEY
+         izrBtYRVXuWOyR7XdjMpXzWUj6/ZKG1wHK6m3eOLTfx0G1/W+tqgepVn8hmFTwIty9
+         8Cf1FC0lDBcnQ==
+Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
+        by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.95)
+        (envelope-from <maz@kernel.org>)
+        id 1pGKQZ-001WzG-9z;
+        Fri, 13 Jan 2023 13:49:03 +0000
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH 09/13] clk: qcom: cpu-8996: fix PLL configuration sequence
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230111192004.2509750-1-dmitry.baryshkov@linaro.org>
- <20230111192004.2509750-10-dmitry.baryshkov@linaro.org>
- <e556e250-7ae4-a5a7-7d0f-eb80a0231e8b@linaro.org>
- <449be451-f12c-ee14-a5f8-7a1e0d417597@linaro.org>
- <942a6282-5519-8871-5043-229bead87bd8@linaro.org>
- <ee457852-adb7-3ecf-e02b-264e804a280c@linaro.org>
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <ee457852-adb7-3ecf-e02b-264e804a280c@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+Date:   Fri, 13 Jan 2023 13:49:02 +0000
+From:   Marc Zyngier <maz@kernel.org>
+To:     devi priya <quic_devipriy@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org,
+        linus.walleij@linaro.org, catalin.marinas@arm.com, will@kernel.org,
+        p.zabel@pengutronix.de, shawnguo@kernel.org, arnd@arndb.de,
+        marcel.ziswiler@toradex.com, dmitry.baryshkov@linaro.org,
+        nfraprado@collabora.com, broonie@kernel.org, tdas@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
+        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
+        quic_poovendh@quicinc.com
+Subject: Re: [PATCH 6/7] arm64: dts: Add ipq9574 SoC and AL02 board support
+In-Reply-To: <20230110121316.24892-7-quic_devipriy@quicinc.com>
+References: <20230110121316.24892-1-quic_devipriy@quicinc.com>
+ <20230110121316.24892-7-quic_devipriy@quicinc.com>
+User-Agent: Roundcube Webmail/1.4.13
+Message-ID: <5da7ead743415dfb6d571a6b72a81b08@kernel.org>
+X-Sender: maz@kernel.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 51.254.78.96
+X-SA-Exim-Rcpt-To: quic_devipriy@quicinc.com, agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com, sboyd@kernel.org, linus.walleij@linaro.org, catalin.marinas@arm.com, will@kernel.org, p.zabel@pengutronix.de, shawnguo@kernel.org, arnd@arndb.de, marcel.ziswiler@toradex.com, dmitry.baryshkov@linaro.org, nfraprado@collabora.com, broonie@kernel.org, tdas@codeaurora.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org, quic_srichara@quicinc.com, quic_gokulsri@quicinc.com, quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com, quic_arajkuma@quicinc.com, quic_anusha@quicinc.com, quic_poovendh@quicinc.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 2023-01-10 12:13, devi priya wrote:
+> From: POOVENDHAN SELVARAJ <quic_poovendh@quicinc.com>
+> 
+> Add initial device tree support for Qualcomm IPQ9574 SoC
+> and AL02 board
+> 
+> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
+> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
+> Co-developed-by: devi priya <quic_devipriy@quicinc.com>
+> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
+> Signed-off-by: POOVENDHAN SELVARAJ <quic_poovendh@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/Makefile            |   1 +
+>  arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dts |  69 ++++
+>  arch/arm64/boot/dts/qcom/ipq9574.dtsi        | 318 +++++++++++++++++++
+>  3 files changed, 388 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile
+> b/arch/arm64/boot/dts/qcom/Makefile
+> index 3e79496292e7..872c62028a0b 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -7,6 +7,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= ipq6018-cp01-c1.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk01.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk10-c1.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk10-c2.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-al02-c7.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-alcatel-idol347.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-asus-z00l.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-huawei-g7.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dts
+> b/arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dts
+> new file mode 100644
+> index 000000000000..ae3c32f3e16a
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dts
 
+[...]
 
-On 13.01.2023 12:19, Dmitry Baryshkov wrote:
-> On 12/01/2023 16:32, Konrad Dybcio wrote:
->>
->>
->> On 11.01.2023 23:05, Dmitry Baryshkov wrote:
->>> On 11/01/2023 23:08, Konrad Dybcio wrote:
->>>>
->>>>
->>>> On 11.01.2023 20:20, Dmitry Baryshkov wrote:
->>>>> Switch both power and performance clocks to the GPLL0/2 (sys_apcs_aux)
->>>>> before PLL configuration. Switch them to the ACD afterwards.
->>>>>
->>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>>> ---
->>>>>    drivers/clk/qcom/clk-cpu-8996.c | 14 ++++++++++++++
->>>>>    1 file changed, 14 insertions(+)
->>>>>
->>>>> diff --git a/drivers/clk/qcom/clk-cpu-8996.c b/drivers/clk/qcom/clk-cpu-8996.c
->>>>> index 571ed52b3026..47c58bb5f21a 100644
->>>>> --- a/drivers/clk/qcom/clk-cpu-8996.c
->>>>> +++ b/drivers/clk/qcom/clk-cpu-8996.c
->>>>> @@ -432,13 +432,27 @@ static int qcom_cpu_clk_msm8996_register_clks(struct device *dev,
->>>>>    {
->>>>>        int i, ret;
->>>>>    +    /* Select GPLL0 for 300MHz for the both clusters */
->>>> superfluous 'the'
->>>>
->>>>> +    regmap_write(regmap, PERFCL_REG_OFFSET + MUX_OFFSET, 0xc);
->>>>> +    regmap_write(regmap, PWRCL_REG_OFFSET + MUX_OFFSET, 0xc);
->>>>> +
->>>>> +    /* Ensure write goes through before PLLs are reconfigured */
->>>>> +    udelay(5);
->>>> Is this value based on n clock cycles, or 'good enough'?
->>>
->>> Don't know, this is based on downstream direclty.
->> Right, I see it now.
->>
->>>
->>>>
->>>>> +
->>>>>        clk_alpha_pll_configure(&pwrcl_pll, regmap, &hfpll_config);
->>>>>        clk_alpha_pll_configure(&perfcl_pll, regmap, &hfpll_config);
->>>>>        clk_alpha_pll_configure(&pwrcl_alt_pll, regmap, &altpll_config);
->>>>>        clk_alpha_pll_configure(&perfcl_alt_pll, regmap, &altpll_config);
->>>>>    +    /* Wait for PLL(s) to lock */
->>>>> +        udelay(50);
->>>> Weird indentation
-> 
-> Fixing for v2.
-> 
->>>>
->>>> Maybe wait_for_pll_enable_lock() to be super sure?
->>>
->>> Does it work for HWFSM PLLs?
->> Not sure, but wait_for_pll_update_ack_clear() should, since it's
->> called by
-> 
-> I'd prefer to keep it as is. First, this seems to be the difference between normal and hwfsm PLLs, see clk_alpha_pll_is_enabled() vs clk_alpha_pll_hwfsm_is_enabled(). And second, the wait_for_pll() function is not exported from the clk-alpha-pll.c. Note, that downstream also does sleep instead of waiting.
-Okay let's settle on that.
+> +	timer {
+> +		compatible = "arm,armv8-timer";
+> +		interrupts = <GIC_PPI 2 (GIC_CPU_MASK_SIMPLE(4) | 
+> IRQ_TYPE_LEVEL_LOW)>,
+> +			     <GIC_PPI 3 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+> +			     <GIC_PPI 4 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+> +			     <GIC_PPI 1 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>;
 
-Konrad
-> 
->>
->> clk_alpha_pll_hwfsm_set_rate() ->
->>    __clk_alpha_pll_set_rate() ->
->>      clk_alpha_pll_update_latch() ->
->>        __clk_alpha_pll_update_latch()
->>
->> Konrad
->>>
->>>>
->>>>> +
->>>>>        qcom_cpu_clk_msm8996_acd_init(regmap);
->>>>>    +    /* Switch clusters to use the ACD leg */
->>>>> +    regmap_write(regmap, PWRCL_REG_OFFSET + MUX_OFFSET, 0x2);
->>>>> +    regmap_write(regmap, PERFCL_REG_OFFSET + MUX_OFFSET, 0x2);
->>>>> +
->>>> No delays here?
->>>
->>> No. Probably it isn't required since there is no additional PLL locking, etc.
->>>
->>>>
->>>> Konrad
->>>>>        for (i = 0; i < ARRAY_SIZE(cpu_msm8996_hw_clks); i++) {
->>>>>            ret = devm_clk_hw_register(dev, cpu_msm8996_hw_clks[i]);
->>>>>            if (ret)
->>>
-> 
+Interesting choice for the PPIs...
+
+> +		clock-frequency = <24000000>;
+
+Please drop this and fix the firmware. No system built within
+past 10 years should need it.
+
+         M.
+-- 
+Jazz is not dead. It just smells funny...
