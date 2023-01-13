@@ -2,108 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1807A6691F0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 09:57:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 395CA669215
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 10:01:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232777AbjAMI5Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 03:57:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60414 "EHLO
+        id S232500AbjAMJB0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 04:01:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232500AbjAMI5Y (ORCPT
+        with ESMTP id S230161AbjAMJBP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 03:57:24 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 510A937278
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 00:57:23 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id bp15so32153172lfb.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 00:57:23 -0800 (PST)
+        Fri, 13 Jan 2023 04:01:15 -0500
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACCC26E41D
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 01:01:14 -0800 (PST)
+Received: by mail-ej1-x62e.google.com with SMTP id ss4so43502850ejb.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 01:01:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ysmHHp/43jCoR62RWa7j7U0fIOfTEzPcP5KkwYW03+Y=;
-        b=JSQ9xgftTgc+3wChXekfPAhq633giaFDfteRLlk662EuogEM1yyTybzvAs6JUU/+yC
-         eNIF1kkjxwXwhNvUW/gsqLNtNK05X+jWily8sQ+HYu5OdZY7ixMtw1gB1pc4/qvzC3Wn
-         VTy6p3Zh3kRQf38km99+OrYx/mu5/hsETlOXWDbJYYKMY2EbE/aOns8YPUtulVjbu17G
-         mw/qbhx8aj7KehXUPGMZVTgpsMkg5E3g8714UEE29BALMQ3joIu+r/y5Bx9eknQdZtku
-         nnwCirFJ46KtEfZDpGTS7InzMD02NBOk2969DPioKPJE4hZAFbYT8z1JeBb2XQlw934g
-         YSsQ==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=14vWSUq8m0YB7K6+daykZcIVaA+luIuXLh3y27wDsWg=;
+        b=bR2S7FuChvapbV2SSHw5GKXtn/l3a/gzcDyOBMAB4i/vnG0xHLw9sukVToJB4Lb+s5
+         oGwlaUBgZl5433qp2rS02Fb8ddVxcxN5PLsDUG2LPUqw/L0cPbOVkGT1I9q74Jl+TzZ3
+         p6Bhr4IGA+1NCUx52jxdBrcvPAH45TNeqcsH8620I7fF919Gw+Sah8QOHYL3hl4pg/9M
+         UzoGRx70jgRYyhUg07tmt4gcmWmUcxXGGP+VqgO9oSYkflBV+tmxT/DUvJBZ/yyepUyH
+         w7c/TETrHJigi+N5bIv3nPr1FocbznUgCUqUG4SZlSzPJ7O3VvC0ZNVW1IOWfT4uOdxh
+         pG3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ysmHHp/43jCoR62RWa7j7U0fIOfTEzPcP5KkwYW03+Y=;
-        b=Dy8H08gaXqdf37VhcImewqM5dbnewjFTJ8Leenpos5DJgBfTEEnMlWHamejJpV7so1
-         0yQHlB5U7bkWW31550Jm91yedSLQo+bbRqrBAK2pmQ0tQVTnDlabh/vkzrxeJvKZKGvg
-         HtSpgJxyjkWq6OWg6M/QjGpJpoW+ohTg3WFyVdlvI3qfVgjuQy+YKyOqBn6VDDIwF+Rf
-         ixXMLI8wx2mKldG8lRNM7aBq/QrdlpKsKIqL00a1tHcsyhR3Ye/HnEaKVNkZv+Ri7Dzs
-         +y22SUIxx/h595y7tmtz7f2ciIeDwbO5pgilkxxk8kEsy/aXuLYa3YbrpIM9PKNfBnC+
-         ij9A==
-X-Gm-Message-State: AFqh2krnek7RE7NDDCsXnmmBGjN9t+ZfNFe2Y9BK9YWHoOwZxNWYyHrc
-        VAX2m6NNkMRvq2revdUHEufevQ==
-X-Google-Smtp-Source: AMrXdXtBlsg3TCrCR6Yu2JIdPZC5uS8fWSZfkc3geFs8erjGiBE3AGQjYSZ0FPjxIX17l3lKzpd9tQ==
-X-Received: by 2002:a05:6512:368a:b0:4b5:b90a:829d with SMTP id d10-20020a056512368a00b004b5b90a829dmr19917438lfs.66.1673600241703;
-        Fri, 13 Jan 2023 00:57:21 -0800 (PST)
-Received: from [192.168.2.31] ([194.204.33.9])
-        by smtp.gmail.com with ESMTPSA id br11-20020a056512400b00b0048a934168c0sm3758739lfb.35.2023.01.13.00.57.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Jan 2023 00:57:21 -0800 (PST)
-Message-ID: <9a64c685-9ff0-bc1d-e604-e3773ff9edd7@linaro.org>
-Date:   Fri, 13 Jan 2023 10:57:18 +0200
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=14vWSUq8m0YB7K6+daykZcIVaA+luIuXLh3y27wDsWg=;
+        b=BUut0xSJMNE5lRj1bT+BGGFgT9qYT6icqRSMINvzoY8/BXG3yyOUPp5aq1hc0cEuNK
+         29ssNS/pY0qbxm2qYVelRNv9ZwCQfnAgcrzw8c8Ln64YW/NCOBXXt9WuIcdr69Rt65sl
+         nUKgJph2mvjVgCOV4/4Dl2Z3hTwiDCuwuDtVuXBTomQnW0DorFVuVPvNPvV7ZguK2rtd
+         zjpDLarproDQ/jtkKoyXwqlV6We8MN2rDSjsATD5rltZgN+tjH/dsb601Za8AIRKtBqf
+         SSYYFPp/NPO3S2n59bJnU8dT+VwC5nh3SYcFzOjwVqEm7hmsSazIa5lLONsK+PGeMqmR
+         DUjQ==
+X-Gm-Message-State: AFqh2kpH04aTAhmK7VdQhfW665Cd31P9HbMRnKNkUvxmA1DUPioT2wqT
+        GTolyPpeCM09ZhCu9euQOHrGUA==
+X-Google-Smtp-Source: AMrXdXuuNz3tvAd/ti33PZCvEok0i2r4nLgU2YcUyg8cns1TjEUS1Udl3Y8gFbByBGqo6fV5bBj07g==
+X-Received: by 2002:a17:907:d48a:b0:7c0:971e:f6c5 with SMTP id vj10-20020a170907d48a00b007c0971ef6c5mr72138862ejc.14.1673600473231;
+        Fri, 13 Jan 2023 01:01:13 -0800 (PST)
+Received: from krzk-bin.. ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id l10-20020a1709060cca00b0082ddfb47d06sm8393331ejh.148.2023.01.13.01.01.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Jan 2023 01:01:12 -0800 (PST)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Herring <robh@kernel.org>
+Subject: [RESEND PATCH] dt-bindings: thermal: qcom-spmi-adc-tm5: add qcom,adc-tm7
+Date:   Fri, 13 Jan 2023 10:01:07 +0100
+Message-Id: <20230113090107.18498-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH] drm/msm: Initialize mode_config earlier
-Content-Language: en-GB
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Johan Hovold <johan@kernel.org>
-Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-References: <20230113041051.4189063-1-quic_bjorande@quicinc.com>
- <eea1c5dc-6bc5-4246-f0e1-0c790de9f078@linaro.org>
-In-Reply-To: <eea1c5dc-6bc5-4246-f0e1-0c790de9f078@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/01/2023 06:23, Dmitry Baryshkov wrote:
-> On 13/01/2023 06:10, Bjorn Andersson wrote:
->> Invoking drm_bridge_hpd_notify() on a drm_bridge with a HPD-enabled
->> bridge_connector ends up in drm_bridge_connector_hpd_cb() calling
->> drm_kms_helper_hotplug_event(), which assumes that the associated
->> drm_device's mode_config.funcs is a valid pointer.
->>
->> But in the MSM DisplayPort driver the HPD enablement happens at bind
->> time and mode_config.funcs is initialized late in msm_drm_init(). This
->> means that there's a window for hot plug events to dereference a NULL
->> mode_config.funcs.
->>
->> Move the assignment of mode_config.funcs before the bind, to avoid this
->> scenario.
-> 
-> Cam we make DP driver not to report HPD events until the enable_hpd() 
-> was called? I think this is what was fixed by your internal_hpd patchset.
+The qcom,adc-tm7 compatible is already used in PMK8350 so add it to the
+Qualcomm PMIC Thermal Monitoring ADC.  Based on downstream sources, the
+new compatible for TM7 differs from older TM5 by allowing configuring
+per sensor decimation, time measurement and number of sample averaging -
+unlike one configuration per entire device.  This was not reflected in
+the bindings, therefore comment the new compatible as incomplete as it
+might change and its ABI is no stable.
 
-Or to express this in another words: I thought that internal_hpd already 
-deferred enabling hpd event reporting till the time when we need it, 
-didn't it?
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Acked-by: Rob Herring <robh@kernel.org>
+---
+
+Resending because it is waiting for half a year.
 
 
+
+ Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml b/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml
+index d20569b9b763..52ec18cf1eda 100644
+--- a/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml
++++ b/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml
+@@ -13,6 +13,7 @@ properties:
+     enum:
+       - qcom,spmi-adc-tm5
+       - qcom,spmi-adc-tm5-gen2
++      - qcom,adc-tm7 # Incomplete / subject to change
+ 
+   reg:
+     maxItems: 1
 -- 
-With best wishes
-Dmitry
+2.34.1
 
