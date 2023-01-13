@@ -2,83 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E06A0669B66
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 16:06:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DD9D669B75
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 16:09:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230094AbjAMPGo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 10:06:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59110 "EHLO
+        id S229634AbjAMPJ2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 10:09:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229843AbjAMPF4 (ORCPT
+        with ESMTP id S229521AbjAMPH5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 10:05:56 -0500
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FE89BCB1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 06:57:33 -0800 (PST)
-Received: by mail-ej1-x632.google.com with SMTP id v6so9907055ejg.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 06:57:33 -0800 (PST)
+        Fri, 13 Jan 2023 10:07:57 -0500
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B31C97495
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 06:59:03 -0800 (PST)
+Received: by mail-ej1-x629.google.com with SMTP id vm8so52916925ejc.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 06:59:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=o0NOI61sZZytS7l+v8TO1KZZRUZqCOc1nmFiVvqeW/U=;
-        b=mt5OZcj0ibpkJjQfmMfVLnZB2nNEpqrPpBlFS6IZqEyDlA0O6uP1jKssBmNCZjF5cp
-         PChbYpEfIIygKZND3MWe2Y4x+v0FfKZr7MgiIN7C31GpR5yD2aN3RrLobFKdf3Eh0Jkb
-         nVh/88DxGBN9MkwS99Hf+tx/CRI+YPPFG+k2Xk/9mTQ61VpmMcf+3932gfgauaX6GFgG
-         kIqIxGKS3wJY2Zors6D9cfgQXOIq4r0dQwYI+Uhum6zvb+cWQvi7q4wovpaft9DRopRZ
-         3JqjMjQvdBED/juxFziXfrLmpNtuJ1VxNsCiey6gwgZd17ogeCbZAaBsNXzT9R0FOVRH
-         A1Tw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=XU/dHO8DVmGPpqkb7r01X1pAdFG84fFdf1WtxGiiHvQ=;
+        b=ARnoDLgerC10W1udjRPEt/GqBBzqwMsZyw7cRxy9pAmrdaWhWipPNrxDp8DBWRpYG+
+         Iea+vxk4XoiUXFG//j9I13kfV+No6IlbMzurvbDOSa8gJIJ7jVIhkQwtRNZC2GtD/WQl
+         79tRkeKdEqvkoIvDjk7Eg6qqOwqxqDhh3dkJHf/2TMxpGesmbtrczYR68uFVNXqOd7Mg
+         9vvQ/zaF+WdZCC567si2DOhLTihqGrCKEIJ/GpoR+zyrxB4HLBzDz28JUWXMonFTufTi
+         tzrEcMZoHzRylV3/dN2XRl+t+JSa6Mg/8+Cn18L2q7Lqr8VfmriCR0tI1KaRlhtW1+L0
+         nZAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=o0NOI61sZZytS7l+v8TO1KZZRUZqCOc1nmFiVvqeW/U=;
-        b=h26P9ounQwH0yGCmmR+oWMl0DSF6ZYk1qxgWNMEBdczAH3UWFjtoeQhrrRJY+qBVL2
-         RXdJNlfMU+ceh3ZC7ZP3R5fUs73OlPbQLqxcZajMXoLPRoOGDCyDsrD+CAJWTw0cgbpt
-         PN22r/YJozOJL7lTKpCnn3fNuH7lN6f7CwPIRJUXSJyCw0FKubzlo/8OcuDyeK7DX9+c
-         8vRuxajo+HeZoj0v0sNKvXo9rjMV4cdUn61iZoDT0npBv/IEiYTIpcfvh0Q+JbRg6pJi
-         N/a1g3Z7feQhaAEn/mzuyOfNIRp0Vj+RIl0NfUeqjVcBwI1LccHKdzh7OVu3QctDWy8Q
-         wsVA==
-X-Gm-Message-State: AFqh2krOu7FHE0u6WVAMTN6rj2ckQAIS8R9uDAWPltSlk/GBYKLaktoV
-        vbGtkAAi8TnHzlzQ/7hnPTp4Ng==
-X-Google-Smtp-Source: AMrXdXvZDD1kPQ0qZ8nzhzFjR7dYZBRGdYQLKP1aRAWON25sL5kQ7wkZxmEihgbIy2ov6AwuUGW1Zg==
-X-Received: by 2002:a17:907:a0d6:b0:7d3:c516:6ef4 with SMTP id hw22-20020a170907a0d600b007d3c5166ef4mr89399506ejc.20.1673621851782;
-        Fri, 13 Jan 2023 06:57:31 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id 18-20020a170906201200b00846734faa9asm8506473ejo.164.2023.01.13.06.57.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Jan 2023 06:57:31 -0800 (PST)
-Message-ID: <0337e1ad-b8b4-8728-f5f1-be153b950fe6@linaro.org>
-Date:   Fri, 13 Jan 2023 15:57:29 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH 1/6] dt-bindings: clock: Add YAML schemas for QCOM A73 PLL
-Content-Language: en-US
-To:     devi priya <quic_devipriy@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
-        sboyd@kernel.org, jassisinghbrar@gmail.com,
-        catalin.marinas@arm.com, will@kernel.org, shawnguo@kernel.org,
-        arnd@arndb.de, marcel.ziswiler@toradex.com,
-        dmitry.baryshkov@linaro.org, nfraprado@collabora.com,
-        broonie@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
-        quic_poovendh@quicinc.com
-References: <20230113143647.14961-1-quic_devipriy@quicinc.com>
- <20230113143647.14961-2-quic_devipriy@quicinc.com>
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=XU/dHO8DVmGPpqkb7r01X1pAdFG84fFdf1WtxGiiHvQ=;
+        b=tztWYlDqa8nOkJ91Clb0SME5ApSsvmuD2xszJMOrSgeNVKouhtjuSGEEQGD0Fu5Qly
+         dwffyMBh57abdArF8b2QtDgoUhfeAW8KzasQerX0GUMpc6bjNqgbmejevmk79+sBNjni
+         i1dgQhFOrkeheYZp70lTjJmA/agRSSAYvJdJmEZtl7iEJ+e0imFg6srB84ocX9wtveZd
+         hobhDQKvk8g2HVmyCUa6h5P8QH7bxxLHnqAYrmwcBfONZOl/Gmcvs2Q+7uikBbiGwE5W
+         BBlHbVrTHeOazPhQppedC1GeVdRC6bU1Ydbh9R9ol44uNLB7RvgXk2SHb/uprpGNdjCE
+         ijgA==
+X-Gm-Message-State: AFqh2kpqT075vCorwaF1Fc432/jRA/29PqFPPrB2FZwwVQQfnMvPf1DL
+        KcJmWfUFWQqgNCF5galVMhef5Q==
+X-Google-Smtp-Source: AMrXdXvQMbq4TsL6YlyMhhJSIvA4tsjszzryU1CY+N0v6fsjTiGu3umfQ6d6YPAX7S+tZ+ikL7UVbw==
+X-Received: by 2002:a17:906:2813:b0:7c0:f9ef:23a2 with SMTP id r19-20020a170906281300b007c0f9ef23a2mr84066794ejc.30.1673621942178;
+        Fri, 13 Jan 2023 06:59:02 -0800 (PST)
+Received: from krzk-bin.. ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id f1-20020a17090631c100b007aea1dc1840sm8621468ejf.111.2023.01.13.06.59.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Jan 2023 06:59:01 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230113143647.14961-2-quic_devipriy@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] dt-bindings: clock: qcom,a53pll: drop operating-points-v2
+Date:   Fri, 13 Jan 2023 15:58:59 +0100
+Message-Id: <20230113145859.82868-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -87,86 +76,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/01/2023 15:36, devi priya wrote:
-> Add schema for primary CPU PLL found on few Qualcomm platforms.
+The CPU PLL clock node does not use OPP tables (neither driver).
 
-Subject: drop redundant "YAML schemas for"
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ Documentation/devicetree/bindings/clock/qcom,a53pll.yaml | 2 --
+ 1 file changed, 2 deletions(-)
 
-
-> 
-> Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
-> ---
->  .../bindings/clock/qcom,a73pll.yaml           | 52 +++++++++++++++++++
->  1 file changed, 52 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,a73pll.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,a73pll.yaml b/Documentation/devicetree/bindings/clock/qcom,a73pll.yaml
-> new file mode 100644
-> index 000000000000..a0e81094db8d
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/clock/qcom,a73pll.yaml
-> @@ -0,0 +1,52 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/clock/qcom,a73pll.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm A73 PLL clock
-> +
-> +maintainers:
-> +  - Bjorn Andersson <andersson@kernel.org>
-> +
-> +description:
-> +  The A73 PLL on few Qualcomm platforms is the main CPU PLL used for
-> +  frequencies above 1GHz.
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,ipq9574-a73pll
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  '#clock-cells':
-> +    const: 0
-> +
-> +  clocks:
-> +    items:
-> +      - description: board XO clock
-> +
-> +  clock-names:
-> +    items:
-> +      - const: xo
-> +
-> +  operating-points-v2: true
-
-Drop. I'll fix the other bindings.
-
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - '#clock-cells'
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    a73pll: clock@b116000 {
-> +            compatible = "qcom,ipq9574-a73pll";
-
-Use 4 spaces for example indentation.
-
-> +            reg = <0x0b116000 0x40>;
-> +            #clock-cells = <0>;
-> +            clocks = <&xo_board_clk>;
-> +            clock-names = "xo";
-> +    };
-
-Best regards,
-Krzysztof
+diff --git a/Documentation/devicetree/bindings/clock/qcom,a53pll.yaml b/Documentation/devicetree/bindings/clock/qcom,a53pll.yaml
+index 525ebaa93c85..6bf70af948d7 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,a53pll.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,a53pll.yaml
+@@ -35,8 +35,6 @@ properties:
+     items:
+       - const: xo
+ 
+-  operating-points-v2: true
+-
+ required:
+   - compatible
+   - reg
+-- 
+2.34.1
 
