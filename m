@@ -2,71 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 908B7669C71
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 16:33:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ECCB0669CA0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 16:41:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229946AbjAMPds (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 10:33:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55666 "EHLO
+        id S230177AbjAMPlr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 10:41:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230263AbjAMPd0 (ORCPT
+        with ESMTP id S230172AbjAMPlL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 10:33:26 -0500
-Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D61BC974B5;
-        Fri, 13 Jan 2023 07:26:57 -0800 (PST)
-Received: by mail-oi1-f174.google.com with SMTP id s124so1139962oif.1;
-        Fri, 13 Jan 2023 07:26:57 -0800 (PST)
+        Fri, 13 Jan 2023 10:41:11 -0500
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 729307D25F
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 07:32:49 -0800 (PST)
+Received: by mail-lj1-x22c.google.com with SMTP id y19so1504426ljq.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 07:32:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wvGqtD0vaEdCq6Jrz2aJKXvMSqDV7y3ghbHDsmS6aUg=;
+        b=WShKkgwSKxwnCM5q9NWeicjuMObQBy2sGtAadPAmoSPejSTxWmyHscrB8HuuxP2knT
+         YzYQ8UAAWTq024aVnxQagCtBT11LXpl/LKjQkcDWRDWujkV7dfcxbrsq/o3z1NE6z1Tv
+         agX/mrpXaZtag5WYqk8Ze7mOYg6wmocF9nl+JYnQ4P2kS+CVuUpN8nF8QpvsJNxp3Dt/
+         5V3nmyDn1jCNG2KZEw10O5ZPrOKNlFGDNi6U3hjWbRs/q0bWtLtnp7BMYpICtE8E0tu2
+         u7wX0Zm1zZylg07OBatuowBGLegdzLCZsHn0H5K1jKj0T4xULt3dQTpQ/AiaUW4u8cvj
+         iFbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=w3iFRccbSDkEugBccIou+2bALCJO5axdL5vy8psmKe8=;
-        b=22LWLyyzcwh25msT8TSUwytbqOlNmi3k/XKZ7xnB64XLTOj3jplMg0muNk5u/BO5Vo
-         N5uHpMTzL4wsUPeNqAgPOfCATabgcBx27OvDchp/JBB4QVQWMLe9DrgEy91lt7xtcprz
-         uu87Na78s0Ymn+75n0LLDCumi9ZmmeHA6h6rweEWaWZUy66ined7wurUzYccvCDp1HUj
-         xDeXRewR2C0n5vH0cWBmXc+8W2JDpBJCdxZoCt/2tmSwAOABhPgAyAA7X7FgetEpr5Qy
-         gYQuP+KnYn3AEneoXSgN2KhabsYMvnVVs5958+ElT1P7EJ3oWj5SC/0dqQDhJGTquVNq
-         bCFg==
-X-Gm-Message-State: AFqh2kos/QhwSjwO6bcR/9EeLTaMJQDKax8oDETQR7xLR1wMYgoOakqi
-        6iMoZCvQwusaRtoIysfBzA==
-X-Google-Smtp-Source: AMrXdXtU5Q+EcHwM8fGnUFflgtn0JMNu0tQGWDvrXpPdN6wJh85fEDrBO+B8rxDkKl45atQuth7UAg==
-X-Received: by 2002:a05:6808:18a8:b0:364:adbc:609b with SMTP id bi40-20020a05680818a800b00364adbc609bmr1610560oib.19.1673623617083;
-        Fri, 13 Jan 2023 07:26:57 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id be16-20020a056808219000b00359ad661d3csm9234840oib.30.2023.01.13.07.26.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Jan 2023 07:26:56 -0800 (PST)
-Received: (nullmailer pid 2224506 invoked by uid 1000);
-        Fri, 13 Jan 2023 15:26:52 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wvGqtD0vaEdCq6Jrz2aJKXvMSqDV7y3ghbHDsmS6aUg=;
+        b=SEUqnUSTeA+TffjNQzXxUqUpJVPgA4dh/IbVuXDpFT9xdjX4UfChE4e94RwW70qzBZ
+         9jKrdAOPCJoMSzQu3lokXVQOCnMkOt/KMw+FtuSJVr+cAei3I8qu838Z0jxWMJxD4fy9
+         XiPTeWBA5ttGupCJhppKYbYEB7Sf+Go4UqQSb+/gPjhUFnKbEvN6j5mM/zzh+5yKCxkP
+         0sxzrXXFyTkbVl9MhQMo3FOYRzFHD9ARvsgPLOPdKAAdWj23gFX5SEDvEZ9Lu8zbaODE
+         pTd+LMXqhYna5y+882lBMrNqDLrzb/OJ70fEdGmbobcbpHsRmfg+op1K/UtbK7+0Dv5O
+         EyZg==
+X-Gm-Message-State: AFqh2kpi0tAA28MgflotFSNiuBNHv1Uka6eXTSG5cgW4IPsM+xJtbLWZ
+        Na3m/AQcgckL1vHMYoUYFPR17A==
+X-Google-Smtp-Source: AMrXdXucRYt3swxHwKrnEfP7mbphGpw0NJKZN1uVdF19616i3aXJztERykz/cMkbkGdSi5Zxl070fA==
+X-Received: by 2002:a2e:9310:0:b0:28b:6936:30bc with SMTP id e16-20020a2e9310000000b0028b693630bcmr662578ljh.31.1673623967774;
+        Fri, 13 Jan 2023 07:32:47 -0800 (PST)
+Received: from [192.168.1.101] (abym53.neoplus.adsl.tpnet.pl. [83.9.32.53])
+        by smtp.gmail.com with ESMTPSA id r17-20020a2eb891000000b00288a8094a76sm1010768ljp.60.2023.01.13.07.32.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 13 Jan 2023 07:32:46 -0800 (PST)
+Message-ID: <4114bf50-67bf-e11c-5304-f2c6dcc0063d@linaro.org>
+Date:   Fri, 13 Jan 2023 16:32:44 +0100
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Stephen Boyd <swboyd@chromium.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        dri-devel@lists.freedesktop.org, Sean Paul <sean@poorly.run>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        David Airlie <airlied@gmail.com>, devicetree@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20230113083720.39224-2-dmitry.baryshkov@linaro.org>
-References: <20230113083720.39224-1-dmitry.baryshkov@linaro.org>
- <20230113083720.39224-2-dmitry.baryshkov@linaro.org>
-Message-Id: <167362343145.2212490.16180994187587985655.robh@kernel.org>
-Subject: Re: [PATCH v6 01/11] dt-bindings: display/msm: convert MDP5 schema to
- YAML format
-Date:   Fri, 13 Jan 2023 09:26:52 -0600
-X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH 5/6] arm64: dts: qcom: ipq9574: Add cpufreq & RPM related
+ nodes
+Content-Language: en-US
+To:     devi priya <quic_devipriy@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, lgirdwood@gmail.com, broonie@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
+        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
+        quic_poovendh@quicinc.com
+References: <20230113150310.29709-1-quic_devipriy@quicinc.com>
+ <20230113150310.29709-6-quic_devipriy@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230113150310.29709-6-quic_devipriy@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -74,37 +84,185 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Fri, 13 Jan 2023 10:37:10 +0200, Dmitry Baryshkov wrote:
-> Convert the mdp5.txt into the yaml format. Changes to the existing (txt) schema:
->  - MSM8996 has additional "iommu" clock, define it separately
->  - Add new properties used on some of platforms:
->    - interconnects, interconnect-names
->    - iommus
->    - power-domains
->    - operating-points-v2, opp-table
+
+On 13.01.2023 16:03, devi priya wrote:
+> Add CPU Freq and RPM related nodes in the device tree
+These two are wildly different things, barely related to one
+another and can very well be introduced in separate patches.
+Please do so.
+
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
 > ---
->  .../devicetree/bindings/display/msm/mdp5.txt  | 132 -----------------
->  .../bindings/display/msm/qcom,mdp5.yaml       | 138 ++++++++++++++++++
->  2 files changed, 138 insertions(+), 132 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/display/msm/mdp5.txt
->  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,mdp5.yaml
+>  arch/arm64/boot/dts/qcom/ipq9574.dtsi | 80 +++++++++++++++++++++++++++
+>  1 file changed, 80 insertions(+)
 > 
+> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> index 5a2244b437ed..79fa5d91882c 100644
+> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> @@ -9,6 +9,7 @@
+>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+>  #include <dt-bindings/clock/qcom,gcc-ipq9574.h>
+>  #include <dt-bindings/reset/qcom,gcc-ipq9574.h>
+> +#include <dt-bindings/clock/qcom,apss-ipq.h>
+Please sort the includes alphabetically.
 
-Running 'make dtbs_check' with the schema in this patch gives the
-following warnings. Consider if they are expected or the schema is
-incorrect. These may not be new warnings.
+>  
+>  / {
+>  	interrupt-parent = <&intc>;
+> @@ -75,6 +76,10 @@
+>  			reg = <0x0>;
+>  			enable-method = "psci";
+>  			next-level-cache = <&L2_0>;
+> +			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
+> +			clock-names = "cpu";
+> +			operating-points-v2 = <&cpu_opp_table>;
+> +			cpu0-supply = <&ipq9574_s1>;
+Why is this cpu0-supply and the rest are cpu-supply? Neither of them
+seem particularly documented, by the way..
 
-Note that it is not yet a requirement to have 0 warnings for dtbs_check.
-This will change in the future.
 
-Full log is available here: https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230113083720.39224-2-dmitry.baryshkov@linaro.org
+>  		};
+>  
+>  		CPU1: cpu@1 {
+> @@ -83,6 +88,10 @@
+>  			reg = <0x1>;
+>  			enable-method = "psci";
+>  			next-level-cache = <&L2_0>;
+> +			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
+> +			clock-names = "cpu";
+> +			operating-points-v2 = <&cpu_opp_table>;
+> +			cpu-supply = <&ipq9574_s1>;
+>  		};
+>  
+>  		CPU2: cpu@2 {
+> @@ -91,6 +100,10 @@
+>  			reg = <0x2>;
+>  			enable-method = "psci";
+>  			next-level-cache = <&L2_0>;
+> +			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
+> +			clock-names = "cpu";
+> +			operating-points-v2 = <&cpu_opp_table>;
+> +			cpu-supply = <&ipq9574_s1>;
+>  		};
+>  
+>  		CPU3: cpu@3 {
+> @@ -99,6 +112,10 @@
+>  			reg = <0x3>;
+>  			enable-method = "psci";
+>  			next-level-cache = <&L2_0>;
+> +			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
+> +			clock-names = "cpu";
+> +			operating-points-v2 = <&cpu_opp_table>;
+> +			cpu-supply = <&ipq9574_s1>;
+>  		};
+>  
+>  		L2_0: l2-cache {
+> @@ -107,6 +124,42 @@
+>  		};
+>  	};
+>  
+> +	cpu_opp_table: opp-table-cpu {
+Alphabetically this goes after memory
+
+> +		compatible = "operating-points-v2";
+> +		opp-shared;
+> +
+> +		opp-936000000 {
+> +			opp-hz = /bits/ 64 <936000000>;
+> +			opp-microvolt = <725000>;
+> +			clock-latency-ns = <200000>;
+> +		};
+Please add a newline between each subnode.
+
+> +		opp-1104000000 {
+> +			opp-hz = /bits/ 64 <1104000000>;
+> +			opp-microvolt = <787500>;
+> +			clock-latency-ns = <200000>;
+> +		};
+> +		opp-1416000000 {
+> +			opp-hz = /bits/ 64 <1416000000>;
+> +			opp-microvolt = <862500>;
+> +			clock-latency-ns = <200000>;
+> +		};
+> +		opp-1488000000 {
+> +			opp-hz = /bits/ 64 <1488000000>;
+> +			opp-microvolt = <925000>;
+> +			clock-latency-ns = <200000>;
+> +		};
+> +		opp-1800000000 {
+> +			opp-hz = /bits/ 64 <1800000000>;
+> +			opp-microvolt = <987500>;
+> +			clock-latency-ns = <200000>;
+> +		};
+> +		opp-2208000000 {
+> +			opp-hz = /bits/ 64 <2208000000>;
+> +			opp-microvolt = <1062500>;
+> +			clock-latency-ns = <200000>;
+> +		};
+> +	};
+> +
+>  	memory@40000000 {
+>  		device_type = "memory";
+>  		/* We expect the bootloader to fill in the size */
+> @@ -128,6 +181,11 @@
+>  		#size-cells = <2>;
+>  		ranges;
+>  
+> +		rpm_msg_ram: memory@60000 {
+> +			reg = <0x0 0x00060000 0x0 0x6000>;
+> +			no-map;
+> +		};
+> +
+>  		tz_region: memory@4a600000 {
+>  			reg = <0x0 0x4a600000 0x0 0x400000>;
+>  			no-map;
+> @@ -324,6 +382,28 @@
+>  		};
+>  	};
+>  
+> +	rpm-glink {
+> +		compatible = "qcom,glink-rpm";
+> +		interrupts = <GIC_SPI 168 IRQ_TYPE_EDGE_RISING>;
+> +		qcom,rpm-msg-ram = <&rpm_msg_ram>;
+> +		mboxes = <&apcs_glb 0>;
+> +
+> +		rpm_requests: glink-channel {
+> +			compatible = "qcom,rpm-ipq9574";
+> +			qcom,glink-channels = "rpm_requests";
+> +
+> +			regulators {
+> +				compatible = "qcom,rpm-ipq9574-mp5496-regulators";
+The regulators are board-specific and should not be included in the
+SoC DTSI. If this is a very common configuration, you may split that
+into ipq9574-mp5496.dtsi, for example. Or ipq9574-pmics.dtsi if it's
+coupled with more PMICs.
+
+> +
+> +				ipq9574_s1: s1 {
+> +					regulator-min-microvolt = <587500>;
+> +					regulator-max-microvolt = <1075000>;
+> +					regulator-always-on;
+Won't this break CPU retention?
+
+You're holding a vote on it from the CPU devices, so it should be
+always enabled when the CPUs are oneline (as far as Linux is
+concerned).
 
 
-mdp@1a01000: compatible:0: 'qcom,mdp5' was expected
-	arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dtb
+Or maybe Linux will think it's enabled and RPM will quietly park
+it when it decides it's good to do so.. but will it with an active
+request.. not sure, really.. just something to consider..
 
-mdp@1a01000: compatible: ['qcom,msm8953-mdp5', 'qcom,mdp5'] is too long
-	arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dtb
-
+Konrad
+> +				};
+> +			};
+> +		};
+> +	};
+> +
+>  	timer {
+>  		compatible = "arm,armv8-timer";
+>  		interrupts = <GIC_PPI 2 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
