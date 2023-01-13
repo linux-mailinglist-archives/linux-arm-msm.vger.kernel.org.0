@@ -2,82 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 015CD66A2BE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 20:17:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 16FF666A36B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 20:34:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229512AbjAMTRR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 14:17:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37990 "EHLO
+        id S230439AbjAMTeA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 14:34:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230134AbjAMTRI (ORCPT
+        with ESMTP id S231231AbjAMTdi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 14:17:08 -0500
-Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A9BF857FA;
-        Fri, 13 Jan 2023 11:17:07 -0800 (PST)
-Received: by mail-ot1-f41.google.com with SMTP id m6-20020a9d7e86000000b0066ec505ae93so12738059otp.9;
-        Fri, 13 Jan 2023 11:17:07 -0800 (PST)
+        Fri, 13 Jan 2023 14:33:38 -0500
+Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 085678A23A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 11:31:52 -0800 (PST)
+Received: by mail-yb1-xb2a.google.com with SMTP id c124so23546702ybb.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 11:31:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q3w2TiU+Lm4nUzsmAN2R9y6Z1pBbZIeSZTFy+e+i1Wk=;
+        b=wwkkD/BbYvU5NuTiZHjqY6R/O+FRehpJ86yRYqvetizP1k1TrxND2a8wx5XckTHlAR
+         +bzA9nNbrS8Hi2ckThe8kGGYkIxYsP9CReFyV5gT9J4XPS8UJ7Cp7zUobVzaDAxHL+Rd
+         29Xk+FkVcheDmHH0IhvWxzPdfRREwBTEbwmN6Ssd+33B7k+QEHeUedzmqn7VIvFFSw6U
+         AAohESqAXJJNdAOFkDqC6I6VRaxf8qWA+GveIBguZcE+sk92sku8QQdQbLOh1pjKaXnI
+         0L2eTI4kOu03otfB272qaDnq8eASvQfg2uFIuIMEzYAv724TEzM12sAWMNa1wrw3XOtu
+         Q6wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FapQoxkKDls/b9akC1v16cEe+PDIce/Iikxy1EziQ8I=;
-        b=CbkhNGkAE1kk2anaTOnhr8kY9ruYlZpwTO46Ai8SkCnQ1ufndr8NyqGiAsXNzWyFm1
-         vwIH0BhhvsgC5ml9kXkCCTBOQ0c0DuJ4hgBf5FGouINfuiWQSSegS4bb1k0+EXKOPGT1
-         RRYUmYu1JIR1xyLhEWEy4IOm+Lon+JvVkcTwosvd4LfgNaaZa+xQcL9M/KFcUoCIoxG3
-         p1tavotmwF+4/+6qQaD+RRTag6XzZ1hbndzUru37NoHVnajJE5la8xwmuCXxJmleT7uD
-         lYOpNRgViudI/Up/X0kbSEjlDVMHYx/lQnJXOdS+saUKLybmU5yCL0F8Sm4Iu2ygv887
-         rzzw==
-X-Gm-Message-State: AFqh2kqHPFnG+StSBgDu553tscT4M7WFUFQ/PhgHPNuBYYgWHHhi19O/
-        GqnWbWU1sKe36gUZxP+i/Bfd3m4o6A==
-X-Google-Smtp-Source: AMrXdXvwi/XqjBgQXuKc8TT4fT5fBqWRCmJ2xZ0Xa3GhPV+vqWZTcy9OJrE7vk2Mj1YjWeMDnmNFzg==
-X-Received: by 2002:a9d:19e9:0:b0:684:9f0e:57f6 with SMTP id k96-20020a9d19e9000000b006849f0e57f6mr8165074otk.10.1673637426694;
-        Fri, 13 Jan 2023 11:17:06 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id g72-20020a9d12ce000000b00684ccbfe012sm1767009otg.27.2023.01.13.11.17.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Jan 2023 11:17:06 -0800 (PST)
-Received: (nullmailer pid 2751067 invoked by uid 1000);
-        Fri, 13 Jan 2023 19:17:05 -0000
-Date:   Fri, 13 Jan 2023 13:17:05 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@linaro.org,
-        andersson@kernel.org, bhelgaas@google.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        lpieralisi@kernel.org, robh+dt@kernel.org,
-        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: PCI: qcom: Allow both GIC-ITS and
- internal MSI controller
-Message-ID: <167363742427.2750717.3455349071670736976.robh@kernel.org>
-References: <20230111123004.21048-1-manivannan.sadhasivam@linaro.org>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Q3w2TiU+Lm4nUzsmAN2R9y6Z1pBbZIeSZTFy+e+i1Wk=;
+        b=ts/KIe8JBsoxYHGbyZdObB4hwta1eS7WITzenmy9hd4YfWnCofvsxH8JYVsAQw8EtR
+         47C9GVKaS/e7QkY7paWFcQHednKFSGasSmQp0AZd8iLS3BIkriQg6DLHcDryX3lh2xNi
+         vliBXXosgKHAo3GLZ8CDNCI/3P8ABX6+p9tTM6PIW946+2Egl7Ee2ygrusGqUBDgg2Wg
+         Ujkb3ViAYJuSiitAlKmtbAP2wghZiZpMEHXIHZSdZrGmD4+ZgGI94PZAmdWtYs+lSzt3
+         44Ts5AgnZBD8L7g0kvOo1i62YU+7zmbAPyxbyoFJOz3vDLdHSPy2G+51O10khhdcm6Se
+         BOVw==
+X-Gm-Message-State: AFqh2kqBHQcuhG/GFjpE3bIf/VqbMW8xK4WfePAFfLIPkKoK1px29W0Y
+        yWDewyGgtpws+IlXT9cr2+gzEMcSuwLmaDNRdllPzQ==
+X-Google-Smtp-Source: AMrXdXtimzxWwdAam5pUjv6lnc370dF1DqEq+lHlc6Ucv3r0ITCLyfKNu6YkXfF2piMkkorsB+TRlnbtQAkbkc0H55Q=
+X-Received: by 2002:a25:cc7:0:b0:6e0:c7d3:f026 with SMTP id
+ 190-20020a250cc7000000b006e0c7d3f026mr8920588ybm.275.1673638311180; Fri, 13
+ Jan 2023 11:31:51 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230111123004.21048-1-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+References: <20230108195336.388349-1-they@mint.lgbt> <20230108195336.388349-4-they@mint.lgbt>
+In-Reply-To: <20230108195336.388349-4-they@mint.lgbt>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 13 Jan 2023 21:31:40 +0200
+Message-ID: <CAA8EJpp-RwPOv61MtoXYb3Tuy5LDWWBCvYSrGUOvg8vWhid_tw@mail.gmail.com>
+Subject: Re: [PATCH v6 3/6] phy: qcom-qmp: Add SM6125 UFS PHY support
+To:     Lux Aliaga <they@mint.lgbt>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        vkoul@kernel.org, kishon@kernel.org, alim.akhtar@samsung.com,
+        avri.altman@wdc.com, bvanassche@acm.org, keescook@chromium.org,
+        tony.luck@intel.com, gpiccoli@igalia.com,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-scsi@vger.kernel.org, linux-hardening@vger.kernel.org,
+        phone-devel@vger.kernel.org, martin.botka@somainline.org,
+        marijn.suijten@somainline.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Wed, 11 Jan 2023 18:00:03 +0530, Manivannan Sadhasivam wrote:
-> The binding should specify both MSI implementations and the OS/driver
-> should choose the one based on the platform requirements.
-> 
-> Fixes: 2b0d557419cd ("dt-bindings: PCI: qcom: Allow both GIC-ITS and internal MSI controller")
-> Suggested-by: Rob Herring <robh@kernel.org>
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+On Sun, 8 Jan 2023 at 21:54, Lux Aliaga <they@mint.lgbt> wrote:
+>
+> The SM6125 UFS PHY is compatible with the one from SM6115. Add a
+> compatible for it and modify the config from SM6115 to make them
+> compatible with the SC8280XP binding
+>
+> Signed-off-by: Lux Aliaga <they@mint.lgbt>
+> Reviewed-by: Martin Botka <martin.botka@somainline.org>
 > ---
->  Documentation/devicetree/bindings/pci/qcom,pcie.yaml | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
+>  drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 5 +++++
+>  1 file changed, 5 insertions(+)
+>
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> index 318eea35b972..f33c84578940 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> @@ -693,6 +693,8 @@ static const struct qmp_phy_cfg sdm845_ufsphy_cfg = {
+>  static const struct qmp_phy_cfg sm6115_ufsphy_cfg = {
+>         .lanes                  = 1,
+>
+> +       .offsets                = &qmp_ufs_offsets_v5,
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Please don't randomly reuse generation-specific structures. This
+structure is clearly related to v5, while the PHY is from the v2
+generation.
+
+> +
+>         .serdes_tbl             = sm6115_ufsphy_serdes_tbl,
+>         .serdes_tbl_num         = ARRAY_SIZE(sm6115_ufsphy_serdes_tbl),
+>         .tx_tbl                 = sm6115_ufsphy_tx_tbl,
+> @@ -1172,6 +1174,9 @@ static const struct of_device_id qmp_ufs_of_match_table[] = {
+>         }, {
+>                 .compatible = "qcom,sm6115-qmp-ufs-phy",
+>                 .data = &sm6115_ufsphy_cfg,
+> +       }, {
+> +               .compatible = "qcom,sm6125-qmp-ufs-phy",
+> +               .data = &sm6115_ufsphy_cfg,
+>         }, {
+>                 .compatible = "qcom,sm6350-qmp-ufs-phy",
+>                 .data = &sdm845_ufsphy_cfg,
+> --
+> 2.39.0
+>
+
+
+-- 
+With best wishes
+Dmitry
