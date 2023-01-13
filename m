@@ -2,128 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 04702669B61
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 16:06:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E06A0669B66
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 16:06:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229922AbjAMPGN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 10:06:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56676 "EHLO
+        id S230094AbjAMPGo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 10:06:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbjAMPFk (ORCPT
+        with ESMTP id S229843AbjAMPF4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 10:05:40 -0500
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 289B68F288
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 06:57:05 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id m6so33466875lfj.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 06:57:05 -0800 (PST)
+        Fri, 13 Jan 2023 10:05:56 -0500
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FE89BCB1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 06:57:33 -0800 (PST)
+Received: by mail-ej1-x632.google.com with SMTP id v6so9907055ejg.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 06:57:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Na3ZrE6A9rh81pSsXiZxGcF9IK4nLW3nyLKYL0aIcJk=;
-        b=jxuFWlPtwQ9F568YD6d7nIFz8eLjcs0j6kLwHG29Ujh36BK6Us5Gs+I+TQ/BD0dEXl
-         Vw+WzawLuT/IjVpiybsa+PeKnqFKEEre++X0MiSNNoNAUEpZrOoifKCAU3uHgHprg29v
-         bTB+RmgdNBJMTyz/mqCQCACxdjVTybgSP9fcZ72i/M09OGBAWDQ/2SOV8iQQhEsSdMCH
-         GOm92NsH7S4h0K+5Smgzr8+IFa9qf3MQeUjSpkltR5akxfyvz+G+/rmyU+oVLHxE1n4k
-         ihEy+h4XJQRkPFVfcnsej/1i2bHhY63EkW9Ybesg6fgAEzRhzPkOUi7CjLNfHgCzRQqa
-         xRSw==
+        bh=o0NOI61sZZytS7l+v8TO1KZZRUZqCOc1nmFiVvqeW/U=;
+        b=mt5OZcj0ibpkJjQfmMfVLnZB2nNEpqrPpBlFS6IZqEyDlA0O6uP1jKssBmNCZjF5cp
+         PChbYpEfIIygKZND3MWe2Y4x+v0FfKZr7MgiIN7C31GpR5yD2aN3RrLobFKdf3Eh0Jkb
+         nVh/88DxGBN9MkwS99Hf+tx/CRI+YPPFG+k2Xk/9mTQ61VpmMcf+3932gfgauaX6GFgG
+         kIqIxGKS3wJY2Zors6D9cfgQXOIq4r0dQwYI+Uhum6zvb+cWQvi7q4wovpaft9DRopRZ
+         3JqjMjQvdBED/juxFziXfrLmpNtuJ1VxNsCiey6gwgZd17ogeCbZAaBsNXzT9R0FOVRH
+         A1Tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Na3ZrE6A9rh81pSsXiZxGcF9IK4nLW3nyLKYL0aIcJk=;
-        b=DNqgZFSa88ld+iNEs3zBR5A4sZYGtF2/f+1nOZ0t5UFAzJNLhK/yviHmg/IzXarAS1
-         B5Zl+xCHzy1oZyG/Sso0HpeDI78VNfZlqaM2+FN/FkplIh6al6treFUzqxwRRfZ/eyNp
-         0yy2TwoBW1IYQW3uKujgI5goQ1srGnSbpNmfwAZ7vEfUsQ6chH+nkbDG/baNpnKDjg46
-         fz3jfgoHr6z4WV3bT/n1/Lc8+wS82IvKfg5xvvZM821KPCjE1SN/6d/+D0nGNr8nWhqm
-         Cy1IcmuEuqZP7RZE0pZGsucHcuxtmZFbgjjTvmn/Giw4f11S6Bvw8hr5UDnG3L22obGJ
-         7DMg==
-X-Gm-Message-State: AFqh2koC0i1k9WztdmmywpAzeXyXpXi0PyXnaLGTlx/2VIz3E3hVqZ34
-        fsxPYIBeydvQaCC9GUVy0OU8NQ==
-X-Google-Smtp-Source: AMrXdXtK78wDBBNrYu++ZFjm6b/nQ++mI9J8yJs6bL3QmgppxUrMuOTd40O6gvn68/5psniZuS03EQ==
-X-Received: by 2002:ac2:4ad1:0:b0:4d2:bb83:e7e6 with SMTP id m17-20020ac24ad1000000b004d2bb83e7e6mr221744lfp.59.1673621823553;
-        Fri, 13 Jan 2023 06:57:03 -0800 (PST)
-Received: from [192.168.1.101] (abym53.neoplus.adsl.tpnet.pl. [83.9.32.53])
-        by smtp.gmail.com with ESMTPSA id e19-20020a05651236d300b00499b1873d6dsm3851569lfs.269.2023.01.13.06.57.00
+        bh=o0NOI61sZZytS7l+v8TO1KZZRUZqCOc1nmFiVvqeW/U=;
+        b=h26P9ounQwH0yGCmmR+oWMl0DSF6ZYk1qxgWNMEBdczAH3UWFjtoeQhrrRJY+qBVL2
+         RXdJNlfMU+ceh3ZC7ZP3R5fUs73OlPbQLqxcZajMXoLPRoOGDCyDsrD+CAJWTw0cgbpt
+         PN22r/YJozOJL7lTKpCnn3fNuH7lN6f7CwPIRJUXSJyCw0FKubzlo/8OcuDyeK7DX9+c
+         8vRuxajo+HeZoj0v0sNKvXo9rjMV4cdUn61iZoDT0npBv/IEiYTIpcfvh0Q+JbRg6pJi
+         N/a1g3Z7feQhaAEn/mzuyOfNIRp0Vj+RIl0NfUeqjVcBwI1LccHKdzh7OVu3QctDWy8Q
+         wsVA==
+X-Gm-Message-State: AFqh2krOu7FHE0u6WVAMTN6rj2ckQAIS8R9uDAWPltSlk/GBYKLaktoV
+        vbGtkAAi8TnHzlzQ/7hnPTp4Ng==
+X-Google-Smtp-Source: AMrXdXvZDD1kPQ0qZ8nzhzFjR7dYZBRGdYQLKP1aRAWON25sL5kQ7wkZxmEihgbIy2ov6AwuUGW1Zg==
+X-Received: by 2002:a17:907:a0d6:b0:7d3:c516:6ef4 with SMTP id hw22-20020a170907a0d600b007d3c5166ef4mr89399506ejc.20.1673621851782;
+        Fri, 13 Jan 2023 06:57:31 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id 18-20020a170906201200b00846734faa9asm8506473ejo.164.2023.01.13.06.57.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Jan 2023 06:57:02 -0800 (PST)
-Message-ID: <bcf497a7-66bb-9cd9-bada-4081000747a6@linaro.org>
-Date:   Fri, 13 Jan 2023 15:56:59 +0100
+        Fri, 13 Jan 2023 06:57:31 -0800 (PST)
+Message-ID: <0337e1ad-b8b4-8728-f5f1-be153b950fe6@linaro.org>
+Date:   Fri, 13 Jan 2023 15:57:29 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
-Subject: Re: [PATCH v2 0/4] soc: qcom: Introduce PMIC GLINK
+Subject: Re: [PATCH 1/6] dt-bindings: clock: Add YAML schemas for QCOM A73 PLL
 Content-Language: en-US
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Sebastian Reichel <sre@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>,
-        Johan Hovold <johan@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-References: <20230113041132.4189268-1-quic_bjorande@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230113041132.4189268-1-quic_bjorande@quicinc.com>
+To:     devi priya <quic_devipriy@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
+        sboyd@kernel.org, jassisinghbrar@gmail.com,
+        catalin.marinas@arm.com, will@kernel.org, shawnguo@kernel.org,
+        arnd@arndb.de, marcel.ziswiler@toradex.com,
+        dmitry.baryshkov@linaro.org, nfraprado@collabora.com,
+        broonie@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
+        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
+        quic_poovendh@quicinc.com
+References: <20230113143647.14961-1-quic_devipriy@quicinc.com>
+ <20230113143647.14961-2-quic_devipriy@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230113143647.14961-2-quic_devipriy@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 13/01/2023 15:36, devi priya wrote:
+> Add schema for primary CPU PLL found on few Qualcomm platforms.
+
+Subject: drop redundant "YAML schemas for"
 
 
-On 13.01.2023 05:11, Bjorn Andersson wrote:
-> This implements the base PMIC GLINK driver, a power_supply driver and a
-> driver for the USB Type-C altmode protocol. This has been tested and
-> shown to provide battery information, USB Type-C switch and mux requests
-> and DisplayPort notifications on SC8180X, SC8280XP and SM8350.
 > 
-For the series:
-
-Tested-by: Konrad Dybcio <konrad.dybcio@linaro.org> # SM8350 PDX215
-
-Thanks a lot for working on this!
-
-One thing, /sys/class/power_supply/qcom-battmgr-usb/input_current_limit
-is stuck at zero and so is the current_now as a result (the voltage
-readout is 5V + some noise, so that looks good), but I don't see any
-SET paths for it in the driver, so I suppose that's what the firmware
-default is?
-
-Konrad
-
-> Bjorn Andersson (4):
->   dt-bindings: soc: qcom: Introduce PMIC GLINK binding
->   soc: qcom: pmic_glink: Introduce base PMIC GLINK driver
->   soc: qcom: pmic_glink: Introduce altmode support
->   power: supply: Introduce Qualcomm PMIC GLINK power supply
+> Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
+> ---
+>  .../bindings/clock/qcom,a73pll.yaml           | 52 +++++++++++++++++++
+>  1 file changed, 52 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,a73pll.yaml
 > 
->  .../bindings/soc/qcom/qcom,pmic-glink.yaml    |  102 ++
->  drivers/power/supply/Kconfig                  |    9 +
->  drivers/power/supply/Makefile                 |    1 +
->  drivers/power/supply/qcom_battmgr.c           | 1421 +++++++++++++++++
->  drivers/soc/qcom/Kconfig                      |   15 +
->  drivers/soc/qcom/Makefile                     |    2 +
->  drivers/soc/qcom/pmic_glink.c                 |  336 ++++
->  drivers/soc/qcom/pmic_glink_altmode.c         |  477 ++++++
->  include/linux/soc/qcom/pmic_glink.h           |   32 +
->  9 files changed, 2395 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,pmic-glink.yaml
->  create mode 100644 drivers/power/supply/qcom_battmgr.c
->  create mode 100644 drivers/soc/qcom/pmic_glink.c
->  create mode 100644 drivers/soc/qcom/pmic_glink_altmode.c
->  create mode 100644 include/linux/soc/qcom/pmic_glink.h
-> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,a73pll.yaml b/Documentation/devicetree/bindings/clock/qcom,a73pll.yaml
+> new file mode 100644
+> index 000000000000..a0e81094db8d
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,a73pll.yaml
+> @@ -0,0 +1,52 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/clock/qcom,a73pll.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm A73 PLL clock
+> +
+> +maintainers:
+> +  - Bjorn Andersson <andersson@kernel.org>
+> +
+> +description:
+> +  The A73 PLL on few Qualcomm platforms is the main CPU PLL used for
+> +  frequencies above 1GHz.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,ipq9574-a73pll
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  '#clock-cells':
+> +    const: 0
+> +
+> +  clocks:
+> +    items:
+> +      - description: board XO clock
+> +
+> +  clock-names:
+> +    items:
+> +      - const: xo
+> +
+> +  operating-points-v2: true
+
+Drop. I'll fix the other bindings.
+
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - '#clock-cells'
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    a73pll: clock@b116000 {
+> +            compatible = "qcom,ipq9574-a73pll";
+
+Use 4 spaces for example indentation.
+
+> +            reg = <0x0b116000 0x40>;
+> +            #clock-cells = <0>;
+> +            clocks = <&xo_board_clk>;
+> +            clock-names = "xo";
+> +    };
+
+Best regards,
+Krzysztof
+
