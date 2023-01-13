@@ -2,83 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1DA72669C0A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 16:27:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 908FC669C35
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 16:30:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230216AbjAMP1o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 10:27:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45916 "EHLO
+        id S230157AbjAMPaj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 10:30:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229585AbjAMP1M (ORCPT
+        with ESMTP id S230234AbjAMP3z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 10:27:12 -0500
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 856148143A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 07:20:10 -0800 (PST)
-Received: by mail-lj1-x233.google.com with SMTP id s25so22787754lji.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 07:20:10 -0800 (PST)
+        Fri, 13 Jan 2023 10:29:55 -0500
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 617528BA8F
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 07:22:38 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id m6so33577273lfj.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 07:22:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=SSgTXFHyKy3EKW5amzFNddURi7wwL3JPtHEB4W2PJIQ=;
-        b=E+Ko3HoaAn/SbNq2+BoHjVxHOcFXzxcMw5eAnMS7INVdgfQwkd47z0/mJOV5XoH498
-         scTjG3apXZotcgyYBbdTB1cUhowgMekHOy1hfNWvlASySy0yRd7gG4cWcB5FR7gy/508
-         BxaNCdVHU/hZlmXCX11/vmpk7b3qlV3Mom9au2tVJ36szclEsWxoaKG1SrKU1+5r6TmC
-         phFiurVXNenluvCVRtvFrmBL5DAxUUj/0PoGhJp1toeZdMGZkQujloCxNS+e1QNClM3X
-         HsvM8DnHrtWSbIkFQrovljY1C8ndbwfkHRDo85zbuIaZCICMW2Dr1oAdkQ2yKx7O2mff
-         64mw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ANsyJifEncSP92lLk3miSuvqvxDpZXt5DLlwH0kSeYg=;
+        b=WIXZCl3srJseLgQX9neHOCK7tyE77OWiZNrNYCUffzMHjMR1Ubr+HyPObwJ6K+l7th
+         4YLcHeG1/m9TqNpnqCxbkoaN6ITL4NeRHYHZ4U8UNXg7qN+tniRChAW6BZgDVNCDqbre
+         82Wke+fhJXldtTPBrUh4glO52u5jdprrihNBY5c+c2LzdyKeBqkxTceEZUYgVxtfCNKp
+         nSZJNk/2tiztZSXnpVa4CmxIB4wEDOncttA1EqOn/1cuPBCUaL9XPCYFahgRi6GXMrKQ
+         cadAwiKnKmU5v2Ph86s5TuH3oxfzbQC6/zDUHS+oZLEJKP6Jcr/MSWfsh0tYw3Fr1MoQ
+         hANQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SSgTXFHyKy3EKW5amzFNddURi7wwL3JPtHEB4W2PJIQ=;
-        b=uN8umtyTXOoYL3AYnqq6Fa0qGlsTdRhZcxBsY2s6DuHHR6WvckCP+sz9pfxn6MzCu7
-         PFMcY0ntr7z82EggsN4/Ammzpzn0fo6E5iwKW84pKuTM5U3VDlOfe/bWm463slJsOopX
-         4PoE13z9aYeYx/wdo9Hf5yPfs+HIp/HIFKJEBw7YL/afw6T1s7asv7uNGAmNMByd2Be6
-         rhwW2zrr7FBOSrVxCCHdp1okinHGO/6AnCTSYjkNgz0xApxiGoPs7W0R2hzlYGqqy8Au
-         kk+gnlskYHjoazxDRQFCJvfJ2k5AggJ9lISHvYsu+bHAv6bTkgGKaz+r0AH/7Nfi7CrJ
-         0lhg==
-X-Gm-Message-State: AFqh2ko0Xx8M8Jmo/vvbVD9uqExEa3WuUjoBiV5Ct4pHptX3BZkqOh5v
-        VWDjjpei7fZrPqwsd7ybQuMFwA==
-X-Google-Smtp-Source: AMrXdXtlAwax9wzqDnNUzguINen9TYLIV91ebf6KZx6f+zkSZhQ803ZvgPpY7xs8wCz4XL7zPvUNXw==
-X-Received: by 2002:a2e:a48a:0:b0:281:e762:35aa with SMTP id h10-20020a2ea48a000000b00281e76235aamr62619lji.3.1673623208570;
-        Fri, 13 Jan 2023 07:20:08 -0800 (PST)
-Received: from [192.168.1.101] (abym53.neoplus.adsl.tpnet.pl. [83.9.32.53])
-        by smtp.gmail.com with ESMTPSA id p6-20020a2ea406000000b00289cfd2088csm693673ljn.73.2023.01.13.07.20.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Jan 2023 07:20:08 -0800 (PST)
-Message-ID: <b87ab80d-0936-5a5a-25da-35c0dbdede33@linaro.org>
-Date:   Fri, 13 Jan 2023 16:20:06 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH 6/6] clk: qcom: Fix APSS PLL and RCG Configuration
-Content-Language: en-US
-To:     devi priya <quic_devipriy@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
-        sboyd@kernel.org, jassisinghbrar@gmail.com,
-        catalin.marinas@arm.com, will@kernel.org, shawnguo@kernel.org,
-        arnd@arndb.de, marcel.ziswiler@toradex.com,
-        dmitry.baryshkov@linaro.org, nfraprado@collabora.com,
-        broonie@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
-        quic_poovendh@quicinc.com
-References: <20230113143647.14961-1-quic_devipriy@quicinc.com>
- <20230113143647.14961-7-quic_devipriy@quicinc.com>
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ANsyJifEncSP92lLk3miSuvqvxDpZXt5DLlwH0kSeYg=;
+        b=vsCsRaS19TJaz+ZbkQrn6OurykwiYz2sYm5R+kGFZ5VPvY8RW/59Axud6TTnXQhyEr
+         rB3kyUyb5AWRCYOjs/Ktx1XEAUqU82vXJ0QEDVV0+QyCTkZktme5atDU26kGT3o6xBkx
+         L9ht7UCKnE2pS5zoHkmU86SoEIQeKlEFaiwohDyYYoBFE/Gg7TyfZYeeEy4IcnxeZh7A
+         oejpah5OZJtF3lIN+ZkdY0o/guG/wRTBMQcRO7TP+LkCko+f0wwtRzzvy0u0H9tC3IMT
+         NCcVyv78whINgY8jYqScrXKUIefiTWhgaeBxTdie0d7oqR8H47UywVHNC/IgdYshBjVp
+         pYmQ==
+X-Gm-Message-State: AFqh2krEjjxn8lGoiHHrc1kToMEj5XJxoYdG/tVdbpAE3YVN2x6SzL9L
+        +c4acvLFDQjNtuJybYDyV33ybZrWx9s1v1wb
+X-Google-Smtp-Source: AMrXdXuvRKKfnLv0K6fkFCJ+VqdzGZXYnnyMmAWDagBwdzXXeg47jDWiaaCTc9oqRgG8p7X7oLxWrA==
+X-Received: by 2002:a05:6512:e86:b0:4b5:b87a:3262 with SMTP id bi6-20020a0565120e8600b004b5b87a3262mr25559492lfb.28.1673623356522;
+        Fri, 13 Jan 2023 07:22:36 -0800 (PST)
+Received: from localhost.localdomain (abym53.neoplus.adsl.tpnet.pl. [83.9.32.53])
+        by smtp.gmail.com with ESMTPSA id c19-20020a056512325300b004cb3d77a936sm3875440lfr.46.2023.01.13.07.22.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Jan 2023 07:22:35 -0800 (PST)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230113143647.14961-7-quic_devipriy@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     marijn.suijten@somainline.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 1/2] Revert "soc: qcom: rpmpd: Add SM4250 support"
+Date:   Fri, 13 Jan 2023 16:22:31 +0100
+Message-Id: <20230113152232.2624545-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.39.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS
         autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -87,73 +71,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+SM4250 and SM6115 use a shared device tree and the RPMPDs are
+identical. There's no need for a separate entry, so remove it.
 
+This reverts commit 5b617b1b10c1c6a4365d8f956032e95c53b8e388.
 
-On 13.01.2023 15:36, devi priya wrote:
-> Included CLK_IS_CRITICAL flag which helps to properly enable
-> the APSS PLL during bootup.
-Please describe the issue and not only the user-visible impact it
-makes. Does the PLL get shut down by clk_ignore_unused? Maybe you
-would be interested in the sync_state changes that landed in recent
--next that may solve it for you?
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ drivers/soc/qcom/rpmpd.c | 18 ------------------
+ 1 file changed, 18 deletions(-)
 
-I don't think it should be always-on, as you have an alternate source
-for low power modes, adding CLK_IS_CRITICAL will keep the PLL enabled
-even if you're not using it.
+diff --git a/drivers/soc/qcom/rpmpd.c b/drivers/soc/qcom/rpmpd.c
+index f0db6a10cf4e..337b1ad1cd3b 100644
+--- a/drivers/soc/qcom/rpmpd.c
++++ b/drivers/soc/qcom/rpmpd.c
+@@ -471,23 +471,6 @@ static const struct rpmpd_desc qcm2290_desc = {
+ 	.max_state = RPM_SMD_LEVEL_TURBO_NO_CPR,
+ };
+ 
+-static struct rpmpd *sm4250_rpmpds[] = {
+-	[SM4250_VDDCX] = &sm6115_vddcx,
+-	[SM4250_VDDCX_AO] = &sm6115_vddcx_ao,
+-	[SM4250_VDDCX_VFL] = &sm6115_vddcx_vfl,
+-	[SM4250_VDDMX] = &sm6115_vddmx,
+-	[SM4250_VDDMX_AO] = &sm6115_vddmx_ao,
+-	[SM4250_VDDMX_VFL] = &sm6115_vddmx_vfl,
+-	[SM4250_VDD_LPI_CX] = &sm6115_vdd_lpi_cx,
+-	[SM4250_VDD_LPI_MX] = &sm6115_vdd_lpi_mx,
+-};
+-
+-static const struct rpmpd_desc sm4250_desc = {
+-	.rpmpds = sm4250_rpmpds,
+-	.num_pds = ARRAY_SIZE(sm4250_rpmpds),
+-	.max_state = RPM_SMD_LEVEL_TURBO_NO_CPR,
+-};
+-
+ static const struct of_device_id rpmpd_match_table[] = {
+ 	{ .compatible = "qcom,mdm9607-rpmpd", .data = &mdm9607_desc },
+ 	{ .compatible = "qcom,msm8226-rpmpd", .data = &msm8226_desc },
+@@ -502,7 +485,6 @@ static const struct of_device_id rpmpd_match_table[] = {
+ 	{ .compatible = "qcom,qcm2290-rpmpd", .data = &qcm2290_desc },
+ 	{ .compatible = "qcom,qcs404-rpmpd", .data = &qcs404_desc },
+ 	{ .compatible = "qcom,sdm660-rpmpd", .data = &sdm660_desc },
+-	{ .compatible = "qcom,sm4250-rpmpd", .data = &sm4250_desc },
+ 	{ .compatible = "qcom,sm6115-rpmpd", .data = &sm6115_desc },
+ 	{ .compatible = "qcom,sm6125-rpmpd", .data = &sm6125_desc },
+ 	{ .compatible = "qcom,sm6375-rpmpd", .data = &sm6375_desc },
+-- 
+2.39.0
 
-> clk_rcg2_ops should be used for APSS clock RCG, as other ops
-> will not configure the RCG register
-RCG register meaning RCG register*s*, meaning in this case M/N/D
-which would be required for proper rate setting and not only input
-switching (which arguably doesn't seem to be of much concern on a
-single-parent clock)? This all is not obvious..
-
-Konrad
-> 
-> Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
-> ---
->  drivers/clk/qcom/apss-ipq-pll.c | 1 +
->  drivers/clk/qcom/apss-ipq6018.c | 8 +++++++-
->  2 files changed, 8 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/clk/qcom/apss-ipq-pll.c b/drivers/clk/qcom/apss-ipq-pll.c
-> index dd0c01bf5a98..75486a124fcd 100644
-> --- a/drivers/clk/qcom/apss-ipq-pll.c
-> +++ b/drivers/clk/qcom/apss-ipq-pll.c
-> @@ -33,6 +33,7 @@ static struct clk_alpha_pll ipq_pll = {
->  			},
->  			.num_parents = 1,
->  			.ops = &clk_alpha_pll_huayra_ops,
-> +			.flags = CLK_IS_CRITICAL,
->  		},
->  	},
->  };
-> diff --git a/drivers/clk/qcom/apss-ipq6018.c b/drivers/clk/qcom/apss-ipq6018.c
-> index f2f502e2d5a4..0d0e7196a4dc 100644
-> --- a/drivers/clk/qcom/apss-ipq6018.c
-> +++ b/drivers/clk/qcom/apss-ipq6018.c
-> @@ -33,15 +33,21 @@ static const struct parent_map parents_apcs_alias0_clk_src_map[] = {
->  	{ P_APSS_PLL_EARLY, 5 },
->  };
->  
-> +static const struct freq_tbl ftbl_apcs_alias0_clk_src[] = {
-> +	{ .src = P_APSS_PLL_EARLY, .pre_div = 1 },
-> +	{ }
-> +};
-> +
->  static struct clk_rcg2 apcs_alias0_clk_src = {
->  	.cmd_rcgr = 0x0050,
-> +	.freq_tbl = ftbl_apcs_alias0_clk_src,
->  	.hid_width = 5,
->  	.parent_map = parents_apcs_alias0_clk_src_map,
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "apcs_alias0_clk_src",
->  		.parent_data = parents_apcs_alias0_clk_src,
->  		.num_parents = ARRAY_SIZE(parents_apcs_alias0_clk_src),
-> -		.ops = &clk_rcg2_mux_closest_ops,
-> +		.ops = &clk_rcg2_ops,
->  		.flags = CLK_SET_RATE_PARENT,
->  	},
->  };
