@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ACFE3669BD1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 16:20:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DA72669C0A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 16:27:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229988AbjAMPUM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 10:20:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38124 "EHLO
+        id S230216AbjAMP1o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 10:27:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230018AbjAMPTn (ORCPT
+        with ESMTP id S229585AbjAMP1M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 10:19:43 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1600DC61
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 07:13:35 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id cf42so33594627lfb.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 07:13:35 -0800 (PST)
+        Fri, 13 Jan 2023 10:27:12 -0500
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 856148143A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 07:20:10 -0800 (PST)
+Received: by mail-lj1-x233.google.com with SMTP id s25so22787754lji.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 07:20:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=zUYGeT36rdUoWdmbRVQkbA4vrtGHPM/cta2o4YS1FyY=;
-        b=uPDu9VmAG8xj/S26qpUk1CnS0UmsreGp/NEqPwXtGnKwecwZ2Ctbm5Yp0ixsx3z6hs
-         jaJlNR/j/ohUPAx9Uxj5sJ6oxTcPVcFt5MLC7tckK6YRicxHWYB9fk1spCyGSNklIkS7
-         nR5/dS1/wCjhHDY/cma/xgxqf6ZIzdGOKDBSr+4YuRmwzjei2vO33aTbIADbVu0OVDdV
-         myAXOkPG0Udo86lU2BZbm0IhL/dw0f3i6SlIxebB8vlNhShjjIeF7G1CPu/SPF4pk+c6
-         /W7dBB497Sjy2JKRBD2JfHtEcYxPYDOB8vi9509zoFvngAONQ9BLdZl4+5U+hL6PBvtV
-         mgzQ==
+        bh=SSgTXFHyKy3EKW5amzFNddURi7wwL3JPtHEB4W2PJIQ=;
+        b=E+Ko3HoaAn/SbNq2+BoHjVxHOcFXzxcMw5eAnMS7INVdgfQwkd47z0/mJOV5XoH498
+         scTjG3apXZotcgyYBbdTB1cUhowgMekHOy1hfNWvlASySy0yRd7gG4cWcB5FR7gy/508
+         BxaNCdVHU/hZlmXCX11/vmpk7b3qlV3Mom9au2tVJ36szclEsWxoaKG1SrKU1+5r6TmC
+         phFiurVXNenluvCVRtvFrmBL5DAxUUj/0PoGhJp1toeZdMGZkQujloCxNS+e1QNClM3X
+         HsvM8DnHrtWSbIkFQrovljY1C8ndbwfkHRDo85zbuIaZCICMW2Dr1oAdkQ2yKx7O2mff
+         64mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zUYGeT36rdUoWdmbRVQkbA4vrtGHPM/cta2o4YS1FyY=;
-        b=ZOVWhXZI69TfMaHSOBtg5MqmGqA8bdra/RBJjjveZhiUhNnv4Pmg8XxkNSNSDTZrJO
-         DH6GMUQ+QdWLEF/tVTS7HEdkyn7wcV9CDmQr3Mr9ShPvLuwXB+M47gkcMJWSrWO1WTY7
-         OVp6C4RBYpXbL6rM/qSUKFpfKWNyDIxxTeJeua+Uk7bzO7uAvBhVjkTHT6E5yjWY1+fu
-         e3CLFG7DpirjpQRvTO1/RzoswmmqJ9zVA1L51bxEFC7pBYMrrfwJmgm3R2O2ZhKcjWmK
-         YyQEKl79GEAhGWnRIiD1IyyUDrd145VJJbJkLThYa6omTgJl+/6I14jWEPeoaha8iylH
-         wgeQ==
-X-Gm-Message-State: AFqh2kpkFFtxhlkAs39SXiD+SCV4XGaT+9HZktts2WlYMac0h+czcOqg
-        VOoWiac8A+CI4IBVG3SD6YdkOg==
-X-Google-Smtp-Source: AMrXdXsNFSB4i5fU5BCEY1bOU1s3DzBggRjE5V04XQ1OXzn1osBJ2odaHVEsTW5dMNL9bNp01Oa7Ng==
-X-Received: by 2002:a05:6512:b23:b0:4cb:d3:3b99 with SMTP id w35-20020a0565120b2300b004cb00d33b99mr22731307lfu.36.1673622813471;
-        Fri, 13 Jan 2023 07:13:33 -0800 (PST)
+        bh=SSgTXFHyKy3EKW5amzFNddURi7wwL3JPtHEB4W2PJIQ=;
+        b=uN8umtyTXOoYL3AYnqq6Fa0qGlsTdRhZcxBsY2s6DuHHR6WvckCP+sz9pfxn6MzCu7
+         PFMcY0ntr7z82EggsN4/Ammzpzn0fo6E5iwKW84pKuTM5U3VDlOfe/bWm463slJsOopX
+         4PoE13z9aYeYx/wdo9Hf5yPfs+HIp/HIFKJEBw7YL/afw6T1s7asv7uNGAmNMByd2Be6
+         rhwW2zrr7FBOSrVxCCHdp1okinHGO/6AnCTSYjkNgz0xApxiGoPs7W0R2hzlYGqqy8Au
+         kk+gnlskYHjoazxDRQFCJvfJ2k5AggJ9lISHvYsu+bHAv6bTkgGKaz+r0AH/7Nfi7CrJ
+         0lhg==
+X-Gm-Message-State: AFqh2ko0Xx8M8Jmo/vvbVD9uqExEa3WuUjoBiV5Ct4pHptX3BZkqOh5v
+        VWDjjpei7fZrPqwsd7ybQuMFwA==
+X-Google-Smtp-Source: AMrXdXtlAwax9wzqDnNUzguINen9TYLIV91ebf6KZx6f+zkSZhQ803ZvgPpY7xs8wCz4XL7zPvUNXw==
+X-Received: by 2002:a2e:a48a:0:b0:281:e762:35aa with SMTP id h10-20020a2ea48a000000b00281e76235aamr62619lji.3.1673623208570;
+        Fri, 13 Jan 2023 07:20:08 -0800 (PST)
 Received: from [192.168.1.101] (abym53.neoplus.adsl.tpnet.pl. [83.9.32.53])
-        by smtp.gmail.com with ESMTPSA id f7-20020ac25327000000b004b4ea0f4e25sm3892681lfh.301.2023.01.13.07.13.31
+        by smtp.gmail.com with ESMTPSA id p6-20020a2ea406000000b00289cfd2088csm693673ljn.73.2023.01.13.07.20.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Jan 2023 07:13:33 -0800 (PST)
-Message-ID: <83718846-1c51-d102-d11a-a14860be8454@linaro.org>
-Date:   Fri, 13 Jan 2023 16:13:30 +0100
+        Fri, 13 Jan 2023 07:20:08 -0800 (PST)
+Message-ID: <b87ab80d-0936-5a5a-25da-35c0dbdede33@linaro.org>
+Date:   Fri, 13 Jan 2023 16:20:06 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
-Subject: Re: [PATCH 5/6] dt-bindings: mailbox: Add compatible for IPQ9574
+Subject: Re: [PATCH 6/6] clk: qcom: Fix APSS PLL and RCG Configuration
 Content-Language: en-US
 To:     devi priya <quic_devipriy@quicinc.com>, agross@kernel.org,
         andersson@kernel.org, robh+dt@kernel.org,
@@ -72,9 +72,9 @@ Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
         quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
         quic_poovendh@quicinc.com
 References: <20230113143647.14961-1-quic_devipriy@quicinc.com>
- <20230113143647.14961-6-quic_devipriy@quicinc.com>
+ <20230113143647.14961-7-quic_devipriy@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230113143647.14961-6-quic_devipriy@quicinc.com>
+In-Reply-To: <20230113143647.14961-7-quic_devipriy@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -90,45 +90,70 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 13.01.2023 15:36, devi priya wrote:
-> Add the mailbox compatible string for IPQ9574 SoC
+> Included CLK_IS_CRITICAL flag which helps to properly enable
+> the APSS PLL during bootup.
+Please describe the issue and not only the user-visible impact it
+makes. Does the PLL get shut down by clk_ignore_unused? Maybe you
+would be interested in the sync_state changes that landed in recent
+-next that may solve it for you?
+
+I don't think it should be always-on, as you have an alternate source
+for low power modes, adding CLK_IS_CRITICAL will keep the PLL enabled
+even if you're not using it.
+
+> clk_rcg2_ops should be used for APSS clock RCG, as other ops
+> will not configure the RCG register
+RCG register meaning RCG register*s*, meaning in this case M/N/D
+which would be required for proper rate setting and not only input
+switching (which arguably doesn't seem to be of much concern on a
+single-parent clock)? This all is not obvious..
+
+Konrad
 > 
 > Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
 > Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
 > Signed-off-by: devi priya <quic_devipriy@quicinc.com>
 > ---
-Binding changes should come before driver changes, so that
-you're not introducing an "illegal" compatible and only
-"legalize" it later - please reorder the patch.
-
-Konrad
->  .../devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml     | 3 +++
->  1 file changed, 3 insertions(+)
+>  drivers/clk/qcom/apss-ipq-pll.c | 1 +
+>  drivers/clk/qcom/apss-ipq6018.c | 8 +++++++-
+>  2 files changed, 8 insertions(+), 1 deletion(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
-> index 943f9472ae10..9e076758a58a 100644
-> --- a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
-> +++ b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
-> @@ -20,6 +20,7 @@ properties:
->            - enum:
->                - qcom,ipq6018-apcs-apps-global
->                - qcom,ipq8074-apcs-apps-global
-> +              - qcom,ipq9574-apcs-apps-global
->                - qcom,msm8976-apcs-kpss-global
->                - qcom,msm8996-apcs-hmss-global
->                - qcom,msm8998-apcs-hmss-global
-> @@ -113,6 +114,7 @@ allOf:
->            enum:
->              - qcom,ipq6018-apcs-apps-global
->              - qcom,ipq8074-apcs-apps-global
-> +            - qcom,ipq9574-apcs-apps-global
->      then:
->        properties:
->          clocks:
-> @@ -129,6 +131,7 @@ allOf:
->            enum:
->              - qcom,ipq6018-apcs-apps-global
->              - qcom,ipq8074-apcs-apps-global
-> +            - qcom,ipq9574-apcs-apps-global
->      then:
->        properties:
->          '#clock-cells':
+> diff --git a/drivers/clk/qcom/apss-ipq-pll.c b/drivers/clk/qcom/apss-ipq-pll.c
+> index dd0c01bf5a98..75486a124fcd 100644
+> --- a/drivers/clk/qcom/apss-ipq-pll.c
+> +++ b/drivers/clk/qcom/apss-ipq-pll.c
+> @@ -33,6 +33,7 @@ static struct clk_alpha_pll ipq_pll = {
+>  			},
+>  			.num_parents = 1,
+>  			.ops = &clk_alpha_pll_huayra_ops,
+> +			.flags = CLK_IS_CRITICAL,
+>  		},
+>  	},
+>  };
+> diff --git a/drivers/clk/qcom/apss-ipq6018.c b/drivers/clk/qcom/apss-ipq6018.c
+> index f2f502e2d5a4..0d0e7196a4dc 100644
+> --- a/drivers/clk/qcom/apss-ipq6018.c
+> +++ b/drivers/clk/qcom/apss-ipq6018.c
+> @@ -33,15 +33,21 @@ static const struct parent_map parents_apcs_alias0_clk_src_map[] = {
+>  	{ P_APSS_PLL_EARLY, 5 },
+>  };
+>  
+> +static const struct freq_tbl ftbl_apcs_alias0_clk_src[] = {
+> +	{ .src = P_APSS_PLL_EARLY, .pre_div = 1 },
+> +	{ }
+> +};
+> +
+>  static struct clk_rcg2 apcs_alias0_clk_src = {
+>  	.cmd_rcgr = 0x0050,
+> +	.freq_tbl = ftbl_apcs_alias0_clk_src,
+>  	.hid_width = 5,
+>  	.parent_map = parents_apcs_alias0_clk_src_map,
+>  	.clkr.hw.init = &(struct clk_init_data){
+>  		.name = "apcs_alias0_clk_src",
+>  		.parent_data = parents_apcs_alias0_clk_src,
+>  		.num_parents = ARRAY_SIZE(parents_apcs_alias0_clk_src),
+> -		.ops = &clk_rcg2_mux_closest_ops,
+> +		.ops = &clk_rcg2_ops,
+>  		.flags = CLK_SET_RATE_PARENT,
+>  	},
+>  };
