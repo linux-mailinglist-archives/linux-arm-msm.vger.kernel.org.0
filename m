@@ -2,144 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D6D1A669982
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 15:06:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 37EA966997F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 15:06:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241648AbjAMOG0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 09:06:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59548 "EHLO
+        id S241112AbjAMOGX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 09:06:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241627AbjAMOFy (ORCPT
+        with ESMTP id S241050AbjAMOFw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 09:05:54 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68BF38463F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 06:02:50 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id j17so33286517lfr.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 06:02:50 -0800 (PST)
+        Fri, 13 Jan 2023 09:05:52 -0500
+Received: from mail-oo1-xc29.google.com (mail-oo1-xc29.google.com [IPv6:2607:f8b0:4864:20::c29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1990848C3;
+        Fri, 13 Jan 2023 06:02:52 -0800 (PST)
+Received: by mail-oo1-xc29.google.com with SMTP id b10-20020a4a9fca000000b004e6f734c6b4so5587796oom.9;
+        Fri, 13 Jan 2023 06:02:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jS0Sn7Q/DWgyMi4++YnIgoji3iR4wjoLHIyUoWyhzT0=;
-        b=cqF0GZSk30p8zV9N8ZW7JtXcNOmUzwQi+LXaxJrfaO5iTORvyLlP0AkaLFgfFxq8rX
-         7z8XPPOBRIui73oasWhOsC3xVP9I1hO/muq9V5jay//3icUvvAhhWi6Qt6Zv/sIAHK4g
-         doEkhXgfhIDHrD6DLD4sweZkLM6vBa8vzS7baTfQAJNdx2LLAwvQx6Prht9fHMSvAMPa
-         ac99Mt/S8f/xMd/qG0jy1BwGCgp9L0Ym5L+rymg0zow83wTKhVkSkwBqfBqyzcYHlV+V
-         q6wvaBkjgjC/ViTOwpTkHPYHFJBQNi4Q03f6n2q59z5XVja5IE71chw3zBS6RHa0DWCp
-         rRCg==
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eIdIHCQo4qiprGc7sFFxrDjZzynhHIC6KZoUweTf9OA=;
+        b=p2qK7nbEkQggLvqIQfjMeQK4E5Et+O0zNUxI/C2rzV1pmhYyilqPltxQebkgYldZGk
+         4W9FmYJOAamN2MMYQFchwKUWwHJmlGgDx/VCvFA99miWe6+tCQNM0AuKmiwWNQq0klaJ
+         Obe5C8/2O8dzmKnezt8HJYxrApXEIoTkiwp+2HXZBGKPRvvif4eCfJcsB7O7ya4SpmA3
+         0YwQ5i1oPsFvwITm07YansbeVpAxHS22BlGf/8Q1MgthYmdVfc6ok3YJrvjs+JG6wGTR
+         4djJvqOXndtmh3sr8LeUXmnsj+2FyxjH0f6B+fyroeWsrM2ilmx8s5PJtackC6KOWQf0
+         GHwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jS0Sn7Q/DWgyMi4++YnIgoji3iR4wjoLHIyUoWyhzT0=;
-        b=ATeG1e1hOMbqZ1co6rxLggPwsCMphjwROwZm1dUZoNNsLXopE+wgTRpWnAJNuNAE6d
-         /7W4ceva9KVWn03zdzZ2pfLsez3xhvN9czaU8BW8lD5FSVZE1+QyyHyd6nuu3IxWZFoL
-         dSsOZ0Q3IukPyWS0BwZM5r3iV3nZRLQw783NOzkS8fF373YlnOIa272YeVZyaMmCYV6H
-         aWSHUNo97PKXWGJpKQySZL6642NL1QGGyz5MTvoCZQ0O/om7JiZ2l0ztgRJ4QNmb2C1u
-         HYpX23FkhoKLz7MbSykJELNs+w4FTLbfArf7DaocM0htKjoHK9anwwVFFVgow0JolhwB
-         eD/w==
-X-Gm-Message-State: AFqh2kr04X2Jh3/8bcmpkxuPpbpVsBPcSRbZmZhGzIPleCsCn8DAtQNj
-        cmAfx3LMZxO3BBNZglkgO212kQ==
-X-Google-Smtp-Source: AMrXdXteV9D28Pi8GIuO5SPL/s56rnW763SXWhMrKRnNX/ceg6NZp9UibDBYSX42UJ59U9l8skTFyw==
-X-Received: by 2002:a05:6512:2987:b0:4a4:68b7:d642 with SMTP id du7-20020a056512298700b004a468b7d642mr23027702lfb.41.1673618568724;
-        Fri, 13 Jan 2023 06:02:48 -0800 (PST)
-Received: from [192.168.1.101] (abym53.neoplus.adsl.tpnet.pl. [83.9.32.53])
-        by smtp.gmail.com with ESMTPSA id n1-20020a05651203e100b004d0ce8a0fc8sm311390lfq.202.2023.01.13.06.02.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Jan 2023 06:02:47 -0800 (PST)
-Message-ID: <9d1a12ef-3001-977d-20a2-1fb31f277ff6@linaro.org>
-Date:   Fri, 13 Jan 2023 15:02:44 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH 11/13] clk: qcom: cpu-8996: fix PLL clock ops
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=eIdIHCQo4qiprGc7sFFxrDjZzynhHIC6KZoUweTf9OA=;
+        b=CLdXt7Bz+B1Gw9U/16hE3ROHuFP4rL3DMTyK4ui0jpSEvekH1Ia1DMs3KexwSEQTi/
+         qfZB6/sIrLohypI8Sgs0QtqcyNt9dXrHDyJNQzHcxpwd1iJB1gRhvi9REnQcRMgMxVJt
+         6BhL7Wp+B6K5xmbuMfiD18XpunaOaYeEIKDcBfQFoyvr4AAQ4I/7BwsqrIdmCGsH2cRC
+         buGeNVtcw0q5nOZ5v4HiTiTEBS9w2SltCrbn2JZu6GacG6MxxL/6nw7cWAbjmgBUJV88
+         flYEWphk9HiXX9wM6Kkn660myg9ngTmIFvHBwy4TokOFMPuQ/GuP/sC8dKtUxb0O6Q9n
+         H8xg==
+X-Gm-Message-State: AFqh2kr/4ddZCMrj6wsGM1M9XZLN5zI6ucsEG6Q8OUUxGqejkRaopCDj
+        Pn7kDya3/9ayjdXmdRL0w1eP0utCEAk=
+X-Google-Smtp-Source: AMrXdXtr5IgUGIPi2Cu215mW/ZglwbTtoma3MwwTDbxvF+c2UCPiRfCD2IHK0iqMALEpjIJVk+M+EQ==
+X-Received: by 2002:a4a:21c5:0:b0:4af:70e8:8afd with SMTP id u188-20020a4a21c5000000b004af70e88afdmr39218014oou.4.1673618572075;
+        Fri, 13 Jan 2023 06:02:52 -0800 (PST)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id w15-20020a4ae08f000000b004f1f6b25091sm7659656oos.41.2023.01.13.06.02.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Jan 2023 06:02:51 -0800 (PST)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date:   Fri, 13 Jan 2023 06:02:50 -0800
+From:   Guenter Roeck <linux@roeck-us.net>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230111192004.2509750-1-dmitry.baryshkov@linaro.org>
- <20230111192004.2509750-12-dmitry.baryshkov@linaro.org>
- <b2798d5a-d637-cc94-501e-0739345f0fed@linaro.org>
- <66296817-669f-b3f9-146e-48d5808e124e@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <66296817-669f-b3f9-146e-48d5808e124e@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+        Wim Van Sebroeck <wim@linux-watchdog.org>,
+        Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-watchdog@vger.kernel.org,
+        Rob Herring <robh@kernel.org>
+Subject: Re: [PATCH v2 3/7] dt-bindings: watchdog: qcom-wdt: fix list of MSM
+ timer compatibles
+Message-ID: <20230113140250.GC1606649@roeck-us.net>
+References: <20230113103346.29381-1-krzysztof.kozlowski@linaro.org>
+ <20230113103346.29381-4-krzysztof.kozlowski@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230113103346.29381-4-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 13.01.2023 12:35, Dmitry Baryshkov wrote:
-> On 12/01/2023 18:10, Konrad Dybcio wrote:
->>
->>
->> On 11.01.2023 20:20, Dmitry Baryshkov wrote:
->>> Switch CPU PLLs to use clk_alpha_pll_hwfsm_ops, it seems to suit
->>> better.
->>>
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->> I *think* SUPPORTS_DYNAMIC_UPDATE should also be kicked from
->> non-alt PLLs.. Otherwise we might have been kicking ourselves
->> in the face all along, changing the frequency of a running
->> PLL that doesn't support it if we were using the main PLL
->> and not the altPLL/ACD..
->>
->> Downstream sets it only for clk_ops_alpha_pll_hwfsm which is
->> used on alt PLLs only
->>
->> This change seems sound, as Huayra supports dynamic update
->> even without setting any flags.
+On Fri, Jan 13, 2023 at 11:33:42AM +0100, Krzysztof Kozlowski wrote:
+> The MSM timer ("qcom,msm-timer") is a bit different timer and watchdog
+> device than KPSS watchdog.  It has its own generic and specific
+> compatibles, so fix the list to reflect this.  Adjust the example to
+> show the newer KPSS watchdog.
 > 
-> I don't know where Huayra came from. Downstream uses plain hwfsm pll. Huayra uses different alpha register settings.
-Right, that too.. somewhat of a miracle things worked at all..
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Acked-by: Rob Herring <robh@kernel.org>
 
-Konrad
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
 
-P.S please revisit that SUPPORTS_DYNAMIC_UPDATE flag for main PLLs
 > 
->>
->> Konrad
->>>   drivers/clk/qcom/clk-cpu-8996.c | 4 ++--
->>>   1 file changed, 2 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/drivers/clk/qcom/clk-cpu-8996.c b/drivers/clk/qcom/clk-cpu-8996.c
->>> index 1c00eb629b61..b53cddc4bca3 100644
->>> --- a/drivers/clk/qcom/clk-cpu-8996.c
->>> +++ b/drivers/clk/qcom/clk-cpu-8996.c
->>> @@ -128,7 +128,7 @@ static struct clk_alpha_pll pwrcl_pll = {
->>>           .name = "pwrcl_pll",
->>>           .parent_data = pll_parent,
->>>           .num_parents = ARRAY_SIZE(pll_parent),
->>> -        .ops = &clk_alpha_pll_huayra_ops,
->>> +        .ops = &clk_alpha_pll_hwfsm_ops,
->>>       },
->>>   };
->>>   @@ -140,7 +140,7 @@ static struct clk_alpha_pll perfcl_pll = {
->>>           .name = "perfcl_pll",
->>>           .parent_data = pll_parent,
->>>           .num_parents = ARRAY_SIZE(pll_parent),
->>> -        .ops = &clk_alpha_pll_huayra_ops,
->>> +        .ops = &clk_alpha_pll_hwfsm_ops,
->>>       },
->>>   };
->>>   
+> ---
+> 
+> Changes since v1:
+> 1. Add tag.
+> ---
+>  .../devicetree/bindings/watchdog/qcom-wdt.yaml    | 15 ++++++++++-----
+>  1 file changed, 10 insertions(+), 5 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+> index 3e0b30a817d6..93e4381067dd 100644
+> --- a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+> +++ b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+> @@ -33,13 +33,16 @@ properties:
+>            - const: qcom,kpss-wdt
+>        - const: qcom,kpss-wdt
+>          deprecated: true
+> +      - items:
+> +          - const: qcom,scss-timer
+> +          - const: qcom,msm-timer
+>        - items:
+>            - enum:
+> -              - qcom,kpss-timer
+>                - qcom,kpss-wdt-apq8064
+>                - qcom,kpss-wdt-ipq8064
+>                - qcom,kpss-wdt-msm8960
+> -              - qcom,scss-timer
+> +          - const: qcom,kpss-timer
+> +          - const: qcom,msm-timer
+>  
+>    reg:
+>      maxItems: 1
+> @@ -56,9 +59,11 @@ unevaluatedProperties: false
+>  
+>  examples:
+>    - |
+> -    watchdog@208a038 {
+> -      compatible = "qcom,kpss-wdt-ipq8064";
+> -      reg = <0x0208a038 0x40>;
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +
+> +    watchdog@17c10000 {
+> +      compatible = "qcom,apss-wdt-sm8150", "qcom,kpss-wdt";
+> +      reg = <0x17c10000 0x1000>;
+>        clocks = <&sleep_clk>;
+>        timeout-sec = <10>;
+>      };
+> -- 
+> 2.34.1
 > 
