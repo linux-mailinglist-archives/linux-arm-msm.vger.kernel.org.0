@@ -2,66 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CA973669C6A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 16:33:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 908B7669C71
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 16:33:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229457AbjAMPdo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 10:33:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53466 "EHLO
+        id S229946AbjAMPds (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 10:33:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230077AbjAMPdU (ORCPT
+        with ESMTP id S230263AbjAMPd0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 10:33:20 -0500
-Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33DC89423A;
-        Fri, 13 Jan 2023 07:26:54 -0800 (PST)
-Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-12c8312131fso22639322fac.4;
-        Fri, 13 Jan 2023 07:26:54 -0800 (PST)
+        Fri, 13 Jan 2023 10:33:26 -0500
+Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D61BC974B5;
+        Fri, 13 Jan 2023 07:26:57 -0800 (PST)
+Received: by mail-oi1-f174.google.com with SMTP id s124so1139962oif.1;
+        Fri, 13 Jan 2023 07:26:57 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=date:subject:message-id:references:in-reply-to:cc:to:from
          :mime-version:content-transfer-encoding:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=0PbROUEuIJk+HQe91NY18FTTLvUzGQXQDtdY40/ABZE=;
-        b=nu9IWNcY7xo7v/v/EMifLvQYzgEOpL94Ga6v0ECuGHM1fqcWd8w/WZNHxtaEIhsZaI
-         6Z6G+EQoEzaeMFXSjCRWSAf9zxHPtgFFQoqcfnsqloYoKBBGiUnnVe/2IPfXhADEqolH
-         txayA1FISMh798xZEQHZZFn7VrdcptMP6uCmTbwasNMAZzsGcDYud1lNkNaQ5GFPjaMi
-         92crlmkInW4YUTszXpczoz5HQsdvZcOLNEH0oKgfktXAd0Bfj3K0U/RSHlj72dDCiTs0
-         O/gp4k9yhd/SAZnBvDguBjXGopDor3n5ab7LKvTzTKcAizqAwUOp/bgKY3u6SympyABO
-         FXNQ==
-X-Gm-Message-State: AFqh2kqI0jHuSvoqcI8skDUYR9HGAWsOPNcj36icQ0XQ1zjgbv5DaQpV
-        azeRPCp+a9tFC0+SqKLuXg==
-X-Google-Smtp-Source: AMrXdXs3qrRsk35e5aDRYxcFeHO8M4hoHtTtK5NTH7ZKCs86bZQy6UFOAiOsRQojs+jf/ClrcsasKQ==
-X-Received: by 2002:a05:6870:c905:b0:15e:ef68:67cf with SMTP id hj5-20020a056870c90500b0015eef6867cfmr1226310oab.59.1673623613356;
-        Fri, 13 Jan 2023 07:26:53 -0800 (PST)
+        bh=w3iFRccbSDkEugBccIou+2bALCJO5axdL5vy8psmKe8=;
+        b=22LWLyyzcwh25msT8TSUwytbqOlNmi3k/XKZ7xnB64XLTOj3jplMg0muNk5u/BO5Vo
+         N5uHpMTzL4wsUPeNqAgPOfCATabgcBx27OvDchp/JBB4QVQWMLe9DrgEy91lt7xtcprz
+         uu87Na78s0Ymn+75n0LLDCumi9ZmmeHA6h6rweEWaWZUy66ined7wurUzYccvCDp1HUj
+         xDeXRewR2C0n5vH0cWBmXc+8W2JDpBJCdxZoCt/2tmSwAOABhPgAyAA7X7FgetEpr5Qy
+         gYQuP+KnYn3AEneoXSgN2KhabsYMvnVVs5958+ElT1P7EJ3oWj5SC/0dqQDhJGTquVNq
+         bCFg==
+X-Gm-Message-State: AFqh2kos/QhwSjwO6bcR/9EeLTaMJQDKax8oDETQR7xLR1wMYgoOakqi
+        6iMoZCvQwusaRtoIysfBzA==
+X-Google-Smtp-Source: AMrXdXtU5Q+EcHwM8fGnUFflgtn0JMNu0tQGWDvrXpPdN6wJh85fEDrBO+B8rxDkKl45atQuth7UAg==
+X-Received: by 2002:a05:6808:18a8:b0:364:adbc:609b with SMTP id bi40-20020a05680818a800b00364adbc609bmr1610560oib.19.1673623617083;
+        Fri, 13 Jan 2023 07:26:57 -0800 (PST)
 Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id m34-20020a056870562200b00143ae7d4ccesm10612793oao.45.2023.01.13.07.26.52
+        by smtp.gmail.com with ESMTPSA id be16-20020a056808219000b00359ad661d3csm9234840oib.30.2023.01.13.07.26.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Jan 2023 07:26:53 -0800 (PST)
-Received: (nullmailer pid 2224492 invoked by uid 1000);
+        Fri, 13 Jan 2023 07:26:56 -0800 (PST)
+Received: (nullmailer pid 2224506 invoked by uid 1000);
         Fri, 13 Jan 2023 15:26:52 -0000
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 From:   Rob Herring <robh@kernel.org>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        devicetree@vger.kernel.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
+Cc:     Andy Gross <agross@kernel.org>, Stephen Boyd <swboyd@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        dri-devel@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-        Andy Gross <agross@kernel.org>, Daniel Vetter <daniel@ffwll.ch>
-In-Reply-To: <20230113083720.39224-5-dmitry.baryshkov@linaro.org>
+        dri-devel@lists.freedesktop.org, Sean Paul <sean@poorly.run>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        David Airlie <airlied@gmail.com>, devicetree@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20230113083720.39224-2-dmitry.baryshkov@linaro.org>
 References: <20230113083720.39224-1-dmitry.baryshkov@linaro.org>
- <20230113083720.39224-5-dmitry.baryshkov@linaro.org>
-Message-Id: <167362341911.2212079.15291287366051593468.robh@kernel.org>
-Subject: Re: [PATCH v6 04/11] dt-bindings: display/msm: rename mdss nodes to
- display-subsystem
+ <20230113083720.39224-2-dmitry.baryshkov@linaro.org>
+Message-Id: <167362343145.2212490.16180994187587985655.robh@kernel.org>
+Subject: Re: [PATCH v6 01/11] dt-bindings: display/msm: convert MDP5 schema to
+ YAML format
 Date:   Fri, 13 Jan 2023 09:26:52 -0600
 X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
@@ -74,42 +74,37 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Fri, 13 Jan 2023 10:37:13 +0200, Dmitry Baryshkov wrote:
-> Follow the 'generic names' rule and rename mdss nodes to
-> display-subsystem.
+On Fri, 13 Jan 2023 10:37:10 +0200, Dmitry Baryshkov wrote:
+> Convert the mdp5.txt into the yaml format. Changes to the existing (txt) schema:
+>  - MSM8996 has additional "iommu" clock, define it separately
+>  - Add new properties used on some of platforms:
+>    - interconnects, interconnect-names
+>    - iommus
+>    - power-domains
+>    - operating-points-v2, opp-table
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  .../devicetree/bindings/display/msm/mdss-common.yaml      | 8 ++++++++
->  .../devicetree/bindings/display/msm/qcom,mdss.yaml        | 5 ++++-
->  2 files changed, 12 insertions(+), 1 deletion(-)
+>  .../devicetree/bindings/display/msm/mdp5.txt  | 132 -----------------
+>  .../bindings/display/msm/qcom,mdp5.yaml       | 138 ++++++++++++++++++
+>  2 files changed, 138 insertions(+), 132 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/display/msm/mdp5.txt
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,mdp5.yaml
 > 
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+Running 'make dtbs_check' with the schema in this patch gives the
+following warnings. Consider if they are expected or the schema is
+incorrect. These may not be new warnings.
 
-yamllint warnings/errors:
+Note that it is not yet a requirement to have 0 warnings for dtbs_check.
+This will change in the future.
 
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm6115-mdss.example.dtb: mdss@5e00000: $nodename:0: 'mdss@5e00000' does not match '^display-subsystem@[0-9a-f]+$'
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm6115-mdss.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.example.dtb: mdss@5e00000: $nodename:0: 'mdss@5e00000' does not match '^display-subsystem@[0-9a-f]+$'
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml
+Full log is available here: https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230113083720.39224-2-dmitry.baryshkov@linaro.org
 
-doc reference errors (make refcheckdocs):
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230113083720.39224-5-dmitry.baryshkov@linaro.org
+mdp@1a01000: compatible:0: 'qcom,mdp5' was expected
+	arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dtb
 
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+mdp@1a01000: compatible: ['qcom,msm8953-mdp5', 'qcom,mdp5'] is too long
+	arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dtb
 
