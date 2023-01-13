@@ -2,37 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 987B366A1D5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 19:19:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2063866A1E5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 19:24:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230085AbjAMSTU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 13:19:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33108 "EHLO
+        id S231232AbjAMSY0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 13:24:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230124AbjAMSTC (ORCPT
+        with ESMTP id S230001AbjAMSX7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 13:19:02 -0500
+        Fri, 13 Jan 2023 13:23:59 -0500
 Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D239A15812;
-        Fri, 13 Jan 2023 10:10:59 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA29B8D5FE;
+        Fri, 13 Jan 2023 10:17:33 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 8FC12B821AB;
-        Fri, 13 Jan 2023 18:10:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42CC1C433EF;
-        Fri, 13 Jan 2023 18:10:55 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 85919B821AA;
+        Fri, 13 Jan 2023 18:17:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31446C43392;
+        Fri, 13 Jan 2023 18:17:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1673633457;
-        bh=El6zsbjfdaa104rFExh3mMvqh+hk+3xX+6KrXRNYuWk=;
+        s=k20201202; t=1673633851;
+        bh=MC3Wb0A+JrFPrTulLTxnk1+4ay4eXZrhHeOdStTKrfY=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=nRlu2mjlU4JQyt0ARmm5dutVyGeFuuTpNXBMr1+HosWMv/PTAnVMEk3f2iKZ+pNXP
-         7VqRxNDdbpJF8oUjgWq9pFMD950sH0vU39UYYP2cRgZfGQJdNJ/5YrtgKm0fkQJIXg
-         /pF/THG6SNsZHN+PTwK3XZ9KebL5PZIbA+jt+wqwzvCB8pj/mcNf/Dmdu8KB/u6QAM
-         xoFC+zw2aW9oJG3toEuxDWgQAVWqDjAFXw/Yx4AaqTRp3CRqmx0/JWTatzpFRdz+G7
-         PCjz/GGKU8scwBtfbEilna7cMtMOygrT9TkGzlULa3pRct4N/vkP39z6hLb4q5vBwU
-         j0tuGG360TRNg==
-Date:   Fri, 13 Jan 2023 23:40:53 +0530
+        b=Ts/O8pF741PO1l3JN4gkhTIapMPZ3pImdar2X6efG6/+c+a+PCVOyFot/na2cwwMo
+         Ck1qMstsND4k83I09UbbacKvr+0lkeb2f1shWydjbNpdfKYyoStX0BLOA2ip/kpagI
+         dagDI0TxUTmmUgIu8LZ5WJ+h/yE8azCttZ2A3hDpgqEqQ/RxlGymhbhOlc2Wa3I+lc
+         FLib8YA9o2gc6ZUpU2eojnFimtZ8i4u5QwFsbXivg56EcIqqwpQONFfS5mKISPaUQw
+         yjQ6k/Gf+ewI5LJN5cpHX2Ie0xBS4VY5h0gh4ijLmnx1JQJ0bpMzzJzzODAYUW54XI
+         20Px3YBhDdCCw==
+Date:   Fri, 13 Jan 2023 23:47:26 +0530
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -44,14 +44,14 @@ Cc:     Andy Gross <agross@kernel.org>,
         Wesley Cheng <quic_wcheng@quicinc.com>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/4] dt-bindings: phy: qcom,usb-snps-femto-v2: use
- fallback compatibles
-Message-ID: <Y8GerZ2LweryNauI@matsya>
-References: <20221223161835.112079-1-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH] dt-bindings: phy: qcom,qusb2: do not define properties
+ in "if" block
+Message-ID: <Y8GgNidy+Hhnnikp@matsya>
+References: <20221224154226.43417-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221223161835.112079-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221224154226.43417-1-krzysztof.kozlowski@linaro.org>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -61,16 +61,11 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23-12-22, 17:18, Krzysztof Kozlowski wrote:
-> Document SoC-specific compatibles with generic fallback (e.g.
-> qcom,usb-snps-hs-7nm-phy) already used in DTSI.  Add SoC-specific
-> compatibles for PHY on SDX55 and SDX65.
-> 
-> This disallows usage of the qcom,usb-snps-hs-5nm-phy and
-> qcom,usb-snps-hs-7nm-phy generic compatibles alone.  Do not touch
-> remaining two compatibles - qcom,usb-snps-femto-v2-phy and
-> qcom,sc8180x-usb-hs-phy - because there are no upstream users, so not
-> sure what was the intention for them.
+On 24-12-22, 16:42, Krzysztof Kozlowski wrote:
+> It is more readable to define properties in top-level "properties:" and
+> restrict them (if needed) per compatible in the "if" block.  Defining
+> properties in "if" block  does not work correctly with
+> additionalProperties:false:
 
 Applied, thanks
 
