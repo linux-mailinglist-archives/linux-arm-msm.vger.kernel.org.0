@@ -2,72 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D6550668ADB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 05:29:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A9249668AF4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 05:39:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229982AbjAME3Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Jan 2023 23:29:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46406 "EHLO
+        id S230413AbjAMEjX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Jan 2023 23:39:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232777AbjAME1x (ORCPT
+        with ESMTP id S230298AbjAMEjU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Jan 2023 23:27:53 -0500
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D1CC65ACD
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 20:23:24 -0800 (PST)
-Received: by mail-lf1-x12a.google.com with SMTP id d30so26494618lfv.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 20:23:24 -0800 (PST)
+        Thu, 12 Jan 2023 23:39:20 -0500
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAA78B91
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 20:39:18 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id m6so31423566lfj.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 20:39:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=E3qVpAD4e4r2YgJT6QopKVtu7JfoDub68cT+znrlhg8=;
-        b=g1sA+mRdgmsO8AavsUumHfQvlLAtB4VWYXXDCq1VVzPS/3nhZ0fXsMdyNXfCxkN4Px
-         NAkp+2C1iN5sx/f49xoGjCrPBJHCZyugZ6Xt+Ox1mjao5V9sWHSK8LFAXfzHbwXtg3nC
-         H4FqkcaaJHGoG+b6f00MIrTH95LvcwhSwWN068Gjcn9WOVVt9I3JUxVLsfW6Jjnb7JQU
-         ErjD5maMc0S8NBiEn8iG5SD0lq5Txbq+ivp8B85ILpdPAwfObjm0jin09Z0p6ZcQf0yG
-         Hq/ueqdpP2iEvYF3/VcAX1wr8GoVyfYfUf9wYdVJGsB5VgePWFw5C79Xkp3HcNOR+YhV
-         t87A==
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=rwPWckFN6l5Z0VUc2rVprLclAK1KfD6OaLDUvXSlPdU=;
+        b=Hus9WhNP0DRji76qhUZD9CGZBPjXVgznHEyqxtiuCZvdjakWb7/pqgsZ6ogIyK7Bas
+         RsErYkEFYFFIuWWrKINuUrESd+Q8tdxJf1d5ez8gVaAHyvNDYrWKz+4+lrB5q7j9GYMu
+         Uwww3O2Q2Jxw9UbU0ybbDPjjoR4tTUYQPAhVnw8tJw51QJ/E1OPPLBJMeb+t7w3pfPa6
+         CSe8ErQK9BiqMatIMuosQmkfJIKPHD/sKx5P80j5/PeKsZBUeh03LzSzkftt0bLsryFG
+         3JMlDzzlKx7V4TvIax8OnW7Xc/tnqfICLmsXlZjikwo2c5ElObaf/PtYaw1k6R4hGmqw
+         pdvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=E3qVpAD4e4r2YgJT6QopKVtu7JfoDub68cT+znrlhg8=;
-        b=J/eK9AKduLMZcLgON/g6rfE3kpGeUXmPgoBHOA/+MfZMiPQYdquW9Q+dy5MtLuM964
-         OVrz3xbN/pfdgZkRGQdRL+w0dO6D+Z+2qk/Ja991rgYZWs1YNMrf7nYdZngZWRxII75D
-         6bYxc3OyxRe7FhZVQWqxBTfvIMO5kHNGRDqVUrCuCAtOAv+H0Ls+V/H3iw1cEgtvubTm
-         C49uqak6XBiushkGNJv8tzRI6MkrAoNt7Y1sx43D1v8uQLQKJxf+LNYYfzqLuO6NiTWn
-         Anu3ISl6TATG5XPLXwG9GdycsAB+yvZtMpuTaD7abX7jNWr3OgRXNhv1JLfZoanb70fZ
-         Drwg==
-X-Gm-Message-State: AFqh2kpt1gsJDPrT9j7NtfkN22d7VmXYXJ7cKczRZWgKHyKeYaMh7MWd
-        ANQMos1eoU9E6hBn2tTDpMVzK/BYD4AXeBoj
-X-Google-Smtp-Source: AMrXdXv/7anjVIOUNJ+YbJdMSEKH2cBrncksS4VLSL3bLyFOCJQTjCjx5DOLn66H/eEOHhRBYmPXnQ==
-X-Received: by 2002:a05:6512:2316:b0:4ce:e95c:f300 with SMTP id o22-20020a056512231600b004cee95cf300mr918390lfu.39.1673583803336;
-        Thu, 12 Jan 2023 20:23:23 -0800 (PST)
+        bh=rwPWckFN6l5Z0VUc2rVprLclAK1KfD6OaLDUvXSlPdU=;
+        b=2DP8YbNFD0FgdR/9EYM1Jo3X4LbWJe1956551zMsZl019HQSCbnd337TYm2gjYzWGw
+         O0Z/F2qLBQM2T9shP7vF0p9rxZf/WMeqSD7CSO4MXFwgh9nTttRwE/xFqdWRs7vNl74o
+         fGZoAa3iw08SvKC7QCRRqmsG5tcfM0+HJNi3i239rCCOkmEhxd/+1I2OF5PJpSwdgkI5
+         5tRJXnayIrNY/Dyd5GfKBTznyk2o1W8JTvxkZNCZWT1eRaTzz3atPjPt6YYTrW67lEzj
+         qtfAsSR2LG6MOM+ak6E9HjbbZMjkJcgMvK9EYvyoCv2KTFI+ZgP6OBfMON0az855Crfr
+         KXtQ==
+X-Gm-Message-State: AFqh2kqm1TeBcHTCawF4g/pdc32tkksWrxAvCpMmtZM6nzns2f3wHEuS
+        PpVjOBMxateAeFqETGQTSEq30A==
+X-Google-Smtp-Source: AMrXdXuk1hI4hpqDsFfaxA0tg5vvn/WEymEIKE6fD6oI7k5DMiFrZUHrVB69K4e5s7uzDhfzb3cLVw==
+X-Received: by 2002:a19:c20d:0:b0:4b5:7859:349f with SMTP id l13-20020a19c20d000000b004b57859349fmr18986772lfc.48.1673584757132;
+        Thu, 12 Jan 2023 20:39:17 -0800 (PST)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id a26-20020a056512201a00b004ce437fe97dsm392242lfb.102.2023.01.12.20.23.22
+        by smtp.gmail.com with ESMTPSA id m8-20020a056512358800b004cb2c720b97sm3639604lfr.260.2023.01.12.20.39.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Jan 2023 20:23:22 -0800 (PST)
-Message-ID: <eea1c5dc-6bc5-4246-f0e1-0c790de9f078@linaro.org>
-Date:   Fri, 13 Jan 2023 06:23:22 +0200
+        Thu, 12 Jan 2023 20:39:16 -0800 (PST)
+Message-ID: <6c6bb40e-3601-f795-a170-43117b39b5a3@linaro.org>
+Date:   Fri, 13 Jan 2023 06:39:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH] drm/msm: Initialize mode_config earlier
-Content-Language: en-GB
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+Subject: Re: [PATCH v2] drm/msm/dpu: add hw revision 410
+To:     Richard Acayan <mailingradian@gmail.com>,
         Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Johan Hovold <johan@kernel.org>
-Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-References: <20230113041051.4189063-1-quic_bjorande@quicinc.com>
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20230113035939.185064-1-mailingradian@gmail.com>
+Content-Language: en-GB
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230113041051.4189063-1-quic_bjorande@quicinc.com>
+In-Reply-To: <20230113035939.185064-1-mailingradian@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -79,54 +85,60 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/01/2023 06:10, Bjorn Andersson wrote:
-> Invoking drm_bridge_hpd_notify() on a drm_bridge with a HPD-enabled
-> bridge_connector ends up in drm_bridge_connector_hpd_cb() calling
-> drm_kms_helper_hotplug_event(), which assumes that the associated
-> drm_device's mode_config.funcs is a valid pointer.
+On 13/01/2023 05:59, Richard Acayan wrote:
+> The Snapdragon 670 uses similar clocks (with one frequency added) to the
+> Snapdragon 845 but reports DPU revision 4.1.0. Add support for this DPU
+> with configuration from the Pixel 3a downstream kernel.
 > 
-> But in the MSM DisplayPort driver the HPD enablement happens at bind
-> time and mode_config.funcs is initialized late in msm_drm_init(). This
-> means that there's a window for hot plug events to dereference a NULL
-> mode_config.funcs.
-> 
-> Move the assignment of mode_config.funcs before the bind, to avoid this
-> scenario.
+> Link: https://android.googlesource.com/kernel/msm/+/368478b0ae76566927a2769a2bf24dfe7f38bb78/arch/arm64/boot/dts/qcom/sdm670-sde.dtsi
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
 
-Cam we make DP driver not to report HPD events until the enable_hpd() 
-was called? I think this is what was fixed by your internal_hpd patchset.
+This should come together with the qcom,sdm670-dpu and with the bindings 
+update. Also unless there is a strong reason not to do this, add 
+corresponding qcom,sdm670-mdss support to the driver and bindings.
 
-> 
-> Reported-by: Johan Hovold <johan@kernel.org>
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Otherwise the patch look good to me, minor nit below.
+
 > ---
->   drivers/gpu/drm/msm/msm_drv.c | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
+> Changes since v1:
+>   - proper use of DSC_BLK()
 > 
-> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> index ee2f60b6f09b..7ac670f3e6ab 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.c
-> +++ b/drivers/gpu/drm/msm/msm_drv.c
-> @@ -438,6 +438,9 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
+>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 67 +++++++++++++++++++
+>   1 file changed, 67 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> index 0f3da480b066..56709d508a6f 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> @@ -504,6 +504,25 @@ static const struct dpu_mdp_cfg msm8998_mdp[] = {
+>   	},
+>   };
 >   
->   	drm_mode_config_init(ddev);
->   
-> +	ddev->mode_config.funcs = &mode_config_funcs;
-> +	ddev->mode_config.helper_private = &mode_config_helper_funcs;
+> +static const struct dpu_mdp_cfg sdm670_mdp[] = {
+> +	{
+> +	.name = "top_0", .id = MDP_TOP,
+> +	.base = 0x0, .len = 0x45C,
+> +	.features = BIT(DPU_MDP_AUDIO_SELECT),
+> +	.highest_bank_bit = 0x1,
+> +	.clk_ctrls[DPU_CLK_CTRL_VIG0] = {
+> +			.reg_off = 0x2AC, .bit_off = 0},
+> +	.clk_ctrls[DPU_CLK_CTRL_VIG1] = {
+> +			.reg_off = 0x2B4, .bit_off = 0},
+> +	.clk_ctrls[DPU_CLK_CTRL_DMA0] = {
+> +			.reg_off = 0x2AC, .bit_off = 8},
+> +	.clk_ctrls[DPU_CLK_CTRL_CURSOR0] = {
+> +			.reg_off = 0x2B4, .bit_off = 8},
+> +	.clk_ctrls[DPU_CLK_CTRL_CURSOR1] = {
+> +			.reg_off = 0x2BC, .bit_off = 8},
+
+lowercase hex please
+
+> +	},
+> +};
 > +
->   	ret = msm_init_vram(ddev);
->   	if (ret)
->   		return ret;
-> @@ -479,9 +482,6 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
->   
->   	drm_helper_move_panel_connectors_to_head(ddev);
->   
-> -	ddev->mode_config.funcs = &mode_config_funcs;
-> -	ddev->mode_config.helper_private = &mode_config_helper_funcs;
-> -
->   	for (i = 0; i < priv->num_crtcs; i++) {
->   		/* initialize event thread */
->   		priv->event_thread[i].crtc_id = priv->crtcs[i]->base.id;
+>   static const struct dpu_mdp_cfg sdm845_mdp[] = {
+>   	{
+>   	.name = "top_0", .id = MDP_TOP,
 
 -- 
 With best wishes
