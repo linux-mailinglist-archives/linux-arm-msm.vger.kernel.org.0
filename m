@@ -2,215 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2298D6689F5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 04:14:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2E5B5668A0F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 04:25:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230163AbjAMDOV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Jan 2023 22:14:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38526 "EHLO
+        id S231349AbjAMDZl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Jan 2023 22:25:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45394 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230170AbjAMDOT (ORCPT
+        with ESMTP id S231154AbjAMDZk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Jan 2023 22:14:19 -0500
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B469A625F3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 19:14:17 -0800 (PST)
-Received: by mail-lf1-x133.google.com with SMTP id b3so31256697lfv.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 19:14:17 -0800 (PST)
+        Thu, 12 Jan 2023 22:25:40 -0500
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B9091580A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 19:25:38 -0800 (PST)
+Received: by mail-pl1-x634.google.com with SMTP id v23so17263413plo.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 19:25:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=iPjbB3FK1NBMvplGNfsEp/AEDsK3/EIymSBWqMhhO+g=;
-        b=DezL/d3trZVr4HXL/SAVamVvqujPUjBDNHJnlARdY09fq9HYIx6oGUqPe6l+LxI/eh
-         ifAU3gYz2BA36XzT9cLzaQd9qLTcGTuf4wzI3YFDCwM4+49CdeaHxs8mcXPWihTznWyT
-         VVVmeEuWRNV6Lf3kjm28nifW/uJeyEdcUNCMjaKORkgrT0eJYJ4woI8/vPBXBOwXPt15
-         CWGE6ua9fTkHxswFRvZ8uBuBnty0zCsHzVbTghKe6lMUJWESJuK491DSlBGv7yYK9ntD
-         3Q6QUrf1XSmx8ng9LkddahZzWTjvWrxnAu5zzujKhcG9NlSiMYK8eESnqASJrMnsTu9N
-         T4AQ==
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=yWM9xiWj0MDQWf+13yvBO0xsCa3YE6cBbf88bv0xKGo=;
+        b=mmBXkG/LSqvEPp/oud0jjzcfAcQK9A1EVzIN+KuMHROkzbXneuRSvT4e+2RNZB5fmA
+         pQhGOD9FhjoVtQzP3KGi206ANhdJB/HTBUWZouaXaHqpzgBR0WnZAE7sAL97U5/guxa3
+         GWuEGpXdjVdbIsUK4QMH+d/oGpil7EfgQ97v0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=iPjbB3FK1NBMvplGNfsEp/AEDsK3/EIymSBWqMhhO+g=;
-        b=NXIPvURcGpDEhmpKu+8fu6+tHKMAFaS9RDp9Ti5bX6aDYdEWGKqW4lixF1NprdI9f8
-         33YzwZHtofsrxrv+7tdnkcJrw+Xt3fLEQfZKM2nhJZouIedTwtIOOixuHTTrK82/qr/f
-         zQQxVxcKvrljtXkOiJjOK4YVyV+oeu9rUXebziwi4ekF8F3P6olLXQW4DMOoSLMjcDYW
-         c7RjWG71tExbBmDV4ytEi4ii9In/a+/R1klzybQnl/xTJ44ul0z02ocG1/XRAH49lYOK
-         2zKt6JqU+975t4s4MFla0q8neM16ztZZfDZ5Z6Y20x0A8m8PdW9EDyzVPMIJqJk4gpCa
-         aJ+g==
-X-Gm-Message-State: AFqh2kqWQvfOkhYtHF3QBcJO1QmZLAyV4zK5E3cnak9DQnCLIGRX9h06
-        4SGr6yx+HXv5cMVHjorlQ34ck6xSloYJQVFR
-X-Google-Smtp-Source: AMrXdXuwnrKyJC+g4abuntp+z7g60CE4WM5LJiayATlVFNlo2sO8dPJsZn8M3RdLcB+18kQk/4wtDw==
-X-Received: by 2002:a19:700e:0:b0:4cd:afbf:c206 with SMTP id h14-20020a19700e000000b004cdafbfc206mr886608lfc.22.1673579655859;
-        Thu, 12 Jan 2023 19:14:15 -0800 (PST)
-Received: from localhost.localdomain (abym53.neoplus.adsl.tpnet.pl. [83.9.32.53])
-        by smtp.gmail.com with ESMTPSA id w19-20020a05651234d300b004cb09fd48ebsm3584858lfr.149.2023.01.12.19.14.12
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yWM9xiWj0MDQWf+13yvBO0xsCa3YE6cBbf88bv0xKGo=;
+        b=wq/y4xwJwXY6ruKb2FyG1ZbmvfrDiZhhsQJWyLWJCZ5pBVFC7f0tnj4VQ7y1nIv09F
+         XxZZ/Tz1h9fs36NPheu2ohzwVDGIMXgUguUlpd3sulTug5aewV8fFrw1Ygl01DkEDKu+
+         e9ddZBmGJjYGcJB+Rdne9GmZyXh5DJPPvTRTnvng3LtO0WprvAry6KXEGail5ONk1tc4
+         ygOnLF+gzUUM6lc3zZR9ro9arY0YsVcNwHqF+uKa7HVokOAjPKfSI7rZwiDtE+vcow+K
+         6a0d0D0hRArh1g/q5odB8tBGragvoYM/GPXBtj6TMyfgQcFjz+uDcv7WOLPcLuT52y+k
+         kqEQ==
+X-Gm-Message-State: AFqh2kq1LA5z+O/H12Zns7bDay2ZbJ2gvHp6s8iPDVuFOKuz89NsEdzb
+        0MXis1PbobDLpt1A7Ztf+/o1w+mbdEUJz5du
+X-Google-Smtp-Source: AMrXdXteN4EQNWVjUzcqIIa8750bkO0vLIuJOV4mCsxDWyWFHhvIj+daEShB5XYfiDU/YgV0SUnvSQ==
+X-Received: by 2002:a17:90a:5903:b0:229:11ab:4ea8 with SMTP id k3-20020a17090a590300b0022911ab4ea8mr3097656pji.36.1673580337564;
+        Thu, 12 Jan 2023 19:25:37 -0800 (PST)
+Received: from judyhsiao0523.c.googlers.com.com (21.160.199.104.bc.googleusercontent.com. [104.199.160.21])
+        by smtp.gmail.com with ESMTPSA id e7-20020a17090a684700b002260c751b00sm1870588pjm.23.2023.01.12.19.25.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Jan 2023 19:14:13 -0800 (PST)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org,
+        Thu, 12 Jan 2023 19:25:36 -0800 (PST)
+From:   Judy Hsiao <judyhsiao@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Judy Hsiao <judyhsiao@chromium.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
-Subject: [PATCH 2/2] firmware: qcom_scm: Fully implement qcom_scm_lmh_dcvsh()
-Date:   Fri, 13 Jan 2023 04:14:01 +0100
-Message-Id: <20230113031401.2336157-3-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230113031401.2336157-1-konrad.dybcio@linaro.org>
-References: <20230113031401.2336157-1-konrad.dybcio@linaro.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Subject: [PATCH v1] arm64: dts: qcom: sc7280: add display port audio
+Date:   Fri, 13 Jan 2023 03:25:10 +0000
+Message-Id: <20230113032510.749804-1-judyhsiao@chromium.org>
+X-Mailer: git-send-email 2.39.0.314.g84b9a713c41-goog
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The qcom_scm_lmh_dcvsh call can actually pass two values to the
-secure world. The second value is used for example with the
-LMH_FREQ_CAP function, which limits the maximum achievable frequency
-directly from LMh. Add the missing arguments, handle them and update
-the current usages of this function.
+Add DisplayPort sound node and lpass_cpu node
+in sc7280-herobrine-audio-rt5682.dtsi.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
+
 ---
- drivers/firmware/qcom_scm.c | 13 ++++++++-----
- drivers/thermal/qcom/lmh.c  | 28 ++++++++++++++--------------
- include/linux/qcom_scm.h    |  5 +++--
- 3 files changed, 25 insertions(+), 21 deletions(-)
+Changes Since v1:
+    -- Fix the commit message.
 
-diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-index cdbfe54c8146..58a19a47e442 100644
---- a/drivers/firmware/qcom_scm.c
-+++ b/drivers/firmware/qcom_scm.c
-@@ -1252,12 +1252,13 @@ int qcom_scm_lmh_profile_change(u32 profile_id)
- }
- EXPORT_SYMBOL(qcom_scm_lmh_profile_change);
+
+ .../qcom/sc7280-herobrine-audio-rt5682.dtsi   | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi
+index af685bc35e10..69e7aa7b2f6c 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi
+@@ -33,9 +33,22 @@ codec {
+ 		};
  
--int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
--		       u64 limit_node, u32 node_id, u64 version)
-+int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val0,
-+		       u32 payload_val1, u64 limit_node, u32 node_id,
-+		       u64 version, bool has_val1)
- {
- 	dma_addr_t payload_phys;
- 	u32 *payload_buf;
--	int ret, payload_size = 5 * sizeof(u32);
-+	int ret, payload_size = (5 + has_val1) * sizeof(u32);
+ 		dai-link@1 {
+-			link-name = "ALC5682";
++			link-name = "DisplayPort";
+ 			reg = <1>;
  
- 	struct qcom_scm_desc desc = {
- 		.svc = QCOM_SCM_SVC_LMH,
-@@ -1278,8 +1279,10 @@ int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
- 	payload_buf[0] = payload_fn;
- 	payload_buf[1] = 0;
- 	payload_buf[2] = payload_reg;
--	payload_buf[3] = 1;
--	payload_buf[4] = payload_val;
-+	payload_buf[3] = has_val1 ? 2 : 1;
-+	payload_buf[4] = payload_val0;
-+	if (has_val1)
-+		payload_buf[5] = payload_val1;
++			cpu {
++				sound-dai = <&lpass_cpu LPASS_DP_RX>;
++			};
++
++			codec {
++				sound-dai = <&mdss_dp>;
++			};
++		};
++
++		dai-link@2 {
++			link-name = "ALC5682";
++			reg = <2>;
++
+ 			cpu {
+ 				sound-dai = <&lpass_cpu MI2S_PRIMARY>;
+ 			};
+@@ -92,6 +105,10 @@ dai-link@1 {
+ 		reg = <MI2S_SECONDARY>;
+ 		qcom,playback-sd-lines = <0>;
+ 	};
++
++	dai-link@5 {
++		reg = <LPASS_DP_RX>;
++	};
+ };
  
- 	desc.args[0] = payload_phys;
- 
-diff --git a/drivers/thermal/qcom/lmh.c b/drivers/thermal/qcom/lmh.c
-index 5e8ff196c9a6..d2b5ea8322eb 100644
---- a/drivers/thermal/qcom/lmh.c
-+++ b/drivers/thermal/qcom/lmh.c
-@@ -147,23 +147,23 @@ static int lmh_probe(struct platform_device *pdev)
- 		return -EINVAL;
- 
- 	if (flags & LMH_ENABLE_ALGOS) {
--		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_CRNT, LMH_ALGO_MODE_ENABLE, 1,
--					 LMH_NODE_DCVS, node_id, 0);
-+		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_CRNT, LMH_ALGO_MODE_ENABLE, 1, 0,
-+					 LMH_NODE_DCVS, node_id, 0, false);
- 		if (ret)
- 			dev_err(dev, "Error %d enabling current subfunction\n", ret);
- 
--		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_REL, LMH_ALGO_MODE_ENABLE, 1,
--					 LMH_NODE_DCVS, node_id, 0);
-+		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_REL, LMH_ALGO_MODE_ENABLE, 1, 0,
-+					 LMH_NODE_DCVS, node_id, 0, false);
- 		if (ret)
- 			dev_err(dev, "Error %d enabling reliability subfunction\n", ret);
- 
--		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_BCL, LMH_ALGO_MODE_ENABLE, 1,
--					 LMH_NODE_DCVS, node_id, 0);
-+		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_BCL, LMH_ALGO_MODE_ENABLE, 1, 0,
-+					 LMH_NODE_DCVS, node_id, 0, false);
- 		if (ret)
- 			dev_err(dev, "Error %d enabling BCL subfunction\n", ret);
- 
--		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_ALGO_MODE_ENABLE, 1,
--					 LMH_NODE_DCVS, node_id, 0);
-+		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_ALGO_MODE_ENABLE, 1, 0,
-+					 LMH_NODE_DCVS, node_id, 0, false);
- 		if (ret) {
- 			dev_err(dev, "Error %d enabling thermal subfunction\n", ret);
- 			return ret;
-@@ -177,22 +177,22 @@ static int lmh_probe(struct platform_device *pdev)
- 	}
- 
- 	/* Set default thermal trips */
--	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_TH_ARM_THRESHOLD, temp_arm,
--				 LMH_NODE_DCVS, node_id, 0);
-+	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_TH_ARM_THRESHOLD, temp_arm, 0,
-+				 LMH_NODE_DCVS, node_id, 0, false);
- 	if (ret) {
- 		dev_err(dev, "Error setting thermal ARM threshold%d\n", ret);
- 		return ret;
- 	}
- 
--	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_TH_HI_THRESHOLD, temp_high,
--				 LMH_NODE_DCVS, node_id, 0);
-+	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_TH_HI_THRESHOLD, temp_high, 0,
-+				 LMH_NODE_DCVS, node_id, 0, false);
- 	if (ret) {
- 		dev_err(dev, "Error setting thermal HI threshold%d\n", ret);
- 		return ret;
- 	}
- 
--	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_TH_LOW_THRESHOLD, temp_low,
--				 LMH_NODE_DCVS, node_id, 0);
-+	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_TH_LOW_THRESHOLD, temp_low, 0,
-+				 LMH_NODE_DCVS, node_id, 0, false);
- 	if (ret) {
- 		dev_err(dev, "Error setting thermal ARM threshold%d\n", ret);
- 		return ret;
-diff --git a/include/linux/qcom_scm.h b/include/linux/qcom_scm.h
-index 1e449a5d7f5c..9fd798d17fdd 100644
---- a/include/linux/qcom_scm.h
-+++ b/include/linux/qcom_scm.h
-@@ -117,8 +117,9 @@ extern int qcom_scm_hdcp_req(struct qcom_scm_hdcp_req *req, u32 req_cnt,
- extern int qcom_scm_iommu_set_pt_format(u32 sec_id, u32 ctx_num, u32 pt_fmt);
- extern int qcom_scm_qsmmu500_wait_safe_toggle(bool en);
- 
--extern int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
--			      u64 limit_node, u32 node_id, u64 version);
-+extern int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val0,
-+			      u32 payload_val1, u64 limit_node, u32 node_id,
-+			      u64 version, bool has_val1);
- extern int qcom_scm_lmh_profile_change(u32 profile_id);
- extern bool qcom_scm_lmh_dcvsh_available(void);
- 
+ /* PINCTRL - ADDITIONS TO NODES IN PARENT DEVICE TREE FILES */
 -- 
-2.39.0
+2.39.0.314.g84b9a713c41-goog
 
