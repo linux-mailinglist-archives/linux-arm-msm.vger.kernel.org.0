@@ -2,68 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2104D668C78
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 07:23:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D2DD668E22
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 07:36:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233650AbjAMGXn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 01:23:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60836 "EHLO
+        id S235371AbjAMGgD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 01:36:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232726AbjAMGXD (ORCPT
+        with ESMTP id S241142AbjAMGeN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 01:23:03 -0500
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7B8A69B33
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 22:22:38 -0800 (PST)
-Received: by mail-pj1-x102c.google.com with SMTP id o1-20020a17090a678100b00219cf69e5f0so26031861pjj.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 22:22:38 -0800 (PST)
+        Fri, 13 Jan 2023 01:34:13 -0500
+Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68D376E421
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 22:26:20 -0800 (PST)
+Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-4d59d518505so102560947b3.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Jan 2023 22:26:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Rh9+uqGdeUQ/uk0uBV7vpLnb1/bQZNWqul7yXMNfGn8=;
-        b=FE1sUVNzVAS03UySQcPp/VF5cQb9NBEXqgalMqgL4a69J1iUYHsZ3akU0Yqh7h0EGP
-         fZ+StJezbIgj2GP6Zlk2Gv0FNHHQDo6am0fxVGD062OTBzXJ+d0R71Cgkp99mmn6VdNt
-         CUvVvKOsmQCQcTFK7EnTi9cfOfx0xnp8FLk9M=
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=tC0lkP+Jv1BQqV1q/iChdkxbwz+GLXuspS9rktzQ5EY=;
+        b=EET76yrF1iVTCrzkHrsf7cd8t+fkGLobXLevIaUpBvQRKCm912JOWXmsu+e4fgJXdN
+         UyrNvsIJGbTO629zVdW/EHdPL2O8D9ECTAcKi7NcwDsVYu3sMRtkBS5KT6OXSkBjeGTW
+         E9QtuibQS33CiiJKTP7ImWYM6UdAT3vxw++fcjl52NWxYvIPJD2kc94uNsJQKRW+dSHv
+         Ldi01vTbTUBpfFOXw4KoptpNnyVzKxnhUapRPpRL3NcL/hc8EjZPBHfwqOhlYsMcYXld
+         TgPQs3UacEVL5bdRAu+shgptX5jjsKlLhp2yM+dDqxrGs/iRqhs1bjbrnr/e956nKIj1
+         PvWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Rh9+uqGdeUQ/uk0uBV7vpLnb1/bQZNWqul7yXMNfGn8=;
-        b=hgGTgJl0x9Jd3taB3CwcuayplUcVdLFulQBpiAY2tKCPeJNnf4y09NFzN7mhikvAJt
-         3KAspq2wsSiDdJUKDJVjFDs1ME5GcokIoh8+4dMpB/5fqA/rM8tJZohhOhrmWLJSsQom
-         4wdJl9CwJrLDHYvwGzw7Z6l7ymyuTMQDZqYvigbth2luLJrpQMQ1PcvvcmlB1gdPE7Kh
-         p8QghlTEMNuklT6LEzzYfNOQXgyMY7yfq4YSWn3uBjacl35zL4iJeY9fG6pwVe3xqMHc
-         76NYOJ+UV7G5bt9w5SyPXmLiceVnm4LsQ1+MYNmUjkJ+neT8YBBnteu9p6QiU2uIrFBG
-         jKng==
-X-Gm-Message-State: AFqh2koS2QiayxqKRUHwTkGRAKBDPIqWBHn0X4nnDftCR+/R7AVq5avM
-        76RtD4i+A41/rAYVRDk0Xt2LFQ==
-X-Google-Smtp-Source: AMrXdXvOi3UGPKTD8KbwEvurdGPas7WtLGOQ/gQ8wYB+JIjfdTfv2yWNIVs+FiJxCZRyyTOXEWFiBQ==
-X-Received: by 2002:a05:6a20:8e02:b0:ad:a09c:5734 with SMTP id y2-20020a056a208e0200b000ada09c5734mr14600534pzj.44.1673590957700;
-        Thu, 12 Jan 2023 22:22:37 -0800 (PST)
-Received: from judyhsiao0523.c.googlers.com.com (21.160.199.104.bc.googleusercontent.com. [104.199.160.21])
-        by smtp.gmail.com with ESMTPSA id s14-20020a170902ea0e00b001926bff074fsm13180746plg.276.2023.01.12.22.22.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Jan 2023 22:22:36 -0800 (PST)
-From:   Judy Hsiao <judyhsiao@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
+        bh=tC0lkP+Jv1BQqV1q/iChdkxbwz+GLXuspS9rktzQ5EY=;
+        b=0dPb/px5KIn1WHDIpGM4CsRYpVTd2HO6FFfNy/Awy6+RsHrn4G3Jzg7ZC2MXxJITPP
+         KXbyF11ZQWySDbzYg87o5+1xnoWlJn7dTxf2q+f9PeH5MzXT9ih4MeGOqAB0NBISwT5s
+         0c/XTWYo9zHWJMEtSKCihuZNDQTP8HPS6JalU4dzRJMacPmbF+093FqYeBr0KeskHEW8
+         qsV+r/TngbCLIDHKQ4E+lKNUAuCNADmbM9j2MHZz86sF7hSWkNba1yBDXzaDJJ5QHsTe
+         3DDgaCwzapnlzJaTtPb/4ADrh60vd6VK1X7sZt5uOxj8NdZU2dTaChSewzomRUln9vo0
+         x2sA==
+X-Gm-Message-State: AFqh2kpz8Vy1A0C1gWoPxebGCmVrS0pKglwnkHc9bX7bnj7l+kE3inAB
+        S9PdV7uLHI+gekvAQeiL5S4I0oF1mdh09mM3903RUA==
+X-Google-Smtp-Source: AMrXdXv+r56xaZf+DPzmWtRoeJ10nSBpqmcSoPeyOKiQUFUxaNvHkK2BzSZf4FlhbAELH/HIgBAVVD/LMTEjenz0Z1o=
+X-Received: by 2002:a0d:d692:0:b0:477:b56e:e1d6 with SMTP id
+ y140-20020a0dd692000000b00477b56ee1d6mr1899526ywd.188.1673591164592; Thu, 12
+ Jan 2023 22:26:04 -0800 (PST)
+MIME-Version: 1.0
+References: <20230113062229.774871-1-judyhsiao@chromium.org>
+In-Reply-To: <20230113062229.774871-1-judyhsiao@chromium.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 13 Jan 2023 08:25:53 +0200
+Message-ID: <CAA8EJprpHALTfcPCFFH=-vpfavnyph+UQfF9xb59SPjV8GOvBg@mail.gmail.com>
+Subject: Re: [PATCH v2] arm64: dts: qcom: sc7280: add display port audio
+To:     Judy Hsiao <judyhsiao@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Douglas Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        Judy Hsiao <judyhsiao@chromium.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Subject: [PATCH v2] arm64: dts: qcom: sc7280: add display port audio
-Date:   Fri, 13 Jan 2023 06:22:29 +0000
-Message-Id: <20230113062229.774871-1-judyhsiao@chromium.org>
-X-Mailer: git-send-email 2.39.0.314.g84b9a713c41-goog
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,60 +72,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add DisplayPort sound node and lpass_cpu node
-in sc7280-herobrine-audio-rt5682.dtsi.
+On Fri, 13 Jan 2023 at 08:23, Judy Hsiao <judyhsiao@chromium.org> wrote:
+>
+> Add DisplayPort sound node and lpass_cpu node
+> in sc7280-herobrine-audio-rt5682.dtsi.
 
-Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
+Any reason for inserting it in front of the ALC rather than putting it
+at the end of  dai-links?
 
----
-Changes Since v1:
-    -- Fix the commit message.
+>
+> Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
 
 
-(no changes since v1)
-
- .../qcom/sc7280-herobrine-audio-rt5682.dtsi   | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi
-index af685bc35e10..69e7aa7b2f6c 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi
-@@ -33,9 +33,22 @@ codec {
- 		};
- 
- 		dai-link@1 {
--			link-name = "ALC5682";
-+			link-name = "DisplayPort";
- 			reg = <1>;
- 
-+			cpu {
-+				sound-dai = <&lpass_cpu LPASS_DP_RX>;
-+			};
-+
-+			codec {
-+				sound-dai = <&mdss_dp>;
-+			};
-+		};
-+
-+		dai-link@2 {
-+			link-name = "ALC5682";
-+			reg = <2>;
-+
- 			cpu {
- 				sound-dai = <&lpass_cpu MI2S_PRIMARY>;
- 			};
-@@ -92,6 +105,10 @@ dai-link@1 {
- 		reg = <MI2S_SECONDARY>;
- 		qcom,playback-sd-lines = <0>;
- 	};
-+
-+	dai-link@5 {
-+		reg = <LPASS_DP_RX>;
-+	};
- };
- 
- /* PINCTRL - ADDITIONS TO NODES IN PARENT DEVICE TREE FILES */
 -- 
-2.39.0.314.g84b9a713c41-goog
-
+With best wishes
+Dmitry
