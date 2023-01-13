@@ -2,149 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F131766A3F0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 21:17:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8574766A3FA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 21:18:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229660AbjAMURz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 15:17:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47504 "EHLO
+        id S231166AbjAMUSY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 15:18:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229914AbjAMURx (ORCPT
+        with ESMTP id S231229AbjAMUST (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 15:17:53 -0500
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2650B1D0D6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 12:17:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1673641023;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=s9+h5CzjxOXFVyR2zY6Aj8bDP7ydcGeQkU1xxgKQ2VM=;
-        b=XW5/bVFfZQMNl1D0i9/bTVe7ko1z1mnlzJTxKypSBl6dszrtGK3xqmAg9WdF6+i76F82hC
-        u7j/RwBc0Q2VWu6c6qvUCNvA8URxk+STh8Q8wQ9fyl1uGlemRk4JlrIPS5mIllDi0Bn0vq
-        XQmITN4oXGtZeApdxHWH18AUfqDYI/M=
-Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com
- [209.85.210.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-516-mUsCvtu1PAS7zV4LXgo1rw-1; Fri, 13 Jan 2023 15:17:02 -0500
-X-MC-Unique: mUsCvtu1PAS7zV4LXgo1rw-1
-Received: by mail-ot1-f72.google.com with SMTP id c10-20020a056830314a00b00684c39c324eso3053014ots.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 12:17:02 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=s9+h5CzjxOXFVyR2zY6Aj8bDP7ydcGeQkU1xxgKQ2VM=;
-        b=3xD9yclDIR4mm/1FkLZkqiCKLp7fsIBgHSxuQ9tougVluh//QCL5EYPJibiLVBi6p8
-         0E9HcYgI7VzzkWPxMOzPzIzB4FYXUO938MmmUc4UzQQI+7+IWL/Jns7hTov/OMmytpEe
-         kusCG6dLnFfP/1sBYGuENX6wwS5xK06TtWisglHsR3pDsZ3IGLsKRzA5JLoJt03MrQWO
-         ofj5sB0MRbOgKz8m2fMDzXyqnVg5fOeRxpR2rZQ1Anc5EUkLjsl7EVvvW7D9Uah2prE4
-         vff5HSMA1+vzN9cJdK8ELO29gpYMGKvEY+REXz8R0kwJFZ5/65EIMGvtuK4TiVRKM4pJ
-         ciTA==
-X-Gm-Message-State: AFqh2kr6KguMMt10cnLXdYVs0eqGcyjyGeDuH59nX0ot8I8FpukeG6OX
-        Bqgwm0P3XzZLWGf8ON/UG0+RJHdcb0aT6WOx4L1qbtQHCAjVE6eexol/kpejFrHQMj6FulAAelg
-        3Lpdd3N/F/lxhB17XccHZv8ISZQ==
-X-Received: by 2002:a05:6830:30a8:b0:670:9e78:4b64 with SMTP id g40-20020a05683030a800b006709e784b64mr41163878ots.5.1673641021586;
-        Fri, 13 Jan 2023 12:17:01 -0800 (PST)
-X-Google-Smtp-Source: AMrXdXvloTLpF1TOLJr2fph60aLc5QFnPfBrb1FmXTiTn+gCVkhVrHRjxfNA4WToTJ7FWhyAFlMNwA==
-X-Received: by 2002:a05:6830:30a8:b0:670:9e78:4b64 with SMTP id g40-20020a05683030a800b006709e784b64mr41163867ots.5.1673641021391;
-        Fri, 13 Jan 2023 12:17:01 -0800 (PST)
-Received: from halaney-x13s ([2600:1700:1ff0:d0e0::41])
-        by smtp.gmail.com with ESMTPSA id b19-20020a9d6b93000000b0066ca61230casm11046830otq.8.2023.01.13.12.17.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Jan 2023 12:17:00 -0800 (PST)
-Date:   Fri, 13 Jan 2023 14:16:58 -0600
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Johan Hovold <johan@kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp: Define CMA region for CRD
- and X13s
-Message-ID: <20230113201658.lrue7e7tpuep537x@halaney-x13s>
-References: <20230113041025.4188910-1-quic_bjorande@quicinc.com>
+        Fri, 13 Jan 2023 15:18:19 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 019736C063
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 12:18:17 -0800 (PST)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30DJx5vi007010;
+        Fri, 13 Jan 2023 20:18:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=2Ubhbkx1PyJi5kYI/gyLj/rsjr5edd+3RL67+q6F1VM=;
+ b=gL5dlIruerEo2311fqg2p8eJl+RWQeJBMWoj3W6GoWhEVUduQrXWEqHyj3OYycucAUDg
+ xyh/GjcRBvXdDJmqUYRfJhDRBeEBm3KqhxOMca31Q/gRB4QkY1bGKbTgXCQLt+YKh4+t
+ Kqi1Q4yTiY0Rw6ceQgB7qIfogLuBe4ZD5dC5WYQsg/9edBCe1O0ZC5KAYtEPHltQx6WK
+ YkG5SeDNi05JssgmRmh1Q54AzTWBzwZylk4FjLMic+dTt5iiT89CfNZBRoMJry/sLasn
+ 3rNttnLfcS1Ut4EmRirJdK0S977niHJblucIc/q+cTMJiRj03cb1FCvusNTHmnurnKdE Sg== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n32wu9up2-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 13 Jan 2023 20:18:11 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30DKIAeB027545
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 13 Jan 2023 20:18:11 GMT
+Received: from [10.110.70.165] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Fri, 13 Jan
+ 2023 12:18:10 -0800
+Message-ID: <0e12c491-8150-6579-852f-27ee01333816@quicinc.com>
+Date:   Fri, 13 Jan 2023 12:18:09 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230113041025.4188910-1-quic_bjorande@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [RFC PATCH 3/4] drm/msm/mdss: add data for sc8180xp
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20221208000850.312548-1-dmitry.baryshkov@linaro.org>
+ <20221208000850.312548-4-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20221208000850.312548-4-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: I6j4xxkB0nsRxkKAm7OgKFoggMUnSB2n
+X-Proofpoint-ORIG-GUID: I6j4xxkB0nsRxkKAm7OgKFoggMUnSB2n
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-13_10,2023-01-13_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
+ mlxlogscore=999 spamscore=0 clxscore=1015 lowpriorityscore=0
+ suspectscore=0 impostorscore=0 priorityscore=1501 mlxscore=0 phishscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301130138
+X-Spam-Status: No, score=0.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 12, 2023 at 08:10:25PM -0800, Bjorn Andersson wrote:
-> Booting the CRD needs roughly 64MB CMA, rather than relying on people
-> adding boot parameters etc define a region for this, to remove the
-> allocation errors from e.g. NVME.
-> 
-> While fixing the CRD define the same region for the X13s.
-> 
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-Tested-by: Andrew Halaney <ahalaney@redhat.com> # sc8280xp-lenovo-thinkpad-x13s
 
-I'm not sure if I've seen this issue in the past, but booting with this
-applied isn't showing any obvious problems like described in the commit.
-It would be nice as Konrad said to be a little more explicit about what
-you were seeing without this, but that's my personal opinion.
+On 12/7/2022 4:08 PM, Dmitry Baryshkov wrote:
+> Add platform data for sc8180xp based on sdmshrike-sde.dtsi.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+This matches up the docs I have, hence,
+
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
 > ---
->  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts                | 9 +++++++++
->  .../boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts      | 9 +++++++++
->  2 files changed, 18 insertions(+)
+>   drivers/gpu/drm/msm/msm_mdss.c | 8 +++++++-
+>   1 file changed, 7 insertions(+), 1 deletion(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> index b29c02307839..e30a37c73b90 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> @@ -128,6 +128,15 @@ vreg_wwan: regulator-wwan {
->  
->  		regulator-boot-on;
->  	};
+> diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
+> index 4401f945b966..5e19ec897670 100644
+> --- a/drivers/gpu/drm/msm/msm_mdss.c
+> +++ b/drivers/gpu/drm/msm/msm_mdss.c
+> @@ -518,6 +518,12 @@ static const struct msm_mdss_data sc7280_data = {
+>   	.macrotile_mode = 1,
+>   };
+>   
+> +static const struct msm_mdss_data sc8180x_data = {
+> +	.ubwc_version = UBWC_3_0,
+> +	.highest_bank_bit = 3,
+> +	.macrotile_mode = 1,
+> +};
 > +
-> +	reserved-memory {
-> +		linux,cma {
-> +			compatible = "shared-dma-pool";
-> +			size = <0x0 0x8000000>;
-> +			reusable;
-> +			linux,cma-default;
-> +		};
-> +	};
->  };
->  
->  &apps_rsc {
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> index 78e61a8184c5..5bfd1f0b2a24 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> @@ -153,6 +153,15 @@ vreg_wwan: regulator-wwan {
->  		regulator-boot-on;
->  	};
->  
-> +	reserved-memory {
-> +		linux,cma {
-> +			compatible = "shared-dma-pool";
-> +			size = <0x0 0x8000000>;
-> +			reusable;
-> +			linux,cma-default;
-> +		};
-> +	};
-> +
->  	thermal-zones {
->  		skin-temp-thermal {
->  			polling-delay-passive = <250>;
-> -- 
-> 2.37.3
-> 
-
+>   static const struct msm_mdss_data sc8280xp_data = {
+>   	.ubwc_version = UBWC_4_0,
+>   	.ubwc_swizzle = 6,
+> @@ -553,7 +559,7 @@ static const struct of_device_id mdss_dt_match[] = {
+>   	{ .compatible = "qcom,sdm845-mdss" },
+>   	{ .compatible = "qcom,sc7180-mdss", .data = &sc7180_data },
+>   	{ .compatible = "qcom,sc7280-mdss", .data = &sc7280_data },
+> -	{ .compatible = "qcom,sc8180x-mdss" },
+> +	{ .compatible = "qcom,sc8180x-mdss", .data = &sc8180x_data },
+>   	{ .compatible = "qcom,sc8280xp-mdss", .data = &sc8280xp_data },
+>   	{ .compatible = "qcom,sm6115-mdss", .data = &sm6115_data },
+>   	{ .compatible = "qcom,sm8150-mdss", .data = &sm8150_data },
