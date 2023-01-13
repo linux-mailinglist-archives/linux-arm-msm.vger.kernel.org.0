@@ -2,116 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 957C7669A1B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 15:30:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CE349669A22
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 15:31:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229436AbjAMO36 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 09:29:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53440 "EHLO
+        id S229551AbjAMOa7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 09:30:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229484AbjAMO32 (ORCPT
+        with ESMTP id S229807AbjAMOaS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 09:29:28 -0500
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7395EDB3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 06:20:30 -0800 (PST)
-Received: by mail-ej1-x62f.google.com with SMTP id hw16so40822474ejc.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 06:20:30 -0800 (PST)
+        Fri, 13 Jan 2023 09:30:18 -0500
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7A6F84097
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 06:23:22 -0800 (PST)
+Received: by mail-ed1-x534.google.com with SMTP id x10so28484925edd.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 06:23:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=aXm/KVhv1Q+MJT4WARwvCEecY+Pt3DzZrZnoHTVBa9c=;
-        b=nr2atzfb+mPTcqxh+qo03K/MkGPKipx/pu1w6IOQaCy0ubgEMTWuZi8M1DPRQ7Qd6E
-         isy4pAbJYsnTbrPbQ4Nt/grugBLz6qFkTPvLapBXsfA5EEHDBnS0dGSZnuiWL114xQdH
-         qnfI3Ze7DBplXLb3ssiXrPUBlLyYozd3YeRKK8YxZ75Z1mE3fbFBi0RD1FjZtepCKF6X
-         gANHMg2asjUUGdRT/E5ekZNGKOc4JFGqexCFymrDgvvILVHiwHf/7yr9wYpMY2VwbqsT
-         8iv19WITTw12jTtEdvpQ8Kv4N+r6fbOSvID/VaVqT4HznN5MUcuwmXte4aEd4E9rfoEa
-         vuVA==
+        bh=jltJ1PtaljceVmLtUNZy4GkzBy9Rz0omnda+TqjQGk0=;
+        b=VBhMWoJtRRYKon+iIS+tTXfxLPkHkUgxz1XzLA/c/iY8SCPSKqmTEUzGmJ60XXsw0j
+         xdMPM9MJK9sFONsRksBoJKFnb/z7gtfHNC+tlom7DjTkL5IE+hN27SkBSARwm8vsrBxy
+         MsZRm+gUd1BgSjaYJQmZaJCKMlTSAH8EZC1qiXGXid1NUWaPZNoXVno4bDuKozhrZdDz
+         A0YZQ5nlUbw21Hjw6veiqJaXijY8I7atT7FsouwrcBD8DQhjN/EAqGSSWrMGXfbbMIVJ
+         WqLE0fdbt0ITXpfMHdFNnitsqm9JtXrG+9JtKAhWr/ZlHg8yoTBmc0XEGjVZ6yXo10nh
+         27Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aXm/KVhv1Q+MJT4WARwvCEecY+Pt3DzZrZnoHTVBa9c=;
-        b=mm+fypYHG1GxHkcowELlK/vm+r1QDBkD05/T6v/FUXtmUcboxat9Bcq8xqkYJq3TIX
-         JDuus66rb9rm7lAzYL4aEPuZfVAj/zxuWCakQVOMCyfLGqO93fNWW3Q8ewptlxL6u/GU
-         FVKsKGHPFm3mRfktlZLPqsEEw7DZRzcqdErgIT7fUPlwuX1/Bdbxz+OUJKSHDYaCdFyN
-         VsD0tQknGcVZ1mmvVHXuqTsm0LwiaeA7CCv9dXT7tyAGkIzdGCO4nOQLDeYet7ULwNte
-         z0f+VVWrHNZ6cLUZEHIHKWyNJaMAwk0lfJ6V9emMYJNuBHCW901ZjS7kHRIAZo6NVAMd
-         Pigg==
-X-Gm-Message-State: AFqh2kr7nFCVGg1U0A1nyjyxDj71n0KKsG/FG14t44Rqgw01ce/KP7ex
-        13Gt8Eh3FPttypAlzeDq0Xo57Q==
-X-Google-Smtp-Source: AMrXdXuhoTbM4wM81X8S1RJYwrtdyd2fyIBnofyfbBJZ4gOKdtlpxhGW8rh1SA9w6+Q0K44Yhwoq9g==
-X-Received: by 2002:a17:907:c48d:b0:7c1:4bb:b157 with SMTP id tp13-20020a170907c48d00b007c104bbb157mr3645542ejc.4.1673619629025;
-        Fri, 13 Jan 2023 06:20:29 -0800 (PST)
+        bh=jltJ1PtaljceVmLtUNZy4GkzBy9Rz0omnda+TqjQGk0=;
+        b=GaaK4G6MFm3CJl8TZVIhHCROroFINtLtbF/HhZNBR6DIXvcgGhltzOiA+gcxMa/mlX
+         HQ5jAwALOSvhQMfwW+nelklpnMN4jwjfO7zuw2b613jCnAXvAwmtVl46R5/jmvXLVjQK
+         88C80yJiH+5n3xZc0yFJqgqhx0qJmHPX8nZ1q9qh4TPfeo73ctADVR5fyMx/+pf8E3Bt
+         9Wn2GKmhJL1yjSB9T5GsqP6/3SQZJcSH+huDT/7i9LChEOd/xwo5SaIyEdUYytJ/tIzt
+         +X+aWkKWIZSb6LVnVkAepvN7ADLRFagE7pKn37MJkaINxqjQekdvqe7oqyT5dFpMKar/
+         SM5w==
+X-Gm-Message-State: AFqh2ko6HpCt6kC1IHJ7ACimiWjJtYQ7qnPQzq55ww3sitJKXmmgtIoI
+        FP5vTmGMrivzByPH57FzVB57Kg==
+X-Google-Smtp-Source: AMrXdXuKgO9JGCXCLsX54cOWfaiZHFKYD32Qa/1wbUnbXVzxem7IzAMkCrTUpbAMgPNaFfCwCzrvcw==
+X-Received: by 2002:a05:6402:357:b0:49b:b274:b816 with SMTP id r23-20020a056402035700b0049bb274b816mr4324189edw.37.1673619801564;
+        Fri, 13 Jan 2023 06:23:21 -0800 (PST)
 Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id g3-20020a1709067c4300b007c0a7286ac8sm8606501ejp.69.2023.01.13.06.20.25
+        by smtp.gmail.com with ESMTPSA id w21-20020aa7d295000000b0046c4553010fsm669382edq.1.2023.01.13.06.23.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Jan 2023 06:20:28 -0800 (PST)
-Message-ID: <84aa79c3-b793-0d0e-d6a5-035aff5a17b4@linaro.org>
-Date:   Fri, 13 Jan 2023 15:20:25 +0100
+        Fri, 13 Jan 2023 06:23:21 -0800 (PST)
+Message-ID: <9016ea51-9ca2-551d-d4a1-0b70232b5dc5@linaro.org>
+Date:   Fri, 13 Jan 2023 15:23:18 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
-Subject: Re: [PATCH 6/7] arm64: dts: Add ipq9574 SoC and AL02 board support
+Subject: Re: [PATCH v2] dt-bindings: PCI: qcom,pcie-ep: correct
+ qcom,perst-regs
 Content-Language: en-US
-To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
-        sboyd@kernel.org, linus.walleij@linaro.org,
-        catalin.marinas@arm.com, will@kernel.org, p.zabel@pengutronix.de,
-        shawnguo@kernel.org, arnd@arndb.de, marcel.ziswiler@toradex.com,
-        dmitry.baryshkov@linaro.org, nfraprado@collabora.com,
-        broonie@kernel.org, tdas@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
-        quic_poovendh@quicinc.com
-References: <20230110121316.24892-1-quic_devipriy@quicinc.com>
- <20230110121316.24892-7-quic_devipriy@quicinc.com>
- <f6ef1834-b629-b76c-9cde-55af56320665@linaro.org>
- <7f157b73-f856-04d2-1b39-e1f8861d0439@quicinc.com>
+To:     Bjorn Helgaas <helgaas@kernel.org>
+Cc:     Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-pci@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        devicetree@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Herring <robh@kernel.org>
+References: <20230113140328.GA1836008@bhelgaas>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <7f157b73-f856-04d2-1b39-e1f8861d0439@quicinc.com>
+In-Reply-To: <20230113140328.GA1836008@bhelgaas>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/01/2023 14:29, Devi Priya wrote:
->>> +
->>> +	soc: soc@0 {
->>> +		#address-cells = <1>;
->>> +		#size-cells = <1>;
->>> +		ranges = <0 0 0 0xffffffff>;
->>> +		compatible = "simple-bus";
->>> +
->>> +		tlmm: pinctrl@1000000 {
->>> +			compatible = "qcom,ipq9574-tlmm";
->>> +			reg = <0x01000000 0x300000>;
->>> +			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
->>> +			gpio-controller;
->>> +			#gpio-cells = <2>;
->>> +			gpio-ranges = <&tlmm 0 0 65>;
->>> +			gpio-reserved-ranges = <59 1>;
+On 13/01/2023 15:03, Bjorn Helgaas wrote:
+> On Fri, Jan 13, 2023 at 10:02:27AM +0100, Krzysztof Kozlowski wrote:
+>> On 30/12/2022 14:42, Lorenzo Pieralisi wrote:
+>>> On Wed, 9 Nov 2022 12:32:02 +0100, Krzysztof Kozlowski wrote:
+>>>> qcom,perst-regs is an phandle array of one item with a phandle and its
+>>>> arguments.
+>>>
+>>> Applied to pci/dt, thanks!
+>>>
+>>> [1/1] dt-bindings: PCI: qcom,pcie-ep: correct qcom,perst-regs
+>>>       https://git.kernel.org/lpieralisi/pci/c/68909a813609
 >>
->> Hm, why reserved ranges are in SoC?
-> As the gpio is forbidden on all ipq9574 boards, we have added it in SoC
+>> It's still not in linux-next. Is you tree correctly included in the next?
+> 
+> It's on Lorenzo's branch
+> (https://git.kernel.org/pub/scm/linux/kernel/git/lpieralisi/pci.git/)
+> but I haven't pulled it into my "next" branch yet.  Will try to do
+> that today.
 
-Why it is forbidden on all boards? I guess it depends on the firmware
-and this can differ, can't it?
+If Lorenzo picks up patches which at some point are merged by another
+maintainer, his tree should be in linux-next as well (and in LKP tests).
+Otherwise we loose some build and test coverage.
 
 Best regards,
 Krzysztof
