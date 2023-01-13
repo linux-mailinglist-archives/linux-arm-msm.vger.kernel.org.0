@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CFE38669BA6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 16:15:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5FCF0669BCB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 16:19:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229436AbjAMPPG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 10:15:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34332 "EHLO
+        id S229492AbjAMPT5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 10:19:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229873AbjAMPN4 (ORCPT
+        with ESMTP id S229721AbjAMPTb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 10:13:56 -0500
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F3DC7EC87
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 07:05:36 -0800 (PST)
-Received: by mail-lj1-x22d.google.com with SMTP id g14so22683891ljh.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 07:05:36 -0800 (PST)
+        Fri, 13 Jan 2023 10:19:31 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02DD288A13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 07:12:18 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id y25so33537107lfa.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 07:12:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=gfCT28FCbQrY32iGHKuf0fPbE9jzwWTkTnjnRxrb20U=;
-        b=Zp0s16o3sQ4APW3gerIzyuXEb6qETgU4J7bwRJmj1stYMiqNpaitxpSLPu74UNSndW
-         GhGA0gyk/2bXcq1IHLcMU7oWBh4iSAGhsV1Jz5aV0UqGN30fcSJ686koWZg4TPsLVnOA
-         86QTvvGMjXrRIycEn46gMTXtuSptuQAoogL/VhsmP8yzf3EzGECvfSmWReYJKMAfVcc0
-         EpXltxInKh86k9/I5m2RLk+WJgn9O/Rdgw5nP9sgNTWOQUw2KAyz8mg+3Qp2+aw3rDYY
-         kgFNvfp7UuLNHR8w5e3fT5zN9/+oBGTjKIp7UCmOqGxfKLYsP/WFyLEO5VAV5ARFH56R
-         ac5w==
+        bh=BIY98kPJHyijXd7ZkHV2FnXqne7Lt3cNAo7nyQqbLCQ=;
+        b=y46y+lz3GKAUel7jfTZ1Si4H+C1iKfJ8kEkvGHVZ+5IwWxYhiR+qf6kV8uSSafmoNE
+         bwAE3PLgQ95iVV7nAVjDHuN1ogQt8pc0qD84B/t12k/EUjvHnK90HA+5lGXjzh/gCoC+
+         yCAiOqj4tx1U8hgTPcLImYZS/mJrhpkB5Jd/7cevlG7ui92ngjBbKcjokyWewyl1BxjB
+         svaP+NUcKIuTBr6Ol1EUBSiILFfeSTA3IOBwMNjQkS2k3GRNJgJ9K0CtSwKj60lGT0s0
+         88vdM8Ey6PL08n6CtDm4ewPLl+EvxAJ0Dc3wbSulIjrXTtVs1WKq6H0AO2yo35aEVFsO
+         zUww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gfCT28FCbQrY32iGHKuf0fPbE9jzwWTkTnjnRxrb20U=;
-        b=5Q9NnZs8qM4n96OQcJGnkIDbi52eA9SV9ZJi0HGLkGdVh3mV+nTQ+8Q0B4uN4AjC2B
-         Wq1A6GcQpcAnrILWstAV4yO7v14oMaCy89TD3WQ7ND3i4ecmwAxG3d7Qb8lflHyYt/mZ
-         5zSFv5IqaEI7eKlCW4VKL40/jmwql4oOikEuDOq96cW/ueJ4YBmbkXcFMKVhIrqdhR3W
-         NvGT1oix7rk1ZdBnMy/N7f3vG0D67Rp/p4jPCLrXWUwuVGU9/4rxo1JpRLTVDcW5kGKo
-         pCFO5PNeXEsbP9KvMx7J0nbPZr2e1jfJlz4rAAU4uzMzT2yAhky9klddtjIfK8Og0PJk
-         9HoA==
-X-Gm-Message-State: AFqh2kpGvJntlMLhbOReS22GSoivZoGuQZ7REDzjYr2C3M3m5Mi/eWsF
-        qJD5+Ukgodjldgw1ZjXyqI5zYQ==
-X-Google-Smtp-Source: AMrXdXvFzWxeuBB1ZFxrX2CcWicgc3JY6xGrdvgsXt/LSY4sD3TIm2IiV24qO5V1+SmnRPlVFuHrfQ==
-X-Received: by 2002:a2e:aa93:0:b0:284:254a:9d5a with SMTP id bj19-20020a2eaa93000000b00284254a9d5amr5761404ljb.39.1673622334638;
-        Fri, 13 Jan 2023 07:05:34 -0800 (PST)
+        bh=BIY98kPJHyijXd7ZkHV2FnXqne7Lt3cNAo7nyQqbLCQ=;
+        b=mFoHBX80BgS6C1PUu+LhP+q0myXrPr7NOtaF/Nz00UDQw4RWhtRpwOcQNQ106PY868
+         75uQhv5qie9D0LbGoSINS0OdiBy6u6Vl7sGECx7/BY3YZKb65cS89da6OgylEJffdt9q
+         O70h9BZ5EAAbBZp045w79HDtWPQ/kYpIDGypl1bbZup29zPCggTrKZENsxumSzISuYJL
+         MkioeGvYC2oZ0OOMYRJHrh3Fo/ht4FCQwkkUw1KD6gTLkUrC5EjW3wFEXCjqUCR6aeWt
+         rvWuhUGM8rJYdn0SGdjvpVvuFuTFOME7WzOWd/pYVeGBZJy3L6QHqtuAoJ2YWUxFdlkw
+         ZPJg==
+X-Gm-Message-State: AFqh2koeySsGQPGz2Q8k5eLhQpmJtL6LRph/5zIZKkxLaCAfuV6kc/Di
+        D1dxCBH4DGukdp2w9FIOaYk2lw==
+X-Google-Smtp-Source: AMrXdXsEfUe+AqYQC1WC5x69hG4UhSrgJ8qZxilHr6zseZ/JQN5sQgNY2iXbwoA3BPEANtllwSEHAA==
+X-Received: by 2002:ac2:5216:0:b0:4cb:13d7:77e2 with SMTP id a22-20020ac25216000000b004cb13d777e2mr37380lfl.26.1673622736207;
+        Fri, 13 Jan 2023 07:12:16 -0800 (PST)
 Received: from [192.168.1.101] (abym53.neoplus.adsl.tpnet.pl. [83.9.32.53])
-        by smtp.gmail.com with ESMTPSA id u27-20020a2eb81b000000b00281068cd497sm2569212ljo.119.2023.01.13.07.05.30
+        by smtp.gmail.com with ESMTPSA id i4-20020ac25d24000000b004b578e52d81sm3869961lfb.176.2023.01.13.07.12.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Jan 2023 07:05:32 -0800 (PST)
-Message-ID: <e9025ca7-c955-5c49-ce66-701e9639129b@linaro.org>
-Date:   Fri, 13 Jan 2023 16:05:29 +0100
+        Fri, 13 Jan 2023 07:12:15 -0800 (PST)
+Message-ID: <9157d3c9-cca2-8694-ffcb-6cafa7b43d84@linaro.org>
+Date:   Fri, 13 Jan 2023 16:12:11 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
-Subject: Re: [PATCH 1/6] dt-bindings: clock: Add YAML schemas for QCOM A73 PLL
+Subject: Re: [PATCH 2/6] clk: qcom: ipq9574: Enable APSS clock driver
 Content-Language: en-US
 To:     devi priya <quic_devipriy@quicinc.com>, agross@kernel.org,
         andersson@kernel.org, robh+dt@kernel.org,
@@ -72,9 +72,9 @@ Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
         quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
         quic_poovendh@quicinc.com
 References: <20230113143647.14961-1-quic_devipriy@quicinc.com>
- <20230113143647.14961-2-quic_devipriy@quicinc.com>
+ <20230113143647.14961-3-quic_devipriy@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230113143647.14961-2-quic_devipriy@quicinc.com>
+In-Reply-To: <20230113143647.14961-3-quic_devipriy@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -90,77 +90,91 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 13.01.2023 15:36, devi priya wrote:
-> Add schema for primary CPU PLL found on few Qualcomm platforms.
+> Enable APSS clock driver for IPQ9574 based devices
+Please be more descriptive of what you're doing and why
+you're doing it.
+
+clk: qcom: apss-ipq-pll: Add IPQ9574 support
+
+Add IPQ9574-specific APSS PLL configuration values.
+
+
+mailbox: qcom-apcs-ipc: Add IPQ9574 support
+
+Add a compatible for IPQ9574's mailbox. The SoC, similarly
+to other IPQs uses the APSS IPQ PLL driver for CPU scaling.
+
+
 > 
 > Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
 > Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
 > Signed-off-by: devi priya <quic_devipriy@quicinc.com>
 > ---
-Doesn't this belong in Documentation/devicetree/bindings/clock/qcom,a53pll.yaml?
+>  drivers/clk/qcom/apss-ipq-pll.c         | 13 +++++++++++++
+>  drivers/mailbox/qcom-apcs-ipc-mailbox.c |  5 +++++
+>  2 files changed, 18 insertions(+)
+> 
+> diff --git a/drivers/clk/qcom/apss-ipq-pll.c b/drivers/clk/qcom/apss-ipq-pll.c
+> index a5aea27eb867..dd0c01bf5a98 100644
+> --- a/drivers/clk/qcom/apss-ipq-pll.c
+> +++ b/drivers/clk/qcom/apss-ipq-pll.c
+> @@ -61,6 +61,18 @@ static const struct alpha_pll_config ipq8074_pll_config = {
+>  	.test_ctl_hi_val = 0x4000,
+>  };
+>  
+> +static const struct alpha_pll_config ipq9574_pll_config = {
+> +	.l = 0x3b,
+> +	.config_ctl_val = 0x200D4828,
+Lowercase hex, please.
 
-It looks identical, so it may be as simple as adding your
-new compatible there..
+> +	.config_ctl_hi_val = 0x6,
+> +	.early_output_mask = BIT(3),
+> +	.aux2_output_mask = BIT(2),
+> +	.aux_output_mask = BIT(1),
+> +	.main_output_mask = BIT(0),
+> +	.test_ctl_val = 0x0,
+> +	.test_ctl_hi_val = 0x4000,
+> +};
+> +
+>  static const struct regmap_config ipq_pll_regmap_config = {
+>  	.reg_bits		= 32,
+>  	.reg_stride		= 4,
+> @@ -102,6 +114,7 @@ static int apss_ipq_pll_probe(struct platform_device *pdev)
+>  static const struct of_device_id apss_ipq_pll_match_table[] = {
+>  	{ .compatible = "qcom,ipq6018-a53pll", .data = &ipq6018_pll_config },
+>  	{ .compatible = "qcom,ipq8074-a53pll", .data = &ipq8074_pll_config },
+> +	{ .compatible = "qcom,ipq9574-a73pll", .data = &ipq9574_pll_config },
+>  	{ }
+>  };
+These are very small changes, so maybe they'll pass, but generally
+it's preferred to split changes per-file if possible (and here it is
+possible if you change the APSS PLL driver first and then bind it in
+APCS mbox afterwards).
+
+>  MODULE_DEVICE_TABLE(of, apss_ipq_pll_match_table);
+> diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+> index 0e9f9cba8668..90e74f9d7cb3 100644
+> --- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+> +++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+> @@ -33,6 +33,10 @@ static const struct qcom_apcs_ipc_data ipq6018_apcs_data = {
+>  	.offset = 8, .clk_name = "qcom,apss-ipq6018-clk"
+>  };
+>  
+> +static const struct qcom_apcs_ipc_data ipq9574_apcs_data = {
+> +	.offset = 8, .clk_name = "qcom,apss-ipq6018-clk"
+> +};
+Please reuse ipq6018_apcs_data, it's identical.
 
 Konrad
->  .../bindings/clock/qcom,a73pll.yaml           | 52 +++++++++++++++++++
->  1 file changed, 52 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,a73pll.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,a73pll.yaml b/Documentation/devicetree/bindings/clock/qcom,a73pll.yaml
-> new file mode 100644
-> index 000000000000..a0e81094db8d
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/clock/qcom,a73pll.yaml
-> @@ -0,0 +1,52 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/clock/qcom,a73pll.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +title: Qualcomm A73 PLL clock
-> +
-> +maintainers:
-> +  - Bjorn Andersson <andersson@kernel.org>
-> +
-> +description:
-> +  The A73 PLL on few Qualcomm platforms is the main CPU PLL used for
-> +  frequencies above 1GHz.
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,ipq9574-a73pll
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  '#clock-cells':
-> +    const: 0
-> +
-> +  clocks:
-> +    items:
-> +      - description: board XO clock
-> +
-> +  clock-names:
-> +    items:
-> +      - const: xo
-> +
-> +  operating-points-v2: true
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - '#clock-cells'
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    a73pll: clock@b116000 {
-> +            compatible = "qcom,ipq9574-a73pll";
-> +            reg = <0x0b116000 0x40>;
-> +            #clock-cells = <0>;
-> +            clocks = <&xo_board_clk>;
-> +            clock-names = "xo";
-> +    };
+>  static const struct qcom_apcs_ipc_data msm8916_apcs_data = {
+>  	.offset = 8, .clk_name = "qcom-apcs-msm8916-clk"
+>  };
+> @@ -143,6 +147,7 @@ static int qcom_apcs_ipc_remove(struct platform_device *pdev)
+>  static const struct of_device_id qcom_apcs_ipc_of_match[] = {
+>  	{ .compatible = "qcom,ipq6018-apcs-apps-global", .data = &ipq6018_apcs_data },
+>  	{ .compatible = "qcom,ipq8074-apcs-apps-global", .data = &ipq6018_apcs_data },
+> +	{ .compatible = "qcom,ipq9574-apcs-apps-global", .data = &ipq9574_apcs_data },
+>  	{ .compatible = "qcom,msm8916-apcs-kpss-global", .data = &msm8916_apcs_data },
+>  	{ .compatible = "qcom,msm8939-apcs-kpss-global", .data = &msm8916_apcs_data },
+>  	{ .compatible = "qcom,msm8953-apcs-kpss-global", .data = &msm8994_apcs_data },
