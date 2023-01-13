@@ -2,43 +2,43 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D6E90668895
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 01:36:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F75C668897
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 01:36:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234657AbjAMAgD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Jan 2023 19:36:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42708 "EHLO
+        id S239713AbjAMAg3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Jan 2023 19:36:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234846AbjAMAgB (ORCPT
+        with ESMTP id S234765AbjAMAgQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Jan 2023 19:36:01 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 062AC61338;
-        Thu, 12 Jan 2023 16:35:59 -0800 (PST)
+        Thu, 12 Jan 2023 19:36:16 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 931BD6133A;
+        Thu, 12 Jan 2023 16:36:11 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 60FE7621DC;
-        Fri, 13 Jan 2023 00:35:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF990C433F0;
-        Fri, 13 Jan 2023 00:35:58 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id A2118B8203E;
+        Fri, 13 Jan 2023 00:36:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25BBCC433EF;
+        Fri, 13 Jan 2023 00:36:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1673570158;
-        bh=yQWRMMUNGFtjiEIaS8EKT5gV/Yn01FKt2Q/WoJVLgQ0=;
+        s=k20201202; t=1673570168;
+        bh=aRG0HqCnMaQxo0ef4kIoeT8KHMrF7fFixGKcmhALUUQ=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=oYmw8Vv1IjuyBTBOJhvZ5NOAc+xRtwdcMWXHaGchcPZnR1lQx/sMy84uMIykGeex+
-         /+JxusM/6mS2+fyeYkdEuxOcuxrEf/TDBF6+qvYjZeIkkX3a13PEE6P1FUNGYHdUGD
-         /kAwSjINyXIO7VoHQxuN/Sil0VZo/bR/ImLZj6PfhMetHXmO/ftta8cDgqawEPq6zw
-         imWFCQj3kerfGiQo0kfAl2YkqBGHGvXUkL7l1ztbRgmrR1TW6ueb0lbKFiCVjtBmXi
-         ao6sJiQFX4wJf6t21WAQ71PqK1ZFyJrswrYwyu+/L7CNnXv8bETAus1/TX5myQXL0G
-         TuYIbb2DQcv+g==
-Message-ID: <46ce692e441f6837c30a959fbcaa4e7a.sboyd@kernel.org>
+        b=E/xs7eefPpg+eduQl8Ta0vx/8uvc6YQIw4PZw+m+VYunc2Wwv3ZR01u7Q8NcKWEvr
+         WXGzyMCHNKmg1mYV2k2oHEPjK+6HuFSVrFKhKHs0uEmr5Cz6upnvPCtXkD/YNbt9R2
+         nkMw4OW99pznHodGoBDNLHWsRLvOY+FvyqNrbtlG4ZiCtcQUnHsWeP2l6jw7pLV58u
+         jveDwtnxwIhWOBfFzhI4o3QMcfcoxGLZvudMCILFpQoFkvJbjiN/VfW+RVy4I9MDcK
+         Rf09eQvn+wAptRVEYRYolj+Qf6bm1RHges5j9xCAdX8BKGy90lF/rKVV8HUUuJM3dN
+         K6ULa3P7SAjeQ==
+Message-ID: <5fd524b02f3b9c8f53ce026a0c3cb89f.sboyd@kernel.org>
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20221228185237.3111988-15-dmitry.baryshkov@linaro.org>
-References: <20221228185237.3111988-1-dmitry.baryshkov@linaro.org> <20221228185237.3111988-15-dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH v2 14/16] clk: qcom: gcc-sm8350: get rid of test clock
+In-Reply-To: <20221228185237.3111988-16-dmitry.baryshkov@linaro.org>
+References: <20221228185237.3111988-1-dmitry.baryshkov@linaro.org> <20221228185237.3111988-16-dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v2 15/16] clk: qcom: mmcc-msm8998: get rid of test clock
 From:   Stephen Boyd <sboyd@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org
@@ -50,7 +50,7 @@ To:     Andy Gross <agross@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
         Rob Herring <robh+dt@kernel.org>,
         Taniya Das <quic_tdas@quicinc.com>
-Date:   Thu, 12 Jan 2023 16:35:56 -0800
+Date:   Thu, 12 Jan 2023 16:36:06 -0800
 User-Agent: alot/0.10
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
@@ -61,7 +61,7 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dmitry Baryshkov (2022-12-28 10:52:35)
+Quoting Dmitry Baryshkov (2022-12-28 10:52:36)
 > The test clock apparently it's not used by anyone upstream. Remove it.
 >=20
 > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
