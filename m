@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ECCB0669CA0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 16:41:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D6B5669CC3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 16:47:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230177AbjAMPlr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 10:41:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59018 "EHLO
+        id S229610AbjAMPrd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 10:47:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230172AbjAMPlL (ORCPT
+        with ESMTP id S229553AbjAMPqg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 10:41:11 -0500
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 729307D25F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 07:32:49 -0800 (PST)
-Received: by mail-lj1-x22c.google.com with SMTP id y19so1504426ljq.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 07:32:49 -0800 (PST)
+        Fri, 13 Jan 2023 10:46:36 -0500
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F10D6432
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 07:37:36 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id bf43so33663859lfb.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 07:37:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=wvGqtD0vaEdCq6Jrz2aJKXvMSqDV7y3ghbHDsmS6aUg=;
-        b=WShKkgwSKxwnCM5q9NWeicjuMObQBy2sGtAadPAmoSPejSTxWmyHscrB8HuuxP2knT
-         YzYQ8UAAWTq024aVnxQagCtBT11LXpl/LKjQkcDWRDWujkV7dfcxbrsq/o3z1NE6z1Tv
-         agX/mrpXaZtag5WYqk8Ze7mOYg6wmocF9nl+JYnQ4P2kS+CVuUpN8nF8QpvsJNxp3Dt/
-         5V3nmyDn1jCNG2KZEw10O5ZPrOKNlFGDNi6U3hjWbRs/q0bWtLtnp7BMYpICtE8E0tu2
-         u7wX0Zm1zZylg07OBatuowBGLegdzLCZsHn0H5K1jKj0T4xULt3dQTpQ/AiaUW4u8cvj
-         iFbg==
+        bh=CQmmN4UZp6vm/MPn+6xJoyMuv2Cth9kwSKB3piNKqlw=;
+        b=TZsx4xAO4pLUFT00cBgy9ker7fkPoPKWBWCLMezh7j12QY3zv9CR8qaK/cTYdjn38e
+         nWiumjkNGMsOC3Ji0kEo/YgbCV2tnHrLjdsHF/7ZLGH30cusvXPg4wEswLK2MK2MIge4
+         uvmfkZWddFuXobMXVf/5N3SCBYugtpzLieccG07cjsu46bKOJn+QJy8OLXCBohg3gewT
+         aBJJvwJ+8V396LCDDnHy2/M3yOPLMXG8vmw4RGd2CHhlyBtkpUp64EY4W+rfWA/6UHVy
+         03ofI/AeGm72arXzEJZyupuC3n2Tl1TtjS72NMJ0idzE8kfk+8kjNWyN05SIP16zayEy
+         AkYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wvGqtD0vaEdCq6Jrz2aJKXvMSqDV7y3ghbHDsmS6aUg=;
-        b=SEUqnUSTeA+TffjNQzXxUqUpJVPgA4dh/IbVuXDpFT9xdjX4UfChE4e94RwW70qzBZ
-         9jKrdAOPCJoMSzQu3lokXVQOCnMkOt/KMw+FtuSJVr+cAei3I8qu838Z0jxWMJxD4fy9
-         XiPTeWBA5ttGupCJhppKYbYEB7Sf+Go4UqQSb+/gPjhUFnKbEvN6j5mM/zzh+5yKCxkP
-         0sxzrXXFyTkbVl9MhQMo3FOYRzFHD9ARvsgPLOPdKAAdWj23gFX5SEDvEZ9Lu8zbaODE
-         pTd+LMXqhYna5y+882lBMrNqDLrzb/OJ70fEdGmbobcbpHsRmfg+op1K/UtbK7+0Dv5O
-         EyZg==
-X-Gm-Message-State: AFqh2kpi0tAA28MgflotFSNiuBNHv1Uka6eXTSG5cgW4IPsM+xJtbLWZ
-        Na3m/AQcgckL1vHMYoUYFPR17A==
-X-Google-Smtp-Source: AMrXdXucRYt3swxHwKrnEfP7mbphGpw0NJKZN1uVdF19616i3aXJztERykz/cMkbkGdSi5Zxl070fA==
-X-Received: by 2002:a2e:9310:0:b0:28b:6936:30bc with SMTP id e16-20020a2e9310000000b0028b693630bcmr662578ljh.31.1673623967774;
-        Fri, 13 Jan 2023 07:32:47 -0800 (PST)
+        bh=CQmmN4UZp6vm/MPn+6xJoyMuv2Cth9kwSKB3piNKqlw=;
+        b=jGqLlDgWeNGSUJYlmpdHlohfEn3w5Xp51yGREMPbAoscSd0aJ3kvJU7yeih/Sp3hXf
+         Qnc7PSj+Lh+Tb51ohOmygzTUfLt+047QeHtRzrDwgpqZqmnYcmyUACDwZtNvIY4rhZyH
+         7t3ERf37PzqcDrDNzoPTywTl1B/8+G3k9g+t//OAV4NOSFFjPNkIMZxmlwFVXRFEJN5m
+         zHnGAlMelzc6BZL+LGiTQ6g68yBEw6cboK188GsrfcXmrTwa1nLFlAcncW3SWrcOZT9r
+         gynoN34z1FOxEK8ZxL5NmK/Uzoi0eBb4lRZzt9synW4/AICdjJIfMEOi5ArizjmFSeMV
+         XDsQ==
+X-Gm-Message-State: AFqh2krblC7jKHj0wU5XOHCtPj0AUfnZI0CQZH5VWHhYj9pRYbWd+oPq
+        HYbrYzAdrxNHtzlItf/ocHWhFaNReOoX6t5c
+X-Google-Smtp-Source: AMrXdXsw6l1NUq5GD0ouPv+r+GXQDAqG/gmNYndecwpSh8o9NX0xu9PT3TBmT7p8ywz7QI7gq5AH4A==
+X-Received: by 2002:ac2:551c:0:b0:4a4:68b8:c2b8 with SMTP id j28-20020ac2551c000000b004a468b8c2b8mr77993lfk.15.1673624254592;
+        Fri, 13 Jan 2023 07:37:34 -0800 (PST)
 Received: from [192.168.1.101] (abym53.neoplus.adsl.tpnet.pl. [83.9.32.53])
-        by smtp.gmail.com with ESMTPSA id r17-20020a2eb891000000b00288a8094a76sm1010768ljp.60.2023.01.13.07.32.45
+        by smtp.gmail.com with ESMTPSA id d22-20020a196b16000000b004d093d60f50sm379848lfa.215.2023.01.13.07.37.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Jan 2023 07:32:46 -0800 (PST)
-Message-ID: <4114bf50-67bf-e11c-5304-f2c6dcc0063d@linaro.org>
-Date:   Fri, 13 Jan 2023 16:32:44 +0100
+        Fri, 13 Jan 2023 07:37:33 -0800 (PST)
+Message-ID: <77d84408-166e-8a02-227a-67654a4d31f2@linaro.org>
+Date:   Fri, 13 Jan 2023 16:37:31 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
-Subject: Re: [PATCH 5/6] arm64: dts: qcom: ipq9574: Add cpufreq & RPM related
- nodes
+Subject: Re: [PATCH 6/6] regulator: qcom_smd: Add support to define the bootup
+ voltage
 Content-Language: en-US
 To:     devi priya <quic_devipriy@quicinc.com>, agross@kernel.org,
         andersson@kernel.org, lgirdwood@gmail.com, broonie@kernel.org,
@@ -68,9 +68,9 @@ Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
         quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
         quic_poovendh@quicinc.com
 References: <20230113150310.29709-1-quic_devipriy@quicinc.com>
- <20230113150310.29709-6-quic_devipriy@quicinc.com>
+ <20230113150310.29709-7-quic_devipriy@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230113150310.29709-6-quic_devipriy@quicinc.com>
+In-Reply-To: <20230113150310.29709-7-quic_devipriy@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -86,183 +86,59 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 13.01.2023 16:03, devi priya wrote:
-> Add CPU Freq and RPM related nodes in the device tree
-These two are wildly different things, barely related to one
-another and can very well be introduced in separate patches.
-Please do so.
-
+> Kernel does not know the initial voltage set by the bootloaders.
+> During regulator registration, the voltage variable is just declared
+> and it is zero. Based on that, the regulator framework considers current
+> the voltage as zero and tries to bring up each regulator to minimum
+> the supported voltage.
+> 
+> This introduces a dip in the voltage during kernel boot and gets
+> stabilized once the voltage scaling comes into picture.
+> 
+> To avoid the voltage dip, adding support to define the
+> bootup voltage set by the boodloaders and based on it, regulator
+> framework understands that proper voltage is already set
 > 
 > Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
 > Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
 > Signed-off-by: devi priya <quic_devipriy@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/ipq9574.dtsi | 80 +++++++++++++++++++++++++++
->  1 file changed, 80 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> index 5a2244b437ed..79fa5d91882c 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> @@ -9,6 +9,7 @@
->  #include <dt-bindings/interrupt-controller/arm-gic.h>
->  #include <dt-bindings/clock/qcom,gcc-ipq9574.h>
->  #include <dt-bindings/reset/qcom,gcc-ipq9574.h>
-> +#include <dt-bindings/clock/qcom,apss-ipq.h>
-Please sort the includes alphabetically.
-
->  
->  / {
->  	interrupt-parent = <&intc>;
-> @@ -75,6 +76,10 @@
->  			reg = <0x0>;
->  			enable-method = "psci";
->  			next-level-cache = <&L2_0>;
-> +			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
-> +			clock-names = "cpu";
-> +			operating-points-v2 = <&cpu_opp_table>;
-> +			cpu0-supply = <&ipq9574_s1>;
-Why is this cpu0-supply and the rest are cpu-supply? Neither of them
-seem particularly documented, by the way..
-
-
->  		};
->  
->  		CPU1: cpu@1 {
-> @@ -83,6 +88,10 @@
->  			reg = <0x1>;
->  			enable-method = "psci";
->  			next-level-cache = <&L2_0>;
-> +			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
-> +			clock-names = "cpu";
-> +			operating-points-v2 = <&cpu_opp_table>;
-> +			cpu-supply = <&ipq9574_s1>;
->  		};
->  
->  		CPU2: cpu@2 {
-> @@ -91,6 +100,10 @@
->  			reg = <0x2>;
->  			enable-method = "psci";
->  			next-level-cache = <&L2_0>;
-> +			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
-> +			clock-names = "cpu";
-> +			operating-points-v2 = <&cpu_opp_table>;
-> +			cpu-supply = <&ipq9574_s1>;
->  		};
->  
->  		CPU3: cpu@3 {
-> @@ -99,6 +112,10 @@
->  			reg = <0x3>;
->  			enable-method = "psci";
->  			next-level-cache = <&L2_0>;
-> +			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
-> +			clock-names = "cpu";
-> +			operating-points-v2 = <&cpu_opp_table>;
-> +			cpu-supply = <&ipq9574_s1>;
->  		};
->  
->  		L2_0: l2-cache {
-> @@ -107,6 +124,42 @@
->  		};
->  	};
->  
-> +	cpu_opp_table: opp-table-cpu {
-Alphabetically this goes after memory
-
-> +		compatible = "operating-points-v2";
-> +		opp-shared;
-> +
-> +		opp-936000000 {
-> +			opp-hz = /bits/ 64 <936000000>;
-> +			opp-microvolt = <725000>;
-> +			clock-latency-ns = <200000>;
-> +		};
-Please add a newline between each subnode.
-
-> +		opp-1104000000 {
-> +			opp-hz = /bits/ 64 <1104000000>;
-> +			opp-microvolt = <787500>;
-> +			clock-latency-ns = <200000>;
-> +		};
-> +		opp-1416000000 {
-> +			opp-hz = /bits/ 64 <1416000000>;
-> +			opp-microvolt = <862500>;
-> +			clock-latency-ns = <200000>;
-> +		};
-> +		opp-1488000000 {
-> +			opp-hz = /bits/ 64 <1488000000>;
-> +			opp-microvolt = <925000>;
-> +			clock-latency-ns = <200000>;
-> +		};
-> +		opp-1800000000 {
-> +			opp-hz = /bits/ 64 <1800000000>;
-> +			opp-microvolt = <987500>;
-> +			clock-latency-ns = <200000>;
-> +		};
-> +		opp-2208000000 {
-> +			opp-hz = /bits/ 64 <2208000000>;
-> +			opp-microvolt = <1062500>;
-> +			clock-latency-ns = <200000>;
-> +		};
-> +	};
-> +
->  	memory@40000000 {
->  		device_type = "memory";
->  		/* We expect the bootloader to fill in the size */
-> @@ -128,6 +181,11 @@
->  		#size-cells = <2>;
->  		ranges;
->  
-> +		rpm_msg_ram: memory@60000 {
-> +			reg = <0x0 0x00060000 0x0 0x6000>;
-> +			no-map;
-> +		};
-> +
->  		tz_region: memory@4a600000 {
->  			reg = <0x0 0x4a600000 0x0 0x400000>;
->  			no-map;
-> @@ -324,6 +382,28 @@
->  		};
->  	};
->  
-> +	rpm-glink {
-> +		compatible = "qcom,glink-rpm";
-> +		interrupts = <GIC_SPI 168 IRQ_TYPE_EDGE_RISING>;
-> +		qcom,rpm-msg-ram = <&rpm_msg_ram>;
-> +		mboxes = <&apcs_glb 0>;
-> +
-> +		rpm_requests: glink-channel {
-> +			compatible = "qcom,rpm-ipq9574";
-> +			qcom,glink-channels = "rpm_requests";
-> +
-> +			regulators {
-> +				compatible = "qcom,rpm-ipq9574-mp5496-regulators";
-The regulators are board-specific and should not be included in the
-SoC DTSI. If this is a very common configuration, you may split that
-into ipq9574-mp5496.dtsi, for example. Or ipq9574-pmics.dtsi if it's
-coupled with more PMICs.
-
-> +
-> +				ipq9574_s1: s1 {
-> +					regulator-min-microvolt = <587500>;
-> +					regulator-max-microvolt = <1075000>;
-> +					regulator-always-on;
-Won't this break CPU retention?
-
-You're holding a vote on it from the CPU devices, so it should be
-always enabled when the CPUs are oneline (as far as Linux is
-concerned).
-
-
-Or maybe Linux will think it's enabled and RPM will quietly park
-it when it decides it's good to do so.. but will it with an active
-request.. not sure, really.. just something to consider..
+Or maybe hook it up to the spmi_regulator_common_get_voltage()
+from the SPMI regulator driver and read the real voltage instead
+of relying on hardcoded values thay may differ between boards?
 
 Konrad
-> +				};
-> +			};
-> +		};
-> +	};
+>  drivers/regulator/qcom_smd-regulator.c | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/regulator/qcom_smd-regulator.c b/drivers/regulator/qcom_smd-regulator.c
+> index 1eb17d378897..49a36b07397c 100644
+> --- a/drivers/regulator/qcom_smd-regulator.c
+> +++ b/drivers/regulator/qcom_smd-regulator.c
+> @@ -800,6 +800,7 @@ struct rpm_regulator_data {
+>  	u32 id;
+>  	const struct regulator_desc *desc;
+>  	const char *supply;
+> +	int boot_uV; /* To store the bootup voltage set by bootloaders */
+>  };
+>  
+>  static const struct rpm_regulator_data rpm_mp5496_regulators[] = {
+> @@ -809,7 +810,7 @@ static const struct rpm_regulator_data rpm_mp5496_regulators[] = {
+>  };
+>  
+>  static const struct rpm_regulator_data rpm_ipq9574_mp5496_regulators[] = {
+> -	{ "s1", QCOM_SMD_RPM_SMPA, 1, &ipq9574_mp5496_smpa1, "s1" },
+> +	{ "s1", QCOM_SMD_RPM_SMPA, 1, &ipq9574_mp5496_smpa1, "s1", 875000 },
+>  	{}
+>  };
+>  
+> @@ -1394,6 +1395,9 @@ static int rpm_regulator_init_vreg(struct qcom_rpm_reg *vreg, struct device *dev
+>  	vreg->type	= rpm_data->type;
+>  	vreg->id	= rpm_data->id;
+>  
+> +	if (rpm_data->boot_uV)
+> +		vreg->uV = rpm_data->boot_uV;
 > +
->  	timer {
->  		compatible = "arm,armv8-timer";
->  		interrupts = <GIC_PPI 2 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+>  	memcpy(&vreg->desc, rpm_data->desc, sizeof(vreg->desc));
+>  	vreg->desc.name = rpm_data->name;
+>  	vreg->desc.supply_name = rpm_data->supply;
