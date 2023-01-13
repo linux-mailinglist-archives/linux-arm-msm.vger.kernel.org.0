@@ -2,66 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B75E66A412
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 21:28:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 13AB966A45F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 21:48:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229846AbjAMU21 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 15:28:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52150 "EHLO
+        id S231322AbjAMUsA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 15:48:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229813AbjAMU20 (ORCPT
+        with ESMTP id S231349AbjAMUrk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 15:28:26 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4725CDFB7;
-        Fri, 13 Jan 2023 12:28:26 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D97D462325;
-        Fri, 13 Jan 2023 20:28:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35914C433EF;
-        Fri, 13 Jan 2023 20:28:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1673641705;
-        bh=HwyfpRpcKiNgFxBF8Fbg2rQkB/xW2UMxV2EyZwi2Cdg=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=daL+l5NdFwnvuDTj4Zl99RfFy4ymHTe4yruuyRkEzU5Vvz1Zzb6rCQN6YLeLGKc0i
-         yAgEhPfPckED5m1j04C5sUbxEjoNO3UU9Yjt14mlo+UXF5xPGYCtqvbzZWdIkoQ6NM
-         Ej+2ldLt1DtJn0ohk20r9LQ469uWUOMtTi58Lrgu0ieQbVT0xoqq1rKpSbDuCHaqtn
-         lGfH4IOYDWj3jNCoc3p8oIfLnLQWSWUCvSTU2Je5w5MMQeto3+wNsqIUykGGmJ+9P1
-         b+DkKZkG5P3uWoMMALpqoJ7+nmEJG0CCLxOlXBGui4G0g/TodQc1aXSyRCkjTTcNdz
-         +Z9wZL0kNxhoA==
-Message-ID: <e73ad320fafa1365e3506bbd4cc77d8d.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20230113145859.82868-1-krzysztof.kozlowski@linaro.org>
-References: <20230113145859.82868-1-krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH] dt-bindings: clock: qcom,a53pll: drop operating-points-v2
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Fri, 13 Jan 2023 15:47:40 -0500
+Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5695B88DDC;
+        Fri, 13 Jan 2023 12:46:50 -0800 (PST)
+Received: by mail-oi1-f172.google.com with SMTP id s124so1815940oif.1;
+        Fri, 13 Jan 2023 12:46:50 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9OyV33OUJhlI5mwm69sd2O9VmK+PLImRqzdV7apRGPI=;
+        b=Sq3sVIFm9IGjdMMzLwg0/JDW9bOfBEd6kD8j7G2PjWmCIkXik2Kmqa2UOErL1IqUb4
+         NNTEUCrMObdnCqJilrpp+qdRs2ePnTYyT9YeOlDtdtU2pLXDMsKOkf5YtJSNRO+2+l1O
+         0njLW0SsD1bS8lufozGf6Ds1UBcPlwozqXLno9YyY96utDJ8KCNOKzm+TRrun7ZvR8+F
+         Ywk7bVkvrcmlwXrOyl9lQj+cDPKXjtQYdp3miVyUbeXRptvZ0pqATUHD9IulrhCnAR3V
+         lW+6OxvlnP1Bga28mn4m5z8As1VYSvG2PaNoRKDrrCOJ9yGqd2enONWhEYq7YEGaVOYP
+         TfCg==
+X-Gm-Message-State: AFqh2kpqAMhNq4/jsuoXEnJkNgrLW7UUXYrVmU4PQW/1siJEjlZ/xqBQ
+        1/mPTqStGtZeLDHfK8nPPg==
+X-Google-Smtp-Source: AMrXdXvgM0nwUjelEFyWvjA8p6YbDz6iLcaYHxcRZS7w24OHTPmEhdC9mh67Ds8JNlwgfrNKRnuaLw==
+X-Received: by 2002:a05:6808:18aa:b0:35e:1a0f:7dea with SMTP id bi42-20020a05680818aa00b0035e1a0f7deamr47989197oib.12.1673642797896;
+        Fri, 13 Jan 2023 12:46:37 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id q10-20020acad90a000000b00354932bae03sm9630099oig.10.2023.01.13.12.46.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Jan 2023 12:46:37 -0800 (PST)
+Received: (nullmailer pid 2893298 invoked by uid 1000);
+        Fri, 13 Jan 2023 20:46:36 -0000
+Date:   Fri, 13 Jan 2023 14:46:36 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Melody Olvera <quic_molvera@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Date:   Fri, 13 Jan 2023 12:28:23 -0800
-User-Agent: alot/0.10
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v6] dt-bindings: soc: qcom,rpmh-rsc: Update to allow for
+ generic nodes
+Message-ID: <167364279598.2893245.18171316624883671372.robh@kernel.org>
+References: <20230112203653.23139-1-quic_molvera@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230112203653.23139-1-quic_molvera@quicinc.com>
+X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Krzysztof Kozlowski (2023-01-13 06:58:59)
-> The CPU PLL clock node does not use OPP tables (neither driver).
 
-What device is qcom_a53pll_get_freq_tbl() operating on?
+On Thu, 12 Jan 2023 12:36:53 -0800, Melody Olvera wrote:
+> Update the bindings to allow for generic regulator nodes instead of
+> device-specific node names.
+> 
+> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/soc/qcom/qcom,rpmh-rsc.yaml | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+
+Reviewed-by: Rob Herring <robh@kernel.org>
