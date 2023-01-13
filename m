@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 30FCD66969D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 13:13:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8385C6696A3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 13:13:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241010AbjAMMNV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 07:13:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50052 "EHLO
+        id S241163AbjAMMNb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 07:13:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240987AbjAMMMQ (ORCPT
+        with ESMTP id S230335AbjAMMMn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 07:12:16 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B7587F47C
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 04:07:09 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id g13so32844877lfv.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 04:07:09 -0800 (PST)
+        Fri, 13 Jan 2023 07:12:43 -0500
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55C2580616
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 04:07:13 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id d30so27916675lfv.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 04:07:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Hm/qQ8fRN2NQHjAQUuIDga+VQhSDIFkn6c2/qYNneiA=;
-        b=ZFRatt/dxs5o0+wQkcz4uNvrDuRZmQTYPlToVfMr+7HTwl5EqQiKl7jPlkAV5mexc+
-         gt+8O9lsZfxTNqn7TLo8OKJkW+afnkuYOkFbNzF5/0keHyFucCBEuvJwtpnjgVlFChjf
-         h6YGOmQTI06JeDucA8iWvSnVMg8QykjjEaEQ17TOMsLMPR03jGzTyCNxC7i5eHaXcrbK
-         6Ss17K0lc3n6wt1mZfjkzRVzO863pRC7VRFl/AjQJlJze+5jaCoeqio4f8ZclkXwm3as
-         9abAKWybrWoBelHzlO25LrhLZDA1Jz95/TBud2CNt2tQIPh23IZtCjf2e3byNynZQmAw
-         54CQ==
+        bh=5MFNWqBH1dgb33/SbdMGGUOEJxNRoxoxCAjFOGyypZg=;
+        b=kyLCDm9JNzTCeJGrVZHp00qlEnRZxXSldgnU3XXFI0M9yWaamRhCONX56rCX937nUy
+         AAmCBQLD0KtJyDH341zw2m63S+E3Zpgv2HyG6vAX+jg1DHVWVNoToPXlU4UPsDFlwobx
+         i9JtRlMu9Rs9ib36VVbi5ZUC2AB5vZncizRNaXTKgiWiJ4EZbCi00LEyB3oy9C6f4T9m
+         //nOr2Zx4Sb6DfkD0W7NHJNGSuJH7YEVo02hbVF04/rOVkrev7h8TwrIeQhDjZSYr4VG
+         Ze7RnpC3HOyFp2M2ZZc3y6waeYfvEIrEBhZLw35wajBr0oeiXBYVPO4Hz8xyvefz5Bu8
+         U5Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Hm/qQ8fRN2NQHjAQUuIDga+VQhSDIFkn6c2/qYNneiA=;
-        b=x2bVy55hbc9vPf2OWNiXtw4uW1LUhxAwARY3uiJuCFfmd61FXT/z5QBwwFf5sKWUX7
-         4uUeCr7Zg9kF7mPt923BYB7Ry0B7NITz9WunUpYnuBcu9cn/slTps9hdw/LX805KG57f
-         pZetOcTJBelAERMnbvvcrz1jQuf9xCHjsxLCVDttLlC2Y9xviYKAELctX0wHLjAKxpP2
-         aGbw1YD8eD0jeXCtp0ovzGTcS50bzXD4RCmfQL80oOhND5rfS/YSbnCPqsdK7jGeUCxr
-         QtkL/ExwFGeJYI+UgI1qgiKkY8yZmDnHB9WUg8Mj57vv0dyvkSsa/DrMgA+Cj/ToMtGs
-         Gp5A==
-X-Gm-Message-State: AFqh2kr9gODM+1/AuDF9+Es5k+CJa2/bNrXEqyJ7BKwXQIBuHOlPbO+f
-        Lab0aEOeJGnFm8Im8U8yA0VomAAtfp9UfOV0bIG0VQ==
-X-Google-Smtp-Source: AMrXdXsBRAteX1m4WkeMuLekg73W6xuRSD8lqAflC3cp1BrQ+FO37EJXz6dTlWvKg/GS1z0NVctXIQ==
-X-Received: by 2002:a05:6512:1111:b0:4b5:43ef:a552 with SMTP id l17-20020a056512111100b004b543efa552mr24324909lfg.16.1673611629271;
-        Fri, 13 Jan 2023 04:07:09 -0800 (PST)
+        bh=5MFNWqBH1dgb33/SbdMGGUOEJxNRoxoxCAjFOGyypZg=;
+        b=m9Y1IVoaq0aZbzeLTYyaXe1ykSGKHzz26Ql23ZwdIqvQJSZrMMMFVi7v98xJjYsuVJ
+         /Tkf2cpgiby2fDcFTOMhDt0e2RuByvbx2nHzPX4JLPuWP0xZ3dVhxFa94FuK7FowokSY
+         RF7rxsn5koBtMLcxJ7GJ4TFVOb8IjmIjKir13xQDkEo7coNFj4xqP3HT9aiTx9VDCtnE
+         IvKkIr0FbezQo2VB0ke9fZNfqidb5rq00GBYZizdFqePClfxqcL74B4mSnbR4Hx5uYMc
+         FoAAC9XV9wpfeixORqCAaEmBqkdsbZbbndKWjFusAKpAnGLu5e5wZPbru+QZ89oVHrim
+         PcEQ==
+X-Gm-Message-State: AFqh2kr9VP3WjtMob5SjVe+o+3Y4qDKthLT67WgbXDpZrEwNwE+Uj1yc
+        AU3s/wyQfGeuIXeif1Wttmwhfg==
+X-Google-Smtp-Source: AMrXdXt21JqeKEr+uWTyS6Z1xXpwSoJ7QyfhSDktRj0WOAE8E2K3dzU8EStFOUSXwVWnrcziPfX73A==
+X-Received: by 2002:ac2:5b41:0:b0:4a4:68b9:66dd with SMTP id i1-20020ac25b41000000b004a468b966ddmr22188001lfp.40.1673611631699;
+        Fri, 13 Jan 2023 04:07:11 -0800 (PST)
 Received: from eriador.lumag.spb.ru ([188.170.82.205])
-        by smtp.gmail.com with ESMTPSA id i7-20020ac25227000000b004ac6a444b26sm3806290lfl.141.2023.01.13.04.07.01
+        by smtp.gmail.com with ESMTPSA id i7-20020ac25227000000b004ac6a444b26sm3806290lfl.141.2023.01.13.04.07.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Jan 2023 04:07:08 -0800 (PST)
+        Fri, 13 Jan 2023 04:07:11 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -61,9 +61,9 @@ To:     Andy Gross <agross@kernel.org>,
         Taniya Das <quic_tdas@quicinc.com>
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org
-Subject: [PATCH v3 06/14] clk: qcom: cpu-8996: skip ACD init if the setup is valid
-Date:   Fri, 13 Jan 2023 14:05:36 +0200
-Message-Id: <20230113120544.59320-7-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v3 07/14] clk: qcom: cpu-8996: simplify the cpu_clk_notifier_cb
+Date:   Fri, 13 Jan 2023 14:05:37 +0200
+Message-Id: <20230113120544.59320-8-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230113120544.59320-1-dmitry.baryshkov@linaro.org>
 References: <20230113120544.59320-1-dmitry.baryshkov@linaro.org>
@@ -71,50 +71,76 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Check whether L2 registers contain correct values and skip programming
-if they are valid. This follows the code present downstream.
+- Do not use the Alt PLL completely. Switch to smux when necessary to
+  prevent overvolting
+- Restore the parent in case the rate change aborts for some reason
+- Do not duplicate resetting the parent in set_parent operation.
 
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/clk/qcom/clk-cpu-8996.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/clk/qcom/clk-cpu-8996.c | 31 +++++++++++++++++++------------
+ 1 file changed, 19 insertions(+), 12 deletions(-)
 
 diff --git a/drivers/clk/qcom/clk-cpu-8996.c b/drivers/clk/qcom/clk-cpu-8996.c
-index 0e0c00d44c6f..7e5246ca7e7f 100644
+index 7e5246ca7e7f..ee7e18b37832 100644
 --- a/drivers/clk/qcom/clk-cpu-8996.c
 +++ b/drivers/clk/qcom/clk-cpu-8996.c
-@@ -472,10 +472,15 @@ static void __iomem *base;
- static void qcom_cpu_clk_msm8996_acd_init(void __iomem *base)
+@@ -506,27 +506,34 @@ static int cpu_clk_notifier_cb(struct notifier_block *nb, unsigned long event,
  {
- 	u64 hwid;
-+	u32 val;
- 	unsigned long flags;
+ 	struct clk_cpu_8996_pmux *cpuclk = to_clk_cpu_8996_pmux_nb(nb);
+ 	struct clk_notifier_data *cnd = data;
+-	int ret;
  
- 	spin_lock_irqsave(&qcom_clk_acd_lock, flags);
- 
-+	val = kryo_l2_get_indirect_reg(L2ACDTD_REG);
-+	if (val == 0x00006a11)
-+		goto out;
+ 	switch (event) {
+ 	case PRE_RATE_CHANGE:
+-		ret = clk_cpu_8996_pmux_set_parent(&cpuclk->clkr.hw, ALT_INDEX);
+ 		qcom_cpu_clk_msm8996_acd_init(base);
 +
- 	hwid = read_cpuid_mpidr() & CPU_AFINITY_MASK;
- 
- 	kryo_l2_set_indirect_reg(L2ACDTD_REG, 0x00006a11);
-@@ -492,6 +497,7 @@ static void qcom_cpu_clk_msm8996_acd_init(void __iomem *base)
- 		writel(0xf, base + PERFCL_REG_OFFSET + SSSCTL_OFFSET);
++		/*
++		 * Avoid overvolting. clk_core_set_rate_nolock() walks from top
++		 * to bottom, so it will change the rate of the PLL before
++		 * chaging the parent of PMUX. This can result in pmux getting
++		 * clocked twice the expected rate.
++		 *
++		 * Manually switch to PLL/2 here.
++		 */
++		if (cnd->new_rate < DIV_2_THRESHOLD &&
++		    cnd->old_rate > DIV_2_THRESHOLD)
++			clk_cpu_8996_pmux_set_parent(&cpuclk->clkr.hw, SMUX_INDEX);
++
+ 		break;
+-	case POST_RATE_CHANGE:
+-		if (cnd->new_rate < DIV_2_THRESHOLD)
+-			ret = clk_cpu_8996_pmux_set_parent(&cpuclk->clkr.hw,
+-							   SMUX_INDEX);
+-		else
+-			ret = clk_cpu_8996_pmux_set_parent(&cpuclk->clkr.hw,
+-							   ACD_INDEX);
+-		break;
++	case ABORT_RATE_CHANGE:
++		/* Revert manual change */
++		if (cnd->new_rate < DIV_2_THRESHOLD &&
++		    cnd->old_rate > DIV_2_THRESHOLD)
++			clk_cpu_8996_pmux_set_parent(&cpuclk->clkr.hw, ACD_INDEX);
+ 	default:
+-		ret = 0;
+ 		break;
  	}
  
-+out:
- 	spin_unlock_irqrestore(&qcom_clk_acd_lock, flags);
- }
+-	return notifier_from_errno(ret);
++	return NOTIFY_OK;
+ };
  
+ static int qcom_cpu_clk_msm8996_driver_probe(struct platform_device *pdev)
 -- 
 2.39.0
 
