@@ -2,65 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5019F669B3B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 16:00:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CC32669B4F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Jan 2023 16:02:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229914AbjAMPA2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 10:00:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51698 "EHLO
+        id S229666AbjAMPC1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 10:02:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229994AbjAMO7k (ORCPT
+        with ESMTP id S229960AbjAMPB7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 09:59:40 -0500
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D060D7EA71
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 06:49:54 -0800 (PST)
-Received: by mail-ed1-x52e.google.com with SMTP id v30so31476742edb.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 06:49:54 -0800 (PST)
+        Fri, 13 Jan 2023 10:01:59 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B68AD479F2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 06:52:35 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id b4so11963969edf.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 06:52:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=QcDYSwpxN84t5AantCdrrt1gSgLuFeIhm0uoKE/AHTc=;
-        b=xnwwndU/KDlZ2Xjb+KOBbby8mLfoVIsB40zEzt6rkrx6BZy2pbBqNDNsGRhDHOzppu
-         7GO0RoQV2l2gZwRn5WNf7oToaPKJlDRwrcvplQfrFWDY5l8dm/tefGnejrPPfAhwZXbx
-         9Un/DMVF/pPuZU7s7yNgIgGuTJFU8MnH1wretRnuUiJDeiEc85oWoPcV7Y3OaywgDVnH
-         7xL7Jtopm9G9r7m5e91XcBhWAhqVPiAJyoy/HWNOGXOtYS0shvPNM7Mn7LyZDy4SFFo1
-         QTSXCVKl06W2q3I/kDO3YByD9zwsZdJGiPiCx15I6NqtxuowcuHnJ3GvvnR77dTrmmaf
-         YkpA==
+        bh=+WAr0+GGD2fGKXixnjGetPFkT6Eo1APKb/W0QbrZH4w=;
+        b=L4RrN52zCJKYL1jiHwq1+vrvXGFT6X0RHamF2kVAYzBo4JYR3ecxto2emyBCKZzuYV
+         4FL/8m1YtbF8bw5hwM+6AsTOt/ki0VAoYqbm1VQuNfHg3nPxCOgj2g2/5KxAuJwjx1/1
+         LoPAmFulKjx6DFqjSXN5CdwHHQIFutzKi1ZzhjfvGSqyHGmQZqHW9h71F/nW5k1LIuFl
+         OYYi+1FoV26aCCe1eyiQtxThbO8izc5GsC3im+cHVu+jSZ4gXBPrge/OXkR3V7OPxRTx
+         Xw+JC9fO0Hk+KLNcVKs88sqg1Ahb2OMFBqj96QzT48YMJM6eU7sqMWkyKN7OUqZNF/MK
+         YUPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=QcDYSwpxN84t5AantCdrrt1gSgLuFeIhm0uoKE/AHTc=;
-        b=I2DLp4UTFJ5PqP2C4JZxIkOGZ5sJkoQvyLQJAPjQhDb/ggpXhtmdyqEzLytTsiUUKX
-         rNyiCTFnLe2WfiAdrwpD6zH8xeQeECcbMu9NLqRsNNdDmCRc/WoAmI9eocbmKqF30VRb
-         xBMBAc8YaUJ9BX4vTftNkNRP72QwV7amjMXDuzWPxQmK3JtIB2IppGv+WcUHDQ40T8Zh
-         a7/sD+6NtLZK/GHbUSuZXUYGiguqbFEtipP7mt/+voScMKC/xB3fFdt5dhNj/B+FaRBP
-         6WJU4itrYAfI4I+FPQGy+Cw9UCWH5TWiKCbRFJGJkk4RSWe+PGgTKqEVwgVQJOjoVIkS
-         nmSw==
-X-Gm-Message-State: AFqh2koI2HeUIMWt/po2oOIiqnmaevU9SXUrHnWNcbIEfm+BMq0D4M1B
-        kV/sz/VgFWS8tOF7Wbdv6SHl8g==
-X-Google-Smtp-Source: AMrXdXu4pqcGbN7MrIWNbzOcrwjUGOlSIHBUfxxrafuK/J2Pr50QR1fY2ckC8Lri2czGVf+MxQ8BYQ==
-X-Received: by 2002:aa7:d653:0:b0:47e:15ec:155e with SMTP id v19-20020aa7d653000000b0047e15ec155emr65639330edr.26.1673621393297;
-        Fri, 13 Jan 2023 06:49:53 -0800 (PST)
+        bh=+WAr0+GGD2fGKXixnjGetPFkT6Eo1APKb/W0QbrZH4w=;
+        b=ZH/Xrol3BOAYf0TSmAxNm7+7i+revyS8Yszp6RuxqfCLWnEQVFUgDkMi3WHR4RRghx
+         kqbKdbpvc7F8WwEwL88nIPRxQhHs5ECWefxdH+q8qSOiVurKpe7Gb5pUMeu1zHZs1ek6
+         dD7aArGyC+OXEhCevbuU5+5vsXPpmsGyxwh/IhgEJ02Fz1SRaddwjS0TEZgu3QlH03XL
+         1sa2oakLG4cNqZEjuGkYbjXZ4B25izAPTJsZ3wsbRrlqIxU7HuX3FpEdVcjwX6E+uJuS
+         8aH61LC8MGGMrQFwSGc5KG7/knLC5HpXdQRMqUTZWwXqTZ8ph0jwBrQyoaEOl73qkt+Y
+         mMkg==
+X-Gm-Message-State: AFqh2koMrrXCqcT9quEymqvS0HdS5JIBB9rxORnKIcuosWZ4+H1nel3q
+        dQQqHxkfBuxPfUjtiFIuiBRtGw==
+X-Google-Smtp-Source: AMrXdXt41dKLuKsr/HD9byrt3GJ9NMGhr3Ts+hQl35egSfG6rvmepDKGJ8yFUAyyEga9Wze4VkG+Fg==
+X-Received: by 2002:a05:6402:3712:b0:499:70a8:f918 with SMTP id ek18-20020a056402371200b0049970a8f918mr18053606edb.16.1673621554339;
+        Fri, 13 Jan 2023 06:52:34 -0800 (PST)
 Received: from krzk-bin.. ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id bt16-20020a0564020a5000b00482e0c55e2bsm8213918edb.93.2023.01.13.06.49.52
+        by smtp.gmail.com with ESMTPSA id j4-20020aa7c0c4000000b004847513929csm8284250edp.72.2023.01.13.06.52.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Jan 2023 06:49:52 -0800 (PST)
+        Fri, 13 Jan 2023 06:52:33 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] dt-bindindgs: i2c: qcom,i2c-geni: document operating-points-v2
-Date:   Fri, 13 Jan 2023 15:49:50 +0100
-Message-Id: <20230113144950.78246-1-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: sdm845-db845c: drop label from I2C controllers
+Date:   Fri, 13 Jan 2023 15:52:31 +0100
+Message-Id: <20230113145231.79280-1-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -73,28 +73,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Just like other Geni serial interfaces (qcom,geni-spi and
-qcom,geni-uart), the Geni I2C Controller comes with OPP table:
+Geni I2C Controller node does not allow a "label" property and Linux
+driver does not parse it:
 
-  sdm845-sony-xperia-tama-apollo.dtb: i2c@894000: Unevaluated properties are not allowed ('operating-points-v2' was unexpected)
+  sdm845-db845c.dtb: i2c@a8c000: Unevaluated properties are not allowed ('label' was unexpected)
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
-index f5f7dc8f325c..0e88c85985b5 100644
---- a/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
-+++ b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
-@@ -46,6 +46,8 @@ properties:
-   interrupts:
-     maxItems: 1
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+index 0d935c928148..6b355589edb3 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+@@ -506,14 +506,12 @@ lt9611_out: endpoint {
+ &i2c11 {
+ 	/* On Low speed expansion */
+ 	clock-frequency = <100000>;
+-	label = "LS-I2C1";
+ 	status = "okay";
+ };
  
-+  operating-points-v2: true
-+
-   pinctrl-0: true
-   pinctrl-1: true
+ &i2c14 {
+ 	/* On Low speed expansion */
+ 	clock-frequency = <100000>;
+-	label = "LS-I2C0";
+ 	status = "okay";
+ };
  
 -- 
 2.34.1
