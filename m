@@ -2,482 +2,707 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2101C66ADEF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Jan 2023 21:54:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 89EBF66AE0E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Jan 2023 22:08:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230441AbjANUyp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 14 Jan 2023 15:54:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44706 "EHLO
+        id S230358AbjANVIT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 14 Jan 2023 16:08:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47832 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230433AbjANUyo (ORCPT
+        with ESMTP id S230467AbjANVIR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 14 Jan 2023 15:54:44 -0500
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7913365BA
-        for <linux-arm-msm@vger.kernel.org>; Sat, 14 Jan 2023 12:54:42 -0800 (PST)
-Received: by mail-lj1-x22b.google.com with SMTP id bn6so25996777ljb.13
-        for <linux-arm-msm@vger.kernel.org>; Sat, 14 Jan 2023 12:54:42 -0800 (PST)
+        Sat, 14 Jan 2023 16:08:17 -0500
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAF6A9EDD
+        for <linux-arm-msm@vger.kernel.org>; Sat, 14 Jan 2023 13:08:13 -0800 (PST)
+Received: by mail-pj1-x102f.google.com with SMTP id o18so4499560pji.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 14 Jan 2023 13:08:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Jhlu7bQ0QdAg6OfQv/+8TH83c/23OGuGJMt6XySlBUk=;
-        b=i6FjuDBnCIKVH7q+noR9PsmbjSEm04M1j9dByNkNHUmTYKWHSacEjqjLabaqX0qNWh
-         qDVYje8pcmN2R8zn1NbU5411vEf2J1qQjwhFmZ/eu/Ff4EuoVvkc02mqu/9uTk0Ao4of
-         puF+MOMDIv1xA8kdj7oO1H33k4LS1xasaU7kNB1BAjaZHBW8VanRyn/aRofinlfxAVz6
-         /As1BeUD7ByYQcqnuek8GlC5JLGqxyQlK4UOeuNvmpbUeXwaAfcdgDtpJqCIX5i+5p7l
-         GRCUNQL2LMg/IjMTRw7mQ9QYX0tcwdSWC72Ea9eGuRQBw1Xp+aTuyuCVdXzjy4ad6IcR
-         AZPQ==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=dX9vpUuJim4tgDsy1o2ntPEfYHflg+J2zhoKMTHo15g=;
+        b=ynRlIi/0sg8OF74zvERIwLq3h4atwqMiFQ3GffxzHd7IURQKpidbh4hveHUmXRAT9U
+         UBmjNf64A/I6KE7OLJy85Vx2QQUXjsUYxJRtbggktyNOaPgK2GHhR4HtO64Qyyj1bUqE
+         63Fn6x1XB/5Oe9+c4Jq3FsWDVoxLm64hUfX+TbWLV/sMXskdbbLy0B3H/sDGLFXJ3pSq
+         ojdf1yjxhCQuVxe70YzfpzoQrcZWK419oiDQPI7ee8/+SCaTr4vdswoPuQU5llyFBiqS
+         XmOPWNwZMg2j1WCuQl3QV2uwRUcZ9Aq+Y9wRaCNMRGW1JPsFq2OZ9D4fW/o+PaFRIMoO
+         cfBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Jhlu7bQ0QdAg6OfQv/+8TH83c/23OGuGJMt6XySlBUk=;
-        b=DUz8wYgIjd0oQRPIka2TZWHYF02mh5o2V95xFhxHC3E/MZ8Hh7JsOpE76F6HnoNieu
-         P2Lrr1B+vng46lE6F7Qya634n25B4UQyWjULFioFWdkusznUHQQThCc53F0c4UT4BsZc
-         KVYuAn5jpjX65Z+jY4jS5ytMuUtbBtVQmzunSShHHKmiwE3EAFXlfmKV2G49Bl/Wm6jt
-         55Z7Ru8GIQJB9/OXQMZ6vmfZ8T7Aen8Zg2P0kxooGS6zzMZzIBkG+DADXpXHmWzCjWIy
-         8xGaLmJSSMnypHH9r3GsVI/r/RO+1DY6zeKPMeKBzxEIhBQXcAJbyHs+DVYlOZxN4vGJ
-         keKg==
-X-Gm-Message-State: AFqh2ko3oU3khLRUMtEPiUikS8hO5zAXWdONLcieZOCf8Tv4ACzg9lXm
-        C1Nz9g52c8KMfpnYgS+e9AOPWA==
-X-Google-Smtp-Source: AMrXdXuJ1Lvj/xx2/tbY//KTszzrzlh9nr+T+sf2jA1CE5HIe/il47HbUkY2260YmetgzsvVyM92sA==
-X-Received: by 2002:a2e:9799:0:b0:281:e7d0:aba0 with SMTP id y25-20020a2e9799000000b00281e7d0aba0mr9109822lji.53.1673729680791;
-        Sat, 14 Jan 2023 12:54:40 -0800 (PST)
-Received: from [192.168.1.101] (abym53.neoplus.adsl.tpnet.pl. [83.9.32.53])
-        by smtp.gmail.com with ESMTPSA id z7-20020a2e8e87000000b002834cfbd857sm2743980ljk.52.2023.01.14.12.54.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 14 Jan 2023 12:54:40 -0800 (PST)
-Message-ID: <a7d19f36-56b0-df4e-3afe-858f6e0bf520@linaro.org>
-Date:   Sat, 14 Jan 2023 21:54:38 +0100
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dX9vpUuJim4tgDsy1o2ntPEfYHflg+J2zhoKMTHo15g=;
+        b=bR/osudMhx55moZRk4bB8+ucz1U4oKVlVH5z5TZ7ff/y/apFABbkcnAMm5BvvgDOq9
+         tK0UXANW3wqor37v8E/px1PxV0Pn8DMIofDW/WAPzPh6lhMlk8ebbeD2qG7Di31kykrg
+         Jo+EhUBdiUx0vxEllqPkZDHaaCzbHq7WFHLU3dSauUjaDm6YUPYvpnnOLn5GxhrSopVA
+         HxiHuNrnVfzBrhMkTgOvry2mflevIentCc54kjd9n1tEPefY7cMQQRapLB/FF5kNZ6O8
+         /wUM3QURjw9Ko5czGGpIIIWOVaf+uhIETMgAxb0tvzfraS5eXG90ucY+xNwFU+Zc1X1e
+         rY2w==
+X-Gm-Message-State: AFqh2kosIPiOBgXbMxKpiDkOWlYHKypVbTq104xfkO8uiQ0iYMlHnZrC
+        eElo5m7l/Bak8LrjWCvBI3l/uEkAeOR1or1t
+X-Google-Smtp-Source: AMrXdXv0ZXkP75G5RNMRhnYRIeBkPC9K0w9twXbaqbBitP4dCZ8bn9fwJ9iz3BoaGkyL+GJq5+GQXQ==
+X-Received: by 2002:a17:902:b18a:b0:194:87fe:c8f9 with SMTP id s10-20020a170902b18a00b0019487fec8f9mr1270417plr.38.1673730492712;
+        Sat, 14 Jan 2023 13:08:12 -0800 (PST)
+Received: from localhost.localdomain ([2401:4900:1c60:63d3:2d69:9f71:187e:f085])
+        by smtp.gmail.com with ESMTPSA id y22-20020a17090264d600b001708c4ebbaesm3204283pli.309.2023.01.14.13.08.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 14 Jan 2023 13:08:12 -0800 (PST)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
+        bhupesh.sharma@linaro.org, robh+dt@kernel.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sm6115: Add debug related nodes
+Date:   Sun, 15 Jan 2023 02:37:54 +0530
+Message-Id: <20230114210754.353912-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v4 3/3] arm64: dts: qcom: msm8916-thwc: Add initial device
- trees
-Content-Language: en-US
-To:     Yang Xiwen <forbidden405@foxmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Jaime Breva <jbreva@nayarsystems.com>,
-        Nikita Travkin <nikita@trvn.ru>,
-        ~postmarketos/upstreaming@lists.sr.ht
-References: <20230114063846.2633-1-forbidden405@foxmail.com>
- <tencent_AB776DFEB1B993E8B3F0BD5A4BF420600407@qq.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <tencent_AB776DFEB1B993E8B3F0BD5A4BF420600407@qq.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add dtsi nodes related to coresight debug units such
+as cti, etm, etr, funnel(s), replicator(s), etc. for
+Qualcomm sm6115 SoC.
 
+Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sm6115.dtsi | 612 +++++++++++++++++++++++++++
+ 1 file changed, 612 insertions(+)
 
-On 14.01.2023 07:38, Yang Xiwen wrote:
-> This commit adds support for the ufi-001C and uf896 WiFi/LTE dongle made by
-> Tong Heng Wei Chuang based on MSM8916.
-> uf896 is another variant for the usb stick. The board design
-> differs by using different gpios for the keys and leds.
-> 
-> Note: The original firmware does not support 64-bit OS. It is necessary
-> to flash 64-bit TZ firmware to boot arm64.
-> 
-> Currently supported:
-> - All CPU cores
-> - Buttons
-> - LEDs
-> - Modem
-> - SDHC
-> - USB Device Mode
-> - UART
-> 
-> Co-developed-by: Jaime Breva <jbreva@nayarsystems.com>
-> Signed-off-by: Jaime Breva <jbreva@nayarsystems.com>
-> Co-developed-by: Nikita Travkin <nikita@trvn.ru>
-> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
-> Signed-off-by: Yang Xiwen <forbidden405@foxmail.com>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+index 478c5d009272..5067910b18ab 100644
+--- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+@@ -1237,6 +1237,618 @@ dispcc: clock-controller@5f00000 {
+ 			#power-domain-cells = <1>;
+ 		};
+ 
++		cti0: cti@8010000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x08010000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++		};
++
++		cti1: cti@8011000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x08011000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++		};
++
++		cti2: cti@8012000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x08012000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++		};
++
++		cti3: cti@8013000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x08013000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++		};
++
++		cti4: cti@8014000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x08014000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++		};
++
++		cti5: cti@8015000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x08015000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++		};
++
++		cti6: cti@8016000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x08016000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++		};
++
++		cti7: cti@8017000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x08017000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++		};
++
++		cti8: cti@8018000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x08018000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++		};
++
++		cti9: cti@8019000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x08019000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++		};
++
++		cti10: cti@801a000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x0801a000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++		};
++
++		cti11: cti@801b000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x0801b000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++		};
++
++		cti12: cti@801c000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x0801c000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++		};
++
++		cti13: cti@801d000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x0801d000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++		};
++
++		cti14: cti@801e000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x0801e000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++		};
++
++		cti15: cti@801f000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x0801f000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++		};
++
++		replicator@8046000 {
++			compatible = "arm,coresight-dynamic-replicator", "arm,primecell";
++			reg = <0x08046000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++
++			out-ports {
++				port {
++					replicator_out: endpoint {
++						remote-endpoint = <&etr_in>;
++					};
++				};
++			};
++
++			in-ports {
++				port {
++					replicator_in: endpoint {
++						remote-endpoint = <&etf_out>;
++					};
++				};
++			};
++		};
++
++		etf@8047000 {
++			compatible = "arm,coresight-tmc", "arm,primecell";
++			reg = <0x08047000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++
++			in-ports {
++				port {
++					etf_in: endpoint {
++						remote-endpoint = <&merge_funnel_out>;
++					};
++				};
++			};
++
++			out-ports {
++				port {
++					etf_out: endpoint {
++						remote-endpoint = <&replicator_in>;
++					};
++				};
++			};
++		};
++
++		etr@8048000 {
++			compatible = "arm,coresight-tmc", "arm,primecell";
++			reg = <0x08048000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++
++			in-ports {
++				port {
++					etr_in: endpoint {
++						remote-endpoint = <&replicator_out>;
++					};
++				};
++			};
++		};
++
++		stm@8002000 {
++			compatible = "arm,coresight-stm", "arm,primecell";
++			reg = <0x08002000 0x1000>,
++			      <0x0e280000 0x180000>;
++			reg-names = "stm-base", "stm-stimulus-base";
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++
++			out-ports {
++				port {
++					stm_out: endpoint {
++						remote-endpoint = <&funnel_in0_in>;
++					};
++				};
++			};
++		};
++
++		funnel@8041000 {
++			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++			reg = <0x08041000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++
++			out-ports {
++				port {
++					funnel_in0_out: endpoint {
++						remote-endpoint = <&merge_funnel_in0>;
++					};
++				};
++			};
++
++			in-ports {
++				port {
++					funnel_in0_in: endpoint {
++						remote-endpoint = <&stm_out>;
++					};
++				};
++			};
++		};
++
++		funnel@8042000 {
++			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++			reg = <0x08042000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++
++			out-ports {
++				port {
++					funnel_in1_out: endpoint {
++						remote-endpoint = <&merge_funnel_in1>;
++					};
++				};
++			};
++
++			in-ports {
++				port {
++					funnel_in1_in: endpoint {
++						remote-endpoint = <&funnel_apss1_out>;
++					};
++				};
++			};
++		};
++
++		funnel@8045000 {
++			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++			reg = <0x08045000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++
++			out-ports {
++				port {
++					merge_funnel_out: endpoint {
++						remote-endpoint = <&etf_in>;
++					};
++				};
++			};
++
++			in-ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@0 {
++					reg = <0>;
++					merge_funnel_in0: endpoint {
++						remote-endpoint = <&funnel_in0_out>;
++					};
++				};
++
++				port@1 {
++					reg = <1>;
++					merge_funnel_in1: endpoint {
++						remote-endpoint = <&funnel_in1_out>;
++					};
++				};
++			};
++		};
++
++		etm@9040000 {
++			compatible = "arm,coresight-etm4x", "arm,primecell";
++			reg = <0x09040000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++			arm,coresight-loses-context-with-cpu;
++
++			cpu = <&CPU0>;
++
++			status = "disabled";
++
++			out-ports {
++				port {
++					etm0_out: endpoint {
++						remote-endpoint = <&funnel_apss0_in0>;
++					};
++				};
++			};
++		};
++
++		etm@9140000 {
++			compatible = "arm,coresight-etm4x", "arm,primecell";
++			reg = <0x09140000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++			arm,coresight-loses-context-with-cpu;
++
++			cpu = <&CPU1>;
++
++			status = "disabled";
++
++			out-ports {
++				port {
++					etm1_out: endpoint {
++						remote-endpoint = <&funnel_apss0_in1>;
++					};
++				};
++			};
++		};
++
++		etm@9240000 {
++			compatible = "arm,coresight-etm4x", "arm,primecell";
++			reg = <0x09240000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++			arm,coresight-loses-context-with-cpu;
++
++			cpu = <&CPU2>;
++
++			status = "disabled";
++
++			out-ports {
++				port {
++					etm2_out: endpoint {
++						remote-endpoint = <&funnel_apss0_in2>;
++					};
++				};
++			};
++		};
++
++		etm@9340000 {
++			compatible = "arm,coresight-etm4x", "arm,primecell";
++			reg = <0x09340000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++			arm,coresight-loses-context-with-cpu;
++
++			cpu = <&CPU3>;
++
++			status = "disabled";
++
++			out-ports {
++				port {
++					etm3_out: endpoint {
++						remote-endpoint = <&funnel_apss0_in3>;
++					};
++				};
++			};
++		};
++
++		etm@9440000 {
++			compatible = "arm,coresight-etm4x", "arm,primecell";
++			reg = <0x09440000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++			arm,coresight-loses-context-with-cpu;
++
++			cpu = <&CPU4>;
++
++			status = "disabled";
++
++			out-ports {
++				port {
++					etm4_out: endpoint {
++						remote-endpoint = <&funnel_apss0_in4>;
++					};
++				};
++			};
++		};
++
++		etm@9540000 {
++			compatible = "arm,coresight-etm4x", "arm,primecell";
++			reg = <0x09540000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++			arm,coresight-loses-context-with-cpu;
++
++			cpu = <&CPU5>;
++
++			status = "disabled";
++
++			out-ports {
++				port {
++					etm5_out: endpoint {
++						remote-endpoint = <&funnel_apss0_in5>;
++					};
++				};
++			};
++		};
++
++		etm@9640000 {
++			compatible = "arm,coresight-etm4x", "arm,primecell";
++			reg = <0x09640000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++			arm,coresight-loses-context-with-cpu;
++
++			cpu = <&CPU6>;
++
++			status = "disabled";
++
++			out-ports {
++				port {
++					etm6_out: endpoint {
++						remote-endpoint = <&funnel_apss0_in6>;
++					};
++				};
++			};
++		};
++
++		etm@9740000 {
++			compatible = "arm,coresight-etm4x", "arm,primecell";
++			reg = <0x09740000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++			arm,coresight-loses-context-with-cpu;
++
++			cpu = <&CPU7>;
++
++			status = "disabled";
++
++			out-ports {
++				port {
++					etm7_out: endpoint {
++						remote-endpoint = <&funnel_apss0_in7>;
++					};
++				};
++			};
++		};
++
++		funnel@9800000 {
++			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++			reg = <0x09800000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++
++			out-ports {
++				port {
++					funnel_apss0_out: endpoint {
++						remote-endpoint = <&funnel_apss1_in>;
++					};
++				};
++			};
++
++			in-ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@0 {
++					reg = <0>;
++					funnel_apss0_in0: endpoint {
++						remote-endpoint = <&etm0_out>;
++					};
++				};
++
++				port@1 {
++					reg = <1>;
++					funnel_apss0_in1: endpoint {
++						remote-endpoint = <&etm1_out>;
++					};
++				};
++
++				port@2 {
++					reg = <2>;
++					funnel_apss0_in2: endpoint {
++						remote-endpoint = <&etm2_out>;
++					};
++				};
++
++				port@3 {
++					reg = <3>;
++					funnel_apss0_in3: endpoint {
++						remote-endpoint = <&etm3_out>;
++					};
++				};
++
++				port@4 {
++					reg = <4>;
++					funnel_apss0_in4: endpoint {
++						remote-endpoint = <&etm4_out>;
++					};
++				};
++
++				port@5 {
++					reg = <5>;
++					funnel_apss0_in5: endpoint {
++						remote-endpoint = <&etm5_out>;
++					};
++				};
++
++				port@6 {
++					reg = <6>;
++					funnel_apss0_in6: endpoint {
++						remote-endpoint = <&etm6_out>;
++					};
++				};
++
++				port@7 {
++					reg = <7>;
++					funnel_apss0_in7: endpoint {
++						remote-endpoint = <&etm7_out>;
++					};
++				};
++			};
++		};
++
++		funnel@9810000 {
++			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++			reg = <0x09810000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++
++			out-ports {
++				port {
++					funnel_apss1_out: endpoint {
++						remote-endpoint = <&funnel_in1_in>;
++					};
++				};
++			};
++
++			in-ports {
++				port {
++					funnel_apss1_in: endpoint {
++						remote-endpoint = <&funnel_apss0_out>;
++					};
++				};
++			};
++		};
++
+ 		apps_smmu: iommu@c600000 {
+ 			compatible = "qcom,sm6115-smmu-500", "qcom,smmu-500", "arm,mmu-500";
+ 			reg = <0x0c600000 0x80000>;
+-- 
+2.38.1
 
-Konrad
->  arch/arm64/boot/dts/qcom/Makefile             |   2 +
->  .../boot/dts/qcom/msm8916-thwc-uf896.dts      |  39 +++
->  .../boot/dts/qcom/msm8916-thwc-ufi001c.dts    |  39 +++
->  arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi     | 250 ++++++++++++++++++
->  4 files changed, 330 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8916-thwc-uf896.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8916-thwc-ufi001c.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index e442a81895d04..d83e02c84d42c 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -22,6 +22,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-e7.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-grandmax.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-j5.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-serranove.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-thwc-uf896.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-thwc-ufi001c.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt88047.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-motorola-potter.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-xiaomi-daisy.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/msm8916-thwc-uf896.dts b/arch/arm64/boot/dts/qcom/msm8916-thwc-uf896.dts
-> new file mode 100644
-> index 0000000000000..c492db8561904
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/msm8916-thwc-uf896.dts
-> @@ -0,0 +1,39 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +
-> +/dts-v1/;
-> +
-> +#include "msm8916-ufi.dtsi"
-> +
-> +/ {
-> +	model = "uf896 4G Modem Stick";
-> +	compatible = "thwc,uf896", "qcom,msm8916";
-> +};
-> +
-> +&button_restart {
-> +	gpios = <&msmgpio 35 GPIO_ACTIVE_LOW>;
-> +};
-> +
-> +&led_r {
-> +	gpios = <&msmgpio 82 GPIO_ACTIVE_HIGH>;
-> +};
-> +
-> +&led_g {
-> +	gpios = <&msmgpio 83 GPIO_ACTIVE_HIGH>;
-> +};
-> +
-> +&led_b {
-> +	gpios = <&msmgpio 81 GPIO_ACTIVE_HIGH>;
-> +};
-> +
-> +&button_default {
-> +	pins = "gpio35";
-> +	bias-pull-up;
-> +};
-> +
-> +&gpio_leds_default {
-> +	pins = "gpio81", "gpio82", "gpio83";
-> +};
-> +
-> +&sim_ctrl_default {
-> +	pins = "gpio1", "gpio2";
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/msm8916-thwc-ufi001c.dts b/arch/arm64/boot/dts/qcom/msm8916-thwc-ufi001c.dts
-> new file mode 100644
-> index 0000000000000..700cf81cbf8c0
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/msm8916-thwc-ufi001c.dts
-> @@ -0,0 +1,39 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +
-> +/dts-v1/;
-> +
-> +#include "msm8916-ufi.dtsi"
-> +
-> +/ {
-> +	model = "ufi-001c/ufi-001b 4G Modem Stick";
-> +	compatible = "thwc,ufi001c", "qcom,msm8916";
-> +};
-> +
-> +&button_restart {
-> +	gpios = <&msmgpio 37 GPIO_ACTIVE_HIGH>;
-> +};
-> +
-> +&led_r {
-> +	gpios = <&msmgpio 22 GPIO_ACTIVE_HIGH>;
-> +};
-> +
-> +&led_g {
-> +	gpios = <&msmgpio 21 GPIO_ACTIVE_HIGH>;
-> +};
-> +
-> +&led_b {
-> +	gpios = <&msmgpio 20 GPIO_ACTIVE_HIGH>;
-> +};
-> +
-> +&button_default {
-> +	pins = "gpio37";
-> +	bias-pull-down;
-> +};
-> +
-> +&gpio_leds_default {
-> +	pins = "gpio20", "gpio21", "gpio22";
-> +};
-> +
-> +&sim_ctrl_default {
-> +	pins = "gpio1", "gpio2";
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi b/arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi
-> new file mode 100644
-> index 0000000000000..790a9696da9de
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi
-> @@ -0,0 +1,250 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +
-> +#include "msm8916-pm8916.dtsi"
-> +
-> +#include <dt-bindings/gpio/gpio.h>
-> +#include <dt-bindings/leds/common.h>
-> +
-> +/ {
-> +	chassis-type = "embedded";
-> +
-> +	aliases {
-> +		serial0 = &blsp1_uart2;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = "serial0";
-> +	};
-> +
-> +	reserved-memory {
-> +		mpss_mem: mpss@86800000 {
-> +			reg = <0x0 0x86800000 0x0 0x5500000>;
-> +			no-map;
-> +		};
-> +
-> +		gps_mem: gps@8bd00000 {
-> +			reg = <0x0 0x8bd00000 0x0 0x200000>;
-> +			no-map;
-> +		};
-> +	};
-> +
-> +	gpio-keys {
-> +		compatible = "gpio-keys";
-> +
-> +		pinctrl-0 = <&button_default>;
-> +		pinctrl-names = "default";
-> +
-> +		label = "GPIO Buttons";
-> +
-> +		/* GPIO is board-specific */
-> +		button_restart: button-restart {
-> +			label = "Restart";
-> +			linux,code = <KEY_RESTART>;
-> +		};
-> +	};
-> +
-> +	leds {
-> +		compatible = "gpio-leds";
-> +
-> +		pinctrl-0 = <&gpio_leds_default>;
-> +		pinctrl-names = "default";
-> +
-> +		/*
-> +		 * GPIOs are board-specific.
-> +		 * Functions and default-states defined here are fallbacks.
-> +		 * Feel free to override them if your board is different.
-> +		 */
-> +		led_r: led-r {
-> +			color = <LED_COLOR_ID_RED>;
-> +			default-state = "on";
-> +			function = LED_FUNCTION_POWER;
-> +		};
-> +
-> +		led_g: led-g {
-> +			color = <LED_COLOR_ID_GREEN>;
-> +			default-state = "off";
-> +			function = LED_FUNCTION_WLAN;
-> +		};
-> +
-> +		led_b: led-b {
-> +			color = <LED_COLOR_ID_BLUE>;
-> +			default-state = "off";
-> +			function = LED_FUNCTION_WAN;
-> +		};
-> +	};
-> +};
-> +
-> +&bam_dmux {
-> +	status = "okay";
-> +};
-> +
-> +&bam_dmux_dma {
-> +	status = "okay";
-> +};
-> +
-> +&blsp1_uart2 {
-> +	status = "okay";
-> +};
-> +
-> +/* Remove &dsi_phy0 from clocks to make sure that gcc probes with display disabled */
-> +&gcc {
-> +	clocks = <&xo_board>, <&sleep_clk>, <0>, <0>, <0>, <0>, <0>;
-> +};
-> +
-> +&mpss {
-> +	pinctrl-0 = <&sim_ctrl_default>;
-> +	pinctrl-names = "default";
-> +
-> +	status = "okay";
-> +};
-> +
-> +&pm8916_usbin {
-> +	status = "okay";
-> +};
-> +
-> +&pronto {
-> +	status = "okay";
-> +};
-> +
-> +&sdhc_1 {
-> +	pinctrl-0 = <&sdc1_clk_on &sdc1_cmd_on &sdc1_data_on>;
-> +	pinctrl-1 = <&sdc1_clk_off &sdc1_cmd_off &sdc1_data_off>;
-> +	pinctrl-names = "default", "sleep";
-> +
-> +	status = "okay";
-> +};
-> +
-> +&usb {
-> +	extcon = <&pm8916_usbin>;
-> +	dr_mode = "peripheral";
-> +
-> +	status = "okay";
-> +};
-> +
-> +&usb_hs_phy {
-> +	extcon = <&pm8916_usbin>;
-> +};
-> +
-> +&smd_rpm_regulators {
-> +	vdd_l1_l2_l3-supply = <&pm8916_s3>;
-> +	vdd_l4_l5_l6-supply = <&pm8916_s4>;
-> +	vdd_l7-supply = <&pm8916_s4>;
-> +
-> +	s3 {
-> +		regulator-min-microvolt = <1200000>;
-> +		regulator-max-microvolt = <1300000>;
-> +	};
-> +
-> +	s4 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <2100000>;
-> +	};
-> +
-> +	l1 {
-> +		regulator-min-microvolt = <1225000>;
-> +		regulator-max-microvolt = <1225000>;
-> +	};
-> +
-> +	l2 {
-> +		regulator-min-microvolt = <1200000>;
-> +		regulator-max-microvolt = <1200000>;
-> +	};
-> +
-> +	l4 {
-> +		regulator-min-microvolt = <2050000>;
-> +		regulator-max-microvolt = <2050000>;
-> +	};
-> +
-> +	l5 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <1800000>;
-> +	};
-> +
-> +	l6 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <1800000>;
-> +	};
-> +
-> +	l7 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <1800000>;
-> +	};
-> +
-> +	l8 {
-> +		regulator-min-microvolt = <2850000>;
-> +		regulator-max-microvolt = <2900000>;
-> +	};
-> +
-> +	l9 {
-> +		regulator-min-microvolt = <3300000>;
-> +		regulator-max-microvolt = <3300000>;
-> +	};
-> +
-> +	l10 {
-> +		regulator-min-microvolt = <2700000>;
-> +		regulator-max-microvolt = <2800000>;
-> +	};
-> +
-> +	l11 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <2950000>;
-> +		regulator-system-load = <200000>;
-> +		regulator-allow-set-load;
-> +	};
-> +
-> +	l12 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <2950000>;
-> +	};
-> +
-> +	l13 {
-> +		regulator-min-microvolt = <3075000>;
-> +		regulator-max-microvolt = <3075000>;
-> +	};
-> +
-> +	l14 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <3300000>;
-> +	};
-> +
-> +	l15 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <3300000>;
-> +	};
-> +
-> +	l16 {
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <3300000>;
-> +	};
-> +
-> +	l17 {
-> +		regulator-min-microvolt = <2850000>;
-> +		regulator-max-microvolt = <2850000>;
-> +	};
-> +
-> +	l18 {
-> +		regulator-min-microvolt = <2700000>;
-> +		regulator-max-microvolt = <2700000>;
-> +	};
-> +};
-> +
-> +&msmgpio {
-> +	/* pins are board-specific */
-> +	button_default: button-default-state {
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +	};
-> +
-> +	gpio_leds_default: gpio-leds-default-state {
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-disable;
-> +	};
-> +
-> +	sim_ctrl_default: sim-ctrl-default-state {
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-disable;
-> +		output-low;
-> +	};
-> +};
