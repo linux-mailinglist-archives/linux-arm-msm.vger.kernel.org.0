@@ -2,121 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 54BA766A8DC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Jan 2023 04:07:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9828B66A9AB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Jan 2023 07:39:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231535AbjANDHk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 22:07:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56730 "EHLO
+        id S229581AbjANGjp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 14 Jan 2023 01:39:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231516AbjANDHd (ORCPT
+        with ESMTP id S229565AbjANGjm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 22:07:33 -0500
-Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C1418D3B2;
-        Fri, 13 Jan 2023 19:07:25 -0800 (PST)
-Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
-        by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30E2wNNT023855;
-        Sat, 14 Jan 2023 03:07:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type : content-transfer-encoding; s=corp-2022-7-12;
- bh=FqBQjREvcACjBzDkIhCAkhf57aXLYf5/WwuqqldkKiI=;
- b=mrVXInI9EN+EES05LTP4C+nza58a0R8xZYXjSwUkoaB7ToaXwxbckIZdf7VxybybU9NC
- LweBF4iDZoaSXWbn2cybWT3jFpUM+gsyTCi0AL27r+e7xDdlvEidieyJokAuHnpnhGo5
- DTULO3MmbO0rtBetqnNXhwWiSnkinJZ6byJBAhXCTrs2JhScjdVCvixlKcr2d5/fML5P
- wLqG3fuhGgg4liegee4ZF2DGT0cbTve62xoScc5gORDy0vwnHdT2B3rI8jXF/dP9AgGc
- Y1A9Dpd/kIoH8LpDqadK1Md0N7rFfDbAjOI8Wcfnhbiy0aP7NsniTL2JU3wymjM6yAUG qQ== 
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
-        by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3n3kaa80vy-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Sat, 14 Jan 2023 03:07:09 +0000
-Received: from pps.filterd (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
-        by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.5/8.17.1.5) with ESMTP id 30E2xIfM018721;
-        Sat, 14 Jan 2023 03:07:07 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 3n3m3d85tb-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Sat, 14 Jan 2023 03:07:07 +0000
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 30E375hH035466;
-        Sat, 14 Jan 2023 03:07:06 GMT
-Received: from ca-mkp2.ca.oracle.com.com (mpeterse-ol9.allregionaliads.osdevelopmeniad.oraclevcn.com [100.100.251.135])
-        by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id 3n3m3d85sp-4;
-        Sat, 14 Jan 2023 03:07:06 +0000
-From:   "Martin K. Petersen" <martin.petersen@oracle.com>
-To:     jejb@linux.ibm.com, andersson@kernel.org, vkoul@kernel.org,
-        Manivannan Sadhasivam <mani@kernel.org>
-Cc:     "Martin K . Petersen" <martin.petersen@oracle.com>,
-        quic_cang@quicinc.com, quic_asutoshd@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-phy@lists.infradead.org, linux-scsi@vger.kernel.org,
-        dmitry.baryshkov@linaro.org, ahalaney@redhat.com,
-        abel.vesa@linaro.org, alim.akhtar@samsung.com, avri.altman@wdc.com,
-        bvanassche@acm.org
-Subject: Re: (subset) [PATCH v5 00/23] ufs: qcom: Add HS-G4 support
-Date:   Fri, 13 Jan 2023 22:06:42 -0500
-Message-Id: <167366469091.3069139.11760332738434847058.b4-ty@oracle.com>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221222141001.54849-1-manivannan.sadhasivam@linaro.org>
-References: <20221222141001.54849-1-manivannan.sadhasivam@linaro.org>
+        Sat, 14 Jan 2023 01:39:42 -0500
+Received: from out203-205-221-202.mail.qq.com (out203-205-221-202.mail.qq.com [203.205.221.202])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70F8B4ED2;
+        Fri, 13 Jan 2023 22:39:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
+        s=s201512; t=1673678372;
+        bh=fTWOf2xuRe2mU+NqN+3qMJT9tELkw0/Wp+h3uXQVpdE=;
+        h=From:To:Cc:Subject:Date;
+        b=TcUdZ5TgJY8vek0JAzoH2PHZikva76FHlCvaRPUP/vke8PE4Wz9eBaLXjIxMhiyxf
+         ENI0+P1yWZobNbddWsJDiO9z6bm6cXJ5lcFOBjxXF6yirjeuJVNQbL90vTdNVnfxx4
+         bc+ZbJmIeC5+k+GZpmHw+p7UqCz8BauXkM4QMBCo=
+Received: from localhost.localdomain ([111.60.247.106])
+        by newxmesmtplogicsvrsza12-0.qq.com (NewEsmtp) with SMTP
+        id 9D611E2E; Sat, 14 Jan 2023 14:39:22 +0800
+X-QQ-mid: xmsmtpt1673678362tz613eefd
+Message-ID: <tencent_542D047A15F0BB3B25BFD71C41345E385F06@qq.com>
+X-QQ-XMAILINFO: OOWntbL6xj16PCEPfzvbPmDCgQGdV7XjYLK6HIDrmkB01P4V5K3yNXFk3ZoDad
+         ObjvmrD4dFpR7XniX5eyX5YD80iW6Uv9Blv98aOqk4sKAdkSXRe/Ynt+olCC2exLOYGLFKV+X0YP
+         aUHZzb/7j5NO0+k9dlq+ZCePijSoKjmajAa7C446p2hOztD3UybCE4HohS4t7XzElrWS5hlbTesC
+         APpTYdCZzGRprEaKiJC8ZJTsIkwE1QFLUUXB+n/cTEMlay9zRy75Eo3KtY++jWK0TggPRUsM1Ksd
+         zQ4Cyxdd7e8E84U+hLlRHk4u0mg0ZazRU5yhiEwrKodcNlJxv2GKRZc0zMs7IFxZeGIgGIzGzKbs
+         ezxBW9D96Hiagha71ABF++4k2mPVEpDDcuCPWxF+y9EQn9CjvIWm0/FSEm9vy44srtPLX/6T3t1f
+         ZA4RJ8W9USHkKwBa6nmAA53FL6DnaWCt8wIdm7PYPPrKBiXoh0uto//g6C39bauOfmp3saR1nLjY
+         UEQZMfbHe7TpVkBjHmdq5BuGxFEpECo+4mFYrKugTSILzLcm1iFUm5fPW1W1s9DfpzvUnL99WHXx
+         559GWLVTOUmaqMw/qJH49dqy/nknhFW/vAlzvtUT4UQK6e5VJoPsydsEHrTeQPNN3dJOhLqMuDPY
+         640qVSSPxgwwwpwMZHF7VH0V/iQzWx2neuFMXOsUyYwB1Zx07FITfMXubeVaNbtTwhZ84yEpbM0O
+         8v8O/utMGu21l17fzG1wJrV84cuT5oY2D3XdB8lNlX0vxTCrMS1QIAcHZzk7uDRnOt7VGbkRaEPk
+         mago+KbxSnPwlNGnVRG6BDIz5ti2ngCBBLrlQz0ezqvOAirvPgDPajDoOrmfZqSRMkGVa/4sAtBV
+         BAxkUNbSov37E0a3EKxV4qWfP9vnU9GjOl7m0C+LDVBzfSHEq5ootg9doSAnyqORjFLc5agp7R6U
+         gssIrxEfKU+j0V16NPHL8WAhQbXeSRXxjaoB6m6cuV0T7xUD4rsQ==
+From:   Yang Xiwen <forbidden405@foxmail.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Yang Xiwen <forbidden405@foxmail.com>,
+        Jaime Breva <jbreva@nayarsystems.com>,
+        Nikita Travkin <nikita@trvn.ru>,
+        ~postmarketos/upstreaming@lists.sr.ht
+Subject: [PATCH v4 0/3] Support for MSM8916-based UFi ufi001c and uf896
+Date:   Sat, 14 Jan 2023 14:38:43 +0800
+X-OQ-MSGID: <20230114063846.2633-1-forbidden405@foxmail.com>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-13_12,2023-01-13_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 adultscore=0 phishscore=0
- mlxscore=0 mlxlogscore=999 bulkscore=0 suspectscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2301140019
-X-Proofpoint-GUID: 2Pb_fdYL-h4NF2yuk3MPFoRKBCY-MtfP
-X-Proofpoint-ORIG-GUID: 2Pb_fdYL-h4NF2yuk3MPFoRKBCY-MtfP
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,HELO_DYNAMIC_IPADDR,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        RDNS_DYNAMIC,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 22 Dec 2022 19:39:38 +0530, Manivannan Sadhasivam wrote:
+These devices are equipped with 512MB RAM, 4/8GB eMMC and MSM8916.
+This series introduces support for them and adds a dtsi for the class of
+MSM8916-based UFIs.
 
-> This series adds HS-G4 support to the Qcom UFS driver and PHY driver.
-> The newer Qcom platforms support configuring the UFS controller and PHY
-> in dual gears (i.e., controller/PHY can be configured to run in two gear
-> speeds). This is accomplished by adding two different PHY init sequences
-> to the PHY driver and the UFS driver requesting the one that's required
-> based on the platform configuration.
-> 
-> [...]
+v4:
+- Fix some minor typing mistakes
+- Modify common definitions for leds
+v3:
+- Sort vendor-prefixes alphabatically
+v2:
+- Managed to get the real vendor
+- Remove some reduntant descriptions
+- Rename dtsi more formally
 
-Applied to 6.3/scsi-queue, thanks!
+Yang Xiwen (3):
+  dt-bindings: vendor-prefixes: add thwc
+  dt-bindings: qcom: Document msm8916-thwc-uf896 and ufi001c
+  arm64: dts: qcom: msm8916-thwc: Add initial device trees
 
-[13/23] scsi: ufs: ufs-qcom: Remove un-necessary goto statements
-        https://git.kernel.org/mkp/scsi/c/031312dbc695
-[14/23] scsi: ufs: ufs-qcom: Remove un-necessary WARN_ON()
-        https://git.kernel.org/mkp/scsi/c/a98c2183e81d
-[15/23] scsi: ufs: ufs-qcom: Use bitfields where appropriate
-        https://git.kernel.org/mkp/scsi/c/18fe2ab79bcf
-[16/23] scsi: ufs: ufs-qcom: Use dev_err_probe() for printing probe error
-        https://git.kernel.org/mkp/scsi/c/132b027205ef
-[17/23] scsi: ufs: ufs-qcom: Fix the Qcom register name for offset 0xD0
-        https://git.kernel.org/mkp/scsi/c/7959587f3284
-[18/23] scsi: ufs: core: Add reinit_notify() callback
-        https://git.kernel.org/mkp/scsi/c/c2c38c573a2e
-[19/23] scsi: ufs: core: Add support for reinitializing the UFS device
-        https://git.kernel.org/mkp/scsi/c/96a7141da332
-[20/23] scsi: ufs: ufs-qcom: Factor out the logic finding the HS Gear
-        https://git.kernel.org/mkp/scsi/c/c270986527f9
-[21/23] scsi: ufs: ufs-qcom: Add support for reinitializing the UFS device
-        https://git.kernel.org/mkp/scsi/c/baf5ddac90dc
-[22/23] scsi: ufs: ufs-qcom: Add support for finding max gear on new platforms
-        https://git.kernel.org/mkp/scsi/c/2c407fe97015
-[23/23] MAINTAINERS: Add myself as the maintainer for Qcom UFS drivers
-        https://git.kernel.org/mkp/scsi/c/39beef59128f
+ .../devicetree/bindings/arm/qcom.yaml         |   2 +
+ .../devicetree/bindings/vendor-prefixes.yaml  |   2 +
+ arch/arm64/boot/dts/qcom/Makefile             |   2 +
+ .../boot/dts/qcom/msm8916-thwc-uf896.dts      |  39 +++
+ .../boot/dts/qcom/msm8916-thwc-ufi001c.dts    |  39 +++
+ arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi     | 250 ++++++++++++++++++
+ 6 files changed, 334 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8916-thwc-uf896.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8916-thwc-ufi001c.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi
 
 -- 
-Martin K. Petersen	Oracle Linux Engineering
+2.39.0
+
