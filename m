@@ -2,73 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 07E7166A9E4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Jan 2023 08:12:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E007B66A9E8
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Jan 2023 08:14:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229906AbjANHMt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 14 Jan 2023 02:12:49 -0500
+        id S229535AbjANHOb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 14 Jan 2023 02:14:31 -0500
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229799AbjANHM1 (ORCPT
+        with ESMTP id S229747AbjANHOK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 14 Jan 2023 02:12:27 -0500
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEA6FC13E0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 23:11:30 -0800 (PST)
-Received: by mail-pj1-x1032.google.com with SMTP id gz9-20020a17090b0ec900b002290bda1b07so2772962pjb.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 23:11:30 -0800 (PST)
+        Sat, 14 Jan 2023 02:14:10 -0500
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84E14BBB3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 23:12:29 -0800 (PST)
+Received: by mail-pl1-x631.google.com with SMTP id c6so25580861pls.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 23:12:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=1hhoYOhdFd/1XWBMyQAS/0V7h4xRZx/EixJ0JzHFu+g=;
-        b=s/rwqXRQRrL287PIModN2dUSPDh/Rdn5QjNd5Xp+Axm/oMwq7OfgSfuDuisdK92Hq5
-         MTLo1kefENmoT+Q58au/HYoJ7/OhtfVipv0+5dmgr8+c4+Q7Hvxbxjsj+5nOA0MLeWVN
-         DZR+h96VSYYvWFA2l9s8uXTAmA8dvCNTT6eoE8OZ4jbckdImpMl0O4UCDnMxY3h9cCNC
-         6rOTpmW/MGaeggiUS23KBUei63wgqnewzos/1PZYDzseOX5DojemX+yAlGmZW6kx2Hok
-         3qYLB75spkgntclw0xXCtIluVmHzwlWYz9Gx4TPqTBOz1t/vZa0Xd/p/WDU0cOXB9M7d
-         THVA==
+        bh=Zg2WmO9wf8RImBuJiJx191XjcOzWFAmiLeDlAR4VkfU=;
+        b=kB9czAtkBXfTqqM7RoBhUsx5UEq8inQBjOq6os5tM27gT9kdLGBDg/OQgYLXeaDHX/
+         BehFBLv8uG5TNyzgENDDvr3XYgc+tOcUVbL/bBEzIT9f5lmoB6nu+rUsXfiUZBKJpvQu
+         ykm0yLIa9bUp0+hcaVFqF3HB+pG9HIoQi1H1OKd7GQSawE7wiWVE8mYrTQfiXFCmiglW
+         Jvpl060jO49w1CnzM64AkISsROmUuEvQ6vPjqh8x/Y/l9fXQ+ULncx3DZuT8r7bpG3YD
+         oH+H6sMy2r3GcVf3cdj4MATaOMs7j/n+TFKQCXnhE6SSOOPf/j9ED7nnE+RngEKhwxM7
+         ZSxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1hhoYOhdFd/1XWBMyQAS/0V7h4xRZx/EixJ0JzHFu+g=;
-        b=LrWOI2GW6Uu/htB6eSJHeQEw3zFUZTohtvOfrxPZhqk+b7JKz9Q1jLIEAbGOVFxlRT
-         6e26Xs3uwrT4O8VG/b7bLE5w5zM+vugzvwe4HcQFt8h6xoKxMDqX0O9zAArVMAHv87fD
-         DWO5zfjCk0cypttJHzwsix+u+6v4c3CnMNjkkRgUadVitv78L1IMUswizEh3EcsmbyhZ
-         yanyUFopiYUo1kvBi8xvBEd3wR/0AAXYiI+KxMFbCPsLPRm60BNpIb6Hz6cbvNoF+ik5
-         jJrruYb3QajD9UU6bPEDTyMPqUpONp1RFqbFUpm0JyDD15QST69HcoAUIpDmRdyuZrRT
-         xSgA==
-X-Gm-Message-State: AFqh2kqntyTIEM/wVAwVzAQ9Od77HxDgxwbkdcWvSzhlSNc6dZJuUkP5
-        CyiQitCUSC3PGBBrfGHAGDXt
-X-Google-Smtp-Source: AMrXdXuRiszNGrahdiih775tFedEbPuYrEDVDujrhEjX5i2q3iO2KN2NrvpKq7SntYHOH003BwajVw==
-X-Received: by 2002:a17:902:e5cd:b0:192:9140:ee76 with SMTP id u13-20020a170902e5cd00b001929140ee76mr86976458plf.37.1673680290585;
-        Fri, 13 Jan 2023 23:11:30 -0800 (PST)
+        bh=Zg2WmO9wf8RImBuJiJx191XjcOzWFAmiLeDlAR4VkfU=;
+        b=YVHlU4M2/c/XPB68yNz/HXGvCUX9y0t3HqaOZf22HPAE95hIBp5QLSK0wf1qNQo57g
+         +/0pnLAzSXvYmWc/5sjaQEMJy1UBJAXpkWDVzaK7XDRMug14SEHxxmsBGFOODasI7gWE
+         Aouk3RXxJQbxqMjMTtVWGG9T0Axq3GNRhz8qDCDlVx94i/KxHCzyXt7RXH7xUdizxe4a
+         d15N048KR8O1ZEftUyRy7gYinYdu/x8B1E+xSj9ltgUD90wp9WzM6b5rjDxoeFYM1/QY
+         /52GovlGRDVeavFzWdHeqpIvEpzmHVf8xDs5T/oIzg8UmkHOLxd/CWppJvLAqmSDIJF7
+         bmug==
+X-Gm-Message-State: AFqh2krUAtneaPb3WyUpbzCew5IWr/bOxiEKHUrslQkClbSjaMxMzDSO
+        miKDKRjvaq8053taqWwhtmeI
+X-Google-Smtp-Source: AMrXdXu2EJNJuu1cUHWCPG+IKKHRvZ+JDIgSwxXpk6XJ02epnw30+ybEWzgcMfsFoW0ZKqJ4ESHzAQ==
+X-Received: by 2002:a17:902:e5c5:b0:189:c57c:9a19 with SMTP id u5-20020a170902e5c500b00189c57c9a19mr112067881plf.58.1673680348900;
+        Fri, 13 Jan 2023 23:12:28 -0800 (PST)
 Received: from thinkpad ([220.158.159.156])
-        by smtp.gmail.com with ESMTPSA id n6-20020a170903110600b00192d9258532sm15316913plh.150.2023.01.13.23.11.25
+        by smtp.gmail.com with ESMTPSA id b14-20020a1709027e0e00b00193132018ecsm14896832plm.170.2023.01.13.23.12.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Jan 2023 23:11:29 -0800 (PST)
-Date:   Sat, 14 Jan 2023 12:41:24 +0530
+        Fri, 13 Jan 2023 23:12:27 -0800 (PST)
+Date:   Sat, 14 Jan 2023 12:42:22 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     martin.petersen@oracle.com, jejb@linux.ibm.com,
-        andersson@kernel.org, quic_cang@quicinc.com,
-        quic_asutoshd@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-scsi@vger.kernel.org, dmitry.baryshkov@linaro.org,
-        ahalaney@redhat.com, abel.vesa@linaro.org, alim.akhtar@samsung.com,
-        avri.altman@wdc.com, bvanassche@acm.org
-Subject: Re: [PATCH v5 00/23] ufs: qcom: Add HS-G4 support
-Message-ID: <20230114071124.GA6992@thinkpad>
-References: <20221222141001.54849-1-manivannan.sadhasivam@linaro.org>
- <Y8BNQZ/CFljuxsSL@matsya>
+To:     Borislav Petkov <bp@alien8.de>
+Cc:     andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, tony.luck@intel.com,
+        quic_saipraka@quicinc.com, konrad.dybcio@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        james.morse@arm.com, mchehab@kernel.org, rric@kernel.org,
+        linux-edac@vger.kernel.org, quic_ppareek@quicinc.com,
+        luca.weiss@fairphone.com, ahalaney@redhat.com, steev@kali.org
+Subject: Re: [PATCH v5 00/17] Qcom: LLCC/EDAC: Fix base address used for LLCC
+ banks
+Message-ID: <20230114071222.GB6992@thinkpad>
+References: <20221228084028.46528-1-manivannan.sadhasivam@linaro.org>
+ <Y6wcFjqpBUoxAkdk@zn.tnic>
+ <20221228164711.GB256211@thinkpad>
+ <Y6yDI43UZYfGDuOm@zn.tnic>
+ <20230102173045.GB16638@thinkpad>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <Y8BNQZ/CFljuxsSL@matsya>
+In-Reply-To: <20230102173045.GB16638@thinkpad>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -79,38 +83,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 12, 2023 at 11:41:13PM +0530, Vinod Koul wrote:
-> On 22-12-22, 19:39, Manivannan Sadhasivam wrote:
-> > Hello,
+On Mon, Jan 02, 2023 at 11:00:45PM +0530, Manivannan Sadhasivam wrote:
+> On Wed, Dec 28, 2022 at 06:55:47PM +0100, Borislav Petkov wrote:
+> > On Wed, Dec 28, 2022 at 10:17:11PM +0530, Manivannan Sadhasivam wrote:
+> > > Well, some maintainers prefer to pick the independent patches through their
+> > > tree. That's why I moved those patches to the start of the series.
 > > 
-> > This series adds HS-G4 support to the Qcom UFS driver and PHY driver.
-> > The newer Qcom platforms support configuring the UFS controller and PHY
-> > in dual gears (i.e., controller/PHY can be configured to run in two gear
-> > speeds). This is accomplished by adding two different PHY init sequences
-> > to the PHY driver and the UFS driver requesting the one that's required
-> > based on the platform configuration.
+> > Once some maintainers experience a crazy dependency hell between trees,
+> > they would find routing it all through a single tree a lot easier the
+> > next time.
 > > 
-> > Initially the ufs-qcom driver will use the default gear G2 for enumerating
-> > the UFS device. Afer enumeration, the max gear supported by both the
-> > controller and device would be found out and that will be used thereafter.
-> > But for using the max gear after enumeration, the ufs-qcom driver requires
-> > the UFS device to be reinitialized. For this purpose, a separate quirk has
-> > been introduced in the UFS core along with a callback and those will be used
-> > by the ufs-qcom driver.
+> > > If you are fine with all patches going through qcom tree, I do not
+> > > have any issue :)
+> > 
+> > I'm reviewing.
+> > 
 > 
-> The series lgtm. This fails for me to apply though due to other patches
-> I have picked up.
-> 
-> Can you please rebase the phy patches and send those 
+> Ok! I'll wait for your reviews on the rest of the EDAC patches before doing the
+> respin.
 > 
 
-Done!
+Ping!
 
 Thanks,
 Mani
 
+> Thanks,
+> Mani
+> 
+> > -- 
+> > Regards/Gruss,
+> >     Boris.
+> > 
+> > https://people.kernel.org/tglx/notes-about-netiquette
+> 
 > -- 
-> ~Vinod
+> மணிவண்ணன் சதாசிவம்
 
 -- 
 மணிவண்ணன் சதாசிவம்
