@@ -2,75 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B66E966A743
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Jan 2023 00:56:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3BF9766A75E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Jan 2023 01:09:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231143AbjAMX4k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Jan 2023 18:56:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48064 "EHLO
+        id S229482AbjANAJP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Jan 2023 19:09:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230312AbjAMX4h (ORCPT
+        with ESMTP id S230019AbjANAJN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Jan 2023 18:56:37 -0500
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C000A2DE7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 15:56:36 -0800 (PST)
-Received: by mail-pg1-x52f.google.com with SMTP id r18so15995446pgr.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 15:56:36 -0800 (PST)
+        Fri, 13 Jan 2023 19:09:13 -0500
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E26D48CD38
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 16:09:12 -0800 (PST)
+Received: by mail-pl1-x62a.google.com with SMTP id jl4so24996560plb.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Jan 2023 16:09:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HBRAbkUwcVHYnpIoYhFS8Gcgp00+RQqgzwfjMcTRfn8=;
-        b=CBsLcSyAmbSqlhmELttzLHiRFV0Pbee815YWapJN6gF0sd2nxMN5ceXTUwfPWY1vb6
-         tQQUO8D+NzkbrARK/MSF+73CIpPAtT7QqL2Di6XBOZcjUCUevQh67WapL9qMwFjKqkIJ
-         ZHcoRYRPJ2BuMgAhKxtLI4kUOmqUNo1orQW1k=
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=iCt1TVcQGT69o0NxFcLxxxAse3ihgOBwig0LVJHKNSQ=;
+        b=PbPnpcZ8eF/CwYhed0OtyJu8Vmo2IAckT9ykkO30Wp2z+MDwWjyn/lhG4KDd0f171G
+         qP5MTty7fpLNF1p7JwY3jjwkYxy9Bikgc7JsJBqj4XvvfhK+f1Y0DBZgOddOIO/4xHNf
+         wo+du5YEL8RN8nKdgGHhfMUzV749F4sCl1kh8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HBRAbkUwcVHYnpIoYhFS8Gcgp00+RQqgzwfjMcTRfn8=;
-        b=XFx+wjuEqm93Vslg1XT8mN/v20dKgTOT59N8hziv8hI5KRfAVgOmsFXqvD8/OdsJpz
-         QZDfnM9bv+ftfmG+PvozLXd+e7E2rocpEIa3yqzxa05eflZDg4OqAWYNJS2u0PgjcM37
-         ypcwT/wj06c3OLN/6K5IzlS369C7Ru6pRtDFcCVb4XSUn9uOJ1YVekGzF/MJXxMhGz+C
-         rBJv18VJUICqx/vkDDXG5dxo7lOqBQMMA4ui622ql5bj7vlUtVyPDT4eCzGn2LbZ1npn
-         ArVO+IFaGn5hiQumLeAKATZ/81sAQMWWs0ziE+CSDRHim1JaXRERN/FFiX2nLrdsRgY4
-         L/Yg==
-X-Gm-Message-State: AFqh2koODIWw1sC3dSkj7nCK2Xc18aY8u65Tb7vr0hPtwRQqLgUWqlFy
-        ngEaQVf61wUuBtwXGb3saPv3/w==
-X-Google-Smtp-Source: AMrXdXuomsdDatJcgff6JJQdXFgh43w+wzL4U0XQAyLogqR8FHf1P6mgKPSLl8kF4/dLARQ97ol6+w==
-X-Received: by 2002:a62:1693:0:b0:583:9b05:d1f0 with SMTP id 141-20020a621693000000b005839b05d1f0mr25361391pfw.33.1673654196266;
-        Fri, 13 Jan 2023 15:56:36 -0800 (PST)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:9d:2:b4ad:3c49:1195:a01e])
-        by smtp.gmail.com with ESMTPSA id f10-20020aa79d8a000000b005823b7da05asm10002737pfq.122.2023.01.13.15.56.34
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iCt1TVcQGT69o0NxFcLxxxAse3ihgOBwig0LVJHKNSQ=;
+        b=47dhe2ycm8CndxQ/p5pY+z+MiQKLptibTqMki6hJbStczw5sejhxMc4Th7FZcfa1E3
+         LREH2a+fW+ZK/xIMzDxuBvkPc+2DBN+o040ouNOzSSNgblQZhFJh/XOvaG7tVm4z32/v
+         0o85SDGbFuMnW+3XnktATmPhFx8g87M9xLLUAIi8CVS+o8G6I5AgX02IKqrpIty6gR3H
+         iXNqTEtXpDw/JME/ydrY6hfhf92DvkX3wBxhS9/9HGv6c4Xe1bHaWuQiYR/c7qHU2CvL
+         8v4ndjEpROXge+ZYj8Irh3DFN1jU4/J7rxru27ITasOgvsDIc9K7GqiQBNfrWMpoHmC+
+         66bg==
+X-Gm-Message-State: AFqh2kpEE7lnEuQXWg9b1TXPaldDiyX+BYSuhbBOXSDnJSYEZ6SOCctR
+        3W0Va+inkoO0Nz0husYc118D5A==
+X-Google-Smtp-Source: AMrXdXvx17AIp+ECFymjutA1xBaxl0yWe14V9QyFLYnxxmH8Bd1cQLvxABFqH5ZfQYMYlm2zXzKovg==
+X-Received: by 2002:a17:902:8d81:b0:194:4339:f12e with SMTP id v1-20020a1709028d8100b001944339f12emr13815441plo.1.1673654952381;
+        Fri, 13 Jan 2023 16:09:12 -0800 (PST)
+Received: from smtp.gmail.com ([2620:15c:11a:201:4652:3752:b9b7:29f9])
+        by smtp.gmail.com with ESMTPSA id n15-20020a170902d2cf00b0018963b8e131sm14637072plc.290.2023.01.13.16.09.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Jan 2023 15:56:35 -0800 (PST)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     dri-devel@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Daniel Vetter <daniel@ffwll.ch>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Dave Stevenson <dave.stevenson@raspberrypi.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Sean Paul <sean@poorly.run>, Jonas Karlman <jonas@kwiboo.se>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        David Airlie <airlied@gmail.com>,
-        linux-arm-msm@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        ye xingchen <ye.xingchen@zte.com.cn>
-Subject: [RFT PATCH 2/2] drm/msm/dsi: Stop unconditionally powering up DSI hosts at modeset
-Date:   Fri, 13 Jan 2023 15:56:04 -0800
-Message-Id: <20230113155547.RFT.2.I4cfeab9d0e07e98ead23dd0736ab4461e6c69002@changeid>
+        Fri, 13 Jan 2023 16:09:11 -0800 (PST)
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>
+Cc:     linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH] phy: qcom-qmp: Introduce Kconfig symbols for discrete drivers
+Date:   Fri, 13 Jan 2023 16:09:10 -0800
+Message-Id: <20230114000910.1256462-1-swboyd@chromium.org>
 X-Mailer: git-send-email 2.39.0.314.g84b9a713c41-goog
-In-Reply-To: <20230113155547.RFT.1.I723a3761d57ea60c5dd754c144aed6c3b2ea6f5a@changeid>
-References: <20230113155547.RFT.1.I723a3761d57ea60c5dd754c144aed6c3b2ea6f5a@changeid>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
@@ -82,162 +68,114 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In commit 7d8e9a90509f ("drm/msm/dsi: move DSI host powerup to modeset
-time"), we moved powering up DSI hosts to modeset time. This wasn't
-because it was an elegant design, but there were no better options.
+Introduce a config option for each QMP PHY driver now that the QMP PHY
+mega-driver has been split up into different modules. This allows kernel
+configurators to limit the binary size of the kernel by only compiling
+in the QMP PHY driver that they need, or to split the module up into one
+per PHY driver instead of one module for all the QMP PHY drivers.
 
-That commit actually ended up breaking ps8640, and thus was born
-commit ec7981e6c614 ("drm/msm/dsi: don't powerup at modeset time for
-parade-ps8640") as a temporary hack to un-break ps8640 by moving it to
-the old way of doing things. It turns out that ps8640 _really_ doesn't
-like its pre_enable() function to be called after
-dsi_mgr_bridge_power_on(). Specifically (from experimentation, not
-because I have any inside knowledge), it looks like the assertion of
-"RST#" in the ps8640 runtime resume handler seems like it's not
-allowed to happen after dsi_mgr_bridge_power_on()
+Leave the old config QCOM_QMP in place and make it into a menuconfig so
+that 'make olddefconfig' continues to work. Furthermore, set the default
+of the new Kconfig symbols to be QCOM_QMP so that the transition is
+smooth.
 
-Recently, Dave Stevenson's series landed allowing bridges some control
-over pre_enable ordering. The meaty commit for our purposes is commit
-4fb912e5e190 ("drm/bridge: Introduce pre_enable_prev_first to alter
-bridge init order"). As documented by that series, if a bridge doesn't
-set "pre_enable_prev_first" then we should use the old ordering.
-
-Now that we have the commit ("drm/bridge: tc358762: Set
-pre_enable_prev_first") we can go back to the old ordering, which also
-allows us to remove the ps8640 special case.
-
-One last note is that even without reverting commit 7d8e9a90509f
-("drm/msm/dsi: move DSI host powerup to modeset time"), if you _just_
-revert the ps8640 special case and try it out then it doesn't seem to
-fail anymore. I spent time bisecting / debugging this and it turns out
-to be mostly luck, so we still want this patch to make sure it's
-solid. Specifically the reason it sorta works these days is because
-we implemented wait_hpd_asserted() in ps8640 now, plus the magic of
-"pm_runtime" autosuspend. The fact that we have wait_hpd_asserted()
-implemented means that we actually power the bridge chip up just a wee
-bit earlier and then the bridge happens to stay on because of
-autosuspend and thus ends up powered before dsi_mgr_bridge_power_on().
-
-Cc: Dave Stevenson <dave.stevenson@raspberrypi.com>
 Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
+ drivers/phy/qualcomm/Kconfig  | 50 ++++++++++++++++++++++++++++++++---
+ drivers/phy/qualcomm/Makefile | 12 ++++-----
+ 2 files changed, 52 insertions(+), 10 deletions(-)
 
- drivers/gpu/drm/msm/dsi/dsi_manager.c | 68 +++++----------------------
- 1 file changed, 11 insertions(+), 57 deletions(-)
+diff --git a/drivers/phy/qualcomm/Kconfig b/drivers/phy/qualcomm/Kconfig
+index 5c98850f5a36..1d3a8062e651 100644
+--- a/drivers/phy/qualcomm/Kconfig
++++ b/drivers/phy/qualcomm/Kconfig
+@@ -50,13 +50,55 @@ config PHY_QCOM_PCIE2
+ 	  Enable this to support the Qualcomm PCIe PHY, used with the Synopsys
+ 	  based PCIe controller.
+ 
+-config PHY_QCOM_QMP
+-	tristate "Qualcomm QMP PHY Driver"
++menuconfig PHY_QCOM_QMP
++	tristate "Qualcomm QMP PHY Drivers"
+ 	depends on OF && COMMON_CLK && (ARCH_QCOM || COMPILE_TEST)
++
++if PHY_QCOM_QMP
++
++config PHY_QCOM_QMP_COMBO
++	tristate "Qualcomm QMP Combo PHY Driver"
++	default PHY_QCOM_QMP
++	select GENERIC_PHY
++	help
++	  Enable this to support the QMP Combo PHY transceiver that is used
++	  with USB3 and DisplayPort controllers on Qualcomm chips.
++
++config PHY_QCOM_QMP_PCIE
++	tristate "Qualcomm QMP PCIe PHY Driver"
++	depends on PCI || COMPILE_TEST
++	select GENERIC_PHY
++	default PHY_QCOM_QMP
++	help
++	  Enable this to support the QMP PCIe PHY transceiver that is used
++	  with PCIe controllers on Qualcomm chips.
++
++config PHY_QCOM_QMP_PCIE_8996
++	tristate "Qualcomm QMP PCIe 8996 PHY Driver"
++	depends on PCI || COMPILE_TEST
+ 	select GENERIC_PHY
++	default PHY_QCOM_QMP
+ 	help
+-	  Enable this to support the QMP PHY transceiver that is used
+-	  with controllers such as PCIe, UFS, and USB on Qualcomm chips.
++	  Enable this to support the QMP PCIe PHY transceiver that is used
++	  with PCIe controllers on Qualcomm msm8996 chips.
++
++config PHY_QCOM_QMP_UFS
++	tristate "Qualcomm QMP UFS PHY Driver"
++	select GENERIC_PHY
++	default PHY_QCOM_QMP
++	help
++	  Enable this to support the QMP UFS PHY transceiver that is used
++	  with UFS controllers on Qualcomm chips.
++
++config PHY_QCOM_QMP_USB
++	tristate "Qualcomm QMP USB PHY Driver"
++	select GENERIC_PHY
++	default PHY_QCOM_QMP
++	help
++	  Enable this to support the QMP USB PHY transceiver that is used
++	  with USB3 controllers on Qualcomm chips.
++
++endif # PHY_QCOM_QMP
+ 
+ config PHY_QCOM_QUSB2
+ 	tristate "Qualcomm QUSB2 PHY Driver"
+diff --git a/drivers/phy/qualcomm/Makefile b/drivers/phy/qualcomm/Makefile
+index 65f6c30a3e93..79dd4e507961 100644
+--- a/drivers/phy/qualcomm/Makefile
++++ b/drivers/phy/qualcomm/Makefile
+@@ -5,12 +5,12 @@ obj-$(CONFIG_PHY_QCOM_EDP)		+= phy-qcom-edp.o
+ obj-$(CONFIG_PHY_QCOM_IPQ4019_USB)	+= phy-qcom-ipq4019-usb.o
+ obj-$(CONFIG_PHY_QCOM_IPQ806X_SATA)	+= phy-qcom-ipq806x-sata.o
+ obj-$(CONFIG_PHY_QCOM_PCIE2)		+= phy-qcom-pcie2.o
+-obj-$(CONFIG_PHY_QCOM_QMP)		+= \
+-	phy-qcom-qmp-combo.o \
+-	phy-qcom-qmp-pcie.o \
+-	phy-qcom-qmp-pcie-msm8996.o \
+-	phy-qcom-qmp-ufs.o \
+-	phy-qcom-qmp-usb.o
++
++obj-$(CONFIG_PHY_QCOM_QMP_COMBO)	+= phy-qcom-qmp-combo.o
++obj-$(CONFIG_PHY_QCOM_QMP_PCIE)		+= phy-qcom-qmp-pcie.o
++obj-$(CONFIG_PHY_QCOM_QMP_PCIE_8996)	+= phy-qcom-qmp-pcie-msm8996.o
++obj-$(CONFIG_PHY_QCOM_QMP_UFS)		+= phy-qcom-qmp-ufs.o
++obj-$(CONFIG_PHY_QCOM_QMP_USB)		+= phy-qcom-qmp-usb.o
+ 
+ obj-$(CONFIG_PHY_QCOM_QUSB2)		+= phy-qcom-qusb2.o
+ obj-$(CONFIG_PHY_QCOM_USB_HS) 		+= phy-qcom-usb-hs.o
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-index 3a1417397283..5e6b8d423b96 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-@@ -34,32 +34,6 @@ static struct msm_dsi_manager msm_dsim_glb;
- #define IS_SYNC_NEEDED()	(msm_dsim_glb.is_sync_needed)
- #define IS_MASTER_DSI_LINK(id)	(msm_dsim_glb.master_dsi_link_id == id)
- 
--#ifdef CONFIG_OF
--static bool dsi_mgr_power_on_early(struct drm_bridge *bridge)
--{
--	struct drm_bridge *next_bridge = drm_bridge_get_next_bridge(bridge);
--
--	/*
--	 * If the next bridge in the chain is the Parade ps8640 bridge chip
--	 * then don't power on early since it seems to violate the expectations
--	 * of the firmware that the bridge chip is running.
--	 *
--	 * NOTE: this is expected to be a temporary special case. It's expected
--	 * that we'll eventually have a framework that allows the next level
--	 * bridge to indicate whether it needs us to power on before it or
--	 * after it. When that framework is in place then we'll use it and
--	 * remove this special case.
--	 */
--	return !(next_bridge && next_bridge->of_node &&
--		 of_device_is_compatible(next_bridge->of_node, "parade,ps8640"));
--}
--#else
--static inline bool dsi_mgr_power_on_early(struct drm_bridge *bridge)
--{
--	return true;
--}
--#endif
--
- static inline struct msm_dsi *dsi_mgr_get_dsi(int id)
- {
- 	return msm_dsim_glb.dsi[id];
-@@ -254,7 +228,7 @@ static void msm_dsi_manager_set_split_display(u8 id)
- 	}
- }
- 
--static void dsi_mgr_bridge_power_on(struct drm_bridge *bridge)
-+static void dsi_mgr_bridge_pre_enable(struct drm_bridge *bridge)
- {
- 	int id = dsi_mgr_bridge_get_id(bridge);
- 	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
-@@ -300,36 +274,10 @@ static void dsi_mgr_bridge_power_on(struct drm_bridge *bridge)
- 	if (is_bonded_dsi && msm_dsi1)
- 		msm_dsi_host_enable_irq(msm_dsi1->host);
- 
--	return;
--
--host1_on_fail:
--	msm_dsi_host_power_off(host);
--host_on_fail:
--	dsi_mgr_phy_disable(id);
--phy_en_fail:
--	return;
--}
--
--static void dsi_mgr_bridge_pre_enable(struct drm_bridge *bridge)
--{
--	int id = dsi_mgr_bridge_get_id(bridge);
--	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
--	struct msm_dsi *msm_dsi1 = dsi_mgr_get_dsi(DSI_1);
--	struct mipi_dsi_host *host = msm_dsi->host;
--	bool is_bonded_dsi = IS_BONDED_DSI();
--	int ret;
--
--	DBG("id=%d", id);
--	if (!msm_dsi_device_connected(msm_dsi))
--		return;
--
- 	/* Do nothing with the host if it is slave-DSI in case of bonded DSI */
- 	if (is_bonded_dsi && !IS_MASTER_DSI_LINK(id))
- 		return;
- 
--	if (!dsi_mgr_power_on_early(bridge))
--		dsi_mgr_bridge_power_on(bridge);
--
- 	ret = msm_dsi_host_enable(host);
- 	if (ret) {
- 		pr_err("%s: enable host %d failed, %d\n", __func__, id, ret);
-@@ -349,7 +297,16 @@ static void dsi_mgr_bridge_pre_enable(struct drm_bridge *bridge)
- host1_en_fail:
- 	msm_dsi_host_disable(host);
- host_en_fail:
--
-+	msm_dsi_host_disable_irq(host);
-+	if (is_bonded_dsi && msm_dsi1) {
-+		msm_dsi_host_disable_irq(msm_dsi1->host);
-+		msm_dsi_host_power_off(msm_dsi1->host);
-+	}
-+host1_on_fail:
-+	msm_dsi_host_power_off(host);
-+host_on_fail:
-+	dsi_mgr_phy_disable(id);
-+phy_en_fail:
- 	return;
- }
- 
-@@ -438,9 +395,6 @@ static void dsi_mgr_bridge_mode_set(struct drm_bridge *bridge,
- 	msm_dsi_host_set_display_mode(host, adjusted_mode);
- 	if (is_bonded_dsi && other_dsi)
- 		msm_dsi_host_set_display_mode(other_dsi->host, adjusted_mode);
--
--	if (dsi_mgr_power_on_early(bridge))
--		dsi_mgr_bridge_power_on(bridge);
- }
- 
- static enum drm_mode_status dsi_mgr_bridge_mode_valid(struct drm_bridge *bridge,
+base-commit: 30a0b95b1335e12efef89dd78518ed3e4a71a763
 -- 
-2.39.0.314.g84b9a713c41-goog
+https://chromeos.dev
 
