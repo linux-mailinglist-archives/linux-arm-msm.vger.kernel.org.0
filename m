@@ -2,95 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 044CE66B18D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Jan 2023 15:35:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A64B566B1E1
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Jan 2023 16:11:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231253AbjAOOfb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 15 Jan 2023 09:35:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40344 "EHLO
+        id S231226AbjAOPLt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 15 Jan 2023 10:11:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231225AbjAOOf3 (ORCPT
+        with ESMTP id S231136AbjAOPLr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 15 Jan 2023 09:35:29 -0500
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9344D113EB
-        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Jan 2023 06:35:27 -0800 (PST)
-Received: by mail-ej1-x630.google.com with SMTP id vm8so62577012ejc.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Jan 2023 06:35:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=DMuIH5LG2Ixkb3oKpryjATK2iwStMCn/u2ZA+n6gcS8=;
-        b=BgwVzXD0n3KGXA0DkPiJuIUd0XhBqL41XcLGLS3BXVxEzzD3IHDUDARxXhrNM34vHx
-         OCOk66fh1zUpjlKFSkcvWrUFtpR6uU701TB9mf4MVsp6EwgLWZ5OyQag9yr+lHGaujn1
-         aJLSWXFBN7WuDwuNTXvYU1QWRSLrhJrAf3m2ISFcF7knkLlXR5AdvHi+W5ZesxD9MzMj
-         CnqVMWLz2lqWPSIFkxoN/JddaCnACYIwgozkw+HFeraVRQqTZ+deoG+8/SX8wJB7jQBL
-         aqqOJ8c8yDSoSncz4+38X3E5biDJSlEwjnqjMrY6Z3uah0AtwvOIbh7Q0eG7lGqFuvga
-         yXhg==
+        Sun, 15 Jan 2023 10:11:47 -0500
+Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1161ECDFB;
+        Sun, 15 Jan 2023 07:11:46 -0800 (PST)
+Received: by mail-ot1-f45.google.com with SMTP id v15-20020a9d69cf000000b006709b5a534aso14870384oto.11;
+        Sun, 15 Jan 2023 07:11:46 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DMuIH5LG2Ixkb3oKpryjATK2iwStMCn/u2ZA+n6gcS8=;
-        b=uEtr0kD5MkId3jiTSZKd40QpOFZnZxnKpuwdjQJ+ZwXx1VJNUK4Op+JkQ9+RG9iOu0
-         GgH6n+WnmM4ZB74lE9Z7gQSInpWqIMG06Vpt5DBbpl63KHLQf8O+DNaJu7Jj2OIN+oQk
-         PuUCIg39j1U5YJ7vXZ0m1Ym4WdJ9mzo/FPLp1udeKcCO/2v7kUddqbCFFPTGqbJ/MzLh
-         NVmwX751BJGY60cbkKTYZNhtThPfP9z6qlAsvw3ygbWMBX1jxZVJOONW/qtm8wZTTF3T
-         rDJ+i9L4ykELJhsXe+11JU+9gYEqAiLbvq7Bj/ia3Ly76dkXNppmuP8SN7pmMT8X5nhC
-         5KzA==
-X-Gm-Message-State: AFqh2kqW0A1yyPeOkXmzmX25psQ7cZg5OxX/Q1laf8yB7kS5XJG0INu9
-        MGM15WEchuu9GWVxBTqNtWqqkQ==
-X-Google-Smtp-Source: AMrXdXsKlT6DeiXdPYqVuF4feQTf1Ore6dkf4nNfirTPjsdE3vBPGR0y270Pizq9p+u5Bh0ry55icw==
-X-Received: by 2002:a17:907:2c61:b0:86e:fccc:bc19 with SMTP id ib1-20020a1709072c6100b0086efcccbc19mr3609305ejc.43.1673793326201;
-        Sun, 15 Jan 2023 06:35:26 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id wl21-20020a170907311500b0084d37cc06fesm9623940ejb.94.2023.01.15.06.35.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 15 Jan 2023 06:35:25 -0800 (PST)
-Message-ID: <063c5516-417d-7c21-b58f-a6552779a621@linaro.org>
-Date:   Sun, 15 Jan 2023 15:35:23 +0100
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=1SvPkdrRqclnIiQLKFR8JacZ9XIaTQnycEJaLqb6Sc4=;
+        b=qnuHVtPiwMQQiC8xy38c1DnYwaOeAewRelfYXiiwBHePwg25+ubx7xHAmwn2K1wQpW
+         I/x69nnRycUif3oEtuje59YCbjXArQWnK6Cdk3VGwKxTbila+BiVpmZN1HF5BpStjBki
+         wtrl0S+ckROQ58OlCaLlBjtck/BIUM7y+Qs2CbncGQymrjlgMy04eQvAo12JVLNTVKu/
+         T9SjRe65Pa0qM7FiCYcDpA4nF3J9bsxIlOWBG0+ofDAqMrxnEgSJMwD5KF7CGNmD+NIX
+         2t5AxzjmmBoo2l9F1BttLf3OsjwJgLohM9TFyXzKh5Oxb8wBQw813e6LPF82PXavrun2
+         8CPA==
+X-Gm-Message-State: AFqh2kpkiPSsfTSbHBnD3tE16/p3ac+jWWN6p5ltaULQ1Ap5Vfuu+T82
+        3yYdFxPrQcwB2VFhqiwl1Q==
+X-Google-Smtp-Source: AMrXdXsh6dWqsMlGqRqeH89BB+VTpx1Pk6bCOFikeZ/Yr6Ctmk10iCTGB8c1G6BR+K7Vku/zamfzHQ==
+X-Received: by 2002:a9d:6353:0:b0:684:eca3:fa4a with SMTP id y19-20020a9d6353000000b00684eca3fa4amr774789otk.31.1673795505175;
+        Sun, 15 Jan 2023 07:11:45 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id bm10-20020a056830374a00b0066e868dbc2esm13603695otb.46.2023.01.15.07.11.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 15 Jan 2023 07:11:44 -0800 (PST)
+Received: (nullmailer pid 2300324 invoked by uid 1000);
+        Sun, 15 Jan 2023 15:11:43 -0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH] dt-bindings: clock: qcom,a53pll: drop operating-points-v2
-Content-Language: en-US
-To:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+From:   Rob Herring <robh@kernel.org>
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230113145859.82868-1-krzysztof.kozlowski@linaro.org>
- <e73ad320fafa1365e3506bbd4cc77d8d.sboyd@kernel.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <e73ad320fafa1365e3506bbd4cc77d8d.sboyd@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        quic_pkondeti@quicinc.com, Rob Herring <robh+dt@kernel.org>,
+        linux-kernel@vger.kernel.org, quic_ppratap@quicinc.com,
+        quic_wcheng@quicinc.com, quic_jackp@quicinc.com,
+        quic_harshq@quicinc.com, Philipp Zabel <p.zabel@pengutronix.de>,
+        Felipe Balbi <balbi@kernel.org>, devicetree@vger.kernel.org,
+        Andy Gross <agross@kernel.org>
+In-Reply-To: <20230115114146.12628-2-quic_kriskura@quicinc.com>
+References: <20230115114146.12628-1-quic_kriskura@quicinc.com>
+ <20230115114146.12628-2-quic_kriskura@quicinc.com>
+Message-Id: <167379535756.2296593.3352224696296396152.robh@kernel.org>
+Subject: Re: [RFC v4 1/5] dt-bindings: usb: Add bindings to support multiport
+ properties
+Date:   Sun, 15 Jan 2023 09:11:43 -0600
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/01/2023 21:28, Stephen Boyd wrote:
-> Quoting Krzysztof Kozlowski (2023-01-13 06:58:59)
->> The CPU PLL clock node does not use OPP tables (neither driver).
+
+On Sun, 15 Jan 2023 17:11:42 +0530, Krishna Kurapati wrote:
+> Add bindings to indicate properties required to support multiport
+> on Snps Dwc3 controller.
 > 
-> What device is qcom_a53pll_get_freq_tbl() operating on?
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> ---
+>  .../devicetree/bindings/usb/snps,dwc3.yaml    | 53 ++++++++++++++++---
+>  1 file changed, 47 insertions(+), 6 deletions(-)
+> 
 
-On its own, internal table. While of course driver could be converted to
-operating-points-v2, no one did it within last 5 years, so why it should
-happen now?
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-Best regards,
-Krzysztof
+yamllint warnings/errors:
+./Documentation/devicetree/bindings/usb/snps,dwc3.yaml:90:5: [warning] wrong indentation: expected 6 but found 4 (indentation)
+
+dtschema/dtc warnings/errors:
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230115114146.12628-2-quic_kriskura@quicinc.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
 
