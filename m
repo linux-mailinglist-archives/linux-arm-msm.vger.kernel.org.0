@@ -2,73 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EBD2066AF43
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Jan 2023 05:11:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 86D3166AF47
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Jan 2023 05:12:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229758AbjAOELU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 14 Jan 2023 23:11:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38328 "EHLO
+        id S230467AbjAOEMs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 14 Jan 2023 23:12:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229900AbjAOELQ (ORCPT
+        with ESMTP id S230441AbjAOEMq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 14 Jan 2023 23:11:16 -0500
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6412D44BF
-        for <linux-arm-msm@vger.kernel.org>; Sat, 14 Jan 2023 20:11:15 -0800 (PST)
-Received: by mail-pl1-x62f.google.com with SMTP id jn22so27168582plb.13
-        for <linux-arm-msm@vger.kernel.org>; Sat, 14 Jan 2023 20:11:15 -0800 (PST)
+        Sat, 14 Jan 2023 23:12:46 -0500
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F34C44C14
+        for <linux-arm-msm@vger.kernel.org>; Sat, 14 Jan 2023 20:12:45 -0800 (PST)
+Received: by mail-pf1-x42a.google.com with SMTP id y5so18788899pfe.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 14 Jan 2023 20:12:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=TUsBOWy5UhAp6xbtUsJklT0rm4uS/PjlVjvwS2k1vhM=;
-        b=Dzk0wkd85xOIYqkdj9F5B3jGt7WyjeYBbeLNDtQxVMited8KnFCsWXXuWfpLk+to4w
-         d9OvAObapEUD/jCOC55y56boBHkRR8diez+KxCk5zjS/cGyEX2/LT/auz5Xy7PAyUUcL
-         x2TxCsUPTKsv/6Ce/tuxIAb/zYFOjab99D5Cb+/F29xlWYcSTc1Dh1o32TVVYw+AWa2e
-         jN1FK1spq5/fnt7IgjkHKaTg+bvBnSP43Dx3kx63HadrBMegyYtTrq/qd/MPqtQbBaDk
-         iUiG7ewyAP2xZrrlDCTbU7LOzS7Bx7PyOx7W+JUDuEAjE3WC9SlUZO2j45IRMav4MBWQ
-         hmaA==
+        bh=HbOf8QOA+SQUVuPMrmy7ht0oGGMULpTbRXbzXkjFY3A=;
+        b=hjm9nN1bYtTMlwFOMG3d/0+hrsk/uXSUsl+L6pAydr0htkM4+OO62Iuwkqqs0F29+6
+         c0Inh+d64SeNTprg+UR0YTa++EI8ir5du58JpUmpg/YPn/1Z4mFw6QHRIWm0DkokKYJY
+         IGCYf4oFqvDwKhQT6Yb/1DvrPwzbCwYuJbcdHhFDNUELUme+hQYEz9WWUBxVoIDLHOoB
+         JR4i3Re1Lcl1LNWxpLZ02HzAQRqCPSwY48jzSQ/Iw0lgMscSDyz/AhlTlHyMVNru71CS
+         uwtPFYplAhOE0WPpf3UTWiRnmjGxwx+ZNafGG0o6W2yDhudUrGuliTVHBAfKHFbOUdcT
+         BD/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TUsBOWy5UhAp6xbtUsJklT0rm4uS/PjlVjvwS2k1vhM=;
-        b=qbLQvTwWvK9CNdoN39EiARDu9eZQf1FKAuG2vzYh4x+BIYbXHvISIprL1VvuyDpbop
-         Q2WfM2dXCNn4omzeKrcPgRz72qeHu6G0TQtupmehPYGmThFPo1oRj7uauqf/THUSK4jl
-         nTxesHBuYXhAuQNo7wL/lXQQxWQHxYqyrsC9sW0ocwpyY8198a7Wv5v03+Jez4Xxpx3E
-         rwVd3Nmq73f8iDC+7IyPfc6WaikxmzcyUzR82CG0jIrMYKI4/HSZJCngun47BXTdDJ7f
-         IssA3oAym7lYI0BAieqktVFKXVQFYzRec0HVXjqaYYjOAZzumzZcgkSC4NFxarjtTie8
-         TaSg==
-X-Gm-Message-State: AFqh2ko9TXje0c3LK4Mr9LpZyrXD6jVHpXqnlceouSXOwP4jGmkNWT/Q
-        Nu34YykblgIMFT13wzP4IYkx
-X-Google-Smtp-Source: AMrXdXsA3fJe2SPgDEtu9fgDT3kXG4YnvJbnAd/7UZy+gQv4RJpihOeO7IzDYN13SQVotVY5fGaDQA==
-X-Received: by 2002:a17:902:f0d1:b0:192:8c85:54fa with SMTP id v17-20020a170902f0d100b001928c8554famr14363437pla.31.1673755874753;
-        Sat, 14 Jan 2023 20:11:14 -0800 (PST)
+        bh=HbOf8QOA+SQUVuPMrmy7ht0oGGMULpTbRXbzXkjFY3A=;
+        b=GfFjsDH3LSOXkltHqKnSKVc2Wld1g32q7FH84UyOYAH6+BfHonzVCeWsulZrHa8tQS
+         45eCeXUEUc1dyLJWZppKabWwZ+Qc6NFwZWUFGtheEYHWqKkB62Ah1G/AV+Dw5sT068fI
+         uoDHQX5Mco8Z2dxczO4c1VcZ/i82DP5f8c7vOn3OIUN7ZB7jjop7/TAVTJ3vP/IulK/p
+         tj3MzKhpbvnxddPoyXs1QKIkzwJvw/Hn+++MrNYf6+lYU6P+8F26s7RKrDUtWlSuqqt+
+         kJCP1qRHE90pbLh9N8WMcxfHiDgt52ixlznNAsGbAo/LOudJoOUpCy/AgK+0dxiy42qN
+         BSXw==
+X-Gm-Message-State: AFqh2kraEzBt0VhjSVaZBR8z1MPRsUTfRrDYFy3ot3fAv199qjeIi3tn
+        Pgj64BNifU08gmnW2NMLb2uw
+X-Google-Smtp-Source: AMrXdXstU3k+Ez9dUb7CwiCgHzcbkcy6cGiJpvcz1VmULRJ+tjsFA08gfUCtv2uGb2za3n8vLfag/A==
+X-Received: by 2002:a62:2903:0:b0:57f:f2cd:6180 with SMTP id p3-20020a622903000000b0057ff2cd6180mr79015953pfp.0.1673755965296;
+        Sat, 14 Jan 2023 20:12:45 -0800 (PST)
 Received: from thinkpad ([220.158.159.143])
-        by smtp.gmail.com with ESMTPSA id u2-20020a170902714200b00178143a728esm16605379plm.275.2023.01.14.20.11.11
+        by smtp.gmail.com with ESMTPSA id x6-20020a623106000000b0058bb8943c9asm3473463pfx.161.2023.01.14.20.12.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 14 Jan 2023 20:11:13 -0800 (PST)
-Date:   Sun, 15 Jan 2023 09:41:08 +0530
+        Sat, 14 Jan 2023 20:12:43 -0800 (PST)
+Date:   Sun, 15 Jan 2023 09:42:39 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+Cc:     Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Johan Hovold <johan@kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp: Define CMA region for CRD
- and X13s
-Message-ID: <20230115041108.GC6568@thinkpad>
-References: <20230113041025.4188910-1-quic_bjorande@quicinc.com>
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Abel Vesa <abel.vesa@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] clk: qcom: Remove need for clk_ignore_unused on sc8280xp
+Message-ID: <20230115041239.GD6568@thinkpad>
+References: <20230113041038.4188995-1-quic_bjorande@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230113041025.4188910-1-quic_bjorande@quicinc.com>
+In-Reply-To: <20230113041038.4188995-1-quic_bjorande@quicinc.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -79,12 +78,11 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 12, 2023 at 08:10:25PM -0800, Bjorn Andersson wrote:
-> Booting the CRD needs roughly 64MB CMA, rather than relying on people
-> adding boot parameters etc define a region for this, to remove the
-> allocation errors from e.g. NVME.
-> 
-> While fixing the CRD define the same region for the X13s.
+On Thu, Jan 12, 2023 at 08:10:38PM -0800, Bjorn Andersson wrote:
+> With the transition of disabling unused clocks at sync_state, rather
+> than late_initcall() it's now possible to drop clk_ignore_unused and
+> unused clock disabled once client drivers have probed. Do this on
+> SC8280XP.
 > 
 > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 
@@ -94,50 +92,34 @@ Thanks,
 Mani
 
 > ---
->  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts                | 9 +++++++++
->  .../boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts      | 9 +++++++++
->  2 files changed, 18 insertions(+)
+>  drivers/clk/qcom/dispcc-sc8280xp.c | 1 +
+>  drivers/clk/qcom/gcc-sc8280xp.c    | 1 +
+>  2 files changed, 2 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> index b29c02307839..e30a37c73b90 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> @@ -128,6 +128,15 @@ vreg_wwan: regulator-wwan {
->  
->  		regulator-boot-on;
->  	};
-> +
-> +	reserved-memory {
-> +		linux,cma {
-> +			compatible = "shared-dma-pool";
-> +			size = <0x0 0x8000000>;
-> +			reusable;
-> +			linux,cma-default;
-> +		};
-> +	};
+> diff --git a/drivers/clk/qcom/dispcc-sc8280xp.c b/drivers/clk/qcom/dispcc-sc8280xp.c
+> index 167470beb369..c84a6481b879 100644
+> --- a/drivers/clk/qcom/dispcc-sc8280xp.c
+> +++ b/drivers/clk/qcom/dispcc-sc8280xp.c
+> @@ -3199,6 +3199,7 @@ static struct platform_driver disp_cc_sc8280xp_driver = {
+>  	.driver = {
+>  		.name = "disp_cc-sc8280xp",
+>  		.of_match_table = disp_cc_sc8280xp_match_table,
+> +		.sync_state = clk_sync_state_disable_unused,
+>  	},
 >  };
 >  
->  &apps_rsc {
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> index 78e61a8184c5..5bfd1f0b2a24 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> @@ -153,6 +153,15 @@ vreg_wwan: regulator-wwan {
->  		regulator-boot-on;
->  	};
+> diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
+> index b3198784e1c3..f4fdc5b9663c 100644
+> --- a/drivers/clk/qcom/gcc-sc8280xp.c
+> +++ b/drivers/clk/qcom/gcc-sc8280xp.c
+> @@ -7441,6 +7441,7 @@ static struct platform_driver gcc_sc8280xp_driver = {
+>  	.driver = {
+>  		.name = "gcc-sc8280xp",
+>  		.of_match_table = gcc_sc8280xp_match_table,
+> +		.sync_state = clk_sync_state_disable_unused,
+>  	},
+>  };
 >  
-> +	reserved-memory {
-> +		linux,cma {
-> +			compatible = "shared-dma-pool";
-> +			size = <0x0 0x8000000>;
-> +			reusable;
-> +			linux,cma-default;
-> +		};
-> +	};
-> +
->  	thermal-zones {
->  		skin-temp-thermal {
->  			polling-delay-passive = <250>;
 > -- 
 > 2.37.3
 > 
