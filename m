@@ -2,70 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A9D766B275
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Jan 2023 17:11:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 36A1F66B342
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Jan 2023 18:42:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231519AbjAOQLg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 15 Jan 2023 11:11:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40874 "EHLO
+        id S231447AbjAORmK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 15 Jan 2023 12:42:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231446AbjAOQLf (ORCPT
+        with ESMTP id S231512AbjAORl4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 15 Jan 2023 11:11:35 -0500
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB5B4CC14
-        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Jan 2023 08:11:34 -0800 (PST)
-Received: by mail-ej1-x630.google.com with SMTP id u9so62935164ejo.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Jan 2023 08:11:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=DCTiFIBsz+mA+RBLRcWdYu9eMO+UAxD9uKThfcsKYDE=;
-        b=wOtk3RHpHDrvp/2ct7en+pwljKn3TTcFH82jnoLSdNZM3YyjU1N2dRgZwu0CK7doUk
-         OSATfYtZpKvdaiIEJkKSitxg2gVKReYxyHgnAQpq4psLuM5tXqVWwV1Be9PntztXwSi1
-         pHNZt0UXLa7y9tCP+BTUjqJ4Q+BQaUjVnN608IdfC/wgRJDBBISlmEZLv4CF65Z1JDog
-         vIl51CjSKsz4KZCnjc0GeuuW5/9LF4rYu6HFV5ck007JBpyP1qPOgkJaoiCELPSJqG9m
-         N1nTorQ5Gy3Rbky/ct2yRGQDh+YuWMMRyw25Wvl1Qq1BsBg/g7k19g02qp+Rk2JBQGK4
-         +DgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DCTiFIBsz+mA+RBLRcWdYu9eMO+UAxD9uKThfcsKYDE=;
-        b=GWpls+u9pCZCPfth/qturu3BiZQGgPlWsAOQTqgPs/sEUmwNODX8HODCuhPUlffp6A
-         ezyboa/ZghUe0wDSHRbtfIL7TWd2yiLNbBXpleaPilGvPItMs7Ih4TqKrV2PQQuh/CMW
-         ftllM0NnTCzp0fUVokanSMs7nA9Gw5Pb7JlT4wXhxFl8vkvFeBxOyaw++6nyIVDpZiqv
-         yaXKYUgT6Yh8OyxBqVwTFlvEV7QUiBNcIfMjPvvtjG753pY4l3T8mznvnoTCBxvvVZPl
-         pU/3S2TFmZFpOg0MTUB6S0AylVLc8nFmz9mlLoz42L1LRLick8NC8JMZUZNOH7tBHRcf
-         1KiQ==
-X-Gm-Message-State: AFqh2koGoNhZPriXGruAtt8fxcjdE7syK2ii+Gs2UeZETOuLP/CCslKL
-        U9R/AXYzREcRuC08dvK3O4acTw==
-X-Google-Smtp-Source: AMrXdXupc2CzIStk6SHRrwiCJtsdSVrSUOx57XyaG3i3NMYkNDzLELTLZfW6IYtG/Y50W8tMZQAoYA==
-X-Received: by 2002:a17:907:6026:b0:84d:445b:8aa6 with SMTP id fs38-20020a170907602600b0084d445b8aa6mr19617790ejc.70.1673799093344;
-        Sun, 15 Jan 2023 08:11:33 -0800 (PST)
-Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id 11-20020a170906318b00b0078d3f96d293sm10825646ejy.30.2023.01.15.08.11.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 15 Jan 2023 08:11:32 -0800 (PST)
-Date:   Sun, 15 Jan 2023 18:11:31 +0200
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] clk: qcom: Remove need for clk_ignore_unused on sc8280xp
-Message-ID: <Y8Qls7iBCT4bWY24@linaro.org>
-References: <20230113041038.4188995-1-quic_bjorande@quicinc.com>
+        Sun, 15 Jan 2023 12:41:56 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B59A113D5;
+        Sun, 15 Jan 2023 09:41:45 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 1877560DB6;
+        Sun, 15 Jan 2023 17:41:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 642BAC433D2;
+        Sun, 15 Jan 2023 17:41:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1673804504;
+        bh=ok2GpqvsbxT2ZfL/AmAdt1BO0nq0vW1Jn+mHxtduKxM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=SV/snAwAwpxL8EzMHAr1Z4GCQ20dBOxw6Ccz03/HaOz7qS7AjJgsFuyAi+Pk4oHZR
+         EndTE69vmf2MNHN29wRzjxrjg42l0MRsHubXlyZ/IBIsc6CRjat02w1XVXohC7EzNT
+         N9HQO9FGViFcbdswl7MwRqTnbYvawq1bNJwwNOsqgX/9ITJqkDpoUJPxVIeWkXHuan
+         fm0LZMLtiztLC5hCelPmVDtq4iI3W329SuWs2DWlJNfFe48JI/suI7Q6GbtYFB1vPs
+         n30njjOx8x+Afsaiwv0Hk5ZK8QdKUeH2QDyd0tK13OUFdb/1KO3AcwM99GXoiBRffd
+         NynT1SmBAT7qA==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pH716-0002oh-3j; Sun, 15 Jan 2023 18:42:00 +0100
+Date:   Sun, 15 Jan 2023 18:42:00 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Daniele Palmas <dnlplm@gmail.com>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Abel Vesa <abel.vesa@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: defconfig: enable Qualcomm PCIe modem drivers
+Message-ID: <Y8Q66ClSIcww0GWq@hovoldconsulting.com>
+References: <20230114162236.22615-1-johan+linaro@kernel.org>
+ <CAGRyCJHcbc3kad=8ugpo+hF9TGQZv2akzrYXa175HwCM7kVb9w@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230113041038.4188995-1-quic_bjorande@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <CAGRyCJHcbc3kad=8ugpo+hF9TGQZv2akzrYXa175HwCM7kVb9w@mail.gmail.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,45 +63,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23-01-12 20:10:38, Bjorn Andersson wrote:
-> With the transition of disabling unused clocks at sync_state, rather
-> than late_initcall() it's now possible to drop clk_ignore_unused and
-> unused clock disabled once client drivers have probed. Do this on
-> SC8280XP.
+On Sun, Jan 15, 2023 at 01:11:08PM +0100, Daniele Palmas wrote:
+> Hello Johan,
 > 
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> Il giorno sab 14 gen 2023 alle ore 17:23 Johan Hovold
+> <johan+linaro@kernel.org> ha scritto:
+> >
+> > Enable the MHI PCI controller driver and MHI WWAN drivers for Qualcomm
+> > based PCIe modems such as the ones found on the SC8280XP Compute
+> > Reference Design (CRD) and Lenovo Thinkpad X13s.
+> >
+> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> > ---
 
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+> > diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+> > index 86aa3730a8b6..117b49f3f1c1 100644
+> > --- a/arch/arm64/configs/defconfig
+> > +++ b/arch/arm64/configs/defconfig
+> > @@ -250,6 +250,7 @@ CONFIG_DEVTMPFS_MOUNT=y
+> >  CONFIG_FW_LOADER_USER_HELPER=y
+> >  CONFIG_HISILICON_LPC=y
+> >  CONFIG_TEGRA_ACONNECT=m
+> > +CONFIG_MHI_BUS_PCI_GENERIC=m
+> >  CONFIG_ARM_SCMI_PROTOCOL=y
+> >  CONFIG_ARM_SCPI_PROTOCOL=y
+> >  CONFIG_RASPBERRYPI_FIRMWARE=y
+> > @@ -405,6 +406,9 @@ CONFIG_MWIFIEX_SDIO=m
+> >  CONFIG_MWIFIEX_PCIE=m
+> >  CONFIG_WL18XX=m
+> >  CONFIG_WLCORE_SDIO=m
+> > +CONFIG_WWAN=m
+> > +CONFIG_MHI_WWAN_CTRL=m
+> > +CONFIG_MHI_WWAN_MBIM=m
+> 
+> wondering if it could make sense to also enable CONFIG_MHI_NET, since
+> in mhi_pci_generic there are also modems bound to that driver and, if
+> not enabled, those would show just the control device, but not the
+> netdevice.
 
-> ---
->  drivers/clk/qcom/dispcc-sc8280xp.c | 1 +
->  drivers/clk/qcom/gcc-sc8280xp.c    | 1 +
->  2 files changed, 2 insertions(+)
-> 
-> diff --git a/drivers/clk/qcom/dispcc-sc8280xp.c b/drivers/clk/qcom/dispcc-sc8280xp.c
-> index 167470beb369..c84a6481b879 100644
-> --- a/drivers/clk/qcom/dispcc-sc8280xp.c
-> +++ b/drivers/clk/qcom/dispcc-sc8280xp.c
-> @@ -3199,6 +3199,7 @@ static struct platform_driver disp_cc_sc8280xp_driver = {
->  	.driver = {
->  		.name = "disp_cc-sc8280xp",
->  		.of_match_table = disp_cc_sc8280xp_match_table,
-> +		.sync_state = clk_sync_state_disable_unused,
->  	},
->  };
->  
-> diff --git a/drivers/clk/qcom/gcc-sc8280xp.c b/drivers/clk/qcom/gcc-sc8280xp.c
-> index b3198784e1c3..f4fdc5b9663c 100644
-> --- a/drivers/clk/qcom/gcc-sc8280xp.c
-> +++ b/drivers/clk/qcom/gcc-sc8280xp.c
-> @@ -7441,6 +7441,7 @@ static struct platform_driver gcc_sc8280xp_driver = {
->  	.driver = {
->  		.name = "gcc-sc8280xp",
->  		.of_match_table = gcc_sc8280xp_match_table,
-> +		.sync_state = clk_sync_state_disable_unused,
->  	},
->  };
->  
-> -- 
-> 2.37.3
-> 
+Yes, indeed, that's a good idea. I had it enabled in my local config but
+didn't include it as it isn't needed for the two machines I'm currently
+working on.
+
+I'll send a v2. Thanks!
+
+Johan
