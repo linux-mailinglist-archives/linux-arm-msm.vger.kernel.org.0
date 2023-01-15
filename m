@@ -2,129 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B651B66B0DF
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Jan 2023 13:11:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C5E166B10E
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Jan 2023 13:42:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230368AbjAOMLW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 15 Jan 2023 07:11:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44804 "EHLO
+        id S231386AbjAOMl6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 15 Jan 2023 07:41:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230290AbjAOMLV (ORCPT
+        with ESMTP id S231368AbjAOMl6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 15 Jan 2023 07:11:21 -0500
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2B8E2733;
-        Sun, 15 Jan 2023 04:11:20 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id ss4so54882175ejb.11;
-        Sun, 15 Jan 2023 04:11:20 -0800 (PST)
+        Sun, 15 Jan 2023 07:41:58 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 077FE213B
+        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Jan 2023 04:41:57 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id y25so39243986lfa.9
+        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Jan 2023 04:41:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=OaBjbLT8Yixt+k8nB/dptFNhIIGxHMHB0aguu9SPL7M=;
-        b=VLKXZ0yiBvIzaXy2ogq+/3Azcy16L7j5WnIxQ/AMsED9Yuz61y3JhF945JIJeQJX8F
-         nGOIsR9ezdOjKsR3UxAMDdIBPJGlTIRvypJqjAo0AH9vVIOfBVLz4l6d1WsMu48FE3jD
-         xGo4ux3dCzfM1ETfXvXJZjmwV30B6yilbIrkNFLDWPxfiaDjer62uMXXJIHSD3rns/KR
-         wB6qdiMdWrXvsBxvS7d1MXBVWpEWFN59fm53yh4F3PoIwRP11GQDR5kfHpnKePhaby4U
-         YeeW49Z7BcAsYoHegVtniVwMqBIKgVXSjFsYwqBOomMYDlfETiHEX91H22tRAVwMcOFQ
-         W7IQ==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=NNWyPfscA/NuHJHmZQjpSPIoHVjgZDvP+Ju7BCFKeR8=;
+        b=qGqRA39zMsMKs+oKHldZM+tNFHve7z9THNoEMPfbVglKoJRGSmw2TACARP9WH+jyTw
+         2FHh7foZg8ZW1tPcu22k3q7E32YdIvefChs7w15XrFewT6N7av+WOhrcLwHmjrDtwOgH
+         94ZJkq1FT1y6wBhkonkRvh3m9h9mdmm51v70DcgjfyMhFqaTfnB45pxbeb8/QICk048d
+         lPXAF+iw6AaPzZf2GjCo48kJ2JMfM5hUSguxYlE4W1dov5opc0F9n9h7PiYAE0M/WwmD
+         JSQP7UXidwKNfFaEHRlqIJZbnirvo2/4JQeVSPcMtRdu6u1pmUiLSO//SwH187lW+FMU
+         wyXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=OaBjbLT8Yixt+k8nB/dptFNhIIGxHMHB0aguu9SPL7M=;
-        b=u2mRqU6scg1vkJrAFADlk64ZXkmP0DMO86t+X4+SWi/uRt22uODpdcllm2A9eOgZN9
-         vpQOM1T1appSE2jBe48GRST5DEkWUYQUwsluIkPkRnBEDpQ2MvzgwbKez78Gcr+LkOML
-         CteC92Wg/soOrL6fPC1LOP6jneKs/wE4Ddmq054+QncuUlGJaChrV6+lJ5nzoWyR8s6u
-         tLxklcayVuBXe/dDnb7+eAVwzWgIYypmehMkNsfR0VmUsH2+72ALuKuudxtqRqyrLZFE
-         v+4J+Qi9PohzsKMNs5jOhQp2QcG4wpLmUpnmxcjtHB4QKLtB7WkYMk9UDgedzMI6Hh3g
-         jo/w==
-X-Gm-Message-State: AFqh2koithnMoqTGyA4lywbuiE+okSg22wf8Q1x3eN4ZYZRapm2kBPTw
-        XibSnG+eyumC+eNHjozi8XrB0KyyWqMwAx/L61M=
-X-Google-Smtp-Source: AMrXdXs3Rnc/QVw5omTzAyafKji3Fek/u4ImtQk7luTAvq6b4ghKF/L4DySDplW6Sg0JKw2I1e4x2TGaA9mjMjONty0=
-X-Received: by 2002:a17:906:c0c6:b0:7c1:a0b:c0a2 with SMTP id
- bn6-20020a170906c0c600b007c10a0bc0a2mr6751356ejb.568.1673784679262; Sun, 15
- Jan 2023 04:11:19 -0800 (PST)
+        bh=NNWyPfscA/NuHJHmZQjpSPIoHVjgZDvP+Ju7BCFKeR8=;
+        b=Hso5idRVN+lb2Mmh9WPuTwr5JZEXQ/1uFK4xXhlKlGxXko5BG6aJeQTAn7BU7prwYo
+         feXKL4qAgPfNHp2DDDVWg5kGAcgrHzDC3Sf9rSKStlgKIabdXBO+SJAPPpU4ToP5y1bk
+         CkKqIk8GAg3fJuBrC/b+lCQOfEnRczZWGCdvg+8KY9kAkkmtsKkyYgiagevy2sJtkNmH
+         xkTBAqM7nLKmsLx/24MvYi6umiI99QScFQSNqDvv9sCD1E8MdFsdUDA0qa/HMuu9AaLT
+         +c5APlKs+mk3TXGfE8/pJbbu7RZl0zeOPYFffx5N9QIdraPldf4WDtRo9b0fJH7PSiqa
+         daTA==
+X-Gm-Message-State: AFqh2kpciBiWWqRMpIMedOLVIMVD1Y6SRWkrdbTNBgklZSlVTkPMKEt+
+        khKYLtPnjINYA8dErxx9Lfxe9Q==
+X-Google-Smtp-Source: AMrXdXuEtzFGi7S9tuf/so/YhH2yU0wR4wrvqBijQ5q47uzb8qSH1+w0unQvNQD7JbJUofp40jVhsQ==
+X-Received: by 2002:a05:6512:3769:b0:4a4:68b7:f86d with SMTP id z9-20020a056512376900b004a468b7f86dmr29814695lft.17.1673786515322;
+        Sun, 15 Jan 2023 04:41:55 -0800 (PST)
+Received: from eriador.lumag.spb.ru ([188.170.85.102])
+        by smtp.gmail.com with ESMTPSA id 22-20020a2e1456000000b0028559373a31sm2688243lju.112.2023.01.15.04.41.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 15 Jan 2023 04:41:54 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>
+Subject: [PATCH 1/2] drm/msm/dpu: fix clocks settings for msm8998 SSPP blocks
+Date:   Sun, 15 Jan 2023 14:41:42 +0200
+Message-Id: <20230115124143.464809-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-References: <20230114162236.22615-1-johan+linaro@kernel.org>
-In-Reply-To: <20230114162236.22615-1-johan+linaro@kernel.org>
-From:   Daniele Palmas <dnlplm@gmail.com>
-Date:   Sun, 15 Jan 2023 13:11:08 +0100
-Message-ID: <CAGRyCJHcbc3kad=8ugpo+hF9TGQZv2akzrYXa175HwCM7kVb9w@mail.gmail.com>
-Subject: Re: [PATCH] arm64: defconfig: enable Qualcomm PCIe modem drivers
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,HK_RANDOM_ENVFROM,
-        HK_RANDOM_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello Johan,
+DMA2 and DMA3 planes on msm8998 should use corresponding DMA2 and DMA3
+clocks rather than CURSOR0/1 clocks (which are used for the CURSOR
+planes). Correct corresponding SSPP declarations.
 
-Il giorno sab 14 gen 2023 alle ore 17:23 Johan Hovold
-<johan+linaro@kernel.org> ha scritto:
->
-> Enable the MHI PCI controller driver and MHI WWAN drivers for Qualcomm
-> based PCIe modems such as the ones found on the SC8280XP Compute
-> Reference Design (CRD) and Lenovo Thinkpad X13s.
->
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
->
-> Bjorn,
->
-> Perhaps you can take this through your tree?
->
-> Johan
->
->
->  arch/arm64/configs/defconfig | 4 ++++
->  1 file changed, 4 insertions(+)
->
-> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> index 86aa3730a8b6..117b49f3f1c1 100644
-> --- a/arch/arm64/configs/defconfig
-> +++ b/arch/arm64/configs/defconfig
-> @@ -250,6 +250,7 @@ CONFIG_DEVTMPFS_MOUNT=y
->  CONFIG_FW_LOADER_USER_HELPER=y
->  CONFIG_HISILICON_LPC=y
->  CONFIG_TEGRA_ACONNECT=m
-> +CONFIG_MHI_BUS_PCI_GENERIC=m
->  CONFIG_ARM_SCMI_PROTOCOL=y
->  CONFIG_ARM_SCPI_PROTOCOL=y
->  CONFIG_RASPBERRYPI_FIRMWARE=y
-> @@ -405,6 +406,9 @@ CONFIG_MWIFIEX_SDIO=m
->  CONFIG_MWIFIEX_PCIE=m
->  CONFIG_WL18XX=m
->  CONFIG_WLCORE_SDIO=m
-> +CONFIG_WWAN=m
-> +CONFIG_MHI_WWAN_CTRL=m
-> +CONFIG_MHI_WWAN_MBIM=m
+Fixes: 94391a14fc27 ("drm/msm/dpu1: Add MSM8998 to hw catalog")
+Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+Cc: Jami Kettunen <jami.kettunen@somainline.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-wondering if it could make sense to also enable CONFIG_MHI_NET, since
-in mhi_pci_generic there are also modems bound to that driver and, if
-not enabled, those would show just the control device, but not the
-netdevice.
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+index 0f3da480b066..ad0c55464154 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+@@ -1180,9 +1180,9 @@ static const struct dpu_sspp_cfg msm8998_sspp[] = {
+ 	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000,  DMA_MSM8998_MASK,
+ 		sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA1),
+ 	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000,  DMA_CURSOR_MSM8998_MASK,
+-		sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR0),
++		sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA2),
+ 	SSPP_BLK("sspp_11", SSPP_DMA3, 0x2a000,  DMA_CURSOR_MSM8998_MASK,
+-		sdm845_dma_sblk_3, 13, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR1),
++		sdm845_dma_sblk_3, 13, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA3),
+ };
+ 
+ static const struct dpu_sspp_cfg sdm845_sspp[] = {
+-- 
+2.39.0
 
-Regards,
-Daniele
-
->  CONFIG_INPUT_EVDEV=y
->  CONFIG_KEYBOARD_ADC=m
->  CONFIG_KEYBOARD_GPIO=y
-> --
-> 2.38.2
->
