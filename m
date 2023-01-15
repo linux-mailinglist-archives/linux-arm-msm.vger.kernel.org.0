@@ -2,720 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C96E66AE2D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Jan 2023 22:26:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CCED66AF39
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Jan 2023 04:58:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230358AbjANV0J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 14 Jan 2023 16:26:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52910 "EHLO
+        id S230260AbjAOD6K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 14 Jan 2023 22:58:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230380AbjANV0J (ORCPT
+        with ESMTP id S230003AbjAOD6J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 14 Jan 2023 16:26:09 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E43E7ABE
-        for <linux-arm-msm@vger.kernel.org>; Sat, 14 Jan 2023 13:26:06 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id j17so37824526lfr.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 14 Jan 2023 13:26:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/rkFL4JQ6qmwO5yG7gvrFL3poPk1NvmBJ8ZqbA8Y98k=;
-        b=dk3Qm3Ddkj//E3O3I/e7iSHjy64hiqQMTxIQgctztPXtir7JN0KwZBNlQleLZgb4YD
-         NQIxD3tV7wYW3+7SDRSOS3Whrseer9JvOrnaNDayzTdzORWzFSX6gtHWpBqGmZTppYmX
-         7jZ6J7iNrGjmkzZ4blAKASrykjU3imDlecGHBle9DltBY7/9BWqth9tHJRMWgmTgTrxy
-         NZLkz/Zmc+8fKHvNwfDJl6cCjly/XmyT1GXgpSr8wQ9kGGRo8bppdY6NygtzJN0vd++4
-         kopcdaxJNjgwakDH6c6PN1WD7e1KZUdLV7YiPNaJvtyHY43U8FtkVSJi/CD/e5MNdMlu
-         x5tw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/rkFL4JQ6qmwO5yG7gvrFL3poPk1NvmBJ8ZqbA8Y98k=;
-        b=t1EL+I6Hxwrbcmkj7bUyHu5KIxISVRq2Jn4x08RuShYtX0LdL1ooXV3mBMkneTb9PL
-         swTwdfe+fu4JSYv0GsvhREWgg/BEHXlCudPkxMTm68XgSOwjVbc26LRhEUY56h9G/JzN
-         +n3Z6kqdnoZAXyBSdRMeBPv7I+YM9gQUgt2ZhET0T5m4l7WittWmMYpoBCJN05vKkiyt
-         5lIoPVXc6yX8EbVL8cgbkPNRuLQNh2lScXWI0S1rQnT+V4d375i1UGc6YlfzL5utCmhV
-         DAj3upoS1vYkqEpY26zfAney1b2gwqS4YDaUfpwof0VDFUY0ftT+osS62pVm+Gsc4grd
-         Ajqw==
-X-Gm-Message-State: AFqh2kqA3b9ayYYrZtk81l3fm+F1SgjamGQS46EW9Zuw84Eebnm2hnBB
-        93V/IybGW2qH6XAH1IWIoFlBPA==
-X-Google-Smtp-Source: AMrXdXvSsEr66mKYO8Ho4y+4QlkwbfAhaR3kWi7qLvmTWbKBORi2sQjVQnKykCo8/gqCNNTVeOLZiQ==
-X-Received: by 2002:a19:7008:0:b0:4b5:7d49:4a05 with SMTP id h8-20020a197008000000b004b57d494a05mr21752108lfc.0.1673731564777;
-        Sat, 14 Jan 2023 13:26:04 -0800 (PST)
-Received: from [192.168.1.101] (abym53.neoplus.adsl.tpnet.pl. [83.9.32.53])
-        by smtp.gmail.com with ESMTPSA id j15-20020a056512344f00b004b56bebdc4esm4456632lfr.14.2023.01.14.13.26.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 14 Jan 2023 13:26:04 -0800 (PST)
-Message-ID: <323b9519-38e4-a7ca-f45d-96cef06fd9bf@linaro.org>
-Date:   Sat, 14 Jan 2023 22:26:01 +0100
+        Sat, 14 Jan 2023 22:58:09 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E439DB74A;
+        Sat, 14 Jan 2023 19:58:07 -0800 (PST)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30F3veBa008990;
+        Sun, 15 Jan 2023 03:57:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : to : cc : from : subject : content-type :
+ content-transfer-encoding; s=qcppdkim1;
+ bh=jtc+dxZTScazwf6CJliIJoikyEQ1LzERekxuaplZUWo=;
+ b=hhbrguiOyppznT2wXwHFTvYlgyV24tGilYpkYYyLFuGbunrl7Gppba+00mqIwKILxo80
+ FfnuUVBuvwKUe1Zio7HQpDFIKu7x49tqzIp/w55eA9BsH1zU/dXf5HFMUt+IhOLPTNuz
+ edOycs96eWeJt6axiDfikbSdC+uHhZl5hxo/bgCutXNO+FD20nFvU+x/5FwZdanfJSa7
+ qyxjyfgMAIZAuMM47efAhZh7P7sPcAUxdSnpx+aT8ws/xxB9IVFLeNmpEb69UHa8KgLa
+ XL4yZAZccNjKl15U054qdultW6UUSiFH7EVlWRRbEtg9DaVA8gSUFWDZmBUkmApkJw0S 0g== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n3n5qs8js-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 15 Jan 2023 03:57:39 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30F3vdXI019249
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 15 Jan 2023 03:57:39 GMT
+Received: from [10.110.21.213] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Sat, 14 Jan
+ 2023 19:57:37 -0800
+Message-ID: <072de3f4-6bd3-f9ce-024d-e469288fc46a@quicinc.com>
+Date:   Sat, 14 Jan 2023 19:57:36 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH] arm64: dts: qcom: sm6115: Add debug related nodes
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.1
 Content-Language: en-US
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Cc:     agross@kernel.org, andersson@kernel.org,
-        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
-        robh+dt@kernel.org, devicetree@vger.kernel.org
-References: <20230114210754.353912-1-bhupesh.sharma@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230114210754.353912-1-bhupesh.sharma@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+To:     David Hildenbrand <david@redhat.com>,
+        Johannes Weiner <hannes@cmpxchg.org>,
+        Suren Baghdasaryan <surenb@google.com>,
+        Mike Rapoport <rppt@kernel.org>,
+        Oscar Salvador <osalvador@suse.de>,
+        Anshuman Khandual <anshuman.khandual@arm.com>,
+        <mark.rutland@arm.com>, <will@kernel.org>,
+        <virtualization@lists.linux-foundation.org>, <linux-mm@kvack.org>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>
+CC:     "Trilok Soni (QUIC)" <quic_tsoni@quicinc.com>,
+        "Sukadev Bhattiprolu (QUIC)" <quic_sukadev@quicinc.com>,
+        "Srivatsa Vaddagiri (QUIC)" <quic_svaddagi@quicinc.com>,
+        "Patrick Daly (QUIC)" <quic_pdaly@quicinc.com>
+From:   Sudarshan Rajagopalan <quic_sudaraja@quicinc.com>
+Subject: [RFC] memory pressure detection in VMs using PSI mechanism for
+ dynamically inflating/deflating VM memory
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: g3cNJ5ezalwP-36q3I0iwjqzcUmc9j6O
+X-Proofpoint-ORIG-GUID: g3cNJ5ezalwP-36q3I0iwjqzcUmc9j6O
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-15_01,2023-01-13_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
+ mlxscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0 bulkscore=0
+ mlxlogscore=606 priorityscore=1501 impostorscore=0 phishscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301150027
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hello all,
 
+We’re from the Linux memory team here at Qualcomm. We are currently 
+devising a VM memory resizing feature where we dynamically inflate or 
+deflate the Linux VM based on ongoing memory demands in the VM. We 
+wanted to propose few details about this userspace daemon in form of RFC 
+and wanted to know the upstream’s opinion. Here are few details –
 
-On 14.01.2023 22:07, Bhupesh Sharma wrote:
-> Add dtsi nodes related to coresight debug units such
-> as cti, etm, etr, funnel(s), replicator(s), etc. for
-> Qualcomm sm6115 SoC.
-> 
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm6115.dtsi | 612 +++++++++++++++++++++++++++
->  1 file changed, 612 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> index 478c5d009272..5067910b18ab 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> @@ -1237,6 +1237,618 @@ dispcc: clock-controller@5f00000 {
->  			#power-domain-cells = <1>;
->  		};
->  
-> +		cti0: cti@8010000 {
-> +			compatible = "arm,coresight-cti", "arm,primecell";
-> +			reg = <0x08010000 0x1000>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
-> +			clock-names = "apb_pclk";
-> +
-> +			status = "disabled";
-> +		};
-> +
-> +		cti1: cti@8011000 {
-> +			compatible = "arm,coresight-cti", "arm,primecell";
-> +			reg = <0x08011000 0x1000>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
-> +			clock-names = "apb_pclk";
-> +
-> +			status = "disabled";
-> +		};
-> +
-> +		cti2: cti@8012000 {
-> +			compatible = "arm,coresight-cti", "arm,primecell";
-> +			reg = <0x08012000 0x1000>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
-> +			clock-names = "apb_pclk";
-> +
-> +			status = "disabled";
-> +		};
-> +
-> +		cti3: cti@8013000 {
-> +			compatible = "arm,coresight-cti", "arm,primecell";
-> +			reg = <0x08013000 0x1000>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
-> +			clock-names = "apb_pclk";
-> +
-> +			status = "disabled";
-> +		};
-> +
-> +		cti4: cti@8014000 {
-> +			compatible = "arm,coresight-cti", "arm,primecell";
-> +			reg = <0x08014000 0x1000>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
-> +			clock-names = "apb_pclk";
-> +
-> +			status = "disabled";
-> +		};
-> +
-> +		cti5: cti@8015000 {
-> +			compatible = "arm,coresight-cti", "arm,primecell";
-> +			reg = <0x08015000 0x1000>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
-> +			clock-names = "apb_pclk";
-> +
-> +			status = "disabled";
-> +		};
-> +
-> +		cti6: cti@8016000 {
-> +			compatible = "arm,coresight-cti", "arm,primecell";
-> +			reg = <0x08016000 0x1000>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
-> +			clock-names = "apb_pclk";
-> +
-> +			status = "disabled";
-> +		};
-> +
-> +		cti7: cti@8017000 {
-> +			compatible = "arm,coresight-cti", "arm,primecell";
-> +			reg = <0x08017000 0x1000>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
-> +			clock-names = "apb_pclk";
-> +
-> +			status = "disabled";
-> +		};
-> +
-> +		cti8: cti@8018000 {
-> +			compatible = "arm,coresight-cti", "arm,primecell";
-> +			reg = <0x08018000 0x1000>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
-> +			clock-names = "apb_pclk";
-> +
-> +			status = "disabled";
-> +		};
-> +
-> +		cti9: cti@8019000 {
-> +			compatible = "arm,coresight-cti", "arm,primecell";
-> +			reg = <0x08019000 0x1000>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
-> +			clock-names = "apb_pclk";
-> +
-> +			status = "disabled";
-> +		};
-> +
-> +		cti10: cti@801a000 {
-> +			compatible = "arm,coresight-cti", "arm,primecell";
-> +			reg = <0x0801a000 0x1000>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
-> +			clock-names = "apb_pclk";
-> +
-> +			status = "disabled";
-> +		};
-> +
-> +		cti11: cti@801b000 {
-> +			compatible = "arm,coresight-cti", "arm,primecell";
-> +			reg = <0x0801b000 0x1000>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
-> +			clock-names = "apb_pclk";
-> +
-> +			status = "disabled";
-> +		};
-> +
-> +		cti12: cti@801c000 {
-> +			compatible = "arm,coresight-cti", "arm,primecell";
-> +			reg = <0x0801c000 0x1000>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
-> +			clock-names = "apb_pclk";
-> +
-> +			status = "disabled";
-> +		};
-> +
-> +		cti13: cti@801d000 {
-> +			compatible = "arm,coresight-cti", "arm,primecell";
-> +			reg = <0x0801d000 0x1000>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
-> +			clock-names = "apb_pclk";
-> +
-> +			status = "disabled";
-> +		};
-> +
-> +		cti14: cti@801e000 {
-> +			compatible = "arm,coresight-cti", "arm,primecell";
-> +			reg = <0x0801e000 0x1000>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
-> +			clock-names = "apb_pclk";
-> +
-> +			status = "disabled";
-> +		};
-> +
-> +		cti15: cti@801f000 {
-> +			compatible = "arm,coresight-cti", "arm,primecell";
-> +			reg = <0x0801f000 0x1000>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
-> +			clock-names = "apb_pclk";
-> +
-> +			status = "disabled";
-> +		};
-> +
-> +		replicator@8046000 {
-> +			compatible = "arm,coresight-dynamic-replicator", "arm,primecell";
-> +			reg = <0x08046000 0x1000>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
-> +			clock-names = "apb_pclk";
-> +
-> +			status = "disabled";
-> +
-> +			out-ports {
-> +				port {
-> +					replicator_out: endpoint {
-> +						remote-endpoint = <&etr_in>;
-> +					};
-> +				};
-> +			};
-> +
-> +			in-ports {
-> +				port {
-> +					replicator_in: endpoint {
-> +						remote-endpoint = <&etf_out>;
-> +					};
-> +				};
-> +			};
-> +		};
-> +
-> +		etf@8047000 {
-> +			compatible = "arm,coresight-tmc", "arm,primecell";
-> +			reg = <0x08047000 0x1000>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
-> +			clock-names = "apb_pclk";
-> +
-> +			status = "disabled";
-> +
-> +			in-ports {
-> +				port {
-> +					etf_in: endpoint {
-> +						remote-endpoint = <&merge_funnel_out>;
-> +					};
-> +				};
-> +			};
-> +
-> +			out-ports {
-> +				port {
-> +					etf_out: endpoint {
-> +						remote-endpoint = <&replicator_in>;
-> +					};
-> +				};
-> +			};
-> +		};
-> +
-> +		etr@8048000 {
-> +			compatible = "arm,coresight-tmc", "arm,primecell";
-> +			reg = <0x08048000 0x1000>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
-> +			clock-names = "apb_pclk";
-> +
-> +			status = "disabled";
-> +
-> +			in-ports {
-> +				port {
-> +					etr_in: endpoint {
-> +						remote-endpoint = <&replicator_out>;
-> +					};
-> +				};
-> +			};
-> +		};
-> +
-> +		stm@8002000 {
-This one node is out of order
+1. This will be a native userspace daemon that will be running only in 
+the Linux VM which will use virtio-mem driver that uses memory hotplug 
+to add/remove memory. The VM (aka Secondary VM, SVM) will request for 
+memory from the host which is Primary VM, PVM via the backend hypervisor 
+which takes care of cross-VM communication.
 
-I *think* the rest looks good overall... so:
+2. This will be guest driver. This daemon will use PSI mechanism to 
+monitor memory pressure to keep track of memory demands in the system. 
+It will register to few memory pressure events and make an educated 
+guess on when demand for memory in system is increasing.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+3. Currently, min PSI window size is 500ms, so PSI monitor sampling 
+period will be 50ms. In order to get quick response time from PSI, we’ve 
+reduced the min window size to 50ms so that as small as 5ms increase in 
+memory pressure can be reported to userspace by PSI.
 
-Konrad
-> +			compatible = "arm,coresight-stm", "arm,primecell";
-> +			reg = <0x08002000 0x1000>,
-> +			      <0x0e280000 0x180000>;
-> +			reg-names = "stm-base", "stm-stimulus-base";
-> +
-> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
-> +			clock-names = "apb_pclk";
-> +
-> +			status = "disabled";
-> +
-> +			out-ports {
-> +				port {
-> +					stm_out: endpoint {
-> +						remote-endpoint = <&funnel_in0_in>;
-> +					};
-> +				};
-> +			};
-> +		};
-> +
-> +		funnel@8041000 {
-> +			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
-> +			reg = <0x08041000 0x1000>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
-> +			clock-names = "apb_pclk";
-> +
-> +			status = "disabled";
-> +
-> +			out-ports {
-> +				port {
-> +					funnel_in0_out: endpoint {
-> +						remote-endpoint = <&merge_funnel_in0>;
-> +					};
-> +				};
-> +			};
-> +
-> +			in-ports {
-> +				port {
-> +					funnel_in0_in: endpoint {
-> +						remote-endpoint = <&stm_out>;
-> +					};
-> +				};
-> +			};
-> +		};
-> +
-> +		funnel@8042000 {
-> +			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
-> +			reg = <0x08042000 0x1000>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
-> +			clock-names = "apb_pclk";
-> +
-> +			status = "disabled";
-> +
-> +			out-ports {
-> +				port {
-> +					funnel_in1_out: endpoint {
-> +						remote-endpoint = <&merge_funnel_in1>;
-> +					};
-> +				};
-> +			};
-> +
-> +			in-ports {
-> +				port {
-> +					funnel_in1_in: endpoint {
-> +						remote-endpoint = <&funnel_apss1_out>;
-> +					};
-> +				};
-> +			};
-> +		};
-> +
-> +		funnel@8045000 {
-> +			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
-> +			reg = <0x08045000 0x1000>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
-> +			clock-names = "apb_pclk";
-> +
-> +			status = "disabled";
-> +
-> +			out-ports {
-> +				port {
-> +					merge_funnel_out: endpoint {
-> +						remote-endpoint = <&etf_in>;
-> +					};
-> +				};
-> +			};
-> +
-> +			in-ports {
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +
-> +				port@0 {
-> +					reg = <0>;
-> +					merge_funnel_in0: endpoint {
-> +						remote-endpoint = <&funnel_in0_out>;
-> +					};
-> +				};
-> +
-> +				port@1 {
-> +					reg = <1>;
-> +					merge_funnel_in1: endpoint {
-> +						remote-endpoint = <&funnel_in1_out>;
-> +					};
-> +				};
-> +			};
-> +		};
-> +
-> +		etm@9040000 {
-> +			compatible = "arm,coresight-etm4x", "arm,primecell";
-> +			reg = <0x09040000 0x1000>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
-> +			clock-names = "apb_pclk";
-> +			arm,coresight-loses-context-with-cpu;
-> +
-> +			cpu = <&CPU0>;
-> +
-> +			status = "disabled";
-> +
-> +			out-ports {
-> +				port {
-> +					etm0_out: endpoint {
-> +						remote-endpoint = <&funnel_apss0_in0>;
-> +					};
-> +				};
-> +			};
-> +		};
-> +
-> +		etm@9140000 {
-> +			compatible = "arm,coresight-etm4x", "arm,primecell";
-> +			reg = <0x09140000 0x1000>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
-> +			clock-names = "apb_pclk";
-> +			arm,coresight-loses-context-with-cpu;
-> +
-> +			cpu = <&CPU1>;
-> +
-> +			status = "disabled";
-> +
-> +			out-ports {
-> +				port {
-> +					etm1_out: endpoint {
-> +						remote-endpoint = <&funnel_apss0_in1>;
-> +					};
-> +				};
-> +			};
-> +		};
-> +
-> +		etm@9240000 {
-> +			compatible = "arm,coresight-etm4x", "arm,primecell";
-> +			reg = <0x09240000 0x1000>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
-> +			clock-names = "apb_pclk";
-> +			arm,coresight-loses-context-with-cpu;
-> +
-> +			cpu = <&CPU2>;
-> +
-> +			status = "disabled";
-> +
-> +			out-ports {
-> +				port {
-> +					etm2_out: endpoint {
-> +						remote-endpoint = <&funnel_apss0_in2>;
-> +					};
-> +				};
-> +			};
-> +		};
-> +
-> +		etm@9340000 {
-> +			compatible = "arm,coresight-etm4x", "arm,primecell";
-> +			reg = <0x09340000 0x1000>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
-> +			clock-names = "apb_pclk";
-> +			arm,coresight-loses-context-with-cpu;
-> +
-> +			cpu = <&CPU3>;
-> +
-> +			status = "disabled";
-> +
-> +			out-ports {
-> +				port {
-> +					etm3_out: endpoint {
-> +						remote-endpoint = <&funnel_apss0_in3>;
-> +					};
-> +				};
-> +			};
-> +		};
-> +
-> +		etm@9440000 {
-> +			compatible = "arm,coresight-etm4x", "arm,primecell";
-> +			reg = <0x09440000 0x1000>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
-> +			clock-names = "apb_pclk";
-> +			arm,coresight-loses-context-with-cpu;
-> +
-> +			cpu = <&CPU4>;
-> +
-> +			status = "disabled";
-> +
-> +			out-ports {
-> +				port {
-> +					etm4_out: endpoint {
-> +						remote-endpoint = <&funnel_apss0_in4>;
-> +					};
-> +				};
-> +			};
-> +		};
-> +
-> +		etm@9540000 {
-> +			compatible = "arm,coresight-etm4x", "arm,primecell";
-> +			reg = <0x09540000 0x1000>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
-> +			clock-names = "apb_pclk";
-> +			arm,coresight-loses-context-with-cpu;
-> +
-> +			cpu = <&CPU5>;
-> +
-> +			status = "disabled";
-> +
-> +			out-ports {
-> +				port {
-> +					etm5_out: endpoint {
-> +						remote-endpoint = <&funnel_apss0_in5>;
-> +					};
-> +				};
-> +			};
-> +		};
-> +
-> +		etm@9640000 {
-> +			compatible = "arm,coresight-etm4x", "arm,primecell";
-> +			reg = <0x09640000 0x1000>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
-> +			clock-names = "apb_pclk";
-> +			arm,coresight-loses-context-with-cpu;
-> +
-> +			cpu = <&CPU6>;
-> +
-> +			status = "disabled";
-> +
-> +			out-ports {
-> +				port {
-> +					etm6_out: endpoint {
-> +						remote-endpoint = <&funnel_apss0_in6>;
-> +					};
-> +				};
-> +			};
-> +		};
-> +
-> +		etm@9740000 {
-> +			compatible = "arm,coresight-etm4x", "arm,primecell";
-> +			reg = <0x09740000 0x1000>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
-> +			clock-names = "apb_pclk";
-> +			arm,coresight-loses-context-with-cpu;
-> +
-> +			cpu = <&CPU7>;
-> +
-> +			status = "disabled";
-> +
-> +			out-ports {
-> +				port {
-> +					etm7_out: endpoint {
-> +						remote-endpoint = <&funnel_apss0_in7>;
-> +					};
-> +				};
-> +			};
-> +		};
-> +
-> +		funnel@9800000 {
-> +			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
-> +			reg = <0x09800000 0x1000>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
-> +			clock-names = "apb_pclk";
-> +
-> +			status = "disabled";
-> +
-> +			out-ports {
-> +				port {
-> +					funnel_apss0_out: endpoint {
-> +						remote-endpoint = <&funnel_apss1_in>;
-> +					};
-> +				};
-> +			};
-> +
-> +			in-ports {
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +
-> +				port@0 {
-> +					reg = <0>;
-> +					funnel_apss0_in0: endpoint {
-> +						remote-endpoint = <&etm0_out>;
-> +					};
-> +				};
-> +
-> +				port@1 {
-> +					reg = <1>;
-> +					funnel_apss0_in1: endpoint {
-> +						remote-endpoint = <&etm1_out>;
-> +					};
-> +				};
-> +
-> +				port@2 {
-> +					reg = <2>;
-> +					funnel_apss0_in2: endpoint {
-> +						remote-endpoint = <&etm2_out>;
-> +					};
-> +				};
-> +
-> +				port@3 {
-> +					reg = <3>;
-> +					funnel_apss0_in3: endpoint {
-> +						remote-endpoint = <&etm3_out>;
-> +					};
-> +				};
-> +
-> +				port@4 {
-> +					reg = <4>;
-> +					funnel_apss0_in4: endpoint {
-> +						remote-endpoint = <&etm4_out>;
-> +					};
-> +				};
-> +
-> +				port@5 {
-> +					reg = <5>;
-> +					funnel_apss0_in5: endpoint {
-> +						remote-endpoint = <&etm5_out>;
-> +					};
-> +				};
-> +
-> +				port@6 {
-> +					reg = <6>;
-> +					funnel_apss0_in6: endpoint {
-> +						remote-endpoint = <&etm6_out>;
-> +					};
-> +				};
-> +
-> +				port@7 {
-> +					reg = <7>;
-> +					funnel_apss0_in7: endpoint {
-> +						remote-endpoint = <&etm7_out>;
-> +					};
-> +				};
-> +			};
-> +		};
-> +
-> +		funnel@9810000 {
-> +			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
-> +			reg = <0x09810000 0x1000>;
-> +
-> +			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
-> +			clock-names = "apb_pclk";
-> +
-> +			status = "disabled";
-> +
-> +			out-ports {
-> +				port {
-> +					funnel_apss1_out: endpoint {
-> +						remote-endpoint = <&funnel_in1_in>;
-> +					};
-> +				};
-> +			};
-> +
-> +			in-ports {
-> +				port {
-> +					funnel_apss1_in: endpoint {
-> +						remote-endpoint = <&funnel_apss0_out>;
-> +					};
-> +				};
-> +			};
-> +		};
-> +
->  		apps_smmu: iommu@c600000 {
->  			compatible = "qcom,sm6115-smmu-500", "qcom,smmu-500", "arm,mmu-500";
->  			reg = <0x0c600000 0x80000>;
+/* PSI trigger definitions */
+-#define WINDOW_MIN_US 500000   /* Min window size is 500ms */
++#define WINDOW_MIN_US 50000    /* Min window size is 50ms */
+
+4. Detecting increase in memory demand – when a certain usecase starts 
+in VM that does memory allocations, it will stall causing PSI mechanism 
+to generate a memory pressure event to userspace. To simply put, when 
+pressure increases certain set threshold, it can make educated guess 
+that a memory requiring usecase has ran and VM system needs memory to be 
+added.
+
+5. Detecting decrease in memory pressure – the reverse part where we 
+give back memory to PVM when memory is no longer needed is bit tricky. 
+We look for pressure decay and see if PSI averages (avg10, avg60, 
+avg300) go down, and along with other memory stats (such as free memory 
+etc) we make an educated guess that usecase has ended and memory has 
+been free’ed by the usecase, and this memory can be given back to PVM 
+when its no longer needed.
+
+6. I’m skimming much on the logic and intelligence but the daemon relies 
+on PSI mechanism to know when memory demand is going up and down, and 
+communicates with virtio-mem driver for hot-plugging/unplugging memory. 
+We also factor in the latency involved with roundtrips between SVM<->PVM 
+so we size the memory chuck that needs to be plugged-in accordingly.
+
+7. The whole purpose of daemon using PSI mechanism is to make this si 
+guest driven rather than host driven, which currently is the case mostly 
+with virtio-mem users. The memory pressure and usage monitoring happens 
+inside the SVM and the SVM makes the decisions to request for memory 
+from PVM. This avoids any intervention such as admin in PVM to monitor 
+and control the knobs. We have also set max limit of how much SVMs can 
+grow interms of memory, so that a rouge VM would not abuse this scheme.
+
+This daemon is currently in just Beta stage now and we have basic 
+functionality running. We are yet to add more flesh to this scheme to 
+make sure any potential risks or security concerns are taken care as well.
+
+We would happy to know your opinions on such a scheme.
+
+Thanks and Regards,
+Sudarshan
+
