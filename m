@@ -2,94 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A214A66BAA7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jan 2023 10:41:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8CA2466BABD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jan 2023 10:44:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232208AbjAPJlO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Jan 2023 04:41:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34424 "EHLO
+        id S230109AbjAPJn7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Jan 2023 04:43:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231679AbjAPJkn (ORCPT
+        with ESMTP id S232240AbjAPJnO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Jan 2023 04:40:43 -0500
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 83B171E9CD;
-        Mon, 16 Jan 2023 01:39:41 -0800 (PST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 59E96AD7;
-        Mon, 16 Jan 2023 01:40:23 -0800 (PST)
-Received: from [10.57.89.182] (unknown [10.57.89.182])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 576553F67D;
-        Mon, 16 Jan 2023 01:39:38 -0800 (PST)
-Message-ID: <31601f49-967e-4990-5599-0558fc6364b0@arm.com>
-Date:   Mon, 16 Jan 2023 09:39:36 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.6.1
-Subject: Re: [PATCH v16 8/8] arm64: dts: qcom: sm8250: Add tpdm mm/prng
-To:     Mao Jinlong <quic_jinlmao@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
+        Mon, 16 Jan 2023 04:43:14 -0500
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2068814EB3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 01:42:20 -0800 (PST)
+Received: by mail-pl1-x62e.google.com with SMTP id d3so29758612plr.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 01:42:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=r5rnNsL4lEChI1TD5S3DOvfNRk0icdBAPi2/vjJi8W8=;
+        b=XltKaVPJPio78dn9fWXrVElyvU7s3UkQS3HseSd7T7iW/oXsc1fQLKL4xFCd2k1Y1V
+         xtm8gANYx/TlpQUJpPuKeQhlHFxXrqEN4rPIPqlvJEXF+VduauJyymi378eLZIP0vQGr
+         vVIsiuef5gh/ce2gDR8vWmEwIkSJ88Nk1bbu0bhYinlch1O3RTAshPafKmuYwND0b4ZK
+         PDpGu6pnnt9QhdHNU+SE+Cl75JfEIk1882jEoB2C2xISz+gSbgXZ+Lle4Kh30K79WxPL
+         ejQdHOHj0+U7BpCfBmCwXkZ2cuNbDpvzz6BoY2OvEvRnQglz9LBHiEFdgh5IoSECRh/v
+         YuIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=r5rnNsL4lEChI1TD5S3DOvfNRk0icdBAPi2/vjJi8W8=;
+        b=aYQTnFzbiMS23zYrOh05hOFL9e4BkJ9iU1MftH0tMbRrPoNEcvmTYeYfcS6nvhoUos
+         hwSR2G/5S9f5qA/N86lzSpRtYWCLIhNSOlY/PtpyGw9kXqoNuuw/xumPH4QY8ggt+US2
+         x5YxDZJickYc5iX4SRTNtN5qEh/60LSIAIk4y/+W09lmcA+RhRSU8c6qg3kWzsDYv3F3
+         emdlooyCIkehwsAFFqVPS0O2AA3yJ9Y4Wn9peu6msHxYcPr339XlnbLQa7s+f4Bds4hO
+         u880ge4cPBfGGZyUD3UmpAky4TGGYBFX7DhlHuX0ysTCStP1LEu0q7rSLPNj2/qsOkNt
+         y7gw==
+X-Gm-Message-State: AFqh2krlOw8vXFcWDTzpFYMkIbMM3SBnwTOnKz9tGlF+hPPwkXTQEb/k
+        v+mH2811cHUZlOeCx0//vam4wQ==
+X-Google-Smtp-Source: AMrXdXsDIb3h1O/6Tz2h9O66iZtsKZs2KTs69PMWNdtDV8aQkHBc21pklhDRIECg4t7uzG5IyiH8mw==
+X-Received: by 2002:a17:903:442:b0:194:828e:ec5c with SMTP id iw2-20020a170903044200b00194828eec5cmr7035610plb.51.1673862139608;
+        Mon, 16 Jan 2023 01:42:19 -0800 (PST)
+Received: from localhost ([122.172.81.45])
+        by smtp.gmail.com with ESMTPSA id i12-20020a170902c94c00b00189a50d2a3esm6051998pla.241.2023.01.16.01.42.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Jan 2023 01:42:19 -0800 (PST)
+Date:   Mon, 16 Jan 2023 15:12:17 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org,
+        marijn.suijten@somainline.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Rob Herring <robh@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org
-References: <20230106092119.20449-1-quic_jinlmao@quicinc.com>
- <20230106092119.20449-9-quic_jinlmao@quicinc.com>
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <20230106092119.20449-9-quic_jinlmao@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Niklas Cassel <nks@flawful.org>, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v9 3/6] dt-bindings: opp: v2-qcom-level: Let
+ qcom,opp-fuse-level be a 2-long array
+Message-ID: <20230116094217.3ekwt7yosfkxst4a@vireshk-i7>
+References: <20230116093845.72621-1-konrad.dybcio@linaro.org>
+ <20230116093845.72621-4-konrad.dybcio@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230116093845.72621-4-konrad.dybcio@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/01/2023 09:21, Mao Jinlong wrote:
-> Add tpdm mm and tpdm prng for sm8250.
+On 16-01-23, 10:38, Konrad Dybcio wrote:
+> In some instances (particularly with CPRh) we might want to specifiy
+> more than one qcom,opp-fuse-level, as the same OPP subnodes may be
+> used by different "CPR threads". We need to make sure that
+> n = num_threads entries is legal and so far nobody seems to use more
+> than two, so let's allow that.
 > 
-> +---------------+                +-------------+
-> |  tpdm@6c08000 |                |tpdm@684C000 |
-> +-------|-------+                +------|------+
->          |                               |
-> +-------|-------+                       |
-> | funnel@6c0b000|                       |
-> +-------|-------+                       |
->          |                               |
-> +-------|-------+                       |
-> |funnel@6c2d000 |                       |
-> +-------|-------+                       |
->          |                               |
->          |    +---------------+          |
->          +----- tpda@6004000  -----------+
->               +-------|-------+
->                       |
->               +-------|-------+
->               |funnel@6005000 |
->               +---------------+
-> 
-> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+> Acked-by: Rob Herring <robh@kernel.org>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
+>  Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml b/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml
+> index b9ce2e099ce9..a30ef93213c0 100644
+> --- a/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml
+> +++ b/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml
+> @@ -30,7 +30,9 @@ patternProperties:
+>            this OPP node. Sometimes several corners/levels shares a certain fuse
+>            corner/level. A fuse corner/level contains e.g. ref uV, min uV,
+>            and max uV.
+> -        $ref: /schemas/types.yaml#/definitions/uint32
+> +        $ref: /schemas/types.yaml#/definitions/uint32-array
+> +        minItems: 1
+> +        maxItems: 2
+>  
+>      required:
+>        - opp-level
 
-nit: I have fixed Bjorn's email address. Please fix it in the next
-revision.
+Applied. Thanks.
 
-I assume this change will go via the arm-soc tree. Hence:
-
-Acked-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-
+-- 
+viresh
