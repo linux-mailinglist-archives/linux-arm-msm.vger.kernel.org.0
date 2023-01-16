@@ -2,66 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 72D0666C0BA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jan 2023 15:04:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 508BD66C229
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jan 2023 15:26:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231683AbjAPOD7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Jan 2023 09:03:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44342 "EHLO
+        id S232694AbjAPO0s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Jan 2023 09:26:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231794AbjAPODR (ORCPT
+        with ESMTP id S232708AbjAPO01 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Jan 2023 09:03:17 -0500
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D7CA22DE0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 06:02:48 -0800 (PST)
-Received: by mail-yb1-xb35.google.com with SMTP id o75so30389555yba.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 06:02:48 -0800 (PST)
+        Mon, 16 Jan 2023 09:26:27 -0500
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66AC83FF19
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 06:10:29 -0800 (PST)
+Received: by mail-ej1-x635.google.com with SMTP id vw16so5234859ejc.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 06:10:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=TQY8MHuSk9LBg4bjJGXRFvs4IYota2lxSV05jRoM7zo=;
-        b=MjdVdubzz+i+2MVOHNGdAD8LZ924fWZQp6mx+qg4mbRaV3Tb8brgO/8j9miGVpeBPy
-         IN+ytTjX6OQ/fEYgpRBMcZfbq3hheZSTaxcy2ByRQNDhGNj3gS61jYQtxwZi8VVCmjb2
-         BacZDDbMR35CJCjjGtGXAWS8CdKdGWYJ776MPT3mGBmP8RK27ilMf9+/cE5Xca7oz8Wr
-         35vn1URDpG9zdHH5HqXcOHMT3hQafEXjHqm8x1brEXaiYCNC7syCLNZfDbHKXXORkPz2
-         v74fFlbV6rgySBSB6+AVcKxM4HWTfreAT9bTBHQQhfrEeL1U+qWP1/37/A4+fYA2wD4v
-         Tmig==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ADJXZ8kNsgv3vcrTQzysSsEWOj1WOI4LxJL3Kvfr5dM=;
+        b=KcRVOHaYBJvNxPvlZAP8dXYYf/AAs0EdCHAX1OubPlt++a06CkeHn3Y9g3CUQEuYp1
+         vPkBkZcp4JgdzNCrcQVXJM25JFuNb8Q/c8GaYE40YRaZudYtD7e/s/F86O9PoEqduy2t
+         1m+6ZA7KlF/k/2Dze/KQ/ghuG97COwzY0UzIbjyjSocuyOCFw1ytQfMo2JwefWHrNRm3
+         cEbg/e7CS8kwaHZyx2WED5Zq/0vpOxFXVTIc3UGKMYDpQm1/J6/if2At0WREoMJex68D
+         j3FDzUNSPQAGfbvOj/xPdP3Rnk66U4Komo7Cj6jIp4rCyGP8IeM42lDjJswKh8BVnrHs
+         piFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=TQY8MHuSk9LBg4bjJGXRFvs4IYota2lxSV05jRoM7zo=;
-        b=LTgLCwlzeAUFjXLhboyO4ykZb5RVwntvQy9QwjfIRJK5BnuSqjai5YBhLaxyfkO8PA
-         l83OBwUsRYVcn4iPOsQbnNLSENm8YwHM/FfHlSlorXyC5fhYnqh8SzUQ+8WdSua4Jb5t
-         79/HhULBiHX2r03qVIShDMUTT/Uh4dUI7l8P3PXgTukBoysjmjcigHiNqskeKnnB0qhf
-         xzFaFUYuACJsBIbrpu34oogIKsOeINdSm4PkN3dlJEezQso+x6jGSLbQe9LORqwh+uRH
-         2vbur2Xkh6BvfII+gVUQ8iWFzK3yjWTNI6KAEK4QxhsBw5EoBjg5tN2eCIZ9QS7F6TA9
-         LHOg==
-X-Gm-Message-State: AFqh2ko3ti40cs86+Th2sN2gKuJncMlVHQ1bdIqANNKxczB0S3dEg1kv
-        C76LF/OcuFEXsqhYPq4ICIXkK/FpWU4/2PP4EZtP8g==
-X-Google-Smtp-Source: AMrXdXtRxz9SmVvead1/eVkMbw6RrkJCIXk2BBeMIoI151jIqjC/5sT2uKdUWsYnn6jtYbpF546JBBYHEHI5GK0uT0E=
-X-Received: by 2002:a25:6b0b:0:b0:7d2:8687:aea5 with SMTP id
- g11-20020a256b0b000000b007d28687aea5mr1265558ybc.210.1673877767930; Mon, 16
- Jan 2023 06:02:47 -0800 (PST)
-MIME-Version: 1.0
-References: <20230112184923.80442-1-andriy.shevchenko@linux.intel.com>
-In-Reply-To: <20230112184923.80442-1-andriy.shevchenko@linux.intel.com>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Mon, 16 Jan 2023 15:02:36 +0100
-Message-ID: <CACRpkdZua44WU077yW9ZZAj0gV2-pCJQhMD7RC4y_fagPOwr5g@mail.gmail.com>
-Subject: Re: [PATCH v1 1/1] pinctrl: qcom: lpass-lpi: Remove duplicate
- assignment of of_gpio_n_cells
-To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
+        bh=ADJXZ8kNsgv3vcrTQzysSsEWOj1WOI4LxJL3Kvfr5dM=;
+        b=tjAq742/sAX46NkwpsPInlueGyrcl1zzw2vx69i0cH77RujJ4RJHMhqVXDQ2+rF1BJ
+         mgK56y+3u0UvFRSbEHQucd69AJ2RpkJEyTq88vuruHljLJAZ5sp6BAJuLysI4IXjnWUz
+         ozzkwG9XROOoFmUjxRg17ONfrBcO4E4HFfYp5t6PfpCiwTpYfdHdTqAubfgVp1G/E3h9
+         0EcHiJTTv9yTtO7lbpr9WSIGlIYVfCxeOandWoKnRz0cR88Xek7If3i34Ln5kzRvNIuP
+         vUVP69NkWKXfWL3+RuC9no7OzRsaoS+HfPNB7AwdzB7Hqm6mkYmUVCXfzrQ8+INiHTBm
+         iJkg==
+X-Gm-Message-State: AFqh2komAEGsxZuhP/5zu1ZN11iUegDOY4E2fW2K6Ru2Tr2bi4GVFMTP
+        iRBcX+CCpobGr7X0yGtH2h1+rg==
+X-Google-Smtp-Source: AMrXdXuqLnI363kobIndikhQNFwzd6Lx+VZdNIHk+U/Wpmpxs/Dr86HRpUDxXn14YqZiPBKjvsVIuw==
+X-Received: by 2002:a17:906:d4a:b0:7bd:43e9:d3ab with SMTP id r10-20020a1709060d4a00b007bd43e9d3abmr12803479ejh.52.1673878209601;
+        Mon, 16 Jan 2023 06:10:09 -0800 (PST)
+Received: from hackbox.lan ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id kx1-20020a170907774100b0084d368b1628sm10704150ejc.40.2023.01.16.06.10.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Jan 2023 06:10:08 -0800 (PST)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Johan Hovold <johan@kernel.org>
+Subject: [PATCH v3 1/2] arm64: dts: qcom: sm8550: Add UFS host controller and phy nodes
+Date:   Mon, 16 Jan 2023 16:09:59 +0200
+Message-Id: <20230116141000.1831351-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -72,15 +74,116 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 12, 2023 at 7:49 PM Andy Shevchenko
-<andriy.shevchenko@linux.intel.com> wrote:
+Add UFS host controller and PHY nodes.
 
-> The of_gpio_n_cells default is 2 when ->of_xlate() callback is
-> not defined. No need to assign it explicitly in the driver.
->
-> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
 
-Patch applied!
+Changes since v2:
+ * reversed phy clocks and changed their names to ref and ref_aux
+ * dropped both address-cells and size-cells from phy node
+ * dropped the extra newline
+ * moved #clocks-cells above #phy-cells
+ * dropped ranges property
+ * renamed ufshc to ufs
+ * replaced RPMH_LN_BB_CLK3 clock with TCSR_UFS_PAD_CLKREF_EN for the
+   ufs host controller node
+ * added required-opps property to the ufs host controller node
 
-Yours,
-Linus Walleij
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 73 ++++++++++++++++++++++++++--
+ 1 file changed, 70 insertions(+), 3 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+index 59756ec11564..3d47281a276b 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+@@ -649,9 +649,9 @@ gcc: clock-controller@100000 {
+ 				 <0>,
+ 				 <0>,
+ 				 <0>,
+-				 <0>,
+-				 <0>,
+-				 <0>,
++				 <&ufs_mem_phy 0>,
++				 <&ufs_mem_phy 1>,
++				 <&ufs_mem_phy 2>,
+ 				 <0>;
+ 		};
+ 
+@@ -1571,6 +1571,73 @@ crypto: crypto@1de0000 {
+ 			interconnect-names = "memory";
+ 		};
+ 
++		ufs_mem_phy: phy@1d80000 {
++			compatible = "qcom,sm8550-qmp-ufs-phy";
++			reg = <0x0 0x01d80000 0x0 0x2000>;
++			clocks = <&tcsr TCSR_UFS_CLKREF_EN>,
++				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
++			clock-names = "ref", "ref_aux";
++
++			power-domains = <&gcc UFS_MEM_PHY_GDSC>;
++
++			resets = <&ufs_mem_hc 0>;
++			reset-names = "ufsphy";
++
++			#clock-cells = <1>;
++			#phy-cells = <0>;
++
++			status = "disabled";
++		};
++
++		ufs_mem_hc: ufs@1d84000 {
++			compatible = "qcom,sm8550-ufshc", "qcom,ufshc",
++				     "jedec,ufs-2.0";
++			reg = <0x0 0x01d84000 0x0 0x3000>;
++			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
++			phys = <&ufs_mem_phy>;
++			phy-names = "ufsphy";
++			lanes-per-direction = <2>;
++			#reset-cells = <1>;
++			resets = <&gcc GCC_UFS_PHY_BCR>;
++			reset-names = "rst";
++
++			power-domains = <&gcc UFS_PHY_GDSC>;
++			required-opps = <&rpmhpd_opp_nom>;
++
++			iommus = <&apps_smmu 0x60 0x0>;
++
++			interconnects = <&aggre1_noc MASTER_UFS_MEM 0 &mc_virt SLAVE_EBI1 0>,
++					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_UFS_MEM_CFG 0>;
++
++			interconnect-names = "ufs-ddr", "cpu-ufs";
++			clock-names = "core_clk",
++				      "bus_aggr_clk",
++				      "iface_clk",
++				      "core_clk_unipro",
++				      "ref_clk",
++				      "tx_lane0_sync_clk",
++				      "rx_lane0_sync_clk",
++				      "rx_lane1_sync_clk";
++			clocks = <&gcc GCC_UFS_PHY_AXI_CLK>,
++				 <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
++				 <&gcc GCC_UFS_PHY_AHB_CLK>,
++				 <&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
++				 <&tcsr TCSR_UFS_PAD_CLKREF_EN>,
++				 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
++				 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
++				 <&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
++			freq-table-hz =
++				<75000000 300000000>,
++				<0 0>,
++				<0 0>,
++				<75000000 300000000>,
++				<100000000 403000000>,
++				<0 0>,
++				<0 0>,
++				<0 0>;
++			status = "disabled";
++		};
++
+ 		tcsr_mutex: hwlock@1f40000 {
+ 			compatible = "qcom,tcsr-mutex";
+ 			reg = <0 0x01f40000 0 0x20000>;
+-- 
+2.34.1
+
