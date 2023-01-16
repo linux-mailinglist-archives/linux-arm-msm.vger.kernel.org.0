@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7017866C237
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jan 2023 15:33:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D4F8D66C244
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jan 2023 15:34:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232759AbjAPOdX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Jan 2023 09:33:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60028 "EHLO
+        id S231588AbjAPOel (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Jan 2023 09:34:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34180 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232504AbjAPOdA (ORCPT
+        with ESMTP id S232754AbjAPOeV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Jan 2023 09:33:00 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50FFF2CFF1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 06:13:43 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id y25so42884404lfa.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 06:13:43 -0800 (PST)
+        Mon, 16 Jan 2023 09:34:21 -0500
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E80C25E2A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 06:14:58 -0800 (PST)
+Received: by mail-lj1-x233.google.com with SMTP id q2so30134364ljp.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 06:14:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z0+W/Zj8jDpib9X/b7wfOA2JWzfWFWC+letT6lKOBN8=;
-        b=pkP+o5VHNi7BbfWnMDgqz06CS8IInlSpei4vdxhdoBow7iuSE6n1CHy9p0nw+E83iu
-         oSfH+nzhPBPD7ptr2ztbsK9F5Nvo0Ai/bFg80iwIeFkx43qkhkSSspdSbOfH3Jl6NuGg
-         u6vv+zWUyzEBDwdsnKsiLZ8a8H84epnlCFnnZ6YLQbqm0wzqxaURAMV/bmlgyfXCCuBE
-         PeM7z/Q2dFO+vUXtmj7U438xvh5c68Bt5wfnbqz9Pp/UtFz/qRGZ+OrMQ2B7Ql0F8TI2
-         Z0DsBwqe3SjiZ528Fdspc0J4r1rXIOt/8YTBvQAeI9FBn0ZRzLnPwCnxICIPMc7qJPyg
-         mrKg==
+        bh=gfxwMKEZH+NFckzgqpqUEB7uQk1T5vZlyDTZwBsejUA=;
+        b=D0K+dkz5EQufaK9M0iV/c46pfEMmZmI7iXGYdUZ07hDY4s8CS2Bn/fNS/G4kXC6lZ4
+         adwdLeaqj0l8hSJrrUHh+vPY4KzXMOxpcVQKFSI99gwBSJJWO7RBNuK8gTXHbtRq4kBx
+         oDb5MEo47WRkHDJ0XWmxvyXY1S8GiJCTB2pR2002CTTp7FLEwZxvGIOWHKFpnAreziOt
+         50Yo55lFXaY/uewzP/zktF9b2oab62AmbjttqJoP/LlMofBt329rsOU/NR1RzFosPNyY
+         9xTMqAMSGugjFTV63tyQZz5p1LD+6XuKH3MREjjAbPjFrtswL3IomDxZwBuY9KMerFXI
+         7sLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Z0+W/Zj8jDpib9X/b7wfOA2JWzfWFWC+letT6lKOBN8=;
-        b=PDVxjHXxm4RLBKKwHyEXxcC0kuGknBrSZ8ypbEluu5Q6DyW05EdGJoJwPTOiyCOf1Q
-         SCg3NYe1X1FLClkLot3v5p1FnScTs98I9q8Q0NWe7xo6kz667T2jP37xtNE41M40zTg2
-         nkQT1Ndw24/wZfMHkCL+ViFMX4+6j0B5PVpv/vv0ZhQOZvDBlxEYk0Q5emO/yqUWjOJ9
-         CZ6jsZU7CmU2t3cQZlwBhsPPGB9PexwiaFhbjfhs0G5rFr8+JSbACEDOIvkqQBDprtlK
-         bSojcpoI1ejQKYRO0Aarr+57LVDhIlXKDziUkC72WStEaOY2tZntTfBHBXLAhwycW/Zv
-         Nv0g==
-X-Gm-Message-State: AFqh2kql+Z9/ZmhaWATT8g7/JC3II6cdKAfCe6WmudPM18it/wBcNPgA
-        LxDaYCwFcbV8rhDdt53J/QPLbWUJm3Sp3Ckg
-X-Google-Smtp-Source: AMrXdXsqyUisqsmfEDU6hJCgmpfK8ZpBSqwtMG9GxcFK1H2qf6hbW6vzP6Jwb9FT3/nJv4qwaV2mDA==
-X-Received: by 2002:a05:6512:b04:b0:4cc:7258:f178 with SMTP id w4-20020a0565120b0400b004cc7258f178mr3912459lfu.59.1673878420746;
-        Mon, 16 Jan 2023 06:13:40 -0800 (PST)
+        bh=gfxwMKEZH+NFckzgqpqUEB7uQk1T5vZlyDTZwBsejUA=;
+        b=UmYw0BhhsQ5OuhdfESHN25Z1ujkqke0UgRXiF0+xYw6NMGVz8uNymXgW5grqFuXjgB
+         vezTGLkVl3u2aLcfDKhR7pOb1IMp2ZEUkE8HN0QiyUkksAjNt3wc8r/dtRioC5DwHsE/
+         QD0NuVUberN0Vinz0bONu2AvnHbadchWmL65OVCcmFbvJBXGAR69HMZej2ZaStlMRfus
+         /IXIGGT4BEnGQaCyAI3CQrhAkJmEfturnbF4uAWupf645NsiLsQ94ZXiyj4xAZsYmipQ
+         00j/ehGvoWV3Y/D5G4QMA7etlK9fotLLASB+25A0ceZYPliL6qV2+QKDxa+Rd8RAivGZ
+         WZzg==
+X-Gm-Message-State: AFqh2koy//dbAyEsoT1pWn3eSOLuhnnqeATx9gzHFJqSJhD1brjw0pg/
+        Om2VA/m9dNpIEesNEuR29+hH1QJkXXMUGHG9
+X-Google-Smtp-Source: AMrXdXsjQl9gidGkce3k1f5obBG7GyFTV59yXHIzIZfs68CLMBcx8NeFjmPHkRj7vMKD3pjNirkQyg==
+X-Received: by 2002:a2e:95d9:0:b0:28b:5391:2ae with SMTP id y25-20020a2e95d9000000b0028b539102aemr4654056ljh.2.1673878496307;
+        Mon, 16 Jan 2023 06:14:56 -0800 (PST)
 Received: from localhost.localdomain (abym53.neoplus.adsl.tpnet.pl. [83.9.32.53])
-        by smtp.gmail.com with ESMTPSA id c28-20020a056512239c00b0049ad2619becsm5030937lfv.131.2023.01.16.06.13.39
+        by smtp.gmail.com with ESMTPSA id s27-20020a05651c201b00b0028b85d0e705sm483717ljo.136.2023.01.16.06.14.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Jan 2023 06:13:40 -0800 (PST)
+        Mon, 16 Jan 2023 06:14:55 -0800 (PST)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
         agross@kernel.org, krzysztof.kozlowski@linaro.org
@@ -57,9 +57,9 @@ Cc:     marijn.suijten@somainline.org,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 1/2] arm64: dts: qcom: sdm630: Don't use underscores in node names
-Date:   Mon, 16 Jan 2023 15:13:36 +0100
-Message-Id: <20230116141337.469871-1-konrad.dybcio@linaro.org>
+Subject: [PATCH v2 1/2] arm64: dts: qcom: sdm630-nile: Don't use underscores in node names
+Date:   Mon, 16 Jan 2023 15:14:50 +0100
+Message-Id: <20230116141451.470158-1-konrad.dybcio@linaro.org>
 X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -78,6 +78,9 @@ undescores.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
+v1 -> v2:
+- Correct the patch title, didn't hit CTRL-C quick enough..
+
  arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
