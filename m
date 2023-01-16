@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0187466BD05
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jan 2023 12:41:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F70866BD0D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jan 2023 12:41:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229762AbjAPLlJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Jan 2023 06:41:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59376 "EHLO
+        id S229972AbjAPLlR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Jan 2023 06:41:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229793AbjAPLlH (ORCPT
+        with ESMTP id S229930AbjAPLlN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Jan 2023 06:41:07 -0500
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 856F844BF
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 03:41:05 -0800 (PST)
-Received: by mail-lj1-x230.google.com with SMTP id y19so8401170ljq.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 03:41:05 -0800 (PST)
+        Mon, 16 Jan 2023 06:41:13 -0500
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A82FE44B6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 03:41:09 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id d30so37410464lfv.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 03:41:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=bAzr3WbepHH/Xzw3XY7+Qyd2EYJHyzok2hFrIPSgsi8=;
-        b=W3zFXG1CifPHncC3axUe9wXlorA4Z55HvPebPUfGeJXpgJbQG8XOEJ2h45A4eVBHip
-         0x3+QEX/JBeZ+DrmbqnDk/x3ml+kmr6FtH3LaOmTW33IWrqGzAiglQPnb+Yie7+nKhoN
-         6fEiQyWktJLR+nOFWggMUDK7agb2Xl71a62ZqaR1iCrgB2bS/3FLRHYFzDTIhwNE7z3z
-         YTcO/GJihhOH8sFe7/4I1opzLrgzykmByosB9J5fGr2Zv4JWr88NVN+OulPziFYGFNMj
-         izYkzknOqcKf2bSeEJx7EH5rewbX6ildpqYws+7JXUsPvCVobu0WGNJo6mAOawsWE4nN
-         ArnQ==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3dGHe77W5+el0IE6FbRdtVCcIAo/MBAj9RuLYV7h71Y=;
+        b=OLnkeMwg+dH2A4GCcRVev9FtOtnLh0ZS1dw8p+g9sULNPcwEUSEaOqQTAGm+G+vHEO
+         VLWmuZjGrbobtrWwYfQmyib4Z941yVjBRLSvjWWSIRZQZ+fEzyU7licMbG3x+VqSKFft
+         SeH950EQ1wCK1eJxgpT+VJOKpKYLUGud5mCE/UlDJ/Df5oOJWs5xeTxepQkW4EnEaMA6
+         VKiwTV5ammFo33j6naCN5HD+N6tITn5CIQKjN69IWFDNKQyYJ3AUEFxrTFk+YcYrJtuf
+         wtjM96VfP+ze/kDz0kuD/QNYBXvvd2XPIVW8hAiu++fUjp1k+FLAMFJiRok3RIEwvp8x
+         143w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bAzr3WbepHH/Xzw3XY7+Qyd2EYJHyzok2hFrIPSgsi8=;
-        b=1IEyxS4qQ5DzCCdBSuVAAOK17jQS4xhkCG+4TsPSV9/jM3+OXwDTGpBAs3vKCurxt4
-         5cKje/GnbBNo0eEF1hGs3uwbnAkCBvraxgA2IgThKF6J6VI/cMW94/ejmrofRxBLfQI8
-         MrWMXwoVz5+mCIzpJmQ1LaRaxLjOgbe0LJ9VoTcOT8ZfZJgmn6L2yLqUSdteb9zlkjJL
-         szJN27cVrKp167ZWrjnm0cw5Jou4G4sLYRRHlVHp7tj1JL6e2Un2utBnWKmBZLFCZBRV
-         ALzhXpXPLEEDLi0q+psp7oviJs/fm+z0Ejp2O5eJDtj7PmvDcY218AHVEcRcTHtmM6lz
-         A84Q==
-X-Gm-Message-State: AFqh2kp/AiIkRpNYWI/AOPLDIIXTEy3UNrZCC6+5iyu874svfRcAH9JS
-        2YsDg9V+RXchzNsSucJN+U2Dj2IhTqDhH2WP
-X-Google-Smtp-Source: AMrXdXuyo8z+lpPJjrE3F6tFchQ8Fr0hXF7Q1C6orut7naGETw7CiURB4lbO1OBvqDWT2nI+dH35AA==
-X-Received: by 2002:a05:651c:1992:b0:27f:b2cf:85a0 with SMTP id bx18-20020a05651c199200b0027fb2cf85a0mr28139431ljb.43.1673869263688;
-        Mon, 16 Jan 2023 03:41:03 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=3dGHe77W5+el0IE6FbRdtVCcIAo/MBAj9RuLYV7h71Y=;
+        b=wV7ip4o35NSaZIWjvamzgZB8+rC27cKQzPEiX6QLs5q/ndwgfUyTTvAfPO6+AIfEJ5
+         KAEvHY+DJZyLTxvnGYo8d4JFx78HsP2wcVjbVXjLAcg3Gifopn7UDSH0PfVQjLJWU2Qm
+         c+Cp7FIGuGh70/GeATaboMFdRLedlpqJeiMY4ilPT5wq80pVXxvTafUsT4PzGLuBSkqI
+         fp1uDgy/1ExS71BOgjBf2AcdSw6XeUY6xG9tE/piesQBUE0a+Zow37Qw5ZTQ33Vp7NNW
+         IAiAKrMVKweV4UeslZM4VF/i1Pzx1hRumpPT/ILzViEd9SXpFUu6BeMB/nDqSsVXr1Oy
+         yytA==
+X-Gm-Message-State: AFqh2kq+CNNIcOC4zL520QdVa7SEHSzrQiKsYghjYEyic0orhl7ph6TD
+        CJUvhRo6XG+tj4UESWLv5rtsRvECn3VJcXY1
+X-Google-Smtp-Source: AMrXdXveFQwM64kphTdh9VvJyOYqmqjJIcGg0+MVAT2K8ZYQnBqUWMZSnBMwW92nMB6jcRu72BtVNw==
+X-Received: by 2002:a05:6512:3e10:b0:4b5:c489:8cf8 with SMTP id i16-20020a0565123e1000b004b5c4898cf8mr29527596lfv.61.1673869267773;
+        Mon, 16 Jan 2023 03:41:07 -0800 (PST)
 Received: from localhost.localdomain (abym53.neoplus.adsl.tpnet.pl. [83.9.32.53])
-        by smtp.gmail.com with ESMTPSA id k10-20020a05651c10aa00b0027fb9e64bd0sm918946ljn.86.2023.01.16.03.41.01
+        by smtp.gmail.com with ESMTPSA id k10-20020a05651c10aa00b0027fb9e64bd0sm918946ljn.86.2023.01.16.03.41.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Jan 2023 03:41:03 -0800 (PST)
+        Mon, 16 Jan 2023 03:41:07 -0800 (PST)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
         agross@kernel.org, krzysztof.kozlowski@linaro.org
@@ -63,11 +64,20 @@ Cc:     marijn.suijten@somainline.org,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Jonathan Marek <jonathan@marek.ca>,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 1/2] dt-bindings: display/msm: Add SM6375 DSI PHY
-Date:   Mon, 16 Jan 2023 12:40:58 +0100
-Message-Id: <20230116114059.346327-1-konrad.dybcio@linaro.org>
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        sunliming <sunliming@kylinos.cn>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        =?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
+        Rajeev Nandan <quic_rajeevny@quicinc.com>,
+        Loic Poulain <loic.poulain@linaro.org>
+Subject: [PATCH 2/2] drm/msm/dsi: Add phy configuration for SM6375
+Date:   Mon, 16 Jan 2023 12:40:59 +0100
+Message-Id: <20230116114059.346327-2-konrad.dybcio@linaro.org>
 X-Mailer: git-send-email 2.39.0
+In-Reply-To: <20230116114059.346327-1-konrad.dybcio@linaro.org>
+References: <20230116114059.346327-1-konrad.dybcio@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -80,25 +90,78 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SM6375 has a single 7nm DSI PHY. Document it.
+From: Konrad Dybcio <konrad.dybcio@somainline.org>
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+SM6375 uses a boring standard 7nm PHY. Add a configuration entry for it.
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 ---
- Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml | 1 +
- 1 file changed, 1 insertion(+)
+Depends on [1] to work properly, but won't hurt for it to land
+separately..
 
-diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml b/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml
-index 78ab8c410ccd..9c9184f94c44 100644
---- a/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml
-@@ -18,6 +18,7 @@ properties:
-       - qcom,dsi-phy-7nm
-       - qcom,dsi-phy-7nm-8150
-       - qcom,sc7280-dsi-phy-7nm
-+      - qcom,sm6375-dsi-phy-7nm
-       - qcom,sm8350-dsi-phy-5nm
-       - qcom,sm8450-dsi-phy-5nm
-       - qcom,sm8550-dsi-phy-4nm
+[1] https://patchwork.kernel.org/project/linux-arm-msm/patch/1642586079-12472-1-git-send-email-loic.poulain@linaro.org/
+
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.c     |  2 ++
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.h     |  1 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 20 ++++++++++++++++++++
+ 3 files changed, 23 insertions(+)
+
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+index cbe669fca26d..57445a5dc816 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+@@ -569,6 +569,8 @@ static const struct of_device_id dsi_phy_dt_match[] = {
+ 	  .data = &dsi_phy_7nm_8150_cfgs },
+ 	{ .compatible = "qcom,sc7280-dsi-phy-7nm",
+ 	  .data = &dsi_phy_7nm_7280_cfgs },
++	{ .compatible = "qcom,sm6375-dsi-phy-7nm",
++	  .data = &dsi_phy_7nm_6375_cfgs },
+ 	{ .compatible = "qcom,sm8350-dsi-phy-5nm",
+ 	  .data = &dsi_phy_5nm_8350_cfgs },
+ 	{ .compatible = "qcom,sm8450-dsi-phy-5nm",
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+index 5f0b1c9b09ef..c849bfd7494e 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+@@ -55,6 +55,7 @@ extern const struct msm_dsi_phy_cfg dsi_phy_14nm_8953_cfgs;
+ extern const struct msm_dsi_phy_cfg dsi_phy_10nm_cfgs;
+ extern const struct msm_dsi_phy_cfg dsi_phy_10nm_8998_cfgs;
+ extern const struct msm_dsi_phy_cfg dsi_phy_7nm_cfgs;
++extern const struct msm_dsi_phy_cfg dsi_phy_7nm_6375_cfgs;
+ extern const struct msm_dsi_phy_cfg dsi_phy_7nm_8150_cfgs;
+ extern const struct msm_dsi_phy_cfg dsi_phy_7nm_7280_cfgs;
+ extern const struct msm_dsi_phy_cfg dsi_phy_5nm_8350_cfgs;
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+index af5c952c6ad0..3b1ed02f644d 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+@@ -1152,6 +1152,26 @@ const struct msm_dsi_phy_cfg dsi_phy_7nm_cfgs = {
+ 	.quirks = DSI_PHY_7NM_QUIRK_V4_1,
+ };
+ 
++const struct msm_dsi_phy_cfg dsi_phy_7nm_6375_cfgs = {
++	.has_phy_lane = true,
++	.ops = {
++		.enable = dsi_7nm_phy_enable,
++		.disable = dsi_7nm_phy_disable,
++		.pll_init = dsi_pll_7nm_init,
++		.save_pll_state = dsi_7nm_pll_save_state,
++		.restore_pll_state = dsi_7nm_pll_restore_state,
++	},
++	.min_pll_rate = 600000000UL,
++#ifdef CONFIG_64BIT
++	.max_pll_rate = 5000000000ULL,
++#else
++	.max_pll_rate = ULONG_MAX,
++#endif
++	.io_start = { 0x5e94400 },
++	.num_dsi_phy = 1,
++	.quirks = DSI_PHY_7NM_QUIRK_V4_1,
++};
++
+ const struct msm_dsi_phy_cfg dsi_phy_7nm_8150_cfgs = {
+ 	.has_phy_lane = true,
+ 	.regulator_data = dsi_phy_7nm_36mA_regulators,
 -- 
 2.39.0
 
