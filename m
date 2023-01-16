@@ -2,59 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CB64E66BC8A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jan 2023 12:13:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 72A9466BCD4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jan 2023 12:25:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229494AbjAPLNB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Jan 2023 06:13:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42406 "EHLO
+        id S229863AbjAPLZv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Jan 2023 06:25:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50654 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229626AbjAPLMj (ORCPT
+        with ESMTP id S229727AbjAPLZu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Jan 2023 06:12:39 -0500
+        Mon, 16 Jan 2023 06:25:50 -0500
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EA1014487;
-        Mon, 16 Jan 2023 03:12:36 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2C4C1DB99;
+        Mon, 16 Jan 2023 03:25:49 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E35E160F68;
-        Mon, 16 Jan 2023 11:12:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B524C433D2;
-        Mon, 16 Jan 2023 11:12:34 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 8FD8960F66;
+        Mon, 16 Jan 2023 11:25:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01A41C433EF;
+        Mon, 16 Jan 2023 11:25:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1673867555;
-        bh=+wQ25LIyeqNsuwnNuac8hPsPq35J2Ha8X2Pw4vC4ugk=;
+        s=k20201202; t=1673868349;
+        bh=FUq7UxCOUiutH7Be3J196rTcDsnh/wAPIdZu/jyQFlE=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=M7dA4lvI6DveU5osHG3ehgQ5EcRwZhupa8q2AbikDbB8v5NouXE861wUbAJORWcFR
-         C92L0v9G6PwpUNM6rckYlGByT9OvCgBhDHQtjrPk6IrvpzEK6oohxQURgj3ctk0qG3
-         wB1+VuEDlF8+3evOfGVQl5nkfEiErkJRG+bqRGqVcHi0fFQ6TGhWxpGCOl0t15W6ng
-         oVoyhsSRoPg/LXZ0ArbvVNeRPbZbXTCHrJ7uPnPbIUXWw9BTtDqCgAfqZ95yVsPlB1
-         HEAiPwanxi/+0df7i8+4GDpqw0NQ3pos9Srw1hEsIyAqXe2/wNZf9jJFyovAOyUQaX
-         g/4fZ4o4tkW1g==
-Date:   Mon, 16 Jan 2023 11:12:29 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     devi priya <quic_devipriy@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        lgirdwood@gmail.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
-        quic_poovendh@quicinc.com
-Subject: Re: [PATCH 1/6] soc: qcom: smd-rpm: Add IPQ9574 compatible
-Message-ID: <Y8UxHZx6Mkt3sHXq@sirena.org.uk>
-References: <20230113150310.29709-1-quic_devipriy@quicinc.com>
- <20230113150310.29709-2-quic_devipriy@quicinc.com>
- <37755ba1-e8d0-cd9e-73a4-6501746022d8@linaro.org>
+        b=tlcEBQYchwvOmx+MeC5SiZOECRn3YfUcH8dCIqscrTnlrazVR7tghY+Vb2IJwPJQb
+         ivsfpfD3vdmwE1CYmFYLng7Fq9ge+Rejfo2s1Q0CBjL8+LQhWpcQm3r51BAUZ1TjNd
+         +bGv/Vk9E1WzPNCF8U0TkXbYAmm+uUnbIvlQoXBoVWRnZPYTgLN28qK24AIhuPN0u2
+         UDJQIkvgDH0uO0D6wZkuU6A8NEtLnX1J1LjoY4JXce8k+IDiQSeDc9RwLHIIiu+2MV
+         xAxyMjL+ixGIj3OtR7Wbtz8WAoJoCdtg3Nun5R6rCj23GRNeXxHFX8rbVWt2D86bUj
+         o96JERSrnLOWw==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pHNct-0003hX-5m; Mon, 16 Jan 2023 12:26:07 +0100
+Date:   Mon, 16 Jan 2023 12:26:07 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Lorenzo Pieralisi <lpieralisi@kernel.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org
+Subject: Re: [PATCH 2/4] PCI: qcom: Use clk_bulk_ API for 1.0.0 clocks
+ handling
+Message-ID: <Y8U0T4YVUhe/4hRv@hovoldconsulting.com>
+References: <20221020103120.1541862-1-dmitry.baryshkov@linaro.org>
+ <20221020103120.1541862-3-dmitry.baryshkov@linaro.org>
+ <Y1EsOGhEqNe9Cxo6@hovoldconsulting.com>
+ <30850757-0e39-bd3d-0d4f-cdb4627b097c@linaro.org>
+ <Y8F+sSf3yG1mLhJo@lpieralisi>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="wIRK8edTiW17OVlw"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <37755ba1-e8d0-cd9e-73a4-6501746022d8@linaro.org>
-X-Cookie: Serving suggestion.
+In-Reply-To: <Y8F+sSf3yG1mLhJo@lpieralisi>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -64,42 +70,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, Jan 13, 2023 at 04:54:25PM +0100, Lorenzo Pieralisi wrote:
+> On Thu, Oct 20, 2022 at 02:22:47PM +0300, Dmitry Baryshkov wrote:
+> > On 20/10/2022 14:08, Johan Hovold wrote:
+> > > On Thu, Oct 20, 2022 at 01:31:18PM +0300, Dmitry Baryshkov wrote:
+> > > > Change hand-coded implementation of bulk clocks to use the existing
+> > > 
+> > > Let's hope everything is "hand-coded" at least for a few years still
+> > > (job security). ;)
+> > > 
+> > > Perhaps rephrase using "open-coded"?
+> > 
+> > Yes, thank you.
+> 
+> If that's the only change required I can fix it up when merging the
+> series.
 
---wIRK8edTiW17OVlw
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I believe there was also a couple of bugs in patch 3/4 which was spotted
+by Jingoo Han and that would need to be fixed:
 
-On Fri, Jan 13, 2023 at 05:42:36PM +0100, Krzysztof Kozlowski wrote:
-> On 13/01/2023 16:03, devi priya wrote:
-> > Adding compatible string to support RPM communication over SMD for
-> > IPQ9574 SoC
-> >=20
-> > Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-> > Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
->=20
-> What exactly was developed here but the other author?
+	https://lore.kernel.org/all/CAPOBaE5Zg+r0F35MvKWAozFa9x4xvym1LbA_UHvUSmnLbTpqzA@mail.gmail.com/
 
-It's fairly clear looking at this in the context of the series
-that the same tags have been applied to every patch in the
-series.  Probably a patch like this was actually written by just
-one person but there's a decent chance that it's just been
-forgotten who it was and fundamentally it just doesn't matter
-that much.
-
---wIRK8edTiW17OVlw
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmPFMRgACgkQJNaLcl1U
-h9Da5gf/XnXzjuy+LtiIlDhMn/Kn8h19yQMA765qgQdrO+h8Ig/PUCRTyf9X8ksa
-2kRwpMRn4wf767IWRei5rYrvsDuwTC3CObWa2H9cJ+m0mvPpH5us91mSnnaBlcKN
-Pll+1q4K1o+bAxG/fwAQbkrHfMUzeVO2ctaLpDmBZ9WATahktJl34OvsUZxZ7UIb
-VnyK8ZmIFFVSTrliaKzdlng39VwUK/gqWZm2s4NGLGh2EtHHWqlZdu2nL0o2gtP8
-hw5fJQiIhTRIlnnyWwfUB5hSXfkW5Js+8sYBZWA3y2W6MweDf5/6uhOYmlu6cH4E
-3YakshqMbXpUFGY4gRDDqkQCeHOOpw==
-=3sH0
------END PGP SIGNATURE-----
-
---wIRK8edTiW17OVlw--
+Johan
