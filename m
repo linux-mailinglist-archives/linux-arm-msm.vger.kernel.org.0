@@ -2,82 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6FA0966B884
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jan 2023 08:58:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 67FAF66B942
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jan 2023 09:46:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232050AbjAPH61 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Jan 2023 02:58:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32846 "EHLO
+        id S232329AbjAPIqg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Jan 2023 03:46:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55578 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231868AbjAPH6Z (ORCPT
+        with ESMTP id S231969AbjAPIqd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Jan 2023 02:58:25 -0500
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63FCA10425
-        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Jan 2023 23:58:24 -0800 (PST)
-Received: by mail-ej1-x632.google.com with SMTP id v6so23065814ejg.6
-        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Jan 2023 23:58:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3P6m9cygArzQUzcA1d5DwOn4hihKZKZ13H0Eg/NjplU=;
-        b=bvbnoadocjzFvIY8rA2ScL3BHDG5nGLrhnObZLR5L5GxVum3MWkfyz1psbXIfhmohJ
-         OeRm3E++cDyQz0UmArQ/li1KchmCcsQ++YH5az6lgQ4Q6PY9jDgP502Trnf0IKltb7kU
-         TN8nqaAGrquKIVHvf9UneOe3K03O1UTKd9eRunWf+EZ3vImN4he4WfxRVkDrh6c54TtF
-         05dslx+JuVNgcWXpVARuax/eCChE70fouqeKq1yv8ZHXlHJcGqX61Lt6X11HygWws0d0
-         q4SX4h7lMpCqPYjkCCT8k2HE17vDVeMwaPrmaZkHiZbKxAwql4y489KPwkKKY+3DtClD
-         cdyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3P6m9cygArzQUzcA1d5DwOn4hihKZKZ13H0Eg/NjplU=;
-        b=36rpHw9MmX4DqliPrSdUJlY5uqahBrYk4MNtAHYpki572x9MJWOo4WgAqGw42gAH/A
-         aj2ONI5vaMDM01aeWmJx+9+pjSxnUijUW8VoCTrlAsrY62ulLM8nHl3XGaf/NNLhNcUN
-         pEwmDRYgotS9ir+8axQ8bYhT6ITkRoMEhBD8jIdSZKi720S2ddExVdZkZlT6C/RUIgWA
-         7U8LAYipSvlCFwcO30+ON2RHrjbpxPlSqEyDCcJ8sdc9bzavv9UYsFGW2JR1ocYKO5On
-         fCpbq20UsIDAIvadNOAL8f7FsFuY3EIcOvc4L2WiTVhdst7KDdfSo9mgrqgAJJ4X948z
-         JSnA==
-X-Gm-Message-State: AFqh2krElOawjrIoYfLBd5hlXZNGXiSQNye3iX764KZ36oxwWVdmCF8k
-        Squr/TiYzp5UgP1uPELb2UbxPA==
-X-Google-Smtp-Source: AMrXdXuDcVGn28fkOHFfMl2xwsTevHvQAKWtTc2UKZJEFgpVWjyxOj8xWnSiMJ754nRI5I2rklLXhQ==
-X-Received: by 2002:a17:907:c019:b0:7c0:b569:8efe with SMTP id ss25-20020a170907c01900b007c0b5698efemr72786145ejc.60.1673855903025;
-        Sun, 15 Jan 2023 23:58:23 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id v2-20020a170906292200b008710789d85fsm530701ejd.156.2023.01.15.23.58.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 15 Jan 2023 23:58:22 -0800 (PST)
-Message-ID: <20385103-2217-a5d0-6355-802bc87ec888@linaro.org>
-Date:   Mon, 16 Jan 2023 08:58:20 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH 2/6] arm64: dts: qcom: sdm845: move WCD9340 codec to
- separate file
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Mon, 16 Jan 2023 03:46:33 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D721F1286C;
+        Mon, 16 Jan 2023 00:46:32 -0800 (PST)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30G6ukmT032407;
+        Mon, 16 Jan 2023 08:46:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : reply-to : references : mime-version :
+ content-type : in-reply-to; s=qcppdkim1;
+ bh=9upRWgPsUI4MWJz8NNhINZoq9YCOZLLadpunlbq+F+I=;
+ b=UnN5PMZIYloM18yNkt42oJvysp3WI+HRVAA+lSiq4mk+L8/tCBO6Ho8UMeCuIpiYUx8m
+ iW/rmtED8PqAbB2/HLBCDpF3QBlCO9qzx0BlT581Hw+EB3RmFBaDok50qYP2uMSunDD8
+ +I/sxax71S9iPJNvBJduo2SQfj1e/vQdwRxeBqx2C4UXmD02oiLPBIbwAv7fCdy2gsEY
+ 0buEhutE2o5j3zNHww0xeeGSoyQLtdQLIffma6hPlyWMYpLJc3lyjX+RERKKIwJnQ9QJ
+ 02+EFkpN2opWjW0Gpd7owyODK8gtGMmqf1a8UsvQ93TE36J//gcybSDoirbDSNlWTzY6 lw== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n3mm9tx1w-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 16 Jan 2023 08:46:08 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30G8k74G028844
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 16 Jan 2023 08:46:07 GMT
+Received: from quicinc.com (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 16 Jan
+ 2023 00:46:00 -0800
+Date:   Mon, 16 Jan 2023 14:15:57 +0530
+From:   Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
+To:     Elliot Berman <quic_eberman@quicinc.com>
+CC:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        "Carl van Schaik" <quic_cvanscha@quicinc.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230113162245.117324-1-krzysztof.kozlowski@linaro.org>
- <20230113162245.117324-2-krzysztof.kozlowski@linaro.org>
- <e3c367ba-b752-d116-0b84-fd2437e565b8@linaro.org>
- <5e784285-c391-91f4-c9d1-a53443fc4264@linaro.org>
- <CAA8EJpr+0fnhy+aHwmdKQA_xk2Qkse0L5u8JdCJNDZqqdYwhrg@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAA8EJpr+0fnhy+aHwmdKQA_xk2Qkse0L5u8JdCJNDZqqdYwhrg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-acpi@vger.kernel.org>
+Subject: Re: [PATCH v8 13/28] gunyah: rsc_mgr: Add RPC for sharing memory
+Message-ID: <20230116084557.GB1737564@quicinc.com>
+Reply-To: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
+References: <20221219225850.2397345-1-quic_eberman@quicinc.com>
+ <20221219225850.2397345-14-quic_eberman@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+In-Reply-To: <20221219225850.2397345-14-quic_eberman@quicinc.com>
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: _ofK556yL_a9qSF87Ooq6UE7hMu7sYIb
+X-Proofpoint-ORIG-GUID: _ofK556yL_a9qSF87Ooq6UE7hMu7sYIb
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-16_06,2023-01-13_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
+ spamscore=0 priorityscore=1501 malwarescore=0 suspectscore=0
+ impostorscore=0 adultscore=0 bulkscore=0 lowpriorityscore=0 clxscore=1011
+ mlxlogscore=839 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301160064
+X-Spam-Status: No, score=0.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,35 +98,106 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/01/2023 06:55, Dmitry Baryshkov wrote:
-> On Sun, 15 Jan 2023 at 13:21, Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
->>
->> On 14/01/2023 21:33, Konrad Dybcio wrote:
->>>
->>>
->>> On 13.01.2023 17:22, Krzysztof Kozlowski wrote:
->>>> WCD9340 codec node is not a property of the SoC, but board.  Move it to
->>>> separate file and include it in the specific boards.  On all others,
->>>> keep the Slimbus node disabled as it is empty.
->>>>
->>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>>> ---
->>> Generally this should be SoC-independent, for example some newer
->>> MSM8998 devices shipped with the 9340 codec that most 845 devices
->>> used, but earlier ones used the WCD9335 found on MSM8996
->>
->> OK, but I don't get if you expect me to change anything?
-> 
-> Maybe it might make sense to name new include file just 'wcd9340.dtsi'
-> rather than 'sdm845-somthing.dtsi'? Same applies to the wcd9335 codec
-> found in msm8996.dtsi, if you are going to extract it too.
+* Elliot Berman <quic_eberman@quicinc.com> [2022-12-19 14:58:34]:
 
-Ah, then I vote against, because it is not only codec, but also it's bus
-attachment. It cannot be re-used on other devices.
+> +static int _gh_rm_mem_append(struct gh_rm_rpc *rm, u32 mem_handle, bool end_append,
+> +			struct gh_rm_mem_entry *mem_entries, size_t n_mem_entries)
+> +{
+> +	size_t msg_size = 0;
+> +	void *msg;
+> +	struct gh_mem_append_req_header *req_header;
+> +	struct gh_mem_share_req_mem_section *mem_section;
+> +	void *resp;
+> +	size_t resp_size;
+> +	int ret;
+> +
+> +	msg_size += sizeof(struct gh_mem_append_req_header);
+> +	msg_size += offsetof(struct gh_mem_share_req_mem_section, entries[n_mem_entries]);
+> +
+> +	msg = kzalloc(msg_size, GFP_KERNEL);
+> +	if (!msg)
+> +		return -ENOMEM;
+> +
+> +	req_header = msg;
+> +	mem_section = (void *)req_header + sizeof(struct gh_mem_append_req_header);
+> +
+> +	req_header->mem_handle = mem_handle;
 
-Same approach with sc7280 audios - not re-usable for other SoCs.
+cpu_to_le(mem_handle);
 
-Best regards,
-Krzysztof
+
+> +	if (end_append)
+> +		req_header->flags |= GH_MEM_APPEND_REQ_FLAGS_END;
+> +
+> +	mem_section->n_entries = n_mem_entries;
+> +	memcpy(mem_section->entries, mem_entries, sizeof(*mem_entries) * n_mem_entries);
+> +
+> +	ret = gh_rm_call(rm, GH_RM_RPC_MEM_APPEND, msg, msg_size, &resp, &resp_size);
+> +	if (ret)
+
+kfree(msg);
+
+> +		return ret;
+> +	kfree(resp);
+
+kfree(msg);
+
+> +
+> +	return ret;
+> +}
+> +
+> +static int gh_rm_mem_append(struct gh_rm_rpc *rm, u32 mem_handle, bool allow_append,
+
+Is there any scenario where allow_append will be 'true'? As of this patch
+atleast, its always 'false', so maybe just avoid this input argument?
+
+> +static int gh_rm_mem_lend_common(struct gh_rm_rpc *rm, u32 message_id, struct gh_rm_mem_parcel *p)
+> +{
+
+[snip]
+
+> +	acl_section->n_entries = p->n_acl_entries;
+
+cpu_to_le32(p->n_acl_entries);
+
+> +	memcpy(acl_section->entries, p->acl_entries, sizeof(*(p->acl_entries)) * p->n_acl_entries);
+> +
+> +	mem_section->n_entries = initial_n_mem_entries;
+
+cpu_to_le32(initial_n_mem_entries);
+
+> +	memcpy(mem_section->entries, p->mem_entries,
+> +		sizeof(*(p->mem_entries)) * initial_n_mem_entries);
+> +
+> +	/* Set n_entries for memory attribute section to 0 */
+> +	*mem_attr_section = 0;
+> +
+> +	ret = gh_rm_call(rm, message_id, msg, msg_size, &resp, &resp_size);
+> +	if (ret)
+
+kfree(msg)
+
+> +		return ret;
+> +
+> +	if (resp_size != sizeof(__le32)) {
+> +		ret = -EIO;
+> +		goto out;
+> +	}
+> +
+> +	p->mem_handle = le32_to_cpu(*(__le32 *)resp);
+> +
+> +	if (initial_n_mem_entries != p->n_mem_entries) {
+> +		ret = gh_rm_mem_append(rm, p->mem_handle, false,
+> +					&p->mem_entries[initial_n_mem_entries],
+> +					p->n_mem_entries - initial_n_mem_entries);
+> +		if (ret)
+> +			gh_rm_mem_reclaim(rm, p);
+
+			p->mem_handle = GH_MEM_HANDLE_INVAL in this case?
+
+> +	}
+> +
+> +out:
+
+kfree(msg) ?
 
