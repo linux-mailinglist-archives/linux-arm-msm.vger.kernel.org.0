@@ -2,108 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 02E6366D045
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jan 2023 21:35:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4661F66D05A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jan 2023 21:45:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232556AbjAPUf4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Jan 2023 15:35:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40860 "EHLO
+        id S229934AbjAPUo7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Jan 2023 15:44:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232003AbjAPUfz (ORCPT
+        with ESMTP id S230103AbjAPUo6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Jan 2023 15:35:55 -0500
-Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [5.144.164.163])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1C7C2A17B;
-        Mon, 16 Jan 2023 12:35:53 -0800 (PST)
+        Mon, 16 Jan 2023 15:44:58 -0500
+Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [IPv6:2001:4b7a:2000:18::170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEA662A99E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 12:44:56 -0800 (PST)
 Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 0C3B11F5E0;
-        Mon, 16 Jan 2023 21:35:50 +0100 (CET)
-Date:   Mon, 16 Jan 2023 21:35:49 +0100
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 7A08D1FAA6;
+        Mon, 16 Jan 2023 21:44:53 +0100 (CET)
+Date:   Mon, 16 Jan 2023 21:44:52 +0100
 From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Michael Srba <Michael.Srba@seznam.cz>,
+To:     Jonathan Cameron <jic23@kernel.org>
+Cc:     Nuno =?utf-8?B?U8Oh?= <nuno.sa@analog.com>,
+        openbmc@lists.ozlabs.org, linux-imx@nxp.com,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-iio@vger.kernel.org, linux-mips@vger.kernel.org,
+        linux-renesas-soc@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        chrome-platform@lists.linux.dev,
+        linux-arm-kernel@lists.infradead.org,
+        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+        linux-arm-msm@vger.kernel.org,
+        Gwendal Grignou <gwendal@chromium.org>,
+        Saravanan Sekar <sravanhome@gmail.com>,
+        Tomer Maimon <tmaimon77@gmail.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Lorenzo Bianconi <lorenzo@kernel.org>,
+        Fabio Estevam <festevam@gmail.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Olivier Moysan <olivier.moysan@foss.st.com>,
+        Tali Perry <tali.perry1@gmail.com>,
+        Thara Gopinath <thara.gopinath@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Benjamin Fair <benjaminfair@google.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Patrick Venture <venture@google.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Benson Leung <bleung@chromium.org>,
+        Nancy Yuen <yuenn@google.com>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Christophe Branchereau <cbranchereau@gmail.com>,
+        Cai Huoqing <cai.huoqing@linux.dev>,
+        Avi Fishman <avifishman70@gmail.com>,
+        Eugen Hristev <eugen.hristev@microchip.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Andy Shevchenko <andy.shevchenko@gmail.com>,
+        Guenter Roeck <groeck@chromium.org>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] Revert "phy: qualcomm: usb28nm: Add MDM9607 init
- sequence"
-Message-ID: <20230116203549.5jzd2olxua662n6w@SoMainline.org>
-Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
-        Vinod Koul <vkoul@kernel.org>, phone-devel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Michael Srba <Michael.Srba@seznam.cz>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221214223733.648167-1-marijn.suijten@somainline.org>
- <Y8GY51Cfkj7o1MJs@matsya>
+        Amit Kucheria <amitk@kernel.org>,
+        Michael Hennerich <Michael.Hennerich@analog.com>,
+        Haibo Chen <haibo.chen@nxp.com>,
+        Jishnu Prakash <quic_jprakash@quicinc.com>
+Subject: Re: [PATCH v3 12/15] iio: adc: qcom-spmi-adc5: convert to device
+ properties
+Message-ID: <20230116204452.il4gase2szipeexz@SoMainline.org>
+References: <20220715122903.332535-1-nuno.sa@analog.com>
+ <20220715122903.332535-13-nuno.sa@analog.com>
+ <20220806192048.0ca41cc5@jic23-huawei>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <Y8GY51Cfkj7o1MJs@matsya>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220806192048.0ca41cc5@jic23-huawei>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-01-13 23:16:15, Vinod Koul wrote:
-> On 14-12-22, 23:37, Marijn Suijten wrote:
-> > This reverts commit 557a28811c7e0286d3816842032db5eb7bb5f156.
-> > 
-> > This commit introduced an init sequence from downstream DT [1] in the
-> > driver.  As mentioned by the comment above the HSPHY_INIT_CFG macro for
-> > this sequence:
-> > 
-> >     /*
-> >      * The macro is used to define an initialization sequence.  Each tuple
-> >      * is meant to program 'value' into phy register at 'offset' with 'delay'
-> >      * in us followed.
-> >      */
-> > 
-> > Instead of corresponding to offsets into the phy register, the sequence
-> > read by the downstream driver [2] is passed into ulpi_write [3] which
-> > crafts the address-value pair into a new value and writes it into the
-> > same register at USB_ULPI_VIEWPORT [4].  In other words, this init
-> > sequence is programmed into the hardware in a totally different way than
-> > downstream and is unlikely to achieve the desired result, if the hsphy
-> > is working at all.
-> > 
-> > An alternative method needs to be found to write these init values at
-> > the desired location.  Fortunately mdm9607 did not land upstream yet [5]
-> > and should have its compatible revised to use the generic one, instead
-> > of a compatible that writes wrong data to the wrong registers.
+On 2022-08-06 19:20:48, Jonathan Cameron wrote:
+> On Fri, 15 Jul 2022 14:29:00 +0200
+> Nuno Sá <nuno.sa@analog.com> wrote:
 > 
-> Applied after adding missing subsystem tag, thanks
+> > Make the conversion to firmware agnostic device properties. As part of
+> > the conversion the IIO inkern interface 'of_xlate()' is also converted to
+> > 'fwnode_xlate()'. The goal is to completely drop 'of_xlate' and hence OF
+> > dependencies from IIO.
+> > 
+> > Signed-off-by: Nuno Sá <nuno.sa@analog.com>
+> > Acked-by: Linus Walleij <linus.walleij@linaro.org>
+> > Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+> +CC Marijin who happend to post a patch for this driver that I just accepted
+> and hence probably has hardware access.  Any chance of a test for this series?
+> 
+> If not, no problem as this is fairly mechanical and we have testing on some of
+> the other drivers using the new code.
+> 
+> I'll probably queue this up in the meantime but it won't end up upstream
+> for a few weeks yet.
 
-Thanks, it wasn't clear to me whether to suffix the title when already
-included in the Revert: "phy: qualcomm: ..." title :)
+Jonathan,
+
+This CC just surfaced in my inbox while searching for our current
+discussion around missing labels in qcom-spmi-vadc - and on the side a
+userspace @xx label name ABI break (in qcom-spmi-adc5) caused by this
+patch's fwnode_get_name change - we could've caught it if I had not
+accidentally marked it as read and/or forgot about it.  My apologies.
 
 - Marijn
