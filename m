@@ -2,119 +2,713 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 04F6E66C971
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jan 2023 17:49:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 91C1366C9FC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jan 2023 17:58:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233968AbjAPQtw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Jan 2023 11:49:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44438 "EHLO
+        id S234076AbjAPQ61 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Jan 2023 11:58:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233898AbjAPQtc (ORCPT
+        with ESMTP id S234033AbjAPQ5p (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Jan 2023 11:49:32 -0500
-Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A60E2B2A7;
-        Mon, 16 Jan 2023 08:36:18 -0800 (PST)
-Received: by mail-oi1-f177.google.com with SMTP id d188so12670889oia.3;
-        Mon, 16 Jan 2023 08:36:18 -0800 (PST)
+        Mon, 16 Jan 2023 11:57:45 -0500
+Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 936B62CFD0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 08:40:42 -0800 (PST)
+Received: by mail-pg1-x529.google.com with SMTP id s67so20036640pgs.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 08:40:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=7vIF0NjJ6ridtH0ycWroVl3ltM4BPIf60BYeD4BHAf8=;
+        b=y/+xQBDp6bkar+9ESYuKOcaDmEFQ7m7LqYLtDjWGYzUVtK9j6CPldh/Bi22Xaq8GZE
+         fh23EO9hOqIrZhPi4cz7ISNtOoAZe7X4RLB0Gd8ka6mmokRZWXsr6zMkItC6nYl8KuAj
+         gfmUwtmujO3hwODKg3sw/QgY2cX+sgIXhcX4Yd0GKbF9SbYMJgbKYsYZDfK/jV9s2MxK
+         X1+28y24uKMAESfGPZf1qPofWIkIOUqeYa01iyyCFYSzg88P7ZMf7j+lybfXjzNfBkXT
+         xO3SFOpYkWJniIpRIGpjjHdxyXmlaQP8pbuNtt9380cM/6cVacPLBNwGFhXE9vDh4qZE
+         eqmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=s1mnVLUqXMbam/ql0ZAT00mPh8Q7RxTd9GmFpYmAkm4=;
-        b=XSJqEc63ecqvcqjhv+Bt/0sAK/IU+YpWj5q70To1QqunvOyD6C7hsBt/smAIc7QtwS
-         snrM5vD1ij/W4QeFLFDqmxqpk47CBL8PbXASOnLcMcMA0+uh0p9fUeggR6SJEYR6wsqP
-         A5zb767LWXO5K4L7rIvPoO9LjFRoou6hS3QyhTou7tQp1FX5Y1B7Jd8zUqs8JLUZErHQ
-         eSWejB1zwTNF/SbnApXWKLfCXx0aeVDRM8I9ZiaRuLxVNDU4yi4TZpTX0O1lptvzuoGq
-         52AXoZD4RbkFo6vJ+QZQVo5ghj2t92p6Gpxs5CNRobqdWOEP9eF1tWDnKzJDl8SmdnVv
-         1I0g==
-X-Gm-Message-State: AFqh2koX6/WtvYx4PfUQNhWCuLwqir5efKVl6jl6HjgCBiI4AjG6Flag
-        S5cZyDN5b1JniSPLcJDESCj/RcUWvg==
-X-Google-Smtp-Source: AMrXdXs3Hr51eTOi/MRFOAQNqOWjNSAoz2ZaZH/Mx8uM+O8E+kql8IwC4IZsTNPAH9WZrLwUr6BU8g==
-X-Received: by 2002:a05:6808:124c:b0:364:3de0:f92f with SMTP id o12-20020a056808124c00b003643de0f92fmr17757691oiv.19.1673886977885;
-        Mon, 16 Jan 2023 08:36:17 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id t11-20020a9d590b000000b00677714a440fsm14931184oth.81.2023.01.16.08.36.17
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7vIF0NjJ6ridtH0ycWroVl3ltM4BPIf60BYeD4BHAf8=;
+        b=edpg5PLZVu+U9tnUWDBqwEKeeHMl21rmS4ps0NCv9Yz1NgIVWKeL0JoX5eMwu9aivp
+         5I/EvzvW44Hj83w7c65vxzWhc4lko9syKpTX+moZCu7Vrfy8v1VQZWKu051jrfrlgjnQ
+         Qr4GeSbpue7JJwinPBr7JJO8CahOCkKCLo6xeo7+MED96z/m6gSDIyiyd5dpDNNDaPEv
+         pTiAir+PSxkUZYbCD3Tj8I6EU7pjFOt1isXtVcJH2urWo4sexlwtT3PmxGOEtYmxscqp
+         XC/bmFau/AMmIa98yyffyuwkLPsTh+iznLwbip4OaZ9dk/6Eohlyknvj/zcNbHxPtzIF
+         zB3Q==
+X-Gm-Message-State: AFqh2kp8hUWBc0JBsT5zM7kl19xl9W71SYmiSDE/pYKckbjH6rMno6nk
+        RnHOgzXcLBR+GQyL/9UqKcFmjCCdG/8CRq57
+X-Google-Smtp-Source: AMrXdXud/hPOa5OM3UjlwyHhhj5hXBJd+KwvF511PfNNMKNPph/98E6hBLiuVTX64Vo/aZvkxwXd4A==
+X-Received: by 2002:aa7:9208:0:b0:582:fba:319f with SMTP id 8-20020aa79208000000b005820fba319fmr19045262pfo.27.1673887241444;
+        Mon, 16 Jan 2023 08:40:41 -0800 (PST)
+Received: from localhost.localdomain ([2401:4900:1c60:63d3:2d69:9f71:187e:f085])
+        by smtp.gmail.com with ESMTPSA id x5-20020a628605000000b0058bca264253sm4129083pfd.126.2023.01.16.08.40.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Jan 2023 08:36:17 -0800 (PST)
-Received: (nullmailer pid 606184 invoked by uid 1000);
-        Mon, 16 Jan 2023 16:36:12 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+        Mon, 16 Jan 2023 08:40:40 -0800 (PST)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
+        bhupesh.sharma@linaro.org, robh+dt@kernel.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH v2] arm64: dts: qcom: sm6115: Add debug related nodes
+Date:   Mon, 16 Jan 2023 22:10:32 +0530
+Message-Id: <20230116164032.551223-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>, andersson@kernel.org,
-        marijn.suijten@somainline.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, krzysztof.kozlowski@linaro.org,
-        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        agross@kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-In-Reply-To: <20230116093845.72621-3-konrad.dybcio@linaro.org>
-References: <20230116093845.72621-1-konrad.dybcio@linaro.org>
- <20230116093845.72621-3-konrad.dybcio@linaro.org>
-Message-Id: <167388663828.594146.5142968901472742042.robh@kernel.org>
-Subject: Re: [PATCH v9 2/6] dt-bindings: soc: qcom: cpr3: Add bindings for CPR3 driver
-Date:   Mon, 16 Jan 2023 10:36:12 -0600
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add dtsi nodes related to coresight debug units such
+as cti, etm, etr, funnel(s), replicator(s), etc. for
+Qualcomm sm6115 SoC.
 
-On Mon, 16 Jan 2023 10:38:41 +0100, Konrad Dybcio wrote:
-> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> 
-> Add the bindings for the CPR3 driver to the documentation.
-> 
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> [Konrad: Make binding check pass; update AGdR's email]
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  .../bindings/soc/qcom/qcom,cpr3.yaml          | 314 ++++++++++++++++++
->  1 file changed, 314 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.yaml
-> 
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+---
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+- Changes since v1:
+ - v1 can be viewed here: https://lore.kernel.org/linux-arm-msm/20230114210754.353912-1-bhupesh.sharma@linaro.org/
+ - Addressed stm node ordering as per Konrad's review on v1.
+ - Collected Konrad's R-B.
 
-yamllint warnings/errors:
+ arch/arm64/boot/dts/qcom/sm6115.dtsi | 612 +++++++++++++++++++++++++++
+ 1 file changed, 612 insertions(+)
 
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.example.dtb: opp-table-cprh: opp-1: 'qcom,opp-cloop-vadj', 'qcom,opp-oloop-vadj' do not match any of the regexes: 'pinctrl-[0-9]+'
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.example.dtb: opp-table-cprh: opp-2: 'qcom,opp-cloop-vadj', 'qcom,opp-oloop-vadj' do not match any of the regexes: 'pinctrl-[0-9]+'
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.example.dtb: opp-table-cprh: opp-3: 'qcom,opp-cloop-vadj', 'qcom,opp-oloop-vadj' do not match any of the regexes: 'pinctrl-[0-9]+'
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.example.dtb: opp-table-cprh: opp-3:qcom,opp-fuse-level:0: [2, 3] is too long
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230116093845.72621-3-konrad.dybcio@linaro.org
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+index 478c5d009272..08f93b1dc2f8 100644
+--- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+@@ -1237,6 +1237,618 @@ dispcc: clock-controller@5f00000 {
+ 			#power-domain-cells = <1>;
+ 		};
+ 
++		stm@8002000 {
++			compatible = "arm,coresight-stm", "arm,primecell";
++			reg = <0x08002000 0x1000>,
++			      <0x0e280000 0x180000>;
++			reg-names = "stm-base", "stm-stimulus-base";
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++
++			out-ports {
++				port {
++					stm_out: endpoint {
++						remote-endpoint = <&funnel_in0_in>;
++					};
++				};
++			};
++		};
++
++		cti0: cti@8010000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x08010000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++		};
++
++		cti1: cti@8011000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x08011000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++		};
++
++		cti2: cti@8012000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x08012000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++		};
++
++		cti3: cti@8013000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x08013000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++		};
++
++		cti4: cti@8014000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x08014000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++		};
++
++		cti5: cti@8015000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x08015000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++		};
++
++		cti6: cti@8016000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x08016000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++		};
++
++		cti7: cti@8017000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x08017000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++		};
++
++		cti8: cti@8018000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x08018000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++		};
++
++		cti9: cti@8019000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x08019000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++		};
++
++		cti10: cti@801a000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x0801a000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++		};
++
++		cti11: cti@801b000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x0801b000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++		};
++
++		cti12: cti@801c000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x0801c000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++		};
++
++		cti13: cti@801d000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x0801d000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++		};
++
++		cti14: cti@801e000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x0801e000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++		};
++
++		cti15: cti@801f000 {
++			compatible = "arm,coresight-cti", "arm,primecell";
++			reg = <0x0801f000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++		};
++
++		replicator@8046000 {
++			compatible = "arm,coresight-dynamic-replicator", "arm,primecell";
++			reg = <0x08046000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++
++			out-ports {
++				port {
++					replicator_out: endpoint {
++						remote-endpoint = <&etr_in>;
++					};
++				};
++			};
++
++			in-ports {
++				port {
++					replicator_in: endpoint {
++						remote-endpoint = <&etf_out>;
++					};
++				};
++			};
++		};
++
++		etf@8047000 {
++			compatible = "arm,coresight-tmc", "arm,primecell";
++			reg = <0x08047000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++
++			in-ports {
++				port {
++					etf_in: endpoint {
++						remote-endpoint = <&merge_funnel_out>;
++					};
++				};
++			};
++
++			out-ports {
++				port {
++					etf_out: endpoint {
++						remote-endpoint = <&replicator_in>;
++					};
++				};
++			};
++		};
++
++		etr@8048000 {
++			compatible = "arm,coresight-tmc", "arm,primecell";
++			reg = <0x08048000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++
++			in-ports {
++				port {
++					etr_in: endpoint {
++						remote-endpoint = <&replicator_out>;
++					};
++				};
++			};
++		};
++
++		funnel@8041000 {
++			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++			reg = <0x08041000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++
++			out-ports {
++				port {
++					funnel_in0_out: endpoint {
++						remote-endpoint = <&merge_funnel_in0>;
++					};
++				};
++			};
++
++			in-ports {
++				port {
++					funnel_in0_in: endpoint {
++						remote-endpoint = <&stm_out>;
++					};
++				};
++			};
++		};
++
++		funnel@8042000 {
++			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++			reg = <0x08042000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++
++			out-ports {
++				port {
++					funnel_in1_out: endpoint {
++						remote-endpoint = <&merge_funnel_in1>;
++					};
++				};
++			};
++
++			in-ports {
++				port {
++					funnel_in1_in: endpoint {
++						remote-endpoint = <&funnel_apss1_out>;
++					};
++				};
++			};
++		};
++
++		funnel@8045000 {
++			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++			reg = <0x08045000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++
++			out-ports {
++				port {
++					merge_funnel_out: endpoint {
++						remote-endpoint = <&etf_in>;
++					};
++				};
++			};
++
++			in-ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@0 {
++					reg = <0>;
++					merge_funnel_in0: endpoint {
++						remote-endpoint = <&funnel_in0_out>;
++					};
++				};
++
++				port@1 {
++					reg = <1>;
++					merge_funnel_in1: endpoint {
++						remote-endpoint = <&funnel_in1_out>;
++					};
++				};
++			};
++		};
++
++		etm@9040000 {
++			compatible = "arm,coresight-etm4x", "arm,primecell";
++			reg = <0x09040000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++			arm,coresight-loses-context-with-cpu;
++
++			cpu = <&CPU0>;
++
++			status = "disabled";
++
++			out-ports {
++				port {
++					etm0_out: endpoint {
++						remote-endpoint = <&funnel_apss0_in0>;
++					};
++				};
++			};
++		};
++
++		etm@9140000 {
++			compatible = "arm,coresight-etm4x", "arm,primecell";
++			reg = <0x09140000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++			arm,coresight-loses-context-with-cpu;
++
++			cpu = <&CPU1>;
++
++			status = "disabled";
++
++			out-ports {
++				port {
++					etm1_out: endpoint {
++						remote-endpoint = <&funnel_apss0_in1>;
++					};
++				};
++			};
++		};
++
++		etm@9240000 {
++			compatible = "arm,coresight-etm4x", "arm,primecell";
++			reg = <0x09240000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++			arm,coresight-loses-context-with-cpu;
++
++			cpu = <&CPU2>;
++
++			status = "disabled";
++
++			out-ports {
++				port {
++					etm2_out: endpoint {
++						remote-endpoint = <&funnel_apss0_in2>;
++					};
++				};
++			};
++		};
++
++		etm@9340000 {
++			compatible = "arm,coresight-etm4x", "arm,primecell";
++			reg = <0x09340000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++			arm,coresight-loses-context-with-cpu;
++
++			cpu = <&CPU3>;
++
++			status = "disabled";
++
++			out-ports {
++				port {
++					etm3_out: endpoint {
++						remote-endpoint = <&funnel_apss0_in3>;
++					};
++				};
++			};
++		};
++
++		etm@9440000 {
++			compatible = "arm,coresight-etm4x", "arm,primecell";
++			reg = <0x09440000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++			arm,coresight-loses-context-with-cpu;
++
++			cpu = <&CPU4>;
++
++			status = "disabled";
++
++			out-ports {
++				port {
++					etm4_out: endpoint {
++						remote-endpoint = <&funnel_apss0_in4>;
++					};
++				};
++			};
++		};
++
++		etm@9540000 {
++			compatible = "arm,coresight-etm4x", "arm,primecell";
++			reg = <0x09540000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++			arm,coresight-loses-context-with-cpu;
++
++			cpu = <&CPU5>;
++
++			status = "disabled";
++
++			out-ports {
++				port {
++					etm5_out: endpoint {
++						remote-endpoint = <&funnel_apss0_in5>;
++					};
++				};
++			};
++		};
++
++		etm@9640000 {
++			compatible = "arm,coresight-etm4x", "arm,primecell";
++			reg = <0x09640000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++			arm,coresight-loses-context-with-cpu;
++
++			cpu = <&CPU6>;
++
++			status = "disabled";
++
++			out-ports {
++				port {
++					etm6_out: endpoint {
++						remote-endpoint = <&funnel_apss0_in6>;
++					};
++				};
++			};
++		};
++
++		etm@9740000 {
++			compatible = "arm,coresight-etm4x", "arm,primecell";
++			reg = <0x09740000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++			arm,coresight-loses-context-with-cpu;
++
++			cpu = <&CPU7>;
++
++			status = "disabled";
++
++			out-ports {
++				port {
++					etm7_out: endpoint {
++						remote-endpoint = <&funnel_apss0_in7>;
++					};
++				};
++			};
++		};
++
++		funnel@9800000 {
++			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++			reg = <0x09800000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++
++			out-ports {
++				port {
++					funnel_apss0_out: endpoint {
++						remote-endpoint = <&funnel_apss1_in>;
++					};
++				};
++			};
++
++			in-ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@0 {
++					reg = <0>;
++					funnel_apss0_in0: endpoint {
++						remote-endpoint = <&etm0_out>;
++					};
++				};
++
++				port@1 {
++					reg = <1>;
++					funnel_apss0_in1: endpoint {
++						remote-endpoint = <&etm1_out>;
++					};
++				};
++
++				port@2 {
++					reg = <2>;
++					funnel_apss0_in2: endpoint {
++						remote-endpoint = <&etm2_out>;
++					};
++				};
++
++				port@3 {
++					reg = <3>;
++					funnel_apss0_in3: endpoint {
++						remote-endpoint = <&etm3_out>;
++					};
++				};
++
++				port@4 {
++					reg = <4>;
++					funnel_apss0_in4: endpoint {
++						remote-endpoint = <&etm4_out>;
++					};
++				};
++
++				port@5 {
++					reg = <5>;
++					funnel_apss0_in5: endpoint {
++						remote-endpoint = <&etm5_out>;
++					};
++				};
++
++				port@6 {
++					reg = <6>;
++					funnel_apss0_in6: endpoint {
++						remote-endpoint = <&etm6_out>;
++					};
++				};
++
++				port@7 {
++					reg = <7>;
++					funnel_apss0_in7: endpoint {
++						remote-endpoint = <&etm7_out>;
++					};
++				};
++			};
++		};
++
++		funnel@9810000 {
++			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++			reg = <0x09810000 0x1000>;
++
++			clocks = <&rpmcc RPM_SMD_QDSS_CLK>;
++			clock-names = "apb_pclk";
++
++			status = "disabled";
++
++			out-ports {
++				port {
++					funnel_apss1_out: endpoint {
++						remote-endpoint = <&funnel_in1_in>;
++					};
++				};
++			};
++
++			in-ports {
++				port {
++					funnel_apss1_in: endpoint {
++						remote-endpoint = <&funnel_apss0_out>;
++					};
++				};
++			};
++		};
++
+ 		apps_smmu: iommu@c600000 {
+ 			compatible = "qcom,sm6115-smmu-500", "qcom,smmu-500", "arm,mmu-500";
+ 			reg = <0x0c600000 0x80000>;
+-- 
+2.38.1
 
