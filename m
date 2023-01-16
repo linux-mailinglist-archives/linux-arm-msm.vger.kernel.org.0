@@ -2,83 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B024C66BEC0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jan 2023 14:07:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0AF1866BF9C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jan 2023 14:22:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231609AbjAPNHW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Jan 2023 08:07:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56838 "EHLO
+        id S229577AbjAPNWD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Jan 2023 08:22:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231229AbjAPNG5 (ORCPT
+        with ESMTP id S229560AbjAPNWC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Jan 2023 08:06:57 -0500
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 429333ABB
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 05:06:56 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id o20so10672511lfk.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 05:06:56 -0800 (PST)
+        Mon, 16 Jan 2023 08:22:02 -0500
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 661EA166ED
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 05:22:00 -0800 (PST)
+Received: by mail-lf1-x133.google.com with SMTP id m6so42683381lfj.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 05:22:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=UhaySgQ931ggdM3I6a9ki+kXxD+QSoWR1uvU+hZmKiM=;
-        b=mE/EwGkRpZCujtVivCpriZS0XO6rUEfL+lYuLMGxspO4E0COtutKaR0sS12UUovXG0
-         P917lUmjP323E3U3LajB4eVqjr+6N7I8mYnJzvzwkUBdOYDWY5lvilCt0dIgo2MWgXZD
-         Eu7upP8CExT76uU4GxOZhMJ8DA02prbw2oOrQMoTfzrOGBCYoq/kPe19HyevnLilAChC
-         2RnnksigiGUMUNa1nSg6btyEgUuCJPCgSS3u6JS+mbvlSFzAoS2yIt2zL3EZA///oBol
-         k1mUZqXdSdxLESDLvjMSrXVnq46syo3EBiSZGqE5Zl9IrNnKJ8bNHOENn703ErzQqi3x
-         WxUw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=fYHFBSfsmrvjZy0cdVUXnzJoMQUjlp6rsLDDn+96Gig=;
+        b=Fr3cpqby+CCnA2bdDfyf5fyhkb0wuZT0NnhHKn35v/K9YHP/AwxO4/WFLneLuYXl+5
+         9aYZyW3phRkZlZ2LixIEkY+StyBrEKTCzKx6VW9S+A6LJDz0DTHi/eGZK5hcg/1/qlX4
+         8/781/uv2OkL13n8Ea4hTO8Eod2y3Vw8y9u7kYZoXv0FOMTMk3B6S2UbVPlCKy0W7BAM
+         guCHz98n28zTlT9+isnqkXfDIRITDRLCgbypdN3Jzi9P1H0LIeWHeC1mPZM3UN1Pg94U
+         SQco/kT0DlSuT87F8GdNwfLqJDLpACs0pHAyOhn1wq1dfbpjQteK7/3xS6KUEqy8po/F
+         1H1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UhaySgQ931ggdM3I6a9ki+kXxD+QSoWR1uvU+hZmKiM=;
-        b=f5vChNS7ZYyEpq7AXdBxhzOJeAZRowF/Krsezl0ql8Phef4qK2gCl3iQrQTOhQ1H8D
-         ODMWSEH8QKz73Elc9rEwrzAqg6u9+Wy9Fpb+qdwGIUYVnLEeCY11pheFBmjFZBbf11Ig
-         My6T5KepF4wr0CODdHF00tuxmcpFWf52V44Yz4jRSGxQH25uW6Sds/O0DLGcdXfsJ64e
-         eSz0LhGO7UlAqX3+75DvwJT4uU3Ddb7S5NLuRPywUUrE/IjomeFa1UKg6nhhPuhkZGdJ
-         ptOVOM/PY9wz8wbzrvCO5gbMHQl2TQNGambhD6mI8tLeg4LikbWeAOeNDrlBIyn17H8g
-         BuQQ==
-X-Gm-Message-State: AFqh2kp+gjf7mPi/c/xvj2wutA+COO2dEGEPKHatRWlNvjIp+3oPYbWF
-        Ph7DSLI5u98wbT0zgEwbzAuvSA==
-X-Google-Smtp-Source: AMrXdXvF5dt4yar2orujGs7guEyKNFpIKXkkv1kvIR2CQqTY55DTNzGT4TUUjImhtKs6f8KXfaF2fw==
-X-Received: by 2002:a05:6512:2302:b0:4a4:68b8:f4f1 with SMTP id o2-20020a056512230200b004a468b8f4f1mr31785702lfu.55.1673874414625;
-        Mon, 16 Jan 2023 05:06:54 -0800 (PST)
-Received: from [192.168.1.101] (abym53.neoplus.adsl.tpnet.pl. [83.9.32.53])
-        by smtp.gmail.com with ESMTPSA id s9-20020ac24649000000b004cb08757441sm4999853lfo.199.2023.01.16.05.06.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Jan 2023 05:06:54 -0800 (PST)
-Message-ID: <4ccefff5-a207-8832-c94f-058757ecf8e8@linaro.org>
-Date:   Mon, 16 Jan 2023 14:06:52 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v2 02/10] interconnect: qcom: rpm: make QoS INVALID
- default, separate out driver data
-Content-Language: en-US
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fYHFBSfsmrvjZy0cdVUXnzJoMQUjlp6rsLDDn+96Gig=;
+        b=quI3ji87nuzJ2vAVZ31cYRjhYDX8jlVnh2J2ASgyEm4I6wV+EIcMFerMfZzfxzf3+w
+         M/aZtzaMvn6Bjypr8FTsvE0Jj3bossLu1UO5Py4Vasv10uxrpFbbFdCFiCDg7/Nulpjd
+         NODcPr4at/CgJz6DtJq03UtVt2yy/GEtCVmKMWpE7UbW6EvxMtSWUe8nzN6cgteKX4ln
+         KchEA2zSOyniOGCNZRCwNmzWlHjszOzKdt38A6lnf8uKOKwuZ4dXXPF9xFVplocjCO4b
+         +AEkhf2tIvHJ/UDywUzuoGNbNtFp2cB+iHpBh3G5IIMORG2SEzOj2dXrVbSO+gN3Ol49
+         KT1Q==
+X-Gm-Message-State: AFqh2krFoojj3FebpwEdQv6XA75BT9/GWHgyytNG+AqpikKIVE2VUtnv
+        wIDlSU2/Cr4TK1rz7XD1A3DW0SxJ+kFgsrYb
+X-Google-Smtp-Source: AMrXdXubqzXir96QFSuI3vVb/oUN66BPMRdDEUXTR07dch6Q8VtzThXI9OjNgoYyyi00+n1c0+nbuQ==
+X-Received: by 2002:a19:8c51:0:b0:4b6:ed1d:38e9 with SMTP id i17-20020a198c51000000b004b6ed1d38e9mr2986883lfj.64.1673875318453;
+        Mon, 16 Jan 2023 05:21:58 -0800 (PST)
+Received: from localhost.localdomain (abym53.neoplus.adsl.tpnet.pl. [83.9.32.53])
+        by smtp.gmail.com with ESMTPSA id p9-20020a05651212c900b004cc58b91177sm5016653lfg.239.2023.01.16.05.21.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Jan 2023 05:21:58 -0800 (PST)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
         agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org, Georgi Djakov <djakov@kernel.org>,
-        Evan Green <evgreen@chromium.org>,
-        Jun Nie <jun.nie@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Brian Masney <masneyb@onstation.org>,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230110132202.956619-1-konrad.dybcio@linaro.org>
- <20230110132202.956619-3-konrad.dybcio@linaro.org>
- <d8a7e477-f612-19cb-8573-5cc0449df0fa@linaro.org>
- <22d4bd3b-1b36-8ad4-ca19-157597949a21@linaro.org>
-In-Reply-To: <22d4bd3b-1b36-8ad4-ca19-157597949a21@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+Cc:     marijn.suijten@somainline.org, bryan.odonoghue@linaro.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH v3 0/9] The great interconnecification fixation
+Date:   Mon, 16 Jan 2023 14:21:43 +0100
+Message-Id: <20230116132152.405535-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.39.0
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS
         autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -87,35 +70,99 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi!
+
+This series grew quite a bit bigger than the previous [1] attempt, so
+I decided to also add a cover letter.
+
+Link to v2: [2]
+
+It addresses a few things that were not quite right:
+
+- Setting QoS params before a "real" (non-zero) bandwidth request
+  makes little sense (since there's no data supposed to flow through
+  the bus, why would the QoS matter) and (at least newer) downstream
+  prevents that from happening. Do the same in Patch 1.
+
+- QNoC type buses expect to always have their QoS registers set as long
+  as there's a non-INVALID QoS mode set; ap_owned is not really a thing
+  on these anymore, Patch 3 handles that.
+
+- The recent MSM8996 boot fix was done quickly and not quite properly,
+  leading to possibly setting the aggregate bus rate on "normal"
+  hardware interface clocks; this series handles that by limiting the
+  number of bus_clocks to 2 (which is the maximum that makes sense,
+  anyway) and handling the rest as "intf_clocks", which are required
+  to access the   hardware at the other end. Patches 5-8 take care of
+  that and Patch 10 reverts the _optional moniker in clk_get_ to make
+  sure we always have the bus scaling clocks, as they're well, kind
+  of important :)
+
+- Similarly to QNoC, BIMC on "newer" (which can be loosely approximated
+  by "new enough" == "has only BIMC and QNoC hosts") SoCs expects to
+  always receive QoS programming, whereas BIMC on "older" SoCs cries
+  like a wild boar and crashes the platform when trying to do so
+  unconditionally. Patch 9 adds a way to take care of that for newer
+  SoCs (like SM6375)
+
+- QoS mode INVALID was assumed by developers before to be the default
+  ("I didn't specify any QoS settings, so the driver can't assume I
+  did.. right? right!?" - wrong, partial struct initialization led to
+  0 being set and 0 corresponded to QoS mode FIXED). Make it so, as
+  that's the logical choice. This allows the "Always set QoS params
+  on QNoC" patch to work without setting tons of what-should-
+  -obviously-be-the-default values everywhere, as well as fixes older
+  drivers that set ap_owned = true but left the QoS mode field unset.
+  Patch 2 cleans that up.
+
+- Some nodes are physically connected over more than one channel
+  (usually DDR or other high-throughput paths). Patch 4 allows that
+  to be reflected in calculations. This will be required for at least
+  MSM8998 and SM6375 (which will be submitted soon after this lands)
+
+v1 -> v2 changelog:
+- reorder "make QoS INVALID default", makes more sense to have it
+  before "Always set QoS params on QNoC"
+
+- Limit ap_owned-independent QoS setting to QNoC only
+
+- Add new patches for handling the 8996-and-friends clocks situation
+  and optional BIMC regardless-of-ap_owned QoS programming
+
+v2 -> v3 changelog:
+- Drop "Don't set QoS params before non-zero bw is requested"
+
+- Rebase on next
+
+- [1/9] ("..make QoS INVALID default.."): remove unused define for
+  MODE_INVALID_VAL
+
+- Pick up tags
+
+[1] https://lore.kernel.org/linux-arm-msm/14e06574-f95e-8960-0243-8c95a1c294e9@linaro.org/T/#m056692bea71d4c272968d5e07afbd9eb07a88123
+[2] https://lore.kernel.org/linux-arm-msm/20230110132202.956619-1-konrad.dybcio@linaro.org/
 
 
-On 11.01.2023 00:47, Konrad Dybcio wrote:
-> 
-> 
-> On 11.01.2023 00:13, Bryan O'Donoghue wrote:
->> On 10/01/2023 13:21, Konrad Dybcio wrote:
->>> +#define NOC_QOS_MODE_INVALID_VAL    -1
->>> +#define NOC_QOS_MODE_FIXED_VAL        0x0
->>> +#define NOC_QOS_MODE_BYPASS_VAL        0x2
->>
->> The basic fix you are applying here makes sense to me.
->>
->> But why bother with an additional _VAL defintion, you have your enum.
-> Thinking about it, I was probably confused by MODE_INVALID checks in
-> qcom_icc_set_bimc_qos and only now realized that it's not even called
-> with MODE_INVALID.. Will surely fix!
-Actually, no.. qcom_icc_set_noc_qos() writes the _VAL to
-NOC_QOS_MODEn_ADDR(), so it does matter.
+Konrad Dybcio (9):
+  interconnect: qcom: rpm: make QoS INVALID default, separate out driver
+    data
+  interconnect: qcom: rpm: Always set QoS params on QNoC
+  interconnect: qcom: rpm: Add support for specifying channel num
+  interconnect: qcom: Sort kerneldoc entries
+  interconnect: qcom: rpm: Rename icc desc clocks to bus_blocks
+  interconnect: qcom: rpm: Rename icc provider num_clocks to
+    num_bus_clocks
+  interconnect: qcom: rpm: Handle interface clocks
+  interconnect: qcom: rpm: Add a way to always set QoS registers
+  interconnect: qcom: rpm: Don't use clk_get_optional for bus clocks
+    anymore
 
-Konrad
-> 
-> Konrad
->>
->> +enum qos_mode {
->> +    NOC_QOS_MODE_INVALID = 0,
->> +    NOC_QOS_MODE_FIXED,
->> +    NOC_QOS_MODE_BYPASS,
->> +};
->>
->> ---
->> bod
+ drivers/interconnect/qcom/icc-rpm.c | 111 +++++++++++++++++++---------
+ drivers/interconnect/qcom/icc-rpm.h |  36 ++++++---
+ drivers/interconnect/qcom/msm8996.c |  22 +++---
+ drivers/interconnect/qcom/sdm660.c  |  16 ++--
+ 4 files changed, 117 insertions(+), 68 deletions(-)
+
+-- 
+2.39.0
+
