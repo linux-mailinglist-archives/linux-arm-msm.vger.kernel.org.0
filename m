@@ -2,68 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F11266C776
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jan 2023 17:31:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E451F66C8BC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jan 2023 17:42:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233326AbjAPQbP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Jan 2023 11:31:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48360 "EHLO
+        id S233627AbjAPQmN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Jan 2023 11:42:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233258AbjAPQat (ORCPT
+        with ESMTP id S233670AbjAPQlq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Jan 2023 11:30:49 -0500
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF41C274A9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 08:19:03 -0800 (PST)
-Received: by mail-pj1-x102a.google.com with SMTP id bj3so26377186pjb.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 08:19:03 -0800 (PST)
+        Mon, 16 Jan 2023 11:41:46 -0500
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D83D12ED4B
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 08:29:57 -0800 (PST)
+Received: by mail-lf1-x134.google.com with SMTP id y25so43423475lfa.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 08:29:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:references:subject:to:from
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QkZ6p1sWM6e327+u9DFI968nqnYYqypY+VMbq4nZJio=;
-        b=MM9f3TBYs7nt1Q8xbmpAJTyQBecU4RriGQYs/0dBETh7Cgc5eZyZ9KBS+PmrmBcru7
-         vInyI9hzCwkbyTn5E+pyKBiXc0RMkbSfUIYZR6NRcdBeTCwhF9GTfOFgmtBaTrq5nh0y
-         Wx7259mb4fb8vICNaTBBjkkvlg9NkSbmi0O3q1PwpIAqFPtxi1SBSrp87r5PxXyWv0ps
-         skST7AGo0lL+n+eaIz9/Nb4IsE4VRc8BXeTCQSBN+gmcIvrdjK7sQLjCt6OQvNRg6YRE
-         0aINg7ClTouUIDmOt2Lz/pEr+CKy62u4Omev9TMqi2ec8ZtcBtCB1yR0108e16q6D7KQ
-         3dMg==
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=G8K1RmWXIkiPGKo5rdIMlyUws+ytI7cIHwrzZJ2azso=;
+        b=Qwo73i7k4TFVW4W9ODHn2D31owplGN+ohI4BcXolF/ZQkD6do3Wcxz1nYOC9CNXonX
+         jS1RVfnJcQQVABWLq0jNH4zheVyf4h+GMcbONNoUdnri7EXnXonvt/hUQXFZFO1J4VIE
+         /jj/OeKV1qAbQdKi2V/45Q69RwkZ8rR1pOiTPZ1lgP/79MZ4kFTQhJqM76J+i1+8w8nD
+         ayeX1QToZyVrwU1GjlFcCXzJZKQ2R6Xhc/a61usDxr0B9tyokNrdPmr3dzt94h2Cm+WG
+         Sme/OPxLhDfUbhZysJgMsukjfrMJJnmj+xESqgD7xAN7XGm9ZDJkXBjaapDzuKZltmpU
+         79hQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:subject:to:from
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=QkZ6p1sWM6e327+u9DFI968nqnYYqypY+VMbq4nZJio=;
-        b=HoFDs6/+7EcMFNbSW/uIloUzMwVbUHI1kbq8pbWxt6WCEK/QKF62dNnNxdqtR0mFEy
-         f3nEJWLmd+4Tl62FtD1s3zRPanPx7JCD5F6vWSegv4LR3cMKCReKPw32V03Axlp7YeAT
-         83BiXTC0/37QYD2Ih0LmJaE/2BXxgS9KFBcQL9LxMFl+hg2rnKo+IFF9UAOrVX2O57Gw
-         kDV8/eRX+ZqkGsByytvN/K2hZgtn0u1c9JvxdNCkexANMDOQAVXwt/hrlpHxWnL+xbEp
-         f6ZGdE2Bc04dslg8KO0EU+jD1X4jDRO4DbjLFoeEe8iwFUOcSpwxj/BBzqREclpYwHPJ
-         cTMw==
-X-Gm-Message-State: AFqh2kpOMo7Qv1sL8NV41uer7+Q6yckEJHeCONp/rQ2OUaDZEDUxPNY/
-        oewahXSyN6ZLRhzbIsXEEnqjPA==
-X-Google-Smtp-Source: AMrXdXv7lZMThAWNboYgauo+mDkEGcyy7Jml1WsBvoJ/U1kb1cvMKZyTC0crrdxBz09gXiqSYr049w==
-X-Received: by 2002:a17:902:c401:b0:193:e20:a5a9 with SMTP id k1-20020a170902c40100b001930e20a5a9mr398065plk.15.1673885943235;
-        Mon, 16 Jan 2023 08:19:03 -0800 (PST)
-Received: from ?IPV6:2401:4900:1c60:63d3:2d69:9f71:187e:f085? ([2401:4900:1c60:63d3:2d69:9f71:187e:f085])
-        by smtp.gmail.com with ESMTPSA id im15-20020a170902bb0f00b001943d58268csm13200862plb.55.2023.01.16.08.18.59
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=G8K1RmWXIkiPGKo5rdIMlyUws+ytI7cIHwrzZJ2azso=;
+        b=laW92WgYd6xDrduB8Ths1XJl20eolzRc0D0FW7MlPiXiLgo6IJ4BjfCT5DpFBr0u02
+         VmxFKz/Wg0Q15zhNuza25IYvJkQjSanZn5qF44cee5PRMYvaqt2gP7oP944jK5rrgz25
+         iC6QhnOyQeczcikhqf89hLqmZhbrNE8aejrm09qQR9eRQ+uHC/qA3mr1Dp6n6pdFLnM7
+         jHfFdJitm6rR7wTDSed48nntRRTBB2XbawMbqNur4AuVW3StEmFk8DDtUlHs+7a9iEN5
+         yUVdgwIu+lh7v3Bh+IsOidCufuzTKEaLrHqdPr4yHm36T4w4jtLWuRX8taVY9/98CKde
+         ZdEw==
+X-Gm-Message-State: AFqh2kqXdrFuMy4/U6cU53rLRXSFAQqiwW078BsP8eKbIrf75A/l+O4A
+        KWoFZ2CAip5dtDf+Ub9+s3UWgw==
+X-Google-Smtp-Source: AMrXdXsPIZj1jWkctfyszi9JmAGWKyuU0BIXMPnSpGeeviVYMWHd72EtUdKxhks7JtVTHMQhAtHFmg==
+X-Received: by 2002:a19:e611:0:b0:4a4:68b9:608a with SMTP id d17-20020a19e611000000b004a468b9608amr24195186lfh.21.1673886596181;
+        Mon, 16 Jan 2023 08:29:56 -0800 (PST)
+Received: from [192.168.1.101] (abym53.neoplus.adsl.tpnet.pl. [83.9.32.53])
+        by smtp.gmail.com with ESMTPSA id x12-20020ac25dcc000000b0049fbf5facf4sm5087974lfq.75.2023.01.16.08.29.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Jan 2023 08:19:02 -0800 (PST)
-Message-ID: <3e18a79b-fdd8-63f8-c27a-7515bbb6cb9b@linaro.org>
-Date:   Mon, 16 Jan 2023 21:48:58 +0530
+        Mon, 16 Jan 2023 08:29:55 -0800 (PST)
+Message-ID: <09fe3e93-328b-13a3-540b-4ca47224b176@linaro.org>
+Date:   Mon, 16 Jan 2023 17:29:54 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.1
-From:   bhupesh.sharma@linaro.org
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Thunderbird/102.6.1
+Subject: Re: [PATCH] dt-bindings: qcom: geni-se: Fix '#address-cells' &
+ '#size-cells' related dt-binding error
+Content-Language: en-US
+To:     bhupesh.sharma@linaro.org,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         agross@kernel.org, andersson@kernel.org,
         linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
         robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org
-Subject: Re: [PATCH] dt-bindings: qcom: geni-se: Fix '#address-cells' &
- '#size-cells' related dt-binding error
 References: <20230113201038.267449-1-bhupesh.sharma@linaro.org>
  <aef753a5-e8b1-5b7b-1b9e-e92a84de15bd@linaro.org>
  <CAH=2Ntx5rLWu4jzXV8DwKj+yweHPRqb4+Rv8uZpDn_brWDxyJg@mail.gmail.com>
@@ -72,12 +72,15 @@ References: <20230113201038.267449-1-bhupesh.sharma@linaro.org>
  <23b4551c-db79-d859-c037-6ed3c8a11883@linaro.org>
  <6f08d466-9589-ebff-c38d-bf9015a0f6ad@linaro.org>
  <64e4b3b0-fc71-1876-9de8-e51d503d6183@linaro.org>
-In-Reply-To: <64e4b3b0-fc71-1876-9de8-e51d503d6183@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ <3e18a79b-fdd8-63f8-c27a-7515bbb6cb9b@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <3e18a79b-fdd8-63f8-c27a-7515bbb6cb9b@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-0.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -85,64 +88,71 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 1/16/23 9:35 PM, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+
+On 16.01.2023 17:18, bhupesh.sharma@linaro.org wrote:
 > 
+> On 1/16/23 9:35 PM, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>>
+>>
+>> On 16.01.2023 17:02, Bhupesh Sharma wrote:
+>> >
+>> > On 1/16/23 9:24 PM, Konrad Dybcio wrote:
+>> >>
+>> >>
+>> >> On 16.01.2023 16:43, Bhupesh Sharma wrote:
+>> >>> On Mon, 16 Jan 2023 at 13:23, Krzysztof Kozlowski
+>> >>> <krzysztof.kozlowski@linaro.org> wrote:
+>> >>>>
+>> >>>> On 15/01/2023 22:33, Bhupesh Sharma wrote:
+>> >>>>> On Sun, 15 Jan 2023 at 20:57, Krzysztof Kozlowski
+>> >>>>> <krzysztof.kozlowski@linaro.org> wrote:
+>> >>>>>>
+>> >>>>>> On 13/01/2023 21:10, Bhupesh Sharma wrote:
+>> >>>>>>> Fix the following '#address-cells' & '#size-cells' related
+>> >>>>>>> dt-binding error:
+>> >>>>>>>
+>> >>>>>>>      $ make dtbs_check
+>> >>>>>>>
+>> >>>>>>>      From schema: Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
+>> >>>>>>>           arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dtb: geniqup@4ac0000:
+>> >>>>>>>                 #address-cells:0:0: 2 was expected
+>> >>>>>>>         From schema: Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
+>> >>>>>>
+>> >>>>>> Don't we want rather to unify the soc address range?
+>> >>>>>
+>> >>>>> Well, the assumption in the original dt-bindings was that every reg
+>> >>>>> variable is 4 * u32 wide (as most new qcom SoCs set #address- and
+>> >>>>> #size-cells to <2>). However, that is not the case for all of the
+>> >>>>> SoCs.
+>> >>>>
+>> >>>> Hm, which device of that SoC cannot be used with address/size cells 2?
+>> >>>
+>> >>> As noted in the git log already the geniqup on sm6115 / sm4250 cannot
+>> >>> be used with address/size cells 2 (See:
+>> >>> https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/sm6115.dtsi#L795)
+>> >> SM6115 (and pretty much every other arm64 msm platform newer than 8916)
+>> >> should be using addr/size-cells = 2 along with (dma-)ranges of 36 bit, as
+>> >> that's what their smmus use and otherwise some addresses may get cut off
+>> >> in translation, or so the story went with 845 N years ago.. We can either
+>> >> pursue this patch or I can submit the 2-cell-ification if you don't plan on
+>> >> adding more nodes shortly
+>> >
+>> >
+>> > Have you tested this combination on SM6115 like SoCs with various IPs? I have tried a few experiments in the past and not all IPs work well with 36-bit DMA ranges (atleast not on the boards I have).
+>> Can you list any specific examples? I've been using it for
+>> quite some time now and I see nothing wrong..
 > 
-> On 16.01.2023 17:02, Bhupesh Sharma wrote:
-> >
-> > On 1/16/23 9:24 PM, Konrad Dybcio wrote:
-> >>
-> >>
-> >> On 16.01.2023 16:43, Bhupesh Sharma wrote:
-> >>> On Mon, 16 Jan 2023 at 13:23, Krzysztof Kozlowski
-> >>> <krzysztof.kozlowski@linaro.org> wrote:
-> >>>>
-> >>>> On 15/01/2023 22:33, Bhupesh Sharma wrote:
-> >>>>> On Sun, 15 Jan 2023 at 20:57, Krzysztof Kozlowski
-> >>>>> <krzysztof.kozlowski@linaro.org> wrote:
-> >>>>>>
-> >>>>>> On 13/01/2023 21:10, Bhupesh Sharma wrote:
-> >>>>>>> Fix the following '#address-cells' & '#size-cells' related
-> >>>>>>> dt-binding error:
-> >>>>>>>
-> >>>>>>>      $ make dtbs_check
-> >>>>>>>
-> >>>>>>>      From schema: Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
-> >>>>>>>           arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dtb: geniqup@4ac0000:
-> >>>>>>>                 #address-cells:0:0: 2 was expected
-> >>>>>>>         From schema: Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
-> >>>>>>
-> >>>>>> Don't we want rather to unify the soc address range?
-> >>>>>
-> >>>>> Well, the assumption in the original dt-bindings was that every reg
-> >>>>> variable is 4 * u32 wide (as most new qcom SoCs set #address- and
-> >>>>> #size-cells to <2>). However, that is not the case for all of the
-> >>>>> SoCs.
-> >>>>
-> >>>> Hm, which device of that SoC cannot be used with address/size cells 2?
-> >>>
-> >>> As noted in the git log already the geniqup on sm6115 / sm4250 cannot
-> >>> be used with address/size cells 2 (See:
-> >>> https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/sm6115.dtsi#L795)
-> >> SM6115 (and pretty much every other arm64 msm platform newer than 8916)
-> >> should be using addr/size-cells = 2 along with (dma-)ranges of 36 bit, as
-> >> that's what their smmus use and otherwise some addresses may get cut off
-> >> in translation, or so the story went with 845 N years ago.. We can either
-> >> pursue this patch or I can submit the 2-cell-ification if you don't plan on
-> >> adding more nodes shortly
-> >
-> >
-> > Have you tested this combination on SM6115 like SoCs with various IPs? I have tried a few experiments in the past and not all IPs work well with 36-bit DMA ranges (atleast not on the boards I have).
-> Can you list any specific examples? I've been using it for
-> quite some time now and I see nothing wrong..
+> I remember seeing some issues with SDHC controller booting (uSD card use case) with sm6115, but I cannot find the appropriate dmesg right now.
+FWIW it works completely fine for me, in fact I'm booting from
+uSD most of the time.
 
-I remember seeing some issues with SDHC controller booting (uSD card use case) with sm6115, but I cannot find the appropriate dmesg right now.
-
-> >
-> > So, I think it might lead to more breakage (unless we are sure of a well-tested fix). A simpler patch to fix the dt-bindings looks more useful IMO.
-> I'm not saying no, you just have to convince Krzysztof :D
-
-:)
-
-Thanks,
-Bhupesh
+Konrad
+> 
+>> >
+>> > So, I think it might lead to more breakage (unless we are sure of a well-tested fix). A simpler patch to fix the dt-bindings looks more useful IMO.
+>> I'm not saying no, you just have to convince Krzysztof :D
+> 
+> :)
+> 
+> Thanks,
+> Bhupesh
