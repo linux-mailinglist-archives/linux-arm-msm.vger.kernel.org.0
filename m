@@ -2,167 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E10766C0C3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jan 2023 15:04:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 72D0666C0BA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jan 2023 15:04:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231783AbjAPOEX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Jan 2023 09:04:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45774 "EHLO
+        id S231683AbjAPOD7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Jan 2023 09:03:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231853AbjAPODl (ORCPT
+        with ESMTP id S231794AbjAPODR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Jan 2023 09:03:41 -0500
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D1032313D;
-        Mon, 16 Jan 2023 06:02:54 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 7E047CE1166;
-        Mon, 16 Jan 2023 14:02:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EBB6C433F2;
-        Mon, 16 Jan 2023 14:02:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1673877770;
-        bh=c1dLUwLzKCg211SfEHv4A5E+XPyoUTVlsOTJ08S8uLo=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=QhjQO0iMneDDr6zm6B5ku1kwHIvlUF/AOXRW7f7WwdVw9e7qK9t8SYUcH7+fHBJn5
-         x79k9mqywvKIe0jPfmy7wFWEDAGgQJ4GfjTwRCEgoK9ufJnypTt8VwseK6NSCTu0Kc
-         cvKdMqkQztvzoWiXTb/2ej+OyDk+Hvbp7OATYDRid+GttMyWIPJ9X6WqH4eskxl3WO
-         gVOXMGAoNhmKI2XGgLJtuGHsQRCyWTpip1IbP2Xg+lEZsrl1NUhVZoqcP/yklGXzmA
-         BBW0PhbHSdUvKEs2YIqbWZ1ZfJhzPtvRPKTBKq3PXvOGdjfWWWotZ+QbJJTmxymlMO
-         yKFdluySDqCAA==
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Sasha Levin <sashal@kernel.org>, robdclark@gmail.com,
-        quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
-        airlied@gmail.com, daniel@ffwll.ch, konrad.dybcio@somainline.org,
-        geert@linux-m68k.org, dianders@chromium.org, olvaffe@gmail.com,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.1 16/53] drm/msm/a6xx: Avoid gx gbit halt during rpm suspend
-Date:   Mon, 16 Jan 2023 09:01:16 -0500
-Message-Id: <20230116140154.114951-16-sashal@kernel.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20230116140154.114951-1-sashal@kernel.org>
-References: <20230116140154.114951-1-sashal@kernel.org>
+        Mon, 16 Jan 2023 09:03:17 -0500
+Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D7CA22DE0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 06:02:48 -0800 (PST)
+Received: by mail-yb1-xb35.google.com with SMTP id o75so30389555yba.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 06:02:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=TQY8MHuSk9LBg4bjJGXRFvs4IYota2lxSV05jRoM7zo=;
+        b=MjdVdubzz+i+2MVOHNGdAD8LZ924fWZQp6mx+qg4mbRaV3Tb8brgO/8j9miGVpeBPy
+         IN+ytTjX6OQ/fEYgpRBMcZfbq3hheZSTaxcy2ByRQNDhGNj3gS61jYQtxwZi8VVCmjb2
+         BacZDDbMR35CJCjjGtGXAWS8CdKdGWYJ776MPT3mGBmP8RK27ilMf9+/cE5Xca7oz8Wr
+         35vn1URDpG9zdHH5HqXcOHMT3hQafEXjHqm8x1brEXaiYCNC7syCLNZfDbHKXXORkPz2
+         v74fFlbV6rgySBSB6+AVcKxM4HWTfreAT9bTBHQQhfrEeL1U+qWP1/37/A4+fYA2wD4v
+         Tmig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TQY8MHuSk9LBg4bjJGXRFvs4IYota2lxSV05jRoM7zo=;
+        b=LTgLCwlzeAUFjXLhboyO4ykZb5RVwntvQy9QwjfIRJK5BnuSqjai5YBhLaxyfkO8PA
+         l83OBwUsRYVcn4iPOsQbnNLSENm8YwHM/FfHlSlorXyC5fhYnqh8SzUQ+8WdSua4Jb5t
+         79/HhULBiHX2r03qVIShDMUTT/Uh4dUI7l8P3PXgTukBoysjmjcigHiNqskeKnnB0qhf
+         xzFaFUYuACJsBIbrpu34oogIKsOeINdSm4PkN3dlJEezQso+x6jGSLbQe9LORqwh+uRH
+         2vbur2Xkh6BvfII+gVUQ8iWFzK3yjWTNI6KAEK4QxhsBw5EoBjg5tN2eCIZ9QS7F6TA9
+         LHOg==
+X-Gm-Message-State: AFqh2ko3ti40cs86+Th2sN2gKuJncMlVHQ1bdIqANNKxczB0S3dEg1kv
+        C76LF/OcuFEXsqhYPq4ICIXkK/FpWU4/2PP4EZtP8g==
+X-Google-Smtp-Source: AMrXdXtRxz9SmVvead1/eVkMbw6RrkJCIXk2BBeMIoI151jIqjC/5sT2uKdUWsYnn6jtYbpF546JBBYHEHI5GK0uT0E=
+X-Received: by 2002:a25:6b0b:0:b0:7d2:8687:aea5 with SMTP id
+ g11-20020a256b0b000000b007d28687aea5mr1265558ybc.210.1673877767930; Mon, 16
+ Jan 2023 06:02:47 -0800 (PST)
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20230112184923.80442-1-andriy.shevchenko@linux.intel.com>
+In-Reply-To: <20230112184923.80442-1-andriy.shevchenko@linux.intel.com>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Mon, 16 Jan 2023 15:02:36 +0100
+Message-ID: <CACRpkdZua44WU077yW9ZZAj0gV2-pCJQhMD7RC4y_fagPOwr5g@mail.gmail.com>
+Subject: Re: [PATCH v1 1/1] pinctrl: qcom: lpass-lpi: Remove duplicate
+ assignment of of_gpio_n_cells
+To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+On Thu, Jan 12, 2023 at 7:49 PM Andy Shevchenko
+<andriy.shevchenko@linux.intel.com> wrote:
 
-[ Upstream commit f4a75b5933c998e60fd812a7680e0971eb1c7cee ]
+> The of_gpio_n_cells default is 2 when ->of_xlate() callback is
+> not defined. No need to assign it explicitly in the driver.
+>
+> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-As per the downstream driver, gx gbif halt is required only during
-recovery sequence. So lets avoid it during regular rpm suspend.
+Patch applied!
 
-Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/515279/
-Link: https://lore.kernel.org/r/20221216223253.1.Ice9c47bfeb1fddb8dc377a3491a043a3ee7fca7d@changeid
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 15 +++++++++------
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c |  7 +++++++
- drivers/gpu/drm/msm/adreno/a6xx_gpu.h |  1 +
- 3 files changed, 17 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index e033d6a67a20..870252bef23f 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -876,7 +876,8 @@ static void a6xx_gmu_rpmh_off(struct a6xx_gmu *gmu)
- #define GBIF_CLIENT_HALT_MASK             BIT(0)
- #define GBIF_ARB_HALT_MASK                BIT(1)
- 
--static void a6xx_bus_clear_pending_transactions(struct adreno_gpu *adreno_gpu)
-+static void a6xx_bus_clear_pending_transactions(struct adreno_gpu *adreno_gpu,
-+		bool gx_off)
- {
- 	struct msm_gpu *gpu = &adreno_gpu->base;
- 
-@@ -889,9 +890,11 @@ static void a6xx_bus_clear_pending_transactions(struct adreno_gpu *adreno_gpu)
- 		return;
- 	}
- 
--	/* Halt the gx side of GBIF */
--	gpu_write(gpu, REG_A6XX_RBBM_GBIF_HALT, 1);
--	spin_until(gpu_read(gpu, REG_A6XX_RBBM_GBIF_HALT_ACK) & 1);
-+	if (gx_off) {
-+		/* Halt the gx side of GBIF */
-+		gpu_write(gpu, REG_A6XX_RBBM_GBIF_HALT, 1);
-+		spin_until(gpu_read(gpu, REG_A6XX_RBBM_GBIF_HALT_ACK) & 1);
-+	}
- 
- 	/* Halt new client requests on GBIF */
- 	gpu_write(gpu, REG_A6XX_GBIF_HALT, GBIF_CLIENT_HALT_MASK);
-@@ -929,7 +932,7 @@ static void a6xx_gmu_force_off(struct a6xx_gmu *gmu)
- 	/* Halt the gmu cm3 core */
- 	gmu_write(gmu, REG_A6XX_GMU_CM3_SYSRESET, 1);
- 
--	a6xx_bus_clear_pending_transactions(adreno_gpu);
-+	a6xx_bus_clear_pending_transactions(adreno_gpu, true);
- 
- 	/* Reset GPU core blocks */
- 	gpu_write(gpu, REG_A6XX_RBBM_SW_RESET_CMD, 1);
-@@ -1083,7 +1086,7 @@ static void a6xx_gmu_shutdown(struct a6xx_gmu *gmu)
- 			return;
- 		}
- 
--		a6xx_bus_clear_pending_transactions(adreno_gpu);
-+		a6xx_bus_clear_pending_transactions(adreno_gpu, a6xx_gpu->hung);
- 
- 		/* tell the GMU we want to slumber */
- 		ret = a6xx_gmu_notify_slumber(gmu);
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index e846e629c00d..9d7fc44c1e2a 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -1277,6 +1277,12 @@ static void a6xx_recover(struct msm_gpu *gpu)
- 	if (hang_debug)
- 		a6xx_dump(gpu);
- 
-+	/*
-+	 * To handle recovery specific sequences during the rpm suspend we are
-+	 * about to trigger
-+	 */
-+	a6xx_gpu->hung = true;
-+
- 	/* Halt SQE first */
- 	gpu_write(gpu, REG_A6XX_CP_SQE_CNTL, 3);
- 
-@@ -1319,6 +1325,7 @@ static void a6xx_recover(struct msm_gpu *gpu)
- 	mutex_unlock(&gpu->active_lock);
- 
- 	msm_gpu_hw_init(gpu);
-+	a6xx_gpu->hung = false;
- }
- 
- static const char *a6xx_uche_fault_block(struct msm_gpu *gpu, u32 mid)
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-index ab853f61db63..eea2e60ce3b7 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-@@ -32,6 +32,7 @@ struct a6xx_gpu {
- 	void *llc_slice;
- 	void *htw_llc_slice;
- 	bool have_mmu500;
-+	bool hung;
- };
- 
- #define to_a6xx_gpu(x) container_of(x, struct a6xx_gpu, base)
--- 
-2.35.1
-
+Yours,
+Linus Walleij
