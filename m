@@ -2,141 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A80666CC7D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jan 2023 18:26:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8BDEF66CE29
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Jan 2023 18:59:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234598AbjAPR0h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Jan 2023 12:26:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47964 "EHLO
+        id S232686AbjAPR7j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Jan 2023 12:59:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234700AbjAPR0K (ORCPT
+        with ESMTP id S235165AbjAPR6o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Jan 2023 12:26:10 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E49022F786
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 09:03:23 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id f34so43544773lfv.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 09:03:23 -0800 (PST)
+        Mon, 16 Jan 2023 12:58:44 -0500
+Received: from mail-oa1-x2e.google.com (mail-oa1-x2e.google.com [IPv6:2001:4860:4864:20::2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4006241CE
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 09:41:28 -0800 (PST)
+Received: by mail-oa1-x2e.google.com with SMTP id 586e51a60fabf-15eeec85280so8415349fac.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 09:41:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=zfvW4x1CWzo8A4PwKTRFbT66dZe4XOyatA3UxJIt6gc=;
-        b=EVjfE+dG0xInpD0+sTbInPaZ881Ao8yfX74tHARGpLq/Vuoh5zH/IZAB6fuvpNTiQD
-         OZSWYx1zj/QbCN06VMZ9rI/DlXlPo3SSUro6mDRt9WMXgX/Q3bYSxTmsXTterImm/xBi
-         YVUqhAzo7XB6SK9wumYGA0FcWX9srsn/x6AWevqFLKNXHbSL1FMoeT+8C4e/IeDA7FMy
-         Bbqea9Eiwb6V0mWyqWFSXAYlpf965nS7S0tTa4d6NwsGbd/9RYi4+qPr+aRgBwsMHt4U
-         JmTm9wFI0ExMgUTJXQi6yvhDYoUiI7P5vN6MJAE5bf+JE2hzlrZDZHHByBVERciPxZtj
-         DkCA==
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=32etmJGtnoqZs4BKYvAsZxgp4Z8S6ohTWuwi/XPlaIY=;
+        b=PvRXv20O6DvvrQohvHLThOVursOGZoHGCN2kKLOUEBl+JlR++v8pM94Rsdy+06TzUD
+         u3nljlp1FNHPwvXBcmTsJQwp5H1hGn8IPm856UZTRnbPtrFRl7W84tpUJXbZl1HzLC42
+         eqWloiTobk3CJkGgEEIyOLOP+ig3gjISbbDWsltJJk4dOFlrjgn9rWUN7Py8pr2Qw3ct
+         KKMwPo18GrWMGwi7ePfdIWFFhEKZo7AFWB8fi1obVJVVN0HXpg2T/0WKU0KzvEMCBPND
+         1CxvpeA1K8zaqluCHxAwRBQsULmXXLB/zx0TCmeChCv8oPySCtsAbc6p6IUrW9xuzyDB
+         5DNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zfvW4x1CWzo8A4PwKTRFbT66dZe4XOyatA3UxJIt6gc=;
-        b=g8aLgWj2igk0q+av+CUKlkIDlryFT1fZE9RjI85Jxw4s1q8paF0Yp+prpo8Pz9NT+5
-         zHub613MIh6LxXefEl6UQhtfloDYgGfHhofx4HmyMN9ZTlv3rzxSXY9cz4WsgSRjkZxW
-         HHcvuRjngNOvoRl9Ys5zjmCUh1ciCmyiIMlCs5B/JWRzzaE70Wx8fJdQuhPQw03mmMZx
-         pKfSqswdShjYLZWScsiaZkh19SHCz1RjomOH5el/chy+4XyDHVWAB8Aqgxxfgcl9Hh4s
-         n1Ur6YRxq2hORuh7T2i5BXekyTtoLH7h8/jeKSH80ecZF/TL++XdQNzzknfnvGuO3JWr
-         reBA==
-X-Gm-Message-State: AFqh2kpuRzHCjc0Z8SXWdpaxRfg4oXFujTGl2tBA9/ujnX27rxkuOdqD
-        uCUvJSdh3Uv1/9+EQApnwJ/MMA==
-X-Google-Smtp-Source: AMrXdXsd06/7/A//PRAcqE8qTJqcA12oJaa0Irfd+A8C2D4tJ03Bxs3ain1PJkLty9RuS9mUvk9TIA==
-X-Received: by 2002:a19:8c0a:0:b0:4b6:e775:ebb7 with SMTP id o10-20020a198c0a000000b004b6e775ebb7mr3088878lfd.12.1673888601862;
-        Mon, 16 Jan 2023 09:03:21 -0800 (PST)
-Received: from [192.168.1.101] (abym53.neoplus.adsl.tpnet.pl. [83.9.32.53])
-        by smtp.gmail.com with ESMTPSA id w19-20020a05651234d300b004cb09fd48ebsm5055655lfr.149.2023.01.16.09.03.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Jan 2023 09:03:21 -0800 (PST)
-Message-ID: <37690485-a456-ace1-50b7-55c6f2dc416d@linaro.org>
-Date:   Mon, 16 Jan 2023 18:03:19 +0100
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=32etmJGtnoqZs4BKYvAsZxgp4Z8S6ohTWuwi/XPlaIY=;
+        b=kN58RSADuQb+6UWuVb3zd3A4JDQ644PozGo1bxA+LylhEcINpzJEtyytosU0RHLo0z
+         mBjTefg8kqnx9rDOropq9Tw6CQ+SwVpnT9arUlyH1gGSO3KoqmgeXEuTASxufQWlF/Mk
+         kM3nG5ZKe+vWip9xSkRdoHpa46zrcdfIw4ldvONjSeIfZpfvqUsc9dPrIIcKOiG8P3LY
+         pid9Ae26gMpcr6OjhMy9MH6RTkav9ug0tE7NmERfRJHICLyr8QRd2RBg3Tz3Yv5WYxAS
+         6Plfk/t4mHitBJUkdstewZmgQYO9YOTvEreiDvfGr53+WQHakOTy/VS5VMtrhF4mGy2q
+         VdFQ==
+X-Gm-Message-State: AFqh2kpV0TWy4gbCCzERWed4sywaEg/a/STtevDbOp/EH+D8DD1DhKt6
+        GSTzYtGPuqKPLTlPRKwkAigh2iNndsgM85QtkqM=
+X-Google-Smtp-Source: AMrXdXv/fJdDosEVH5QdjcHknh+mizzHGjnQeD0B3IXf279r17ct66uUwAb+qk2pfx3Fq5drTaa1P/d+FtTgWTMAjOU=
+X-Received: by 2002:a05:6870:9a9b:b0:13d:51fe:3404 with SMTP id
+ hp27-20020a0568709a9b00b0013d51fe3404mr31029oab.183.1673890887961; Mon, 16
+ Jan 2023 09:41:27 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v9 2/6] dt-bindings: soc: qcom: cpr3: Add bindings for
- CPR3 driver
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>
-Cc:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>, andersson@kernel.org,
-        marijn.suijten@somainline.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, krzysztof.kozlowski@linaro.org,
-        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        agross@kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-References: <20230116093845.72621-1-konrad.dybcio@linaro.org>
- <20230116093845.72621-3-konrad.dybcio@linaro.org>
- <167388663828.594146.5142968901472742042.robh@kernel.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <167388663828.594146.5142968901472742042.robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_SORBS_HTTP,RCVD_IN_SORBS_SOCKS,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Mon, 16 Jan 2023 09:41:25 -0800
+Message-ID: <CAF6AEGskguoVsz2wqAK2k+f32LwcVY5JC6+e2RwLqZswz3RY2Q@mail.gmail.com>
+Subject: [pull] drm/msm: drm-msm-fixes-2023-01-16 for v6.3-rc5
+To:     Dave Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Dave,
 
+A couple more fixes for the v6.3 cycle, which were meant to be part of
+the previous fixes pull, but I fumbled at git when applying the tag.
 
-On 16.01.2023 17:36, Rob Herring wrote:
-> 
-> On Mon, 16 Jan 2023 10:38:41 +0100, Konrad Dybcio wrote:
->> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
->>
->> Add the bindings for the CPR3 driver to the documentation.
->>
->> Reviewed-by: Rob Herring <robh@kernel.org>
->> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
->> [Konrad: Make binding check pass; update AGdR's email]
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>  .../bindings/soc/qcom/qcom,cpr3.yaml          | 314 ++++++++++++++++++
->>  1 file changed, 314 insertions(+)
->>  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.yaml
->>
-> 
-> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> on your patch (DT_CHECKER_FLAGS is new in v5.13):
-> 
-> yamllint warnings/errors:
-> 
-> dtschema/dtc warnings/errors:
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.example.dtb: opp-table-cprh: opp-1: 'qcom,opp-cloop-vadj', 'qcom,opp-oloop-vadj' do not match any of the regexes: 'pinctrl-[0-9]+'
-> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.example.dtb: opp-table-cprh: opp-2: 'qcom,opp-cloop-vadj', 'qcom,opp-oloop-vadj' do not match any of the regexes: 'pinctrl-[0-9]+'
-> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.example.dtb: opp-table-cprh: opp-3: 'qcom,opp-cloop-vadj', 'qcom,opp-oloop-vadj' do not match any of the regexes: 'pinctrl-[0-9]+'
-Argh, forgot to include that again.. My tree's so big it's hard
-to manage.. Hopefully the third time's the charm..
+The following changes since commit f4a75b5933c998e60fd812a7680e0971eb1c7cee:
 
-Konrad
-> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.example.dtb: opp-table-cprh: opp-3:qcom,opp-fuse-level:0: [2, 3] is too long
-> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml
-> 
-> doc reference errors (make refcheckdocs):
-> 
-> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230116093845.72621-3-konrad.dybcio@linaro.org
-> 
-> The base for the series is generally the latest rc1. A different dependency
-> should be noted in *this* patch.
-> 
-> If you already ran 'make dt_binding_check' and didn't see the above
-> error(s), then make sure 'yamllint' is installed and dt-schema is up to
-> date:
-> 
-> pip3 install dtschema --upgrade
-> 
-> Please check and re-submit after running the above command yourself. Note
-> that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-> your schema. However, it must be unset to test all examples with your schema.
-> 
+  drm/msm/a6xx: Avoid gx gbit halt during rpm suspend (2023-01-05
+15:13:16 -0800)
+
+are available in the Git repository at:
+
+  https://gitlab.freedesktop.org/drm/msm.git tags/drm-msm-fixes-2023-01-16
+
+for you to fetch changes up to a66f1efcf748febea7758c4c3c8b5bc5294949ef:
+
+  drm/msm/gpu: Fix potential double-free (2023-01-11 09:00:14 -0800)
+
+----------------------------------------------------------------
+msm-fixes for v6.3-rc5
+
+Two GPU fixes which were meant to be part of the previous pull request,
+but I'd forgotten to fetch from gitlab after the MR was merged so that
+git tag was applied to the wrong commit.
+
+- kexec shutdown fix
+- fix potential double free
+
+----------------------------------------------------------------
+Joel Fernandes (Google) (1):
+      adreno: Shutdown the GPU properly
+
+Rob Clark (1):
+      drm/msm/gpu: Fix potential double-free
+
+ drivers/gpu/drm/msm/adreno/adreno_device.c |  5 +++--
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c    |  4 ++++
+ drivers/gpu/drm/msm/msm_gpu.c              |  2 ++
+ drivers/gpu/drm/msm/msm_gpu.h              | 12 ++++++++++--
+ 4 files changed, 19 insertions(+), 4 deletions(-)
