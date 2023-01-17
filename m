@@ -2,129 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E730B66D4BF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 03:55:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0696666D4D2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 04:01:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235740AbjAQCzQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Jan 2023 21:55:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53202 "EHLO
+        id S235782AbjAQDBJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Jan 2023 22:01:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235199AbjAQCyq (ORCPT
+        with ESMTP id S235664AbjAQDAn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Jan 2023 21:54:46 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F09D2B0A3;
-        Mon, 16 Jan 2023 18:51:28 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id D0DCCB810C0;
-        Tue, 17 Jan 2023 02:51:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92086C433EF;
-        Tue, 17 Jan 2023 02:51:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1673923885;
-        bh=JmhtnjRtv93fmLYRY9nJ+6bCJOF5xS+IQeydvqLjKrI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=JwcF6Rzoh4bFaEVEF0G1LosXwazA3b54uS4yT1qtBTRxH+WCVlYxJI7UvbRvnGMZm
-         S8VjEKubNcAdUsJMMNjIFTk94GfjfIHUHpkpF4bcUyuYGJJa6qNR2QDUlGEFJC2HGV
-         UNDur8tV6nrLSqkmVZajJ0cS84DXmU9AEoCU9YnH3Zw22NDbjxXqw8eF46P79dLMLT
-         jCNlgPZE9WjjN2ony2ESpyTPSs3ftVDo8a/M+J/sm0fQPbbDEXYSwE13dEDlL0Avfa
-         CVjhO83dbu/NTZ8/5FPNnjao/qyQ+ewsvWzJwJ6wSPJOs5uRlyefPKQXnXgjan3hE2
-         +zMXVuZVki8PQ==
-Date:   Mon, 16 Jan 2023 20:51:22 -0600
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Johan Hovold <johan@kernel.org>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm: Initialize mode_config earlier
-Message-ID: <20230117025122.jt3wrjkqfnogu4ci@builder.lan>
-References: <20230113041051.4189063-1-quic_bjorande@quicinc.com>
- <eea1c5dc-6bc5-4246-f0e1-0c790de9f078@linaro.org>
- <9a64c685-9ff0-bc1d-e604-e3773ff9edd7@linaro.org>
+        Mon, 16 Jan 2023 22:00:43 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1896A2BEF1;
+        Mon, 16 Jan 2023 18:58:24 -0800 (PST)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30H1XF6t015452;
+        Tue, 17 Jan 2023 02:58:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=EEnvsJJM5Osp3CoOWFQQMpnmZGh1V+OjNHzXq5JM+Qc=;
+ b=XoLIi6OimKlgfK5FI00qiRPt8WLLxH5eI2Ay6pvsSn4VsTqcNq6/Z0sTPasemPB+pdQU
+ YfzXGqz5GMWJTWpjFzpvtK+2Onsn05FndN/QMvWphfI/XsTc7ts890W3XZtx19AwUtTt
+ f0jGyBSe98uKeA2Zfw8KdVPWRDi6ZzkUhkcMc/LInEAup9HxOEmbIcqhX3vZ+MPeD3Eh
+ RfA5h4Lz5Y07GhAQfj49RquafSiNEbYbbnNwZM1CwJ2MveNz8NCnylsPhjq5dGNj5Wie
+ h5MhRx1fxXqpi/ocnVCuMs71kPczhBpbCqW9gQmCWE1+2l9PIyTJ9rmtPa0j+IwybRyC Ug== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n3mg3cjma-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 17 Jan 2023 02:58:20 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30H2wJgp028544
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 17 Jan 2023 02:58:19 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Mon, 16 Jan 2023 18:58:19 -0800
+Date:   Mon, 16 Jan 2023 18:58:18 -0800
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+CC:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Sebastian Reichel <sre@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>,
+        Johan Hovold <johan@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v2 0/4] soc: qcom: Introduce PMIC GLINK
+Message-ID: <20230117025818.GC2350793@hu-bjorande-lv.qualcomm.com>
+References: <20230113041132.4189268-1-quic_bjorande@quicinc.com>
+ <9e831252-7198-7983-8a52-0e745688452d@linaro.org>
+ <20230117023238.GB2350793@hu-bjorande-lv.qualcomm.com>
+ <c1e3db0d-7593-b0fc-043b-60538faf9ba2@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <9a64c685-9ff0-bc1d-e604-e3773ff9edd7@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <c1e3db0d-7593-b0fc-043b-60538faf9ba2@linaro.org>
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: MFhhu_0YLnA72HTVJf2Qgv5Pr_YftpSP
+X-Proofpoint-GUID: MFhhu_0YLnA72HTVJf2Qgv5Pr_YftpSP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-16_18,2023-01-13_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
+ priorityscore=1501 malwarescore=0 phishscore=0 suspectscore=0
+ clxscore=1015 impostorscore=0 bulkscore=0 mlxscore=0 spamscore=0
+ mlxlogscore=999 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2212070000 definitions=main-2301170020
+X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_SBL_CSS,SPF_HELO_NONE,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 13, 2023 at 10:57:18AM +0200, Dmitry Baryshkov wrote:
-> On 13/01/2023 06:23, Dmitry Baryshkov wrote:
-> > On 13/01/2023 06:10, Bjorn Andersson wrote:
-> > > Invoking drm_bridge_hpd_notify() on a drm_bridge with a HPD-enabled
-> > > bridge_connector ends up in drm_bridge_connector_hpd_cb() calling
-> > > drm_kms_helper_hotplug_event(), which assumes that the associated
-> > > drm_device's mode_config.funcs is a valid pointer.
+On Tue, Jan 17, 2023 at 02:37:27AM +0000, Bryan O'Donoghue wrote:
+> On 17/01/2023 02:32, Bjorn Andersson wrote:
+> > On Fri, Jan 13, 2023 at 05:10:17PM +0000, Bryan O'Donoghue wrote:
+> > > On 13/01/2023 04:11, Bjorn Andersson wrote:
+> > > > This implements the base PMIC GLINK driver, a power_supply driver and a
+> > > > driver for the USB Type-C altmode protocol. This has been tested and
+> > > > shown to provide battery information, USB Type-C switch and mux requests
+> > > > and DisplayPort notifications on SC8180X, SC8280XP and SM8350.
+> > > > 
+> > > > Bjorn Andersson (4):
+> > > >     dt-bindings: soc: qcom: Introduce PMIC GLINK binding
+> > > >     soc: qcom: pmic_glink: Introduce base PMIC GLINK driver
+> > > >     soc: qcom: pmic_glink: Introduce altmode support
+> > > >     power: supply: Introduce Qualcomm PMIC GLINK power supply
+> > > > 
+> > > >    .../bindings/soc/qcom/qcom,pmic-glink.yaml    |  102 ++
+> > > >    drivers/power/supply/Kconfig                  |    9 +
+> > > >    drivers/power/supply/Makefile                 |    1 +
+> > > >    drivers/power/supply/qcom_battmgr.c           | 1421 +++++++++++++++++
+> > > >    drivers/soc/qcom/Kconfig                      |   15 +
+> > > >    drivers/soc/qcom/Makefile                     |    2 +
+> > > >    drivers/soc/qcom/pmic_glink.c                 |  336 ++++
+> > > >    drivers/soc/qcom/pmic_glink_altmode.c         |  477 ++++++
+> > > >    include/linux/soc/qcom/pmic_glink.h           |   32 +
+> > > >    9 files changed, 2395 insertions(+)
+> > > >    create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,pmic-glink.yaml
+> > > >    create mode 100644 drivers/power/supply/qcom_battmgr.c
+> > > >    create mode 100644 drivers/soc/qcom/pmic_glink.c
+> > > >    create mode 100644 drivers/soc/qcom/pmic_glink_altmode.c
+> > > >    create mode 100644 include/linux/soc/qcom/pmic_glink.h
+> > > > 
 > > > 
-> > > But in the MSM DisplayPort driver the HPD enablement happens at bind
-> > > time and mode_config.funcs is initialized late in msm_drm_init(). This
-> > > means that there's a window for hot plug events to dereference a NULL
-> > > mode_config.funcs.
+> > > How does the USB PHY and a USB redriver fit into this ?
 > > > 
-> > > Move the assignment of mode_config.funcs before the bind, to avoid this
-> > > scenario.
+> > > Is the host supposed to manage both/neither ? Is the DSP responsible for
+> > > configuring the PHY lanes and the turnaround on orientation switch ?
+> > > 
 > > 
-> > Cam we make DP driver not to report HPD events until the enable_hpd()
-> > was called? I think this is what was fixed by your internal_hpd
-> > patchset.
+> > As indicated above, the firmware deals with battery management and USB
+> > Type-C handling.
+> > 
+> > The battery/power management is handled by the battmgr implementation,
+> > exposing the various properties through a set of power_supply objects.
+> > 
+> > The USB Type-C handling comes in two forms. The "altmode" protocol
+> > handles DisplayPort notifications - plug detect, orientation and mode
+> > switches. The other part of the USB implementation exposes UCSI.
+> > 
+> > The altmode implementation provides two things:
+> > - A drm_bridge, per connector, which can be tied (of_graph) to a
+> >    DisplayPort instance, and will invoke HPD notifications on the
+> >    drm_bridge, based on notification messages thereof.
+> > 
+> > - Acquire typec_switch and typec_mux handles through the of_graph and
+> >    signal the remotes when notifications of state changes occur. Linking
+> >    this to the FSA4480, is sufficient to get USB/DP combo (2+2 lanes)
+> >    working on e.g. SM8350 HDK.
+> >    Work in progress patches also exists for teaching QMP about
+> >    orientation switching of the SS lines, but it seems this needs to be
+> >    rebased onto the refactored QMP driver.
+> >    I also have patches for QMP to make it switch USB/DP combo -> 4-lane
+> >    DP, which allow 4k support without DSC, unfortunately switch back to
+> >    USB has not been fully reliable, so this requires some more work
+> >    (downstream involves DWC3 here as well, to reprogram the PHY).
 > 
-> Or to express this in another words: I thought that internal_hpd already
-> deferred enabling hpd event reporting till the time when we need it, didn't
-> it?
+> Oki doki that makes sense and is pretty much in-line with what I thought.
+> 
+> We still have a bunch of typec-mux and phy work to do even with adsp/glink
+> doing the TCPM.
 > 
 
-I added a WARN_ON(1) in drm_bridge_hpd_enable() to get a sense of when
-this window of "opportunity" opens up, and here's the callstack:
+Correct, the registration of QMP as a typec_switch and typec_mux and
+handling of respective notification remains open and should (by design)
+be independent of the TCPM implementation.
 
-------------[ cut here ]------------
-WARNING: CPU: 6 PID: 99 at drivers/gpu/drm/drm_bridge.c:1260 drm_bridge_hpd_enable+0x48/0x94 [drm]
-...
-Call trace:
- drm_bridge_hpd_enable+0x48/0x94 [drm]
- drm_bridge_connector_enable_hpd+0x30/0x3c [drm_kms_helper]
- drm_kms_helper_poll_enable+0xa4/0x114 [drm_kms_helper]
- drm_kms_helper_poll_init+0x6c/0x7c [drm_kms_helper]
- msm_drm_bind+0x370/0x628 [msm]
- try_to_bring_up_aggregate_device+0x170/0x1bc
- __component_add+0xb0/0x168
- component_add+0x20/0x2c
- dp_display_probe+0x40c/0x468 [msm]
- platform_probe+0xb4/0xdc
- really_probe+0x13c/0x300
- __driver_probe_device+0xc0/0xec
- driver_probe_device+0x48/0x204
- __device_attach_driver+0x124/0x14c
- bus_for_each_drv+0x90/0xdc
- __device_attach+0xdc/0x1a8
- device_initial_probe+0x20/0x2c
- bus_probe_device+0x40/0xa4
- deferred_probe_work_func+0x94/0xd0
- process_one_work+0x1a8/0x3c0
- worker_thread+0x254/0x47c
- kthread+0xf8/0x1b8
- ret_from_fork+0x10/0x20
----[ end trace 0000000000000000 ]---
+In particular the orientation switching is an itch worth scratching at
+this time. But when the DPU becomes capable of producing 4k@60 output it
+would obviously be nice to have the whole shebang :)
 
-As drm_kms_helper_poll_init() is the last thing being called in
-msm_drm_init() shifting around the mode_config.func assignment would not
-have any impact.
-
-Perhaps we have shuffled other things around to avoid this bug?  Either
-way, let's this on hold  until further proof that it's still
-reproducible.
-
-Sorry for the noise,
+Regards,
 Bjorn
+
+> Thanks for the explanation.
+> 
+> ---
+> bod
+> 
