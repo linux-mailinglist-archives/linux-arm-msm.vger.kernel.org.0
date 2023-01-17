@@ -2,95 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB9A666E631
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 19:38:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 12D9166E63A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 19:41:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230392AbjAQShh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 13:37:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54486 "EHLO
+        id S234513AbjAQSiS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 13:38:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232575AbjAQSbu (ORCPT
+        with ESMTP id S230220AbjAQScy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 13:31:50 -0500
-Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E3344392B;
-        Tue, 17 Jan 2023 10:03:42 -0800 (PST)
-Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-15b9c93848dso24538503fac.1;
-        Tue, 17 Jan 2023 10:03:42 -0800 (PST)
+        Tue, 17 Jan 2023 13:32:54 -0500
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA31D53F90
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 10:04:40 -0800 (PST)
+Received: by mail-wm1-x32e.google.com with SMTP id q8so11136206wmo.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 10:04:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20210112.gappssmtp.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=KBPtb5kB7phRN2HyeU727IaxXRKzBI0qHI+gXLYhw7Y=;
+        b=ClpPpXyniScMXOMCRlplFUjOlwCjRSmBW9rMYR/cAmLHnmHaa2ASXhhoYZgW5AMz7D
+         7/1/E7MwBpNSPAdz+Ye155/YRdxU1XL9V8955MblAQGUlVaQDiQE1oJki8WsfKbeRgX5
+         i7fC3zAKp7KSgy3LzCJLRVcuTSt9kXDIrbO6+aQvd+7boGg00pItttB/7qGWlt6nWUCW
+         O4H6RZtoGXg4WaSmkzd47EdA6WKM60SZDu00opIRR/cLXk55aLC416kpQ0jwBtEfVyRW
+         4sSJGUSt+zyiHsCPIkmmpn974Oa83ih3eltGA3CrnfItJF+cBhVfbyzPJ66F8IH6Jzd2
+         IDeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DOYPnyAt2J4Uh+rVJ+ehIUCeXiRFMPFo5jZlhneDgR4=;
-        b=j1CwvGMSGTkfCDAwf7YeTFOdMR/4mYqdZbgGnYyDjs7FUUZw+17XwCN5wmvMgS7Bc3
-         oozT2hDUYqAhCfn3+279xvnlrByxOQLzqvN0V4EIOTrSEHzsqHxmqU/hPDBDiU4yUFoC
-         5QwUf6bn0aGMslyPRBrchMwSvzxqwfq8aOn9y/DafgIIE5FvL/MJfLGNhttJTkxmmqha
-         dasKi6CVYdAcDynITWbuCyJpTW3qAp4Jz8Gg2dECKHO+yb26LDmI16hHJK8xUdhoYd4w
-         zHxQeXe9chOdfUTt1IkFT/eLAGDqUelpw4Skf0l0p7xAWO+/EMTiJLEFOHRV8bELFlj0
-         kZlw==
-X-Gm-Message-State: AFqh2kojTcQEAwminQbHbZaAq88lcEwtLJl0bKQvYSBvNGurAbHhoe4J
-        j/DukCZXeXus78wUjCDifw==
-X-Google-Smtp-Source: AMrXdXtXdEGZRX21HSHeHAgDRpQrycVFovajB2ZoPABGZ88wt1c/v3xzwZs6+aRiC5KlzuBvMMu+lw==
-X-Received: by 2002:a05:6870:fd99:b0:15f:ed7:c02d with SMTP id ma25-20020a056870fd9900b0015f0ed7c02dmr2433421oab.55.1673978610488;
-        Tue, 17 Jan 2023 10:03:30 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id c6-20020a056870c08600b0014be94a12d0sm16837537oad.44.2023.01.17.10.03.29
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KBPtb5kB7phRN2HyeU727IaxXRKzBI0qHI+gXLYhw7Y=;
+        b=BSQHikS9EI87a8Q4ZOr0aS4v7jV6m3059glT3NvDwcrx1BNx2hiTZ+9wZXPM4Y0x89
+         nW5GYCB/RvAJaN0oPTNanO5Usf3fjNCSIm/9T5/W7guvt+0dc6irK+twXovYTDzhhnST
+         lljAcBYiO2ry6+aqc8A2g4B6o9msuwWLw8o8YmFB1JUXwmXHrgyvzkWighYdI50D3tDE
+         KHVirm7Yz4GYJEqSRjDNm/UXO8GrHlOJwOwfWzGvUfP7pTukPG6JIvsmsRSbXB1IvzJX
+         CK9cEJrIzRvshAzCRgR5Lsv3HGr2lOs2L3nXi6wt4ZVzsJ3WwN3cipNXkk0P6KZ7nxj/
+         skBQ==
+X-Gm-Message-State: AFqh2koimTzf6KyPIM1k3Z+zPIiS66IyKNggJw+g5Eh4EKRg93bVd9gq
+        eqycjGR0+GE84UEGMgwfVMaTeqTP3cfIu02C
+X-Google-Smtp-Source: AMrXdXu3unw8WBLHAeJhgOLo9n3+ap345utf67uMWZmJFzFH8SfgPHxxfhGIk2SYm9ufTb+ARBg4gw==
+X-Received: by 2002:a05:600c:3b1e:b0:3cf:497c:c4f5 with SMTP id m30-20020a05600c3b1e00b003cf497cc4f5mr4116868wms.13.1673978679194;
+        Tue, 17 Jan 2023 10:04:39 -0800 (PST)
+Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:9236:abcb:4905:a64e])
+        by smtp.gmail.com with ESMTPSA id bp28-20020a5d5a9c000000b00273cd321a1bsm29356681wrb.107.2023.01.17.10.04.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Jan 2023 10:03:29 -0800 (PST)
-Received: (nullmailer pid 3323388 invoked by uid 1000);
-        Tue, 17 Jan 2023 18:03:29 -0000
-Date:   Tue, 17 Jan 2023 12:03:29 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        David Airlie <airlied@gmail.com>,
-        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
+        Tue, 17 Jan 2023 10:04:38 -0800 (PST)
+From:   Bartosz Golaszewski <brgl@bgdev.pl>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Sean Paul <sean@poorly.run>, Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-Subject: Re: [PATCH v6 01/11] dt-bindings: display/msm: convert MDP5 schema
- to YAML format
-Message-ID: <167397860857.3323332.1645036328845035692.robh@kernel.org>
-References: <20230113083720.39224-1-dmitry.baryshkov@linaro.org>
- <20230113083720.39224-2-dmitry.baryshkov@linaro.org>
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        netdev@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH v2 0/2] qcom: sa8775p: add the GCC clock driver for Qualcomm SA8775P platforms
+Date:   Tue, 17 Jan 2023 19:04:27 +0100
+Message-Id: <20230117180429.305266-1-brgl@bgdev.pl>
+X-Mailer: git-send-email 2.37.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230113083720.39224-2-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-On Fri, 13 Jan 2023 10:37:10 +0200, Dmitry Baryshkov wrote:
-> Convert the mdp5.txt into the yaml format. Changes to the existing (txt) schema:
->  - MSM8996 has additional "iommu" clock, define it separately
->  - Add new properties used on some of platforms:
->    - interconnects, interconnect-names
->    - iommus
->    - power-domains
->    - operating-points-v2, opp-table
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  .../devicetree/bindings/display/msm/mdp5.txt  | 132 -----------------
->  .../bindings/display/msm/qcom,mdp5.yaml       | 138 ++++++++++++++++++
->  2 files changed, 138 insertions(+), 132 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/display/msm/mdp5.txt
->  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,mdp5.yaml
-> 
+Add the DT bindings and driver for the GCC clock on the sa8775p platform
+from Qualcomm.
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+v1 -> v2:
+- fix examples in DT bindings and make sure they pass tests
+- use lowercase letters in hex numbers
+- fix the name of DT compatible and headers (gcc-sa8775p -> sa8775p-gcc)
+- fix licensing of DT bindings
+- fix the regmap's max_register property
+- use clk_regmap_phy_mux_ops where applicable
+- other minor tweaks and improvements
+
+Bartosz Golaszewski (1):
+  dt-bindings: clock: qcom: document the GCC clock on Qualcomm sa8775p
+
+Shazad Hussain (1):
+  clk: qcom: add the GCC driver for sa8775p
+
+ .../bindings/clock/qcom,sa8775p-gcc.yaml      |   79 +
+ drivers/clk/qcom/Kconfig                      |    9 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/gcc-sa8775p.c                | 4805 +++++++++++++++++
+ include/dt-bindings/clock/qcom,sa8775p-gcc.h  |  320 ++
+ 5 files changed, 5214 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sa8775p-gcc.yaml
+ create mode 100644 drivers/clk/qcom/gcc-sa8775p.c
+ create mode 100644 include/dt-bindings/clock/qcom,sa8775p-gcc.h
+
+-- 
+2.37.2
+
