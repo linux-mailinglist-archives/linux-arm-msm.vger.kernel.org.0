@@ -2,205 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7417C66E23E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 16:34:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A22266E24A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 16:35:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232707AbjAQPea (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 10:34:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37402 "EHLO
+        id S232866AbjAQPfk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 10:35:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232666AbjAQPe1 (ORCPT
+        with ESMTP id S232536AbjAQPfh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 10:34:27 -0500
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DEBF3FF20
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 07:33:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1673969620;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=lpLspA5PSonBw/vmV1OrZLpzelfm/8/OIBNoQk0pktg=;
-        b=OgXjfblP8tKtcYs2gfyKsKyVN7mZo/6VtSeJ310c/oIQYuXGnxVTXkfSrlrIEKrerZ/D+v
-        fMUXKFVcFkHe0NreTNgWkn7ginxqKlBJtktHRre0PBFeDGDBE8WyaGCD4gHwRh4iXaUcd5
-        5D2+++A4ilc6Xmc3xCQn/X8J9MNSdAc=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-670-FtaB8tjoO7qnsWCo3NDJrQ-1; Tue, 17 Jan 2023 10:33:19 -0500
-X-MC-Unique: FtaB8tjoO7qnsWCo3NDJrQ-1
-Received: by mail-wr1-f70.google.com with SMTP id k18-20020adfb352000000b002bdd0a7a2b5so3256289wrd.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 07:33:05 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:subject:organization:from
-         :references:cc:to:content-language:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=lpLspA5PSonBw/vmV1OrZLpzelfm/8/OIBNoQk0pktg=;
-        b=QxUV1GPRRaoTWs1T4dkxMrDFIraltfpem7ATeFzBvaPgw2nc4C/yntyabg5KMPvhIi
-         hM5eMBI4nBoioA+q0hMypsr/t1b6jWb2Zi9kizKDgbNMOpDE4KsWQqIx68xs41eFcOce
-         9D/r8T2qsWlYVTNiWFZxLpKkOqLWmV56c4qru94QW0fscs8b9ErPM8bwVX7YJg7bglqP
-         EnrAE+axR6uQiSq+zM24nPjcbXG9DsDyCPu/ZIoPYVofoPJBFI/DHFr2e+WI9j1aMCJS
-         PfwAOKJ1uthJ8rVz8d1ja31XmcOR77hXYzwCccGoPl81Af2U2G3jc9s9wGNdzA3xCe8U
-         F/0w==
-X-Gm-Message-State: AFqh2kpQhVWlGy5spkeycMozEEfw1hNlZz/KmYmbJpxmzADPpqQMRcLj
-        NLnYyB/xj8vkerbzGENDnPGF5F6uxQCdiD9vYsoyEa919jt1SdlABG9JqTR6K4VavaUEUXwTcIO
-        V1EoERNx4/J6itVFB+aPJc4pIIw==
-X-Received: by 2002:a05:600c:3083:b0:3da:e4d:e6ba with SMTP id g3-20020a05600c308300b003da0e4de6bamr3462889wmn.14.1673969584684;
-        Tue, 17 Jan 2023 07:33:04 -0800 (PST)
-X-Google-Smtp-Source: AMrXdXvCh6pUXHdET5pfuUv9PvBeMbDsI9H3dt7KkiP1Worcaf06CcwLqp9GwiSRlxDjBnrsjANXng==
-X-Received: by 2002:a05:600c:3083:b0:3da:e4d:e6ba with SMTP id g3-20020a05600c308300b003da0e4de6bamr3462862wmn.14.1673969584377;
-        Tue, 17 Jan 2023 07:33:04 -0800 (PST)
-Received: from ?IPV6:2003:cb:c708:f00:323e:5956:8da1:9237? (p200300cbc7080f00323e59568da19237.dip0.t-ipconnect.de. [2003:cb:c708:f00:323e:5956:8da1:9237])
-        by smtp.gmail.com with ESMTPSA id bi6-20020a05600c3d8600b003d9df9e59c4sm34116110wmb.37.2023.01.17.07.33.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Jan 2023 07:33:03 -0800 (PST)
-Message-ID: <acd8d55c-8528-bb21-488e-e5999c3c4e4e@redhat.com>
-Date:   Tue, 17 Jan 2023 16:33:02 +0100
+        Tue, 17 Jan 2023 10:35:37 -0500
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 78EE341B52;
+        Tue, 17 Jan 2023 07:35:35 -0800 (PST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9822A165C;
+        Tue, 17 Jan 2023 07:36:16 -0800 (PST)
+Received: from FVFF77S0Q05N.cambridge.arm.com (FVFF77S0Q05N.cambridge.arm.com [10.1.31.153])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id ACA663F67D;
+        Tue, 17 Jan 2023 07:35:17 -0800 (PST)
+Date:   Tue, 17 Jan 2023 15:35:10 +0000
+From:   Mark Rutland <mark.rutland@arm.com>
+To:     Sudeep Holla <sudeep.holla@arm.com>
+Cc:     Peter Zijlstra <peterz@infradead.org>,
+        richard.henderson@linaro.org, ink@jurassic.park.msu.ru,
+        mattst88@gmail.com, vgupta@kernel.org, linux@armlinux.org.uk,
+        nsekhar@ti.com, brgl@bgdev.pl, ulli.kroll@googlemail.com,
+        linus.walleij@linaro.org, shawnguo@kernel.org,
+        Sascha Hauer <s.hauer@pengutronix.de>, kernel@pengutronix.de,
+        festevam@gmail.com, linux-imx@nxp.com, tony@atomide.com,
+        khilman@kernel.org, krzysztof.kozlowski@linaro.org,
+        alim.akhtar@samsung.com, catalin.marinas@arm.com, will@kernel.org,
+        guoren@kernel.org, bcain@quicinc.com, chenhuacai@kernel.org,
+        kernel@xen0n.name, geert@linux-m68k.org, sammy@sammy.net,
+        monstr@monstr.eu, tsbogend@alpha.franken.de, dinguyen@kernel.org,
+        jonas@southpole.se, stefan.kristiansson@saunalahti.fi,
+        shorne@gmail.com, James.Bottomley@hansenpartnership.com,
+        deller@gmx.de, mpe@ellerman.id.au, npiggin@gmail.com,
+        christophe.leroy@csgroup.eu, paul.walmsley@sifive.com,
+        palmer@dabbelt.com, aou@eecs.berkeley.edu, hca@linux.ibm.com,
+        gor@linux.ibm.com, agordeev@linux.ibm.com,
+        borntraeger@linux.ibm.com, svens@linux.ibm.com,
+        ysato@users.sourceforge.jp, dalias@libc.org, davem@davemloft.net,
+        richard@nod.at, anton.ivanov@cambridgegreys.com,
+        johannes@sipsolutions.net, tglx@linutronix.de, mingo@redhat.com,
+        bp@alien8.de, dave.hansen@linux.intel.com, x86@kernel.org,
+        hpa@zytor.com, acme@kernel.org, alexander.shishkin@linux.intel.com,
+        jolsa@kernel.org, namhyung@kernel.org, jgross@suse.com,
+        srivatsa@csail.mit.edu, amakhalov@vmware.com,
+        pv-drivers@vmware.com, boris.ostrovsky@oracle.com,
+        chris@zankel.net, jcmvbkbc@gmail.com, rafael@kernel.org,
+        lenb@kernel.org, pavel@ucw.cz, gregkh@linuxfoundation.org,
+        mturquette@baylibre.com, sboyd@kernel.org,
+        daniel.lezcano@linaro.org, lpieralisi@kernel.org,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        anup@brainfault.org, thierry.reding@gmail.com,
+        jonathanh@nvidia.com, jacob.jun.pan@linux.intel.com,
+        atishp@atishpatra.org, Arnd Bergmann <arnd@arndb.de>,
+        yury.norov@gmail.com, andriy.shevchenko@linux.intel.com,
+        linux@rasmusvillemoes.dk, dennis@kernel.org, tj@kernel.org,
+        cl@linux.com, rostedt@goodmis.org, mhiramat@kernel.org,
+        frederic@kernel.org, paulmck@kernel.org, pmladek@suse.com,
+        senozhatsky@chromium.org, john.ogness@linutronix.de,
+        juri.lelli@redhat.com, vincent.guittot@linaro.org,
+        dietmar.eggemann@arm.com, bsegall@google.com, mgorman@suse.de,
+        bristot@redhat.com, vschneid@redhat.com, ryabinin.a.a@gmail.com,
+        glider@google.com, andreyknvl@gmail.com, dvyukov@google.com,
+        vincenzo.frascino@arm.com,
+        Andrew Morton <akpm@linux-foundation.org>, jpoimboe@kernel.org,
+        linux-alpha@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-snps-arc@lists.infradead.org, linux-omap@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-csky@vger.kernel.org,
+        linux-hexagon@vger.kernel.org, linux-ia64@vger.kernel.org,
+        loongarch@lists.linux.dev, linux-m68k@lists.linux-m68k.org,
+        linux-mips@vger.kernel.org, openrisc@lists.librecores.org,
+        linux-parisc@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+        linux-riscv@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-sh@vger.kernel.org, sparclinux@vger.kernel.org,
+        linux-um@lists.infradead.org, linux-perf-users@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        linux-xtensa@linux-xtensa.org, linux-acpi@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-arch@vger.kernel.org, linux-mm@kvack.org,
+        linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com
+Subject: Re: [PATCH v3 00/51] cpuidle,rcu: Clean up the mess
+Message-ID: <Y8bALvyrPpdg++/J@FVFF77S0Q05N.cambridge.arm.com>
+References: <20230112194314.845371875@infradead.org>
+ <Y8WCWAuQSHN651dA@FVFF77S0Q05N.cambridge.arm.com>
+ <Y8Z31UbzG3LJgAXE@hirez.programming.kicks-ass.net>
+ <Y8afpbHtDOqAHq9M@FVFF77S0Q05N.cambridge.arm.com>
+ <20230117142140.g423hxisv7djudof@bogus>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Content-Language: en-US
-To:     Sudarshan Rajagopalan <quic_sudaraja@quicinc.com>,
-        Johannes Weiner <hannes@cmpxchg.org>,
-        Suren Baghdasaryan <surenb@google.com>,
-        Mike Rapoport <rppt@kernel.org>,
-        Oscar Salvador <osalvador@suse.de>,
-        Anshuman Khandual <anshuman.khandual@arm.com>,
-        mark.rutland@arm.com, will@kernel.org,
-        virtualization@lists.linux-foundation.org, linux-mm@kvack.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     "Trilok Soni (QUIC)" <quic_tsoni@quicinc.com>,
-        "Sukadev Bhattiprolu (QUIC)" <quic_sukadev@quicinc.com>,
-        "Srivatsa Vaddagiri (QUIC)" <quic_svaddagi@quicinc.com>,
-        "Patrick Daly (QUIC)" <quic_pdaly@quicinc.com>
-References: <072de3f4-6bd3-f9ce-024d-e469288fc46a@quicinc.com>
-From:   David Hildenbrand <david@redhat.com>
-Organization: Red Hat
-Subject: Re: [RFC] memory pressure detection in VMs using PSI mechanism for
- dynamically inflating/deflating VM memory
-In-Reply-To: <072de3f4-6bd3-f9ce-024d-e469288fc46a@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230117142140.g423hxisv7djudof@bogus>
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15.01.23 04:57, Sudarshan Rajagopalan wrote:
-> Hello all,
+On Tue, Jan 17, 2023 at 02:21:40PM +0000, Sudeep Holla wrote:
+> On Tue, Jan 17, 2023 at 01:16:21PM +0000, Mark Rutland wrote:
+> > On Tue, Jan 17, 2023 at 11:26:29AM +0100, Peter Zijlstra wrote:
+> > > On Mon, Jan 16, 2023 at 04:59:04PM +0000, Mark Rutland wrote:
+> > > 
+> > > > I'm sorry to have to bear some bad news on that front. :(
+> > > 
+> > > Moo, something had to give..
+> > > 
+> > > 
+> > > > IIUC what's happenign here is the PSCI cpuidle driver has entered idle and RCU
+> > > > is no longer watching when arm64's cpu_suspend() manipulates DAIF. Our
+> > > > local_daif_*() helpers poke lockdep and tracing, hence the call to
+> > > > trace_hardirqs_off() and the RCU usage.
+> > > 
+> > > Right, strictly speaking not needed at this point, IRQs should have been
+> > > traced off a long time ago.
+> > 
+> > True, but there are some other calls around here that *might* end up invoking
+> > RCU stuff (e.g. the MTE code).
+> > 
+> > That all needs a noinstr cleanup too, which I'll sort out as a follow-up.
+> > 
+> > > > I think we need RCU to be watching all the way down to cpu_suspend(), and it's
+> > > > cpu_suspend() that should actually enter/exit idle context. That and we need to
+> > > > make cpu_suspend() and the low-level PSCI invocation noinstr.
+> > > > 
+> > > > I'm not sure whether 32-bit will have a similar issue or not.
+> > > 
+> > > I'm not seeing 32bit or Risc-V have similar issues here, but who knows,
+> > > maybe I missed somsething.
+> > 
+> > I reckon if they do, the core changes here give us the infrastructure to fix
+> > them if/when we get reports.
+> > 
+> > > In any case, the below ought to cure the ARM64 case and remove that last
+> > > known RCU_NONIDLE() user as a bonus.
+> > 
+> > The below works for me testing on a Juno R1 board with PSCI, using defconfig +
+> > CONFIG_PROVE_LOCKING=y + CONFIG_DEBUG_LOCKDEP=y + CONFIG_DEBUG_ATOMIC_SLEEP=y.
+> > I'm not sure how to test the LPI / FFH part, but it looks good to me.
+> > 
+> > FWIW:
+> > 
+> > Reviewed-by: Mark Rutland <mark.rutland@arm.com>
+> > Tested-by: Mark Rutland <mark.rutland@arm.com>
+> > 
+> > Sudeep, would you be able to give the LPI/FFH side a spin with the kconfig
+> > options above?
+> > 
 > 
+> Not sure if I have messed up something in my mail setup, but I did reply
+> earlier.
 
-Hi,
+Sorry, that was my bad; I had been drafting my reply for a while and forgot to
+re-check prior to sending.
 
-I'll focus on the virtio-mem side of things :)
+> I did test both DT/cpuidle-psci driver and  ACPI/LPI+FFH driver
+> with the fix Peter sent. I was seeing same splat as you in both DT and
+> ACPI boot which the patch fixed it. I used the same config as described by
+> you above.
 
-> We’re from the Linux memory team here at Qualcomm. We are currently
-> devising a VM memory resizing feature where we dynamically inflate or
-> deflate the Linux VM based on ongoing memory demands in the VM. We
-> wanted to propose few details about this userspace daemon in form of RFC
-> and wanted to know the upstream’s opinion. Here are few details –
+Perfect; thanks!
 
-I'd avoid using the terminology of inflating/deflating VM memory when 
-talking about virtio-mem. Just call it "dynamically resizing VM memory". 
-virtio-mem is one way of doing it using memory devices.
-
-Inflation/deflation, in contrast, reminds one of a traditional balloon 
-driver, along the lines of virtio-balloon.
-
-> 
-> 1. This will be a native userspace daemon that will be running only in
-> the Linux VM which will use virtio-mem driver that uses memory hotplug
-> to add/remove memory. The VM (aka Secondary VM, SVM) will request for
-> memory from the host which is Primary VM, PVM via the backend hypervisor
-> which takes care of cross-VM communication.
-> 
-> 2. This will be guest driver. This daemon will use PSI mechanism to
-> monitor memory pressure to keep track of memory demands in the system.
-> It will register to few memory pressure events and make an educated
-> guess on when demand for memory in system is increasing.
-
-Is that running in the primary or the secondary VM?
-
-> 
-> 3. Currently, min PSI window size is 500ms, so PSI monitor sampling
-> period will be 50ms. In order to get quick response time from PSI, we’ve
-> reduced the min window size to 50ms so that as small as 5ms increase in
-> memory pressure can be reported to userspace by PSI.
-> 
-> /* PSI trigger definitions */
-> -#define WINDOW_MIN_US 500000   /* Min window size is 500ms */
-> +#define WINDOW_MIN_US 50000    /* Min window size is 50ms */
-> 
-> 4. Detecting increase in memory demand – when a certain usecase starts
-> in VM that does memory allocations, it will stall causing PSI mechanism
-> to generate a memory pressure event to userspace. To simply put, when
-> pressure increases certain set threshold, it can make educated guess
-> that a memory requiring usecase has ran and VM system needs memory to be
-> added.
-> 
-> 5. Detecting decrease in memory pressure – the reverse part where we
-> give back memory to PVM when memory is no longer needed is bit tricky.
-> We look for pressure decay and see if PSI averages (avg10, avg60,
-> avg300) go down, and along with other memory stats (such as free memory
-> etc) we make an educated guess that usecase has ended and memory has
-> been free’ed by the usecase, and this memory can be given back to PVM
-> when its no longer needed.
-> 
-> 6. I’m skimming much on the logic and intelligence but the daemon relies
-> on PSI mechanism to know when memory demand is going up and down, and
-> communicates with virtio-mem driver for hot-plugging/unplugging memory.
-
-For now, the hypervisor is in charge of triggering a virtio-mem device 
-resize request. Will the Linux VM expose a virtio-mem device to the SVM 
-and request to resize the SVM memory via that virtio-mem device?
-
-> We also factor in the latency involved with roundtrips between SVM<->PVM
-> so we size the memory chuck that needs to be plugged-in accordingly.
-> 
-> 7. The whole purpose of daemon using PSI mechanism is to make this si
-> guest driven rather than host driven, which currently is the case mostly
-> with virtio-mem users. The memory pressure and usage monitoring happens
-> inside the SVM and the SVM makes the decisions to request for memory
-> from PVM. This avoids any intervention such as admin in PVM to monitor
-> and control the knobs. We have also set max limit of how much SVMs can
-> grow interms of memory, so that a rouge VM would not abuse this scheme.
-
-Something I envisioned at some point is to
-1) Have a virtio-mem guest driver to request a size change. The
-    hypervisor will react accordingly by adjusting the requested size.
-
-    Such a driver<->device request could be communicated via any other
-    communication mechanism to the hypervisor, but it already came up a
-    couple of times to do it via the virtio-mem protocol directly.
-
-2) Configure the hypervisor to have a lower/upper range. Within that
-    range, resize requests by the driver can be granted. The current
-    values of these properties can be exposed via the device to the
-    driver as well.
-
-Is that what you also proposing here? If so, great.
-
-> 
-> This daemon is currently in just Beta stage now and we have basic
-> functionality running. We are yet to add more flesh to this scheme to
-
-Good to hear that the basics are running with virtio-mem (I assume :) ).
-
-> make sure any potential risks or security concerns are taken care as well.
-
-It would be great to draw/explain the architecture in more detail.
-
--- 
-Thanks,
-
-David / dhildenb
-
+Mark.
