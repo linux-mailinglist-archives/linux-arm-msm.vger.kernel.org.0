@@ -2,322 +2,205 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EEDF866E17D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 15:57:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7417C66E23E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 16:34:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232844AbjAQO5v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 09:57:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38824 "EHLO
+        id S232707AbjAQPea (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 10:34:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230033AbjAQO5k (ORCPT
+        with ESMTP id S232666AbjAQPe1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 09:57:40 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8DAC3E611;
-        Tue, 17 Jan 2023 06:57:39 -0800 (PST)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30HEgXV3009373;
-        Tue, 17 Jan 2023 14:57:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=XJUS31OMejqMwAp10cRDrNALATh1Qi+y3CP7SptYo9g=;
- b=UzAc3rKp+2GKKoOtC0/NA+DOEAPcN44P9fpF2NOCcM19d7AcL9oWckcZAIBhM43M5kOr
- hDZonc+2rfIUwX7/6upiFdM//7GrrmKtALnLbIohGGbU/BgL+urI2/NX4yCd9ewM2RPw
- hN6DDCYvzwKC5/i11bWK4OHYa8kYEcuZE4JDu2/4HrJWFT54wPlAyGMflNFIxV4Mn2LW
- 3f+isPnMS2VDBihvb6KVDxGAhOaT1ZuU932uh244CWnu7EG18Zs3PNd8LDm+o1VtqkLX
- In7tictf96Trum23sqvhrKrtl3O1tZWqypeMQgH5cmVtxew+kfj7lXq19X8BD3WDpA3T tQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n5b189p2v-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 17 Jan 2023 14:57:23 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30HEvNR7015956
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 17 Jan 2023 14:57:23 GMT
-Received: from hu-jinlmao-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Tue, 17 Jan 2023 06:57:22 -0800
-From:   Mao Jinlong <quic_jinlmao@quicinc.com>
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     Mao Jinlong <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH v17 9/9] arm64: dts: qcom: sm8250: Add tpdm mm/prng
-Date:   Tue, 17 Jan 2023 06:57:08 -0800
-Message-ID: <20230117145708.16739-10-quic_jinlmao@quicinc.com>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230117145708.16739-1-quic_jinlmao@quicinc.com>
-References: <20230117145708.16739-1-quic_jinlmao@quicinc.com>
+        Tue, 17 Jan 2023 10:34:27 -0500
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DEBF3FF20
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 07:33:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1673969620;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=lpLspA5PSonBw/vmV1OrZLpzelfm/8/OIBNoQk0pktg=;
+        b=OgXjfblP8tKtcYs2gfyKsKyVN7mZo/6VtSeJ310c/oIQYuXGnxVTXkfSrlrIEKrerZ/D+v
+        fMUXKFVcFkHe0NreTNgWkn7ginxqKlBJtktHRre0PBFeDGDBE8WyaGCD4gHwRh4iXaUcd5
+        5D2+++A4ilc6Xmc3xCQn/X8J9MNSdAc=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-670-FtaB8tjoO7qnsWCo3NDJrQ-1; Tue, 17 Jan 2023 10:33:19 -0500
+X-MC-Unique: FtaB8tjoO7qnsWCo3NDJrQ-1
+Received: by mail-wr1-f70.google.com with SMTP id k18-20020adfb352000000b002bdd0a7a2b5so3256289wrd.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 07:33:05 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:subject:organization:from
+         :references:cc:to:content-language:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lpLspA5PSonBw/vmV1OrZLpzelfm/8/OIBNoQk0pktg=;
+        b=QxUV1GPRRaoTWs1T4dkxMrDFIraltfpem7ATeFzBvaPgw2nc4C/yntyabg5KMPvhIi
+         hM5eMBI4nBoioA+q0hMypsr/t1b6jWb2Zi9kizKDgbNMOpDE4KsWQqIx68xs41eFcOce
+         9D/r8T2qsWlYVTNiWFZxLpKkOqLWmV56c4qru94QW0fscs8b9ErPM8bwVX7YJg7bglqP
+         EnrAE+axR6uQiSq+zM24nPjcbXG9DsDyCPu/ZIoPYVofoPJBFI/DHFr2e+WI9j1aMCJS
+         PfwAOKJ1uthJ8rVz8d1ja31XmcOR77hXYzwCccGoPl81Af2U2G3jc9s9wGNdzA3xCe8U
+         F/0w==
+X-Gm-Message-State: AFqh2kpQhVWlGy5spkeycMozEEfw1hNlZz/KmYmbJpxmzADPpqQMRcLj
+        NLnYyB/xj8vkerbzGENDnPGF5F6uxQCdiD9vYsoyEa919jt1SdlABG9JqTR6K4VavaUEUXwTcIO
+        V1EoERNx4/J6itVFB+aPJc4pIIw==
+X-Received: by 2002:a05:600c:3083:b0:3da:e4d:e6ba with SMTP id g3-20020a05600c308300b003da0e4de6bamr3462889wmn.14.1673969584684;
+        Tue, 17 Jan 2023 07:33:04 -0800 (PST)
+X-Google-Smtp-Source: AMrXdXvCh6pUXHdET5pfuUv9PvBeMbDsI9H3dt7KkiP1Worcaf06CcwLqp9GwiSRlxDjBnrsjANXng==
+X-Received: by 2002:a05:600c:3083:b0:3da:e4d:e6ba with SMTP id g3-20020a05600c308300b003da0e4de6bamr3462862wmn.14.1673969584377;
+        Tue, 17 Jan 2023 07:33:04 -0800 (PST)
+Received: from ?IPV6:2003:cb:c708:f00:323e:5956:8da1:9237? (p200300cbc7080f00323e59568da19237.dip0.t-ipconnect.de. [2003:cb:c708:f00:323e:5956:8da1:9237])
+        by smtp.gmail.com with ESMTPSA id bi6-20020a05600c3d8600b003d9df9e59c4sm34116110wmb.37.2023.01.17.07.33.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 Jan 2023 07:33:03 -0800 (PST)
+Message-ID: <acd8d55c-8528-bb21-488e-e5999c3c4e4e@redhat.com>
+Date:   Tue, 17 Jan 2023 16:33:02 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Content-Language: en-US
+To:     Sudarshan Rajagopalan <quic_sudaraja@quicinc.com>,
+        Johannes Weiner <hannes@cmpxchg.org>,
+        Suren Baghdasaryan <surenb@google.com>,
+        Mike Rapoport <rppt@kernel.org>,
+        Oscar Salvador <osalvador@suse.de>,
+        Anshuman Khandual <anshuman.khandual@arm.com>,
+        mark.rutland@arm.com, will@kernel.org,
+        virtualization@lists.linux-foundation.org, linux-mm@kvack.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     "Trilok Soni (QUIC)" <quic_tsoni@quicinc.com>,
+        "Sukadev Bhattiprolu (QUIC)" <quic_sukadev@quicinc.com>,
+        "Srivatsa Vaddagiri (QUIC)" <quic_svaddagi@quicinc.com>,
+        "Patrick Daly (QUIC)" <quic_pdaly@quicinc.com>
+References: <072de3f4-6bd3-f9ce-024d-e469288fc46a@quicinc.com>
+From:   David Hildenbrand <david@redhat.com>
+Organization: Red Hat
+Subject: Re: [RFC] memory pressure detection in VMs using PSI mechanism for
+ dynamically inflating/deflating VM memory
+In-Reply-To: <072de3f4-6bd3-f9ce-024d-e469288fc46a@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: kU3GiKP3oXPPRlsX9T2dmiNuc4TFU80w
-X-Proofpoint-ORIG-GUID: kU3GiKP3oXPPRlsX9T2dmiNuc4TFU80w
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-17_06,2023-01-17_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- lowpriorityscore=0 phishscore=0 spamscore=0 malwarescore=0
- priorityscore=1501 adultscore=0 impostorscore=0 suspectscore=0
- mlxlogscore=860 bulkscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2212070000 definitions=main-2301170121
-X-Spam-Status: No, score=0.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add tpdm mm and tpdm prng for sm8250.
+On 15.01.23 04:57, Sudarshan Rajagopalan wrote:
+> Hello all,
+> 
 
-+---------------+                +-------------+
-|  tpdm@6c08000 |                |tpdm@684C000 |
-+-------|-------+                +------|------+
-        |                               |
-+-------|-------+                       |
-| funnel@6c0b000|                       |
-+-------|-------+                       |
-        |                               |
-+-------|-------+                       |
-|funnel@6c2d000 |                       |
-+-------|-------+                       |
-        |                               |
-        |    +---------------+          |
-        +----- tpda@6004000  -----------+
-             +-------|-------+
-                     |
-             +-------|-------+
-             |funnel@6005000 |
-             +---------------+
+Hi,
 
-Acked-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 164 +++++++++++++++++++++++++++
- 1 file changed, 164 insertions(+)
+I'll focus on the virtio-mem side of things :)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index dab5579946f3..221fcbdb47a5 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -2746,6 +2746,73 @@ stm_out: endpoint {
- 			};
- 		};
- 
-+		tpda@6004000 {
-+			compatible = "qcom,coresight-tpda", "arm,primecell";
-+			reg = <0 0x06004000 0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+					tpda_out_funnel_qatb: endpoint {
-+						remote-endpoint = <&funnel_qatb_in_tpda>;
-+					};
-+				};
-+			};
-+
-+			in-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@9 {
-+					reg = <9>;
-+					tpda_9_in_tpdm_mm: endpoint {
-+						remote-endpoint = <&tpdm_mm_out_tpda9>;
-+					};
-+				};
-+
-+				port@17 {
-+					reg = <23>;
-+					tpda_23_in_tpdm_prng: endpoint {
-+						remote-endpoint = <&tpdm_prng_out_tpda_23>;
-+					};
-+				};
-+			};
-+		};
-+
-+		funnel@6005000 {
-+			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
-+			reg = <0 0x06005000 0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					funnel_qatb_out_funnel_in0: endpoint {
-+						remote-endpoint = <&funnel_in0_in_funnel_qatb>;
-+					};
-+				};
-+			};
-+
-+			in-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+					funnel_qatb_in_tpda: endpoint {
-+						remote-endpoint = <&tpda_out_funnel_qatb>;
-+					};
-+				};
-+			};
-+		};
-+
- 		funnel@6041000 {
- 			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
- 			reg = <0 0x06041000 0 0x1000>;
-@@ -2765,6 +2832,13 @@ in-ports {
- 				#address-cells = <1>;
- 				#size-cells = <0>;
- 
-+				port@6 {
-+					reg = <6>;
-+					funnel_in0_in_funnel_qatb: endpoint {
-+						remote-endpoint = <&funnel_qatb_out_funnel_in0>;
-+					};
-+				};
-+
- 				port@7 {
- 					reg = <7>;
- 					funnel0_in7: endpoint {
-@@ -2882,6 +2956,22 @@ etr_in: endpoint {
- 			};
- 		};
- 
-+		tpdm@684c000 {
-+			compatible = "qcom,coresight-tpdm", "arm,primecell";
-+			reg = <0 0x0684c000 0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					tpdm_prng_out_tpda_23: endpoint {
-+						remote-endpoint = <&tpda_23_in_tpdm_prng>;
-+					};
-+				};
-+			};
-+		};
-+
- 		funnel@6b04000 {
- 			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
- 			arm,primecell-periphid = <0x000bb908>;
-@@ -2966,6 +3056,80 @@ replicator_in: endpoint {
- 			};
- 		};
- 
-+		tpdm@6c08000 {
-+			compatible = "qcom,coresight-tpdm", "arm,primecell";
-+			reg = <0 0x06c08000 0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					tpdm_mm_out_funnel_dl_mm: endpoint {
-+						remote-endpoint = <&funnel_dl_mm_in_tpdm_mm>;
-+					};
-+				};
-+			};
-+		};
-+
-+		funnel@6c0b000 {
-+			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
-+			reg = <0 0x06c0b000 0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				port {
-+					funnel_dl_mm_out_funnel_dl_center: endpoint {
-+					remote-endpoint = <&funnel_dl_center_in_funnel_dl_mm>;
-+					};
-+				};
-+			};
-+
-+			in-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@3 {
-+					reg = <3>;
-+					funnel_dl_mm_in_tpdm_mm: endpoint {
-+						remote-endpoint = <&tpdm_mm_out_funnel_dl_mm>;
-+					};
-+				};
-+			};
-+		};
-+
-+		funnel@6c2d000 {
-+			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
-+			reg = <0 0x06c2d000 0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				port {
-+					tpdm_mm_out_tpda9: endpoint {
-+						remote-endpoint = <&tpda_9_in_tpdm_mm>;
-+					};
-+				};
-+			};
-+
-+			in-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@2 {
-+					reg = <2>;
-+					funnel_dl_center_in_funnel_dl_mm: endpoint {
-+					remote-endpoint = <&funnel_dl_mm_out_funnel_dl_center>;
-+					};
-+				};
-+			};
-+		};
-+
- 		etm@7040000 {
- 			compatible = "arm,coresight-etm4x", "arm,primecell";
- 			reg = <0 0x07040000 0 0x1000>;
+> We’re from the Linux memory team here at Qualcomm. We are currently
+> devising a VM memory resizing feature where we dynamically inflate or
+> deflate the Linux VM based on ongoing memory demands in the VM. We
+> wanted to propose few details about this userspace daemon in form of RFC
+> and wanted to know the upstream’s opinion. Here are few details –
+
+I'd avoid using the terminology of inflating/deflating VM memory when 
+talking about virtio-mem. Just call it "dynamically resizing VM memory". 
+virtio-mem is one way of doing it using memory devices.
+
+Inflation/deflation, in contrast, reminds one of a traditional balloon 
+driver, along the lines of virtio-balloon.
+
+> 
+> 1. This will be a native userspace daemon that will be running only in
+> the Linux VM which will use virtio-mem driver that uses memory hotplug
+> to add/remove memory. The VM (aka Secondary VM, SVM) will request for
+> memory from the host which is Primary VM, PVM via the backend hypervisor
+> which takes care of cross-VM communication.
+> 
+> 2. This will be guest driver. This daemon will use PSI mechanism to
+> monitor memory pressure to keep track of memory demands in the system.
+> It will register to few memory pressure events and make an educated
+> guess on when demand for memory in system is increasing.
+
+Is that running in the primary or the secondary VM?
+
+> 
+> 3. Currently, min PSI window size is 500ms, so PSI monitor sampling
+> period will be 50ms. In order to get quick response time from PSI, we’ve
+> reduced the min window size to 50ms so that as small as 5ms increase in
+> memory pressure can be reported to userspace by PSI.
+> 
+> /* PSI trigger definitions */
+> -#define WINDOW_MIN_US 500000   /* Min window size is 500ms */
+> +#define WINDOW_MIN_US 50000    /* Min window size is 50ms */
+> 
+> 4. Detecting increase in memory demand – when a certain usecase starts
+> in VM that does memory allocations, it will stall causing PSI mechanism
+> to generate a memory pressure event to userspace. To simply put, when
+> pressure increases certain set threshold, it can make educated guess
+> that a memory requiring usecase has ran and VM system needs memory to be
+> added.
+> 
+> 5. Detecting decrease in memory pressure – the reverse part where we
+> give back memory to PVM when memory is no longer needed is bit tricky.
+> We look for pressure decay and see if PSI averages (avg10, avg60,
+> avg300) go down, and along with other memory stats (such as free memory
+> etc) we make an educated guess that usecase has ended and memory has
+> been free’ed by the usecase, and this memory can be given back to PVM
+> when its no longer needed.
+> 
+> 6. I’m skimming much on the logic and intelligence but the daemon relies
+> on PSI mechanism to know when memory demand is going up and down, and
+> communicates with virtio-mem driver for hot-plugging/unplugging memory.
+
+For now, the hypervisor is in charge of triggering a virtio-mem device 
+resize request. Will the Linux VM expose a virtio-mem device to the SVM 
+and request to resize the SVM memory via that virtio-mem device?
+
+> We also factor in the latency involved with roundtrips between SVM<->PVM
+> so we size the memory chuck that needs to be plugged-in accordingly.
+> 
+> 7. The whole purpose of daemon using PSI mechanism is to make this si
+> guest driven rather than host driven, which currently is the case mostly
+> with virtio-mem users. The memory pressure and usage monitoring happens
+> inside the SVM and the SVM makes the decisions to request for memory
+> from PVM. This avoids any intervention such as admin in PVM to monitor
+> and control the knobs. We have also set max limit of how much SVMs can
+> grow interms of memory, so that a rouge VM would not abuse this scheme.
+
+Something I envisioned at some point is to
+1) Have a virtio-mem guest driver to request a size change. The
+    hypervisor will react accordingly by adjusting the requested size.
+
+    Such a driver<->device request could be communicated via any other
+    communication mechanism to the hypervisor, but it already came up a
+    couple of times to do it via the virtio-mem protocol directly.
+
+2) Configure the hypervisor to have a lower/upper range. Within that
+    range, resize requests by the driver can be granted. The current
+    values of these properties can be exposed via the device to the
+    driver as well.
+
+Is that what you also proposing here? If so, great.
+
+> 
+> This daemon is currently in just Beta stage now and we have basic
+> functionality running. We are yet to add more flesh to this scheme to
+
+Good to hear that the basics are running with virtio-mem (I assume :) ).
+
+> make sure any potential risks or security concerns are taken care as well.
+
+It would be great to draw/explain the architecture in more detail.
+
 -- 
-2.39.0
+Thanks,
+
+David / dhildenb
 
