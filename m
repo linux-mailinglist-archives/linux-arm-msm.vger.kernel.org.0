@@ -2,81 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3236766E701
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 20:31:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F0A7066E715
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 20:36:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233654AbjAQTbf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 14:31:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57434 "EHLO
+        id S232764AbjAQTgR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 14:36:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234646AbjAQT3L (ORCPT
+        with ESMTP id S235374AbjAQTe6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 14:29:11 -0500
-Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 051B453E4D;
-        Tue, 17 Jan 2023 10:34:52 -0800 (PST)
-Received: by mail-oi1-f182.google.com with SMTP id p133so11361273oig.8;
-        Tue, 17 Jan 2023 10:34:51 -0800 (PST)
+        Tue, 17 Jan 2023 14:34:58 -0500
+Received: from mail-oo1-f41.google.com (mail-oo1-f41.google.com [209.85.161.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5A5E5829F;
+        Tue, 17 Jan 2023 10:38:37 -0800 (PST)
+Received: by mail-oo1-f41.google.com with SMTP id h12-20020a4a940c000000b004fa81915b1cso261867ooi.4;
+        Tue, 17 Jan 2023 10:38:37 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lX+6Z0OlQ07+t9nQjvkv2dDMkjX1pwcJNWhvE932sdU=;
-        b=RfHsCTn4rKj2P2vLdHyaPs80SczzrlCbI3K9QoBw8luK+p2sLYh5iwyrWLLllP7U8Z
-         TheeCvL9Osz4jpveC2EN06ewySrEb5P6HVU6vCRKzcNh+cxTucSKbe7i6G6GCpLzZWZI
-         yYk/CudZR3mDMlR9RtCP6Hl6oP0tsNRSiFkC2OJvFxWi9faEv01odvxfKBXGBYwReUYX
-         Q80ncAT0edNun7smdMAbsv2N77EP0da4YF3ghr6iuCHrW3jJZZLBAk0R0dU6jAGA5+C8
-         JFfjZNmF6ifDjVSYl6HmJybBVPLCH12E3JDaP9OlMlk33LiM5RiGSZWO7Y538NqMkFfJ
-         TjxA==
-X-Gm-Message-State: AFqh2kpe0/GhQvG4Dp9x4oR9lbY6bSUQ+p78qL2PgRKbpnqnfCeLQi51
-        ACoMiCrq+jCcq7KS4cYGZA==
-X-Google-Smtp-Source: AMrXdXvilM2PLUJPhr+TCdUeK5S5Diqs5zjhMdzfpDEA02/efrzjJvygZgdZLG92tuDhm11fpfNFPQ==
-X-Received: by 2002:a54:489a:0:b0:35c:687:2ff8 with SMTP id r26-20020a54489a000000b0035c06872ff8mr1833297oic.21.1673980491272;
-        Tue, 17 Jan 2023 10:34:51 -0800 (PST)
+        bh=usmLcJsIrTN0HzsLj6S4gEel07Cxr+uLTfIujYF6bko=;
+        b=rApqE/H8lQKYkkSCKtB3ra8+NVcQ1wMweNOOGMW6rsD8cno6V9zZhDwK5nQGTtnOy5
+         TLO8pgANRowp1ugb2CMd4uditf9DpwmlhQXzK1Z5MIQVsGu4vfJJQ4Ink/L8lM8bgCvW
+         vlXfjNSQzLXzdoQ3+bp0FxlFrEtIbQx5jqfm3pgIf6rKUOLJ0SkponU96V4iWnjI6knq
+         5TpKnVrUpuqY1FL22zSrWxrM+8IWKrZGgMqQHQdRCeA4/jxCtTD7MEW3jjLmQdBFikTY
+         sThUuz+QGP+wKLfbmJZ4uO/v9kZ4DQ4OO4D31JMRcu2QpKnmkv5kWoR17Eh7+Y9IpTal
+         0sUA==
+X-Gm-Message-State: AFqh2koHxL/rRn0PU9OPqkryX9Tb6Pdqjqhesm8f38rcUz1+K0MrvllK
+        1Y3qhe0BJfT1yIqMVwO7tg==
+X-Google-Smtp-Source: AMrXdXvLVI5CuwaiE3H8rQprNcWFD5EueDgPFGCLXvTjlgOMhu3/99mSh2ykniwjUqwZDe68lJAbKQ==
+X-Received: by 2002:a4a:d6d8:0:b0:4f2:2e05:4fe0 with SMTP id j24-20020a4ad6d8000000b004f22e054fe0mr2302535oot.4.1673980716888;
+        Tue, 17 Jan 2023 10:38:36 -0800 (PST)
 Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id s40-20020a05683043a800b00684bc23f2cfsm9609899otv.32.2023.01.17.10.34.50
+        by smtp.gmail.com with ESMTPSA id z23-20020a4ad597000000b004b0037cebc4sm15453364oos.9.2023.01.17.10.38.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Jan 2023 10:34:50 -0800 (PST)
-Received: (nullmailer pid 3426273 invoked by uid 1000);
-        Tue, 17 Jan 2023 18:34:50 -0000
-Date:   Tue, 17 Jan 2023 12:34:50 -0600
+        Tue, 17 Jan 2023 10:38:36 -0800 (PST)
+Received: (nullmailer pid 3431272 invoked by uid 1000);
+        Tue, 17 Jan 2023 18:38:35 -0000
+Date:   Tue, 17 Jan 2023 12:38:35 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Andy Gross <agross@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Subject: Re: [PATCH] dt-bindings: clock: qcom,a53pll: drop operating-points-v2
-Message-ID: <167398048822.3426199.2848666545032964620.robh@kernel.org>
-References: <20230113145859.82868-1-krzysztof.kozlowski@linaro.org>
+To:     devi priya <quic_devipriy@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        lgirdwood@gmail.com, broonie@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
+        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
+        quic_poovendh@quicinc.com
+Subject: Re: [PATCH 4/6] regulator: qcom_smd: Add PMIC compatible for IPQ9574
+Message-ID: <20230117183835.GA3427325-robh@kernel.org>
+References: <20230113150310.29709-1-quic_devipriy@quicinc.com>
+ <20230113150310.29709-5-quic_devipriy@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230113145859.82868-1-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+In-Reply-To: <20230113150310.29709-5-quic_devipriy@quicinc.com>
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Fri, 13 Jan 2023 15:58:59 +0100, Krzysztof Kozlowski wrote:
-> The CPU PLL clock node does not use OPP tables (neither driver).
+On Fri, Jan 13, 2023 at 08:33:08PM +0530, devi priya wrote:
+> Add mp5496 PMIC compatible string for IPQ9574 SoC
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
 > ---
->  Documentation/devicetree/bindings/clock/qcom,a53pll.yaml | 2 --
->  1 file changed, 2 deletions(-)
+>  .../devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml  | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 > 
+> diff --git a/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
+> index 8c45f53212b1..7907d9385583 100644
+> --- a/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
+> +++ b/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
+> @@ -22,7 +22,7 @@ description:
+>    Each sub-node is identified using the node's name, with valid values listed
+>    for each of the pmics below.
+>  
+> -  For mp5496, s2
+> +  For mp5496, s1, s2
+>  
+>    For pm2250, s1, s2, s3, s4, l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11,
+>    l12, l13, l14, l15, l16, l17, l18, l19, l20, l21, l22
+> @@ -84,6 +84,7 @@ properties:
+>    compatible:
+>      enum:
+>        - qcom,rpm-mp5496-regulators
+> +      - qcom,rpm-ipq9574-mp5496-regulators
 
-Acked-by: Rob Herring <robh@kernel.org>
+Is this a different part than just mp5496? Or used in a different, 
+incompatible way?
+
+>        - qcom,rpm-pm2250-regulators
+>        - qcom,rpm-pm6125-regulators
+>        - qcom,rpm-pm660-regulators
+> -- 
+> 2.17.1
+> 
