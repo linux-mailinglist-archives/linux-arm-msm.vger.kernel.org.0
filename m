@@ -2,283 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 308A566DC50
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 12:25:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B70B66DC92
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 12:35:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236624AbjAQLZq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 06:25:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44782 "EHLO
+        id S236792AbjAQLft (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 06:35:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51332 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236550AbjAQLZp (ORCPT
+        with ESMTP id S236144AbjAQLer (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 06:25:45 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBC193C1C;
-        Tue, 17 Jan 2023 03:25:44 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 566D461261;
-        Tue, 17 Jan 2023 11:25:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41B07C433D2;
-        Tue, 17 Jan 2023 11:25:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1673954743;
-        bh=q+Rmu1SCkR+4L9yV7tU7o0EDPb/yktcBfTvU4XKR2WM=;
-        h=From:To:Cc:Subject:Date:From;
-        b=jZ3Jv79IlGz3m8xVtSAYg9ultutj17ISLapKhSLeHG84wdF0prGLtRptjDOPWGltV
-         fIQ3w5DJsthbUnTXLMheWjcN4BP4QujEaLV3ifoKZCviBmL8i14jiDyIUDMylj8oD8
-         F7I2TCfnXqP92QfieXL5jCy4f2fn6z7uJeRiDgqzk2woStkGzxW40gYevN5OplSU/K
-         gsm6V7dha4dBm7x2Ati+4AnwNja6eJL5reYi2tHXYyOthPqspGV3tybOhfXzzRLFBq
-         Xr0skOMrHK43fOpWt0vmRivSF5hdieC1Ad03B9wK7n9b1pNZ0oXzE3xtyQ01tb+6Mw
-         7xkKij4R1NPAQ==
-From:   rfoss@kernel.org
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Robert Foss <robert.foss@linaro.org>
-Subject: [PATCH v1] arm64: dts: qcom: sm8350: Add &tlmm gpio-line-names
-Date:   Tue, 17 Jan 2023 12:25:37 +0100
-Message-Id: <20230117112537.1016250-1-rfoss@kernel.org>
-X-Mailer: git-send-email 2.34.1
+        Tue, 17 Jan 2023 06:34:47 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAC44360AB
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 03:34:43 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id d2so10131888wrp.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 03:34:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0fREWHN2UQ1kl2XZ6OMZzGJJemz/P4M0H3yz7UyzV+A=;
+        b=QSscyCpFZNbbM6kyMW199uVthsV7aRgY+daSbfaJH7SmHUieDbJ3JqHGYU+FXCi55W
+         f1U84Y+nlWQhZvyaWVEDrbezdyNVKuByZpMdnvVDLCxc8hk6kvUnkAOekj8wFP94eZ6V
+         Fzzo3XG/40/WB0u4Rpu52uH0sb9kzmIJ7YWstAO9Q4/3YSeDi9jalDiGoLDOsB2OL9TF
+         s/Ar12W1+M2VcLYvQJrQT5CjtCtCMB7i9asQ4BKnWhBEWJA02RntWvh7DCbi2DnRxzsV
+         9U8YcPyUduEmxx3IRfq/xnrsfXhC/ppPJ7CNfcU8ZJk9CU8jBE1L08xZjjf4GKiGfj0u
+         ppnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0fREWHN2UQ1kl2XZ6OMZzGJJemz/P4M0H3yz7UyzV+A=;
+        b=OjYtdrH/0x+TttreW+5fF0FU3R6UxQFCNo+K6G1H7tTdjPl/69zgTJ9+YDTeEWV4DM
+         quZADPYAZYXBLQa21J6LfmaKlGRkaREuTb8bNUC+G0joksJwnLd+WU/duEq5405vQQ0k
+         8JkjpXkvmtkZxpbzj7T0VZPxSQcstF8uks9EG/ldF2/3DZQ7fCzFIvKwKK8KlPa6wEqj
+         4F2N1lPwDfyCYdtJARW2uF0INhZMvG7fFiNveoUBob2CxZPxcaOcANRKRREH3nfROfGN
+         AgbphKSZJuR5VkO3TOu6rWWOTYDz/LpPaaevzjV9i56sYrICS843I2VtcVwTtz02hrY3
+         iogA==
+X-Gm-Message-State: AFqh2kolbWKCzUf2V/z29kRVcDzBdkeu7D74WcqqWM3ZC+2vAgnicAp0
+        Gm7ht3P1XQSEygi5sGt8jEOGr0Kal5St7v+n
+X-Google-Smtp-Source: AMrXdXtVLG+lFxj/ILADCcRFl8jlKdWjcXBh4tuBystBmpfSjE2Lu+/jzWctDw6Y3TXUc20op7SLNw==
+X-Received: by 2002:a05:6000:248:b0:2bd:d4bd:581d with SMTP id m8-20020a056000024800b002bdd4bd581dmr10476975wrz.53.1673955282527;
+        Tue, 17 Jan 2023 03:34:42 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id n6-20020adfe786000000b002bdbde1d3absm18444072wrm.78.2023.01.17.03.34.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 Jan 2023 03:34:42 -0800 (PST)
+Message-ID: <aa5598ee-0dd1-caa7-c60d-5a409f039713@linaro.org>
+Date:   Tue, 17 Jan 2023 12:34:38 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,UPPERCASE_50_75 autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v2 1/4] dt-bindings: mailbox: qcom: correct the list of
+ platforms using clocks
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20230113090739.45805-1-dmitry.baryshkov@linaro.org>
+ <20230113090739.45805-2-dmitry.baryshkov@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230113090739.45805-2-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Robert Foss <robert.foss@linaro.org>
+On 13/01/2023 10:07, Dmitry Baryshkov wrote:
+> Only three platforms require `pll' and `aux' clocks: msm8916, msm8939
+> and qcs404. Correct the list of platforms in the corresponding clause.
+> 
+> Fixes: 0d17014e9189 ("dt-bindings: mailbox: Add binding for SDX55 APCS")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  .../bindings/mailbox/qcom,apcs-kpss-global.yaml          | 9 +--------
+>  1 file changed, 1 insertion(+), 8 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
+> index 943f9472ae10..b8a44ef0540f 100644
+> --- a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
+> +++ b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
+> @@ -71,15 +71,8 @@ allOf:
+>          compatible:
+>            enum:
+>              - qcom,msm8916-apcs-kpss-global
+> -            - qcom,msm8994-apcs-kpss-global
+> -            - qcom,msm8996-apcs-hmss-global
+> -            - qcom,msm8998-apcs-hmss-global
+> +            - qcom,msm8939-apcs-kpss-global
+>              - qcom,qcs404-apcs-apps-global
+> -            - qcom,sc7180-apss-shared
+> -            - qcom,sdm660-apcs-hmss-global
+> -            - qcom,sdm845-apss-shared
+> -            - qcom,sm6125-apcs-hmss-global
+> -            - qcom,sm8150-apss-shared
 
-Add GPIO line names as described by the sm8350-hdk schematic.
+And what in other case? Any clocks? They should be moved to their own if
+forbidding the clocks and clock-names.
 
-Signed-off-by: Robert Foss <robert.foss@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8350-hdk.dts | 205 ++++++++++++++++++++++++
- 1 file changed, 205 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-index 26a608144886..1f990831af77 100644
---- a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-@@ -241,6 +241,211 @@ &slpi {
- 
- &tlmm {
- 	gpio-reserved-ranges = <52 8>;
-+
-+	gpio-line-names =
-+		"APPS_I2C_SDA", /* GPIO_0 */
-+		"APPS_I2C_SCL",
-+		"FSA_INT_N",
-+		"USER_LED3_EN",
-+		"SMBUS_SDA_1P8",
-+		"SMBUS_SCL_1P8",
-+		"2M2_3P3_EN",
-+		"ALERT_DUAL_M2_N",
-+		"EXP_UART_CTS",
-+		"EXP_UART_RFR",
-+		"EXP_UART_TX", /* GPIO_10 */
-+		"EXP_UART_RX",
-+		"NC",
-+		"NC",
-+		"RCM_MARKER1",
-+		"WSA0_EN",
-+		"CAM1_RESET_N",
-+		"CAM0_RESET_N",
-+		"DEBUG_UART_TX",
-+		"DEBUG_UART_RX",
-+		"TS_I2C_SDA", /* GPIO_20 */
-+		"TS_I2C_SCL",
-+		"TS_RESET_N",
-+		"TS_INT_N",
-+		"DISP0_RESET_N",
-+		"DISP1_RESET_N",
-+		"ETH_RESET",
-+		"RCM_MARKER2",
-+		"CAM_DC_MIPI_MUX_EN",
-+		"CAM_DC_MIPI_MUX_SEL",
-+		"AFC_PHY_TA_D_PLUS", /* GPIO_30 */
-+		"AFC_PHY_TA_D_MINUS",
-+		"PM8008_1_IRQ",
-+		"PM8008_1_RESET_N",
-+		"PM8008_2_IRQ",
-+		"PM8008_2_RESET_N",
-+		"CAM_DC_I3C_SDA",
-+		"CAM_DC_I3C_SCL",
-+		"FP_INT_N",
-+		"FP_WUHB_INT_N",
-+		"SMB_SPMI_DATA", /* GPIO_40 */
-+		"SMB_SPMI_CLK",
-+		"USB_HUB_RESET",
-+		"FORCE_USB_BOOT",
-+		"LRF_IRQ",
-+		"NC",
-+		"IMU2_INT",
-+		"HDMI_3P3_EN",
-+		"HDMI_RSTN",
-+		"HDMI_1P2_EN",
-+		"HDMI_INT", /* GPIO_50 */
-+		"USB1_ID",
-+		"FP_SPI_MISO",
-+		"FP_SPI_MOSI",
-+		"FP_SPI_CLK",
-+		"FP_SPI_CS_N",
-+		"NFC_ESE_SPI_MISO",
-+		"NFC_ESE_SPI_MOSI",
-+		"NFC_ESE_SPI_CLK",
-+		"NFC_ESE_SPI_CS",
-+		"NFC_I2C_SDA", /* GPIO_60 */
-+		"NFC_I2C_SCLC",
-+		"NFC_EN",
-+		"NFC_CLK_REQ",
-+		"HST_WLAN_EN",
-+		"HST_BT_EN",
-+		"HST_SW_CTRL",
-+		"NC",
-+		"HST_BT_UART_CTS",
-+		"HST_BT_UART_RFR",
-+		"HST_BT_UART_TX", /* GPIO_70 */
-+		"HST_BT_UART_RX",
-+		"CAM_DC_SPI0_MISO",
-+		"CAM_DC_SPI0_MOSI",
-+		"CAM_DC_SPI0_CLK",
-+		"CAM_DC_SPI0_CS_N",
-+		"CAM_DC_SPI1_MISO",
-+		"CAM_DC_SPI1_MOSI",
-+		"CAM_DC_SPI1_CLK",
-+		"CAM_DC_SPI1_CS_N",
-+		"HALL_INT_N", /* GPIO_80 */
-+		"USB_PHY_PS",
-+		"MDP_VSYNC_P",
-+		"MDP_VSYNC_S",
-+		"ETH_3P3_EN",
-+		"RADAR_INT",
-+		"NFC_DWL_REQ",
-+		"SM_GPIO_87",
-+		"WCD_RESET_N",
-+		"ALSP_INT_N",
-+		"PRESS_INT", /* GPIO_90 */
-+		"SAR_INT_N",
-+		"SD_CARD_DET_N",
-+		"NC",
-+		"PCIE0_RESET_N",
-+		"PCIE0_CLK_REQ_N",
-+		"PCIE0_WAKE_N",
-+		"PCIE1_RESET_N",
-+		"PCIE1_CLK_REQ_N",
-+		"PCIE1_WAKE_N",
-+		"CAM_MCLK0", /* GPIO_100 */
-+		"CAM_MCLK1",
-+		"CAM_MCLK2",
-+		"CAM_MCLK3",
-+		"CAM_MCLK4",
-+		"CAM_MCLK5",
-+		"CAM2_RESET_N",
-+		"CCI_I2C0_SDA",
-+		"CCI_I2C0_SCL",
-+		"CCI_I2C1_SDA",
-+		"CCI_I2C1_SCL", /* GPIO_110 */
-+		"CCI_I2C2_SDA",
-+		"CCI_I2C2_SCL",
-+		"CCI_I2C3_SDA",
-+		"CCI_I2C3_SCL",
-+		"CAM5_RESET_N",
-+		"CAM4_RESET_N",
-+		"CAM3_RESET_N",
-+		"IMU1_INT",
-+		"MAG_INT_N",
-+		"MI2S2_I2S_SCK", /* GPIO_120 */
-+		"MI2S2_I2S_DAT0",
-+		"MI2S2_I2S_WS",
-+		"HIFI_DAC_I2S_MCLK",
-+		"MI2S2_I2S_DAT1",
-+		"HIFI_DAC_I2S_SCK",
-+		"HIFI_DAC_I2S_DAT0",
-+		"NC",
-+		"HIFI_DAC_I2S_WS",
-+		"HST_BT_WLAN_SLIMBUS_CLK",
-+		"HST_BT_WLAN_SLIMBUS_DAT0", /* GPIO_130 */
-+		"BT_LED_EN",
-+		"WLAN_LED_EN",
-+		"NC",
-+		"NC",
-+		"NC",
-+		"UIM2_PRESENT",
-+		"NC",
-+		"NC",
-+		"NC",
-+		"UIM1_PRESENT", /* GPIO_140 */
-+		"NC",
-+		"SM_RFFE0_DATA",
-+		"NC",
-+		"SM_RFFE1_DATA",
-+		"SM_MSS_GRFC4",
-+		"SM_MSS_GRFC5",
-+		"SM_MSS_GRFC6",
-+		"SM_MSS_GRFC7",
-+		"SM_RFFE4_CLK",
-+		"SM_RFFE4_DATA", /* GPIO_150 */
-+		"WLAN_COEX_UART1_RX",
-+		"WLAN_COEX_UART1_TX",
-+		"HST_SW_CTRL",
-+		"DSI0_STATUS",
-+		"DSI1_STATUS",
-+		"APPS_PBL_BOOT_SPEED_1",
-+		"APPS_BOOT_FROM_ROM",
-+		"APPS_PBL_BOOT_SPEED_0",
-+		"QLINK0_REQ",
-+		"QLINK0_EN", /* GPIO_160 */
-+		"QLINK0_WMSS_RESET_N",
-+		"NC",
-+		"NC",
-+		"NC",
-+		"NC",
-+		"NC",
-+		"NC",
-+		"WCD_SWR_TX_CLK",
-+		"WCD_SWR_TX_DATA0",
-+		"WCD_SWR_TX_DATA1", /* GPIO_170 */
-+		"WCD_SWR_RX_CLK",
-+		"WCD_SWR_RX_DATA0",
-+		"WCD_SWR_RX_DATA1",
-+		"DMIC01_CLK",
-+		"DMIC01_DATA",
-+		"DMIC23_CLK",
-+		"DMIC23_DATA",
-+		"WSA_SWR_CLK",
-+		"WSA_SWR_DATA",
-+		"DMIC45_CLK", /* GPIO_180 */
-+		"DMIC45_DATA",
-+		"WCD_SWR_TX_DATA2",
-+		"SENSOR_I3C_SDA",
-+		"SENSOR_I3C_SCL",
-+		"CAM_OIS0_I3C_SDA",
-+		"CAM_OIS0_I3C_SCL",
-+		"IMU_SPI_MISO",
-+		"IMU_SPI_MOSI",
-+		"IMU_SPI_CLK",
-+		"IMU_SPI_CS_N", /* GPIO_190 */
-+		"MAG_I2C_SDA",
-+		"MAG_I2C_SCL",
-+		"SENSOR_I2C_SDA",
-+		"SENSOR_I2C_SCL",
-+		"RADAR_SPI_MISO",
-+		"RADAR_SPI_MOSI",
-+		"RADAR_SPI_CLK",
-+		"RADAR_SPI_CS_N",
-+		"HST_BLE_UART_TX",
-+		"HST_BLE_UART_RX", /* GPIO_200 */
-+		"HST_WLAN_UART_TX",
-+		"HST_WLAN_UART_RX";
- };
- 
- &uart2 {
--- 
-2.34.1
+Best regards,
+Krzysztof
 
