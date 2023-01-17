@@ -2,164 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 91A6666D981
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 10:14:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0935C66D9B4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 10:21:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236409AbjAQJOZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 04:14:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48000 "EHLO
+        id S236404AbjAQJVF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 04:21:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236589AbjAQJNy (ORCPT
+        with ESMTP id S236420AbjAQJUn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 04:13:54 -0500
-Received: from mail-qv1-xf34.google.com (mail-qv1-xf34.google.com [IPv6:2607:f8b0:4864:20::f34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B6C82F798;
-        Tue, 17 Jan 2023 01:06:43 -0800 (PST)
-Received: by mail-qv1-xf34.google.com with SMTP id u20so4927029qvq.4;
-        Tue, 17 Jan 2023 01:06:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zqiw1Vgwv9XN5UDZwZy7V1JCvqxayLwD+czwSJLGNXc=;
-        b=Psgp67/kfCGo58IHNa1lEyOJXoWCpIR5x85MyyrDJoXfgixTFZiJwrgG6Z2AKRakmp
-         zghbXg9ARJQlDo0kuxxNRWw3M6aIX9M3KaMcEbqpsTruamXxCyM3x3174jsLZIlnXDie
-         S48FGLNi233/D0l7kHrnvDZo41pYXtWdvW2tcymtnhTIoNSiNIu1XoexByALK95nBW/h
-         UkMtL3a9O7pfEmje61zV8JRPCXDyVy9Co2tfLOTiZyo6y0yRklbOxNq8m6Rco6jq/Y1y
-         SOBAC54b+oXTSLnVDm3LckhRwCnjLlFPEywDcVrPLfUTS5sN1M/bNX0iGc2OQmErXu4P
-         rcJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zqiw1Vgwv9XN5UDZwZy7V1JCvqxayLwD+czwSJLGNXc=;
-        b=C11UJEN6Q6WJ/r1txkxKg6w0bfp7G9Y0Sffol3TWI9m+l3S1vUaYiRvVt1R8MwVW1z
-         4k288VnAt5vq9wYlnS1aHMpiuCUUd7F25WtZWES6koQuK8sGrQprUfiZmWEwV1hcyADQ
-         fw6U8b7DzvWu5hvsPQgvq2jivtHkbdBq49TtvhZgpwMQBvzv6aJDPPUSibhqKte6aU4W
-         yjnBqRiwWor2kWEdVjsXzjX0tMaiTRmiQgZBdsKKbfO6EExvvvEcNmsWg7HWn0+iaRce
-         WkyTmNq5eo97IBxPaPAZ61zhgda3Z7OdVnTTOWC/GC/QK7WKFU+pbhSmm3nKTlsqT4kB
-         QMMw==
-X-Gm-Message-State: AFqh2kpj2sNJo1VXcx6ji65D4yUjrCPu9bKyyvEmP5FFvf/UFUg9wb9f
-        I98Fa4aLhviy8FP4+d8knGChObUtsL7XUGzXaks=
-X-Google-Smtp-Source: AMrXdXugvDqNOWGB6Kj/gk3CK1DdfaCjiiHjRVIVFmtT0b0bZ7ODJdy3/f2SSMatSgKUUAIIRvAhojzcRgzJa2YLUfg=
-X-Received: by 2002:a05:6214:418e:b0:532:2c82:95ac with SMTP id
- ld14-20020a056214418e00b005322c8295acmr149506qvb.97.1673946401725; Tue, 17
- Jan 2023 01:06:41 -0800 (PST)
+        Tue, 17 Jan 2023 04:20:43 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 565AF39CED;
+        Tue, 17 Jan 2023 01:15:06 -0800 (PST)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30H8uiMQ001606;
+        Tue, 17 Jan 2023 09:14:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=kn9odNJkQi3m7iemI181oIY+bwqzN2jC5sd5o9b0cKY=;
+ b=i8vx3VCz20ls44KEovWIJsL23Uiow0h4wLGo60Rn/rCt5LuGIwvuSISpwBPPoPIaukBF
+ JPLGhWN/iP+Tfegq4F8oTGHgVF8EKI6CinihCX+iJP7nO1feTtdDNZSTyg1wEprbhsKo
+ qL4yAFkhMF5XM1lfgy3K0DWencyeQu7Q/gKdOLt79/hebQySf24grlwwDAfECQcBr3sj
+ z3hzic6M14A/wAxpPfoYzIRxJHqY2VtXEsmVO2MYcrH//7xWrtOTZIAvLlMoNxuCvcQh
+ BrKgvlFxYl2x/SRDBBeqr/6yPHNU8tTmaXKsiZXmNk16Vxd283XvrNZ4JHCeXOmYsKxz 3w== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n3j3nn8vt-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 17 Jan 2023 09:14:55 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30H9EsFh015648
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 17 Jan 2023 09:14:54 GMT
+Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Tue, 17 Jan 2023 01:14:50 -0800
+Date:   Tue, 17 Jan 2023 14:44:46 +0530
+From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
+To:     Abel Vesa <abel.vesa@linaro.org>
+CC:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        "Sai Prakash Ranjan" <quic_saipraka@quicinc.com>
+Subject: Re: [PATCH v9 02/10] arm64: dts: qcom: Add base SM8550 dtsi
+Message-ID: <20230117091446.GA3704192@hu-pkondeti-hyd.qualcomm.com>
+References: <20230106201047.337409-1-abel.vesa@linaro.org>
+ <20230106201047.337409-3-abel.vesa@linaro.org>
 MIME-Version: 1.0
-References: <20220715122903.332535-1-nuno.sa@analog.com> <20220715122903.332535-13-nuno.sa@analog.com>
- <20220806192048.0ca41cc5@jic23-huawei> <20230116204452.il4gase2szipeexz@SoMainline.org>
- <CAHp75VdX9sFgn9STyzwcDCK1KYbU00ejFNcEP3FVnLk5J=Pktg@mail.gmail.com>
-In-Reply-To: <CAHp75VdX9sFgn9STyzwcDCK1KYbU00ejFNcEP3FVnLk5J=Pktg@mail.gmail.com>
-From:   Andy Shevchenko <andy.shevchenko@gmail.com>
-Date:   Tue, 17 Jan 2023 11:06:05 +0200
-Message-ID: <CAHp75VdTftm1BE21rH1HVHiwUye-0Dvc66uCK2LE2qF4_zA6hg@mail.gmail.com>
-Subject: Re: [PATCH v3 12/15] iio: adc: qcom-spmi-adc5: convert to device properties
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Jonathan Cameron <jic23@kernel.org>,
-        =?UTF-8?B?TnVubyBTw6E=?= <nuno.sa@analog.com>,
-        openbmc@lists.ozlabs.org, linux-imx@nxp.com,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-iio@vger.kernel.org, linux-mips@vger.kernel.org,
-        linux-renesas-soc@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        chrome-platform@lists.linux.dev,
-        linux-arm-kernel@lists.infradead.org,
-        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-        linux-arm-msm@vger.kernel.org,
-        Gwendal Grignou <gwendal@chromium.org>,
-        Tomer Maimon <tmaimon77@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Lorenzo Bianconi <lorenzo@kernel.org>,
-        Fabio Estevam <festevam@gmail.com>,
-        Olivier Moysan <olivier.moysan@foss.st.com>,
-        Tali Perry <tali.perry1@gmail.com>,
-        Benjamin Fair <benjaminfair@google.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Patrick Venture <venture@google.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Benson Leung <bleung@chromium.org>,
-        Nancy Yuen <yuenn@google.com>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Christophe Branchereau <cbranchereau@gmail.com>,
-        Cai Huoqing <cai.huoqing@linux.dev>,
-        Avi Fishman <avifishman70@gmail.com>,
-        Eugen Hristev <eugen.hristev@microchip.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Andy Gross <agross@kernel.org>,
-        Michael Hennerich <Michael.Hennerich@analog.com>,
-        Haibo Chen <haibo.chen@nxp.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20230106201047.337409-3-abel.vesa@linaro.org>
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 1D1VN3zjSIA5d2MKyqxJcB_5Kea2Fiib
+X-Proofpoint-ORIG-GUID: 1D1VN3zjSIA5d2MKyqxJcB_5Kea2Fiib
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-17_04,2023-01-13_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ adultscore=0 bulkscore=0 suspectscore=0 mlxlogscore=618 phishscore=0
+ clxscore=1011 mlxscore=0 lowpriorityscore=0 impostorscore=0 spamscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301170077
+X-Spam-Status: No, score=0.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jan 17, 2023 at 10:53 AM Andy Shevchenko
-<andy.shevchenko@gmail.com> wrote:
->
-> On Mon, Jan 16, 2023 at 10:44 PM Marijn Suijten
-> <marijn.suijten@somainline.org> wrote:
-> >
-> > On 2022-08-06 19:20:48, Jonathan Cameron wrote:
-> > > On Fri, 15 Jul 2022 14:29:00 +0200
-> > > Nuno S=C3=A1 <nuno.sa@analog.com> wrote:
-> > >
-> > > > Make the conversion to firmware agnostic device properties. As part=
- of
-> > > > the conversion the IIO inkern interface 'of_xlate()' is also conver=
-ted to
-> > > > 'fwnode_xlate()'. The goal is to completely drop 'of_xlate' and hen=
-ce OF
-> > > > dependencies from IIO.
-> > > >
-> > > > Signed-off-by: Nuno S=C3=A1 <nuno.sa@analog.com>
-> > > > Acked-by: Linus Walleij <linus.walleij@linaro.org>
-> > > > Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-> > > +CC Marijin who happend to post a patch for this driver that I just a=
-ccepted
-> > > and hence probably has hardware access.  Any chance of a test for thi=
-s series?
-> > >
-> > > If not, no problem as this is fairly mechanical and we have testing o=
-n some of
-> > > the other drivers using the new code.
-> > >
-> > > I'll probably queue this up in the meantime but it won't end up upstr=
-eam
-> > > for a few weeks yet.
-> >
-> > Jonathan,
-> >
-> > This CC just surfaced in my inbox while searching for our current
-> > discussion around missing labels in qcom-spmi-vadc - and on the side a
-> > userspace @xx label name ABI break (in qcom-spmi-adc5) caused by this
-> > patch's fwnode_get_name change - we could've caught it if I had not
-> > accidentally marked it as read and/or forgot about it.  My apologies.
->
-> Does the following addition to the top of the
-> adc5_get_fw_channel_data() fix the issue?
->
-> +       name =3D devm_kasprintf(adc->dev, GFP_KERNEL, "%pfwP", fwnode);
-> +       if (!name)
-> +               return -ENOMEM;
+On Fri, Jan 06, 2023 at 10:10:39PM +0200, Abel Vesa wrote:
+> +		cpufreq_hw: cpufreq@17d91000 {
+> +			compatible = "qcom,sm8550-cpufreq-epss", "qcom,cpufreq-epss";
+> +			reg = <0 0x17d91000 0 0x1000>,
+> +			      <0 0x17d92000 0 0x1000>,
+> +			      <0 0x17d93000 0 0x1000>;
+> +			reg-names = "freq-domain0", "freq-domain1", "freq-domain2";
+> +			clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GCC_GPLL0>;
+> +			clock-names = "xo", "alternate";
+> +			interrupts = <GIC_SPI 30 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 31 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 19 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "dcvsh-irq-0", "dcvsh-irq-1", "dcvsh-irq-2";
+> +			#freq-domain-cells = <1>;
+> +		};
 
-Okay, it probably the same, so it might need additional code to
+Currently, I am seeing available frequencies as 2x of the original
+frequencies. This is observed for all CPUs. The xo source should be bi_tcxo here.
+I will send a patch on top of qcom/linux : arm64-for-6.3 branch.
 
-+ name[strchrnul(name, '@') - name] =3D '\0';
-
---=20
-With Best Regards,
-Andy Shevchenko
+Thanks,
+Pavan
