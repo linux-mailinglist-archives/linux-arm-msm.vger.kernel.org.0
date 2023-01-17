@@ -2,82 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 195FE66D481
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 03:44:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2477B66D48D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 03:50:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234808AbjAQCoy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Jan 2023 21:44:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46616 "EHLO
+        id S235791AbjAQCuH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Jan 2023 21:50:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235792AbjAQCnk (ORCPT
+        with ESMTP id S235657AbjAQCtv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Jan 2023 21:43:40 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96B7D2FCD7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 18:38:34 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id d2so9041431wrp.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 18:38:34 -0800 (PST)
+        Mon, 16 Jan 2023 21:49:51 -0500
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE3512DE43
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 18:42:57 -0800 (PST)
+Received: by mail-pj1-x1032.google.com with SMTP id cx21-20020a17090afd9500b00228f2ecc6dbso7946414pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 18:42:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=NN7ra9RM5RwWoUr/tsRU6zWH7d53cck2M9uCu21ulu0=;
-        b=Oab9zK27rpgas0uCStmMiykRixxSbqgEkfw41hgaNMTL3tWA/9pi5puiL/ERXYkLpY
-         47CVxZnDTCYkPZYPSRRJtwc2YEPI2H8WG04kN/t0Yj7L8Y9VCdPsL0JbZgU4Y61r5BP7
-         aI2tvd6ObvUqLjXmHJrdE6l49kAt4Q9e4kyb2C7DgrtVXS8lZfhzp/PW/bK1eUHcMxKh
-         X0b15FwntkLtmhjqK5URNhh/7EG/7EJfWfVq2reEB+dc65bjju+Ns4noGV1tO/jClh/p
-         tuHzdKSruPdk1ivcgcMG6kVLQSGD4bxz/xcpDV89E7ryXofXsqkiV2n5G/F/L55GAkC9
-         EaqQ==
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ci0ShutkyKqbRS5y4WPW5+YhID9YQTVWD129Yl/CGkY=;
+        b=QjjequB+bplNYxUEtGQzwSjo9+VvYNN/XhKvzZM0XlamFEbJs90Tth5t1TD3XAzRJz
+         JIvQGcRMwo0hwiH373b81nt6gPyhXwCWqvWLp2DM1FxT/KdKXTIdLWTaU8ICEMu7xpQd
+         5sceRvnB1/uFx94inIZAolVq0Pu95Ag3afa4A=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NN7ra9RM5RwWoUr/tsRU6zWH7d53cck2M9uCu21ulu0=;
-        b=AjZxlyeNYaPf4OTE5WDFQQSwmeyQdlICzRlUl56a1PFXxBbY/iuHkZNPuqpCizg0hV
-         +Z7gcpJ0kYptxuAEB7SSJtgC0FfCoUQLvg0R58uN5coG6E6nVZxe6DnXpR+vii2kYsvU
-         pSkYjMnCrbY3m/g5OujFZwtR8++Mk6WhVtokL5aNZjHwF23Yig/8OCrlEqjNXNOw36F2
-         QcwwmMItWoogd3yWw/ipXL3p3pWeTCPOL/7GYk1wO699go3BVJvk9a0LZIUC14rbCXSY
-         zNxov49XyXwpWZZI4aAyfkm0M2cb22cpMuuTRGatCLIeLK7D7WJR1lvUFhjPJFeSczov
-         wGUQ==
-X-Gm-Message-State: AFqh2kq2x41sLB48XTb3r0cG8rGjvqU9NhMJ9UiSK9ieN6uYov5CE3TM
-        IgkSxwURlanh4Y2yZHIteIUaSQ==
-X-Google-Smtp-Source: AMrXdXt/uADrirudTtbLAThIF7D33RBC/uAACiFdsfTZOuuirWxs/Jfbl29q/QJSTS1dIZHczsAv2g==
-X-Received: by 2002:a5d:4e51:0:b0:2bd:f5df:2696 with SMTP id r17-20020a5d4e51000000b002bdf5df2696mr1122371wrt.67.1673923049035;
-        Mon, 16 Jan 2023 18:37:29 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id f2-20020adff982000000b002bde537721dsm9634581wrr.20.2023.01.16.18.37.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Jan 2023 18:37:28 -0800 (PST)
-Message-ID: <c1e3db0d-7593-b0fc-043b-60538faf9ba2@linaro.org>
-Date:   Tue, 17 Jan 2023 02:37:27 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: [PATCH v2 0/4] soc: qcom: Introduce PMIC GLINK
-Content-Language: en-US
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ci0ShutkyKqbRS5y4WPW5+YhID9YQTVWD129Yl/CGkY=;
+        b=EkK9/H7C5JNUF2HHAO3nwL3+m8parmEjSYAEPhFlzK7TzFo2+N+jgp6iC1eNRAmEgj
+         S3sLTJRZ00Fc85xtJzAa1X9Z0bUQCMBLVEIbESdVaFyaIOy6OwdDvI3sNK5icxf0C0BY
+         HYcJqm6v8Yw02fr5wD+btwsGeqYfpQqqV1VLxjJ9StfwBWEHO6W/UMxkAU5jOBTtzBgn
+         TpK/4gIM4JgJhNXCGS8e1/s2HHTG0WqfE0muInJN5+VhVeKXNhLHj8zmvz7Reuo/RVvo
+         pph/Lst/SnDw/EWAHUgTxvx6ijPEiPgzbPMxPheNINapiiydMX4jjWYDWpxrg506zuds
+         8B3g==
+X-Gm-Message-State: AFqh2koA5BY478pulJ4VfrjaJnoV6QGNP9Vnd8ddRQ8u4754ERl7I582
+        kPOmTev/ICItauLBTDj54zFbBUZ0xSiYv5DP
+X-Google-Smtp-Source: AMrXdXt9saMUMMymJC5GYhQSjizFrnpQID9HqmpQqPvwSrzjohq15SMwxJxf2Mno4CcOWYP9KWe9Dg==
+X-Received: by 2002:a17:902:7b85:b0:193:3bf7:40e6 with SMTP id w5-20020a1709027b8500b001933bf740e6mr735478pll.53.1673923364863;
+        Mon, 16 Jan 2023 18:42:44 -0800 (PST)
+Received: from judyhsiao0523.c.googlers.com.com (21.160.199.104.bc.googleusercontent.com. [104.199.160.21])
+        by smtp.gmail.com with ESMTPSA id e2-20020a170902784200b0017d97d13b18sm19958534pln.65.2023.01.16.18.42.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Jan 2023 18:42:44 -0800 (PST)
+From:   Judy Hsiao <judyhsiao@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Cc:     linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <andersson@kernel.org>,
+        Judy Hsiao <judyhsiao@chromium.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Sebastian Reichel <sre@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>,
-        Johan Hovold <johan@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-References: <20230113041132.4189268-1-quic_bjorande@quicinc.com>
- <9e831252-7198-7983-8a52-0e745688452d@linaro.org>
- <20230117023238.GB2350793@hu-bjorande-lv.qualcomm.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20230117023238.GB2350793@hu-bjorande-lv.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Subject: [PATCH v3] arm64: dts: qcom: sc7280: add display port audio
+Date:   Tue, 17 Jan 2023 02:42:36 +0000
+Message-Id: <20230117024236.1442437-1-judyhsiao@chromium.org>
+X-Mailer: git-send-email 2.39.0.314.g84b9a713c41-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -86,77 +72,63 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/01/2023 02:32, Bjorn Andersson wrote:
-> On Fri, Jan 13, 2023 at 05:10:17PM +0000, Bryan O'Donoghue wrote:
->> On 13/01/2023 04:11, Bjorn Andersson wrote:
->>> This implements the base PMIC GLINK driver, a power_supply driver and a
->>> driver for the USB Type-C altmode protocol. This has been tested and
->>> shown to provide battery information, USB Type-C switch and mux requests
->>> and DisplayPort notifications on SC8180X, SC8280XP and SM8350.
->>>
->>> Bjorn Andersson (4):
->>>     dt-bindings: soc: qcom: Introduce PMIC GLINK binding
->>>     soc: qcom: pmic_glink: Introduce base PMIC GLINK driver
->>>     soc: qcom: pmic_glink: Introduce altmode support
->>>     power: supply: Introduce Qualcomm PMIC GLINK power supply
->>>
->>>    .../bindings/soc/qcom/qcom,pmic-glink.yaml    |  102 ++
->>>    drivers/power/supply/Kconfig                  |    9 +
->>>    drivers/power/supply/Makefile                 |    1 +
->>>    drivers/power/supply/qcom_battmgr.c           | 1421 +++++++++++++++++
->>>    drivers/soc/qcom/Kconfig                      |   15 +
->>>    drivers/soc/qcom/Makefile                     |    2 +
->>>    drivers/soc/qcom/pmic_glink.c                 |  336 ++++
->>>    drivers/soc/qcom/pmic_glink_altmode.c         |  477 ++++++
->>>    include/linux/soc/qcom/pmic_glink.h           |   32 +
->>>    9 files changed, 2395 insertions(+)
->>>    create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,pmic-glink.yaml
->>>    create mode 100644 drivers/power/supply/qcom_battmgr.c
->>>    create mode 100644 drivers/soc/qcom/pmic_glink.c
->>>    create mode 100644 drivers/soc/qcom/pmic_glink_altmode.c
->>>    create mode 100644 include/linux/soc/qcom/pmic_glink.h
->>>
->>
->> How does the USB PHY and a USB redriver fit into this ?
->>
->> Is the host supposed to manage both/neither ? Is the DSP responsible for
->> configuring the PHY lanes and the turnaround on orientation switch ?
->>
-> 
-> As indicated above, the firmware deals with battery management and USB
-> Type-C handling.
-> 
-> The battery/power management is handled by the battmgr implementation,
-> exposing the various properties through a set of power_supply objects.
-> 
-> The USB Type-C handling comes in two forms. The "altmode" protocol
-> handles DisplayPort notifications - plug detect, orientation and mode
-> switches. The other part of the USB implementation exposes UCSI.
-> 
-> The altmode implementation provides two things:
-> - A drm_bridge, per connector, which can be tied (of_graph) to a
->    DisplayPort instance, and will invoke HPD notifications on the
->    drm_bridge, based on notification messages thereof.
-> 
-> - Acquire typec_switch and typec_mux handles through the of_graph and
->    signal the remotes when notifications of state changes occur. Linking
->    this to the FSA4480, is sufficient to get USB/DP combo (2+2 lanes)
->    working on e.g. SM8350 HDK.
->    Work in progress patches also exists for teaching QMP about
->    orientation switching of the SS lines, but it seems this needs to be
->    rebased onto the refactored QMP driver.
->    I also have patches for QMP to make it switch USB/DP combo -> 4-lane
->    DP, which allow 4k support without DSC, unfortunately switch back to
->    USB has not been fully reliable, so this requires some more work
->    (downstream involves DWC3 here as well, to reprogram the PHY).
+1. Add DisplayPort sound node and lpass_cpu node.
 
-Oki doki that makes sense and is pretty much in-line with what I thought.
+2. Adjust the dai-link order to make the order to
+   be consistent with sc7280-herobrine-audio-rt5682-3mic.dtsi.
 
-We still have a bunch of typec-mux and phy work to do even with 
-adsp/glink doing the TCPM.
-
-Thanks for the explanation.
+Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
 
 ---
-bod
+
+Changes in v3:
+- Add more detail in the commit message.
+
+Changes in v2:
+- Fix the commit message format.
+
+ .../qcom/sc7280-herobrine-audio-rt5682.dtsi   | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi
+index af685bc35e10..69e7aa7b2f6c 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi
+@@ -33,9 +33,22 @@ codec {
+ 		};
+ 
+ 		dai-link@1 {
+-			link-name = "ALC5682";
++			link-name = "DisplayPort";
+ 			reg = <1>;
+ 
++			cpu {
++				sound-dai = <&lpass_cpu LPASS_DP_RX>;
++			};
++
++			codec {
++				sound-dai = <&mdss_dp>;
++			};
++		};
++
++		dai-link@2 {
++			link-name = "ALC5682";
++			reg = <2>;
++
+ 			cpu {
+ 				sound-dai = <&lpass_cpu MI2S_PRIMARY>;
+ 			};
+@@ -92,6 +105,10 @@ dai-link@1 {
+ 		reg = <MI2S_SECONDARY>;
+ 		qcom,playback-sd-lines = <0>;
+ 	};
++
++	dai-link@5 {
++		reg = <LPASS_DP_RX>;
++	};
+ };
+ 
+ /* PINCTRL - ADDITIONS TO NODES IN PARENT DEVICE TREE FILES */
+-- 
+2.39.0.314.g84b9a713c41-goog
 
