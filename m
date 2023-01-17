@@ -2,109 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F0A7066E715
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 20:36:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2879B66E719
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 20:37:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232764AbjAQTgR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 14:36:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59308 "EHLO
+        id S231673AbjAQThU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 14:37:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235374AbjAQTe6 (ORCPT
+        with ESMTP id S235421AbjAQTfI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 14:34:58 -0500
-Received: from mail-oo1-f41.google.com (mail-oo1-f41.google.com [209.85.161.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5A5E5829F;
-        Tue, 17 Jan 2023 10:38:37 -0800 (PST)
-Received: by mail-oo1-f41.google.com with SMTP id h12-20020a4a940c000000b004fa81915b1cso261867ooi.4;
-        Tue, 17 Jan 2023 10:38:37 -0800 (PST)
+        Tue, 17 Jan 2023 14:35:08 -0500
+Received: from mail-vk1-xa35.google.com (mail-vk1-xa35.google.com [IPv6:2607:f8b0:4864:20::a35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D8CA38010
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 10:40:52 -0800 (PST)
+Received: by mail-vk1-xa35.google.com with SMTP id t2so15255101vkk.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 10:40:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=HzP1xFoLjj5jhJ3xNiat0BSRJmicxmV9UzOSz4HXrGI=;
+        b=lk2Ol42uH592eFDM/2k/N+xqYAdoODD5g/N7UJ7JKoDCDd9fEllMgDaV5J/zMwowGJ
+         sylAwhCm918hE3r70qdAMJnL6ktDsrxkF9TElCPUsfufClV394XIYhJBBgqfTl8ftiJ7
+         tbR78n4ln2EH8StsOtl5QJTYqIkA2qIC7hzkI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=usmLcJsIrTN0HzsLj6S4gEel07Cxr+uLTfIujYF6bko=;
-        b=rApqE/H8lQKYkkSCKtB3ra8+NVcQ1wMweNOOGMW6rsD8cno6V9zZhDwK5nQGTtnOy5
-         TLO8pgANRowp1ugb2CMd4uditf9DpwmlhQXzK1Z5MIQVsGu4vfJJQ4Ink/L8lM8bgCvW
-         vlXfjNSQzLXzdoQ3+bp0FxlFrEtIbQx5jqfm3pgIf6rKUOLJ0SkponU96V4iWnjI6knq
-         5TpKnVrUpuqY1FL22zSrWxrM+8IWKrZGgMqQHQdRCeA4/jxCtTD7MEW3jjLmQdBFikTY
-         sThUuz+QGP+wKLfbmJZ4uO/v9kZ4DQ4OO4D31JMRcu2QpKnmkv5kWoR17Eh7+Y9IpTal
-         0sUA==
-X-Gm-Message-State: AFqh2koHxL/rRn0PU9OPqkryX9Tb6Pdqjqhesm8f38rcUz1+K0MrvllK
-        1Y3qhe0BJfT1yIqMVwO7tg==
-X-Google-Smtp-Source: AMrXdXvLVI5CuwaiE3H8rQprNcWFD5EueDgPFGCLXvTjlgOMhu3/99mSh2ykniwjUqwZDe68lJAbKQ==
-X-Received: by 2002:a4a:d6d8:0:b0:4f2:2e05:4fe0 with SMTP id j24-20020a4ad6d8000000b004f22e054fe0mr2302535oot.4.1673980716888;
-        Tue, 17 Jan 2023 10:38:36 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id z23-20020a4ad597000000b004b0037cebc4sm15453364oos.9.2023.01.17.10.38.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Jan 2023 10:38:36 -0800 (PST)
-Received: (nullmailer pid 3431272 invoked by uid 1000);
-        Tue, 17 Jan 2023 18:38:35 -0000
-Date:   Tue, 17 Jan 2023 12:38:35 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     devi priya <quic_devipriy@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        lgirdwood@gmail.com, broonie@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
-        quic_poovendh@quicinc.com
-Subject: Re: [PATCH 4/6] regulator: qcom_smd: Add PMIC compatible for IPQ9574
-Message-ID: <20230117183835.GA3427325-robh@kernel.org>
-References: <20230113150310.29709-1-quic_devipriy@quicinc.com>
- <20230113150310.29709-5-quic_devipriy@quicinc.com>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=HzP1xFoLjj5jhJ3xNiat0BSRJmicxmV9UzOSz4HXrGI=;
+        b=pVJCl8nD44RwCzuUjzRxzsws0Fe70K1ciTxXZ1rXeAlye25smM4ZnAGM2cd7a7D6RW
+         EePgv48SaxAn5LCaoygVjH2lJ/QhiugdyMisYvpxgdlOK04EBj+PbN5pnIVC1aO4eBLd
+         UdiY99cow8GX6927BrDXbvMzmmh66hbI+lsbGGYQ+VrXk0QKdZrqChwRl4UYRsIWCLPI
+         DHnCx0wFLpPdUfbajjIrxi3XDn37HT12vAypYpPuHnUw5sGNtpl7Msjo/f56+ZEGMhb5
+         eN+kaafa3bXQFHVOry5ldktaBIFeBUzNKPe2odrTcYlpescbHomwCI/Jjm/2LRGvCqQN
+         t94g==
+X-Gm-Message-State: AFqh2kqL2bDYBbpGYAbOTD3wXCLIROnLpy5DBXhw+u6Ga6DRc0B0Rcpn
+        i9WTw9X1RETY8qN9JuZ6tUK0UwRuuYR3AWz+
+X-Google-Smtp-Source: AMrXdXtLycyxNVVabz3vPau+1ysDEughs/QAnZvofhF2pw2qykAKskfjILHY0+c/ax3plQqNDJCrXQ==
+X-Received: by 2002:a05:6122:1818:b0:3dd:fcfd:dccc with SMTP id ay24-20020a056122181800b003ddfcfddcccmr2601362vkb.5.1673980851438;
+        Tue, 17 Jan 2023 10:40:51 -0800 (PST)
+Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com. [209.85.217.48])
+        by smtp.gmail.com with ESMTPSA id p69-20020a1fbf48000000b003d5788539c4sm3852205vkf.16.2023.01.17.10.40.50
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 Jan 2023 10:40:50 -0800 (PST)
+Received: by mail-vs1-f48.google.com with SMTP id 187so2492522vsv.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 10:40:50 -0800 (PST)
+X-Received: by 2002:a67:bb14:0:b0:3ce:acca:5b77 with SMTP id
+ m20-20020a67bb14000000b003ceacca5b77mr466044vsn.70.1673980850013; Tue, 17 Jan
+ 2023 10:40:50 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230113150310.29709-5-quic_devipriy@quicinc.com>
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+References: <20230117085212.1.If242b1cd61b2e87e312dd9cf81e20301bae2a5a4@changeid>
+In-Reply-To: <20230117085212.1.If242b1cd61b2e87e312dd9cf81e20301bae2a5a4@changeid>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 17 Jan 2023 10:40:38 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=XNazmGuFkdUEcNoitkced4uuy5C1CJBK4vgpbdZU5AWg@mail.gmail.com>
+Message-ID: <CAD=FV=XNazmGuFkdUEcNoitkced4uuy5C1CJBK4vgpbdZU5AWg@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7180: set ath10k output power
+ calibration string
+To:     Yunlong Jia <ecs.beijing2022@gmail.com>
+Cc:     LKML <linux-kernel@vger.kernel.org>,
+        Bob Moragues <moragues@chromium.org>,
+        Henry Sun <henrysun@google.com>,
+        Abhishek Kumar <kuabhs@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 13, 2023 at 08:33:08PM +0530, devi priya wrote:
-> Add mp5496 PMIC compatible string for IPQ9574 SoC
-> 
-> Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
+Hi,
+
+On Tue, Jan 17, 2023 at 12:57 AM Yunlong Jia <ecs.beijing2022@gmail.com> wrote:
+>
+> Add the string to load RF output power table for pazquel360 project.
+>
+> Signed-off-by: Yunlong Jia <ecs.beijing2022@gmail.com>
+>
 > ---
->  .../devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml  | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
-> index 8c45f53212b1..7907d9385583 100644
-> --- a/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
-> +++ b/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
-> @@ -22,7 +22,7 @@ description:
->    Each sub-node is identified using the node's name, with valid values listed
->    for each of the pmics below.
->  
-> -  For mp5496, s2
-> +  For mp5496, s1, s2
->  
->    For pm2250, s1, s2, s3, s4, l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11,
->    l12, l13, l14, l15, l16, l17, l18, l19, l20, l21, l22
-> @@ -84,6 +84,7 @@ properties:
->    compatible:
->      enum:
->        - qcom,rpm-mp5496-regulators
-> +      - qcom,rpm-ipq9574-mp5496-regulators
+>
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel360.dtsi | 4 ++++
+>  1 file changed, 4 insertions(+)
 
-Is this a different part than just mp5496? Or used in a different, 
-incompatible way?
-
->        - qcom,rpm-pm2250-regulators
->        - qcom,rpm-pm6125-regulators
->        - qcom,rpm-pm660-regulators
-> -- 
-> 2.17.1
-> 
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
