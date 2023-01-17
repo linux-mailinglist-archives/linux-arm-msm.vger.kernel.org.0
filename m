@@ -2,276 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B3A95670DD0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 00:43:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 00082670DF3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 00:49:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229660AbjAQXng (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 18:43:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37292 "EHLO
+        id S229876AbjAQXtf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 18:49:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230124AbjAQXnC (ORCPT
+        with ESMTP id S229603AbjAQXtU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 18:43:02 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FC2B656C8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 14:48:41 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id iv8-20020a05600c548800b003db04a0a46bso491685wmb.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 14:48:41 -0800 (PST)
+        Tue, 17 Jan 2023 18:49:20 -0500
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE6305A81A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 14:58:27 -0800 (PST)
+Received: by mail-ej1-x631.google.com with SMTP id u19so79003112ejm.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 14:58:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=LYCcWqCCZCUHqzEyU/xnDg7cnPafRId64wsa4xHKDIA=;
-        b=y6NtW/6VxO1x8kKxzAS+q88Nf99KzaIP+D2IjKsLyOFqIjWSXZBEy7GiUTILBrFWye
-         bPbeaUC+x0Fu2tXv3IifcnPxKHhzNfVWY1GrU1kZdsz8GprC+PVxsF3z0WINvHJMhlcz
-         x9ZwiBtK3rhAOdN4YVIBCAJkUpTcgqmvlXTUugGxjATB6/AGSjuRjLruAtEH3aolU1Jq
-         pMRxrOeo1+/5mRNTN4F2aEhRix6CEgJzz0i73MG/60NZi5I3ytzccm96+eWCU/4YxwAA
-         wKHqZzmvWdTYfO+FJfYCTndwki5xB2wymqjQttORaUdKXJT2mFh6vgQ5erDSFSxecAwr
-         yn6Q==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=fhtQCvX/tSJys6S4hJnViiM+9HKQO1LNRZqOWTVY3ys=;
+        b=Z/nRzHyyYai5h0kOA3n7z0u6uDaptTMvYCHvbIszz03m3bT77thMVojvGrK227u3t6
+         EkHw7jfdL+8HlXAIIy6NLyJTkijTShj7jjl3zpZOTnnScoAfq1D0flpOZHkSeI1m1Tkr
+         RXMQJbdqvLLJwYmu5pIy33h5AuFJIM3M9BevLfr85wTz9O39XI6H3GAIGol+wCZoO3pv
+         wjDbW0v4ky5oXcy3rV5Ci3RJA5mJcxS0jmta1uimjexJzgkqcTh0USZ1CyzHAMe0yN6u
+         peNBEZRFCY4IVvZty47Nf680cN4cRh5ep1e7qx7GbEWyPh3qib9cP9jLfLZitzsUGDk1
+         i5GA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LYCcWqCCZCUHqzEyU/xnDg7cnPafRId64wsa4xHKDIA=;
-        b=tuBCDw45yb+80Sg550iRBPxGGLANhoh6eIm5u7LDnCZAT6WH9Dtv3JM+j0U69Q+Qgj
-         voNjnT0WWSJ8GlGGgKk3qEWFFMweVktsnqN1/j/zwsPOq9o9ridrF/UDAVUBMLEbPFrY
-         xvY16qpp+o4xnpCki9+1gY6F9orykFrupTh030Ta+3SMl+fuyrRqSpqin1vVk7APh/gK
-         PdfDzsENQKfYHJzrqA7q57JNOGHUtbVuvEljFZKi7FjcXEBqxQGzDPdU7LuKKV7CyQIn
-         QrdVvraHAqi72kFn7diUM7XHCBTRkseYVkLQGGaXKqm7rYDzSkmXiKYT/0Oqwq6LYefB
-         rg8w==
-X-Gm-Message-State: AFqh2kqevsg2j+ZGBBX6+bNeXjXcmSlDoV7EwpBkAWCjNn5Je5u7YdJw
-        DYKqJlKeY0YseMAJNqpIAxRxNQ==
-X-Google-Smtp-Source: AMrXdXuFvYbZV9S/7lQ8QJ10PZT/eT5LWRdZmBUuVkcgeLYgs3Z2XUHlrgXrVqMt4pxJK4LZ4oNphw==
-X-Received: by 2002:a05:600c:920:b0:3da:22a6:7b6b with SMTP id m32-20020a05600c092000b003da22a67b6bmr4561497wmp.13.1673995719688;
-        Tue, 17 Jan 2023 14:48:39 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id h6-20020a05600c314600b003d99469ece1sm159069wmo.24.2023.01.17.14.48.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Jan 2023 14:48:38 -0800 (PST)
-Message-ID: <28e1df7a-6577-bf39-9739-d0a047b36f12@linaro.org>
-Date:   Tue, 17 Jan 2023 22:48:37 +0000
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fhtQCvX/tSJys6S4hJnViiM+9HKQO1LNRZqOWTVY3ys=;
+        b=RTKGHT+0wmKpb7QakN5laCXxIhyRi0bXmhSDDmlLYyTFTSO07d/c9gAw6G7tCgMe3q
+         I+77eUg3o46P+bJTvqaOAtpkhGptqNVLdYbIBQ3sUIMp8RPeWdjzGG9gil372DuJCrTD
+         2utj0HcL63/pZYekmuZt0TUYMkgo21Y6HVRMIx8nCFG5MFOHUUCahMKW99iq0OBnv7PU
+         VQV3Gr7WL72/8pbuONAzAhUwQuNlkTcgGj+Y1/dZd6dw7mK6jTB5d6kUYJDC9Rp2Oi2n
+         r8TXfgRE0X2snlRT4EsyLjwdkYmQ1YjXmXqttMnWYvigwrREb5O0lY6aTcTPJBx7oWzi
+         +lWQ==
+X-Gm-Message-State: AFqh2kq61kF7fKlGtvACMNcNzgaJNFP50EObvL6n941IXw9G/J5A7amt
+        LI15P+TUhpZ1Be2MR+mGZpwr6w==
+X-Google-Smtp-Source: AMrXdXsWCV+QyQsM/XeACm1myMGgjrnpAmFwb2gixdmqaOLIsdzjpBocVpSOC0zre3aqMCTW3S3daQ==
+X-Received: by 2002:a17:906:5da8:b0:7b2:c227:126d with SMTP id n8-20020a1709065da800b007b2c227126dmr844649ejv.20.1673996306267;
+        Tue, 17 Jan 2023 14:58:26 -0800 (PST)
+Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id t1-20020a1709061be100b0086f40238403sm3919762ejg.223.2023.01.17.14.58.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Jan 2023 14:58:25 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH v2 0/7] clk: qcom: msm8996: add support for the CBF clock
+Date:   Wed, 18 Jan 2023 00:58:17 +0200
+Message-Id: <20230117225824.1552604-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: [PATCH v3 5/8] arm64: dts: qcom: Add msm8939 SoC
-Content-Language: en-US
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     agross@kernel.org, konrad.dybcio@linaro.org, djakov@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        benl@squareup.com, shawn.guo@linaro.org, fabien.parent@linaro.org,
-        leo.yan@linaro.org, dmitry.baryshkov@linaro.org,
-        Jun Nie <jun.nie@linaro.org>,
-        James Willcox <jwillcox@squareup.com>,
-        Joseph Gates <jgates@squareup.com>,
-        Max Chen <mchen@squareup.com>, Zac Crosby <zac@squareup.com>,
-        Vincent Knecht <vincent.knecht@mailoo.org>,
-        Stephan Gerhold <stephan@gerhold.net>
-References: <20230117024846.1367794-1-bryan.odonoghue@linaro.org>
- <20230117024846.1367794-6-bryan.odonoghue@linaro.org>
- <20230117205800.cqexxwxmtupapy7e@builder.lan>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20230117205800.cqexxwxmtupapy7e@builder.lan>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/01/2023 20:58, Bjorn Andersson wrote:
-> On Tue, Jan 17, 2023 at 02:48:43AM +0000, Bryan O'Donoghue wrote:
->> Add msm8939 a derivative SoC of msm8916. This SoC contains a number of key
->> differences to msm8916.
->>
->> - big.LITTLE Octa Core - quad 1.5GHz + quad 1.0GHz
->> - DRAM 1x800 LPDDR3
->> - Camera 4+4 lane CSI
->> - Venus @ 1080p60 HEVC
->> - DSI x 2
->> - Adreno A405
->> - WiFi wcn3660/wcn3680b 802.11ac
->>
->> Co-developed-by: Shawn Guo <shawn.guo@linaro.org>
->> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
->> Co-developed-by: Jun Nie <jun.nie@linaro.org>
->> Signed-off-by: Jun Nie <jun.nie@linaro.org>
->> Co-developed-by: Benjamin Li <benl@squareup.com>
->> Signed-off-by: Benjamin Li <benl@squareup.com>
->> Co-developed-by: James Willcox <jwillcox@squareup.com>
->> Signed-off-by: James Willcox <jwillcox@squareup.com>
->> Co-developed-by: Leo Yan <leo.yan@linaro.org>
->> Signed-off-by: Leo Yan <leo.yan@linaro.org>
->> Co-developed-by: Joseph Gates <jgates@squareup.com>
->> Signed-off-by: Joseph Gates <jgates@squareup.com>
->> Co-developed-by: Max Chen <mchen@squareup.com>
->> Signed-off-by: Max Chen <mchen@squareup.com>
->> Co-developed-by: Zac Crosby <zac@squareup.com>
->> Signed-off-by: Zac Crosby <zac@squareup.com>
->> Co-developed-by: Vincent Knecht <vincent.knecht@mailoo.org>
->> Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
->> Co-developed-by: Stephan Gerhold <stephan@gerhold.net>
->> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
->> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> 
-> Just to make sure when I get the question, you all co-developed this
-> patch, right?
+On MSM8996 two CPU clusters are interconnected using the Core Bus
+Fabric (CBF). In order for the CPU clusters to function properly, it
+should be clocked following the core's frequencies to provide adequate
+bandwidth. On the other hand the CBF's clock rate can be used by other
+drivers (e.g. by the pending SPDM driver to provide input on the CPU
+performance).
 
-A long list but a fair one.
+Thus register CBF as a clock (required for CPU to boot) and add a tiny
+interconnect layer on top of it to let cpufreq/opp scale the CBF clock.
 
->> ---
->>   arch/arm64/boot/dts/qcom/msm8939.dtsi | 2393 +++++++++++++++++++++++++
->>   1 file changed, 2393 insertions(+)
->>   create mode 100644 arch/arm64/boot/dts/qcom/msm8939.dtsi
->>
->> diff --git a/arch/arm64/boot/dts/qcom/msm8939.dtsi b/arch/arm64/boot/dts/qcom/msm8939.dtsi
->> new file mode 100644
->> index 0000000000000..8cd358a9fe623
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/msm8939.dtsi
->> @@ -0,0 +1,2393 @@
->> +// SPDX-License-Identifier: GPL-2.0-only
->> +/*
->> + * Copyright (c) 2013-2015, The Linux Foundation. All rights reserved.
->> + * Copyright (c) 2020-2023, Linaro Limited
->> + */
->> +
->> +#include <dt-bindings/clock/qcom,gcc-msm8939.h>
->> +#include <dt-bindings/clock/qcom,rpmcc.h>
->> +#include <dt-bindings/interconnect/qcom,msm8939.h>
->> +#include <dt-bindings/interrupt-controller/arm-gic.h>
->> +#include <dt-bindings/power/qcom-rpmpd.h>
->> +#include <dt-bindings/reset/qcom,gcc-msm8939.h>
->> +#include <dt-bindings/thermal/thermal.h>
->> +
->> +/ {
->> +	interrupt-parent = <&intc>;
->> +
->> +	#address-cells = <2>;
->> +	#size-cells = <2>;
-> 
-> Why do you use a default of 2? In particular since you reduce it to 1 in
-> /soc...
+Dependencies: [1]
 
-You asked that before, and I took a note of the answer but, then because 
-I was away from the main machine when I sent V2, I didn't have the log.
+[1] https://lore.kernel.org/linux-arm-msm/20230111191453.2509468-1-dmitry.baryshkov@linaro.org/
 
-Here's what I wrote down.
+- Relicensed schema to GPL-2.0 + BSD-2-Clause (Krzysztof)
+- Changed clock driver to use parent_hws (Konrad)
+- Fixed indentation in CBF clock driver (Konrad)
+- Changed MODULE_LICENSE of CBF clock driver to GPL from GPL-v2
+- Switched CBF to use RPM_SMD_XO_CLK_SRC as one of the parents
+- Enabled RPM_SMD_XO_CLK_SRC on msm8996 platform and switch to it from
+  RPM_SMD_BB_CLK1 clock
 
-"  - address-cells/size-cells = 1 in /soc - Bjorn
-     I experimentally changed address/cell sizes to 2
-     I'm finding that lk chokes "
+Dmitry Baryshkov (7):
+  dt-bindings: clock: qcom,msm8996-cbf: Describe the MSM8996 CBF clock
+    controller
+  clk: qcom: add msm8996 Core Bus Framework (CBF) support
+  clk: qcom: cbf-msm8996: scale CBF clock according to the CPUfreq
+  clk: qcom: smd-rpm: provide RPM_SMD_XO_CLK_SRC on MSM8996 platform
+  arm64: qcom: dts: msm8996 switch from RPM_SMD_BB_CLK1 to
+    RPM_SMD_XO_CLK_SRC
+  arm64: dts: qcom: msm8996: add CBF device entry
+  arm64: dts: qcom: msm8996: scale CBF clock according to the CPUfreq
 
-So AFAIR LK was unhappy about changing the top level address/size cells 
-to <1> <1> and converting the /soc address/size cells to <2> <2> caused 
-a number of breakages during boot.
+ .../bindings/clock/qcom,msm8996-cbf.yaml      |  53 ++
+ arch/arm64/boot/dts/qcom/msm8996.dtsi         |  71 ++-
+ drivers/clk/qcom/Makefile                     |   2 +-
+ drivers/clk/qcom/clk-cbf-8996.c               | 456 ++++++++++++++++++
+ drivers/clk/qcom/clk-smd-rpm.c                |   2 +
+ 5 files changed, 576 insertions(+), 8 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,msm8996-cbf.yaml
+ create mode 100644 drivers/clk/qcom/clk-cbf-8996.c
 
-To be honest, this pattern is copied from the msm8916.dtsi original. 
-msm8953.dtsi has the same thing. msm8994 too, and 8998.
+-- 
+2.39.0
 
-If you think it needs changing, then I'll have to see what can be done 
-with soc@{} entries.
-
-> 
->> +
->> +	clocks {
->> +		xo_board: xo-board {
->> +			compatible = "fixed-clock";
->> +			#clock-cells = <0>;
->> +			clock-frequency = <19200000>;
->> +		};
->> +
->> +		sleep_clk: sleep-clk {
->> +			compatible = "fixed-clock";
->> +			#clock-cells = <0>;
->> +			clock-frequency = <32768>;
->> +		};
->> +	};
-> [..]
->> +	smp2p-hexagon {
-> 
-> To avoid having people start sending patches that changes the sort order
-> as soon as I merge this, could you please sort your nodes by address
-> (not applicable for this one), then by node name alphabetically, then by
-> label alphabetically.
-
-ah. I sorted the contents of soc. I missed the upper level groupings.
-
-> 
->> +		compatible = "qcom,smp2p";
->> +		qcom,smem = <435>, <428>;
->> +
->> +		interrupts = <GIC_SPI 27 IRQ_TYPE_EDGE_RISING>;
->> +
->> +		mboxes = <&apcs1_mbox 14>;
->> +
->> +		qcom,local-pid = <0>;
->> +		qcom,remote-pid = <1>;
->> +
->> +		hexagon_smp2p_out: master-kernel {
->> +			qcom,entry-name = "master-kernel";
->> +
->> +			#qcom,smem-state-cells = <1>;
->> +		};
->> +
->> +		hexagon_smp2p_in: slave-kernel {
->> +			qcom,entry-name = "slave-kernel";
->> +
->> +			interrupt-controller;
->> +			#interrupt-cells = <2>;
->> +			#address-cells = <0>;
->> +			#size-cells = <0>;
->> +		};
->> +	};
->> +
->> +	memory@80000000 {
->> +		device_type = "memory";
->> +		/* We expect the bootloader to fill in the reg */
->> +		reg = <0x0 0x80000000 0x0 0x0>;
->> +	};
->> +
-> [..]
->> +	soc: soc@0 {
-> [..]
->> +		pronto: remoteproc@a204000 {
->> +			compatible = "qcom,pronto-v2-pil", "qcom,pronto";
->> +			reg = <0x0a204000 0x2000>,
->> +			      <0x0a202000 0x1000>,
->> +			      <0x0a21b000 0x3000>;
->> +			reg-names = "ccu", "dxe", "pmu";
->> +
->> +			interrupts-extended = <&intc 0 149 IRQ_TYPE_EDGE_RISING>,
->> +					      <&wcnss_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
->> +					      <&wcnss_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
->> +					      <&wcnss_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
->> +					      <&wcnss_smp2p_in 3 IRQ_TYPE_EDGE_RISING>;
->> +			interrupt-names = "wdog", "fatal", "ready", "handover", "stop-ack";
->> +
->> +			memory-region = <&wcnss_mem>;
->> +
->> +			power-domains = <&rpmpd MSM8939_VDDCX>,
->> +					<&rpmpd MSM8939_VDDMX_AO>;
-> 
-> The purpose of the remoteproc driver's vote is to keep the rails powered
-> while we're booting the remote, in the event that Linux decides to
-> suspend and turn of the power rails while we're waiting...
-> 
-> Once the remote pulls the "handover" interrupt, it signals that it has
-> cast the necessary votes and need no more hand-holding.
-> 
-> So it's unlikely that _AO is the right choice here.
-
-Yes, it's probably just VDDMX isn't it.
-
-I'll change that.
-
----
-bod
