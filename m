@@ -2,113 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D8C1670CBD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 00:08:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E8AD7670DC6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 00:38:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229455AbjAQXId (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 18:08:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57508 "EHLO
+        id S230177AbjAQXie (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 18:38:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229728AbjAQXHp (ORCPT
+        with ESMTP id S230118AbjAQXiA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 18:07:45 -0500
-Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF73D44BC2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 14:42:56 -0800 (PST)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id DF99E3F428;
-        Tue, 17 Jan 2023 23:42:53 +0100 (CET)
-Date:   Tue, 17 Jan 2023 23:42:51 +0100
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Andy Shevchenko <andy.shevchenko@gmail.com>
-Cc:     Jonathan Cameron <jic23@kernel.org>,
-        Nuno =?utf-8?B?U8Oh?= <nuno.sa@analog.com>,
-        openbmc@lists.ozlabs.org, linux-imx@nxp.com,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-iio@vger.kernel.org, linux-mips@vger.kernel.org,
-        linux-renesas-soc@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        chrome-platform@lists.linux.dev,
-        linux-arm-kernel@lists.infradead.org,
-        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-        linux-arm-msm@vger.kernel.org,
-        Gwendal Grignou <gwendal@chromium.org>,
-        Fabio Estevam <festevam@gmail.com>,
-        Tali Perry <tali.perry1@gmail.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Eugen Hristev <eugen.hristev@microchip.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Michael Hennerich <Michael.Hennerich@analog.com>,
-        Haibo Chen <haibo.chen@nxp.com>
-Subject: Re: [PATCH v3 12/15] iio: adc: qcom-spmi-adc5: convert to device
- properties
-Message-ID: <20230117224251.wzxexdlfe5ydzjw5@SoMainline.org>
-References: <20220715122903.332535-1-nuno.sa@analog.com>
- <20220715122903.332535-13-nuno.sa@analog.com>
- <20220806192048.0ca41cc5@jic23-huawei>
- <20230116204452.il4gase2szipeexz@SoMainline.org>
- <CAHp75VdX9sFgn9STyzwcDCK1KYbU00ejFNcEP3FVnLk5J=Pktg@mail.gmail.com>
- <CAHp75VdTftm1BE21rH1HVHiwUye-0Dvc66uCK2LE2qF4_zA6hg@mail.gmail.com>
- <CAHp75VdyCA7mQdm--kg=hUbmQqX4-jfFMHgLxref5mNSM1vnMA@mail.gmail.com>
+        Tue, 17 Jan 2023 18:38:00 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C5B1392BA;
+        Tue, 17 Jan 2023 14:44:37 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id h16so32162732wrz.12;
+        Tue, 17 Jan 2023 14:44:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=dSOKhvqsjRLHMedgakHEOkcG54qmkySqSuJu+13pLAY=;
+        b=DwN4EBIPJr3N28JnsH5aawIVOacElZIsyiKnVUreSdXlfZqYAITHtcOe3QjfZ+/Q+5
+         QwO426vHgVAYCPIIwS3TiY7enMDEQ67CNMaWz+WyZEoqFHh38Ual+okBkrBiGETU61Rg
+         m11bkhOo6Xf9ohoFpxmrRvj2tXq2yCZFPABlJ8iEvSJZ0Z3eUsy8zv5Xi8VnzZVF/SBA
+         3qCo+0vwX8dfOXFcAl/dTuSDH8QcWUNf02gAtfz8sjaQOKMA/qHxY6NjGV+SiueyvoBw
+         VcxteEjLeXwvsW9q4GXtMpr894QdhzdVoFUlaxTrVAgr/CjjWM+EBVJAM9Ener/cfu9u
+         IXUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dSOKhvqsjRLHMedgakHEOkcG54qmkySqSuJu+13pLAY=;
+        b=7dQYfLuu3UGHoMTLOGMOxPfJLYSaGxZCgu+R3Ond3+N/xNkxyAItvYRlz8N4QdZd03
+         +hnh6KzJC4xZpGCSvJJ2L2G2+XpDDDipxL20IdwhHtNF5E8rzyj5iLZSeKYYvthiR6bE
+         hsdViIGZTNtcNKhrpU6M/V+Tf2NDQw9jkUG8//dQRy4tiVorMBr+NlEYZolJQw+DLxCo
+         QUDHJ2Upc2P4hl8n+SubIpXueMnW3zh5p6/MJNGtppJStj1ZyhSyL61Mn9LX02ZS1kIT
+         tvUkg2Slkk5xRQEyXtkeKt+8eis771G2VgxyNjJHYqEldppBehHwVD47RN2TGtzL8sLk
+         9Ggg==
+X-Gm-Message-State: AFqh2kp0TWLRvjPKjaeLdJA15MC4UFwpOd5nRkR2owEP/vrzx6xlQZGJ
+        dcLMxcByLm6z8t3H1N4jw5Tiij/hQyM=
+X-Google-Smtp-Source: AMrXdXsesnZC0DKLfx9arDON2N17eAuLeCMPEpCvaDZrtC/Ji8EKv8DgI2e7BFGJI6YvIgbeQ/BrqQ==
+X-Received: by 2002:a05:6000:4006:b0:2bd:f4af:48fb with SMTP id cy6-20020a056000400600b002bdf4af48fbmr4514014wrb.44.1673995475905;
+        Tue, 17 Jan 2023 14:44:35 -0800 (PST)
+Received: from localhost.localdomain (93-34-92-88.ip49.fastwebnet.it. [93.34.92.88])
+        by smtp.googlemail.com with ESMTPSA id bt19-20020a056000081300b002bdc3f5945dsm17518032wrb.89.2023.01.17.14.44.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Jan 2023 14:44:35 -0800 (PST)
+From:   Christian Marangi <ansuelsmth@gmail.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Christian Marangi <ansuelsmth@gmail.com>
+Subject: [PATCH] ARM: dts: qcom: ipq8064: move reg-less nodes outside soc node
+Date:   Tue, 17 Jan 2023 23:44:17 +0100
+Message-Id: <20230117224417.7530-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAHp75VdyCA7mQdm--kg=hUbmQqX4-jfFMHgLxref5mNSM1vnMA@mail.gmail.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-01-17 11:40:42, Andy Shevchenko wrote:
-<snip>
-> > > > This CC just surfaced in my inbox while searching for our current
-> > > > discussion around missing labels in qcom-spmi-vadc - and on the side a
-> > > > userspace @xx label name ABI break (in qcom-spmi-adc5) caused by this
-> > > > patch's fwnode_get_name change - we could've caught it if I had not
-> > > > accidentally marked it as read and/or forgot about it.  My apologies.
-> > >
-> > > Does the following addition to the top of the
-> > > adc5_get_fw_channel_data() fix the issue?
-> > >
-> > > +       name = devm_kasprintf(adc->dev, GFP_KERNEL, "%pfwP", fwnode);
-> > > +       if (!name)
-> > > +               return -ENOMEM;
-> >
-> > Okay, it probably the same, so it might need additional code to
-> >
-> > + name[strchrnul(name, '@') - name] = '\0';
-> 
-> I have just sent a formal patch, please test on top of non-working kernel.
+Move node that doesn't have a reg outside the soc node as it should only
+contain reg nodes.
+No changes intended.
 
-I would've preferred to fix this in the same way as qcom-spmi-vadc by
-implementing read_label instead and basing it on the DT label or driver
-string literals instead [1], but dropping extend_name (hence changing
-sysfs filenames once again) would be considered an ABI break.
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+---
+ arch/arm/boot/dts/qcom-ipq8064.dtsi | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-I've instead gone for a similar change that also ignores the node name
-in favour of falling back to the driver string literal (if no "label"
-property is available) while retaining extend_label [3] and the -
-however ugly they are - sysfs filenames, but that'll likely get rejected
-as strictly being an ABI break as well, not in the least because DT
-needs to be patched up [3] for it to work out.
+diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+index ae018a7dc6fd..52d77e105957 100644
+--- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
++++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+@@ -326,26 +326,26 @@ scm {
+ 		};
+ 	};
+ 
++	stmmac_axi_setup: stmmac-axi-config {
++		snps,wr_osr_lmt = <7>;
++		snps,rd_osr_lmt = <7>;
++		snps,blen = <16 0 0 0 0 0 0>;
++	};
++
++	vsdcc_fixed: vsdcc-regulator {
++		compatible = "regulator-fixed";
++		regulator-name = "SDCC Power";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++		regulator-always-on;
++	};
++
+ 	soc: soc {
+ 		#address-cells = <1>;
+ 		#size-cells = <1>;
+ 		ranges;
+ 		compatible = "simple-bus";
+ 
+-		stmmac_axi_setup: stmmac-axi-config {
+-			snps,wr_osr_lmt = <7>;
+-			snps,rd_osr_lmt = <7>;
+-			snps,blen = <16 0 0 0 0 0 0>;
+-		};
+-
+-		vsdcc_fixed: vsdcc-regulator {
+-			compatible = "regulator-fixed";
+-			regulator-name = "SDCC Power";
+-			regulator-min-microvolt = <3300000>;
+-			regulator-max-microvolt = <3300000>;
+-			regulator-always-on;
+-		};
+-
+ 		rpm: rpm@108000 {
+ 			compatible = "qcom,rpm-ipq8064";
+ 			reg = <0x00108000 0x1000>;
+-- 
+2.38.1
 
-I'll at least test your patch when getting back to one of these devices.
-
-- Marijn
-
-[1]: https://lore.kernel.org/linux-arm-msm/20230116220909.196926-6-marijn.suijten@somainline.org/
-[2]: https://lore.kernel.org/linux-arm-msm/20230116220909.196926-4-marijn.suijten@somainline.org/
-[3]: https://lore.kernel.org/linux-arm-msm/20221209215308.1781047-1-marijn.suijten@somainline.org/
