@@ -2,123 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0DE4266E088
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 15:26:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AD06066E08D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 15:27:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232528AbjAQO0V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 09:26:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44432 "EHLO
+        id S232484AbjAQO1G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 09:27:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231856AbjAQOZk (ORCPT
+        with ESMTP id S232509AbjAQO0m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 09:25:40 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5226D3F2B9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 06:24:17 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id l41-20020a05600c1d2900b003daf986faaeso4674012wms.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 06:24:17 -0800 (PST)
+        Tue, 17 Jan 2023 09:26:42 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCDC4402FF
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 06:25:07 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id k16so1736969wms.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 06:25:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=gmE2Ehr/ETvFjtSmedtCa2EspI42jlN+3OaC9EIlxrI=;
-        b=m/2mZeDoUQa9RxRhTraFbL4K7uYMEmGKa6ch2sh/AE5087OOya8q2I98bbpmQetL0Z
-         b6+AQCcUXN4arOZcK8w1e2Dpg/4lxRorP/I2putXq3ijsbCwik1R4PNilZ0DzLM1hpDN
-         UbwNYeqOQsm5k0YE32yLMLejbd3FI9Oqz8tYcSoE9Oh36B7C+T5/vRiSBwodmk/EHr7u
-         QEOW6vW14AFlsRpMWHTfJHBgFwxnUfX1uXjoF/G/YVtEMRIM16X4toNItz81kqWGSMx0
-         4D2eP9buBPvtE/2aiaVS3RmUoo2C2NpPUs1cWHAKP73zpOYC08u4iG3UqcdZ/GXqCmpW
-         8gig==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=0o5JKqHA2jE2pZCqpewPRuIPIvKyqcaqw+l6676pGJY=;
+        b=Xt4JgcY4xB0r7T92IzDEDPjSB5vXfr00+YuDT1ZcYsxdhY22g+XGDHlWzWHw9EVfF/
+         glqP6b1I/M3w5Juepr1Bl0RkPLkE8LxIDMXphUZbGPfetM9yFlRvujF3XZrc0qY3+0Od
+         5ZEi738PWLGo4On8nvLAx8455u1MDkvtXUP170YCS4vlwXE2hfsNHuM0krmr86SE8QP7
+         5XV2c7tv7PDTPR79ox7PqF0mlon5JlVS+qW2kl54+SWj9TltiGQtQ5co3SfiwRffgR7u
+         BRXsh6Wn0j+nB1Zs05uXqcIOAS9hbqQaLK+0ejZ+6+qpspKMqapmjgbzx3JEYU6nVfMv
+         OxVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gmE2Ehr/ETvFjtSmedtCa2EspI42jlN+3OaC9EIlxrI=;
-        b=mmuNPg4KRNfJHbLRHdGF5k84Enn2TT4FZ4EaPv2v3EUkp++jM+fj6ZRpC7USJ3ahj9
-         6tJMEwYR0l2qY/HCGyIrxjPBtOFMS67U1PZgg19IPROeiCXfZErLUoe7LjGv0khZLg7P
-         0QvuZyMl7bhix5pFuvOwgjVubdlyb2pVjDJafAdgZ2ZZKHuXxElgqTZftAUBsOUNrLJ9
-         DoUT4v+C6maIiV3IagwuNdqsCn5873APOBaZVIT6urvdHFT9fanh31XsfpppLb3oDNlR
-         7sryfct+7tBhFRUSpqvF3PTExkZN6HBvZzyB+7RZ+jYO+3qfMjhL/qDV5e+ZcgEpSWqT
-         Z1cg==
-X-Gm-Message-State: AFqh2kolJ7d1xJj2ozFLidFkpfbcRu2OS3daEBPMZ3SDWV99pf8Xp1Fn
-        plgMMh02c2vZSLi5eoivzH0NTg==
-X-Google-Smtp-Source: AMrXdXvI6hcnugSXWgquVNhW7ZLFd7ovzW1ow0cFKelpOd1a5syfY/eyznHgFpd00wQX9qIrLlI1cQ==
-X-Received: by 2002:a05:600c:3582:b0:3d9:ed39:8999 with SMTP id p2-20020a05600c358200b003d9ed398999mr3394963wmq.35.1673965455902;
-        Tue, 17 Jan 2023 06:24:15 -0800 (PST)
-Received: from lion.. (cpc76484-cwma10-2-0-cust274.7-3.cable.virginm.net. [82.31.201.19])
-        by smtp.gmail.com with ESMTPSA id o19-20020a05600c511300b003d9862ec435sm28103726wms.20.2023.01.17.06.24.14
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0o5JKqHA2jE2pZCqpewPRuIPIvKyqcaqw+l6676pGJY=;
+        b=1RNcDjltguusC6ZdUZOY1Ojx3RUon0HBcoCIi8Qb5wugbSmiO9zcHnsnIlwJ6c4m7y
+         hTniyGWEBGr1q1xQL6/0opC3TKqthlPvsCPsDTGxN+JNzTWxC0PGXzzTG2/o0PsRb+/e
+         aC/3woX/F05wvLARl7TSjHvbvpmSo3uwV0AcDLIgUhJDqLFv3qRFsxAQ2YRziLi/At8m
+         N4TTIiSkZp0XVS1flP5NrtUlLZ0Xh12g281SDPDOZULjwpfKrqeC4uAIiS+du+YvV8ix
+         FThSN4VWeOYEV21CvaccuXi3UWiDr7LzyRQLuvtXlABCFj8+UNLRrmBpQEpS0WN0bnB9
+         qVBg==
+X-Gm-Message-State: AFqh2krFt7XtaofN9GSiQlsk61BkPXBY0sPmdVWx+uC5OvIlA32q1Bab
+        Az03HOvApkwqNDPMhFDQFxkfqA==
+X-Google-Smtp-Source: AMrXdXvUiyE7TTzBBUfTs4/cb9g/hSrNJbSFCgye8F3KowhvGTrU+ni8vLPEN0p9Wn24H5f8GY1x9Q==
+X-Received: by 2002:a05:600c:181b:b0:3da:ff1f:e8d3 with SMTP id n27-20020a05600c181b00b003daff1fe8d3mr3255753wmp.15.1673965506462;
+        Tue, 17 Jan 2023 06:25:06 -0800 (PST)
+Received: from linaro.org ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id n6-20020a05600c3b8600b003db012d49b7sm5854466wms.2.2023.01.17.06.25.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Jan 2023 06:24:15 -0800 (PST)
-From:   Caleb Connolly <caleb.connolly@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Tue, 17 Jan 2023 06:25:05 -0800 (PST)
+Date:   Tue, 17 Jan 2023 16:25:04 +0200
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc:     phone-devel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org
-Subject: [PATCH] rpmsg: qcom: glink: support waking up on channel rx
-Date:   Tue, 17 Jan 2023 14:24:13 +0000
-Message-Id: <20230117142414.983946-1-caleb.connolly@linaro.org>
-X-Mailer: git-send-email 2.39.0
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Johan Hovold <johan@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v3 1/6] dt-bindings: phy: Add QMP UFS PHY comptible for
+ SM8550
+Message-ID: <Y8avwNKKQYwbgmRX@linaro.org>
+References: <20230117125555.163087-1-abel.vesa@linaro.org>
+ <20230117125555.163087-2-abel.vesa@linaro.org>
+ <33eda50c-c70f-1bb6-0917-22b6fdb4a2ca@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <33eda50c-c70f-1bb6-0917-22b6fdb4a2ca@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Configure all channels as wakeup capable and report a wakeup event
-when data is received.
+On 23-01-17 16:09:12, Dmitry Baryshkov wrote:
+> On 17/01/2023 14:55, Abel Vesa wrote:
+> > Document the QMP UFS PHY compatible for SM8550.
+> > 
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > ---
+> >   .../devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml       | 1 +
+> >   1 file changed, 1 insertion(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml
+> > index 760791de0869..44745a5c64cd 100644
+> > --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml
+> > +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml
+> > @@ -17,6 +17,7 @@ properties:
+> >     compatible:
+> >       enum:
+> >         - qcom,sc8280xp-qmp-ufs-phy
+> > +      - qcom,sm8550-qmp-ufs-phy
+> >         - qcom,sm6125-qmp-ufs-phy
+> 
+> Please keep the list sorted
 
-This allows userspace to "subscribe" to a particular channel where
-it is useful to wake up to process new data. The expected usecase
-is to allow for handling incoming SMS or phone calls where the only
-notification mechanism is via QRTR on the IPCRTR glink channel.
+Ugh.
 
-As this behaviour is likely undesirable for most users, this patch
-doesn't enable a wakeup_source for any channels by default.
+I sent a new version.
 
-Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
----
- drivers/rpmsg/qcom_glink_native.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
-
-diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-index 115c0a1eddb1..1a96a7ae23bb 100644
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -914,6 +914,9 @@ static int qcom_glink_rx_data(struct qcom_glink *glink, size_t avail)
- 		channel->buf = NULL;
- 
- 		qcom_glink_rx_done(glink, channel, intent);
-+
-+		pm_wakeup_ws_event(channel->ept.rpdev->dev.power.wakeup, 0,
-+				   true);
- 	}
- 
- advance_rx:
-@@ -1510,6 +1513,17 @@ static int qcom_glink_rx_open(struct qcom_glink *glink, unsigned int rcid,
- 		if (ret)
- 			goto rcid_remove;
- 
-+		/*
-+		 * Declare all channels as wakeup capable, but don't enable
-+		 * waking up by default.
-+		 *
-+		 * Userspace may wish to be woken up for incoming messages on a
-+		 * specific channel, for example to handle incoming calls or SMS
-+		 * messages on the IPCRTR channel. This can be done be enabling
-+		 * the wakeup source via sysfs.
-+		 */
-+		device_set_wakeup_capable(&rpdev->dev, true);
-+
- 		channel->rpdev = rpdev;
- 	}
- 
--- 
-2.39.0
-
+> 
+> >     reg:
+> 
+> -- 
+> With best wishes
+> Dmitry
+> 
