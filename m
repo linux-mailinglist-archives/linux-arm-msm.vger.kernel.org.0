@@ -2,140 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B410266E7D2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 21:39:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E5D2866E7EA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 21:45:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234634AbjAQUj2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 15:39:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53866 "EHLO
+        id S230262AbjAQUp0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 15:45:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233273AbjAQUgq (ORCPT
+        with ESMTP id S233697AbjAQUhZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 15:36:46 -0500
-Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 578492C658
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 11:21:15 -0800 (PST)
-Received: by mail-il1-x12e.google.com with SMTP id g2so15893068ila.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 11:21:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=X6QGAdbpO4js38m8kqmMNfNj0cJL5DAjxA6pYUNKH30=;
-        b=EGBN80wbBUdJj7Z/jkUWK5AFLeZOZLo5xHgOEl0PgXYrOSfBG/7dnDJbzvQhOya/ow
-         +jy6ommn0FNq4Wqq83QTFAnhPeX4dDoMUIcfN2dIoY9l4OGUdsYixaaM17Ae+x1IkV8X
-         xGy/1xQdE/J2mTBTSTAwy0GrYJTbaUjoANEguiNcpC5TV2IqfcMURDnsGu5H6RmCm7RY
-         ZlSXTTrU34trY64Y/VT6wmqHwm+9puSKKQDZBIjr3mHpp+++7lx7kTP1g7LiYlDtyZso
-         zzQmejXLekCZG+ZaIwtd1vNYDstgwiSpx9kTxioziEPC6gexAocnuxZtPD1IJrJLBlRe
-         RuIQ==
+        Tue, 17 Jan 2023 15:37:25 -0500
+Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97F2134C30;
+        Tue, 17 Jan 2023 11:22:21 -0800 (PST)
+Received: by mail-ot1-f41.google.com with SMTP id f88-20020a9d03e1000000b00684c4041ff1so8705278otf.8;
+        Tue, 17 Jan 2023 11:22:21 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=X6QGAdbpO4js38m8kqmMNfNj0cJL5DAjxA6pYUNKH30=;
-        b=5nf3REJ96lF/CytB+Bj5oRqa7bh7b7y0bA6ilD6QBgIcIKMkj7x8m8/M1q+F2WlRO8
-         FI8Ddp/7Ybpn8KlpF+DeKbXG5gXKwLhXtgvXbV3SkX3baWuf3z0TX0m3FVvglJI/o2OC
-         HUMFlgSi7pLyEjLtOJT69dfSbL0L9Mr0RwnEwvsb+nqt6MJO4/KphIdqng74ezXhY/hc
-         DAIPRVrfCr8muJpb7MkoobCsaVbnlTO8YtkiMH1zHytomu1W52nM9we/uHEZGFEV83lv
-         58xaCcH6xNR5CWww8xOVgmkakQAN1NnUWJRTkr04RPjECfxbq0rpk0cepLwnSyVTjHvm
-         8akw==
-X-Gm-Message-State: AFqh2kqL8/eJBydJbzOza5QpKB3vIaIWafGL2M297fxo8t2/xgt/+3FY
-        NUFatmQY75goM3YZtciNe/A7xET3auk0iAwi
-X-Google-Smtp-Source: AMrXdXuSn9Mn8FTmXSuDHirPKGy73AMn7jIeXgtlejcuD7V+SVsgxxuOefJLK0Qin4xwXGaY2YwGSA==
-X-Received: by 2002:a92:d6c6:0:b0:304:c91b:4a5c with SMTP id z6-20020a92d6c6000000b00304c91b4a5cmr3292929ilp.24.1673983274699;
-        Tue, 17 Jan 2023 11:21:14 -0800 (PST)
-Received: from [172.22.22.4] ([98.61.227.136])
-        by smtp.googlemail.com with ESMTPSA id l3-20020a056e0205c300b0030f1be2e051sm811189ils.39.2023.01.17.11.21.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Jan 2023 11:21:14 -0800 (PST)
-Message-ID: <65af5abc-3719-95fe-041c-67d1d146aba1@linaro.org>
-Date:   Tue, 17 Jan 2023 13:21:13 -0600
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-From:   Alex Elder <elder@linaro.org>
-Subject: Re: [PATCH v8 09/28] mailbox: Add Gunyah message queue mailbox
-To:     Elliot Berman <quic_eberman@quicinc.com>,
-        Alex Elder <elder@linaro.org>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Jonathan Corbet <corbet@lwn.net>
-Cc:     Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3rG3R2V1qqSN44Ku2yfSe1P+2hvGoj34mROM9Vs7AX8=;
+        b=ASwErkTLs9xzvG8HW3HYcMhklaJYgR5TZK6X782L5hoJZ3k2mEeRtZQMRNa6VOGO/8
+         QubZ6ptNtn1XaU+jdnFimgC9uicHX/V2DF2gRHsK3U1QHAk8fiPuWulXsLeu3SjFdfNu
+         5O9ESppGbe4CxeClCSnbkk1dLd5FYCl3JncAaYTu5ueUqWbD3YNOCdzQ1gXiAcVU+A9L
+         xsi6pd9cnbwoKhqU0EOXeljKIhM83AZ88mMlqU9Dh9TB8hTCO8b4yussYFAoDysOVFY9
+         sWuq0IKgctGnFmlwtHxPUMEYdcou/Y/+TkfSYqAqRZMAcCti6ppAA6KbG7Twrzpt1/n+
+         wcQA==
+X-Gm-Message-State: AFqh2kqIORDqmrnWHfs2ul42tjsIRWSPuymR37GiF8xTTPdbIdQ2hXFZ
+        SPUcRHU+ZgUHZ0ViStmTvQ==
+X-Google-Smtp-Source: AMrXdXvKqegazsLgf2v9G1uLKuVnBCQgYZfnuujKkNC+iUoo7aQUeewPrn0DJQx+IyQAjvv5Q53F/g==
+X-Received: by 2002:a9d:2c06:0:b0:684:c8ff:8844 with SMTP id f6-20020a9d2c06000000b00684c8ff8844mr1992677otb.12.1673983340756;
+        Tue, 17 Jan 2023 11:22:20 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id w25-20020a056830061900b006863c59f685sm3601880oti.28.2023.01.17.11.22.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Jan 2023 11:22:20 -0800 (PST)
+Received: (nullmailer pid 3489286 invoked by uid 1000);
+        Tue, 17 Jan 2023 19:22:19 -0000
+Date:   Tue, 17 Jan 2023 13:22:19 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>, alsa-devel@alsa-project.org,
+        linux-arm-msm@vger.kernel.org, Mark Brown <broonie@kernel.org>,
+        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-acpi@vger.kernel.org
-References: <20221219225850.2397345-1-quic_eberman@quicinc.com>
- <20221219225850.2397345-10-quic_eberman@quicinc.com>
- <4e064b55-22fd-5f29-620b-715a5d822a75@linaro.org>
- <f626a867-7293-fd70-00d7-706d43342f5f@quicinc.com>
-Content-Language: en-US
-In-Reply-To: <f626a867-7293-fd70-00d7-706d43342f5f@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        linux-kernel@vger.kernel.org,
+        Banajit Goswami <bgoswami@quicinc.com>
+Subject: Re: [PATCH 1/3] ASoC: dt-bindings: qcom,wsa881x: Allow
+ sound-name-prefix
+Message-ID: <167398333901.3489228.15719942715865032325.robh@kernel.org>
+References: <20230113162214.117261-1-krzysztof.kozlowski@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230113162214.117261-1-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 1/10/23 12:16 PM, Elliot Berman wrote:
->>> +    ret = gh_hypercall_msgq_send(msgq->tx_ghrsc->capid, 
->>> msgq_data->length,
->>> +                    (uintptr_t)msgq_data->data, tx_flags, &ready);
->>> +
->>> +    /**
->>> +     * unlikely because Linux tracks state of msgq and should not 
->>> try to
->>> +     * send message when msgq is full.
->>> +     */
->>
->> Is it just unlikely, or is it impossible?
->>
+
+On Fri, 13 Jan 2023 17:22:12 +0100, Krzysztof Kozlowski wrote:
+> Reference common DAI properties to fix:
 > 
-> This would require multiple mailbox controllers interacting with the 
-> same message queue.
+>   sdm845-db845c.dtb: speaker@0,1: 'sound-name-prefix' does not match any of the regexes: 'pinctrl-[0-9]+'
 > 
-> The only way I can think this is possible is if the Gunyah drivers are 
-> unloaded when the message queue is full; drivers are then re-loaded 
-> before the receiver processes the messages. The initial internal state 
-> of the message queue controller assumes that there is space in the 
-> message queue. We would get a Tx vIRQ once space becomes available and 
-> the message would then be attempted to sent again. Since there's a safe 
-> flow to recover from a inconsistent internal state and it's very 
-> unlikely to start in that state, I don't think we need to add calls to 
-> check if the message queue is full during initialization.
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/sound/qcom,wsa881x.yaml | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+> 
 
-First, your explanation is appreciated but more than what I
-was looking for...  I just mentioned it because if it were
-impossible, then there's no point in having this code handle
-something that literally can't happen.
-
-But as far as your explanation, I *hope* if the Gunyah drivers
-are unloaded, everything gets fully cleaned up before that
-completes.  There should be no in-flight activity, or
-any "previous generation" messages that could be processed.
-
-In any case, I think my question is answered.  Thanks.
-
-					-Alex
+Acked-by: Rob Herring <robh@kernel.org>
