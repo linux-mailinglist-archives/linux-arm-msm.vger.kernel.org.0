@@ -2,142 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CA5C166D7F9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 09:22:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0EDD666D81B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 09:24:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236099AbjAQIWJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 03:22:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36028 "EHLO
+        id S236081AbjAQIYo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 03:24:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236074AbjAQIWF (ORCPT
+        with ESMTP id S236133AbjAQIY0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 03:22:05 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A6F229E02
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 00:22:02 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id q10so10406021wrs.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 00:22:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=cROEQBEpxEpKKdlrs6yVYznmIj77lk7XMPgisTFSYjo=;
-        b=b4o4HMMGu7IbfxMJuOl6gYI5JYrYgA4xvgWi/+wFevzAt0rcbLqi5JpAW4gaar8iZc
-         BuWC46sIQW6cVElyoW/MvOgbq1X3zBqRDnA+e9xt/ViJeFgMVJ/UXMdgfofCcjx9Q35H
-         +jJJ2iDzrk+Umn5PzdC5RutoeelsNEHep+2MCtaLBbRcssZyTf/lvYC7JrHpKM38bu5a
-         6nehA54lEgBnFCj1jsrcVIcH4L8tzVNfyji87lWLNRNPVuFzZ1Lm2sg7Z7ZUfRp/PbuV
-         ikFPa9TLxUnuh6npMNoIeHgEldf8hgU27vrKVHlqTQzXRpNCg1wnjOXOLqNdlp/ZwZu2
-         PzWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=cROEQBEpxEpKKdlrs6yVYznmIj77lk7XMPgisTFSYjo=;
-        b=jHkTDbZY84558REyJsusRczL/Du2XWDBHRlLhVxy8arlte69Q5LYk6LBDq+NfjwFGi
-         9cGHFJ9ErmwVliY+6wTAh04/qJ/ZaniGrIU9/zE+K4CWTD+8Nu/ZfGFpUaDGqWAraogW
-         KniWh+r0kajSIAHQEDnWmKISiZ8CnSnGgSPj5Pe4TTNxs4ChS/BIrvoPFgdAOAhjvLN7
-         yshjTFfJW6jyIxpkRPKCIKtL0pQ0PocxT4N2VB9r1B5eEJgtxH3dqgAh4wMk/wqW77g2
-         /CW8CjtGpHIr+VwzAaflpvuWpSzOpfZnc9NcHJj1XHSjyzNIODjDtv9uYdBJ+cfq0Kk0
-         xkkw==
-X-Gm-Message-State: AFqh2kq7qUnJBRMtIKUwiYdyWdrNwgPeUck/l2Jg7Y2MMfji2zpqUTEO
-        Zk0oCdf/OPhitltQduZJmkfNNdpNbpkC5SKE
-X-Google-Smtp-Source: AMrXdXuZrTpa4frMUO9j6FvZ5gEyTk2iwfq1ZM2sfOs9phe5WoovF4LTYOxMGVhRp1qjOD402L/qEg==
-X-Received: by 2002:a5d:4574:0:b0:2bd:df33:ecc9 with SMTP id a20-20020a5d4574000000b002bddf33ecc9mr1872308wrc.46.1673943721043;
-        Tue, 17 Jan 2023 00:22:01 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:dff1:a9dd:eccd:492d? ([2a01:e0a:982:cbb0:dff1:a9dd:eccd:492d])
-        by smtp.gmail.com with ESMTPSA id t14-20020adfeb8e000000b002baa780f0fasm27948450wrn.111.2023.01.17.00.22.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Jan 2023 00:22:00 -0800 (PST)
-Message-ID: <ca6ba293-9add-0986-d1b4-c28925cc3677@linaro.org>
-Date:   Tue, 17 Jan 2023 09:21:59 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v2 0/3] arm64: dts: qcom: sm8550-mtp: enable DSI panel
-Content-Language: en-US
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Tue, 17 Jan 2023 03:24:26 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 310E62ED58;
+        Tue, 17 Jan 2023 00:24:04 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id AD6EA611F2;
+        Tue, 17 Jan 2023 08:24:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07E0EC433F1;
+        Tue, 17 Jan 2023 08:24:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1673943843;
+        bh=jOMA2ItWhbyt6drah2KbBQDJgxvQk73yFlOfbO12fu4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Ls0BQqaL23lBXhvrtbco3O6ro6b1+RhXmNl4/Mdz6e+k2JDSy7ZdQTYJNeENmVc0T
+         U1Yt33cs8/uUvDdt3cwrpXhFusU2Xyj6IElSjBwVVzTZm2kCeuuusisknHIzU9FF0+
+         iB2FFgpKaPaeWYge/fxtQFEz0j0+je1R4BSF5ZSdY5jU8EyjgZuP5I/AuHahvStnXf
+         apmrRFs0gHXYSux7PaGbuUvGyK9WhpR/FE8fzdWwFeQwbDcV0aUpIRYla23oe586S4
+         OMJm8CHF2MzvlFz/mdvrFmA/gY4yte5G0jLiNwrUDSi/4f9CCtJkHkc21fq5SidYnG
+         yLOCuy6LZYn9g==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pHhGZ-0007NH-6G; Tue, 17 Jan 2023 09:24:23 +0100
+Date:   Tue, 17 Jan 2023 09:24:23 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Maximilian Luz <luzmaximilian@gmail.com>,
+        Ard Biesheuvel <ardb@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230104-topic-sm8550-upstream-dts-display-v2-0-9fbb15263e0d@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <20230104-topic-sm8550-upstream-dts-display-v2-0-9fbb15263e0d@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Cristian Marussi <cristian.marussi@arm.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, linux-efi@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 3/4] firmware: Add support for Qualcomm UEFI Secure
+ Application
+Message-ID: <Y8ZbN5LNn2fk0/xi@hovoldconsulting.com>
+References: <20220723224949.1089973-1-luzmaximilian@gmail.com>
+ <20220723224949.1089973-4-luzmaximilian@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220723224949.1089973-4-luzmaximilian@gmail.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn, Konrad,
-
-On 10/01/2023 20:22, Neil Armstrong wrote:
-> Add device tree nodes for MDSS, DPU and DSI devices on Qualcomm SM8550
-> platform. Enable these devices and add the DSI panel on the MTP device.
-
-Gentle ping!
-
-Are the patches 1 & 3 ok ?
-
-Thanks,
-Neil
-
+On Sun, Jul 24, 2022 at 12:49:48AM +0200, Maximilian Luz wrote:
+> On platforms using the Qualcomm UEFI Secure Application (uefisecapp),
+> EFI variables cannot be accessed via the standard interface in EFI
+> runtime mode. The respective functions return EFI_UNSUPPORTED. On these
+> platforms, we instead need to talk to uefisecapp. This commit provides
+> support for this and registers the respective efivars operations to
+> access EFI variables from the kernel.
 > 
-> Dependencies:
-> - [1] SM8550 base DT (applied)
-> - [2] MDSS/DPU/DSI bindings (applied)
-> - [3] DISPCC bindings (build dependency, applied)
-> - [4] VTDR6130 Panel bindings (applied)
+> Communication with uefisecapp follows the standard Qualcomm Trusted
+> Environment (TEE or TrEE) / Secure OS conventions via the respective SCM
+> call interface. This is also the reason why variable access works
+> normally while boot services are active. During this time, said SCM
+> interface is managed by the boot services. When calling
+> ExitBootServices(), the ownership is transferred to the kernel.
+> Therefore, UEFI must not use that interface itself (as multiple parties
+> accessing this interface at the same time may lead to complications) and
+> cannot access variables for us.
 > 
-> [1] https://lore.kernel.org/all/20230106201047.337409-1-abel.vesa@linaro.org
-> [2] https://lore.kernel.org/all/20230103-topic-sm8550-upstream-mdss-dsi-v3-0-660c3bcb127f@linaro.org
-> [3] https://lore.kernel.org/all/20230103-topic-sm8550-upstream-dispcc-v3-0-8a03d348c572@linaro.org
-> [4] https://lore.kernel.org/all/20230103-topic-sm8550-upstream-vtdr6130-panel-v2-0-dd6200f47a76@linaro.org
-> 
-> To: Andy Gross <agross@kernel.org>
-> To: Bjorn Andersson <andersson@kernel.org>
-> To: Konrad Dybcio <konrad.dybcio@linaro.org>
-> To: Rob Herring <robh+dt@kernel.org>
-> To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: devicetree@vger.kernel.org
-> Cc: linux-kernel@vger.kernel.org
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> 
+> Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
 > ---
-> Changes in v2:
-> - reshuffled properties in the order konrad shared
-> - updated DSI PHY compatible
-> - renamed mdss@ to display-subsystem@
-> - added back dispcc bindings include
-> - added Reviewed-by on patch 2
-> - Link to v1: https://lore.kernel.org/r/20230104-topic-sm8550-upstream-dts-display-v1-0-aeab9751928f@linaro.org
-> 
-> ---
-> Neil Armstrong (3):
->        arm64: dts: qcom: sm8550: add display hardware devices
->        arm64: dts: qcom: sm8550-mtp: enable display hardware
->        arm64: dts: qcom: sm8550-mtp: add DSI panel
-> 
->   arch/arm64/boot/dts/qcom/sm8550-mtp.dts |  78 +++++++++
->   arch/arm64/boot/dts/qcom/sm8550.dtsi    | 299 ++++++++++++++++++++++++++++++++
->   2 files changed, 377 insertions(+)
-> ---
-> base-commit: 813d028f81ae4e84926fbb9a499652539eb8694a
-> change-id: 20230104-topic-sm8550-upstream-dts-display-aa22b568ea17
-> 
-> Best regards,
 
+> +static struct platform_driver qcom_uefisecapp_driver = {
+> +	.probe = qcom_uefisecapp_probe,
+> +	.remove = qcom_uefisecapp_remove,
+> +	.driver = {
+> +		.name = "qcom_tee_uefisecapp",
+> +		.of_match_table = qcom_uefisecapp_dt_match,
+> +		.probe_type = PROBE_PREFER_ASYNCHRONOUS,
+> +	},
+> +};
+> +module_platform_driver(qcom_uefisecapp_driver);
+
+I noticed that for efivarfs to work, you're currently relying on having
+the firmware still claim that the variable services are supported in the
+RT_PROP table so that efi core registers the default ops at subsys init
+time (which are later overridden by this driver).
+
+Otherwise efivarfs may fail to initialise when built in:
+
+	static __init int efivarfs_init(void)
+	{
+		if (!efivars_kobject())
+			return -ENODEV;
+
+		return register_filesystem(&efivarfs_type);
+	}
+
+	module_init(efivarfs_init);
+
+With recent X13s firmware the corresponding bit in the RT_PROP table has
+been cleared so that efivarfs would fail to initialise. Similar problem
+when booting with 'efi=noruntime'.
+
+One way to handle this is to register also the qcom_uefisecapp_driver at
+subsys init time and prevent it from being built as a module (e.g. as is
+done for the SCM driver). I'm using the below patch for this currently.
+
+I guess the Google GSMI implementation suffers from a similar problem.
+
+Johan
+
+
+From 8fecce12d215bd8cab1b8c8f9f0d1e1fe20fe6e7 Mon Sep 17 00:00:00 2001
+From: Johan Hovold <johan+linaro@kernel.org>
+Date: Sun, 15 Jan 2023 15:32:34 +0100
+Subject: [PATCH] firmware: qcom_tee_uefisecapp: register at subsys init
+
+Register efivars at subsys init time so that it is available when
+efivarfs probes. For the same reason, also prevent building the driver
+as a module.
+
+This is specifically needed on platforms such as the Lenovo Thinkpad
+X13s where the firmware has cleared the variable services in the RT_PROP
+table so that efi core does not register any efivar callbacks at subsys
+init time (which are later overridden).
+
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+---
+ drivers/firmware/Kconfig               | 2 +-
+ drivers/firmware/qcom_tee_uefisecapp.c | 7 ++++++-
+ 2 files changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/firmware/Kconfig b/drivers/firmware/Kconfig
+index 4e9e2c227899..48e712e363da 100644
+--- a/drivers/firmware/Kconfig
++++ b/drivers/firmware/Kconfig
+@@ -231,7 +231,7 @@ config QCOM_TEE
+ 	select QCOM_SCM
+ 
+ config QCOM_TEE_UEFISECAPP
+-	tristate "Qualcomm TrEE UEFI Secure App client driver"
++	bool "Qualcomm TrEE UEFI Secure App client driver"
+ 	select QCOM_TEE
+ 	depends on EFI
+ 	help
+diff --git a/drivers/firmware/qcom_tee_uefisecapp.c b/drivers/firmware/qcom_tee_uefisecapp.c
+index 65573e4b815a..e83bce4da70a 100644
+--- a/drivers/firmware/qcom_tee_uefisecapp.c
++++ b/drivers/firmware/qcom_tee_uefisecapp.c
+@@ -754,7 +754,12 @@ static struct platform_driver qcom_uefisecapp_driver = {
+ 		.probe_type = PROBE_PREFER_ASYNCHRONOUS,
+ 	},
+ };
+-module_platform_driver(qcom_uefisecapp_driver);
++
++static int __init qcom_uefisecapp_init(void)
++{
++	return platform_driver_register(&qcom_uefisecapp_driver);
++}
++subsys_initcall(qcom_uefisecapp_init);
+ 
+ MODULE_AUTHOR("Maximilian Luz <luzmaximilian@gmail.com>");
+ MODULE_DESCRIPTION("Client driver for Qualcomm TrEE/TZ UEFI Secure App");
+-- 
+2.38.2
