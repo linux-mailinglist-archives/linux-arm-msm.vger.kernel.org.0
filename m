@@ -2,73 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 245DF66E66B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 19:50:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6060F66E66C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 19:50:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233984AbjAQSuY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 13:50:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60368 "EHLO
+        id S234979AbjAQSu2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 13:50:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235179AbjAQSkC (ORCPT
+        with ESMTP id S233040AbjAQSm1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 13:40:02 -0500
-Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A0FF2A165;
-        Tue, 17 Jan 2023 10:11:55 -0800 (PST)
-Received: by mail-oi1-f181.google.com with SMTP id p185so5514329oif.2;
-        Tue, 17 Jan 2023 10:11:55 -0800 (PST)
+        Tue, 17 Jan 2023 13:42:27 -0500
+Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 577194C6E8;
+        Tue, 17 Jan 2023 10:13:31 -0800 (PST)
+Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-15b9c93848dso24572671fac.1;
+        Tue, 17 Jan 2023 10:13:31 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=i9bR2toKRsd+a4vnzgdTNirWsngBZI9w5cbicVD+Etg=;
-        b=Aa1A+qOBO6kbwXxBRJwPD7E6Wbwl01zOvEpkGq6S+cjUcAVgk88HC9FoGPSujCCZd0
-         fsVs2rP9ldHzQciJziPvAbxhd0rJPjpfPjy6F1+nbTkS+DfVg0tyAUm93hIXQcZBjGQB
-         2p90pEsI5J+lMtM5mYdqMn1/RRSR8ivDPePlnu4LMyzsIMI29bdR6/UVtHCo7SWKgtAh
-         XE9sMlGiZmeCDL5mf2zumEettS7d37I9dNcmYlpgq1cNQ/fB+k4UxcRSmX3bxS/xyk0o
-         BESREtX4gDoKWOUBMIRca4eXr0hwX+3WRmdhu/XQ3Umm/c8zZ66ADC3BdESf8AveyoGD
-         +SHQ==
-X-Gm-Message-State: AFqh2kqP+oP8CtvqSdQUA778IDv0/XndiFhF8CIgBZSlfJV0MWwgTdQP
-        7AEEjcldoa9O9G6bB+CJIw==
-X-Google-Smtp-Source: AMrXdXsu8gdmXHhUdvUZwiISvgeSQBVWS1KQ28ogMeBnmlUMQUB3NQkyYTfCvw5u9t5VG4hWgX1YjQ==
-X-Received: by 2002:aca:5804:0:b0:35e:7dd2:aa96 with SMTP id m4-20020aca5804000000b0035e7dd2aa96mr1783317oib.21.1673979114515;
-        Tue, 17 Jan 2023 10:11:54 -0800 (PST)
+        bh=qAQembbfAly4IRjGr3cDZDww9N/iI2dr1CRggFoPOeA=;
+        b=1W93M83LETR7b+sCCg/n7ungV5daeInt+aUq3Zfzd+OfpJ5dGEk+7wx4TMIThzx3r/
+         nrQd7NFqfhw469CXWU+4ZwSYwZNLT7uUr4OlQho+60IbDvc1kBZKGjX0TBCWRTirsdt0
+         iqWu1Bw6OFqH1TF5+TmZ/KCfVQZ1/hdrHP2NcZwbZS5SsTbkcoBHdDSdUzPBzeOS7m1y
+         JuCMvCjBGdLJHY0qT1cmeZxXO22jPeNcWdM2cQgWxCeVluf229WhIiaWWdEpmpfg1d9L
+         rAHWOb5Fz1jOq5R4SWuOWIxx4DPxywnZO2p1TTqKt+Tr3D+FkZFKB/wYg818kn2YlEoR
+         XAgQ==
+X-Gm-Message-State: AFqh2kr/RRr/3TGMuBc7ldyZHYRtFpotvZNqVr6yohxIeR9t6l7HMs+P
+        AN6NixOTckBJUBeLvOi/7Q==
+X-Google-Smtp-Source: AMrXdXtoKW0M+JEa5UDfl75nd/xbDorgIheGi98GezD8LwsaKaQtMEYFIlehYZ4gKtpGPhhQwY1v9w==
+X-Received: by 2002:a05:6870:9e92:b0:15e:fe0a:db84 with SMTP id pu18-20020a0568709e9200b0015efe0adb84mr7695952oab.27.1673979210329;
+        Tue, 17 Jan 2023 10:13:30 -0800 (PST)
 Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id e8-20020a544f08000000b0035aa617156bsm15101211oiy.17.2023.01.17.10.11.53
+        by smtp.gmail.com with ESMTPSA id c15-20020a4ae24f000000b004f28d09a880sm7028866oot.13.2023.01.17.10.13.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Jan 2023 10:11:54 -0800 (PST)
-Received: (nullmailer pid 3386962 invoked by uid 1000);
-        Tue, 17 Jan 2023 18:11:53 -0000
-Date:   Tue, 17 Jan 2023 12:11:53 -0600
+        Tue, 17 Jan 2023 10:13:29 -0800 (PST)
+Received: (nullmailer pid 3398763 invoked by uid 1000);
+        Tue, 17 Jan 2023 18:13:29 -0000
+Date:   Tue, 17 Jan 2023 12:13:29 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     dri-devel@lists.freedesktop.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        David Airlie <airlied@gmail.com>, Sean Paul <sean@poorly.run>,
-        Andy Gross <agross@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Guenter Roeck <linux@roeck-us.net>, devicetree@vger.kernel.org,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        freedreno@lists.freedesktop.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-Subject: Re: [PATCH v6 05/11] dt-bindings: display/msm: rename mdp nodes to
- display-controller
-Message-ID: <167397911283.3386904.11601634517098506944.robh@kernel.org>
-References: <20230113083720.39224-1-dmitry.baryshkov@linaro.org>
- <20230113083720.39224-6-dmitry.baryshkov@linaro.org>
+        linux-kernel@vger.kernel.org, linux-watchdog@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: Re: [PATCH v2 6/7] dt-bindings: watchdog: qcom-wdt: merge MSM timer
+Message-ID: <167397920868.3398730.2074338668546770210.robh@kernel.org>
+References: <20230113103346.29381-1-krzysztof.kozlowski@linaro.org>
+ <20230113103346.29381-7-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230113083720.39224-6-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+In-Reply-To: <20230113103346.29381-7-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -76,16 +74,28 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Fri, 13 Jan 2023 10:37:14 +0200, Dmitry Baryshkov wrote:
-> Follow the 'generic names' rule and rename mdp nodes to
-> display-controller.
+On Fri, 13 Jan 2023 11:33:45 +0100, Krzysztof Kozlowski wrote:
+> Merge Qualcomm MSM timer bindings into watchdog, because the timer
+> compatibles are already included here and the hardware is quite similar.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> While converting the MSM timer bindings, adjust clock-frequency
+> property to take only one frequency, instead of two, because:
+> 1. DT schema does not allow to frequencies,
+> 2. The Linux timer driver reads only first frequency.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+> 
 > ---
->  .../devicetree/bindings/display/msm/dpu-common.yaml       | 8 ++++++++
->  .../devicetree/bindings/display/msm/qcom,mdp5.yaml        | 3 +++
->  .../devicetree/bindings/display/msm/qcom,mdss.yaml        | 6 +++---
->  3 files changed, 14 insertions(+), 3 deletions(-)
+> 
+> Changes since v1:
+> 1. Add tag.
+> 2. Correct clock-frequency description (Rob).
+> ---
+>  .../bindings/timer/qcom,msm-timer.txt         | 47 ------------------
+>  .../bindings/watchdog/qcom-wdt.yaml           | 49 +++++++++++++++++++
+>  2 files changed, 49 insertions(+), 47 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/timer/qcom,msm-timer.txt
 > 
 
 Reviewed-by: Rob Herring <robh@kernel.org>
