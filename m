@@ -2,225 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E7BDD66E049
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 15:21:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B27AE66E068
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 15:24:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232122AbjAQOU4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 09:20:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42604 "EHLO
+        id S232312AbjAQOYB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 09:24:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229830AbjAQOUk (ORCPT
+        with ESMTP id S232609AbjAQOXe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 09:20:40 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD3193C2B0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 06:20:38 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id fl11-20020a05600c0b8b00b003daf72fc844so4816506wmb.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 06:20:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SHwaAi3MrYeGkWyEPhqgh3sqGyG41qhb1u3JYra9iJY=;
-        b=bXjhyKdXoS04wGj1H25B4fGWOHSmKpeX1qELP9FbQg5yVyrtbZpQmNsqsZMfzPN+a5
-         ZIx0a89d5A+dZUG3OIFtmme8Xa7zhUalR8m8BlXe9EIEe7l1ZcViDIa5fLc49SIJutty
-         joj2JHHUPEjgOGy98/IyxDH+pGzhWpFoU3xcMkqUHgrq1hxbymBh7WcJZcU/zqRYHqU7
-         GpxYG8o6Zk4PF8IYrHHhLXjrBf8OhpjznGN3MN1rHREsokwUfs1olTb2/bZ/GFyzaIg1
-         3quiLmOWz3ZOhZ5MzsK1WAKPUcK2QgNsJnXU9ciHj+Ua62+BOPFvFGSrZjLnZGW1RnVo
-         WB2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SHwaAi3MrYeGkWyEPhqgh3sqGyG41qhb1u3JYra9iJY=;
-        b=JZayWPrLu3n7DKVlBCuBiJz8G/No77kVUdXA8+S6wd0P3QEIQiIM6GEru1ru1b48Z5
-         Lc8SYnFSEneqDzwljg0Ma3ga4v/pR+vmf+7s1wBAJC9LtquMB6+uWCnyigkqAvGN1RBu
-         KD6rEgNbMdFwjer1ZfBf/gs0KzxXAIz3/wOvty8BoNhIBkrkJbvU56JGN2b8GiSGkRq6
-         ppdU4WdhdDQBwSl/bZGPiv0MAoieIC1Lm3yW48WfUsbxjFJ9Sy0LIhqAWl+SsG7IDKhx
-         x42mP13vorb4w8G6l0Kdn0FWtpOzS9AhiwcTxaDgA3JDMuUFpGKM4vy47z6dI4256xC1
-         B6oQ==
-X-Gm-Message-State: AFqh2krHMkiHMjtbD+NnOTfiLSXyT9LRPt/7fv3tnM17lG0DIRkkEzrT
-        BSxtM6OJP18sArlSda7im3LHBQ==
-X-Google-Smtp-Source: AMrXdXtAcw/ucFR8KnIEUAUC7eqaXP/ABntER8vu+o1Y51c4dMMVV3V0b4ZogfovwQBpbYmZpdBKOg==
-X-Received: by 2002:a7b:cd11:0:b0:3d9:6c7d:c9ee with SMTP id f17-20020a7bcd11000000b003d96c7dc9eemr11894181wmj.25.1673965238367;
-        Tue, 17 Jan 2023 06:20:38 -0800 (PST)
-Received: from hackbox.lan ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id i8-20020a05600c354800b003cf894dbc4fsm40443133wmq.25.2023.01.17.06.20.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Jan 2023 06:20:37 -0800 (PST)
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "vkoul@kernel.org" <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Johan Hovold <johan@kernel.org>
-Subject: [PATCH v4 6/6] phy: qcom-qmp-ufs: Add SM8550 support
-Date:   Tue, 17 Jan 2023 16:20:15 +0200
-Message-Id: <20230117142015.509675-7-abel.vesa@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230117142015.509675-1-abel.vesa@linaro.org>
-References: <20230117142015.509675-1-abel.vesa@linaro.org>
+        Tue, 17 Jan 2023 09:23:34 -0500
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 48AEE3E617;
+        Tue, 17 Jan 2023 06:22:00 -0800 (PST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 7277412FC;
+        Tue, 17 Jan 2023 06:22:41 -0800 (PST)
+Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1B3A83F67D;
+        Tue, 17 Jan 2023 06:21:43 -0800 (PST)
+Date:   Tue, 17 Jan 2023 14:21:40 +0000
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Mark Rutland <mark.rutland@arm.com>
+Cc:     Peter Zijlstra <peterz@infradead.org>,
+        richard.henderson@linaro.org, ink@jurassic.park.msu.ru,
+        mattst88@gmail.com, vgupta@kernel.org, linux@armlinux.org.uk,
+        nsekhar@ti.com, brgl@bgdev.pl, ulli.kroll@googlemail.com,
+        linus.walleij@linaro.org, shawnguo@kernel.org,
+        Sascha Hauer <s.hauer@pengutronix.de>, kernel@pengutronix.de,
+        festevam@gmail.com, linux-imx@nxp.com, tony@atomide.com,
+        khilman@kernel.org, krzysztof.kozlowski@linaro.org,
+        alim.akhtar@samsung.com, catalin.marinas@arm.com, will@kernel.org,
+        guoren@kernel.org, bcain@quicinc.com, chenhuacai@kernel.org,
+        kernel@xen0n.name, geert@linux-m68k.org, sammy@sammy.net,
+        monstr@monstr.eu, tsbogend@alpha.franken.de, dinguyen@kernel.org,
+        jonas@southpole.se, stefan.kristiansson@saunalahti.fi,
+        shorne@gmail.com, James.Bottomley@hansenpartnership.com,
+        deller@gmx.de, mpe@ellerman.id.au, npiggin@gmail.com,
+        christophe.leroy@csgroup.eu, paul.walmsley@sifive.com,
+        palmer@dabbelt.com, aou@eecs.berkeley.edu, hca@linux.ibm.com,
+        gor@linux.ibm.com, agordeev@linux.ibm.com,
+        borntraeger@linux.ibm.com, svens@linux.ibm.com,
+        ysato@users.sourceforge.jp, dalias@libc.org, davem@davemloft.net,
+        richard@nod.at, anton.ivanov@cambridgegreys.com,
+        johannes@sipsolutions.net, tglx@linutronix.de, mingo@redhat.com,
+        bp@alien8.de, dave.hansen@linux.intel.com, x86@kernel.org,
+        hpa@zytor.com, acme@kernel.org, alexander.shishkin@linux.intel.com,
+        jolsa@kernel.org, namhyung@kernel.org, jgross@suse.com,
+        srivatsa@csail.mit.edu, amakhalov@vmware.com,
+        pv-drivers@vmware.com, boris.ostrovsky@oracle.com,
+        chris@zankel.net, jcmvbkbc@gmail.com, rafael@kernel.org,
+        lenb@kernel.org, pavel@ucw.cz, gregkh@linuxfoundation.org,
+        mturquette@baylibre.com, sboyd@kernel.org,
+        daniel.lezcano@linaro.org, lpieralisi@kernel.org,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        anup@brainfault.org, thierry.reding@gmail.com,
+        jonathanh@nvidia.com, jacob.jun.pan@linux.intel.com,
+        atishp@atishpatra.org, Arnd Bergmann <arnd@arndb.de>,
+        yury.norov@gmail.com, andriy.shevchenko@linux.intel.com,
+        linux@rasmusvillemoes.dk, dennis@kernel.org, tj@kernel.org,
+        cl@linux.com, rostedt@goodmis.org, mhiramat@kernel.org,
+        frederic@kernel.org, paulmck@kernel.org, pmladek@suse.com,
+        senozhatsky@chromium.org, john.ogness@linutronix.de,
+        juri.lelli@redhat.com, vincent.guittot@linaro.org,
+        dietmar.eggemann@arm.com, bsegall@google.com, mgorman@suse.de,
+        bristot@redhat.com, vschneid@redhat.com, ryabinin.a.a@gmail.com,
+        glider@google.com, andreyknvl@gmail.com, dvyukov@google.com,
+        vincenzo.frascino@arm.com,
+        Andrew Morton <akpm@linux-foundation.org>, jpoimboe@kernel.org,
+        linux-alpha@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-snps-arc@lists.infradead.org, linux-omap@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-csky@vger.kernel.org,
+        linux-hexagon@vger.kernel.org, linux-ia64@vger.kernel.org,
+        loongarch@lists.linux.dev, linux-m68k@lists.linux-m68k.org,
+        linux-mips@vger.kernel.org, openrisc@lists.librecores.org,
+        linux-parisc@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+        linux-riscv@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-sh@vger.kernel.org, sparclinux@vger.kernel.org,
+        linux-um@lists.infradead.org, linux-perf-users@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        linux-xtensa@linux-xtensa.org, linux-acpi@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-arch@vger.kernel.org, linux-mm@kvack.org,
+        linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com,
+        Sudeep Holla <sudeep.holla@arm.com>
+Subject: Re: [PATCH v3 00/51] cpuidle,rcu: Clean up the mess
+Message-ID: <20230117142140.g423hxisv7djudof@bogus>
+References: <20230112194314.845371875@infradead.org>
+ <Y8WCWAuQSHN651dA@FVFF77S0Q05N.cambridge.arm.com>
+ <Y8Z31UbzG3LJgAXE@hirez.programming.kicks-ass.net>
+ <Y8afpbHtDOqAHq9M@FVFF77S0Q05N.cambridge.arm.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y8afpbHtDOqAHq9M@FVFF77S0Q05N.cambridge.arm.com>
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add SM8550 specific register layout and table configs.
+On Tue, Jan 17, 2023 at 01:16:21PM +0000, Mark Rutland wrote:
+> On Tue, Jan 17, 2023 at 11:26:29AM +0100, Peter Zijlstra wrote:
+> > On Mon, Jan 16, 2023 at 04:59:04PM +0000, Mark Rutland wrote:
+> > 
+> > > I'm sorry to have to bear some bad news on that front. :(
+> > 
+> > Moo, something had to give..
+> > 
+> > 
+> > > IIUC what's happenign here is the PSCI cpuidle driver has entered idle and RCU
+> > > is no longer watching when arm64's cpu_suspend() manipulates DAIF. Our
+> > > local_daif_*() helpers poke lockdep and tracing, hence the call to
+> > > trace_hardirqs_off() and the RCU usage.
+> > 
+> > Right, strictly speaking not needed at this point, IRQs should have been
+> > traced off a long time ago.
+> 
+> True, but there are some other calls around here that *might* end up invoking
+> RCU stuff (e.g. the MTE code).
+> 
+> That all needs a noinstr cleanup too, which I'll sort out as a follow-up.
+> 
+> > > I think we need RCU to be watching all the way down to cpu_suspend(), and it's
+> > > cpu_suspend() that should actually enter/exit idle context. That and we need to
+> > > make cpu_suspend() and the low-level PSCI invocation noinstr.
+> > > 
+> > > I'm not sure whether 32-bit will have a similar issue or not.
+> > 
+> > I'm not seeing 32bit or Risc-V have similar issues here, but who knows,
+> > maybe I missed somsething.
+> 
+> I reckon if they do, the core changes here give us the infrastructure to fix
+> them if/when we get reports.
+> 
+> > In any case, the below ought to cure the ARM64 case and remove that last
+> > known RCU_NONIDLE() user as a bonus.
+> 
+> The below works for me testing on a Juno R1 board with PSCI, using defconfig +
+> CONFIG_PROVE_LOCKING=y + CONFIG_DEBUG_LOCKDEP=y + CONFIG_DEBUG_ATOMIC_SLEEP=y.
+> I'm not sure how to test the LPI / FFH part, but it looks good to me.
+> 
+> FWIW:
+> 
+> Reviewed-by: Mark Rutland <mark.rutland@arm.com>
+> Tested-by: Mark Rutland <mark.rutland@arm.com>
+> 
+> Sudeep, would you be able to give the LPI/FFH side a spin with the kconfig
+> options above?
+> 
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 96 +++++++++++++++++++++++++
- 1 file changed, 96 insertions(+)
+Not sure if I have messed up something in my mail setup, but I did reply
+earlier. I did test both DT/cpuidle-psci driver and  ACPI/LPI+FFH driver
+with the fix Peter sent. I was seeing same splat as you in both DT and
+ACPI boot which the patch fixed it. I used the same config as described by
+you above.
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-index f142235432e1..2a300d9919e9 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-@@ -103,6 +103,13 @@ static const unsigned int ufsphy_v5_regs_layout[QPHY_LAYOUT_SIZE] = {
- 	[QPHY_PCS_POWER_DOWN_CONTROL]	= QPHY_V5_PCS_UFS_POWER_DOWN_CONTROL,
- };
- 
-+static const unsigned int ufsphy_v6_regs_layout[QPHY_LAYOUT_SIZE] = {
-+	[QPHY_START_CTRL]		= QPHY_V6_PCS_UFS_PHY_START,
-+	[QPHY_PCS_READY_STATUS]		= QPHY_V6_PCS_UFS_READY_STATUS,
-+	[QPHY_SW_RESET]			= QPHY_V6_PCS_UFS_SW_RESET,
-+	[QPHY_PCS_POWER_DOWN_CONTROL]	= QPHY_V6_PCS_UFS_POWER_DOWN_CONTROL,
-+};
-+
- static const struct qmp_phy_init_tbl msm8996_ufsphy_serdes[] = {
- 	QMP_PHY_INIT_CFG(QSERDES_COM_CMN_CONFIG, 0x0e),
- 	QMP_PHY_INIT_CFG(QSERDES_COM_SYSCLK_EN_SEL, 0xd7),
-@@ -607,6 +614,61 @@ static const struct qmp_phy_init_tbl sm8350_ufsphy_g4_pcs[] = {
- 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_UFS_BIST_FIXED_PAT_CTRL, 0x0a),
- };
- 
-+static const struct qmp_phy_init_tbl sm8550_ufsphy_serdes[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_SYSCLK_EN_SEL, 0xd9),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CMN_CONFIG_1, 0x16),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_HSCLK_SEL_1, 0x11),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_HSCLK_HS_SWITCH_SEL_1, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP_EN, 0x01),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_VCO_TUNE_MAP, 0x04),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_IVCO, 0x0f),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_VCO_TUNE_INITVAL2, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MODE0, 0x41),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE0, 0x0a),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_RCTRL_MODE0, 0x18),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE0, 0x14),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE0, 0x7f),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE0, 0x06),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MODE0, 0x4c),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE0, 0x0a),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_RCTRL_MODE0, 0x18),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE0, 0x14),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE0, 0x99),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE0, 0x07),
-+};
-+
-+static const struct qmp_phy_init_tbl sm8550_ufsphy_tx[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_V6_TX_LANE_MODE_1, 0x05),
-+	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_TX_RES_CODE_LANE_OFFSET_TX, 0x07),
-+};
-+
-+static const struct qmp_phy_init_tbl sm8550_ufsphy_rx[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_UCDR_FO_GAIN_RATE2, 0x0c),
-+	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_UCDR_FO_GAIN_RATE4, 0x0f),
-+	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_VGA_CAL_MAN_VAL, 0x0e),
-+
-+	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE_0_1_B0, 0xc2),
-+	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE_0_1_B1, 0xc2),
-+	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE_0_1_B3, 0x1a),
-+	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE_0_1_B6, 0x60),
-+
-+	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE2_B3, 0x9e),
-+	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE2_B6, 0x60),
-+
-+	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE3_B3, 0x9e),
-+	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE3_B4, 0x0e),
-+	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE3_B5, 0x36),
-+	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE3_B8, 0x02),
-+};
-+
-+static const struct qmp_phy_init_tbl sm8550_ufsphy_pcs[] = {
-+	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_RX_SIGDET_CTRL2, 0x69),
-+	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_LARGE_AMP_DRV_LVL, 0x0f),
-+	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_MID_TERM_CTRL1, 0x43),
-+	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_PLL_CNTL, 0x2b),
-+	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_MULTI_LANE_CTRL1, 0x02),
-+};
-+
- struct qmp_ufs_offsets {
- 	u16 serdes;
- 	u16 pcs;
-@@ -729,6 +791,15 @@ static const struct qmp_ufs_offsets qmp_ufs_offsets_v5 = {
- 	.rx2		= 0xa00,
- };
- 
-+static const struct qmp_ufs_offsets qmp_ufs_offsets_v6 = {
-+	.serdes		= 0,
-+	.pcs		= 0x0400,
-+	.tx		= 0x1000,
-+	.rx		= 0x1200,
-+	.tx2		= 0x1800,
-+	.rx2		= 0x1a00,
-+};
-+
- static const struct qmp_phy_cfg msm8996_ufsphy_cfg = {
- 	.lanes			= 1,
- 
-@@ -968,6 +1039,28 @@ static const struct qmp_phy_cfg sm8450_ufsphy_cfg = {
- 	.regs			= ufsphy_v5_regs_layout,
- };
- 
-+static const struct qmp_phy_cfg sm8550_ufsphy_cfg = {
-+	.lanes			= 2,
-+
-+	.offsets		= &qmp_ufs_offsets_v6,
-+
-+	.tbls = {
-+		.serdes		= sm8550_ufsphy_serdes,
-+		.serdes_num	= ARRAY_SIZE(sm8550_ufsphy_serdes),
-+		.tx		= sm8550_ufsphy_tx,
-+		.tx_num		= ARRAY_SIZE(sm8550_ufsphy_tx),
-+		.rx		= sm8550_ufsphy_rx,
-+		.rx_num		= ARRAY_SIZE(sm8550_ufsphy_rx),
-+		.pcs		= sm8550_ufsphy_pcs,
-+		.pcs_num	= ARRAY_SIZE(sm8550_ufsphy_pcs),
-+	},
-+	.clk_list		= sdm845_ufs_phy_clk_l,
-+	.num_clks		= ARRAY_SIZE(sdm845_ufs_phy_clk_l),
-+	.vreg_list		= qmp_phy_vreg_l,
-+	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
-+	.regs			= ufsphy_v6_regs_layout,
-+};
-+
- static void qmp_ufs_configure_lane(void __iomem *base,
- 					const struct qmp_phy_init_tbl tbl[],
- 					int num,
-@@ -1479,6 +1572,9 @@ static const struct of_device_id qmp_ufs_of_match_table[] = {
- 	}, {
- 		.compatible = "qcom,sm8450-qmp-ufs-phy",
- 		.data = &sm8450_ufsphy_cfg,
-+	}, {
-+		.compatible = "qcom,sm8550-qmp-ufs-phy",
-+		.data = &sm8550_ufsphy_cfg,
- 	},
- 	{ },
- };
 -- 
-2.34.1
-
+Regards,
+Sudeep
