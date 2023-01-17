@@ -2,206 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 445D766DFA3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 14:56:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E46BF66DFB4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 14:57:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231137AbjAQNzc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 08:55:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51922 "EHLO
+        id S231620AbjAQN51 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 08:57:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230401AbjAQNz2 (ORCPT
+        with ESMTP id S231652AbjAQN4w (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 08:55:28 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EF6F7ABC;
-        Tue, 17 Jan 2023 05:55:27 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id o17-20020a05600c511100b003db021ef437so3123031wms.4;
-        Tue, 17 Jan 2023 05:55:27 -0800 (PST)
+        Tue, 17 Jan 2023 08:56:52 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDF073D09B
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 05:56:14 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id k16so1667529wms.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 05:56:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=N+8K4EO+Daz1wxfQ80+5vMacSGUxLmGR0DsNNmoO1rU=;
-        b=iyqM/nh3hh0RdHGl3qNhNtb95HDQvufWzwOZ26VK/EFYAUOOqDzhl4tAydr1xF6e+M
-         IDwemHIQ9xRh9Pg97SaISJR90cyn8U68WRoCeB34SOOGU7smX45ErRcnJlSERmgLTHeJ
-         vPe6ODuVM4sOaGcGTJgSLBi1J7Gp+61zMoI2D5dj+/GC/AkPzSg0oNKPq9qIAsp52EnW
-         /1fnpzlKyqnPQdI6ncSjoOAffFOOZFo/STscOKLo5NbW9dDwSciHR5Tx6grPpjEGW2mp
-         sjTbPwoYx3lPSHHZ44ECYo+XXkNO68f1kVkNublAm/tS9OrOt5V/fC4XrI4SNov0c4w5
-         Ft4A==
+        h=content-transfer-encoding:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=qnONv6ljq41Tulih2wNiX8/3YbIpOSq+P5AfGvqItI4=;
+        b=T6FjdRHtqP/9CsjIXx4TuTzHdpvYrOj+sStD4WgdppkvNvWW+0lRIECADV3X2YvDXU
+         wnDcFKHPFb6pXvDuPL7YIMqJwWnwRaxN7d6tARfQ8QqdHYrvc2e9dSkZrLzPEZAiQC8Z
+         NKaS30auQlFGUFoebn4oUVHdojMHRzhlwCnxv1ZxNGeI5W/cqvhklYXSoTcLqxfCHhs/
+         ykc0y1xV/dScDk1ZrgLxcPjnmDoa2d+HiWeSQNnWYHR3Ze5huYTZR0QhFmzNAaf+6bjv
+         3GreX/u8otHjW2qVLltzgXiRmUyHVnr5eI/zzeV3g+nPWOftcigIabuUcoWg6Nfyz3RY
+         1DuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=N+8K4EO+Daz1wxfQ80+5vMacSGUxLmGR0DsNNmoO1rU=;
-        b=W94jtJRQNoC9AATwS9OoM0n2PtLT11Okhusuyq6Tnlv94irUGvpniH3J6P2Gc+KjiJ
-         ClwheQu3NUsmiUF86jAyJQ/W1DPayv7F3Vd3jJl3rePRasq24lWvatL7reiG4zUkUH9k
-         uvxNWMwYxca0T4cDq+EyDbliMf2u9KPS7yJ4EoaT1BgIDud5vMNyc4emau9yL35zMIes
-         IUI+1nejUer0Wy6gj7OJtRUZlnzDmHLuMIz5hFwgEt1hDyGBEq7jrutNzm+1oXt6/uIW
-         +M0QJFXYjTinQ91hEclNJnpR4vGpoa6fgD8meyp6Bo0Xz47+k1+Nrm8AsscnBsNGjy3y
-         V0Ig==
-X-Gm-Message-State: AFqh2kpY6H0vp0euFVGqTkVzI9mjJfFe0ncBE2cIIHQTOPlO78W4YfSq
-        3ALsNg1lsXNFNB9DbMX2750=
-X-Google-Smtp-Source: AMrXdXskDLI9cbckDCrW8XlHoXPpJqn6mtanOTpdtORDF5CsAe+1kEZjrFYbfq1Yo0FdKxBTnv3ehg==
-X-Received: by 2002:a1c:7919:0:b0:3da:79f:8953 with SMTP id l25-20020a1c7919000000b003da079f8953mr11790148wme.41.1673963725885;
-        Tue, 17 Jan 2023 05:55:25 -0800 (PST)
-Received: from localhost.localdomain (93-34-92-88.ip49.fastwebnet.it. [93.34.92.88])
-        by smtp.googlemail.com with ESMTPSA id s7-20020a1cf207000000b003d98438a43asm35147461wmc.34.2023.01.17.05.55.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Jan 2023 05:55:25 -0800 (PST)
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Christian Marangi <ansuelsmth@gmail.com>,
-        Robert Marko <robimarko@gmail.com>
-Subject: [PATCH v3 6/6] clk: qcom: gcc-ipq8074: rework nss_port5/6 clock to multiple conf
-Date:   Tue, 17 Jan 2023 14:54:59 +0100
-Message-Id: <20230117135459.16868-7-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20230117135459.16868-1-ansuelsmth@gmail.com>
-References: <20230117135459.16868-1-ansuelsmth@gmail.com>
+        h=content-transfer-encoding:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qnONv6ljq41Tulih2wNiX8/3YbIpOSq+P5AfGvqItI4=;
+        b=YELRMSUaaIeugA0twpqhu0QjZNXs/3z+dtFwvVgrF850/fQpuCvTe73wFjKcCp/SGp
+         Ree6Gqnp59rPCbYoCULmb4kBSKIjYIhGeErja1sNuLjJM89fiRHpOoDIjbdO9zkWz0pc
+         OVT6xZZV9sJjsuH9dKjvONzTNM9ffFyMn4WOGTsMmtjwPUvPMP5R6jtrFgt2ZTlCO0+l
+         V9cK/V5ee2YNpgRYO7iDTbrFaHWdzGIctErWlB81ZGLZSPeiMCDFh7QxEpbpQ3HNol52
+         PYLdNVayyekrWkMFCgOlp3TqqzhUiD4k91Lzc9ZKXDkRHeEn519f9dIJRFHpqCBBRPcW
+         WAVA==
+X-Gm-Message-State: AFqh2koyW87DHDn/XxhMVw5p8MMEBUhXWMdSWTIiOlVSQuguEU4wdawQ
+        Rb2VusUv8Rti6PMUld505zNdm9e1CFA=
+X-Google-Smtp-Source: AMrXdXvfWOqdSvnvhwpCYCLLvLzb6+pJZXyYDfTr8+b3yT/HBbp7YB8jsXZroDRKNetG8k0m0PRqhQ==
+X-Received: by 2002:a7b:c309:0:b0:3d9:f801:bb6 with SMTP id k9-20020a7bc309000000b003d9f8010bb6mr3115004wmj.10.1673963771074;
+        Tue, 17 Jan 2023 05:56:11 -0800 (PST)
+Received: from DESKTOP-53HLT22 ([39.42.178.198])
+        by smtp.gmail.com with ESMTPSA id p13-20020a05600c1d8d00b003d9fb04f658sm10737975wms.4.2023.01.17.05.56.09
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
+        Tue, 17 Jan 2023 05:56:10 -0800 (PST)
+Message-ID: <63c6a8fa.050a0220.ec2b1.3f58@mx.google.com>
+Date:   Tue, 17 Jan 2023 05:56:10 -0800 (PST)
+X-Google-Original-Date: 17 Jan 2023 08:57:45 -0500
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+From:   felixjosiah47@gmail.com
+To:     linux-arm-msm@vger.kernel.org
+Subject: TakeOff
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=1.6 required=5.0 tests=BAYES_20,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,RCVD_IN_SORBS_WEB,SPF_HELO_NONE,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Rework nss_port5/6 to use the new multiple configuration implementation
-and correctly fix the clocks for these port under some corner case.
-
-This is particularly relevant for device that have 2.5G or 10G port
-connected to port5 or port 6 on ipq8074. As the parent are shared
-across multiple port it may be required to select the correct
-configuration to accomplish the desired clock. Without this patch such
-port doesn't work in some specific ethernet speed as the clock will be
-set to the wrong frequency as we just select the first configuration for
-the related frequency instead of selecting the best one.
-
-Tested-by: Robert Marko <robimarko@gmail.com> # ipq8074 Qnap QHora-301W
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
----
- drivers/clk/qcom/gcc-ipq8074.c | 64 +++++++++++++++++++++++++---------
- 1 file changed, 48 insertions(+), 16 deletions(-)
-
-diff --git a/drivers/clk/qcom/gcc-ipq8074.c b/drivers/clk/qcom/gcc-ipq8074.c
-index 42d185fe19c8..02d04a552b78 100644
---- a/drivers/clk/qcom/gcc-ipq8074.c
-+++ b/drivers/clk/qcom/gcc-ipq8074.c
-@@ -1787,13 +1787,21 @@ static struct clk_regmap_div nss_port4_tx_div_clk_src = {
- 	},
- };
- 
-+static const struct freq_conf ftbl_nss_port5_rx_clk_src_25[] = {
-+	C(P_UNIPHY1_RX, 12.5, 0, 0),
-+	C(P_UNIPHY0_RX, 5, 0, 0),
-+};
-+
-+static const struct freq_conf ftbl_nss_port5_rx_clk_src_125[] = {
-+	C(P_UNIPHY1_RX, 2.5, 0, 0),
-+	C(P_UNIPHY0_RX, 1, 0, 0),
-+};
-+
- static const struct freq_tbl ftbl_nss_port5_rx_clk_src[] = {
- 	F(19200000, P_XO, 1, 0, 0),
--	F(25000000, P_UNIPHY1_RX, 12.5, 0, 0),
--	F(25000000, P_UNIPHY0_RX, 5, 0, 0),
-+	FM(25000000, ftbl_nss_port5_rx_clk_src_25),
- 	F(78125000, P_UNIPHY1_RX, 4, 0, 0),
--	F(125000000, P_UNIPHY1_RX, 2.5, 0, 0),
--	F(125000000, P_UNIPHY0_RX, 1, 0, 0),
-+	FM(125000000, ftbl_nss_port5_rx_clk_src_125),
- 	F(156250000, P_UNIPHY1_RX, 2, 0, 0),
- 	F(312500000, P_UNIPHY1_RX, 1, 0, 0),
- 	{ }
-@@ -1829,13 +1837,21 @@ static struct clk_regmap_div nss_port5_rx_div_clk_src = {
- 	},
- };
- 
-+static struct freq_conf ftbl_nss_port5_tx_clk_src_25[] = {
-+	C(P_UNIPHY1_TX, 12.5, 0, 0),
-+	C(P_UNIPHY0_TX, 5, 0, 0),
-+};
-+
-+static struct freq_conf ftbl_nss_port5_tx_clk_src_125[] = {
-+	C(P_UNIPHY1_TX, 2.5, 0, 0),
-+	C(P_UNIPHY0_TX, 1, 0, 0),
-+};
-+
- static const struct freq_tbl ftbl_nss_port5_tx_clk_src[] = {
- 	F(19200000, P_XO, 1, 0, 0),
--	F(25000000, P_UNIPHY1_TX, 12.5, 0, 0),
--	F(25000000, P_UNIPHY0_TX, 5, 0, 0),
-+	FM(25000000, ftbl_nss_port5_tx_clk_src_25),
- 	F(78125000, P_UNIPHY1_TX, 4, 0, 0),
--	F(125000000, P_UNIPHY1_TX, 2.5, 0, 0),
--	F(125000000, P_UNIPHY0_TX, 1, 0, 0),
-+	FM(125000000, ftbl_nss_port5_tx_clk_src_125),
- 	F(156250000, P_UNIPHY1_TX, 2, 0, 0),
- 	F(312500000, P_UNIPHY1_TX, 1, 0, 0),
- 	{ }
-@@ -1871,13 +1887,21 @@ static struct clk_regmap_div nss_port5_tx_div_clk_src = {
- 	},
- };
- 
-+static struct freq_conf ftbl_nss_port6_rx_clk_src_25[] = {
-+	C(P_UNIPHY2_RX, 5, 0, 0),
-+	C(P_UNIPHY2_RX, 12.5, 0, 0),
-+};
-+
-+static struct freq_conf ftbl_nss_port6_rx_clk_src_125[] = {
-+	C(P_UNIPHY2_RX, 1, 0, 0),
-+	C(P_UNIPHY2_RX, 2.5, 0, 0),
-+};
-+
- static const struct freq_tbl ftbl_nss_port6_rx_clk_src[] = {
- 	F(19200000, P_XO, 1, 0, 0),
--	F(25000000, P_UNIPHY2_RX, 5, 0, 0),
--	F(25000000, P_UNIPHY2_RX, 12.5, 0, 0),
-+	FM(25000000, ftbl_nss_port6_rx_clk_src_25),
- 	F(78125000, P_UNIPHY2_RX, 4, 0, 0),
--	F(125000000, P_UNIPHY2_RX, 1, 0, 0),
--	F(125000000, P_UNIPHY2_RX, 2.5, 0, 0),
-+	FM(125000000, ftbl_nss_port6_rx_clk_src_125),
- 	F(156250000, P_UNIPHY2_RX, 2, 0, 0),
- 	F(312500000, P_UNIPHY2_RX, 1, 0, 0),
- 	{ }
-@@ -1913,13 +1937,21 @@ static struct clk_regmap_div nss_port6_rx_div_clk_src = {
- 	},
- };
- 
-+static struct freq_conf ftbl_nss_port6_tx_clk_src_25[] = {
-+	C(P_UNIPHY2_TX, 5, 0, 0),
-+	C(P_UNIPHY2_TX, 12.5, 0, 0),
-+};
-+
-+static struct freq_conf ftbl_nss_port6_tx_clk_src_125[] = {
-+	C(P_UNIPHY2_TX, 1, 0, 0),
-+	C(P_UNIPHY2_TX, 2.5, 0, 0),
-+};
-+
- static const struct freq_tbl ftbl_nss_port6_tx_clk_src[] = {
- 	F(19200000, P_XO, 1, 0, 0),
--	F(25000000, P_UNIPHY2_TX, 5, 0, 0),
--	F(25000000, P_UNIPHY2_TX, 12.5, 0, 0),
-+	FM(25000000, ftbl_nss_port6_tx_clk_src_25),
- 	F(78125000, P_UNIPHY2_TX, 4, 0, 0),
--	F(125000000, P_UNIPHY2_TX, 1, 0, 0),
--	F(125000000, P_UNIPHY2_TX, 2.5, 0, 0),
-+	FM(125000000, ftbl_nss_port6_tx_clk_src_125),
- 	F(156250000, P_UNIPHY2_TX, 2, 0, 0),
- 	F(312500000, P_UNIPHY2_TX, 1, 0, 0),
- 	{ }
--- 
-2.38.1
+=0D=0AHi,=0D=0A=0D=0ADo you have any estimating projects for us=0D=0A=
+=0D=0AIf you are holding a project, please send over the plans in=
+ PDF format for getting a firm quote on your project.=0D=0A=0D=0A=
+Let me know if you have any questions or if you would like to see=
+ some samples.=0D=0A=0D=0AWe will be happy to answer any question=
+s you have. Thank you=0D=0A=0D=0ARegards,=0D=0AFelix Josiah=0D=0A=
+Crossland Estimation, INC
 
