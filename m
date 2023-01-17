@@ -2,78 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9681B66D73C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 08:51:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 633D366D776
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 09:04:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232094AbjAQHvu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 02:51:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47196 "EHLO
+        id S235843AbjAQIEY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 03:04:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235709AbjAQHvr (ORCPT
+        with ESMTP id S233018AbjAQIEU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 02:51:47 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3603324480
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 23:51:45 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id j17so3020233wms.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 23:51:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=HurAsoClkkfNishWyH7zyhaS3SjeDCn6WcRooyIarSk=;
-        b=HrQi2jM2o3k7MlGekuYzaRfGnWM40tf3DH1T7opEj1V16klaEMUxJI7aNqVcb/qg9r
-         ocIQtAl5h2SHhb45/fc+ld45TMwe7JarYlfaCvgM0h3KOb+01x6MY9mm/XF8RChm6QKo
-         mshyl8wMDh8x5RGAmN7kfShw+9NttQQWjBu2DRiX3r6NmYt4GPBRmHTorJ4HszSYa6Rw
-         8SzUKv9Qvsrmbbn6sNbpuwvUXvpkj9EVyfBWBXZBCQ6mu5BfB44zwirK8AvmeWfPmv0f
-         f0FJAcCviVIOc0lOejsbCVxherG0FCCtgZarK6JfyKqhqUVD0sabjJ9EzBHkbDp+jdeS
-         y0GA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HurAsoClkkfNishWyH7zyhaS3SjeDCn6WcRooyIarSk=;
-        b=kKsQ2oiGB+BdsVCW90q0qodyNW3XN4JkaxozM9vwMa1GB2E97SdnVSowr1fxn4yJv8
-         b53emctYs/7UMC6KVnKJeu2wTE/vgYFDP+2cf9X3vJeQ0rwJvjo0GQYLA7o9jR/vEDM0
-         08EK0bxzQQPXYisCvtlVBj8UT92BEkrUDpk7EkPDl0GSTHeEi5WeDHUtlFF48PPD4j+u
-         PT3vMc254jPTxzO1ZIeWdwSso8PuHIr8QOXZAS4Fdtt4ZWUIb1f3DYPrCwFlS083dSY3
-         QARD+hc+dKmHfN//CNixdFOnZFJPPmJTTwBCaN5m3HxN/zBXf4PzqsuoCBp57bpDIxB4
-         bQMw==
-X-Gm-Message-State: AFqh2kq49JgJ4LmL2HwPitRoRgdbPwh0p5T1Ms+R7Fy97TQm0gyxrzqJ
-        3s6qAlT3sSxljfiDnheE0CcgNw==
-X-Google-Smtp-Source: AMrXdXvme5c+Y2+O5xOdzwHI53CavI+MeY/3uvmpsnhkqo7OyPX1WsvR43HhkCntqsykA4usyIw3mQ==
-X-Received: by 2002:a05:600c:c16:b0:3da:26e5:10b6 with SMTP id fm22-20020a05600c0c1600b003da26e510b6mr2193294wmb.30.1673941903802;
-        Mon, 16 Jan 2023 23:51:43 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id t5-20020a1c7705000000b003daffc2ecdesm3815750wmi.13.2023.01.16.23.51.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Jan 2023 23:51:43 -0800 (PST)
-Message-ID: <948d6fec-12e3-f4e6-8024-d444e5a41df5@linaro.org>
-Date:   Tue, 17 Jan 2023 08:51:41 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH 2/6] arm64: dts: qcom: sdm845: move WCD9340 codec to
- separate file
-Content-Language: en-US
+        Tue, 17 Jan 2023 03:04:20 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC51D265B6;
+        Tue, 17 Jan 2023 00:04:19 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 42F19611E0;
+        Tue, 17 Jan 2023 08:04:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1306C433EF;
+        Tue, 17 Jan 2023 08:04:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1673942658;
+        bh=vB1tUi0ipCUEpsBghYAjXEtXUjagIZFsMiRJPsWnUaU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=T5yZSdMjUiRzxdy3m2UG+4oH3ZQlLPbzR+AnF52SIEImKtlyPrUvMcmkG25HjpZ79
+         joYjF+7Uei7L3bhxUxQZMNSVVlgUr/35WwcarMU6e6lG0r/yCrGtOXCG6FEi6O/UXk
+         XRBjZpUT0bW7LTEZUP9lUyEbl2BTAhsSVdaKfuTp+IVSX9wBl1GkmWZ4y82M6xrzJ7
+         Xwj6WP0H8jfHRn5Sx0d+D9ouSZNV3EEK/Kaq5687HVuEph0UwiUTqfd++pFIJ8QcAR
+         eV+n82ogzK1BDQ+E3+t0Ne+2N0d/uM9RDKD726Ea4girgTXOHtwIB7M1FSWjovvohH
+         XwbixnAO3tX+w==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pHgxT-00074C-F0; Tue, 17 Jan 2023 09:04:39 +0100
+Date:   Tue, 17 Jan 2023 09:04:39 +0100
+From:   Johan Hovold <johan@kernel.org>
 To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         linux-kernel@vger.kernel.org
-References: <20230113162245.117324-1-krzysztof.kozlowski@linaro.org>
- <20230113162245.117324-2-krzysztof.kozlowski@linaro.org>
- <20230117035631.cgi6fjdrpz5eppca@builder.lan>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230117035631.cgi6fjdrpz5eppca@builder.lan>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Subject: Re: [PATCH] drm/msm: Initialize mode_config earlier
+Message-ID: <Y8ZWl85gSpOaLgO4@hovoldconsulting.com>
+References: <20230113041051.4189063-1-quic_bjorande@quicinc.com>
+ <eea1c5dc-6bc5-4246-f0e1-0c790de9f078@linaro.org>
+ <9a64c685-9ff0-bc1d-e604-e3773ff9edd7@linaro.org>
+ <20230117025122.jt3wrjkqfnogu4ci@builder.lan>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230117025122.jt3wrjkqfnogu4ci@builder.lan>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,46 +65,79 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/01/2023 04:56, Bjorn Andersson wrote:
-> On Fri, Jan 13, 2023 at 05:22:41PM +0100, Krzysztof Kozlowski wrote:
->> WCD9340 codec node is not a property of the SoC, but board.  Move it to
->> separate file and include it in the specific boards.  On all others,
->> keep the Slimbus node disabled as it is empty.
->>
+On Mon, Jan 16, 2023 at 08:51:22PM -0600, Bjorn Andersson wrote:
+> On Fri, Jan 13, 2023 at 10:57:18AM +0200, Dmitry Baryshkov wrote:
+> > On 13/01/2023 06:23, Dmitry Baryshkov wrote:
+> > > On 13/01/2023 06:10, Bjorn Andersson wrote:
+> > > > Invoking drm_bridge_hpd_notify() on a drm_bridge with a HPD-enabled
+> > > > bridge_connector ends up in drm_bridge_connector_hpd_cb() calling
+> > > > drm_kms_helper_hotplug_event(), which assumes that the associated
+> > > > drm_device's mode_config.funcs is a valid pointer.
+> > > > 
+> > > > But in the MSM DisplayPort driver the HPD enablement happens at bind
+> > > > time and mode_config.funcs is initialized late in msm_drm_init(). This
+> > > > means that there's a window for hot plug events to dereference a NULL
+> > > > mode_config.funcs.
+> > > > 
+> > > > Move the assignment of mode_config.funcs before the bind, to avoid this
+> > > > scenario.
+> > > 
+> > > Cam we make DP driver not to report HPD events until the enable_hpd()
+> > > was called? I think this is what was fixed by your internal_hpd
+> > > patchset.
+> > 
+> > Or to express this in another words: I thought that internal_hpd already
+> > deferred enabling hpd event reporting till the time when we need it, didn't
+> > it?
+> > 
 > 
-> I think this seems like a reasonable idea. But without clearly
-> documenting your intentions/guidelines we will soon have
-> sdm845-display.dtsi, sdm845-pcie.dtsi etc.
+> I added a WARN_ON(1) in drm_bridge_hpd_enable() to get a sense of when
+> this window of "opportunity" opens up, and here's the callstack:
 > 
-> So please start there.
-
-You said like this started the process but it is already there for
-sc7280. Where do you want to store such documentation? In commit msg?
-
+> ------------[ cut here ]------------
+> WARNING: CPU: 6 PID: 99 at drivers/gpu/drm/drm_bridge.c:1260 drm_bridge_hpd_enable+0x48/0x94 [drm]
+> ...
+> Call trace:
+>  drm_bridge_hpd_enable+0x48/0x94 [drm]
+>  drm_bridge_connector_enable_hpd+0x30/0x3c [drm_kms_helper]
+>  drm_kms_helper_poll_enable+0xa4/0x114 [drm_kms_helper]
+>  drm_kms_helper_poll_init+0x6c/0x7c [drm_kms_helper]
+>  msm_drm_bind+0x370/0x628 [msm]
+>  try_to_bring_up_aggregate_device+0x170/0x1bc
+>  __component_add+0xb0/0x168
+>  component_add+0x20/0x2c
+>  dp_display_probe+0x40c/0x468 [msm]
+>  platform_probe+0xb4/0xdc
+>  really_probe+0x13c/0x300
+>  __driver_probe_device+0xc0/0xec
+>  driver_probe_device+0x48/0x204
+>  __device_attach_driver+0x124/0x14c
+>  bus_for_each_drv+0x90/0xdc
+>  __device_attach+0xdc/0x1a8
+>  device_initial_probe+0x20/0x2c
+>  bus_probe_device+0x40/0xa4
+>  deferred_probe_work_func+0x94/0xd0
+>  process_one_work+0x1a8/0x3c0
+>  worker_thread+0x254/0x47c
+>  kthread+0xf8/0x1b8
+>  ret_from_fork+0x10/0x20
+> ---[ end trace 0000000000000000 ]---
 > 
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
->>  .../boot/dts/qcom/sdm845-audio-wcd9340.dtsi   | 69 +++++++++++++++++++
->>  arch/arm64/boot/dts/qcom/sdm845-db845c.dts    |  1 +
->>  .../qcom/sdm845-xiaomi-beryllium-common.dtsi  |  1 +
->>  .../boot/dts/qcom/sdm845-xiaomi-polaris.dts   |  1 +
->>  arch/arm64/boot/dts/qcom/sdm845.dtsi          | 60 +---------------
->>  .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts |  1 +
->>  .../boot/dts/qcom/sdm850-samsung-w737.dts     |  1 +
->>  7 files changed, 75 insertions(+), 59 deletions(-)
->>  create mode 100644 arch/arm64/boot/dts/qcom/sdm845-audio-wcd9340.dtsi
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sdm845-audio-wcd9340.dtsi b/arch/arm64/boot/dts/qcom/sdm845-audio-wcd9340.dtsi
->> new file mode 100644
->> index 000000000000..5bcce7d0d709
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/sdm845-audio-wcd9340.dtsi
+> As drm_kms_helper_poll_init() is the last thing being called in
+> msm_drm_init() shifting around the mode_config.func assignment would not
+> have any impact.
 > 
-> Why does this include the substring "audio"?
+> Perhaps we have shuffled other things around to avoid this bug?  Either
+> way, let's this on hold  until further proof that it's still
+> reproducible.
 
-To indicate it covers entire audio, which points me to the fact that
-probably I can also move there sound node.
+As I've mentioned off list, I haven't hit the apparent race I reported
+here:
 
-Best regards,
-Krzysztof
+	https://lore.kernel.org/all/Y1efJh11B5UQZ0Tz@hovoldconsulting.com/
 
+since moving to 6.2. I did hit it with both 6.0 and 6.1-rc2, but it
+could very well be that something has changes that fixes (or hides) the
+issue since.
+
+Johan
