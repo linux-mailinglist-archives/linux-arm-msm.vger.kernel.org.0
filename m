@@ -2,228 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C0AB1670CB6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 00:08:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D8C1670CBD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 00:08:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229640AbjAQXIX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 18:08:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59912 "EHLO
+        id S229455AbjAQXId (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 18:08:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229825AbjAQXHW (ORCPT
+        with ESMTP id S229728AbjAQXHp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 18:07:22 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DA304617D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 14:42:08 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id d2so12045692wrp.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 14:42:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7hruPC9W5ehB6/tJZ6aRaTWsYXYVZIaFu7P2x1VdPuQ=;
-        b=xJOPh0qrdfh+kFofoDAa322UYucNvaZWgeYgGaVL0n44rxee/k+YjUWOdTOpaH+q4D
-         YE6GTi9s9NGcu4CtwpdywrcZXKuSj5k7HqQsfHuyRjaqtyKIV5DuqUOy66lTe/Rfez8g
-         H+FAm98wTueexbZOEWqvqwsm/9NCNZ/v/p0JUwxjh7mK12i5U8J2u+p/TwvXQ2So0yCv
-         wfY1AJI1XjgGIzblMXuyRtU1pYrHbXio4IXVtCS6ZYGYN5MjCOgexbKGJx+mi/HQsTJZ
-         YK91HarAJnuYv5s0IVtvMkyop5iGfYSD8ZPlhjoMH3wHDeTylM9mptzBthLGnYNbqbPx
-         E30A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7hruPC9W5ehB6/tJZ6aRaTWsYXYVZIaFu7P2x1VdPuQ=;
-        b=vRIfTKTjXfZNMT7u2NpnYDZ1AhSwaAdC+pjS0wFnuNZPXhDI4VqjpegK5mUdtMbq5/
-         4LPf8o4KwwOtAVeyvQYTiYDyt6GcrUtwbfoU/KvN+zVWxxEsKlEuv5/3r+r3Mt5jN9gO
-         V+taITeAU9/Jxw05Ia8lKiFelXGG1+HsU6z4Cib0EjvRLOamVGTp14CqnkVq8jJgL7U/
-         zEfvqIhWf3z/NykR3+8NNtmoSuUtFCS2XamRChjloZAdx0PPL4S3n3GMrTTUonB9IM/r
-         LjXV6q2Cf7bXvs/fTGgb/x3Hi14eIjx/nuM0VbbaAQXw8EMpMAUlp4Eq3ikjxET2K0Qp
-         FO8w==
-X-Gm-Message-State: AFqh2ko6vWQhpdFzTz4nAQPV3md6KsQo9UKqGxouo43t2zXlo1Odz/PI
-        2zKpnQXo29QfiJrsV/Hxx4VpJA==
-X-Google-Smtp-Source: AMrXdXuMleSu0q3d0i05Str5Gs/LkCCtwxzcoYNQPlWkEd2QlO41RqwVBteOmmyoJbcdMSpZLi3cMQ==
-X-Received: by 2002:a05:6000:812:b0:2bd:dc41:5714 with SMTP id bt18-20020a056000081200b002bddc415714mr5008776wrb.68.1673995322782;
-        Tue, 17 Jan 2023 14:42:02 -0800 (PST)
-Received: from hackbox.lan ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id m1-20020a5d6241000000b002bbdaf21744sm27024916wrv.113.2023.01.17.14.42.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Jan 2023 14:42:01 -0800 (PST)
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "vkoul@kernel.org" <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Johan Hovold <johan@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH v5 6/6] phy: qcom-qmp-ufs: Add SM8550 support
-Date:   Wed, 18 Jan 2023 00:41:48 +0200
-Message-Id: <20230117224148.1914627-7-abel.vesa@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230117224148.1914627-1-abel.vesa@linaro.org>
-References: <20230117224148.1914627-1-abel.vesa@linaro.org>
+        Tue, 17 Jan 2023 18:07:45 -0500
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF73D44BC2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 14:42:56 -0800 (PST)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id DF99E3F428;
+        Tue, 17 Jan 2023 23:42:53 +0100 (CET)
+Date:   Tue, 17 Jan 2023 23:42:51 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Andy Shevchenko <andy.shevchenko@gmail.com>
+Cc:     Jonathan Cameron <jic23@kernel.org>,
+        Nuno =?utf-8?B?U8Oh?= <nuno.sa@analog.com>,
+        openbmc@lists.ozlabs.org, linux-imx@nxp.com,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-iio@vger.kernel.org, linux-mips@vger.kernel.org,
+        linux-renesas-soc@vger.kernel.org,
+        linux-mediatek@lists.infradead.org,
+        chrome-platform@lists.linux.dev,
+        linux-arm-kernel@lists.infradead.org,
+        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+        linux-arm-msm@vger.kernel.org,
+        Gwendal Grignou <gwendal@chromium.org>,
+        Fabio Estevam <festevam@gmail.com>,
+        Tali Perry <tali.perry1@gmail.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Eugen Hristev <eugen.hristev@microchip.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Michael Hennerich <Michael.Hennerich@analog.com>,
+        Haibo Chen <haibo.chen@nxp.com>
+Subject: Re: [PATCH v3 12/15] iio: adc: qcom-spmi-adc5: convert to device
+ properties
+Message-ID: <20230117224251.wzxexdlfe5ydzjw5@SoMainline.org>
+References: <20220715122903.332535-1-nuno.sa@analog.com>
+ <20220715122903.332535-13-nuno.sa@analog.com>
+ <20220806192048.0ca41cc5@jic23-huawei>
+ <20230116204452.il4gase2szipeexz@SoMainline.org>
+ <CAHp75VdX9sFgn9STyzwcDCK1KYbU00ejFNcEP3FVnLk5J=Pktg@mail.gmail.com>
+ <CAHp75VdTftm1BE21rH1HVHiwUye-0Dvc66uCK2LE2qF4_zA6hg@mail.gmail.com>
+ <CAHp75VdyCA7mQdm--kg=hUbmQqX4-jfFMHgLxref5mNSM1vnMA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAHp75VdyCA7mQdm--kg=hUbmQqX4-jfFMHgLxref5mNSM1vnMA@mail.gmail.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add SM8550 specific register layout and table configs.
+On 2023-01-17 11:40:42, Andy Shevchenko wrote:
+<snip>
+> > > > This CC just surfaced in my inbox while searching for our current
+> > > > discussion around missing labels in qcom-spmi-vadc - and on the side a
+> > > > userspace @xx label name ABI break (in qcom-spmi-adc5) caused by this
+> > > > patch's fwnode_get_name change - we could've caught it if I had not
+> > > > accidentally marked it as read and/or forgot about it.  My apologies.
+> > >
+> > > Does the following addition to the top of the
+> > > adc5_get_fw_channel_data() fix the issue?
+> > >
+> > > +       name = devm_kasprintf(adc->dev, GFP_KERNEL, "%pfwP", fwnode);
+> > > +       if (!name)
+> > > +               return -ENOMEM;
+> >
+> > Okay, it probably the same, so it might need additional code to
+> >
+> > + name[strchrnul(name, '@') - name] = '\0';
+> 
+> I have just sent a formal patch, please test on top of non-working kernel.
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 96 +++++++++++++++++++++++++
- 1 file changed, 96 insertions(+)
+I would've preferred to fix this in the same way as qcom-spmi-vadc by
+implementing read_label instead and basing it on the DT label or driver
+string literals instead [1], but dropping extend_name (hence changing
+sysfs filenames once again) would be considered an ABI break.
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-index f142235432e1..65b82a0d3fb4 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-@@ -103,6 +103,13 @@ static const unsigned int ufsphy_v5_regs_layout[QPHY_LAYOUT_SIZE] = {
- 	[QPHY_PCS_POWER_DOWN_CONTROL]	= QPHY_V5_PCS_UFS_POWER_DOWN_CONTROL,
- };
- 
-+static const unsigned int ufsphy_v6_regs_layout[QPHY_LAYOUT_SIZE] = {
-+	[QPHY_START_CTRL]		= QPHY_V6_PCS_UFS_PHY_START,
-+	[QPHY_PCS_READY_STATUS]		= QPHY_V6_PCS_UFS_READY_STATUS,
-+	[QPHY_SW_RESET]			= QPHY_V6_PCS_UFS_SW_RESET,
-+	[QPHY_PCS_POWER_DOWN_CONTROL]	= QPHY_V6_PCS_UFS_POWER_DOWN_CONTROL,
-+};
-+
- static const struct qmp_phy_init_tbl msm8996_ufsphy_serdes[] = {
- 	QMP_PHY_INIT_CFG(QSERDES_COM_CMN_CONFIG, 0x0e),
- 	QMP_PHY_INIT_CFG(QSERDES_COM_SYSCLK_EN_SEL, 0xd7),
-@@ -607,6 +614,61 @@ static const struct qmp_phy_init_tbl sm8350_ufsphy_g4_pcs[] = {
- 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_UFS_BIST_FIXED_PAT_CTRL, 0x0a),
- };
- 
-+static const struct qmp_phy_init_tbl sm8550_ufsphy_serdes[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_SYSCLK_EN_SEL, 0xd9),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CMN_CONFIG_1, 0x16),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_HSCLK_SEL_1, 0x11),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_HSCLK_HS_SWITCH_SEL_1, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP_EN, 0x01),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_VCO_TUNE_MAP, 0x04),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_IVCO, 0x0f),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_VCO_TUNE_INITVAL2, 0x00),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MODE0, 0x41),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE0, 0x0a),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_RCTRL_MODE0, 0x18),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE0, 0x14),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE0, 0x7f),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE0, 0x06),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MODE0, 0x4c),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE0, 0x0a),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_RCTRL_MODE0, 0x18),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE0, 0x14),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE0, 0x99),
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE0, 0x07),
-+};
-+
-+static const struct qmp_phy_init_tbl sm8550_ufsphy_tx[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_V6_TX_LANE_MODE_1, 0x05),
-+	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_TX_RES_CODE_LANE_OFFSET_TX, 0x07),
-+};
-+
-+static const struct qmp_phy_init_tbl sm8550_ufsphy_rx[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_UCDR_FASTLOCK_FO_GAIN_RATE2, 0x0c),
-+	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_UCDR_FASTLOCK_FO_GAIN_RATE4, 0x0f),
-+	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_VGA_CAL_MAN_VAL, 0x0e),
-+
-+	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE_0_1_B0, 0xc2),
-+	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE_0_1_B1, 0xc2),
-+	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE_0_1_B3, 0x1a),
-+	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE_0_1_B6, 0x60),
-+
-+	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE2_B3, 0x9e),
-+	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE2_B6, 0x60),
-+
-+	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE3_B3, 0x9e),
-+	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE3_B4, 0x0e),
-+	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE3_B5, 0x36),
-+	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE3_B8, 0x02),
-+};
-+
-+static const struct qmp_phy_init_tbl sm8550_ufsphy_pcs[] = {
-+	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_RX_SIGDET_CTRL2, 0x69),
-+	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_LARGE_AMP_DRV_LVL, 0x0f),
-+	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_MID_TERM_CTRL1, 0x43),
-+	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_PLL_CNTL, 0x2b),
-+	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_MULTI_LANE_CTRL1, 0x02),
-+};
-+
- struct qmp_ufs_offsets {
- 	u16 serdes;
- 	u16 pcs;
-@@ -729,6 +791,15 @@ static const struct qmp_ufs_offsets qmp_ufs_offsets_v5 = {
- 	.rx2		= 0xa00,
- };
- 
-+static const struct qmp_ufs_offsets qmp_ufs_offsets_v6 = {
-+	.serdes		= 0,
-+	.pcs		= 0x0400,
-+	.tx		= 0x1000,
-+	.rx		= 0x1200,
-+	.tx2		= 0x1800,
-+	.rx2		= 0x1a00,
-+};
-+
- static const struct qmp_phy_cfg msm8996_ufsphy_cfg = {
- 	.lanes			= 1,
- 
-@@ -968,6 +1039,28 @@ static const struct qmp_phy_cfg sm8450_ufsphy_cfg = {
- 	.regs			= ufsphy_v5_regs_layout,
- };
- 
-+static const struct qmp_phy_cfg sm8550_ufsphy_cfg = {
-+	.lanes			= 2,
-+
-+	.offsets		= &qmp_ufs_offsets_v6,
-+
-+	.tbls = {
-+		.serdes		= sm8550_ufsphy_serdes,
-+		.serdes_num	= ARRAY_SIZE(sm8550_ufsphy_serdes),
-+		.tx		= sm8550_ufsphy_tx,
-+		.tx_num		= ARRAY_SIZE(sm8550_ufsphy_tx),
-+		.rx		= sm8550_ufsphy_rx,
-+		.rx_num		= ARRAY_SIZE(sm8550_ufsphy_rx),
-+		.pcs		= sm8550_ufsphy_pcs,
-+		.pcs_num	= ARRAY_SIZE(sm8550_ufsphy_pcs),
-+	},
-+	.clk_list		= sdm845_ufs_phy_clk_l,
-+	.num_clks		= ARRAY_SIZE(sdm845_ufs_phy_clk_l),
-+	.vreg_list		= qmp_phy_vreg_l,
-+	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
-+	.regs			= ufsphy_v6_regs_layout,
-+};
-+
- static void qmp_ufs_configure_lane(void __iomem *base,
- 					const struct qmp_phy_init_tbl tbl[],
- 					int num,
-@@ -1479,6 +1572,9 @@ static const struct of_device_id qmp_ufs_of_match_table[] = {
- 	}, {
- 		.compatible = "qcom,sm8450-qmp-ufs-phy",
- 		.data = &sm8450_ufsphy_cfg,
-+	}, {
-+		.compatible = "qcom,sm8550-qmp-ufs-phy",
-+		.data = &sm8550_ufsphy_cfg,
- 	},
- 	{ },
- };
--- 
-2.34.1
+I've instead gone for a similar change that also ignores the node name
+in favour of falling back to the driver string literal (if no "label"
+property is available) while retaining extend_label [3] and the -
+however ugly they are - sysfs filenames, but that'll likely get rejected
+as strictly being an ABI break as well, not in the least because DT
+needs to be patched up [3] for it to work out.
 
+I'll at least test your patch when getting back to one of these devices.
+
+- Marijn
+
+[1]: https://lore.kernel.org/linux-arm-msm/20230116220909.196926-6-marijn.suijten@somainline.org/
+[2]: https://lore.kernel.org/linux-arm-msm/20230116220909.196926-4-marijn.suijten@somainline.org/
+[3]: https://lore.kernel.org/linux-arm-msm/20221209215308.1781047-1-marijn.suijten@somainline.org/
