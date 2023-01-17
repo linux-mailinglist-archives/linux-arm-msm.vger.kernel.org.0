@@ -2,125 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 79C52670E10
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 00:52:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 772E8670E42
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 00:58:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229999AbjAQXwG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 18:52:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41674 "EHLO
+        id S229838AbjAQX57 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 18:57:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229882AbjAQXvd (ORCPT
+        with ESMTP id S229846AbjAQX5T (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 18:51:33 -0500
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB03246D55
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 15:01:53 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id mg12so6739613ejc.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 15:01:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3Rm/I8nO9gd2qK++J479RUyAvGB50YCflkNIheUW3mw=;
-        b=kpFSFEFu1royNwIwK2EHJAzZZ2zAfVa3bMf74nggMFzAc/3fitC0IZRmBqb9r8I1RY
-         t49QMkzlE6Vu2+7OB+uJwzs7vJXixkZVs7t5gRV2FEmtp9V5FS9Sva68+TRy+OlYVYkt
-         1nkOniopaEL/T6BOeXAW7zDDS2qt43tAPj2a+hRxikujO9XLqxGnVb6ocVImAspYpogX
-         3qwVmICK9wERMKs7PEX3dxj8cmgjQzKiWFOx1+QrsV0a/9T06/2+Qfity6dMNuyT/+ac
-         zDRzja8svsbsOT4Ks6M0PvcApxUNdd/TXfjMdhV18vDEymRhuavzegNeftFaqEM40O58
-         Zxfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3Rm/I8nO9gd2qK++J479RUyAvGB50YCflkNIheUW3mw=;
-        b=SIHZzUaHMyTRg74uZYon/aAIZ+pKgzPJEXrdLFaTJeib5Yp2U+XIGewb5r/ecpKILJ
-         xdiI5wofQD9q6VgV9x6osMpm6uqp7lWmw41osTU3+ioKwomBVQcDa1POZVhwSSH5jxHf
-         6Jg7zCP1Ol/1GX/6JmX2t0vHNStcEFO3qn3HkQ4QdClcvdbWdvUJDnKDHGl38gADwBVv
-         679LHXf1sXkVP1UPuxoEnCwQPX3noHx4xTevMIjN2SgxO8DAMKXskBfLscvpxUNHLB47
-         ZwKiQdwk2TinGNRQh8lIzesF/iRZOWu9D5er1wRfji5j7PUqHrwI8B//H47tW7nuXfLB
-         ZoSA==
-X-Gm-Message-State: AFqh2krUGRtson1ebZLikxkPGmRLGuoltVw6n2ZMsVE0Ycvha5yNKfac
-        CTyi/2djS0JZhD5WvLjl600b2w==
-X-Google-Smtp-Source: AMrXdXurc0vhLvVdLRLeDt5w9RkfHwaMIRUkHQW7M1vvDzpCkrBmoNO3oe0Tmc0SmYKQQq8b5+PgYg==
-X-Received: by 2002:a17:906:9417:b0:86c:f7ac:71ff with SMTP id q23-20020a170906941700b0086cf7ac71ffmr4846348ejx.10.1673996512516;
-        Tue, 17 Jan 2023 15:01:52 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id kz11-20020a17090777cb00b007aece68483csm13826994ejc.193.2023.01.17.15.01.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Jan 2023 15:01:52 -0800 (PST)
-Message-ID: <5f8d1b76-5948-3b98-52c0-0f280042fa20@linaro.org>
-Date:   Wed, 18 Jan 2023 01:01:50 +0200
+        Tue, 17 Jan 2023 18:57:19 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75FA44DE0D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 15:10:39 -0800 (PST)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30HKdR6J008685;
+        Tue, 17 Jan 2023 23:10:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=Kq4QTOw6JsPonbbZhmW9Co89yNppmOZX9p8vxzArv/Y=;
+ b=Am9tMQHFbGXKntink20eUTTonIvqfaxmvcAhtKlZWhwRlLK2GG1anGZx0FmY1fXhiblh
+ ZkaWsPokEgdFJlZE4FFNkgbKJ/bEAtdu/evPpGSmadEH5vkOQtqqFGKOYWNfkznPRKwK
+ k185j9sQrgim+fJipBsihINDM/+bcNW73wZL3aCMqiF54DoWCodf8+T+bILCvr1hi2Qn
+ 9oZFYvIHFAzYf7gJF/WFdbVS8S888tww7YHq8VIDbRpZKalTU1FYwvVwyBogwE5iG8Oo
+ RNJtrxXyWba7e5c1P0WOEjxTz9UigI19XGYlTdXtsj/rFczVD/771sXwOSrZd/AETzQU GA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n3mm9xkdx-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 17 Jan 2023 23:10:32 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30HNAV0J000861
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 17 Jan 2023 23:10:31 GMT
+Received: from [10.110.108.90] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 17 Jan
+ 2023 15:10:30 -0800
+Message-ID: <9bf93afc-c54d-bd1d-2c85-548202e7d29f@quicinc.com>
+Date:   Tue, 17 Jan 2023 15:10:21 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH v2] clk: qcom: common: use parent_hws in
- _qcom_cc_register_board_clk()
-Content-Language: en-GB
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        Dan Carpenter <dan.carpenter@oracle.com>
-References: <20221228203555.3130090-1-dmitry.baryshkov@linaro.org>
- <20230111044715.5nbxasuhlqv6t2fw@builder.lan>
- <CAA8EJppzHoHp5BVBJN-ZF0OmwbtKfxhX_qTEPc5cwSnLTvTcJQ@mail.gmail.com>
- <20230117033003.ky2i7fc2l72rhysd@builder.lan>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230117033003.ky2i7fc2l72rhysd@builder.lan>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH] drm/msm/dpu: enable sourcesplit for sc7180/sc7280
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230116034435.569512-1-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20230116034435.569512-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: RUDZ_zeBkrafzxgiV_q3x4rY4wrVpxev
+X-Proofpoint-ORIG-GUID: RUDZ_zeBkrafzxgiV_q3x4rY4wrVpxev
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-17_10,2023-01-17_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
+ spamscore=0 priorityscore=1501 malwarescore=0 suspectscore=0
+ impostorscore=0 adultscore=0 bulkscore=0 lowpriorityscore=0 clxscore=1015
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301170185
+X-Spam-Status: No, score=0.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/01/2023 05:30, Bjorn Andersson wrote:
-> On Wed, Jan 11, 2023 at 06:49:29AM +0200, Dmitry Baryshkov wrote:
->> On Wed, 11 Jan 2023 at 06:47, Bjorn Andersson <andersson@kernel.org> wrote:
->>>
->>> On Wed, Dec 28, 2022 at 10:35:55PM +0200, Dmitry Baryshkov wrote:
->>>> Switch _qcom_cc_register_board_clk() to use parent_hws.
->>>>
->>>
->>> There's more to this patch then this short sentence, please describe it
->>> further.
->>
->> True, I'll fix it for v3.
->>
->>>
->>> And given Dan's reported-by, I must assume that there's an issue with
->>> the current code. Is there a Fixes?
->>
->> No. Dan reported an issue with v1, thus his Reported-by was included into v2.
->>
+
+
+On 1/15/2023 7:44 PM, Dmitry Baryshkov wrote:
+> According to the vendor dts files, both sc7180 and sc7280 support the
+> source split mode (using two LMs for a single output). Change these two
+> platforms to use MIXER_SDM845_MASK, which includes
+> DPU_MIXER_SOURCESPLIT. Rename MIXER_SC7180_MASK to MIXER_QCM2290_MASK,
+> since this platform doesn't seem to support source split mode.
 > 
-> I though it meant "this corrects an issue that was Reported-by".
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+Names are getting confusing with mask name re-uses, till the hw catalog 
+split have to live with it I guess.
+
+I need to double-check about QCM 2290, but since this change is keeping 
+current masks for it and just renaming,
+
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 14 +++++++-------
+>   1 file changed, 7 insertions(+), 7 deletions(-)
 > 
-> IMHO including "issues was fixed during code review after being
-> Reported-by" diminishing the value of this trailer - in particular since
-> we don't use it broadly to capture anyone else's review feedback.
-
-I particularly use it for the cases when the issue was reported by 
-testing robot or by Dan (or Dan's robot), since these emails explicitly 
-ask for such trailer.
-
-> 
-> 
-> PS. I'm definitely in favour of introducing a trailer to give Dan, and
-> others, credit for reviews.
-
-Any particular suggestion?
-
--- 
-With best wishes
-Dmitry
-
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> index 22ad996e9014..835d6d2c4115 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> @@ -56,7 +56,7 @@
+>   #define MIXER_SDM845_MASK \
+>   	(BIT(DPU_MIXER_SOURCESPLIT) | BIT(DPU_DIM_LAYER) | BIT(DPU_MIXER_COMBINED_ALPHA))
+>   
+> -#define MIXER_SC7180_MASK \
+> +#define MIXER_QCM2290_MASK \
+>   	(BIT(DPU_DIM_LAYER) | BIT(DPU_MIXER_COMBINED_ALPHA))
+>   
+>   #define PINGPONG_SDM845_MASK BIT(DPU_PINGPONG_DITHER)
+> @@ -1464,9 +1464,9 @@ static const struct dpu_lm_sub_blks sc7180_lm_sblk = {
+>   };
+>   
+>   static const struct dpu_lm_cfg sc7180_lm[] = {
+> -	LM_BLK("lm_0", LM_0, 0x44000, MIXER_SC7180_MASK,
+> +	LM_BLK("lm_0", LM_0, 0x44000, MIXER_SDM845_MASK,
+>   		&sc7180_lm_sblk, PINGPONG_0, LM_1, DSPP_0),
+> -	LM_BLK("lm_1", LM_1, 0x45000, MIXER_SC7180_MASK,
+> +	LM_BLK("lm_1", LM_1, 0x45000, MIXER_SDM845_MASK,
+>   		&sc7180_lm_sblk, PINGPONG_1, LM_0, 0),
+>   };
+>   
+> @@ -1499,11 +1499,11 @@ static const struct dpu_lm_cfg sm8150_lm[] = {
+>   };
+>   
+>   static const struct dpu_lm_cfg sc7280_lm[] = {
+> -	LM_BLK("lm_0", LM_0, 0x44000, MIXER_SC7180_MASK,
+> +	LM_BLK("lm_0", LM_0, 0x44000, MIXER_SDM845_MASK,
+>   		&sc7180_lm_sblk, PINGPONG_0, 0, DSPP_0),
+> -	LM_BLK("lm_2", LM_2, 0x46000, MIXER_SC7180_MASK,
+> +	LM_BLK("lm_2", LM_2, 0x46000, MIXER_SDM845_MASK,
+>   		&sc7180_lm_sblk, PINGPONG_2, LM_3, 0),
+> -	LM_BLK("lm_3", LM_3, 0x47000, MIXER_SC7180_MASK,
+> +	LM_BLK("lm_3", LM_3, 0x47000, MIXER_SDM845_MASK,
+>   		&sc7180_lm_sblk, PINGPONG_3, LM_2, 0),
+>   };
+>   
+> @@ -1518,7 +1518,7 @@ static const struct dpu_lm_sub_blks qcm2290_lm_sblk = {
+>   };
+>   
+>   static const struct dpu_lm_cfg qcm2290_lm[] = {
+> -	LM_BLK("lm_0", LM_0, 0x44000, MIXER_SC7180_MASK,
+> +	LM_BLK("lm_0", LM_0, 0x44000, MIXER_QCM2290_MASK,
+>   		&qcm2290_lm_sblk, PINGPONG_0, 0, DSPP_0),
+>   };
+>   
