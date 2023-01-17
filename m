@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C65D66E0B5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 15:30:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FA2466E112
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 15:42:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229730AbjAQOa0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 09:30:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47882 "EHLO
+        id S232653AbjAQOmR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 09:42:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229648AbjAQO3u (ORCPT
+        with ESMTP id S230032AbjAQOmL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 09:29:50 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4299D3C2A3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 06:29:05 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id w14so27983031edi.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 06:29:05 -0800 (PST)
+        Tue, 17 Jan 2023 09:42:11 -0500
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D09833D09B
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 06:42:10 -0800 (PST)
+Received: by mail-ed1-x529.google.com with SMTP id s21so1141055edi.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 06:42:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=4UGD3C9WKKhoLcns/YO+k60vwTruXIRCWksL33OjZZU=;
-        b=abmeYWOSlOCC0sm9Rn75XUSAgWCcUg+A6l5COGLADBxE0NlO8PyH1OPZQNvp61VOoX
-         f+ydVjTYmeQPoLmRP0nsPcE8HSbDzdWN1zBU2VOoKmZbtkeOOgRad3kyh3Ja94bCKWCh
-         j9H9C9WSPDWUjaPSn7PWUjeAU8kcZDVK/GQD/XuiOwnMaBYOEOh+FR+QRgkhGYex/UBJ
-         X9PtxP2VhMuABAjzxXJQMW14VcUB2lYwR/N3bpjgh7RzFVC7fTpqpCelIkeiIsFHjzfY
-         l6Il6TpAzqdv5UftkS6MWRsywpVOZmwtAsd79yosFw/9HbslH+1ifKrCbVfU2upyJLkW
-         TsYw==
+        bh=Hc75TyffO25aVJYo/DlU/tvU9zvgJb8khhzScIUOhmU=;
+        b=sdCkItfiGOKGlz4qq5AkoHv3WRIzQLHfvVV3TZJf+ek+OQtXNYCbzA1FgwjlpA0GNS
+         5sC0DyfMJ7iB1Jph0oWojgsoaSULER/wDj0F0DuNNDKZOzrPI+8ZKEbxiADF/xdDXZIz
+         ONCnd9N7/zb9dN7lYy+KukSz/SGBCqMpgIGlFPecV48O2q8aNjXC6fvov6z9c/JYOA1S
+         bKWoPuekTbSTjrWLqO88N3GtiDgz+5O4LlcotXmFginUw9BVzdWHQ+4FSz+Za+KDVk7W
+         kuv5KHAZyaJ+xnuiimq9NU9w2p940PM4TE/zn1C2t0t8SXWhFs6vC+Zypfo/YBPScOfa
+         xNFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4UGD3C9WKKhoLcns/YO+k60vwTruXIRCWksL33OjZZU=;
-        b=nX+5FNKFB90phx80vU/hDlVDyXRi4LpiTeH086nlEyO4Fcfe2shR84j4NuuW8F5AIl
-         cbKAuuwwKIXlwNEyrGQSsGBttx96ARj4vRKmPVrJfzmTZvGynsJapcjbutxOEvz3EBPZ
-         z5T2H2le1Hr88f4VnQ2fQ8U8iCOFmud2oZUCItqfYIxqqqSP1QCpnWPq5mbTJ64VTpJr
-         vmklyaNwFAx5qHVqUO3sYVfB3B6vXWKpW1DFLfpKjoHJeDG44aRD1oBuSIH7XhXuv6QB
-         Tl7ufpncCKg5qSry2a7PGnLXYh+cbklCJPn0Pi77vMaukHLiBSJVyfBqWsCcoeN+hBek
-         2BbA==
-X-Gm-Message-State: AFqh2kqID/gVoEfp4kiY/qJTvCC4pMcdJ836PVWmC06emHODlRwfUOv7
-        ANnY3PZF8Y6+YyaKtpjsuEsufg==
-X-Google-Smtp-Source: AMrXdXvxf9/ZCk1lQ4i0cJ8vaYUkXgZ2w4SlStRI/xVCppgh3t+Ic79lLXRd+Ny5+lB/YlZcgccXJw==
-X-Received: by 2002:aa7:d7d9:0:b0:478:5688:7c9f with SMTP id e25-20020aa7d7d9000000b0047856887c9fmr12926771eds.29.1673965743743;
-        Tue, 17 Jan 2023 06:29:03 -0800 (PST)
+        bh=Hc75TyffO25aVJYo/DlU/tvU9zvgJb8khhzScIUOhmU=;
+        b=m5HSxm1k3AJHbO1EpRdmUaT+wHxDE0f5MjOtUYdIVol9l50fSDlnnL0e704OcA+OO6
+         Apu7JA3pkSuBubXJguAnu4tQxwIsOgu/aUjD8XOc/5lNt268/7EmzuT3nmvKqSTwtFaf
+         TffI7aO16aVNQH+YVd3JAwIcxQ2rdhX7A6GuZhKY57hfxv9u3IX3msYdC9rmQfmCvEaR
+         qHnAPJ/pmIqPgGY2zPtkU/sXC8/GikO4RK5vTFJE8k28KnBpRxhEj7IVbl6gUl4VspWW
+         NWG16TXldtsby/JiZNKMPt4cCpEAPygRGf3FGcbVTYCdiFXln82Agek6ElpQl9UMqEA6
+         U4Lw==
+X-Gm-Message-State: AFqh2krXWoC5yZijFC5MefwpGwQe/S4yxfasQhWY7D999h0CGbO7Tv3l
+        sv6wBBYe/PvlF/m4X7D/38m+Dg==
+X-Google-Smtp-Source: AMrXdXswfLZjseblqDDfG3SABRK5o4w3rIGxnxPRJ/o9FT4Mp4F/UAxJuJ2olnpJUzBUKNUP4UFvkw==
+X-Received: by 2002:aa7:c052:0:b0:475:dddc:374a with SMTP id k18-20020aa7c052000000b00475dddc374amr3407422edo.18.1673966529432;
+        Tue, 17 Jan 2023 06:42:09 -0800 (PST)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id d3-20020aa7d5c3000000b004835bd8dfe5sm12988233eds.35.2023.01.17.06.29.02
+        by smtp.gmail.com with ESMTPSA id a8-20020aa7d908000000b0049dfd6bdc25sm3805154edr.84.2023.01.17.06.42.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Jan 2023 06:29:03 -0800 (PST)
-Message-ID: <49481b50-b68b-3c77-e398-8b0ae617ab06@linaro.org>
-Date:   Tue, 17 Jan 2023 16:29:02 +0200
+        Tue, 17 Jan 2023 06:42:09 -0800 (PST)
+Message-ID: <61be8f36-7171-dbc1-94ec-7e77438b37f5@linaro.org>
+Date:   Tue, 17 Jan 2023 16:42:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH v4 5/6] phy: qcom-qmp: pcs-ufs: Add v6 register offsets
+Subject: Re: [PATCH v4 4/6] phy: qcom-qmp: qserdes-txrx-ufs: Add v6 register
+ offsets
 Content-Language: en-GB
 To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -69,15 +70,14 @@ Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         Johan Hovold <johan@kernel.org>
 References: <20230117142015.509675-1-abel.vesa@linaro.org>
- <20230117142015.509675-6-abel.vesa@linaro.org>
+ <20230117142015.509675-5-abel.vesa@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230117142015.509675-6-abel.vesa@linaro.org>
+In-Reply-To: <20230117142015.509675-5-abel.vesa@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -86,17 +86,73 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 17/01/2023 16:20, Abel Vesa wrote:
 > The new SM8550 SoC bumps up the HW version of QMP phy to v6 for USB,
-> UFS and PCIE g3x2. Add the new PCS UFS specific offsets in a dedicated
-> header file.
+> UFS and PCIE g3x2. Add the new qserdes TX RX but UFS specific offsets
+> in a dedicated header file.
 > 
 > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
->   .../phy/qualcomm/phy-qcom-qmp-pcs-ufs-v6.h    | 31 +++++++++++++++++++
->   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c       |  1 +
+>   .../phy-qcom-qmp-qserdes-txrx-ufs-v6.h        | 30 +++++++++++++++++++
+>   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c       |  2 ++
 >   2 files changed, 32 insertions(+)
->   create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v6.h
+>   create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h
+> new file mode 100644
+> index 000000000000..6238dd2b8421
+> --- /dev/null
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h
+> @@ -0,0 +1,30 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +/*
+> + * Copyright (c) 2023, Linaro Limited
+> + */
+> +
+> +#ifndef QCOM_PHY_QMP_QSERDES_TXRX_UFS_V6_H_
+> +#define QCOM_PHY_QMP_QSERDES_TXRX_UFS_V6_H_
+> +
+> +#define QSERDES_UFS_V6_TX_RES_CODE_LANE_TX			0x28
+> +#define QSERDES_UFS_V6_TX_RES_CODE_LANE_RX			0x2c
+> +#define QSERDES_UFS_V6_TX_RES_CODE_LANE_OFFSET_TX		0x30
+> +#define QSERDES_UFS_V6_TX_RES_CODE_LANE_OFFSET_RX		0x34
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Emty line please
+
+> +#define QSERDES_UFS_V6_RX_UCDR_FO_GAIN_RATE2			0x08
+> +#define QSERDES_UFS_V6_RX_UCDR_FO_GAIN_RATE4			0x10
+
+Any chance to doublecheck these two values? I think that 
+UCDR_FO_GAIN_RATE2 is 0xd4 (according to phy-qcom-ufs-qmp-v4-cape.h from 
+msm-5.10)
+
+> +
+> +#define QSERDES_UFS_V6_RX_VGA_CAL_MAN_VAL			0x178
+> +#define QSERDES_UFS_V6_RX_MODE_RATE_0_1_B0			0x208
+> +#define QSERDES_UFS_V6_RX_MODE_RATE_0_1_B1			0x20c
+> +#define QSERDES_UFS_V6_RX_MODE_RATE_0_1_B3			0x214
+> +#define QSERDES_UFS_V6_RX_MODE_RATE_0_1_B6			0x220
+> +#define QSERDES_UFS_V6_RX_MODE_RATE2_B3				0x238
+> +#define QSERDES_UFS_V6_RX_MODE_RATE2_B6				0x244
+> +#define QSERDES_UFS_V6_RX_MODE_RATE3_B3				0x25c
+> +#define QSERDES_UFS_V6_RX_MODE_RATE3_B4				0x260
+> +#define QSERDES_UFS_V6_RX_MODE_RATE3_B5				0x264
+> +#define QSERDES_UFS_V6_RX_MODE_RATE3_B8				0x270
+> +#define QSERDES_UFS_V6_RX_MODE_RATE4_B3				0x280
+> +#define QSERDES_UFS_V6_RX_MODE_RATE4_B6				0x28c
+> +
+> +#endif
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> index 110d8fb9309f..a5cdd58c5b4d 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> @@ -27,6 +27,8 @@
+>   #include "phy-qcom-qmp-pcs-ufs-v4.h"
+>   #include "phy-qcom-qmp-pcs-ufs-v5.h"
+>   
+> +#include "phy-qcom-qmp-qserdes-txrx-ufs-v6.h"
+> +
+>   /* QPHY_SW_RESET bit */
+>   #define SW_RESET				BIT(0)
+>   /* QPHY_POWER_DOWN_CONTROL */
 
 -- 
 With best wishes
