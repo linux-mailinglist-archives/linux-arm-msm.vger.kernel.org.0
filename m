@@ -2,128 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7121B66DDF7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 13:45:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D3B966DE32
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 13:56:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236853AbjAQMp4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 07:45:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34080 "EHLO
+        id S236931AbjAQM4H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 07:56:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236214AbjAQMpz (ORCPT
+        with ESMTP id S236596AbjAQM4F (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 07:45:55 -0500
-Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE8593867B
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 04:45:53 -0800 (PST)
-Received: by mail-yb1-xb2f.google.com with SMTP id o75so33850269yba.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 04:45:53 -0800 (PST)
+        Tue, 17 Jan 2023 07:56:05 -0500
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D94181BAE7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 04:56:02 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id iv8-20020a05600c548800b003db04a0a46bso1273165wmb.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 04:56:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=vxknlLDnsxojLcmQ59vK0ZLgoKiVLvxFkDDOG8faM4Q=;
-        b=uqcNVH96+N3QhwEoMwCX0XF8bNjcpWqYdeKTdHchHyJ1W9LW/wuK5nUhmLsPUlqcjz
-         7kV/qMP8k1vWUT7gagwrWaw7KqPt9kl/O1+irrBaSgnivLTfRy1btFgNHs0Gl7SiH9ji
-         A532CpWpeNHRHouB4wkT/dQOWzRCmCVnPNfD0yz9tD2N5LAH6g28XDE2L5EmjbPp6huX
-         HmiS0kgY0TYGihNMa3JOOZNERhi1bTob47MaH4+Nrpum65ConMPIFPErUsUSkUeMwqmm
-         3hVtI2/l7sxxTNcHAoq5MxayhbFf0SXOt3b2IzUI8MGo0MOoUV//HbK6Oam84fX+IabD
-         kN8Q==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Kqhws25vCfr+KtN44sNbAes05bM1bGpfEYSXw7WryfE=;
+        b=KATTs6l9/8eFALrmE/PARmJXB+OJhINK1bpVy5E0K94Kqngab/bmHcfgbkw/gpPGTw
+         3gz2xCCkVhsaQi962ml2qo5pkgSoYrxausxWk5QRUSoZsyC4PhrApdGgZDR8x6C7lbd6
+         abxD2/W1DsjM+DU3FwShLfS3je/WvRhrCIA1TqlqqLHzAYoSBjmlHSaXXYLHPKESYYvh
+         aGdUMDV/tAZ4NKYh6u39Grq6aYK1fUl00jqfWXwe2Kq4f8gOxWjEfZZd22DsdCWkDFMJ
+         Ie42H1XSnXlvFS6XLmkQXNhYLT8WHzGIfBE8Ujdy1PKxDDZeUZaaAvsHfXmWUEfT7+HB
+         IBkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=vxknlLDnsxojLcmQ59vK0ZLgoKiVLvxFkDDOG8faM4Q=;
-        b=G76/im85xxKFWO759TlqyBeMrP8QpYhqNsvewqoxVUp3m/xp5u7IQnPK8HX03nwS8c
-         C9nL64BrCwc6HfLhnotsyR7pyA6zODel/d6k5x0hN+RebekI3/5ORWDwNgPlxMxh0owq
-         MvxCEzPa4jIu4i3Q5nbl3XouD0aqSu6YaxJmWRfL6bnQQ4ZTEuO+0lHhjOe1JSneBfdO
-         2PaewAAEsKli0mGWgGraSA51ve19Euuv/QPKyah4elFUkfXQwLHIj2pbVUOdTu6M9dTQ
-         71+IzZs4Gskd1HeY5qN57jAwJYxyx+mfid+nfrqF7zsf0UDYOmV9uHUfV4BiRc/ORLjP
-         qTWA==
-X-Gm-Message-State: AFqh2kqsUSLQqgeyI5TJl3trEmRJAJXLWqPA1PXfOto+9NC3gJKoLyrn
-        jvuFiuwVFcSc+jce73cy0eLpr0JJh5JdZSFBXWNpDQ==
-X-Google-Smtp-Source: AMrXdXuPODb5km1vVWLEOajbQIs4XSX8t9jdXpVQTtsxlKrB6VmMItgiux+DXoc2jwTxQ8qklnWstNG6QM+ZlY6ut2o=
-X-Received: by 2002:a25:ca81:0:b0:7d2:891e:ee59 with SMTP id
- a123-20020a25ca81000000b007d2891eee59mr439542ybg.152.1673959553051; Tue, 17
- Jan 2023 04:45:53 -0800 (PST)
-MIME-Version: 1.0
-References: <20230109174511.1740856-1-brgl@bgdev.pl> <20230109174511.1740856-3-brgl@bgdev.pl>
- <bbd21894-234e-542e-80ec-8f2bb11e268e@linaro.org> <843eed4b-552a-a529-83ed-b813c1346c5f@linaro.org>
- <CAMRc=MfTynAACwy+hB+FxOQ=-gA+307viz7LCUk8zmn4H7BaOQ@mail.gmail.com>
-In-Reply-To: <CAMRc=MfTynAACwy+hB+FxOQ=-gA+307viz7LCUk8zmn4H7BaOQ@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 17 Jan 2023 14:45:42 +0200
-Message-ID: <CAA8EJpp=w=PurE8GYBOPWmz5GnuXPo8Wyd=Xho0M_yNRciG+0w@mail.gmail.com>
-Subject: Re: [PATCH 02/18] clk: qcom: add the GCC driver for sa8775p
-To:     Bartosz Golaszewski <brgl@bgdev.pl>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        bh=Kqhws25vCfr+KtN44sNbAes05bM1bGpfEYSXw7WryfE=;
+        b=3bAQJ2hpfm206aYrL9jH9/2reLjOESw4To475pA7EkETq/JWXiAbV5e9stJ33bXzLb
+         nn/r036eLmdq9avLgnJNPDj8jMzo8Chj2y6ewzIubwTUWRNyS8ZQdkZU72NAL1raXKyU
+         oWKAFNDjjJOB4be1tB1nUWEpG5Q8nMlZ1ZLeeAGknHjBF8QwBS1S29XLhLL8JI9446G+
+         bt0IAFEnCrfyEoebgDi/tKipJ1s+B80EJSe3R8rGkEUr1AQsBYGzgOClTRGgq9gI6LMs
+         EraE9BU5shbc/YjYXbtrug0K+5yn7K3X/sr6UF+bKf0DX+u4jTuz0eZYpNPxhWwi7EEb
+         s9cQ==
+X-Gm-Message-State: AFqh2kpI2zXqHA+DnATOfYHPkifKJ2kVQFyy4r3/3DnkICLA3EU6fr//
+        uowEaTbxaWPifyX7K5s+bM9Hdw==
+X-Google-Smtp-Source: AMrXdXvqtGtRoLFDkn2W9oAJUq+uFk2SZmQkZJFMhbCCc178PKwlPxcU5GY21cpxJ19dpuBfLPSbrw==
+X-Received: by 2002:a05:600c:1695:b0:3da:1c49:d632 with SMTP id k21-20020a05600c169500b003da1c49d632mr2998500wmn.1.1673960161411;
+        Tue, 17 Jan 2023 04:56:01 -0800 (PST)
+Received: from hackbox.lan ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id g12-20020a05600c310c00b003c70191f267sm45069778wmo.39.2023.01.17.04.56.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Jan 2023 04:56:00 -0800 (PST)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Richard Cochran <richardcochran@gmail.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, Alex Elder <elder@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux.dev, linux-gpio@vger.kernel.org,
-        netdev@vger.kernel.org, Shazad Hussain <quic_shazhuss@quicinc.com>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Johan Hovold <johan@kernel.org>
+Subject: [PATCH v3 0/6] phy: qualcomm: Add UFS support for SM8550
+Date:   Tue, 17 Jan 2023 14:55:49 +0200
+Message-Id: <20230117125555.163087-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 17 Jan 2023 at 14:44, Bartosz Golaszewski <brgl@bgdev.pl> wrote:
->
-> On Mon, Jan 9, 2023 at 10:06 PM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
-> >
-> > On 09/01/2023 19:58, Konrad Dybcio wrote:
-> > >
-> > >
-> > > On 9.01.2023 18:44, Bartosz Golaszewski wrote:
-> > >> From: Shazad Hussain <quic_shazhuss@quicinc.com>
-> > >>
-> > >> Add support for the Global Clock Controller found in the QTI SA8775P
-> > >> platforms.
-> > >>
-> > >> Signed-off-by: Shazad Hussain <quic_shazhuss@quicinc.com>
-> > >> [Bartosz: made the driver ready for upstream]
-> > >> Co-developed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > >> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > >> ---
-> > > [...]
-> > >
-> >
-> > As the driver didn't get to the list, I'll comment OOB.
-> >
-> > Please use clk_regmap_phy_mux_ops where applicable (PCIe PIPE clocks).
-> >
->
-> Looks like it's impossible for this platform as the PCIe PIPE clocks
-> have two parents.
+The v2 of this patchset is:
+https://lore.kernel.org/all/20230112130542.1399921-1-abel.vesa@linaro.org/
 
-That's the point, please check the history of other platforms. XO
-becomes the 'off' state rather than being a separate parent.
+Changes since v2:
+ * rebased on linux-phy/next
+ * dropped sm8550_ufs_phy_clk_l, used sdm845_ufs_phy_clk_l instead
+ * zero padded pcs value in qmp_ufs_offsets_v6 to 4 digits
+ * replaced LF copyright with Linaro's in all header files
+ * moved the UFS specific includes in the UFS specific driver file
+ * added Krzysztof's A-b tag to the bindings patch
+
+Abel Vesa (6):
+  dt-bindings: phy: Add QMP UFS PHY comptible for SM8550
+  phy: qcom-qmp: qserdes-com: Add v6 register offsets
+  phy: qcom-qmp: qserdes-txrx: Add v6 register offsets
+  phy: qcom-qmp: qserdes-txrx-ufs: Add v6 register offsets
+  phy: qcom-qmp: pcs-ufs: Add v6 register offsets
+  phy: qcom-qmp-ufs: Add SM8550 support
+
+ .../phy/qcom,sc8280xp-qmp-ufs-phy.yaml        |  1 +
+ .../phy/qualcomm/phy-qcom-qmp-pcs-ufs-v6.h    | 31 ++++++
+ .../qualcomm/phy-qcom-qmp-qserdes-com-v6.h    | 82 +++++++++++++++
+ .../phy-qcom-qmp-qserdes-txrx-ufs-v6.h        | 30 ++++++
+ .../qualcomm/phy-qcom-qmp-qserdes-txrx-v6.h   | 77 +++++++++++++++
+ drivers/phy/qualcomm/phy-qcom-qmp-ufs.c       | 99 +++++++++++++++++++
+ drivers/phy/qualcomm/phy-qcom-qmp.h           |  3 +
+ 7 files changed, 323 insertions(+)
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v6.h
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-qserdes-com-v6.h
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-v6.h
 
 -- 
-With best wishes
-Dmitry
+2.34.1
+
