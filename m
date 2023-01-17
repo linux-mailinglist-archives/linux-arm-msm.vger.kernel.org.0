@@ -2,159 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 175BC66DA33
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 10:44:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D848066DB6E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 11:46:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236514AbjAQJoV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 04:44:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41640 "EHLO
+        id S235963AbjAQKqh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 05:46:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236247AbjAQJlw (ORCPT
+        with ESMTP id S236182AbjAQKqg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 04:41:52 -0500
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 925B286AB;
-        Tue, 17 Jan 2023 01:41:19 -0800 (PST)
-Received: by mail-qk1-x729.google.com with SMTP id i28so2138963qkl.6;
-        Tue, 17 Jan 2023 01:41:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hdQxBMQOMwqD8VUok85rROkSgj2htMeyYzI/9JQJnaY=;
-        b=HdpUBrzVC+fRm5us0I5pcSVClglYaFUfiEm/cGmO0HRwQ+aYU0HVym6Sa1QAveTfcy
-         HVrNoblnZL7c17Uzkx9cWtDUNfb/se9p1L8E0LImXSu+eOf5/sphsIlfsbxsZUBcSG3A
-         epLckHWQLqK9BHTP8K/H2nWLrxRMmIziEGtmrfzMCzTlKxaNHqt+yQ5uevBzAlX/9/dD
-         eraOfE2nSwKxtnVs7ghhKhl4PJs4QjHGI2ViGL60UKvVQ0h5+wkTdiujQa4bIuASu3/g
-         mGE/ZB8GT3isx1sHuKZF2MZCBZI+i9AXRO9tTxFkQbgjJOCiiAphcf9gB63ctNnSGHL5
-         ktCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hdQxBMQOMwqD8VUok85rROkSgj2htMeyYzI/9JQJnaY=;
-        b=Bm98z8W6Pwj+StervzCzzbAsf86KJ/AzQY3L9XKBybh85SV+IJdnfGCBH1MW0UZaKg
-         d38WcsuJ1bQmw3y6/dFRnQDMu4+zthBQaonm5xNCnaF5eebZbE9ZVL7rppalwPuMlaw+
-         aEO5YFz/AMba35L2fwSaoY+JUJZCxnLa6LMTIIceMjMUWECEJDESiHBVRhKXR7Go4YFj
-         bbX3FfU/2yAVCbUt4Tb/tO0+rxQogHkQKF2KvskA2MBrS3T8mPDICzn6vIwnDjY0vecB
-         sTtiROIrm7CJYJmqOlV/EyJU8xKumj3lPRMC6BrYCQZ3zoW3cX51pXgjBAJbPC+E2mG1
-         QyYA==
-X-Gm-Message-State: AFqh2kpidLFMhQX4WmNPI7/7JcgeEIi5Pp4Hob6qiXC8JFRW7dNSxsA5
-        1pt34W6RwGt6tQXm5JWYEouZ7Dejf8HHg14pN1Q=
-X-Google-Smtp-Source: AMrXdXvUweQfxPG9XW/trbF8uyUaDAKToxBAJ8l2RD/emKWwnVOskao8jQNpBm7SRN0AryYBpZ/goUm0u7jIv/pAfEY=
-X-Received: by 2002:a05:620a:36f4:b0:702:34dc:25a8 with SMTP id
- cz52-20020a05620a36f400b0070234dc25a8mr95984qkb.748.1673948478628; Tue, 17
- Jan 2023 01:41:18 -0800 (PST)
+        Tue, 17 Jan 2023 05:46:36 -0500
+X-Greylist: delayed 2275 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 17 Jan 2023 02:46:33 PST
+Received: from mx.kernkonzept.com (serv1.kernkonzept.com [IPv6:2a01:4f8:1c1c:b490::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9F192D16C;
+        Tue, 17 Jan 2023 02:46:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=kernkonzept.com; s=mx1; h=Content-Transfer-Encoding:MIME-Version:Message-Id
+        :Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=5lOdDkXmqt/n+E+7DkwgWkVn3eeFOhgRvKeEyKH5zV4=; b=hJNmOS1iEMSCYdkwEsbHFpVKKI
+        5R8bmjR62AZt3g2SsB1hJ+z3TUZ1YhAHV+qXyx3ivA9KsiDosqvTgXBo5ephRj4u6hN6p6ZOK/kjA
+        c51kS8di/uIvEYTSjCWatXizQgc7S4ved7yoZUhPcS2TT4eMjRnoHOqIxcT+pV5g1c5CYgQMji33n
+        Jv4uG9Z6+pre9pShsAAbQGPN3PCpmnjV9y303jNDnxS5lCeWqY6uP1uLYLVjZEBOQG0rWLECIZZzx
+        IMl09R1dGLDykUeMP3pPe4Y4UbEnJ+Vp9Hi4VNV4laUxmTr00eXJa/orQpJMV9qZIvBosxGIT+dQ3
+        vVl39hdg==;
+Received: from [10.22.3.24] (helo=kernkonzept.com)
+        by mx.kernkonzept.com with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.94.2)
+        id 1pHitL-003dpB-BN; Tue, 17 Jan 2023 11:08:31 +0100
+From:   Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Paul Menzel <pmenzel@molgen.mpg.de>,
+        Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Subject: [PATCH v2 RESEND RESEND] Bluetooth: btqcomsmd: Fix command timeout after setting BD address
+Date:   Tue, 17 Jan 2023 11:07:03 +0100
+Message-Id: <20230117100703.375787-1-stephan.gerhold@kernkonzept.com>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-References: <20220715122903.332535-1-nuno.sa@analog.com> <20220715122903.332535-13-nuno.sa@analog.com>
- <20220806192048.0ca41cc5@jic23-huawei> <20230116204452.il4gase2szipeexz@SoMainline.org>
- <CAHp75VdX9sFgn9STyzwcDCK1KYbU00ejFNcEP3FVnLk5J=Pktg@mail.gmail.com> <CAHp75VdTftm1BE21rH1HVHiwUye-0Dvc66uCK2LE2qF4_zA6hg@mail.gmail.com>
-In-Reply-To: <CAHp75VdTftm1BE21rH1HVHiwUye-0Dvc66uCK2LE2qF4_zA6hg@mail.gmail.com>
-From:   Andy Shevchenko <andy.shevchenko@gmail.com>
-Date:   Tue, 17 Jan 2023 11:40:42 +0200
-Message-ID: <CAHp75VdyCA7mQdm--kg=hUbmQqX4-jfFMHgLxref5mNSM1vnMA@mail.gmail.com>
-Subject: Re: [PATCH v3 12/15] iio: adc: qcom-spmi-adc5: convert to device properties
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Jonathan Cameron <jic23@kernel.org>,
-        =?UTF-8?B?TnVubyBTw6E=?= <nuno.sa@analog.com>,
-        openbmc@lists.ozlabs.org, linux-imx@nxp.com,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-iio@vger.kernel.org, linux-mips@vger.kernel.org,
-        linux-renesas-soc@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        chrome-platform@lists.linux.dev,
-        linux-arm-kernel@lists.infradead.org,
-        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-        linux-arm-msm@vger.kernel.org,
-        Gwendal Grignou <gwendal@chromium.org>,
-        Fabio Estevam <festevam@gmail.com>,
-        Tali Perry <tali.perry1@gmail.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Eugen Hristev <eugen.hristev@microchip.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Michael Hennerich <Michael.Hennerich@analog.com>,
-        Haibo Chen <haibo.chen@nxp.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jan 17, 2023 at 11:06 AM Andy Shevchenko
-<andy.shevchenko@gmail.com> wrote:
->
-> On Tue, Jan 17, 2023 at 10:53 AM Andy Shevchenko
-> <andy.shevchenko@gmail.com> wrote:
-> >
-> > On Mon, Jan 16, 2023 at 10:44 PM Marijn Suijten
-> > <marijn.suijten@somainline.org> wrote:
-> > >
-> > > On 2022-08-06 19:20:48, Jonathan Cameron wrote:
-> > > > On Fri, 15 Jul 2022 14:29:00 +0200
-> > > > Nuno S=C3=A1 <nuno.sa@analog.com> wrote:
-> > > >
-> > > > > Make the conversion to firmware agnostic device properties. As pa=
-rt of
-> > > > > the conversion the IIO inkern interface 'of_xlate()' is also conv=
-erted to
-> > > > > 'fwnode_xlate()'. The goal is to completely drop 'of_xlate' and h=
-ence OF
-> > > > > dependencies from IIO.
-> > > > >
-> > > > > Signed-off-by: Nuno S=C3=A1 <nuno.sa@analog.com>
-> > > > > Acked-by: Linus Walleij <linus.walleij@linaro.org>
-> > > > > Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-> > > > +CC Marijin who happend to post a patch for this driver that I just=
- accepted
-> > > > and hence probably has hardware access.  Any chance of a test for t=
-his series?
-> > > >
-> > > > If not, no problem as this is fairly mechanical and we have testing=
- on some of
-> > > > the other drivers using the new code.
-> > > >
-> > > > I'll probably queue this up in the meantime but it won't end up ups=
-tream
-> > > > for a few weeks yet.
-> > >
-> > > Jonathan,
-> > >
-> > > This CC just surfaced in my inbox while searching for our current
-> > > discussion around missing labels in qcom-spmi-vadc - and on the side =
-a
-> > > userspace @xx label name ABI break (in qcom-spmi-adc5) caused by this
-> > > patch's fwnode_get_name change - we could've caught it if I had not
-> > > accidentally marked it as read and/or forgot about it.  My apologies.
-> >
-> > Does the following addition to the top of the
-> > adc5_get_fw_channel_data() fix the issue?
-> >
-> > +       name =3D devm_kasprintf(adc->dev, GFP_KERNEL, "%pfwP", fwnode);
-> > +       if (!name)
-> > +               return -ENOMEM;
->
-> Okay, it probably the same, so it might need additional code to
->
-> + name[strchrnul(name, '@') - name] =3D '\0';
+On most devices using the btqcomsmd driver (e.g. the DragonBoard 410c
+and other devices based on the Qualcomm MSM8916/MSM8909/... SoCs)
+the Bluetooth firmware seems to become unresponsive for a while after
+setting the BD address. On recent kernel versions (at least 5.17+)
+this often causes timeouts for subsequent commands, e.g. the HCI reset
+sent by the Bluetooth core during initialization:
 
-I have just sent a formal patch, please test on top of non-working kernel.
+    Bluetooth: hci0: Opcode 0x c03 failed: -110
 
+Unfortunately this behavior does not seem to be documented anywhere.
+Experimentation suggests that the minimum necessary delay to avoid
+the problem is ~150us. However, to be sure add a sleep for > 1ms
+in case it is a bit longer on other firmware versions.
 
---
-With Best Regards,
-Andy Shevchenko
+Older kernel versions are likely also affected, although perhaps with
+slightly different errors or less probability. Side effects can easily
+hide the issue in most cases, e.g. unrelated incoming interrupts that
+cause the necessary delay.
+
+Fixes: 1511cc750c3d ("Bluetooth: Introduce Qualcomm WCNSS SMD based HCI driver")
+Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+---
+Unmodified second resend of the v2 I sent back in June and again in
+October, it seems to have been archived again in patchwork. Any kind of
+feedback would be much appreciated! :)
+
+I tested this using a script that reboots repeatedly and checks for the
+error. With this patch, BT shows up successfully for 100+ consecutive
+boots. Without this patch it usually fails after 1-5 boots (or even
+always on some boards).
+
+Changes in v2:
+  - Clarify commit message: Add affected devices and kernel versions
+---
+ drivers/bluetooth/btqcomsmd.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/bluetooth/btqcomsmd.c b/drivers/bluetooth/btqcomsmd.c
+index 2acb719e596f..11c7e04bf394 100644
+--- a/drivers/bluetooth/btqcomsmd.c
++++ b/drivers/bluetooth/btqcomsmd.c
+@@ -122,6 +122,21 @@ static int btqcomsmd_setup(struct hci_dev *hdev)
+ 	return 0;
+ }
+ 
++static int btqcomsmd_set_bdaddr(struct hci_dev *hdev, const bdaddr_t *bdaddr)
++{
++	int ret;
++
++	ret = qca_set_bdaddr_rome(hdev, bdaddr);
++	if (ret)
++		return ret;
++
++	/* The firmware stops responding for a while after setting the bdaddr,
++	 * causing timeouts for subsequent commands. Sleep a bit to avoid this.
++	 */
++	usleep_range(1000, 10000);
++	return 0;
++}
++
+ static int btqcomsmd_probe(struct platform_device *pdev)
+ {
+ 	struct btqcomsmd *btq;
+@@ -162,7 +177,7 @@ static int btqcomsmd_probe(struct platform_device *pdev)
+ 	hdev->close = btqcomsmd_close;
+ 	hdev->send = btqcomsmd_send;
+ 	hdev->setup = btqcomsmd_setup;
+-	hdev->set_bdaddr = qca_set_bdaddr_rome;
++	hdev->set_bdaddr = btqcomsmd_set_bdaddr;
+ 
+ 	ret = hci_register_dev(hdev);
+ 	if (ret < 0)
+-- 
+2.30.2
+
