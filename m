@@ -2,65 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 87A2666D5A5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 06:36:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1065466D651
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 07:26:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235280AbjAQFgW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 00:36:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43636 "EHLO
+        id S235612AbjAQG0Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 01:26:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235245AbjAQFgV (ORCPT
+        with ESMTP id S235665AbjAQGZ7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 00:36:21 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1473F17CD4;
-        Mon, 16 Jan 2023 21:36:19 -0800 (PST)
+        Tue, 17 Jan 2023 01:25:59 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8887D166E5;
+        Mon, 16 Jan 2023 22:25:10 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id A0A97B80E76;
-        Tue, 17 Jan 2023 05:36:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A99BC433F0;
-        Tue, 17 Jan 2023 05:36:16 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 2127F61195;
+        Tue, 17 Jan 2023 06:25:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5C87C433EF;
+        Tue, 17 Jan 2023 06:25:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1673933777;
-        bh=asJm1FEO3RCTI9yXgHpd6dK9DTZntJ1KAbCE9ko3y+Y=;
-        h=Date:From:To:Subject:References:In-Reply-To:From;
-        b=IcYiayCbWMGTTFIh0EEe0exejTDmWE9l0RjFiqBj98UmqkCalRXE3C4omasKau9Bn
-         jByxdAKp/url4C9UtT8N3buxBDAVUl8pIhA0cyyfCncNXwsME08M3yDSzL6wbMSs2l
-         8Z+CLVvKCSlRGs2954djFxzzG43Tk16nTxCB1S/yrGKJ/Ie8X6pmznF8r+XMw9iXzO
-         Vx6yd0zWBVruK3dFlS1Q0+nXYxeK7C/8IJlgmKyM14LrsXfzEdViJwcMpolYOCKzG8
-         0Cf5w5VIXYfPR7JGSYS01vSKylK5D5BxdQpZ4s8Dy7Ja5leb0RXU17tcz1dXIjH8kp
-         i2jJpYQEnpdZQ==
-Date:   Tue, 17 Jan 2023 11:06:12 +0530
+        s=k20201202; t=1673936709;
+        bh=Thp28YsZz2lq8b1khFzysyZJYiSV8xClCrJdvqiye54=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=H9WUqhJOGNXpYZAqHJ9B139BMMOKckyQFLpL9y3ILJDvUebayuD4ETHRkK/Ntz4ue
+         S1h9m3bUjsuN4UtKRYzppaRjH7HHEgga0vKD0IDbj5Ed/l/O+s8xkAuj2urzCgOyMa
+         ugTQwF4sHluRifcyjpR6j0rZf2AVEEXcekNtNYs0zz+3+XxrudurM8VczeO5/pBNlI
+         RjbO/h/7d818rBjGW+GZE43iWPmnO35f+9Mdv7xhWbSWrW55XqM+vPdC9/U9R5g1Bp
+         8jCq/wbMx9+GHDslAUibM2CwoFjyfse3d0pRvC4vlSfNZCUPwRjCHLpP9R7niyGqFI
+         QHcvtujvuAPMw==
+Date:   Tue, 17 Jan 2023 11:55:05 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Michael Srba <Michael.Srba@seznam.cz>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] Revert "phy: qualcomm: usb28nm: Add MDM9607 init
- sequence"
-Message-ID: <Y8YzzCEqGi3m9fWM@matsya>
-References: <20221214223733.648167-1-marijn.suijten@somainline.org>
- <Y8GY51Cfkj7o1MJs@matsya>
- <20230116203549.5jzd2olxua662n6w@SoMainline.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     andersson@kernel.org, quic_cang@quicinc.com,
+        quic_asutoshd@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+        dmitry.baryshkov@linaro.org, ahalaney@redhat.com,
+        abel.vesa@linaro.org
+Subject: Re: [PATCH v6 00/12] ufs: qcom: Add HS-G4 support
+Message-ID: <Y8Y/QX1KzWy2m3v5@matsya>
+References: <20230114071009.88102-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230116203549.5jzd2olxua662n6w@SoMainline.org>
+In-Reply-To: <20230114071009.88102-1-manivannan.sadhasivam@linaro.org>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -70,42 +56,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16-01-23, 21:35, Marijn Suijten wrote:
-> On 2023-01-13 23:16:15, Vinod Koul wrote:
-> > On 14-12-22, 23:37, Marijn Suijten wrote:
-> > > This reverts commit 557a28811c7e0286d3816842032db5eb7bb5f156.
-> > > 
-> > > This commit introduced an init sequence from downstream DT [1] in the
-> > > driver.  As mentioned by the comment above the HSPHY_INIT_CFG macro for
-> > > this sequence:
-> > > 
-> > >     /*
-> > >      * The macro is used to define an initialization sequence.  Each tuple
-> > >      * is meant to program 'value' into phy register at 'offset' with 'delay'
-> > >      * in us followed.
-> > >      */
-> > > 
-> > > Instead of corresponding to offsets into the phy register, the sequence
-> > > read by the downstream driver [2] is passed into ulpi_write [3] which
-> > > crafts the address-value pair into a new value and writes it into the
-> > > same register at USB_ULPI_VIEWPORT [4].  In other words, this init
-> > > sequence is programmed into the hardware in a totally different way than
-> > > downstream and is unlikely to achieve the desired result, if the hsphy
-> > > is working at all.
-> > > 
-> > > An alternative method needs to be found to write these init values at
-> > > the desired location.  Fortunately mdm9607 did not land upstream yet [5]
-> > > and should have its compatible revised to use the generic one, instead
-> > > of a compatible that writes wrong data to the wrong registers.
-> > 
-> > Applied after adding missing subsystem tag, thanks
+On 14-01-23, 12:39, Manivannan Sadhasivam wrote:
+> Hello,
 > 
-> Thanks, it wasn't clear to me whether to suffix the title when already
-> included in the Revert: "phy: qualcomm: ..." title :)
+> This series adds HS-G4 support to the Qcom UFS driver and PHY driver.
+> The newer Qcom platforms support configuring the UFS controller and PHY
+> in dual gears (i.e., controller/PHY can be configured to run in two gear
+> speeds). This is accomplished by adding two different PHY init sequences
+> to the PHY driver and the UFS driver requesting the one that's required
+> based on the platform configuration.
+> 
+> Initially the ufs-qcom driver will use the default gear G2 for enumerating
+> the UFS device. Afer enumeration, the max gear supported by both the
+> controller and device would be found out and that will be used thereafter.
+> But for using the max gear after enumeration, the ufs-qcom driver requires
+> the UFS device to be reinitialized. For this purpose, a separate quirk has
+> been introduced in the UFS core along with a callback and those will be used
+> by the ufs-qcom driver.
 
-A revert patch is a patch as well so the patch rules apply there as well,
-so should say "subsystem tag: other tags: Revert foo..."
+Applied, thanks
 
-Thanks
 -- 
 ~Vinod
