@@ -2,132 +2,276 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E8AD7670DC6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 00:38:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B3A95670DD0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 00:43:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230177AbjAQXie (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 18:38:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36574 "EHLO
+        id S229660AbjAQXng (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 18:43:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230118AbjAQXiA (ORCPT
+        with ESMTP id S230124AbjAQXnC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 18:38:00 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C5B1392BA;
-        Tue, 17 Jan 2023 14:44:37 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id h16so32162732wrz.12;
-        Tue, 17 Jan 2023 14:44:37 -0800 (PST)
+        Tue, 17 Jan 2023 18:43:02 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FC2B656C8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 14:48:41 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id iv8-20020a05600c548800b003db04a0a46bso491685wmb.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 14:48:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=dSOKhvqsjRLHMedgakHEOkcG54qmkySqSuJu+13pLAY=;
-        b=DwN4EBIPJr3N28JnsH5aawIVOacElZIsyiKnVUreSdXlfZqYAITHtcOe3QjfZ+/Q+5
-         QwO426vHgVAYCPIIwS3TiY7enMDEQ67CNMaWz+WyZEoqFHh38Ual+okBkrBiGETU61Rg
-         m11bkhOo6Xf9ohoFpxmrRvj2tXq2yCZFPABlJ8iEvSJZ0Z3eUsy8zv5Xi8VnzZVF/SBA
-         3qCo+0vwX8dfOXFcAl/dTuSDH8QcWUNf02gAtfz8sjaQOKMA/qHxY6NjGV+SiueyvoBw
-         VcxteEjLeXwvsW9q4GXtMpr894QdhzdVoFUlaxTrVAgr/CjjWM+EBVJAM9Ener/cfu9u
-         IXUA==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=LYCcWqCCZCUHqzEyU/xnDg7cnPafRId64wsa4xHKDIA=;
+        b=y6NtW/6VxO1x8kKxzAS+q88Nf99KzaIP+D2IjKsLyOFqIjWSXZBEy7GiUTILBrFWye
+         bPbeaUC+x0Fu2tXv3IifcnPxKHhzNfVWY1GrU1kZdsz8GprC+PVxsF3z0WINvHJMhlcz
+         x9ZwiBtK3rhAOdN4YVIBCAJkUpTcgqmvlXTUugGxjATB6/AGSjuRjLruAtEH3aolU1Jq
+         pMRxrOeo1+/5mRNTN4F2aEhRix6CEgJzz0i73MG/60NZi5I3ytzccm96+eWCU/4YxwAA
+         wKHqZzmvWdTYfO+FJfYCTndwki5xB2wymqjQttORaUdKXJT2mFh6vgQ5erDSFSxecAwr
+         yn6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dSOKhvqsjRLHMedgakHEOkcG54qmkySqSuJu+13pLAY=;
-        b=7dQYfLuu3UGHoMTLOGMOxPfJLYSaGxZCgu+R3Ond3+N/xNkxyAItvYRlz8N4QdZd03
-         +hnh6KzJC4xZpGCSvJJ2L2G2+XpDDDipxL20IdwhHtNF5E8rzyj5iLZSeKYYvthiR6bE
-         hsdViIGZTNtcNKhrpU6M/V+Tf2NDQw9jkUG8//dQRy4tiVorMBr+NlEYZolJQw+DLxCo
-         QUDHJ2Upc2P4hl8n+SubIpXueMnW3zh5p6/MJNGtppJStj1ZyhSyL61Mn9LX02ZS1kIT
-         tvUkg2Slkk5xRQEyXtkeKt+8eis771G2VgxyNjJHYqEldppBehHwVD47RN2TGtzL8sLk
-         9Ggg==
-X-Gm-Message-State: AFqh2kp0TWLRvjPKjaeLdJA15MC4UFwpOd5nRkR2owEP/vrzx6xlQZGJ
-        dcLMxcByLm6z8t3H1N4jw5Tiij/hQyM=
-X-Google-Smtp-Source: AMrXdXsesnZC0DKLfx9arDON2N17eAuLeCMPEpCvaDZrtC/Ji8EKv8DgI2e7BFGJI6YvIgbeQ/BrqQ==
-X-Received: by 2002:a05:6000:4006:b0:2bd:f4af:48fb with SMTP id cy6-20020a056000400600b002bdf4af48fbmr4514014wrb.44.1673995475905;
-        Tue, 17 Jan 2023 14:44:35 -0800 (PST)
-Received: from localhost.localdomain (93-34-92-88.ip49.fastwebnet.it. [93.34.92.88])
-        by smtp.googlemail.com with ESMTPSA id bt19-20020a056000081300b002bdc3f5945dsm17518032wrb.89.2023.01.17.14.44.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Jan 2023 14:44:35 -0800 (PST)
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Christian Marangi <ansuelsmth@gmail.com>
-Subject: [PATCH] ARM: dts: qcom: ipq8064: move reg-less nodes outside soc node
-Date:   Tue, 17 Jan 2023 23:44:17 +0100
-Message-Id: <20230117224417.7530-1-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.38.1
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=LYCcWqCCZCUHqzEyU/xnDg7cnPafRId64wsa4xHKDIA=;
+        b=tuBCDw45yb+80Sg550iRBPxGGLANhoh6eIm5u7LDnCZAT6WH9Dtv3JM+j0U69Q+Qgj
+         voNjnT0WWSJ8GlGGgKk3qEWFFMweVktsnqN1/j/zwsPOq9o9ridrF/UDAVUBMLEbPFrY
+         xvY16qpp+o4xnpCki9+1gY6F9orykFrupTh030Ta+3SMl+fuyrRqSpqin1vVk7APh/gK
+         PdfDzsENQKfYHJzrqA7q57JNOGHUtbVuvEljFZKi7FjcXEBqxQGzDPdU7LuKKV7CyQIn
+         QrdVvraHAqi72kFn7diUM7XHCBTRkseYVkLQGGaXKqm7rYDzSkmXiKYT/0Oqwq6LYefB
+         rg8w==
+X-Gm-Message-State: AFqh2kqevsg2j+ZGBBX6+bNeXjXcmSlDoV7EwpBkAWCjNn5Je5u7YdJw
+        DYKqJlKeY0YseMAJNqpIAxRxNQ==
+X-Google-Smtp-Source: AMrXdXuFvYbZV9S/7lQ8QJ10PZT/eT5LWRdZmBUuVkcgeLYgs3Z2XUHlrgXrVqMt4pxJK4LZ4oNphw==
+X-Received: by 2002:a05:600c:920:b0:3da:22a6:7b6b with SMTP id m32-20020a05600c092000b003da22a67b6bmr4561497wmp.13.1673995719688;
+        Tue, 17 Jan 2023 14:48:39 -0800 (PST)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id h6-20020a05600c314600b003d99469ece1sm159069wmo.24.2023.01.17.14.48.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 Jan 2023 14:48:38 -0800 (PST)
+Message-ID: <28e1df7a-6577-bf39-9739-d0a047b36f12@linaro.org>
+Date:   Tue, 17 Jan 2023 22:48:37 +0000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: [PATCH v3 5/8] arm64: dts: qcom: Add msm8939 SoC
+Content-Language: en-US
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     agross@kernel.org, konrad.dybcio@linaro.org, djakov@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        benl@squareup.com, shawn.guo@linaro.org, fabien.parent@linaro.org,
+        leo.yan@linaro.org, dmitry.baryshkov@linaro.org,
+        Jun Nie <jun.nie@linaro.org>,
+        James Willcox <jwillcox@squareup.com>,
+        Joseph Gates <jgates@squareup.com>,
+        Max Chen <mchen@squareup.com>, Zac Crosby <zac@squareup.com>,
+        Vincent Knecht <vincent.knecht@mailoo.org>,
+        Stephan Gerhold <stephan@gerhold.net>
+References: <20230117024846.1367794-1-bryan.odonoghue@linaro.org>
+ <20230117024846.1367794-6-bryan.odonoghue@linaro.org>
+ <20230117205800.cqexxwxmtupapy7e@builder.lan>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20230117205800.cqexxwxmtupapy7e@builder.lan>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Move node that doesn't have a reg outside the soc node as it should only
-contain reg nodes.
-No changes intended.
+On 17/01/2023 20:58, Bjorn Andersson wrote:
+> On Tue, Jan 17, 2023 at 02:48:43AM +0000, Bryan O'Donoghue wrote:
+>> Add msm8939 a derivative SoC of msm8916. This SoC contains a number of key
+>> differences to msm8916.
+>>
+>> - big.LITTLE Octa Core - quad 1.5GHz + quad 1.0GHz
+>> - DRAM 1x800 LPDDR3
+>> - Camera 4+4 lane CSI
+>> - Venus @ 1080p60 HEVC
+>> - DSI x 2
+>> - Adreno A405
+>> - WiFi wcn3660/wcn3680b 802.11ac
+>>
+>> Co-developed-by: Shawn Guo <shawn.guo@linaro.org>
+>> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+>> Co-developed-by: Jun Nie <jun.nie@linaro.org>
+>> Signed-off-by: Jun Nie <jun.nie@linaro.org>
+>> Co-developed-by: Benjamin Li <benl@squareup.com>
+>> Signed-off-by: Benjamin Li <benl@squareup.com>
+>> Co-developed-by: James Willcox <jwillcox@squareup.com>
+>> Signed-off-by: James Willcox <jwillcox@squareup.com>
+>> Co-developed-by: Leo Yan <leo.yan@linaro.org>
+>> Signed-off-by: Leo Yan <leo.yan@linaro.org>
+>> Co-developed-by: Joseph Gates <jgates@squareup.com>
+>> Signed-off-by: Joseph Gates <jgates@squareup.com>
+>> Co-developed-by: Max Chen <mchen@squareup.com>
+>> Signed-off-by: Max Chen <mchen@squareup.com>
+>> Co-developed-by: Zac Crosby <zac@squareup.com>
+>> Signed-off-by: Zac Crosby <zac@squareup.com>
+>> Co-developed-by: Vincent Knecht <vincent.knecht@mailoo.org>
+>> Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
+>> Co-developed-by: Stephan Gerhold <stephan@gerhold.net>
+>> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> 
+> Just to make sure when I get the question, you all co-developed this
+> patch, right?
 
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+A long list but a fair one.
+
+>> ---
+>>   arch/arm64/boot/dts/qcom/msm8939.dtsi | 2393 +++++++++++++++++++++++++
+>>   1 file changed, 2393 insertions(+)
+>>   create mode 100644 arch/arm64/boot/dts/qcom/msm8939.dtsi
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/msm8939.dtsi b/arch/arm64/boot/dts/qcom/msm8939.dtsi
+>> new file mode 100644
+>> index 0000000000000..8cd358a9fe623
+>> --- /dev/null
+>> +++ b/arch/arm64/boot/dts/qcom/msm8939.dtsi
+>> @@ -0,0 +1,2393 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/*
+>> + * Copyright (c) 2013-2015, The Linux Foundation. All rights reserved.
+>> + * Copyright (c) 2020-2023, Linaro Limited
+>> + */
+>> +
+>> +#include <dt-bindings/clock/qcom,gcc-msm8939.h>
+>> +#include <dt-bindings/clock/qcom,rpmcc.h>
+>> +#include <dt-bindings/interconnect/qcom,msm8939.h>
+>> +#include <dt-bindings/interrupt-controller/arm-gic.h>
+>> +#include <dt-bindings/power/qcom-rpmpd.h>
+>> +#include <dt-bindings/reset/qcom,gcc-msm8939.h>
+>> +#include <dt-bindings/thermal/thermal.h>
+>> +
+>> +/ {
+>> +	interrupt-parent = <&intc>;
+>> +
+>> +	#address-cells = <2>;
+>> +	#size-cells = <2>;
+> 
+> Why do you use a default of 2? In particular since you reduce it to 1 in
+> /soc...
+
+You asked that before, and I took a note of the answer but, then because 
+I was away from the main machine when I sent V2, I didn't have the log.
+
+Here's what I wrote down.
+
+"  - address-cells/size-cells = 1 in /soc - Bjorn
+     I experimentally changed address/cell sizes to 2
+     I'm finding that lk chokes "
+
+So AFAIR LK was unhappy about changing the top level address/size cells 
+to <1> <1> and converting the /soc address/size cells to <2> <2> caused 
+a number of breakages during boot.
+
+To be honest, this pattern is copied from the msm8916.dtsi original. 
+msm8953.dtsi has the same thing. msm8994 too, and 8998.
+
+If you think it needs changing, then I'll have to see what can be done 
+with soc@{} entries.
+
+> 
+>> +
+>> +	clocks {
+>> +		xo_board: xo-board {
+>> +			compatible = "fixed-clock";
+>> +			#clock-cells = <0>;
+>> +			clock-frequency = <19200000>;
+>> +		};
+>> +
+>> +		sleep_clk: sleep-clk {
+>> +			compatible = "fixed-clock";
+>> +			#clock-cells = <0>;
+>> +			clock-frequency = <32768>;
+>> +		};
+>> +	};
+> [..]
+>> +	smp2p-hexagon {
+> 
+> To avoid having people start sending patches that changes the sort order
+> as soon as I merge this, could you please sort your nodes by address
+> (not applicable for this one), then by node name alphabetically, then by
+> label alphabetically.
+
+ah. I sorted the contents of soc. I missed the upper level groupings.
+
+> 
+>> +		compatible = "qcom,smp2p";
+>> +		qcom,smem = <435>, <428>;
+>> +
+>> +		interrupts = <GIC_SPI 27 IRQ_TYPE_EDGE_RISING>;
+>> +
+>> +		mboxes = <&apcs1_mbox 14>;
+>> +
+>> +		qcom,local-pid = <0>;
+>> +		qcom,remote-pid = <1>;
+>> +
+>> +		hexagon_smp2p_out: master-kernel {
+>> +			qcom,entry-name = "master-kernel";
+>> +
+>> +			#qcom,smem-state-cells = <1>;
+>> +		};
+>> +
+>> +		hexagon_smp2p_in: slave-kernel {
+>> +			qcom,entry-name = "slave-kernel";
+>> +
+>> +			interrupt-controller;
+>> +			#interrupt-cells = <2>;
+>> +			#address-cells = <0>;
+>> +			#size-cells = <0>;
+>> +		};
+>> +	};
+>> +
+>> +	memory@80000000 {
+>> +		device_type = "memory";
+>> +		/* We expect the bootloader to fill in the reg */
+>> +		reg = <0x0 0x80000000 0x0 0x0>;
+>> +	};
+>> +
+> [..]
+>> +	soc: soc@0 {
+> [..]
+>> +		pronto: remoteproc@a204000 {
+>> +			compatible = "qcom,pronto-v2-pil", "qcom,pronto";
+>> +			reg = <0x0a204000 0x2000>,
+>> +			      <0x0a202000 0x1000>,
+>> +			      <0x0a21b000 0x3000>;
+>> +			reg-names = "ccu", "dxe", "pmu";
+>> +
+>> +			interrupts-extended = <&intc 0 149 IRQ_TYPE_EDGE_RISING>,
+>> +					      <&wcnss_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
+>> +					      <&wcnss_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
+>> +					      <&wcnss_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
+>> +					      <&wcnss_smp2p_in 3 IRQ_TYPE_EDGE_RISING>;
+>> +			interrupt-names = "wdog", "fatal", "ready", "handover", "stop-ack";
+>> +
+>> +			memory-region = <&wcnss_mem>;
+>> +
+>> +			power-domains = <&rpmpd MSM8939_VDDCX>,
+>> +					<&rpmpd MSM8939_VDDMX_AO>;
+> 
+> The purpose of the remoteproc driver's vote is to keep the rails powered
+> while we're booting the remote, in the event that Linux decides to
+> suspend and turn of the power rails while we're waiting...
+> 
+> Once the remote pulls the "handover" interrupt, it signals that it has
+> cast the necessary votes and need no more hand-holding.
+> 
+> So it's unlikely that _AO is the right choice here.
+
+Yes, it's probably just VDDMX isn't it.
+
+I'll change that.
+
 ---
- arch/arm/boot/dts/qcom-ipq8064.dtsi | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
-
-diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-index ae018a7dc6fd..52d77e105957 100644
---- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
-+++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-@@ -326,26 +326,26 @@ scm {
- 		};
- 	};
- 
-+	stmmac_axi_setup: stmmac-axi-config {
-+		snps,wr_osr_lmt = <7>;
-+		snps,rd_osr_lmt = <7>;
-+		snps,blen = <16 0 0 0 0 0 0>;
-+	};
-+
-+	vsdcc_fixed: vsdcc-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "SDCC Power";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+		regulator-always-on;
-+	};
-+
- 	soc: soc {
- 		#address-cells = <1>;
- 		#size-cells = <1>;
- 		ranges;
- 		compatible = "simple-bus";
- 
--		stmmac_axi_setup: stmmac-axi-config {
--			snps,wr_osr_lmt = <7>;
--			snps,rd_osr_lmt = <7>;
--			snps,blen = <16 0 0 0 0 0 0>;
--		};
--
--		vsdcc_fixed: vsdcc-regulator {
--			compatible = "regulator-fixed";
--			regulator-name = "SDCC Power";
--			regulator-min-microvolt = <3300000>;
--			regulator-max-microvolt = <3300000>;
--			regulator-always-on;
--		};
--
- 		rpm: rpm@108000 {
- 			compatible = "qcom,rpm-ipq8064";
- 			reg = <0x00108000 0x1000>;
--- 
-2.38.1
-
+bod
