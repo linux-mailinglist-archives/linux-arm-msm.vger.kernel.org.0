@@ -2,119 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9352966E50B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 18:34:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 234B966E51B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 18:41:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230134AbjAQReq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 12:34:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54662 "EHLO
+        id S235039AbjAQRll (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 12:41:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235786AbjAQRay (ORCPT
+        with ESMTP id S232533AbjAQRkd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 12:30:54 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08D1E233F4;
-        Tue, 17 Jan 2023 09:30:04 -0800 (PST)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30HFwnVo006833;
-        Tue, 17 Jan 2023 17:29:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=qcppdkim1;
- bh=ghf5QjfvagPaFI53epsH4kOavDlkXLiG4G5OxHZ1B1w=;
- b=XM6PiWpgCjQ74IEnJPmXn+h0JsMiuZ9Pf7sqEV7CpJlwWcoA1t14GakjDkMv8N20+5ff
- UtTfDDO9mUX/BBiCv5XAAmXSW4nw32Wl4fq9O3Y2NSPJ3/QkR1ThFDF7U9eoq6D/bNhp
- 4Od2FjBNXl9JKkpE9R1hn4Ooh5/g7qQumA2nThjM55xveA/viUx5y1xrpsy+oxRagw8l
- 45FmiW5bOloioEBJNH0LIS2bfGgAzIaiXm5R4tLKUSfbHceIGUfTl5J/1hKnGlHbF6lq
- 9jydt8u0U8hrsEMrFB9Ek+CeRaVvaKnXh9KR2k4MNnnJ2XEhbL6Yy1NEG/rUgx81V/dP dA== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n5nkq9cwq-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 17 Jan 2023 17:29:58 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30HHTvQQ024675
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 17 Jan 2023 17:29:57 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Tue, 17 Jan 2023 09:29:56 -0800
-From:   Bjorn Andersson <quic_bjorande@quicinc.com>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>
-CC:     Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        "Daniel Vetter" <daniel@ffwll.ch>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH] drm/msm/dp: Remove INIT_SETUP delay
-Date:   Tue, 17 Jan 2023 09:29:51 -0800
-Message-ID: <20230117172951.2748456-1-quic_bjorande@quicinc.com>
-X-Mailer: git-send-email 2.25.1
+        Tue, 17 Jan 2023 12:40:33 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1E37521D5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 09:33:46 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id g10so22865086wmo.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 09:33:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=p9X/E0nTuGg/ziYb/sqmkQprPxdu3YzscqPmDsFFV0A=;
+        b=XL51Sdalg82WE+JbLXz2SEBksj+gjR62nkt4OBlAalqXk0EgjRcohyFDzhBxNcSjpP
+         o83Z8TyUspsUYg7ojxlj/77unJED9W7maQDtSjFs6PqFtziXLzM5SydD5zLrE1edKgUL
+         g6fE7WZ8R9oG4cqdG/Gd+lfL7j3pGG37+8TF04Xye8h5Si1afbg4UV0XySn27QxamMl9
+         QneAMxb1z2s6hQ83ZW+cRXQz0SD9teCbdlX1glNqfpo/tiO55hXoH8gMQvSWrakRO5rc
+         4ze35KGmUc7WLSUhxBosJVhWMdnwFrcffGd4fVSWb+CnJjEmKjRgBQ0M7ME8oZC5aw9h
+         EZ2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=p9X/E0nTuGg/ziYb/sqmkQprPxdu3YzscqPmDsFFV0A=;
+        b=ao1Yu9dpYaikDrwy9IwvX+PvZxYAvgwcpF65jGMnIBVYMA8J5s2+CmiuJtY5hIeGiC
+         r50aesJkC2ylzZgIHCBWMXJx//UyK/8Ei/n9Df/D3e10vimUjRYeKuzS8vtB+zmnYAlf
+         diwSMEg9mjFkRT7ZEr2gQ1z4W3MG5t7xAM5W6TXljqZTxWGexvyA0vvHB8hkzsaNhdYa
+         xxEoHnkI1atbx3BX/oDzzaAA/B8X6LWBfED9DrIM004SqXbzcPFveOsmVJICovBOZDAn
+         GvCcCadaDCxMWxONl3q4NiAE5N5aYgC5rg5yPklnJmAqT+J2GSVwTQ0ol1Jgi56E4N+L
+         RSPw==
+X-Gm-Message-State: AFqh2kqdkETnA0pilZweXIStVNZrXUxZ/Wjpyytr0NVqjJOczGspoAqo
+        mwxBEs9X/OJN4rDXkZW6PbJv9g==
+X-Google-Smtp-Source: AMrXdXsv+55G5FnSXPMY9NBzuWWVoycH0E4lbFURb3YtiipIhLiTvNKCbWm0MGOZRJa7Bi5vFbDrOQ==
+X-Received: by 2002:a1c:7415:0:b0:3da:fd07:1e3 with SMTP id p21-20020a1c7415000000b003dafd0701e3mr3750361wmc.22.1673976824626;
+        Tue, 17 Jan 2023 09:33:44 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id he12-20020a05600c540c00b003d9ddc82450sm36592707wmb.45.2023.01.17.09.33.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 Jan 2023 09:33:43 -0800 (PST)
+Message-ID: <754f8193-09ec-8bbf-e0d4-898525dc242f@linaro.org>
+Date:   Tue, 17 Jan 2023 18:33:41 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: CTQZUj5Sj9fGSZ8d58zMmdjQRLVdlPti
-X-Proofpoint-ORIG-GUID: CTQZUj5Sj9fGSZ8d58zMmdjQRLVdlPti
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-17_08,2023-01-17_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 impostorscore=0
- mlxscore=0 adultscore=0 mlxlogscore=999 bulkscore=0 lowpriorityscore=0
- spamscore=0 priorityscore=1501 phishscore=0 malwarescore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2301170139
-X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_SBL_CSS,SPF_HELO_NONE,
-        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: *
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: sc7280: Add cpu and llcc BWMON
+ (=> interconnect issue)
+Content-Language: en-US
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Georgi Djakov <djakov@kernel.org>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@somainline.org,
+        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-pm@vger.kernel.org, Douglas Anderson <dianders@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>
+References: <20220902043511.17130-1-quic_rjendra@quicinc.com>
+ <20220902043511.17130-5-quic_rjendra@quicinc.com>
+ <Y8Ggh6RObbB1cxSS@google.com>
+ <dc5487d8-d31e-28c6-07e8-8d1ff54a4ba4@linaro.org>
+ <Y8baZWlKB9vNGYJw@google.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <Y8baZWlKB9vNGYJw@google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-During initalization of the DisplayPort controller an EV_HPD_INIT_SETUP
-event is generated, but with a delay of 100 units. This delay existed to
-circumvent bug in the QMP combo PHY driver, where if the DP part was
-powered up before USB, the common properties would not be properly
-initialized - and USB wouldn't work.
+On 17/01/2023 18:27, Matthias Kaehlcke wrote:
+> 
+>>> which would set the initially bandwidths to 0 and determine the actually
+>>> needed bandwidth. But since the driver isn't probed the initial
+>>> bandwidths stay at INT_MAX.
+>>>
+>>> This isn't actually an issue with this patch, but how the interconnect
+>>> framework deals with devices that are registered on the bus, but aren't
+>>> probed (yet). Not sure how this would be best fixed. Georgi, do you have
+>>> any ideas?
+>>
+>> Why the device is not probed (yet)? If it is registered, it will come
+>> soon during boot up.
+> 
+> Because CONFIG_QCOM_ICC_BWMON is not enabled for the board in question (see
+> above). It could be enabled as a short term mitigtion, however we shouldn't
+> require drivers to be enabled just because the DT has a corresponding node.
 
-This issue was resolved in the recent refactoring of the QMP driver,
-so it's now possible to remove this delay.
+It's the same case as with all other interconnect leafs/consumers. The
+same behavior if you do not have it enabled, right? If not, I wonder
+what is here different?
 
-While there is still a timing dependency in the current implementation,
-test indicates that it's now possible to boot with an external display
-on USB Type-C and have the display power up, without disconnecting and
-reconnecting the cable.
-
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
----
- drivers/gpu/drm/msm/dp/dp_display.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index db9783ffd5cf..bde1a7ce442f 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -1506,7 +1506,7 @@ void msm_dp_irq_postinstall(struct msm_dp *dp_display)
- 	dp = container_of(dp_display, struct dp_display_private, dp_display);
- 
- 	if (!dp_display->is_edp)
--		dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 100);
-+		dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 0);
- }
- 
- bool msm_dp_wide_bus_available(const struct msm_dp *dp_display)
--- 
-2.37.3
+Best regards,
+Krzysztof
 
