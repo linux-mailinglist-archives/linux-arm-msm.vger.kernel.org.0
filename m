@@ -2,171 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E904C66DF0C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 14:42:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4FF1D66DF96
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 14:55:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229772AbjAQNl7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 08:41:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39614 "EHLO
+        id S229753AbjAQNzZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 08:55:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229448AbjAQNl5 (ORCPT
+        with ESMTP id S229695AbjAQNzX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 08:41:57 -0500
-Received: from lelv0142.ext.ti.com (lelv0142.ext.ti.com [198.47.23.249])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B68441722;
-        Tue, 17 Jan 2023 05:41:56 -0800 (PST)
-Received: from fllv0035.itg.ti.com ([10.64.41.0])
-        by lelv0142.ext.ti.com (8.15.2/8.15.2) with ESMTP id 30HDfg9Q043905;
-        Tue, 17 Jan 2023 07:41:42 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1673962902;
-        bh=8tzcj7YcBvmsXG1Iqf3XfpgVaGKs2epzXYS+rFPxnuU=;
-        h=Date:Subject:To:CC:References:From:In-Reply-To;
-        b=nl1+B6EplvVzZA15QZJmQnV0YdsSFFGL1wr8SRISR+q9H9TiP1ZqN85q/gNU2qBdv
-         zNMgyU0UiBgblxBGfzA/wut5xt/feiJ9bD01HeFvMnc3ieIWAVaWt6ztcrzvYEKyWa
-         GyKdUF/kYV5RCxvXO6tawJu2Duq9hvEqPPXSXWzk=
-Received: from DLEE103.ent.ti.com (dlee103.ent.ti.com [157.170.170.33])
-        by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 30HDfg2n112619
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Tue, 17 Jan 2023 07:41:42 -0600
-Received: from DLEE107.ent.ti.com (157.170.170.37) by DLEE103.ent.ti.com
- (157.170.170.33) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.16; Tue, 17
- Jan 2023 07:41:41 -0600
-Received: from fllv0039.itg.ti.com (10.64.41.19) by DLEE107.ent.ti.com
- (157.170.170.37) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.16 via
- Frontend Transport; Tue, 17 Jan 2023 07:41:41 -0600
-Received: from [10.250.235.217] (ileaxei01-snat.itg.ti.com [10.180.69.5])
-        by fllv0039.itg.ti.com (8.15.2/8.15.2) with ESMTP id 30HDfBu1083638;
-        Tue, 17 Jan 2023 07:41:12 -0600
-Message-ID: <5c888a22-aa56-6d94-2d56-ac5c224f8565@ti.com>
-Date:   Tue, 17 Jan 2023 19:11:10 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: (subset) [PATCH v2 23/23] arm64: dts: Update cache properties for
- ti
-To:     Pierre Gondois <pierre.gondois@arm.com>,
-        <linux-kernel@vger.kernel.org>
-CC:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        Tsahee Zidenberg <tsahee@annapurnalabs.com>,
-        Antoine Tenart <atenart@kernel.org>,
-        Brijesh Singh <brijeshkumar.singh@amd.com>,
-        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-        Tom Lendacky <thomas.lendacky@amd.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Khuong Dinh <khuong@os.amperecomputing.com>,
-        Liviu Dudau <liviu.dudau@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        William Zhang <william.zhang@broadcom.com>,
-        Anand Gore <anand.gore@broadcom.com>,
-        Kursad Oney <kursad.oney@broadcom.com>,
-        =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Shawn Guo <shawnguo@kernel.org>, Li Yang <leoyang.li@nxp.com>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Chester Lin <clin@suse.com>,
-        =?UTF-8?Q?Andreas_F=c3=a4rber?= <afaerber@suse.de>,
-        Matthias Brugger <mbrugger@suse.com>,
-        NXP S32 Linux Team <s32@nxp.com>,
-        Wei Xu <xuwei5@hisilicon.com>, Chanho Min <chanho.min@lge.com>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Lars Povlsen <lars.povlsen@microchip.com>,
-        Steen Hegelund <Steen.Hegelund@microchip.com>,
-        Daniel Machon <daniel.machon@microchip.com>,
-        <UNGLinuxDriver@microchip.com>,
-        Avi Fishman <avifishman70@gmail.com>,
-        Tomer Maimon <tmaimon77@gmail.com>,
-        Tali Perry <tali.perry1@gmail.com>,
-        Patrick Venture <venture@google.com>,
-        Nancy Yuen <yuenn@google.com>,
-        Benjamin Fair <benjaminfair@google.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
+        Tue, 17 Jan 2023 08:55:23 -0500
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E5EB3C3E;
+        Tue, 17 Jan 2023 05:55:22 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id q8so10501555wmo.5;
+        Tue, 17 Jan 2023 05:55:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=z60P+F5yrVPU+RcrdTjGo7YHCmfZ47F2G2bKTQG7QcQ=;
+        b=ZYBe+xbXY0HrXWRYOjW1aeiRtYtxZfds1/0dMWPVBZSUa6fDFQeD1puw25NfpeJIlp
+         qKk89WDEks39dvtQMGhl/hACUXC+H7llXvQfqVhxRq6t13lcNNooQtekL+Trj579qVrN
+         6mr0voeX0Zy3cdq/ehUYuO1sEazhbRwxpUtjd24Zpq+DBmTCJZ3HSEw/RiWs5Idm3quy
+         vyNUfzJ1SFotkLsu47Op0/3ksURz3WqmPE2gAScxma+fdJ+mlTc8lpdrAUsiu6Yy7Qn3
+         UNzJuKTYY6Y/sG1wjIIxURu2KM8CjFDGgGD5nAOAuPXCq553H3bdzdVbCxANdlgmSwpG
+         IoOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=z60P+F5yrVPU+RcrdTjGo7YHCmfZ47F2G2bKTQG7QcQ=;
+        b=RLvrtAynvhsvclQ7b3raXCPCOKewOmFaVCKBRrrVlzLTmYGwDg9FlS8TUGY+nxWYnB
+         oV/wwCIyA8W8dIpK+N4mbFD0U6m1rrjCeaLuyH78im4GaZBKehMIDFc/hHerrJR7qUyJ
+         UpyyuxkC4u4LAyP8P7oU8Cf9xlOASLGOauNr77K9h90ENU+EEjNQevU5Z8LNk6UbYRsH
+         esGd0OonalJt0nRO/Y10ZfAQnXGN+33mH2v7N7CjRrwXhS9uR5qBVJuUx0iWTr0y/VX0
+         8rb3DlSgq5SGwkb7AclGI+VLTa6IRn4WzoEiYhRTbT1MYvb3PErkJzviLpZsYkgLXUu3
+         s2ww==
+X-Gm-Message-State: AFqh2kpyYB6H5DLjt/Dc1sWbeO1b4R2hK6gdyDBm0or9L15CJwgBucEZ
+        DTlCyQeiv5Bp+XOWHQIZrk0=
+X-Google-Smtp-Source: AMrXdXuEsX79K0f5sO9n79Z74zmNvX8Zxw4uXDYNn7aIl4Yrr44wzNoS41K6GHoVTWNRm5WWwwhxwg==
+X-Received: by 2002:a05:600c:54d0:b0:3da:f9c9:cec9 with SMTP id iw16-20020a05600c54d000b003daf9c9cec9mr3282729wmb.1.1673963720425;
+        Tue, 17 Jan 2023 05:55:20 -0800 (PST)
+Received: from localhost.localdomain (93-34-92-88.ip49.fastwebnet.it. [93.34.92.88])
+        by smtp.googlemail.com with ESMTPSA id s7-20020a1cf207000000b003d98438a43asm35147461wmc.34.2023.01.17.05.55.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Jan 2023 05:55:20 -0800 (PST)
+From:   Christian Marangi <ansuelsmth@gmail.com>
+To:     Bjorn Andersson <andersson@kernel.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Magnus Damm <magnus.damm@gmail.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Jisheng Zhang <jszhang@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Tero Kristo <kristo@kernel.org>,
-        Viorel Suman <viorel.suman@nxp.com>,
-        Abel Vesa <abelvesa@kernel.org>,
-        Zhou Peng <eagle.zhou@nxp.com>,
-        Shenwei Wang <shenwei.wang@nxp.com>,
-        Peng Fan <peng.fan@nxp.com>, Ming Qian <ming.qian@nxp.com>,
-        Tim Harvey <tharvey@gateworks.com>,
-        Adam Ford <aford173@gmail.com>,
-        Lucas Stach <l.stach@pengutronix.de>, Li Jun <jun.li@nxp.com>,
-        Richard Zhu <hongxing.zhu@nxp.com>,
-        Markus Niebel <Markus.Niebel@ew.tq-group.com>,
-        Joakim Zhang <qiangqing.zhang@nxp.com>,
-        Marek Vasut <marex@denx.de>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Alexander Stein <alexander.stein@ew.tq-group.com>,
-        Paul Elder <paul.elder@ideasonboard.com>,
-        Martin Kepplinger <martink@posteo.de>,
-        David Heidelberg <david@ixit.cz>,
-        Oliver Graute <oliver.graute@kococonnector.com>,
-        Liu Ying <victor.liu@nxp.com>, Wei Fang <wei.fang@nxp.com>,
-        Clark Wang <xiaoning.wang@nxp.com>,
-        Jacky Bai <ping.bai@nxp.com>,
-        Chris Packham <chris.packham@alliedtelesis.co.nz>,
-        Vadym Kochan <vadym.kochan@plvision.eu>,
-        Sameer Pujar <spujar@nvidia.com>,
-        Mikko Perttunen <mperttunen@nvidia.com>,
-        Prathamesh Shete <pshete@nvidia.com>,
-        Akhil R <akhilrajeev@nvidia.com>,
-        Sumit Gupta <sumitg@nvidia.com>,
-        Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>,
-        Vidya Sagar <vidyas@nvidia.com>,
-        Ashish Mhetre <amhetre@nvidia.com>,
-        Johan Jonker <jbx6244@gmail.com>,
-        Christopher Obbard <chris.obbard@collabora.com>,
-        Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
-        Aswani Reddy <aswani.reddy@samsung.com>,
-        Shashank Prashar <s.prashar@samsung.com>,
-        Arjun K V <arjun.kv@samsung.com>,
-        <devicetree@vger.kernel.org>,
-        <linux-rpi-kernel@lists.infradead.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-amlogic@lists.infradead.org>,
-        <linux-samsung-soc@vger.kernel.org>,
-        <linux-mediatek@lists.infradead.org>, <openbmc@lists.ozlabs.org>,
-        <linux-tegra@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-realtek-soc@lists.infradead.org>,
-        <linux-renesas-soc@vger.kernel.org>,
-        <linux-rockchip@lists.infradead.org>
-References: <20221107155825.1644604-1-pierre.gondois@arm.com>
- <20221107155825.1644604-24-pierre.gondois@arm.com>
-Content-Language: en-US
-From:   "Raghavendra, Vignesh" <vigneshr@ti.com>
-In-Reply-To: <20221107155825.1644604-24-pierre.gondois@arm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
-X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_PASS,SPF_PASS autolearn=ham
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Christian Marangi <ansuelsmth@gmail.com>
+Subject: [PATCH v3 0/6] clk: qcom: clk-rcg2: introduce support for multiple conf for same freq
+Date:   Tue, 17 Jan 2023 14:54:53 +0100
+Message-Id: <20230117135459.16868-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.38.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -174,42 +73,61 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Pierre Gondois,
+This small series fix a current problem with ipq8074 where the 2 uniphy
+port doesn't work in some corner case with some clk configuration. The
+port to correctly work require a specific frequency, using the wrong one
+results in the port not transmitting data.
 
-On 11/7/2022 9:27 PM, Pierre Gondois wrote:
-> The DeviceTree Specification v0.3 specifies that the cache node
-> 'compatible' and 'cache-level' properties are 'required'. Cf.
-> s3.8 Multi-level and Shared Cache Nodes
-> The 'cache-unified' property should be present if one of the
-> properties for unified cache is present ('cache-size', ...).
-> 
-> Update the Device Trees accordingly.
+With the current code with a requested freq of 125MHz, the frequency is
+set to 105MHz. This is caused by the fact that there are 2 different
+configuration to set 125MHz and it's always selected the first one that
+results in 105MHz.
 
-[...]
+In the original QSDK code, the frequency configuration selection is
+different and the CEIL FLOOR logic is not present. Instead it's used a
+BEST approach where the frequency table is checked and then it's checked
+if there are duplicate entry.
 
-[23/23] arm64: dts: Update cache properties for ti
-        commit: 880932e657ffc677c1b053a947afa87ffed1b29d
+This proposed implementation is more specific and keep the CEIL FLOOR
+logic while maitaining the possibility to provide multiple
+configuration.
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent up the chain
-during the next merge window (or sooner if it is a relevant bug fix),
-however if problems are discovered then the patch may be dropped or
-reverted.
+The first 2 patch drop redundant F entry redefinition.
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+The 3rd and 4th one try to align rcg2 set rate to what clock core suggest
+by using just what determine_clock pass to clk core.
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
+The 5th one implement the change with also some macro description on how
+this new implementation works. On determine the old v2 logic is used but
+for set the requested parent is used instead of researching.
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
+The 6th one migrate the gcc-ipq8074 driver to this new implementation.
 
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/ti/linux.git
---
-Vignesh
+Changes v3:
+- Add qcom_find_freq_exact
+- Drop re-search on rcg2_set_rate
+- Rework multiple conf patch to follow new implementation
+Changes v2:
+- Out of RFC
+- Fix compile warning from buildbot related to F redefinition
 
+Christian Marangi (6):
+  clk: qcom: gcc-ipq6018: drop redundant F define
+  clk: qcom: gcc-sdm660: drop redundant F define
+  clk: qcom: common: add qcom_find_freq_exact
+  clk: qcom: clk-rcg2: don't re-search config on rcg2_set_rate
+  clk: qcom: clk-rcg2: introduce support for multiple conf for same freq
+  clk: qcom: gcc-ipq8074: rework nss_port5/6 clock to multiple conf
 
-[...]
+ drivers/clk/qcom/clk-rcg.h     |  14 +++-
+ drivers/clk/qcom/clk-rcg2.c    | 140 +++++++++++++++++++++++++++------
+ drivers/clk/qcom/common.c      |  17 ++++
+ drivers/clk/qcom/common.h      |   2 +
+ drivers/clk/qcom/gcc-ipq6018.c |   2 -
+ drivers/clk/qcom/gcc-ipq8074.c |  64 +++++++++++----
+ drivers/clk/qcom/gcc-sdm660.c  |   2 -
+ 7 files changed, 196 insertions(+), 45 deletions(-)
+
+-- 
+2.38.1
+
