@@ -2,165 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B27AE66E068
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 15:24:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0DE4266E088
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 15:26:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232312AbjAQOYB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 09:24:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42552 "EHLO
+        id S232528AbjAQO0V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 09:26:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232609AbjAQOXe (ORCPT
+        with ESMTP id S231856AbjAQOZk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 09:23:34 -0500
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 48AEE3E617;
-        Tue, 17 Jan 2023 06:22:00 -0800 (PST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 7277412FC;
-        Tue, 17 Jan 2023 06:22:41 -0800 (PST)
-Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1B3A83F67D;
-        Tue, 17 Jan 2023 06:21:43 -0800 (PST)
-Date:   Tue, 17 Jan 2023 14:21:40 +0000
-From:   Sudeep Holla <sudeep.holla@arm.com>
-To:     Mark Rutland <mark.rutland@arm.com>
-Cc:     Peter Zijlstra <peterz@infradead.org>,
-        richard.henderson@linaro.org, ink@jurassic.park.msu.ru,
-        mattst88@gmail.com, vgupta@kernel.org, linux@armlinux.org.uk,
-        nsekhar@ti.com, brgl@bgdev.pl, ulli.kroll@googlemail.com,
-        linus.walleij@linaro.org, shawnguo@kernel.org,
-        Sascha Hauer <s.hauer@pengutronix.de>, kernel@pengutronix.de,
-        festevam@gmail.com, linux-imx@nxp.com, tony@atomide.com,
-        khilman@kernel.org, krzysztof.kozlowski@linaro.org,
-        alim.akhtar@samsung.com, catalin.marinas@arm.com, will@kernel.org,
-        guoren@kernel.org, bcain@quicinc.com, chenhuacai@kernel.org,
-        kernel@xen0n.name, geert@linux-m68k.org, sammy@sammy.net,
-        monstr@monstr.eu, tsbogend@alpha.franken.de, dinguyen@kernel.org,
-        jonas@southpole.se, stefan.kristiansson@saunalahti.fi,
-        shorne@gmail.com, James.Bottomley@hansenpartnership.com,
-        deller@gmx.de, mpe@ellerman.id.au, npiggin@gmail.com,
-        christophe.leroy@csgroup.eu, paul.walmsley@sifive.com,
-        palmer@dabbelt.com, aou@eecs.berkeley.edu, hca@linux.ibm.com,
-        gor@linux.ibm.com, agordeev@linux.ibm.com,
-        borntraeger@linux.ibm.com, svens@linux.ibm.com,
-        ysato@users.sourceforge.jp, dalias@libc.org, davem@davemloft.net,
-        richard@nod.at, anton.ivanov@cambridgegreys.com,
-        johannes@sipsolutions.net, tglx@linutronix.de, mingo@redhat.com,
-        bp@alien8.de, dave.hansen@linux.intel.com, x86@kernel.org,
-        hpa@zytor.com, acme@kernel.org, alexander.shishkin@linux.intel.com,
-        jolsa@kernel.org, namhyung@kernel.org, jgross@suse.com,
-        srivatsa@csail.mit.edu, amakhalov@vmware.com,
-        pv-drivers@vmware.com, boris.ostrovsky@oracle.com,
-        chris@zankel.net, jcmvbkbc@gmail.com, rafael@kernel.org,
-        lenb@kernel.org, pavel@ucw.cz, gregkh@linuxfoundation.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        daniel.lezcano@linaro.org, lpieralisi@kernel.org,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        anup@brainfault.org, thierry.reding@gmail.com,
-        jonathanh@nvidia.com, jacob.jun.pan@linux.intel.com,
-        atishp@atishpatra.org, Arnd Bergmann <arnd@arndb.de>,
-        yury.norov@gmail.com, andriy.shevchenko@linux.intel.com,
-        linux@rasmusvillemoes.dk, dennis@kernel.org, tj@kernel.org,
-        cl@linux.com, rostedt@goodmis.org, mhiramat@kernel.org,
-        frederic@kernel.org, paulmck@kernel.org, pmladek@suse.com,
-        senozhatsky@chromium.org, john.ogness@linutronix.de,
-        juri.lelli@redhat.com, vincent.guittot@linaro.org,
-        dietmar.eggemann@arm.com, bsegall@google.com, mgorman@suse.de,
-        bristot@redhat.com, vschneid@redhat.com, ryabinin.a.a@gmail.com,
-        glider@google.com, andreyknvl@gmail.com, dvyukov@google.com,
-        vincenzo.frascino@arm.com,
-        Andrew Morton <akpm@linux-foundation.org>, jpoimboe@kernel.org,
-        linux-alpha@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-snps-arc@lists.infradead.org, linux-omap@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-csky@vger.kernel.org,
-        linux-hexagon@vger.kernel.org, linux-ia64@vger.kernel.org,
-        loongarch@lists.linux.dev, linux-m68k@lists.linux-m68k.org,
-        linux-mips@vger.kernel.org, openrisc@lists.librecores.org,
-        linux-parisc@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
-        linux-riscv@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-sh@vger.kernel.org, sparclinux@vger.kernel.org,
-        linux-um@lists.infradead.org, linux-perf-users@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        linux-xtensa@linux-xtensa.org, linux-acpi@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-arch@vger.kernel.org, linux-mm@kvack.org,
-        linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com,
-        Sudeep Holla <sudeep.holla@arm.com>
-Subject: Re: [PATCH v3 00/51] cpuidle,rcu: Clean up the mess
-Message-ID: <20230117142140.g423hxisv7djudof@bogus>
-References: <20230112194314.845371875@infradead.org>
- <Y8WCWAuQSHN651dA@FVFF77S0Q05N.cambridge.arm.com>
- <Y8Z31UbzG3LJgAXE@hirez.programming.kicks-ass.net>
- <Y8afpbHtDOqAHq9M@FVFF77S0Q05N.cambridge.arm.com>
+        Tue, 17 Jan 2023 09:25:40 -0500
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5226D3F2B9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 06:24:17 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id l41-20020a05600c1d2900b003daf986faaeso4674012wms.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 06:24:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=gmE2Ehr/ETvFjtSmedtCa2EspI42jlN+3OaC9EIlxrI=;
+        b=m/2mZeDoUQa9RxRhTraFbL4K7uYMEmGKa6ch2sh/AE5087OOya8q2I98bbpmQetL0Z
+         b6+AQCcUXN4arOZcK8w1e2Dpg/4lxRorP/I2putXq3ijsbCwik1R4PNilZ0DzLM1hpDN
+         UbwNYeqOQsm5k0YE32yLMLejbd3FI9Oqz8tYcSoE9Oh36B7C+T5/vRiSBwodmk/EHr7u
+         QEOW6vW14AFlsRpMWHTfJHBgFwxnUfX1uXjoF/G/YVtEMRIM16X4toNItz81kqWGSMx0
+         4D2eP9buBPvtE/2aiaVS3RmUoo2C2NpPUs1cWHAKP73zpOYC08u4iG3UqcdZ/GXqCmpW
+         8gig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gmE2Ehr/ETvFjtSmedtCa2EspI42jlN+3OaC9EIlxrI=;
+        b=mmuNPg4KRNfJHbLRHdGF5k84Enn2TT4FZ4EaPv2v3EUkp++jM+fj6ZRpC7USJ3ahj9
+         6tJMEwYR0l2qY/HCGyIrxjPBtOFMS67U1PZgg19IPROeiCXfZErLUoe7LjGv0khZLg7P
+         0QvuZyMl7bhix5pFuvOwgjVubdlyb2pVjDJafAdgZ2ZZKHuXxElgqTZftAUBsOUNrLJ9
+         DoUT4v+C6maIiV3IagwuNdqsCn5873APOBaZVIT6urvdHFT9fanh31XsfpppLb3oDNlR
+         7sryfct+7tBhFRUSpqvF3PTExkZN6HBvZzyB+7RZ+jYO+3qfMjhL/qDV5e+ZcgEpSWqT
+         Z1cg==
+X-Gm-Message-State: AFqh2kolJ7d1xJj2ozFLidFkpfbcRu2OS3daEBPMZ3SDWV99pf8Xp1Fn
+        plgMMh02c2vZSLi5eoivzH0NTg==
+X-Google-Smtp-Source: AMrXdXvI6hcnugSXWgquVNhW7ZLFd7ovzW1ow0cFKelpOd1a5syfY/eyznHgFpd00wQX9qIrLlI1cQ==
+X-Received: by 2002:a05:600c:3582:b0:3d9:ed39:8999 with SMTP id p2-20020a05600c358200b003d9ed398999mr3394963wmq.35.1673965455902;
+        Tue, 17 Jan 2023 06:24:15 -0800 (PST)
+Received: from lion.. (cpc76484-cwma10-2-0-cust274.7-3.cable.virginm.net. [82.31.201.19])
+        by smtp.gmail.com with ESMTPSA id o19-20020a05600c511300b003d9862ec435sm28103726wms.20.2023.01.17.06.24.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Jan 2023 06:24:15 -0800 (PST)
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc:     phone-devel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org
+Subject: [PATCH] rpmsg: qcom: glink: support waking up on channel rx
+Date:   Tue, 17 Jan 2023 14:24:13 +0000
+Message-Id: <20230117142414.983946-1-caleb.connolly@linaro.org>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y8afpbHtDOqAHq9M@FVFF77S0Q05N.cambridge.arm.com>
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jan 17, 2023 at 01:16:21PM +0000, Mark Rutland wrote:
-> On Tue, Jan 17, 2023 at 11:26:29AM +0100, Peter Zijlstra wrote:
-> > On Mon, Jan 16, 2023 at 04:59:04PM +0000, Mark Rutland wrote:
-> > 
-> > > I'm sorry to have to bear some bad news on that front. :(
-> > 
-> > Moo, something had to give..
-> > 
-> > 
-> > > IIUC what's happenign here is the PSCI cpuidle driver has entered idle and RCU
-> > > is no longer watching when arm64's cpu_suspend() manipulates DAIF. Our
-> > > local_daif_*() helpers poke lockdep and tracing, hence the call to
-> > > trace_hardirqs_off() and the RCU usage.
-> > 
-> > Right, strictly speaking not needed at this point, IRQs should have been
-> > traced off a long time ago.
-> 
-> True, but there are some other calls around here that *might* end up invoking
-> RCU stuff (e.g. the MTE code).
-> 
-> That all needs a noinstr cleanup too, which I'll sort out as a follow-up.
-> 
-> > > I think we need RCU to be watching all the way down to cpu_suspend(), and it's
-> > > cpu_suspend() that should actually enter/exit idle context. That and we need to
-> > > make cpu_suspend() and the low-level PSCI invocation noinstr.
-> > > 
-> > > I'm not sure whether 32-bit will have a similar issue or not.
-> > 
-> > I'm not seeing 32bit or Risc-V have similar issues here, but who knows,
-> > maybe I missed somsething.
-> 
-> I reckon if they do, the core changes here give us the infrastructure to fix
-> them if/when we get reports.
-> 
-> > In any case, the below ought to cure the ARM64 case and remove that last
-> > known RCU_NONIDLE() user as a bonus.
-> 
-> The below works for me testing on a Juno R1 board with PSCI, using defconfig +
-> CONFIG_PROVE_LOCKING=y + CONFIG_DEBUG_LOCKDEP=y + CONFIG_DEBUG_ATOMIC_SLEEP=y.
-> I'm not sure how to test the LPI / FFH part, but it looks good to me.
-> 
-> FWIW:
-> 
-> Reviewed-by: Mark Rutland <mark.rutland@arm.com>
-> Tested-by: Mark Rutland <mark.rutland@arm.com>
-> 
-> Sudeep, would you be able to give the LPI/FFH side a spin with the kconfig
-> options above?
-> 
+Configure all channels as wakeup capable and report a wakeup event
+when data is received.
 
-Not sure if I have messed up something in my mail setup, but I did reply
-earlier. I did test both DT/cpuidle-psci driver and  ACPI/LPI+FFH driver
-with the fix Peter sent. I was seeing same splat as you in both DT and
-ACPI boot which the patch fixed it. I used the same config as described by
-you above.
+This allows userspace to "subscribe" to a particular channel where
+it is useful to wake up to process new data. The expected usecase
+is to allow for handling incoming SMS or phone calls where the only
+notification mechanism is via QRTR on the IPCRTR glink channel.
 
+As this behaviour is likely undesirable for most users, this patch
+doesn't enable a wakeup_source for any channels by default.
+
+Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+---
+ drivers/rpmsg/qcom_glink_native.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
+index 115c0a1eddb1..1a96a7ae23bb 100644
+--- a/drivers/rpmsg/qcom_glink_native.c
++++ b/drivers/rpmsg/qcom_glink_native.c
+@@ -914,6 +914,9 @@ static int qcom_glink_rx_data(struct qcom_glink *glink, size_t avail)
+ 		channel->buf = NULL;
+ 
+ 		qcom_glink_rx_done(glink, channel, intent);
++
++		pm_wakeup_ws_event(channel->ept.rpdev->dev.power.wakeup, 0,
++				   true);
+ 	}
+ 
+ advance_rx:
+@@ -1510,6 +1513,17 @@ static int qcom_glink_rx_open(struct qcom_glink *glink, unsigned int rcid,
+ 		if (ret)
+ 			goto rcid_remove;
+ 
++		/*
++		 * Declare all channels as wakeup capable, but don't enable
++		 * waking up by default.
++		 *
++		 * Userspace may wish to be woken up for incoming messages on a
++		 * specific channel, for example to handle incoming calls or SMS
++		 * messages on the IPCRTR channel. This can be done be enabling
++		 * the wakeup source via sysfs.
++		 */
++		device_set_wakeup_capable(&rpdev->dev, true);
++
+ 		channel->rpdev = rpdev;
+ 	}
+ 
 -- 
-Regards,
-Sudeep
+2.39.0
+
