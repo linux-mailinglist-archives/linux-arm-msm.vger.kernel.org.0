@@ -2,126 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E1EE5670B89
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 23:18:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0DEE3670BD2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 23:43:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229578AbjAQWSI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 17:18:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60522 "EHLO
+        id S229768AbjAQWnp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 17:43:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229629AbjAQWRO (ORCPT
+        with ESMTP id S229748AbjAQWmn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 17:17:14 -0500
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD36E3FF11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 13:58:41 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id v6so35720581ejg.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 13:58:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=txGdDzUac92pqSWXdQlchfy3R9bwdZSF7lrIlBLtnf0=;
-        b=zvLJC9262oshfH0qHkMFmMxm+AP+JnbyhoYphCttXndwDgpsU++Fh8HyLEzzbV/Tcg
-         GM7xOF0MQMeryLO78JsF0m+RFvR5S/LaM5g90QTQmw/JTmzWVdySK/6Z2N8XqK6ebrhK
-         BgFgDSgzTejngffKJ4290DX/2wbmH1YIWgZiOXYkdGHF8IXTxvJ7yAj7JPT0h0o2xRGV
-         VlePIyV1n2ka5uE4Hjo2SV+QwKPZ50wdZ5daSRGRzyEmz7fHTodemNZmQcZQMDvTedDb
-         gyv+hyDLjyUorL5fw2Q4Q3iKSJZ7OR0yT6LK+V5MHk0YUdZBkQ5TZVxezdmD2wGt1W4o
-         mQIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=txGdDzUac92pqSWXdQlchfy3R9bwdZSF7lrIlBLtnf0=;
-        b=IUSD7WiyDddJMvPJdfrhACGgIAedQL3C3eyFkihlB1k6cf+7WWRFjAzAlCImD3Zw8s
-         ++dWcJy6NkmvRLI8dM4NqqF7yrKNY54x4rOS/rn4EsQbuwd9jZJiyembLwP7id1MkJTH
-         P7QryjXlLGAmgctnp9eyp4zMbnDWxGuionXcgk8NxxqOxtzA2z81OP/iVZ+kE+dG35MB
-         k6khaI+jHsFsGjI/9hz6/Zik97IYu3lOfZwyVAIhmebWDSgbXeO+e2FIyNAnYRPuVEvv
-         oqUBI8Q/ugk6/at0MWVtnBBlXpvywWbHEOmM3RRZjRPEA1buvrLNMDQGT6XxC/IqBuQq
-         M9Ng==
-X-Gm-Message-State: AFqh2kqikJp6mDSNOXCYd66lEWVTZfn1LKBKvG9xHgdc8mjDkEfxnp0x
-        2+hmComEmaZMF/+5pekuc+7P25KBDIEkBxi3
-X-Google-Smtp-Source: AMrXdXsKVD6gHfiuaL4Os5vPq+eVVULRrsLQxcntuwbs7qCmWl/JkyRQsk1P2JGnim+usLSjboxZBQ==
-X-Received: by 2002:a17:907:1759:b0:85e:c4e4:cfbf with SMTP id lf25-20020a170907175900b0085ec4e4cfbfmr4575430ejc.15.1673992719265;
-        Tue, 17 Jan 2023 13:58:39 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id kz11-20020a17090777cb00b007aece68483csm13772544ejc.193.2023.01.17.13.58.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Jan 2023 13:58:38 -0800 (PST)
-Message-ID: <3579f89a-895c-d0a0-ce86-4e66881f0c99@linaro.org>
-Date:   Tue, 17 Jan 2023 23:58:37 +0200
+        Tue, 17 Jan 2023 17:42:43 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC1CC474C6;
+        Tue, 17 Jan 2023 14:29:48 -0800 (PST)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30HMQfer016497;
+        Tue, 17 Jan 2023 22:29:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=L3lrNdGwPI64g1imGZgAD0hLzBBqC1j4gjf4j57+EE0=;
+ b=YHlZxMt+7XD299eEHaW9sYS2VYx8EpJ0BYWQcEHJLxs+Fv6mgxcywKxjVK784CBg02W/
+ Aw6sP1cZUsYQhDs/AhtQchbMMHgVeqHJQhEt7dLZgLOwJptqrIE9tu28q5Hph1Hs3OBV
+ kXNhaalYKkK9V2zn1TpYv+Tddcu5eDHkxbdrxogNkdVdj0802bm3tnCRkz61IvUz3042
+ Sb5Uc3UsXn6Tn1poIKZj+cP5XxgkhrXTPQmgiAZmnkV/WaEjABcJC4bH8nd2+zmQJ2B8
+ 0cKW1ahfwIB94Sd61ODebkpLrJBp9V3xKDJhORs2VYUA8KJbwTdS5zj/cTVfkXupYd+S uA== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n55cxbcfr-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 17 Jan 2023 22:29:33 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30HMTW46019089
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 17 Jan 2023 22:29:32 GMT
+Received: from [10.134.67.48] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 17 Jan
+ 2023 14:29:31 -0800
+Message-ID: <59bddf7a-f420-cccd-8029-65052f834c62@quicinc.com>
+Date:   Tue, 17 Jan 2023 14:29:31 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH v2 1/4] dt-bindings: mailbox: qcom: correct the list of
- platforms using clocks
-Content-Language: en-GB
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v8 05/28] virt: gunyah: Add hypercalls to identify Gunyah
+To:     Alex Elder <elder@linaro.org>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        "Will Deacon" <will@kernel.org>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>
+CC:     Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230113090739.45805-1-dmitry.baryshkov@linaro.org>
- <20230113090739.45805-2-dmitry.baryshkov@linaro.org>
- <aa5598ee-0dd1-caa7-c60d-5a409f039713@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <aa5598ee-0dd1-caa7-c60d-5a409f039713@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        Jonathan Corbet <corbet@lwn.net>,
+        "Bagas Sanjaya" <bagasdotme@gmail.com>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        "Sudeep Holla" <sudeep.holla@arm.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        "Lorenzo Pieralisi" <lpieralisi@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-acpi@vger.kernel.org>
+References: <20221219225850.2397345-1-quic_eberman@quicinc.com>
+ <20221219225850.2397345-6-quic_eberman@quicinc.com>
+ <63bbc640-9b0c-95af-3d35-291da0323db3@linaro.org>
+ <4e8a7fdf-8c91-cf2f-d369-c67b7584f580@quicinc.com>
+ <b2819f68-8672-4909-c787-d1bdbd35da2e@linaro.org>
+Content-Language: en-US
+From:   Elliot Berman <quic_eberman@quicinc.com>
+In-Reply-To: <b2819f68-8672-4909-c787-d1bdbd35da2e@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: miyKeSpHg7UHbXYqZwTyLjr8gHpRWoe-
+X-Proofpoint-ORIG-GUID: miyKeSpHg7UHbXYqZwTyLjr8gHpRWoe-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-17_10,2023-01-17_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 phishscore=0
+ suspectscore=0 priorityscore=1501 mlxscore=0 spamscore=0 bulkscore=0
+ mlxlogscore=917 malwarescore=0 lowpriorityscore=0 impostorscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301170179
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/01/2023 13:34, Krzysztof Kozlowski wrote:
-> On 13/01/2023 10:07, Dmitry Baryshkov wrote:
->> Only three platforms require `pll' and `aux' clocks: msm8916, msm8939
->> and qcs404. Correct the list of platforms in the corresponding clause.
+
+
+On 1/17/2023 11:20 AM, Alex Elder wrote:
+> On 1/10/23 11:56 AM, Elliot Berman wrote:
+>>>> There are two calls to help identify Gunyah:
+>>>>
+>>>> 1. gh_hypercall_get_uid() returns a UID when running under a Gunyah
+>>>>     hypervisor.
+>>>> 2. gh_hypercall_hyp_identify() returns build information and a set of
+>>>>     feature flags that are supported by Gunyah.
+>>>
+>>> The first is a "service", while the second is a "hypercall".
+>>> Can you explain the distinction?  The sentence at the top
+>>> refers to both as "hypercalls".
+>>>
 >>
->> Fixes: 0d17014e9189 ("dt-bindings: mailbox: Add binding for SDX55 APCS")
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   .../bindings/mailbox/qcom,apcs-kpss-global.yaml          | 9 +--------
->>   1 file changed, 1 insertion(+), 8 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
->> index 943f9472ae10..b8a44ef0540f 100644
->> --- a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
->> +++ b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
->> @@ -71,15 +71,8 @@ allOf:
->>           compatible:
->>             enum:
->>               - qcom,msm8916-apcs-kpss-global
->> -            - qcom,msm8994-apcs-kpss-global
->> -            - qcom,msm8996-apcs-hmss-global
->> -            - qcom,msm8998-apcs-hmss-global
->> +            - qcom,msm8939-apcs-kpss-global
->>               - qcom,qcs404-apcs-apps-global
->> -            - qcom,sc7180-apss-shared
->> -            - qcom,sdm660-apcs-hmss-global
->> -            - qcom,sdm845-apss-shared
->> -            - qcom,sm6125-apcs-hmss-global
->> -            - qcom,sm8150-apss-shared
+>> I learned more details about this to answer your question. "get_uid()" 
+>> is a standardized call that is ARM_SMCCC_VENDOR_HYP_CALL_UID_FUNC_ID 
+>> defined in include/arm-smccc.h. I'll use that.
 > 
-> And what in other case? Any clocks? They should be moved to their own if
-> forbidding the clocks and clock-names.
+> You didn't really explain the distinction between hypercall
+> and service in Gunyah.  Both are encoded as "vendor specific
+> hypervisor service calls" according to the SVCCC specification.
+> I haven't found where ARM_SMCCC_VENDOR_HYP_CALL_UID_FUNC_ID
+> gets handled, but I accept your answer that it's basically
+> a standard call.  The "get UID" is the only one that's defined
+> as a Gunyah "service"; the rest are hypercalls.
+> 
 
-Ack
+This came from a Gunyah implementation detail that separates standard 
+(service) calls from the non-standard calls. I was following the 
+distinction from Gunyah code not realizing that it's actually a 
+standardized call that Linux would already have support for.
 
--- 
-With best wishes
-Dmitry
+Thanks,
+Elliot
 
+> It's not a big deal, I just noticed the difference and was
+> curious about it.
+> 
+>                      -Alex
