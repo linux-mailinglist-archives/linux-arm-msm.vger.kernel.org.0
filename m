@@ -2,119 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AD06066E08D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 15:27:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6FE8D66E0AB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 15:30:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232484AbjAQO1G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 09:27:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47700 "EHLO
+        id S232418AbjAQOaK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 09:30:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232509AbjAQO0m (ORCPT
+        with ESMTP id S232608AbjAQO3s (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 09:26:42 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCDC4402FF
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 06:25:07 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id k16so1736969wms.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 06:25:07 -0800 (PST)
+        Tue, 17 Jan 2023 09:29:48 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B831230195
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 06:28:51 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id v13so11201076eda.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 06:28:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=0o5JKqHA2jE2pZCqpewPRuIPIvKyqcaqw+l6676pGJY=;
-        b=Xt4JgcY4xB0r7T92IzDEDPjSB5vXfr00+YuDT1ZcYsxdhY22g+XGDHlWzWHw9EVfF/
-         glqP6b1I/M3w5Juepr1Bl0RkPLkE8LxIDMXphUZbGPfetM9yFlRvujF3XZrc0qY3+0Od
-         5ZEi738PWLGo4On8nvLAx8455u1MDkvtXUP170YCS4vlwXE2hfsNHuM0krmr86SE8QP7
-         5XV2c7tv7PDTPR79ox7PqF0mlon5JlVS+qW2kl54+SWj9TltiGQtQ5co3SfiwRffgR7u
-         BRXsh6Wn0j+nB1Zs05uXqcIOAS9hbqQaLK+0ejZ+6+qpspKMqapmjgbzx3JEYU6nVfMv
-         OxVA==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=NaZ0IlVdh+q7MBEpI5jBa+K8Ee5vJI/lj2dgRFdnnfc=;
+        b=TunKgBrKl0nB1l1mnTlj9qfcrW7V7u2hmKrKebfgF7hNWS5OAtUPFGLW6NE4aRMG61
+         KgR6XPx76BJWkR/4/jxt6g1jNHayqp8cq6f3DZW6fpbsMuSKvQH4K6uLjaFGtAQQADbK
+         Rn/JMzaSFZM4eGJ6yvQIkFy4IkZzGkyxTIjuLMVudMn5N6BS8rD7sKbbH+c8YpAC0lel
+         hSxs7RUJ6yM+1TK/SUy/T9Flz5edcthPI/TsDvZKbb7Uipg7zJ4S2LaAaWns6zRDFZ1g
+         ODA7NJLDAteg/y2gsw77M6T8yRqynFSIH+fSD7cdCifYADENymasX9n25ZqLkSJ8uwKb
+         F4KA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0o5JKqHA2jE2pZCqpewPRuIPIvKyqcaqw+l6676pGJY=;
-        b=1RNcDjltguusC6ZdUZOY1Ojx3RUon0HBcoCIi8Qb5wugbSmiO9zcHnsnIlwJ6c4m7y
-         hTniyGWEBGr1q1xQL6/0opC3TKqthlPvsCPsDTGxN+JNzTWxC0PGXzzTG2/o0PsRb+/e
-         aC/3woX/F05wvLARl7TSjHvbvpmSo3uwV0AcDLIgUhJDqLFv3qRFsxAQ2YRziLi/At8m
-         N4TTIiSkZp0XVS1flP5NrtUlLZ0Xh12g281SDPDOZULjwpfKrqeC4uAIiS+du+YvV8ix
-         FThSN4VWeOYEV21CvaccuXi3UWiDr7LzyRQLuvtXlABCFj8+UNLRrmBpQEpS0WN0bnB9
-         qVBg==
-X-Gm-Message-State: AFqh2krFt7XtaofN9GSiQlsk61BkPXBY0sPmdVWx+uC5OvIlA32q1Bab
-        Az03HOvApkwqNDPMhFDQFxkfqA==
-X-Google-Smtp-Source: AMrXdXvUiyE7TTzBBUfTs4/cb9g/hSrNJbSFCgye8F3KowhvGTrU+ni8vLPEN0p9Wn24H5f8GY1x9Q==
-X-Received: by 2002:a05:600c:181b:b0:3da:ff1f:e8d3 with SMTP id n27-20020a05600c181b00b003daff1fe8d3mr3255753wmp.15.1673965506462;
-        Tue, 17 Jan 2023 06:25:06 -0800 (PST)
-Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id n6-20020a05600c3b8600b003db012d49b7sm5854466wms.2.2023.01.17.06.25.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Jan 2023 06:25:05 -0800 (PST)
-Date:   Tue, 17 Jan 2023 16:25:04 +0200
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=NaZ0IlVdh+q7MBEpI5jBa+K8Ee5vJI/lj2dgRFdnnfc=;
+        b=4Z5kOHi44JHr+lQjoQVYpX74+/oVLhz9Ew+aKjYkXrvIaOLOon3R6qyLLCDMXAR1T1
+         FBKdd93AXGxOk1Da/I0JAc/e6c1gW6OvCsEJoYEXa5F8b2rCQ9Qp5yhtUPZwko/+A4Oo
+         OPvl1RY9YFW6oZXx3AK+rmw8zxxEUlBfsf7cXM04kqLvtA8ZJx/myIRFMNzzTl3gKysK
+         uxkG+gxxoh6I6J1Zcalp7WhC53D1JbQZvMusSwl5EtLyJuv0wKqigiPZfPerLeggo6kR
+         TKuzL5G2AGT8pA/D3UIRdqCyGcLATl3ZfX9mynxFnAhScTrfkFHHWl7loFRMIgI/Zaim
+         Hqcg==
+X-Gm-Message-State: AFqh2krYZdzehIbDrBhm8V02hxLh9+ddUQIL2iPGr5nXjPep+0GBo6xL
+        e5zFf+pe3cfLCzDPPhhP9K6FuNKK2oHxuI40
+X-Google-Smtp-Source: AMrXdXsYfQvUo/LDJi+qTb01CAhI9LdxAJJZGKIxi9fU1dJzQV7GO0zUblV27hUr3bg/El7pIE+qeQ==
+X-Received: by 2002:a05:6402:1944:b0:49c:1fe4:9f17 with SMTP id f4-20020a056402194400b0049c1fe49f17mr13597246edz.37.1673965730355;
+        Tue, 17 Jan 2023 06:28:50 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id gh9-20020a170906e08900b0086f4b8f9e42sm3384284ejb.65.2023.01.17.06.28.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 Jan 2023 06:28:50 -0800 (PST)
+Message-ID: <5d15d855-c239-7d4c-34eb-726577d53546@linaro.org>
+Date:   Tue, 17 Jan 2023 16:28:48 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH v4 2/6] phy: qcom-qmp: qserdes-com: Add v6 register
+ offsets
+Content-Language: en-GB
+To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         "vkoul@kernel.org" <vkoul@kernel.org>,
         Kishon Vijay Abraham I <kishon@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         devicetree@vger.kernel.org,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Johan Hovold <johan@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v3 1/6] dt-bindings: phy: Add QMP UFS PHY comptible for
- SM8550
-Message-ID: <Y8avwNKKQYwbgmRX@linaro.org>
-References: <20230117125555.163087-1-abel.vesa@linaro.org>
- <20230117125555.163087-2-abel.vesa@linaro.org>
- <33eda50c-c70f-1bb6-0917-22b6fdb4a2ca@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <33eda50c-c70f-1bb6-0917-22b6fdb4a2ca@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Johan Hovold <johan@kernel.org>
+References: <20230117142015.509675-1-abel.vesa@linaro.org>
+ <20230117142015.509675-3-abel.vesa@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230117142015.509675-3-abel.vesa@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23-01-17 16:09:12, Dmitry Baryshkov wrote:
-> On 17/01/2023 14:55, Abel Vesa wrote:
-> > Document the QMP UFS PHY compatible for SM8550.
-> > 
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> > ---
-> >   .../devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml       | 1 +
-> >   1 file changed, 1 insertion(+)
-> > 
-> > diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml
-> > index 760791de0869..44745a5c64cd 100644
-> > --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml
-> > +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml
-> > @@ -17,6 +17,7 @@ properties:
-> >     compatible:
-> >       enum:
-> >         - qcom,sc8280xp-qmp-ufs-phy
-> > +      - qcom,sm8550-qmp-ufs-phy
-> >         - qcom,sm6125-qmp-ufs-phy
+On 17/01/2023 16:20, Abel Vesa wrote:
+> The new SM8550 SoC bumps up the HW version of QMP phy to v6 for USB,
+> UFS and PCIE g3x2. Add the new qserdes com offsets in a dedicated
+> header file.
 > 
-> Please keep the list sorted
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+>   .../qualcomm/phy-qcom-qmp-qserdes-com-v6.h    | 82 +++++++++++++++++++
+>   drivers/phy/qualcomm/phy-qcom-qmp.h           |  2 +
+>   2 files changed, 84 insertions(+)
+>   create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-qserdes-com-v6.h
 
-Ugh.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-I sent a new version.
+-- 
+With best wishes
+Dmitry
 
-> 
-> >     reg:
-> 
-> -- 
-> With best wishes
-> Dmitry
-> 
