@@ -2,53 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1065466D651
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 07:26:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9681B66D73C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 08:51:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235612AbjAQG0Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 01:26:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37480 "EHLO
+        id S232094AbjAQHvu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 02:51:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235665AbjAQGZ7 (ORCPT
+        with ESMTP id S235709AbjAQHvr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 01:25:59 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8887D166E5;
-        Mon, 16 Jan 2023 22:25:10 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 2127F61195;
-        Tue, 17 Jan 2023 06:25:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5C87C433EF;
-        Tue, 17 Jan 2023 06:25:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1673936709;
-        bh=Thp28YsZz2lq8b1khFzysyZJYiSV8xClCrJdvqiye54=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=H9WUqhJOGNXpYZAqHJ9B139BMMOKckyQFLpL9y3ILJDvUebayuD4ETHRkK/Ntz4ue
-         S1h9m3bUjsuN4UtKRYzppaRjH7HHEgga0vKD0IDbj5Ed/l/O+s8xkAuj2urzCgOyMa
-         ugTQwF4sHluRifcyjpR6j0rZf2AVEEXcekNtNYs0zz+3+XxrudurM8VczeO5/pBNlI
-         RjbO/h/7d818rBjGW+GZE43iWPmnO35f+9Mdv7xhWbSWrW55XqM+vPdC9/U9R5g1Bp
-         8jCq/wbMx9+GHDslAUibM2CwoFjyfse3d0pRvC4vlSfNZCUPwRjCHLpP9R7niyGqFI
-         QHcvtujvuAPMw==
-Date:   Tue, 17 Jan 2023 11:55:05 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     andersson@kernel.org, quic_cang@quicinc.com,
-        quic_asutoshd@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-        dmitry.baryshkov@linaro.org, ahalaney@redhat.com,
-        abel.vesa@linaro.org
-Subject: Re: [PATCH v6 00/12] ufs: qcom: Add HS-G4 support
-Message-ID: <Y8Y/QX1KzWy2m3v5@matsya>
-References: <20230114071009.88102-1-manivannan.sadhasivam@linaro.org>
+        Tue, 17 Jan 2023 02:51:47 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3603324480
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 23:51:45 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id j17so3020233wms.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Jan 2023 23:51:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=HurAsoClkkfNishWyH7zyhaS3SjeDCn6WcRooyIarSk=;
+        b=HrQi2jM2o3k7MlGekuYzaRfGnWM40tf3DH1T7opEj1V16klaEMUxJI7aNqVcb/qg9r
+         ocIQtAl5h2SHhb45/fc+ld45TMwe7JarYlfaCvgM0h3KOb+01x6MY9mm/XF8RChm6QKo
+         mshyl8wMDh8x5RGAmN7kfShw+9NttQQWjBu2DRiX3r6NmYt4GPBRmHTorJ4HszSYa6Rw
+         8SzUKv9Qvsrmbbn6sNbpuwvUXvpkj9EVyfBWBXZBCQ6mu5BfB44zwirK8AvmeWfPmv0f
+         f0FJAcCviVIOc0lOejsbCVxherG0FCCtgZarK6JfyKqhqUVD0sabjJ9EzBHkbDp+jdeS
+         y0GA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=HurAsoClkkfNishWyH7zyhaS3SjeDCn6WcRooyIarSk=;
+        b=kKsQ2oiGB+BdsVCW90q0qodyNW3XN4JkaxozM9vwMa1GB2E97SdnVSowr1fxn4yJv8
+         b53emctYs/7UMC6KVnKJeu2wTE/vgYFDP+2cf9X3vJeQ0rwJvjo0GQYLA7o9jR/vEDM0
+         08EK0bxzQQPXYisCvtlVBj8UT92BEkrUDpk7EkPDl0GSTHeEi5WeDHUtlFF48PPD4j+u
+         PT3vMc254jPTxzO1ZIeWdwSso8PuHIr8QOXZAS4Fdtt4ZWUIb1f3DYPrCwFlS083dSY3
+         QARD+hc+dKmHfN//CNixdFOnZFJPPmJTTwBCaN5m3HxN/zBXf4PzqsuoCBp57bpDIxB4
+         bQMw==
+X-Gm-Message-State: AFqh2kq49JgJ4LmL2HwPitRoRgdbPwh0p5T1Ms+R7Fy97TQm0gyxrzqJ
+        3s6qAlT3sSxljfiDnheE0CcgNw==
+X-Google-Smtp-Source: AMrXdXvme5c+Y2+O5xOdzwHI53CavI+MeY/3uvmpsnhkqo7OyPX1WsvR43HhkCntqsykA4usyIw3mQ==
+X-Received: by 2002:a05:600c:c16:b0:3da:26e5:10b6 with SMTP id fm22-20020a05600c0c1600b003da26e510b6mr2193294wmb.30.1673941903802;
+        Mon, 16 Jan 2023 23:51:43 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id t5-20020a1c7705000000b003daffc2ecdesm3815750wmi.13.2023.01.16.23.51.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 16 Jan 2023 23:51:43 -0800 (PST)
+Message-ID: <948d6fec-12e3-f4e6-8024-d444e5a41df5@linaro.org>
+Date:   Tue, 17 Jan 2023 08:51:41 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230114071009.88102-1-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH 2/6] arm64: dts: qcom: sdm845: move WCD9340 codec to
+ separate file
+Content-Language: en-US
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230113162245.117324-1-krzysztof.kozlowski@linaro.org>
+ <20230113162245.117324-2-krzysztof.kozlowski@linaro.org>
+ <20230117035631.cgi6fjdrpz5eppca@builder.lan>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230117035631.cgi6fjdrpz5eppca@builder.lan>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -56,25 +81,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14-01-23, 12:39, Manivannan Sadhasivam wrote:
-> Hello,
+On 17/01/2023 04:56, Bjorn Andersson wrote:
+> On Fri, Jan 13, 2023 at 05:22:41PM +0100, Krzysztof Kozlowski wrote:
+>> WCD9340 codec node is not a property of the SoC, but board.  Move it to
+>> separate file and include it in the specific boards.  On all others,
+>> keep the Slimbus node disabled as it is empty.
+>>
 > 
-> This series adds HS-G4 support to the Qcom UFS driver and PHY driver.
-> The newer Qcom platforms support configuring the UFS controller and PHY
-> in dual gears (i.e., controller/PHY can be configured to run in two gear
-> speeds). This is accomplished by adding two different PHY init sequences
-> to the PHY driver and the UFS driver requesting the one that's required
-> based on the platform configuration.
+> I think this seems like a reasonable idea. But without clearly
+> documenting your intentions/guidelines we will soon have
+> sdm845-display.dtsi, sdm845-pcie.dtsi etc.
 > 
-> Initially the ufs-qcom driver will use the default gear G2 for enumerating
-> the UFS device. Afer enumeration, the max gear supported by both the
-> controller and device would be found out and that will be used thereafter.
-> But for using the max gear after enumeration, the ufs-qcom driver requires
-> the UFS device to be reinitialized. For this purpose, a separate quirk has
-> been introduced in the UFS core along with a callback and those will be used
-> by the ufs-qcom driver.
+> So please start there.
 
-Applied, thanks
+You said like this started the process but it is already there for
+sc7280. Where do you want to store such documentation? In commit msg?
 
--- 
-~Vinod
+> 
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>  .../boot/dts/qcom/sdm845-audio-wcd9340.dtsi   | 69 +++++++++++++++++++
+>>  arch/arm64/boot/dts/qcom/sdm845-db845c.dts    |  1 +
+>>  .../qcom/sdm845-xiaomi-beryllium-common.dtsi  |  1 +
+>>  .../boot/dts/qcom/sdm845-xiaomi-polaris.dts   |  1 +
+>>  arch/arm64/boot/dts/qcom/sdm845.dtsi          | 60 +---------------
+>>  .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts |  1 +
+>>  .../boot/dts/qcom/sdm850-samsung-w737.dts     |  1 +
+>>  7 files changed, 75 insertions(+), 59 deletions(-)
+>>  create mode 100644 arch/arm64/boot/dts/qcom/sdm845-audio-wcd9340.dtsi
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sdm845-audio-wcd9340.dtsi b/arch/arm64/boot/dts/qcom/sdm845-audio-wcd9340.dtsi
+>> new file mode 100644
+>> index 000000000000..5bcce7d0d709
+>> --- /dev/null
+>> +++ b/arch/arm64/boot/dts/qcom/sdm845-audio-wcd9340.dtsi
+> 
+> Why does this include the substring "audio"?
+
+To indicate it covers entire audio, which points me to the fact that
+probably I can also move there sound node.
+
+Best regards,
+Krzysztof
+
