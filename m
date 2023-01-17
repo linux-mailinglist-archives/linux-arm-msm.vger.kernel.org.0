@@ -2,133 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6780E66E74F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 20:58:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A862B66E7D6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 21:40:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229448AbjAQT6G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 14:58:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40152 "EHLO
+        id S232442AbjAQUjj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 15:39:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232197AbjAQTtO (ORCPT
+        with ESMTP id S235419AbjAQUfh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 14:49:14 -0500
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8F497497D;
-        Tue, 17 Jan 2023 10:46:36 -0800 (PST)
+        Tue, 17 Jan 2023 15:35:37 -0500
+Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 830241CAEE
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 11:20:47 -0800 (PST)
+Received: by mail-io1-xd35.google.com with SMTP id 203so4707739iou.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 11:20:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1673981206; x=1705517206;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=iVEJ8ngNMnmubogwgqBceWjbGwsJF2hG5TCwZ0pb0v4=;
-  b=zMHWsay/2eF4eSkIO16Xwuexf+5hK9BGElAD8JeDU8qUAfKUZGmIt4JY
-   Fn8cNpyCM31IItTcP3boCxAJzjGbaNqPZl/W1lDoX7h5le+dQUFPKgWUl
-   oVYy+n9qqu0hUf2WvY3qahNUSWh8bjqwftNfyxmflBrDtiBY+KKR0iL7t
-   g=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 17 Jan 2023 10:46:36 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.45.79.139])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jan 2023 10:46:36 -0800
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Tue, 17 Jan 2023 10:46:36 -0800
-From:   Bjorn Andersson <quic_bjorande@quicinc.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-CC:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Andrew Halaney <ahalaney@redhat.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v2] arm64: dts: qcom: sc8280xp: Define CMA region for CRD and X13s
-Date:   Tue, 17 Jan 2023 10:46:30 -0800
-Message-ID: <20230117184630.2775905-1-quic_bjorande@quicinc.com>
-X-Mailer: git-send-email 2.25.1
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=bQQhGaa8ME/qD8GrOmb/LR8k+tyYKhHj8WpJOgJmL40=;
+        b=N7yg3KxlCKSsu1VLFwTpGLiGTU9blVjz991dhmvqJBNqTfCy4BzvkPgeUjMrUYfSy7
+         /FxMBE0zLvyO99Y2aDlH1urHHynquVL1ldUueDFvMzJymo9wh22fKm27wHn1OzcAvL2T
+         yYe+MedHIUiQkwelizE9HuJVyQAPyC7xpw4b03TB4gKah2lNdziKu2cPMS/vPNsx85zl
+         dM1VbsPr0pQDaJLu/4imj/uLvr2B1Se8zh2vsO17KX0Ev6i94T7OwXZ8UphY4LQePhVc
+         HxR2F3B+CsvOQAhA5VwqE7riipIdmRRGiSzUoS3JcMcwJdBOGWUZJlbWW8myUH+mk0Vh
+         ksGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=bQQhGaa8ME/qD8GrOmb/LR8k+tyYKhHj8WpJOgJmL40=;
+        b=CNSNNFjIWuGYBtAqSoP5sBU2UgAzHYgq8h3SPHjijYKV/K5Jw89OL+Aat3ayCbrd1E
+         pricvv90PhejCgcVGmDDTf5VGfCYHE7Cmr2C9/GXoteGlQ2QGxaln6D5YteTxbFFk9/l
+         yKLoHsdqe5tofsLYTKus5tvIYKaiR9wSQKkGg5qeq5GAqZNErylub4p62XNy/ZutKUEn
+         jjIuKeSETWihRG88JKA8yjgS/IeNlWj/XZnMVTjAFahY00lwL5PaRFbw6TSrRL8Tp3u5
+         663paYA9voXvS5j10sEjCdbhyb6i+sldzsF4+kpYWXTwCh8SslIvQC7/jxEYFxBi9FQU
+         CRsg==
+X-Gm-Message-State: AFqh2kpeTOKsLU5bPnr6NXCVzYeRkofKC2WC8hDg4V38TqLyNBw76Qny
+        lX23NLl7WqMXaJwfJoiiDOT7+w==
+X-Google-Smtp-Source: AMrXdXsRiQGWp5HyS8FdEGoGTMhjd2qK1yDflbDU2KXk0dOG/CUpT3PLJ7xrBuniiCZq5cJTQXdJqQ==
+X-Received: by 2002:a5e:df08:0:b0:704:6e8d:4891 with SMTP id f8-20020a5edf08000000b007046e8d4891mr3332526ioq.3.1673983246899;
+        Tue, 17 Jan 2023 11:20:46 -0800 (PST)
+Received: from [172.22.22.4] ([98.61.227.136])
+        by smtp.googlemail.com with ESMTPSA id o13-20020a0566022e0d00b006bb5af55ddfsm10651735iow.19.2023.01.17.11.20.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 Jan 2023 11:20:46 -0800 (PST)
+Message-ID: <b9686ab1-8f18-4175-2581-df84ba58e3ce@linaro.org>
+Date:   Tue, 17 Jan 2023 13:20:44 -0600
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+From:   Alex Elder <elder@linaro.org>
+Subject: Re: [PATCH v8 00/28] Drivers for gunyah hypervisor
+To:     Elliot Berman <quic_eberman@quicinc.com>,
+        Alex Elder <elder@linaro.org>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-acpi@vger.kernel.org
+References: <20221219225850.2397345-1-quic_eberman@quicinc.com>
+ <83b6dbc2-01da-04b6-64ec-9a69fd5c4c89@linaro.org>
+ <d945e654-9679-72d7-bb79-d09c45f6d5aa@quicinc.com>
+Content-Language: en-US
+In-Reply-To: <d945e654-9679-72d7-bb79-d09c45f6d5aa@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-While booting the CRD, a series of CMA allocation errors can be seen in
-the kernel log:
+On 1/10/23 3:47 PM, Elliot Berman wrote:
+>>
+>> I haven't looked at the earlier reviews; perhaps the RFC stuff
+>> was requested.  I'm sure it's useful to see that but it doesn't
+>> seem directly helpful if your goal is to get this code upstream.
+>>
+> 
+> Right, the RFC patches were requested. Do you have a recommendation for 
+> sharing those later patches? I understand it's best practice not to post 
+> too many patches. The logical split was to have 1-20 go in first, and 
+> the remaining patches submitted later.
 
-  cma: cma_alloc: reserved: alloc failed, req-size: 128 pages, ret: -12
+If they're RFC they should be tagged "RFC".
 
-Growing the CMA region and querying /proc/meminfo indicates that a newly
-booted system (currently) uses 64MB CMA.
+I do think it's easier for reviewers if you can divide up the
+code into a few smaller series, so reviewing each (sub-)series
+isn't such an overwhelming thing to consider.  I've started
+looking (IN GREAT DETAIL) the RPC core code, and haven't gone
+much past that, so I don't have any guidance about how things
+could be structured.  (I do appreciate that the early patches
+were small, and built things up gradually.)
 
-Define a memory region sufficiently large for the current use cases, to
-avoid forcing users to add this themselves, through command line
-parameters etc.
+I personally try to keep my series to closer to 5-10 patches,
+though the maintainer(s) involved need to agree to accept the
+smaller series before the full functionality gets enabled when
+it's all accepted.
 
-While fixing the CRD define the same region for the X13s.
+You'll get (lots) more feedback from me on the remaining patches,
+eventually.  If you decide to re-spin things soon I'd like to know
+your plan so I can review the latest when it's available.
 
-Tested-by: Andrew Halaney <ahalaney@redhat.com> # sc8280xp-lenovo-thinkpad-x13s
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
----
-
-Changes since v1:
-- Updated commit message
-
- arch/arm64/boot/dts/qcom/sc8280xp-crd.dts                | 9 +++++++++
- .../boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts      | 9 +++++++++
- 2 files changed, 18 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-index 4e92dc28e2ce..6f686377dc3e 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-@@ -128,6 +128,15 @@ vreg_wwan: regulator-wwan {
- 
- 		regulator-boot-on;
- 	};
-+
-+	reserved-memory {
-+		linux,cma {
-+			compatible = "shared-dma-pool";
-+			size = <0x0 0x8000000>;
-+			reusable;
-+			linux,cma-default;
-+		};
-+	};
- };
- 
- &apps_rsc {
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-index 55ecbee19a58..8d485e0000cf 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -153,6 +153,15 @@ vreg_wwan: regulator-wwan {
- 		regulator-boot-on;
- 	};
- 
-+	reserved-memory {
-+		linux,cma {
-+			compatible = "shared-dma-pool";
-+			size = <0x0 0x8000000>;
-+			reusable;
-+			linux,cma-default;
-+		};
-+	};
-+
- 	thermal-zones {
- 		skin-temp-thermal {
- 			polling-delay-passive = <250>;
--- 
-2.25.1
-
+					-Alex
