@@ -2,88 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1DF5866E455
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 18:02:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7117466E4FE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 18:33:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232536AbjAQRCb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 12:02:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37154 "EHLO
+        id S229609AbjAQRdR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 12:33:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233883AbjAQRCZ (ORCPT
+        with ESMTP id S235322AbjAQR2S (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 12:02:25 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95B054393E;
-        Tue, 17 Jan 2023 09:02:24 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 332106149A;
-        Tue, 17 Jan 2023 17:02:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64C67C433D2;
-        Tue, 17 Jan 2023 17:02:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1673974943;
-        bh=J0fMJMgzFoKpVLn+Krs4tXYA63OB6Vo+2PIw/pLLrAw=;
-        h=From:To:Cc:Subject:Date:From;
-        b=gOsZkyAXeNghzO5zL4f/bDsyewx6FbmWk5rvXdLOEvJkEUJaBmQMKy1khkUUIVTd4
-         Oc8m/RR2SuwRihhHcJet6Uy8cU68N/+HUee3bnWhhDZ+GjHvetErRgX8k/owV3j5UI
-         T6jdml3rFZOoNe8lxzrVWZB36P4QQhG/IH/tgmTm9Tv0wLcufmxJT0pef5l4Wf0YPu
-         BH5mkjJcg6S+bTjTcVSuGZxUJVeaZYCvLUm0XD6WzavhBHvpQlBcd7k53bTvn942x3
-         xmxN5nA1eQS4jOoFd9iUHAy7oyixABvFmzEt65DPZIjUMJbr30gpEKLEbyhCg6oXoE
-         zbHPWi3bP2I+Q==
-From:   Arnd Bergmann <arnd@kernel.org>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Arnd Bergmann <arnd@arndb.de>, Alex Elder <elder@linaro.org>,
-        Richard Acayan <mailingradian@gmail.com>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] clk: qcom: rpmh: remove duplicate IPA clock reference
-Date:   Tue, 17 Jan 2023 18:02:09 +0100
-Message-Id: <20230117170217.2462320-1-arnd@kernel.org>
-X-Mailer: git-send-email 2.39.0
+        Tue, 17 Jan 2023 12:28:18 -0500
+Received: from mail-il1-x12f.google.com (mail-il1-x12f.google.com [IPv6:2607:f8b0:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0BFE49963
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 09:27:02 -0800 (PST)
+Received: by mail-il1-x12f.google.com with SMTP id g2so15722489ila.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 09:27:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=yNUDy6KyAQAbRWnSnSUxNJKiFT2fKondnpix9cjKDOY=;
+        b=cJZHosGPywZrxxX0ZyqnueVZV3CFoZWMJXBY4yIkikJ5l8RAywicsO+rC7HzgCbYMS
+         YiGVtYUp1NwsmlRbeWTwmH9Mg1FtPjxhuewZl6aehZEhaItlxYM97xvvv1L1XTEEGcf8
+         GBJQ6gO6tPulme1tBA4Ab8cHC1SILZqFqcPzg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yNUDy6KyAQAbRWnSnSUxNJKiFT2fKondnpix9cjKDOY=;
+        b=5+gkf4iGKFDvl5LIN8dKvvRbnZmHak1eHtMaPIcZ+6onuN05p0WmOXb1IKgmBDRk87
+         8zrKKTuajcH/R7y+5v0PTdJ91pnFSit8sd/83li73ehyzjdoEFWLsP49Hxu13u5pqjH3
+         pC3Xeq5NRPE4/ojMPOh1ABA0f35Tscpd5Amhv4WbWLMZs4pPo/KmWHXda2BHHeXHd5LX
+         90n3bqy9De2q0qGri264OaprxfkHYrOTbQgo39DpO99G8IWFLYnr18DVmX/Ca9aEV6hZ
+         Ryz1kqekhGCNpmPM10hdyNTDDzxx6mbIbDvW26sWc1OPyxEyIUutVTgcNWgyNsUYbsY3
+         3DSg==
+X-Gm-Message-State: AFqh2krvwvYXtIMFIbYaFocRyWhWjMlvMJSbgHybs/55GTPQIoam0oUj
+        ewgPgzcE7i5CYetlqRqkqajv2g==
+X-Google-Smtp-Source: AMrXdXulPcxFsVsyjyaJO/ymO6SL8ctVeJej39K1uFvkJaYf58YF6v4liYIPvKPOSVjRuSAyB8wPFw==
+X-Received: by 2002:a05:6e02:1a45:b0:302:392c:5878 with SMTP id u5-20020a056e021a4500b00302392c5878mr4409722ilv.13.1673976422085;
+        Tue, 17 Jan 2023 09:27:02 -0800 (PST)
+Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
+        by smtp.gmail.com with UTF8SMTPSA id y9-20020a027309000000b0039e5cad0bebsm5703351jab.89.2023.01.17.09.27.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 Jan 2023 09:27:01 -0800 (PST)
+Date:   Tue, 17 Jan 2023 17:27:01 +0000
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Georgi Djakov <djakov@kernel.org>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@somainline.org,
+        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-pm@vger.kernel.org, Douglas Anderson <dianders@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>
+Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: sc7280: Add cpu and llcc BWMON
+ (=> interconnect issue)
+Message-ID: <Y8baZWlKB9vNGYJw@google.com>
+References: <20220902043511.17130-1-quic_rjendra@quicinc.com>
+ <20220902043511.17130-5-quic_rjendra@quicinc.com>
+ <Y8Ggh6RObbB1cxSS@google.com>
+ <dc5487d8-d31e-28c6-07e8-8d1ff54a4ba4@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <dc5487d8-d31e-28c6-07e8-8d1ff54a4ba4@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Arnd Bergmann <arnd@arndb.de>
+On Sun, Jan 15, 2023 at 04:13:40PM +0100, Krzysztof Kozlowski wrote:
+> On 13/01/2023 19:18, Matthias Kaehlcke wrote:
+> > Hi,
+> > 
+> > On Fri, Sep 02, 2022 at 10:05:11AM +0530, Rajendra Nayak wrote:
+> >> Add cpu and llcc BWMON nodes and their corresponding
+> >> OPP tables for sc7280 SoC.
+> >>
+> >> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+> >> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > 
+> > I found that with a v6.1 kernel AOSS on sc7280 doesn't reach it's low
+> > power state during system. This can be observed on herobrine based
+> > boards on which the AP_SUSPEND signal should transition to 1 during
+> > system suspend. If it doesn't the Embedded Controller (EC) notices
+> > it and wakes the system up again.
+> > 
+> > Bisection points to this patch, the issue only occurs when
+> > CONFIG_QCOM_ICC_BWMON is *not* set. One might think the patch shouldn't
+> > have any impact at all when the driver is not enabled, but it does.
+> > 
+> > Debugging shows that the issue is interconnect related. A bare platform
+> > device is created for each bwmon devices, which results in the average
+> > and peak bandwidth of the interconnect link to be set 'initially' to
+> > INT_MAX. The driver is supposed to call icc_sync_state() during probe,
+> 
+> This is for interconnect providers, not consumers.
 
-One of the ones that were recently added was already there:
+Ah, thanks for the clarification.
 
-drivers/clk/qcom/clk-rpmh.c:578:35: error: initialized field overwritten [-Werror=override-init]
-  578 |         [RPMH_IPA_CLK]          = &clk_rpmh_ipa.hw,
+Still, for the INT_MAX bandwidth setting remains in place unless the device
+is probed.
 
-Fixes: aa055bf158cd ("clk: qcom: rpmh: define IPA clocks where required")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
----
- drivers/clk/qcom/clk-rpmh.c | 1 -
- 1 file changed, 1 deletion(-)
+> > which would set the initially bandwidths to 0 and determine the actually
+> > needed bandwidth. But since the driver isn't probed the initial
+> > bandwidths stay at INT_MAX.
+> > 
+> > This isn't actually an issue with this patch, but how the interconnect
+> > framework deals with devices that are registered on the bus, but aren't
+> > probed (yet). Not sure how this would be best fixed. Georgi, do you have
+> > any ideas?
+> 
+> Why the device is not probed (yet)? If it is registered, it will come
+> soon during boot up.
 
-diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
-index 393b83f6020e..45ee370f3307 100644
---- a/drivers/clk/qcom/clk-rpmh.c
-+++ b/drivers/clk/qcom/clk-rpmh.c
-@@ -575,7 +575,6 @@ static struct clk_hw *sc8280xp_rpmh_clocks[] = {
- 	[RPMH_IPA_CLK]          = &clk_rpmh_ipa.hw,
- 	[RPMH_PKA_CLK]          = &clk_rpmh_pka.hw,
- 	[RPMH_HWKM_CLK]         = &clk_rpmh_hwkm.hw,
--	[RPMH_IPA_CLK]		= &clk_rpmh_ipa.hw,
- };
- 
- static const struct clk_rpmh_desc clk_rpmh_sc8280xp = {
--- 
-2.39.0
-
+Because CONFIG_QCOM_ICC_BWMON is not enabled for the board in question (see
+above). It could be enabled as a short term mitigtion, however we shouldn't
+require drivers to be enabled just because the DT has a corresponding node.
