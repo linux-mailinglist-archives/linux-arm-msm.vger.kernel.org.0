@@ -2,128 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 33CBD66D894
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 09:49:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0AE7066D8B3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 09:52:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236174AbjAQItx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 03:49:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53394 "EHLO
+        id S235776AbjAQIwy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 03:52:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235898AbjAQItv (ORCPT
+        with ESMTP id S235606AbjAQIwb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 03:49:51 -0500
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EA74EC47;
-        Tue, 17 Jan 2023 00:49:51 -0800 (PST)
-Received: from pps.filterd (m0098419.ppops.net [127.0.0.1])
-        by mx0b-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30H7jBg2002153;
-        Tue, 17 Jan 2023 08:49:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : subject :
- from : to : cc : date : in-reply-to : references : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=H906UnaT+mKc1vvKmTCCEcWqGmxotatY633LkzBqxYU=;
- b=A6BVq7HNMg+oOk9phju+5wb8NvQ5nhXgUGV4aDzrytllvMMkF1QwAASO805mzs95eZ2n
- nFKcix/B9tP3yq5RutbLwr2yS0Abm57uKLmBtWu1LQCnzO68gBvKuRAubGf/f3lwbm/t
- d7yQv+5f0SONkcFHHSaAcX07ZpD4eOvZsvKy1FKh8tdh0yhzrWgHCxFAGAnbCx2hVThN
- Rond9aWSHw3YaiM/1OecQ05uP252qJXP3SYTDx0h1dBaObZJqgSUfIb/xpcCfRKWX9Px
- JCMj5JyJGhH44nebnIBpCrl3064gZ9Rc08Ewv1HQn0ismQJBIsB7Inz4PAelp10g6+mT Qw== 
-Received: from pps.reinject (localhost [127.0.0.1])
-        by mx0b-001b2d01.pphosted.com (PPS) with ESMTPS id 3n5hky0gqv-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 17 Jan 2023 08:49:29 +0000
-Received: from m0098419.ppops.net (m0098419.ppops.net [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 30H8ftP6001523;
-        Tue, 17 Jan 2023 08:49:28 GMT
-Received: from ppma05fra.de.ibm.com (6c.4a.5195.ip4.static.sl-reverse.com [149.81.74.108])
-        by mx0b-001b2d01.pphosted.com (PPS) with ESMTPS id 3n5hky0gq2-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 17 Jan 2023 08:49:28 +0000
-Received: from pps.filterd (ppma05fra.de.ibm.com [127.0.0.1])
-        by ppma05fra.de.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 30GGKqhH025576;
-        Tue, 17 Jan 2023 08:49:26 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
-        by ppma05fra.de.ibm.com (PPS) with ESMTPS id 3n3m16ajt5-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 17 Jan 2023 08:49:26 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com [10.20.54.105])
-        by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 30H8nMXa14222046
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Tue, 17 Jan 2023 08:49:22 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
-        by IMSVA (Postfix) with ESMTP id CAED920049;
-        Tue, 17 Jan 2023 08:49:22 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
-        by IMSVA (Postfix) with ESMTP id 33E1620040;
-        Tue, 17 Jan 2023 08:49:22 +0000 (GMT)
-Received: from [9.155.211.163] (unknown [9.155.211.163])
-        by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
-        Tue, 17 Jan 2023 08:49:22 +0000 (GMT)
-Message-ID: <0bd438b3afa979b9f4d4d1e9c76451a93e7ef7eb.camel@linux.ibm.com>
-Subject: Re: [PATCH 8/8] iommu/s390: Push the gfp parameter to the
- kmem_cache_alloc()'s
-From:   Niklas Schnelle <schnelle@linux.ibm.com>
-To:     Jason Gunthorpe <jgg@nvidia.com>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Kevin Tian <kevin.tian@intel.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Robin Murphy <robin.murphy@arm.com>
-Cc:     Alex Williamson <alex.williamson@redhat.com>,
-        ath10k@lists.infradead.org, ath11k@lists.infradead.org,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        dri-devel@lists.freedesktop.org, iommu@lists.linux.dev,
-        kvm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        linux-rdma@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-s390@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-tegra@vger.kernel.org, linux-wireless@vger.kernel.org,
-        netdev@vger.kernel.org, nouveau@lists.freedesktop.org,
-        virtualization@lists.linux-foundation.org
-Date:   Tue, 17 Jan 2023 09:49:22 +0100
-In-Reply-To: <8-v1-6e8b3997c46d+89e-iommu_map_gfp_jgg@nvidia.com>
-References: <8-v1-6e8b3997c46d+89e-iommu_map_gfp_jgg@nvidia.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.3 (3.46.3-1.fc37) 
+        Tue, 17 Jan 2023 03:52:31 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 680352CFC9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 00:51:46 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id c4-20020a1c3504000000b003d9e2f72093so20428819wma.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 00:51:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=expaoc4a1kUuojomtX/CBeI3GGcWe8iG4JOwm7tA2Ms=;
+        b=GCBuP2ME3LEmq3d288LClfQ+DDoceb7qejVUCKci1Io3+3RT81PEq0YzI+C1ZzwsT5
+         6WyQCYKa7CiON2FBCWKBC+ZrjoPsaFO5JDZTtLTblFsb0I90j7ED6EsBVKGyb9eMbfjW
+         zL/aWSzykK4zTaUc4GgVZs/QUjdTlpK4BCVtJBhNAGmInT8k0Gh9CUOdgUMk/69WsWqI
+         T0liqYDKLBb7PqCc5cJAcgK/89PPlPM8ZoGDAHIjm6wK+/lYKZGo9fhmW0b7V9ja1joI
+         iA76KK54eIYL7LNUe07Mnj7MuYHzX2Q2/qBEMEkGW/HVJ9ZGhJpKcr5egZmElAtKO/yS
+         J6aA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=expaoc4a1kUuojomtX/CBeI3GGcWe8iG4JOwm7tA2Ms=;
+        b=WlAwm27zlIDMCWi6deyxxKpCCu64nnpY2SJWORV82r57Sh8FKib7jNYZfnf6mKa1NJ
+         ToO6m+t10Wb7oIzpInby3qVw9mklrSyohbRiZc9HRUjOXSgD6fjnG0bxUQJMu0WDixC7
+         hbyBo/xpwnHn5SZh26OP2L5hSeWdWMYSiKgP2UxddArk73FL4Ahq+hCpaUszjaQa5X30
+         rAthibnGz9sBVNtcPv26/JR2BziIZGvRn8GpEoPQEJ0l3EJlbCM2+9CfuGbWdoeAu8Wz
+         SxPBhDAd1sUNpfqklJgXDfihN41jcu181Iy4cENNGoodgv45baEFgbErIr1o1J+BK+2X
+         ua1A==
+X-Gm-Message-State: AFqh2krZcEfP2SsZ1Dxt7XrIzOY9quNiZUI/xi1dgwVhUtfUh8E6RAE/
+        BBa/AAlkI/sVp/333Wxpl9NkYA==
+X-Google-Smtp-Source: AMrXdXueXFpF3XR7NYfg4P+jSjPuEvD2oSEf8abJxzrHhstw07/IPA3YDM4cBB/MjzxBAzfHOuxzSA==
+X-Received: by 2002:a05:600c:5006:b0:3da:f92a:5446 with SMTP id n6-20020a05600c500600b003daf92a5446mr2418854wmr.27.1673945504969;
+        Tue, 17 Jan 2023 00:51:44 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id h19-20020a05600c351300b003d9a86a13bfsm39331066wmq.28.2023.01.17.00.51.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 Jan 2023 00:51:44 -0800 (PST)
+Message-ID: <ee9ef65b-38c6-2283-b1e7-abf49abdccd6@linaro.org>
+Date:   Tue, 17 Jan 2023 09:51:42 +0100
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: MKx4-ANHPJUrZonOgwaEaY-EVKsDWzHU
-X-Proofpoint-GUID: SbFxmq8QKSSdWBsgb5noBKiad8Yo5FPz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-17_04,2023-01-13_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
- phishscore=0 malwarescore=0 lowpriorityscore=0 mlxlogscore=713 bulkscore=0
- spamscore=0 impostorscore=0 clxscore=1011 suspectscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2301170071
-X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_EF,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [RFC PATCH] regulator: dt-bindings: qcom-labibb: Allow
+ regulator-common properties
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     marijn.suijten@somainline.org, Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20230116092502.71146-1-konrad.dybcio@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230116092502.71146-1-konrad.dybcio@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 2023-01-06 at 12:42 -0400, Jason Gunthorpe wrote:
-> dma_alloc_cpu_table() and dma_alloc_page_table() are eventually called by
-> iommufd through s390_iommu_map_pages() and it should not be forced to
-> atomic. Thread the gfp parameter through the call chain starting from
-> s390_iommu_map_pages().
->=20
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+On 16/01/2023 10:25, Konrad Dybcio wrote:
+> Allow regulator-common properties on lab/ibb regulators, such as
+> regulator-always-on, etc.
+
+Are these proper regulators? If so this looks sensible. Why calling it
+RFC? What is here questionable?
+
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->  arch/s390/include/asm/pci_dma.h |  5 +++--
->  arch/s390/pci/pci_dma.c         | 31 +++++++++++++++++--------------
->  drivers/iommu/s390-iommu.c      | 15 +++++++++------
->  3 files changed, 29 insertions(+), 22 deletions(-)
->=20
----8<---
-> =20
+>  .../bindings/regulator/qcom-labibb-regulator.yaml           | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.yaml
+> index f97b8083678f..c0be7d5a6d40 100644
+> --- a/Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.yaml
+> +++ b/Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.yaml
+> @@ -20,7 +20,8 @@ properties:
+>  
+>    lab:
+>      type: object
+> -    additionalProperties: false
+> +    $ref: "regulator.yaml#"
 
-Looks good to me and I have no objections.
+Drop quotes.
 
-Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
+> +    unevaluatedProperties: false
+>  
+>      properties:
+>        qcom,soft-start-us:
+> @@ -46,7 +47,8 @@ properties:
+>  
+>    ibb:
+>      type: object
+> -    additionalProperties: false
+> +    $ref: "regulator.yaml#"
+
+Drop quotes.
+
+> +    unevaluatedProperties: false
+>  
+>      properties:
+>        qcom,discharge-resistor-kohms:
+
+Best regards,
+Krzysztof
 
