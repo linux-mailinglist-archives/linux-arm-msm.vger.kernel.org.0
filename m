@@ -2,104 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 415A266DA1C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 10:38:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2597E66DA23
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Jan 2023 10:41:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236632AbjAQJiU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 04:38:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38530 "EHLO
+        id S236629AbjAQJli (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 04:41:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41622 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235783AbjAQJhw (ORCPT
+        with ESMTP id S236514AbjAQJku (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 04:37:52 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3633333449;
-        Tue, 17 Jan 2023 01:35:49 -0800 (PST)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30H7OLJK008832;
-        Tue, 17 Jan 2023 09:35:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=a3uCGNyveDE2VOg9aSlVRu17hXbzIyfZyjCVbxTfAdU=;
- b=QRNPkIIJHwE4M13MgaBGMKNHI4dZaH2a9AJ6Ew/A3m/+8NENgsBjTtkwcABN4KbEQ7zh
- fm2Er0YHX3EhZ46WUNbDRGJy0PjdEqDJ4dfeXjpn8zfSVdjjKG4v/Mndy9bLGbbnag8x
- NXDy5EQPwA/VPMnpUSaL1dvRLq/CqKDRaBPxLigfAh9DrkxYqYFBtKj98H0GFJHhASXi
- hnIFgGJyHwlGUDvTn5uR7VySIFbeIG5G4g4Ok5K+Pwzwsg8/AoaK9wMNUCup+UxoF/7b
- YfBYCODeqkBbtxBPrJj6ZBy3fNbhSBoc7EJooey5/E3P1IiHw8OQhXPsXdv4DilZvYBu dQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n5b1897d9-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 17 Jan 2023 09:35:46 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30H9Zjih009293
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 17 Jan 2023 09:35:45 GMT
-Received: from quicinc.com (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 17 Jan
- 2023 01:35:43 -0800
-From:   Pavankumar Kondeti <quic_pkondeti@quicinc.com>
-To:     Abel Vesa <abel.vesa@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>
-CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        Pavankumar Kondeti <quic_pkondeti@quicinc.com>
-Subject: [PATCH] arm64: dts: qcom: sm8550: fix xo clock source in cpufreq-hw node
-Date:   Tue, 17 Jan 2023 15:05:33 +0530
-Message-ID: <20230117093533.3710000-1-quic_pkondeti@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230117091446.GA3704192@hu-pkondeti-hyd.qualcomm.com>
-References: <20230117091446.GA3704192@hu-pkondeti-hyd.qualcomm.com>
+        Tue, 17 Jan 2023 04:40:50 -0500
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E64212F23;
+        Tue, 17 Jan 2023 01:39:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1673948357; x=1705484357;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=D/jhirtyfFnEDy4/rsjYJANSLHw3P8R2e4OpVFJvmSo=;
+  b=Snh29fRWaeuIplCH8i75oshiwK2NY26LT5CKo4G3m7BmRRY1rsKAQVWg
+   /MYc+cdMxiGB6cwIB/IsNPBUifpsPcojaZGKDFPSoqYPKBSCAJVQ7tmlq
+   3zakjOsTD1tP8XoO8J8qw2loDokavpH3xkl/RwuRnTEPOPROv+yAPjes4
+   ryPJ1CIQCDxhZ8TCkt1TThgxPwxd9vDFAlKgiDecynC0n3jdyPxjMHG8h
+   sq9jc8Rpk+QSjGPgCHuNGQ8edWqAzkEcK+EWg3hSlIPdnyh+Lq+MJhrk9
+   T0snOfWODrw70/vSDPXTgtg9nbusuG/q7tJ7llDU87qC/YDXnbbS3vTHY
+   A==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10592"; a="410890557"
+X-IronPort-AV: E=Sophos;i="5.97,222,1669104000"; 
+   d="scan'208";a="410890557"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jan 2023 01:39:16 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10592"; a="722588293"
+X-IronPort-AV: E=Sophos;i="5.97,222,1669104000"; 
+   d="scan'208";a="722588293"
+Received: from black.fi.intel.com ([10.237.72.28])
+  by fmsmga008.fm.intel.com with ESMTP; 17 Jan 2023 01:39:13 -0800
+Received: by black.fi.intel.com (Postfix, from userid 1003)
+        id 51A5A130; Tue, 17 Jan 2023 11:39:48 +0200 (EET)
+From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To:     Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+        =?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Subject: [PATCH v1 1/1] iio: adc: qcom-spmi-adc5: Fix the channel name
+Date:   Tue, 17 Jan 2023 11:39:44 +0200
+Message-Id: <20230117093944.72271-1-andriy.shevchenko@linux.intel.com>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 6ka9jqzARrwNqWyfPHgmAzREZT8yFDMT
-X-Proofpoint-ORIG-GUID: 6ka9jqzARrwNqWyfPHgmAzREZT8yFDMT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-17_04,2023-01-13_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- lowpriorityscore=0 phishscore=0 spamscore=0 malwarescore=0
- priorityscore=1501 adultscore=0 impostorscore=0 suspectscore=0
- mlxlogscore=959 bulkscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2212070000 definitions=main-2301170080
-X-Spam-Status: No, score=0.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently, available frequencies for all CPUs are appearing as 2x
-of the actual frequencies. Use xo clock source as bi_tcxo in the
-cpufreq-hw node to fix this.
+The node name can contain an address part which is not used by
+the driver. Cut it out before assigning the channel name.
 
-Signed-off-by: Pavankumar Kondeti <quic_pkondeti@quicinc.com>
+Fixes: 4f47a236a23d ("iio: adc: qcom-spmi-adc5: convert to device properties")
+Reported-by: Marijn Suijten <marijn.suijten@somainline.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 ---
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/adc/qcom-spmi-adc5.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index 59756ec11564..a551ded31ddf 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -2522,7 +2522,7 @@ cpufreq_hw: cpufreq@17d91000 {
- 			      <0 0x17d92000 0 0x1000>,
- 			      <0 0x17d93000 0 0x1000>;
- 			reg-names = "freq-domain0", "freq-domain1", "freq-domain2";
--			clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GCC_GPLL0>;
-+			clocks = <&bi_tcxo_div2>, <&gcc GCC_GPLL0>;
- 			clock-names = "xo", "alternate";
- 			interrupts = <GIC_SPI 30 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 31 IRQ_TYPE_LEVEL_HIGH>,
+diff --git a/drivers/iio/adc/qcom-spmi-adc5.c b/drivers/iio/adc/qcom-spmi-adc5.c
+index e90c299c913a..c52bf6722a6a 100644
+--- a/drivers/iio/adc/qcom-spmi-adc5.c
++++ b/drivers/iio/adc/qcom-spmi-adc5.c
+@@ -628,12 +628,19 @@ static int adc5_get_fw_channel_data(struct adc5_chip *adc,
+ 				    struct fwnode_handle *fwnode,
+ 				    const struct adc5_data *data)
+ {
+-	const char *name = fwnode_get_name(fwnode), *channel_name;
++	const char *name, *channel_name;
+ 	u32 chan, value, varr[2];
+ 	u32 sid = 0;
+ 	int ret;
+ 	struct device *dev = adc->dev;
+ 
++	name = devm_kasprintf(dev, GFP_KERNEL, "%pfwP", fwnode);
++	if (!name)
++		return -ENOMEM;
++
++	/* Cut the address part */
++	name[strchrnul(name, '@') - name] = '\0';
++
+ 	ret = fwnode_property_read_u32(fwnode, "reg", &chan);
+ 	if (ret) {
+ 		dev_err(dev, "invalid channel number %s\n", name);
 -- 
-2.25.1
+2.39.0
 
