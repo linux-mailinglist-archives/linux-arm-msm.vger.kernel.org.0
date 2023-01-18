@@ -2,78 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 73A176710C7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 03:07:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F05A56710D4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 03:09:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229803AbjARCG7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 21:06:59 -0500
+        id S229794AbjARCJD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 21:09:03 -0500
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229736AbjARCGn (ORCPT
+        with ESMTP id S229732AbjARCIg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 21:06:43 -0500
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB0F2457C6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 18:06:41 -0800 (PST)
-Received: by mail-ej1-x635.google.com with SMTP id tz11so15429333ejc.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 18:06:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KLPgSw0irM5YzAF5nZ346rzglXvudc7WJVvK+w5PcIU=;
-        b=wWQtCktXZaI6BanHhfkK0swKa4aLr3ijictfcdpe7XnxB7LMUp9tt+Givr4t5doTNZ
-         1RcMJZ0GihusQQDF+YsYJo/r/m7p5BLn+ZVokpirswxYYLgGmqeDgMJ1mSmSCLbnqoh5
-         l/fvQdzYHNV8pYDyprky76jUOHs20Om2Qvi2qXalD6ruNVVzuImfWHjKTUPJNYyI7f+D
-         GabJ7wTVugFzH/BMElRbvILAWYHtK3B6tTl9KsEkZkpt0mG5L9/+yNA42kBt1ywmLzlh
-         zGWuVl4UtaI0qzgtC6GXMj9yCTLFRGr8/kgt3wziSu4eIGnqsShwuP3TPMdKYkdY3Bxl
-         LhCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KLPgSw0irM5YzAF5nZ346rzglXvudc7WJVvK+w5PcIU=;
-        b=LHbGKTOCOtDZip8rzM06K7L1s//X2PbCdKALAlfgo//InWE7HAWmCSPgWseGxWg7/H
-         I88L0Pq4G7p8rHzWQm5sFlwSKTJragtHF6WD4qRdxjHl2aGPyT4lWazAt89MZIAYJVYV
-         WW3d+LKeXISwaGA8czvfB9Y2xkzvXaXgNa44T+4PSs6xvx/UjZYnruRvLgh9lnBGBKBB
-         CeOCDHYw5H9MMvyhGEqwH9da27TwldsRYjYiyzc7mmjpE8TnkcaF3sbkNpoKqreXhc+x
-         LpW6GCL9Jk61KKOgNYfQQKsuirkkBsx5UrZWSUtbt7bcuDWxHKoH1xgS946d/JZxCuJm
-         7x3g==
-X-Gm-Message-State: AFqh2kqgeP4RgD2hMrNFQJAkPGBxwq/d3Wer1lzarhnjtS6xYCtWBrCC
-        nlPmMm59rPs1oQ5eHVcMbGWAaQ==
-X-Google-Smtp-Source: AMrXdXvVpUEZsx3KcELZ64o0nenozD8z4wMbxcHvAeSa0WZDEiedT8sOTPcjC+HYhUBReAflau+nog==
-X-Received: by 2002:a17:906:f1d6:b0:86e:7896:80d4 with SMTP id gx22-20020a170906f1d600b0086e789680d4mr5137016ejb.49.1674007601304;
-        Tue, 17 Jan 2023 18:06:41 -0800 (PST)
-Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id kx1-20020a170907774100b0084d368b1628sm12702694ejc.40.2023.01.17.18.06.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Jan 2023 18:06:40 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm/dp: Remove INIT_SETUP delay
-Date:   Wed, 18 Jan 2023 04:06:21 +0200
-Message-Id: <167400670531.1683873.4513062713172900376.b4-ty@linaro.org>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230117172951.2748456-1-quic_bjorande@quicinc.com>
-References: <20230117172951.2748456-1-quic_bjorande@quicinc.com>
+        Tue, 17 Jan 2023 21:08:36 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2B194345A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 18:08:25 -0800 (PST)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30I19UeQ020138;
+        Wed, 18 Jan 2023 02:08:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=Z3DKXCmO1HouasRtE1cjxHJVD/kCDSspckrTrsV/zg0=;
+ b=HiegyrFP57f8tLD+SjHVZBcYYOcGNvrQ9Gxy0zukB5QB2p2MDlrh3pgka0EMxYaxZptR
+ 0lpbn7rdMi+/ASsFTl5bMzfygLmLEKqS7vb2XahKPUlNIkDAZo6m2jtsUpx8EFR3sase
+ Ga63txTWH+4sCSPjqQ8dKhnAaaIEioEtKESAtc2mBpVUGkwfKNTDclSLnqVIuUvpJkWZ
+ MB1Mblh2NisCPDd7G6Zkv7oa4Bih6eqt55hFuGpg7N19/jLWbHT5iMfdbL5ZhFHQ11ub
+ cUUdEKTh+hO1YvTIOXsCna3eUfHea5glo03e9QShR+wY2p3hYpfmZv0o9j5DqGV9nEUv 3g== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n60bx0vup-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 18 Jan 2023 02:08:18 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30I28HPD011329
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 18 Jan 2023 02:08:17 GMT
+Received: from [10.110.108.90] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 17 Jan
+ 2023 18:08:16 -0800
+Message-ID: <785376c2-26de-10c4-c7a0-22ebb2c086fd@quicinc.com>
+Date:   Tue, 17 Jan 2023 18:08:15 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH 1/2] drm/msm/dpu: point sc8280xp_dpu_cfg to
+ sc8280xp_regdma
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230118020455.1689929-1-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20230118020455.1689929-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: MS46vR8YTcAY7HtoHwjvgrsvqYWyjKaY
+X-Proofpoint-ORIG-GUID: MS46vR8YTcAY7HtoHwjvgrsvqYWyjKaY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-17_11,2023-01-17_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
+ mlxscore=0 phishscore=0 malwarescore=0 mlxlogscore=999 impostorscore=0
+ clxscore=1015 priorityscore=1501 adultscore=0 suspectscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301180015
+X-Spam-Status: No, score=0.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -81,23 +86,30 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Tue, 17 Jan 2023 09:29:51 -0800, Bjorn Andersson wrote:
-> During initalization of the DisplayPort controller an EV_HPD_INIT_SETUP
-> event is generated, but with a delay of 100 units. This delay existed to
-> circumvent bug in the QMP combo PHY driver, where if the DP part was
-> powered up before USB, the common properties would not be properly
-> initialized - and USB wouldn't work.
+
+On 1/17/2023 6:04 PM, Dmitry Baryshkov wrote:
+> SC8280XP configuration missed the reg_dma configuration. We do not use
+> regdma for now, but let's put the correct pointer anyway.
 > 
-> This issue was resolved in the recent refactoring of the QMP driver,
-> so it's now possible to remove this delay.
+> Fixes: 4a352c2fc15a ("drm/msm/dpu: Introduce SC8280XP")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 2 ++
+>   1 file changed, 2 insertions(+)
 > 
-> [...]
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> index 4375e72a9aab..3d0fbc1746e2 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> @@ -2680,6 +2680,8 @@ static const struct dpu_mdss_cfg sc8280xp_dpu_cfg = {
+>   	.intf = sc8280xp_intf,
+>   	.vbif_count = ARRAY_SIZE(sdm845_vbif),
+>   	.vbif = sdm845_vbif,
+> +	.reg_dma_count = 1,
 
-Applied, thanks!
+Lets stick to the convention of the rest of the entries and use ARRAY_SIZE.
 
-[1/1] drm/msm/dp: Remove INIT_SETUP delay
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/e17af1c9d861
-
-Best regards,
--- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> +	.dma_cfg = &sc8280xp_regdma,
+>   	.perf = &sc8280xp_perf_data,
+>   	.mdss_irqs = IRQ_SC8280XP_MASK,
+>   };
