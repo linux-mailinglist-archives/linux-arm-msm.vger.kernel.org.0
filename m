@@ -2,110 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CD9B672CAF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 00:39:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 695DF672CB7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 00:40:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229575AbjARXjJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 18:39:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46164 "EHLO
+        id S229862AbjARXks (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 18:40:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229622AbjARXjI (ORCPT
+        with ESMTP id S229622AbjARXkr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 18:39:08 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6B3B62D30
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 15:39:07 -0800 (PST)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30INVdaU003088;
-        Wed, 18 Jan 2023 23:39:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=qcppdkim1;
- bh=xn0IoLYGkGNrFsEmPAlr5+5f1kkNCC84vRmgMEK0qyc=;
- b=XXRtRJacSUqPzgK3MNvfoYKxT4sguQVhlOK/oF/lqto6qT0yaUg26j7rMikRHKSyyuYc
- AaiIkf8iL2ToFgQEnvToz2tJA3nj5gVeycTYiirPrvCKk8gNBTUkEXCnZVjbjR0wByzu
- 5+LIrzuGGE0g26qo+LU55hWQ1LDRKCRD8vkw5TBQ/lx3203yoSx4cXH2/CwsPt5K9VzV
- t5seIP56GvsFs6StrYdYdXvJlHQ0U6tKU+Y+F/vt14a47bE7gUJqMTYtsplcJ4yfAhVD
- CGpnCii4R5hr7pygM/FJkXtTSAQg6S5RvhXlF8HyOcV+d4SQi/lpA1tt8txlSVkJcw3O nw== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n6r5987ku-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 18 Jan 2023 23:39:04 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30INd47x019382
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 18 Jan 2023 23:39:04 GMT
-Received: from JESSZHAN.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Wed, 18 Jan 2023 15:39:03 -0800
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-To:     <freedreno@lists.freedesktop.org>
-CC:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <robdclark@gmail.com>, <seanpaul@chromium.org>,
-        <swboyd@chromium.org>, <dmitry.baryshkov@linaro.org>,
-        <quic_abhinavk@quicinc.com>, <quic_kalyant@quicinc.com>
-Subject: [PATCH v3] drm/msm/dpu: Reapply CTM if modeset is needed
-Date:   Wed, 18 Jan 2023 15:38:48 -0800
-Message-ID: <20230118233848.611-1-quic_jesszhan@quicinc.com>
-X-Mailer: git-send-email 2.25.1
+        Wed, 18 Jan 2023 18:40:47 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68AF563081;
+        Wed, 18 Jan 2023 15:40:46 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id EF20061AC2;
+        Wed, 18 Jan 2023 23:40:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B4D6C433EF;
+        Wed, 18 Jan 2023 23:40:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1674085245;
+        bh=4z99fwOBj8wyKeWgsNT+dDn9Fq0WFr6o8JW+WgXF9LA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=EEe46n3G0XzhpkHJhdYZG9z/YtETaNTEfBmcxdyhGo5IEvZ6YUPUbf2bqnhYD0eaf
+         LGbwt4CpmZiRg1jd0PkpGNJH4YBkocRx/YvUOnxS7IHwLuKgnaehAqdycS2HwD+nC0
+         o5rXmWE7X+sSlKJMABnJybTIIveyxd6ExjUjDx3Qa1/YTMrQEKgy9z65GriA06mAce
+         fqYmzVDdnSmx8+VffNdUAiaX0tV6SdKjX+fLVwK6wWF8/GhEic/5buq8g8ITfFAvBV
+         uP3m6HOC2HUyiyXPYbORum124Y0ttCKkpkzlBRzmwrGh9eo2Ct0GoNctWVAH6pt6tS
+         0r+FnZkaMGT0Q==
+Date:   Wed, 18 Jan 2023 17:40:42 -0600
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        agross@kernel.org, bhupesh.linux@gmail.com,
+        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski@linaro.org, konrad.dybcio@linaro.org,
+        a39.skl@gmail.com
+Subject: Re: [PATCH] arm64: dts: qcom: sm6115: Add interconnect nodes
+Message-ID: <20230118234042.ds4hqdgqjrt7ukpg@builder.lan>
+References: <20221130104519.2266918-1-bhupesh.sharma@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 4VjfkML8hKxStsPr2jPfLU5FNdB9WE6P
-X-Proofpoint-GUID: 4VjfkML8hKxStsPr2jPfLU5FNdB9WE6P
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-18_05,2023-01-18_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1015
- mlxscore=0 mlxlogscore=833 malwarescore=0 priorityscore=1501 bulkscore=0
- suspectscore=0 phishscore=0 adultscore=0 spamscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2301180196
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221130104519.2266918-1-bhupesh.sharma@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a !drm_atomic_crtc_needs_modeset() check to
-_dpu_crtc_setup_cp_blocks() so that CTM is reapplied if the LM/DSPP
-blocks were reallocated during modeset or after a suspend/resume.
+On Wed, Nov 30, 2022 at 04:15:19PM +0530, Bhupesh Sharma wrote:
+> Add the interconnect nodes inside SM6115 dtsi.
+> 
+> Cc: Bjorn Andersson <andersson@kernel.org>
+> Cc: Rob Herring <robh+dt@kernel.org>
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 
-Changes in V2:
-- Fixed commit message
+Seems the driver series is waiting for a v2.
 
-Changes in V3:
-- Added mention of suspend/resume case back to commit message
+I'll drop this from my queue for now, please resubmit once the DT
+binding has landed.
 
-Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/23
-Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Thanks,
+Bjorn
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index 13ce321283ff..aa120a230222 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -748,7 +748,7 @@ static void _dpu_crtc_setup_cp_blocks(struct drm_crtc *crtc)
- 	int i;
- 
- 
--	if (!state->color_mgmt_changed)
-+	if (!state->color_mgmt_changed && !drm_atomic_crtc_needs_modeset(state))
- 		return;
- 
- 	for (i = 0; i < cstate->num_mixers; i++) {
--- 
-2.39.0
-
+> ---
+> - Based on linux-next/master
+> - Depends on the SM6115 dt-binding and driver patchset, which can be
+>   seen here: https://lore.kernel.org/linux-arm-msm/20221130103841.2266464-1-bhupesh.sharma@linaro.org/ 
+> 
+>  arch/arm64/boot/dts/qcom/sm6115.dtsi | 51 ++++++++++++++++++++++++++++
+>  1 file changed, 51 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> index e4a2440ce544..dad5ab3edf0e 100644
+> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> @@ -485,6 +485,57 @@ usb_1_hsphy: phy@1613000 {
+>  			status = "disabled";
+>  		};
+>  
+> +		snoc: interconnect@1880000 {
+> +			compatible = "qcom,sm6115-snoc";
+> +			reg = <0x01880000 0x60200>;
+> +			#interconnect-cells = <1>;
+> +			clock-names = "bus", "bus_a";
+> +			clocks = <&rpmcc RPM_SMD_SNOC_CLK>,
+> +				 <&rpmcc RPM_SMD_SNOC_A_CLK>;
+> +
+> +			clk_virt: interconnect-clk {
+> +				compatible = "qcom,sm6115-clk-virt";
+> +				#interconnect-cells = <1>;
+> +				clock-names = "bus", "bus_a";
+> +				clocks = <&rpmcc RPM_SMD_QUP_CLK>,
+> +					 <&rpmcc RPM_SMD_QUP_A_CLK>;
+> +			};
+> +
+> +			mmnrt_virt: interconnect-mmnrt {
+> +				compatible = "qcom,sm6115-mmnrt-virt";
+> +				#interconnect-cells = <1>;
+> +				clock-names = "bus", "bus_a";
+> +				clocks = <&rpmcc RPM_SMD_MMNRT_CLK>,
+> +					 <&rpmcc RPM_SMD_MMNRT_A_CLK>;
+> +			};
+> +
+> +			mmrt_virt: interconnect-mmrt {
+> +				compatible = "qcom,sm6115-mmrt-virt";
+> +				#interconnect-cells = <1>;
+> +				clock-names = "bus", "bus_a";
+> +				clocks = <&rpmcc RPM_SMD_MMRT_CLK>,
+> +					 <&rpmcc RPM_SMD_MMRT_A_CLK>;
+> +			};
+> +		};
+> +
+> +		cnoc: interconnect@1900000 {
+> +			compatible = "qcom,sm6115-cnoc";
+> +			reg = <0x01900000 0x8200>;
+> +			#interconnect-cells = <1>;
+> +			clock-names = "bus", "bus_a";
+> +			clocks = <&rpmcc RPM_SMD_CNOC_CLK>,
+> +				 <&rpmcc RPM_SMD_CNOC_A_CLK>;
+> +		};
+> +
+> +		bimc: interconnect@4480000 {
+> +			compatible = "qcom,sm6115-bimc";
+> +			reg = <0x04480000 0x80000>;
+> +			#interconnect-cells = <1>;
+> +			clock-names = "bus", "bus_a";
+> +			clocks = <&rpmcc RPM_SMD_BIMC_CLK>,
+> +				 <&rpmcc RPM_SMD_BIMC_A_CLK>;
+> +		};
+> +
+>  		qfprom@1b40000 {
+>  			compatible = "qcom,sm6115-qfprom", "qcom,qfprom";
+>  			reg = <0x01b40000 0x7000>;
+> -- 
+> 2.38.1
+> 
