@@ -2,85 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB1AD6727D8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 20:05:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7BD336727E4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 20:11:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229694AbjARTF0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 14:05:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45284 "EHLO
+        id S229770AbjARTLG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 14:11:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229734AbjARTFX (ORCPT
+        with ESMTP id S229663AbjARTLF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 14:05:23 -0500
-Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EA771817B;
-        Wed, 18 Jan 2023 11:05:21 -0800 (PST)
-Received: from zn.tnic (p5de8e9fe.dip0.t-ipconnect.de [93.232.233.254])
+        Wed, 18 Jan 2023 14:11:05 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17745530C1;
+        Wed, 18 Jan 2023 11:11:04 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 134ED1EC0646;
-        Wed, 18 Jan 2023 20:05:20 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
-        t=1674068720;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
-        bh=9qHB2EOibAtLSrG+MwPw/tL0T1kkYYJw1nnGQj0Y0/E=;
-        b=VkFM+cNi56Ng6zWoHeHfp5tI6VmPFFqLbgaeJeeungYbuMgTTg4FDoneqRPsmF1Wjj+EdU
-        H9/Lx4AMGNA+LLrv+2abG+ZuQJzBCeK5OxNd5Os0Rk/vSHplwdMuaRMOr9aGR+RUnQmc+j
-        /jzb1P4IN94GONAAshJp1w27nzA5xXY=
-Date:   Wed, 18 Jan 2023 20:05:15 +0100
-From:   Borislav Petkov <bp@alien8.de>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        tony.luck@intel.com, quic_saipraka@quicinc.com,
-        konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, james.morse@arm.com,
-        mchehab@kernel.org, rric@kernel.org, linux-edac@vger.kernel.org,
-        quic_ppareek@quicinc.com, luca.weiss@fairphone.com,
-        ahalaney@redhat.com, steev@kali.org, stable@vger.kernel.org
-Subject: Re: [PATCH v6 01/17] EDAC/device: Respect any driver-supplied
- workqueue polling value
-Message-ID: <Y8hC6x1eO6GXJGI3@zn.tnic>
-References: <20230118150904.26913-1-manivannan.sadhasivam@linaro.org>
- <20230118150904.26913-2-manivannan.sadhasivam@linaro.org>
- <20230118174625.oo5gi36q45kfbgoq@builder.lan>
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A70BF619C5;
+        Wed, 18 Jan 2023 19:11:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA584C433D2;
+        Wed, 18 Jan 2023 19:11:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1674069063;
+        bh=Nv6pusw6gTldht2J9OiYqivb3O/jn9kff9e+OmktbW4=;
+        h=In-Reply-To:References:Subject:From:To:Date:From;
+        b=QAnoE0mc1tZha037fZcCzUut7YSpS9BilUeV3MFKvRJh96egg16FLHt9D3+i6jnll
+         syOsfEFxjxciz+6QD5QvATeb+A+py+oHRDPYuqDnGwbb3MKoMRA6i1WmtsvpHdRcFt
+         eJI8prfVRmw+bkzWNbCz6XW/Mf/bsu13HLuR55xpBuBKC2Pyr6AY+bfV07E5EB4Xku
+         pZVkP7DSH9GdU+CKBbgu+voj3YlUnugTlf0gwwLxEtJuIpA49NDBTrgoVQnhnGs2x5
+         hsS5AClCbp2W8Uj829mXBscL0tqb7JNYMIgmW1h0aJPNzxJGx5yBBjJG3UfMFdCVpR
+         1gST9rBagNXaA==
+Message-ID: <705c78c1d0da18089419b064832d5fed.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20230118174625.oo5gi36q45kfbgoq@builder.lan>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <063c5516-417d-7c21-b58f-a6552779a621@linaro.org>
+References: <20230113145859.82868-1-krzysztof.kozlowski@linaro.org> <e73ad320fafa1365e3506bbd4cc77d8d.sboyd@kernel.org> <063c5516-417d-7c21-b58f-a6552779a621@linaro.org>
+Subject: Re: [PATCH] dt-bindings: clock: qcom,a53pll: drop operating-points-v2
+From:   Stephen Boyd <sboyd@kernel.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Date:   Wed, 18 Jan 2023 11:11:00 -0800
+User-Agent: alot/0.10
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 18, 2023 at 11:46:25AM -0600, Bjorn Andersson wrote:
-> On Wed, Jan 18, 2023 at 08:38:48PM +0530, Manivannan Sadhasivam wrote:
-> > The EDAC drivers may optionally pass the poll_msec value. Use that value
-> > if available, else fall back to 1000ms.
-> > 
-> >   [ bp: Touchups. ]
-> > 
-> > Fixes: e27e3dac6517 ("drivers/edac: add edac_device class")
-> > Reported-by: Luca Weiss <luca.weiss@fairphone.com>
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> 
-> Your S-o-b should be the last one to indicate that you are the  one
-> certifying the origin of this patch.
+Quoting Krzysztof Kozlowski (2023-01-15 06:35:23)
+> On 13/01/2023 21:28, Stephen Boyd wrote:
+> > Quoting Krzysztof Kozlowski (2023-01-13 06:58:59)
+> >> The CPU PLL clock node does not use OPP tables (neither driver).
+> >=20
+> > What device is qcom_a53pll_get_freq_tbl() operating on?
+>=20
+> On its own, internal table. While of course driver could be converted to
+> operating-points-v2, no one did it within last 5 years, so why it should
+> happen now?
+>=20
 
-I took his and massaged it a bit.
+The property was added mid 2021 by Shawn[1], that's not 5 years ago. I
+guess there were plans to add an OPP table that never happened[2]? Is
+Shawn still working on this? If not, we should revert the OPP code out
+of the driver.
 
-I'll fix up the order properly when applying.
-
-Thx.
-
--- 
-Regards/Gruss,
-    Boris.
-
-https://people.kernel.org/tglx/notes-about-netiquette
+[1] https://lore.kernel.org/all/20210704024032.11559-4-shawn.guo@linaro.org/
+[2] https://lore.kernel.org/all/20210709021334.GB11342@dragon/
