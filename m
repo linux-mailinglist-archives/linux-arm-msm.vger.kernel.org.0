@@ -2,51 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F1B85672861
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 20:31:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8791F672864
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 20:31:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230194AbjARTbK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 14:31:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57972 "EHLO
+        id S229576AbjARTbM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 14:31:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230356AbjARTa5 (ORCPT
+        with ESMTP id S230381AbjARTbA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 14:30:57 -0500
-Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A8275CE6A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 11:30:49 -0800 (PST)
-Received: by mail-qv1-xf2b.google.com with SMTP id i12so24479099qvs.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 11:30:49 -0800 (PST)
+        Wed, 18 Jan 2023 14:31:00 -0500
+Received: from mail-vs1-xe2a.google.com (mail-vs1-xe2a.google.com [IPv6:2607:f8b0:4864:20::e2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6B2E58998
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 11:30:51 -0800 (PST)
+Received: by mail-vs1-xe2a.google.com with SMTP id 3so36888042vsq.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 11:30:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/52S2yQO347VCYnw3lcgURc+RsitVzGCjZgdtUF6R2c=;
-        b=B2/cZWZAuvHw0Rt4dcv6ipWOsx/xa87RiYmMSjt40gPQiuZW28kSOCN18cHj9JEHYD
-         JlP5e57TRa7JOqyxL/ZljMb4hA0UTkb08WLbJzclztGei8o3eRLybHFr25EV70aQ/iK8
-         vK2izOMFI9OAEj11M/H5SfB8e917SA5SlbFaU=
+        bh=whvNa1bQa9Ec01Ss8iLlJDl35nz+BH7m8TtqnPdDJwY=;
+        b=ImLD5hc/tmuvomyXgF6IjzNPnrWJWOCR2+a7OULQkwKKwDj9QdI2G3eQsoQZsK++9R
+         4BYRXCIJ8nkHHh5aV7YDmT2k/W2eS/ltVtSskU1+sWSLtpj3x587500gg7CYhCo2jTmt
+         0KoCBfTya/mqK1EArI3IzHwezk6DGMx158GAI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/52S2yQO347VCYnw3lcgURc+RsitVzGCjZgdtUF6R2c=;
-        b=ZrMN9WtUqXZEquiq+dRS1Qlfjqvrf7WlpPn4cBHW9LDKyBMWfb193B6UT+wyVJeBd7
-         3S3soqTo1M0R+2DsYODlhDZvFQxbpYuK0w6pG6Ef+zwWtgcUcxAiaBBNtMs7lbRDYhtx
-         1LGloFZTyZpDDSDQjxyWhTTRkCxOsIDN8ZofohkNG+LXBg8bUMTOW0+jYm0cbkBuDCa8
-         PSgXvVTmRuMlbuYUWLcsa3vqvZ6SyxECPUm9c6mSyTE8IeijCRykPmP6UBbaUwapnIcg
-         mHYjclzuxcSQGRvAdDdiEN+CY2zLIKtpuA95VTDy8kbxLP+dJTKOHzbSX7Oo0ZbxyP4m
-         Z22Q==
-X-Gm-Message-State: AFqh2kqbJk1xYluorFoy3/U0oI+YuO45RS7DYCo5nNJfBUHMi0/CYo5x
-        wo4sTIWLLZN2HGkkkviBjTrJAA==
-X-Google-Smtp-Source: AMrXdXswgWPxSK5vtG8KVOUpiv1dsMdMlTWhfTgij9ORwe5l2o9VqGfzDsuK+S7FR81euFwjYj3agA==
-X-Received: by 2002:a05:6214:2d41:b0:534:e0c4:226d with SMTP id na1-20020a0562142d4100b00534e0c4226dmr10247851qvb.16.1674070248272;
-        Wed, 18 Jan 2023 11:30:48 -0800 (PST)
+        bh=whvNa1bQa9Ec01Ss8iLlJDl35nz+BH7m8TtqnPdDJwY=;
+        b=SQNEUBzVzvkJpCVIikssSWhdCMKcBhExJumjahfXv4IIXv3GVhMUTQs7kykkjyM4E8
+         OV5UMmcqpLnbIAizn5KRVtJljqH2hvYMpePG7fXrHPuZK3X/VIjUFZ3zV72U107VGyz0
+         2IQi48xOkIPAwc1ID9XGUhpD+uS5vI5/6JQKouCrU78VJwLuBue2vKah60xnJ+moK96O
+         oPwdStBrW4tHB6nhgS+0VT3j2cF4P2tMXKII3g71WUIP8IHEbkp3PvcNpvn9fPQMDscL
+         e8hHISpk6VlOHkkXTNhT98QGTfBo1G/VnXx9k2n6zfZC4Zw3mdvam/Epu8vcPI8C2BTv
+         VXtQ==
+X-Gm-Message-State: AFqh2krFlJ6Sjd/TxFBFRhbR6cdgHh274QAUVQHepON9R1XR6vas7GNb
+        fTOCxQaelM/cAjFJM+t0blYz6Q==
+X-Google-Smtp-Source: AMrXdXuIYSpsuAQVnu/PN9wvfo695OrdT003SUKTNSh8GNPck2iywWTRy+ghKQQifhstv5OOviVDUg==
+X-Received: by 2002:a67:f886:0:b0:3cb:aaa:81d8 with SMTP id h6-20020a67f886000000b003cb0aaa81d8mr18345765vso.16.1674070250836;
+        Wed, 18 Jan 2023 11:30:50 -0800 (PST)
 Received: from localhost (29.46.245.35.bc.googleusercontent.com. [35.245.46.29])
-        by smtp.gmail.com with UTF8SMTPSA id f8-20020a05620a408800b0070543181468sm23215117qko.57.2023.01.18.11.30.46
+        by smtp.gmail.com with UTF8SMTPSA id j7-20020a05620a410700b006cbe3be300esm8750610qko.12.2023.01.18.11.30.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Jan 2023 11:30:47 -0800 (PST)
+        Wed, 18 Jan 2023 11:30:50 -0800 (PST)
 From:   Mark Yacoub <markyacoub@chromium.org>
 X-Google-Original-From: Mark Yacoub <markyacoub@google.com>
 To:     quic_khsieh@quicinc.com, linux-arm-msm@vger.kernel.org,
@@ -72,12 +72,10 @@ Cc:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
         christophe.jaillet@wanadoo.fr, quic_sbillaka@quicinc.com,
         johan+linaro@kernel.org, dianders@chromium.org, marex@denx.de,
         quic_jesszhan@quicinc.com, bjorn.andersson@linaro.org,
-        abhinavk@codeaurora.org, seanpaul@chromium.org,
-        Rob Herring <robh@kernel.org>,
-        Mark Yacoub <markyacoub@chromiu.org>
-Subject: [PATCH v6 08/10] dt-bindings: msm/dp: Add bindings for HDCP registers
-Date:   Wed, 18 Jan 2023 19:30:13 +0000
-Message-Id: <20230118193015.911074-9-markyacoub@google.com>
+        abhinavk@codeaurora.org, seanpaul@chromium.org
+Subject: [PATCH v6 09/10] arm64: dts: qcom: sc7180: Add support for HDCP in dp-controller
+Date:   Wed, 18 Jan 2023 19:30:14 +0000
+Message-Id: <20230118193015.911074-10-markyacoub@google.com>
 X-Mailer: git-send-email 2.39.0.246.g2a6d74b583-goog
 In-Reply-To: <20230118193015.911074-1-markyacoub@google.com>
 References: <20230118193015.911074-1-markyacoub@google.com>
@@ -85,8 +83,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -95,79 +92,52 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Sean Paul <seanpaul@chromium.org>
 
-This patch adds the bindings for the MSM DisplayPort HDCP registers
-which are required to write the HDCP key into the display controller as
-well as the registers to enable HDCP authentication/key
-exchange/encryption.
+This patch adds the register ranges required for HDCP key injection and
+HDCP TrustZone interaction as described in the dt-bindings for the
+sc7180 dp controller. Now that these are supported, change the
+compatible string to "dp-hdcp".
 
-We'll use a new compatible string for this since the fields are optional.
-
-Cc: Rob Herring <robh@kernel.org>
-Cc: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Sean Paul <seanpaul@chromium.org>
-Signed-off-by: Mark Yacoub <markyacoub@chromiu.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20210913175747.47456-13-sean@poorly.run #v1
-Link: https://patchwork.freedesktop.org/patch/msgid/20210915203834.1439-13-sean@poorly.run #v2
-Link: https://patchwork.freedesktop.org/patch/msgid/20211001151145.55916-13-sean@poorly.run #v3
-Link: https://patchwork.freedesktop.org/patch/msgid/20211105030434.2828845-13-sean@poorly.run #v4
-Link: https://patchwork.freedesktop.org/patch/msgid/20211115202153.117244-1-sean@poorly.run #v4.5
-Link: https://patchwork.freedesktop.org/patch/msgid/20220411204741.1074308-9-sean@poorly.run #v5
+Signed-off-by: Mark Yacoub <markyacoub@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20210913175747.47456-15-sean@poorly.run #v1
+Link: https://patchwork.freedesktop.org/patch/msgid/20210915203834.1439-14-sean@poorly.run #v2
+Link: https://patchwork.freedesktop.org/patch/msgid/20211001151145.55916-14-sean@poorly.run #v3
+Link: https://patchwork.freedesktop.org/patch/msgid/20211105030434.2828845-14-sean@poorly.run #v4
+Link: https://patchwork.freedesktop.org/patch/msgid/20220411204741.1074308-10-sean@poorly.run #v5
 
-Changes in v2:
--Drop register range names (Stephen)
--Fix yaml errors (Rob)
 Changes in v3:
--Add new compatible string for dp-hdcp
--Add descriptions to reg
--Add minItems/maxItems to reg
--Make reg depend on the new hdcp compatible string
+-Split off into a new patch containing just the dts change (Stephen)
+-Add hdcp compatible string (Stephen)
 Changes in v4:
 -Rebase on Bjorn's multi-dp patchset
-Changes in v4.5:
--Remove maxItems from reg (Rob)
--Remove leading zeros in example (Rob)
 Changes in v5:
--None
+-Put the tz register offsets in trogdor dtsi (Rob C)
 Changes in v6:
--Rebased: modify minItems instead of adding it as new line.
+-Rebased: Removed modifications in sc7180.dtsi as it's already upstream
 
 ---
- .../devicetree/bindings/display/msm/dp-controller.yaml    | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-index f2515af8256f..17d741f9af86 100644
---- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-@@ -24,13 +24,15 @@ properties:
-       - qcom,sm8350-dp
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+index 178efaaa89ec..6f6fe5cb6563 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+@@ -817,6 +817,14 @@ &mdss_dp {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&dp_hot_plug_det>;
+ 	data-lanes = <0 1>;
++
++	reg = <0 0x0ae90000 0 0x200>,
++	      <0 0x0ae90200 0 0x200>,
++	      <0 0x0ae90400 0 0xc00>,
++	      <0 0x0ae91000 0 0x400>,
++	      <0 0x0ae91400 0 0x400>,
++	      <0 0x0aed1000 0 0x175>,
++	      <0 0x0aee1000 0 0x2c>;
+ };
  
-   reg:
--    minItems: 4
-+    minItems: 5
-     items:
-       - description: ahb register block
-       - description: aux register block
-       - description: link register block
-       - description: p0 register block
-       - description: p1 register block
-+      - description: (Optional) Registers for HDCP device key injection
-+      - description: (Optional) Registers for HDCP TrustZone interaction
- 
-   interrupts:
-     maxItems: 1
-@@ -154,7 +156,9 @@ examples:
-               <0xae90200 0x200>,
-               <0xae90400 0xc00>,
-               <0xae91000 0x400>,
--              <0xae91400 0x400>;
-+              <0xae91400 0x400>,
-+              <0xaed1000 0x174>,
-+              <0xaee1000 0x2c>;
-         interrupt-parent = <&mdss>;
-         interrupts = <12>;
-         clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+ &pm6150_adc {
 -- 
 2.39.0.246.g2a6d74b583-goog
 
