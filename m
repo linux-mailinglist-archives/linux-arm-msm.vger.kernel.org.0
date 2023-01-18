@@ -2,157 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B83AC67233E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 17:30:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AC952672378
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 17:36:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229522AbjARQaU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 11:30:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35538 "EHLO
+        id S230195AbjARQgl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 11:36:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229850AbjARQ33 (ORCPT
+        with ESMTP id S230239AbjARQgM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 11:29:29 -0500
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44B4B53F8D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 08:27:05 -0800 (PST)
-Received: by mail-pl1-x62f.google.com with SMTP id v23so32497958plo.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 08:27:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=PnIT1ZOLzxJX6WD//TaGrhIYfVz9ufKdiV7vsF/iRQM=;
-        b=oyNLlxOA4h9fIFeFYgsQYpQBXl331UIiaWIGE+I8+2VKXi/tAvWIFIGMY/+R+RitkD
-         ZLgs6rwtFHI0fdK1yebai2/rpR2R7ohI4Hou1mSzpXW274rGY143NsnzU47AAB//rnqY
-         Wv9envguaPCsvQSGp9M5BmODhROqcKUOLqcHLhxMJwvu2nkHFMkgksHHfp2z1i1f1oPG
-         NzmTwEnqP0/D92dYyv+UoXLqlR63a8yYs0QmAEaxl6tKn/mXVOSDWY/AbHsSnRGOn9es
-         CaPipCYwHvdeYNt7JmOqIQKrWTDL0G0kXU8fmyQlrSsle1J6stnovg7FHLRI4akneThf
-         k4lA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PnIT1ZOLzxJX6WD//TaGrhIYfVz9ufKdiV7vsF/iRQM=;
-        b=yzIqOoaNl+cCBbcJQEnv1YhdnnnOFU8cWhA5uKifiLe23IwB/pR4qu4q+lYDandwA1
-         UdBKBpiuvFjpqE+g1Vl5SfS9Iw1Oau+Cl2HV4gm5hKeprREQGx+QxSByX3va8sGubY4q
-         a3PT1jZtMUdpop9647iXiZMdWq9qMv1cFeQ+p80jimapKc7IB7JcbkQ9NqseKDphuZ+p
-         0JRzpGueBAFmi9PzLtmshDJBnV7AGtesQNGA3oc68k/PrSgl+2PU+lN6I5O97D7fQ7I+
-         3tIddXB2SZqqyYkRFRxCMGnEJgLmTw7giRtPJeojpZfnyi4707zybpGGV/vo7HuglLFs
-         KsyQ==
-X-Gm-Message-State: AFqh2krM1cZ4/5eU85XynDFTwX6cEbWJg6bRqZpEMJsMJsZbFocFVnLq
-        cRBMTtdDfsi1oUuamCsMLFZ/
-X-Google-Smtp-Source: AMrXdXvvDlhhZoU7y/wT2VNk0daUJAuDCDa1GEO7xu7ndvUK9lrvpG0UpYaPKFREDviZj/98AsTgiQ==
-X-Received: by 2002:a05:6a20:3ca7:b0:9d:efbf:48e3 with SMTP id b39-20020a056a203ca700b0009defbf48e3mr9897658pzj.39.1674059224894;
-        Wed, 18 Jan 2023 08:27:04 -0800 (PST)
-Received: from thinkpad ([220.158.158.171])
-        by smtp.gmail.com with ESMTPSA id x15-20020aa78f0f000000b00587fda4a260sm6021014pfr.9.2023.01.18.08.26.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Jan 2023 08:27:03 -0800 (PST)
-Date:   Wed, 18 Jan 2023 21:56:57 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, bp@alien8.de,
-        tony.luck@intel.com, quic_saipraka@quicinc.com,
-        konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, james.morse@arm.com,
-        mchehab@kernel.org, rric@kernel.org, linux-edac@vger.kernel.org,
-        quic_ppareek@quicinc.com, luca.weiss@fairphone.com,
-        ahalaney@redhat.com, steev@kali.org, stable@vger.kernel.org
-Subject: Re: [PATCH v6 17/17] soc: qcom: llcc: Do not create EDAC platform
- device on SDM845
-Message-ID: <20230118162657.GE4690@thinkpad>
-References: <20230118150904.26913-1-manivannan.sadhasivam@linaro.org>
- <20230118150904.26913-18-manivannan.sadhasivam@linaro.org>
- <d3cd9b7a-6286-a140-d205-6d4b6ca8092d@linaro.org>
- <20230118155919.GD4690@thinkpad>
- <3ca41414-df2e-4ba0-9dc7-cacea2413fe6@linaro.org>
+        Wed, 18 Jan 2023 11:36:12 -0500
+Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [IPv6:2001:4b7a:2000:18::164])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D46FF51C77;
+        Wed, 18 Jan 2023 08:35:29 -0800 (PST)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 533A520113;
+        Wed, 18 Jan 2023 17:35:27 +0100 (CET)
+Date:   Wed, 18 Jan 2023 17:35:25 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc:     Jami Kettunen <jami.kettunen@somainline.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [RFC PATCH v2 1/5] iio: core: Point users of extend_name field
+ to read_label callback
+Message-ID: <20230118163525.hh6woxq5q74pmcmq@SoMainline.org>
+Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
+        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Lars-Peter Clausen <lars@metafoo.de>, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230116220909.196926-1-marijn.suijten@somainline.org>
+ <20230116220909.196926-2-marijn.suijten@somainline.org>
+ <20230118161920.0000207c@Huawei.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3ca41414-df2e-4ba0-9dc7-cacea2413fe6@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20230118161920.0000207c@Huawei.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 18, 2023 at 05:05:28PM +0100, Krzysztof Kozlowski wrote:
-> On 18/01/2023 16:59, Manivannan Sadhasivam wrote:
-> > On Wed, Jan 18, 2023 at 04:37:29PM +0100, Krzysztof Kozlowski wrote:
-> >> On 18/01/2023 16:09, Manivannan Sadhasivam wrote:
-> >>> The platforms based on SDM845 SoC locks the access to EDAC registers in the
-> >>> bootloader. So probing the EDAC driver will result in a crash. Hence,
-> >>> disable the creation of EDAC platform device on all SDM845 devices.
-> >>>
-> >>> The issue has been observed on Lenovo Yoga C630 and DB845c.
-> >>>
-> >>> Cc: <stable@vger.kernel.org> # 5.10
-> >>> Reported-by: Steev Klimaszewski <steev@kali.org>
-> >>> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> >>> ---
-> >>>  drivers/soc/qcom/llcc-qcom.c | 17 ++++++++++++-----
-> >>>  1 file changed, 12 insertions(+), 5 deletions(-)
-> >>>
-> >>> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-> >>> index 7b7c5a38bac6..8d840702df50 100644
-> >>> --- a/drivers/soc/qcom/llcc-qcom.c
-> >>> +++ b/drivers/soc/qcom/llcc-qcom.c
-> >>> @@ -1012,11 +1012,18 @@ static int qcom_llcc_probe(struct platform_device *pdev)
-> >>>  
-> >>>  	drv_data->ecc_irq = platform_get_irq_optional(pdev, 0);
-> >>>  
-> >>> -	llcc_edac = platform_device_register_data(&pdev->dev,
-> >>> -					"qcom_llcc_edac", -1, drv_data,
-> >>> -					sizeof(*drv_data));
-> >>> -	if (IS_ERR(llcc_edac))
-> >>> -		dev_err(dev, "Failed to register llcc edac driver\n");
-> >>> +	/*
-> >>> +	 * The platforms based on SDM845 SoC locks the access to EDAC registers
-> >>> +	 * in bootloader. So probing the EDAC driver will result in a crash.
-> >>> +	 * Hence, disable the creation of EDAC platform device on SDM845.
-> >>> +	 */
-> >>> +	if (!of_device_is_compatible(dev->of_node, "qcom,sdm845-llcc")) {
-> >>
-> >> Don't spread of_device_is_compatible() in driver code. You have driver
-> >> data for this.
-> >>
+On 2023-01-18 16:19:20, Jonathan Cameron wrote:
+> On Mon, 16 Jan 2023 23:09:05 +0100
+> Marijn Suijten <marijn.suijten@somainline.org> wrote:
+> 
+> > As mentioned and discussed in [1] extend_name should not be used for
+> > full channel labels (and most drivers seem to only use it to express a
+> > short type of a channel) as this affects sysfs filenames, while the
+> > label name is supposed to be extracted from the *_label sysfs file
+> > instead.  This appears to have been unclear to some drivers as
+> > extend_name is also used when read_label is unset, achieving an initial
+> > goal of providing sensible names in *_label sysfs files without noticing
+> > that sysfs filenames are (negatively and likely unintentionally)
+> > affected as well.
 > > 
-> > Yeah, but there is no ID to in the driver data to identify an SoC. 
+> > Point readers of iio_chan_spec::extend_name to iio_info::read_label by
+> > mentioning deprecation and side-effects of this field.
+> > 
+> > [1]: https://lore.kernel.org/linux-arm-msm/20221221223432.si2aasbleiicayfl@SoMainline.org/
+> > 
+> > Suggested-by: Jonathan Cameron <jic23@kernel.org>
+> > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> > ---
+> >  include/linux/iio/iio.h | 3 +++
+> >  1 file changed, 3 insertions(+)
+> > 
+> > diff --git a/include/linux/iio/iio.h b/include/linux/iio/iio.h
+> > index 81413cd3a3e7..36c89f238fb9 100644
+> > --- a/include/linux/iio/iio.h
+> > +++ b/include/linux/iio/iio.h
+> > @@ -221,6 +221,9 @@ struct iio_event_spec {
+> >   * @extend_name:	Allows labeling of channel attributes with an
+> >   *			informative name. Note this has no effect codes etc,
+> >   *			unlike modifiers.
+> > + *			This field is deprecated in favour of overriding read_label
+> > + *			in iio_info, which unlike @extend_name does not affect sysfs
+> > + *			filenames.
+> Perhaps reword as
 > 
-> What do you mean there is no? You use exactly the same compatible as the
-> one in driver data.
+> This field is deprecated in favour of overriding the default label
+> by providing a read_label() callback in iio_info, which unlike
+> @extend_name does not affect sysfs filenames.
+> ?
+
+Agreed, explicitly stating "the default label by" makes this much more
+clear.  Though, maybe swap that around into "in favour of providing
+read_label() in iio_info to override the label"?  Otherwise this could
+be interpreted as "overriding the default label" is preferred to setting
+extend_name... which one would do to override the default label.
+
+I can queue this up for v3 unless you'll fix it up while applying,
+presuming no other changes have to be made (aside from dropping patch
+3/5).
+
+Will read_label() turn into a link?  And is the @extend_name reference
+proper?  Is there something to link to iio_info, perhaps a hashtag - or
+maybe fully qualify `#iio_info::read_label()` for linking purposes?
+/me jumps over to kerneldoc documentation :)
+
+- Marijn
+
+> >   * @datasheet_name:	A name used in in-kernel mapping of channels. It should
+> >   *			correspond to the first name that the channel is referred
+> >   *			to by in the datasheet (e.g. IND), or the nearest
 > 
-
-Right, but I was saying that there is no unique field to identify an SoC.
-
-> 
-> > I could add
-> > one but is that really worth doing so? Is using of_device_is_compatible() in
-> > drivers discouraged nowadays?
-> 
-> Because it spreads variant matching all over. It does not scale. drv
-> data fields are the way or better quirks/flags.
-> 
-
-The driver quirk/flags are usually beneficial if it applies to multiple
-platforms, otherwise they are a bit overkill IMO just like in this case.
-
-One can argue that this matching could spread to other SoCs in the future, but
-I don't think that could happen for this case.
-
-Thanks,
-Mani
-
-> Best regards,
-> Krzysztof
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
