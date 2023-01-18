@@ -2,136 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B2E9D671D9C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 14:24:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E8BD4671DA0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 14:24:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231191AbjARNYA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 08:24:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53828 "EHLO
+        id S230212AbjARNYG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 08:24:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231160AbjARNXo (ORCPT
+        with ESMTP id S230469AbjARNXr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 08:23:44 -0500
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB36644BC2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 04:49:34 -0800 (PST)
-Received: by mail-ed1-x531.google.com with SMTP id w14so32147567edi.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 04:49:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=djHqBDlScb5lRsRE74FGmmvvX5FCg2DiG/HUABofp+s=;
-        b=S3jpbPgP+0E7k7Q/czAPZSiFUwGdraKA/CiRy5bKyvrnH65HGI0UdVVF0Id10XglQt
-         lfqC4jpTpojl2k4PcOwJdYourHyO7k4VLjhrtizKYslUoi5DpiE3+y9wtRitKlELjybG
-         8KXvMAyiWSJZB+J5lifEkDU9r5PojnhkSJ0JKsX1wMUgiUs9Z+xTWOQN2U/jljPyIe2e
-         yMIunlhUW4gUk+ezilPNN8i+NhxxWrdjt06FqsMcWkmQ/WtngAk96P3nyvvwBkdLhZA1
-         4JyqIJH0wTHTXhR0sSGC7Ocf3z4qyZq1VnGDRlw3mjOX6z/qd2D8e0nn+bkwRfDqzs1H
-         JjLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=djHqBDlScb5lRsRE74FGmmvvX5FCg2DiG/HUABofp+s=;
-        b=CiyNQppq3L5BImQdPzGAAlTSlmKlbF5Zl0F94pAoa2/GhSCqWgrk0BokbEJ2C6n9Gl
-         jC2QWVfSpxhzO4oouNjMpgBD3BE/Ph3ZWxU7YvoE9vInJj+7fj1Qzs0gtRnjIiW8TG9/
-         LEWBwkuC05wgBJBDIBTQ1T5wKYleQpPlQ2yuXvU0dt86iKVwxkVqiwNVAhtqQyKWKtbg
-         SS1Lgefg3sq8sciMLUnoc8PUa2BXgcfcqbkoTn6yHPrsRQ0qyTJQr2w665AjkCUn2DT5
-         LOEwyE4A8ini1GzQhQCkIJJH1wpkY8/Divt2+O8kW2/xi8iBOH/TNIztdhHjilvUsSWU
-         dT8g==
-X-Gm-Message-State: AFqh2koVyidAdsLUGzilQ/IQZZtClw//dzx6Hwcw+wRsBAQBiZyZLDJO
-        4t6Mp0rpaG86S7qsFtco8vvg3Q==
-X-Google-Smtp-Source: AMrXdXvsUJwb/yAFbMhciMhs5y72gLy9mpb2XpfKAbJT39PGO3tb+WGBE3y6N5X1t0pHWPZdLobXuw==
-X-Received: by 2002:aa7:ccd3:0:b0:49d:f44f:7ef1 with SMTP id y19-20020aa7ccd3000000b0049df44f7ef1mr7209879edt.14.1674046173533;
-        Wed, 18 Jan 2023 04:49:33 -0800 (PST)
-Received: from [192.168.1.101] (abxh252.neoplus.adsl.tpnet.pl. [83.9.1.252])
-        by smtp.gmail.com with ESMTPSA id 18-20020a170906201200b00846734faa9asm14468680ejo.164.2023.01.18.04.49.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Jan 2023 04:49:33 -0800 (PST)
-Message-ID: <9850c8a3-5d1e-d379-7994-14c04fc8c653@linaro.org>
-Date:   Wed, 18 Jan 2023 13:49:30 +0100
+        Wed, 18 Jan 2023 08:23:47 -0500
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F98F2A14C;
+        Wed, 18 Jan 2023 04:50:43 -0800 (PST)
+Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits))
+        (No client certificate requested)
+        (Authenticated sender: kholk11)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id CEEA16602DFF;
+        Wed, 18 Jan 2023 12:50:41 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1674046242;
+        bh=oeiaamJgDNdwr5Xa4TX2CMdpkyV4DV3G1iGY486t7oc=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=C66exSRmLAFtEfVKiRKdLHOOkLp00xNHSfwfEoiS8EQ5NgcS1lDJl2gfUi5B7DN16
+         ziuNv8KKiKqJEXzyCLFCc2AtUsEhimxWLXoIAk4WqmXzWW8i/8HS//173RFR+3ByOE
+         YhEYpXOh2xA1NsCadN5P0YjedH/7ppENuA5ZPiQxdtEu+U92+6hq7+vLDQkmN3L4/l
+         gPugrV7OooJfs2YQIhjOVrk7FaCF0YIj1aGFFxwif7qmYfZIAtuLFUe+0/TgG7EwBe
+         iZbJe0aVdGLXNY7coePIfuwLMYywKHcI4oJsdMoW/G026gMqBFfZDB3dm3q7yQov5I
+         UUwkD9x9IBqQw==
+Message-ID: <dfecf744-30c6-e9b5-5a75-045aca840cae@collabora.com>
+Date:   Wed, 18 Jan 2023 13:50:39 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v3 8/9] interconnect: qcom: rpm: Add a way to always set
- QoS registers
+ Thunderbird/102.6.0
+Subject: Re: [PATCH v9 5/6] soc: qcom: Add support for Core Power Reduction
+ v3, v4 and Hardened
 Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Robert Marko <robimarko@gmail.com>,
         linux-arm-msm@vger.kernel.org, andersson@kernel.org,
         agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org, Georgi Djakov <djakov@kernel.org>,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230116132152.405535-1-konrad.dybcio@linaro.org>
- <20230116132152.405535-9-konrad.dybcio@linaro.org>
- <6e35de82-e539-35c1-fcb1-10c02af9bb8c@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <6e35de82-e539-35c1-fcb1-10c02af9bb8c@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+Cc:     marijn.suijten@somainline.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>, linux-kernel@vger.kernel.org
+References: <20230116093845.72621-1-konrad.dybcio@linaro.org>
+ <20230116093845.72621-6-konrad.dybcio@linaro.org>
+ <5ced2e01-367f-5e0d-8120-aa5ef4d4eeab@gmail.com>
+ <233f0d52-4f9d-a512-0450-77e2fb4da878@linaro.org>
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+In-Reply-To: <233f0d52-4f9d-a512-0450-77e2fb4da878@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+..snip..
 
+>>> +
+>>> +static const struct cpr_desc sdm630_cpr_desc = {
 
-On 17.01.2023 14:27, Bryan O'Donoghue wrote:
-> On 16/01/2023 13:21, Konrad Dybcio wrote:
->> On newer SoCs (there's no clear boundary, but probably "new enough"
->> means every interconnect provider is either BIMC or QNoC and there
->> are no old-style NoC hosts) we're expected to set QoS registers
->> regardless of the ap_owned param. Add a bool in the qcom_icc_provider
->> and make the logic assume it's okay to set the registers when it's
->> set.
+..snip..
+
+>>> +    },
+>>> +};
 >>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>   drivers/interconnect/qcom/icc-rpm.c | 2 +-
->>   drivers/interconnect/qcom/icc-rpm.h | 2 ++
->>   2 files changed, 3 insertions(+), 1 deletion(-)
+>> Hi Konrad, I am trying to add IPQ8074 support to CPR as its the last thing
+>> missing for upstream CPU scaling, and I really want to get rid of the downstream driver.
 >>
->> diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
->> index 509cadf398e9..343e6021a93a 100644
+>> However, I am having hard time figuring some of these parameters, some are easy to
+>> read from the DTS or driver defines, however arent the fuse corners supposed to be read
+>> from the fuses and not hardcocded in the thread structures?
+> They reside in socname-regulator.dtsi most of the time.
+> Some parameters are read from fuses (per-unit capabilities
+> that let your specific chip run at a specific voltage offset),
+> but there's also some per-SoC-model data that needs to be
+> taken into account when performing the calculations.. This
+> is actually a smart move from Qualcomm (well, for them
+> anyway), as they put as little data in fuses as possible,
+> saving them space on this tiiiiny ROM.
 > 
-> On next-20230116,
-g fetch linux-next next-20230116
-gco FETCH_HEAD
-b4 am 20230116132152.405535-1-konrad.dybcio@linaro.org
-g am ./v3_20230116_konrad_dybcio_the_great_interconnecification_fixation.mbx
+>>
+>> Mind you, I dont have any docs so I am mostly using the downstream kernel as the reference.
+> This driver doesn't do anything more than its downstream
+> counterpart, everything we need should be there on msm-X.Y.
+> 
+> One flaw in this revision is that it doesn't yet support
+> multiple speed bins, so if your SoC has n of those, you
+> may get confused by n sets of values.. This is easy to
+> improve on in future, but this initial submission is
+> already very fat to begin with..
+> 
+> 
 
-Stosowanie: interconnect: qcom: rpm: make QoS INVALID default, separate out driver data
-Stosowanie: interconnect: qcom: rpm: Always set QoS params on QNoC
-Stosowanie: interconnect: qcom: rpm: Add support for specifying channel num
-Stosowanie: interconnect: qcom: Sort kerneldoc entries
-Stosowanie: interconnect: qcom: rpm: Rename icc desc clocks to bus_blocks
-Stosowanie: interconnect: qcom: rpm: Rename icc provider num_clocks to num_bus_clocks
-Stosowanie: interconnect: qcom: rpm: Handle interface clocks
-Stosowanie: interconnect: qcom: rpm: Add a way to always set QoS registers
-Stosowanie: interconnect: qcom: rpm: Don't use clk_get_optional for bus clocks anymore
-(no errors)
+Hello Robert, Konrad,
 
-Konrad
-> 
-> git am < ~/Downloads/v3-1-9-interconnect-qcom-rpm-make-QoS-INVALID-default-separate-out-driver-data.patch
-> Applying: interconnect: qcom: rpm: make QoS INVALID default, separate out driver data
-> Applying: interconnect: qcom: rpm: Add support for specifying channel num
-> Applying: interconnect: qcom: rpm: Rename icc desc clocks to bus_blocks
-> Applying: interconnect: qcom: rpm: Add a way to always set QoS registers
-> 
-> error: patch failed: drivers/interconnect/qcom/icc-rpm.c:243
-> error: drivers/interconnect/qcom/icc-rpm.c: patch does not apply
-> error: patch failed: drivers/interconnect/qcom/icc-rpm.h:28
-> error: drivers/interconnect/qcom/icc-rpm.h: patch does not apply
-> Patch failed at 0004 interconnect: qcom: rpm: Add a way to always set QoS registers
-> hint: Use 'git am --show-current-patch=diff' to see the failed patch
-> 
-> Should I pick up another series from elsewhere to apply this ?
-> 
-> ---
-> bod
+since it is a bit difficult to find and follow discussions started/written in
+a random place of a file (and reviews, as well), can you please cut off the
+unnecessary text before sending out a reply?
+
+Anyway, the fuse corners are actually read from fuses; the values that you see
+hardcoded are references and safety min/max values which purpose is to both
+perform calculation after fuse reading and to ensure safety (example: you put
+a wrong bits range to read from fuses, the driver saves you by refusing to set
+a very high voltage on the CPU core[s]).
+
+As for where to find the values, I personally don't precisely remember, as that
+was done more than 1.5 years ago, but what I recall is that they're scattered
+across multiple files, including devicetree and drivers.
+
+I also remember that I had to add debugging prints to the downstream driver in
+order to get one of the values right... but that may have been due to MSM8998
+values being a bit strange.
+
+Thanks,
+Angelo
+
