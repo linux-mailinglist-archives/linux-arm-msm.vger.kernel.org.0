@@ -2,55 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4753067256E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 18:48:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 32C79672574
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 18:48:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229681AbjARRsD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 12:48:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45710 "EHLO
+        id S230246AbjARRs1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 12:48:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229831AbjARRrr (ORCPT
+        with ESMTP id S230247AbjARRry (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 12:47:47 -0500
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D9E05CFD7;
-        Wed, 18 Jan 2023 09:46:32 -0800 (PST)
+        Wed, 18 Jan 2023 12:47:54 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 551A63CE0D;
+        Wed, 18 Jan 2023 09:47:50 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id BB46ACE1B53;
-        Wed, 18 Jan 2023 17:46:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A58C4C433F0;
-        Wed, 18 Jan 2023 17:46:27 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id E973161944;
+        Wed, 18 Jan 2023 17:47:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C15EC433EF;
+        Wed, 18 Jan 2023 17:47:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1674063988;
-        bh=MWdNzb1aQw4NJSMQBvu2jSlHNAYyl/IhJuxAJiXZHWc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Ol5PtcjeQNn+GhJ8Y0tkDbOmz6I1a6MuIpO0o+ECwx+qtLepmgkkSFN+XzFPUwF9Y
-         OE5kcKAHreizCqXe5hiHEYN9PeZ4EY2nc4KOlhgGVBOQGRldjGyqH9GoCZhOwCx4I7
-         MgBU2EoMBvhaT8NiDcHbQthWohhLpmWAiQQHwTh+zprkwvS/UkZP29uOKyVUEUSll2
-         QcFFgOmjmi6qKEup3A3yCn19kDiLCgwqUxa2qb9y36Yq8P9d1IWTb8G0rlQQoUcuoH
-         YFhNldU8FD01eYT0tq+Tn2YrCluJAZQFgz3B1DhQ2DuiqiW8U+6eWTMDFbsDvr6lIF
-         U6qc/sXrcfLJw==
-Date:   Wed, 18 Jan 2023 11:46:25 -0600
+        s=k20201202; t=1674064069;
+        bh=dTOao7OTnDD2Bljll1cIh3aZadqaefZ1UzKEm/3O13s=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=iT9y7TEGJZWJK/D9ZgOxj5SpFsBm9v0WjU7S38iXzcBR1FgigHN9MHeM0yaPntq7Q
+         g1H1dET0MsaTIHxWIZiLxvpDbso5Hso6mUsUylgH2M6wc0GosV82ee/BNvhviIt/KI
+         ILtW5yYOB4RrF4BumnY2jK7vq4YmY6sPooHzsjWRgJNI/v/dm+9AN9XdfSVmmPypO1
+         ijyf7ScoBCof2ZN0IcsF+AYAMV7vtvAkrRnWoQalqhAy0ge60BVoM5MwjJkngjZq6z
+         mJrtEYCtVP79xafZcEdcbxtHbilFsH4+D+90tkE/vsRx6HyyOLsIQLSKVnppepinWc
+         5EgLJv1JXFbqQ==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        bp@alien8.de, tony.luck@intel.com, quic_saipraka@quicinc.com,
-        konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, james.morse@arm.com,
-        mchehab@kernel.org, rric@kernel.org, linux-edac@vger.kernel.org,
-        quic_ppareek@quicinc.com, luca.weiss@fairphone.com,
-        ahalaney@redhat.com, steev@kali.org, stable@vger.kernel.org
-Subject: Re: [PATCH v6 01/17] EDAC/device: Respect any driver-supplied
- workqueue polling value
-Message-ID: <20230118174625.oo5gi36q45kfbgoq@builder.lan>
-References: <20230118150904.26913-1-manivannan.sadhasivam@linaro.org>
- <20230118150904.26913-2-manivannan.sadhasivam@linaro.org>
+To:     agross@kernel.org, robh+dt@kernel.org, neil.armstrong@linaro.org,
+        mani@kernel.org, srinivas.kandagatla@linaro.org,
+        krzysztof.kozlowski+dt@linaro.org, amahesh@qti.qualcomm.com,
+        mathieu.poirier@linaro.org, konrad.dybcio@somainline.org
+Cc:     linux-arm-msm@vger.kernel.org, krzysztof.kozlowski@linaro.org,
+        elder@linaro.org, abel.vesa@linaro.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org
+Subject: Re: [PATCH v4 0/5] remoteproc: qcom_q6v5_pas: add support for SM8550 adsp, cdsp & mpss
+Date:   Wed, 18 Jan 2023 11:47:47 -0600
+Message-Id: <167406406337.2924867.12230424280288709048.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.37.1
+In-Reply-To: <20221114-narmstrong-sm8550-upstream-remoteproc-v4-0-54154c08c0b7@linaro.org>
+References: <20221114-narmstrong-sm8550-upstream-remoteproc-v4-0-54154c08c0b7@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230118150904.26913-2-manivannan.sadhasivam@linaro.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -60,88 +59,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 18, 2023 at 08:38:48PM +0530, Manivannan Sadhasivam wrote:
-> The EDAC drivers may optionally pass the poll_msec value. Use that value
-> if available, else fall back to 1000ms.
+On Wed, 18 Jan 2023 17:22:39 +0100, Neil Armstrong wrote:
+> This patchsets adds support for the aDSP, cDSP and MPSS found in the
+> SM8550 SoC.
 > 
->   [ bp: Touchups. ]
+> The aDSP, cDSP and MPSS boot process on SM8550 now requires a secondary
+> "Devicetree" firmware to be passed along the main Firmware, and the cDSP
+> a new power domain named "NSP".
 > 
-> Fixes: e27e3dac6517 ("drivers/edac: add edac_device class")
-> Reported-by: Luca Weiss <luca.weiss@fairphone.com>
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> [...]
 
-Your S-o-b should be the last one to indicate that you are the  one
-certifying the origin of this patch.
+Applied, thanks!
 
-> Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+[1/5] dt-bindings: remoteproc: qcom: adsp: move memory-region and firmware-name out of pas-common
+      commit: cee616c6884616aea3be72a9debafd0614332682
+[2/5] dt-bindings: remoteproc: qcom: adsp: document sm8550 adsp, cdsp & mpss compatible
+      commit: 084258d607128a7486311daf5e67ca414ee07cc9
+[3/5] remoteproc: qcom_q6v5_pas: add support for dtb co-firmware loading
+      commit: 29814986b82e820ae9d3eb7474cdcf66605bd114
+[4/5] remoteproc: qcom_q6v5_pas: add support for assigning memory to firmware
+      commit: c63c0a7cab91b930a6ee78c28b481b84bfa98b7f
+[5/5] remoteproc: qcom_q6v5_pas: add sm8550 adsp, cdsp & mpss compatible & data
+      commit: 7eddedc975638f9bf427e7964c74276450a3021d
 
-If the two of you wrote the patch, please add a Co-developed-by.
-
-Thanks,
-Bjorn
-
-> Tested-by: Steev Klimaszewski <steev@kali.org> # Thinkpad X13s
-> Tested-by: Andrew Halaney <ahalaney@redhat.com> # sa8540p-ride
-> Cc: <stable@vger.kernel.org> # 4.9
-> Link: https://lore.kernel.org/r/COZYL8MWN97H.MROQ391BGA09@otso
-> ---
->  drivers/edac/edac_device.c | 15 +++++++--------
->  1 file changed, 7 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/edac/edac_device.c b/drivers/edac/edac_device.c
-> index 19522c568aa5..a50b7bcfb731 100644
-> --- a/drivers/edac/edac_device.c
-> +++ b/drivers/edac/edac_device.c
-> @@ -34,6 +34,9 @@
->  static DEFINE_MUTEX(device_ctls_mutex);
->  static LIST_HEAD(edac_device_list);
->  
-> +/* Default workqueue processing interval on this instance, in msecs */
-> +#define DEFAULT_POLL_INTERVAL 1000
-> +
->  #ifdef CONFIG_EDAC_DEBUG
->  static void edac_device_dump_device(struct edac_device_ctl_info *edac_dev)
->  {
-> @@ -336,7 +339,7 @@ static void edac_device_workq_function(struct work_struct *work_req)
->  	 * whole one second to save timers firing all over the period
->  	 * between integral seconds
->  	 */
-> -	if (edac_dev->poll_msec == 1000)
-> +	if (edac_dev->poll_msec == DEFAULT_POLL_INTERVAL)
->  		edac_queue_work(&edac_dev->work, round_jiffies_relative(edac_dev->delay));
->  	else
->  		edac_queue_work(&edac_dev->work, edac_dev->delay);
-> @@ -366,7 +369,7 @@ static void edac_device_workq_setup(struct edac_device_ctl_info *edac_dev,
->  	 * timers firing on sub-second basis, while they are happy
->  	 * to fire together on the 1 second exactly
->  	 */
-> -	if (edac_dev->poll_msec == 1000)
-> +	if (edac_dev->poll_msec == DEFAULT_POLL_INTERVAL)
->  		edac_queue_work(&edac_dev->work, round_jiffies_relative(edac_dev->delay));
->  	else
->  		edac_queue_work(&edac_dev->work, edac_dev->delay);
-> @@ -398,7 +401,7 @@ void edac_device_reset_delay_period(struct edac_device_ctl_info *edac_dev,
->  {
->  	unsigned long jiffs = msecs_to_jiffies(value);
->  
-> -	if (value == 1000)
-> +	if (value == DEFAULT_POLL_INTERVAL)
->  		jiffs = round_jiffies_relative(value);
->  
->  	edac_dev->poll_msec = value;
-> @@ -443,11 +446,7 @@ int edac_device_add_device(struct edac_device_ctl_info *edac_dev)
->  		/* This instance is NOW RUNNING */
->  		edac_dev->op_state = OP_RUNNING_POLL;
->  
-> -		/*
-> -		 * enable workq processing on this instance,
-> -		 * default = 1000 msec
-> -		 */
-> -		edac_device_workq_setup(edac_dev, 1000);
-> +		edac_device_workq_setup(edac_dev, edac_dev->poll_msec ?: DEFAULT_POLL_INTERVAL);
->  	} else {
->  		edac_dev->op_state = OP_RUNNING_INTERRUPT;
->  	}
-> -- 
-> 2.25.1
-> 
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
