@@ -2,123 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C52067224B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 17:01:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A50E4672258
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 17:02:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229734AbjARQBa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 11:01:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33300 "EHLO
+        id S231173AbjARQCP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 11:02:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231332AbjARQAE (ORCPT
+        with ESMTP id S231590AbjARQAv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 11:00:04 -0500
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9533A37544;
-        Wed, 18 Jan 2023 07:57:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1674057432; x=1705593432;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=DkJy9b3JAxxLyt2nl0Vw3miTgnaruYcbY3qIyzZgzDU=;
-  b=Xvm2bZZ/5kXFor7w3N9zSRnHWla7iTMlrmH60HSKnxUZPCXBZ9SBAukj
-   a+p2si6+7HIrmEDSr6RE4967/mJJFyj52fDg66wqjEqsKPI2Gq/Sest8m
-   U168oxs0hegtMaMddL9ZMxF9dxzQ6juHa4lDSpxWspFsUhaUQU/muPovD
-   WSwJ0hPuR9pfDnd9J51NQVspRFO8sOy4wdIVL8hQvHPecCNCclew3RZqW
-   XMsTzpk5o/HmVMNE0zptlKCi+CVXpv64XGfhNnSebG/deiTxvclKuDB3T
-   ymaaL1JHxHjtyBnOjlrIsEwIv1qsFJ8jgL3yHEsVJoAuaCX/6iTJemIab
-   Q==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10594"; a="323699437"
-X-IronPort-AV: E=Sophos;i="5.97,226,1669104000"; 
-   d="scan'208";a="323699437"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jan 2023 07:57:12 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10594"; a="659845668"
-X-IronPort-AV: E=Sophos;i="5.97,226,1669104000"; 
-   d="scan'208";a="659845668"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by orsmga002.jf.intel.com with ESMTP; 18 Jan 2023 07:57:08 -0800
-Received: from andy by smile.fi.intel.com with local (Exim 4.96)
-        (envelope-from <andriy.shevchenko@linux.intel.com>)
-        id 1pIAoE-00BFsU-1a;
-        Wed, 18 Jan 2023 17:57:06 +0200
-Date:   Wed, 18 Jan 2023 17:57:06 +0200
-From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-        Nuno =?iso-8859-1?Q?S=E1?= <nuno.sa@analog.com>,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>
-Subject: Re: [PATCH v2 1/1] iio: adc: qcom-spmi-adc5: Fix the channel name
-Message-ID: <Y8gW0msz0KwkpQaA@smile.fi.intel.com>
-References: <20230118100623.42255-1-andriy.shevchenko@linux.intel.com>
- <20230118123528.oaxtjbdier3ojd3m@SoMainline.org>
- <Y8fyonSp49QoAb8v@smile.fi.intel.com>
- <20230118140423.y4ogqdkyti7vcwaz@SoMainline.org>
- <Y8gCRECOja+FxRsf@smile.fi.intel.com>
- <20230118152121.blb74eplrqz5rww2@SoMainline.org>
+        Wed, 18 Jan 2023 11:00:51 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA63A4DE1A;
+        Wed, 18 Jan 2023 07:58:31 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 41C8A617BC;
+        Wed, 18 Jan 2023 15:58:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB98CC433EF;
+        Wed, 18 Jan 2023 15:58:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1674057510;
+        bh=pEEVf/Jora3k9fJs7MkNDz8h6qM3plpE8adDbzqBFOc=;
+        h=From:To:Cc:Subject:Date:From;
+        b=oarDxp9l6MGmeqdtPPlPcdcbct7dpxUxhM4ZbO0nB/h5L1I/bWMWT+F4COW6gdFuG
+         ka9uVRj0MBzO/PovATGhagFvnLVoGhVt9G3I1LO1xyY9kfG5IqOrjAJZP7Zl/qgYlv
+         6L0hvziRSN4jmqOJDOFRRFpiKNndCh0ggr0dntwoM1JG7GRQUGNE5FJo0JLoRvjF0y
+         NKPqAvqHFVaXZHU1ccf/FYF52DgvTbWPikkg3D8T0KkzILemeh+co8C+tjw+5RkntU
+         0Qz8dKIMvdmpTHejRPydgnFn/g8+EZJ+cBDARMBwAPLowgmKyFS4N4ocHLdjGyh8sz
+         qMSJkca+YFgqg==
+From:   Arnd Bergmann <arnd@kernel.org>
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Arnd Bergmann <arnd@arndb.de>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Chia-I Wu <olvaffe@gmail.com>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] drm/msm/gpu: Add proper DEVFREQ_GOV_SIMPLE_ONDEMAND dependency
+Date:   Wed, 18 Jan 2023 16:58:05 +0100
+Message-Id: <20230118155825.4071424-1-arnd@kernel.org>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230118152121.blb74eplrqz5rww2@SoMainline.org>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 18, 2023 at 04:21:21PM +0100, Marijn Suijten wrote:
-> On 2023-01-18 16:29:24, Andy Shevchenko wrote:
-...
-> > The devm_kstrdup(fwnode_get_name()) is an open coded variant of the above.
-> > I don't think we need to open code and produce NIH even a single API. And
-> > no, there is no magic behind that. At least from the fwnode point of view.
-> > 
-> > You may very well say that > 1500 instances of "%pOF" is a magic...
-> 
-> Forgive me for not having a clear definition of "open coding" in mind
-> (showing a different way of implementing something, compared to the
-> "status quo" that I was not yet aware of?), nor knowing what NIH is
-> supposed to mean in this context.
+From: Arnd Bergmann <arnd@arndb.de>
 
-"open coding" means to have a copy of the function of macro that is already
-implemented and available (even if it's private to some driver or module,
-we always can move it to the generic module and header).
+DRM_MSM can no longer be built when devfreq is disabled:
 
-NIH: Not Invented Here.
+WARNING: unmet direct dependencies detected for DEVFREQ_GOV_SIMPLE_ONDEMAND
+  Depends on [n]: PM_DEVFREQ [=n]
+  Selected by [y]:
+  - DRM_MSM [=y] && HAS_IOMEM [=y] && DRM [=y] && (ARCH_QCOM [=n] || SOC_IMX5 [=n] || COMPILE_TEST [=y]) && COMMON_CLK [=y] && IOMMU_SUPPORT [=y] && (QCOM_OCMEM [=n] || QCOM_OCMEM [=n]=n) && (QCOM_LLCC [=n] || QCOM_LLCC [=n]=n) && (QCOM_COMMAND_DB [=y] || QCOM_COMMAND_DB [=y]=n)
 
-> We're in bike-shedding territory
-> anyway, guess I should just bookmark the page that details all the many
-> `%` format strings available.
+In file included from drivers/gpu/drm/msm/msm_gpu.h:18,
+                 from drivers/gpu/drm/msm/adreno/adreno_gpu.h:15,
+                 from drivers/gpu/drm/msm/adreno/adreno_device.c:9:
+drivers/gpu/drm/msm/msm_drv.h:238:45: error: field 'gpu_devfreq_config' has incomplete type
+  238 |         struct devfreq_simple_ondemand_data gpu_devfreq_config;
+      |                                             ^~~~~~~~~~~~~~~~~~
 
-True :-)
+Device drivers should never select user-visible options, especially
+in other subsystems. This one can simply be expressed as a Kconfig
+'depends on' statement, though a better approach would be to
+let the driver keep working even without devfreq.
 
-...
-> > > I find the latter clearer as it doesn't require the reader to figure out
-> > > that name - name cancels itself out.  Alternatively we can write
-> > > strchrnul(name, '@')[0].
-> > 
-> > I don't like to have Pythonisms in the C code, really.
-> > 
-> > P.S. I guess this little patch already emptied my bandwidth, so I leave
-> > any further discussion to you and IIO maintainers. Thank you for the
-> > review!
-> 
-> Just soaking up kernel coding standards here :)
+Note that the same symbol selects a bunch of other drivers that
+should probably be turned into 'depends on' as well, but doing so
+has the potential to introduce regressions, so I'm not touching
+that here.
 
-Right.
+Fixes: 6563f60f14cb ("drm/msm/gpu: Add devfreq tuning debugfs")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+---
+ drivers/gpu/drm/msm/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
+index 871870ddf7ec..7f6f5202648a 100644
+--- a/drivers/gpu/drm/msm/Kconfig
++++ b/drivers/gpu/drm/msm/Kconfig
+@@ -9,6 +9,7 @@ config DRM_MSM
+ 	depends on QCOM_OCMEM || QCOM_OCMEM=n
+ 	depends on QCOM_LLCC || QCOM_LLCC=n
+ 	depends on QCOM_COMMAND_DB || QCOM_COMMAND_DB=n
++	depends on DEVFREQ_GOV_SIMPLE_ONDEMAND
+ 	select IOMMU_IO_PGTABLE
+ 	select QCOM_MDT_LOADER if ARCH_QCOM
+ 	select REGULATOR
+@@ -23,7 +24,6 @@ config DRM_MSM
+ 	select SHMEM
+ 	select TMPFS
+ 	select QCOM_SCM
+-	select DEVFREQ_GOV_SIMPLE_ONDEMAND
+ 	select WANT_DEV_COREDUMP
+ 	select SND_SOC_HDMI_CODEC if SND_SOC
+ 	select SYNC_FILE
 -- 
-With Best Regards,
-Andy Shevchenko
-
+2.39.0
 
