@@ -2,99 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B69736717A0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 10:27:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A3C3E6717A6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 10:27:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229998AbjARJ1T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 04:27:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45524 "EHLO
+        id S230080AbjARJ1Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 04:27:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45536 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230281AbjARJZO (ORCPT
+        with ESMTP id S230296AbjARJZR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 04:25:14 -0500
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E0744FCCF
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 00:50:36 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id fl11-20020a05600c0b8b00b003daf72fc844so910328wmb.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 00:50:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NQ/ZvoGlN8LNm1TDQttciwGvM6ENGTWfyYnICnRN+aE=;
-        b=PcF4OplwqjX1KXFL2FelWVB30I4kMpxRa55XaRWxO5qcq3mfBaj+NG07Ae4+vBzgRz
-         BeuyNzs2T2vyF9onERuH7vuSzPT1jnuWFiGdpPsY1vREwU8fcAL3UD2WM62KYOI0bbK4
-         YxCqh5n5gZyAnr2MMuqh9sy69q4RhR/5LWuds9jlhmQtKg2W0cWVCAQIea65jBJ9RiHo
-         Xk2f61FMu6pyZM0cyFU1VgUbdexRn8PRCW9/sLK894G8wSV9iGphlVlshR4JpEb6vYBx
-         Lm3FO2vdkDoSBsrkk/LD7hK4dU1orJlk29f5G5mBHGdUXAIST8GKiWEf8hos8z66eKT9
-         rGMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=NQ/ZvoGlN8LNm1TDQttciwGvM6ENGTWfyYnICnRN+aE=;
-        b=RFw5T1Nv9PJXnao6HXUPfO+plPGA5GlLILEL8eksYLlzikZPhLqINvNaMKYv1bRKIq
-         CeZUSPtd33ItKlG9U5uWtLyFA6GSoAfoEYvGfIK3wk8STaYPZqPXw1twYsFIaYCbBuTY
-         njyfWXNNDcU1BZ/PTcuqafrIoeaaYgzL9EXXAJw8l9W9iDHR9jeCNFjOOst+uKziCOZT
-         M6ShCTCsVG5sb7/ZH9Rr11fu9OD5Iv5Qi1+BwHcC3wku08KbQyNqY8vwME/kY3rA66q9
-         xb9Wm2FdHiYQ/7LgwQjsoe10QuBnfsTgRT/hULlF+FJ5WR4Z8ppwveC7KXriwYtsSnHD
-         6Hrg==
-X-Gm-Message-State: AFqh2kr6qYpgRgBQunmitoW7LNud9rVDGGyM5snPvp6Ra1aSlgT7VLxA
-        hbPFT6c7uxWxC7oXPkimAyiHeQ/AzY25NuSd
-X-Google-Smtp-Source: AMrXdXslM4nFmjBRTwdrJ0RxoH21KiqWdRsHyjBtqRvMQHwq63sg7no12cXMj+h4zA5f/ynLG7i22w==
-X-Received: by 2002:a05:600c:538e:b0:3da:516:19ed with SMTP id hg14-20020a05600c538e00b003da051619edmr5746276wmb.29.1674031834660;
-        Wed, 18 Jan 2023 00:50:34 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id ay22-20020a05600c1e1600b003dafbd859a6sm1272231wmb.43.2023.01.18.00.50.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Jan 2023 00:50:34 -0800 (PST)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Wed, 18 Jan 2023 09:50:30 +0100
-Subject: [PATCH v3 1/2] arm64: defconfig: enable SM8550 DISPCC clock driver
+        Wed, 18 Jan 2023 04:25:17 -0500
+Received: from mail.bostmarktrun.com (mail.bostmarktrun.com [135.125.238.46])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20E4E32507
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 00:50:53 -0800 (PST)
+Received: by mail.bostmarktrun.com (Postfix, from userid 1002)
+        id C6F00A28BE; Wed, 18 Jan 2023 08:50:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=bostmarktrun.com;
+        s=mail; t=1674031851;
+        bh=gfWmJwOZk+B/IN1TMPg7emKhIvoExrJdUiyEL8yd2Jk=;
+        h=Date:From:To:Subject:From;
+        b=ReVveWa+OWKSoVK+7u3DktwMT98Wf5NTIMkEKpn83vEPC8AxuYV5rVQ2Ql/4dy3rC
+         IHdNrrPJxayHSZbWF1gRTMId5nAv5YtagOzXKYlYi9trRWK5aJMhVnktblnJNRwqIj
+         k/7Xc6tj8qHUKASh1q/Y0aIPJxmwRzsFo9y8u70TELefm6AIVknsb5ZwUEpkXq4Hlz
+         y/Iho+DGTJXU/6Yd0di8+83/s1IoYeSm/z7MLVZtKVCTR00ktk+tWvxyCT7zYFXQLJ
+         QWq2FXhXhr9p/6JRms4SAWGxt/62lAedfOCdPeBgtm9f6068jTpTSvVO3G9CR2aS1P
+         aVzcXi5h+lk9A==
+Received: by mail.bostmarktrun.com for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 08:50:31 GMT
+Message-ID: <20230118074500-0.1.4p.wrz5.0.q0senfa0kl@bostmarktrun.com>
+Date:   Wed, 18 Jan 2023 08:50:31 GMT
+From:   "Corey Webb" <corey.webb@bostmarktrun.com>
+To:     <linux-arm-msm@vger.kernel.org>
+Subject: Custom Software Development
+X-Mailer: mail.bostmarktrun.com
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230110-topic-sm8550-disp-defconfig-v3-1-11b558f7ff5d@linaro.org>
-References: <20230110-topic-sm8550-disp-defconfig-v3-0-11b558f7ff5d@linaro.org>
-In-Reply-To: <20230110-topic-sm8550-disp-defconfig-v3-0-11b558f7ff5d@linaro.org>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.11.1
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: Yes, score=6.5 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_SBL_CSS,SPF_HELO_NONE,
+        SPF_PASS,URIBL_CSS_A,URIBL_DBL_SPAM autolearn=no autolearn_force=no
         version=3.4.6
+X-Spam-Report: *  2.5 URIBL_DBL_SPAM Contains a spam URL listed in the Spamhaus DBL
+        *      blocklist
+        *      [URIs: bostmarktrun.com]
+        *  3.3 RCVD_IN_SBL_CSS RBL: Received via a relay in Spamhaus SBL-CSS
+        *      [135.125.238.46 listed in zen.spamhaus.org]
+        *  0.1 URIBL_CSS_A Contains URL's A record listed in the Spamhaus CSS
+        *      blocklist
+        *      [URIs: bostmarktrun.com]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5000]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+X-Spam-Level: ******
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Build the Qualcomm SM8550 Display Clock Controller driver as a module
+Hi,=20
 
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+I would like to reach the person responsible for the implementation of yo=
+ur company's goals, vision and mission or the decision-maker in the devel=
+opment of your technology strategy.
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 851e8f9be06d..c9011e1438c0 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -1107,6 +1107,7 @@ CONFIG_SDM_GPUCC_845=y
- CONFIG_SDM_VIDEOCC_845=y
- CONFIG_SDM_DISPCC_845=y
- CONFIG_SM_DISPCC_8250=y
-+CONFIG_SM_DISPCC_8550=m
- CONFIG_SM_GCC_6115=y
- CONFIG_SM_GCC_8350=y
- CONFIG_SM_GCC_8450=y
+I represent provider of lucrative IT solutions that remove the barriers t=
+o process development resulting from limited access to appropriate IT res=
+ources.
 
--- 
-2.34.1
+We guarantee you access to the knowledge and experience of outstanding 3,=
+000 software developers from Poland and 500 professional consultants and =
+senior developers in the United States and other Western countries. =20
+
+We respond to a variety of needs, ranging from expanding your project tea=
+m with specialists with specific skills to supporting project managers, e=
+xperienced innovation teams to creating a Minimum Viable Project (MVP).
+
+The comprehensiveness of our services guarantees you dynamic software dev=
+elopment including creation, testing and implementation systems that are =
+the backbone of effective management of the entire organization.
+
+A partnership that lasts for years is the best proof that our clients mee=
+t their unique requirements within a specific timeframe, introduce new op=
+portunities and grow their business while we solve their problems.
+
+Are you available for a brief call? I will be looking forward to hearing =
+from you.
+
+
+Best regards
+Corey Webb
