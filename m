@@ -2,73 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3052E6710AF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 03:06:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 28E576710C6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 03:07:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229783AbjARCGo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 21:06:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42970 "EHLO
+        id S229877AbjARCG7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 21:06:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229696AbjARCGk (ORCPT
+        with ESMTP id S229803AbjARCGm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 21:06:40 -0500
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4B4745F75
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 18:06:38 -0800 (PST)
-Received: by mail-ej1-x631.google.com with SMTP id hw16so67975770ejc.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 18:06:38 -0800 (PST)
+        Tue, 17 Jan 2023 21:06:42 -0500
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F24C2457C2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 18:06:40 -0800 (PST)
+Received: by mail-ej1-x62b.google.com with SMTP id az20so60735640ejc.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 18:06:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Iu2lmDtgcoBeAYM6gGh53UxWG0qeailU/FlKFijEGOk=;
-        b=h086/2nQ2W1KOvaY3mNIjiu+FbWUv3/dHgY/xQVayIj8uGyXDQwM9f8/cj8gIuCFjV
-         3k6NCXHSoGzkTl70xUh0BA4VL8imLpXY6XL/VNwi/+pBvlCePLc4noWn2zUWGaTFPKuC
-         Kd99DvlqFLxdObExHD15E/G9XJPbfZIR1Fm2hV+UKPUcBN0AlOzUfloP6Or/S4BXaCTI
-         dBftvA/S8sFBWqMhqSRRxaZAbV0zX6DEE5aNBxRpe/MesLwXVzaCD9iwMF1i9GvWGmMu
-         tA3mIXYSF98eUwSCxzuMGO+7lVRTLKIpI/suz2pb24rxXGs4s5uAA1oRagnHkv9Ot4hQ
-         CvBA==
+        bh=9IfmhJrvRWfUC5D3CUUdjzAYNIM2kHYmHQdiJOf/ROU=;
+        b=w+hu4Qm0z16ldHxczDe00Y41K5vtZ5PXlGgBghOUz39DYC3gQXuhYTQMJtrhxq4Ymh
+         v5Iu6CtQOcG3rwF+TgXUS0WlRQYlVUIt74WRrxFJa9823+suIoEXfCtsRAfW2+SMYQuu
+         9FX+G5SdU+w/i2o9m64FKiirxOs1wH+bBRrp1JBsGaez3cfNdcLDB3pWIm+EKpFKUpBa
+         4vV7ODiSSU/nl1AykN8/j9cSHczY25RjC5WOlnqjJ879l9vn94uWxpnjOVLdjiTft2Op
+         iw3j+L9MLlVpGfRUHUPEdtkwk6wY5ho84aAK2smpCp5psKsftaESNXY8DBeooNovG96t
+         Kx0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Iu2lmDtgcoBeAYM6gGh53UxWG0qeailU/FlKFijEGOk=;
-        b=Dxci0AC3MBN1x580XdgEahCAAXAyzgK7F845SNRo4p61fe8KVnRsKSyttQVr1CneRk
-         ZOjvQRf42vXzMJVPguD9/2u8gd9CQNxI5xlBO6FqGkHW9IDrhKSLNi22gaQnliAH7+to
-         m6r3MROy/xMPNv8TJ3q03R/RAVZfV7/J+dN/CjZNl6YrIK0iVBOdQOJ+1RNWXAyzzUVW
-         orc5/IZ1xY3x0HKTaSeZHjOe8i6PwmbXLB1k8BL4jmXZ9hB144Ny5jVNr2FeCDlQSkb/
-         oDA7sqdOhv/jxIP5QEPuO0ZWlPqpCjRuKUkPVrFc9HQ3bDti8NFGDjAgVbDqEw816+AQ
-         oB2g==
-X-Gm-Message-State: AFqh2krg4FVQqiL6v3SRaB5dP+RHsIfF/eFvHXmD9hc8uPwDvJiFU/mi
-        KG7OqrlhC0u7wT6BheFxHjfGMVDgwxu4e7sN
-X-Google-Smtp-Source: AMrXdXsGRlD3SDRIHHy/5S7y2T3T+y6gbGLje+Dh/2Uwev7/umKTAb80X+U78jbo97FaiZdhuIZPHQ==
-X-Received: by 2002:a17:907:2135:b0:86f:fe8a:be with SMTP id qo21-20020a170907213500b0086ffe8a00bemr5128958ejb.4.1674007598052;
-        Tue, 17 Jan 2023 18:06:38 -0800 (PST)
+        bh=9IfmhJrvRWfUC5D3CUUdjzAYNIM2kHYmHQdiJOf/ROU=;
+        b=RYn0riInZpu8bHCbe5D2Sw2VACq1vJ57hvjcsO5uwjoYd2hcLvULuCyFI0WrWWhl0D
+         e9LYQ09KIa7oAK/WqjDhOXnKJinTutmmqViPkPz4mJDS0/CKHIJsvHv9jsFJX/X39jtV
+         r1az5H+UnVVph2KFtLiENGjthQ0iw/Ker7z07MHgIhLqah4ohLGH/RMD2SqXZU9WhwPY
+         zuP93NXglgJphk97KvYeDHipkCDz84c5hF2BvLf/TmnlWeCKfcRrtIheqw8nwj/GQ1D7
+         UDcqbm7+EpQAVXQDvjpSKv080HHCyZElHfcFDsj5X2+jJXppQ2q9wRwk1JAeMuw/5UXE
+         7gjQ==
+X-Gm-Message-State: AFqh2kpiS9m7LAMB8hvxMN8isko/BYz6H4HgN6paMKAv9jsgGSe0FpDL
+        dn+DmNxOMp7JOzo4KnK4i9KoLw==
+X-Google-Smtp-Source: AMrXdXt2C1AYGJI145oWUugmSjbdf9sJ5mLy1O8PkJlJX/SIy9mMUJKSJDO7UiobV+oiMqKQ2wLIcA==
+X-Received: by 2002:a17:906:eb0e:b0:871:be7:c984 with SMTP id mb14-20020a170906eb0e00b008710be7c984mr5085808ejb.34.1674007599352;
+        Tue, 17 Jan 2023 18:06:39 -0800 (PST)
 Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id kx1-20020a170907774100b0084d368b1628sm12702694ejc.40.2023.01.17.18.06.36
+        by smtp.gmail.com with ESMTPSA id kx1-20020a170907774100b0084d368b1628sm12702694ejc.40.2023.01.17.18.06.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Jan 2023 18:06:37 -0800 (PST)
+        Tue, 17 Jan 2023 18:06:38 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
+To:     phone-devel@vger.kernel.org,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: msm/dsi: Don't require vdds-supply on 7nm PHY
-Date:   Wed, 18 Jan 2023 04:06:18 +0200
-Message-Id: <167400670532.1683873.2224335545021677491.b4-ty@linaro.org>
+        Stephen Boyd <swboyd@chromium.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Drew Davenport <ddavenport@chromium.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3] drm/msm/dpu: Disallow unallocated resources to be returned
+Date:   Wed, 18 Jan 2023 04:06:19 +0200
+Message-Id: <167400670542.1683873.15043456378376951686.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230116115132.348961-1-konrad.dybcio@linaro.org>
-References: <20230116115132.348961-1-konrad.dybcio@linaro.org>
+In-Reply-To: <20230109231556.344977-1-marijn.suijten@somainline.org>
+References: <20230109231556.344977-1-marijn.suijten@somainline.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -83,17 +88,22 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Mon, 16 Jan 2023 12:51:32 +0100, Konrad Dybcio wrote:
-> On some SoCs (hello SM6375) vdds-supply is not wired to any smd-rpm
-> or rpmh regulator, but instead powered by the VDD_MX/mx.lvl line,
-> which is voted for in the DSI ctrl node.
+On Tue, 10 Jan 2023 00:15:55 +0100, Marijn Suijten wrote:
+> In the event that the topology requests resources that have not been
+> created by the system (because they are typically not represented in
+> dpu_mdss_cfg ^1), the resource(s) in global_state (in this case DSC
+> blocks, until their allocation/assignment is being sanity-checked in
+> "drm/msm/dpu: Reject topologies for which no DSC blocks are available")
+> remain NULL but will still be returned out of
+> dpu_rm_get_assigned_resources, where the caller expects to get an array
+> containing num_blks valid pointers (but instead gets these NULLs).
 > 
-> 
+> [...]
 
 Applied, thanks!
 
-[1/1] dt-bindings: msm/dsi: Don't require vdds-supply on 7nm PHY
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/4ff00ebb193a
+[1/1] drm/msm/dpu: Disallow unallocated resources to be returned
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/abc40122d9a6
 
 Best regards,
 -- 
