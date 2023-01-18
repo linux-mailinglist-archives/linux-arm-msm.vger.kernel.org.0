@@ -2,84 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D90B8671E1A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 14:39:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B1E3671E5A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 14:50:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229600AbjARNjG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 08:39:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38242 "EHLO
+        id S230339AbjARNuo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 08:50:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229834AbjARNin (ORCPT
+        with ESMTP id S229524AbjARNuZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 08:38:43 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DC5A525A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 05:08:33 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id b5so12706951wrn.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 05:08:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=MhcLCYviwxqI/VsqmLVJgx9rPgKwghAfrMXFXyiVeMM=;
-        b=hrOFDURWILT2DqGWyL9qinjOdyZ41Inq585N9fqjmq4tMiNrg+7Aha4q8ZHKBnX9lH
-         alBoOGJvlNF7suTvXFO5bD/db6HrxjibcCiS9Cw+SJEyouu5KnZTrz3iyG2x+TKs0lhh
-         sjVN6TTkMIsyLFeNopOryUUDuAh68zZC3gZjXgnOkGr7eTw43nAAgE5l3Le2fXwxAf6c
-         1yZmRUp8LEeaexLfDKPMYGtnLXyM/DSwYPLZ7iGzOg9xrSCrjDsmdd8D+lBChVSYmpqN
-         PYLT27AbnmuiIUNtvyNKhkyr9A2hV0+v1QtEO7YIeOCLLx/PrpO7T1wcnomtoVLSM2cX
-         NT5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MhcLCYviwxqI/VsqmLVJgx9rPgKwghAfrMXFXyiVeMM=;
-        b=UxE51JSbTx+wWgndadUstEJdXrEm0NMBkX/UvpkOpyTrxtqxKEksMP0pMsP91AeDuz
-         CF0orDh6gXL5+QPo4kq3GQGnyLHDwVLvGbR35j0w/siMEbljk9EinrnEv58oczF6GF6e
-         Y6S+TRU7OxKxvB7VeXGug2thqL6VosUoGMDs+qGcooi4kRpS1BlbrnT38o/tfw4yu2mh
-         jG/B16RrPYOum9Q5HULuUSYhFovm1Yc4jsPEvn3aZhzN/mBlV/qyJJgVIToy3s/KT8BD
-         wLGeZrv7qRCsUgCJCHKWF3ETjRdbRXmZWuIkzyFmE8oSKQuygUs5jvVf0Va7wd3N3xot
-         aNBQ==
-X-Gm-Message-State: AFqh2kqpXa/nGBJW5K3gqtp+Ltj11isuHA4NzkDp/kX4rCMxdyzZQbQK
-        iCQ632ReHo+qvY9qRjGuqRX42PjAO1gECcbg
-X-Google-Smtp-Source: AMrXdXsbEtOlMUXBm6MGE3A8haF9JqMc8uZ+r0UYeA5e8mgWxLZc5suwqnbcl0ee96wZ9yHrk+JVEQ==
-X-Received: by 2002:a5d:50c9:0:b0:2b4:790e:32f3 with SMTP id f9-20020a5d50c9000000b002b4790e32f3mr5709204wrt.68.1674047310799;
-        Wed, 18 Jan 2023 05:08:30 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id f2-20020adff982000000b002bde537721dsm13362962wrr.20.2023.01.18.05.08.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Jan 2023 05:08:30 -0800 (PST)
-Message-ID: <a4a39197-a58b-df5b-1dc8-fa9fd520bbc2@linaro.org>
-Date:   Wed, 18 Jan 2023 14:08:28 +0100
+        Wed, 18 Jan 2023 08:50:25 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C835CCE899;
+        Wed, 18 Jan 2023 05:19:50 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 3A361B81D0B;
+        Wed, 18 Jan 2023 13:19:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4EE5C433D2;
+        Wed, 18 Jan 2023 13:19:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1674047986;
+        bh=ePgAPHOhTVOksHn0s2syMgYNYHXIHMPRSxnZp4wJ/38=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=ia5UQJcongu0X+ElLOSAtjQ1h1Z4S8tC04z/rG10+8rBeyzSAG+V4BT6/5C0IPSe5
+         AaeNqgUaa0LWvfxRH4MDg7CxNPUrjB5RvCqiKJzFlFnqtOwORYtqxveFLmv0JBcIfd
+         /JJ3AgX+e0Rq8Pz2ob9MAnVqKiOg4UDw6YzMVaX0f500Dl+dowhGo+bL1FjyU6k2bH
+         w6mVhx6OWVFU7z++pOiffB/9KSR20DlnpNNgHA3yrmPzA8LkznjS7LEA6ntUDAWHwt
+         aBUg/YgXl7oVEWkCLy1QhaZMm8nANXwJrm0xJB3gvXRFQuU8pyXMS4Q8tyx0Qj5HZU
+         7Wx4HcKaK8Hpg==
+Received: by mail-vs1-f46.google.com with SMTP id 3so35661872vsq.7;
+        Wed, 18 Jan 2023 05:19:46 -0800 (PST)
+X-Gm-Message-State: AFqh2kruyZEcAs4t3TqgJb7oKevd6nx8SEzuA22k0xahyXzBhA71Zo8X
+        zKdhjAkorzbxy+LeukfbiLd12pNf8RLTe7Ipwg==
+X-Google-Smtp-Source: AMrXdXux9aAlM451KGBma1Qs2rJpTOL4EbQDljgAz6sNK/elrsA2uBmlRu/x//wMYoC5wIXCvkWkR51ZCIzD8PoAZoA=
+X-Received: by 2002:a67:f506:0:b0:3d3:c767:4570 with SMTP id
+ u6-20020a67f506000000b003d3c7674570mr1026153vsn.85.1674047985721; Wed, 18 Jan
+ 2023 05:19:45 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH v3 3/6] dt-bindings: mailbox: qcom: correct the list of
- platforms using clocks
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+References: <20230113162214.117261-1-krzysztof.kozlowski@linaro.org>
+ <20230113162214.117261-2-krzysztof.kozlowski@linaro.org> <20230117192724.GA3489389-robh@kernel.org>
+ <331eed95-eaf7-5c5a-86c1-0ee7b5591b9a@linaro.org>
+In-Reply-To: <331eed95-eaf7-5c5a-86c1-0ee7b5591b9a@linaro.org>
+From:   Rob Herring <robh@kernel.org>
+Date:   Wed, 18 Jan 2023 07:19:34 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqJUTFa24iZ2fovE_yJdBVcbkcUX8rBoPB12ptdAyxHW6g@mail.gmail.com>
+Message-ID: <CAL_JsqJUTFa24iZ2fovE_yJdBVcbkcUX8rBoPB12ptdAyxHW6g@mail.gmail.com>
+Subject: Re: [PATCH 2/3] ASoC: dt-bindings: qcom,wcd934x: Describe slim-ifc-dev
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230117223013.1545026-1-dmitry.baryshkov@linaro.org>
- <20230117223013.1545026-4-dmitry.baryshkov@linaro.org>
- <efd7df12-d94b-4850-728d-416bdbbc295a@linaro.org>
- <f575e888-b2ee-6568-7e63-708ad016ac5f@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <f575e888-b2ee-6568-7e63-708ad016ac5f@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -87,73 +71,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/01/2023 14:04, Dmitry Baryshkov wrote:
-> On 18/01/2023 13:41, Krzysztof Kozlowski wrote:
->> On 17/01/2023 23:30, Dmitry Baryshkov wrote:
->>> Only three platforms require `pll' and `aux' clocks: msm8916, msm8939
->>> and qcs404. Correct the list of platforms in the corresponding clause.
->>>
->>> Fixes: 0d17014e9189 ("dt-bindings: mailbox: Add binding for SDX55 APCS")
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->>>   .../mailbox/qcom,apcs-kpss-global.yaml        | 33 ++++++++++++++-----
->>>   1 file changed, 25 insertions(+), 8 deletions(-)
->>>
->>> diff --git a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
->>> index ecc286ab49ef..7d8de7a16984 100644
->>> --- a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
->>> +++ b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
->>> @@ -72,15 +72,8 @@ allOf:
->>>           compatible:
->>>             enum:
->>>               - qcom,msm8916-apcs-kpss-global
->>> -            - qcom,msm8994-apcs-kpss-global
->>> -            - qcom,msm8996-apcs-hmss-global
->>> -            - qcom,msm8998-apcs-hmss-global
->>> +            - qcom,msm8939-apcs-kpss-global
->>>               - qcom,qcs404-apcs-apps-global
->>> -            - qcom,sc7180-apss-shared
->>> -            - qcom,sdm660-apcs-hmss-global
->>> -            - qcom,sdm845-apss-shared
->>> -            - qcom,sm6125-apcs-hmss-global
->>> -            - qcom,sm8150-apss-shared
->>>       then:
->>>         properties:
->>>           clocks:
->>> @@ -124,6 +117,30 @@ allOf:
->>>             items:
->>>               - const: pll
->>>               - const: xo
->>> +
->>> +  - if:
->>> +      properties:
->>> +        compatible:
->>> +          enum:
->>> +            - qcom,msm8953-apcs-kpss-global
->>> +            - qcom,msm8976-apcs-kpss-global
->>> +            - qcom,msm8994-apcs-kpss-global
->>> +            - qcom,msm8996-apcs-hmss-global
->>> +            - qcom,msm8998-apcs-hmss-global
->>> +            - qcom,qcm2290-apcs-hmss-global
->>> +            - qcom,sc7180-apss-shared
->>> +            - qcom,sc8180x-apss-shared
->>> +            - qcom,sdm660-apcs-hmss-global
->>> +            - qcom,sdm845-apss-shared
->>> +            - qcom,sm4250-apcs-hmss-global
->>> +            - qcom,sm6115-apcs-hmss-global
->>> +            - qcom,sm6125-apcs-hmss-global
->>> +            - qcom,sm8150-apss-shared
->>
->> Isn't this in multiple places now? This doesn't match what you remove
->> either.
-> 
-> Yes, I addsd several platforms. I can split this into two patches: one 
-> moving the platforms and another one adding missing platforms. Would you 
-> prefer it?
+On Wed, Jan 18, 2023 at 5:25 AM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 17/01/2023 20:27, Rob Herring wrote:
+> > On Fri, Jan 13, 2023 at 05:22:13PM +0100, Krzysztof Kozlowski wrote:
+> >> The "slim-ifc-dev" property should not be just "true", because it allows
+> >> any type.
+> >
+> > Yes, but it is common, so it should be in a common schema. Though
+> > there's only one other binding using it (wcd9335.txt).
+>
+> This is still wcd9335 and wcd934x specific, not really common. Maybe
+> next Qualcomm codec would also bring it so then we can define common
+> schema for the codecs. But so far I think it is not really a common
+> property.
 
-Yes, plus you now duplicated entries, didn't you? As I pointed - some of
-them are in multiple places now.
+By common, I only mean used by more than 1 binding. That's already the
+case, there's just not a schema for the 2nd one. In any case, can
+address that later.
 
-Best regards,
-Krzysztof
-
+Acked-by: Rob Herring <robh@kernel.org>
