@@ -2,168 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C9E7F671301
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 06:09:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B1AE671610
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 09:18:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229503AbjARFJz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 00:09:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35670 "EHLO
+        id S229980AbjARISW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 03:18:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229475AbjARFJy (ORCPT
+        with ESMTP id S229862AbjARIRm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 00:09:54 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2E7511E93;
-        Tue, 17 Jan 2023 21:09:52 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 555126157D;
-        Wed, 18 Jan 2023 05:09:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F9D9C433D2;
-        Wed, 18 Jan 2023 05:09:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1674018591;
-        bh=MVabULCSkNV421jVEsP7DjhYVzrIeoLvfIJ7eMv+LXA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=SIQvrDQUUMEyIMpQ6bG2KNlRIB7auqTJG76u8rZ5OD9Iw2YB2an3cPlqQ8ajBjcbM
-         rNO/PKVvm5X5x9U6VCBhE8kKM7qA47Salap0cVDwsh52I6d50VWR3IVe7ut3Kc2ZsO
-         AhBJD8PF7NyzWv4cZBA75TP1gH9XJshTcqetx7clLPFonm6Ag6ex/y+vsvliFJr8U0
-         8KKmcohtYsf97eLZDs4WrMrluN0UI1g7/CwryWZyZHH1sIjRqKbyOKXvBdljPMhlpw
-         MdNan4VNUYZvASuI0gn3C3PTKwSPf5JzwJmycu5DGM1R3UnefFsZPXsH/gZLppfGHG
-         qqDYARAx6eZtw==
-Date:   Tue, 17 Jan 2023 23:09:48 -0600
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     agross@kernel.org, konrad.dybcio@linaro.org, djakov@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        benl@squareup.com, shawn.guo@linaro.org, fabien.parent@linaro.org,
-        leo.yan@linaro.org, dmitry.baryshkov@linaro.org,
-        Jun Nie <jun.nie@linaro.org>,
-        James Willcox <jwillcox@squareup.com>,
-        Joseph Gates <jgates@squareup.com>,
-        Max Chen <mchen@squareup.com>, Zac Crosby <zac@squareup.com>,
-        Vincent Knecht <vincent.knecht@mailoo.org>,
-        Stephan Gerhold <stephan@gerhold.net>
-Subject: Re: [PATCH v3 5/8] arm64: dts: qcom: Add msm8939 SoC
-Message-ID: <20230118050948.bibhq26s6sgzullg@builder.lan>
-References: <20230117024846.1367794-1-bryan.odonoghue@linaro.org>
- <20230117024846.1367794-6-bryan.odonoghue@linaro.org>
- <20230117205800.cqexxwxmtupapy7e@builder.lan>
- <28e1df7a-6577-bf39-9739-d0a047b36f12@linaro.org>
+        Wed, 18 Jan 2023 03:17:42 -0500
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA5776D6BE;
+        Tue, 17 Jan 2023 23:46:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1674028022; x=1705564022;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=+QFXAEE/I1e+ZlCichsm9XHIaVDx4dSZnoWCivSwEaY=;
+  b=PtHr7507Cc91CPZHgkRPNwLBmP/s/8zGjZyu3XiMRtg+ZPwEa46OR8tv
+   QYyKnAnZwtc8EfLh/gop36PJERFsIx+VhTt0ouBZPiZTpNC9UzH52KAgE
+   W4eYDTNReQfmzHYhd6pBDZQUANIJtYwBfOoIk42Jy9JAro9aDlFACP2Qs
+   WNbfxN0romXGMPRP08pnS2fTKS8fJl2yGh3hi59cCeuwnNhKpjqRyAAoe
+   qhTX2V3p4FY7nMrnM+O3AO55hfEQSmce7QaBeFuf/tLGqzWwx+zI2y/4j
+   /JJPQr2EinN2B1Ps6Ttsd/Ph72CD5/QsiYzQ40Np/sfL1DhEoIWgMw0tP
+   g==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10593"; a="322611688"
+X-IronPort-AV: E=Sophos;i="5.97,224,1669104000"; 
+   d="scan'208";a="322611688"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jan 2023 23:46:24 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10593"; a="728085837"
+X-IronPort-AV: E=Sophos;i="5.97,224,1669104000"; 
+   d="scan'208";a="728085837"
+Received: from smile.fi.intel.com ([10.237.72.54])
+  by fmsmga004.fm.intel.com with ESMTP; 17 Jan 2023 23:46:17 -0800
+Received: from andy by smile.fi.intel.com with local (Exim 4.96)
+        (envelope-from <andriy.shevchenko@linux.intel.com>)
+        id 1pI39C-00Azu7-2C;
+        Wed, 18 Jan 2023 09:46:14 +0200
+Date:   Wed, 18 Jan 2023 09:46:14 +0200
+From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+        Nuno =?iso-8859-1?Q?S=E1?= <nuno.sa@analog.com>,
+        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>
+Subject: Re: [PATCH v1 1/1] iio: adc: qcom-spmi-adc5: Fix the channel name
+Message-ID: <Y8ejxsqeHL/pBTAY@smile.fi.intel.com>
+References: <20230117093944.72271-1-andriy.shevchenko@linux.intel.com>
+ <20230117231204.fpvxryjscosg57a6@SoMainline.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <28e1df7a-6577-bf39-9739-d0a047b36f12@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20230117231204.fpvxryjscosg57a6@SoMainline.org>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jan 17, 2023 at 10:48:37PM +0000, Bryan O'Donoghue wrote:
-> On 17/01/2023 20:58, Bjorn Andersson wrote:
-> > On Tue, Jan 17, 2023 at 02:48:43AM +0000, Bryan O'Donoghue wrote:
-> > > Add msm8939 a derivative SoC of msm8916. This SoC contains a number of key
-> > > differences to msm8916.
-> > > 
-> > > - big.LITTLE Octa Core - quad 1.5GHz + quad 1.0GHz
-> > > - DRAM 1x800 LPDDR3
-> > > - Camera 4+4 lane CSI
-> > > - Venus @ 1080p60 HEVC
-> > > - DSI x 2
-> > > - Adreno A405
-> > > - WiFi wcn3660/wcn3680b 802.11ac
-> > > 
-> > > Co-developed-by: Shawn Guo <shawn.guo@linaro.org>
-> > > Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
-> > > Co-developed-by: Jun Nie <jun.nie@linaro.org>
-> > > Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> > > Co-developed-by: Benjamin Li <benl@squareup.com>
-> > > Signed-off-by: Benjamin Li <benl@squareup.com>
-> > > Co-developed-by: James Willcox <jwillcox@squareup.com>
-> > > Signed-off-by: James Willcox <jwillcox@squareup.com>
-> > > Co-developed-by: Leo Yan <leo.yan@linaro.org>
-> > > Signed-off-by: Leo Yan <leo.yan@linaro.org>
-> > > Co-developed-by: Joseph Gates <jgates@squareup.com>
-> > > Signed-off-by: Joseph Gates <jgates@squareup.com>
-> > > Co-developed-by: Max Chen <mchen@squareup.com>
-> > > Signed-off-by: Max Chen <mchen@squareup.com>
-> > > Co-developed-by: Zac Crosby <zac@squareup.com>
-> > > Signed-off-by: Zac Crosby <zac@squareup.com>
-> > > Co-developed-by: Vincent Knecht <vincent.knecht@mailoo.org>
-> > > Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
-> > > Co-developed-by: Stephan Gerhold <stephan@gerhold.net>
-> > > Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-> > > Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> > 
-> > Just to make sure when I get the question, you all co-developed this
-> > patch, right?
+On Wed, Jan 18, 2023 at 12:12:04AM +0100, Marijn Suijten wrote:
+> On 2023-01-17 11:39:44, Andy Shevchenko wrote:
+> > The node name can contain an address part which is not used by
+> > the driver. Cut it out before assigning the channel name.
 > 
-> A long list but a fair one.
-> 
-> > > ---
-> > >   arch/arm64/boot/dts/qcom/msm8939.dtsi | 2393 +++++++++++++++++++++++++
-> > >   1 file changed, 2393 insertions(+)
-> > >   create mode 100644 arch/arm64/boot/dts/qcom/msm8939.dtsi
-> > > 
-> > > diff --git a/arch/arm64/boot/dts/qcom/msm8939.dtsi b/arch/arm64/boot/dts/qcom/msm8939.dtsi
-> > > new file mode 100644
-> > > index 0000000000000..8cd358a9fe623
-> > > --- /dev/null
-> > > +++ b/arch/arm64/boot/dts/qcom/msm8939.dtsi
-> > > @@ -0,0 +1,2393 @@
-> > > +// SPDX-License-Identifier: GPL-2.0-only
-> > > +/*
-> > > + * Copyright (c) 2013-2015, The Linux Foundation. All rights reserved.
-> > > + * Copyright (c) 2020-2023, Linaro Limited
-> > > + */
-> > > +
-> > > +#include <dt-bindings/clock/qcom,gcc-msm8939.h>
-> > > +#include <dt-bindings/clock/qcom,rpmcc.h>
-> > > +#include <dt-bindings/interconnect/qcom,msm8939.h>
-> > > +#include <dt-bindings/interrupt-controller/arm-gic.h>
-> > > +#include <dt-bindings/power/qcom-rpmpd.h>
-> > > +#include <dt-bindings/reset/qcom,gcc-msm8939.h>
-> > > +#include <dt-bindings/thermal/thermal.h>
-> > > +
-> > > +/ {
-> > > +	interrupt-parent = <&intc>;
-> > > +
-> > > +	#address-cells = <2>;
-> > > +	#size-cells = <2>;
-> > 
-> > Why do you use a default of 2? In particular since you reduce it to 1 in
-> > /soc...
-> 
-> You asked that before, and I took a note of the answer but, then because I
-> was away from the main machine when I sent V2, I didn't have the log.
-> 
-> Here's what I wrote down.
-> 
-> "  - address-cells/size-cells = 1 in /soc - Bjorn
->     I experimentally changed address/cell sizes to 2
->     I'm finding that lk chokes "
-> 
-> So AFAIR LK was unhappy about changing the top level address/size cells to
-> <1> <1> and converting the /soc address/size cells to <2> <2> caused a
-> number of breakages during boot.
-> 
-> To be honest, this pattern is copied from the msm8916.dtsi original.
-> msm8953.dtsi has the same thing. msm8994 too, and 8998.
-> 
-> If you think it needs changing, then I'll have to see what can be done with
-> soc@{} entries.
-> 
+> This explanation doesn't cut it.  It's not that the driver "doesn't use"
 
-Sounds like problems not worth pursuing further. How about leaving a
-comment for the next person here about LK's expectation of these being
-2?
+Driver doesn't use it still. There is no contradiction, but I agree that
+below part is good to have in the commit message.
 
-Thanks,
-Bjorn
+> the address part, it is that this string is propagated into the
+> userspace label, sysfs /filenames/ *and breaking ABI*.
+
+So I will add it into v2 in case the fix works (see below).
+
+...
+
+> > -	const char *name = fwnode_get_name(fwnode), *channel_name;
+> > +	const char *name, *channel_name;
+> 
+> I don't think this'll compile as name is still a pointer to const data,
+> while you're assigning (a '\0' char) to it below.
+
+Right, it's always hard for me to compile things for ARM on x86 :-)
+Thanks for catching this up!
+
+But does this fix the issue after compilation fix?
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
+
