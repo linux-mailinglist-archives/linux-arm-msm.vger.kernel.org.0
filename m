@@ -2,107 +2,172 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2068C6722E7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 17:22:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1CC656722F8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 17:24:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230351AbjARQWi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 11:22:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52948 "EHLO
+        id S230433AbjARQYg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 11:24:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230367AbjARQWK (ORCPT
+        with ESMTP id S229949AbjARQYT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 11:22:10 -0500
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98960233C9;
-        Wed, 18 Jan 2023 08:19:23 -0800 (PST)
-Received: from lhrpeml500005.china.huawei.com (unknown [172.18.147.206])
-        by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4NxrT96t04z67ZTx;
-        Thu, 19 Jan 2023 00:15:25 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.34; Wed, 18 Jan
- 2023 16:19:21 +0000
-Date:   Wed, 18 Jan 2023 16:19:20 +0000
-From:   Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Lars-Peter Clausen <lars@metafoo.de>
-CC:     <phone-devel@vger.kernel.org>, Andy Gross <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-iio@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: Re: [RFC PATCH v2 1/5] iio: core: Point users of extend_name field
- to read_label callback
-Message-ID: <20230118161920.0000207c@Huawei.com>
-In-Reply-To: <20230116220909.196926-2-marijn.suijten@somainline.org>
-References: <20230116220909.196926-1-marijn.suijten@somainline.org>
-        <20230116220909.196926-2-marijn.suijten@somainline.org>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+        Wed, 18 Jan 2023 11:24:19 -0500
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEB285899F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 08:22:43 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id o17-20020a05600c511100b003db021ef437so1933015wms.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 08:22:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=P4dmctLxdZK3eYAfEKwcOzQh3Gp/4sD4d2HzV/1+Nrw=;
+        b=WiY1AS2zer5ahoODjQ8Y3ht6v/Axjn4JLz4yzpsMT+3EKV5+jOsvRZTMHYjiOE/J3S
+         DomR/QyEhbR2YXoaItwgpG5J+eTeLO0KZp+BSavxggl16iRIzyuSbMrDqerj+8GkA5W7
+         0ngjVMlvaQKh+2xyfZRqnnmydAf4E8wX7Zq8ljk8jPaxu7JhsVBYc5bU7OeXbp0+3uNJ
+         uoK9HdMdph+Uc95W3Oz6sfbKUeoeM0IBaCQcAsYSuKfJXrHATpPfOB5r+LXxszRrK4xA
+         etYI59rM0OJk5K96CtBuTRX/+uPR36t2WP7mTvceKh9wm2AdVYrxF2vi0pL0aZeZjCXv
+         VCRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=P4dmctLxdZK3eYAfEKwcOzQh3Gp/4sD4d2HzV/1+Nrw=;
+        b=2Ruv8Qxan//K4EL3AEDWD4U3iJ4RP4hCDxjpkzmQQfll3w4v8qCTwJrCZtbfsc4KDt
+         R8UWFc+W2GYGiSKRfP4QQ++VkdBc38C72pHBnltjGekRR1RRPBWARmnLHjSIjxYwj+L9
+         r+qhDC3kOgXH4st2ZvdIebe+V5NHynghGCxBFRbSaGJFSANC56W7suTwQbqw4BLq1aE6
+         fZCUL2XeUhe1u1Vbhrq8om53MTEDP3TfgMCPnE8JcSrgNMkrN6oO10vi/I8KhUW4djmt
+         DwHXZCxtVUoWV2R2rRAcvSRUyhoXSp7jg/FKucHYRq6cYhYziYXwLZ/uzTgTbRiQdxEb
+         P/GA==
+X-Gm-Message-State: AFqh2kroDfxmmDOcus8mTA4U+lXyDXEKL5LUpV8qz2WLJlIEZJHT8OD5
+        6ULN+kR9l7ZDHSOM0V/+MtGUdA==
+X-Google-Smtp-Source: AMrXdXuSfKEoI9Que22uwdl2DSJT2jjnF4v05Fdzz7/9dp0O0uRIcdpKjO6cvsuzGzA9eJ1QCp8LFg==
+X-Received: by 2002:a05:600c:1e21:b0:3d0:7fee:8a70 with SMTP id ay33-20020a05600c1e2100b003d07fee8a70mr7622507wmb.19.1674058962368;
+        Wed, 18 Jan 2023 08:22:42 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id l23-20020a05600c1d1700b003db0dbbea53sm2744393wms.30.2023.01.18.08.22.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Jan 2023 08:22:41 -0800 (PST)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH v4 0/5] remoteproc: qcom_q6v5_pas: add support for SM8550
+ adsp, cdsp & mpss
+Date:   Wed, 18 Jan 2023 17:22:39 +0100
+Message-Id: <20221114-narmstrong-sm8550-upstream-remoteproc-v4-0-54154c08c0b7@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.202.227.76]
-X-ClientProxiedBy: lhrpeml500005.china.huawei.com (7.191.163.240) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-X-CFilter-Loop: Reflected
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-B4-Tracking: v=1; b=H4sIAM8cyGMC/53NQWrDMBAF0KsErTtFM5ITt6veI2QhybItsKUwc
+ gzB+O6ZZFe6albDH/jvb6pGTrGq78OmOK6pppIl2I+DCqPLQ4TUSVakiRDRQnY814VLHqDObdNo
+ uF0lRzcDx7ks8colQKttb3rvjfW9Esu7GsGzy2EULd+mSZ5jqkvh+2t7RTnn/86sCBpQ22Bs8MZ
+ /4c+UpFk+Cw/qIhMrvcXSkyUfiKhp7Mn+Yc1brBH2SHgkh11/wvYXu+/7AwWo346OAQAA
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>
+Cc:     Alex Elder <elder@linaro.org>, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.11.1
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 16 Jan 2023 23:09:05 +0100
-Marijn Suijten <marijn.suijten@somainline.org> wrote:
+This patchsets adds support for the aDSP, cDSP and MPSS found in the
+SM8550 SoC.
 
-> As mentioned and discussed in [1] extend_name should not be used for
-> full channel labels (and most drivers seem to only use it to express a
-> short type of a channel) as this affects sysfs filenames, while the
-> label name is supposed to be extracted from the *_label sysfs file
-> instead.  This appears to have been unclear to some drivers as
-> extend_name is also used when read_label is unset, achieving an initial
-> goal of providing sensible names in *_label sysfs files without noticing
-> that sysfs filenames are (negatively and likely unintentionally)
-> affected as well.
-> 
-> Point readers of iio_chan_spec::extend_name to iio_info::read_label by
-> mentioning deprecation and side-effects of this field.
-> 
-> [1]: https://lore.kernel.org/linux-arm-msm/20221221223432.si2aasbleiicayfl@SoMainline.org/
-> 
-> Suggested-by: Jonathan Cameron <jic23@kernel.org>
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> ---
->  include/linux/iio/iio.h | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/include/linux/iio/iio.h b/include/linux/iio/iio.h
-> index 81413cd3a3e7..36c89f238fb9 100644
-> --- a/include/linux/iio/iio.h
-> +++ b/include/linux/iio/iio.h
-> @@ -221,6 +221,9 @@ struct iio_event_spec {
->   * @extend_name:	Allows labeling of channel attributes with an
->   *			informative name. Note this has no effect codes etc,
->   *			unlike modifiers.
-> + *			This field is deprecated in favour of overriding read_label
-> + *			in iio_info, which unlike @extend_name does not affect sysfs
-> + *			filenames.
-Perhaps reword as
+The aDSP, cDSP and MPSS boot process on SM8550 now requires a secondary
+"Devicetree" firmware to be passed along the main Firmware, and the cDSP
+a new power domain named "NSP".
 
-This field is deprecated in favour of overriding the default label
-by providing a read_label() callback in iio_info, which unlike
-@extend_name does not affect sysfs filenames.
-?
->   * @datasheet_name:	A name used in in-kernel mapping of channels. It should
->   *			correspond to the first name that the channel is referred
->   *			to by in the datasheet (e.g. IND), or the nearest
+In order to satisfy the load & authentication order required by the SM8550
+SoC, the following is implemented:
+- "Devicetree" firmware request & load in dedicated memory
+- Q6V5 prepare
+- Power Domain & Clocks enable
+- "Devicetree" firmware authentication
+- Main firmware load in dedicated memory
+- Main firmware authentication
+- Q6V5 startup
+- "Devicetree" firmware metadata release
+- Main metadata release
 
+When booting older platforms, the "Devicetree" steps would be
+bypassed and the load & authentication order would still be valid.
+
+To: Andy Gross <agross@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@somainline.org>
+To: Mathieu Poirier <mathieu.poirier@linaro.org>
+To: Rob Herring <robh+dt@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+To: Manivannan Sadhasivam <mani@kernel.org>
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+To: Amol Maheshwari <amahesh@qti.qualcomm.com>
+Cc: Alex Elder <elder@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-remoteproc@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: Abel Vesa <abel.vesa@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+
+---
+Changes in v4:
+- Rebased onto git://git.kernel.org/pub/scm/linux/kernel/git/remoteproc/linux.git for-next
+- Added reviewed-by on bindings patches
+- Remove dependency in cover letter since merged
+- Link to v3: https://lore.kernel.org/r/20221114-narmstrong-sm8550-upstream-remoteproc-v3-0-62162a1df718@linaro.org
+
+Changes in v3:
+- fix mpss matching in bindings, tested against DT
+- Link to v2: https://lore.kernel.org/r/20221114-narmstrong-sm8550-upstream-remoteproc-v2-0-12bc22255474@linaro.org
+
+Changes in v2:
+- Moved the SM8550 pas bindings on top of "split and reorganize PAS/PIL" v3 patchset 
+- Incorporated DSM memory support into pas bindings & driver
+- Moved second DTB firmware into second entry of firmware-name
+- Dropped applied "qcom,fastrpc: increase allowed iommus entries" patch
+- Link to v1: https://lore.kernel.org/r/20221114-narmstrong-sm8550-upstream-remoteproc-v1-0-104c34cb3b91@linaro.org
+
+---
+Neil Armstrong (5):
+      dt-bindings: remoteproc: qcom: adsp: move memory-region and firmware-name out of pas-common
+      dt-bindings: remoteproc: qcom: adsp: document sm8550 adsp, cdsp & mpss compatible
+      remoteproc: qcom_q6v5_pas: add support for dtb co-firmware loading
+      remoteproc: qcom_q6v5_pas: add support for assigning memory to firmware
+      remoteproc: qcom_q6v5_pas: add sm8550 adsp, cdsp & mpss compatible & data
+
+ .../devicetree/bindings/remoteproc/qcom,adsp.yaml  |   4 +
+ .../bindings/remoteproc/qcom,pas-common.yaml       |   8 -
+ .../bindings/remoteproc/qcom,qcs404-pas.yaml       |   8 +
+ .../bindings/remoteproc/qcom,sc7180-pas.yaml       |   8 +
+ .../bindings/remoteproc/qcom,sc8180x-pas.yaml      |   8 +
+ .../bindings/remoteproc/qcom,sc8280xp-pas.yaml     |   8 +
+ .../bindings/remoteproc/qcom,sdx55-pas.yaml        |   8 +
+ .../bindings/remoteproc/qcom,sm6350-pas.yaml       |   8 +
+ .../bindings/remoteproc/qcom,sm8150-pas.yaml       |   8 +
+ .../bindings/remoteproc/qcom,sm8350-pas.yaml       |   8 +
+ .../bindings/remoteproc/qcom,sm8550-pas.yaml       | 178 ++++++++++++++
+ drivers/remoteproc/qcom_q6v5_pas.c                 | 268 ++++++++++++++++++++-
+ 12 files changed, 501 insertions(+), 21 deletions(-)
+---
+base-commit: f9721c6a43b63f6428e71b23a435f7f4f4e17af2
+change-id: 20221114-narmstrong-sm8550-upstream-remoteproc-804f3fbb34bf
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
