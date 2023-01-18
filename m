@@ -2,131 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 90D75670F91
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 02:08:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B07A670F9D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 02:10:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229549AbjARBIA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 20:08:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57090 "EHLO
+        id S229470AbjARBKm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 20:10:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229613AbjARBHS (ORCPT
+        with ESMTP id S229744AbjARBKM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 20:07:18 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF3293C24;
-        Tue, 17 Jan 2023 17:01:07 -0800 (PST)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30HNt2IQ003851;
-        Wed, 18 Jan 2023 01:01:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=subject : to : cc :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=BSHaOYw0kWSC5JTjpxcMKCWS430xiqp9tvd4qGTkfYE=;
- b=bUqyrgyptUZiXqOE4RET/JdJzHIAS+Qvube6lr8VxtUgaIDbX0NUDWvbDUKz7HUKegKh
- lUes4btsjr4x7qr8d1gdpkaEt2tyELjziRUarQKwsi+VAGvnCvU/wCJiq/IYegbN2D0T
- UqrMY3UhoYtF1gDQhOtVi+oqiw0s5HBZHa9gTeg7eKa8Ghjf9T/TdKy6b7hZ+xfbEUT8
- /6CE0GTUq56HaFd78+3ApbR3ArWcPG56/aSHC2Mr5+LmysTy0cWrk+v0FD1M/dW78Pzv
- UXmdcpcphm7KuxoQw+/zhKMujwrP/0v8yVUsrJBBA5+1LMQYsMTBArngLqYyDlrOoiOg pQ== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n5b18av4b-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 18 Jan 2023 01:01:04 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30I113KO003926
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 18 Jan 2023 01:01:03 GMT
-Received: from [192.168.142.6] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 17 Jan
- 2023 17:01:02 -0800
-Subject: Re: [PATCH] rpmsg: glink: Release driver_override
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Tue, 17 Jan 2023 20:10:12 -0500
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 477A83928F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 17:04:31 -0800 (PST)
+Received: by mail-ej1-x629.google.com with SMTP id qx13so21217657ejb.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 17:04:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=8rhJ0O8Zy/1VvqvtS0RaWkABfDCQcHeOv+mUOGGm0vg=;
+        b=c4+IadVG1v6vHRVEIM+x0TcO5mn4FPTbnM6tL/hFLXlB4bn5l9Jbt7wPGmnFo3/XKz
+         p+QXOHjMYZJTJkJ/GcMtBujS33aBr91rP6k8IMjckb/EheH5FEhZQumwetPqeuca5YWT
+         Ci+r1VlRqYvw+E13V+qulLZ62H7kYrbSy8yQbF92bg+np1w/p6mz+Qizp4pJ7Q10c26K
+         FdenHZCzjdjK4OLvYw4pzb49HerHMNoLRfZm9fMkt4HhRWoggSyABRGy9CwHgQWvEWZs
+         CPu+tzZiHf+bahsjOXrmt4eqzvv0hd2iRdJTlA3UrFD9uO9sg2Gl5W/wNlTQWTCFhpPZ
+         8TUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8rhJ0O8Zy/1VvqvtS0RaWkABfDCQcHeOv+mUOGGm0vg=;
+        b=rk3I/1/zyZV0SXtPOcDhb4CefwUH1g9H72aB5/1mynvoyg6lb6BtD+/27jzds+c3ZS
+         Xcy/CcE+EhuN9uctddRu6bDELYP/E5DVdQiK+SaUOK/w1FQF+2GYKkBa3gP3AqZcqktr
+         J9EH07QOqDQ27Bhca2QQTBFFSvUNR66Vjgi5N1KvEnmlW0t3WudKmy3+dwvF3djUBGv8
+         b6O/8ZLb574SmPJE/fdt9z+6uPY1lGsLxGe9JNsU1FtOWONazdFKhWqAKDPoAE+usb56
+         6W9tITvxDJRESY+EtNZ671k8xRPgKHLizPYPYuHpzkmW+vHy1sHM3i7eOnwAx0MyAe5c
+         Z+QQ==
+X-Gm-Message-State: AFqh2kqiDMgPNjsdme/UhKjBal7Ypod/5idzhs9na9do+B8DQje2oGf+
+        PN/zv9eBLhsYriqKxTg9Hr3lnA==
+X-Google-Smtp-Source: AMrXdXsbrX4whZyE4W/TN4wre7PGGEwiXJsJa0DevP/1mPPa3o9ayYPR8cCbC9sb6CWX7aeHGhqkew==
+X-Received: by 2002:a17:906:e24a:b0:86e:ec10:ed15 with SMTP id gq10-20020a170906e24a00b0086eec10ed15mr4124318ejb.41.1674003869883;
+        Tue, 17 Jan 2023 17:04:29 -0800 (PST)
+Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id r1-20020a17090609c100b007e0e2e35205sm13988953eje.143.2023.01.17.17.04.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Jan 2023 17:04:29 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>
-CC:     "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        "open list:REMOTE PROCESSOR MESSAGING (RPMSG) SUBSYSTEM" 
-        <linux-remoteproc@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20230109223818.1706292-1-quic_bjorande@quicinc.com>
-From:   Chris Lew <quic_clew@quicinc.com>
-Message-ID: <dc0e1609-a872-08e7-2801-0ece573181ad@quicinc.com>
-Date:   Tue, 17 Jan 2023 17:01:01 -0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v2 0/3] drm/msm/mdss: rework UBWC setup
+Date:   Wed, 18 Jan 2023 03:04:25 +0200
+Message-Id: <20230118010428.1671443-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-In-Reply-To: <20230109223818.1706292-1-quic_bjorande@quicinc.com>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: AweWf2Q1Rb6VlTKUwyoEM91j9iiZSrGA
-X-Proofpoint-ORIG-GUID: AweWf2Q1Rb6VlTKUwyoEM91j9iiZSrGA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-17_11,2023-01-17_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- lowpriorityscore=0 phishscore=0 spamscore=0 malwarescore=0
- priorityscore=1501 adultscore=0 impostorscore=0 suspectscore=0
- mlxlogscore=999 bulkscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2212070000 definitions=main-2301180005
-X-Spam-Status: No, score=0.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The commit 92bab9142456 ("drm/msm: less magic numbers in
+msm_mdss_enable") reworked the static UBWC setup to replace magic
+numbers with calulating written values from the SoC/device parameters.
+This simplified adding new platforms.
+However I did not estimate that the values would still be cryptic and
+would be C&P-sted instead of being determined from the vendor DT. Some
+of the platform (sc8180x) completely missed this setup step.
 
+This series attempts to rework the static UBWC setup to be both
+manageable and hopefully easier to write.
 
-On 1/9/2023 2:38 PM, Bjorn Andersson wrote:
-> Upon termination of the rpmsg_device, driver_override needs to be freed
-> to avoid leaking the potentially assigned string.
-> 
-> Fixes: 42cd402b8fd4 ("rpmsg: Fix kfree() of static memory on setting driver_override")
-> Fixes: 39e47767ec9b ("rpmsg: Add driver_override device attribute for rpmsg_device")
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> ---
->   drivers/rpmsg/qcom_glink_native.c | 2 ++
->   1 file changed, 2 insertions(+)
-> 
-> diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-> index 8620eea1dc8a..046271e439c5 100644
-> --- a/drivers/rpmsg/qcom_glink_native.c
-> +++ b/drivers/rpmsg/qcom_glink_native.c
-> @@ -1454,6 +1454,7 @@ static void qcom_glink_rpdev_release(struct device *dev)
->   {
->   	struct rpmsg_device *rpdev = to_rpmsg_device(dev);
->   
-> +	kfree(rpdev->driver_override);
+Changes since RFC:
+- Merged sm6115 fixup patch into the main patch, since only the comment
+  was incorrect
+- Moved reading HW revision and UBWC decoder version to the error case
+  only
 
-I see in Krzysztof's original patch to fix up the driver_override we do 
-kfree in other areas of rpmsg.
+Dmitry Baryshkov (3):
+  drm/msm/mdss: convert UBWC setup to use match data
+  drm/msm/mdss: add data for sc8180xp
+  drm/msm/mdss: add the sdm845 data for completeness
 
-More of a just curious as to why don't we use the driver_set_override 
-function to clear the string? It's mentioned in the rpmsg header that 
-the helper should be used.
+ drivers/gpu/drm/msm/msm_mdss.c | 198 ++++++++++++++++++++-------------
+ 1 file changed, 120 insertions(+), 78 deletions(-)
 
---- include/linux/rpmsg.h
-  * @driver_override: driver name to force a match; do not set directly,
-  *                   because core frees it; use driver_set_override() to
-  *                   set or clear it.
+-- 
+2.39.0
 
->   	kfree(rpdev);
->   }
->   
-> @@ -1697,6 +1698,7 @@ static void qcom_glink_device_release(struct device *dev)
->   
->   	/* Release qcom_glink_alloc_channel() reference */
->   	kref_put(&channel->refcount, qcom_glink_channel_release);
-> +	kfree(rpdev->driver_override);
->   	kfree(rpdev);
->   }
->   
-> 
