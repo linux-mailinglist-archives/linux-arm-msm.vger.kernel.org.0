@@ -2,95 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A513B6722A2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 17:11:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2068C6722E7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 17:22:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229507AbjARQLF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 11:11:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43222 "EHLO
+        id S230351AbjARQWi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 11:22:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229916AbjARQJf (ORCPT
+        with ESMTP id S230367AbjARQWK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 11:09:35 -0500
-Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F8003B3E1;
-        Wed, 18 Jan 2023 08:05:43 -0800 (PST)
-Received: by mail-oi1-f179.google.com with SMTP id v17so7664086oie.5;
-        Wed, 18 Jan 2023 08:05:43 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7tuGFAfqRCVW7qUbmXv4aoqXHqjRDkD2HH7zwkEHfLk=;
-        b=1RtIivoZyqzEmlHIQssJxZ2X08m5H4NEnVx9YVnGTU/Z7UVOOvZlIaoSdqkA93ibYB
-         tgvnWGWGa2YziYgWyBe4Whmw6Dfchx8q5Iyxd5Kpe+VhYMYnOAX6Db6afRnWitOpdWTk
-         rTp5i+mWfb4G9CB3L6hqfhEXMrIFpYWbZbSQ7W+JEOnzTv1dImBWuTa49Z+57gp4dmjT
-         cZt0UJ9Ig0zrmT5Ywbg5EwB9LtjxKlfY8mEpfCBn3iW0ThR40FoFp01deKUN02xOTj1K
-         teV3CTbfpdLP9wFztL4M00L6ODRMEzLGxzQKep+/hgENF7WQWhdCus6J+biJQWtoeNl7
-         FQ5Q==
-X-Gm-Message-State: AFqh2kpvFMAUycRLNLhiVwURHS3QOSNp6hxUxBRVmCKbODvJIAru+T38
-        TQAh/svE3WVNdaBVBT1qfKxa7k0tMA==
-X-Google-Smtp-Source: AMrXdXu75jJ57NWli2T25cgyRN8wEQAFExKDfERE3ly1W13hMhKaZ/tacFIMiyHP6aLAYiEKhNhoHQ==
-X-Received: by 2002:a05:6808:120d:b0:364:9e70:2d77 with SMTP id a13-20020a056808120d00b003649e702d77mr12791684oil.20.1674057942566;
-        Wed, 18 Jan 2023 08:05:42 -0800 (PST)
-Received: from robh_at_kernel.org ([4.31.143.193])
-        by smtp.gmail.com with ESMTPSA id bs1-20020a056830398100b00660e833baddsm18527592otb.29.2023.01.18.08.05.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Jan 2023 08:05:42 -0800 (PST)
-Received: (nullmailer pid 90065 invoked by uid 1000);
-        Wed, 18 Jan 2023 16:05:41 -0000
-Date:   Wed, 18 Jan 2023 10:05:41 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Christian Marangi <ansuelsmth@gmail.com>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Wed, 18 Jan 2023 11:22:10 -0500
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98960233C9;
+        Wed, 18 Jan 2023 08:19:23 -0800 (PST)
+Received: from lhrpeml500005.china.huawei.com (unknown [172.18.147.206])
+        by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4NxrT96t04z67ZTx;
+        Thu, 19 Jan 2023 00:15:25 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.34; Wed, 18 Jan
+ 2023 16:19:21 +0000
+Date:   Wed, 18 Jan 2023 16:19:20 +0000
+From:   Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Lars-Peter Clausen <lars@metafoo.de>
+CC:     <phone-devel@vger.kernel.org>, Andy Gross <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        <~postmarketos/upstreaming@lists.sr.ht>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-clk@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>
-Subject: Re: [PATCH v7 2/7] dt-bindings: arm: msm: Convert and split kpss-acc
- driver Documentation to yaml
-Message-ID: <167405794085.89999.14844192427406164237.robh@kernel.org>
-References: <20230116204751.23045-1-ansuelsmth@gmail.com>
- <20230116204751.23045-3-ansuelsmth@gmail.com>
+        Martin Botka <martin.botka@somainline.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-iio@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: Re: [RFC PATCH v2 1/5] iio: core: Point users of extend_name field
+ to read_label callback
+Message-ID: <20230118161920.0000207c@Huawei.com>
+In-Reply-To: <20230116220909.196926-2-marijn.suijten@somainline.org>
+References: <20230116220909.196926-1-marijn.suijten@somainline.org>
+        <20230116220909.196926-2-marijn.suijten@somainline.org>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230116204751.23045-3-ansuelsmth@gmail.com>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml500005.china.huawei.com (7.191.163.240) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+X-CFilter-Loop: Reflected
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, 16 Jan 2023 23:09:05 +0100
+Marijn Suijten <marijn.suijten@somainline.org> wrote:
 
-On Mon, 16 Jan 2023 21:47:46 +0100, Christian Marangi wrote:
-> Convert kpss-acc driver Documentation to yaml.
-> The original Documentation was wrong all along. Fix it while we are
-> converting it.
-> The example was wrong as kpss-acc-v2 should only expose the regs but we
-> don't have any driver that expose additional clocks. The kpss-acc driver
-> is only specific to v1. For this exact reason, split the Documentation
-> to 2 different schema, v1 as clock-controller and v2 for
-> power-manager as per msm-3.10 specification, the exposed regs handle
-> power manager.
+> As mentioned and discussed in [1] extend_name should not be used for
+> full channel labels (and most drivers seem to only use it to express a
+> short type of a channel) as this affects sysfs filenames, while the
+> label name is supposed to be extracted from the *_label sysfs file
+> instead.  This appears to have been unclear to some drivers as
+> extend_name is also used when read_label is unset, achieving an initial
+> goal of providing sensible names in *_label sysfs files without noticing
+> that sysfs filenames are (negatively and likely unintentionally)
+> affected as well.
 > 
-> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> Point readers of iio_chan_spec::extend_name to iio_info::read_label by
+> mentioning deprecation and side-effects of this field.
+> 
+> [1]: https://lore.kernel.org/linux-arm-msm/20221221223432.si2aasbleiicayfl@SoMainline.org/
+> 
+> Suggested-by: Jonathan Cameron <jic23@kernel.org>
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 > ---
->  .../bindings/arm/msm/qcom,kpss-acc.txt        | 49 -------------
->  .../bindings/clock/qcom,kpss-acc-v1.yaml      | 72 +++++++++++++++++++
->  .../bindings/power/qcom,kpss-acc-v2.yaml      | 42 +++++++++++
->  3 files changed, 114 insertions(+), 49 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.txt
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,kpss-acc-v1.yaml
->  create mode 100644 Documentation/devicetree/bindings/power/qcom,kpss-acc-v2.yaml
+>  include/linux/iio/iio.h | 3 +++
+>  1 file changed, 3 insertions(+)
 > 
+> diff --git a/include/linux/iio/iio.h b/include/linux/iio/iio.h
+> index 81413cd3a3e7..36c89f238fb9 100644
+> --- a/include/linux/iio/iio.h
+> +++ b/include/linux/iio/iio.h
+> @@ -221,6 +221,9 @@ struct iio_event_spec {
+>   * @extend_name:	Allows labeling of channel attributes with an
+>   *			informative name. Note this has no effect codes etc,
+>   *			unlike modifiers.
+> + *			This field is deprecated in favour of overriding read_label
+> + *			in iio_info, which unlike @extend_name does not affect sysfs
+> + *			filenames.
+Perhaps reword as
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+This field is deprecated in favour of overriding the default label
+by providing a read_label() callback in iio_info, which unlike
+@extend_name does not affect sysfs filenames.
+?
+>   * @datasheet_name:	A name used in in-kernel mapping of channels. It should
+>   *			correspond to the first name that the channel is referred
+>   *			to by in the datasheet (e.g. IND), or the nearest
+
