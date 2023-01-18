@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9617767129F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 05:30:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AF5886712A8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 05:34:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229493AbjAREaL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 23:30:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46434 "EHLO
+        id S229528AbjAREeu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 23:34:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229460AbjAREaK (ORCPT
+        with ESMTP id S229570AbjAREeq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 23:30:10 -0500
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC4CA5421B
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 20:30:08 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id hw16so68468566ejc.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 20:30:08 -0800 (PST)
+        Tue, 17 Jan 2023 23:34:46 -0500
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04D875422D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 20:34:44 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id qx13so21958013ejb.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 20:34:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=u6v14LcAICHb69jcIlcu7Td3nT4SVb66NgpvBJDBzQM=;
-        b=zO+g8C4ezhmweF2QHzrs1mI/xUQWKclHS3VraN5/JLTU0t9Hp6C2GopHcTNUsLz3Fy
-         bSeWI+iMs1o2fcU4ep8egVhdSd9g44TvNB2eSPuSVjNSHmRvUgGvXmi2SEU/JltcNG9N
-         /pVbUAM+c+j/pKfwaoE7Lv2qvgfOmqnj59fOzUI9+1Dx1oIwmtmwLfbeg42/mA5elzOD
-         WvQYaNK6MjUfLyFSwNo9Wcx6FrcgtinY65Ssm7vsLFbz3G3q8fdJcBHj8c3B+e9T1HKt
-         WhmS0zf7yYG74QDaksdOx4VC+p9FiHp+u3qwCoaRdhFbWVlroI+J84O0j485bsnJa7Rd
-         33hA==
+        bh=9QRiqEIm/55SzWiod6J1S0tN8S9gHuqwPIfY3LIUzYE=;
+        b=CkQ+nrOAkSuCp7mMrD3K8TzSBuvsFxd2aXjwpTLPYTAkNV16EF5Z6NGuL0SdCyqF3Y
+         b8dVqPf6pVcRtIHzg0ddcGEJ8R72DWRX40wLruO9IUtwo02lmr36z0aj45JOpKoKrcZ9
+         AiYWHjFlZPErZb8FSbFNnQ5sNI0O+HN3yGLHfpgwqmuPstOZ7GwZDegGt3EwlCUfDsg8
+         qqFF35IK18d49bkLp9b7TpH2Vk4XdEPneiueBJldHD/XcIb0H04RDrjjizEmy0K7VJpC
+         xDsPZKtFU3f7j05ngH3ojWbAPu3fGrVjT1CVv6jHmEIkFIca1qlnr7Ic4TdsN8chI5s1
+         1cjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=u6v14LcAICHb69jcIlcu7Td3nT4SVb66NgpvBJDBzQM=;
-        b=lCVHErAwFOPTwQ8npSDChR7Plt090WefwV1FWetoiy25J4kB+gP9lD14T0OuZzEc6R
-         VrGYTqyotgprX45CPlNcbl+akKKRKYC0T5d+KVoQ1NKw0IHRvSoail0YrAfRzH2H1YHK
-         i1JEOvN3P3J1D9KoqBXqiN/UimO7wChYbzIEpaOpcwHtxeNfhWIvLYu7zL5ntl+IUl3D
-         H8CK8gFBuAvZDePvvmaZ+5Nb6nUbLO01QC/UVfR9sYyUsa6iTRaLddSDGABaY7vMN3A8
-         Q8iy1eKoxUUE6BlKWnOjhtoi33lwbWJBB6LLIe+dQRwr3G3TFYskyRl8mDUcTBXvXOtg
-         DEEw==
-X-Gm-Message-State: AFqh2kqbcTvW5S0UcM8fWDGt7esTA77W76ss7ZX/s0K2YGm4UKSL5fuM
-        T3YUCUQ5X3dQVwFqk2Q6/bKn2Q==
-X-Google-Smtp-Source: AMrXdXvS2536eufZEdPZZko+pPBcNSUfVGd9P/RK47eqEqzFUcd720zKnxwJ9k+lBGSY97RHoaHF9A==
-X-Received: by 2002:a17:906:415:b0:7c1:2e19:ba3f with SMTP id d21-20020a170906041500b007c12e19ba3fmr19594339eja.57.1674016207224;
-        Tue, 17 Jan 2023 20:30:07 -0800 (PST)
+        bh=9QRiqEIm/55SzWiod6J1S0tN8S9gHuqwPIfY3LIUzYE=;
+        b=vVU6kf+hR4eki4ceKR+2pDdfCUhBhP53AxR3o+Co9o1FU0jxb2Tfaz9xPIrhk1CgX6
+         day0qPLJ9jBXO0yRcvl6CrPbD6ZqrF+tW78fYKPiR3cZP1umnmV4QZc8Btqr53+9wPny
+         kp0Jh/qO1jK+ASA0UrRIb6v6XiWklW1JpZKYPtb2ijir3lkituJGnuqb9RHeE9FHX7Z6
+         UpI4//+IswPUThHgn0ciMA5uBPhhUjAtUNFMTSeD4nn82lpzd5Glhk4fUJLaU8/bdDcF
+         wXlFg1ujKpb2pxPoiMHfnfDy+jev1Tld/gmVjCossDyTdZNt8a3+Ez91nnZiOBJxDP8b
+         LPrg==
+X-Gm-Message-State: AFqh2koUZjnCvle5Xnb0HicyjJ6X8nRC+8m/XKAcmDkglL8mWVewXzTR
+        rEm6wz59cwVfZaGCHMdF82S4FA==
+X-Google-Smtp-Source: AMrXdXu2NLT2a5zzlRnQMmqm67QQgZ3iKnxMMDzynioxIR+84++bUki1rW6n724CqDRQgXpq66VxZA==
+X-Received: by 2002:a17:907:9b06:b0:872:f259:a7ea with SMTP id kn6-20020a1709079b0600b00872f259a7eamr5343432ejc.53.1674016482610;
+        Tue, 17 Jan 2023 20:34:42 -0800 (PST)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id f25-20020a170906391900b0087223b8d6efsm2238610eje.16.2023.01.17.20.30.06
+        by smtp.gmail.com with ESMTPSA id l2-20020a1709063d2200b0087276f66c6asm1872325ejf.115.2023.01.17.20.34.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Jan 2023 20:30:06 -0800 (PST)
-Message-ID: <bad1127c-9a4e-4be4-c893-f3baf1413416@linaro.org>
-Date:   Wed, 18 Jan 2023 06:30:05 +0200
+        Tue, 17 Jan 2023 20:34:42 -0800 (PST)
+Message-ID: <7fe0c49e-a628-8e76-8294-ab8faadb3a70@linaro.org>
+Date:   Wed, 18 Jan 2023 06:34:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH v3 6/8] phy: qcom-qmp: qserdes-txrx: Add v6.20 register
- offsets
+Subject: Re: [PATCH v3 8/8] phy: qcom-qmp-pcie: Add support for SM8550 g3x2
+ and g4x2 PCIEs
 Content-Language: en-GB
 To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -68,11 +68,12 @@ To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
 Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         devicetree@vger.kernel.org,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Johan Hovold <johan@kernel.org>
+        Johan Hovold <johan@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>
 References: <20230118005328.2378792-1-abel.vesa@linaro.org>
- <20230118005328.2378792-7-abel.vesa@linaro.org>
+ <20230118005328.2378792-9-abel.vesa@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230118005328.2378792-7-abel.vesa@linaro.org>
+In-Reply-To: <20230118005328.2378792-9-abel.vesa@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -86,18 +87,28 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 18/01/2023 02:53, Abel Vesa wrote:
-> The new SM8550 SoC bumps up the HW version of QMP phy to v6.20 for
-> PCIE g4x2. Add the new qserdes TX RX PCIE specific offsets in a
-> dedicated header file.
+> Add the SM8550 both g4 and g3 configurations. In addition, there is a
+> new "lane shared" table that needs to be configured for g4, along with
+> the No-CSR list of resets.
 > 
+> Co-developed-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
->   .../phy-qcom-qmp-qserdes-txrx-v6_20.h         | 45 +++++++++++++++++++
->   drivers/phy/qualcomm/phy-qcom-qmp.h           |  1 +
->   2 files changed, 46 insertions(+)
->   create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-v6_20.h
+>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 369 +++++++++++++++++++++++
+>   1 file changed, 369 insertions(+)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> index bffb9e138715..6f82604bd430 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> @@ -1506,6 +1506,234 @@ static const struct qmp_phy_init_tbl sm8450_qmp_gen4x2_pcie_ep_pcs_misc_tbl[] =
+>   	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_PCIE_OSC_DTCT_MODE2_CONFIG5, 0x08),
+>   };
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+I see that the last two patches still use 'shrd' a lot. Does this 
+correspond to hw register names or is it just a vendor kernel code 
+convention?
 
 -- 
 With best wishes
