@@ -2,83 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E7572671DA3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 14:24:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D77B671DF3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 14:34:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230344AbjARNYT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 08:24:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54076 "EHLO
+        id S229657AbjARNeS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 08:34:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34180 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230215AbjARNXs (ORCPT
+        with ESMTP id S229716AbjARNdF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 08:23:48 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DC638A7B
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 04:50:57 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id c10-20020a05600c0a4a00b003db0636ff84so1463356wmq.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 04:50:57 -0800 (PST)
+        Wed, 18 Jan 2023 08:33:05 -0500
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B71C875BA
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 05:00:30 -0800 (PST)
+Received: by mail-ej1-x62a.google.com with SMTP id hw16so71187158ejc.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 05:00:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=h6UofrQemZ4+eX1QPPo3KJD1icPLPcDXcolqW+JUoFQ=;
-        b=Cuq7EjnurKOrCWygPW2yM9RPlSaKj8NbC5g3CcHISAxiBoQTfL0TxFoby3SalLb0en
-         xdJ1dNFPlaVmAyovwRg26cBcjDQX+IK98f1YU/m5Jhq6HmeXtkK5ElIh83pdeHU8UInm
-         EIjJw1DMRk3dEm0iTYdO4H/KyEUutsz/7yGkO8u+sK9PdQCMPS8/DKdIfdrC9E2HcbRA
-         9CtuZ0M0R5tuR6HWeak7YE/I3dX2k1WfkNeOclyM6G11fTTMkDmehN9Otic4mn5uD+r+
-         uG5Qg7VIT0C4pMH79BAOqveRsMP6E1NKDde0LCcfvQVJ2wbAZ2FAvLIMZRnAyPhWug4C
-         6kcA==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=o8KcKlOKvCT1RhL/1bTXTH5peRxlu6t4vAM/1NMH6zM=;
+        b=MYDih5Yobi173RFOnC/C/JTrtV1ft2cGlcfBLnnvOpujt/PMLp0mM52t3mqxxqrF6w
+         UXFOeBLh0SYyoYmY/sPtYUTVhKh7SgeRjW7PFIS32o7rNSIQn8Ccby43Ye6cS/Xvl+gn
+         M6nKfTZk9/VpuH4bWXoGTd0ON/REmvX6vjiAbl0zySkT5yDnkmIeabfyEj517jg7uLPN
+         ust8Ye8M5pPZ1jByLC89I3P52qq0uINnCHy3/UeM0YFkU/d5yhxMzKKwpmCTfeqoep8w
+         oWnuE2m2ydBx0zMJWvdM4POKO6TzC3deIjE169rYX/332NoiZX3yOBSBtr6LzT3pxYU5
+         ThIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=h6UofrQemZ4+eX1QPPo3KJD1icPLPcDXcolqW+JUoFQ=;
-        b=Dm6fEmmINInhoidekZR2xt//l91qn7be3lzcAhM5QjFq+MkFCQTsUZp5V4QwnAw5RC
-         DPwffEuFxf6XMzvNKXrCrmR527Br4Z/c0orhD+s5NXo7dzoJKUOFgrv+7QZqY/WY9qTc
-         CjN6ECRR4mv7h+vmaqtNEoEcS1UtsCVT1GghQv6IKr8gTgFcOphJRxr5Y17kutjRHBo9
-         IMeKTvz9UEk45nUN5+cxEMbHTb4oXWP5N7TiLQo04JdusL1bM2lbIUrvLLI+uIGkY/Uf
-         gzFbc1btW//8EySc4NN2bcxCMnhNcGkukQ4ro/gYlUpAvkasAU3p0DlNY66OqsrnLR1A
-         3fhQ==
-X-Gm-Message-State: AFqh2kqGcwZH8EbdAezA8wathIEyIs0v5tKSAdKVZKENTxcGA32JcD0L
-        FqcAjCHAk6XStQft1fr+C+0M6g==
-X-Google-Smtp-Source: AMrXdXtQ0z5537FCj9ntjVW+joNiKI3tv3JZd/zlO+3v+/CSF+vqDDmlfBlrEksX79ozb6+vGn0Jiw==
-X-Received: by 2002:a05:600c:3d10:b0:3da:e4c:2a3c with SMTP id bh16-20020a05600c3d1000b003da0e4c2a3cmr6874947wmb.41.1674046255745;
-        Wed, 18 Jan 2023 04:50:55 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id k34-20020a05600c1ca200b003cfd4e6400csm2114848wms.19.2023.01.18.04.50.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Jan 2023 04:50:55 -0800 (PST)
-Message-ID: <8a704b63-9ef1-ed4d-3ee5-35ebfd2a2318@linaro.org>
-Date:   Wed, 18 Jan 2023 12:50:54 +0000
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=o8KcKlOKvCT1RhL/1bTXTH5peRxlu6t4vAM/1NMH6zM=;
+        b=aKlHh+1edkxJhoaQ3pxyC4pRYJQHshsVq1syv8es6NogUIIjrivlqTa0XUBQTYtLUi
+         zBtqW445KS//lFq0lUitNEWNlCGD7FuRllJEfOQH7om69w9Og7WlaWNL6uWJF8WMvcG+
+         P8hPMP07N+Mbfyz05Fg7IP3NPLXBVcOVD5PSSYrfAzHj5s86cJ3wTd+LpiV2U/4sjY7Q
+         barLVDNhPeSj8f0j7Ibd474L3cnf9rnAbVqTM8ZJqu1rLDDNmUaDNNJrahbxDXapz31N
+         ObCBSyEFM/H+7NiAj3yJS790jln0KOgp/KjbnUas/Ajq2SmL2zeQqo5ZOpRB525/iRkj
+         Omnw==
+X-Gm-Message-State: AFqh2kpw8b7jpb/384oKZzNq2ktI+AswvXchZXvE1soLl+KbJyCODnQ8
+        ctcfs2SUcp1Javvlnfme3lTb4w==
+X-Google-Smtp-Source: AMrXdXvOwCxXci9FlJdC38rItACst1z0ITs/WpWk09TtajFJiqVIQzZvfGmWJ6CaOdNbLEB56deQdg==
+X-Received: by 2002:a17:907:3ea9:b0:7ff:727f:65cb with SMTP id hs41-20020a1709073ea900b007ff727f65cbmr4374843ejc.19.1674046828803;
+        Wed, 18 Jan 2023 05:00:28 -0800 (PST)
+Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id vw22-20020a170907059600b0084d43def70esm3073180ejb.25.2023.01.18.05.00.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Jan 2023 05:00:28 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
+        Loic Poulain <loic.poulain@linaro.org>
+Subject: [PATCH] drm/msm/dsi: correct byte intf clock rate for 14nm DSI PHY
+Date:   Wed, 18 Jan 2023 15:00:27 +0200
+Message-Id: <20230118130027.2345719-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: [PATCH v3 5/8] arm64: dts: qcom: Add msm8939 SoC
-Content-Language: en-US
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        djakov@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, benl@squareup.com,
-        shawn.guo@linaro.org, fabien.parent@linaro.org, leo.yan@linaro.org,
-        dmitry.baryshkov@linaro.org, Jun Nie <jun.nie@linaro.org>,
-        James Willcox <jwillcox@squareup.com>,
-        Joseph Gates <jgates@squareup.com>,
-        Max Chen <mchen@squareup.com>, Zac Crosby <zac@squareup.com>,
-        Vincent Knecht <vincent.knecht@mailoo.org>
-References: <20230117024846.1367794-1-bryan.odonoghue@linaro.org>
- <20230117024846.1367794-6-bryan.odonoghue@linaro.org>
- <Y8fC/GCHfENQmBNC@gerhold.net>
- <cf4920e6-c007-20a5-ba3a-5005b22f891b@linaro.org>
-In-Reply-To: <cf4920e6-c007-20a5-ba3a-5005b22f891b@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,97 +74,110 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/01/2023 11:50, Bryan O'Donoghue wrote:
->>> +                clocks = <&gcc GCC_MDSS_MDP_CLK>,
->>> +                     <&gcc GCC_MDSS_AHB_CLK>,
->>> +                     <&gcc GCC_MDSS_AXI_CLK>,
->>> +                     <&gcc GCC_MDSS_BYTE1_CLK>,
->>> +                     <&gcc GCC_MDSS_PCLK1_CLK>,
->>> +                     <&gcc GCC_MDSS_ESC1_CLK>;
->>> +                clock-names = "mdp_core",
->>> +                          "iface",
->>> +                          "bus",
->>> +                          "byte",
->>> +                          "pixel",
->>> +                          "core";
->>> +                assigned-clocks = <&gcc BYTE1_CLK_SRC>,
->>> +                          <&gcc PCLK1_CLK_SRC>;
->>> +                assigned-clock-parents = <&dsi_phy1 0>,
->>> +                             <&dsi_phy1 1>;
->>
->> Does this work? Confusingly, BYTE1/PCLK1_CLK_SRC can only have dsi0pll
->> as parent in gcc-msm8939 and not the dsi1pll. <&dsi_phy1 0/1> is not a
->> valid parent for those clocks.
-> 
-> No you're right, its all wrong. I will correct it
-> 
->          mdss_dsi0: qcom,mdss_dsi@1a98000 {
->                  compatible = "qcom,mdss-dsi-ctrl";
->                  label = "MDSS DSI CTRL->0";
->                  cell-index = <0>;
->                  reg = <0x1a98000 0x25c>,
->                        <0x1a98500 0x2b0>,
->                        <0x193e000 0x30>;
->                  reg-names = "dsi_ctrl", "dsi_phy", "mmss_misc_phys";
->                  qcom,mdss-fb-map = <&mdss_fb0>;
->                  qcom,mdss-mdp = <&mdss_mdp>;
->                  gdsc-supply = <&gdsc_mdss>;
->                  vdda-supply = <&pm8916_l2>;
->                  vdd-supply = <&pm8916_l17>;
->                  vddio-supply = <&pm8916_l6>;
->                  clocks = <&clock_gcc clk_gcc_mdss_mdp_clk>,
->                           <&clock_gcc clk_gcc_mdss_ahb_clk>,
->                           <&clock_gcc clk_gcc_mdss_axi_clk>,
->                           <&clock_gcc_mdss clk_gcc_mdss_byte0_clk>,
->                           <&clock_gcc_mdss clk_gcc_mdss_pclk0_clk>,
->                           <&clock_gcc clk_gcc_mdss_esc0_clk>;
+According to the vendor kernel, byte intf clock rate should be a half of
+the byte clock only when DSI PHY version is above 2.0 (in other words,
+10nm PHYs and later) and only if PHY is used in D-PHY mode. Currently
+MSM DSI code handles only the second part of the clause (C-PHY vs
+D-PHY), skipping DSI PHY version check, which causes issues on some of
+14nm DSI PHY platforms (e.g. qcm2290).
 
-Sorry what am I saying that's the wrong dsiX
+Move divisor selection to DSI PHY code, pass selected divisor through
+shared timings and set byte intf clock rate accordingly.
 
-Here's downstream - byte1, plck1, esc1 exist
+Cc: Loic Poulain <loic.poulain@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
 
-         mdss_dsi1: qcom,mdss_dsi@1aa0000 {
-                 compatible = "qcom,mdss-dsi-ctrl";
-                 label = "MDSS DSI CTRL->1";
-                 cell-index = <1>;
-                 reg = <0x1aa0000 0x25c>,
-                       <0x1aa0500 0x2b0>,
-                       <0x193e000 0x30>;
-                 reg-names = "dsi_ctrl", "dsi_phy", "mmss_misc_phys";
-                 qcom,mdss-fb-map = <&mdss_fb0>;
-                 qcom,mdss-mdp = <&mdss_mdp>;
-                 gdsc-supply = <&gdsc_mdss>;
-                 vdda-supply = <&pm8916_l2>;
-                 vdd-supply = <&pm8916_l17>;
-                 vddio-supply = <&pm8916_l6>;
-                 clocks = <&clock_gcc clk_gcc_mdss_mdp_clk>,
-                          <&clock_gcc clk_gcc_mdss_ahb_clk>,
-                          <&clock_gcc clk_gcc_mdss_axi_clk>,
-                          <&clock_gcc_mdss clk_gcc_mdss_byte1_clk>,
-                          <&clock_gcc_mdss clk_gcc_mdss_pclk1_clk>,
-                          <&clock_gcc clk_gcc_mdss_esc1_clk>;
-                 clock-names = "mdp_core_clk", "iface_clk", "bus_clk",
-                                 "byte_clk", "pixel_clk", "core_clk";
+This patch is a reimplementation of [1] in a slightly more flexible way.
 
-
-Parent clock is gpll0a but they waggle different rcgr addresses
-
-static struct clk_rcg2 byte0_clk_src = {
-         .cmd_rcgr = 0x4d044,    <- here
-         .hid_width = 5,
-         .parent_map = gcc_xo_gpll0a_dsibyte_map,
-         .clkr.hw.init = &(struct clk_init_data){
-                 .name = "byte0_clk_src",
-
-static struct clk_rcg2 byte1_clk_src = {
-         .cmd_rcgr = 0x4d0b0,    <- and here
-         .hid_width = 5,
-         .parent_map = gcc_xo_gpll0a_dsibyte_map,
-         .clkr.hw.init = &(struct clk_init_data){
-                 .name = "byte1_clk_src",
-
-It *should* work even with the wrong name but, I will send a GCC update 
-to address the naming, which looks wrong.
+[1] https://patchwork.kernel.org/project/linux-arm-msm/patch/1642586079-12472-1-git-send-email-loic.poulain@linaro.org/
 
 ---
-bod
+ drivers/gpu/drm/msm/dsi/dsi.h         |  1 +
+ drivers/gpu/drm/msm/dsi/dsi_host.c    | 14 ++++++--------
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.c |  4 ++++
+ 3 files changed, 11 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
+index 1a551cc0e889..bd3763a5d723 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi.h
++++ b/drivers/gpu/drm/msm/dsi/dsi.h
+@@ -141,6 +141,7 @@ struct msm_dsi_phy_shared_timings {
+ 	u32 clk_post;
+ 	u32 clk_pre;
+ 	bool clk_pre_inc_by_2;
++	bool byte_intf_clk_div_2;
+ };
+ 
+ struct msm_dsi_phy_clk_request {
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index 7c21f2fba520..18fa30e1e858 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -122,6 +122,7 @@ struct msm_dsi_host {
+ 	struct clk *byte_intf_clk;
+ 
+ 	unsigned long byte_clk_rate;
++	unsigned long byte_intf_clk_rate;
+ 	unsigned long pixel_clk_rate;
+ 	unsigned long esc_clk_rate;
+ 
+@@ -398,7 +399,6 @@ int msm_dsi_runtime_resume(struct device *dev)
+ 
+ int dsi_link_clk_set_rate_6g(struct msm_dsi_host *msm_host)
+ {
+-	unsigned long byte_intf_rate;
+ 	int ret;
+ 
+ 	DBG("Set clk rates: pclk=%d, byteclk=%lu",
+@@ -418,13 +418,7 @@ int dsi_link_clk_set_rate_6g(struct msm_dsi_host *msm_host)
+ 	}
+ 
+ 	if (msm_host->byte_intf_clk) {
+-		/* For CPHY, byte_intf_clk is same as byte_clk */
+-		if (msm_host->cphy_mode)
+-			byte_intf_rate = msm_host->byte_clk_rate;
+-		else
+-			byte_intf_rate = msm_host->byte_clk_rate / 2;
+-
+-		ret = clk_set_rate(msm_host->byte_intf_clk, byte_intf_rate);
++		ret = clk_set_rate(msm_host->byte_intf_clk, msm_host->byte_intf_clk_rate);
+ 		if (ret) {
+ 			pr_err("%s: Failed to set rate byte intf clk, %d\n",
+ 			       __func__, ret);
+@@ -2394,6 +2388,10 @@ int msm_dsi_host_power_on(struct mipi_dsi_host *host,
+ 		goto unlock_ret;
+ 	}
+ 
++	msm_host->byte_intf_clk_rate = msm_host->byte_clk_rate;
++	if (phy_shared_timings->byte_intf_clk_div_2)
++		msm_host->byte_intf_clk_rate /= 2;
++
+ 	msm_dsi_sfpb_config(msm_host, true);
+ 
+ 	ret = regulator_bulk_enable(msm_host->cfg_hnd->cfg->num_regulators,
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+index 57445a5dc816..bb09cbe8ff86 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+@@ -350,6 +350,8 @@ int msm_dsi_dphy_timing_calc_v3(struct msm_dsi_dphy_timing *timing,
+ 		timing->shared_timings.clk_pre_inc_by_2 = 0;
+ 	}
+ 
++	timing->shared_timings.byte_intf_clk_div_2 = true;
++
+ 	timing->ta_go = 3;
+ 	timing->ta_sure = 0;
+ 	timing->ta_get = 4;
+@@ -454,6 +456,8 @@ int msm_dsi_dphy_timing_calc_v4(struct msm_dsi_dphy_timing *timing,
+ 	tmax = 255;
+ 	timing->shared_timings.clk_pre = DIV_ROUND_UP((tmax - tmin) * 125, 10000) + tmin;
+ 
++	timing->shared_timings.byte_intf_clk_div_2 = true;
++
+ 	DBG("%d, %d, %d, %d, %d, %d, %d, %d, %d, %d",
+ 		timing->shared_timings.clk_pre, timing->shared_timings.clk_post,
+ 		timing->clk_zero, timing->clk_trail, timing->clk_prepare, timing->hs_exit,
+-- 
+2.39.0
+
