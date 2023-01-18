@@ -2,73 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA355672328
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 17:27:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B83AC67233E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 17:30:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229706AbjARQ1p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 11:27:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56754 "EHLO
+        id S229522AbjARQaU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 11:30:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229734AbjARQ1Y (ORCPT
+        with ESMTP id S229850AbjARQ33 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 11:27:24 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AABE95898C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 08:25:18 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id g10so25103040wmo.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 08:25:18 -0800 (PST)
+        Wed, 18 Jan 2023 11:29:29 -0500
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44B4B53F8D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 08:27:05 -0800 (PST)
+Received: by mail-pl1-x62f.google.com with SMTP id v23so32497958plo.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 08:27:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=z2LqQldgrNJPcDI7p5vuw4ycWgmlXdq2eC/RcsIX/VU=;
-        b=SffSry5qO7cTumzlgWrGzzUXzaiocJTBbYvKSI+eeNH3+GpuwOSB2hrq4JdaNXXxqT
-         3OICczJREC9GO7IqR7z+kLqzAKM3lpF70ow6XKoz+UcEa8GDUv2/ncxF1DXTrLIUJVku
-         NX0lQ7vc0XbSafsVoIyNnh5CzBa+Hjv4g09A+OSSOf86h8d4tsB5ez+C7/TiDDtdOI5S
-         whLRkKEkCJzArHhw9HCVP1MXE09LbomfYL74nrsfhiIihsDPWn+uSEYY+Z+t91Hi//30
-         ITMRku3LiO9Fmve+Azp3sB+IM84XCCjOPAlJXiNSXpJaWAVjAqjPOL4qAbr0CbmiHxnq
-         zXZg==
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=PnIT1ZOLzxJX6WD//TaGrhIYfVz9ufKdiV7vsF/iRQM=;
+        b=oyNLlxOA4h9fIFeFYgsQYpQBXl331UIiaWIGE+I8+2VKXi/tAvWIFIGMY/+R+RitkD
+         ZLgs6rwtFHI0fdK1yebai2/rpR2R7ohI4Hou1mSzpXW274rGY143NsnzU47AAB//rnqY
+         Wv9envguaPCsvQSGp9M5BmODhROqcKUOLqcHLhxMJwvu2nkHFMkgksHHfp2z1i1f1oPG
+         NzmTwEnqP0/D92dYyv+UoXLqlR63a8yYs0QmAEaxl6tKn/mXVOSDWY/AbHsSnRGOn9es
+         CaPipCYwHvdeYNt7JmOqIQKrWTDL0G0kXU8fmyQlrSsle1J6stnovg7FHLRI4akneThf
+         k4lA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=z2LqQldgrNJPcDI7p5vuw4ycWgmlXdq2eC/RcsIX/VU=;
-        b=6SjfBPjEOToRnamosFLze0X260x4eF+Kh5TroFEZRau7LgaXOKJYbVeZIMjOXgwdP2
-         3BngPjj4M8A/2rHXfPqrRbEkogNF/jWhn4b3+hiatxCrtarCjwzXjsC4t+p85PNyDPUf
-         9mYCfJjUxMC4KzLiwYqfNU8Bi7NgqWxy1seG7n1c7jH7A6HPWf2KRJmrvqR23OLwxqr2
-         S+bWg9jwTcHWotaow3+Qd1H/+lRR6d5Vw/UmelDL8l8hO7FmRbIRdHcRTfMlmQkAP976
-         xIRwsyfXDgPVjqEvGLVbYkYVs119zmbrV8Eu48g5+YfbzXtKGDyfaJB/yP95TYk+D7rJ
-         cqKQ==
-X-Gm-Message-State: AFqh2kpMRr8KmpYB4t3t29lxpj6Wz8nR6wOPOURL4xqNJCw543sGuh6z
-        HAb5Ic7+XT52JfLtFJNRDErl2QS/tDqeSddELw4=
-X-Google-Smtp-Source: AMrXdXugeQjWoOIfTOVUYB+z1tOrg0w7jGItCArPzaWowUAWzbkTZ5kh1xspWwE07Slny96CI9NWNg==
-X-Received: by 2002:a05:600c:281:b0:3da:1132:4b63 with SMTP id 1-20020a05600c028100b003da11324b63mr7293199wmk.5.1674059117316;
-        Wed, 18 Jan 2023 08:25:17 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id m27-20020a05600c3b1b00b003db012d49b7sm3670695wms.2.2023.01.18.08.25.16
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=PnIT1ZOLzxJX6WD//TaGrhIYfVz9ufKdiV7vsF/iRQM=;
+        b=yzIqOoaNl+cCBbcJQEnv1YhdnnnOFU8cWhA5uKifiLe23IwB/pR4qu4q+lYDandwA1
+         UdBKBpiuvFjpqE+g1Vl5SfS9Iw1Oau+Cl2HV4gm5hKeprREQGx+QxSByX3va8sGubY4q
+         a3PT1jZtMUdpop9647iXiZMdWq9qMv1cFeQ+p80jimapKc7IB7JcbkQ9NqseKDphuZ+p
+         0JRzpGueBAFmi9PzLtmshDJBnV7AGtesQNGA3oc68k/PrSgl+2PU+lN6I5O97D7fQ7I+
+         3tIddXB2SZqqyYkRFRxCMGnEJgLmTw7giRtPJeojpZfnyi4707zybpGGV/vo7HuglLFs
+         KsyQ==
+X-Gm-Message-State: AFqh2krM1cZ4/5eU85XynDFTwX6cEbWJg6bRqZpEMJsMJsZbFocFVnLq
+        cRBMTtdDfsi1oUuamCsMLFZ/
+X-Google-Smtp-Source: AMrXdXvvDlhhZoU7y/wT2VNk0daUJAuDCDa1GEO7xu7ndvUK9lrvpG0UpYaPKFREDviZj/98AsTgiQ==
+X-Received: by 2002:a05:6a20:3ca7:b0:9d:efbf:48e3 with SMTP id b39-20020a056a203ca700b0009defbf48e3mr9897658pzj.39.1674059224894;
+        Wed, 18 Jan 2023 08:27:04 -0800 (PST)
+Received: from thinkpad ([220.158.158.171])
+        by smtp.gmail.com with ESMTPSA id x15-20020aa78f0f000000b00587fda4a260sm6021014pfr.9.2023.01.18.08.26.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Jan 2023 08:25:17 -0800 (PST)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Wed, 18 Jan 2023 17:25:13 +0100
-Subject: [PATCH v3 3/3] arm64: dts: qcom: sm8550-mtp: enable adsp, cdsp & mdss
+        Wed, 18 Jan 2023 08:27:03 -0800 (PST)
+Date:   Wed, 18 Jan 2023 21:56:57 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, bp@alien8.de,
+        tony.luck@intel.com, quic_saipraka@quicinc.com,
+        konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, james.morse@arm.com,
+        mchehab@kernel.org, rric@kernel.org, linux-edac@vger.kernel.org,
+        quic_ppareek@quicinc.com, luca.weiss@fairphone.com,
+        ahalaney@redhat.com, steev@kali.org, stable@vger.kernel.org
+Subject: Re: [PATCH v6 17/17] soc: qcom: llcc: Do not create EDAC platform
+ device on SDM845
+Message-ID: <20230118162657.GE4690@thinkpad>
+References: <20230118150904.26913-1-manivannan.sadhasivam@linaro.org>
+ <20230118150904.26913-18-manivannan.sadhasivam@linaro.org>
+ <d3cd9b7a-6286-a140-d205-6d4b6ca8092d@linaro.org>
+ <20230118155919.GD4690@thinkpad>
+ <3ca41414-df2e-4ba0-9dc7-cacea2413fe6@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20221115-topic-sm8550-upstream-dts-remoteproc-v3-3-815a1753de34@linaro.org>
-References: <20221115-topic-sm8550-upstream-dts-remoteproc-v3-0-815a1753de34@linaro.org>
-In-Reply-To: <20221115-topic-sm8550-upstream-dts-remoteproc-v3-0-815a1753de34@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.11.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <3ca41414-df2e-4ba0-9dc7-cacea2413fe6@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -78,43 +83,76 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the aDSP, cDSP and MPSS firmware and "Devicetree" firmware paths
-for the SM8550 MTP platform.
+On Wed, Jan 18, 2023 at 05:05:28PM +0100, Krzysztof Kozlowski wrote:
+> On 18/01/2023 16:59, Manivannan Sadhasivam wrote:
+> > On Wed, Jan 18, 2023 at 04:37:29PM +0100, Krzysztof Kozlowski wrote:
+> >> On 18/01/2023 16:09, Manivannan Sadhasivam wrote:
+> >>> The platforms based on SDM845 SoC locks the access to EDAC registers in the
+> >>> bootloader. So probing the EDAC driver will result in a crash. Hence,
+> >>> disable the creation of EDAC platform device on all SDM845 devices.
+> >>>
+> >>> The issue has been observed on Lenovo Yoga C630 and DB845c.
+> >>>
+> >>> Cc: <stable@vger.kernel.org> # 5.10
+> >>> Reported-by: Steev Klimaszewski <steev@kali.org>
+> >>> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> >>> ---
+> >>>  drivers/soc/qcom/llcc-qcom.c | 17 ++++++++++++-----
+> >>>  1 file changed, 12 insertions(+), 5 deletions(-)
+> >>>
+> >>> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+> >>> index 7b7c5a38bac6..8d840702df50 100644
+> >>> --- a/drivers/soc/qcom/llcc-qcom.c
+> >>> +++ b/drivers/soc/qcom/llcc-qcom.c
+> >>> @@ -1012,11 +1012,18 @@ static int qcom_llcc_probe(struct platform_device *pdev)
+> >>>  
+> >>>  	drv_data->ecc_irq = platform_get_irq_optional(pdev, 0);
+> >>>  
+> >>> -	llcc_edac = platform_device_register_data(&pdev->dev,
+> >>> -					"qcom_llcc_edac", -1, drv_data,
+> >>> -					sizeof(*drv_data));
+> >>> -	if (IS_ERR(llcc_edac))
+> >>> -		dev_err(dev, "Failed to register llcc edac driver\n");
+> >>> +	/*
+> >>> +	 * The platforms based on SDM845 SoC locks the access to EDAC registers
+> >>> +	 * in bootloader. So probing the EDAC driver will result in a crash.
+> >>> +	 * Hence, disable the creation of EDAC platform device on SDM845.
+> >>> +	 */
+> >>> +	if (!of_device_is_compatible(dev->of_node, "qcom,sdm845-llcc")) {
+> >>
+> >> Don't spread of_device_is_compatible() in driver code. You have driver
+> >> data for this.
+> >>
+> > 
+> > Yeah, but there is no ID to in the driver data to identify an SoC. 
+> 
+> What do you mean there is no? You use exactly the same compatible as the
+> one in driver data.
+> 
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8550-mtp.dts | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+Right, but I was saying that there is no unique field to identify an SoC.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-index 81fcbdc6bdc4..5ab5ac05f989 100644
---- a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-@@ -374,6 +374,24 @@ &qupv3_id_0 {
- 	status = "okay";
- };
- 
-+&remoteproc_adsp {
-+	firmware-name = "qcom/sm8550/adsp.mbn",
-+			"qcom/sm8550/adsp_dtb.mbn";
-+	status = "okay";
-+};
-+
-+&remoteproc_cdsp {
-+	firmware-name = "qcom/sm8550/cdsp.mbn",
-+			"qcom/sm8550/cdsp_dtb.mbn";
-+	status = "okay";
-+};
-+
-+&remoteproc_mpss {
-+	firmware-name = "qcom/sm8550/modem.mbn",
-+			"qcom/sm8550/modem_dtb.mbn";
-+	status = "okay";
-+};
-+
- &sdhc_2 {
- 	cd-gpios = <&pm8550_gpios 12 GPIO_ACTIVE_LOW>;
- 	pinctrl-names = "default", "sleep";
+> 
+> > I could add
+> > one but is that really worth doing so? Is using of_device_is_compatible() in
+> > drivers discouraged nowadays?
+> 
+> Because it spreads variant matching all over. It does not scale. drv
+> data fields are the way or better quirks/flags.
+> 
+
+The driver quirk/flags are usually beneficial if it applies to multiple
+platforms, otherwise they are a bit overkill IMO just like in this case.
+
+One can argue that this matching could spread to other SoCs in the future, but
+I don't think that could happen for this case.
+
+Thanks,
+Mani
+
+> Best regards,
+> Krzysztof
+> 
 
 -- 
-2.34.1
+மணிவண்ணன் சதாசிவம்
