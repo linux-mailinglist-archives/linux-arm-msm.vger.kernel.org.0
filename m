@@ -2,215 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1008E671202
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 04:35:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D3CF67124C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 05:12:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229485AbjARDfg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 22:35:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54464 "EHLO
+        id S229546AbjAREMt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 23:12:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229464AbjARDfg (ORCPT
+        with ESMTP id S229450AbjAREMs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 22:35:36 -0500
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BD6A44BE1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 19:35:35 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id qx13so21759585ejb.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 19:35:34 -0800 (PST)
+        Tue, 17 Jan 2023 23:12:48 -0500
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C492E53E5F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 20:12:46 -0800 (PST)
+Received: by mail-ej1-x62b.google.com with SMTP id v6so37255483ejg.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 20:12:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=JyC5wQaAQwe5exV8k9/wO906ujI4qMbS3vzhcJWha9A=;
-        b=YZ539sfgFgnRi8TQKYjSYOo8pa1kO+1Enb3ODiy0lWqrGZSaho62pW2Sg+i057Pi4h
-         GH7GLL/3aTljO5Xlb+NUrwgls8H5r1mscQsGwvTozzqc2OYxjkpjjJXq3apqU3KjHybT
-         pNvE4WnveOEuB8Az7raFKs6E6MnvFQs/WFMjitRKnSh2jRLewT/4eKsyTH9jQDKNgbFx
-         DR+QGvBnlCwlEDsruskZkmNcUM4dQLSlmBYWZrKCJQrxKd+D821/6GWZeDmdDYQGXjyG
-         d1iZM/bauv48vdSEPu11oTWGq5E7CNU/Nv8nXi0tSJJFpnLc47sDleIJQ2v3R9FN1R2Z
-         zUAg==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=pO+Uco41EUjfLqhvJP0rFyHyCPPZFeb3S6/8ABkjVA4=;
+        b=lHJFpcqGExqtPFjhW7R5odgjeffA5J3nNkxsE+e/AMD4ZAOg1xKVF1Z/XHFOkUTH0b
+         rUgW8aA+Qb5V0MgimIf8ps7QMSTbg2tCj345pUWsqD1ObNLFjf+8QJXLcn/jyEj9DWqX
+         j5//dZs7yYdaWNRL3mPEVLbuJG8inR6iK4gb7Sa5fj8TKSyUv3YrMQg6ztG754SbYRqg
+         y4MU8dO3SJdhTkxOpM0g73TQkzTVO4pQ11HXvQTzG6NmkrZgrM4rKzuC0JOh6PwPa5FW
+         R0Kjjq7m9WiWVHba7ajm9PExa9tpqhIR5c0LFosf8rtrxStGxoMAlkHFYMMNpLBgJY9c
+         I5TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JyC5wQaAQwe5exV8k9/wO906ujI4qMbS3vzhcJWha9A=;
-        b=y71Ppcx72gmtfB8jhGUKKoN50s3RgYTu7COQRfuyEWRagoxJS40IYNjZpWNmiZegtD
-         FL9gU6M8i1Ugm1RzWR43Qkaz29mnq2RM9G0bITLFd0JgoeojvkweKpYUTlCQRGxq/WIH
-         8YDhEyUU6KcwNec9OJyerTa1/tWKI91GLLNZW4A0xBtBu4XlR9Xc6nBhVst+RqwsuNWi
-         W4Jc1NMEUktwrZePKvtrFOdi9PbofPVV1tPlhzXIdSTuADWkZeoBcDNrJ4LFBnd75HA/
-         rcW401eBML/cRSg1DnRdTRjd2P9L3x8sG6VaVPzhkl/lC846yXwdkiVa/OEOeKR6Qjn/
-         SmWQ==
-X-Gm-Message-State: AFqh2ko4P6Ca9lgTjF3q+EgT1cMxIOYIZvIHxbYV4XkTLUH6EY2nCGCV
-        lUXZFblo5G5iVjPLr9wqnxeByQ==
-X-Google-Smtp-Source: AMrXdXsAdIAPa8BvKgUibxZlFlBtNI8eWlBKctF83mVlrrhtEiAgMk1uL6QVFNT5soCNixIRLpEGgw==
-X-Received: by 2002:a17:906:1112:b0:84d:28d6:3179 with SMTP id h18-20020a170906111200b0084d28d63179mr5141345eja.0.1674012933548;
-        Tue, 17 Jan 2023 19:35:33 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id ti3-20020a170907c20300b0087190b46ab0sm2668902ejc.76.2023.01.17.19.35.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Jan 2023 19:35:33 -0800 (PST)
-Message-ID: <aa89eb88-f0f3-6eb7-fdcd-b7394b1a1771@linaro.org>
-Date:   Wed, 18 Jan 2023 05:35:31 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH 2/3] drm/msm/disp/dpu1: allow dspp selection for all the
- interfaces
-Content-Language: en-GB
-To:     Kalyan Thota <kalyant@qti.qualcomm.com>,
-        "Kalyan Thota (QUIC)" <quic_kalyant@quicinc.com>,
-        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
-        Doug Anderson <dianders@google.com>
-Cc:     "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "robdclark@chromium.org" <robdclark@chromium.org>,
-        "dianders@chromium.org" <dianders@chromium.org>,
-        "swboyd@chromium.org" <swboyd@chromium.org>,
-        "Vinod Polimera (QUIC)" <quic_vpolimer@quicinc.com>
-References: <1673972488-30140-1-git-send-email-quic_kalyant@quicinc.com>
- <1673972488-30140-3-git-send-email-quic_kalyant@quicinc.com>
- <24ef467e-24a6-fc8f-3859-95ec0ae109ae@linaro.org>
- <BN0PR02MB81421A761275502A5A17AEEE96C79@BN0PR02MB8142.namprd02.prod.outlook.com>
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pO+Uco41EUjfLqhvJP0rFyHyCPPZFeb3S6/8ABkjVA4=;
+        b=F9oS/rB0Ye7tyUaaNHUmUWyB6fxrqz/Sjbj06VeP+VztuTzmItxZP8VvkwiY6mRXXG
+         xnE6rdizz0DDok5BvDMrMw1SgWxcRo2PsB5Mxvotl1Bib96tHAM9ZZbFFeBrJ+/j9JFK
+         3Dlkr+a9fs7VMtBBXP+2NUzySyIR438XNWL9vuvPjud2OUrHoRxD64HkKRyY0OrY8k2z
+         w7fGiqgg90nzmXvCm6r5yhEvb+1hj3iCH1dCoDeI0d07vzmoZczbHxzPZMat1KK1ox1S
+         wIxCtFiXXoQopwkdDheMVlnioj5dnbVEMBQZTrPN3keamFizyNQRZCS4wc5tTV8zRPnM
+         YMGA==
+X-Gm-Message-State: AFqh2kpRUcmUTP2kmY3dVMX4WRbdJEVbheYXlfnZqn3yhpels85HuPn4
+        MQPswsvsQcytNo2KjF6IK3AXYQ==
+X-Google-Smtp-Source: AMrXdXu9dIuU8w6EoeW3K9kLGvsJMauYo1b6ux8eRySmw1DVE5IlEjw3z7pg7LCdSH+d6wwqFZhpmg==
+X-Received: by 2002:a17:907:a708:b0:86d:e1ce:5c9c with SMTP id vw8-20020a170907a70800b0086de1ce5c9cmr5171931ejc.76.1674015165386;
+        Tue, 17 Jan 2023 20:12:45 -0800 (PST)
+Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id hp24-20020a1709073e1800b008720c458bd4sm2314100ejc.3.2023.01.17.20.12.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Jan 2023 20:12:44 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <BN0PR02MB81421A761275502A5A17AEEE96C79@BN0PR02MB8142.namprd02.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v7 00/11] dt-bindings: display/msm: rework MDP5 and MDSS schema
+Date:   Wed, 18 Jan 2023 06:12:32 +0200
+Message-Id: <20230118041243.1720520-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/01/2023 05:30, Kalyan Thota wrote:
-> 
-> 
->> -----Original Message-----
->> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> Sent: Tuesday, January 17, 2023 10:26 PM
->> To: Kalyan Thota (QUIC) <quic_kalyant@quicinc.com>; dri-
->> devel@lists.freedesktop.org; linux-arm-msm@vger.kernel.org;
->> freedreno@lists.freedesktop.org; devicetree@vger.kernel.org
->> Cc: linux-kernel@vger.kernel.org; robdclark@chromium.org;
->> dianders@chromium.org; swboyd@chromium.org; Vinod Polimera (QUIC)
->> <quic_vpolimer@quicinc.com>; Abhinav Kumar (QUIC)
->> <quic_abhinavk@quicinc.com>
->> Subject: Re: [PATCH 2/3] drm/msm/disp/dpu1: allow dspp selection for all the
->> interfaces
->>
->> WARNING: This email originated from outside of Qualcomm. Please be wary of
->> any links or attachments, and do not enable macros.
->>
->> On 17/01/2023 18:21, Kalyan Thota wrote:
->>> Allow dspps to be populated as a requirement for all the encoder types
->>> it need not be just DSI. If for any encoder the dspp allocation
->>> doesn't go through then there can be an option to fallback for color
->>> features.
->>>
->>> Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
->>> ---
->>>    drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 18 +++++++++---------
->>>    1 file changed, 9 insertions(+), 9 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>> index 9c6817b..e39b345 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>> @@ -545,7 +545,8 @@ bool dpu_encoder_use_dsc_merge(struct drm_encoder
->> *drm_enc)
->>>    static struct msm_display_topology dpu_encoder_get_topology(
->>>                        struct dpu_encoder_virt *dpu_enc,
->>>                        struct dpu_kms *dpu_kms,
->>> -                     struct drm_display_mode *mode)
->>> +                     struct drm_display_mode *mode,
->>> +                     struct drm_crtc_state *crtc_state)
->>
->> Is this new argument used at all?
->>
->>>    {
->>>        struct msm_display_topology topology = {0};
->>>        int i, intf_count = 0;
->>> @@ -563,8 +564,9 @@ static struct msm_display_topology
->> dpu_encoder_get_topology(
->>>         * 1 LM, 1 INTF
->>>         * 2 LM, 1 INTF (stream merge to support high resolution interfaces)
->>>         *
->>> -      * Adding color blocks only to primary interface if available in
->>> -      * sufficient number
->>> +      * dspp blocks are made optional. If RM manager cannot allocate
->>> +      * dspp blocks, then reservations will still go through with non dspp LM's
->>> +      * so as to allow color management support via composer
->>> + fallbacks
->>>         */
->>
->> No, this is not the way to go.
->>
->> First, RM should prefer non-DSPP-enabled LMs if DSPP blocks are not required.
->> Right now your patch makes it possible to allocate LMs, that have DSPP attached,
->> for non-CTM-enabled encoder and later fail allocation of DSPP for the CRTC
->> which has CTM blob attached.
->>
->> Second, the decision on using DSPPs should come from dpu_crtc_atomic_check().
->> Pass 'bool need_dspp' to this function from dpu_atomic_check(). Fail if the
->> need_dspp constraint can't be fulfilled.
->>
-> We may not get color_mgmt_changed property set during modeset commit, where as our resource allocation happens during modeset.
+Krzysztof asked me to merge all pending MDSS/MDP5/DPU patches to a
+single series to ease review and to let one to see the whole picture.
 
-So, you have to fix the conditions to perform LM reallocation if CTM 
-usage has changed (note, color_mgmt_changed is not a correct one here).
+This combines three series: MDP5 schema conversion, mdss/mdp renaming
+and addition of the "core" clock to the MDSS device node.
 
-> With this approach, dspps will get allocated on first come first serve basis
+Patch 4 might generate warnings in qcom,sm6115-mdss and
+qcom,qcm2290-mdss examples, but they have been fixed by the commit
+e5266ca38294 ("dt-bindings: display: msm: Rename mdss node name in
+example"). See https://gitlab.freedesktop.org/drm/msm/-/commit/e5266ca38294
 
-I don't think that this is what we have agreed upon.
+Changes since v6:
+- Switched qcom,mdss.yaml to use contains rather than oneOf (Rob
+  Herring)
+- Fixed typo in patch 3 commit message (Rob Herring)
+- Reworked clocks/clock-names to have oneOf under the properties
+  themselves, rather than having a toplevel switch (Rob Herring)
 
-> @Rob, is it possible to send color management property during modeset, in that case, we can use it for dspp allocation to the datapath. The current approach doesn't assume it.
-> On chrome compositor, I see that color property was being set in the subsequent commits but not in modeset.
-> 
->>
->>>        if (intf_count == 2)
->>>                topology.num_lm = 2;
->>> @@ -573,11 +575,9 @@ static struct msm_display_topology
->> dpu_encoder_get_topology(
->>>        else
->>>                topology.num_lm = (mode->hdisplay > MAX_HDISPLAY_SPLIT)
->>> ? 2 : 1;
->>>
->>> -     if (dpu_enc->disp_info.intf_type == DRM_MODE_ENCODER_DSI) {
->>> -             if (dpu_kms->catalog->dspp &&
->>> -                     (dpu_kms->catalog->dspp_count >= topology.num_lm))
->>> -                     topology.num_dspp = topology.num_lm;
->>> -     }
->>> +     if (dpu_kms->catalog->dspp &&
->>> +         (dpu_kms->catalog->dspp_count >= topology.num_lm))
->>> +             topology.num_dspp = topology.num_lm;
->>>
->>>        topology.num_enc = 0;
->>>        topology.num_intf = intf_count;
->>> @@ -643,7 +643,7 @@ static int dpu_encoder_virt_atomic_check(
->>>                }
->>>        }
->>>
->>> -     topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode);
->>> +     topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode,
->>> + crtc_state);
->>>
->>>        /* Reserve dynamic resources now. */
->>>        if (!ret) {
->>
->> --
->> With best wishes
->> Dmitry
-> 
+Changes since v5:
+- Merged in the mdss/mdp node renaming and core clock series
+- Fixed the formatting of descriptions in qcom,mdp5 schema.
+
+Changes since v4:
+- Adjust qcom,mdss.yaml to follow the addition of per-SoC compatibles
+
+Changes since v3:
+- Drop MSM8998 completely, it conflicts with qcom,msm8998-dpu.yaml
+
+Changes since v2:
+- Fix MSM8998 compatible list: "qcom,msm8998-dpu", "msm,mdp5" to allow
+  handling this device by either of the drivers.
+
+Dmitry Baryshkov (11):
+  dt-bindings: display/msm: convert MDP5 schema to YAML format
+  dt-bindings: display/msm: add SoC-specific compats to qcom,mdp5.yaml
+  dt-bindings: display/msm: add core clock to the mdss bindings
+  dt-bindings: display/msm: rename mdss nodes to display-subsystem
+  dt-bindings: display/msm: rename mdp nodes to display-controller
+  ARM: dts: qcom-msm8974: add SoC specific compat string to mdp5 node
+  arm64: dts: qcom: add SoC specific compat strings to mdp5 nodes
+  arm64: dts: qcom: rename mdss nodes to display-subsystem
+  ARM: dts: qcom-msm8974: rename mdss node to display-subsystem
+  arm64: dts: qcom: rename mdp nodes to display-controller
+  ARM: dts: qcom: rename mdp nodes to display-controller
+
+ .../bindings/display/msm/dpu-common.yaml      |   8 +
+ .../devicetree/bindings/display/msm/mdp5.txt  | 132 ---------------
+ .../bindings/display/msm/mdss-common.yaml     |   8 +
+ .../bindings/display/msm/qcom,mdp5.yaml       | 156 ++++++++++++++++++
+ .../bindings/display/msm/qcom,mdss.yaml       |  46 ++++--
+ arch/arm/boot/dts/qcom-apq8064.dtsi           |   2 +-
+ arch/arm/boot/dts/qcom-msm8974.dtsi           |   6 +-
+ arch/arm64/boot/dts/qcom/msm8916.dtsi         |   6 +-
+ arch/arm64/boot/dts/qcom/msm8953.dtsi         |   4 +-
+ arch/arm64/boot/dts/qcom/msm8996.dtsi         |   6 +-
+ arch/arm64/boot/dts/qcom/sc7180.dtsi          |   2 +-
+ arch/arm64/boot/dts/qcom/sdm630.dtsi          |   6 +-
+ arch/arm64/boot/dts/qcom/sdm660.dtsi          |   2 +
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |   2 +-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |   2 +-
+ 15 files changed, 223 insertions(+), 165 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/display/msm/mdp5.txt
+ create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,mdp5.yaml
 
 -- 
-With best wishes
-Dmitry
+2.39.0
 
