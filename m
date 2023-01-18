@@ -2,112 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 906FD6719E2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 12:00:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 94790671A09
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 12:09:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230156AbjARLAs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 06:00:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50980 "EHLO
+        id S230229AbjARLJZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 06:09:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229919AbjARK5o (ORCPT
+        with ESMTP id S230219AbjARLIv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 05:57:44 -0500
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FE3A8CE6A;
-        Wed, 18 Jan 2023 02:05:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1674036355; x=1705572355;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=sGwCRk+5/82kviy26W1sAKCGQVjy71ZrSmzZw9BkOwI=;
-  b=lRzQtKfP3fVkmVH8EwEGLHzHVZq2i3MEULAm/IuXucPg+VVQ7IVnBIfw
-   a8jm5qhhj0HD9q5CBNO+59CDvBP8cZ843owWvRDQPg6r06jYZNr6MT5GV
-   YjbTOKpArb1dgWJgDU1vpJ1qePFlTMW7/Ynx3+Cx5/3BjmWhpcS5+5/aq
-   pepl+MtT7epb0gvUaDRivQ8T87/8V5KetvVb+Uor9pRcXg8Cq3vfBXrY9
-   Q8qCLFUcarmSHrFwVDXaazSN4bgEyE6CvD6IVAF1C2ofP7F9eELUz4oWc
-   CF1hxgTfOUn7PIM+lQIf5j50zDVqIISB+XYRfxGtXQuPginD59OTmA7Vf
-   Q==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10593"; a="308509831"
-X-IronPort-AV: E=Sophos;i="5.97,224,1669104000"; 
-   d="scan'208";a="308509831"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jan 2023 02:05:54 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10593"; a="691946163"
-X-IronPort-AV: E=Sophos;i="5.97,224,1669104000"; 
-   d="scan'208";a="691946163"
-Received: from black.fi.intel.com ([10.237.72.28])
-  by orsmga001.jf.intel.com with ESMTP; 18 Jan 2023 02:05:51 -0800
-Received: by black.fi.intel.com (Postfix, from userid 1003)
-        id DCAD0368; Wed, 18 Jan 2023 12:06:25 +0200 (EET)
-From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To:     Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-        =?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
+        Wed, 18 Jan 2023 06:08:51 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18FB79574E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 02:15:48 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id k22-20020a05600c1c9600b003d1ee3a6289so1111927wms.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 02:15:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=uRyEhmF53trv7Kk3HZnJmBth9b2MnpqhZNNSw33IxZw=;
+        b=CkGxztPeZ7+mrbeo75roxxrAxtbRiGO8zsjGejstIdNbfXXCpaBjyxTkK5DK9E8H5/
+         BUEVRHfzeCL/5tO7UxBFB/KGhctINV/Xh6/XhjtAlwxtOYGrn3dl34d9xRCXnlO0NlS6
+         8iAFY8ZOSuPH76eYZvHs7l1bMEvruVSGnnDifZTtxdqiIKsYxJW6ZS+jLk2sIXkK2xFM
+         rHtPYM9xyapRgWGE1yJAcv1pUGzN+XA8aIa8RbeQYbZmF3C/EyAM2K0sHHKzDPqj/JLf
+         vcPPGSXJ1yGCyw+lURMfGO86QP11JohiF67mED9Hnf9fFFXFyQt4g/P+tQ1Q4XrzADZc
+         Smbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=uRyEhmF53trv7Kk3HZnJmBth9b2MnpqhZNNSw33IxZw=;
+        b=gGB8zYp/PxKBR0VFkHLubf0PX3iakR7HB5bQGvVcy35Q3D353Aw1FqqYQ6xH5hQqsm
+         RgqmmEUg/dYirGzmjoeySJO1Vwkxs9Omyd9fYvCTNHtQ3iaPi1JAPt0pdmv7Ujpdkrv5
+         X6FxMi+qwkv9mQA6YVXXG7Elc0POb8BurxGD4jezWf+DAFStUV7f75pQ8pkd0cgM/Y8Z
+         X+HAGI99aayRhLaVLH2GFYcdQmmeE/YqPi2wsiJbZT+J7jUPnbkBnEBdsKhaOr8Zs7JY
+         dU2s9kwqrRGHZQk24YqHUdpvejn5zvIySeG7BdwqpEAJLTcmQJhANvh8Nrj4u4FzTf2C
+         FaQg==
+X-Gm-Message-State: AFqh2kooGy4HVXBstkfx36+o0n3CVrCQ4mn2SBA8lZhUeEFa89mm6NmJ
+        K+DSqtUDfUjPzXPzSIgNjfTuCg==
+X-Google-Smtp-Source: AMrXdXvXVA0eU58uzXSl/J827hOxqwwfBk3z8B/SPSmD0BQLzQD6uFwmFm3SePbidZ1gnz4zDG7pPw==
+X-Received: by 2002:a1c:7417:0:b0:3da:fcd:7dfe with SMTP id p23-20020a1c7417000000b003da0fcd7dfemr14856239wmc.10.1674036947004;
+        Wed, 18 Jan 2023 02:15:47 -0800 (PST)
+Received: from krzk-bin.. ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id w10-20020a05600c474a00b003db00747fdesm1529838wmo.15.2023.01.18.02.15.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Jan 2023 02:15:46 -0800 (PST)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Subject: [PATCH v2 1/1] iio: adc: qcom-spmi-adc5: Fix the channel name
-Date:   Wed, 18 Jan 2023 12:06:23 +0200
-Message-Id: <20230118100623.42255-1-andriy.shevchenko@linux.intel.com>
-X-Mailer: git-send-email 2.39.0
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/2] ASoC: dt-bindings: qcom,sm8250: use fallback for SDM845 sound cards
+Date:   Wed, 18 Jan 2023 11:15:41 +0100
+Message-Id: <20230118101542.96705-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The node name can contain an address part which is unused
-by the driver. Moreover, this string is propagated into
-the userspace label, sysfs filenames *and breaking ABI*.
+All SDM845 sound cards are compatible with each other, so use one
+generic fallback compatible for them.
 
-Cut the address part out before assigning the channel name.
-
-Fixes: 4f47a236a23d ("iio: adc: qcom-spmi-adc5: convert to device properties")
-Reported-by: Marijn Suijten <marijn.suijten@somainline.org>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
-v2: rephrased commit message (Marijn), fixed compilation issue (Marijin)
- drivers/iio/adc/qcom-spmi-adc5.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ .../bindings/sound/qcom,sm8250.yaml           | 24 +++++++++++--------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/iio/adc/qcom-spmi-adc5.c b/drivers/iio/adc/qcom-spmi-adc5.c
-index e90c299c913a..c2d5e06f137a 100644
---- a/drivers/iio/adc/qcom-spmi-adc5.c
-+++ b/drivers/iio/adc/qcom-spmi-adc5.c
-@@ -628,12 +628,20 @@ static int adc5_get_fw_channel_data(struct adc5_chip *adc,
- 				    struct fwnode_handle *fwnode,
- 				    const struct adc5_data *data)
- {
--	const char *name = fwnode_get_name(fwnode), *channel_name;
-+	const char *channel_name;
-+	char *name;
- 	u32 chan, value, varr[2];
- 	u32 sid = 0;
- 	int ret;
- 	struct device *dev = adc->dev;
+diff --git a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
+index 70080d04ddc9..262de7a60a73 100644
+--- a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
++++ b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
+@@ -15,16 +15,20 @@ description:
  
-+	name = devm_kasprintf(dev, GFP_KERNEL, "%pfwP", fwnode);
-+	if (!name)
-+		return -ENOMEM;
-+
-+	/* Cut the address part */
-+	name[strchrnul(name, '@') - name] = '\0';
-+
- 	ret = fwnode_property_read_u32(fwnode, "reg", &chan);
- 	if (ret) {
- 		dev_err(dev, "invalid channel number %s\n", name);
+ properties:
+   compatible:
+-    enum:
+-      - lenovo,yoga-c630-sndcard
+-      - qcom,apq8016-sbc-sndcard
+-      - qcom,db845c-sndcard
+-      - qcom,msm8916-qdsp6-sndcard
+-      - qcom,qrb5165-rb5-sndcard
+-      - qcom,sc8280xp-sndcard
+-      - qcom,sdm845-sndcard
+-      - qcom,sm8250-sndcard
+-      - qcom,sm8450-sndcard
++    oneOf:
++      - items:
++          - enum:
++              - lenovo,yoga-c630-sndcard
++              - qcom,db845c-sndcard
++          - const: qcom,sdm845-sndcard
++      - enum:
++          - qcom,apq8016-sbc-sndcard
++          - qcom,msm8916-qdsp6-sndcard
++          - qcom,qrb5165-rb5-sndcard
++          - qcom,sc8280xp-sndcard
++          - qcom,sdm845-sndcard
++          - qcom,sm8250-sndcard
++          - qcom,sm8450-sndcard
+ 
+   audio-routing:
+     $ref: /schemas/types.yaml#/definitions/non-unique-string-array
 -- 
-2.39.0
+2.34.1
 
