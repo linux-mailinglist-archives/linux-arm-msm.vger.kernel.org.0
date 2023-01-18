@@ -2,136 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A0DCC670FE0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 02:21:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C72BE670FEC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 02:24:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230123AbjARBV1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Jan 2023 20:21:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40714 "EHLO
+        id S229521AbjARBYj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Jan 2023 20:24:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229600AbjARBVH (ORCPT
+        with ESMTP id S229502AbjARBYi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Jan 2023 20:21:07 -0500
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9427F26B7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 17:19:02 -0800 (PST)
-Received: by mail-pl1-x635.google.com with SMTP id g23so19759238plq.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 17:19:02 -0800 (PST)
+        Tue, 17 Jan 2023 20:24:38 -0500
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 263CF10D5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 17:24:37 -0800 (PST)
+Received: by mail-ej1-x62b.google.com with SMTP id ud5so79714735ejc.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Jan 2023 17:24:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=yM0/ZgSXnPriP0s8Td7ncf1X5xesw5ro9ypu77r/PK0=;
-        b=BV117Kzh2UJo/RZBiMP4OXZU4kXp8mdi48JKZJMLPFMihgNhZzPzqYbkUzLWDXY6Lb
-         vAf8PqLlTxrCEba2lMkeotanIM/+dubx70HNK40Jd1vYL16+29poPIqIo6w0Ih6RcmFC
-         UzNMr/URPmE2+wiXJ+R2ECli2yQmt5dzyAjUk=
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=hCw2/tRfMHxdziYE7u5XMHonH7hwIjkmwIJuVfBRNWc=;
+        b=nkdE03+Z0aIn/+n7c1/I2F3pJkSHHVfoKP7G8X9gUuTEkxpuUwMEtVoc0Q+WUvSkvd
+         A2H/THg65gzR0hZgMbt2oPoKf4nCe5i/l6BjLfuin4U01myYpCXjWorb+1mTTzkDuhk+
+         mCiQUtSbLtdcOWtWJ+KRejJGi/NmzqWORt/S7l/3k66JUoNrsREYogsLyLY9EldEHZAd
+         PsL1wjKb7nQ9OgsnYZGOBNaPZy9TIY5EbGcsIFJCz2t8kQSQcm9Uxy1IesuXV/QInnfa
+         1rUiZs41LNJEYzESPz3fByvOWWq3gxSP9vx82MfGgPxkgTfoUoXvKS+9zNGRrN+o9uHZ
+         YGAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yM0/ZgSXnPriP0s8Td7ncf1X5xesw5ro9ypu77r/PK0=;
-        b=PRrpVW7iWy3Fvp62tzwIpIeRcS3t8VFgL/nR2BndWWgibR3qPTPxQVTYQKVnVuzvgo
-         WBtShSIbNCFJnn/rp4JKuukDYKTuxTox81ZGnUjr+N4W6OyTFoSSXJobY9miAldij47Z
-         XskdK02EvZkyJKpDUxxdNMpAmnX26UdOKts1nOumtUqWt4p9c1pA34xJUIuON6BNAKN8
-         nvKA1eiMGDXTxn4ObhfOhe4hqagsLfXtKFqtxNmsqXDBtEUUM4ZGP1IzVQMB70JIynxe
-         4td5G+elUKoc4aHbc5fHoMhc2sSjaTVqDRUvKQ74t63fhEJ4VgC2psoDLhZSFom3l9Yq
-         GxYA==
-X-Gm-Message-State: AFqh2kpxnyAefyLnRvM1Cd20PyFzmAMfH9mTe+wAGTw4IVqykys9JOiR
-        UyfBJqpU/D58qG8bJk0/P7DRvg==
-X-Google-Smtp-Source: AMrXdXvp8hy99LqbYoteOM90Am/eEo/HgHBQWWXXYRic5vTpFMq2hhBNwBimm+r/63GraZGxPXd1DA==
-X-Received: by 2002:a05:6a20:b925:b0:9d:efbf:8156 with SMTP id fe37-20020a056a20b92500b0009defbf8156mr28765714pzb.31.1674004742127;
-        Tue, 17 Jan 2023 17:19:02 -0800 (PST)
-Received: from judyhsiao0523.c.googlers.com.com (21.160.199.104.bc.googleusercontent.com. [104.199.160.21])
-        by smtp.gmail.com with ESMTPSA id b3-20020a63d803000000b00477bfac06b7sm18014600pgh.34.2023.01.17.17.18.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Jan 2023 17:19:01 -0800 (PST)
-From:   Judy Hsiao <judyhsiao@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Judy Hsiao <judyhsiao@chromium.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Subject: [PATCH v4] arm64: dts: qcom: sc7280: add DP audio to herobrine rt5682 1-mic dtsi
-Date:   Wed, 18 Jan 2023 01:18:53 +0000
-Message-Id: <20230118011853.1614566-1-judyhsiao@chromium.org>
-X-Mailer: git-send-email 2.39.0.314.g84b9a713c41-goog
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hCw2/tRfMHxdziYE7u5XMHonH7hwIjkmwIJuVfBRNWc=;
+        b=yDj7/Pwi/CLiDLRr1SxDgRhhZ/vphVk6+SeqkRLq/S+NJIq3MabEUJIj1dhiFJOC4X
+         AqmWJDJueARc/qTLjErlGOHRapCh7Tw8oYFywUCuyb9VYptp4D2oODpJyXpg6skwh/Cw
+         6mIYtIvWxKMa1wElUMk1PNZb8JpbP6MK7ibvHdui6Q3pdFdVNHotFjyuS+tuiW50BCNt
+         fpjUemMEKTT7IGm9dX3kzOibQ5Os6TnGfpLlWRfKbeg3XDXMM8Je1KAFkR5vqkp5wMoA
+         K5CcRcY+1kh8VJLujsHRAUk9JCBivrrVT0vxDf0+UUC5SWIsSP4C9MhAeJKO9/gu5cCY
+         6wjw==
+X-Gm-Message-State: AFqh2ko1ldvY+BfKtI+zqv6jvzsDr7+HIpH2xwUlCyn+gEYdjVGISwl0
+        nd64sPwDhP5pkUv8AxnxTUdOIQ==
+X-Google-Smtp-Source: AMrXdXsas82xe4F5cGHedGjetCtbabIxMQUCoeuWsYdgrdP89CeJeAfXys09rvlr0gPpyI7oo6dygw==
+X-Received: by 2002:a17:907:6294:b0:86a:1afa:6dd8 with SMTP id nd20-20020a170907629400b0086a1afa6dd8mr26337861ejc.69.1674005075726;
+        Tue, 17 Jan 2023 17:24:35 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id fn4-20020a1709069d0400b0084d4b907ff8sm10941430ejc.120.2023.01.17.17.24.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 Jan 2023 17:24:35 -0800 (PST)
+Message-ID: <b9fa44e8-3387-df90-7997-cac74312cb3b@linaro.org>
+Date:   Wed, 18 Jan 2023 03:24:34 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH v2] drm/msm: Add missing check and destroy for
+ alloc_ordered_workqueue
+Content-Language: en-GB
+To:     Jiasheng Jiang <jiasheng@iscas.ac.cn>, robdclark@gmail.com,
+        quic_abhinavk@quicinc.com, sean@poorly.run, airlied@gmail.com,
+        sumit.semwal@linaro.org, christian.koenig@amd.com
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+        linaro-mm-sig@lists.linaro.org, freedreno@lists.freedesktop.org
+References: <20230109022038.2163-1-jiasheng@iscas.ac.cn>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230109022038.2163-1-jiasheng@iscas.ac.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-1. Add DisplayPort sound node and lpass_cpu node.
+On 09/01/2023 04:20, Jiasheng Jiang wrote:
+> Add check for the return value of alloc_ordered_workqueue as it may return
+> NULL pointer.
+> Moreover, use the destroy_workqueue in the later fails in order to avoid
+> memory leak.
+> 
+> Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+> ---
+> Changelog:
+> 
+> v1 -> v2:
+> 
+> 1. Convert "goto err_destroy_workqueue" into "goto err_msm_unit" and
+> remove "err_destroy_workqueue" label.
+> ---
+>   drivers/gpu/drm/msm/msm_drv.c | 6 ++++--
+>   1 file changed, 4 insertions(+), 2 deletions(-)
 
-2. Adjust the dai-link order to make the order to
-   be consistent with sc7280-herobrine-audio-rt5682-3mic.dtsi.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-
----
-
-Changes in v4:
-- Fix the subject.
-
-Changes in v3:
-- Add more detail in the commit message.
-
-Changes in v2:
-- Fix the commit message format.
-
- .../qcom/sc7280-herobrine-audio-rt5682.dtsi   | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi
-index af685bc35e10..69e7aa7b2f6c 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audio-rt5682.dtsi
-@@ -33,9 +33,22 @@ codec {
- 		};
- 
- 		dai-link@1 {
--			link-name = "ALC5682";
-+			link-name = "DisplayPort";
- 			reg = <1>;
- 
-+			cpu {
-+				sound-dai = <&lpass_cpu LPASS_DP_RX>;
-+			};
-+
-+			codec {
-+				sound-dai = <&mdss_dp>;
-+			};
-+		};
-+
-+		dai-link@2 {
-+			link-name = "ALC5682";
-+			reg = <2>;
-+
- 			cpu {
- 				sound-dai = <&lpass_cpu MI2S_PRIMARY>;
- 			};
-@@ -92,6 +105,10 @@ dai-link@1 {
- 		reg = <MI2S_SECONDARY>;
- 		qcom,playback-sd-lines = <0>;
- 	};
-+
-+	dai-link@5 {
-+		reg = <LPASS_DP_RX>;
-+	};
- };
- 
- /* PINCTRL - ADDITIONS TO NODES IN PARENT DEVICE TREE FILES */
 -- 
-2.39.0.314.g84b9a713c41-goog
+With best wishes
+Dmitry
 
