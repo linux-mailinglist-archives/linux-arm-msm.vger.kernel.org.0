@@ -2,132 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B37C6672C96
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 00:30:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4391B672CA9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 00:34:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229644AbjARXaL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 18:30:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43134 "EHLO
+        id S229995AbjARXec (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 18:34:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44760 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229620AbjARXaK (ORCPT
+        with ESMTP id S229540AbjARXe3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 18:30:10 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 373AC4AA52
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 15:30:09 -0800 (PST)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30IMatu4008315;
-        Wed, 18 Jan 2023 23:30:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=suT+BfuPsIxiBMLN9h/qNHf8aeCdZyBgoyNb44c9T7c=;
- b=eOulEh0YC50sK20oJaXAqiuohmH2co9La//DtXLBJ3jfuEVu5YpB+fIMq0rlrRINxtjU
- dSGb6+P5xd7f6+G5k0YblYLs9Mn3f4NsOsGLUnAMyogKeJl9LASeUlOBf1niIkO33Rtb
- Wr3Cq1sudN1BT9Bs6lg4oI2ME9LA1/hVW+HVOSUIau5tDiSr7L9PFa2Nrqj5EmzQnrEd
- 9L1SqKhlx6ViBTx/LqQUhvcD3WKUennG368WPuUAbFkPaZFXZ3SZqFuRE0LC9nWzY/qh
- kwfupNCjskrk2LXY7hOF+uL/2y99y9Uy86CnTHIXQfg+kXY8VCYPtu4mBx6Oc6w0F4Pb SQ== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n6debspk1-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 18 Jan 2023 23:30:06 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30INU5xq008268
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 18 Jan 2023 23:30:05 GMT
-Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 18 Jan
- 2023 15:30:04 -0800
-Message-ID: <c4109940-b2a6-259a-ef27-aa0edb339d88@quicinc.com>
-Date:   Wed, 18 Jan 2023 15:30:04 -0800
+        Wed, 18 Jan 2023 18:34:29 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE6E162D16
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 15:34:27 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id z5so208772wrt.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 15:34:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=rMcqZ9jlkTT/EnrqF50abWmD/pX2w5h3KsRPUL/teDU=;
+        b=Y49gmAzSIBUA2llk6gPqPtLMmlGrwJKyK+EeFI0U8GSsIQfAl34R5XnojOqbtuXD+S
+         NLZXrdKqM1bUrcVGZaivKOzBbuJANCHPAo2OgbEi0yjlKGNCNJzZtkmHj/Vf93SLxFW+
+         KaN3eLK+byjKqiIlD/S9KVD5W1upBFM5mi4Vd0rsYn4ZN5EvIP36fHoCbZiQBZr6XqMd
+         Uc7vMoTKhLbS5k6LpADOLPanKsuhX6z7Kn/Gg6XSsEQ8Jcw/e6uR/6760dtToiYkq+8D
+         MzBetbGrh8uX4YGfLnOvJ1GmVQ2rGjX3FWVgoCIl0H02XNeKwpEfQh8/YV6eVJw5zXAB
+         T6rg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rMcqZ9jlkTT/EnrqF50abWmD/pX2w5h3KsRPUL/teDU=;
+        b=C1KtYOKHBUVgXOMt+Gzs9JzDOxB2HFsoSAjkUbq22PkslIxR7D4g57KH7cqcbJo0HK
+         KVY1MNr3EO226O4gSXnZUCWMOMsJaSTMjnq9MFl8z2mt5Ru6UoAQtvFASuxr1+uKWjh2
+         4XiOlUJV95AyeiAPbdqFpZW38L73kml7BdRTuJ4wJr9xnPI0cUgrk3IrdHYQOfm1RVqS
+         UGwSEijgmdRBnif7UrA7ZKWZ0IlqTnYkuYQ8dn9sLgO9fsCR3Nx5fRjE0NUspxDSXRu7
+         2wb+seLrXZSRWrYNwHOgIvrbvaSQJFzqHIb5bNnn1kTFqebJCiz9toSUVPtMWRNG6IXF
+         bohg==
+X-Gm-Message-State: AFqh2koZR+OwgcxZ90A1d7vVAnjMQlOlagKP3CnQDTrzF2HS8fNZmNRY
+        kks+xZC3p6eNJlz//J/z93GZBA==
+X-Google-Smtp-Source: AMrXdXuJIDrIOSPo/0awstKU4JLPlOV9/gPSywgl2jxeexFxWtosMGtgICO1AqeVXnL18yQT8mYmXg==
+X-Received: by 2002:a5d:4532:0:b0:2bd:dc1a:cbd8 with SMTP id j18-20020a5d4532000000b002bddc1acbd8mr7486793wra.57.1674084866399;
+        Wed, 18 Jan 2023 15:34:26 -0800 (PST)
+Received: from linaro.org ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id v14-20020adff68e000000b002365730eae8sm32569664wrp.55.2023.01.18.15.34.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Jan 2023 15:34:25 -0800 (PST)
+Date:   Thu, 19 Jan 2023 01:34:24 +0200
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Johan Hovold <johan@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v3 8/8] phy: qcom-qmp-pcie: Add support for SM8550 g3x2
+ and g4x2 PCIEs
+Message-ID: <Y8iCAPOyrYXd7e/3@linaro.org>
+References: <20230118005328.2378792-1-abel.vesa@linaro.org>
+ <20230118005328.2378792-9-abel.vesa@linaro.org>
+ <7fe0c49e-a628-8e76-8294-ab8faadb3a70@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH v2] drm/msm/dpu: Reapply CTM if modeset is needed
-Content-Language: en-US
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        <freedreno@lists.freedesktop.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <robdclark@gmail.com>, <seanpaul@chromium.org>,
-        <swboyd@chromium.org>, <dmitry.baryshkov@linaro.org>,
-        <quic_kalyant@quicinc.com>
-References: <20230118164103.325-1-quic_jesszhan@quicinc.com>
- <6f08ad96-8d55-2a46-e5fa-5f4c7f89ec88@quicinc.com>
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <6f08ad96-8d55-2a46-e5fa-5f4c7f89ec88@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: bnWdmkcNgvRRVhxv57jU_8blYSpgK4xE
-X-Proofpoint-ORIG-GUID: bnWdmkcNgvRRVhxv57jU_8blYSpgK4xE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-18_05,2023-01-18_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 mlxlogscore=990 adultscore=0 bulkscore=0 spamscore=0
- lowpriorityscore=0 phishscore=0 suspectscore=0 impostorscore=0
- clxscore=1015 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301180194
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7fe0c49e-a628-8e76-8294-ab8faadb3a70@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 1/18/2023 11:29 AM, Abhinav Kumar wrote:
+On 23-01-18 06:34:41, Dmitry Baryshkov wrote:
+> On 18/01/2023 02:53, Abel Vesa wrote:
+> > Add the SM8550 both g4 and g3 configurations. In addition, there is a
+> > new "lane shared" table that needs to be configured for g4, along with
+> > the No-CSR list of resets.
+> > 
+> > Co-developed-by: Neil Armstrong <neil.armstrong@linaro.org>
+> > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > ---
+> >   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 369 +++++++++++++++++++++++
+> >   1 file changed, 369 insertions(+)
+> > 
+> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> > index bffb9e138715..6f82604bd430 100644
+> > --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> > +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> > @@ -1506,6 +1506,234 @@ static const struct qmp_phy_init_tbl sm8450_qmp_gen4x2_pcie_ep_pcs_misc_tbl[] =
+> >   	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_PCIE_OSC_DTCT_MODE2_CONFIG5, 0x08),
+> >   };
 > 
-> 
-> On 1/18/2023 8:41 AM, Jessica Zhang wrote:
->> Add a !drm_atomic_crtc_needs_modeset() check to
->> _dpu_crtc_setup_cp_blocks() so that CTM is reapplied if the LM/DSPP
->> blocks were reallocated during modeset.
-> 
-> This was in addition to the suspend/resume case.
-> 
-> So CTM needs to be reapplied in case of suspend/resume OR LM/DSPP block 
-> reallocation.
-> 
-> To cover both of these we are adding the needs_modeset check
+> I see that the last two patches still use 'shrd' a lot. Does this correspond
+> to hw register names or is it just a vendor kernel code convention?
 
-Hi Abhinav,
-
-Acked. Will add back mention of suspend/resume case.
-
-Thanks,
-
-Jessica Zhang
+It corresponds to the hw register names..
 
 > 
->>
->> Changes in V2:
->> - Fixed commit message
->>
->> Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/23
->> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
->> ---
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
->> index 13ce321283ff..aa120a230222 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
->> @@ -748,7 +748,7 @@ static void _dpu_crtc_setup_cp_blocks(struct 
->> drm_crtc *crtc)
->>       int i;
->> -    if (!state->color_mgmt_changed)
->> +    if (!state->color_mgmt_changed && 
->> !drm_atomic_crtc_needs_modeset(state))
->>           return;
->>       for (i = 0; i < cstate->num_mixers; i++) {
+> -- 
+> With best wishes
+> Dmitry
+> 
