@@ -2,75 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B2E9E671F96
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 15:29:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 56A9A671FA4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 15:33:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231236AbjARO3P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 09:29:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58460 "EHLO
+        id S231270AbjAROdM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 09:33:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229772AbjARO2y (ORCPT
+        with ESMTP id S231206AbjAROcp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 09:28:54 -0500
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A518298F2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 06:15:44 -0800 (PST)
-Received: by mail-ej1-x635.google.com with SMTP id mg12so11225154ejc.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 06:15:44 -0800 (PST)
+        Wed, 18 Jan 2023 09:32:45 -0500
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 027131E5EE
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 06:21:08 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id vw16so20451914ejc.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 06:21:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=GdcrXBW2MtYoLFVY9wCMCVpizC+Njw3MsYjn9jDyc/o=;
-        b=RB/YGMXSb9wj8Og+DZdsXMUzp3Ir4wtmJ7x+U7HVoknku5DSE/DHjV9KOq6FuV/Uo4
-         8mttHM06RNyisoQ8/Eb6esz3avzeaLM02yKoItQiidPOliAiEogLlVJVpphb3/L5LuMp
-         DnajvT+5huNOZK5wz8hvuKFEru250OgRYkXkdIGackFvV2hTEsDcg/BIlBqYHJ+ywkR7
-         4pFNhijqfvdDJqQFB4zfPByKtibD3vn43SUDENxZbWdGwjV7zgJ7iKvgVIQuAQCU6TUD
-         Pf2QKxlee+QENlLtSDz4V0gibVjfCEfbEwbTZ0j8ItIFapnTUaR9qFEByvDoCWadxuug
-         dGqA==
+        bh=33e6GgoXuh4+eRQrB35G/on3xqyiWTKOBlZuPx8InNI=;
+        b=Sb/PUPXAYas7wvDGn0+GrQNUMREqJ/xfUq7WdEavD1gxG55WsyzZG+i2xH+UlPg+vn
+         nPJLzTQd0D8IJPcT1ju6sIU7WgU3EOmTH9TKw8qXhrOmzsTnDfBkU3NR2XBMST66J+1E
+         /cFNop0pxpv3vfviyatW+1lwUcn5OTeX3g9VkWJALfYdz/dQoxfYVXPctyP+dGhZ2hKg
+         vnSlYmw6Iq4QeaOKnhbBjVZOHXvqDtKXGZHYkPaFQF0be+T1+HGVW0oKEHTlPSr7a1ai
+         h/AUYZJLKrB5z3Ch8t43jSV/hNvkIAS1S3dnXj9zGGN4PMu1ZMZ4szRZ3/Kq2M82znuu
+         9Klw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GdcrXBW2MtYoLFVY9wCMCVpizC+Njw3MsYjn9jDyc/o=;
-        b=j6OKT+OmNDCpCtMc5Yns5drrOwirwBaepPI2vq1I2Sg4YRPOEFq3UMUYSCsqgM2+xp
-         BgCIQJkVY+Bq2XiMPHcSFxgAHh7q1b3v+j7QPELwKcPkiEVZdCmx3sPd89On4rNtt5xs
-         TBWJsSXP113g9QGPBqFveqoeN82MdLb48t4bNirzQxRz15+xA2GiJYipfQThnq1WYQSZ
-         bF1uCiYkYMhL1Iw3gyqFoW8IsaLi6LauqfXAsJTEn7pnv4JsM/gyzQjR3aq6bZKv5ZhZ
-         +aih/ce+GK6lrAmZKpmIfoSGBhCq9jBTTb/kfcf0SEhd8ZIsXVPyP6kgNbCD0AuY2Mbt
-         8FHA==
-X-Gm-Message-State: AFqh2kqRnUxKNh73vnEANL2anqiiEaH/B3Ek9iN0KmHK5vkIZjeyR9kV
-        kGRNAn2pOePJ8jJrQD12ARGVbQ==
-X-Google-Smtp-Source: AMrXdXsIKT861wAEvSPGjUCBEBtzhIh9JueOVO76XSoFaU14eREu4Bux4PhbSbZOwXnl4aiLRBl3Zg==
-X-Received: by 2002:a17:906:348b:b0:84d:3a95:cdf9 with SMTP id g11-20020a170906348b00b0084d3a95cdf9mr7190429ejb.50.1674051342794;
-        Wed, 18 Jan 2023 06:15:42 -0800 (PST)
+        bh=33e6GgoXuh4+eRQrB35G/on3xqyiWTKOBlZuPx8InNI=;
+        b=zR8hBFvz48RJ2HHZ9zZYDNeBbo/MXZIP0BfL8GYtkMmCp++4mzZIWD/2nxyFOhtsIr
+         GdCwqway7eiopjb0wk83OWBVgapwgEOSZMBPUU16tI3aFqZUTIY/WPpz7B00AIAlkwhN
+         cHXsjLVyiSwjK2qFquQIGGYfziOi09QBkhALYonGpjbshurJ4FV83p+wP3C64huvRdvr
+         DlQ+i9I0Nev6cxc0e19u4T6KQyHy2ddTpY5z0PteOcWBNi9zjtD/gPc2YDAbXIY6WHEU
+         AOks+T17mI1QnKcYV5lMo168/dSaQfSTsppdZz2T1IQomjHZLViNFHGGnZHQwlxboKni
+         JG6A==
+X-Gm-Message-State: AFqh2kr52OQSBa1q41sX/pR5Ke9tdVGPCVfJLByu/Zc9D5WQXMNaxHw4
+        s156I98/ow9sOpRe4QRgNZp/2Q==
+X-Google-Smtp-Source: AMrXdXtCAxv+2l1VlAteHKGFEAdd3zSyCQ73cImzSL4Y5Ql4b+9mRf0+X/Wf6Zyd5AeIviKMsaZVig==
+X-Received: by 2002:a17:906:1605:b0:870:2f70:c631 with SMTP id m5-20020a170906160500b008702f70c631mr9104735ejd.2.1674051666578;
+        Wed, 18 Jan 2023 06:21:06 -0800 (PST)
 Received: from [192.168.1.101] (abxh252.neoplus.adsl.tpnet.pl. [83.9.1.252])
-        by smtp.gmail.com with ESMTPSA id 9-20020a170906318900b0080c433a9eeesm14695321ejy.182.2023.01.18.06.15.41
+        by smtp.gmail.com with ESMTPSA id h10-20020a1709070b0a00b0084d4e9a13cbsm11599021ejl.221.2023.01.18.06.21.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Jan 2023 06:15:42 -0800 (PST)
-Message-ID: <9855fd94-d6a2-9a34-d6f7-e548e1a75550@linaro.org>
-Date:   Wed, 18 Jan 2023 15:15:40 +0100
+        Wed, 18 Jan 2023 06:21:06 -0800 (PST)
+Message-ID: <671e8d1d-d41b-5747-540f-9174b12ffb4b@linaro.org>
+Date:   Wed, 18 Jan 2023 15:21:02 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
-Subject: Re: drm/msm/dsi: correct byte intf clock rate for 14nm DSI PHY
+Subject: Re: [PATCH v2 3/7] clk: qcom: cbf-msm8996: scale CBF clock according
+ to the CPUfreq
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     freedreno@lists.freedesktop.org,
-        Loic Poulain <loic.poulain@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        dri-devel@lists.freedesktop.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@gmail.com>
-References: <20230118130027.2345719-1-dmitry.baryshkov@linaro.org>
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20230117225824.1552604-1-dmitry.baryshkov@linaro.org>
+ <20230117225824.1552604-4-dmitry.baryshkov@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230118130027.2345719-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230117225824.1552604-4-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -84,117 +85,200 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 18.01.2023 14:00, Dmitry Baryshkov wrote:
-> According to the vendor kernel, byte intf clock rate should be a half of
-> the byte clock only when DSI PHY version is above 2.0 (in other words,
-> 10nm PHYs and later) and only if PHY is used in D-PHY mode. Currently
-> MSM DSI code handles only the second part of the clause (C-PHY vs
-> D-PHY), skipping DSI PHY version check, which causes issues on some of
-> 14nm DSI PHY platforms (e.g. qcm2290).
+On 17.01.2023 23:58, Dmitry Baryshkov wrote:
+> Turn CBF into the interconnect provider. Scale CBF frequency (bandwidth)
+> according to CPU frequencies.
 > 
-> Move divisor selection to DSI PHY code, pass selected divisor through
-> shared timings and set byte intf clock rate accordingly.
-> 
-> Cc: Loic Poulain <loic.poulain@linaro.org>
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
+>  drivers/clk/qcom/clk-cbf-8996.c | 141 +++++++++++++++++++++++++++++++-
+>  1 file changed, 140 insertions(+), 1 deletion(-)
 > 
-> This patch is a reimplementation of [1] in a slightly more flexible way.
-> 
-> [1] https://patchwork.kernel.org/project/linux-arm-msm/patch/1642586079-12472-1-git-send-email-loic.poulain@linaro.org/
-> 
-> ---
-Tested-by: Konrad Dybcio <konrad.dybcio@linaro.org> # SM6115P J606F
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Interestingly enough, this seems to somehow solve the issue
-where I had to manually set the brightness again after the
-first frame transfer or get a black screen otherwise.. 
-
-Konrad
->  drivers/gpu/drm/msm/dsi/dsi.h         |  1 +
->  drivers/gpu/drm/msm/dsi/dsi_host.c    | 14 ++++++--------
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy.c |  4 ++++
->  3 files changed, 11 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
-> index 1a551cc0e889..bd3763a5d723 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi.h
-> +++ b/drivers/gpu/drm/msm/dsi/dsi.h
-> @@ -141,6 +141,7 @@ struct msm_dsi_phy_shared_timings {
->  	u32 clk_post;
->  	u32 clk_pre;
->  	bool clk_pre_inc_by_2;
-> +	bool byte_intf_clk_div_2;
+> diff --git a/drivers/clk/qcom/clk-cbf-8996.c b/drivers/clk/qcom/clk-cbf-8996.c
+> index 9cde0e660228..9e30311a310b 100644
+> --- a/drivers/clk/qcom/clk-cbf-8996.c
+> +++ b/drivers/clk/qcom/clk-cbf-8996.c
+> @@ -5,6 +5,7 @@
+>  #include <linux/bitfield.h>
+>  #include <linux/clk.h>
+>  #include <linux/clk-provider.h>
+> +#include <linux/interconnect-provider.h>
+>  #include <linux/of.h>
+>  #include <linux/module.h>
+>  #include <linux/platform_device.h>
+> @@ -225,6 +226,133 @@ static const struct regmap_config cbf_msm8996_regmap_config = {
+>  	.val_format_endian	= REGMAP_ENDIAN_LITTLE,
 >  };
 >  
->  struct msm_dsi_phy_clk_request {
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index 7c21f2fba520..18fa30e1e858 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -122,6 +122,7 @@ struct msm_dsi_host {
->  	struct clk *byte_intf_clk;
->  
->  	unsigned long byte_clk_rate;
-> +	unsigned long byte_intf_clk_rate;
->  	unsigned long pixel_clk_rate;
->  	unsigned long esc_clk_rate;
->  
-> @@ -398,7 +399,6 @@ int msm_dsi_runtime_resume(struct device *dev)
->  
->  int dsi_link_clk_set_rate_6g(struct msm_dsi_host *msm_host)
+> +#ifdef CONFIG_INTERCONNECT
+> +struct qcom_msm8996_cbf_icc_provider {
+> +	struct icc_provider provider;
+> +	struct clk *clk;
+> +};
+> +
+> +#define to_qcom_cbf_provider(_provider) \
+> +	container_of(_provider, struct qcom_msm8996_cbf_icc_provider, provider)
+> +
+> +enum {
+> +	CBF_MASTER_NODE = 2000,
+Where did the 2000 come from?
+
+> +	CBF_SLAVE_NODE
+> +};
+> +
+> +#define CBF_NUM_NODES 2
+> +
+> +static int qcom_msm8996_cbf_set(struct icc_node *src, struct icc_node *dst)
+> +{
+> +	struct qcom_msm8996_cbf_icc_provider *qp;
+> +
+> +	qp = to_qcom_cbf_provider(src->provider);
+> +
+> +	return clk_set_rate(qp->clk, icc_units_to_bps(dst->peak_bw));
+> +}
+> +
+> +static int qcom_msm8996_cbf_icc_get_bw(struct icc_node *node, u32 *avg, u32 *peak)
+> +{
+> +	struct qcom_msm8996_cbf_icc_provider *qp;
+> +
+> +	qp = to_qcom_cbf_provider(node->provider);
+> +	*peak = clk_get_rate(qp->clk) / 1000ULL;
+> +
+> +	return 0;
+> +}
+> +
+> +static int qcom_msm8996_cbf_icc_register(struct platform_device *pdev, struct clk_hw *cbf_hw)
+> +{
+> +	struct device *dev = &pdev->dev;
+> +	struct qcom_msm8996_cbf_icc_provider *qp;
+> +	struct icc_provider *provider;
+> +	struct icc_onecell_data *data;
+> +	struct icc_node *node;
+> +	struct clk *clk;
+> +	int ret;
+> +
+> +	clk = devm_clk_hw_get_clk(dev, cbf_hw, "cbf");
+> +	if (IS_ERR(clk))
+> +		return PTR_ERR(clk);
+> +
+> +	data = devm_kzalloc(dev, struct_size(data, nodes, CBF_NUM_NODES), GFP_KERNEL);
+> +	if (!data)
+> +		return -ENOMEM;
+> +
+> +	data->num_nodes = CBF_NUM_NODES;
+> +
+> +	qp = devm_kzalloc(dev, sizeof(*qp), GFP_KERNEL);
+> +	if (!qp)
+> +		return -ENOMEM;
+> +
+> +	qp->clk = clk;
+> +
+> +	provider = &qp->provider;
+> +	provider->dev = dev;
+> +	provider->get_bw = qcom_msm8996_cbf_icc_get_bw;
+> +	provider->set = qcom_msm8996_cbf_set;
+> +	provider->aggregate = icc_std_aggregate;
+> +	provider->xlate = of_icc_xlate_onecell;
+> +	INIT_LIST_HEAD(&provider->nodes);
+> +	provider->data = data;
+> +
+> +	ret = icc_provider_add(provider);
+> +	if (ret) {
+> +		dev_err(dev, "error adding interconnect provider\n");
+> +		return ret;
+> +	}
+> +
+> +	node = icc_node_create(CBF_MASTER_NODE);
+> +	if (IS_ERR(node)) {
+> +		ret = PTR_ERR(node);
+> +		goto err;
+> +	}
+> +
+> +	node->name = "cbf_master";
+> +	icc_node_add(node, provider);
+> +	icc_link_create(node, CBF_SLAVE_NODE);
+> +	data->nodes[0] = node;
+> +
+> +	node = icc_node_create(CBF_SLAVE_NODE);
+> +	if (IS_ERR(node)) {
+> +		ret = PTR_ERR(node);
+> +		goto err;
+> +	}
+> +
+> +	node->name = "cbf_slave";
+> +	icc_node_add(node, provider);
+> +	data->nodes[1] = node;
+> +
+> +	platform_set_drvdata(pdev, provider);
+> +
+> +	return 0;
+> +
+> +err:
+> +	icc_nodes_remove(provider);
+> +	icc_provider_del(provider);
+> +
+> +	return ret;
+> +}
+> +
+> +static int qcom_msm8996_cbf_icc_remove(struct platform_device *pdev)
+> +{
+> +	struct icc_provider *provider = platform_get_drvdata(pdev);
+> +
+> +	icc_nodes_remove(provider);
+> +	icc_provider_del(provider);
+> +
+> +	return 0;
+> +}
+> +#else
+> +static int qcom_msm8996_cbf_icc_register(struct platform_device *pdev)
+> +{
+> +	dev_warn(&pdev->dev, "interconnects support is disabled, CBF clock is fixed\n");
+s/interconnects/interconnect
+
+Will cpufreq still work correctly with opp tables having bw
+properties, the nodes having icc properties and the icc provider
+not probing? And then, will the system not choke up with high CPU
+and inadequately low CBF clocks?
+
+Maybe `select INTERCONNECT_something_8996` would be better?
+
+Konrad
+> +
+> +	return 0;
+> +}
+> +#define qcom_msm8996_cbf_icc_remove(pdev) (0)
+> +#endif
+> +
+>  static int qcom_msm8996_cbf_probe(struct platform_device *pdev)
 >  {
-> -	unsigned long byte_intf_rate;
->  	int ret;
+>  	void __iomem *base;
+> @@ -283,7 +411,16 @@ static int qcom_msm8996_cbf_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		return ret;
 >  
->  	DBG("Set clk rates: pclk=%d, byteclk=%lu",
-> @@ -418,13 +418,7 @@ int dsi_link_clk_set_rate_6g(struct msm_dsi_host *msm_host)
->  	}
->  
->  	if (msm_host->byte_intf_clk) {
-> -		/* For CPHY, byte_intf_clk is same as byte_clk */
-> -		if (msm_host->cphy_mode)
-> -			byte_intf_rate = msm_host->byte_clk_rate;
-> -		else
-> -			byte_intf_rate = msm_host->byte_clk_rate / 2;
-> -
-> -		ret = clk_set_rate(msm_host->byte_intf_clk, byte_intf_rate);
-> +		ret = clk_set_rate(msm_host->byte_intf_clk, msm_host->byte_intf_clk_rate);
->  		if (ret) {
->  			pr_err("%s: Failed to set rate byte intf clk, %d\n",
->  			       __func__, ret);
-> @@ -2394,6 +2388,10 @@ int msm_dsi_host_power_on(struct mipi_dsi_host *host,
->  		goto unlock_ret;
->  	}
->  
-> +	msm_host->byte_intf_clk_rate = msm_host->byte_clk_rate;
-> +	if (phy_shared_timings->byte_intf_clk_div_2)
-> +		msm_host->byte_intf_clk_rate /= 2;
+> -	return devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get, &cbf_mux.clkr.hw);
+> +	ret = devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get, &cbf_mux.clkr.hw);
+> +	if (ret)
+> +		return ret;
 > +
->  	msm_dsi_sfpb_config(msm_host, true);
->  
->  	ret = regulator_bulk_enable(msm_host->cfg_hnd->cfg->num_regulators,
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> index 57445a5dc816..bb09cbe8ff86 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> @@ -350,6 +350,8 @@ int msm_dsi_dphy_timing_calc_v3(struct msm_dsi_dphy_timing *timing,
->  		timing->shared_timings.clk_pre_inc_by_2 = 0;
->  	}
->  
-> +	timing->shared_timings.byte_intf_clk_div_2 = true;
+> +	return qcom_msm8996_cbf_icc_register(pdev, &cbf_mux.clkr.hw);
+> +}
 > +
->  	timing->ta_go = 3;
->  	timing->ta_sure = 0;
->  	timing->ta_get = 4;
-> @@ -454,6 +456,8 @@ int msm_dsi_dphy_timing_calc_v4(struct msm_dsi_dphy_timing *timing,
->  	tmax = 255;
->  	timing->shared_timings.clk_pre = DIV_ROUND_UP((tmax - tmin) * 125, 10000) + tmin;
+> +static int qcom_msm8996_cbf_remove(struct platform_device *pdev)
+> +{
+> +	return qcom_msm8996_cbf_icc_remove(pdev);
+>  }
 >  
-> +	timing->shared_timings.byte_intf_clk_div_2 = true;
-> +
->  	DBG("%d, %d, %d, %d, %d, %d, %d, %d, %d, %d",
->  		timing->shared_timings.clk_pre, timing->shared_timings.clk_post,
->  		timing->clk_zero, timing->clk_trail, timing->clk_prepare, timing->hs_exit,
-> 
+>  static const struct of_device_id qcom_msm8996_cbf_match_table[] = {
+> @@ -294,9 +431,11 @@ MODULE_DEVICE_TABLE(of, qcom_msm8996_cbf_match_table);
+>  
+>  static struct platform_driver qcom_msm8996_cbf_driver = {
+>  	.probe = qcom_msm8996_cbf_probe,
+> +	.remove = qcom_msm8996_cbf_remove,
+>  	.driver = {
+>  		.name = "qcom-msm8996-cbf",
+>  		.of_match_table = qcom_msm8996_cbf_match_table,
+> +		.sync_state = icc_sync_state,
+>  	},
+>  };
+>  
