@@ -2,48 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 38007672D30
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 00:56:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3FFDD672D33
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 00:56:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230359AbjARX40 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 18:56:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60136 "EHLO
+        id S230298AbjARX4d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 18:56:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230259AbjARX4M (ORCPT
+        with ESMTP id S230317AbjARX4Y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 18:56:12 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73A5247435;
-        Wed, 18 Jan 2023 15:56:00 -0800 (PST)
+        Wed, 18 Jan 2023 18:56:24 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EF0A474E3;
+        Wed, 18 Jan 2023 15:56:02 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 0105F61ADD;
-        Wed, 18 Jan 2023 23:56:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6225C433F1;
-        Wed, 18 Jan 2023 23:55:58 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 9DE4FB81E12;
+        Wed, 18 Jan 2023 23:56:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A37DEC43392;
+        Wed, 18 Jan 2023 23:55:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1674086159;
-        bh=rB3uci14ZtarYdqY2ylJKrE1q8vmSrkvrEdGLhvpa/A=;
+        s=k20201202; t=1674086160;
+        bh=av5a60cd35yCZdEI7pA/z4YSR1zn18F8Hdbx0/dxol8=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=aQ+GZ/dUcW1DbG+bkcDe+4ckB4KCgKiLIInp4VA4HvcjsTleJ/HYmHQ/vTeG7WuAU
-         UjWKbus8/UM/fsHtQR1PRTsECEzHuyjbU6hNaCV33/mtnXQmad/7qM7Xsqk01d/P7h
-         vpQD1KoPmN42YT324M6rPQzpyi2pePOdNljb0XuxG/6DjwLt5FqAB0EXwXVUJ4LJo8
-         aL5hPEQUz1WrxPlM6C0niZvGzgPDDq20iNYDNYJrjOhMhBFtlkEeER2MN/NtqSNqQJ
-         WoYbA5M81fU+JbeMKUZL9XqEiOCVwx4FU9ne33280nigJSI1HpvFMwbFtSc6npN8Z/
-         AsCj0CqJjzMMw==
+        b=WZsZ4iHxkr4jraFHFcOEp/qwfCWwThSIzUQkKVPs21ClhTovwLN+XQVRKaDDLG/FI
+         JZLO1bZU1ylF9gRoQzOI82r0or5rub+I0mtM1rCLh0VPMh2FFVHcprGAKIig5bz92a
+         /zIsfKrHfdtc0Wt6qlYt9L1jFTI3rI1CotJCmC+MWCXRzd1uyY5+htsXZnYd/8eCJL
+         RFQiib1Mqb9LVv7ht+BJduczG29sOqtuWWHLg1LG8Yh1vK91/MGmgwZ7AuB47vUke1
+         gF8a5Hxb7Z+rv4GoV4UgjgXq0S1TcgWWSVl0SS0xM6b37KVW228eD/Aooqqees0/LQ
+         l02/P1NaF/xmg==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     agross@kernel.org, devicetree@vger.kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, konrad.dybcio@linaro.org,
-        rfoss@kernel.org
-Cc:     robert.foss@linaro.org
-Subject: Re: [PATCH v1] arm64: dts: qcom: sm8350: Use 2 interconnect cells
-Date:   Wed, 18 Jan 2023 17:55:43 -0600
-Message-Id: <167408614052.2989059.12874514471754492819.b4-ty@kernel.org>
+To:     stephan@gerhold.net
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Subject: Re: [PATCH 0/4] soc: qcom: socinfo: Add a bunch of older SoCs
+Date:   Wed, 18 Jan 2023 17:55:44 -0600
+Message-Id: <167408614061.2989059.3900500212019182555.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20230117115712.1054613-1-rfoss@kernel.org>
-References: <20230117115712.1054613-1-rfoss@kernel.org>
+In-Reply-To: <20230104115348.25046-1-stephan@gerhold.net>
+References: <20230104115348.25046-1-stephan@gerhold.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -56,18 +57,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 17 Jan 2023 12:57:11 +0100, rfoss@kernel.org wrote:
-> From: Robert Foss <robert.foss@linaro.org>
+On Wed, 4 Jan 2023 12:53:44 +0100, Stephan Gerhold wrote:
+> Sync the SoC IDs in qcom,ids.h with relevant entries from Qualcomm's LK
+> bootloader that is used for almost all older Qualcomm SoCs. This is
+> meant to reduce the effort for future SoC bring-up (to avoid having to
+> send a separate patch series for each new SoC) and will also benefit
+> other projects using the same dt-bindings, e.g. bootloaders where
+> adding support for all these SoCs is a bit easier than on Linux.
 > 
-> Use two interconnect cells in order to optionally
-> support a path tag.
-> 
-> 
+> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: sm8350: Use 2 interconnect cells
-      commit: 4f287e31ff5f464526651ee3cb3fd3e96b2e5746
+[1/4] soc: qcom: socinfo: Fix soc_id order
+      commit: 017a7c11a8a29e266aa40c6d1bf2ba83f880f719
+[2/4] dt-bindings: arm: qcom,ids: Add QRD board ID
+      commit: 8b949c0e2ce59c376818bc3f80db4b94b06981b7
+[3/4] dt-bindings: arm: qcom,ids: Add a bunch of older SoCs
+      commit: 56abffc793befb19f30ec9d4bec24343529377f1
+[4/4] soc: qcom: socinfo: Add a bunch of older SoCs
+      commit: 40017cebb111eed65bddfa993df7b0636be98de8
 
 Best regards,
 -- 
