@@ -2,97 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F4EF6721A0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 16:43:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C52067224B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 17:01:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229515AbjARPnw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 10:43:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49776 "EHLO
+        id S229734AbjARQBa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 11:01:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229752AbjARPnu (ORCPT
+        with ESMTP id S231332AbjARQAE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 10:43:50 -0500
-Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A3497298;
-        Wed, 18 Jan 2023 07:43:49 -0800 (PST)
-Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-1442977d77dso35871547fac.6;
-        Wed, 18 Jan 2023 07:43:49 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ukaT+V3Vb1FjUPkT6hZm3l611ylAlOtjFyDVedo3F+c=;
-        b=YbSsy/aAF744r07bnAc2GEEzS5HihZmK81pW03rHMdEvBjKaHoll65YUoS1ML+mnOo
-         SfDhmyvM8GZd5LgM2nX2HNTpReojP3C5drz7SUKTOjDmVob7Czsjcbd1nWbTXpVRb+Q+
-         E1fy2zKr7AbaoZXLt33ZHGGit/7FzbqVAC8QwAfl8RWE8OPBH7WUlPtg0ueaINSxLwAO
-         klNuliDw9wYsaXP/fj1TTGrV8jRFy+KuMLsq2eiCuNs0tWVRdlfQGgRgfqRhi9s8Sivo
-         t2UU8AtTmFjd5BzyOvZP7GRbaewjayT8J1hbmRJz2QAKQQ5fKNLe0IqcKZT7HtrEARLX
-         dhPA==
-X-Gm-Message-State: AFqh2krDTWf8+lJmVmg6zy1FTf7Yfv6+hKLYav8vjqMf0SzPFQQXM9cv
-        SVWRAT7ZaOSkSrpu5hl/hA==
-X-Google-Smtp-Source: AMrXdXslFOXnulpQe6RkBP46QyXxTX6HLS26sNC2/1L4zrMl2+ezht2EDmducLgMXaHjrnnLaD3ijg==
-X-Received: by 2002:a05:6871:1c9:b0:15b:96af:50ac with SMTP id q9-20020a05687101c900b0015b96af50acmr3913424oad.29.1674056628728;
-        Wed, 18 Jan 2023 07:43:48 -0800 (PST)
-Received: from robh_at_kernel.org ([4.31.143.193])
-        by smtp.gmail.com with ESMTPSA id r10-20020a05687032ca00b0014ff15936casm18355779oac.40.2023.01.18.07.43.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Jan 2023 07:43:48 -0800 (PST)
-Received: (nullmailer pid 54719 invoked by uid 1000);
-        Wed, 18 Jan 2023 15:43:47 -0000
-Date:   Wed, 18 Jan 2023 09:43:47 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     dri-devel@lists.freedesktop.org, Andy Gross <agross@kernel.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Stephen Boyd <swboyd@chromium.org>, devicetree@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Wed, 18 Jan 2023 11:00:04 -0500
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9533A37544;
+        Wed, 18 Jan 2023 07:57:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1674057432; x=1705593432;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=DkJy9b3JAxxLyt2nl0Vw3miTgnaruYcbY3qIyzZgzDU=;
+  b=Xvm2bZZ/5kXFor7w3N9zSRnHWla7iTMlrmH60HSKnxUZPCXBZ9SBAukj
+   a+p2si6+7HIrmEDSr6RE4967/mJJFyj52fDg66wqjEqsKPI2Gq/Sest8m
+   U168oxs0hegtMaMddL9ZMxF9dxzQ6juHa4lDSpxWspFsUhaUQU/muPovD
+   WSwJ0hPuR9pfDnd9J51NQVspRFO8sOy4wdIVL8hQvHPecCNCclew3RZqW
+   XMsTzpk5o/HmVMNE0zptlKCi+CVXpv64XGfhNnSebG/deiTxvclKuDB3T
+   ymaaL1JHxHjtyBnOjlrIsEwIv1qsFJ8jgL3yHEsVJoAuaCX/6iTJemIab
+   Q==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10594"; a="323699437"
+X-IronPort-AV: E=Sophos;i="5.97,226,1669104000"; 
+   d="scan'208";a="323699437"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jan 2023 07:57:12 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10594"; a="659845668"
+X-IronPort-AV: E=Sophos;i="5.97,226,1669104000"; 
+   d="scan'208";a="659845668"
+Received: from smile.fi.intel.com ([10.237.72.54])
+  by orsmga002.jf.intel.com with ESMTP; 18 Jan 2023 07:57:08 -0800
+Received: from andy by smile.fi.intel.com with local (Exim 4.96)
+        (envelope-from <andriy.shevchenko@linux.intel.com>)
+        id 1pIAoE-00BFsU-1a;
+        Wed, 18 Jan 2023 17:57:06 +0200
+Date:   Wed, 18 Jan 2023 17:57:06 +0200
+From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+        Nuno =?iso-8859-1?Q?S=E1?= <nuno.sa@analog.com>,
+        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Daniel Vetter <daniel@ffwll.ch>
-Subject: Re: [PATCH v7 04/11] dt-bindings: display/msm: rename mdss nodes to
- display-subsystem
-Message-ID: <167405662664.54658.957028337731224500.robh@kernel.org>
-References: <20230118041243.1720520-1-dmitry.baryshkov@linaro.org>
- <20230118041243.1720520-5-dmitry.baryshkov@linaro.org>
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>
+Subject: Re: [PATCH v2 1/1] iio: adc: qcom-spmi-adc5: Fix the channel name
+Message-ID: <Y8gW0msz0KwkpQaA@smile.fi.intel.com>
+References: <20230118100623.42255-1-andriy.shevchenko@linux.intel.com>
+ <20230118123528.oaxtjbdier3ojd3m@SoMainline.org>
+ <Y8fyonSp49QoAb8v@smile.fi.intel.com>
+ <20230118140423.y4ogqdkyti7vcwaz@SoMainline.org>
+ <Y8gCRECOja+FxRsf@smile.fi.intel.com>
+ <20230118152121.blb74eplrqz5rww2@SoMainline.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230118041243.1720520-5-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+In-Reply-To: <20230118152121.blb74eplrqz5rww2@SoMainline.org>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Jan 18, 2023 at 04:21:21PM +0100, Marijn Suijten wrote:
+> On 2023-01-18 16:29:24, Andy Shevchenko wrote:
+...
+> > The devm_kstrdup(fwnode_get_name()) is an open coded variant of the above.
+> > I don't think we need to open code and produce NIH even a single API. And
+> > no, there is no magic behind that. At least from the fwnode point of view.
+> > 
+> > You may very well say that > 1500 instances of "%pOF" is a magic...
+> 
+> Forgive me for not having a clear definition of "open coding" in mind
+> (showing a different way of implementing something, compared to the
+> "status quo" that I was not yet aware of?), nor knowing what NIH is
+> supposed to mean in this context.
 
-On Wed, 18 Jan 2023 06:12:36 +0200, Dmitry Baryshkov wrote:
-> Follow the 'generic names' rule and rename mdss nodes to
-> display-subsystem.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-> 
-> Note, this patch might generate warnings in qcom,sm6115-mdss and
-> qcom,qcm2290-mdss examples, but they have been fixed by the commit
-> e5266ca38294 ("dt-bindings: display: msm: Rename mdss node name in
-> example")
-> 
-> See https://gitlab.freedesktop.org/drm/msm/-/commit/e5266ca38294
-> 
-> 
-> ---
->  .../devicetree/bindings/display/msm/mdss-common.yaml      | 8 ++++++++
->  .../devicetree/bindings/display/msm/qcom,mdss.yaml        | 5 ++++-
->  2 files changed, 12 insertions(+), 1 deletion(-)
-> 
+"open coding" means to have a copy of the function of macro that is already
+implemented and available (even if it's private to some driver or module,
+we always can move it to the generic module and header).
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+NIH: Not Invented Here.
+
+> We're in bike-shedding territory
+> anyway, guess I should just bookmark the page that details all the many
+> `%` format strings available.
+
+True :-)
+
+...
+> > > I find the latter clearer as it doesn't require the reader to figure out
+> > > that name - name cancels itself out.  Alternatively we can write
+> > > strchrnul(name, '@')[0].
+> > 
+> > I don't like to have Pythonisms in the C code, really.
+> > 
+> > P.S. I guess this little patch already emptied my bandwidth, so I leave
+> > any further discussion to you and IIO maintainers. Thank you for the
+> > review!
+> 
+> Just soaking up kernel coding standards here :)
+
+Right.
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
+
