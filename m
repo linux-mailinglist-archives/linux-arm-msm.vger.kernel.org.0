@@ -2,63 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4DF1C671E05
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 14:36:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D90B8671E1A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 14:39:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230345AbjARNgL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 08:36:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35372 "EHLO
+        id S229600AbjARNjG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 08:39:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38242 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229919AbjARNfj (ORCPT
+        with ESMTP id S229834AbjARNin (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 08:35:39 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66F58599B1;
-        Wed, 18 Jan 2023 05:03:55 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id C5F0BB81B79;
-        Wed, 18 Jan 2023 13:03:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A79FC433D2;
-        Wed, 18 Jan 2023 13:03:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1674047032;
-        bh=H9OnX6tOzIQ0Ao5RbA/08LRthWY8/pH4phATDneivAE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=EmwuKUzeMsYm71VpkSSqTqSYqnGqgW4bIsKRzXGreRemKLoaUthkjZjFqlWtBLbgw
-         t5eLf218/BN2dvC9hJ7niiPuCOHkSJlKL/K4hnoV8OXGysY36w0vvnYVCQdFLEkXeq
-         QJBcZWNFOsD2vXW1zqni75xmARVqbf0/zqzsSGxBHbym6z2LoaNhXCMUuM+NLo89id
-         tr/m5Jx2ol2BnRMk939km4gn5FFUhL/y45EeNDt6RrzSRUZSgmBOg+u5wlzqMX6BkL
-         jDhPsOjD0Z3g2iNvMIp+NRbZQG+NZ18DhEADzbEteV+7/S19cCWoBZyTlRj8mSR7o6
-         VfX0LmohFCt8w==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1pI86y-00063F-U2; Wed, 18 Jan 2023 14:04:16 +0100
-Date:   Wed, 18 Jan 2023 14:04:16 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Wed, 18 Jan 2023 08:38:43 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DC5A525A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 05:08:33 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id b5so12706951wrn.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 05:08:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=MhcLCYviwxqI/VsqmLVJgx9rPgKwghAfrMXFXyiVeMM=;
+        b=hrOFDURWILT2DqGWyL9qinjOdyZ41Inq585N9fqjmq4tMiNrg+7Aha4q8ZHKBnX9lH
+         alBoOGJvlNF7suTvXFO5bD/db6HrxjibcCiS9Cw+SJEyouu5KnZTrz3iyG2x+TKs0lhh
+         sjVN6TTkMIsyLFeNopOryUUDuAh68zZC3gZjXgnOkGr7eTw43nAAgE5l3Le2fXwxAf6c
+         1yZmRUp8LEeaexLfDKPMYGtnLXyM/DSwYPLZ7iGzOg9xrSCrjDsmdd8D+lBChVSYmpqN
+         PYLT27AbnmuiIUNtvyNKhkyr9A2hV0+v1QtEO7YIeOCLLx/PrpO7T1wcnomtoVLSM2cX
+         NT5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=MhcLCYviwxqI/VsqmLVJgx9rPgKwghAfrMXFXyiVeMM=;
+        b=UxE51JSbTx+wWgndadUstEJdXrEm0NMBkX/UvpkOpyTrxtqxKEksMP0pMsP91AeDuz
+         CF0orDh6gXL5+QPo4kq3GQGnyLHDwVLvGbR35j0w/siMEbljk9EinrnEv58oczF6GF6e
+         Y6S+TRU7OxKxvB7VeXGug2thqL6VosUoGMDs+qGcooi4kRpS1BlbrnT38o/tfw4yu2mh
+         jG/B16RrPYOum9Q5HULuUSYhFovm1Yc4jsPEvn3aZhzN/mBlV/qyJJgVIToy3s/KT8BD
+         wLGeZrv7qRCsUgCJCHKWF3ETjRdbRXmZWuIkzyFmE8oSKQuygUs5jvVf0Va7wd3N3xot
+         aNBQ==
+X-Gm-Message-State: AFqh2kqpXa/nGBJW5K3gqtp+Ltj11isuHA4NzkDp/kX4rCMxdyzZQbQK
+        iCQ632ReHo+qvY9qRjGuqRX42PjAO1gECcbg
+X-Google-Smtp-Source: AMrXdXsbEtOlMUXBm6MGE3A8haF9JqMc8uZ+r0UYeA5e8mgWxLZc5suwqnbcl0ee96wZ9yHrk+JVEQ==
+X-Received: by 2002:a5d:50c9:0:b0:2b4:790e:32f3 with SMTP id f9-20020a5d50c9000000b002b4790e32f3mr5709204wrt.68.1674047310799;
+        Wed, 18 Jan 2023 05:08:30 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id f2-20020adff982000000b002bde537721dsm13362962wrr.20.2023.01.18.05.08.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Jan 2023 05:08:30 -0800 (PST)
+Message-ID: <a4a39197-a58b-df5b-1dc8-fa9fd520bbc2@linaro.org>
+Date:   Wed, 18 Jan 2023 14:08:28 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH v3 3/6] dt-bindings: mailbox: qcom: correct the list of
+ platforms using clocks
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2 1/2] dt-bindings: PCI: qcom: Add SM8550 compatible
-Message-ID: <Y8fuUI4xaNkADkWl@hovoldconsulting.com>
-References: <20230118111704.3553542-1-abel.vesa@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230118111704.3553542-1-abel.vesa@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Jassi Brar <jassisinghbrar@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230117223013.1545026-1-dmitry.baryshkov@linaro.org>
+ <20230117223013.1545026-4-dmitry.baryshkov@linaro.org>
+ <efd7df12-d94b-4850-728d-416bdbbc295a@linaro.org>
+ <f575e888-b2ee-6568-7e63-708ad016ac5f@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <f575e888-b2ee-6568-7e63-708ad016ac5f@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -66,112 +87,73 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 18, 2023 at 01:17:03PM +0200, Abel Vesa wrote:
-> Add the SM8550 platform to the binding.
+On 18/01/2023 14:04, Dmitry Baryshkov wrote:
+> On 18/01/2023 13:41, Krzysztof Kozlowski wrote:
+>> On 17/01/2023 23:30, Dmitry Baryshkov wrote:
+>>> Only three platforms require `pll' and `aux' clocks: msm8916, msm8939
+>>> and qcs404. Correct the list of platforms in the corresponding clause.
+>>>
+>>> Fixes: 0d17014e9189 ("dt-bindings: mailbox: Add binding for SDX55 APCS")
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>>   .../mailbox/qcom,apcs-kpss-global.yaml        | 33 ++++++++++++++-----
+>>>   1 file changed, 25 insertions(+), 8 deletions(-)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
+>>> index ecc286ab49ef..7d8de7a16984 100644
+>>> --- a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
+>>> +++ b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
+>>> @@ -72,15 +72,8 @@ allOf:
+>>>           compatible:
+>>>             enum:
+>>>               - qcom,msm8916-apcs-kpss-global
+>>> -            - qcom,msm8994-apcs-kpss-global
+>>> -            - qcom,msm8996-apcs-hmss-global
+>>> -            - qcom,msm8998-apcs-hmss-global
+>>> +            - qcom,msm8939-apcs-kpss-global
+>>>               - qcom,qcs404-apcs-apps-global
+>>> -            - qcom,sc7180-apss-shared
+>>> -            - qcom,sdm660-apcs-hmss-global
+>>> -            - qcom,sdm845-apss-shared
+>>> -            - qcom,sm6125-apcs-hmss-global
+>>> -            - qcom,sm8150-apss-shared
+>>>       then:
+>>>         properties:
+>>>           clocks:
+>>> @@ -124,6 +117,30 @@ allOf:
+>>>             items:
+>>>               - const: pll
+>>>               - const: xo
+>>> +
+>>> +  - if:
+>>> +      properties:
+>>> +        compatible:
+>>> +          enum:
+>>> +            - qcom,msm8953-apcs-kpss-global
+>>> +            - qcom,msm8976-apcs-kpss-global
+>>> +            - qcom,msm8994-apcs-kpss-global
+>>> +            - qcom,msm8996-apcs-hmss-global
+>>> +            - qcom,msm8998-apcs-hmss-global
+>>> +            - qcom,qcm2290-apcs-hmss-global
+>>> +            - qcom,sc7180-apss-shared
+>>> +            - qcom,sc8180x-apss-shared
+>>> +            - qcom,sdm660-apcs-hmss-global
+>>> +            - qcom,sdm845-apss-shared
+>>> +            - qcom,sm4250-apcs-hmss-global
+>>> +            - qcom,sm6115-apcs-hmss-global
+>>> +            - qcom,sm6125-apcs-hmss-global
+>>> +            - qcom,sm8150-apss-shared
+>>
+>> Isn't this in multiple places now? This doesn't match what you remove
+>> either.
 > 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
-> 
-> The v1 was here:
-> https://lore.kernel.org/all/20221116123505.2760397-1-abel.vesa@linaro.org/
-> 
-> Changes since v1:
->  * Switched to single compatible for both PCIes (qcom,pcie-sm8550)
->  * dropped enable-gpios property
->  * dropped interconnects related properties, the power-domains properties
->    and resets related properties the sm8550 specific allOf:if:then
->  * dropped pipe_mux, phy_pipe and ref clocks from the sm8550 specific
->    allOf:if:then clock-names array and decreased the minItems and
->    maxItems for clocks property accordingly
-> 
->  .../devicetree/bindings/pci/qcom,pcie.yaml    | 37 +++++++++++++++++++
->  1 file changed, 37 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> index a5859bb3dc28..78e8babd11d9 100644
-> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> @@ -34,6 +34,7 @@ properties:
->        - qcom,pcie-sm8250
->        - qcom,pcie-sm8450-pcie0
->        - qcom,pcie-sm8450-pcie1
-> +      - qcom,pcie-sm8550
->        - qcom,pcie-ipq6018
->  
->    reg:
-> @@ -197,6 +198,7 @@ allOf:
->                - qcom,pcie-sm8250
->                - qcom,pcie-sm8450-pcie0
->                - qcom,pcie-sm8450-pcie1
-> +              - qcom,pcie-sm8550
->      then:
->        properties:
->          reg:
-> @@ -611,6 +613,40 @@ allOf:
->            items:
->              - const: pci # PCIe core reset
->  
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,pcie-sm8550
-> +    then:
-> +      properties:
-> +        clocks:
-> +          minItems: 8
-> +          maxItems: 9
-> +        clock-names:
-> +          items:
-> +            - const: pipe # PIPE clock
+> Yes, I addsd several platforms. I can split this into two patches: one 
+> moving the platforms and another one adding missing platforms. Would you 
+> prefer it?
 
-The pipe clock is managed by the PHY and should not be here either.
+Yes, plus you now duplicated entries, didn't you? As I pointed - some of
+them are in multiple places now.
 
-> +            - const: aux # Auxiliary clock
-> +            - const: cfg # Configuration clock
-> +            - const: bus_master # Master AXI clock
-> +            - const: bus_slave # Slave AXI clock
-> +            - const: slave_q2a # Slave Q2A clock
-> +            - const: ddrss_sf_tbu # PCIe SF TBU clock
-> +            - const: aggre # Aggre NoC PCIe0 AXI clock
+Best regards,
+Krzysztof
 
-The comment referring to a specific controller instance (PCIe0) looks
-wrong.
-
-We used a noc_ prefix to separate it from the cnoc_ clocks for sc8280xp
-(e.g. noc_aggr_4).
-
-> +            - const: cnoc_pcie_sf_axi # Config NoC PCIe1 AXI clock
-
-The _pcie infix looks unnecessary, same comment about PCIe1 as above.
-
-> +        iommus:
-> +          maxItems: 1
-> +        iommu-map:
-> +          maxItems: 2
-> +        resets:
-> +          minItems: 1
-> +          maxItems: 2
-> +        reset-names:
-> +          items:
-> +            - const: pci # PCIe core reset
-> +            - const: pcie_1_link_down_reset # PCIe link down reset
-
-No need to repeat the resource type in the name. Shouldn't this just be
-'link_down' or similar?
-
-> +
->    - if:
->        properties:
->          compatible:
-> @@ -694,6 +730,7 @@ allOf:
->                - qcom,pcie-sm8250
->                - qcom,pcie-sm8450-pcie0
->                - qcom,pcie-sm8450-pcie1
-> +              - qcom,pcie-sm8550
->      then:
->        oneOf:
->          - properties:
-
-Johan
