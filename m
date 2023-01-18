@@ -2,75 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2AD7F6728C5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 20:54:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ECDA0672980
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 21:36:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229507AbjARTy6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 14:54:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40460 "EHLO
+        id S230125AbjARUf7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 15:35:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43832 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229481AbjARTy5 (ORCPT
+        with ESMTP id S230143AbjARUfh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 14:54:57 -0500
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96D6E59262
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 11:54:55 -0800 (PST)
-Received: by mail-ej1-x62a.google.com with SMTP id mp20so39292887ejc.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 11:54:55 -0800 (PST)
+        Wed, 18 Jan 2023 15:35:37 -0500
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3D7A5EF89
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 12:34:44 -0800 (PST)
+Received: by mail-pg1-x535.google.com with SMTP id 78so25422629pgb.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 12:34:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=PS/7KuaB+IDJ4czpYZHfKfWWHUA84RHoIsTNfT8XuEU=;
-        b=S0yIBmB+f/4oFnfqAxjqm9aQJfCPt643cmPeAJKJPeekK2T3v7n5HehsoVvxSE6bU6
-         Y7Bg7s+JENwF9NUn2L7RZFzpVypzZaRMOCFOxolI4MU9wCdSvZYVPSKQnQ3nH05aA/84
-         qlu+z0GkLuieC2sDWH54TBMrxtjFX3knmLW7FotnDQns8sYrlNMGNpJrgH6omg5QQ8S4
-         W8zcVnI5enQv6Oh9l78bEWs5lAVF8Y7bIaQZgg0WvRZwQFUoMY9yWfcuYfKQI31lvRMW
-         t8NxgxIyBXVFwA15TebgbIaBGylGv0Wr/kfDtzyw+peIGIfPEmVeQnc6pnc1LCfqTSS0
-         eIWw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1DqtnrZpeAQG00MExmoFCWtw4zspPS5f/QUn4GznZGU=;
+        b=TQob0NI6zROAPkKJ8WmU7oLNmIuTKjgr6fluG7lhVt0d1p04zLrRGgu6+GrnhEukcz
+         pE945lmOBcf20JJMtj96oeznOA9iEfsVK1FiIPRgcfhHiLyRueYZmkRTLjsoTfBKV59w
+         HWGLoe91MPAalxjjf2i2V4a9BGb9/Vjgjf1bhHUiBCpT6ZfBwEhL9+PLDDRG0cBp6LRV
+         K2zozTu+VWE9H7WSFO9VhaPw7JUsMqledw6ie48QFICVyxHWIWdaKgS8XiSc0T4r2hja
+         6xZ/1I9V/MsIViVT5JLQ8gZA5Z5VUq0eQ4ccqdE/EWzr12tstwvZGl7pgqLHuS7CKcip
+         95qQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PS/7KuaB+IDJ4czpYZHfKfWWHUA84RHoIsTNfT8XuEU=;
-        b=Hn0YMwaGTYn9vSwlS+NrAtudQdkari+Pt+q8dHOTXtyBUCO5mxvqVUMESIMp/Vz4mS
-         kB8J4NBcqHsm/nfwVbTSuRQdsgyQiolzZqL7qQ+N2hBjo4zG1C9qX/vBImfxyvLZAZ99
-         v4OBJ8kwLmQLOzhdGEzVDTdL+sXU3oxr+lOIRCp4JQPexkACxwsUutEOAwG+scqxFyrD
-         P5Y+b4fBWl2uXNrFg17l/r9NEsoFA9J6+pAGlbOhppnqVG/TtAVCo9XF3RY8pm8kVcUt
-         ZhYH/0/xZKkRBk3/Y1rUBlAmLcFVALJ/78xlSDeUbE4alPXkEFePB3lkN0VHMXR35fxM
-         8ePg==
-X-Gm-Message-State: AFqh2ko6GxwqV6OV/KESJXjwNjbucH9+QHFwiWpqa8OOxhpBVWyJtu9Z
-        T20V3KwQn2vP8GpGw9vgpaw2iROVvefLWLqL
-X-Google-Smtp-Source: AMrXdXsTXO2h6sqsyvxXkLtL0jBXFCsyXKu+HZK+lAdfdFRJ7Z+o+GbGbEHYDji0L9trJsJrB6sDew==
-X-Received: by 2002:a17:907:1a46:b0:84c:e89e:bb4c with SMTP id mf6-20020a1709071a4600b0084ce89ebb4cmr4063246ejc.49.1674071694016;
-        Wed, 18 Jan 2023 11:54:54 -0800 (PST)
-Received: from [192.168.1.101] (abxh150.neoplus.adsl.tpnet.pl. [83.9.1.150])
-        by smtp.gmail.com with ESMTPSA id f17-20020a170906495100b0086dd8f20a6asm5923513ejt.77.2023.01.18.11.54.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Jan 2023 11:54:53 -0800 (PST)
-Message-ID: <f07bbbb6-3343-19c7-bd94-c8c239f1cbc8@linaro.org>
-Date:   Wed, 18 Jan 2023 20:54:51 +0100
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1DqtnrZpeAQG00MExmoFCWtw4zspPS5f/QUn4GznZGU=;
+        b=MHqDvYKlRzbXPgnUePLOnPMRQ3vySjUDjdD4vlGhJb1U7wKn9UW6gui4F57zU9NdLk
+         L6CZHlQtJuUq5twlFLyZxsGPVX2oPPfunREceD4v/pky1LIxYkNvMZGzbw2s4Dw+du/I
+         fjBErsGYURXRRWuhBC7GxnsAp6tRdrFOK6HGCfV4ZuFm4gV//0iyPdQ7EfJdHVRFgKqY
+         r0D/7c0nNoSVyBcklDLECaxEHFDbKlPTviCFpi/tv9vRmVpBrzYMlXBloPtFYO80bWIo
+         EkjeOIIDTT4WPiBQUzXUy9Pure258utoSI8K/83Q2iA7td+ujiDfN4F/KxkRA0JACYP7
+         B09A==
+X-Gm-Message-State: AFqh2kowJWJKxnlnKRc4T1+74xfCrfejjb/vOoWBTN0pR0TuhRU9eQnK
+        Qzailu5ZBk6QwYDjmeq0K1IeM1CMqGcMTx+k
+X-Google-Smtp-Source: AMrXdXvz3W3yDzYxv2ad22wjF+zp5coz51GuRnc4XEQoJZlD+DwUtgnAsK2EDp8bHNW1OA6vRytqLg==
+X-Received: by 2002:a62:830d:0:b0:58d:94f4:a8b9 with SMTP id h13-20020a62830d000000b0058d94f4a8b9mr9722043pfe.11.1674074083380;
+        Wed, 18 Jan 2023 12:34:43 -0800 (PST)
+Received: from localhost.localdomain ([2401:4900:1c60:63d3:2d69:9f71:187e:f085])
+        by smtp.gmail.com with ESMTPSA id 8-20020a621608000000b0058a3d8eab6asm16303441pfw.134.2023.01.18.12.34.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Jan 2023 12:34:42 -0800 (PST)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
+        bhupesh.sharma@linaro.org, robh+dt@kernel.org,
+        devicetree@vger.kernel.org, krzysztof.kozlowski+dt@linaro.org
+Subject: [PATCH] arm64: dts: qcom: sm6115: Add CPU idle-states
+Date:   Thu, 19 Jan 2023 02:04:28 +0530
+Message-Id: <20230118203428.910992-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v3 8/9] interconnect: qcom: rpm: Add a way to always set
- QoS registers
-Content-Language: en-US
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org, bryan.odonoghue@linaro.org,
-        Georgi Djakov <djakov@kernel.org>, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230116132152.405535-1-konrad.dybcio@linaro.org>
- <20230116132152.405535-9-konrad.dybcio@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230116132152.405535-9-konrad.dybcio@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,57 +71,191 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add CPU idle-state nodes and power-domains in Qualcomm sm6115 SoC dtsi.
 
+Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sm6115.dtsi | 104 +++++++++++++++++++++++++++
+ 1 file changed, 104 insertions(+)
 
-On 16.01.2023 14:21, Konrad Dybcio wrote:
-> On newer SoCs (there's no clear boundary, but probably "new enough"
-> means every interconnect provider is either BIMC or QNoC and there
-> are no old-style NoC hosts) we're expected to set QoS registers
-> regardless of the ap_owned param. Add a bool in the qcom_icc_provider
-> and make the logic assume it's okay to set the registers when it's
-> set.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
-Argh, I only noticed now that this patch is incomplete,
-missing setting the value in qnoc_probe() and adding a
-similar struct member to qcom_icc_desc..
+diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+index 478c5d009272..29c05cbb5fd7 100644
+--- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+@@ -44,6 +44,8 @@ CPU0: cpu@0 {
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_0>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
++			power-domains = <&CPU_PD0>;
++			power-domain-names = "psci";
+ 			L2_0: l2-cache {
+ 				compatible = "cache";
+ 				cache-level = <2>;
+@@ -59,6 +61,8 @@ CPU1: cpu@1 {
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_0>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
++			power-domains = <&CPU_PD1>;
++			power-domain-names = "psci";
+ 		};
+ 
+ 		CPU2: cpu@2 {
+@@ -70,6 +74,8 @@ CPU2: cpu@2 {
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_0>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
++			power-domains = <&CPU_PD2>;
++			power-domain-names = "psci";
+ 		};
+ 
+ 		CPU3: cpu@3 {
+@@ -81,6 +87,8 @@ CPU3: cpu@3 {
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_0>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
++			power-domains = <&CPU_PD3>;
++			power-domain-names = "psci";
+ 		};
+ 
+ 		CPU4: cpu@100 {
+@@ -92,6 +100,8 @@ CPU4: cpu@100 {
+ 			dynamic-power-coefficient = <282>;
+ 			next-level-cache = <&L2_1>;
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
++			power-domains = <&CPU_PD4>;
++			power-domain-names = "psci";
+ 			L2_1: l2-cache {
+ 				compatible = "cache";
+ 				cache-level = <2>;
+@@ -107,6 +117,8 @@ CPU5: cpu@101 {
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_1>;
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
++			power-domains = <&CPU_PD5>;
++			power-domain-names = "psci";
+ 		};
+ 
+ 		CPU6: cpu@102 {
+@@ -118,6 +130,8 @@ CPU6: cpu@102 {
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_1>;
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
++			power-domains = <&CPU_PD6>;
++			power-domain-names = "psci";
+ 		};
+ 
+ 		CPU7: cpu@103 {
+@@ -129,6 +143,8 @@ CPU7: cpu@103 {
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_1>;
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
++			power-domains = <&CPU_PD7>;
++			power-domain-names = "psci";
+ 		};
+ 
+ 		cpu-map {
+@@ -168,6 +184,41 @@ core3 {
+ 				};
+ 			};
+ 		};
++
++		idle-states {
++			entry-method = "psci";
++
++			LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
++				compatible = "arm,idle-state";
++				idle-state-name = "silver-rail-power-collapse";
++				arm,psci-suspend-param = <0x40000003>;
++				entry-latency-us = <290>;
++				exit-latency-us = <376>;
++				min-residency-us = <800>;
++				local-timer-stop;
++			};
++
++			BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
++				compatible = "arm,idle-state";
++				idle-state-name = "gold-rail-power-collapse";
++				arm,psci-suspend-param = <0x40000003>;
++				entry-latency-us = <297>;
++				exit-latency-us = <324>;
++				min-residency-us = <1110>;
++				local-timer-stop;
++			};
++		};
++
++		domain-idle-states {
++			CLUSTER_SLEEP_0: cluster-sleep-0 {
++				compatible = "domain-idle-state";
++				idle-state-name = "cluster-power-collapse";
++				arm,psci-suspend-param = <0x41000043>;
++				entry-latency-us = <800>;
++				exit-latency-us = <2118>;
++				min-residency-us = <7376>;
++			};
++		};
+ 	};
+ 
+ 	firmware {
+@@ -191,6 +242,59 @@ pmu {
+ 	psci {
+ 		compatible = "arm,psci-1.0";
+ 		method = "smc";
++
++		CPU_PD0: power-domain-cpu0 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
++		};
++
++		CPU_PD1: power-domain-cpu1 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
++		};
++
++		CPU_PD2: power-domain-cpu2 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
++		};
++
++		CPU_PD3: power-domain-cpu3 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
++		};
++
++		CPU_PD4: power-domain-cpu4 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&BIG_CPU_SLEEP_0>;
++		};
++
++		CPU_PD5: power-domain-cpu5 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&BIG_CPU_SLEEP_0>;
++		};
++
++		CPU_PD6: power-domain-cpu6 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&BIG_CPU_SLEEP_0>;
++		};
++
++		CPU_PD7: power-domain-cpu7 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&BIG_CPU_SLEEP_0>;
++		};
++
++		CLUSTER_PD: power-domain-cpu-cluster0 {
++			#power-domain-cells = <0>;
++			domain-idle-states = <&CLUSTER_SLEEP_0>;
++		};
+ 	};
+ 
+ 	reserved_memory: reserved-memory {
+-- 
+2.38.1
 
-Konrad
->  drivers/interconnect/qcom/icc-rpm.c | 2 +-
->  drivers/interconnect/qcom/icc-rpm.h | 2 ++
->  2 files changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
-> index 509cadf398e9..343e6021a93a 100644
-> --- a/drivers/interconnect/qcom/icc-rpm.c
-> +++ b/drivers/interconnect/qcom/icc-rpm.c
-> @@ -243,7 +243,7 @@ static int __qcom_icc_set(struct icc_node *n, struct qcom_icc_node *qn,
->  	bool vote_ap, vote_rpm;
->  	int ret;
->  
-> -	if (qp->type == QCOM_ICC_QNOC) {
-> +	if (qp->type == QCOM_ICC_QNOC || qp->always_set_qos) {
->  		vote_ap = true;
->  		vote_rpm = true;
->  	} else {
-> diff --git a/drivers/interconnect/qcom/icc-rpm.h b/drivers/interconnect/qcom/icc-rpm.h
-> index 729573f0d9fe..3c8888482a39 100644
-> --- a/drivers/interconnect/qcom/icc-rpm.h
-> +++ b/drivers/interconnect/qcom/icc-rpm.h
-> @@ -28,6 +28,7 @@ enum qcom_icc_type {
->   * @type: the ICC provider type
->   * @regmap: regmap for QoS registers read/write access
->   * @qos_offset: offset to QoS registers
-> + * @always_set_qos: whether to always set QoS registers regardless of bus type
->   * @bus_clk_rate: bus clock rate in Hz
->   * @bus_clks: the clk_bulk_data table of bus clocks
->   * @intf_clks: the clk_bulk_data table of interface clocks
-> @@ -39,6 +40,7 @@ struct qcom_icc_provider {
->  	enum qcom_icc_type type;
->  	struct regmap *regmap;
->  	unsigned int qos_offset;
-> +	bool always_set_qos;
->  	u64 bus_clk_rate[2];
->  	struct clk_bulk_data bus_clks[2];
->  	struct clk_bulk_data intf_clks[];
