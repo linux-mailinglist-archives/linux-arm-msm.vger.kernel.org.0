@@ -2,112 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A762671A0E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 12:09:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 84A4C671A2A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 12:13:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229518AbjARLJu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 06:09:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57268 "EHLO
+        id S230060AbjARLN1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 06:13:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230253AbjARLIy (ORCPT
+        with ESMTP id S229734AbjARLM5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 06:08:54 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D81C95768
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 02:15:50 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id f25-20020a1c6a19000000b003da221fbf48so1114967wmc.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 02:15:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=djuiJl7bx5DRHNGTITj28NZCN8UBHbOpoHymK5Xy668=;
-        b=mZq+wCBjWMn4ys2DKQ0xXZVF8e3MLqZsuhe6LIZqmNvtZVqNdlnFOXwye+qFyKabNR
-         0eNJ3k+q/L1cobWT0KiCY692QLHmm6GDt9Z0VLiBMFrljI1gGieMZjlQ2Q/HVagCCMlt
-         lsa4GP/fwmnoRl14bppiNU4yXZpm7G+ohNT/iQfrW54D0N/zAiYv1lE7GtwM80lK93+u
-         WuXszjFi6zHUt+QsLbBmef9gdJJthddTMAwawOeawoHBpXl4J/YfTuJWaHIFKNxFNSuG
-         iZue6hpChPgsvVbaRxTB+uS/8JSOK+T4LJH3g3TgU2jb1KvdUHOhA5KDdYOTmheGfMLw
-         QQhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=djuiJl7bx5DRHNGTITj28NZCN8UBHbOpoHymK5Xy668=;
-        b=ReNzm5BEe6ag0S2ZOMHpvfBT+ZHIqQMHf5qjVhQLZpyqtfCk/bjefdpBiDTZ5sNbxg
-         B4YobJa4FiN/RTT/PWFXDNVMC4ASiUtoTGxVjow5Cl39RSk3XxVaqEo42/1yoeaDcePI
-         P7vht2QoLCy47QXnlXr6QnGEVJfRKnxb4FwKzLkoZ3qzpc6uALjC3+thG7O7Ku3aQ/x+
-         PlnnIRTWExe19L1CHDYilnRf84qwj0OOjM0qKJ8CkkVg9zfJ6AvzaNUqUm8oOhVMBnPK
-         Qg+NQtih9RafwsF2wNiAcOtr+AR2vaFAHP1H0Q/PIBeWfPduw6zxSHqUbqUPPn5wATna
-         OQvw==
-X-Gm-Message-State: AFqh2krsm/PDsNvhgUNGeQcAOpfP41XAIi+OcKRQ/GjwF7EE/f4qLJTE
-        jq/v7CZf00u5rs1xfaAaXX/mKg==
-X-Google-Smtp-Source: AMrXdXuSuwUkqc5Qgfm+fecSkhvRSa+4v0bwmM8Aw/gpqS1HjI0hteb1WBpPIkYpvlfGlqcbh3aNVg==
-X-Received: by 2002:a05:600c:1713:b0:3da:fd90:19dd with SMTP id c19-20020a05600c171300b003dafd9019ddmr6139660wmn.26.1674036948962;
-        Wed, 18 Jan 2023 02:15:48 -0800 (PST)
-Received: from krzk-bin.. ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id w10-20020a05600c474a00b003db00747fdesm1529838wmo.15.2023.01.18.02.15.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Jan 2023 02:15:48 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 2/2] ASoC: qcom: sdm845: add remark about unneeded compatibles
-Date:   Wed, 18 Jan 2023 11:15:42 +0100
-Message-Id: <20230118101542.96705-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230118101542.96705-1-krzysztof.kozlowski@linaro.org>
-References: <20230118101542.96705-1-krzysztof.kozlowski@linaro.org>
+        Wed, 18 Jan 2023 06:12:57 -0500
+Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [5.144.164.170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8139A47089;
+        Wed, 18 Jan 2023 02:22:06 -0800 (PST)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 17F9720123;
+        Wed, 18 Jan 2023 11:22:04 +0100 (CET)
+Date:   Wed, 18 Jan 2023 11:22:02 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
+Cc:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run, airlied@gmail.com,
+        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, Abaci Robot <abaci@linux.alibaba.com>
+Subject: Re: [PATCH v2] drm/msm/dpu: Remove some unused variables
+Message-ID: <20230118102202.3oaiv74oo2pi6uuu@SoMainline.org>
+References: <20230118091833.87708-1-jiapeng.chong@linux.alibaba.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230118091833.87708-1-jiapeng.chong@linux.alibaba.com>
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If all devices are the same or compatible, there is no single need to
-keep growing of_device_id list with new entries.
+On 2023-01-18 17:18:33, Jiapeng Chong wrote:
+> Variables 'sc8280xp_regdma' and 'sm8350_regdma' are defined in the
+> dpu_hw_catalog.c file, but not used elsewhere, so remove these unused
+> variables.
+> 
+> drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c:2029:37: warning: unused
+> variable 'sc8280xp_regdma'.
+> drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c:2053:37: warning: unused
+> variable 'sm8350_regdma'.
+> 
+> Link: https://bugzilla.openanolis.cn/show_bug.cgi?id=3722
+> Reported-by: Abaci Robot <abaci@linux.alibaba.com>
+> Signed-off-by: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Does this need a Fixes tag?
 
----
+> ---
+> Changes in v2:
+>   -Adding the regdma entries to .dma_cfg of these chipsets.
 
-Patches are independent and backwards compatible. DTS fixup will be sent
-separately.
----
- sound/soc/qcom/sdm845.c | 1 +
- 1 file changed, 1 insertion(+)
+Don't forget to change the title of this patch; now you're not removing
+unused variables anymore.
 
-diff --git a/sound/soc/qcom/sdm845.c b/sound/soc/qcom/sdm845.c
-index d8d35563af00..02612af714a8 100644
---- a/sound/soc/qcom/sdm845.c
-+++ b/sound/soc/qcom/sdm845.c
-@@ -588,6 +588,7 @@ static int sdm845_snd_platform_probe(struct platform_device *pdev)
- 
- static const struct of_device_id sdm845_snd_device_id[]  = {
- 	{ .compatible = "qcom,sdm845-sndcard" },
-+	/* Do not grow the list for compatible devices */
- 	{ .compatible = "qcom,db845c-sndcard" },
- 	{ .compatible = "lenovo,yoga-c630-sndcard" },
- 	{},
--- 
-2.34.1
+- Marijn
 
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> index 0f3da480b066..3318e1d18a0e 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> @@ -2677,6 +2677,8 @@ static const struct dpu_mdss_cfg sc8280xp_dpu_cfg = {
+>  	.intf = sc8280xp_intf,
+>  	.vbif_count = ARRAY_SIZE(sdm845_vbif),
+>  	.vbif = sdm845_vbif,
+> +	.reg_dma_count = 1,
+> +	.dma_cfg = &sc8280xp_regdma,
+>  	.perf = &sc8280xp_perf_data,
+>  	.mdss_irqs = IRQ_SC8280XP_MASK,
+>  };
+> @@ -2732,7 +2734,7 @@ static const struct dpu_mdss_cfg sm8350_dpu_cfg = {
+>  	.vbif_count = ARRAY_SIZE(sdm845_vbif),
+>  	.vbif = sdm845_vbif,
+>  	.reg_dma_count = 1,
+> -	.dma_cfg = &sm8250_regdma,
+> +	.dma_cfg = &sm8350_regdma,
+>  	.perf = &sm8350_perf_data,
+>  	.mdss_irqs = IRQ_SM8350_MASK,
+>  };
+> -- 
+> 2.20.1.7.g153144c
+> 
