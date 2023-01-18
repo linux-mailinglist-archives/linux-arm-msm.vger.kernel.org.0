@@ -2,145 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 695DF672CB7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 00:40:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B0EB3672CF9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 00:53:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229862AbjARXks (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 18:40:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46726 "EHLO
+        id S230084AbjARXxI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 18:53:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229622AbjARXkr (ORCPT
+        with ESMTP id S230026AbjARXww (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 18:40:47 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68AF563081;
-        Wed, 18 Jan 2023 15:40:46 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id EF20061AC2;
-        Wed, 18 Jan 2023 23:40:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B4D6C433EF;
-        Wed, 18 Jan 2023 23:40:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1674085245;
-        bh=4z99fwOBj8wyKeWgsNT+dDn9Fq0WFr6o8JW+WgXF9LA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=EEe46n3G0XzhpkHJhdYZG9z/YtETaNTEfBmcxdyhGo5IEvZ6YUPUbf2bqnhYD0eaf
-         LGbwt4CpmZiRg1jd0PkpGNJH4YBkocRx/YvUOnxS7IHwLuKgnaehAqdycS2HwD+nC0
-         o5rXmWE7X+sSlKJMABnJybTIIveyxd6ExjUjDx3Qa1/YTMrQEKgy9z65GriA06mAce
-         fqYmzVDdnSmx8+VffNdUAiaX0tV6SdKjX+fLVwK6wWF8/GhEic/5buq8g8ITfFAvBV
-         uP3m6HOC2HUyiyXPYbORum124Y0ttCKkpkzlBRzmwrGh9eo2Ct0GoNctWVAH6pt6tS
-         0r+FnZkaMGT0Q==
-Date:   Wed, 18 Jan 2023 17:40:42 -0600
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        agross@kernel.org, bhupesh.linux@gmail.com,
-        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski@linaro.org, konrad.dybcio@linaro.org,
-        a39.skl@gmail.com
-Subject: Re: [PATCH] arm64: dts: qcom: sm6115: Add interconnect nodes
-Message-ID: <20230118234042.ds4hqdgqjrt7ukpg@builder.lan>
-References: <20221130104519.2266918-1-bhupesh.sharma@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221130104519.2266918-1-bhupesh.sharma@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Wed, 18 Jan 2023 18:52:52 -0500
+X-Greylist: delayed 306 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 18 Jan 2023 15:52:07 PST
+Received: from irl.hu (irl.hu [95.85.9.111])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 732F24617C;
+        Wed, 18 Jan 2023 15:52:04 -0800 (PST)
+Received: from fedori.lan (c3e47541.dsl.pool.telekom.hu [::ffff:195.228.117.65])
+  (AUTH: CRAM-MD5 soyer@irl.hu, )
+  by irl.hu with ESMTPSA
+  id 00000000000642EF.0000000063C884ED.0028DB16; Thu, 19 Jan 2023 00:46:52 +0100
+From:   Gergo Koteles <soyer@irl.hu>
+To:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jiri Kosina <jikos@kernel.org>,
+        Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Cc:     linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Caleb Connolly <caleb@connolly.tech>,
+        Gergo Koteles <soyer@irl.hu>
+Subject: [PATCH 0/3] Add tri-state-key for oneplus
+Date:   Thu, 19 Jan 2023 00:46:35 +0100
+Message-Id: <20230118234638.189098-1-soyer@irl.hu>
+X-Mailer: git-send-email 2.39.0
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Mime-Autoconverted: from 8bit to 7bit by courier 1.0
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_PASS,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 30, 2022 at 04:15:19PM +0530, Bhupesh Sharma wrote:
-> Add the interconnect nodes inside SM6115 dtsi.
-> 
-> Cc: Bjorn Andersson <andersson@kernel.org>
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Gergo Koteles (3):
+  Input: gpio-keys - add support for linux,input-value dts property
+  Input: add ABS_SND_PROFILE
+  arm64: dts: qcom: sdm845-oneplus: add tri-state-key
 
-Seems the driver series is waiting for a v2.
+ Documentation/input/event-codes.rst           |  6 +++
+ .../boot/dts/qcom/sdm845-oneplus-common.dtsi  | 43 ++++++++++++++++++-
+ drivers/hid/hid-debug.c                       |  1 +
+ drivers/input/keyboard/gpio_keys.c            |  3 ++
+ include/uapi/linux/input-event-codes.h        |  1 +
+ 5 files changed, 52 insertions(+), 2 deletions(-)
 
-I'll drop this from my queue for now, please resubmit once the DT
-binding has landed.
+-- 
+2.39.0
 
-Thanks,
-Bjorn
-
-> ---
-> - Based on linux-next/master
-> - Depends on the SM6115 dt-binding and driver patchset, which can be
->   seen here: https://lore.kernel.org/linux-arm-msm/20221130103841.2266464-1-bhupesh.sharma@linaro.org/ 
-> 
->  arch/arm64/boot/dts/qcom/sm6115.dtsi | 51 ++++++++++++++++++++++++++++
->  1 file changed, 51 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> index e4a2440ce544..dad5ab3edf0e 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> @@ -485,6 +485,57 @@ usb_1_hsphy: phy@1613000 {
->  			status = "disabled";
->  		};
->  
-> +		snoc: interconnect@1880000 {
-> +			compatible = "qcom,sm6115-snoc";
-> +			reg = <0x01880000 0x60200>;
-> +			#interconnect-cells = <1>;
-> +			clock-names = "bus", "bus_a";
-> +			clocks = <&rpmcc RPM_SMD_SNOC_CLK>,
-> +				 <&rpmcc RPM_SMD_SNOC_A_CLK>;
-> +
-> +			clk_virt: interconnect-clk {
-> +				compatible = "qcom,sm6115-clk-virt";
-> +				#interconnect-cells = <1>;
-> +				clock-names = "bus", "bus_a";
-> +				clocks = <&rpmcc RPM_SMD_QUP_CLK>,
-> +					 <&rpmcc RPM_SMD_QUP_A_CLK>;
-> +			};
-> +
-> +			mmnrt_virt: interconnect-mmnrt {
-> +				compatible = "qcom,sm6115-mmnrt-virt";
-> +				#interconnect-cells = <1>;
-> +				clock-names = "bus", "bus_a";
-> +				clocks = <&rpmcc RPM_SMD_MMNRT_CLK>,
-> +					 <&rpmcc RPM_SMD_MMNRT_A_CLK>;
-> +			};
-> +
-> +			mmrt_virt: interconnect-mmrt {
-> +				compatible = "qcom,sm6115-mmrt-virt";
-> +				#interconnect-cells = <1>;
-> +				clock-names = "bus", "bus_a";
-> +				clocks = <&rpmcc RPM_SMD_MMRT_CLK>,
-> +					 <&rpmcc RPM_SMD_MMRT_A_CLK>;
-> +			};
-> +		};
-> +
-> +		cnoc: interconnect@1900000 {
-> +			compatible = "qcom,sm6115-cnoc";
-> +			reg = <0x01900000 0x8200>;
-> +			#interconnect-cells = <1>;
-> +			clock-names = "bus", "bus_a";
-> +			clocks = <&rpmcc RPM_SMD_CNOC_CLK>,
-> +				 <&rpmcc RPM_SMD_CNOC_A_CLK>;
-> +		};
-> +
-> +		bimc: interconnect@4480000 {
-> +			compatible = "qcom,sm6115-bimc";
-> +			reg = <0x04480000 0x80000>;
-> +			#interconnect-cells = <1>;
-> +			clock-names = "bus", "bus_a";
-> +			clocks = <&rpmcc RPM_SMD_BIMC_CLK>,
-> +				 <&rpmcc RPM_SMD_BIMC_A_CLK>;
-> +		};
-> +
->  		qfprom@1b40000 {
->  			compatible = "qcom,sm6115-qfprom", "qcom,qfprom";
->  			reg = <0x01b40000 0x7000>;
-> -- 
-> 2.38.1
-> 
