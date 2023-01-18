@@ -2,88 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AB80D6726FC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 19:32:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B379F672771
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 19:48:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230285AbjARScI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 13:32:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51976 "EHLO
+        id S229513AbjARSsB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 13:48:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230235AbjARScE (ORCPT
+        with ESMTP id S229469AbjARSsA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 13:32:04 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2C553B0CB;
-        Wed, 18 Jan 2023 10:32:03 -0800 (PST)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30IHebue001013;
-        Wed, 18 Jan 2023 18:31:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=mhdJfN6MC/RX1BW2utSBLAgdrNwe8Dkh3H8WgTj/kI8=;
- b=MOF7x3EfSQqlSHa6xKtW5+5+/DmW0A0FCfPE/JhDJFkuZc8+WczpE3/kNkw+VwjKtweh
- DchwHPQkQXOTDZq/YOjt303jcO39OZhX0/3wzCNU1ThDftvAQZolWQ5VH9Gi4GXuCSM+
- 9ddiQg3nbJUjK5tAOgxxen15qSOAD7Y8UvZPtDs9LcicoAsUw3Q1wu9Ox670O/Go9pyN
- SuC5naj1i+Jkx9zkVx4dNNj4tez0nB4Gnlq+0Y7ujr/sd5MJFcEvGf0OOmhnP+rphiSM
- BlcLZQ4qqmy4z12qEMCKyAC2CAphYFuzZTT92+5N440hicu0BOBDQ5AW1hboqz1N+KLq IQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n602k2shv-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 18 Jan 2023 18:31:54 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30IIVrjL020308
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 18 Jan 2023 18:31:53 GMT
-Received: from [10.216.38.144] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 18 Jan
- 2023 10:31:46 -0800
-Message-ID: <16ee9cd0-94b4-2fae-f024-63a4d04bafa6@quicinc.com>
-Date:   Thu, 19 Jan 2023 00:01:43 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [RFC v4 5/5] arm: dts: msm: Add multiport controller node for usb
-Content-Language: en-US
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        "Andy Gross" <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        Wed, 18 Jan 2023 13:48:00 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C497765BC
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 10:47:58 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id v13so16809350eda.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 10:47:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=nt8IHofNDa8Mu8tT1igfMGgh2uyandrXwyOL8Q0fB1c=;
+        b=ue4sHDOMNYi0CyHRFgoNJ4AKTkG1czfNAytCUSTOpXV9ZhyPhVD8Y12ZFlgwnCKQWS
+         E4kJBtzwxYHJqMoi2G1wtcND3qS0tUjnZVCQl2mOE5XdGTmpho1Iwe30Naua3oXsUcmP
+         3ajuMNajb5kZtygddZ2sqG2nRSDMZ4GhBgXAgv1lqW3EpaymoRXXKId79nsDM3jHf3Ew
+         xbWemNZKXFTRgEdI+y3ztjGvdnu9hGHQgvIcVCWSfkYPl7jrzfn8F/iVLe7hye6pUbN3
+         r5i4i9F+66gaSOfd4oj4agEpSiQM7+uFI7s8x4vDC4xTbhtZ+92UYG6RQQQ19htJc7AX
+         61cQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=nt8IHofNDa8Mu8tT1igfMGgh2uyandrXwyOL8Q0fB1c=;
+        b=cez5QyasCvlde55GsCKC4z2UYWrQsd3zNvAiA8gJlHVT/PP2mRA9cTwYKfyx6hiTgv
+         KdHkbHPtBRsRWPud3h0oibl5OVgtBDGPUcQ/q43qpvu12QSefJVkQPyQyHObZ+CdVBaS
+         kLlIkdywP8LTBIdYruLV5XUETM1khbcuj14cWr5NgKqj6EJTrDhZEaObtyxOmCO9BPtl
+         i0JA1UMmWzfi49u7UnHJ1OMmZDsrpkw1QS2RtjcpcP7F8z65MbNpkQsxqj08m2ewyi+U
+         +5L30TsnHRXG8/GqLaLYjJpnKhWV1XmDsxwUbCTWhph+R121MHn7+Ezt6/OHE5allKLc
+         jrLg==
+X-Gm-Message-State: AFqh2kovYG4bmVjh9Qrhytw5VtD9B5WGPfKf3uON9Po4yBkWeD13Ml6O
+        zJWsRvBxyYhPIoWMJlBDmGlJqw==
+X-Google-Smtp-Source: AMrXdXuYTCnoM2KlVPwNpadyDQHasWZlB7NOsoaQkROQWKm2SsJH81KvYQmvDehk+vT/R11vTktCpw==
+X-Received: by 2002:aa7:c994:0:b0:499:bf81:be6 with SMTP id c20-20020aa7c994000000b00499bf810be6mr8436270edt.37.1674067677395;
+        Wed, 18 Jan 2023 10:47:57 -0800 (PST)
+Received: from [127.0.0.1] (85-76-70-3-nat.elisa-mobile.fi. [85.76.70.3])
+        by smtp.gmail.com with ESMTPSA id d2-20020a056402000200b0049e09105705sm4840800edu.62.2023.01.18.10.47.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Jan 2023 10:47:57 -0800 (PST)
+Date:   Wed, 18 Jan 2023 20:47:53 +0200
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Bjorn Andersson <andersson@kernel.org>
+CC:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
-        <quic_ppratap@quicinc.com>, <quic_wcheng@quicinc.com>,
-        <quic_jackp@quicinc.com>, <quic_harshq@quicinc.com>
-References: <20230115114146.12628-1-quic_kriskura@quicinc.com>
- <20230115114146.12628-6-quic_kriskura@quicinc.com>
- <20230118182847.GB3353734@hu-bjorande-lv.qualcomm.com>
-From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <20230118182847.GB3353734@hu-bjorande-lv.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: L5Faig9zkCX0sq5qXHXPlEZtmCU4ZvSV
-X-Proofpoint-GUID: L5Faig9zkCX0sq5qXHXPlEZtmCU4ZvSV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-18_05,2023-01-18_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 spamscore=0
- suspectscore=0 clxscore=1015 impostorscore=0 mlxscore=0 lowpriorityscore=0
- priorityscore=1501 adultscore=0 malwarescore=0 phishscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2301180156
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: =?US-ASCII?Q?Re=3A_=5BRFC_PATCH=5D_arm64=3A_dts=3A_qcom=3A_add_devi?= =?US-ASCII?Q?ce_tree_for_DB845c_working_in_dual_DSI_mode?=
+User-Agent: K-9 Mail for Android
+In-Reply-To: <20230118173242.cjh5izohjros6wxd@builder.lan>
+References: <20230118082048.2198715-1-dmitry.baryshkov@linaro.org> <20230118173242.cjh5izohjros6wxd@builder.lan>
+Message-ID: <DFBA966D-3AAF-4E6D-880C-897CB901AEE1@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -91,182 +76,132 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+18 =D1=8F=D0=BD=D0=B2=D0=B0=D1=80=D1=8F 2023 =D0=B3=2E 19:32:42 GMT+02:00, =
+Bjorn Andersson <andersson@kernel=2Eorg> =D0=BF=D0=B8=D1=88=D0=B5=D1=82:
+>On Wed, Jan 18, 2023 at 10:20:48AM +0200, Dmitry Baryshkov wrote:
+>> While we are testing the DB845c working in dual DSI mode (which is
+>> required for the 4k support), create a separate device tree using this
+>> configuration=2E
+>>=20
+>
+>I don't think it's right to change the DTB on your device depending on
+>your TV's ability to do 4k or not=2E=2E=2E
+>
+>I ran into this problem when playing around with 4k-support on the RB3
+>as well a while back=2E I was not able to figure out a way to run the
+>lt9611 off two inputs for the lower resolutions and ended never posted
+>anything because I couldn't come up with any good solution=2E
 
 
-On 1/18/2023 11:58 PM, Bjorn Andersson wrote:
-> On Sun, Jan 15, 2023 at 05:11:46PM +0530, Krishna Kurapati wrote:
->> Add USB and DWC3 node for teritiary port of SC8280 along
->> with multiport IRQ's and phy's.
->>
-> 
-> Very nice.
-> 
-> Please make the subject prefix "arm64: dts: qcom: sc8280xp:", to match
-> other changes in the sc8280xp.dtsi.
->> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+This is implemented with the latest lt9611 patchset, referenced in the pat=
+ch annotation=2E
+
+I posted this as an RFC with the separate dts to let people test dual DSI,=
+ DPU wide planes, etc=2E and to compare that with plain old single link DSI=
+/lt9611=2E=20
+
+>
+>
+>Would it be possible somehow to describe the two ports in DT, but have
+>the display driver use one or both depending on the number of inputs
+>needed by the lt9611?
+
+This would be very problemsome=2E Even switching the number of lanes goes =
+against the standard and is not supported by Linux kernel=2E Supporting swi=
+tching the host off and on would be a real troublle=2E
+
+Hopefully, this is is not necessary=2E
+
+>
+>Regards,
+>Bjorn
+>
+>> Signed-off-by: Dmitry Baryshkov <dmitry=2Ebaryshkov@linaro=2Eorg>
 >> ---
->>   arch/arm64/boot/dts/qcom/sa8295p-adp.dts | 49 +++++++++++++++++++
->>   arch/arm64/boot/dts/qcom/sc8280xp.dtsi   | 60 ++++++++++++++++++++++++
->>   2 files changed, 109 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
->> index 84cb6f3eeb56..f9eb854c3444 100644
->> --- a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
->> +++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
->> @@ -422,6 +422,20 @@ &usb_1_qmpphy {
->>   	status = "okay";
->>   };
->>   
->> +&usb_2 {
->> +	status = "okay";
-> 
-> Please the status property last in the node.
-> 
+>>=20
+>> Dependencies to be able to verify the 4k@30 mode:
+>> [1] https://lore=2Ekernel=2Eorg/linux-arm-msm/20221229191856=2E3508092-=
+1-dmitry=2Ebaryshkov@linaro=2Eorg/
+>> [2] https://lore=2Ekernel=2Eorg/dri-devel/20230118081658=2E2198520-1-dm=
+itry=2Ebaryshkov@linaro=2Eorg/
+>>=20
+>> ---
+>>  arch/arm64/boot/dts/qcom/Makefile             |  1 +
+>>  =2E=2E=2E/boot/dts/qcom/sdm845-db845c-dual-dsi=2Edts  | 48 +++++++++++=
+++++++++
+>>  2 files changed, 49 insertions(+)
+>>  create mode 100644 arch/arm64/boot/dts/qcom/sdm845-db845c-dual-dsi=2Ed=
+ts
+>>=20
+>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qc=
+om/Makefile
+>> index 3e79496292e7=2E=2Edc55c3b989a4 100644
+>> --- a/arch/arm64/boot/dts/qcom/Makefile
+>> +++ b/arch/arm64/boot/dts/qcom/Makefile
+>> @@ -139,6 +139,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+=3D sdm845-cheza-r1=2Edtb
+>>  dtb-$(CONFIG_ARCH_QCOM)	+=3D sdm845-cheza-r2=2Edtb
+>>  dtb-$(CONFIG_ARCH_QCOM)	+=3D sdm845-cheza-r3=2Edtb
+>>  dtb-$(CONFIG_ARCH_QCOM)	+=3D sdm845-db845c=2Edtb
+>> +dtb-$(CONFIG_ARCH_QCOM)	+=3D sdm845-db845c-dual-dsi=2Edtb
+>>  dtb-$(CONFIG_ARCH_QCOM)	+=3D sdm845-db845c-navigation-mezzanine=2Edtb
+>>  dtb-$(CONFIG_ARCH_QCOM)	+=3D sdm845-lg-judyln=2Edtb
+>>  dtb-$(CONFIG_ARCH_QCOM)	+=3D sdm845-lg-judyp=2Edtb
+>> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c-dual-dsi=2Edts b/ar=
+ch/arm64/boot/dts/qcom/sdm845-db845c-dual-dsi=2Edts
+>> new file mode 100644
+>> index 000000000000=2E=2E4a366dedc841
+>> --- /dev/null
+>> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c-dual-dsi=2Edts
+>> @@ -0,0 +1,48 @@
+>> +// SPDX-License-Identifier: GPL-2=2E0
+>> +/*
+>> + * Copyright (c) 2023, Linaro Ltd=2E
+>> + */
 >> +
->> +	pinctrl-names = "default";
->> +	pinctrl-0 = <&usb2_en_state>,
->> +			<&usb3_en_state>,
->> +			<&usb4_en_state>,
->> +			<&usb5_en_state>;
+>> +#include "sdm845-db845c=2Edts"
+>> +
+>> +&dsi0 {
+>> +	qcom,dual-dsi-mode;
+>> +	qcom,master-dsi;
 >> +};
 >> +
->> +&usb_2_dwc3 {
->> +	dr_mode = "host";
->> +};
+>> +&dsi1 {
+>> +	vdda-supply =3D <&vreg_l26a_1p2>;
 >> +
->>   &usb_2_hsphy0 {
->>   	vdda-pll-supply = <&vreg_l5a>;
->>   	vdda18-supply = <&vreg_l7g>;
->> @@ -472,6 +486,41 @@ &xo_board_clk {
->>   	clock-frequency = <38400000>;
->>   };
->>   
->> +/* PINCTRL */
-> 
-> No need to repeat this comment, its purpose is to indicate that nodes
-> above are sorted alphabetically and pinctrl-related nodes are kept here
-> at the end of the file. Please place your nodes below the existing /*
-> PINCTRL */ comment below.
-> 
-> Thanks,
-> Bjorn
-> 
->> +&pm8450c_gpios {
->> +	usb2_en_state: usb2-en-state {
->> +		pins = "gpio9";
->> +		function = "normal";
->> +		output-high;
->> +		power-source = <0>;
->> +	};
->> +};
+>> +	qcom,dual-dsi-mode;
 >> +
->> +&pm8450e_gpios {
->> +	usb3_en_state: usb3-en-state {
->> +		pins = "gpio5";
->> +		function = "normal";
->> +		output-high;
->> +		power-source = <0>;
->> +	};
->> +};
+>> +	/* DSI1 is slave, so use DSI0 clocks */
+>> +	assigned-clock-parents =3D <&dsi0_phy 0>, <&dsi0_phy 1>;
 >> +
->> +&pm8450g_gpios {
->> +	usb4_en_state: usb4-en-state {
->> +		pins = "gpio5";
->> +		function = "normal";
->> +		output-high;
->> +		power-source = <0>;
->> +	};
+>> +	status =3D "okay";
 >> +
->> +	usb5_en_state: usb5-en-state {
->> +		pins = "gpio9";
->> +		function = "normal";
->> +		output-high;
->> +		power-source = <0>;
->> +	};
->> +};
->> +
->>   /* PINCTRL */
->>   
->>   &tlmm {
->> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
->> index 109c9d2b684d..e9866ab5c6e2 100644
->> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
->> @@ -1969,6 +1969,66 @@ usb_1_dwc3: usb@a800000 {
->>   			};
->>   		};
->>   
->> +		usb_2: usb@a4f8800 {
->> +			compatible = "qcom,sc8280xp-dwc3", "qcom,dwc3";
->> +			reg = <0 0x0a4f8800 0 0x400>;
->> +			#address-cells = <2>;
->> +			#size-cells = <2>;
->> +			ranges;
->> +
->> +			clocks = <&gcc GCC_CFG_NOC_USB3_MP_AXI_CLK>,
->> +				 <&gcc GCC_USB30_MP_MASTER_CLK>,
->> +				 <&gcc GCC_AGGRE_USB3_MP_AXI_CLK>,
->> +				 <&gcc GCC_USB30_MP_SLEEP_CLK>,
->> +				 <&gcc GCC_USB30_MP_MOCK_UTMI_CLK>,
->> +				 <&gcc GCC_AGGRE_USB_NOC_AXI_CLK>,
->> +				 <&gcc GCC_AGGRE_USB_NOC_NORTH_AXI_CLK>,
->> +				 <&gcc GCC_AGGRE_USB_NOC_SOUTH_AXI_CLK>,
->> +				 <&gcc GCC_SYS_NOC_USB_AXI_CLK>;
->> +			clock-names = "cfg_noc", "core", "iface", "sleep", "mock_utmi",
->> +				      "noc_aggr", "noc_aggr_north", "noc_aggr_south", "noc_sys";
->> +
->> +			assigned-clocks = <&gcc GCC_USB30_MP_MOCK_UTMI_CLK>,
->> +					  <&gcc GCC_USB30_MP_MASTER_CLK>;
->> +			assigned-clock-rates = <19200000>, <200000000>;
->> +
->> +			interrupts-extended = <&pdc 127 IRQ_TYPE_EDGE_RISING>,
->> +						<&pdc 126 IRQ_TYPE_EDGE_RISING>,
->> +						<&pdc 16 IRQ_TYPE_LEVEL_HIGH>;
->> +
->> +			interrupt-names = "dp_hs_phy_irq", "dm_hs_phy_irq",
->> +						"ss_phy_irq";
->> +
->> +			power-domains = <&gcc USB30_MP_GDSC>;
->> +
->> +			resets = <&gcc GCC_USB30_MP_BCR>;
->> +
->> +			interconnects = <&aggre1_noc MASTER_USB3_1 0 &mc_virt SLAVE_EBI1 0>,
->> +					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_USB3_1 0>;
->> +			interconnect-names = "usb-ddr", "apps-usb";
->> +
->> +			required-opps = <&rpmhpd_opp_nom>;
->> +
->> +			status = "disabled";
->> +
->> +			usb_2_dwc3: usb@a400000 {
->> +				compatible = "snps,dwc3";
->> +				reg = <0 0x0a400000 0 0xcd00>;
->> +				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
->> +				iommus = <&apps_smmu 0x800 0x0>;
->> +				num-ports = <4>;
->> +				num-ss-ports = <2>;
->> +				phys = <&usb_2_hsphy0>, <&usb_2_qmpphy0>,
->> +					<&usb_2_hsphy1>, <&usb_2_qmpphy1>,
->> +					<&usb_2_hsphy2>,
->> +					<&usb_2_hsphy3>;
->> +				phy-names = "usb2-phy_port0", "usb3-phy_port0",
->> +						"usb2-phy_port1", "usb3-phy_port1",
->> +						"usb2-phy_port2",
->> +						"usb2-phy_port3";
+>> +	ports {
+>> +		port@1 {
+>> +			endpoint {
+>> +				remote-endpoint =3D <&lt9611_b>;
+>> +				data-lanes =3D <0 1 2 3>;
 >> +			};
 >> +		};
+>> +	};
+>> +};
 >> +
->>   		pdc: interrupt-controller@b220000 {
->>   			compatible = "qcom,sc8280xp-pdc", "qcom,pdc";
->>   			reg = <0 0x0b220000 0 0x30000>, <0 0x17c000f0 0 0x60>;
->> -- 
->> 2.39.0
->>
+>> +&dsi1_phy {
+>> +	vdds-supply =3D <&vreg_l1a_0p875>;
+>> +	status =3D "okay";
+>> +};
+>> +
+>> +&lt9611_codec {
+>> +	ports {
+>> +		port@1 {
+>> +			reg =3D <1>;
+>> +
+>> +			lt9611_b: endpoint {
+>> +				remote-endpoint =3D <&dsi1_out>;
+>> +			};
+>> +		};
+>> +	};
+>> +};
+>> --=20
+>> 2=2E39=2E0
+>>=20
 
-Hi Bjorn,
-
-  Thanks for the review. Will make sure to incorporate these changes in 
-the next version.
-
-Regards,
-Krishna,
