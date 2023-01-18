@@ -2,338 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D5FFF67249A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 18:16:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CD95C6724B7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 18:20:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229591AbjARRQe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 12:16:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45748 "EHLO
+        id S229686AbjARRUZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 12:20:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230467AbjARRQc (ORCPT
+        with ESMTP id S229651AbjARRUZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 12:16:32 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15D2456EE7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 09:16:31 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id k16so4588063wms.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 09:16:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=q7zV/lGXR4VdaEDQ4Nx12c6m631b/jAQVVbMn5yqLiQ=;
-        b=dLsS8qtz350AVKCTdJBB3SPFogxL/9PcLvhFxBeRIOqWHlZtdQd0eNdkxzTp1n2u3n
-         s2g4VvcaAlbkeqcp04CC2rxtczZCxYNaY0pJq5bssFTHwhZj/JusPAqsA3dz6qmyZkFX
-         KzJjKhSUHA+mFtTSQa4TMhsAAPJ6J8IMr2iIpHsqBcZXevYGfA1z0venCacPb4hWNfzX
-         8z8rSEAmQ+Taig7B57lznwfnjSGNyB3XrV22IM5KPq5TikyMqjB0zpIX5wplEvc7fxjc
-         pP17hncZ/3n7tLZwFmx3TbzEJ1gsIxtNoajRNBWJwLBonp44Of1XOM8pouEJT9HVfI/c
-         /Tcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=q7zV/lGXR4VdaEDQ4Nx12c6m631b/jAQVVbMn5yqLiQ=;
-        b=PV/cmVKXIBFE9OI4ysmT+Cri2uxahGsF3/kJpejmlB/XTSiw0ClsOaC1KuOJpdMVlQ
-         1WG/0rH/+osX2x9JFdDGyK1p3BCU6xRET1OM0psjro+51hMNUwsxYyTT0g+RnlWip5ek
-         V0XXJGZhyRyY7DOemU2L2dT4HJcTfGG0GfXPEu8FVLsnN2kmUXJX7Bc0ied1l6FLawRL
-         H/CAIB1DjJ9tpxerkMN2ztAxbaaan2KFqNVMLOvfce1JTH7Z1Tx6MB8q/87IxZh7BZ0x
-         bcjKF+qIhrelQCctN96RcI7uAgVLA+iPWCYGh17wB+rSklbGBLs7/U2DDqVDvxNYADDD
-         lrMQ==
-X-Gm-Message-State: AFqh2krbi8jAjhmf2g3POWJXckQzKa0yOdTwdA6jt3FgIKiq6pVi1lEk
-        KTPdoNCjQDh5snpFFoC1/uNzNX/D3Ggs6UMr
-X-Google-Smtp-Source: AMrXdXuKC5zRFslwGJK52dVjq2ujUBD5QgTWc+OROZLGPXQt+R//dN5r7uBR7HOQr77RLbjFEkO3/g==
-X-Received: by 2002:a05:600c:540f:b0:3da:f6fe:ba6 with SMTP id he15-20020a05600c540f00b003daf6fe0ba6mr7723015wmb.38.1674062190226;
-        Wed, 18 Jan 2023 09:16:30 -0800 (PST)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id t13-20020a05600c198d00b003cfa81e2eb4sm2772780wmq.38.2023.01.18.09.16.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Jan 2023 09:16:29 -0800 (PST)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org
-Cc:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
-        dmitry.baryshkov@linaro.org, sean@poorly.run, airlied@gmail.com,
-        daniel@ffwll.ch, robh+dt@kernel.org, dianders@chromium.org,
-        david@ixit.cz, krzysztof.kozlowski+dt@linaro.org,
-        swboyd@chromium.org, konrad.dybcio@somainline.org,
-        agross@kernel.org, andersson@kernel.org,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        bryan.odonoghue@linaro.org, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v9 2/2] dt-bindings: msm: dsi-controller-main: Document clocks on a per compatible basis
-Date:   Wed, 18 Jan 2023 17:16:21 +0000
-Message-Id: <20230118171621.102694-3-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20230118171621.102694-1-bryan.odonoghue@linaro.org>
-References: <20230118171621.102694-1-bryan.odonoghue@linaro.org>
+        Wed, 18 Jan 2023 12:20:25 -0500
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C71F84A1CA;
+        Wed, 18 Jan 2023 09:20:19 -0800 (PST)
+Received: from lhrpeml500005.china.huawei.com (unknown [172.18.147.201])
+        by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4NxsvY0ZFxz67JwR;
+        Thu, 19 Jan 2023 01:19:53 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.34; Wed, 18 Jan
+ 2023 17:20:16 +0000
+Date:   Wed, 18 Jan 2023 17:20:15 +0000
+From:   Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+CC:     Jami Kettunen <jami.kettunen@somainline.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        <phone-devel@vger.kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Jonathan Cameron" <jic23@kernel.org>,
+        <~postmarketos/upstreaming@lists.sr.ht>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-iio@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: Re: [RFC PATCH v2 1/5] iio: core: Point users of extend_name field
+ to read_label callback
+Message-ID: <20230118172015.00003aa6@Huawei.com>
+In-Reply-To: <20230118163525.hh6woxq5q74pmcmq@SoMainline.org>
+References: <20230116220909.196926-1-marijn.suijten@somainline.org>
+        <20230116220909.196926-2-marijn.suijten@somainline.org>
+        <20230118161920.0000207c@Huawei.com>
+        <20230118163525.hh6woxq5q74pmcmq@SoMainline.org>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml100005.china.huawei.com (7.191.160.25) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+X-CFilter-Loop: Reflected
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Each compatible has a different set of clocks which are associated with it.
-Add in the list of clocks for each compatible.
+On Wed, 18 Jan 2023 17:35:25 +0100
+Marijn Suijten <marijn.suijten@somainline.org> wrote:
 
-Acked-by: Rob Herring <robh@kernel.org>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- .../display/msm/dsi-controller-main.yaml      | 218 ++++++++++++++++--
- 1 file changed, 201 insertions(+), 17 deletions(-)
+> On 2023-01-18 16:19:20, Jonathan Cameron wrote:
+> > On Mon, 16 Jan 2023 23:09:05 +0100
+> > Marijn Suijten <marijn.suijten@somainline.org> wrote:
+> >   
+> > > As mentioned and discussed in [1] extend_name should not be used for
+> > > full channel labels (and most drivers seem to only use it to express a
+> > > short type of a channel) as this affects sysfs filenames, while the
+> > > label name is supposed to be extracted from the *_label sysfs file
+> > > instead.  This appears to have been unclear to some drivers as
+> > > extend_name is also used when read_label is unset, achieving an initial
+> > > goal of providing sensible names in *_label sysfs files without noticing
+> > > that sysfs filenames are (negatively and likely unintentionally)
+> > > affected as well.
+> > > 
+> > > Point readers of iio_chan_spec::extend_name to iio_info::read_label by
+> > > mentioning deprecation and side-effects of this field.
+> > > 
+> > > [1]: https://lore.kernel.org/linux-arm-msm/20221221223432.si2aasbleiicayfl@SoMainline.org/
+> > > 
+> > > Suggested-by: Jonathan Cameron <jic23@kernel.org>
+> > > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> > > ---
+> > >  include/linux/iio/iio.h | 3 +++
+> > >  1 file changed, 3 insertions(+)
+> > > 
+> > > diff --git a/include/linux/iio/iio.h b/include/linux/iio/iio.h
+> > > index 81413cd3a3e7..36c89f238fb9 100644
+> > > --- a/include/linux/iio/iio.h
+> > > +++ b/include/linux/iio/iio.h
+> > > @@ -221,6 +221,9 @@ struct iio_event_spec {
+> > >   * @extend_name:	Allows labeling of channel attributes with an
+> > >   *			informative name. Note this has no effect codes etc,
+> > >   *			unlike modifiers.
+> > > + *			This field is deprecated in favour of overriding read_label
+> > > + *			in iio_info, which unlike @extend_name does not affect sysfs
+> > > + *			filenames.  
+> > Perhaps reword as
+> > 
+> > This field is deprecated in favour of overriding the default label
+> > by providing a read_label() callback in iio_info, which unlike
+> > @extend_name does not affect sysfs filenames.
+> > ?  
+> 
+> Agreed, explicitly stating "the default label by" makes this much more
+> clear.  Though, maybe swap that around into "in favour of providing
+> read_label() in iio_info to override the label"?  Otherwise this could
+> be interpreted as "overriding the default label" is preferred to setting
+> extend_name... which one would do to override the default label.
 
-diff --git a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-index 35668caa190c4..ad1ba15b74c19 100644
---- a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-@@ -9,9 +9,6 @@ title: Qualcomm Display DSI controller
- maintainers:
-   - Krishna Manikandan <quic_mkrishn@quicinc.com>
- 
--allOf:
--  - $ref: "../dsi-controller.yaml#"
--
- properties:
-   compatible:
-     oneOf:
-@@ -50,22 +47,23 @@ properties:
-     maxItems: 1
- 
-   clocks:
--    items:
--      - description: Display byte clock
--      - description: Display byte interface clock
--      - description: Display pixel clock
--      - description: Display core clock
--      - description: Display AHB clock
--      - description: Display AXI clock
-+    description: |
-+      Several clocks are used, depending on the variant. Typical ones are::
-+       - bus:: Display AHB clock.
-+       - byte:: Display byte clock.
-+       - byte_intf:: Display byte interface clock.
-+       - core:: Display core clock.
-+       - core_mss:: Core MultiMedia SubSystem clock.
-+       - iface:: Display AXI clock.
-+       - mdp_core:: MDP Core clock.
-+       - mnoc:: MNOC clock
-+       - pixel:: Display pixel clock.
-+    minItems: 3
-+    maxItems: 9
- 
-   clock-names:
--    items:
--      - const: byte
--      - const: byte_intf
--      - const: pixel
--      - const: core
--      - const: iface
--      - const: bus
-+    minItems: 3
-+    maxItems: 9
- 
-   phys:
-     maxItems: 1
-@@ -161,6 +159,192 @@ required:
-   - assigned-clock-parents
-   - ports
- 
-+allOf:
-+  - $ref: ../dsi-controller.yaml#
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,apq8064-dsi-ctrl
-+    then:
-+      properties:
-+        clocks:
-+          maxItems: 7
-+        clock-names:
-+          items:
-+            - const: iface
-+            - const: bus
-+            - const: core_mmss
-+            - const: src
-+            - const: byte
-+            - const: pixel
-+            - const: core
-+
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,msm8916-dsi-ctrl
-+    then:
-+      properties:
-+        clocks:
-+          maxItems: 6
-+        clock-names:
-+          items:
-+            - const: mdp_core
-+            - const: iface
-+            - const: bus
-+            - const: byte
-+            - const: pixel
-+            - const: core
-+
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,msm8953-dsi-ctrl
-+    then:
-+      properties:
-+        clocks:
-+          maxItems: 6
-+        clock-names:
-+          items:
-+            - const: mdp_core
-+            - const: iface
-+            - const: bus
-+            - const: byte
-+            - const: pixel
-+            - const: core
-+
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,msm8974-dsi-ctrl
-+    then:
-+      properties:
-+        clocks:
-+          maxItems: 7
-+        clock-names:
-+          items:
-+            - const: mdp_core
-+            - const: iface
-+            - const: bus
-+            - const: byte
-+            - const: pixel
-+            - const: core
-+            - const: core_mmss
-+
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,msm8996-dsi-ctrl
-+    then:
-+      properties:
-+        clocks:
-+          maxItems: 7
-+        clock-names:
-+          items:
-+            - const: mdp_core
-+            - const: byte
-+            - const: iface
-+            - const: bus
-+            - const: core_mmss
-+            - const: pixel
-+            - const: core
-+
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,msm8998-dsi-ctrl
-+    then:
-+      properties:
-+        clocks:
-+          maxItems: 6
-+        clock-names:
-+          items:
-+            - const: byte
-+            - const: byte_intf
-+            - const: pixel
-+            - const: core
-+            - const: iface
-+            - const: bus
-+
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,sc7180-dsi-ctrl
-+              - qcom,sc7280-dsi-ctrl
-+              - qcom,sm8250-dsi-ctrl
-+              - qcom,sm8150-dsi-ctrl
-+              - qcom,sm8250-dsi-ctrl
-+              - qcom,sm8350-dsi-ctrl
-+              - qcom,sm8450-dsi-ctrl
-+              - qcom,sm8550-dsi-ctrl
-+    then:
-+      properties:
-+        clocks:
-+          maxItems: 6
-+        clock-names:
-+          items:
-+            - const: byte
-+            - const: byte_intf
-+            - const: pixel
-+            - const: core
-+            - const: iface
-+            - const: bus
-+
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,sdm660-dsi-ctrl
-+    then:
-+      properties:
-+        clocks:
-+          maxItems: 9
-+        clock-names:
-+          items:
-+            - const: mdp_core
-+            - const: byte
-+            - const: byte_intf
-+            - const: mnoc
-+            - const: iface
-+            - const: bus
-+            - const: core_mmss
-+            - const: pixel
-+            - const: core
-+
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,sdm845-dsi-ctrl
-+    then:
-+      properties:
-+        clocks:
-+          maxItems: 6
-+        clock-names:
-+          items:
-+            - const: byte
-+            - const: byte_intf
-+            - const: pixel
-+            - const: core
-+            - const: iface
-+            - const: bus
-+
- additionalProperties: false
- 
- examples:
--- 
-2.38.1
+Sure that works.
+> 
+> I can queue this up for v3 unless you'll fix it up while applying,
+> presuming no other changes have to be made (aside from dropping patch
+> 3/5).
+I haven't looked closely enough at the rest, but if this is all that
+needs updating I'll change it whilst applying.
+
+> 
+> Will read_label() turn into a link?  And is the @extend_name reference
+> proper?  Is there something to link to iio_info, perhaps a hashtag - or
+> maybe fully qualify `#iio_info::read_label()` for linking purposes?
+> /me jumps over to kerneldoc documentation :)
+> 
+> - Marijn
+> 
+> > >   * @datasheet_name:	A name used in in-kernel mapping of channels. It should
+> > >   *			correspond to the first name that the channel is referred
+> > >   *			to by in the datasheet (e.g. IND), or the nearest  
+> >   
+> 
 
