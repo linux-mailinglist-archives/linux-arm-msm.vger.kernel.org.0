@@ -2,128 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6DC3367287E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 20:35:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2AD7F6728C5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 20:54:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230235AbjARTfH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 14:35:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58350 "EHLO
+        id S229507AbjARTy6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 14:54:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230351AbjARTen (ORCPT
+        with ESMTP id S229481AbjARTy5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 14:34:43 -0500
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B039559549;
-        Wed, 18 Jan 2023 11:33:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1674070380; x=1705606380;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=rd8D9WM+DMkQQdSGbyw+RjACp0njYXtWMwISiTkUNq4=;
-  b=FR0gX07Jn6Qzoa+7ScFsE6DPRqSccs0Y5B1esE5X7spub9gRc4zt5UXF
-   L4TO8MAYLbCoQUWkY8M+u5mP7ZLnzvYMshMb7c67WSWHEqFjhUV+WLvgG
-   wyJwSLKvNa7wwwWefuD7sqUiwd8gN+NTEnyRNrZPS/gRUDSc2VKLilTpj
-   5Dv9Prm+tzqlcmvdfrscy4PvjkJOVp/AA83FsRGVOZXskPvhXQmY2CEyK
-   lt7zyi15XzCPiiBU024UXmNh9knr46sLiWhnk4Mk2mwlKMRKX7UC67geZ
-   8T67qS+nS1UEpuncY+8TnmVEF/55QT0Tdi+i9xPhqTZAGF8thShI6/JqI
-   w==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10594"; a="411319199"
-X-IronPort-AV: E=Sophos;i="5.97,226,1669104000"; 
-   d="scan'208";a="411319199"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jan 2023 11:32:47 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10594"; a="802328577"
-X-IronPort-AV: E=Sophos;i="5.97,226,1669104000"; 
-   d="scan'208";a="802328577"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by fmsmga001.fm.intel.com with ESMTP; 18 Jan 2023 11:32:35 -0800
-Received: from andy by smile.fi.intel.com with local (Exim 4.96)
-        (envelope-from <andriy.shevchenko@linux.intel.com>)
-        id 1pIEAh-00BLES-15;
-        Wed, 18 Jan 2023 21:32:31 +0200
-Date:   Wed, 18 Jan 2023 21:32:31 +0200
-From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Olivier Dautricourt <olivierdautricourt@gmail.com>,
-        Stefan Roese <sr@denx.de>, Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Andreas =?iso-8859-1?Q?F=E4rber?= <afaerber@suse.de>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Viresh Kumar <vireshk@kernel.org>,
-        Green Wan <green.wan@sifive.com>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        =?utf-8?B?77+9ZXI=?= <povik+lin@cutebit.org>,
-        Peng Fan <peng.fan@nxp.com>,
-        Paul Cercueil <paul@crapouillou.net>,
-        - <chuanhua.lei@intel.com>, Long Cheng <long.cheng@mediatek.com>,
-        Rajesh Gumasta <rgumasta@nvidia.com>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Biju Das <biju.das.jz@bp.renesas.com>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Palmer Debbelt <palmer@sifive.com>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Amelie Delaunay <amelie.delaunay@foss.st.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
-        linux-kernel@vger.kernel.org, asahi@lists.linux.dev,
-        linux-tegra@vger.kernel.org, linux-actions@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-riscv@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-mediatek@lists.infradead.org
-Subject: Re: [PATCH 1/2] dt-bindings: dma: drop unneeded quotes
-Message-ID: <Y8hJT7gaw3+s62rv@smile.fi.intel.com>
-References: <20230118180144.364756-1-krzysztof.kozlowski@linaro.org>
+        Wed, 18 Jan 2023 14:54:57 -0500
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96D6E59262
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 11:54:55 -0800 (PST)
+Received: by mail-ej1-x62a.google.com with SMTP id mp20so39292887ejc.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 11:54:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=PS/7KuaB+IDJ4czpYZHfKfWWHUA84RHoIsTNfT8XuEU=;
+        b=S0yIBmB+f/4oFnfqAxjqm9aQJfCPt643cmPeAJKJPeekK2T3v7n5HehsoVvxSE6bU6
+         Y7Bg7s+JENwF9NUn2L7RZFzpVypzZaRMOCFOxolI4MU9wCdSvZYVPSKQnQ3nH05aA/84
+         qlu+z0GkLuieC2sDWH54TBMrxtjFX3knmLW7FotnDQns8sYrlNMGNpJrgH6omg5QQ8S4
+         W8zcVnI5enQv6Oh9l78bEWs5lAVF8Y7bIaQZgg0WvRZwQFUoMY9yWfcuYfKQI31lvRMW
+         t8NxgxIyBXVFwA15TebgbIaBGylGv0Wr/kfDtzyw+peIGIfPEmVeQnc6pnc1LCfqTSS0
+         eIWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=PS/7KuaB+IDJ4czpYZHfKfWWHUA84RHoIsTNfT8XuEU=;
+        b=Hn0YMwaGTYn9vSwlS+NrAtudQdkari+Pt+q8dHOTXtyBUCO5mxvqVUMESIMp/Vz4mS
+         kB8J4NBcqHsm/nfwVbTSuRQdsgyQiolzZqL7qQ+N2hBjo4zG1C9qX/vBImfxyvLZAZ99
+         v4OBJ8kwLmQLOzhdGEzVDTdL+sXU3oxr+lOIRCp4JQPexkACxwsUutEOAwG+scqxFyrD
+         P5Y+b4fBWl2uXNrFg17l/r9NEsoFA9J6+pAGlbOhppnqVG/TtAVCo9XF3RY8pm8kVcUt
+         ZhYH/0/xZKkRBk3/Y1rUBlAmLcFVALJ/78xlSDeUbE4alPXkEFePB3lkN0VHMXR35fxM
+         8ePg==
+X-Gm-Message-State: AFqh2ko6GxwqV6OV/KESJXjwNjbucH9+QHFwiWpqa8OOxhpBVWyJtu9Z
+        T20V3KwQn2vP8GpGw9vgpaw2iROVvefLWLqL
+X-Google-Smtp-Source: AMrXdXsTXO2h6sqsyvxXkLtL0jBXFCsyXKu+HZK+lAdfdFRJ7Z+o+GbGbEHYDji0L9trJsJrB6sDew==
+X-Received: by 2002:a17:907:1a46:b0:84c:e89e:bb4c with SMTP id mf6-20020a1709071a4600b0084ce89ebb4cmr4063246ejc.49.1674071694016;
+        Wed, 18 Jan 2023 11:54:54 -0800 (PST)
+Received: from [192.168.1.101] (abxh150.neoplus.adsl.tpnet.pl. [83.9.1.150])
+        by smtp.gmail.com with ESMTPSA id f17-20020a170906495100b0086dd8f20a6asm5923513ejt.77.2023.01.18.11.54.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Jan 2023 11:54:53 -0800 (PST)
+Message-ID: <f07bbbb6-3343-19c7-bd94-c8c239f1cbc8@linaro.org>
+Date:   Wed, 18 Jan 2023 20:54:51 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230118180144.364756-1-krzysztof.kozlowski@linaro.org>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v3 8/9] interconnect: qcom: rpm: Add a way to always set
+ QoS registers
+Content-Language: en-US
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     marijn.suijten@somainline.org, bryan.odonoghue@linaro.org,
+        Georgi Djakov <djakov@kernel.org>, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230116132152.405535-1-konrad.dybcio@linaro.org>
+ <20230116132152.405535-9-konrad.dybcio@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230116132152.405535-9-konrad.dybcio@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 18, 2023 at 07:01:43PM +0100, Krzysztof Kozlowski wrote:
-> Cleanup by removing unneeded quotes from refs and redundant blank lines.
-> No functional impact except adjusting to preferred coding style.
+
+
+On 16.01.2023 14:21, Konrad Dybcio wrote:
+> On newer SoCs (there's no clear boundary, but probably "new enough"
+> means every interconnect provider is either BIMC or QNoC and there
+> are no old-style NoC hosts) we're expected to set QoS registers
+> regardless of the ap_owned param. Add a bool in the qcom_icc_provider
+> and make the logic assume it's okay to set the registers when it's
+> set.
 > 
->  Documentation/devicetree/bindings/dma/dma-controller.yaml       | 2 +-
->  Documentation/devicetree/bindings/dma/dma-router.yaml           | 2 +-
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+Argh, I only noticed now that this patch is incomplete,
+missing setting the value in qnoc_probe() and adding a
+similar struct member to qcom_icc_desc..
 
->  Documentation/devicetree/bindings/dma/intel,ldma.yaml           | 2 +-
-
->  Documentation/devicetree/bindings/dma/snps,dma-spear1340.yaml   | 2 +-
-
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-
--- 
-With Best Regards,
-Andy Shevchenko
-
-
+Konrad
+>  drivers/interconnect/qcom/icc-rpm.c | 2 +-
+>  drivers/interconnect/qcom/icc-rpm.h | 2 ++
+>  2 files changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
+> index 509cadf398e9..343e6021a93a 100644
+> --- a/drivers/interconnect/qcom/icc-rpm.c
+> +++ b/drivers/interconnect/qcom/icc-rpm.c
+> @@ -243,7 +243,7 @@ static int __qcom_icc_set(struct icc_node *n, struct qcom_icc_node *qn,
+>  	bool vote_ap, vote_rpm;
+>  	int ret;
+>  
+> -	if (qp->type == QCOM_ICC_QNOC) {
+> +	if (qp->type == QCOM_ICC_QNOC || qp->always_set_qos) {
+>  		vote_ap = true;
+>  		vote_rpm = true;
+>  	} else {
+> diff --git a/drivers/interconnect/qcom/icc-rpm.h b/drivers/interconnect/qcom/icc-rpm.h
+> index 729573f0d9fe..3c8888482a39 100644
+> --- a/drivers/interconnect/qcom/icc-rpm.h
+> +++ b/drivers/interconnect/qcom/icc-rpm.h
+> @@ -28,6 +28,7 @@ enum qcom_icc_type {
+>   * @type: the ICC provider type
+>   * @regmap: regmap for QoS registers read/write access
+>   * @qos_offset: offset to QoS registers
+> + * @always_set_qos: whether to always set QoS registers regardless of bus type
+>   * @bus_clk_rate: bus clock rate in Hz
+>   * @bus_clks: the clk_bulk_data table of bus clocks
+>   * @intf_clks: the clk_bulk_data table of interface clocks
+> @@ -39,6 +40,7 @@ struct qcom_icc_provider {
+>  	enum qcom_icc_type type;
+>  	struct regmap *regmap;
+>  	unsigned int qos_offset;
+> +	bool always_set_qos;
+>  	u64 bus_clk_rate[2];
+>  	struct clk_bulk_data bus_clks[2];
+>  	struct clk_bulk_data intf_clks[];
