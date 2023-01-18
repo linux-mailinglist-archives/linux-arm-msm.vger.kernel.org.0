@@ -2,88 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 886436723D9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 17:44:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DF9156723EA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 17:45:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229957AbjARQoW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 11:44:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48264 "EHLO
+        id S230216AbjARQpu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 11:45:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229910AbjARQn0 (ORCPT
+        with ESMTP id S229910AbjARQpd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 11:43:26 -0500
-Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0986A23105;
-        Wed, 18 Jan 2023 08:43:23 -0800 (PST)
-Received: by mail-ot1-f46.google.com with SMTP id g2-20020a9d6b02000000b006864bf5e658so2767896otp.1;
-        Wed, 18 Jan 2023 08:43:23 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ExV51LRKxSAfszSznfMkdCY4p5XYR1eAwLcuflAXfzM=;
-        b=FNKlBARkVT11t6QlbJt++DfhnuxBN/lTk9R6A6qYyCL4PzF7bEULLM9Y8lbqQZuB5m
-         5bkd0nRyngMqXfSmm0D9Q9+Ft2pvFhuHJcw54gcO+lQTmTy0h2NFRQ3PAx4w2veA1Qvv
-         4yeuWOFl88tpYt1tF6+/zkNGqZkmu9ylC6d4hdwft9Uyu6LaEY6f1dPYq6RWLYCiRIss
-         et4HExcojO7/N2H+ttOu/+JbdZJMvk4mhlXwZ5odD2+XimPyDXue9G+JLY80fjkzPnYO
-         5fSpqMATfSee7OIAlrM09oc53s6PyZC15qvMiq9bVkqHYVv5R9HLWrpLopAwpl6tKcWm
-         wS7Q==
-X-Gm-Message-State: AFqh2kp0rrb22f05Io3NLIrtRwY08hupCUOhAoH0IP41fsfE7HEp5+hF
-        QPupxY/aD9SUtxDejeTjUw==
-X-Google-Smtp-Source: AMrXdXtupd2qdij/8GDAp9D/q94uWH1RoHb3vxZY7KCP70YaeSd4XIvdEVydTbRXgGGGq+MIANQ4jg==
-X-Received: by 2002:a05:6830:1086:b0:66e:40bd:436c with SMTP id y6-20020a056830108600b0066e40bd436cmr3937187oto.15.1674060202672;
-        Wed, 18 Jan 2023 08:43:22 -0800 (PST)
-Received: from robh_at_kernel.org ([4.31.143.193])
-        by smtp.gmail.com with ESMTPSA id p8-20020a9d6948000000b00684152e9ff2sm2365769oto.0.2023.01.18.08.43.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Jan 2023 08:43:22 -0800 (PST)
-Received: (nullmailer pid 140766 invoked by uid 1000);
-        Wed, 18 Jan 2023 16:43:21 -0000
-Date:   Wed, 18 Jan 2023 10:43:21 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     dri-devel@lists.freedesktop.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        devicetree@vger.kernel.org, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Wed, 18 Jan 2023 11:45:33 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02D5B5587;
+        Wed, 18 Jan 2023 08:44:54 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id B2EAAB81DA6;
+        Wed, 18 Jan 2023 16:44:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D111C433D2;
+        Wed, 18 Jan 2023 16:44:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1674060291;
+        bh=pmYmioG0fcrEcbWXBBM408S3FTzU7YmS8Z5jlCpig6A=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ny6f4nxMYkCU5Y+pJjIKC/bjQoZcIvf0N98mKvejArUr+EOnAx0KErq0ngOMxfsHP
+         5VvnHtNGCiXPasyyfkwZ7Gd7sPeS/TVFPGkVeWrlpzdSq+8dLnsyvMOW9fiD7QhSct
+         DdKTs/ds6NqASMoAvzolEl9krHbxP1mpO3Q9SieoH6ae6Ww3kyEDyLSuhsy1moSn/h
+         UxY7tp/8GL4NYTlPeDLn3e0uhPq38TIvOGdyiy/wVEG0qDFd0xA+UDEumZso6G/Ttl
+         e0gC2b7bs4Bqk0zs/g5cglUsgFEUDxYoQgtCpWa4lCQM+/8Z6U1nD1G7F+ayaugohh
+         z7sEBtroQRxHw==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pIBYq-0005t8-2X; Wed, 18 Jan 2023 17:45:16 +0100
+Date:   Wed, 18 Jan 2023 17:45:16 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Sean Paul <sean@poorly.run>, freedreno@lists.freedesktop.org,
-        Rob Clark <robdclark@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>
-Subject: Re: [PATCH v7 03/11] dt-bindings: display/msm: add core clock to the
- mdss bindings
-Message-ID: <167406020100.140733.1559118899199486603.robh@kernel.org>
-References: <20230118041243.1720520-1-dmitry.baryshkov@linaro.org>
- <20230118041243.1720520-4-dmitry.baryshkov@linaro.org>
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v3 1/8] dt-bindings: phy: Add QMP PCIe PHY comptible for
+ SM8550
+Message-ID: <Y8giHJMtPu4wTlmA@hovoldconsulting.com>
+References: <20230118005328.2378792-1-abel.vesa@linaro.org>
+ <20230118005328.2378792-2-abel.vesa@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230118041243.1720520-4-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20230118005328.2378792-2-abel.vesa@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Wed, 18 Jan 2023 06:12:35 +0200, Dmitry Baryshkov wrote:
-> Add (optional) core clock to the mdss bindings to let the MDSS driver
-> access hardware registers before MDP driver probes.
+On Wed, Jan 18, 2023 at 02:53:21AM +0200, Abel Vesa wrote:
+> Document the QMP PCIe PHY compatible for SM8550.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
->  .../bindings/display/msm/qcom,mdss.yaml       | 32 +++++++++++++------
->  1 file changed, 22 insertions(+), 10 deletions(-)
+>  .../devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml     | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+> index 8a85318d9c92..65f26cfff3fb 100644
+> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+> @@ -20,6 +20,8 @@ properties:
+>        - qcom,sc8280xp-qmp-gen3x2-pcie-phy
+>        - qcom,sc8280xp-qmp-gen3x4-pcie-phy
+>        - qcom,sm8350-qmp-gen3x1-pcie-phy
+> +      - qcom,sm8550-qmp-gen3x2-pcie-phy
+> +      - qcom,sm8550-qmp-gen4x2-pcie-phy
+>  
+>    reg:
+>      minItems: 1
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+I don't think I'll have time to look at this week, but I did notice that
+you fail do describe the clocks, regulators, and resets (as you also
+did for the UFS PHY binding) which are currently different from
+sc8280xp.
+
+Please be more careful when adding compatible strings so we get this
+right. You should also double check that the differences are really
+warranted and not just due the vendor using different names for the same
+resource.
+
+At least the reset must be renamed ("pcie_1_nocsr_com_phy_reset", e.g.
+drop 'pcie' and 'reset', maybe more).
+
+Johan
