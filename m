@@ -2,77 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 02ED6671C60
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 13:43:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CB35E671CE9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 14:05:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229941AbjARMm6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 07:42:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43758 "EHLO
+        id S231153AbjARNFd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 08:05:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230080AbjARMkv (ORCPT
+        with ESMTP id S231172AbjARNFK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 07:40:51 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 486494A234
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 04:05:53 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id e3so24475227wru.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 04:05:53 -0800 (PST)
+        Wed, 18 Jan 2023 08:05:10 -0500
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0483CFD1A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 04:26:08 -0800 (PST)
+Received: by mail-ej1-x62c.google.com with SMTP id az20so63734377ejc.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 04:26:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=jOtBx7iuzRQsPxKN1y+9m4RLuvwP28DoAs7Gu1XGBOA=;
-        b=P6bO8vngjWSIT1XrIAM91BorkF/ywf8NRmLu2N4HPgWbx6ENup6EZGFzyFAaO4kTyt
-         BijCwnc6YuX5l0kgMI7QPtk+dH9VJi0YUSTnNkej28eJfuWziyV4CyTR2wa2RR0dtvPA
-         eKFFMdq73UeGETv/MccUPmItb+t0dezwpF1CPwa0WLXNtNoq/EYzbJlAnSyTUmdRMQfW
-         4hvHPmQv+XHF/3mXO1A6++0s/dnEYYlunbplWUXEK0RfddDtPWUxg4dnM+FDAgGprwVP
-         HEjiA6GM4PPYsjjCnf7/cbAlPzzE7K/ZQhYKGUwX1Oiy/c4+608MHijUSO0Z0aE+1hkJ
-         41nA==
+        bh=Bw53AePccz141YFg2y0xxMG1R3GQx44WWI8acJWu1V8=;
+        b=dzE60I79dcT2fVcg07c9ozKfm21j4Y/OcNMocl5P1TGzPV6jiqy/YIlqUhazeG8CHe
+         N1TRz1yg89pIIj2TPuNdLdBd/2aXTTmsy62SrDoNlu/ha9BEVwHjmbmhBF30Ycwn6H2f
+         Xi+kCiw8ChwTyVoOXCG7X0B5WlQUQDYAETrID0RPZx9F535Diabo/UPplxhnpW2ugvrQ
+         XboVWyA5cErJWH0w7Z0wYQibcfwTjT8NXUQJm/0ePlCB812Lr9h7i0/pRTncs8viDh7N
+         QD8GblIsWTk4bw5boWKmN1l6RwmCeRNkcDkcY7L7lOK1myFYoCXnVg1Fl6t1JHWh3tLw
+         bt7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jOtBx7iuzRQsPxKN1y+9m4RLuvwP28DoAs7Gu1XGBOA=;
-        b=D6nSLBg05XaMtnZnb3TmXs5AweXs+0P0KvSrQNoUOQesp75WmEfktbzG7NC7R3ut0J
-         g8V14VaVwbgW3O+WeclxBtcvcHNrjPRCCJEjuuUM1WYoWWmKHjUjASqMVkypiC/0LMHW
-         WA+hmfm5Q7qhkaGeP9lj7cTDd2WTWQNcuZPuvt0MCfPSAkCf7OY6H5G2oh5zol5AETDo
-         RLu4byiBgyoh7fFPuNHOF6GtKHU6Bkx6DtZ0M2OiYUzmvejzfdjhyxcovVGSEEkF25LO
-         1t3T3EutU4svLQK3R6L6uDG5Uy/JmfpIENM5rjiWRv28WbX0pvatORTeg0lM6WDj74uX
-         QOCQ==
-X-Gm-Message-State: AFqh2krJNwvOeNQQO3iEdT9/rWDwfzOdPjv7P5bDNazwYb9Ezjs5CWRi
-        LOc7jmoIfupVm/lK+uilc7JEQQ==
-X-Google-Smtp-Source: AMrXdXvC7BWWUHoh9f7f73Qbm2nv6DQNkQWjt2oVVrh14s35bOVD3wyjjp8Q+p1rcAfALaOJuwvL8g==
-X-Received: by 2002:a5d:6e82:0:b0:242:5563:c3b with SMTP id k2-20020a5d6e82000000b0024255630c3bmr5868223wrz.59.1674043551833;
-        Wed, 18 Jan 2023 04:05:51 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id j3-20020adfff83000000b002bddc1ac273sm14126833wrr.87.2023.01.18.04.05.50
+        bh=Bw53AePccz141YFg2y0xxMG1R3GQx44WWI8acJWu1V8=;
+        b=u0kcJTGxoJpAKblMAjAGevZT0IoKGWLnumylcDTmd47WuoH+jdVuSb0WwUZi8zV5we
+         czzrCthRGuM3C/5KM+OeE6pGwW35sJaYOB6EZ2dByxAIMjp6d/rKnj3GPkrNaXn9JQ7F
+         JQDsHbWNz248Iwy1pRuetWaidPrX0cs//bbu2EnQJvcaq1bHByv40rYxfOWYRjgGQb07
+         NDMOqRVkGi3hPwp3/NxqnDBkxZshlSpP+v7XbIJtTTfMlAW0SikzTDd++Hcig3U10iMs
+         woeC0s9wRc6tU3Z4+Ss6GyTEh13zLljtuOgKLXtinfW8A/Nwo0fn4tim0SLqZwycnakh
+         OIPA==
+X-Gm-Message-State: AFqh2krf6vkT6zQTwrGVgRnrvwleXxSsInRjwBTQp94c8iWziix+AzC4
+        utOSp0WbDNNi/wD8Wjx1bAp58g==
+X-Google-Smtp-Source: AMrXdXusewrCLzYwnhOUkGVXsQgkPA/UUWIvvLrXMJ7BEodfXCEli+MoD1BHBQ/LVa5gBtfALs3z1Q==
+X-Received: by 2002:a17:907:918f:b0:871:65a3:1726 with SMTP id bp15-20020a170907918f00b0087165a31726mr5903442ejb.42.1674044767229;
+        Wed, 18 Jan 2023 04:26:07 -0800 (PST)
+Received: from [192.168.1.101] (abxh252.neoplus.adsl.tpnet.pl. [83.9.1.252])
+        by smtp.gmail.com with ESMTPSA id qw25-20020a1709066a1900b00781dbdb292asm14582253ejc.155.2023.01.18.04.26.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Jan 2023 04:05:51 -0800 (PST)
-Message-ID: <7822949a-c373-3028-6a42-66a04245e93b@linaro.org>
-Date:   Wed, 18 Jan 2023 12:05:50 +0000
+        Wed, 18 Jan 2023 04:26:06 -0800 (PST)
+Message-ID: <1dbfb913-95c3-c9c6-1797-e4d8387552ac@linaro.org>
+Date:   Wed, 18 Jan 2023 13:26:04 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: [PATCH v3 1/8] dt-bindings: arm: qcom: Document MSM8939 SoC
- binding
+ Thunderbird/102.6.1
+Subject: Re: [RFC PATCH] regulator: dt-bindings: qcom-labibb: Allow
+ regulator-common properties
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     marijn.suijten@somainline.org, Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20230116092502.71146-1-konrad.dybcio@linaro.org>
+ <ee9ef65b-38c6-2283-b1e7-abf49abdccd6@linaro.org>
 Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        djakov@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, benl@squareup.com,
-        shawn.guo@linaro.org, fabien.parent@linaro.org, leo.yan@linaro.org,
-        dmitry.baryshkov@linaro.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-References: <20230117024846.1367794-1-bryan.odonoghue@linaro.org>
- <20230117024846.1367794-2-bryan.odonoghue@linaro.org>
- <Y8eyIO8BqKzvulbB@gerhold.net>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <Y8eyIO8BqKzvulbB@gerhold.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <ee9ef65b-38c6-2283-b1e7-abf49abdccd6@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -83,156 +82,59 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/01/2023 08:47, Stephan Gerhold wrote:
-> On Tue, Jan 17, 2023 at 02:48:39AM +0000, Bryan O'Donoghue wrote:
->> Document the MSM8939 and supported boards in upstream Sony "Tulip" M4 Aqua
->> and Square APQ8039 T2.
->>
->> MSM8939 is one of the older SoCs so we need to expand the list of
->> qcom,board-ids to allow for the bootloader DTS board-id matching
->> dependency.
->>
+
+
+On 17.01.2023 09:51, Krzysztof Kozlowski wrote:
+> On 16/01/2023 10:25, Konrad Dybcio wrote:
+>> Allow regulator-common properties on lab/ibb regulators, such as
+>> regulator-always-on, etc.
 > 
-> The original LK bootloaders cannot boot your msm8939.dtsi correctly,
-> because a spin-table implementation is required to get the other CPU
-> cores up. This means that a modified bootloader is always needed from
-> the upstream point of view, since I doubt anyone wants to use these
-> devices with a single core only. lk2nd (as the primary spin-table
-> implementation right now) has never required qcom,board-ids and any
-> custom LK would be easy to patch to ignore these.
+> Are these proper regulators? If so this looks sensible. Why calling it
+> RFC? What is here questionable?
+I really had no idea if this was the proper way to do it, but
+dt_bindings_check and CHECK_DTBS+example dt were happy..
 
-The system boots just fine with the shipped LK. We get display, USB, SD, 
-WiFi.
+> 
+>>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+>>  .../bindings/regulator/qcom-labibb-regulator.yaml           | 6 ++++--
+>>  1 file changed, 4 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.yaml
+>> index f97b8083678f..c0be7d5a6d40 100644
+>> --- a/Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.yaml
+>> +++ b/Documentation/devicetree/bindings/regulator/qcom-labibb-regulator.yaml
+>> @@ -20,7 +20,8 @@ properties:
+>>  
+>>    lab:
+>>      type: object
+>> -    additionalProperties: false
+>> +    $ref: "regulator.yaml#"
+> 
+> Drop quotes.
+> 
+>> +    unevaluatedProperties: false
+>>  
+>>      properties:
+>>        qcom,soft-start-us:
+>> @@ -46,7 +47,8 @@ properties:
+>>  
+>>    ibb:
+>>      type: object
+>> -    additionalProperties: false
+>> +    $ref: "regulator.yaml#"
+> 
+> Drop quotes.
+Ack x2
 
-We just don't support booting the second cluster via any other means 
-than lk2nd right now.
-
-You could also not use lk2nd, stick with your default LK and import LPM 
-patches.
-
-Default LK:
-root@linaro-alip:~# cat /proc/cpuinfo
-processor       : 0
-BogoMIPS        : 38.40
-Features        : fp asimd evtstrm aes pmull sha1 sha2 crc32 cpuid
-CPU implementer : 0x41
-CPU architecture: 8
-CPU variant     : 0x0
-CPU part        : 0xd03
-CPU revision    : 4
-
-root@linaro-alip:~# iw wlan0 info 
- 
-
-Interface wlan0
-         ifindex 6
-         wdev 0x1
-         addr e2:b9:a0:ef:3a:ba
-         type managed
-         wiphy 0
-         channel 52 (5260 MHz), width: 80 MHz, center1: 5290 MHz
-         txpower 20.00 dBm
-         multicast TXQ:
-                 qsz-byt qsz-pkt flows   drops   marks   overlmt hashcol 
-tx-bytes        tx-packets
-                 0       0       0       0       0       0       0 
-0               0
-root@linaro-alip:~# uname -a
-Linux linaro-alip 6.2.0-rc4-next-20230116-00029-gf1a46ff9e812-dirty #392 
-SMP PREEMPT Tue Jan 17 23:46:42 GMT 2023 aarch64 GNU/Linux
-
-
-LK2ND:
-root@linaro-alip:~# cat /proc/cpuinfo
-processor       : 0
-BogoMIPS        : 38.40
-Features        : fp asimd evtstrm aes pmull sha1 sha2 crc32 cpuid
-CPU implementer : 0x41
-CPU architecture: 8
-CPU variant     : 0x0
-CPU part        : 0xd03
-CPU revision    : 4
-
-processor       : 1
-BogoMIPS        : 38.40
-Features        : fp asimd evtstrm aes pmull sha1 sha2 crc32 cpuid
-CPU implementer : 0x41
-CPU architecture: 8
-CPU variant     : 0x0
-CPU part        : 0xd03
-CPU revision    : 4
-
-processor       : 2
-BogoMIPS        : 38.40
-Features        : fp asimd evtstrm aes pmull sha1 sha2 crc32 cpuid
-CPU implementer : 0x41
-CPU architecture: 8
-CPU variant     : 0x0
-CPU part        : 0xd03
-CPU revision    : 4
-
-processor       : 3
-BogoMIPS        : 38.40
-Features        : fp asimd evtstrm aes pmull sha1 sha2 crc32 cpuid
-CPU implementer : 0x41
-CPU architecture: 8
-CPU variant     : 0x0
-CPU part        : 0xd03
-CPU revision    : 4
-
-processor       : 4
-BogoMIPS        : 38.40
-Features        : fp asimd evtstrm aes pmull sha1 sha2 crc32 cpuid
-CPU implementer : 0x41
-CPU architecture: 8
-CPU variant     : 0x0
-CPU part        : 0xd03
-CPU revision    : 4
-
-processor       : 5
-BogoMIPS        : 38.40
-Features        : fp asimd evtstrm aes pmull sha1 sha2 crc32 cpuid
-CPU implementer : 0x41
-CPU architecture: 8
-CPU variant     : 0x0
-CPU part        : 0xd03
-CPU revision    : 4
-
-processor       : 6
-BogoMIPS        : 38.40
-Features        : fp asimd evtstrm aes pmull sha1 sha2 crc32 cpuid
-CPU implementer : 0x41
-CPU architecture: 8
-CPU variant     : 0x0
-CPU part        : 0xd03
-CPU revision    : 4
-
-processor       : 7
-BogoMIPS        : 38.40
-Features        : fp asimd evtstrm aes pmull sha1 sha2 crc32 cpuid
-CPU implementer : 0x41
-CPU architecture: 8
-CPU variant     : 0x0
-CPU part        : 0xd03
-CPU revision    : 4
-
-root@linaro-alip:~# iw wlan0 info
-Interface wlan0
-         ifindex 6
-         wdev 0x1
-         addr 02:00:0e:66:5c:21
-         type managed
-         wiphy 0
-         channel 64 (5320 MHz), width: 80 MHz, center1: 5290 MHz
-         txpower 20.00 dBm
-         multicast TXQ:
-                 qsz-byt qsz-pkt flows   drops   marks   overlmt hashcol 
-tx-bytes        tx-packets
-                 0       0       0       0       0       0       0 
-0               0
-root@linaro-alip:~# uname -a
-Linux linaro-alip 6.2.0-rc4-next-20230116-00029-gf1a46ff9e812-dirty #392 
-SMP PREEMPT Tue Jan 17 23:46:42 GMT 2023 aarch64 GNU/Linux
-
----
-bod
+Konrad
+> 
+>> +    unevaluatedProperties: false
+>>  
+>>      properties:
+>>        qcom,discharge-resistor-kohms:
+> 
+> Best regards,
+> Krzysztof
+> 
