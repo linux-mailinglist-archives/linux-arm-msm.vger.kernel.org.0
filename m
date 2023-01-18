@@ -2,80 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ED912672085
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 16:05:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 03B9D672098
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 16:08:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231365AbjARPFp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 10:05:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36116 "EHLO
+        id S229663AbjARPIy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 10:08:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231500AbjARPF2 (ORCPT
+        with ESMTP id S230304AbjARPIx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 10:05:28 -0500
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C71C32E44
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 07:05:15 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id m5-20020a05600c4f4500b003db03b2559eso1732462wmq.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 07:05:15 -0800 (PST)
+        Wed, 18 Jan 2023 10:08:53 -0500
+Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AF221554D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 07:08:52 -0800 (PST)
+Received: by mail-pg1-x529.google.com with SMTP id d10so24682871pgm.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 07:08:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Sy9FqaPskON5MA8I0+FqJ4Z9VJahIZ8FHzsydP66LsA=;
-        b=EzfKz8WBnZ8u2u0ulDL+VpHXYEdT+jUt1JdhVpDIyiU+lKlKlNCgThRuQuvU7QziEF
-         A8w717ibNv9S9bMN531O/JeikVT6XyT/5Ql/wZrtsMNdk8XhhNq3/pXy69DpUA2ZXMHI
-         USDop2hSeGr4d/jqYd/ZlNqs7m3Nd6+zVsDxSBv0uIor/yoMHOiCHn4Bw9RanPtNCINZ
-         EBALUequjrD8pb5EBfojehzDYA8fKbTPqze2SmoFhF6veoflzcLoGzA6X5VlzmMP/hYp
-         WEgPNmhnZFsMeOtxMaW4yk+rZv+gljOVwcDnwGuZLqMTYA7hiTpimdVASafEkD/sQHvd
-         tvdQ==
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=SKmSPzWqZ8ALeqBUAuKuTur5DqPtQNtoVkZGVtUKqkc=;
+        b=SEB1fd7t26dvqJ6O9uhv8Lq/OAzXBLBnnzcNMfGa0vrE61hl7P3K8rUjbUxbeFiCTM
+         qBoNJwKVW+Mb5qc/2OQADOVnzVrt6w8bRRLXdOAtK7dPGEEuVLr1StSF0N5QMUNo8wSN
+         Eg3C8C9QxHdlnqxGw3laUnLCQRX2zLuH38fMQpBEb0Fd2H5Nupo7MEfko1abDxzSsUO5
+         VbBC7oXB+sRc9b0zl5r1nCz4VNMkPScd0/yA+WJsTwq/jumhXW18EQLZsygpnyma3h38
+         YJCYHcAulTneVgauNe8+x021oODQ4WD7DljhJ2FMsUy1AiVQd6VlbDaND6FmOeveGaay
+         Ss6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Sy9FqaPskON5MA8I0+FqJ4Z9VJahIZ8FHzsydP66LsA=;
-        b=SXfcHsaeQrd5xSexUscSFxrQro2Bm0SStjOtN1mDAOOgeVU/8w8VB+1lLB+d2zFR5k
-         E4QQpukpiOd0NBMDosBSn+NW1LJD/zEWUGSrpC8wS27FpsHlV1RFOUpxEHXqLSdaakiU
-         EGB7c+W+cTC1qJEcx5WZM0ID+YRKr4iiKvbIrp0/c0PSk4zDuMrKHioBQy3p8xQNviYp
-         nW5QnC0xTtCTBen4VJJa7pxfwMWFD+xqQoMpHVFqAOx4NuNc3dlSY30TVGf1tO9OsIfB
-         4/SklsKoq+DyFoFEvHNSTc8bWPOZ1cSing1KA+unI03uk1eSJQh2Fo7aNyXydvzBGuaw
-         9bQw==
-X-Gm-Message-State: AFqh2kpGriy0Th8tniTf8UGZkkop33eHedJ4wNnRZIs7ozTfLy+yM96h
-        1CU8h8oB+yo8inc/E6Xb2bhPuQ==
-X-Google-Smtp-Source: AMrXdXvlSfmfkb6rb42n86ovGFgnlYFhIh6UVJnQTf89DfwPrVph3fOYFhqTCUoNp2NyU+J5tv+x7g==
-X-Received: by 2002:a05:600c:1d8e:b0:3d9:f9ef:3d23 with SMTP id p14-20020a05600c1d8e00b003d9f9ef3d23mr7327500wms.23.1674054313725;
-        Wed, 18 Jan 2023 07:05:13 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:37dc:5071:959c:93e4? ([2a01:e0a:982:cbb0:37dc:5071:959c:93e4])
-        by smtp.gmail.com with ESMTPSA id az9-20020a05600c600900b003b3307fb98fsm2345343wmb.24.2023.01.18.07.05.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Jan 2023 07:05:13 -0800 (PST)
-Message-ID: <5ab38158-6e75-ea9c-f788-f3a2d77dbbe7@linaro.org>
-Date:   Wed, 18 Jan 2023 16:05:12 +0100
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=SKmSPzWqZ8ALeqBUAuKuTur5DqPtQNtoVkZGVtUKqkc=;
+        b=EjDWT/5SFoZynVW28/ncWNjomMYAh4vl09Jb+DDWFDlDtDLy7sfKVR8maXCpVRiCd0
+         8+ZU1NkJSFp00Mf5aiV0Ok9Pm+TkKS55f+niHMpyUDwip++Ha0ETyC99Uzfr0e4VALCV
+         yRN9oLdV1LhQ6OUUINyQG6V0gmwjEeSRGADrAmqenPJ7OCLZvfhhWdMnMhJ65om6qJa2
+         uuZ0gB9cll+KXNfBu94dblc9jw8FAhlUMt5mpJAwgRhYChGpl/AAcqWtkHrV2radB1Gn
+         +13fCOzarGhq6k2GjjZ6InGVRra+w24GByIdjBPzjdGst34pXuaQzR30pUa2nfTOUlZ0
+         YoRg==
+X-Gm-Message-State: AFqh2kpIcHRzXyOcBk/cCFfN5JuK4+4CyxEUv7oxqc9FqS4CNRcusTbP
+        QQc/GQjjRM6NCXF7TQpCr16tByYBqCDvwAM=
+X-Google-Smtp-Source: AMrXdXu94e9EBaH7QPB/HyWRyS4Rsufzb4HDL+QkHGMa7jn5NgIhx74pF99ENGwO2XLSyADrPs7hUw==
+X-Received: by 2002:aa7:874c:0:b0:57f:f2cd:6180 with SMTP id g12-20020aa7874c000000b0057ff2cd6180mr7572104pfo.0.1674054531780;
+        Wed, 18 Jan 2023 07:08:51 -0800 (PST)
+Received: from thinkpad ([27.111.75.61])
+        by smtp.gmail.com with ESMTPSA id y1-20020aa79e01000000b005809a3c1b6asm5835524pfq.201.2023.01.18.07.08.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Jan 2023 07:08:50 -0800 (PST)
+Date:   Wed, 18 Jan 2023 20:38:44 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Borislav Petkov <bp@alien8.de>
+Cc:     andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, tony.luck@intel.com,
+        quic_saipraka@quicinc.com, konrad.dybcio@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        james.morse@arm.com, mchehab@kernel.org, rric@kernel.org,
+        linux-edac@vger.kernel.org, quic_ppareek@quicinc.com,
+        luca.weiss@fairphone.com, ahalaney@redhat.com, steev@kali.org
+Subject: Re: [PATCH v5 16/17] qcom: llcc/edac: Support polling mode for ECC
+ handling
+Message-ID: <20230118150844.GB4690@thinkpad>
+References: <20221228084028.46528-1-manivannan.sadhasivam@linaro.org>
+ <20221228084028.46528-17-manivannan.sadhasivam@linaro.org>
+ <Y8Kv0GIk69MhcOjT@zn.tnic>
+ <20230115040825.GB6568@thinkpad>
+ <Y8Up1kjaIRLlxemH@zn.tnic>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v3] dt-bindings: interconnect: qcom-bwmon: document SM8550
- compatibles
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221114-narmstrong-sm8550-upstream-bwmon-v3-1-7d63d2ae6bce@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <20221114-narmstrong-sm8550-upstream-bwmon-v3-1-7d63d2ae6bce@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Y8Up1kjaIRLlxemH@zn.tnic>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -84,61 +83,91 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Georgi,
+On Mon, Jan 16, 2023 at 11:41:26AM +0100, Borislav Petkov wrote:
+> On Sun, Jan 15, 2023 at 09:38:25AM +0530, Manivannan Sadhasivam wrote:
+> > > You need to request the IRQ first and then set edac_op_state above. I.e., this
+> > > devm_request_irq() needs to move in the if (ecc_irq > 0) branch above.
+> > 
+> > May I know why? I also checked other drivers, most of them are doing the same.
+> 
+> If the others do it, that doesn't mean it is clean.
+> 
+> What happens to edac_op_state if devm_request_irq() fails?
+> 
+> I know I know, the probe function will fail and the driver won't load but still,
+> this is sloppy. And it could come down to bite us later, when someone
+> reorganizes that function.
+> 
 
-On 09/01/2023 13:11, Neil Armstrong wrote:
-> Document the compatibles used to describe the Bandwidth Monitors
-> present on the SM8550 platform.
-> 
-> A BWMON v4 IP monitors the CPU bandwidth, and a v5 does the LLCC
-> bandwidth monitoring.
-> 
-> This is described by adding "llcc" and "cpu" into the compatible
-> strings to differentiate the BWMON IPs.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+OK. I just wanted to know the reasoning behind it.
 
-Gentle ping,
-Neil
+Thanks,
+Mani
 
-> ---
-> --
-> ---
-> Changes in v3:
-> - rebased on v6.2-rc1
-> - Link to v2: https://lore.kernel.org/r/20221114-narmstrong-sm8550-upstream-bwmon-v2-0-20c555e3ba5d@linaro.org
+> So, do all the error checking method determination - polling or interrupt - in
+> one place.  Something like this (totally untested ofc, pasting here the whole
+> thing to show what I mean):
 > 
-> Changes in v2:
-> - Reworded commit message
-> - Added Reviewed-by from Krzysztof
-> - Link to v1: https://lore.kernel.org/r/20221114-narmstrong-sm8550-upstream-bwmon-v1-0-b6dd08927f35@linaro.org
-> ---
->   Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml | 2 ++
->   1 file changed, 2 insertions(+)
+> static int qcom_llcc_edac_probe(struct platform_device *pdev)
+> {
+>         struct llcc_drv_data *llcc_driv_data = pdev->dev.platform_data;
+>         struct edac_device_ctl_info *edev_ctl;
+>         struct device *dev = &pdev->dev;
+>         int ecc_irq;
+>         int rc;
 > 
-> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml b/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml
-> index 0c720dbde36e..12a0d3ecbabb 100644
-> --- a/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml
-> +++ b/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml
-> @@ -27,11 +27,13 @@ properties:
->                 - qcom,sc7280-cpu-bwmon
->                 - qcom,sc8280xp-cpu-bwmon
->                 - qcom,sdm845-bwmon
-> +              - qcom,sm8550-cpu-bwmon
->             - const: qcom,msm8998-bwmon
->         - const: qcom,msm8998-bwmon       # BWMON v4
->         - items:
->             - enum:
->                 - qcom,sc8280xp-llcc-bwmon
-> +              - qcom,sm8550-llcc-bwmon
->             - const: qcom,sc7280-llcc-bwmon
->         - const: qcom,sc7280-llcc-bwmon   # BWMON v5
->         - const: qcom,sdm845-llcc-bwmon   # BWMON v5
+>         rc = qcom_llcc_core_setup(llcc_driv_data->bcast_regmap);
+>         if (rc)
+>                 return rc;
 > 
-> ---
-> base-commit: 1b929c02afd37871d5afb9d498426f83432e71c2
-> change-id: 20221114-narmstrong-sm8550-upstream-bwmon-a7c6227fab6d
+>         /* Allocate edac control info */
+>         edev_ctl = edac_device_alloc_ctl_info(0, "qcom-llcc", 1, "bank",
+>                                               llcc_driv_data->num_banks, 1,
+>                                               NULL, 0,
+>                                               edac_device_alloc_index());
 > 
-> Best regards,
+>         if (!edev_ctl)
+>                 return -ENOMEM;
+> 
+>         edev_ctl->dev = dev;
+>         edev_ctl->mod_name = dev_name(dev);
+>         edev_ctl->dev_name = dev_name(dev);
+>         edev_ctl->ctl_name = "llcc";
+>         edev_ctl->panic_on_ue = LLCC_ERP_PANIC_ON_UE;
+> 
+>         /* Check if LLCC driver has passed ECC IRQ */
+>         ecc_irq = llcc_driv_data->ecc_irq;
+>         if (ecc_irq > 0) {
+>                 rc = devm_request_irq(dev, ecc_irq, llcc_ecc_irq_handler,
+>                                       IRQF_TRIGGER_HIGH, "llcc_ecc", edev_ctl);
+>                 if (!rc) {
+>                         edac_op_state = EDAC_OPSTATE_INT;
+>                         goto irq_done;
+>                 }
+>         }
+> 
+>         /* Fall back to polling mode otherwise */
+>         edev_ctl->poll_msec = ECC_POLL_MSEC;
+>         edev_ctl->edac_check = llcc_ecc_check;
+>         edac_op_state = EDAC_OPSTATE_POLL;
+> 
+> irq_done:
+>         rc = edac_device_add_device(edev_ctl);
+>         if (rc) {
+>                 edac_device_free_ctl_info(edev_ctl);
+>                 return rc;
+>         }
+> 
+>         platform_set_drvdata(pdev, edev_ctl);
+> 
+>         return rc;
+> }
+> 
+> -- 
+> Regards/Gruss,
+>     Boris.
+> 
+> https://people.kernel.org/tglx/notes-about-netiquette
 
+-- 
+மணிவண்ணன் சதாசிவம்
