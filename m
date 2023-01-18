@@ -2,77 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C7E867265A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 19:10:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CCB0A672669
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 19:13:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230134AbjARSKM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 13:10:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60744 "EHLO
+        id S229904AbjARSNB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 13:13:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230116AbjARSJg (ORCPT
+        with ESMTP id S229739AbjARSNA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 13:09:36 -0500
-Received: from out2.migadu.com (out2.migadu.com [IPv6:2001:41d0:2:aacc::])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FBD24DCEA;
-        Wed, 18 Jan 2023 10:09:08 -0800 (PST)
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ansari.sh; s=key1;
-        t=1674065347;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=164as81kjAXsfH8J5ZubzMCD2A0+akFEkTCIk85e2jE=;
-        b=hv75GjQ0DzDC0d/+uKtAMq6XRWe8S/C+qitHVSfN0jGWJnZ3ttpfglgyU9T+vmdRYusUxW
-        vOJNECRJsMLj0uU1V0ScwrmUMpmNCHLTnpUzUcygxFns6IIRV/eUOPPkg0EyEvQSjk4HId
-        /BfqbQH6ECLZMcvAnz6Z6/mK41aLnxI=
-From:   Rayyan Ansari <rayyan@ansari.sh>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        Rayyan Ansari <rayyan@ansari.sh>,
-        Andy Gross <agross@kernel.org>,
+        Wed, 18 Jan 2023 13:13:00 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB7E4A9;
+        Wed, 18 Jan 2023 10:12:59 -0800 (PST)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30IHg6bT013725;
+        Wed, 18 Jan 2023 18:12:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=tNDW5Z5FfWRU2ZvezRgERgXKcaw2HRi53+wjPgcTQq8=;
+ b=edc22gJU1MgKp1N7OLA1fq0LAWEDH/0zmS+ktoxtNhtxw8yFz///xN+KWDZNizPCMObt
+ eLdOQyP76yUf1b+aZuM4sfmvQZuNHMBz52PGXqxMM1ZASzrVRzMmJWdDLb1SvAVNrv8u
+ Wa5UKd3XHHKnMDA1PoNeba5p4obxIB7eRMvgkqWzArgv6Cx1kfEiY+w3zOezvn30Qr6k
+ ZwEVDTRc6/D6jwJIa2ylfhN/iZcCSRU4D2szrhWWtsGrrY7fa++4bCJV8qDtckekCkdm
+ b3j/qJkQGetvjoNsqKi1ok53/ToV7gZghqfV+GEAqig+DZtMWBAuiswl1UgnR7O3/hA6 wA== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n5nkqc3a4-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 18 Jan 2023 18:12:55 +0000
+Received: from nasanex01a.na.qualcomm.com ([10.52.223.231])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30IICsH0024143
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 18 Jan 2023 18:12:54 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Wed, 18 Jan 2023 10:12:54 -0800
+Date:   Wed, 18 Jan 2023 10:12:52 -0800
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     Rob Herring <robh@kernel.org>
+CC:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] ARM: dts: qcom: msm8226: add clocks and clock-names to gcc node
-Date:   Wed, 18 Jan 2023 18:08:52 +0000
-Message-Id: <20230118180852.351143-1-rayyan@ansari.sh>
+        Sebastian Reichel <sre@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        "Subbaraman Narayanamurthy" <quic_subbaram@quicinc.com>,
+        Johan Hovold <johan@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v2 1/4] dt-bindings: soc: qcom: Introduce PMIC GLINK
+ binding
+Message-ID: <20230118181252.GC3322341@hu-bjorande-lv.qualcomm.com>
+References: <20230113041132.4189268-1-quic_bjorande@quicinc.com>
+ <20230113041132.4189268-2-quic_bjorande@quicinc.com>
+ <20230117180058.GA3314512-robh@kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20230117180058.GA3314512-robh@kernel.org>
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: j4FepsETTAT2pHP7BWO3SeDm-EQS5guX
+X-Proofpoint-ORIG-GUID: j4FepsETTAT2pHP7BWO3SeDm-EQS5guX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-18_05,2023-01-18_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
+ mlxscore=0 adultscore=0 mlxlogscore=918 bulkscore=0 lowpriorityscore=0
+ spamscore=0 priorityscore=1501 phishscore=0 malwarescore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2301180154
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the XO and Sleep Clock sources to the GCC node.
+On Tue, Jan 17, 2023 at 12:00:58PM -0600, Rob Herring wrote:
+> On Thu, Jan 12, 2023 at 08:11:29PM -0800, Bjorn Andersson wrote:
+[..]
+> > +patternProperties:
+> > +  '^connector@\d$':
+> > +    $ref: /schemas/connector/usb-connector.yaml#
+> > +
+> > +    properties:
+> > +      reg: true
+> 
+>        required:
+>          - reg
+> 
+> Or '@\d' needs to be optional.
+> 
 
-Signed-off-by: Rayyan Ansari <rayyan@ansari.sh>
----
- arch/arm/boot/dts/qcom-msm8226.dtsi | 5 +++++
- 1 file changed, 5 insertions(+)
+You're right, and as the identifier is significant in the firmware
+interface I'll add it as required.
 
-diff --git a/arch/arm/boot/dts/qcom-msm8226.dtsi b/arch/arm/boot/dts/qcom-msm8226.dtsi
-index 4cba25dad8d6..c261fdfbe116 100644
---- a/arch/arm/boot/dts/qcom-msm8226.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8226.dtsi
-@@ -370,6 +370,11 @@ gcc: clock-controller@fc400000 {
- 			#clock-cells = <1>;
- 			#reset-cells = <1>;
- 			#power-domain-cells = <1>;
-+
-+			clocks = <&xo_board>,
-+				 <&sleep_clk>;
-+			clock-names = "xo",
-+				      "sleep_clk";
- 		};
- 
- 		mmcc: clock-controller@fd8c0000 {
--- 
-2.39.0
-
+Thanks,
+Bjorn
