@@ -2,125 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 64159672A4E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 22:21:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4ACF9672A69
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 22:26:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230391AbjARVVT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 16:21:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50556 "EHLO
+        id S230518AbjARV0M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 16:26:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230406AbjARVVR (ORCPT
+        with ESMTP id S231153AbjARVZv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 16:21:17 -0500
-Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56389303E6;
-        Wed, 18 Jan 2023 13:21:16 -0800 (PST)
-Received: by mail-oo1-f50.google.com with SMTP id 187-20020a4a09c4000000b004d8f3cb09f5so67265ooa.6;
-        Wed, 18 Jan 2023 13:21:16 -0800 (PST)
+        Wed, 18 Jan 2023 16:25:51 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E072E654D0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 13:25:35 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id e19-20020a05600c439300b003db1cac0c1fso825703wmn.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 13:25:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=z02Zvvp9rnIkTMvPcvojjoIGvGA32x4pRLqSn0d/D5Q=;
+        b=WuH8yHOnPzQoxp37uCaoXhkR8AFCaoD9ntbQBJvKk8ZtPIeEcYZVR5qT6UAp5aRPot
+         mlbY4K3BqNnsCZ97fG90dQkBZlN6outU5tX37EGrBjWLGl7uywKzK8/XHMZoEY0BfHVx
+         F2KcRJe1D8ufmhm8335igfOfvrRKA+1l9rAwa/XoU1FyTU5HtO+M+9Ml0aFGCJqt/FYf
+         h6Rxl6/02buJf40lSCX1T0SfHP3zs4/MtBbK7yYjyRz0IeEQAkpeRe/62ghQ303CxBUD
+         DhA5bvQWwfbr5mX5VwBj9jrYy2wtOS43fgXSe+353LHS1rn3DW5kYwepZ6k3lOHak6DG
+         6ZlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=HE+LNeQ0cLDl8QRW2H/1UEvxinXqttcsmYeJEyRWQyE=;
-        b=TYeteF2u+gHYdhjSg//1HlRvHuT6146CTGkQbqbw239oqMfPvlnTjwdjKX/vxcEaiI
-         FtXu5ZUKB20LXzH5tgbdGkrl5RiCfOzDj3nP5IjHm3vWVq9uMxv63MjsyOXJIld8UAjj
-         ubDymExCrw6uU1na/qDDIKNXxZBe+sBHXbzCXZ/dU9kGMwY1866JzmYZUeQva6X4TdMc
-         V03HJIaBzUUzN9Z1EAkx7IQ5Ngg48tqfKRwPFJiSVAvB4eXh441EzzzvqedqWkk3RoO0
-         8b7l0pxgw/KM2xN6zxfH27ElVhjw8jth3NhOk/N/RnVdQkO/Hy9aqUFDF4coApe3iKl0
-         itZA==
-X-Gm-Message-State: AFqh2kq0F+VD+jSaWATAkj3Sg28X8zHXHh8l0d8F1erAhiP05SrsT1Zl
-        zWRlOelg3OXljHeODeQwOA==
-X-Google-Smtp-Source: AMrXdXvubcxEn8wrt2Zaj7/ykTRTSravLh1ahoCM+6vzmSxcJ4qw956Y2VRfxfuq6IAQxbMTBNZrcA==
-X-Received: by 2002:a4a:e910:0:b0:4f7:bce6:4e06 with SMTP id bx16-20020a4ae910000000b004f7bce64e06mr4181387oob.1.1674076875480;
-        Wed, 18 Jan 2023 13:21:15 -0800 (PST)
-Received: from robh_at_kernel.org ([4.31.143.193])
-        by smtp.gmail.com with ESMTPSA id q76-20020a4a334f000000b004f21af81e0csm8653454ooq.46.2023.01.18.13.21.14
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=z02Zvvp9rnIkTMvPcvojjoIGvGA32x4pRLqSn0d/D5Q=;
+        b=7AS8++19PHZR6UtDzv6mZITvLAyZVFbJaQgsfvrlxdHrZbTGzKrvXs/4CiGOBGxC8/
+         5jhKf/r4oO11YF9tbz3IIVUap+45raMmqa+gzXoOy165AGNd2CBhoebAM5JfmJyEAQ4y
+         tvEfB0EBiZZFANMwDcTkhBS/ncuYoofW+PrCfehaUKJ7ISxZIEBlXFmnRlyUHjH8Ob0z
+         375cOHbqrUNucutP0rMqdPRIx0OmkSzj5o1R5oNsJPwMxt/lZ18erTg52tD33zlDc5nA
+         CnVn/CBGCYWjR3E1u1Z3RDQ50FbFbGM7eaICrX4ABvgFGmF0TOrGtHZdQPJw9grdvHkt
+         VAvw==
+X-Gm-Message-State: AFqh2krT1asqAudXjlxAMvE1Gf/h2ayVsFCYqDCarxJGNmsgvHiv4dI7
+        NsO4Z7rKJ2Zg4RNeKZIalS1klQ==
+X-Google-Smtp-Source: AMrXdXuuRUr63ls7wGR56IMAO/i/q4UibvwoBS2SM+hobzTQCYLskiXJ88gBrX2HslVcG5iGqJLhcQ==
+X-Received: by 2002:a05:600c:b90:b0:3d8:e0d3:ee24 with SMTP id fl16-20020a05600c0b9000b003d8e0d3ee24mr8339211wmb.37.1674077134046;
+        Wed, 18 Jan 2023 13:25:34 -0800 (PST)
+Received: from linaro.org ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id n19-20020a05600c4f9300b003d1d5a83b2esm3349230wmq.35.2023.01.18.13.25.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Jan 2023 13:21:15 -0800 (PST)
-Received: (nullmailer pid 876135 invoked by uid 1000);
-        Wed, 18 Jan 2023 21:21:14 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Alex Elder <elder@linaro.org>, Andy Gross <agross@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Wed, 18 Jan 2023 13:25:32 -0800 (PST)
+Date:   Wed, 18 Jan 2023 23:25:31 +0200
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20221114-narmstrong-sm8550-upstream-remoteproc-v4-2-54154c08c0b7@linaro.org>
-References: <20221114-narmstrong-sm8550-upstream-remoteproc-v4-0-54154c08c0b7@linaro.org>
- <20221114-narmstrong-sm8550-upstream-remoteproc-v4-2-54154c08c0b7@linaro.org>
-Message-Id: <167407681596.873892.9837637729592866883.robh@kernel.org>
-Subject: Re: [PATCH v4 2/5] dt-bindings: remoteproc: qcom: adsp: document
- sm8550 adsp, cdsp & mpss compatible
-Date:   Wed, 18 Jan 2023 15:21:14 -0600
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v3 1/8] dt-bindings: phy: Add QMP PCIe PHY comptible for
+ SM8550
+Message-ID: <Y8hjy8WRpPh8DVvG@linaro.org>
+References: <20230118005328.2378792-1-abel.vesa@linaro.org>
+ <20230118005328.2378792-2-abel.vesa@linaro.org>
+ <Y8giHJMtPu4wTlmA@hovoldconsulting.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y8giHJMtPu4wTlmA@hovoldconsulting.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Wed, 18 Jan 2023 17:22:40 +0100, Neil Armstrong wrote:
-> This documents the compatible for the component used to boot the
-> aDSP, cDSP and MPSS on the SM8550 SoC.
+On 23-01-18 17:45:16, Johan Hovold wrote:
+> On Wed, Jan 18, 2023 at 02:53:21AM +0200, Abel Vesa wrote:
+> > Document the QMP PCIe PHY compatible for SM8550.
+> > 
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > ---
+> >  .../devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml     | 2 ++
+> >  1 file changed, 2 insertions(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+> > index 8a85318d9c92..65f26cfff3fb 100644
+> > --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+> > +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+> > @@ -20,6 +20,8 @@ properties:
+> >        - qcom,sc8280xp-qmp-gen3x2-pcie-phy
+> >        - qcom,sc8280xp-qmp-gen3x4-pcie-phy
+> >        - qcom,sm8350-qmp-gen3x1-pcie-phy
+> > +      - qcom,sm8550-qmp-gen3x2-pcie-phy
+> > +      - qcom,sm8550-qmp-gen4x2-pcie-phy
+> >  
+> >    reg:
+> >      minItems: 1
 > 
-> The SM8550 boot process on SM8550 now requires a secondary "Devicetree"
-> firmware to be passed along the main Firmware, and the cDSP a new power
-> domain named "NSP".
+> I don't think I'll have time to look at this week, but I did notice that
+> you fail do describe the clocks, regulators, and resets (as you also
+> did for the UFS PHY binding) which are currently different from
+> sc8280xp.
+
+Hmm, sorry about that. I will double check against the pcie phy nodes I
+have for sm8550.
+
+As for the UFS, if your are referring to the following patchset [1], the phy
+node looks exactly the same as on sc8280xp, therefore no other binding
+update, other than compatible, was needed.
+
+[1] https://lore.kernel.org/all/20230117224148.1914627-2-abel.vesa@linaro.org/
+
 > 
-> A third memory domain for the DSM memory zone is also needed for the MPSS
-> PAS bindings.
+> Please be more careful when adding compatible strings so we get this
+> right. You should also double check that the differences are really
+> warranted and not just due the vendor using different names for the same
+> resource.
 > 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->  .../bindings/remoteproc/qcom,sm8550-pas.yaml       | 178 +++++++++++++++++++++
->  1 file changed, 178 insertions(+)
+> At least the reset must be renamed ("pcie_1_nocsr_com_phy_reset", e.g.
+> drop 'pcie' and 'reset', maybe more).
 > 
-
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
-
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-./Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml: Unable to find schema file matching $id: http://devicetree.org/schemas/remoteproc/qcom,pas-common.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.example.dtb: remoteproc@30000000: False schema does not allow {'compatible': ['qcom,sm8550-adsp-pas'], 'reg': [[805306368, 256]], 'clocks': [[4294967295, 0]], 'clock-names': ['xo'], 'interrupts-extended': [[4294967295, 6, 1], [4294967295, 0, 1], [4294967295, 1, 1], [4294967295, 2, 1], [4294967295, 3, 1]], 'interrupt-names': ['wdog', 'fatal', 'ready', 'handover', 'stop-ack'], 'memory-region': [[4294967295], [4294967295]], 'firmware-name': ['qcom/sm8550/adsp.mbn', 'qcom/sm8550/adsp_dtb.mbn'], 'power-domains': [[4294967295], [4294967295]], 'power-domain-names': ['lcx', 'lmx'], 'qcom,qmp': [[4294967295]], 'qcom,smem-states': [[4294967295, 0]], 'qcom,smem-state-names': ['stop'], 'glink-edge': {'interrupts-extended': [[4294967295, 3, 0, 1]], 'mboxes': [[4294967295, 3, 0]], 'label': ['lpass'], 'qcom,remote-pid': [[2]]}, '$nodename': ['remoteproc@30000000']}
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.example.dtb: remoteproc@30000000: Unevaluated properties are not allowed ('glink-edge', 'qcom,smem-state-names', 'qcom,smem-states' were unexpected)
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20221114-narmstrong-sm8550-upstream-remoteproc-v4-2-54154c08c0b7@linaro.org
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+> Johan
