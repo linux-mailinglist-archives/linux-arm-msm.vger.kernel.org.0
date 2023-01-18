@@ -2,225 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E5974672146
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 16:29:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C787672156
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Jan 2023 16:33:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231389AbjARP3M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 10:29:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33442 "EHLO
+        id S229796AbjARPdm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 10:33:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231367AbjARP2u (ORCPT
+        with ESMTP id S230384AbjARPdl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 10:28:50 -0500
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A53C4AA65
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 07:28:19 -0800 (PST)
-Received: by mail-pl1-x636.google.com with SMTP id jl3so2162589plb.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 07:28:19 -0800 (PST)
+        Wed, 18 Jan 2023 10:33:41 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F0442B0A3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 07:33:39 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id h16so34321419wrz.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 07:33:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=1OpOAaZLDBZwIcKhB8f5D7QZijHxGB6vA+uOjDRAnP4=;
-        b=xsf6XlV16XgE3UECaYTxXM9NSNBUUd1c26+00o83eltx/b3NLDtDuWSkWKEdNjC8LO
-         9Vz102fr3QWaUf0xwi+L+lmP/cFV+v5lF5WV3enOjTulMMsAPvUNOFnyrBp/BQ0xFI04
-         RkLxiVh+WV81KjO55Fhc1o3e7U0XKK7z18Fvdm2iIQ1HziR4kumcZcpczsU2CeicBiRj
-         VwnCGVvjDhcpW+DGxzh5izoKH0J69gAc7gOZIKK8MtVMq0Tj9cKcBUQrQNZ3XtZ0xE48
-         jkqKdLQB2r2D/LbWa11zjPojTjeRH3hE9/tyIjLdihAFyNdtFHnT0yjc3XS5AIvs+G6y
-         Oxkw==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=oUPpYf55nSewKPfRw1r8GTAzRNx6PisN+J3CJfYWWqM=;
+        b=ER+nRfLfGkm6S/o3MmxpSFWWo6T91uTm6DYUbVFOOUC+6DeFJbgFuuyS22UQ55nriy
+         pmWZqfjYVV5qpaqONICqbKhaC3QxF4E2pJOloNLIo5uS7NSvF7zNp56PPGTnHThiuF/p
+         LnEtVfxQlEncXoNaufozHXbHi8uLjaoucMIXqdQ1amadF3yujWJlVRJ+RVXxjD+bzNLM
+         9wpmSjZegYNzNgqR6zt8ODCpgAKpU2IsmMbu+Me5U6eiqvNui0GAjCg3SdGzjp0q5+ui
+         xJ89PpSRdyJmedgCuDXRY0yU2KRNDVosV2inzdam3HY3bz2jgEsYfnnEhAZSRW8gQcBY
+         Vfxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1OpOAaZLDBZwIcKhB8f5D7QZijHxGB6vA+uOjDRAnP4=;
-        b=h1OHN8r8G8UaJ68WZhbHT+KcB4brujux50hiRCUAOmO55PUum5B+VC7Wz1SKw5k7HC
-         Vz6dEkN9yoVJcMjto/IXhGIKKb6F4opIzqNqlLTfqbxKHwJMCuvimUKgN13mb/yaa1e3
-         X3kAnLFca0/27ine9OhGjHaD75d/H860UrtyHxALTia8EbnVJwqkY6/Kbb6PvJ/bVKJ5
-         jbwExu7Z96wrz3oqEw9U6U8AeF8z8zYBeLmzuJOmJWE7/E2mKdT7RPa7K307deo53x04
-         sviM5MgL+weIIZPgeZ74O3BMD+MpPfPhjH2rSwNAn9DHZy4c4Q1+gZqsXb8kp1PsAe3V
-         N+pQ==
-X-Gm-Message-State: AFqh2kocNJxAZG+aSm7fHrT08KORWFRJxoqnlEJpAb+kkhszbCIhdgP7
-        rgdiL0cPLwO3vwHye0NXMy2bwm5z+ERGmGg=
-X-Google-Smtp-Source: AMrXdXue7Xsdr13GXyu90w85O2Fntx4faZksW69pVo7NLm0JWQLw2IALCxyJheaOCLZAMVv+OntIxA==
-X-Received: by 2002:a05:6a20:c189:b0:b8:6168:bc2e with SMTP id bg9-20020a056a20c18900b000b86168bc2emr8459540pzb.52.1674055698482;
-        Wed, 18 Jan 2023 07:28:18 -0800 (PST)
-Received: from thinkpad ([27.111.75.61])
-        by smtp.gmail.com with ESMTPSA id 35-20020a631563000000b0044ed37dbca8sm19032149pgv.2.2023.01.18.07.28.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Jan 2023 07:28:17 -0800 (PST)
-Date:   Wed, 18 Jan 2023 20:58:09 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Sibi Sankar <quic_sibis@quicinc.com>
-Cc:     andersson@kernel.org, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        robh+dt@kernel.org, konrad.dybcio@somainline.org,
-        amit.pundir@linaro.org, regressions@leemhuis.info,
-        sumit.semwal@linaro.org, will@kernel.org, catalin.marinas@arm.com,
-        robin.murphy@arm.com
-Subject: Re: [PATCH V4 06/11] remoteproc: qcom_q6v5_mss: Use a carveout to
- authenticate modem headers
-Message-ID: <20230118152809.GC4690@thinkpad>
-References: <20230117085840.32356-1-quic_sibis@quicinc.com>
- <20230117085840.32356-7-quic_sibis@quicinc.com>
+        bh=oUPpYf55nSewKPfRw1r8GTAzRNx6PisN+J3CJfYWWqM=;
+        b=dUWsEpG4mfA8s/cT1RlLNWYieLxiN8+KDwlX0pnlYKOuiHo8+1zs2kQFismH4Tbi6/
+         O25q6+OpCTivt5VL6s7N+LT0PTfAUOdZmnJh3JDzbV3G+LzyKvDoZd2GuwpGyG2lupfo
+         SQQ3HH9YjiJ4oza6v7Sr8mFEkziVFOCVMQsaSkbnq/sAGUFrZFzp8Cb+i2QCTCi9s8I2
+         mwFLIULr16oonNqsTBOVPPWT0qG+O7ORuWXISn3wH0tNr2ZEoOc/4kj89+3XRMmA+Fa2
+         CQzyAEkHnAWVzIBw6a2a/R0zykUQgpQLRZIjkCviV04pk2Q0fyuErHxGqwLE+D+MNgZc
+         h2CQ==
+X-Gm-Message-State: AFqh2kqORhcQr+A2p7q3iSXT48giF9W3WzOL5FPKlt8/6TeGgj1U7ULo
+        hl3q3eaYAdTvf2Nshtv6T+eeZg==
+X-Google-Smtp-Source: AMrXdXtsBYgy2yvXAk1HX7S7z4hIuZLQip5px4lekLCG5EOdySAkbweDKG6rgI8l5Dgzm8Noat9D+g==
+X-Received: by 2002:adf:df10:0:b0:2bb:e891:1829 with SMTP id y16-20020adfdf10000000b002bbe8911829mr6814451wrl.4.1674056017946;
+        Wed, 18 Jan 2023 07:33:37 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id t17-20020a05600001d100b00241d21d4652sm31225540wrx.21.2023.01.18.07.33.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Jan 2023 07:33:37 -0800 (PST)
+Message-ID: <f7d3cd69-3eee-d96e-4c53-958c1e3d1c37@linaro.org>
+Date:   Wed, 18 Jan 2023 16:33:35 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230117085840.32356-7-quic_sibis@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH v2 1/2] dt-bindings: interconnect: qcom: document the
+ interconnects for sa8775p
+Content-Language: en-US
+To:     Bartosz Golaszewski <brgl@bgdev.pl>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20230118140825.242544-1-brgl@bgdev.pl>
+ <20230118140825.242544-2-brgl@bgdev.pl>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230118140825.242544-2-brgl@bgdev.pl>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jan 17, 2023 at 02:28:35PM +0530, Sibi Sankar wrote:
-> Any access to the dynamically allocated metadata region by the application
-> processor after assigning it to the remote Q6 will result in a XPU
-> violation. Fix this by replacing the dynamically allocated memory region
-> with a no-map carveout and unmap the modem metadata memory region before
-> passing control to the remote Q6.
+On 18/01/2023 15:08, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
-> Reported-and-tested-by: Amit Pundir <amit.pundir@linaro.org>
-> Fixes: 6c5a9dc2481b ("remoteproc: qcom: Make secure world call for mem ownership switch")
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-Thanks,
-Mani
-
+> Add a DT binding document for the RPMh interconnects on Qualcomm sa8775p
+> platforms.
+> 
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > ---
-> 
-> v4:
->  * Use size/alloc-ranges instead of a specific address [Bjorn]
->  * Include size checks
-> 
-> v3:
->  * Drop revert no_kernel_mapping since it's already on the list [Mani]
->  * kfree metadata from the branch for parity
-> 
->  drivers/remoteproc/qcom_q6v5_mss.c | 59 +++++++++++++++++++++++++++---
->  1 file changed, 53 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-> index e2f765f87ec9..292e22f58df3 100644
-> --- a/drivers/remoteproc/qcom_q6v5_mss.c
-> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
-> @@ -17,6 +17,7 @@
->  #include <linux/module.h>
->  #include <linux/of_address.h>
->  #include <linux/of_device.h>
-> +#include <linux/of_reserved_mem.h>
->  #include <linux/platform_device.h>
->  #include <linux/pm_domain.h>
->  #include <linux/pm_runtime.h>
-> @@ -215,6 +216,9 @@ struct q6v5 {
->  	size_t mba_size;
->  	size_t dp_size;
->  
-> +	phys_addr_t mdata_phys;
-> +	size_t mdata_size;
-> +
->  	phys_addr_t mpss_phys;
->  	phys_addr_t mpss_reloc;
->  	size_t mpss_size;
-> @@ -973,15 +977,35 @@ static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw,
->  	if (IS_ERR(metadata))
->  		return PTR_ERR(metadata);
->  
-> -	ptr = dma_alloc_attrs(qproc->dev, size, &phys, GFP_KERNEL, dma_attrs);
-> -	if (!ptr) {
-> -		kfree(metadata);
-> -		dev_err(qproc->dev, "failed to allocate mdt buffer\n");
-> -		return -ENOMEM;
-> +	if (qproc->mdata_phys) {
-> +		if (size > qproc->mdata_size) {
-> +			ret = -EINVAL;
-> +			dev_err(qproc->dev, "metadata size outside memory range\n");
-> +			goto free_metadata;
-> +		}
-> +
-> +		phys = qproc->mdata_phys;
-> +		ptr = memremap(qproc->mdata_phys, size, MEMREMAP_WC);
-> +		if (!ptr) {
-> +			ret = -EBUSY;
-> +			dev_err(qproc->dev, "unable to map memory region: %pa+%zx\n",
-> +				&qproc->mdata_phys, size);
-> +			goto free_metadata;
-> +		}
-> +	} else {
-> +		ptr = dma_alloc_attrs(qproc->dev, size, &phys, GFP_KERNEL, dma_attrs);
-> +		if (!ptr) {
-> +			ret = -ENOMEM;
-> +			dev_err(qproc->dev, "failed to allocate mdt buffer\n");
-> +			goto free_metadata;
-> +		}
->  	}
->  
->  	memcpy(ptr, metadata, size);
->  
-> +	if (qproc->mdata_phys)
-> +		memunmap(ptr);
-> +
->  	/* Hypervisor mapping to access metadata by modem */
->  	mdata_perm = BIT(QCOM_SCM_VMID_HLOS);
->  	ret = q6v5_xfer_mem_ownership(qproc, &mdata_perm, false, true,
-> @@ -1010,7 +1034,9 @@ static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw,
->  			 "mdt buffer not reclaimed system may become unstable\n");
->  
->  free_dma_attrs:
-> -	dma_free_attrs(qproc->dev, size, ptr, phys, dma_attrs);
-> +	if (!qproc->mdata_phys)
-> +		dma_free_attrs(qproc->dev, size, ptr, phys, dma_attrs);
-> +free_metadata:
->  	kfree(metadata);
->  
->  	return ret < 0 ? ret : 0;
-> @@ -1847,6 +1873,7 @@ static int q6v5_init_reset(struct q6v5 *qproc)
->  static int q6v5_alloc_memory_region(struct q6v5 *qproc)
->  {
->  	struct device_node *child;
-> +	struct reserved_mem *rmem;
->  	struct device_node *node;
->  	struct resource r;
->  	int ret;
-> @@ -1893,6 +1920,26 @@ static int q6v5_alloc_memory_region(struct q6v5 *qproc)
->  	qproc->mpss_phys = qproc->mpss_reloc = r.start;
->  	qproc->mpss_size = resource_size(&r);
->  
-> +	if (!child) {
-> +		node = of_parse_phandle(qproc->dev->of_node, "memory-region", 2);
-> +	} else {
-> +		child = of_get_child_by_name(qproc->dev->of_node, "metadata");
-> +		node = of_parse_phandle(child, "memory-region", 0);
-> +		of_node_put(child);
-> +	}
-> +
-> +	if (!node)
-> +		return 0;
-> +
-> +	rmem = of_reserved_mem_lookup(node);
-> +	if (!rmem) {
-> +		dev_err(qproc->dev, "unable to resolve metadata region\n");
-> +		return -EINVAL;
-> +	}
-> +
-> +	qproc->mdata_phys = rmem->base;
-> +	qproc->mdata_size = rmem->size;
-> +
->  	return 0;
->  }
->  
-> -- 
-> 2.17.1
-> 
+>  .../interconnect/qcom,sa8775p-rpmh.yaml       |  50 ++++
+>  .../interconnect/qcom,sa8775p-rpmh.h          | 231 ++++++++++++++++++
+>  2 files changed, 281 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,sa8775p-rpmh.yaml
+>  create mode 100644 include/dt-bindings/interconnect/qcom,sa8775p-rpmh.h
 
--- 
-மணிவண்ணன் சதாசிவம்
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
+
