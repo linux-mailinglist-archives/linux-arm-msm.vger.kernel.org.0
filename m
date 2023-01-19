@@ -2,79 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A31D67371E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 12:41:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 44E5667371F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 12:41:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230219AbjASLl2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Jan 2023 06:41:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46346 "EHLO
+        id S230440AbjASLlc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Jan 2023 06:41:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230472AbjASLlN (ORCPT
+        with ESMTP id S230478AbjASLlO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Jan 2023 06:41:13 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 687474A1E9
+        Thu, 19 Jan 2023 06:41:14 -0500
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 745144A210
         for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 03:41:10 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id bk16so1549765wrb.11
+Received: by mail-ed1-x536.google.com with SMTP id b4so2583309edf.0
         for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 03:41:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=WoyFT0cbatPpquHGlGmq+CVFexdYi8Sb0FFBdBRA/oU=;
-        b=lE8lhn4kFosWwH1F5qK1+ReSvndnaCAYkFudXTg9+yBHvpo6GgiU5mozLyMMqDsC0b
-         mLOAjD/z1oFckMHuPzYe15fLVfUDc6ye5Gpj9kc3Ni22S706bJtojGWVdtprUHUNBbvI
-         6GYAP3Qc75vLUkrRz8PcKI41DiMsdpL9gKknOjEfAKKH7bfXcs9NviVJHcbMdZnmCOaO
-         yQlHG7jv+bQ7ve7pjNDwHKxXRDJX87MMCeQMBQO1sFrkgs9XXx6/7TS1XRCNxvhxy2qu
-         VszYqHpEqdt/yZ3/6o86mcJLgRmA+GHbtF+uPokecf7LtzwrPrfXWZK+Lvc0pXFDTall
-         903g==
+        bh=YBCDQ4RcMX5cY0YERp9W+RwKWE5lA3CbAz1gwPZRUX0=;
+        b=NZgSOq7Z0L76O7GqVX3ud2LsfuEpdZ7IvPLf8ZQzpetziragB0UtDNhzUMb0j4FgUN
+         x3yLJosYMGORX3Js20oLfhCxIexVkl1q0FNsBECPeJlwjbmdH+9UWANqlKUbxphvKRB1
+         Fp8iuhgwbH4vkgnTOTSTU8aJrMyY5WLf1QcoGRIGVsqsNRxX4J7NWB+HhbzfSrO+ZgY2
+         KHD3Av7S0a10/xcPTas7iv+yOoBRmGHDkQ3JS31cx+mMuhfT+4Poy9xpvCsXk5jTXUAS
+         VzLglQezCgDzG5/ywXuRSvjEdyD8B/0Hdt15HRCpNcujg3WwPzeJhJeX9iqQBufU1UiJ
+         D7Kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WoyFT0cbatPpquHGlGmq+CVFexdYi8Sb0FFBdBRA/oU=;
-        b=LKtdCXSA9EgjFu9z+NmQG006TN6WrE81g4YFQ2D/+auZ/eTCJRCSq1M3z3rRC2O/HT
-         WxQV+AxRoxF6TIwezFJ3UHYwbvA0BV3xpvm63BvJzLAC0dsL116h1VOfzsg3j+CdhC2w
-         N4URsxfT5CMRlcW1znid2pTvFT/95eoZBLpXA2EAOQ5LK0XzSMViy0PYE4j3n0xk0nLD
-         0hKYaJLdYmdScxMhmNbbvjRZ5i9camjuFxvfVUm/2K60yub1wlqHmx+ACKMcROsjF4jA
-         WKVtMcDFUGiQ/CdEqOwV9+BefA/8VAilYQTtF1OrXkrkSm47LyULIE2iPaOsGslHLFYC
-         7q9w==
-X-Gm-Message-State: AFqh2kpG+DODq299EgoWH/+VMgnoqq5qGIS2jtMw9QBwEmdoUohvVN5A
-        TSrJkwmO+HqtQqNufLWdqxleqQ==
-X-Google-Smtp-Source: AMrXdXs218++12twDEoYyYduIE1B+u+Btq8eB2DlNmjlIceQN0Uugn7LpFeuozQboOEFKkErDv6NZg==
-X-Received: by 2002:a5d:5b0e:0:b0:2bd:e873:e20c with SMTP id bx14-20020a5d5b0e000000b002bde873e20cmr11350111wrb.70.1674128469007;
-        Thu, 19 Jan 2023 03:41:09 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id b13-20020a05600003cd00b002be07cbefb2sm11806849wrg.18.2023.01.19.03.41.07
+        bh=YBCDQ4RcMX5cY0YERp9W+RwKWE5lA3CbAz1gwPZRUX0=;
+        b=XyVT7laAwgQRnhJUBiV4rkAsZZZoqEnTKQCCbtvGiQM9feCevWtpkDKJL15R1U9oEL
+         c6GVZexz70gPxcKSFsyLb89vMtcNV2d6QOE75Syiag5KLtkiZXMUdWbvJMrWHT+gm2pm
+         suk2Aug4CJ2/bDjd+QZtFl8LMeg+vT+kUg2CttJoW6KVliPhGaNwCMFJBV2gAEKjLrF3
+         W4OcwpEBao4SC88HeHYBjO/0/uzpyXt+/n6iWJwhcA1kkqxnslSlvs9DlwBNIAn+O6aB
+         WoSUClhyLGyOlELa+FHlX7IQ/4uCMI839x+ggyfNRp7vHgB+D+aH7w6T7m0mD3pmiFef
+         d9Gw==
+X-Gm-Message-State: AFqh2kq3jLIAZf7VVmjVVpl/y8wEAyJK2qIA6xo4QXGKd5ekMzFFDMpC
+        83jmnJgYClf28uoCYlBVWzNnHw==
+X-Google-Smtp-Source: AMrXdXuEhB91DER4SW1Ekfi/4jdryB/3nUIlOZVGP5Z0MrLtiEb6L2YHlxVVcLbEEX2XvcTtKn/KcQ==
+X-Received: by 2002:a05:6402:35c1:b0:46f:f36b:a471 with SMTP id z1-20020a05640235c100b0046ff36ba471mr14431172edc.22.1674128468957;
+        Thu, 19 Jan 2023 03:41:08 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id e20-20020a170906249400b0084d4cb00f0csm13368821ejb.99.2023.01.19.03.41.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
         Thu, 19 Jan 2023 03:41:08 -0800 (PST)
-Message-ID: <660bb2a3-79f8-b657-782a-50ec61dc8932@linaro.org>
-Date:   Thu, 19 Jan 2023 12:41:06 +0100
+Message-ID: <2c8fc24a-5a16-7817-4001-edc53340f9fd@linaro.org>
+Date:   Thu, 19 Jan 2023 13:41:06 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH v4 3/7] dt-bindings: mailbox: qcom: correct the list of
- platforms using clocks
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230118132254.2356209-1-dmitry.baryshkov@linaro.org>
- <20230118132254.2356209-4-dmitry.baryshkov@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230118132254.2356209-4-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+ Thunderbird/102.6.0
+Subject: Re: [PATCH v6 01/10] drm/hdcp: Add drm_hdcp_atomic_check()
+Content-Language: en-GB
+To:     Mark Yacoub <markyacoub@chromium.org>, quic_khsieh@quicinc.com,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, intel-gfx@lists.freedesktop.org
+Cc:     robdclark@gmail.com, quic_abhinavk@quicinc.com, sean@poorly.run,
+        airlied@gmail.com, daniel@ffwll.ch, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@somainline.org,
+        jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com,
+        rodrigo.vivi@intel.com, tvrtko.ursulin@linux.intel.com,
+        tzimmermann@suse.de, ville.syrjala@linux.intel.com,
+        stanislav.lisovskiy@intel.com, matthew.d.roper@intel.com,
+        imre.deak@intel.com, lucas.demarchi@intel.com,
+        manasi.d.navare@intel.com, swati2.sharma@intel.com,
+        bhanuprakash.modem@intel.com, javierm@redhat.com,
+        jose.souza@intel.com, lyude@redhat.com, hbh25y@gmail.com,
+        arun.r.murthy@intel.com, ashutosh.dixit@intel.com,
+        ankit.k.nautiyal@intel.com, maxime@cerno.tech, swboyd@chromium.org,
+        christophe.jaillet@wanadoo.fr, quic_sbillaka@quicinc.com,
+        johan+linaro@kernel.org, dianders@chromium.org, marex@denx.de,
+        quic_jesszhan@quicinc.com, bjorn.andersson@linaro.org,
+        abhinavk@codeaurora.org, seanpaul@chromium.org,
+        Jani Nikula <jani.nikula@intel.com>
+References: <20230118193015.911074-1-markyacoub@google.com>
+ <20230118193015.911074-2-markyacoub@google.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230118193015.911074-2-markyacoub@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -86,18 +96,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/01/2023 14:22, Dmitry Baryshkov wrote:
-> The schema incorrectly lists some of the platforms in the statement
-> requiring clocks/clock-names. Correct this by moving platforms not
-> requiring additional clocks to the separate clause.
+On 18/01/2023 21:30, Mark Yacoub wrote:
+> From: Sean Paul <seanpaul@chromium.org>
 > 
-> Fixes: 0d17014e9189 ("dt-bindings: mailbox: Add binding for SDX55 APCS")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> This patch moves the hdcp atomic check from i915 to drm_hdcp so other
+> drivers can use it. No functional changes, just cleaned up some of the
+> code when moving it over.
+> 
+> Acked-by: Jani Nikula <jani.nikula@intel.com>
+> Acked-by: Jani Nikula <jani.nikula@intel.com>
+> Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+> Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
+> Signed-off-by: Sean Paul <seanpaul@chromium.org>
+> Signed-off-by: Mark Yacoub <markyacoub@chromium.org>
+> Link: https://patchwork.freedesktop.org/patch/msgid/20210913175747.47456-2-sean@poorly.run #v1
+> Link: https://patchwork.freedesktop.org/patch/msgid/20210915203834.1439-2-sean@poorly.run #v2
+> Link: https://patchwork.freedesktop.org/patch/msgid/20211001151145.55916-2-sean@poorly.run #v3
+> Link: https://patchwork.freedesktop.org/patch/msgid/20211105030434.2828845-2-sean@poorly.run #v4
+> Link: https://patchwork.freedesktop.org/patch/msgid/20220411204741.1074308-2-sean@poorly.run #v5
+> 
+> Changes in v2:
+> -None
+> Changes in v3:
+> -None
+> Changes in v4:
+> -None
+> Changes in v5:
+> -None
+> Changes in V6:
+> -Rebase: move helper from drm_hdcp.c to drm_hdcp_helper.c
+> 
 > ---
+>   drivers/gpu/drm/display/drm_hdcp_helper.c   | 69 +++++++++++++++++++++
+>   drivers/gpu/drm/i915/display/intel_atomic.c |  4 +-
+>   drivers/gpu/drm/i915/display/intel_hdcp.c   | 47 --------------
+>   drivers/gpu/drm/i915/display/intel_hdcp.h   |  3 -
+>   include/drm/display/drm_hdcp_helper.h       |  3 +
+>   5 files changed, 74 insertions(+), 52 deletions(-)
 
+With the hope that commit message is cleaned up:
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Best regards,
-Krzysztof
+-- 
+With best wishes
+Dmitry
 
