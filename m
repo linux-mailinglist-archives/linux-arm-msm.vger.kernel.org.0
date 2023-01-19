@@ -2,123 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F17E967329A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 08:39:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C78967329F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 08:41:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229918AbjASHj5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Jan 2023 02:39:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46860 "EHLO
+        id S229915AbjASHlD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Jan 2023 02:41:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229615AbjASHjm (ORCPT
+        with ESMTP id S229942AbjASHk4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Jan 2023 02:39:42 -0500
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A18B84687
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 23:39:40 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id c4-20020a1c3504000000b003d9e2f72093so2951217wma.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 23:39:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=XOqMBPf6wiOYpq42Y7vvNbvEHVfamUmViAnQdTcUnGg=;
-        b=tv/mH1UJvXzxAbv6ZPc9KMTXNvWLoYO5uSrBdgj9jfOhJTpBXPD+0c3/kgrRv/naa2
-         5iCQl26NSQ3eH/V44N1RfcNV5mKW+NX4ZcNBTZTgDIXCt7r28z/grzeB7Fzru7X/oAHD
-         eJBQufWsXW6XxbpRoT3o4hJiMUBOmrRql+WNWsIUzcqhC9axcCB+i9xwC1hQBAFavaQj
-         Azrgn7mp+DUdkgGjaU87ljwX0BnBDwYV6KWidP+d5u5Gyfp/0mtSocf31OBPkuFEbyMU
-         Y+BeyI6N8vrzNjbkQzxJlhlBl3YWKqmWa2I/O4qD5hjF+4M+ciO7Pt/9UJOOdjCuPH77
-         gMuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XOqMBPf6wiOYpq42Y7vvNbvEHVfamUmViAnQdTcUnGg=;
-        b=68USkVx6kbjqqCvYYNNVKJQAI58MZf7LNZ4D5JN6kfwjjWQORaOvvTS2s5Xpvpnfv2
-         dEdo21/5FZDZcg4aTSFpqIOF4INZ2rN12xdoiH8IFD7jREPia61YWCNpkZeOwj75VPyZ
-         m4J9trWWtmZW3DWi1z7nSgsaUDG6ndXXeJUFI3YZe00g5Bmea7VeCPjFKKfweY9zKwXl
-         ToOKgqxVBy5kI+LMUdBPVymY66hS1BmueumiNSMqdy48dY/u9gpzdvuBSslGaSeFD8jf
-         DcVFvQb0VRBpO1PCRaDNnUbEKTxbzoas82pBv2nUuqejeqmNa3RDA9FUpV32MjsV8pWc
-         nVeA==
-X-Gm-Message-State: AFqh2kr9G2BqW3tJn1lS5rRv8UZsEGVW7/G0In0cH0pmn4K4LiekUYNS
-        miWo8ZUWfXvggyhIfzo/TA/aJw==
-X-Google-Smtp-Source: AMrXdXsLa136dUX8LJKmaxPMIl3hWRQ+ADsEngQaV8UyI/bzAEKD6aaJugxecTle6AogEUDWgkx67w==
-X-Received: by 2002:a05:600c:4fcb:b0:3db:1919:41b5 with SMTP id o11-20020a05600c4fcb00b003db191941b5mr3514893wmq.21.1674113979165;
-        Wed, 18 Jan 2023 23:39:39 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id r9-20020a05600c458900b003d35acb0fd7sm4182561wmo.34.2023.01.18.23.39.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Jan 2023 23:39:38 -0800 (PST)
-Message-ID: <6793b9f0-18ba-56af-2e4d-202ad52b0951@linaro.org>
-Date:   Thu, 19 Jan 2023 08:39:36 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH v4 2/5] dt-bindings: remoteproc: qcom: adsp: document
- sm8550 adsp, cdsp & mpss compatible
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Alex Elder <elder@linaro.org>, Andy Gross <agross@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Thu, 19 Jan 2023 02:40:56 -0500
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16CA567788;
+        Wed, 18 Jan 2023 23:40:36 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by sin.source.kernel.org (Postfix) with ESMTPS id 04177CE1FC5;
+        Thu, 19 Jan 2023 07:40:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE71DC433EF;
+        Thu, 19 Jan 2023 07:40:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1674114033;
+        bh=HBcgxXlu9/ZACXw7g8KqVJy5ZYWiB2l1H7RYFxeC6fQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=aikj+Tm0mxQSXuCWYiKIXLRj14UnB+nMSQhIyK8mH6yJLzfHKQc/rtTRBMy9Ln1CL
+         /ujxFOzacdbq8flTz7jBikUzUlx544jn/cTroWsxyZP7ksClAwTQOqyEG41doEER2j
+         JpOTbf4cl7dWwfUuyykuKegKtmz6nKKhsAOhBWrnqhCYkLMgoY3JEVnxAJ7Ku5ailD
+         IqTU+V+vR5s8YmnxQ/rTfNZh89o3XXv6vK4eFwzuSjiUGR4k05X2NpathNGO3xXhH3
+         FMumtZ3Xe8sATx8oksRCgca7KvmKLiDgRY2OE4dCzoD5ZyfgMu+JjEmuQDUzkFA1rK
+         aNHOe80fu4ImQ==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pIPXf-00055C-B3; Thu, 19 Jan 2023 08:41:00 +0100
+Date:   Thu, 19 Jan 2023 08:40:59 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-References: <20221114-narmstrong-sm8550-upstream-remoteproc-v4-0-54154c08c0b7@linaro.org>
- <20221114-narmstrong-sm8550-upstream-remoteproc-v4-2-54154c08c0b7@linaro.org>
- <167407681596.873892.9837637729592866883.robh@kernel.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <167407681596.873892.9837637729592866883.robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v3 1/8] dt-bindings: phy: Add QMP PCIe PHY comptible for
+ SM8550
+Message-ID: <Y8j0C+rnUOMG6hLi@hovoldconsulting.com>
+References: <20230118005328.2378792-1-abel.vesa@linaro.org>
+ <20230118005328.2378792-2-abel.vesa@linaro.org>
+ <Y8giHJMtPu4wTlmA@hovoldconsulting.com>
+ <Y8hjy8WRpPh8DVvG@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y8hjy8WRpPh8DVvG@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/01/2023 22:21, Rob Herring wrote:
+On Wed, Jan 18, 2023 at 11:25:31PM +0200, Abel Vesa wrote:
+> On 23-01-18 17:45:16, Johan Hovold wrote:
+> > On Wed, Jan 18, 2023 at 02:53:21AM +0200, Abel Vesa wrote:
+> > > Document the QMP PCIe PHY compatible for SM8550.
+> > > 
+> > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > > ---
+> > >  .../devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml     | 2 ++
+> > >  1 file changed, 2 insertions(+)
+> > > 
+> > > diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+> > > index 8a85318d9c92..65f26cfff3fb 100644
+> > > --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+> > > +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+> > > @@ -20,6 +20,8 @@ properties:
+> > >        - qcom,sc8280xp-qmp-gen3x2-pcie-phy
+> > >        - qcom,sc8280xp-qmp-gen3x4-pcie-phy
+> > >        - qcom,sm8350-qmp-gen3x1-pcie-phy
+> > > +      - qcom,sm8550-qmp-gen3x2-pcie-phy
+> > > +      - qcom,sm8550-qmp-gen4x2-pcie-phy
+> > >  
+> > >    reg:
+> > >      minItems: 1
+> > 
+> > I don't think I'll have time to look at this week, but I did notice that
+> > you fail do describe the clocks, regulators, and resets (as you also
+> > did for the UFS PHY binding) which are currently different from
+> > sc8280xp.
 > 
-> On Wed, 18 Jan 2023 17:22:40 +0100, Neil Armstrong wrote:
->> This documents the compatible for the component used to boot the
->> aDSP, cDSP and MPSS on the SM8550 SoC.
->>
->> The SM8550 boot process on SM8550 now requires a secondary "Devicetree"
->> firmware to be passed along the main Firmware, and the cDSP a new power
->> domain named "NSP".
->>
->> A third memory domain for the DSM memory zone is also needed for the MPSS
->> PAS bindings.
->>
->> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
->>  .../bindings/remoteproc/qcom,sm8550-pas.yaml       | 178 +++++++++++++++++++++
->>  1 file changed, 178 insertions(+)
->>
+> Hmm, sorry about that. I will double check against the pcie phy nodes I
+> have for sm8550.
 > 
-> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> on your patch (DT_CHECKER_FLAGS is new in v5.13):
+> As for the UFS, if your are referring to the following patchset [1], the phy
+> node looks exactly the same as on sc8280xp, therefore no other binding
+> update, other than compatible, was needed.
 > 
-> yamllint warnings/errors:
-> 
-> dtschema/dtc warnings/errors:
-> ./Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml: Unable to find schema file matching $id: http://devicetree.org/schemas/remoteproc/qcom,pas-common.yaml
+> [1] https://lore.kernel.org/all/20230117224148.1914627-2-abel.vesa@linaro.org/
 
-That's ok, expected. There was a dependency.
+Yes, but I was referring to your original submission which added
+different names for the clocks without updating the binding. In that
+case, those clocks were really the same ones as the ones on sc8280xp so
+it was only the driver and dts changes that were wrong:
 
-Best regards,
-Krzysztof
+	https://lore.kernel.org/all/Y8And9VVvpnSInlj@hovoldconsulting.com/
 
+> > Please be more careful when adding compatible strings so we get this
+> > right. You should also double check that the differences are really
+> > warranted and not just due the vendor using different names for the same
+> > resource.
+
+Johan
