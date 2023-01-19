@@ -2,50 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D99A8674C84
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 06:36:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 95C38674BC5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 06:07:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231422AbjATFgy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Jan 2023 00:36:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42278 "EHLO
+        id S230340AbjATFH5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Jan 2023 00:07:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230522AbjATFgh (ORCPT
+        with ESMTP id S229810AbjATFHK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Jan 2023 00:36:37 -0500
+        Fri, 20 Jan 2023 00:07:10 -0500
 Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05F9D6A325;
-        Thu, 19 Jan 2023 21:33:19 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 143D511664;
+        Thu, 19 Jan 2023 20:54:48 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id A6596B82070;
-        Thu, 19 Jan 2023 04:54:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0F27C43392;
-        Thu, 19 Jan 2023 04:54:02 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id E9381B82119;
+        Thu, 19 Jan 2023 07:47:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CBC7C433EF;
+        Thu, 19 Jan 2023 07:47:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1674104043;
-        bh=tnRloJ1g4UNmQ2OE//o+mlwI90CLntajf6uqMAcod6Y=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=Tn6yomvZl0Wxo4GoEvVVH8r/k3SvbSwEx83NsdNBfVWUYPrZS/PsqjvVQepovBOq/
-         I/CC4MwFkyZ+bURVQgZjM1syevPls6pnP0JHJgIcWI6BLrUvSRMFZr0g5Rwua8r4JV
-         /r76UdPruChJESmWW3hvcF/3IjSibaW1g7eVGHVhcDNPHafzBOGFs86Iz3NVAKk7PJ
-         zry2c48UZyX2jOqLA+sfOy1n6NeVOlHdaSJPK5FeGdXh0gkrUPLnbh2n9LRYznsK0p
-         7ydlmYx+mpAJyYXFZWKzOqGVaSLK8MJCdt8gRuk28OzJrOrEACF29NoLT7uqt7KPk2
-         4L5Z60zo/FUKA==
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@linaro.org,
+        s=k20201202; t=1674114466;
+        bh=7WOYOeaEZiuH7oZbvdZ78RcbdrMFESiP3WNivPABNbk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=hioSth933gwVfFT0jpHFp1vNYvhnzakGWtxj+rfD0ZZQ1LG7wZFpIy6HRa1hgG2Ko
+         6sL0XQf8ppr8LYQ/MFO0wHfrB+3zvGCqYnZp+gVKxm1MOqHT+5ZsAp8vO5/9Fob7hq
+         p2B9Z75k4dYSGIBJQxu/yq1eId5Z22kEpR/iQuF+OoLmGkXge1CtGIc9jKrjPd+mzC
+         H8wGzt9gAxPXVzO8SyETvjlP+EwsFjQgULiKaZ9Suk1uzRV1FGuLyP84v+/Rg/+6e5
+         YwaYUrMn7A+aRoH0jyMWJl5cboFRYThnT3Oifx/lSOjwHmqQ6uKsM+E2d945mCin3l
+         C80DWQA+WmJuA==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pIPee-0005IE-Hm; Thu, 19 Jan 2023 08:48:12 +0100
+Date:   Thu, 19 Jan 2023 08:48:12 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Mark Yacoub <markyacoub@chromium.org>
+Cc:     quic_khsieh@quicinc.com, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, robh+dt@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Subject: Re: [PATCH] arm64: dts: qcom: sdm845-db845c: drop label from I2C controllers
-Date:   Wed, 18 Jan 2023 22:53:58 -0600
-Message-Id: <167410403676.3048186.7922935740926520662.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20230113145231.79280-1-krzysztof.kozlowski@linaro.org>
-References: <20230113145231.79280-1-krzysztof.kozlowski@linaro.org>
+        intel-gfx@lists.freedesktop.org, robdclark@gmail.com,
+        quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
+        sean@poorly.run, airlied@gmail.com, daniel@ffwll.ch,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@somainline.org, jani.nikula@linux.intel.com,
+        joonas.lahtinen@linux.intel.com, rodrigo.vivi@intel.com,
+        tvrtko.ursulin@linux.intel.com, tzimmermann@suse.de,
+        ville.syrjala@linux.intel.com, stanislav.lisovskiy@intel.com,
+        matthew.d.roper@intel.com, imre.deak@intel.com,
+        lucas.demarchi@intel.com, manasi.d.navare@intel.com,
+        swati2.sharma@intel.com, bhanuprakash.modem@intel.com,
+        javierm@redhat.com, jose.souza@intel.com, lyude@redhat.com,
+        hbh25y@gmail.com, arun.r.murthy@intel.com,
+        ashutosh.dixit@intel.com, ankit.k.nautiyal@intel.com,
+        maxime@cerno.tech, swboyd@chromium.org,
+        christophe.jaillet@wanadoo.fr, quic_sbillaka@quicinc.com,
+        johan+linaro@kernel.org, dianders@chromium.org, marex@denx.de,
+        quic_jesszhan@quicinc.com, bjorn.andersson@linaro.org,
+        abhinavk@codeaurora.org, seanpaul@chromium.org,
+        Rob Herring <robh@kernel.org>,
+        Mark Yacoub <markyacoub@chromiu.org>
+Subject: Re: [PATCH v6 08/10] dt-bindings: msm/dp: Add bindings for HDCP
+ registers
+Message-ID: <Y8j1vOJ1nlsW9Bcg@hovoldconsulting.com>
+References: <20230118193015.911074-1-markyacoub@google.com>
+ <20230118193015.911074-9-markyacoub@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230118193015.911074-9-markyacoub@google.com>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -55,19 +81,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 13 Jan 2023 15:52:31 +0100, Krzysztof Kozlowski wrote:
-> Geni I2C Controller node does not allow a "label" property and Linux
-> driver does not parse it:
+On Wed, Jan 18, 2023 at 07:30:13PM +0000, Mark Yacoub wrote:
+> From: Sean Paul <seanpaul@chromium.org>
 > 
->   sdm845-db845c.dtb: i2c@a8c000: Unevaluated properties are not allowed ('label' was unexpected)
+> This patch adds the bindings for the MSM DisplayPort HDCP registers
+> which are required to write the HDCP key into the display controller as
+> well as the registers to enable HDCP authentication/key
+> exchange/encryption.
 > 
+> We'll use a new compatible string for this since the fields are optional.
 > 
+> Cc: Rob Herring <robh@kernel.org>
+> Cc: Stephen Boyd <swboyd@chromium.org>
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> Signed-off-by: Sean Paul <seanpaul@chromium.org>
+> Signed-off-by: Mark Yacoub <markyacoub@chromiu.org>
 
-Applied, thanks!
+Just a drive-by comment: Your mail address is missing an 'm' here.
 
-[1/1] arm64: dts: qcom: sdm845-db845c: drop label from I2C controllers
-      commit: 3e7a2e8bd9b7350e34b7b0ad3eaad8219b5f5cf6
+Perhaps check the rest of the series as well (checkpatch should catch
+this).
 
-Best regards,
--- 
-Bjorn Andersson <andersson@kernel.org>
+Johan
