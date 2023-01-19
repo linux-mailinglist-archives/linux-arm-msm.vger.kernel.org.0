@@ -2,78 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9AD62673D3E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 16:14:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 45F40673D9B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 16:35:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229844AbjASPOe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Jan 2023 10:14:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53118 "EHLO
+        id S231159AbjASPfb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Jan 2023 10:35:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230310AbjASPOR (ORCPT
+        with ESMTP id S230121AbjASPfO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Jan 2023 10:14:17 -0500
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE99F6797F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 07:14:14 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id f19-20020a1c6a13000000b003db0ef4dedcso3775121wmc.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 07:14:14 -0800 (PST)
+        Thu, 19 Jan 2023 10:35:14 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D48484552
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 07:35:12 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id j17so1874581wms.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 07:35:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9NPQPBsKrvaOn9sdw34Chj6FAIMw9mMDoh9PXJ52yo8=;
-        b=eL1onUrTJJhsavn7jRGxAHwMhcLe30RuHlCuuluA4LWR8R2UYsIt1D4NHeiCLCJXvL
-         0FCveMkFJfp82qWAIJLa76KgYHeo5Ti+3A6kQfN/iCwhJgIEy9ylLmgg9j6QQ8fmUM0w
-         dwDiWF4eUZ9KgpzJ16iKB4dGghPPSlusLrHtqs3IVVkZVxEr9QlbDIoCV7MWvhOSxj0P
-         NFwfdRcZYhIlyfVxYd5QunVKmN65BTMUGM0om7LeoTLze1qT5QhYXnnvszDKq2KPTgT9
-         x+rTgRiU7Npnj56e1rid4L/fIGFhk0hB2CgSxEJpnvtIHGdpQxQke5hjn5ALRcGIP6eT
-         ytpQ==
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=nZL+EvzEvrAfF5w1mqqATHNa4cpLOo+MW+TpXyhWCHM=;
+        b=fHNkuVltpvcapP0msNuKmLRanamZBxuyYOCRyGewd+VVXRtvCT05Y0ai/WF9vSz6tY
+         TRuA/6COyvo+EKDIiGLuUJgzKH9Da54RNY2XhWFp2zzifPR5lPQY60bXYGtOAlaYj2v1
+         1veATYgBXA+Ef+YmS6+HrYl8Z4VpAvFwaCMx8llsjf+ONQDIaYANiA1G29ghHxM7Xqjw
+         ZqEuz5FLtSNtH+N8mPcMaIp+Ovqni62lJnuOjkOkD+ymGZg6lYlKYSOpcNhbeoQIqcCO
+         b/qClz1B42F/M7/TS0B1R9NTOWpPwFLD+aLhuvRR8X9LdAtufdcLvTv5mzrjeYYpaBH8
+         91Tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=9NPQPBsKrvaOn9sdw34Chj6FAIMw9mMDoh9PXJ52yo8=;
-        b=7D/vPOZhX5QhEXHbxCROu/wgv9rQlW5vVEKm61Gx3G3oP1CoaZQ7aAYnwZhIJFjdpF
-         oMrSsCNc0CmeF8V55mKD7rDx2G27m6bxzowdEgU32Y1vOxzuuqdm/dlxIyUXRDjfcn9V
-         awQrgk0DNEYeBpyDmWd9xB3+UpRillYATEThKoOH+ge+TlnAPvGt5cfsI7Uo0eITFVZn
-         nRQ6Y9Y1K421dUJ814OvTCwxLnhrQyZBY18mGqtNwP7L6qEebzNoTWiiYE03YmQNJnyN
-         KhuWWuGeJ2/VYWgLjnmQYlU/WFTUrpha2PdZsk4qTnUfC/MEALAhNUG6ZE/VyVNNO0Id
-         CFiQ==
-X-Gm-Message-State: AFqh2kpl6xfG3K+qokIVoE8fTq1ZFw+m9qExC/Ev5gwOMg9LTtJknnfj
-        iMsQZv8TMGVx/6WMEuwywV2qqg==
-X-Google-Smtp-Source: AMrXdXtFaR78IHfb+vhWQY7bzEJpoiv5Zq927fsyxfpUe2pZcQnkoR91Z4gva/A/2hsMmOor335XbQ==
-X-Received: by 2002:a05:600c:c0c:b0:3db:1caf:1044 with SMTP id fm12-20020a05600c0c0c00b003db1caf1044mr3969515wmb.13.1674141253216;
-        Thu, 19 Jan 2023 07:14:13 -0800 (PST)
-Received: from hackbox.lan ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id o16-20020a05600c379000b003db15b1fb3csm4566605wmr.13.2023.01.19.07.14.11
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=nZL+EvzEvrAfF5w1mqqATHNa4cpLOo+MW+TpXyhWCHM=;
+        b=SwbtIRNuqU3MUTgknTi7Vus56lcQSPXN7UeLmJjktRyNpmo6LrD9C+MmIrNvAadldG
+         yH+AcXIC9ixEtKlwhmbUOSduaIEgifUrI74wNs6MM5VrOersORI+L7Y1Yd/hxg/0jfnL
+         tKcdXFRUR5LEf+NcpIoxlPo+lw+bZL4C5RjYc/mc1EYqjz5nu03wC9RZjAmm78di+rIb
+         i8Zoh2wozJXgHA1o0AwbL2ejWGF2NpJPwCRW4FGVePKe+Cm+JTcpdHYnSbop9DbxRs4n
+         OUZxPbweQ8wQ5avq5qlr/HpVPniTZR/Kx1lzfVgI/m2JoWooMYhkXMAa7YF0pHRMCRtJ
+         lutA==
+X-Gm-Message-State: AFqh2kp5bd9/Ol0GXj0f9sRByMuseghItfWyRHQkfVihZbotRP5Eb1rX
+        ED/dSGkbsb6/WJo8xrMAkE0smw==
+X-Google-Smtp-Source: AMrXdXsQgjNOKgyBhRiFhNp7IpHqVoVUV1i9ePpAWGBcvM/SHjIii/CsB63IjRkyDA7IeZ0KuvPI0w==
+X-Received: by 2002:a1c:7414:0:b0:3d9:779e:9788 with SMTP id p20-20020a1c7414000000b003d9779e9788mr6884710wmc.37.1674142510780;
+        Thu, 19 Jan 2023 07:35:10 -0800 (PST)
+Received: from linaro.org ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id j15-20020a05600c190f00b003d9aa76dc6asm7608427wmq.0.2023.01.19.07.35.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Jan 2023 07:14:12 -0800 (PST)
+        Thu, 19 Jan 2023 07:35:09 -0800 (PST)
+Date:   Thu, 19 Jan 2023 17:35:08 +0200
 From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Manivannan Sadhasivam <mani@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+To:     Manivannan Sadhasivam <mani@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        "James E . J . Bottomley" <jejb@linux.ibm.com>,
-        "Martin K . Petersen" <martin.petersen@oracle.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v2 2/2] dt-bindings: ufs: qcom: Add SM8550 compatible string
-Date:   Thu, 19 Jan 2023 17:14:06 +0200
-Message-Id: <20230119151406.4168685-3-abel.vesa@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230119151406.4168685-1-abel.vesa@linaro.org>
-References: <20230119151406.4168685-1-abel.vesa@linaro.org>
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v4 10/12] PCI: qcom: Add SM8550 PCIe support
+Message-ID: <Y8ljLJ8vsqxdQtW8@linaro.org>
+References: <20230119140453.3942340-1-abel.vesa@linaro.org>
+ <20230119140453.3942340-11-abel.vesa@linaro.org>
+ <20230119142155.GA101896@thinkpad>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230119142155.GA101896@thinkpad>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -84,34 +87,78 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document the compatible for the UFS found on SM8550.
+On 23-01-19 19:51:55, Manivannan Sadhasivam wrote:
+> On Thu, Jan 19, 2023 at 04:04:51PM +0200, Abel Vesa wrote:
+> > Add compatible for both PCIe found on SM8550.
+> > Also add the cnoc_pcie_sf_axi clock needed by the SM8550.
+> > 
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> 
+> Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+> 
+> > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> > ---
+> > 
+> > The v3 of this patchset is:
+> > https://lore.kernel.org/all/20230119112453.3393911-1-abel.vesa@linaro.org/
+> > 
+> > Changes since v3:
+> >  * renamed cnoc_pcie_sf_axi to cnoc_sf_axi
+> > 
+> > Changes since v2:
+> >  * none
+> >  
+> > Changes since v1:
+> >  * changed the subject line prefix for the patch to match the history,
+> >    like Bjorn Helgaas suggested.
+> >  * added Konrad's R-b tag
+> > 
+> > 
+> >  drivers/pci/controller/dwc/pcie-qcom.c | 4 +++-
+> >  1 file changed, 3 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> > index 77e5dc7b88ad..30f74bc51dbf 100644
+> > --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> > @@ -182,7 +182,7 @@ struct qcom_pcie_resources_2_3_3 {
+> >  
+> >  /* 6 clocks typically, 7 for sm8250 */
+> 
+> Now this comment is outdated ;)
+> 
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+Fair point. I'll wait for some more comments before
+I'll send a new version.
 
-diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-index 54f5f8dc5c87..108c281e9d09 100644
---- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-+++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-@@ -33,6 +33,7 @@ properties:
-           - qcom,sm8250-ufshc
-           - qcom,sm8350-ufshc
-           - qcom,sm8450-ufshc
-+          - qcom,sm8550-ufshc
-       - const: qcom,ufshc
-       - const: jedec,ufs-2.0
- 
-@@ -106,6 +107,7 @@ allOf:
-               - qcom,sm8250-ufshc
-               - qcom,sm8350-ufshc
-               - qcom,sm8450-ufshc
-+              - qcom,sm8550-ufshc
-     then:
-       properties:
-         clocks:
--- 
-2.34.1
-
+> Thanks,
+> Mani
+> 
+> >  struct qcom_pcie_resources_2_7_0 {
+> > -	struct clk_bulk_data clks[12];
+> > +	struct clk_bulk_data clks[13];
+> >  	int num_clks;
+> >  	struct regulator_bulk_data supplies[2];
+> >  	struct reset_control *pci_reset;
+> > @@ -1208,6 +1208,7 @@ static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
+> >  	res->clks[idx++].id = "noc_aggr_4";
+> >  	res->clks[idx++].id = "noc_aggr_south_sf";
+> >  	res->clks[idx++].id = "cnoc_qx";
+> > +	res->clks[idx++].id = "cnoc_sf_axi";
+> >  
+> >  	num_opt_clks = idx - num_clks;
+> >  	res->num_clks = idx;
+> > @@ -1828,6 +1829,7 @@ static const struct of_device_id qcom_pcie_match[] = {
+> >  	{ .compatible = "qcom,pcie-sm8250", .data = &cfg_1_9_0 },
+> >  	{ .compatible = "qcom,pcie-sm8450-pcie0", .data = &cfg_1_9_0 },
+> >  	{ .compatible = "qcom,pcie-sm8450-pcie1", .data = &cfg_1_9_0 },
+> > +	{ .compatible = "qcom,pcie-sm8550", .data = &cfg_1_9_0 },
+> >  	{ }
+> >  };
+> >  
+> > -- 
+> > 2.34.1
+> > 
+> 
+> -- 
+> மணிவண்ணன் சதாசிவம்
