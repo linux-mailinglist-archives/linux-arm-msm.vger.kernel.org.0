@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C339673D3A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 16:14:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9AD62673D3E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 16:14:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230320AbjASPOR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Jan 2023 10:14:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53054 "EHLO
+        id S229844AbjASPOe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Jan 2023 10:14:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230180AbjASPOO (ORCPT
+        with ESMTP id S230310AbjASPOR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Jan 2023 10:14:14 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F0AA6D345
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 07:14:13 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id m15so1787432wms.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 07:14:13 -0800 (PST)
+        Thu, 19 Jan 2023 10:14:17 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE99F6797F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 07:14:14 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id f19-20020a1c6a13000000b003db0ef4dedcso3775121wmc.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 07:14:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=pf3TiddMsThpqJL9fIlmLucaPD0shwz9CIN7cHEPyr0=;
-        b=ciqJnrk/dNCtuRAhGKIqib0DKk1KQq4dv27OTrSxqBn4uztJ29ylGmVNSq+kuFoHbM
-         N06fHJjW6+pxIZM1BGHpWFvjpXBY51p7qcLhlI5s8+i2jK4Q1vZbL+fYp00V57HALfWA
-         QpXqOk8AvFEhe1M02RyYEhdPoD11qxd5WRbXkDJCcNrP0XN5WA0Em8rTHvV13ALYdlm/
-         4we2Bq0dtocr4mhqw8Px2VK3VsVgl0iJC8pkA6GLACn1RTPe/MkZW0mZZdXwT+lTCauC
-         1sVALHfXwQG93wskl76nAMqAh9ow/LgC8UyfZvXoMvBsDdsZncMEfpeeEZ0CvJrOJCpe
-         v/Zg==
+        bh=9NPQPBsKrvaOn9sdw34Chj6FAIMw9mMDoh9PXJ52yo8=;
+        b=eL1onUrTJJhsavn7jRGxAHwMhcLe30RuHlCuuluA4LWR8R2UYsIt1D4NHeiCLCJXvL
+         0FCveMkFJfp82qWAIJLa76KgYHeo5Ti+3A6kQfN/iCwhJgIEy9ylLmgg9j6QQ8fmUM0w
+         dwDiWF4eUZ9KgpzJ16iKB4dGghPPSlusLrHtqs3IVVkZVxEr9QlbDIoCV7MWvhOSxj0P
+         NFwfdRcZYhIlyfVxYd5QunVKmN65BTMUGM0om7LeoTLze1qT5QhYXnnvszDKq2KPTgT9
+         x+rTgRiU7Npnj56e1rid4L/fIGFhk0hB2CgSxEJpnvtIHGdpQxQke5hjn5ALRcGIP6eT
+         ytpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=pf3TiddMsThpqJL9fIlmLucaPD0shwz9CIN7cHEPyr0=;
-        b=75BEnEFc6OGVZS0XtwjUMCYUFV6R7R+oy51PFmZXW/P/Nh2H3zBYb0dUpMrRqb4Ys2
-         L33aOVqrUY/jxs+F+JUqRuJwo4r0iE8kW2FfKQXjVMWxi42edlIoYDd/VfNpRryIM4ol
-         Qkrk2KkdUIIeiMPegsExfCXzSzUPN2ai9Sm8Xc+jx2ALU5ZtUv+0RsRq5Z+u4g9/zvT8
-         sOF20a2NZA4zen/B+aHoTe4t1h2IBOw6bFXR5DVBeMuT5iVXcP17QpeheRoqCqURiFmF
-         e5wPM36pK3Qcq6ZqSVGRS7N18U5q1aH2x06QV20Pjr7M/AiyGJWoOETbesfHdGuFPvAR
-         ivvg==
-X-Gm-Message-State: AFqh2krYazJ1wW7jyY5zSDnV2D9yMwoNAFHTEuwsJMn63U8/l6KXf46q
-        VeX1VqeG/csaEDKPJpI6Gb2ohQ==
-X-Google-Smtp-Source: AMrXdXsSGV1ODfoA0XoBReZRcjU3MvJ0gjrgI4ak53eo9a6/AKoUP8jLjPAEP2gXWUtOZDMT6lZYHA==
-X-Received: by 2002:a05:600c:3ca0:b0:3da:fc15:740c with SMTP id bg32-20020a05600c3ca000b003dafc15740cmr10731943wmb.19.1674141251582;
-        Thu, 19 Jan 2023 07:14:11 -0800 (PST)
+        bh=9NPQPBsKrvaOn9sdw34Chj6FAIMw9mMDoh9PXJ52yo8=;
+        b=7D/vPOZhX5QhEXHbxCROu/wgv9rQlW5vVEKm61Gx3G3oP1CoaZQ7aAYnwZhIJFjdpF
+         oMrSsCNc0CmeF8V55mKD7rDx2G27m6bxzowdEgU32Y1vOxzuuqdm/dlxIyUXRDjfcn9V
+         awQrgk0DNEYeBpyDmWd9xB3+UpRillYATEThKoOH+ge+TlnAPvGt5cfsI7Uo0eITFVZn
+         nRQ6Y9Y1K421dUJ814OvTCwxLnhrQyZBY18mGqtNwP7L6qEebzNoTWiiYE03YmQNJnyN
+         KhuWWuGeJ2/VYWgLjnmQYlU/WFTUrpha2PdZsk4qTnUfC/MEALAhNUG6ZE/VyVNNO0Id
+         CFiQ==
+X-Gm-Message-State: AFqh2kpl6xfG3K+qokIVoE8fTq1ZFw+m9qExC/Ev5gwOMg9LTtJknnfj
+        iMsQZv8TMGVx/6WMEuwywV2qqg==
+X-Google-Smtp-Source: AMrXdXtFaR78IHfb+vhWQY7bzEJpoiv5Zq927fsyxfpUe2pZcQnkoR91Z4gva/A/2hsMmOor335XbQ==
+X-Received: by 2002:a05:600c:c0c:b0:3db:1caf:1044 with SMTP id fm12-20020a05600c0c0c00b003db1caf1044mr3969515wmb.13.1674141253216;
+        Thu, 19 Jan 2023 07:14:13 -0800 (PST)
 Received: from hackbox.lan ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id o16-20020a05600c379000b003db15b1fb3csm4566605wmr.13.2023.01.19.07.14.10
+        by smtp.gmail.com with ESMTPSA id o16-20020a05600c379000b003db15b1fb3csm4566605wmr.13.2023.01.19.07.14.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Jan 2023 07:14:11 -0800 (PST)
+        Thu, 19 Jan 2023 07:14:12 -0800 (PST)
 From:   Abel Vesa <abel.vesa@linaro.org>
 To:     Manivannan Sadhasivam <mani@kernel.org>,
         Andy Gross <agross@kernel.org>,
@@ -64,10 +64,11 @@ To:     Manivannan Sadhasivam <mani@kernel.org>,
         "Martin K . Petersen" <martin.petersen@oracle.com>
 Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
         devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: [PATCH v2 1/2] scsi: ufs: ufs-qcom: Clear qunipro_g4_sel for HW version major 5
-Date:   Thu, 19 Jan 2023 17:14:05 +0200
-Message-Id: <20230119151406.4168685-2-abel.vesa@linaro.org>
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2 2/2] dt-bindings: ufs: qcom: Add SM8550 compatible string
+Date:   Thu, 19 Jan 2023 17:14:06 +0200
+Message-Id: <20230119151406.4168685-3-abel.vesa@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20230119151406.4168685-1-abel.vesa@linaro.org>
 References: <20230119151406.4168685-1-abel.vesa@linaro.org>
@@ -83,67 +84,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On SM8550, depending on the Qunipro, we can run with G5 or G4.
-For now, when the major version is 5 or above, we go with G5.
-Therefore, we need to specifically tell UFS HC that.
+Document the compatible for the UFS found on SM8550.
 
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- drivers/ufs/host/ufs-qcom.c | 8 ++++++--
- drivers/ufs/host/ufs-qcom.h | 6 +++++-
- 2 files changed, 11 insertions(+), 3 deletions(-)
+ Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 5e7ba3b6a59d..7b6deef4e49a 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -218,6 +218,10 @@ static void ufs_qcom_select_unipro_mode(struct ufs_qcom_host *host)
- 	ufshcd_rmwl(host->hba, QUNIPRO_SEL,
- 		   ufs_qcom_cap_qunipro(host) ? QUNIPRO_SEL : 0,
- 		   REG_UFS_CFG1);
-+
-+	if (host->hw_ver.major == 0x05)
-+		ufshcd_rmwl(host->hba, QUNIPRO_G4_SEL, 0, REG_UFS_CFG0);
-+
- 	/* make sure above configuration is applied before we return */
- 	mb();
- }
-@@ -507,9 +511,9 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
- 		mb();
- 	}
+diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+index 54f5f8dc5c87..108c281e9d09 100644
+--- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
++++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+@@ -33,6 +33,7 @@ properties:
+           - qcom,sm8250-ufshc
+           - qcom,sm8350-ufshc
+           - qcom,sm8450-ufshc
++          - qcom,sm8550-ufshc
+       - const: qcom,ufshc
+       - const: jedec,ufs-2.0
  
--	if (update_link_startup_timer) {
-+	if (update_link_startup_timer && host->hw_ver.major != 0x5) {
- 		ufshcd_writel(hba, ((core_clk_rate / MSEC_PER_SEC) * 100),
--			      REG_UFS_PA_LINK_STARTUP_TIMER);
-+			      REG_UFS_CFG0);
- 		/*
- 		 * make sure that this configuration is applied before
- 		 * we return
-diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
-index f744a9e62002..cca773210bcb 100644
---- a/drivers/ufs/host/ufs-qcom.h
-+++ b/drivers/ufs/host/ufs-qcom.h
-@@ -35,7 +35,8 @@ enum {
- 	REG_UFS_PA_ERR_CODE                 = 0xCC,
- 	/* On older UFS revisions, this register is called "RETRY_TIMER_REG" */
- 	REG_UFS_PARAM0                      = 0xD0,
--	REG_UFS_PA_LINK_STARTUP_TIMER       = 0xD8,
-+	/* On older UFS revisions, this register is called "REG_UFS_PA_LINK_STARTUP_TIMER" */
-+	REG_UFS_CFG0                        = 0xD8,
- 	REG_UFS_CFG1                        = 0xDC,
- 	REG_UFS_CFG2                        = 0xE0,
- 	REG_UFS_HW_VERSION                  = 0xE4,
-@@ -73,6 +74,9 @@ enum {
- #define UFS_CNTLR_2_x_x_VEN_REGS_OFFSET(x)	(0x000 + x)
- #define UFS_CNTLR_3_x_x_VEN_REGS_OFFSET(x)	(0x400 + x)
- 
-+/* bit definitions for REG_UFS_CFG0 register */
-+#define QUNIPRO_G4_SEL		BIT(5)
-+
- /* bit definitions for REG_UFS_CFG1 register */
- #define QUNIPRO_SEL		BIT(0)
- #define UFS_PHY_SOFT_RESET	BIT(1)
+@@ -106,6 +107,7 @@ allOf:
+               - qcom,sm8250-ufshc
+               - qcom,sm8350-ufshc
+               - qcom,sm8450-ufshc
++              - qcom,sm8550-ufshc
+     then:
+       properties:
+         clocks:
 -- 
 2.34.1
 
