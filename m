@@ -2,80 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3445F6735D1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 11:42:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D47796735EC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 11:45:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229615AbjASKmm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Jan 2023 05:42:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36894 "EHLO
+        id S229644AbjASKpH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Jan 2023 05:45:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230378AbjASKmF (ORCPT
+        with ESMTP id S230036AbjASKo6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Jan 2023 05:42:05 -0500
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06A165EF81
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 02:41:57 -0800 (PST)
-Received: by mail-ej1-x633.google.com with SMTP id hw16so4470046ejc.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 02:41:57 -0800 (PST)
+        Thu, 19 Jan 2023 05:44:58 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DEC644BD5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 02:44:57 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id b5so1468228wrn.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 02:44:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=uS3a51Hf3DeDt61DkEEova6jWQ+51q/C5Vt9AtIW4EY=;
-        b=a610o/VsGt0ptWMrSEL2hb8IAPtrLG6IiIGvUpRybeQv9TGs2j85nG/DIQAbNi7WP3
-         sSkKuQU/+WGfQEalbavTnvcl/h2hkZ9Cxo7/m4qx1al4e0n/XZbdwzMHTzaAzDfZQKuo
-         lyfxsC/Mz74rur7iPU7SptxxP/muoAvfj+HfRm0wPxD3Mq1+eAnhPN68G4szYnAf8Z8M
-         X0mk/um2i58ScTWClViIAcB77BMJwMEUp3OaM3ztgKznkaHabIpC6nMe5RXSKgfCTnQa
-         yrleFtKy3+RJURyzn64eJDRao50rQnCssDMjPW8AKCIw83UhXeGpxm2muW2sFtmTDbN/
-         f1LQ==
+        bh=8xlnawePa78ICFwjfjsW90f7mFfyeG73gzlxTncqwyE=;
+        b=h5WDQK2D6C9l5TGsa7heKev8ShkmZ1JPY5cxwLtzRlVKbAZFrP1SjLeg6p7u0CzyX+
+         ZtI98ciCrs1G6ED70BKYjH1OQt1qjnvI0ruFbP3KmYzNKqmODOiSrIu/SS/4e1B1Ja5+
+         wLBlagSVGeherUSZGt2wnqhYfLeLmrYs/TVm6v9aNWTVzjgFf30B0wKbNCK3mI7LUGRZ
+         GCEtgyUbTxLKvPThn23sDnde6Q5JUoEnbJ6/W23yxrQFfZzsgw6ntkcyzuKOpOjDNE6/
+         dFiLBrO7Zg/s0EnMnMllp8N+jnRR8K4X1Al03LXNaNO8cYTZ6SM9xCElMxBS4u8YQxPt
+         IMRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uS3a51Hf3DeDt61DkEEova6jWQ+51q/C5Vt9AtIW4EY=;
-        b=6HgOKgS+2Fb6TVQOdCkGf1965tpPFyreWgD7hD0cQ6JZ2iphbzyVjqu0MPWZw+x9qe
-         rD3QFHa/57hnxfndWsSgiml8qaIymxnrYa2tzLF9Of0ZOzy89TXwjucaIFeKdm78k8Ba
-         cPv2CYv+jb+EdkhX0RQlsIBlxDB5H+O3sqR0mLwzm4UO/Y26CAYUjHDbdbxmaR7RWMk2
-         eu9r1vDSdqu0FOxgiGnaN3HLqVC2DpLIHtkEe1hjr6FtHif97L9i7RqtfnXZGlYqFm67
-         UrTpH0dIRy3hIhV9J+USONwgGAvsMRLLcGbLYH10TsT9aTXibX89HhV0LYZbfUrvfAHo
-         488w==
-X-Gm-Message-State: AFqh2kotWs8QRRy5/05mKXPO4YL5it0Airm+wpmJyffCxICJYgGUNXFB
-        rHmuU9Ke5YW69AsOXhx0E/7gK+gr6c6Tihgz
-X-Google-Smtp-Source: AMrXdXulFNkg2BZdef9haxKrfnXc0E4+Br72L9bPdpuMtceDIFili6YQO7W/wr8o7/OWWyw6Yy4jHA==
-X-Received: by 2002:a17:906:15d2:b0:84c:cf42:e16 with SMTP id l18-20020a17090615d200b0084ccf420e16mr12961395ejd.1.1674124916149;
-        Thu, 19 Jan 2023 02:41:56 -0800 (PST)
-Received: from [192.168.1.101] (abxh150.neoplus.adsl.tpnet.pl. [83.9.1.150])
-        by smtp.gmail.com with ESMTPSA id hq15-20020a1709073f0f00b0084c7029b24dsm16222588ejc.151.2023.01.19.02.41.53
+        bh=8xlnawePa78ICFwjfjsW90f7mFfyeG73gzlxTncqwyE=;
+        b=qJLBbI33kCC3oa5uq4eXfUbkStmE1kyFPvgwedvpxoCvUWr1SzcNPcGYzbXOHzn/+g
+         xu18b92Gx7uM38bEeeqRAz+623cUingmHhKlSAV0WAQVUxaQNFrfVWhqywwxPoVSQfmH
+         jAlWzMoB/sp8KS0QXQfGQGhgpsBvV0RhAcH1OpJqv66Ejs+xFjx9vGakx8NTVzpzCCPp
+         6GLIupJVJVMdnmJEbhzgBkdMTuzgNcz8ervCzbmG5Dfryb7MoT1B2F9R06MiWUiZBDRT
+         wJlrP3m+l/51VitdVnBSWIOCM44yLFaopaaTZXfUrbibdbg4x1gKg9QGrQgVCf2+kRoN
+         cpKQ==
+X-Gm-Message-State: AFqh2kq+bWFgkN+izui/+s0vvfNDQsiuwpCwx4t0seX/UINZsUtmR8JF
+        IZvpkWOhtzIqhU3WOb7YzB7Vnw==
+X-Google-Smtp-Source: AMrXdXvel3nvZiaEnBT/xHs7rT2NUHqn9HRzAttFMuh2VrOKEUaH5uPNdNIHlLOFA6xljS1sQgnihw==
+X-Received: by 2002:a5d:68c5:0:b0:2bc:846a:8eb2 with SMTP id p5-20020a5d68c5000000b002bc846a8eb2mr8837850wrw.11.1674125096077;
+        Thu, 19 Jan 2023 02:44:56 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id l4-20020a05600012c400b002bbb2d43f65sm30361062wrx.14.2023.01.19.02.44.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 Jan 2023 02:41:55 -0800 (PST)
-Message-ID: <83385cac-9b66-8236-6039-65332ea9edb3@linaro.org>
-Date:   Thu, 19 Jan 2023 11:41:52 +0100
+        Thu, 19 Jan 2023 02:44:55 -0800 (PST)
+Message-ID: <cd7a2eac-5d70-6dcd-ddbd-317e1cbd7d23@linaro.org>
+Date:   Thu, 19 Jan 2023 11:44:52 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH 2/2] firmware: qcom_scm: Fully implement
- qcom_scm_lmh_dcvsh()
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
-        krzysztof.kozlowski@linaro.org, marijn.suijten@somainline.org,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
-References: <20230113031401.2336157-1-konrad.dybcio@linaro.org>
- <20230113031401.2336157-3-konrad.dybcio@linaro.org>
- <20230119030422.askkliovlyonurvz@builder.lan>
+ Thunderbird/102.7.0
+Subject: Re: [PATCH v2 1/9] dt-bindings: arm: Add support for DSB element
 Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230119030422.askkliovlyonurvz@builder.lan>
+To:     Tao Zhang <quic_taozha@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
+        Tao Zhang <taozha@qti.qualcomm.com>
+References: <1674114105-16651-1-git-send-email-quic_taozha@quicinc.com>
+ <1674114105-16651-2-git-send-email-quic_taozha@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <1674114105-16651-2-git-send-email-quic_taozha@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -87,190 +91,80 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 19/01/2023 08:41, Tao Zhang wrote:
+> Add property "qcom,dsb-elem-size" to support DSB(Discrete Single
+> Bit) element for TPDA. Specifies the DSB element size supported
+> by each monitor connected to the aggregator on each port. Should
+> be specified in pairs (port, dsb element size).
+> 
+> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+> Signed-off-by: Tao Zhang <taozha@qti.qualcomm.com>
 
+You are the same person and it is still the same organization
+(Qualcomm), right? Only one SoB.
 
-On 19.01.2023 04:04, Bjorn Andersson wrote:
-> On Fri, Jan 13, 2023 at 04:14:01AM +0100, Konrad Dybcio wrote:
->> The qcom_scm_lmh_dcvsh call can actually pass two values to the
->> secure world. The second value is used for example with the
->> LMH_FREQ_CAP function, which limits the maximum achievable frequency
->> directly from LMh. Add the missing arguments, handle them and update
->> the current usages of this function.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>  drivers/firmware/qcom_scm.c | 13 ++++++++-----
->>  drivers/thermal/qcom/lmh.c  | 28 ++++++++++++++--------------
->>  include/linux/qcom_scm.h    |  5 +++--
->>  3 files changed, 25 insertions(+), 21 deletions(-)
->>
->> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
->> index cdbfe54c8146..58a19a47e442 100644
->> --- a/drivers/firmware/qcom_scm.c
->> +++ b/drivers/firmware/qcom_scm.c
->> @@ -1252,12 +1252,13 @@ int qcom_scm_lmh_profile_change(u32 profile_id)
->>  }
->>  EXPORT_SYMBOL(qcom_scm_lmh_profile_change);
->>  
->> -int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
->> -		       u64 limit_node, u32 node_id, u64 version)
->> +int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val0,
->> +		       u32 payload_val1, u64 limit_node, u32 node_id,
->> +		       u64 version, bool has_val1)
+> ---
+>  .../bindings/arm/qcom,coresight-tpda.yaml          | 22 ++++++++++++++++++++++
+>  1 file changed, 22 insertions(+)
 > 
-> Rather than always passing a dummy payload_val1 and then having has_val1
-> to indicate if it should be considered or not... how about moving the
-> payload last in the call, as a va_list with a "count" before that?
-Sounds neat, but..
+> diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml
+> index 2ec9b5b..298db7f 100644
+> --- a/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml
+> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml
+> @@ -58,6 +58,26 @@ properties:
+>      minItems: 1
+>      maxItems: 2
+>  
+> +  qcom,dsb-element-size:
+> +    description: |
+> +      Specifies the DSB(Discrete Single Bit) element size supported by
+> +      each monitor connected to the aggregator on each port. Should be
+> +      specified in pairs <port, dsb element size>.
 
-> 
-> I.e:
-> 
-> int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u64 limit_node, u32 node_id,
-> 		       u64 version, unsigned int payload_count, ...)
-> 
->>  {
->>  	dma_addr_t payload_phys;
->>  	u32 *payload_buf;
->> -	int ret, payload_size = 5 * sizeof(u32);
->> +	int ret, payload_size = (5 + has_val1) * sizeof(u32);
-> 
-> allocate 4 + payload_count
-> 
->>  
->>  	struct qcom_scm_desc desc = {
->>  		.svc = QCOM_SCM_SVC_LMH,
->> @@ -1278,8 +1279,10 @@ int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
->>  	payload_buf[0] = payload_fn;
->>  	payload_buf[1] = 0;
->>  	payload_buf[2] = payload_reg;
->> -	payload_buf[3] = 1;
->> -	payload_buf[4] = payload_val;
->> +	payload_buf[3] = has_val1 ? 2 : 1;
->> +	payload_buf[4] = payload_val0;
->> +	if (has_val1)
->> +		payload_buf[5] = payload_val1;
-> 
-> Something like:
-> 
-> payload_buf[3] = payload_count;
-> va_start(ap, payload_count);
-> for (i = 0; i < payload_count; i++)
-> 	payload_buf[4 + i] = va_arg(ap, uint32_t);
-> va_end(ap);
-..can the call accept more arguments? And will they be
-interpreted in any way? Otherwise I may add also add
-WARN_ON() or something like this to prevent user error.
+s/port/port number/
 
-> 
-> 
-> 
-> That said, I don't see a single "true" below. Perhaps I'm missing it? I
-> would expect some code in the same series use the newly introduced
-> logic.
-Yeah there's no "true"s, this patch only refactored the
-code in preparation for 8998/660, but adding them as-is
-makes little sense before LMh_lite is also supported
-(AFAIUU this LMh_normal part is just an interface for OSM
-and the actual limits programming is either done on an
-internal-consensus-between-all-3-blocks basis OR just by
-LMh_lite. I can delay resending this series until the
-changes are actually required if you prefer.
+> +
+> +      Note: The maximum value of the port number depends on how many
+> +      input ports the current TPDA has. DSB element size currently only
+> +      supports 32-bit and 64-bit.
+> +    $ref: /schemas/types.yaml#/definitions/uint32-matrix
+> +    items:
 
-On newer SoCs LMh wakes up as part of OSM_secure/EPSS
-programming and needs little to no configuration
-externally (as you can see in this driver) and there's
-no external _lite block.
+Are some reasonable maxItems known?
 
-Konrad
-> 
-> Thanks,
-> Bjorn
-> 
->>  
->>  	desc.args[0] = payload_phys;
->>  
->> diff --git a/drivers/thermal/qcom/lmh.c b/drivers/thermal/qcom/lmh.c
->> index 5e8ff196c9a6..d2b5ea8322eb 100644
->> --- a/drivers/thermal/qcom/lmh.c
->> +++ b/drivers/thermal/qcom/lmh.c
->> @@ -147,23 +147,23 @@ static int lmh_probe(struct platform_device *pdev)
->>  		return -EINVAL;
->>  
->>  	if (flags & LMH_ENABLE_ALGOS) {
->> -		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_CRNT, LMH_ALGO_MODE_ENABLE, 1,
->> -					 LMH_NODE_DCVS, node_id, 0);
->> +		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_CRNT, LMH_ALGO_MODE_ENABLE, 1, 0,
->> +					 LMH_NODE_DCVS, node_id, 0, false);
->>  		if (ret)
->>  			dev_err(dev, "Error %d enabling current subfunction\n", ret);
->>  
->> -		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_REL, LMH_ALGO_MODE_ENABLE, 1,
->> -					 LMH_NODE_DCVS, node_id, 0);
->> +		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_REL, LMH_ALGO_MODE_ENABLE, 1, 0,
->> +					 LMH_NODE_DCVS, node_id, 0, false);
->>  		if (ret)
->>  			dev_err(dev, "Error %d enabling reliability subfunction\n", ret);
->>  
->> -		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_BCL, LMH_ALGO_MODE_ENABLE, 1,
->> -					 LMH_NODE_DCVS, node_id, 0);
->> +		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_BCL, LMH_ALGO_MODE_ENABLE, 1, 0,
->> +					 LMH_NODE_DCVS, node_id, 0, false);
->>  		if (ret)
->>  			dev_err(dev, "Error %d enabling BCL subfunction\n", ret);
->>  
->> -		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_ALGO_MODE_ENABLE, 1,
->> -					 LMH_NODE_DCVS, node_id, 0);
->> +		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_ALGO_MODE_ENABLE, 1, 0,
->> +					 LMH_NODE_DCVS, node_id, 0, false);
->>  		if (ret) {
->>  			dev_err(dev, "Error %d enabling thermal subfunction\n", ret);
->>  			return ret;
->> @@ -177,22 +177,22 @@ static int lmh_probe(struct platform_device *pdev)
->>  	}
->>  
->>  	/* Set default thermal trips */
->> -	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_TH_ARM_THRESHOLD, temp_arm,
->> -				 LMH_NODE_DCVS, node_id, 0);
->> +	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_TH_ARM_THRESHOLD, temp_arm, 0,
->> +				 LMH_NODE_DCVS, node_id, 0, false);
->>  	if (ret) {
->>  		dev_err(dev, "Error setting thermal ARM threshold%d\n", ret);
->>  		return ret;
->>  	}
->>  
->> -	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_TH_HI_THRESHOLD, temp_high,
->> -				 LMH_NODE_DCVS, node_id, 0);
->> +	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_TH_HI_THRESHOLD, temp_high, 0,
->> +				 LMH_NODE_DCVS, node_id, 0, false);
->>  	if (ret) {
->>  		dev_err(dev, "Error setting thermal HI threshold%d\n", ret);
->>  		return ret;
->>  	}
->>  
->> -	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_TH_LOW_THRESHOLD, temp_low,
->> -				 LMH_NODE_DCVS, node_id, 0);
->> +	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_TH_LOW_THRESHOLD, temp_low, 0,
->> +				 LMH_NODE_DCVS, node_id, 0, false);
->>  	if (ret) {
->>  		dev_err(dev, "Error setting thermal ARM threshold%d\n", ret);
->>  		return ret;
->> diff --git a/include/linux/qcom_scm.h b/include/linux/qcom_scm.h
->> index 1e449a5d7f5c..9fd798d17fdd 100644
->> --- a/include/linux/qcom_scm.h
->> +++ b/include/linux/qcom_scm.h
->> @@ -117,8 +117,9 @@ extern int qcom_scm_hdcp_req(struct qcom_scm_hdcp_req *req, u32 req_cnt,
->>  extern int qcom_scm_iommu_set_pt_format(u32 sec_id, u32 ctx_num, u32 pt_fmt);
->>  extern int qcom_scm_qsmmu500_wait_safe_toggle(bool en);
->>  
->> -extern int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
->> -			      u64 limit_node, u32 node_id, u64 version);
->> +extern int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val0,
->> +			      u32 payload_val1, u64 limit_node, u32 node_id,
->> +			      u64 version, bool has_val1);
->>  extern int qcom_scm_lmh_profile_change(u32 profile_id);
->>  extern bool qcom_scm_lmh_dcvsh_available(void);
->>  
->> -- 
->> 2.39.0
->>
+> +      items:
+> +        - description: |
+> +            "port" indicates TPDA input port number
+
+What is "port"? You quoted it like it was some name of variable or
+property. Where is then?
+
+> +          minimum: 0
+> +        - description: |
+> +            "dsb element size" indicates dsb element size
+
+"A" indicates A. This sentence does not make sense.
+
+Also missing units.
+
+s/dsb/DSB/
+
+> +          minimum: 0
+> +          maximum: 64
+> +
+>    clocks:
+>      maxItems: 1
+>  
+> @@ -100,6 +120,8 @@ examples:
+>         compatible = "qcom,coresight-tpda", "arm,primecell";
+>         reg = <0x6004000 0x1000>;
+>  
+> +       qcom,dsb-element-size = <0 32>;
+> +
+>         clocks = <&aoss_qmp>;
+>         clock-names = "apb_pclk";
+>  
+
+Best regards,
+Krzysztof
+
