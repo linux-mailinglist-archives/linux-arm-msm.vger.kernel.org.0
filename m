@@ -2,115 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F3BA673960
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 14:04:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 653D6673972
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 14:07:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230348AbjASNEP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Jan 2023 08:04:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43102 "EHLO
+        id S230314AbjASNHh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Jan 2023 08:07:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230292AbjASND2 (ORCPT
+        with ESMTP id S230403AbjASNHL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Jan 2023 08:03:28 -0500
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05E8561896;
-        Thu, 19 Jan 2023 05:02:26 -0800 (PST)
-Received: by mail-ot1-f49.google.com with SMTP id d6-20020a056830138600b0068585c52f86so1162736otq.4;
-        Thu, 19 Jan 2023 05:02:25 -0800 (PST)
+        Thu, 19 Jan 2023 08:07:11 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A4CF5CFFC
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 05:06:30 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id w14so2783124edi.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 05:06:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=1gPTT8pbx6iE/epEHJkHt7/bEhvcngYyFc03+y1Cxk4=;
+        b=UOedtTtuqugeKVm2m6LJeaG3jrdknha6dCHm+x9B6ll8yvcShFUn/RjhmIrVM5Rs3u
+         8iClmvOLPN/OndVQG+dVnvpmfz/5Jd4eJiumEa0vzs1DVKqNIw+v7rB1wUSCCAP8y8pR
+         K2eBjD0CLQWxdthY06rYB9nOMhqRpvAVuyiT4l1y2i8Djzpiv5mTsYWI8LGjpOydguxp
+         Lj3Qf0hgsH+i849vqtbdbWSrn0hfmDKLx4xW9wH806Bint86r74FqR8vle5J/0Ws/Qa9
+         q98xRLJicvygDHh4lu+MY5XeVSM77P4pFX557Gyrxrb8bHMjN977YMPeeWQV3itvm//f
+         e1lA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=qEzWKNVhTxhmNjpAWCuBDyNcXgW4w9tcJfOj8LQ7RrY=;
-        b=W5luZURTg4Ph7qywOByMMFhfDacOPzTNPuK/VtHmVKa+0JKIoA4pXqodZPlqG3wcSS
-         2uZKGd73yUOnmR7IG6ccOS/VO1XmzPQzF+8HBEzQj8uMaSI8OeD4ZQ2T9bFEGgZRU2zF
-         j7lHmPrBiHUbq2YvuXE3SjT04wVQ5zXWnM4jTiuzALkOI18S/aPkOCUbKUsn31WBGL6U
-         kHeDPATjthuWd6gyYEXZNDyTCLvEOJoiGayUNwnzwSGVMgDZOLMzoKWeYIgAEP4vJicj
-         pLYbsosqFdD9QH44YRkC5AeUYtupAIJ5dMcsYO9USMcztkOR4S3ww25ACT0HIFO++GWP
-         1hTQ==
-X-Gm-Message-State: AFqh2kqwsTs0ZT0qZ316av3AVJ1NMuma57qnCqqGfPfboW9W7s7+Sg6f
-        mT2FfvAf67KYseOqM0juhA==
-X-Google-Smtp-Source: AMrXdXuS0RwLdG32aXLQuMazq1vnSK/yWK2wwrLeyNfrY1C2VusapTqW5U+LsHMCNe53FfekOB/c4w==
-X-Received: by 2002:a9d:7113:0:b0:678:2dcc:9277 with SMTP id n19-20020a9d7113000000b006782dcc9277mr5441279otj.31.1674133343855;
-        Thu, 19 Jan 2023 05:02:23 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id c4-20020a9d6c84000000b00684eaf9018csm7174270otr.34.2023.01.19.05.02.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Jan 2023 05:02:23 -0800 (PST)
-Received: (nullmailer pid 1589489 invoked by uid 1000);
-        Thu, 19 Jan 2023 13:02:22 -0000
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=1gPTT8pbx6iE/epEHJkHt7/bEhvcngYyFc03+y1Cxk4=;
+        b=2TG/D+ovW5z0d1xOlCAwkkSkwW60B2X9S9DUm1o3W1M2WRTuLHOxXVK13xLAkk55Zs
+         3CRAVq5iSQg1X+GdK9S/qkZ5poh337Q0VheOJ8RETwTkhV+pj56fSu9AUnPg5wuLnVJB
+         0CErEFU63II7GdyyxWZD4dgUY1czExik+XlxvVhFwCXUFzcWsgLLGbN+Hg3vrLGWu5iC
+         /auyRo2p0T6oMOTBeAZVfCLvHFhGHq+c5WspGoXx2Wj6/EmP6ZSJnpYlEqlNdfU3dGHc
+         mBOV6IcV8YFCSKlZ9KPIgYNjwo8vKMtZRBOoXkBa5vWsS9J8EwVWjA42yz0KkWubnqh1
+         Adhw==
+X-Gm-Message-State: AFqh2kp2gRStN/h81PiWjXayc3fHGFTG/mMk2N1sLGAfZ5QRdIPnnUh5
+        JEsWLN+KjCwERbLrYyuMagqb+g==
+X-Google-Smtp-Source: AMrXdXsRXs2vwIf3bke14eSVJkGfxbho6m8PLUIx1vhOYyZ+uCnw2rzb6JZEA+BgQ38jvhlnv2XVEQ==
+X-Received: by 2002:a05:6402:159:b0:49d:a87f:ba7b with SMTP id s25-20020a056402015900b0049da87fba7bmr10572271edu.39.1674133589027;
+        Thu, 19 Jan 2023 05:06:29 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id d3-20020aa7d5c3000000b004835bd8dfe5sm15787673eds.35.2023.01.19.05.06.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 Jan 2023 05:06:28 -0800 (PST)
+Message-ID: <0497ba61-7646-91bb-291c-0b437c18434f@linaro.org>
+Date:   Thu, 19 Jan 2023 15:06:27 +0200
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     srinivas.kandagatla@linaro.org, quic_plai@quicinc.com,
-        devicetree@vger.kernel.org, perex@perex.cz, bgoswami@quicinc.com,
-        tiwai@suse.com, quic_rohkumar@quicinc.com, agross@kernel.org,
-        robh+dt@kernel.org, alsa-devel@alsa-project.org,
-        swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
-        andersson@kernel.org, broonie@kernel.org,
-        linux-kernel@vger.kernel.org, judyhsiao@chromium.org,
-        lgirdwood@gmail.com
-In-Reply-To: <1674108674-8392-2-git-send-email-quic_srivasam@quicinc.com>
-References: <1674108674-8392-1-git-send-email-quic_srivasam@quicinc.com>
- <1674108674-8392-2-git-send-email-quic_srivasam@quicinc.com>
-Message-Id: <167413318302.1585278.7105957388478984370.robh@kernel.org>
-Subject: Re: [PATCH 1/3] ASoC: qcom: dt-bindings: lpass-va-macro: Update clock name
-Date:   Thu, 19 Jan 2023 07:02:22 -0600
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH] arm64: dts: qcom: sm6115: Add interconnect nodes
+Content-Language: en-GB
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-arm-msm@vger.kernel.org
+Cc:     devicetree@vger.kernel.org, agross@kernel.org,
+        bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski@linaro.org,
+        konrad.dybcio@linaro.org, a39.skl@gmail.com, andersson@kernel.org
+References: <20221130104519.2266918-1-bhupesh.sharma@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20221130104519.2266918-1-bhupesh.sharma@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Thu, 19 Jan 2023 11:41:12 +0530, Srinivasa Rao Mandadapu wrote:
-> Upadte clock name from core to macro in lpass-va-macro node
-> to make it compatible with existing driver and device tree node.
+On 30/11/2022 12:45, Bhupesh Sharma wrote:
+> Add the interconnect nodes inside SM6115 dtsi.
 > 
-> Fixes: 67d99b23c881 ("ASoC: qcom: dt-bindings: add bindings for lpass va macro codec")
-> 
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Tested-by: Ratna Deepthi Kudaravalli <quic_rkudarv@quicinc.com>
+> Cc: Bjorn Andersson <andersson@kernel.org>
+> Cc: Rob Herring <robh+dt@kernel.org>
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 > ---
->  Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> - Based on linux-next/master
+> - Depends on the SM6115 dt-binding and driver patchset, which can be
+>    seen here: https://lore.kernel.org/linux-arm-msm/20221130103841.2266464-1-bhupesh.sharma@linaro.org/
 > 
+>   arch/arm64/boot/dts/qcom/sm6115.dtsi | 51 ++++++++++++++++++++++++++++
+>   1 file changed, 51 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> index e4a2440ce544..dad5ab3edf0e 100644
+> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> @@ -485,6 +485,57 @@ usb_1_hsphy: phy@1613000 {
+>   			status = "disabled";
+>   		};
+>   
+> +		snoc: interconnect@1880000 {
+> +			compatible = "qcom,sm6115-snoc";
+> +			reg = <0x01880000 0x60200>;
+> +			#interconnect-cells = <1>;
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+Should we use 2 here as we do now for most of interconnect drivers?
 
-yamllint warnings/errors:
+> +			clock-names = "bus", "bus_a";
+> +			clocks = <&rpmcc RPM_SMD_SNOC_CLK>,
+> +				 <&rpmcc RPM_SMD_SNOC_A_CLK>;
 
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.example.dtb: codec@3370000: clock-names: 'oneOf' conditional failed, one must be fixed:
-	['mclk', 'core', 'dcodec'] is too long
-	'macro' was expected
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.example.dtb: codec@3370000: Unevaluated properties are not allowed ('clock-names' was unexpected)
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/1674108674-8392-2-git-send-email-quic_srivasam@quicinc.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+-- 
+With best wishes
+Dmitry
 
