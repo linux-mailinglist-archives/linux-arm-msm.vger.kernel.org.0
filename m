@@ -2,89 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C0A26735B8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 11:38:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3445F6735D1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 11:42:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229796AbjASKic (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Jan 2023 05:38:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33888 "EHLO
+        id S229615AbjASKmm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Jan 2023 05:42:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229899AbjASKiB (ORCPT
+        with ESMTP id S230378AbjASKmF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Jan 2023 05:38:01 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCB8F521E0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 02:37:58 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id t5so1422873wrq.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 02:37:58 -0800 (PST)
+        Thu, 19 Jan 2023 05:42:05 -0500
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06A165EF81
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 02:41:57 -0800 (PST)
+Received: by mail-ej1-x633.google.com with SMTP id hw16so4470046ejc.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 02:41:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=3bKdKCwIEVj9M4OKQvCJxtHfc8akbBWqKFuI0Hwm5VQ=;
-        b=abiQ+0Ax0T69l5OzX1lCBFU9o1uoA15jyF5nqmf1NSEd8y2hpLY95Nyc5l4gU+hBka
-         4U8smJsKBRjvEB9p3VlBHMSSZGyoaLP7lNk1tjL1rlBgPfz5A+sHhHmR8vxzhtGK66tf
-         7G3qV60vd3adXxN6B9ADkhWwTif/4glN32jgcQHBmfXfnDHEx5eIhrHrEr8crqbheB3W
-         6757bzv7i0qlKmoVthZUQPKny12E/fyqyPs5Y3rI3kkChTGN2yX0xNEqIfo2WLw3gKHB
-         6zphkY5X8RPWFgLaw6FWsV2QPxMCDvcQbVFuhZZjc5VVsEUAcJ1eMWjE9X1F4h55fHWT
-         TL2Q==
+        bh=uS3a51Hf3DeDt61DkEEova6jWQ+51q/C5Vt9AtIW4EY=;
+        b=a610o/VsGt0ptWMrSEL2hb8IAPtrLG6IiIGvUpRybeQv9TGs2j85nG/DIQAbNi7WP3
+         sSkKuQU/+WGfQEalbavTnvcl/h2hkZ9Cxo7/m4qx1al4e0n/XZbdwzMHTzaAzDfZQKuo
+         lyfxsC/Mz74rur7iPU7SptxxP/muoAvfj+HfRm0wPxD3Mq1+eAnhPN68G4szYnAf8Z8M
+         X0mk/um2i58ScTWClViIAcB77BMJwMEUp3OaM3ztgKznkaHabIpC6nMe5RXSKgfCTnQa
+         yrleFtKy3+RJURyzn64eJDRao50rQnCssDMjPW8AKCIw83UhXeGpxm2muW2sFtmTDbN/
+         f1LQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3bKdKCwIEVj9M4OKQvCJxtHfc8akbBWqKFuI0Hwm5VQ=;
-        b=hIGa7BYtO7ebLPBHPt5NYKUgAP1r0UbU7ykp1ZPguAVSvyWoAv1Xz6aCw1sJzYp0Kj
-         FwoRearFfdS4vOUuS9Gtmj0b+JU2Udk8UX4EOoDcIEkrstoBPMrEyLAMdog0s9uwDX22
-         S0Zlfw+q0B164m2CG2ZArv5XuQhIvnRqDC6RGypWmQb/HUqKR/brJdbNLsQ96mWp3McQ
-         J7jCnRWULzzI6smCAiVbu7u9DGydXGko6/52TXvc+Nv+mdRtenxSD+8aWR1QQD+CrXWY
-         cAuPMhY9sTZTaRtM/hoedCo4P26khRxbNd9FqrjI89odg7IoEKZyIgezBfTyxN+f+QmI
-         1BdA==
-X-Gm-Message-State: AFqh2krbWsFpyDLBWxnofvNMAnmqZ9OQNonaXbGNnjU4Mb10XbLXo+aI
-        LFQ9kk2OLbg9AEbIUNcuyWX/bQ==
-X-Google-Smtp-Source: AMrXdXuhLwFKsOieEPkv4WnlwiLr1ZX0SsmCVM5hkKGfIQ6kvwNtlt7dCftyMakfb35HvImagi0P6w==
-X-Received: by 2002:adf:ff8d:0:b0:2be:3538:76e with SMTP id j13-20020adfff8d000000b002be3538076emr4276307wrr.66.1674124677351;
-        Thu, 19 Jan 2023 02:37:57 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id x2-20020a05600c21c200b003d9b89a39b2sm4394636wmj.10.2023.01.19.02.37.53
+        bh=uS3a51Hf3DeDt61DkEEova6jWQ+51q/C5Vt9AtIW4EY=;
+        b=6HgOKgS+2Fb6TVQOdCkGf1965tpPFyreWgD7hD0cQ6JZ2iphbzyVjqu0MPWZw+x9qe
+         rD3QFHa/57hnxfndWsSgiml8qaIymxnrYa2tzLF9Of0ZOzy89TXwjucaIFeKdm78k8Ba
+         cPv2CYv+jb+EdkhX0RQlsIBlxDB5H+O3sqR0mLwzm4UO/Y26CAYUjHDbdbxmaR7RWMk2
+         eu9r1vDSdqu0FOxgiGnaN3HLqVC2DpLIHtkEe1hjr6FtHif97L9i7RqtfnXZGlYqFm67
+         UrTpH0dIRy3hIhV9J+USONwgGAvsMRLLcGbLYH10TsT9aTXibX89HhV0LYZbfUrvfAHo
+         488w==
+X-Gm-Message-State: AFqh2kotWs8QRRy5/05mKXPO4YL5it0Airm+wpmJyffCxICJYgGUNXFB
+        rHmuU9Ke5YW69AsOXhx0E/7gK+gr6c6Tihgz
+X-Google-Smtp-Source: AMrXdXulFNkg2BZdef9haxKrfnXc0E4+Br72L9bPdpuMtceDIFili6YQO7W/wr8o7/OWWyw6Yy4jHA==
+X-Received: by 2002:a17:906:15d2:b0:84c:cf42:e16 with SMTP id l18-20020a17090615d200b0084ccf420e16mr12961395ejd.1.1674124916149;
+        Thu, 19 Jan 2023 02:41:56 -0800 (PST)
+Received: from [192.168.1.101] (abxh150.neoplus.adsl.tpnet.pl. [83.9.1.150])
+        by smtp.gmail.com with ESMTPSA id hq15-20020a1709073f0f00b0084c7029b24dsm16222588ejc.151.2023.01.19.02.41.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 Jan 2023 02:37:56 -0800 (PST)
-Message-ID: <67170ce0-8622-8b35-e73a-7d873b7a3b8b@linaro.org>
-Date:   Thu, 19 Jan 2023 11:37:52 +0100
+        Thu, 19 Jan 2023 02:41:55 -0800 (PST)
+Message-ID: <83385cac-9b66-8236-6039-65332ea9edb3@linaro.org>
+Date:   Thu, 19 Jan 2023 11:41:52 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH v6 01/10] drm/hdcp: Add drm_hdcp_atomic_check()
+ Thunderbird/102.6.1
+Subject: Re: [PATCH 2/2] firmware: qcom_scm: Fully implement
+ qcom_scm_lmh_dcvsh()
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        krzysztof.kozlowski@linaro.org, marijn.suijten@somainline.org,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
+References: <20230113031401.2336157-1-konrad.dybcio@linaro.org>
+ <20230113031401.2336157-3-konrad.dybcio@linaro.org>
+ <20230119030422.askkliovlyonurvz@builder.lan>
 Content-Language: en-US
-To:     Mark Yacoub <markyacoub@chromium.org>, quic_khsieh@quicinc.com,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, intel-gfx@lists.freedesktop.org
-Cc:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
-        dmitry.baryshkov@linaro.org, sean@poorly.run, airlied@gmail.com,
-        daniel@ffwll.ch, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@somainline.org,
-        jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com,
-        rodrigo.vivi@intel.com, tvrtko.ursulin@linux.intel.com,
-        tzimmermann@suse.de, ville.syrjala@linux.intel.com,
-        stanislav.lisovskiy@intel.com, matthew.d.roper@intel.com,
-        imre.deak@intel.com, lucas.demarchi@intel.com,
-        manasi.d.navare@intel.com, swati2.sharma@intel.com,
-        bhanuprakash.modem@intel.com, javierm@redhat.com,
-        jose.souza@intel.com, lyude@redhat.com, hbh25y@gmail.com,
-        arun.r.murthy@intel.com, ashutosh.dixit@intel.com,
-        ankit.k.nautiyal@intel.com, maxime@cerno.tech, swboyd@chromium.org,
-        christophe.jaillet@wanadoo.fr, quic_sbillaka@quicinc.com,
-        johan+linaro@kernel.org, dianders@chromium.org, marex@denx.de,
-        quic_jesszhan@quicinc.com, bjorn.andersson@linaro.org,
-        abhinavk@codeaurora.org, seanpaul@chromium.org,
-        Jani Nikula <jani.nikula@intel.com>
-References: <20230118193015.911074-1-markyacoub@google.com>
- <20230118193015.911074-2-markyacoub@google.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230118193015.911074-2-markyacoub@google.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230119030422.askkliovlyonurvz@builder.lan>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -96,32 +87,190 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/01/2023 20:30, Mark Yacoub wrote:
-> From: Sean Paul <seanpaul@chromium.org>
+
+
+On 19.01.2023 04:04, Bjorn Andersson wrote:
+> On Fri, Jan 13, 2023 at 04:14:01AM +0100, Konrad Dybcio wrote:
+>> The qcom_scm_lmh_dcvsh call can actually pass two values to the
+>> secure world. The second value is used for example with the
+>> LMH_FREQ_CAP function, which limits the maximum achievable frequency
+>> directly from LMh. Add the missing arguments, handle them and update
+>> the current usages of this function.
+>>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+>>  drivers/firmware/qcom_scm.c | 13 ++++++++-----
+>>  drivers/thermal/qcom/lmh.c  | 28 ++++++++++++++--------------
+>>  include/linux/qcom_scm.h    |  5 +++--
+>>  3 files changed, 25 insertions(+), 21 deletions(-)
+>>
+>> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+>> index cdbfe54c8146..58a19a47e442 100644
+>> --- a/drivers/firmware/qcom_scm.c
+>> +++ b/drivers/firmware/qcom_scm.c
+>> @@ -1252,12 +1252,13 @@ int qcom_scm_lmh_profile_change(u32 profile_id)
+>>  }
+>>  EXPORT_SYMBOL(qcom_scm_lmh_profile_change);
+>>  
+>> -int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
+>> -		       u64 limit_node, u32 node_id, u64 version)
+>> +int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val0,
+>> +		       u32 payload_val1, u64 limit_node, u32 node_id,
+>> +		       u64 version, bool has_val1)
 > 
-> This patch moves the hdcp atomic check from i915 to drm_hdcp so other
-> drivers can use it. No functional changes, just cleaned up some of the
-> code when moving it over.
+> Rather than always passing a dummy payload_val1 and then having has_val1
+> to indicate if it should be considered or not... how about moving the
+> payload last in the call, as a va_list with a "count" before that?
+Sounds neat, but..
+
 > 
-> Acked-by: Jani Nikula <jani.nikula@intel.com>
-> Acked-by: Jani Nikula <jani.nikula@intel.com>
-> Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-> Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
-> Signed-off-by: Sean Paul <seanpaul@chromium.org>
-> Signed-off-by: Mark Yacoub <markyacoub@chromium.org>
-> Link: https://patchwork.freedesktop.org/patch/msgid/20210913175747.47456-2-sean@poorly.run #v1
-> Link: https://patchwork.freedesktop.org/patch/msgid/20210915203834.1439-2-sean@poorly.run #v2
-> Link: https://patchwork.freedesktop.org/patch/msgid/20211001151145.55916-2-sean@poorly.run #v3
-> Link: https://patchwork.freedesktop.org/patch/msgid/20211105030434.2828845-2-sean@poorly.run #v4
-> Link: https://patchwork.freedesktop.org/patch/msgid/20220411204741.1074308-2-sean@poorly.run #v5
+> I.e:
+> 
+> int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u64 limit_node, u32 node_id,
+> 		       u64 version, unsigned int payload_count, ...)
+> 
+>>  {
+>>  	dma_addr_t payload_phys;
+>>  	u32 *payload_buf;
+>> -	int ret, payload_size = 5 * sizeof(u32);
+>> +	int ret, payload_size = (5 + has_val1) * sizeof(u32);
+> 
+> allocate 4 + payload_count
+> 
+>>  
+>>  	struct qcom_scm_desc desc = {
+>>  		.svc = QCOM_SCM_SVC_LMH,
+>> @@ -1278,8 +1279,10 @@ int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
+>>  	payload_buf[0] = payload_fn;
+>>  	payload_buf[1] = 0;
+>>  	payload_buf[2] = payload_reg;
+>> -	payload_buf[3] = 1;
+>> -	payload_buf[4] = payload_val;
+>> +	payload_buf[3] = has_val1 ? 2 : 1;
+>> +	payload_buf[4] = payload_val0;
+>> +	if (has_val1)
+>> +		payload_buf[5] = payload_val1;
+> 
+> Something like:
+> 
+> payload_buf[3] = payload_count;
+> va_start(ap, payload_count);
+> for (i = 0; i < payload_count; i++)
+> 	payload_buf[4 + i] = va_arg(ap, uint32_t);
+> va_end(ap);
+..can the call accept more arguments? And will they be
+interpreted in any way? Otherwise I may add also add
+WARN_ON() or something like this to prevent user error.
 
-It seems all your previous versions were sent not to correct people and
-lists. Therefore we see it for the first time even though it is v6! It's
-not the first such weird CC list in chromium, so maybe your
-organisational process could be improved? Not only for you but for
-colleagues as well, so you all start using get_maintainers.pl on newest
-kernel (not something ancient)?
+> 
+> 
+> 
+> That said, I don't see a single "true" below. Perhaps I'm missing it? I
+> would expect some code in the same series use the newly introduced
+> logic.
+Yeah there's no "true"s, this patch only refactored the
+code in preparation for 8998/660, but adding them as-is
+makes little sense before LMh_lite is also supported
+(AFAIUU this LMh_normal part is just an interface for OSM
+and the actual limits programming is either done on an
+internal-consensus-between-all-3-blocks basis OR just by
+LMh_lite. I can delay resending this series until the
+changes are actually required if you prefer.
 
-Best regards,
-Krzysztof
+On newer SoCs LMh wakes up as part of OSM_secure/EPSS
+programming and needs little to no configuration
+externally (as you can see in this driver) and there's
+no external _lite block.
 
+Konrad
+> 
+> Thanks,
+> Bjorn
+> 
+>>  
+>>  	desc.args[0] = payload_phys;
+>>  
+>> diff --git a/drivers/thermal/qcom/lmh.c b/drivers/thermal/qcom/lmh.c
+>> index 5e8ff196c9a6..d2b5ea8322eb 100644
+>> --- a/drivers/thermal/qcom/lmh.c
+>> +++ b/drivers/thermal/qcom/lmh.c
+>> @@ -147,23 +147,23 @@ static int lmh_probe(struct platform_device *pdev)
+>>  		return -EINVAL;
+>>  
+>>  	if (flags & LMH_ENABLE_ALGOS) {
+>> -		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_CRNT, LMH_ALGO_MODE_ENABLE, 1,
+>> -					 LMH_NODE_DCVS, node_id, 0);
+>> +		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_CRNT, LMH_ALGO_MODE_ENABLE, 1, 0,
+>> +					 LMH_NODE_DCVS, node_id, 0, false);
+>>  		if (ret)
+>>  			dev_err(dev, "Error %d enabling current subfunction\n", ret);
+>>  
+>> -		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_REL, LMH_ALGO_MODE_ENABLE, 1,
+>> -					 LMH_NODE_DCVS, node_id, 0);
+>> +		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_REL, LMH_ALGO_MODE_ENABLE, 1, 0,
+>> +					 LMH_NODE_DCVS, node_id, 0, false);
+>>  		if (ret)
+>>  			dev_err(dev, "Error %d enabling reliability subfunction\n", ret);
+>>  
+>> -		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_BCL, LMH_ALGO_MODE_ENABLE, 1,
+>> -					 LMH_NODE_DCVS, node_id, 0);
+>> +		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_BCL, LMH_ALGO_MODE_ENABLE, 1, 0,
+>> +					 LMH_NODE_DCVS, node_id, 0, false);
+>>  		if (ret)
+>>  			dev_err(dev, "Error %d enabling BCL subfunction\n", ret);
+>>  
+>> -		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_ALGO_MODE_ENABLE, 1,
+>> -					 LMH_NODE_DCVS, node_id, 0);
+>> +		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_ALGO_MODE_ENABLE, 1, 0,
+>> +					 LMH_NODE_DCVS, node_id, 0, false);
+>>  		if (ret) {
+>>  			dev_err(dev, "Error %d enabling thermal subfunction\n", ret);
+>>  			return ret;
+>> @@ -177,22 +177,22 @@ static int lmh_probe(struct platform_device *pdev)
+>>  	}
+>>  
+>>  	/* Set default thermal trips */
+>> -	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_TH_ARM_THRESHOLD, temp_arm,
+>> -				 LMH_NODE_DCVS, node_id, 0);
+>> +	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_TH_ARM_THRESHOLD, temp_arm, 0,
+>> +				 LMH_NODE_DCVS, node_id, 0, false);
+>>  	if (ret) {
+>>  		dev_err(dev, "Error setting thermal ARM threshold%d\n", ret);
+>>  		return ret;
+>>  	}
+>>  
+>> -	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_TH_HI_THRESHOLD, temp_high,
+>> -				 LMH_NODE_DCVS, node_id, 0);
+>> +	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_TH_HI_THRESHOLD, temp_high, 0,
+>> +				 LMH_NODE_DCVS, node_id, 0, false);
+>>  	if (ret) {
+>>  		dev_err(dev, "Error setting thermal HI threshold%d\n", ret);
+>>  		return ret;
+>>  	}
+>>  
+>> -	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_TH_LOW_THRESHOLD, temp_low,
+>> -				 LMH_NODE_DCVS, node_id, 0);
+>> +	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_TH_LOW_THRESHOLD, temp_low, 0,
+>> +				 LMH_NODE_DCVS, node_id, 0, false);
+>>  	if (ret) {
+>>  		dev_err(dev, "Error setting thermal ARM threshold%d\n", ret);
+>>  		return ret;
+>> diff --git a/include/linux/qcom_scm.h b/include/linux/qcom_scm.h
+>> index 1e449a5d7f5c..9fd798d17fdd 100644
+>> --- a/include/linux/qcom_scm.h
+>> +++ b/include/linux/qcom_scm.h
+>> @@ -117,8 +117,9 @@ extern int qcom_scm_hdcp_req(struct qcom_scm_hdcp_req *req, u32 req_cnt,
+>>  extern int qcom_scm_iommu_set_pt_format(u32 sec_id, u32 ctx_num, u32 pt_fmt);
+>>  extern int qcom_scm_qsmmu500_wait_safe_toggle(bool en);
+>>  
+>> -extern int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
+>> -			      u64 limit_node, u32 node_id, u64 version);
+>> +extern int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val0,
+>> +			      u32 payload_val1, u64 limit_node, u32 node_id,
+>> +			      u64 version, bool has_val1);
+>>  extern int qcom_scm_lmh_profile_change(u32 profile_id);
+>>  extern bool qcom_scm_lmh_dcvsh_available(void);
+>>  
+>> -- 
+>> 2.39.0
+>>
