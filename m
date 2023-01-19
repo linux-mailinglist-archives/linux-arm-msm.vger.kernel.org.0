@@ -2,174 +2,276 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D32FB673FC1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 18:19:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 03FEB674098
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 19:12:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229984AbjASRTd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Jan 2023 12:19:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60580 "EHLO
+        id S229685AbjASSMj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Jan 2023 13:12:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229924AbjASRTc (ORCPT
+        with ESMTP id S230108AbjASSMh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Jan 2023 12:19:32 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0306783DB;
-        Thu, 19 Jan 2023 09:19:31 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id n7so2552047wrx.5;
-        Thu, 19 Jan 2023 09:19:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fJ0JG+1+vzDx+1woc5zISYYnWWHU/+tyzkwsQk+BhPQ=;
-        b=HiutLUBgPNKoinxepplGwduI4t+6YJl/44EjhVyhwpIefpMjkY/j8ZBxN0L/qgCKM1
-         +ZQItAVsnNU27zgEcSz38sGnz3HBKHl5SSGgEJZNrzvOvBaHNO4YZ46BoYRs97u+qqET
-         AXUrXtXaDbPLj6Z4yPBh6TyMdfk15W7KsJxFTu/StnAGeSatFGSw7yG6ULv8DvRVqhOh
-         dlEV1pF/2wx2c90OAClSlkYyWqIvAdnm4LEMIYLHApBkS3fUTthqSWrqUrktb7yh5Jl6
-         u548RE7aoOxW/JvzvLr98mkcgWDEDH951UpcS7jlPr3pVTMLaq7wuPVNfmTJCbX1R5WP
-         Kz5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fJ0JG+1+vzDx+1woc5zISYYnWWHU/+tyzkwsQk+BhPQ=;
-        b=MQiRTGJL75sIka8rFhxD3EsxIfvKWmaAWV9sj+6DTFUWuuoQo8fxwcYq3oPWTEXVI9
-         W6oqOVKArmRhRFYXYpDLdxYxm3hyBKHK8FStj6ADpcbPlFy+LAbZf8QMJ/nFF2/vv1sd
-         a6yT1oSiHxzQ+u31yi/AQ2n5EuI7L1tWxGR+FjiPWHSsf5SgODns8IJg13CjVPoY2dhK
-         dQc3/kLwiEmTLGHHhP8DxRAvPFKumlWUafH6mfPXvNW1Dq74fVdLEJ4EZNlgj/X/+tw9
-         jk+8FnUR08AvXn9kR7bIEWOLkbEorqVEK1l4ztaWBZ5XAqDt128QFbZJ4UzG2aIBqNyJ
-         pTeQ==
-X-Gm-Message-State: AFqh2kqQl6wqz8De6EgxIgvl+szzEMB7grMwZShcPOhLCnXaX59zgw5G
-        jwGiXhQJUvRtiW2cs7Vs6yp6vWpDFWEajA==
-X-Google-Smtp-Source: AMrXdXtnhhV23wxbkvJ5TPod11uXEnITyMWelsTKmu03NNRfq7qQeiDNNiw0jOxkg9PrVROMM2wAAg==
-X-Received: by 2002:a5d:508f:0:b0:2bd:cb39:2ca3 with SMTP id a15-20020a5d508f000000b002bdcb392ca3mr6141237wrt.59.1674148769369;
-        Thu, 19 Jan 2023 09:19:29 -0800 (PST)
-Received: from [10.22.0.8] ([194.126.177.40])
-        by smtp.gmail.com with ESMTPSA id q12-20020adff50c000000b002be25db0b7bsm6024396wro.10.2023.01.19.09.19.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 Jan 2023 09:19:28 -0800 (PST)
-Message-ID: <f68a5ca0-3c57-2655-59ec-1bcae8050153@gmail.com>
-Date:   Thu, 19 Jan 2023 18:19:22 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH 3/4] firmware: Add support for Qualcomm UEFI Secure
- Application
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Ard Biesheuvel <ardb@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Thu, 19 Jan 2023 13:12:37 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E137F9014;
+        Thu, 19 Jan 2023 10:12:35 -0800 (PST)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30JHwKpD014280;
+        Thu, 19 Jan 2023 18:12:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=0t2cAvZhP3n5DRBDOYFkpTsSxhPTrz9mt2vhX4yrNnk=;
+ b=Apuur0BlUxrFtAbJqmBUC2zxULdrbVdhD0QihvWBprkyLve9rePPCNWL6qyvkmYNhyZ7
+ 9NI55chMnODc6W1xmtRKMCicZuhLagIlTyhFzK64jk1NDDbcrXzYqSlurRAzJwl+MCIt
+ ctqdLxmHqISLE/Dt/wZBVlz8xyzaxKZ/Ap53OaXDKrGBOLeLLvXg2+mJAFDLrUQGlQoZ
+ NzjLpZtd9RsOvaDFSS/U8VVcq/tlphC5XJZ5xCZzyByl8Ebg18EO+OTQ1pBb1dgndtW7
+ T9wlVzBl5xUBBbsMwWrZnU0klrsvLJSOGN3Xc7BYpgTw+vf5pzWXjiQj2D/UaIuuthmD ng== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n6vg026e7-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 19 Jan 2023 18:12:23 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30JICNkF002387
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 19 Jan 2023 18:12:23 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Thu, 19 Jan 2023 10:12:22 -0800
+Date:   Thu, 19 Jan 2023 10:12:21 -0800
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Cristian Marussi <cristian.marussi@arm.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, linux-efi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220723224949.1089973-1-luzmaximilian@gmail.com>
- <20220723224949.1089973-4-luzmaximilian@gmail.com>
- <Y8ZbN5LNn2fk0/xi@hovoldconsulting.com>
- <2b0fdc2d-6457-059b-bbdf-27e7de59abeb@gmail.com>
- <Y8l0PdZlXLym//xS@hovoldconsulting.com>
-Content-Language: en-US
-From:   Maximilian Luz <luzmaximilian@gmail.com>
-In-Reply-To: <Y8l0PdZlXLym//xS@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Kalyan Thota <quic_kalyant@quicinc.com>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        "Kuogee Hsieh" <quic_khsieh@quicinc.com>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v5 10/12] arm64: dts: qcom: sc8280xp: Define some of the
+ display blocks
+Message-ID: <20230119181221.GA3951310@hu-bjorande-lv.qualcomm.com>
+References: <20221207220012.16529-1-quic_bjorande@quicinc.com>
+ <20221207220012.16529-11-quic_bjorande@quicinc.com>
+ <6e7b1518-0dd5-59a6-128a-e3c3c194bf52@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <6e7b1518-0dd5-59a6-128a-e3c3c194bf52@linaro.org>
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: xAP35k12o5c-4LTeND7FjchopdsRVfqB
+X-Proofpoint-GUID: xAP35k12o5c-4LTeND7FjchopdsRVfqB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-19_11,2023-01-19_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
+ spamscore=0 malwarescore=0 lowpriorityscore=0 priorityscore=1501
+ bulkscore=0 impostorscore=0 mlxlogscore=999 suspectscore=0 adultscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301190150
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 1/19/23 17:47, Johan Hovold wrote:
-> On Wed, Jan 18, 2023 at 09:45:18PM +0100, Maximilian Luz wrote:
->> On 1/17/23 09:24, Johan Hovold wrote:
->>> On Sun, Jul 24, 2022 at 12:49:48AM +0200, Maximilian Luz wrote:
+On Wed, Jan 18, 2023 at 04:58:26AM +0200, Dmitry Baryshkov wrote:
+> On 08/12/2022 00:00, Bjorn Andersson wrote:
+> > From: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > 
+> > Define the display clock controllers, the MDSS instances, the DP phys
+> > and connect these together.
+> > 
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> > ---
+> > 
+> > Changes since v4:
+> > - None
+> > 
+> >   arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 838 +++++++++++++++++++++++++
+> >   1 file changed, 838 insertions(+)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> > index 9f3132ac2857..c2f186495506 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> > @@ -4,6 +4,7 @@
+> >    * Copyright (c) 2022, Linaro Limited
+> >    */
+> > +#include <dt-bindings/clock/qcom,dispcc-sc8280xp.h>
+> >   #include <dt-bindings/clock/qcom,gcc-sc8280xp.h>
+> >   #include <dt-bindings/clock/qcom,rpmh.h>
+> >   #include <dt-bindings/interconnect/qcom,sc8280xp.h>
+> > @@ -1698,6 +1699,44 @@ usb_1_qmpphy: phy@8903000 {
+> >   			status = "disabled";
+> >   		};
+> > +		mdss1_dp0_phy: phy@8909a00 {
+> > +			compatible = "qcom,sc8280xp-dp-phy";
+> > +			reg = <0 0x08909a00 0 0x19c>,
+> > +			      <0 0x08909200 0 0xec>,
+> > +			      <0 0x08909600 0 0xec>,
+> > +			      <0 0x08909000 0 0x1c8>;
+> > +
+> > +			clocks = <&dispcc1 DISP_CC_MDSS_DPTX0_AUX_CLK>,
+> > +				 <&dispcc1 DISP_CC_MDSS_AHB_CLK>;
+> > +			clock-names = "aux", "cfg_ahb";
+> > +
+> > +			power-domains = <&rpmhpd SC8280XP_MX>;
+> > +
+> > +			#clock-cells = <1>;
+> > +			#phy-cells = <0>;
+> > +
+> > +			status = "disabled";
+> > +		};
+> > +
+> > +		mdss1_dp1_phy: phy@890ca00 {
+> > +			compatible = "qcom,sc8280xp-dp-phy";
+> > +			reg = <0 0x0890ca00 0 0x19c>,
+> > +			      <0 0x0890c200 0 0xec>,
+> > +			      <0 0x0890c600 0 0xec>,
+> > +			      <0 0x0890c000 0 0x1c8>;
+> > +
+> > +			clocks = <&dispcc1 DISP_CC_MDSS_DPTX1_AUX_CLK>,
+> > +				 <&dispcc1 DISP_CC_MDSS_AHB_CLK>;
+> > +			clock-names = "aux", "cfg_ahb";
+> > +
+> > +			power-domains = <&rpmhpd SC8280XP_MX>;
+> > +
+> > +			#clock-cells = <1>;
+> > +			#phy-cells = <0>;
+> > +
+> > +			status = "disabled";
+> > +		};
+> > +
+> >   		system-cache-controller@9200000 {
+> >   			compatible = "qcom,sc8280xp-llcc";
+> >   			reg = <0 0x09200000 0 0x58000>, <0 0x09600000 0 0x58000>;
+> > @@ -1813,6 +1852,326 @@ usb_1_dwc3: usb@a800000 {
+> >   			};
+> >   		};
+> > +		mdss0: display-subsystem@ae00000 {
+> > +			compatible = "qcom,sc8280xp-mdss";
+> > +			reg = <0 0x0ae00000 0 0x1000>;
+> > +			reg-names = "mdss";
+> > +
+> > +			power-domains = <&dispcc0 MDSS_GDSC>;
+> > +
+> > +			clocks = <&gcc GCC_DISP_AHB_CLK>,
+> > +				 <&dispcc0 DISP_CC_MDSS_AHB_CLK>,
+> > +				 <&dispcc0 DISP_CC_MDSS_MDP_CLK>;
+> > +			clock-names = "iface",
+> > +				      "ahb",
+> > +				      "core";
+> > +
+> > +			resets = <&dispcc0 DISP_CC_MDSS_CORE_BCR>;
+> > +
+> > +			interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
+> > +			interrupt-controller;
+> > +			#interrupt-cells = <1>;
+> > +
+> > +			interconnects = <&mmss_noc MASTER_MDP0 0 &mc_virt SLAVE_EBI1 0>,
+> > +					<&mmss_noc MASTER_MDP1 0 &mc_virt SLAVE_EBI1 0>;
+> > +			interconnect-names = "mdp0-mem", "mdp1-mem";
+> > +
+> > +			iommus = <&apps_smmu 0x1000 0x402>;
+> > +
+> > +			status = "disabled";
+> > +
+> > +			#address-cells = <2>;
+> > +			#size-cells = <2>;
+> > +			ranges;
+> > +
+> > +			mdss0_mdp: display-controller@ae01000 {
+> > +				compatible = "qcom,sc8280xp-dpu";
+> > +				reg = <0 0x0ae01000 0 0x8f000>,
+> > +				      <0 0x0aeb0000 0 0x2008>;
+> > +				reg-names = "mdp", "vbif";
+> > +
+> > +				clocks = <&gcc GCC_DISP_HF_AXI_CLK>,
+> > +					 <&gcc GCC_DISP_SF_AXI_CLK>,
+> > +					 <&dispcc0 DISP_CC_MDSS_AHB_CLK>,
+> > +					 <&dispcc0 DISP_CC_MDSS_MDP_LUT_CLK>,
+> > +					 <&dispcc0 DISP_CC_MDSS_MDP_CLK>,
+> > +					 <&dispcc0 DISP_CC_MDSS_VSYNC_CLK>;
+> > +				clock-names = "bus",
+> > +					      "nrt_bus",
+> > +					      "iface",
+> > +					      "lut",
+> > +					      "core",
+> > +					      "vsync";
+> > +
+> > +				assigned-clocks = <&dispcc0 DISP_CC_MDSS_MDP_CLK>,
+> > +						  <&dispcc0 DISP_CC_MDSS_VSYNC_CLK>;
+> > +				assigned-clock-rates = <460000000>,
+> > +						       <19200000>;
+> > +
+> > +				operating-points-v2 = <&mdss0_mdp_opp_table>;
+> > +				power-domains = <&rpmhpd SC8280XP_MMCX>;
+> > +
+> > +				interrupt-parent = <&mdss0>;
+> > +				interrupts = <0>;
+> > +
+> > +				ports {
+> > +					#address-cells = <1>;
+> > +					#size-cells = <0>;
+> > +
+> > +					port@5 {
+> > +						reg = <5>;
+> > +						mdss0_intf5_out: endpoint {
+> > +							remote-endpoint = <&mdss0_dp3_in>;
+> > +						};
+> > +					};
+> > +
+> > +					port@6 {
+> > +						reg = <6>;
+> > +						mdss0_intf6_out: endpoint {
+> > +							remote-endpoint = <&mdss0_dp2_in>;
+> > +						};
+> > +					};
+> > +				};
 > 
->>>> +module_platform_driver(qcom_uefisecapp_driver);
->>>
->>> I noticed that for efivarfs to work, you're currently relying on having
->>> the firmware still claim that the variable services are supported in the
->>> RT_PROP table so that efi core registers the default ops at subsys init
->>> time (which are later overridden by this driver).
->>>
->>> Otherwise efivarfs may fail to initialise when built in:
->>>
->>> 	static __init int efivarfs_init(void)
->>> 	{
->>> 		if (!efivars_kobject())
->>> 			return -ENODEV;
->>>
->>> 		return register_filesystem(&efivarfs_type);
->>> 	}
->>>
->>> 	module_init(efivarfs_init);
->>>
->>> With recent X13s firmware the corresponding bit in the RT_PROP table has
->>> been cleared so that efivarfs would fail to initialise. Similar problem
->>> when booting with 'efi=noruntime'.
->>>
->>> One way to handle this is to register also the qcom_uefisecapp_driver at
->>> subsys init time and prevent it from being built as a module (e.g. as is
->>> done for the SCM driver). I'm using the below patch for this currently.
->>
->> So I've had another look and I'm not sure this will work reliably:
->>
->> First, you are correct in case the RT_PROP table is cleared. In that
->> case, using subsys_initcall() will move the efivar registration before
->> the efivarfs_init() call.
->>
->> However, in case EFI indicates support for variables, we will then have
->> generic_ops_register() and the uefisecapp's driver call running both in
->> subsys_initcall(). So if I'm not mistaken, this could cause the generic
->> ops to be registered after the uefisecapp ones, which we want to avoid.
+> This now fails with:
 > 
-> Good catch, I was using 'efi=noruntime' on the CRD so I did not notice
-> that race.
+> arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb: display-controller@ae01000:
+> ports: 'port@0' is a required property
+> 	From schema:
+> Documentation/devicetree/bindings/display/msm/qcom,sc8280xp-dpu.yaml
+> arch/arm64/boot/dts/qcom/sc8280xp-crd.dtb: display-controller@ae01000:
+> Unevaluated properties are not allowed ('ports' was unexpected)
+> 	From schema:
+> Documentation/devicetree/bindings/display/msm/qcom,sc8280xp-dpu.yaml
 > 
->> One solution is bumping uefisecapp to fs_initcall(). Or do you have any
->> other suggestions?
+> We do not map reg ids to INTF indices. So, unless you plan to change that,
+> could you please change these to port@0 / port@1 ?
 > 
-> I think it would be best to avoid that if we can, but that should work.
-> 
-> The problem here is that the firmware claims to support the EFI variable
-> services even when it clearly does not and the corresponding callbacks
-> just return EFI_UNSUPPORTED. As far as I understand, this is still spec
-> compliant though so we just need to handle that.
-> 
-> One way to address this could be to have efi core not register the
-> default efivars ops in this case. That would require checking that the
-> services are indeed available by making one of those calls during
-> initialisation.
-> 
-> This would however expose the fact that the Google SMI implementation
-> implicitly relies on overriding the default ops, but I think that's a
-> good thing as what we have now is racy in multiple ways.
-> 
-> Instead I think we should move the efivarfs availability check from
-> module init to mount time. That should allow the Google driver, and your
-> SCM implementation, to continue to be built as modules.
-> 
-> Any consumers (e.g. the Qualcomm RTC driver) would instead need to
-> check if efivars is available or else defer probe.
-> 
-> Alternatively, it seems all efivars implementation would need to be
-> always-built in which is not ideal for generic kernels.
-> 
-> I just posted a series here as food for thought:
-> 
-> 	https://lore.kernel.org/r/20230119164255.28091-1-johan+linaro@kernel.org
 
-Thanks, I agree that those checks are probably the better option.
+Too bad, I liked the fact that I gave these numbers any form of meaning.
+I guess we can change it to just be an arbitrary index, and keep the
+intf-information in the label...
 
 Regards,
-Max
+Bjorn
+
+> [skipped the rest]
+> 
+> -- 
+> With best wishes
+> Dmitry
+> 
