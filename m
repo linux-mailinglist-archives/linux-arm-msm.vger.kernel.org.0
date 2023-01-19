@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5445B673B36
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 15:06:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 645C1673B3C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 15:06:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231492AbjASOG0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Jan 2023 09:06:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33054 "EHLO
+        id S231567AbjASOGi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Jan 2023 09:06:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231489AbjASOFv (ORCPT
+        with ESMTP id S231432AbjASOF5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Jan 2023 09:05:51 -0500
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D06AB80146
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 06:05:22 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id l8so1615546wms.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 06:05:22 -0800 (PST)
+        Thu, 19 Jan 2023 09:05:57 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D65980899
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 06:05:24 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id m15so1614845wms.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 06:05:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rmxDEmjJAIZF6pBIcHDYYCg28aDDwgUhbVh1uCP6umk=;
-        b=ijj1Sbml5IM/ADUkkgnEpuWAxJxQdH8gs5DcECvy0wOc6ZyyHF9E1qt+kClZERSR1I
-         1tFs5yeziEVIG0YXwpVxRZwhjctqmXUXNSZzRrHvliOdrfFVex5wq6tIPi+1FhaLCmY2
-         pQNTojW31NEbzA2SEaXoJvWFsP8apB6lF4dYxMkMNY2L4dMTyfvJBmkY8I1BdJtjUJe9
-         gbMV81bvemhMsjTqBEOQJUo6Ta13+88ubzvbeFhsykw4/wrERB+JldyeigHqRavbS8e+
-         8ZdrkvYk83H+/BYl0I5sRb+xjYUE5wT+n92/EigxuZ0vhmlcvDLI3BT/dI6GtPa4FBgl
-         REpQ==
+        bh=pnjm/PMfCWBhtrU2iGU0gG9+KDqoUzC+C9XvnUy9xOc=;
+        b=M0O7PQaCGbV0hMlBcsh03sRfPVTNskwhjem187W4uuej4J5RtyB+jYc8c2OnJJfFmC
+         oZe/BTbbPyI2bYXggtFLLdK3G4NQw5KrE9rLIC07z4v/Tn5Ke1HTn1rk+aZtGG9MdHar
+         SfVnXT6hXblTh9g5OhkWdQ/tVIbMGaHSnO7iLt4pnMVcEm/X8SuXJZO6Yrr5k+ocFmaw
+         nXKB4Iw89bYgdOXW/idAPWdqGyXDtHSkWo3ME6qzizd9Hs8UqAUlATNrJaaTyvLkxHTY
+         wBK7s6Dbtx4HjyzfBMu8SVesBOdIsPWd8nl445KGqlaflELTVG4Lw/4ZUc3UTI4SPYGq
+         slEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=rmxDEmjJAIZF6pBIcHDYYCg28aDDwgUhbVh1uCP6umk=;
-        b=rxXA+1KtPxyPLeAsXUQ+kIDT5dREQj/EvfJ8oyW0PQlu/Dgh0Mvo2qtxLlHd5pY42v
-         HByaXuBBgpYaNFtApAk6e58JQBY2pSVfGF/CfUOfhCGbrOJNr4hyj7QrTbaU4yf/vL3F
-         MWpnNcV4DYnvesqBCtsrQCrwklmkKUncag1czekcfmCGcxmNMgUaD9Eed6IuMfFmorNr
-         cZt9eSM8Otq4BPtPuJ/6E0W+K5KBZuztlh/wX+hm6f3gvomtLvFo2J5Xh18oTZ0Qq8Oo
-         l9LNnrpXvE+Z7E+HZjKIDTaUbD2dN/qqZ56cTTo2690bhJjU+Yxki2O5QOrcgRa5GGh4
-         1STA==
-X-Gm-Message-State: AFqh2kpdsMoLEzbo1DZcxFsZPaAoVo/SW18OhsvqkuHegC9fVCKRiJwB
-        p0TociWU9dEb2rX6EFIHnBvtIQ==
-X-Google-Smtp-Source: AMrXdXum2sSZR7Oz5BmWxE2VnxankJvf+hVdqN0OqZLhSIT79NVjMSMJDLSgmQVZCNL85yfovCj/Wg==
-X-Received: by 2002:a05:600c:4d91:b0:3da:fb96:53d with SMTP id v17-20020a05600c4d9100b003dafb96053dmr10097926wmp.4.1674137121358;
-        Thu, 19 Jan 2023 06:05:21 -0800 (PST)
+        bh=pnjm/PMfCWBhtrU2iGU0gG9+KDqoUzC+C9XvnUy9xOc=;
+        b=EuS1hYAYNObC5wEBdJximW6zUBCgIbRHHMOYRksyaXrVmIVlWVJsUx9vWgWq9pZlBF
+         WXkuiuvwp/RyaLQcG0srviFdNz+/6fPoOFDuZcSXLOAe+S/R/bleJXeXOBrRREgo7xrF
+         BM2JKPwryTDSNWG157Bd+AB2FZwE8B9CaW7vGVwHR0QcG0bl/sWhVKKwrTTZrAaEo54T
+         J/JIEa5zjWswyhkawHdGUO3hd87/1HKtAkle43+WCnSxiswLKju6EXiFqOO1HGqeGMjP
+         seVvc6acdhzinaqsa1FU8VVSQkeThbjHHOiZ+dBNq+odxgbHRpUOgIl5kDUFKCZNC3Fj
+         gqug==
+X-Gm-Message-State: AFqh2kqM/HWGngmMBQ2npV1XPr24LJgIYT8wxPh0gPD+LrDChnE2K9nF
+        oy/tdSWURUoEtDhmRYdSMFw3iw==
+X-Google-Smtp-Source: AMrXdXtphli43eFWHG1PjJ2mKVvRbspfaY8ujSfwWfzIsqOG/XGx12InmUGDoNDQm10pyYnxc0FWpQ==
+X-Received: by 2002:a05:600c:4e05:b0:3d3:5a4a:9103 with SMTP id b5-20020a05600c4e0500b003d35a4a9103mr10304805wmq.31.1674137123398;
+        Thu, 19 Jan 2023 06:05:23 -0800 (PST)
 Received: from hackbox.lan ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id m10-20020a05600c4f4a00b003d96efd09b7sm5263883wmq.19.2023.01.19.06.05.19
+        by smtp.gmail.com with ESMTPSA id m10-20020a05600c4f4a00b003d96efd09b7sm5263883wmq.19.2023.01.19.06.05.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Jan 2023 06:05:20 -0800 (PST)
+        Thu, 19 Jan 2023 06:05:22 -0800 (PST)
 From:   Abel Vesa <abel.vesa@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -66,9 +66,9 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
         linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: [PATCH v4 09/12] dt-bindings: PCI: qcom: Add SM8550 compatible
-Date:   Thu, 19 Jan 2023 16:04:50 +0200
-Message-Id: <20230119140453.3942340-10-abel.vesa@linaro.org>
+Subject: [PATCH v4 10/12] PCI: qcom: Add SM8550 PCIe support
+Date:   Thu, 19 Jan 2023 16:04:51 +0200
+Message-Id: <20230119140453.3942340-11-abel.vesa@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20230119140453.3942340-1-abel.vesa@linaro.org>
 References: <20230119140453.3942340-1-abel.vesa@linaro.org>
@@ -76,142 +76,68 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the SM8550 platform to the binding.
+Add compatible for both PCIe found on SM8550.
+Also add the cnoc_pcie_sf_axi clock needed by the SM8550.
 
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
 
 The v3 of this patchset is:
 https://lore.kernel.org/all/20230119112453.3393911-1-abel.vesa@linaro.org/
 
 Changes since v3:
- * renamed noc_aggr to noc_aggr_4, as found in the driver
+ * renamed cnoc_pcie_sf_axi to cnoc_sf_axi
 
 Changes since v2:
- * dropped the pipe from clock-names
- * removed the pcie instance number from aggre clock-names comment
- * renamed aggre clock-names to noc_aggr
- * dropped the _pcie infix from cnoc_pcie_sf_axi
- * renamed pcie_1_link_down_reset to simply link_down
- * added enable-gpios back, since pcie1 node will use it
-
+ * none
+ 
 Changes since v1:
- * Switched to single compatible for both PCIes (qcom,pcie-sm8550)
- * dropped enable-gpios property
- * dropped interconnects related properties, the power-domains
- * properties
-   and resets related properties the sm8550 specific allOf:if:then
- * dropped pipe_mux, phy_pipe and ref clocks from the sm8550 specific
-   allOf:if:then clock-names array and decreased the minItems and
-   maxItems for clocks property accordingly
- * added "minItems: 1" to interconnects, since sm8550 pcie uses just
- * one,
-   same for interconnect-names
+ * changed the subject line prefix for the patch to match the history,
+   like Bjorn Helgaas suggested.
+ * added Konrad's R-b tag
 
 
- .../devicetree/bindings/pci/qcom,pcie.yaml    | 44 +++++++++++++++++++
- 1 file changed, 44 insertions(+)
+ drivers/pci/controller/dwc/pcie-qcom.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-index a5859bb3dc28..58f926666332 100644
---- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-+++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-@@ -34,6 +34,7 @@ properties:
-       - qcom,pcie-sm8250
-       - qcom,pcie-sm8450-pcie0
-       - qcom,pcie-sm8450-pcie1
-+      - qcom,pcie-sm8550
-       - qcom,pcie-ipq6018
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index 77e5dc7b88ad..30f74bc51dbf 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -182,7 +182,7 @@ struct qcom_pcie_resources_2_3_3 {
  
-   reg:
-@@ -65,9 +66,11 @@ properties:
-   dma-coherent: true
+ /* 6 clocks typically, 7 for sm8250 */
+ struct qcom_pcie_resources_2_7_0 {
+-	struct clk_bulk_data clks[12];
++	struct clk_bulk_data clks[13];
+ 	int num_clks;
+ 	struct regulator_bulk_data supplies[2];
+ 	struct reset_control *pci_reset;
+@@ -1208,6 +1208,7 @@ static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
+ 	res->clks[idx++].id = "noc_aggr_4";
+ 	res->clks[idx++].id = "noc_aggr_south_sf";
+ 	res->clks[idx++].id = "cnoc_qx";
++	res->clks[idx++].id = "cnoc_sf_axi";
  
-   interconnects:
-+    minItems: 1
-     maxItems: 2
+ 	num_opt_clks = idx - num_clks;
+ 	res->num_clks = idx;
+@@ -1828,6 +1829,7 @@ static const struct of_device_id qcom_pcie_match[] = {
+ 	{ .compatible = "qcom,pcie-sm8250", .data = &cfg_1_9_0 },
+ 	{ .compatible = "qcom,pcie-sm8450-pcie0", .data = &cfg_1_9_0 },
+ 	{ .compatible = "qcom,pcie-sm8450-pcie1", .data = &cfg_1_9_0 },
++	{ .compatible = "qcom,pcie-sm8550", .data = &cfg_1_9_0 },
+ 	{ }
+ };
  
-   interconnect-names:
-+    minItems: 1
-     items:
-       - const: pcie-mem
-       - const: cpu-pcie
-@@ -102,6 +105,10 @@ properties:
-   power-domains:
-     maxItems: 1
- 
-+  enable-gpios:
-+    description: GPIO controlled connection to ENABLE# signal
-+    maxItems: 1
-+
-   perst-gpios:
-     description: GPIO controlled connection to PERST# signal
-     maxItems: 1
-@@ -197,6 +204,7 @@ allOf:
-               - qcom,pcie-sm8250
-               - qcom,pcie-sm8450-pcie0
-               - qcom,pcie-sm8450-pcie1
-+              - qcom,pcie-sm8550
-     then:
-       properties:
-         reg:
-@@ -611,6 +619,41 @@ allOf:
-           items:
-             - const: pci # PCIe core reset
- 
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,pcie-sm8550
-+    then:
-+      properties:
-+        clocks:
-+          minItems: 7
-+          maxItems: 8
-+        clock-names:
-+          minItems: 7
-+          items:
-+            - const: aux # Auxiliary clock
-+            - const: cfg # Configuration clock
-+            - const: bus_master # Master AXI clock
-+            - const: bus_slave # Slave AXI clock
-+            - const: slave_q2a # Slave Q2A clock
-+            - const: ddrss_sf_tbu # PCIe SF TBU clock
-+            - const: noc_aggr_4 # Aggre NoC PCIe AXI clock
-+            - const: cnoc_sf_axi # Config NoC PCIe1 AXI clock
-+        iommus:
-+          maxItems: 1
-+        iommu-map:
-+          maxItems: 2
-+        resets:
-+          minItems: 1
-+          maxItems: 2
-+        reset-names:
-+          minItems: 1
-+          items:
-+            - const: pci # PCIe core reset
-+            - const: link_down # PCIe link down reset
-+
-   - if:
-       properties:
-         compatible:
-@@ -694,6 +737,7 @@ allOf:
-               - qcom,pcie-sm8250
-               - qcom,pcie-sm8450-pcie0
-               - qcom,pcie-sm8450-pcie1
-+              - qcom,pcie-sm8550
-     then:
-       oneOf:
-         - properties:
 -- 
 2.34.1
 
