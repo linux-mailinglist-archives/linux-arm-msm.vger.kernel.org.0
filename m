@@ -2,58 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 34783674C71
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 06:34:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EA116674C2E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 06:26:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231524AbjATFeT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Jan 2023 00:34:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39976 "EHLO
+        id S230099AbjATF0L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Jan 2023 00:26:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56176 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230467AbjATFeC (ORCPT
+        with ESMTP id S230178AbjATF0A (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Jan 2023 00:34:02 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D794D7DFBC;
-        Thu, 19 Jan 2023 21:29:44 -0800 (PST)
+        Fri, 20 Jan 2023 00:26:00 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACF0F7D679;
+        Thu, 19 Jan 2023 21:18:19 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 05155B82129;
-        Thu, 19 Jan 2023 07:59:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3E05C433EF;
-        Thu, 19 Jan 2023 07:59:43 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id AAD98B826A2;
+        Thu, 19 Jan 2023 17:29:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD721C433EF;
+        Thu, 19 Jan 2023 17:29:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1674115183;
-        bh=pKKL2++V2LWrneLPbZFMOa/GzAMecbfqoMLCr5AN248=;
+        s=k20201202; t=1674149368;
+        bh=XjA6FNxjMQiOnXZJOx1apsS33nTEFUkoVAm3T3M6M8M=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=DeFFmDzj5d95mRvTYw7/wTDKRGk/n1kX/4BQt30Q4tGIODlIINATXyb3nhL6sDXsR
-         W+trEXi0E8mT+tPqZoVyzrzrnFi83AIiZeHkZ4ZQhapyScl5s5db7H0fjiRJkGn+12
-         VCWHakJi3Whk0y+QitH/mRJilBqTAlh0SvOnoEGFZP9AzeIS7fJq0oVZnNbJ8OaDP5
-         70XEzgok5JWFclMip7D+2Tx7WZJvtalU/8Os0ktmF2KDb8KoM3kXJ+++Ku0k+JCGp+
-         ttt34R3WBqi78ooZOZsRlMNNb3i10wJbdDd0lhoAZGvp2lvAncN+nfBAd0x+RdXuYZ
-         jYku2HfpvoBlw==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1pIPqE-0005We-P1; Thu, 19 Jan 2023 09:00:10 +0100
-Date:   Thu, 19 Jan 2023 09:00:10 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
+        b=vI7EuC1HYKUg35FJz+wmpXIUQjvqRm71FrejBhtsRO4XtT9ItQR86PhdAESkgM2rl
+         7s6IlQzP0XSW7IlxDFPBCZ3z3IsEUxb1WdmYcsnLETy9SdoiX2/nmQhgWGjCOOyabB
+         zqGZhMNFrw6TlZ6001HKwUFH4L//OAwWGr8fjwVabhzlAHxlu/eajf3mElNal1fM6M
+         SaMmXAd6HflnYdMEot9iGdLyuPeT5RXI6rL0QVXgZdWADTtiEk1BMgHzLEC2/FzJ0h
+         R9wXeygOsbBT3A+vniK0UL9rpejY4/y6juSijYU//RhqSTZ2On16QdOoQGkn03Qmu6
+         R9u9NciOXNBZg==
+Date:   Thu, 19 Jan 2023 17:29:22 +0000
+From:   Will Deacon <will@kernel.org>
+To:     Luca Weiss <luca@z3ntu.xyz>
+Cc:     iommu@lists.linux.dev, ~postmarketos/upstreaming@lists.sr.ht,
+        phone-devel@vger.kernel.org, Rob Herring <robh@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        Robin Murphy <robin.murphy@arm.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andrew Halaney <ahalaney@redhat.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: Re: [PATCH v2] arm64: dts: qcom: sc8280xp: Define CMA region for CRD
- and X13s
-Message-ID: <Y8j4ikRGiHC5m+y/@hovoldconsulting.com>
-References: <20230117184630.2775905-1-quic_bjorande@quicinc.com>
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5] dt-bindings: iommu: qcom: Add Qualcomm MSM8953
+ compatible
+Message-ID: <20230119172921.GA20092@willie-the-truck>
+References: <20221105142016.93406-1-luca@z3ntu.xyz>
+ <20221114134458.GD30263@willie-the-truck>
+ <4793103.31r3eYUQgx@g550jk>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230117184630.2775905-1-quic_bjorande@quicinc.com>
+In-Reply-To: <4793103.31r3eYUQgx@g550jk>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -63,47 +66,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jan 17, 2023 at 10:46:30AM -0800, Bjorn Andersson wrote:
-> While booting the CRD, a series of CMA allocation errors can be seen in
-> the kernel log:
+On Wed, Dec 28, 2022 at 10:34:35PM +0100, Luca Weiss wrote:
+> On Montag, 14. November 2022 14:44:59 CET Will Deacon wrote:
+> > On Sat, Nov 05, 2022 at 03:20:17PM +0100, Luca Weiss wrote:
+> > > Document the compatible used for IOMMU on the msm8953 SoC.
+> > > 
+> > > Acked-by: Rob Herring <robh@kernel.org>
+> > > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> > > ---
+> > > Changes in v5:
+> > > * Change subject so it hopefully gets noticed by iommu maintainers
+> > > 
+> > >   (thanks Krzysztof, maybe this helps..)
+> > >  
+> > >  Documentation/devicetree/bindings/iommu/qcom,iommu.txt | 1 +
+> > >  1 file changed, 1 insertion(+)
+> > > 
+> > > diff --git a/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
+> > > b/Documentation/devicetree/bindings/iommu/qcom,iommu.txt index
+> > > 059139abce35..e6cecfd360eb 100644
+> > > --- a/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
+> > > +++ b/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
+> > > @@ -10,6 +10,7 @@ to non-secure vs secure interrupt line.
+> > > 
+> > >  - compatible       : Should be one of:
+> > >                          "qcom,msm8916-iommu"
+> > > 
+> > > +                        "qcom,msm8953-iommu"
+> > > 
+> > >                       Followed by "qcom,msm-iommu-v1".
+> > 
+> > I'd expect the MSM maintainers (i.e Andy and Bjorn) to pick this up.
 > 
->   cma: cma_alloc: reserved: alloc failed, req-size: 128 pages, ret: -12
-> 
-> Growing the CMA region and querying /proc/meminfo indicates that a newly
-> booted system (currently) uses 64MB CMA.
+> Bjorn, could you pick this up for v6.3 please?
 
-The NVMe driver buffers alone always take up 64 MB and in total roughly
-92 MB is used on the CRD after boot here. Perhaps you're missing some
-driver in you config (e.g. modem or wifi?).
+Since this seems to be stagnating here, I'll pick it up into the smmu
+queue along with the other pending bindings patches I have.
 
-On the X13s I even have 105 MB allocated after boot.
-
-That's why I increased the CMA region to 128 MB in my out-of-tree
-config, which is also what you are doing here but in the devicetree.
-
-> Define a memory region sufficiently large for the current use cases, to
-> avoid forcing users to add this themselves, through command line
-> parameters etc.
-> 
-> While fixing the CRD define the same region for the X13s.
-> 
-> Tested-by: Andrew Halaney <ahalaney@redhat.com> # sc8280xp-lenovo-thinkpad-x13s
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> ---
-> 
-> Changes since v1:
-> - Updated commit message
-
-> +
-> +	reserved-memory {
-> +		linux,cma {
-> +			compatible = "shared-dma-pool";
-> +			size = <0x0 0x8000000>;
-> +			reusable;
-> +			linux,cma-default;
-> +		};
-> +	};
->  };
-
-Johan
+Will
