@@ -2,49 +2,46 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D1845674C94
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 06:37:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A6EFF674C90
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 06:37:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230113AbjATFhY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Jan 2023 00:37:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45252 "EHLO
+        id S231519AbjATFhV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Jan 2023 00:37:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230174AbjATFgs (ORCPT
+        with ESMTP id S230107AbjATFgr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Jan 2023 00:36:48 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 286D5CA31;
-        Thu, 19 Jan 2023 21:33:25 -0800 (PST)
+        Fri, 20 Jan 2023 00:36:47 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4DE45B5B7;
+        Thu, 19 Jan 2023 21:33:24 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 176D9B81FB5;
+        by ams.source.kernel.org (Postfix) with ESMTPS id CB378B8206B;
         Thu, 19 Jan 2023 04:54:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB8D2C433D2;
-        Thu, 19 Jan 2023 04:54:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04CC7C433F2;
+        Thu, 19 Jan 2023 04:54:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1674104041;
-        bh=eVKf7wBSxj2O+ou6CTudQ1D1waWBQ7x4QXBha4ovRpc=;
+        s=k20201202; t=1674104042;
+        bh=9B8AESEnaiyyvG9bBTaaDPwbKe9TAiv/vyN8K/61H08=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=L/Cn/f/g8kUyS6s/hP/vCE36U2PCAW3EZxVhCACYJVM6eVK+Q67AqxgvD3fl4GgjE
-         ScJWAM3L+AkbZF5sfbHCvEXaewZiTis5kFQSHipAqc3nq04vZOLqU1LPme8c4xcMrH
-         izdZQw240KE7dZVqNHGhwx+1LsiuRo8tP0OOEdJuaAAZAU+Q+K5Yd7HWi4Lzh3/pQJ
-         Ab9JRGJhfkJVPYENKHy/tdWOARJkZT8Ngwhws7x7l4NgK4FJTbpcv6RpnQpzsx/qEh
-         yjxDNRzXuhazVL3tyXeAiU30Ok0Xs3EV3EkU9rFgzyY7HbkHJuH3rjCOp6wwW2IA4G
-         r/S1H7W8300Bg==
+        b=qLcujfbpKxYaAmL0gAhh6QQUl6Va+0xU6t7jkMJg6U2amU27lcnYghTUv13FV6m9G
+         Ic4FGg5JjSZpJugbWHNULmZ1Gb+1oyhwRkg3RMaM5yIRbYQFaLGfx0PENCLenMrSC+
+         AwFweHYWMywbEWU0PawPwjKf33YJpGm3ktPZQJSLBPI7yITnFwVAvlhnV83YveO71N
+         UKhVzyK2/peUu4ApOQZQM04bfTGG8blSYtiH0kFCV2xzmliHmtD2yogOhtVs3c4zsM
+         Q7z4vea+17LlDUYmLCyTHW+CUlhMVw7gwjPsb+0ILAw5kT9ZJZ5wHX3dDx3I2RfEUI
+         UE2oTS+kLyQww==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     quic_tdas@quicinc.com, dmitry.baryshkov@linaro.org,
-        sboyd@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        konrad.dybcio@linaro.org, mturquette@baylibre.com,
-        robh+dt@kernel.org, agross@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-clk@vger.kernel.org
-Subject: Re: (subset) [PATCH v3 00/14] clk: qcom: cpu-8996: stability fixes
-Date:   Wed, 18 Jan 2023 22:53:56 -0600
-Message-Id: <167410403675.3048186.784444647776183552.b4-ty@kernel.org>
+To:     linux-arm-msm@vger.kernel.org, konrad.dybcio@linaro.org,
+        krzysztof.kozlowski@linaro.org, agross@kernel.org
+Cc:     marijn.suijten@somainline.org, linux-kernel@vger.kernel.org
+Subject: Re: (subset) [PATCH 1/2] Revert "soc: qcom: rpmpd: Add SM4250 support"
+Date:   Wed, 18 Jan 2023 22:53:57 -0600
+Message-Id: <167410403676.3048186.9960546404192439260.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20230113120544.59320-1-dmitry.baryshkov@linaro.org>
-References: <20230113120544.59320-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230113152232.2624545-1-konrad.dybcio@linaro.org>
+References: <20230113152232.2624545-1-konrad.dybcio@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -57,21 +54,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 13 Jan 2023 14:05:30 +0200, Dmitry Baryshkov wrote:
-> This series provides stability fixes for the MSM8996 boot process. It
-> changes the order of calls during the CPU PLL setup, makes it use GPLL0
-> (through sys_apcs_aux) during PLL init, finetunes the ACD, etc.
+On Fri, 13 Jan 2023 16:22:31 +0100, Konrad Dybcio wrote:
+> SM4250 and SM6115 use a shared device tree and the RPMPDs are
+> identical. There's no need for a separate entry, so remove it.
 > 
-> Dependency: [1]
+> This reverts commit 5b617b1b10c1c6a4365d8f956032e95c53b8e388.
 > 
-> [1] https://lore.kernel.org/linux-arm-msm/20230111191453.2509468-1-dmitry.baryshkov@linaro.org/
 > 
-> [...]
 
 Applied, thanks!
 
-[14/14] arm64: dts: qcom: msm8996: support using GPLL0 as kryocc input
-        commit: ac0d84d4556cecf81ba0b1631d25d9a395235a5c
+[1/2] Revert "soc: qcom: rpmpd: Add SM4250 support"
+      commit: a36489778ba8f7eb98c3e9fca2d300090bf1ffcd
+[2/2] Revert "dt-bindings: power: rpmpd: Add SM4250 support"
+      commit: dfe5ac7023624617d402ca1c295552fbd271e20c
 
 Best regards,
 -- 
