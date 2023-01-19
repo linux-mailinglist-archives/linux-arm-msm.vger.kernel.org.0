@@ -2,81 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A324E673B44
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 15:06:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E103E673B63
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 15:12:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231366AbjASOGt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Jan 2023 09:06:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34470 "EHLO
+        id S231548AbjASOMX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Jan 2023 09:12:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231522AbjASOGH (ORCPT
+        with ESMTP id S231462AbjASOLw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Jan 2023 09:06:07 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DA04808A2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 06:05:27 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id fl11-20020a05600c0b8b00b003daf72fc844so3675960wmb.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 06:05:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KyPmIKhrj5llOSZUdUq5Kr/KaLcp/C/7nBe8Tyy5vk4=;
-        b=Ro0EqqAi9yh4lpsziLAifpMMIiVgu35zQr/kylSTf6VsCoedWvgRvRk+1jDdX0XIYi
-         dLMOCFDVto+0Kg78ScF0l2ebFvoRj1Fq09X7dT2NMIBhnhnUUbSOO8iMSQKKE0m/Rd95
-         6v30MpHu2PuwT04eAsBLxoauENCr9MMqdxoRqzVWREkv48G7fx2K8Gk28aZi8dGlOZJX
-         Rcfx3+F72UebuTmN1B/iHf/H2Kk0V5B2BosmozETT+F3XdDCRRfEmvt2gAxkGNHhclCR
-         5DXbqljI/MNaaKxdDxGspyYOdiLr4jmb/fjq76EF6kvi0q1TG6XfKwKZqrp1y/jFwdEC
-         bdOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KyPmIKhrj5llOSZUdUq5Kr/KaLcp/C/7nBe8Tyy5vk4=;
-        b=7z5XTU0yq8vSAg4BJ1RKZyEnatfbSjcbhYJFgLCNu0D3dy1NwmHaGqklRTArTGRX0V
-         AI3buHmSylqMJbKA4sOGvWaePPm7qqy9ss/9dL5mdaF40+qBHV36b5l5pI4U22tpewJh
-         MVr19XJRTKOxxppv0CIoOx1XwnVZmWwuU1m0R8JJNfejefw8dZbYjWwqn2NC2P1wpJ7Z
-         SEEVVuiwyxT7SOnvnLMzG/MeexbafpDJ+ES9wP9xgvLPEOwbN72mIoymsBo1hkrniNx3
-         Knga2KAsKYSKyHxl6ymWe/QucrJcGmViprzYBCs1fuzNLn9dO+ix14j6NOXLagHRUiy/
-         uYcw==
-X-Gm-Message-State: AFqh2koCvIgcpaP8ga8/p/ZcSiQmMc6Y1AQ08Hei8vz9bqr9ErxFPJ63
-        59rbSkz+X7mlbhCOi5IgYRCT7A==
-X-Google-Smtp-Source: AMrXdXtz9rqfygqM2faXYVw6dTuktiFobisglXW40wIIAv8MVziyyjsOF8Jgn/ATvMoD1cN4YsQYHg==
-X-Received: by 2002:a05:600c:3d19:b0:3db:1810:8c9e with SMTP id bh25-20020a05600c3d1900b003db18108c9emr5298390wmb.38.1674137126642;
-        Thu, 19 Jan 2023 06:05:26 -0800 (PST)
-Received: from hackbox.lan ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id m10-20020a05600c4f4a00b003d96efd09b7sm5263883wmq.19.2023.01.19.06.05.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Jan 2023 06:05:26 -0800 (PST)
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Thu, 19 Jan 2023 09:11:52 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7D1D84556;
+        Thu, 19 Jan 2023 06:10:17 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 555D061957;
+        Thu, 19 Jan 2023 14:10:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33BF7C433D2;
+        Thu, 19 Jan 2023 14:10:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1674137416;
+        bh=5C216vTrkyYZuw9mA2HXMbg2MCiU0VRVvsY9D+/BvSo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=mr3UcwsVawDuRc2Eii94Y7LgvepiVyXCMA6UDbP47wrHFkyeoyTDX9gwizJKUWNHD
+         ctoRQkOXB0q7tXf0iIk9A0C6Jiyuq4fdvwSJPKI7hu/q6hfDAgPSqSwcGKXjuS2LIa
+         aNLaNTjtE5kwyvuGgh30CP+pwwkwOpbbFmvBVmRM=
+Date:   Thu, 19 Jan 2023 15:10:14 +0100
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Bartosz Golaszewski <brgl@bgdev.pl>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Rob Herring <robh@kernel.org>,
-        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        "vkoul@kernel.org" <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH v4 12/12] arm64: dts: qcom: sm8550-mtp: Add PCIe PHYs and controllers nodes
-Date:   Thu, 19 Jan 2023 16:04:53 +0200
-Message-Id: <20230119140453.3942340-13-abel.vesa@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230119140453.3942340-1-abel.vesa@linaro.org>
-References: <20230119140453.3942340-1-abel.vesa@linaro.org>
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, Alex Elder <elder@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-serial@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [RESEND PATCH 0/2] tty: serial: add and use a managed variant of
+ uart_add_one_port()
+Message-ID: <Y8lPRiEbUfkjS/P/@kroah.com>
+References: <20221229161948.594102-1-brgl@bgdev.pl>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221229161948.594102-1-brgl@bgdev.pl>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,78 +58,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable PCIe controllers and PHYs nodes on SM8550 MTP board.
+On Thu, Dec 29, 2022 at 05:19:46PM +0100, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> 
+> Resending rebased on top of v6.2-rc1
+> 
+> --
+> 
+> This series adds a managed variant of uart_add_one_port() and uses it in the
+> qcom-geni-serial driver.
+> 
+> I've been asked by Greg to send it separately and he didn't seem to be
+> impressed by the proposition of adding devres interfaces to the tty layer
+> in general. I can only assume it has something to do with the ongoing
+> discussion about the supposed danger of using devres interfaces in conjunction
+> with exporting character devices to user-space.
 
-Co-developed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
+That is correct.
 
-This patch does not have a v3, but since it is now part of the same
-patchset with the controller and the phy drivers patches, I had to
-bump the version to 4.
+> The bug in question can be triggered by opening a device file, unbinding the
+> driver that exported it and then calling any of the system calls on the
+> associated file descriptor.
+> 
+> After some testing I noticed that many subsystems are indeed either crashing
+> or deadlocking in the above situation. I've sent patches that attempt to fix
+> the GPIO and I2C subsystems[1][2]. Neither of these issues have anything to
+> do with devres and all to do with the fact that certain resources are freed
+> on driver unbind and others need to live for as long as the character device
+> exists. More details on that in the cover letters and commit messages in the
+> links.
+> 
+> I'd like to point out that the serial code is immune to this issue as before
+> every operation, the serial core takes the port lock and checks the uart
+> state. If the device no longer exists (when the uart port is removed, the
+> pointer to uart_port inside uart_state is to NULL), it gracefully returns
+> -ENODEV to user-space.
+> 
+> Please consider applying the patches in the series as devres is the easiest
+> way to lessen the burden on driver developers when dealing with complex error
+> paths and resource leaks. The general rule for devres is: if it can be freed
+> in .remove() then it can be managed by devres, which is the case for this new
+> helper.
 
-Latest version was here (v2):
-https://lore.kernel.org/all/20230118230526.1499328-3-abel.vesa@linaro.org/
+Overall you are adding more code to the kernel than removing, so how is
+this a win?  Perhaps if other drivers were converted over to this new
+function then I would be more inclined to be able to accept it.
 
-Changes since latest version (v2):
- * none
+But as-is, with only one user, it's a non-starter, sorry.
 
-Changes since v1:
- * ordered pcie related nodes alphabetically in MTP dts
- * dropped the pipe_mux, phy_pipe and ref clocks from the pcie nodes
- * dropped the child node from the phy nodes, like Johan suggested,
-   and updated to use the sc8280xp binding scheme
- * changed "pcie_1_nocsr_com_phy_reset" 2nd reset name of pcie1_phy
-   to "nocsr"
- * reordered all pcie nodes properties to look similar to the ones
-   from sc8280xp
+thanks,
 
-
-
- arch/arm64/boot/dts/qcom/sm8550-mtp.dts | 29 +++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-index 81fcbdc6bdc4..b69ded9c4b57 100644
---- a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-@@ -359,6 +359,35 @@ vreg_l3g_1p2: ldo3 {
- 	};
- };
- 
-+&pcie_1_phy_aux_clk {
-+	clock-frequency = <1000>;
-+};
-+
-+&pcie0 {
-+	wake-gpios = <&tlmm 96 GPIO_ACTIVE_HIGH>;
-+	perst-gpios = <&tlmm 94 GPIO_ACTIVE_LOW>;
-+	status = "okay";
-+};
-+
-+&pcie0_phy {
-+	vdda-phy-supply = <&vreg_l1e_0p88>;
-+	vdda-pll-supply = <&vreg_l3e_1p2>;
-+	status = "okay";
-+};
-+
-+&pcie1 {
-+	wake-gpios = <&tlmm 99 GPIO_ACTIVE_HIGH>;
-+	perst-gpios = <&tlmm 97 GPIO_ACTIVE_LOW>;
-+	status = "okay";
-+};
-+
-+&pcie1_phy {
-+	vdda-phy-supply = <&vreg_l3c_0p91>;
-+	vdda-pll-supply = <&vreg_l3e_1p2>;
-+	vdda-qref-supply = <&vreg_l1e_0p88>;
-+	status = "okay";
-+};
-+
- &pm8550_gpios {
- 	sdc2_card_det_n: sdc2-card-det-state {
- 		pins = "gpio12";
--- 
-2.34.1
-
+greg k-h
