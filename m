@@ -2,76 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2EFA56737F5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 13:09:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E25B8673804
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 13:13:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230433AbjASMJw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Jan 2023 07:09:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40384 "EHLO
+        id S229787AbjASMNi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Jan 2023 07:13:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42332 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231220AbjASMJt (ORCPT
+        with ESMTP id S229544AbjASMNh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Jan 2023 07:09:49 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDFE74A1FC
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 04:09:46 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id d2so1636318wrp.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 04:09:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=iJM/h+lldPXDlTcAuDUdunbYkmcG7VHMb5074kf6tA0=;
-        b=P1XDghb5jL3e1MRSpcUCp94PDNobl2vr2DOi5acBorxHYFvq6rY8KEpa/V6WNDlFSN
-         ai8t3W95n5hWIn/P6vOafgpSvOgDRbsNcGX1RbE/vHw5iGSYs/3aQyYdPe/tG/jS0n1v
-         HqLo582UeEhdXlcVT3jRHVfQkgDO5Yc9pZJPfPRpV26F10Xo6t5WYWQONLSixF9YOt5w
-         0a/9INrTDeYQHUa+Z7p7NQoAS5Y1lmB5MVJa16LK+DJHmp7wjNgVWhCGgwK4AqXmFx24
-         YV8ZptHfnkPtIqS50zj/mBP5ZSiq1Uec1u6XNKrpwiSt5fw467Jb5q3WuT3a+qN78hKX
-         2HqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=iJM/h+lldPXDlTcAuDUdunbYkmcG7VHMb5074kf6tA0=;
-        b=CP0vRvpRs1COPP1a9Ht9GGGrADkCVUnDS1puKeeafJen2ORTOxDtmQ4bhHklThWnnR
-         ZCDe9cbVICWKiuOcL7gfsTiWoOt2YSqmuhIs/3moDj6qAgyRt9XKAS1OBaYWIkOUUGvd
-         DkN7a1HD1CUY+wzUhbshH90b2oGipnCUV+VS6fALl7tRhsLUs0+Xj7NaTvW6roMTQGbO
-         aR8cMz7PRb6C5RxMnVCgylN3muoYAYiUhxCd+8CcmVlk3LJg79cnh8/v8LMMUONDms8w
-         aFFAkD+IPS2G7Y8k2zGWCEiZj4ixFxjBsanlUU6jcY0GvAJdbEL2/F7/Z4Tx+JdRDK0r
-         TqFA==
-X-Gm-Message-State: AFqh2koYqxsV9Daqnkl8XRP8yzH3tCyIS17jIiBQdvmHp6R2QnOb+afU
-        yno1IpK0mJ89FG4NYjHN59Ulhw==
-X-Google-Smtp-Source: AMrXdXs7QQi4g4VYJPo232c8Q5V9/773sn0KHvyX6ENIS2uuYmJA9wUi1iKQcFkDf4ozmhlPdvZszw==
-X-Received: by 2002:a5d:6b09:0:b0:2be:110d:5d59 with SMTP id v9-20020a5d6b09000000b002be110d5d59mr8620305wrw.51.1674130185366;
-        Thu, 19 Jan 2023 04:09:45 -0800 (PST)
-Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id f2-20020adfdb42000000b0024274a5db0asm33607850wrj.2.2023.01.19.04.09.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Jan 2023 04:09:44 -0800 (PST)
-Date:   Thu, 19 Jan 2023 14:09:43 +0200
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 0/2] arm64: dts: qcom: sm8550: Add PCIe HC and PHY
- support
-Message-ID: <Y8kzBz0ApSWgOkVJ@linaro.org>
-References: <20230118230526.1499328-1-abel.vesa@linaro.org>
- <167408614065.2989059.2950818972854332656.b4-ty@kernel.org>
- <Y8jyQAR7fF1NRmwu@hovoldconsulting.com>
+        Thu, 19 Jan 2023 07:13:37 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4010B6E91;
+        Thu, 19 Jan 2023 04:13:34 -0800 (PST)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30JBFiZ8013617;
+        Thu, 19 Jan 2023 12:13:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=1BLNPwdD2MIkGCnflVreUOktXJImRH9Nu9SpRY1ajKg=;
+ b=cl2EIhNDrbmVNGeTnOw52zuwov7a0mHYxOV+QnF98y/aZnzKg7lRC70ZjT8ybbPtL1Kh
+ TK9zmySNRJF2Z+inLDd1dDIcXC9ODyl5aMcigUMRAcCQTOG84I27K/YG0QI/3LYXd93B
+ /mxb0eZymaU6jsymDrOmyAS+6zDhoNIdnyt6FNvb6PIeo9vcN+XaRrcRQm8pYnjed29+
+ OAf4rwqcd/2hBxmrwyjgp7wSXO8HTCx+dOSbqc0s9uPf4dB1TxRfkUo6ngJU953H8PkX
+ Dk3atpX3dz+/lEE3fCXNYxhIutPAqosdqHse6YeHgb5W6MwIaZUk6GEwQ+YPlyezqIUH Fw== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n6ya2s4d7-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 19 Jan 2023 12:13:30 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30JCDT08019257
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 19 Jan 2023 12:13:29 GMT
+Received: from [10.216.43.228] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Thu, 19 Jan
+ 2023 04:13:25 -0800
+Message-ID: <94d64ba8-4a49-5f94-79a0-5b09c6f39f5d@quicinc.com>
+Date:   Thu, 19 Jan 2023 17:43:21 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y8jyQAR7fF1NRmwu@hovoldconsulting.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v2 2/8] arm64: dts: qcom: sc7280: audioreach: Add sound
+ node
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_rohkumar@quicinc.com>,
+        <srinivas.kandagatla@linaro.org>, <dianders@chromium.org>,
+        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
+        <konrad.dybcio@linaro.org>, <mka@chromium.org>
+References: <1672925875-2107-1-git-send-email-quic_srivasam@quicinc.com>
+ <1672925875-2107-3-git-send-email-quic_srivasam@quicinc.com>
+ <a6e0fce9-3a59-1014-9ae8-f07b50d122a2@linaro.org>
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Organization: Qualcomm
+In-Reply-To: <a6e0fce9-3a59-1014-9ae8-f07b50d122a2@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 9MFpG3EPn8hPxc-IpzkqH9dEu15KHocz
+X-Proofpoint-GUID: 9MFpG3EPn8hPxc-IpzkqH9dEu15KHocz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-19_09,2023-01-19_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
+ mlxscore=0 priorityscore=1501 lowpriorityscore=0 suspectscore=0
+ impostorscore=0 adultscore=0 mlxlogscore=830 malwarescore=0 phishscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301190096
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,46 +87,133 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23-01-19 08:33:20, Johan Hovold wrote:
-> On Wed, Jan 18, 2023 at 05:55:31PM -0600, Bjorn Andersson wrote:
-> > On Thu, 19 Jan 2023 01:05:24 +0200, Abel Vesa wrote:
-> > > This patchset adds PCIe controllers and PHYs support to SM8550 platform
-> > > and enables them on the MTP board.
-> > > 
-> > > The v1 was here:
-> > > https://lore.kernel.org/all/20221116130430.2812173-1-abel.vesa@linaro.org/
-> > > 
-> > > Changes since v1:
-> > >  * ordered pcie related nodes alphabetically in MTP dts
-> > >  * dropped the pipe_mux, phy_pipe and ref clocks from the pcie nodes
-> > >  * dropped the child node from the phy nodes, like Johan suggested,
-> > >    and updated to use the sc8280xp binding scheme
-> > >  * changed "pcie_1_nocsr_com_phy_reset" 2nd reset name of pcie1_phy
-> > >    to "nocsr"
-> > >  * reordered all pcie nodes properties to look similar to the ones
-> > >    from sc8280xp
-> > > 
-> > > [...]
-> > 
-> > Applied, thanks!
-> > 
-> > [1/2] arm64: dts: qcom: sm8550: Add PCIe PHYs and controllers nodes
-> >       commit: 7d1158c984d37e79ab8bb55ab152a0b35566cb89
-> > [2/2] arm64: dts: qcom: sm8550-mtp: Add PCIe PHYs and controllers nodes
-> >       commit: 1eeef306b5d80494cdb149f058013c3ab43984b4
-> 
-> I believe there were still some changes needed to the controller
-> and PHY bindings so this should not have been merged.
-> 
-> 	https://lore.kernel.org/all/Y8fuUI4xaNkADkWl@hovoldconsulting.com/
-> 	https://lore.kernel.org/lkml/Y8giHJMtPu4wTlmA@hovoldconsulting.com/
-> 
-> Perhaps in the future you can send the dts changes along with the (PHY)
-> driver changes so that they can be kept in lock-step and avoid this.
 
-Well, that is a bit hard to do, because phy patches are based on
-linux-phy/next, while dtsi patches are based on Bjorn's tree which,
-so ...
-
-> 
-> Johan
+On 1/10/2023 4:30 PM, Krzysztof Kozlowski wrote:
+Thanks for your time Krzysztof!!!
+> On 05/01/2023 14:37, Srinivasa Rao Mandadapu wrote:
+>> Add sound node for sc7280 based audioreach platforms.
+>>
+>> Include audioreach dtsi into crd-rev3 platform specific dts file.
+>> Also remove phandle to sound node, as audio routing is same as
+>> audioreach specific dtsi file.
+>>
+> Thank you for your patch. There is something to discuss/improve.
+>
+>> +#include <dt-bindings/sound/qcom,q6afe.h>
+>> +
+>> +/{
+>> +	/* BOARD-SPECIFIC TOP LEVEL NODES */
+>> +	sound: sound {
+>> +		compatible = "google,sc7280-herobrine";
+>> +		model = "SC7280-AUDIOREACH";
+>> +		adsp-mode;
+> There is no such property. Test DTS against your schema, so make
+> dtbs_check DT_SCHEMA_FILES=google,sc7280-herobrine
+Okay. Will fix it.
+>
+>> +		audio-routing =
+>> +			"IN1_HPHL", "HPHL_OUT",
+>> +			"IN2_HPHR", "HPHR_OUT",
+>> +			"AMIC1", "MIC BIAS1",
+>> +			"AMIC2", "MIC BIAS2",
+>> +			"VA DMIC0", "MIC BIAS1",
+>> +			"VA DMIC1", "MIC BIAS1",
+>> +			"VA DMIC2", "MIC BIAS3",
+>> +			"VA DMIC3", "MIC BIAS3",
+>> +			"TX SWR_ADC0", "ADC1_OUTPUT",
+>> +			"TX SWR_ADC1", "ADC2_OUTPUT",
+>> +			"TX SWR_ADC2", "ADC3_OUTPUT",
+>> +			"TX SWR_DMIC0", "DMIC1_OUTPUT",
+>> +			"TX SWR_DMIC1", "DMIC2_OUTPUT",
+>> +			"TX SWR_DMIC2", "DMIC3_OUTPUT",
+>> +			"TX SWR_DMIC3", "DMIC4_OUTPUT",
+>> +			"TX SWR_DMIC4", "DMIC5_OUTPUT",
+>> +			"TX SWR_DMIC5", "DMIC6_OUTPUT",
+>> +			"TX SWR_DMIC6", "DMIC7_OUTPUT",
+>> +			"TX SWR_DMIC7", "DMIC8_OUTPUT";
+>> +
+>> +		qcom,msm-mbhc-hphl-swh = <1>;
+>> +		qcom,msm-mbhc-gnd-swh = <1>;
+>> +
+>> +		#address-cells = <1>;
+>> +		#size-cells = <0>;
+>> +		#sound-dai-cells = <0>;
+>> +
+>> +		dai-link@0 {
+>> +			link-name = "WCD9385 Playback";
+>> +			reg = <0>;
+>> +
+>> +			cpu {
+>> +				sound-dai = <&q6apmbedai RX_CODEC_DMA_RX_0>;
+>> +			};
+>> +			codec {
+>> +				sound-dai = <&wcd9385 0>, <&swr0 0>, <&lpass_rx_macro 0>;
+>> +			};
+>> +			platform {
+>> +				sound-dai = <&q6apm>;
+>> +			};
+>> +		};
+>> +
+>> +		dai-link@1 {
+>> +			link-name = "WCD9385 Capture";
+>> +			reg = <1>;
+>> +
+>> +			cpu {
+>> +				sound-dai = <&q6apmbedai TX_CODEC_DMA_TX_3>;
+>> +			};
+>> +			codec {
+>> +				sound-dai = <&wcd9385 1>, <&swr1 0>, <&lpass_tx_macro 0>;
+>> +			};
+>> +			platform {
+>> +				sound-dai = <&q6apm>;
+>> +			};
+>> +		};
+>> +
+>> +		dai-link@2 {
+>> +			link-name = "Amplifier Playback";
+>> +			reg = <3>;
+> Missing dtbs W=1 build.
+Okay. Will fix it.
+>
+>> +
+>> +			cpu {
+>> +				sound-dai = <&q6apmbedai SECONDARY_MI2S_RX>;
+>> +			};
+>> +
+> Use consistent style. Either blank line or not between the
+> cpu/codec/platform nodes.
+Okay. will fix it.
+>
+>> +			codec {
+>> +				sound-dai = <&max98360a>;
+>> +			};
+>> +
+>> +			platform {
+>> +				sound-dai = <&q6apm>;
+>> +			};
+>> +		};
+>> +
+>> +		dai-link@3 {
+>> +			link-name = "DMIC";
+>> +			reg = <4>;
+> Same problem, wrong reg.
+Okay.
+>
+>> +
+>> +			cpu {
+>> +				sound-dai = <&q6apmbedai VA_CODEC_DMA_TX_0>;
+>> +			};
+>> +
+>> +			codec {
+>> +				sound-dai = <&lpass_va_macro 0>;
+>> +			};
+>> +
+>> +			platform {
+>> +				sound-dai = <&q6apm>;
+>> +			};
+>> +		};
+>> +	};
+>> +};
+> Best regards,
+> Krzysztof
+>
