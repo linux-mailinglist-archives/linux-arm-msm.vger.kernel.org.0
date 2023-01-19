@@ -2,127 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E315B673920
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 14:01:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F3BA673960
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 14:04:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230405AbjASNBC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Jan 2023 08:01:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43168 "EHLO
+        id S230348AbjASNEP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Jan 2023 08:04:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230246AbjASNAm (ORCPT
+        with ESMTP id S230292AbjASND2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Jan 2023 08:00:42 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72B486778B
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 05:00:35 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id m15so1455748wms.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 05:00:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0AOd0ZEvKWMBuKPkPo/Zqo5m7MHUWNQaguVRXb3+VEo=;
-        b=om7J09nbshDZbj2XaKZYzaxIokzE1OsS8949cUasFL+lXb7uYWM3TEtpN9q9JT7Hu5
-         TfC0UO5YhYL37zgF6qUYY6ekRtKQQRLIibraBmtfBEnQoVe5J4EhwOuz9cuX6P9LfJyO
-         Ag4qV86TX2woox4IcNrNM76cI5FeqYo53sFX5nTZEIxqtTO5dL7HrAWYaceYdsdVLQZ8
-         qv7bzpC71Jo6vByGb63uMbo2o4ZM6yZjVw4Gcjog+eb5eywYcJu62q6h8DQCjKoyUNoW
-         HonoeQsVG+jHEHqnWp5O8ANqWd4UA+J2TF9PiUYkZva5Xy/kJ756Cl+WfiR21bBtB02g
-         BEsw==
+        Thu, 19 Jan 2023 08:03:28 -0500
+Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05E8561896;
+        Thu, 19 Jan 2023 05:02:26 -0800 (PST)
+Received: by mail-ot1-f49.google.com with SMTP id d6-20020a056830138600b0068585c52f86so1162736otq.4;
+        Thu, 19 Jan 2023 05:02:25 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0AOd0ZEvKWMBuKPkPo/Zqo5m7MHUWNQaguVRXb3+VEo=;
-        b=oCf9gCmYdTixM5MXe+ASubMi3VHNXfcTgV7ib0qLOuFh6hoYjLT06IKdD5U6UA5I/C
-         zfSVvFPENVro2mb0pT8xxF3po36qP/13jd8sXKaWQU1KFzLX1ohRMMlxAbpy8zOAcaYZ
-         pjbH3pyy7FJcGKp4Hzv9XDvrQhdYa2udO4obiiZmKIJ4RzJT5/jkKBn+6K3nW/Uak/Df
-         2igmQRHlxOyhUQOpySP0AM6Xz/NopZN6St+YVjDvBqPLXAf3gcyjvNdj8ZAczP5TZzl7
-         6ruXBgmXh1v517HqG+w9ApM7cpMtbVcLZS2Nw/YPFVL1mgCs1OTmU4C/iCnuIOoezWGy
-         vOQg==
-X-Gm-Message-State: AFqh2krMsJrA2IV/bHumT2+NzMX02n+ao4ZV6TVb3t6fjbL4PTb1tFEb
-        KxEwgBNl/j/JePnTb0/ACcm4yg==
-X-Google-Smtp-Source: AMrXdXuoBqS2MH52Ow6nOKuruhqXm5kecfENqnEwAFj/KPuJ+4p2xMa+YfA+o3bZIFzy0n90wBe9WQ==
-X-Received: by 2002:a05:600c:21c4:b0:3da:fcf1:d4cc with SMTP id x4-20020a05600c21c400b003dafcf1d4ccmr10273418wmj.30.1674133233983;
-        Thu, 19 Jan 2023 05:00:33 -0800 (PST)
-Received: from krzk-bin.. ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id w1-20020a1cf601000000b003daf681d05dsm4823808wmc.26.2023.01.19.05.00.32
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=qEzWKNVhTxhmNjpAWCuBDyNcXgW4w9tcJfOj8LQ7RrY=;
+        b=W5luZURTg4Ph7qywOByMMFhfDacOPzTNPuK/VtHmVKa+0JKIoA4pXqodZPlqG3wcSS
+         2uZKGd73yUOnmR7IG6ccOS/VO1XmzPQzF+8HBEzQj8uMaSI8OeD4ZQ2T9bFEGgZRU2zF
+         j7lHmPrBiHUbq2YvuXE3SjT04wVQ5zXWnM4jTiuzALkOI18S/aPkOCUbKUsn31WBGL6U
+         kHeDPATjthuWd6gyYEXZNDyTCLvEOJoiGayUNwnzwSGVMgDZOLMzoKWeYIgAEP4vJicj
+         pLYbsosqFdD9QH44YRkC5AeUYtupAIJ5dMcsYO9USMcztkOR4S3ww25ACT0HIFO++GWP
+         1hTQ==
+X-Gm-Message-State: AFqh2kqwsTs0ZT0qZ316av3AVJ1NMuma57qnCqqGfPfboW9W7s7+Sg6f
+        mT2FfvAf67KYseOqM0juhA==
+X-Google-Smtp-Source: AMrXdXuS0RwLdG32aXLQuMazq1vnSK/yWK2wwrLeyNfrY1C2VusapTqW5U+LsHMCNe53FfekOB/c4w==
+X-Received: by 2002:a9d:7113:0:b0:678:2dcc:9277 with SMTP id n19-20020a9d7113000000b006782dcc9277mr5441279otj.31.1674133343855;
+        Thu, 19 Jan 2023 05:02:23 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id c4-20020a9d6c84000000b00684eaf9018csm7174270otr.34.2023.01.19.05.02.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Jan 2023 05:00:33 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 2/2] dt-bindings: opp: constrain required-opps
-Date:   Thu, 19 Jan 2023 14:00:28 +0100
-Message-Id: <20230119130028.106817-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230119130028.106817-1-krzysztof.kozlowski@linaro.org>
-References: <20230119130028.106817-1-krzysztof.kozlowski@linaro.org>
+        Thu, 19 Jan 2023 05:02:23 -0800 (PST)
+Received: (nullmailer pid 1589489 invoked by uid 1000);
+        Thu, 19 Jan 2023 13:02:22 -0000
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+From:   Rob Herring <robh@kernel.org>
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Cc:     srinivas.kandagatla@linaro.org, quic_plai@quicinc.com,
+        devicetree@vger.kernel.org, perex@perex.cz, bgoswami@quicinc.com,
+        tiwai@suse.com, quic_rohkumar@quicinc.com, agross@kernel.org,
+        robh+dt@kernel.org, alsa-devel@alsa-project.org,
+        swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
+        andersson@kernel.org, broonie@kernel.org,
+        linux-kernel@vger.kernel.org, judyhsiao@chromium.org,
+        lgirdwood@gmail.com
+In-Reply-To: <1674108674-8392-2-git-send-email-quic_srivasam@quicinc.com>
+References: <1674108674-8392-1-git-send-email-quic_srivasam@quicinc.com>
+ <1674108674-8392-2-git-send-email-quic_srivasam@quicinc.com>
+Message-Id: <167413318302.1585278.7105957388478984370.robh@kernel.org>
+Subject: Re: [PATCH 1/3] ASoC: qcom: dt-bindings: lpass-va-macro: Update clock name
+Date:   Thu, 19 Jan 2023 07:02:22 -0600
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Be specific how many required-opps are allowed.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+On Thu, 19 Jan 2023 11:41:12 +0530, Srinivasa Rao Mandadapu wrote:
+> Upadte clock name from core to macro in lpass-va-macro node
+> to make it compatible with existing driver and device tree node.
+> 
+> Fixes: 67d99b23c881 ("ASoC: qcom: dt-bindings: add bindings for lpass va macro codec")
+> 
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Tested-by: Ratna Deepthi Kudaravalli <quic_rkudarv@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
 
----
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-This change is independent, although logically is connected with my
-dtschema pull:
-https://github.com/devicetree-org/dt-schema/pull/95
----
- Documentation/devicetree/bindings/opp/opp-v2-base.yaml     | 1 +
- Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml | 3 ++-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+yamllint warnings/errors:
 
-diff --git a/Documentation/devicetree/bindings/opp/opp-v2-base.yaml b/Documentation/devicetree/bindings/opp/opp-v2-base.yaml
-index 47e6f36b7637..9b141a409191 100644
---- a/Documentation/devicetree/bindings/opp/opp-v2-base.yaml
-+++ b/Documentation/devicetree/bindings/opp/opp-v2-base.yaml
-@@ -202,6 +202,7 @@ patternProperties:
-           for the functioning of the current device at the current OPP (where
-           this property is present).
-         $ref: /schemas/types.yaml#/definitions/phandle-array
-+        maxItems: 1
-         items:
-           maxItems: 1
- 
-diff --git a/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml b/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml
-index b4947b326773..438880db1872 100644
---- a/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml
-+++ b/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml
-@@ -59,7 +59,8 @@ patternProperties:
- 
-       clock-latency-ns: true
- 
--      required-opps: true
-+      required-opps:
-+        maxItems: 1
- 
-     required:
-       - opp-hz
--- 
-2.34.1
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.example.dtb: codec@3370000: clock-names: 'oneOf' conditional failed, one must be fixed:
+	['mclk', 'core', 'dcodec'] is too long
+	'macro' was expected
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.example.dtb: codec@3370000: Unevaluated properties are not allowed ('clock-names' was unexpected)
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/1674108674-8392-2-git-send-email-quic_srivasam@quicinc.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
 
