@@ -2,164 +2,318 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 10F5C673BFF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 15:30:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D349673C0E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 15:33:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229862AbjASOaK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Jan 2023 09:30:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49660 "EHLO
+        id S230114AbjASOdN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Jan 2023 09:33:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231612AbjASO2u (ORCPT
+        with ESMTP id S231508AbjASOcz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Jan 2023 09:28:50 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E8A982D72;
-        Thu, 19 Jan 2023 06:28:11 -0800 (PST)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30JDtCPM007859;
-        Thu, 19 Jan 2023 14:28:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=7xRvwaEisCkBO6uMLPK1HkqxKLEGDfsEwaD0lWMlcsU=;
- b=WonlJu9GpWljSWHAbZwTiRvQYyE66AK5JsPZDLaAVshHMla1Ojjvc8WG9stCwsWp0b4d
- wtGE8Dn4QyK3UZLEz9UA3ZeqF63LDnFCN0ytB4olHtER3m/px+PQATv5z2rGaEZMv23D
- Paej+tO7uMU6rk1xBsAqknc3J3J8YVET6R0miwo8T4M4VwDwg9il7nFaGP/we5nH5FzZ
- g089NAM6wogIadcAwYTK+HJRolXHPTl7u3VWyk6DOihCPzyqwzfQEH2YcjnX+pIO25Rn
- sj1y+NOlSoIjdJKCWnT2O/hGCVRofOq8Gn4FE7hkoN6Pf0Q/OKrdLygEUXoItkYThvRp qg== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n75w3g5uh-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 19 Jan 2023 14:28:08 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30JES7BS009065
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 19 Jan 2023 14:28:07 GMT
-Received: from vpolimer-linux.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Thu, 19 Jan 2023 06:28:01 -0800
-From:   Vinod Polimera <quic_vpolimer@quicinc.com>
-To:     <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>
-CC:     Vinod Polimera <quic_vpolimer@quicinc.com>,
-        <linux-kernel@vger.kernel.org>, <robdclark@gmail.com>,
-        <dianders@chromium.org>, <swboyd@chromium.org>,
-        <quic_kalyant@quicinc.com>, <dmitry.baryshkov@linaro.org>,
-        <quic_khsieh@quicinc.com>, <quic_vproddut@quicinc.com>,
-        <quic_bjorande@quicinc.com>, <quic_abhinavk@quicinc.com>,
-        <quic_sbillaka@quicinc.com>
-Subject: [PATCH Resend v11 15/15] drm/msm/disp/dpu: update dpu_enc crtc state on crtc enable/disable during self refresh
-Date:   Thu, 19 Jan 2023 19:56:33 +0530
-Message-ID: <1674138393-475-16-git-send-email-quic_vpolimer@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1674138393-475-1-git-send-email-quic_vpolimer@quicinc.com>
-References: <1674138393-475-1-git-send-email-quic_vpolimer@quicinc.com>
+        Thu, 19 Jan 2023 09:32:55 -0500
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id F144C211C;
+        Thu, 19 Jan 2023 06:32:04 -0800 (PST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 390C5176A;
+        Thu, 19 Jan 2023 06:32:46 -0800 (PST)
+Received: from [10.57.75.229] (unknown [10.57.75.229])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B1BA13F445;
+        Thu, 19 Jan 2023 06:32:01 -0800 (PST)
+Message-ID: <a6a543d5-4623-2010-68e3-ea30b4401047@arm.com>
+Date:   Thu, 19 Jan 2023 14:31:59 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ztp5r9OANjaLqnvdyRWV7D9FQ94fNnr1
-X-Proofpoint-GUID: ztp5r9OANjaLqnvdyRWV7D9FQ94fNnr1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-19_09,2023-01-19_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
- impostorscore=0 lowpriorityscore=0 adultscore=0 clxscore=1015 mlxscore=0
- spamscore=0 priorityscore=1501 malwarescore=0 suspectscore=0 phishscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301190115
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.6.1
+Subject: Re: [PATCH v17 2/9] Coresight: Add coresight TPDM source driver
+To:     Mao Jinlong <quic_jinlmao@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>
+References: <20230117145708.16739-1-quic_jinlmao@quicinc.com>
+ <20230117145708.16739-3-quic_jinlmao@quicinc.com>
+From:   Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <20230117145708.16739-3-quic_jinlmao@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Populate the enocder software structure to reflect the updated
-crtc appropriately during crtc enable/disable for a new commit
-while taking care of the self refresh transitions when crtc
-disable is triggered from the drm self refresh library.
+Hi Mao Jinolong,
 
-Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 31 ++++++++++++++++++++++++++-----
- 1 file changed, 26 insertions(+), 5 deletions(-)
+On 17/01/2023 14:57, Mao Jinlong wrote:
+> Add driver to support Coresight device TPDM (Trace, Profiling and
+> Diagnostics Monitor). TPDM is a monitor to collect data from
+> different datasets. This change is to add probe/enable/disable
+> functions for tpdm source.
+> 
+> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+> ---
+>   drivers/hwtracing/coresight/Kconfig          |  12 ++
+>   drivers/hwtracing/coresight/Makefile         |   1 +
+>   drivers/hwtracing/coresight/coresight-core.c |   5 +-
+>   drivers/hwtracing/coresight/coresight-tpdm.c | 149 +++++++++++++++++++
+>   drivers/hwtracing/coresight/coresight-tpdm.h |  26 ++++
+>   include/linux/coresight.h                    |   1 +
+>   6 files changed, 193 insertions(+), 1 deletion(-)
+>   create mode 100644 drivers/hwtracing/coresight/coresight-tpdm.c
+>   create mode 100644 drivers/hwtracing/coresight/coresight-tpdm.h
+> 
+> diff --git a/drivers/hwtracing/coresight/Kconfig b/drivers/hwtracing/coresight/Kconfig
+> index ba035d7894e0..e2debad59608 100644
+> --- a/drivers/hwtracing/coresight/Kconfig
+> +++ b/drivers/hwtracing/coresight/Kconfig
+> @@ -213,4 +213,16 @@ config ULTRASOC_SMB
+>   
+>   	  To compile this driver as a module, choose M here: the module will be
+>   	  called ultrasoc-smb.
+> +
+> +config CORESIGHT_TPDM
+> +	tristate "CoreSight Trace, Profiling & Diagnostics Monitor driver"
+> +	select CORESIGHT_LINKS_AND_SINKS
+> +	help
+> +	  This driver provides support for configuring monitor. Monitors are
+> +	  primarily responsible for data set collection and support the
+> +	  ability to collect any permutation of data set types.
+> +
+> +	  To compile this driver as a module, choose M here: the module will be
+> +	  called coresight-tpdm.
+> +
+>   endif
+> diff --git a/drivers/hwtracing/coresight/Makefile b/drivers/hwtracing/coresight/Makefile
+> index 80f99d915bc9..c637376e0efd 100644
+> --- a/drivers/hwtracing/coresight/Makefile
+> +++ b/drivers/hwtracing/coresight/Makefile
+> @@ -25,6 +25,7 @@ obj-$(CONFIG_CORESIGHT_CPU_DEBUG) += coresight-cpu-debug.o
+>   obj-$(CONFIG_CORESIGHT_CATU) += coresight-catu.o
+>   obj-$(CONFIG_CORESIGHT_CTI) += coresight-cti.o
+>   obj-$(CONFIG_CORESIGHT_TRBE) += coresight-trbe.o
+> +obj-$(CONFIG_CORESIGHT_TPDM) += coresight-tpdm.o
+>   coresight-cti-y := coresight-cti-core.o	coresight-cti-platform.o \
+>   		   coresight-cti-sysfs.o
+>   obj-$(CONFIG_ULTRASOC_SMB) += ultrasoc-smb.o
+> diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/hwtracing/coresight/coresight-core.c
+> index 5eb013f49a0d..a798008ac56e 100644
+> --- a/drivers/hwtracing/coresight/coresight-core.c
+> +++ b/drivers/hwtracing/coresight/coresight-core.c
+> @@ -1061,7 +1061,8 @@ static int coresight_validate_source(struct coresight_device *csdev,
+>   	}
+>   
+>   	if (subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_PROC &&
+> -	    subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE) {
+> +	    subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE &&
+> +	    subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_OTHERS) {
+>   		dev_err(&csdev->dev, "wrong device subtype in %s\n", function);
+>   		return -EINVAL;
+>   	}
+> @@ -1130,6 +1131,7 @@ int coresight_enable(struct coresight_device *csdev)
+>   		per_cpu(tracer_path, cpu) = path;
+>   		break;
+>   	case CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE:
+> +	case CORESIGHT_DEV_SUBTYPE_SOURCE_OTHERS:
+>   		/*
+>   		 * Use the hash of source's device name as ID
+>   		 * and map the ID to the pointer of the path.
+> @@ -1179,6 +1181,7 @@ void coresight_disable(struct coresight_device *csdev)
+>   		per_cpu(tracer_path, cpu) = NULL;
+>   		break;
+>   	case CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE:
+> +	case CORESIGHT_DEV_SUBTYPE_SOURCE_OTHERS:
+>   		hash = hashlen_hash(hashlen_string(NULL, dev_name(&csdev->dev)));
+>   		/* Find the path by the hash. */
+>   		path = idr_find(&path_idr, hash);
+> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
+> new file mode 100644
+> index 000000000000..95dbf4badfd2
+> --- /dev/null
+> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
+> @@ -0,0 +1,149 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include <linux/amba/bus.h>
+> +#include <linux/bitmap.h>
+> +#include <linux/coresight.h>
+> +#include <linux/coresight-pmu.h>
+> +#include <linux/device.h>
+> +#include <linux/err.h>
+> +#include <linux/fs.h>
+> +#include <linux/io.h>
+> +#include <linux/kernel.h>
+> +#include <linux/module.h>
+> +#include <linux/of.h>
+> +
+> +#include "coresight-priv.h"
+> +#include "coresight-tpdm.h"
+> +
+> +DEFINE_CORESIGHT_DEVLIST(tpdm_devs, "tpdm");
+> +
+> +/* TPDM enable operations */
+> +static int tpdm_enable(struct coresight_device *csdev,
+> +		       struct perf_event *event, u32 mode)
+> +{
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
+> +
+> +	spin_lock(&drvdata->spinlock);
+> +	if (drvdata->enable) {
+> +		spin_unlock(&drvdata->spinlock);
+> +		return -EBUSY;
+> +	}
+> +
+> +	drvdata->enable = true;
+> +	spin_unlock(&drvdata->spinlock);
+> +
+> +	dev_dbg(drvdata->dev, "TPDM tracing enabled\n");
+> +	return 0;
+> +}
+> +
+> +/* TPDM disable operations */
+> +static void tpdm_disable(struct coresight_device *csdev,
+> +			 struct perf_event *event)
+> +{
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
+> +
+> +	spin_lock(&drvdata->spinlock);
+> +	if (!drvdata->enable) {
+> +		spin_unlock(&drvdata->spinlock);
+> +		return;
+> +	}
+> +
+> +	drvdata->enable = false;
+> +	spin_unlock(&drvdata->spinlock);
+> +
+> +	dev_dbg(drvdata->dev, "TPDM tracing disabled\n");
+> +}
+> +
+> +static const struct coresight_ops_source tpdm_source_ops = {
+> +	.enable		= tpdm_enable,
+> +	.disable	= tpdm_disable,
+> +};
+> +
+> +static const struct coresight_ops tpdm_cs_ops = {
+> +	.source_ops	= &tpdm_source_ops,
+> +};
+> +
+> +static int tpdm_probe(struct amba_device *adev, const struct amba_id *id)
+> +{
+> +	void __iomem *base;
+> +	struct device *dev = &adev->dev;
+> +	struct coresight_platform_data *pdata;
+> +	struct tpdm_drvdata *drvdata;
+> +	struct coresight_desc desc = { 0 };
+> +
+> +	pdata = coresight_get_platform_data(dev);
+> +	if (IS_ERR(pdata))
+> +		return PTR_ERR(pdata);
+> +	adev->dev.platform_data = pdata;
+> +
+> +	/* driver data*/
+> +	drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
+> +	if (!drvdata)
+> +		return -ENOMEM;
+> +	drvdata->dev = &adev->dev;
+> +	dev_set_drvdata(dev, drvdata);
+> +
+> +	base = devm_ioremap_resource(dev, &adev->res);
+> +	if (IS_ERR(base))
+> +		return PTR_ERR(base);
+> +
+> +	drvdata->base = base;
+> +
+> +	/* Set up coresight component description */
+> +	desc.name = coresight_alloc_device_name(&tpdm_devs, dev);
+> +	if (!desc.name)
+> +		return -ENOMEM;
+> +	desc.type = CORESIGHT_DEV_TYPE_SOURCE;
+> +	desc.subtype.source_subtype = CORESIGHT_DEV_SUBTYPE_SOURCE_OTHERS;
+> +	desc.ops = &tpdm_cs_ops;
+> +	desc.pdata = adev->dev.platform_data;
+> +	desc.dev = &adev->dev;
+> +	desc.access = CSDEV_ACCESS_IOMEM(base);
+> +	drvdata->csdev = coresight_register(&desc);
+> +	if (IS_ERR(drvdata->csdev))
+> +		return PTR_ERR(drvdata->csdev);
+> +
+> +	spin_lock_init(&drvdata->spinlock);
+> +	/* Decrease pm refcount when probe is done.*/
+> +	pm_runtime_put(&adev->dev);
+> +
+> +	return 0;
+> +}
+> +
+> +static void __exit tpdm_remove(struct amba_device *adev)
+> +{
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(&adev->dev);
+> +
+> +	coresight_unregister(drvdata->csdev);
+> +}
+> +
+> +/*
+> + * Different TPDM has different periph id.
+> + * The difference is 0-7 bits' value. So ignore 0-7 bits.
+> + */
+> +static struct amba_id tpdm_ids[] = {
+> +	{
+> +		.id = 0x000f0e00,
+> +		.mask = 0x000fff00,
+> +	},
+> +	{ 0, 0},
+> +};
+> +
+> +static struct amba_driver tpdm_driver = {
+> +	.drv = {
+> +		.name   = "coresight-tpdm",
+> +		.owner	= THIS_MODULE,
+> +		.suppress_bind_attrs = true,
+> +	},
+> +	.probe          = tpdm_probe,
+> +	.id_table	= tpdm_ids,
+> +	.remove		= tpdm_remove,
+> +};
+> +
+> +module_amba_driver(tpdm_driver);
+> +
+> +MODULE_LICENSE("GPL v2");
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index d513aeb4..e8e456a 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -1013,14 +1013,23 @@ static void dpu_crtc_disable(struct drm_crtc *crtc,
- 									      crtc);
- 	struct dpu_crtc *dpu_crtc = to_dpu_crtc(crtc);
- 	struct dpu_crtc_state *cstate = to_dpu_crtc_state(crtc->state);
--	struct drm_encoder *encoder;
-+	struct drm_encoder *encoder = NULL;
- 	unsigned long flags;
- 	bool release_bandwidth = false;
- 
- 	DRM_DEBUG_KMS("crtc%d\n", crtc->base.id);
- 
--	if (old_crtc_state->self_refresh_active)
-+	/* If disable is triggered while in self refresh mode,
-+	 * reset the encoder software state so that in enable
-+	 * it won't trigger a warn while assigning crtc.
-+	 */
-+	if (old_crtc_state->self_refresh_active) {
-+		drm_for_each_encoder_mask(encoder, crtc->dev,
-+					old_crtc_state->encoder_mask) {
-+			dpu_encoder_assign_crtc(encoder, NULL);
-+		}
- 		return;
-+	}
- 
- 	/* Disable/save vblank irq handling */
- 	drm_crtc_vblank_off(crtc);
-@@ -1033,7 +1042,14 @@ static void dpu_crtc_disable(struct drm_crtc *crtc,
- 		 */
- 		if (dpu_encoder_get_intf_mode(encoder) == INTF_MODE_VIDEO)
- 			release_bandwidth = true;
--		dpu_encoder_assign_crtc(encoder, NULL);
-+
-+		/*
-+		 * If disable is triggered during psr active(e.g: screen dim in PSR),
-+		 * we will need encoder->crtc connection to process the device sleep &
-+		 * preserve it during psr sequence.
-+		 */
-+		if (!crtc->state->self_refresh_active)
-+			dpu_encoder_assign_crtc(encoder, NULL);
- 	}
- 
- 	/* wait for frame_event_done completion */
-@@ -1081,6 +1097,9 @@ static void dpu_crtc_enable(struct drm_crtc *crtc,
- 	struct dpu_crtc *dpu_crtc = to_dpu_crtc(crtc);
- 	struct drm_encoder *encoder;
- 	bool request_bandwidth = false;
-+	struct drm_crtc_state *old_crtc_state;
-+
-+	old_crtc_state = drm_atomic_get_old_crtc_state(state, crtc);
- 
- 	pm_runtime_get_sync(crtc->dev->dev);
- 
-@@ -1103,8 +1122,10 @@ static void dpu_crtc_enable(struct drm_crtc *crtc,
- 	trace_dpu_crtc_enable(DRMID(crtc), true, dpu_crtc);
- 	dpu_crtc->enabled = true;
- 
--	drm_for_each_encoder_mask(encoder, crtc->dev, crtc->state->encoder_mask)
--		dpu_encoder_assign_crtc(encoder, crtc);
-+	if (!old_crtc_state->self_refresh_active) {
-+		drm_for_each_encoder_mask(encoder, crtc->dev, crtc->state->encoder_mask)
-+			dpu_encoder_assign_crtc(encoder, crtc);
-+	}
- 
- 	/* Enable/restore vblank irq handling */
- 	drm_crtc_vblank_on(crtc);
--- 
-2.7.4
+I get checkpatch warnings with the line above:
+
+WARNING: Prefer "GPL" over "GPL v2" - see commit bf7fbeeae6db ("module: 
+Cure the MODULE_LICENSE "GPL" vs. "GPL v2" bogosity")
+#242: FILE: drivers/hwtracing/coresight/coresight-tpdm.c:148:
++MODULE_LICENSE("GPL v2");
+
+I get the above WARNING with checkpatch. Are you able to respin the 
+series modifying the above to "GPL".
+
+Fyi, "GPL v2" and "GPL" mean the same in terms of the MODULE_LICENSE()
+and the latter is recommended. See, Documentation/process/license-rules.rst
+
+Are you able to respin this patch alone and send it with the change ?
+
+Suzuki
+
 
