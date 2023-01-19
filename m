@@ -2,101 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 032E867426C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 20:12:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7224967426E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 20:12:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231339AbjASTL7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Jan 2023 14:11:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53688 "EHLO
+        id S231360AbjASTMZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Jan 2023 14:12:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52852 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231314AbjASTLf (ORCPT
+        with ESMTP id S230143AbjASTLm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Jan 2023 14:11:35 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0ED9495762;
-        Thu, 19 Jan 2023 11:10:56 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id B4BAA61D57;
-        Thu, 19 Jan 2023 19:09:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61705C433EF;
-        Thu, 19 Jan 2023 19:09:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1674155361;
-        bh=L96CiyxDqJQ1R3tSGxtY8MIZKLSX74xqYGN6oYu3uJw=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=pvwiCEhA4FKeukST+Pm8eh/01rTbHQ19Mcd3hpODmzZ2H76O6lZZ0qzsXVMkTK8Pd
-         WffM7EFzIMPUtEQkB8IiS2MyzPDU0r/y9Qcb393Bix5vyGEhd0jAZW4x+MqVSaiJuu
-         WmN0Zakt4hsyNtLCebhnns02keHskm3gYg9H+vodk+aEn8tckO713zN7j24IB+Aujy
-         c2RPAQCfTLBO/+Yhjk5ixriW5u8XKzfgpymWu1p84qQcM5oVS565p5rMZSzNTP+CTK
-         zaXCoTtjKlm1Vtq9ETIPeg6A9vrWiXHVpaunCNEhj06Ul5NrmCZ7ipg3eOzmG/2xSc
-         MGWT3q9pDLc9A==
-From:   Will Deacon <will@kernel.org>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        phone-devel@vger.kernel.org
-Cc:     catalin.marinas@arm.com, kernel-team@android.com,
-        Will Deacon <will@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Thierry Reding <treding@nvidia.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, Lux Aliaga <they@mint.lgbt>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        devicetree@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Melody Olvera <quic_molvera@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        iommu@lists.linux.dev, ~postmarketos/upstreaming@lists.sr.ht,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: Re: [PATCH v5 0/4] arm64: dts: qcom: sm6125: Enable APPS SMMU
-Date:   Thu, 19 Jan 2023 19:08:40 +0000
-Message-Id: <167415032929.2381501.12211116927490999924.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20221222193254.126925-1-marijn.suijten@somainline.org>
-References: <20221222193254.126925-1-marijn.suijten@somainline.org>
+        Thu, 19 Jan 2023 14:11:42 -0500
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2C1C74EB3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 11:11:02 -0800 (PST)
+Received: by mail-ej1-x629.google.com with SMTP id ss4so8194154ejb.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 11:11:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5DgmdxISYxAGF0PfZ9BcThxW09Vbi+MCyPhr6BazLtw=;
+        b=dF8f7+PhLfU04sVIxxubHrCV5k3rKFiQPk/NlLGGZjXyAhv59R5ETnUwaQSVV6o5oq
+         LLCqFaMNdZ4DUMCLO81WV675QdK6ZpZYVTRtAdaHe/3bIItQGayb3kW3vnY4MmSBq9CB
+         hXbQ/cZrxPcXxwM5i/SjMTGaY3kRebVG086IZp7fjtiXc+FBAjOQN8Y0K7nngY1hr8dP
+         bCltMfxrQ5U2GcnTVKss5uS7PrfUaeBttESr6oHzodTXO6Q9sdlpbp9aUzIP893zxEsi
+         NClVFM/dzDrrxhhOiFRuEpqhM+E8592P0yWU6NGiLy8CECmyOGrfakA4ev+LuV6mMYM1
+         1/2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5DgmdxISYxAGF0PfZ9BcThxW09Vbi+MCyPhr6BazLtw=;
+        b=3J65tU4T+imZ4hUlqg78QI/CxDniZyQWTqAyd12Mmtoemyoo6LOvRJHCW8Q2dX0OLZ
+         mtWWv9uk3fBaafksFJX2Chmlj1ZTg5HEjEbnSHHk14/ef/qHyls+rAikt69Sqi5WaSTs
+         veYpQ1DSWBdEHh1/YrauwUb8xfsNoJhuHer2ocpkWSDkM1VfB8TRfPOxfO36h28gYzV4
+         MzTCXHX9h13ef2V68fHs0xyVWPHvCRq1dzC4F2g6KBh7aBvp9AIjQYIjEzmFEa3Fa5vu
+         XfxWcegfBi0uHO6WtFEqWueHwCQpQejB4UFKObRE/1SAvkcjSx4O4ij4bw0QudImSoWF
+         iC8w==
+X-Gm-Message-State: AFqh2krhsrYCctr0VK3e3GHnCjg4xp3YQerG6nP41Bgdgk92uHZdkD+y
+        hhQqYCe6eO6AMQeB45KjN/8DTQ==
+X-Google-Smtp-Source: AMrXdXv9JqeohpG7e780c+S2XWGSDjRglnr6mSNdrJpNsLuGu/s9a2hyjayxnK0PpkQB3Nq/m/u6dA==
+X-Received: by 2002:a17:907:c019:b0:867:ef3f:dd85 with SMTP id ss25-20020a170907c01900b00867ef3fdd85mr9077419ejc.56.1674155407507;
+        Thu, 19 Jan 2023 11:10:07 -0800 (PST)
+Received: from [192.168.1.101] (abyk37.neoplus.adsl.tpnet.pl. [83.9.30.37])
+        by smtp.gmail.com with ESMTPSA id d14-20020a170906304e00b0077077c62cadsm16677521ejd.31.2023.01.19.11.10.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 Jan 2023 11:10:06 -0800 (PST)
+Message-ID: <fc97247a-300f-dc46-aaa4-932259702136@linaro.org>
+Date:   Thu, 19 Jan 2023 20:10:04 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v2 1/2] clk: qcom: smd: Add XO RPM clocks for
+ MSM8226/MSM8974
+Content-Language: en-US
+To:     Rayyan Ansari <rayyan@ansari.sh>, linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230119190534.317041-1-rayyan@ansari.sh>
+ <20230119190534.317041-2-rayyan@ansari.sh>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230119190534.317041-2-rayyan@ansari.sh>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 22 Dec 2022 20:32:50 +0100, Marijn Suijten wrote:
-> Add APPS SMMU to SM6125 dtsi and use it in SDHCI/USB nodes.
+
+
+On 19.01.2023 20:05, Rayyan Ansari wrote:
+> Add the XO and XO_A clocks to the MSM8974 clock list, which is also
+> used on MSM8226.
 > 
-> Changes since v4:
+> Signed-off-by: Rayyan Ansari <rayyan@ansari.sh>
+> ---
+>  drivers/clk/qcom/clk-smd-rpm.c | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
-> - Use hexadecimal 0x0 for iommu mask;
-> - Add sm6125 to the dt-bindings list without clocks, now depending on:
->   https://lore.kernel.org/linux-arm-kernel/20221222092355.74586-1-krzysztof.kozlowski@linaro.org/
-> 
-> [...]
+> diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rpm.c
+> index fea505876855..42ea3bb37f63 100644
+> --- a/drivers/clk/qcom/clk-smd-rpm.c
+> +++ b/drivers/clk/qcom/clk-smd-rpm.c
+> @@ -549,6 +549,8 @@ DEFINE_CLK_SMD_RPM_XO_BUFFER_PINCTRL(msm8974, cxo_a1_pin, cxo_a1_a_pin, 5, 19200
+>  DEFINE_CLK_SMD_RPM_XO_BUFFER_PINCTRL(msm8974, cxo_a2_pin, cxo_a2_a_pin, 6, 19200000);
+>  
+>  static struct clk_smd_rpm *msm8974_clks[] = {
+> +	[RPM_SMD_XO_CLK_SRC] 		= &sdm660_bi_tcxo,
+> +	[RPM_SMD_XO_A_CLK_SRC] 		= &sdm660_bi_tcxo_a,
+I think that's gonna conflict with Dmitry's recent cleanup..
 
-Applied first patch to will (for-joerg/arm-smmu/bindings), thanks!
-
-[1/4] dt-bindings: arm-smmu: Document smmu-500 binding for SM6125
-      https://git.kernel.org/will/c/c940c8787929
-
-Cheers,
--- 
-Will
-
-https://fixes.arm64.dev
-https://next.arm64.dev
-https://will.arm64.dev
+Konrad
+>  	[RPM_SMD_PNOC_CLK]		= &msm8916_pcnoc_clk,
+>  	[RPM_SMD_PNOC_A_CLK]		= &msm8916_pcnoc_a_clk,
+>  	[RPM_SMD_SNOC_CLK]		= &msm8916_snoc_clk,
