@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3719F673A14
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 14:26:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5AA74673A2D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 14:29:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230351AbjASN0Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Jan 2023 08:26:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36328 "EHLO
+        id S230503AbjASN3r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Jan 2023 08:29:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230369AbjASN0Y (ORCPT
+        with ESMTP id S229608AbjASN3q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Jan 2023 08:26:24 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3C813ABD
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 05:26:22 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id m5-20020a05600c4f4500b003db03b2559eso1252823wmq.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 05:26:22 -0800 (PST)
+        Thu, 19 Jan 2023 08:29:46 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 938617928A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 05:29:43 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id k16so1538191wms.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 05:29:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=liF/fJsraKfm9Mh6BETv21w34Yvp7QKUx+OiIsQvbek=;
-        b=RTx+nVav6lWlpATz2R0+33QBCCwdDVZpJNN2IzIHcJguzSgbjxAIKqa7Opp+LawcFz
-         VzxoBCy1LrqcV/UIZ6kBj2/mwrw4c9X3sJRsljzkv3xxtazRGFDAsWjNV+Qjyc9PWxQu
-         b9jOlldhOp+/Ws+k03g/T1GaLPo1US/aP/tWSJu/y5XG/9Iryw7Szf4rMvFFtHzX0seS
-         B2hmCmN1Etg8KoOikAuBCq2ge7eLxYDZczlqqGAzVVBa1cUbmpvAj+ZNn1Z1zRqqAjXE
-         /2cHV5u1uRZWVyfP3XC1XGtF5sngK7yok6oFGqN7KCCiNpVjo+YEjqnwfq0E84bm6Hyv
-         rSdw==
+        bh=C3dW0pBIAKxEtxU2RORikWEFqQVlFjW5pcOn+Qp2gyM=;
+        b=VNpjeXq3OZVrzKoFwoENfxprV0c/LHQ/ja2SbF6Ueo9L9iG5dfVKrDwgsBaGLiP0NX
+         htavdbNyI3VCb3Fc4cJNZB9kOP9FUqb/WznH7/oRBN8dQktYvjC0gCRALkv4fm1j+42a
+         SGzS53uwoHPZ0AzTPwdVXHvt5tCtoOx2OHlRkDCwsye+4WaGN0jkjXTA8T4q164+duOq
+         xWDirg55Ok5y2QwhoSSYJJNU47Gmy/v9QSA+FAgshFd2qwKAz+g3xruyi3IBxqSkZy16
+         AxZA6+bN6ZE/WjSPIMk9cd7VjTMYwX9AsZfLkk0KATIQz/qKlwpt3vLBRltnnuevNPFT
+         fJ7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=liF/fJsraKfm9Mh6BETv21w34Yvp7QKUx+OiIsQvbek=;
-        b=q2QWmGgVAblUcFeZOcaRxzz5tDf9dL9chj/SUg+VEpigJx5KrTS9B3HqI7xuAHwpNP
-         JSmfNyCUj+jRn27r151NSO2awgsFbM2dlKWKDVxY7cpI+24sa41OJRWKApozf4U2pWWp
-         lJhZb003+t1j46QComI2zU5suNyhujWsm9+lJco23FSdeZspB3p3x7Qcps6QeP/sI+S2
-         5KbdGNMJeYRaWO8RrWl8mxzS6uktJyXFFw5Sw1wyD50mGPPqd3aKZcj02oQBWooxOOsS
-         44sfTCmk+qA3QZjGbuICUL6IWRsRcsU1Qag2XemSEcYkCn+BHs3+O2Ada/RRXaKneVRz
-         X4oA==
-X-Gm-Message-State: AFqh2kp6AhoYn2/7Cr17B0Z6LXinHXNX/xvJThwH7MW6JCjZgxKrMIjU
-        mml0PHVjF54Iq2o667YCG/yLlQ==
-X-Google-Smtp-Source: AMrXdXswERYqjY+bheQCm0Hc0ktL/bw552J6U/3HxxcEPZmxwkI00Q5qpa1OapFFY2kT2djlObY54g==
-X-Received: by 2002:a05:600c:539a:b0:3db:419:8d3b with SMTP id hg26-20020a05600c539a00b003db04198d3bmr10507790wmb.39.1674134781449;
-        Thu, 19 Jan 2023 05:26:21 -0800 (PST)
+        bh=C3dW0pBIAKxEtxU2RORikWEFqQVlFjW5pcOn+Qp2gyM=;
+        b=nQRc9uqgx5SOAqo1KN+NvIaJ2nZXsqY1IV+fUma348vjOuJaeFPdnZSc6wouC+n6gx
+         79mvD8qT4AvDwWaElYWZHI9qXEx5l9MnFxNm+TnxmRzP56Baeu+OrgmAgNx03TNWq+iq
+         aIsqAi8czS34JGGa5ZOjbJ3xr4OTiFZWF3dRfYLLDB2fMM/3lEs5f7kBmI9XLUCL4Atg
+         d32AS8QLtTOh2/WPFNE8ICZPd/eqSWdT3w8FXnBeOn4nwTVBGXwt+TFn+3jW0HD2CLBg
+         l80bs1TDcvn1v0HbguAFHo7yO9l/9U2jb2FK/SpoGp+FlYZOE7/N55Xoh5VFQP9mjJ/V
+         VgEw==
+X-Gm-Message-State: AFqh2kraAbyVi0aF4FgE0OX5gZzX3Ag+niLPrBzE72kAaZKbzEk1a83J
+        r3P4JwMDHbIfT/hXn0Q0lLaRlg==
+X-Google-Smtp-Source: AMrXdXutMqkmGbFSaII+0b3BWhZKLvebXXTCpEBdUITKyeT6dH7yiekgvhHNEYUi/sJ6hmCQbPDkfg==
+X-Received: by 2002:a05:600c:5114:b0:3db:254e:59a9 with SMTP id o20-20020a05600c511400b003db254e59a9mr1687123wms.15.1674134982119;
+        Thu, 19 Jan 2023 05:29:42 -0800 (PST)
 Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id bp28-20020a5d5a9c000000b00273cd321a1bsm33847822wrb.107.2023.01.19.05.26.19
+        by smtp.gmail.com with ESMTPSA id z4-20020a1cf404000000b003da2932bde0sm5538891wma.23.2023.01.19.05.29.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 Jan 2023 05:26:21 -0800 (PST)
-Message-ID: <16d26962-f55b-d420-e70e-bb832ca088ed@linaro.org>
-Date:   Thu, 19 Jan 2023 14:26:19 +0100
+        Thu, 19 Jan 2023 05:29:41 -0800 (PST)
+Message-ID: <a3da518d-0247-e36c-1161-f82fddd76476@linaro.org>
+Date:   Thu, 19 Jan 2023 14:29:39 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.0
-Subject: Re: [PATCH v3 2/7] arm64: dts: qcom: sc7280: Add sound node
+Subject: Re: [PATCH v3 3/7] arm64: dts: qcom: sc7280: Add LPASS PIL node
 Content-Language: en-US
 To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
         vkoul@kernel.org, agross@kernel.org, andersson@kernel.org,
@@ -67,9 +67,9 @@ To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
         alsa-devel@alsa-project.org, quic_rjendra@quicinc.com,
         konrad.dybcio@somainline.org, mka@chromium.org
 References: <1674131227-26456-1-git-send-email-quic_srivasam@quicinc.com>
- <1674131227-26456-3-git-send-email-quic_srivasam@quicinc.com>
+ <1674131227-26456-4-git-send-email-quic_srivasam@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1674131227-26456-3-git-send-email-quic_srivasam@quicinc.com>
+In-Reply-To: <1674131227-26456-4-git-send-email-quic_srivasam@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,14 +83,59 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 19/01/2023 13:27, Srinivasa Rao Mandadapu wrote:
-> Add sound node for sc7280 based audioreach platforms.
+> Add LPASS PIL node for sc7280 based audioreach platforms.
 > 
-> Include audioreach dtsi into crd-rev3 platform specific dts file.
-> Also remove phandle to sound node, as audio routing is same as
-> audioreach specific dtsi file.
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Tested-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+> ---
+>  .../qcom/sc7280-herobrine-audioreach-wcd9385.dtsi  |  4 +
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi               | 95 ++++++++++++++++++++++
+>  2 files changed, 99 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
+> index 7b3f7ee..81e0f3a 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
+> @@ -107,3 +107,7 @@
+>  		};
+>  	};
+>  };
+> +
+> +&remoteproc_adsp {
+> +	status = "okay";
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index 6908bca..08142047 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -8,6 +8,7 @@
+>  #include <dt-bindings/clock/qcom,dispcc-sc7280.h>
+>  #include <dt-bindings/clock/qcom,gcc-sc7280.h>
+>  #include <dt-bindings/clock/qcom,gpucc-sc7280.h>
+> +#include <dt-bindings/clock/qcom,lpass-sc7280.h>
+>  #include <dt-bindings/clock/qcom,lpassaudiocc-sc7280.h>
+>  #include <dt-bindings/clock/qcom,lpasscorecc-sc7280.h>
+>  #include <dt-bindings/clock/qcom,rpmh.h>
+> @@ -21,6 +22,7 @@
+>  #include <dt-bindings/power/qcom-rpmpd.h>
+>  #include <dt-bindings/reset/qcom,sdm845-aoss.h>
+>  #include <dt-bindings/reset/qcom,sdm845-pdc.h>
+> +#include <dt-bindings/soc/qcom,gpr.h>
+>  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+>  #include <dt-bindings/sound/qcom,lpass.h>
+>  #include <dt-bindings/thermal/thermal.h>
+> @@ -3439,6 +3441,99 @@
+>  			status = "disabled";
+>  		};
+>  
+> +		remoteproc_adsp: remoteproc@3000000 {
+> +			compatible = "qcom,sc7280-adsp-pil";
+> +			reg = <0 0x03000000 0 0x5000>, <0 0x0355b000 0 0x10>;
+> +			reg-names = "qdsp6ss_base", "lpass_efuse";
+> +
+> +			status = "disabled";
 
-Your subject does not match exactly your contents. Subject says you are
-adding sound node to all sc7280 boards. Commit does something else...
+Status is always the last property.
 
 
 Best regards,
