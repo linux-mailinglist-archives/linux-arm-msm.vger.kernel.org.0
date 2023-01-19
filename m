@@ -2,73 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2ECC16739FD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 14:23:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 237AD6739FF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 14:23:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229544AbjASNWu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Jan 2023 08:22:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34062 "EHLO
+        id S229796AbjASNXB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Jan 2023 08:23:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229966AbjASNWs (ORCPT
+        with ESMTP id S230406AbjASNWy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Jan 2023 08:22:48 -0500
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7060466EEA
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 05:22:41 -0800 (PST)
-Received: by mail-ej1-x62b.google.com with SMTP id ss4so5545642ejb.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 05:22:41 -0800 (PST)
+        Thu, 19 Jan 2023 08:22:54 -0500
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFB9483
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 05:22:52 -0800 (PST)
+Received: by mail-ej1-x633.google.com with SMTP id v6so5612515ejg.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 05:22:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=M5lFrlvCIHoFB2+uziz/1ge4iw3F4JUj7qisClGGYZE=;
-        b=BZyQsTr5ZebjrhxCYNrobbQBYaHncBi9ZTdl09BDOy/d3/0CNMz5/ewJezf59QRx2M
-         ijZ7Dv9RVwYCeUMqVQ0vIFeOoEF1lmaJ8QbGGPIT/Ab6jV+maIbW4msr6kY0a5wT6QHJ
-         05zkUwIjrOah3leYeVOfngbpKLUhbd/F39Apuj825I0KnSPIn1D/FY1VWfiKzk7U/AlS
-         OeY+kljH/TsTD/HmKje0dm7kDrXdiWgetHOy+AL/bD3Jgkw8Sdo+vWPuv/mCfJKhdQc2
-         cit750FVs8sscTMuSmiIdKBsj5wfQVLhBpV3aHaKWaJspkiwqvFZzm4kbmC9IJqoaJKG
-         POcg==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=5anTg9HNFSMINQ7lkO2Gxr/FAOhOJdyJakgcx2braz8=;
+        b=Sr/S1iw3IrT0j2JMfizhF1hi0ge6U4ge704ZnseaKhlDFY5THR/jV+DBfFg8L8j8jl
+         ky0jVpIcpnLhLImZb6zKj3m5qUZ9tbp8HK5V+COsafB/jKslQF8g0LT7QmwBpkpF4k7D
+         pUhmE/PFipQA61axtR2PmBxwycg9TYguIG8LyD0tNYbo+8gASojzp8GJXV50qgbNGnuj
+         jtREBtZi9hk23WT3cNLCUIn9W7Y5Qa0zwm5vg6sDyYmR2QT2++kjljGiXBuz/cMZ+5XB
+         UMFNESfqe3nOUH6eiYQ95dDJ7ZCXTds9rembXP9pgAhp61hole+b/3w2oOxEMOpWhNCm
+         +ypA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=M5lFrlvCIHoFB2+uziz/1ge4iw3F4JUj7qisClGGYZE=;
-        b=6SlLRNPpbEB6Tsa0kdTXtPjCt3++sGZZDkjO5MbLPXu80Kf+StWDnHXRfZkFggdrhS
-         T7jab4V5X7HdT+ant2tG89ITWRRYUQGd//PKnzIfWbUDAPDm7Ct6tzMsZknp2J4NmYVk
-         i7yqWEYk1ZV3axnleTKjKz4LLPwA466QQ8GNJOS0BqhfaRYm2rTew89/uoHSnc7aSuo0
-         1J4Ii6mtIY0Jw3CA5PKpie5SWaRdDh6VflH+PQvbw25uWoHMDn2yr/PjSNAsQgTJ+Kfk
-         yYZkKHiwK7m73XVtdb7BjYHSlhgmgGCdW9Xi1bKRp2IhIY5wpSXRDnGOwjmI1chzsvmL
-         VYcA==
-X-Gm-Message-State: AFqh2koxeU1JJyg76G1z/4thiQyc4AIvComUXivoA3ayQzRrGesax0tM
-        /jCaVsGd3Fp/LOl6xa7JN7c0lqZ4KzgEkEMF
-X-Google-Smtp-Source: AMrXdXte67q8fD3ofpSt16K0O4y/76/t1vXA+qk0uMaBlzCGEPaAUZSL9km91H6eh7t0eNEap7FqfQ==
-X-Received: by 2002:a17:906:60d0:b0:877:612e:516e with SMTP id f16-20020a17090660d000b00877612e516emr16289651ejk.61.1674134547974;
-        Thu, 19 Jan 2023 05:22:27 -0800 (PST)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5anTg9HNFSMINQ7lkO2Gxr/FAOhOJdyJakgcx2braz8=;
+        b=fsPLwwvr10u/qveGbWgBc9vq9XlmVq8MY1dl36pZg4mtaVc2iKBR/+jw3GX8LDSGZa
+         gx26nBl992k21bWbgbwzWqoo/bN+bMC/xf6LL5NJo4KCseki6i9KgEaINRanCIE/i2o0
+         SRpfm95QkzytdBhuUwqVf4UU3+WIl15LQ1sS/psfs8oOuGpgpPMuu0reZXlQ4ZyoOA6K
+         9u3FIDsOar2vUTnscEwTRKWAwnYkFggwoZf3o+PMUT6zubFrzoiNb3Xmm2XxP2di+tMY
+         24GiLN0AftWwMhJAWnII5xqhr90OVvnX8XgiafViUivMkD491+tpcLziwMpjkOKkX6Gw
+         UqGg==
+X-Gm-Message-State: AFqh2kpcg5m5MZDk3JAy1HjO0YDCZJRJwuwUTVCKtjjbTc+1WLJ8ilYK
+        9IMAgkvhEZuu7kwFBGLJ8nkUrA==
+X-Google-Smtp-Source: AMrXdXtGkEXt2SNCvuXKuJAmtxQDRSvIXylH4vkfWsqaVupSpfc+r11Nt55iuygkiTB5Isn4k5q+wg==
+X-Received: by 2002:a17:906:7152:b0:84d:1f00:e29 with SMTP id z18-20020a170906715200b0084d1f000e29mr26084660ejj.7.1674134571272;
+        Thu, 19 Jan 2023 05:22:51 -0800 (PST)
 Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id bt16-20020a0564020a5000b00482e0c55e2bsm15532646edb.93.2023.01.19.05.22.26
+        by smtp.gmail.com with ESMTPSA id 18-20020a170906311200b0084b89c66eb5sm16179883ejx.4.2023.01.19.05.22.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Jan 2023 05:22:27 -0800 (PST)
+        Thu, 19 Jan 2023 05:22:50 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH 6/6] ARM: dts: qcom: apq8064: use hdmi_phy for the MMCC's hdmipll clock
-Date:   Thu, 19 Jan 2023 15:22:19 +0200
-Message-Id: <20230119132219.2479775-7-dmitry.baryshkov@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH] ARM: dts: qcom: apq8064: add second DSI host and PHY
+Date:   Thu, 19 Jan 2023 15:22:49 +0200
+Message-Id: <20230119132249.2480022-1-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230119132219.2479775-1-dmitry.baryshkov@linaro.org>
-References: <20230119132219.2479775-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -81,26 +72,100 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Link hdmi_phy as a clock provider of "hdmipll" clock to the MMCC.
+Add second DSI host and PHY available on the APQ8064 platform.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm/boot/dts/qcom-apq8064.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/qcom-apq8064.dtsi | 69 ++++++++++++++++++++++++++++-
+ 1 file changed, 67 insertions(+), 2 deletions(-)
 
 diff --git a/arch/arm/boot/dts/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom-apq8064.dtsi
-index 82c795beb8a1..b7e5b45e1c04 100644
+index b7e5b45e1c04..3ae6abd85f3d 100644
 --- a/arch/arm/boot/dts/qcom-apq8064.dtsi
 +++ b/arch/arm/boot/dts/qcom-apq8064.dtsi
-@@ -867,7 +867,7 @@ mmcc: clock-controller@4000000 {
+@@ -865,8 +865,8 @@ mmcc: clock-controller@4000000 {
+ 				 <&gcc PLL8_VOTE>,
+ 				 <&dsi0_phy 1>,
  				 <&dsi0_phy 0>,
- 				 <0>,
- 				 <0>,
--				 <0>;
-+				 <&hdmi_phy>;
+-				 <0>,
+-				 <0>,
++				 <&dsi1_phy 1>,
++				 <&dsi1_phy 0>,
+ 				 <&hdmi_phy>;
  			clock-names = "pxo",
  				      "pll3",
- 				      "pll8_vote",
+@@ -1342,6 +1342,71 @@ dsi0_phy: phy@4700200 {
+ 			status = "disabled";
+ 		};
+ 
++		dsi1: dsi@5800000 {
++			compatible = "qcom,mdss-dsi-ctrl";
++			label = "MDSS DSI CTRL->0";
++			#address-cells = <1>;
++			#size-cells = <0>;
++			interrupts = <GIC_SPI 166 IRQ_TYPE_LEVEL_HIGH>;
++			reg = <0x05800000 0x200>;
++			reg-names = "dsi_ctrl";
++
++			clocks = <&mmcc DSI2_M_AHB_CLK>,
++				<&mmcc DSI2_S_AHB_CLK>,
++				<&mmcc AMP_AHB_CLK>,
++				<&mmcc DSI2_CLK>,
++				<&mmcc DSI2_BYTE_CLK>,
++				<&mmcc DSI2_PIXEL_CLK>,
++				<&mmcc DSI2_ESC_CLK>;
++			clock-names = "iface", "bus", "core_mmss",
++					"src", "byte", "pixel",
++					"core";
++
++			assigned-clocks = <&mmcc DSI2_BYTE_SRC>,
++					<&mmcc DSI2_ESC_SRC>,
++					<&mmcc DSI2_SRC>,
++					<&mmcc DSI2_PIXEL_SRC>;
++			assigned-clock-parents = <&dsi0_phy 0>,
++						<&dsi0_phy 0>,
++						<&dsi0_phy 1>,
++						<&dsi0_phy 1>;
++			syscon-sfpb = <&mmss_sfpb>;
++			phys = <&dsi1_phy>;
++			status = "disabled";
++
++			ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@0 {
++					reg = <0>;
++					dsi1_in: endpoint {
++					};
++				};
++
++				port@1 {
++					reg = <1>;
++					dsi1_out: endpoint {
++					};
++				};
++			};
++		};
++
++
++		dsi1_phy: dsi-phy@5800200 {
++			compatible = "qcom,dsi-phy-28nm-8960";
++			#clock-cells = <1>;
++			#phy-cells = <0>;
++
++			reg = <0x05800200 0x100>,
++				<0x05800300 0x200>,
++				<0x05800500 0x5c>;
++			reg-names = "dsi_pll", "dsi_phy", "dsi_phy_regulator";
++			clock-names = "iface", "ref";
++			clocks = <&mmcc DSI2_M_AHB_CLK>,
++				 <&pxo_board>;
++			status = "disabled";
++		};
+ 
+ 		mdp_port0: iommu@7500000 {
+ 			compatible = "qcom,apq8064-iommu";
 -- 
 2.39.0
 
