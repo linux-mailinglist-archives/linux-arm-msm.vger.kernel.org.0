@@ -2,168 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D47796735EC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 11:45:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 165F967360F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 11:51:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229644AbjASKpH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Jan 2023 05:45:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39164 "EHLO
+        id S230073AbjASKv2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Jan 2023 05:51:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230036AbjASKo6 (ORCPT
+        with ESMTP id S230266AbjASKvD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Jan 2023 05:44:58 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DEC644BD5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 02:44:57 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id b5so1468228wrn.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 02:44:57 -0800 (PST)
+        Thu, 19 Jan 2023 05:51:03 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD7EE717BD
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 02:50:31 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id bk16so1418896wrb.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 02:50:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=8xlnawePa78ICFwjfjsW90f7mFfyeG73gzlxTncqwyE=;
-        b=h5WDQK2D6C9l5TGsa7heKev8ShkmZ1JPY5cxwLtzRlVKbAZFrP1SjLeg6p7u0CzyX+
-         ZtI98ciCrs1G6ED70BKYjH1OQt1qjnvI0ruFbP3KmYzNKqmODOiSrIu/SS/4e1B1Ja5+
-         wLBlagSVGeherUSZGt2wnqhYfLeLmrYs/TVm6v9aNWTVzjgFf30B0wKbNCK3mI7LUGRZ
-         GCEtgyUbTxLKvPThn23sDnde6Q5JUoEnbJ6/W23yxrQFfZzsgw6ntkcyzuKOpOjDNE6/
-         dFiLBrO7Zg/s0EnMnMllp8N+jnRR8K4X1Al03LXNaNO8cYTZ6SM9xCElMxBS4u8YQxPt
-         IMRQ==
+        bh=Cf7yICQO9NaAanq9Gf/a43Gbk/UV6UR1wALLIkbHGrw=;
+        b=cR4nbnwlqsEA/NcHSP1YnS80mXVK+nQgb3VrQuZcccEcQxPZEyKt7ZtLkv0UDGGojh
+         cYYDC0HPnWbE8gvK2QZjxb2rn4UF3xrDs1r1C/uSjDNSanRD6V0BU+wXolKci2iGJlbm
+         C8jVyAf1YZi/oNNMHTnMbD/7j4L/2YS63F0XIT7HeMky0o43mX4CdUcB5FVC23Y+vd7G
+         BTRaqZ6awjew/6HY5Zyrkdi1oNL7A+Oj4rAIVafQqrMI/z8JPTnUd1DhQr9IyQRXrWmm
+         /u+9ADfL/rfd/Lm/47g+lj67XSaan8/8ACc/IxXy0s0oxsB11OLQhZdVdZXACoHHq76G
+         Sbew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8xlnawePa78ICFwjfjsW90f7mFfyeG73gzlxTncqwyE=;
-        b=qJLBbI33kCC3oa5uq4eXfUbkStmE1kyFPvgwedvpxoCvUWr1SzcNPcGYzbXOHzn/+g
-         xu18b92Gx7uM38bEeeqRAz+623cUingmHhKlSAV0WAQVUxaQNFrfVWhqywwxPoVSQfmH
-         jAlWzMoB/sp8KS0QXQfGQGhgpsBvV0RhAcH1OpJqv66Ejs+xFjx9vGakx8NTVzpzCCPp
-         6GLIupJVJVMdnmJEbhzgBkdMTuzgNcz8ervCzbmG5Dfryb7MoT1B2F9R06MiWUiZBDRT
-         wJlrP3m+l/51VitdVnBSWIOCM44yLFaopaaTZXfUrbibdbg4x1gKg9QGrQgVCf2+kRoN
-         cpKQ==
-X-Gm-Message-State: AFqh2kq+bWFgkN+izui/+s0vvfNDQsiuwpCwx4t0seX/UINZsUtmR8JF
-        IZvpkWOhtzIqhU3WOb7YzB7Vnw==
-X-Google-Smtp-Source: AMrXdXvel3nvZiaEnBT/xHs7rT2NUHqn9HRzAttFMuh2VrOKEUaH5uPNdNIHlLOFA6xljS1sQgnihw==
-X-Received: by 2002:a5d:68c5:0:b0:2bc:846a:8eb2 with SMTP id p5-20020a5d68c5000000b002bc846a8eb2mr8837850wrw.11.1674125096077;
-        Thu, 19 Jan 2023 02:44:56 -0800 (PST)
+        bh=Cf7yICQO9NaAanq9Gf/a43Gbk/UV6UR1wALLIkbHGrw=;
+        b=4JW0VxrpeR1ROdXdFJkr61Lz1/mH3Lr1nRBgHB9kRO9HjrlO80rTQ41h/1pe0T11Tb
+         P8nHBKlHXJikvFyMvbNJx92gxFDf7gn1zL/kODEuPGip3DJMqoYwzshhXhU8M7e+PGNC
+         ZPyw8iDQRRtQYDCxxCx1G8HFMZ6eiz3+Yql3h0m0nSj6n38JrHHeidDurvzObntBoUU1
+         zTL8Do1789C+wgroTiKIOB2jqlg5KLKOzLPlJYOlISokk7z8FBujn+YH5qDA3Y+HwDmH
+         HO841cjrCqJkLMOs1Vki+NPeNQi05UoOGw3j169qqVZ1W1Jjjw13LGcuUQjXmTvNU3hM
+         1scA==
+X-Gm-Message-State: AFqh2koYegVZKpNcabvDlujzMsoSHsNOpxy5T8SiYdm4lSOTGVDhdAeY
+        VtrkEIpjsUpDEybRpd7iUw0zog==
+X-Google-Smtp-Source: AMrXdXs26D5JmZyw8QpqvpCU4DEz1mdnfomAHI/Qw37hNyTda9/pEjzWEsXixDvMSOMkrJV+gcBZRQ==
+X-Received: by 2002:a5d:4588:0:b0:2bb:f255:6bb4 with SMTP id p8-20020a5d4588000000b002bbf2556bb4mr4607855wrq.25.1674125430385;
+        Thu, 19 Jan 2023 02:50:30 -0800 (PST)
 Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id l4-20020a05600012c400b002bbb2d43f65sm30361062wrx.14.2023.01.19.02.44.53
+        by smtp.gmail.com with ESMTPSA id q11-20020adf9dcb000000b00268aae5fb5bsm34065801wre.3.2023.01.19.02.50.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 Jan 2023 02:44:55 -0800 (PST)
-Message-ID: <cd7a2eac-5d70-6dcd-ddbd-317e1cbd7d23@linaro.org>
-Date:   Thu, 19 Jan 2023 11:44:52 +0100
+        Thu, 19 Jan 2023 02:50:30 -0800 (PST)
+Message-ID: <41b0c0cc-3ef5-362c-a09e-97a2ffca8e1f@linaro.org>
+Date:   Thu, 19 Jan 2023 11:50:28 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.0
-Subject: Re: [PATCH v2 1/9] dt-bindings: arm: Add support for DSB element
+Subject: Re: [PATCH v1] arm64: dts: qcom: sm8350: Use 2 interconnect cells
 Content-Language: en-US
-To:     Tao Zhang <quic_taozha@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
-        Tao Zhang <taozha@qti.qualcomm.com>
-References: <1674114105-16651-1-git-send-email-quic_taozha@quicinc.com>
- <1674114105-16651-2-git-send-email-quic_taozha@quicinc.com>
+To:     Bjorn Andersson <andersson@kernel.org>, agross@kernel.org,
+        devicetree@vger.kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, konrad.dybcio@linaro.org,
+        rfoss@kernel.org
+Cc:     robert.foss@linaro.org
+References: <20230117115712.1054613-1-rfoss@kernel.org>
+ <167408614052.2989059.12874514471754492819.b4-ty@kernel.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1674114105-16651-2-git-send-email-quic_taozha@quicinc.com>
+In-Reply-To: <167408614052.2989059.12874514471754492819.b4-ty@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/01/2023 08:41, Tao Zhang wrote:
-> Add property "qcom,dsb-elem-size" to support DSB(Discrete Single
-> Bit) element for TPDA. Specifies the DSB element size supported
-> by each monitor connected to the aggregator on each port. Should
-> be specified in pairs (port, dsb element size).
+On 19/01/2023 00:55, Bjorn Andersson wrote:
+> On Tue, 17 Jan 2023 12:57:11 +0100, rfoss@kernel.org wrote:
+>> From: Robert Foss <robert.foss@linaro.org>
+>>
+>> Use two interconnect cells in order to optionally
+>> support a path tag.
+>>
+>>
 > 
-> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
-> Signed-off-by: Tao Zhang <taozha@qti.qualcomm.com>
-
-You are the same person and it is still the same organization
-(Qualcomm), right? Only one SoB.
-
-> ---
->  .../bindings/arm/qcom,coresight-tpda.yaml          | 22 ++++++++++++++++++++++
->  1 file changed, 22 insertions(+)
+> Applied, thanks!
 > 
-> diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml
-> index 2ec9b5b..298db7f 100644
-> --- a/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml
-> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml
-> @@ -58,6 +58,26 @@ properties:
->      minItems: 1
->      maxItems: 2
->  
-> +  qcom,dsb-element-size:
-> +    description: |
-> +      Specifies the DSB(Discrete Single Bit) element size supported by
-> +      each monitor connected to the aggregator on each port. Should be
-> +      specified in pairs <port, dsb element size>.
+> [1/1] arm64: dts: qcom: sm8350: Use 2 interconnect cells
+>       commit: 4f287e31ff5f464526651ee3cb3fd3e96b2e5746
 
-s/port/port number/
 
-> +
-> +      Note: The maximum value of the port number depends on how many
-> +      input ports the current TPDA has. DSB element size currently only
-> +      supports 32-bit and 64-bit.
-> +    $ref: /schemas/types.yaml#/definitions/uint32-matrix
-> +    items:
-
-Are some reasonable maxItems known?
-
-> +      items:
-> +        - description: |
-> +            "port" indicates TPDA input port number
-
-What is "port"? You quoted it like it was some name of variable or
-property. Where is then?
-
-> +          minimum: 0
-> +        - description: |
-> +            "dsb element size" indicates dsb element size
-
-"A" indicates A. This sentence does not make sense.
-
-Also missing units.
-
-s/dsb/DSB/
-
-> +          minimum: 0
-> +          maximum: 64
-> +
->    clocks:
->      maxItems: 1
->  
-> @@ -100,6 +120,8 @@ examples:
->         compatible = "qcom,coresight-tpda", "arm,primecell";
->         reg = <0x6004000 0x1000>;
->  
-> +       qcom,dsb-element-size = <0 32>;
-> +
->         clocks = <&aoss_qmp>;
->         clock-names = "apb_pclk";
->  
+I don't think this is correct patch. We talked that this must be rebased
+on my interconnect cells change and I think it wasn't :(
 
 Best regards,
 Krzysztof
