@@ -2,70 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 653D6673972
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 14:07:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AC951673975
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 14:08:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230314AbjASNHh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Jan 2023 08:07:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48630 "EHLO
+        id S230050AbjASNII (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Jan 2023 08:08:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230403AbjASNHL (ORCPT
+        with ESMTP id S231132AbjASNHl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Jan 2023 08:07:11 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A4CF5CFFC
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 05:06:30 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id w14so2783124edi.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 05:06:30 -0800 (PST)
+        Thu, 19 Jan 2023 08:07:41 -0500
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7889D4ABCB
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 05:07:04 -0800 (PST)
+Received: by mail-ed1-x534.google.com with SMTP id s21so2737836edi.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 05:07:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=1gPTT8pbx6iE/epEHJkHt7/bEhvcngYyFc03+y1Cxk4=;
-        b=UOedtTtuqugeKVm2m6LJeaG3jrdknha6dCHm+x9B6ll8yvcShFUn/RjhmIrVM5Rs3u
-         8iClmvOLPN/OndVQG+dVnvpmfz/5Jd4eJiumEa0vzs1DVKqNIw+v7rB1wUSCCAP8y8pR
-         K2eBjD0CLQWxdthY06rYB9nOMhqRpvAVuyiT4l1y2i8Djzpiv5mTsYWI8LGjpOydguxp
-         Lj3Qf0hgsH+i849vqtbdbWSrn0hfmDKLx4xW9wH806Bint86r74FqR8vle5J/0Ws/Qa9
-         q98xRLJicvygDHh4lu+MY5XeVSM77P4pFX557Gyrxrb8bHMjN977YMPeeWQV3itvm//f
-         e1lA==
+        bh=EXODrPsAw+WxnGMS9ryh6u+wd5DwP7P3JwcF8GuVJm0=;
+        b=L807A/l2Noy+D3jGMrMFebZrU4oXQEMFtkrog97/fPeOcgCba7MrctXgvN0uLveygF
+         3HWFy4CqHQB9JA5o8/pwpEpckUwUQj9CoUFCl0PW/qRcFw4p3SSM5kXJ5ezeI2SRgGj5
+         R28LH/thHBCYtmQKfSvEOxpx72jkU/qRvOnWLylUgGEFOmSNn6d1RoHxNWqO5hSk2dEq
+         zjHrbsVLthzarGnZHcG3kwQ+UIXgwJolTA91+2vnRm1//alHK1RM2rqwXE4zkGARDuiL
+         rQkRySKAeF8DKirTwNBZXiwS95eRurYoKHu9oXMPuudwXbiX1IpkAogcAGeQ5VY46t+w
+         8DUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1gPTT8pbx6iE/epEHJkHt7/bEhvcngYyFc03+y1Cxk4=;
-        b=2TG/D+ovW5z0d1xOlCAwkkSkwW60B2X9S9DUm1o3W1M2WRTuLHOxXVK13xLAkk55Zs
-         3CRAVq5iSQg1X+GdK9S/qkZ5poh337Q0VheOJ8RETwTkhV+pj56fSu9AUnPg5wuLnVJB
-         0CErEFU63II7GdyyxWZD4dgUY1czExik+XlxvVhFwCXUFzcWsgLLGbN+Hg3vrLGWu5iC
-         /auyRo2p0T6oMOTBeAZVfCLvHFhGHq+c5WspGoXx2Wj6/EmP6ZSJnpYlEqlNdfU3dGHc
-         mBOV6IcV8YFCSKlZ9KPIgYNjwo8vKMtZRBOoXkBa5vWsS9J8EwVWjA42yz0KkWubnqh1
-         Adhw==
-X-Gm-Message-State: AFqh2kp2gRStN/h81PiWjXayc3fHGFTG/mMk2N1sLGAfZ5QRdIPnnUh5
-        JEsWLN+KjCwERbLrYyuMagqb+g==
-X-Google-Smtp-Source: AMrXdXsRXs2vwIf3bke14eSVJkGfxbho6m8PLUIx1vhOYyZ+uCnw2rzb6JZEA+BgQ38jvhlnv2XVEQ==
-X-Received: by 2002:a05:6402:159:b0:49d:a87f:ba7b with SMTP id s25-20020a056402015900b0049da87fba7bmr10572271edu.39.1674133589027;
-        Thu, 19 Jan 2023 05:06:29 -0800 (PST)
+        bh=EXODrPsAw+WxnGMS9ryh6u+wd5DwP7P3JwcF8GuVJm0=;
+        b=2kyb7eRTKh4mo3yf2h3QGYodXLmWwdTZkjm4NNEUTpoE6EaHh4J+FxGds5CIuLqS68
+         IEQ0Zcb47HEfw9hlJQaPMcRWX3QIEC9Q8WS8OH5aTY8XFo1BsoOPR8ZUfwHj/0SFA2Rv
+         epRGJPHrUxcVu9Xx2SyrjkILBkkpMXdEmq7oWcLlcf05Ukm1b77r97wIwYdvZFQD91eq
+         3AM3Dq8C+gzWn/xItX8A5jCXa4HmjXCDTk6phyVL1DzoFnG4Yy1Jgj+u0rxkIIb1IQTZ
+         XXW4oMyW+QB4uLmClyjqax1r7DUqKyZRHdKzLSCCxtwCjSKu/qN7mYIGQbZckGlOtvrw
+         TeLA==
+X-Gm-Message-State: AFqh2kqNzPVYKC6n7jtKbGj0jEnngu+Qoob/TuM4TwBcdhM6zweCkEFK
+        N/Tc/jc+BqbO7YKJlQi1ehMvPw==
+X-Google-Smtp-Source: AMrXdXuCspeStoCPA/c7cDkJ87Z65zeI5mX53jM6IpeoCJAMXRN9bIUD9BN5sBY7JZ12Rnm7f309QA==
+X-Received: by 2002:aa7:cac2:0:b0:497:948b:e8 with SMTP id l2-20020aa7cac2000000b00497948b00e8mr9756962edt.6.1674133623023;
+        Thu, 19 Jan 2023 05:07:03 -0800 (PST)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id d3-20020aa7d5c3000000b004835bd8dfe5sm15787673eds.35.2023.01.19.05.06.28
+        by smtp.gmail.com with ESMTPSA id x22-20020aa7dad6000000b0048789661fa2sm15554559eds.66.2023.01.19.05.07.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 Jan 2023 05:06:28 -0800 (PST)
-Message-ID: <0497ba61-7646-91bb-291c-0b437c18434f@linaro.org>
-Date:   Thu, 19 Jan 2023 15:06:27 +0200
+        Thu, 19 Jan 2023 05:07:02 -0800 (PST)
+Message-ID: <5c4c6ee7-e202-716b-a3ac-04d7620b8c58@linaro.org>
+Date:   Thu, 19 Jan 2023 15:07:01 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH] arm64: dts: qcom: sm6115: Add interconnect nodes
+Subject: Re: [PATCH v3 8/8] phy: qcom-qmp-pcie: Add support for SM8550 g3x2
+ and g4x2 PCIEs
 Content-Language: en-GB
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Cc:     devicetree@vger.kernel.org, agross@kernel.org,
-        bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski@linaro.org,
-        konrad.dybcio@linaro.org, a39.skl@gmail.com, andersson@kernel.org
-References: <20221130104519.2266918-1-bhupesh.sharma@linaro.org>
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Johan Hovold <johan@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+References: <20230118005328.2378792-1-abel.vesa@linaro.org>
+ <20230118005328.2378792-9-abel.vesa@linaro.org>
+ <7fe0c49e-a628-8e76-8294-ab8faadb3a70@linaro.org>
+ <Y8iCAPOyrYXd7e/3@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221130104519.2266918-1-bhupesh.sharma@linaro.org>
+In-Reply-To: <Y8iCAPOyrYXd7e/3@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -77,38 +88,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/11/2022 12:45, Bhupesh Sharma wrote:
-> Add the interconnect nodes inside SM6115 dtsi.
+On 19/01/2023 01:34, Abel Vesa wrote:
+> On 23-01-18 06:34:41, Dmitry Baryshkov wrote:
+>> On 18/01/2023 02:53, Abel Vesa wrote:
+>>> Add the SM8550 both g4 and g3 configurations. In addition, there is a
+>>> new "lane shared" table that needs to be configured for g4, along with
+>>> the No-CSR list of resets.
+>>>
+>>> Co-developed-by: Neil Armstrong <neil.armstrong@linaro.org>
+>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>>> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+>>> ---
+>>>    drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 369 +++++++++++++++++++++++
+>>>    1 file changed, 369 insertions(+)
+>>>
+>>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+>>> index bffb9e138715..6f82604bd430 100644
+>>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+>>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+>>> @@ -1506,6 +1506,234 @@ static const struct qmp_phy_init_tbl sm8450_qmp_gen4x2_pcie_ep_pcs_misc_tbl[] =
+>>>    	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_PCIE_OSC_DTCT_MODE2_CONFIG5, 0x08),
+>>>    };
+>>
+>> I see that the last two patches still use 'shrd' a lot. Does this correspond
+>> to hw register names or is it just a vendor kernel code convention?
 > 
-> Cc: Bjorn Andersson <andersson@kernel.org>
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
-> - Based on linux-next/master
-> - Depends on the SM6115 dt-binding and driver patchset, which can be
->    seen here: https://lore.kernel.org/linux-arm-msm/20221130103841.2266464-1-bhupesh.sharma@linaro.org/
-> 
->   arch/arm64/boot/dts/qcom/sm6115.dtsi | 51 ++++++++++++++++++++++++++++
->   1 file changed, 51 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> index e4a2440ce544..dad5ab3edf0e 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> @@ -485,6 +485,57 @@ usb_1_hsphy: phy@1613000 {
->   			status = "disabled";
->   		};
->   
-> +		snoc: interconnect@1880000 {
-> +			compatible = "qcom,sm6115-snoc";
-> +			reg = <0x01880000 0x60200>;
-> +			#interconnect-cells = <1>;
+> It corresponds to the hw register names..
 
-Should we use 2 here as we do now for most of interconnect drivers?
+Ack, then:
 
-> +			clock-names = "bus", "bus_a";
-> +			clocks = <&rpmcc RPM_SMD_SNOC_CLK>,
-> +				 <&rpmcc RPM_SMD_SNOC_A_CLK>;
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+> 
+>>
+>> -- 
+>> With best wishes
+>> Dmitry
+>>
 
 -- 
 With best wishes
