@@ -2,58 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3772B672FD5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 05:02:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F7BB672FE9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 05:03:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229991AbjASD6Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 22:58:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38148 "EHLO
+        id S230073AbjASEDD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 23:03:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39596 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230131AbjASDs6 (ORCPT
+        with ESMTP id S230155AbjASEAC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 22:48:58 -0500
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C05256CCC9;
-        Wed, 18 Jan 2023 19:45:35 -0800 (PST)
+        Wed, 18 Jan 2023 23:00:02 -0500
+Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id EF55B37B45;
+        Wed, 18 Jan 2023 19:57:09 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id E7BECCE1FC5;
-        Thu, 19 Jan 2023 03:43:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EB38C433EF;
-        Thu, 19 Jan 2023 03:43:54 +0000 (UTC)
+        by sin.source.kernel.org (Postfix) with ESMTPS id ADAF6CE1FE3;
+        Thu, 19 Jan 2023 03:44:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB1FCC433D2;
+        Thu, 19 Jan 2023 03:44:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1674099836;
-        bh=DtX/m8VS/oitQXmE/jhFHYHwqO3UAviNdSUK7AOwdZ0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=gUHWG12ePwVF6r6UDyC3DWhmGA0CJo/JYRqzdIj5boHTf+f5tdPwBf3xk/7Q6ixPP
-         hbK902v3f4hpK2iY4sLUObEyyFEbLJVvdt9DBRqhZUVk521Efd7suSs8gDEynSB0jp
-         eHF5xvONJntaH0JcRDxsqk/4F18DbUH+PTGoLsjG2UjylrWoyqAqWkdseNsg3GzWTE
-         Yh0J/UKKVHPwuoFjJXorq+HRMGmZIVH4MrG5QjtgSrxEVeEvoNvBaqhhfHruWX8eEI
-         Y9gMI225k6CCN6XrKInKYGiHhMVJuoc6sTZG5HUdUdduew/DOw6Hvoe2DTps0oK97+
-         xnn5+IszJalKQ==
-Date:   Wed, 18 Jan 2023 21:43:52 -0600
+        s=k20201202; t=1674099871;
+        bh=bQlbGQrc9yJs59rSSNPWzyJ0ckGvabW8Cu5jr8y+/ZI=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=JAJmhT/IYErYc/2eD4WDCv1guLTKHz0vsbdz7pYIWI0c/Y99CGOf2UDc3PZde9NAC
+         yKBUDQNx6p7GxouNl757s7yNfdVkOn+DHDMt87gzwrw1WVyjzsrshqR7MymCoitlzc
+         WYNGUa9GqM1IoxKs2Tx7gBPeMMzp2OG1ozToXegZqZR2hIF+VA/TUcI7fBC07zc6FJ
+         parXx6BtV9ezFhgGxNesRBwJYxCrprl/f0irO1wbqnPnLGC+8Vlm9ytgn4suRU9kx4
+         TSE7WOYqwsRUNMn0CYeh/56U2xyMb1j3xmMcp2yUexTZbn4k97dq7vXUYRYW41BETb
+         yPlN+fGtsJ6fw==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, quic_pkondeti@quicinc.com,
-        quic_ppratap@quicinc.com, quic_wcheng@quicinc.com,
-        quic_jackp@quicinc.com, quic_harshq@quicinc.com
-Subject: Re: [RFC v4 0/5] Add multiport support for DWC3 controllers
-Message-ID: <20230119034352.stbhutga5ounihj7@builder.lan>
-References: <20230115114146.12628-1-quic_kriskura@quicinc.com>
+To:     quic_sibis@quicinc.com, Manivannan Sadhasivam <mani@kernel.org>
+Cc:     regressions@leemhuis.info, linux-kernel@vger.kernel.org,
+        konrad.dybcio@somainline.org, will@kernel.org,
+        robin.murphy@arm.com, catalin.marinas@arm.com,
+        devicetree@vger.kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        sumit.semwal@linaro.org, amit.pundir@linaro.org,
+        robh+dt@kernel.org, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: (subset) [PATCH V4 00/11] Fix XPU violation during modem metadata authentication
+Date:   Wed, 18 Jan 2023 21:44:28 -0600
+Message-Id: <167409986459.3039214.14669304455685242733.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.37.1
+In-Reply-To: <20230117085840.32356-1-quic_sibis@quicinc.com>
+References: <20230117085840.32356-1-quic_sibis@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230115114146.12628-1-quic_kriskura@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -63,64 +59,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Jan 15, 2023 at 05:11:41PM +0530, Krishna Kurapati wrote:
-> Currently the DWC3 driver supports only single port controller which
-> requires at most two PHYs ie HS and SS PHYs. There are SoCs that has
-> DWC3 controller with multiple ports that can operate in host mode.
-> Some of the port supports both SS+HS and other port supports only HS
-> mode.
+On Tue, 17 Jan 2023 14:28:29 +0530, Sibi Sankar wrote:
+> The memory region allocated using dma_alloc_attr with no kernel mapping
+> attribute set would still be a part of the linear kernel map. Any access
+> to this region by the application processor after assigning it to the
+> remote Q6 will result in a XPU violation. Fix this by replacing the
+> dynamically allocated memory region with a no-map carveout and unmap the
+> modem metadata memory region before passing control to the remote Q6.
+> The addition of the carveout and memunmap is required only on SoCs that
+> mandate memory protection before transferring control to Q6, hence the
+> driver falls back to dynamic memory allocation in the absence of the
+> modem metadata carveout.
 > 
-> This change primarily refactors the Phy logic in core driver to allow
-> multiport support with Generic Phy's.
-> 
-> Chananges have been tested on  QCOM SoC SA8295P which has 4 ports (2
-> are HS+SS capable and 2 are HS only capable).
-> 
+> [...]
 
-I can confirm that applying this series allow me to use all 6 USB ports
-on the ADP. Looking forward to v5.
+Applied, thanks!
 
-Thanks,
-Bjorn
+[01/11] dt-bindings: remoteproc: qcom,q6v5: Move MSM8996 to schema
+        commit: bdea142295ffd76aaec2a90a36ba09ad19660686
+[02/11] dt-bindings: remoteproc: qcom,msm8996-mss-pil: Update memory region
+        commit: 9b3024247b2ddea6880fa77b638c870ddbdb6bba
+[03/11] dt-bindings: remoteproc: qcom,sc7180-mss-pil: Update memory-region
+        commit: 95864f27330674c970c84b81ae791182de150b0f
+[04/11] dt-bindings: remoteproc: qcom,sc7280-mss-pil: Update memory-region
+        commit: eb48137d783b4c845c7b081e32a73666326dcbb3
+[05/11] Revert "remoteproc: qcom_q6v5_mss: map/unmap metadata region before/after use"
+        commit: a899d542b687c9b04ccbd9eefabc829ba5fef791
+[06/11] remoteproc: qcom_q6v5_mss: Use a carveout to authenticate modem headers
+        commit: 57f72170a2b2a362c35bb9407fc844eac5afdec1
 
-> Changes in v4:
-> Added DT support for SA8295p.
-> 
-> Changes in v3:
-> Incase any PHY init fails, then clear/exit the PHYs that
-> are already initialized.
-> 
-> Changes in v2:
-> Changed dwc3_count_phys to return the number of PHY Phandles in the node.
-> This will be used now in dwc3_extract_num_phys to increment num_usb2_phy 
-> and num_usb3_phy.
-> 
-> Added new parameter "ss_idx" in dwc3_core_get_phy_ny_node and changed its
-> structure such that the first half is for HS-PHY and second half is for
-> SS-PHY.
-> 
-> In dwc3_core_get_phy, for multiport controller, only if SS-PHY phandle is
-> present, pass proper SS_IDX else pass -1.
-> 
-> Link to v3: https://lore.kernel.org/all/1654709787-23686-1-git-send-email-quic_harshq@quicinc.com/#r
-> Link to v2: https://lore.kernel.org/all/1653560029-6937-1-git-send-email-quic_harshq@quicinc.com/#r
-> 
-> Krishna Kurapati (5):
->   dt-bindings: usb: Add bindings to support multiport properties
->   usb: dwc3: core: Refactor PHY logic to support Multiport Controller
->   usb: dwc3: core: Do not setup event buffers for host only controllers
->   usb: dwc3: qcom: Add multiport controller support for qcom wrapper
->   arm: dts: msm: Add multiport controller node for usb
-> 
->  .../devicetree/bindings/usb/snps,dwc3.yaml    |  42 ++-
->  arch/arm64/boot/dts/qcom/sa8295p-adp.dts      |  49 +++
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi        |  60 ++++
->  drivers/usb/dwc3/core.c                       | 325 +++++++++++++-----
->  drivers/usb/dwc3/core.h                       |  15 +-
->  drivers/usb/dwc3/drd.c                        |  14 +-
->  drivers/usb/dwc3/dwc3-qcom.c                  |  28 +-
->  7 files changed, 429 insertions(+), 104 deletions(-)
-> 
-> -- 
-> 2.39.0
-> 
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
