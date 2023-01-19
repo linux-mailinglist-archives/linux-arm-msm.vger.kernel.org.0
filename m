@@ -2,181 +2,183 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A77C2674746
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 00:37:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 41A5A674798
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 00:56:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229917AbjASXhh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Jan 2023 18:37:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43298 "EHLO
+        id S230325AbjASX4t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Jan 2023 18:56:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229637AbjASXhf (ORCPT
+        with ESMTP id S230184AbjASX4r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Jan 2023 18:37:35 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76B179373B;
-        Thu, 19 Jan 2023 15:37:33 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 1C80A61DA8;
-        Thu, 19 Jan 2023 23:37:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF7FBC433EF;
-        Thu, 19 Jan 2023 23:37:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1674171452;
-        bh=+gEU+eMFHL3lKHPOqi8dNs9YPbbilMd5M394ShMlU0s=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=tsVRjb5H2Y8GJdYdo7iWksxQ27oNtdSCdudLDnNMadigmH93vpYyU65+jDWIih9X6
-         WLnx25JUtoTkL2Cq/vqDNGtqx6TArZ/G3l077U+qR7nlID5JOKgloEpSgpn8IUVXGS
-         5KeN4aUynTwn+Vo/DiKGF6afuwdCzZGWKpXnvLCddiq7I2f/j7tp3vrkdwgy9NAbx+
-         QXPtFtbT/v4fuuhs0V0PfNmbUvm0BFTkSFtrKux4eN8ANyStXRn8mNDlp4TD6bMzZM
-         CqCo1mSBZ3iouzj50sO8Z/lPMny6ZGLjQiOr9f8IInOmFh6xPwWsGg6NzlntcHIBAb
-         qibaj7C/5FGLA==
-Date:   Fri, 20 Jan 2023 08:37:28 +0900
-From:   Masami Hiramatsu (Google) <mhiramat@kernel.org>
-To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-Cc:     <linux-kernel@vger.kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        "Sai Prakash Ranjan" <quic_saipraka@quicinc.com>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>
-Subject: Re: [PATCH V0 1/1] bootconfig: Increase max size of bootconfig from
- 32 KB to 256 KB for DCC support
-Message-Id: <20230120083728.d685ee9140d71e7f245f4440@kernel.org>
-In-Reply-To: <ea3e6838-a656-9a20-8240-b312dd54f285@quicinc.com>
-References: <cover.1673261071.git.quic_schowdhu@quicinc.com>
-        <654357bcbfd3974072a558c494a51edafaa73e1a.1673261071.git.quic_schowdhu@quicinc.com>
-        <20230110001820.5ca81344286f614ed4ccec77@kernel.org>
-        <e2ac0fa4-28f0-f4d8-e02a-b2a5d6131a48@quicinc.com>
-        <20230110234643.7bbd340ece99c28f25fe7ad7@kernel.org>
-        <9545ca51-ccda-64f0-bdd4-3b53e06785ad@quicinc.com>
-        <20230112160128.600f9e7257d67aa63a5fbcb9@kernel.org>
-        <ea3e6838-a656-9a20-8240-b312dd54f285@quicinc.com>
-X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        Thu, 19 Jan 2023 18:56:47 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4543D9F3A2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 15:56:46 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id l8so2838656wms.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 15:56:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7zfu79BDE69Zh0TrvdzIrEU2jRKWV7JH3x7U+ZjYWM0=;
+        b=SJhxSwdZNU7z2+p1g3yIQBnyVza86mIdK28LITnqaoKYY+K/HVrfV1WLttbwLO2Nkp
+         ZVhAQP84sWr8ifdX7EhC+kLFhh02b9sNd76wq7HJO8LywM5aZecSuvBTvNq7LzYNwI3C
+         oD6zQDjq2WRlwUFPrcE0IZFE96cBBkUvPd50ksZb6lLZkT1LaAdfycv19codiQlbN4l0
+         PSbsi2XsqIwN18gSevvEN4hiSjFoV3Tkat6RwmwnfYU1NI+z8Bbt/md1qbumq192GNEq
+         cROMbpkJDxGYfgUvuqXd+RgiufUo24/8mMqXDFDOwvPNk21IixWNf7DPeZJ0U40dcCIn
+         A/bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7zfu79BDE69Zh0TrvdzIrEU2jRKWV7JH3x7U+ZjYWM0=;
+        b=PRr3WdxdCauV9hDshVnhYwQ+GJlFyUQMSUj5Ol1C4yYU1QuH/NB9BB0flNgmKBuHeB
+         K6CQnLcclxLeLRiaOFfuu5DPnnHzBdA2JFURfqF6NhvWDHYLjyTdmXn6muAGagoqeSC9
+         qVVQOYudof9G7NF1JTOpmSAfwlrwtcPsv2855boWyuyWcj70vzROnRMrwbLBj/PAQcMn
+         SYm9CPgWBHp6/JVJqmGx6wRPQmm9MDTiRJJnMMb0go9m+lAN7cwV+HiX+Jw8uIxHmFFg
+         KBdwpMTMh/NZHLxuoLv/BEJRpdV1fugZfkVGTmeb7pXGlQ0wRO65gCzpYtOfvuFLVQJt
+         3f1w==
+X-Gm-Message-State: AFqh2kqdbATGnl/iE7M8Sf8LF9p6wFFfJ+/zku4Kwza7eNXZBZCM1WoJ
+        cJUPFLl5JwOejCNrCCXYECaURQ==
+X-Google-Smtp-Source: AMrXdXt4ndAKiOX5/+V2WXaYeC/vcQeAB0NXODmWZRk/BIIRlfvQ7Yl95THd31XadduqSNeOpdHRZg==
+X-Received: by 2002:a05:600c:1c83:b0:3da:fbd8:59a0 with SMTP id k3-20020a05600c1c8300b003dafbd859a0mr12107833wms.11.1674172604830;
+        Thu, 19 Jan 2023 15:56:44 -0800 (PST)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id j8-20020a05600c1c0800b003d9862ec435sm606542wms.20.2023.01.19.15.56.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 Jan 2023 15:56:44 -0800 (PST)
+Message-ID: <35dcb764-e340-5fe7-6637-cdb5f84266ce@linaro.org>
+Date:   Thu, 19 Jan 2023 23:56:43 +0000
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: [PATCH] interconnect: Skip call into provider if initial bw is
+ zero
+Content-Language: en-US
+To:     Vivek Aknurwar <quic_viveka@quicinc.com>, djakov@kernel.org
+Cc:     quic_mdtipton@quicinc.com, quic_okukatla@quicinc.com,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <1673647679-15216-1-git-send-email-quic_viveka@quicinc.com>
+ <83a7bfed-3b16-3d01-b1b2-f197252bd0b1@linaro.org>
+ <5e1f37ba-494a-19d2-e412-7631508ab142@linaro.org>
+ <151790dd-02e5-a1f5-aab5-360f39e21c57@quicinc.com>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <151790dd-02e5-a1f5-aab5-360f39e21c57@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 19 Jan 2023 22:21:27 +0530
-Souradeep Chowdhury <quic_schowdhu@quicinc.com> wrote:
-
+On 19/01/2023 22:18, Vivek Aknurwar wrote:
+> Hi Bryan,
+> Thanks for taking time to review the patch.
 > 
+> On 1/13/2023 5:40 PM, Bryan O'Donoghue wrote:
+>> On 14/01/2023 01:24, Bryan O'Donoghue wrote:
+>>> On 13/01/2023 22:07, Vivek Aknurwar wrote:
+>>>> Currently framework sets bw even when init bw requirements are zero 
+>>>> during
+>>>> provider registration, thus resulting bulk of set bw to hw.
+>>>> Avoid this behaviour by skipping provider set bw calls if init bw is 
+>>>> zero.
+>>>>
+>>>> Signed-off-by: Vivek Aknurwar <quic_viveka@quicinc.com>
+>>>> ---
+>>>>   drivers/interconnect/core.c | 17 ++++++++++-------
+>>>>   1 file changed, 10 insertions(+), 7 deletions(-)
+>>>>
+>>>> diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
+>>>> index 25debde..43ed595 100644
+>>>> --- a/drivers/interconnect/core.c
+>>>> +++ b/drivers/interconnect/core.c
+>>>> @@ -977,14 +977,17 @@ void icc_node_add(struct icc_node *node, 
+>>>> struct icc_provider *provider)
+>>>>       node->avg_bw = node->init_avg;
+>>>>       node->peak_bw = node->init_peak;
+>>>> -    if (provider->pre_aggregate)
+>>>> -        provider->pre_aggregate(node);
+>>>> -
+>>>> -    if (provider->aggregate)
+>>>> -        provider->aggregate(node, 0, node->init_avg, node->init_peak,
+>>>> -                    &node->avg_bw, &node->peak_bw);
+>>>> +    if (node->avg_bw || node->peak_bw) {
+>>>> +        if (provider->pre_aggregate)
+>>>> +            provider->pre_aggregate(node);
+>>>> +
+>>>> +        if (provider->aggregate)
+>>>> +            provider->aggregate(node, 0, node->init_avg, 
+>>>> node->init_peak,
+>>>> +                        &node->avg_bw, &node->peak_bw);
+>>>> +        if (provider->set)
+>>>> +            provider->set(node, node);
+>>>> +    }
+>>>> -    provider->set(node, node);
+>>>>       node->avg_bw = 0;
+>>>>       node->peak_bw = 0;
+>>>
+>>> I have the same comment/question for this patch that I had for the 
+>>> qcom arch specific version of it. This patch seems to be doing at a 
+>>> higher level what the patch below was doing at a lower level.
+>>>
+>>> https://lore.kernel.org/lkml/1039a507-c4cd-e92f-dc29-1e2169ce5078@linaro.org/T/#m0c90588d0d1e2ab88c39be8f5f3a8f0b61396349
+>>>
+>>> what happens to earlier silicon - qcom silicon which previously made 
+>>> explicit zero requests ?
 > 
-> On 1/12/2023 12:31 PM, Masami Hiramatsu (Google) wrote:
-> > On Tue, 10 Jan 2023 20:38:54 +0530
-> > Souradeep Chowdhury <quic_schowdhu@quicinc.com> wrote:
-> > 
-> >>
-> >>
-> >> On 1/10/2023 8:16 PM, Masami Hiramatsu (Google) wrote:
-> >>> On Tue, 10 Jan 2023 17:26:07 +0530
-> >>> Souradeep Chowdhury <quic_schowdhu@quicinc.com> wrote:
-> >>>
-> >>>>
-> >>>>
-> >>>> On 1/9/2023 8:48 PM, Masami Hiramatsu (Google) wrote:
-> >>>>> On Mon, 9 Jan 2023 20:01:05 +0530
-> >>>>> Souradeep Chowdhury <quic_schowdhu@quicinc.com> wrote:
-> >>>>>
-> >>>>>> Increasing the memory size of bootconfig to be able to handle a max number of
-> >>>>>> 8192 nodes to be fitted in memory size of 256KB.
-> >>>>>
-> >>>>> Sorry, but you missed the 'xbc_node::data' stores the index of the data and
-> >>>>> that is uint16_t. So the XBC_DATA_MAX is fixed limitation.
-> >>>>>
-> >>>>> The number of nodes (XBC_NODE_MAX) can be expanded because I just decided it
-> >>>>> to keep the pre-compiled array size ~8KB. Maybe expanding it to 64KB just
-> >>>>> increase the size of kernel on init memory (and freed after boot).
-> >>>>>
-> >>>>> Could you tell me why you need such a big data for your DCC?
-> >>>>>
-> >>>>> Thank you,
-> >>>>
-> >>>> DCC is a debugging tool used in qcom which is needed to debug crashes
-> >>>> that can happen at boot-time. For debugging purposes a large number of
-> >>>> registers need to be configured in DCC driver which is to be fed via the
-> >>>> bootconfig file. For that we need to expand the nodes as well as memory
-> >>>> for using bootconfig.
-> >>>
-> >>> Hmm, how many registers does DCC usually use? And how big the bootconfig
-> >>> file is usually? I have no idea about that.
-> >>
-> >> So a typical bootconfig file for consumption of DCC looks like as follows
-> >>
-> >> dcc_config {
-> >>           link_list_0 {
-> >>                   qcom-curr-link-list = 6
-> >>                   qcom-link-list = R_0x1781005c_1_apb,
-> >>                                    R_0x1782005c_1_apb
-> >>           }
-> >>           link_list_1 {
-> >>                   qcom-curr-link-list = 5
-> >>                   qcom-link-list = R_0x1784005c_1_apb
-> >>           }
-> >> }
-> >>
-> >> The "qcom-link-list" field can have 1000s of register , based on that
-> >> max nodes is increased to 8192.
-> > 
-> > OK, then the number of fields can be larger than 1000. I got it.
-> > 
-> >>
-> >>>
-> >>>> Can you let us know the changes that you suggest for doing the same? Is
-> >>>> it fine to just increase the XBC_NODE_MAX, do we also need to
-> >>>> change the uint16_t to u32 for proper storing of index values?
-> >>>
-> >>> Expanding the number of max nodes is easy, just increase the XBC_NODE_MAX
-> >>> (must be less than 64k). That will also increase the memory consumption
-> >>> during the boot time even if the bootconfig is small. Anyway, it will be
-> >>> freed after boot, so it maybe OK.
-> >>
-> >> So since the limit is 64K, 8192 is a valid value for max nodes.
-> > 
-> > Yes. Expanding the number of node is OK to me.
-> > 
-> >>
-> >>>
-> >>> But expanding the size of max bootconfig needs to change the type of
-> >>> the 'data' field to uint32_t (since that will be used for building
-> >>> bootconfig tool) and you also must confirm that `tools/bootconfig/bootconfig`
-> >>> can be built and pass the test-bootconfig.sh.
-> >>> Hmm, comparing with expanding the max number of XBC node, changing the
-> >>> 'data' type to uint32_t may not have much impact on memory consumption point
-> >>> of view, because it may increase only 20% of memory, but expanding the
-> >>> MAX_XBC_NODE always increases more than double.
-> >>>
-> >>> Thus, if we can accept increasing the number of node, it should be OK to
-> >>> change the 'data' type.
-> >>
-> >> That means from DCC point of view only increasing the max nodes is
-> >> enough as increasing the data size is unrelated to increasing the max nodes?
-> > 
-> > Yes, if it is less than 32KB, you just need to increase the XBC_NODE_MAX.
-> > But if you think the size of bootconfig, we have to change the type of
-> > xbc_node::data field.
-> > 
-> > Can you check the DCC also need to expand the size of bootconfig limitation?
-> > 
-> > Thank you!
+> This patch is to optimize and avoid all those bw 0 requests on each node 
+> addition during probe (which results in rpmh remote calls) for upcoming 
+> targets.
+
+So why not change it just for rpmh ?
+
+You are changing it for rpm here, as well as for Samsung and NXP 
+interconnects.
+
+Taking rpm as an example, for certain generations of silicon we make an 
+explicit zero call.
+
+https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/blob/LA.BR.1.2.9-00810-8x09.0/drivers/platform/msm/msm_bus/msm_bus_bimc.c#L1367
+
+Here's the original RPM commit that sets a zero
+
+https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/commit/d91d108656a7a44a6dfcfb318a25d39c5418e54b
+
+>>> https://lore.kernel.org/lkml/1039a507-c4cd-e92f-dc29-1e2169ce5078@linaro.org/T/#m589e8280de470e038249bb362634221771d845dd
+>>>
+>>> https://lkml.org/lkml/2023/1/3/1232
+>>>
+>>> Isn't it a better idea to let lower layer drivers differentiate what 
+>>> they do ?
 > 
-> Yes, I don't think the index needs to be increased from u16 to u32 for 
-> dcc. Will be sending out the next version accordingly.
+> AFAIU lower layer driver can/should not differentiate between normal 
+> flow calls vs made as a result from probe/initialization of driver. 
+> Hence even bw 0 request is honored as like client in general wish to 
+> vote 0 as in an normal use case.
 
-OK, thanks for the confirmation!
+But surely if I vote zero, then I mean to vote zero ?
 
+Do we know that for every architecture and for every different supported 
+that ignoring a zero vote is the right thing to do ?
 
+I don't think we do know that.
 
--- 
-Masami Hiramatsu (Google) <mhiramat@kernel.org>
+https://lore.kernel.org/linux-arm-msm/20230116132152.405535-1-konrad.dybcio@linaro.org/
+
+I think for older rpm this is a departure from long existing logic.
+
+Maybe its entirely benign but, IMO you should be proposing this change 
+at the rpmh level only, not at the top level across multiple different 
+interconnect arches.
+
+---
+bod
