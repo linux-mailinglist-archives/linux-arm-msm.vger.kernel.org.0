@@ -2,136 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 42423673067
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 05:34:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A7BD6673096
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 05:51:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230339AbjASEeb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Jan 2023 23:34:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49552 "EHLO
+        id S229939AbjASEvt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Jan 2023 23:51:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230059AbjASEeK (ORCPT
+        with ESMTP id S229724AbjASEvP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Jan 2023 23:34:10 -0500
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2489E4391D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 20:30:13 -0800 (PST)
-Received: by mail-pj1-x102c.google.com with SMTP id gz9-20020a17090b0ec900b002290bda1b07so3225233pjb.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 20:30:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=c1y/5KDHgKHirXTUDecr+02A1cm5hXFyau/VonkRgpE=;
-        b=Qwwu3mjMk12mb8arDhmeBCvpdrQtaWykCv52bQMcfaQnPlZn+g4S4pyHWK9g5gJq/E
-         bO7IKgK54I54tGt/S05MX6Bugw6bPxNfhg+ah1MT6QRzC2BodAU7Nxc3jTYm0+gOfRju
-         rQK0Xne7+kdHXBVjGreIcWWobpNO5IybesRxyfrNKwIxvNJ4yschR/MT3M0xuU4V9iLQ
-         o9Q6K/DEzCiH29zW01Y9cg6rR9MmG3HVgncg8V1EWXGBj2G8UTMnjfYdHZEb5fExOvTX
-         fa3wF8EGcngCDygVAXXSYTLa32Z2WL/Lw84vQis+TJezj9R9KJ13ggeoKElki9XZ9BB1
-         8FZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=c1y/5KDHgKHirXTUDecr+02A1cm5hXFyau/VonkRgpE=;
-        b=OJmFDiREIt641pNBLjM61L1TrAPBrkZjQVE0ntBWswx0B+OTeYSamfLX0ddvPpNCOU
-         VelAEtj0KvoPvH4g8OI+shCSxSUQ2r8J+YMM7HRTHW2+TwyS2yIxrqHTc67mOlrszTY6
-         NeubATIcr431al3WuPIAji+R7qMNSOBieUXT1v27k4q7PDUWLPjeui8vHuOfcOuVecXR
-         BoIee0WtRjdYs8EOmXc3GMWbV9AqZJMOm+4ammlr7p62eAhSvWvNTuzQeXbMFJxcVPxs
-         TNDDm/t+/nw3PAC5Nj5nF1CmKxuqWooK1CnRXv/geduE61KbGsERPiWaYCG8oZCWGlSU
-         BdSw==
-X-Gm-Message-State: AFqh2koCIgLuVZOuX3e1EKJDER1jJLk70dlZx+xHprKAY3gXLimeePG4
-        7i3fpqFYt6AyqpLYvIQN53OfKg==
-X-Google-Smtp-Source: AMrXdXsL1ggmaWVhUlXD0gW9Nplw6seQdpkL31Roa0A2ZWPa6AvCI+80NJvuCsPquPnD0v53gX9ycw==
-X-Received: by 2002:a05:6a20:9b86:b0:b8:648f:f414 with SMTP id mr6-20020a056a209b8600b000b8648ff414mr9493806pzb.29.1674102565791;
-        Wed, 18 Jan 2023 20:29:25 -0800 (PST)
-Received: from localhost ([122.172.83.155])
-        by smtp.gmail.com with ESMTPSA id bg7-20020a056a02010700b004785c24ffb4sm10760212pgb.26.2023.01.18.20.29.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Jan 2023 20:29:24 -0800 (PST)
-Date:   Thu, 19 Jan 2023 09:59:22 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Olivier Dautricourt <olivierdautricourt@gmail.com>,
-        Stefan Roese <sr@denx.de>, Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Andreas =?utf-8?Q?F=C3=A4rber?= <afaerber@suse.de>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Viresh Kumar <vireshk@kernel.org>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Green Wan <green.wan@sifive.com>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        =?utf-8?B?77+9ZXI=?= <povik+lin@cutebit.org>,
-        Peng Fan <peng.fan@nxp.com>,
-        Paul Cercueil <paul@crapouillou.net>,
-        - <chuanhua.lei@intel.com>, Long Cheng <long.cheng@mediatek.com>,
-        Rajesh Gumasta <rgumasta@nvidia.com>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Biju Das <biju.das.jz@bp.renesas.com>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Palmer Debbelt <palmer@sifive.com>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Amelie Delaunay <amelie.delaunay@foss.st.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
-        linux-kernel@vger.kernel.org, asahi@lists.linux.dev,
-        linux-tegra@vger.kernel.org, linux-actions@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-riscv@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-mediatek@lists.infradead.org
-Subject: Re: [PATCH 1/2] dt-bindings: dma: drop unneeded quotes
-Message-ID: <20230119042922.aiggjqvnirk6sgdo@vireshk-i7>
-References: <20230118180144.364756-1-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230118180144.364756-1-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Wed, 18 Jan 2023 23:51:15 -0500
+Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEF727C868;
+        Wed, 18 Jan 2023 20:45:00 -0800 (PST)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+        by mailout.west.internal (Postfix) with ESMTP id 2E52F32002D8;
+        Wed, 18 Jan 2023 23:44:58 -0500 (EST)
+Received: from imap50 ([10.202.2.100])
+  by compute6.internal (MEProxy); Wed, 18 Jan 2023 23:45:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=cc
+        :content-type:date:date:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to; s=fm2; t=1674103497; x=1674189897; bh=RA62djbRjH
+        AtR5eYDGCg3s9PgydQzyaEPXFw3P5ADCE=; b=bQ1Lex1biSOsg9sZ0oCG32YJjg
+        ymUiX5FA89IlkUP0WnP4Mqbfg3cRGRfDMd/Q9HMHxZyPeveH/z8DNzb9Y2JyciS9
+        PbR458V7YzwoRUwih89rXDzIQeadvmjl4laV/9igg04WSdFxrnnOafzF1oehvDhV
+        0XayKr4JLT10lkAZu7NShyxFpzhNgRANVRnvZBuZpCszrKLwIWYebsJyx6jGy5lr
+        zkVjlgVd103/d/Z3i2laAkK2x0leJjXwsw5Wf+dzjJ3jK4CiVCz+0qPuE158uMq7
+        cWkgoFDu0cNjnseoQ+eeu9L4IPa6Le4Uc5xvVu8zdwPvQ9mUCD0aB3zHWiQQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:date:feedback-id
+        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to
+        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+        fm3; t=1674103497; x=1674189897; bh=RA62djbRjHAtR5eYDGCg3s9PgydQ
+        zyaEPXFw3P5ADCE=; b=gH4TLQKqQ3ouj/hKJKXkuCBSaYp1Utvr1tqT5JHO8dAS
+        LqMSLpW0Q1IiOhP11OGXZnGtFt6/CNcATiaWIEajheAAQqh/+sVZC1mKFZyV6Gfr
+        1zJShEs48+Id9p6LgF4Hv78ghevwRh/72pA3tZGN3pq9BF2LRG/kyuF1A+LofmL4
+        7oTrKkLV9/3vOJdY6eCabQcLB3OyzxsRmSreTHRKUCYT7vOqzXzafdg15xpCH/x3
+        0/+9NGh8xLdxaLeVwGSCyyqZKgHswU9a/IVf4B2mLGdH3fp2uWzroVajfJ8toLIG
+        XD+wjySvyoz7fvaZ5PVyU+V9eszLfmriVqQKpz7i2g==
+X-ME-Sender: <xms:yMrIY7pCyXxUMOvaDKg2BAcTqICUraG38J-Nrpj3Jqt5QjSlu4Tu_w>
+    <xme:yMrIY1qhEgvdxItp5fbsmCTEN1D2vbWb98Gg8GxGhXwrFWABp7HZHQV3cPqpLhGPC
+    OvL8Qv3UAAvNOjnZQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedruddtledgjeehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
+    rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
+    grthhtvghrnhephefhfeekgfekudevheffheeihedujeefjeevjeefudfgfeeutdeuvdeh
+    hfevueffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
+    eprghnughrvgifsegrjhdrihgurdgruh
+X-ME-Proxy: <xmx:yMrIY4PnPTa0pI2mk7ylIXFS6WM5xsFnHxvupr09IJ7xciQy9a-poQ>
+    <xmx:yMrIY-6wAgKJPmeYq1fdu5mkCyeb74PoPwTI_8bMlCnagMBn9b8N2A>
+    <xmx:yMrIY67txgF_3CsmtcEk9pWkopnv4Fg3GzuNDnu2P2ykVK1LxhHxAg>
+    <xmx:ycrIY_pByLB2jT-LFgxAD3ro1NLEN5i3aZT12bkvkjM1hHQvuvnyIw>
+Feedback-ID: idfb84289:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id A40C61700089; Wed, 18 Jan 2023 23:44:56 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-85-gd6d859e0cf-fm-20230116.001-gd6d859e0
+Mime-Version: 1.0
+Message-Id: <9a82d30a-c8ca-47fb-a976-f7f4d99cefec@app.fastmail.com>
+In-Reply-To: <20230118173932.358153-2-krzysztof.kozlowski@linaro.org>
+References: <20230118173932.358153-1-krzysztof.kozlowski@linaro.org>
+ <20230118173932.358153-2-krzysztof.kozlowski@linaro.org>
+Date:   Thu, 19 Jan 2023 15:14:36 +1030
+From:   "Andrew Jeffery" <andrew@aj.id.au>
+To:     "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
+        "Mark Brown" <broonie@kernel.org>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        "Chen-Yu Tsai" <wens@csie.org>,
+        "Jernej Skrabec" <jernej.skrabec@gmail.com>,
+        "Samuel Holland" <samuel@sholland.org>,
+        "Neil Armstrong" <neil.armstrong@linaro.org>,
+        "Kevin Hilman" <khilman@baylibre.com>,
+        "Jerome Brunet" <jbrunet@baylibre.com>,
+        "Martin Blumenstingl" <martin.blumenstingl@googlemail.com>,
+        "Chin-Ting Kuo" <chin-ting_kuo@aspeedtech.com>,
+        =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+        "Joel Stanley" <joel@jms.id.au>,
+        "Kamal Dasu" <kdasu.kdev@gmail.com>,
+        "Broadcom internal kernel review list" 
+        <bcm-kernel-feedback-list@broadcom.com>, "Han Xu" <han.xu@nxp.com>,
+        "Shawn Guo" <shawnguo@kernel.org>,
+        "Sascha Hauer" <s.hauer@pengutronix.de>,
+        "Pengutronix Kernel Team" <kernel@pengutronix.de>,
+        "Fabio Estevam" <festevam@gmail.com>,
+        "NXP Linux Team" <linux-imx@nxp.com>,
+        "Matthias Brugger" <matthias.bgg@gmail.com>,
+        "Thierry Reding" <thierry.reding@gmail.com>,
+        "Jonathan Hunter" <jonathanh@nvidia.com>,
+        "Andy Gross" <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        "Serge Semin" <fancer.lancer@gmail.com>,
+        "Haibo Chen" <haibo.chen@nxp.com>,
+        "Yogesh Gaur" <yogeshgaur.83@gmail.com>,
+        "Linus Walleij" <linus.walleij@linaro.org>,
+        "Heiko Stuebner" <heiko@sntech.de>,
+        "Palmer Dabbelt" <palmer@dabbelt.com>,
+        "Paul Walmsley" <paul.walmsley@sifive.com>,
+        "Li-hao Kuo" <lhjeff911@gmail.com>,
+        "Michal Simek" <michal.simek@xilinx.com>,
+        "Orson Zhai" <orsonzhai@gmail.com>,
+        "Baolin Wang" <baolin.wang@linux.alibaba.com>,
+        "Chunyan Zhang" <zhang.lyra@gmail.com>,
+        "Maxime Coquelin" <mcoquelin.stm32@gmail.com>,
+        "Alexandre Torgue" <alexandre.torgue@foss.st.com>,
+        "Maxime Ripard" <mripard@kernel.org>,
+        =?UTF-8?Q?=EF=BF=BDecki?= <rafal@milecki.pl>,
+        "Vaishnav Achath" <vaishnav.a@ti.com>,
+        "Parshuram Thombare" <pthombar@cadence.com>,
+        "Leilk Liu" <leilk.liu@mediatek.com>,
+        "Gabor Juhos" <juhosg@openwrt.org>,
+        "Bert Vermeulen" <bert@biot.com>,
+        "Miquel Raynal" <miquel.raynal@bootlin.com>,
+        "Marek Vasut" <marex@denx.de>,
+        "Birger Koblitz" <mail@birger-koblitz.de>,
+        "Geert Uytterhoeven" <geert+renesas@glider.be>,
+        "Anson Huang" <Anson.Huang@nxp.com>,
+        "Chris Packham" <chris.packham@alliedtelesis.co.nz>,
+        "Kuldeep Singh" <singh.kuldeep87k@gmail.com>,
+        "Pragnesh Patel" <pragnesh.patel@sifive.com>,
+        "Christophe Kerello" <christophe.kerello@foss.st.com>,
+        "Patrice Chotard" <patrice.chotard@foss.st.com>,
+        "Erwan Leray" <erwan.leray@foss.st.com>,
+        "Fabrice Gasnier" <fabrice.gasnier@foss.st.com>,
+        "open list:SPI SUBSYSTEM" <linux-spi@vger.kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-sunxi@lists.linux.dev, linux-kernel@vger.kernel.org,
+        linux-amlogic@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
+        openbmc@lists.ozlabs.org, linux-mediatek@lists.infradead.org,
+        linux-tegra@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-riscv@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com
+Subject: Re: [PATCH 2/2] spi: dt-bindings: cleanup examples - indentation, lowercase
+ hex
+Content-Type: text/plain
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18-01-23, 19:01, Krzysztof Kozlowski wrote:
-> diff --git a/Documentation/devicetree/bindings/dma/snps,dma-spear1340.yaml b/Documentation/devicetree/bindings/dma/snps,dma-spear1340.yaml
-> index c13649bf7f19..5da8291a7de0 100644
-> --- a/Documentation/devicetree/bindings/dma/snps,dma-spear1340.yaml
-> +++ b/Documentation/devicetree/bindings/dma/snps,dma-spear1340.yaml
-> @@ -11,7 +11,7 @@ maintainers:
->    - Andy Shevchenko <andriy.shevchenko@linux.intel.com>
->  
->  allOf:
-> -  - $ref: "dma-controller.yaml#"
-> +  - $ref: dma-controller.yaml#
->  
->  properties:
->    compatible:
 
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
 
--- 
-viresh
+On Thu, 19 Jan 2023, at 04:09, Krzysztof Kozlowski wrote:
+> Cleanup examples:
+>  - use 4-space indentation (for cases when it is neither 4 not 2 space),
+>  - drop redundant blank lines,
+>  - use lowercase hex.
+>
+> No functional impact except adjusting to preferred coding style.
+>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  .../bindings/spi/amlogic,meson-gx-spicc.yaml  |  26 +--
+>  .../bindings/spi/amlogic,meson6-spifc.yaml    |  22 +--
+>  .../bindings/spi/aspeed,ast2600-fmc.yaml      |  24 +--
+
+For the Aspeed change:
+
+Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
