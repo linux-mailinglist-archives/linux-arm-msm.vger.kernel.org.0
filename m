@@ -2,170 +2,398 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0BD40673EAA
+	by mail.lfdr.de (Postfix) with ESMTP id BDF35673EAB
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 17:25:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229788AbjASQZI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Jan 2023 11:25:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49110 "EHLO
+        id S230004AbjASQZJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Jan 2023 11:25:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230255AbjASQYj (ORCPT
+        with ESMTP id S230314AbjASQYr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Jan 2023 11:24:39 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7A638A729;
-        Thu, 19 Jan 2023 08:24:37 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id bp15so3939883lfb.13;
-        Thu, 19 Jan 2023 08:24:37 -0800 (PST)
+        Thu, 19 Jan 2023 11:24:47 -0500
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA6178A0CB
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 08:24:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=8lVOvMoIQ2x2Wf6zy8frHnpB0eXV9ve1xBd2DqHKd8Y=;
-        b=a/g9O4xy606aS7gTGUOYByXG9qF6KTMWOZA30DBpya3y/ma8wWSWbZ0GhEnw/5Dd56
-         SwWKUvve09j1o3F73iD1XSqxXcz9bXivs5oPpAd58vaExY7Ut/gg8J5SySYtOKeJp85Y
-         xmSrmvNHPLNYd+qGYEno2szmpyk9kL3REN4AGFML0pKUuvB9xnBoYaDYyqhUn2RKO/PI
-         lFHQZLGbsqrirm06txrQIW/ebbIiz59ba6eAsRY5KjrWXIZ73jywqljunaP/ghJHB5A9
-         uKyEtu3Zvgig66EC5x+MjGQiTGePO5AKzyatccaZUr2ktzAcgc0H0B/UBMut22jZ1DsG
-         EBCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8lVOvMoIQ2x2Wf6zy8frHnpB0eXV9ve1xBd2DqHKd8Y=;
-        b=5V6obgO2jc0eIN9rJsmtqdu4phwQsKe/iDHF9Mazya6uJWauR8HTOW1Ok0++9K8fYq
-         wGmlKWLi7+sL5pG4ZK62J0XRG9VrZd8LCjpleTdySTDSBJfjcfkZa0zhpTkee4WWgCRO
-         iRPdE8E0L5hG3/zrb4ySTgfVa5aXmnwnCjUZvMMxKvpy+jQ+xobU+8pG8kR3awxwHFQR
-         WBpAuMz/hR2KdAcAOzJOt8o8kzc/2TzU8+wNU0IhhKlMq9RXW2cPR7YJUC1LLZjNZSkG
-         rIjYaIV6taUGQtxX1L0/kGtNMYFp0gLrY23Q6LNYcz82maXnwlCQumxmUQR318c2s8H6
-         LRgw==
-X-Gm-Message-State: AFqh2krW8pwh30gfvUaTDEnsFDcoB85n0RFf9b1DNooYeJ0bz2u9qBew
-        262qKfTLaNYkXn5FqtRBnxw=
-X-Google-Smtp-Source: AMrXdXv7/blNpjVnMJiMaPKfEdqpiTFTh3jtjnRI+SUuGsVsK9TsgKmt9RRC03LAK7v7xiQAHH0RHA==
-X-Received: by 2002:a05:6512:25a5:b0:4b5:7338:e2c7 with SMTP id bf37-20020a05651225a500b004b57338e2c7mr3358360lfb.53.1674145476128;
-        Thu, 19 Jan 2023 08:24:36 -0800 (PST)
-Received: from mobilestation ([95.79.133.202])
-        by smtp.gmail.com with ESMTPSA id s9-20020ac24649000000b004cb41b43c25sm5884147lfo.197.2023.01.19.08.24.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Jan 2023 08:24:35 -0800 (PST)
-Date:   Thu, 19 Jan 2023 19:24:31 +0300
-From:   Serge Semin <fancer.lancer@gmail.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Mark Brown <broonie@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>,
-        =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
-        Joel Stanley <joel@jms.id.au>,
-        Andrew Jeffery <andrew@aj.id.au>,
-        Kamal Dasu <kdasu.kdev@gmail.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>, Han Xu <han.xu@nxp.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Haibo Chen <haibo.chen@nxp.com>,
-        Yogesh Gaur <yogeshgaur.83@gmail.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Li-hao Kuo <lhjeff911@gmail.com>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        =?utf-8?B?77+9ZWNraQ==?= <rafal@milecki.pl>,
-        Vaishnav Achath <vaishnav.a@ti.com>,
-        Parshuram Thombare <pthombar@cadence.com>,
-        Leilk Liu <leilk.liu@mediatek.com>,
-        Gabor Juhos <juhosg@openwrt.org>,
-        Bert Vermeulen <bert@biot.com>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Marek Vasut <marex@denx.de>,
-        Birger Koblitz <mail@birger-koblitz.de>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Anson Huang <Anson.Huang@nxp.com>,
-        Chris Packham <chris.packham@alliedtelesis.co.nz>,
-        Kuldeep Singh <singh.kuldeep87k@gmail.com>,
-        Pragnesh Patel <pragnesh.patel@sifive.com>,
-        Christophe Kerello <christophe.kerello@foss.st.com>,
-        Patrice Chotard <patrice.chotard@foss.st.com>,
-        Erwan Leray <erwan.leray@foss.st.com>,
-        Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-        linux-spi@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
-        linux-kernel@vger.kernel.org, linux-amlogic@lists.infradead.org,
-        linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
-        linux-mediatek@lists.infradead.org, linux-tegra@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org,
-        linux-riscv@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com
-Subject: Re: [PATCH 1/2] spi: dt-bindings: drop unneeded quotes
-Message-ID: <20230119162431.mepdze3xibqjgwsi@mobilestation>
-References: <20230118173932.358153-1-krzysztof.kozlowski@linaro.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1674145482; x=1705681482;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=mvTu+MkrqbFrYom9OnvzEVX8ZpTp3ptK16XH6TGMfjw=;
+  b=asdEsF9v3+cIPcTDOfNCNBj95qm5WvMJR0zwFs0/tV4aYKYWw7uoNx7G
+   70qoZ6LQ2V3p/t+OE9pLyth9hGMu65LWjMwigPCJ4+MwnNGNiLYuskFIE
+   ZGH1U8WoMy7AHhmblJq3W3boH8T9+ZiCGZ16qwH8nRIGIgbl8poA5WFyw
+   Y=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 19 Jan 2023 08:24:42 -0800
+X-QCInternal: smtphost
+Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Jan 2023 08:24:41 -0800
+Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Thu, 19 Jan
+ 2023 08:24:41 -0800
+Message-ID: <c9f67c35-9abb-8d3c-d6d1-e55451c453a1@quicinc.com>
+Date:   Thu, 19 Jan 2023 08:24:40 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230118173932.358153-1-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [RFC PATCH v3 1/3] drm: Introduce solid fill property for drm
+ plane
+Content-Language: en-US
+To:     Harry Wentland <harry.wentland@amd.com>,
+        <freedreno@lists.freedesktop.org>
+CC:     <sebastian.wick@redhat.com>, <ppaalanen@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <quic_abhinavk@quicinc.com>,
+        <dri-devel@lists.freedesktop.org>, <swboyd@chromium.org>,
+        <daniel.vetter@ffwll.ch>, <seanpaul@chromium.org>,
+        <laurent.pinchart@ideasonboard.com>, <dmitry.baryshkov@linaro.org>,
+        <wayland-devel@lists.freedesktop.org>
+References: <20230104234036.636-1-quic_jesszhan@quicinc.com>
+ <20230104234036.636-2-quic_jesszhan@quicinc.com>
+ <c380bb1b-6e65-23c4-6e6b-29ce410b6baa@amd.com>
+ <512bf32f-b8d2-91b7-a23c-1905354ff0e9@quicinc.com>
+ <e5d0b837-2fd3-7bfa-155b-d80418dc2e79@amd.com>
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <e5d0b837-2fd3-7bfa-155b-d80418dc2e79@amd.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 18, 2023 at 06:39:31PM +0100, Krzysztof Kozlowski wrote:
-> Cleanup by removing unneeded quotes from refs and redundant blank lines.
-> No functional impact except adjusting to preferred coding style.
+
+
+On 1/19/2023 7:57 AM, Harry Wentland wrote:
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
+> 
+> On 1/18/23 17:53, Jessica Zhang wrote:
+>>
+>>
+>> On 1/18/2023 10:57 AM, Harry Wentland wrote:
+>>> On 1/4/23 18:40, Jessica Zhang wrote:
+>>>> Add support for solid_fill property to drm_plane. In addition, add
+>>>> support for setting and getting the values for solid_fill.
+>>>>
+>>>> solid_fill holds data for supporting solid fill planes. The property
+>>>> accepts an RGB323232 value and the driver data is formatted as such:
+>>>>
+>>>> struct drm_solid_fill {
+>>>>      u32 r;
+>>>>      u32 g;
+>>>>      u32 b;
+>>>> };
+>>>
+>>> Rather than special-casing this would it make sense to define this
+>>> as a single pixel of a FOURCC property?
+>>>
+>>> I.e., something like this:
+>>>
+>>> struct drm_solid_fill_info {
+>>>      u32 format; /* FOURCC value */
+>>>      u64 value; /* FOURCC pixel value */
+>>> }
+>>>
+>>> That removes some ambiguity how the value should be interpreted, i.e.,
+>>> it can be interpreted like a single pixel of the specified FOURCC format.
+>>>
+>>> It might also make sense to let drivers advertise the supported
+>>> FOURCC formats for solid_fill planes.
+>>
+>> Hi Harry,
+>>
+>> The initial v1 of this RFC had support for taking in a format and such, but it was decided that just supporting RGB323232 would work too.
+>>
+>> Here's the original thread discussing it [1], but to summarize, the work needed to convert the solid fill color to RGB is trivial (as it's just a single pixel of data). In addition, supporting various formats for solid_fill would add complexity as we'd have to communicate which formats are supported.
+>>
+>> [1] https://lists.freedesktop.org/archives/dri-devel/2022-November/379148.html
+>>
+> 
+> Make sense, and thanks for summarizing.
+> 
+> The only comment I would have left then, is that maybe it'd be good to add
+> an alpha value. I think it was suggested by someone else as well.
 
-[nip]
+Yep it was mentioned in the v1 discussion, but we came to the conclusion 
+that user can set the alpha through the separate alpha plane property.
 
->  .../bindings/spi/snps,dw-apb-ssi.yaml          |  2 +-
+Thanks,
 
-[nip]
+Jessica Zhang
 
-> diff --git a/Documentation/devicetree/bindings/spi/snps,dw-apb-ssi.yaml b/Documentation/devicetree/bindings/spi/snps,dw-apb-ssi.yaml
-> index d33b72fabc5d..a132b5fc56e0 100644
-> --- a/Documentation/devicetree/bindings/spi/snps,dw-apb-ssi.yaml
-> +++ b/Documentation/devicetree/bindings/spi/snps,dw-apb-ssi.yaml
-> @@ -10,7 +10,7 @@ maintainers:
->    - Mark Brown <broonie@kernel.org>
->  
->  allOf:
-> -  - $ref: "spi-controller.yaml#"
-> +  - $ref: spi-controller.yaml#
->    - if:
->        properties:
->          compatible:
-
-For the Synopsys DW SSI bindings:
-Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
-
-Thanks
--Serge(y)
-
+> 
+>>>
+>>> Is there an implementation for this in a corresponding canonical
+>>> upstream userspace project, to satisfy [1]? If not, what is the plan
+>>> for this? If so, please point to the corresponding patches.
+>>
+>> The use case we're trying to support here is the Android HWC SOLID_FILL hint [1], though it can also be used to address the Wayland single pixel FB protocol [2]. I'm also planning to add an IGT test to show an example of end to end usage.
+>>
+>> [1] https://android.googlesource.com/platform/hardware/interfaces/+/refs/heads/master/graphics/composer/aidl/android/hardware/graphics/composer3/Composition.aidl#52
+>>
+>> [2] https://gitlab.freedesktop.org/wayland/wayland-protocols/-/merge_requests/104
+>>
+> 
+> Makes sense.
+> 
+> Harry
+> 
+>> Thanks,
+>>
+>> Jessica Zhang
+>>
+>>>
+>>> [1] https://dri.freedesktop.org/docs/drm/gpu/drm-uapi.html#open-source-userspace-requirements
+>>>
+>>> Harry
+>>>
+>>>>
+>>>> To enable solid fill planes, userspace must assigned solid_fill to a
+>>>> property blob containing the following information:
+>>>>
+>>>> struct drm_solid_fill_info {
+>>>>      u8 version;
+>>>>      u32 r, g, b;
+>>>> };
+>>>>
+>>>> Changes in V2:
+>>>> - Changed solid_fill property to a property blob (Simon, Dmitry)
+>>>> - Added drm_solid_fill struct (Simon)
+>>>> - Added drm_solid_fill_info struct (Simon)
+>>>>
+>>>> Changes in V3:
+>>>> - Corrected typo in drm_solid_fill struct documentation
+>>>>
+>>>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>>>> ---
+>>>>    drivers/gpu/drm/drm_atomic_state_helper.c |  9 ++++
+>>>>    drivers/gpu/drm/drm_atomic_uapi.c         | 59 +++++++++++++++++++++++
+>>>>    drivers/gpu/drm/drm_blend.c               | 17 +++++++
+>>>>    include/drm/drm_blend.h                   |  1 +
+>>>>    include/drm/drm_plane.h                   | 43 +++++++++++++++++
+>>>>    5 files changed, 129 insertions(+)
+>>>>
+>>>> diff --git a/drivers/gpu/drm/drm_atomic_state_helper.c b/drivers/gpu/drm/drm_atomic_state_helper.c
+>>>> index dfb57217253b..c96fd1f2ad99 100644
+>>>> --- a/drivers/gpu/drm/drm_atomic_state_helper.c
+>>>> +++ b/drivers/gpu/drm/drm_atomic_state_helper.c
+>>>> @@ -253,6 +253,11 @@ void __drm_atomic_helper_plane_state_reset(struct drm_plane_state *plane_state,
+>>>>        plane_state->alpha = DRM_BLEND_ALPHA_OPAQUE;
+>>>>        plane_state->pixel_blend_mode = DRM_MODE_BLEND_PREMULTI;
+>>>>    +    if (plane_state->solid_fill_blob) {
+>>>> +        drm_property_blob_put(plane_state->solid_fill_blob);
+>>>> +        plane_state->solid_fill_blob = NULL;
+>>>> +    }
+>>>> +
+>>>>        if (plane->color_encoding_property) {
+>>>>            if (!drm_object_property_get_default_value(&plane->base,
+>>>>                                   plane->color_encoding_property,
+>>>> @@ -335,6 +340,9 @@ void __drm_atomic_helper_plane_duplicate_state(struct drm_plane *plane,
+>>>>        if (state->fb)
+>>>>            drm_framebuffer_get(state->fb);
+>>>>    +    if (state->solid_fill_blob)
+>>>> +        drm_property_blob_get(state->solid_fill_blob);
+>>>> +
+>>>>        state->fence = NULL;
+>>>>        state->commit = NULL;
+>>>>        state->fb_damage_clips = NULL;
+>>>> @@ -384,6 +392,7 @@ void __drm_atomic_helper_plane_destroy_state(struct drm_plane_state *state)
+>>>>            drm_crtc_commit_put(state->commit);
+>>>>          drm_property_blob_put(state->fb_damage_clips);
+>>>> +    drm_property_blob_put(state->solid_fill_blob);
+>>>>    }
+>>>>    EXPORT_SYMBOL(__drm_atomic_helper_plane_destroy_state);
+>>>>    diff --git a/drivers/gpu/drm/drm_atomic_uapi.c b/drivers/gpu/drm/drm_atomic_uapi.c
+>>>> index c06d0639d552..8a1d2fb7a757 100644
+>>>> --- a/drivers/gpu/drm/drm_atomic_uapi.c
+>>>> +++ b/drivers/gpu/drm/drm_atomic_uapi.c
+>>>> @@ -316,6 +316,55 @@ drm_atomic_set_crtc_for_connector(struct drm_connector_state *conn_state,
+>>>>    }
+>>>>    EXPORT_SYMBOL(drm_atomic_set_crtc_for_connector);
+>>>>    +static void drm_atomic_convert_solid_fill_info(struct drm_solid_fill *out,
+>>>> +        struct drm_solid_fill_info *in)
+>>>> +{
+>>>> +    out->r = in->r;
+>>>> +    out->g = in->g;
+>>>> +    out->b = in->b;
+>>>> +}
+>>>> +
+>>>> +static int drm_atomic_set_solid_fill_prop(struct drm_plane_state *state,
+>>>> +        struct drm_property_blob *blob)
+>>>> +{
+>>>> +    int ret = 0;
+>>>> +    int blob_version;
+>>>> +
+>>>> +    if (blob == state->solid_fill_blob)
+>>>> +        return 0;
+>>>> +
+>>>> +    drm_property_blob_put(state->solid_fill_blob);
+>>>> +    state->solid_fill_blob = NULL;
+>>>> +
+>>>> +    memset(&state->solid_fill, 0, sizeof(state->solid_fill));
+>>>> +
+>>>> +    if (blob) {
+>>>> +        if (blob->length != sizeof(struct drm_solid_fill_info)) {
+>>>> +            drm_dbg_atomic(state->plane->dev,
+>>>> +                    "[PLANE:%d:%s] bad solid fill blob length: %zu\n",
+>>>> +                    state->plane->base.id, state->plane->name,
+>>>> +                    blob->length);
+>>>> +            return -EINVAL;
+>>>> +        }
+>>>> +
+>>>> +        blob_version = ((struct drm_solid_fill_info *)blob->data)->version;
+>>>> +
+>>>> +        /* Append with more versions if necessary */
+>>>> +        if (blob_version == 1) {
+>>>> +            drm_atomic_convert_solid_fill_info(&state->solid_fill, blob->data);
+>>>> +        } else {
+>>>> +            drm_dbg_atomic(state->plane->dev,
+>>>> +                    "[PLANE:%d:%s] failed to set solid fill (ret=%d)\n",
+>>>> +                    state->plane->base.id, state->plane->name,
+>>>> +                    ret);
+>>>> +            return -EINVAL;
+>>>> +        }
+>>>> +        state->solid_fill_blob = drm_property_blob_get(blob);
+>>>> +    }
+>>>> +
+>>>> +    return ret;
+>>>> +}
+>>>> +
+>>>>    static void set_out_fence_for_crtc(struct drm_atomic_state *state,
+>>>>                       struct drm_crtc *crtc, s32 __user *fence_ptr)
+>>>>    {
+>>>> @@ -544,6 +593,13 @@ static int drm_atomic_plane_set_property(struct drm_plane *plane,
+>>>>            state->src_w = val;
+>>>>        } else if (property == config->prop_src_h) {
+>>>>            state->src_h = val;
+>>>> +    } else if (property == plane->solid_fill_property) {
+>>>> +        struct drm_property_blob *solid_fill = drm_property_lookup_blob(dev, val);
+>>>> +
+>>>> +        ret = drm_atomic_set_solid_fill_prop(state, solid_fill);
+>>>> +        drm_property_blob_put(solid_fill);
+>>>> +
+>>>> +        return ret;
+>>>>        } else if (property == plane->alpha_property) {
+>>>>            state->alpha = val;
+>>>>        } else if (property == plane->blend_mode_property) {
+>>>> @@ -616,6 +672,9 @@ drm_atomic_plane_get_property(struct drm_plane *plane,
+>>>>            *val = state->src_w;
+>>>>        } else if (property == config->prop_src_h) {
+>>>>            *val = state->src_h;
+>>>> +    } else if (property == plane->solid_fill_property) {
+>>>> +        *val = state->solid_fill_blob ?
+>>>> +            state->solid_fill_blob->base.id : 0;
+>>>>        } else if (property == plane->alpha_property) {
+>>>>            *val = state->alpha;
+>>>>        } else if (property == plane->blend_mode_property) {
+>>>> diff --git a/drivers/gpu/drm/drm_blend.c b/drivers/gpu/drm/drm_blend.c
+>>>> index b4c8cab7158c..17ab645c8309 100644
+>>>> --- a/drivers/gpu/drm/drm_blend.c
+>>>> +++ b/drivers/gpu/drm/drm_blend.c
+>>>> @@ -616,3 +616,20 @@ int drm_plane_create_blend_mode_property(struct drm_plane *plane,
+>>>>        return 0;
+>>>>    }
+>>>>    EXPORT_SYMBOL(drm_plane_create_blend_mode_property);
+>>>> +
+>>>> +int drm_plane_create_solid_fill_property(struct drm_plane *plane)
+>>>> +{
+>>>> +    struct drm_property *prop;
+>>>> +
+>>>> +    prop = drm_property_create(plane->dev,
+>>>> +            DRM_MODE_PROP_ATOMIC | DRM_MODE_PROP_BLOB,
+>>>> +            "solid_fill", 0);
+>>>> +    if (!prop)
+>>>> +        return -ENOMEM;
+>>>> +
+>>>> +    drm_object_attach_property(&plane->base, prop, 0);
+>>>> +    plane->solid_fill_property = prop;
+>>>> +
+>>>> +    return 0;
+>>>> +}
+>>>> +EXPORT_SYMBOL(drm_plane_create_solid_fill_property);
+>>>> diff --git a/include/drm/drm_blend.h b/include/drm/drm_blend.h
+>>>> index 88bdfec3bd88..0338a860b9c8 100644
+>>>> --- a/include/drm/drm_blend.h
+>>>> +++ b/include/drm/drm_blend.h
+>>>> @@ -58,4 +58,5 @@ int drm_atomic_normalize_zpos(struct drm_device *dev,
+>>>>                      struct drm_atomic_state *state);
+>>>>    int drm_plane_create_blend_mode_property(struct drm_plane *plane,
+>>>>                         unsigned int supported_modes);
+>>>> +int drm_plane_create_solid_fill_property(struct drm_plane *plane);
+>>>>    #endif
+>>>> diff --git a/include/drm/drm_plane.h b/include/drm/drm_plane.h
+>>>> index 447e664e49d5..3b9da06f358b 100644
+>>>> --- a/include/drm/drm_plane.h
+>>>> +++ b/include/drm/drm_plane.h
+>>>> @@ -40,6 +40,25 @@ enum drm_scaling_filter {
+>>>>        DRM_SCALING_FILTER_NEAREST_NEIGHBOR,
+>>>>    };
+>>>>    +/**
+>>>> + * struct drm_solid_fill_info - User info for solid fill planes
+>>>> + */
+>>>> +struct drm_solid_fill_info {
+>>>> +    __u8 version;
+>>>> +    __u32 r, g, b;
+>>>> +};
+>>>> +
+>>>> +/**
+>>>> + * struct solid_fill_property - RGB values for solid fill plane
+>>>> + *
+>>>> + * Note: This is the V1 for this feature
+>>>> + */
+>>>> +struct drm_solid_fill {
+>>>> +    uint32_t r;
+>>>> +    uint32_t g;
+>>>> +    uint32_t b;
+>>>> +};
+>>>> +
+>>>>    /**
+>>>>     * struct drm_plane_state - mutable plane state
+>>>>     *
+>>>> @@ -116,6 +135,23 @@ struct drm_plane_state {
+>>>>        /** @src_h: height of visible portion of plane (in 16.16) */
+>>>>        uint32_t src_h, src_w;
+>>>>    +    /**
+>>>> +     * @solid_fill_blob:
+>>>> +     *
+>>>> +     * Blob containing relevant information for a solid fill plane
+>>>> +     * including pixel format and data. See
+>>>> +     * drm_plane_create_solid_fill_property() for more details.
+>>>> +     */
+>>>> +    struct drm_property_blob *solid_fill_blob;
+>>>> +
+>>>> +    /**
+>>>> +     * @solid_fill:
+>>>> +     *
+>>>> +     * Pixel data for solid fill planes. See
+>>>> +     * drm_plane_create_solid_fill_property() for more details.
+>>>> +     */
+>>>> +    struct drm_solid_fill solid_fill;
+>>>> +
+>>>>        /**
+>>>>         * @alpha:
+>>>>         * Opacity of the plane with 0 as completely transparent and 0xffff as
+>>>> @@ -699,6 +735,13 @@ struct drm_plane {
+>>>>         */
+>>>>        struct drm_plane_state *state;
+>>>>    +    /*
+>>>> +     * @solid_fill_property:
+>>>> +     * Optional solid_fill property for this plane. See
+>>>> +     * drm_plane_create_solid_fill_property().
+>>>> +     */
+>>>> +    struct drm_property *solid_fill_property;
+>>>> +
+>>>>        /**
+>>>>         * @alpha_property:
+>>>>         * Optional alpha property for this plane. See
+>>>
+> 
