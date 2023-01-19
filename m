@@ -2,79 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 15DB56736DB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 12:30:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C6D426736FC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 12:35:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230393AbjASLam (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Jan 2023 06:30:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37948 "EHLO
+        id S230424AbjASLen (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Jan 2023 06:34:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230339AbjASLaY (ORCPT
+        with ESMTP id S230323AbjASLeX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Jan 2023 06:30:24 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD02178575
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 03:29:56 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id q8so1245593wmo.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 03:29:56 -0800 (PST)
+        Thu, 19 Jan 2023 06:34:23 -0500
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 207F21042E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 03:33:44 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id bg13-20020a05600c3c8d00b003d9712b29d2so3366988wmb.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 03:33:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=c/2ba17zj7VIMK/xPxIvdDUjP5shl1h27sejoZLeZuQ=;
-        b=Qw9NmNb2h3Q/WXN8V5dKD8ZMvIo3a0/mIEIjRNyA53EOfat0tKaG0+L0ynTn+k0bn+
-         7nB4MNLiiYgOCG7bjoRS10SdcndOKBq9AwVfBDlD94nOxaxQdV3xD35VPPvWBVtg29O0
-         3wpX7BiIIIR/hUytdPdEjdj/9zcu+Y492n43AxsG6phf2LHg9p4F6WknT7O61Z48ZEfj
-         zQvdXQWl3GvX79bSXIQ4vV97pmYo9gGScPOml2FX5ndGYGUnSkSDt3lXOGiOzx4NXJoY
-         nSvSiP90PrTm9/BI2ZektMxNMMw0QiFqlkZKkxlMtOWCYyWEouI1VUK3PZUhiek9/Obk
-         Jnag==
+        bh=Fl+mZE0bzcHSG7RJ3fjFnUtUZhQ6+Zdss6o32rRiNi8=;
+        b=kme6Q5uu+9jfciuTWgvoy5Okl+8i7gXFBfjnmqrc51HE3R2c4KNpeVRg9F5o23jX3I
+         D25qitLLkEaAfD/CJYIhfbLjbicryA6y9PepjB8cDmZ9AOh2wcZSgFt1FvvOLRQl64sz
+         BGq2PxgFt0Ey1qGaoXttVktf3zlA9fRs1MTPEvs18VDGw8Tan+4IhvatDNo3XYGqglR3
+         xWEhJKiAr2v8G6B3AXkRtHzavJO69tuEoBPfoJKm/FSx6PrIWygy+q1lQRrcg6ieYpu9
+         uhqu9JEkHRPysI9gctSV38iVJ6egB++PlvUlHS1LkQRz5OC5B6tXdJdljQC7a4VUVFT5
+         mF4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=c/2ba17zj7VIMK/xPxIvdDUjP5shl1h27sejoZLeZuQ=;
-        b=iygBgTxfBggaHmY+8gFRTMVBy7u462sJDEGhvNVmrkaZiucpIhUuuZMnBBZpD6b+of
-         PfPCMdZPoUyKiXQEs3lqa4C4sSCvVY5sJyGqh1NiAnEVQjTfTAUNe6kdV0OJFMHGPcmr
-         VBlXQuX4Z6TgOEK35unYd6MAlR9OVyWxP5G3eOy6779usX9wPg30m7Mgv0bv5sd5KchK
-         3o/iduuHj7Zzcn60MFP3Pt1EizZ1ScZUK7k+CnsufFQ66iJjyWXDwwXDhU9MkuXBMPTe
-         teLhBfg9b3yF0K6YQVrQ7HwCMME/eeWBFGGhC5fNpAjvfHPXFORfpNToHe7rETtwCm1C
-         0cVQ==
-X-Gm-Message-State: AFqh2kqC1kwjtQpr6xvRjQBiSdmEX2hecgJEyEpav+mdBLb2wxQDsoFG
-        nHQ8kddl11QAGnjkAyJAjFVH4A==
-X-Google-Smtp-Source: AMrXdXuMiM4IM//k/gieCDJhxZvpWdnP1PFB01eqMkwELfRhnLAPpWXMgCWEP2v9uPTdedd9+u1RGw==
-X-Received: by 2002:a05:600c:54d0:b0:3d9:7847:96e2 with SMTP id iw16-20020a05600c54d000b003d9784796e2mr9919025wmb.2.1674127792247;
-        Thu, 19 Jan 2023 03:29:52 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id g9-20020a05600c310900b003c21ba7d7d6sm1189775wmo.44.2023.01.19.03.29.51
+        bh=Fl+mZE0bzcHSG7RJ3fjFnUtUZhQ6+Zdss6o32rRiNi8=;
+        b=LcQvof/HMjv/qCmO2eLHB2eCEnxl6wubV0p7NrhUwAPRFOJheZl+wJD+wI5FC0L3Up
+         E9lwneEpOV3E8X7p8ig6QCaEHvjqnPl7Xfxh8p/KCaNfEivmClu2U+ohIq10PvdxloNw
+         m9jbs2TJp7oarcq0KVaxOF3GiwArhliUvTQcOVRs0K1/Tf+Z14WxRS2tDRQ0ML/3kqDB
+         kuQzS5his09Sq4SgRi8kPm1IUewmzgK7FzxO2Zq2F9zpI528GN8aDgFYQeCXUdCFjkQL
+         7fICGl5Hvk/Lt03K+LERXwoUiFcJeIQiF8CXzChKmvoVcbUVL5uiTgcq//xRQDYRGRMt
+         RV7g==
+X-Gm-Message-State: AFqh2kqB45/5HloF2NEJ7UXsbdNmOG9hwlH0JATeL1Pij3hRYMbQQjRv
+        dbx8IgXlkWvTOAESdGshzJztWg==
+X-Google-Smtp-Source: AMrXdXt3JnAI8NaxR3aCD+iy4yUN0eTtuOdknbjGr/KseeMccHT+0ESuESX+f0IeULtjJskJEz3oBQ==
+X-Received: by 2002:a05:600c:214f:b0:3da:68e1:5d45 with SMTP id v15-20020a05600c214f00b003da68e15d45mr10031208wml.23.1674128022801;
+        Thu, 19 Jan 2023 03:33:42 -0800 (PST)
+Received: from [192.168.0.159] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id m27-20020a05600c3b1b00b003db012d49b7sm7025228wms.2.2023.01.19.03.33.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 Jan 2023 03:29:51 -0800 (PST)
-Message-ID: <9622fe3c-0f3a-a3a2-6e35-90befe869d1b@linaro.org>
-Date:   Thu, 19 Jan 2023 12:29:50 +0100
+        Thu, 19 Jan 2023 03:33:42 -0800 (PST)
+Message-ID: <f18bbf82-8555-7645-abd7-71610060b10c@linaro.org>
+Date:   Thu, 19 Jan 2023 11:33:40 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: sdm845-oneplus: add tri-state-key
+ Thunderbird/102.4.2
+Subject: Re: [PATCH] dt-bindings: clock: qcom,a53pll: drop operating-points-v2
 Content-Language: en-US
-To:     Gergo Koteles <soyer@irl.hu>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jiri Kosina <jikos@kernel.org>,
-        Benjamin Tissoires <benjamin.tissoires@redhat.com>
-Cc:     linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Caleb Connolly <caleb@connolly.tech>
-References: <20230118234638.189098-1-soyer@irl.hu>
- <20230118234638.189098-4-soyer@irl.hu>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230118234638.189098-4-soyer@irl.hu>
-Content-Type: text/plain; charset=UTF-8
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, fabien.parent@linaro.org
+References: <20230113145859.82868-1-krzysztof.kozlowski@linaro.org>
+ <e73ad320fafa1365e3506bbd4cc77d8d.sboyd@kernel.org>
+ <063c5516-417d-7c21-b58f-a6552779a621@linaro.org>
+ <705c78c1d0da18089419b064832d5fed.sboyd@kernel.org>
+ <20230119031136.27vson2awemt3nkt@builder.lan>
+ <776b67b2-2405-36f5-f072-78f33ae59fcc@linaro.org>
+ <b6dae46b-7dd4-f731-aa26-f4ea3e4f3118@linaro.org>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <b6dae46b-7dd4-f731-aa26-f4ea3e4f3118@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -86,85 +87,107 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/01/2023 00:46, Gergo Koteles wrote:
-> The tri-state-key is a sound profile switch found on the OnePlus 6,
-> Android maps the states to "mute", "vibrate" and "ring", expose them as
-> ABS_SND_PROFILE events.
-> The previous GPIO numbers were wrong, the patch updates them to the correct
-> ones.
+On 19/01/2023 11:04, Krzysztof Kozlowski wrote:
+> On 19/01/2023 11:55, Bryan O'Donoghue wrote:
+>> On 19/01/2023 03:11, Bjorn Andersson wrote:
+>>> On Wed, Jan 18, 2023 at 11:11:00AM -0800, Stephen Boyd wrote:
+>>>> Quoting Krzysztof Kozlowski (2023-01-15 06:35:23)
+>>>>> On 13/01/2023 21:28, Stephen Boyd wrote:
+>>>>>> Quoting Krzysztof Kozlowski (2023-01-13 06:58:59)
+>>>>>>> The CPU PLL clock node does not use OPP tables (neither driver).
+>>>>>>
+>>>>>> What device is qcom_a53pll_get_freq_tbl() operating on?
+>>>>>
+>>>>> On its own, internal table. While of course driver could be converted to
+>>>>> operating-points-v2, no one did it within last 5 years, so why it should
+>>>>> happen now?
+>>>>>
+>>>>
+>>>> The property was added mid 2021 by Shawn[1], that's not 5 years ago. I
+>>>> guess there were plans to add an OPP table that never happened[2]? Is
+>>>> Shawn still working on this? If not, we should revert the OPP code out
+>>>> of the driver.
+>>>>
+>>>
+>>> @Bryan, what do you think about this?
+>>
+>> I'd be in favour of starting the CPR patchset instead, which depends on
+>> the opps.
+>>
+>> I think @Fabien has been waiting on the core 8939 dtsi, I also think the
+>> dtsi is close enough to merge that we could reasonably initiate the CPR
+>> stuff.
 > 
-> Co-developed-by: Caleb Connolly <caleb@connolly.tech>
-> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
-> Signed-off-by: Gergo Koteles <soyer@irl.hu>
-> ---
->  .../boot/dts/qcom/sdm845-oneplus-common.dtsi  | 43 ++++++++++++++++++-
->  1 file changed, 41 insertions(+), 2 deletions(-)
+> So you would make use of operating-points-v2 property? Then probably we
+> also miss opp-table, but anyway this patch can be dropped then.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-> index 42cf4dd5ea28..33215ad17513 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-> @@ -49,6 +49,44 @@ key-vol-up {
->  		};
->  	};
->  
-> +	tri-state-key {
-> +		compatible = "gpio-keys";
-> +		label = "Tri-state key";
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&tri_state_key_default>;
-> +
-> +		state-top {
+> Best regards,
+> Krzysztof
+> 
 
-Does not look like you tested the DTS against bindings. Please run `make
-dtbs_check` (see Documentation/devicetree/bindings/writing-schema.rst
-for instructions).
 
-> +			label = "Tri-state key top";
-> +			linux,input-type = <EV_ABS>;
-> +			linux,code = <ABS_SND_PROFILE>;
-> +			linux,input-value = <0>;
-> +			gpios = <&tlmm 126 GPIO_ACTIVE_LOW>;
-> +			debounce-interval = <50>;
-> +			linux,can-disable;
-> +		};
-> +
-> +		state-middle {
-> +			label = "Tri-state key middle";
-> +			linux,input-type = <EV_ABS>;
-> +			linux,code = <ABS_SND_PROFILE>;
-> +			linux,input-value = <1>;
-> +			gpios = <&tlmm 52 GPIO_ACTIVE_LOW>;
-> +			debounce-interval = <50>;
-> +			linux,can-disable;
-> +		};
-> +
-> +		state-bottom {
-> +			label = "Tri-state key bottom";
-> +			linux,input-type = <EV_ABS>;
-> +			linux,code = <ABS_SND_PROFILE>;
-> +			linux,input-value = <2>;
-> +			gpios = <&tlmm 24 GPIO_ACTIVE_LOW>;
-> +			debounce-interval = <50>;
-> +			linux,can-disable;
-> +		};
-> +	};
-> +
->  	reserved-memory {
->  		/*
->  		 * The rmtfs_mem needs to be guarded due to "XPU limitations"
-> @@ -588,9 +626,10 @@ &usb_1_hsphy {
->  &tlmm {
->  	gpio-reserved-ranges = <0 4>, <81 4>;
->  
-> -	tri_state_key_default: tri_state_key_default {
-> +	// The GPIOs have a hardware pullup.
-> +	tri_state_key_default: tri-state-pins {
->  		mux {
+Yep.
 
-You need to rebase.
+Looks something like this.
 
-Best regards,
-Krzysztof
+CPU2: cpu@102 {
+     device_type = "cpu";
+     compatible = "arm,cortex-a53", "arm,armv8";
+     reg = <0x102>;
+     next-level-cache = <&L2_1>;
+     enable-method = "qcom,kpss-acc-v2";
+     qcom,acc = <&acc2>;
+     qcom,saw = <&saw2>;
+     clocks = <&apcs1>;
+     operating-points-v2 = <&cluster1_opp_table>;
+     power-domains = <&cpr>;
+     power-domain-names = "cpr";
+     #cooling-cells = <2>;
+     capacity-dmips-mhz = <1024>;
+};
 
+cluster1_opp_table: cluster1-opp-table {
+     compatible = "operating-points-v2-qcom-cpu";
+     opp-shared;
+
+     /* Used by qcom-cpufreq-nvmem.c */
+     nvmem-cells = <&cpr_efuse_speedbin_pvs>;
+     nvmem-cell-names = "cpr_efuse_speedbin_pvs";
+
+     opp-200000000 {
+         opp-hz = /bits/ 64 <200000000>;
+         opp-supported-hw = <0x3f>;
+         required-opps = <&cpr_opp3>;
+     };
+
+     opp-345600000 {
+         opp-hz = /bits/ 64 <345600000>;
+         opp-supported-hw = <0x3f>;
+         required-opps = <&cpr_opp3>;
+     };
+};
+
+cpr_opp_table: cpr-opp-table {
+     compatible = "operating-points-v2-qcom-level";
+
+     cpr_opp1: opp1 {
+         opp-hz = /bits/ 64 <200000000>;
+             opp-level = <1>;
+             qcom,opp-fuse-level = <1>;
+         };
+     cpr_opp2: opp2 {
+         opp-hz = /bits/ 64 <345600000>;
+             opp-level = <2>;
+             qcom,opp-fuse-level = <1>;
+          };
+          cpr_opp3: opp3 {
+             opp-hz = /bits/ 64 <400000000>;
+             opp-level = <3>;
+             qcom,opp-fuse-level = <1>;
+          };
+     };
+     /* etc */
+};
+
+---
+bod
