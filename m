@@ -2,158 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E667B673114
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 06:17:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EF96E673172
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 06:58:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229606AbjASFR5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Jan 2023 00:17:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52090 "EHLO
+        id S230023AbjASF6U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Jan 2023 00:58:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229710AbjASFRm (ORCPT
+        with ESMTP id S230042AbjASF6N (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Jan 2023 00:17:42 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 639751BE9;
-        Wed, 18 Jan 2023 21:17:35 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30J4WPWZ010850;
-        Thu, 19 Jan 2023 05:17:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=IiNe1D7wMVXUPC7Sw5JyIQAiN+MwSRp7HO+FgP9EyA8=;
- b=E7KHEut4oe8T8/K36K6WQHyrtV+u1rtV99CKZg+awDqa/nikv1vhxatX3HF00UwoiLn2
- ERqhdXbOl/d4mXFZouLlA405XcuqppUiW1aJRORTi0TxniTUbn47Y/2yY9fVpGD847XW
- DOD/aznAPmy+CYYLSBJH9i+ZhmF4aMR/sdJVn3ICS/N+UKZf/wnyCSoUPs6lIjPXWxfe
- YMJOMKM003p0+qS9oVcsL6/U0SyOd/hkPKv44nBvg4HyY1zoOhmABjNnTjMCSktM0NFa
- CKhq2K1DQHBqVd1OzZsVcw8WxCm/V4Mo8hmj7RWFGyZ3KMC/W2cD1h0bhoT7MZ4og0MX 7A== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n69dpjn1a-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 19 Jan 2023 05:17:25 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30J5HOTZ022308
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 19 Jan 2023 05:17:24 GMT
-Received: from [10.216.31.99] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 18 Jan
- 2023 21:17:18 -0800
-Message-ID: <81f29a76-4daf-d5ec-afd5-e2305fbb8feb@quicinc.com>
-Date:   Thu, 19 Jan 2023 10:47:14 +0530
+        Thu, 19 Jan 2023 00:58:13 -0500
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A4615CE5A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 21:58:10 -0800 (PST)
+Received: by mail-pj1-x1031.google.com with SMTP id x2-20020a17090a46c200b002295ca9855aso4835393pjg.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Jan 2023 21:58:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=NqoJEjKcl3UOYqd7SPQRjzEP7ckIMaJAKD1OzGpEQKw=;
+        b=hzqrmcOWUVXCz5l2YZEAhL2A7qelvCmWkLTe/GpehR2IISgGvRw4CcXkt11epZaZjM
+         HafMdnpe3P6+JZK+Tzp/817fzzFvgFEEvEdmIw4vSnO5zwAnSqCIsvOK9uAevfnYRn2r
+         vW+RX6F1mHr4dvllfGArzC4Pta6oOf6A0XIRQjAdu+cFbs0b5Uts0JWckJhu+f0xeO1H
+         3GnES/v2G6SEtPgoMIjxqZxxzYjUIhCICb66I+eoK3Trwe9pD6UOyxC+8d8pxylk0QcZ
+         iE2kXCkKWx1YdhLxwiOY2EWVP5qMLthknpVSe1tRj2Rn/akGdxc6rJs7nOIRJZFEAISj
+         Xv9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=NqoJEjKcl3UOYqd7SPQRjzEP7ckIMaJAKD1OzGpEQKw=;
+        b=M4dChOiK4OjlKAqTtbi+tGmO3fIoVwPSk6J4/6lYI8u2aLmzr6kq2MFrnhxz01a9/J
+         g5WL4aEylUK1ltfXpHHGhs4jyZ5Pj9VuBaGfwT2n8EUjMN7h0gGUgNS43P4ZMFmKyWAw
+         1Hzt+676RdpmGjpePAs99PPrPfJunN9Qn8Z+8fu9vKsu8sRFUCt8tyGSB7MGkkeFOSq9
+         cl8nHPC9Ph/fC+pKRyLtNgKdvXnx2iV3ScuoGOvhk2MYfVFy10AWoDvziZw0RUa0aaxu
+         8LkC3QGYnp3OGgsXxmzadSzS0Cd4tyYIKBjGWHX1Yh7tswPrN7U/o2EU499KQ6yqky+d
+         O9Ug==
+X-Gm-Message-State: AFqh2kr99y4uaZESOGmcPArLxxMGSXhogsaLrqXr1vma+R2WisTule0p
+        BRwo9jYNVU9zssicQTp14CzocQ==
+X-Google-Smtp-Source: AMrXdXssNyzCzGULvihUFdc0LouhxBz/1PBL4DSn/DIblNtvXTi0WFwPkCvDNqLvH1BSIbWe7wlrGw==
+X-Received: by 2002:a17:902:a514:b0:194:476b:1af0 with SMTP id s20-20020a170902a51400b00194476b1af0mr9729302plq.65.1674107889637;
+        Wed, 18 Jan 2023 21:58:09 -0800 (PST)
+Received: from ?IPV6:2401:4900:1c60:63d3:2d69:9f71:187e:f085? ([2401:4900:1c60:63d3:2d69:9f71:187e:f085])
+        by smtp.gmail.com with ESMTPSA id k6-20020a170902c40600b0017f8094a52asm7109120plk.29.2023.01.18.21.58.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Jan 2023 21:58:08 -0800 (PST)
+Message-ID: <ee2dea71-771b-a574-1016-14c357a215d3@linaro.org>
+Date:   Thu, 19 Jan 2023 11:28:04 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [RFC v4 0/5] Add multiport support for DWC3 controllers
-Content-Language: en-US
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.1
+Subject: Re: [PATCH] dt-bindings: qcom: geni-se: Fix '#address-cells' &
+ '#size-cells' related dt-binding error
 To:     Bjorn Andersson <andersson@kernel.org>
-CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        "Andy Gross" <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
-        <quic_ppratap@quicinc.com>, <quic_wcheng@quicinc.com>,
-        <quic_jackp@quicinc.com>, <quic_harshq@quicinc.com>
-References: <20230115114146.12628-1-quic_kriskura@quicinc.com>
- <20230119034352.stbhutga5ounihj7@builder.lan>
-From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <20230119034352.stbhutga5ounihj7@builder.lan>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        agross@kernel.org, konrad.dybcio@linaro.org,
+        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org
+References: <20230113201038.267449-1-bhupesh.sharma@linaro.org>
+ <aef753a5-e8b1-5b7b-1b9e-e92a84de15bd@linaro.org>
+ <CAH=2Ntx5rLWu4jzXV8DwKj+yweHPRqb4+Rv8uZpDn_brWDxyJg@mail.gmail.com>
+ <b9aa6d30-5fe8-57a9-e478-c99bca70d185@linaro.org>
+ <CAH=2Nty2gUL3DufowzHavhUNdeht2dcX4EU7ooM+xzax2vP7uQ@mail.gmail.com>
+ <20230119032332.w5in5zmoyavi2s45@builder.lan>
+Content-Language: en-US
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+In-Reply-To: <20230119032332.w5in5zmoyavi2s45@builder.lan>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Q0JGznN4uxfDUfqHfN06r8af1gKT5Rc_
-X-Proofpoint-ORIG-GUID: Q0JGznN4uxfDUfqHfN06r8af1gKT5Rc_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-18_05,2023-01-18_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
- priorityscore=1501 adultscore=0 malwarescore=0 lowpriorityscore=0
- clxscore=1015 mlxscore=0 suspectscore=0 impostorscore=0 spamscore=0
- mlxlogscore=962 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301190039
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Bjorn,
 
-
-On 1/19/2023 9:13 AM, Bjorn Andersson wrote:
-> On Sun, Jan 15, 2023 at 05:11:41PM +0530, Krishna Kurapati wrote:
->> Currently the DWC3 driver supports only single port controller which
->> requires at most two PHYs ie HS and SS PHYs. There are SoCs that has
->> DWC3 controller with multiple ports that can operate in host mode.
->> Some of the port supports both SS+HS and other port supports only HS
->> mode.
+On 1/19/23 8:53 AM, Bjorn Andersson wrote:
+> On Mon, Jan 16, 2023 at 09:13:12PM +0530, Bhupesh Sharma wrote:
+>> On Mon, 16 Jan 2023 at 13:23, Krzysztof Kozlowski
+>> <krzysztof.kozlowski@linaro.org> wrote:
+>>>
+>>> On 15/01/2023 22:33, Bhupesh Sharma wrote:
+>>>> On Sun, 15 Jan 2023 at 20:57, Krzysztof Kozlowski
+>>>> <krzysztof.kozlowski@linaro.org> wrote:
+>>>>>
+>>>>> On 13/01/2023 21:10, Bhupesh Sharma wrote:
+>>>>>> Fix the following '#address-cells' & '#size-cells' related
+>>>>>> dt-binding error:
+>>>>>>
+>>>>>>     $ make dtbs_check
+>>>>>>
+>>>>>>     From schema: Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
+>>>>>>          arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dtb: geniqup@4ac0000:
+>>>>>>                #address-cells:0:0: 2 was expected
+>>>>>>        From schema: Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
+>>>>>
+>>>>> Don't we want rather to unify the soc address range?
+>>>>
+>>>> Well, the assumption in the original dt-bindings was that every reg
+>>>> variable is 4 * u32 wide (as most new qcom SoCs set #address- and
+>>>> #size-cells to <2>). However, that is not the case for all of the
+>>>> SoCs.
+>>>
+>>> Hm, which device of that SoC cannot be used with address/size cells 2?
 >>
->> This change primarily refactors the Phy logic in core driver to allow
->> multiport support with Generic Phy's.
->>
->> Chananges have been tested on  QCOM SoC SA8295P which has 4 ports (2
->> are HS+SS capable and 2 are HS only capable).
+>> As noted in the git log already the geniqup on sm6115 / sm4250 cannot
+>> be used with address/size cells 2 (See:
+>> https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/sm6115.dtsi#L795)
 >>
 > 
-> I can confirm that applying this series allow me to use all 6 USB ports
-> on the ADP. Looking forward to v5.
+> I'm not able to find the reasoning you're referring to. We do have cells
+> of 2 for these nodes on all other platforms.  If there is a specific
+> problem, that can be documented and you can probably use ranges to
+> reduce keep the cells of 1 in the geni wrappers.
 > 
-> Thanks,
-> Bjorn
 > 
-Thanks Bjorn for testing it out.
+> The reason why we have cells = 2 on most platforms is because the SMMU
+> reports that it's capable of more address bits than the buses will
+> handle. So without cells = 2, we can't describe dma-ranges appropriately
+> and you get page faults due to truncated addresses on the bus when the
+> iommu iova has been picking addresses for you.
 
-Regards,
-Krishna,
->> Changes in v4:
->> Added DT support for SA8295p.
->>
->> Changes in v3:
->> Incase any PHY init fails, then clear/exit the PHYs that
->> are already initialized.
->>
->> Changes in v2:
->> Changed dwc3_count_phys to return the number of PHY Phandles in the node.
->> This will be used now in dwc3_extract_num_phys to increment num_usb2_phy
->> and num_usb3_phy.
->>
->> Added new parameter "ss_idx" in dwc3_core_get_phy_ny_node and changed its
->> structure such that the first half is for HS-PHY and second half is for
->> SS-PHY.
->>
->> In dwc3_core_get_phy, for multiport controller, only if SS-PHY phandle is
->> present, pass proper SS_IDX else pass -1.
->>
->> Link to v3: https://lore.kernel.org/all/1654709787-23686-1-git-send-email-quic_harshq@quicinc.com/#r
->> Link to v2: https://lore.kernel.org/all/1653560029-6937-1-git-send-email-quic_harshq@quicinc.com/#r
->>
->> Krishna Kurapati (5):
->>    dt-bindings: usb: Add bindings to support multiport properties
->>    usb: dwc3: core: Refactor PHY logic to support Multiport Controller
->>    usb: dwc3: core: Do not setup event buffers for host only controllers
->>    usb: dwc3: qcom: Add multiport controller support for qcom wrapper
->>    arm: dts: msm: Add multiport controller node for usb
->>
->>   .../devicetree/bindings/usb/snps,dwc3.yaml    |  42 ++-
->>   arch/arm64/boot/dts/qcom/sa8295p-adp.dts      |  49 +++
->>   arch/arm64/boot/dts/qcom/sc8280xp.dtsi        |  60 ++++
->>   drivers/usb/dwc3/core.c                       | 325 +++++++++++++-----
->>   drivers/usb/dwc3/core.h                       |  15 +-
->>   drivers/usb/dwc3/drd.c                        |  14 +-
->>   drivers/usb/dwc3/dwc3-qcom.c                  |  28 +-
->>   7 files changed, 429 insertions(+), 104 deletions(-)
->>
->> -- 
->> 2.39.0
->>
+Consolidating the replies to your, Krzysztof's and Rob's observations / 
+suggestions here..
+
+Yes, the original background to the problem was that I observed that for
+the sm6115 based Qualcomm board with me, if I was using 36-bit DMA 
+configuration with a few IP blocks (like SDHC), I was seeing some issues.
+
+But, Konrad observed in [1] that it works fine for me on the sm6115 
+based Lenovo tab, so I agree to his suggestions and may be he can help
+send the '2-cell-ification' patch he has working, in which case I think
+we can drop this patch.
+
+@Konrad, please feel free to share the patch you were mentioning and I 
+can help test it as well.
+
+[1]. 
+https://lore.kernel.org/linux-arm-msm/09fe3e93-328b-13a3-540b-4ca47224b176@linaro.org/
+
+Thanks,
+Bhupesh
