@@ -2,89 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 333FD6737C2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 13:01:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E4DC6737ED
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Jan 2023 13:08:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231124AbjASMBj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Jan 2023 07:01:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35776 "EHLO
+        id S230217AbjASMI4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Jan 2023 07:08:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231258AbjASMA7 (ORCPT
+        with ESMTP id S230241AbjASMIz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Jan 2023 07:00:59 -0500
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 560214B76A;
-        Thu, 19 Jan 2023 04:00:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1674129653; x=1705665653;
-  h=message-id:date:mime-version:cc:subject:to:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=a0VAKNGfVX7Xb0tncsnGiNJiQB7rZGtxb86sJ68DmJ0=;
-  b=eMBmSPsEDMKrHL99mV9lC4DRORcUPu9bVTFjOEtupFxiWvzdgWQNHTbN
-   /3bEBEfSk7hN2e+1yCxjgnvFK06PbsBGWwzUGBEuzZo+NWwWNaZrYc9qX
-   y5Pod1jLOrz+TojLlBGy+nbc5mZ+upy0M0t4b9zjRMhn0peExivLGmPpd
-   v0JZsiBGnLWViB8UM138SPLlwdUg+mMbQiEBb50549RZY/9hi0w7Fgg4i
-   80W/FIXl2soo6mK6VV582uC/b2G4nLyW4P3C2MCBmD7TTmEnM2wIXFE3y
-   S/ZVdcdKaY1XVXBKohlhyy8vi+x/ROmH+XuSYlFX8Mc5F98XOYn2+oKYN
-   g==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10594"; a="305638202"
-X-IronPort-AV: E=Sophos;i="5.97,229,1669104000"; 
-   d="scan'208";a="305638202"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Jan 2023 04:00:52 -0800
-X-IronPort-AV: E=McAfee;i="6500,9779,10594"; a="692393552"
-X-IronPort-AV: E=Sophos;i="5.97,229,1669104000"; 
-   d="scan'208";a="692393552"
-Received: from blu2-mobl.ccr.corp.intel.com (HELO [10.252.185.248]) ([10.252.185.248])
-  by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Jan 2023 04:00:46 -0800
-Message-ID: <4f93e58d-2406-6b29-d546-02f90c4815b8@linux.intel.com>
-Date:   Thu, 19 Jan 2023 20:00:44 +0800
+        Thu, 19 Jan 2023 07:08:55 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4E2B2BEC3;
+        Thu, 19 Jan 2023 04:08:53 -0800 (PST)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30J5Fmes017643;
+        Thu, 19 Jan 2023 12:08:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=gfTqnOTWGqZDemDVHdu2Cs2qANt8WoEK/JLQa6iXSAY=;
+ b=HdylZ1tpR0zZFAkhsT3OUoR9qt6HANDa6jZ7EKe/eeiQuLxae/VxQXVpplG85yhK/cgb
+ V0M80CaoAOzszRKVFFtEZiBNvfN5G0bOXnKqHJlmw54P0D1NqIQL8YfS/pNvFqU6t5rV
+ lWzw1DFhbv2OcIynrpW3jkaBuweJSe0PfYmwhEC9q5sIces1qPk/nOyLQb04v6+BHWv2
+ yxYdnIM9k4mDiFH3iZdYR3FQZxsnxE9TxS7sLKHdbeu4miq/zINTUQfvNjoJ647QVDPT
+ VpvMtNORygCkrYQqCorh0TIZpus5vzxlbF2FNXhnMpaCEZq3Jyb/qMmpnnZRqilZSe8R pA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n6wbs9asr-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 19 Jan 2023 12:08:47 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30JC8k49017768
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 19 Jan 2023 12:08:46 GMT
+Received: from [10.216.43.228] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Thu, 19 Jan
+ 2023 04:08:41 -0800
+Message-ID: <77d4cb35-aff1-e35d-f1bf-957d17970714@quicinc.com>
+Date:   Thu, 19 Jan 2023 17:38:38 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Cc:     baolu.lu@linux.intel.com,
-        Alex Williamson <alex.williamson@redhat.com>,
-        ath10k@lists.infradead.org, ath11k@lists.infradead.org,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        dri-devel@lists.freedesktop.org, iommu@lists.linux.dev,
-        kvm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        linux-rdma@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-s390@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-tegra@vger.kernel.org, linux-wireless@vger.kernel.org,
-        netdev@vger.kernel.org, nouveau@lists.freedesktop.org,
-        Niklas Schnelle <schnelle@linux.ibm.com>,
-        virtualization@lists.linux-foundation.org
-Subject: Re: [PATCH v2 08/10] iommu/intel: Use GFP_KERNEL in sleepable
- contexts
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH v2 1/8] arm64: dts: qcom: sc7280: Extract audio nodes from
+ common idp dtsi file
 Content-Language: en-US
-To:     Jason Gunthorpe <jgg@nvidia.com>, Joerg Roedel <joro@8bytes.org>,
-        Kevin Tian <kevin.tian@intel.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Robin Murphy <robin.murphy@arm.com>
-References: <8-v2-ce66f632bd0d+484-iommu_map_gfp_jgg@nvidia.com>
-From:   Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <8-v2-ce66f632bd0d+484-iommu_map_gfp_jgg@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_rohkumar@quicinc.com>,
+        <srinivas.kandagatla@linaro.org>, <dianders@chromium.org>,
+        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
+        <konrad.dybcio@linaro.org>, <mka@chromium.org>
+References: <1672925875-2107-1-git-send-email-quic_srivasam@quicinc.com>
+ <1672925875-2107-2-git-send-email-quic_srivasam@quicinc.com>
+ <6a0b4fff-e012-92df-c2fb-82184eba8aef@linaro.org>
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Organization: Qualcomm
+In-Reply-To: <6a0b4fff-e012-92df-c2fb-82184eba8aef@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 5KXhCBnl6Dtc7vRx4_i7VbR8a8QUvyBC
+X-Proofpoint-GUID: 5KXhCBnl6Dtc7vRx4_i7VbR8a8QUvyBC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-19_09,2023-01-19_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ mlxlogscore=999 malwarescore=0 impostorscore=0 priorityscore=1501
+ bulkscore=0 phishscore=0 adultscore=0 mlxscore=0 suspectscore=0
+ clxscore=1015 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301190096
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023/1/19 2:00, Jason Gunthorpe wrote:
-> These contexts are sleepable, so use the proper annotation. The GFP_ATOMIC
-> was added mechanically in the prior patches.
-> 
-> Signed-off-by: Jason Gunthorpe<jgg@nvidia.com>
 
-Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
-
-Best regards,
-baolu
+On 1/10/2023 4:27 PM, Krzysztof Kozlowski wrote:
+Thanks for your time Krzysztof!!!
+> On 05/01/2023 14:37, Srinivasa Rao Mandadapu wrote:
+>> Split common idp dtsi file into audio specific dtsi and common
+>> idp dtsi file.
+>>
+>> It is required to isolate idp and crd-rev3 platform device tree nodes
+>> and convert crd-rev3 platform device tree nodes into audioreach specific
+>> device tree nodes.
+>>
+>> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+>> Tested-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+>> ---
+> Please include a changelog - either per patch or in cover letter.
+Okay. Will include and re post it.
+>
+>>   arch/arm64/boot/dts/qcom/sc7280-audio-idp.dtsi | 135 +++++++++++++++++++++++++
+>>   arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts     |   1 +
+>>   arch/arm64/boot/dts/qcom/sc7280-idp.dtsi       | 126 -----------------------
+>>   3 files changed, 136 insertions(+), 126 deletions(-)
+>>   create mode 100644 arch/arm64/boot/dts/qcom/sc7280-audio-idp.dtsi
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-audio-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-audio-idp.dtsi
+>> new file mode 100644
+>> index 0000000..d1aea28
+>> --- /dev/null
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280-audio-idp.dtsi
+>> @@ -0,0 +1,135 @@
+>> +// SPDX-License-Identifier: BSD-3-Clause
+>> +/*
+>> + * sc7280 Audio IDP board device tree source (common between SKU1 and SKU2)
+>> + *
+>> + * Copyright (c) 2022, The Linux Foundation. All rights reserved.
+>> + */
+>> +
+>> +/{
+>> +   /* BOARD-SPECIFIC TOP LEVEL NODES */
+> Still wrong indentation.
+Okay. Will fix it.
+>
+>> +	sound: sound {
+>> +		compatible = "google,sc7280-herobrine";
+>> +		model = "sc7280-wcd938x-max98360a-1mic";
+>> +
+>
+>
+>
+> Best regards,
+> Krzysztof
+>
