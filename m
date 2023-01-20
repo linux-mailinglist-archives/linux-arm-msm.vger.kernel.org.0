@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E170675572
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 14:18:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4BCB2675574
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 14:18:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231176AbjATNSj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Jan 2023 08:18:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36128 "EHLO
+        id S231177AbjATNSk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Jan 2023 08:18:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230509AbjATNSf (ORCPT
+        with ESMTP id S230513AbjATNSf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 20 Jan 2023 08:18:35 -0500
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B041DC41E2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 05:14:53 -0800 (PST)
-Received: by mail-ej1-x62b.google.com with SMTP id v6so13871337ejg.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 05:14:53 -0800 (PST)
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CB25C41E5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 05:14:54 -0800 (PST)
+Received: by mail-ej1-x636.google.com with SMTP id mp20so13827358ejc.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 05:14:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=fairphone.com; s=fair;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=031w1g9Y5G2a1Xr/z7EdzNKTzhiIoWJq1q3UhyHxNMk=;
-        b=hjhSK/azGy6/8bHlJ36i3bsWkmf7nBMd/TaTMlbpWpkf5BHUzAS+W4FnI2FVT5gmlR
-         aPG5xxtLBO4AuU1ncz6zDn4FIjN1a3/OQs+iCGGtsRBDIWNolX+58WEGA3N944/pgCS1
-         0ptgjvIhYL1ijkt3qnYfFr3wEJq2piFDJZpFNLcxxUdxOMu4POh6fJ4V1Fasskv84Mj8
-         JJP/pJPsym0dd3nCdtDPzdRlm2UHgYW7tCTGzx3nFb3XvWcPSJK+rnaKuGOAcGQe9N/m
-         YGfiofAv7F5KgTa1nGT0tc+Q3HKmsFp40tBU9RqElL9+24QUIa5QR68e/A6nt9gxWO8a
-         AyZQ==
+        bh=ySBpf/g54h4mieeOX1iTHn4nbDJmcd4e2yinCvFCp5c=;
+        b=LQoXIY51ocKZoiJFhh/AKSvIacV/F1db3r+IWRBBO5CRnSUd4/y6t+JPN0hZcOZC4j
+         5g67O4XNBTR/+4FcVFML8g5LzcxfzWKtB9YbLXV3o/Db+9DuJBVvgDmf6VRweZz9QhDU
+         bV1mIusIhlsezQ+F7aqLrpXr/4I4jyYEmNI8gosKdTeftWaoFn1xi/3E81QKglReGzWm
+         TGMHSuUcV+YZiR5D5WDxbZsbn3viFZ1oQNXG1fdq0+VPKfTaNemr1mbtrXs9xNrEEgw4
+         7JVC9CibLH/pdTT/Po5D4c3F3Oiyy4xXwS3aNWAxEZNeXLTRFj386RA7xlUos4xg0BOx
+         gGBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=031w1g9Y5G2a1Xr/z7EdzNKTzhiIoWJq1q3UhyHxNMk=;
-        b=2uZUikEfcEci1cwhkukC0APJ6SQ6fIi9VGFH1rw/9e6xb2oQwsfDA9LhtD+L7LWDRT
-         JFaCjngirdYj9ir82vBZRaQ1RMb8shlaLKpk7pB8fdtFAw1FiIopLMjklKb7OljAyJiq
-         s7QjLadf6mRNUgKmwAet1TRDVEnOgyDIr6irOS6blXtY4ECezkefJjvZhJuOXMu8jjJj
-         IeTvW+6xDm3fYq9odmEbS328ili6sTDLDerio9BQWAKMtIJvL4MLIXXn8hSEvqU9aPf2
-         5pgc+eFX2cCZ7k1W0/W3S/y53Xq0nVnAN1K0bYpMj9YIKV9+jviesohar1dO18Itwfir
-         8odQ==
-X-Gm-Message-State: AFqh2kr5F9hwlSWnbqFfZj4HQCDO3At/hi6LhuOGGRSeutJso2DZOIPX
-        IhD+17V6H0lfK5Ndx6ktV7K7fw==
-X-Google-Smtp-Source: AMrXdXuIXbFX/5M5zW9GdKZmjUZ3xfV0D1QO3DSGLjENqCzrRFFaRRvPqHuh98H+c2o9c9R6ZkDS9A==
-X-Received: by 2002:a17:906:358f:b0:829:6064:bc52 with SMTP id o15-20020a170906358f00b008296064bc52mr14368169ejb.74.1674220491895;
-        Fri, 20 Jan 2023 05:14:51 -0800 (PST)
+        bh=ySBpf/g54h4mieeOX1iTHn4nbDJmcd4e2yinCvFCp5c=;
+        b=aDIu1hChFQM7y3difhJvMnvXhUbtXkXkHboQ5uxroFgmWhGHcgIPrsAWlo80hDiibb
+         bvgGVBNN+o66MoNVwrwvk/uPpkM3ex/VbFBSJ849xivSHzHex1VCZ0C1JEBh34yeZ5mJ
+         0tP6FB0SKSYI2XbMeKdF+fTZUufRLjt4FfEL0Nu4RHaggzgfjqRlnbvShy9Lgj75Z9se
+         9OEznoq63qSVj4sn6KMWu428ru0A7Yz+WAkaes7i/+xGKtBuxUX+ZQeW32YQmTcWdBAH
+         vLS7epgTp2XGLkKFdhtUnlf/4hm35o7/UN65aiGT3jijxJpU1Xs2iwU2mypcgaf62qSn
+         I3+Q==
+X-Gm-Message-State: AFqh2kriToxjDnz3lRkw0fq6+F3yX6INeRDQSSZxroAOs1cBFcejnLA2
+        cK0mxLTwvcAJVx2sVXpWazf36w==
+X-Google-Smtp-Source: AMrXdXvwTGSr0VTfDAVxv+4egpg34iuffH5U0RjzGKJRCWUe2ybZYxw/9OuLWcE4dBOerhoopk/deA==
+X-Received: by 2002:a17:906:c7cc:b0:7ae:bfec:74c7 with SMTP id dc12-20020a170906c7cc00b007aebfec74c7mr14237590ejb.72.1674220492599;
+        Fri, 20 Jan 2023 05:14:52 -0800 (PST)
 Received: from [172.16.220.87] (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id t1-20020a1709061be100b0086f40238403sm8063276ejg.223.2023.01.20.05.14.51
+        by smtp.gmail.com with ESMTPSA id t1-20020a1709061be100b0086f40238403sm8063276ejg.223.2023.01.20.05.14.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Jan 2023 05:14:51 -0800 (PST)
+        Fri, 20 Jan 2023 05:14:52 -0800 (PST)
 From:   Luca Weiss <luca.weiss@fairphone.com>
-Date:   Fri, 20 Jan 2023 14:13:44 +0100
-Subject: [PATCH v2 1/4] dt-bindings: i2c: qcom-cci: Document SM6350
- compatible
+Date:   Fri, 20 Jan 2023 14:13:45 +0100
+Subject: [PATCH v2 2/4] arm64: dts: qcom: sm6350: Add camera clock
+ controller
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20221213-sm6350-cci-v2-1-15c2c14c34bb@fairphone.com>
+Message-Id: <20221213-sm6350-cci-v2-2-15c2c14c34bb@fairphone.com>
 References: <20221213-sm6350-cci-v2-0-15c2c14c34bb@fairphone.com>
 In-Reply-To: <20221213-sm6350-cci-v2-0-15c2c14c34bb@fairphone.com>
 To:     Andy Gross <agross@kernel.org>,
@@ -70,8 +70,7 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Luca Weiss <luca.weiss@fairphone.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+        Luca Weiss <luca.weiss@fairphone.com>
 X-Mailer: b4 0.12-dev-78462
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -83,34 +82,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document the compatible for the CCI block found on SM6350 SoC.
+Add a node for the camcc found on SM6350 SoC.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 ---
- Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/qcom/sm6350.dtsi | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml b/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
-index 87e414f0c39c..ec79b7270437 100644
---- a/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
-+++ b/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
-@@ -26,6 +26,7 @@ properties:
-       - items:
-           - enum:
-               - qcom,sdm845-cci
-+              - qcom,sm6350-cci
-               - qcom,sm8250-cci
-               - qcom,sm8450-cci
-           - const: qcom,msm8996-cci # CCI v2
-@@ -139,6 +140,7 @@ allOf:
-           contains:
-             enum:
-               - qcom,sdm845-cci
-+              - qcom,sm6350-cci
-     then:
-       properties:
-         clocks:
+diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+index 8224adb99948..300ced5cda57 100644
+--- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+@@ -1435,6 +1435,15 @@ usb_1_dwc3: usb@a600000 {
+ 			};
+ 		};
+ 
++		camcc: clock-controller@ad00000 {
++			compatible = "qcom,sm6350-camcc";
++			reg = <0 0x0ad00000 0 0x16000>;
++			clocks = <&rpmhcc RPMH_CXO_CLK>;
++			#clock-cells = <1>;
++			#reset-cells = <1>;
++			#power-domain-cells = <1>;
++		};
++
+ 		pdc: interrupt-controller@b220000 {
+ 			compatible = "qcom,sm6350-pdc", "qcom,pdc";
+ 			reg = <0 0x0b220000 0 0x30000>, <0 0x17c000f0 0 0x64>;
 
 -- 
 2.39.1
