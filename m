@@ -2,287 +2,729 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ED6FD67487A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 02:03:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 15C2A6748DD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 02:32:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229805AbjATBDL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Jan 2023 20:03:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59724 "EHLO
+        id S229918AbjATBc3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Jan 2023 20:32:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229535AbjATBDJ (ORCPT
+        with ESMTP id S229877AbjATBc2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Jan 2023 20:03:09 -0500
-Received: from mx0b-00230701.pphosted.com (mx0b-00230701.pphosted.com [148.163.158.9])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FFFEA1028;
-        Thu, 19 Jan 2023 17:03:07 -0800 (PST)
-Received: from pps.filterd (m0297265.ppops.net [127.0.0.1])
-        by mx0a-00230701.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30JJv3La011397;
-        Thu, 19 Jan 2023 17:02:48 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=synopsys.com; h=from : to : cc :
- subject : date : message-id : references : in-reply-to : content-type :
- content-id : content-transfer-encoding : mime-version; s=pfptdkimsnps;
- bh=TVYYmJfWfZ4bSz8ez2cosdhy45KljTOSr7jZ/KNMvPk=;
- b=kQsGqeqa7ZFXoAmO3ScfmacKNcOvdfZ3yy7VEnihkiWGTHFuiqohM86iiKiQgoVaW4SB
- 7R9zqIKrmWBzUbzwlaoMsoYeP84g0Htz/AuGilJ+LXP28Fse7D6Bx6h/2H9ZvG+XWWL4
- OoSyfkqHAEETe8iau6OlDHVonTilsRI+pwY7+dcLY8Fm31q4+iu4REBneseCTaEUWwDY
- tizRcgylh4PYoz0HxkM/CePL2jGAOj41OPaNZY+5Z4BQKIcmucOk/qyUNmGVcx0SD1Ly
- GFnKGNvtBakmFk5JlxYbiG4BrDj8osnn2dhGcmLjaBfanBzMZT2y3yS3bY7rVqxzWI5N YQ== 
-Received: from smtprelay-out1.synopsys.com (smtprelay-out1.synopsys.com [149.117.87.133])
-        by mx0a-00230701.pphosted.com (PPS) with ESMTPS id 3n78wv37ax-1
+        Thu, 19 Jan 2023 20:32:28 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1527186EE6;
+        Thu, 19 Jan 2023 17:32:22 -0800 (PST)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30K1NFTB008821;
+        Fri, 20 Jan 2023 01:32:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : from : subject : to : cc : references : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=mIgoW/fLOQ033D0tM09c6IF0e+za6gisYdjdnnouWZI=;
+ b=e1KMfyZCd7CNHffr0WV5Z5d1jKb5rYreoXdTlP5P9AvqtX15bNfmHMXjRbo113xpcdmr
+ lzP3c3wtbI/bQV7iCc4SW4Jgj/lqfRVjPlHi0m/OAQafBSCVFZUsA+NEggkrnHhe4uzG
+ spvmrf7bUSDMuWvlTkK0Ca/fN8wJ8/nW6qrkEvHrzGlus1OfAEBLIkoaamiHyPU50uMI
+ xNKFJHuaUWQDXmXGBxxvtWCjdhSmt5CcHxf6Zk2o+hZHJJIZjHvHIdoYTfTQ2eFiyQ/3
+ mjR6R4PebzP8QCZEXBf4FPwOHUomAG4jdHSJjAUU6VK9TKiy4ERgbLK9NkC/72UAVkp8 XA== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n700ytkq0-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 19 Jan 2023 17:02:48 -0800
-Received: from mailhost.synopsys.com (sv2-mailhost2.synopsys.com [10.205.2.134])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (Client CN "mailhost.synopsys.com", Issuer "SNPSica2" (verified OK))
-        by smtprelay-out1.synopsys.com (Postfix) with ESMTPS id 40613C098D;
-        Fri, 20 Jan 2023 01:02:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=synopsys.com; s=mail;
-        t=1674176567; bh=TVYYmJfWfZ4bSz8ez2cosdhy45KljTOSr7jZ/KNMvPk=;
-        h=From:To:CC:Subject:Date:References:In-Reply-To:From;
-        b=LsuZMCbf/xWKLGLGI/C3VjOU9UYGRVoF2kCbaL4XfbRRLBMQZo9MefEbTM7aaNfTF
-         2Z3dR/fashJPbHgeqF1VCFTiDL4mcledtJMsnd8l7HooXvFaAYvAKjJ8jxKTy4nc1K
-         qbEBxqVCPzb79d7Zym0fIxDtVX6uKCopDg4+PqJWN1P4lPXbTS7r7scUzmBYXMwyvt
-         u+zqbLvIKONsIhfiFs8x35yRedMAHVvjL1Dt++a98Mk7WXGEmbSp/swgO1YwM6wHc/
-         rvlVcJ09bkDAl7pkkmna4b5WxR5R9m6F7gH3GBRX9f5YTk+MgvL4s/VPqSGYfrph1/
-         kj68o6OLUfL3g==
-Received: from o365relay-in.synopsys.com (sv2-o365relay1.synopsys.com [10.202.1.137])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (Client CN "o365relay-in.synopsys.com", Issuer "Entrust Certification Authority - L1K" (verified OK))
-        by mailhost.synopsys.com (Postfix) with ESMTPS id 5001DA00BC;
-        Fri, 20 Jan 2023 01:02:44 +0000 (UTC)
-Received: from NAM02-SN1-obe.outbound.protection.outlook.com (mail-sn1nam02lp2043.outbound.protection.outlook.com [104.47.57.43])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (Client CN "mail.protection.outlook.com", Issuer "DigiCert Cloud Services CA-1" (verified OK))
-        by o365relay-in.synopsys.com (Postfix) with ESMTPS id 9244440139;
-        Fri, 20 Jan 2023 01:02:42 +0000 (UTC)
-Authentication-Results: o365relay-in.synopsys.com; dmarc=pass (p=reject dis=none) header.from=synopsys.com
-Authentication-Results: o365relay-in.synopsys.com; spf=pass smtp.mailfrom=thinhn@synopsys.com
-Authentication-Results: o365relay-in.synopsys.com;
-        dkim=pass (1024-bit key; unprotected) header.d=synopsys.com header.i=@synopsys.com header.b="U+5wJy6y";
-        dkim-atps=neutral
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=AS9lpqtRSw/qx+3C9xzvBDPKqabAYIZGTkuHe/d7vQY01nkcWAh0rOJWCTKBr+9ivQVLvNNaSWJuZwNT9ha639gdPVWWrbuk4Y7uzU0siU+5Dk83/hZ+ymSQJ1NqAZsXUitvkdKnfWF7HxuvO9Y8FYrLZ2sctrdxW56i02DxROxr8JFFT1ugmLlQsF7HLKqhVBZOPlknP8GFBk09VRnS0RSZ++rAHBd5ZpcbGkCgeGhmwEJH8Mj/U/3c/qOVHxqfR6KHo5uTrlvFmfY7ssaX2YDJllCOdx4f4HU8mdh46x4g4DheIpwAmAoEiUTsSpXeun9Io1fF/ssZR2xKewgoSg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=TVYYmJfWfZ4bSz8ez2cosdhy45KljTOSr7jZ/KNMvPk=;
- b=OH1Sbrq9+zAcIRqjdftwzEB2Pvo28n9wjVWaWCfUz1lRBOXTQvPMYi9BavNeqcP8XGr+K7YhwySAlYYAR13LTgZ+9OjvdvHFVcqmsJl8kATM6j+R7aM3Cn0eeG9iQp3TuIZicece9WcuYC/lhvIVGWtmMOdOcpG6UbM/v7sDwrkeJvsM17EDCyG8PwhS76BVr5ET2x/Z7qPnwc97WhC6MzgdMP/Y7x9fbmUgsohsJ3Piw/W6w4dVO7IQ8fDTOOcxzaS/2ZG28dlX7xJfa98oSpSAgsSRJe6KOVjPBjVDUucKR31OB4P/PeBzDsxvjdORwmyKcp8p/r/pyzBUpBRgZQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=synopsys.com; dmarc=pass action=none header.from=synopsys.com;
- dkim=pass header.d=synopsys.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=synopsys.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=TVYYmJfWfZ4bSz8ez2cosdhy45KljTOSr7jZ/KNMvPk=;
- b=U+5wJy6yV6EIvQkLzC88Xhyq7DhpU56A4newnnU8SfWU/nW4CHcoAeKfR7VfKpQRHSczECwuC8lvsPjpZE+Tm0kcfYGehDKw2PzRi50W8qL7/bZIsUpFP2W23mOhZ9cIPrwaTI/cd33mEfvGNIeuNwW2pju2Q7ojycspPqCdIAQ=
-Received: from BYAPR12MB4791.namprd12.prod.outlook.com (2603:10b6:a03:10a::12)
- by MN6PR12MB8514.namprd12.prod.outlook.com (2603:10b6:208:474::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5986.18; Fri, 20 Jan
- 2023 01:02:39 +0000
-Received: from BYAPR12MB4791.namprd12.prod.outlook.com
- ([fe80::e395:902b:2e90:b7ee]) by BYAPR12MB4791.namprd12.prod.outlook.com
- ([fe80::e395:902b:2e90:b7ee%4]) with mapi id 15.20.5986.018; Fri, 20 Jan 2023
- 01:02:39 +0000
-X-SNPS-Relay: synopsys.com
-From:   Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Fri, 20 Jan 2023 01:32:00 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30K1Vxle022112
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 20 Jan 2023 01:31:59 GMT
+Received: from [10.134.67.48] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Thu, 19 Jan
+ 2023 17:31:58 -0800
+Message-ID: <6ae00909-7d05-3be9-c5f9-dcd403afaf04@quicinc.com>
+Date:   Thu, 19 Jan 2023 17:31:58 -0800
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+From:   Elliot Berman <quic_eberman@quicinc.com>
+Subject: Re: [PATCH v8 11/28] gunyah: rsc_mgr: Add VM lifecycle RPC
+To:     Alex Elder <elder@linaro.org>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>
+CC:     Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Arnd Bergmann <arnd@arndb.de>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "quic_pkondeti@quicinc.com" <quic_pkondeti@quicinc.com>,
-        "quic_ppratap@quicinc.com" <quic_ppratap@quicinc.com>,
-        "quic_wcheng@quicinc.com" <quic_wcheng@quicinc.com>,
-        "quic_jackp@quicinc.com" <quic_jackp@quicinc.com>,
-        "quic_harshq@quicinc.com" <quic_harshq@quicinc.com>
-Subject: Re: [RFC v4 2/5] usb: dwc3: core: Refactor PHY logic to support
- Multiport Controller
-Thread-Topic: [RFC v4 2/5] usb: dwc3: core: Refactor PHY logic to support
- Multiport Controller
-Thread-Index: AQHZKNZ01nzPNqP4IUaLkP7OVwXfx66k6muAgAAojICAAXEUAA==
-Date:   Fri, 20 Jan 2023 01:02:38 +0000
-Message-ID: <20230120010226.wjwtisj4id6frirl@synopsys.com>
-References: <20230115114146.12628-1-quic_kriskura@quicinc.com>
- <20230115114146.12628-3-quic_kriskura@quicinc.com>
- <20230119003619.ane3weigd4ebsta6@synopsys.com>
- <7fa2d7b0-509d-ae90-4208-6f0245f927f7@quicinc.com>
-In-Reply-To: <7fa2d7b0-509d-ae90-4208-6f0245f927f7@quicinc.com>
-Accept-Language: en-US
+        Jonathan Corbet <corbet@lwn.net>,
+        "Bagas Sanjaya" <bagasdotme@gmail.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        "Sudeep Holla" <sudeep.holla@arm.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        "Lorenzo Pieralisi" <lpieralisi@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-acpi@vger.kernel.org>
+References: <20221219225850.2397345-1-quic_eberman@quicinc.com>
+ <20221219225850.2397345-12-quic_eberman@quicinc.com>
+ <7a4fdcca-b72a-d155-854f-07ec1a4a9107@linaro.org>
 Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: BYAPR12MB4791:EE_|MN6PR12MB8514:EE_
-x-ms-office365-filtering-correlation-id: 5a7b164f-a281-412b-e894-08dafa82064b
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: koukMYsw1TflduPgpwyiwuzxDOKUdUmyDWwr+A2WaebmjyQZCAg4+XbOwgNjvRDkge7QjcpmY+EvVO/Gn+SScRxZY2XW1P4woxaDvubP+YhDguLAbbjbQJgGKzxpKzSO7V5FUlgO2FIKzKHMltke0WbhFWfWlya9yQQp+lP/Miusdo7T57jAcLhAeIGT9/OH4EZiJ8KfB0V0Uh7Cjn3FE+Z+k05WgzWPfFaTvpBoldsvFRmVdZ8b/O3V8XzRnZxRb3D4tHvNxdG55t8sC1aj9/pz0Mv55NdGYI5L6wuWS/AMyn0+PH2xz4YqlyU1cZFXcV83TmI+HJmT/UN4EhHjN1LUzvZYOtXPSMJclwftVov818cxF3A5SXLOy5MfLOr58Hyljy6Bid54gEk1TGuGdHe1mdMMAn8FqPxAmAaQSNjAbz9J4HX5oHojGB6GOs0X4tlQ/t50KSSqxX/B4LfkgwIgf42M92VJC9tyQ/UxkomUabvlhpIuOAnM5MWyHQ9IhIYRI7+3aWStJrN7d3y/aQ8iGTv5bk4z782BzkcXXZlgNX+Qk3FKV9ocuZh+j5odZ6cjIPRWpwa8o8w+5gRhDxJfEST27wfHG7hHF7r/GTe0wmA0VeLQ6o3AZMFaVfTQ15HRydo3OknFnlowYGS5Tk0mL7BebRmo45NCtAHMtdj/1cco7A/ahFB+elpqiQhvngmzn8t9N0BBMo5oUPrPAg==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR12MB4791.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(346002)(136003)(396003)(39860400002)(376002)(366004)(451199015)(66556008)(1076003)(64756008)(66476007)(41300700001)(76116006)(36756003)(66446008)(2616005)(316002)(4326008)(83380400001)(38100700002)(5660300002)(86362001)(38070700005)(8936002)(122000001)(54906003)(8676002)(7416002)(66946007)(71200400001)(2906002)(6506007)(6916009)(53546011)(6486002)(26005)(478600001)(186003)(6512007);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?TGJhODV0ekg5Nm9lMjdCTGJObGd0V3d1enBMZzJhZlFSaXpDSDdvdDlkV3Ju?=
- =?utf-8?B?SHRFMTVVSTdJZ2tRUmFFWG9iZ3VSWjM5NThoUUVYeTJyK0hiMzZ6RTZVYXVG?=
- =?utf-8?B?c3E4WjZZYWt4QUxoZ0tUbDhSVzlwNHVkdzVnb3RsNkNCcEVjOHBlWmJhenNs?=
- =?utf-8?B?eVZuUEJncyttdG9VeW5uanVLMTB2T2Z2R1Vyb1BIVGg4RFhIVlhvVmxWNWc5?=
- =?utf-8?B?YUllSU1Pd20rY2E3MGt2SGZMeVAzWWpUUUJWUXlYa2dMd01PeE8vR0lhZ0FL?=
- =?utf-8?B?ZUtKeHBUUWlvMmJJc28yeXBuR1dSQ1h4b1ozc3lCRlZmZHNwNWxCWGxORzdx?=
- =?utf-8?B?ck1NOEVoYjkxR3lESGZOVlFBTDVSSHYwZk1VdExsNWJCMVB5QmFIY2c2VktC?=
- =?utf-8?B?dzY0NE5qRGs3ZTg2MzZSSjlCSndjVzB5VEN4TkpyNGtteHNLZ1praUh5K0Iv?=
- =?utf-8?B?bjNHU0dlSnBBQi9KRWdOZmp0dmhYdks1NUY0SUFudHMxQUxXaUMxMTltM1cv?=
- =?utf-8?B?S1ZnTzFsdlJ6eEFmbTdKMHdmSS9SSFVkMG1MVUl2N0dDaXRUY3lETDBoUzVR?=
- =?utf-8?B?RGlNMTd2ekZDOFU3S1NiYmNIY3VqTXBIRnkxRTRybm5UM0pyQVhQY1hVdnZQ?=
- =?utf-8?B?WGxVQmVldnFlTGsyaEdWNFBQRFRBSTViZG1ZTFZpNGtTbE4rc1BzamlJSitG?=
- =?utf-8?B?QVBRMkVZMkFvYkV0UVJQTnVoU1FwRFhyN3NqbjVqV3IzcnU1QmJ6K1E4OW1J?=
- =?utf-8?B?bnpPeFpaS3VrcGVVbXoyUnNsQXJhZmpjNTZGdHZ6UHNrbjRVSmVvY0dPdkQ4?=
- =?utf-8?B?RHVpdHRNaVo1VENQYmVodVdxRlBpWlIyYlEvYmtXbWx5OGM2ZGQvU1Y1TGNv?=
- =?utf-8?B?ajlvK1pTakhOQ0JSb2xvVkFRRkRQTFNIcnJrNjNKc2UxUnVSUjByK2gxSXd0?=
- =?utf-8?B?S0Z0K3NYUGtycFJKQnRQcCtiMCtFUFVxWXJsRWhsUFhBREwrNWVvazc3VHFQ?=
- =?utf-8?B?bmt3QnROM256U0I0aVA5b0lNVG9JdEg1STlVeUcyWTVHNDlZU0s5K25BczNw?=
- =?utf-8?B?ME1JQU5JbUltakN5WHIzS1I4WTFkckdtYkRNN2VXSXBNay92QjV2RFZXSlJ5?=
- =?utf-8?B?ZHdpeFhtVW8rQlB4Q1RuWFVjbysyYjMweXdUY2dhanExczhIb2JIKytpYm8r?=
- =?utf-8?B?M0VxMEp0VFljdEcxT3NIYStZMEwxZG96dHdPK1ZRRkRVeSt5c2p2M0lKZit6?=
- =?utf-8?B?YU9RRVBpZkhsN3loYitRaUdGZ0dpMFZ3eXhaVGhUdTZkdjc4WUw4WE5wTFMr?=
- =?utf-8?B?TmFxOXVJY1BQdHdhRVlLcFJQMm55RlAzRk95Ry91VkcxVTY1OHgyYjQwSXN1?=
- =?utf-8?B?TGhUbGoxbzVxMC9tdXo3MEZVOTNhY2VwbU9QdTMxVXhlREI1QVVDbExmQWhv?=
- =?utf-8?B?b3VXbTB2UlE5bFhZeU9MYjZjWW85L2ptQkgyYTBBdlhIV0ZNTlgzNmUrZng1?=
- =?utf-8?B?aDZvYUtDa2djemdZL3RZOG5oUXo4Si9DOVR1Q1JjSVUybk92a2xYTnNuOWE0?=
- =?utf-8?B?REdyZHBCdC9QOEw2VmtpV0h3ek9ML05FbTZrRUhkejdGQy8vMGRGN0oyekhm?=
- =?utf-8?B?MEViUThScmVOT2toUTh1dUFyZmI2RWR5Wjk4aFBCQ1FJa3hMYUdKa2tjZTdx?=
- =?utf-8?B?cUZQdE5KTElhRzZwZkR0TTBHZFFxQmcxTkRyWGowKzNhTVJmK1EyNGJBVUx3?=
- =?utf-8?B?YVFXS3FsVlQ3eUxLaFhtRkhyVFVsZEZ1UEN6c3dGTXRHVk0rZXRuUmhOME9t?=
- =?utf-8?B?YkRBU3k5bGRmbi9QOTVlRFJyVUpUYmNnbFpiYk9ZakpwcFg1SFlGM0dSRjBn?=
- =?utf-8?B?VjZ0aDlKS2t1SWg2dWtaL3huQmdYejR0QlloaURtTktIWHF3bnkrYjZVa05E?=
- =?utf-8?B?cnAvbW50ckw5bjBpb3Y4cHpsSkxuTGdDOStpcW9Pc0VBTEJURmQ4aWEwWm1R?=
- =?utf-8?B?MW5oWnBoajFyV1VDU2JheUt2OTd6dzB1Y0hCM2NvaHJUb2ZDVU9HN0FkTGZq?=
- =?utf-8?B?eWVzMTc2TGI1S1hWZ0hoblZZeERyRUo3aE9aNkZ4MnFESmxrZkJha2tlTVlP?=
- =?utf-8?B?NG8wMUhlL1VMRzZuZHFlMzJValJ6bDk5NVVhQk11YUhNVXdXNGpkaVFJU2dp?=
- =?utf-8?B?Vnc9PQ==?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <5007446A5194A7488C3C5979A146C486@namprd12.prod.outlook.com>
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: =?utf-8?B?dTZYOVlaRjhJT1A3ckdDb3N1VVRZMEdzdmdGY2FYY0oyUVlMNUdtMVBGTjcy?=
- =?utf-8?B?TU1ZUkNvRTNkMm1IY3FZTVpmZ1RicUVVdlZpRVdud3BxUC83V29ySlNMaDBZ?=
- =?utf-8?B?Q0pyWXJKVkw0S1YwSDhnRkVPZG1CMklRVjJOVHNUbFN0L3FIOGlBcERjcGty?=
- =?utf-8?B?V0V5K2FSNVVXbjUzNG4vVldKVGs1REUzUWhQOE9IcmJpUXFxaDBHcXhHWGR4?=
- =?utf-8?B?c0NCc04xV09qb3JMbHRxbk56OG9WSXp2SmI1UjFDdXc1SmNPTXYrWVYwRkZw?=
- =?utf-8?B?S2dNRllzKzhQYzg2QUF5NUlhaGtFSk8vZWxQV1FFbDMxVFlPQUx1VG9LRFJF?=
- =?utf-8?B?eWRzdHNZNWtGbjhIb042WnVRbFlDdzk4QStyMnlJUWh3OHQwYlRZdkdHQVdN?=
- =?utf-8?B?bDREbEpNRWhIOXR0NFZTTk90d2J0SG4vU085djNTWGt5OUxHb2pva21rcWpw?=
- =?utf-8?B?aWdKczBsSmVnVXJFaWZIYkhyTzVnL0FjZkl2WEJJQk9ScndwRUpkM0FOTFJk?=
- =?utf-8?B?T0xVRWxWV2gyc3UrRm45LzMvT0NnWDI5WXEydnFWZ1hQTWdxU2EyaFdMNzY4?=
- =?utf-8?B?QWFRaHRMQWJKbFprTDBRNlV6Vm1hcFJ2MjlVL1J0Y2xUUkswR1cyRnYvZnpQ?=
- =?utf-8?B?Z1JnUWdrMjlQK0UyWXNENFN4Wk5DMStMMnBCYjJVS1dyVFZvWk5uc0Y4akpw?=
- =?utf-8?B?U2dCMkp5bnBEVTNBOW1Wa05yVy9WVW5qd2RDS1RjbjErRlQ3cnJVMlVFR244?=
- =?utf-8?B?NjVWeURYN2l6aFg1ZTFOVEVyOFRmaGZoQUFXajF4WGExV3FqcFR0blVwcTdN?=
- =?utf-8?B?MnR4dFpGNUVIYXNmNTdHL3JSWHZIV0lJVnVMSDIyV2kwbXlsek9ia21ObnRR?=
- =?utf-8?B?d1R0Wktkd0RGL0YxWjV6M3FYbkZFRE5sTjdzZzY3N1RZZ3paRkpxck9JVm41?=
- =?utf-8?B?VFFYbFc0L2hmbGVSWmxkWHVRMUZINmMzS2pPdmtxTG5MSlhxQmgvNExRaDAx?=
- =?utf-8?B?U2ErYlp2dFI3RTFzWTluT1dIYVl0THhzazh2SHg4NDFMU1VaaWk5bVZqTjd3?=
- =?utf-8?B?RW1sTUR2dDk0RTJLZ2Ftd1FrOFgrWEkxbEVSMFFIS0lYS2xKN3pQTjFnSWl5?=
- =?utf-8?B?ZXZ0SUZzdkVjWkxVQmNBOVFMYlhQYkRvYU9ZL1pyY2pJcjRIMEFDcG1zVjU0?=
- =?utf-8?B?Y2JzZ1BHeU12MWxCZE1HYzRWL1lQVHVTVTQrUlBrZGF4eE9BU0hZeU9YNldE?=
- =?utf-8?B?SWJzZG8xbmNhd0tLa1k5d01rWnJld1lGWmpxQk1nWG5PSllpTElnK2F4dGdT?=
- =?utf-8?Q?X0vnFMAAEgIaU=3D?=
-X-OriginatorOrg: synopsys.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR12MB4791.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5a7b164f-a281-412b-e894-08dafa82064b
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Jan 2023 01:02:38.4364
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: c33c9f88-1eb7-4099-9700-16013fd9e8aa
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 83EEm72EjoZoTzHQczgBk4QzxKIxxWBThAvBzoepcgLq7leJNYBzTaKpUn9sFtUuw5k78GpXdeQO/PjNww4Mbg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN6PR12MB8514
-X-Proofpoint-GUID: WEsVyVKgf5_uJzIi7wRbowDJB4nChsGH
-X-Proofpoint-ORIG-GUID: WEsVyVKgf5_uJzIi7wRbowDJB4nChsGH
+In-Reply-To: <7a4fdcca-b72a-d155-854f-07ec1a4a9107@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: z9hdqLUt_tAVFydd48aSI-J7xFxaPSL4
+X-Proofpoint-ORIG-GUID: z9hdqLUt_tAVFydd48aSI-J7xFxaPSL4
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
  definitions=2023-01-19_16,2023-01-19_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_active_cloned_notspam policy=outbound_active_cloned score=0
- impostorscore=0 mlxscore=0 adultscore=0 phishscore=0 clxscore=1015
- suspectscore=0 lowpriorityscore=0 bulkscore=0 spamscore=0 mlxlogscore=999
- malwarescore=0 priorityscore=1501 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2212070000 definitions=main-2301200005
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ malwarescore=0 priorityscore=1501 mlxscore=0 bulkscore=0 phishscore=0
+ mlxlogscore=999 impostorscore=0 adultscore=0 suspectscore=0 spamscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301200010
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SGksDQoNCk9uIFRodSwgSmFuIDE5LCAyMDIzLCBLcmlzaG5hIEt1cmFwYXRpIFBTU05WIHdyb3Rl
-Og0KPiANCj4gDQo+IE9uIDEvMTkvMjAyMyA2OjA2IEFNLCBUaGluaCBOZ3V5ZW4gd3JvdGU6DQo+
-ID4gSGksDQo+ID4gDQo+ID4gT24gU3VuLCBKYW4gMTUsIDIwMjMsIEtyaXNobmEgS3VyYXBhdGkg
-d3JvdGU6DQo+ID4gPiBDdXJyZW50bHkgdGhlIERXQzMgZHJpdmVyIHN1cHBvcnRzIG9ubHkgc2lu
-Z2xlIHBvcnQgY29udHJvbGxlcg0KPiA+ID4gd2hpY2ggcmVxdWlyZXMgYXQgbW9zdCBvbmUgSFMg
-YW5kIG9uZSBTUyBQSFkuDQo+ID4gDQo+ID4gQWRkIG5vdGUgaGVyZSB0aGF0IG11bHRpLXBvcnQg
-aXMgZm9yIGhvc3QgbW9kZSBmb3IgY2xhcml0eS4NCj4gPiANCj4gPiA+IA0KPiA+ID4gQnV0IHRo
-ZSBEV0MzIFVTQiBjb250cm9sbGVyIGNhbiBiZSBjb25uZWN0ZWQgdG8gbXVsdGlwbGUgcG9ydHMg
-YW5kDQo+ID4gPiBlYWNoIHBvcnQgY2FuIGhhdmUgdGhlaXIgb3duIFBIWXMuIEVhY2ggcG9ydCBv
-ZiB0aGUgbXVsdGlwb3J0DQo+ID4gPiBjb250cm9sbGVyIGNhbiBlaXRoZXIgYmUgSFMrU1MgY2Fw
-YWJsZSBvciBIUyBvbmx5IGNhcGFibGUNCj4gPiA+IFByb3BlciBxdWFudGlmaWNhdGlvbiBvZiB0
-aGVtIGlzIHJlcXVpcmVkIHRvIG1vZGlmeSBHVVNCMlBIWUNGRw0KPiA+ID4gYW5kIEdVU0IzUElQ
-RUNUTCByZWdpc3RlcnMgYXBwcm9wcmlhdGVseS4NCj4gPiA+IA0KPiA+ID4gQWRkIHN1cHBvcnQg
-Zm9yIGRldGVjdGluZywgb2J0YWluaW5nIGFuZCBjb25maWd1cmluZyBwaHkncyBzdXBwb3J0ZWQN
-Cj4gPiA+IGJ5IGEgbXVsdGlwb3J0IGNvbnRyb2xsZXIgYW5kIGxpbWl0IHRoZSBtYXggbnVtYmVy
-IG9mIHBvcnRzDQo+ID4gPiBzdXBwb3J0ZWQgdG8gNC4NCj4gPiA+IA0KPiA+ID4gU2lnbmVkLW9m
-Zi1ieTogSGFyc2ggQWdhcndhbCA8cXVpY19oYXJzaHFAcXVpY2luYy5jb20+DQo+ID4gPiBTaWdu
-ZWQtb2ZmLWJ5OiBLcmlzaG5hIEt1cmFwYXRpIDxxdWljX2tyaXNrdXJhQHF1aWNpbmMuY29tPg0K
-PiA+ID4gLS0tDQo+ID4gPiAgIGRyaXZlcnMvdXNiL2R3YzMvY29yZS5jIHwgMzA0ICsrKysrKysr
-KysrKysrKysrKysrKysrKysrKysrLS0tLS0tLS0tLS0NCj4gPiA+ICAgZHJpdmVycy91c2IvZHdj
-My9jb3JlLmggfCAgMTUgKy0NCj4gPiA+ICAgZHJpdmVycy91c2IvZHdjMy9kcmQuYyAgfCAgMTQg
-Ky0NCj4gPiA+ICAgMyBmaWxlcyBjaGFuZ2VkLCAyNDQgaW5zZXJ0aW9ucygrKSwgODkgZGVsZXRp
-b25zKC0pDQo+ID4gPiANCg0KPHNuaXA+DQoNCj4gPiA+IEBAIC0xNTc1LDYgKzE2OTAsMjEgQEAg
-c3RhdGljIHZvaWQgZHdjM19nZXRfcHJvcGVydGllcyhzdHJ1Y3QgZHdjMyAqZHdjKQ0KPiA+ID4g
-ICAJZHdjLT5kaXNfc3BsaXRfcXVpcmsgPSBkZXZpY2VfcHJvcGVydHlfcmVhZF9ib29sKGRldiwN
-Cj4gPiA+ICAgCQkJCSJzbnBzLGRpcy1zcGxpdC1xdWlyayIpOw0KPiA+ID4gKw0KPiA+ID4gKwkv
-Kg0KPiA+ID4gKwkgKiBJZiBubyBtdWxpdHBvcnQgcHJvcGVydGllcyBhcmUgZGVmaW5lZCwgZGVm
-YXVsdA0KPiA+IA0KPiA+IG11bHRpKg0KPiA+IA0KPiA+ID4gKwkgKiB0aGUgcG9ydCBjb3VudCB0
-byAnMScuDQo+ID4gPiArCSAqLw0KPiA+IA0KPiA+IENhbiB3ZSBpbml0aWFsaXplIG51bV9wb3J0
-cyBhbmQgbnVtX3NzX3BvcnRzIHRvIDEgaW5zdGVhZCBvZiBzZXR0aW5nIGl0DQo+ID4gb24gZXJy
-b3IgKHNpbWlsYXIgdG8gaG93IHdlIGhhbmRsZSBvdGhlciBwcm9wZXJ0aWVzKS4NCj4gPiANCj4g
-SGkgVGhpbmgsDQo+IA0KPiAgIFRoYW5rcyBmb3IgdGhlIHJldmlldy4gT24gdGhlIGJpbmRpbmdz
-LCBSb2IgYW5kIEtyenlzenRvZiBoYXZlIHN1Z2dlc3RlZA0KPiB0byBnZXQgdGhlIG51bS1wb3J0
-cyBhbmQgbnVtLXNzLXBvcnRzIGJ5IGNvdW50aW5nIHRoZSBQaHktbmFtZXMgaW4gRFQuDQoNClRo
-aXMgbWF5IGJlIGEgYml0IHByb2JsZW1hdGljIGZvciBub24tRFQgZGV2aWNlLiBDdXJyZW50bHkg
-cGNpIGRldmljZXMNCnBhc3MgZmFrZSBEVCBwcm9wZXJ0aWVzIHRvIHNlbmQgdGhlc2Uga2luZHMg
-b2YgaW5mby4gQnV0IHRoYXQncyBmaW5lLA0Kd2UgY2FuIGVuaGFuY2UgZHdjMyBmb3Igbm9uLURU
-IGRldmljZXMgbGF0ZXIuDQoNCj4gDQo+IFNpbmNlIHRoZXJlIG1heSBiZSBtYW55IGNhc2VzIHdo
-ZXJlIHRoZSB1c2VyIG1pZ2h0IHNraXAgZ2l2aW5nIGFueSBQaHkncyBvcg0KPiBldmVuIHNraXAg
-ZGlmZmVyZW50IHBvcnRzIGluIHRoZSBEVCBpZiBoZSBkb2Vzbid0IHdhbnQgdG8gdXNlIHRoZW0s
-IGNhbiB3ZQ0KPiBkZXNpZ24vcmVmYWN0b3IgdGhlIGJlbG93IGxvZ2ljIGFzIGZvbGxvd3Mgd2hp
-bGUgbWFuZGF0aW5nIHRoZSBmYWN0IHRoYXQNCj4gdXNlciBtdXN0IGdpdmUgdGhlIFNTIFBoeSdz
-IGlmIGFueSBzdGFydGluZyBmcm9tIFBvcnQtMC46DQo+IA0KPiBudW0tc3MtcG9ydHMgPSBtYXhf
-cG9ydF9pbmRleCAodXNiMy1wb3J0WCkgKyAxDQo+IG51bS1wb3J0cyA9IG1heCAobWF4X3BvcnRf
-aW5kZXgodXNiMi1wb3J0WCksIG51bS1zcy1wb3J0cykgKyAxDQo+IA0KPiBFeDogSWYgdGhlcmUg
-YXJlIDMgcG9ydHMgYW5kIG9ubHkgMSBpcyBTUyBjYXBhYmxlIGFuZCB1c2VyIGRlY2lkZXMgdG8g
-c2tpcA0KPiBwb3J0LTIgSFMgUGh5Lg0KPiANCj4gY2FzZS0xOiBwaHktbmFtZXMgPSAidXNiMi1w
-b3J0MCIsICJ1c2IzLXBvcnQwIiwgInVzYjItcG9ydC0xIg0KPiBjYXNlLTI6IHBoeS1uYW1lcyA9
-ICJ1c2IyLXBvcnQwIiwgInVzYjItcG9ydC0xIiwgInVzYjMtcG9ydDEiDQo+IA0KPiBJbiBib3Ro
-IGNhc2VzLCBvbmx5IG9uZSBTUyBpcyBwcmVzZW50LCBqdXN0IHRoZSBvcmRlciBpcyBjaGFuZ2Vk
-LiAoTm90IHN1cmUNCj4gaWYgbGFzdCBmZXcgcG9ydHMgY2FuIGJlIG1hZGUgU1MgQ2FwYWJsZSBp
-bnN0ZWFkIG9mIHRoZSBmaXJzdCBwb3J0cyBvbiBhbnkNCj4gSFcpID8NCj4gDQo+IEJ1dCBhY2Nv
-cmRpbmcgdG8gdGhlIGFib3ZlIGZvcm11bGE6DQo+IA0KPiBJbiBjYXNlLTEgOiAobnVtLXBvcnRz
-ID0gMiwgbnVtLXNzLXBvcnRzID0gMSkgLSBUaGlzIGlzIGNvcnJlY3QNCj4gSW4gY2FzZS0yOiAo
-bnVtLXBvcnRzID0gMiwgbnVtLXNzLXBvcnRzID0gMikgLSBUaGlzIGlzIHdyb25nDQo+IA0KDQpD
-YW4ndCB3ZSBqdXN0IHdhbGsgdGhyb3VnaCBhbGwgdGhlIHBoeSBuYW1lcyB0byBmaWd1cmUgdGhh
-dCBvdXQ/IExldCdzDQpub3QgcmVxdWlyZSB0aGUgdXNlciB0byBzcGVjaWZ5IFBvcnQtMCBpcyBT
-UyBjYXBhYmxlIGlmIHRoZXkgY2FuIHNraXANCml0Lg0KDQo+IEkgYmVsaWV2ZSB0aGlzIGNvdmVy
-cyBhbGwgY2FzZXMgYW5kIEkgY2FuIHJlYWQgdGhpcyBpbiBnZXRfcHJvcGVydGllcw0KPiBmdW5j
-dGlvbi4gTGV0IG1lIGtub3cgeW91ciBvcGluaW9uIGlmIHRoaXMgZGVzaWduIGlzIGdvb2QgdG8g
-cHJvY2VlZA0KPiBmdXJ0aGVyLg0KPiANCg0KVGhhbmtzLA0KVGhpbmgNCg==
+
+
+On 1/18/2023 10:26 AM, Alex Elder wrote:
+> On 12/19/22 4:58 PM, Elliot Berman wrote:
+>> Add Gunyah Resource Manager RPC to launch an unauthenticated VM.
+> 
+> I have a number of general comments on your patch, and there
+> are a few bugs that you will need to address.
+> 
+>> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+>> ---
+>>   drivers/virt/gunyah/Makefile      |   2 +-
+>>   drivers/virt/gunyah/rsc_mgr.h     |  41 ++++++
+>>   drivers/virt/gunyah/rsc_mgr_rpc.c | 224 ++++++++++++++++++++++++++++++
+>>   include/linux/gunyah_rsc_mgr.h    |  50 +++++++
+>>   4 files changed, 316 insertions(+), 1 deletion(-)
+>>   create mode 100644 drivers/virt/gunyah/rsc_mgr_rpc.c
+>>
+>> diff --git a/drivers/virt/gunyah/Makefile b/drivers/virt/gunyah/Makefile
+>> index e7cf59b9e64e..5caa05267a58 100644
+>> --- a/drivers/virt/gunyah/Makefile
+>> +++ b/drivers/virt/gunyah/Makefile
+>> @@ -1,4 +1,4 @@
+>>   obj-$(CONFIG_GUNYAH) += gunyah.o
+>> -gunyah_rsc_mgr-y += rsc_mgr.o
+>> +gunyah_rsc_mgr-y += rsc_mgr.o rsc_mgr_rpc.o
+>>   obj-$(CONFIG_GUNYAH_RESOURCE_MANAGER) += gunyah_rsc_mgr.o
+>> diff --git a/drivers/virt/gunyah/rsc_mgr.h 
+>> b/drivers/virt/gunyah/rsc_mgr.h
+>> index b5bb36a7a4cc..1f9e3c38038e 100644
+>> --- a/drivers/virt/gunyah/rsc_mgr.h
+>> +++ b/drivers/virt/gunyah/rsc_mgr.h
+>> @@ -33,4 +33,45 @@ struct gh_rm_rpc;
+>>   int gh_rm_call(struct gh_rm_rpc *rsc_mgr, u32 message_id, void 
+>> *req_buff, size_t req_buff_size,
+>>           void **resp_buf, size_t *resp_buff_size);
+>> +/* Message IDs: VM Management */
+>> +#define GH_RM_RPC_VM_ALLOC_VMID            0x56000001
+> 
+> These values very clearly appear to be encoded.  Like the top
+> byte (0x56) might be defining the resource type and bytes below
+> it are the request ID?  If that is truly the case I think it
+> is useful to lay out that format, and perhaps define the values
+> based on the components that they are comprised of.
+> 
+
+Gunyah doesn't have any formal encoding scheme. It's separated out into 
+logical regions, but there is no meaning for the "0x56" except that it 
+mostly has functions related to VM management.
+
+>> +#define GH_RM_RPC_VM_DEALLOC_VMID        0x56000002
+>> +#define GH_RM_RPC_VM_START            0x56000004
+>> +#define GH_RM_RPC_VM_STOP            0x56000005
+>> +#define GH_RM_RPC_VM_CONFIG_IMAGE        0x56000009
+>> +#define GH_RM_RPC_VM_INIT            0x5600000B
+>> +#define GH_RM_RPC_VM_GET_HYP_RESOURCES        0x56000020
+>> +#define GH_RM_RPC_VM_GET_VMID            0x56000024
+>> +
+>> +/* Call: CONSOLE_OPEN, CONSOLE_CLOSE, CONSOLE_FLUSH */
+> 
+> The above comment is nonsense.  None of these symbols (or
+> similar) are defined, anywhere.  For the current patch, this
+> structure is used for VM_ALLOC_VMID, VM_GET_HYP_RESOURCES,
+> and via gh_rm_common_vmid_call(), VM_DEALLOC_VMID, VM_START,
+> and VM_INIT.  It's possible you'll use it for other requests
+> in subsequent patches.
+> 
+> Here you are defining a single "common" structure that's
+> used for several message types.  I think there are legitimate
+> reasons for that.  However...
+> 
+> In general, I think I'd rather see every message type laid
+> out separately.  It becomes a little long, here, where you
+> would define them, but in the code that uses them it allows
+> some simple patterns to be used in message handler functions
+> that I think improve understandability and perhaps correctness.
+> I'll provide some examples below to try to make my case.
+> 
+>> +struct gh_vm_common_vmid_req {
+>> +    __le16 vmid;
+>> +    __le16 reserved0;
+> 
+> If the above is really reserved (and unused), its
+> endianness doesn't matter.  (Not really a big deal.)
+> 
+>> +} __packed;
+> 
+> The above structure defines the format of a *request*
+> message.  But it is *also* the format of a VM_ALLOC_VMID
+> *response* message.  So the name of the type does not
+> match the way it's used.  As a reviewer, this seems off.
+> 
+
+Yes, I see the point here. I've created separate struct for the 
+VM_ALLOC_VMID response message. I'd still like to keep the 
+"gh_vm_common_vmid_req" for
+
+>> +/* Call: VM_STOP */
+>> +struct gh_vm_stop_req {
+>> +    __le16 vmid;
+>> +    u8 flags;
+> 
+> I don't believe you specify what the valid values this
+> "flags" field can hold.  If not, I think you should (and
+> if it's currently not used/needed, say that).
+> 
+>> +    u8 reserved;
+>> +    __le32 stop_reason;
+> 
+> Same thing here.  This field is defined but from what
+> I can tell, it is not currently used.  What values
+> *could* it take on?  Why is it currently ignored?
+> 
+
+Neither of the fields are currently used, so I've not defined them.
+
+Flags has the following bit:
+
+// Forcibly shutdown VM without sending a VM_SHUTDOWN notification
+#define GH_VM_STOP_FORCE_SHUTDOWN BIT(1)
+
+stop_reason is a code that is passed to the VM in the VM_SHUTDOWN 
+notification.
+
+>> +} __packed;
+>> +
+>> +/* Call: VM_CONFIG_IMAGE */
+>> +struct gh_vm_config_image_req {
+>> +    __le16 vmid;
+>> +    __le16 auth_mech;
+>> +    __le32 mem_handle;
+>> +    __le64 image_offset;
+>> +    __le64 image_size;
+>> +    __le64 dtb_offset;
+>> +    __le64 dtb_size;
+>> +} __packed;
+>> +
+>> +/* Call: GET_HYP_RESOURCES */
+>> +struct gh_vm_get_hyp_resources_resp {
+>> +    __le32 n_entries;
+>> +    struct gh_rm_hyp_resource entries[];
+> 
+> This header file should include <linux/gunyah_rsrc_mgr.h> to get
+> the required definition of struct gh_rm_hyp_resource.
+> 
+
+Done.
+
+>> +} __packed;
+>> +
+>>   #endif
+>> diff --git a/drivers/virt/gunyah/rsc_mgr_rpc.c 
+>> b/drivers/virt/gunyah/rsc_mgr_rpc.c
+>> new file mode 100644
+>> index 000000000000..8d9c1c635a27
+>> --- /dev/null
+>> +++ b/drivers/virt/gunyah/rsc_mgr_rpc.c
+>> @@ -0,0 +1,224 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/*
+>> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights 
+>> reserved.
+>> + */
+>> +
+>> +#include <linux/gunyah_rsc_mgr.h>
+>> +
+>> +#include "rsc_mgr.h"
+>> +
+>> +/*
+>> + * Several RM calls take only a VMID as a parameter and give only 
+>> standard
+>> + * response back. Deduplicate boilerplate code by using this common 
+>> call.
+> 
+> In other words, the response message is empty for the requests that use
+> this function.
+> 
+>> + */
+>> +static int gh_rm_common_vmid_call(struct gh_rm_rpc *rm, u32 
+>> message_id, u16 vmid)
+>> +{
+>> +    void *resp = NULL;
+> 
+> No need to set this to NULL if you ignore its value
+> when the gh_rm_call() is unsuccessful.
+> 
+
+Done.
+
+>> +    struct gh_vm_common_vmid_req req_payload = {
+>> +        .vmid = cpu_to_le16(vmid),
+>> +    };
+>> +    size_t resp_size;
+>> +    int ret;
+>> +
+>> +    ret = gh_rm_call(rm, message_id, &req_payload, 
+>> sizeof(req_payload), &resp, &resp_size);
+> 
+> Here and in all other calls to gh_rm_call() here (and added later),
+> you need to handle the return value differently.  (THIS IS A BUG.)
+> 
+> There are three classes of return value from gh_rm_call():
+> - Zero (success)
+> - Negative errno
+> - Positive Gunyah resource manager error code
+> 
+> In practice, it might be nice to distinguish Gunyah error codes from
+> Linux errnos, but I think the easiest solution might be to have a
+> function that maps Gunyah codes to comparable errno values, and have
+> gh_rm_call() use it so its return value is always 0 or negative.
+> 
+>> +    if (!ret)
+>> +        kfree(resp);
+>> +
+>> +    WARN_ON(!ret && resp_size);
+> 
+> You should have well-defined behavior when the response message
+> is empty.  Will the response pointer be valid or not?  I suggest
+> that a 0 length response message be guaranteed to return a null
+> pointer if the return value indicates success.  And a non-zero
+> length should be guaranteed to be valid.  There should be no
+> need for callers to issue warnings like this.
+> 
+> So the above would then just be (note this follows a pattern
+> similar to used by handlers later in the file):
+> 
+>      if (ret)
+>          return ret;
+> 
+>      if (resp_size)        /* (this is optional) */
+>          kfree(resp);
+> 
+>      return 0;
+> 
+> 
+
+Done, I'll clean up the error flow here.
+
+>> +
+>> +    return ret;
+>> +}
+>> +
+>> +/**
+>> + * gh_rm_alloc_vmid() - Allocate a new VM in Gunyah. Returns the VM 
+>> identifier.
+>> + * @vmid: Use GH_VMID_INVAL to dynamically allocate a VM. A reserved 
+>> VMID can also be requested
+>> + *        for a special-purpose platform-defined VM.
+>> + *
+>> + * Returns - the allocated VMID or negative value on error
+> 
+> Currently (based on a comment I made above) this statement
+> is not correct.  But I think what's described is the proper
+> return convention.  It's probably worth mentioning that it
+> will never return GH_VMID_SELF or GH_VMID_INVAL.
+> 
+>> + */
+>> +int gh_rm_alloc_vmid(struct gh_rm_rpc *rm, u16 vmid)
+>> +{
+>> +    void *resp;
+>> +    struct gh_vm_common_vmid_req req_payload = {
+>> +        .vmid = cpu_to_le16(vmid),
+>> +    };
+>> +    struct gh_vm_common_vmid_req *resp_payload;
+>> +    size_t resp_size;
+>> +    int ret;
+>> +
+> 
+> What is the meaning of this call if you pass GH_VMID_SELF?
+> Is that defined to be valid?  The code allows it, and if
+> so it treats it as equivalent to passing GH_VMID_INVAL.
+> 
+
+I've updated the docstring to allow for GH_VMID_SELF and 0 to all be 
+equivalent.
+
+>> +    if (vmid == GH_VMID_INVAL)
+>> +        vmid = 0;
+>> +
+>> +    ret = gh_rm_call(rm, GH_RM_RPC_VM_ALLOC_VMID, &req_payload, 
+>> sizeof(req_payload), &resp,
+>> +            &resp_size);
+> 
+> This *can* return a positive Gunyah resource manager error ID.
+> So in this case the caller would (erroneously) assume it was
+> a valid VMID.
+> 
+> You need to fix this.
+> 
+>> +    if (ret)
+>> +        return ret;
+>> +
+>> +    if (!vmid) {
+>> +        if (resp_size != sizeof(*resp_payload)) {
+>> +            ret = -EINVAL;
+> 
+> EINVAL means "invalid argument".  I *think* the right thing
+> to return would be -EBADMSG.  In any case I don't really
+> think -EINVAL is appropriate.
+> 
+>> +        } else {
+>> +            resp_payload = resp;
+>> +            ret = resp_payload->vmid;
+> 
+> This is a bug.  The vmid is a little-endian value, so you need
+> to use:
+> 
+>      ret = le16_to_cpu(resp_payload->vmid);
+> 
+>> +        }
+>> +    }
+>> +    kfree(resp);
+>> +
+>> +    return ret;
+>> +}
+>> +EXPORT_SYMBOL_GPL(gh_rm_alloc_vmid);
+>> +
+>> +/**
+>> + * gh_rm_dealloc_vmid() - Dispose the VMID
+>> + * @vmid: VM identifier
+> 
+>    * Returns: ...    (here and throughout)
+> 
+>> + */
+>> +int gh_rm_dealloc_vmid(struct gh_rm_rpc *rm, u16 vmid)
+>> +{
+>> +    return gh_rm_common_vmid_call(rm, GH_RM_RPC_VM_DEALLOC_VMID, vmid);
+>> +}
+>> +EXPORT_SYMBOL_GPL(gh_rm_dealloc_vmid);
+>> +
+>> +/**
+>> + * gh_rm_vm_start() - Move the VM into "ready to run" state
+>> + * @vmid: VM identifier
+>> + *
+>> + * On VMs which use proxy scheduling, vcpu_run is needed to actually 
+>> run the VM.
+>> + * On VMs which use Gunyah's scheduling, the vCPUs start executing in 
+>> accordance with Gunyah
+>> + * scheduling policies.
+>> + */
+>> +int gh_rm_vm_start(struct gh_rm_rpc *rm, u16 vmid)
+>> +{
+>> +    return gh_rm_common_vmid_call(rm, GH_RM_RPC_VM_START, vmid);
+>> +}
+>> +EXPORT_SYMBOL_GPL(gh_rm_vm_start);
+>> +
+>> +/**
+>> + * gh_rm_vm_stop() - Send a request to Resource Manager VM to stop a VM.
+>> + * @vmid: VM identifier
+>> + */
+>> +int gh_rm_vm_stop(struct gh_rm_rpc *rm, u16 vmid)
+>> +{
+>> +    struct gh_vm_stop_req req_payload = {
+>> +        .vmid = cpu_to_le16(vmid),
+> 
+> This structure has a flags and a stop_reason field.  As I mentioned
+> earlier, I think you ought to explain what values this might have,
+> or perhaps explain why they're not used.
+> 
+>> +    };
+>> +    void *resp;
+>> +    size_t resp_size;
+>> +    int ret;
+>> +
+>> +    ret = gh_rm_call(rm, GH_RM_RPC_VM_STOP, &req_payload, 
+>> sizeof(req_payload),
+>> +            &resp, &resp_size);
+>> +    if (ret)
+>> +        return ret;
+> 
+> Is the response in this case in fact empty?  You are discarding
+> it, but because you don't specify how every request/response is
+> structured, we can only guess what's contained in the response
+> (if there is one).  This is a reason why I prefer having every
+> message structure shown explicitly, even if some are identical.
+> It makes it very clear to the reader what the protocol actually
+> looks like.  And unlike what you do in gh_rm_common_vmid_call(),
+> you ignore the resp_size, which could be checked if we knew its
+> expected size.
+> 
+
+The response is empty, I've added the resp_size check.
+
+>> +    kfree(resp);
+>> +
+>> +    return ret;
+>> +}
+>> +EXPORT_SYMBOL_GPL(gh_rm_vm_stop);
+>> +
+>> +int gh_rm_vm_configure(struct gh_rm_rpc *rm, u16 vmid, enum 
+>> gh_rm_vm_auth_mechanism auth_mechanism,
+>> +        u32 mem_handle, u64 image_offset, u64 image_size, u64 
+>> dtb_offset, u64 dtb_size)
+>> +{
+>> +    struct gh_vm_config_image_req req_payload = { 0 };
+>> +    void *resp;
+>> +    size_t resp_size;
+>> +    int ret;
+>> +
+>> +    req_payload.vmid = cpu_to_le16(vmid);
+>> +    req_payload.auth_mech = cpu_to_le32(auth_mechanism);
+>> +    req_payload.mem_handle = cpu_to_le32(mem_handle);
+>> +    req_payload.image_offset = cpu_to_le64(image_offset);
+>> +    req_payload.image_size = cpu_to_le64(image_size);
+>> +    req_payload.dtb_offset = cpu_to_le64(dtb_offset);
+>> +    req_payload.dtb_size = cpu_to_le64(dtb_size);
+>> +
+>> +    ret = gh_rm_call(rm, GH_RM_RPC_VM_CONFIG_IMAGE, &req_payload, 
+>> sizeof(req_payload),
+>> +            &resp, &resp_size);
+>> +    if (ret)
+>> +        return ret;
+>> +    kfree(resp);
+>> +
+>> +    return ret;
+>> +}
+>> +EXPORT_SYMBOL_GPL(gh_rm_vm_configure);
+>> +
+>> +/**
+>> + * gh_rm_vm_init() - Move the VM to initialized state.
+>> + * @vmid: VM identifier
+>> + *
+>> + * RM will allocate needed resources for the VM. After gh_rm_vm_init, 
+>> gh_rm_get_hyp_resources()
+>> + * can be called to learn of the capabilities we can use with the new 
+>> VM.
+>> + */
+>> +int gh_rm_vm_init(struct gh_rm_rpc *rm, u16 vmid)
+>> +{
+>> +    return gh_rm_common_vmid_call(rm, GH_RM_RPC_VM_INIT,vmid);
+>> +}
+>> +EXPORT_SYMBOL_GPL(gh_rm_vm_init);
+>> +
+>> +/**
+>> + * gh_rm_get_hyp_resources() - Retrieve hypervisor resources 
+>> (capabilities) associated with a VM
+>> + * @vmid: VMID of the other VM to get the resources of
+>> + * @resources: Set by gh_rm_get_hyp_resources and contains the 
+>> returned hypervisor resources.
+>> + *
+>> + * Return: >=0 value indicates the number of gh_rm_hyp_resource 
+>> entries filled into *resources
+>> + */
+>> +ssize_t gh_rm_get_hyp_resources(struct gh_rm_rpc *rm, u16 vmid,
+>> +                struct gh_rm_hyp_resource **resources)
+> 
+> First, this function can return a positive Gunyah resource manager
+> error as well, which is a problem.
+> 
+> But this function is also pretty different from the rest, returning
+> the number of elements in the array whose address is returned.
+> 
+> I don't know why you don't just return the actual response
+> buffer (rather than duplicating most of it), and let the
+> caller use its embedded n_entries field to determine its
+> length.  Either way it's not beautiful I guess, but the
+> kmemdup() call seems unneccesary and adds a possible
+> additional error condition.
+> 
+
+I can return the response buffer. It arbitrarily felt like a better idea 
+at the time, but returning the actual response is also a clean approach.
+
+>> +{
+>> +    struct gh_vm_get_hyp_resources_resp *resp;
+>> +    size_t resp_size;
+>> +    int ret;
+>> +    struct gh_vm_common_vmid_req req_payload = {
+>> +        .vmid = cpu_to_le16(vmid),
+>> +    };
+>> +
+>> +    ret = gh_rm_call(rm, GH_RM_RPC_VM_GET_HYP_RESOURCES,
+>> +             &req_payload, sizeof(req_payload),
+>> +             (void **)&resp, &resp_size);
+>> +    if (ret)
+>> +        return ret;
+>> +
+>> +    if (resp_size < sizeof(*resp) ||
+>> +        (sizeof(*resp->entries) && (resp->n_entries > U32_MAX / 
+>> sizeof(*resp->entries))) ||
+>> +        (resp_size != sizeof(*resp) + (resp->n_entries * 
+>> sizeof(*resp->entries)))) {
+>> +        ret = -EIO;
+>> +        goto out;
+>> +    }
+>> +
+>> +    *resources = kmemdup(resp->entries, (resp->n_entries * 
+>> sizeof(*resp->entries)), GFP_KERNEL);
+> 
+> If *resources is NULL you should return -ENOMEM.
+> 
+>> +    ret = resp->n_entries;
+>> +
+>> +out:
+>> +    kfree(resp);
+>> +    return ret;
+>> +}
+>> +EXPORT_SYMBOL_GPL(gh_rm_get_hyp_resources);
+>> +
+>> +/**
+>> + * gh_rm_get_vmid() - Retrieve VMID of this virtual machine
+>> + * @vmid: Filled with the VMID of this VM
+>> + */
+>> +int gh_rm_get_vmid(struct gh_rm_rpc *rm, u16 *vmid)
+>> +{
+>> +    static u16 cached_vmid = GH_VMID_INVAL;
+> 
+> This cached VMID seems like a good idea, but you don't actually use it.
+> 
+>> +    void *resp;
+>> +    size_t resp_size;
+>> +    int ret;
+>> +    int payload = 0;
+> 
+> In fact the payload has type __le16 (or at least I assume so).
+> I don't actually know what this payload represents.  Is it a
+> VMID (which would I presume in this case be GH_VMID_SELF)?
+> How big is it, actually?
+> 
+> If you were to define each request and response, I would hope
+> each would be a packed structure, so in this case:
+> 
+>      struct gh_rm_get_vmid_request {
+>          __le16 vmid;
+>          u16 reserved;    /* ??? */
+>      } __packed;
+> 
+
+The payload here is a dummy payload and not used due to some earlier 
+limitations in RM's handling of messages. This brought up the point 
+again, and they have fixed the limitation. I should've commented that it 
+is empty payload without meaning. In v9, I'll simply remove the payload 
+entirely.
+
+>> +
+>> +    if (cached_vmid != GH_VMID_INVAL) {
+>> +        *vmid = cached_vmid;
+>> +        return 0;
+>> +    }
+>> +
+>> +    ret = gh_rm_call(rm, GH_RM_RPC_VM_GET_VMID, &payload, 
+>> sizeof(payload), &resp, &resp_size);
+>> +    if (ret)
+>> +        return ret;
+>> +
+>> +    if (resp_size != sizeof(*vmid))
+>> +        return -EIO;
+>> +    *vmid = *(u16 *)resp;
+> 
+> This is a bug.  The response is little endian, so you need to do:
+> 
+>      *vmid = le16_to_32(resp);
+> 
+>> +    kfree(resp);
+>> +
+>> +    return ret;
+>> +}
+>> +EXPORT_SYMBOL_GPL(gh_rm_get_vmid);
+>> diff --git a/include/linux/gunyah_rsc_mgr.h 
+>> b/include/linux/gunyah_rsc_mgr.h
+>> index b4f55c19954b..eb94b48c41de 100644
+>> --- a/include/linux/gunyah_rsc_mgr.h
+>> +++ b/include/linux/gunyah_rsc_mgr.h
+>> @@ -15,4 +15,54 @@
+>>   /* Gunyah recognizes VMID0 as an alias to the current VM's ID */
+>>   #define GH_VMID_SELF            0
+> 
+> Please be sure to use this symbol in place of 0 when that's
+> what you mean.  In gh_rm_get_vmid() it looked like *maybe*
+> that's what was being passed as an argument in the request
+> payload--and if so, that's a case I'd like to see GH_VMID_SELF.
+> 
+>                      -Alex
+> 
+>> +struct gh_rm_rpc;
+>> +
+>> +enum gh_rm_vm_status {
+>> +    GH_RM_VM_STATUS_NO_STATE    = 0,
+>> +    GH_RM_VM_STATUS_INIT        = 1,
+>> +    GH_RM_VM_STATUS_READY        = 2,
+>> +    GH_RM_VM_STATUS_RUNNING        = 3,
+>> +    GH_RM_VM_STATUS_PAUSED        = 4,
+>> +    GH_RM_VM_STATUS_LOAD        = 5,
+>> +    GH_RM_VM_STATUS_AUTH        = 6,
+>> +    GH_RM_VM_STATUS_INIT_FAILED    = 8,
+>> +    GH_RM_VM_STATUS_EXITED        = 9,
+>> +    GH_RM_VM_STATUS_RESETTING    = 10,
+>> +    GH_RM_VM_STATUS_RESET        = 11,
+>> +};
+>> +
+>> +/* RPC Calls */
+>> +int gh_rm_alloc_vmid(struct gh_rm_rpc *rm, u16 vmid);
+>> +int gh_rm_dealloc_vmid(struct gh_rm_rpc *rm, u16 vmid);
+>> +int gh_rm_vm_start(struct gh_rm_rpc *rm, u16 vmid);
+>> +int gh_rm_vm_stop(struct gh_rm_rpc *rm, u16 vmid);
+>> +
+>> +enum gh_rm_vm_auth_mechanism {
+>> +    GH_RM_VM_AUTH_NONE        = 0,
+>> +    GH_RM_VM_AUTH_QCOM_PIL_ELF    = 1,
+>> +    GH_RM_VM_AUTH_QCOM_ANDROID_PVM    =2,
+>> +};
+>> +
+>> +int gh_rm_vm_configure(struct gh_rm_rpc *rm, u16 vmid, enum 
+>> gh_rm_vm_auth_mechanism auth_mechanism,
+>> +            u32 mem_handle, u64 image_offset, u64 image_size,
+>> +            u64 dtb_offset, u64 dtb_size);
+>> +int gh_rm_vm_init(struct gh_rm_rpc *rm, u16 vmid);
+>> +
+>> +struct gh_rm_hyp_resource {
+>> +    u8 type;
+>> +    u8 reserved;
+>> +    __le16 partner_vmid;
+>> +    __le32 resource_handle;
+>> +    __le32 resource_label;
+>> +    __le64 cap_id;
+>> +    __le32 virq_handle;
+>> +    __le32 virq;
+>> +    __le64 base;
+>> +    __le64 size;
+>> +} __packed;
+>> +
+>> +ssize_t gh_rm_get_hyp_resources(struct gh_rm_rpc *rm, u16 vmid,
+>> +                struct gh_rm_hyp_resource **resources);
+>> +int gh_rm_get_vmid(struct gh_rm_rpc *rm, u16 *vmid);
+>> +
+>>   #endif
+> 
