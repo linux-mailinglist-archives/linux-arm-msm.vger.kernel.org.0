@@ -2,172 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 16E9767504F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 10:11:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7BF1A675100
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 10:27:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229481AbjATJLN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Jan 2023 04:11:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49672 "EHLO
+        id S230406AbjATJ1P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Jan 2023 04:27:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229517AbjATJLN (ORCPT
+        with ESMTP id S230204AbjATJ1N (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Jan 2023 04:11:13 -0500
-Received: from mail-vs1-xe2b.google.com (mail-vs1-xe2b.google.com [IPv6:2607:f8b0:4864:20::e2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FAA58F6DA
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 01:10:33 -0800 (PST)
-Received: by mail-vs1-xe2b.google.com with SMTP id v127so4968852vsb.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 01:10:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20210112.gappssmtp.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=MZaS2jFjKgJPIvOoi38x6xVSa304xRVXmBfQSeerAQY=;
-        b=oS34Rc5HqDn0y15rqvi/SJ7g/YzvXWq0oxQW3beFjIl1h0f2A1Hbkc6cYkGT/Qt9u7
-         I2whoZrl78YFDiKZsS3Gp8hoc/MAtStyl8kT501tDSnjzejpUcrEAKrWvfWqqQCKhXn9
-         BYvMzs3RTYs3I0fetVg4f0ujpF21vjBQ16sLDg1U8mo9AT2mWcgZ0yQC0k5VhelwF06a
-         qLDRvDv7lVwx+PDEZtqTJ7YDDYNidzpcHtOf4XQfIQ9kNj2WfW8+nkCBq619uUKy0jGQ
-         Jc6Y/SDX6V5/Z4L2J2ZrQgwmMY3PW96vmVnGwxDWhfQMQGTnSw+ZKu1K1MfE8GsC/20c
-         cvDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MZaS2jFjKgJPIvOoi38x6xVSa304xRVXmBfQSeerAQY=;
-        b=Uzry8YzwOhACioKn4dVIM5bOgQyDXZC/nQ2v9tGvvLBfh4t8gHkFnbbrNX2Cl0K7zT
-         Gb3SbyBQF3SSw4aNouGKfaeI3eNQY3FBfx1IS4mjMWiJfoPH8axqw1cnPoclo6kYAaZM
-         sNubWoHEaISjJuaboNkAljdcl0uVepLwFWMJip1jDwAtLUGXhzKhDIK3+prChLgGmSFW
-         WcdlCPtRYhM7Jc4bYCs/TXywN1IrJhGbKtVcDM9fw4L0Irfspsw3KvYGlqYwKRrinqbY
-         LFd6++G5wjawtYM3iTpHpP0V8VMw4rQJD+IWIGm8RT79GCP9ki0OcoV4zogPa15JpDsN
-         IW4Q==
-X-Gm-Message-State: AFqh2kqtLHbC3ELTDL5RhW5lzSEmGDPI0s7rlgWphYPzlSMLOCI0sG51
-        6JHHV088LQOgJOQyYlyvPPXbKda6/B3ppOe4bPhO1w==
-X-Google-Smtp-Source: AMrXdXuoNgBQTMIHd+dvijVuebGsbNf80ukIzQIavSmHvcpNOwe/UwQI7TD7lVbOmJjHW7p96DCDvNBXfraxk5DyG7M=
-X-Received: by 2002:a67:f2da:0:b0:3d3:d90c:5ef2 with SMTP id
- a26-20020a67f2da000000b003d3d90c5ef2mr2358807vsn.17.1674205804654; Fri, 20
- Jan 2023 01:10:04 -0800 (PST)
+        Fri, 20 Jan 2023 04:27:13 -0500
+Received: from mail.8bytes.org (mail.8bytes.org [IPv6:2a01:238:42d9:3f00:e505:6202:4f0c:f051])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 055A0A19A5;
+        Fri, 20 Jan 2023 01:26:42 -0800 (PST)
+Received: from 8bytes.org (p200300c27714bc0086ad4f9d2505dd0d.dip0.t-ipconnect.de [IPv6:2003:c2:7714:bc00:86ad:4f9d:2505:dd0d])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by mail.8bytes.org (Postfix) with ESMTPSA id E12D62626D1;
+        Fri, 20 Jan 2023 10:24:56 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=8bytes.org;
+        s=default; t=1674206697;
+        bh=N0Ez9jlBhYWiOK7+xYABfIe0+VmfRPgpACpzUje2F4A=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=lOLKVLD4dyMYfuGfszt0Aqi18MMtbwUvgwVbHoDO6hE/pu3jlsoFnfOvfV2sSJ6i8
+         k3lOBgDA7x9bkKbnD+qVSk6qrzEVOc/9/JS99/CzblV3IjUWMNUsDLegoejr0hYkyT
+         NIAGgbjvSNtqhO8clUAYjH7vWYcGoTKi2kDTgKFmFcsSDinl9Vo2l2M2oUTe7UNJh3
+         4hHtdAX4so62XBRGFWlRKgCJW94p/lPduMMBp2SCZ238xwGOe1m0xh9F5SouN8x7NO
+         06U5w+umYu9ogUcIQK1YpQ4ciXMhW+H2quzpMMrP7f3cTLkb2U0hf6Ab3xk/GMJY5E
+         1P63Vv4/HChRw==
+Date:   Fri, 20 Jan 2023 10:24:55 +0100
+From:   Joerg Roedel <joro@8bytes.org>
+To:     Jason Gunthorpe <jgg@nvidia.com>
+Cc:     Robin Murphy <robin.murphy@arm.com>,
+        Lu Baolu <baolu.lu@linux.intel.com>,
+        Kevin Tian <kevin.tian@intel.com>,
+        Matthew Rosato <mjrosato@linux.ibm.com>,
+        Alex Williamson <alex.williamson@redhat.com>,
+        ath10k@lists.infradead.org, ath11k@lists.infradead.org,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        dri-devel@lists.freedesktop.org, iommu@lists.linux.dev,
+        kvm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        linux-rdma@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-s390@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-tegra@vger.kernel.org, linux-wireless@vger.kernel.org,
+        netdev@vger.kernel.org, nouveau@lists.freedesktop.org,
+        Niklas Schnelle <schnelle@linux.ibm.com>,
+        virtualization@lists.linux-foundation.org
+Subject: Re: [PATCH 1/8] iommu: Add a gfp parameter to iommu_map()
+Message-ID: <Y8pd50mdNShTyVRX@8bytes.org>
+References: <1-v1-6e8b3997c46d+89e-iommu_map_gfp_jgg@nvidia.com>
+ <4fd1b194-29ef-621d-4059-a8336058f217@arm.com>
+ <Y7hZOwerwljDKoQq@nvidia.com>
 MIME-Version: 1.0
-References: <20230118140825.242544-1-brgl@bgdev.pl> <20230118140825.242544-3-brgl@bgdev.pl>
- <4f65001a-b442-7425-dfa3-b1e9be81d566@linaro.org>
-In-Reply-To: <4f65001a-b442-7425-dfa3-b1e9be81d566@linaro.org>
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-Date:   Fri, 20 Jan 2023 10:09:53 +0100
-Message-ID: <CAMRc=MfnBF3Bnez7w+twmn8bzCk3HRRSq69mJ3NpSrQeQqpPDA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] interconnect: qcom: add a driver for sa8775p
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Shazad Hussain <quic_shazhuss@quicinc.com>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y7hZOwerwljDKoQq@nvidia.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 18, 2023 at 3:45 PM Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->
->
->
-> On 18.01.2023 15:08, Bartosz Golaszewski wrote:
-> > From: Shazad Hussain <quic_shazhuss@quicinc.com>
-> >
-> > Introduce QTI SA8775P-specific interconnect driver.
-> >
-> > Signed-off-by: Shazad Hussain <quic_shazhuss@quicinc.com>
-> > [Bartosz: made the driver ready for upstream]
-> > Co-developed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > ---
-> >  drivers/interconnect/qcom/Kconfig   |    9 +
-> >  drivers/interconnect/qcom/Makefile  |    2 +
-> >  drivers/interconnect/qcom/sa8775p.c | 2541 +++++++++++++++++++++++++++
-> >  3 files changed, 2552 insertions(+)
-> >  create mode 100644 drivers/interconnect/qcom/sa8775p.c
-> >
-> > diff --git a/drivers/interconnect/qcom/Kconfig b/drivers/interconnect/qcom/Kconfig
-> > index cd689b782f97..3132a03ca974 100644
-> > --- a/drivers/interconnect/qcom/Kconfig
-> > +++ b/drivers/interconnect/qcom/Kconfig
-> > @@ -92,6 +92,15 @@ config INTERCONNECT_QCOM_RPMH_POSSIBLE
-> >  config INTERCONNECT_QCOM_RPMH
-> >       tristate
-> >
-> > +config INTERCONNECT_QCOM_SA8775P
-> > +     tristate "Qualcomm SA8775P interconnect driver"
-> > +     depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
-> > +     select INTERCONNECT_QCOM_RPMH
-> > +     select INTERCONNECT_QCOM_BCM_VOTER
-> > +     help
-> > +       This is a driver for the Qualcomm Network-on-Chip on sa8775p-based
-> > +       platforms.
-> > +
-> >  config INTERCONNECT_QCOM_SC7180
-> >       tristate "Qualcomm SC7180 interconnect driver"
-> >       depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
-> > diff --git a/drivers/interconnect/qcom/Makefile b/drivers/interconnect/qcom/Makefile
-> > index 3fd4c2713c4a..75df2cf64c0b 100644
-> > --- a/drivers/interconnect/qcom/Makefile
-> > +++ b/drivers/interconnect/qcom/Makefile
-> > @@ -13,6 +13,7 @@ qnoc-qcm2290-objs                   := qcm2290.o
-> >  qnoc-qcs404-objs                     := qcs404.o
-> >  qnoc-qdu1000-objs                    := qdu1000.o
-> >  icc-rpmh-obj                         := icc-rpmh.o
-> > +qnoc-sa8775p-objs                    := sa8775p.o
-> >  qnoc-sc7180-objs                     := sc7180.o
-> >  qnoc-sc7280-objs                        := sc7280.o
-> >  qnoc-sc8180x-objs                    := sc8180x.o
-> > @@ -39,6 +40,7 @@ obj-$(CONFIG_INTERCONNECT_QCOM_QCM2290) += qnoc-qcm2290.o
-> >  obj-$(CONFIG_INTERCONNECT_QCOM_QCS404) += qnoc-qcs404.o
-> >  obj-$(CONFIG_INTERCONNECT_QCOM_QDU1000) += qnoc-qdu1000.o
-> >  obj-$(CONFIG_INTERCONNECT_QCOM_RPMH) += icc-rpmh.o
-> > +obj-$(CONFIG_INTERCONNECT_QCOM_SA8775P) += qnoc-sa8775p.o
-> >  obj-$(CONFIG_INTERCONNECT_QCOM_SC7180) += qnoc-sc7180.o
-> >  obj-$(CONFIG_INTERCONNECT_QCOM_SC7280) += qnoc-sc7280.o
-> >  obj-$(CONFIG_INTERCONNECT_QCOM_SC8180X) += qnoc-sc8180x.o
-> > diff --git a/drivers/interconnect/qcom/sa8775p.c b/drivers/interconnect/qcom/sa8775p.c
-> > new file mode 100644
-> > index 000000000000..da21cc31a580
-> > --- /dev/null
-> > +++ b/drivers/interconnect/qcom/sa8775p.c
-> > @@ -0,0 +1,2541 @@
-> > +// SPDX-License-Identifier: GPL-2.0-only
-> > +/*
-> > + * Copyright (c) 2021-2022, Qualcomm Innovation Center, Inc. All rights reserved.
-> > + * Copyright (c) 2023, Linaro Limited
-> > + */
-> > +
-> > +#include <linux/device.h>
-> > +#include <linux/interconnect.h>
-> > +#include <linux/interconnect-provider.h>
-> > +#include <linux/module.h>
-> > +#include <linux/of_platform.h>
-> > +#include <dt-bindings/interconnect/qcom,sa8775p-rpmh.h>
-> > +
-> > +#include "bcm-voter.h"
-> > +#include "icc-rpmh.h"
-> > +
-> > +#define SA8775P_MASTER_GPU_TCU                               0
-> Other drivers move these to socname.h
->
+On Fri, Jan 06, 2023 at 01:24:11PM -0400, Jason Gunthorpe wrote:
+> I think it is just better to follow kernel convention and have
+> allocation functions include the GFP because it is a clear signal to
+> the user that there is an allocation hidden inside the API. The whole
+> point of gfp is not to have multitudes of every function for every
+> allocation mode.
 
-Why would they do it if the symbols are not meant to be used outside
-of the driver?
+Well, having GFP parameters is not a strict kernel convention. There are
+places doing it differently and have sleeping and atomic variants of
+APIs. I have to say I like the latter more. But given that this leads to
+an invasion of API functions here which all do the same under the hood, I
+agree it is better to go with a GFP parameter here.
 
-> Otherwise, this lgtm:
->
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->
+Regards,
 
-[...]
-
-Bart
+	Joerg
