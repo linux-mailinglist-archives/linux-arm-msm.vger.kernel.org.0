@@ -2,108 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5DFA76754F5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 13:48:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A603867556F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 14:18:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230376AbjATMsE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Jan 2023 07:48:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45202 "EHLO
+        id S230506AbjATNSj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Jan 2023 08:18:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230349AbjATMsB (ORCPT
+        with ESMTP id S231128AbjATNSf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Jan 2023 07:48:01 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3B9636FC7;
-        Fri, 20 Jan 2023 04:47:41 -0800 (PST)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30KCJY9M026642;
-        Fri, 20 Jan 2023 12:47:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=vXi5NSA8pXu6r8itrTtWjr7+Au14TerrSkz8Lx2g/Uk=;
- b=ZEGU9z0DJ0OkJfmsIwwCc7wKrvT62pdiwjxseQqGUG6l5zYog8Js3uNwyWcBxOaUcvgw
- ZKJI/CpdqVT5lUZLAA0cS9XCg6dy5q45zR6yOwaBjF2cebs4ooqe7g5mQQbTxDunJ2qI
- Dd1TyOgofpnr6/zvcfwaiH4vL+EmLjhP+hPEFF49zRypqQ/D0WlgfAHkwPOzyTKbOL4o
- tRX+GEwXkm3MbRDdAas0KrZIUuhW0sMuE9lkON0d19heGc7QArHh8XjFVLR6FnaJMv2r
- OLNALeo13Uzo4y+P23dAlhD15lfSOK/t8EQMZh40KInNlwdMJjKEE/gsful+QaLHWB5Z eA== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n7nuxrhxw-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 20 Jan 2023 12:47:34 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30KClYck024505
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 20 Jan 2023 12:47:34 GMT
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Fri, 20 Jan 2023 04:47:29 -0800
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <swboyd@chromium.org>, <agross@kernel.org>, <andersson@kernel.org>,
-        <robh+dt@kernel.org>, <broonie@kernel.org>,
-        <quic_plai@quicinc.com>, <krzysztof.kozlowski+dt@linaro.org>,
-        <konrad.dybcio@somainline.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_rohkumar@quicinc.com>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Subject: [PATCH v5 6/6] clk: qcom: lpassaudiocc-sc7280: Skip lpass_aon_cc_pll config
-Date:   Fri, 20 Jan 2023 18:16:46 +0530
-Message-ID: <1674218806-7711-7-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1674218806-7711-1-git-send-email-quic_srivasam@quicinc.com>
-References: <1674218806-7711-1-git-send-email-quic_srivasam@quicinc.com>
+        Fri, 20 Jan 2023 08:18:35 -0500
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BE1AC41D4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 05:14:52 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id kt14so13892907ejc.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 05:14:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=sG3PS8nuni6BtffOEZijtC58vcZHCox57Y1HsnncO6g=;
+        b=CiQw79VRaVPPwAXmSYsAJg9G88x6kGxDTJPi/mZf7Hbw6RtuFKFjxBb3K2bBQYA7AH
+         dBZhCHB7NryJhy4vXXXU/ON4COaY/Pd0Ssvnhy+B/oOovDwMRcrsEEE6ykROltaW82mT
+         YPEjdjTYzJtaePAepi3sXDkAd3gsWy7nt08eGi1NbVq/mdzMkP9bGXjam+d7u5cEOorc
+         1v/I7t+0iw0KYrLHEda8+AybPunrbyNEUN+NQc1xqu0MSZlzwcw3Nn2uSx8VbVuSZtXl
+         g0+riJ6NkhUN5Iv0ktkAs6YvTQDTZsxyPFsdimAfDLgnTclmeAcZ8jjdPUwSgS0jhFYv
+         nDPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=sG3PS8nuni6BtffOEZijtC58vcZHCox57Y1HsnncO6g=;
+        b=2jQpkYhO8fmZdxUc/eX0EVaR+LdKZJalj6wv9/NmDDblmJeoSqFZd3tuVBsr1J/JzL
+         XtupdhN5HElzoXXithtwlweA6h7dnDDOlK2E1tEOTn1UPiqoGdr/N4L96zAXyEJ+8LUL
+         W+z3ENYQFEZc3aI82NMi9jQWO3TlFPIhloVd8iH1brfyFmr6/ll55dViMP+Wgte6wa2F
+         l8yyI9YFnc6RvPxQR3dN1HTEDd1HXNy6NMK1+FEX86FuE8k8mzDXP2VRAyCXbxSluBnu
+         XrbwLVSwLb/ISVVxeF0F+qp6WBOl9tg8ojiiR3SQDGbF/XCVu6nBqJ/UU0W9I81nPMiJ
+         tuiw==
+X-Gm-Message-State: AFqh2krSQPbUpGr2aDUHHos+CvADpDYHRAxHdeaJILiVWEUBkBhr9og4
+        FdVDB+jORI1PDieB54OOPmHOnQ==
+X-Google-Smtp-Source: AMrXdXvwteo+cNreaAuqxl9/M1U7opM9iKY723pc0eH80ss0mePHE8BnN7fzg8jcQMU7uLf3gR1FQQ==
+X-Received: by 2002:a17:907:cc03:b0:7c4:f8fb:6a27 with SMTP id uo3-20020a170907cc0300b007c4f8fb6a27mr25051938ejc.0.1674220491112;
+        Fri, 20 Jan 2023 05:14:51 -0800 (PST)
+Received: from [172.16.220.87] (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id t1-20020a1709061be100b0086f40238403sm8063276ejg.223.2023.01.20.05.14.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Jan 2023 05:14:50 -0800 (PST)
+From:   Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH v2 0/4] Add CCI bus support for SM6350
+Date:   Fri, 20 Jan 2023 14:13:43 +0100
+Message-Id: <20221213-sm6350-cci-v2-0-15c2c14c34bb@fairphone.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: i_dsfSfQGFXz7zU_iddcEa9-cX3kgBFY
-X-Proofpoint-ORIG-GUID: i_dsfSfQGFXz7zU_iddcEa9-cX3kgBFY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-20_08,2023-01-20_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- mlxlogscore=999 malwarescore=0 impostorscore=0 adultscore=0
- priorityscore=1501 spamscore=0 bulkscore=0 phishscore=0 mlxscore=0
- clxscore=1015 suspectscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2212070000 definitions=main-2301200120
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAIeTymMC/22NzQrCMBCEX6Xs2ZX82KKefA/xkGy3ZqFNSqIBK
+ X13g2dPwzfwzWxQOAsXuHYbZK5SJMUG5tABBRefjDI2BqOM0UZbLMtge4VEgvbs3aQvjth6aIJ
+ 3hdFnFyk0Jb7nuZVByivlz++g6hb3v1tVo0LuR0V2YEWn6TY5yWtIkY+UFnjs+/4FYvniXa0AA
+ AA=
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Luca Weiss <luca.weiss@fairphone.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.12-dev-78462
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Skip lpass_aon_cc_pll configuration for ADSP based platforms
-based on qcom,adsp-pil-mode property.
-This is to avoid ADSP out of reset fail.
+Add the camera clock controller node and CCI nodes to sm6350 dtsi and enable
+the i2c busses on Fairphone 4 dts.
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Tested-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+This is tested using PM8008 regulator patches from the lists which power the
+cameras, and using i2cdetect/i2cget/i2cset reading the sensor ID registers.
+
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 ---
- drivers/clk/qcom/lpassaudiocc-sc7280.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Changes in v2:
+- Correct ordering of attributes in sm6350.dtsi (#*-cells, pinctrl-names,
+  bias-*)
+- Link to v1: https://lore.kernel.org/r/20221213-sm6350-cci-v1-0-e5d0c36e0c4f@fairphone.com
 
-diff --git a/drivers/clk/qcom/lpassaudiocc-sc7280.c b/drivers/clk/qcom/lpassaudiocc-sc7280.c
-index 732ecc4..12b15de 100644
---- a/drivers/clk/qcom/lpassaudiocc-sc7280.c
-+++ b/drivers/clk/qcom/lpassaudiocc-sc7280.c
-@@ -846,7 +846,8 @@ static int lpass_aon_cc_sc7280_probe(struct platform_device *pdev)
- 		goto exit;
- 	}
- 
--	clk_lucid_pll_configure(&lpass_aon_cc_pll, regmap, &lpass_aon_cc_pll_config);
-+	if (!of_property_read_bool(pdev->dev.of_node, "qcom,adsp-pil-mode"))
-+		clk_lucid_pll_configure(&lpass_aon_cc_pll, regmap, &lpass_aon_cc_pll_config);
- 
- 	ret = qcom_cc_really_probe(pdev, &lpass_aon_cc_sc7280_desc, regmap);
- 	if (ret) {
+---
+Luca Weiss (4):
+      dt-bindings: i2c: qcom-cci: Document SM6350 compatible
+      arm64: dts: qcom: sm6350: Add camera clock controller
+      arm64: dts: qcom: sm6350: Add CCI nodes
+      arm64: dts: qcom: sm7225-fairphone-fp4: Enable CCI busses
+
+ .../devicetree/bindings/i2c/qcom,i2c-cci.yaml      |   2 +
+ arch/arm64/boot/dts/qcom/sm6350.dtsi               | 141 +++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts  |  20 +++
+ 3 files changed, 163 insertions(+)
+---
+base-commit: 1578f85d549045aac441821064e7953732460e51
+change-id: 20221213-sm6350-cci-38baf19ace3b
+
+Best regards,
 -- 
-2.7.4
+Luca Weiss <luca.weiss@fairphone.com>
 
