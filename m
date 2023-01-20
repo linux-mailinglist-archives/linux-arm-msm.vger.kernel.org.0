@@ -2,153 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 90FAD675F7C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 22:13:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 496BA675F96
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 22:22:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229511AbjATVN2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Jan 2023 16:13:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35528 "EHLO
+        id S229445AbjATVWc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Jan 2023 16:22:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229487AbjATVN2 (ORCPT
+        with ESMTP id S229494AbjATVWb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Jan 2023 16:13:28 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0B9D8A4C;
-        Fri, 20 Jan 2023 13:13:26 -0800 (PST)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30KKhonO019470;
-        Fri, 20 Jan 2023 21:13:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=zq62gIvYUOYZp0PNrvkd+owZCAJA9jgIYgDD39UMtkg=;
- b=Sjjr6Q44OLoaSU9CxyMV9AtrdiUa+4/D5a8CVr+zC0E31T7mbKc/IGl2LnaKFAKgFBYO
- 4ympxxfXOYUCR8+jZ0uh3lAtOaJMo9b6r866FxSXlIZaTPs25RMwDOEzdA6hAIxUy3Fn
- /n69ojdC1JN7/DxtiZ5bG0NNDRYSedmkye3uLKNmQDd6nZxpvK06AN5GjZ6EkbzNGLZs
- d7YGc2gO40q0dC45Wblarin0f+gbe4tMxFexRMvxq0tUFYiLNsPusX8fTiBI3ezbSboE
- ymMQZGL4pyUgWLbzDNEs9VY4hksRDC6YPtDlmTMUWyVWFGpDpQOloks/dFFoh4B2EjL6 ZQ== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n7yc60cga-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 20 Jan 2023 21:13:17 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30KLDHJ0009059
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 20 Jan 2023 21:13:17 GMT
-Received: from [10.110.31.254] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Fri, 20 Jan
- 2023 13:13:16 -0800
-Message-ID: <f709f410-f21b-b2e7-4e76-04b15fb2001a@quicinc.com>
-Date:   Fri, 20 Jan 2023 13:13:16 -0800
+        Fri, 20 Jan 2023 16:22:31 -0500
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6D98EC55
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 13:22:29 -0800 (PST)
+Received: by mail-ej1-x633.google.com with SMTP id ud5so17142863ejc.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 13:22:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zs+UmtgIVGddv6KprN6BXtkow6vxqhZUCHnX30GG25U=;
+        b=X9pJ7J7c4pfA5xNIpjYeRsukd/H1nHACT4Nfu4T99rkLdG5idf+bsF2NWw7izRYvhq
+         oVE2WqaOfgjZpydJ6CRTsYYkoIZ6ozHvMmgVlXtfuLMF98vjtwILcyx+2P15Eg1fyWRB
+         70yLM2xN2acXpqRDAOmNh9BR0O5IczjGqsBSNKDfy1Ul2YCWt7txgcEnMkqrZ1RHJXbQ
+         bnZLICF5V8nE00jHEQYqFZjaMzzGEM4q8yxH8WR2nXaOsko7rJx8tsRF8xNEEtEpzxqC
+         GmCqmjRvyMSV5TSGA5Z/ETZKxLULBsZu6UEEfFRGOPdg69bDNX0MjTN/C0ZiaM7eCCTK
+         IBQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zs+UmtgIVGddv6KprN6BXtkow6vxqhZUCHnX30GG25U=;
+        b=X8fuofembs5E1jVt3Ex6ApYjxvyUBSR8a+aSR+u36Ajvd9lOjNirrp4nBfOSO8DIPq
+         2D8rNsCGpbAnSDO/3qHvRLEoMlgudpYDeKvzJWAo7JZwqxpiIf2I1mBd4cJrbnGADnFt
+         MrIUzqUtWW7nT098VGcd2yi0LDPpwiNYOTbMj28AQ5pyNsLtHiJ7QNs5VaJrqrIr3oYv
+         /uZBI2u14ZtK6XLEp8P15KsfI82z6Pq6SGKSfNjLFmkdIJUSzgs4L/dAnBftdaX11Dtp
+         zpwy/6HpZiMeQAEZ+9txNHRfU+qZyVKL5h63w7uI8gzV3BCzzJEQcw9xF9gQnMdf4Qdx
+         6KIQ==
+X-Gm-Message-State: AFqh2krCqCfM6mNRWsLeChaar179Lvai2VJ4yGpvrAa+vewTk61ktk0C
+        IBIYQOVJspwQnc+C5DlBJbd3Y0Oru5wzwpbi
+X-Google-Smtp-Source: AMrXdXuLUbPoZoARW90jlFLIvQDjlEXpxoRIk7pxHrrrCXNjAqSD+GPJEpN5eEiS01RZnbQ3wX2A4A==
+X-Received: by 2002:a17:906:1911:b0:870:29fd:be41 with SMTP id a17-20020a170906191100b0087029fdbe41mr11380858eje.48.1674249748345;
+        Fri, 20 Jan 2023 13:22:28 -0800 (PST)
+Received: from [192.168.1.101] (abyk37.neoplus.adsl.tpnet.pl. [83.9.30.37])
+        by smtp.gmail.com with ESMTPSA id g3-20020a1709067c4300b007c0a7286ac8sm18494294ejp.69.2023.01.20.13.22.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 20 Jan 2023 13:22:27 -0800 (PST)
+Message-ID: <e5bd7941-0a7e-f8b5-2be8-d0d7cc0f84f7@linaro.org>
+Date:   Fri, 20 Jan 2023 22:22:25 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH v6 0/2] Add base device tree files for QDU1000/QRU1000
-To:     Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v6 1/2] arm64: dts: qcom: Add base QDU1000/QRU1000 DTSIs
+Content-Language: en-US
+To:     Melody Olvera <quic_molvera@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 References: <20230112210722.6234-1-quic_molvera@quicinc.com>
-Content-Language: en-US
-From:   Melody Olvera <quic_molvera@quicinc.com>
-In-Reply-To: <20230112210722.6234-1-quic_molvera@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+ <20230112210722.6234-2-quic_molvera@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230112210722.6234-2-quic_molvera@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: oms45SBvs9RnGgrpTBNy5zskWvfLaBrE
-X-Proofpoint-ORIG-GUID: oms45SBvs9RnGgrpTBNy5zskWvfLaBrE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-20_11,2023-01-20_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0 mlxscore=0
- priorityscore=1501 spamscore=0 impostorscore=0 phishscore=0 clxscore=1015
- mlxlogscore=751 adultscore=0 malwarescore=0 bulkscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2301200202
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Can someone review these patches please?
 
-Thanks,
-Melody
 
-On 1/12/2023 1:07 PM, Melody Olvera wrote:
-> This series adds the base device tree files and DTS support for the
-> Qualcomm QDU1000 and QRU1000 IDP SoCs, including the clocks, tlmm, smmu,
-> regulators, mmc, interconnects, cpufreq, and qup. 
->
-> This patchset requires the dt-bindings changes from [1-3].
->
-> The Qualcomm Technologies, Inc. Distributed Unit 1000 and Radio Unit
-> 1000 are new SoCs meant for enabling Open RAN solutions. See more at
-> https://www.qualcomm.com/content/dam/qcomm-martech/dm-assets/documents/qualcomm_5g_ran_platforms_product_brief.pdf
->
-> [1] https://lore.kernel.org/all/20221216231426.24760-1-quic_molvera@quicinc.com/
-> [2] https://lore.kernel.org/all/20230112204446.30236-1-quic_molvera@quicinc.com/
-> [3] https://lore.kernel.org/all/20230112203653.23139-1-quic_molvera@quicinc.com/
->
-> Changes from v5:
-> - Moved XYZ-names fields under XYZ fields
-> - Removed irrelevant comments
-> - Updated ordering of some fields
-> - Removed unneeded fields
-> - Revised style on clocks and interrupts
->
-> Changes from v4:
-> - Added chassis-type
-> - Added missing regulator voltages
-> - Sorted includes
-> - Remaned memory nodes
-> - Reorganized nodes to start with compatible/reg
-> - Removed unnecessary clocks
-> - Switched to deleting nodes by label
-> - Moved pin biases and drive strengths to dts files
->
-> Changes from v3:
-> - added PCIE and USB clocks
-> - added missing qdu1000 compats
->
-> Changes from v2:
-> - Revised device nodes to match updated dt-bindings
-> - Revised rpmh-rsc bindings to allow for generic regulator nodes
-> - Updated soc ordering
-> - Moved clock node to DTS files
-> - Updated regulator nodes to be generic
-> - Removed some unnecessary whitespace
->
-> Melody Olvera (2):
->   arm64: dts: qcom: Add base QDU1000/QRU1000 DTSIs
->   arm64: dts: qcom: Add base QDU1000/QRU1000 IDP DTs
->
->  arch/arm64/boot/dts/qcom/Makefile        |    2 +
->  arch/arm64/boot/dts/qcom/qdu1000-idp.dts |  453 ++++++++
->  arch/arm64/boot/dts/qcom/qdu1000.dtsi    | 1333 ++++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/qru1000-idp.dts |  453 ++++++++
->  arch/arm64/boot/dts/qcom/qru1000.dtsi    |   26 +
->  5 files changed, 2267 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/qdu1000-idp.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/qdu1000.dtsi
->  create mode 100644 arch/arm64/boot/dts/qcom/qru1000-idp.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/qru1000.dtsi
->
->
-> base-commit: 0a093b2893c711d82622a9ab27da4f1172821336
-> prerequisite-patch-id: d439ef85a730c7b736ed8c63162e24c7ae661b60
-> prerequisite-patch-id: c55ff1a38fed5356caa8f40a85ef0b8ebc4d1fa4
-> prerequisite-patch-id: 984e8570d2464f4027dc59294c10f47e7ae29a84
+On 12.01.2023 22:07, Melody Olvera wrote:
+> Add the base DTSI files for QDU1000 and QRU1000 SoCs, including base
+> descriptions of CPUs, GCC, RPMHCC, QUP, TLMM, and interrupt-controller
+> to boot to shell with console on these SoCs.
+> 
+> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+> ---
 
+[...]
+> +
+> +	arch_timer: timer {
+Unused label
+
+Otherwise:
+
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Konrad
+
+> +		compatible = "arm,armv8-timer";
+> +		interrupts = <GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+> +			     <GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+> +			     <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+> +			     <GIC_PPI 10 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+> +			     <GIC_PPI 12 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>;
+> +	};
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/qru1000.dtsi b/arch/arm64/boot/dts/qcom/qru1000.dtsi
+> new file mode 100644
+> index 000000000000..eac5dc54a8ab
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/qru1000.dtsi
+> @@ -0,0 +1,26 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include "qdu1000.dtsi"
+> +/delete-node/ &tenx_mem;
+> +/delete-node/ &oem_tenx_mem;
+> +/delete-node/ &tenx_q6_buffer_mem;
+> +
+> +&reserved_memory {
+> +	oem_tenx_mem: oem-tenx@a0000000 {
+> +		reg = <0x0 0xa0000000 0x0 0x6400000>;
+> +		no-map;
+> +	};
+> +
+> +	mpss_diag_buffer_mem: mpss-diag-buffer@aea00000 {
+> +		reg = <0x0 0xaea00000 0x0 0x6400000>;
+> +		no-map;
+> +	};
+> +
+> +	tenx_q6_buffer_mem: tenx-q6-buffer@b4e00000 {
+> +		reg = <0x0 0xb4e00000 0x0 0x3200000>;
+> +		no-map;
+> +	};
+> +};
