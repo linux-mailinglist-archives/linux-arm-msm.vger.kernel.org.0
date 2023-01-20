@@ -2,220 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2BA78675737
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 15:31:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 024C46757B4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 15:45:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230087AbjATObw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Jan 2023 09:31:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34896 "EHLO
+        id S230342AbjATOpd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Jan 2023 09:45:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230280AbjATObu (ORCPT
+        with ESMTP id S231154AbjATOp2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Jan 2023 09:31:50 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EFD279EB6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 06:31:16 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id fl11-20020a05600c0b8b00b003daf72fc844so5994789wmb.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 06:31:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ilLx6O6YT20nFcUZQCZceyzwkMlq9jdKRHFVcmAsl2w=;
-        b=ayEpP7xMy4TXl7+XiO8ro4Txa0MJS/99a9JhC3ahSwucSr+pp8+JT7uj14K3WxO9Nb
-         RIc5SGeLH1XIKcd+7X4Qcl/YIMwm+VApTHcgrQdFJw8ZP24HqoAMJkxdYH2SeOdQ7XIk
-         nkouY/TYeIKfYx7l6/RoZknFBPgPe+9Lub3HncGUaPxnM0IFo3L4BrrRmi5mm9z62LID
-         ZatLCWTGQ2w0EiSGU4HJCXi0B++LXBaZCcsJrVSL0SqwNLmBepU+2VIp0+kpZI0P+qwU
-         xay2fhZ6JGajmJVUIRxTvYn5cnBBa5kn6gIZ98wCC9K6UC8lhr2FCWuAoqD4ixPId8kd
-         2uvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ilLx6O6YT20nFcUZQCZceyzwkMlq9jdKRHFVcmAsl2w=;
-        b=hwFBb9k4eOnB4M0LNSX5jwxzi7Y3HHcI71gbN35mBue9GIChlQCS1TgKwU/Y5yGCFm
-         PsYXyozcYYIFBIDurGIttaWJVjoOwtUhFuMkxVkEdOt9yMdh2v/Yya1vcB6SDfhJISE/
-         CX/BYZBf1lY0dSGRPlisqKtwcZuLRrF8esMzbgLX+64onRxgIvHSw1qFyDVkyPwprIYt
-         A+yBvnEQrx8ELHnzd1krR6SLSXtZ1+fEGACMw7twAhh5P/VTYnPeBsGlWouB7YtYHCxQ
-         EeWqM3SS0nbjo6a0NWOBzpKfRjP4m3S6jDyuU9fsA6llYhzLE2pz9SLWqtI12Z9SRx0W
-         Y6Ng==
-X-Gm-Message-State: AFqh2kq9pFKQQX+Cd65VoyXMtWpzxojUy+obsRz+iTIVF5ivFlKFXapc
-        C66AtpwbyHoDB9iLHgslSmo6mXZuXvOZ5HrsToACfw==
-X-Google-Smtp-Source: AMrXdXtSS2bkT3pSmtQPIneqvBLkh4z0QahUWsvsrzmDs10I/OhZz7loxD1lwHY6/y7aklLQNAsNlA==
-X-Received: by 2002:a17:906:eb13:b0:869:236c:ac43 with SMTP id mb19-20020a170906eb1300b00869236cac43mr15283207ejb.32.1674224027081;
-        Fri, 20 Jan 2023 06:13:47 -0800 (PST)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id y20-20020a170906559400b0084d44bff4a2sm15840508ejp.39.2023.01.20.06.13.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Jan 2023 06:13:46 -0800 (PST)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Fri, 20 Jan 2023 15:13:46 +0100
-Message-Id: <CPX2VVT5EUDV.2LH6VI2586F02@otso>
-Subject: Re: [PATCH v3 2/3] phy: qcom-qmp-combo: Add config for SM6350
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>
-Cc:     "Vinod Koul" <vkoul@kernel.org>, "Johan Hovold" <johan@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        <phone-devel@vger.kernel.org>, "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        "Kishon Vijay Abraham I" <kishon@kernel.org>,
-        <linux-phy@lists.infradead.org>, <linux-kernel@vger.kernel.org>
-X-Mailer: aerc 0.14.0
-References: <20221130081430.67831-1-luca.weiss@fairphone.com>
- <20221130081430.67831-2-luca.weiss@fairphone.com>
- <Y6xP4YRAp68TfxFi@hovoldconsulting.com> <Y8BIX+js1ircJyb9@matsya>
- <cf968a25-02f7-d402-530b-eb379b707e54@linaro.org>
- <CPR2LS3SJQ3I.Z7UY505COG3@otso>
- <CAA8EJpoOMMALHz7ysft6KvQaYhGWPD+xZiUjOTrC8CA_y81n-w@mail.gmail.com>
-In-Reply-To: <CAA8EJpoOMMALHz7ysft6KvQaYhGWPD+xZiUjOTrC8CA_y81n-w@mail.gmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Fri, 20 Jan 2023 09:45:28 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DBE12BF26;
+        Fri, 20 Jan 2023 06:44:55 -0800 (PST)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30KDnCAG005568;
+        Fri, 20 Jan 2023 14:16:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=yheRbIbicAKXHUM+UATza2UYD1aXrGTJi0I0dCAwKAU=;
+ b=n4yuM/F5al29iuNRTXd+YWnBjuAI4jc0QTANx2b2pzzP/L5gc7gkdrLoZWeVjo4SmRai
+ w4xiPxhl4GoARUQzFYl2wTLlFAmGViG5+Bw/rw91v3lqkLr1SmRws3KOX3AzmYPwQLjM
+ HJFqJX2VF+EmAh7bgeUK+UFBjr+KV+F24XprAE+i3m0GmDi+Rc3bJ96i5HlEDpTddQ4+
+ AYsiJ+/QbswVVFiCO+rkpD/1+gKwW+m+Eh8GTbsS9sZkL4UoPfx/IKQbVVcSLH9zoVLb
+ BVV5w1YykPug3iCcE/wxQi01uXTYZHxN7BDfOj88wrJQm8fNnAZuuZ8bjLhYAoHddRXT 8Q== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n7q858hg9-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 20 Jan 2023 14:16:59 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30KEGwst029712
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 20 Jan 2023 14:16:58 GMT
+Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Fri, 20 Jan 2023 06:16:52 -0800
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     <vkoul@kernel.org>, <agross@kernel.org>, <andersson@kernel.org>,
+        <robh+dt@kernel.org>, <broonie@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_rohkumar@quicinc.com>,
+        <srinivas.kandagatla@linaro.org>, <dianders@chromium.org>,
+        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
+        <alsa-devel@alsa-project.org>, <quic_rjendra@quicinc.com>,
+        <konrad.dybcio@somainline.org>, <mka@chromium.org>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: [PATCH v4 0/7] Add SC7280 audioreach device tree nodes
+Date:   Fri, 20 Jan 2023 19:46:34 +0530
+Message-ID: <1674224201-28109-1-git-send-email-quic_srivasam@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: EYiwxHwuMw6YFLDceecAJkH_-CQRp9ek
+X-Proofpoint-GUID: EYiwxHwuMw6YFLDceecAJkH_-CQRp9ek
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-20_08,2023-01-20_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ suspectscore=0 spamscore=0 malwarescore=0 priorityscore=1501 clxscore=1015
+ adultscore=0 phishscore=0 lowpriorityscore=0 bulkscore=0 mlxlogscore=999
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301200135
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri Jan 13, 2023 at 2:01 PM CET, Dmitry Baryshkov wrote:
-> On Fri, 13 Jan 2023 at 14:44, Luca Weiss <luca.weiss@fairphone.com> wrote=
-:
-> >
-> > Hi Dmitry,
-> >
-> > On Thu Jan 12, 2023 at 8:33 PM CET, Dmitry Baryshkov wrote:
-> > > On 12/01/2023 19:50, Vinod Koul wrote:
-> > > > On 28-12-22, 15:17, Johan Hovold wrote:
-> > > >> Luca, Vinod,
-> > > >>
-> > > >> On Wed, Nov 30, 2022 at 09:14:28AM +0100, Luca Weiss wrote:
-> > > >>> Add the tables and config for the combo phy found on SM6350.
-> > > >>>
-> > > >>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> > > >>> ---
-> > > >>> Changes since v2:
-> > > >>> * Drop dp_txa/dp_txb changes, not required
-> > > >>> * Fix dp_dp_phy offset
-> > > >>>
-> > > >>>   drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 126 +++++++++++++++=
-+++++++
-> > > >>>   1 file changed, 126 insertions(+)
-> > > >>>
-> > > >>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/=
-phy/qualcomm/phy-qcom-qmp-combo.c
-> > > >>> index 77052c66cf70..6ac0c68269dc 100644
-> > > >>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> > > >>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> > > >>
-> > > >>> @@ -975,6 +1039,19 @@ static const char * const sc7180_usb3phy_re=
-set_l[] =3D {
-> > > >>>           "phy",
-> > > >>>   };
-> > > >>>
-> > > >>> +static const struct qmp_combo_offsets qmp_combo_offsets_v3 =3D {
-> > > >>> + .com            =3D 0x0000,
-> > > >>> + .txa            =3D 0x1200,
-> > > >>> + .rxa            =3D 0x1400,
-> > > >>> + .txb            =3D 0x1600,
-> > > >>> + .rxb            =3D 0x1800,
-> > > >>> + .usb3_serdes    =3D 0x1000,
-> > > >>> + .usb3_pcs_misc  =3D 0x1a00,
-> > > >>> + .usb3_pcs       =3D 0x1c00,
-> > > >>> + .dp_serdes      =3D 0x1000,
-> > > >>
-> > > >> I would have expected this to be 0x2000 as that's what the older
-> > > >> platforms have been using for the dp serdes table so far. Without =
-access
-> > > >> to any documentation it's hard to tell whether everyone's just bee=
-n
-> > > >> cargo-culting all along or if there's actually something there at =
-offset
-> > > >> 0x2000.
-> > >
-> > > usb3_serdes is 0x1000, so dp_serdes equal to 0x1000 is definitely an =
-typo.
-> > >
-> > > Judging from the downstream dtsi, the DP PHY starts at offset 0x2000.=
- So
-> > > dp_serdes is equal to 0x2000, dp_phy =3D 0x2a00, ln_tx1 =3D 0x2200, l=
-n_tx2 =3D
-> > > 0x2600.
-> >
-> > Can you share how you got to the 0x2000 offset? You can see my
-> > (potentially wrong) reasoning for 0x1000 a few messages ago[0].
-> >
-> > The only 0x2000-something I could find now while looking at it again is
-> > "#define USB3_DP_PHY_DP_DP_PHY_PD_CTL 0x2a18" which becomes
-> > USB3_DP_DP_PHY_PD_CTL in the driver but this is seemingly not used at
-> > all in my msm-4.19 tree.
->
-> Quite simple: see [1]. DP_PLL is at +0x2000
->
-> [1] https://android.googlesource.com/kernel/msm-extra/devicetree/+/refs/h=
-eads/android-msm-bramble-4.19-android11-qpr1/qcom/lagoon-sde-pll.dtsi#27
+Add SC7280 audioreach device tree nodes and extract audio specific
+dtsi nodes and add them in new file.
 
-I still disagree from what I see.
+This patch series depends on:
+    -- https://patchwork.kernel.org/project/linux-clk/list/?series=713587
+Corresponding dt-bindings not mainlined yet.
+    -- https://git.kernel.org/pub/scm/linux/kernel/git/remoteproc/linux.git/commit/?h=rproc-next&id=8490a99586abd480d7139893f78c019790a58979
 
-E.g. this part of the dp_serdes init table in mainline:
+Changes Since v3:
+    -- Remove deleting digital codecs in crd-rev3 board specific dtsi and upadate them using phandle.
+    -- Update commit message in "Update lpass_tlmm node" patch.
+    -- Change the position of status property in LPASS PIL node.
+    -- Update commit message in "Add sound node" patch.
+Changes Since v2:
+    -- Remove Patch related to Add CGCR reset property.
+    -- Remove Patch related to Disable legacy path clock nodes.
+    -- Add dt-bindings for missing properties.
+    -- Change the order of nodes.
+    -- Move digictal codec macro nodes to root node from soc node.
+    -- Add adsp-pil-mode property in required clock nodes.
+Changes Since v1:
+    -- Move remoteproc node to soc dtsi file.
+    -- Add qcom, adsp-pil-mode reg property in lpasscc node.
+    -- Fix typo errors.
+    -- Remove redundant status properties.
 
-static const struct qmp_phy_init_tbl qmp_v3_dp_serdes_tbl_rbr[] =3D {
-	QMP_PHY_INIT_CFG(QSERDES_V3_COM_HSCLK_SEL, 0x0c),
+Srinivasa Rao Mandadapu (7):
+  arm64: dts: qcom: sc7280: Extract audio nodes from common idp dtsi
+    file
+  arm64: dts: qcom: sc7280: Add sound node for crd-rev3 board
+  arm64: dts: qcom: sc7280: Add LPASS PIL node
+  arm64: dts: qcom: sc7280: Update VA/RX/TX macro clock nodes
+  arm64: dts: qcom: sc7280: Update lpass_tlmm node
+  arm64: dts: qcom: sc7280: Update qcom,adsp-pil-mode property
+  dt-bindings: remoteproc: qcom: sc7280-adsp-pil: Add missing properties
 
-With this one:
-#define QSERDES_V3_COM_HSCLK_SEL                     0x13c
+ .../bindings/remoteproc/qcom,sc7280-adsp-pil.yaml  |  30 +++-
+ arch/arm64/boot/dts/qcom/sc7280-audio-idp.dtsi     | 135 ++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts         |  24 +--
+ .../qcom/sc7280-herobrine-audioreach-wcd9385.dtsi  | 171 +++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi           | 126 ---------------
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               |  96 ++++++++++++
+ 6 files changed, 429 insertions(+), 153 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7280-audio-idp.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
 
-To write this config qmp->dp_serdes gets used which is set at:
-	qmp->dp_serdes =3D base + offs->dp_serdes;
-
-So if offs->dp_serdes is 0x2000, this write will go to 0x213c.
-
-If we go back to msm-4.19 downstream the equivalent define is
-#define USB3_DP_QSERDES_COM_HSCLK_SEL				0x113c
-
-So there we are at offset 0x1000. And this define is used in
-qcom,qmp-phy-init-seq which I already went to in detail in a previous
-email in this thread.
-
->
-> Anyway, having DP serdes at the space as USB3 serdes would mean that
-> one would be setting USB3 PLL when trying to enable DP. So I could
-> have said even w/o looking at the dtsi that dp serdes can _not_ be at
-> 0x1000.
-
-I don't know enough about these PHY/DP/etc blocks to say anything there.
-
->
-> >
-> > Also if you have any idea on how to test it at runtime without actually
-> > having to get all the type-C functionality up I'd be happy to try that.
-> > Unfortunately I believe there's still quite some bits missing to
-> > actually get DP out via the USB-C port - which I imagine would trigger
-> > the PHY setup.
->
-> Unfortunately, I don't have a recipe to test this.
-
-No worries :)
-
-Regards
-Luca
-
->
-> >
-> > [0] https://lore.kernel.org/linux-arm-msm/CPDIYQ3SSY3E.I0Y0NMIED0WO@ots=
-o/
-> >
-> > Regards
-> > Luca
->
->
-> --=20
-> With best wishes
-> Dmitry
+-- 
+2.7.4
 
