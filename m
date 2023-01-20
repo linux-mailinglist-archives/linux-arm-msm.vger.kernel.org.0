@@ -2,78 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D7401675FD5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 22:59:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AC512675FF0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 23:11:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229687AbjATV72 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Jan 2023 16:59:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53610 "EHLO
+        id S229923AbjATWLn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Jan 2023 17:11:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229608AbjATV71 (ORCPT
+        with ESMTP id S229587AbjATWLn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Jan 2023 16:59:27 -0500
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABE3651421
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 13:59:25 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id hw16so17228022ejc.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 13:59:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Pgs07PyvKGpksByKsjTcCowCL5vvFmT3PIciH90Z4pw=;
-        b=eCe81CaotE8487LI7h3iOTTOKUpUcN9XtqW0R8o/FODQE7Vtjzho8V2Smabu7KZsK5
-         zGak5XpliKLCQLiGjO/MjdJ/G6SA7YaFAvb78Q/t2KYXAbahWabv58FleHHpSwCyY8f8
-         flo7845GTH3md4yWcpVbDz6c4ufGOZ7K1O+ZqOXobq7hoy2He/o/LcqdZUe/w4e7KNPt
-         mbwy0OKJN2v/TTXip1EdzRC0dB8ZMGIKk+QbJqZYXeRUKP3O0Cd1Ub0mzBL57X6udEqS
-         fzGqre/RAntbnKiCiGoVj1t4rUsvSk/Lmv94Lh7+6Y6Ds6X6mknYjnf6NPRCDYJsCQOQ
-         /VcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Pgs07PyvKGpksByKsjTcCowCL5vvFmT3PIciH90Z4pw=;
-        b=FkDYf/FOUNO90p2m4VcsWpNDEtJ0GuVZFdbyYEjeoOJMUkNo3YYkxeK+PiZ7fCamDA
-         LKU+vk98qI32WZ8rjicAV+NlypFir8jieCZC6X4ZjAcFFd66YYuFSsEe9nQAk4qO9fSq
-         KlvlhGJ7fQ0cvAizlPC9rry+mjOg0jaglHS8dMYlCk9fNX0oiyyVzjFIsJ1PuzNTS+e8
-         2q4SpHY9KQuqPfUVVH7+yhounTcuXwvgvvevYSf/5AP/ICclLQzaNM6rbpDsw5XWP7HB
-         kEQ3ijItuif5ACLW43KYQUAi7SbfYTEo9VHI5lcfwf6Ylt3fxtK6dCdLuOwk/WVPRCH9
-         LJRA==
-X-Gm-Message-State: AFqh2koYLBmOxgS5bnm+HmD/9tvGkCZozUbulr7hS+wRGFJTDnDrL24i
-        gXOI4cHs1QYsy/8R78J6KPCzbw==
-X-Google-Smtp-Source: AMrXdXujuKX9GQSph4XmO5ic2WuK/rHBTeeAl+cwTJR3B0pg8Uv+i3g+jYyo+jTzU4z5DLTg15lZXQ==
-X-Received: by 2002:a17:907:94ce:b0:870:ab89:3dd3 with SMTP id dn14-20020a17090794ce00b00870ab893dd3mr16676134ejc.70.1674251964209;
-        Fri, 20 Jan 2023 13:59:24 -0800 (PST)
-Received: from [192.168.1.101] (abyk37.neoplus.adsl.tpnet.pl. [83.9.30.37])
-        by smtp.gmail.com with ESMTPSA id la19-20020a170907781300b007aee7ca1199sm18666132ejc.10.2023.01.20.13.59.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Jan 2023 13:59:23 -0800 (PST)
-Message-ID: <bbcdfa45-64c8-72b8-e27c-bea924bf0398@linaro.org>
-Date:   Fri, 20 Jan 2023 22:59:22 +0100
+        Fri, 20 Jan 2023 17:11:43 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6D8C36441;
+        Fri, 20 Jan 2023 14:11:41 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 7C20FB82A8B;
+        Fri, 20 Jan 2023 22:11:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C661C433EF;
+        Fri, 20 Jan 2023 22:11:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1674252699;
+        bh=fY92xshQMLDdPXyG9FcNkhWbhYvRBMxZmEl2a/bUYwE=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=MKJQJ7VHJ4+NchxxWdA3fCaDWfPqCerxmUYk1gUrzKS67DP8o5pctztlqVEgHtm6d
+         8bgfN3b8fHuVLRi484wMLag5HFsj7mzIa8Wh812VtIwITEVUmESHxAqptESbyoEJy6
+         h4Wzr2bdstsWpQvXTmzdru9pb5TGTxv32gJX8lgjQMAoABLOSBpbaovgEDMxztrmLt
+         IK0famR5YSsmL4mviMn3N+MjCCY0uuNxOiOw7KiV1W/z8WMxRp4X9JBQ02dDp52RK+
+         8kLXSPrmmjL3rQ3QPFJP3DJbxodUm2zbD8BtQ/Vi+/YDS2hlXPtyAJxIgxpCS32LWp
+         2kQXlgjwCHV2A==
+Message-ID: <078c5a8254ac006b65fc5fa81dfbc515.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [RESEND PATCH] of: property: do not create clocks device link for
- clock controllers
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>
-Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20230120061417.2623751-5-dmitry.baryshkov@linaro.org>
+References: <20230120061417.2623751-1-dmitry.baryshkov@linaro.org> <20230120061417.2623751-5-dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v3 4/8] clk: qcom: cbf-msm8996: scale CBF clock according to the CPUfreq
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Abel Vesa <abel.vesa@linaro.org>
-References: <20230118091122.2205452-1-dmitry.baryshkov@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230118091122.2205452-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+Date:   Fri, 20 Jan 2023 14:11:35 -0800
+User-Agent: alot/0.10
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,87 +61,79 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 18.01.2023 10:11, Dmitry Baryshkov wrote:
-> Do not create device link for clock controllers. Some of the clocks
-> provided to the device via OF can be the clocks that are just parents to
-> the clocks provided by this clock controller. Clock subsystem already
-> has support for handling missing clock parents correctly (clock
-> orphans). Later when the parent clock is registered, clocks get
-> populated properly.
-> 
-> An example of the system where this matters is the SDM8450 MTP board
-> (see arch/arm64/boot/dts/qcom/sdm845-mtp.dts). Here the dispcc uses
-> clocks provided by dsi0_phy and dsi1_phy device tree nodes. However the
-> dispcc itself provides clocks to both PHYs, to the PHY parent device,
-> etc. With just dsi0_phy in place devlink is able to break the
-> dependency, but with two PHYs, dispcc doesn't get probed at all, thus
-> breaking display support.
-> 
-> Cc: Bjorn Andersson <andersson@kernel.org>
-> Cc: Stephen Boyd <sboyd@kernel.org>
-> Cc: Saravana Kannan <saravanak@google.com>
-> Cc: Abel Vesa <abel.vesa@linaro.org>
+Quoting Dmitry Baryshkov (2023-01-19 22:14:13)
+> Turn CBF into the interconnect provider. Scale CBF frequency (bandwidth)
+> according to CPU frequencies.
+>=20
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
-Tested-by: Konrad Dybcio <konrad.dybcio@linaro.org> # SM8350 PDX215
-
-
-Konrad
-> 
-> This patch has been posted a year ago in January 2022 ([1]). Since that time
-> Saravana failed to produce patches to assist in debugging the issue
-> ([2]) or to fix the issue ([3]). The issue we observe has been described
-> by Abel at ([4]). As we work on adding support for Dual DSI
-> configurations, the issue becomes more and more important, since binding
-> the whole display subsystem fails.
-> 
-> Currently the qcom/sdm845-mtp board is already broken and I've just
-> posted a patch adding Dual DSI variant for the qcom/sdm845-db845c board
-> ([5]).
-> 
-> [1] https://lore.kernel.org/lkml/20211125183622.597177-1-dmitry.baryshkov@linaro.org/
-> [2] https://lore.kernel.org/lkml/CAA8EJpqELXvRMPWJdTLCURjwkcMxyPDPj1tVZPkdOT_JVQb4-w@mail.gmail.com/
-> [3] https://lore.kernel.org/all/CAGETcx8F0wP+RA0KpjOJeZfc=DVG-MbM_=SkRHD4UhD2ReL7Kw@mail.gmail.com/
-> [4] https://lore.kernel.org/all/YrsdLQrOtg1qdaoE@linaro.org/
-> [5] https://lore.kernel.org/all/20230118082048.2198715-1-dmitry.baryshkov@linaro.org/
-> 
-> ---
->  drivers/of/property.c | 16 +++++++++++++++-
->  1 file changed, 15 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/of/property.c b/drivers/of/property.c
-> index 134cfc980b70..d323bf26a613 100644
-> --- a/drivers/of/property.c
-> +++ b/drivers/of/property.c
-> @@ -1297,7 +1297,6 @@ struct supplier_bindings {
->  	bool node_not_dev;
+>  drivers/clk/qcom/clk-cbf-8996.c | 143 +++++++++++++++++++++++++++++++-
+>  1 file changed, 142 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/drivers/clk/qcom/clk-cbf-8996.c b/drivers/clk/qcom/clk-cbf-8=
+996.c
+> index 9cde0e660228..b049b4f7b270 100644
+> --- a/drivers/clk/qcom/clk-cbf-8996.c
+> +++ b/drivers/clk/qcom/clk-cbf-8996.c
+> @@ -5,11 +5,14 @@
+>  #include <linux/bitfield.h>
+>  #include <linux/clk.h>
+>  #include <linux/clk-provider.h>
+> +#include <linux/interconnect-provider.h>
+>  #include <linux/of.h>
+>  #include <linux/module.h>
+>  #include <linux/platform_device.h>
+>  #include <linux/regmap.h>
+> =20
+> +#include <dt-bindings/interconnect/qcom,msm8996-cbf.h>
+> +
+>  #include "clk-alpha-pll.h"
+>  #include "clk-regmap.h"
+> =20
+> @@ -225,6 +228,133 @@ static const struct regmap_config cbf_msm8996_regma=
+p_config =3D {
+>         .val_format_endian      =3D REGMAP_ENDIAN_LITTLE,
 >  };
->  
-> -DEFINE_SIMPLE_PROP(clocks, "clocks", "#clock-cells")
->  DEFINE_SIMPLE_PROP(interconnects, "interconnects", "#interconnect-cells")
->  DEFINE_SIMPLE_PROP(iommus, "iommus", "#iommu-cells")
->  DEFINE_SIMPLE_PROP(mboxes, "mboxes", "#mbox-cells")
-> @@ -1327,6 +1326,21 @@ DEFINE_SIMPLE_PROP(backlight, "backlight", NULL)
->  DEFINE_SUFFIX_PROP(regulators, "-supply", NULL)
->  DEFINE_SUFFIX_PROP(gpio, "-gpio", "#gpio-cells")
->  
-> +static struct device_node *parse_clocks(struct device_node *np,
-> +					const char *prop_name, int index)
+> =20
+> +#ifdef CONFIG_INTERCONNECT
+
+Can you move this driver to drivers/interconnect/ ?
+
+> +struct qcom_msm8996_cbf_icc_provider {
+> +       struct icc_provider provider;
+> +       struct clk *clk;
+> +};
+> +
+> +#define to_qcom_cbf_provider(_provider) \
+> +       container_of(_provider, struct qcom_msm8996_cbf_icc_provider, pro=
+vider)
+> +
+> +enum {
+> +       CBF_MASTER_NODE =3D 2000,
+[...]
+> +static int qcom_msm8996_cbf_icc_remove(struct platform_device *pdev)
 > +{
-> +	/*
-> +	 * Do not create clock-related device links for clocks controllers,
-> +	 * clock orphans will handle missing clock parents automatically.
-> +	 */
-> +	if (!strcmp(prop_name, "clocks") &&
-> +	    of_find_property(np, "#clock-cells", NULL))
-> +		return NULL;
+> +       struct icc_provider *provider =3D platform_get_drvdata(pdev);
 > +
-> +	return parse_prop_cells(np, prop_name, index, "clocks",
-> +				       "#clock-cells");
+> +       icc_nodes_remove(provider);
+> +       icc_provider_del(provider);
+> +
+> +       return 0;
 > +}
+> +#else
+> +static int qcom_msm8996_cbf_icc_register(struct platform_device *pdev)
+> +{
+> +       dev_warn(&pdev->dev, "interconnects support is disabled, CBF cloc=
+k is fixed\n");
 > +
->  static struct device_node *parse_gpios(struct device_node *np,
->  				       const char *prop_name, int index)
+> +       return 0;
+> +}
+> +#define qcom_msm8996_cbf_icc_remove(pdev) (0)
+
+It's like two drivers in one.
+
+> +#endif
+> +
+>  static int qcom_msm8996_cbf_probe(struct platform_device *pdev)
 >  {
+>         void __iomem *base;
