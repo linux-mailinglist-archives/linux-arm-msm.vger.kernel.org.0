@@ -2,72 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CE12E675B28
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 18:23:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C9B7675BA9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 18:36:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230078AbjATRXA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Jan 2023 12:23:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35554 "EHLO
+        id S229518AbjATRg0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Jan 2023 12:36:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230012AbjATRWw (ORCPT
+        with ESMTP id S229867AbjATRgY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Jan 2023 12:22:52 -0500
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0D8740C7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 09:22:50 -0800 (PST)
-Received: by mail-ej1-x62b.google.com with SMTP id az20so15731762ejc.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 09:22:50 -0800 (PST)
+        Fri, 20 Jan 2023 12:36:24 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B83D2DBE8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 09:36:22 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id f12-20020a7bc8cc000000b003daf6b2f9b9so6341751wml.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 09:36:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=P0ezJCiejYKH3mHjjOi3D4bAnLIutlLPwGAfzv+fbpQ=;
-        b=g13LZ40zbQtq1kR0e2MKIJwJyHXgoa0hMLRRDRQw91OP3YOoSOmR6a7eALnD8Z1tQE
-         ipyaeJaBmjP83JhEziARP4SVSnWtggAatHwHH/3rLqJ9cYWsvedUqo7PE91bdwhF6ihY
-         MDO9S3thXGpajBtKNJMdBnoy0LZ9UDJ2SX2KByUnFMWoMyxbvfNfn7fRUk6CI3pO7ZY5
-         jyFAkHzbYseDhAEcRu/qL4IwufIoM3Y6CpqTtkz8joRVMwLwhjsbJoGPBV9AxHi5cj8f
-         uZcznvRe45QG6nE9Yn5HfZ824BZtPRXb/ivebY+pdQRrYnE2739AekENceva2VA1bM97
-         nsew==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=T/fkQZoxq2LVgdlP6o8ISAl67meRTQs6k6eGFoQcXV0=;
+        b=uCouVft/678PMSeYh72dZ/cmQ3539Q08cQjJm8WroYp5AYxoK6xmyZqRQtw45k+W/u
+         p7DriRVdL5+iW+h8R+Efz19EaHAQw3bx4FMZhk7hQX+nCYhus2AoNhdXi1ksfKRw7eiw
+         9VT2bugfXsp/wXAu5h1gKUMc+F/X/oFgqYT3zSSVm2X5AeJ5SurJoSe6u4weoPtM3N4b
+         7ygZ53czOGsCIEJ7DBvXPY7UdnDYutz6QLJLTpB+x2E3K0HEpN6QX17BBUN+mI1C0dvk
+         QG5ywTxIG9eet9FsuMCqmb/m8LcrVOtj8eKYRS1slfReD6SB2JPK2jMWyAkSX+cq5Z7A
+         eIcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=P0ezJCiejYKH3mHjjOi3D4bAnLIutlLPwGAfzv+fbpQ=;
-        b=io95/qB7LSCcdVK61GM6M0axEg2wCAFdyGTYy2XvZpxn3Qj9pwYE1HH5aa2bi3ukyE
-         DmwRdBNXry9HZmqGLuWxYfsA9MD+jBfj8HKu+aFDoo/nG2XkHF8PwjK5Evs2aNSL+5iK
-         0X3TfJ+/vSVV13WvO6xC4vjgUB2Hyq84KZL2lwTjSMOVmGPub79MDdL897xnN/xKMb8a
-         YlYaK+wePdLxXNqGFzJywo8Qy2i2Qmot+1cBINyr9/1RzuvolaOf/h1uCv/TAvgm/Cbg
-         sPC4ISG0zyHrZy8BKQ/4+cTAJ7MYaiEAgYOCKeV/ToIHJ/GJAqWcw00IYDRas/AAT5uL
-         mC3g==
-X-Gm-Message-State: AFqh2koJIEhtdk+N2HNipsmaRSdlQWygN4cFVcAc+dghEP/bSh7nokzK
-        2Q7H4jz08RPwDzTKkYtgozUwCEe11io4WSQT
-X-Google-Smtp-Source: AMrXdXtx8X/yBlmU7Fn46+gnHPnWsfBg6M83EWkjsFYdNYROQddqutpTfrlJF4gWuidhWPJdJCqhKQ==
-X-Received: by 2002:a17:906:29d8:b0:86f:a1fe:237a with SMTP id y24-20020a17090629d800b0086fa1fe237amr16070806eje.54.1674235368997;
-        Fri, 20 Jan 2023 09:22:48 -0800 (PST)
-Received: from localhost.localdomain (abyk37.neoplus.adsl.tpnet.pl. [83.9.30.37])
-        by smtp.gmail.com with ESMTPSA id s17-20020a1709060c1100b0084d21db0691sm18313857ejf.179.2023.01.20.09.22.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Jan 2023 09:22:48 -0800 (PST)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 5/5] arm64: dts: qcom: sm8250: Add GPU speedbin support
-Date:   Fri, 20 Jan 2023 18:22:33 +0100
-Message-Id: <20230120172233.1905761-6-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230120172233.1905761-1-konrad.dybcio@linaro.org>
-References: <20230120172233.1905761-1-konrad.dybcio@linaro.org>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=T/fkQZoxq2LVgdlP6o8ISAl67meRTQs6k6eGFoQcXV0=;
+        b=TpHoOQ5wIraYWWCTVzzCLnbsJmUlucdGj/fN57NslRhKhhJShruBu/tLnYcS9Ry9Ar
+         6lnKhwMAuBRbLuaqRBwwsMLcwAkAjc696L2VTMbZJoRcPbDyzqrCy9eRY/tZ3M/jJbd6
+         g1WQlQv0A32Cej77l7nP+X6jiM6OL8yFf+EnlNhUeAKqkAgrhk+GJ6SDbtEWQnQAClSP
+         7tMV6MIuobwXfMr7mTeku7nvVqgB9C0iJD7owtiuj/YnVe3tC+t1hs6x5wtyv1O5Y6k+
+         BjwN13MTJTUmLIwf53zOou++6SwGIpbhkRccYnAbxb8KtCWFaeGNkLYgH/K8iICFijAj
+         Di5g==
+X-Gm-Message-State: AFqh2kqw1KpQAGge+ZOAoWvRE9pAAY6BqJf++dsfBpycc7dWKMNggIdI
+        Zpo2jsM13Vpq1o7BTDasm/ghYg==
+X-Google-Smtp-Source: AMrXdXsFwzzGIEstO3SnHULQxXF4eMZtD91tPjdYdhdv27AoHRcOCQEwd+woViZIHj7JJnRNA8pmRg==
+X-Received: by 2002:a05:600c:22c6:b0:3da:fc30:bfc5 with SMTP id 6-20020a05600c22c600b003dafc30bfc5mr15185468wmg.13.1674236181384;
+        Fri, 20 Jan 2023 09:36:21 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id y18-20020a5d6152000000b002425be3c9e2sm35660830wrt.60.2023.01.20.09.36.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 20 Jan 2023 09:36:20 -0800 (PST)
+Message-ID: <c643747e-accb-c7af-a4f9-5cf8feb2075a@linaro.org>
+Date:   Fri, 20 Jan 2023 18:36:18 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH v2] dt-bindings: pinctrl: qcom,pmic-mpp: Rename "mpp"
+ child node names to "-pins$"
+Content-Language: en-US
+To:     Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230120165103.1278852-1-robh@kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230120165103.1278852-1-robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -76,100 +80,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SM8250 has (at least) four GPU speed bins. With the support added on the
-driver side, wire up bin detection in the DTS to restrict lower-quality
-SKUs from running at frequencies they were not validated at.
+On 20/01/2023 17:51, Rob Herring wrote:
+> Just 'mpp' is a bit ambiguous for a pattern as it allows any prefix or
+> suffix. Change the node name pattern to "-pins$" to align with other
+> Qualcomm pinctrl bindings.
+> 
+> Signed-off-by: Rob Herring <robh@kernel.org>
+> ---
+> v2:
+>  - Use "-pins$" for pattern instead
+> ---
 
-Tested-by: Marijn Suijten <marijn.suijten@somainline.org> # On Sony Xperia 5 II (speed bin 0x7)
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 23 ++++++++++++++++++++++-
- 1 file changed, 22 insertions(+), 1 deletion(-)
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 059c83003fb6..95f1a6afcd43 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -981,6 +981,18 @@ ipcc: mailbox@408000 {
- 			#mbox-cells = <2>;
- 		};
- 
-+		qfprom: efuse@784000 {
-+			compatible = "qcom,sm8250-qfprom", "qcom,qfprom";
-+			reg = <0 0x00784000 0 0x8ff>;
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+
-+			gpu_speed_bin: gpu_speed_bin@19b {
-+				reg = <0x19b 0x1>;
-+				bits = <5 3>;
-+			};
-+		};
-+
- 		rng: rng@793000 {
- 			compatible = "qcom,prng-ee";
- 			reg = <0 0x00793000 0 0x1000>;
-@@ -2576,49 +2588,58 @@ gpu: gpu@3d00000 {
- 
- 			qcom,gmu = <&gmu>;
- 
-+			nvmem-cells = <&gpu_speed_bin>;
-+			nvmem-cell-names = "speed_bin";
-+
- 			status = "disabled";
- 
- 			zap-shader {
- 				memory-region = <&gpu_mem>;
- 			};
- 
--			/* note: downstream checks gpu binning for 670 Mhz */
- 			gpu_opp_table: opp-table {
- 				compatible = "operating-points-v2";
- 
- 				opp-670000000 {
- 					opp-hz = /bits/ 64 <670000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
-+					opp-supported-hw = <0x6>;
- 				};
- 
- 				opp-587000000 {
- 					opp-hz = /bits/ 64 <587000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
-+					opp-supported-hw = <0x7>;
- 				};
- 
- 				opp-525000000 {
- 					opp-hz = /bits/ 64 <525000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L2>;
-+					opp-supported-hw = <0xf>;
- 				};
- 
- 				opp-490000000 {
- 					opp-hz = /bits/ 64 <490000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
-+					opp-supported-hw = <0xf>;
- 				};
- 
- 				opp-441600000 {
- 					opp-hz = /bits/ 64 <441600000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L0>;
-+					opp-supported-hw = <0xf>;
- 				};
- 
- 				opp-400000000 {
- 					opp-hz = /bits/ 64 <400000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
-+					opp-supported-hw = <0xf>;
- 				};
- 
- 				opp-305000000 {
- 					opp-hz = /bits/ 64 <305000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
-+					opp-supported-hw = <0xf>;
- 				};
- 			};
- 		};
--- 
-2.39.1
+Best regards,
+Krzysztof
 
