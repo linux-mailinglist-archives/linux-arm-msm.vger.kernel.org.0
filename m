@@ -2,129 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A1E8D674DF2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 08:21:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0EBFC674E36
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 08:37:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230002AbjATHV1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Jan 2023 02:21:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58262 "EHLO
+        id S229488AbjATHhz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Jan 2023 02:37:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229997AbjATHVW (ORCPT
+        with ESMTP id S229473AbjATHhx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Jan 2023 02:21:22 -0500
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E52B10AB9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 23:21:18 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id f25-20020a1c6a19000000b003da221fbf48so2973439wmc.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 23:21:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=fCX2TwLI9aZum1c9pglq0JwNjkxZ7mpNRJm/F/xcr8c=;
-        b=vq4TbAhTMVqW4gP0N05b07VYOCZw3XqziYyP5JF2ScPu7l+yvrLXhKojfbM4JuErmI
-         l419sAQWpkN509zV1FX1Nzod05/LMScB7b4IDfYXZlpaRzYeY778kuHOl/vqgMwZy9Xj
-         /LSyb7cyeddUK/sZlgJ2i0Qcn7RVoL44WszRvo5KbfOxPVq/9o/X9xcdkYv3wRCbLBZG
-         AD9O66sG/SuEZvg5P9oZdkf5yb/ffWRmeVOR0ANBCPZhuT5n44B8Eg75fB8aLysw1FAX
-         H9xVGbzNrcZuGRxEw49Ed2I2EK+EoT00/u1wTK+gW6xeq8GzcwE/p140IjrAMziFPFvj
-         b8SA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=fCX2TwLI9aZum1c9pglq0JwNjkxZ7mpNRJm/F/xcr8c=;
-        b=VYl+7z/KCTPbwZjMujZGZ7+5/iK1etzI2hnqRvWaOzrb4DEwoLGjiCNIcUcfGJhO1Q
-         UtHHuQpRcnFvn+xc2C+Q7QKzzH8HbfeFONUYLXuCLislJr2+00LdRSyX246lGw7Dwtcz
-         qagk0ALj1pRMsZDmlYn4OM7MberLVuzT6HnURD+JApXP9dkL0HjhfXTbmStF6jNaocHe
-         yl+nqmBqbC4I8594//y43RFhbO0efqCElPe9CwEAnNbrOCYdOzAQKNqFUYUUZtNY5PQc
-         8vIGD5h06wc4tehy22t4yv2UWZyHfjSV9onluJgQ2XbBFZF0z6SmmANjhHE2yPkLP4C5
-         teVA==
-X-Gm-Message-State: AFqh2kqcFWUVrmPVLPMQpHRmzuEflPlU8HAx8Y2lpzhv7ymLAtlWnYKa
-        wOkYKR86Y7EnFffj+u3lF3r0Uw==
-X-Google-Smtp-Source: AMrXdXviFfNYl8EabixQ/X1Hi8N3VyHUwXxJT+xuel3TqqHEU3qGjb3354MHeFTyx/DT6HYAdIXuYw==
-X-Received: by 2002:a05:600c:3b82:b0:3d2:392b:3165 with SMTP id n2-20020a05600c3b8200b003d2392b3165mr13164586wms.12.1674199276885;
-        Thu, 19 Jan 2023 23:21:16 -0800 (PST)
-Received: from krzk-bin.. ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id z4-20020a05600c0a0400b003db01178b62sm1465652wmp.40.2023.01.19.23.21.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Jan 2023 23:21:16 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] ARM: dts: qcom: align OPP table names with DT schema
-Date:   Fri, 20 Jan 2023 08:21:12 +0100
-Message-Id: <20230120072113.138656-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        Fri, 20 Jan 2023 02:37:53 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02B75798C4;
+        Thu, 19 Jan 2023 23:37:51 -0800 (PST)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30K7UiDM012953;
+        Fri, 20 Jan 2023 07:37:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=T+HRskxYu1v9Bh5a0v2OBHQYbed3GESNbOqvsftlHyk=;
+ b=STsjpiGbsSLJL3G0unLvsaid7PcrnqNTLqFarwvimj/7T10gfdMX77q2yeIYr3fi16mH
+ k3GnioLhekiZgDb7w8xagGCIc5Aq7QA1RhN5+jvBJh2SPBuBl1Y8CrdwIHmmmRPqhUo+
+ 7UCGaq5E7AeAvOkVnVuToedgl1CHMw8cMMuReQvABicycaI3mXvTmFojgnDi/5C6PiKK
+ p5DaOue+6WpFLsiOCoclhUnA2LV81ZKl1hFYaPZ5hNUyvx+oeWVHm3rYuxq5CGVFTX2g
+ sbclNx2ejdcXkkX0FPGi0YklMkduIlrP1BOqo/lo/qDbHjzHoXfP7WyLRBC6oNME7hVI RA== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n6xktkaag-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 20 Jan 2023 07:37:02 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30K7b1f0000598
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 20 Jan 2023 07:37:01 GMT
+Received: from [10.216.43.228] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Thu, 19 Jan
+ 2023 23:36:55 -0800
+Message-ID: <9c4d2ce8-11e0-bfbb-7062-078255d1d60b@quicinc.com>
+Date:   Fri, 20 Jan 2023 13:06:52 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH 2/3] ASoC: google: dt-bindings: sc7280: Add platform
+ property
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzk@kernel.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <lgirdwood@gmail.com>,
+        <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
+        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
+        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>, <linux-kernel@vger.kernel.org>,
+        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
+        <devicetree@vger.kernel.org>
+References: <1674108674-8392-1-git-send-email-quic_srivasam@quicinc.com>
+ <1674108674-8392-3-git-send-email-quic_srivasam@quicinc.com>
+ <f0c5e40e-e59d-152d-31f1-1ad3da0a6d34@kernel.org>
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Organization: Qualcomm
+In-Reply-To: <f0c5e40e-e59d-152d-31f1-1ad3da0a6d34@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: _wR1aeK0lfk6LSFW66KY625n85nZc-Ax
+X-Proofpoint-GUID: _wR1aeK0lfk6LSFW66KY625n85nZc-Ax
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-20_04,2023-01-19_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
+ clxscore=1011 spamscore=0 mlxlogscore=999 lowpriorityscore=0 bulkscore=0
+ malwarescore=0 priorityscore=1501 mlxscore=0 phishscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2301200071
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-DT schema expects names of operating points tables to match certain
-pattern:
 
-  qcom-ipq4018-ap120c-ac.dtb: opp_table0: $nodename:0: 'opp_table0' does not match '^opp-table(-[a-z0-9]+)?$'
-
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm/boot/dts/qcom-ipq4019.dtsi | 2 +-
- arch/arm/boot/dts/qcom-sdx55.dtsi   | 2 +-
- arch/arm/boot/dts/qcom-sdx65.dtsi   | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/arch/arm/boot/dts/qcom-ipq4019.dtsi b/arch/arm/boot/dts/qcom-ipq4019.dtsi
-index a73c3a17b6a4..02e9ea78405d 100644
---- a/arch/arm/boot/dts/qcom-ipq4019.dtsi
-+++ b/arch/arm/boot/dts/qcom-ipq4019.dtsi
-@@ -106,7 +106,7 @@ L2: l2-cache {
- 		};
- 	};
- 
--	cpu0_opp_table: opp_table0 {
-+	cpu0_opp_table: opp-table {
- 		compatible = "operating-points-v2";
- 		opp-shared;
- 
-diff --git a/arch/arm/boot/dts/qcom-sdx55.dtsi b/arch/arm/boot/dts/qcom-sdx55.dtsi
-index 5408ff715fbf..c64088c12c89 100644
---- a/arch/arm/boot/dts/qcom-sdx55.dtsi
-+++ b/arch/arm/boot/dts/qcom-sdx55.dtsi
-@@ -62,7 +62,7 @@ cpu0: cpu@0 {
- 		};
- 	};
- 
--	cpu_opp_table: cpu-opp-table {
-+	cpu_opp_table: opp-table-cpu {
- 		compatible = "operating-points-v2";
- 		opp-shared;
- 
-diff --git a/arch/arm/boot/dts/qcom-sdx65.dtsi b/arch/arm/boot/dts/qcom-sdx65.dtsi
-index d3c661d7650d..aa6439d8763a 100644
---- a/arch/arm/boot/dts/qcom-sdx65.dtsi
-+++ b/arch/arm/boot/dts/qcom-sdx65.dtsi
-@@ -61,7 +61,7 @@ cpu0: cpu@0 {
- 		};
- 	};
- 
--	cpu_opp_table: cpu-opp-table {
-+	cpu_opp_table: opp-table-cpu {
- 		compatible = "operating-points-v2";
- 		opp-shared;
- 
--- 
-2.34.1
-
+On 1/19/2023 5:43 PM, Krzysztof Kozlowski wrote:
+> On 19/01/2023 07:11, Srinivasa Rao Mandadapu wrote:
+>> Update sc7280 machine driver bindings with platform property for
+>> supporting ADSP based platform's DAI links.
+> Subject:
+> ASoC: dt-bindings: google,sc7280-herobrine:
+>
+>> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+>> Tested-by: Ratna Deepthi Kudaravalli <quic_rkudarv@quicinc.com>
+> This tested tag is a bit unusual. How were they tested? If
+> dt_bindings_check why this is not the same person as you (submitter)?
+Okay. Will remove Tested-by tag.
+>
+>> ---
+>>   .../devicetree/bindings/sound/google,sc7280-herobrine.yaml    | 11 +++++++++++
+>>   1 file changed, 11 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml b/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
+>> index 869b403..ccf1b1d 100644
+>> --- a/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
+>> +++ b/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
+>> @@ -75,6 +75,17 @@ patternProperties:
+>>   
+>>           additionalProperties: false
+>>   
+>> +      platform:
+>> +        description: Holds subnode which indicates platform dai.
+> Neither commit msg nor this here explains why do you need it and what it
+> really represents. Basically description repeats "platform" name of
+> property - there is no single new information.
+Will modify accordingly and re-spin.
+>
+>> +        type: object
+>> +        properties:
+>> +          sound-dai: true
+> maxItems
+Sorry. why max items required here?
+>
+>> +
+>> +        required:
+>> +          - sound-dai
+>> +
+>> +        additionalProperties: false
+>> +
+>>       required:
+>>         - link-name
+>>         - cpu
+> Best regards,
+> Krzysztof
+>
