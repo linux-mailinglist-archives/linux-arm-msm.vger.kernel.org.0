@@ -2,309 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A558B6760BC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 23:50:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 837A76760CC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 23:55:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230283AbjATWuK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Jan 2023 17:50:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58500 "EHLO
+        id S229561AbjATWzB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Jan 2023 17:55:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36158 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230228AbjATWuJ (ORCPT
+        with ESMTP id S229656AbjATWzA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Jan 2023 17:50:09 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C359C4DBDF;
-        Fri, 20 Jan 2023 14:49:26 -0800 (PST)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30KLvekf003343;
-        Fri, 20 Jan 2023 22:48:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=w6/aHGaEUJiqoCCNWVVmdNmnpXulOdKevHNVnLS9tfw=;
- b=hMLgkUDpPUW2CE6uo1tfIsnKGboCUqJpscYvRG5uUbLY2GjdFz035TJpdZWFbyKnALUW
- f5W6N3BsRhzaPZH6vcAx8o4SsrE280Luobmll+d60qSp8w2l0lk0AGmQzMqRZLG/F8eP
- 8fXMpd4MgvJVCsKJcHKy384Tx6+TYPzeA/91yU2elqcFo/+C0BBirCSRqBF3jgifKWwy
- Jt4Y50GYPqBo5AntJyDsajwxIcf5R+buOxEZNLFvZtOCZ9RSiDNC+8CSF8I1g2SB16V9
- WtuLtD6x9Q9vOdfSrVK9jYQWhmEnd2s37REYt/bwrhvLSZGLo+nSW7rpI4di0EOeviWL yg== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n7593uqyw-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 20 Jan 2023 22:48:13 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30KMmC59005805
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 20 Jan 2023 22:48:12 GMT
-Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Fri, 20 Jan 2023 14:48:11 -0800
-From:   Elliot Berman <quic_eberman@quicinc.com>
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Alex Elder <elder@linaro.org>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Jonathan Corbet <corbet@lwn.net>
-CC:     Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        "Will Deacon" <will@kernel.org>, Marc Zyngier <maz@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-Subject: [PATCH v9 27/27] virt: gunyah: Add ioeventfd
-Date:   Fri, 20 Jan 2023 14:46:26 -0800
-Message-ID: <20230120224627.4053418-28-quic_eberman@quicinc.com>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230120224627.4053418-1-quic_eberman@quicinc.com>
-References: <20230120224627.4053418-1-quic_eberman@quicinc.com>
+        Fri, 20 Jan 2023 17:55:00 -0500
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D99D129E1E
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 14:54:29 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id j17so10212235lfr.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 14:54:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Hbm1EsGZAeT2mHTFiqh0Dx28LeC9mCKTbUcH0BzL/No=;
+        b=mpB0UJHp3a+W4Up5ODk4M/2agnrtRI29W7jdtrMM7sUitAEWVM0wn5iQVGuvoaEGgE
+         6KIO6Ww3/MGhL0X73TxjqOkp2UgPHhe9QOq9A4V2txjt4REmD0oVtS2bnaGUs/bTC4iR
+         f8JvVwXUcyCMkDyR+av/kZ639ZXYLPvgRG02Fp4L834KU7JkUDuCueeJZQoTsaUNXmRF
+         UDSLjXx/p3BG8KUFVISw/lGWZoY9W+ZD6VI+T39nbT8GmxB2iskrWQJ/i3+VhkzIDT1f
+         k5cR3I6m4xyyvgwmCG9G0h3v8v2lLkiogUo83rSf9sg5zmvxe4DB0bAM7OtIaA1ClEye
+         BJdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Hbm1EsGZAeT2mHTFiqh0Dx28LeC9mCKTbUcH0BzL/No=;
+        b=HkGWCPpSR/y38Fk7UsMuYuZmkfR4fTfCeCxZRqZPhBhCwUTo/2TXeJy1tJIWfRBeQY
+         nNYo5gg5ckkVdSBGd7KesmyFDu8B5Erx2NAxZNPpk85Ue8ZYupaP8PiJfihCYFr968Z3
+         Ntk73cwQlxrTtulzCeu/7xNYJvfOwo9nYeN+vggYfpGcEjeaGQ54p/nZtc65QXBr+S39
+         7nRn8W4Y3DzVvjftB/s/TYlyP6vVH/vweJDdiXkimbhFn/TgAVPthwhrtocfaN6S3bb2
+         VwbLe7VZt0+fl/liIOkujOmGS+s1UyqoVKAiwllfMbo2FQXdbk0wTvYG20vBH/GMHysd
+         3JKQ==
+X-Gm-Message-State: AFqh2koGGw0UsgEvLvSPyoXROx8Luk/8mSeGGz1hcnR/CFnziyFSrLFy
+        35X8YG0ZgW2NM67JcuBc139pTw==
+X-Google-Smtp-Source: AMrXdXu7FVclTVblU/bHESbrokULCekzEfzB978ZHJVMnBBS6ReI9nV7Te2jsL6OuDizMc61dMzDpg==
+X-Received: by 2002:a05:6512:143:b0:4cc:a1a1:9aaf with SMTP id m3-20020a056512014300b004cca1a19aafmr3834418lfo.23.1674255203191;
+        Fri, 20 Jan 2023 14:53:23 -0800 (PST)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id j5-20020a05651231c500b004b5480edf67sm6197207lfe.36.2023.01.20.14.53.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 20 Jan 2023 14:53:22 -0800 (PST)
+Message-ID: <3a355075-cc29-957a-678b-2a05aed25587@linaro.org>
+Date:   Sat, 21 Jan 2023 00:53:21 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 6VKb8RmDFqQGIsBLbynaHrsPWYv04-50
-X-Proofpoint-ORIG-GUID: 6VKb8RmDFqQGIsBLbynaHrsPWYv04-50
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-20_11,2023-01-20_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- mlxlogscore=999 spamscore=0 suspectscore=0 mlxscore=0 adultscore=0
- clxscore=1015 impostorscore=0 priorityscore=1501 bulkscore=0
- malwarescore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2212070000 definitions=main-2301200218
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH v3 4/8] clk: qcom: cbf-msm8996: scale CBF clock according
+ to the CPUfreq
+Content-Language: en-GB
+To:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20230120061417.2623751-1-dmitry.baryshkov@linaro.org>
+ <20230120061417.2623751-5-dmitry.baryshkov@linaro.org>
+ <078c5a8254ac006b65fc5fa81dfbc515.sboyd@kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <078c5a8254ac006b65fc5fa81dfbc515.sboyd@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Allow userspace to attach an ioeventfd to an mmio address within the guest.
+On 21/01/2023 00:11, Stephen Boyd wrote:
+> Quoting Dmitry Baryshkov (2023-01-19 22:14:13)
+>> Turn CBF into the interconnect provider. Scale CBF frequency (bandwidth)
+>> according to CPU frequencies.
+>>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   drivers/clk/qcom/clk-cbf-8996.c | 143 +++++++++++++++++++++++++++++++-
+>>   1 file changed, 142 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/clk/qcom/clk-cbf-8996.c b/drivers/clk/qcom/clk-cbf-8996.c
+>> index 9cde0e660228..b049b4f7b270 100644
+>> --- a/drivers/clk/qcom/clk-cbf-8996.c
+>> +++ b/drivers/clk/qcom/clk-cbf-8996.c
+>> @@ -5,11 +5,14 @@
+>>   #include <linux/bitfield.h>
+>>   #include <linux/clk.h>
+>>   #include <linux/clk-provider.h>
+>> +#include <linux/interconnect-provider.h>
+>>   #include <linux/of.h>
+>>   #include <linux/module.h>
+>>   #include <linux/platform_device.h>
+>>   #include <linux/regmap.h>
+>>   
+>> +#include <dt-bindings/interconnect/qcom,msm8996-cbf.h>
+>> +
+>>   #include "clk-alpha-pll.h"
+>>   #include "clk-regmap.h"
+>>   
+>> @@ -225,6 +228,133 @@ static const struct regmap_config cbf_msm8996_regmap_config = {
+>>          .val_format_endian      = REGMAP_ENDIAN_LITTLE,
+>>   };
+>>   
+>> +#ifdef CONFIG_INTERCONNECT
+> 
+> Can you move this driver to drivers/interconnect/ ?
 
-Co-developed-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
-Signed-off-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
-Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
----
- Documentation/virt/gunyah/vm-manager.rst |  21 +++++
- drivers/virt/gunyah/Kconfig              |   9 ++
- drivers/virt/gunyah/Makefile             |   1 +
- drivers/virt/gunyah/gunyah_ioeventfd.c   | 109 +++++++++++++++++++++++
- include/uapi/linux/gunyah.h              |  10 +++
- 5 files changed, 150 insertions(+)
- create mode 100644 drivers/virt/gunyah/gunyah_ioeventfd.c
+Only the interconnect part? At some point I considered dropping the 
+whole CBF mux support and moving the whole driver to 
+drivers/interconnect, but I could not find a good way to use alpha-pll 
+from the interconnect driver. Would you recommend one?
 
-diff --git a/Documentation/virt/gunyah/vm-manager.rst b/Documentation/virt/gunyah/vm-manager.rst
-index b6cf8db826b8..19ec859a7912 100644
---- a/Documentation/virt/gunyah/vm-manager.rst
-+++ b/Documentation/virt/gunyah/vm-manager.rst
-@@ -164,3 +164,24 @@ the irqfd.label.
- 
- GH_IRQFD_LEVEL configures the corresponding doorbell to behave like a level
- triggered interrupt.
-+
-+Type: "ioeventfd"
-+^^^^^^^^^^^^^^^^^
-+
-+::
-+
-+  struct gh_fn_ioeventfd_arg {
-+	__u64 datamatch;
-+	__u64 addr;        /* legal mmio address */
-+	__u32 len;         /* 1, 2, 4, or 8 bytes */
-+	__s32 fd;
-+  #define GH_IOEVENTFD_DATAMATCH		(1UL << 0)
-+	__u32 flags;
-+  };
-+
-+Attaches an ioeventfd to a legal mmio address within the guest. A guest write
-+in the registered address will signal the provided event instead of triggering
-+an exit on the GH_VCPU_RUN ioctl.
-+
-+If datamatch flag is set, the event will be signaled only if the written value
-+to the registered address is equal to datamatch in struct gh_fn_ioeventfd_arg.
-diff --git a/drivers/virt/gunyah/Kconfig b/drivers/virt/gunyah/Kconfig
-index 2cde24d429d1..bd8e31184962 100644
---- a/drivers/virt/gunyah/Kconfig
-+++ b/drivers/virt/gunyah/Kconfig
-@@ -35,3 +35,12 @@ config GUNYAH_IRQFD
- 	  on Gunyah virtual machine.
- 
- 	  Say Y/M here if unsure and you want to support Gunyah VMMs.
-+
-+config GUNYAH_IOEVENTFD
-+	tristate "Gunyah ioeventfd interface"
-+	depends on GUNYAH
-+	help
-+	  Enable kernel support for creating ioeventfds which can alert userspace
-+	  when a Gunyah virtual machine accesses a memory address.
-+
-+	  Say Y/M here if unsure and you want to support Gunyah VMMs.
-diff --git a/drivers/virt/gunyah/Makefile b/drivers/virt/gunyah/Makefile
-index 6cf756bfa3c2..7347b1470491 100644
---- a/drivers/virt/gunyah/Makefile
-+++ b/drivers/virt/gunyah/Makefile
-@@ -8,3 +8,4 @@ obj-$(CONFIG_GUNYAH) += gunyah_rsc_mgr.o
- 
- obj-$(CONFIG_GUNYAH_VCPU) += gunyah_vcpu.o
- obj-$(CONFIG_GUNYAH_IRQFD) += gunyah_irqfd.o
-+obj-$(CONFIG_GUNYAH_IOEVENTFD) += gunyah_ioeventfd.o
-diff --git a/drivers/virt/gunyah/gunyah_ioeventfd.c b/drivers/virt/gunyah/gunyah_ioeventfd.c
-new file mode 100644
-index 000000000000..c16a6725fe7e
---- /dev/null
-+++ b/drivers/virt/gunyah/gunyah_ioeventfd.c
-@@ -0,0 +1,109 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
-+
-+#include <linux/eventfd.h>
-+#include <linux/file.h>
-+#include <linux/fs.h>
-+#include <linux/gunyah.h>
-+#include <linux/gunyah_vm_mgr.h>
-+#include <linux/module.h>
-+#include <linux/printk.h>
-+
-+#include <uapi/linux/gunyah.h>
-+
-+struct gunyah_ioeventfd {
-+	struct gunyah_vm_function *f;
-+	struct gunyah_vm_io_handler io_handler;
-+
-+	struct eventfd_ctx *ctx;
-+};
-+
-+static int gh_write_ioeventfd(struct gunyah_vm_io_handler *io_dev, u64 addr, u32 len, u64 data)
-+{
-+	struct gunyah_ioeventfd *iofd = container_of(io_dev, struct gunyah_ioeventfd, io_handler);
-+
-+	eventfd_signal(iofd->ctx, 1);
-+	return 0;
-+}
-+
-+static struct gunyah_vm_io_handler_ops io_ops = {
-+	.write = gh_write_ioeventfd,
-+};
-+
-+static long gunyah_ioeventfd_bind(struct gunyah_vm_function *f)
-+{
-+	struct eventfd_ctx *ctx = NULL;
-+	struct gunyah_ioeventfd *iofd;
-+	const struct gh_fn_ioeventfd_arg *args = &f->fn.ioeventfd;
-+	int ret;
-+
-+	/* must be natural-word sized, or 0 to ignore length */
-+	switch (args->len) {
-+	case 0:
-+	case 1:
-+	case 2:
-+	case 4:
-+	case 8:
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
-+
-+	/* check for range overflow */
-+	if (args->addr + args->len < args->addr)
-+		return -EINVAL;
-+
-+	/* ioeventfd with no length can't be combined with DATAMATCH */
-+	if (!args->len && (args->flags & GH_IOEVENTFD_DATAMATCH))
-+		return -EINVAL;
-+
-+	ctx = eventfd_ctx_fdget(args->fd);
-+	if (IS_ERR(ctx))
-+		return PTR_ERR(ctx);
-+
-+	iofd = kzalloc(sizeof(*iofd), GFP_KERNEL);
-+	if (!iofd) {
-+		ret = -ENOMEM;
-+		goto err_eventfd;
-+	}
-+
-+	f->data = iofd;
-+	iofd->f = f;
-+
-+	iofd->ctx = ctx;
-+
-+	if (args->flags & GH_IOEVENTFD_DATAMATCH) {
-+		iofd->io_handler.datamatch = true;
-+		iofd->io_handler.len = args->len;
-+		iofd->io_handler.data = args->datamatch;
-+	}
-+	iofd->io_handler.addr = args->addr;
-+	iofd->io_handler.ops = &io_ops;
-+
-+	ret = gh_vm_mgr_add_io_handler(f->ghvm, &iofd->io_handler);
-+	if (ret)
-+		goto err_io_dev_add;
-+
-+	return 0;
-+
-+err_io_dev_add:
-+	kfree(iofd);
-+err_eventfd:
-+	eventfd_ctx_put(ctx);
-+	return ret;
-+}
-+
-+static void gunyah_ioeventfd_release(struct gunyah_vm_function *f)
-+{
-+	struct gunyah_ioeventfd *iofd = f->data;
-+
-+	eventfd_ctx_put(iofd->ctx);
-+	gh_vm_mgr_remove_io_handler(iofd->f->ghvm, &iofd->io_handler);
-+	kfree(iofd);
-+}
-+
-+DECLARE_GUNYAH_VM_FUNCTION_INIT(ioeventfd, gunyah_ioeventfd_bind, gunyah_ioeventfd_release);
-+MODULE_DESCRIPTION("Gunyah ioeventfds");
-+MODULE_LICENSE("GPL");
-diff --git a/include/uapi/linux/gunyah.h b/include/uapi/linux/gunyah.h
-index a947f0317ca9..3cc387f0831a 100644
---- a/include/uapi/linux/gunyah.h
-+++ b/include/uapi/linux/gunyah.h
-@@ -65,11 +65,21 @@ struct gh_fn_irqfd_arg {
- 	__u32 flags;
- };
- 
-+struct gh_fn_ioeventfd_arg {
-+	__u64 datamatch;
-+	__u64 addr;        /* legal mmio address */
-+	__u32 len;         /* 1, 2, 4, or 8 bytes; or 0 to ignore length */
-+	__s32 fd;
-+#define GH_IOEVENTFD_DATAMATCH		(1UL << 0)
-+	__u32 flags;
-+};
-+
- struct gh_vm_function {
- 	char name[GUNYAH_FUNCTION_NAME_SIZE];
- 	union {
- 		struct gh_fn_vcpu_arg vcpu;
- 		struct gh_fn_irqfd_arg irqfd;
-+		struct gh_fn_ioeventfd_arg ioeventfd;
- 		char data[GUNYAH_FUNCTION_MAX_ARG_SIZE];
- 	};
- };
+> 
+>> +struct qcom_msm8996_cbf_icc_provider {
+>> +       struct icc_provider provider;
+>> +       struct clk *clk;
+>> +};
+>> +
+>> +#define to_qcom_cbf_provider(_provider) \
+>> +       container_of(_provider, struct qcom_msm8996_cbf_icc_provider, provider)
+>> +
+>> +enum {
+>> +       CBF_MASTER_NODE = 2000,
+> [...]
+>> +static int qcom_msm8996_cbf_icc_remove(struct platform_device *pdev)
+>> +{
+>> +       struct icc_provider *provider = platform_get_drvdata(pdev);
+>> +
+>> +       icc_nodes_remove(provider);
+>> +       icc_provider_del(provider);
+>> +
+>> +       return 0;
+>> +}
+>> +#else
+>> +static int qcom_msm8996_cbf_icc_register(struct platform_device *pdev)
+>> +{
+>> +       dev_warn(&pdev->dev, "interconnects support is disabled, CBF clock is fixed\n");
+>> +
+>> +       return 0;
+>> +}
+>> +#define qcom_msm8996_cbf_icc_remove(pdev) (0)
+> 
+> It's like two drivers in one.
+> 
+>> +#endif
+>> +
+>>   static int qcom_msm8996_cbf_probe(struct platform_device *pdev)
+>>   {
+>>          void __iomem *base;
+
 -- 
-2.39.0
+With best wishes
+Dmitry
 
