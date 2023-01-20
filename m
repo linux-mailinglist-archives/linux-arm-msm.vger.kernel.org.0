@@ -2,74 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 47E35675861
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 16:20:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1AE216758A2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 16:33:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229785AbjATPUW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Jan 2023 10:20:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52246 "EHLO
+        id S231487AbjATPc7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Jan 2023 10:32:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230130AbjATPUW (ORCPT
+        with ESMTP id S231461AbjATPcy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Jan 2023 10:20:22 -0500
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD525DB7AD
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 07:19:59 -0800 (PST)
-Received: by mail-ej1-x62f.google.com with SMTP id ss4so14716068ejb.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 07:19:59 -0800 (PST)
+        Fri, 20 Jan 2023 10:32:54 -0500
+Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B58EBCE0F
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 07:32:49 -0800 (PST)
+Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-4c131bede4bso77336237b3.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 07:32:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oohYZqlXb/UEppW6rQtISKF6pXwhrVR4gJAAjhthm3M=;
-        b=L3xzaMDpCnHoKgPC6Jo0Lpa2a+zydubEH2Zg2XksukzxOMnWENJ9xKNJ+jyT4XsxiJ
-         UjfEGE0epmcdSxMhuJylugp1jH4Muof1LwCIwXHgaPZLddeTIhHu2Yzo8r0mYBGbwISX
-         TBvCCSki0UHfCvGuOB0/cPthgQ1LC4jnBx4Z/zySb8p4kKax9wUs0TocD2mMEN0cQE5j
-         9M+pGd0g7jKfv83fwFXEi5HjSMMIYoYg5magZ1avuVzYTpD0h7e2FeTDyY7dT6Uph0+6
-         wcra6nRWFpLdsxXTPywthzp2EMw1cOgYwirD1GwC/rwMvwYUKMJKxG/V9USVssv4GOeI
-         hj3w==
+        d=poorly.run; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=9IPtDJM5M6jGN6qD0tP24K72UIm4iRXYGKWNFo7x72g=;
+        b=SPoq6nBK/JeShjz0kPsSHbBdOJtV/AmVLorEPqTuGDzC70Ow5DX8doU0rsRDKCcTD1
+         Jltcq/okn/fjqBisJ9sE69yh3amFyHgGDIqt3YyHdPR0N6qepAWxsS2OMETpUksYGV1S
+         kwvgHr7iyU+Zf8HqHBuJwD0xp+BnLHmYnP0u3hdglzpy03kUEls0HWOct6IEtaAqANmb
+         Q+V1t217x323JxoCLe6IfUbqtk4A/Ytth5Y1OutLyazCII9UdOCnZNL5iFxHvuAhrIPK
+         3bwvEBE3iFXfMvlRByIuUpVcNW3pdXTUVnZ8yCJLWxGQb/RIggDxCRemoyzqpl81n21X
+         kMFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=oohYZqlXb/UEppW6rQtISKF6pXwhrVR4gJAAjhthm3M=;
-        b=CDc+yFkTo85iPNlEvQ61vNIJHHyeZeNFuyerpVJqL/ZBc+Td46Jgb/+rPcJUnpO9UM
-         KhO+Y5CmO+J30vSzyNXkbgCGRaSIL/zA5Is5K29w9hpq9ZtIxSPdlEEGoKNkoBPSsWz+
-         u7sLsj8nN/1IoTInFAkQ8r42XEf1a1gnzkeUEea/qfvETi2LysjUlLjhrx6+8HE94vwn
-         oURdbYjfiXZ9uZ9RP0KEO+OIfZAsh07Ga3NAHnrdD9PTEPBg2+Dz0asT6YUl/3iI799i
-         vuYqUw1DxtUQ8g54leDGoEwTihTVyoYwAfvI3kS9bGIYaCHno9bilqwct9i8lp+CNT6J
-         shcA==
-X-Gm-Message-State: AFqh2krHguB6obZJOHfivdtHSauO2tM/3nNZx6lE17PGncBiksRO8Ikr
-        SOSc4CB9advMMfpVDHwHkhDv1Q==
-X-Google-Smtp-Source: AMrXdXuNmUs4phh4bB2kbw3WJrDxVfTHziau8J+3frDuKxt57+6s1sDoG8Uc/9i74Lj8U3HHEjyqxQ==
-X-Received: by 2002:a17:906:608d:b0:872:a2ee:271d with SMTP id t13-20020a170906608d00b00872a2ee271dmr14170359ejj.53.1674227998279;
-        Fri, 20 Jan 2023 07:19:58 -0800 (PST)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id w15-20020a17090633cf00b008711cab8875sm6977298eja.216.2023.01.20.07.19.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Jan 2023 07:19:57 -0800 (PST)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Fri, 20 Jan 2023 16:19:57 +0100
-Message-Id: <CPX4AK05WU5V.2XZ2KT3M3ZHA@otso>
-Cc:     <~postmarketos/upstreaming@lists.sr.ht>,
-        "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        "Michael Turquette" <mturquette@baylibre.com>,
-        "Stephen Boyd" <sboyd@kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2 1/2] clk: qcom: smd: Add XO RPM clocks for
- MSM8226/MSM8974
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Rayyan Ansari" <rayyan@ansari.sh>, <linux-arm-msm@vger.kernel.org>
-X-Mailer: aerc 0.14.0
-References: <20230119190534.317041-1-rayyan@ansari.sh>
- <20230119190534.317041-2-rayyan@ansari.sh>
-In-Reply-To: <20230119190534.317041-2-rayyan@ansari.sh>
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9IPtDJM5M6jGN6qD0tP24K72UIm4iRXYGKWNFo7x72g=;
+        b=nKmPEtqXtJM4eK2pet0j6zd8nQZAhwaG95jObccTcR+l5/yIkI8qMsQp+SBeT5iERK
+         zYjdUC+BWzgqoqgrpu5Q02+5x1asSaFkw8YU8U/aH+Phk2oYX07RGy8tcTxN5s7oE9PV
+         Ycr+GvPGm7FDiay0WfgF13QBQGDdszxBTcMG80OrsYbXAr4i6ZNSVIi/aiNBdKeJP9G4
+         WK2yUUjZPNmKfhOoY5Hb4YKMz/xAbnkcMY+RESCudDzO+o3idi83ITY4llPt+HCsL9QI
+         tFQ169EMn5O5WgFH2gScmiMwEsAgFlMkb+RuYheCTIVBryR9tCexLS0cuB13/wqxlMC/
+         t9iA==
+X-Gm-Message-State: AFqh2krjc6sHh1jUTvhaqSCWYX4MSpqUE9dTjtt+E9VL0/ezVzO54JA2
+        Knvugl1XpROAC6ipsTzQgWtLoQ==
+X-Google-Smtp-Source: AMrXdXtru88v2k61i9cQGS6ax35vAmCsXdW2DZPSz/qrSHebfuajOctI7UdN7zUMawsmB7qZX4N0+w==
+X-Received: by 2002:a0d:d610:0:b0:3af:2118:fc34 with SMTP id y16-20020a0dd610000000b003af2118fc34mr11723672ywd.34.1674228768750;
+        Fri, 20 Jan 2023 07:32:48 -0800 (PST)
+Received: from localhost (200.234.86.34.bc.googleusercontent.com. [34.86.234.200])
+        by smtp.gmail.com with ESMTPSA id j20-20020a05620a289400b006fed58fc1a3sm26448188qkp.119.2023.01.20.07.32.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Jan 2023 07:32:47 -0800 (PST)
+Date:   Fri, 20 Jan 2023 15:32:47 +0000
+From:   Sean Paul <sean@poorly.run>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Mark Yacoub <markyacoub@chromium.org>, quic_khsieh@quicinc.com,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run, airlied@gmail.com,
+        daniel@ffwll.ch, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@somainline.org,
+        jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com,
+        rodrigo.vivi@intel.com, tvrtko.ursulin@linux.intel.com,
+        tzimmermann@suse.de, ville.syrjala@linux.intel.com,
+        stanislav.lisovskiy@intel.com, matthew.d.roper@intel.com,
+        imre.deak@intel.com, lucas.demarchi@intel.com,
+        manasi.d.navare@intel.com, swati2.sharma@intel.com,
+        bhanuprakash.modem@intel.com, javierm@redhat.com,
+        jose.souza@intel.com, lyude@redhat.com, hbh25y@gmail.com,
+        arun.r.murthy@intel.com, ashutosh.dixit@intel.com,
+        ankit.k.nautiyal@intel.com, maxime@cerno.tech, swboyd@chromium.org,
+        christophe.jaillet@wanadoo.fr, quic_sbillaka@quicinc.com,
+        johan+linaro@kernel.org, dianders@chromium.org, marex@denx.de,
+        quic_jesszhan@quicinc.com, bjorn.andersson@linaro.org,
+        abhinavk@codeaurora.org, seanpaul@chromium.org,
+        Jani Nikula <jani.nikula@intel.com>
+Subject: Re: [PATCH v6 01/10] drm/hdcp: Add drm_hdcp_atomic_check()
+Message-ID: <Y8q0H7SiDkdfmyXP@art_vandelay>
+References: <20230118193015.911074-1-markyacoub@google.com>
+ <20230118193015.911074-2-markyacoub@google.com>
+ <67170ce0-8622-8b35-e73a-7d873b7a3b8b@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <67170ce0-8622-8b35-e73a-7d873b7a3b8b@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -79,41 +94,72 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu Jan 19, 2023 at 8:05 PM CET, Rayyan Ansari wrote:
-> Add the XO and XO_A clocks to the MSM8974 clock list, which is also
-> used on MSM8226.
->
-> Signed-off-by: Rayyan Ansari <rayyan@ansari.sh>
-> ---
->  drivers/clk/qcom/clk-smd-rpm.c | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rp=
-m.c
-> index fea505876855..42ea3bb37f63 100644
-> --- a/drivers/clk/qcom/clk-smd-rpm.c
-> +++ b/drivers/clk/qcom/clk-smd-rpm.c
-> @@ -549,6 +549,8 @@ DEFINE_CLK_SMD_RPM_XO_BUFFER_PINCTRL(msm8974, cxo_a1_=
-pin, cxo_a1_a_pin, 5, 19200
->  DEFINE_CLK_SMD_RPM_XO_BUFFER_PINCTRL(msm8974, cxo_a2_pin, cxo_a2_a_pin, =
-6, 19200000);
-> =20
->  static struct clk_smd_rpm *msm8974_clks[] =3D {
-> +	[RPM_SMD_XO_CLK_SRC] 		=3D &sdm660_bi_tcxo,
-> +	[RPM_SMD_XO_A_CLK_SRC] 		=3D &sdm660_bi_tcxo_a,
+On Thu, Jan 19, 2023 at 11:37:52AM +0100, Krzysztof Kozlowski wrote:
+> On 18/01/2023 20:30, Mark Yacoub wrote:
+> > From: Sean Paul <seanpaul@chromium.org>
+> > 
+> > This patch moves the hdcp atomic check from i915 to drm_hdcp so other
+> > drivers can use it. No functional changes, just cleaned up some of the
+> > code when moving it over.
+> > 
+> > Acked-by: Jani Nikula <jani.nikula@intel.com>
+> > Acked-by: Jani Nikula <jani.nikula@intel.com>
+> > Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+> > Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
+> > Signed-off-by: Sean Paul <seanpaul@chromium.org>
+> > Signed-off-by: Mark Yacoub <markyacoub@chromium.org>
+> > Link: https://patchwork.freedesktop.org/patch/msgid/20210913175747.47456-2-sean@poorly.run #v1
+> > Link: https://patchwork.freedesktop.org/patch/msgid/20210915203834.1439-2-sean@poorly.run #v2
+> > Link: https://patchwork.freedesktop.org/patch/msgid/20211001151145.55916-2-sean@poorly.run #v3
+> > Link: https://patchwork.freedesktop.org/patch/msgid/20211105030434.2828845-2-sean@poorly.run #v4
+> > Link: https://patchwork.freedesktop.org/patch/msgid/20220411204741.1074308-2-sean@poorly.run #v5
+> 
+> It seems all your previous versions were sent not to correct people and
+> lists. Therefore we see it for the first time even though it is v6! 
 
-Hi Rayyan,
+Hi Krzysztof,
+Thanks for your review comments.
 
-This doesn't apply on linux-next.
-The references were renamed to clk_smd_rpm_branch_bi_tcxo*
-Please rebase.
+Here are the addresses the last version was sent to, who is missing?
 
-Regards
-Luca
+To: dri-devel@lists.freedesktop.org, 
+    jani.nikula@intel.com,
+    intel-gfx@lists.freedesktop.org,
+    freedreno@lists.freedesktop.org,
+    rodrigo.vivi@intel.com
+Cc: bjorn.andersson@linaro.org, 
+    swboyd@chromium.org,
+    abhinavk@codeaurora.org,
+    markyacoub@chromium.org,
+    Sean Paul <seanpaul@chromium.org>,
+    Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+    Maxime Ripard <mripard@kernel.org>,
+    Thomas Zimmermann <tzimmermann@suse.de>,
+    David Airlie <airlied@linux.ie>,
+    Daniel Vetter <daniel@ffwll.ch>,
+    Jani Nikula <jani.nikula@linux.intel.com>,
+    Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+    Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
 
->  	[RPM_SMD_PNOC_CLK]		=3D &msm8916_pcnoc_clk,
->  	[RPM_SMD_PNOC_A_CLK]		=3D &msm8916_pcnoc_a_clk,
->  	[RPM_SMD_SNOC_CLK]		=3D &msm8916_snoc_clk,
-> --=20
-> 2.39.0
+> It's
+> not the first such weird CC list in chromium, so maybe your
+> organisational process could be improved? Not only for you but for
+> colleagues as well, so you all start using get_maintainers.pl on newest
+> kernel (not something ancient)?
 
+I can't really speak for others, but I use MAINTAINERS from drm-tip. The 
+previous patch sets were sent before 24df12013853 ("MAINTAINERS: Add 
+Dmitry as MSM DRM driver co-maintainer"), which might explain why you think
+there are absences?
+
+Thanks again,
+
+Sean
+
+> 
+> Best regards,
+> Krzysztof
+> 
+
+-- 
+Sean Paul, Software Engineer, Google / Chromium OS
