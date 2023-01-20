@@ -2,108 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 89AEF675345
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 12:15:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C13AA675351
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 12:17:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229652AbjATLP2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Jan 2023 06:15:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43196 "EHLO
+        id S229893AbjATLRm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Jan 2023 06:17:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229575AbjATLP1 (ORCPT
+        with ESMTP id S229881AbjATLRl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Jan 2023 06:15:27 -0500
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D4D83584;
-        Fri, 20 Jan 2023 03:15:26 -0800 (PST)
-Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits))
-        (No client certificate requested)
-        (Authenticated sender: kholk11)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id CD80A660230B;
-        Fri, 20 Jan 2023 11:15:21 +0000 (GMT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1674213324;
-        bh=CASdzRtoHYplP6yd6/mt/6hm04+ftfOht/MoW2dAnK8=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=YaLvVsczluXVfnE14rTAqsOFML8ibEN1/3WdsV84rBmyv56rm0yhbjdLUhD+eXUI3
-         yKn2Ye+ICWEX+swXtC8nTyojSyi5j8aVZuPYvhCHx1sWbnW1CWR4J/WG6G5TcHOWq+
-         13fRRh3EqjgwoQo7KnaqPqj0ur/D2OH2xexc1gB7gf/Hlbt7rT5ZQgwX6J3xN0YQdo
-         SrTxkQ28Dw8AuQNXaTwK75BGopNLRf82Lq2KW9Jw2yZz9otY2jWkfw+0AnSgNmiMk3
-         /A+CAQqcuPdlo4xosz+MWz7duPvfGPQgBCRsPxfwYxeslWq4G5I77YLn6dGajAqHo7
-         NKDsK9qZMT2Aw==
-Message-ID: <1e924d3b-1283-b9f9-d2a0-0e42db656d4e@collabora.com>
-Date:   Fri, 20 Jan 2023 12:15:19 +0100
+        Fri, 20 Jan 2023 06:17:41 -0500
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 747201F932
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 03:17:39 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id f19-20020a1c6a13000000b003db0ef4dedcso5582297wmc.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 03:17:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=fUigsRmkXItA6bUlKwYNj2lqkTiqf/I1oCA6A0jR9ew=;
+        b=HOYUi5u8nNi6mfzhsiaQo4s/O6EAuoDO7t8cZHJB5e64BXNrnptRP56upnmwhc/rCh
+         3jZwWoss2pnA7D6QJPCu3+2ba2I0NqjU1uMO5N1vjgLozGKsBPBrdRmeU7wiQzSkQ4kX
+         ottKKbrkunQsBa1SS7z0Vxcg+VefpGjqSicMx+o9pmOXVpGmmKML7FaBjV2eFzNfJA6R
+         M977axLvmi40HdEHzIlycK0UPoSVwSI52oIUtuAncV6mQsqm4+6tmFedNrez5VnMdmCA
+         wUEbZWEH0JS/9RMCO6g19INkouC2zyuofjqTMmfjc/ymP9sUo97cO5/nyE6siGUuvl26
+         ev/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fUigsRmkXItA6bUlKwYNj2lqkTiqf/I1oCA6A0jR9ew=;
+        b=ZeXc31VRgfThHyTW2REdGt1cSYP/UK0BTDdiGs46VtpMU+aCfiv2vmcNAp7xohNiuo
+         GzXTYsBjQDLJ7irStNXKrCmM9MWVAJ6hRaawd1zSboKTOVmyt1XRtFEIq0CaeseXQA/0
+         CnZ9BheH/UmI7LsiZKeaBr3sGSYX+buVYJgSoAOTna6pzOHSAm1E5aBymdCcbwlLes+l
+         cdnegTMJ9kApSXQNbGaAQpFSyY9r7Uxl3NxE7JgHRmbfB30SaFfKHm0E35FT5fiV9/zB
+         16vChq0u50R0Q9qs8ezSH723MdayBy4OlSEOlm13ZtMzzqa+dDTGSzaTJKjK33hSFPxB
+         OtjQ==
+X-Gm-Message-State: AFqh2koPxJxEHuA9O5cq17glkrJ8caT74CYoO0bV4D8mzmnQkeqUP+7R
+        pdw4fGVaqc0xnkBxFm4v/kLYXw==
+X-Google-Smtp-Source: AMrXdXv1GyW15lzWgOsJbli/Sm2gt987OIIchyWtf68r8s7aNtwe7bTFmb2cPTgluncvv68Cno2jug==
+X-Received: by 2002:a05:600c:3b1e:b0:3cf:497c:c4f5 with SMTP id m30-20020a05600c3b1e00b003cf497cc4f5mr14014830wms.13.1674213458038;
+        Fri, 20 Jan 2023 03:17:38 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id u3-20020a7bc043000000b003d1d5a83b2esm1949560wmc.35.2023.01.20.03.17.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 20 Jan 2023 03:17:37 -0800 (PST)
+Message-ID: <7a4ab7df-5790-bdde-388d-8a848d2ebeea@linaro.org>
+Date:   Fri, 20 Jan 2023 12:17:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH v3 3/3] drm: Convert users of drm_of_component_match_add
- to component_match_add_of
+ Thunderbird/102.7.0
+Subject: Re: [PATCH 1/4] dt-bindings: i2c: qcom-cci: Document SM6350
+ compatible
 Content-Language: en-US
-To:     Sean Anderson <sean.anderson@seco.com>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        dri-devel@lists.freedesktop.org
-Cc:     linux-kernel@vger.kernel.org, Jyri Sarha <jyri.sarha@iki.fi>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Alain Volmat <alain.volmat@foss.st.com>,
-        Brian Starkey <brian.starkey@arm.com>,
-        Chen Feng <puck.chen@hisilicon.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Christian Gmeiner <christian.gmeiner@gmail.com>,
-        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        John Stultz <jstultz@google.com>,
-        Liviu Dudau <liviu.dudau@arm.com>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Mali DP Maintainers <malidp@foss.arm.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Mihail Atanassov <mihail.atanassov@arm.com>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Rob Clark <robdclark@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Samuel Holland <samuel@sholland.org>,
-        Sean Paul <sean@poorly.run>, Tian Tao <tiantao6@hisilicon.com>,
-        Tomi Valkeinen <tomba@kernel.org>,
-        Xinliang Liu <xinliang.liu@linaro.org>,
-        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
-        etnaviv@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-mips@vger.kernel.org, linux-sunxi@lists.linux.dev
-References: <20230119191040.1637739-1-sean.anderson@seco.com>
- <20230119191040.1637739-4-sean.anderson@seco.com>
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-In-Reply-To: <20230119191040.1637739-4-sean.anderson@seco.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+To:     Luca Weiss <luca.weiss@fairphone.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221213-sm6350-cci-v1-0-e5d0c36e0c4f@fairphone.com>
+ <20221213-sm6350-cci-v1-1-e5d0c36e0c4f@fairphone.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20221213-sm6350-cci-v1-1-e5d0c36e0c4f@fairphone.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il 19/01/23 20:10, Sean Anderson ha scritto:
-> Every user of this function either uses component_compare_of or
-> something equivalent. Most of them immediately put the device node as
-> well. Convert these users to component_match_add_of and remove
-> drm_of_component_match_add.
+On 20/01/2023 12:11, Luca Weiss wrote:
+> Document the compatible for the CCI block found on SM6350 SoC.
 > 
-> Signed-off-by: Sean Anderson <sean.anderson@seco.com>
-> Acked-by: Jyri Sarha <jyri.sarhaı@iki.fi>
-> Tested-by: Jyri Sarha <jyri.sarha@iki.fi>
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
 
-For MediaTek mtk_drm_drv:
 
-Tested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
+Best regards,
+Krzysztof
 
