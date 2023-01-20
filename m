@@ -2,140 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EBFC674E36
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 08:37:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 62F53674E47
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 08:42:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229488AbjATHhz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Jan 2023 02:37:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42446 "EHLO
+        id S229529AbjATHmO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Jan 2023 02:42:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229473AbjATHhx (ORCPT
+        with ESMTP id S229473AbjATHmN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Jan 2023 02:37:53 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02B75798C4;
-        Thu, 19 Jan 2023 23:37:51 -0800 (PST)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30K7UiDM012953;
-        Fri, 20 Jan 2023 07:37:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=T+HRskxYu1v9Bh5a0v2OBHQYbed3GESNbOqvsftlHyk=;
- b=STsjpiGbsSLJL3G0unLvsaid7PcrnqNTLqFarwvimj/7T10gfdMX77q2yeIYr3fi16mH
- k3GnioLhekiZgDb7w8xagGCIc5Aq7QA1RhN5+jvBJh2SPBuBl1Y8CrdwIHmmmRPqhUo+
- 7UCGaq5E7AeAvOkVnVuToedgl1CHMw8cMMuReQvABicycaI3mXvTmFojgnDi/5C6PiKK
- p5DaOue+6WpFLsiOCoclhUnA2LV81ZKl1hFYaPZ5hNUyvx+oeWVHm3rYuxq5CGVFTX2g
- sbclNx2ejdcXkkX0FPGi0YklMkduIlrP1BOqo/lo/qDbHjzHoXfP7WyLRBC6oNME7hVI RA== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n6xktkaag-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 20 Jan 2023 07:37:02 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30K7b1f0000598
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 20 Jan 2023 07:37:01 GMT
-Received: from [10.216.43.228] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Thu, 19 Jan
- 2023 23:36:55 -0800
-Message-ID: <9c4d2ce8-11e0-bfbb-7062-078255d1d60b@quicinc.com>
-Date:   Fri, 20 Jan 2023 13:06:52 +0530
+        Fri, 20 Jan 2023 02:42:13 -0500
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47875798C4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 23:42:12 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id fl11-20020a05600c0b8b00b003daf72fc844so5245145wmb.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 23:42:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UmqGa1Qj6D/e9e1ov4dTk2Q4eRwYBsgwn9EnteIfffA=;
+        b=lSVSHakEyMy8miejxoMOivQAdLRndirkBxlQRwNMwUS9+AaabszZi1wslfnxTbNwj4
+         w4dq0LMC04mABQh2aalyAO/g6xXC3CrqMPPmvgu/JtYt+I7y3jdM3WHSVNEKHT6UkHt6
+         JlFPfnDeCf0Hxm1MvF4ap6X5YDKvblSw6MmsNewKK/gzhktRPMevWYv2xO/Ffpb542E6
+         2SI93/kUEupMdm/RXE4spD+DA8at0G9/8APUmMDrI4h/pewFkXggGR2Mx72h3/y4W3x/
+         f8WPl5Ik8Gh6potgTSLLrRRrGpubPX1qIKtvdzBBg/uV95fXQxIISLAG0eyC2+FAsaxZ
+         tRnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UmqGa1Qj6D/e9e1ov4dTk2Q4eRwYBsgwn9EnteIfffA=;
+        b=4eW1k6sL5IewX1pYSyF+Te0e1KD74UaozlQQ5pMfEP0/y1fwpTM8cfWuRpok2fGSd7
+         IK0nNLxYvJ7gacMto+9MhSW4htP9pWzr1vVTpAb/Dn3urWW1elSW2EwmdSPqbyLgppnY
+         JPByeGUPBiWNYLrF1VfuKN4GdcQb+NzOeInR0TmgzwTC70DExyR6oYxr9uCJmSrmM0GB
+         0OjCXk5xJTa0L8pS6DYCKOLp7l2RR/AzmTt22qMb5UNgKsH75JUUw09CHMmXSG/eXysh
+         0EARa6Q7/28Yg7fOJSdLKrIDEm1qMAt0on596Xk4c1kmRwlNHW5r27z+Qt69Lfe4jiXA
+         EiVw==
+X-Gm-Message-State: AFqh2kr6Ks2woUls7CthpuNlrHZnpTYakK2sQhRt+S+s29ek+bnSlo5X
+        0CkV+yc+dLPDPqppgIRltA/xvg==
+X-Google-Smtp-Source: AMrXdXvei+KDchpZ4NbLTqiGqPC7s6x89FqKwKhyCBnJ8HqVDA1spAuFTlMYtqEGfGr9PKRbDZbXMg==
+X-Received: by 2002:a05:600c:3514:b0:3db:80c:8ed9 with SMTP id h20-20020a05600c351400b003db080c8ed9mr11872073wmq.22.1674200530840;
+        Thu, 19 Jan 2023 23:42:10 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id k21-20020a05600c1c9500b003db30be4a54sm1120935wms.38.2023.01.19.23.42.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 Jan 2023 23:42:10 -0800 (PST)
+Message-ID: <1711636c-8aa1-eccc-eded-14a64baf7bec@linaro.org>
+Date:   Fri, 20 Jan 2023 08:42:08 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH 2/3] ASoC: google: dt-bindings: sc7280: Add platform
- property
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [RFT PATCH v2 4/6] arm64: dts: qcom: sdm845: move audio to
+ separate file
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzk@kernel.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <lgirdwood@gmail.com>,
-        <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>, <perex@perex.cz>,
-        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
-        <quic_rohkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <linux-kernel@vger.kernel.org>,
-        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
-        <devicetree@vger.kernel.org>
-References: <1674108674-8392-1-git-send-email-quic_srivasam@quicinc.com>
- <1674108674-8392-3-git-send-email-quic_srivasam@quicinc.com>
- <f0c5e40e-e59d-152d-31f1-1ad3da0a6d34@kernel.org>
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Organization: Qualcomm
-In-Reply-To: <f0c5e40e-e59d-152d-31f1-1ad3da0a6d34@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Caleb Connolly <caleb.connolly@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+References: <20230118103458.107434-1-krzysztof.kozlowski@linaro.org>
+ <20230118103458.107434-4-krzysztof.kozlowski@linaro.org>
+ <46acf2f4-3272-c33d-887f-05d4f4aad4d7@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <46acf2f4-3272-c33d-887f-05d4f4aad4d7@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: _wR1aeK0lfk6LSFW66KY625n85nZc-Ax
-X-Proofpoint-GUID: _wR1aeK0lfk6LSFW66KY625n85nZc-Ax
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-20_04,2023-01-19_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
- clxscore=1011 spamscore=0 mlxlogscore=999 lowpriorityscore=0 bulkscore=0
- malwarescore=0 priorityscore=1501 mlxscore=0 phishscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2301200071
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 20/01/2023 00:24, Caleb Connolly wrote:
+> 
+> 
+> On 18/01/2023 10:34, Krzysztof Kozlowski wrote:
+>> Re-organize SDM845 sound components into separate, audio DTSI which
+>> should be included and customized by the SDM845 boards wanting audio.
+>> The DTSI includes:
+>> 1. WCD9340 codec node because it is not a property of the SoC, but board.
+>> 2. Common sound DAI links, shared with all sound cards.
+> 
+> Hi Krzysztof,
+> 
+> I know I already reported this on IRC, I thought I'd duplicate the info
+> here for completeness sake.
+> 
+> Due to how the sound node is parsed the device numbers in alsa are
+> derived from the index of the sound/mmX-dai-link child nodes.
+> 
+> For boards which use more than 3 FE's this causes breaking changes in
+> userspace, as the slim-dai-link and slimcap-dai-link nodes now come
+> before the other mmX-dai-link nodes, for example with my OnePlus 6
+> patches "aplay -l" shows:
+> 
+> card 0: O6 [OnePlus 6], device 0: MultiMedia1 (*) []
+>   Subdevices: 1/1
+>   Subdevice #0: subdevice #0
+> card 0: O6 [OnePlus 6], device 1: MultiMedia2 (*) []
+>   Subdevices: 1/1
+>   Subdevice #0: subdevice #0
+> card 0: O6 [OnePlus 6], device 2: MultiMedia3 (*) []
+>   Subdevices: 1/1
+>   Subdevice #0: subdevice #0
+> card 0: O6 [OnePlus 6], device 5: MultiMedia4 (*) [] <-- 5 instead of 3
+>   Subdevices: 1/1
+>   Subdevice #0: subdevice #0
+> card 0: O6 [OnePlus 6], device 6: MultiMedia5 (*) []
+>   Subdevices: 1/1
+>   Subdevice #0: subdevice #0
+> card 0: O6 [OnePlus 6], device 7: MultiMedia6 (*) []
+>   Subdevices: 1/1
+>   Subdevice #0: subdevice #0
+> 
+> This breaks the UCM configs shipped by postmarketOS and Mobian - though
+> none of it is "upstream".
 
-On 1/19/2023 5:43 PM, Krzysztof Kozlowski wrote:
-> On 19/01/2023 07:11, Srinivasa Rao Mandadapu wrote:
->> Update sc7280 machine driver bindings with platform property for
->> supporting ADSP based platform's DAI links.
-> Subject:
-> ASoC: dt-bindings: google,sc7280-herobrine:
->
->> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
->> Tested-by: Ratna Deepthi Kudaravalli <quic_rkudarv@quicinc.com>
-> This tested tag is a bit unusual. How were they tested? If
-> dt_bindings_check why this is not the same person as you (submitter)?
-Okay. Will remove Tested-by tag.
->
->> ---
->>   .../devicetree/bindings/sound/google,sc7280-herobrine.yaml    | 11 +++++++++++
->>   1 file changed, 11 insertions(+)
+Thanks for the report.
+
+
+> 
+> Would it be reasonable to add all 6 FE DAI's and then disable the unused
+> ones on a per-board basis?
+
+
+Or just drop the sound node from the audio DTSI, not sure if there are
+benefits in such case...
+
+> 
 >>
->> diff --git a/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml b/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
->> index 869b403..ccf1b1d 100644
->> --- a/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
->> +++ b/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
->> @@ -75,6 +75,17 @@ patternProperties:
->>   
->>           additionalProperties: false
->>   
->> +      platform:
->> +        description: Holds subnode which indicates platform dai.
-> Neither commit msg nor this here explains why do you need it and what it
-> really represents. Basically description repeats "platform" name of
-> property - there is no single new information.
-Will modify accordingly and re-spin.
->
->> +        type: object
->> +        properties:
->> +          sound-dai: true
-> maxItems
-Sorry. why max items required here?
->
->> +
->> +        required:
->> +          - sound-dai
->> +
->> +        additionalProperties: false
->> +
->>       required:
->>         - link-name
->>         - cpu
-> Best regards,
-> Krzysztof
->
+>> The Xiaomi Polaris, although includes WCD9340 codec, it lacks sound
+>> node, so it stays disabled.
+>>
+>> On all others boards not using audio, keep the Slimbus node disabled as
+>> it is empty.
+
+Please trim your replies - there is a lot of unrelated content here and
+I don't know if I should keep scrolling to look for something or not.
+
+Best regards,
+Krzysztof
+
