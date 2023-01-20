@@ -2,119 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AC526675BC1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 18:40:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 05772675BD3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 18:43:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229923AbjATRkm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Jan 2023 12:40:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57804 "EHLO
+        id S230351AbjATRnA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Jan 2023 12:43:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229516AbjATRkm (ORCPT
+        with ESMTP id S230305AbjATRm7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Jan 2023 12:40:42 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02C825FDD
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 09:40:41 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id f25-20020a1c6a19000000b003da221fbf48so4266551wmc.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 09:40:40 -0800 (PST)
+        Fri, 20 Jan 2023 12:42:59 -0500
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D49256884
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 09:42:56 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id e3so5486075wru.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 09:42:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=sPLPvg2uT7xNYWk0DfZ111zSBkmikQxIwUT5J/mgO2c=;
-        b=RVt/425eYeb1svgpsQcsE7Egizut7s4oCVOkqu3iBbdq2A3Yvo2+JwNybc6UMo3tvE
-         ej4o6wHa6E7stF2mTCv2BBpaxeT/x/jG50PKDqjY7NFzS9sQDkNUW2WMgqPsor5qOSHC
-         UeOG5ltZy0y1MdFqIljy82w/YbkIxBEt2TQlnDHKrw06Ehee+FwAdvagjEJTsRisNc+Z
-         D6inwzhfGwhu/uGXxDTlWk1FDi7hyBpLUKixFSHU6VGQ7zWqb9t1bPlNsMnyrFd9h6hl
-         Xk6TXmzNOmuKMJnBFNaZU55GSPrk2QMWkCa3isthkzyiiKE3R++yfjqB7KHgwBJ9sEfR
-         0zUA==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fXxDJVILWzNGImHcYBDjtkkRHu4msoDg+jCitV9yT+g=;
+        b=ViIz/gLjXv5KxCzh3B0pbF/nHKt7BTJ6LohH6UVyBXYeQal8UNNVucUdAAur8ll60X
+         0BNwWdkRdi69bdw5PCXnI5ghV1aGedv8NK6lDDPp8k8IENPJf+URcx8IOe/6FPpz5M7C
+         02FOgf92NWeCFYQygmk4z8PHRzBNAcvgZ+LFvMY9n/AGt1Jdh76J55zh0nVNNSl7vsrU
+         LizEGfUQIeOSWyMDV9n9uVX41GSt7LWRZ5Wiy1QJ6580y4EaGPTsxT1tfMNkRT53JSDx
+         kp4nirAev8aQXfEBXJvwX9zF4V2hu02cmVk56O+ONEniuOGOhn1hnHoHshOxnaeyRwep
+         QHsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=sPLPvg2uT7xNYWk0DfZ111zSBkmikQxIwUT5J/mgO2c=;
-        b=D/+d/iLPEzC7sLTJ0FdqjZCw2i3YMp2IVX6V+GoLkO5+Glzrz6twtps7QGP7OqbruE
-         Y4Zg4vcyBVrU4ZjAwgsHSVcB/W0Bl3onhHyxZFseOuEsH8AGpy3XHKUgsqjw+xYZau0X
-         +qv2bd8Si0ErwyqbeBQwYkeHZysnTS5e+dM3ZdbavQL88WBQQr2/11ttmDiMt07jMAUP
-         i8IoxhIVeybqTAFoTQfu+lo7Vr2weRSoZhUfE2OKSgHnY+I+fxhPylk4gowQA2ttKHQ8
-         to2mkeG00LoY46dK6ER/RYMLEC9C/AOodzDbQ0PWZdoSWC57NEZN2Yz2TIKCF7o5oGeK
-         SpVQ==
-X-Gm-Message-State: AFqh2krExYYWbW7MWgfCqtRUd7MZA+hJG/9972xHcZjDLzRPmdk+d1Od
-        rc1D0MMwdmo5jSU4zDLNJmHHow==
-X-Google-Smtp-Source: AMrXdXuOlPk+5uf/TXLUtIfdayDgrrFEdR/JC8sDpjol9StC6mUzODgxz8QP9mpVRIPgHzuB+NF7aw==
-X-Received: by 2002:a05:600c:3514:b0:3c6:c6c9:d75e with SMTP id h20-20020a05600c351400b003c6c6c9d75emr15856181wmq.0.1674236439587;
-        Fri, 20 Jan 2023 09:40:39 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=fXxDJVILWzNGImHcYBDjtkkRHu4msoDg+jCitV9yT+g=;
+        b=L3N+LJoxHzmdQ3E5SnzmjzR0YEpiyjEDimlVDkFbPphBw+PMobcX6Vk9A+8PTx06Mx
+         JESTZ+94s58/QWXc4HvbdkqZrYRi0n1siyLb4GdXlwSJCcmXhYKSp4n/ZEF7op2X8PXr
+         zHlR8O69TMEukOCz3nH+u/W3c2vjs8CaAZWKT2KmU8w7MpoP/gp8lvDkAu4xWnM9mcdh
+         O/v1QHt8RZRJaeKc3BkvIrwBEMdEJoIu2x+6+K4EvnOzw6oPLZWa0VZBqk3jAEB2NSoE
+         wpYQyUkgFbZRWu2KVxLDq2DrUVc5GBmFAhJNDS0s4J8srgx/3Jr9DV7o81Lem96FfmDT
+         C1Hw==
+X-Gm-Message-State: AFqh2kqHlIhuLqSHzH5A6xUb6C2t+aIXY4JSwTy+YmhKTgAz+kvbjiOP
+        yGkksncsnbT0sLlCI0OuuBiJFg==
+X-Google-Smtp-Source: AMrXdXtzzNIF7XraOrNH0+hup8VYPt+S3b7S2atV+7nc+9oxpWKJ/VtBCFZu027CC4YZ9Rtw4iQPXg==
+X-Received: by 2002:a5d:6b50:0:b0:2bc:7fdd:9245 with SMTP id x16-20020a5d6b50000000b002bc7fdd9245mr12870266wrw.5.1674236574785;
+        Fri, 20 Jan 2023 09:42:54 -0800 (PST)
 Received: from krzk-bin.. ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id k10-20020a05600c1c8a00b003db2dbbd710sm3467855wms.25.2023.01.20.09.40.38
+        by smtp.gmail.com with ESMTPSA id w8-20020adf8bc8000000b002bdc39849d1sm24589861wra.44.2023.01.20.09.42.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Jan 2023 09:40:39 -0800 (PST)
+        Fri, 20 Jan 2023 09:42:54 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+To:     Linus Walleij <linus.walleij@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] ARM: dts: qcom: apq8060-dragonboard: align MPP pin node names with DT schema
-Date:   Fri, 20 Jan 2023 18:40:36 +0100
-Message-Id: <20230120174036.351937-1-krzysztof.kozlowski@linaro.org>
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2] dt-bindings: pinctrl: qcom,pmic-mpp: Rename "mpp" child node names to "-pins$"
+Date:   Fri, 20 Jan 2023 18:42:47 +0100
+Message-Id: <167423655094.352486.17564121663586668814.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20230120165103.1278852-1-robh@kernel.org>
+References: <20230120165103.1278852-1-robh@kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-DT schema expects nodes ending with "pins:
+On Fri, 20 Jan 2023 10:51:03 -0600, Rob Herring wrote:
+> Just 'mpp' is a bit ambiguous for a pattern as it allows any prefix or
+> suffix. Change the node name pattern to "-pins$" to align with other
+> Qualcomm pinctrl bindings.
+> 
+> 
 
-  qcom-apq8060-dragonboard.dtb: mpps@50: cm3605-mpps-state: 'oneOf' conditional failed, one must be fixed:
-    'mpp5' does not match any of the regexes: '-pins$', 'pinctrl-[0-9]+'
+Or instead of review let me grab it for Linus:
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Applied, thanks!
 
----
+[1/1] dt-bindings: pinctrl: qcom,pmic-mpp: Rename "mpp" child node names to "-pins$"
+      https://git.kernel.org/krzk/linux-dt/c/5682f23bd3daf8d66f0a4c0fa0e5645b324e7014
 
-Warning visible after:
-https://lore.kernel.org/r/20230120165103.1278852-1-robh@kernel.org
----
- arch/arm/boot/dts/qcom-apq8060-dragonboard.dts | 16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
-
-diff --git a/arch/arm/boot/dts/qcom-apq8060-dragonboard.dts b/arch/arm/boot/dts/qcom-apq8060-dragonboard.dts
-index 7a4c59e04af6..8e4b61e4d4b1 100644
---- a/arch/arm/boot/dts/qcom-apq8060-dragonboard.dts
-+++ b/arch/arm/boot/dts/qcom-apq8060-dragonboard.dts
-@@ -435,15 +435,13 @@ &pm8058_led133 {
- 
- &pm8058_mpps {
- 	dragon_cm3605_mpps: cm3605-mpps-state {
--		mpp5 {
--			pins = "mpp5";
--			function = "analog";
--			input-enable;
--			bias-high-impedance;
--			/* Let's use channel 5 */
--			qcom,amux-route = <PMIC_MPP_AMUX_ROUTE_CH5>;
--			power-source = <PM8058_GPIO_S3>;
--		};
-+		pins = "mpp5";
-+		function = "analog";
-+		input-enable;
-+		bias-high-impedance;
-+		/* Let's use channel 5 */
-+		qcom,amux-route = <PMIC_MPP_AMUX_ROUTE_CH5>;
-+		power-source = <PM8058_GPIO_S3>;
- 	};
- };
- 
+Best regards,
 -- 
-2.34.1
-
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
