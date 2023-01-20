@@ -2,58 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 67684674B3A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 05:50:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6098E674A9D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 05:30:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230082AbjATEuQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Jan 2023 23:50:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35284 "EHLO
+        id S229911AbjATEa2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Jan 2023 23:30:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230431AbjATEtv (ORCPT
+        with ESMTP id S229972AbjATEaM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Jan 2023 23:49:51 -0500
+        Thu, 19 Jan 2023 23:30:12 -0500
 Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B5B3D0DB7;
-        Thu, 19 Jan 2023 20:43:38 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98C4BB2E53;
+        Thu, 19 Jan 2023 20:29:47 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 1F18DB82708;
-        Thu, 19 Jan 2023 19:09:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AA5AC433F1;
-        Thu, 19 Jan 2023 19:09:12 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id F1584B8233A;
+        Fri, 20 Jan 2023 04:29:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F15DEC433D2;
+        Fri, 20 Jan 2023 04:29:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1674155355;
-        bh=B6WQVoKviGDo5Lmu/PR7ZIGyspBOx43F6uoNLJC8g2c=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=LLfeub4rKI7vD91AaKS0pn8I21qqkeaKjwX0QRVRS1tbAkHNcFaTtb2xPyU9WAm7X
-         BV83IzRxLTsVKX4W9u2UI99FeicOcUFaqzzgjKPTU6Wdlx0BSjgpcY7ZkmdCqFoJml
-         OvowNVKJZkep78xI0532l/B4TGGe7NvKVPlet3S0L+hmd1QCu0rqBJP3zGiXhn6cnf
-         GEGofDcQyp1iWMdDegAmCxRd8rM96v121ESi4X5REp660nMaqm6DHfP8c7/eF/BNmS
-         UgdZcoTICI4sLLsFr7OhenHw/34XXPTQ6mCzavcliEE5hMkgpcQOMrcaAqIx5wFXvf
-         d8UzL0oJJgW+A==
-From:   Will Deacon <will@kernel.org>
-To:     iommu@lists.linux.dev, Luca Weiss <luca@z3ntu.xyz>
-Cc:     catalin.marinas@arm.com, kernel-team@android.com,
-        Will Deacon <will@kernel.org>,
+        s=k20201202; t=1674188947;
+        bh=yAmXPbBSRLpimCnR9Yp98v03bNqg5mhYa1PIGrqybE0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=h1oD0dWc221H9Cyh/yAl36/+UwLkYWa3tnWGrZJFYeV5x3tMGa3a4ishT3dAK1Yn8
+         WIDVlbRvVDqMQtI8TVqackFlQEo+LmvveiMiwU6qDBsNtd3YraLyLz4BhtZsZqdX6T
+         tAp71V5qU9ieW4VXoWff8ul+RCunsSVOQG93eBd8nExyuMQQz2dc9ZYDSZ7iRk5hII
+         XqEYlJCZNzujkgD3nrCesSyJf7raO7ZOpmy+KfpAGQT+r3xiIZwDQcLjsCLthRIxvU
+         p37L5813Qs81P6HUXDy9GUGo1H8jgcnVyopbJQdfqeFymadKRl5R3xTOLQ/YLXGneE
+         WFpOMYJJPhoQA==
+Date:   Thu, 19 Jan 2023 22:29:05 -0600
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht, devicetree@vger.kernel.org,
-        Joerg Roedel <joro@8bytes.org>, phone-devel@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Rob Herring <robh@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, Robin Murphy <robin.murphy@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Subject: Re: [PATCH v5] dt-bindings: iommu: qcom: Add Qualcomm MSM8953 compatible
-Date:   Thu, 19 Jan 2023 19:08:39 +0000
-Message-Id: <167414938328.2378422.11457059166338062006.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20221105142016.93406-1-luca@z3ntu.xyz>
-References: <20221105142016.93406-1-luca@z3ntu.xyz>
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: pinctrl: qcom,pmic-mpp: Restrict 'mpp'
+ child node name pattern
+Message-ID: <20230120042905.d2pdrzyv3e3airdj@builder.lan>
+References: <20230120020600.3232001-1-robh@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230120020600.3232001-1-robh@kernel.org>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -63,20 +58,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 5 Nov 2022 15:20:17 +0100, Luca Weiss wrote:
-> Document the compatible used for IOMMU on the msm8953 SoC.
+On Thu, Jan 19, 2023 at 08:06:00PM -0600, Rob Herring wrote:
+> Just 'mpp' is a bit ambiguous for a pattern. It allows any prefix or
+> suffix. I couldn't find any actual users, so update the pattern to match
+> the example.
 > 
+> Signed-off-by: Rob Herring <robh@kernel.org>
+> ---
+>  Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml
+> index 72cce38bc1ce..891a7385d7cb 100644
+> --- a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml
+> @@ -74,7 +74,7 @@ patternProperties:
+>      oneOf:
+>        - $ref: "#/$defs/qcom-pmic-mpp-state"
+>        - patternProperties:
+> -          "mpp":
+> +          "-mpp$":
 
-Applied to will (for-joerg/arm-smmu/bindings), thanks!
+How about aligning it with the other Qualcomm pinctrl bindings and make
+it "-pins$" instead?
 
-[1/1] dt-bindings: iommu: qcom: Add Qualcomm MSM8953 compatible
-      https://git.kernel.org/will/c/e3fed6861d86
+If my grep is correct we have one "mpp5" and two "-pins$" currently in
+the sources, so this should be beneficial as well.
 
-Cheers,
--- 
-Will
+Regards,
+Bjorn
 
-https://fixes.arm64.dev
-https://next.arm64.dev
-https://will.arm64.dev
+>              $ref: "#/$defs/qcom-pmic-mpp-state"
+>          additionalProperties: false
+>  
+> -- 
+> 2.39.0
+> 
