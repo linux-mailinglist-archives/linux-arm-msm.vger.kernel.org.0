@@ -2,118 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 32369675839
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 16:11:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 96FE267581C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 16:08:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231316AbjATPLs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Jan 2023 10:11:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45540 "EHLO
+        id S230117AbjATPIH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Jan 2023 10:08:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230059AbjATPLr (ORCPT
+        with ESMTP id S229633AbjATPIG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Jan 2023 10:11:47 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 349ADD88C8;
-        Fri, 20 Jan 2023 07:11:45 -0800 (PST)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30KDe1wu000771;
-        Fri, 20 Jan 2023 14:17:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=A/QBbR3qmsM7+Eno3cmdmG34p5Bp0U+S541FPNpCN0I=;
- b=mcd6khLLgclCISQl/1he5tZcmtaFVdl96ACc25dRQF8ssAtcmklH/EUXPnpBf4+5h2vp
- 8eau3BoNCU+c9mdYE0hkXb3TV22/U51ArU803hyzdApqDjB721LzePLVzLTUAdt+KAfm
- BGTaGPI2g1Py4jnN6HiQ4L4+xUh1cKruw/CRRrp9CojhwvEu6zXmdmPMX+7Z6V2xAG6A
- Fv+6KbhhM56UM2UtDS9ZRRGW5LemkufpU+cmSLeFc5Yqn84i+yQn5KC+3npsAxbqJcQE
- djOP0BnKMfiV0JVRL0hfHhh93JZUK0iCuVsRyt7gSV17it0U3VMZ/9qnwdrW8Jd4zduP QA== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n700yuuu9-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 20 Jan 2023 14:17:31 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30KEHU1u023857
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 20 Jan 2023 14:17:30 GMT
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Fri, 20 Jan 2023 06:17:24 -0800
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <vkoul@kernel.org>, <agross@kernel.org>, <andersson@kernel.org>,
-        <robh+dt@kernel.org>, <broonie@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_rohkumar@quicinc.com>,
-        <srinivas.kandagatla@linaro.org>, <dianders@chromium.org>,
-        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
-        <alsa-devel@alsa-project.org>, <quic_rjendra@quicinc.com>,
-        <konrad.dybcio@somainline.org>, <mka@chromium.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Subject: [PATCH v4 5/7] arm64: dts: qcom: sc7280: Update lpass_tlmm node
-Date:   Fri, 20 Jan 2023 19:46:39 +0530
-Message-ID: <1674224201-28109-6-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1674224201-28109-1-git-send-email-quic_srivasam@quicinc.com>
-References: <1674224201-28109-1-git-send-email-quic_srivasam@quicinc.com>
+        Fri, 20 Jan 2023 10:08:06 -0500
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 500F5BFF77
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 07:08:02 -0800 (PST)
+Received: by mail-ej1-x62a.google.com with SMTP id v6so14707855ejg.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 07:08:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ZloHG/b+aUSzeESbN9+Hbz6Kz4K6ar0eODA3eSRcTt4=;
+        b=fvjOJbmCatrxy3kmbDBZkiCSxXkDHf81I9S8cORViLbYbRvNcqC2+otHYyYn9X+aVB
+         oPokIWUIX4sLJ9LLOPPhZBaI6w13WWbmZw7pxTlsCG+lfXt+mU2TJGL1JDsQo9BiaMQb
+         UxC0G8MyNtNTvKIH0NF0ahNh051Gb3MJmiscczuo9CVFEsH/bg5FDGhZh3cv850wCXW1
+         P2CgPh/r8NOm36lJO1SZUyCR+UwjOVhuc6Wg/AucFHTzmDL/W7CNF41JFTAUZOZYKlN/
+         vVtvXoavDpptLy06mG4tXpvtDLkhYe+TJV28PgwVEKb4y/dNlu4JNW9WN/l2/L/jJSdZ
+         LSuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZloHG/b+aUSzeESbN9+Hbz6Kz4K6ar0eODA3eSRcTt4=;
+        b=3TbuYlyarMvjj5bS9yxNVfUP8Fqz8PQLGYh/4Ln3hGxB27TNUvDaLndGazhobVvPyk
+         JRhniRNxT/P5ksOIhcKDfQaVUj6FU4wFpUlfWMg/oF6+8GJnhABYE19h6c7p66Vqkb4x
+         PBlps4I1AHJi34sdAHtrnHJh9sCLxDtSVROw3LO0i722262dtG+V+kfUpxwIvTMP6chk
+         g8nkOwAKMGJuzi3tFlO3CMnWfp/b3nzXNSdW+mIuOQB6nupCoBajPxwyZpQUCYzKCGOB
+         iQth7J9CERbIgWwnnz4FJtCaAtO07Ke+4hPqCq6rtRZgRuz4r6NK/qFlfxtP6ICzujrS
+         iyvg==
+X-Gm-Message-State: AFqh2krc6YWtFBqiPRGHBMDjZL6iC2FIRDgmpGoQRRW0Nnjmuo4DITCv
+        ShnE0D6eB2pqCB8EuemLdd4u7wREZKOUcMN5
+X-Google-Smtp-Source: AMrXdXu0TCIsz6KA4nidb34t6GeimnrRJpKQf8lbl0ED3lMO7EjYah3chjPsQGur8g3vZ3FUlgjSRw==
+X-Received: by 2002:a17:906:a898:b0:820:4046:1586 with SMTP id ha24-20020a170906a89800b0082040461586mr12094672ejb.12.1674227280837;
+        Fri, 20 Jan 2023 07:08:00 -0800 (PST)
+Received: from [192.168.1.101] (abyk37.neoplus.adsl.tpnet.pl. [83.9.30.37])
+        by smtp.gmail.com with ESMTPSA id fs37-20020a170907602500b0086ffe3a99f9sm7756004ejc.82.2023.01.20.07.07.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 20 Jan 2023 07:08:00 -0800 (PST)
+Message-ID: <ebde7290-e99c-eb91-d96e-ada60a43b06d@linaro.org>
+Date:   Fri, 20 Jan 2023 16:07:58 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 7c-pwPu4HIS5Yac-3ebLFdkxxSvagYE5
-X-Proofpoint-ORIG-GUID: 7c-pwPu4HIS5Yac-3ebLFdkxxSvagYE5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-20_08,2023-01-20_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- malwarescore=0 priorityscore=1501 mlxscore=0 bulkscore=0 phishscore=0
- mlxlogscore=999 impostorscore=0 adultscore=0 suspectscore=0 spamscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301200135
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v2 2/2] ARM: dts: qcom: msm8226: add clocks and
+ clock-names to gcc node
+Content-Language: en-US
+To:     Alexey Minnekhanov <alexeymin@postmarketos.org>,
+        Rayyan Ansari <rayyan@ansari.sh>, linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230119190534.317041-1-rayyan@ansari.sh>
+ <20230119190534.317041-3-rayyan@ansari.sh>
+ <e079e820-2df0-3c95-10ef-527020b97f5d@postmarketos.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <e079e820-2df0-3c95-10ef-527020b97f5d@postmarketos.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update lpass_tlmm clock properties, as different clock sources
-are required in ADSP enabled platforms.
-Also update LPASS_MCC register region. This is required to avoid
-memory region conflicts due to overlapping lpass_efuse Q6 regmap
-region used in LPASS PIL node.
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Tested-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
----
- .../arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi | 9 +++++++++
- 1 file changed, 9 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
-index 0add125..4def6b3 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
-@@ -121,6 +121,15 @@
- 	status = "okay";
- };
- 
-+&lpass_tlmm {
-+	clocks = <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-+		 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
-+
-+	clock-names = "core", "audio";
-+	reg = <0 0x033c0000 0x0 0x20000>,
-+	      <0 0x03550000 0x0 0xa100>;
-+};
-+
- &lpass_tx_macro {
- 	/delete-property/ power-domains;
- 	/delete-property/ power-domain-names;
--- 
-2.7.4
+On 19.01.2023 22:42, Alexey Minnekhanov wrote:
+> Hi!
+> 
+> On 2023-01-19 22:05, Rayyan Ansari wrote:
+>> Add the XO and Sleep Clock sources to the GCC node.
+>>
+>> Signed-off-by: Rayyan Ansari <rayyan@ansari.sh>
+>> ---
+>>   arch/arm/boot/dts/qcom-msm8226.dtsi | 6 ++++++
+> 
+> Should the same be done for msm8974 dtsi as well?
+yes
 
+Konrad
