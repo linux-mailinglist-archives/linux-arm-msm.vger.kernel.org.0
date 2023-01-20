@@ -2,75 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CFC10674D25
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 07:14:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D085674D57
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 07:25:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229877AbjATGOd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Jan 2023 01:14:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52442 "EHLO
+        id S229878AbjATGZj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Jan 2023 01:25:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229823AbjATGOc (ORCPT
+        with ESMTP id S229684AbjATGZi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Jan 2023 01:14:32 -0500
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C5F97DF88
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 22:14:29 -0800 (PST)
-Received: by mail-ej1-x636.google.com with SMTP id tz11so11526956ejc.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 22:14:29 -0800 (PST)
+        Fri, 20 Jan 2023 01:25:38 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63AE1872B8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 22:25:06 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id q10so3934496wrs.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 22:25:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Gvixn/mOnP53fthNITK9DCgph1DiRtwL0d8bJPUA/8o=;
-        b=E2GNqGL8dr5hBJsZO+nj6DZ8o7plymAvQN7oOKspP0BTwqZ5QG2s93tbxDb4UEEfMC
-         rO23Eprxohue87NePYzAEFY62hhEjH+2xVocMIOcgYpJ1R0ydyiYmA0sz6dfy8YhCQzo
-         W2JSrpXoPpjNMMWKrokwuZSvBiXpXybBllQ2DsQ7WZo9ryDZWtM/wrTkaPGW8njEfoGW
-         fwtzZLA/16rBYwAvAY/ch5v8Hrk4FI0O8i61V3oHvsKpqfka7troHfy4L47uybKTKbqu
-         6UnlZHR5jK7sGCUatDroxiYYQtHLPiGPpt+kXy7SU4wpS4kja2Q9xL5C3V4Zt5FvMFud
-         7fIg==
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=GxQNp79R+XdyUWCcN7g4amNp/JsJi1+bDNVRhs+DKVA=;
+        b=h3pmmoknuqFY6LkSoG2b9m1G2fI4oTQfwpfOF95O/vXYQjSnq8iQQ/krogHPVyRWyN
+         xNLeAejsudG4WdJdsnB8sy7HyrM/t543hv+RfpXbAIr5dUUdiR8ADZF6Al+U/48543jE
+         Ui8r4P8Bj0m7P0NvCpQn5HtRMSbkwEainVtT387LOU6xThDpgBHjjjP9Ztk559I9Tik5
+         hRYYj2D/Xdtxk6/zQ8MJ27CZq0rfL6e1Pb642osulf1H7uN7ZgaznUexQlkH1GBNw27g
+         luSZS/wL1qgHkINXetuFpv5NPWJw7i1yu1JM0raKod437FGd0duOog7rzTHGzFBQvnCY
+         P1kQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Gvixn/mOnP53fthNITK9DCgph1DiRtwL0d8bJPUA/8o=;
-        b=Cjpi26r45W40JQcoT0kyymdfJ4/aARtv4bg0oo5OIZabKFEvAsVvmfuyWUYbrorOxM
-         /XfgV0AtxzS6nZPJgXroh9pthDCltYFrHchu0E2Imc8PnWbkdJ5uOAesA7KrzXM9znOx
-         0Y7fsaGjOj1vE14YmEvvhjUiyJtjKxjEmGo4EHXlOyemrkFDP+3R3A2KqGxRpj6eLXI1
-         mk07PIUG5IpUK/J8L2/dvRjVDTwOQAUO/T/jmeFl6PvZ9PJBUwMnzgT2uB7P7yOEbV7K
-         MVGpHuApT8JKQCVQWuxhpm1uPKJv7bdetoq633331riz8VzCxlMtWSiaz0k8xfB/BJb3
-         zkHQ==
-X-Gm-Message-State: AFqh2koeNwVCzbItuHI1cPg36bm6JVJBugtvhFBUqj8za1epjC5i0jge
-        7ERePm2LMkmaiiKc+Sofo1EpqA==
-X-Google-Smtp-Source: AMrXdXujfPMEri8yukxgXRRpQMOOlJMAvpobCHpZnQTwaV6AhfGTdOXMfxhUbFdoLBw7iqSVzXeTbA==
-X-Received: by 2002:a17:907:c70f:b0:871:d04e:1df with SMTP id ty15-20020a170907c70f00b00871d04e01dfmr15188323ejc.29.1674195267901;
-        Thu, 19 Jan 2023 22:14:27 -0800 (PST)
-Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id hp24-20020a1709073e1800b008720c458bd4sm5813358ejc.3.2023.01.19.22.14.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Jan 2023 22:14:27 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH v3 8/8] arm64: dts: qcom: msm8996: scale CBF clock according to the CPUfreq
-Date:   Fri, 20 Jan 2023 08:14:17 +0200
-Message-Id: <20230120061417.2623751-9-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230120061417.2623751-1-dmitry.baryshkov@linaro.org>
-References: <20230120061417.2623751-1-dmitry.baryshkov@linaro.org>
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=GxQNp79R+XdyUWCcN7g4amNp/JsJi1+bDNVRhs+DKVA=;
+        b=jG3FuNUGz5PivPQ1mooI9wUO4fUBJFfZbnG5ZaFtdv8OVgLCX7aoO6fPVLgtudQi8W
+         wNFjKi1D4yj03plUFdhZ8JNEWY8N15AKOqWl65NUpSk4K16/wmz2jjUUSjPZg5UZHvLK
+         9TyKTHW7QDPL/wSmor2f2igylJ93dh/vSI2END/QVrwXb/7lVsFrgyFsd7FmjUj3Gty6
+         2QvEo7s7fp4r20DeBIDrdZRT2RL6HByzQ4namHBVZ3wN/WSrhfwjX2/0e9RRXLl+MzkJ
+         AnYoL/SGZ+MBKhVIvMpqyrMn2qDeZDsZzchRBVJFSt1jMoMXN/l0F4paqjk05c9rMvyj
+         P9QA==
+X-Gm-Message-State: AFqh2kqjVPsgRXsF+E41Y1pfh1bAib81Tvotmeef7O+vUpsGMXBwDV4Y
+        2i724ON157HhTKXjz03k7UOZlw==
+X-Google-Smtp-Source: AMrXdXuDBWLKar3I9BvLZ2J3NTR0GEVbcT550ZY+Iw5aK49ZYMf4i+OxkxUx3eLGCWxD+LNNCzf1sg==
+X-Received: by 2002:a05:6000:1049:b0:2bb:ee8a:4282 with SMTP id c9-20020a056000104900b002bbee8a4282mr11173469wrx.34.1674195902101;
+        Thu, 19 Jan 2023 22:25:02 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id z12-20020adfd0cc000000b002bdff778d87sm12335144wrh.34.2023.01.19.22.25.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 Jan 2023 22:25:01 -0800 (PST)
+Message-ID: <7d874a5d-5a26-1ae1-58bc-dd819774190d@linaro.org>
+Date:   Fri, 20 Jan 2023 07:24:59 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH v3 4/7] arm64: dts: qcom: sc7280: Update VA/RX/TX macro
+ clock nodes
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        vkoul@kernel.org, agross@kernel.org, andersson@kernel.org,
+        robh+dt@kernel.org, broonie@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_rohkumar@quicinc.com, srinivas.kandagatla@linaro.org,
+        dianders@chromium.org, swboyd@chromium.org, judyhsiao@chromium.org,
+        alsa-devel@alsa-project.org, quic_rjendra@quicinc.com,
+        konrad.dybcio@somainline.org, mka@chromium.org
+References: <1674131227-26456-1-git-send-email-quic_srivasam@quicinc.com>
+ <1674131227-26456-5-git-send-email-quic_srivasam@quicinc.com>
+ <17b895c0-3985-a012-9b02-94d5ebb11ff9@linaro.org>
+ <9ae3b1b0-e9d6-6370-667b-88af5d0efa2e@quicinc.com>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <9ae3b1b0-e9d6-6370-667b-88af5d0efa2e@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,341 +85,45 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Turn CBF into the interconnect provider. Scale CBF frequency (bandwidth)
-according to CPU frequencies.
+On 20/01/2023 05:47, Srinivasa Rao Mandadapu wrote:
+> 
+> On 1/19/2023 7:01 PM, Krzysztof Kozlowski wrote:
+> Thanks for your time Krzysztof!!!
+>> On 19/01/2023 13:27, Srinivasa Rao Mandadapu wrote:
+>>> Update VA, RX and TX macro and lpass_tlmm clock properties and
+>>> enable them.
+>> Everything is an update and this does not explain what exactly you are
+>> updating in the nodes and why.
+>>
+>>> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+>>> Tested-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+>>> ---
+>>>   .../qcom/sc7280-herobrine-audioreach-wcd9385.dtsi  | 59 ++++++++++++++++++++++
+>>>   1 file changed, 59 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
+>>> index 81e0f3a..674b01a 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
+>>> @@ -8,8 +8,67 @@
+>>>   
+>>>   #include <dt-bindings/sound/qcom,q6afe.h>
+>>>   
+>>> +/delete-node/ &lpass_rx_macro;
+>> Why?
+> 
+> Actually in SoC dtsi (sc7280.dtsi) power domains property used.
+> 
+> Which is not required for ADSP based solution. As there is no way to delete
+> 
+> individual property, deleting node and recreating it here.
+> 
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 51 +++++++++++++++++++++++++++
- 1 file changed, 51 insertions(+)
+You can delete property - delete-property. However why in AudioReach
+device comes without power domains? What does it mean "power domains
+property is not required"? DTS describes the hardware and the rx macro
+is powered, isn't it?
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 6f180a8efe77..04c41a7987e4 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -8,6 +8,7 @@
- #include <dt-bindings/clock/qcom,mmcc-msm8996.h>
- #include <dt-bindings/clock/qcom,rpmcc.h>
- #include <dt-bindings/interconnect/qcom,msm8996.h>
-+#include <dt-bindings/interconnect/qcom,msm8996-cbf.h>
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/power/qcom-rpmpd.h>
- #include <dt-bindings/soc/qcom,apr.h>
-@@ -49,6 +50,7 @@ CPU0: cpu@0 {
- 			cpu-idle-states = <&CPU_SLEEP_0>;
- 			capacity-dmips-mhz = <1024>;
- 			clocks = <&kryocc 0>;
-+			interconnects = <&cbf MASTER_CBF_M4M &cbf SLAVE_CBF_M4M>;
- 			operating-points-v2 = <&cluster0_opp>;
- 			#cooling-cells = <2>;
- 			next-level-cache = <&L2_0>;
-@@ -66,6 +68,7 @@ CPU1: cpu@1 {
- 			cpu-idle-states = <&CPU_SLEEP_0>;
- 			capacity-dmips-mhz = <1024>;
- 			clocks = <&kryocc 0>;
-+			interconnects = <&cbf MASTER_CBF_M4M &cbf SLAVE_CBF_M4M>;
- 			operating-points-v2 = <&cluster0_opp>;
- 			#cooling-cells = <2>;
- 			next-level-cache = <&L2_0>;
-@@ -79,6 +82,7 @@ CPU2: cpu@100 {
- 			cpu-idle-states = <&CPU_SLEEP_0>;
- 			capacity-dmips-mhz = <1024>;
- 			clocks = <&kryocc 1>;
-+			interconnects = <&cbf MASTER_CBF_M4M &cbf SLAVE_CBF_M4M>;
- 			operating-points-v2 = <&cluster1_opp>;
- 			#cooling-cells = <2>;
- 			next-level-cache = <&L2_1>;
-@@ -96,6 +100,7 @@ CPU3: cpu@101 {
- 			cpu-idle-states = <&CPU_SLEEP_0>;
- 			capacity-dmips-mhz = <1024>;
- 			clocks = <&kryocc 1>;
-+			interconnects = <&cbf MASTER_CBF_M4M &cbf SLAVE_CBF_M4M>;
- 			operating-points-v2 = <&cluster1_opp>;
- 			#cooling-cells = <2>;
- 			next-level-cache = <&L2_1>;
-@@ -147,91 +152,109 @@ opp-307200000 {
- 			opp-hz = /bits/ 64 <307200000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <307200>;
- 		};
- 		opp-422400000 {
- 			opp-hz = /bits/ 64 <422400000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <307200>;
- 		};
- 		opp-480000000 {
- 			opp-hz = /bits/ 64 <480000000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <307200>;
- 		};
- 		opp-556800000 {
- 			opp-hz = /bits/ 64 <556800000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <307200>;
- 		};
- 		opp-652800000 {
- 			opp-hz = /bits/ 64 <652800000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <384000>;
- 		};
- 		opp-729600000 {
- 			opp-hz = /bits/ 64 <729600000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <460800>;
- 		};
- 		opp-844800000 {
- 			opp-hz = /bits/ 64 <844800000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <537600>;
- 		};
- 		opp-960000000 {
- 			opp-hz = /bits/ 64 <960000000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <672000>;
- 		};
- 		opp-1036800000 {
- 			opp-hz = /bits/ 64 <1036800000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <672000>;
- 		};
- 		opp-1113600000 {
- 			opp-hz = /bits/ 64 <1113600000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <825600>;
- 		};
- 		opp-1190400000 {
- 			opp-hz = /bits/ 64 <1190400000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <825600>;
- 		};
- 		opp-1228800000 {
- 			opp-hz = /bits/ 64 <1228800000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <902400>;
- 		};
- 		opp-1324800000 {
- 			opp-hz = /bits/ 64 <1324800000>;
- 			opp-supported-hw = <0xd>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1056000>;
- 		};
- 		opp-1363200000 {
- 			opp-hz = /bits/ 64 <1363200000>;
- 			opp-supported-hw = <0x2>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1132800>;
- 		};
- 		opp-1401600000 {
- 			opp-hz = /bits/ 64 <1401600000>;
- 			opp-supported-hw = <0xd>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1132800>;
- 		};
- 		opp-1478400000 {
- 			opp-hz = /bits/ 64 <1478400000>;
- 			opp-supported-hw = <0x9>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1190400>;
- 		};
- 		opp-1497600000 {
- 			opp-hz = /bits/ 64 <1497600000>;
- 			opp-supported-hw = <0x04>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1305600>;
- 		};
- 		opp-1593600000 {
- 			opp-hz = /bits/ 64 <1593600000>;
- 			opp-supported-hw = <0x9>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1382400>;
- 		};
- 	};
- 
-@@ -245,136 +268,163 @@ opp-307200000 {
- 			opp-hz = /bits/ 64 <307200000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <307200>;
- 		};
- 		opp-403200000 {
- 			opp-hz = /bits/ 64 <403200000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <307200>;
- 		};
- 		opp-480000000 {
- 			opp-hz = /bits/ 64 <480000000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <307200>;
- 		};
- 		opp-556800000 {
- 			opp-hz = /bits/ 64 <556800000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <307200>;
- 		};
- 		opp-652800000 {
- 			opp-hz = /bits/ 64 <652800000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <307200>;
- 		};
- 		opp-729600000 {
- 			opp-hz = /bits/ 64 <729600000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <307200>;
- 		};
- 		opp-806400000 {
- 			opp-hz = /bits/ 64 <806400000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <384000>;
- 		};
- 		opp-883200000 {
- 			opp-hz = /bits/ 64 <883200000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <460800>;
- 		};
- 		opp-940800000 {
- 			opp-hz = /bits/ 64 <940800000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <537600>;
- 		};
- 		opp-1036800000 {
- 			opp-hz = /bits/ 64 <1036800000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <595200>;
- 		};
- 		opp-1113600000 {
- 			opp-hz = /bits/ 64 <1113600000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <672000>;
- 		};
- 		opp-1190400000 {
- 			opp-hz = /bits/ 64 <1190400000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <672000>;
- 		};
- 		opp-1248000000 {
- 			opp-hz = /bits/ 64 <1248000000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <748800>;
- 		};
- 		opp-1324800000 {
- 			opp-hz = /bits/ 64 <1324800000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <825600>;
- 		};
- 		opp-1401600000 {
- 			opp-hz = /bits/ 64 <1401600000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <902400>;
- 		};
- 		opp-1478400000 {
- 			opp-hz = /bits/ 64 <1478400000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <979200>;
- 		};
- 		opp-1555200000 {
- 			opp-hz = /bits/ 64 <1555200000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1056000>;
- 		};
- 		opp-1632000000 {
- 			opp-hz = /bits/ 64 <1632000000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1190400>;
- 		};
- 		opp-1708800000 {
- 			opp-hz = /bits/ 64 <1708800000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1228800>;
- 		};
- 		opp-1785600000 {
- 			opp-hz = /bits/ 64 <1785600000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1305600>;
- 		};
- 		opp-1804800000 {
- 			opp-hz = /bits/ 64 <1804800000>;
- 			opp-supported-hw = <0xe>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1305600>;
- 		};
- 		opp-1824000000 {
- 			opp-hz = /bits/ 64 <1824000000>;
- 			opp-supported-hw = <0x1>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1382400>;
- 		};
- 		opp-1900800000 {
- 			opp-hz = /bits/ 64 <1900800000>;
- 			opp-supported-hw = <0x4>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1305600>;
- 		};
- 		opp-1920000000 {
- 			opp-hz = /bits/ 64 <1920000000>;
- 			opp-supported-hw = <0x1>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1459200>;
- 		};
- 		opp-1996800000 {
- 			opp-hz = /bits/ 64 <1996800000>;
- 			opp-supported-hw = <0x1>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1593600>;
- 		};
- 		opp-2073600000 {
- 			opp-hz = /bits/ 64 <2073600000>;
- 			opp-supported-hw = <0x1>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1593600>;
- 		};
- 		opp-2150400000 {
- 			opp-hz = /bits/ 64 <2150400000>;
- 			opp-supported-hw = <0x1>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1593600>;
- 		};
- 	};
- 
-@@ -3577,6 +3627,7 @@ cbf: clock-controller@9a11000 {
- 			reg = <0x09a11000 0x10000>;
- 			clocks = <&rpmcc RPM_SMD_XO_A_CLK_SRC>, <&apcs_glb>;
- 			#clock-cells = <0>;
-+			#interconnect-cells = <1>;
- 		};
- 
- 		intc: interrupt-controller@9bc0000 {
--- 
-2.39.0
+Best regards,
+Krzysztof
 
