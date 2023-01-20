@@ -2,115 +2,186 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A4E76675EEC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 21:31:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B21C7675EF7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 21:33:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229556AbjATUb1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Jan 2023 15:31:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40902 "EHLO
+        id S229828AbjATUdz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Jan 2023 15:33:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229450AbjATUb1 (ORCPT
+        with ESMTP id S229553AbjATUdx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Jan 2023 15:31:27 -0500
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D14E8535A;
-        Fri, 20 Jan 2023 12:31:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1674246686; x=1705782686;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=P7Qo7pDtBTeT6nusdsJikwF6Hz1XK2b6WUGvSCudE2U=;
-  b=X01ro+YCSy2zt1GIg++RaXdcXAmAihvVroiLEWzFUoF5alUtyHucwQBr
-   6Fi0JsUS1uh2OieeG1d7s7rdctVsmXa06HP89Q03Ompb+RB4KWhnDKspy
-   +77frr7OUN4WZj5ClonrQWFbNhon0kk3++Pci8HebMGBM+SVqlf00Wt4+
-   PsjLwkP6yVaMJR3GT3/0d8UfHuXaVpi8PQE90FyOtBZd6uEeyJPQc1xdB
-   /Os8lTZXk1EJRh2+Bc/y3woOR2mirEc68SFWi/klx2dV3Nz+lXgnTFrMG
-   Bxmd28ikYYPUm3qzI2yH56bhGgna72GS8y525z5tGVvJmtu/63glbDGXe
-   Q==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10596"; a="390196116"
-X-IronPort-AV: E=Sophos;i="5.97,233,1669104000"; 
-   d="scan'208";a="390196116"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jan 2023 12:31:25 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10596"; a="989524455"
-X-IronPort-AV: E=Sophos;i="5.97,233,1669104000"; 
-   d="scan'208";a="989524455"
-Received: from lkp-server01.sh.intel.com (HELO 5646d64e7320) ([10.239.97.150])
-  by fmsmga005.fm.intel.com with ESMTP; 20 Jan 2023 12:31:22 -0800
-Received: from kbuild by 5646d64e7320 with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1pIy2j-0002uO-23;
-        Fri, 20 Jan 2023 20:31:21 +0000
-Date:   Sat, 21 Jan 2023 04:30:21 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 4/4] arm64: dts: qcom: sa8295p-adp: Add max20411 on i2c4
-Message-ID: <202301210451.KgHMjz0A-lkp@intel.com>
-References: <20230119214749.4048933-5-quic_bjorande@quicinc.com>
+        Fri, 20 Jan 2023 15:33:53 -0500
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 618C38A0FF
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 12:33:51 -0800 (PST)
+Received: by mail-lj1-x232.google.com with SMTP id c3so6762254ljh.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 12:33:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=6a1CsEt8CudzRfvBnwyGdGse2R0fVkuKsLbjSK3W3ZU=;
+        b=BV4fyxZgFNPW/IkcBFL26ouEsyGDHeRDZG+9LaXTS9UmerEGGQKt8zSbntQy6f70Ee
+         DLFKPt4Ecx2aFtqeP66leWda/QaPgnyvwyvs0F2PEME9O2F7dU425QOhtLUktr9DHz45
+         mJoISy2zum6vUbvBGLxP65OznjqVzj4BrHB+hXTfxQudiviaVX7OodTaOtNk12l463Eh
+         34aLCeGzHfmm35Z2aO+do5+1C2o0wxgnoiSRZwXLYXZgIyu+Zgc/zypkoYvaEHMtFoZy
+         1PudTMMcf+ygD/aB3VrnDYcwDR6zNmtKRCxKjjkxBCL+nHWswnVnaPa1EDCarbaySvWD
+         McDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6a1CsEt8CudzRfvBnwyGdGse2R0fVkuKsLbjSK3W3ZU=;
+        b=cEGbxWLwBmbVJxOHNqg1FxXncdVX24Rnb+H5Vdh7WYHwwsbDVYZvcKtPMujKZm12Dh
+         oxVVblK69DDOqgU0FxQBxhy6DqlEiICA+ITPUPpDKvoCNvAWErxec5yhyCHvvhjixDOK
+         3X94sKTYn7kdVzKX7fldmOYNynljlJRj9nXdcR369e5VsavJ3bTY0nv3T2Qr8KnOi8Wb
+         XrWl3lEqHPD/GuEWpFedZHxKqdjcoylKo9YrYzKgEG/RFb35EBwd0RsGvBReog64cjeY
+         zCauhUkH9V+/rvOBd5R295P1bxshNsYby/YYbTRDtZDqM+pkUD7HcMRSUgd/wSKJc4ep
+         lkAQ==
+X-Gm-Message-State: AFqh2krIwlrYmbqIJLgsNt1lA0T1wt6Xc5JHd+iigqR2h+WQ4XBVEqnw
+        +mVpk9mHsgrDxjDN4IO1eqAEOsXNPmFLLEmX2GQ=
+X-Google-Smtp-Source: AMrXdXseY041EcoBVjr8I7TjlaoEgXg0O09aGRO1387zhmObbC/gygm6bg9SKzzA3KsLfgKlsqBVYg==
+X-Received: by 2002:a2e:9ecb:0:b0:283:ce76:415b with SMTP id h11-20020a2e9ecb000000b00283ce76415bmr4760051ljk.29.1674246829689;
+        Fri, 20 Jan 2023 12:33:49 -0800 (PST)
+Received: from [127.0.0.1] ([188.162.65.44])
+        by smtp.gmail.com with ESMTPSA id k6-20020a05651c10a600b00287d9d49939sm3518968ljn.81.2023.01.20.12.33.47
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 20 Jan 2023 12:33:49 -0800 (PST)
+Date:   Fri, 20 Jan 2023 23:33:40 +0300
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Sean Paul <sean@poorly.run>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+CC:     Mark Yacoub <markyacoub@chromium.org>, quic_khsieh@quicinc.com,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        robdclark@gmail.com, quic_abhinavk@quicinc.com, sean@poorly.run,
+        airlied@gmail.com, daniel@ffwll.ch, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@somainline.org,
+        jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com,
+        rodrigo.vivi@intel.com, tvrtko.ursulin@linux.intel.com,
+        tzimmermann@suse.de, ville.syrjala@linux.intel.com,
+        stanislav.lisovskiy@intel.com, matthew.d.roper@intel.com,
+        imre.deak@intel.com, lucas.demarchi@intel.com,
+        manasi.d.navare@intel.com, swati2.sharma@intel.com,
+        bhanuprakash.modem@intel.com, javierm@redhat.com,
+        jose.souza@intel.com, lyude@redhat.com, hbh25y@gmail.com,
+        arun.r.murthy@intel.com, ashutosh.dixit@intel.com,
+        ankit.k.nautiyal@intel.com, maxime@cerno.tech, swboyd@chromium.org,
+        christophe.jaillet@wanadoo.fr, quic_sbillaka@quicinc.com,
+        johan+linaro@kernel.org, dianders@chromium.org, marex@denx.de,
+        quic_jesszhan@quicinc.com, bjorn.andersson@linaro.org,
+        abhinavk@codeaurora.org, seanpaul@chromium.org,
+        Jani Nikula <jani.nikula@intel.com>
+Subject: Re: [PATCH v6 01/10] drm/hdcp: Add drm_hdcp_atomic_check()
+User-Agent: K-9 Mail for Android
+In-Reply-To: <Y8q0H7SiDkdfmyXP@art_vandelay>
+References: <20230118193015.911074-1-markyacoub@google.com> <20230118193015.911074-2-markyacoub@google.com> <67170ce0-8622-8b35-e73a-7d873b7a3b8b@linaro.org> <Y8q0H7SiDkdfmyXP@art_vandelay>
+Message-ID: <A0271342-FB1E-4F7C-BD94-7506F4FACE6E@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230119214749.4048933-5-quic_bjorande@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
 
-I love your patch! Yet something to improve:
 
-[auto build test ERROR on broonie-regulator/for-next]
-[also build test ERROR on robh/for-next broonie-sound/for-next linus/master v6.2-rc4]
-[cannot apply to next-20230120]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+On 20 January 2023 18:32:47 GMT+03:00, Sean Paul <sean@poorly=2Erun> wrote=
+:
+>On Thu, Jan 19, 2023 at 11:37:52AM +0100, Krzysztof Kozlowski wrote:
+>> On 18/01/2023 20:30, Mark Yacoub wrote:
+>> > From: Sean Paul <seanpaul@chromium=2Eorg>
+>> >=20
+>> > This patch moves the hdcp atomic check from i915 to drm_hdcp so other
+>> > drivers can use it=2E No functional changes, just cleaned up some of =
+the
+>> > code when moving it over=2E
+>> >=20
+>> > Acked-by: Jani Nikula <jani=2Enikula@intel=2Ecom>
+>> > Acked-by: Jani Nikula <jani=2Enikula@intel=2Ecom>
+>> > Reviewed-by: Rodrigo Vivi <rodrigo=2Evivi@intel=2Ecom>
+>> > Reviewed-by: Abhinav Kumar <abhinavk@codeaurora=2Eorg>
+>> > Signed-off-by: Sean Paul <seanpaul@chromium=2Eorg>
+>> > Signed-off-by: Mark Yacoub <markyacoub@chromium=2Eorg>
+>> > Link: https://patchwork=2Efreedesktop=2Eorg/patch/msgid/2021091317574=
+7=2E47456-2-sean@poorly=2Erun #v1
+>> > Link: https://patchwork=2Efreedesktop=2Eorg/patch/msgid/2021091520383=
+4=2E1439-2-sean@poorly=2Erun #v2
+>> > Link: https://patchwork=2Efreedesktop=2Eorg/patch/msgid/2021100115114=
+5=2E55916-2-sean@poorly=2Erun #v3
+>> > Link: https://patchwork=2Efreedesktop=2Eorg/patch/msgid/2021110503043=
+4=2E2828845-2-sean@poorly=2Erun #v4
+>> > Link: https://patchwork=2Efreedesktop=2Eorg/patch/msgid/2022041120474=
+1=2E1074308-2-sean@poorly=2Erun #v5
+>>=20
+>> It seems all your previous versions were sent not to correct people and
+>> lists=2E Therefore we see it for the first time even though it is v6!=
+=20
+>
+>Hi Krzysztof,
+>Thanks for your review comments=2E
+>
+>Here are the addresses the last version was sent to, who is missing?
+>
+>To: dri-devel@lists=2Efreedesktop=2Eorg,=20
+>    jani=2Enikula@intel=2Ecom,
+>    intel-gfx@lists=2Efreedesktop=2Eorg,
+>    freedreno@lists=2Efreedesktop=2Eorg,
+>    rodrigo=2Evivi@intel=2Ecom
+>Cc: bjorn=2Eandersson@linaro=2Eorg,=20
+>    swboyd@chromium=2Eorg,
+>    abhinavk@codeaurora=2Eorg,
+>    markyacoub@chromium=2Eorg,
+>    Sean Paul <seanpaul@chromium=2Eorg>,
+>    Maarten Lankhorst <maarten=2Elankhorst@linux=2Eintel=2Ecom>,
+>    Maxime Ripard <mripard@kernel=2Eorg>,
+>    Thomas Zimmermann <tzimmermann@suse=2Ede>,
+>    David Airlie <airlied@linux=2Eie>,
+>    Daniel Vetter <daniel@ffwll=2Ech>,
+>    Jani Nikula <jani=2Enikula@linux=2Eintel=2Ecom>,
+>    Joonas Lahtinen <joonas=2Elahtinen@linux=2Eintel=2Ecom>,
+>    Tvrtko Ursulin <tvrtko=2Eursulin@linux=2Eintel=2Ecom>
+>
+>> It's
+>> not the first such weird CC list in chromium, so maybe your
+>> organisational process could be improved? Not only for you but for
+>> colleagues as well, so you all start using get_maintainers=2Epl on newe=
+st
+>> kernel (not something ancient)?
+>
+>I can't really speak for others, but I use MAINTAINERS from drm-tip=2E Th=
+e=20
+>previous patch sets were sent before 24df12013853 ("MAINTAINERS: Add=20
+>Dmitry as MSM DRM driver co-maintainer"), which might explain why you thi=
+nk
+>there are absences?
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Bjorn-Andersson/dt-bindings-regulator-Describe-Maxim-MAX20411/20230120-061409
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
-patch link:    https://lore.kernel.org/r/20230119214749.4048933-5-quic_bjorande%40quicinc.com
-patch subject: [PATCH 4/4] arm64: dts: qcom: sa8295p-adp: Add max20411 on i2c4
-config: arm64-randconfig-r012-20230119 (https://download.01.org/0day-ci/archive/20230121/202301210451.KgHMjz0A-lkp@intel.com/config)
-compiler: clang version 16.0.0 (https://github.com/llvm/llvm-project 4196ca3278f78c6e19246e54ab0ecb364e37d66a)
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # install arm64 cross compiling tool for clang build
-        # apt-get install binutils-aarch64-linux-gnu
-        # https://github.com/intel-lab-lkp/linux/commit/75c5fbc70a2e2cbd360675e2dc0fb001b3ad6fdf
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Bjorn-Andersson/dt-bindings-regulator-Describe-Maxim-MAX20411/20230120-061409
-        git checkout 75c5fbc70a2e2cbd360675e2dc0fb001b3ad6fdf
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm64 olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash
+Current iteration of the patchset got at least three addresses wrong=2E Th=
+ey have been changed for various reasons=2E Thus I also can suppose that th=
+e list is incomplete and/or incorrect=2E
 
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
+>
+>Thanks again,
+>
+>Sean
+>
+>>=20
+>> Best regards,
+>> Krzysztof
+>>=20
+>
 
-All errors (new ones prefixed by >>):
-
->> Error: arch/arm64/boot/dts/qcom/sa8295p-adp.dts:502.1-16 Label or path pmm8540a_gpios not found
->> FATAL ERROR: Syntax error parsing input tree
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
+--=20
+With best wishes
+Dmitry
