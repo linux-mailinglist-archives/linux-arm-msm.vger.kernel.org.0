@@ -2,79 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D3389675589
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 14:19:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2BA78675737
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 15:31:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229729AbjATNTT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Jan 2023 08:19:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36212 "EHLO
+        id S230087AbjATObw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Jan 2023 09:31:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230502AbjATNSh (ORCPT
+        with ESMTP id S230280AbjATObu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Jan 2023 08:18:37 -0500
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C493C458F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 05:16:09 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id v30so6715270edb.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 05:16:09 -0800 (PST)
+        Fri, 20 Jan 2023 09:31:50 -0500
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EFD279EB6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 06:31:16 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id fl11-20020a05600c0b8b00b003daf72fc844so5994789wmb.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 06:31:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gafe9P/3LkcqiXBJGXaZu00WTSPzwj/fCBVH8Ff8/6E=;
-        b=H87wx7re1NhxJvF9wmt5LosXLmkltHWG4ikLnS2OFWmmRddGF1eCQZTFReJs5hC01S
-         jT7hwVyZEAhueKavri13CGz50cCIGGznDjHAPGF0+ba6WYGm+PA9bHO2082nUOhJPX7g
-         A69c3eXJE1v5RyDl/EBfy4/jBUybaFcejoDEH6ORWdtRmvbtxf4b6buU0dJeWX8hg4F6
-         4s5kdG2Shlcr8+dbrYQCHWASLaQ8wprkF9hCdAXWdHFzmdk8oZMC4QUw5plnogXWE4+0
-         3jPtH8b/rzwhX6gjw02TY5ZNLZMckrzcSiBKsMTWfdcHQ2nUMEsLhCUoJ6uW9THFewaR
-         IShQ==
+        d=fairphone.com; s=fair;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ilLx6O6YT20nFcUZQCZceyzwkMlq9jdKRHFVcmAsl2w=;
+        b=ayEpP7xMy4TXl7+XiO8ro4Txa0MJS/99a9JhC3ahSwucSr+pp8+JT7uj14K3WxO9Nb
+         RIc5SGeLH1XIKcd+7X4Qcl/YIMwm+VApTHcgrQdFJw8ZP24HqoAMJkxdYH2SeOdQ7XIk
+         nkouY/TYeIKfYx7l6/RoZknFBPgPe+9Lub3HncGUaPxnM0IFo3L4BrrRmi5mm9z62LID
+         ZatLCWTGQ2w0EiSGU4HJCXi0B++LXBaZCcsJrVSL0SqwNLmBepU+2VIp0+kpZI0P+qwU
+         xay2fhZ6JGajmJVUIRxTvYn5cnBBa5kn6gIZ98wCC9K6UC8lhr2FCWuAoqD4ixPId8kd
+         2uvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gafe9P/3LkcqiXBJGXaZu00WTSPzwj/fCBVH8Ff8/6E=;
-        b=H5YA0D/CDuWz+Em1Ln4z30iomT0+XPVyY75R36vr07X99dZw+Is0pKLZEUIeucEkNW
-         MaVytmTg2XScbvv/Buu3nk8IINC7fBkQiDA9dIsLjrFWiQcD7yaCQ8swR5H1yKpnxFP/
-         px43RK9V02wgZG9MUxuphlHgu5LBGPMeT1Oy4YsiqFg6AFlQQ2924eJNxoPIPaCITeci
-         4AzMtA845BBhIX8envv0RUqaWk8AEa3CGvaFSamdcq4xybmQCyVIgcx19bQcDK9/ta5p
-         4MmDune9Sg4DAWRnte5ElKteU/CjWLzTxwRzf7BHcvDebbdB1+eODnQW+w+ds3sIZ/6n
-         Uxaw==
-X-Gm-Message-State: AFqh2kpmzeeJn5NRtZ8E9EuONuwkupyzNLSG+/mSJ/+18V/oO87nPpEj
-        fxd+kA6bn7tsApZaXkXA1SjyEA==
-X-Google-Smtp-Source: AMrXdXtaBT/vlbufvsp44/JbzjNu62RrYibeiuVZ1/NI+JOP4CQ8dGXg9onBP/ZwQfjw8yUdu8DbNw==
-X-Received: by 2002:aa7:de87:0:b0:49c:d620:4bf8 with SMTP id j7-20020aa7de87000000b0049cd6204bf8mr15535309edv.24.1674220567847;
-        Fri, 20 Jan 2023 05:16:07 -0800 (PST)
-Received: from [192.168.1.101] (abyk37.neoplus.adsl.tpnet.pl. [83.9.30.37])
-        by smtp.gmail.com with ESMTPSA id s5-20020a170906c30500b008552bc8399dsm14086113ejz.172.2023.01.20.05.16.06
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ilLx6O6YT20nFcUZQCZceyzwkMlq9jdKRHFVcmAsl2w=;
+        b=hwFBb9k4eOnB4M0LNSX5jwxzi7Y3HHcI71gbN35mBue9GIChlQCS1TgKwU/Y5yGCFm
+         PsYXyozcYYIFBIDurGIttaWJVjoOwtUhFuMkxVkEdOt9yMdh2v/Yya1vcB6SDfhJISE/
+         CX/BYZBf1lY0dSGRPlisqKtwcZuLRrF8esMzbgLX+64onRxgIvHSw1qFyDVkyPwprIYt
+         A+yBvnEQrx8ELHnzd1krR6SLSXtZ1+fEGACMw7twAhh5P/VTYnPeBsGlWouB7YtYHCxQ
+         EeWqM3SS0nbjo6a0NWOBzpKfRjP4m3S6jDyuU9fsA6llYhzLE2pz9SLWqtI12Z9SRx0W
+         Y6Ng==
+X-Gm-Message-State: AFqh2kq9pFKQQX+Cd65VoyXMtWpzxojUy+obsRz+iTIVF5ivFlKFXapc
+        C66AtpwbyHoDB9iLHgslSmo6mXZuXvOZ5HrsToACfw==
+X-Google-Smtp-Source: AMrXdXtSS2bkT3pSmtQPIneqvBLkh4z0QahUWsvsrzmDs10I/OhZz7loxD1lwHY6/y7aklLQNAsNlA==
+X-Received: by 2002:a17:906:eb13:b0:869:236c:ac43 with SMTP id mb19-20020a170906eb1300b00869236cac43mr15283207ejb.32.1674224027081;
+        Fri, 20 Jan 2023 06:13:47 -0800 (PST)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id y20-20020a170906559400b0084d44bff4a2sm15840508ejp.39.2023.01.20.06.13.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Jan 2023 05:16:07 -0800 (PST)
-Message-ID: <ac74d330-713a-fd68-efce-9c01cc120a45@linaro.org>
-Date:   Fri, 20 Jan 2023 14:16:05 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v2 3/4] arm64: dts: qcom: sm6350: Add CCI nodes
-Content-Language: en-US
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221213-sm6350-cci-v2-0-15c2c14c34bb@fairphone.com>
- <20221213-sm6350-cci-v2-3-15c2c14c34bb@fairphone.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221213-sm6350-cci-v2-3-15c2c14c34bb@fairphone.com>
+        Fri, 20 Jan 2023 06:13:46 -0800 (PST)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Date:   Fri, 20 Jan 2023 15:13:46 +0100
+Message-Id: <CPX2VVT5EUDV.2LH6VI2586F02@otso>
+Subject: Re: [PATCH v3 2/3] phy: qcom-qmp-combo: Add config for SM6350
+From:   "Luca Weiss" <luca.weiss@fairphone.com>
+To:     "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>
+Cc:     "Vinod Koul" <vkoul@kernel.org>, "Johan Hovold" <johan@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        <~postmarketos/upstreaming@lists.sr.ht>,
+        <phone-devel@vger.kernel.org>, "Andy Gross" <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        "Kishon Vijay Abraham I" <kishon@kernel.org>,
+        <linux-phy@lists.infradead.org>, <linux-kernel@vger.kernel.org>
+X-Mailer: aerc 0.14.0
+References: <20221130081430.67831-1-luca.weiss@fairphone.com>
+ <20221130081430.67831-2-luca.weiss@fairphone.com>
+ <Y6xP4YRAp68TfxFi@hovoldconsulting.com> <Y8BIX+js1ircJyb9@matsya>
+ <cf968a25-02f7-d402-530b-eb379b707e54@linaro.org>
+ <CPR2LS3SJQ3I.Z7UY505COG3@otso>
+ <CAA8EJpoOMMALHz7ysft6KvQaYhGWPD+xZiUjOTrC8CA_y81n-w@mail.gmail.com>
+In-Reply-To: <CAA8EJpoOMMALHz7ysft6KvQaYhGWPD+xZiUjOTrC8CA_y81n-w@mail.gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,179 +84,138 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri Jan 13, 2023 at 2:01 PM CET, Dmitry Baryshkov wrote:
+> On Fri, 13 Jan 2023 at 14:44, Luca Weiss <luca.weiss@fairphone.com> wrote=
+:
+> >
+> > Hi Dmitry,
+> >
+> > On Thu Jan 12, 2023 at 8:33 PM CET, Dmitry Baryshkov wrote:
+> > > On 12/01/2023 19:50, Vinod Koul wrote:
+> > > > On 28-12-22, 15:17, Johan Hovold wrote:
+> > > >> Luca, Vinod,
+> > > >>
+> > > >> On Wed, Nov 30, 2022 at 09:14:28AM +0100, Luca Weiss wrote:
+> > > >>> Add the tables and config for the combo phy found on SM6350.
+> > > >>>
+> > > >>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> > > >>> ---
+> > > >>> Changes since v2:
+> > > >>> * Drop dp_txa/dp_txb changes, not required
+> > > >>> * Fix dp_dp_phy offset
+> > > >>>
+> > > >>>   drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 126 +++++++++++++++=
++++++++
+> > > >>>   1 file changed, 126 insertions(+)
+> > > >>>
+> > > >>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/=
+phy/qualcomm/phy-qcom-qmp-combo.c
+> > > >>> index 77052c66cf70..6ac0c68269dc 100644
+> > > >>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> > > >>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> > > >>
+> > > >>> @@ -975,6 +1039,19 @@ static const char * const sc7180_usb3phy_re=
+set_l[] =3D {
+> > > >>>           "phy",
+> > > >>>   };
+> > > >>>
+> > > >>> +static const struct qmp_combo_offsets qmp_combo_offsets_v3 =3D {
+> > > >>> + .com            =3D 0x0000,
+> > > >>> + .txa            =3D 0x1200,
+> > > >>> + .rxa            =3D 0x1400,
+> > > >>> + .txb            =3D 0x1600,
+> > > >>> + .rxb            =3D 0x1800,
+> > > >>> + .usb3_serdes    =3D 0x1000,
+> > > >>> + .usb3_pcs_misc  =3D 0x1a00,
+> > > >>> + .usb3_pcs       =3D 0x1c00,
+> > > >>> + .dp_serdes      =3D 0x1000,
+> > > >>
+> > > >> I would have expected this to be 0x2000 as that's what the older
+> > > >> platforms have been using for the dp serdes table so far. Without =
+access
+> > > >> to any documentation it's hard to tell whether everyone's just bee=
+n
+> > > >> cargo-culting all along or if there's actually something there at =
+offset
+> > > >> 0x2000.
+> > >
+> > > usb3_serdes is 0x1000, so dp_serdes equal to 0x1000 is definitely an =
+typo.
+> > >
+> > > Judging from the downstream dtsi, the DP PHY starts at offset 0x2000.=
+ So
+> > > dp_serdes is equal to 0x2000, dp_phy =3D 0x2a00, ln_tx1 =3D 0x2200, l=
+n_tx2 =3D
+> > > 0x2600.
+> >
+> > Can you share how you got to the 0x2000 offset? You can see my
+> > (potentially wrong) reasoning for 0x1000 a few messages ago[0].
+> >
+> > The only 0x2000-something I could find now while looking at it again is
+> > "#define USB3_DP_PHY_DP_DP_PHY_PD_CTL 0x2a18" which becomes
+> > USB3_DP_DP_PHY_PD_CTL in the driver but this is seemingly not used at
+> > all in my msm-4.19 tree.
+>
+> Quite simple: see [1]. DP_PLL is at +0x2000
+>
+> [1] https://android.googlesource.com/kernel/msm-extra/devicetree/+/refs/h=
+eads/android-msm-bramble-4.19-android11-qpr1/qcom/lagoon-sde-pll.dtsi#27
 
+I still disagree from what I see.
 
-On 20.01.2023 14:13, Luca Weiss wrote:
-> Add nodes for the two CCI blocks found on SM6350.
-> 
-> The first contains two i2c busses and while the second one might also
-> contains two busses, the downstream kernel only has one configured, and
-> some boards use the GPIOs for the potential cci1_i2c1 one other
-> purposes, so leave that one unconfigured.
-> 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+E.g. this part of the dp_serdes init table in mainline:
 
-Konrad
->  arch/arm64/boot/dts/qcom/sm6350.dtsi | 132 +++++++++++++++++++++++++++++++++++
->  1 file changed, 132 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-> index 300ced5cda57..802d7f494162 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-> @@ -6,6 +6,7 @@
->  
->  #include <dt-bindings/clock/qcom,gcc-sm6350.h>
->  #include <dt-bindings/clock/qcom,rpmh.h>
-> +#include <dt-bindings/clock/qcom,sm6350-camcc.h>
->  #include <dt-bindings/dma/qcom-gpi.h>
->  #include <dt-bindings/gpio/gpio.h>
->  #include <dt-bindings/interconnect/qcom,icc.h>
-> @@ -1435,6 +1436,95 @@ usb_1_dwc3: usb@a600000 {
->  			};
->  		};
->  
-> +		cci0: cci@ac4a000 {
-> +			compatible = "qcom,sm6350-cci", "qcom,msm8996-cci";
-> +			reg = <0 0x0ac4a000 0 0x1000>;
-> +			interrupts = <GIC_SPI 468 IRQ_TYPE_EDGE_RISING>;
-> +			power-domains = <&camcc TITAN_TOP_GDSC>;
-> +
-> +			clocks = <&camcc CAMCC_CAMNOC_AXI_CLK>,
-> +				 <&camcc CAMCC_SOC_AHB_CLK>,
-> +				 <&camcc CAMCC_SLOW_AHB_CLK_SRC>,
-> +				 <&camcc CAMCC_CPAS_AHB_CLK>,
-> +				 <&camcc CAMCC_CCI_0_CLK>,
-> +				 <&camcc CAMCC_CCI_0_CLK_SRC>;
-> +			clock-names = "camnoc_axi",
-> +				      "soc_ahb",
-> +				      "slow_ahb_src",
-> +				      "cpas_ahb",
-> +				      "cci",
-> +				      "cci_src";
-> +
-> +			assigned-clocks = <&camcc CAMCC_CAMNOC_AXI_CLK>,
-> +					  <&camcc CAMCC_CCI_0_CLK>;
-> +			assigned-clock-rates = <80000000>, <37500000>;
-> +
-> +			pinctrl-0 = <&cci0_default &cci1_default>;
-> +			pinctrl-1 = <&cci0_sleep &cci1_sleep>;
-> +			pinctrl-names = "default", "sleep";
-> +
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +
-> +			status = "disabled";
-> +
-> +			cci0_i2c0: i2c-bus@0 {
-> +				reg = <0>;
-> +				clock-frequency = <1000000>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +			};
-> +
-> +			cci0_i2c1: i2c-bus@1 {
-> +				reg = <1>;
-> +				clock-frequency = <1000000>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +			};
-> +		};
-> +
-> +		cci1: cci@ac4b000 {
-> +			compatible = "qcom,sm6350-cci", "qcom,msm8996-cci";
-> +			reg = <0 0x0ac4b000 0 0x1000>;
-> +			interrupts = <GIC_SPI 462 IRQ_TYPE_EDGE_RISING>;
-> +			power-domains = <&camcc TITAN_TOP_GDSC>;
-> +
-> +			clocks = <&camcc CAMCC_CAMNOC_AXI_CLK>,
-> +				 <&camcc CAMCC_SOC_AHB_CLK>,
-> +				 <&camcc CAMCC_SLOW_AHB_CLK_SRC>,
-> +				 <&camcc CAMCC_CPAS_AHB_CLK>,
-> +				 <&camcc CAMCC_CCI_1_CLK>,
-> +				 <&camcc CAMCC_CCI_1_CLK_SRC>;
-> +			clock-names = "camnoc_axi",
-> +				      "soc_ahb",
-> +				      "slow_ahb_src",
-> +				      "cpas_ahb",
-> +				      "cci",
-> +				      "cci_src";
-> +
-> +			assigned-clocks = <&camcc CAMCC_CAMNOC_AXI_CLK>,
-> +					  <&camcc CAMCC_CCI_1_CLK>;
-> +			assigned-clock-rates = <80000000>, <37500000>;
-> +
-> +			pinctrl-0 = <&cci2_default>;
-> +			pinctrl-1 = <&cci2_sleep>;
-> +			pinctrl-names = "default", "sleep";
-> +
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +
-> +			status = "disabled";
-> +
-> +			cci1_i2c0: i2c-bus@0 {
-> +				reg = <0>;
-> +				clock-frequency = <1000000>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +			};
-> +
-> +			/* SM6350 seems to have cci1_i2c1 on gpio2 & gpio3 but unused downstream */
-> +		};
-> +
->  		camcc: clock-controller@ad00000 {
->  			compatible = "qcom,sm6350-camcc";
->  			reg = <0 0x0ad00000 0 0x16000>;
-> @@ -1522,6 +1612,48 @@ tlmm: pinctrl@f100000 {
->  			#interrupt-cells = <2>;
->  			gpio-ranges = <&tlmm 0 0 157>;
->  
-> +			cci0_default: cci0-default-state {
-> +				pins = "gpio39", "gpio40";
-> +				function = "cci_i2c";
-> +				drive-strength = <2>;
-> +				bias-pull-up;
-> +			};
-> +
-> +			cci0_sleep: cci0-sleep-state {
-> +				pins = "gpio39", "gpio40";
-> +				function = "cci_i2c";
-> +				drive-strength = <2>;
-> +				bias-pull-down;
-> +			};
-> +
-> +			cci1_default: cci1-default-state {
-> +				pins = "gpio41", "gpio42";
-> +				function = "cci_i2c";
-> +				drive-strength = <2>;
-> +				bias-pull-up;
-> +			};
-> +
-> +			cci1_sleep: cci1-sleep-state {
-> +				pins = "gpio41", "gpio42";
-> +				function = "cci_i2c";
-> +				drive-strength = <2>;
-> +				bias-pull-down;
-> +			};
-> +
-> +			cci2_default: cci2-default-state {
-> +				pins = "gpio43", "gpio44";
-> +				function = "cci_i2c";
-> +				drive-strength = <2>;
-> +				bias-pull-up;
-> +			};
-> +
-> +			cci2_sleep: cci2-sleep-state {
-> +				pins = "gpio43", "gpio44";
-> +				function = "cci_i2c";
-> +				drive-strength = <2>;
-> +				bias-pull-down;
-> +			};
-> +
->  			sdc2_off_state: sdc2-off-state {
->  				clk-pins {
->  					pins = "sdc2_clk";
-> 
+static const struct qmp_phy_init_tbl qmp_v3_dp_serdes_tbl_rbr[] =3D {
+	QMP_PHY_INIT_CFG(QSERDES_V3_COM_HSCLK_SEL, 0x0c),
+
+With this one:
+#define QSERDES_V3_COM_HSCLK_SEL                     0x13c
+
+To write this config qmp->dp_serdes gets used which is set at:
+	qmp->dp_serdes =3D base + offs->dp_serdes;
+
+So if offs->dp_serdes is 0x2000, this write will go to 0x213c.
+
+If we go back to msm-4.19 downstream the equivalent define is
+#define USB3_DP_QSERDES_COM_HSCLK_SEL				0x113c
+
+So there we are at offset 0x1000. And this define is used in
+qcom,qmp-phy-init-seq which I already went to in detail in a previous
+email in this thread.
+
+>
+> Anyway, having DP serdes at the space as USB3 serdes would mean that
+> one would be setting USB3 PLL when trying to enable DP. So I could
+> have said even w/o looking at the dtsi that dp serdes can _not_ be at
+> 0x1000.
+
+I don't know enough about these PHY/DP/etc blocks to say anything there.
+
+>
+> >
+> > Also if you have any idea on how to test it at runtime without actually
+> > having to get all the type-C functionality up I'd be happy to try that.
+> > Unfortunately I believe there's still quite some bits missing to
+> > actually get DP out via the USB-C port - which I imagine would trigger
+> > the PHY setup.
+>
+> Unfortunately, I don't have a recipe to test this.
+
+No worries :)
+
+Regards
+Luca
+
+>
+> >
+> > [0] https://lore.kernel.org/linux-arm-msm/CPDIYQ3SSY3E.I0Y0NMIED0WO@ots=
+o/
+> >
+> > Regards
+> > Luca
+>
+>
+> --=20
+> With best wishes
+> Dmitry
+
