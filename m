@@ -2,212 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D5830674CA2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 06:38:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 93859674D0E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 07:14:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231563AbjATFiS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Jan 2023 00:38:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42148 "EHLO
+        id S229457AbjATGOZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Jan 2023 01:14:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231562AbjATFiE (ORCPT
+        with ESMTP id S229490AbjATGOX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Jan 2023 00:38:04 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8E5072C33;
-        Thu, 19 Jan 2023 21:34:35 -0800 (PST)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30K3o2V9011583;
-        Fri, 20 Jan 2023 05:34:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : reply-to : references : mime-version :
- content-type : in-reply-to; s=qcppdkim1;
- bh=5AwsPcgBKb4mMBYPkdjE+yVcpgBpoQQmg99thVzIvtg=;
- b=MyHtXJEVAZa7E/joLQi+OBc4OirSPbgBGkoVLcfBccf9qGlAqrxRn7GA+Ejdgzu6RZAF
- AwYXOm8XnO/qe/YnMPZFySntTBPGIy2R/ENhq+4JFUeiMtBuwb7usgLDejPmDmBWWYnD
- VyLVc0BaS3/sv1ExALTr3LQNeXkeHfYCOXnyjgEMrj0LRvTSaXFSvYyyBAul/F0mk8j4
- O8k2OcfRcI5UniTBkwQIvPlKM17HPw0sn7Xt66Dr4kS4OSDb7TaCFnWcCZG1Bowb/3IR
- WGKn93wWWcbZ2kkBAvfOQUB0vwDhAbknMwXeI0r6H3AGxF+bzCBumLE6465dyUjmHaEU BA== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n6vjbk9x5-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 20 Jan 2023 05:34:19 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30K5YI9a014355
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 20 Jan 2023 05:34:18 GMT
-Received: from quicinc.com (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Thu, 19 Jan
- 2023 21:34:11 -0800
-Date:   Fri, 20 Jan 2023 11:04:07 +0530
-From:   Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
-To:     Elliot Berman <quic_eberman@quicinc.com>
-CC:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        "Carl van Schaik" <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Fri, 20 Jan 2023 01:14:23 -0500
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22AD87CCC7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 22:14:21 -0800 (PST)
+Received: by mail-ej1-x62e.google.com with SMTP id qx13so11317552ejb.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 22:14:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ESKvgTayz6dgs1jEkiJ0s0q3qentgpGHI5ZQhX/NmjA=;
+        b=TJa7INX5SIEEJ5tLUWOSwnCGr5rIVy/4ytwSVg0fchj+dBK1SVVf7nplhJ7jtvPp9Q
+         FJIhMAbU29nA/cnmFMdIT5pNg/JXsahcmbFmrFgplPZJYjg7uNbRmJ/uwzrQFCwwSWcg
+         Trk5lG7LsNr5p3veXMhP+tojOeyVq0SQSW6EzY8+H8adO1nr9SqR1lbhcpNavVgdXntH
+         JTzw0tFHMP5/0k6MFO71KnUXf4I5i+KdwJ3jM9DDnPRs3YJvOgeScMTRSGvSAvLIakmp
+         dbwNGm3RM06Gx8cidMrqa3oj5ijLagsP7nkj7PNdzj2Q9xJQZkLcz64LtDNq5UnyFoA1
+         6kmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ESKvgTayz6dgs1jEkiJ0s0q3qentgpGHI5ZQhX/NmjA=;
+        b=INieC8aEwi9DJvdgyarYQMTNziCV4XlxxZ5A0Ft7WOSh22cOchmYbtuhVwrIiLOSJ+
+         m9AiFuwJH/VriR0AjeZvcM55vz+pBg0FDuwUn6WBt6qGsV//wWZX6qhCL/FBkIlGlVuU
+         qYLtkCgWi5pBSFdvB7cOv+bU9rEYTW+wrn4dWNv0Cvo7suaFa325fez/FprFKkpQ4YX8
+         l/5zASFi7FmgS8MzyyItVL1HgEzSGP7h0VtvZP1mvTntP9Naf3XjTB0N9el+usg+V8M8
+         GjuRVAnA6Txy4biC7iW62wcBMF5MpV/YmYLHmEeKYo40qnRCxfxDni/F7zGKyf64iJUN
+         Xtmw==
+X-Gm-Message-State: AFqh2kq8SIEk3LUD6QxV+ORhiK06KSyWBnqgKVYnqgKOQjctScfA8QG5
+        RIstbRQcW7WWY5ilo/DTa/NDkA==
+X-Google-Smtp-Source: AMrXdXtBj/aX76zNo4ihfmLZudtl2bveeHq7IeIvpCqOyiKM2JblbzfZlvGt5eNPV9lBbsFkIDwZCQ==
+X-Received: by 2002:a17:906:3396:b0:871:ac32:88a6 with SMTP id v22-20020a170906339600b00871ac3288a6mr13729121eja.39.1674195259695;
+        Thu, 19 Jan 2023 22:14:19 -0800 (PST)
+Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id hp24-20020a1709073e1800b008720c458bd4sm5813358ejc.3.2023.01.19.22.14.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Jan 2023 22:14:19 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
         Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-acpi@vger.kernel.org>
-Subject: Re: [PATCH v8 14/28] gunyah: vm_mgr: Add/remove user memory regions
-Message-ID: <20230118090859.GC1737564@quicinc.com>
-Reply-To: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
-References: <20221219225850.2397345-1-quic_eberman@quicinc.com>
- <20221219225850.2397345-15-quic_eberman@quicinc.com>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH v3 0/8] clk: qcom: msm8996: add support for the CBF clock
+Date:   Fri, 20 Jan 2023 08:14:09 +0200
+Message-Id: <20230120061417.2623751-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Disposition: inline
-In-Reply-To: <20221219225850.2397345-15-quic_eberman@quicinc.com>
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: hwDDQ5ftKuDYkmwG8_jwJQaSrm3ey9s7
-X-Proofpoint-GUID: hwDDQ5ftKuDYkmwG8_jwJQaSrm3ey9s7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-20_02,2023-01-19_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- suspectscore=0 priorityscore=1501 clxscore=1015 phishscore=0
- malwarescore=0 mlxscore=0 spamscore=0 impostorscore=0 mlxlogscore=812
- adultscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301200050
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-* Elliot Berman <quic_eberman@quicinc.com> [2022-12-19 14:58:35]:
+On MSM8996 two CPU clusters are interconnected using the Core Bus
+Fabric (CBF). In order for the CPU clusters to function properly, it
+should be clocked following the core's frequencies to provide adequate
+bandwidth. On the other hand the CBF's clock rate can be used by other
+drivers (e.g. by the pending SPDM driver to provide input on the CPU
+performance).
 
->  static int gh_vm_release(struct inode *inode, struct file *filp)
->  {
->  	struct gunyah_vm *ghvm = filp->private_data;
-> +	struct gunyah_vm_memory_mapping *mapping, *tmp;
->  
-> +	list_for_each_entry_safe(mapping, tmp, &ghvm->memory_mappings, list) {
-> +		gh_vm_mem_mapping_reclaim(ghvm, mapping);
+Thus register CBF as a clock (required for CPU to boot) and add a tiny
+interconnect layer on top of it to let cpufreq/opp scale the CBF clock.
 
-kfree(mapping) also?
+Dependencies: [1]
 
-> +	}
->  	put_gh_rm(ghvm->rm);
->  	kfree(ghvm);
->  	return 0;
+[1] https://lore.kernel.org/linux-arm-msm/20230111191453.2509468-1-dmitry.baryshkov@linaro.org/
 
-[snip]
+Changes since v2:
+- Added interconnect-related bindings
+- Switched CPU and CBF clocks to RPM_SMD_XO_A_CLK_SRC
 
-> +struct gunyah_vm_memory_mapping {
-> +	struct list_head list;
-> +	enum gunyah_vm_mem_share_type share_type;
-> +	struct gh_rm_mem_parcel parcel;
-> +
-> +	__u64 guest_phys_addr;
-> +	__u32 mem_size;
+Changes since v1:
+- Relicensed schema to GPL-2.0 + BSD-2-Clause (Krzysztof)
+- Changed clock driver to use parent_hws (Konrad)
+- Fixed indentation in CBF clock driver (Konrad)
+- Changed MODULE_LICENSE of CBF clock driver to GPL from GPL-v2
+- Switched CBF to use RPM_SMD_XO_CLK_SRC as one of the parents
+- Enabled RPM_SMD_XO_CLK_SRC on msm8996 platform and switch to it from
+  RPM_SMD_BB_CLK1 clock
 
-'gh_userspace_memory_region' allows 64-bit mem_size, so perhaps make it 64-bit
-here as well?
+Dmitry Baryshkov (8):
+  dt-bindings: clock: qcom,msm8996-cbf: Describe the MSM8996 CBF clock
+    controller
+  dt-bindints: interconnect/msm8996-cbf: add defines to be used by CBF
+  clk: qcom: add msm8996 Core Bus Framework (CBF) support
+  clk: qcom: cbf-msm8996: scale CBF clock according to the CPUfreq
+  clk: qcom: smd-rpm: provide RPM_SMD_XO_CLK_SRC on MSM8996 platform
+  arm64: qcom: dts: msm8996 switch from RPM_SMD_BB_CLK1 to
+    RPM_SMD_XO_CLK_SRC
+  arm64: dts: qcom: msm8996: add CBF device entry
+  arm64: dts: qcom: msm8996: scale CBF clock according to the CPUfreq
 
-> +struct gunyah_vm_memory_mapping *gh_vm_mem_mapping_alloc(struct gunyah_vm *ghvm,
-> +							struct gh_userspace_memory_region *region)
-> +{
-> +	phys_addr_t curr_page, prev_page;
-> +	struct gunyah_vm_memory_mapping *mapping, *tmp_mapping;
-> +	struct gh_rm_mem_entry *mem_entries;
-> +	int i, j, pinned, ret = 0;
-> +	struct gh_rm_mem_parcel *parcel;
-> +
-> +	if (!region->memory_size || !PAGE_ALIGNED(region->memory_size) ||
-> +		!PAGE_ALIGNED(region->userspace_addr))
-> +		return ERR_PTR(-EINVAL);
-> +
-> +	ret = mutex_lock_interruptible(&ghvm->mm_lock);
-> +	if (ret)
-> +		return ERR_PTR(ret);
-> +	mapping = __gh_vm_mem_mapping_find(ghvm, region->label);
-> +	if (mapping) {
-> +		ret = -EEXIST;
-> +		goto unlock;
+ .../bindings/clock/qcom,msm8996-cbf.yaml      |  53 ++
+ arch/arm64/boot/dts/qcom/msm8996.dtsi         |  72 ++-
+ drivers/clk/qcom/Makefile                     |   2 +-
+ drivers/clk/qcom/clk-cbf-8996.c               | 458 ++++++++++++++++++
+ drivers/clk/qcom/clk-smd-rpm.c                |   2 +
+ .../interconnect/qcom,msm8996-cbf.h           |  12 +
+ 6 files changed, 591 insertions(+), 8 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,msm8996-cbf.yaml
+ create mode 100644 drivers/clk/qcom/clk-cbf-8996.c
+ create mode 100644 include/dt-bindings/interconnect/qcom,msm8996-cbf.h
 
-We should avoid kfree(mapping) in this case?
-
-> +	}
-> +
-> +	mapping = kzalloc(sizeof(*mapping), GFP_KERNEL);
-> +	if (!mapping) {
-> +		ret = -ENOMEM;
-> +		goto unlock;
-> +	}
-> +
-> +	mapping->parcel.label = region->label;
-> +	mapping->guest_phys_addr = region->guest_phys_addr;
-> +	mapping->npages = region->memory_size >> PAGE_SHIFT;
-> +	parcel = &mapping->parcel;
-> +	parcel->mem_handle = GH_MEM_HANDLE_INVAL; /* to be filled later by mem_share/mem_lend */
-> +	parcel->mem_type = GH_RM_MEM_TYPE_NORMAL;
-> +
-> +	/* Check for overlap */
-> +	list_for_each_entry(tmp_mapping, &ghvm->memory_mappings, list) {
-> +		if (!((mapping->guest_phys_addr + (mapping->npages << PAGE_SHIFT) <=
-> +			tmp_mapping->guest_phys_addr) ||
-> +			(mapping->guest_phys_addr >=
-> +			tmp_mapping->guest_phys_addr + (tmp_mapping->npages << PAGE_SHIFT)))) {
-> +			ret = -EEXIST;
-> +			goto unlock;
-> +		}
-> +	}
-> +
-> +	list_add(&mapping->list, &ghvm->memory_mappings);
-
-I think we need to either avoid adding to the list this early (until all steps
-below are successfull) or maintain some additional state in 'mapping' to
-indicate that its work in progress. Consider the race condition for example when
-multiple threads call SET_USER_MEM_REGION ioctl on same label (one with size > 0
-and other with size = 0), which can lead to unpleasant outcome AFAICS.
-
-> +unlock:
-> +	mutex_unlock(&ghvm->mm_lock);
-> +	if (ret)
-> +		goto free_mapping;
-> +
-> +	mapping->pages = kcalloc(mapping->npages, sizeof(*mapping->pages), GFP_KERNEL);
-> +	if (!mapping->pages) {
-> +		ret = -ENOMEM;
-> +		goto reclaim;
-
-Can you check this error path? We seem to call unpin_user_page() in this path,
-which is not correct.
-
-> +	}
-> +
-> +	pinned = pin_user_pages_fast(region->userspace_addr, mapping->npages,
-> +					FOLL_WRITE | FOLL_LONGTERM, mapping->pages);
-> +	if (pinned < 0) {
-> +		ret = pinned;
-> +		goto reclaim;
-
-Same comment as above
-
-> +	parcel->acl_entries[0].vmid = ghvm->vmid;
-
-cpu_to_le() wrapper missing here and few other places in this function. Pls check.
+-- 
+2.39.0
 
