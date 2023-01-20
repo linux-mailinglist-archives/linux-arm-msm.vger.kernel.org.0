@@ -2,79 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AB85B674EE2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 09:04:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DDE4F674EF1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 09:05:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230193AbjATIEW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Jan 2023 03:04:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34642 "EHLO
+        id S230235AbjATIF4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Jan 2023 03:05:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230144AbjATIEU (ORCPT
+        with ESMTP id S230208AbjATIFz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Jan 2023 03:04:20 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80F0E5B5A6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 00:04:17 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id bk16so4065291wrb.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 00:04:17 -0800 (PST)
+        Fri, 20 Jan 2023 03:05:55 -0500
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 683B8568AC
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 00:05:53 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id q10-20020a1cf30a000000b003db0edfdb74so470997wmq.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 00:05:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=V6LXkIx8BANILDQmoLHswehPH28NdMe4BBg+GYgmQJc=;
-        b=gd4l01rhpsa8H54xUMgiQ+zJGbH0SoJyTrI51hbsZysaJi8L40ZQIGPyyul0z7Ocg4
-         zpTey7QZIqkSZ7gD5mfJdzGH+L4xP/Jxx56pspJ6DDz/Nuu1VfZEFelRQ4fi1j2kbkDG
-         w6trpgj2whXf8arw9tAjTnPhr22VOyiu53zB5CjdInNNnTHdHsFAf3a3zOM2pa3gRF1e
-         JnyE9UIa+CjL/Wu7vll6UEQG/D9fdAAnH4sEvkUbrmMjEHAcpAzpaIhiQwydr0b83pxt
-         4aCsRknCcqzwyo8rJRE4R7ChWA6EjnQh9pcWq482df90gL/dh5ZcxXYq5aygoTOLg8md
-         5CUw==
+        bh=qEiaE3Kt/Zqawbv0sFZW0DAx4T45mpd9/chaTTzXPeo=;
+        b=mQ5bfQNkc8GF/MbtM8Odfdstz5NWj/maou5OY0puotwLLyBsWDPeF7gKwNS2a41g8F
+         zKXRzDVR+5wpi2TVx/u1zNbJh7/XoHy7KZ3MJr8aeCTYOJQRftCpL7iw8jKlx2BvQshY
+         nvSWtZIlyCewgwVCEMi+5q3R8t0wO7Z3+A5x56CNvi+6snktlz/JzdSabM+Df4dwiQUg
+         /M0PrGarve2hGvmz7P4UUBnQXnBY7EoDHlAIQ5VfMebCR5FaL1uqlaiqlclcp/1yB7ew
+         ZNevdtwswxXmwB8eqHoAeh+L4oynvI3oDm+2hZ/wj4Rj8s/+J9+nL/2/Sq1xRV+sxxK3
+         o0JA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=V6LXkIx8BANILDQmoLHswehPH28NdMe4BBg+GYgmQJc=;
-        b=x5FQ0dF+1vYZdjFyG/ohe3WXJbFxWe9R66v3A3mzKs+Z1YeT7XI09yIF5HIxCTi3Gd
-         hYBKUXhwC84GMWys+nC4R2J2A6FJnKgk/ScG1YQlvYiYp8i1APOGGE2KQYwMiR5MeerU
-         899xnQ25vVDRuEu4CN3z1QbxTmjyrBPlkJBo6DlaVFM+KKfLylImIQPw7A0VYCinjBNj
-         VyYUO4EkF7cFpZzh2Ya0rAx6sJ0n8xIdSl12vX+w1qaB8SQzLHbZobigEgLjDl1eWSns
-         g8P34/8IJfNVyQCFQ4aXjiBobpewwDgvuJbl/8ENy587b3zvZwiZpTlJ0WPJvigJszWa
-         7brA==
-X-Gm-Message-State: AFqh2koR6uMaQMvCmgZQkIizF4mRPuI6ocK1aHuUMLfqpk+1eXhpfPpt
-        ySygLoJ7nILyQahyp1ljwlRRwQ==
-X-Google-Smtp-Source: AMrXdXsMXAoaC0AHQ2YBbTngF/qLL6GGMIQ5qXh9iHZwnWh7GupAm7r9lc0MoGv9BvDY3wk+bH3dTg==
-X-Received: by 2002:adf:8b1c:0:b0:2bf:9478:a91d with SMTP id n28-20020adf8b1c000000b002bf9478a91dmr1393wra.39.1674201855853;
-        Fri, 20 Jan 2023 00:04:15 -0800 (PST)
+        bh=qEiaE3Kt/Zqawbv0sFZW0DAx4T45mpd9/chaTTzXPeo=;
+        b=uAADQvEGL9feXpYSNZoWSQHxp+iHMFSOYR25W8cv2qbIAs2LxPcafYJFOg/JChuGE4
+         35kjrsJUT11NlA18Cy9YRW+1FBEWfI6tIe6+zGfzzqbiG9mIi7bhwQmT2MBqe30OQcm0
+         rAe9VsW5LEhqygA8QiDIlzytJ4IhEbxdCWOdJEgAKx4lc1G+xglqpBlsr6PfRWaNCH+x
+         y8OXePvu1FzMgoO149uOUg6GTRXfa/6ytfma9EEzIoWvob+Gc53MY4soe+XpyVV9KdW4
+         U2hgluYnMBfTfjixquJQcsWmQ0INQxkbZBpDdzQ4DD3oeJWErMqwGVEG7Y0mgE12o1lu
+         48jw==
+X-Gm-Message-State: AFqh2koKaGJcR43ETRMYnjudzpEBwQzn2ZLUIb0d2lFe932x1SiESW9V
+        ITEmS59hwTQEtIU7K82ljeF31A==
+X-Google-Smtp-Source: AMrXdXtel/zRPW7HHqCvaaP8It5ksyI0B/eOUV75c8cXYl4kkTUtSqoTiVeCApG97s//Y7gJnMhLNQ==
+X-Received: by 2002:a05:600c:1c2a:b0:3cf:d0b1:8aa1 with SMTP id j42-20020a05600c1c2a00b003cfd0b18aa1mr12978979wms.0.1674201951795;
+        Fri, 20 Jan 2023 00:05:51 -0800 (PST)
 Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id e11-20020a5d6d0b000000b002bdda9856b5sm1822404wrq.50.2023.01.20.00.04.13
+        by smtp.gmail.com with ESMTPSA id h11-20020a05600c314b00b003db0f4e12c8sm1556702wmo.34.2023.01.20.00.05.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Jan 2023 00:04:15 -0800 (PST)
-Message-ID: <4be5a020-c9a3-cab9-921a-c4cdfe6ce979@linaro.org>
-Date:   Fri, 20 Jan 2023 09:04:12 +0100
+        Fri, 20 Jan 2023 00:05:51 -0800 (PST)
+Message-ID: <aaecbc1a-b43f-c7b3-ee47-0ca338f0196e@linaro.org>
+Date:   Fri, 20 Jan 2023 09:05:49 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.0
-Subject: Re: [PATCH v3 4/7] arm64: dts: qcom: sc7280: Update VA/RX/TX macro
- clock nodes
+Subject: Re: [PATCH v3 2/8] dt-bindints: interconnect/msm8996-cbf: add defines
+ to be used by CBF
 Content-Language: en-US
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        vkoul@kernel.org, agross@kernel.org, andersson@kernel.org,
-        robh+dt@kernel.org, broonie@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_rohkumar@quicinc.com, srinivas.kandagatla@linaro.org,
-        dianders@chromium.org, swboyd@chromium.org, judyhsiao@chromium.org,
-        alsa-devel@alsa-project.org, quic_rjendra@quicinc.com,
-        konrad.dybcio@somainline.org, mka@chromium.org
-References: <1674131227-26456-1-git-send-email-quic_srivasam@quicinc.com>
- <1674131227-26456-5-git-send-email-quic_srivasam@quicinc.com>
- <17b895c0-3985-a012-9b02-94d5ebb11ff9@linaro.org>
- <9ae3b1b0-e9d6-6370-667b-88af5d0efa2e@quicinc.com>
- <7d874a5d-5a26-1ae1-58bc-dd819774190d@linaro.org>
- <3299b57b-7260-0189-ba6f-824db391d81c@quicinc.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20230120061417.2623751-1-dmitry.baryshkov@linaro.org>
+ <20230120061417.2623751-3-dmitry.baryshkov@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <3299b57b-7260-0189-ba6f-824db391d81c@quicinc.com>
+In-Reply-To: <20230120061417.2623751-3-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -87,65 +85,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/01/2023 07:35, Srinivasa Rao Mandadapu wrote:
-> 
-> On 1/20/2023 11:54 AM, Krzysztof Kozlowski wrote:
-> Thanks for your valuable suggestion Krzysztof!!!
->> On 20/01/2023 05:47, Srinivasa Rao Mandadapu wrote:
->>> On 1/19/2023 7:01 PM, Krzysztof Kozlowski wrote:
->>> Thanks for your time Krzysztof!!!
->>>> On 19/01/2023 13:27, Srinivasa Rao Mandadapu wrote:
->>>>> Update VA, RX and TX macro and lpass_tlmm clock properties and
->>>>> enable them.
->>>> Everything is an update and this does not explain what exactly you are
->>>> updating in the nodes and why.
->>>>
->>>>> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
->>>>> Tested-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
->>>>> ---
->>>>>    .../qcom/sc7280-herobrine-audioreach-wcd9385.dtsi  | 59 ++++++++++++++++++++++
->>>>>    1 file changed, 59 insertions(+)
->>>>>
->>>>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
->>>>> index 81e0f3a..674b01a 100644
->>>>> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
->>>>> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
->>>>> @@ -8,8 +8,67 @@
->>>>>    
->>>>>    #include <dt-bindings/sound/qcom,q6afe.h>
->>>>>    
->>>>> +/delete-node/ &lpass_rx_macro;
->>>> Why?
->>> Actually in SoC dtsi (sc7280.dtsi) power domains property used.
->>>
->>> Which is not required for ADSP based solution. As there is no way to delete
->>>
->>> individual property, deleting node and recreating it here.
->>>
->> You can delete property - delete-property. However why in AudioReach
->> device comes without power domains? What does it mean "power domains
->> property is not required"? DTS describes the hardware and the rx macro
->> is powered, isn't it?
-> 
-> Actually in case ADSP bypass solution power domains are handled in HLOS 
-> clock driver.
-> 
-> Whereas in ADSP based solution they are handled in ADSP firmware, and 
-> from HLOS
-> 
-> voted as clocks.
-> 
-> Below is the reference commit.
-> 
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=9e3d83c52844f955aa2975f78cee48bf9f72f5e1
+On 20/01/2023 07:14, Dmitry Baryshkov wrote:
+> On msm8996 CBF interconnects power and performance CPU clusters. Add
+> corresponding interconnect defines to be used in device trees.
 
-I am sorry, but this is one big mess. Hardware is one. I understand that
-Linux drivers can be entirely different but here - and in the past with
-few clocks - the hardware description keeps changing depending on the
-wishes of developers. That's not how bindings and DTS work. This suggest
-that DTS is being pushed to satisfy driver needs, not to properly
-describe the hardware. I am sorry, but hardware does not change.
+Subject: typos and not correct prefix. interconnect: (without /).
 
+
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  include/dt-bindings/interconnect/qcom,msm8996-cbf.h | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
+>  create mode 100644 include/dt-bindings/interconnect/qcom,msm8996-cbf.h
+> 
 Best regards,
 Krzysztof
 
