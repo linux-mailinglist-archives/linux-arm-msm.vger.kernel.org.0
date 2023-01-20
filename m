@@ -2,164 +2,453 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1AE216758A2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 16:33:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 83D296758DB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 16:38:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231487AbjATPc7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Jan 2023 10:32:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35024 "EHLO
+        id S230152AbjATPi1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Jan 2023 10:38:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231461AbjATPcy (ORCPT
+        with ESMTP id S229769AbjATPi1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Jan 2023 10:32:54 -0500
-Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B58EBCE0F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 07:32:49 -0800 (PST)
-Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-4c131bede4bso77336237b3.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 07:32:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=poorly.run; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=9IPtDJM5M6jGN6qD0tP24K72UIm4iRXYGKWNFo7x72g=;
-        b=SPoq6nBK/JeShjz0kPsSHbBdOJtV/AmVLorEPqTuGDzC70Ow5DX8doU0rsRDKCcTD1
-         Jltcq/okn/fjqBisJ9sE69yh3amFyHgGDIqt3YyHdPR0N6qepAWxsS2OMETpUksYGV1S
-         kwvgHr7iyU+Zf8HqHBuJwD0xp+BnLHmYnP0u3hdglzpy03kUEls0HWOct6IEtaAqANmb
-         Q+V1t217x323JxoCLe6IfUbqtk4A/Ytth5Y1OutLyazCII9UdOCnZNL5iFxHvuAhrIPK
-         3bwvEBE3iFXfMvlRByIuUpVcNW3pdXTUVnZ8yCJLWxGQb/RIggDxCRemoyzqpl81n21X
-         kMFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9IPtDJM5M6jGN6qD0tP24K72UIm4iRXYGKWNFo7x72g=;
-        b=nKmPEtqXtJM4eK2pet0j6zd8nQZAhwaG95jObccTcR+l5/yIkI8qMsQp+SBeT5iERK
-         zYjdUC+BWzgqoqgrpu5Q02+5x1asSaFkw8YU8U/aH+Phk2oYX07RGy8tcTxN5s7oE9PV
-         Ycr+GvPGm7FDiay0WfgF13QBQGDdszxBTcMG80OrsYbXAr4i6ZNSVIi/aiNBdKeJP9G4
-         WK2yUUjZPNmKfhOoY5Hb4YKMz/xAbnkcMY+RESCudDzO+o3idi83ITY4llPt+HCsL9QI
-         tFQ169EMn5O5WgFH2gScmiMwEsAgFlMkb+RuYheCTIVBryR9tCexLS0cuB13/wqxlMC/
-         t9iA==
-X-Gm-Message-State: AFqh2krjc6sHh1jUTvhaqSCWYX4MSpqUE9dTjtt+E9VL0/ezVzO54JA2
-        Knvugl1XpROAC6ipsTzQgWtLoQ==
-X-Google-Smtp-Source: AMrXdXtru88v2k61i9cQGS6ax35vAmCsXdW2DZPSz/qrSHebfuajOctI7UdN7zUMawsmB7qZX4N0+w==
-X-Received: by 2002:a0d:d610:0:b0:3af:2118:fc34 with SMTP id y16-20020a0dd610000000b003af2118fc34mr11723672ywd.34.1674228768750;
-        Fri, 20 Jan 2023 07:32:48 -0800 (PST)
-Received: from localhost (200.234.86.34.bc.googleusercontent.com. [34.86.234.200])
-        by smtp.gmail.com with ESMTPSA id j20-20020a05620a289400b006fed58fc1a3sm26448188qkp.119.2023.01.20.07.32.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Jan 2023 07:32:47 -0800 (PST)
-Date:   Fri, 20 Jan 2023 15:32:47 +0000
-From:   Sean Paul <sean@poorly.run>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Mark Yacoub <markyacoub@chromium.org>, quic_khsieh@quicinc.com,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        robdclark@gmail.com, quic_abhinavk@quicinc.com,
-        dmitry.baryshkov@linaro.org, sean@poorly.run, airlied@gmail.com,
-        daniel@ffwll.ch, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@somainline.org,
-        jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com,
-        rodrigo.vivi@intel.com, tvrtko.ursulin@linux.intel.com,
-        tzimmermann@suse.de, ville.syrjala@linux.intel.com,
-        stanislav.lisovskiy@intel.com, matthew.d.roper@intel.com,
-        imre.deak@intel.com, lucas.demarchi@intel.com,
-        manasi.d.navare@intel.com, swati2.sharma@intel.com,
-        bhanuprakash.modem@intel.com, javierm@redhat.com,
-        jose.souza@intel.com, lyude@redhat.com, hbh25y@gmail.com,
-        arun.r.murthy@intel.com, ashutosh.dixit@intel.com,
-        ankit.k.nautiyal@intel.com, maxime@cerno.tech, swboyd@chromium.org,
-        christophe.jaillet@wanadoo.fr, quic_sbillaka@quicinc.com,
-        johan+linaro@kernel.org, dianders@chromium.org, marex@denx.de,
-        quic_jesszhan@quicinc.com, bjorn.andersson@linaro.org,
-        abhinavk@codeaurora.org, seanpaul@chromium.org,
-        Jani Nikula <jani.nikula@intel.com>
-Subject: Re: [PATCH v6 01/10] drm/hdcp: Add drm_hdcp_atomic_check()
-Message-ID: <Y8q0H7SiDkdfmyXP@art_vandelay>
-References: <20230118193015.911074-1-markyacoub@google.com>
- <20230118193015.911074-2-markyacoub@google.com>
- <67170ce0-8622-8b35-e73a-7d873b7a3b8b@linaro.org>
+        Fri, 20 Jan 2023 10:38:27 -0500
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 9FBF97DFA6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 07:37:54 -0800 (PST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 088451576
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 07:37:56 -0800 (PST)
+Received: from e110455-lin.cambridge.arm.com (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 1E1F93F67D
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 07:37:14 -0800 (PST)
+Date:   Fri, 20 Jan 2023 15:36:50 +0000
+From:   Liviu Dudau <liviu.dudau@arm.com>
+To:     Sean Anderson <sean.anderson@seco.com>
+Cc:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        dri-devel@lists.freedesktop.org,
+        Xinliang Liu <xinliang.liu@linaro.org>,
+        linux-mips@vger.kernel.org, Paul Cercueil <paul@crapouillou.net>,
+        John Stultz <jstultz@google.com>,
+        Mihail Atanassov <mihail.atanassov@arm.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Russell King <linux@armlinux.org.uk>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Mali DP Maintainers <malidp@foss.arm.com>,
+        linux-arm-msm@vger.kernel.org,
+        Alain Volmat <alain.volmat@foss.st.com>,
+        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
+        linux-sunxi@lists.linux.dev,
+        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+        Chen Feng <puck.chen@hisilicon.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        etnaviv@lists.freedesktop.org, linux-mediatek@lists.infradead.org,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Sean Paul <sean@poorly.run>,
+        linux-arm-kernel@lists.infradead.org,
+        Tomi Valkeinen <tomba@kernel.org>,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Tian Tao <tiantao6@hisilicon.com>,
+        Jyri Sarha <jyri.sarha@iki.fi>
+Subject: Re: [PATCH v3 3/3] drm: Convert users of drm_of_component_match_add
+ to component_match_add_of
+Message-ID: <Y8q0tN88QGKcIfw/@e110455-lin.cambridge.arm.com>
+References: <20230119191040.1637739-1-sean.anderson@seco.com>
+ <20230119191040.1637739-4-sean.anderson@seco.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <67170ce0-8622-8b35-e73a-7d873b7a3b8b@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230119191040.1637739-4-sean.anderson@seco.com>
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 19, 2023 at 11:37:52AM +0100, Krzysztof Kozlowski wrote:
-> On 18/01/2023 20:30, Mark Yacoub wrote:
-> > From: Sean Paul <seanpaul@chromium.org>
-> > 
-> > This patch moves the hdcp atomic check from i915 to drm_hdcp so other
-> > drivers can use it. No functional changes, just cleaned up some of the
-> > code when moving it over.
-> > 
-> > Acked-by: Jani Nikula <jani.nikula@intel.com>
-> > Acked-by: Jani Nikula <jani.nikula@intel.com>
-> > Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-> > Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
-> > Signed-off-by: Sean Paul <seanpaul@chromium.org>
-> > Signed-off-by: Mark Yacoub <markyacoub@chromium.org>
-> > Link: https://patchwork.freedesktop.org/patch/msgid/20210913175747.47456-2-sean@poorly.run #v1
-> > Link: https://patchwork.freedesktop.org/patch/msgid/20210915203834.1439-2-sean@poorly.run #v2
-> > Link: https://patchwork.freedesktop.org/patch/msgid/20211001151145.55916-2-sean@poorly.run #v3
-> > Link: https://patchwork.freedesktop.org/patch/msgid/20211105030434.2828845-2-sean@poorly.run #v4
-> > Link: https://patchwork.freedesktop.org/patch/msgid/20220411204741.1074308-2-sean@poorly.run #v5
+On Thu, Jan 19, 2023 at 02:10:39PM -0500, Sean Anderson wrote:
+> Every user of this function either uses component_compare_of or
+> something equivalent. Most of them immediately put the device node as
+> well. Convert these users to component_match_add_of and remove
+> drm_of_component_match_add.
 > 
-> It seems all your previous versions were sent not to correct people and
-> lists. Therefore we see it for the first time even though it is v6! 
-
-Hi Krzysztof,
-Thanks for your review comments.
-
-Here are the addresses the last version was sent to, who is missing?
-
-To: dri-devel@lists.freedesktop.org, 
-    jani.nikula@intel.com,
-    intel-gfx@lists.freedesktop.org,
-    freedreno@lists.freedesktop.org,
-    rodrigo.vivi@intel.com
-Cc: bjorn.andersson@linaro.org, 
-    swboyd@chromium.org,
-    abhinavk@codeaurora.org,
-    markyacoub@chromium.org,
-    Sean Paul <seanpaul@chromium.org>,
-    Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-    Maxime Ripard <mripard@kernel.org>,
-    Thomas Zimmermann <tzimmermann@suse.de>,
-    David Airlie <airlied@linux.ie>,
-    Daniel Vetter <daniel@ffwll.ch>,
-    Jani Nikula <jani.nikula@linux.intel.com>,
-    Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-    Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-
-> It's
-> not the first such weird CC list in chromium, so maybe your
-> organisational process could be improved? Not only for you but for
-> colleagues as well, so you all start using get_maintainers.pl on newest
-> kernel (not something ancient)?
-
-I can't really speak for others, but I use MAINTAINERS from drm-tip. The 
-previous patch sets were sent before 24df12013853 ("MAINTAINERS: Add 
-Dmitry as MSM DRM driver co-maintainer"), which might explain why you think
-there are absences?
-
-Thanks again,
-
-Sean
-
+> Signed-off-by: Sean Anderson <sean.anderson@seco.com>
+> Acked-by: Jyri Sarha <jyri.sarhaı@iki.fi>
+> Tested-by: Jyri Sarha <jyri.sarha@iki.fi>
+> ---
 > 
-> Best regards,
-> Krzysztof
+> (no changes since v1)
+> 
+>  .../gpu/drm/arm/display/komeda/komeda_drv.c   |  6 ++--
+>  drivers/gpu/drm/arm/hdlcd_drv.c               |  9 +-----
+>  drivers/gpu/drm/arm/malidp_drv.c              | 11 +------
+>  drivers/gpu/drm/armada/armada_drv.c           | 10 ++++---
+>  drivers/gpu/drm/drm_of.c                      | 29 +++----------------
+>  drivers/gpu/drm/etnaviv/etnaviv_drv.c         |  4 +--
+>  .../gpu/drm/hisilicon/kirin/kirin_drm_drv.c   |  3 +-
+>  drivers/gpu/drm/ingenic/ingenic-drm-drv.c     |  3 +-
+>  drivers/gpu/drm/mediatek/mtk_drm_drv.c        |  4 +--
+>  drivers/gpu/drm/msm/msm_drv.c                 | 14 ++++-----
+>  drivers/gpu/drm/sti/sti_drv.c                 |  3 +-
+>  drivers/gpu/drm/sun4i/sun4i_drv.c             |  3 +-
+>  drivers/gpu/drm/tilcdc/tilcdc_external.c      | 10 ++-----
+>  include/drm/drm_of.h                          | 12 --------
+>  14 files changed, 33 insertions(+), 88 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/arm/display/komeda/komeda_drv.c b/drivers/gpu/drm/arm/display/komeda/komeda_drv.c
+> index 3f4e719eebd8..e3bfc72c378f 100644
+> --- a/drivers/gpu/drm/arm/display/komeda/komeda_drv.c
+> +++ b/drivers/gpu/drm/arm/display/komeda/komeda_drv.c
+> @@ -103,10 +103,8 @@ static void komeda_add_slave(struct device *master,
+>  	struct device_node *remote;
+>  
+>  	remote = of_graph_get_remote_node(np, port, endpoint);
+> -	if (remote) {
+> -		drm_of_component_match_add(master, match, component_compare_of, remote);
+> -		of_node_put(remote);
+> -	}
+> +	if (remote)
+> +		component_match_add_of(master, match, remote);
+>  }
+>  
+>  static int komeda_platform_probe(struct platform_device *pdev)
+> diff --git a/drivers/gpu/drm/arm/hdlcd_drv.c b/drivers/gpu/drm/arm/hdlcd_drv.c
+> index e3507dd6f82a..5f760bb66af4 100644
+> --- a/drivers/gpu/drm/arm/hdlcd_drv.c
+> +++ b/drivers/gpu/drm/arm/hdlcd_drv.c
+> @@ -347,11 +347,6 @@ static const struct component_master_ops hdlcd_master_ops = {
+>  	.unbind		= hdlcd_drm_unbind,
+>  };
+>  
+> -static int compare_dev(struct device *dev, void *data)
+> -{
+> -	return dev->of_node == data;
+> -}
+> -
+>  static int hdlcd_probe(struct platform_device *pdev)
+>  {
+>  	struct device_node *port;
+> @@ -362,9 +357,7 @@ static int hdlcd_probe(struct platform_device *pdev)
+>  	if (!port)
+>  		return -ENODEV;
+>  
+> -	drm_of_component_match_add(&pdev->dev, &match, compare_dev, port);
+> -	of_node_put(port);
+> -
+> +	component_match_add_of(&pdev->dev, &match, port);
+>  	return component_master_add_with_match(&pdev->dev, &hdlcd_master_ops,
+>  					       match);
+>  }
+> diff --git a/drivers/gpu/drm/arm/malidp_drv.c b/drivers/gpu/drm/arm/malidp_drv.c
+> index 589c1c66a6dc..3a49c29ba5b8 100644
+> --- a/drivers/gpu/drm/arm/malidp_drv.c
+> +++ b/drivers/gpu/drm/arm/malidp_drv.c
+> @@ -909,13 +909,6 @@ static const struct component_master_ops malidp_master_ops = {
+>  	.unbind = malidp_unbind,
+>  };
+>  
+> -static int malidp_compare_dev(struct device *dev, void *data)
+> -{
+> -	struct device_node *np = data;
+> -
+> -	return dev->of_node == np;
+> -}
+> -
+>  static int malidp_platform_probe(struct platform_device *pdev)
+>  {
+>  	struct device_node *port;
+> @@ -929,9 +922,7 @@ static int malidp_platform_probe(struct platform_device *pdev)
+>  	if (!port)
+>  		return -ENODEV;
+>  
+> -	drm_of_component_match_add(&pdev->dev, &match, malidp_compare_dev,
+> -				   port);
+> -	of_node_put(port);
+> +	component_match_add_of(&pdev->dev, &match, port);
+>  	return component_master_add_with_match(&pdev->dev, &malidp_master_ops,
+>  					       match);
+>  }
+
+For komeda, mali_dp and hdlcd: Acked-by: Liviu Dudau <liviu.dudau@arm.com>
+
+Best regards,
+Liviu
+
+
+> diff --git a/drivers/gpu/drm/armada/armada_drv.c b/drivers/gpu/drm/armada/armada_drv.c
+> index 0643887800b4..c0211ad7a45d 100644
+> --- a/drivers/gpu/drm/armada/armada_drv.c
+> +++ b/drivers/gpu/drm/armada/armada_drv.c
+> @@ -184,10 +184,12 @@ static void armada_add_endpoints(struct device *dev,
+>  
+>  	for_each_endpoint_of_node(dev_node, ep) {
+>  		remote = of_graph_get_remote_port_parent(ep);
+> -		if (remote && of_device_is_available(remote))
+> -			drm_of_component_match_add(dev, match, component_compare_of,
+> -						   remote);
+> -		of_node_put(remote);
+> +		if (remote) {
+> +			if (of_device_is_available(remote))
+> +				component_match_add_of(dev, match, remote);
+> +			else
+> +				of_node_put(remote);
+> +		}
+>  	}
+>  }
+>  
+> diff --git a/drivers/gpu/drm/drm_of.c b/drivers/gpu/drm/drm_of.c
+> index 7bbcb999bb75..0a474729ddf6 100644
+> --- a/drivers/gpu/drm/drm_of.c
+> +++ b/drivers/gpu/drm/drm_of.c
+> @@ -78,24 +78,6 @@ uint32_t drm_of_find_possible_crtcs(struct drm_device *dev,
+>  }
+>  EXPORT_SYMBOL(drm_of_find_possible_crtcs);
+>  
+> -/**
+> - * drm_of_component_match_add - Add a component helper OF node match rule
+> - * @master: master device
+> - * @matchptr: component match pointer
+> - * @compare: compare function used for matching component
+> - * @node: of_node
+> - */
+> -void drm_of_component_match_add(struct device *master,
+> -				struct component_match **matchptr,
+> -				int (*compare)(struct device *, void *),
+> -				struct device_node *node)
+> -{
+> -	of_node_get(node);
+> -	component_match_add_release(master, matchptr, component_release_of,
+> -				    compare, node);
+> -}
+> -EXPORT_SYMBOL_GPL(drm_of_component_match_add);
+> -
+>  /**
+>   * drm_of_component_probe - Generic probe function for a component based master
+>   * @dev: master device containing the OF node
+> @@ -130,10 +112,9 @@ int drm_of_component_probe(struct device *dev,
+>  			break;
+>  
+>  		if (of_device_is_available(port->parent))
+> -			drm_of_component_match_add(dev, &match, compare_of,
+> -						   port);
+> -
+> -		of_node_put(port);
+> +			component_match_add_of(dev, &match, port);
+> +		else
+> +			of_node_put(port);
+>  	}
+>  
+>  	if (i == 0) {
+> @@ -171,9 +152,7 @@ int drm_of_component_probe(struct device *dev,
+>  				continue;
+>  			}
+>  
+> -			drm_of_component_match_add(dev, &match, compare_of,
+> -						   remote);
+> -			of_node_put(remote);
+> +			component_match_add_of(dev, &match, remote);
+>  		}
+>  		of_node_put(port);
+>  	}
+> diff --git a/drivers/gpu/drm/etnaviv/etnaviv_drv.c b/drivers/gpu/drm/etnaviv/etnaviv_drv.c
+> index 1d2b4fb4bcf8..4a0dba34a6e7 100644
+> --- a/drivers/gpu/drm/etnaviv/etnaviv_drv.c
+> +++ b/drivers/gpu/drm/etnaviv/etnaviv_drv.c
+> @@ -590,8 +590,8 @@ static int etnaviv_pdev_probe(struct platform_device *pdev)
+>  			if (!first_node)
+>  				first_node = core_node;
+>  
+> -			drm_of_component_match_add(&pdev->dev, &match,
+> -						   component_compare_of, core_node);
+> +			of_node_get(core_node);
+> +			component_match_add_of(&pdev->dev, &match, core_node);
+>  		}
+>  	} else {
+>  		char **names = dev->platform_data;
+> diff --git a/drivers/gpu/drm/hisilicon/kirin/kirin_drm_drv.c b/drivers/gpu/drm/hisilicon/kirin/kirin_drm_drv.c
+> index 9c5d49bf40c9..3ee277615c39 100644
+> --- a/drivers/gpu/drm/hisilicon/kirin/kirin_drm_drv.c
+> +++ b/drivers/gpu/drm/hisilicon/kirin/kirin_drm_drv.c
+> @@ -273,8 +273,7 @@ static int kirin_drm_platform_probe(struct platform_device *pdev)
+>  	if (!remote)
+>  		return -ENODEV;
+>  
+> -	drm_of_component_match_add(dev, &match, component_compare_of, remote);
+> -	of_node_put(remote);
+> +	component_match_add_of(dev, &match, remote);
+>  
+>  	return component_master_add_with_match(dev, &kirin_drm_ops, match);
+>  }
+> diff --git a/drivers/gpu/drm/ingenic/ingenic-drm-drv.c b/drivers/gpu/drm/ingenic/ingenic-drm-drv.c
+> index 3d5af44bf92d..d0c87175dec4 100644
+> --- a/drivers/gpu/drm/ingenic/ingenic-drm-drv.c
+> +++ b/drivers/gpu/drm/ingenic/ingenic-drm-drv.c
+> @@ -1444,8 +1444,7 @@ static int ingenic_drm_probe(struct platform_device *pdev)
+>  	if (!np)
+>  		return ingenic_drm_bind(dev, false);
+>  
+> -	drm_of_component_match_add(dev, &match, component_compare_of, np);
+> -	of_node_put(np);
+> +	component_match_add_of(dev, &match, np);
+>  
+>  	return component_master_add_with_match(dev, &ingenic_master_ops, match);
+>  }
+> diff --git a/drivers/gpu/drm/mediatek/mtk_drm_drv.c b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+> index cd5b18ef7951..abead814bfdc 100644
+> --- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+> +++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+> @@ -787,8 +787,8 @@ static int mtk_drm_probe(struct platform_device *pdev)
+>  		    comp_type == MTK_DSI) {
+>  			dev_info(dev, "Adding component match for %pOF\n",
+>  				 node);
+> -			drm_of_component_match_add(dev, &match, component_compare_of,
+> -						   node);
+> +			of_node_get(node);
+> +			component_match_add_of(dev, &match, node);
+>  		}
+>  
+>  		ret = mtk_ddp_comp_init(node, &private->ddp_comp[comp_id], comp_id);
+> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+> index 8b0b0ac74a6f..8ccf57def955 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.c
+> +++ b/drivers/gpu/drm/msm/msm_drv.c
+> @@ -5,6 +5,7 @@
+>   * Author: Rob Clark <robdclark@gmail.com>
+>   */
+>  
+> +#include <linux/component.h>
+>  #include <linux/dma-mapping.h>
+>  #include <linux/fault-inject.h>
+>  #include <linux/kthread.h>
+> @@ -1156,10 +1157,9 @@ static int add_components_mdp(struct device *master_dev,
+>  			continue;
+>  
+>  		if (of_device_is_available(intf))
+> -			drm_of_component_match_add(master_dev, matchptr,
+> -						   component_compare_of, intf);
+> -
+> -		of_node_put(intf);
+> +			component_match_add_of(master_dev, matchptr, intf);
+> +		else
+> +			of_node_put(intf);
+>  	}
+>  
+>  	return 0;
+> @@ -1188,9 +1188,9 @@ static int add_gpu_components(struct device *dev,
+>  		return 0;
+>  
+>  	if (of_device_is_available(np))
+> -		drm_of_component_match_add(dev, matchptr, component_compare_of, np);
+> -
+> -	of_node_put(np);
+> +		component_match_add_of(dev, matchptr, np);
+> +	else
+> +		of_node_put(np);
+>  
+>  	return 0;
+>  }
+> diff --git a/drivers/gpu/drm/sti/sti_drv.c b/drivers/gpu/drm/sti/sti_drv.c
+> index ef6a4e63198f..e3aae4574c75 100644
+> --- a/drivers/gpu/drm/sti/sti_drv.c
+> +++ b/drivers/gpu/drm/sti/sti_drv.c
+> @@ -238,8 +238,7 @@ static int sti_platform_probe(struct platform_device *pdev)
+>  	child_np = of_get_next_available_child(node, NULL);
+>  
+>  	while (child_np) {
+> -		drm_of_component_match_add(dev, &match, component_compare_of,
+> -					   child_np);
+> +		component_match_add_of(dev, &match, child_np);
+>  		child_np = of_get_next_available_child(node, child_np);
+>  	}
+>  
+> diff --git a/drivers/gpu/drm/sun4i/sun4i_drv.c b/drivers/gpu/drm/sun4i/sun4i_drv.c
+> index cc94efbbf2d4..9b3ddd82f1be 100644
+> --- a/drivers/gpu/drm/sun4i/sun4i_drv.c
+> +++ b/drivers/gpu/drm/sun4i/sun4i_drv.c
+> @@ -323,7 +323,8 @@ static int sun4i_drv_add_endpoints(struct device *dev,
+>  	     of_device_is_available(node))) {
+>  		/* Add current component */
+>  		DRM_DEBUG_DRIVER("Adding component %pOF\n", node);
+> -		drm_of_component_match_add(dev, match, component_compare_of, node);
+> +		of_node_get(node);
+> +		component_match_add_of(dev, match, node);
+>  		count++;
+>  	}
+>  
+> diff --git a/drivers/gpu/drm/tilcdc/tilcdc_external.c b/drivers/gpu/drm/tilcdc/tilcdc_external.c
+> index 3b86d002ef62..0138ce02a64f 100644
+> --- a/drivers/gpu/drm/tilcdc/tilcdc_external.c
+> +++ b/drivers/gpu/drm/tilcdc/tilcdc_external.c
+> @@ -155,11 +155,6 @@ int tilcdc_attach_external_device(struct drm_device *ddev)
+>  	return ret;
+>  }
+>  
+> -static int dev_match_of(struct device *dev, void *data)
+> -{
+> -	return dev->of_node == data;
+> -}
+> -
+>  int tilcdc_get_external_components(struct device *dev,
+>  				   struct component_match **match)
+>  {
+> @@ -173,7 +168,8 @@ int tilcdc_get_external_components(struct device *dev,
+>  	}
+>  
+>  	if (match)
+> -		drm_of_component_match_add(dev, match, dev_match_of, node);
+> -	of_node_put(node);
+> +		component_match_add_of(dev, match, node);
+> +	else
+> +		of_node_put(node);
+>  	return 1;
+>  }
+> diff --git a/include/drm/drm_of.h b/include/drm/drm_of.h
+> index 10ab58c40746..685c44dc1dae 100644
+> --- a/include/drm/drm_of.h
+> +++ b/include/drm/drm_of.h
+> @@ -33,10 +33,6 @@ uint32_t drm_of_crtc_port_mask(struct drm_device *dev,
+>  			    struct device_node *port);
+>  uint32_t drm_of_find_possible_crtcs(struct drm_device *dev,
+>  				    struct device_node *port);
+> -void drm_of_component_match_add(struct device *master,
+> -				struct component_match **matchptr,
+> -				int (*compare)(struct device *, void *),
+> -				struct device_node *node);
+>  int drm_of_component_probe(struct device *dev,
+>  			   int (*compare_of)(struct device *, void *),
+>  			   const struct component_master_ops *m_ops);
+> @@ -69,14 +65,6 @@ static inline uint32_t drm_of_find_possible_crtcs(struct drm_device *dev,
+>  	return 0;
+>  }
+>  
+> -static inline void
+> -drm_of_component_match_add(struct device *master,
+> -			   struct component_match **matchptr,
+> -			   int (*compare)(struct device *, void *),
+> -			   struct device_node *node)
+> -{
+> -}
+> -
+>  static inline int
+>  drm_of_component_probe(struct device *dev,
+>  		       int (*compare_of)(struct device *, void *),
+> -- 
+> 2.35.1.1320.gc452695387.dirty
 > 
 
 -- 
-Sean Paul, Software Engineer, Google / Chromium OS
+====================
+| I would like to |
+| fix the world,  |
+| but they're not |
+| giving me the   |
+ \ source code!  /
+  ---------------
+    ¯\_(ツ)_/¯
