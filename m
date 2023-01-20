@@ -2,88 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C3454674D65
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 07:35:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F295674D6B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 07:38:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230058AbjATGfe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Jan 2023 01:35:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37260 "EHLO
+        id S229529AbjATGif (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Jan 2023 01:38:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230039AbjATGfd (ORCPT
+        with ESMTP id S229517AbjATGie (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Jan 2023 01:35:33 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1548654C3;
-        Thu, 19 Jan 2023 22:35:31 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30K4nqTE027742;
-        Fri, 20 Jan 2023 06:35:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=h1Nt0Kj3EVYuq6Lt/Hu4JFG+2Y6oufddlZ8+ev7cjw4=;
- b=KH/FWy7U7f9eTex69kpwce5747rgKGafmlQPDDsKhI1bLEvvwxjUnGRNeUfHMUfaklaE
- JrzXMQTUjNmH/lL5qGCBwbf4vi1NvQ0KSjXV2QepI7Uv+J9+W+zLmkNCcLMTdQPmH2p7
- Uj5i476iLRSXu67Qbv+iDV2c4OWmxLoDCUdtEmtEuI4tfGoUa7EKilFxfG6driiHH+zC
- SjA/4xcrENpOl3X/bY30al789F6NMYUEBJxQVOtvp7FQuH/iAQ9ophFrCMkj194VVQrC
- 41+dE+fm4E0IffwTnjOHUjSlFoBl7s6b/5XMtzxZ2u+H9bwnRIiOu7nsS5IOAVijhBPW 5A== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n70eyk0sq-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 20 Jan 2023 06:35:19 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30K6ZI9x003832
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 20 Jan 2023 06:35:18 GMT
-Received: from [10.216.43.228] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Thu, 19 Jan
- 2023 22:35:12 -0800
-Message-ID: <3299b57b-7260-0189-ba6f-824db391d81c@quicinc.com>
-Date:   Fri, 20 Jan 2023 12:05:09 +0530
+        Fri, 20 Jan 2023 01:38:34 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FD9611EB7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 22:38:33 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id r2so3926434wrv.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 22:38:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=FZtRmIZ42UnRz6LhmwOmoeKPNBphQysUvengJAatuzk=;
+        b=mvvDxCz9s11Ai4vmLdV2UGQGcAUuhBixOGiaz6B4OVJeBVYVI1L9jdcvkR4bFlyDa1
+         icigmZn+zStDeV+NBmQ6eNHRQ2Z9xP/ZkVG9GdmrM5HMpmzrmO5vzMUJKtB3I7VIwKYb
+         EU9eaxgYoN30V790SKqF7Sb7q0Vy0tjtkxPMCgSDraGFaPouF1QmTr+b9AOXgfdm5vqp
+         wrHi1M9UqFYEwz/yy7eKK5dNbzsh/E5b8YZIYpjAGLFc2Cd+6QPuGT8j+imJhqPZG4Gs
+         M5yqCkI9aISsSuSNk9U+zaN3kJCe9S6v/VINIr6pvNaTac/4GVIeGvxETigsBPrrc6qs
+         WTog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=FZtRmIZ42UnRz6LhmwOmoeKPNBphQysUvengJAatuzk=;
+        b=dWtoTC4RbqfruWdFaRtoxtXgfkGqiDL1FBC7fwvNmkKIfT1tJKD1zYgZIX3rP0P9jt
+         6NtbSl29F5HpYQ60cTXi+HKTryimpy7sKybu5BE8nGCECkH1t0jSw5l+AaXyDA/hmasU
+         zvKEjsGipXxTF7FEc4El1XeS9x2UMTxrYrXD2WDi+HSEsbhAwhAFYJP1znzJRljZVBLH
+         ffrCPGS8ViiWbVxH1qcoMG1lTxaQLlx+GN4+MnawnNaFoNANbLQJ7nHdUCMf+KzKKva/
+         3DvsOcYVxDNvKuyErn+YRmdWD6Rgsjq9KgiZDZjZH8q4RORpwpIvXtoxB6xeq7tQnDmc
+         AR/g==
+X-Gm-Message-State: AFqh2kprhuQaHFtfbcmQQAfTdo14QJb2AWxQBeUfpwW2kXcJmX9pXNtT
+        NSia1crXN9zhTRrI8ZN5sYnDqXdMhQVdEFlR
+X-Google-Smtp-Source: AMrXdXvbEWmQ4JIEHt3Bob7S2yKY4TRYoAhRrOVQAmt28VEcaD3Z8/z4hIYoA8+WaOnqoC20RwPBQg==
+X-Received: by 2002:a5d:5e84:0:b0:2bd:dd44:8b13 with SMTP id ck4-20020a5d5e84000000b002bddd448b13mr14220222wrb.60.1674196711684;
+        Thu, 19 Jan 2023 22:38:31 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id b11-20020a05600018ab00b002be2279f100sm9846759wri.96.2023.01.19.22.38.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 Jan 2023 22:38:31 -0800 (PST)
+Message-ID: <3aa54a61-8a42-6ddf-d524-c20dc03111fa@linaro.org>
+Date:   Fri, 20 Jan 2023 07:38:28 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH v3 4/7] arm64: dts: qcom: sc7280: Update VA/RX/TX macro
- clock nodes
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH] dt-bindings: pinctrl: qcom,pmic-mpp: Restrict 'mpp' child
+ node name pattern
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <vkoul@kernel.org>, <agross@kernel.org>, <andersson@kernel.org>,
-        <robh+dt@kernel.org>, <broonie@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_rohkumar@quicinc.com>,
-        <srinivas.kandagatla@linaro.org>, <dianders@chromium.org>,
-        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
-        <alsa-devel@alsa-project.org>, <quic_rjendra@quicinc.com>,
-        <konrad.dybcio@somainline.org>, <mka@chromium.org>
-References: <1674131227-26456-1-git-send-email-quic_srivasam@quicinc.com>
- <1674131227-26456-5-git-send-email-quic_srivasam@quicinc.com>
- <17b895c0-3985-a012-9b02-94d5ebb11ff9@linaro.org>
- <9ae3b1b0-e9d6-6370-667b-88af5d0efa2e@quicinc.com>
- <7d874a5d-5a26-1ae1-58bc-dd819774190d@linaro.org>
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Organization: Qualcomm
-In-Reply-To: <7d874a5d-5a26-1ae1-58bc-dd819774190d@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230120020600.3232001-1-robh@kernel.org>
+ <20230120042905.d2pdrzyv3e3airdj@builder.lan>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230120042905.d2pdrzyv3e3airdj@builder.lan>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: YLHaY3gEPYW0Su-PDUOw78pG_YygqKMn
-X-Proofpoint-GUID: YLHaY3gEPYW0Su-PDUOw78pG_YygqKMn
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-20_03,2023-01-19_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- impostorscore=0 spamscore=0 priorityscore=1501 malwarescore=0 adultscore=0
- phishscore=0 suspectscore=0 clxscore=1015 mlxscore=0 mlxlogscore=999
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301200060
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -91,58 +81,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On 1/20/2023 11:54 AM, Krzysztof Kozlowski wrote:
-Thanks for your valuable suggestion Krzysztof!!!
-> On 20/01/2023 05:47, Srinivasa Rao Mandadapu wrote:
->> On 1/19/2023 7:01 PM, Krzysztof Kozlowski wrote:
->> Thanks for your time Krzysztof!!!
->>> On 19/01/2023 13:27, Srinivasa Rao Mandadapu wrote:
->>>> Update VA, RX and TX macro and lpass_tlmm clock properties and
->>>> enable them.
->>> Everything is an update and this does not explain what exactly you are
->>> updating in the nodes and why.
->>>
->>>> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
->>>> Tested-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
->>>> ---
->>>>    .../qcom/sc7280-herobrine-audioreach-wcd9385.dtsi  | 59 ++++++++++++++++++++++
->>>>    1 file changed, 59 insertions(+)
->>>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
->>>> index 81e0f3a..674b01a 100644
->>>> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
->>>> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
->>>> @@ -8,8 +8,67 @@
->>>>    
->>>>    #include <dt-bindings/sound/qcom,q6afe.h>
->>>>    
->>>> +/delete-node/ &lpass_rx_macro;
->>> Why?
->> Actually in SoC dtsi (sc7280.dtsi) power domains property used.
+On 20/01/2023 05:29, Bjorn Andersson wrote:
+> On Thu, Jan 19, 2023 at 08:06:00PM -0600, Rob Herring wrote:
+>> Just 'mpp' is a bit ambiguous for a pattern. It allows any prefix or
+>> suffix. I couldn't find any actual users, so update the pattern to match
+>> the example.
 >>
->> Which is not required for ADSP based solution. As there is no way to delete
+>> Signed-off-by: Rob Herring <robh@kernel.org>
+>> ---
+>>  Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
 >>
->> individual property, deleting node and recreating it here.
->>
-> You can delete property - delete-property. However why in AudioReach
-> device comes without power domains? What does it mean "power domains
-> property is not required"? DTS describes the hardware and the rx macro
-> is powered, isn't it?
+>> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml
+>> index 72cce38bc1ce..891a7385d7cb 100644
+>> --- a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml
+>> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml
+>> @@ -74,7 +74,7 @@ patternProperties:
+>>      oneOf:
+>>        - $ref: "#/$defs/qcom-pmic-mpp-state"
+>>        - patternProperties:
+>> -          "mpp":
+>> +          "-mpp$":
+> 
+> How about aligning it with the other Qualcomm pinctrl bindings and make
+> it "-pins$" instead?
+> 
+> If my grep is correct we have one "mpp5" and two "-pins$" currently in
+> the sources, so this should be beneficial as well.
 
-Actually in case ADSP bypass solution power domains are handled in HLOS 
-clock driver.
+Let's align it with other Qualcomm pinctrl bindings, so:
+	"-pins$":
 
-Whereas in ADSP based solution they are handled in ADSP firmware, and 
-from HLOS
+I can also fix the DTS to match it.
 
-voted as clocks.
+Best regards,
+Krzysztof
 
-Below is the reference commit.
-
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=9e3d83c52844f955aa2975f78cee48bf9f72f5e1
-
->
-> Best regards,
-> Krzysztof
->
