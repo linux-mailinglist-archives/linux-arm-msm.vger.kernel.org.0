@@ -2,76 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 41A5A674798
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 00:56:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 477356747D0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 01:07:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230325AbjASX4t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Jan 2023 18:56:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52726 "EHLO
+        id S229617AbjATAHe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Jan 2023 19:07:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230184AbjASX4r (ORCPT
+        with ESMTP id S229478AbjATAHd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Jan 2023 18:56:47 -0500
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4543D9F3A2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 15:56:46 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id l8so2838656wms.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 15:56:46 -0800 (PST)
+        Thu, 19 Jan 2023 19:07:33 -0500
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3909346082
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 16:07:31 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id hw16so9962767ejc.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 16:07:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7zfu79BDE69Zh0TrvdzIrEU2jRKWV7JH3x7U+ZjYWM0=;
-        b=SJhxSwdZNU7z2+p1g3yIQBnyVza86mIdK28LITnqaoKYY+K/HVrfV1WLttbwLO2Nkp
-         ZVhAQP84sWr8ifdX7EhC+kLFhh02b9sNd76wq7HJO8LywM5aZecSuvBTvNq7LzYNwI3C
-         oD6zQDjq2WRlwUFPrcE0IZFE96cBBkUvPd50ksZb6lLZkT1LaAdfycv19codiQlbN4l0
-         PSbsi2XsqIwN18gSevvEN4hiSjFoV3Tkat6RwmwnfYU1NI+z8Bbt/md1qbumq192GNEq
-         cROMbpkJDxGYfgUvuqXd+RgiufUo24/8mMqXDFDOwvPNk21IixWNf7DPeZJ0U40dcCIn
-         A/bg==
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=2V8Ln6e8tegMHSBR/J0K1l0Tuvgg5sXARNbUfWI/C08=;
+        b=GaQqhxxDs2Yu9TEHYHaW7FaEC5qe3eqdZRboUv1cZObr8UKmpxXD8WDx1MuCfpM1Oi
+         ZTgaKuAIwehs6ElVZnISD0lbgkwrjgP00OZm+aMLCHOeMX2yWo71LLQsA3XSLoJ1H3Lg
+         Nl9H7LVKRJTqrrmefk4OPeU2PyHuKn31+yjWE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7zfu79BDE69Zh0TrvdzIrEU2jRKWV7JH3x7U+ZjYWM0=;
-        b=PRr3WdxdCauV9hDshVnhYwQ+GJlFyUQMSUj5Ol1C4yYU1QuH/NB9BB0flNgmKBuHeB
-         K6CQnLcclxLeLRiaOFfuu5DPnnHzBdA2JFURfqF6NhvWDHYLjyTdmXn6muAGagoqeSC9
-         qVVQOYudof9G7NF1JTOpmSAfwlrwtcPsv2855boWyuyWcj70vzROnRMrwbLBj/PAQcMn
-         SYm9CPgWBHp6/JVJqmGx6wRPQmm9MDTiRJJnMMb0go9m+lAN7cwV+HiX+Jw8uIxHmFFg
-         KBdwpMTMh/NZHLxuoLv/BEJRpdV1fugZfkVGTmeb7pXGlQ0wRO65gCzpYtOfvuFLVQJt
-         3f1w==
-X-Gm-Message-State: AFqh2kqdbATGnl/iE7M8Sf8LF9p6wFFfJ+/zku4Kwza7eNXZBZCM1WoJ
-        cJUPFLl5JwOejCNrCCXYECaURQ==
-X-Google-Smtp-Source: AMrXdXt4ndAKiOX5/+V2WXaYeC/vcQeAB0NXODmWZRk/BIIRlfvQ7Yl95THd31XadduqSNeOpdHRZg==
-X-Received: by 2002:a05:600c:1c83:b0:3da:fbd8:59a0 with SMTP id k3-20020a05600c1c8300b003dafbd859a0mr12107833wms.11.1674172604830;
-        Thu, 19 Jan 2023 15:56:44 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id j8-20020a05600c1c0800b003d9862ec435sm606542wms.20.2023.01.19.15.56.44
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2V8Ln6e8tegMHSBR/J0K1l0Tuvgg5sXARNbUfWI/C08=;
+        b=sUl1Asa7pxRnx7hKv6MEfI2McDsD7MBGnbTpxLM8lgjkN6YIGeyhXEf97A4HjBouPC
+         Ij7JNSaxCJ2azazlph7j0PMfM9TEfdeKKBfy7nVlLWOk4/w+wJjU0kJgLVLZRvhjSP8U
+         4H9nJxShtVif2Jqeixf+a7NkUUVGKQflwnp51l6TAGOc/pza3cIVpFJ5+aBKBMfsey4C
+         ChJhW8qnndqJiAWmSP7yQmbRdzDNmlNaC5l4dxftM5xQfI57kfvsO+4oEJnfkdgLKoQu
+         79dwE3qOorPXAhxR6t05TvO4X/+wXmjFcwbtaTye/OsBTppClauMV39MRXIWyu4gagRf
+         018g==
+X-Gm-Message-State: AFqh2kq6cfY5PUkWOJqsYnj+G+ySI+mPXv+oCqbW8DKEtM9I7Eb7FnEw
+        L4fXoa7pyIC5FqT0OQQFdiYf674poZ3fyIk2iCE=
+X-Google-Smtp-Source: AMrXdXtn1APen6YwPsLDL1fRTS21zYCc4f73OBpZn2AJEA+K1LhV1oSJ9QemAXAz9zR7SjDPmP/eGw==
+X-Received: by 2002:a17:906:5414:b0:861:b4c5:63ba with SMTP id q20-20020a170906541400b00861b4c563bamr11484465ejo.41.1674173249601;
+        Thu, 19 Jan 2023 16:07:29 -0800 (PST)
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com. [209.85.128.48])
+        by smtp.gmail.com with ESMTPSA id lh2-20020a170906f8c200b00877696c015asm2221437ejb.134.2023.01.19.16.07.27
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 Jan 2023 15:56:44 -0800 (PST)
-Message-ID: <35dcb764-e340-5fe7-6637-cdb5f84266ce@linaro.org>
-Date:   Thu, 19 Jan 2023 23:56:43 +0000
+        Thu, 19 Jan 2023 16:07:28 -0800 (PST)
+Received: by mail-wm1-f48.google.com with SMTP id l8so2852874wms.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Jan 2023 16:07:27 -0800 (PST)
+X-Received: by 2002:a05:600c:180f:b0:3db:d4b:f019 with SMTP id
+ n15-20020a05600c180f00b003db0d4bf019mr461234wmp.170.1674173247519; Thu, 19
+ Jan 2023 16:07:27 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: [PATCH] interconnect: Skip call into provider if initial bw is
- zero
-Content-Language: en-US
-To:     Vivek Aknurwar <quic_viveka@quicinc.com>, djakov@kernel.org
-Cc:     quic_mdtipton@quicinc.com, quic_okukatla@quicinc.com,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <1673647679-15216-1-git-send-email-quic_viveka@quicinc.com>
- <83a7bfed-3b16-3d01-b1b2-f197252bd0b1@linaro.org>
- <5e1f37ba-494a-19d2-e412-7631508ab142@linaro.org>
- <151790dd-02e5-a1f5-aab5-360f39e21c57@quicinc.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <151790dd-02e5-a1f5-aab5-360f39e21c57@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+References: <1672193785-11003-1-git-send-email-quic_khsieh@quicinc.com>
+ <1672193785-11003-3-git-send-email-quic_khsieh@quicinc.com>
+ <CAD=FV=VeBBFTZBjZNhMUBO1uTNKBwcgZM6ehnw3BGmervE7jXA@mail.gmail.com> <CAE-0n50JB211OhA7pqj6U3rfBeeS0ofzY_moE77REmY2awo7bA@mail.gmail.com>
+In-Reply-To: <CAE-0n50JB211OhA7pqj6U3rfBeeS0ofzY_moE77REmY2awo7bA@mail.gmail.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 19 Jan 2023 16:07:11 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=W92EO9+XnRCuBCAePQmH8+CgGQf5ETEtHcRFDkNGhJ0A@mail.gmail.com>
+Message-ID: <CAD=FV=W92EO9+XnRCuBCAePQmH8+CgGQf5ETEtHcRFDkNGhJ0A@mail.gmail.com>
+Subject: Re: [PATCH v6 2/2] drm/msm/dp: enhance dp controller isr
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, vkoul@kernel.org, daniel@ffwll.ch,
+        airlied@gmail.com, agross@kernel.org, dmitry.baryshkov@linaro.org,
+        andersson@kernel.org, quic_abhinavk@quicinc.com,
+        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,106 +80,102 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/01/2023 22:18, Vivek Aknurwar wrote:
-> Hi Bryan,
-> Thanks for taking time to review the patch.
-> 
-> On 1/13/2023 5:40 PM, Bryan O'Donoghue wrote:
->> On 14/01/2023 01:24, Bryan O'Donoghue wrote:
->>> On 13/01/2023 22:07, Vivek Aknurwar wrote:
->>>> Currently framework sets bw even when init bw requirements are zero 
->>>> during
->>>> provider registration, thus resulting bulk of set bw to hw.
->>>> Avoid this behaviour by skipping provider set bw calls if init bw is 
->>>> zero.
->>>>
->>>> Signed-off-by: Vivek Aknurwar <quic_viveka@quicinc.com>
->>>> ---
->>>>   drivers/interconnect/core.c | 17 ++++++++++-------
->>>>   1 file changed, 10 insertions(+), 7 deletions(-)
->>>>
->>>> diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
->>>> index 25debde..43ed595 100644
->>>> --- a/drivers/interconnect/core.c
->>>> +++ b/drivers/interconnect/core.c
->>>> @@ -977,14 +977,17 @@ void icc_node_add(struct icc_node *node, 
->>>> struct icc_provider *provider)
->>>>       node->avg_bw = node->init_avg;
->>>>       node->peak_bw = node->init_peak;
->>>> -    if (provider->pre_aggregate)
->>>> -        provider->pre_aggregate(node);
->>>> -
->>>> -    if (provider->aggregate)
->>>> -        provider->aggregate(node, 0, node->init_avg, node->init_peak,
->>>> -                    &node->avg_bw, &node->peak_bw);
->>>> +    if (node->avg_bw || node->peak_bw) {
->>>> +        if (provider->pre_aggregate)
->>>> +            provider->pre_aggregate(node);
->>>> +
->>>> +        if (provider->aggregate)
->>>> +            provider->aggregate(node, 0, node->init_avg, 
->>>> node->init_peak,
->>>> +                        &node->avg_bw, &node->peak_bw);
->>>> +        if (provider->set)
->>>> +            provider->set(node, node);
->>>> +    }
->>>> -    provider->set(node, node);
->>>>       node->avg_bw = 0;
->>>>       node->peak_bw = 0;
->>>
->>> I have the same comment/question for this patch that I had for the 
->>> qcom arch specific version of it. This patch seems to be doing at a 
->>> higher level what the patch below was doing at a lower level.
->>>
->>> https://lore.kernel.org/lkml/1039a507-c4cd-e92f-dc29-1e2169ce5078@linaro.org/T/#m0c90588d0d1e2ab88c39be8f5f3a8f0b61396349
->>>
->>> what happens to earlier silicon - qcom silicon which previously made 
->>> explicit zero requests ?
-> 
-> This patch is to optimize and avoid all those bw 0 requests on each node 
-> addition during probe (which results in rpmh remote calls) for upcoming 
-> targets.
+Hi,
 
-So why not change it just for rpmh ?
+On Wed, Jan 18, 2023 at 2:34 PM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> Quoting Doug Anderson (2023-01-18 10:29:59)
+> > Hi,
+> >
+> > On Tue, Dec 27, 2022 at 6:16 PM Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+> > > +
+> > >         if (isr & DP_INTR_AUX_ERROR) {
+> > >                 aux->aux_error_num = DP_AUX_ERR_PHY;
+> > >                 dp_catalog_aux_clear_hw_interrupts(aux->catalog);
+> > > +               ret = IRQ_HANDLED;
+> > >         }
+> >
+> > The end result of the above is a weird mix of "if" and "else if" for
+> > no apparent reason. All except one of them just updates the exact same
+> > variable so doing more than one is mostly useless. If you made it
+> > consistently with "else" then the whole thing could be much easier,
+> > like this (untested):
+>
+> Totally agreed. I even asked that when I posted the RFC[1]!
+>
+> "Can we also simplify the aux handlers to be a big pile of
+> if-else-if conditions that don't overwrite the 'aux_error_num'? That
+> would simplify the patch below."
+>
+> > > @@ -425,17 +464,15 @@ void dp_aux_isr(struct drm_dp_aux *dp_aux)
+> > >
+> > >         /* no interrupts pending, return immediately */
+> > >         if (!isr)
+> > > -               return;
+> > > +               return IRQ_NONE;
+> > >
+> > >         if (!aux->cmd_busy)
+> > > -               return;
+> > > +               return IRQ_NONE;
+> > >
+> > >         if (aux->native)
+> > > -               dp_aux_native_handler(aux, isr);
+> > > +               return dp_aux_native_handler(aux, isr);
+> > >         else
+> > > -               dp_aux_i2c_handler(aux, isr);
+> > > -
+> > > -       complete(&aux->comp);
+> > > +               return dp_aux_i2c_handler(aux, isr);
+> >
+> > Personally, I wouldn't have done it this way. I guess that means I
+> > disagree with Stephen. I'm not dead-set against this way and it's fine
+> > if you want to continue with it. If I were doing it, though, then I
+> > would always return IRQ_HANDLED IF dp_catalog_aux_get_irq() returned
+> > anything non-zero. Why? Officially if dp_catalog_aux_get_irq() returns
+> > something non-zero then you know for sure that there was an interrupt
+> > for this device and officially you have "handled" it by acking it,
+> > since dp_catalog_aux_get_irq() acks all the bits that it returns. That
+> > means that even if dp_aux_native_handler() or dp_aux_i2c_handler()
+> > didn't do anything with the interrupt you at least know that it was
+> > for us (so if the IRQ is shared we properly report back to the IRQ
+> > subsystem) and that it won't keep firing over and over (because we
+> > acked it).
+>
+> I'm primarily concerned with irq storms taking down the system. Can that
+> happen here? If not, then returning IRQ_NONE is not really useful. The
+> overall IRQ for DP looks to be level, because the driver requests the
+> IRQ that way. The aux interrupt status bits look to be edge style
+> interrupts though, because the driver acks them in the handler. I guess
+> that means the edges come in and latch into the interrupt status
+> register so the driver has to ack all of them to drop the IRQ level for
+> the overall DP interrupt? If the driver only acked the bits it looked at
+> instead of all interrupt bits in the register, then the level would
+> never go down for the IRQ if an unhandled interrupt bit was present like
+> 'DP_INTR_PLL_UNLOCKED'. That would mean we would hit spurious IRQ
+> handling very quickly if that interrupt bit was ever seen.
+>
+> But the driver is acking all interrupts, so probably trying to work
+> IRQ_NONE into this code is not very useful? The only thing it would
+> catch is DP_INTR_PLL_UNLOCKED being set over and over again, which seems
+> unlikely. Of course, why is this driver unmasking interrupt bits it
+> doesn't care about? That may be leading to useless interrupt handling in
+> this driver if some interrupt bit is unmasked but never looked at. Can
+> that be fixed in another patch?
+>
+> >
+> > NOTE: I still like having the complete() call in
+> > dp_aux_native_handler() and dp_aux_i2c_handler() and, to me, that part
+> > of this patch is worthwhile. That makes it more obvious that the code
+> > is truly expecting that complete to be called for all error cases as
+> > well as transfer finished.
+> >
+>
+> I think it may be required. We don't want to allow DP_INTR_PLL_UNLOCKED
+> to complete() the transfer.
 
-You are changing it for rpm here, as well as for Samsung and NXP 
-interconnects.
+OK, I've tried to code up what I think is the right solution. I'd
+appreciate review and testing.
 
-Taking rpm as an example, for certain generations of silicon we make an 
-explicit zero call.
+https://lore.kernel.org/r/20230119145248.1.I90ffed3ddd21e818ae534f820cb4d6d8638859ab@changeid
 
-https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/blob/LA.BR.1.2.9-00810-8x09.0/drivers/platform/msm/msm_bus/msm_bus_bimc.c#L1367
-
-Here's the original RPM commit that sets a zero
-
-https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/commit/d91d108656a7a44a6dfcfb318a25d39c5418e54b
-
->>> https://lore.kernel.org/lkml/1039a507-c4cd-e92f-dc29-1e2169ce5078@linaro.org/T/#m589e8280de470e038249bb362634221771d845dd
->>>
->>> https://lkml.org/lkml/2023/1/3/1232
->>>
->>> Isn't it a better idea to let lower layer drivers differentiate what 
->>> they do ?
-> 
-> AFAIU lower layer driver can/should not differentiate between normal 
-> flow calls vs made as a result from probe/initialization of driver. 
-> Hence even bw 0 request is honored as like client in general wish to 
-> vote 0 as in an normal use case.
-
-But surely if I vote zero, then I mean to vote zero ?
-
-Do we know that for every architecture and for every different supported 
-that ignoring a zero vote is the right thing to do ?
-
-I don't think we do know that.
-
-https://lore.kernel.org/linux-arm-msm/20230116132152.405535-1-konrad.dybcio@linaro.org/
-
-I think for older rpm this is a departure from long existing logic.
-
-Maybe its entirely benign but, IMO you should be proposing this change 
-at the rpmh level only, not at the top level across multiple different 
-interconnect arches.
-
----
-bod
+-Doug
