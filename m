@@ -2,77 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 55044675994
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 17:10:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C2D3675A6A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 17:49:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229590AbjATQKk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Jan 2023 11:10:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44794 "EHLO
+        id S230497AbjATQtn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Jan 2023 11:49:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229492AbjATQKj (ORCPT
+        with ESMTP id S230487AbjATQtn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Jan 2023 11:10:39 -0500
-Received: from mail.skyhub.de (mail.skyhub.de [IPv6:2a01:4f8:190:11c2::b:1457])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FE4BC4E91;
-        Fri, 20 Jan 2023 08:10:29 -0800 (PST)
-Received: from zn.tnic (p5de8e9fe.dip0.t-ipconnect.de [93.232.233.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id CB2051EC04DA;
-        Fri, 20 Jan 2023 17:10:27 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
-        t=1674231027;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
-        bh=+Uv2qYI/Acdi8YQFtUpIZmkuRZJh/qURv6bPGDHtKxI=;
-        b=IlgRb9IqZibsZVsRONdfAdjTJZyU4XJwavWqV1N3/+bTTHCfVgdVNdlpY+tpLhYivZTFkn
-        IBklpJFY9uzz+NQnP5XBoS61Q0go4d+mSCDkx37B3BVykoontsC8MX6LWmBCtWayspS2Fo
-        OkeunDqKOQA+jz/fV7kwhyaZdMiIoW0=
-Date:   Fri, 20 Jan 2023 17:10:21 +0100
-From:   Borislav Petkov <bp@alien8.de>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, tony.luck@intel.com,
-        quic_saipraka@quicinc.com, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        james.morse@arm.com, mchehab@kernel.org, rric@kernel.org,
-        linux-edac@vger.kernel.org, quic_ppareek@quicinc.com,
-        luca.weiss@fairphone.com, ahalaney@redhat.com, steev@kali.org
-Subject: Re: [PATCH v6 02/17] EDAC/qcom: Add platform_device_id table for
- module autoloading
-Message-ID: <Y8q87Yvy/uLYqSZ5@zn.tnic>
-References: <20230118150904.26913-1-manivannan.sadhasivam@linaro.org>
- <20230118150904.26913-3-manivannan.sadhasivam@linaro.org>
+        Fri, 20 Jan 2023 11:49:43 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB985702B9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 08:49:41 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id d2so5360650wrp.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 08:49:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ReqL3/KdTtoMI5gOn47wEfy8Brch/hDuTRzHxmxqXLI=;
+        b=HrWAbzIu1bfu5+Ce6Jw2FEMPVasYO23fFdoUKI+s2D5dbd/iFNqYGuO1NWjYcusFKy
+         fP9liXt78VZOHABtZOIYTAWWAAwkkrz7GVp/N10X76oFvPrJmDlHk+4Fgwv8rjCKwuus
+         tFouDnkYAVUa4IIcvCYAQxzY/2uIqD/2hPonHIq4+yuN/6kQgGsnpArb/o55+WXIgbEB
+         tRn0xd4tH8ozAowgLV/G7pe9Hr7HEcWabeLEvmDCDJNMCpwGvWH2rIokvMONX8B9UE5M
+         pQuSJnDvLsfG3xLeUvaKGtLV2rDhWCWwojOJBeUj/zyGuO6T4FPiweqaOlj1sZm9tP9y
+         mvEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ReqL3/KdTtoMI5gOn47wEfy8Brch/hDuTRzHxmxqXLI=;
+        b=PmPAy9d/6qrSGr4CAf/xcw029Ws/h64J+GfUBBUrHj+vNz1qw3ninFaW+eKs+1DCiX
+         6TI1Ukyk+M2kNQsAwImxlSuARdjhA8wHNjqQ/7YCQbFfcE2rUoPXUzLw2gfB8CG2uw/4
+         LviniGp5XpXz6lC2d6wzR0hi9azy86uf62xtlDE94wcEwBzJhPAg7GK3xj+J2wYiiN0n
+         9nZp5yWfxErLCTo80n8btKXxRzDB/EAF1e6V+mp5jM6QTMXF766xUcAKap+4GQVSnu6W
+         Wygfm7VW0OUBUqfU67x1QTxV5aJCRTJekpmuGr9JK8mhuj8nwLWRIsUofWVo97o+C5rf
+         P0xg==
+X-Gm-Message-State: AFqh2koZeTfryGC0Fxd0mRG+VHy+iJAbgQBAN8Mpb/k0igrpnPONKLkr
+        bGq0ldHgWSfaI4wI2pXtQwSi2A==
+X-Google-Smtp-Source: AMrXdXtEWQc0BoNfAHarjgxoITnBqOmzi3Fm+XNUr6JyoaeecEc3V7G+XJtcFtNOp9ktTOsRs0d5CQ==
+X-Received: by 2002:a5d:4e84:0:b0:2be:c94c:ebff with SMTP id e4-20020a5d4e84000000b002bec94cebffmr1852291wru.56.1674233380271;
+        Fri, 20 Jan 2023 08:49:40 -0800 (PST)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id y18-20020a5d6152000000b002425be3c9e2sm35581781wrt.60.2023.01.20.08.49.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 20 Jan 2023 08:49:39 -0800 (PST)
+Message-ID: <e5ff49d4-45c7-8c4a-d624-d8f7cc9ce2cb@linaro.org>
+Date:   Fri, 20 Jan 2023 16:49:38 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20230118150904.26913-3-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: [PATCH v2 2/4] arm64: dts: qcom: sm6350: Add camera clock
+ controller
+Content-Language: en-US
+To:     Luca Weiss <luca.weiss@fairphone.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221213-sm6350-cci-v2-0-15c2c14c34bb@fairphone.com>
+ <20221213-sm6350-cci-v2-2-15c2c14c34bb@fairphone.com>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20221213-sm6350-cci-v2-2-15c2c14c34bb@fairphone.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 18, 2023 at 08:38:49PM +0530, Manivannan Sadhasivam wrote:
-> Add a device ID table so that the driver loads automatically when the
-> associated platform_device gets registered.
-> 
-> Tested-by: Steev Klimaszewski <steev@kali.org> # Thinkpad X13s
-> Tested-by: Andrew Halaney <ahalaney@redhat.com> # sa8540p-ride
-> Reported-by: Andrew Halaney <ahalaney@redhat.com>
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  drivers/edac/qcom_edac.c | 7 +++++++
->  1 file changed, 7 insertions(+)
+On 20/01/2023 13:13, Luca Weiss wrote:
+> +		camcc: clock-controller@ad00000 {
+> +			compatible = "qcom,sm6350-camcc";
+> +			reg = <0 0x0ad00000 0 0x16000>;
+> +			clocks = <&rpmhcc RPMH_CXO_CLK>;
+> +			#clock-cells = <1>;
+> +			#reset-cells = <1>;
+> +			#power-domain-cells = <1>;
+> +		};
 
-Applied, thx.
+Should you include
 
--- 
-Regards/Gruss,
-    Boris.
+required-opps = <&rpmhpd_opp_low_svs>;
 
-https://people.kernel.org/tglx/notes-about-netiquette
+?
+
+---
+bod
+
