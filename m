@@ -2,265 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 48B2F6753EA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 12:55:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 52AF36754E0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Jan 2023 13:47:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229851AbjATLzs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Jan 2023 06:55:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34702 "EHLO
+        id S230178AbjATMrO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Jan 2023 07:47:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229943AbjATLzr (ORCPT
+        with ESMTP id S229540AbjATMrN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Jan 2023 06:55:47 -0500
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F5C894CA0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 03:55:46 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id u19so13295437ejm.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Jan 2023 03:55:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=EVtsBJ7H2KNrK3G6RxZ2DLy5xTmEMTPBpX6GkJGZa5E=;
-        b=ftsAS2bHaMUmJHhKespNWM3DsCMQ2sHlG2b38WCBrjzTcUvyCIsj8fP64i7IFrkoN5
-         94kRlnhNB0K75yTNIYDbe5JGl7f0i09KL4m5T/r3PGsjkKql2u0ZyJsmr4Nz4r+U+ad/
-         9C9wv3H90czXJy5wA9vJNI+vvppPHehfL4/1qkyRML8GlLCSKFHOF8zjnRDcMpCWoNJ4
-         yBAvvanuuNVCotO31vr8rcAyIslgwLOVgvyzuBFOrzOd/yFsRrdpE3obZR0poeaMN3Zw
-         a60Q1RpP/OFh5xiWjgpMKXW7j4ralV1LtR+lxaMID3dK89DbdsW8TPxh9VujB4qw3KLu
-         bjGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EVtsBJ7H2KNrK3G6RxZ2DLy5xTmEMTPBpX6GkJGZa5E=;
-        b=BebrHqCNSQwhKKOVZQGlxtJWY2b1nVFWXtSt2MtlIc/gUp6x86CjA7dMKT0eUWiU9v
-         RJvdrqZ70OlhIsFXhT38blqUk7zia5zDxBH5s6C2X7UMAYl4LcnUqLa8hZH3yN7xGlwZ
-         RiJMZOAtaP72tGxs/5nOrkr8NUK5HxByUngawprJj8Sp/F6wBY7sfGglg6uZkZCI6c9F
-         r64Z7Ca3aWasWDqOGntCRHsRR8lQwA2MXgfehR/+MJHlCmeHssfLUNcEFDEPtH5G0HYR
-         W82IVEwk/q9aaKSwdJuNCWtzWjcBKG229uAdJiwaeKmeegg0sfh2Y9/3r0rGjcnwmQhr
-         bF3Q==
-X-Gm-Message-State: AFqh2krvqwbmE/WZJRKd4TnsJC+4C1dCnM2V5mnRTQD8LPVCP/OjSMhL
-        w9TnTY34m4Oq7cs4w5b+1ucqOw==
-X-Google-Smtp-Source: AMrXdXtkRellbUhEZob0odXDiTuKhEgdutMsliVFDjeutf6jQ+gx/hacBgMoHeKU47hB0GPuKhaEyQ==
-X-Received: by 2002:a17:907:d506:b0:7c0:cc69:571b with SMTP id wb6-20020a170907d50600b007c0cc69571bmr17370793ejc.8.1674215744562;
-        Fri, 20 Jan 2023 03:55:44 -0800 (PST)
-Received: from [192.168.1.101] (abyk37.neoplus.adsl.tpnet.pl. [83.9.30.37])
-        by smtp.gmail.com with ESMTPSA id 18-20020a170906311200b0084b89c66eb5sm17679900ejx.4.2023.01.20.03.55.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Jan 2023 03:55:44 -0800 (PST)
-Message-ID: <8764d815-d74b-4f67-b94c-f85966c922aa@linaro.org>
-Date:   Fri, 20 Jan 2023 12:55:41 +0100
+        Fri, 20 Jan 2023 07:47:13 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F06681BC2;
+        Fri, 20 Jan 2023 04:47:12 -0800 (PST)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30KCX71f029448;
+        Fri, 20 Jan 2023 12:47:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=JzX+rtg+HZuJiDwfuJ8Do11GcSMBCSLI9yEvqazh47E=;
+ b=peQdyfjWJsnDOnoEnKOAwSo3cucozcJqsB947+rYRo5kwKfXCH7m0jhKNuQ5ez3QLIou
+ 6jwS9wJ3GfInPZacnPJpC9AvIK3eUi1TtEe++PpZVliPwGmdFA0rLTFO1C5lgdHjVaWX
+ +YN5AZHXIf+Cy6YgZpqudok+C9aBj5eqfAU5mLm4jueUzfe8CIpUoHsriRmuMqzZ9Fnv
+ BvCxET86NE5DPuCsyXPd2w+kEu7utm5yPer4TWu1UuO0H3EHZQzrPfb0L2FUXD1iR2Z2
+ AFJooqNvKLOT0lqyNTepR7VuS5gfMSbMvczy31MmiFg/c05BLOLAEnx3XjCbUjcji8WU zA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n6wbsbxy7-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 20 Jan 2023 12:47:05 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30KCl4Ke029528
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 20 Jan 2023 12:47:04 GMT
+Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Fri, 20 Jan 2023 04:46:59 -0800
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     <swboyd@chromium.org>, <agross@kernel.org>, <andersson@kernel.org>,
+        <robh+dt@kernel.org>, <broonie@kernel.org>,
+        <quic_plai@quicinc.com>, <krzysztof.kozlowski+dt@linaro.org>,
+        <konrad.dybcio@somainline.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_rohkumar@quicinc.com>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: [PATCH v5 0/6] Add resets for ADSP based audio clock controller driver
+Date:   Fri, 20 Jan 2023 18:16:40 +0530
+Message-ID: <1674218806-7711-1-git-send-email-quic_srivasam@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: sm6350: Add CCI nodes
-Content-Language: en-US
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221213-sm6350-cci-v1-0-e5d0c36e0c4f@fairphone.com>
- <20221213-sm6350-cci-v1-3-e5d0c36e0c4f@fairphone.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20221213-sm6350-cci-v1-3-e5d0c36e0c4f@fairphone.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: GTXD0lSssPkQvaRwYHZe80-wcdkj5d1i
+X-Proofpoint-GUID: GTXD0lSssPkQvaRwYHZe80-wcdkj5d1i
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-20_08,2023-01-20_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ mlxlogscore=802 malwarescore=0 impostorscore=0 priorityscore=1501
+ bulkscore=0 phishscore=0 adultscore=0 mlxscore=0 suspectscore=0
+ clxscore=1015 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301200120
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add resets and remove qdsp6ss clcok controller for audioreach based platforms. 
 
+Changes since v4:
+    -- Update Fixes tag in Merge lpasscc into lpass_aon patch.
+    -- Revert removal of clk_regmap structure in Merge lpasscc into lpass_aon patch.
 
-On 20.01.2023 12:11, Luca Weiss wrote:
-> Add nodes for the two CCI blocks found on SM6350.
-> 
-> The first contains two i2c busses and while the second one might also
-> contains two busses, the downstream kernel only has one configured, and
-> some boards use the GPIOs for the potential cci1_i2c1 one other
-> purposes, so leave that one unconfigured.
-> 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
->  arch/arm64/boot/dts/qcom/sm6350.dtsi | 132 +++++++++++++++++++++++++++++++++++
->  1 file changed, 132 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-> index 300ced5cda57..666c1c80e4e6 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-> @@ -6,6 +6,7 @@
->  
->  #include <dt-bindings/clock/qcom,gcc-sm6350.h>
->  #include <dt-bindings/clock/qcom,rpmh.h>
-> +#include <dt-bindings/clock/qcom,sm6350-camcc.h>
->  #include <dt-bindings/dma/qcom-gpi.h>
->  #include <dt-bindings/gpio/gpio.h>
->  #include <dt-bindings/interconnect/qcom,icc.h>
-> @@ -1435,6 +1436,95 @@ usb_1_dwc3: usb@a600000 {
->  			};
->  		};
->  
-> +		cci0: cci@ac4a000 {
-> +			compatible = "qcom,sm6350-cci", "qcom,msm8996-cci";
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-These two belong at the bottom
-> +
-> +			reg = <0 0x0ac4a000 0 0x1000>;
-> +			interrupts = <GIC_SPI 468 IRQ_TYPE_EDGE_RISING>;
-> +			power-domains = <&camcc TITAN_TOP_GDSC>;
-> +
-> +			clocks = <&camcc CAMCC_CAMNOC_AXI_CLK>,
-> +				 <&camcc CAMCC_SOC_AHB_CLK>,
-> +				 <&camcc CAMCC_SLOW_AHB_CLK_SRC>,
-> +				 <&camcc CAMCC_CPAS_AHB_CLK>,
-> +				 <&camcc CAMCC_CCI_0_CLK>,
-> +				 <&camcc CAMCC_CCI_0_CLK_SRC>;
-> +			clock-names = "camnoc_axi",
-> +				      "soc_ahb",
-> +				      "slow_ahb_src",
-> +				      "cpas_ahb",
-> +				      "cci",
-> +				      "cci_src";
-> +
-> +			assigned-clocks = <&camcc CAMCC_CAMNOC_AXI_CLK>,
-> +					  <&camcc CAMCC_CCI_0_CLK>;
-> +			assigned-clock-rates = <80000000>, <37500000>;
-> +
-> +			pinctrl-names = "default", "sleep";
-Please move pinctrl-names below pinctrl-N for consistency
-with other properties ending with -names.
+Changes since v3:
+    -- Remove duplicate clock resets patch.
+    -- Add binding headers for q6 clocks.
+    -- Create new patch for merging lpasscc q6 clocks into lpass_aon.
+    -- Create new patches for handling conflicts of ADSP and bypass solution.
 
-> +			pinctrl-0 = <&cci0_default &cci1_default>;
-> +			pinctrl-1 = <&cci0_sleep &cci1_sleep>;
-> +
-> +			status = "disabled";
-> +
-> +			cci0_i2c0: i2c-bus@0 {
-> +				reg = <0>;
-> +				clock-frequency = <1000000>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +			};
-> +
-> +			cci0_i2c1: i2c-bus@1 {
-> +				reg = <1>;
-> +				clock-frequency = <1000000>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +			};
-> +		};
-> +
-> +		cci1: cci@ac4b000 {
-> +			compatible = "qcom,sm6350-cci", "qcom,msm8996-cci";
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +
-> +			reg = <0 0x0ac4b000 0 0x1000>;
-> +			interrupts = <GIC_SPI 462 IRQ_TYPE_EDGE_RISING>;
-> +			power-domains = <&camcc TITAN_TOP_GDSC>;
-> +
-> +			clocks = <&camcc CAMCC_CAMNOC_AXI_CLK>,
-> +				 <&camcc CAMCC_SOC_AHB_CLK>,
-> +				 <&camcc CAMCC_SLOW_AHB_CLK_SRC>,
-> +				 <&camcc CAMCC_CPAS_AHB_CLK>,
-> +				 <&camcc CAMCC_CCI_1_CLK>,
-> +				 <&camcc CAMCC_CCI_1_CLK_SRC>;
-> +			clock-names = "camnoc_axi",
-> +				      "soc_ahb",
-> +				      "slow_ahb_src",
-> +				      "cpas_ahb",
-> +				      "cci",
-> +				      "cci_src";
-> +
-> +			assigned-clocks = <&camcc CAMCC_CAMNOC_AXI_CLK>,
-> +					  <&camcc CAMCC_CCI_1_CLK>;
-> +			assigned-clock-rates = <80000000>, <37500000>;
-> +
-> +			pinctrl-names = "default", "sleep";
-> +			pinctrl-0 = <&cci2_default>;
-> +			pinctrl-1 = <&cci2_sleep>;
-> +
-> +			status = "disabled";
-> +
-> +			cci1_i2c0: i2c-bus@0 {
-> +				reg = <0>;
-> +				clock-frequency = <1000000>;
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +			};
-> +
-> +			/* SM6350 seems to have cci1_i2c1 on gpio2 & gpio3 but unused downstream */
-> +		};
-> +
->  		camcc: clock-controller@ad00000 {
->  			compatible = "qcom,sm6350-camcc";
->  			reg = <0 0x0ad00000 0 0x16000>;
-> @@ -1522,6 +1612,48 @@ tlmm: pinctrl@f100000 {
->  			#interrupt-cells = <2>;
->  			gpio-ranges = <&tlmm 0 0 157>;
->  
-> +			cci0_default: cci0-default-state {
-> +				pins = "gpio39", "gpio40";
-> +				function = "cci_i2c";
-> +				bias-pull-up;
-Most other pin definitions in our directory have bias
-properties below drive-strength, please reorder.
+Changes since v2:
+    -- Revert removing qdsp6ss clock control.
+    -- Add Conditional check for qdsp6ss clock registration.
+Changes since v1:
+    -- Update commit message.
+    -- Remove qdsp6ss clock control.
 
-Konrad
-> +				drive-strength = <2>;
-> +			};
-> +
-> +			cci0_sleep: cci0-sleep-state {
-> +				pins = "gpio39", "gpio40";
-> +				function = "cci_i2c";
-> +				bias-pull-down;
-> +				drive-strength = <2>;
-> +			};
-> +
-> +			cci1_default: cci1-default-state {
-> +				pins = "gpio41", "gpio42";
-> +				function = "cci_i2c";
-> +				bias-pull-up;
-> +				drive-strength = <2>;
-> +			};
-> +
-> +			cci1_sleep: cci1-sleep-state {
-> +				pins = "gpio41", "gpio42";
-> +				function = "cci_i2c";
-> +				bias-pull-down;
-> +				drive-strength = <2>;
-> +			};
-> +
-> +			cci2_default: cci2-default-state {
-> +				pins = "gpio43", "gpio44";
-> +				function = "cci_i2c";
-> +				bias-pull-up;
-> +				drive-strength = <2>;
-> +			};
-> +
-> +			cci2_sleep: cci2-sleep-state {
-> +				pins = "gpio43", "gpio44";
-> +				function = "cci_i2c";
-> +				bias-pull-down;
-> +				drive-strength = <2>;
-> +			};
-> +
->  			sdc2_off_state: sdc2-off-state {
->  				clk-pins {
->  					pins = "sdc2_clk";
-> 
+Srinivasa Rao Mandadapu (6):
+  dt-bindings: clock: qcom,sc7280-lpasscc: Add qcom,adsp-pil-mode
+    property
+  dt-bindings: clock: lpassaudiocc-sc7280: Add binding headers for
+    lpasscc
+  clk: qcom: lpasscc-sc7280: Skip qdsp6ss clock registration
+  clk: qcom: lpasscorecc-sc7280: Skip lpasscorecc registration
+  clk: qcom: lpassaudiocc-sc7280: Merge lpasscc into lpass_aon
+  clk: qcom: lpassaudiocc-sc7280: Skip lpass_aon_cc_pll config
+
+ .../devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml    |  7 +++++++
+ drivers/clk/qcom/lpassaudiocc-sc7280.c                    | 15 ++++++++++-----
+ drivers/clk/qcom/lpasscc-sc7280.c                         | 12 +++++++-----
+ drivers/clk/qcom/lpasscorecc-sc7280.c                     |  3 +++
+ include/dt-bindings/clock/qcom,lpassaudiocc-sc7280.h      |  2 ++
+ 5 files changed, 29 insertions(+), 10 deletions(-)
+
+-- 
+2.7.4
+
