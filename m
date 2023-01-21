@@ -2,35 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C1FEF67685A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Jan 2023 20:23:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 68D83676867
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Jan 2023 20:25:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230030AbjAUTXr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 21 Jan 2023 14:23:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54904 "EHLO
+        id S229831AbjAUTZw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 21 Jan 2023 14:25:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229883AbjAUTXp (ORCPT
+        with ESMTP id S229680AbjAUTZv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 21 Jan 2023 14:23:45 -0500
-Received: from out2.migadu.com (out2.migadu.com [IPv6:2001:41d0:2:aacc::])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1ED228D26;
-        Sat, 21 Jan 2023 11:23:44 -0800 (PST)
-Message-ID: <f2266be7-b0b8-8b10-8b0f-e8bae4196917@ansari.sh>
+        Sat, 21 Jan 2023 14:25:51 -0500
+Received: from out-187.mta0.migadu.com (out-187.mta0.migadu.com [IPv6:2001:41d0:1004:224b::bb])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22D961F5F6
+        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Jan 2023 11:25:51 -0800 (PST)
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ansari.sh; s=key1;
-        t=1674329023;
+        t=1674329148;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=vkejwVXi6/FCUirpcEx8CpAKTfT9V6ZNYQg0zp0VucE=;
-        b=OwsNbhHNx9WIgZg10kN708xweLzQ221HgXIvPxC37f/1ryTR4pKy5PrAjJOQ3oCIcuOWiD
-        FsDCvT7ny40siLOVBMbvk0H0J1DJkwJjdl1rYfKLu/gT2coLXsXvy37AA0wXXDfh6kLiYW
-        dYcq6ysXl0/TJKvDyVKJNMIYYgl41mM=
-Date:   Sat, 21 Jan 2023 19:23:41 +0000
-MIME-Version: 1.0
-Subject: Re: [PATCH v3 0/3] Add XO clocks for MSM8226/MSM8974
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=U7rpjGG4NdYtPyqjlrpIBGX8eBcKA0o9fEOPBmr9xxM=;
+        b=maZmw7af+WirSWWRtUHAHGWuAcxXdgehxoaEgMdmANaqDMsCh57bMMvse6LI9QGwdr7enq
+        fB+GTWamOmLdxSkkcukmFCDBd6uMeGarmRrbNeGhvSSs5BX6C6Yeg+1ztEPCDFD+u6ydAF
+        4bQ4UDdxah9PudCIst/80zA8hEXuYf0=
+From:   Rayyan Ansari <rayyan@ansari.sh>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        Rayyan Ansari <rayyan@ansari.sh>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         devicetree@vger.kernel.org,
@@ -40,44 +38,34 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht,
         Michael Turquette <mturquette@baylibre.com>,
         Rob Herring <robh+dt@kernel.org>,
         Stephen Boyd <sboyd@kernel.org>
-References: <20230121175838.755636-1-rayyan@ansari.sh>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From:   Rayyan Ansari <rayyan@ansari.sh>
-In-Reply-To: <20230121175838.755636-1-rayyan@ansari.sh>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Subject: [PATCH v4 0/3] Add XO clocks for MSM8226/MSM8974
+Date:   Sat, 21 Jan 2023 19:25:37 +0000
+Message-Id: <20230121192540.9177-1-rayyan@ansari.sh>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Migadu-Flow: FLOW_OUT
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
-        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/01/2023 17:58, Rayyan Ansari wrote:
-> Changes since v2:
-> - Base off linux-next
-> - Add correct XO clock to MSM8974 as well
-> 
-> Rayyan Ansari (3):
->    clk: qcom: smd: Add XO RPM clocks for MSM8226/MSM8974
->    ARM: dts: qcom: msm8226: add clocks and clock-names to GCC node
+Changes since v3:
+- Put the rpmcc.h include back in
 
-I've just noticed that rpmcc.h has somehow been missed in this commit. I 
-will send v4 to address this.
+Rayyan Ansari (3):
+  clk: qcom: smd: Add XO RPM clocks for MSM8226/MSM8974
+  ARM: dts: qcom: msm8226: add clocks and clock-names to GCC node
+  ARM: dts: qcom: msm8974: add correct XO clock source to GCC node
 
->    ARM: dts: qcom: msm8974: add correct XO clock source to GCC node
-> 
->   arch/arm/boot/dts/qcom-msm8226.dtsi | 5 +++++
->   arch/arm/boot/dts/qcom-msm8974.dtsi | 2 +-
->   drivers/clk/qcom/clk-smd-rpm.c      | 2 ++
->   3 files changed, 8 insertions(+), 1 deletion(-)
-> 
+ arch/arm/boot/dts/qcom-msm8226.dtsi | 6 ++++++
+ arch/arm/boot/dts/qcom-msm8974.dtsi | 2 +-
+ drivers/clk/qcom/clk-smd-rpm.c      | 2 ++
+ 3 files changed, 9 insertions(+), 1 deletion(-)
 
 -- 
-Rayyan Ansari
-https://ansari.sh
+2.39.0
 
