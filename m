@@ -2,165 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 02DB06768A9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Jan 2023 21:05:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 43E9F6769E3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Jan 2023 23:57:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229840AbjAUUFL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 21 Jan 2023 15:05:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41634 "EHLO
+        id S229850AbjAUW5v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 21 Jan 2023 17:57:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53058 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229805AbjAUUFK (ORCPT
+        with ESMTP id S229559AbjAUW5t (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 21 Jan 2023 15:05:10 -0500
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A905A22A04
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Jan 2023 12:05:09 -0800 (PST)
-Received: by mail-pj1-x102a.google.com with SMTP id k10-20020a17090a590a00b0022ba875a1a4so5087760pji.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Jan 2023 12:05:09 -0800 (PST)
+        Sat, 21 Jan 2023 17:57:49 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B402635B5
+        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Jan 2023 14:57:47 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id t5so7769123wrq.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Jan 2023 14:57:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=0j60d7iQ4NQWxCiQzwUehUL0a3y+Bi4urvTxeUjWvB8=;
-        b=wz7V7Svw9SegVn7t5xdBgv0rmPDaDmHugVucHOACIk/EoelZOb1s4Jwa0vj+9nH6Pf
-         fhjKIdyrdch+NgeMQgk8Fo6j0IKfA19sMs5FlvzBQgMlfHH4+A5CvN4VuXvZBOJHYcel
-         zeVDIsmIvFpAtBIhavYrZIVMZh0I2vUxV/gDjk+Qf2gFHHKsvnLY6JQ4LXmq0S2+cpe1
-         /dBZsFvlEOwIq0BbQ8Cipc24KrYOpVLa3hShtAwkpxHT4RK8KXlxv230Iq3D4BQCxn5o
-         B8C5b/ZWtAyBbxxugpADmTiXsODRJCDcckRCPxxsG0vj0TqZr3fvMJGENK1yelgwhsA4
-         wcBQ==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DXevFDlFQdM/zI7Jx7BcXm3YkWz/eRd8voNlgNsEDEs=;
+        b=fOk7XXQyvFjmtjCFm1qgajijZ9hisHU8wsSpmwQeu0iyQ/WWys4CJdsCq3k+0fbDH/
+         R1z3xUq7q4lDTiZHyX2MgmIzRO9JvoSjwwWC7WiZAmJzWZy9OGov5nfpupFLKX1BffXc
+         jGgpG/MCAXB59mRd8Lrkb4t07e32LrFaojqAtswjVCGnhWaV6j3+dFViR7qSl/ddn5mi
+         M6JaI6gCDUW2fLgrU2/9m28Sm+yocGfFl9LfpQs8qJorogk9CNXo8++TTZNrnBuJoKlb
+         5R+9hXzpsVsQT91uBXHZ+kECAHLaQj0zXzBFqthurQj3Y6R3YWpGlhh/cbLj7ttO+l8K
+         AsvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=0j60d7iQ4NQWxCiQzwUehUL0a3y+Bi4urvTxeUjWvB8=;
-        b=6yxzLapPlHVvBjdWrGjks8V6W28dJb2eHSayrufTusgZATc8VSELaySoTa/qtBgTYv
-         EVfXC6a8Q7jTGrJnaoXn1pjlOa3bbJ/RJFs7iZG8Leb3JIrZNtT5UR74v/23KcMnke28
-         FfsY9gHazLpRYk7Ysuf1LpNjEFD1mn1ktkPdqXAhQl84Xe4PFj4/S0KmgeeuJkZ/ntnU
-         gBWFE+mMFhJc9zelLYZRsNYLkYE8YoGkgcTRZFUZZsXyQz9MJBT8nQHElAg7AKzWgXfU
-         cufdVQDmrHyCxP+WV1Zuw+niCCp/WB93oFPce+FaRGe+nEAYSfjfIQ6sjG49Hn0lExq3
-         +hPA==
-X-Gm-Message-State: AFqh2ko3gHoW8ZiJRBPp5BT0f+qbLxNAqkjpoOMofC4HudN9wPD6DQFP
-        f0sKBIa5g0tDUH2R920gQEZnbyorlO81TPib
-X-Google-Smtp-Source: AMrXdXsgTu/qEHUxOMVP9vS7O/BqUv57gbtll3vcKJw/BSN9mpGVvzKzdBCWTUqBXTzNYKcMoQy+yQ==
-X-Received: by 2002:a05:6a20:d80e:b0:ac:b2a3:e39c with SMTP id iv14-20020a056a20d80e00b000acb2a3e39cmr19018212pzb.62.1674331508623;
-        Sat, 21 Jan 2023 12:05:08 -0800 (PST)
-Received: from localhost.localdomain ([223.233.74.24])
-        by smtp.gmail.com with ESMTPSA id bg7-20020a056a02010700b004785c24ffb4sm15595269pgb.26.2023.01.21.12.05.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Jan 2023 12:05:07 -0800 (PST)
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
-        bhupesh.sharma@linaro.org, robh+dt@kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: sm6115: Add smp2p nodes
-Date:   Sun, 22 Jan 2023 01:34:54 +0530
-Message-Id: <20230121200454.1423567-1-bhupesh.sharma@linaro.org>
-X-Mailer: git-send-email 2.38.1
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DXevFDlFQdM/zI7Jx7BcXm3YkWz/eRd8voNlgNsEDEs=;
+        b=MhkBFr2sBOc06VfyS7koV37ZwGHUhZSK2EVjSZejDZOpPGIG5Vyfnif4cx20jaH2ne
+         8REOZIZg8m971CCI5AO6uUyqHb54puPLXCZTOF9PnTfudHGS+1bYLv/uXjxN/YCRVcr6
+         7+BwR7o3BboSEPiOU6UWOG0VCjR8t7/TjifUvE6Hu9iwOOIpngsCajW9+9jpfp1FwAgq
+         nuaE7g1g2Jo7do/K6Ebcs6Qmz10RY9gwav9V4ZglcKbVR6LYsrh5YfRF0oL77yAUXyIx
+         z1//e2tZBcmWtOW/N/2adXUZheWohenfea8ijyQuC0nHpWcK212HnCwWXCzkUfr6XhP6
+         iK/g==
+X-Gm-Message-State: AFqh2kqnxcwAmhOiMl64Q38/28ojUMuD0S92pYNSCKW6hcFCmLbicRkP
+        nlH/YOTi+Lie2S5Z+lhSbQQj8g==
+X-Google-Smtp-Source: AMrXdXsUDxCkXVypog+Cjl1KgXGXiZ+K1LLyRLQkDar7eCHpCQ0/MhePcfFKKNBi0EORYD4Ui4ot6Q==
+X-Received: by 2002:a5d:4fc8:0:b0:256:ff7d:2347 with SMTP id h8-20020a5d4fc8000000b00256ff7d2347mr24451448wrw.13.1674341866203;
+        Sat, 21 Jan 2023 14:57:46 -0800 (PST)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id e1-20020a5d65c1000000b002be15ee1377sm13079444wrw.22.2023.01.21.14.57.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 21 Jan 2023 14:57:45 -0800 (PST)
+Message-ID: <1d6c5aae-dde8-3780-e851-f304e43d3ddf@linaro.org>
+Date:   Sat, 21 Jan 2023 22:57:44 +0000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: [PATCH v3 5/8] arm64: dts: qcom: Add msm8939 SoC
+Content-Language: en-US
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        djakov@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, benl@squareup.com,
+        shawn.guo@linaro.org, fabien.parent@linaro.org, leo.yan@linaro.org,
+        dmitry.baryshkov@linaro.org, Jun Nie <jun.nie@linaro.org>,
+        James Willcox <jwillcox@squareup.com>,
+        Joseph Gates <jgates@squareup.com>,
+        Max Chen <mchen@squareup.com>, Zac Crosby <zac@squareup.com>,
+        Vincent Knecht <vincent.knecht@mailoo.org>
+References: <20230117024846.1367794-1-bryan.odonoghue@linaro.org>
+ <20230117024846.1367794-6-bryan.odonoghue@linaro.org>
+ <Y8fC/GCHfENQmBNC@gerhold.net>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <Y8fC/GCHfENQmBNC@gerhold.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the adsp, cdsp and modem smp2p nodes to sm6115.
+On 18/01/2023 09:59, Stephan Gerhold wrote:
+> Why are you adding a dummy power domain here? IMO this would be better
+> added together with CPR. Especially because I would expect two power
+> domains here later ("mx", "cpr"). For cpufreq you also need to make
+> votes for the "MSM8939_VDDMX" power domain.
 
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Confirmed power-domain is a required property, dtbs check will complain 
+without it.
+
+I'll leave further discussion on the format of CPR for the CPR series 
+but our working example supposes the below as a starting point.
+
+I'm not aware of VDDMX in the CPR path but its not at this node.
+
+CPU2: cpu@102 {
+     device_type = "cpu";
+     compatible = "arm,cortex-a53", "arm,armv8";
+     reg = <0x102>;
+     next-level-cache = <&L2_1>;
+     enable-method = "qcom,kpss-acc-v2";
+     qcom,acc = <&acc2>;
+     qcom,saw = <&saw2>;
+     clocks = <&apcs1>;
+     operating-points-v2 = <&cluster1_opp_table>;
+     power-domains = <&cpr>;
+     power-domain-names = "cpr";
+     #cooling-cells = <2>;
+     capacity-dmips-mhz = <1024>;
+};
+
+cluster1_opp_table: cluster1-opp-table {
+     compatible = "operating-points-v2-qcom-cpu";
+     opp-shared;
+
+     /* Used by qcom-cpufreq-nvmem.c */
+     nvmem-cells = <&cpr_efuse_speedbin_pvs>;
+     nvmem-cell-names = "cpr_efuse_speedbin_pvs";
+
+     opp-200000000 {
+         opp-hz = /bits/ 64 <200000000>;
+         opp-supported-hw = <0x3f>;
+         required-opps = <&cpr_opp3>;
+     };
+
+     opp-345600000 {
+         opp-hz = /bits/ 64 <345600000>;
+         opp-supported-hw = <0x3f>;
+         required-opps = <&cpr_opp3>;
+     };
+};
+
+cpr_opp_table: cpr-opp-table {
+     compatible = "operating-points-v2-qcom-level";
+
+     cpr_opp1: opp1 {
+         opp-hz = /bits/ 64 <200000000>;
+             opp-level = <1>;
+             qcom,opp-fuse-level = <1>;
+         };
+     cpr_opp2: opp2 {
+         opp-hz = /bits/ 64 <345600000>;
+             opp-level = <2>;
+             qcom,opp-fuse-level = <1>;
+          };
+          cpr_opp3: opp3 {
+             opp-hz = /bits/ 64 <400000000>;
+             opp-level = <3>;
+             qcom,opp-fuse-level = <1>;
+          };
+     };
+     /* etc */
+};
+
 ---
- arch/arm64/boot/dts/qcom/sm6115.dtsi | 72 ++++++++++++++++++++++++++++
- 1 file changed, 72 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-index 50cb8a82ecd5..3c66f998a81b 100644
---- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-@@ -345,6 +345,78 @@ rpmpd_opp_turbo_plus: opp8 {
- 		};
- 	};
- 
-+	smp2p-adsp {
-+		compatible = "qcom,smp2p";
-+		qcom,smem = <443>, <429>;
-+
-+		interrupts = <GIC_SPI 279 IRQ_TYPE_EDGE_RISING>;
-+
-+		mboxes = <&apcs_glb 10>;
-+
-+		qcom,local-pid = <0>;
-+		qcom,remote-pid = <2>;
-+
-+		adsp_smp2p_out: master-kernel {
-+			qcom,entry-name = "master-kernel";
-+			#qcom,smem-state-cells = <1>;
-+		};
-+
-+		adsp_smp2p_in: slave-kernel {
-+			qcom,entry-name = "slave-kernel";
-+
-+			interrupt-controller;
-+			#interrupt-cells = <2>;
-+		};
-+	};
-+
-+	smp2p-cdsp {
-+		compatible = "qcom,smp2p";
-+		qcom,smem = <94>, <432>;
-+
-+		interrupts = <GIC_SPI 263 IRQ_TYPE_EDGE_RISING>;
-+
-+		mboxes = <&apcs_glb 30>;
-+
-+		qcom,local-pid = <0>;
-+		qcom,remote-pid = <5>;
-+
-+		cdsp_smp2p_out: master-kernel {
-+			qcom,entry-name = "master-kernel";
-+			#qcom,smem-state-cells = <1>;
-+		};
-+
-+		cdsp_smp2p_in: slave-kernel {
-+			qcom,entry-name = "slave-kernel";
-+
-+			interrupt-controller;
-+			#interrupt-cells = <2>;
-+		};
-+	};
-+
-+	smp2p-mpss {
-+		compatible = "qcom,smp2p";
-+		qcom,smem = <435>, <428>;
-+
-+		interrupts = <GIC_SPI 70 IRQ_TYPE_EDGE_RISING>;
-+
-+		mboxes = <&apcs_glb 14>;
-+
-+		qcom,local-pid = <0>;
-+		qcom,remote-pid = <1>;
-+
-+		modem_smp2p_out: master-kernel {
-+			qcom,entry-name = "master-kernel";
-+			#qcom,smem-state-cells = <1>;
-+		};
-+
-+		modem_smp2p_in: slave-kernel {
-+			qcom,entry-name = "slave-kernel";
-+
-+			interrupt-controller;
-+			#interrupt-cells = <2>;
-+		};
-+	};
-+
- 	soc: soc@0 {
- 		compatible = "simple-bus";
- 		#address-cells = <1>;
--- 
-2.38.1
-
+bod
