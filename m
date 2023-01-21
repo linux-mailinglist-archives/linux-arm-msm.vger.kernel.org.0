@@ -2,176 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B875676782
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Jan 2023 17:54:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E0EEF6767A5
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Jan 2023 18:34:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229810AbjAUQys (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 21 Jan 2023 11:54:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40380 "EHLO
+        id S229763AbjAUReB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 21 Jan 2023 12:34:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229463AbjAUQyq (ORCPT
+        with ESMTP id S229493AbjAUReA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 21 Jan 2023 11:54:46 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 313A120067;
-        Sat, 21 Jan 2023 08:54:45 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id D7067B80816;
-        Sat, 21 Jan 2023 16:54:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6615EC433EF;
-        Sat, 21 Jan 2023 16:54:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1674320082;
-        bh=6ozn67CKzOc1y3DxxRz93tgT2WqnbMotA91WAsPajuY=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=lYbFzMT9ytogqyj1iWCKlG/uRMZpyaqTwCvSLm43T7YBALV16GjveBWqWWwpeCzF8
-         KQIevFEvqzC2YPgSrAVE4RCd6GR5gtZ1kf9NvlW1qr9izDv5UOQ4F5PmXmaeZ6W7xl
-         eQkMtJz3zdv7dDFTZPlQDUtfrGwjchnf/BU0L3rv6wNU+RjP8QcUBDAhv8aryeZ/qc
-         lIduCFwc3UDCPVDVvvztTSuhMJTL10Niq4+jhOanvCfiChT2QV2wyllZ9yIcC+Neep
-         urFE6wCVIOLngB5wvNhqhxkZAV8Yp+tW9r++SMnWOVcgd8n/4K48XuvGPAerIfA4MP
-         +q6mCiSikLvhg==
-Date:   Sat, 21 Jan 2023 17:08:25 +0000
-From:   Jonathan Cameron <jic23@kernel.org>
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        iio@vger.kernel.org, Lars-Peter Clausen <lars@metafoo.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-iio@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] dt-bindings: iio: adc: Require generic adc-chan
- name for channel nodes
-Message-ID: <20230121170825.0d284151@jic23-huawei>
-In-Reply-To: <20230119212632.185881-2-marijn.suijten@somainline.org>
-References: <20230119212632.185881-1-marijn.suijten@somainline.org>
-        <20230119212632.185881-2-marijn.suijten@somainline.org>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.36; x86_64-pc-linux-gnu)
+        Sat, 21 Jan 2023 12:34:00 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2B0D2312D;
+        Sat, 21 Jan 2023 09:33:59 -0800 (PST)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30LH5t1O025837;
+        Sat, 21 Jan 2023 17:33:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=7qGoNQYb5B3YfbRKY45nqiWEy1FXpM53eRLuZNVhYfc=;
+ b=cQ/s18YPcFyRFRoqj4fv5rSkBkM3hMfawa+Y4nTM5fH8SsZ1Q78jKDTpNArcjkjx0e3q
+ uGiVonV0Nqlin4y9+zOrekk9itSFOFnct9lRcqa0MFPVMUNwfg631Suroftpik6rxN6N
+ i8mW8G2ZeE8a8COn5tXGxfNdEQIjwRWpmbvZjpcxkHrtUAxtbfVmMe2tDczvtoS/yYCx
+ HWs4oKXYZvqokhldMlbksnLBHhTIbCdJgC/AAB3EpNZp9ibt0oHyFMB1XAV3fw7TwkM3
+ JG47PpO0FefHxNmLz7vL9ItXR/j8zbAte6pkKUAbWnMhcU7BdUdrkTquLOZ0K8dKbiVa SA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n89eu8nbw-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 21 Jan 2023 17:33:45 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30LHXiuV021630
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 21 Jan 2023 17:33:44 GMT
+Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Sat, 21 Jan 2023 09:33:39 -0800
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     <swboyd@chromium.org>, <agross@kernel.org>, <andersson@kernel.org>,
+        <robh+dt@kernel.org>, <broonie@kernel.org>,
+        <quic_plai@quicinc.com>, <krzysztof.kozlowski+dt@linaro.org>,
+        <konrad.dybcio@somainline.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_rohkumar@quicinc.com>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: [RESEND v5 0/6] Add resets for ADSP based audio clock controller driver
+Date:   Sat, 21 Jan 2023 23:02:14 +0530
+Message-ID: <1674322340-25882-1-git-send-email-quic_srivasam@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: rbhf0QxeAuxNResCGGP2gq7ugIFsQ6JU
+X-Proofpoint-ORIG-GUID: rbhf0QxeAuxNResCGGP2gq7ugIFsQ6JU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-21_11,2023-01-20_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
+ mlxlogscore=736 spamscore=0 malwarescore=0 bulkscore=0 adultscore=0
+ phishscore=0 clxscore=1015 priorityscore=1501 lowpriorityscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301210168
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 19 Jan 2023 22:26:31 +0100
-Marijn Suijten <marijn.suijten@somainline.org> wrote:
+Add resets and remove qdsp6ss clcok controller for audioreach based platforms. 
 
-> As discussed in [1] it is more convenient to use a generic adc-chan node
-> name for ADC channels while storing a friendly - board-specific instead
-> of PMIC-specific - name in the label, if/when desired to overwrite the
-> channel description already contained (but previously unused) in the
-> driver [2].
-> 
-> Replace the .* name pattern with the adc-chan literal, but leave the
-> label property optional for bindings to choose to fall back a channel
-> label hardcoded in the driver [2] instead.
-> 
-> [1]: https://lore.kernel.org/linux-arm-msm/20221106193018.270106-1-marijn.suijten@somainline.org/T/#u
-> [2]: https://lore.kernel.org/linux-arm-msm/20230116220909.196926-4-marijn.suijten@somainline.org/
-> 
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Other than the use in the tm5 thermal example that Rob's bot found, this looks
-good to me.  I think ideal would be to fix that in a precursor patch then
-do this one.
+Changes since v4:
+    -- Update Fixes tag in Merge lpasscc into lpass_aon patch.
+    -- Revert removal of clk_regmap structure in Merge lpasscc into lpass_aon patch.
 
-Note that the existing two patches should be in the other order
-1. Update the dtsi
-2. Tighten the bounds to check they are right.
+Changes since v3:
+    -- Remove duplicate clock resets patch.
+    -- Add binding headers for q6 clocks.
+    -- Create new patch for merging lpasscc q6 clocks into lpass_aon.
+    -- Create new patches for handling conflicts of ADSP and bypass solution.
 
-Doesn't matter much though as the two patches will probably go through
-different trees.
+Changes since v2:
+    -- Revert removing qdsp6ss clock control.
+    -- Add Conditional check for qdsp6ss clock registration.
+Changes since v1:
+    -- Update commit message.
+    -- Remove qdsp6ss clock control.
 
-Thanks,
+Srinivasa Rao Mandadapu (6):
+  dt-bindings: clock: qcom,sc7280-lpasscc: Add qcom,adsp-pil-mode
+    property
+  dt-bindings: clock: lpassaudiocc-sc7280: Add binding headers for
+    lpasscc
+  clk: qcom: lpasscc-sc7280: Skip qdsp6ss clock registration
+  clk: qcom: lpasscorecc-sc7280: Skip lpasscorecc registration
+  clk: qcom: lpassaudiocc-sc7280: Merge lpasscc into lpass_aon
+  clk: qcom: lpassaudiocc-sc7280: Skip lpass_aon_cc_pll config
 
-Jonathan
+ .../devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml   |  7 +++++++
+ drivers/clk/qcom/lpassaudiocc-sc7280.c                   | 16 +++++++++++-----
+ drivers/clk/qcom/lpasscc-sc7280.c                        | 12 +++++++-----
+ drivers/clk/qcom/lpasscorecc-sc7280.c                    |  3 +++
+ include/dt-bindings/clock/qcom,lpassaudiocc-sc7280.h     |  2 ++
+ 5 files changed, 30 insertions(+), 10 deletions(-)
 
-> ---
->  .../bindings/iio/adc/qcom,spmi-vadc.yaml         | 16 +++++++++-------
->  1 file changed, 9 insertions(+), 7 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml b/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
-> index bd6e0d6f6e0c..9b1a60fe7599 100644
-> --- a/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
-> +++ b/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
-> @@ -54,7 +54,7 @@ required:
->    - '#io-channel-cells'
->  
->  patternProperties:
-> -  "^.*@[0-9a-f]+$":
-> +  "^adc-chan@[0-9a-f]+$":
->      type: object
->      additionalProperties: false
->      description: |
-> @@ -148,7 +148,7 @@ allOf:
->  
->      then:
->        patternProperties:
-> -        "^.*@[0-9a-f]+$":
-> +        "^adc-chan@[0-9a-f]+$":
->            properties:
->              qcom,decimation:
->                enum: [ 512, 1024, 2048, 4096 ]
-> @@ -171,7 +171,7 @@ allOf:
->  
->      then:
->        patternProperties:
-> -        "^.*@[0-9a-f]+$":
-> +        "^adc-chan@[0-9a-f]+$":
->            properties:
->              qcom,decimation:
->                enum: [ 256, 512, 1024 ]
-> @@ -194,7 +194,7 @@ allOf:
->  
->      then:
->        patternProperties:
-> -        "^.*@[0-9a-f]+$":
-> +        "^adc-chan@[0-9a-f]+$":
->            properties:
->              qcom,decimation:
->                enum: [ 250, 420, 840 ]
-> @@ -217,7 +217,7 @@ allOf:
->  
->      then:
->        patternProperties:
-> -        "^.*@[0-9a-f]+$":
-> +        "^adc-chan@[0-9a-f]+$":
->            properties:
->              qcom,decimation:
->                enum: [ 85, 340, 1360 ]
-> @@ -292,16 +292,18 @@ examples:
->              #io-channel-cells = <1>;
->  
->              /* Other properties are omitted */
-> -            xo-therm@44 {
-> +            adc-chan@44 {
->                  reg = <PMK8350_ADC7_AMUX_THM1_100K_PU>;
->                  qcom,ratiometric;
->                  qcom,hw-settle-time = <200>;
-> +                label = "xo_therm";
->              };
->  
-> -            conn-therm@47 {
-> +            adc-chan@47 {
->                  reg = <PM8350_ADC7_AMUX_THM4_100K_PU(1)>;
->                  qcom,ratiometric;
->                  qcom,hw-settle-time = <200>;
-> +                label = "conn_therm";
->              };
->          };
->      };
+-- 
+2.7.4
 
