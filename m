@@ -2,179 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5FB6C6764F3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Jan 2023 08:28:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AE99F67651E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Jan 2023 09:42:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229639AbjAUH2M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 21 Jan 2023 02:28:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48834 "EHLO
+        id S229587AbjAUImJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 21 Jan 2023 03:42:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229450AbjAUH2L (ORCPT
+        with ESMTP id S229523AbjAUImH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 21 Jan 2023 02:28:11 -0500
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 173EC70292;
-        Fri, 20 Jan 2023 23:28:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1674286090; x=1705822090;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=Qkoh5MykipgiNXgEPEeWoVT+cm37cUhUw0TSx1mdBDY=;
-  b=Haas8j6OcFI5ioKZmJW1BzeGejRsmTXgP0NDOKd0dxRBKSyFFsSMXvcM
-   XK1mBXpc04pmG4dfE5u3rwQO8G35r9OL9LUoGjoaWS7akEQb1YCF2UlX3
-   xmu2D0AQsCBDn9jzcne7fK7N8UpVK9oKkRgVF+Jl5b/v4dU71xZeaiDlm
-   7/o3p43GnclMeSVvblA+2QP/HGsPgzfWaI5Ds5izgZMXlo8M8jcgydoIV
-   Jr+wQ8j5U4Rd1CwipXFTtv01xCEq+n69cvc2gyaDnLwVznIS0eKWnDNRo
-   Fh41PMlGGYBb9i0iUP9GlJCL4R7ngebWhn33NPg10OcYiBYp5RpavmpCk
-   Q==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10596"; a="353020249"
-X-IronPort-AV: E=Sophos;i="5.97,234,1669104000"; 
-   d="scan'208";a="353020249"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jan 2023 23:28:09 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10596"; a="803325301"
-X-IronPort-AV: E=Sophos;i="5.97,234,1669104000"; 
-   d="scan'208";a="803325301"
-Received: from lkp-server01.sh.intel.com (HELO 5646d64e7320) ([10.239.97.150])
-  by fmsmga001.fm.intel.com with ESMTP; 20 Jan 2023 23:28:05 -0800
-Received: from kbuild by 5646d64e7320 with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1pJ8IH-0003lW-0V;
-        Sat, 21 Jan 2023 07:28:05 +0000
-Date:   Sat, 21 Jan 2023 15:27:56 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        swboyd@chromium.org, agross@kernel.org, andersson@kernel.org,
-        robh+dt@kernel.org, broonie@kernel.org, quic_plai@quicinc.com,
-        krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@somainline.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com
-Cc:     llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Subject: Re: [PATCH v5 5/6] clk: qcom: lpassaudiocc-sc7280: Merge lpasscc
- into lpass_aon
-Message-ID: <202301211545.p4v6zuaX-lkp@intel.com>
-References: <1674218806-7711-6-git-send-email-quic_srivasam@quicinc.com>
+        Sat, 21 Jan 2023 03:42:07 -0500
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C3666AC9E
+        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Jan 2023 00:42:06 -0800 (PST)
+Received: by mail-lj1-x231.google.com with SMTP id y19so7980058ljq.7
+        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Jan 2023 00:42:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=rtcfHZAR7Ysq5XNRm/jCy3LiiJsqdTUfh0gGDYHtMjI=;
+        b=ttPttT4fXeRLAIGUhnlOd/e1nfyPSbx1mjkJhmM+Nxee/NpQkGX06mVqwSY0Hh9Xkn
+         DrQQ7z8exjG3ZzZdRqG/CdbF1QxliQh0pkb/uPp3kWuhNSeAKoSrTsHAagWkTgvUd68V
+         WnPtqsXV9LNksxGoISAYyl3siHpFd0QjyDmyc2dkHHxhBGAlo3KBv4xRSEfcqS13p9CZ
+         MayPk2HmayTK9apWRtZ6KDk+4MnVGtEM4xWbFePfLOWOlufpHsGV4xKWClSrrM27RrH3
+         EDdFDFd5s5N4miDsmrQNlVNM5Aj8WCnr2ecetSq0XSRdv4cOWzh93aT3+cLJfbo4kNdW
+         kBSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rtcfHZAR7Ysq5XNRm/jCy3LiiJsqdTUfh0gGDYHtMjI=;
+        b=hOM+lRR+J7n6rz8vA5HL49AuBRUuWpxDyIM+j8l11CmrjrdrHv5nrg9GhwBRETlITF
+         jeXVmPJx6xJYZcOFB14w8LguL7HHmcJTONIBL3s0QMCDgZtdTFpCZ+5N9DqPSkgC6ozl
+         oBfimnTG1NpewhreznyNxIFq2tE5OIiMpzQyPBQLau52BNVP3lxtnaL8HVNCELnDlDAh
+         L1YyRaQznuNpLBA9tLpL13eFoTLjhJ6q/2FpT2e/CklyfFZVDvgCbT1M2lvQq1ilpRsu
+         qHkDX73UFyxQ0vCWGUoIXP6S6YHOthnbd1Qqs4YJWDo1ZA54tEadjIZj6bHppX1DEuCI
+         fiqQ==
+X-Gm-Message-State: AFqh2kqVWH/29HyWRQXXZq5WjLVi5SkfH5iPwUrB//xAr2kKLZPki6q1
+        pb9LiWTCQUg277t7mTomNYAQ7A==
+X-Google-Smtp-Source: AMrXdXsbtbF+q/skX2lYOVrY6nCebNMS9fJNREzP8Yx1fO97MiS2zdHfmNzBb36aUjgFxzyI/n2Y8A==
+X-Received: by 2002:a05:651c:81:b0:27f:d5c6:f4f with SMTP id 1-20020a05651c008100b0027fd5c60f4fmr4446567ljq.29.1674290523906;
+        Sat, 21 Jan 2023 00:42:03 -0800 (PST)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id k9-20020a2ea269000000b0027fc14cdfa5sm2553634ljm.42.2023.01.21.00.42.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 21 Jan 2023 00:42:03 -0800 (PST)
+Message-ID: <f665b62f-d5c7-d02a-d775-434c4445ad86@linaro.org>
+Date:   Sat, 21 Jan 2023 10:42:02 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1674218806-7711-6-git-send-email-quic_srivasam@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH 1/8] drm/msm/dsi: Allow 2 CTRLs on v2.5.0
+Content-Language: en-GB
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Douglas Anderson <dianders@chromium.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Rajeev Nandan <quic_rajeevny@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+References: <20230120210101.2146852-1-konrad.dybcio@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230120210101.2146852-1-konrad.dybcio@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Srinivasa,
+On 20/01/2023 23:00, Konrad Dybcio wrote:
+> v2.5.0 support was originally added for SC7280, but this hw is also
+> present on SM8350, which has one more DSI host. Bump up the dsi count
+> and fill in the register of the secondary host to allow it to probe.
+> 
+> This should not have any adverse effects on SC7280, as the secondary
+> CTRL will only be touched if it's defined, anyway.
+> 
+> Fixes: 65c391b31994 ("drm/msm/dsi: Add DSI support for SC7280")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/dsi/dsi_cfg.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-Thank you for the patch! Yet something to improve:
-
-[auto build test ERROR on clk/clk-next]
-[also build test ERROR on linus/master v6.2-rc4 next-20230120]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Srinivasa-Rao-Mandadapu/dt-bindings-clock-qcom-sc7280-lpasscc-Add-qcom-adsp-pil-mode-property/20230120-204835
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git clk-next
-patch link:    https://lore.kernel.org/r/1674218806-7711-6-git-send-email-quic_srivasam%40quicinc.com
-patch subject: [PATCH v5 5/6] clk: qcom: lpassaudiocc-sc7280: Merge lpasscc into lpass_aon
-config: arm-randconfig-r006-20230119 (https://download.01.org/0day-ci/archive/20230121/202301211545.p4v6zuaX-lkp@intel.com/config)
-compiler: clang version 16.0.0 (https://github.com/llvm/llvm-project 4196ca3278f78c6e19246e54ab0ecb364e37d66a)
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # install arm cross compiling tool for clang build
-        # apt-get install binutils-arm-linux-gnueabi
-        # https://github.com/intel-lab-lkp/linux/commit/9163f9ad677af61b97b9ea5ef569722f277a7d20
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Srinivasa-Rao-Mandadapu/dt-bindings-clock-qcom-sc7280-lpasscc-Add-qcom-adsp-pil-mode-property/20230120-204835
-        git checkout 9163f9ad677af61b97b9ea5ef569722f277a7d20
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash drivers/clk/qcom/
-
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
-
-All errors (new ones prefixed by >>):
-
->> drivers/clk/qcom/lpassaudiocc-sc7280.c:831:3: error: use of undeclared identifier 'res'; did you mean 'ret'?
-                   res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "cc");
-                   ^~~
-                   ret
-   drivers/clk/qcom/lpassaudiocc-sc7280.c:824:6: note: 'ret' declared here
-           int ret;
-               ^
->> drivers/clk/qcom/lpassaudiocc-sc7280.c:831:7: error: incompatible pointer to integer conversion assigning to 'int' from 'struct resource *' [-Wint-conversion]
-                   res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "cc");
-                       ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   drivers/clk/qcom/lpassaudiocc-sc7280.c:832:7: error: use of undeclared identifier 'res'; did you mean 'ret'?
-                   if (res) {
-                       ^~~
-                       ret
-   drivers/clk/qcom/lpassaudiocc-sc7280.c:824:6: note: 'ret' declared here
-           int ret;
-               ^
-   3 errors generated.
-
-
-vim +831 drivers/clk/qcom/lpassaudiocc-sc7280.c
-
-   819	
-   820	static int lpass_aon_cc_sc7280_probe(struct platform_device *pdev)
-   821	{
-   822		const struct qcom_cc_desc *desc;
-   823		struct regmap *regmap;
-   824		int ret;
-   825	
-   826		ret = lpass_audio_setup_runtime_pm(pdev);
-   827		if (ret)
-   828			return ret;
-   829	
-   830		if (of_property_read_bool(pdev->dev.of_node, "qcom,adsp-pil-mode")) {
- > 831			res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "cc");
-   832			if (res) {
-   833				lpass_audio_cc_sc7280_regmap_config.name = "cc";
-   834				desc = &lpass_cc_sc7280_desc;
-   835				return qcom_cc_probe(pdev, desc);
-   836			}
-   837		}
-   838	
-   839		lpass_audio_cc_sc7280_regmap_config.name = "lpasscc_aon";
-   840		lpass_audio_cc_sc7280_regmap_config.max_register = 0xa0008;
-   841		desc = &lpass_aon_cc_sc7280_desc;
-   842	
-   843		regmap = qcom_cc_map(pdev, desc);
-   844		if (IS_ERR(regmap)) {
-   845			ret = PTR_ERR(regmap);
-   846			goto exit;
-   847		}
-   848	
-   849		clk_lucid_pll_configure(&lpass_aon_cc_pll, regmap, &lpass_aon_cc_pll_config);
-   850	
-   851		ret = qcom_cc_really_probe(pdev, &lpass_aon_cc_sc7280_desc, regmap);
-   852		if (ret) {
-   853			dev_err(&pdev->dev, "Failed to register LPASS AON CC clocks\n");
-   854			goto exit;
-   855		}
-   856	
-   857		pm_runtime_mark_last_busy(&pdev->dev);
-   858	exit:
-   859		pm_runtime_put_autosuspend(&pdev->dev);
-   860	
-   861		return ret;
-   862	}
-   863	
-
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
+With best wishes
+Dmitry
+
