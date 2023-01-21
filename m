@@ -2,81 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 720B26767E6
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Jan 2023 19:00:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 45B0067682E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Jan 2023 19:59:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229788AbjAUSAi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 21 Jan 2023 13:00:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35006 "EHLO
+        id S229776AbjAUS72 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 21 Jan 2023 13:59:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229685AbjAUSAh (ORCPT
+        with ESMTP id S229673AbjAUS71 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 21 Jan 2023 13:00:37 -0500
-X-Greylist: delayed 80 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 21 Jan 2023 10:00:35 PST
-Received: from out0.migadu.com (out0.migadu.com [94.23.1.103])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88624658F;
-        Sat, 21 Jan 2023 10:00:35 -0800 (PST)
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ansari.sh; s=key1;
-        t=1674323943;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=S77AubuYa5OrTV/jgUtcL1ihA4inmRuRojyuL5xTg7c=;
-        b=ba970Vb+HajZc+wE0Nq0L8pBg21OWxOfTAkAYIKkdCskIrKZPp9tFSqk/a0sNjv3aboWhP
-        7CNKrbBUMYotKfeLJTx4cWS7wgiaw+2TI1Mt15NfXxU3x1uVd23l/rQ3P9a+wjuFDJRuMm
-        tbICmVyoCyJxKaVi5O8PEGP107/8+bA=
-From:   Rayyan Ansari <rayyan@ansari.sh>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        Rayyan Ansari <rayyan@ansari.sh>,
-        Andy Gross <agross@kernel.org>,
+        Sat, 21 Jan 2023 13:59:27 -0500
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC14D23C6F
+        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Jan 2023 10:59:25 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id k16so6303787wms.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Jan 2023 10:59:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Y+8AIcmyNh7anmgy6us1S2qZEpfi8cOsNKu1F+SDuic=;
+        b=DSNmytpeph3gW86uTDWNK4tSD4wjbNZ+cDtqBYO3TGJYyGKeyNEnyDHpdL6NbHsnsR
+         H1HZAwuXKokfN8LsS1QrJEyAeY7EIOdPKb8qeSzkOktbrnPpL84L2xaMDr+0F7xXZ3HP
+         5S4Q3pnfupRaVcL3f8GPGj2rc3jlDXy5D+vFJdCsgI6+Ntr7Pp1uQ4A5TgxZMj9fYqZf
+         zXsTyha3a2JkjiMkL3x711hQtBd+fuhd9iZtgPTCo4Ow3XIhSI0bGl5NGf8QzLUz0wfA
+         UwXvNPRSl2+7FhnwqvCm6ZPJaHNQjALqXvNoOxOpD3cch02DvgwxSnlmxIBX2RIhkkDS
+         BAnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Y+8AIcmyNh7anmgy6us1S2qZEpfi8cOsNKu1F+SDuic=;
+        b=gyZd0Tnfw2K0mGwIP+N8ROuvbEVvTuh7YalYhp3gtrcWjav1bzGgIAOP3cZQoXfiEF
+         XZrnWK3ZD/jwcyjRMF9gJTMZ6WctCdu/WN+Dbs5ucz0k3fNopCywt/WBWpmo2mkIBqel
+         IBkFSSmBrd4gJptt0l2zcUbxsKhnMEQVRifHtc4ixvFWwNuza5db+tIlIyU6R9e/wGT3
+         051Zb+O1DalDLUPE1583OLff2FaiwYI76Feh+eb3GcMoNsz7/gcbwKbG+MAA8kYDfnjl
+         iaIR0lwOeom8eN5693yy9cLmx234vcLsE3Q6NBVBPg+6a/6WXXzac3W+STkFXQDudcwB
+         VhsQ==
+X-Gm-Message-State: AFqh2krxOmUCzs8KnEIrN5vP/+47iWTgq8tedVXMyz1WaGcxl2tRzLwU
+        hp68zRFcgGGJrVd+N0q1jsRtrw==
+X-Google-Smtp-Source: AMrXdXuEm576fBINS2Nr1ehlHPHAUS08eLwq4m7iyjQxHe/PDV7pRwzAmtYjpecqMbhz1ClAl+8oUQ==
+X-Received: by 2002:a05:600c:4d91:b0:3da:fb96:53d with SMTP id v17-20020a05600c4d9100b003dafb96053dmr17702315wmp.4.1674327564340;
+        Sat, 21 Jan 2023 10:59:24 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id z4-20020a05600c0a0400b003db01178b62sm6848719wmp.40.2023.01.21.10.59.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 21 Jan 2023 10:59:23 -0800 (PST)
+Message-ID: <277a46d9-587f-324b-10cf-064302bdd2c5@linaro.org>
+Date:   Sat, 21 Jan 2023 19:59:21 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH 1/2] dt-bindings: clock: qcom,sm8450-camcc: constrain
+ required-opps
+Content-Language: en-US
+To:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        devicetree@vger.kernel.org,
+        Ilia Lin <ilia.lin@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
         Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>
-Subject: [PATCH v3 3/3] ARM: dts: qcom: msm8974: add correct XO clock source to GCC node
-Date:   Sat, 21 Jan 2023 17:58:37 +0000
-Message-Id: <20230121175838.755636-4-rayyan@ansari.sh>
-In-Reply-To: <20230121175838.755636-1-rayyan@ansari.sh>
-References: <20230121175838.755636-1-rayyan@ansari.sh>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
-        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        Nishanth Menon <nm@ti.com>, Rob Herring <robh+dt@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org
+References: <20230119130028.106817-1-krzysztof.kozlowski@linaro.org>
+ <b676c36565da1b73c53ced6218ef6de1.sboyd@kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <b676c36565da1b73c53ced6218ef6de1.sboyd@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Change the XO clock in MSM8974's GCC node to point to RPMCC.
+On 20/01/2023 23:15, Stephen Boyd wrote:
+> Quoting Krzysztof Kozlowski (2023-01-19 05:00:27)
+>> Be specific how many required-opps are allowed.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>
+>> ---
+>>
+>> This change is independent, although logically is connected with my
+>> dtschema pull:
+>> https://github.com/devicetree-org/dt-schema/pull/95
+> 
+> Do you want to take it through dt tree?
 
-Signed-off-by: Rayyan Ansari <rayyan@ansari.sh>
----
- arch/arm/boot/dts/qcom-msm8974.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I think it would be better if you take it.
 
-diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
-index 834ad95515b1..31e9721b571d 100644
---- a/arch/arm/boot/dts/qcom-msm8974.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
-@@ -1057,7 +1057,7 @@ gcc: clock-controller@fc400000 {
- 			#power-domain-cells = <1>;
- 			reg = <0xfc400000 0x4000>;
- 
--			clocks = <&xo_board>,
-+			clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
- 				 <&sleep_clk>;
- 			clock-names = "xo",
- 				      "sleep_clk";
--- 
-2.39.0
+Best regards,
+Krzysztof
 
