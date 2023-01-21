@@ -2,53 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 83BB1676568
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Jan 2023 10:34:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 220B367659C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Jan 2023 11:16:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229699AbjAUJek (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 21 Jan 2023 04:34:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47018 "EHLO
+        id S229653AbjAUKQ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 21 Jan 2023 05:16:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229575AbjAUJej (ORCPT
+        with ESMTP id S229493AbjAUKQ0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 21 Jan 2023 04:34:39 -0500
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B030142DDD;
-        Sat, 21 Jan 2023 01:34:38 -0800 (PST)
-Received: from g550jk.localnet (unknown [62.108.10.64])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 51054CC376;
-        Sat, 21 Jan 2023 09:34:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1674293646; bh=MqUZTlkDGQQvCi7SGR3c1VPMOPlAAw14WOQqx63RvVw=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=T86pmCXSpo2/Jhgrr7szEYc0oopV5xI5fsJlSQydDtIvrHT+VcUKYGwUG1J/0cd+2
-         oOtk2p83/aRr0gU4TRiGD+aUPCxZm4L16g2auzJVCBBvD0OBKSxW563Agd+Q7Wh/gJ
-         QdKuUwCUgHv/HQLtGC3ldGIiIETlHaxjcN8MGaPM=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     Will Deacon <will@kernel.org>
-Cc:     iommu@lists.linux.dev, ~postmarketos/upstreaming@lists.sr.ht,
-        phone-devel@vger.kernel.org, Rob Herring <robh@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5] dt-bindings: iommu: qcom: Add Qualcomm MSM8953 compatible
-Date:   Sat, 21 Jan 2023 10:34:05 +0100
-Message-ID: <2663745.mvXUDI8C0e@g550jk>
-In-Reply-To: <20230119172921.GA20092@willie-the-truck>
-References: <20221105142016.93406-1-luca@z3ntu.xyz> <4793103.31r3eYUQgx@g550jk>
- <20230119172921.GA20092@willie-the-truck>
+        Sat, 21 Jan 2023 05:16:26 -0500
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54DE33D09D
+        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Jan 2023 02:16:24 -0800 (PST)
+Received: by mail-lj1-x235.google.com with SMTP id y19so8141445ljq.7
+        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Jan 2023 02:16:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=R+Pyl+joRSSSHYvf7WpDkCWmQvZq+W+aRVbNCqAWyN0=;
+        b=aw4vZZx4wkPSHemLhBCOWKkcGKy2I6AvBjN7UL/hvRcVPDSIlGrklw2jTtkH/RvGZb
+         uueF5MZpeSFKiA06BhrDArxQaLgpWridTlFnBJcqHTMEN8Es+P7RiSkewrQNPSK/4g3K
+         eqf2aNalnUtTCszMbvy4i2lDVXJUE56aCvqtzCQPf/d2rREW9rsLlnb3NRwtpkvW+0rg
+         ZW19EDyGbGyLGScXmsOmfTRVSVKLQoSZJnVmY+4+H99Ueooe6NqfOPkITPYRuAhx4Rxi
+         3NibyE+BBWFbhVxIs01RoDCYx7jr/UkqI8VdnfrR9x8kU3kL3uPF5LxS/Sv6NCiAZa2w
+         IdBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=R+Pyl+joRSSSHYvf7WpDkCWmQvZq+W+aRVbNCqAWyN0=;
+        b=sEmdWOzKkhAaxV8zFAh2a6+bpxPM3YcbvlxFE5vZzlbQh0okZtbto4tv3XcxoFrvdT
+         o1bHPbniTeEo2uEH8dtnVc1Fw5Pr3bvCtHS4yz/y9s65MkzAQ3WqTxRbjEM5SdDJAXWd
+         Lpl3u4n7dsNnqEcDmOcFTtERLmx7oMAfwUXXfo7BX9me97310BUyff/N7SpPMGTZq3G7
+         9/8K1bC0LS5PQK8EoAbbUpKmW9G5sbFPm+bcGmENCiS+n9Qr4cHCMTPUQRhKZ9A+4SeG
+         oOVEQ3xUnFglmPZ6Vgn79bvEKpTGs0NplDiPQyfC1sdUhuwLK885FB81l5J+Opbwkpgc
+         +FZw==
+X-Gm-Message-State: AFqh2kp9B/M0SZrp7+yK3aowqlvD7/E1d+jrmQVUjJtKw/t99yUQIzRG
+        fD8OQ8f3Ysam9d9ZlCOMIR8a+Q==
+X-Google-Smtp-Source: AMrXdXsmnMg48aeBhogSIz+DbIJdUnf4nEqxin4EPTgBYOA8j6w8atXnnKg+jW8ZCAvlcIjIEdWAAg==
+X-Received: by 2002:a2e:3807:0:b0:276:dc01:8058 with SMTP id f7-20020a2e3807000000b00276dc018058mr4630164lja.1.1674296182695;
+        Sat, 21 Jan 2023 02:16:22 -0800 (PST)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id p19-20020a2ea4d3000000b0028a4a907a33sm3023710ljm.84.2023.01.21.02.16.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 21 Jan 2023 02:16:22 -0800 (PST)
+Message-ID: <7116584e-f5a1-f404-8cfc-d1d159a4d647@linaro.org>
+Date:   Sat, 21 Jan 2023 12:16:21 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,DKIM_INVALID,
-        DKIM_SIGNED,FROM_SUSPICIOUS_NTLD,SPF_HELO_NONE,SPF_PASS,
-        T_PDS_OTHER_BAD_TLD,URIBL_BLOCKED autolearn=no autolearn_force=no
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH v6 09/10] arm64: dts: qcom: sc7180: Add support for HDCP
+ in dp-controller
+Content-Language: en-GB
+To:     Sean Paul <sean@poorly.run>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Mark Yacoub <markyacoub@chromium.org>, quic_khsieh@quicinc.com,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        robdclark@gmail.com, quic_abhinavk@quicinc.com, airlied@gmail.com,
+        daniel@ffwll.ch, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@somainline.org,
+        jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com,
+        rodrigo.vivi@intel.com, tvrtko.ursulin@linux.intel.com,
+        tzimmermann@suse.de, ville.syrjala@linux.intel.com,
+        stanislav.lisovskiy@intel.com, matthew.d.roper@intel.com,
+        imre.deak@intel.com, lucas.demarchi@intel.com,
+        manasi.d.navare@intel.com, swati2.sharma@intel.com,
+        bhanuprakash.modem@intel.com, javierm@redhat.com,
+        jose.souza@intel.com, lyude@redhat.com, hbh25y@gmail.com,
+        arun.r.murthy@intel.com, ashutosh.dixit@intel.com,
+        ankit.k.nautiyal@intel.com, maxime@cerno.tech, swboyd@chromium.org,
+        christophe.jaillet@wanadoo.fr, quic_sbillaka@quicinc.com,
+        johan+linaro@kernel.org, dianders@chromium.org, marex@denx.de,
+        quic_jesszhan@quicinc.com, bjorn.andersson@linaro.org,
+        abhinavk@codeaurora.org, seanpaul@chromium.org
+References: <20230118193015.911074-1-markyacoub@google.com>
+ <20230118193015.911074-10-markyacoub@google.com>
+ <aee03688-54b6-ed9f-e32c-b46e31d72198@linaro.org>
+ <Y8q5UfpIg0+qnAuG@art_vandelay>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <Y8q5UfpIg0+qnAuG@art_vandelay>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -56,49 +100,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Donnerstag, 19. J=E4nner 2023 18:29:22 CET Will Deacon wrote:
-> On Wed, Dec 28, 2022 at 10:34:35PM +0100, Luca Weiss wrote:
-> > On Montag, 14. November 2022 14:44:59 CET Will Deacon wrote:
-> > > On Sat, Nov 05, 2022 at 03:20:17PM +0100, Luca Weiss wrote:
-> > > > Document the compatible used for IOMMU on the msm8953 SoC.
-> > > >=20
-> > > > Acked-by: Rob Herring <robh@kernel.org>
-> > > > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> > > > ---
-> > > > Changes in v5:
-> > > > * Change subject so it hopefully gets noticed by iommu maintainers
-> > > >=20
-> > > >   (thanks Krzysztof, maybe this helps..)
-> > > > =20
-> > > >  Documentation/devicetree/bindings/iommu/qcom,iommu.txt | 1 +
-> > > >  1 file changed, 1 insertion(+)
-> > > >=20
-> > > > diff --git a/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
-> > > > b/Documentation/devicetree/bindings/iommu/qcom,iommu.txt index
-> > > > 059139abce35..e6cecfd360eb 100644
-> > > > --- a/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
-> > > > +++ b/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
-> > > > @@ -10,6 +10,7 @@ to non-secure vs secure interrupt line.
-> > > >=20
-> > > >  - compatible       : Should be one of:
-> > > >                          "qcom,msm8916-iommu"
-> > > >=20
-> > > > +                        "qcom,msm8953-iommu"
-> > > >=20
-> > > >                       Followed by "qcom,msm-iommu-v1".
-> > >=20
-> > > I'd expect the MSM maintainers (i.e Andy and Bjorn) to pick this up.
-> >=20
-> > Bjorn, could you pick this up for v6.3 please?
->=20
-> Since this seems to be stagnating here, I'll pick it up into the smmu
-> queue along with the other pending bindings patches I have.
+On 20/01/2023 17:54, Sean Paul wrote:
+> On Thu, Jan 19, 2023 at 11:35:32AM +0100, Krzysztof Kozlowski wrote:
+>> On 18/01/2023 20:30, Mark Yacoub wrote:
+>>> From: Sean Paul <seanpaul@chromium.org>
+>>>
+>>> This patch adds the register ranges required for HDCP key injection and
+>>
+>> Do not use "This commit/patch".
+>> https://elixir.bootlin.com/linux/v5.17.1/source/Documentation/process/submitting-patches.rst#L95
+>>
+>> This applies to all your patches. Fix it everywhere.
+> 
+> My goodness, this is peak bikeshedding. Surely we have better things to do with
+> our time?
 
-Thanks a lot!
+While I would not enforce this rule if there were no other issues with 
+the commits, Mark will have to cleanup/rework commits anyway, see other 
+review comments. Thus removing/slightly rephrasing a commit message 
+sounds like a minor issue to me.
 
->=20
-> Will
+>>>
+>>> Signed-off-by: Sean Paul <seanpaul@chromium.org>
+>>> Signed-off-by: Mark Yacoub <markyacoub@chromium.org>
+>>> Link: https://patchwork.freedesktop.org/patch/msgid/20210913175747.47456-15-sean@poorly.run #v1
+>>> Link: https://patchwork.freedesktop.org/patch/msgid/20210915203834.1439-14-sean@poorly.run #v2
+>>> Link: https://patchwork.freedesktop.org/patch/msgid/20211001151145.55916-14-sean@poorly.run #v3
+>>> Link: https://patchwork.freedesktop.org/patch/msgid/20211105030434.2828845-14-sean@poorly.run #v4
+>>> Link: https://patchwork.freedesktop.org/patch/msgid/20220411204741.1074308-10-sean@poorly.run #v5
+>>
+>> Drop the links.
+> 
+> Why? I've always done this, it seems helpful to me?
+> 
 
+I'd say, if you wish to include them, they belong to the cover letter, 
+not to the per-commit message. Once landed, they will serve no purpose.
 
-
+-- 
+With best wishes
+Dmitry
 
