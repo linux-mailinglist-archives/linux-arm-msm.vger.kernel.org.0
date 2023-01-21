@@ -2,48 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F1CFD676402
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Jan 2023 06:35:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5FB6C6764F3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Jan 2023 08:28:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229697AbjAUFfB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 21 Jan 2023 00:35:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56534 "EHLO
+        id S229639AbjAUH2M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 21 Jan 2023 02:28:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229544AbjAUFfB (ORCPT
+        with ESMTP id S229450AbjAUH2L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 21 Jan 2023 00:35:01 -0500
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00DEE4F84B;
-        Fri, 20 Jan 2023 21:34:59 -0800 (PST)
+        Sat, 21 Jan 2023 02:28:11 -0500
+Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 173EC70292;
+        Fri, 20 Jan 2023 23:28:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1674279300; x=1705815300;
+  t=1674286090; x=1705822090;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=NyAaTmyfPMukEU82BbayaCdDYiu0nA0LRprRqC50EW4=;
-  b=MjK8izKm4nynY0Nh24ue4AzZqWi+PBYSomZlBmNFY3gZe5JCfdoF6WQ9
-   KMhg841cN/pL4Uhctc4ZF5MKd/80TVjedkXkSRSiUmXd4SvcplgAfDKFy
-   bIFf5ymrJbZS8A9logkkoDIZJ5j8evjToh4Mx0vAPM0GNG5J3QmIrbNVK
-   wU12GpcaXmFejHdI3hV1IAVM7w9/Aiq9ihx2KnC33u4PFRUJ305vDwDUD
-   S5re4HJkPDYz1nEfOfsA9aJ3dQdGS9j6IX8PZl5ZpwfD2mI92iX2dZIte
-   /mCz1YxnnNQ3oEH30O80rzLoA0sj1x5m6pBke6cE0J2GVZ0dcuudAUbSX
-   w==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10596"; a="324448691"
+  bh=Qkoh5MykipgiNXgEPEeWoVT+cm37cUhUw0TSx1mdBDY=;
+  b=Haas8j6OcFI5ioKZmJW1BzeGejRsmTXgP0NDOKd0dxRBKSyFFsSMXvcM
+   XK1mBXpc04pmG4dfE5u3rwQO8G35r9OL9LUoGjoaWS7akEQb1YCF2UlX3
+   xmu2D0AQsCBDn9jzcne7fK7N8UpVK9oKkRgVF+Jl5b/v4dU71xZeaiDlm
+   7/o3p43GnclMeSVvblA+2QP/HGsPgzfWaI5Ds5izgZMXlo8M8jcgydoIV
+   Jr+wQ8j5U4Rd1CwipXFTtv01xCEq+n69cvc2gyaDnLwVznIS0eKWnDNRo
+   Fh41PMlGGYBb9i0iUP9GlJCL4R7ngebWhn33NPg10OcYiBYp5RpavmpCk
+   Q==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10596"; a="353020249"
 X-IronPort-AV: E=Sophos;i="5.97,234,1669104000"; 
-   d="scan'208";a="324448691"
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jan 2023 21:34:59 -0800
+   d="scan'208";a="353020249"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jan 2023 23:28:09 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10596"; a="662773341"
+X-IronPort-AV: E=McAfee;i="6500,9779,10596"; a="803325301"
 X-IronPort-AV: E=Sophos;i="5.97,234,1669104000"; 
-   d="scan'208";a="662773341"
+   d="scan'208";a="803325301"
 Received: from lkp-server01.sh.intel.com (HELO 5646d64e7320) ([10.239.97.150])
-  by fmsmga007.fm.intel.com with ESMTP; 20 Jan 2023 21:34:55 -0800
+  by fmsmga001.fm.intel.com with ESMTP; 20 Jan 2023 23:28:05 -0800
 Received: from kbuild by 5646d64e7320 with local (Exim 4.96)
         (envelope-from <lkp@intel.com>)
-        id 1pJ6Wk-0003ZX-2Q;
-        Sat, 21 Jan 2023 05:34:54 +0000
-Date:   Sat, 21 Jan 2023 13:34:14 +0800
+        id 1pJ8IH-0003lW-0V;
+        Sat, 21 Jan 2023 07:28:05 +0000
+Date:   Sat, 21 Jan 2023 15:27:56 +0800
 From:   kernel test robot <lkp@intel.com>
 To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
         swboyd@chromium.org, agross@kernel.org, andersson@kernel.org,
@@ -52,11 +52,11 @@ To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
         mturquette@baylibre.com, sboyd@kernel.org,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com
-Cc:     oe-kbuild-all@lists.linux.dev,
+Cc:     llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
         Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
 Subject: Re: [PATCH v5 5/6] clk: qcom: lpassaudiocc-sc7280: Merge lpasscc
  into lpass_aon
-Message-ID: <202301211339.VDhvfKMQ-lkp@intel.com>
+Message-ID: <202301211545.p4v6zuaX-lkp@intel.com>
 References: <1674218806-7711-6-git-send-email-quic_srivasam@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -64,8 +64,8 @@ Content-Disposition: inline
 In-Reply-To: <1674218806-7711-6-git-send-email-quic_srivasam@quicinc.com>
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -86,31 +86,45 @@ url:    https://github.com/intel-lab-lkp/linux/commits/Srinivasa-Rao-Mandadapu/d
 base:   https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git clk-next
 patch link:    https://lore.kernel.org/r/1674218806-7711-6-git-send-email-quic_srivasam%40quicinc.com
 patch subject: [PATCH v5 5/6] clk: qcom: lpassaudiocc-sc7280: Merge lpasscc into lpass_aon
-config: arc-randconfig-r043-20230119 (https://download.01.org/0day-ci/archive/20230121/202301211339.VDhvfKMQ-lkp@intel.com/config)
-compiler: arceb-elf-gcc (GCC) 12.1.0
+config: arm-randconfig-r006-20230119 (https://download.01.org/0day-ci/archive/20230121/202301211545.p4v6zuaX-lkp@intel.com/config)
+compiler: clang version 16.0.0 (https://github.com/llvm/llvm-project 4196ca3278f78c6e19246e54ab0ecb364e37d66a)
 reproduce (this is a W=1 build):
         wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
         chmod +x ~/bin/make.cross
+        # install arm cross compiling tool for clang build
+        # apt-get install binutils-arm-linux-gnueabi
         # https://github.com/intel-lab-lkp/linux/commit/9163f9ad677af61b97b9ea5ef569722f277a7d20
         git remote add linux-review https://github.com/intel-lab-lkp/linux
         git fetch --no-tags linux-review Srinivasa-Rao-Mandadapu/dt-bindings-clock-qcom-sc7280-lpasscc-Add-qcom-adsp-pil-mode-property/20230120-204835
         git checkout 9163f9ad677af61b97b9ea5ef569722f277a7d20
         # save the config file
         mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arc olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arc SHELL=/bin/bash
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm olddefconfig
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash drivers/clk/qcom/
 
 If you fix the issue, kindly add following tag where applicable
 | Reported-by: kernel test robot <lkp@intel.com>
 
 All errors (new ones prefixed by >>):
 
-   drivers/clk/qcom/lpassaudiocc-sc7280.c: In function 'lpass_aon_cc_sc7280_probe':
->> drivers/clk/qcom/lpassaudiocc-sc7280.c:831:17: error: 'res' undeclared (first use in this function); did you mean 'ret'?
-     831 |                 res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "cc");
-         |                 ^~~
-         |                 ret
-   drivers/clk/qcom/lpassaudiocc-sc7280.c:831:17: note: each undeclared identifier is reported only once for each function it appears in
+>> drivers/clk/qcom/lpassaudiocc-sc7280.c:831:3: error: use of undeclared identifier 'res'; did you mean 'ret'?
+                   res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "cc");
+                   ^~~
+                   ret
+   drivers/clk/qcom/lpassaudiocc-sc7280.c:824:6: note: 'ret' declared here
+           int ret;
+               ^
+>> drivers/clk/qcom/lpassaudiocc-sc7280.c:831:7: error: incompatible pointer to integer conversion assigning to 'int' from 'struct resource *' [-Wint-conversion]
+                   res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "cc");
+                       ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   drivers/clk/qcom/lpassaudiocc-sc7280.c:832:7: error: use of undeclared identifier 'res'; did you mean 'ret'?
+                   if (res) {
+                       ^~~
+                       ret
+   drivers/clk/qcom/lpassaudiocc-sc7280.c:824:6: note: 'ret' declared here
+           int ret;
+               ^
+   3 errors generated.
 
 
 vim +831 drivers/clk/qcom/lpassaudiocc-sc7280.c
