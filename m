@@ -2,64 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CE9966770CB
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jan 2023 17:49:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 900CA6770D2
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jan 2023 17:58:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229999AbjAVQtm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 22 Jan 2023 11:49:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54514 "EHLO
+        id S230121AbjAVQ6E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 22 Jan 2023 11:58:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230037AbjAVQtm (ORCPT
+        with ESMTP id S229837AbjAVQ6D (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 22 Jan 2023 11:49:42 -0500
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78F281C320;
-        Sun, 22 Jan 2023 08:49:32 -0800 (PST)
-Received: from [192.168.178.23] (unknown [62.108.10.64])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id AE834CD52F;
-        Sun, 22 Jan 2023 16:48:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1674406136; bh=UC4MZp7joZ5KIGVSNAjIE3z+woZwa8RY5kG95For80s=;
-        h=From:Date:Subject:References:In-Reply-To:To:Cc;
-        b=fVblwWHYIq+sZjwawB8O/+pjliEqr1MXSpYnZ4VYptxGu/htsKJQYy3mvkJNPL/Re
-         qnJC9+OEUQ+h0mMU+Rq6PhvP2xrNcbMwYxxWmVbPlrBHPdCOl+2+xU110ZhDqMtN4B
-         hBNLu3aL9/t/mrFmF2DMtf+a7qyhEHH1BaP1wFsc=
-From:   Luca Weiss <luca@z3ntu.xyz>
-Date:   Sun, 22 Jan 2023 17:48:36 +0100
-Subject: [PATCH 5/5] ARM: dts: qcom: msm8974-oneplus-bacon: Add notification LED
+        Sun, 22 Jan 2023 11:58:03 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8424417CF7;
+        Sun, 22 Jan 2023 08:58:02 -0800 (PST)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30MGvqqZ030738;
+        Sun, 22 Jan 2023 16:57:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=Y7aSpToOimi+qzcP+zvLl299nP0lgLH+azF1Y+cNlOw=;
+ b=mImWISlaUv9v/HGpSCspJXmXoc85jrowbrAJrJPvfo9aG0+g/MB+SPIfgJaV1ncLgSIT
+ JBwYpTwhlrC+0qd9kYIYx5yHru1x3N4c/yfz0uigue4vbIx8Zvvd3FlGCUnqjfRAhUuR
+ /MABhFfoIcra6rlAmXLW+/2BQBRqhXSRLefgq4R5V4AQR7iYzslOH0KUG6iXhiWX8V+y
+ IbcpNfqalFsmYmbGlZPv0S4GGWkFdFjREQ3QMYEJdGDSNcieh7BqrT4sD+cClsvmDKr/
+ q6+ZMg92CXX1KZXUVJk74E4QBrXyM0XbBGwNL5ITZazW2Uc+6DfT9f5fsyDzns5kSNDX vA== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n89dr1qw7-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 22 Jan 2023 16:57:52 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30MGvp2G004508
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 22 Jan 2023 16:57:51 GMT
+Received: from [10.50.40.120] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Sun, 22 Jan
+ 2023 08:57:48 -0800
+Message-ID: <ebdd9932-e251-0cd7-6c98-3c735ecb74a6@quicinc.com>
+Date:   Sun, 22 Jan 2023 22:27:45 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: ipq8074: add QFPROM node
+To:     Robert Marko <robimarko@gmail.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <srinivas.kandagatla@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20230121112358.52216-1-robimarko@gmail.com>
+ <20230121112358.52216-2-robimarko@gmail.com>
+Content-Language: en-US
+From:   Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+In-Reply-To: <20230121112358.52216-2-robimarko@gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230122-msm8974-bacon-features-v1-5-4049f565c24c@z3ntu.xyz>
-References: <20230122-msm8974-bacon-features-v1-0-4049f565c24c@z3ntu.xyz>
-In-Reply-To: <20230122-msm8974-bacon-features-v1-0-4049f565c24c@z3ntu.xyz>
-To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Luca Weiss <luca@z3ntu.xyz>
-X-Mailer: b4 0.11.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1264; i=luca@z3ntu.xyz;
- h=from:subject:message-id; bh=UC4MZp7joZ5KIGVSNAjIE3z+woZwa8RY5kG95For80s=;
- b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBjzWj2Melh4WgPgof4i5KIb9eQCvJo0gQAcgbgA6Ml
- Zfm8VqOJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCY81o9gAKCRBy2EO4nU3XVrm3EA
- C/KppKnzqSEjeDp67YBOnF3nRIdl7sMxjYsRfYN0kkt3dOtwmFkhbXoqplheSGGdjdIpOqWWYyu5p5
- vbabckzcp6SPm/XhlGBPFtq+diyApCW8CUx6JzsS0LhLEVrJpHH5+0gJeRaPQc/rVq8r+wld8x4y+h
- pT0kpn/f3SDYycRw0QwvY6poLHZxu6/BUx54rrKS5klUOuwUatphUBLHO2F9ms0EO5VHsHcoKj4e1S
- rwygzJH1uQnRN4Na6SK6VO9uO9aXcwd4tFqw1Fhrq2KVvpJvN/TmIaxfZBp5OcLEOiUWsYZzDzr8ud
- ie2j811S73Bs3yZdmGfkJUilDHOjJoQyqAcDQBQORrQ5EdldgFuEVHgxfRev8FMCgoMQTFIWunbq0u
- VM7ENcBQ7tBDlX95Ne7tMEUdMXsM/2obbPKYDKJRQ/4cJWbAlfSAVGIZP/TVPq6q+Yj6Bfnz8jcPyH
- 3Hva2cUGoMKhrGv93G5Tolj7NLnNnF3JB2Aq9L2HZlZZhuvdBK/uETx96gAmpA/TBpp8HrM9iJZ5WU
- La9QVrfGOcypa7xbAFB/Ut49xBt3dfuQxRBwh7ppTrR8xRYf8OslVNoJNBnf/+TBQ01AmMF34JImMO
- 8yDLkg4icyACHND+hdUkb2f6K6q0Q9mdcYQYnSnD44tTAsc0z81scOnc8ytw==
-X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
- fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,DKIM_INVALID,
-        DKIM_SIGNED,FROM_SUSPICIOUS_NTLD,SPF_HELO_NONE,SPF_PASS,
-        T_PDS_OTHER_BAD_TLD,URIBL_BLOCKED autolearn=no autolearn_force=no
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: UA29yu-0QGu7phHoyR2aDfvYJ8eDzPPT
+X-Proofpoint-ORIG-GUID: UA29yu-0QGu7phHoyR2aDfvYJ8eDzPPT
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-22_14,2023-01-20_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1011
+ priorityscore=1501 impostorscore=0 suspectscore=0 spamscore=0 adultscore=0
+ bulkscore=0 mlxlogscore=929 phishscore=0 malwarescore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2301220163
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -67,56 +83,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the node describing the sn3193 that's used to provide notification
-LED.
 
-Unfortunately the driver currently supports neither multicolor API nor
-using the properties function & color, so we use label instead.
+On 1/21/2023 4:53 PM, Robert Marko wrote:
+> IPQ8074 has efuses like other Qualcomm SoC-s that are required for
+> determining various HW quirks which will be required later for CPR etc,
+> so lets add the QFPROM node for start.
+>
+> Individidual fuses will be added as they are required.
+>
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> ---
+>   arch/arm64/boot/dts/qcom/ipq8074.dtsi | 7 +++++++
+>   1 file changed, 7 insertions(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+> index 8eba586065a3..f29491f647fe 100644
+> --- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+> @@ -301,6 +301,13 @@ mdio: mdio@90000 {
+>   			status = "disabled";
+>   		};
+>   
+> +		qfprom: efuse@a4000 {
+> +			compatible = "qcom,ipq8074-qfprom", "qcom,qfprom";
+> +			reg = <0x000a4000 0x1000>;
 
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
----
- .../arm/boot/dts/qcom-msm8974pro-oneplus-bacon.dts | 28 ++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
 
-diff --git a/arch/arm/boot/dts/qcom-msm8974pro-oneplus-bacon.dts b/arch/arm/boot/dts/qcom-msm8974pro-oneplus-bacon.dts
-index ffb486ceb6a6..a672c45d7070 100644
---- a/arch/arm/boot/dts/qcom-msm8974pro-oneplus-bacon.dts
-+++ b/arch/arm/boot/dts/qcom-msm8974pro-oneplus-bacon.dts
-@@ -114,6 +114,34 @@ led@0 {
- 			default-brightness = <80>;
- 		};
- 	};
-+
-+	led-controller@68 {
-+		compatible = "si-en,sn3193";
-+		reg = <0x68>;
-+
-+		shutdown-gpios = <&tlmm 45 GPIO_ACTIVE_HIGH>;
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		led@1 {
-+			reg = <1>;
-+			label = "red:status";
-+			led-max-microamp = <17500>;
-+		};
-+
-+		led@2 {
-+			reg = <2>;
-+			label = "green:status";
-+			led-max-microamp = <17500>;
-+		};
-+
-+		led@3 {
-+			reg = <3>;
-+			label = "blue:status";
-+			led-max-microamp = <17500>;
-+		};
-+	};
- };
- 
- &blsp1_i2c6 {
+ From the HW document, I see the overall size of this region is 0x2000, 
+any reason to stick with 0x1000?
 
--- 
-2.39.1
+Thanks, Kathiravan T.
+
+
+> +			#address-cells = <1>;
+> +			#size-cells = <1>;
+> +		};
+> +
+>   		prng: rng@e3000 {
+>   			compatible = "qcom,prng-ee";
+>   			reg = <0x000e3000 0x1000>;
