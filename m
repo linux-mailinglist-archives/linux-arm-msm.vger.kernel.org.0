@@ -2,115 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A12976770AF
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jan 2023 17:46:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F18866770DF
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jan 2023 18:06:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229837AbjAVQqI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 22 Jan 2023 11:46:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51298 "EHLO
+        id S230355AbjAVRF7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 22 Jan 2023 12:05:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229749AbjAVQqI (ORCPT
+        with ESMTP id S229837AbjAVRF6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 22 Jan 2023 11:46:08 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AAE819686;
-        Sun, 22 Jan 2023 08:46:03 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 1AC3E60C7A;
-        Sun, 22 Jan 2023 16:46:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23B82C433EF;
-        Sun, 22 Jan 2023 16:45:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1674405962;
-        bh=AQ/kuD1UpuybXY4NA/nKCIQdS+nCP13moa731pzrRyI=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=gus3NgHyX23OzLtbKxKhVzQCqZr9NFO8HTjFyYB0JpgVfH8E3JLdSO2igRcR12Qsz
-         lv3x95Yb5XZby/0rQU0XlrbuN8EDxi6kcXromwqTQjLKIH/fRY2UBNhMhSrcimm/O2
-         3B21MM5gN7fJVBzFKaPM//bbS0jA1/WdY0h4zxGNDEaAkwl1F7tCUg9cb38X/MFd13
-         i8OSoUIPT5jn49KtpdB+YgTCNdc3nGPBEIb5nfSM4a1EQz/L0NNTrmN2jjue1r1afX
-         K5G7EYhRg8ipkXD3IFXmZiseacQA2VfiDOltgOnbs3hkJi9sPFNqUdvovn6qcp3otW
-         eKMQKQzkRICpQ==
-Date:   Sun, 22 Jan 2023 16:59:47 +0000
-From:   Jonathan Cameron <jic23@kernel.org>
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH v2 0/5] iio: adc: qcom-spmi-vadc: Propagate fw node
- label to userspace
-Message-ID: <20230122165947.62e8652d@jic23-huawei>
-In-Reply-To: <20230116220909.196926-1-marijn.suijten@somainline.org>
-References: <20230116220909.196926-1-marijn.suijten@somainline.org>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.36; x86_64-pc-linux-gnu)
+        Sun, 22 Jan 2023 12:05:58 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61FCD193E9;
+        Sun, 22 Jan 2023 09:05:54 -0800 (PST)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30MH0DfM028970;
+        Sun, 22 Jan 2023 17:05:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=8eO8169TlFFU9q7i4/L6sF2LV7YTHHSzqyCt9efilmk=;
+ b=CAWsb0NPKtgmz+ofZRDnlvoRlFHoeQzFJuvMgpkj5B3V6sU3hxid6KPkQaZFDs4H2x00
+ TASp52MGhyVQo92fhUY5XO979YrH7k5BBUpnOh8vJZpOvrq66IaH6fgux55p3C9ndqHx
+ rp5M6JIcu0+cbZyAHKt+QqGXFMawGbEtp1v/N24c1wZZo7TAlSmw47zvZ7ecHYDgZFVK
+ ib/njgOVywHAwTl7QpQnEVbN1XWKCtEqbNiovB8uTLRjiZocoYsgWt5HgI4dMuEI+LSS
+ oOxRsBIS2YdY+pNrX6iYtjSSw1L6v2ZnedBwAkvOJnsfihPm/67/KFHSXk3uHCj70Y6T vA== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n89f59q0s-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 22 Jan 2023 17:05:50 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30MH5nwt028438
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 22 Jan 2023 17:05:49 GMT
+Received: from [10.50.40.120] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Sun, 22 Jan
+ 2023 09:05:45 -0800
+Message-ID: <29d9de45-1ce7-d6e5-bf02-052e911a067b@quicinc.com>
+Date:   Sun, 22 Jan 2023 22:35:43 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: ipq8074: add QFPROM node
+To:     Robert Marko <robimarko@gmail.com>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <srinivas.kandagatla@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20230121112358.52216-1-robimarko@gmail.com>
+ <20230121112358.52216-2-robimarko@gmail.com>
+ <ebdd9932-e251-0cd7-6c98-3c735ecb74a6@quicinc.com>
+ <CAOX2RU7p-0ZTx8fkY4hOk=Zmx6RT+1PwVL+CQxkjzVadm0ehTA@mail.gmail.com>
+Content-Language: en-US
+From:   Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+In-Reply-To: <CAOX2RU7p-0ZTx8fkY4hOk=Zmx6RT+1PwVL+CQxkjzVadm0ehTA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: -tlVJTRhbf9X80PuHjALOtFVi3qAgUSa
+X-Proofpoint-GUID: -tlVJTRhbf9X80PuHjALOtFVi3qAgUSa
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-22_14,2023-01-20_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=987 bulkscore=0
+ clxscore=1015 mlxscore=0 spamscore=0 phishscore=0 adultscore=0
+ lowpriorityscore=0 suspectscore=0 malwarescore=0 priorityscore=1501
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301220163
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 16 Jan 2023 23:09:04 +0100
-Marijn Suijten <marijn.suijten@somainline.org> wrote:
 
-> Implement read_label in qcom-spmi-vadc to see DT-specified label names
-> in userspace.  At the same time clear up some documentation around
-> extend_name to promote read_label, and normalize similar code in
-> qcom-spmi-adc5.
-> 
+On 1/22/2023 10:29 PM, Robert Marko wrote:
+> On Sun, 22 Jan 2023 at 17:57, Kathiravan Thirumoorthy
+> <quic_kathirav@quicinc.com> wrote:
+>>
+>> On 1/21/2023 4:53 PM, Robert Marko wrote:
+>>> IPQ8074 has efuses like other Qualcomm SoC-s that are required for
+>>> determining various HW quirks which will be required later for CPR etc,
+>>> so lets add the QFPROM node for start.
+>>>
+>>> Individidual fuses will be added as they are required.
+>>>
+>>> Signed-off-by: Robert Marko <robimarko@gmail.com>
+>>> ---
+>>>    arch/arm64/boot/dts/qcom/ipq8074.dtsi | 7 +++++++
+>>>    1 file changed, 7 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+>>> index 8eba586065a3..f29491f647fe 100644
+>>> --- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+>>> @@ -301,6 +301,13 @@ mdio: mdio@90000 {
+>>>                        status = "disabled";
+>>>                };
+>>>
+>>> +             qfprom: efuse@a4000 {
+>>> +                     compatible = "qcom,ipq8074-qfprom", "qcom,qfprom";
+>>> +                     reg = <0x000a4000 0x1000>;
+>>
+>>   From the HW document, I see the overall size of this region is 0x2000,
+>> any reason to stick with 0x1000?
+> Like always, I dont have access to docs and 0x1000 is all I could find
+> downstream
+> being used.
+>
+> Any chance you can share the regions inside of QFPROM, it would be great to use
+> the ECC corrected one if available.
 
-I think this is a good route forwards, but it is making changes
-to ABI so I definitely want input on this from at least one of
-the qualcomm maintainers before I pick it up - particularly
-the changes in patch 3.
+Sorry, What do you refer by "ECC corrected" here?
 
-Don't want to cause anyone nasty surprises.
+Thanks, Kathiravan T.
 
-J
 
-> Changes since v1:
-> - qcom-spmi-vadc: Use read_label instead of extend_name;
-> 
-> New since v1:
-> - core: Point users of extend_name field to read_label callback
-> - qcom-spmi-adc5: Use datasheet_name string literal for
->   iio_chan_spec::datasheet_name;
-> - qcom-spmi-adc5: Fall back to datasheet_name instead of
->   fwnode_get_name() for iio_chan_spec::extend_name (gets rid of @xx in
->   sysfs filenames and labels);
-> - qcom-spmi-adc5: Remove unnecessary datasheet_name NULL check.
-> 
-> v1: https://lore.kernel.org/linux-arm-msm/20221106193018.270106-1-marijn.suijten@somainline.org/
-> 
-> Marijn Suijten (5):
->   iio: core: Point users of extend_name field to read_label callback
->   iio: adc: qcom-spmi-adc5: Use driver datasheet_name instead of DT
->     label
->   iio: adc: qcom-spmi-adc5: Fall back to datasheet_name instead of
->     fwnode name
->   iio: adc: qcom-spmi-adc5: Remove unnecessary datasheet_name NULL check
->   iio: adc: qcom-spmi-vadc: Propagate fw node label to userspace
-> 
->  drivers/iio/adc/qcom-spmi-adc5.c | 15 +++++++--------
->  drivers/iio/adc/qcom-spmi-vadc.c | 19 ++++++++++++++++++-
->  include/linux/iio/iio.h          |  3 +++
->  3 files changed, 28 insertions(+), 9 deletions(-)
-> 
-> --
-> 2.39.0
-> 
-
+>
+> Regards,
+> Robert
+>> Thanks, Kathiravan T.
+>>
+>>
+>>> +                     #address-cells = <1>;
+>>> +                     #size-cells = <1>;
+>>> +             };
+>>> +
+>>>                prng: rng@e3000 {
+>>>                        compatible = "qcom,prng-ee";
+>>>                        reg = <0x000e3000 0x1000>;
