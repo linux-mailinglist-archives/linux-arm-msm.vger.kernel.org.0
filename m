@@ -2,159 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 423A3676D6C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jan 2023 15:11:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 558B2676D74
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jan 2023 15:13:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229944AbjAVOLF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 22 Jan 2023 09:11:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37314 "EHLO
+        id S230097AbjAVON2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 22 Jan 2023 09:13:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229814AbjAVOLE (ORCPT
+        with ESMTP id S229867AbjAVON1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 22 Jan 2023 09:11:04 -0500
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31AB21A8
-        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Jan 2023 06:11:03 -0800 (PST)
-Received: by mail-wm1-x32d.google.com with SMTP id bg13-20020a05600c3c8d00b003d9712b29d2so8893312wmb.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Jan 2023 06:11:03 -0800 (PST)
+        Sun, 22 Jan 2023 09:13:27 -0500
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4AE41027D
+        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Jan 2023 06:13:25 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id e3so8602800wru.13
+        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Jan 2023 06:13:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=AZRXyEWbQpFjtg2DB58n/2kfQoLivtArMtPHHmMjBIw=;
-        b=psPxgqGBE3X6rF+vKXfc90XELktrxm99+p7puFRyKXyvgJOEM7cWOJAe9c8MHVOV6R
-         WJenH8vfT/zVfX6uAI5TXufWIIDSVHawLUB6oYhP9YKxzeO1YOKBkFzPggepvoZU3qw7
-         g3W1PPKldLW1ev8Mq1Spw8NdEzYVwYbhlcVEoE8CBZQ/oNthZ//XhZugJ3BWvDfMoKG4
-         QgcSe4wDY0xzbLHKCipclV272WMrAWjzoC6lBOCKM+WxXib6/8qOYCk9wcx9u9M08zak
-         nozizZGLUwRcQtvxi+hDPbgw6/kh2QUJnvaY5Z85kvcDOEyT2WhT/IYCLKw57NYOqicD
-         pH4Q==
+        bh=SugIva74NLBWESanDTCiWyPSvA7ip4zXV7gKw6lUbrQ=;
+        b=RtA0V7/CAARJiXkH3BrJd9ABPzAIusIdaM+jUH3z5+LkCZqCcs/MCd5IEwaS9ZAz59
+         OlWEx1djJpKqmzSarWx3hxVnc5t2pFtAbqLQ6Z6lmeXy11P+vxc51XZlP3O5zSvcGph6
+         cWKfrXUuomgoyMJraFQjXosGZYY+V5K7XCn6jILQPrlofpJ+5DxzI9zi4020J62JLmYl
+         ik9431vEilugYV2udtLQwYhJ4QoVgFsdCPXgFQENgl//vV/qqt/h2ZIKOFhUNfNT6OIr
+         XFShVJc40LjwCnQc7gz5CWnC+r4+geNboDL8Aq/U/6Xee7w5VNCcP93Ihsc5odM6keaF
+         hzwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AZRXyEWbQpFjtg2DB58n/2kfQoLivtArMtPHHmMjBIw=;
-        b=H/cncNaWlOlxjyYRevqs4GYI00fn+XO8oe9Ky9w0KCNV65L/NI7T83SHptZITrDZFC
-         cx5m7f9x0sF6xR4WNHyY13kQI9fIIeUkQ38EjYnIGosjh8yyC6ufxpngP36zNysKcpPK
-         MZ7FQC3fTuqAbAM4x5IIBlOhkLpY68fMf9YUrJrNMGrNH+MLL3lkh0+DJhBN5fTGpT4Y
-         oS+bn99GFwpvim3ee/iEqS68r+i3VAkYWI/mqEX8d3oBGF6+t3GQiPpUsXGG7On0+0Am
-         f/0HbdQ9udX/b0drCHlfcpMc01fCrAlMcoq3zpB3D+Ut5UurF4wpovKLFlIxhBJFwcjy
-         HdEQ==
-X-Gm-Message-State: AFqh2kputX+5/ZP1In4m6HevdU5Owvf+f/1B3JSPNzSHy+WSn4kjsKzp
-        4imyQgJEJ12jQMmy3SnaKZMZXA==
-X-Google-Smtp-Source: AMrXdXuPwv8v/1rV46mJhP+RM46Rt+X2nwPmAaFNL2bvKuSE7jTpSNYsqqad9bPQYmUdop/7BzGARg==
-X-Received: by 2002:a05:600c:4f56:b0:3db:1f68:28f with SMTP id m22-20020a05600c4f5600b003db1f68028fmr12804784wmq.24.1674396661774;
-        Sun, 22 Jan 2023 06:11:01 -0800 (PST)
+        bh=SugIva74NLBWESanDTCiWyPSvA7ip4zXV7gKw6lUbrQ=;
+        b=yZo/mEqvyOCPhwX2DfaWeQzh9GoHxR/oK+HQGiyg5xSjYWMgRO4oFjL+wGxFBFpTgK
+         qZOSTzF2jx9WvsZIsJD9hguewdqugyvpLagKrzIn8Xi+pDX7M0IWtRQxwbovpUiIUgXn
+         qQu6Opb6A9N8nOyvbWpbJMmM7ULA7uee7ElPjIveoaN0zrDC3NalJqEqdr10EwJSnPKC
+         FLd/xvRrZ2/1JxZetn0WxQsEHXg8qnKg8+iOu/UswYBc+Dan/QSCkqjTVL71UHWFe0ii
+         dapMG0Skwvft6BmDve3pUjuCD4uG/7v6wqFtp2c28nPLWFES+ywFPZ5EFsExYDOx9ZUO
+         0Egg==
+X-Gm-Message-State: AFqh2koAJhiO1MV93prEnjy08G5P4dOvGX2pGo63S34KXr4dkVX502pP
+        nL9X5uVLDgSq165OqJ1orZLETg==
+X-Google-Smtp-Source: AMrXdXsqPk8Wl8LBsZZhJL3bZObq5yLmvOCLaCUwEICuMLelSRGwqMatxMPiBhX9mXOa9NcdhRNGjg==
+X-Received: by 2002:a5d:688d:0:b0:2bf:9551:e48f with SMTP id h13-20020a5d688d000000b002bf9551e48fmr5387696wru.47.1674396804511;
+        Sun, 22 Jan 2023 06:13:24 -0800 (PST)
 Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id f22-20020a1cc916000000b003d35acb0fd7sm8138526wmb.34.2023.01.22.06.10.59
+        by smtp.gmail.com with ESMTPSA id k3-20020a5d6e83000000b00289bdda07b7sm2355229wrz.92.2023.01.22.06.13.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 22 Jan 2023 06:11:01 -0800 (PST)
-Message-ID: <7af21247-a44e-cb46-7461-204fa6b4fcab@linaro.org>
-Date:   Sun, 22 Jan 2023 15:10:59 +0100
+        Sun, 22 Jan 2023 06:13:24 -0800 (PST)
+Message-ID: <1666baf9-0996-ec23-dfec-8e52fc92ddee@linaro.org>
+Date:   Sun, 22 Jan 2023 15:13:21 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.0
-Subject: Re: [PATCH v4 09/12] dt-bindings: PCI: qcom: Add SM8550 compatible
+Subject: Re: [PATCH 1/3] dt-bindings: cpufreq: qcom-cpufreq-nvmem: make cpr
+ bindings optional
 Content-Language: en-US
-To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
+To:     Christian Marangi <ansuelsmth@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Rob Herring <robh@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        "vkoul@kernel.org" <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-References: <20230119140453.3942340-1-abel.vesa@linaro.org>
- <20230119140453.3942340-10-abel.vesa@linaro.org>
+        Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>,
+        Yassine Oudjana <y.oudjana@protonmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230121000146.7809-1-ansuelsmth@gmail.com>
+ <43ff6113-03ee-a40a-b454-53cadec8728a@linaro.org>
+ <63cd42af.df0a0220.aae7d.51f1@mx.google.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230119140453.3942340-10-abel.vesa@linaro.org>
+In-Reply-To: <63cd42af.df0a0220.aae7d.51f1@mx.google.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/01/2023 15:04, Abel Vesa wrote:
-> Add the SM8550 platform to the binding.
+On 22/01/2023 15:05, Christian Marangi wrote:
+> On Sun, Jan 22, 2023 at 02:57:07PM +0100, Krzysztof Kozlowski wrote:
+>> On 21/01/2023 01:01, Christian Marangi wrote:
+>>> The qcom-cpufreq-nvmem driver also supports legacy devices pre-cpr that
+>>> doesn't have power-domains. When the schema was introduced, it was
+>>> wrongly set to always require these binding but this is not the case for
+>>> legacy device that base everything on nvmem cells and multiple microvolt
+>>
+>> What is a "legacy device"? Why do you adjust bindings to legacy device?
+>> Can't you just fix the DTS on these devices?
+>>
 > 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
+> With legacy I mean device where cpr (core power reduction) wasn't a
+> thing and qcom used a different way to select the microvolt for the opp.
 > 
-> The v3 of this patchset is:
-> https://lore.kernel.org/all/20230119112453.3393911-1-abel.vesa@linaro.org/
+> There is nothing in the related DTS to fix since they are not broken.
+> The driver doesn't enforce cpr presence and supports both new and old
+> implementation...
 > 
-> Changes since v3:
->  * renamed noc_aggr to noc_aggr_4, as found in the driver
+> Setting the cpr as a required binding was wrong from the start. It was
+> probably done when qcs404 was introduced and they had this bright idea
+> of creating the schema and ignoring the other kind of configuration the
+> driver supports.
 > 
-> Changes since v2:
->  * dropped the pipe from clock-names
->  * removed the pcie instance number from aggre clock-names comment
->  * renamed aggre clock-names to noc_aggr
->  * dropped the _pcie infix from cnoc_pcie_sf_axi
->  * renamed pcie_1_link_down_reset to simply link_down
->  * added enable-gpios back, since pcie1 node will use it
+> Since now we want to send opp for ipq8064 that use the old
+> implementation this fixup is required.
 > 
-> Changes since v1:
->  * Switched to single compatible for both PCIes (qcom,pcie-sm8550)
->  * dropped enable-gpios property
->  * dropped interconnects related properties, the power-domains
->  * properties
->    and resets related properties the sm8550 specific allOf:if:then
->  * dropped pipe_mux, phy_pipe and ref clocks from the sm8550 specific
->    allOf:if:then clock-names array and decreased the minItems and
->    maxItems for clocks property accordingly
->  * added "minItems: 1" to interconnects, since sm8550 pcie uses just
->  * one,
->    same for interconnect-names
-> 
-> 
->  .../devicetree/bindings/pci/qcom,pcie.yaml    | 44 +++++++++++++++++++
->  1 file changed, 44 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> index a5859bb3dc28..58f926666332 100644
-> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> @@ -34,6 +34,7 @@ properties:
->        - qcom,pcie-sm8250
->        - qcom,pcie-sm8450-pcie0
->        - qcom,pcie-sm8450-pcie1
-> +      - qcom,pcie-sm8550
->        - qcom,pcie-ipq6018
->  
->    reg:
-> @@ -65,9 +66,11 @@ properties:
->    dma-coherent: true
->  
->    interconnects:
-> +    minItems: 1
->      maxItems: 2
->  
+> Probably I should drop the legacy term and just say that the driver
+> supports 2 different configuration and the following schema permits only
+> one?
 
-I don't see my concerns from v3 answered.
-
-This is a friendly reminder during the review process.
-
-It seems my previous comments were not fully addressed. Maybe my
-feedback got lost between the quotes, maybe you just forgot to apply it.
-Please go back to the previous discussion and either implement all
-requested changes or keep discussing them.
-
-Thank you.
+Yes, it would be clearer.
 
 Best regards,
 Krzysztof
