@@ -2,134 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DE3D8676DE0
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jan 2023 15:57:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E9D8D6770C6
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jan 2023 17:49:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230002AbjAVO5l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 22 Jan 2023 09:57:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54820 "EHLO
+        id S230131AbjAVQtj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 22 Jan 2023 11:49:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229947AbjAVO5j (ORCPT
+        with ESMTP id S229895AbjAVQtj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 22 Jan 2023 09:57:39 -0500
-X-Greylist: delayed 449 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 22 Jan 2023 06:57:37 PST
-Received: from proxmox1.postmarketos.org (proxmox1.postmarketos.org [213.239.216.189])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 152611BAFE;
-        Sun, 22 Jan 2023 06:57:36 -0800 (PST)
-Received: from shock.lan (2-248-191-197-no36.tbcn.telia.com [2.248.191.197])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by proxmox1.postmarketos.org (Postfix) with ESMTPSA id EC1DE140402;
-        Sun, 22 Jan 2023 14:50:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
-        s=donut; t=1674399025;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=dtyjs2pqrJrhJouhbcxDlpTK3vQz+8gAmTLZyHkw9gE=;
-        b=cEMghCUCVTn9UbQVdx2Z+dFC55xH2Fi7qQJ8TIYV1jr3GlGeYEwyknv/Pwa2GZAsy/nHZK
-        oksySJGKbZCsBGtI3G6T4NT+PfP3UyG3Nv7MCHkX294k1pqaFft++THEPU3UKYokYh7vZO
-        lb1fvyPIGRvHDEbVC4fA6wBjnjGqgp8=
-From:   Stefan Hansson <newbyte@postmarketos.org>
-To:     Andy Gross <agross@kernel.org>,
+        Sun, 22 Jan 2023 11:49:39 -0500
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F94D7D93;
+        Sun, 22 Jan 2023 08:49:27 -0800 (PST)
+Received: from [192.168.178.23] (unknown [62.108.10.64])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id A0B0FCD17F;
+        Sun, 22 Jan 2023 16:48:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1674406135; bh=hkk3joZ0mTC0UcwxuuHdlSXDDx0OPBvCwaw8zRjJjaU=;
+        h=From:Date:Subject:References:In-Reply-To:To:Cc;
+        b=CSP84unqgU3MNiA4kMM1RnRhf7wVjOYOC/6RcN9qrJfRdGVeeiKP/o+JrQP3Tm5B6
+         xtUOm7HBJ9UsHzGUFvdl72+Z1WVMf+jZ2k9/B4+JSIRX9wPZgSQy4KFDKVlFgGNMc/
+         aSxuxnOVHVog0yovNyl/y1ZnlhQ1WxcAGDY5FUMQ=
+From:   Luca Weiss <luca@z3ntu.xyz>
+Date:   Sun, 22 Jan 2023 17:48:32 +0100
+Subject: [PATCH 1/5] ARM: dts: qcom: pm8941: Add vibrator node
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230122-msm8974-bacon-features-v1-1-4049f565c24c@z3ntu.xyz>
+References: <20230122-msm8974-bacon-features-v1-0-4049f565c24c@z3ntu.xyz>
+In-Reply-To: <20230122-msm8974-bacon-features-v1-0-4049f565c24c@z3ntu.xyz>
+To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-        soc@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        matti.lehtimaki@gmail.com,
-        Stefan Hansson <newbyte@postmarketos.org>
-Subject: [PATCH 3/3] ARM: dts: qcom: Add support for Samsung Galaxy Tab 4 10.1 LTE (SM-T535)
-Date:   Sun, 22 Jan 2023 15:47:50 +0100
-Message-Id: <20230122144749.87597-4-newbyte@postmarketos.org>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230122144749.87597-1-newbyte@postmarketos.org>
-References: <20230122144749.87597-1-newbyte@postmarketos.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_NONE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Luca Weiss <luca@z3ntu.xyz>
+X-Mailer: b4 0.11.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=713; i=luca@z3ntu.xyz;
+ h=from:subject:message-id; bh=hkk3joZ0mTC0UcwxuuHdlSXDDx0OPBvCwaw8zRjJjaU=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBjzWjyA2uq3IAKgtXVZ+hXAHDmyTJuKDODtcN1ynjz
+ IxxQqyCJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCY81o8gAKCRBy2EO4nU3XVpVjD/
+ 9PQLiq2tz2CpOqjGEKldludYM3tJ/avYS7mRo5d0XOPn8cZYuASTdJCxRbN2e/rQrb5rBWNROLaTxB
+ e5CRmB2BH7kDLHjefoYUeGA21/+GyyC2+DsHc/UuWF6vC6JmjRnRRTM9IYq15ud8yihbmeu+6C8Zsm
+ FGizuTNE1wdxNFeosN5iOlke3pdDGKj6p+deinSQ2HRXaS+LBV7V4Yxb1XJ7h5XdJSiX0kUdVCMR3u
+ WPNfYl69sJhyANLn401J8Y/b0qRMuz3LUMM4k0UXs/tUr3hGzrWNZQP/Ru/tnKdC/3SGgZnL/EZXdH
+ T1fU32jTjyOmr9z9Ge39Fy6gT65eVTdgcozdk83nl7xQewgbvdIlLAVeukkjOCaGj/WNNWdE/29egS
+ NzNPjfTE7IHGylI1gnPVAnVfokMFmn8luO0A2eFrHbkSKCNp/tv0+kAJAx6KsHPXv7AuoA/uVqsz3I
+ B6hXFUeIL9/9mxl7RcwskoQH+9jxL2qHjwf5ETxpGxNKitFPzLs7yy7cKgL3nyhXssWvvDgJGcdhRr
+ ut3JvL5VeaqEp/woRyxYcb7z0l7nRrT9ZxKNQasDeL92GS/tch7OmzSpkgOH6Osk3DbeK0OQkGu07o
+ svQehs3qqEnnE3U2MIMKk0mNhlmgZOSB14EqtT3IemyhzD2e/fZiqSXg6yPQ==
+X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
+ fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
+X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
+        SPF_HELO_NONE,SPF_PASS,T_PDS_OTHER_BAD_TLD,URIBL_BLOCKED autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a device tree for the Samsung Galaxy Tab 4 10.1 (SM-T535) LTE tablet
-based on the MSM8926 platform.
+Add the node describing the vibrator that's found on pm8941.
 
-Signed-off-by: Stefan Hansson <newbyte@postmarketos.org>
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 ---
- arch/arm/boot/dts/Makefile                    |  1 +
- .../dts/qcom-msm8926-samsung-matisselte.dts   | 39 +++++++++++++++++++
- 2 files changed, 40 insertions(+)
- create mode 100644 arch/arm/boot/dts/qcom-msm8926-samsung-matisselte.dts
+ arch/arm/boot/dts/qcom-pm8941.dtsi | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-index d0c07867aeab..e1fad9eb0d26 100644
---- a/arch/arm/boot/dts/Makefile
-+++ b/arch/arm/boot/dts/Makefile
-@@ -1061,6 +1061,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
- 	qcom-msm8916-samsung-e7.dtb \
- 	qcom-msm8916-samsung-grandmax.dtb \
- 	qcom-msm8916-samsung-serranove.dtb \
-+	qcom-msm8926-samsung-matisselte.dtb \
- 	qcom-msm8960-cdp.dtb \
- 	qcom-msm8974-lge-nexus5-hammerhead.dtb \
- 	qcom-msm8974-sony-xperia-rhine-amami.dtb \
-diff --git a/arch/arm/boot/dts/qcom-msm8926-samsung-matisselte.dts b/arch/arm/boot/dts/qcom-msm8926-samsung-matisselte.dts
-new file mode 100644
-index 000000000000..6df568f1f36d
---- /dev/null
-+++ b/arch/arm/boot/dts/qcom-msm8926-samsung-matisselte.dts
-@@ -0,0 +1,39 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2022, Matti Lehtimäki <matti.lehtimaki@gmail.com>
-+ * Copyright (c) 2023, Stefan Hansson <newbyte@postmarketos.org>
-+ */
+diff --git a/arch/arm/boot/dts/qcom-pm8941.dtsi b/arch/arm/boot/dts/qcom-pm8941.dtsi
+index cd957a1e7cdf..a821f0368a28 100644
+--- a/arch/arm/boot/dts/qcom-pm8941.dtsi
++++ b/arch/arm/boot/dts/qcom-pm8941.dtsi
+@@ -161,6 +161,12 @@ pm8941_lpg: pwm {
+ 			status = "disabled";
+ 		};
+ 
++		pm8941_vib: vibrator@c000 {
++			compatible = "qcom,pm8916-vib";
++			reg = <0xc000>;
++			status = "disabled";
++		};
 +
-+/dts-v1/;
-+
-+#include "qcom-msm8226-samsung-matisse-common.dtsi"
-+
-+/ {
-+	model = "Samsung Galaxy Tab 4 10.1 LTE";
-+	compatible = "samsung,matisselte", "qcom,msm8926";
-+	chassis-type = "tablet";
-+};
-+
-+&pm8226_l3 {
-+	regulator-min-microvolt = <750000>;
-+	regulator-max-microvolt = <1350000>;
-+	regulator-always-on;
-+};
-+
-+&pm8226_s4 {
-+	regulator-min-microvolt = <1800000>;
-+	regulator-max-microvolt = <2200000>;
-+};
-+
-+&reg_tsp_3p3v {
-+		gpio = <&tlmm 32 GPIO_ACTIVE_HIGH>;
-+};
-+
-+&sdhc_2 {
-+	/* SD card fails to probe with error -110 */
-+	status = "disabled";
-+};
-+
-+&tsp_en1_default_state {
-+	pins = "gpio32";
-+};
+ 		pm8941_wled: wled@d800 {
+ 			compatible = "qcom,pm8941-wled";
+ 			reg = <0xd800>;
+
 -- 
-2.39.0
-
+2.39.1
