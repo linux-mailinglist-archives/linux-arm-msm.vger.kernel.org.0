@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 382A9676D68
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jan 2023 15:09:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 423A3676D6C
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jan 2023 15:11:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230011AbjAVOJT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 22 Jan 2023 09:09:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36758 "EHLO
+        id S229944AbjAVOLF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 22 Jan 2023 09:11:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229864AbjAVOJS (ORCPT
+        with ESMTP id S229814AbjAVOLE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 22 Jan 2023 09:09:18 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98F746A43
-        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Jan 2023 06:09:17 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id fl11-20020a05600c0b8b00b003daf72fc844so8903594wmb.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Jan 2023 06:09:17 -0800 (PST)
+        Sun, 22 Jan 2023 09:11:04 -0500
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31AB21A8
+        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Jan 2023 06:11:03 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id bg13-20020a05600c3c8d00b003d9712b29d2so8893312wmb.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Jan 2023 06:11:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=a9NpMSfkooTiSv2ZBQPfxArsfZPBfz7GqCCR+XSaAOg=;
-        b=OHuy7+aZrOI8AjcM8rXiRTGA3F82tyHoun7dlV3o8JzEZmu1Nib00YrXclUIX/IbyW
-         HZMEi4IkWMmrLwsEnwqjOUM0hEcQT8eP8GEGCYUAhXpKrCYv9p+0oo99ESXe7IwBM9pC
-         cX9ZcC7snaiqc5qFHw6dsS6iAA7cLqR2k2s90SqJIALSOQ0xp0IY7fra+WkISkChBjXL
-         6iKH/5fp67J/EhDZ2Ql+huD+NgZupKYXqSsuZhPOMUZaKwq+f3Uc+P2GTq/5LPi084M9
-         2hjWiw0Xb+/cUfzetx93dAXrOYxU4SJFL8C8co7LdHA53ZusDtvuHhBzi6KFtjHrCMN1
-         Y4UA==
+        bh=AZRXyEWbQpFjtg2DB58n/2kfQoLivtArMtPHHmMjBIw=;
+        b=psPxgqGBE3X6rF+vKXfc90XELktrxm99+p7puFRyKXyvgJOEM7cWOJAe9c8MHVOV6R
+         WJenH8vfT/zVfX6uAI5TXufWIIDSVHawLUB6oYhP9YKxzeO1YOKBkFzPggepvoZU3qw7
+         g3W1PPKldLW1ev8Mq1Spw8NdEzYVwYbhlcVEoE8CBZQ/oNthZ//XhZugJ3BWvDfMoKG4
+         QgcSe4wDY0xzbLHKCipclV272WMrAWjzoC6lBOCKM+WxXib6/8qOYCk9wcx9u9M08zak
+         nozizZGLUwRcQtvxi+hDPbgw6/kh2QUJnvaY5Z85kvcDOEyT2WhT/IYCLKw57NYOqicD
+         pH4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=a9NpMSfkooTiSv2ZBQPfxArsfZPBfz7GqCCR+XSaAOg=;
-        b=JoZUhmB6Hpqpp/CH0dMAWI7v2K8Ccb2Q81fGPv2Jd+YshqkdxwRLqPfBlJ1avuLa6q
-         OrtSjND+YIajAnP+NSuEBotcPP+Q/fZs3urjFBfV+Xw4vlWdyGEXIrAukUHN9Y4lN2OO
-         ziR1FJISwvoI6sD2s9eSynU/XWqJVU5NEoAK8k+Cx1aNbUvp9DjcDFPlxiSj4TeNHyof
-         YFT82eAK3+hOtT8zogC7Ira3MUK9hyQ75oqQhi1NnlQaUljyOFBVOD648ck3dgJNkwG9
-         48pDJXEkXKn9Pnw/BY9rejCyhzaVF6uCrj9akiVkVkwZ/+kNBi8mWXEBxLc64OaHXmWo
-         uLZA==
-X-Gm-Message-State: AFqh2kpdiA6LRMBEiUYKzkm6rluwHIZwMTdPpOGReIWSsbPqMF+zQFyg
-        XE5LEAe6Kkp6xkb9kCr0MkARAg==
-X-Google-Smtp-Source: AMrXdXtDA46PnZEz1olLAyyVedLaw70rB9bL/u8qM6NXPsKsze4CIEalUOanBH3tAqmcu3CtNmfDPQ==
-X-Received: by 2002:a05:600c:3b05:b0:3d6:b691:b80d with SMTP id m5-20020a05600c3b0500b003d6b691b80dmr20881250wms.21.1674396556168;
-        Sun, 22 Jan 2023 06:09:16 -0800 (PST)
+        bh=AZRXyEWbQpFjtg2DB58n/2kfQoLivtArMtPHHmMjBIw=;
+        b=H/cncNaWlOlxjyYRevqs4GYI00fn+XO8oe9Ky9w0KCNV65L/NI7T83SHptZITrDZFC
+         cx5m7f9x0sF6xR4WNHyY13kQI9fIIeUkQ38EjYnIGosjh8yyC6ufxpngP36zNysKcpPK
+         MZ7FQC3fTuqAbAM4x5IIBlOhkLpY68fMf9YUrJrNMGrNH+MLL3lkh0+DJhBN5fTGpT4Y
+         oS+bn99GFwpvim3ee/iEqS68r+i3VAkYWI/mqEX8d3oBGF6+t3GQiPpUsXGG7On0+0Am
+         f/0HbdQ9udX/b0drCHlfcpMc01fCrAlMcoq3zpB3D+Ut5UurF4wpovKLFlIxhBJFwcjy
+         HdEQ==
+X-Gm-Message-State: AFqh2kputX+5/ZP1In4m6HevdU5Owvf+f/1B3JSPNzSHy+WSn4kjsKzp
+        4imyQgJEJ12jQMmy3SnaKZMZXA==
+X-Google-Smtp-Source: AMrXdXuPwv8v/1rV46mJhP+RM46Rt+X2nwPmAaFNL2bvKuSE7jTpSNYsqqad9bPQYmUdop/7BzGARg==
+X-Received: by 2002:a05:600c:4f56:b0:3db:1f68:28f with SMTP id m22-20020a05600c4f5600b003db1f68028fmr12804784wmq.24.1674396661774;
+        Sun, 22 Jan 2023 06:11:01 -0800 (PST)
 Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id w10-20020a5d544a000000b00273cd321a1bsm2853845wrv.107.2023.01.22.06.09.14
+        by smtp.gmail.com with ESMTPSA id f22-20020a1cc916000000b003d35acb0fd7sm8138526wmb.34.2023.01.22.06.10.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 22 Jan 2023 06:09:15 -0800 (PST)
-Message-ID: <938a5115-48e4-73f9-8a7a-ae890eb10077@linaro.org>
-Date:   Sun, 22 Jan 2023 15:09:13 +0100
+        Sun, 22 Jan 2023 06:11:01 -0800 (PST)
+Message-ID: <7af21247-a44e-cb46-7461-204fa6b4fcab@linaro.org>
+Date:   Sun, 22 Jan 2023 15:10:59 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.0
-Subject: Re: [PATCH v4 01/12] dt-bindings: phy: Add QMP PCIe PHY comptible for
- SM8550
+Subject: Re: [PATCH v4 09/12] dt-bindings: PCI: qcom: Add SM8550 compatible
 Content-Language: en-US
 To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -74,15 +73,15 @@ Cc:     linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
         linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 References: <20230119140453.3942340-1-abel.vesa@linaro.org>
- <20230119140453.3942340-2-abel.vesa@linaro.org>
+ <20230119140453.3942340-10-abel.vesa@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230119140453.3942340-2-abel.vesa@linaro.org>
+In-Reply-To: <20230119140453.3942340-10-abel.vesa@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -90,61 +89,72 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 19/01/2023 15:04, Abel Vesa wrote:
-> Document the QMP PCIe PHY compatible for SM8550.
+> Add the SM8550 platform to the binding.
 > 
 > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
 > 
-> This patchset relies on the following patchset:
-> https://lore.kernel.org/all/20230117224148.1914627-1-abel.vesa@linaro.org/
-> 
 > The v3 of this patchset is:
-> https://lore.kernel.org/all/20230118005328.2378792-1-abel.vesa@linaro.org/
+> https://lore.kernel.org/all/20230119112453.3393911-1-abel.vesa@linaro.org/
 > 
 > Changes since v3:
->  * increased the allowed number of resets to allow ncsr reset
->  * added vdda-qref-supply which is used by pcie1_phy node in MTP dts
->  * added both compatibles to the allOf:if:then clause to constrain the
->    number of possible clocks to 5
+>  * renamed noc_aggr to noc_aggr_4, as found in the driver
 > 
 > Changes since v2:
->  * added back the binding compatible update patch
+>  * dropped the pipe from clock-names
+>  * removed the pcie instance number from aggre clock-names comment
+>  * renamed aggre clock-names to noc_aggr
+>  * dropped the _pcie infix from cnoc_pcie_sf_axi
+>  * renamed pcie_1_link_down_reset to simply link_down
+>  * added enable-gpios back, since pcie1 node will use it
 > 
 > Changes since v1:
->  * split all the offsets into separate patches, like Vinod suggested
+>  * Switched to single compatible for both PCIes (qcom,pcie-sm8550)
+>  * dropped enable-gpios property
+>  * dropped interconnects related properties, the power-domains
+>  * properties
+>    and resets related properties the sm8550 specific allOf:if:then
+>  * dropped pipe_mux, phy_pipe and ref clocks from the sm8550 specific
+>    allOf:if:then clock-names array and decreased the minItems and
+>    maxItems for clocks property accordingly
+>  * added "minItems: 1" to interconnects, since sm8550 pcie uses just
+>  * one,
+>    same for interconnect-names
 > 
->  .../bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml      | 11 ++++++++++-
->  1 file changed, 10 insertions(+), 1 deletion(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
-> index 8a85318d9c92..4b4566f90811 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
-> @@ -20,6 +20,8 @@ properties:
->        - qcom,sc8280xp-qmp-gen3x2-pcie-phy
->        - qcom,sc8280xp-qmp-gen3x4-pcie-phy
->        - qcom,sm8350-qmp-gen3x1-pcie-phy
-> +      - qcom,sm8550-qmp-gen3x2-pcie-phy
-> +      - qcom,sm8550-qmp-gen4x2-pcie-phy
+>  .../devicetree/bindings/pci/qcom,pcie.yaml    | 44 +++++++++++++++++++
+>  1 file changed, 44 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> index a5859bb3dc28..58f926666332 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> @@ -34,6 +34,7 @@ properties:
+>        - qcom,pcie-sm8250
+>        - qcom,pcie-sm8450-pcie0
+>        - qcom,pcie-sm8450-pcie1
+> +      - qcom,pcie-sm8550
+>        - qcom,pcie-ipq6018
 >  
 >    reg:
->      minItems: 1
-> @@ -43,16 +45,21 @@ properties:
->      maxItems: 1
+> @@ -65,9 +66,11 @@ properties:
+>    dma-coherent: true
 >  
->    resets:
-> -    maxItems: 1
+>    interconnects:
 > +    minItems: 1
-> +    maxItems: 2
+>      maxItems: 2
 >  
->    reset-names:
-> +    minItems: 1
->      items:
->        - const: phy
-> +      - const: nocsr
 
-I think it is valid only for this phy variant, so please constrain it to
-1 entries for all others.
+I don't see my concerns from v3 answered.
+
+This is a friendly reminder during the review process.
+
+It seems my previous comments were not fully addressed. Maybe my
+feedback got lost between the quotes, maybe you just forgot to apply it.
+Please go back to the previous discussion and either implement all
+requested changes or keep discussing them.
+
+Thank you.
 
 Best regards,
 Krzysztof
