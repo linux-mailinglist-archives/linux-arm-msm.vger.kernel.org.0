@@ -2,88 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 35F64676C9E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jan 2023 13:00:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D4CDA676D43
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jan 2023 14:51:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229699AbjAVMAD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 22 Jan 2023 07:00:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50884 "EHLO
+        id S229980AbjAVNvK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 22 Jan 2023 08:51:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229867AbjAVMAC (ORCPT
+        with ESMTP id S229972AbjAVNvJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 22 Jan 2023 07:00:02 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 944F31632E
-        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Jan 2023 03:59:57 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id t5so8495939wrq.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Jan 2023 03:59:57 -0800 (PST)
+        Sun, 22 Jan 2023 08:51:09 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 824251DBA6
+        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Jan 2023 05:51:08 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id iv8-20020a05600c548800b003db04a0a46bso3303899wmb.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Jan 2023 05:51:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=B2LDrF4mdXRODwHYb9g9f5UoWpcaY5wVZNODxK+6ym4=;
-        b=A/PftIvd7aQMmaQ0+f6sTZ0jewQUlUirWHFFvCOzJ7Ev+bQEHqPL9sGZcVqPtRrTT4
-         +HKdELZ7eUPeKPGPP4XSjYE/H1/IGaMmt6I8DaOY+buWBGECi26ARlyrIu7AkM7tD3Xp
-         gNPe/n/FQqVK5VvYPnZaBbLXWWp2NZtn9/q3GzjIZ3g3TtevchRoA4AO5F8elhLUOCoq
-         Ae07avCADDHnRi59CivBqOS+04pUd5VXgXI+wG4g6H4aKvPbCi1hKk9zrWT/WydjZVw8
-         83YmRzcOxvcZKn51IUbNxPK90IEpR8U146OPllCcRMVYrOxpoEAgfAKWwV7/Rg6ObcAX
-         wJIQ==
+        bh=JBQsna4Ml4m+CXKj50BA/m/QubV2oPbdfMdO4WVRYYc=;
+        b=VLQgazTYjVfIt001bxaQt/FbWF7560Tm2HbPWameob7U/hMBFgmtO5QiueZDdoBgST
+         yJRDUHKPcDtFlR13MfwK6UuMpmGd/SsY9jm8/56ZcX2A9c82dw/uikQ5rAqilaLe/AAP
+         J0WyJ7vEcVPba/Y5NGTYvKgpEW6uxn1gOFOCq/R2CjuFU/COPhPmSg/syLVEs1LdD5BR
+         uKL2zHK5Wj7t5i3jgeZLpULo6IME8uPpWMCqMAa6/ygs+p+fJP0GywNXldgX7EJ6mQRm
+         N5ks7NmEbfrIZuWruK+nx1M60WisROVzxiueSsYiwDoXDdvIdTp5Yi8ukREaOlVTau2p
+         1sGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=B2LDrF4mdXRODwHYb9g9f5UoWpcaY5wVZNODxK+6ym4=;
-        b=2q47/XHbMls4O8IaQ6VQoII5sUkDWhlhbYmwDJgXNu9OHskDoRtNhvlSiNoDuFylj4
-         DDG3as2z3iWCLXSQLaOCtKpZJSB42aBJYHNdgpCx9Bg9PkToW1/LqfcG2WWfoSpml0Fa
-         qp362DCopERKnwc9otWSJd4enHW2hhXvlYhrXjuB2LUU571cNtS/ravLbCe00qnyRdAV
-         SIFn1O6sNCLmtgPyADzk+yyuaCn4ZvSsLeYf6hV3GK3HYPaYmX3MyG5qQnTeD4YObt1P
-         zhjlzVjMv00Xc79lnMf9UQBaU0EWpbvqESdnH1xxDJ/PlcKgcrYWK/Vg2kKI7wqmh/Z4
-         FPfg==
-X-Gm-Message-State: AFqh2kq3xyiTxDSpYmpzBI5e6hj1EttupCZxtgf7DO4iZutNFlXx4EOS
-        pZynjP8lLrN+5ulrVQ+tW4C1SA==
-X-Google-Smtp-Source: AMrXdXuaF/TrZ4zpb+eoFpCMqA7VQH3RLErJJfzsKl1A7D8KW/Hodkc9JOcgF2DszJKKF2FAAmtjzA==
-X-Received: by 2002:a5d:42d0:0:b0:2bf:9459:255 with SMTP id t16-20020a5d42d0000000b002bf94590255mr6565401wrr.70.1674388796187;
-        Sun, 22 Jan 2023 03:59:56 -0800 (PST)
+        bh=JBQsna4Ml4m+CXKj50BA/m/QubV2oPbdfMdO4WVRYYc=;
+        b=Zn7eXeHbaB9ZoOZu5ojPbap7ljsktYaiTiPp0+H/xoiN3d72sNODcWgcHI4odC1fbx
+         f4fkjp33CgdoyOkMYYG6JmTAw0DKvFvNnY8oYjvqclLfqN2kTLPo7nqsg886MeOGJGAe
+         KZ88z6TpebCKqYCTwR7vzN2w2+is0ilxJuB/RwRjYsJ8JMk19jhLK4mQdEby9bhG894/
+         8RWP6+qPPqbBI9w+fVYsiKDP0uq9J/LRWqTUBSKhfXBGYXG76c2w1BQfD3GjJvsw3hcb
+         bRmGcXcbOAtpi2eN16U2ttyMIDpK4j/8ugVacb8aF75BnXan/ip4gxvp1igdlmG8rvey
+         /VXA==
+X-Gm-Message-State: AFqh2kq7d6U65PAYKF662uGTMwclAm1AD+0+cG82RUtU117nziWFPJDe
+        iu/TF+X4z6vgzIdVaQB8fND5vw==
+X-Google-Smtp-Source: AMrXdXsXRA6OI2AcFH5C60qUwEPyDPWkyeNw6lIIh9+btcIBhRDQrJ9zcvZzYhgFuv/QMs45W/Znng==
+X-Received: by 2002:a05:600c:1c9c:b0:3d3:49db:9b25 with SMTP id k28-20020a05600c1c9c00b003d349db9b25mr17348348wms.26.1674395467083;
+        Sun, 22 Jan 2023 05:51:07 -0800 (PST)
 Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id w11-20020adfd4cb000000b00241fde8fe04sm2739852wrk.7.2023.01.22.03.59.54
+        by smtp.gmail.com with ESMTPSA id o6-20020a05600c378600b003d9fba3c7a4sm7953734wmr.16.2023.01.22.05.51.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 22 Jan 2023 03:59:55 -0800 (PST)
-Message-ID: <0b4ff383-d07e-6c18-9d42-f336f282d990@linaro.org>
-Date:   Sun, 22 Jan 2023 12:59:54 +0100
+        Sun, 22 Jan 2023 05:51:06 -0800 (PST)
+Message-ID: <030115dd-f489-5d4e-c993-e9fa8b550f04@linaro.org>
+Date:   Sun, 22 Jan 2023 14:51:03 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.0
-Subject: Re: [PATCH 1/2] dt-bindings: nvmem: qfprom: add IPQ8074 compatible
+Subject: Re: [RESEND v5 0/6] Add resets for ADSP based audio clock controller
+ driver
 Content-Language: en-US
-To:     Robert Marko <robimarko@gmail.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        srinivas.kandagatla@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230121112358.52216-1-robimarko@gmail.com>
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        swboyd@chromium.org, agross@kernel.org, andersson@kernel.org,
+        robh+dt@kernel.org, broonie@kernel.org, quic_plai@quicinc.com,
+        krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@somainline.org,
+        mturquette@baylibre.com, sboyd@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com
+References: <1674322340-25882-1-git-send-email-quic_srivasam@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230121112358.52216-1-robimarko@gmail.com>
+In-Reply-To: <1674322340-25882-1-git-send-email-quic_srivasam@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/01/2023 12:23, Robert Marko wrote:
-> Document IPQ8074 compatible for QFPROM, its compatible with the generic
-> QFPROM fallback.
+On 21/01/2023 18:32, Srinivasa Rao Mandadapu wrote:
+> Add resets and remove qdsp6ss clcok controller for audioreach based platforms. 
 > 
-> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> Changes since v4:
+>     -- Update Fixes tag in Merge lpasscc into lpass_aon patch.
+>     -- Revert removal of clk_regmap structure in Merge lpasscc into lpass_aon patch.
+> 
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Your v5 before resend have build issues. Please fix.
 
 Best regards,
 Krzysztof
