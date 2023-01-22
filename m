@@ -2,81 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 92A90676D62
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jan 2023 15:05:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 382A9676D68
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jan 2023 15:09:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229989AbjAVOFk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 22 Jan 2023 09:05:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34700 "EHLO
+        id S230011AbjAVOJT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 22 Jan 2023 09:09:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229622AbjAVOFi (ORCPT
+        with ESMTP id S229864AbjAVOJS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 22 Jan 2023 09:05:38 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B8441E9F9;
-        Sun, 22 Jan 2023 06:05:37 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id l8so7212582wms.3;
-        Sun, 22 Jan 2023 06:05:37 -0800 (PST)
+        Sun, 22 Jan 2023 09:09:18 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98F746A43
+        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Jan 2023 06:09:17 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id fl11-20020a05600c0b8b00b003daf72fc844so8903594wmb.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Jan 2023 06:09:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=w+DYwuFS9Dkc93QjhUhcqFaLx7ImoBj+LjvTnSTbnm8=;
-        b=DcYu8g70+C7PZXA3VZnn6MsW7kkyGrHhUlHUT+xknVAJQ+nUsllEzfqQT1wAbAh1Ic
-         OAul5mZ1m1T9UxlxWCXVmtqTE7L4e6Kx2Xv9/kDBSQ2BzWmnMm3hXANtWxJSYWGDgFLz
-         f9fmbfVJ15OV3cwdg+58uUypMjS+6kTuPkcNOZWqCATbBYpVPZ51FbvRVTJrBMjam96P
-         dH+GrEaYoot27weeWuXToMMvoC5xYUxBKf+tLs+8QcoOGTwdjGmg2WZAY0kY7VOUU34F
-         DGw14uuvDUHv66Ra2T/goSg3FOgF1beQGH0rifmrQlWYwdue1a8uB2nvLz5Il5xvq5Rl
-         vjCQ==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=a9NpMSfkooTiSv2ZBQPfxArsfZPBfz7GqCCR+XSaAOg=;
+        b=OHuy7+aZrOI8AjcM8rXiRTGA3F82tyHoun7dlV3o8JzEZmu1Nib00YrXclUIX/IbyW
+         HZMEi4IkWMmrLwsEnwqjOUM0hEcQT8eP8GEGCYUAhXpKrCYv9p+0oo99ESXe7IwBM9pC
+         cX9ZcC7snaiqc5qFHw6dsS6iAA7cLqR2k2s90SqJIALSOQ0xp0IY7fra+WkISkChBjXL
+         6iKH/5fp67J/EhDZ2Ql+huD+NgZupKYXqSsuZhPOMUZaKwq+f3Uc+P2GTq/5LPi084M9
+         2hjWiw0Xb+/cUfzetx93dAXrOYxU4SJFL8C8co7LdHA53ZusDtvuHhBzi6KFtjHrCMN1
+         Y4UA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=w+DYwuFS9Dkc93QjhUhcqFaLx7ImoBj+LjvTnSTbnm8=;
-        b=pYEldFa6EG4BvkuJaRoxejOqdZWbr2RUopAtRpdlouV0l4dUqdEd4IhpmkO3KVnWIo
-         vEFlfSoY1mPlP7KFTPLZEQ6tMLT0FjrryByat+VR1sBKTxlKJnb2YGDn6vyq9t/sZ/tC
-         jd2WI3JJHXSrvDS+n+aAu4Bfs/4faa3z6Abs+Zz6fwQh+P3VhnNyEJmM6VueiGNeFcYn
-         uB5NFL5EFDSFzjuNVJcyRJdi6V2cv1ehulplypLxQYvllmC9y36g8bJIB7S3GPAYIr1C
-         UCVo0n1gEIyoAcfuZyx7BgHL+hjAvtZoRwx633b57zB1s2co1KpnUcTg5/j4qEyGP/ui
-         l+uA==
-X-Gm-Message-State: AFqh2krpdU4kF95RBCzYB4ee+D6ZV0yXCHqsPrTyghcVwkJEXyg7iHuh
-        F0iIb22/1KM0cCM2nRy7P5I=
-X-Google-Smtp-Source: AMrXdXv+rSm+lsQYdvS3/yF76MtW37onSPVLBg07nzj60X14FGGRCT3TcMxNGfhPGDbb557hHFDsEg==
-X-Received: by 2002:a7b:c4d0:0:b0:3d1:f6b3:2ce3 with SMTP id g16-20020a7bc4d0000000b003d1f6b32ce3mr21583864wmk.35.1674396335807;
-        Sun, 22 Jan 2023 06:05:35 -0800 (PST)
-Received: from Ansuel-xps. (93-34-89-61.ip49.fastwebnet.it. [93.34.89.61])
-        by smtp.gmail.com with ESMTPSA id u24-20020adfa198000000b002bc84c55758sm39347527wru.63.2023.01.22.06.05.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Jan 2023 06:05:35 -0800 (PST)
-Message-ID: <63cd42af.df0a0220.aae7d.51f1@mx.google.com>
-X-Google-Original-Message-ID: <Y81CrRr8BqFQSEfV@Ansuel-xps.>
-Date:   Sun, 22 Jan 2023 15:05:33 +0100
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=a9NpMSfkooTiSv2ZBQPfxArsfZPBfz7GqCCR+XSaAOg=;
+        b=JoZUhmB6Hpqpp/CH0dMAWI7v2K8Ccb2Q81fGPv2Jd+YshqkdxwRLqPfBlJ1avuLa6q
+         OrtSjND+YIajAnP+NSuEBotcPP+Q/fZs3urjFBfV+Xw4vlWdyGEXIrAukUHN9Y4lN2OO
+         ziR1FJISwvoI6sD2s9eSynU/XWqJVU5NEoAK8k+Cx1aNbUvp9DjcDFPlxiSj4TeNHyof
+         YFT82eAK3+hOtT8zogC7Ira3MUK9hyQ75oqQhi1NnlQaUljyOFBVOD648ck3dgJNkwG9
+         48pDJXEkXKn9Pnw/BY9rejCyhzaVF6uCrj9akiVkVkwZ/+kNBi8mWXEBxLc64OaHXmWo
+         uLZA==
+X-Gm-Message-State: AFqh2kpdiA6LRMBEiUYKzkm6rluwHIZwMTdPpOGReIWSsbPqMF+zQFyg
+        XE5LEAe6Kkp6xkb9kCr0MkARAg==
+X-Google-Smtp-Source: AMrXdXtDA46PnZEz1olLAyyVedLaw70rB9bL/u8qM6NXPsKsze4CIEalUOanBH3tAqmcu3CtNmfDPQ==
+X-Received: by 2002:a05:600c:3b05:b0:3d6:b691:b80d with SMTP id m5-20020a05600c3b0500b003d6b691b80dmr20881250wms.21.1674396556168;
+        Sun, 22 Jan 2023 06:09:16 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id w10-20020a5d544a000000b00273cd321a1bsm2853845wrv.107.2023.01.22.06.09.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 22 Jan 2023 06:09:15 -0800 (PST)
+Message-ID: <938a5115-48e4-73f9-8a7a-ae890eb10077@linaro.org>
+Date:   Sun, 22 Jan 2023 15:09:13 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH v4 01/12] dt-bindings: phy: Add QMP PCIe PHY comptible for
+ SM8550
+Content-Language: en-US
+To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Rob Herring <robh@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/3] dt-bindings: cpufreq: qcom-cpufreq-nvmem: make cpr
- bindings optional
-References: <20230121000146.7809-1-ansuelsmth@gmail.com>
- <43ff6113-03ee-a40a-b454-53cadec8728a@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <43ff6113-03ee-a40a-b454-53cadec8728a@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+References: <20230119140453.3942340-1-abel.vesa@linaro.org>
+ <20230119140453.3942340-2-abel.vesa@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230119140453.3942340-2-abel.vesa@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,96 +89,63 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Jan 22, 2023 at 02:57:07PM +0100, Krzysztof Kozlowski wrote:
-> On 21/01/2023 01:01, Christian Marangi wrote:
-> > The qcom-cpufreq-nvmem driver also supports legacy devices pre-cpr that
-> > doesn't have power-domains. When the schema was introduced, it was
-> > wrongly set to always require these binding but this is not the case for
-> > legacy device that base everything on nvmem cells and multiple microvolt
+On 19/01/2023 15:04, Abel Vesa wrote:
+> Document the QMP PCIe PHY compatible for SM8550.
 > 
-> What is a "legacy device"? Why do you adjust bindings to legacy device?
-> Can't you just fix the DTS on these devices?
->
-
-With legacy I mean device where cpr (core power reduction) wasn't a
-thing and qcom used a different way to select the microvolt for the opp.
-
-There is nothing in the related DTS to fix since they are not broken.
-The driver doesn't enforce cpr presence and supports both new and old
-implementation...
-
-Setting the cpr as a required binding was wrong from the start. It was
-probably done when qcs404 was introduced and they had this bright idea
-of creating the schema and ignoring the other kind of configuration the
-driver supports.
-
-Since now we want to send opp for ipq8064 that use the old
-implementation this fixup is required.
-
-Probably I should drop the legacy term and just say that the driver
-supports 2 different configuration and the following schema permits only
-one?
-
-> > binding providing values based on speedbin, psv and version.
-> > 
-> > Make the power-domain optional and set them required only for qcs404
-> > based devices.
-> > 
-> > Fixes: ec24d1d55469 ("dt-bindings: opp: Convert qcom-nvmem-cpufreq to DT schema")
-> > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> > ---
-> >  .../bindings/cpufreq/qcom-cpufreq-nvmem.yaml  | 78 +++++++++++++------
-> >  1 file changed, 54 insertions(+), 24 deletions(-)
-> > 
-> > diff --git a/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml b/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
-> > index 9c086eac6ca7..04aac634d7fc 100644
-> > --- a/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
-> > +++ b/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
-> > @@ -17,6 +17,9 @@ description: |
-> >    on the CPU OPP in use. The CPUFreq driver sets the CPR power domain level
-> >    according to the required OPPs defined in the CPU OPP tables.
-> >  
-> > +  For old implementation efuses are parsed to select the correct opp table and
-> > +  voltage and CPR is not supported/used.
-> > +
-> >  select:
-> >    properties:
-> >      compatible:
-> > @@ -33,37 +36,64 @@ select:
-> >    required:
-> >      - compatible
-> >  
-> > -properties:
-> > -  cpus:
-> > -    type: object
-> > +if:
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
 > 
-> Missing allOf. Fix also the placement - this block goes before
-> additionalPropertes:false.
+> This patchset relies on the following patchset:
+> https://lore.kernel.org/all/20230117224148.1914627-1-abel.vesa@linaro.org/
 > 
-
-Thanks for the review! Will fix in v2.
-
-> > +  properties:
-> > +    compatible:
-> > +      contains:
-> > +        enum:
-> > +          - qcom,qcs404
-> >  
-> > -    patternProperties:
-> > -      '^cpu@[0-9a-f]+$':
-> > -        type: object
-> > +then:
-> > +  properties:
-> > +    cpus:
-> > +      type: object
-> >  
-> > -        properties:
-> > -          power-domains:
+> The v3 of this patchset is:
+> https://lore.kernel.org/all/20230118005328.2378792-1-abel.vesa@linaro.org/
 > 
-> Best regards,
-> Krzysztof
+> Changes since v3:
+>  * increased the allowed number of resets to allow ncsr reset
+>  * added vdda-qref-supply which is used by pcie1_phy node in MTP dts
+>  * added both compatibles to the allOf:if:then clause to constrain the
+>    number of possible clocks to 5
 > 
+> Changes since v2:
+>  * added back the binding compatible update patch
+> 
+> Changes since v1:
+>  * split all the offsets into separate patches, like Vinod suggested
+> 
+>  .../bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml      | 11 ++++++++++-
+>  1 file changed, 10 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+> index 8a85318d9c92..4b4566f90811 100644
+> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+> @@ -20,6 +20,8 @@ properties:
+>        - qcom,sc8280xp-qmp-gen3x2-pcie-phy
+>        - qcom,sc8280xp-qmp-gen3x4-pcie-phy
+>        - qcom,sm8350-qmp-gen3x1-pcie-phy
+> +      - qcom,sm8550-qmp-gen3x2-pcie-phy
+> +      - qcom,sm8550-qmp-gen4x2-pcie-phy
+>  
+>    reg:
+>      minItems: 1
+> @@ -43,16 +45,21 @@ properties:
+>      maxItems: 1
+>  
+>    resets:
+> -    maxItems: 1
+> +    minItems: 1
+> +    maxItems: 2
+>  
+>    reset-names:
+> +    minItems: 1
+>      items:
+>        - const: phy
+> +      - const: nocsr
 
--- 
-	Ansuel
+I think it is valid only for this phy variant, so please constrain it to
+1 entries for all others.
+
+Best regards,
+Krzysztof
+
