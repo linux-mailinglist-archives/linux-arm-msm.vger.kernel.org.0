@@ -2,43 +2,44 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4EB3F676C46
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jan 2023 12:21:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CE687676C63
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jan 2023 12:40:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229924AbjAVLV3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 22 Jan 2023 06:21:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36466 "EHLO
+        id S229861AbjAVLkn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 22 Jan 2023 06:40:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229902AbjAVLVV (ORCPT
+        with ESMTP id S229480AbjAVLkn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 22 Jan 2023 06:21:21 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0E6F1CAC1;
-        Sun, 22 Jan 2023 03:21:17 -0800 (PST)
+        Sun, 22 Jan 2023 06:40:43 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90C8B1DB99;
+        Sun, 22 Jan 2023 03:40:41 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 6F8FAB80A36;
-        Sun, 22 Jan 2023 11:21:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6408C433D2;
-        Sun, 22 Jan 2023 11:21:10 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 47E45B80A36;
+        Sun, 22 Jan 2023 11:40:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6930AC433D2;
+        Sun, 22 Jan 2023 11:40:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1674386475;
-        bh=hhL4owlHSb7bTGGL4JOXpwJorCM1k6EPqpOeVcz6xuk=;
+        s=k20201202; t=1674387639;
+        bh=mrCwh8rnHVNuJJ9uXW6L9xtLqHdoTlnPc2chjp+cULc=;
         h=Date:Subject:To:References:From:In-Reply-To:From;
-        b=kSrwphvoMzmfojC0Gr5hBMhrk/Zt+5W3hSe8664nYNogg1GCoZVD4xPRJppoVa1Wn
-         giClbBm0b9FuwiPRAOK61GYWmnIdWYjw8443ol25fz1kSYhL66Ui00xscNYfyLKlt5
-         cXd+w27p0pQyErVDTAfOptz9kCjBJK4RaeS2syg/AX6UoJUjq1K0PVWw9oBpzffINi
-         pk5ghYXJzqxqRNy3vpAEmizr5+YvBZqCw6oyunbbqj3oa3KYOGW3ou5P+0WIbQcVBs
-         tDz96oDRoyHkmprvuj+/fCbXsuXE86mUb60o2eRc6AOr0iL5h02Z4hn11QL1zVH4c8
-         lxZcSitMEm3QQ==
-Message-ID: <bbb4f42a-28a1-e54d-28d2-1c3c23fc9074@kernel.org>
-Date:   Sun, 22 Jan 2023 12:21:06 +0100
+        b=Gnv1AHcdyHkeRaFbaNeLHA3okSsSqgsW3yND4TATCt5+Em0NorUN+xw+4Gsf9cJyW
+         Bk03flBM48vOM2FKc7YGWHjySL2DaAY5S+qHfgjpzPUnoGaRoqOrbkfNpZ1yfLoZcx
+         HPXjgRxtxILmm3DnpZk6rR9JkbzTWFf5ktgyhuIyXG3WWNz7tlq6Mvy2/kjz8i8xpr
+         9ZqZ2da4IIkShSvkUd4nfB7W2yjbeRWcI1gBiYf+JcKYCF1OtSdGcJ2M9VmL6Yu/bA
+         s/BW4kiGeJ7tERMkeQPivrw8AmmppBjhNCSYjeSkBDcdO4syo8xt/K0J6WIXdietPI
+         taJMDR9AwwuwA==
+Message-ID: <e59e3933-1fa2-06c7-9038-3b58822a4a61@kernel.org>
+Date:   Sun, 22 Jan 2023 12:40:31 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.0
-Subject: Re: [PATCH v2 1/2] ASoC: qcom: dt-bindings: lpass-va-macro: Update
- clock name
+Subject: Re: [PATCH v2 2/2] ASoC: dt-bindings: google,sc7280-herobrine: Add
+ platform property
+Content-Language: en-US
 To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
         agross@kernel.org, andersson@kernel.org, lgirdwood@gmail.com,
         broonie@kernel.org, robh+dt@kernel.org, quic_plai@quicinc.com,
@@ -48,10 +49,9 @@ To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
         swboyd@chromium.org, judyhsiao@chromium.org,
         devicetree@vger.kernel.org, konrad.dybcio@linaro.org
 References: <1674210685-19944-1-git-send-email-quic_srivasam@quicinc.com>
- <1674210685-19944-2-git-send-email-quic_srivasam@quicinc.com>
-Content-Language: en-US
+ <1674210685-19944-3-git-send-email-quic_srivasam@quicinc.com>
 From:   Krzysztof Kozlowski <krzk@kernel.org>
-In-Reply-To: <1674210685-19944-2-git-send-email-quic_srivasam@quicinc.com>
+In-Reply-To: <1674210685-19944-3-git-send-email-quic_srivasam@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-8.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
@@ -64,31 +64,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-Subject prefix: ASoC: dt-bindings: qcom,lpass-va-macro:
-(you got such comment few days ago)
-
 On 20/01/2023 11:31, Srinivasa Rao Mandadapu wrote:
-> Update clock name from core to macro in lpass-va-macro node
-> to make it compatible with existing driver and device tree node.
+> Add platform property in sc7280 machine driver bindings for including
+> platform subnode in dai-links.
+> This is required for binding the frontend dai driver with codec driver
+> and cpu driver and to do dynamic pcm routing in ADSP based platforms.
 
-s/device tree node/existing DTS files/
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+I have doubts that this is for binding frontend driver with codec and
+CPU. The CPU and codec phandles are already there, so they are bound...
 
 > 
-> Fixes: 67d99b23c881 ("ASoC: qcom: dt-bindings: add bindings for lpass va macro codec")
 > Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Reported-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
+>  .../devicetree/bindings/sound/google,sc7280-herobrine.yaml   | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml b/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
+> index 869b403..0b1a01a 100644
+> --- a/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
+> +++ b/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
+> @@ -75,6 +75,18 @@ patternProperties:
+>  
+>          additionalProperties: false
+>  
+> +      platform:
+> +        description: Holds subnode which includes the phandle of q6apm platform device.
+> +        type: object
+> +        properties:
+> +          sound-dai:
+> +            maxItems: 1
+> +
+> +        required:
+> +          - sound-dai
+> +
+> +        additionalProperties: false
+> +
+>      required:
+>        - link-name
+>        - cpu
 
-Please use scripts/get_maintainers.pl to get a list of necessary people
-and lists to CC.  It might happen, that command when run on an older
-kernel, gives you outdated entries.  Therefore please be sure you base
-your patches on recent Linux kernel.
+Add it also to existing example.
 
-You also got this comment last time... so I don't know what to do more
-here...
 
 Best regards,
 Krzysztof
