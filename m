@@ -2,137 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CB7366770F6
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jan 2023 18:10:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E461C6770FC
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Jan 2023 18:11:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230024AbjAVRKK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 22 Jan 2023 12:10:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34462 "EHLO
+        id S230186AbjAVRLP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 22 Jan 2023 12:11:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229975AbjAVRKJ (ORCPT
+        with ESMTP id S231352AbjAVRLO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 22 Jan 2023 12:10:09 -0500
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E116413516;
-        Sun, 22 Jan 2023 09:09:26 -0800 (PST)
-Received: by mail-pf1-x42d.google.com with SMTP id 200so7219138pfx.7;
-        Sun, 22 Jan 2023 09:09:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=vYSXXg5e6s/NvCMij6drYU933rOuoET93FHCVB0DyzQ=;
-        b=QgiPbB3zmcZQ6q1HB0ZmVaGKTzB91HabHLJNzixu4QY6/AOSMuJX/9qt5jk8P9XNmH
-         iL0aqhNhJS6uscxjKYkiFpF+S2y8wdH4GU12QPjx5lQ6F/+ih1LP9qVQ5bSV5jePu/03
-         T2hn1zw4saZ72O0Gm/YcmjIgUdbQZrzw0lHix08iGfmZz2QRvfJJ5FVFifQkPQvTocDK
-         Kmpy6Y6RtCKXeUSuoUzlCEzntf5c7v+Hj5k+aVUvMJPTr8L3DKL2HZlwZ5agq9kJ8tMy
-         96tk6T0f6zf/DM84ZPX8QoT2wnkb3V18onMAsp8ypEULlzN9m/7rz7eZQoURctfDVamq
-         xzhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=vYSXXg5e6s/NvCMij6drYU933rOuoET93FHCVB0DyzQ=;
-        b=gBdZNo7fPvNGcXzkNSAgV/u/d3mc08O+78kw8tagdLj0cmrmROtzsMtJiQdNMKmGzu
-         OgzBS/DdPkeg4JOomG+U7aJJyS4PjN4V/Frhq93II5+HcGk/AuyIVuYhBXfegcmKT3yt
-         /Vo1sVWi0bhuCpUR9YITOZ/l3Fn5NjbZJTnX/ZNRuKH1o7UgK0WWp9KQUOZ5Q4ApMKLj
-         YBI4k2GjHMsrU/ICUI58UiA7X+T/+stG8Kvw3GEmK4TABi+oXtxkQsTyQH6YuvDMD/Pw
-         gGeW6FSkXvsSsIW5u3/45cFtN2TqF8CV+mcWGBtdcEbUgjzFYJdriCK4vNvPJpSzS61u
-         xqgg==
-X-Gm-Message-State: AFqh2kqbNhk9LGh8IElKj3upQlvnNjAoObXy0+fVtmBNkgiruOofwLKv
-        gJ3Cvb83/RnfNIeLZRWaD07nml+dBlVCPIw8DbT5Bjjcs3M=
-X-Google-Smtp-Source: AMrXdXsBVB8n/1RhZCeU7snMZ6saiO98lUVGkEkzDdthQucxeEbfO4XxgPU7br4QJd6/rwMScuiWHnpsxUo1bikg1lI=
-X-Received: by 2002:a05:6a00:13a3:b0:58d:973f:e2f1 with SMTP id
- t35-20020a056a0013a300b0058d973fe2f1mr2205617pfg.10.1674407365181; Sun, 22
- Jan 2023 09:09:25 -0800 (PST)
+        Sun, 22 Jan 2023 12:11:14 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34FAD61AA;
+        Sun, 22 Jan 2023 09:10:59 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id D1329B80B28;
+        Sun, 22 Jan 2023 17:10:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C4F2C433D2;
+        Sun, 22 Jan 2023 17:10:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1674407456;
+        bh=3Mfk191ggzdExTq0b2HwwqXCDca7qSKJuGQ7daqNE0w=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=YUmZL6S3T/Ht1SQiUunupVx6IxgVtzG9yGCu3xv1+rLGWxaFit30RwlbL69FV5H8H
+         lLwc+gbnYK54yTwLEkbFMai1Sl3856yz7vQNjbQZ00b7UmM0sv2WSmwmmEonSidtpq
+         JebjtgD6ZwidgzLkyG35gw6R2Po4x74+B7t5Mk+A5qXj7CEA402YUpHJdpqZyRJa9U
+         GMqzKtXnI97QrG/ReLlrBOArcaoTXE52DqF9lPFjzbnIT3APHz6gzet61dOBM+RtH+
+         bB0B1LeGXVTR0hR8vVX8zS+JmQjOsXWDVNsOGYfyJ8VjQOaDZakVL4R5YBlQg0Y0/D
+         ldk6q7XxYp3Ww==
+Date:   Sun, 22 Jan 2023 17:24:41 +0000
+From:   Jonathan Cameron <jic23@kernel.org>
+To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc:     Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+        Nuno =?UTF-8?B?U8Oh?= <nuno.sa@analog.com>,
+        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v2 1/1] iio: adc: qcom-spmi-adc5: Fix the channel name
+Message-ID: <20230122172441.4f8d75f5@jic23-huawei>
+In-Reply-To: <20230118100623.42255-1-andriy.shevchenko@linux.intel.com>
+References: <20230118100623.42255-1-andriy.shevchenko@linux.intel.com>
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.36; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-References: <20230121112358.52216-1-robimarko@gmail.com> <20230121112358.52216-2-robimarko@gmail.com>
- <ebdd9932-e251-0cd7-6c98-3c735ecb74a6@quicinc.com> <CAOX2RU7p-0ZTx8fkY4hOk=Zmx6RT+1PwVL+CQxkjzVadm0ehTA@mail.gmail.com>
- <29d9de45-1ce7-d6e5-bf02-052e911a067b@quicinc.com>
-In-Reply-To: <29d9de45-1ce7-d6e5-bf02-052e911a067b@quicinc.com>
-From:   Robert Marko <robimarko@gmail.com>
-Date:   Sun, 22 Jan 2023 18:09:14 +0100
-Message-ID: <CAOX2RU7BfESmsUdZ5jBfYjWXUnDWmFizT8UiPwgzb_SsrT0jnA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: ipq8074: add QFPROM node
-To:     Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        srinivas.kandagatla@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 22 Jan 2023 at 18:05, Kathiravan Thirumoorthy
-<quic_kathirav@quicinc.com> wrote:
->
->
-> On 1/22/2023 10:29 PM, Robert Marko wrote:
-> > On Sun, 22 Jan 2023 at 17:57, Kathiravan Thirumoorthy
-> > <quic_kathirav@quicinc.com> wrote:
-> >>
-> >> On 1/21/2023 4:53 PM, Robert Marko wrote:
-> >>> IPQ8074 has efuses like other Qualcomm SoC-s that are required for
-> >>> determining various HW quirks which will be required later for CPR etc,
-> >>> so lets add the QFPROM node for start.
-> >>>
-> >>> Individidual fuses will be added as they are required.
-> >>>
-> >>> Signed-off-by: Robert Marko <robimarko@gmail.com>
-> >>> ---
-> >>>    arch/arm64/boot/dts/qcom/ipq8074.dtsi | 7 +++++++
-> >>>    1 file changed, 7 insertions(+)
-> >>>
-> >>> diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> >>> index 8eba586065a3..f29491f647fe 100644
-> >>> --- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> >>> +++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> >>> @@ -301,6 +301,13 @@ mdio: mdio@90000 {
-> >>>                        status = "disabled";
-> >>>                };
-> >>>
-> >>> +             qfprom: efuse@a4000 {
-> >>> +                     compatible = "qcom,ipq8074-qfprom", "qcom,qfprom";
-> >>> +                     reg = <0x000a4000 0x1000>;
-> >>
-> >>   From the HW document, I see the overall size of this region is 0x2000,
-> >> any reason to stick with 0x1000?
-> > Like always, I dont have access to docs and 0x1000 is all I could find
-> > downstream
-> > being used.
-> >
-> > Any chance you can share the regions inside of QFPROM, it would be great to use
-> > the ECC corrected one if available.
->
-> Sorry, What do you refer by "ECC corrected" here?
+On Wed, 18 Jan 2023 12:06:23 +0200
+Andy Shevchenko <andriy.shevchenko@linux.intel.com> wrote:
 
-Isnt there a corrected region in the QFPROM meant for reading?
-As far as I understand it's protected by FEC.
+> The node name can contain an address part which is unused
+> by the driver. Moreover, this string is propagated into
+> the userspace label, sysfs filenames *and breaking ABI*.
+> 
+> Cut the address part out before assigning the channel name.
+> 
+> Fixes: 4f47a236a23d ("iio: adc: qcom-spmi-adc5: convert to device properties")
+> Reported-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-Regards,
-Robert
->
-> Thanks, Kathiravan T.
->
->
-> >
-> > Regards,
-> > Robert
-> >> Thanks, Kathiravan T.
-> >>
-> >>
-> >>> +                     #address-cells = <1>;
-> >>> +                     #size-cells = <1>;
-> >>> +             };
-> >>> +
-> >>>                prng: rng@e3000 {
-> >>>                        compatible = "qcom,prng-ee";
-> >>>                        reg = <0x000e3000 0x1000>;
+LGTM, but given it will have ABI impact, I'd like to hear from 
+Andy, Bjorn or Konrad as maintainers and /or Dmitry as someone
+who has touched this driver fairly recently.
+
+Mostly I want to be sure they know this exists before it causes surprise.
+
+Jonathan
+
+> ---
+> v2: rephrased commit message (Marijn), fixed compilation issue (Marijin)
+>  drivers/iio/adc/qcom-spmi-adc5.c | 10 +++++++++-
+>  1 file changed, 9 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/iio/adc/qcom-spmi-adc5.c b/drivers/iio/adc/qcom-spmi-adc5.c
+> index e90c299c913a..c2d5e06f137a 100644
+> --- a/drivers/iio/adc/qcom-spmi-adc5.c
+> +++ b/drivers/iio/adc/qcom-spmi-adc5.c
+> @@ -628,12 +628,20 @@ static int adc5_get_fw_channel_data(struct adc5_chip *adc,
+>  				    struct fwnode_handle *fwnode,
+>  				    const struct adc5_data *data)
+>  {
+> -	const char *name = fwnode_get_name(fwnode), *channel_name;
+> +	const char *channel_name;
+> +	char *name;
+>  	u32 chan, value, varr[2];
+>  	u32 sid = 0;
+>  	int ret;
+>  	struct device *dev = adc->dev;
+>  
+> +	name = devm_kasprintf(dev, GFP_KERNEL, "%pfwP", fwnode);
+> +	if (!name)
+> +		return -ENOMEM;
+> +
+> +	/* Cut the address part */
+> +	name[strchrnul(name, '@') - name] = '\0';
+> +
+>  	ret = fwnode_property_read_u32(fwnode, "reg", &chan);
+>  	if (ret) {
+>  		dev_err(dev, "invalid channel number %s\n", name);
+
