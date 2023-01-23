@@ -2,43 +2,43 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 07390677A74
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 13:03:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B7EA3677A87
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 13:06:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229848AbjAWMD0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Jan 2023 07:03:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48692 "EHLO
+        id S230023AbjAWMGC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Jan 2023 07:06:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229580AbjAWMDZ (ORCPT
+        with ESMTP id S229436AbjAWMGB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Jan 2023 07:03:25 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80FFB9008;
-        Mon, 23 Jan 2023 04:03:24 -0800 (PST)
+        Mon, 23 Jan 2023 07:06:01 -0500
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CC319008;
+        Mon, 23 Jan 2023 04:06:01 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 1E82560EA8;
-        Mon, 23 Jan 2023 12:03:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 737EEC433EF;
-        Mon, 23 Jan 2023 12:03:23 +0000 (UTC)
+        by sin.source.kernel.org (Postfix) with ESMTPS id 5BEF0CE11AB;
+        Mon, 23 Jan 2023 12:05:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8900BC433D2;
+        Mon, 23 Jan 2023 12:05:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1674475403;
-        bh=2vRkJy1jPVn+EmgWE8R3/Pd6by7UgXua8Abm0Bc7PCw=;
+        s=k20201202; t=1674475557;
+        bh=xomCv4fVScuMgRQPunTMEDlZt86y3oPZFGZ9j/BTOXE=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=TWZHlRqE/XIb8+Uk+e2IeM6ZAogxeV6RThWrJpfxV7YKO718XgVecGuAQrk6HsIBn
-         Jdn4M95qDKHTE5IIw/3DYEeIVi0MPCJtUCrmJGh1vtkR7ZAdRmQyT2LxBp9C2ETyY+
-         U/HlL0pFntlEXTZkuRoDuXmOst/wVSm93dSbBXGlcYEaKU/otRhzqTpjc6HWvylsAN
-         VpbrOjlveFNmCOnwumkr2Wn1LBkhoaIuj8C2o/sY4QRs8jEy7vK91OJBDX01AdVoxK
-         DoPcTH8lPqKIUM9WbyvLhxuynDzUbI7NHyFNvU0/5Uk5qT39Y9s6az4ZVX/HaF9sot
-         EwwqbAp+Wp55A==
+        b=USEasJXMz7HT7THL5/juE79zj86m04PeEMqm6Cf5U3n47ahStCAEKgrrzGxptY/gK
+         VPqDP+QaoSIt8m9HlZaiqvdjh73XDYAK2w0Oc5vE86Y8VYf0c4cTggAEsv4OrBq3hG
+         boCmwC3mBd7bdpOH+KBUsOCvuDKTW1m9q41N3PvEWnVKsr+n2sKqO0E5bGUBEGHIbQ
+         vBC+W1wHK98FZMZM+0bXxTC+WzrWlx9Mrk0EbUQEaAz8Azi/ELsN1w8gRgv4iXINA8
+         ZCqUzpStGzI7EIFPLtvQSLVk71io/fHAFoRx3O7WOKkWyPwt4tGSIBU8kqPB3ritj1
+         Pt7gKgm9eeWDw==
 Received: from johan by xi.lan with local (Exim 4.94.2)
         (envelope-from <johan@kernel.org>)
-        id 1pJvXk-0001zc-Rh; Mon, 23 Jan 2023 13:03:20 +0100
-Date:   Mon, 23 Jan 2023 13:03:20 +0100
+        id 1pJvaF-000225-2P; Mon, 23 Jan 2023 13:05:55 +0100
+Date:   Mon, 23 Jan 2023 13:05:55 +0100
 From:   Johan Hovold <johan@kernel.org>
-To:     Luca Weiss <luca.weiss@fairphone.com>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Luca Weiss <luca.weiss@fairphone.com>,
         Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
         ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
@@ -47,8 +47,9 @@ Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Kishon Vijay Abraham I <kishon@kernel.org>,
         linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
 Subject: Re: [PATCH v3 2/3] phy: qcom-qmp-combo: Add config for SM6350
-Message-ID: <Y853iEBf1e7uh/wX@hovoldconsulting.com>
-References: <20221130081430.67831-2-luca.weiss@fairphone.com>
+Message-ID: <Y854Iz7gG6/APILo@hovoldconsulting.com>
+References: <20221130081430.67831-1-luca.weiss@fairphone.com>
+ <20221130081430.67831-2-luca.weiss@fairphone.com>
  <Y6xP4YRAp68TfxFi@hovoldconsulting.com>
  <Y8BIX+js1ircJyb9@matsya>
  <cf968a25-02f7-d402-530b-eb379b707e54@linaro.org>
@@ -57,11 +58,10 @@ References: <20221130081430.67831-2-luca.weiss@fairphone.com>
  <CPX2VVT5EUDV.2LH6VI2586F02@otso>
  <Y85WqDrGXAXp7gS/@hovoldconsulting.com>
  <a18359f8-6495-dbea-2323-8ab73bbfc472@linaro.org>
- <CPZJ4F39LES0.ANG4EP8EUFI7@otso>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CPZJ4F39LES0.ANG4EP8EUFI7@otso>
+In-Reply-To: <a18359f8-6495-dbea-2323-8ab73bbfc472@linaro.org>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -71,24 +71,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 23, 2023 at 12:22:32PM +0100, Luca Weiss wrote:
-> On Mon Jan 23, 2023 at 12:15 PM CET, Dmitry Baryshkov wrote:
+On Mon, Jan 23, 2023 at 01:15:52PM +0200, Dmitry Baryshkov wrote:
+> On 23/01/2023 11:43, Johan Hovold wrote:
 
-> > There are two SERDES regions. One used by USB part of the PHY (at 
-> > 0x1000) and another SERDES region used for DP (at 0x2000). As Johan 
-> > described below, vendor kernel handles the DP regions in the DP driver. 
-> > Possibly this caused a confusion on your side.
+> > We'll convert the older platforms over to use the new binding scheme
+> > soon and then we'd need this anyway. And if it turns out later that this
+> > was all bogus, at least we only need to fix the driver (and not worry
+> > about dts backward compatibility as we had to with the old style
+> > bindings).
 > 
-> Ack, I think I got it now. I also see the registers used downstream
-> now, e.g.:
-> 
-> techpack/display/pll/dp_pll_10nm_util.c:#define QSERDES_COM_LOCK_CMP2_MODE0             0x009C
-> 
-> So now .dp_serdes should be 0x2000. Do I need to change anything else
-> also? I think not?
+> As you mentioned this. Do you have plans to work on this conversion? If 
+> not, I'll probably take a look during next development window.
 
-You also need to add new dp_tx/rx pointers to the offset struct and use
-those in favour of the current ones if set. I think we hashed that bit
-out in one of the previous versions of this patch.
+Yes, I was planning on looking at this after Luca's series is merged. I
+have some higher prio stuff to get out the door these next couple of
+weeks first, though.
 
 Johan
