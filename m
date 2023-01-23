@@ -2,103 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 52FEA6782E7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 18:20:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BFDB467836D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 18:39:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233576AbjAWRUQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Jan 2023 12:20:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57296 "EHLO
+        id S230040AbjAWRjP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Jan 2023 12:39:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233591AbjAWRUP (ORCPT
+        with ESMTP id S232041AbjAWRjO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Jan 2023 12:20:15 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 275496590
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 09:20:13 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id c4-20020a1c3504000000b003d9e2f72093so11138619wma.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 09:20:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=V0msOilVBY3pjgMACo3Te8zEGERavlW1uoU0JEDp1xM=;
-        b=pah5q2Hj/GvzfjsYuW6mAtlCdeIXaWMAxaTQUuLqDBUXpQT10XeRsLwX0d52wTpeBO
-         WvgF9ZkJm7ER3iakvA+Me3DBjferPoGSnV3hT11DUHH96u79pVd1PqT1tiTpYHmU/ytp
-         aRDojCASz9NqsQMDmFUOd8KvhXN7WfxKvVEdYm11sWvWYoi3vyHT0vpqEZN4K7ShrpyA
-         0Ls93gY3yE7/xvMU49fDBX0WCiISaT1QCsNOI2cVFrq5Ticm/FTAeqjl9CEXnmxaf/34
-         Sqer/ZDtQTdIdZ/sJ1nkoBKl952d1+xsNMc+FvvbLmF33oRTKPY5Jz3vMOhDCYIJzz8T
-         NUpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=V0msOilVBY3pjgMACo3Te8zEGERavlW1uoU0JEDp1xM=;
-        b=mjwgee4gGHQnpO7iJwaL8zK3egQnU3rhV0dZoBlqAMQl29mXSAgnMmkUaeKYfI+0HH
-         8NjGXm9rbkcvmFkb/2utOiX6Uugt/JQkD3SOFteMdviz9sqXRBcyaAv5Ax9sjdMrGsFK
-         b1RySJAZin0zFphfS9ns7xTztOKYwMNsSOqahcMRoOCi0lEgi+543inivQ6u5GPbYDSU
-         ZniLk1xDCbaHDLbw8z7z6s008JzOLeFOLx8Bly/rbO9gnBxUj27adcNaq/G8wLmrEkYz
-         CghwTF0hnKU14SveYRZWQxtIJrAi4jj89eVqO8CdzxYYgkK3zcJZfZ3klygf8UGthIF8
-         P1GQ==
-X-Gm-Message-State: AFqh2krHjr1Fb1XFdTHaAQcLMyP1jgVXedJs8MgHCMIRZlKaHuX+EvPU
-        Ea8c1jw5IS8/vgX0RSuZN5DZaA==
-X-Google-Smtp-Source: AMrXdXsOd0W6F4AyRHz94PTRyrytWVwh2ZPNKPOiNOKdtIRejMRkoAOE9QGRdRKQ3WxJBLGOkq0Fpw==
-X-Received: by 2002:a05:600c:35d4:b0:3db:3694:b93c with SMTP id r20-20020a05600c35d400b003db3694b93cmr11899304wmq.15.1674494411786;
-        Mon, 23 Jan 2023 09:20:11 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id f14-20020a05600c154e00b003daff80f16esm15530766wmg.27.2023.01.23.09.20.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Jan 2023 09:20:11 -0800 (PST)
-Message-ID: <bfe19712-5801-573b-220e-c96494f11393@linaro.org>
-Date:   Mon, 23 Jan 2023 18:20:09 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH v3 1/2] dt-bindings: PCI: qcom: Add SM8550 compatible
-Content-Language: en-US
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Mon, 23 Jan 2023 12:39:14 -0500
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA36229157;
+        Mon, 23 Jan 2023 09:39:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1674495552; x=1706031552;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=5LNho4sfT75NePcn4eH8u+6snEN8uGq86xx6e7f3JM4=;
+  b=OkXdA03C8U+SdjVrMvao70Bayq6rFilxKXFzR5+LqMO0VuiiAdnvTQ7e
+   bp1tsKAF1VCk/xgf+lryF8TQBiHBev+q5Tcpqk3CwDBq7xpGTh//rLNGh
+   Exl/+KB+3v2OM+r2XApsiNE8yC0t96elv5jWxXfbQh5Galim19Q3jflMx
+   m5QOXIDTnrIFsGvr58Icw363ogXqdyO0YrDOafF7CJlGgIUS+qB4ZFAUg
+   qUa/ddR7kVqfnAw/zFQcrETWVMTI1HLIhcIT1lqftTinQoPcFFF1agevp
+   aLrhkwY941e3KcHN0hn6Pu79IWPlnR6eW2reCTv5K41iI0Pj4ILMQtxu4
+   Q==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10599"; a="390601978"
+X-IronPort-AV: E=Sophos;i="5.97,240,1669104000"; 
+   d="scan'208";a="390601978"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jan 2023 09:39:12 -0800
+X-IronPort-AV: E=McAfee;i="6500,9779,10599"; a="694017767"
+X-IronPort-AV: E=Sophos;i="5.97,240,1669104000"; 
+   d="scan'208";a="694017767"
+Received: from giangiac-mobl1.amr.corp.intel.com (HELO ijarvine-MOBL2.ger.corp.intel.com) ([10.249.47.71])
+  by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jan 2023 09:39:09 -0800
+From:   =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-serial@vger.kernel.org, Jiri Slaby <jirislaby@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Rob Herring <robh@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-References: <20230119112453.3393911-1-abel.vesa@linaro.org>
- <7befa113-c45a-93d0-2696-17bbf62af711@linaro.org>
- <Y864lFLEQyCwZLef@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <Y864lFLEQyCwZLef@linaro.org>
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 1/2] serial: qcom_geni: Fix variable naming
+Date:   Mon, 23 Jan 2023 19:38:56 +0200
+Message-Id: <20230123173857.40695-2-ilpo.jarvinen@linux.intel.com>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20230123173857.40695-1-ilpo.jarvinen@linux.intel.com>
+References: <20230123173857.40695-1-ilpo.jarvinen@linux.intel.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/01/2023 17:40, Abel Vesa wrote:
-> 
->>
->>> +        resets:
->>> +          minItems: 1
->>
->> Why second reset is optional?
-> 
-> link_down reset is needed only by g4x2 pcie, AFAICT.
+Commit 2aaa43c70778 ("tty: serial: qcom-geni-serial: add support for
+serial engine DMA") renamed rx_fifo member to rf_buf which caused a
+build failure when b8caf69a6946 ("tty: serial: qcom-geni-serial: fix
+slab-out-of-bounds on RX FIFO buffer") from tty-linus was merged into
+tty-next.
 
-OK
+Fix the member variable name.
 
-Best regards,
-Krzysztof
+Fixes: 7a6aa989f2e8 ("Merge 6.2-rc5 into tty-next")
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+---
+ drivers/tty/serial/qcom_geni_serial.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+index d98e0a8aae7c..7c49194ec8ac 100644
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -1055,11 +1055,11 @@ static int setup_fifos(struct qcom_geni_serial_port *port)
+ 	uport->fifosize =
+ 		(port->tx_fifo_depth * port->tx_fifo_width) / BITS_PER_BYTE;
+ 
+-	if (port->rx_fifo && (old_rx_fifo_depth != port->rx_fifo_depth) && port->rx_fifo_depth) {
+-		port->rx_fifo = devm_krealloc(uport->dev, port->rx_fifo,
+-					      port->rx_fifo_depth * sizeof(u32),
+-					      GFP_KERNEL);
+-		if (!port->rx_fifo)
++	if (port->rx_buf && (old_rx_fifo_depth != port->rx_fifo_depth) && port->rx_fifo_depth) {
++		port->rx_buf = devm_krealloc(uport->dev, port->rx_buf,
++					     port->rx_fifo_depth * sizeof(u32),
++					     GFP_KERNEL);
++		if (!port->rx_buf)
+ 			return -ENOMEM;
+ 	}
+ 
+-- 
+2.30.2
 
