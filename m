@@ -2,149 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 69C746777AA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 10:47:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B22D76777B2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 10:48:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230074AbjAWJrN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Jan 2023 04:47:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43586 "EHLO
+        id S230245AbjAWJsV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Jan 2023 04:48:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231824AbjAWJrL (ORCPT
+        with ESMTP id S231476AbjAWJsU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Jan 2023 04:47:11 -0500
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFE7321A18;
-        Mon, 23 Jan 2023 01:46:58 -0800 (PST)
-Received: by mail-pf1-x433.google.com with SMTP id z3so8338158pfb.2;
-        Mon, 23 Jan 2023 01:46:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=mNVBQzYKvaOsqX4tRiNZzz8ZPdnvV/rsuJuQmq+/ajI=;
-        b=Uc/8qzIHjHoClILDsnW/XzarmHzWCdK4Bov43AZp8h9efxDKt93QLkupqBBWUGtdRI
-         ZM5XF15VShg1LM3PhHQ8MSP85m4tgDqB80QWYVhD02BC8qBOSWBI4wLcXZE7fKVwet3/
-         GYIpBceIx6r6rJVxM7CcfiYE7otQrNs6bQWnguKynuubNfNNwmCuHZM9AAjRACEATSlz
-         Q0Nr3OogD7Mpi1G9mrFNHvlpJ4mD55Zb5rWeMcVEHaanVjYqYG5wh6sTyc1x/pt2+Rda
-         kztN6lnz4o+ELB5oII4dcLP3vSk/lhkKJN0A3HKhqJhs7DI5lREORM8oXsESaG51xg1T
-         lkrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mNVBQzYKvaOsqX4tRiNZzz8ZPdnvV/rsuJuQmq+/ajI=;
-        b=s2LUObusCb2SRjqmN4MWwIb4kbFqsh3qtqWDFepSMYzsuM0M7E0KdOsGB/vARm7uPN
-         zrRyRlDU+uDGwD8t9IZjkmL/NGVdCzDps8nQ86iDvrQyzzH2Hqc1IUXKoOCIj0CXDKmf
-         nBtIg+LF9dZE4+IKKG1W76gx+mTA7jOL1AKBK0/gUTo6j3QbT/bX3rSj2l7l5tj9+QMC
-         PfcQZUOu7IcaSK7KAA5tVoeYszJDwr7WWVBDSZjR+YXjWUH74uOcrkySznIBQSjCuQOS
-         jAKw4OyJvXBP83z8J1hLJfTPnA3/8g+ck2CCGURs3BeSaMhCkVEEKgPQx+TcabJ2IDv6
-         rqFQ==
-X-Gm-Message-State: AFqh2kpHcBlpzqGY9l/ojS2zKkjaGGRBma63sZp7gDCYgvhDnjrSdsQJ
-        RJEZtk4aWUjCGdrYma+ynacOP5vhw7zVBaqsrj4=
-X-Google-Smtp-Source: AMrXdXuovTbBXeXg8I+9+vyt9mizydIvPf196uiVN42cD6gdZP+kuDBCMbqAnhRsIAjDDDQCRzBhpSQOXiG92c3JuzY=
-X-Received: by 2002:a05:6a00:13a3:b0:58d:973f:e2f1 with SMTP id
- t35-20020a056a0013a300b0058d973fe2f1mr2446981pfg.10.1674467218360; Mon, 23
- Jan 2023 01:46:58 -0800 (PST)
+        Mon, 23 Jan 2023 04:48:20 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DA7C126D8;
+        Mon, 23 Jan 2023 01:48:19 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id ECC1760DF5;
+        Mon, 23 Jan 2023 09:48:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D95AC433D2;
+        Mon, 23 Jan 2023 09:48:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1674467298;
+        bh=Gtrawd7V+PvigCRX4HDB9clZlq6pOWl9bC5qYU/+HLo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=PfWR0NTjvuDZ6i0n+Rb8fjNYeA0IjRNI9+763/zPi9X0gJTlndXoEa3kU7DzZz4wf
+         zBT6ZZ7Pyy/nXgf71EEV88AoI6MBbMn+Bx+M+BBzWozs6Fqb+5lXyHtjsc7TJjMVnq
+         IvJ7B9x3wa5j0tFuiULBreBkzHTvO18Fc2VsKi8yYffzmrvYciBhn84fwn23YFVw3i
+         v882rT+ctchnhWcL4gXiI+kDqb+24tahQXhnfNve7dSw3x3U4eLVQWTmii+s+m6mWZ
+         01e3Hw/qKpdy8v15QQ781QJsEQF/9CaPLYmqM6PudqdEf7VhJsMZtR8wOKTuoc4lmZ
+         YjWJBwpxMkTjw==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pJtR1-0000JK-I7; Mon, 23 Jan 2023 10:48:15 +0100
+Date:   Mon, 23 Jan 2023 10:48:15 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v4 1/6] dt-bindings: phy: Add QMP UFS PHY comptible for
+ SM8550
+Message-ID: <Y85X3whxGRhFZjtP@hovoldconsulting.com>
+References: <20230117142015.509675-1-abel.vesa@linaro.org>
+ <20230117142015.509675-2-abel.vesa@linaro.org>
 MIME-Version: 1.0
-References: <20230121112358.52216-1-robimarko@gmail.com> <20230121112358.52216-2-robimarko@gmail.com>
- <ebdd9932-e251-0cd7-6c98-3c735ecb74a6@quicinc.com> <CAOX2RU7p-0ZTx8fkY4hOk=Zmx6RT+1PwVL+CQxkjzVadm0ehTA@mail.gmail.com>
- <29d9de45-1ce7-d6e5-bf02-052e911a067b@quicinc.com> <CAOX2RU7BfESmsUdZ5jBfYjWXUnDWmFizT8UiPwgzb_SsrT0jnA@mail.gmail.com>
- <0b224700-4774-0c34-7ce1-0a984b62b3c0@quicinc.com>
-In-Reply-To: <0b224700-4774-0c34-7ce1-0a984b62b3c0@quicinc.com>
-From:   Robert Marko <robimarko@gmail.com>
-Date:   Mon, 23 Jan 2023 10:46:47 +0100
-Message-ID: <CAOX2RU4JaVTTrroG1RZw=Lnj76_2P2Xfgg5u7iTgDFuA3DKZQA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: ipq8074: add QFPROM node
-To:     Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        srinivas.kandagatla@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230117142015.509675-2-abel.vesa@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 23 Jan 2023 at 05:44, Kathiravan Thirumoorthy
-<quic_kathirav@quicinc.com> wrote:
->
->
-> On 1/22/2023 10:39 PM, Robert Marko wrote:
-> > On Sun, 22 Jan 2023 at 18:05, Kathiravan Thirumoorthy
-> > <quic_kathirav@quicinc.com> wrote:
-> >>
-> >> On 1/22/2023 10:29 PM, Robert Marko wrote:
-> >>> On Sun, 22 Jan 2023 at 17:57, Kathiravan Thirumoorthy
-> >>> <quic_kathirav@quicinc.com> wrote:
-> >>>> On 1/21/2023 4:53 PM, Robert Marko wrote:
-> >>>>> IPQ8074 has efuses like other Qualcomm SoC-s that are required for
-> >>>>> determining various HW quirks which will be required later for CPR etc,
-> >>>>> so lets add the QFPROM node for start.
-> >>>>>
-> >>>>> Individidual fuses will be added as they are required.
-> >>>>>
-> >>>>> Signed-off-by: Robert Marko <robimarko@gmail.com>
-> >>>>> ---
-> >>>>>     arch/arm64/boot/dts/qcom/ipq8074.dtsi | 7 +++++++
-> >>>>>     1 file changed, 7 insertions(+)
-> >>>>>
-> >>>>> diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> >>>>> index 8eba586065a3..f29491f647fe 100644
-> >>>>> --- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> >>>>> +++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> >>>>> @@ -301,6 +301,13 @@ mdio: mdio@90000 {
-> >>>>>                         status = "disabled";
-> >>>>>                 };
-> >>>>>
-> >>>>> +             qfprom: efuse@a4000 {
-> >>>>> +                     compatible = "qcom,ipq8074-qfprom", "qcom,qfprom";
-> >>>>> +                     reg = <0x000a4000 0x1000>;
-> >>>>    From the HW document, I see the overall size of this region is 0x2000,
-> >>>> any reason to stick with 0x1000?
-> >>> Like always, I dont have access to docs and 0x1000 is all I could find
-> >>> downstream
-> >>> being used.
-> >>>
-> >>> Any chance you can share the regions inside of QFPROM, it would be great to use
-> >>> the ECC corrected one if available.
-> >> Sorry, What do you refer by "ECC corrected" here?
-> > Isnt there a corrected region in the QFPROM meant for reading?
-> > As far as I understand it's protected by FEC.
->
->
-> Yes, there are two regions for the QFPROM, the region which you used
-> here is the one used for reading and there is a error correction logic
-> for it and it is size is 8KB not 4KB.
+On Tue, Jan 17, 2023 at 04:20:10PM +0200, Abel Vesa wrote:
+> Document the QMP UFS PHY compatible for SM8550.
+> 
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  .../devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml       | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml
+> index 760791de0869..64ed331880f6 100644
+> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml
+> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml
+> @@ -18,6 +18,7 @@ properties:
+>      enum:
+>        - qcom,sc8280xp-qmp-ufs-phy
+>        - qcom,sm6125-qmp-ufs-phy
+> +      - qcom,sm8550-qmp-ufs-phy
+>  
+>    reg:
+>      maxItems: 1
 
-Ok, thanks for the info, I will expand the size to 0x2000 then in v2.
-
-Regards,
-Robert
->
-> Thanks, Kathiravan T.
->
-> >
-> > Regards,
-> > Robert
-> >> Thanks, Kathiravan T.
-> >>
-> >>
-> >>> Regards,
-> >>> Robert
-> >>>> Thanks, Kathiravan T.
-> >>>>
-> >>>>
-> >>>>> +                     #address-cells = <1>;
-> >>>>> +                     #size-cells = <1>;
-> >>>>> +             };
-> >>>>> +
-> >>>>>                 prng: rng@e3000 {
-> >>>>>                         compatible = "qcom,prng-ee";
-> >>>>>                         reg = <0x000e3000 0x1000>;
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
