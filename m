@@ -2,107 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C1D6677C61
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 14:23:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A0E87677C76
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 14:30:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231588AbjAWNX2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Jan 2023 08:23:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48322 "EHLO
+        id S231968AbjAWNa0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Jan 2023 08:30:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231468AbjAWNX1 (ORCPT
+        with ESMTP id S231659AbjAWNaZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Jan 2023 08:23:27 -0500
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C5DC2197D
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 05:23:25 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id k16so8996832wms.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 05:23:25 -0800 (PST)
+        Mon, 23 Jan 2023 08:30:25 -0500
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3495922A0E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 05:30:24 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id kt14so30498757ejc.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 05:30:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=UWI06omnMqNceUtG8KJb2WUeJNmegQhi3FN/6Z1ebzY=;
-        b=kYxewxF3YY5x1+++vIOTxnpAGTNbG/KViPKqxc5gokiTsdHeKqMGsWMCPI0eM2ghuU
-         VHthTUPgKTUV1ZKgUQxCRgYcOMohV4J6G9AO/seBNZFLKsGyRB9jDpT6GDrNDFYX160x
-         adWm/2gOBoUBBA/URyrrO21EWyNvKbv/VwKx0ZpOovZAKIVMngkKl/2xudSooUd+UEWP
-         24sizqZHc4SDCGLXygdKaT6UD7TeguLLO2e26I6rNNH/ClQrew1/GM8Cg//Hhyl2oZ8H
-         rPIweQwR9GmrzKwmN/lvyxgrHsOujxTnk816LqaQR8nIfiO7ij45pDS/J2FwjE/HBd7H
-         j4UQ==
+        d=fairphone.com; s=fair;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=GNbLj/XmOS18lcQ6X8VOqWOavPYN+fm3m3tQOx//CQY=;
+        b=y1I2hXpHlXyGKsjZYDgisHlHbdrEFWMrdHw+LbJUg2u9PZkEeKin8vq7vzHQ5KTcRw
+         AwLhJQZ2Ld5yppC0c3LhRYB1CaJibzMyuDPe93tQfyVIJnK4HQ5ZeYlsHQqPFxA4+8pZ
+         IYgvWu3JrRyj4qZwRXWyZeV19HzqrLgp8m3t06I1/szGtrp4wxVcdU5ljdVuvUP6n0mm
+         pnZr+lzBGgT0nEcV9UekpHf6E4BRgHKjiyMXfZ4RLEvpuIw4/Xkjw1fhs33y0jSyAzTm
+         qcBRVahxjqq+IRiVe/abu+UHvm/ar293kZjtI2z8KrJnL6WnV0fzUHCPPyDN5T1S/9Wh
+         hXmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UWI06omnMqNceUtG8KJb2WUeJNmegQhi3FN/6Z1ebzY=;
-        b=4jU21+7LhtZkglIy4LSeBbXEx3A1WRDM8/EiwNbCsHxO63txBU4USmnRE+9Z7jyLjz
-         jfoIxRb7+q7X5GxjJ5lENgpnxJXL3zhxIPfm3vJS1qo+CKBdPVYRNZ0N8fT/acy2DbGj
-         ygsgSjkXEZYGn1KUHY9HpMz3HAp0GGRnMHo59IrA8hcpdB0pvUKCUk2oT9l8ro+gp86N
-         rbKOqPB6B7n/pxXgH44c7ohzfozPqX5IpTV/zLZW+7W9hmVQCT7Tl8vYJgBKINBV9BOM
-         41Mwx9fp3u7fhgFixrWA8B8zWtUgg8J5viYTCyjdEbyxyh671lbpSDNFN4nDDOeW1MC2
-         5rMA==
-X-Gm-Message-State: AFqh2kpxl8MvVxGERY/apn0NRVkP1Ho3g5uVNiEblo+AYqhoSSLkzpbH
-        CZymkzyN448siYJootV7/3SdMg==
-X-Google-Smtp-Source: AMrXdXvEqTk26rpkj64XjgRaJNm95+WxdojhIs2s8lBudsO1uqhbmoSNsw3wackOkLEtrqe/V0YdBg==
-X-Received: by 2002:a05:600c:4d06:b0:3da:f0a:83d7 with SMTP id u6-20020a05600c4d0600b003da0f0a83d7mr23428035wmp.8.1674480204173;
-        Mon, 23 Jan 2023 05:23:24 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id f23-20020a7bc8d7000000b003d1f3e9df3csm10751788wml.7.2023.01.23.05.23.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Jan 2023 05:23:23 -0800 (PST)
-Message-ID: <45800033-e2ae-09c8-b8a2-e97afb6508fd@linaro.org>
-Date:   Mon, 23 Jan 2023 13:23:22 +0000
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GNbLj/XmOS18lcQ6X8VOqWOavPYN+fm3m3tQOx//CQY=;
+        b=JpG3aYGVXxEbApiSLwnTVnvGdTdy5h0nJT+l4QqqWWDEitoXHpuf0JCyMOz1fZbkQB
+         HKFamb4LvEgmB9mySouw+AXAhbtQRqwj0HXmhwMuWDOaWB4cO7W91fyjr0MZDTpHtTRy
+         x/c0f7lHwJk8E0ntZcmpQCe94ZxEXd4mefE8gCGoPoc6xD4LrF7qBequlrY0VY5Dgb9i
+         qOEF3VGVHH+dbiA53u22gK+El+OiF0UqMy3zWSTL/WmBlRnTdIhlqxD2DdRZeCskCD1q
+         mJWU/rR3BpJKVIfmrAXWJ+qSrNSbCR9AqcAZobjqxPICWO5UeRtEd75fSbpUeQNVBa8u
+         TABw==
+X-Gm-Message-State: AFqh2krBYEFVNbVP9nAubqYWEJt+De98JLIZi9el2uL88Jwn1OVLj0sM
+        YxF/6q5y+WOFvtInXo64lQi/hQ==
+X-Google-Smtp-Source: AMrXdXsO2W7vTKmldyNi2VluWAXyWgl/FTLpjx5ljjPpjsV580GO1FHx9OHRarQY2voFWBfv9iIenA==
+X-Received: by 2002:a17:906:5417:b0:877:5dbc:da84 with SMTP id q23-20020a170906541700b008775dbcda84mr19849609ejo.72.1674480622737;
+        Mon, 23 Jan 2023 05:30:22 -0800 (PST)
+Received: from [172.16.220.87] (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id s5-20020a170906c30500b008552bc8399dsm18410066ejz.172.2023.01.23.05.30.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Jan 2023 05:30:22 -0800 (PST)
+From:   Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH v4 0/3] Add USB/DP combo PHY config for SM6350
+Date:   Mon, 23 Jan 2023 14:29:48 +0100
+Message-Id: <20230120-sm6350-usbphy-v4-0-4d700a90ba16@fairphone.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: [PATCH v4 0/6] Add MSM8939 SoC support with two devices
-Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        djakov@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, benl@squareup.com,
-        shawn.guo@linaro.org, fabien.parent@linaro.org, leo.yan@linaro.org,
-        dmitry.baryshkov@linaro.org
-References: <20230123023127.1186619-1-bryan.odonoghue@linaro.org>
- <42baa874-c926-9111-b0b3-2df2562d8de6@linaro.org>
- <Y86CPmgvAi+kChQI@gerhold.net>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <Y86CPmgvAi+kChQI@gerhold.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAMyLzmMC/zWNywrDIBBFf6W47oRR85Cu+h+lC2PHKiQanKYPQ
+ v69UujyXDjnboKpRGJxOmyi0DNyzKlCezwIF2y6E8RbZaFQaZQKgededwgrj0v4gBlcR9qjkoZ
+ EdUbLBGOxyYVqpXWa6rgU8vH9O7lcK/uSZ3iEQvafVlJqRCNbjU0/GC1BwrQ627woMp+9jWUJO
+ VHj8iz2/QtItfVgtgAAAA==
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Luca Weiss <luca.weiss@fairphone.com>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.12.0
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/01/2023 12:49, Stephan Gerhold wrote:
-> It's only required though because you forgot to drop the DT schema patch
-> (3/4) when I suggested half a year ago that you make the MSM8939
-> cpufreq-qcom-nvmem changes together with the CPR stack [1]. :/
+While this patchset started out as just adding a dedicated init sequence
+for SM6350 since USB PHY init didn't work in some cases, now it's also
+migrating the phy config and dts over to a new format.
 
-Didn't forget, tested that and as I recall there are side-effects 
-removing 8939 from drivers/cpufreq/cpufreq-dt-platdev.c - not all 
-processors were booted.
+Also note, that the DP portions are pratically untested since TCPM
+(type-C port manager) and possibly other components aren't brought up
+yet.
 
-> Anyway, it looks like qcom-cpufreq-nvmem.yaml requiring "cpr" power
-> domain unconditionally is a mistake anyway for multiple platforms.
-> [2] was recently submitted to fix this so that patch should allow you to
-> drop the dummy nodes. 😄
-> 
-> [1]:https://lore.kernel.org/linux-arm-msm/Ysf8VRaXdGg+8Ev3@gerhold.net/
-> [2]:https://lore.kernel.org/linux-arm-msm/20230122174548.13758-1-ansuelsmth@gmail.com/
-
-8939 _is_ a CPR device, I think qcs404 comes from msm893x IP.
-
-To me it makes more sense to stub CPR in the DTS than to, wrongly 
-declare the 8939 a non-CPR device.
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+Changes in v4:
+- Fix dp_serdes offsets in driver, add dp_txa & dp_txb fields (as in v2)
+- Fix order of resets in dtsi
+- Link to v3: https://lore.kernel.org/r/20221130081430.67831-1-luca.weiss@fairphone.com
 
 ---
-bod
+Luca Weiss (3):
+      dt-bindings: phy: qcom,qmp-usb3-dp: Add sm6350 compatible
+      phy: qcom-qmp-combo: Add config for SM6350
+      arm64: dts: qcom: sm6350: Use specific qmpphy compatible
+
+ .../phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml         |   1 +
+ arch/arm64/boot/dts/qcom/sm6350.dtsi               |  54 +++-----
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c          | 139 ++++++++++++++++++++-
+ 3 files changed, 154 insertions(+), 40 deletions(-)
+---
+base-commit: d514392f17fd4d386cfadde7f849d97db4ca1fb0
+change-id: 20230120-sm6350-usbphy-87c5e3f0218e
+
+Best regards,
+-- 
+Luca Weiss <luca.weiss@fairphone.com>
+
