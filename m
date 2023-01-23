@@ -2,79 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D79D678214
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 17:45:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6ECF567821D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 17:48:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233395AbjAWQpO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Jan 2023 11:45:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50602 "EHLO
+        id S233337AbjAWQsx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Jan 2023 11:48:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233300AbjAWQpN (ORCPT
+        with ESMTP id S231899AbjAWQsw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Jan 2023 11:45:13 -0500
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BB082CC60
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 08:44:52 -0800 (PST)
-Received: by mail-ej1-x62b.google.com with SMTP id u19so32084193ejm.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 08:44:52 -0800 (PST)
+        Mon, 23 Jan 2023 11:48:52 -0500
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29B132943F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 08:48:51 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id tz11so32243122ejc.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 08:48:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=8+MQluqn9nt7RD71EHDttjyHlEpDdbP4AXW0/Pi9N4o=;
-        b=AsFqEHjp2PSwAXOyGhhhUK4qFRmPxRek5DXJD+ka9zxyw39v6E0qGm93e1fTloHbzg
-         m+AbQbcQ8L/dWEGUoybVvPKvCmYdSzDSCJw3/uYpgu8lnee8rOTCYMiVOTGzR+tVxpvT
-         BkN3iBJCy5H1GBDA5CsRmqq6YeuUeeyQmvrCfhSSc//6SX2hnAtpcM2teUE2kolvkCVL
-         ox9G2lBiPAZurPL+ecT6KAY+8/oKT1lg0YH27sH4rkUcMeUydiGsq+BBtpzIL/OsGAyB
-         bgtfB6v6fw/bl9figdWuulaxYRFFxY/xzUX5etLjEKg0KkF7+gGGOxfWJFJ9RC/AblfQ
-         g2/g==
+        bh=juz46s3FiDdEs9rs33v7d1aVH0ysvr9X47OMEfmTYQc=;
+        b=WM067+mlI+8i8h6eAVzT3eiVHH1jMagTYEqEfRdIxfo0u9PTlFH3WSgssTQRu9o3E3
+         bA/cQVnqbcC56QccNtZNX5kVFYCha9pvIvzJMhySudiZqCAi984l0Z0HxyU383a3a0gl
+         PjIth1WpGBOVzPHuM8ds158mGDYJr7Fma/QzL9vvV0T3Igun6drqfkFpAyV0znKwgVM/
+         RbaHv1M6SAK16t9CYre/8p6SNonsLnL3WKflCNlXZvjPDfZF6VZEI+LFp/OPpdXc6gmO
+         iz/DWwNWFUglzAaogygWT3O+2o+EZsAiiVcCvXqZoGoGVuow0NzxMUN+xhX7DqF1fC2z
+         0Yxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8+MQluqn9nt7RD71EHDttjyHlEpDdbP4AXW0/Pi9N4o=;
-        b=a7GL7Sq51VuWm5uzwfYJbfbsNDzooqgpcPXIg4W+ePvaciaH10evMvaaeEBrjm0d46
-         lvejfGAGoLrkMwz4OE4CSkUPdrHaisTPcwGiXW9JCyuNEAULEkBMuLJPvzdftv89+eva
-         W6HcK7z1g4W/GKxvMbj/CmgYyAplK+rxvXRm6j6rZhRKVOeUe+bynwTyQTyyDo3oedpZ
-         jcCMkDH+dzozDp7NiDeT543YOm45fHRA/hsfIywJyRoWI+lX1WsRGzoJZANISdzYC3yU
-         5kOTuvZBZIx58UVzZsmZdAMbyE0HCPalmkTQIegadAsr1VoEQdKFAfLsEBVmJy07UpYH
-         KiSw==
-X-Gm-Message-State: AFqh2koi9XI9OMYfqSlAplVf5/3bDaBnctQzoqfzpH7BVU/tcEJybs79
-        JarvROHiZU5QtvkIC0fTfjHgzQ==
-X-Google-Smtp-Source: AMrXdXvQtB0ZWiGkDZiL9MK9IWIwnHOO3JLmXSKr2tzZrBLjkFBjqCvTjHBnHf1KxzAW+Y+scytgGg==
-X-Received: by 2002:a17:907:340f:b0:872:db7f:80b4 with SMTP id ab15-20020a170907340f00b00872db7f80b4mr22527807ejc.38.1674492288754;
-        Mon, 23 Jan 2023 08:44:48 -0800 (PST)
+        bh=juz46s3FiDdEs9rs33v7d1aVH0ysvr9X47OMEfmTYQc=;
+        b=mZYAA1deY/ss3m1RMVuE+heK18+EaKY8QxalK7nXzsdvnzvSBPbMhnGcsF7/mbly9k
+         a9L7FT2BWEgGxm/DDS9pcKIjAdxcMV5RvldsqPc/9Lt13UIBK787Z68X9l7aGUsNd+Mb
+         4erCraw6pGShFq1imjrBoV4W7vzbhGNsC2BpUqhnYaDjAdGOPiZAc8utXli3tpf5pV04
+         ZXPaLcsN2HPUBskQaMr1tH5GnVn9bSiXqo58vm4Hk7f2HJATxrjGQmVdIMI3RSmzzbcs
+         6JJ9qiZlOKGp2R/5hSrC3zFc+ZYb/9mZYox8pA/1cGNMPR2b8sUZwDoRj+GixSbwkrGh
+         bjww==
+X-Gm-Message-State: AFqh2kq/UAAbQ5zqBzC7ef41HExLOuX0zG7ycP5U2urx4QYWi8fRCtec
+        6COdEtr7z3o7w9rwN1W1JGC2Hg==
+X-Google-Smtp-Source: AMrXdXvIXcbH4UEK131yDd+ts6HxEAsmVjpAtgm2xSNtt/vtSspvA+02QUO23mOp0JMcMj5zO6ulMw==
+X-Received: by 2002:a17:907:d401:b0:7c0:c220:a33d with SMTP id vi1-20020a170907d40100b007c0c220a33dmr29196610ejc.9.1674492529690;
+        Mon, 23 Jan 2023 08:48:49 -0800 (PST)
 Received: from [192.168.1.101] (abxi24.neoplus.adsl.tpnet.pl. [83.9.2.24])
-        by smtp.gmail.com with ESMTPSA id vo16-20020a170907a81000b0086dc174caf2sm13108255ejc.220.2023.01.23.08.44.47
+        by smtp.gmail.com with ESMTPSA id c10-20020a17090618aa00b0084c6ec69a9dsm22186837ejf.124.2023.01.23.08.48.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Jan 2023 08:44:48 -0800 (PST)
-Message-ID: <0c63f37d-a6a9-4cb0-39c8-ebf302945ad2@linaro.org>
-Date:   Mon, 23 Jan 2023 17:44:46 +0100
+        Mon, 23 Jan 2023 08:48:49 -0800 (PST)
+Message-ID: <a373c719-a4f7-20d1-1b97-efdd5c350035@linaro.org>
+Date:   Mon, 23 Jan 2023 17:48:47 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.0
-Subject: Re: [PATCH 5/5] ARM: dts: qcom: msm8974-oneplus-bacon: Add
- notification LED
+Subject: Re: [PATCH 3/3] ARM: dts: qcom: Add support for Samsung Galaxy Tab 4
+ 10.1 LTE (SM-T535)
 Content-Language: en-US
-To:     Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
-        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+To:     Stefan Hansson <newbyte@postmarketos.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230122-msm8974-bacon-features-v1-0-4049f565c24c@z3ntu.xyz>
- <20230122-msm8974-bacon-features-v1-5-4049f565c24c@z3ntu.xyz>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
+        soc@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        matti.lehtimaki@gmail.com
+References: <20230122144749.87597-1-newbyte@postmarketos.org>
+ <20230122144749.87597-4-newbyte@postmarketos.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230122-msm8974-bacon-features-v1-5-4049f565c24c@z3ntu.xyz>
+In-Reply-To: <20230122144749.87597-4-newbyte@postmarketos.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -83,58 +86,83 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 22.01.2023 17:48, Luca Weiss wrote:
-> Add the node describing the sn3193 that's used to provide notification
-> LED.
+On 22.01.2023 15:47, Stefan Hansson wrote:
+> Add a device tree for the Samsung Galaxy Tab 4 10.1 (SM-T535) LTE tablet
+> based on the MSM8926 platform.
 > 
-> Unfortunately the driver currently supports neither multicolor API nor
-> using the properties function & color, so we use label instead.
-> 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> Signed-off-by: Stefan Hansson <newbyte@postmarketos.org>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>  arch/arm/boot/dts/Makefile                    |  1 +
+>  .../dts/qcom-msm8926-samsung-matisselte.dts   | 39 +++++++++++++++++++
+>  2 files changed, 40 insertions(+)
+>  create mode 100644 arch/arm/boot/dts/qcom-msm8926-samsung-matisselte.dts
+> 
+> diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+> index d0c07867aeab..e1fad9eb0d26 100644
+> --- a/arch/arm/boot/dts/Makefile
+> +++ b/arch/arm/boot/dts/Makefile
+> @@ -1061,6 +1061,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
+>  	qcom-msm8916-samsung-e7.dtb \
+>  	qcom-msm8916-samsung-grandmax.dtb \
+>  	qcom-msm8916-samsung-serranove.dtb \
+> +	qcom-msm8926-samsung-matisselte.dtb \
+>  	qcom-msm8960-cdp.dtb \
+>  	qcom-msm8974-lge-nexus5-hammerhead.dtb \
+>  	qcom-msm8974-sony-xperia-rhine-amami.dtb \
+> diff --git a/arch/arm/boot/dts/qcom-msm8926-samsung-matisselte.dts b/arch/arm/boot/dts/qcom-msm8926-samsung-matisselte.dts
+> new file mode 100644
+> index 000000000000..6df568f1f36d
+> --- /dev/null
+> +++ b/arch/arm/boot/dts/qcom-msm8926-samsung-matisselte.dts
+> @@ -0,0 +1,39 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2022, Matti Lehtimäki <matti.lehtimaki@gmail.com>
+> + * Copyright (c) 2023, Stefan Hansson <newbyte@postmarketos.org>
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include "qcom-msm8226-samsung-matisse-common.dtsi"
+> +
+> +/ {
+> +	model = "Samsung Galaxy Tab 4 10.1 LTE";
+> +	compatible = "samsung,matisselte", "qcom,msm8926";
+> +	chassis-type = "tablet";
+> +};
+> +
+> +&pm8226_l3 {
+> +	regulator-min-microvolt = <750000>;
+This is identical as the common value.
+
+
+> +	regulator-max-microvolt = <1350000>;
+> +	regulator-always-on;
+This value already exists in common.
+
+> +};
+> +
+> +&pm8226_s4 {
+> +	regulator-min-microvolt = <1800000>;
+> +	regulator-max-microvolt = <2200000>;
+> +};
+> +
+> +&reg_tsp_3p3v {
+> +		gpio = <&tlmm 32 GPIO_ACTIVE_HIGH>;
+The indentation here seems off.
+
+> +};
+> +
+> +&sdhc_2 {
+> +	/* SD card fails to probe with error -110 */
+Maybe this SKU has some different pin properties or
+needs some external GPIO/regulator?
+
 
 Konrad
->  .../arm/boot/dts/qcom-msm8974pro-oneplus-bacon.dts | 28 ++++++++++++++++++++++
->  1 file changed, 28 insertions(+)
-> 
-> diff --git a/arch/arm/boot/dts/qcom-msm8974pro-oneplus-bacon.dts b/arch/arm/boot/dts/qcom-msm8974pro-oneplus-bacon.dts
-> index ffb486ceb6a6..a672c45d7070 100644
-> --- a/arch/arm/boot/dts/qcom-msm8974pro-oneplus-bacon.dts
-> +++ b/arch/arm/boot/dts/qcom-msm8974pro-oneplus-bacon.dts
-> @@ -114,6 +114,34 @@ led@0 {
->  			default-brightness = <80>;
->  		};
->  	};
+> +	status = "disabled";
+> +};
 > +
-> +	led-controller@68 {
-> +		compatible = "si-en,sn3193";
-> +		reg = <0x68>;
-> +
-> +		shutdown-gpios = <&tlmm 45 GPIO_ACTIVE_HIGH>;
-> +
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		led@1 {
-> +			reg = <1>;
-> +			label = "red:status";
-> +			led-max-microamp = <17500>;
-> +		};
-> +
-> +		led@2 {
-> +			reg = <2>;
-> +			label = "green:status";
-> +			led-max-microamp = <17500>;
-> +		};
-> +
-> +		led@3 {
-> +			reg = <3>;
-> +			label = "blue:status";
-> +			led-max-microamp = <17500>;
-> +		};
-> +	};
->  };
->  
->  &blsp1_i2c6 {
-> 
+> +&tsp_en1_default_state {
+> +	pins = "gpio32";
+> +};
