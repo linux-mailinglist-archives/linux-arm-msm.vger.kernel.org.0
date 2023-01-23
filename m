@@ -2,74 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5928C678A80
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 23:13:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B9B6E678A9E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 23:18:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233142AbjAWWNb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Jan 2023 17:13:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58694 "EHLO
+        id S231663AbjAWWR6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Jan 2023 17:17:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233151AbjAWWM5 (ORCPT
+        with ESMTP id S231787AbjAWWR6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Jan 2023 17:12:57 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 316B4392A0;
-        Mon, 23 Jan 2023 14:12:26 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 48F85B80DE1;
-        Mon, 23 Jan 2023 22:12:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DDAEC4339B;
-        Mon, 23 Jan 2023 22:12:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1674511925;
-        bh=T4OUyD+gMfLi4t8TV225tN/XhFfB3kBwKhfR2EqDfhs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Yoi5yYwgUE0ymFOJ1VSucmfsRg0usKoyceuEV9GVihlqvhT4KlLQpeJxjvfHBUfuV
-         lUYtSOA+6yT2GzMcuxA70lIyvs9FpfgCascM2kx6pPGdtaZxoSTV842ZbsQCXsvcTz
-         uAhwYAlNJaC6mW8bvw4NRibMBoJzrdi74v3URwlH37xT0lWKEiNgrsR8G7mGUe/Vuz
-         SPNC1EMaCc351AkUQurhLr3keaQrqWTdrXgNcbf6NFHOcGzL+V1An5Wo8XCBms9vJa
-         DRp42l22VsvfUH4jBtrDR1yn5OPzFD9p75c4l8lAqKRNe8IenOE1A7tpMEMrofmmpk
-         piS8ZcYSw9Lpw==
-Date:   Mon, 23 Jan 2023 23:12:00 +0100
-From:   Wolfram Sang <wsa@kernel.org>
-To:     Luca Weiss <luca.weiss@fairphone.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v2 1/4] dt-bindings: i2c: qcom-cci: Document SM6350
- compatible
-Message-ID: <Y88GMAjn6scr1DFv@shikoro>
-Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
-        Luca Weiss <luca.weiss@fairphone.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Robert Foss <rfoss@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-References: <20221213-sm6350-cci-v2-0-15c2c14c34bb@fairphone.com>
- <20221213-sm6350-cci-v2-1-15c2c14c34bb@fairphone.com>
+        Mon, 23 Jan 2023 17:17:58 -0500
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FD39EB76
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 14:17:56 -0800 (PST)
+Received: by mail-ej1-x634.google.com with SMTP id kt14so34398587ejc.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 14:17:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=WEJCKFdjYo7/IVhVCm8AADTKhVefjweLe+Hh3JRaamM=;
+        b=YkZbmEjzlEHI7psm5eT7QDxkiIxJOaSaEyAhHaVyS7I6epAJygcBFyIVnz1ffgQm1R
+         tyiYTJF2jTX1Ta4wzWywDPPUTCPMznDcWZizxeJ8Nur/Qjsky9kGT/EcQtsZYgPrgAJP
+         Ix4kVxUSQiTu+Moot3RfEfTokcM0NtjGdNs1MVvFRZiV9DXpyjE8pob5BwcFMjzVHTH9
+         EMNdMAmYaB4LtiJ+1rUGONta89eertXRKASUiXeA/JWqehSAIJnan4+a5ABSe6Pc99zT
+         qCPYJ+Yf/Scm7ihMeugXcurESOGkYZ2oToTHLNyQn4Dg68BCZOV4mATB9UJerUnCoK3P
+         iP0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WEJCKFdjYo7/IVhVCm8AADTKhVefjweLe+Hh3JRaamM=;
+        b=tonmp6IY8isC7e1PpCP9EUW8matDCQR58T0O8bduecZIOmrI4UhPyGZ4EVty/sVn9L
+         wBnwu4temx7IWLavtAmufQF/3xy3CWEdO/cqP5Zu2yGRCRW3oAZyXSLcyhH2m0lieWBr
+         dT2YCRl6G9wk8diXkTdhApOUgbVdRdLghVyi2s/h6+/FtJF7I++ceZcut3/qfKCHiTBN
+         EfDZAw+hV/2iLsQ7sI0w4xdz1+4KX2rcCfeRXKm5ydymNu/rCGYz4IkNZQmtKI1DrVVu
+         R4vO7quM+SCDugmHQ9bZiBxK2lHz5eWOUdAKmy1/ny+WJxOdZDcPPZodugCVR75fgYSE
+         eO1Q==
+X-Gm-Message-State: AFqh2koGT22Xy249xqeiUYjyL6zhaRAXZtNGkN3Y/1IZd6OY4zAcK5U9
+        VqM+hCvnyqOQigk/d1TUESqElA==
+X-Google-Smtp-Source: AMrXdXtYtfXTtIAQnaUD/Ct3lTRFyOqcwB5jp+SprzQujvlZmZxPpXRR5cz2BELW/Wus++KxU7uvpg==
+X-Received: by 2002:a17:907:c019:b0:867:ef3f:dd85 with SMTP id ss25-20020a170907c01900b00867ef3fdd85mr26873215ejc.56.1674512275078;
+        Mon, 23 Jan 2023 14:17:55 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id fx2-20020a170906b74200b0084d4b907ff8sm16725ejb.120.2023.01.23.14.17.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Jan 2023 14:17:51 -0800 (PST)
+Message-ID: <8ba56c15-12e5-f476-9b6b-0951531cae8c@linaro.org>
+Date:   Tue, 24 Jan 2023 00:17:46 +0200
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="M5DjASHqtfqGSqrR"
-Content-Disposition: inline
-In-Reply-To: <20221213-sm6350-cci-v2-1-15c2c14c34bb@fairphone.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH v1 01/14] drm/msm/dp: add dpcd read of both dsc and fec
+ capability
+Content-Language: en-GB
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, andersson@kernel.org
+Cc:     quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <1674498274-6010-1-git-send-email-quic_khsieh@quicinc.com>
+ <1674498274-6010-2-git-send-email-quic_khsieh@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <1674498274-6010-2-git-send-email-quic_khsieh@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,39 +81,221 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 23/01/2023 20:24, Kuogee Hsieh wrote:
+> FEC is pre-requirement of DSC. Therefore FEC has to be enabled
+> before DSC enabled. This patch add functions to read sink's DSC
+> and FEC related DPCD and decode them and set enable flags
+> accordingly.
 
---M5DjASHqtfqGSqrR
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Please split this to FEC and DSC patches.
 
-On Fri, Jan 20, 2023 at 02:13:44PM +0100, Luca Weiss wrote:
-> Document the compatible for the CCI block found on SM6350 SoC.
->=20
-> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> 
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> ---
+>   drivers/gpu/drm/msm/dp/dp_panel.c | 91 ++++++++++++++++++++++++++++++++++++++-
+>   drivers/gpu/drm/msm/dp/dp_panel.h | 20 ++++++++-
+>   2 files changed, 109 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
+> index 1800d89..5078247 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_panel.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
+> @@ -1,14 +1,18 @@
+>   // SPDX-License-Identifier: GPL-2.0-only
+>   /*
+> - * Copyright (c) 2012-2020, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2012-2023, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2023. Qualcomm Innovation Center, Inc. All rights reserved
+>    */
+>   
+>   #include "dp_panel.h"
+>   
+> +#include <drm/drm_fixed.h>
+>   #include <drm/drm_connector.h>
+>   #include <drm/drm_edid.h>
+>   #include <drm/drm_print.h>
+>   
+> +#define DSC_TGT_BPP 8
+> +
+>   struct dp_panel_private {
+>   	struct device *dev;
+>   	struct drm_device *drm_dev;
+> @@ -68,6 +72,9 @@ static int dp_panel_read_dpcd(struct dp_panel *dp_panel)
+>   		goto end;
+>   	}
+>   
+> +	print_hex_dump_debug("[drm-dp] SINK DPCD: ",
+> +		DUMP_PREFIX_NONE, 8, 1, dp_panel->dpcd, rlen, false);
 
-Applied to for-next, thanks!
+I think this can go away.
 
+> +
+>   	link_info->revision = dpcd[DP_DPCD_REV];
+>   	major = (link_info->revision >> 4) & 0x0f;
+>   	minor = link_info->revision & 0x0f;
+> @@ -154,6 +161,83 @@ static int dp_panel_update_modes(struct drm_connector *connector,
+>   	return rc;
+>   }
+>   
+> +static void dp_panel_decode_dsc_dpcd(struct dp_panel *dp_panel)
+> +{
+> +	if (dp_panel->dsc_dpcd[0]) {
+> +		dp_panel->sink_dsc_caps.dsc_capable = true;
+> +		dp_panel->sink_dsc_caps.version = dp_panel->dsc_dpcd[1];
+> +		dp_panel->sink_dsc_caps.block_pred_en =
+> +				dp_panel->dsc_dpcd[6] ? true : false;
+> +		dp_panel->sink_dsc_caps.color_depth =
+> +				dp_panel->dsc_dpcd[10];
+> +
+> +		if (dp_panel->sink_dsc_caps.version >= 0x11)
+> +			dp_panel->dsc_en = true;
+> +	} else {
+> +		dp_panel->sink_dsc_caps.dsc_capable = false;
+> +		dp_panel->dsc_en = false;
+> +	}
+> +}
+> +
+> +static void dp_panel_read_sink_dsc_caps(struct dp_panel *dp_panel)
+> +{
+> +	int rlen;
+> +	struct dp_panel_private *panel;
+> +	int dpcd_rev;
+> +
+> +	if (!dp_panel) {
+> +		DRM_ERROR("invalid input\n");
+> +		return;
+> +	}
+> +
+> +	dpcd_rev = dp_panel->dpcd[DP_DPCD_REV];
+> +
+> +	panel = container_of(dp_panel, struct dp_panel_private, dp_panel);
+> +	if (dpcd_rev >= 0x14) {
+> +		rlen = drm_dp_dpcd_read(panel->aux, DP_DSC_SUPPORT,
+> +			dp_panel->dsc_dpcd, (DP_DSC_RECEIVER_CAP_SIZE + 1));
+> +		if (rlen < (DP_DSC_RECEIVER_CAP_SIZE + 1)) {
+> +			drm_dbg_dp(panel->drm_dev, "dsc dpcd read failed, rlen=%d\n", rlen);
+> +			return;
+> +		}
+> +
+> +		print_hex_dump_debug("[drm-dp] SINK DSC DPCD: ",
+> +			DUMP_PREFIX_NONE, 8, 1, dp_panel->dsc_dpcd, rlen, false);
 
---M5DjASHqtfqGSqrR
-Content-Type: application/pgp-signature; name="signature.asc"
+Oh. An extra dump again. Can we get rid of them please? Or can we use 
+the standard drm debug levels? So that it would be possible to turn them 
+on and off with standard params.
 
------BEGIN PGP SIGNATURE-----
+> +
+> +		dp_panel_decode_dsc_dpcd(dp_panel);
+> +	}
+> +}
+> +
+> +static void dp_panel_read_sink_fec_caps(struct dp_panel *dp_panel)
+> +{
+> +	int rlen;
+> +	struct dp_panel_private *panel;
+> +	s64 fec_overhead_fp = drm_fixp_from_fraction(1, 1);
+> +
+> +	if (!dp_panel) {
+> +		DRM_ERROR("invalid input\n");
+> +		return;
+> +	}
+> +
+> +	panel = container_of(dp_panel, struct dp_panel_private, dp_panel);
+> +	rlen = drm_dp_dpcd_readb(panel->aux, DP_FEC_CAPABILITY,
+> +			&dp_panel->fec_dpcd);
+> +	if (rlen < 1) {
+> +		DRM_ERROR("fec capability read failed, rlen=%d\n", rlen);
+> +		return;
+> +	}
+> +
+> +	print_hex_dump_debug("[drm-dp] SINK FEC DPCD: ",
+> +		DUMP_PREFIX_NONE, 8, 1, &dp_panel->fec_dpcd, rlen, false);
+> +
+> +	dp_panel->fec_en = dp_panel->fec_dpcd & DP_FEC_CAPABLE;
+> +
+> +	if (dp_panel->fec_en)
+> +		fec_overhead_fp = drm_fixp_from_fraction(100000, 97582);
+> +
+> +	dp_panel->fec_overhead_fp = fec_overhead_fp;
+> +}
+> +
+>   int dp_panel_read_sink_caps(struct dp_panel *dp_panel,
+>   	struct drm_connector *connector)
+>   {
+> @@ -224,6 +308,11 @@ int dp_panel_read_sink_caps(struct dp_panel *dp_panel,
+>   		}
+>   		panel->aux_cfg_update_done = false;
+>   	}
+> +
+> +	dp_panel_read_sink_fec_caps(dp_panel);
+> +
+> +	if (dp_panel->fec_en)
+> +		dp_panel_read_sink_dsc_caps(dp_panel);
+>   end:
+>   	return rc;
+>   }
+> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
+> index f04d021..fb30b92 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_panel.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_panel.h
+> @@ -1,6 +1,7 @@
+>   /* SPDX-License-Identifier: GPL-2.0-only */
+>   /*
+> - * Copyright (c) 2012-2020, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2012-2023, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2023. Qualcomm Innovation Center, Inc. All rights reserved
+>    */
+>   
+>   #ifndef _DP_PANEL_H_
+> @@ -11,6 +12,7 @@
+>   #include "dp_aux.h"
+>   #include "dp_link.h"
+>   #include "dp_hpd.h"
+> +#include "msm_drv.h"
+>   
+>   struct edid;
+>   
+> @@ -34,12 +36,21 @@ struct dp_panel_in {
+>   	struct dp_catalog *catalog;
+>   };
+>   
+> +struct dp_dsc_caps {
+> +	bool dsc_capable;
+> +	u8 version;
+> +	bool block_pred_en;
+> +	u8 color_depth;
+> +};
+> +
+>   struct dp_panel {
+>   	/* dpcd raw data */
+>   	u8 dpcd[DP_RECEIVER_CAP_SIZE + 1];
+>   	u8 ds_cap_info[DP_DOWNSTREAM_PORTS * DP_DOWNSTREAM_CAP_SIZE];
+>   	u32 ds_port_cnt;
+>   	u32 dfp_present;
+> +	u8 dsc_dpcd[DP_DSC_RECEIVER_CAP_SIZE + 1];
+> +	u8 fec_dpcd;
+>   
+>   	struct dp_link_info link_info;
+>   	struct drm_dp_desc desc;
+> @@ -53,6 +64,13 @@ struct dp_panel {
+>   	u32 max_dp_link_rate;
+>   
+>   	u32 max_bw_code;
+> +
+> +	struct dp_dsc_caps sink_dsc_caps;
 
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmPPBi0ACgkQFA3kzBSg
-KbbLwg//S0qCFdJcJKzs8y0lQOit1uSGRCIm5yWVdF+aF/DEDoeg+rAildQMvdRu
-feERgXqbEJUHtNLH1K7K9BwnhTAcvUIGYC79UFz3OWmZiMaX1Gl8HPTJXSc4Y9wy
-GWBGhl3QXUGDeyApIV33sLSauZe220PXg0Zw/X/5WTZo9R+KnkoL8JqvNJIQsQ5v
-PwQ3c6UJUjIuL/wmbqM7AYe45UOGmsPi87nTgbdJFbgMvXp2xD37e2Y2LcYMICh5
-M1iknYmk0FMC2E1rBAwsGjmgwyYtbIEGMJqK0qkR+cuTu1KD0Fv2Z2nGQJh4TcK1
-ftkGfPEKQAzvm1GqH5ExzpijZU9/c8lQIOaIiHul5CxPJEqBZgn2KBj+1OyErfbH
-nL0ymeXrDzp01/gqrVwv1RYpg+wAzuie/uxXjnAJ2vInvEVx2osOy2sykP1Bg8FZ
-3Q74VMCQJ+3kM+BXMh9sEinr8aGs8qGEUIXL32YQp2dG57T3V8teqDJamYOMXXpT
-U0d7ff1Cz1FPYKkNzX2b9HXgsEbjrBh1XGZaDjJZTwbJuXtnN12lER4u+PzKaGZa
-aUSZ8ugLTSbRxCAJTPARXUGBTsOKiuxGTvYS/tYe1Hm/zHVGORUeqlIcTHuxswdV
-4PYbYwEE1eFwVxhJBsxsxG7XA+3OYWR/4HKnkqcgGWksO7qf4b8=
-=3gYL
------END PGP SIGNATURE-----
+Why do you need both decoded and raw DSC caps?
 
---M5DjASHqtfqGSqrR--
+> +	bool dsc_feature_enable;
+> +	bool fec_feature_enable;
+> +	bool dsc_en;
+> +	bool fec_en;
+> +	s64 fec_overhead_fp;
+>   };
+>   
+>   int dp_panel_init_panel_info(struct dp_panel *dp_panel);
+
+-- 
+With best wishes
+Dmitry
+
