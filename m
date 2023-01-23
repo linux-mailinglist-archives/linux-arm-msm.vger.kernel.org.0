@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F457678ACE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 23:35:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 953CD678ADB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 23:41:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233228AbjAWWfB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Jan 2023 17:35:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44442 "EHLO
+        id S233286AbjAWWl0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Jan 2023 17:41:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229956AbjAWWfB (ORCPT
+        with ESMTP id S229956AbjAWWlZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Jan 2023 17:35:01 -0500
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9766D3865F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 14:34:59 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id mg12so34455110ejc.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 14:34:59 -0800 (PST)
+        Mon, 23 Jan 2023 17:41:25 -0500
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93CE232E71
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 14:41:23 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id qx13so34383955ejb.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 14:41:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=YxnLY9crCokdRJwZ1cSyxopWXEnHeRFdvQXqwCq/JLg=;
-        b=tlHGHNwXhG+d5/P861oREM5anvoPyhHVNbQdTZhui7wQRHSLeHzXxAzhIstobqhjLi
-         rtvJ/pYgXb/cWnA8QL9zqz7qNX3uUBtEwrLXdSZM0CwL8YOyILW1I8Fkka2BFU+fjrL4
-         r4SrZVpSe36iCMJZampFAbqQ98LvGdnYttfjMbOFqJNrV9DY+YQyfBnjc5xms84mFp7f
-         Ob8zx1W0G+/M9br4mDKl9YriKhBdS0TGzujgoKDsr8gK7uE5uBXqlk251bWLKIVuSzec
-         bE2TI55hnDDU0nY/+Fg10l1nkR0UWAyHA0oRyPdN7o11CUWS8L4HHdKCWFOW23y75G6p
-         bFew==
+        bh=DAh9Xbtfief/OlsV2KWJ+0B0immMWxg2cM0rmo6xr3k=;
+        b=FpQwvjke2tSxx5LeBEvsXh/qQZcv/u1RWBrEK/3eIZ527rYbLYhdGwKr60hzndq6/h
+         Id2B2QqjsH+dfDMzS8mJklAUX4uyRYM7+JuHVKF0DZb8465awtktQEF8Js4atAVd9eAH
+         zBC1joHkb9qY2OSIIxzlWZ1MfKBeSsS+QHaAus6TEJHYkpZ6rbuokauLvi4Gsc/GXobK
+         3r2MSV8M3skKLfc1f9BPvyVhYm0+CXoxG+RhOfNqWFtQF48gHJn4iK5WVBfJD/OFw15U
+         Zf/CGiH+7T8BtpeqkhD++C2D918xXPog77jRFK8fOObBTS6Cjk6VxCTE9wGASr8gPeRY
+         xKPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YxnLY9crCokdRJwZ1cSyxopWXEnHeRFdvQXqwCq/JLg=;
-        b=iAdZC3WIlnZTJMM6YdRZf6FiBdqngRqbdPT6FHmfQ22EGcNi0Au+tkbHyySPenVG/W
-         y7eofmP6DeAZ2widC0nSLOucKabrMYba4yVXXZVsVZ4079o8fI2/47jcJubumUMCs2Iu
-         bkRi5BDt7hP3pRVnadNB8xunAVZ5uM9DKyH38pWeyzz2mTLc7HvLmQHUOvEKfNGSvdZV
-         LcZOWz5XnDdDAZMEtnXt9PciAR0kh8Tl0/x3mj/7xjHnqu8GIUG3fA3Hj26Qwmj/8fUu
-         SW8xvVs4m/u07zo/o11i6j6jn11M9kOnj9m5S6+tHQ7VCSgw3ZKVABjWM3FsKJ+ezs7o
-         78tQ==
-X-Gm-Message-State: AFqh2kpY9QzMENalBsfAbFi42xMxGXW91I9Rv1X8mt2xdLgjp2TU5gn2
-        QlGVHbHH33lXrAAb+Y2dM+k2KlFNdjtPVoJ6UFg=
-X-Google-Smtp-Source: AMrXdXs/q0SN2iTlfURXLknICueUeQ2KL3YOpAmOmOXhaGSs4EPeAlgu1yjr23YTa3tVLndJjW/kEQ==
-X-Received: by 2002:a17:906:5f82:b0:871:45b2:19fb with SMTP id a2-20020a1709065f8200b0087145b219fbmr26131003eju.25.1674513298028;
-        Mon, 23 Jan 2023 14:34:58 -0800 (PST)
+        bh=DAh9Xbtfief/OlsV2KWJ+0B0immMWxg2cM0rmo6xr3k=;
+        b=Iq/I8uJBy9sJrCSkR6Ge1RlzkUkrQQpa0aVUnPbqqEf5+Zz5741dkhozMhPTwpHoIu
+         mAJNgz8a6IxEx99LjXsiDISZeqpczPOg08py0KHm7iAlByr7x7deI6f8Dy8J/fh5QK1q
+         YY3hTWrz4jGxKmIAcVejMU45AXDxuG+aaTtSYUbrswN3QmqyVLl4hg+qIPDL2/U9gNC6
+         cDmCV6jRe9tA5rMHdCEGCxTGRjM8QxcfoTHWQLVvsWW/JuI85cJNiX+tsTE9CdJpRV3z
+         aeIErWA7fG/4b5Cui3JwYlh3C8FWPzOBE5ss14wybUnuXrkDzsFKVvpO3I5Ad/y56KUL
+         6+xQ==
+X-Gm-Message-State: AFqh2kr7fufJzZY7+pHaqfVMsYuoxUEE5+C7gT9obIcVP2w0j7IoTNPW
+        lBwl5na5+eoyoIvoyQokyH0k3g==
+X-Google-Smtp-Source: AMrXdXtYujRNRFxkwoP4/7o+r7V0nLuSUdhqgyinxvkCDPLKrXc+//LDE+zu3X4bCAq+zVoy7H+Ttg==
+X-Received: by 2002:a17:906:591a:b0:82c:3642:79b5 with SMTP id h26-20020a170906591a00b0082c364279b5mr27251073ejq.58.1674513682042;
+        Mon, 23 Jan 2023 14:41:22 -0800 (PST)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id l15-20020a170906a40f00b00877961fbaffsm46173ejz.15.2023.01.23.14.34.56
+        by smtp.gmail.com with ESMTPSA id by23-20020a170906a2d700b0086c4fbb8507sm21797ejb.225.2023.01.23.14.41.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Jan 2023 14:34:57 -0800 (PST)
-Message-ID: <b09871f5-820b-2e1f-7b56-f31786c492bc@linaro.org>
-Date:   Tue, 24 Jan 2023 00:34:55 +0200
+        Mon, 23 Jan 2023 14:41:21 -0800 (PST)
+Message-ID: <a1fc24d6-824f-6a00-29c8-c8f3fd6c6c2e@linaro.org>
+Date:   Tue, 24 Jan 2023 00:41:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH v1 03/14] drm/msm/dp: add configure mainlink_levels base
- on lane number
+Subject: Re: [PATCH v1 04/14] drm/msm/dp: correct configure Colorimetry
+ Indicator Field at MISC0
 Content-Language: en-GB
 To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
         dri-devel@lists.freedesktop.org, robdclark@gmail.com,
@@ -67,9 +67,9 @@ Cc:     quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
         freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <1674498274-6010-1-git-send-email-quic_khsieh@quicinc.com>
- <1674498274-6010-4-git-send-email-quic_khsieh@quicinc.com>
+ <1674498274-6010-5-git-send-email-quic_khsieh@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1674498274-6010-4-git-send-email-quic_khsieh@quicinc.com>
+In-Reply-To: <1674498274-6010-5-git-send-email-quic_khsieh@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -82,118 +82,183 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 23/01/2023 20:24, Kuogee Hsieh wrote:
-> Mainlink_levels determined when two actions to take place by hardware,
-> a new BS sequence due to start of video and a static HW MVID is sent
-> to panel. This patch add function to configure mainlink level properly
-> base on lane number.
+> MSA MISC0 bit 1 to 7 contains Colorimetry Indicator Field. At current
+> implementation, Colorimetry Indicator Field of MISC0 is not configured
+> correctly. This patch add support of RGB formats Colorimetry.
+
+Any Fixes tag? Not to mention that fixes should come first.
+
 > 
 > Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 > ---
->   drivers/gpu/drm/msm/dp/dp_catalog.c | 37 ++++++++++++++++++++++++++++++++++++-
->   drivers/gpu/drm/msm/dp/dp_catalog.h |  4 +++-
->   drivers/gpu/drm/msm/dp/dp_ctrl.c    |  4 ++++
->   3 files changed, 43 insertions(+), 2 deletions(-)
+>   drivers/gpu/drm/msm/dp/dp_ctrl.c  |  5 +++--
+>   drivers/gpu/drm/msm/dp/dp_link.c  | 29 +++++++++++++++++++------
+>   drivers/gpu/drm/msm/dp/dp_panel.c | 45 +++++++++++++++++++++++++++++++++++++++
+>   drivers/gpu/drm/msm/dp/dp_panel.h |  1 +
+>   4 files changed, 71 insertions(+), 9 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
-> index 676279d..7ac37d8 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
+> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> index 959a78c..d0d1848 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
 > @@ -1,6 +1,7 @@
 >   // SPDX-License-Identifier: GPL-2.0-only
 >   /*
-> - * Copyright (c) 2017-2020, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2017-2023, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2021. Qualcomm Innovation Center, Inc. All rights reserved
+> - * Copyright (c) 2012-2020, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2012-2023, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved
 >    */
 >   
 >   #define pr_fmt(fmt)	"[drm-dp] %s: " fmt, __func__
-> @@ -359,6 +360,40 @@ void dp_catalog_ctrl_lane_mapping(struct dp_catalog *dp_catalog)
->   			ln_mapping);
->   }
+> @@ -169,7 +170,7 @@ static void dp_ctrl_configure_source_params(struct dp_ctrl_private *ctrl)
 >   
-> +void dp_catalog_ctrl_mainlink_levels(struct dp_catalog *dp_catalog,
-> +					u8 lane_cnt)
-> +{
-> +	struct dp_catalog_private *catalog = container_of(dp_catalog,
-> +				struct dp_catalog_private, dp_catalog);
-> +
-> +	u32 mainlink_levels, safe_to_exit_level = 14;
-> +
-> +	switch (lane_cnt) {
-> +	case 1:
-> +		safe_to_exit_level = 14;
-> +		break;
-> +	case 2:
-> +		safe_to_exit_level = 8;
-> +		break;
-> +	case 4:
-> +		safe_to_exit_level = 5;
-> +		break;
-> +	default:
-> +		drm_dbg_dp(catalog->drm_dev, "setting the default safe_to_exit_level=%u\n",
-> +				safe_to_exit_level);
-
-So, set it here rather than somewhere at the top of the function.
-
-> +		break;
-> +	}
-> +
-> +	mainlink_levels = dp_read_link(catalog, REG_DP_MAINLINK_LEVELS);
-> +	mainlink_levels &= 0xFE0;
-> +	mainlink_levels |= safe_to_exit_level;
-> +
-> +	drm_dbg_dp(catalog->drm_dev, "mainlink_level=0x%x, safe_to_exit_level=0x%x\n",
-> +		mainlink_levels, safe_to_exit_level);
-> +
-> +	dp_write_link(catalog, REG_DP_MAINLINK_LEVELS, mainlink_levels);
-> +}
-> +
->   void dp_catalog_ctrl_mainlink_ctrl(struct dp_catalog *dp_catalog,
->   						bool enable)
->   {
-> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.h b/drivers/gpu/drm/msm/dp/dp_catalog.h
-> index 1f717f4..990c162 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_catalog.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.h
+>   	tb = dp_link_get_test_bits_depth(ctrl->link,
+>   		ctrl->panel->dp_mode.bpp);
+> -	cc = dp_link_get_colorimetry_config(ctrl->link);
+> +	cc = dp_panel_get_misc_colorimetry_val(ctrl->panel);
+>   	dp_catalog_ctrl_config_misc(ctrl->catalog, cc, tb);
+>   	dp_panel_timing_cfg(ctrl->panel);
+>   }
+> diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
+> index f1f1d64..e957948 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_link.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_link.c
 > @@ -1,6 +1,7 @@
->   /* SPDX-License-Identifier: GPL-2.0-only */
+>   // SPDX-License-Identifier: GPL-2.0-only
 >   /*
-> - * Copyright (c) 2017-2020, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2017-2023, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2021. Qualcomm Innovation Center, Inc. All rights reserved
+> - * Copyright (c) 2012-2020, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2012-2023, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved
 >    */
 >   
->   #ifndef _DP_CATALOG_H_
-> @@ -92,6 +93,7 @@ u32 dp_catalog_aux_get_irq(struct dp_catalog *dp_catalog);
->   void dp_catalog_ctrl_state_ctrl(struct dp_catalog *dp_catalog, u32 state);
->   void dp_catalog_ctrl_config_ctrl(struct dp_catalog *dp_catalog, u32 config);
->   void dp_catalog_ctrl_lane_mapping(struct dp_catalog *dp_catalog);
-> +void dp_catalog_ctrl_mainlink_levels(struct dp_catalog *dp_catalog, u8 lane_cnt);
->   void dp_catalog_ctrl_mainlink_ctrl(struct dp_catalog *dp_catalog, bool enable);
->   void dp_catalog_ctrl_config_misc(struct dp_catalog *dp_catalog, u32 cc, u32 tb);
->   void dp_catalog_ctrl_config_msa(struct dp_catalog *dp_catalog, u32 rate,
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> index dd26ca6..959a78c 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> @@ -161,6 +161,8 @@ static void dp_ctrl_configure_source_params(struct dp_ctrl_private *ctrl)
->   	u32 cc, tb;
+>   #define pr_fmt(fmt)	"[drm-dp] %s: " fmt, __func__
+> @@ -12,6 +13,12 @@
 >   
->   	dp_catalog_ctrl_lane_mapping(ctrl->catalog);
-> +	dp_catalog_ctrl_mainlink_levels(ctrl->catalog,
-> +				ctrl->link->link_params.num_lanes);
->   	dp_catalog_ctrl_mainlink_ctrl(ctrl->catalog, true);
+>   #define DP_TEST_REQUEST_MASK		0x7F
 >   
->   	dp_ctrl_config_ctrl(ctrl);
-> @@ -1296,6 +1298,8 @@ static int dp_ctrl_setup_main_link(struct dp_ctrl_private *ctrl,
+> +enum dynamic_range {
+> +	DP_DYNAMIC_RANGE_RGB_VESA = 0x00,
+> +	DP_DYNAMIC_RANGE_RGB_CEA = 0x01,
+> +	DP_DYNAMIC_RANGE_UNKNOWN = 0xFFFFFFFF,
+
+No need to assign values here, unless they serve some purpose. Do they?
+
+> +};
+> +
+>   enum audio_sample_rate {
+>   	AUDIO_SAMPLE_RATE_32_KHZ	= 0x00,
+>   	AUDIO_SAMPLE_RATE_44_1_KHZ	= 0x01,
+> @@ -1079,6 +1086,7 @@ int dp_link_process_request(struct dp_link *dp_link)
+>   int dp_link_get_colorimetry_config(struct dp_link *dp_link)
 >   {
->   	int ret = 0;
+>   	u32 cc;
+> +	enum dynamic_range dr;
+>   	struct dp_link_private *link;
 >   
-> +	dp_catalog_ctrl_mainlink_levels(ctrl->catalog,
-> +				ctrl->link->link_params.num_lanes);
->   	dp_catalog_ctrl_mainlink_ctrl(ctrl->catalog, true);
+>   	if (!dp_link) {
+> @@ -1088,14 +1096,21 @@ int dp_link_get_colorimetry_config(struct dp_link *dp_link)
 >   
->   	if (ctrl->link->sink_request & DP_TEST_LINK_PHY_TEST_PATTERN)
+>   	link = container_of(dp_link, struct dp_link_private, dp_link);
+>   
+> -	/*
+> -	 * Unless a video pattern CTS test is ongoing, use RGB_VESA
+> -	 * Only RGB_VESA and RGB_CEA supported for now
+> -	 */
+> +	/* unless a video pattern CTS test is ongoing, use CEA_VESA */
+>   	if (dp_link_is_video_pattern_requested(link))
+> -		cc = link->dp_link.test_video.test_dyn_range;
+> +		dr = link->dp_link.test_video.test_dyn_range;
+>   	else
+> -		cc = DP_TEST_DYNAMIC_RANGE_VESA;
+> +		dr = DP_DYNAMIC_RANGE_RGB_VESA;
+> +
+> +	/* Only RGB_VESA nd RGB_CEA supported for now */
+> +	switch (dr) {
+> +	case DP_DYNAMIC_RANGE_RGB_CEA:
+> +		cc = BIT(2);
+> +		break;
+> +	case DP_DYNAMIC_RANGE_RGB_VESA:
+> +	default:
+> +		cc = 0;
+> +	}
+>   
+>   	return cc;
+>   }
+> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
+> index 36dad05..55bb6b0 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_panel.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
+> @@ -567,6 +567,51 @@ int dp_panel_init_panel_info(struct dp_panel *dp_panel)
+>   	return 0;
+>   }
+>   
+> +/**
+
+This marks the start of kerneldoc. But the rest of the comment isn't a 
+kerneldoc.
+
+> + * Mapper function which outputs colorimetry to be used for a
+> + * given colorspace value when misc field of MSA is used to
+> + * change the colorimetry. Currently only RGB formats have been
+> + * added. This API will be extended to YUV once its supported on DP.
+
+its != it's
+
+> + */
+> +u8 dp_panel_get_misc_colorimetry_val(struct dp_panel *dp_panel)
+> +{
+> +	u8 colorimetry;
+> +	u32 colorspace;
+> +	u32 cc;
+> +	struct dp_panel_private *panel;
+> +
+> +	panel = container_of(dp_panel, struct dp_panel_private, dp_panel);
+> +
+> +	cc = dp_link_get_colorimetry_config(panel->link);
+> +	/*
+> +	 * If there is a non-zero value then compliance test-case
+> +	 * is going on, otherwise we can honor the colorspace setting
+> +	 */
+> +	if (cc)
+> +		return cc;
+> +
+> +	colorspace = dp_panel->connector->state->colorspace;
+> +	switch (colorspace) {
+> +	case DRM_MODE_COLORIMETRY_DCI_P3_RGB_D65:
+> +	case DRM_MODE_COLORIMETRY_DCI_P3_RGB_THEATER:
+> +		colorimetry = 0x7;
+> +		break;
+> +	case DRM_MODE_COLORIMETRY_RGB_WIDE_FIXED:
+> +		colorimetry = 0x3;
+> +		break;
+> +	case DRM_MODE_COLORIMETRY_RGB_WIDE_FLOAT:
+> +		colorimetry = 0xb;
+> +		break;
+> +	case DRM_MODE_COLORIMETRY_OPRGB:
+> +		colorimetry = 0xc;
+> +		break;
+> +	default:
+> +		colorimetry = 0;
+> +	}
+> +
+> +	return colorimetry;
+> +}
+> +
+>   struct dp_panel *dp_panel_get(struct dp_panel_in *in)
+>   {
+>   	struct dp_panel_private *panel;
+> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
+> index fb30b92..1153e88 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_panel.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_panel.h
+> @@ -85,6 +85,7 @@ int dp_panel_get_modes(struct dp_panel *dp_panel,
+>   		struct drm_connector *connector);
+>   void dp_panel_handle_sink_request(struct dp_panel *dp_panel);
+>   void dp_panel_tpg_config(struct dp_panel *dp_panel, bool enable);
+> +u8 dp_panel_get_misc_colorimetry_val(struct dp_panel *dp_panel);
+>   
+>   /**
+>    * is_link_rate_valid() - validates the link rate
 
 -- 
 With best wishes
