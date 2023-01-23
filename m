@@ -2,76 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F4A5678172
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 17:30:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BF7DF67818D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 17:35:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232295AbjAWQaT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Jan 2023 11:30:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32970 "EHLO
+        id S233178AbjAWQfo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Jan 2023 11:35:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232351AbjAWQaR (ORCPT
+        with ESMTP id S233179AbjAWQfo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Jan 2023 11:30:17 -0500
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D1D02B632
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 08:29:54 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id tz11so32084172ejc.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 08:29:54 -0800 (PST)
+        Mon, 23 Jan 2023 11:35:44 -0500
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDAEE2BEC7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 08:35:42 -0800 (PST)
+Received: by mail-ej1-x633.google.com with SMTP id vw16so31991306ejc.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 08:35:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=TASDLyKH+0DjNc1kNKn1XmKSEz18xnkdI15P2UbcAWA=;
-        b=SEoC8mIsBQpVsNL2SVpaX/Me7/JqveYsN/AJ66jJyFj5rhL9xBCbptenc9ciLNnrVc
-         KHsDrFGXh7FIUYQcybbIIPplTH49U46Sh5Tw8e9Vj5pAISupKU5vjsuAtI++WQyZdu4L
-         +t9/9uqk4bM9YExaatLWO2fDozZmJoGl09pb+PLFMTCnxx0FDkYKLeqggM4T0LJOi7r9
-         PJF2UqpmcCJza2j+2Zcf58z5n564C4rStg0qJ8SbYoihP62Do07fFKdstIneYafQXhPO
-         k0+o2+ude7SzDVYOXI7KUSUE2JEiaMxuEmvs/VbU29SrWzh0/5NkyjJQov+njEInrFjx
-         0qUg==
+        bh=m0Gxh9AiNJZqPqlkDkjLVBcYYycaXIS8zrXO7C1huyk=;
+        b=uRk9GBjR7rCDMx8/44l0h8DBuBbLcsuh0HZRINoQhDYcIvif8GTpEfh5xna3sgxBBZ
+         UGhklSqPZB5p2Lza3TNG3DI/U+y1i/ByCQcX7fLwaOn65lGmM75rZ2dHZN+Ki9WFN5t+
+         xX8MNtAVSt02mAmOiVTsolwBcL/M8Dkh5SCG5GwXLg55qfJGFtin+rBsrAXvOAk0zDAU
+         x0j9JmfymCZGfJhdQF+plzqCf1MhyOvRfaaYuLfvLOETejbek111Rx9WJ/1+ECvhsi7A
+         nn1HLzpbYYgLaTSWGN1drWR9uO5kkTlqPEpDV3zlM939HWCaSh5M6Xp+0pAdpHLAbih2
+         1/3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TASDLyKH+0DjNc1kNKn1XmKSEz18xnkdI15P2UbcAWA=;
-        b=WxJHdkGNlO0gHCikoNHmpISvZVVfIDfYMrueyhLgKXDCMs0Hucy2ef3NlnPafPvgQr
-         3vZhJdrPJIc6XGxlE8smf+V7Acjeq2HutMjYdU9wWYgCkM4Fg2iEUDIBUHGXw3cnEOym
-         Jn671lidsVLWMl9oQI0PkLrHRW4Wcttg++MNkQ/kkusLRGcq07XdPRaXbCrtEpJXViyt
-         SmAAMxqF1NR4OoxTUTLq5WTPd4IXmfSR+oregKncQRfpIR296JmjnU6BwXK9VzgvJHNu
-         bEe75VnsjLazBmF4k+jPBa/ZLRDrpNh5vo/hyS2Ue6+/0rU9oj8c186PhdxDV8cq1p+3
-         rMsg==
-X-Gm-Message-State: AFqh2kofp3+NJOW6/fNyemrQz5PFZQr96bvvNwE4D6CwLGzXqxfWjvYw
-        JWij1liZAQ+ed85rWDdhJ63wQQ==
-X-Google-Smtp-Source: AMrXdXv6uGougMYEDD5lLrYNdz6BR2Jr2z2VhkIydC8OzXmpkcu1kg8rLsEa1mULz9hSljpmUUWDXA==
-X-Received: by 2002:a17:906:95d2:b0:7c0:a6a9:64e9 with SMTP id n18-20020a17090695d200b007c0a6a964e9mr27120793ejy.36.1674491393106;
-        Mon, 23 Jan 2023 08:29:53 -0800 (PST)
+        bh=m0Gxh9AiNJZqPqlkDkjLVBcYYycaXIS8zrXO7C1huyk=;
+        b=OUV/u27ZNN6GhppdLxcMrCt3DxFbeONQ9AkthgUK73o9mDx5ehf7RQR5KaHe6vD+f3
+         XbepV2xqV6+DhMVIiBfW9LNsXQBiquW//SQOm2KVT9WvRxSCx7ZvwSTrh+RR64J6xJiM
+         SznA+q5GGL6v4cKUN2VgWsHIlErKY0e6x+oUaCgaFGscJJZJTvgrTUF9eOce6Sg/Kldj
+         vuMOqsc4ErLVBRtoPONOCa8AHUQZoRr0sl+5oCMNuIzQht8BQPKYWBAl2sFCPBUyrEFD
+         irayCuVKo+VQ7yJgfSbJVYvdp5sTbMR74ZirvA1iVH+jeNCGS3EVqYYx+Yk7d6AZ8XJ5
+         LuOA==
+X-Gm-Message-State: AFqh2kpyXufyLFZrguKS886OhECIQMHoFxVptgALJtiRZM+p2U0qTAyc
+        uWL5Fvre3OlmRFVeQtetzxPLsw==
+X-Google-Smtp-Source: AMrXdXvYAMztktTuFtNe8pWfh2/y+eI4NoNWhqyzS+5Ne4GtBPTgyn1QcIOMd4PzPj0633HsMKsLRQ==
+X-Received: by 2002:a17:906:489b:b0:850:52f8:5ca9 with SMTP id v27-20020a170906489b00b0085052f85ca9mr25511121ejq.28.1674491741481;
+        Mon, 23 Jan 2023 08:35:41 -0800 (PST)
 Received: from [192.168.1.101] (abxi24.neoplus.adsl.tpnet.pl. [83.9.2.24])
-        by smtp.gmail.com with ESMTPSA id hr35-20020a1709073fa300b00877557ae644sm8748272ejc.71.2023.01.23.08.29.51
+        by smtp.gmail.com with ESMTPSA id kw17-20020a170907771100b0084c4b87aa18sm22392447ejc.37.2023.01.23.08.35.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Jan 2023 08:29:52 -0800 (PST)
-Message-ID: <a7d10bdf-f605-7cef-3ccb-68592febb67b@linaro.org>
-Date:   Mon, 23 Jan 2023 17:29:51 +0100
+        Mon, 23 Jan 2023 08:35:41 -0800 (PST)
+Message-ID: <22fa80f5-0cf0-85bd-03a4-e1eb80272420@linaro.org>
+Date:   Mon, 23 Jan 2023 17:35:34 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.0
-Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: sm8550: drop incorrect cells
- from serial
+Subject: Re: [PATCH v2 1/1] iio: adc: qcom-spmi-adc5: Fix the channel name
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+To:     Jonathan Cameron <jic23@kernel.org>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc:     Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+        =?UTF-8?Q?Nuno_S=c3=a1?= <nuno.sa@analog.com>,
+        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230123125612.154840-1-krzysztof.kozlowski@linaro.org>
- <20230123125612.154840-4-krzysztof.kozlowski@linaro.org>
+        Douglas Anderson <dianders@chromium.org>
+References: <20230118100623.42255-1-andriy.shevchenko@linux.intel.com>
+ <20230122172441.4f8d75f5@jic23-huawei>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230123125612.154840-4-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230122172441.4f8d75f5@jic23-huawei>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -85,34 +85,64 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 23.01.2023 13:56, Krzysztof Kozlowski wrote:
-> The serial/UART device node does not have children with unit addresses,
-> so adderss/size cells are not correct.
+On 22.01.2023 18:24, Jonathan Cameron wrote:
+> On Wed, 18 Jan 2023 12:06:23 +0200
+> Andy Shevchenko <andriy.shevchenko@linux.intel.com> wrote:
 > 
-> Fixes: 377972ac743f ("arm64: dts: qcom: sm8550: add I2C Master Hub nodes")
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> The node name can contain an address part which is unused
+>> by the driver. Moreover, this string is propagated into
+>> the userspace label, sysfs filenames *and breaking ABI*.
+>>
+>> Cut the address part out before assigning the channel name.
+>>
+>> Fixes: 4f47a236a23d ("iio: adc: qcom-spmi-adc5: convert to device properties")
+>> Reported-by: Marijn Suijten <marijn.suijten@somainline.org>
+>> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 > 
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> LGTM, but given it will have ABI impact, I'd like to hear from 
+> Andy, Bjorn or Konrad as maintainers and /or Dmitry as someone
+> who has touched this driver fairly recently.
++ Doug
+
+Unless the Chromium folks relied on the old names (they're the
+only ones I can think of that actually could have tapped into
+this), I say green light!
 
 Konrad
 > 
-> Changes since v1:
-> 1. New patch
-> ---
->  arch/arm64/boot/dts/qcom/sm8550.dtsi | 2 --
->  1 file changed, 2 deletions(-)
+> Mostly I want to be sure they know this exists before it causes surprise.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> index 6ff135191ee0..0307b853ec4f 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> @@ -1582,8 +1582,6 @@ uart7: serial@a9c000 {
->  				interconnect-names = "qup-core", "qup-config";
->  				interconnects =	<&clk_virt MASTER_QUP_CORE_1 0 &clk_virt SLAVE_QUP_CORE_1 0>,
->  						<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_QUP_1 0>;
-> -				#address-cells = <1>;
-> -				#size-cells = <0>;
->  				status = "disabled";
->  			};
->  		};
+> Jonathan
+> 
+>> ---
+>> v2: rephrased commit message (Marijn), fixed compilation issue (Marijin)
+>>  drivers/iio/adc/qcom-spmi-adc5.c | 10 +++++++++-
+>>  1 file changed, 9 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/iio/adc/qcom-spmi-adc5.c b/drivers/iio/adc/qcom-spmi-adc5.c
+>> index e90c299c913a..c2d5e06f137a 100644
+>> --- a/drivers/iio/adc/qcom-spmi-adc5.c
+>> +++ b/drivers/iio/adc/qcom-spmi-adc5.c
+>> @@ -628,12 +628,20 @@ static int adc5_get_fw_channel_data(struct adc5_chip *adc,
+>>  				    struct fwnode_handle *fwnode,
+>>  				    const struct adc5_data *data)
+>>  {
+>> -	const char *name = fwnode_get_name(fwnode), *channel_name;
+>> +	const char *channel_name;
+>> +	char *name;
+>>  	u32 chan, value, varr[2];
+>>  	u32 sid = 0;
+>>  	int ret;
+>>  	struct device *dev = adc->dev;
+>>  
+>> +	name = devm_kasprintf(dev, GFP_KERNEL, "%pfwP", fwnode);
+>> +	if (!name)
+>> +		return -ENOMEM;
+>> +
+>> +	/* Cut the address part */
+>> +	name[strchrnul(name, '@') - name] = '\0';
+>> +
+>>  	ret = fwnode_property_read_u32(fwnode, "reg", &chan);
+>>  	if (ret) {
+>>  		dev_err(dev, "invalid channel number %s\n", name);
+> 
