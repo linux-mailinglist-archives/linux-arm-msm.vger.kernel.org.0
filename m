@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 953CD678ADB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 23:41:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F3F78678AF8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 23:46:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233286AbjAWWl0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Jan 2023 17:41:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47136 "EHLO
+        id S231663AbjAWWqV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Jan 2023 17:46:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229956AbjAWWlZ (ORCPT
+        with ESMTP id S232865AbjAWWqU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Jan 2023 17:41:25 -0500
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93CE232E71
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 14:41:23 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id qx13so34383955ejb.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 14:41:23 -0800 (PST)
+        Mon, 23 Jan 2023 17:46:20 -0500
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B8D537F37
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 14:46:19 -0800 (PST)
+Received: by mail-ej1-x636.google.com with SMTP id v6so34519565ejg.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 14:46:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=DAh9Xbtfief/OlsV2KWJ+0B0immMWxg2cM0rmo6xr3k=;
-        b=FpQwvjke2tSxx5LeBEvsXh/qQZcv/u1RWBrEK/3eIZ527rYbLYhdGwKr60hzndq6/h
-         Id2B2QqjsH+dfDMzS8mJklAUX4uyRYM7+JuHVKF0DZb8465awtktQEF8Js4atAVd9eAH
-         zBC1joHkb9qY2OSIIxzlWZ1MfKBeSsS+QHaAus6TEJHYkpZ6rbuokauLvi4Gsc/GXobK
-         3r2MSV8M3skKLfc1f9BPvyVhYm0+CXoxG+RhOfNqWFtQF48gHJn4iK5WVBfJD/OFw15U
-         Zf/CGiH+7T8BtpeqkhD++C2D918xXPog77jRFK8fOObBTS6Cjk6VxCTE9wGASr8gPeRY
-         xKPg==
+        bh=MkAMX/B2MTCfyftMsOJJrPfYiTTByIZ9NFFUdVXdU30=;
+        b=toQTimjh9JFaY0c8NR7V7CAHgYAmGPWU0zPNQKcBV45A1TksDVZMVBHM1dfYyPR4uV
+         P7lau1IDWZuhTGzC9JI1QRbspZ6eyrioD8a5bv+VtaEQ9xPIVQqBycB2vX+SnKVQFcF4
+         KIDzTApOE/BV8Hvx2GXO/X4IknOuhxk/NlrYg+V6T99YmRLoGTVFE8T1bX+ZkQvy7S2N
+         eWJ8IEtU4WUtcLqTxLjGSm3wih3uWsYqZNrnRplLTVOB/aHWSOD5Vjf4YXHlhvsXTatB
+         ev6TVlz8VoOTYewNwboW/C0phIqxBxDs8N9nVN9FDHwTKspBRBR1PNQzNkeaUEECy5HI
+         ad/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DAh9Xbtfief/OlsV2KWJ+0B0immMWxg2cM0rmo6xr3k=;
-        b=Iq/I8uJBy9sJrCSkR6Ge1RlzkUkrQQpa0aVUnPbqqEf5+Zz5741dkhozMhPTwpHoIu
-         mAJNgz8a6IxEx99LjXsiDISZeqpczPOg08py0KHm7iAlByr7x7deI6f8Dy8J/fh5QK1q
-         YY3hTWrz4jGxKmIAcVejMU45AXDxuG+aaTtSYUbrswN3QmqyVLl4hg+qIPDL2/U9gNC6
-         cDmCV6jRe9tA5rMHdCEGCxTGRjM8QxcfoTHWQLVvsWW/JuI85cJNiX+tsTE9CdJpRV3z
-         aeIErWA7fG/4b5Cui3JwYlh3C8FWPzOBE5ss14wybUnuXrkDzsFKVvpO3I5Ad/y56KUL
-         6+xQ==
-X-Gm-Message-State: AFqh2kr7fufJzZY7+pHaqfVMsYuoxUEE5+C7gT9obIcVP2w0j7IoTNPW
-        lBwl5na5+eoyoIvoyQokyH0k3g==
-X-Google-Smtp-Source: AMrXdXtYujRNRFxkwoP4/7o+r7V0nLuSUdhqgyinxvkCDPLKrXc+//LDE+zu3X4bCAq+zVoy7H+Ttg==
-X-Received: by 2002:a17:906:591a:b0:82c:3642:79b5 with SMTP id h26-20020a170906591a00b0082c364279b5mr27251073ejq.58.1674513682042;
-        Mon, 23 Jan 2023 14:41:22 -0800 (PST)
+        bh=MkAMX/B2MTCfyftMsOJJrPfYiTTByIZ9NFFUdVXdU30=;
+        b=rUV/k86srkwyPaTNh+qBS8v/9bH+LPR7SC1HNi+bVFzov72JAxodd1GOQSuuGbyHq1
+         LhEzXnlE0q7alzajhGGMOOAISvUeXSxorjGADCcgDnj+IVKwZ/zApPtjsSOcMhcRriVK
+         pVHxpKSf0PhuFE4FJTDgSBcgN0IGp1DSEeH9gzplOf8rIn2kEI8JZbxsFDE0R/H4NSiE
+         W2FssY1/Fo+kIPssLOdxm2FJlkPz+CBrLfjRZGrl1DeRjCgCwK3LFxcw3pL/8nJdM4lo
+         5OqlE6rgCyQGrUs2/9pjfi3IEEL0uZAFyn2ntMNEJXCGIqjKJQKm1R9wSNOCvrQeOBng
+         r03Q==
+X-Gm-Message-State: AFqh2kpPJLNeMXyuw1o+UV3j3aQ1WGKKkctVsUcMspHZdkMeWaZVtrNS
+        5LQMQLOWgt6LMtvrUHx07RBh/Q==
+X-Google-Smtp-Source: AMrXdXvCnMVkhpllRKGvsCpCjETEgJ4Wt4YF1bN+pOfSQ1n3bHPHoHJpqBhF/lapypJUpQ5RzS894g==
+X-Received: by 2002:a17:906:5d1:b0:861:7a02:1046 with SMTP id t17-20020a17090605d100b008617a021046mr25353409ejt.37.1674513977548;
+        Mon, 23 Jan 2023 14:46:17 -0800 (PST)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id by23-20020a170906a2d700b0086c4fbb8507sm21797ejb.225.2023.01.23.14.41.19
+        by smtp.gmail.com with ESMTPSA id lr26-20020a170906fb9a00b008566b807d8asm47194ejb.73.2023.01.23.14.46.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Jan 2023 14:41:21 -0800 (PST)
-Message-ID: <a1fc24d6-824f-6a00-29c8-c8f3fd6c6c2e@linaro.org>
-Date:   Tue, 24 Jan 2023 00:41:19 +0200
+        Mon, 23 Jan 2023 14:46:16 -0800 (PST)
+Message-ID: <e1521af3-ce93-8fec-bc1b-6d9db8f40e7e@linaro.org>
+Date:   Tue, 24 Jan 2023 00:46:14 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH v1 04/14] drm/msm/dp: correct configure Colorimetry
- Indicator Field at MISC0
+Subject: Re: [PATCH v1 06/14] drm/msm/dp: add display compression related
+ struct
 Content-Language: en-GB
 To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
         dri-devel@lists.freedesktop.org, robdclark@gmail.com,
@@ -67,9 +67,9 @@ Cc:     quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
         freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <1674498274-6010-1-git-send-email-quic_khsieh@quicinc.com>
- <1674498274-6010-5-git-send-email-quic_khsieh@quicinc.com>
+ <1674498274-6010-7-git-send-email-quic_khsieh@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1674498274-6010-5-git-send-email-quic_khsieh@quicinc.com>
+In-Reply-To: <1674498274-6010-7-git-send-email-quic_khsieh@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -82,183 +82,194 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 23/01/2023 20:24, Kuogee Hsieh wrote:
-> MSA MISC0 bit 1 to 7 contains Colorimetry Indicator Field. At current
-> implementation, Colorimetry Indicator Field of MISC0 is not configured
-> correctly. This patch add support of RGB formats Colorimetry.
-
-Any Fixes tag? Not to mention that fixes should come first.
-
+> Add display compression related struct to support variant compression
+> mechanism. However, DSC is the only one supported at this moment.
+> VDC may be added later.
 > 
 > Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 > ---
->   drivers/gpu/drm/msm/dp/dp_ctrl.c  |  5 +++--
->   drivers/gpu/drm/msm/dp/dp_link.c  | 29 +++++++++++++++++++------
->   drivers/gpu/drm/msm/dp/dp_panel.c | 45 +++++++++++++++++++++++++++++++++++++++
->   drivers/gpu/drm/msm/dp/dp_panel.h |  1 +
->   4 files changed, 71 insertions(+), 9 deletions(-)
+>   drivers/gpu/drm/msm/dp/dp_panel.h | 42 ++++++++++++++++++
+>   drivers/gpu/drm/msm/msm_drv.h     | 89 +++++++++++++++++++++++++++++++++++++++
+>   2 files changed, 131 insertions(+)
 > 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> index 959a78c..d0d1848 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> @@ -1,6 +1,7 @@
->   // SPDX-License-Identifier: GPL-2.0-only
->   /*
-> - * Copyright (c) 2012-2020, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2012-2023, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved
->    */
->   
->   #define pr_fmt(fmt)	"[drm-dp] %s: " fmt, __func__
-> @@ -169,7 +170,7 @@ static void dp_ctrl_configure_source_params(struct dp_ctrl_private *ctrl)
->   
->   	tb = dp_link_get_test_bits_depth(ctrl->link,
->   		ctrl->panel->dp_mode.bpp);
-> -	cc = dp_link_get_colorimetry_config(ctrl->link);
-> +	cc = dp_panel_get_misc_colorimetry_val(ctrl->panel);
->   	dp_catalog_ctrl_config_misc(ctrl->catalog, cc, tb);
->   	dp_panel_timing_cfg(ctrl->panel);
->   }
-> diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
-> index f1f1d64..e957948 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_link.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_link.c
-> @@ -1,6 +1,7 @@
->   // SPDX-License-Identifier: GPL-2.0-only
->   /*
-> - * Copyright (c) 2012-2020, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2012-2023, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved
->    */
->   
->   #define pr_fmt(fmt)	"[drm-dp] %s: " fmt, __func__
-> @@ -12,6 +13,12 @@
->   
->   #define DP_TEST_REQUEST_MASK		0x7F
->   
-> +enum dynamic_range {
-> +	DP_DYNAMIC_RANGE_RGB_VESA = 0x00,
-> +	DP_DYNAMIC_RANGE_RGB_CEA = 0x01,
-> +	DP_DYNAMIC_RANGE_UNKNOWN = 0xFFFFFFFF,
-
-No need to assign values here, unless they serve some purpose. Do they?
-
-> +};
-> +
->   enum audio_sample_rate {
->   	AUDIO_SAMPLE_RATE_32_KHZ	= 0x00,
->   	AUDIO_SAMPLE_RATE_44_1_KHZ	= 0x01,
-> @@ -1079,6 +1086,7 @@ int dp_link_process_request(struct dp_link *dp_link)
->   int dp_link_get_colorimetry_config(struct dp_link *dp_link)
->   {
->   	u32 cc;
-> +	enum dynamic_range dr;
->   	struct dp_link_private *link;
->   
->   	if (!dp_link) {
-> @@ -1088,14 +1096,21 @@ int dp_link_get_colorimetry_config(struct dp_link *dp_link)
->   
->   	link = container_of(dp_link, struct dp_link_private, dp_link);
->   
-> -	/*
-> -	 * Unless a video pattern CTS test is ongoing, use RGB_VESA
-> -	 * Only RGB_VESA and RGB_CEA supported for now
-> -	 */
-> +	/* unless a video pattern CTS test is ongoing, use CEA_VESA */
->   	if (dp_link_is_video_pattern_requested(link))
-> -		cc = link->dp_link.test_video.test_dyn_range;
-> +		dr = link->dp_link.test_video.test_dyn_range;
->   	else
-> -		cc = DP_TEST_DYNAMIC_RANGE_VESA;
-> +		dr = DP_DYNAMIC_RANGE_RGB_VESA;
-> +
-> +	/* Only RGB_VESA nd RGB_CEA supported for now */
-> +	switch (dr) {
-> +	case DP_DYNAMIC_RANGE_RGB_CEA:
-> +		cc = BIT(2);
-> +		break;
-> +	case DP_DYNAMIC_RANGE_RGB_VESA:
-> +	default:
-> +		cc = 0;
-> +	}
->   
->   	return cc;
->   }
-> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
-> index 36dad05..55bb6b0 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_panel.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
-> @@ -567,6 +567,51 @@ int dp_panel_init_panel_info(struct dp_panel *dp_panel)
->   	return 0;
->   }
->   
-> +/**
-
-This marks the start of kerneldoc. But the rest of the comment isn't a 
-kerneldoc.
-
-> + * Mapper function which outputs colorimetry to be used for a
-> + * given colorspace value when misc field of MSA is used to
-> + * change the colorimetry. Currently only RGB formats have been
-> + * added. This API will be extended to YUV once its supported on DP.
-
-its != it's
-
-> + */
-> +u8 dp_panel_get_misc_colorimetry_val(struct dp_panel *dp_panel)
-> +{
-> +	u8 colorimetry;
-> +	u32 colorspace;
-> +	u32 cc;
-> +	struct dp_panel_private *panel;
-> +
-> +	panel = container_of(dp_panel, struct dp_panel_private, dp_panel);
-> +
-> +	cc = dp_link_get_colorimetry_config(panel->link);
-> +	/*
-> +	 * If there is a non-zero value then compliance test-case
-> +	 * is going on, otherwise we can honor the colorspace setting
-> +	 */
-> +	if (cc)
-> +		return cc;
-> +
-> +	colorspace = dp_panel->connector->state->colorspace;
-> +	switch (colorspace) {
-> +	case DRM_MODE_COLORIMETRY_DCI_P3_RGB_D65:
-> +	case DRM_MODE_COLORIMETRY_DCI_P3_RGB_THEATER:
-> +		colorimetry = 0x7;
-> +		break;
-> +	case DRM_MODE_COLORIMETRY_RGB_WIDE_FIXED:
-> +		colorimetry = 0x3;
-> +		break;
-> +	case DRM_MODE_COLORIMETRY_RGB_WIDE_FLOAT:
-> +		colorimetry = 0xb;
-> +		break;
-> +	case DRM_MODE_COLORIMETRY_OPRGB:
-> +		colorimetry = 0xc;
-> +		break;
-> +	default:
-> +		colorimetry = 0;
-> +	}
-> +
-> +	return colorimetry;
-> +}
-> +
->   struct dp_panel *dp_panel_get(struct dp_panel_in *in)
->   {
->   	struct dp_panel_private *panel;
 > diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
-> index fb30b92..1153e88 100644
+> index 1153e88..4c45d51 100644
 > --- a/drivers/gpu/drm/msm/dp/dp_panel.h
 > +++ b/drivers/gpu/drm/msm/dp/dp_panel.h
-> @@ -85,6 +85,7 @@ int dp_panel_get_modes(struct dp_panel *dp_panel,
->   		struct drm_connector *connector);
->   void dp_panel_handle_sink_request(struct dp_panel *dp_panel);
->   void dp_panel_tpg_config(struct dp_panel *dp_panel, bool enable);
-> +u8 dp_panel_get_misc_colorimetry_val(struct dp_panel *dp_panel);
+> @@ -21,12 +21,54 @@ struct edid;
+>   #define DP_DOWNSTREAM_PORTS		4
+>   #define DP_DOWNSTREAM_CAP_SIZE		4
+>   
+> +
+> +#define DP_PANEL_CAPS_DSC	BIT(0)
+> +
+> +enum dp_output_format {
+> +	DP_OUTPUT_FORMAT_RGB,
+> +	DP_OUTPUT_FORMAT_YCBCR420,
+> +	DP_OUTPUT_FORMAT_YCBCR422,
+> +	DP_OUTPUT_FORMAT_YCBCR444,
+> +	DP_OUTPUT_FORMAT_INVALID,
+> +};
+> +
+> +
+> +struct dp_panel_info {
+> +	u32 h_active;
+> +	u32 v_active;
+> +	u32 h_back_porch;
+> +	u32 h_front_porch;
+> +	u32 h_sync_width;
+> +	u32 h_active_low;
+> +	u32 v_back_porch;
+> +	u32 v_front_porch;
+> +	u32 v_sync_width;
+> +	u32 v_active_low;
+> +	u32 h_skew;
+> +	u32 refresh_rate;
+> +	u32 pixel_clk_khz;
+> +	u32 bpp;
+> +	bool widebus_en;
+> +	struct msm_compression_info comp_info;
+> +	s64 dsc_overhead_fp;
+> +};
+> +
+>   struct dp_display_mode {
+>   	struct drm_display_mode drm_mode;
+> +	struct dp_panel_info timing;
+>   	u32 capabilities;
+> +	s64 fec_overhead_fp;
+> +	s64 dsc_overhead_fp;
+>   	u32 bpp;
+>   	u32 h_active_low;
+>   	u32 v_active_low;
+> +	/**
+> +	 * @output_format:
+> +	 *
+> +	 * This is used to indicate DP output format.
+> +	 * The output format can be read from drm_mode.
+> +	 */
+> +	enum dp_output_format output_format;
+>   };
+>   
+>   struct dp_panel_in {
+> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+> index 9f0c184..f155803 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.h
+> +++ b/drivers/gpu/drm/msm/msm_drv.h
+> @@ -1,6 +1,7 @@
+>   /* SPDX-License-Identifier: GPL-2.0-only */
+>   /*
+>    * Copyright (c) 2016-2018, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2023. Qualcomm Innovation Center, Inc. All rights reserved
+>    * Copyright (C) 2013 Red Hat
+>    * Author: Rob Clark <robdclark@gmail.com>
+>    */
+> @@ -70,6 +71,16 @@ enum msm_dp_controller {
+>   #define MAX_H_TILES_PER_DISPLAY 2
 >   
 >   /**
->    * is_link_rate_valid() - validates the link rate
+> + * enum msm_display_compression_type - compression method used for pixel stream
+> + * @MSM_DISPLAY_COMPRESSION_NONE:     Pixel data is not compressed
+> + * @MSM_DISPLAY_COMPRESSION_DSC:      DSC compresison is used
+> + */
+> +enum msm_display_compression_type {
+> +	MSM_DISPLAY_COMPRESSION_NONE,
+> +	MSM_DISPLAY_COMPRESSION_DSC,
+> +};
+> +
+> +/**
+>    * enum msm_event_wait - type of HW events to wait for
+>    * @MSM_ENC_COMMIT_DONE - wait for the driver to flush the registers to HW
+>    * @MSM_ENC_TX_COMPLETE - wait for the HW to transfer the frame to panel
+> @@ -82,6 +93,84 @@ enum msm_event_wait {
+>   };
+>   
+>   /**
+> + * struct msm_display_dsc_info - defines dsc configuration
+
+This structure was removed. Please keep it this way. We are not going to 
+reintroduce it unless it is really required for some reason. And up to 
+now I don't see a good reason for adding it back.
+
+> + * @config                   DSC encoder configuration
+> + * @scr_rev:                 DSC revision.
+> + * @initial_lines:           Number of initial lines stored in encoder.
+> + * @pkt_per_line:            Number of packets per line.
+> + * @bytes_in_slice:          Number of bytes in slice.
+> + * @eol_byte_num:            Valid bytes at the end of line.
+> + * @bytes_per_pkt            Number of bytes in DSI packet
+> + * @pclk_per_line:           Compressed width.
+> + * @slice_last_group_size:   Size of last group in pixels.
+> + * @slice_per_pkt:           Number of slices per packet.
+> + * @num_active_ss_per_enc:   Number of active soft slices per encoder.
+> + * @source_color_space:      Source color space of DSC encoder
+> + * @chroma_format:           Chroma_format of DSC encoder.
+> + * @det_thresh_flatness:     Flatness threshold.
+> + * @extra_width:             Extra width required in timing calculations.
+> + * @pps_delay_ms:            Post PPS command delay in milliseconds.
+> + * @dsc_4hsmerge_en:         Using DSC 4HS merge topology
+> + * @dsc_4hsmerge_padding     4HS merge DSC pair padding value in bytes
+> + * @dsc_4hsmerge_alignment   4HS merge DSC alignment value in bytes
+> + * @half_panel_pu            True for single and dual dsc encoders if partial
+> + *                           update sets the roi width to half of mode width
+> + *                           False in all other cases
+> + */
+> +struct msm_display_dsc_info {
+> +	struct drm_dsc_config drm_dsc;
+> +	u8 scr_rev;
+> +
+> +	int initial_lines;
+> +	int pkt_per_line;
+> +	int bytes_in_slice;
+> +	int bytes_per_pkt;
+> +	int eol_byte_num;
+> +	int pclk_per_line;
+> +	int slice_last_group_size;
+> +	int slice_per_pkt;
+> +	int num_active_ss_per_enc;
+> +	int source_color_space;
+> +	int chroma_format;
+> +	int det_thresh_flatness;
+> +	u32 extra_width;
+> +	u32 pps_delay_ms;
+> +	bool dsc_4hsmerge_en;
+> +	u32 dsc_4hsmerge_padding;
+> +	u32 dsc_4hsmerge_alignment;
+> +	bool half_panel_pu;
+> +};
+> +
+> +/*
+> + * conver from struct drm_dsc_config to struct msm_display_dsc_info
+> + */
+> +#define to_msm_dsc_info(dsc) container_of((dsc), struct msm_display_dsc_info, drm_dsc)
+> +
+> +/**
+> + * Bits/pixel target >> 4  (removing the fractional bits)
+> + * returns the integer bpp value from the drm_dsc_config struct
+> + */
+> +#define DSC_BPP(config) ((config).bits_per_pixel >> 4)
+> +
+> +/**
+> + * struct msm_compression_info - defined panel compression
+> + * @enabled:          enabled/disabled
+> + * @comp_type:        type of compression supported
+> + * @comp_ratio:       compression ratio
+> + * @src_bpp:          bits per pixel before compression
+> + * @tgt_bpp:          bits per pixel after compression
+> + * @msm_dsc_info:     msm dsc info if the compression supported is DSC
+> + */
+> +struct msm_compression_info {
+> +	bool enabled;
+> +	enum msm_display_compression_type comp_type;
+> +	u32 comp_ratio;
+> +	u32 src_bpp;
+> +	u32 tgt_bpp;
+> +	struct msm_display_dsc_info msm_dsc_info;
+> +};
+> +
+> +/**
+>    * struct msm_display_topology - defines a display topology pipeline
+>    * @num_lm:       number of layer mixers used
+>    * @num_intf:     number of interfaces the panel is mounted on
 
 -- 
 With best wishes
