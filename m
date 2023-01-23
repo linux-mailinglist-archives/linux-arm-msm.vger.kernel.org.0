@@ -2,98 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4DAA46787B2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 21:26:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A99B46787BF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 21:28:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229791AbjAWU02 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Jan 2023 15:26:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56586 "EHLO
+        id S232135AbjAWU2a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Jan 2023 15:28:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232241AbjAWU0Z (ORCPT
+        with ESMTP id S232341AbjAWU2Z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Jan 2023 15:26:25 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82A0B367FB
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 12:26:17 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id q5so7305625wrv.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 12:26:17 -0800 (PST)
+        Mon, 23 Jan 2023 15:28:25 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1C385B88
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 12:28:24 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id v10so16029863edi.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 12:28:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=9bJvI0er9NKNpyW36Ww5MlEqVL1HalCL3An+z6IAwBs=;
-        b=kJJvK6idxMBGC+1pmy/3TT8FBROK0VCDlR89DeNLjbGvXBkArBXsbKYsVDPpF85kG3
-         6Xyr/slLys+933gTy3O1JiZnHI8vZMmtaoD1h8K94krUipVEKZ7WxjKciQeP+STz1GhQ
-         5KDdRd/9lX7yqw5+6esYYIEm5v8pfxk+klTfUdf77tpfTW7Qr/MKf6xXnqUY6lyFJDNj
-         gjxsYOHb0V/BIy8R0oBCyncvND/ofWdx52ijlAqQ1s3yQzTGriDLNRQUuwq850FBEB3a
-         2wzgpbPE3MfFBUz0fhOaLVVGNfT8MqzUeaPVrqq5FXPv7evJxnILfYTOlxzo8SXGnBNE
-         cD2w==
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=aDBvtTwmNjrhK6lLug0V+Hi7SYRB+PFPx4pB07r9nZA=;
+        b=PqyGw6DxB7zjILHaD4PLOzE+EwTLYl3bkjqt9t4dPQnPTT+dxjlSB5r1j+5jqcfbg/
+         2c5PReRMGtUHRrKWjEguB0xXTNb6RQzdukQxmfk9ruHR1ceBrQrFq0oFbydHe3APVdZP
+         tswjbr85JZynAVzOL4c5AIptKEJ5rJIK4BAxFZukCkdvygfFiVx/ZVYDwvF47q+Yq7Mu
+         VrS9ESFY34CvVwabVpd21X9JLCSoVaEhdeB7f4AqPFypmvQXrE7IdYi5wHianIYW3wqc
+         nnDmRXpnEq9O7HOuib/xkEAWY3iD4q18Surbso3p5hvfd5E5Q1NENoLaYBD4/BvAxMSU
+         04Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9bJvI0er9NKNpyW36Ww5MlEqVL1HalCL3An+z6IAwBs=;
-        b=NMXXq/mfzwf/e3bk9F3wNZ97tcehwiiaxqskfooN3LECUX/XitgqrZKbTGJdrbtIVx
-         xflV6QzyngV5nR3v6IpUlyY3PX5Lwr5HDFY6oILi+ee/86k++NamRmSQ7bbW+4mmQ/Nx
-         a5Z4MumbKFcwnBrUgJKNZVjPIoZCmt6QX1PWsClMmNcI+u9b2vqhuElGu8LEE6WtDRyI
-         SiiD5GQDcn78Ktf5LOn1avBzxm5Ih04ziQH3B3/WqGlLFQY7M7hOYlZ7KYQJoMcWTxW8
-         oPooMRr3HwfcYKKP+pohNmpuLKSbt/qXeQed5uOZEK6oEN+F4fp++FmKsRuk7dxnEDV8
-         2VhA==
-X-Gm-Message-State: AO0yUKW0Vkdb216hWDi7lVrDirXQo6ydv18kcAl3a0GPXp33Mk1KYfDp
-        vDkZYWuAMMC5wdBg/rjcjfqEAA==
-X-Google-Smtp-Source: AK7set8G62ZPGE3yj/GxRFf06B6qne0PaY4rDmY0nPTNs/5+g71n4+vH1n+t5qHnjsp9Y9c1WKdnCQ==
-X-Received: by 2002:a05:6000:5:b0:2bf:ae2f:c6ff with SMTP id h5-20020a056000000500b002bfae2fc6ffmr372304wrx.31.1674505576089;
-        Mon, 23 Jan 2023 12:26:16 -0800 (PST)
-Received: from krzk-bin.. ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id y15-20020adfdf0f000000b00236883f2f5csm220301wrl.94.2023.01.23.12.26.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Jan 2023 12:26:15 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] soc: qcom: restrict L2 accessors to ARM64 build tests
-Date:   Mon, 23 Jan 2023 21:26:01 +0100
-Message-Id: <20230123202601.1296983-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=aDBvtTwmNjrhK6lLug0V+Hi7SYRB+PFPx4pB07r9nZA=;
+        b=zxh17lM/LPcWauN7qxaiR3X5D6Zc08UQZKB+RNwsTh3D36NJoRMip9tJ7XwMABa1hY
+         PsUdcv/2f2+pFVBB+woTDUwStah0MDedNaMjvELF0YTHX39yj6KBvEBkP4FAc7uULoRz
+         S4JlJzQ9N0rCUtr5MuzemmgZP6pYhm8hSVMcycZreXBfU55DtFofDFgv1GodVoZ3tEe5
+         wHSK4Q7ABY3tQwtTqEJXKZwcPpqfkyX3XNx1la0MUddbqSvsk+KIZ3DhKP/Rzk2EcF6Z
+         4uP41N2datur63GdFxU7undCwXRdyoOOrcifI1cedNkQEuiohgnxqe4AsD1S/u4lJtjU
+         S5zg==
+X-Gm-Message-State: AFqh2krTPe1e2clmtU4CKCw9ScLSlUM45bOiM009qA5QpUr4EzP001dh
+        1plu63qaIEsx5zNV+GQjOByjnA==
+X-Google-Smtp-Source: AMrXdXt+s9H65FrH4rXwFlX0dSme/wEf8z8RVcTn3ETUYvEJ5nzPiIfK3709z0ycUV/UYjavuXhVDw==
+X-Received: by 2002:a05:6402:28cb:b0:49e:db43:1722 with SMTP id ef11-20020a05640228cb00b0049edb431722mr12581368edb.18.1674505703277;
+        Mon, 23 Jan 2023 12:28:23 -0800 (PST)
+Received: from [192.168.1.101] (abxi24.neoplus.adsl.tpnet.pl. [83.9.2.24])
+        by smtp.gmail.com with ESMTPSA id b4-20020aa7cd04000000b00487fc51c532sm166081edw.33.2023.01.23.12.28.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Jan 2023 12:28:22 -0800 (PST)
+Message-ID: <e20498a2-15b8-4211-0607-32b62b0c0a62@linaro.org>
+Date:   Mon, 23 Jan 2023 21:28:21 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH 1/3] clk: qcom: cpu-8996: add missing cputype include
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230123201812.1230039-1-krzysztof.kozlowski@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230123201812.1230039-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The QCOM_KRYO_L2_ACCESSORS can be compile tested only on ARM64 because
-it references asm/sysreg.h present only on ARM64.  Mark the dependency
-correct, even though as a non-selectable option it does not have real
-effect.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- drivers/soc/qcom/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-index 21c4ce2315ba..96b5d0a4ed48 100644
---- a/drivers/soc/qcom/Kconfig
-+++ b/drivers/soc/qcom/Kconfig
-@@ -80,7 +80,7 @@ config QCOM_DCC
- 
- config QCOM_KRYO_L2_ACCESSORS
- 	bool
--	depends on ARCH_QCOM && ARM64 || COMPILE_TEST
-+	depends on (ARCH_QCOM || COMPILE_TEST) && ARM64
- 
- config QCOM_MDT_LOADER
- 	tristate
--- 
-2.34.1
+On 23.01.2023 21:18, Krzysztof Kozlowski wrote:
+> Include asm/cputype.h to fix ARMv7 compile test error:
+> 
+>   drivers/clk/qcom/clk-cpu-8996.c: In function ‘qcom_cpu_clk_msm8996_acd_init’:
+>   drivers/clk/qcom/clk-cpu-8996.c:468:16: error: implicit declaration of function ‘read_cpuid_mpidr’ [-Werror=implicit-function-declaration]
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
+Konrad
+>  drivers/clk/qcom/clk-cpu-8996.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/clk/qcom/clk-cpu-8996.c b/drivers/clk/qcom/clk-cpu-8996.c
+> index ee76ef958d31..40c4dabc20a7 100644
+> --- a/drivers/clk/qcom/clk-cpu-8996.c
+> +++ b/drivers/clk/qcom/clk-cpu-8996.c
+> @@ -49,6 +49,7 @@
+>   * detect voltage droops.
+>   */
+>  
+> +#include <asm/cputype.h>
+>  #include <linux/bitfield.h>
+>  #include <linux/clk.h>
+>  #include <linux/clk-provider.h>
