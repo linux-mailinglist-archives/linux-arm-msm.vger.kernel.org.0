@@ -2,243 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AB832677A10
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 12:22:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 836F7677A72
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 13:03:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231768AbjAWLWo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Jan 2023 06:22:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57366 "EHLO
+        id S230366AbjAWMC7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Jan 2023 07:02:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231882AbjAWLWl (ORCPT
+        with ESMTP id S229502AbjAWMC6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Jan 2023 06:22:41 -0500
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8790623128
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 03:22:37 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id qx13so29463444ejb.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 03:22:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2lzGiYJblPTtKdronpDxWVNuUcb29sPEo8arZ8em6q0=;
-        b=AxlLvD+8DMKh+wf9BiUSKdDb+sa2rlt4bmvz14FGa9toDn+4zMljNoowKbhRbQdzEm
-         qKGk/dnywgteUmH+J1bPz8VdiBfLUHsl8ZLpjM7ni1hHPBa4QAkln4VAO5S07CCJlHHe
-         wtuRNC+zeBROd+zQOn9yOWQu0uOY42k5uFCqvC7shKXx9k2ssKO5A5jachXrsahRiSAd
-         IMQOODb2Il2E+OamRm9593X78+9t6g10Rvakdcxecze1PzMNfQBNNq1fcwD9jWCxt3vt
-         2shLxCrq1NITVByiflYp620F5He2X5yrHb+iGKy+00JiKnCRi2K0XYHi7zNNUOKbXFds
-         +bcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=2lzGiYJblPTtKdronpDxWVNuUcb29sPEo8arZ8em6q0=;
-        b=e/V29SgLMUlHK110yEZnFspd/pCD74t5pGPH5+VWx79Wc9NZ9L6PZMwSnf7KPBvsFZ
-         opz6PlV60ddp6o0VDBRa2SxPoGy6XtWmO8ZkJr8PM05n7qQiKuDIFTxoU+I1TlVICSaP
-         rXSncuzmsfvbYv7RZntNuq2QlXOP21DR+9H/19/cRaUJEO5ROyjXQug2mPcQfdkx1bvi
-         3Z+383J4euGcvlJORc7FHso9hKZtmkZUudbBZ++14HzH4WBB8j9AIN2V/FVENAHEOTxJ
-         RaHfrr75WFVF4Vrmne2MAASLw7crmqXXaLyodOi/2ulxzngL2IcDfis76a76GusRyBHQ
-         PqkQ==
-X-Gm-Message-State: AFqh2kpJ1aRaUalhM3j2Lm0drK4528ZWbFIoyq1bSoKcYJAUwpdkMLrV
-        PivHR8m4Iazu/X8WbILqWNqS2A==
-X-Google-Smtp-Source: AMrXdXvSk0blnMkYUU5+UTAdRbufaMt8iWLi3aJJ3AC0FL/Ef+iJFHEdXA762JO2j4NC2AqdroMFWg==
-X-Received: by 2002:a17:907:6a98:b0:855:2c8e:ad52 with SMTP id ri24-20020a1709076a9800b008552c8ead52mr16850357ejc.29.1674472956040;
-        Mon, 23 Jan 2023 03:22:36 -0800 (PST)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id i21-20020a1709064fd500b008779570227bsm5187799ejw.112.2023.01.23.03.22.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Jan 2023 03:22:35 -0800 (PST)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Mon, 23 Jan 2023 12:22:32 +0100
-Message-Id: <CPZJ4F39LES0.ANG4EP8EUFI7@otso>
-Cc:     "Vinod Koul" <vkoul@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        <phone-devel@vger.kernel.org>, "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        "Kishon Vijay Abraham I" <kishon@kernel.org>,
-        <linux-phy@lists.infradead.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v3 2/3] phy: qcom-qmp-combo: Add config for SM6350
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
-        "Johan Hovold" <johan@kernel.org>
-X-Mailer: aerc 0.14.0
-References: <20221130081430.67831-1-luca.weiss@fairphone.com>
- <20221130081430.67831-2-luca.weiss@fairphone.com>
- <Y6xP4YRAp68TfxFi@hovoldconsulting.com> <Y8BIX+js1ircJyb9@matsya>
- <cf968a25-02f7-d402-530b-eb379b707e54@linaro.org>
- <CPR2LS3SJQ3I.Z7UY505COG3@otso>
- <CAA8EJpoOMMALHz7ysft6KvQaYhGWPD+xZiUjOTrC8CA_y81n-w@mail.gmail.com>
- <CPX2VVT5EUDV.2LH6VI2586F02@otso> <Y85WqDrGXAXp7gS/@hovoldconsulting.com>
- <a18359f8-6495-dbea-2323-8ab73bbfc472@linaro.org>
-In-Reply-To: <a18359f8-6495-dbea-2323-8ab73bbfc472@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Mon, 23 Jan 2023 07:02:58 -0500
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75ED555AA;
+        Mon, 23 Jan 2023 04:02:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1674475377; x=1706011377;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=Gac31zA3L0a5rQtCHU57yyl10/98WWoOzbC9C/m7naQ=;
+  b=KQhYLwm6Zds+Oykz0S4bi/POjHpPpGojBiuYP8td/cJOOQyeF2SNeQfb
+   8uWHCQMMoK5sQ+AldXy8/d1gN8Cl5yYUEuEo/C0EuRciMivV1ym2ICXKb
+   Gsqn1eDnIz0UGykfAa6eJYfeUAnL0tVXbiegRXplx46dRE/nlvsPIoABc
+   Fg1/sBPO6BHW61xeGYPxAR+6i36pnNKOMeGLCcrAtdZrlWDnWF4h2qjQg
+   jpF76wcHKeU6aJINaH6qLte5ieZiKtV74vaZBNFBSJnjmtgPsky2IGcT6
+   KAm84OA3u/QV2XE2tL1gmS55mB05qVJDKvFq0Z2Eh/UPvBJPFF8NGEPIR
+   A==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10598"; a="305683345"
+X-IronPort-AV: E=Sophos;i="5.97,239,1669104000"; 
+   d="scan'208";a="305683345"
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jan 2023 04:02:57 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10598"; a="663532353"
+X-IronPort-AV: E=Sophos;i="5.97,239,1669104000"; 
+   d="scan'208";a="663532353"
+Received: from smile.fi.intel.com ([10.237.72.54])
+  by fmsmga007.fm.intel.com with ESMTP; 23 Jan 2023 04:02:54 -0800
+Received: from andy by smile.fi.intel.com with local (Exim 4.96)
+        (envelope-from <andriy.shevchenko@linux.intel.com>)
+        id 1pJvXI-00Diqy-0V;
+        Mon, 23 Jan 2023 14:02:52 +0200
+Date:   Mon, 23 Jan 2023 14:02:51 +0200
+From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To:     Jonathan Cameron <jic23@kernel.org>
+Cc:     Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+        Nuno =?iso-8859-1?Q?S=E1?= <nuno.sa@analog.com>,
+        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v2 1/1] iio: adc: qcom-spmi-adc5: Fix the channel name
+Message-ID: <Y853a5jr4rfrDHfd@smile.fi.intel.com>
+References: <20230118100623.42255-1-andriy.shevchenko@linux.intel.com>
+ <20230122172441.4f8d75f5@jic23-huawei>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230122172441.4f8d75f5@jic23-huawei>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_PASS,
+        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon Jan 23, 2023 at 12:15 PM CET, Dmitry Baryshkov wrote:
-> On 23/01/2023 11:43, Johan Hovold wrote:
-> > On Fri, Jan 20, 2023 at 03:13:46PM +0100, Luca Weiss wrote:
-> >> On Fri Jan 13, 2023 at 2:01 PM CET, Dmitry Baryshkov wrote:
-> >>> On Fri, 13 Jan 2023 at 14:44, Luca Weiss <luca.weiss@fairphone.com> w=
-rote:
-> >>>>
-> >>>> Hi Dmitry,
-> >>>>
-> >>>> On Thu Jan 12, 2023 at 8:33 PM CET, Dmitry Baryshkov wrote:
-> >>>>> On 12/01/2023 19:50, Vinod Koul wrote:
-> >>>>>> On 28-12-22, 15:17, Johan Hovold wrote:
-> >>>>>>> Luca, Vinod,
-> >>>>>>>
-> >>>>>>> On Wed, Nov 30, 2022 at 09:14:28AM +0100, Luca Weiss wrote:
-> >>>>>>>> Add the tables and config for the combo phy found on SM6350.
-> >>>>>>>>
-> >>>>>>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> >>>>>>>> ---
-> >>>>>>>> Changes since v2:
-> >>>>>>>> * Drop dp_txa/dp_txb changes, not required
-> >>>>>>>> * Fix dp_dp_phy offset
-> >>>>>>>>
-> >>>>>>>>    drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 126 +++++++++++++=
-+++++++++
-> >>>>>>>>    1 file changed, 126 insertions(+)
-> >>>>>>>>
-> >>>>>>>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers=
-/phy/qualcomm/phy-qcom-qmp-combo.c
-> >>>>>>>> index 77052c66cf70..6ac0c68269dc 100644
-> >>>>>>>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> >>>>>>>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> >>>>>>>
-> >>>>>>>> @@ -975,6 +1039,19 @@ static const char * const sc7180_usb3phy_r=
-eset_l[] =3D {
-> >>>>>>>>            "phy",
-> >>>>>>>>    };
-> >>>>>>>>
-> >>>>>>>> +static const struct qmp_combo_offsets qmp_combo_offsets_v3 =3D =
-{
-> >>>>>>>> + .com            =3D 0x0000,
-> >>>>>>>> + .txa            =3D 0x1200,
-> >>>>>>>> + .rxa            =3D 0x1400,
-> >>>>>>>> + .txb            =3D 0x1600,
-> >>>>>>>> + .rxb            =3D 0x1800,
-> >>>>>>>> + .usb3_serdes    =3D 0x1000,
-> >>>>>>>> + .usb3_pcs_misc  =3D 0x1a00,
-> >>>>>>>> + .usb3_pcs       =3D 0x1c00,
-> >>>>>>>> + .dp_serdes      =3D 0x1000,
-> >>>>>>>
-> >>>>>>> I would have expected this to be 0x2000 as that's what the older
-> >>>>>>> platforms have been using for the dp serdes table so far. Without=
- access
-> >>>>>>> to any documentation it's hard to tell whether everyone's just be=
-en
-> >>>>>>> cargo-culting all along or if there's actually something there at=
- offset
-> >>>>>>> 0x2000.
-> >>>>>
-> >>>>> usb3_serdes is 0x1000, so dp_serdes equal to 0x1000 is definitely a=
-n typo.
-> >>>>>
-> >>>>> Judging from the downstream dtsi, the DP PHY starts at offset 0x200=
-0. So
-> >>>>> dp_serdes is equal to 0x2000, dp_phy =3D 0x2a00, ln_tx1 =3D 0x2200,=
- ln_tx2 =3D
-> >>>>> 0x2600.
-> >>>>
-> >>>> Can you share how you got to the 0x2000 offset? You can see my
-> >>>> (potentially wrong) reasoning for 0x1000 a few messages ago[0].
-> >>>>
-> >>>> The only 0x2000-something I could find now while looking at it again=
- is
-> >>>> "#define USB3_DP_PHY_DP_DP_PHY_PD_CTL 0x2a18" which becomes
-> >>>> USB3_DP_DP_PHY_PD_CTL in the driver but this is seemingly not used a=
-t
-> >>>> all in my msm-4.19 tree.
-> >>>
-> >>> Quite simple: see [1]. DP_PLL is at +0x2000
-> >>>
-> >>> [1] https://android.googlesource.com/kernel/msm-extra/devicetree/+/re=
-fs/heads/android-msm-bramble-4.19-android11-qpr1/qcom/lagoon-sde-pll.dtsi#2=
-7
-> >>
-> >> I still disagree from what I see.
-> >>
-> >> E.g. this part of the dp_serdes init table in mainline:
-> >>
-> >> static const struct qmp_phy_init_tbl qmp_v3_dp_serdes_tbl_rbr[] =3D {
-> >> 	QMP_PHY_INIT_CFG(QSERDES_V3_COM_HSCLK_SEL, 0x0c),
-> >>
-> >> With this one:
-> >> #define QSERDES_V3_COM_HSCLK_SEL                     0x13c
-> >>
-> >> To write this config qmp->dp_serdes gets used which is set at:
-> >> 	qmp->dp_serdes =3D base + offs->dp_serdes;
-> >>
-> >> So if offs->dp_serdes is 0x2000, this write will go to 0x213c.
-> >>
-> >> If we go back to msm-4.19 downstream the equivalent define is
-> >> #define USB3_DP_QSERDES_COM_HSCLK_SEL				0x113c
->
-> There are two SERDES regions. One used by USB part of the PHY (at=20
-> 0x1000) and another SERDES region used for DP (at 0x2000). As Johan=20
-> described below, vendor kernel handles the DP regions in the DP driver.=
-=20
-> Possibly this caused a confusion on your side.
+On Sun, Jan 22, 2023 at 05:24:41PM +0000, Jonathan Cameron wrote:
+> On Wed, 18 Jan 2023 12:06:23 +0200
+> Andy Shevchenko <andriy.shevchenko@linux.intel.com> wrote:
+> 
+> > The node name can contain an address part which is unused
+> > by the driver. Moreover, this string is propagated into
+> > the userspace label, sysfs filenames *and breaking ABI*.
+> > 
+> > Cut the address part out before assigning the channel name.
+> > 
+> > Fixes: 4f47a236a23d ("iio: adc: qcom-spmi-adc5: convert to device properties")
+> > Reported-by: Marijn Suijten <marijn.suijten@somainline.org>
+> > Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> 
+> LGTM, but given it will have ABI impact, I'd like to hear from 
+> Andy, Bjorn or Konrad as maintainers and /or Dmitry as someone
+> who has touched this driver fairly recently.
 
-Ack, I think I got it now. I also see the registers used downstream
-now, e.g.:
+Hmm... But this is to fix the ABI breakage. It means that the previous series
+by Nuno had broken it.
 
-techpack/display/pll/dp_pll_10nm_util.c:#define QSERDES_COM_LOCK_CMP2_MODE0=
-             0x009C
+> Mostly I want to be sure they know this exists before it causes surprise.
 
-So now .dp_serdes should be 0x2000. Do I need to change anything else
-also? I think not?
+-- 
+With Best Regards,
+Andy Shevchenko
 
-Regards
-Luca
-
->
-> >>
-> >> So there we are at offset 0x1000. And this define is used in
-> >> qcom,qmp-phy-init-seq which I already went to in detail in a previous
-> >> email in this thread.
-> >=20
-> >  From what I've heard, the PHY driver in the vendor kernel only deals
-> > with the USB part of the PHY, while some display driver accesses the DP
-> > part directly. So the fact that the Qualcomm USB PHY driver init
-> > sequences don't seem to use the DP regions (apart from that
-> > USB3_DP_PHY_DP_DP_PHY_PD_CTL register) is to be expected.
->
-> Correct.
->
-> >=20
-> > IIRC the v3 layout was also used by the SoC for which DP support was
-> > first implemented. Presumably, the separate USB and DP regions do exist
-> > and you should include them also for SM6350 even if you can't test it
-> > currently.
->
-> Correct. sdm845 and sc7180 are v3 and they handle DP and USB3 regions=20
-> separately inside a single Combo driver.
->
-> > We'll convert the older platforms over to use the new binding scheme
-> > soon and then we'd need this anyway. And if it turns out later that thi=
-s
-> > was all bogus, at least we only need to fix the driver (and not worry
-> > about dts backward compatibility as we had to with the old style
-> > bindings).
->
-> As you mentioned this. Do you have plans to work on this conversion? If=
-=20
-> not, I'll probably take a look during next development window.
-> --=20
-> With best wishes
-> Dmitry
 
