@@ -2,153 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 97AB86785A5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 20:00:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D48356785DA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 20:11:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231818AbjAWTAK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Jan 2023 14:00:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40836 "EHLO
+        id S231863AbjAWTL1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Jan 2023 14:11:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232951AbjAWTAB (ORCPT
+        with ESMTP id S231629AbjAWTL0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Jan 2023 14:00:01 -0500
-Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BC051716
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 11:00:00 -0800 (PST)
-Received: by mail-yb1-xb2c.google.com with SMTP id b1so10828661ybn.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 11:00:00 -0800 (PST)
+        Mon, 23 Jan 2023 14:11:26 -0500
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D148E4C3B
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 11:11:24 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id v6so33216499ejg.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 11:11:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=B8sSohvWdeGR854ywrgR9OxUM3Kmm0F/pKhgNWx62Gc=;
-        b=G6FnlpNfZErOiG4DtB5aA5k1KFTRsZW6MSzsHwFNA7/BB7+QqojQBEyWFyis3TyeAt
-         VplDekwOOHXZbk96HcnsextR2Vub/u1FZMm6GHYsqqzwGclYzch27EnbKwt2HyKhk7y4
-         nZMu4YP7WP2Ge1t9ALpDl4DshLg2L40c3sUmz8T25DSuErdzlR6QzLHHDLuYD41P/1XF
-         0yWAeTPT1M8VZ2NRwrJ/NhadihrATZ6mKbOx5piUGPCHpyE2EexHeY3c3LSZ3Ah3/wsY
-         wapJcs5ll/5Q1DivlfhDvt5iRHF9lsP3pDOvjVY07J83F1jqtdw9ryaXMmDejLLqVAlT
-         lSjw==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=VTgfQuOsmh7vjgkxhuSVXobpiXcrEh67Jxe/HpZBj34=;
+        b=zE7VPg2fziZ5ITyaLO0x9pxpTopn0zh6qZM9xHxie0hpl60u8R7DXHx7j4TilLjGX7
+         BvKFaeZCIRORQGBaDE6kgXKPo74RYpvrXYKMF0K36WcR2Rexu+xOu8AzAPPlBFY00Sn7
+         tSj5BLPHdjEPtejXaUZNqNHkjk/j1yHUo2JHQGoCeDnEVEaUHlKbBmUcYWOqjWWqLFaC
+         e10RXE8FzfudGuq+PotI/bFnSeeGHwDDuoVoKdhLNvsbW7/ZfzFlbelBAju+vBfMfHAQ
+         RD8NCzYg2c63MfpscVi9wu3CIAAPrSN4+QRenjeAvM/ncbrW4JCzepF3C4+CSySVsVYD
+         wMtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=B8sSohvWdeGR854ywrgR9OxUM3Kmm0F/pKhgNWx62Gc=;
-        b=XLquOGnoNMLShHNTurosHpy/GUbn+dAKhXyh2cEUKQX0jW0LWEhp9+TAuuMVhGQvEl
-         m11lHhDqcG7NNArps96lIOc38mUSMDEPD9yGYm3JXbEnwjQkSY7a/QB2Qa9HXnoGyTie
-         I2eHP9PJzZfFCxm6qBr4Ljzi4ELI550rIH6ehAQ6Ts49sY2cnU/3O5yhGAfA+oZZ8KGJ
-         CyAjP78bY9jkdJYwOiQCeZqBO9bikOQxIULN80lnWZVNtWWKmPY/KLkU95pL0IWxISH+
-         jWA5SXzyBOuWjlk1ItDp2GgXCU1bk3P49QljsqGTAWEKKk+C10v0wQUuX4vFtcu1AaoC
-         plpw==
-X-Gm-Message-State: AFqh2kpg724PopIijnDjJIJduPyNhkaBGbulEfkCg8BQPjT1FHaySE3y
-        BpkDNDtHzFF1LDDDaAgPwkxJBp+SDNnUXQAELMuWSg==
-X-Google-Smtp-Source: AMrXdXsXcpimRuFloMT17rxdhV5ggwkbSJFO8dxxUhNSQDaPeT2613uy05QEP75h+EwfYywQpAI6h3Lmus1Th02/Q6Y=
-X-Received: by 2002:a5b:305:0:b0:709:9335:236e with SMTP id
- j5-20020a5b0305000000b007099335236emr2370198ybp.288.1674500399574; Mon, 23
- Jan 2023 10:59:59 -0800 (PST)
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=VTgfQuOsmh7vjgkxhuSVXobpiXcrEh67Jxe/HpZBj34=;
+        b=k4MHL6nmaO6EyBD98o2JF6h1dRb6J/tb0e8amEYvkOGpkC6vwNAet8mGzg4+8aTYRh
+         HeIV3tpnDlir48o4C7zVXLKhziFZuGqPZE9drUqo3SuyAinOqD291t3kUS99fSfmHffU
+         Gy4/l5IROUYdpwqHQaNP87lpvNg+lylUol+8YRVQ0/Je3OO85n+zHxpZ18EkA+lNWWW2
+         rXqFrourLE/t6j7frv+XF9d9u3EJmt9OLTSEIECRO2j4L6VAiBOmz7kZWjLUajqahMfd
+         7p2bossjAS8nqM8WrU8/uUOQUTVYTVev1xGcpVfXiCZ8gaRmJsSF41chSvcUGTwXm7TN
+         lGSA==
+X-Gm-Message-State: AFqh2ko73VSNi2MHdmBRyRROUYwfTYOmw2NOYMwrqgdtYOUz4xq7CTuk
+        iMBq/J3DV4iZWVK+1m/jhzcYng==
+X-Google-Smtp-Source: AMrXdXsb/vuiOrI+Q50hcrg4EbClN2vPr3UA9jJ6Rxnvdr9HixhD8Y5DGs4AWYEwJrUVoTXxOq1Nzg==
+X-Received: by 2002:a17:906:6d7:b0:7c1:22a9:ba8b with SMTP id v23-20020a17090606d700b007c122a9ba8bmr38898359ejb.50.1674501083426;
+        Mon, 23 Jan 2023 11:11:23 -0800 (PST)
+Received: from [192.168.1.101] (abxi24.neoplus.adsl.tpnet.pl. [83.9.2.24])
+        by smtp.gmail.com with ESMTPSA id s17-20020a1709060c1100b0084d21db0691sm22656785ejf.179.2023.01.23.11.11.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Jan 2023 11:11:23 -0800 (PST)
+Message-ID: <179bf38e-2b4b-3c8d-6dd3-33cd33883118@linaro.org>
+Date:   Mon, 23 Jan 2023 20:11:21 +0100
 MIME-Version: 1.0
-References: <20230123120807.3101313-1-dmitry.baryshkov@linaro.org> <Y86TDYOKtpcLdZYx@hovoldconsulting.com>
-In-Reply-To: <Y86TDYOKtpcLdZYx@hovoldconsulting.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 23 Jan 2023 20:59:48 +0200
-Message-ID: <CAA8EJppU4nQRYWwAahWtjrVbU1ywF4P+zxHs1PZm98bzKswiZA@mail.gmail.com>
-Subject: Re: [PATCH] phy: qcom-qmp-combo: correct DP register offsets
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH v3 9/9] interconnect: qcom: rpm: Don't use
+ clk_get_optional for bus clocks anymore
+Content-Language: en-US
+To:     Arnaud Vrac <rawoul@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org,
+        marijn.suijten@somainline.org, bryan.odonoghue@linaro.org,
+        Georgi Djakov <djakov@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230116132152.405535-1-konrad.dybcio@linaro.org>
+ <20230116132152.405535-10-konrad.dybcio@linaro.org>
+ <CAN5H-g54j7kA0+7fmoyj+gOKENycOxJjpHiqbgfM_bYZXj2ofA@mail.gmail.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <CAN5H-g54j7kA0+7fmoyj+gOKENycOxJjpHiqbgfM_bYZXj2ofA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 23 Jan 2023 at 16:00, Johan Hovold <johan@kernel.org> wrote:
->
-> On Mon, Jan 23, 2023 at 02:08:07PM +0200, Dmitry Baryshkov wrote:
-> > Correct DP register offsets used with new DT bindings scheme. First, DP
-> > TX registers reside in separate regions, not in the same regions as USB
-> > TX registers do. Second, correct DP_PHY region offset to follow the
-> > offset used for earlier generations/bindings.
->
-> No, this patch is broken. SC8280XP is different, doesn't seem to have
-> separate DP TX regions and the DP_PHY registers lies at a different
-> offset than on previous generations.
->
-> You can't just pull these numbers out of your ... ;)
->
-> This is the only platform that I can test the DP part on and it is
-> working. If that happens to be by chance, then you need to blame the
-> commit adding support for sc8280xp (i.e. not the one that fixed the
-> binding). And note that this was added by Bjorn who do have access to
-> the documentation for this SoC (as well as actual hardware).
-
-Ack, let's wait for Bjorn to check the offsets. I find it extremely
-suspicious that dp_txa/txb use the same region as usb txa/txb do.
-
->
-> > Cc: Johan Hovold <johan+linaro@kernel.org>
-> > Fixes: 83a0bbe39b17 ("phy: qcom-qmp-combo: add support for updated sc8280xp binding")
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 10 +++++++---
-> >  1 file changed, 7 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> > index 1f022e580407..c6634f92de19 100644
-> > --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> > +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> > @@ -807,6 +807,8 @@ struct qmp_combo_offsets {
-> >       u16 usb3_pcs;
-> >       u16 usb3_pcs_usb;
-> >       u16 dp_serdes;
-> > +     u16 dp_txa;
-> > +     u16 dp_txb;
-> >       u16 dp_dp_phy;
-> >  };
-> >
-> > @@ -984,7 +986,9 @@ static const struct qmp_combo_offsets qmp_combo_offsets_v5 = {
-> >       .usb3_pcs       = 0x1400,
-> >       .usb3_pcs_usb   = 0x1700,
-> >       .dp_serdes      = 0x2000,
-> > -     .dp_dp_phy      = 0x2200,
-> > +     .dp_txa         = 0x2200,
-> > +     .dp_txa         = 0x2600,
->
-> You added dp_txa twice.
-
-Ack
-
->
-> > +     .dp_dp_phy      = 0x2a00,
-> >  };
-> >
-> >  static const struct qmp_phy_cfg sc7180_usb3dpphy_cfg = {
-> > @@ -2639,8 +2643,8 @@ static int qmp_combo_parse_dt(struct qmp_combo *qmp)
-> >       qmp->pcs_usb = base + offs->usb3_pcs_usb;
-> >
-> >       qmp->dp_serdes = base + offs->dp_serdes;
-> > -     qmp->dp_tx = base + offs->txa;
-> > -     qmp->dp_tx2 = base + offs->txb;
-> > +     qmp->dp_tx = base + offs->dp_txa;
-> > +     qmp->dp_tx2 = base + offs->dp_txb;
-> >       qmp->dp_dp_phy = base + offs->dp_dp_phy;
-> >
-> >       qmp->pipe_clk = devm_clk_get(dev, "usb3_pipe");
->
-> Johan
 
 
+On 23.01.2023 19:41, Arnaud Vrac wrote:
+> Hi Konrad,
+> 
+> With this series on a db820c, I get an error on boot when probing
+> a0noc because no "bus" clock is defined. If I revert this patch it
+> works again.
+> 
+> -Arnaud
+Ouch! Thanks for testing and catching this, definitely an edge
+case, as we usually expect there's an interconnect bus and bus_a
+clock.. but that can be worked around!
 
--- 
-With best wishes
-Dmitry
+Konrad
+> 
+> Le lun. 16 janv. 2023 à 14:31, Konrad Dybcio
+> <konrad.dybcio@linaro.org> a écrit :
+>>
+>> Commit dd42ec8ea5b9 ("interconnect: qcom: rpm: Use _optional func for provider clocks")
+>> relaxed the requirements around probing bus clocks. This was a decent
+>> solution for making sure MSM8996 would still boot with old DTs, but
+>> now that there's a proper fix in place that both old and new DTs
+>> will be happy about, revert back to the safer variant of the
+>> function.
+>>
+>> Fixes: dd42ec8ea5b9 ("interconnect: qcom: rpm: Use _optional func for provider clocks")
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+>>  drivers/interconnect/qcom/icc-rpm.c | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
+>> index 343e6021a93a..8cff724661f2 100644
+>> --- a/drivers/interconnect/qcom/icc-rpm.c
+>> +++ b/drivers/interconnect/qcom/icc-rpm.c
+>> @@ -522,7 +522,7 @@ int qnoc_probe(struct platform_device *pdev)
+>>         }
+>>
+>>  regmap_done:
+>> -       ret = devm_clk_bulk_get_optional(dev, qp->num_bus_clks, qp->bus_clks);
+>> +       ret = devm_clk_bulk_get(dev, qp->num_bus_clks, qp->bus_clks);
+>>         if (ret)
+>>                 return ret;
+>>
+>> --
+>> 2.39.0
+>>
