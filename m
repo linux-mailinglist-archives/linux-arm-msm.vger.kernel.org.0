@@ -2,69 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 37A1F67825F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 17:57:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 88FAC67826A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 17:59:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232361AbjAWQ5e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Jan 2023 11:57:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35424 "EHLO
+        id S232398AbjAWQ7z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Jan 2023 11:59:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232399AbjAWQ52 (ORCPT
+        with ESMTP id S232789AbjAWQ7r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Jan 2023 11:57:28 -0500
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 807CD2D14F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 08:57:26 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id u19so32184518ejm.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 08:57:26 -0800 (PST)
+        Mon, 23 Jan 2023 11:59:47 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB07E3AB3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 08:59:45 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id z11so15390432ede.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 08:59:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Qs+PmdCaa0Oqr95NZq++4uVVYKEKDJ91l4ijJEaTst8=;
-        b=geR+2FaMDDlT/WgzMf7kyTloZZO3xPIQ/oqdt5EIQwnr6PorP9r0Du1JisgGyZ9xTb
-         6yl0C9VFDch5/qrQSDpKUuPPf/4vdpoTtdnfb4KTAypNS0fjiGIN9l71Z+xI7P+TFhok
-         epAtFMxn4CjtR+sr2O4FsFZpTyuAvBt5dWdDZm5t+kQcwG2hl/mllyJuBLckrXB20Sq+
-         Tdl4ig7Oi22Xw9iVTHshTod2IDscC7ThsLzT6EbkiAtrcCFSm1nlv2k3WurMTxkw/HRM
-         OKAGaC6zDjTrFM++HSX6/LLMK++cfOOAiKq5PSgMc/F43q4BGhc+eHraAkkbJwW7uis0
-         r5FQ==
+        bh=xK/tJD2L46iP/URfZGuVe4KqSktL9jm8XqyOKQlMWUc=;
+        b=C3Zdpzssjw/N8nZmtlDkdTlrmRFezDyF04q9f30A2Yn6VdKPIsuxO+5sMUZnQURu8f
+         eJHB7BQE+B0N9svPpWUisK7v9fmtZ7WGbfA0oZEklCJNTHiSxqgKGnhdTDJ3Jq/5inEs
+         uKqnXx6BOz3Slauoz0uUM2gZaHPSAPB6K+I3uuS9YLEQl45eq5E2oDevuTsDT/ybzka+
+         SH1CbGAKqzmcBZjKDPforPR0UDtq8kys12+Oc33k0tnj676wBP9GckT1gutHlEwbrNvr
+         vxOn96iHfpZA9BOw/orQL7hINtyg0jOtzGdE/UnubkflV2yxMxGmoZxXpvubHZkf7JRZ
+         Ka/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Qs+PmdCaa0Oqr95NZq++4uVVYKEKDJ91l4ijJEaTst8=;
-        b=raYgVAJL0UJ34k87cnvWWQ3URm9MkwTPmUt57m+Gv8VhIo4F6R53mpBb9UwIwZBRl2
-         1QwSkrNWgqpOnenTjG4s47DNSBIbf4wdqoQN9g6EWo09nJw4gJgCLSs61ez1cZTQXyrH
-         tpFgtHTN7GcwHC6LfwTVsrlbKTsbBsk90ppzVnFUr42UZHw+FD6CQH1quI1UOBbIW0HK
-         57ynLk5dEuuidKyDLKpiLG3zjtclVzow7/5i28HqCh0vEN9LnddLRv/gnepDqXpkt8Gr
-         58EM8WMx1PG4+slpgRFFT7wE/XWCBFVCg4FV3+KdRsyrDJDB++w/DfEitmmpgj4BZ5Hz
-         Dxag==
-X-Gm-Message-State: AFqh2kqPYwxIOrkgD5NsPyE9K9hLiIxpleeRPwItNA1wBfB9JF0emdT7
-        hmoPhIm36iV7tAcKZ3QAsw562g==
-X-Google-Smtp-Source: AMrXdXurF26/WD+AXN2fCfpei/bQ2eG8irXZnCNrkdttoZhRiwGLMq+O6BiSC47v3lAbam4CncX+8Q==
-X-Received: by 2002:a17:906:a09:b0:7af:1139:de77 with SMTP id w9-20020a1709060a0900b007af1139de77mr32057359ejf.4.1674493045126;
-        Mon, 23 Jan 2023 08:57:25 -0800 (PST)
+        bh=xK/tJD2L46iP/URfZGuVe4KqSktL9jm8XqyOKQlMWUc=;
+        b=Lfdw338UBgLs3trwHFz6wbFwOM4ZSgDiGZmyZ0lT0mi6CGruL6dVkV431N1xKrl2nU
+         5wssbKa6K9u8WHu5LNlsgl6UtyCiRY0lovXEbVO6l0iD26fybiA127K0jrVN0DENMr7G
+         TYsOpi9vrRCW6NMmTG+GN3dA1rxlGpQgyalS/9AG+UwU01Hox2Red4jRanKGqPM6yr3v
+         Af+UzFzndFc2BcjZjVGx6zogCzKCTzrGsSxZTBnBGqv/H32MWLk7EtNjYrlujmX9e+0V
+         a5H1YfclE4SZNoI3xZ0cPK+F5NkpQgq8vKyfoGxDOC2jlPxiqtx7OOTGhXGB4x0MmGq7
+         7Kiw==
+X-Gm-Message-State: AFqh2kqAC6o09xLJ3xYGHowxoJ15mvX2heLsGn0SvMMgpmg3X239BZgi
+        thg0kYEEYlevvGOeb9w+6FLI1Q==
+X-Google-Smtp-Source: AMrXdXst8AG3jkX/eSdhSIJ7ADBSzh6KhNY/+rEfVHGCYZ4T5aCH5AT4/LAdJ2nV2eVDUy4OIXZN0w==
+X-Received: by 2002:a05:6402:448d:b0:498:2f9f:3442 with SMTP id er13-20020a056402448d00b004982f9f3442mr27190337edb.2.1674493184575;
+        Mon, 23 Jan 2023 08:59:44 -0800 (PST)
 Received: from [192.168.1.101] (abxi24.neoplus.adsl.tpnet.pl. [83.9.2.24])
-        by smtp.gmail.com with ESMTPSA id i21-20020a1709064fd500b008779570227bsm5542285ejw.112.2023.01.23.08.57.24
+        by smtp.gmail.com with ESMTPSA id d26-20020a056402401a00b0046c7c3755a7sm8271999eda.17.2023.01.23.08.59.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Jan 2023 08:57:24 -0800 (PST)
-Message-ID: <4afc4f62-dfa8-89e3-e5cc-9dae3290b0b3@linaro.org>
-Date:   Mon, 23 Jan 2023 17:57:23 +0100
+        Mon, 23 Jan 2023 08:59:44 -0800 (PST)
+Message-ID: <fd71f1ef-22c7-c0cb-cb68-b7a044c94d03@linaro.org>
+Date:   Mon, 23 Jan 2023 17:59:42 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.0
-Subject: Re: [PATCH] arm64: dts: qcom: sm6115: Add smp2p nodes
+Subject: Re: [PATCH 3/4] cpufreq: qcom-nvmem: use SoC ID-s from bindings
 Content-Language: en-US
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Cc:     agross@kernel.org, andersson@kernel.org,
-        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
-        robh+dt@kernel.org, devicetree@vger.kernel.org
-References: <20230121200454.1423567-1-bhupesh.sharma@linaro.org>
+To:     Robert Marko <robimarko@gmail.com>, ilia.lin@kernel.org,
+        agross@kernel.org, andersson@kernel.org, rafael@kernel.org,
+        viresh.kumar@linaro.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20230121112947.53433-1-robimarko@gmail.com>
+ <20230121112947.53433-3-robimarko@gmail.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230121200454.1423567-1-bhupesh.sharma@linaro.org>
+In-Reply-To: <20230121112947.53433-3-robimarko@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -79,97 +79,50 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 21.01.2023 21:04, Bhupesh Sharma wrote:
-> Add the adsp, cdsp and modem smp2p nodes to sm6115.
+On 21.01.2023 12:29, Robert Marko wrote:
+> SMEM SoC ID-s are now stored in DT bindings so lets use those instead of
+> defining them in the driver again.
 > 
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
 > ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
->  arch/arm64/boot/dts/qcom/sm6115.dtsi | 72 ++++++++++++++++++++++++++++
->  1 file changed, 72 insertions(+)
+>  drivers/cpufreq/qcom-cpufreq-nvmem.c | 15 +++++----------
+>  1 file changed, 5 insertions(+), 10 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> index 50cb8a82ecd5..3c66f998a81b 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> @@ -345,6 +345,78 @@ rpmpd_opp_turbo_plus: opp8 {
->  		};
->  	};
+> diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> index c0a7841a56c1..da55d2e1925a 100644
+> --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> @@ -30,12 +30,7 @@
+>  #include <linux/soc/qcom/smem.h>
+>  #include <linux/soc/qcom/socinfo.h>
 >  
-> +	smp2p-adsp {
-> +		compatible = "qcom,smp2p";
-> +		qcom,smem = <443>, <429>;
-> +
-> +		interrupts = <GIC_SPI 279 IRQ_TYPE_EDGE_RISING>;
-> +
-> +		mboxes = <&apcs_glb 10>;
-> +
-> +		qcom,local-pid = <0>;
-> +		qcom,remote-pid = <2>;
-> +
-> +		adsp_smp2p_out: master-kernel {
-> +			qcom,entry-name = "master-kernel";
-> +			#qcom,smem-state-cells = <1>;
-> +		};
-> +
-> +		adsp_smp2p_in: slave-kernel {
-> +			qcom,entry-name = "slave-kernel";
-> +
-> +			interrupt-controller;
-> +			#interrupt-cells = <2>;
-> +		};
-> +	};
-> +
-> +	smp2p-cdsp {
-> +		compatible = "qcom,smp2p";
-> +		qcom,smem = <94>, <432>;
-> +
-> +		interrupts = <GIC_SPI 263 IRQ_TYPE_EDGE_RISING>;
-> +
-> +		mboxes = <&apcs_glb 30>;
-> +
-> +		qcom,local-pid = <0>;
-> +		qcom,remote-pid = <5>;
-> +
-> +		cdsp_smp2p_out: master-kernel {
-> +			qcom,entry-name = "master-kernel";
-> +			#qcom,smem-state-cells = <1>;
-> +		};
-> +
-> +		cdsp_smp2p_in: slave-kernel {
-> +			qcom,entry-name = "slave-kernel";
-> +
-> +			interrupt-controller;
-> +			#interrupt-cells = <2>;
-> +		};
-> +	};
-> +
-> +	smp2p-mpss {
-> +		compatible = "qcom,smp2p";
-> +		qcom,smem = <435>, <428>;
-> +
-> +		interrupts = <GIC_SPI 70 IRQ_TYPE_EDGE_RISING>;
-> +
-> +		mboxes = <&apcs_glb 14>;
-> +
-> +		qcom,local-pid = <0>;
-> +		qcom,remote-pid = <1>;
-> +
-> +		modem_smp2p_out: master-kernel {
-> +			qcom,entry-name = "master-kernel";
-> +			#qcom,smem-state-cells = <1>;
-> +		};
-> +
-> +		modem_smp2p_in: slave-kernel {
-> +			qcom,entry-name = "slave-kernel";
-> +
-> +			interrupt-controller;
-> +			#interrupt-cells = <2>;
-> +		};
-> +	};
-> +
->  	soc: soc@0 {
->  		compatible = "simple-bus";
->  		#address-cells = <1>;
+> -enum _msm_id {
+> -	MSM8996V3 = 0xF6ul,
+> -	APQ8096V3 = 0x123ul,
+> -	MSM8996SG = 0x131ul,
+> -	APQ8096SG = 0x138ul,
+> -};
+> +#include <dt-bindings/arm/qcom,ids.h>
+>  
+>  enum _msm8996_version {
+>  	MSM8996_V3,
+> @@ -150,12 +145,12 @@ static enum _msm8996_version qcom_cpufreq_get_msm_id(void)
+>  		return NUM_OF_MSM8996_VERSIONS;
+>  
+>  	switch (info->id) {
+> -	case MSM8996V3:
+> -	case APQ8096V3:
+> +	case QCOM_ID_MSM8996:
+> +	case QCOM_ID_APQ8096:
+>  		version = MSM8996_V3;
+>  		break;
+> -	case MSM8996SG:
+> -	case APQ8096SG:
+> +	case QCOM_ID_MSM8996SG:
+> +	case QCOM_ID_APQ8096SG:
+>  		version = MSM8996_SG;
+>  		break;
+>  	default:
