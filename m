@@ -2,109 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AC6AC6776EE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 10:01:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0EEA6677706
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 10:06:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231612AbjAWJBh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Jan 2023 04:01:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45758 "EHLO
+        id S230486AbjAWJGX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Jan 2023 04:06:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231482AbjAWJBg (ORCPT
+        with ESMTP id S231486AbjAWJGW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Jan 2023 04:01:36 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54A60EB58
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 01:01:35 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id q8so8392682wmo.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 01:01:35 -0800 (PST)
+        Mon, 23 Jan 2023 04:06:22 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 187121C33D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 01:06:21 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id l41-20020a05600c1d2900b003daf986faaeso7982454wms.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 01:06:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=EnbR18XVTVgA/kG2E8Uv4DzkNNYetgwaJLUmuarDdSk=;
-        b=JzK8IhpBF46oOeAJ76jz6D0Y6GOOrokHvTEDGusuNe3Me7BOEfEx95JrDZGmUc8yDg
-         StBnXbbXFuwDTZsCKINAjG2zces9HDT92dI7smnCOexe7cALbOH8I4A10R+BQcFKW/9U
-         PmrkYNZHXZKZq83Ul2puFJ2PXNiUM/1PFjsyO9bA6dzu8OpLazow+sdEas+m/V3R7Uq4
-         8i5H+HP6Jo+bOHL7Ut7RBOm53akrdpAAPxLxWXnAXzkYHdfIfORZ5E9drFbX6uv+C4W8
-         BC7S4Ou+88ayBwicUuyemqRWjFHXIWWP7d/fxEiaqlsc6IhAypkZkF8SD4oQRydkRDj1
-         sIVg==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qT8VDBW8UHV1yeROoYytlmMrV/nocyFgzQx6EY9sPnY=;
+        b=jjzItVrmtYSP2PpXag6KstA4FOPzDGtz6YMFxZsr4Gijz59RpZhR78fbxGVOau4cYn
+         jsUmxAdrdOzn6rxVs8KDRW0vT02V2XKhgfUTvZLYbwyWp/0tliNgGQ8MReoFn5O8b3SB
+         YfQF5wztIxmuzYtN/RZvXlDPE04pZO6TmKJ0m3jxrjyCohKrZeC7K5Z1yWjPKNZRVej0
+         uC2Y0OPY1EgZfOpv7S2iHe/ErtuKOP/OcX2ar+sBtPdqY7Aj90zi7EmKnXQV+SrFRkdf
+         TAQjSqn9pUeO9R1oz1p230DiI6YuLSVdYjJb7oj6inpAgzWsDrDU/VEu2aY/gzVJFlfN
+         WlSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=EnbR18XVTVgA/kG2E8Uv4DzkNNYetgwaJLUmuarDdSk=;
-        b=NA3eGVuMY8DXp1zixWQEp9Tn4+gDp/mdIC+bOsWY1tjF3xJDgUozeAZrd9pIyeNQjT
-         LQMlHf3uH8Ka0Y2izn7SQ9H/mx6bI7V8gOQPNsI8kBZejP1CukdXc7PLiiWxt3vm6fWQ
-         58MTHJ9NMALh6E0ki2wgWWuvndvauEA9Idgcmjolw+AXUwX4jYcPcksE0NOXtmgULuzO
-         Oj9hzmNWhLyH/spvtiKwdD+dxKeNeGKb12uVzrtlw2QWZTjWKcFE1btRjtkistqsOqC9
-         MGj6EmOSj41WBxsVeNJseeGETJ04YRHgTUTkoWeQxXdTZZjfdqAXGz1zMAtvceBfdBuM
-         rOEg==
-X-Gm-Message-State: AFqh2ko6BMQ0UeF6m8YYtm/QhwuuIPWXmZpWzFaRNfkvagEBMdDSxlZd
-        QblBMpbfddgc2hUvm84BFRYKUg==
-X-Google-Smtp-Source: AMrXdXu/HlyXTp/d7I1qaZ4QWa7ARUSXggvTNS6pnnOmW48dig76WBBRkDfoJsFeYItnkAgit3gqWQ==
-X-Received: by 2002:a05:600c:4fd3:b0:3cf:7197:e68a with SMTP id o19-20020a05600c4fd300b003cf7197e68amr19869124wmq.18.1674464493842;
-        Mon, 23 Jan 2023 01:01:33 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id t15-20020a05600c198f00b003db32ccf4bfsm10106087wmq.41.2023.01.23.01.01.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Jan 2023 01:01:33 -0800 (PST)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Mon, 23 Jan 2023 10:01:25 +0100
-Subject: [PATCH] usb: dwc3: qcom: enable vbus override when in OTG dr-mode
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qT8VDBW8UHV1yeROoYytlmMrV/nocyFgzQx6EY9sPnY=;
+        b=mdb0UniFbeWEBhAWcHhpZntAewwk48pWCX53ycA6Q/YFmNstntmjKjQh87zg4repq9
+         EoRZiRIgPxt3/5I/Ei39W8P6r5GS28Zr4BdaDJugC3SqrTnfP8OUilTK2rJuGNxcQ7JB
+         /0WmvsFYHbKwUY/fkDxrRi4hFsLWIrBMZcT9GC6ztnaIwPcfGtxwXiQH9RCpeucG3rv2
+         2AFsUobioOEU6U2ODyuTYPfyz9DiJZhzqYyG31ul6hdpxsed5ugQc8wYQcDs3odsYeHZ
+         i0Apu5XChbG7RoMwHWcmjsnxODhIplDsia6umCnj1xwrUEFrGffaqyPrp09RyaHkZqcr
+         FFhw==
+X-Gm-Message-State: AFqh2kqXK6pSWVYTyp1pHMxV5WlNsHbpdOo0D3mES4xW09x6Wp5LbqK1
+        h7IjG36/eYrQWEv8nWhaDHLzlg==
+X-Google-Smtp-Source: AMrXdXunP3IY8eNNyaGERglsQ226d+VylGRf7gSuCDniB/ieNQkaZEMQ10E8CUjEXXeeTxz3iR3+Ow==
+X-Received: by 2002:a05:600c:4395:b0:3da:2829:2935 with SMTP id e21-20020a05600c439500b003da28292935mr23145718wmn.11.1674464779681;
+        Mon, 23 Jan 2023 01:06:19 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id j25-20020a05600c1c1900b003c71358a42dsm13964289wms.18.2023.01.23.01.06.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Jan 2023 01:06:19 -0800 (PST)
+Message-ID: <c00e3e15-1d42-8851-a17b-0c488d245ca1@linaro.org>
+Date:   Mon, 23 Jan 2023 10:06:17 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH v4 1/6] dt-bindings: clock: msm8939: Move msm8939 to a
+ distinct yaml file
+Content-Language: en-US
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, djakov@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        benl@squareup.com, shawn.guo@linaro.org, fabien.parent@linaro.org,
+        leo.yan@linaro.org, dmitry.baryshkov@linaro.org,
+        stephan@gerhold.net
+References: <20230123023127.1186619-1-bryan.odonoghue@linaro.org>
+ <20230123023127.1186619-2-bryan.odonoghue@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230123023127.1186619-2-bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230123-topic-sm8550-upstream-dwc3-qcom-otg-v1-1-e287a418aa5f@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAOVMzmMC/x2NSwrCMBQAr1Ky9kE+BqNXERf5PNtA8zEvVaH07
- gaXM4uZnRG2iMRu084aviPFkgeI08T8YvOMEMNgJrlUXEgFvdTogZLRmsNWqTe0CcLHK3j5kqD0
- GYy4XDVacTbBsVFylhBcs9kvo5W3dR2yNnzG7399fxzHD1TTZ32KAAAA
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.11.1
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-With vbus override enabled when in OTG dr_mode, Host<->Peripheral
-switch now works on SM8550, otherwise the DWC3 seems to be stuck
-in Host mode only.
+On 23/01/2023 03:31, Bryan O'Donoghue wrote:
+> The MSM8939 has two DSI controllers as opposed to the MSM8916 which has
+> one. As a consequence we need to document some additional clocks provided
+> by the MSM8939 GCC which are not provided by MSM8916.
+> 
+> Move the declaration of the MSM8939 super-set of clocks to an MSM8939
+> specific yaml file.
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- drivers/usb/dwc3/dwc3-qcom.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index b0a0351d2d8b..959fc925ca7c 100644
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -901,7 +901,7 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
- 	qcom->mode = usb_get_dr_mode(&qcom->dwc3->dev);
- 
- 	/* enable vbus override for device mode */
--	if (qcom->mode == USB_DR_MODE_PERIPHERAL)
-+	if (qcom->mode != USB_DR_MODE_HOST)
- 		dwc3_qcom_vbus_override_enable(qcom, true);
- 
- 	/* register extcon to override sw_vbus on Vbus change later */
-
----
-base-commit: 1b929c02afd37871d5afb9d498426f83432e71c2
-change-id: 20230123-topic-sm8550-upstream-dwc3-qcom-otg-81795ea148db
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
--- 
-Neil Armstrong <neil.armstrong@linaro.org>
+Krzysztof
+
