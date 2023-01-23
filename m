@@ -2,135 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 44EE0678673
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 20:34:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A6E467869C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 20:42:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231898AbjAWTeh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Jan 2023 14:34:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41884 "EHLO
+        id S232486AbjAWTm3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Jan 2023 14:42:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231867AbjAWTeh (ORCPT
+        with ESMTP id S232414AbjAWTm2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Jan 2023 14:34:37 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3B8930E93;
-        Mon, 23 Jan 2023 11:34:35 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id e3so11822284wru.13;
-        Mon, 23 Jan 2023 11:34:35 -0800 (PST)
+        Mon, 23 Jan 2023 14:42:28 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A5DA35AC
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 11:42:27 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id d14so8181153wrr.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 11:42:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=soIeeALkS41bJ2ncvnZDLOOPGxMriqJTL5s1g1AyJyc=;
-        b=ZXMPZfkOFIL6dxeDLSpIRvNj9o6WVBrQyyyuuxO4aH8UdL8p8gg/FiQQ97cQLhMeXU
-         VEUo0xjJYLnWhQFzLFdnn47I6nq785nL8oPWyp0K9rgsniZcJOaqghz+AG068L0MU+xW
-         Bqx6nuAZ2hLA22ySlcqUEXE//qir9d0THhXT4/P/494Ysckf00Ml+8ekbKarNVNOwK8e
-         Q6ffxoTB4psAMWeZfixOUtBJenIIR6WRg0vcrHrq4bUAcbVO4xQbn69Crr5a/T/zFVFU
-         e1OeXt6qREJEbh29PFd8URiT8VWsIMf6dtMmvJ/y65E7C1h3mIIL7Oz4DXrFHWPpItDN
-         CmUA==
+        d=linaro.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=p9ILq3+mwKrh0pefLGbJdcwDb8dIBE8u28kNBwVa/4E=;
+        b=AW/XUguALAmXap9iIRkL9wPE1+78JgBdgei1kVXA1aDGHszAL3rWm2zWxD/+2L94qq
+         Ai9QVNX5MqQMZf1tNfL/JAzFrqycZRpT2RTS9zNfk0k7t38aFLRSYuDrl1rOf+bKtOhL
+         59HIDTTK3pLwO0ooeLDkGqAMCelObQvL82eCLD6p6hOucdd+k162dxnenZtS6XFghKAd
+         HpYFMcHO9dgsGMv/PoIRv/phrA051NZUVN1eZ1QsFXFI6RmUyrlqHccHBepyQTMlrztR
+         6z/GMXcviz4lZr9ICzPpx621xgV6B/strzNrsuKr6Btq+0OSucGLSsIzHGf9fY1IEe8K
+         CmeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=soIeeALkS41bJ2ncvnZDLOOPGxMriqJTL5s1g1AyJyc=;
-        b=AchauiRQW/2UDYC9cXXqhno0AdbaJ7/RgSghKN0/Ri6wxjud2HDphEjSNGTT5FfBO+
-         tJJTZpK0dNo1zREIKG2Ywfhveu7OdFzoSrCkWI4DaGHWLd8q4nbT9OI8UHUx+i5YucLM
-         UZKLVbNIdhfyqq/nTPkhV01hMOMU0zm3p7WclH/SMPrZIDerBHVe6p0ZI/f0Z59yj50d
-         6XTNSyc1JvUpRwO5Yx52WSvEmWXhiyttBMnSkgqDgt7mR6a8FtI2P5XF6IaFnT9QvYSa
-         I9ARHlWtemy+GE9+0XoWhUZFTr7x/Xt5+be2v4Wwl/AAe7x77nmHGq8Xm4Md3TRoUmCr
-         7R4Q==
-X-Gm-Message-State: AFqh2kopzs75q0NWAj1s7qhflwZ0JVC8psdQVNxLTICD5qgXfW4XCI5r
-        tbhK77cElWJho4/Tekjb/uGk2OfcMEQ=
-X-Google-Smtp-Source: AMrXdXswKfzpNtGZwSh6N9h23hhfo2/ZJ4yh+Eljese29HLOMBEU93s0Z968TxRIVGWoSQt5mMNBrg==
-X-Received: by 2002:a5d:4350:0:b0:2be:5366:8cdf with SMTP id u16-20020a5d4350000000b002be53668cdfmr11652548wrr.20.1674502474339;
-        Mon, 23 Jan 2023 11:34:34 -0800 (PST)
-Received: from localhost.localdomain (93-34-89-61.ip49.fastwebnet.it. [93.34.89.61])
-        by smtp.googlemail.com with ESMTPSA id z8-20020a5d4408000000b002b8fe58d6desm151428wrq.62.2023.01.23.11.34.33
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=p9ILq3+mwKrh0pefLGbJdcwDb8dIBE8u28kNBwVa/4E=;
+        b=Ak82F8trywxIbloSGz5pvhyAIGiPooIpBhdkUN0amCVgIs8fdLmGlqz1oYRbe0liK5
+         X8ptqpdG8m9luu6X8v+EKjBBHHg/kkFwHuXlDvZZoklyoTuu6eEN85SD2OFrx0vb4mKE
+         DB0Q6z8FMuRVY9t+odeKpyXqIV43NljRFLlTX3A1Os+jvwHDl/Dvo45FHWpChQGmIRl5
+         Wy/gF9TIoJO4ZBjGeGPajm06NO2mINkHFX8tIOGY/B8wUDEausmKLKFEcByJTGODdJgX
+         vbo9X+FYo2KO7cJOBya/0kxnrrmHZPdY4qWwEyJawz45AB6Af+/A5kf17fVGijsRd6wj
+         imow==
+X-Gm-Message-State: AFqh2kq+6r77Qr3NXKAztZxBNtNhaDof4a9pSGuBV+w1LUiVigf8eIRA
+        fHEA8NGrN2/7zwSkXzY6LHAQ1g==
+X-Google-Smtp-Source: AMrXdXsnN/1Z1mhC5MXnr3/Vlg9iTHyDxGzqM1a2JSKGN6e1eHCKTGhbtkzJtZchpKSCwnfztvDLQQ==
+X-Received: by 2002:adf:f805:0:b0:2be:2b5:ae87 with SMTP id s5-20020adff805000000b002be02b5ae87mr22137380wrp.24.1674502945664;
+        Mon, 23 Jan 2023 11:42:25 -0800 (PST)
+Received: from linaro.org ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id y15-20020a5d470f000000b002bc8130cca7sm175808wrq.23.2023.01.23.11.42.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Jan 2023 11:34:34 -0800 (PST)
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
+        Mon, 23 Jan 2023 11:42:25 -0800 (PST)
+Date:   Mon, 23 Jan 2023 21:42:22 +0200
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Christian Marangi <ansuelsmth@gmail.com>
-Subject: [PATCH v3 2/2] dt-bindings: opp: opp-v2-kryo-cpu: enlarge opp-supported-hw maximum
-Date:   Mon, 23 Jan 2023 20:34:22 +0100
-Message-Id: <20230123193422.15972-2-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20230123193422.15972-1-ansuelsmth@gmail.com>
-References: <20230123193422.15972-1-ansuelsmth@gmail.com>
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v4 08/12] phy: qcom-qmp-pcie: Add support for SM8550 g3x2
+ and g4x2 PCIEs
+Message-ID: <Y87jHlzAaoGbs0Pu@linaro.org>
+References: <20230119140453.3942340-1-abel.vesa@linaro.org>
+ <20230119140453.3942340-9-abel.vesa@linaro.org>
+ <Y86h1FDuHFu3mImq@hovoldconsulting.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y86h1FDuHFu3mImq@hovoldconsulting.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enlarge opp-supported-hw maximum value. In recent SoC we started
-matching more bit and we currently match mask of 112. The old maximum of
-7 was good for old SoC that didn't had complex id, but now this is
-limiting and we need to enlarge it to support more variants.
+On 23-01-23 16:03:48, Johan Hovold wrote:
+> On Thu, Jan 19, 2023 at 04:04:49PM +0200, Abel Vesa wrote:
+> > Add the SM8550 both g4 and g3 configurations. In addition, there is a
+> > new "lane shared" table that needs to be configured for g4, along with
+> > the No-CSR list of resets.
+> > 
+> > Co-developed-by: Neil Armstrong <neil.armstrong@linaro.org>
+> > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> > 
+> > This patchset relies on the following patchset:
+> > https://lore.kernel.org/all/20230117224148.1914627-1-abel.vesa@linaro.org/
+> > 
+> > The v3 of this patchset is:
+> > https://lore.kernel.org/all/20230118005328.2378792-1-abel.vesa@linaro.org/
+> > 
+> > Changes since v3:
+> >  * added Dmitry's R-b tag
+> > 
+> > Changes since v2:
+> >  * none
+> > 
+> > Changes since v1:
+> >  * split all the offsets into separate patches, like Vinod suggested
+> > 
+> > 
+> >  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 365 +++++++++++++++++++++++
+> >  1 file changed, 365 insertions(+)
+> > 
+> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> > index bffb9e138715..48d179d8d8d6 100644
+> > --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> > +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
 
-Document all the various mask that can be used and limit them to only
-reasonable values instead of using a generic maximum limit.
+[...]
 
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
----
+> > @@ -2370,6 +2704,14 @@ static int qmp_pcie_power_on(struct phy *phy)
+> >  	if (ret)
+> >  		return ret;
+> >  
+> > +	if (qmp->nocsr_resets) {
+> > +		ret = reset_control_bulk_deassert(cfg->num_nocsr_resets, qmp->nocsr_resets);
+> > +		if (ret) {
+> > +			dev_err(qmp->dev, "no-csr reset deassert failed\n");
+> > +			goto err_disable_pipe_clk;
+> > +		}
+> > +	}
+> 
+> Is this the documented reset sequence? To keep the nocsr reset asserted
+> from init() to power_on() and during programming of the PHY registers?
+> 
+> What if power_on() is never called, etc? (I know we always call
+> power_on() after init() currently, but that may change.)
+> 
+> Could you explain a bit how this reset is supposed work and be used?
+> 
 
-Changes v3:
-- Fix dt_binding_check for missing 0x5 and 0x6 value
-Changes v2:
-- Document additional bit format
+The documentation says that the no-CSR reset should be kept asserted until
+the clock (PLL) is stable and during configuration. It also says the
+no-CSR can be used to reset the PHY without losing the configuration.
+It also says pciephy_reset needs to be deasserted before configuration.
 
- .../devicetree/bindings/opp/opp-v2-kryo-cpu.yaml | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+So I guess what we need to do here is: deassert the pciephy_reset,
+configure the CSR register, then deassert the no-CSR reset.
 
-diff --git a/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml b/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml
-index b4947b326773..bbbad31ae4ca 100644
---- a/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml
-+++ b/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml
-@@ -50,12 +50,22 @@ patternProperties:
-       opp-supported-hw:
-         description: |
-           A single 32 bit bitmap value, representing compatible HW.
--          Bitmap:
-+          Bitmap for MSM8996 format:
-           0:  MSM8996, speedbin 0
-           1:  MSM8996, speedbin 1
-           2:  MSM8996, speedbin 2
--          3-31:  unused
--        maximum: 0x7
-+          3:  MSM8996, speedbin 3
-+          4-31:  unused
-+
-+          Bitmap for MSM8996SG format (speedbin shifted of 4 left):
-+          0-3:  unused
-+          4:  MSM8996SG, speedbin 0
-+          5:  MSM8996SG, speedbin 1
-+          6:  MSM8996SG, speedbin 2
-+          7-31:  unused
-+        enum: [0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7,
-+               0x9, 0xd, 0xe, 0xf,
-+               0x10, 0x20, 0x30, 0x70]
- 
-       clock-latency-ns: true
- 
--- 
-2.38.1
+If power on never gets called, PHY remains in reset, but configured.
 
+> > +
+> >  	/* Pull PHY out of reset state */
+> >  	qphy_clrbits(pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
+> >  
+> > @@ -2503,6 +2845,21 @@ static int qmp_pcie_reset_init(struct qmp_pcie *qmp)
+> >  	if (ret)
+> >  		return dev_err_probe(dev, ret, "failed to get resets\n");
+> >  
+> > +	if (cfg->nocsr_reset_list) {
+> > +		qmp->nocsr_resets = devm_kcalloc(dev, cfg->num_nocsr_resets,
+> > +				   sizeof(*qmp->nocsr_resets), GFP_KERNEL);
+> > +		if (!qmp->nocsr_resets)
+> > +			return -ENOMEM;
+> > +
+> > +		for (i = 0; i < cfg->num_nocsr_resets; i++)
+> > +			qmp->nocsr_resets[i].id = cfg->nocsr_reset_list[i];
+> > +
+> > +		ret = devm_reset_control_bulk_get_exclusive(dev, cfg->num_nocsr_resets,
+> > +								qmp->nocsr_resets);
+> > +		if (ret)
+> > +			return dev_err_probe(dev, ret, "failed to get no CSR resets\n");
+
+[...]
