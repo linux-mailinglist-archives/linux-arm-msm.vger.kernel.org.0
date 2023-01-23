@@ -2,190 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 68DFF6788B0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 21:52:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CD238678959
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 22:18:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231610AbjAWUwI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Jan 2023 15:52:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49628 "EHLO
+        id S233061AbjAWVSn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Jan 2023 16:18:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229514AbjAWUwH (ORCPT
+        with ESMTP id S231540AbjAWVSn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Jan 2023 15:52:07 -0500
-Received: from mailrelay1-1.pub.mailoutpod2-cph3.one.com (mailrelay1-1.pub.mailoutpod2-cph3.one.com [46.30.211.176])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5481733476
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 12:52:05 -0800 (PST)
+        Mon, 23 Jan 2023 16:18:43 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F23E1ABF0;
+        Mon, 23 Jan 2023 13:18:42 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id n7so12072695wrx.5;
+        Mon, 23 Jan 2023 13:18:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ravnborg.org; s=rsa2;
-        h=in-reply-to:content-type:mime-version:references:message-id:subject:cc:to:
-         from:date:from;
-        bh=6xlJitFXBs8UqFqbNXtsqz4Qe4cxHRrL4RHl5+HWVV8=;
-        b=BYQB1r9230Rhlr9d4tlQD/BzVdvjxRnPEk9wov3faQk2ckbz06LXW2HPwHA/4TyrQdLvlpnJklOfG
-         FXDMxvjuc8dnXEYTUwgcbFiBfstPjMdyyH0YX2LO4+w6qRdSvHnnlJ5VUd/vEv8cp4732SJ1G1Oxwm
-         XDILz3LGNXkxa94+o32JYdV1q8wgZyO/UDr6LQHMMor8Nqr6+EYZ/6mqDJwtaHYgIBcPdc0C+PbaVC
-         MC2TS3+vJy41LdgNmuafvswsaPs0nSZII8RqLUnszrRYbh16WDrhUaFtP/Itlj58s4XyO5EZ4IDuDF
-         jRL7m85J+clhsyWnmXyUsjbJyzwd5aA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed;
-        d=ravnborg.org; s=ed2;
-        h=in-reply-to:content-type:mime-version:references:message-id:subject:cc:to:
-         from:date:from;
-        bh=6xlJitFXBs8UqFqbNXtsqz4Qe4cxHRrL4RHl5+HWVV8=;
-        b=TvwoevhBurigcyIfAcq+VWI6JaPtfF139Yc4vlWQbp6YNbsnZUwUpsVBURsM+ZPfScBMEH9fCMbO3
-         jQpf0XYBQ==
-X-HalOne-ID: a3c44e78-9b5f-11ed-a91a-11abd97b9443
-Received: from ravnborg.org (2-105-2-98-cable.dk.customer.tdc.net [2.105.2.98])
-        by mailrelay1 (Halon) with ESMTPSA
-        id a3c44e78-9b5f-11ed-a91a-11abd97b9443;
-        Mon, 23 Jan 2023 20:51:00 +0000 (UTC)
-Date:   Mon, 23 Jan 2023 21:50:58 +0100
-From:   Sam Ravnborg <sam@ravnborg.org>
-To:     Thomas Zimmermann <tzimmermann@suse.de>
-Cc:     airlied@gmail.com, daniel@ffwll.ch,
-        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        javierm@redhat.com, linux-samsung-soc@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
-        linux-tegra@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 10/10] drm/fbdev-generic: Rename struct fb_info 'fbi' to
- 'info'
-Message-ID: <Y87zMk0sJc6EOG/6@ravnborg.org>
-References: <20230123100559.12351-1-tzimmermann@suse.de>
- <20230123100559.12351-11-tzimmermann@suse.de>
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=xpwrGNkZx+sVBzOW0j2j89vPfNOgreFG5uTvNf7DxPU=;
+        b=Re4cufl2WPD0YzvKeEyjkmvLydeJYy4KQuxRe9CRuQ7oDQ2oxGsg7J74D+XYFYfct+
+         DVJ1YyRjLXunFJRCg4W/rjWhbeRwbuzEblodhZwoqiC7r3x2pzyAbbQtAynNERDGnnbX
+         zMVrCMPY8ke7Jbh2+8hj+26bMuG4dp1g33QvGkYP9QdftlePedoBdkirLZe4pOKb7ukQ
+         M8JQ9vwHFsNZVwYcEW/QRxpZY/otC5RMcGVuQ4X85bysv+eFZSIjdjjjuNlioOjFf9n8
+         2St3GosQSf2WgkMhkmFO6DpjIlYyqTMgsMYYCHuDvI8R1kYPfZMb72uxwYqPDdR3AAm0
+         wxGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xpwrGNkZx+sVBzOW0j2j89vPfNOgreFG5uTvNf7DxPU=;
+        b=wJ7LccqocBR14g4rKzce5ezVkMtiHo6HrqOMtgUyvI/C1cfI4rGv7e252Cnh9gUzmU
+         iqPLL/26S0wS41FoySJDnH5UQhN73GrokjHakJzVg82XEvYquCyWWb3TPipLvYel8+jA
+         7cL9KXBRe8iLITNCoYMljcQrlpRTWwKhW12O1e4oIMEnqFIjyKBw6r4/i3hUgN8QRQND
+         eUMfRvsRKaUXb+54/8Ktf8/TYfkZETy/qxYaEbUW5pmIMhMRlHYI5oJmYmQaooL7zFVu
+         16wQc3M4829Rh4DaIMB5k6foINb+SM+CJvwpaF02Rpej5CiXi6OUcQ6gSdcfoYas1YNl
+         5RMg==
+X-Gm-Message-State: AFqh2krV2lYGZeHRngH2vZk7WFKRhwo4hAtpeJ5VaxCjee3ekxXkv0yC
+        fFOYz3cwHIE5iLnXVbyzK28=
+X-Google-Smtp-Source: AMrXdXuTEcmNF+SqV8HUBdeUbSceMBFZ6/+tS/tF0O/XdFHGgavdDJZnFa9jxPCwWwHamsCJj6BzeA==
+X-Received: by 2002:adf:e2d0:0:b0:2bb:e868:6a45 with SMTP id d16-20020adfe2d0000000b002bbe8686a45mr17384896wrj.56.1674508720406;
+        Mon, 23 Jan 2023 13:18:40 -0800 (PST)
+Received: from localhost.localdomain (93-34-89-61.ip49.fastwebnet.it. [93.34.89.61])
+        by smtp.googlemail.com with ESMTPSA id v1-20020a5d4b01000000b002be53aa2260sm314121wrq.117.2023.01.23.13.18.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Jan 2023 13:18:40 -0800 (PST)
+From:   Christian Marangi <ansuelsmth@gmail.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Christian Marangi <ansuelsmth@gmail.com>
+Subject: [PATCH] dt-bindings: arm: qcom,ids: Add Soc IDs for IPQ8064 and variants
+Date:   Mon, 23 Jan 2023 22:17:27 +0100
+Message-Id: <20230123211727.21542-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230123100559.12351-11-tzimmermann@suse.de>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Thomas,
+Add Soc IDs for Qualcomm IPQ8064 and variants.
 
-a quick drive-by comment.
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+---
+ include/dt-bindings/arm/qcom,ids.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-On Mon, Jan 23, 2023 at 11:05:59AM +0100, Thomas Zimmermann wrote:
-> The generic fbdev emulation names variables of type struct fb_info
-> both 'fbi' and 'info'. The latter seems to be more common in fbdev
-> code, so name fbi accordingly.
-> 
-> Also replace the duplicate variable in drm_fbdev_fb_destroy().
-> 
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-> ---
->  drivers/gpu/drm/drm_fbdev_generic.c | 49 ++++++++++++++---------------
->  1 file changed, 24 insertions(+), 25 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/drm_fbdev_generic.c b/drivers/gpu/drm/drm_fbdev_generic.c
-> index 49a0bba86ce7..7633da5c13c3 100644
-> --- a/drivers/gpu/drm/drm_fbdev_generic.c
-> +++ b/drivers/gpu/drm/drm_fbdev_generic.c
-> @@ -46,17 +46,16 @@ static int drm_fbdev_fb_release(struct fb_info *info, int user)
->  static void drm_fbdev_fb_destroy(struct fb_info *info)
->  {
->  	struct drm_fb_helper *fb_helper = info->par;
-> -	struct fb_info *fbi = fb_helper->info;
->  	void *shadow = NULL;
->  
->  	if (!fb_helper->dev)
->  		return;
->  
-> -	if (fbi) {
-> -		if (fbi->fbdefio)
-> -			fb_deferred_io_cleanup(fbi);
-> +	if (info) {
-As info is already used above to find fb_helper, this check is
-redundant.
+diff --git a/include/dt-bindings/arm/qcom,ids.h b/include/dt-bindings/arm/qcom,ids.h
+index f7aef3f310d7..dc86461ab664 100644
+--- a/include/dt-bindings/arm/qcom,ids.h
++++ b/include/dt-bindings/arm/qcom,ids.h
+@@ -45,6 +45,10 @@
+ #define QCOM_ID_MSM8126			198
+ #define QCOM_ID_APQ8026			199
+ #define QCOM_ID_MSM8926			200
++#define QCOM_ID_IPQ8062			201
++#define QCOM_ID_IPQ8064			202
++#define QCOM_ID_IPQ8066			203
++#define QCOM_ID_IPQ8068			204
+ #define QCOM_ID_MSM8326			205
+ #define QCOM_ID_MSM8916			206
+ #define QCOM_ID_MSM8994			207
+@@ -80,6 +84,8 @@
+ #define QCOM_ID_APQ8094			253
+ #define QCOM_ID_MSM8956			266
+ #define QCOM_ID_MSM8976			278
++#define QCOM_ID_IPQ8065			280
++#define QCOM_ID_IPQ8069			281
+ #define QCOM_ID_MDM9607			290
+ #define QCOM_ID_APQ8096			291
+ #define QCOM_ID_MSM8998			292
+-- 
+2.38.1
 
-	Sam
-
-> +		if (info->fbdefio)
-> +			fb_deferred_io_cleanup(info);
->  		if (drm_fbdev_use_shadow_fb(fb_helper))
-> -			shadow = fbi->screen_buffer;
-> +			shadow = info->screen_buffer;
->  	}
->  
->  	drm_fb_helper_fini(fb_helper);
-> @@ -173,7 +172,7 @@ static int drm_fbdev_fb_probe(struct drm_fb_helper *fb_helper,
->  	struct drm_device *dev = fb_helper->dev;
->  	struct drm_client_buffer *buffer;
->  	struct drm_framebuffer *fb;
-> -	struct fb_info *fbi;
-> +	struct fb_info *info;
->  	u32 format;
->  	struct iosys_map map;
->  	int ret;
-> @@ -192,35 +191,35 @@ static int drm_fbdev_fb_probe(struct drm_fb_helper *fb_helper,
->  	fb_helper->fb = buffer->fb;
->  	fb = buffer->fb;
->  
-> -	fbi = drm_fb_helper_alloc_info(fb_helper);
-> -	if (IS_ERR(fbi))
-> -		return PTR_ERR(fbi);
-> +	info = drm_fb_helper_alloc_info(fb_helper);
-> +	if (IS_ERR(info))
-> +		return PTR_ERR(info);
->  
-> -	fbi->fbops = &drm_fbdev_fb_ops;
-> -	fbi->screen_size = sizes->surface_height * fb->pitches[0];
-> -	fbi->fix.smem_len = fbi->screen_size;
-> -	fbi->flags = FBINFO_DEFAULT;
-> +	info->fbops = &drm_fbdev_fb_ops;
-> +	info->screen_size = sizes->surface_height * fb->pitches[0];
-> +	info->fix.smem_len = info->screen_size;
-> +	info->flags = FBINFO_DEFAULT;
->  
-> -	drm_fb_helper_fill_info(fbi, fb_helper, sizes);
-> +	drm_fb_helper_fill_info(info, fb_helper, sizes);
->  
->  	if (drm_fbdev_use_shadow_fb(fb_helper)) {
-> -		fbi->screen_buffer = vzalloc(fbi->screen_size);
-> -		if (!fbi->screen_buffer)
-> +		info->screen_buffer = vzalloc(info->screen_size);
-> +		if (!info->screen_buffer)
->  			return -ENOMEM;
-> -		fbi->flags |= FBINFO_VIRTFB | FBINFO_READS_FAST;
-> +		info->flags |= FBINFO_VIRTFB | FBINFO_READS_FAST;
->  
-> -		fbi->fbdefio = &drm_fbdev_defio;
-> -		fb_deferred_io_init(fbi);
-> +		info->fbdefio = &drm_fbdev_defio;
-> +		fb_deferred_io_init(info);
->  	} else {
->  		/* buffer is mapped for HW framebuffer */
->  		ret = drm_client_buffer_vmap(fb_helper->buffer, &map);
->  		if (ret)
->  			return ret;
->  		if (map.is_iomem) {
-> -			fbi->screen_base = map.vaddr_iomem;
-> +			info->screen_base = map.vaddr_iomem;
->  		} else {
-> -			fbi->screen_buffer = map.vaddr;
-> -			fbi->flags |= FBINFO_VIRTFB;
-> +			info->screen_buffer = map.vaddr;
-> +			info->flags |= FBINFO_VIRTFB;
->  		}
->  
->  		/*
-> @@ -229,10 +228,10 @@ static int drm_fbdev_fb_probe(struct drm_fb_helper *fb_helper,
->  		 * case.
->  		 */
->  #if IS_ENABLED(CONFIG_DRM_FBDEV_LEAK_PHYS_SMEM)
-> -		if (fb_helper->hint_leak_smem_start && fbi->fix.smem_start == 0 &&
-> +		if (fb_helper->hint_leak_smem_start && info->fix.smem_start == 0 &&
->  		    !drm_WARN_ON_ONCE(dev, map.is_iomem))
-> -			fbi->fix.smem_start =
-> -				page_to_phys(virt_to_page(fbi->screen_buffer));
-> +			info->fix.smem_start =
-> +				page_to_phys(virt_to_page(info->screen_buffer));
->  #endif
->  	}
->  
-> -- 
-> 2.39.0
