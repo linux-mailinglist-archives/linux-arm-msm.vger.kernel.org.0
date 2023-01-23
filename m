@@ -2,78 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D4DA6775FD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 09:01:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B30E1677610
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 09:08:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231607AbjAWIBR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Jan 2023 03:01:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43716 "EHLO
+        id S230360AbjAWIIX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Jan 2023 03:08:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231615AbjAWIBP (ORCPT
+        with ESMTP id S230255AbjAWIIW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Jan 2023 03:01:15 -0500
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC7311C33F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 00:01:06 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id q8so8277352wmo.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 00:01:06 -0800 (PST)
+        Mon, 23 Jan 2023 03:08:22 -0500
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2349413D7F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 00:08:21 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id a11so17064923lfg.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 00:08:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xgwS1wLKSY/UzsprCjGjz1jf0uYNHHiqTORdSq4h/xs=;
-        b=IsuNxvgMqdlvZT3QGtWGnsuF4PY7RvVV499fHpcNx5aM1X7MZ0k5cdDgw9zZlzWR+K
-         jVBQpgYP3Fc9W2dLwiUaBZ6UtY7KFBBnDxLMgIYDTHjmE3DBU4MUHgpYeGz47sPIKgcP
-         ie+HLMFvjEUpDyYg93WbT5hA6/dT3wXGM76PuYvn+8nNnWc4XMsUvtaQcaUADycAIx3O
-         CDnxYR6rYgFdUMJG5xFsPQo0ip2+vfQlBEuTTC+DQQ4BUriARJgmKA/mChWnpSGNGMDL
-         EqZD71AB8iDeXKTuZ8JSRMn8nIFo7G1bdrtKehwNJ5huWinE3Pld4T+buE8UIlEcSlt9
-         7GJA==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=c7wlYRJ20Jol236QKN6NipQuokT5Lc5cfhgSG+Al5uE=;
+        b=YiIp9bSkATLGtKH5X9Qw8/wPF5/WC7QLObJT7zQkSWWYGSgBKWTCuexj4of3gEZb/4
+         Xi76HAMGUOmeQVFUl71QGTlVn5iLqCRI8Fv3IyLNJ/c3S1thWAIXGusqqdbIvkqiSVE4
+         P82BwXvvxpPjh6IB1fcZfl9MK/25gW4+l8kh4XE1bfV6EP0EXJqSaCL2kF6pahAMSdqd
+         c0usWW0p0EJRpqMEhODnakmmLMItLvI5KFcR7a3EcLfOILZchJX/ixLUSlusDnyMwDOW
+         TX6zbffuPS8GAWaBKlk40OoX1h6aUARXyG9Noi1H1jDZjnq7ypZ7PP8BvXyOQXy6vfDa
+         wn1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xgwS1wLKSY/UzsprCjGjz1jf0uYNHHiqTORdSq4h/xs=;
-        b=yGk9IpNPaHR68LWrbnM+mzWiKd/CblhRmCXm6a/k9iMEyMIMuhPE4/J9AR/GoVezmB
-         rjwzFoplsIebrI0MNBdIYMbHOuxBhXvbCFTS+BOfjdQ/kiaQXrSYcL1v0Y+JAVy0Wsfg
-         KYmtlpz/f9dP2ZoKFMkK29wbaZ0XCiHWIvHbITXcXGq/Z7QFK3OOpWSiDUEojmExXPDO
-         8QSJXmnOchGhj7ys7nLL12u9fontukPUkA9DOGuj/+r+s/0aVNxzYMJVgUKTTjTqey53
-         +eUmSvb8oZZZH7ehhWzjy2tlkXnPLKP5d2IKahDaiYynoJRHPzwwKouZKsl4k7M8h/1V
-         gF4g==
-X-Gm-Message-State: AFqh2kqymMVyOnq9WuZqb8+YHwXWzQJ++ZtY/otEaoXnS1CD/ki2rqxo
-        YOQrfROcZSUkrRjbCeFb4yZEpA==
-X-Google-Smtp-Source: AMrXdXtBxcsmF6l5HL2ODsqVwfRUK9XbGKORvubwbbLb1eDRMhP295OnmpH8GomgMdPsglnkk0Vr8w==
-X-Received: by 2002:a05:600c:1d0b:b0:3db:88f:996d with SMTP id l11-20020a05600c1d0b00b003db088f996dmr22170395wms.36.1674460865387;
-        Mon, 23 Jan 2023 00:01:05 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id c14-20020adfa30e000000b002be50604c81sm8386152wrb.47.2023.01.23.00.01.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Jan 2023 00:01:04 -0800 (PST)
-Message-ID: <0c06bfb5-c0b7-c3eb-4c99-8e77280a942c@linaro.org>
-Date:   Mon, 23 Jan 2023 09:01:02 +0100
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=c7wlYRJ20Jol236QKN6NipQuokT5Lc5cfhgSG+Al5uE=;
+        b=jeabr7nnpSG+J32ACZAQ2pnlYQzancIRaB8iSlmdJhqxNaBjvBiPWnScHvs5AxFkdp
+         8Nrt4BKfVbRVwFQhIc5S/+6Nx3dnvHK7JSqDgR69KSe5lFNubxrPc2PeFsvAdkrJbgU6
+         R5PT+QSX+M5kTZkTc2xy/6s5ZWGmsGCnfFOesRJ1xePukvox85WlECZ9xG/BoNDdTrpZ
+         zxNo3/x0Cnh44OL4dXs++OUH4EckThu6fQy3tvPiM8b4BuDfNwvR4SqNSBgNxdzvyoLr
+         akBFzeMp1jBJJBoiVkJ/qORyoG4Lz7TZtoNuYw71ybPAJfO1m8xp5QPtWavRGGB0/YVt
+         LQrQ==
+X-Gm-Message-State: AFqh2kptS+hY0AS/brbt+yJDuutnD93bj7Nq4YvlrNpE9vAnXFwN+lOF
+        VtiDEBrDb8mmR27wBe+6zH9c0Q==
+X-Google-Smtp-Source: AMrXdXvmu4H2D/okEr4fBGESa3wja37aq6dQQ/DRvEdR9w9OojzN05TqJovYtHPPNMf9ZBSgX0ma0g==
+X-Received: by 2002:a05:6512:3ba8:b0:4d5:8bf9:92ef with SMTP id g40-20020a0565123ba800b004d58bf992efmr7694954lfv.60.1674461299296;
+        Mon, 23 Jan 2023 00:08:19 -0800 (PST)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id w42-20020a0565120b2a00b004cc858a2d47sm5154265lfu.41.2023.01.23.00.08.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Jan 2023 00:08:18 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH] drm/msm/dpu: fix sm8450 CTL configuration
+Date:   Mon, 23 Jan 2023 10:08:18 +0200
+Message-Id: <20230123080818.3069266-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [RESEND v5 0/6] Add resets for ADSP based audio clock controller
- driver
-Content-Language: en-US
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        swboyd@chromium.org, agross@kernel.org, andersson@kernel.org,
-        robh+dt@kernel.org, broonie@kernel.org, quic_plai@quicinc.com,
-        krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@somainline.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com
-References: <1674322340-25882-1-git-send-email-quic_srivasam@quicinc.com>
- <030115dd-f489-5d4e-c993-e9fa8b550f04@linaro.org>
- <43bea488-7a71-aec3-508c-6a541d5db508@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <43bea488-7a71-aec3-508c-6a541d5db508@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,26 +73,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/01/2023 06:13, Srinivasa Rao Mandadapu wrote:
-> 
-> On 1/22/2023 7:21 PM, Krzysztof Kozlowski wrote:
-> Thanks for Your time Krzysztof!!!
->> On 21/01/2023 18:32, Srinivasa Rao Mandadapu wrote:
->>> Add resets and remove qdsp6ss clcok controller for audioreach based platforms.
->>>
->>> Changes since v4:
->>>      -- Update Fixes tag in Merge lpasscc into lpass_aon patch.
->>>      -- Revert removal of clk_regmap structure in Merge lpasscc into lpass_aon patch.
->>>
->> Your v5 before resend have build issues. Please fix.
-> 
-> In v5, one commit missed to amend local changes.Hence resent it.
-> 
-> on Resent patch series no build issues.
+Correct the CTL size on sm8450 platform. This fixes the incorrect merge
+of sm8350 support, which unfortunately also touched the SM8450 setup.
 
-Resend means you send the same patches. If you change patches, it's not
-resend but new version.
+Fixes: 0e91bcbb0016 ("drm/msm/dpu: Add SM8350 to hw catalog")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-Best regards,
-Krzysztof
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+index 63a0fa3b0a17..9060dce51e2e 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+@@ -1017,31 +1017,31 @@ static const struct dpu_ctl_cfg sm8450_ctl[] = {
+ 	},
+ 	{
+ 	.name = "ctl_1", .id = CTL_1,
+-	.base = 0x16000, .len = 0x1e8,
++	.base = 0x16000, .len = 0x204,
+ 	.features = BIT(DPU_CTL_SPLIT_DISPLAY) | CTL_SC7280_MASK,
+ 	.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 10),
+ 	},
+ 	{
+ 	.name = "ctl_2", .id = CTL_2,
+-	.base = 0x17000, .len = 0x1e8,
++	.base = 0x17000, .len = 0x204,
+ 	.features = CTL_SC7280_MASK,
+ 	.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 11),
+ 	},
+ 	{
+ 	.name = "ctl_3", .id = CTL_3,
+-	.base = 0x18000, .len = 0x1e8,
++	.base = 0x18000, .len = 0x204,
+ 	.features = CTL_SC7280_MASK,
+ 	.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 12),
+ 	},
+ 	{
+ 	.name = "ctl_4", .id = CTL_4,
+-	.base = 0x19000, .len = 0x1e8,
++	.base = 0x19000, .len = 0x204,
+ 	.features = CTL_SC7280_MASK,
+ 	.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 13),
+ 	},
+ 	{
+ 	.name = "ctl_5", .id = CTL_5,
+-	.base = 0x1a000, .len = 0x1e8,
++	.base = 0x1a000, .len = 0x204,
+ 	.features = CTL_SC7280_MASK,
+ 	.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 23),
+ 	},
+-- 
+2.39.0
 
