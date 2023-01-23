@@ -2,62 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6ECF567821D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 17:48:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 44E5C678228
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 17:50:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233337AbjAWQsx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Jan 2023 11:48:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54382 "EHLO
+        id S232278AbjAWQuO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Jan 2023 11:50:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231899AbjAWQsw (ORCPT
+        with ESMTP id S233455AbjAWQuK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Jan 2023 11:48:52 -0500
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29B132943F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 08:48:51 -0800 (PST)
-Received: by mail-ej1-x62f.google.com with SMTP id tz11so32243122ejc.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 08:48:51 -0800 (PST)
+        Mon, 23 Jan 2023 11:50:10 -0500
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6ADCF2D168
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 08:50:07 -0800 (PST)
+Received: by mail-ed1-x531.google.com with SMTP id s3so15320874edd.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 08:50:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=juz46s3FiDdEs9rs33v7d1aVH0ysvr9X47OMEfmTYQc=;
-        b=WM067+mlI+8i8h6eAVzT3eiVHH1jMagTYEqEfRdIxfo0u9PTlFH3WSgssTQRu9o3E3
-         bA/cQVnqbcC56QccNtZNX5kVFYCha9pvIvzJMhySudiZqCAi984l0Z0HxyU383a3a0gl
-         PjIth1WpGBOVzPHuM8ds158mGDYJr7Fma/QzL9vvV0T3Igun6drqfkFpAyV0znKwgVM/
-         RbaHv1M6SAK16t9CYre/8p6SNonsLnL3WKflCNlXZvjPDfZF6VZEI+LFp/OPpdXc6gmO
-         iz/DWwNWFUglzAaogygWT3O+2o+EZsAiiVcCvXqZoGoGVuow0NzxMUN+xhX7DqF1fC2z
-         0Yxw==
+        bh=kWCI2M5MRTLd+nORwrHWu4yoS6PIWa3IEl2T22HQAmA=;
+        b=mW2XjebZvisk2ij/kthEbIC2eqFxOWbI4ADgSd4W5aqwEFnK9mkmrZMJVkaduZ1w/G
+         GBWz1hlnUYLRYLH7rH8HM86b+nt/w5mqtISoQYZvsBVyZ0Tqo2/ZA7cDtSXjPHoOwAlq
+         1UfxgIvB81O4V7EeKgtJ+TMpD7mA7R6VX6dy/XMsWFu1+LUSdRfkHkeaS3MDH8Zn8vTf
+         OFyRev0RDxo5HX7+R5LXZ3QmK9MBkNdoVm+2K6twK9gV4W9JNJpfyJcFPFon6WWJWjoQ
+         F8nDBqEa3XklYw9dLy2nL7/krXOnt9KqNFsMPHBroX1BqkqAECiSnkcbPzUi5N2NgvIM
+         jioQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=juz46s3FiDdEs9rs33v7d1aVH0ysvr9X47OMEfmTYQc=;
-        b=mZYAA1deY/ss3m1RMVuE+heK18+EaKY8QxalK7nXzsdvnzvSBPbMhnGcsF7/mbly9k
-         a9L7FT2BWEgGxm/DDS9pcKIjAdxcMV5RvldsqPc/9Lt13UIBK787Z68X9l7aGUsNd+Mb
-         4erCraw6pGShFq1imjrBoV4W7vzbhGNsC2BpUqhnYaDjAdGOPiZAc8utXli3tpf5pV04
-         ZXPaLcsN2HPUBskQaMr1tH5GnVn9bSiXqo58vm4Hk7f2HJATxrjGQmVdIMI3RSmzzbcs
-         6JJ9qiZlOKGp2R/5hSrC3zFc+ZYb/9mZYox8pA/1cGNMPR2b8sUZwDoRj+GixSbwkrGh
-         bjww==
-X-Gm-Message-State: AFqh2kq/UAAbQ5zqBzC7ef41HExLOuX0zG7ycP5U2urx4QYWi8fRCtec
-        6COdEtr7z3o7w9rwN1W1JGC2Hg==
-X-Google-Smtp-Source: AMrXdXvIXcbH4UEK131yDd+ts6HxEAsmVjpAtgm2xSNtt/vtSspvA+02QUO23mOp0JMcMj5zO6ulMw==
-X-Received: by 2002:a17:907:d401:b0:7c0:c220:a33d with SMTP id vi1-20020a170907d40100b007c0c220a33dmr29196610ejc.9.1674492529690;
-        Mon, 23 Jan 2023 08:48:49 -0800 (PST)
+        bh=kWCI2M5MRTLd+nORwrHWu4yoS6PIWa3IEl2T22HQAmA=;
+        b=EpyViaNFVTDDzZ4TKGcILOP6M5XZ/rp/MgjdQJixOJy18xD+nhbQS6GvwbArqsTVIW
+         7TDigil5nFSemKw+GRYizm7YHkHHh99xAzfrMlY+lXg4lTXQLjEjVeLmOluN9UoBrcJ3
+         RNQIREMS8kDpM5j462VUoS+9jIpcXOqeo06L8E5EveALIRDo7vkCYAvKCsT0RhV6f7y9
+         CeVLfpxVFi7FLKYpIfQVwXP3HE12v1tFpg3PXVAXLd2rl6O7kqAhItyOI3yqrmFq+AOi
+         lVC5e2URfutrfrOxjgt0gp+d2s49oXp958YgB8iWTgI/ClzGP6K/gRS6B4q6fTc6u2Xy
+         Jb1A==
+X-Gm-Message-State: AFqh2krucAKHFompElAaohFNwBFSlc65QtYh6ZhAdIwhZStzkBjqcQUr
+        ruOfiZ1F6sciZoWGoLCnjOzQgw==
+X-Google-Smtp-Source: AMrXdXscKM3+EaCOCzMlfENTh1GzycpQBpDW2I7dFrhsdfeIC6t63AC/KVM27bK2DzVnqlmzBE70fw==
+X-Received: by 2002:a05:6402:1f85:b0:45c:835c:eab7 with SMTP id c5-20020a0564021f8500b0045c835ceab7mr28003140edc.37.1674492605945;
+        Mon, 23 Jan 2023 08:50:05 -0800 (PST)
 Received: from [192.168.1.101] (abxi24.neoplus.adsl.tpnet.pl. [83.9.2.24])
-        by smtp.gmail.com with ESMTPSA id c10-20020a17090618aa00b0084c6ec69a9dsm22186837ejf.124.2023.01.23.08.48.47
+        by smtp.gmail.com with ESMTPSA id m20-20020a056402431400b0049ef70a2894sm4385926edc.38.2023.01.23.08.50.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Jan 2023 08:48:49 -0800 (PST)
-Message-ID: <a373c719-a4f7-20d1-1b97-efdd5c350035@linaro.org>
-Date:   Mon, 23 Jan 2023 17:48:47 +0100
+        Mon, 23 Jan 2023 08:50:05 -0800 (PST)
+Message-ID: <f74fb2da-bf01-479b-0bb6-9281f9948ec0@linaro.org>
+Date:   Mon, 23 Jan 2023 17:50:03 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.0
 Subject: Re: [PATCH 3/3] ARM: dts: qcom: Add support for Samsung Galaxy Tab 4
  10.1 LTE (SM-T535)
 Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 To:     Stefan Hansson <newbyte@postmarketos.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -71,13 +72,14 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         matti.lehtimaki@gmail.com
 References: <20230122144749.87597-1-newbyte@postmarketos.org>
  <20230122144749.87597-4-newbyte@postmarketos.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230122144749.87597-4-newbyte@postmarketos.org>
+ <a373c719-a4f7-20d1-1b97-efdd5c350035@linaro.org>
+In-Reply-To: <a373c719-a4f7-20d1-1b97-efdd5c350035@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -86,83 +88,90 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 22.01.2023 15:47, Stefan Hansson wrote:
-> Add a device tree for the Samsung Galaxy Tab 4 10.1 (SM-T535) LTE tablet
-> based on the MSM8926 platform.
+On 23.01.2023 17:48, Konrad Dybcio wrote:
 > 
-> Signed-off-by: Stefan Hansson <newbyte@postmarketos.org>
-> ---
->  arch/arm/boot/dts/Makefile                    |  1 +
->  .../dts/qcom-msm8926-samsung-matisselte.dts   | 39 +++++++++++++++++++
->  2 files changed, 40 insertions(+)
->  create mode 100644 arch/arm/boot/dts/qcom-msm8926-samsung-matisselte.dts
 > 
-> diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-> index d0c07867aeab..e1fad9eb0d26 100644
-> --- a/arch/arm/boot/dts/Makefile
-> +++ b/arch/arm/boot/dts/Makefile
-> @@ -1061,6 +1061,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
->  	qcom-msm8916-samsung-e7.dtb \
->  	qcom-msm8916-samsung-grandmax.dtb \
->  	qcom-msm8916-samsung-serranove.dtb \
-> +	qcom-msm8926-samsung-matisselte.dtb \
->  	qcom-msm8960-cdp.dtb \
->  	qcom-msm8974-lge-nexus5-hammerhead.dtb \
->  	qcom-msm8974-sony-xperia-rhine-amami.dtb \
-> diff --git a/arch/arm/boot/dts/qcom-msm8926-samsung-matisselte.dts b/arch/arm/boot/dts/qcom-msm8926-samsung-matisselte.dts
-> new file mode 100644
-> index 000000000000..6df568f1f36d
-> --- /dev/null
-> +++ b/arch/arm/boot/dts/qcom-msm8926-samsung-matisselte.dts
-> @@ -0,0 +1,39 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2022, Matti Lehtimäki <matti.lehtimaki@gmail.com>
-> + * Copyright (c) 2023, Stefan Hansson <newbyte@postmarketos.org>
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "qcom-msm8226-samsung-matisse-common.dtsi"
-> +
-> +/ {
-> +	model = "Samsung Galaxy Tab 4 10.1 LTE";
-> +	compatible = "samsung,matisselte", "qcom,msm8926";
-> +	chassis-type = "tablet";
-> +};
-> +
-> +&pm8226_l3 {
-> +	regulator-min-microvolt = <750000>;
-This is identical as the common value.
-
-
-> +	regulator-max-microvolt = <1350000>;
-> +	regulator-always-on;
-This value already exists in common.
-
-> +};
-> +
-> +&pm8226_s4 {
-> +	regulator-min-microvolt = <1800000>;
-> +	regulator-max-microvolt = <2200000>;
-> +};
-> +
-> +&reg_tsp_3p3v {
-> +		gpio = <&tlmm 32 GPIO_ACTIVE_HIGH>;
-The indentation here seems off.
-
-> +};
-> +
-> +&sdhc_2 {
-> +	/* SD card fails to probe with error -110 */
-Maybe this SKU has some different pin properties or
-needs some external GPIO/regulator?
-
+> On 22.01.2023 15:47, Stefan Hansson wrote:
+>> Add a device tree for the Samsung Galaxy Tab 4 10.1 (SM-T535) LTE tablet
+>> based on the MSM8926 platform.
+>>
+>> Signed-off-by: Stefan Hansson <newbyte@postmarketos.org>
+>> ---
+>>  arch/arm/boot/dts/Makefile                    |  1 +
+>>  .../dts/qcom-msm8926-samsung-matisselte.dts   | 39 +++++++++++++++++++
+>>  2 files changed, 40 insertions(+)
+>>  create mode 100644 arch/arm/boot/dts/qcom-msm8926-samsung-matisselte.dts
+>>
+>> diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+>> index d0c07867aeab..e1fad9eb0d26 100644
+>> --- a/arch/arm/boot/dts/Makefile
+>> +++ b/arch/arm/boot/dts/Makefile
+>> @@ -1061,6 +1061,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
+>>  	qcom-msm8916-samsung-e7.dtb \
+>>  	qcom-msm8916-samsung-grandmax.dtb \
+>>  	qcom-msm8916-samsung-serranove.dtb \
+>> +	qcom-msm8926-samsung-matisselte.dtb \
+>>  	qcom-msm8960-cdp.dtb \
+>>  	qcom-msm8974-lge-nexus5-hammerhead.dtb \
+>>  	qcom-msm8974-sony-xperia-rhine-amami.dtb \
+>> diff --git a/arch/arm/boot/dts/qcom-msm8926-samsung-matisselte.dts b/arch/arm/boot/dts/qcom-msm8926-samsung-matisselte.dts
+>> new file mode 100644
+>> index 000000000000..6df568f1f36d
+>> --- /dev/null
+>> +++ b/arch/arm/boot/dts/qcom-msm8926-samsung-matisselte.dts
+>> @@ -0,0 +1,39 @@
+>> +// SPDX-License-Identifier: BSD-3-Clause
+>> +/*
+>> + * Copyright (c) 2022, Matti Lehtimäki <matti.lehtimaki@gmail.com>
+>> + * Copyright (c) 2023, Stefan Hansson <newbyte@postmarketos.org>
+>> + */
+>> +
+>> +/dts-v1/;
+>> +
+>> +#include "qcom-msm8226-samsung-matisse-common.dtsi"
+>> +
+>> +/ {
+>> +	model = "Samsung Galaxy Tab 4 10.1 LTE";
+>> +	compatible = "samsung,matisselte", "qcom,msm8926";
+>> +	chassis-type = "tablet";
+>> +};
+>> +
+>> +&pm8226_l3 {
+>> +	regulator-min-microvolt = <750000>;
+> This is identical as the common value.
+> 
+> 
+>> +	regulator-max-microvolt = <1350000>;
+>> +	regulator-always-on;
+> This value already exists in common.
+Nevermind, I misread the diff. That said, you can
+commonize them.
 
 Konrad
-> +	status = "disabled";
-> +};
-> +
-> +&tsp_en1_default_state {
-> +	pins = "gpio32";
-> +};
+> 
+>> +};
+>> +
+>> +&pm8226_s4 {
+>> +	regulator-min-microvolt = <1800000>;
+>> +	regulator-max-microvolt = <2200000>;
+>> +};
+>> +
+>> +&reg_tsp_3p3v {
+>> +		gpio = <&tlmm 32 GPIO_ACTIVE_HIGH>;
+> The indentation here seems off.
+> 
+>> +};
+>> +
+>> +&sdhc_2 {
+>> +	/* SD card fails to probe with error -110 */
+> Maybe this SKU has some different pin properties or
+> needs some external GPIO/regulator?
+> 
+> 
+> Konrad
+>> +	status = "disabled";
+>> +};
+>> +
+>> +&tsp_en1_default_state {
+>> +	pins = "gpio32";
+>> +};
