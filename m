@@ -2,374 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E3BCF677EA1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 16:04:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 37E6F677EAB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 16:05:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232165AbjAWPD6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Jan 2023 10:03:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33446 "EHLO
+        id S232171AbjAWPFD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Jan 2023 10:05:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232186AbjAWPDz (ORCPT
+        with ESMTP id S231778AbjAWPFC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Jan 2023 10:03:55 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 878BD2887C;
-        Mon, 23 Jan 2023 07:03:52 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 1943D60F58;
-        Mon, 23 Jan 2023 15:03:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 500E4C433D2;
-        Mon, 23 Jan 2023 15:03:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1674486231;
-        bh=sO5ySKuSsq9MUqxlGYVWya0q9jimaA/5HNl8GVliyBQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=bSCiKKkWfQZqRCSVgNT0tBqX+zT3VZk+LbCaYULG7G4qYGC4fVlwbGzLMk/r03ZlC
-         BlmVNClUdStc2s1FrkhNA7qOUDtek7hWuWRNUrM6Aufw2B9ZuPYzttG8V2hZIZjznQ
-         NvNRBBNaPUApQqUN5wwepVN9viHS5/urM+3oYAJqVIa2RwgoqwIRAsj2GQED/roYqZ
-         B7L4QCM6W4Oxlu8V+gVoFKQqhKb3MOTT/+Yo1jcIbQ1UCS6cWTpEHGiQwC0c03zSZX
-         tIK+RHrPHA1vdjnxVaLoH3FbM5ErRxSsknJIfBc+UbYkHlGXc9W1AkOuzGv9o32sai
-         O3OECYLsYZr1w==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1pJyMO-0000Io-VQ; Mon, 23 Jan 2023 16:03:49 +0100
-Date:   Mon, 23 Jan 2023 16:03:48 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        "vkoul@kernel.org" <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH v4 08/12] phy: qcom-qmp-pcie: Add support for SM8550 g3x2
- and g4x2 PCIEs
-Message-ID: <Y86h1FDuHFu3mImq@hovoldconsulting.com>
-References: <20230119140453.3942340-1-abel.vesa@linaro.org>
- <20230119140453.3942340-9-abel.vesa@linaro.org>
+        Mon, 23 Jan 2023 10:05:02 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36C9728D0E;
+        Mon, 23 Jan 2023 07:05:01 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id x40so18602104lfu.12;
+        Mon, 23 Jan 2023 07:05:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=P3rqFJi0wYIMyx4eFEnrANXBYlUWFGjnlOrB4sJY0mc=;
+        b=VSvjd1+J+2hfVE0rK2aWfDA0OVUPFITcaGU/EEk+ovd3PB+LZoSIbLXjg/6O4g0QkX
+         wQSOdPQHW8ShVOvuv6K4ehak+/FUBZ6bBjlKapxHcHQImaA7q7t1gEwYZmwObqGrP/PP
+         CuO1Q1/NA1X4wba91SbkMkbJ02vBgbwFgxkUGAZz0utThM5EFRk4Y/dHFQrqiTC3T8XY
+         pxEaA9cykcbArWN/Q14sLzrf2oqArLVwTmvV0IHeWZXjaXfjdJS++GDWvaf9CtXKja5B
+         /+o8WCQ6Z8OG5i90gfUfiXJhw6rQk2gldlIFYsb4njbrpXyfD3NMkTBxEGrhoTwav/UE
+         HUzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=P3rqFJi0wYIMyx4eFEnrANXBYlUWFGjnlOrB4sJY0mc=;
+        b=RXKXSeDWVED+HTRoYIVS3h1Kg/2Xiwsf6GLEeVRsELkNLw7N+TVP54n2nL5vSwxCd+
+         ge4q+NmxOeiCFmZ+E6D6dgCb2EB9dI7stkmIXIUXfGbuY60MTiNTiYkjT592Yis2nkWw
+         ge8anLLBKkO9wJ/L6eZEW9r4xGHS2qTnecRrzHOuCTpTkVxcJBmW7maQR5JgnstmWh70
+         TBXpDsKLokpLyawQpAf4mNSiAXxObo7ctOoO9s6FitJqtmhsc8yITJhF1btrN4ddApCA
+         RO89iMg9380Zi/cFnk6MhT4uJkZCu8YQEUpHwtJTUw51Vt+xHZ8KivybTNN8eCJqQwCG
+         n2PA==
+X-Gm-Message-State: AFqh2kpF1iGzmvy+cExxcY7VfLFck5DoMWF7ZhxATtKKUZ9sKGUUjpi/
+        EYOwfb3jvVI7arcLAg75UkI=
+X-Google-Smtp-Source: AMrXdXuHnINfpXEMI/5P6IHfO27xMrOaiT1cQnmYVDzQ2npYaq/u8eUakJKoBBnDu0eFJD/hs2QaqA==
+X-Received: by 2002:a05:6512:340a:b0:4d2:551e:3838 with SMTP id i10-20020a056512340a00b004d2551e3838mr7464162lfr.29.1674486299330;
+        Mon, 23 Jan 2023 07:04:59 -0800 (PST)
+Received: from mobilestation ([95.79.133.202])
+        by smtp.gmail.com with ESMTPSA id b8-20020a0565120b8800b004d593f218absm1011508lfv.108.2023.01.23.07.04.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Jan 2023 07:04:58 -0800 (PST)
+Date:   Mon, 23 Jan 2023 18:04:56 +0300
+From:   Serge Semin <fancer.lancer@gmail.com>
+To:     Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>
+Cc:     broonie@kernel.org, miquel.raynal@bootlin.com,
+        linus.walleij@linaro.org, krzysztof.kozlowski@linaro.org,
+        vireshk@kernel.org, gregkh@linuxfoundation.org,
+        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org,
+        bcm-kernel-feedback-list@broadcom.com, kernel@pengutronix.de,
+        linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-rpi-kernel@lists.infradead.org,
+        linux-amlogic@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+        netdev@vger.kernel.org, linux-wpan@vger.kernel.org,
+        libertas-dev@lists.infradead.org, linux-wireless@vger.kernel.org,
+        linux-mtd@lists.infradead.org, linux-iio@vger.kernel.org,
+        linux-riscv@lists.infradead.org, linux-media@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, greybus-dev@lists.linaro.org,
+        linux-staging@lists.linux.dev
+Subject: Re: [PATCH v2 02/13] spi: Replace all spi->chip_select and
+ spi->cs_gpiod references with function call
+Message-ID: <20230123145953.ytaaq3x4tetgepyf@mobilestation>
+References: <20230119185342.2093323-1-amit.kumar-mahapatra@amd.com>
+ <20230119185342.2093323-3-amit.kumar-mahapatra@amd.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230119140453.3942340-9-abel.vesa@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20230119185342.2093323-3-amit.kumar-mahapatra@amd.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 19, 2023 at 04:04:49PM +0200, Abel Vesa wrote:
-> Add the SM8550 both g4 and g3 configurations. In addition, there is a
-> new "lane shared" table that needs to be configured for g4, along with
-> the No-CSR list of resets.
+On Fri, Jan 20, 2023 at 12:23:31AM +0530, Amit Kumar Mahapatra wrote:
+> Supporting multi-cs in spi drivers would require the chip_select & cs_gpiod
+> members of struct spi_device to be an array. But changing the type of these
+> members to array would break the spi driver functionality. To make the
+> transition smoother introduced four new APIs to get/set the
+> spi->chip_select & spi->cs_gpiod and replaced all spi->chip_select and
+> spi->cs_gpiod references with get or set API calls.
+> While adding multi-cs support in further patches the chip_select & cs_gpiod
+> members of the spi_device structure would be converted to arrays & the
+> "idx" parameter of the APIs would be used as array index i.e.,
+> spi->chip_select[idx] & spi->cs_gpiod[idx] respectively.
 > 
-> Co-developed-by: Neil Armstrong <neil.armstrong@linaro.org>
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>
 > ---
-> 
-> This patchset relies on the following patchset:
-> https://lore.kernel.org/all/20230117224148.1914627-1-abel.vesa@linaro.org/
-> 
-> The v3 of this patchset is:
-> https://lore.kernel.org/all/20230118005328.2378792-1-abel.vesa@linaro.org/
-> 
-> Changes since v3:
->  * added Dmitry's R-b tag
-> 
-> Changes since v2:
->  * none
-> 
-> Changes since v1:
->  * split all the offsets into separate patches, like Vinod suggested
-> 
-> 
->  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 365 +++++++++++++++++++++++
->  1 file changed, 365 insertions(+)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> index bffb9e138715..48d179d8d8d6 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> @@ -1506,6 +1506,234 @@ static const struct qmp_phy_init_tbl sm8450_qmp_gen4x2_pcie_ep_pcs_misc_tbl[] =
->  	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_PCIE_OSC_DTCT_MODE2_CONFIG5, 0x08),
->  };
->  
-> +static const struct qmp_phy_init_tbl sm8550_qmp_gen4x2_pcie_serdes_ln_shrd_tbl[] = {
 
-Perhaps you can drop the '_serdes' infix here as it is mostly redundant
-and not included in the names of the other tables/resources.
+[nip]
 
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RXCLK_DIV2_CTRL, 0x01),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_Q_EN_RATES, 0xe),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_DFE_DAC_ENABLE1, 0x00),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_TX_ADAPT_POST_THRESH1, 0x00),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_TX_ADAPT_POST_THRESH2, 0x1f),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MODE_RATE_0_1_B0, 0x12),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MODE_RATE_0_1_B1, 0x12),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MODE_RATE_0_1_B2, 0xdb),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MODE_RATE_0_1_B3, 0x9a),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MODE_RATE_0_1_B4, 0x38),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MODE_RATE_0_1_B5, 0xb6),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MODE_RATE_0_1_B6, 0x64),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MARG_COARSE_THRESH1_RATE210, 0x1f),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MARG_COARSE_THRESH1_RATE3, 0x1f),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MARG_COARSE_THRESH2_RATE210, 0x1f),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MARG_COARSE_THRESH2_RATE3, 0x1f),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MARG_COARSE_THRESH3_RATE210, 0x1f),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MARG_COARSE_THRESH3_RATE3, 0x1f),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MARG_COARSE_THRESH4_RATE3, 0x1f),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MARG_COARSE_THRESH5_RATE3, 0x1f),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MARG_COARSE_THRESH6_RATE3, 0x1f),
-> +};
-> +
-> +static const struct qmp_phy_init_tbl sm8550_qmp_gen4x2_pcie_tx_tbl[] = {
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_20_TX_RES_CODE_LANE_OFFSET_TX, 0x1d),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_20_TX_RES_CODE_LANE_OFFSET_RX, 0x03),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_20_TX_LANE_MODE_1, 0x01),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_20_TX_LANE_MODE_2, 0x00),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_20_TX_LANE_MODE_3, 0x51),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_20_TX_TRAN_DRVR_EMP_EN, 0x34),
-> +};
+>  drivers/spi/spi-dw-core.c         |  2 +-
+>  drivers/spi/spi-dw-mmio.c         |  4 ++--
 
->  struct qmp_pcie_offsets {
->  	u16 serdes;
->  	u16 pcs;
-> @@ -1514,11 +1742,14 @@ struct qmp_pcie_offsets {
->  	u16 rx;
->  	u16 tx2;
->  	u16 rx2;
-> +	u16 ln_shrd;
->  };
->  
->  struct qmp_phy_cfg_tbls {
->  	const struct qmp_phy_init_tbl *serdes;
->  	int serdes_num;
-> +	const struct qmp_phy_init_tbl *ln_shrd_serdes;
-> +	int ln_shrd_serdes_num;
->  	const struct qmp_phy_init_tbl *tx;
->  	int tx_num;
->  	const struct qmp_phy_init_tbl *rx;
-> @@ -1556,6 +1787,9 @@ struct qmp_phy_cfg {
->  	/* resets to be requested */
->  	const char * const *reset_list;
->  	int num_resets;
-> +	/* no CSR resets to be requested */
+[nip]
 
-Add a hyphen between 'no' and 'CSR' to make it a bit more readable.
-
-> +	const char * const *nocsr_reset_list;
-> +	int num_nocsr_resets;
->  	/* regulators to be requested */
->  	const char * const *vreg_list;
->  	int num_vregs;
-> @@ -1569,6 +1803,9 @@ struct qmp_phy_cfg {
->  
->  	bool skip_start_delay;
->  
-> +	/* true, if PHY has lane shared serdes table */
-> +	bool has_ln_shrd_serdes_tbl;
-> +
-
-Can't you just check the table pointer directly?
-
->  	/* QMP PHY pipe clock interface rate */
->  	unsigned long pipe_clock_rate;
->  };
-> @@ -1580,6 +1817,7 @@ struct qmp_pcie {
->  	bool tcsr_4ln_config;
->  
->  	void __iomem *serdes;
-> +	void __iomem *ln_shrd_serdes;
-
-Drop '_serdes'.
-
->  	void __iomem *pcs;
->  	void __iomem *pcs_misc;
->  	void __iomem *tx;
-> @@ -1594,6 +1832,7 @@ struct qmp_pcie {
->  	int num_pipe_clks;
->  
->  	struct reset_control_bulk_data *resets;
-> +	struct reset_control_bulk_data *nocsr_resets;
->  	struct regulator_bulk_data *vregs;
->  
->  	struct phy *phy;
-> @@ -1648,6 +1887,10 @@ static const char * const qmp_phy_vreg_l[] = {
->  	"vdda-phy", "vdda-pll",
->  };
->  
-> +static const char * const sm8550_qmp_phy_vreg_l[] = {
-> +	"vdda-phy", "vdda-pll", "vdda-qref",
-> +};
-> +
->  /* list of resets */
->  static const char * const ipq8074_pciephy_reset_l[] = {
->  	"phy", "common",
-> @@ -1657,6 +1900,10 @@ static const char * const sdm845_pciephy_reset_l[] = {
->  	"phy",
->  };
->  
-> +static const char * const sm8550_pciephy_nocsr_reset_l[] = {
-> +	"nocsr",
-> +};
-> +
->  static const struct qmp_pcie_offsets qmp_pcie_offsets_v5 = {
->  	.serdes		= 0,
->  	.pcs		= 0x0200,
-> @@ -1667,6 +1914,17 @@ static const struct qmp_pcie_offsets qmp_pcie_offsets_v5 = {
->  	.rx2		= 0x1800,
->  };
->  
-> +static const struct qmp_pcie_offsets qmp_pcie_offsets_v6_20 = {
-> +	.tx		= 0x0,
-> +	.rx		= 0x0200,
-> +	.tx2		= 0x0800,
-> +	.rx2		= 0x0a00,
-> +	.ln_shrd	= 0x0e00,
-> +	.serdes		= 0x1000,
-> +	.pcs		= 0x1200,
-> +	.pcs_misc	= 0x1400,
-> +};
-
-I did not notice before, but perhaps you should use the order from the
-struct definition instead of sorting by offset. That should make it
-easier to spot SoC differences, missing fields, etc.
-
-> +
->  static const struct qmp_phy_cfg ipq8074_pciephy_cfg = {
->  	.lanes			= 1,
->  
-
-> @@ -2262,6 +2583,7 @@ static void qmp_pcie_init_registers(struct qmp_pcie *qmp, const struct qmp_phy_c
->  {
->  	const struct qmp_phy_cfg *cfg = qmp->cfg;
->  	void __iomem *serdes = qmp->serdes;
-> +	void __iomem *ln_shrd_serdes = qmp->ln_shrd_serdes;
-
-ln_shrd should do.
-
->  	void __iomem *tx = qmp->tx;
->  	void __iomem *rx = qmp->rx;
->  	void __iomem *tx2 = qmp->tx2;
-> @@ -2289,6 +2611,10 @@ static void qmp_pcie_init_registers(struct qmp_pcie *qmp, const struct qmp_phy_c
->  		qmp_pcie_configure(serdes, cfg->serdes_4ln_tbl, cfg->serdes_4ln_num);
->  		qmp_pcie_init_port_b(qmp, tbls);
->  	}
-> +
-> +	if (cfg->has_ln_shrd_serdes_tbl)
-
-So you could check tbls->ln_shrd here, or just call unconditionally as
-qmp_pcie_configure() already handles that.
-
-> +		qmp_pcie_configure(ln_shrd_serdes, tbls->ln_shrd_serdes,
-> +				       tbls->ln_shrd_serdes_num);
+> diff --git a/drivers/spi/spi-dw-core.c b/drivers/spi/spi-dw-core.c
+> index 99edddf9958b..4fd1aa800cc3 100644
+> --- a/drivers/spi/spi-dw-core.c
+> +++ b/drivers/spi/spi-dw-core.c
+> @@ -103,7 +103,7 @@ void dw_spi_set_cs(struct spi_device *spi, bool enable)
+>  	 * support active-high or active-low CS level.
+>  	 */
+>  	if (cs_high == enable)
+> -		dw_writel(dws, DW_SPI_SER, BIT(spi->chip_select));
+> +		dw_writel(dws, DW_SPI_SER, BIT(spi_get_chipselect(spi, 0)));
+>  	else
+>  		dw_writel(dws, DW_SPI_SER, 0);
 >  }
+> diff --git a/drivers/spi/spi-dw-mmio.c b/drivers/spi/spi-dw-mmio.c
+> index 26c40ea6dd12..d511da766ce8 100644
+> --- a/drivers/spi/spi-dw-mmio.c
+> +++ b/drivers/spi/spi-dw-mmio.c
+> @@ -65,7 +65,7 @@ static void dw_spi_mscc_set_cs(struct spi_device *spi, bool enable)
+>  	struct dw_spi *dws = spi_master_get_devdata(spi->master);
+>  	struct dw_spi_mmio *dwsmmio = container_of(dws, struct dw_spi_mmio, dws);
+>  	struct dw_spi_mscc *dwsmscc = dwsmmio->priv;
+> -	u32 cs = spi->chip_select;
+> +	u32 cs = spi_get_chipselect(spi, 0);
 >  
->  static int qmp_pcie_init(struct phy *phy)
-> @@ -2309,6 +2635,14 @@ static int qmp_pcie_init(struct phy *phy)
->  		goto err_disable_regulators;
->  	}
+>  	if (cs < 4) {
+>  		u32 sw_mode = MSCC_SPI_MST_SW_MODE_SW_PIN_CTRL_MODE;
+> @@ -138,7 +138,7 @@ static void dw_spi_sparx5_set_cs(struct spi_device *spi, bool enable)
+>  	struct dw_spi *dws = spi_master_get_devdata(spi->master);
+>  	struct dw_spi_mmio *dwsmmio = container_of(dws, struct dw_spi_mmio, dws);
+>  	struct dw_spi_mscc *dwsmscc = dwsmmio->priv;
+> -	u8 cs = spi->chip_select;
+> +	u8 cs = spi_get_chipselect(spi, 0);
 >  
-> +	if (qmp->nocsr_resets) {
-> +		ret = reset_control_bulk_assert(cfg->num_nocsr_resets, qmp->nocsr_resets);
-> +		if (ret) {
-> +			dev_err(qmp->dev, "no-csr reset assert failed\n");
-> +			goto err_disable_regulators;
-> +		}
-> +	}
-> +
->  	usleep_range(200, 300);
->  
->  	ret = reset_control_bulk_deassert(cfg->num_resets, qmp->resets);
+>  	if (!enable) {
+>  		/* CS override drive enable */
 
-Should you really leave the reset asserted on errors here and below?
+For the DW SSI part:
+Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
 
-> @@ -2370,6 +2704,14 @@ static int qmp_pcie_power_on(struct phy *phy)
->  	if (ret)
->  		return ret;
->  
-> +	if (qmp->nocsr_resets) {
-> +		ret = reset_control_bulk_deassert(cfg->num_nocsr_resets, qmp->nocsr_resets);
-> +		if (ret) {
-> +			dev_err(qmp->dev, "no-csr reset deassert failed\n");
-> +			goto err_disable_pipe_clk;
-> +		}
-> +	}
+-Serge(y)
 
-Is this the documented reset sequence? To keep the nocsr reset asserted
-from init() to power_on() and during programming of the PHY registers?
-
-What if power_on() is never called, etc? (I know we always call
-power_on() after init() currently, but that may change.)
-
-Could you explain a bit how this reset is supposed work and be used?
-
-> +
->  	/* Pull PHY out of reset state */
->  	qphy_clrbits(pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
->  
-> @@ -2503,6 +2845,21 @@ static int qmp_pcie_reset_init(struct qmp_pcie *qmp)
->  	if (ret)
->  		return dev_err_probe(dev, ret, "failed to get resets\n");
->  
-> +	if (cfg->nocsr_reset_list) {
-> +		qmp->nocsr_resets = devm_kcalloc(dev, cfg->num_nocsr_resets,
-> +				   sizeof(*qmp->nocsr_resets), GFP_KERNEL);
-> +		if (!qmp->nocsr_resets)
-> +			return -ENOMEM;
-> +
-> +		for (i = 0; i < cfg->num_nocsr_resets; i++)
-> +			qmp->nocsr_resets[i].id = cfg->nocsr_reset_list[i];
-> +
-> +		ret = devm_reset_control_bulk_get_exclusive(dev, cfg->num_nocsr_resets,
-> +								qmp->nocsr_resets);
-> +		if (ret)
-> +			return dev_err_probe(dev, ret, "failed to get no CSR resets\n");
-
-hyphen after 'no'
-
-> +	}
-> +
->  	return 0;
->  }
->  
-> @@ -2713,6 +3070,8 @@ static int qmp_pcie_parse_dt(struct qmp_pcie *qmp)
->  	qmp->pcs_misc = base + offs->pcs_misc;
->  	qmp->tx = base + offs->tx;
->  	qmp->rx = base + offs->rx;
-> +	if (cfg->has_ln_shrd_serdes_tbl)
-> +		qmp->ln_shrd_serdes = base + offs->ln_shrd;
-
-Odd placement here in between tx/rx and tx2/rx2.
-
-Doesn't hurt setting the pointer whenever this block exists, so perhaps
-just do
-
-	if (offs->ln_shrd)
-		qmp->ln_shrd = base + offs->ln_shrd;
-
-and move this after the port_b initialisation (e.g. to follow the order
-in the offset struct and programming sequence above)?
-
->  
->  	if (cfg->lanes >= 2) {
->  		qmp->tx2 = base + offs->tx2;
-
-Johan
+[nip]
