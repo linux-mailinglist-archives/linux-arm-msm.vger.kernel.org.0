@@ -2,111 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 60E226778F1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 11:16:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C82BD6778FC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 11:19:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231991AbjAWKQ4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Jan 2023 05:16:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46288 "EHLO
+        id S231979AbjAWKT4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Jan 2023 05:19:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231745AbjAWKQz (ORCPT
+        with ESMTP id S232023AbjAWKTr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Jan 2023 05:16:55 -0500
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FF027D99;
-        Mon, 23 Jan 2023 02:16:37 -0800 (PST)
-Received: by mail-ej1-x632.google.com with SMTP id kt14so29134129ejc.3;
-        Mon, 23 Jan 2023 02:16:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ne7laZb1v2Bqbj6brLBa/Nq0CF7MhBrYeAZ1Rknt7PU=;
-        b=MDrw8EC56uJUTpWXz4zqWZ3xCO1EeCmiB5N4OToQkcepvcpPSFsJ6VS7SgGCgKyVCa
-         rWJhpLfgDXmxWr4gvsDvs+8L5Yo40IvZLmk2MYDFsUG3mUK9SO7HzQ1UoSh7Wafel9TQ
-         BN/44+qkIKB3WHnA6i+bvjzXI4eaHWXr2M96g6eMJEEK5Btf8guWLlncfIH9JA8BB27s
-         LiUSIiaEv2mKaatvvc3iG6kdtBJMGLKaHdD7w+WITGtkbqbuqxZlfaWrx4Qru8lpSmSm
-         vNji9iI29HW3haWD2iXVQGtsrZ1c84/c5QtOxgPdImoi++hi49b+INsM3EYrJhBVqA/U
-         6oFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Ne7laZb1v2Bqbj6brLBa/Nq0CF7MhBrYeAZ1Rknt7PU=;
-        b=ss2q1/OhYOU4ZCCuWAFvFw7Qmtt/NRYUuuRXpFggiJtI39eNR6EyPSPeswViPvJxQK
-         t5WLh/JM3YYjaY4TS1Xgv4KFTBaRxME81qGtHolbwUerAkw/qwVOfO77EEYrhReF0+8c
-         NBKdOYRCKDKGq9nBXYHlnkV9Bb9at7gJGbaaQJpBkeiZLWcU7Ge1IBT8hphdWczD68hQ
-         FE6xiG7KvP0mZkcCabJXo+ws9hP2qUgbLtVz4pgIKiFmCZ8GLngqcCVZOvXGLHnQhGl2
-         88EkQ2foZ+9NPmCwD60F/t0YIL5p6UNNFp3DWdSSjbntfCZWQphgzHCR2ksE8vY+8zru
-         5hQw==
-X-Gm-Message-State: AFqh2kpZ+5SHBbsTE0KlzZkfXuHUJ4ZPxlHQb5XyFX8PNRkEhgT+WLpZ
-        hibzZm65mtDzN4eSubai3xA=
-X-Google-Smtp-Source: AMrXdXtYSv+WHJfge/QRmmysi0IUo7WvlbnlIkPcWqPYKjyjtGX8xPb2vvrEX0OrkEWseWr5KepPGQ==
-X-Received: by 2002:a17:906:6d14:b0:7c1:765:9cfc with SMTP id m20-20020a1709066d1400b007c107659cfcmr38761622ejr.34.1674468995615;
-        Mon, 23 Jan 2023 02:16:35 -0800 (PST)
-Received: from fedora.. (cpezg-94-253-128-151-cbl.xnet.hr. [94.253.128.151])
-        by smtp.googlemail.com with ESMTPSA id m15-20020aa7c48f000000b0049dc0123f29sm12579125edq.61.2023.01.23.02.16.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Jan 2023 02:16:35 -0800 (PST)
-From:   Robert Marko <robimarko@gmail.com>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        srinivas.kandagatla@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_kathirav@quicinc.com
-Cc:     Robert Marko <robimarko@gmail.com>
-Subject: [PATCH v2 2/2] arm64: dts: qcom: ipq8074: add QFPROM node
-Date:   Mon, 23 Jan 2023 11:16:31 +0100
-Message-Id: <20230123101631.475712-2-robimarko@gmail.com>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230123101631.475712-1-robimarko@gmail.com>
-References: <20230123101631.475712-1-robimarko@gmail.com>
+        Mon, 23 Jan 2023 05:19:47 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A737A113CC;
+        Mon, 23 Jan 2023 02:19:43 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 5F652B80CBC;
+        Mon, 23 Jan 2023 10:19:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0650CC433D2;
+        Mon, 23 Jan 2023 10:19:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1674469181;
+        bh=R8TEHMiMrqLAL4VER9QYwXpcKwfMt+LaxjwixzRorjM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=jFlknf7bHk9HiHeO2bHfa1wcP91KT8Wf+/vJ55+DGGz1fVU5ccAny+01ENx4vhoam
+         9zjclV80G90b5WAbI+JB1QfnKQQLnuAWIsCW/3MlTiSYEW3OUTJpI3NhtZboEhJPBX
+         2hiA+UNILsBqnO4Q+nV7NblTd7CiPQhj7dPpb6uvH8Gkf3LNs+Ff9L7pt4dMXWPJ/C
+         gCq/CV4JA3Xcq8wM409qzW3/8ppWenjhhvw5N8lyxFH1kwqOw+TTR5rbDW56oRvLjH
+         xZB6rrE2ODKMQPOcVnk6Mz3HNy8tXqHPVHfLgBhczuqPOvKKYjUOU1C81V1mY4z55n
+         BL6o+MvSmZsIg==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pJtvO-0000fP-Ag; Mon, 23 Jan 2023 11:19:38 +0100
+Date:   Mon, 23 Jan 2023 11:19:38 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org
+Subject: Re: [PATCH 04/10] dt-bindings: phy: qcom,qmp-usb: Document SM8550
+ compatible
+Message-ID: <Y85fOgfjEUBMnWar@hovoldconsulting.com>
+References: <20221116120157.2706810-1-abel.vesa@linaro.org>
+ <20221116120157.2706810-5-abel.vesa@linaro.org>
+ <Y3TpzgQ1JaFs5sNk@hovoldconsulting.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y3TpzgQ1JaFs5sNk@hovoldconsulting.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-IPQ8074 has efuses like other Qualcomm SoC-s that are required for
-determining various HW quirks which will be required later for CPR etc,
-so lets add the QFPROM node for start.
+On Wed, Nov 16, 2022 at 02:46:54PM +0100, Johan Hovold wrote:
+> On Wed, Nov 16, 2022 at 02:01:51PM +0200, Abel Vesa wrote:
+> > Add the SM8550 compatible to the list.
+> > 
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > ---
+> >  .../devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml       | 1 +
+> >  1 file changed, 1 insertion(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
+> > index 0c6b3ba7346b..cba2a252baf8 100644
+> > --- a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
+> > +++ b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
+> > @@ -37,6 +37,7 @@ properties:
+> >        - qcom,sm8350-qmp-usb3-phy
+> >        - qcom,sm8350-qmp-usb3-uni-phy
+> >        - qcom,sm8450-qmp-usb3-phy
+> > +      - qcom,sm8550-qmp-usb3-phy
+> 
+> This one too should be based on sc8280xp rather than the legacy binding
+> scheme.
 
-Individidual fuses will be added as they are required.
+I can't seem to find a v2 of this one adding a new-style binding for
+sm8550.
 
-Signed-off-by: Robert Marko <robimarko@gmail.com>
----
-Changes in v2:
-* Enlarge the register space size due to info from Kathiravan T.
----
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 7 +++++++
- 1 file changed, 7 insertions(+)
+Note that the corresponding dts changes have already been merged:
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index 8eba586065a3..ff59a2f38293 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -301,6 +301,13 @@ mdio: mdio@90000 {
- 			status = "disabled";
- 		};
- 
-+		qfprom: efuse@a4000 {
-+			compatible = "qcom,ipq8074-qfprom", "qcom,qfprom";
-+			reg = <0x000a4000 0x2000>;
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+		};
-+
- 		prng: rng@e3000 {
- 			compatible = "qcom,prng-ee";
- 			reg = <0x000e3000 0x1000>;
--- 
-2.39.1
+	https://lore.kernel.org/all/20230119004533.1869870-2-abel.vesa@linaro.org/
 
+Johan
