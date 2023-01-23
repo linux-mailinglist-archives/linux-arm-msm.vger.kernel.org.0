@@ -2,82 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A81ED678284
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 18:04:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7762267829C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 18:10:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232517AbjAWRE6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Jan 2023 12:04:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40830 "EHLO
+        id S232353AbjAWRKS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Jan 2023 12:10:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231725AbjAWRE5 (ORCPT
+        with ESMTP id S231371AbjAWRKR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Jan 2023 12:04:57 -0500
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CAD45BA0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 09:04:56 -0800 (PST)
-Received: by mail-ej1-x632.google.com with SMTP id v6so32289144ejg.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 09:04:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=MumBSmLnR6qtNJV+vo1mnn6BMJJa8MTj2/SYpRgyK0A=;
-        b=zVIfPhFLbFu7uV161eMTM3C7yivzp8mPjtQ5u+ywjWvegXp60gGKONpyK0tUEJ7jNf
-         UZDMGmwpPitzBVGSctxPY3/sqXteeykKOSSrhXwTX4QB65xausSwEwEE1ADVonPOMaYq
-         aKEcuWojS3jRc0a1TrLA1PGzJMLxY3JXXE8CDIw6AlpIX9iFjKdMBijt5aajW0xYyKYE
-         hdp4ISJ8ocxfJk8/MuwLwmRBCyAXoJ25Kv/rJlV1hgRIXrQOByLf8rzFUcZfm9JXfv55
-         F5sWVdZjMfDlQsTvUuAefT6JkRXRSma2E/PYPMwCFTYcztvkJ/Sr8eq0k4r6DNn0nhQy
-         wFLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MumBSmLnR6qtNJV+vo1mnn6BMJJa8MTj2/SYpRgyK0A=;
-        b=S2Ct1f/8NGPf/xdPXEep++CBMW8NC5mxlAUuyqXu7FBxo/8i7SgXLKKgkgW/6ijD3X
-         KVdDimTMvDXVBUO8SkMVnytr9S9BF4VRDeMUmqZl2ZwO6lCFQogzHNwbLbedNSTgbN32
-         M/fPmm84ZeaV0Q3jO8JpBm66rCofP27ugzR7zNjmDxkb062fElT/AQmLxxBrOgGMwS3Z
-         Hd2uo8osMi4wD+HnEokZFcluGBYdtEVXKPgGCtruw6umOTDPxeXvvDZFMCNvmnp1STMr
-         HlbFTaKPP78QXtEVChpW3sfO1g502kJOMfHSxNOwEsrweAi8aG2wrs8NxHDbDqqwDHn8
-         pV+w==
-X-Gm-Message-State: AFqh2kq0965VpEEtsVvpmNvnyBzCFAZ3jmqpDH0pDtq1kwyzh60fUGf9
-        AQB+3VWUefJmetQPN1uidoplnA==
-X-Google-Smtp-Source: AMrXdXvF9qSmhrrxo1yfZJcAWyvUP3LJLaDdk6U4dhdDk/1GeU4VbH1AxM/lBMVsF0YnR0jWRThYgg==
-X-Received: by 2002:a17:907:7248:b0:872:b1d7:8028 with SMTP id ds8-20020a170907724800b00872b1d78028mr34814718ejc.3.1674493495123;
-        Mon, 23 Jan 2023 09:04:55 -0800 (PST)
-Received: from [192.168.1.101] (abxi24.neoplus.adsl.tpnet.pl. [83.9.2.24])
-        by smtp.gmail.com with ESMTPSA id k6-20020a17090632c600b008779eb0fd83sm5288910ejk.23.2023.01.23.09.04.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Jan 2023 09:04:54 -0800 (PST)
-Message-ID: <5ca0d7d4-b396-8435-0957-f794ed0c2eed@linaro.org>
-Date:   Mon, 23 Jan 2023 18:04:53 +0100
+        Mon, 23 Jan 2023 12:10:17 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5203A7;
+        Mon, 23 Jan 2023 09:10:16 -0800 (PST)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30NGvN6J026960;
+        Mon, 23 Jan 2023 17:10:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=pTuOp5LlMUVJWR1XuURU/ySq8b3L4N71BJXYI/OV+6E=;
+ b=MizU+vAIFrxeHgG3Nw8kzDabUB3yyGEesamgjRdIugYNUF90iDknigCtVi3MEwkHuDEX
+ 8GUYzix1F5ugVfoF2WI7h03KJQyMKZyXkr45TPboac09oZJFuEJGZwm28ABqOzr4IAbr
+ /eXl1jjNBrFmc4aSiet/RwpuZMCMkwfaIWJiyzjWIDgQWFF1OQxqrxatWk4tldm7hr1f
+ ZKhva2YLPJuWavmLkk/iEfON94dac7GDC2snJ73m5Og5VRJxxXQsR3NSywx6UrWRCan1
+ kyLhj8jZPdnrkaYj4qe/Wdr4j6OZoems00DoukfOn1N5GEUr+uk2Y96iI0ng2jVyRAbK 4Q== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n89gt3cuf-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 23 Jan 2023 17:10:08 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30NHA7GO007117
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 23 Jan 2023 17:10:07 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 23 Jan
+ 2023 09:10:07 -0800
+Message-ID: <59422195-28eb-4617-2529-5e997e5a7903@quicinc.com>
+Date:   Mon, 23 Jan 2023 10:10:06 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH v2 1/1] iio: adc: qcom-spmi-adc5: Fix the channel name
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH] bus: mhi: ep: Change state_lock to mutex
 Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Jonathan Cameron <jic23@kernel.org>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-        =?UTF-8?Q?Nuno_S=c3=a1?= <nuno.sa@analog.com>,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>
-References: <20230118100623.42255-1-andriy.shevchenko@linux.intel.com>
- <20230122172441.4f8d75f5@jic23-huawei>
- <22fa80f5-0cf0-85bd-03a4-e1eb80272420@linaro.org>
- <20230123170118.2q5b5rmmkyoi7zpk@SoMainline.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230123170118.2q5b5rmmkyoi7zpk@SoMainline.org>
-Content-Type: text/plain; charset=UTF-8
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        <mhi@lists.linux.dev>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <stable@vger.kernel.org>, Dan Carpenter <error27@gmail.com>
+References: <20230123075049.168040-1-manivannan.sadhasivam@linaro.org>
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <20230123075049.168040-1-manivannan.sadhasivam@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: n9SL77rLGTAsIWFNr5Pd4S64zT4LmzVV
+X-Proofpoint-ORIG-GUID: n9SL77rLGTAsIWFNr5Pd4S64zT4LmzVV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-23_12,2023-01-23_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=376 spamscore=0
+ priorityscore=1501 lowpriorityscore=0 bulkscore=0 adultscore=0
+ clxscore=1011 mlxscore=0 suspectscore=0 phishscore=0 impostorscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301230165
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,40 +79,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 23.01.2023 18:01, Marijn Suijten wrote:
-> On 2023-01-23 17:35:34, Konrad Dybcio wrote:
->> On 22.01.2023 18:24, Jonathan Cameron wrote:
->>> On Wed, 18 Jan 2023 12:06:23 +0200
->>> Andy Shevchenko <andriy.shevchenko@linux.intel.com> wrote:
->>>
->>>> The node name can contain an address part which is unused
->>>> by the driver. Moreover, this string is propagated into
->>>> the userspace label, sysfs filenames *and breaking ABI*.
->>>>
->>>> Cut the address part out before assigning the channel name.
->>>>
->>>> Fixes: 4f47a236a23d ("iio: adc: qcom-spmi-adc5: convert to device properties")
->>>> Reported-by: Marijn Suijten <marijn.suijten@somainline.org>
->>>> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
->>>
->>> LGTM, but given it will have ABI impact, I'd like to hear from 
->>> Andy, Bjorn or Konrad as maintainers and /or Dmitry as someone
->>> who has touched this driver fairly recently.
->> + Doug
->>
->> Unless the Chromium folks relied on the old names (they're the
->> only ones I can think of that actually could have tapped into
->> this), I say green light!
+On 1/23/2023 12:50 AM, Manivannan Sadhasivam wrote:
+> state_lock, the spinlock type is meant to protect race against concurrent
+> MHI state transitions. In mhi_ep_set_m0_state(), while the state_lock is
+> being held, the channels are resumed in mhi_ep_resume_channels() if the
+> previous state was M3. This causes sleeping in atomic bug, since
+> mhi_ep_resume_channels() use mutex internally.
 > 
-> Can you clarify "old names"?  The ABI-broken ones after Nuno's patch
-> with @xx suffix, or the orignal names (without @xx) before that, which
-> this patch from Andy reverts back to?
-Nuno's patch names, this is a fix for that but in a very unfortunate
-event, they might have started using sysfs paths right when the
-breakage happened.
-
-Konrad
+> Since the state_lock is supposed to be held throughout the state change,
+> it is not ideal to drop the lock before calling mhi_ep_resume_channels().
+> So to fix this issue, let's change the type of state_lock to mutex. This
+> would also allow holding the lock throughout all state transitions thereby
+> avoiding any potential race.
 > 
-> - Marijn
+> Cc: <stable@vger.kernel.org> # 5.19
+> Fixes: e4b7b5f0f30a ("bus: mhi: ep: Add support for suspending and resuming channels")
+> Reported-by: Dan Carpenter <error27@gmail.com>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
+Looks sane.
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
