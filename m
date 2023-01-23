@@ -2,86 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EC6D678973
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 22:22:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 12B6E678988
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 22:27:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231537AbjAWVWc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Jan 2023 16:22:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50776 "EHLO
+        id S232786AbjAWV1Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Jan 2023 16:27:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232387AbjAWVWb (ORCPT
+        with ESMTP id S232926AbjAWV1W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Jan 2023 16:22:31 -0500
-Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDA0738E84;
-        Mon, 23 Jan 2023 13:22:29 -0800 (PST)
-Received: by mail-oi1-f169.google.com with SMTP id s124so11608107oif.1;
-        Mon, 23 Jan 2023 13:22:29 -0800 (PST)
+        Mon, 23 Jan 2023 16:27:22 -0500
+Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E1FC3928A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 13:27:13 -0800 (PST)
+Received: by mail-io1-xd35.google.com with SMTP id p189so6256895iod.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 13:27:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jDdvKKY6vXKD/b+VRce+QXw9nBIr50kKl6fkjfVvZeQ=;
+        b=iGe2Fv/+NXwoftR7t8rC953/eZ013rEQ4mBrdt8X9MzNkxMlldK1FT1JvwVd1t2oTa
+         wzt3oK7AQ4pAuDF97gMa3ELDfzuiAPv2Sj6Se4Q8V/18I8Smqebnz75/5jqt/OqIVno1
+         WGAz4o5YbBc6PhfxTSoN3tEK/3lw4PEwRg2QcPp3M9UNmGaGIPjKAmHJ71g/sWvKwVpV
+         uS+jSM/nCuWJJMaknBdzwZaj7BZzgYtRH3I96fVSl4km4WJG+B2zY/RW6id3JJhxFf0B
+         QKznnqt8fScD5DU8shOa7RZGkcigl4jxEbuD3jZT+W9E32zLgkcS9gKPeuGDZl14/ySp
+         Wumg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=km5MHBFg3WaIEODkOycCfdgVcNvfUAMbE+78TwtWGJk=;
-        b=PLOYgQMOFuKbD5p4Fld5VsaoClzdY6k9AgiecTSjUzo3xFC428e8N/YJc+Yd8+ryRz
-         aTv0cKhWih9b95H3TZkRfEW2wGSUexIbHeKS9jcy0oBdGp8DyZS0NeZvQkgQG/YfLx/S
-         Z8OaTk7kkvuJ+dVmNst5Rf/sFpAnniY3m3GDnhRJ0Rqc+mv7J47XGcXV/8i9AkGXUtfL
-         bG0fQt3QdhkrJgKw1CSW+73kU2quKGkm+e4uF4gBMo5bgSWTTOwVTaHyb5tYkX0Pj8dU
-         QSo5JfqEoDqLC5I/aK3bx9/aW3u5TYzInmjSGeMfnEljufFM+PwWCUZ2jcterVI/3MHz
-         OuoQ==
-X-Gm-Message-State: AFqh2krlHOvEPGhUpG93B7HK7Ia/n2BrqyoeFAeaippR5304n8+aolZP
-        R8LjMNZZXPZFSyU0kbB+vQ==
-X-Google-Smtp-Source: AMrXdXuZaYIcuyOxhHXh9+FUI61XRC36OTfJwV9ek7v/xiD+F6Kk/85rE89xiM1B8FaUhRAbqKN3wQ==
-X-Received: by 2002:aca:1a19:0:b0:363:acf4:7f3f with SMTP id a25-20020aca1a19000000b00363acf47f3fmr11030730oia.16.1674508949227;
-        Mon, 23 Jan 2023 13:22:29 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id i11-20020aca2b0b000000b00369a721732asm189207oik.41.2023.01.23.13.22.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Jan 2023 13:22:28 -0800 (PST)
-Received: (nullmailer pid 2662050 invoked by uid 1000);
-        Mon, 23 Jan 2023 21:22:28 -0000
-Date:   Mon, 23 Jan 2023 15:22:28 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>, devicetree@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, Andy Gross <agross@kernel.org>,
-        Sean Paul <sean@poorly.run>, Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: Re: [PATCH 2/6] dt-bindings: phy: qcom,hdmi-phy-other: mark it as
- clock provider
-Message-ID: <167450894751.2661990.692858765334564400.robh@kernel.org>
-References: <20230119132219.2479775-1-dmitry.baryshkov@linaro.org>
- <20230119132219.2479775-3-dmitry.baryshkov@linaro.org>
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jDdvKKY6vXKD/b+VRce+QXw9nBIr50kKl6fkjfVvZeQ=;
+        b=kWTUBPJd2VidsLNf32W4/TRXF+SiiQY0jU5HWW3Yu44u2erVH4cn+9Im2ZKn3L8aYP
+         kCJ+1RFOkeTnixUJlINVdMteG0i7unwbsbAoIZQsUy9jvu1ohdwf8Xi1HxC4UqqBoPaS
+         IGxxCKn5KJ84t+vDaLPR5mReMiOxTaT7qNwBw9EtIonRUpJ8oefhUJ3y2kKVhNjHXzWb
+         mPBprM+NooeARDnz4imnFcQcY1Wq20Jf/Hotr3GfXxgjhWrFIjFGcRvj/6WqE9LEhM/Z
+         LcxHqvyw+M9Ytsm/ET5tX38JrMazToFMhESst5US/Y2ysi6jd1Abc5Eev8e4VqIamjOy
+         iMrw==
+X-Gm-Message-State: AFqh2ko7kNrhH25a55v/VC07mNQpklpWWrp74ePOUauKc5IpoK9Wpa79
+        9EGPSJ+Hrp9mqObyOpNnyPJFGEOXYTxuDMNLSGhccg==
+X-Google-Smtp-Source: AMrXdXvugBkUlkAE0J84vm8n8+OXi1gfzdkJrM86OXIf0grqvMPwRN3cym8TAc6y9qi0UP+ChtOcMLoFU3K2eooeb88=
+X-Received: by 2002:a6b:4108:0:b0:704:8263:b926 with SMTP id
+ n8-20020a6b4108000000b007048263b926mr1952152ioa.53.1674509232247; Mon, 23 Jan
+ 2023 13:27:12 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230119132219.2479775-3-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+References: <DS0PR02MB90787835F5B9CB9771A20329C4C09@DS0PR02MB9078.namprd02.prod.outlook.com>
+In-Reply-To: <DS0PR02MB90787835F5B9CB9771A20329C4C09@DS0PR02MB9078.namprd02.prod.outlook.com>
+From:   "T.J. Alumbaugh" <talumbau@google.com>
+Date:   Mon, 23 Jan 2023 13:26:36 -0800
+Message-ID: <CABmGT5HiH8OM_F6K7VQj9vj1ZnSvVowwJ_d4EVox5-JDL3Eh5w@mail.gmail.com>
+Subject: Re: [RFC] memory pressure detection in VMs using PSI mechanism for
+ dynamically inflating/deflating VM memory
+To:     "Sudarshan Rajagopalan (QUIC)" <quic_sudaraja@quicinc.com>
+Cc:     David Hildenbrand <david@redhat.com>,
+        Johannes Weiner <hannes@cmpxchg.org>,
+        Suren Baghdasaryan <surenb@google.com>,
+        Mike Rapoport <rppt@kernel.org>,
+        Oscar Salvador <osalvador@suse.de>,
+        Anshuman Khandual <anshuman.khandual@arm.com>,
+        "mark.rutland@arm.com" <mark.rutland@arm.com>,
+        "will@kernel.org" <will@kernel.org>,
+        "virtualization@lists.linux-foundation.org" 
+        <virtualization@lists.linux-foundation.org>,
+        "linux-mm@kvack.org" <linux-mm@kvack.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-arm-kernel@lists.infradead.org" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "Trilok Soni (QUIC)" <quic_tsoni@quicinc.com>,
+        "Sukadev Bhattiprolu (QUIC)" <quic_sukadev@quicinc.com>,
+        "Srivatsa Vaddagiri (QUIC)" <quic_svaddagi@quicinc.com>,
+        "Patrick Daly (QUIC)" <quic_pdaly@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-17.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        ENV_AND_HDR_SPF_MATCH,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Sudarshan,
 
-On Thu, 19 Jan 2023 15:22:15 +0200, Dmitry Baryshkov wrote:
-> Eventually all HDMI PHYs are going to provide the HDMI PLL clock to the
-> MMCC. Add #clock-cells property required to provide the HDMI PLL clock to
-> other devices.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  .../devicetree/bindings/phy/qcom,hdmi-phy-other.yaml          | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
+I had questions about the setup and another about the use of PSI.
 
-Acked-by: Rob Herring <robh@kernel.org>
+>
+> 1. This will be a native userspace daemon that will be running only in th=
+e Linux VM which will use virtio-mem driver that uses memory hotplug to add=
+/remove memory. The VM (aka Secondary VM, SVM) will request for memory from=
+ the host which is Primary VM, PVM via the backend hypervisor which takes c=
+are of cross-VM communication.
+>
+
+In regards to the "PVM/SVM" nomenclature, is the implied setup one of
+fault tolerance (i.e. the secondary is there to take over in case of
+failure of the primary VM)? Generally speaking, are the PVM and SVM
+part of a defined system running some workload? The context seems to
+be that the situation is more intricate than "two virtual machines
+running on a host", but I'm not clear how it is different from that
+general notion.
+
+>
+> 5. Detecting decrease in memory pressure =E2=80=93 the reverse part where=
+ we give back memory to PVM when memory is no longer needed is bit tricky. =
+We look for pressure decay and see if PSI averages (avg10, avg60, avg300) g=
+o down, and along with other memory stats (such as free memory etc) we make=
+ an educated guess that usecase has ended and memory has been free=E2=80=99=
+ed by the usecase, and this memory can be given back to PVM when its no lon=
+ger needed.
+>
+
+This is also very interesting to me. Detecting a decrease in pressure
+using PSI seems difficult. IIUC correctly, the approach taken in
+OOMD/senpai from Meta seems to be continually applying
+pressure/backing off, and then seeing the outcome of that decision on
+the pressure metric to feedback to the next decision (see links
+below). Is your approach similar? Do you check the metric periodically
+or only when receiving PSI memory events in userspace?
+
+https://github.com/facebookincubator/senpai/blob/main/senpai.py#L117-L148
+https://github.com/facebookincubator/oomd/blob/main/src/oomd/plugins/Senpai=
+.cpp#L529-L538
+
+Very interesting proposal. Thanks for sending,
+
+-T.J.
