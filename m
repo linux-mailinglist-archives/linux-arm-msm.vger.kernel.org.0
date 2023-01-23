@@ -2,77 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9212A678154
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 17:26:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9080A67815A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 17:27:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231739AbjAWQ03 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Jan 2023 11:26:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57372 "EHLO
+        id S231855AbjAWQ1y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Jan 2023 11:27:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229676AbjAWQ03 (ORCPT
+        with ESMTP id S231898AbjAWQ1w (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Jan 2023 11:26:29 -0500
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8A9224128
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 08:26:27 -0800 (PST)
-Received: by mail-ej1-x636.google.com with SMTP id tz11so32055704ejc.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 08:26:27 -0800 (PST)
+        Mon, 23 Jan 2023 11:27:52 -0500
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D6CFE390
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 08:27:51 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id v5so15235461edc.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 08:27:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Lab8GS0BsXttrEIIOF5NuoFe5yEpMq3XNGpFEieVFus=;
-        b=oF4rD6jd7XwszpEixf28vjQe5BHyTMqbDMbb0myXN7sNdrC+JWF7pbvptfZlr7EEZu
-         HCOfmKYSseWmcGQZrMEirBmnWHakJk4wj4YR3gUJPzu6+oTCwtccIThIC1wRNBsyWMXu
-         UA1QfgF5DJysHFZOaK/HO8gZU+urYcCCf9sVVohIfO94u8tzqW8/b5tggtzRQWLaG37+
-         7XiMVCZk+HTLtDhrNOTeALvlSHaIBTmfV9EKcQWB56KGNvKJU6JAWK9srHD5ActxyIWq
-         Wrh53EiA1YID0pZF750/wIkqkgG7oi6bMdLd8VzYTe5cs8JuMpY5jjkdg3M6pTcU/vrY
-         3j0w==
+        bh=TGuYaOel0khSlsV73mjsk+bMlDYH0IBIlccCQCNfK1E=;
+        b=Ubi1O/Kasayv1ha8O0YCjJcm6Y0ZVcgOh1rT/N7mz1JKTIo7vdWf8/NVllfkq95TMW
+         t3eyRIRN5cHZ+DP685pu1KtCtaTGICyCv44L56g8avat8TpCYp5LSDN9AB+JWncX4AOl
+         Z/4hKr4MkLnJpS0OQlsvjTMBxRkE7rEg3hxFT/W9CZqr1coUhMl1/IEqDDWfxza3v3Bg
+         gJrSbZdHaYqkimetnjenR2jlynhKVn3tOikswFh67Z+koXUubvKxUTE/1KNqJzZtxgAQ
+         88nMwkH0n6kpsvMsGVGu9Dbo5wgK203ryb55mFmSU/WjOi3yeMsHCHOYDjOE2G55Gxo5
+         QmWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Lab8GS0BsXttrEIIOF5NuoFe5yEpMq3XNGpFEieVFus=;
-        b=KM9M+ll+i18JfINAO/2TcZsLhnuLlznlft2e8SE03RoJzGJs+ScHDtCsTdJczk4ODJ
-         YsqHQC4WpL2dAPiRZBBhvoeSojq9A9Q4C2CnaqlBUBXKwDAvYLHK/PTCKvDO89VYb2/5
-         7ttsqMKBu2RE0RFu7PoB74IzMSDGatJCxukNCar0xdLSyh4eE5NMvDqP2TPktbCS2OCu
-         2Jrk49oHC/OYV/IO1FLoAp2GrVQdqoABzsKJWjfRtIP8HIIuzWKCf++7l5VY8N9AlulE
-         OKiAvuWur8+8GXLGPH/CLfbUODiX38FYjGuZdRLNRRhPkt8u8PQzp42kSLzHZSy3GQoQ
-         Ue8A==
-X-Gm-Message-State: AFqh2kqJ5xZr8iWiaCHRom/dYiJNixEF3dw6S005W+ZVXEO2CvJxZ440
-        t2+Vr2n6pDwJ0Egm6WfFyQ626g==
-X-Google-Smtp-Source: AMrXdXsLNSc/qQBnWGQwUSUQ/FzBERvIWV6+ygvsH14hClyHcGWFZRhHiJquSdlWNG5cIgsdJW1j7g==
-X-Received: by 2002:a17:906:78b:b0:7c1:9b07:32cd with SMTP id l11-20020a170906078b00b007c19b0732cdmr26403478ejc.39.1674491186264;
-        Mon, 23 Jan 2023 08:26:26 -0800 (PST)
+        bh=TGuYaOel0khSlsV73mjsk+bMlDYH0IBIlccCQCNfK1E=;
+        b=kV4G0bxxg8C/wwtdC4OnLJJJluNt2ynuq8bBRjgd+jTDH5hzsfADbLu622YsLVZjcC
+         xcziGc4YhJME5hcig0QHmCGIMM0yToMbHIT+LMrUJ+iZTBu5cP7u++rsUhoMusKDiAUN
+         O4zxYXHyuY0egj/xU6esm+Gh59vK6++gw2vN+faetTtI2bkes3MsHSQekP0z8a/HDfPM
+         2A72FRSm8IFIK/YVCB5hubju+q1Je67LintnL3VdG42/TvNJClUM/F4z6I6A+je4BfAW
+         G10ySmmFq+K3cCc9SsuGezZAE0pxAVsQLo4kiGSliC61gGFihcppb/GjIqb9kOrybrOe
+         SlIA==
+X-Gm-Message-State: AFqh2ko752Vv0koBz+vwqppCSZNFFB9fzKJXN5gV8LgQ3E8idx4wcu+B
+        fCSZ2CAcOgoQeIYvQNFWW7G2qA==
+X-Google-Smtp-Source: AMrXdXsJxFhmQ2v5F8J6vrg0ggGVqPFNwrKtuWx+Q3okt+eHUaYwph1+T1gQrUiO/f0NRxcyRkLAHA==
+X-Received: by 2002:a50:fe87:0:b0:49b:7416:e3f9 with SMTP id d7-20020a50fe87000000b0049b7416e3f9mr27213592edt.35.1674491269871;
+        Mon, 23 Jan 2023 08:27:49 -0800 (PST)
 Received: from [192.168.1.101] (abxi24.neoplus.adsl.tpnet.pl. [83.9.2.24])
-        by smtp.gmail.com with ESMTPSA id f6-20020a17090631c600b008779b5c7db6sm5411656ejf.107.2023.01.23.08.26.24
+        by smtp.gmail.com with ESMTPSA id d7-20020a50fb07000000b0049cbd334b13sm13842962edq.29.2023.01.23.08.27.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Jan 2023 08:26:25 -0800 (PST)
-Message-ID: <2f0881e3-9f6c-1c77-c6ca-3e291b37bd12@linaro.org>
-Date:   Mon, 23 Jan 2023 17:26:23 +0100
+        Mon, 23 Jan 2023 08:27:49 -0800 (PST)
+Message-ID: <16e9609b-0ac7-60e2-d759-0312822ddb30@linaro.org>
+Date:   Mon, 23 Jan 2023 17:27:47 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.0
-Subject: Re: [PATCH v4 3/3] arm64: dts: qcom: sm6350: Use specific qmpphy
- compatible
+Subject: Re: [PATCH v2 1/4] arm64: dts: qcom: use generic node name for
+ Bluetooth
 Content-Language: en-US
-To:     Luca Weiss <luca.weiss@fairphone.com>,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>
-References: <20230120-sm6350-usbphy-v4-0-4d700a90ba16@fairphone.com>
- <20230120-sm6350-usbphy-v4-3-4d700a90ba16@fairphone.com>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230123125612.154840-1-krzysztof.kozlowski@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230120-sm6350-usbphy-v4-3-4d700a90ba16@fairphone.com>
+In-Reply-To: <20230123125612.154840-1-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -87,109 +85,61 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 23.01.2023 14:29, Luca Weiss wrote:
-> The sc7180 phy compatible works fine for some cases, but it turns out
-> sm6350 does need proper phy configuration in the driver, so use the
-> newly added sm6350 compatible.
+On 23.01.2023 13:56, Krzysztof Kozlowski wrote:
+> Node names should be generic (as Devicetree spec mandates), so use
+> "bluetooth" for BT node.
 > 
-> Because the sm6350 compatible is using the new binding, we need to
-> change the node quite a bit to match it.
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > 
-> This fixes qmpphy init when no USB cable is plugged in during bootloader
-> stage.
-> 
-> Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 > ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
->  arch/arm64/boot/dts/qcom/sm6350.dtsi | 54 +++++++++++-------------------------
->  1 file changed, 16 insertions(+), 38 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-> index 8224adb99948..128dbbe23ef5 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-> @@ -13,6 +13,7 @@
->  #include <dt-bindings/interconnect/qcom,sm6350.h>
->  #include <dt-bindings/interrupt-controller/arm-gic.h>
->  #include <dt-bindings/mailbox/qcom-ipcc.h>
-> +#include <dt-bindings/phy/phy-qcom-qmp.h>
->  #include <dt-bindings/power/qcom-rpmpd.h>
->  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
->  
-> @@ -1314,49 +1315,26 @@ usb_1_hsphy: phy@88e3000 {
->  			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
->  		};
->  
-> -		usb_1_qmpphy: phy@88e9000 {
-> -			compatible = "qcom,sc7180-qmp-usb3-dp-phy";
-> -			reg = <0 0x088e9000 0 0x200>,
-> -			      <0 0x088e8000 0 0x40>,
-> -			      <0 0x088ea000 0 0x200>;
-> -			status = "disabled";
-> -			#address-cells = <2>;
-> -			#size-cells = <2>;
-> -			ranges;
-> +		usb_1_qmpphy: phy@88e8000 {
-> +			compatible = "qcom,sm6350-qmp-usb3-dp-phy";
-> +			reg = <0 0x088e8000 0 0x3000>;
->  
->  			clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
-> -				 <&xo_board>,
-> -				 <&rpmhcc RPMH_QLINK_CLK>,
-> -				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>;
-> -			clock-names = "aux", "cfg_ahb", "ref", "com_aux";
-> +				 <&gcc GCC_USB3_PRIM_CLKREF_CLK>,
-> +				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>,
-> +				 <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
-> +			clock-names = "aux", "ref", "com_aux", "usb3_pipe";
-> +
-> +			power-domains = <&gcc USB30_PRIM_GDSC>;
->  
-> -			resets = <&gcc GCC_USB3_DP_PHY_PRIM_BCR>,
-> -				 <&gcc GCC_USB3_PHY_PRIM_BCR>;
-> +			resets = <&gcc GCC_USB3_PHY_PRIM_BCR>,
-> +				 <&gcc GCC_USB3_DP_PHY_PRIM_BCR>;
->  			reset-names = "phy", "common";
->  
-> -			usb_1_ssphy: usb3-phy@88e9200 {
-> -				reg = <0 0x088e9200 0 0x200>,
-> -				      <0 0x088e9400 0 0x200>,
-> -				      <0 0x088e9c00 0 0x400>,
-> -				      <0 0x088e9600 0 0x200>,
-> -				      <0 0x088e9800 0 0x200>,
-> -				      <0 0x088e9a00 0 0x100>;
-> -				#clock-cells = <0>;
-> -				#phy-cells = <0>;
-> -				clocks = <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
-> -				clock-names = "pipe0";
-> -				clock-output-names = "usb3_phy_pipe_clk_src";
-> -			};
-> +			#clock-cells = <1>;
-> +			#phy-cells = <1>;
->  
-> -			dp_phy: dp-phy@88ea200 {
-> -				reg = <0 0x088ea200 0 0x200>,
-> -				      <0 0x088ea400 0 0x200>,
-> -				      <0 0x088eaa00 0 0x200>,
-> -				      <0 0x088ea600 0 0x200>,
-> -				      <0 0x088ea800 0 0x200>;
-> -				#phy-cells = <0>;
-> -				#clock-cells = <1>;
-> -			};
-> +			status = "disabled";
->  		};
->  
->  		dc_noc: interconnect@9160000 {
-> @@ -1430,7 +1408,7 @@ usb_1_dwc3: usb@a600000 {
->  				snps,dis_enblslpm_quirk;
->  				snps,has-lpm-erratum;
->  				snps,hird-threshold = /bits/ 8 <0x10>;
-> -				phys = <&usb_1_hsphy>, <&usb_1_ssphy>;
-> +				phys = <&usb_1_hsphy>, <&usb_1_qmpphy QMP_USB43DP_USB3_PHY>;
->  				phy-names = "usb2-phy", "usb3-phy";
->  			};
->  		};
+> Changes since v1:
+> 1. Fix also msm8996-xiaomi-common
+> ---
+>  arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi | 2 +-
+>  arch/arm64/boot/dts/qcom/sc7180-idp.dts             | 2 +-
+>  arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi          | 2 +-
+>  3 files changed, 3 insertions(+), 3 deletions(-)
 > 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
+> index 5b47b8de69da..2acfed28e3cb 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
+> @@ -229,7 +229,7 @@ &blsp1_uart2 {
+>  	status = "okay";
+>  	label = "QCA_UART";
+>  
+> -	bluetooth: qca6174a {
+> +	bluetooth: bluetooth {
+>  		compatible = "qcom,qca6174-bt";
+>  
+>  		enable-gpios = <&pm8994_gpios 19 GPIO_ACTIVE_HIGH>;
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> index 774f9d45f051..6ea8dd7d3e01 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> @@ -430,7 +430,7 @@ &uart3 {
+>  	pinctrl-names = "default", "sleep";
+>  	pinctrl-1 = <&qup_uart3_sleep>;
+>  
+> -	bluetooth: wcn3990-bt {
+> +	bluetooth: bluetooth {
+>  		compatible = "qcom,wcn3990-bt";
+>  		vddio-supply = <&vreg_l10a_1p8>;
+>  		vddxo-supply = <&vreg_l1c_1p8>;
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
+> index a78075155310..e19178c1ec44 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
+> @@ -862,7 +862,7 @@ &uart6 {
+>  
+>  	pinctrl-0 = <&qup_uart6_4pin>;
+>  
+> -	bluetooth: wcn3990-bt {
+> +	bluetooth: bluetooth {
+>  		compatible = "qcom,wcn3990-bt";
+>  		vddio-supply = <&src_pp1800_s4a>;
+>  		vddxo-supply = <&pp1800_l7a_wcn3990>;
