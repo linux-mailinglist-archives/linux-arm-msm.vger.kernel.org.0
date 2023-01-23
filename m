@@ -2,173 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D503D677BA3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 13:50:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9EE08677BF7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 13:56:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231650AbjAWMuA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Jan 2023 07:50:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52602 "EHLO
+        id S231131AbjAWM45 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Jan 2023 07:56:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231891AbjAWMty (ORCPT
+        with ESMTP id S231503AbjAWM45 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Jan 2023 07:49:54 -0500
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C84671114D;
-        Mon, 23 Jan 2023 04:49:15 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1674478149; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=Bb7+wDR4HhZ+4yPZeTDvI/n5HAUqDx2yxahDWMl9/K4xhBvhwoq7gvn/rOksK3Jdaz
-    9RpfYLFqImLDMep2oJ8sHGIIeKvHv6EEDYfljOBIOcrTTSwrpbRAbzOjiCfqkv2LIVSU
-    4eac7q6zrHXiKvhbm57yvnElx+z+S7GJXu6KbGu9AwjwlJrC/t6eeGY3/0DpKaCz1X9a
-    eMF2k1Pfu+70x2uBCPXvgE4kGFPaeR4naIYkD0jY6ii/JThRC9bNDe5O2vdCYtNrMprs
-    uyYO7c4zjHTEimJgu3gyiEw+J3RI8DLfqoNTcbxM+PvLtFZGkDvHnvYPumLdZJd7GtMf
-    MItA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1674478149;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=sD2B2ZOQtBqvxHV8WDrINo/9+pIZKRvy/nGecyo3S0o=;
-    b=i2zn1vRDDu+vsxX0VYcRCYlvXwyPQs6V+IR8glc/YTkV5fbXpASNMihKjtdQWZGmzN
-    cDxJ8Psaqs9935RTM7KlaFtsik7e0xbA09syacnbHTt6BQW4zsQnUM5brVQfPrJdlfj7
-    yQH+trIIkg8GYPC8Yws4gRDhFqfqyIWNJT7eg502u/5s1AtsdM/RBDMQQgoKMqePESHN
-    JDLlLSSd6vAsLaaH+e6vHCP7aJm5w+Niln2ApkCRIGDhucSe+Zyj5IaUzMAxGCWGpyoZ
-    mGP6+QwR2tZEBdDWqEToimpVYIzHtbyKOKdWsua7Xc9XMhtrbK9pAhU1X7LSjBcGbpc9
-    dleg==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1674478149;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=sD2B2ZOQtBqvxHV8WDrINo/9+pIZKRvy/nGecyo3S0o=;
-    b=nk3ux1boGsNtcf4ltzkvj2s81dSMvhXpY7A5851MmYf/yIZ6+1jvm7OJFefNI2fe+f
-    ZJJ4NW/EP1qpgpL8OuGqf6OzDfA65PX0Gori51lqErBqoyB3E5NRo3LvWFOEdmGlyPP5
-    5xo6k/PIndDgTeqOI6Q5ks6hszQYAaX5CDmGJ6LlJD+UIIu/IK6amahZfFxB5bzVU0ui
-    UaI+NIVoAnHNs5LKlUEyxbNBMNBaXyVZYMpDxyY3jzALGq/Ohy0+d2VptT5c9f8nFqyW
-    Wi+XVc2AV5iyyKTdmDZIXtDLCpmgOvcaJC3W3BOwdyMWFxGFAbRdBe4WNt3G+G6YUkBe
-    oEHg==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKjXrKw58qY="
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.1.0 AUTH)
-    with ESMTPSA id 6630d1z0NCn8AFC
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Mon, 23 Jan 2023 13:49:08 +0100 (CET)
-Date:   Mon, 23 Jan 2023 13:49:02 +0100
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        djakov@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, benl@squareup.com,
-        shawn.guo@linaro.org, fabien.parent@linaro.org, leo.yan@linaro.org,
-        dmitry.baryshkov@linaro.org
-Subject: Re: [PATCH v4 0/6] Add MSM8939 SoC support with two devices
-Message-ID: <Y86CPmgvAi+kChQI@gerhold.net>
-References: <20230123023127.1186619-1-bryan.odonoghue@linaro.org>
- <42baa874-c926-9111-b0b3-2df2562d8de6@linaro.org>
+        Mon, 23 Jan 2023 07:56:57 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68CE33A97
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 04:56:55 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id q5so6058740wrv.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 04:56:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=js7pRMwDu5EHvl9HWw9Bq4dZ98JUEwC6xMOJGefUs4c=;
+        b=Ys42QZ5dtuZOUeAQTUOjMBFK0hkF/MLkR/buS6vrt86FjjWFLgxDrB5rliYR+0V5hY
+         fMjObsKLzT23m3cFP18ftCuer7iOLA/rzG5KZN1q013GJXJBH5a9g7o4+qXCiszR3AP+
+         MT96ahDnPpvewb9K2Nve6fiudnxgwK32HdJKWjMZDGDdzxGtjsDsK/aDaZWJ4H82mHYM
+         o3Yuk61/q6HfyaIa+G17u0ZNxXukM9dPAUQYtfsyHpyFp+c3/IRMbF1Jku/tLve09Q37
+         ktoPS3KPPHmEgV4deAuIotzpKpr+sOtQdIL2NfnAwa7lX/DwL3RyeXW1p55pnCkLvBQ3
+         QZqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=js7pRMwDu5EHvl9HWw9Bq4dZ98JUEwC6xMOJGefUs4c=;
+        b=iNEIjzRiOSHe9YP0sPYSNMPtC592R38oRmr/KoflNzGOqDi5T8HLDvbVSK9lc29bL9
+         rsAcNCS4VOvBmNwci0GFwiXP2omMPkEte9Eqzu9oAwAKJcozZuL3mvvYJ0cZHFtWERyK
+         tD8/d8KV8AOA6dJZGRkhS+QwWhOxZw9em9vo0fUnk5oLxeLyLfQLiVmGp0BxOmdBbK++
+         dMS9y7bsnR8kiPivuZxFZrqhKcaruESwiO4aaN1+JwYWWTe9nhgiLQqiKhnbzMCGdcQP
+         qoNrHFlEmvcAi17LPJxdFWlZDtDCAaUIYjrZGBusk4X3uwtlxRs/4c/b3Cye9Gf/EQms
+         ZphA==
+X-Gm-Message-State: AFqh2krh37tVI8Q0rfPWn4cFYdnxtUCQtDsrQPE9w/b6FEh+YeARkyvB
+        GXfYzOvt7IBHS6NHdyEyxy+ukA==
+X-Google-Smtp-Source: AMrXdXuhxWIrD+fGm7Plj36KzNqMsxCxdjpVHFjf4tsbuHxXogOtxsAmSXdiyz/4r2/PxOtH3ojOPw==
+X-Received: by 2002:a05:6000:a03:b0:244:48b3:d138 with SMTP id co3-20020a0560000a0300b0024448b3d138mr24564949wrb.54.1674478613920;
+        Mon, 23 Jan 2023 04:56:53 -0800 (PST)
+Received: from krzk-bin.. ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id a10-20020a056000100a00b00297dcfdc90fsm4569616wrx.24.2023.01.23.04.56.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Jan 2023 04:56:53 -0800 (PST)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2 1/4] arm64: dts: qcom: use generic node name for Bluetooth
+Date:   Mon, 23 Jan 2023 13:56:09 +0100
+Message-Id: <20230123125612.154840-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <42baa874-c926-9111-b0b3-2df2562d8de6@linaro.org>
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_PASS,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 23, 2023 at 11:08:28AM +0000, Bryan O'Donoghue wrote:
-> V4:
-> - Left _AO for wcnss as downstream reference uses this - Bjorn/Bryan
+Node names should be generic (as Devicetree spec mandates), so use
+"bluetooth" for BT node.
 
-Downstream is just an implementation and contains plenty of misleading
-or even wrong information. IMO Bjorn is right here that VDDMX_AO is not
-a logical choice.
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-The _AO (active-only) suffix means that the votes are only applied when
-the processor making the vote is "active", that is when the Linux CPUs
-are not in deep cpuidle mode.
+---
 
-For WCNSS the goal is to keep the necessary power domains active while
-WCNSS is booting up, until it is able to make its own votes (handover).
-The WCNSS firmware might then vote for VDDMX_AO internally because VDDMX
-is not needed when the WCNSS CPU is suspended.
+Changes since v1:
+1. Fix also msm8996-xiaomi-common
+---
+ arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi | 2 +-
+ arch/arm64/boot/dts/qcom/sc7180-idp.dts             | 2 +-
+ arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi          | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-However, I would expect that the meaning is totally different when the
-same vote is made from Linux. When Linux votes for _AO the "active"
-state likely refers to the Linux CPUs, instead of the WCNSS CPU when
-made from the WCNSS firmware.
+diff --git a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
+index 5b47b8de69da..2acfed28e3cb 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
+@@ -229,7 +229,7 @@ &blsp1_uart2 {
+ 	status = "okay";
+ 	label = "QCA_UART";
+ 
+-	bluetooth: qca6174a {
++	bluetooth: bluetooth {
+ 		compatible = "qcom,qca6174-bt";
+ 
+ 		enable-gpios = <&pm8994_gpios 19 GPIO_ACTIVE_HIGH>;
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+index 774f9d45f051..6ea8dd7d3e01 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+@@ -430,7 +430,7 @@ &uart3 {
+ 	pinctrl-names = "default", "sleep";
+ 	pinctrl-1 = <&qup_uart3_sleep>;
+ 
+-	bluetooth: wcn3990-bt {
++	bluetooth: bluetooth {
+ 		compatible = "qcom,wcn3990-bt";
+ 		vddio-supply = <&vreg_l10a_1p8>;
+ 		vddxo-supply = <&vreg_l1c_1p8>;
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
+index a78075155310..e19178c1ec44 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
+@@ -862,7 +862,7 @@ &uart6 {
+ 
+ 	pinctrl-0 = <&qup_uart6_4pin>;
+ 
+-	bluetooth: wcn3990-bt {
++	bluetooth: bluetooth {
+ 		compatible = "qcom,wcn3990-bt";
+ 		vddio-supply = <&src_pp1800_s4a>;
+ 		vddxo-supply = <&pp1800_l7a_wcn3990>;
+-- 
+2.34.1
 
-Why does it work in downstream then? I would just assume "side effects":
-  - Something else votes for VDDMX without _AO while WCNSS is booting
-  - The Linux CPUs don't go into deep cpuidle state during startup
-    - In particular, note how downstream often has "lpm_levels.sleep_disabled=1"
-      on the kernel command line. This disables all cpuidle states until
-      late after boot-up when userspace changes this setting. Without
-      cpuidle, VDDMX_AO is identical to VDDMX.
-
-Please change it to VDDMX (without _AO). It will most likely not make
-any difference, but IMO it is logcially more correct and less
-confusing/misleading. :)
-
-> - Leaves dummy power-domain reference in cpu defintion as this is a
->   required property and the dt checker complains - Stephan/Bryan
-
-It's only required though because you forgot to drop the DT schema patch
-(3/4) when I suggested half a year ago that you make the MSM8939
-cpufreq-qcom-nvmem changes together with the CPR stack [1]. :/
-
-Anyway, it looks like qcom-cpufreq-nvmem.yaml requiring "cpr" power
-domain unconditionally is a mistake anyway for multiple platforms.
-[2] was recently submitted to fix this so that patch should allow you to
-drop the dummy nodes. :)
-
-[1]: https://lore.kernel.org/linux-arm-msm/Ysf8VRaXdGg+8Ev3@gerhold.net/
-[2]: https://lore.kernel.org/linux-arm-msm/20230122174548.13758-1-ansuelsmth@gmail.com/
-
-> - Left MDSS interconnects. I don't see a bug to fix here - Stephan/Bryan
-
-Fair enough, if you would like to keep it I will likely send a revert
-for the MSM8939 icc_sync_state() though. Because clearly it breaks
-setups without a display and I don't see how one would fix that from the
-device tree.
-
-Also: The undocumented "register-mem" interconnect is still there. :)
-
-> - power-domain in MDSS - dropped its not longer required after
->   commit a6f033938beb ("dt-bindings: msm: dsi-controller-main: Fix
-> power-domain constraint") - Stephan
-
-Thanks!
-
-> - Adds gcc dsi1pll and dsi1pllbyte to gcc clock list.
->   Reviewing the silicon documentation we see dsi0_phy_pll is used to clock
->   GCC_BYTE1_CFG_RCGR : SRC_SEL
->   Root Source Select
->   000 : cxo
->   001 : dsi0_phy_pll_out_byteclk
->   010 : GPLL0_OUT_AUX
->   011 : gnd
->   100 : gnd
->   101 : gnd
->   110 : gnd
->   111 : reserved - Stephan/Bryan
-> 
-
-I'm confused. Are you not contradicting yourself here? You say that
-dsi0_phy_pll (dsi ZERO) is used to clock GCC_BYTE1_CFG_RCGR. Then why
-do you add dsi1_phy_pll (dsi ONE) to the gcc clock list?
-
-To me this looks like a confirmation of what downstream does, that both
-DSI byte clocks are actually sourced from the dsi0_phy and the PLL of
-dsi1_phy is not used.
-
-Thanks,
-Stephan
