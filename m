@@ -2,110 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C8C3677995
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 11:49:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 015E46779A7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 11:56:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231635AbjAWKt4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Jan 2023 05:49:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36912 "EHLO
+        id S230139AbjAWK4s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Jan 2023 05:56:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229502AbjAWKtz (ORCPT
+        with ESMTP id S231620AbjAWK4q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Jan 2023 05:49:55 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDA22212A;
-        Mon, 23 Jan 2023 02:49:54 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 636ED60E75;
-        Mon, 23 Jan 2023 10:49:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B436EC433D2;
-        Mon, 23 Jan 2023 10:49:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1674470993;
-        bh=g4mFdXvL6aqm8OEL7mjoXSAfbXNFwG4v64rCqRpd7X4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=osE6ua+mqXa24ikv1uq9gwBDh2nHn+pr7nV0u7+l+3t7xss9EGpAO8i4s4UzgBIq1
-         0z313t01wVU8LhE0aSmG9D7ODL8kmHzvHnAGAprAu8OAPzkT6J4iu0DFzK74SEu0JB
-         vM7nipCyChNODYFJukQzP//HxsfvCT8baRzfkiko6p0mDyhXN26eKdP7q+VUivUeFq
-         D+YIfUhSG3OQ/CcH8jCgHpc37g+eNmFXTCaMjW07D/Q+kKvZs5CQTFUPzWe1/xcy/N
-         eajo3F0chlO5NRv+ctkjuYDePy6zc71zglH75I2gaKjBpkF2rDIs/rCq9ufIwrOuEQ
-         HW5xnPXrcEopg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1pJuOd-0000xI-2l; Mon, 23 Jan 2023 11:49:51 +0100
-Date:   Mon, 23 Jan 2023 11:49:51 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Abel Vesa <abel.vesa@linaro.org>
+        Mon, 23 Jan 2023 05:56:46 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB5BA1CAEA
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 02:56:44 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id h12so6387706wrv.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 02:56:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=M+6uYP+MbTYF0NBYNdaigx/58WjLEGFdjk2/rVFjcyc=;
+        b=Q7XJBZsR/2LjtipimHF2PWIbSJhSPtlaX/WDZ3z6jD3XW8wwtFX7nivgiFl34QGwbq
+         BNoPZ9MmzwLIM3jLL+LG7F+1weXOofb5dYp9DxthnNj6UojG+IJ424ScDqmXVN02bU/Q
+         lBGWdYyN98tfymSWPVr5QWJPexlQHipp/8J2x7nWl2AH81Ry+cbsyTmrJN0o0XM2p7ui
+         vvILB60sabY9N0yJmMZwUleRwhPLlECoLpHW36yMIhkF7AbSbLZiLmbmGfEdwvFVzOks
+         lgpOjCFaFCvR58YjB8aXYYwPVIEeeXo1ycQxP1aBZ7tai4J1zJR4KxpIVhobCx6VpQuR
+         w9vQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=M+6uYP+MbTYF0NBYNdaigx/58WjLEGFdjk2/rVFjcyc=;
+        b=t1JdFLrhL0N23rSEzBIHFruH+pQUNRPbWSrpfT+9+N0FQuRtl+vofQDMQ5HP+RsWuB
+         E5fGDcFyIlntfaRVd6S/0Wa9HJNqRoRmWoCEEVRuNNHL4tF8pc24GRBtovqokBTSwjhg
+         QCSI78EBRdOsFApY6/+ThN9AUJ/kt5xQ9y4PBWPmAK/sN2MNDMnTAT4C93/HUXGayTOC
+         MJiCWgbp4KPV/mzQoPZmOBJhHTDH9vstHGOr8AAmtr7YM1VGsdOjNHed/hS5g7axxkrK
+         BhF6x1kxTd562HzWI0j1kKKKGTDhycihtTSv/RLDPTO46K93268o6ONEajpefG4oIOgh
+         JEzg==
+X-Gm-Message-State: AFqh2krNHrpQMVLoUPwd1fpZoxwInmp1pN7XhRRubnPtnE0tBywZK7Zl
+        huSCU/wod6bO3Heh274arNvBjQ==
+X-Google-Smtp-Source: AMrXdXs0x2uUX0FmQbIv3R5wGA6FQnaTyB5mpfT8FEVNcT8YVvcMWJ5NWN/lCK+THPxUopDAMwuW8A==
+X-Received: by 2002:a05:6000:1006:b0:24f:5890:616b with SMTP id a6-20020a056000100600b0024f5890616bmr28966879wrx.56.1674471403238;
+        Mon, 23 Jan 2023 02:56:43 -0800 (PST)
+Received: from linaro.org ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id c8-20020a5d4cc8000000b002bdeb0cf706sm22803416wrt.65.2023.01.23.02.56.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Jan 2023 02:56:42 -0800 (PST)
+Date:   Mon, 23 Jan 2023 12:56:41 +0200
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         "vkoul@kernel.org" <vkoul@kernel.org>,
         Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-phy@lists.infradead.org
-Subject: Re: [PATCH 04/10] dt-bindings: phy: qcom,qmp-usb: Document SM8550
- compatible
-Message-ID: <Y85mT7wZH0hsJ7Y6@hovoldconsulting.com>
-References: <20221116120157.2706810-1-abel.vesa@linaro.org>
- <20221116120157.2706810-5-abel.vesa@linaro.org>
- <Y3TpzgQ1JaFs5sNk@hovoldconsulting.com>
- <Y85fOgfjEUBMnWar@hovoldconsulting.com>
- <Y85mA3limH9u/NHe@linaro.org>
+        Johan Hovold <johan@kernel.org>
+Subject: Re: [PATCH v4 4/6] phy: qcom-qmp: qserdes-txrx-ufs: Add v6 register
+ offsets
+Message-ID: <Y85n6Z3lPhj6gAKb@linaro.org>
+References: <20230117142015.509675-1-abel.vesa@linaro.org>
+ <20230117142015.509675-5-abel.vesa@linaro.org>
+ <61be8f36-7171-dbc1-94ec-7e77438b37f5@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Y85mA3limH9u/NHe@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <61be8f36-7171-dbc1-94ec-7e77438b37f5@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 23, 2023 at 12:48:35PM +0200, Abel Vesa wrote:
-> On 23-01-23 11:19:38, Johan Hovold wrote:
-> > On Wed, Nov 16, 2022 at 02:46:54PM +0100, Johan Hovold wrote:
-> > > On Wed, Nov 16, 2022 at 02:01:51PM +0200, Abel Vesa wrote:
-> > > > Add the SM8550 compatible to the list.
-> > > > 
-> > > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > > > ---
-> > > >  .../devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml       | 1 +
-> > > >  1 file changed, 1 insertion(+)
-> > > > 
-> > > > diff --git a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
-> > > > index 0c6b3ba7346b..cba2a252baf8 100644
-> > > > --- a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
-> > > > +++ b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
-> > > > @@ -37,6 +37,7 @@ properties:
-> > > >        - qcom,sm8350-qmp-usb3-phy
-> > > >        - qcom,sm8350-qmp-usb3-uni-phy
-> > > >        - qcom,sm8450-qmp-usb3-phy
-> > > > +      - qcom,sm8550-qmp-usb3-phy
-> > > 
-> > > This one too should be based on sc8280xp rather than the legacy binding
-> > > scheme.
+On 23-01-17 16:42:07, Dmitry Baryshkov wrote:
+> On 17/01/2023 16:20, Abel Vesa wrote:
+> > The new SM8550 SoC bumps up the HW version of QMP phy to v6 for USB,
+> > UFS and PCIE g3x2. Add the new qserdes TX RX but UFS specific offsets
+> > in a dedicated header file.
 > > 
-> > I can't seem to find a v2 of this one adding a new-style binding for
-> > sm8550.
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > ---
+> >   .../phy-qcom-qmp-qserdes-txrx-ufs-v6.h        | 30 +++++++++++++++++++
+> >   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c       |  2 ++
+> >   2 files changed, 32 insertions(+)
+> >   create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h
 > > 
-> > Note that the corresponding dts changes have already been merged:
-> > 
-> > 	https://lore.kernel.org/all/20230119004533.1869870-2-abel.vesa@linaro.org/
+> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h
+> > new file mode 100644
+> > index 000000000000..6238dd2b8421
+> > --- /dev/null
+> > +++ b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h
+> > @@ -0,0 +1,30 @@
+> > +/* SPDX-License-Identifier: GPL-2.0 */
+> > +/*
+> > + * Copyright (c) 2023, Linaro Limited
+> > + */
+> > +
+> > +#ifndef QCOM_PHY_QMP_QSERDES_TXRX_UFS_V6_H_
+> > +#define QCOM_PHY_QMP_QSERDES_TXRX_UFS_V6_H_
+> > +
+> > +#define QSERDES_UFS_V6_TX_RES_CODE_LANE_TX			0x28
+> > +#define QSERDES_UFS_V6_TX_RES_CODE_LANE_RX			0x2c
+> > +#define QSERDES_UFS_V6_TX_RES_CODE_LANE_OFFSET_TX		0x30
+> > +#define QSERDES_UFS_V6_TX_RES_CODE_LANE_OFFSET_RX		0x34
 > 
-> As we discussed on Friday, I intend to apply the same strategy as
-> for pcie. I haven't managed to send the v2 for this one yet.
-> The order is, UFS, PCIe and then USB. Since the patchsets are based
-> on each other, I'm trying to make sure PCIe is in the proper shape
-> before moving on to USB.
+> Emty line please
+> 
 
-Sounds good.
+Sure. Will drop in the next version.
 
-Johan
+> > +#define QSERDES_UFS_V6_RX_UCDR_FO_GAIN_RATE2			0x08
+> > +#define QSERDES_UFS_V6_RX_UCDR_FO_GAIN_RATE4			0x10
+> 
+> Any chance to doublecheck these two values? I think that UCDR_FO_GAIN_RATE2
+> is 0xd4 (according to phy-qcom-ufs-qmp-v4-cape.h from msm-5.10)
+
+Double checked. The values are correct. Please note that your are
+looking in a header file for qmp v4. This is v6.
+
+> 
+> > +
+> > +#define QSERDES_UFS_V6_RX_VGA_CAL_MAN_VAL			0x178
+> > +#define QSERDES_UFS_V6_RX_MODE_RATE_0_1_B0			0x208
+> > +#define QSERDES_UFS_V6_RX_MODE_RATE_0_1_B1			0x20c
+> > +#define QSERDES_UFS_V6_RX_MODE_RATE_0_1_B3			0x214
+> > +#define QSERDES_UFS_V6_RX_MODE_RATE_0_1_B6			0x220
+> > +#define QSERDES_UFS_V6_RX_MODE_RATE2_B3				0x238
+> > +#define QSERDES_UFS_V6_RX_MODE_RATE2_B6				0x244
+> > +#define QSERDES_UFS_V6_RX_MODE_RATE3_B3				0x25c
+> > +#define QSERDES_UFS_V6_RX_MODE_RATE3_B4				0x260
+> > +#define QSERDES_UFS_V6_RX_MODE_RATE3_B5				0x264
+> > +#define QSERDES_UFS_V6_RX_MODE_RATE3_B8				0x270
+> > +#define QSERDES_UFS_V6_RX_MODE_RATE4_B3				0x280
+> > +#define QSERDES_UFS_V6_RX_MODE_RATE4_B6				0x28c
+> > +
+> > +#endif
+> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> > index 110d8fb9309f..a5cdd58c5b4d 100644
+> > --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> > +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> > @@ -27,6 +27,8 @@
+> >   #include "phy-qcom-qmp-pcs-ufs-v4.h"
+> >   #include "phy-qcom-qmp-pcs-ufs-v5.h"
+> > +#include "phy-qcom-qmp-qserdes-txrx-ufs-v6.h"
+> > +
+> >   /* QPHY_SW_RESET bit */
+> >   #define SW_RESET				BIT(0)
+> >   /* QPHY_POWER_DOWN_CONTROL */
+> 
+> -- 
+> With best wishes
+> Dmitry
+> 
