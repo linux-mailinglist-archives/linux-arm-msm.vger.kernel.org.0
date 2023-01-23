@@ -2,567 +2,202 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EEC3B677425
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 03:31:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 96B816774A8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 05:31:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231492AbjAWCbx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 22 Jan 2023 21:31:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52136 "EHLO
+        id S231488AbjAWEbr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 22 Jan 2023 23:31:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231487AbjAWCbr (ORCPT
+        with ESMTP id S231490AbjAWEbi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 22 Jan 2023 21:31:47 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 159B4166DE
-        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Jan 2023 18:31:38 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id e3so9462371wru.13
-        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Jan 2023 18:31:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4eEkv/abbkcfzh0mmzSXI9XPpVbAKcusD1fGaRxOUqE=;
-        b=MSBKLu+pAQbX2LtjNhRHTDnPQNTpp4MDmprNFnqmurdaSVOmQDFFcjO0vEABiQY1s5
-         LScBiuW5GWR48KgZVdSzpL4LxkmevEPeiWfjH78z8w4CII8U4jdGg/mRaCenLOUOc05M
-         UNDMtch7xuZS6BryfyRx2RyPydYOn3UcrrDCYSzER8D1K91/g4M5OXOLvEVFOqsWpgZm
-         KMsYh9X3qF0BhCKkdXfvwk07QFGq6dDXBZvvVC0SS3c7TpOhqab/HU1zek/pFbnG4xm0
-         sLl/PiEBqcbJHha7aDcMgNoLx6avcRQUvfWww4LfEzJJ5+BDn1ZGgiG4i9v6lnaXx8xJ
-         9JZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4eEkv/abbkcfzh0mmzSXI9XPpVbAKcusD1fGaRxOUqE=;
-        b=3BFdaiJ9ka02xAEnV+/86euU6RC8o9BqkRTyk+xc7tqgaTe+78su2o5z+9I0NEduuU
-         cPhCAVlRK/UD5b/3viHd4HipuA37JQ+QFOEd/aRb177oP+5XHbsS3e9gIIAe3cQFUsyq
-         u9sSMh6m8W5WYQZc3KFN+eJGVrIsF+RcUYYYSPPJdpzXUDbAvFXaA9Ktz9c0ky8xA6xU
-         /8gIcTQXN3sb3YJCJPF8lHccaWVayx//2YSuvjK2FM9Y141RtfnLMphht9hf/cMXmMJp
-         CTAeQ0+TN0UIDq3CW3Ee4qWpouTDQtpq3mOImiz3lh9b/gkWkgoeLRC2brMsOS+ea3uH
-         N6kA==
-X-Gm-Message-State: AFqh2kodDK4alfmO57oN/axrLcw6qs68KMqg5umHrjDG7NEjsvB3zz3R
-        2+cyVn5QsgudSPENm8ZrYWkaKQ==
-X-Google-Smtp-Source: AMrXdXsmwMQz7lZrrinRD27lQUnbxMVbPqk2Yw2Nz9mJADoLW0ThNXi5KYDUDgDvFe+zYaTAkVPGLQ==
-X-Received: by 2002:a5d:6b85:0:b0:2bd:d782:c2bc with SMTP id n5-20020a5d6b85000000b002bdd782c2bcmr20154872wrx.33.1674441097458;
-        Sun, 22 Jan 2023 18:31:37 -0800 (PST)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id r11-20020adff70b000000b002bdf290efdasm18672703wrp.58.2023.01.22.18.31.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Jan 2023 18:31:37 -0800 (PST)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        djakov@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org
-Cc:     bryan.odonoghue@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, benl@squareup.com,
-        shawn.guo@linaro.org, fabien.parent@linaro.org, leo.yan@linaro.org,
-        dmitry.baryshkov@linaro.org, stephan@gerhold.net
-Subject: [PATCH v4 6/6] arm64: dts: qcom: Add msm8939 Sony Xperia M4 Aqua
-Date:   Mon, 23 Jan 2023 02:31:27 +0000
-Message-Id: <20230123023127.1186619-7-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20230123023127.1186619-1-bryan.odonoghue@linaro.org>
-References: <20230123023127.1186619-1-bryan.odonoghue@linaro.org>
+        Sun, 22 Jan 2023 23:31:38 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4D651A949;
+        Sun, 22 Jan 2023 20:31:27 -0800 (PST)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30N4TMlU009887;
+        Mon, 23 Jan 2023 04:31:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=RGnWmcYmRpDUDAVXudOkcEb+Itdsk4WK80t8GliST8Q=;
+ b=iIwSV7A9feszg8qUXHbCenTTe+MIYaa18YSWyvj87cnqp0YN3q9EHlN28iHWYakcvID6
+ 1ZSW9fH157DrFUuD1C1DbSmRfhBcJJzkcfioBkG9XrdZfFLDcWTM5KwOWw1zx6sW8dgz
+ uqojws1YEp0SLwc+YqQILEYoan25jIr8thNfgUBdHhzG1wbvP7aBQEPaPEt2M1eig/hW
+ v/sRu3XsPYeF424e3tKCglgudG6cmucdaqUujTBmzmS0361g65mTRQrRUhSblOBHK15N
+ cuiafT1htcqQ9JkJDt75S6q0oi0+bwYBhpoThag31pZPNXmk3IbTF3c8EL29U2pJ+Noi Vg== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n89f5a8f8-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 23 Jan 2023 04:31:11 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30N4V9XX022834
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 23 Jan 2023 04:31:09 GMT
+Received: from [10.131.116.172] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Sun, 22 Jan
+ 2023 20:31:04 -0800
+Message-ID: <5c2442d3-1f65-9106-2ef4-d6beec159538@quicinc.com>
+Date:   Mon, 23 Jan 2023 10:00:55 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH v3 1/3] clk: qcom: gdsc: Fix the handling of PWRSTS_RET
+ support
+Content-Language: en-US
+To:     Luca Weiss <luca@z3ntu.xyz>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@somainline.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>, <mka@chromium.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <johan+linaro@kernel.org>, <quic_kriskura@quicinc.com>,
+        <dianders@chromium.org>, <linux-clk@vger.kernel.org>,
+        <angelogioacchino.delregno@collabora.com>,
+        <~postmarketos/upstreaming@lists.sr.ht>
+References: <20220920111517.10407-1-quic_rjendra@quicinc.com>
+ <5897497.lOV4Wx5bFT@g550jk>
+From:   Rajendra Nayak <quic_rjendra@quicinc.com>
+In-Reply-To: <5897497.lOV4Wx5bFT@g550jk>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: jnjnRNsqrBfqY-7WRewipyXRPIjLc5va
+X-Proofpoint-GUID: jnjnRNsqrBfqY-7WRewipyXRPIjLc5va
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-23_02,2023-01-20_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 bulkscore=0
+ clxscore=1011 mlxscore=0 spamscore=0 phishscore=0 adultscore=0
+ lowpriorityscore=0 suspectscore=0 malwarescore=0 priorityscore=1501
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301230042
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a basic booting DTS for the Sony Xperia M4 Aqua aka "tulip".
 
-Tulip is paired with:
+On 1/22/2023 5:45 AM, Luca Weiss wrote:
+> Hi Rajendra,
+> 
+> On Dienstag, 20. September 2022 13:15:15 CET Rajendra Nayak wrote:
+>> GDSCs cannot be transitioned into a Retention state in SW.
+>> When either the RETAIN_MEM bit, or both the RETAIN_MEM and
+>> RETAIN_PERIPH bits are set, and the GDSC is left ON, the HW
+>> takes care of retaining the memory/logic for the domain when
+>> the parent domain transitions to power collapse/power off state.
+>>
+>> On some platforms where the parent domains lowest power state
+>> itself is Retention, just leaving the GDSC in ON (without any
+>> RETAIN_MEM/RETAIN_PERIPH bits being set) will also transition
+>> it to Retention.
+>>
+>> The existing logic handling the PWRSTS_RET seems to set the
+>> RETAIN_MEM/RETAIN_PERIPH bits if the cxcs offsets are specified
+>> but then explicitly turns the GDSC OFF as part of _gdsc_disable().
+>> Fix that by leaving the GDSC in ON state.
+>>
+>> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+>> Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+>> ---
+>> v3:
+>> Updated changelog
+>>
+>> There are a few existing users of PWRSTS_RET and I am not
+>> sure if they would be impacted with this change
+>>
+>> 1. mdss_gdsc in mmcc-msm8974.c, I am expecting that the
+>> gdsc is actually transitioning to OFF and might be left
+>> ON as part of this change, atleast till we hit system wide
+>> low power state.
+>> If we really leak more power because of this
+>> change, the right thing to do would be to update .pwrsts for
+>> mdss_gdsc to PWRSTS_OFF_ON instead of PWRSTS_RET_ON
+>> I dont have a msm8974 hardware, so if anyone who has can report
+>> any issues I can take a look further on how to fix it.
+> 
+> Unfortunately indeed this patch makes problems on msm8974, at least on
+> fairphone-fp2 hardware.
+> 
+> With this patch in place, the screen doesn't initialize correctly in maybe 80%
+> of boots and is stuck in weird states, mostly just becomes completely blue.
+> 
+> Kernel log at least sometimes includes messages like this:
+> [   25.847541] dsi_cmds2buf_tx: cmd dma tx failed, type=0x39, data0=0x51,
+> len=8, ret=-110
+> 
+> Do you have anything I can try on msm8974? For now, reverting this patch makes
+> display work again on v6.1
 
-- wcn3660
-- smb1360 battery charger
-- 720p Truly NT35521 Panel
+hmm, I was really expecting this to leak more power than break anything functionally,
+Did you try moving to PWRSTS_OFF_ON instead of PWRSTS_RET_ON for mdss_gdsc?
 
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- .../qcom/msm8939-sony-xperia-kanuti-tulip.dts | 453 ++++++++++++++++++
- 2 files changed, 454 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/msm8939-sony-xperia-kanuti-tulip.dts
-
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 73ff8d3213d99..1df3dbaf8a6d8 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -27,6 +27,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-j5.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-j5x.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-serranove.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt88047.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-sony-xperia-kanuti-tulip.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-motorola-potter.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-xiaomi-daisy.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-xiaomi-mido.dtb
-diff --git a/arch/arm64/boot/dts/qcom/msm8939-sony-xperia-kanuti-tulip.dts b/arch/arm64/boot/dts/qcom/msm8939-sony-xperia-kanuti-tulip.dts
-new file mode 100644
-index 0000000000000..841d88fe3659f
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/msm8939-sony-xperia-kanuti-tulip.dts
-@@ -0,0 +1,453 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Copyright (c) 2015, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2022-2023, Bryan O'Donoghue.
-+ *
-+ */
-+
-+/dts-v1/;
-+
-+#include "msm8939.dtsi"
-+#include "msm8939-pm8916.dtsi"
-+#include <dt-bindings/arm/qcom,ids.h>
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-+
-+/ {
-+	model = "Sony Xperia M4 Aqua";
-+	compatible = "sony,kanuti-tulip", "qcom,msm8939";
-+
-+	qcom,board-id = <8 0>;
-+	qcom,msm-id = <QCOM_ID_MSM8939 0>, <QCOM_ID_MSM8939 0x30000>, <QCOM_ID_APQ8039 0x30000>;
-+
-+	aliases {
-+		mmc0 = &sdhc_1; /* SDC1 eMMC slot */
-+		mmc1 = &sdhc_2; /* SDC2 SD card slot */
-+		serial0 = &blsp1_uart2;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0:115200n8";
-+	};
-+
-+	negative5_reg: negative5-regulator {
-+		compatible = "regulator-fixed";
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&negative5_reg_default>;
-+		regulator-name = "negative5_reg";
-+		gpio = <&tlmm 17 GPIO_ACTIVE_LOW>;
-+		startup-delay-us = <0>;
-+	};
-+
-+	positive5_reg: positive5-regulator {
-+		compatible = "regulator-fixed";
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&positive5_reg_default>;
-+		regulator-name = "positive5_reg";
-+		gpio = <&tlmm 114 GPIO_ACTIVE_LOW>;
-+		startup-delay-us = <0>;
-+	};
-+
-+	usb_id: usb-id {
-+		compatible = "linux,extcon-usb-gpio";
-+		id-gpio = <&tlmm 110 GPIO_ACTIVE_HIGH>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&usb_id_default>;
-+	};
-+};
-+
-+&dsi0 {
-+	status = "okay";
-+
-+	panel@0 {
-+		compatible = "sony,tulip-truly-nt35521";
-+		reg = <0>;
-+		positive5-supply = <&positive5_reg>;
-+		negative5-supply = <&negative5_reg>;
-+		reset-gpios = <&tlmm 25 GPIO_ACTIVE_LOW>;
-+		enable-gpios = <&tlmm 10 GPIO_ACTIVE_LOW>;
-+
-+		ports {
-+			port {
-+				panel_in: endpoint {
-+					remote-endpoint = <&dsi0_out>;
-+				};
-+			};
-+		};
-+
-+	};
-+};
-+
-+&dsi0_out {
-+	remote-endpoint = <&panel_in>;
-+	data-lanes = <0 1 2 3>;
-+};
-+
-+&dsi_phy0 {
-+	qcom,dsi-phy-regulator-ldo-mode;
-+	status = "okay";
-+};
-+
-+&tlmm {
-+	ak8963_default: ak8963-default-state {
-+		pins = "gpio69";
-+		function = "gpio";
-+		drive-strength = <6>;
-+		bias-pull-up;
-+	};
-+
-+	ak8963_sleep: ak8963-sleep-state {
-+		pins = "gpio69";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
-+	/* Ambient light and proximity sensor apds9930 and apds9900 */
-+	apds99xx_default: apds99xx-default-state {
-+		pins = "gpio113";
-+		function = "gpio";
-+		drive-strength = <6>;
-+		bias-pull-up;
-+	};
-+
-+	apds99xx_sleep: apds99xx-sleep-state {
-+		pins = "gpio113";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
-+	cam_sensor_flash_default: cam-sensor-flash-default-state {
-+		pins = "gpio98", "gpio97";
-+		function = "gpio";
-+		bias-disable;
-+		drive-strength = <2>;
-+	};
-+
-+	cci1_default: cci1-default-state {
-+		pins = "gpio31", "gpio32";
-+		function = "cci_i2c";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	cdc_ext_spk_pa_active: cdc-ext-spk-pa-on-state {
-+		pins = "gpio0";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		output-low;
-+	};
-+
-+	cdc_ext_spk_pa_sus: cdc-ext-spk-pa-off-state {
-+		pins = "gpio0";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	cdc_slim_lines_act: lines-on-state {
-+		pins = "gpio63";
-+		function = "cdc_pdm0";
-+		drive-strength = <8>;
-+		output-high;
-+	};
-+
-+	cdc_slim_lines_sus: lines-off-state {
-+		pins = "gpio63";
-+		function = "cdc_pdm0";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	cross_conn_det_act: lines-on-state {
-+		pins = "gpio120";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-pull-down;
-+		output-low;
-+	};
-+
-+	cross_conn_det_sus: lines-off-state {
-+		pins = "gpio120";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
-+	ext_buck_vsel: vsel0-state {
-+		pins = "gpio111";
-+		function = "gpio";
-+		drive-strength = <2>;
-+	};
-+
-+	ext_cdc_tlmm_lines_act: tlmm-lines-on-state {
-+		pins = "gpio116", "gpio112", "gpio117", "gpio118", "gpio119";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-disable;
-+	};
-+
-+	ext_cdc_tlmm_lines_sus: tlmm-lines-off-state {
-+		pins = "gpio116", "gpio112", "gpio117", "gpio118", "gpio119";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	gpio_key_suspend: gpio-key-suspend-state {
-+		pins = "gpio107", "gpio108", "gpio109";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
-+
-+	negative5_reg_default: negative5-reg-default-state {
-+		pins = "gpio17";
-+		function = "gpio";
-+		output-low;
-+	};
-+
-+	positive5_reg_default: positive5-reg-default-state {
-+		pins = "gpio114";
-+		function = "gpio";
-+		output-low;
-+	};
-+
-+	/* Gyroscope and accelerometer sensor combo */
-+	mpu6050_default: mpu6050-default-state {
-+		pins = "gpio115";
-+		function = "gpio";
-+		drive-strength = <6>;
-+		bias-pull-up;
-+	};
-+
-+	mpu6050_sleep: mpu6050-sleep-state {
-+		pins = "gpio115";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
-+	nfc_disable_active: nfc-disable-active-state {
-+		pins = "gpio20";
-+		function = "gpio";
-+		drive-strength = <6>;
-+		bias-pull-up;
-+	};
-+
-+	nfc_disable_suspend: nfc-disable-suspend-state {
-+		pins = "gpio20";
-+		function = "gpio";
-+		drive-strength = <6>;
-+		bias-disable;
-+	};
-+
-+	nfc_int_active: nfc-int-active-state {
-+		pins = "gpio21";
-+		function = "gpio";
-+		drive-strength = <6>;
-+		bias-pull-up;
-+	};
-+
-+	nfc_int_suspend: nfc-int-suspend-state {
-+		pins = "gpio21";
-+		function = "gpio";
-+		drive-strength = <6>;
-+		bias-pull-up;
-+	};
-+
-+	nt35521_te_default: nt35521-te-default-state {
-+		pins = "gpio24";
-+		function = "gpio";
-+		drive-strength = <6>;
-+		bias-pull-down;
-+	};
-+
-+	nt35521_backlight: nt35521-backlight-default-state {
-+		pins = "gpio10";
-+		function = "gpio";
-+		drive-strength = <6>;
-+		bias-pull-down;
-+	};
-+
-+	smb_int: smb-int-default-state {
-+		pins = "gpio62";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
-+
-+	ts_int_active: ts-int-active-state {
-+		pins = "gpio13";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-pull-up;
-+	};
-+
-+	ts_int_suspend: ts-int-suspend-state {
-+		pins = "gpio13";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
-+	ts_reset_active: ts-reset-active-state {
-+		pins = "gpio12";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-pull-up;
-+	};
-+
-+	ts_reset_suspend: ts-reset-suspend-state {
-+		pins = "gpio12";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
-+	ts_release: ts-release-default-state {
-+		pins = "gpio13", "gpio12";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
-+	usb_id_default: usb-id-default-state {
-+		pins = "gpio110";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-pull-up;
-+	};
-+};
-+
-+&pronto {
-+	status = "okay";
-+
-+	iris {
-+		compatible = "qcom,wcn3660";
-+	};
-+};
-+
-+&smd_rpm_regulators {
-+	vdd_l1_l2_l3-supply = <&pm8916_s3>;
-+	vdd_l4_l5_l6-supply = <&pm8916_s4>;
-+	vdd_l7-supply = <&pm8916_s4>;
-+
-+	pm8916_s3: s3 {
-+		regulator-min-microvolt = <1200000>;
-+		regulator-max-microvolt = <1300000>;
-+	};
-+
-+	pm8916_s4: s4 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <2100000>;
-+	};
-+
-+	pm8916_l2: l2 {
-+		regulator-min-microvolt = <1200000>;
-+		regulator-max-microvolt = <1200000>;
-+	};
-+
-+	pm8916_l4: l4 {
-+		regulator-min-microvolt = <2050000>;
-+		regulator-max-microvolt = <2050000>;
-+	};
-+
-+	pm8916_l5: l5 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+	};
-+
-+	pm8916_l6: l6 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+		regulator-always-on;
-+	};
-+
-+	pm8916_l7: l7 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+	};
-+
-+	pm8916_l8: l8 {
-+		regulator-min-microvolt = <2850000>;
-+		regulator-max-microvolt = <2900000>;
-+	};
-+
-+	pm8916_l9: l9 {
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+	};
-+
-+	pm8916_l10: l10 {
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+	};
-+
-+	pm8916_l11: l11 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <3300000>;
-+		regulator-system-load = <200000>;
-+		regulator-allow-set-load;
-+	};
-+
-+	pm8916_l12: l12 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <3300000>;
-+	};
-+
-+	pm8916_l13: l13 {
-+		regulator-min-microvolt = <3075000>;
-+		regulator-max-microvolt = <3075000>;
-+	};
-+
-+	pm8916_l14: l14 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <3300000>;
-+	};
-+
-+	pm8916_l15: l15 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <3300000>;
-+	};
-+
-+	pm8916_l16: l16 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <3300000>;
-+	};
-+
-+	pm8916_l17: l17 {
-+		regulator-min-microvolt = <2850000>;
-+		regulator-max-microvolt = <2850000>;
-+	};
-+
-+	pm8916_l18: l18 {
-+		regulator-min-microvolt = <2700000>;
-+		regulator-max-microvolt = <2700000>;
-+	};
-+};
-+
-+&sdhc_1 {
-+	pinctrl-names = "default", "sleep";
-+	pinctrl-0 = <&sdc1_default_state>;
-+	pinctrl-1 = <&sdc1_sleep_state>;
-+	status = "okay";
-+};
-+
-+&sdhc_2 {
-+	pinctrl-names = "default", "sleep";
-+	pinctrl-0 = <&sdc2_default_state>;
-+	pinctrl-1 = <&sdc2_sleep_state>;
-+	cd-gpios = <&tlmm 38 GPIO_ACTIVE_HIGH>;
-+	status = "okay";
-+};
-+
-+&usb {
-+	extcon = <&usb_id>, <&usb_id>;
-+	status = "okay";
-+};
-+
-+&usb_hs_phy {
-+	extcon = <&usb_id>;
-+};
--- 
-2.38.1
-
+> 
+> Regards
+> Luca
+> 
+>>
+>> 2. gpu_gx_gdsc in gpucc-msm8998.c and
+>>     gpu_gx_gdsc in gpucc-sdm660.c
+>> Both of these seem to add support for 3 power state
+>> OFF, RET and ON, however I dont see any logic in gdsc
+>> driver to handle 3 different power states.
+>> So I am expecting that these are infact just transitioning
+>> between ON and OFF and RET state is never really used.
+>> The ideal fix for them would be to just update their resp.
+>> .pwrsts to PWRSTS_OFF_ON only.
+>>
+>>   drivers/clk/qcom/gdsc.c | 10 ++++++++++
+>>   drivers/clk/qcom/gdsc.h |  5 +++++
+>>   2 files changed, 15 insertions(+)
+>>
+>> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+>> index d3244006c661..ccf63771e852 100644
+>> --- a/drivers/clk/qcom/gdsc.c
+>> +++ b/drivers/clk/qcom/gdsc.c
+>> @@ -368,6 +368,16 @@ static int _gdsc_disable(struct gdsc *sc)
+>>   	if (sc->pwrsts & PWRSTS_OFF)
+>>   		gdsc_clear_mem_on(sc);
+>>
+>> +	/*
+>> +	 * If the GDSC supports only a Retention state, apart from ON,
+>> +	 * leave it in ON state.
+>> +	 * There is no SW control to transition the GDSC into
+>> +	 * Retention state. This happens in HW when the parent
+>> +	 * domain goes down to a Low power state
+>> +	 */
+>> +	if (sc->pwrsts == PWRSTS_RET_ON)
+>> +		return 0;
+>> +
+>>   	ret = gdsc_toggle_logic(sc, GDSC_OFF);
+>>   	if (ret)
+>>   		return ret;
+>> diff --git a/drivers/clk/qcom/gdsc.h b/drivers/clk/qcom/gdsc.h
+>> index 5de48c9439b2..981a12c8502d 100644
+>> --- a/drivers/clk/qcom/gdsc.h
+>> +++ b/drivers/clk/qcom/gdsc.h
+>> @@ -49,6 +49,11 @@ struct gdsc {
+>>   	const u8			pwrsts;
+>>   /* Powerdomain allowable state bitfields */
+>>   #define PWRSTS_OFF		BIT(0)
+>> +/*
+>> + * There is no SW control to transition a GDSC into
+>> + * PWRSTS_RET. This happens in HW when the parent
+>> + * domain goes down to a low power state
+>> + */
+>>   #define PWRSTS_RET		BIT(1)
+>>   #define PWRSTS_ON		BIT(2)
+>>   #define PWRSTS_OFF_ON		(PWRSTS_OFF | PWRSTS_ON)
+> 
+> 
+> 
+> 
