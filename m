@@ -2,83 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2EC216774C6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 06:14:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EE301677517
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 07:24:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230241AbjAWFOE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Jan 2023 00:14:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53410 "EHLO
+        id S230131AbjAWGYU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Jan 2023 01:24:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230024AbjAWFOD (ORCPT
+        with ESMTP id S229441AbjAWGYU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Jan 2023 00:14:03 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3B9617CFA;
-        Sun, 22 Jan 2023 21:14:02 -0800 (PST)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30N4pqvY023348;
-        Mon, 23 Jan 2023 05:13:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=PokQlAY0XObxV/4OP9P41L2+sykW6BgoKTlEHhw9H78=;
- b=e0L+JwugzK8ulEMeNHjecihmZbyDA1+tUrOLye1IRIQ9LOstIIoMrsWMYB1a22xcINF0
- IXkWzb3d7WpHUZ3fIUOVLUZGOnigGZTREKM4s8fSy9TfwJr3o7eLHXYGEINlgpFmE3G5
- PDAiU2AIcO2jbjgxutDnjoNvM4smSo/q/1PScRAmZl/VYmhaptmHB4vzEICONmhviNa/
- 6Xho+Jg8Vck71Q7+x9TDnCpfC/RSfzePwLVoIbFl/JX5TETIJ+/pTsLO3b/UBW/GzU0H
- Or1bGC4vyLKnjgBSh8b7osfOa+F2ap70+9amlPau9+Ga8VUBUNNPF2SQnoLtgcQqS2YS zg== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n89hk27xu-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 23 Jan 2023 05:13:53 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30N5Dq7L031873
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 23 Jan 2023 05:13:52 GMT
-Received: from [10.216.3.135] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Sun, 22 Jan
- 2023 21:13:47 -0800
-Message-ID: <43bea488-7a71-aec3-508c-6a541d5db508@quicinc.com>
-Date:   Mon, 23 Jan 2023 10:43:44 +0530
+        Mon, 23 Jan 2023 01:24:20 -0500
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9E83193D4
+        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Jan 2023 22:24:18 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id g13so16650106lfv.7
+        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Jan 2023 22:24:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=zmjULO6Lx2bWV6pkSSEDxjddNWaKTXCc+6Tq6pikP+U=;
+        b=YutDh5WeB6NfXcZ3hcWQgq2dByaVsZ7vVHG+GdUSj3u28nImaDR7qbiJyk5Uz9myWT
+         AIAAkzE3HWrAx3EgDduZmPtOQMJgRct5gkB/UX9zhCIuavgp3HidywhNEU9GLpWEl2Ea
+         FgdbO8mCFOkVx42WPWp3YREJrW8pyKtqITeTn6UdxK1mt0ZNxSDJTWUoykyY7UebDsSw
+         h2+CgCOfL5GRLoYzNl3MqeJTDfrqc8X8z5ne0a1/+9DKUoizMeggOZdmdMf2Q3AsyxQH
+         u4jzVWmdGlaq1BpbJs4WkAivQ+wOl0QCymxOEdN3dZ3CzheMHNYgOsUHLx0Wg9U+H4w3
+         ik6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zmjULO6Lx2bWV6pkSSEDxjddNWaKTXCc+6Tq6pikP+U=;
+        b=Zerd9kILw3sbZ6o1kPAWlyAekgxopGDQjiPyBRlcKkvgkYR+OlsCZmXaldYIwksUbO
+         rQzKok0xVY87AgMV5g20IoSyR5DbZDQHvFhU4N+beXSSnhD7acnWaYWP7gSVDrOs224J
+         grSXr3KxP+Y33jyT0+whFWkquIAhKKREov4iBDNVZx9I+v7U38GMwn7OqJ5Dcj+iQ2te
+         fCsyZ70rPLrZrd36ybiZjBE+/tFvCghc3Acm3nqZIHwgOzEm8mQsJ0Um6XB0Dtyqtolv
+         J1c4jCdmuMTIFchnSRXhYfjVfGcfDj62YblKAWfozc5p91IVmEyy5ooCfeP5lXSQiek8
+         fwuQ==
+X-Gm-Message-State: AFqh2kqeLZx4mVwvqsT5lpq9s57BrQOc2xDo+P1P3iMA7W+hXSYtU1GL
+        dgp6fZD2uxdWfky3QzQ5VJLrKQ==
+X-Google-Smtp-Source: AMrXdXsuF1OLKO3i/Z0WsolPfPCIAUQJ/ZfsfaSUltkM+91LW8idP/MFE+s9DJZ6rvMmKcmp+StWHA==
+X-Received: by 2002:a05:6512:2305:b0:4b5:b87a:3264 with SMTP id o5-20020a056512230500b004b5b87a3264mr7370328lfu.56.1674455057129;
+        Sun, 22 Jan 2023 22:24:17 -0800 (PST)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id g7-20020a056512118700b004cc885ea933sm4807775lfr.192.2023.01.22.22.24.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 22 Jan 2023 22:24:16 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v2] drm/msm/dpu: add missing ubwc_swizzle setting to catalog
+Date:   Mon, 23 Jan 2023 08:24:15 +0200
+Message-Id: <20230123062415.3027743-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [RESEND v5 0/6] Add resets for ADSP based audio clock controller
- driver
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <swboyd@chromium.org>, <agross@kernel.org>, <andersson@kernel.org>,
-        <robh+dt@kernel.org>, <broonie@kernel.org>,
-        <quic_plai@quicinc.com>, <krzysztof.kozlowski+dt@linaro.org>,
-        <konrad.dybcio@somainline.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_rohkumar@quicinc.com>
-References: <1674322340-25882-1-git-send-email-quic_srivasam@quicinc.com>
- <030115dd-f489-5d4e-c993-e9fa8b550f04@linaro.org>
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Organization: Qualcomm
-In-Reply-To: <030115dd-f489-5d4e-c993-e9fa8b550f04@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: nCaUGGdgDJmR7PAPPCdrHV4Xy6GD6DRP
-X-Proofpoint-ORIG-GUID: nCaUGGdgDJmR7PAPPCdrHV4Xy6GD6DRP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-23_02,2023-01-20_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=872 phishscore=0
- suspectscore=0 clxscore=1015 mlxscore=0 impostorscore=0 spamscore=0
- adultscore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301230049
-X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,23 +73,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Use the values from the vendor DTs to set ubwc_swizzle in the catalog.
 
-On 1/22/2023 7:21 PM, Krzysztof Kozlowski wrote:
-Thanks for Your time Krzysztof!!!
-> On 21/01/2023 18:32, Srinivasa Rao Mandadapu wrote:
->> Add resets and remove qdsp6ss clcok controller for audioreach based platforms.
->>
->> Changes since v4:
->>      -- Update Fixes tag in Merge lpasscc into lpass_aon patch.
->>      -- Revert removal of clk_regmap structure in Merge lpasscc into lpass_aon patch.
->>
-> Your v5 before resend have build issues. Please fix.
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
 
-In v5, one commit missed to amend local changes.Hence resent it.
+Changes since v1:
+- Added data for sc7280 and sm8550
 
-on Resent patch series no build issues.
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
->
-> Best regards,
-> Krzysztof
->
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+index e45799e9fe49..b16e550fc4b6 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+@@ -580,6 +580,7 @@ static const struct dpu_mdp_cfg sm6115_mdp[] = {
+ 	.base = 0x0, .len = 0x494,
+ 	.features = 0,
+ 	.highest_bank_bit = 0x1,
++	.ubwc_swizzle = 0x7,
+ 	.clk_ctrls[DPU_CLK_CTRL_VIG0] = {
+ 		.reg_off = 0x2ac, .bit_off = 0},
+ 	.clk_ctrls[DPU_CLK_CTRL_DMA0] = {
+@@ -593,6 +594,7 @@ static const struct dpu_mdp_cfg sm8250_mdp[] = {
+ 	.base = 0x0, .len = 0x494,
+ 	.features = 0,
+ 	.highest_bank_bit = 0x3, /* TODO: 2 for LP_DDR4 */
++	.ubwc_swizzle = 0x6,
+ 	.clk_ctrls[DPU_CLK_CTRL_VIG0] = {
+ 			.reg_off = 0x2AC, .bit_off = 0},
+ 	.clk_ctrls[DPU_CLK_CTRL_VIG1] = {
+@@ -649,6 +651,7 @@ static const struct dpu_mdp_cfg sm8450_mdp[] = {
+ 	.base = 0x0, .len = 0x494,
+ 	.features = BIT(DPU_MDP_PERIPH_0_REMOVED),
+ 	.highest_bank_bit = 0x3, /* TODO: 2 for LP_DDR4 */
++	.ubwc_swizzle = 0x6,
+ 	.clk_ctrls[DPU_CLK_CTRL_VIG0] = {
+ 			.reg_off = 0x2AC, .bit_off = 0},
+ 	.clk_ctrls[DPU_CLK_CTRL_VIG1] = {
+@@ -675,6 +678,7 @@ static const struct dpu_mdp_cfg sc7280_mdp[] = {
+ 	.name = "top_0", .id = MDP_TOP,
+ 	.base = 0x0, .len = 0x2014,
+ 	.highest_bank_bit = 0x1,
++	.ubwc_swizzle = 0x6,
+ 	.clk_ctrls[DPU_CLK_CTRL_VIG0] = {
+ 		.reg_off = 0x2AC, .bit_off = 0},
+ 	.clk_ctrls[DPU_CLK_CTRL_DMA0] = {
+@@ -711,6 +715,7 @@ static const struct dpu_mdp_cfg sm8550_mdp[] = {
+ 	.base = 0, .len = 0x494,
+ 	.features = BIT(DPU_MDP_PERIPH_0_REMOVED),
+ 	.highest_bank_bit = 0x3, /* TODO: 2 for LP_DDR4 */
++	.ubwc_swizzle = 0x6,
+ 	.clk_ctrls[DPU_CLK_CTRL_VIG0] = {
+ 			.reg_off = 0x4330, .bit_off = 0},
+ 	.clk_ctrls[DPU_CLK_CTRL_VIG1] = {
+-- 
+2.39.0
+
