@@ -2,66 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AD5826775CD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 08:51:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D4DA6775FD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 09:01:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231268AbjAWHvI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Jan 2023 02:51:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38542 "EHLO
+        id S231607AbjAWIBR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Jan 2023 03:01:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229989AbjAWHvH (ORCPT
+        with ESMTP id S231615AbjAWIBP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Jan 2023 02:51:07 -0500
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03BE5EB61
-        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Jan 2023 23:51:03 -0800 (PST)
-Received: by mail-pj1-x102f.google.com with SMTP id o13so10917077pjg.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Jan 2023 23:51:02 -0800 (PST)
+        Mon, 23 Jan 2023 03:01:15 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC7311C33F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 00:01:06 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id q8so8277352wmo.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 00:01:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=tO+IyOnJfDPFLFS1K1GLxKTMhSkraFKNnAGsYcCy4Cs=;
-        b=AtGDoqw8G39Pb3dQjkkl9jfAs08uIlMvFO7gGtEFi6PWt/X5A6ltQ6pYsfrNcdrMJp
-         zwWX8s/+Jc347dGkvnVFh30USmH3SKeKJlsUC+W9Z82dMexGvGlorfmxenVlmeficqX0
-         wd03r4O8udsc9PLBKFQZ9DsDVXm+WktnwIOYMUT2WOgXRc6/aodMmlywNeAuMnsXj8Lh
-         a/DiifGRS9t+Wu76hOaMHV4UjwNabBhYl3q8uOfuHviNkbd8ryN7V2M9OFr//kJqKNU8
-         LC/Cs5QACM6Vzaif5L5bN51YCb3n91uzpHsoqjplp8RaofYbOgPcDBOFYzJAaPzhQCjE
-         uOxA==
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=xgwS1wLKSY/UzsprCjGjz1jf0uYNHHiqTORdSq4h/xs=;
+        b=IsuNxvgMqdlvZT3QGtWGnsuF4PY7RvVV499fHpcNx5aM1X7MZ0k5cdDgw9zZlzWR+K
+         jVBQpgYP3Fc9W2dLwiUaBZ6UtY7KFBBnDxLMgIYDTHjmE3DBU4MUHgpYeGz47sPIKgcP
+         ie+HLMFvjEUpDyYg93WbT5hA6/dT3wXGM76PuYvn+8nNnWc4XMsUvtaQcaUADycAIx3O
+         CDnxYR6rYgFdUMJG5xFsPQo0ip2+vfQlBEuTTC+DQQ4BUriARJgmKA/mChWnpSGNGMDL
+         EqZD71AB8iDeXKTuZ8JSRMn8nIFo7G1bdrtKehwNJ5huWinE3Pld4T+buE8UIlEcSlt9
+         7GJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=tO+IyOnJfDPFLFS1K1GLxKTMhSkraFKNnAGsYcCy4Cs=;
-        b=yW9wbQKarvdB0uDJ8SEfBboo3mqns4KrMJdifCr+/vI0URqsAcj0w2N1ibEn1X7m/N
-         aE3eTFY78BFxaqflPMgYBIlkZYJHSc8nX+rmX+qoJsqZuJ1yHiPacD4PwWPqVd42VJur
-         nFcegovXbklK3Ftum+1kT8na5An3z4mCnCqDlXmyh4VOD35bX/iDCY+j10JxwqIkX9QT
-         3piirrieq8SbBx+UgFgTJckzKSrom2DgYHa9heGd4qc2fQV6sdTztihKU1gKGvFATWAQ
-         iiN/FCgQNO5yWKaKpfRkC5clDoUigu+hk54HTcAraiCIkdd250hVad6Jr4I94qiEIEFq
-         bxeQ==
-X-Gm-Message-State: AFqh2kpvh2PYIkJRxcMMWxjC/nBd+v5qW+78kCfUH5uO0O1LRRU7X5Oa
-        cOm/xJW5MrfUJjL/r9OF/vMv
-X-Google-Smtp-Source: AMrXdXuQSvipdphA5iwXPzdaZoJlrdZ1d5r1RLxKU20QvrLH+MR4/RmknzGoZfLAnQ89NLupF4FFog==
-X-Received: by 2002:a17:903:244f:b0:194:6400:cd37 with SMTP id l15-20020a170903244f00b001946400cd37mr33549307pls.14.1674460262495;
-        Sun, 22 Jan 2023 23:51:02 -0800 (PST)
-Received: from localhost.localdomain ([117.193.209.99])
-        by smtp.gmail.com with ESMTPSA id v3-20020a170902e8c300b0019602274208sm2123454plg.186.2023.01.22.23.50.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Jan 2023 23:51:01 -0800 (PST)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     mhi@lists.linux.dev
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        stable@vger.kernel.org, Dan Carpenter <error27@gmail.com>
-Subject: [PATCH] bus: mhi: ep: Change state_lock to mutex
-Date:   Mon, 23 Jan 2023 13:20:49 +0530
-Message-Id: <20230123075049.168040-1-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xgwS1wLKSY/UzsprCjGjz1jf0uYNHHiqTORdSq4h/xs=;
+        b=yGk9IpNPaHR68LWrbnM+mzWiKd/CblhRmCXm6a/k9iMEyMIMuhPE4/J9AR/GoVezmB
+         rjwzFoplsIebrI0MNBdIYMbHOuxBhXvbCFTS+BOfjdQ/kiaQXrSYcL1v0Y+JAVy0Wsfg
+         KYmtlpz/f9dP2ZoKFMkK29wbaZ0XCiHWIvHbITXcXGq/Z7QFK3OOpWSiDUEojmExXPDO
+         8QSJXmnOchGhj7ys7nLL12u9fontukPUkA9DOGuj/+r+s/0aVNxzYMJVgUKTTjTqey53
+         +eUmSvb8oZZZH7ehhWzjy2tlkXnPLKP5d2IKahDaiYynoJRHPzwwKouZKsl4k7M8h/1V
+         gF4g==
+X-Gm-Message-State: AFqh2kqymMVyOnq9WuZqb8+YHwXWzQJ++ZtY/otEaoXnS1CD/ki2rqxo
+        YOQrfROcZSUkrRjbCeFb4yZEpA==
+X-Google-Smtp-Source: AMrXdXtBxcsmF6l5HL2ODsqVwfRUK9XbGKORvubwbbLb1eDRMhP295OnmpH8GomgMdPsglnkk0Vr8w==
+X-Received: by 2002:a05:600c:1d0b:b0:3db:88f:996d with SMTP id l11-20020a05600c1d0b00b003db088f996dmr22170395wms.36.1674460865387;
+        Mon, 23 Jan 2023 00:01:05 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id c14-20020adfa30e000000b002be50604c81sm8386152wrb.47.2023.01.23.00.01.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Jan 2023 00:01:04 -0800 (PST)
+Message-ID: <0c06bfb5-c0b7-c3eb-4c99-8e77280a942c@linaro.org>
+Date:   Mon, 23 Jan 2023 09:01:02 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [RESEND v5 0/6] Add resets for ADSP based audio clock controller
+ driver
+Content-Language: en-US
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        swboyd@chromium.org, agross@kernel.org, andersson@kernel.org,
+        robh+dt@kernel.org, broonie@kernel.org, quic_plai@quicinc.com,
+        krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@somainline.org,
+        mturquette@baylibre.com, sboyd@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com
+References: <1674322340-25882-1-git-send-email-quic_srivasam@quicinc.com>
+ <030115dd-f489-5d4e-c993-e9fa8b550f04@linaro.org>
+ <43bea488-7a71-aec3-508c-6a541d5db508@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <43bea488-7a71-aec3-508c-6a541d5db508@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -69,202 +81,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-state_lock, the spinlock type is meant to protect race against concurrent
-MHI state transitions. In mhi_ep_set_m0_state(), while the state_lock is
-being held, the channels are resumed in mhi_ep_resume_channels() if the
-previous state was M3. This causes sleeping in atomic bug, since
-mhi_ep_resume_channels() use mutex internally.
+On 23/01/2023 06:13, Srinivasa Rao Mandadapu wrote:
+> 
+> On 1/22/2023 7:21 PM, Krzysztof Kozlowski wrote:
+> Thanks for Your time Krzysztof!!!
+>> On 21/01/2023 18:32, Srinivasa Rao Mandadapu wrote:
+>>> Add resets and remove qdsp6ss clcok controller for audioreach based platforms.
+>>>
+>>> Changes since v4:
+>>>      -- Update Fixes tag in Merge lpasscc into lpass_aon patch.
+>>>      -- Revert removal of clk_regmap structure in Merge lpasscc into lpass_aon patch.
+>>>
+>> Your v5 before resend have build issues. Please fix.
+> 
+> In v5, one commit missed to amend local changes.Hence resent it.
+> 
+> on Resent patch series no build issues.
 
-Since the state_lock is supposed to be held throughout the state change,
-it is not ideal to drop the lock before calling mhi_ep_resume_channels().
-So to fix this issue, let's change the type of state_lock to mutex. This
-would also allow holding the lock throughout all state transitions thereby
-avoiding any potential race.
+Resend means you send the same patches. If you change patches, it's not
+resend but new version.
 
-Cc: <stable@vger.kernel.org> # 5.19
-Fixes: e4b7b5f0f30a ("bus: mhi: ep: Add support for suspending and resuming channels")
-Reported-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/bus/mhi/ep/main.c |  8 +++++---
- drivers/bus/mhi/ep/sm.c   | 42 ++++++++++++++++++++++-----------------
- include/linux/mhi_ep.h    |  4 ++--
- 3 files changed, 31 insertions(+), 23 deletions(-)
-
-diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-index bcaaba97ef63..528c00b232bf 100644
---- a/drivers/bus/mhi/ep/main.c
-+++ b/drivers/bus/mhi/ep/main.c
-@@ -1001,11 +1001,11 @@ static void mhi_ep_reset_worker(struct work_struct *work)
- 
- 	mhi_ep_power_down(mhi_cntrl);
- 
--	spin_lock_bh(&mhi_cntrl->state_lock);
-+	mutex_lock(&mhi_cntrl->state_lock);
-+
- 	/* Reset MMIO to signal host that the MHI_RESET is completed in endpoint */
- 	mhi_ep_mmio_reset(mhi_cntrl);
- 	cur_state = mhi_cntrl->mhi_state;
--	spin_unlock_bh(&mhi_cntrl->state_lock);
- 
- 	/*
- 	 * Only proceed further if the reset is due to SYS_ERR. The host will
-@@ -1014,6 +1014,8 @@ static void mhi_ep_reset_worker(struct work_struct *work)
- 	 */
- 	if (cur_state == MHI_STATE_SYS_ERR)
- 		mhi_ep_power_up(mhi_cntrl);
-+
-+	mutex_unlock(&mhi_cntrl->state_lock);
- }
- 
- /*
-@@ -1386,8 +1388,8 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
- 
- 	INIT_LIST_HEAD(&mhi_cntrl->st_transition_list);
- 	INIT_LIST_HEAD(&mhi_cntrl->ch_db_list);
--	spin_lock_init(&mhi_cntrl->state_lock);
- 	spin_lock_init(&mhi_cntrl->list_lock);
-+	mutex_init(&mhi_cntrl->state_lock);
- 	mutex_init(&mhi_cntrl->event_lock);
- 
- 	/* Set MHI version and AMSS EE before enumeration */
-diff --git a/drivers/bus/mhi/ep/sm.c b/drivers/bus/mhi/ep/sm.c
-index 3655c19e23c7..fd200b2ac0bb 100644
---- a/drivers/bus/mhi/ep/sm.c
-+++ b/drivers/bus/mhi/ep/sm.c
-@@ -63,24 +63,23 @@ int mhi_ep_set_m0_state(struct mhi_ep_cntrl *mhi_cntrl)
- 	int ret;
- 
- 	/* If MHI is in M3, resume suspended channels */
--	spin_lock_bh(&mhi_cntrl->state_lock);
-+	mutex_lock(&mhi_cntrl->state_lock);
-+
- 	old_state = mhi_cntrl->mhi_state;
- 	if (old_state == MHI_STATE_M3)
- 		mhi_ep_resume_channels(mhi_cntrl);
- 
- 	ret = mhi_ep_set_mhi_state(mhi_cntrl, MHI_STATE_M0);
--	spin_unlock_bh(&mhi_cntrl->state_lock);
--
- 	if (ret) {
- 		mhi_ep_handle_syserr(mhi_cntrl);
--		return ret;
-+		goto err_unlock;
- 	}
- 
- 	/* Signal host that the device moved to M0 */
- 	ret = mhi_ep_send_state_change_event(mhi_cntrl, MHI_STATE_M0);
- 	if (ret) {
- 		dev_err(dev, "Failed sending M0 state change event\n");
--		return ret;
-+		goto err_unlock;
- 	}
- 
- 	if (old_state == MHI_STATE_READY) {
-@@ -88,11 +87,14 @@ int mhi_ep_set_m0_state(struct mhi_ep_cntrl *mhi_cntrl)
- 		ret = mhi_ep_send_ee_event(mhi_cntrl, MHI_EE_AMSS);
- 		if (ret) {
- 			dev_err(dev, "Failed sending AMSS EE event\n");
--			return ret;
-+			goto err_unlock;
- 		}
- 	}
- 
--	return 0;
-+err_unlock:
-+	mutex_unlock(&mhi_cntrl->state_lock);
-+
-+	return ret;
- }
- 
- int mhi_ep_set_m3_state(struct mhi_ep_cntrl *mhi_cntrl)
-@@ -100,13 +102,12 @@ int mhi_ep_set_m3_state(struct mhi_ep_cntrl *mhi_cntrl)
- 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
- 	int ret;
- 
--	spin_lock_bh(&mhi_cntrl->state_lock);
--	ret = mhi_ep_set_mhi_state(mhi_cntrl, MHI_STATE_M3);
--	spin_unlock_bh(&mhi_cntrl->state_lock);
-+	mutex_lock(&mhi_cntrl->state_lock);
- 
-+	ret = mhi_ep_set_mhi_state(mhi_cntrl, MHI_STATE_M3);
- 	if (ret) {
- 		mhi_ep_handle_syserr(mhi_cntrl);
--		return ret;
-+		goto err_unlock;
- 	}
- 
- 	mhi_ep_suspend_channels(mhi_cntrl);
-@@ -115,10 +116,13 @@ int mhi_ep_set_m3_state(struct mhi_ep_cntrl *mhi_cntrl)
- 	ret = mhi_ep_send_state_change_event(mhi_cntrl, MHI_STATE_M3);
- 	if (ret) {
- 		dev_err(dev, "Failed sending M3 state change event\n");
--		return ret;
-+		goto err_unlock;
- 	}
- 
--	return 0;
-+err_unlock:
-+	mutex_unlock(&mhi_cntrl->state_lock);
-+
-+	return ret;
- }
- 
- int mhi_ep_set_ready_state(struct mhi_ep_cntrl *mhi_cntrl)
-@@ -127,22 +131,24 @@ int mhi_ep_set_ready_state(struct mhi_ep_cntrl *mhi_cntrl)
- 	enum mhi_state mhi_state;
- 	int ret, is_ready;
- 
--	spin_lock_bh(&mhi_cntrl->state_lock);
-+	mutex_lock(&mhi_cntrl->state_lock);
-+
- 	/* Ensure that the MHISTATUS is set to RESET by host */
- 	mhi_state = mhi_ep_mmio_masked_read(mhi_cntrl, EP_MHISTATUS, MHISTATUS_MHISTATE_MASK);
- 	is_ready = mhi_ep_mmio_masked_read(mhi_cntrl, EP_MHISTATUS, MHISTATUS_READY_MASK);
- 
- 	if (mhi_state != MHI_STATE_RESET || is_ready) {
- 		dev_err(dev, "READY state transition failed. MHI host not in RESET state\n");
--		spin_unlock_bh(&mhi_cntrl->state_lock);
--		return -EIO;
-+		ret = -EIO;
-+		goto err_unlock;
- 	}
- 
- 	ret = mhi_ep_set_mhi_state(mhi_cntrl, MHI_STATE_READY);
--	spin_unlock_bh(&mhi_cntrl->state_lock);
--
- 	if (ret)
- 		mhi_ep_handle_syserr(mhi_cntrl);
- 
-+err_unlock:
-+	mutex_unlock(&mhi_cntrl->state_lock);
-+
- 	return ret;
- }
-diff --git a/include/linux/mhi_ep.h b/include/linux/mhi_ep.h
-index 478aece17046..f198a8ac7ee7 100644
---- a/include/linux/mhi_ep.h
-+++ b/include/linux/mhi_ep.h
-@@ -70,8 +70,8 @@ struct mhi_ep_db_info {
-  * @cmd_ctx_cache_phys: Physical address of the host command context cache
-  * @chdb: Array of channel doorbell interrupt info
-  * @event_lock: Lock for protecting event rings
-- * @list_lock: Lock for protecting state transition and channel doorbell lists
-  * @state_lock: Lock for protecting state transitions
-+ * @list_lock: Lock for protecting state transition and channel doorbell lists
-  * @st_transition_list: List of state transitions
-  * @ch_db_list: List of queued channel doorbells
-  * @wq: Dedicated workqueue for handling rings and state changes
-@@ -117,8 +117,8 @@ struct mhi_ep_cntrl {
- 
- 	struct mhi_ep_db_info chdb[4];
- 	struct mutex event_lock;
-+	struct mutex state_lock;
- 	spinlock_t list_lock;
--	spinlock_t state_lock;
- 
- 	struct list_head st_transition_list;
- 	struct list_head ch_db_list;
--- 
-2.25.1
+Best regards,
+Krzysztof
 
