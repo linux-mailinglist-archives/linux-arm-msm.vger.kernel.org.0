@@ -2,798 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AECA76777C0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 10:49:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B988C677816
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 11:00:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231833AbjAWJtz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Jan 2023 04:49:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46266 "EHLO
+        id S231655AbjAWKA1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Jan 2023 05:00:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231840AbjAWJtt (ORCPT
+        with ESMTP id S231495AbjAWKAY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Jan 2023 04:49:49 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DD64126F4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 01:49:46 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id e3so10178512wru.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 01:49:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=A7XNhfezFNCGQXPoGQj2pwQnaEfYn+WK3J4yM3sd3+M=;
-        b=cSXxoPQYYGXrokhYwJhcZL/vie8yFcpRu+fvYJbNvnTEv374vBp7BsibPm6YxlgVGN
-         wMItfoWIXo9y4xYUPFUIQ9R5xyGh79onOxmd7Mp74UQrUz1zoMGBTl/M0T6zDDc/bCJK
-         qqGOQrveX0dEhdoDlEguuq+qJ1hoSYzGaj3bnZAzZa9+45EhoMYkN7kD04i5XukROyLG
-         E7UaLZL218jp7UtrhBZDzQw6TM1tMDcPXMn8MxVP54cKdnt9HSzJuGJ8M2ydy/zeIqLf
-         f8rkk8Qp2RAfZDer3100YCsw4tTNoUdAnUsCA/QQ7JNBkJiFekvXcp+WO61bGnZ52JWd
-         OR4w==
+        Mon, 23 Jan 2023 05:00:24 -0500
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A66B8901D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 01:59:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1674467934;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=xqxVJDgcGhaPuWMeQPrfnb0idJyOysfRMbpPEBhyxTU=;
+        b=UTcPpVtsjsB++mmVV8L4B+UZ2dXrQIGUxqACbK3p6G4exeo+5dsTT16KgpHnIvmx6GzVxU
+        RzJC3kgxQBWb/SFk0eZNN/Ye72enV8bjMI7Ip5yaB9xqc8Tx055zMk131k5QmMihxufplV
+        YqvGD949v2U5BuNFmhMbIOH8SCQJKcM=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-213-Yp8WUuOoO1O9CRKAC1ZI2w-1; Mon, 23 Jan 2023 04:58:52 -0500
+X-MC-Unique: Yp8WUuOoO1O9CRKAC1ZI2w-1
+Received: by mail-wm1-f72.google.com with SMTP id az37-20020a05600c602500b003da50af44b3so7252533wmb.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 01:58:51 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=A7XNhfezFNCGQXPoGQj2pwQnaEfYn+WK3J4yM3sd3+M=;
-        b=iEFEMw76MvmGBWlpkH5pBp3HyIO88QcQsq2lwjgIPfMkCyu4KRxgx661GOGjqbsuFi
-         euVD8iUrXGEFN921SxLwIprdCClsvvMzmF4fGpinEfgYEt6ggnnGg1he+ABjyxgM01Cm
-         VF4uBpXQUg+qf7Wm911ftG4tWqqDsCqIDVRXiuvQ9WNRNQlQfY9jdEhsY1tEFp/DCCQf
-         Jffuyku/FtHmuExb/6eOc/3xiS3AAed0AXoONyekpORx39vh0zAsfC+rrhXccwdbxzuy
-         etyd0Xwh1l0Qx1pG/ed1DGzMINauCy1paV82wTYYCLm3msTm5PcTmALukbE+rDhbDH/b
-         n6wg==
-X-Gm-Message-State: AFqh2kqlf0pgcJ51GpzmANevRBXMkcZFad17uPyuza74fu0tRgyo/ICR
-        1GxcQBHpTA1bTQAzuXD/vEioVQ==
-X-Google-Smtp-Source: AMrXdXs3vovGS0vIVMoOD8nLn2T0D9KPSRBzzDlx1npIrc8o9r76G1eOOWPdV481iGJzwgV4cHBTKw==
-X-Received: by 2002:a05:6000:1f84:b0:2be:5370:4f2a with SMTP id bw4-20020a0560001f8400b002be53704f2amr14411295wrb.22.1674467384469;
-        Mon, 23 Jan 2023 01:49:44 -0800 (PST)
-Received: from krzk-bin.. ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id f2-20020adff982000000b002bde537721dsm23976864wrr.20.2023.01.23.01.49.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Jan 2023 01:49:44 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 2/2] clk: qcom: restrict drivers per ARM/ARM64
-Date:   Mon, 23 Jan 2023 10:49:25 +0100
-Message-Id: <20230123094925.54824-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230123094925.54824-1-krzysztof.kozlowski@linaro.org>
-References: <20230123094925.54824-1-krzysztof.kozlowski@linaro.org>
+        h=content-transfer-encoding:in-reply-to:subject:organization:from
+         :references:cc:to:content-language:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xqxVJDgcGhaPuWMeQPrfnb0idJyOysfRMbpPEBhyxTU=;
+        b=jNlNrCCnex4lOFDd3MwlGi14G7qlGW2+ZXCRREbaZED6cMHw6rMcGFob8jMH0RuULm
+         DsmLMrl9pdMOLK7EV7fzSGpPUOWATZM8twbqVvahK6GC+nn5zIS2TXIIEtyN1qyLJ0+Y
+         sR+zdkrXqsuontPyM7v/3QRYo5VKkZV0NpBGmnHu6aNhBuC2p512vdJs0VW4obMKVLMv
+         0BH+Vs3lya7Jw6R/Ujd4cIME+VhD7z54hRGTJGoIx77+dsKvRFoy4r+fO0PcxLmJ8v6O
+         3dgL1cD9/NcC4byhnDuJI2LRpEwKlsqpzFHr6vEu1QE0SCemZUH2uzzUlurobsVq2opU
+         n7jA==
+X-Gm-Message-State: AFqh2kqYt13sLTEoRh2bgQDSCuHe5GGBxnG/4PGaqqAMMbXPf+LHxiTu
+        ao3Wag6guoCfnAFOOmYaq3+e3PI0wivi6SFhmZ1ZcnLVDbir/uBx3B+MHXjja+KRhjAwkINV0rq
+        DdW/a07foLCEmNuWrP5/lN36f3g==
+X-Received: by 2002:adf:f6cf:0:b0:2bc:858a:3def with SMTP id y15-20020adff6cf000000b002bc858a3defmr29393205wrp.5.1674467930997;
+        Mon, 23 Jan 2023 01:58:50 -0800 (PST)
+X-Google-Smtp-Source: AMrXdXstu8PcgHyGx2MksVilHw4EWMLVNPr4EaFuPknof9TNabDZ9AHTOwZsX8ISDp5PVXt4YaBMkQ==
+X-Received: by 2002:adf:f6cf:0:b0:2bc:858a:3def with SMTP id y15-20020adff6cf000000b002bc858a3defmr29393191wrp.5.1674467930702;
+        Mon, 23 Jan 2023 01:58:50 -0800 (PST)
+Received: from ?IPV6:2003:cb:c704:1100:65a0:c03a:142a:f914? (p200300cbc704110065a0c03a142af914.dip0.t-ipconnect.de. [2003:cb:c704:1100:65a0:c03a:142a:f914])
+        by smtp.gmail.com with ESMTPSA id l14-20020a5d526e000000b0028e55b44a99sm24225816wrc.17.2023.01.23.01.58.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Jan 2023 01:58:50 -0800 (PST)
+Message-ID: <de3f1fd1-bcec-c6e5-e57a-b06674144c3b@redhat.com>
+Date:   Mon, 23 Jan 2023 10:58:48 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Content-Language: en-US
+To:     Sudarshan Rajagopalan <quic_sudaraja@quicinc.com>,
+        Johannes Weiner <hannes@cmpxchg.org>,
+        Suren Baghdasaryan <surenb@google.com>,
+        Mike Rapoport <rppt@kernel.org>,
+        Oscar Salvador <osalvador@suse.de>,
+        Anshuman Khandual <anshuman.khandual@arm.com>,
+        mark.rutland@arm.com, will@kernel.org,
+        virtualization@lists.linux-foundation.org, linux-mm@kvack.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     "Trilok Soni (QUIC)" <quic_tsoni@quicinc.com>,
+        "Sukadev Bhattiprolu (QUIC)" <quic_sukadev@quicinc.com>,
+        "Srivatsa Vaddagiri (QUIC)" <quic_svaddagi@quicinc.com>,
+        "Patrick Daly (QUIC)" <quic_pdaly@quicinc.com>
+References: <072de3f4-6bd3-f9ce-024d-e469288fc46a@quicinc.com>
+ <acd8d55c-8528-bb21-488e-e5999c3c4e4e@redhat.com>
+ <2faf67fe-b1df-d110-6d57-67f284cd5584@quicinc.com>
+From:   David Hildenbrand <david@redhat.com>
+Organization: Red Hat
+Subject: Re: [RFC] memory pressure detection in VMs using PSI mechanism for
+ dynamically inflating/deflating VM memory
+In-Reply-To: <2faf67fe-b1df-d110-6d57-67f284cd5584@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There is no point to allow selecting pin-controller drivers for Qualcomm
-ARMv7 SoCs when building ARM64 kernel, and vice versa.  This makes
-kernel configuration more difficult as many do not remember the Qualcomm
-SoCs model names/numbers.  There won't be a single image for ARMv7 and
-ARMv8/9 SoCs, so no features/options are lost.
+>>>
+>>> 1. This will be a native userspace daemon that will be running only in
+>>> the Linux VM which will use virtio-mem driver that uses memory hotplug
+>>> to add/remove memory. The VM (aka Secondary VM, SVM) will request for
+>>> memory from the host which is Primary VM, PVM via the backend hypervisor
+>>> which takes care of cross-VM communication.
+>>>
+>>> 2. This will be guest driver. This daemon will use PSI mechanism to
+>>> monitor memory pressure to keep track of memory demands in the system.
+>>> It will register to few memory pressure events and make an educated
+>>> guess on when demand for memory in system is increasing.
+>>
+>> Is that running in the primary or the secondary VM?
+> 
+> The userspace PSI daemon will be running on secondary VM. It will talk
+> to a kernel driver (running on secondary VM itself) via ioctl. This
+> kernel driver will talk to slightly modified version of virtio-mem
+> driver where it can call the virtio_mem_config_changed(virtiomem_device)
+> function for resizing the secondary VM. So its mainly "guest driven" now.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- drivers/clk/qcom/Kconfig | 88 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 88 insertions(+)
+Okay, thanks.
 
-diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-index 1c360eed72d7..3112ca762f4d 100644
---- a/drivers/clk/qcom/Kconfig
-+++ b/drivers/clk/qcom/Kconfig
-@@ -57,6 +57,7 @@ config QCOM_CLK_APCC_MSM8996
- config QCOM_CLK_APCS_SDX55
- 	tristate "SDX55 and SDX65 APCS Clock Controller"
- 	depends on QCOM_APCS_IPC || COMPILE_TEST
-+	depends on ARM || COMPILE_TEST
- 	help
- 	  Support for the APCS Clock Controller on SDX55, SDX65 platforms. The
- 	  APCS is managing the mux and divider which feeds the CPUs.
-@@ -100,6 +101,7 @@ config QCOM_CLK_RPMH
- 
- config APQ_GCC_8084
- 	tristate "APQ8084 Global Clock Controller"
-+	depends on ARM || COMPILE_TEST
- 	select QCOM_GDSC
- 	help
- 	  Support for the global clock controller on apq8084 devices.
-@@ -108,6 +110,7 @@ config APQ_GCC_8084
- 
- config APQ_MMCC_8084
- 	tristate "APQ8084 Multimedia Clock Controller"
-+	depends on ARM || COMPILE_TEST
- 	select APQ_GCC_8084
- 	select QCOM_GDSC
- 	help
-@@ -116,6 +119,7 @@ config APQ_MMCC_8084
- 	  graphics, video encode/decode, camera, etc.
- 
- config IPQ_APSS_PLL
-+	depends on ARM64 || COMPILE_TEST
- 	tristate "IPQ APSS PLL"
- 	help
- 	  Support for APSS PLL on ipq devices. The APSS PLL is the main
-@@ -127,6 +131,7 @@ config IPQ_APSS_6018
- 	tristate "IPQ APSS Clock Controller"
- 	select IPQ_APSS_PLL
- 	depends on QCOM_APCS_IPC || COMPILE_TEST
-+	depends on ARM64 || COMPILE_TEST
- 	help
- 	  Support for APSS clock controller on IPQ platforms. The
- 	  APSS clock controller manages the Mux and enable block that feeds the
-@@ -143,6 +148,7 @@ config IPQ_GCC_4019
- 
- config IPQ_GCC_6018
- 	tristate "IPQ6018 Global Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	help
- 	  Support for global clock controller on ipq6018 devices.
- 	  Say Y if you want to use peripheral devices such as UART, SPI,
-@@ -151,6 +157,7 @@ config IPQ_GCC_6018
- 
- config IPQ_GCC_806X
- 	tristate "IPQ806x Global Clock Controller"
-+	depends on ARM || COMPILE_TEST
- 	help
- 	  Support for the global clock controller on ipq806x devices.
- 	  Say Y if you want to use peripheral devices such as UART, SPI,
-@@ -158,6 +165,7 @@ config IPQ_GCC_806X
- 
- config IPQ_LCC_806X
- 	tristate "IPQ806x LPASS Clock Controller"
-+	depends on ARM || COMPILE_TEST
- 	select IPQ_GCC_806X
- 	help
- 	  Support for the LPASS clock controller on ipq806x devices.
-@@ -166,6 +174,7 @@ config IPQ_LCC_806X
- 
- config IPQ_GCC_8074
- 	tristate "IPQ8074 Global Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select QCOM_GDSC
- 	help
- 	  Support for global clock controller on ipq8074 devices.
-@@ -175,6 +184,7 @@ config IPQ_GCC_8074
- 
- config MSM_GCC_8660
- 	tristate "MSM8660 Global Clock Controller"
-+	depends on ARM || COMPILE_TEST
- 	help
- 	  Support for the global clock controller on msm8660 devices.
- 	  Say Y if you want to use peripheral devices such as UART, SPI,
-@@ -182,6 +192,7 @@ config MSM_GCC_8660
- 
- config MSM_GCC_8909
- 	tristate "MSM8909 Global Clock Controller"
-+	depends on ARM || COMPILE_TEST
- 	select QCOM_GDSC
- 	help
- 	  Support for the global clock controller on msm8909 devices.
-@@ -206,6 +217,7 @@ config MSM_GCC_8939
- 
- config MSM_GCC_8960
- 	tristate "APQ8064/MSM8960 Global Clock Controller"
-+	depends on ARM || COMPILE_TEST
- 	help
- 	  Support for the global clock controller on apq8064/msm8960 devices.
- 	  Say Y if you want to use peripheral devices such as UART, SPI,
-@@ -213,6 +225,7 @@ config MSM_GCC_8960
- 
- config MSM_LCC_8960
- 	tristate "APQ8064/MSM8960 LPASS Clock Controller"
-+	depends on ARM || COMPILE_TEST
- 	select MSM_GCC_8960
- 	help
- 	  Support for the LPASS clock controller on apq8064/msm8960 devices.
-@@ -221,6 +234,7 @@ config MSM_LCC_8960
- 
- config MDM_GCC_9607
- 	tristate "MDM9607 Global Clock Controller"
-+	depends on ARM || COMPILE_TEST
- 	help
- 	  Support for the global clock controller on mdm9607 devices.
- 	  Say Y if you want to use peripheral devices such as UART, SPI,
-@@ -228,6 +242,7 @@ config MDM_GCC_9607
- 
- config MDM_GCC_9615
- 	tristate "MDM9615 Global Clock Controller"
-+	depends on ARM || COMPILE_TEST
- 	help
- 	  Support for the global clock controller on mdm9615 devices.
- 	  Say Y if you want to use peripheral devices such as UART, SPI,
-@@ -235,6 +250,7 @@ config MDM_GCC_9615
- 
- config MDM_LCC_9615
- 	tristate "MDM9615 LPASS Clock Controller"
-+	depends on ARM || COMPILE_TEST
- 	select MDM_GCC_9615
- 	help
- 	  Support for the LPASS clock controller on mdm9615 devices.
-@@ -243,6 +259,7 @@ config MDM_LCC_9615
- 
- config MSM_MMCC_8960
- 	tristate "MSM8960 Multimedia Clock Controller"
-+	depends on ARM || COMPILE_TEST
- 	select MSM_GCC_8960
- 	help
- 	  Support for the multimedia clock controller on msm8960 devices.
-@@ -251,6 +268,7 @@ config MSM_MMCC_8960
- 
- config MSM_GCC_8953
- 	tristate "MSM8953 Global Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select QCOM_GDSC
- 	help
- 	  Support for the global clock controller on msm8953 devices.
-@@ -259,6 +277,7 @@ config MSM_GCC_8953
- 
- config MSM_GCC_8974
- 	tristate "MSM8974 Global Clock Controller"
-+	depends on ARM || COMPILE_TEST
- 	select QCOM_GDSC
- 	help
- 	  Support for the global clock controller on msm8974 devices.
-@@ -267,6 +286,7 @@ config MSM_GCC_8974
- 
- config MSM_MMCC_8974
- 	tristate "MSM8974 Multimedia Clock Controller"
-+	depends on ARM || COMPILE_TEST
- 	select MSM_GCC_8974
- 	select QCOM_GDSC
- 	help
-@@ -276,6 +296,7 @@ config MSM_MMCC_8974
- 
- config MSM_GCC_8976
- 	tristate "MSM8956/76 Global Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select QCOM_GDSC
- 	help
- 	  Support for the global clock controller on msm8956/76 devices.
-@@ -284,6 +305,7 @@ config MSM_GCC_8976
- 
- config MSM_MMCC_8994
- 	tristate "MSM8994 Multimedia Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select MSM_GCC_8994
- 	select QCOM_GDSC
- 	help
-@@ -293,6 +315,7 @@ config MSM_MMCC_8994
- 
- config MSM_GCC_8994
- 	tristate "MSM8994 Global Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	help
- 	  Support for the global clock controller on msm8994 devices.
- 	  Say Y if you want to use peripheral devices such as UART, SPI,
-@@ -300,6 +323,7 @@ config MSM_GCC_8994
- 
- config MSM_GCC_8996
- 	tristate "MSM8996 Global Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select QCOM_GDSC
- 	help
- 	  Support for the global clock controller on msm8996 devices.
-@@ -308,6 +332,7 @@ config MSM_GCC_8996
- 
- config MSM_MMCC_8996
- 	tristate "MSM8996 Multimedia Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select MSM_GCC_8996
- 	select QCOM_GDSC
- 	help
-@@ -317,6 +342,7 @@ config MSM_MMCC_8996
- 
- config MSM_GCC_8998
- 	tristate "MSM8998 Global Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select QCOM_GDSC
- 	help
- 	  Support for the global clock controller on msm8998 devices.
-@@ -325,6 +351,7 @@ config MSM_GCC_8998
- 
- config MSM_GPUCC_8998
- 	tristate "MSM8998 Graphics Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select MSM_GCC_8998
- 	select QCOM_GDSC
- 	help
-@@ -334,6 +361,7 @@ config MSM_GPUCC_8998
- 
- config MSM_MMCC_8998
- 	tristate "MSM8998 Multimedia Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select MSM_GCC_8998
- 	select QCOM_GDSC
- 	help
-@@ -351,6 +379,7 @@ config QCM_GCC_2290
- 
- config QCM_DISPCC_2290
- 	tristate "QCM2290 Display Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select QCM_GCC_2290
- 	help
- 	  Support for the display clock controller on Qualcomm Technologies, Inc
-@@ -360,6 +389,7 @@ config QCM_DISPCC_2290
- 
- config QCS_GCC_404
- 	tristate "QCS404 Global Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	help
- 	  Support for the global clock controller on QCS404 devices.
- 	  Say Y if you want to use multimedia devices or peripheral
-@@ -367,6 +397,7 @@ config QCS_GCC_404
- 
- config SC_CAMCC_7180
- 	tristate "SC7180 Camera Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SC_GCC_7180
- 	help
- 	  Support for the camera clock controller on Qualcomm Technologies, Inc
-@@ -376,6 +407,7 @@ config SC_CAMCC_7180
- 
- config SC_CAMCC_7280
- 	tristate "SC7280 Camera Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SC_GCC_7280
- 	help
- 	  Support for the camera clock controller on Qualcomm Technologies, Inc
-@@ -385,6 +417,7 @@ config SC_CAMCC_7280
- 
- config SC_DISPCC_7180
- 	tristate "SC7180 Display Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SC_GCC_7180
- 	help
- 	  Support for the display clock controller on Qualcomm Technologies, Inc
-@@ -394,6 +427,7 @@ config SC_DISPCC_7180
- 
- config SC_DISPCC_7280
- 	tristate "SC7280 Display Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SC_GCC_7280
- 	help
- 	  Support for the display clock controller on Qualcomm Technologies, Inc.
-@@ -403,6 +437,7 @@ config SC_DISPCC_7280
- 
- config SC_DISPCC_8280XP
- 	tristate "SC8280XP Display Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SC_GCC_8280XP
- 	help
- 	  Support for the two display clock controllers on Qualcomm
-@@ -414,6 +449,7 @@ config SC_GCC_7180
- 	tristate "SC7180 Global Clock Controller"
- 	select QCOM_GDSC
- 	depends on COMMON_CLK_QCOM
-+	depends on ARM64 || COMPILE_TEST
- 	help
- 	  Support for the global clock controller on SC7180 devices.
- 	  Say Y if you want to use peripheral devices such as UART, SPI,
-@@ -423,6 +459,7 @@ config SC_GCC_7280
- 	tristate "SC7280 Global Clock Controller"
- 	select QCOM_GDSC
- 	depends on COMMON_CLK_QCOM
-+	depends on ARM64 || COMPILE_TEST
- 	help
- 	  Support for the global clock controller on SC7280 devices.
- 	  Say Y if you want to use peripheral devices such as UART, SPI,
-@@ -432,6 +469,7 @@ config SC_GCC_8180X
- 	tristate "SC8180X Global Clock Controller"
- 	select QCOM_GDSC
- 	depends on COMMON_CLK_QCOM
-+	depends on ARM64 || COMPILE_TEST
- 	help
- 	  Support for the global clock controller on SC8180X devices.
- 	  Say Y if you want to use peripheral devices such as UART, SPI,
-@@ -441,6 +479,7 @@ config SC_GCC_8280XP
- 	tristate "SC8280XP Global Clock Controller"
- 	select QCOM_GDSC
- 	depends on COMMON_CLK_QCOM
-+	depends on ARM64 || COMPILE_TEST
- 	help
- 	  Support for the global clock controller on SC8280XP devices.
- 	  Say Y if you want to use peripheral devices such as UART, SPI,
-@@ -448,6 +487,7 @@ config SC_GCC_8280XP
- 
- config SC_GPUCC_7180
- 	tristate "SC7180 Graphics Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SC_GCC_7180
- 	help
- 	  Support for the graphics clock controller on SC7180 devices.
-@@ -456,6 +496,7 @@ config SC_GPUCC_7180
- 
- config SC_GPUCC_7280
- 	tristate "SC7280 Graphics Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SC_GCC_7280
- 	help
- 	  Support for the graphics clock controller on SC7280 devices.
-@@ -464,6 +505,7 @@ config SC_GPUCC_7280
- 
- config SC_GPUCC_8280XP
- 	tristate "SC8280XP Graphics Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SC_GCC_8280XP
- 	help
- 	  Support for the graphics clock controller on SC8280XP devices.
-@@ -472,6 +514,7 @@ config SC_GPUCC_8280XP
- 
- config SC_LPASSCC_7280
- 	tristate "SC7280 Low Power Audio Subsystem (LPASS) Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SC_GCC_7280
- 	help
- 	  Support for the LPASS clock controller on SC7280 devices.
-@@ -480,6 +523,7 @@ config SC_LPASSCC_7280
- 
- config SC_LPASS_CORECC_7180
- 	tristate "SC7180 LPASS Core Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SC_GCC_7180
- 	help
- 	  Support for the LPASS(Low Power Audio Subsystem) core clock controller
-@@ -489,6 +533,7 @@ config SC_LPASS_CORECC_7180
- 
- config SC_LPASS_CORECC_7280
- 	tristate "SC7280 LPASS Core & Audio Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SC_GCC_7280
- 	select QCOM_GDSC
- 	help
-@@ -499,6 +544,7 @@ config SC_LPASS_CORECC_7280
- 
- config SC_MSS_7180
- 	tristate "SC7180 Modem Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SC_GCC_7180
- 	help
- 	  Support for the Modem Subsystem clock controller on Qualcomm
-@@ -508,6 +554,7 @@ config SC_MSS_7180
- 
- config SC_VIDEOCC_7180
- 	tristate "SC7180 Video Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SC_GCC_7180
- 	help
- 	  Support for the video clock controller on SC7180 devices.
-@@ -516,6 +563,7 @@ config SC_VIDEOCC_7180
- 
- config SC_VIDEOCC_7280
- 	tristate "SC7280 Video Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SC_GCC_7280
- 	help
- 	  Support for the video clock controller on SC7280 devices.
-@@ -524,6 +572,7 @@ config SC_VIDEOCC_7280
- 
- config SDM_CAMCC_845
- 	tristate "SDM845 Camera Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SDM_GCC_845
- 	help
- 	  Support for the camera clock controller on SDM845 devices.
-@@ -531,6 +580,7 @@ config SDM_CAMCC_845
- 
- config SDM_GCC_660
- 	tristate "SDM660 Global Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select QCOM_GDSC
- 	help
- 	  Support for the global clock controller on SDM660 devices.
-@@ -539,6 +589,7 @@ config SDM_GCC_660
- 
- config SDM_MMCC_660
- 	tristate "SDM660 Multimedia Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SDM_GCC_660
- 	select QCOM_GDSC
- 	help
-@@ -548,6 +599,7 @@ config SDM_MMCC_660
- 
- config SDM_GPUCC_660
- 	tristate "SDM660 Graphics Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SDM_GCC_660
- 	select QCOM_GDSC
- 	help
-@@ -557,12 +609,14 @@ config SDM_GPUCC_660
- 
- config QCS_TURING_404
- 	tristate "QCS404 Turing Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	help
- 	  Support for the Turing Clock Controller on QCS404, provides clocks
- 	  and resets for the Turing subsystem.
- 
- config QCS_Q6SSTOP_404
- 	tristate "QCS404 Q6SSTOP Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select QCS_GCC_404
- 	help
- 	  Support for the Q6SSTOP clock controller on QCS404 devices.
-@@ -571,6 +625,7 @@ config QCS_Q6SSTOP_404
- 
- config SDM_GCC_845
- 	tristate "SDM845/SDM670 Global Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select QCOM_GDSC
- 	help
- 	  Support for the global clock controller on SDM845 and SDM670 devices.
-@@ -579,6 +634,7 @@ config SDM_GCC_845
- 
- config SDM_GPUCC_845
- 	tristate "SDM845 Graphics Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SDM_GCC_845
- 	help
- 	  Support for the graphics clock controller on SDM845 devices.
-@@ -587,6 +643,7 @@ config SDM_GPUCC_845
- 
- config SDM_VIDEOCC_845
- 	tristate "SDM845 Video Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SDM_GCC_845
- 	select QCOM_GDSC
- 	help
-@@ -596,6 +653,7 @@ config SDM_VIDEOCC_845
- 
- config SDM_DISPCC_845
- 	tristate "SDM845 Display Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SDM_GCC_845
- 	help
- 	  Support for the display clock controller on Qualcomm Technologies, Inc
-@@ -605,6 +663,7 @@ config SDM_DISPCC_845
- 
- config SDM_LPASSCC_845
- 	tristate "SDM845 Low Power Audio Subsystem (LPAAS) Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SDM_GCC_845
- 	help
- 	  Support for the LPASS clock controller on SDM845 devices.
-@@ -613,6 +672,7 @@ config SDM_LPASSCC_845
- 
- config SDX_GCC_55
- 	tristate "SDX55 Global Clock Controller"
-+	depends on ARM || COMPILE_TEST
- 	select QCOM_GDSC
- 	help
- 	  Support for the global clock controller on SDX55 devices.
-@@ -621,6 +681,7 @@ config SDX_GCC_55
- 
- config SDX_GCC_65
- 	tristate "SDX65 Global Clock Controller"
-+	depends on ARM || COMPILE_TEST
- 	select QCOM_GDSC
- 	help
- 	  Support for the global clock controller on SDX65 devices.
-@@ -629,6 +690,7 @@ config SDX_GCC_65
- 
- config SM_CAMCC_6350
- 	tristate "SM6350 Camera Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SM_GCC_6350
- 	help
- 	  Support for the camera clock controller on SM6350 devices.
-@@ -636,6 +698,7 @@ config SM_CAMCC_6350
- 
- config SM_CAMCC_8250
- 	tristate "SM8250 Camera Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SM_GCC_8250
- 	help
- 	  Support for the camera clock controller on SM8250 devices.
-@@ -643,6 +706,7 @@ config SM_CAMCC_8250
- 
- config SM_CAMCC_8450
- 	tristate "SM8450 Camera Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SM_GCC_8450
- 	help
- 	  Support for the camera clock controller on SM8450 devices.
-@@ -650,6 +714,7 @@ config SM_CAMCC_8450
- 
- config SM_DISPCC_6115
- 	tristate "SM6115 Display Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	depends on SM_GCC_6115
- 	help
- 	  Support for the display clock controller on Qualcomm Technologies, Inc
-@@ -659,6 +724,7 @@ config SM_DISPCC_6115
- 
- config SM_DISPCC_6125
- 	tristate "SM6125 Display Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	depends on SM_GCC_6125
- 	help
- 	  Support for the display clock controller on Qualcomm Technologies, Inc
-@@ -668,6 +734,7 @@ config SM_DISPCC_6125
- 
- config SM_DISPCC_8250
- 	tristate "SM8150/SM8250/SM8350 Display Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	depends on SM_GCC_8150 || SM_GCC_8250 || SM_GCC_8350
- 	help
- 	  Support for the display clock controller on Qualcomm Technologies, Inc
-@@ -677,6 +744,7 @@ config SM_DISPCC_8250
- 
- config SM_DISPCC_6350
- 	tristate "SM6350 Display Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	depends on SM_GCC_6350
- 	help
- 	  Support for the display clock controller on Qualcomm Technologies, Inc
-@@ -686,6 +754,7 @@ config SM_DISPCC_6350
- 
- config SM_DISPCC_6375
- 	tristate "SM6375 Display Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	depends on SM_GCC_6375
- 	help
- 	  Support for the display clock controller on Qualcomm Technologies, Inc
-@@ -695,6 +764,7 @@ config SM_DISPCC_6375
- 
- config SM_DISPCC_8450
- 	tristate "SM8450 Display Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	depends on SM_GCC_8450
- 	help
- 	  Support for the display clock controller on Qualcomm Technologies, Inc
-@@ -704,6 +774,7 @@ config SM_DISPCC_8450
- 
- config SM_DISPCC_8550
- 	tristate "SM8550 Display Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	depends on SM_GCC_8550
- 	help
- 	  Support for the display clock controller on Qualcomm Technologies, Inc
-@@ -713,6 +784,7 @@ config SM_DISPCC_8550
- 
- config SM_GCC_6115
- 	tristate "SM6115 and SM4250 Global Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select QCOM_GDSC
- 	help
- 	  Support for the global clock controller on SM6115 and SM4250 devices.
-@@ -721,6 +793,7 @@ config SM_GCC_6115
- 
- config SM_GCC_6125
- 	tristate "SM6125 Global Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	help
- 	  Support for the global clock controller on SM6125 devices.
- 	  Say Y if you want to use peripheral devices such as UART,
-@@ -728,6 +801,7 @@ config SM_GCC_6125
- 
- config SM_GCC_6350
- 	tristate "SM6350 Global Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select QCOM_GDSC
- 	help
- 	  Support for the global clock controller on SM6350 devices.
-@@ -736,6 +810,7 @@ config SM_GCC_6350
- 
- config SM_GCC_6375
- 	tristate "SM6375 Global Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select QCOM_GDSC
- 	help
- 	  Support for the global clock controller on SM6375 devices.
-@@ -744,6 +819,7 @@ config SM_GCC_6375
- 
- config SM_GCC_8150
- 	tristate "SM8150 Global Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	help
- 	  Support for the global clock controller on SM8150 devices.
- 	  Say Y if you want to use peripheral devices such as UART,
-@@ -751,6 +827,7 @@ config SM_GCC_8150
- 
- config SM_GCC_8250
- 	tristate "SM8250 Global Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select QCOM_GDSC
- 	help
- 	  Support for the global clock controller on SM8250 devices.
-@@ -759,6 +836,7 @@ config SM_GCC_8250
- 
- config SM_GCC_8350
- 	tristate "SM8350 Global Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select QCOM_GDSC
- 	help
- 	  Support for the global clock controller on SM8350 devices.
-@@ -767,6 +845,7 @@ config SM_GCC_8350
- 
- config SM_GCC_8450
- 	tristate "SM8450 Global Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select QCOM_GDSC
- 	help
- 	  Support for the global clock controller on SM8450 devices.
-@@ -775,6 +854,7 @@ config SM_GCC_8450
- 
- config SM_GCC_8550
- 	tristate "SM8550 Global Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select QCOM_GDSC
- 	help
- 	  Support for the global clock controller on SM8550 devices.
-@@ -783,6 +863,7 @@ config SM_GCC_8550
- 
- config SM_GPUCC_6350
- 	tristate "SM6350 Graphics Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SM_GCC_6350
- 	help
- 	  Support for the graphics clock controller on SM6350 devices.
-@@ -791,6 +872,7 @@ config SM_GPUCC_6350
- 
- config SM_GPUCC_8150
- 	tristate "SM8150 Graphics Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SM_GCC_8150
- 	help
- 	  Support for the graphics clock controller on SM8150 devices.
-@@ -799,6 +881,7 @@ config SM_GPUCC_8150
- 
- config SM_GPUCC_8250
- 	tristate "SM8250 Graphics Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SM_GCC_8250
- 	help
- 	  Support for the graphics clock controller on SM8250 devices.
-@@ -807,6 +890,7 @@ config SM_GPUCC_8250
- 
- config SM_GPUCC_8350
- 	tristate "SM8350 Graphics Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SM_GCC_8350
- 	help
- 	  Support for the graphics clock controller on SM8350 devices.
-@@ -815,6 +899,7 @@ config SM_GPUCC_8350
- 
- config SM_TCSRCC_8550
- 	tristate "SM8550 TCSR Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select QCOM_GDSC
- 	help
- 	  Support for the TCSR clock controller on SM8550 devices.
-@@ -822,6 +907,7 @@ config SM_TCSRCC_8550
- 
- config SM_VIDEOCC_8150
- 	tristate "SM8150 Video Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SM_GCC_8150
- 	select QCOM_GDSC
- 	help
-@@ -831,6 +917,7 @@ config SM_VIDEOCC_8150
- 
- config SM_VIDEOCC_8250
- 	tristate "SM8250 Video Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SM_GCC_8250
- 	select QCOM_GDSC
- 	help
-@@ -871,6 +958,7 @@ config KRAITCC
- 
- config CLK_GFM_LPASS_SM8250
- 	tristate "SM8250 GFM LPASS Clocks"
-+	depends on ARM64 || COMPILE_TEST
- 	help
- 	  Support for the Glitch Free Mux (GFM) Low power audio
-           subsystem (LPASS) clocks found on SM8250 SoCs.
+[...]
+
+>>>
+>>> This daemon is currently in just Beta stage now and we have basic
+>>> functionality running. We are yet to add more flesh to this scheme to
+>>
+>> Good to hear that the basics are running with virtio-mem (I assume :) ).
+>>
+>>> make sure any potential risks or security concerns are taken care as
+>>> well.
+>>
+>> It would be great to draw/explain the architecture in more detail.
+> 
+> We will be looking into solving any potential security concerns where
+> hypervisor would restrict few actions of resizing of memory. Right now,
+> we are experimenting to see if PSI mechanism itself can be used for ways
+> of detecting memory pressure in the system and add memory to secondary
+> VM when memory is in need. Taking into account all the latencies
+> involved in the PSI scheme (i.e. time when one does malloc call till
+> when extra memory gets added to SVM system). And wanted to know
+> upstream's opinion on such a scheme using PSI mechanism for detecting
+> memory pressure and resizing SVM accordingly.
+
+One problematic thing is that adding memory to Linux by virtio-mem 
+eventually consumes memory (e.g., the memmap), especially when having to 
+to add a completely new memory block to Linux.
+
+So if you're already under severe memory pressure, these allocations to 
+bring up new memory can fail. The question is, if PSI can notify "early" 
+enough such that this barely happens in practice.
+
+There are some possible ways to mitigate:
+
+1) Always keep spare memory blocks by virtio-mem added to Linux, that
+    don't expose any memory yet. Memory from these block can be handed
+    over to Linux without additional Linux allocations. Of course, they
+    consume metadata, so one might want to limit them.
+
+2) Implement memmap_on_memory support for virtio-mem. This might help in
+    some setups, where the device block size is suitable.
+
+Did you run into that scenario already during your experiments, and how 
+did you deal with that?
+
 -- 
-2.34.1
+Thanks,
+
+David / dhildenb
 
