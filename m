@@ -2,78 +2,43 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 29B626784D7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 19:26:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 91CA7678504
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 19:35:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233777AbjAWS0R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Jan 2023 13:26:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37550 "EHLO
+        id S232514AbjAWSfI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Jan 2023 13:35:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233722AbjAWSZv (ORCPT
+        with ESMTP id S232446AbjAWSez (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Jan 2023 13:25:51 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 069CA31E04;
-        Mon, 23 Jan 2023 10:25:18 -0800 (PST)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30NDvPKX006849;
-        Mon, 23 Jan 2023 18:25:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=KErrjc3xgE1bMROYd6zPKW0ZtuwKlGeYv2r3etNPY6E=;
- b=nelKSCwbRedweKBhLbXaglFkAmzrqFSrsNTg7nrQIjWMTuJ4QNWJIVo0qzEyB1FHQOmn
- H4vKDIBRqzeeFMZhhuV9YnFpoVfNoyfhPslAJCzGTX7Vr7TDEnYt9Vzx2hE1fZtAHWgB
- KIqoTjJu4VmYKho4bsDsUlMKkrkGYJTPvN5wxCTNrFykxHJNHZFEqVvX9BBc8NtqRE4q
- AQy6rkYufzZ/ZlH7XBloLgmi/vgpHyg/8/socDAxAKXcUcbEEr57t+5n1+roLA5Ysx+T
- zqRelZIPgIbuuNFa0SS1km1896+jDx9ksvFQvHsqTjvsY42BYuQPTlhsygrQzTlX6CUy Aw== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n89dr3hcj-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 23 Jan 2023 18:25:10 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30NIPAXY032366
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 23 Jan 2023 18:25:10 GMT
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Mon, 23 Jan 2023 10:25:09 -0800
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
-        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <andersson@kernel.org>
-CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        <quic_abhinavk@quicinc.com>, <quic_sbillaka@quicinc.com>,
-        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v1 14/14] drm/msm/disp/dpu1: add sc7280 dsc block and sub block
-Date:   Mon, 23 Jan 2023 10:24:34 -0800
-Message-ID: <1674498274-6010-15-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1674498274-6010-1-git-send-email-quic_khsieh@quicinc.com>
+        Mon, 23 Jan 2023 13:34:55 -0500
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57430BB9E;
+        Mon, 23 Jan 2023 10:34:54 -0800 (PST)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id AFD1C4053B;
+        Mon, 23 Jan 2023 19:34:51 +0100 (CET)
+Date:   Mon, 23 Jan 2023 19:34:49 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, dmitry.baryshkov@linaro.org,
+        andersson@kernel.org, quic_abhinavk@quicinc.com,
+        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1 00/14] add display port DSC feature
+Message-ID: <20230123183449.qxjd22z3dpip5rqp@SoMainline.org>
 References: <1674498274-6010-1-git-send-email-quic_khsieh@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: RMcxm3L4YY1LFlihdTSGZoGR1L41zBsj
-X-Proofpoint-ORIG-GUID: RMcxm3L4YY1LFlihdTSGZoGR1L41zBsj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-23_12,2023-01-23_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
- priorityscore=1501 impostorscore=0 suspectscore=0 spamscore=0 adultscore=0
- bulkscore=0 mlxlogscore=999 phishscore=0 malwarescore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2301230177
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1674498274-6010-1-git-send-email-quic_khsieh@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
         SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,113 +46,84 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch add DSC block and sub block to support new DSC v1.2 hardware
-encoder. Also sc7280 DSC related hardware information are added to allow
-sc7280 DSC feature be enabled at sc7280 platform.
+DisplayPort is a name, and I think you should spell it as such in both
+the cover letter title and individual patch descriptions (capital D and
+P, no space in between).
 
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 50 +++++++++++++++++++-------
- 1 file changed, 38 insertions(+), 12 deletions(-)
+On 2023-01-23 10:24:20, Kuogee Hsieh wrote:
+> This patch add DSC related supporting functions into to both dp controller and dpu enccoder
+> 
+> Kuogee Hsieh (14):
+>   drm/msm/dp: add dpcd read of both dsc and fec capability
+>   drm/msm/dp: add dsc factor into calculation of supported bpp
+>   drm/msm/dp: add configure mainlink_levels base on lane number
+>   drm/msm/dp: correct configure Colorimetry Indicator Field at MISC0
+>   drm/msm/dp: upgrade tu calculation base on newest algorithm
+>   drm/msm/dp: add display compression related struct
+>   drm/msm/dp: add dsc helper functions
+>   drm/msm/dp: add dsc supporting functions to DP controller
+>   drm/msm/dsi: export struct msm_compression_info to dpu encoder
+>   drm/msm/disp/dpu: add supports of DSC encoder v1.2 engine
+>   drm/msm/disp/dpu1: add supports of new flush mechanism
+>   drm/msm/disp/dpu1: revise timing engine programming to work for DSC
+>   drm/msm/disp/dpu1: add dsc supporting functions to dpu encoder
+>   drm/msm/disp/dpu1: add sc7280 dsc block and sub block
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index 7deffc9f9..2c78a46 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0-only
- /* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
-- * Copyright (c) 2022. Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2022-2023, Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #define pr_fmt(fmt)	"[drm:%s:%d] " fmt, __func__, __LINE__
-@@ -476,6 +476,7 @@ static const struct dpu_caps sc7280_dpu_caps = {
- 	.has_idle_pc = true,
- 	.max_linewidth = 2400,
- 	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
-+	.max_dsc_width = 2560,
- };
- 
- static const struct dpu_mdp_cfg msm8998_mdp[] = {
-@@ -1707,7 +1708,7 @@ static const struct dpu_pingpong_cfg sm8350_pp[] = {
- };
- 
- static const struct dpu_pingpong_cfg sc7280_pp[] = {
--	PP_BLK("pingpong_0", PINGPONG_0, 0x59000, 0, sc7280_pp_sblk, -1, -1),
-+	PP_BLK("pingpong_0", PINGPONG_0, 0x69000, 0, sc7280_pp_sblk, -1, -1),
- 	PP_BLK("pingpong_1", PINGPONG_1, 0x6a000, 0, sc7280_pp_sblk, -1, -1),
- 	PP_BLK("pingpong_2", PINGPONG_2, 0x6b000, 0, sc7280_pp_sblk, -1, -1),
- 	PP_BLK("pingpong_3", PINGPONG_3, 0x6c000, 0, sc7280_pp_sblk, -1, -1),
-@@ -1814,25 +1815,48 @@ static const struct dpu_merge_3d_cfg sm8550_merge_3d[] = {
- /*************************************************************
-  * DSC sub blocks config
-  *************************************************************/
--#define DSC_BLK(_name, _id, _base, _features) \
-+#define DSC_BLK_HW_1_1(_name, _id, _base, _features) \
- 	{\
- 	.name = _name, .id = _id, \
- 	.base = _base, .len = 0x140, \
--	.features = _features, \
-+	.features = BIT(DPU_DSC_HW_REV_1_1) | _features, \
-+	}
-+
-+#define DSC_BLK_HW_1_2(_name, _id, _base, _features, _sblk) \
-+	{\
-+	.name = _name, .id = _id, \
-+	.base = _base, .len = 0x140, \
-+	.features = BIT(DPU_DSC_HW_REV_1_2) | _features, \
-+	.sblk = &_sblk, \
- 	}
- 
- static struct dpu_dsc_cfg sdm845_dsc[] = {
--	DSC_BLK("dsc_0", DSC_0, 0x80000, 0),
--	DSC_BLK("dsc_1", DSC_1, 0x80400, 0),
--	DSC_BLK("dsc_2", DSC_2, 0x80800, 0),
--	DSC_BLK("dsc_3", DSC_3, 0x80c00, 0),
-+	DSC_BLK_HW_1_1("dsc_0", DSC_0, 0x80000, 0),
-+	DSC_BLK_HW_1_1("dsc_1", DSC_1, 0x80400, 0),
-+	DSC_BLK_HW_1_1("dsc_2", DSC_2, 0x80800, 0),
-+	DSC_BLK_HW_1_1("dsc_3", DSC_3, 0x80c00, 0),
- };
- 
- static struct dpu_dsc_cfg sm8150_dsc[] = {
--	DSC_BLK("dsc_0", DSC_0, 0x80000, BIT(DPU_DSC_OUTPUT_CTRL)),
--	DSC_BLK("dsc_1", DSC_1, 0x80400, BIT(DPU_DSC_OUTPUT_CTRL)),
--	DSC_BLK("dsc_2", DSC_2, 0x80800, BIT(DPU_DSC_OUTPUT_CTRL)),
--	DSC_BLK("dsc_3", DSC_3, 0x80c00, BIT(DPU_DSC_OUTPUT_CTRL)),
-+	DSC_BLK_HW_1_1("dsc_0", DSC_0, 0x80000, BIT(DPU_DSC_OUTPUT_CTRL)),
-+	DSC_BLK_HW_1_1("dsc_1", DSC_1, 0x80400, BIT(DPU_DSC_OUTPUT_CTRL)),
-+	DSC_BLK_HW_1_1("dsc_2", DSC_2, 0x80800, BIT(DPU_DSC_OUTPUT_CTRL)),
-+	DSC_BLK_HW_1_1("dsc_3", DSC_3, 0x80c00, BIT(DPU_DSC_OUTPUT_CTRL)),
-+};
-+
-+static struct dpu_dsc_sub_blks sc7280_dsc_sblk_0 = {
-+	.enc = {.base = 0x100, .len = 0x100},
-+	.ctl = {.base = 0xF00, .len = 0x10},
-+};
-+
-+static struct dpu_dsc_sub_blks sc7280_dsc_sblk_1 = {
-+	.enc = {.base = 0x200, .len = 0x100},
-+	.ctl = {.base = 0xF80, .len = 0x10},
-+};
-+
-+static struct dpu_dsc_cfg sc7280_dsc[] = {
-+	DSC_BLK_HW_1_2("dsc_0", DSC_0, 0x80000, BIT(DPU_DSC_NATIVE_422_EN), sc7280_dsc_sblk_0),
-+	DSC_BLK_HW_1_2("dsc_1", DSC_1, 0x80000, BIT(DPU_DSC_NATIVE_422_EN), sc7280_dsc_sblk_1),
- };
- 
- /*************************************************************
-@@ -2809,6 +2833,8 @@ static const struct dpu_mdss_cfg sc7280_dpu_cfg = {
- 	.pingpong_count = ARRAY_SIZE(sc7280_pp),
- 	.pingpong = sc7280_pp,
- 	.intf_count = ARRAY_SIZE(sc7280_intf),
-+	.dsc_count = ARRAY_SIZE(sc7280_dsc),
-+	.dsc = sc7280_dsc,
- 	.intf = sc7280_intf,
- 	.vbif_count = ARRAY_SIZE(sdm845_vbif),
- 	.vbif = sdm845_vbif,
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+For DSC, capitalize it everywhere instead of the current free-form lower
+and uppercase mixup in patch titles.
 
+Still asking around for the subsystem tag, I've seen:
+
+    drm/msm/dpu
+    drm/msm/dpu1
+    drm/msm/disp/dpu
+    drm/msm/disp/dpu1
+
+And you're already mixing two of them.
+
+Aside that, thanks for sending this series!  Been looking forward to DSC
+1.2 for a while, but for DSI!
+
+- Marijn
+
+>  drivers/gpu/drm/msm/Makefile                       |   2 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_dsc_helper.c     | 537 +++++++++++++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_dsc_helper.h     |  25 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        | 341 +++++++--
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h        |   4 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h   |   7 +-
+>  .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   |  43 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |  50 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |  74 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c         |  43 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h         |  21 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c         |  23 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h         |  23 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc_1_2.c     | 371 +++++++++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c        | 132 ++--
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h        |  10 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h    |   3 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h         |   6 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |  10 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c             |  10 +-
+>  drivers/gpu/drm/msm/dp/dp_catalog.c                | 176 ++++-
+>  drivers/gpu/drm/msm/dp/dp_catalog.h                |  97 ++-
+>  drivers/gpu/drm/msm/dp/dp_ctrl.c                   | 839 ++++++++++++++-------
+>  drivers/gpu/drm/msm/dp/dp_display.c                |  61 +-
+>  drivers/gpu/drm/msm/dp/dp_link.c                   |  29 +-
+>  drivers/gpu/drm/msm/dp/dp_panel.c                  | 749 +++++++++++++++++-
+>  drivers/gpu/drm/msm/dp/dp_panel.h                  |  67 +-
+>  drivers/gpu/drm/msm/dp/dp_reg.h                    |  40 +-
+>  drivers/gpu/drm/msm/dsi/dsi.c                      |   3 +-
+>  drivers/gpu/drm/msm/dsi/dsi.h                      |   3 +-
+>  drivers/gpu/drm/msm/dsi/dsi_host.c                 |  14 +-
+>  drivers/gpu/drm/msm/msm_drv.h                      | 113 ++-
+>  32 files changed, 3429 insertions(+), 497 deletions(-)
+>  create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_dsc_helper.c
+>  create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_dsc_helper.h
+>  create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc_1_2.c
+> 
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> 
