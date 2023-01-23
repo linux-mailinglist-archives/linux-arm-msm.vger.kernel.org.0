@@ -2,166 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 628A767796F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 11:44:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5270567798B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 11:48:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231824AbjAWKoo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Jan 2023 05:44:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60280 "EHLO
+        id S231540AbjAWKsx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Jan 2023 05:48:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231836AbjAWKom (ORCPT
+        with ESMTP id S231842AbjAWKsp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Jan 2023 05:44:42 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CCEC2333A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 02:44:40 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id f25-20020a1c6a19000000b003da221fbf48so8196883wmc.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 02:44:40 -0800 (PST)
+        Mon, 23 Jan 2023 05:48:45 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC04315C8D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 02:48:38 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id bk16so10342966wrb.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 02:48:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=2PRs0X+3aZkUyAyZNInl6XM4TEd14eiJLS0plPeBy28=;
-        b=K88Go0c9RwpYrCjd8bPLO6/yvB177d2ERGGqVyjrBtJ9Opnop6J7vSn8s/U2vk6XVn
-         DKQRsPLphOjXmo+4O6Xf6J/AwvIM8Hw+9mrA0s4gXs8L/Cu8icK2ei4FJgqP0QHd2lwm
-         OXna9tNDOkThjGrHlLYolglciahMV3QqY6i33rWAugKCUJYjfgOU4JIyKwnpXXmiDBgL
-         Ex7Cw/DFsPEVJ3IoTrJPpq5+ceTj/wUEOf5HA5jM4U4/Nl7q2TK3XLM5fyTumzMQD7nH
-         dnh7Wk8vrbvt4os3AlADxQHlUjrTD74altfFZCn+98LHTlUKNv/cV14Hc6LuvyOR2ouH
-         Fp6A==
+        bh=xUVs15KkMYg/lOZfsKh5uaV6K+tz2DAgJfE3k7IQtmk=;
+        b=jjD2YKphApLPv1bjx17k+4kKaGTqVyabYxoEYYixuf3A4AvVpRbRfAI9z9agB375x2
+         xjUu1dkTCkBdnTHtc9IOGs3ZWvcZQpQdxJSyc7oM3vdhdx0N5Afta9SIQwQVKfjc73ul
+         ZYq3u2i+JBZXTJaGpAShOIOweiI0PCAY1v9aFfsncOnl30N1EHyvxBHpVZGUmwiDO5dN
+         QvOmb1IVKJp2IgP8SeHkY1WYr9hlvmnA/ynDkISb2JjmKwqjIOLpW3+YGAocsLkESBGo
+         Bc/918chw0QhVFAAOzmd8agGeTRoLE1i3kUJdYTUfeukIuAxZM7qecHaOD/X10v+IG5q
+         H4gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2PRs0X+3aZkUyAyZNInl6XM4TEd14eiJLS0plPeBy28=;
-        b=7FwaLX74jdfT4SVqpNSA91Ur/OZwRASJVAqjs0iIBHf3+yXXd6kkFQNUR2OAftGFLA
-         rd+ko3uFMMFaVmOjaYq2q0wfpSM9HCDKhNSE3G7tvev0GjseyFYRRHU/+APfhehZPlCg
-         FiwlCyV5XE2eU5w+UdN2AkrRn5OcJrSTciOX6UwtF1eLtehA2MLScBVlYGMc7KBI/S+Y
-         iVWkuD/vAZmO3r+yqyn4J1AVavMtw+ZT6/RuAuoqAFaDjPJAcmI2FolKmxSIsncn7PkG
-         jpVgDJXIJKO6D/UWDT6TfhHumf6tirEWWWXM1UV+/D0AG9dKpMHgyyPumOxUvKH1x4+b
-         GY9g==
-X-Gm-Message-State: AFqh2kozLnUKwJT9UKe8LF5johshMpsuExkgD18HLp5/nccCbLTPg2UN
-        u3MSIXGiD8T4eVqoENzPxO8KLw==
-X-Google-Smtp-Source: AMrXdXtYXhgiuVMLRok6DEndR280kFs7XZ1T15tjO8fChaM2EuvZ84f0IK3TKrrf3jQLDOppc2V2uw==
-X-Received: by 2002:a05:600c:24ce:b0:3da:18c5:e48b with SMTP id 14-20020a05600c24ce00b003da18c5e48bmr31515548wmu.18.1674470678999;
-        Mon, 23 Jan 2023 02:44:38 -0800 (PST)
+        bh=xUVs15KkMYg/lOZfsKh5uaV6K+tz2DAgJfE3k7IQtmk=;
+        b=ZEIpF84Y/k7dalgFvXA2Oud9SGGVm00d5OKJZaBdpLHv3qfcldbOqpUs5otDFJAZC7
+         9yhiFo7fcNoJjQhN+3l8eDDC9D99nyzgCoeZfDFnSpzal/J49TwBqAszU3N2mY2OEjKI
+         MnOETFI0I/shh1tHoQlnchqwx3Al7uk/dWK3TWWwKiUAaSTSw0quY5gsIivLHbHAKXE6
+         nIt8XJZq0jIRM1EHcGZljBtbpi026xp9TpQ70SilSDMR+URFzG09h7ojUdOnnOsi3eQV
+         N4NTelxde4ZHwnJauG1Ix87YtbMxQ4ysSABqIeBvteFiv9DaDqXx+XR0iBiDAjWo6sGK
+         SNJw==
+X-Gm-Message-State: AFqh2krxWfgDym15I/hRuZNjIrPJBNDZPyxEXqVLMqWwrNmWJzSouHdP
+        1GFpdT8wGxafzkmUBEveW8YKUw==
+X-Google-Smtp-Source: AMrXdXvC9iO/i18vyEk6bT6Inj0bgYpYRMo5UeUgpdPDG3EkaOpRwjaGyVhXg1o7xdSEhq9oPjvFSQ==
+X-Received: by 2002:a5d:5c13:0:b0:2bd:d84d:bbc2 with SMTP id cc19-20020a5d5c13000000b002bdd84dbbc2mr22687044wrb.46.1674470917344;
+        Mon, 23 Jan 2023 02:48:37 -0800 (PST)
 Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id k9-20020a5d6d49000000b002bc8130cca7sm34107744wri.23.2023.01.23.02.44.37
+        by smtp.gmail.com with ESMTPSA id q15-20020a5d574f000000b00272c0767b4asm4041803wrw.109.2023.01.23.02.48.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Jan 2023 02:44:38 -0800 (PST)
-Date:   Mon, 23 Jan 2023 12:44:36 +0200
+        Mon, 23 Jan 2023 02:48:36 -0800 (PST)
+Date:   Mon, 23 Jan 2023 12:48:35 +0200
 From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Johan Hovold <johan@kernel.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
         "vkoul@kernel.org" <vkoul@kernel.org>,
         Kishon Vijay Abraham I <kishon@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v4 09/12] dt-bindings: PCI: qcom: Add SM8550 compatible
-Message-ID: <Y85lFD3m5pdpNtdR@linaro.org>
-References: <20230119140453.3942340-1-abel.vesa@linaro.org>
- <20230119140453.3942340-10-abel.vesa@linaro.org>
- <7af21247-a44e-cb46-7461-204fa6b4fcab@linaro.org>
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org
+Subject: Re: [PATCH 04/10] dt-bindings: phy: qcom,qmp-usb: Document SM8550
+ compatible
+Message-ID: <Y85mA3limH9u/NHe@linaro.org>
+References: <20221116120157.2706810-1-abel.vesa@linaro.org>
+ <20221116120157.2706810-5-abel.vesa@linaro.org>
+ <Y3TpzgQ1JaFs5sNk@hovoldconsulting.com>
+ <Y85fOgfjEUBMnWar@hovoldconsulting.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <7af21247-a44e-cb46-7461-204fa6b4fcab@linaro.org>
+In-Reply-To: <Y85fOgfjEUBMnWar@hovoldconsulting.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23-01-22 15:10:59, Krzysztof Kozlowski wrote:
-> On 19/01/2023 15:04, Abel Vesa wrote:
-> > Add the SM8550 platform to the binding.
+On 23-01-23 11:19:38, Johan Hovold wrote:
+> On Wed, Nov 16, 2022 at 02:46:54PM +0100, Johan Hovold wrote:
+> > On Wed, Nov 16, 2022 at 02:01:51PM +0200, Abel Vesa wrote:
+> > > Add the SM8550 compatible to the list.
+> > > 
+> > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > > ---
+> > >  .../devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml       | 1 +
+> > >  1 file changed, 1 insertion(+)
+> > > 
+> > > diff --git a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
+> > > index 0c6b3ba7346b..cba2a252baf8 100644
+> > > --- a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
+> > > +++ b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
+> > > @@ -37,6 +37,7 @@ properties:
+> > >        - qcom,sm8350-qmp-usb3-phy
+> > >        - qcom,sm8350-qmp-usb3-uni-phy
+> > >        - qcom,sm8450-qmp-usb3-phy
+> > > +      - qcom,sm8550-qmp-usb3-phy
 > > 
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > ---
-> > 
-> > The v3 of this patchset is:
-> > https://lore.kernel.org/all/20230119112453.3393911-1-abel.vesa@linaro.org/
-> > 
-> > Changes since v3:
-> >  * renamed noc_aggr to noc_aggr_4, as found in the driver
-> > 
-> > Changes since v2:
-> >  * dropped the pipe from clock-names
-> >  * removed the pcie instance number from aggre clock-names comment
-> >  * renamed aggre clock-names to noc_aggr
-> >  * dropped the _pcie infix from cnoc_pcie_sf_axi
-> >  * renamed pcie_1_link_down_reset to simply link_down
-> >  * added enable-gpios back, since pcie1 node will use it
-> > 
-> > Changes since v1:
-> >  * Switched to single compatible for both PCIes (qcom,pcie-sm8550)
-> >  * dropped enable-gpios property
-> >  * dropped interconnects related properties, the power-domains
-> >  * properties
-> >    and resets related properties the sm8550 specific allOf:if:then
-> >  * dropped pipe_mux, phy_pipe and ref clocks from the sm8550 specific
-> >    allOf:if:then clock-names array and decreased the minItems and
-> >    maxItems for clocks property accordingly
-> >  * added "minItems: 1" to interconnects, since sm8550 pcie uses just
-> >  * one,
-> >    same for interconnect-names
-> > 
-> > 
-> >  .../devicetree/bindings/pci/qcom,pcie.yaml    | 44 +++++++++++++++++++
-> >  1 file changed, 44 insertions(+)
-> > 
-> > diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> > index a5859bb3dc28..58f926666332 100644
-> > --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> > +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> > @@ -34,6 +34,7 @@ properties:
-> >        - qcom,pcie-sm8250
-> >        - qcom,pcie-sm8450-pcie0
-> >        - qcom,pcie-sm8450-pcie1
-> > +      - qcom,pcie-sm8550
-> >        - qcom,pcie-ipq6018
-> >  
-> >    reg:
-> > @@ -65,9 +66,11 @@ properties:
-> >    dma-coherent: true
-> >  
-> >    interconnects:
-> > +    minItems: 1
-> >      maxItems: 2
-> >  
+> > This one too should be based on sc8280xp rather than the legacy binding
+> > scheme.
 > 
-> I don't see my concerns from v3 answered.
+> I can't seem to find a v2 of this one adding a new-style binding for
+> sm8550.
+> 
+> Note that the corresponding dts changes have already been merged:
+> 
+> 	https://lore.kernel.org/all/20230119004533.1869870-2-abel.vesa@linaro.org/
 
-Check the dates for v4 and your reply to v3.
-
-v4 was sent a day before you sent your v3 comments. :)
+As we discussed on Friday, I intend to apply the same strategy as
+for pcie. I haven't managed to send the v2 for this one yet.
+The order is, UFS, PCIe and then USB. Since the patchsets are based
+on each other, I'm trying to make sure PCIe is in the proper shape
+before moving on to USB.
 
 > 
-> This is a friendly reminder during the review process.
-> 
-> It seems my previous comments were not fully addressed. Maybe my
-> feedback got lost between the quotes, maybe you just forgot to apply it.
-> Please go back to the previous discussion and either implement all
-> requested changes or keep discussing them.
-
-Will address your comments in next version.
-
-> 
-> Thank you.
-> 
-> Best regards,
-> Krzysztof
-> 
+> Johan
