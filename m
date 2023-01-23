@@ -2,63 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CE2AE6780B4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 17:01:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D2C1678118
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Jan 2023 17:14:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232290AbjAWQBu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Jan 2023 11:01:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37544 "EHLO
+        id S233082AbjAWQO1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Jan 2023 11:14:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232173AbjAWQBu (ORCPT
+        with ESMTP id S232959AbjAWQO0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Jan 2023 11:01:50 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05474B76C;
-        Mon, 23 Jan 2023 08:01:48 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6C45360F92;
-        Mon, 23 Jan 2023 16:01:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4F27C433EF;
-        Mon, 23 Jan 2023 16:01:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1674489707;
-        bh=+TQ+/1RQ4Y+mpEsDlWjx3tP6VFQIaELp3GBETePs24s=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=kN78ypcoGzW8NrLrsf3leHzLNORyzrx10GSNboEPf2hz11nMLPUaM6sQhOiDQRHEQ
-         KGNOKHP0wzzJltm2G9ioPjw0Tnj3rkiJ/syTItxQKV8PgAbX3f9ajE5Li6X4mZn4E9
-         LoLurSkgJ0gXxWFUc/xxD5YrS2yNQHyLrRgXwmbsgKkb33BgNWQr8oTq7GhMYlaQFK
-         eBLzusUXb04ucjG0cm2Kapa7KJrlZMoVPodxh+mFGMbfrleu6iuKtvI8ofMrBgCfJq
-         /k6ATkf3fVP9pVyQC0FDV5INYI3lYutLxuyjKqgZzhEoaJjRbIhRVBtxLLvtWK4d4J
-         b5boFnXMX9YZQ==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1pJzGT-00016g-7n; Mon, 23 Jan 2023 17:01:45 +0100
-Date:   Mon, 23 Jan 2023 17:01:45 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm: Initialize mode_config earlier
-Message-ID: <Y86vaTQR7INWezyj@hovoldconsulting.com>
-References: <20230113041051.4189063-1-quic_bjorande@quicinc.com>
- <eea1c5dc-6bc5-4246-f0e1-0c790de9f078@linaro.org>
- <9a64c685-9ff0-bc1d-e604-e3773ff9edd7@linaro.org>
- <20230117025122.jt3wrjkqfnogu4ci@builder.lan>
- <Y8ZWl85gSpOaLgO4@hovoldconsulting.com>
+        Mon, 23 Jan 2023 11:14:26 -0500
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8508A26849
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 08:14:25 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id d14so7616790wrr.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 08:14:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=xhWhg+JuWpH66LGbtp0HELb5qzJ+wDxiJkPbeIleqvY=;
+        b=LE4CGd6YvWykB2LGRtQySlcZcz5IpKMgb3o1AVvjaObGK94WPygzmtYSrKnSplWMxh
+         CLRScqMzFoGVqITFCTi/HO7hmQR0vl1NeKsxJKJ63NCxRkzBvJSjpDiZDvEGMhFANwnT
+         Woce5z7k1lF7DzJ1M1yOSQvMZcImSXBY0PUgbw9Oet09I+g3pTGF7IJNQOCDYxrp2PTJ
+         0DANDipQl0y/QIOnQB3MJKRzgDPiYe8FNZjvph5w1lPOdWP9zFhLb7xc0uCwuTdbvX2E
+         8PBjof+aHSRHBhiK2WM4Hr6NA4BVhThCP1roZKiT7a6dMH+tfLts0OqilLx49YEdxHKN
+         P0ZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xhWhg+JuWpH66LGbtp0HELb5qzJ+wDxiJkPbeIleqvY=;
+        b=q5X9nRukbV7f6h7gv8csxwCjXC4JbNJ4tLZemgplAzdOBqW4GsdqCiu9dZn8A936Y9
+         yAVO+37PCGonjvpF3I4jsNnRpQMj4hbAwelwtbV3vn0LqQccOYKT5pFhekDGzjILfq5T
+         HDvEUQM6/S4J9civgL8P22NyLFhSW8GeKYrzlyrbXOZFKXKywsSg1CbbeHaT7tf3ZfXP
+         5Pgm6isaUK5bF9R3u7cH3nA7Oh9yAtzjw6isarzVZAWGftA8uQ/pOURfQO5r80bMtusl
+         hzgc+j7fuNKYnCREll8CUsgzCnFgaj14WIQJgeL2KRq5Nk1sDAcC2NLhw3rIe/lfOJru
+         Wmug==
+X-Gm-Message-State: AFqh2ko7VvO5UFyNjpQGHHa+0HD8stOSnwaea+SQCa6A0EW0k+4mm3Nn
+        j/Y81mlKGZiWh4Xnl8OMlfgA4w==
+X-Google-Smtp-Source: AMrXdXs7vxhLakcU7TmXf5NFoLwqsO/mZDZ+3lJ0pB/UiDi2GJk3mfN51PLloZRCRnEhaE3u8I2weg==
+X-Received: by 2002:adf:dc47:0:b0:2be:5ca4:7480 with SMTP id m7-20020adfdc47000000b002be5ca47480mr9393695wrj.46.1674490464104;
+        Mon, 23 Jan 2023 08:14:24 -0800 (PST)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id h3-20020adfe983000000b002bdf5832843sm21813631wrm.66.2023.01.23.08.14.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Jan 2023 08:14:23 -0800 (PST)
+Message-ID: <254ce21e-5c19-0c29-acc4-9758bdca83b6@linaro.org>
+Date:   Mon, 23 Jan 2023 16:14:22 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y8ZWl85gSpOaLgO4@hovoldconsulting.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: [PATCH v4 0/6] Add MSM8939 SoC support with two devices
+Content-Language: en-US
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        djakov@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, benl@squareup.com,
+        shawn.guo@linaro.org, fabien.parent@linaro.org, leo.yan@linaro.org,
+        dmitry.baryshkov@linaro.org
+References: <20230123023127.1186619-1-bryan.odonoghue@linaro.org>
+ <42baa874-c926-9111-b0b3-2df2562d8de6@linaro.org>
+ <Y86CPmgvAi+kChQI@gerhold.net>
+ <45800033-e2ae-09c8-b8a2-e97afb6508fd@linaro.org>
+ <Y86S7h/QxqXoKS1U@gerhold.net>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <Y86S7h/QxqXoKS1U@gerhold.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -66,123 +83,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jan 17, 2023 at 09:04:39AM +0100, Johan Hovold wrote:
-> On Mon, Jan 16, 2023 at 08:51:22PM -0600, Bjorn Andersson wrote:
-> > On Fri, Jan 13, 2023 at 10:57:18AM +0200, Dmitry Baryshkov wrote:
-> > > On 13/01/2023 06:23, Dmitry Baryshkov wrote:
-> > > > On 13/01/2023 06:10, Bjorn Andersson wrote:
-> > > > > Invoking drm_bridge_hpd_notify() on a drm_bridge with a HPD-enabled
-> > > > > bridge_connector ends up in drm_bridge_connector_hpd_cb() calling
-> > > > > drm_kms_helper_hotplug_event(), which assumes that the associated
-> > > > > drm_device's mode_config.funcs is a valid pointer.
-> > > > > 
-> > > > > But in the MSM DisplayPort driver the HPD enablement happens at bind
-> > > > > time and mode_config.funcs is initialized late in msm_drm_init(). This
-> > > > > means that there's a window for hot plug events to dereference a NULL
-> > > > > mode_config.funcs.
-> > > > > 
-> > > > > Move the assignment of mode_config.funcs before the bind, to avoid this
-> > > > > scenario.
-> > > > 
-> > > > Cam we make DP driver not to report HPD events until the enable_hpd()
-> > > > was called? I think this is what was fixed by your internal_hpd
-> > > > patchset.
-> > > 
-> > > Or to express this in another words: I thought that internal_hpd already
-> > > deferred enabling hpd event reporting till the time when we need it, didn't
-> > > it?
-> > > 
-> > 
-> > I added a WARN_ON(1) in drm_bridge_hpd_enable() to get a sense of when
-> > this window of "opportunity" opens up, and here's the callstack:
-> > 
-> > ------------[ cut here ]------------
-> > WARNING: CPU: 6 PID: 99 at drivers/gpu/drm/drm_bridge.c:1260 drm_bridge_hpd_enable+0x48/0x94 [drm]
-> > ...
-> > Call trace:
-> >  drm_bridge_hpd_enable+0x48/0x94 [drm]
-> >  drm_bridge_connector_enable_hpd+0x30/0x3c [drm_kms_helper]
-> >  drm_kms_helper_poll_enable+0xa4/0x114 [drm_kms_helper]
-> >  drm_kms_helper_poll_init+0x6c/0x7c [drm_kms_helper]
-> >  msm_drm_bind+0x370/0x628 [msm]
-> >  try_to_bring_up_aggregate_device+0x170/0x1bc
-> >  __component_add+0xb0/0x168
-> >  component_add+0x20/0x2c
-> >  dp_display_probe+0x40c/0x468 [msm]
-> >  platform_probe+0xb4/0xdc
-> >  really_probe+0x13c/0x300
-> >  __driver_probe_device+0xc0/0xec
-> >  driver_probe_device+0x48/0x204
-> >  __device_attach_driver+0x124/0x14c
-> >  bus_for_each_drv+0x90/0xdc
-> >  __device_attach+0xdc/0x1a8
-> >  device_initial_probe+0x20/0x2c
-> >  bus_probe_device+0x40/0xa4
-> >  deferred_probe_work_func+0x94/0xd0
-> >  process_one_work+0x1a8/0x3c0
-> >  worker_thread+0x254/0x47c
-> >  kthread+0xf8/0x1b8
-> >  ret_from_fork+0x10/0x20
-> > ---[ end trace 0000000000000000 ]---
-> > 
-> > As drm_kms_helper_poll_init() is the last thing being called in
-> > msm_drm_init() shifting around the mode_config.func assignment would not
-> > have any impact.
-> > 
-> > Perhaps we have shuffled other things around to avoid this bug?  Either
-> > way, let's this on hold  until further proof that it's still
-> > reproducible.
+On 23/01/2023 14:00, Stephan Gerhold wrote:
+> Unless this conclusion changes with your CPR patch set this means that
+> both the DTS and the DT schema will need changes anyway, because you
+> wouldn't need power-domain-names = "cpr", but rather
 > 
-> As I've mentioned off list, I haven't hit the apparent race I reported
-> here:
-> 
-> 	https://lore.kernel.org/all/Y1efJh11B5UQZ0Tz@hovoldconsulting.com/
-> 
-> since moving to 6.2. I did hit it with both 6.0 and 6.1-rc2, but it
-> could very well be that something has changes that fixes (or hides) the
-> issue since.
+> 	power-domains = <&rpmpd MSM8939_VDDMX_AO>, <&vreg_dummy>;
+> 	power-domain-names = "mx", "cpr";
 
-For unrelated reasons, I tried enabling async probing, and apart from
-apparently causing the panel driver to probe defer indefinitely, I also
-again hit the WARN_ON() I had added to catch this:
+I have not been owning the CPR for 8939 so far but, this what we have in 
+our 4.19 tree.
 
-[   13.593235] WARNING: CPU: 0 PID: 125 at drivers/gpu/drm/drm_probe_helper.c:664 drm_kms_helper_hotplug_event+0x48/0x7
-0 [drm_kms_helper]
-...
-[   13.679429] CPU: 0 PID: 125 Comm: kworker/0:3 Not tainted 6.2.0-rc4 #110
-[   13.687159] Hardware name: Qualcomm QRD, BIOS 6.0.220110.BOOT.MXF.1.1-00470-MAKENA-1 01/10/2022
-[   13.696947] Workqueue: events pmic_glink_altmode_worker [pmic_glink_altmode]
-[   13.705044] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[   13.713054] pc : drm_kms_helper_hotplug_event+0x48/0x70 [drm_kms_helper]
-[   13.720812] lr : drm_kms_helper_hotplug_event+0x18/0x70 [drm_kms_helper]
-[   13.728557] sp : ffff800009e33c90
-[   13.732779] x29: ffff800009e33c90 x28: ffffad90862eb000 x27: ffff62d2362ee305
-[   13.740956] x26: ffffad90862f1ea0 x25: ffffad9086309b50 x24: 0000000000000000
-[   13.749125] x23: 0000000000000003 x22: ffff62d0c5dad000 x21: 0000000000000002
-[   13.757291] x20: ffff62d0c6d24000 x19: ffff62d0c5dad000 x18: 0000000000000038
-[   13.765443] x17: 0000000000000004 x16: 000000000000d323 x15: 0000000000000004
-[   13.773585] x14: ffffad9086594208 x13: ffffad90865f50e8 x12: 0000000000000000
-[   13.781723] x11: 00000000000400d7 x10: 0000000000000008 x9 : 0000000000000002
-[   13.789867] x8 : 0000000000000000 x7 : 0000000000000000 x6 : 0000000000097d00
-[   13.798013] x5 : ffff62d0c3395000 x4 : ffff62d2362ed750 x3 : 0000000000097e00
-[   13.806161] x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000000
-[   13.814304] Call trace:
-[   13.817604]  drm_kms_helper_hotplug_event+0x48/0x70 [drm_kms_helper]
-[   13.824959]  drm_bridge_connector_hpd_cb+0xa0/0xc0 [drm_kms_helper]
-[   13.832227]  drm_bridge_hpd_notify+0x40/0x60 [drm]
-[   13.837993]  pmic_glink_altmode_worker+0xc0/0x150 [pmic_glink_altmode]
-[   13.845505]  process_one_work+0x288/0x6c0
-[   13.850404]  worker_thread+0x74/0x450
-[   13.854948]  kthread+0x118/0x120
-[   13.859032]  ret_from_fork+0x10/0x20
-[   13.863473] irq event stamp: 7440
-[   13.867631] hardirqs last  enabled at (7439): [<ffffad9085b00450>] _raw_spin_unlock_irqrestore+0x80/0x90
-[   13.878157] hardirqs last disabled at (7440): [<ffffad9085af33e4>] el1_dbg+0x24/0x90
-[   13.886885] softirqs last  enabled at (7308): [<ffffad908514046c>] _stext+0x46c/0x5d8
-[   13.895697] softirqs last disabled at (7303): [<ffffad90851467b0>] ____do_softirq+0x10/0x20
-[   13.905038] ---[ end trace 0000000000000000 ]---
+CPU0: cpu@100 {
+         device_type = "cpu";
+         compatible = "arm,cortex-a53", "arm,armv8";
+         reg = <0x100>;
+         next-level-cache = <&L2_1>;
+         enable-method = "qcom,kpss-acc-v2";
+         qcom,acc = <&acc0>;
+         qcom,saw = <&saw0>;
+         clocks = <&apcs1>;
+         operating-points-v2 = <&cluster1_opp_table>;
+         power-domains = <&cpr>;
+         power-domain-names = "cpr";
+         #cooling-cells = <2>;
+         capacity-dmips-mhz = <1024>;
+};
 
-So the bug still appears to be there (and the MSM DRM driver is fragile
-and broken, but we knew that).
+cpr: power-controller@b018000 {
+         compatible = "qcom,msm8939-cpr", "qcom,cpr";
+         reg = <0x0b018000 0x1000>;
+         interrupts = <0 15 IRQ_TYPE_EDGE_RISING>;
+         clocks = <&rpmcc CXO_SMD_CXO_A_CLK>;
+         clock-names = "ref";
+         power-domains = <&rpmpd MSM8939_VDDMX_AO>;
+         #power-domain-cells = <0>;
+         operating-points-v2 = <&cpr_opp_table>;
+};
 
-Johan
+So the CPR code not the CPU code owns VDDMX_AO. I'm not sure if there's 
+a good reason why it has been done that way.
+
+Anyway, this feels like a bit of a departure from our core discussion. I 
+will see if it is possible to drop the CPU power-domain entirely 
+contingent on the patch you flagged.
+
+---
+bod
