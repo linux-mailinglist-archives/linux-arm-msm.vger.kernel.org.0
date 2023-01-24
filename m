@@ -2,199 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F959679D4C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 16:21:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D85D1679D5F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 16:25:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234599AbjAXPVV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Jan 2023 10:21:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35158 "EHLO
+        id S233558AbjAXPZs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Jan 2023 10:25:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234455AbjAXPVT (ORCPT
+        with ESMTP id S234519AbjAXPZs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Jan 2023 10:21:19 -0500
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED7D223642
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 07:20:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1674573636;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=EDb2U5bj4qLnGLbCg1xC9iOAx4lXLgAzJbxtIVGln6c=;
-        b=X3qKkMi1B0tcKoGiTElr0QHaGmVR3dLrv9W30S1Tged1oibXn+UJoR+nw1Oe2LBag0XLDl
-        9fn65ACdDyEcKe8Vslq2MEjfiAMW2q5ywFBzKTGhTnKHVhqvqiiXJ7vXDtusquhP/7+cOV
-        V6lTg67L7SqGH4mjcBpoSQCoxj+Nkyk=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-197-wiNMiG78P4WvHe2QpRVKfg-1; Tue, 24 Jan 2023 10:20:34 -0500
-X-MC-Unique: wiNMiG78P4WvHe2QpRVKfg-1
-Received: by mail-wr1-f72.google.com with SMTP id v15-20020adfe4cf000000b002bf9413bc50so1890148wrm.16
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 07:20:34 -0800 (PST)
+        Tue, 24 Jan 2023 10:25:48 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D6F7125B1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 07:25:45 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id q5so9577950wrv.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 07:25:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=oRSOqByjWCTfw2IqSfQf3MSHv6dQgoH4nISayRjMtHk=;
+        b=X9d2a5S1g5Pu1uaUjGX2GmiGuc4pN82zNBWoOGOHcX8XaQC8rGQrGiJeXXPupqndP2
+         8frDjvCY3lM6xNFSYA37yXGrSvy5PYBkJRHC13Eebenn9F/ojaSOUKhG8VARQjtYRVYn
+         eyh99YAjdmXe4Gp4/R2uFIpD527C8xf2I7+NFSRUlRlo9EXl/zd1PWGeJhTzjq5WLhXG
+         Y/ThQ8UtiHVxbsyVAIkJpb/mPo5NATRefd9rcH8Gd6LFhuuxtTwrJPZXScuDn/u/GrVE
+         1FPsN2T235cxTxWMatD3/N/G53cTuBreun53e4j1UQNouUppryVeArPL0OvtowLyQd/d
+         CPZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:subject:organization:from
-         :references:cc:to:content-language:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=EDb2U5bj4qLnGLbCg1xC9iOAx4lXLgAzJbxtIVGln6c=;
-        b=cNZzASzJKhLR+U1yQ8jq6M+N8V1ajI3ST1bYpsNn3zYd/0PeoGo9toNLeoEV9B2PYj
-         tITTpSa16IqUrK+aWBsipkbe0YLCQOlYlnpa+C4Y0PDDF1SvH58pOs/LOTaqsuARsyYv
-         Yk84iVdn3nm4K0RHgoljz94mttGZwyF7TBOTSOud185UVp/MfklZbhW5IBbvHvBJ8l1M
-         kB1h4yNhXKRcys8YZbKnVVvimFUmJ+mHpw2qVMwmZtSmNiJZxi7rUWq0Zpjh5TjXPmrZ
-         HsL/c1XWAa6ROwk2OXODZ68+R7t7gwUyxtiCBwdq8oXumhOQdbelvz1OnHfqbAWHlGP0
-         GeEA==
-X-Gm-Message-State: AFqh2kpROoWun84QHc+2q716NWOZrywJDTy2K0TAr3raVEYaNx94INrY
-        p8zdgoCoJJVE20K0LvS/Zebx11o3jpy/nAm6dIYvikzTCqSn9kEgsg8oro+fwl835F0M/CNUTVh
-        UXsaAaCIhDB2TtedAsInP0Bku1A==
-X-Received: by 2002:a05:600c:3412:b0:3d6:e790:c9a0 with SMTP id y18-20020a05600c341200b003d6e790c9a0mr29312382wmp.10.1674573633772;
-        Tue, 24 Jan 2023 07:20:33 -0800 (PST)
-X-Google-Smtp-Source: AMrXdXvTaxaYATaMQGSOLQgsxj0xqFj+ZcmGJtf/QfZ434oHCSFRqhTuzzUTnrOVqXVi5jH2mRZ+0Q==
-X-Received: by 2002:a05:600c:3412:b0:3d6:e790:c9a0 with SMTP id y18-20020a05600c341200b003d6e790c9a0mr29312359wmp.10.1674573633416;
-        Tue, 24 Jan 2023 07:20:33 -0800 (PST)
-Received: from ?IPV6:2003:cb:c707:9d00:9303:90ce:6dcb:2bc9? (p200300cbc7079d00930390ce6dcb2bc9.dip0.t-ipconnect.de. [2003:cb:c707:9d00:9303:90ce:6dcb:2bc9])
-        by smtp.gmail.com with ESMTPSA id f31-20020a05600c491f00b003cfa81e2eb4sm2221227wmp.38.2023.01.24.07.20.31
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=oRSOqByjWCTfw2IqSfQf3MSHv6dQgoH4nISayRjMtHk=;
+        b=6RI7+J9npwmTVJjNAuSZgL6jZWriqHEgWeJ/+VTaAn6fW9RapniVZOKJ/k2mG4TR/r
+         BjuLY32lH2ydzpz9zdx3sei3lgKTG4Gu2btvATkR6KcsEmxWxRFVIpLWq2Elv9NdqDSC
+         0ac9fK+hw52Hphifq6R2/ZztPa7grJVF2N8wLqDsycGNDOKdnL9pgKJ34UmuNicITdlw
+         vXQ0BiL6ijm7CozIYx3rAOOHPf1ISBAulKFrNYX0xWxsFvgkKHa9omLiU/OcXYPlptxG
+         rU40BLVRp3AMTxRMXQaQCBbxiCXBKWvcENuRwAHP/85iekdiQfm0+4MspgEG+sUmcESM
+         tdvQ==
+X-Gm-Message-State: AFqh2kprM9o2QY2Km8MbfUoyGHhG9G6Aim9ORXOKXzXKhRVaKzZK6SSd
+        gItVeEi6SOokZ86NfuqaYLqnLA==
+X-Google-Smtp-Source: AMrXdXsmytFzOSiZqt0rtnYj8izFdVm0myDTdxvXTy/+LHsqw85xIPz2gUD9Dr7unVsJyyy14GVP4g==
+X-Received: by 2002:adf:fe05:0:b0:2be:bfcb:b1d4 with SMTP id n5-20020adffe05000000b002bebfcbb1d4mr13392077wrr.57.1674573943928;
+        Tue, 24 Jan 2023 07:25:43 -0800 (PST)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id r1-20020a0560001b8100b002bfae16ee2fsm2037656wru.111.2023.01.24.07.25.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Jan 2023 07:20:32 -0800 (PST)
-Message-ID: <1bf30145-22a5-cc46-e583-25053460b105@redhat.com>
-Date:   Tue, 24 Jan 2023 16:20:31 +0100
+        Tue, 24 Jan 2023 07:25:43 -0800 (PST)
+Message-ID: <3ae863df-3260-4863-d88f-da4d3f442174@linaro.org>
+Date:   Tue, 24 Jan 2023 15:25:42 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
+ Thunderbird/102.5.0
+Subject: Re: [PATCH v2 2/4] arm64: dts: qcom: sm6350: Add camera clock
+ controller
 Content-Language: en-US
-To:     Sudarshan Rajagopalan <quic_sudaraja@quicinc.com>,
-        Johannes Weiner <hannes@cmpxchg.org>,
-        Suren Baghdasaryan <surenb@google.com>,
-        Mike Rapoport <rppt@kernel.org>,
-        Oscar Salvador <osalvador@suse.de>,
-        Anshuman Khandual <anshuman.khandual@arm.com>,
-        mark.rutland@arm.com, will@kernel.org,
-        virtualization@lists.linux-foundation.org, linux-mm@kvack.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     "Trilok Soni (QUIC)" <quic_tsoni@quicinc.com>,
-        "Sukadev Bhattiprolu (QUIC)" <quic_sukadev@quicinc.com>,
-        "Srivatsa Vaddagiri (QUIC)" <quic_svaddagi@quicinc.com>,
-        "Patrick Daly (QUIC)" <quic_pdaly@quicinc.com>
-References: <072de3f4-6bd3-f9ce-024d-e469288fc46a@quicinc.com>
- <acd8d55c-8528-bb21-488e-e5999c3c4e4e@redhat.com>
- <2faf67fe-b1df-d110-6d57-67f284cd5584@quicinc.com>
- <de3f1fd1-bcec-c6e5-e57a-b06674144c3b@redhat.com>
- <c38fa123-7750-20de-ed0b-de3346bddc82@quicinc.com>
-From:   David Hildenbrand <david@redhat.com>
-Organization: Red Hat
-Subject: Re: [RFC] memory pressure detection in VMs using PSI mechanism for
- dynamically inflating/deflating VM memory
-In-Reply-To: <c38fa123-7750-20de-ed0b-de3346bddc82@quicinc.com>
+To:     Luca Weiss <luca.weiss@fairphone.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20221213-sm6350-cci-v2-0-15c2c14c34bb@fairphone.com>
+ <20221213-sm6350-cci-v2-2-15c2c14c34bb@fairphone.com>
+ <e5ff49d4-45c7-8c4a-d624-d8f7cc9ce2cb@linaro.org>
+ <CQ0I4ONEI6J4.3KWS1KBE7RTKD@otso>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <CQ0I4ONEI6J4.3KWS1KBE7RTKD@otso>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24.01.23 00:04, Sudarshan Rajagopalan wrote:
-[...]
->> One problematic thing is that adding memory to Linux by virtio-mem
->> eventually consumes memory (e.g., the memmap), especially when having
->> to to add a completely new memory block to Linux.
+On 24/01/2023 14:48, Luca Weiss wrote:
+> On Fri Jan 20, 2023 at 5:49 PM CET, Bryan O'Donoghue wrote:
+>> On 20/01/2023 13:13, Luca Weiss wrote:
+>>> +		camcc: clock-controller@ad00000 {
+>>> +			compatible = "qcom,sm6350-camcc";
+>>> +			reg = <0 0x0ad00000 0 0x16000>;
+>>> +			clocks = <&rpmhcc RPMH_CXO_CLK>;
+>>> +			#clock-cells = <1>;
+>>> +			#reset-cells = <1>;
+>>> +			#power-domain-cells = <1>;
+>>> +		};
 >>
-> Yes we have thought about this issue as well where-in when system is
-> heavily on memory pressure, it would require some memory for memmap
-> metadata, and also few other places in memory hotplug that it would need
-> to alloc_pages for hot-plugging in. I think this path in memory_hotplug
-> may be fixed where it doesn't rely on allocating some small portion of
-> memory for hotplugging. But, the purpose memory_hotplug itself wasn't
-> for plugging memory on system being in memory pressure :).
-
-Some small allocations might be classified as "urgent" and go to atomic 
-reserves (e.g., resource tree node, memory device node). The big 
-allocations (memmap, page-ext if enabled, eventually page tables for 
-direct map when not mapping huge pages) are the problematic "memory 
-consumers" I think.
-
+>> Should you include
+>>
+>> required-opps = <&rpmhpd_opp_low_svs>;
+>>
+>> ?
 > 
-> 
->> So if you're already under severe memory pressure, these allocations
->> to bring up new memory can fail. The question is, if PSI can notify
->> "early" enough such that this barely happens in practice.
->>
->> There are some possible ways to mitigate:
->>
->> 1) Always keep spare memory blocks by virtio-mem added to Linux, that
->> B B  don't expose any memory yet. Memory from these block can be handed
->> B B  over to Linux without additional Linux allocations. Of course, they
->> B B  consume metadata, so one might want to limit them.
->>
->> 2) Implement memmap_on_memory support for virtio-mem. This might help in
->> B B  some setups, where the device block size is suitable.
->>
->> Did you run into that scenario already during your experiments, and
->> how did you deal with that?
->>
-> We are exactly implementing 2) you had mentioned i.e. enabling
-> memmap_on_memory support for virtio-mem. This always guarantees that
-> free memory is always present for memmap metadata while hotplugging. But
-> this required us to increase memory block size to 256MB (from 128MB) for
-> alignment requirement of memory hotplug to enable memory_on_memmap, for
-> 4K page size configuration. Option 1) you mentioned also seems
-
-The memmap of 128 MiB is 2 MiB. Assuming the pageblock size is 2 MiB, 
-and virtio-mem supports a device block size of 2 MiB, it should "in 
-theory" also work with 128 MiB memory blocks.
-
-So I'd be curious why the change to 256 MiB was required. Maybe, that 
-kernel config ends up with a pageblock size of 4 MiB (IIRC that can 
-happen without CONFIG_HUGETLB -- which we should most probbaly change to 
-also be PMD_ORDER due to THP).
-
-> interesting - its good to have some spare memory in hand when system is
-> heavily in memory pressure so that this memory can be handed over
-> immediately on PSI pressure and doesn't have to wait for memory plug-in
-> request roundtrip from Primary VM.
-
-The idea was that you'd still do the roundtrip to request plugging of 
-device memory blocks, but that you could immediately expose memory to 
-the system (without requiring allocations), to eventually immediately 
-prepare the next Linux memory block while "fresh" memory is available.
-
-This way you could handle most allocations that happen when adding a 
-Linux memory block.
-
-The main idea was to always have at least one spare one lying around. 
-And as soon as you start exposing memory from one of them to the page 
-allocator, immediately prepare the next one.
-
-> 
-> Do you think having memmap_on_memory support for virtio-mem is useful to
-> have? If so, we can send the patch that supports this in virtio-mem?
+> I don't know, it works without. But doesn't this property not just
+> affect power-domains? I haven't passed any here.
 > 
 
-I think yes. However, last time I though about adding support, I 
-realized that there are some ugly corner cases to handle cleanly.
+Should you have a TITAN_TOP pd though ?
 
-You have to make sure that the device memory blocks to-be-used as memmap 
-are "plugged" even before calling add_memory_driver_managed(). And you 
-can only "unplug" these device memory blocks after the memory block was 
-removed via offline_and_remove_memory().
-
-So the whole order of events and management of plugged device blocks 
-changes quite a bit ...
-
-... and what to do if the device block size is, say 4MiB, but the memmap 
-is 2 MiB? Of course, one could simply skip the optimization then.
-
-Having that said, if you managed to get it running and it's not too 
-ugly, please share.
-
--- 
-Thanks,
-
-David / dhildenb
+---
+bod
 
