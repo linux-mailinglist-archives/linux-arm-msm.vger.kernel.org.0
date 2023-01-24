@@ -2,67 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A479F679F22
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 17:46:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B53CB67A038
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 18:31:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233508AbjAXQqZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Jan 2023 11:46:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52462 "EHLO
+        id S234451AbjAXRbx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Jan 2023 12:31:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233842AbjAXQqY (ORCPT
+        with ESMTP id S234410AbjAXRbp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Jan 2023 11:46:24 -0500
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EE69124
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 08:46:22 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id rl14so37303656ejb.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 08:46:22 -0800 (PST)
+        Tue, 24 Jan 2023 12:31:45 -0500
+Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF6F04E53B
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 09:31:41 -0800 (PST)
+Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-506609635cbso14130357b3.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 09:31:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=6anXkQhWREYZ7Z+wwNJ+N2b9GEDIU27Fd9BJKH3olz8=;
-        b=hmUF4NSx9DwWxuh+5qY9qu3vXkC9Su3E5becp0tyPpN837yiIcN4xF42l8Bf4EEa+9
-         SliZMm3HRDA1+eTeu7GZ4KWp5fUs7cXQaHAXQ6AHNcV8/oUvm105igX8pi2S7TV2IKJI
-         19lNuuJLGhcM+bb33fpMMZYTlJMyGXOZdLPMj7KJWC5laC3MetrRsawI6Rfwfa5dEqDa
-         znzpUabGpsI23R942mnNAAzKZ/RXjAoCWqyFJw6/KKGNOqhBSFiQWCGEqFZuFqPs/zM1
-         Z7TJu49nnNuTH+dX2xkLms84mXSOU7YTKNP1Uw87AQLGIQKBNmTBPvcBdnfPmPJvj6d/
-         Hi7A==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=QAWZNKWNBnz2nm7fG3oJ2Ondshli1quuAhafNezlm2I=;
+        b=vmOWgr9rkUwzXlseFVsT2j864QAGrD36dNV6+hb9Z7hRLYJ8B5WeRZdEpjer9y7ZXe
+         y3QrwhGV4pSrb3uagpnMn9m7/R87CzSOQh1IMiI/Ze8ueXecFpmJdcSaN8I9jtsmCAcN
+         xFYH9X4OMx83uCjY9yqRshrNksPwFYRMa4Rny8507wYI6TRGrzwtgTMuGK5om09FRo3V
+         6GUQgPGuq8fDJDIGNIxBaQExAtH7HCjVd4U5z+9I7stqOeHP6HY3Rrp7zHrkLvvLyufq
+         4YKtIX9+fDcRiCAKfOkz6LlWFxlJr9Mq0SgSh5ihV8KN0m2O18EeAPFxR8riEi+Popz0
+         7gyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=6anXkQhWREYZ7Z+wwNJ+N2b9GEDIU27Fd9BJKH3olz8=;
-        b=r2YE9TJujf+1Hx2Y9Baqr3ZONlam2NHkyYsXKhGDWf2SY0XtDj+iqmyOgN/Qc0lxlK
-         MqqYpxbufdvOjvWzr1sZj82n0hPeDVRmAA19b8Zdls43Ez2f3HHec1i8/rzycEtjHJuj
-         I4XyHflyLfhUUMwT9dko4G2Cefm2+iSud3YMnYETmuZ1L4vjrziioRfFHg7UJWz3FGI0
-         TBP4BCOqvuw2ipd+Xzj398PwQwLpDqQvc2KdjqQThOeITVA5+Wmh6tQhSTQO1ULZrVBy
-         CnqzAlxrl+Ev77xp+G8gsveRBCs8mcmQf5x9MLx9l56u+oB5ZlsJ1dmO8p28F3Ks88Pg
-         zDiw==
-X-Gm-Message-State: AFqh2krjxT8hInvVQuG9tzM0DCc9g69HRHG0MD6rmPqVMUoi+HQOqhdY
-        dne7Jh/9NFUTgc6+ndCCw2zpQ7uqlDiFXFO9
-X-Google-Smtp-Source: AMrXdXv1OwKIofcJpXz1pJ4NeedVbdQbdmtmeO818Cw3ayAERbgGVzTc74MxKGKJhhgeQ5+iF2R27Q==
-X-Received: by 2002:a17:906:b30f:b0:838:9c66:cd2f with SMTP id n15-20020a170906b30f00b008389c66cd2fmr31112589ejz.74.1674578780819;
-        Tue, 24 Jan 2023 08:46:20 -0800 (PST)
-Received: from localhost.localdomain (abyl109.neoplus.adsl.tpnet.pl. [83.9.31.109])
-        by smtp.gmail.com with ESMTPSA id l4-20020a170906078400b008711cab8875sm1108506ejc.216.2023.01.24.08.46.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Jan 2023 08:46:20 -0800 (PST)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: sm8250: Disable wsamacro and swr0 by default
-Date:   Tue, 24 Jan 2023 17:46:16 +0100
-Message-Id: <20230124164616.228619-1-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.39.1
+        bh=QAWZNKWNBnz2nm7fG3oJ2Ondshli1quuAhafNezlm2I=;
+        b=XDBzR2+7IuZaN2lZLqxqoQmMIabIvvMNTWCN0zPZPG63YwyVCvRbtwA+gOinbzA2TS
+         iysW5JW/pAeWCSA79ToKlp+180mXGv5iLkmgRHEgNo0uGalmY25L8zpuSRSYhmQWHh88
+         FROsC+wNFFqHmfaU20yyP8ayVY2hTXgMLnEITDRt7kuV0Qv4Imp17ciaCZtaQPcS2Vwn
+         Wp4hNbkIlq+yz4Zw5b+gR+NQFfAMKSuOxrUHURzpQjoQepfQMb/kJr2Iw+s8L+SITwiA
+         GVDm6OmKZpOSm+HJBDxntGN7tS9s6ZHiuTe5Ck+tZc/0ALtQJDfrjTxqZIKpgX4F7wml
+         0fdQ==
+X-Gm-Message-State: AFqh2kqMRxk63ExK7LnvTYtZcNDH/KL+pDfSWQj3OF5b8c9yrQ7xHMkG
+        re/GxcWqL0niHbZsy6O7rOuY9ArCm/qYKsF9/SXWPg==
+X-Google-Smtp-Source: AMrXdXsZAyRHAzMydmJt0v6Zl159VWuKM4IasufLzc1VlCjkIdzuHw0AHwiN22tOlj83E3v3X9dDNJNrvuw/U/DjuBY=
+X-Received: by 2002:a81:6d8d:0:b0:490:89c3:21b0 with SMTP id
+ i135-20020a816d8d000000b0049089c321b0mr3916907ywc.132.1674581500991; Tue, 24
+ Jan 2023 09:31:40 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230124141541.8290-1-quic_devipriy@quicinc.com> <20230124141541.8290-8-quic_devipriy@quicinc.com>
+In-Reply-To: <20230124141541.8290-8-quic_devipriy@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 24 Jan 2023 19:11:00 +0200
+Message-ID: <CAA8EJpoHqpo=QWHwO=LEbT-Mk4gr7F1X4ecL0Y+kbG8Ow6cGiQ@mail.gmail.com>
+Subject: Re: [PATCH V1 7/8] arm64: dts: qcom: Add ipq9574 SoC and AL02 board support
+To:     devi priya <quic_devipriy@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, ulf.hansson@linaro.org,
+        linus.walleij@linaro.org, catalin.marinas@arm.com, will@kernel.org,
+        p.zabel@pengutronix.de, shawnguo@kernel.org, arnd@arndb.de,
+        marcel.ziswiler@toradex.com, nfraprado@collabora.com,
+        broonie@kernel.org, tdas@codeaurora.org, bhupesh.sharma@linaro.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-mmc@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, quic_srichara@quicinc.com,
+        quic_gokulsri@quicinc.com, quic_sjaganat@quicinc.com,
+        quic_kathirav@quicinc.com, quic_arajkuma@quicinc.com,
+        quic_anusha@quicinc.com, quic_poovendh@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -73,83 +79,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-They are not used on all boards, so disable them by default.
-Enable them back on MTP/RB5, which were the only current users.
+On Tue, 24 Jan 2023 at 16:17, devi priya <quic_devipriy@quicinc.com> wrote:
+>
+> From: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+>
+> Add initial device tree support for Qualcomm IPQ9574 SoC
+> and AL02 board
+>
+> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
+> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
+> Co-developed-by: devi priya <quic_devipriy@quicinc.com>
+> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
+> Signed-off-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 6 ++++++
- arch/arm64/boot/dts/qcom/sm8250-mtp.dts  | 6 ++++++
- arch/arm64/boot/dts/qcom/sm8250.dtsi     | 4 ++++
- 3 files changed, 16 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-index 8c64cb060e21..6802d36fb20c 100644
---- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-@@ -1007,6 +1007,8 @@ can@0 {
- };
- 
- &swr0 {
-+	status = "okay";
-+
- 	left_spkr: speaker@0,3 {
- 		compatible = "sdw10217211000";
- 		reg = <0 3>;
-@@ -1322,6 +1324,10 @@ &venus {
- 	status = "okay";
- };
- 
-+&wsamacro {
-+	status = "okay";
-+};
-+
- /* PINCTRL - additions to nodes defined in sm8250.dtsi */
- &qup_spi0_cs_gpio {
- 	drive-strength = <6>;
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-index 0991b34a8e49..c0d83fa9a73b 100644
---- a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-@@ -759,6 +759,8 @@ codec {
- };
- 
- &swr0 {
-+	status = "okay";
-+
- 	left_spkr: speaker@0,3 {
- 		compatible = "sdw10217211000";
- 		reg = <0 3>;
-@@ -892,3 +894,7 @@ &usb_2_qmpphy {
- &venus {
- 	status = "okay";
- };
-+
-+&wsamacro {
-+	status = "okay";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 95f1a6afcd43..a0ba166f89d8 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -2277,6 +2277,8 @@ wsamacro: codec@3240000 {
- 
- 			pinctrl-names = "default";
- 			pinctrl-0 = <&wsa_swr_active>;
-+
-+			status = "disabled";
- 		};
- 
- 		swr0: soundwire-controller@3250000 {
-@@ -2297,6 +2299,8 @@ swr0: soundwire-controller@3250000 {
- 			#sound-dai-cells = <1>;
- 			#address-cells = <2>;
- 			#size-cells = <0>;
-+
-+			status = "disabled";
- 		};
- 
- 		audiocc: clock-controller@3300000 {
+I suspect that the order of sign-offs is incorrect here. Your sign-off
+should be the last one, as you are the person sending the patch.
+
+
 -- 
-2.39.1
-
+With best wishes
+Dmitry
