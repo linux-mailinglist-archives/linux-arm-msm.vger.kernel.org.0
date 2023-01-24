@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3756167985A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 13:47:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D322D679861
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 13:47:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233676AbjAXMrd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Jan 2023 07:47:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50234 "EHLO
+        id S234007AbjAXMrj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Jan 2023 07:47:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233993AbjAXMr2 (ORCPT
+        with ESMTP id S234008AbjAXMrd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Jan 2023 07:47:28 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56297457FE
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 04:47:27 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id q5so9100948wrv.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 04:47:27 -0800 (PST)
+        Tue, 24 Jan 2023 07:47:33 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F216545BE4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 04:47:28 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id e3so13735215wru.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 04:47:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=XXqaaiu8XcOEh/w0m5+ujekCyu2XVsl5TF8KZfGBrR0=;
-        b=LYPF1xCatea+0wPnKT60w1baAG84QCdLtvjg9sX+tdToX4hVr+m3XlJqlNYvMdjS1b
-         1KAZvzY4E9nTDQpE8OzcLOHKxkUIsoH+lAQnJ0cAPPPti9U2cFCsUJ1LExUcggX+yYKt
-         0PhZKWOs81uLsYaRekOLndnsoVfFygdwIkk8otLBoP0kVLX43PB0hBgCfZQM0qOO0J6P
-         l8J0rAqcooOYRtKXfZusS4tjmizcUpof+O0vAI1Gq8iVoUS+598WUJE8PHxIy3K0GeTL
-         pTcqYqENrkd9C7T01ZlK2mrRRGnev4KJI1xum0kSaaeXtgfZnh0nFTlFOd5Oi3f1I25T
-         oz/Q==
+        bh=bW3g+f1jFOh6Xbc2Yz4xv9Ez8/6bfoPw3+sQ1Y19h5s=;
+        b=wsx4tRRgJsOsVyc/1uDPeFYJ3RlNVqKMmmbgSwkZjgZnIG/PXThjD50MSy53JwLmmZ
+         PKliezxSrBfNlF7XkOdI/NIDyYh9Usbhk+C6ZlNKIzey9mFQFMQgyLmW/EG6jBCPWQKo
+         p5hKklnOndxf1Zh+A2MqPb4maVUnL2Y6Y4VeqhOxHd7y/jdTSU+IeJ42RRzOShdyzaax
+         AvWRxrzB9/WWWyrS27XdqiOM0xj/iJV8rAsxD2rD8ASIeK9EIcZhf+sjXUdUFcazJe4z
+         Zq/r8f9tk8t/VMHDuss9JjkX3fB8JPC7h3D/sooA4HQYUBE8derChO8FlpmhgzPIpwEk
+         f7tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=XXqaaiu8XcOEh/w0m5+ujekCyu2XVsl5TF8KZfGBrR0=;
-        b=2KcH3+HUyUzvQs8hDOrtufwcZHYoD5DwM9BsFMMM0hQ0gyHJEfuChuPZWEr2LuEytS
-         I/6kSOf+RWaWfFvhEb6CZjZgdSFNwjHsQzWjRSn21NE5x82kab/B3AkjKi1QnXiU+Yoz
-         TCDEFT16GoL4D6qIc893chthuyBOw9kJdJHB6uLRILJfqkdRFyAVn+etd/xW2r1x2dLG
-         UXPzVGDSDvdniuFX1xchrtD7mz6wYcTI+udfG/KpH15ia0WVBRiVRmpyoQEOFO0NMqnD
-         ApPB4yA376+TXkA/oYLTAfLBzDXOfDLtv13c4yfjpeWmiEWTfitVaHb3SbsGsKKlcZtr
-         ewxA==
-X-Gm-Message-State: AFqh2krW0ZyJWdp55zVpzyBo7eWMzUzeSHWGQE1Q/NxfmWBaGtVICGWV
-        fpnAT7pIFnHtzfFesnrzrpEQLg==
-X-Google-Smtp-Source: AMrXdXuhx5GwrYDDdFGgX1pXhJBJ9MEQAVy0Yi+kChQnWQd1wGb8EH5AP+N3bmVQdBHyQiES+HIl7w==
-X-Received: by 2002:a05:6000:1006:b0:24f:5890:616b with SMTP id a6-20020a056000100600b0024f5890616bmr32418689wrx.56.1674564445728;
-        Tue, 24 Jan 2023 04:47:25 -0800 (PST)
+        bh=bW3g+f1jFOh6Xbc2Yz4xv9Ez8/6bfoPw3+sQ1Y19h5s=;
+        b=VvQ8TEmscRuAXB0FXGgOK8Vu40X6hFwjAbZB2xD3GVlbkKX3J1iSIEbxiqBarJ9qVi
+         p1KOoGd+TbGNFgSg6BUjiZ5zIOYWyi12+LlOQ9SXlM9oJ3CYQDPqppUy8EdOfWpAk6X/
+         LO11ULeLzIB2fLvrgQ9ZbPVlJU3wg7WzPPUbcmCCE9lnFRvkhDbtdi6AuQfvgN3Bs6n3
+         bg1phGUmq8+Oq+9zdngKlxBe2fIm6xxcLNMRi7yWj9Orcy/mcI+Tdry7kcb/2oJiTkxw
+         Zyk07cl2aSa3cdXEgWH0pd0DJhasW14f8M2kFVKjufRaVnILpdFLv+iKS/VZ4aIDNVwh
+         kFLg==
+X-Gm-Message-State: AFqh2koB2CZjlbYSTsZ97qjIVxHjb9stAgFJUnbQajmbBO7mdttOLmgA
+        mDxOvs1piWU2NrHvOPhqHCgVSg==
+X-Google-Smtp-Source: AMrXdXtiEzdiF5TNoUEQ0vtlT1+QUG6yOByUtltYok26sIp2wVLnX3FJA8BG+9hShKQu9FG9zjoPkQ==
+X-Received: by 2002:a5d:6b01:0:b0:2bd:fd81:b503 with SMTP id v1-20020a5d6b01000000b002bdfd81b503mr25784430wrw.1.1674564447469;
+        Tue, 24 Jan 2023 04:47:27 -0800 (PST)
 Received: from hackbox.lan ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id a5-20020a5d5705000000b002bdbde1d3absm1766840wrv.78.2023.01.24.04.47.24
+        by smtp.gmail.com with ESMTPSA id a5-20020a5d5705000000b002bdbde1d3absm1766840wrv.78.2023.01.24.04.47.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Jan 2023 04:47:25 -0800 (PST)
+        Tue, 24 Jan 2023 04:47:26 -0800 (PST)
 From:   Abel Vesa <abel.vesa@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -68,9 +68,9 @@ Cc:     linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         linux-phy@lists.infradead.org,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH v5 03/12] phy: qcom-qmp: pcs: Add v6.20 register offsets
-Date:   Tue, 24 Jan 2023 14:47:05 +0200
-Message-Id: <20230124124714.3087948-4-abel.vesa@linaro.org>
+Subject: [PATCH v5 04/12] phy: qcom-qmp: pcs-pcie: Add v6 register offsets
+Date:   Tue, 24 Jan 2023 14:47:06 +0200
+Message-Id: <20230124124714.3087948-5-abel.vesa@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20230124124714.3087948-1-abel.vesa@linaro.org>
 References: <20230124124714.3087948-1-abel.vesa@linaro.org>
@@ -86,8 +86,9 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The new SM8550 SoC bumps up the HW version of QMP phy to v6.20 for
-PCIE g4x2. Add the new PCS offsets in a dedicated header file.
+The new SM8550 SoC bumps up the HW version of QMP phy to v6 for USB,
+UFS and PCIE g3x2. Add the new PCS PCIE specific offsets in a dedicated
+header file.
 
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
@@ -97,7 +98,7 @@ This patchset relies on the following patchset:
 https://lore.kernel.org/all/20230117224148.1914627-1-abel.vesa@linaro.org/
 
 The v4 of this patch is:
-https://lore.kernel.org/all/20230119140453.3942340-4-abel.vesa@linaro.org/
+https://lore.kernel.org/all/20230119140453.3942340-5-abel.vesa@linaro.org/
 
 Changes since v4:
  * none
@@ -112,48 +113,44 @@ Changes since v1:
  * split all the offsets into separate patches, like Vinod suggested
 
 
- drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6_20.h | 18 ++++++++++++++++++
- drivers/phy/qualcomm/phy-qcom-qmp.h           |  2 ++
- 2 files changed, 20 insertions(+)
- create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6_20.h
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c        |  1 +
+ drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v6.h | 15 +++++++++++++++
+ 2 files changed, 16 insertions(+)
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v6.h
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6_20.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6_20.h
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+index 21727e90fad1..d4ca38f31e3f 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+@@ -29,6 +29,7 @@
+ #include "phy-qcom-qmp-pcs-pcie-v4_20.h"
+ #include "phy-qcom-qmp-pcs-pcie-v5.h"
+ #include "phy-qcom-qmp-pcs-pcie-v5_20.h"
++#include "phy-qcom-qmp-pcs-pcie-v6.h"
+ #include "phy-qcom-qmp-pcie-qhp.h"
+ 
+ /* QPHY_SW_RESET bit */
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v6.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v6.h
 new file mode 100644
-index 000000000000..9c3f1e4950e6
+index 000000000000..91e70002eb47
 --- /dev/null
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6_20.h
-@@ -0,0 +1,18 @@
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v6.h
+@@ -0,0 +1,15 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
 + * Copyright (c) 2023, Linaro Limited
 + */
 +
-+#ifndef QCOM_PHY_QMP_PCS_V6_20_H_
-+#define QCOM_PHY_QMP_PCS_V6_20_H_
++#ifndef QCOM_PHY_QMP_PCS_PCIE_V6_H_
++#define QCOM_PHY_QMP_PCS_PCIE_V6_H_
 +
-+/* Only for QMP V6_20 PHY - USB/PCIe PCS registers */
-+#define QPHY_V6_20_PCS_G3S2_PRE_GAIN			0x178
-+#define QPHY_V6_20_PCS_RX_SIGDET_LVL			0x190
-+#define QPHY_V6_20_PCS_COM_ELECIDLE_DLY_SEL		0x1b8
-+#define QPHY_V6_20_PCS_TX_RX_CONFIG1			0x1dc
-+#define QPHY_V6_20_PCS_TX_RX_CONFIG2			0x1e0
-+#define QPHY_V6_20_PCS_EQ_CONFIG4			0x1f8
-+#define QPHY_V6_20_PCS_EQ_CONFIG5			0x1fc
++/* Only for QMP V6 PHY - PCIE have different offsets than V5 */
++#define QPHY_PCIE_V6_PCS_PCIE_POWER_STATE_CONFIG2	0x0c
++#define QPHY_PCIE_V6_PCS_PCIE_POWER_STATE_CONFIG4	0x14
++#define QPHY_PCIE_V6_PCS_PCIE_ENDPOINT_REFCLK_DRIVE	0x20
++#define QPHY_PCIE_V6_PCS_PCIE_OSC_DTCT_ACTIONS		0x94
 +
 +#endif
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.h b/drivers/phy/qualcomm/phy-qcom-qmp.h
-index 80e3b5c860b6..760de4c76e5b 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp.h
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.h
-@@ -40,6 +40,8 @@
- 
- #include "phy-qcom-qmp-pcs-v6.h"
- 
-+#include "phy-qcom-qmp-pcs-v6_20.h"
-+
- /* Only for QMP V3 & V4 PHY - DP COM registers */
- #define QPHY_V3_DP_COM_PHY_MODE_CTRL			0x00
- #define QPHY_V3_DP_COM_SW_RESET				0x04
 -- 
 2.34.1
 
