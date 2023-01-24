@@ -2,84 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 518CE679BEE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 15:33:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 68A5C679C6F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 15:49:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234951AbjAXOdB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Jan 2023 09:33:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44628 "EHLO
+        id S235024AbjAXOtH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Jan 2023 09:49:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234957AbjAXOc5 (ORCPT
+        with ESMTP id S234995AbjAXOsh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Jan 2023 09:32:57 -0500
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EDBE26B9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 06:32:44 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id d4-20020a05600c3ac400b003db1de2aef0so11081008wms.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 06:32:44 -0800 (PST)
+        Tue, 24 Jan 2023 09:48:37 -0500
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04B1944BDC
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 06:48:35 -0800 (PST)
+Received: by mail-ej1-x631.google.com with SMTP id u19so39601638ejm.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 06:48:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=XDiS1iCUboVrRCsKlm7Fzmy1FXXwzKYsp25Aj0Yy6MQ=;
-        b=vPtvZdOa87UVy/r+4SHu0OZoqhQC1mbPBb1lk1SIuBgnt2zuSIjtzfW4NGIBVD0H84
-         6v8OACkHlDBy+yHF76OayE3+j6SqJAwx+1qYg3fVlGn5zZw1ANGhqs6J8n4Bs2maVU6a
-         dihaM2KSVX0WTV5KVTEC0B6r/29kp/MISeR0nu9kJSL4oqKNr5oAVeZchM/7wiGLTcqX
-         ZcgkldwnH3eNvfXnqndagRUz5izEsxyOZVEDiaHGAcCdSKXfOAdahbU9acfaitLVdEVB
-         UcWJqZu3gIHfSC7nzXPs/kjTfySZtzfSIBJ3VL1mJHkDB4GHL70a7jdKxbNq0C5OtcnU
-         ObJQ==
+        d=fairphone.com; s=fair;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zLmM/FCAEjLU2FdJ9A80pZJUuYCaWow19JPmu2luiqc=;
+        b=A1Q9UxdZZRYEsGB1//OQ5e21lf6Jd3C7Xgykqn+gE4C9RdaeoSzkZZhsE459oSrhZz
+         qe/DdeXCjiCUASPkO9FM7DnXQJTEvFg6bJP9sacrYBSol2CuxQ3zHTG/ufUR2iIQGHRu
+         kdk+eBPCfP0qvY7J9DDNabUaimGEFGZ0EQ4iO2gDHawsp/8bEtglFtSB4hi+mne4oCT/
+         wXr7BnpDogZ4GkECKHeukLdKFMVDiBd7kpDq5BkTAR6sd4q5R9P1oKtEPqsneGXpla2G
+         wy3XeQpl9XGmQ/SOGXZ/46qZ61tMTBwDz9LJW3rGA85pMCx8H4iK0q31XSxIJuiUwX4h
+         27wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XDiS1iCUboVrRCsKlm7Fzmy1FXXwzKYsp25Aj0Yy6MQ=;
-        b=zolnW8PSm7E3HvUGx8LOmweka8nyDjYUrd1+WYjSb5MVtbiWr98sjYCEKSOhl8BgQs
-         OFHm79IcAVRTFTaAqzd6maW+UEJaq5fSvRxH8uSvctLsqABqMSWU7ZXF4OuDsMetkYa9
-         ioi+2hCPXcHtmlPndjmBK/7Fbj9xyj3wqlCl5SBDvI0SxWRX3PBky1Irz5OwLKAaiKOj
-         HQN5LnbG8CksFOFpZ6IQ8xC+W9fJ3BVTIThc03hYHbHEV/ZovhSmRihI0QbAs+aSo3g+
-         /mWJyizQwFzAYfUZy6M8JOgnvcqyo8t25CfbQm/MbP7jeILv4XkJLzhlSq+Ll+wUdyjl
-         cCWA==
-X-Gm-Message-State: AFqh2kodZj75ZtTydQUtqbrpG1y0YaqnWi0Osh1F5MiWDe87n1ExGNo3
-        2iDD4ZQOuUM0/rYDDZZEEbhplQ==
-X-Google-Smtp-Source: AMrXdXsctwTFCtiWVY6Ey4pL/EArJw4xmGNT7B2kGRBsUfNDt8LEAZCPcupBoBqTG2mCKoR9qHLQAg==
-X-Received: by 2002:a1c:4b09:0:b0:3db:f0a:8726 with SMTP id y9-20020a1c4b09000000b003db0f0a8726mr25144788wma.28.1674570762789;
-        Tue, 24 Jan 2023 06:32:42 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id o6-20020a05600c378600b003d9fba3c7a4sm13542158wmr.16.2023.01.24.06.32.39
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=zLmM/FCAEjLU2FdJ9A80pZJUuYCaWow19JPmu2luiqc=;
+        b=dyW3lpjJpvR2YmF2Lb3KbDXUprRxryWhc5tzzoO16UtT6Priom5cNOtjq9ttmitUbP
+         fCw/mAFIQ67vpesik44vfWqkiT9Xoho+c3nMSMbaG3hV+oL6vuQsf0zBKyruwW2L+QcV
+         FTREbmsK/Puu0a9M7ECDkZIAkSVnFCAXKH5/KDX9YGhpSAR7F530vKRCWO9tmcmacewV
+         e3ozXpiPEi7XaI4V+w6zYyZuXDjqdUUdQMsVuNNyQ3MXMvszI3DNeUZ8eZ0BBK5nRmDr
+         9GjoPEw1jqfZjNQF5SljQeTLV3xfD55ZH+8N1xqEX0fyjYTS8vDVPzJ5GivyNAR1GZK/
+         jmYw==
+X-Gm-Message-State: AFqh2krdayogC3cRp0wQr68NMzV1LXneM/j3m9d3a+mUQvHKgosP4e0H
+        CDSul+nM8vSZ54KaXpveITydLA==
+X-Google-Smtp-Source: AMrXdXsVvOMxuAPW5wRe6WtIgVighYVElOSLGxSpWFMYJgSUBYhgStGKmiPWAaWfnFO+qMDlKvfAaA==
+X-Received: by 2002:a17:907:2982:b0:7c1:23f2:c052 with SMTP id eu2-20020a170907298200b007c123f2c052mr20541935ejc.45.1674571713476;
+        Tue, 24 Jan 2023 06:48:33 -0800 (PST)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id l12-20020a170906078c00b0079800b8173asm983498ejc.158.2023.01.24.06.48.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Jan 2023 06:32:42 -0800 (PST)
-Message-ID: <5331527f-a96c-1c1b-dcf5-8f7e5957814d@linaro.org>
-Date:   Tue, 24 Jan 2023 15:32:37 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH V1 0/8] Add minimal boot support for IPQ9574
-Content-Language: en-US
-To:     devi priya <quic_devipriy@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
-        sboyd@kernel.org, ulf.hansson@linaro.org, linus.walleij@linaro.org,
-        catalin.marinas@arm.com, will@kernel.org, p.zabel@pengutronix.de,
-        shawnguo@kernel.org, arnd@arndb.de, marcel.ziswiler@toradex.com,
-        dmitry.baryshkov@linaro.org, nfraprado@collabora.com,
-        broonie@kernel.org, tdas@codeaurora.org, bhupesh.sharma@linaro.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
-        quic_poovendh@quicinc.com
-References: <20230124141541.8290-1-quic_devipriy@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230124141541.8290-1-quic_devipriy@quicinc.com>
+        Tue, 24 Jan 2023 06:48:33 -0800 (PST)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Date:   Tue, 24 Jan 2023 15:48:32 +0100
+Message-Id: <CQ0I4ONEI6J4.3KWS1KBE7RTKD@otso>
+Subject: Re: [PATCH v2 2/4] arm64: dts: qcom: sm6350: Add camera clock
+ controller
+From:   "Luca Weiss" <luca.weiss@fairphone.com>
+To:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        "Andy Gross" <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        "Loic Poulain" <loic.poulain@linaro.org>,
+        "Robert Foss" <rfoss@kernel.org>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>
+Cc:     <~postmarketos/upstreaming@lists.sr.ht>,
+        <phone-devel@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+X-Mailer: aerc 0.14.0
+References: <20221213-sm6350-cci-v2-0-15c2c14c34bb@fairphone.com>
+ <20221213-sm6350-cci-v2-2-15c2c14c34bb@fairphone.com>
+ <e5ff49d4-45c7-8c4a-d624-d8f7cc9ce2cb@linaro.org>
+In-Reply-To: <e5ff49d4-45c7-8c4a-d624-d8f7cc9ce2cb@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -88,20 +85,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/01/2023 15:15, devi priya wrote:
-> The IPQ9574 is Qualcomm's 802.11ax SoC for Routers,
-> Gateways and Access Points.
-> 
-> This series adds minimal board boot support for ipq9574-al02-c7 board
-> 
-> [V1]
+On Fri Jan 20, 2023 at 5:49 PM CET, Bryan O'Donoghue wrote:
+> On 20/01/2023 13:13, Luca Weiss wrote:
+> > +		camcc: clock-controller@ad00000 {
+> > +			compatible =3D "qcom,sm6350-camcc";
+> > +			reg =3D <0 0x0ad00000 0 0x16000>;
+> > +			clocks =3D <&rpmhcc RPMH_CXO_CLK>;
+> > +			#clock-cells =3D <1>;
+> > +			#reset-cells =3D <1>;
+> > +			#power-domain-cells =3D <1>;
+> > +		};
+>
+> Should you include
+>
+> required-opps =3D <&rpmhpd_opp_low_svs>;
+>
+> ?
 
-You already sent a v1. This should be v2.
+I don't know, it works without. But doesn't this property not just
+affect power-domains? I haven't passed any here.
 
-> 	Fixed all the review comments
-
-That's not specific enough.
-
-Best regards,
-Krzysztof
+>
+> ---
+> bod
 
