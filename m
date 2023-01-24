@@ -2,110 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 68A5C679C6F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 15:49:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DB717679C90
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 15:52:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235024AbjAXOtH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Jan 2023 09:49:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32826 "EHLO
+        id S234994AbjAXOwU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Jan 2023 09:52:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234995AbjAXOsh (ORCPT
+        with ESMTP id S235079AbjAXOwF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Jan 2023 09:48:37 -0500
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04B1944BDC
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 06:48:35 -0800 (PST)
-Received: by mail-ej1-x631.google.com with SMTP id u19so39601638ejm.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 06:48:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zLmM/FCAEjLU2FdJ9A80pZJUuYCaWow19JPmu2luiqc=;
-        b=A1Q9UxdZZRYEsGB1//OQ5e21lf6Jd3C7Xgykqn+gE4C9RdaeoSzkZZhsE459oSrhZz
-         qe/DdeXCjiCUASPkO9FM7DnXQJTEvFg6bJP9sacrYBSol2CuxQ3zHTG/ufUR2iIQGHRu
-         kdk+eBPCfP0qvY7J9DDNabUaimGEFGZ0EQ4iO2gDHawsp/8bEtglFtSB4hi+mne4oCT/
-         wXr7BnpDogZ4GkECKHeukLdKFMVDiBd7kpDq5BkTAR6sd4q5R9P1oKtEPqsneGXpla2G
-         wy3XeQpl9XGmQ/SOGXZ/46qZ61tMTBwDz9LJW3rGA85pMCx8H4iK0q31XSxIJuiUwX4h
-         27wg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=zLmM/FCAEjLU2FdJ9A80pZJUuYCaWow19JPmu2luiqc=;
-        b=dyW3lpjJpvR2YmF2Lb3KbDXUprRxryWhc5tzzoO16UtT6Priom5cNOtjq9ttmitUbP
-         fCw/mAFIQ67vpesik44vfWqkiT9Xoho+c3nMSMbaG3hV+oL6vuQsf0zBKyruwW2L+QcV
-         FTREbmsK/Puu0a9M7ECDkZIAkSVnFCAXKH5/KDX9YGhpSAR7F530vKRCWO9tmcmacewV
-         e3ozXpiPEi7XaI4V+w6zYyZuXDjqdUUdQMsVuNNyQ3MXMvszI3DNeUZ8eZ0BBK5nRmDr
-         9GjoPEw1jqfZjNQF5SljQeTLV3xfD55ZH+8N1xqEX0fyjYTS8vDVPzJ5GivyNAR1GZK/
-         jmYw==
-X-Gm-Message-State: AFqh2krdayogC3cRp0wQr68NMzV1LXneM/j3m9d3a+mUQvHKgosP4e0H
-        CDSul+nM8vSZ54KaXpveITydLA==
-X-Google-Smtp-Source: AMrXdXsVvOMxuAPW5wRe6WtIgVighYVElOSLGxSpWFMYJgSUBYhgStGKmiPWAaWfnFO+qMDlKvfAaA==
-X-Received: by 2002:a17:907:2982:b0:7c1:23f2:c052 with SMTP id eu2-20020a170907298200b007c123f2c052mr20541935ejc.45.1674571713476;
-        Tue, 24 Jan 2023 06:48:33 -0800 (PST)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id l12-20020a170906078c00b0079800b8173asm983498ejc.158.2023.01.24.06.48.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Jan 2023 06:48:33 -0800 (PST)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Tue, 24 Jan 2023 15:48:32 +0100
-Message-Id: <CQ0I4ONEI6J4.3KWS1KBE7RTKD@otso>
-Subject: Re: [PATCH v2 2/4] arm64: dts: qcom: sm6350: Add camera clock
- controller
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
-        "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        "Loic Poulain" <loic.poulain@linaro.org>,
-        "Robert Foss" <rfoss@kernel.org>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>
-Cc:     <~postmarketos/upstreaming@lists.sr.ht>,
-        <phone-devel@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-X-Mailer: aerc 0.14.0
-References: <20221213-sm6350-cci-v2-0-15c2c14c34bb@fairphone.com>
- <20221213-sm6350-cci-v2-2-15c2c14c34bb@fairphone.com>
- <e5ff49d4-45c7-8c4a-d624-d8f7cc9ce2cb@linaro.org>
-In-Reply-To: <e5ff49d4-45c7-8c4a-d624-d8f7cc9ce2cb@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Tue, 24 Jan 2023 09:52:05 -0500
+Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EB664B770
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 06:51:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1674571916; x=1706107916;
+  h=from:to:cc:subject:in-reply-to:references:date:
+   message-id:mime-version;
+  bh=RA+DKNp+d4oq6n7db0SeDuyhdEEeXCsrsOwjUflRiNM=;
+  b=ZPPJG6CJudb4CkPxqndXhi0DFBgAzUUR8EFkl6+VJSzIeOfNAuR0rLlg
+   jWkLGWzK50QRyT+xgDGz0LocZPG8H8o7ecJ6JYvcXib6AeSX7gVAJDhOr
+   e3kmoM3la/Vb3BrQROW2H9SV2MwhnE5PrZDh/tLPJKHA5fV/RhzOcI6qr
+   ofEOIbNVKCJ1/aFJJ9ZDu9Yi74u6arp7ET/ys1Q4X6KA8eHTWnjSHNCsQ
+   yYACx0bEv+WvJuuvUz77mmmzps4zRJgWrGdhW4Cb+XHXecNWg/Z2ZdB5e
+   oWqmb+Zg2eysB83T3c2gKqAcIiQWFHRg+VZn7sG4a2TND4hfiSn8m8/7X
+   A==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10599"; a="388653256"
+X-IronPort-AV: E=Sophos;i="5.97,242,1669104000"; 
+   d="scan'208";a="388653256"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jan 2023 06:51:55 -0800
+X-IronPort-AV: E=McAfee;i="6500,9779,10599"; a="770338025"
+X-IronPort-AV: E=Sophos;i="5.97,242,1669104000"; 
+   d="scan'208";a="770338025"
+Received: from pesir-mobl.ger.corp.intel.com (HELO localhost) ([10.252.57.197])
+  by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jan 2023 06:51:47 -0800
+From:   Jani Nikula <jani.nikula@intel.com>
+To:     kernel test robot <lkp@intel.com>, dri-devel@lists.freedesktop.org
+Cc:     oe-kbuild-all@lists.linux.dev, Emma Anholt <emma@anholt.net>,
+        amd-gfx@lists.freedesktop.org,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Alain Volmat <alain.volmat@foss.st.com>, Pan@freedesktop.org,
+        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+        Jonas Karlman <jonas@kwiboo.se>, linux-arm-msm@vger.kernel.org,
+        intel-gfx@lists.freedesktop.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Inki Dae <inki.dae@samsung.com>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        linux-mediatek@lists.infradead.org,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Xinhui <Xinhui.Pan@amd.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        freedreno@lists.freedesktop.org,
+        Christian =?utf-8?Q?K=C3=B6nig?= <christian.koenig@amd.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
+Subject: Re: [Intel-gfx] [PATCH 3/3] drm/connector: move ELD and video/audio
+ latencies to display info
+In-Reply-To: <202301242049.eKzx7RzZ-lkp@intel.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+References: <20230124094154.2282778-3-jani.nikula@intel.com>
+ <202301242049.eKzx7RzZ-lkp@intel.com>
+Date:   Tue, 24 Jan 2023 16:51:45 +0200
+Message-ID: <87h6wg6l4u.fsf@intel.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri Jan 20, 2023 at 5:49 PM CET, Bryan O'Donoghue wrote:
-> On 20/01/2023 13:13, Luca Weiss wrote:
-> > +		camcc: clock-controller@ad00000 {
-> > +			compatible =3D "qcom,sm6350-camcc";
-> > +			reg =3D <0 0x0ad00000 0 0x16000>;
-> > +			clocks =3D <&rpmhcc RPMH_CXO_CLK>;
-> > +			#clock-cells =3D <1>;
-> > +			#reset-cells =3D <1>;
-> > +			#power-domain-cells =3D <1>;
-> > +		};
->
-> Should you include
->
-> required-opps =3D <&rpmhpd_opp_low_svs>;
->
-> ?
 
-I don't know, it works without. But doesn't this property not just
-affect power-domains? I haven't passed any here.
+Obviously, I need to still work on this. *looks for brown paper bag*
 
+On Tue, 24 Jan 2023, kernel test robot <lkp@intel.com> wrote:
+> Hi Jani,
 >
-> ---
-> bod
+> I love your patch! Yet something to improve:
+>
+> [auto build test ERROR on drm-tip/drm-tip]
+>
+> url:    https://github.com/intel-lab-lkp/linux/commits/Jani-Nikula/drm-connector-move-HDR-sink-metadata-to-display-info/20230124-174322
+> base:   git://anongit.freedesktop.org/drm/drm-tip drm-tip
+> patch link:    https://lore.kernel.org/r/20230124094154.2282778-3-jani.nikula%40intel.com
+> patch subject: [Intel-gfx] [PATCH 3/3] drm/connector: move ELD and video/audio latencies to display info
+> config: arm-defconfig (https://download.01.org/0day-ci/archive/20230124/202301242049.eKzx7RzZ-lkp@intel.com/config)
+> compiler: arm-linux-gnueabi-gcc (GCC) 12.1.0
+> reproduce (this is a W=1 build):
+>         wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+>         chmod +x ~/bin/make.cross
+>         # https://github.com/intel-lab-lkp/linux/commit/1e92b5478cfc1b0df66153652111117e9548b0d5
+>         git remote add linux-review https://github.com/intel-lab-lkp/linux
+>         git fetch --no-tags linux-review Jani-Nikula/drm-connector-move-HDR-sink-metadata-to-display-info/20230124-174322
+>         git checkout 1e92b5478cfc1b0df66153652111117e9548b0d5
+>         # save the config file
+>         mkdir build_dir && cp config build_dir/.config
+>         COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arm olddefconfig
+>         COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash drivers/gpu/
+>
+> If you fix the issue, kindly add following tag where applicable
+> | Reported-by: kernel test robot <lkp@intel.com>
+>
+> All errors (new ones prefixed by >>):
+>
+>    drivers/gpu/drm/tegra/hdmi.c: In function 'tegra_hdmi_write_eld':
+>>> drivers/gpu/drm/tegra/hdmi.c:620:60: error: 'struct drm_connector' has no member named 'eld'
+>      620 |         size_t length = drm_eld_size(hdmi->output.connector.eld), i;
+>          |                                                            ^
+>    drivers/gpu/drm/tegra/hdmi.c:624:72: error: 'struct drm_connector' has no member named 'eld'
+>      624 |                 tegra_hdmi_writel(hdmi, i << 8 | hdmi->output.connector.eld[i],
+>          |                                                                        ^
+> --
+>    drivers/gpu/drm/tegra/sor.c: In function 'tegra_sor_write_eld':
+>>> drivers/gpu/drm/tegra/sor.c:1951:59: error: 'struct drm_connector' has no member named 'eld'
+>     1951 |         size_t length = drm_eld_size(sor->output.connector.eld), i;
+>          |                                                           ^
+>    drivers/gpu/drm/tegra/sor.c:1954:69: error: 'struct drm_connector' has no member named 'eld'
+>     1954 |                 tegra_sor_writel(sor, i << 8 | sor->output.connector.eld[i],
+>          |                                                                     ^
+>
+>
+> vim +620 drivers/gpu/drm/tegra/hdmi.c
+>
+> edec4af4c3d6d2 Thierry Reding 2012-11-15  617  
+> 5234549b93aa2a Thierry Reding 2015-08-07  618  static void tegra_hdmi_write_eld(struct tegra_hdmi *hdmi)
+> 5234549b93aa2a Thierry Reding 2015-08-07  619  {
+> 5234549b93aa2a Thierry Reding 2015-08-07 @620  	size_t length = drm_eld_size(hdmi->output.connector.eld), i;
+> 5234549b93aa2a Thierry Reding 2015-08-07  621  	u32 value;
+> edec4af4c3d6d2 Thierry Reding 2012-11-15  622  
+> 5234549b93aa2a Thierry Reding 2015-08-07  623  	for (i = 0; i < length; i++)
+> 5234549b93aa2a Thierry Reding 2015-08-07  624  		tegra_hdmi_writel(hdmi, i << 8 | hdmi->output.connector.eld[i],
+> 5234549b93aa2a Thierry Reding 2015-08-07  625  				  HDMI_NV_PDISP_SOR_AUDIO_HDA_ELD_BUFWR);
+> edec4af4c3d6d2 Thierry Reding 2012-11-15  626  
+> 5234549b93aa2a Thierry Reding 2015-08-07  627  	/*
+> 5234549b93aa2a Thierry Reding 2015-08-07  628  	 * The HDA codec will always report an ELD buffer size of 96 bytes and
+> 5234549b93aa2a Thierry Reding 2015-08-07  629  	 * the HDA codec driver will check that each byte read from the buffer
+> 5234549b93aa2a Thierry Reding 2015-08-07  630  	 * is valid. Therefore every byte must be written, even if no 96 bytes
+> 5234549b93aa2a Thierry Reding 2015-08-07  631  	 * were parsed from EDID.
+> 5234549b93aa2a Thierry Reding 2015-08-07  632  	 */
+> 5234549b93aa2a Thierry Reding 2015-08-07  633  	for (i = length; i < HDMI_ELD_BUFFER_SIZE; i++)
+> 5234549b93aa2a Thierry Reding 2015-08-07  634  		tegra_hdmi_writel(hdmi, i << 8 | 0,
+> 5234549b93aa2a Thierry Reding 2015-08-07  635  				  HDMI_NV_PDISP_SOR_AUDIO_HDA_ELD_BUFWR);
+> 5234549b93aa2a Thierry Reding 2015-08-07  636  
+> 5234549b93aa2a Thierry Reding 2015-08-07  637  	value = SOR_AUDIO_HDA_PRESENSE_VALID | SOR_AUDIO_HDA_PRESENSE_PRESENT;
+> 5234549b93aa2a Thierry Reding 2015-08-07  638  	tegra_hdmi_writel(hdmi, value, HDMI_NV_PDISP_SOR_AUDIO_HDA_PRESENSE);
+> edec4af4c3d6d2 Thierry Reding 2012-11-15  639  }
+> edec4af4c3d6d2 Thierry Reding 2012-11-15  640  
 
+-- 
+Jani Nikula, Intel Open Source Graphics Center
