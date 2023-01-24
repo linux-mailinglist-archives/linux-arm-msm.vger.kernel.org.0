@@ -2,70 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 630B867930B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 09:26:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 16DD6679312
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 09:27:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232166AbjAXI0S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Jan 2023 03:26:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49438 "EHLO
+        id S231593AbjAXI1U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Jan 2023 03:27:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232907AbjAXI0R (ORCPT
+        with ESMTP id S232512AbjAXI1S (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Jan 2023 03:26:17 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF6A78A62
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 00:26:14 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id w11so2148558edv.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 00:26:14 -0800 (PST)
+        Tue, 24 Jan 2023 03:27:18 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C89F2A5F3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 00:27:12 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id iv8-20020a05600c548800b003db04a0a46bso669432wmb.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 00:27:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=2e7HEaZzLpkgKJ+mpx17xzcEDMDD/CmZJqe3c3ax7l0=;
-        b=zncYDCgpGkMatClGm2DMi0c0OdVcLDIdyt7Rb9+a8egPe9nKd5uiikyemO8vz+bfmB
-         MRPOX3cmhv3RPVHso+TAS6TGx4StMby9I+rUgSgSdmNgKT5Bu7Plj2aTZuXe/G6qJDo2
-         PdzSVUP4Tb8Yy3YhDaqgb3xOfjH5NRGzuZ693taFd9cp1UHCKtOYffDhVD51TxOxVCam
-         0V3SJOEUEPz1BXoNVDwiW0nZr+5pLlbwVB4+UUjOn8DF+FdHa62vDoI2AyUOttcEU2r5
-         yo+jAqoE+tumTM8Hu0xcYUo2N7F4cDEzhbZcFCRszTe6mIm8ySrNBALs4B415aOnQZo1
-         D6Ng==
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:reply-to:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=l32ibYG6p5bDrGsHgZxAaD4UChPnplKR4dXx/jYKRDA=;
+        b=JKNqKuqs+62LV2uGr0H76AeKHaofNBUD3PD06z8T8M+IGrZpO97cTq/Sl1NUFaz+PD
+         ki9FBk2C52GVGSlVVsImhjy+JOl2tkWYHuk0F9VeHN9+hqhv7qq16tjAmZMfzYawXWMF
+         8N0Xwa9HRXS2UcF3yYEwNj1W9SnijTva0mZ1YTetaomk7o6lg3zmaJWQpSNkh0JZW6eN
+         A5NxR0lY0bxfPyYvofnXfTk0AE4UQRT700951Mc/ZCoSB7m4W3So4PHGl88saJWEs2L4
+         C48h+JK/Rg8f6jeQwzuAdmlEbM0b+4FKpzSgNqUy1kfoVjTEdDLyK2gdV2jo1NGLiY3t
+         JTJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2e7HEaZzLpkgKJ+mpx17xzcEDMDD/CmZJqe3c3ax7l0=;
-        b=kwQtrJxyg6rH33EP7XGX3+aNoF5xbJfzdQodc+xEypc9b2ZxfL4LP8KI5/U6jQneIQ
-         ybG7PBjlc2SD8H6LtNGCKLTKo4iSkrE6C3MkWWuuwuA0n7rQbm17wwTZECFC9elHACFe
-         TD6oZ1iKyWZkW1fbkgsJPxvPLl4B2T+pGd2HLPUtntNaYmVEUGt4oJ4puHdyiDyfGzyA
-         H/bChlv6cpEuGh7t4MgltAfAc1vZAFYApNV+euZTwUcHgYJZCuSLx6b1k13MbiOcx5Hj
-         DPuZYnxobY4rMS+4dt+rwb+RirDdxztnuTiEAQBAXa8vNl4TpyZyQCpXnnbJ+6e6eqQA
-         xIgw==
-X-Gm-Message-State: AFqh2koBx1HUB5s2PT4OiBXJF/0ZtfI4VZzQdPhNJuJ8GFB9Dnx91cV5
-        dywqOm7AJjcw8XpkYcDqVYO7BA==
-X-Google-Smtp-Source: AMrXdXvTlmdYJDkk7HNWHOpnCfo2eeTcCcUwQ4fhimZfI+UQoykA0RByBJDf74eFAZPIC7GmmB9kGw==
-X-Received: by 2002:aa7:c9ca:0:b0:49e:28c1:936c with SMTP id i10-20020aa7c9ca000000b0049e28c1936cmr26949737edt.26.1674548773533;
-        Tue, 24 Jan 2023 00:26:13 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id b23-20020a17090636d700b0086dd8f20a6asm561330ejc.77.2023.01.24.00.26.12
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:reply-to:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=l32ibYG6p5bDrGsHgZxAaD4UChPnplKR4dXx/jYKRDA=;
+        b=yi2xD47h0nTVvSN9yrVnbzP26Q+iqVNS/2Z7vOUhhmwSkMn0FpMCMM6XG+Sow+JqSo
+         CNI5/SIOAsKP7TioChxLPCTt+4ZSF++nlTrCuGqGnqwCLJ4lBOdPkrQ1MpjXk1fa6s0m
+         pOqjMk6936CWM61x3rP5k2qGWuk4dZ9WaIamQjYaLi5IsYY3NYL67TlgVxhQHWDP4I6K
+         vYlLsTajB+vUbHHzl+wIMfTR0KN2/UR6s+JpX5lePZuGkpmmfZh8/7ROwTikr9KqiQ/t
+         A6qjsxGnF/+GYL6DwyhQhtE1TAbwFujE80BVgKBOnZ894RrDnvjjQUk8EK80FnWgeLwe
+         wgyA==
+X-Gm-Message-State: AFqh2kowVB48TaBrBhXNJCtKkTBDH2tG3aXMCgMJc3zhe+tUcIlj3Tya
+        xHX4sJdqyybCGAsoTR0VtJXrNQ==
+X-Google-Smtp-Source: AMrXdXs8UXA8beQuN+9MpImN9RApvtnwpwlKVPL40j/+G59nG/CBvkp1LiNKNiClcIddqubyyyEagg==
+X-Received: by 2002:a05:600c:3d06:b0:3da:f945:2354 with SMTP id bh6-20020a05600c3d0600b003daf9452354mr27219855wmb.41.1674548831234;
+        Tue, 24 Jan 2023 00:27:11 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:ebd2:15b:f444:7985? ([2a01:e0a:982:cbb0:ebd2:15b:f444:7985])
+        by smtp.gmail.com with ESMTPSA id l18-20020adff492000000b00241d21d4652sm1308969wro.21.2023.01.24.00.27.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Jan 2023 00:26:12 -0800 (PST)
-Message-ID: <b8a3b544-daf9-a357-1ab8-236da345a413@linaro.org>
-Date:   Tue, 24 Jan 2023 10:26:11 +0200
+        Tue, 24 Jan 2023 00:27:10 -0800 (PST)
+Message-ID: <2e86f4a5-3612-590b-2845-629a667d926b@linaro.org>
+Date:   Tue, 24 Jan 2023 09:27:09 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH] drm/msm/mdp5: Add check for kzalloc
-Content-Language: en-GB
-To:     Jiasheng Jiang <jiasheng@iscas.ac.cn>, robdclark@gmail.com,
-        quic_abhinavk@quicinc.com, sean@poorly.run, airlied@gmail.com,
-        daniel@ffwll.ch, quic_jesszhan@quicinc.com,
-        ville.syrjala@linux.intel.com, yang.lee@linux.alibaba.com
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20221206074819.18134-1-jiasheng@iscas.ac.cn>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20221206074819.18134-1-jiasheng@iscas.ac.cn>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH] arm64: dts: qcom: sm8450: Fix DSIn PHY compatible
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     marijn.suijten@somainline.org, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230123200552.553181-1-konrad.dybcio@linaro.org>
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Organization: Linaro Developer Services
+In-Reply-To: <20230123200552.553181-1-konrad.dybcio@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -77,20 +81,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/12/2022 09:48, Jiasheng Jiang wrote:
-> As kzalloc may fail and return NULL pointer,
-> it should be better to check the return value
-> in order to avoid the NULL pointer dereference.
+On 23/01/2023 21:05, Konrad Dybcio wrote:
+> Use the correct compatible so that the driver can probe properly.
 > 
-> Fixes: 1cff7440a86e ("drm/msm: Convert to using __drm_atomic_helper_crtc_reset() for reset.")
-> Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+> Fixes: a6dd1206e45a ("arm64: dts: qcom: sm8450: add display hardware devices")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->   drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c | 5 ++++-
->   1 file changed, 4 insertions(+), 1 deletion(-)
+>   arch/arm64/boot/dts/qcom/sm8450.dtsi | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> index d66dcd8fe61f..8d85a3139849 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> @@ -2873,7 +2873,7 @@ opp-358000000 {
+>   			};
+>   
+>   			mdss_dsi0_phy: phy@ae94400 {
+> -				compatible = "qcom,dsi-phy-5nm-8450";
+> +				compatible = "qcom,sm8450-dsi-phy-5nm";
+>   				reg = <0 0x0ae94400 0 0x200>,
+>   				      <0 0x0ae94600 0 0x280>,
+>   				      <0 0x0ae94900 0 0x260>;
+> @@ -2946,7 +2946,7 @@ mdss_dsi1_out: endpoint {
+>   			};
+>   
+>   			mdss_dsi1_phy: phy@ae96400 {
+> -				compatible = "qcom,dsi-phy-5nm-8450";
+> +				compatible = "qcom,sm8450-dsi-phy-5nm";
+>   				reg = <0 0x0ae96400 0 0x200>,
+>   				      <0 0x0ae96600 0 0x280>,
+>   				      <0 0x0ae96900 0 0x260>;
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
--- 
-With best wishes
-Dmitry
-
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
