@@ -2,186 +2,384 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D77CA6792E2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 09:17:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C2E9E6792F2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 09:22:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231544AbjAXIRx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Jan 2023 03:17:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46262 "EHLO
+        id S232483AbjAXIW3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Jan 2023 03:22:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232459AbjAXIRv (ORCPT
+        with ESMTP id S229753AbjAXIW2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Jan 2023 03:17:51 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94BB4BB
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 00:17:49 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id c10-20020a05600c0a4a00b003db0636ff84so10316351wmq.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 00:17:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=OiP0gZn/cpqwNmZsHPi77/HmJt+0GSm02rEXJE0mZuc=;
-        b=rz5WOHaNNlWgEXLRbetKeX7R0dRN7zSC9YmNQarI9o4w7Tq5jxfXRqxTsxgHzpx4I9
-         0yCwad4pvGwH35vsywIACFAKq4+tmuXHMABvAo0ziD9anYJtCqDdCdcshYllGX+jL33S
-         V2jUHNwZjihkw5PkuVs6JSLbPqas8jVCHD1eRQgn0qmI9O5z3akmD8e0KxYGOkHPcExc
-         Fs2kH8M96BLXC3Qw6sek5qgvA/pZtumGefcPFbod9+08KQP1qc8bRANz9r4AuZ40tlvZ
-         UWZ75isPIPXvR1YDxyxT4wsID9oqc6K65nm1U6AzoDk60eiCoeQHwjb7C+rjvLNcASJE
-         as0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OiP0gZn/cpqwNmZsHPi77/HmJt+0GSm02rEXJE0mZuc=;
-        b=KngR2lt+VQhWlt8P14QXI4dDojbLd7zl5oQOMgWUn6N2jawcsEgr8+WSfN8VBe1ZLI
-         +wsf8LiLTxBfWO7iq/It9swKQwSZTLYCR8jDyEV1b+Qc/hX5tN1W+gZhN67jDEA/Gtjz
-         xKCx6gm2f3YRGjXlgts+Gqs6JZY1GAoFG1ZOQyz/yxpCP1evaCJgXr7yWxCLkrku6fm5
-         nBH5bBzxZAjzejHqhzgYoC/zImVoYwwLkJCqMKtjUwPSyI6i+lNKWRyM2ElIzkxeBkOV
-         mN0UqfpdmUjgXy1WhCiWYVXpXgIxXscnJWgVQSQlRoercTzDz0PaGfPjXdcWfarQfqUc
-         frZQ==
-X-Gm-Message-State: AFqh2kpfHZ+nghiX1zvWbzIUeqWoXwxQCKDyzFErkpT2OeJqsX/ANluk
-        zEob8/EihPWvCLxKhk6XSPuDZA==
-X-Google-Smtp-Source: AMrXdXunRvOxaqJzjCgh5gUlJhksZxNRxnNWUPvYFTObnizcuMzYRwgIcDkar5wVJKqfvWoZ4n/TQw==
-X-Received: by 2002:a1c:6a10:0:b0:3da:f665:5b66 with SMTP id f16-20020a1c6a10000000b003daf6655b66mr27262779wmc.6.1674548268129;
-        Tue, 24 Jan 2023 00:17:48 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id g16-20020adffc90000000b002882600e8a0sm1298395wrr.12.2023.01.24.00.17.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Jan 2023 00:17:47 -0800 (PST)
-Message-ID: <934be0a4-3639-5f72-cf54-b796b32df484@linaro.org>
-Date:   Tue, 24 Jan 2023 09:17:43 +0100
+        Tue, 24 Jan 2023 03:22:28 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4A4F3251C;
+        Tue, 24 Jan 2023 00:22:26 -0800 (PST)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30O7uqRp030838;
+        Tue, 24 Jan 2023 08:22:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=VvQWL+N8uOSRIOMAJeoRl11wo2LBIK6chT5eIU3Ghkk=;
+ b=pDdAzWj7DcEVElKY34mUcBQxJ1PgtaECq2/xC0IZ+rFIxjCe3+OZ8LCt5AdCHktyXqeu
+ +XAs6AmF5a+m8k3YTtQ1nOBPfT26wcDvln/3R8+yVd0/CjbsaIly8F/NYvrcIuytitr2
+ GNbtx8Ar/Gt6N4uWyYxLD/3s/xx0MzWgjNRdzrjBIn9SRTF6m500OMcRSiWl1srSfSl6
+ Erup2AATiyyPpRLuaQOPlH40SSdOS7x9auJd9doLsKeMGtR1m0xTJ3SNLDJFQ4kmFU0e
+ qYE76fenERviFeD8nm1X9VSRyFBymnmKhYKFHeWBVWOoK7MQH7dKBTSt0kt4povMhUsN Ww== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n89fm4q3p-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 24 Jan 2023 08:22:15 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30O8ME4F010481
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 24 Jan 2023 08:22:14 GMT
+Received: from [10.216.53.255] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 24 Jan
+ 2023 00:22:05 -0800
+Message-ID: <203602c9-265a-73cd-6fcd-b97620ec263c@quicinc.com>
+Date:   Tue, 24 Jan 2023 13:51:55 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH 2/2] spi: dt-bindings: cleanup examples - indentation,
- lowercase hex
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>
-Cc:     Mark Brown <broonie@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>,
-        =?UTF-8?Q?C=c3=a9dric_Le_Goat?= =?UTF-8?Q?er?= <clg@kaod.org>,
-        Joel Stanley <joel@jms.id.au>,
-        Andrew Jeffery <andrew@aj.id.au>,
-        Kamal Dasu <kdasu.kdev@gmail.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>, Han Xu <han.xu@nxp.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.0
+Subject: Re: [RFC v4 2/5] usb: dwc3: core: Refactor PHY logic to support
+ Multiport Controller
+To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
+        Andrew Halaney <ahalaney@redhat.com>
+CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Andy Gross" <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Serge Semin <fancer.lancer@gmail.com>,
-        Haibo Chen <haibo.chen@nxp.com>,
-        Yogesh Gaur <yogeshgaur.83@gmail.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Li-hao Kuo <lhjeff911@gmail.com>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        =?UTF-8?B?77+9ZWNraQ==?= <rafal@milecki.pl>,
-        Vaishnav Achath <vaishnav.a@ti.com>,
-        Parshuram Thombare <pthombar@cadence.com>,
-        Leilk Liu <leilk.liu@mediatek.com>,
-        Gabor Juhos <juhosg@openwrt.org>,
-        Bert Vermeulen <bert@biot.com>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Marek Vasut <marex@denx.de>,
-        Birger Koblitz <mail@birger-koblitz.de>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Anson Huang <Anson.Huang@nxp.com>,
-        Chris Packham <chris.packham@alliedtelesis.co.nz>,
-        Kuldeep Singh <singh.kuldeep87k@gmail.com>,
-        Pragnesh Patel <pragnesh.patel@sifive.com>,
-        Christophe Kerello <christophe.kerello@foss.st.com>,
-        Patrice Chotard <patrice.chotard@foss.st.com>,
-        Erwan Leray <erwan.leray@foss.st.com>,
-        Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-        linux-spi@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
-        linux-kernel@vger.kernel.org, linux-amlogic@lists.infradead.org,
-        linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
-        linux-mediatek@lists.infradead.org, linux-tegra@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org,
-        linux-riscv@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com
-References: <20230118173932.358153-1-krzysztof.kozlowski@linaro.org>
- <20230118173932.358153-2-krzysztof.kozlowski@linaro.org>
- <20230123201751.GA2450665-robh@kernel.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230123201751.GA2450665-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
+        <quic_ppratap@quicinc.com>, <quic_wcheng@quicinc.com>,
+        <quic_jackp@quicinc.com>, <quic_harshq@quicinc.com>
+References: <20230115114146.12628-1-quic_kriskura@quicinc.com>
+ <20230115114146.12628-3-quic_kriskura@quicinc.com>
+ <20230119220942.ja5gbo3t3fl63gpy@halaney-x13s>
+ <8f32c2e5-2743-1017-6a33-4849021c5287@quicinc.com>
+ <20230120143717.ikbcb6x7wl4yy5d7@halaney-x13s>
+ <84ad5269-dd48-32ef-1313-6241980834bc@quicinc.com>
+ <4afa3861-a18c-d547-5f71-16207ef6490f@quicinc.com>
+Content-Language: en-US
+From:   Shazad Hussain <quic_shazhuss@quicinc.com>
+In-Reply-To: <4afa3861-a18c-d547-5f71-16207ef6490f@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: zuxRpqRfFBDhAfrCTwQmkQd3t47OisnU
+X-Proofpoint-GUID: zuxRpqRfFBDhAfrCTwQmkQd3t47OisnU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-23_12,2023-01-23_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1011
+ malwarescore=0 bulkscore=0 phishscore=0 lowpriorityscore=0 mlxlogscore=999
+ mlxscore=0 priorityscore=1501 adultscore=0 suspectscore=0 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2301240075
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/01/2023 21:17, Rob Herring wrote:
-> On Wed, Jan 18, 2023 at 06:39:32PM +0100, Krzysztof Kozlowski wrote:
->> Cleanup examples:
->>  - use 4-space indentation (for cases when it is neither 4 not 2 space),
->>  - drop redundant blank lines,
->>  - use lowercase hex.
+
+
+On 1/20/2023 8:48 PM, Krishna Kurapati PSSNV wrote:
+> 
+> 
+> On 1/20/2023 8:43 PM, Krishna Kurapati PSSNV wrote:
 >>
->> No functional impact except adjusting to preferred coding style.
 >>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
->>  .../bindings/spi/amlogic,meson-gx-spicc.yaml  |  26 +--
->>  .../bindings/spi/amlogic,meson6-spifc.yaml    |  22 +--
->>  .../bindings/spi/aspeed,ast2600-fmc.yaml      |  24 +--
->>  .../bindings/spi/brcm,spi-bcm-qspi.yaml       | 156 +++++++++---------
->>  .../bindings/spi/cdns,qspi-nor.yaml           |   4 +-
->>  .../bindings/spi/nvidia,tegra210-quad.yaml    |  42 ++---
->>  .../bindings/spi/qcom,spi-qcom-qspi.yaml      |   1 -
->>  .../devicetree/bindings/spi/renesas,rspi.yaml |  22 +--
->>  .../bindings/spi/spi-sunplus-sp7021.yaml      |   4 +-
->>  .../devicetree/bindings/spi/st,stm32-spi.yaml |   1 -
->>  10 files changed, 150 insertions(+), 152 deletions(-)
+>> On 1/20/2023 8:07 PM, Andrew Halaney wrote:
+>>> On Fri, Jan 20, 2023 at 07:25:57AM +0530, Krishna Kurapati PSSNV wrote:
+>>>>
+>>>>
+>>>> On 1/20/2023 3:39 AM, Andrew Halaney wrote:
+>>>>> On Sun, Jan 15, 2023 at 05:11:43PM +0530, Krishna Kurapati wrote:
+>>>>>> Currently the DWC3 driver supports only single port controller
+>>>>>> which requires at most one HS and one SS PHY.
+>>>>>>
+>>>>>> But the DWC3 USB controller can be connected to multiple ports and
+>>>>>> each port can have their own PHYs. Each port of the multiport
+>>>>>> controller can either be HS+SS capable or HS only capable
+>>>>>> Proper quantification of them is required to modify GUSB2PHYCFG
+>>>>>> and GUSB3PIPECTL registers appropriately.
+>>>>>>
+>>>>>> Add support for detecting, obtaining and configuring phy's supported
+>>>>>> by a multiport controller and limit the max number of ports
+>>>>>> supported to 4.
+>>>>>>
+>>>>>> Signed-off-by: Harsh Agarwal <quic_harshq@quicinc.com>
+>>>>>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+>>>>>> ---
+>>>>>>    drivers/usb/dwc3/core.c | 304 
+>>>>>> +++++++++++++++++++++++++++++-----------
+>>>>>>    drivers/usb/dwc3/core.h |  15 +-
+>>>>>>    drivers/usb/dwc3/drd.c  |  14 +-
+>>>>>>    3 files changed, 244 insertions(+), 89 deletions(-)
+>>>>>>
+>>>>>> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+>>>>>> index 476b63618511..7e0a9a598dfd 100644
+>>>>>> --- a/drivers/usb/dwc3/core.c
+>>>>>> +++ b/drivers/usb/dwc3/core.c
+>>>>>
+>>>>> <snip>
+>>>>>
+>>>>>> @@ -1575,6 +1690,21 @@ static void dwc3_get_properties(struct dwc3 
+>>>>>> *dwc)
+>>>>>>        dwc->dis_split_quirk = device_property_read_bool(dev,
+>>>>>>                    "snps,dis-split-quirk");
+>>>>>> +
+>>>>>> +    /*
+>>>>>> +     * If no mulitport properties are defined, default
+>>>>>> +     * the port count to '1'.
+>>>>>> +     */
+>>>>>> +    ret = device_property_read_u32(dev, "num-ports",
+>>>>>> +                &dwc->num_ports);
+>>>>>> +    if (ret)
+>>>>>> +        dwc->num_ports = 1;
+>>>>>> +
+>>>>>> +    ret = device_property_read_u32(dev, "num-ss-ports",
+>>>>>> +                &dwc->num_ss_ports);
+>>>>>> +    if (ret)
+>>>>>> +        dwc->num_ss_ports = 1;
+>>>>>
+>>>>> By using this DT property instead of using the number of each phy 
+>>>>> type you
+>>>>> find you can get into situations where you're writing 
+>>>>> DWC3_GUSB2PHYCFG, etc,
+>>>>> when there's no phy to go along with it.
+>>>>>
+>>>> Hi Andrew,
+>>>>
+>>>>   Thanks for the review. Yes, this decoupling is still there and its 
+>>>> fine I
+>>>> believe.
+>>>>
+>>>>> I ran into this when testing on sa8540p-ride, which only uses one 
+>>>>> of the
+>>>>> ports on the multiport controller. I didn't enable the other phys (not
+>>>>> sure if that was smart or not) and overrode phy-names/phys, but did 
+>>>>> not
+>>>>> override num-ports/num-ss-ports, which resulted in that. Nothing bad
+>>>>> happened on a quick test.. but I thought I'd highlight that as another
+>>>>> downside of decoupling this value from the number of phys you grab.
+>>>>>
+>>>> If we do not override phy-names or num-ports/num-ss-ports info in 
+>>>> DT, they
+>>>> are just defaulted to '1' and as per the current logic only port-1 
+>>>> registers
+>>>> must be configured. Isn't that the case happening ?
+>>>>
+>>>
+>>> In my dts I'm inheriting from the sc8280xp.dtsi usb_2 phandle you've 
+>>> created!
+>>> So unless I override them I get this from your sc8280xp.dtsi:
+>>>
+>>> +                       usb_2_dwc3: usb@a400000 {
+>>> +                               compatible = "snps,dwc3";
+>>> +                               reg = <0 0x0a400000 0 0xcd00>;
+>>> +                               interrupts = <GIC_SPI 133 
+>>> IRQ_TYPE_LEVEL_HIGH>;
+>>> +                               iommus = <&apps_smmu 0x800 0x0>;
+>>> +                               num-ports = <4>;
+>>> +                               num-ss-ports = <2>;
+>>> +                               phys = <&usb_2_hsphy0>, 
+>>> <&usb_2_qmpphy0>,
+>>> +                                       <&usb_2_hsphy1>, 
+>>> <&usb_2_qmpphy1>,
+>>> +                                       <&usb_2_hsphy2>,
+>>> +                                       <&usb_2_hsphy3>;
+>>> +                               phy-names = "usb2-phy_port0", 
+>>> "usb3-phy_port0",
+>>> +                                               "usb2-phy_port1", 
+>>> "usb3-phy_port1",
+>>> +                                               "usb2-phy_port2",
+>>> +                                               "usb2-phy_port3";
+>>> +                       };
+>>>
+>>> Since this board only uses one port of the multiport controller, I
+>>> redefined phys/phy-names to indicate that. I figured that was more
+>>> desireable than enabling unnecessary phys. Without overriding
+>>> num-ports/num-ss-ports all the for loops in this patch would act like
+>>> the values were 4 and 2 respectively, writing to DWC3_GUSB2PHYCFG
+>>> multiple times etc as well as look for the multiport phy-names and fail
+>>> to actually get any phys. Hope that makes sense!
+>>>
+>> Hi Andrew,
+>>
+>>   My Bad. I missed the fact that it was based on sc8280xp.dtsi. In 
+>> that case it makes complete sense to override the num-ports and 
+>> num-ss-ports to "1" and the usb phy-names.
+>>>>> Here's a patch enabling sa8540p-ride, I'd love if you'd add it to the
+>>>>> series (probably needs clean up after review, and will definitely need
+>>>>> alteration after you update the dt-binding again). If not I'll 
+>>>>> continue
+>>>>> to test/review so please CC me!:
+>>>>>
+>>>>>
+>>>> Sure, I can add this patch (probably will add the other phy's too) 
+>>>> during
+>>>> the final submission.
+>>>
+>>> I don't have a great understanding of the mapping of the phys to
+>>> physical connections (as well as what registers like DWC3_GUSB2PHYCFG 
+>>> do),
+>>> so if it makes more sense to enable all the relevant SoC phys, write
+>>> those registers in the DWC3 IP, etc, and only use one of the actual
+>>> board outputs then feel free. I think this is a good example of "what if
+>>> a board designer only uses a single port of the multiport IP" imo.
+>>> Agreed. This could be a good example of multi port with only single port 
 > 
-> [...]
+> Typo in the previous mail. Correcting it here.
 > 
->> diff --git a/Documentation/devicetree/bindings/spi/st,stm32-spi.yaml b/Documentation/devicetree/bindings/spi/st,stm32-spi.yaml
->> index d35c6f7e2dd5..18afdaab946d 100644
->> --- a/Documentation/devicetree/bindings/spi/st,stm32-spi.yaml
->> +++ b/Documentation/devicetree/bindings/spi/st,stm32-spi.yaml
->> @@ -95,7 +95,6 @@ examples:
->>               <&dmamux1 1 40 0x400 0x05>;
->>        dma-names = "rx", "tx";
->>        cs-gpios = <&gpioa 11 0>;
+>> working.
+> Agreed, The dt-patch you provided will be a good working example of 
+> getting just a single port working for a multiport controller.
 > 
-> Looks like the indentation needs adjusting here.
+> Regards,
+> Krishna,
 > 
+>>>>
+>>>>>   From dcb27d07f079194ebd7efe1c9bec64da78beb290 Mon Sep 17 00:00:00 
+>>>>> 2001
+>>>>> From: Andrew Halaney <ahalaney@redhat.com>
+>>>>> Date: Thu, 19 Jan 2023 14:53:38 -0600
+>>>>> Subject: [PATCH] arm64: dts: qcom: sa8540p-ride: Enable usb_2
+>>>>> Content-type: text/plain
+>>>>>
+>>>>> There is now support for the multiport USB controller this uses
+>>>>> so enable it.
+>>>>>
+>>>>> The board only has a single port hooked up (despite it being wired 
+>>>>> up to
+>>>>> the multiport IP on the SoC). There's also a USB 2.0 mux hooked up,
+>>>>> which by default on boot is selected to mux properly. Grab the gpio
+>>>>> controlling that and ensure it stays in the right position so USB 2.0
+>>>>> continues to be routed from the external port to the SoC.
+>>>>>
+>>>>> Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+>>>>> ---
+>>>>>    arch/arm64/boot/dts/qcom/sa8540p-ride.dts | 24 
+>>>>> +++++++++++++++++++++++
+>>>>>    1 file changed, 24 insertions(+)
+>>>>>
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts 
+>>>>> b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+>>>>> index 97957f3baa64..56d4f43faa1e 100644
+>>>>> --- a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+>>>>> +++ b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+>>>>> @@ -246,6 +246,21 @@ &usb_0_qmpphy {
+>>>>>        status = "okay";
+>>>>>    };
+>>>>> +&usb_2 {
+>>>>> +    pinctrl-names = "default";
+>>>>> +    pinctrl-0 = <&usb2_en_state>;
+>>>>> +
+>>>>> +    status = "okay";
+>>>>> +};
+>>>>> +
+>>>>> +&usb_2_dwc3 {
+>>>>> +    dr_mode = "host";
+>>>>> +    num-ports = <1>;
+>>>>> +    num-ss-ports = <1>;
+>>>>
+>>>> More over, if this is a multiport controller and you are using only 
+>>>> port-1,
+>>>> it is as good as a single port controller I believe and the normal DT
+>>>> convention must work. Adding these properties as "1" is not required 
+>>>> as the
+>>>> driver logic defaults them to "1" if they are not found.
+>>>
+>>> See above comment about inheriting from sc8280xp.dtsi and needing to
+>>> override their values.
+>>>
+>>>>
+>>>> Just to add a point here (as I was not clear in DT Binding 
+>>>> description, My
+>>>> bad), the num-ports and num-ss-ports must indicate the HS/SS Phys 
+>>>> present on
+>>>> HW whether they are used in DT or not. Just to cover all cases which 
+>>>> user
+>>>> can use [1].
+>>>>
+>>>> []1:
+>>>> https://lore.kernel.org/all/4eb26a54-148b-942f-01c6-64e66541de8b@quicinc.com/
+>>>
+>>> Ok, if you're going with that approach of "must indicate the HS/SS Phys
+>>> present on HW whether they are used in the DT or not" (/me assumes DT
+>>> here means on the board and not an incorrect coding of the DT) then I
+>>> suppose I should not have overridden anything but phys/phy-names to
+>>> indicate that I'm only using the first port (and used the multiport
+>>> phy-names convention). It looks like in that link you also mention that
+>>> it is ok to write to DWC3_GUSB2PHYCFG and friends even if the phy isn't
+>>> defined, which was my concern and reasoning above for overriding
+>>> num-ports/num-ss-ports.
+>>>
+>>> Thanks,
+>>> Andrew
+>>>
+>> Actually, I was trying to mandate that rule to take care of cases 
+>> where the phy's for say port2 or port3 are missing for a quad port 
+>> controller in dtsi and we don't want to end up configuring wrong 
+>> dwc3-phy regs.
+>>
+>> For just the first port, the changes you have mentioned must be 
+>> sufficient. (Furthermore, thanks for the review and testing it on 
+>> sa8295-ride and confirming nothing breaks while the first port is 
+>> enabled)
 
-Ack
+I agree that for ride platform the changes provided with overridden
+phys in DT for the sa8540-ride.dts makes more sense with only having
+port0 of multi port on this platform.
+Looking forward to validate the next version on ride platform.
 
-Best regards,
-Krzysztof
+Krishna, please keep me in cc in the next version :).
 
+-Shazad
+
+>>
+>> Regards,
+>> Krishna,
+>>>>
+>>>> Regards,
+>>>> Krishna,
+>>>>
+>>>>> +    phy-names = "usb2-phy", "usb3-phy";
+>>>>> +    phys = <&usb_2_hsphy0>, <&usb_2_qmpphy0>;
+>>>>> +};
+>>>>> +
+>>>>>    &usb_2_hsphy0 {
+>>>>>        vdda-pll-supply = <&vreg_l5a>;
+>>>>>        vdda18-supply = <&vreg_l7g>;
+>>>>> @@ -313,4 +328,13 @@ wake-pins {
+>>>>>                bias-pull-up;
+>>>>>            };
+>>>>>        };
+>>>>> +
+>>>>> +    usb2_en_state: usb2-en-state {
+>>>>> +        /* TS3USB221A USB2.0 mux select */
+>>>>> +        pins = "gpio24";
+>>>>> +        function = "gpio";
+>>>>> +        drive-strength = <2>;
+>>>>> +        bias-disable;
+>>>>> +        output-low;
+>>>>> +    };
+>>>>>    };
+>>>>
+>>>
