@@ -2,100 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F1479679031
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 06:45:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C632E679099
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 07:01:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232864AbjAXFpv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Jan 2023 00:45:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41120 "EHLO
+        id S233174AbjAXGB0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Jan 2023 01:01:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232856AbjAXFps (ORCPT
+        with ESMTP id S233152AbjAXGBY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Jan 2023 00:45:48 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB2ED3BDB9;
-        Mon, 23 Jan 2023 21:45:05 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Tue, 24 Jan 2023 01:01:24 -0500
+Received: from mail.marcansoft.com (marcansoft.com [212.63.210.85])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9EB9105;
+        Mon, 23 Jan 2023 22:01:22 -0800 (PST)
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id CC5B6B81061;
-        Tue, 24 Jan 2023 05:45:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D010C4339E;
-        Tue, 24 Jan 2023 05:45:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1674539102;
-        bh=ScyvuQegV5fO5JfKO+uV9dbs09GznxoP8p2RacsRoQ8=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=aieViE0VmzSNNzQQLemLOpdylwN3jL7h9CPVewNebScLHhnL6HbDltpq7BhXWJJvL
-         LXfTknZc9hhbCzA5B46rD3D5TN51FTYw+ytSFgSdInkHjI2g8VtiYcPbPTXhm+OxHU
-         DD5mlN7P8/CCSHzUj5k4rZYLrpbTCxIxHyVbvSs2YdwMidEkmVZimrZgISpBkSCrfn
-         4ilHh3eV0pBTOe0dZSE2a09NlORVhdAvHRneo1OrNwNlv3MqPNTdhGj1dxNpvyMr4v
-         11v+OCkvfU2AAAxr8lg7mwMHgpY1AgeGNiYA8FQT2SWO6eKTvIkQmM4kaOGL37Vse3
-         P0x5P4osYN0Yw==
-Date:   Tue, 24 Jan 2023 14:44:57 +0900
-From:   Masami Hiramatsu (Google) <mhiramat@kernel.org>
-To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-Cc:     <linux-kernel@vger.kernel.org>,
+        (Authenticated sender: marcan@marcan.st)
+        by mail.marcansoft.com (Postfix) with ESMTPSA id A4A7E42651;
+        Tue, 24 Jan 2023 05:45:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=marcan.st; s=default;
+        t=1674539148; bh=HljMxe7jrBTG1Genyu+Pm2rYswosR8p2EtuxuYI1k5k=;
+        h=Date:Subject:To:References:From:In-Reply-To;
+        b=tGJDNdnjFM7diTyJhByzlPW+Qgjt+NJVZE3JfiWvoqqTN22OFEMWJCJu2Ml1pOsAO
+         r0/W8qLAIOzYaNHY8izHRJlBZMIadNunPGWmPwbEb40y1c6VosRAOpZ3Wcs4aMWegs
+         XbuvONOwx1zSvJYikQceLhiAJggA2UD6cvlPAdRG3c6kHqxdgYFDuUkADi9HPGh5Iv
+         0wfqvQC+iXGieASzeODYfH1Ol3XFtpUDplCyJZqQsIPWXhbLyyI6/TLH14CQRMCzGs
+         /k/FBLs2Gdm6AmXg+b0qJZwx9ZtzOaW60Td3qkL6/m3omSubjkfWbCU4KWlUN6s7C8
+         0z/OcdYARoLFA==
+Message-ID: <d7575a8e-035e-b729-bd16-7fd10b2c56c5@marcan.st>
+Date:   Tue, 24 Jan 2023 14:45:31 +0900
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH 1/2] dt-bindings: dma: drop unneeded quotes
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Olivier Dautricourt <olivierdautricourt@gmail.com>,
+        Stefan Roese <sr@denx.de>, Sven Peter <sven@svenpeter.dev>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        =?UTF-8?Q?Andreas_F=c3=a4rber?= <afaerber@suse.de>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>
-Subject: Re: [PATCH V1] bootconfig: Increase max nodes of bootconfig from
- 1024 to 8192 for DCC support
-Message-Id: <20230124144457.00fb60b872c701d70808215e@kernel.org>
-In-Reply-To: <1674536682-18404-1-git-send-email-quic_schowdhu@quicinc.com>
-References: <1674536682-18404-1-git-send-email-quic_schowdhu@quicinc.com>
-X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Viresh Kumar <vireshk@kernel.org>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Green Wan <green.wan@sifive.com>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        =?UTF-8?B?77+9ZXI=?= <povik+lin@cutebit.org>,
+        Peng Fan <peng.fan@nxp.com>,
+        Paul Cercueil <paul@crapouillou.net>,
+        - <chuanhua.lei@intel.com>, Long Cheng <long.cheng@mediatek.com>,
+        Rajesh Gumasta <rgumasta@nvidia.com>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        Biju Das <biju.das.jz@bp.renesas.com>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Palmer Debbelt <palmer@sifive.com>,
+        Masahiro Yamada <yamada.masahiro@socionext.com>,
+        Amelie Delaunay <amelie.delaunay@foss.st.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
+        linux-kernel@vger.kernel.org, asahi@lists.linux.dev,
+        linux-tegra@vger.kernel.org, linux-actions@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-riscv@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-mediatek@lists.infradead.org
+References: <20230118180144.364756-1-krzysztof.kozlowski@linaro.org>
+From:   Hector Martin <marcan@marcan.st>
+In-Reply-To: <20230118180144.364756-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-8.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 24 Jan 2023 10:34:42 +0530
-Souradeep Chowdhury <quic_schowdhu@quicinc.com> wrote:
-
-> The Data Capture and Compare(DCC) is a debugging tool that uses the bootconfig
-> for configuring the register values during boot-time. Increase the max nodes
-> supported by bootconfig to cater to the requirements of the Data Capture and
-> Compare Driver.
-
-Thanks, this looks good to me :)
-
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-
+On 19/01/2023 03.01, Krzysztof Kozlowski wrote:
+> Cleanup by removing unneeded quotes from refs and redundant blank lines.
+> No functional impact except adjusting to preferred coding style.
 > 
-> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->  include/linux/bootconfig.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/include/linux/bootconfig.h b/include/linux/bootconfig.h
-> index 1611f9d..ca73940 100644
-> --- a/include/linux/bootconfig.h
-> +++ b/include/linux/bootconfig.h
-> @@ -59,7 +59,7 @@ struct xbc_node {
->  /* Maximum size of boot config is 32KB - 1 */
->  #define XBC_DATA_MAX	(XBC_VALUE - 1)
-> 
-> -#define XBC_NODE_MAX	1024
-> +#define XBC_NODE_MAX	8192
->  #define XBC_KEYLEN_MAX	256
->  #define XBC_DEPTH_MAX	16
-> 
-> --
-> 2.7.4
-> 
 
+For the Apple stuff,
 
--- 
-Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Acked-by: Hector Martin <marcan@marcan.st>
+
+- Hector
