@@ -2,108 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F01667A6EB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 00:36:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 54D2E67A71E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 00:47:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233732AbjAXXgm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Jan 2023 18:36:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37798 "EHLO
+        id S234125AbjAXXrS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Jan 2023 18:47:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229545AbjAXXgl (ORCPT
+        with ESMTP id S233206AbjAXXrQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Jan 2023 18:36:41 -0500
-Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [IPv6:2001:4b7a:2000:18::169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC9231A1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 15:36:38 -0800 (PST)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 7C3054215D;
-        Wed, 25 Jan 2023 00:36:33 +0100 (CET)
-Date:   Wed, 25 Jan 2023 00:36:31 +0100
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, andersson@kernel.org, quic_abhinavk@quicinc.com,
-        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1 12/14] drm/msm/disp/dpu1: revise timing engine
- programming to work for DSC
-Message-ID: <20230124233631.rojijcfy6xhntl3p@SoMainline.org>
-References: <1674498274-6010-1-git-send-email-quic_khsieh@quicinc.com>
- <1674498274-6010-13-git-send-email-quic_khsieh@quicinc.com>
- <8392e1f3-8459-4408-41de-564a41980b4c@linaro.org>
- <3588a5d0-ca28-918f-e072-35f15a5a5132@quicinc.com>
+        Tue, 24 Jan 2023 18:47:16 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92899E39E;
+        Tue, 24 Jan 2023 15:47:14 -0800 (PST)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30ONKgMW001519;
+        Tue, 24 Jan 2023 23:47:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=X2Q0tE37VDp4hy/FQTBoYaG77TQ/eZFORCyeWxKtWp8=;
+ b=dDD9ZU3VpQgOBrUeo6KH0qtmZmBOzlbxfsumgL3n0y77xlSB48JJOBXlYrAt7x+u4DYG
+ LpiUCYrAulcPrk9Qxy3vJmiLBiiBl15C3AcfyyjAxejri9j5mRaMyy2jzCpyw/VGtfMU
+ hk+i86/tAy4GE/qJUss0Qz22qnzlg2DmDzDbSAp6GiR05lXQCYbYrTWwswcrJGxRDzoq
+ m0FtGG/+lerbH3LCXaJ1jE+xOKw79a0WP3BmqxUfw05Ar/b7eEE7iuCQIVqcewbZMi1y
+ HwUNQdXWxlWv5o1v0bVwihIH1HWhZzX7vaZCQUSdx8C8alZuq3QZqw6BpcRf8iy8NYoA Cg== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3napvhg6wn-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 24 Jan 2023 23:47:06 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30ONl5C0007759
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 24 Jan 2023 23:47:05 GMT
+Received: from hu-collinsd-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Tue, 24 Jan 2023 15:47:04 -0800
+From:   David Collins <quic_collinsd@quicinc.com>
+To:     Daniel Lezcano <daniel.lezcano@linaro.org>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+CC:     David Collins <quic_collinsd@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [RESEND PATCH v3 0/3] thermal: qcom-spmi-temp-alarm: add support for new TEMP_ALARM subtypes
+Date:   Tue, 24 Jan 2023 15:46:03 -0800
+Message-ID: <cover.1674602698.git.quic_collinsd@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3588a5d0-ca28-918f-e072-35f15a5a5132@quicinc.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: T35YPkFgzIg2TtnfBnJxUkLE8-Nreg4f
+X-Proofpoint-ORIG-GUID: T35YPkFgzIg2TtnfBnJxUkLE8-Nreg4f
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-24_17,2023-01-24_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ lowpriorityscore=0 bulkscore=0 malwarescore=0 mlxlogscore=999 phishscore=0
+ adultscore=0 impostorscore=0 mlxscore=0 spamscore=0 suspectscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301240219
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-01-24 09:55:24, Kuogee Hsieh wrote:
+Add support in the qcom-spmi-temp-alarm driver for the new PMIC
+TEMP_ALARM peripheral subtypes: GEN2 rev 2 and LITE.  The GEN2 rev 2
+subtype provides greater flexibility in temperature threshold
+specification by using an independent register value to configure
+each of the three thresholds.  The LITE subtype utilizes a simplified
+set of control registers to configure two thresholds: warning and
+shutdown.
 
-<snip>
+Also add support to avoid a potential issue on certain versions of
+the TEMP_ALARM GEN2 subtype when automatic stage 2 partial shutdown
+is disabled.
 
-> This timing engine code is derived from our downstream code directly and 
-> it has been used at many mobile devices by many vendors for many years 
-> already.
-> 
-> On the other words, it had been tested very thorough and works on 
-> dsi/dp/hdmi/dsc/widebus applications.
+Changes since v2 [1]:
+* Added missing header <linux/bitfield.h> in the third patch
 
-And the code already in mainline has seen 12 rounds of review, with a
-focus on inter-SoC compatibility.  Regardless of that, we have processes
-to make changes on mainline: formatting changes (when actually making an
-improvement) go separate from semantic changes.  Bugfixes are clearly
-described in individual patches with Fixes: tags.  If you really think
-the code has to be as proposed in this patch, follow Dmitry's advice and
-split this accordingly.
+Changes since v1 [2]:
+* Updated the thermal API usage in the patches to work with the recent commit
+  ca1b9a9eb3fd ("thermal/drivers/qcom: Switch to new of API")
 
-> When i brought dsc v1.2 over, I just merged it over and did not consider 
-> too much.
+[1]: https://lore.kernel.org/lkml/cover.1670375556.git.quic_collinsd@quicinc.com/
+[2]: https://lore.kernel.org/lkml/cover.1663282895.git.quic_collinsd@quicinc.com/
 
-And that is exactly what is wrong with this *entire* series: copying
-over downstream code without "considering too much", stomping over
-previous review and even reverting bugfixes [1] [2] without giving it
-ANY ATTENTION in your patch description.  That's unacceptable and
-insulting to contributors and reviewers.  Full stop.  Or did you expect
-us to turn a blind eye?  This is mainline, not some techpack playground.
+David Collins (3):
+  thermal: qcom-spmi-temp-alarm: enable stage 2 shutdown when required
+  thermal: qcom-spmi-temp-alarm: add support for GEN2 rev 2 PMIC
+    peripherals
+  thermal: qcom-spmi-temp-alarm: add support for LITE PMIC peripherals
 
-[1]: https://lore.kernel.org/linux-arm-msm/20230123201133.zzt2zbyaw3pfkzi6@SoMainline.org/
-[2]: https://lore.kernel.org/linux-arm-msm/20221026182824.876933-10-marijn.suijten@somainline.org/
+ drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 407 +++++++++++++++++++-
+ 1 file changed, 392 insertions(+), 15 deletions(-)
 
-> Can we adapt this code so that both upstream and down stream shared same 
-> timing engine programming so that easier to maintain?
+-- 
+2.25.1
 
-Easy, I've said this before in IRC and will state it again: stop this
-techpack nonsense and focus on upstream-first.  When something passes
-mainline review (and please don't bother maintainers and reviewers with
-series like this) it is inevitably good enough to be copied to
-techpack... at which point techpack becomes worthless as you can just
-backport a mainline patch or use a recent-enough kernel.
-
-
-tl;dr: it seems like you nor anyone involved in pre-reviewing/vetting
-this series is familiar with upstream guidelines.  Follow the global
-advice from Dmitry [3] to reach a more efficient v2, and please don't
-let this run to v10 (or beyond) again.
-
-One suggestion to improve efficiency: split off the DPU v1.2 hardware
-block addition (and related changes) into a separate series.  A smaller
-series (and properly split patches!) will give everyone less moving
-parts to worry about, and paves the way for DSI support without blocking
-on DP.
-
-[3]: https://lore.kernel.org/linux-arm-msm/47c83e8c-09f1-d1dd-ca79-574122638256@linaro.org/
-
-- Marijn
