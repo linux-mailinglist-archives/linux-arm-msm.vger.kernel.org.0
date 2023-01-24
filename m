@@ -2,127 +2,236 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C71667950F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 11:20:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 76477679583
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 11:42:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229681AbjAXKUR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Jan 2023 05:20:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58170 "EHLO
+        id S230191AbjAXKm4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Jan 2023 05:42:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233144AbjAXKUP (ORCPT
+        with ESMTP id S232664AbjAXKm4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Jan 2023 05:20:15 -0500
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21FB63E617
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 02:20:12 -0800 (PST)
-Received: by mail-ej1-x62a.google.com with SMTP id ud5so37697714ejc.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 02:20:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=eZAw4Wd/yIjakYBu/HQ1aGBARqEQv7QS64hYIpsab74=;
-        b=RRAonQSeen9UFZdm5y7pb0rYTtTt3nZK8xN6CkeoZ6A6OZaR3IneFLSnZbCbFX7QqL
-         sVj5B7loHSTDXP/mogaqoosuy9fohaaEwY50EE8V9LpmAtS+0uIHpYH1mg9SqWd+RjBy
-         5HHw3hfi36jAbPKHRTB4Hly1hxa7d5k0L/3owxU3TtlARdw1VzgX1ozjrCgzvFM0b+Cz
-         rLjRG4pyEIX++vmxstRMsjFLLtF+U9PMFvyqweS3LOnY4wDJc2+/gPXCR6EtgkYCyg6K
-         y6fjKC41kV9j53J52/We9M1oWPcoMc4VJN+XhuRf9xEDKETi2Hw4wVYlMGaUcLcg5hlA
-         ZPLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eZAw4Wd/yIjakYBu/HQ1aGBARqEQv7QS64hYIpsab74=;
-        b=upNWORdpw244Yi7I/b697F9oEBw8Z5DNw3KH+pvLQwr+AJjwHoI/SV1YJEntJZ0ucr
-         XYhD35IltpSNbLxepXY7AkJCNHUP6NzH/tRkhssYe3hXA9bDQUA1zWh84Z6ML5l04DTY
-         5fYxFiXERoAqUYhIEFqXuGg6UvWwjJRMVNrcLBWDwHKRLsFRwLsCqU+ZOKsHPHTl82PZ
-         Z7n0ib++Js1jLAYZsqqtEL9+u6GkQ3Ym4Rqcc2Mdo/iteAXm8BffqzXXE7s1jnj5F/fQ
-         gsc/j6qvETY46Hz4/Ab50tNidC2zmWX8mKoD4yfS0T9mE5Vn8W744jwT9mHQxojtiuPU
-         IQnA==
-X-Gm-Message-State: AFqh2krL/9fRV52BiQx7e3ZMqmJL6Wi7A6wlKl1Bh3lSepeB3p3XpgwD
-        8ExkuMzeOR5Aq8NVKoW7Si8cgw==
-X-Google-Smtp-Source: AMrXdXuN1UUFLI3cQ5HGZONf6xzIfHcBdoCW3QFSYVTY1/p1lEc/mqprKVme2OUnem84eOZKKrAkFQ==
-X-Received: by 2002:a17:906:1798:b0:84d:43e4:3633 with SMTP id t24-20020a170906179800b0084d43e43633mr27252357eje.36.1674555610686;
-        Tue, 24 Jan 2023 02:20:10 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id jr17-20020a170906515100b0084d4b8f5889sm696697ejc.102.2023.01.24.02.20.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Jan 2023 02:20:10 -0800 (PST)
-Message-ID: <d4ae5354-ec53-c676-2b91-fc45cc425c68@linaro.org>
-Date:   Tue, 24 Jan 2023 12:20:09 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [2/2] drm/msm/dpu: don't use DPU_CLK_CTRL_CURSORn for DMA SSPP
- clocks
-Content-Language: en-GB
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Tue, 24 Jan 2023 05:42:56 -0500
+Received: from mail-4022.proton.ch (mail-4022.proton.ch [185.70.40.22])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60071CDF8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 02:42:53 -0800 (PST)
+Date:   Tue, 24 Jan 2023 10:42:41 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=emersion.fr;
+        s=protonmail; t=1674556970; x=1674816170;
+        bh=i/z349wjaRLFgEN1WwEOPP6Jtfhnv3QcYuT0Uq05V7Y=;
+        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+         Message-ID:BIMI-Selector;
+        b=CaNpRFc1dUxvoK3qCUFvDdt2xDJT8Aon+QtqXxo7EfQIdvEf2VggMQqyzK6uV4xDe
+         5AEpplQKjHWuM2kLKaQe5yJ58dmblOHEM8Rg5uCpnXWjVxGq/cVBggMoXxiQA7GTPP
+         MlHmavQmwppRuyLoaG8HX98qU9lJCGspC2zlJBks95Y3sCSby7z2mnTU9ws2xR0MBv
+         iLExLCsv214W1VF/lpLpBhx7/Dhtas1Fw2yOtg3Mg96nLMlpUSDTp/H4rjR8DN0ZCQ
+         MDEzS29xzWq8YxyoE2ee281yj5VDmvH1queHVsPIVEmZBYJ5aVtvBKYzO8xXeL5F/Q
+         Wbt8KeqsEBloA==
+To:     Daniel Vetter <daniel@ffwll.ch>
+From:   Simon Ser <contact@emersion.fr>
+Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
         freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        dri-devel@lists.freedesktop.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@gmail.com>
-References: <20230115124143.464809-2-dmitry.baryshkov@linaro.org>
- <20230124101346.gwx4z4n6sem5r72t@SoMainline.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230124101346.gwx4z4n6sem5r72t@SoMainline.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        seanpaul@chromium.org, swboyd@chromium.org, daniel.vetter@ffwll.ch,
+        laurent.pinchart@ideasonboard.com, ppaalanen@gmail.com,
+        sebastian.wick@redhat.com, wayland-devel@lists.freedesktop.org,
+        ville.syrjala@linux.intel.com
+Subject: Re: [RFC PATCH v3 0/3] Support for Solid Fill Planes
+Message-ID: <0Cub9hfb3QAHFLGsDbS6zzbzAJE-2-h_jBawDV8Yd2zf9VtSeOGxA9EkcLhAgJALhx6c1_P2mswGag3NVzkUxg7Pd7Uvgoizy7HMfwhAk6c=@emersion.fr>
+In-Reply-To: <Y784TJ5D1m0zsMDv@phenom.ffwll.local>
+References: <20230104234036.636-1-quic_jesszhan@quicinc.com> <Y7a1hCmsvJHKdW1Y@phenom.ffwll.local> <58caf08c-3a02-82ce-4452-8ae7f22f373d@quicinc.com> <CAA8EJppnAmN6+S-emEfXJEc1iVf+DjeLBmCQpGd-nRY2M2AAQQ@mail.gmail.com> <Y7hrWDpg8msuefgZ@phenom.ffwll.local> <CAA8EJppoejPPNhu3eHBc_vsstHvEEwYx67HZLo8+4W3K-gHkag@mail.gmail.com> <60eea42e-07d6-3dc3-25ab-8fabc76c2473@quicinc.com> <Y784TJ5D1m0zsMDv@phenom.ffwll.local>
+Feedback-ID: 1358184:user:proton
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/01/2023 12:13, Marijn Suijten wrote:
-> On 2023-01-15 14:41:43, Dmitry Baryshkov wrote:
->> DPU driver has been using the DPU_CLK_CTRL_CURSOR prefix for the DMA
->> SSPP blocks used for the cursor planes. This has lead to the confusion
->> at least for the MSM8998 platform. In preparation to supporting the
->> cursor SSPP blocks, use proper enum values to index DMA SSPP clock
->> controls.
->>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
->> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550 on top of next-20230116
-> 
-> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-> 
-> One question follows...
-> 
->> ---
->>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 64 +++++++++----------
->>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  2 +
->>   2 files changed, 34 insertions(+), 32 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->> index ad0c55464154..b0f6e071fe4b 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> <snip>
->> @@ -1199,9 +1199,9 @@ static const struct dpu_sspp_cfg sdm845_sspp[] = {
->>   	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000,  DMA_SDM845_MASK,
->>   		sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA1),
->>   	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000,  DMA_CURSOR_SDM845_MASK,
-> 
-> Are these DMA pipes with CURSOR support, or how should I see this?  For
-> MSM8998 I suggested to remove the _CURSOR bit since it has two dedicated
-> cursor pipes (not yet represented in the catalog) but these SoCs don't
-> seem to have those.
->
+On Wednesday, January 11th, 2023 at 23:29, Daniel Vetter <daniel@ffwll.ch> =
+wrote:
 
-As I wrote earlier, this part just marks them to be used for HW cursor 
-support.
+> On Fri, Jan 06, 2023 at 04:33:04PM -0800, Abhinav Kumar wrote:
+> > Hi Daniel
+> >
+> > Thanks for looking into this series.
+> >
+> > On 1/6/2023 1:49 PM, Dmitry Baryshkov wrote:
+> > > On Fri, 6 Jan 2023 at 20:41, Daniel Vetter <daniel@ffwll.ch> wrote:
+> > > >
+> > > > On Fri, Jan 06, 2023 at 05:43:23AM +0200, Dmitry Baryshkov wrote:
+> > > > > On Fri, 6 Jan 2023 at 02:38, Jessica Zhang <quic_jesszhan@quicinc=
+.com> wrote:
+> > > > > >
+> > > > > >
+> > > > > >
+> > > > > > On 1/5/2023 3:33 AM, Daniel Vetter wrote:
+> > > > > > > On Wed, Jan 04, 2023 at 03:40:33PM -0800, Jessica Zhang wrote=
+:
+> > > > > > > > Introduce and add support for a solid_fill property. When t=
+he solid_fill
+> > > > > > > > property is set, and the framebuffer is set to NULL, memory=
+ fetch will be
+> > > > > > > > disabled.
+> > > > > > > >
+> > > > > > > > In addition, loosen the NULL FB checks within the atomic co=
+mmit callstack
+> > > > > > > > to allow a NULL FB when the solid_fill property is set and =
+add FB checks
+> > > > > > > > in methods where the FB was previously assumed to be non-NU=
+LL.
+> > > > > > > >
+> > > > > > > > Finally, have the DPU driver use drm_plane_state.solid_fill=
+ and instead of
+> > > > > > > > dpu_plane_state.color_fill, and add extra checks in the DPU=
+ atomic commit
+> > > > > > > > callstack to account for a NULL FB in cases where solid_fil=
+l is set.
+> > > > > > > >
+> > > > > > > > Some drivers support hardware that have optimizations for s=
+olid fill
+> > > > > > > > planes. This series aims to expose these capabilities to us=
+erspace as
+> > > > > > > > some compositors have a solid fill flag (ex. SOLID_COLOR in=
+ the Android
+> > > > > > > > hardware composer HAL) that can be set by apps like the And=
+roid Gears
+> > > > > > > > app.
+> > > > > > > >
+> > > > > > > > Userspace can set the solid_fill property to a blob contain=
+ing the
+> > > > > > > > appropriate version number and solid fill color (in RGB3232=
+32 format) and
+> > > > > > > > setting the framebuffer to NULL.
+> > > > > > > >
+> > > > > > > > Note: Currently, there's only one version of the solid_fill=
+ blob property.
+> > > > > > > > However if other drivers want to support a similar feature,=
+ but require
+> > > > > > > > more than just the solid fill color, they can extend this f=
+eature by
+> > > > > > > > creating additional versions of the drm_solid_fill struct.
+> > > > > > > >
+> > > > > > > > Changes in V2:
+> > > > > > > > - Dropped SOLID_FILL_FORMAT property (Simon)
+> > > > > > > > - Switched to implementing solid_fill property as a blob (S=
+imon, Dmitry)
+> > > > > > > > - Changed to checks for if solid_fill_blob is set (Dmitry)
+> > > > > > > > - Abstracted (plane_state && !solid_fill_blob) checks to he=
+lper method
+> > > > > > > >     (Dmitry)
+> > > > > > > > - Removed DPU_PLANE_COLOR_FILL_FLAG
+> > > > > > > > - Fixed whitespace and indentation issues (Dmitry)
+> > > > > > >
+> > > > > > > Now that this is a blob, I do wonder again whether it's not c=
+leaner to set
+> > > > > > > the blob as the FB pointer. Or create some kind other kind of=
+ special data
+> > > > > > > source objects (because solid fill is by far not the only suc=
+h thing).
+> > > > > > >
+> > > > > > > We'd still end up in special cases like when userspace that d=
+oesn't
+> > > > > > > understand solid fill tries to read out such a framebuffer, b=
+ut these
+> > > > > > > cases already exist anyway for lack of priviledges.
+> > > > > > >
+> > > > > > > So I still think that feels like the more consistent way to i=
+ntegrate this
+> > > > > > > feature. Which doesn't mean it has to happen like that, but t=
+he
+> > > > > > > patches/cover letter should at least explain why we don't do =
+it like this.
+> > > > > >
+> > > > > > Hi Daniel,
+> > > > > >
+> > > > > > IIRC we were facing some issues with this check [1] when trying=
+ to set
+> > > > > > FB to a PROP_BLOB instead. Which is why we went with making it =
+a
+> > > > > > separate property instead. Will mention this in the cover lette=
+r.
+> > > > >
+> > > > > What kind of issues? Could you please describe them?
+> > > >
+> > > > We switched from bitmask to enum style for prop types, which means =
+it's
+> > > > not possible to express with the current uapi a property which acce=
+pts
+> > > > both an object or a blob.
+> > > >
+> > > > Which yeah sucks a bit ...
+> > > >
+> > > > But!
+> > > >
+> > > > blob properties are kms objects (like framebuffers), so it should b=
+e
+> > > > possible to stuff a blob into an object property as-is. Of course y=
+ou need
+> > > > to update the validation code to make sure we accept either an fb o=
+r a
+> > > > blob for the internal representation. But that kind of split intern=
+ally is
+> > > > required no matter what I think.
+> > >
+> > > I checked your idea and notes from Jessica. So while we can pass blob=
+s
+> > > to property objects, the prop_fb_id is created as an object property
+> > > with the type DRM_MODE_OBJECT_FB. Passing DRM_MODE_OBJECT_BLOB would
+> > > fail a check in drm_property_change_valid_get() ->
+> > > __drm_mode_object_find(). And I don't think that we should break the
+> > > existing validation code for this special case.
+> > >
+> >
+> > Like Jessica wrote, re-using the FB_ID property to pass solid fill
+> > information will need modification of existing checks shown in [1] OR t=
+he
+> > property creation itself would fail.
+>=20
+> Yeah modifications there are needed. Or well, we need to extend that code
+> to allow bitmask for objects iff the driver allows that. What I meant is
+> that from an uapi pov it's doable, which is the part that matters because
+> that is the part that we wont ever be able to change once it's baked in.
+>=20
+> > We just went with this approach, as it was less intrusive and would not
+> > affect the existing FB_ID path.
+> >
+> > Since both approaches need modifications of validation checks, adding a=
+ new
+> > property is less intrusive and safer than the already convoluted checks=
+ in
+> > drm_property_flags_valid().
+>=20
+> It's easier, but it's also the part that we cannot ever change (because
+> it's uapi). If the NULL fb on an active plane makes some compositor die o=
+n
+> vt switch, we then have a pretty serious problem.
 
--- 
-With best wishes
-Dmitry
+The new compositor might try to GETFB on the blob which isn't actually an F=
+B,
+and gets confused even more...
 
+> I'm honestly not sure which is the approach that blows up less, just that
+> justifying uapi with the implementation work on the kernel side is not
+> really the right approach :-)
+>=20
+> > Let us know if its a strong preference on your side to re-use FB_ID and=
+ if
+> > so why.
+>=20
+> I just want to make sure we're picking the right uapi option, and that
+> we're not just excluding them because it looks like we can't implement
+> them in the kernel. Uapi is forever, the implemenation is not.
+
+IMHO re-using FB_ID for this is not a good idea. FB_ID is described by the
+kernel as a property which accepts FB objects (DRM_MODE_OBJECT_FB). Mixing =
+up
+something else will just result in more confusion.
