@@ -2,116 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7868867924E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 08:52:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5323E679267
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 08:57:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232605AbjAXHwu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Jan 2023 02:52:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33240 "EHLO
+        id S229666AbjAXH5Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Jan 2023 02:57:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231660AbjAXHwt (ORCPT
+        with ESMTP id S229627AbjAXH5Y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Jan 2023 02:52:49 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C055CC19
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 23:52:42 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id q10-20020a1cf30a000000b003db0edfdb74so443027wmq.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 23:52:42 -0800 (PST)
+        Tue, 24 Jan 2023 02:57:24 -0500
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A107644A9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 23:57:23 -0800 (PST)
+Received: by mail-ed1-x531.google.com with SMTP id v5so17356774edc.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 23:57:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=BAe2WJH+upW322dDk1bEGZ4cZcCC0V7GrzqFfjdJrMg=;
-        b=hGPTxpSwZUv2ubxuT/5nHbDe+A30AqGBmtvji/Iv7jd9BR1eURErdOE+Ld8kUkcKcV
-         KBpMd+yZB0HVRMSv788IXaCQQxdg9P9UVfVih3M/pen+O2tI+hvtR5R6cbWPe7F48Hqb
-         ExACdlVSsYE6TI+k3v/pOyJomrx6/HBSc4EsF3l9xMz8Uj2+xwf7DVxSUixIp9lITiFV
-         6yOGgpOTV+n/yLZlsoLSx3vLvV/ml+6ZI023vAbywjGDGOjFDrxp+r82czeY0Jb8dexv
-         CP5uWx6pW85Lp7lztlLRVLu4x+/zCR5SutP5JmJbQ2uCG/SEL2XnmQFMRKINlPjQweee
-         wnsw==
+        bh=I3bszTCkD+kw+1Y7L2uGsYTJlWqLn8lcFGeHp2xVzYs=;
+        b=Yd3Me3+cKdqdLlAwp8AvD/tWrYtVn7tB/vvQyHiQc6PUX4I2VrddOvyS5s8MGqIchI
+         wCdXjpZV9dYY6eIplbatXT7nWd/2599Xm1FMAUOvMbT2owgt/d0ABiNlVVpUOV64X7vb
+         SgTHamw4hskUtfa1XGl99c3AhXE6sDn4cNfA8CivcJ5FEP2PXV+2krL+yJagNfHFz41h
+         dI0bN/51xhbwTUg6Aahm+pdXV285AIbcPco1FW/CNJmrxWnr0lcjM7hRkGV8j4SSQFxA
+         UmspSpS24H62B+6vbzJtGX/Mh5l6Y9b+RVEJzdhZNrIA8nbxv/V2m1rZ1vDLuGgAZG2j
+         lSqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BAe2WJH+upW322dDk1bEGZ4cZcCC0V7GrzqFfjdJrMg=;
-        b=o83ouvk+ORMrVO8EE5uuW4qGkJeFnrKRcH6YSIPiHMKq4u5hvpCHpqyRGVPkxGGCTa
-         Sod/D3Bf6CyP2iWBRC3YcAZNYc21AMR7qunUrAqD+AODXAumSlSSghbde/e9dhc3DycP
-         4C6wMIyiIAiOt/EyYKMPpXVO+7a8ucEyDrVrOg1g8GURr71AUXSc2/o8z3dfREzmLC2/
-         BXy/ebpVRpHh8+OX9DJV2ku7AaB4TQe50TaKYjS6mu8N87J/WOdrFL0+wht6/YoR/wdM
-         mrFqX2hYWDekbq4SHkoR9HmCFtLWTZOHogZwfkhkDgMIs6gToD9v+hnVUCggLtnlsoZM
-         2WEg==
-X-Gm-Message-State: AFqh2kqipXCG3zHCMjD2nAWJ2K7Ujtrpn1gndySvUoxYygLLqlraruW1
-        w6OcpV6hWlONHhkqnyTYdMUU8A==
-X-Google-Smtp-Source: AMrXdXtUIbnTklwYfp0Ur7d3WG5zlOuPOMpIoOKsMyOMySKmH3lI7Ra+GFxs1Sh1FysqHT0LgtpI4A==
-X-Received: by 2002:a05:600c:3488:b0:3d2:370b:97f4 with SMTP id a8-20020a05600c348800b003d2370b97f4mr34735239wmq.16.1674546760714;
-        Mon, 23 Jan 2023 23:52:40 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id m26-20020a7bcb9a000000b003db2dede1a2sm12401412wmi.26.2023.01.23.23.52.36
+        bh=I3bszTCkD+kw+1Y7L2uGsYTJlWqLn8lcFGeHp2xVzYs=;
+        b=rHcnOairh0etl0vzUB4v9z712zUtAneIzMM3e1qPiyOuaOu26UYCDnUivNWC+uJpxF
+         WszSSQn8Oz9aRA9YqIHrOJIB3BjaYkdCcdbKbUjwPLw8bZ0ovUj/iUhWSqsv7JWidRNx
+         WpGeS3Us9sTZwkOMPLM9UYmUytQWKMsMswQxIdUuWKCd0VKD8wMg4IGoN6H5E/dNhE7c
+         Qf/MaHk1q2pBQjR0pY4XIE4MVuQ0XUoMrsSoRZt5T5MDjZX8weI+saT62WJtMG42xRb/
+         TekLqo0Kqppjl3zfySTg45SaCmv8tQEw6eA1K3hv1z7hHUAu4bheWn/mt3lVfRSG7JAL
+         15jA==
+X-Gm-Message-State: AFqh2koy499A/IIrU46bx8u4/SRcz67AIdN6a+RYHtGIi8PDwxz5VotO
+        m6BYxFM8ptcLRKUgGA3EhEGjbQ==
+X-Google-Smtp-Source: AMrXdXt+1GGRxvTU201N0GgA/ANjRYl0kMjG+dTlxFaG95i9L3Q80YyqWCvwwDwBnIPn0Lwak3CV6A==
+X-Received: by 2002:a05:6402:28cb:b0:49e:db43:1722 with SMTP id ef11-20020a05640228cb00b0049edb431722mr14083304edb.18.1674547042151;
+        Mon, 23 Jan 2023 23:57:22 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id u18-20020a50c052000000b0049ebbee7134sm698378edd.94.2023.01.23.23.57.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Jan 2023 23:52:40 -0800 (PST)
-Message-ID: <b88bacbb-9da2-2175-3f59-7156c3aad4e3@linaro.org>
-Date:   Tue, 24 Jan 2023 08:52:35 +0100
+        Mon, 23 Jan 2023 23:57:21 -0800 (PST)
+Message-ID: <76500be3-08c8-311b-6f9c-ad9e2feaf2ae@linaro.org>
+Date:   Tue, 24 Jan 2023 09:57:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH 2/2] dt-bindings: dma: cleanup examples - indentation,
- lowercase hex
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Olivier Dautricourt <olivierdautricourt@gmail.com>,
-        Stefan Roese <sr@denx.de>, Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        =?UTF-8?Q?Andreas_F=c3=a4rber?= <afaerber@suse.de>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+ Thunderbird/102.6.0
+Subject: Re: [PATCH v2 1/3] drm/msm/mdss: convert UBWC setup to use match data
+Content-Language: en-GB
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Viresh Kumar <vireshk@kernel.org>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Green Wan <green.wan@sifive.com>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        =?UTF-8?B?77+9ZXI=?= <povik+lin@cutebit.org>,
-        Peng Fan <peng.fan@nxp.com>,
-        Paul Cercueil <paul@crapouillou.net>,
-        - <chuanhua.lei@intel.com>, Long Cheng <long.cheng@mediatek.com>,
-        Rajesh Gumasta <rgumasta@nvidia.com>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Biju Das <biju.das.jz@bp.renesas.com>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Palmer Debbelt <palmer@sifive.com>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Amelie Delaunay <amelie.delaunay@foss.st.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
-        linux-kernel@vger.kernel.org, asahi@lists.linux.dev,
-        linux-tegra@vger.kernel.org, linux-actions@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-riscv@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-mediatek@lists.infradead.org
-References: <20230118180144.364756-1-krzysztof.kozlowski@linaro.org>
- <20230118180144.364756-2-krzysztof.kozlowski@linaro.org>
- <20230123202010.GA2455859-robh@kernel.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230123202010.GA2455859-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20230118010428.1671443-1-dmitry.baryshkov@linaro.org>
+ <20230118010428.1671443-2-dmitry.baryshkov@linaro.org>
+ <2a5c8934-a479-6ea7-4236-9e156e26b29a@quicinc.com>
+ <CAA8EJpp4h1Pt2cNuQi94ShvERmDKTrui_brJORqzx6_wT=KC8Q@mail.gmail.com>
+ <4b0d0fcd-ddbc-5806-0ed9-e674d965d7cc@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <4b0d0fcd-ddbc-5806-0ed9-e674d965d7cc@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -122,89 +83,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/01/2023 21:20, Rob Herring wrote:
-> On Wed, Jan 18, 2023 at 07:01:44PM +0100, Krzysztof Kozlowski wrote:
->> Cleanup examples:
->>  - use 4-space indentation (for cases when it is neither 4 not 2 space),
->>  - use lowercase hex.
+On 24/01/2023 03:48, Abhinav Kumar wrote:
+> 
+> 
+> On 1/19/2023 9:26 PM, Dmitry Baryshkov wrote:
+>> On Fri, 20 Jan 2023 at 00:54, Abhinav Kumar 
+>> <quic_abhinavk@quicinc.com> wrote:
+>>>
+>>>
+>>>
+>>> On 1/17/2023 5:04 PM, Dmitry Baryshkov wrote:
+>>>> To simplify adding new platforms and to make settings more obvious,
+>>>> rewrite the UBWC setup to use the data structure to pass platform 
+>>>> config
+>>>> rather than just calling the functions direcly.
+>>>>
+>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>
+>>> I was reviewing this series and
+>>> https://patchwork.freedesktop.org/series/111732/ together.
+>>>
+>>> More I think about it, it seems like we are duplicating the same values
+>>> here and in the catalog.
+>>>
+>>> Yes, these two are different drivers.
+>>>
+>>> But now that you are adding the UBWC entries here using the compatible
+>>> string so you are creating something like a "catalog" here.
+>>>
+>>> In that case, why dont we remove the entries from dpu catalog and in the
+>>> DPU driver get the parent's match data as we know that the msm_mdss is
+>>> the parent of DPU driver
 >>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
->>  .../bindings/dma/snps,dw-axi-dmac.yaml        | 36 +++++++++----------
->>  .../bindings/dma/stericsson,dma40.yaml        |  4 +--
->>  2 files changed, 20 insertions(+), 20 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml b/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml
->> index 2bedab1f74e0..d34d0fa62ab5 100644
->> --- a/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml
->> +++ b/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml
->> @@ -113,21 +113,21 @@ additionalProperties: false
->>  
->>  examples:
->>    - |
->> -     #include <dt-bindings/interrupt-controller/arm-gic.h>
->> -     #include <dt-bindings/interrupt-controller/irq.h>
->> -     /* example with snps,dw-axi-dmac */
->> -     dmac: dma-controller@80000 {
->> -         compatible = "snps,axi-dma-1.01a";
->> -         reg = <0x80000 0x400>;
->> -         clocks = <&core_clk>, <&cfgr_clk>;
->> -         clock-names = "core-clk", "cfgr-clk";
->> -         interrupt-parent = <&intc>;
->> -         interrupts = <27>;
->> -         #dma-cells = <1>;
->> -         dma-channels = <4>;
->> -         snps,dma-masters = <2>;
->> -         snps,data-width = <3>;
->> -         snps,block-size = <4096 4096 4096 4096>;
->> -         snps,priority = <0 1 2 3>;
->> -         snps,axi-max-burst-len = <16>;
->> -     };
->> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
->> +    #include <dt-bindings/interrupt-controller/irq.h>
->> +    /* example with snps,dw-axi-dmac */
->> +    dmac: dma-controller@80000 {
+>> I should give it a thought, especially since we are trying to clean up
+>> the DPU catalog.
 > 
-> Drop unused labels while you are here.
-
-Ack
-
+> I just went through the cover letter of 
+> https://patchwork.freedesktop.org/patch/519752/ and it mentions
 > 
->> +        compatible = "snps,axi-dma-1.01a";
->> +        reg = <0x80000 0x400>;
->> +        clocks = <&core_clk>, <&cfgr_clk>;
->> +        clock-names = "core-clk", "cfgr-clk";
->> +        interrupt-parent = <&intc>;
->> +        interrupts = <27>;
->> +        #dma-cells = <1>;
->> +        dma-channels = <4>;
->> +        snps,dma-masters = <2>;
->> +        snps,data-width = <3>;
->> +        snps,block-size = <4096 4096 4096 4096>;
->> +        snps,priority = <0 1 2 3>;
->> +        snps,axi-max-burst-len = <16>;
->> +    };
->> diff --git a/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml b/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml
->> index 664ee61a00d8..57395a810719 100644
->> --- a/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml
->> +++ b/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml
->> @@ -147,9 +147,9 @@ examples:
->>      #include <dt-bindings/interrupt-controller/irq.h>
->>      #include <dt-bindings/interrupt-controller/arm-gic.h>
->>      #include <dt-bindings/mfd/dbx500-prcmu.h>
->> -    dma-controller@801C0000 {
->> +    dma-controller@801c0000 {
->>        compatible = "stericsson,db8500-dma40", "stericsson,dma40";
->> -      reg = <0x801C0000 0x1000>, <0x40010000 0x800>;
->> +      reg = <0x801c0000 0x1000>, <0x40010000 0x800>;
->>        reg-names = "base", "lcpa";
->>        interrupts = <GIC_SPI 25 IRQ_TYPE_LEVEL_HIGH>;
->>        #dma-cells = <3>;
+> "My itent is to land both series and then to make
+> DPU request this data from the MDSS driver"
 > 
-> Indentation?
+> This means that the parent data suggestion will be implemented?
 
-Ack
+Yes, at some point. You probably saw the dpu_ubwc_cfg structure. As I 
+wrote, I'd like to get it from MDSS. Just looking for a best way to do this.
 
-Best regards,
-Krzysztof
+
+-- 
+With best wishes
+Dmitry
 
