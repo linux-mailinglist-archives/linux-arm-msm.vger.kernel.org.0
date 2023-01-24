@@ -2,200 +2,423 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 457AC679AF3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 15:01:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8EA17679AFE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 15:03:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234488AbjAXOBu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Jan 2023 09:01:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37544 "EHLO
+        id S234481AbjAXODr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Jan 2023 09:03:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234385AbjAXOBn (ORCPT
+        with ESMTP id S234262AbjAXODp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Jan 2023 09:01:43 -0500
-Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [5.144.164.163])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD8CC1BFE
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 06:01:20 -0800 (PST)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 57FF22049A;
-        Tue, 24 Jan 2023 15:00:45 +0100 (CET)
-Date:   Tue, 24 Jan 2023 15:00:44 +0100
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        freedreno@lists.freedesktop.org,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        dri-devel@lists.freedesktop.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        David Airlie <airlied@gmail.com>
-Subject: Re: [1/2] drm/msm/dpu: fix clocks settings for msm8998 SSPP blocks
-Message-ID: <20230124140044.rg46lhkif7lot2xe@SoMainline.org>
-References: <20230115124143.464809-1-dmitry.baryshkov@linaro.org>
- <20230124095944.4zez2jmidjuh3nvf@SoMainline.org>
- <9f182939-0e32-c0a9-ee09-9e97a48bb7ac@linaro.org>
- <20230124111250.b2r2co4jjxofjchp@SoMainline.org>
- <CAA8EJprPxm6PObLapAXr_D5d85oT8y2GhoCzABLq_u2xFDhkvQ@mail.gmail.com>
- <20230124120652.rqmaj2j4jytmvzbl@SoMainline.org>
- <8cd7b10a-bc1e-76b6-89db-32d1cf09bfd9@linaro.org>
+        Tue, 24 Jan 2023 09:03:45 -0500
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FFCB2916C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 06:03:22 -0800 (PST)
+Received: by mail-ej1-x635.google.com with SMTP id az20so39324368ejc.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 06:03:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=dvMhrp6aXMYhNBDf7vWcqNsepHP7pV06IRFW7mZteb4=;
+        b=t9MCRzd5cuO9xiAy4KR5nwA6yr/i9V3zqK+xz1vwAlROm5JYEsH0Xtq78S05jQfrJN
+         GT978RXSIeDSi2TdVo61NuXai/utJF113ueOgRYnpFOUjX7hAcG57UBCxfh+teLhnKSO
+         paJqE7tbR++i+89Rpob/+7h7THxeZV51QoSKKpdX9LFpQS3m6CUI3lNVpvdJA67XPPN+
+         QQAWryEYwcLIFIdI8OyEIIJ/F5B4FDfUXgaSxrFDgbOLoMrg/1bah9ccTjKjgc+ts/7j
+         rNTe8SR29K9qzeuBPv7uC7rnvqVubKyPncwYa0Akh4VFGbpeaH79raqoU5lD6vvNJlI8
+         OV9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=dvMhrp6aXMYhNBDf7vWcqNsepHP7pV06IRFW7mZteb4=;
+        b=lC7GBMKqG6nuEKCXM52GthJJHNy8zn89l5BFWD2CelKfjNAXcwox9z9JGZQ5lo0H7A
+         gPjZO/DFIroOKZXKtZELyN0bir8VYzTbwTsyhcSGFahVZtKi5SQRM2TfPpO02q7skYUw
+         chOGTuO3eMiX0jnjhfBJJGCbyxN3YPfcFVmAsIBDGztAPQP8VVNj5Q82Dl24Qqh/HKTF
+         roHfyTNDFCOBmT0euSfGqvtLOIhnpVPnbNyGtTP7wbJImGlj+GoHkmF+TbNiRE/677wB
+         Bxk1EKEL4FUVN+Ml4AaHixKwkt6JmKGN9gAOnVeJUSyC6eW3H8uNB4ELrVvtZJWsRGAk
+         YsFQ==
+X-Gm-Message-State: AFqh2kqVhjtWJrjYuJm1LaIP/g7HbyFap14JHaPnTdplz0lLTGjMYjso
+        22R/qBmwy8kP8G3emM1jASoNgEqCDvWFzNTT
+X-Google-Smtp-Source: AMrXdXsd7JJcUfvheW6NJmo4OaTa+SBH6fq8UgQo+LkVJrbY7ThmAsSfeG/v6Xbh+C+FzFF/z+feDA==
+X-Received: by 2002:a17:907:c243:b0:872:84dd:8903 with SMTP id tj3-20020a170907c24300b0087284dd8903mr30438950ejc.59.1674569000305;
+        Tue, 24 Jan 2023 06:03:20 -0800 (PST)
+Received: from [192.168.1.101] (abyl109.neoplus.adsl.tpnet.pl. [83.9.31.109])
+        by smtp.gmail.com with ESMTPSA id k14-20020a170906054e00b0084c6581c16fsm942677eja.64.2023.01.24.06.03.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 Jan 2023 06:03:19 -0800 (PST)
+Message-ID: <f7a93a51-f104-3c75-8e59-6f718255555c@linaro.org>
+Date:   Tue, 24 Jan 2023 15:03:17 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8cd7b10a-bc1e-76b6-89db-32d1cf09bfd9@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8250: Add device tree for Xiaomi
+ Mi Pad 5 Pro
+Content-Language: en-US
+To:     Jianhua Lu <lujianhua000@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Kees Cook <keescook@chromium.org>,
+        Tony Luck <tony.luck@intel.com>,
+        "Guilherme G . Piccoli" <gpiccoli@igalia.com>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+References: <20230124135318.10023-1-lujianhua000@gmail.com>
+ <20230124135318.10023-2-lujianhua000@gmail.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230124135318.10023-2-lujianhua000@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-01-24 14:29:38, Dmitry Baryshkov wrote:
-> On 24/01/2023 14:06, Marijn Suijten wrote:
-> > On 2023-01-24 13:20:57, Dmitry Baryshkov wrote:
-> >> On Tue, 24 Jan 2023 at 13:12, Marijn Suijten
-> >> <marijn.suijten@somainline.org> wrote:
-> >>>
-> >>> On 2023-01-24 12:19:27, Dmitry Baryshkov wrote:
-> >>>> On 24/01/2023 11:59, Marijn Suijten wrote:
-> >>>>> On 2023-01-15 14:41:42, Dmitry Baryshkov wrote:
-> >>>>>> DMA2 and DMA3 planes on msm8998 should use corresponding DMA2 and DMA3
-> >>>>>> clocks rather than CURSOR0/1 clocks (which are used for the CURSOR
-> >>>>>> planes). Correct corresponding SSPP declarations.
-> >>>>>>
-> >>>>>> Fixes: 94391a14fc27 ("drm/msm/dpu1: Add MSM8998 to hw catalog")
-> >>>>>> Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> >>>>>> Cc: Jami Kettunen <jami.kettunen@somainline.org>
-> >>>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >>>>>> ---
-> >>>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 4 ++--
-> >>>>>>    1 file changed, 2 insertions(+), 2 deletions(-)
-> >>>>>>
-> >>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> >>>>>> index 0f3da480b066..ad0c55464154 100644
-> >>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> >>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> >>>>>> @@ -1180,9 +1180,9 @@ static const struct dpu_sspp_cfg msm8998_sspp[] = {
-> >>>>>>     SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000,  DMA_MSM8998_MASK,
-> >>>>>>             sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA1),
-> >>>>>>     SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000,  DMA_CURSOR_MSM8998_MASK,
-> >>>>>
-> >>>>> Drop the _CURSOR mask here?  And the double space....
-> >>>>
-> >>>> Ack for the doublespace. By removing _CURSOR we would disallow using
-> >>>> these planes as hw cursor planes. This would switch all compositors into
-> >>>> sw cursor mode, thus damaging the performance.
-> >>>
-> >>> Doesn't that require special hardware support, or can any DMA pipe
-> >>> support "hw cursor mode/planes", whatever that means?  Sorry for not
-> >>> being well versed in this area, I'd expect DMA pipes and CURSOR pipes to
-> >>> have a different set of features / capabilities.
-> >>
-> >> Yes, they have different capabilities. but DMA_CURSOR_MSM8998_MASK =
-> >> DMA_MSM8998_MASK | BIT(DPU_SSPP_CURSOR). And the DPU_SSPP_CURSOR is
-> >> used internally to tell the DRM core that the corresponding plane is
-> >> going to be used as a "userspace cursor" plane.
-> > 
-> > Different capabilities for userspace, but not in terms hardware (/driver
-> > support, yet)?  If so, then:
-> > 
-> > Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-> > 
-> >>> Commit 07ca1fc0f8a0 ("drm/msm/dpu: enable cursor plane on dpu") leads me
-> >>> to believe that it's mostly to let userspace use these DMA pipes for
-> >>> cursors (having cursor planes available in uapi) rather than requiring
-> >>> any special hardware support (though semantics do seem to change in a
-> >>> nontrivial way).
-> >>
-> >> Correct.
-> >> DRM/userspace cursor planes = planes which userspace can use to draw
-> >> mouse cursor. Legacy compositors and legacy cursor IOCTLs stick to
-> >> using them
-> >> DPU/MDP5 CURSOR plane (sspp_12/13) = lightweight limited plane without
-> > 
-> > But these DMA pipes are _not_ lightweight/limited?
-> 
-> No, they are not.
-> 
-> > 
-> >> additional features, targeting HW cursor only, not present since
-> >> sdm845
-> >> DPU_SSPP_CURSOR = bit which tells DPU core to mark a plane as
-> >> 'DRM/userspace cursor plane'.
-> > 
-> > Ack, so it's not toggling anything hardware specific /yet/.  However,
-> > does this prevent userspace from using these pipes/planes for other DMA
-> > purposes as they're marked as a different _type_ of plane? 
-> 
-> This is what 'universal planes' API is solving.
-> 
-> Historically there were three kinds of planes: primary (iow background), 
-> cursor and overlay.
-> By default an application sees only the overlay planes and has some 
-> additional API to manipulate cursors and backgrounds.
-> 
-> Then at some point it was found that this split is not worth all the 
-> troubles, since applications can better utilize the hardware if they can 
-> decide on their own what should be done. So now we still have all three 
-> kinds of planes (for the legacy userspace), but behind the scenes they 
-> all are the same. If an application knows how to knock the door, it will 
-> see all the planes with the capabilities being exposed through plane 
-> properties, etc.
-> 
-> Back to our case. We mark these planes as 'cursor' ones, to let the 
-> legacy composers to use them for hardware cursor. I think it was decided 
-> that not having the cursor is worse than requiring another blending 
-> step. On the other hand newer composers see a full array of planes.
 
-Thanks so much for this backstory, that explains why it shouldn't harm
-modern compositors; in modetest I see these planes have the cursor type
-property, but no restriction on zpos for example.
 
-> > And will
-> > that change when we do end up "implementing more rigorous/strict
-> > hardware support"? 
+On 24.01.2023 14:53, Jianhua Lu wrote:
+> Add support for Xiaomi Mi Pad 5 Pro, codename is xiaomi-elish.
 > 
-> Once implemented, there will be more planes for msm8998 (and eventually 
-> sdm660/630, once we have them too). Some of them will be limited in size 
-> or in the Z order (cursor), some will not (rgb, dma, vig).
-
-That's what I saw one of the linked patches; at that point we should add
-separate feature bits for this so as to not limit the size or Z-order
-range for these DMA-pipes-disguised-as-cursor-planes.
-
-> > For the other SoCs, are their DMA pipes also
-> > featureful and would the presence of DPU_SSPP_CURSOR severely limit its
-> > functionality? 
+> This commit brings support for:
+>   * ADSP/CDSP/SLPI/VENUS
+>   * Backlight
+>   * Battery fuel gauge
+>   * Framebuffer
+>   * PCIe0
+>   * USB2.0
 > 
-> All DMA pipes have the same set of features (in the same generation of 
-> course).
-> No, it's just a software marker.
-
-Ack yes, so again once the software marker starts limiting properties
-for actual CURSOR support (on pre-msm8998) we should distinguish them
-from DMA pipes that are simply marked as cursor planes...
-
-> > And is this thing that "virtual planes" would be going
-> > to "solve"?
+> Note backlight driver (ktz8866) is waitting for upstreaming[1].
+> [1] https://lore.kernel.org/linux-leds/20230120155018.15376-1-lujianhua000@gmail.com
 > 
-> Included. The virtual planes is trying to solve a slightly different 
-> part of the story: to remove 1:1 correspondence between planes and 
-> pipes. Sometimes it would be nice to use two HW pipes for a single DRM 
-> plane (e.g. the kernel expects to have a single primary plane whose 
-> resolution matches the resolution of the CRTC, 4k = two SSPP because of 
-> hardware limitations). Sometimes a single HW pipe can be used to drive 
-> two DRM planes (see multirect). So, pretty much in the same way as we 
-> use one or two LMs to drive a CRTC, it is useful to use 1/2, 1 or 2 
-> SSPPs to drive a single DRM plane.
+> Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
+> ---
+>  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>  .../boot/dts/qcom/sm8250-xiaomi-elish.dts     | 594 ++++++++++++++++++
+>  2 files changed, 595 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index b0423ca3e79f..769cee2b450f 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -184,6 +184,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-hdk.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-mtp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-sony-xperia-edo-pdx203.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-sony-xperia-edo-pdx206.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-xiaomi-elish.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8350-hdk.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8350-microsoft-surface-duo2.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8350-mtp.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts
+> new file mode 100644
+> index 000000000000..99ae6668e516
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts
+> @@ -0,0 +1,594 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2022, 2023 Jianhua Lu <lujianhua000@gmail.com>
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> +#include "sm8250.dtsi"
+> +#include "pm8150.dtsi"
+> +#include "pm8150b.dtsi"
+> +#include "pm8150l.dtsi"
+> +#include "pm8009.dtsi"
+> +
+> +/*
+> + * Delete following upstream (sm8250.dtsi) reserved
+> + * memory mappings which are different in this device.
+> + */
+> +/delete-node/ &xbl_aop_mem;
+> +/delete-node/ &slpi_mem;
+> +/delete-node/ &adsp_mem;
+> +/delete-node/ &spss_mem;
+> +/delete-node/ &cdsp_secure_heap;
+> +
+> +/ {
+> +	model = "Xiaomi Mi Pad 5 Pro";
+> +	compatible = "xiaomi,elish", "qcom,sm8250";
+> +	classis-type = "tablet";
+> +
+> +	/* required for bootloader to select correct board */
+> +	qcom,msm-id = <356 0x20001>; /* SM8250 v2.1 */
+Please include include/dt-bindings/arm/qcom,ids.h and use
+the QCOM_ID_SM8250 define.
 
-Ah, ack, that makes sense, and it wouldn't / shouldn't be up to
-userspace to assign and use the pipes on its own.
+> +	qcom,board-id = <0x10008 0>;
+> +
+> +	chosen {
+> +		#address-cells = <2>;
+> +		#size-cells = <2>;
+> +		ranges;
+> +
+> +		framebuffer: framebuffer@9c000000 {
+> +			compatible = "simple-framebuffer";
+> +			reg = <0 0x9c000000 0 0x2300000>;
+Please use 0x0 instead of 0, like in other nodes.
 
-- Marijn
+> +			width = <1600>;
+> +			height = <2560>;
+> +			stride = <(1600 * 4)>;
+> +			format = "a8r8g8b8";
+> +		};
+> +	};
+> +
+> +	gpio_keys: gpio-keys {
+> +		compatible = "gpio-keys";
+You may want to add the pin settings for pm8150_gpio6 here.
+
+> +
+> +		vol-up {
+> +			label = "Volume Up";
+> +			gpios = <&pm8150_gpios 6 GPIO_ACTIVE_LOW>;
+> +			linux,code = <KEY_VOLUMEUP>;
+> +			debounce-interval = <15>;
+> +			linux,can-disable;
+> +			gpio-key,wakeup;
+> +		};
+> +	};
+> +
+> +	bl_vddpos_5p5: bl-vddpos-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "bl_vddpos_5p5";
+> +		regulator-min-microvolt = <5500000>;
+> +		regulator-max-microvolt = <5500000>;
+> +		regulator-enable-ramp-delay = <233>;
+> +		gpio = <&tlmm 130 0>;
+> +		enable-active-high;
+> +		regulator-boot-on;
+> +	};
+> +
+> +	bl_vddneg_5p5: bl-vddneg-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "bl_vddneg_5p5";
+> +		regulator-min-microvolt = <5500000>;
+> +		regulator-max-microvolt = <5500000>;
+> +		regulator-enable-ramp-delay = <233>;
+> +		gpio = <&tlmm 131 0>;
+> +		enable-active-high;
+> +		regulator-boot-on;
+> +	};
+> +
+> +	vph_pwr: vph-pwr-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "vph_pwr";
+> +		regulator-min-microvolt = <3700000>;
+> +		regulator-max-microvolt = <3700000>;
+> +	};
+> +
+> +	/* S6c is really ebi.lvl but it's there for supply map completeness sake. */
+> +	vreg_s6c_0p88: smpc6-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "vreg_s6c_0p88";
+> +		regulator-min-microvolt = <880000>;
+> +		regulator-max-microvolt = <880000>;
+> +		regulator-always-on;
+> +		vin-supply = <&vph_pwr>;
+> +	};
+> +
+> +	reserved-memory {
+> +		xbl_aop_mem: memory@80700000 {
+> +			reg = <0x0 0x80600000 0x0 0x260000>;
+> +			no-map;
+> +		};
+> +
+> +		slpi_mem: memory@88c00000 {
+> +			reg = <0x0 0x88c00000 0x0 0x2f00000>;
+> +			no-map;
+> +		};
+> +
+> +		adsp_mem: memory@8bb00000 {
+> +			reg = <0x0 0x8bb00000 0x0 0x2500000>;
+> +			no-map;
+> +		};
+> +
+> +		spss_mem: memory@8e000000 {
+> +			reg = <0x0 0x8e000000 0x0 0x100000>;
+> +			no-map;
+> +		};
+> +
+> +		cdsp_secure_heap: memory@8e100000 {
+> +			reg = <0x0 0x8e100000 0x0 0x4600000>;
+> +			no-map;
+> +		};
+> +
+> +		cont_splash_mem: memory@9c000000 {
+> +			reg = <0x0 0x9c000000 0x0 0x2300000>;
+> +			no-map;
+> +		};
+> +
+> +		ramoops@b0000000 {
+> +			compatible = "ramoops";
+> +			reg = <0x0 0xb0000000 0x0 0x400000>;
+> +			record-size = <0x1000>;
+> +			console-size = <0x200000>;
+> +			ecc-size = <16>;
+> +			no-map;
+> +		};
+> +	};
+> +
+> +	battery_l: battery-l {
+Move these up to keep the nodes sorted alphabetically.
+
+> +		compatible = "simple-battery";
+> +		voltage-min-design-microvolt = <3870000>;
+> +		energy-full-design-microwatt-hours = <16600000>;
+> +		charge-full-design-microamp-hours = <4300000>;
+> +	};
+> +
+> +	battery_r: battery-r {
+> +		compatible = "simple-battery";
+> +		voltage-min-design-microvolt = <3870000>;
+> +		energy-full-design-microwatt-hours = <16600000>;
+> +		charge-full-design-microamp-hours = <4300000>;
+> +	};
+> +};
+> +
+[...]
+
+> +
+> +&i2c0 {
+> +	clock-frequency = <400000>;
+> +	status = "okay";
+> +
+> +	battery_fg@55 {
+fuel-gauge@
+
+> +		compatible = "ti,bq27z561";
+> +		reg = <0x55>;
+> +		monitored-battery = <&battery_r>;
+> +	};
+> +};
+> +
+> +&i2c11 {
+> +	clock-frequency = <400000>;
+> +	status = "okay";
+> +
+> +	backlight: backlight@11 {
+> +		compatible = "kinetic,ktz8866";
+> +		reg = <0x11>;
+> +		vddpos-supply = <&bl_vddpos_5p5>;
+> +		vddneg-supply = <&bl_vddneg_5p5>;
+> +		enable-gpios = <&tlmm 139 GPIO_ACTIVE_HIGH>;
+> +		current-num-sinks = <5>;
+> +		kinetic,current-ramp-delay-ms = <128>;
+> +		kinetic,led-enable-ramp-delay-ms = <1>;
+> +		kinetic,enable-lcd-bias;
+> +	};
+> +};
+> +
+> +&i2c13 {
+> +	clock-frequency = <400000>;
+> +	status = "okay";
+> +
+> +	battery_fg@55 {
+fuel-gauge@
+
+> +		compatible = "ti,bq27z561";
+> +		reg = <0x55>;
+> +		monitored-battery = <&battery_l>;
+> +	};
+> +};
+> +
+> +&pcie0 {
+> +	status = "okay";
+> +};
+> +
+> +&pcie0_phy {
+> +	vdda-phy-supply = <&vreg_l5a_0p88>;
+> +	vdda-pll-supply = <&vreg_l9a_1p2>;
+> +	status = "okay";
+> +};
+> +
+> +&pon_pwrkey {
+> +	status = "okay";
+> +};
+> +
+> +&pon_resin {
+> +	linux,code = <KEY_VOLUMEDOWN>;
+> +	status = "okay";
+> +};
+> +
+> +&qupv3_id_0 {
+> +	status = "okay";
+> +};
+> +
+> +&qupv3_id_1 {
+> +	status = "okay";
+> +};
+> +
+> +&qupv3_id_2 {
+> +	status = "okay";
+> +};
+> +
+> +&slpi {
+> +	firmware-name = "qcom/sm8250/xiaomi/elish/slpi.mbn";
+> +	status = "okay";
+> +};
+> +
+> +&tlmm {
+> +	gpio-reserved-ranges = <40 4>;
+> +};
+> +
+> +&usb_1 {
+> +	/* USB 2.0 only */
+> +	qcom,select-utmi-as-pipe-clk;
+> +	status = "okay";
+> +};
+> +
+> +&usb_1_dwc3 {
+> +	dr_mode = "peripheral";
+> +	maximum-spped = "high-speed";
+> +	/* Remove USB3 phy */
+> +	phys = <&usb_1_hsphy>;
+> +	phy-names = "usb2-phy";
+> +};
+> +
+> +&usb_1_hsphy {
+> +	vdda-pll-supply = <&vreg_l5a_0p88>;
+> +	vdda18-supply = <&vreg_l12a_1p8>;
+> +	vdda33-supply = <&vreg_l2a_3p1>;
+> +	status = "okay";
+> +};
+> +
+> +&ufs_mem_hc {
+> +	vcc-supply = <&vreg_l17a_3p0>;
+> +	vcc-max-microamp = <800000>;
+> +	vccq-supply = <&vreg_l6a_1p2>;
+> +	vccq-max-microamp = <800000>;
+> +	vccq2-supply = <&vreg_s4a_1p8>;
+> +	vccq2-max-microamp = <800000>;
+I think you may want to add regulator-allow-set-load on
+these regulators.
+
+Konrad
+> +	status = "okay";
+> +};
+> +
+> +&ufs_mem_phy {
+> +	vdda-phy-supply = <&vreg_l5a_0p88>;
+> +	vdda-pll-supply = <&vreg_l9a_1p2>;
+> +	status = "okay";
+> +};
+> +
+> +&venus {
+> +	firmware-name = "qcom/sm8250/elish/venus.mbn";
+> +	status = "okay";
+> +};
