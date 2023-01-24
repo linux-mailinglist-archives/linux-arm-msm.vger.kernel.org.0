@@ -2,157 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9CA7667A531
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 22:46:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 33C4C67A545
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 22:57:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233478AbjAXVqI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Jan 2023 16:46:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33386 "EHLO
+        id S233643AbjAXV54 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Jan 2023 16:57:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235124AbjAXVqC (ORCPT
+        with ESMTP id S229545AbjAXV5z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Jan 2023 16:46:02 -0500
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 448D847082
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 13:46:01 -0800 (PST)
-Received: by mail-ej1-x633.google.com with SMTP id kt14so42782163ejc.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 13:46:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9xdh2yXUEHJLO3yLt9IOrFcz74mAZ087g5gbTk/yanY=;
-        b=fm0yBjJquVlA+TgQg+HS6DLHSSnMSnMo2hoYalAO2d0BnBxjIUcTz3ONqP2TB8lQHb
-         s2a8wNu8hD9hQaIqV3/fqafwt5rIxg4hlb7B4uW/LVBGNy/AKWH7vr2asjM+mRRmjv0u
-         aCp9wDDEiPk9Zz0U9OAvpprbIdnKgzELD2R7hWleOhdseOQvvDrLVmMEJdWjhLvqfAGJ
-         qd/V+yet4cMGM7xJ+ASaMrvwSscddjnyu9SAApknJdcvWbHFqibF5TJnmOu578pDs+T/
-         IJEtlttjmxSoa2h1WoM9ZYYj1QXc2CAujW3BYFpQDDYsSuq6LNwuRZ7zR7/mJw7ftdsY
-         GMRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9xdh2yXUEHJLO3yLt9IOrFcz74mAZ087g5gbTk/yanY=;
-        b=I0A5X2bIixT1rntbEmRdO/NHdMiDzj7+YocCRyoT2n6R1eiIuZEKXOQGvmeEDnJznC
-         HW2B+4757rJ/N7aS50WFSs5n2h91weESiZc9WKiMpMjhAV1bYVTfQdzcscc3gg+IfZlQ
-         artbcaAFd+fc6gmxQsAqz34BronELH2h/5ZWKth7HfGLC0jGKq2REM7kzio1cgplGajF
-         sNGviD5gYLVMYZkEsT+hsEdzRUYkcXpEOrW2Fszda/x9t1qaz1avaZg2hB+NarzNjRFG
-         yNgJamJRdjxMa0bN4lJv99xGapNPgAztLZry+VlNYQvSCKCwmSN/Rek3xRhVtcXrbN1G
-         NKZw==
-X-Gm-Message-State: AFqh2krWa8Z3CEwzc+Z2Yhv91VEpxKW8WaBaAUZqs7IqA6bsy4HBk68c
-        DS8DSOOgQ9VwZkiwYYXo+RHMsg==
-X-Google-Smtp-Source: AMrXdXvn3p6vxdHIfQJV7xez9X1sqklQMBgb0JM8gn6Ny6gilstu8jtokmAeSx6Ib1Q3BQljexD++w==
-X-Received: by 2002:a17:907:2a8c:b0:870:8e22:1433 with SMTP id fl12-20020a1709072a8c00b008708e221433mr23229804ejc.16.1674596759807;
-        Tue, 24 Jan 2023 13:45:59 -0800 (PST)
-Received: from [192.168.1.101] (abyl109.neoplus.adsl.tpnet.pl. [83.9.31.109])
-        by smtp.gmail.com with ESMTPSA id n22-20020a1709065e1600b00877de2def77sm1420794eju.31.2023.01.24.13.45.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Jan 2023 13:45:59 -0800 (PST)
-Message-ID: <3d126383-8fea-7ff5-3f42-c131ce46547f@linaro.org>
-Date:   Tue, 24 Jan 2023 22:45:57 +0100
+        Tue, 24 Jan 2023 16:57:55 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A79394A223;
+        Tue, 24 Jan 2023 13:57:52 -0800 (PST)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30OKYCaE022236;
+        Tue, 24 Jan 2023 21:57:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=/3t6Ul43D/U4MVqFsDlfvNyuYMKr31kFdBiILMCnGfo=;
+ b=YHbwAywxZue/HLZ2vZ8oY06ARTeSZQH0vMgCbmTrO7O3UtfVweFnqeDiyfCjIipntie6
+ qo8WRX9YxCLdN2RylCcLvjGp1oH+b9VWAhH+yAF520lRo+7KlFpo0T0G3SOxoAkNuW1b
+ UvANy5c7Q6TgHN5BATQRBGnVw8G0wx20u09DKJYRYFIaenTR/LAm+d/zP7xLvOG6dd2f
+ 9Vi8Hq6EWZT3pMdDC1tPS0mmmS+bXHDbQZzqmhI9+hj1LRNYHGdd2ooSN24TJSsmCbAv
+ QyHJg/A+8rOCwh+vlE5PVBiM5qcL2ua7ivmqjVe9uZdK3aaFwQR2MUlt7tNLwtMuAMCm pQ== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n89dndxjw-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 24 Jan 2023 21:57:41 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30OLveCq026026
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 24 Jan 2023 21:57:40 GMT
+Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Tue, 24 Jan 2023 13:57:39 -0800
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+To:     <mani@kernel.org>
+CC:     <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>
+Subject: [PATCH 0/2] MHI host syserr fixes
+Date:   Tue, 24 Jan 2023 14:57:22 -0700
+Message-ID: <1674597444-24543-1-git-send-email-quic_jhugo@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sa8540p-ride: Document i2c busses
-Content-Language: en-US
-To:     Andrew Halaney <ahalaney@redhat.com>, andersson@kernel.org
-Cc:     agross@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        bmasney@redhat.com, quic_shazhuss@quicinc.com
-References: <20230124192351.695838-1-ahalaney@redhat.com>
- <20230124192351.695838-2-ahalaney@redhat.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230124192351.695838-2-ahalaney@redhat.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ATm4WQtwur1H_c10HPMZWOqm2_icacje
+X-Proofpoint-ORIG-GUID: ATm4WQtwur1H_c10HPMZWOqm2_icacje
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-24_16,2023-01-24_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1015
+ lowpriorityscore=0 spamscore=0 phishscore=0 mlxscore=0 bulkscore=0
+ malwarescore=0 mlxlogscore=991 suspectscore=0 priorityscore=1501
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301240202
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Two small fixes that address an issue where it is observed in stress
+testing that a MHI device could appear to enter a bad state and be unable
+to recover unless the module is removed and re-added which should not be
+necessary.
 
+Jeffrey Hugo (2):
+  bus: mhi: host: Remove duplicate ee check for syserr
+  bus: mhi: host: Use mhi_tryset_pm_state() for setting fw error state
 
-On 24.01.2023 20:23, Andrew Halaney wrote:
-> It isn't obvious in the current devicetree what is connected. Go ahead
-> and document what's on the other end.
-> 
-> Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
-> ---
-Other boards do similar things under the i2c host nodes (see
-e.g. sm8450-sony-xperia-nagara.dtsi..
+ drivers/bus/mhi/host/boot.c | 16 ++++++++++++----
+ drivers/bus/mhi/host/main.c |  2 +-
+ 2 files changed, 13 insertions(+), 5 deletions(-)
 
-> 
-> Not sure if this sort of patch is actually welcomed or not but I went
-> through this exercise (for the prior patch) and thought it might be
-> useful to document.
-..and yes it is very welcome!
+-- 
+2.7.4
 
-> 
-> Shazad, this also highlights (unless I misread things) that i2c12 has no
-> use for us, right? If agreed I can remove it but sorting through the
-> lore links that provided all this it seems like at the time it was
-> desired to be added.
-It's fine if you guys decide that it's useful for some kind expansion
-mezzanine or other add-on board, but if it's not connected anywhere
-you may wish to disable the host and remove the pinctrl entries, as
-keeping it enabled essentially wastes some power.
-
-Konrad
-> 
-> Thanks,
-> Andrew
-> 
->  arch/arm64/boot/dts/qcom/sa8540p-ride.dts | 5 +++++
->  1 file changed, 5 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-> index cb9fbdeb5a9e..3478ab91fe73 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-> +++ b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-> @@ -317,6 +317,7 @@ &xo_board_clk {
->  
->  &tlmm {
->  	i2c0_default: i2c0-default-state {
-> +		/* To USB7002T-I/KDXVA0 USB hub (SIP1 only) */
->  		pins = "gpio135", "gpio136";
->  		function = "qup0";
->  		drive-strength = <2>;
-> @@ -324,6 +325,7 @@ i2c0_default: i2c0-default-state {
->  	};
->  
->  	i2c1_default: i2c1-default-state {
-> +		/* To PM40028B-F3EI PCIe switch */
->  		pins = "gpio158", "gpio159";
->  		function = "qup1";
->  		drive-strength = <2>;
-> @@ -331,6 +333,7 @@ i2c1_default: i2c1-default-state {
->  	};
->  
->  	i2c12_default: i2c12-default-state {
-> +		/* Not connected */
->  		pins = "gpio0", "gpio1";
->  		function = "qup12";
->  		drive-strength = <2>;
-> @@ -338,6 +341,7 @@ i2c12_default: i2c12-default-state {
->  	};
->  
->  	i2c15_default: i2c15-default-state {
-> +		/* To display connector (SIP1 only) */
->  		pins = "gpio36", "gpio37";
->  		function = "qup15";
->  		drive-strength = <2>;
-> @@ -345,6 +349,7 @@ i2c15_default: i2c15-default-state {
->  	};
->  
->  	i2c18_default: i2c18-default-state {
-> +		/* To ASM330LHH IMU (SIP1 only) */
->  		pins = "gpio66", "gpio67";
->  		function = "qup18";
->  		drive-strength = <2>;
