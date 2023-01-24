@@ -2,151 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B0A2067A29D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 20:25:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 162D467A391
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 21:03:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233925AbjAXTZS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Jan 2023 14:25:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57128 "EHLO
+        id S233653AbjAXUDE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Jan 2023 15:03:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233062AbjAXTZR (ORCPT
+        with ESMTP id S233542AbjAXUDE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Jan 2023 14:25:17 -0500
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEEBB4C6CB
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 11:24:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1674588264;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=cO6b+dBIzWhUJ0Ot0Nn16J8i3J9gyi8QLbDA6Oroy1E=;
-        b=B1NXQj/96QP3d1RKURPicgtZDFE7li6G6jwsydeSDrrKLX8PSkIGgxZp5hVkyhTLRcPTE9
-        mC6iKU1It6LFFYRo9vA+M7SXWrJU5ZFM7Et62WBdsAR/YRcG+8lD/5cvcEUVIvTcKGWfji
-        LOpz27jHDcu2y5I/uqAc/ongbGWbBEs=
-Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com
- [209.85.210.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-259-0xKtew2lOCyJHclhDTeYCQ-1; Tue, 24 Jan 2023 14:24:22 -0500
-X-MC-Unique: 0xKtew2lOCyJHclhDTeYCQ-1
-Received: by mail-ot1-f72.google.com with SMTP id c13-20020a9d784d000000b006866230a44aso8117446otm.15
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 11:24:22 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cO6b+dBIzWhUJ0Ot0Nn16J8i3J9gyi8QLbDA6Oroy1E=;
-        b=i1pSG9kdrwyhdejSmmudlPgQXvxiyFVYoYS8Q9yladomM7qiJKPEtdydRO9L8+WItR
-         8X8nlEqPBj8Le5uuaI1hCB4qt83D6WAqP5XVJ8hLfERIdtbU/pK/yemhl1C0vZlSZchu
-         x9PF1EW7vb1b91mYmwQyQpYe3r80a6MR0ANCWgOFPB6WQkIS4bflQ/9ISC5DCejvH/BA
-         RwZ+POoUNVcAjVwXsumEoYnddDKNSQdAQGuZ//kPcfDDimPmZ0BSI7/DcP/3QMdNTIKp
-         qtGqkQPXtbsbza3ANKTZpvJYxvNuKhfAS0QTexf0mwsDv3ktlbpdVtu3paaOK1VADSV4
-         6+Xg==
-X-Gm-Message-State: AFqh2kohHgXKRHuS8wSapoXxj+onod1GGtp9t5mvgc3mXQjnsoxqY5Qx
-        nQtZt4Gc9GDJSMmlZfB5LWrIenujeJNHmI7EWHIfH+BHV5K7x5SlrCSckK1LsNm1HsSgYrmBvPp
-        acHer64WwI5cSk115RAgJhaTX/w==
-X-Received: by 2002:a05:6808:300e:b0:364:f962:afd1 with SMTP id ay14-20020a056808300e00b00364f962afd1mr15578552oib.56.1674588262025;
-        Tue, 24 Jan 2023 11:24:22 -0800 (PST)
-X-Google-Smtp-Source: AMrXdXtXJqXdze5ERKsi/TEq4I3Qn8MLneaaxsNGXIqSS/Q8exKfwqcnDFs/GLX78SPVbd3lckA+0A==
-X-Received: by 2002:a05:6808:300e:b0:364:f962:afd1 with SMTP id ay14-20020a056808300e00b00364f962afd1mr15578541oib.56.1674588261773;
-        Tue, 24 Jan 2023 11:24:21 -0800 (PST)
-Received: from halaney-x13s.attlocal.net ([2600:1700:1ff0:d0e0::21])
-        by smtp.gmail.com with ESMTPSA id r21-20020a056808211500b0036e3bb67a20sm1388024oiw.38.2023.01.24.11.24.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Jan 2023 11:24:21 -0800 (PST)
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     andersson@kernel.org
-Cc:     agross@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        bmasney@redhat.com, quic_shazhuss@quicinc.com,
-        Andrew Halaney <ahalaney@redhat.com>
-Subject: [PATCH 2/2] arm64: dts: qcom: sa8540p-ride: Document i2c busses
-Date:   Tue, 24 Jan 2023 13:23:51 -0600
-Message-Id: <20230124192351.695838-2-ahalaney@redhat.com>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230124192351.695838-1-ahalaney@redhat.com>
-References: <20230124192351.695838-1-ahalaney@redhat.com>
+        Tue, 24 Jan 2023 15:03:04 -0500
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29F4E2ED75;
+        Tue, 24 Jan 2023 12:03:03 -0800 (PST)
+Received: from g550jk.localnet (unknown [62.108.10.64])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 321EBCD51C;
+        Tue, 24 Jan 2023 20:02:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1674590551; bh=Y5e5JN3qUUr0oJYCMxQ/apdya4a1W97ae9pxk72RoDI=;
+        h=From:To:Cc:Subject:Date;
+        b=BcxgQslthYIeiZ437FZvgmeAZKwFjL4wo6oNO+BAbLAON/WDxviFSJd7XIerE7kwy
+         Oy1bG3xxGeJd3FTXaVb03GmMJM8/VSRYpjld4ybZD/TByFqzLmaprNHOBWHHDTxefa
+         Ao5sAetOY+IuWCJvhnTp2ZvrFWKvYxOrURaWckdo=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     Todor Tomov <todor.too@gmail.com>,
+        Robert Foss <robert.foss@linaro.org>
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+Subject: camss: Missing cleanup on probe error
+Date:   Tue, 24 Jan 2023 21:02:30 +0100
+Message-ID: <5898403.lOV4Wx5bFT@g550jk>
 MIME-Version: 1.0
-Content-type: text/plain
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+X-Spam-Status: No, score=0.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
+        FROM_SUSPICIOUS_NTLD_FP,SPF_HELO_NONE,SPF_PASS,T_PDS_OTHER_BAD_TLD
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It isn't obvious in the current devicetree what is connected. Go ahead
-and document what's on the other end.
+Hi all,
 
-Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
----
+I hit an issue that was already fixed with upstream commit 3d658980e6da 
+("media: camss: Do not attach an already attached power domain on MSM8916 
+platform") but this showed that some error handling is missing in camss_probe.
 
-Not sure if this sort of patch is actually welcomed or not but I went
-through this exercise (for the prior patch) and thought it might be
-useful to document.
+After these errors the resources aren't cleaned up and e.g. sensor drivers 
+still try to probe but fail quite badly because some things are NULL or 
+whatever.
 
-Shazad, this also highlights (unless I misread things) that i2c12 has no
-use for us, right? If agreed I can remove it but sorting through the
-lore links that provided all this it seems like at the time it was
-desired to be added.
+[    1.979098] qcom-camss fda0ac00.camss: Failed to configure power domains: 
+-17
+[    1.989327] qcom-camss: probe of fda0ac00.camss failed with error -17
 
-Thanks,
-Andrew
+The commit causing this (or at least part of this) is 2f6f8af67203 ("media: 
+camss: Refactor VFE power domain toggling")
 
- arch/arm64/boot/dts/qcom/sa8540p-ride.dts | 5 +++++
- 1 file changed, 5 insertions(+)
+I tried a bit to add some error handling but in this case it now fails at 
+v4l2_device_unregister_subdev -> media_device_unregister_entity -> 
+__media_device_unregister_entity -> ida_free.
+And I'm not really sure how to fix (and honestly not super motivated).
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-index cb9fbdeb5a9e..3478ab91fe73 100644
---- a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-@@ -317,6 +317,7 @@ &xo_board_clk {
+See following patch (formatting probably messed up, sorry). Maybe someone who 
+knows a bit more about the driver or the media subsystem can fix this, thanks!
+
+Regards
+Luca
+
+diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/
+platform/qcom/camss/camss.c
+index 16545cecc4f4..0ba3c378d241 100644
+--- a/drivers/media/platform/qcom/camss/camss.c
++++ b/drivers/media/platform/qcom/camss/camss.c
+@@ -1836,21 +1836,26 @@ static int camss_probe(struct platform_device *pdev)
+ 		}
+ 	}
  
- &tlmm {
- 	i2c0_default: i2c0-default-state {
-+		/* To USB7002T-I/KDXVA0 USB hub (SIP1 only) */
- 		pins = "gpio135", "gpio136";
- 		function = "qup0";
- 		drive-strength = <2>;
-@@ -324,6 +325,7 @@ i2c0_default: i2c0-default-state {
- 	};
+-	ret = camss_configure_pd(camss);
++	//ret = camss_configure_pd(camss);
++	ret = -17;
+ 	if (ret < 0) {
+ 		dev_err(dev, "Failed to configure power domains: %d\n", 
+ret);
+-		return ret;
++		goto err_configure_pd;
+ 	}
  
- 	i2c1_default: i2c1-default-state {
-+		/* To PM40028B-F3EI PCIe switch */
- 		pins = "gpio158", "gpio159";
- 		function = "qup1";
- 		drive-strength = <2>;
-@@ -331,6 +333,7 @@ i2c1_default: i2c1-default-state {
- 	};
+ 	pm_runtime_enable(dev);
  
- 	i2c12_default: i2c12-default-state {
-+		/* Not connected */
- 		pins = "gpio0", "gpio1";
- 		function = "qup12";
- 		drive-strength = <2>;
-@@ -338,6 +341,7 @@ i2c12_default: i2c12-default-state {
- 	};
+ 	return 0;
  
- 	i2c15_default: i2c15-default-state {
-+		/* To display connector (SIP1 only) */
- 		pins = "gpio36", "gpio37";
- 		function = "qup15";
- 		drive-strength = <2>;
-@@ -345,6 +349,7 @@ i2c15_default: i2c15-default-state {
- 	};
++err_configure_pd:
++	media_device_unregister(&camss->media_dev);
++	media_device_cleanup(&camss->media_dev);
+ err_register_subdevs:
+ 	camss_unregister_entities(camss);
+ err_register_entities:
+ 	v4l2_device_unregister(&camss->v4l2_dev);
+ err_cleanup:
++	v4l2_async_nf_unregister(&camss->notifier);
+ 	v4l2_async_nf_cleanup(&camss->notifier);
  
- 	i2c18_default: i2c18-default-state {
-+		/* To ASM330LHH IMU (SIP1 only) */
- 		pins = "gpio66", "gpio67";
- 		function = "qup18";
- 		drive-strength = <2>;
--- 
-2.39.0
+ 	return ret;
+
+
 
