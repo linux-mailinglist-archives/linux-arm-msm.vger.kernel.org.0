@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C68F9679BC8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 15:27:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 45505679BDC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 15:31:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234912AbjAXO1o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Jan 2023 09:27:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39120 "EHLO
+        id S234478AbjAXObX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Jan 2023 09:31:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234895AbjAXO1n (ORCPT
+        with ESMTP id S234927AbjAXObW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Jan 2023 09:27:43 -0500
+        Tue, 24 Jan 2023 09:31:22 -0500
 Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7455457C8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 06:27:37 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id c10-20020a05600c0a4a00b003db0636ff84so11082777wmq.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 06:27:37 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35C8B485A2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 06:31:19 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id bg13-20020a05600c3c8d00b003d9712b29d2so12975116wmb.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 06:31:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Ih/T3+fE5KUNeucJG+54LWbOG3GZygM+d+54jjzk9hE=;
-        b=FPnGGmxkm6sxBclrNmB5yhxrik2jqrYeqam8kwEWXT9oiUeZOdKyCdOFTUt0bpXqx3
-         68c6vtSpAx5L2d7Pmr1q+ayfjPQUkeWB6E4lIx1JtwrZ1k8Fus2cuHoud3LbvfOVO3SP
-         o7sBIZDhr1LdFwD5d+FXG3BLTUNIKe03Nh44niOHwJFQ18R6sVGEoJI8xk12EcW4JGLO
-         mgh7dps3sIS2AtQMFoTtewTiSIsnCe/XPDxQE7qKK4P5KIQt0kVvuC6ZRtw5frgpuyxG
-         Y+3sMlEtfKommoGkiszSlc/2vgQYxtDRKp6+9RZ181c3DTi/M0BJRnJF9Adli/waEHFa
-         E42Q==
+        bh=CMq1uJ2lNTdPSILsTHElT5IlORpvfWTYcdVcMj0zgu8=;
+        b=malAGbcoyNxEJd68K6Aa9n8FNiC+NRVAzMQgcuER6m2jdibf1hJg654Eox8QKuOmak
+         Drh0onx0zZWockn2Jg0PFKkqQ8gZgjxr5ZAPQullsVO3MImTDwv3MT/AGIHqwdbYAuGv
+         YZ9G23KWlq6FLfnKA2oSf1y2d3GRNhrlaMN3yCYbhf52cQL7nwqdhZ5mnhnzFKcPHzUe
+         vtaQMjS/tGTtIB3yGsHjyhmvl+n+ZVw0MqcntDp5xX5uXUWlXOYrM9c/1WRU7mav/+So
+         tYzIkuMoE7AFElXZFKB/S2bnVjrtbddmJoaLZWmxNDQn7IIKfuGsxIqH1z6B6+RJdI9V
+         ypYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ih/T3+fE5KUNeucJG+54LWbOG3GZygM+d+54jjzk9hE=;
-        b=gMoGOLbpU84CO2XhT35cilcohlZYcKalEHgwIcG9l5GlG48E7GvS4bTdt4L3bR3Oll
-         USZghDmDXnhlUdxIvZjEu4YC+LR34PHC2M++yq8hYXnnnCwN+vZeePvfRQxuXI+dNYrR
-         8jEPojCAU6QdsKAHUIuFVodUGC/dIls8gbsVvqxMq6S3m3bqLdi0l6HvVLKFgj9rLsr6
-         yzBpotEAC5gowIiOt3ZJLkduViYXlvxjk0DnfDfR+mYZWiMHzHCAYDxfAPGBY4WfkWN9
-         gufdpw7lw98pUE/IfxDA6tDGsObvcTC5Q2XqRgcwAiM8wbDCovZl36oowziSvGs0ltUb
-         VC5A==
-X-Gm-Message-State: AFqh2koXq5w5SG7JBPa9VYuv2y7cWLYH72a4yO6vK0iuN6rt63XYfwzd
-        G813dz8Q265UGwrUOKEZLIvkcA==
-X-Google-Smtp-Source: AMrXdXucT9VgZdYEYX8b4F6onwRJuVez8e638q9+QZ0SzAoR2soR2zqDhz7sCxfvzsqnOKV1E7DMcA==
-X-Received: by 2002:a05:600c:5409:b0:3da:f66a:e866 with SMTP id he9-20020a05600c540900b003daf66ae866mr28100113wmb.10.1674570456290;
-        Tue, 24 Jan 2023 06:27:36 -0800 (PST)
+        bh=CMq1uJ2lNTdPSILsTHElT5IlORpvfWTYcdVcMj0zgu8=;
+        b=nr2/mjIMfGQ5PoLmTrBVwJJTOWayKqJDAJLHjuek+6WoPOBNRjsmmUN0oRfckMshKf
+         f7eRKELROhJM9N7YyVHbUNDwbXfarB8nFnGh1vUkUEoDQjsmtTcQQUpMNXD3wvo0BgT1
+         IDUrQ/Bimgfqqf0H+xKAQ8o0KGap4zHW+ZQIYXH3/HcpJMoJawUAsJMc9m3VLICNNp/o
+         R739e+UyO/ucvhs948TWvrYQf6rK+hshdwP8y6peZPVrE/SW10twIeRRbiSPlzX0QOjS
+         NDWezQmbYNZRlBJdhn4uVE85hbv/uXUgWNLkQeSHGnMeVGeLMToC6Jfj7wHWZl/F7x0g
+         mEig==
+X-Gm-Message-State: AFqh2kop2Dx5pDkzsOAAUa0sD0UGI6mKfvll4/5BrL8VowntkOQZ2VHS
+        sdUjPgVf4VPJBFJrzqZi7VHWug==
+X-Google-Smtp-Source: AMrXdXuMpNu7HcwaJai9rG9rkqaYBEF5pYI3elhCyjuuZ3CwgggFA/cexidji92fOVxiXZ3v4KJFiQ==
+X-Received: by 2002:a05:600c:1c83:b0:3db:27b3:a654 with SMTP id k3-20020a05600c1c8300b003db27b3a654mr19779700wms.26.1674570677662;
+        Tue, 24 Jan 2023 06:31:17 -0800 (PST)
 Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id bg24-20020a05600c3c9800b003d9ed40a512sm18815472wmb.45.2023.01.24.06.27.34
+        by smtp.gmail.com with ESMTPSA id o21-20020a05600c4fd500b003c6f8d30e40sm15177651wmq.31.2023.01.24.06.31.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Jan 2023 06:27:35 -0800 (PST)
-Message-ID: <3b4bd60c-84f3-f545-80ce-8ebe974557eb@linaro.org>
-Date:   Tue, 24 Jan 2023 15:27:32 +0100
+        Tue, 24 Jan 2023 06:31:17 -0800 (PST)
+Message-ID: <8b2b3457-37db-3a32-dfca-3b1bc74f3dd9@linaro.org>
+Date:   Tue, 24 Jan 2023 15:31:14 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.0
-Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: Add Xiaomi Mi Pad 5 Pro
- (xiaomi-elish)
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8250: Add device tree for Xiaomi
+ Mi Pad 5 Pro
 Content-Language: en-US
 To:     Jianhua Lu <lujianhua000@gmail.com>,
         Andy Gross <agross@kernel.org>,
@@ -71,8 +71,9 @@ Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
         ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
 References: <20230124135318.10023-1-lujianhua000@gmail.com>
+ <20230124135318.10023-2-lujianhua000@gmail.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230124135318.10023-1-lujianhua000@gmail.com>
+In-Reply-To: <20230124135318.10023-2-lujianhua000@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -86,29 +87,212 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 24/01/2023 14:53, Jianhua Lu wrote:
-> Add a compatible for Xiaomi Mi Pad 5 Pro.
+> Add support for Xiaomi Mi Pad 5 Pro, codename is xiaomi-elish.
+> 
+> This commit brings support for:
+>   * ADSP/CDSP/SLPI/VENUS
+>   * Backlight
+>   * Battery fuel gauge
+>   * Framebuffer
+>   * PCIe0
+>   * USB2.0
+> 
+> Note backlight driver (ktz8866) is waitting for upstreaming[1].
+> [1] https://lore.kernel.org/linux-leds/20230120155018.15376-1-lujianhua000@gmail.com
 > 
 > Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
 > ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
->  1 file changed, 1 insertion(+)
+>  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>  .../boot/dts/qcom/sm8250-xiaomi-elish.dts     | 594 ++++++++++++++++++
+>  2 files changed, 595 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts
 > 
-> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-> index 22553637c519..c5fe81fba5b1 100644
-> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
-> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-> @@ -873,6 +873,7 @@ properties:
->                - qcom,qrb5165-rb5
->                - qcom,sm8250-hdk
->                - qcom,sm8250-mtp
-> +              - xiaomi,elish
->                - sony,pdx203-generic
->                - sony,pdx206-generic
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index b0423ca3e79f..769cee2b450f 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -184,6 +184,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-hdk.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-mtp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-sony-xperia-edo-pdx203.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-sony-xperia-edo-pdx206.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-xiaomi-elish.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8350-hdk.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8350-microsoft-surface-duo2.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8350-mtp.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts
+> new file mode 100644
+> index 000000000000..99ae6668e516
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish.dts
+> @@ -0,0 +1,594 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2022, 2023 Jianhua Lu <lujianhua000@gmail.com>
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> +#include "sm8250.dtsi"
+> +#include "pm8150.dtsi"
+> +#include "pm8150b.dtsi"
+> +#include "pm8150l.dtsi"
+> +#include "pm8009.dtsi"
+> +
+> +/*
+> + * Delete following upstream (sm8250.dtsi) reserved
+> + * memory mappings which are different in this device.
+> + */
+> +/delete-node/ &xbl_aop_mem;
+> +/delete-node/ &slpi_mem;
+> +/delete-node/ &adsp_mem;
+> +/delete-node/ &spss_mem;
+> +/delete-node/ &cdsp_secure_heap;
+> +
+> +/ {
+> +	model = "Xiaomi Mi Pad 5 Pro";
+> +	compatible = "xiaomi,elish", "qcom,sm8250";
+> +	classis-type = "tablet";
+> +
+> +	/* required for bootloader to select correct board */
+> +	qcom,msm-id = <356 0x20001>; /* SM8250 v2.1 */
+> +	qcom,board-id = <0x10008 0>;
+> +
+> +	chosen {
+> +		#address-cells = <2>;
+> +		#size-cells = <2>;
+> +		ranges;
+> +
+> +		framebuffer: framebuffer@9c000000 {
+> +			compatible = "simple-framebuffer";
+> +			reg = <0 0x9c000000 0 0x2300000>;
+> +			width = <1600>;
+> +			height = <2560>;
+> +			stride = <(1600 * 4)>;
+> +			format = "a8r8g8b8";
+> +		};
+> +	};
+> +
+> +	gpio_keys: gpio-keys {
+> +		compatible = "gpio-keys";
+> +
+> +		vol-up {
 
-Not a correct order.
+Missing generic prefix.
 
->            - const: qcom,sm8250
+Does not look like you tested the DTS against bindings. Please run `make
+dtbs_check` (see Documentation/devicetree/bindings/writing-schema.rst
+for instructions).
 
+> +			label = "Volume Up";
+> +			gpios = <&pm8150_gpios 6 GPIO_ACTIVE_LOW>;
+> +			linux,code = <KEY_VOLUMEUP>;
+> +			debounce-interval = <15>;
+> +			linux,can-disable;
+> +			gpio-key,wakeup;
+> +		};
+> +	};
+> +
+> +	bl_vddpos_5p5: bl-vddpos-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "bl_vddpos_5p5";
+> +		regulator-min-microvolt = <5500000>;
+> +		regulator-max-microvolt = <5500000>;
+> +		regulator-enable-ramp-delay = <233>;
+> +		gpio = <&tlmm 130 0>;
+
+Use defines for flags.
+
+> +		enable-active-high;
+> +		regulator-boot-on;
+> +	};
+> +
+> +	bl_vddneg_5p5: bl-vddneg-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "bl_vddneg_5p5";
+> +		regulator-min-microvolt = <5500000>;
+> +		regulator-max-microvolt = <5500000>;
+> +		regulator-enable-ramp-delay = <233>;
+> +		gpio = <&tlmm 131 0>;
+
+Use defines for flags.
+
+> +		enable-active-high;
+> +		regulator-boot-on;
+> +	};
+> +
+> +	vph_pwr: vph-pwr-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "vph_pwr";
+> +		regulator-min-microvolt = <3700000>;
+> +		regulator-max-microvolt = <3700000>;
+> +	};
+> +
+
+(...)
+
+> +
+> +&cdsp {
+> +	firmware-name = "qcom/sm8250/xiaomi/elish/cdsp.mbn";
+> +	status = "okay";
+> +};
+> +
+> +&gpi_dma0 {
+> +	status = "okay";
+> +};
+> +
+> +&gpi_dma1 {
+> +	status = "okay";
+> +};
+> +
+> +&gpi_dma2 {
+> +	status = "okay";
+> +};
+> +
+> +&i2c0 {
+> +	clock-frequency = <400000>;
+> +	status = "okay";
+> +
+> +	battery_fg@55 {
+
+No underscores in node names. Generic node names, so just fuel-gauge
+
+> +		compatible = "ti,bq27z561";
+> +		reg = <0x55>;
+> +		monitored-battery = <&battery_r>;
+> +	};
+> +};
+> +
+> +&i2c11 {
+> +	clock-frequency = <400000>;
+> +	status = "okay";
+> +
+> +	backlight: backlight@11 {
+> +		compatible = "kinetic,ktz8866";
+> +		reg = <0x11>;
+> +		vddpos-supply = <&bl_vddpos_5p5>;
+> +		vddneg-supply = <&bl_vddneg_5p5>;
+> +		enable-gpios = <&tlmm 139 GPIO_ACTIVE_HIGH>;
+> +		current-num-sinks = <5>;
+> +		kinetic,current-ramp-delay-ms = <128>;
+> +		kinetic,led-enable-ramp-delay-ms = <1>;
+> +		kinetic,enable-lcd-bias;
+> +	};
+> +};
+> +
+> +&i2c13 {
+> +	clock-frequency = <400000>;
+> +	status = "okay";
+> +
+> +	battery_fg@55 {
+
+Same problem
+
+> +		compatible = "ti,bq27z561";
+> +		reg = <0x55>;
+> +		monitored-battery = <&battery_l>;
+> +	};
+> +};
 Best regards,
 Krzysztof
 
