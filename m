@@ -2,659 +2,724 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A765679449
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 10:33:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A065679460
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 10:42:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233630AbjAXJdF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Jan 2023 04:33:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34344 "EHLO
+        id S232517AbjAXJmY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Jan 2023 04:42:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233541AbjAXJdE (ORCPT
+        with ESMTP id S229486AbjAXJmX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Jan 2023 04:33:04 -0500
-Received: from aposti.net (aposti.net [89.234.176.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B70B610DC;
-        Tue, 24 Jan 2023 01:32:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=crapouillou.net;
-        s=mail; t=1674552777; h=from:from:sender:reply-to:subject:subject:date:date:
-         message-id:message-id:to:to:cc:cc:mime-version:mime-version:
-         content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=Oba3BeWPgFJyMEvrnjFlCbBYFFmIWrkGDj08PiIGVwY=;
-        b=16ayxAYqXVXoB0h+8PAArjiMZwPFD/yahWfUd9Gmzfcwh4bEqvWEayKQECPlPbqNQhG64x
-        qwWvJAWA0SK9tWWYktu8NmlKndRD0FcXR0AOqLrVGZY4RD7qs7C4vKl7CLAzWdf4enIfVs
-        td+HAo5uvDoYLvgQyOUQc2j3L9uiErY=
-Message-ID: <cdd02d07be433524f6e3d8256eedb90c2a113ca5.camel@crapouillou.net>
-Subject: Re: [PATCH v2 1/2] dt-bindings: dma: drop unneeded quotes
-From:   Paul Cercueil <paul@crapouillou.net>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Chen-Yu Tsai <wens@csie.org>,
+        Tue, 24 Jan 2023 04:42:23 -0500
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB6D21704
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 01:42:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1674553340; x=1706089340;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=t/tYgFt0j2KTLUSlTSql2GDfCdL/4lbg+MmsOCcHAtM=;
+  b=mViMLGVLDoGZBkk+eDrmyaom2YOM+nGh3zkIOGgKN3EktnZx0WZqV3+f
+   aoUvPBJFRlAzs6BP3Yn4XDMd5cNJWkDz7D/IRhEu38qjjnwGT3lZe4IMK
+   nCJtK4Dx2IQFqn7AECFtCzp3zdBB4prqplLbuJNIGFnPYye6KjDJit6k7
+   1wFJpkdvUrxKxvb51YK4+aRlURp7NMUFraVAVxXq/HcS1a34ZAajnSqr1
+   k1YkwDXaXDTSLjZaEBPFiDhrvMwgOnngyd3FRFZm0lOKrBDj88B7kOvBN
+   AKPQDXLGWmB9wmvzwRVl2MWs90AQtajrC1x3lhYc2InMiFRNBHVDHtl2n
+   Q==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10599"; a="328348566"
+X-IronPort-AV: E=Sophos;i="5.97,242,1669104000"; 
+   d="scan'208";a="328348566"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jan 2023 01:42:19 -0800
+X-IronPort-AV: E=McAfee;i="6500,9779,10599"; a="662067723"
+X-IronPort-AV: E=Sophos;i="5.97,242,1669104000"; 
+   d="scan'208";a="662067723"
+Received: from pesir-mobl.ger.corp.intel.com (HELO localhost) ([10.252.57.197])
+  by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jan 2023 01:42:10 -0800
+From:   Jani Nikula <jani.nikula@intel.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     intel-gfx@lists.freedesktop.org, jani.nikula@intel.com,
+        Alex Deucher <alexander.deucher@amd.com>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+        Pan@vger.kernel.org, Xinhui <Xinhui.Pan@amd.com>,
+        amd-gfx@lists.freedesktop.org,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
         Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Olivier Dautricourt <olivierdautricourt@gmail.com>,
-        Stefan Roese <sr@denx.de>, Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Andreas =?ISO-8859-1?Q?F=E4rber?= <afaerber@suse.de>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Viresh Kumar <vireshk@kernel.org>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Green Wan <green.wan@sifive.com>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        ?er <povik+lin@cutebit.org>, Peng Fan <peng.fan@nxp.com>,
-        - <chuanhua.lei@intel.com>, Long Cheng <long.cheng@mediatek.com>,
-        Rajesh Gumasta <rgumasta@nvidia.com>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Biju Das <biju.das.jz@bp.renesas.com>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Palmer Debbelt <palmer@sifive.com>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Amelie Delaunay <amelie.delaunay@foss.st.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
-        linux-kernel@vger.kernel.org, asahi@lists.linux.dev,
-        linux-tegra@vger.kernel.org, linux-actions@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-riscv@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-mediatek@lists.infradead.org
-Cc:     Rob Herring <robh@kernel.org>
-Date:   Tue, 24 Jan 2023 09:32:50 +0000
-In-Reply-To: <20230124081117.31186-1-krzysztof.kozlowski@linaro.org>
-References: <20230124081117.31186-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Inki Dae <inki.dae@samsung.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-mediatek@lists.infradead.org,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org,
+        Alain Volmat <alain.volmat@foss.st.com>,
+        Emma Anholt <emma@anholt.net>,
+        Maxime Ripard <mripard@kernel.org>
+Subject: [PATCH 3/3] drm/connector: move ELD and video/audio latencies to display info
+Date:   Tue, 24 Jan 2023 11:41:54 +0200
+Message-Id: <20230124094154.2282778-3-jani.nikula@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20230124094154.2282778-1-jani.nikula@intel.com>
+References: <20230124094154.2282778-1-jani.nikula@intel.com>
 MIME-Version: 1.0
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=UTF-8
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krzysztof,
+Information parsed from the display EDID should be stored in display
+info. We can stop clearing ELD separately.
 
-Le mardi 24 janvier 2023 =C3=A0 09:11 +0100, Krzysztof Kozlowski a =C3=A9cr=
-it=C2=A0:
-> Cleanup by removing unneeded quotes from refs and redundant blank
-> lines.
-> No functional impact except adjusting to preferred coding style.
->=20
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com> # mediatek
-> Acked-by: Rob Herring <robh@kernel.org>
-> Acked-by: Hector Martin <marcan@marcan.st> # apple
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Pan, Xinhui <Xinhui.Pan@amd.com>
+Cc: amd-gfx@lists.freedesktop.org
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Robert Foss <robert.foss@linaro.org>
+Cc: Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
+Cc: Jonas Karlman <jonas@kwiboo.se>
+Cc: Jernej Skrabec <jernej.skrabec@gmail.com>
+Cc: Inki Dae <inki.dae@samsung.com>
+Cc: Seung-Woo Kim <sw0312.kim@samsung.com>
+Cc: Kyungmin Park <kyungmin.park@samsung.com>
+Cc: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Cc: Philipp Zabel <p.zabel@pengutronix.de>
+Cc: linux-mediatek@lists.infradead.org
+Cc: Rob Clark <robdclark@gmail.com>
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Sean Paul <sean@poorly.run>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: freedreno@lists.freedesktop.org
+Cc: Alain Volmat <alain.volmat@foss.st.com>
+Cc: Emma Anholt <emma@anholt.net>
+Cc: Maxime Ripard <mripard@kernel.org>
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 
-For ingenic:
-Acked-by: Paul Cercueil <paul@crapouillou.net>
+---
 
-Cheers,
--Paul
+Sorry about the crazy Cc list, but this touches a lot of drivers, and I
+didn't want to blind side anyone.
+---
+ drivers/gpu/drm/amd/amdgpu/dce_v10_0.c        |  6 +--
+ drivers/gpu/drm/amd/amdgpu/dce_v11_0.c        |  6 +--
+ drivers/gpu/drm/amd/amdgpu/dce_v6_0.c         |  6 +--
+ drivers/gpu/drm/amd/amdgpu/dce_v8_0.c         | 12 ++---
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 10 ++---
+ drivers/gpu/drm/bridge/analogix/anx7625.c     |  4 +-
+ drivers/gpu/drm/bridge/ite-it66121.c          |  4 +-
+ drivers/gpu/drm/bridge/synopsys/dw-hdmi.c     |  2 +-
+ drivers/gpu/drm/drm_edid.c                    | 45 +++++++------------
+ drivers/gpu/drm/exynos/exynos_hdmi.c          |  2 +-
+ drivers/gpu/drm/i915/display/intel_audio.c    | 22 ++++-----
+ drivers/gpu/drm/i915/display/intel_sdvo.c     |  2 +-
+ drivers/gpu/drm/mediatek/mtk_dp.c             |  2 +-
+ drivers/gpu/drm/mediatek/mtk_hdmi.c           |  3 +-
+ drivers/gpu/drm/msm/dp/dp_audio.c             |  4 +-
+ drivers/gpu/drm/radeon/dce6_afmt.c            | 12 ++---
+ drivers/gpu/drm/radeon/evergreen_hdmi.c       | 12 ++---
+ drivers/gpu/drm/radeon/radeon_audio.c         |  4 +-
+ drivers/gpu/drm/sti/sti_hdmi.c                |  2 +-
+ drivers/gpu/drm/vc4/vc4_hdmi.c                |  2 +-
+ include/drm/drm_connector.h                   | 39 +++++++++-------
+ 21 files changed, 99 insertions(+), 102 deletions(-)
 
-> ---
-> =C2=A0.../devicetree/bindings/dma/allwinner,sun4i-a10-dma.yaml=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 2
-> +-
-> =C2=A0.../devicetree/bindings/dma/allwinner,sun50i-a64-dma.yaml=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 2
-> +-
-> =C2=A0.../devicetree/bindings/dma/allwinner,sun6i-a31-dma.yaml=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 2
-> +-
-> =C2=A0Documentation/devicetree/bindings/dma/altr,msgdma.yaml=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 2
-> +-
-> =C2=A0Documentation/devicetree/bindings/dma/apple,admac.yaml=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 2
-> +-
-> =C2=A0Documentation/devicetree/bindings/dma/arm-pl08x.yaml=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 2
-> +-
-> =C2=A0Documentation/devicetree/bindings/dma/dma-controller.yaml=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 2
-> +-
-> =C2=A0Documentation/devicetree/bindings/dma/dma-router.yaml=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 2
-> +-
-> =C2=A0Documentation/devicetree/bindings/dma/fsl,edma.yaml=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 2
-> +-
-> =C2=A0Documentation/devicetree/bindings/dma/ingenic,dma.yaml=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 2
-> +-
-> =C2=A0Documentation/devicetree/bindings/dma/intel,ldma.yaml=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 2
-> +-
-> =C2=A0Documentation/devicetree/bindings/dma/mediatek,uart-dma.yaml=C2=A0=
-=C2=A0=C2=A0 | 2
-> +-
-> =C2=A0.../devicetree/bindings/dma/nvidia,tegra186-gpc-dma.yaml=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 2
-> +-
-> =C2=A0Documentation/devicetree/bindings/dma/nvidia,tegra210-adma.yaml | 2
-> +-
-> =C2=A0Documentation/devicetree/bindings/dma/owl-dma.yaml=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 2
-> +-
-> =C2=A0Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 2
-> +-
-> =C2=A0Documentation/devicetree/bindings/dma/qcom,gpi.yaml=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 2
-> +-
-> =C2=A0Documentation/devicetree/bindings/dma/renesas,rcar-dmac.yaml=C2=A0=
-=C2=A0=C2=A0 | 2
-> +-
-> =C2=A0Documentation/devicetree/bindings/dma/renesas,rz-dmac.yaml=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 | 2
-> +-
-> =C2=A0Documentation/devicetree/bindings/dma/renesas,rzn1-dmamux.yaml=C2=
-=A0 | 2
-> +-
-> =C2=A0Documentation/devicetree/bindings/dma/renesas,usb-dmac.yaml=C2=A0=
-=C2=A0=C2=A0=C2=A0 | 2
-> +-
-> =C2=A0.../devicetree/bindings/dma/sifive,fu540-c000-pdma.yaml=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 2
-> +-
-> =C2=A0Documentation/devicetree/bindings/dma/snps,dma-spear1340.yaml=C2=A0=
-=C2=A0 | 2
-> +-
-> =C2=A0Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml=C2=A0=
-=C2=A0=C2=A0=C2=A0 | 2
-> +-
-> =C2=A0.../devicetree/bindings/dma/socionext,uniphier-mio-dmac.yaml=C2=A0=
-=C2=A0=C2=A0 | 2
-> +-
-> =C2=A0.../devicetree/bindings/dma/socionext,uniphier-xdmac.yaml=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 2
-> +-
-> =C2=A0Documentation/devicetree/bindings/dma/st,stm32-dma.yaml=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 2
-> +-
-> =C2=A0Documentation/devicetree/bindings/dma/st,stm32-dmamux.yaml=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 | 2
-> +-
-> =C2=A0Documentation/devicetree/bindings/dma/st,stm32-mdma.yaml=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 2
-> +-
-> =C2=A0Documentation/devicetree/bindings/dma/stericsson,dma40.yaml=C2=A0=
-=C2=A0=C2=A0=C2=A0 | 2
-> +-
-> =C2=A030 files changed, 30 insertions(+), 30 deletions(-)
->=20
-> diff --git a/Documentation/devicetree/bindings/dma/allwinner,sun4i-
-> a10-dma.yaml b/Documentation/devicetree/bindings/dma/allwinner,sun4i-
-> a10-dma.yaml
-> index 26d0d8ab7984..02d5bd035409 100644
-> --- a/Documentation/devicetree/bindings/dma/allwinner,sun4i-a10-
-> dma.yaml
-> +++ b/Documentation/devicetree/bindings/dma/allwinner,sun4i-a10-
-> dma.yaml
-> @@ -11,7 +11,7 @@ maintainers:
-> =C2=A0=C2=A0 - Maxime Ripard <mripard@kernel.org>
-> =C2=A0
-> =C2=A0allOf:
-> -=C2=A0 - $ref: "dma-controller.yaml#"
-> +=C2=A0 - $ref: dma-controller.yaml#
-> =C2=A0
-> =C2=A0properties:
-> =C2=A0=C2=A0 "#dma-cells":
-> diff --git a/Documentation/devicetree/bindings/dma/allwinner,sun50i-
-> a64-dma.yaml
-> b/Documentation/devicetree/bindings/dma/allwinner,sun50i-a64-dma.yaml
-> index bd599bda2653..ec2d7a789ffe 100644
-> --- a/Documentation/devicetree/bindings/dma/allwinner,sun50i-a64-
-> dma.yaml
-> +++ b/Documentation/devicetree/bindings/dma/allwinner,sun50i-a64-
-> dma.yaml
-> @@ -11,7 +11,7 @@ maintainers:
-> =C2=A0=C2=A0 - Maxime Ripard <mripard@kernel.org>
-> =C2=A0
-> =C2=A0allOf:
-> -=C2=A0 - $ref: "dma-controller.yaml#"
-> +=C2=A0 - $ref: dma-controller.yaml#
-> =C2=A0
-> =C2=A0properties:
-> =C2=A0=C2=A0 "#dma-cells":
-> diff --git a/Documentation/devicetree/bindings/dma/allwinner,sun6i-
-> a31-dma.yaml b/Documentation/devicetree/bindings/dma/allwinner,sun6i-
-> a31-dma.yaml
-> index 344dc7e04931..5d554bcfab3d 100644
-> --- a/Documentation/devicetree/bindings/dma/allwinner,sun6i-a31-
-> dma.yaml
-> +++ b/Documentation/devicetree/bindings/dma/allwinner,sun6i-a31-
-> dma.yaml
-> @@ -11,7 +11,7 @@ maintainers:
-> =C2=A0=C2=A0 - Maxime Ripard <mripard@kernel.org>
-> =C2=A0
-> =C2=A0allOf:
-> -=C2=A0 - $ref: "dma-controller.yaml#"
-> +=C2=A0 - $ref: dma-controller.yaml#
-> =C2=A0
-> =C2=A0properties:
-> =C2=A0=C2=A0 "#dma-cells":
-> diff --git a/Documentation/devicetree/bindings/dma/altr,msgdma.yaml
-> b/Documentation/devicetree/bindings/dma/altr,msgdma.yaml
-> index b53ac7631a76..391bf5838602 100644
-> --- a/Documentation/devicetree/bindings/dma/altr,msgdma.yaml
-> +++ b/Documentation/devicetree/bindings/dma/altr,msgdma.yaml
-> @@ -14,7 +14,7 @@ description: |
-> =C2=A0=C2=A0 intellectual property (IP)
-> =C2=A0
-> =C2=A0allOf:
-> -=C2=A0 - $ref: "dma-controller.yaml#"
-> +=C2=A0 - $ref: dma-controller.yaml#
-> =C2=A0
-> =C2=A0properties:
-> =C2=A0=C2=A0 compatible:
-> diff --git a/Documentation/devicetree/bindings/dma/apple,admac.yaml
-> b/Documentation/devicetree/bindings/dma/apple,admac.yaml
-> index 97282469e4af..05163d124ec3 100644
-> --- a/Documentation/devicetree/bindings/dma/apple,admac.yaml
-> +++ b/Documentation/devicetree/bindings/dma/apple,admac.yaml
-> @@ -18,7 +18,7 @@ maintainers:
-> =C2=A0=C2=A0 - Martin Povi=C5=A1er <povik+lin@cutebit.org>
-> =C2=A0
-> =C2=A0allOf:
-> -=C2=A0 - $ref: "dma-controller.yaml#"
-> +=C2=A0 - $ref: dma-controller.yaml#
-> =C2=A0
-> =C2=A0properties:
-> =C2=A0=C2=A0 compatible:
-> diff --git a/Documentation/devicetree/bindings/dma/arm-pl08x.yaml
-> b/Documentation/devicetree/bindings/dma/arm-pl08x.yaml
-> index 9193b18fb75f..ab25ae63d2c3 100644
-> --- a/Documentation/devicetree/bindings/dma/arm-pl08x.yaml
-> +++ b/Documentation/devicetree/bindings/dma/arm-pl08x.yaml
-> @@ -11,7 +11,7 @@ maintainers:
-> =C2=A0
-> =C2=A0allOf:
-> =C2=A0=C2=A0 - $ref: /schemas/arm/primecell.yaml#
-> -=C2=A0 - $ref: "dma-controller.yaml#"
-> +=C2=A0 - $ref: dma-controller.yaml#
-> =C2=A0
-> =C2=A0# We need a select here so we don't match all nodes with
-> 'arm,primecell'
-> =C2=A0select:
-> diff --git a/Documentation/devicetree/bindings/dma/dma-
-> controller.yaml b/Documentation/devicetree/bindings/dma/dma-
-> controller.yaml
-> index 538ebadff652..04d150d4d15d 100644
-> --- a/Documentation/devicetree/bindings/dma/dma-controller.yaml
-> +++ b/Documentation/devicetree/bindings/dma/dma-controller.yaml
-> @@ -10,7 +10,7 @@ maintainers:
-> =C2=A0=C2=A0 - Vinod Koul <vkoul@kernel.org>
-> =C2=A0
-> =C2=A0allOf:
-> -=C2=A0 - $ref: "dma-common.yaml#"
-> +=C2=A0 - $ref: dma-common.yaml#
-> =C2=A0
-> =C2=A0# Everything else is described in the common file
-> =C2=A0properties:
-> diff --git a/Documentation/devicetree/bindings/dma/dma-router.yaml
-> b/Documentation/devicetree/bindings/dma/dma-router.yaml
-> index f8d8c3c88bcc..346fe0fa4460 100644
-> --- a/Documentation/devicetree/bindings/dma/dma-router.yaml
-> +++ b/Documentation/devicetree/bindings/dma/dma-router.yaml
-> @@ -10,7 +10,7 @@ maintainers:
-> =C2=A0=C2=A0 - Vinod Koul <vkoul@kernel.org>
-> =C2=A0
-> =C2=A0allOf:
-> -=C2=A0 - $ref: "dma-common.yaml#"
-> +=C2=A0 - $ref: dma-common.yaml#
-> =C2=A0
-> =C2=A0description:
-> =C2=A0=C2=A0 DMA routers are transparent IP blocks used to route DMA requ=
-est
-> diff --git a/Documentation/devicetree/bindings/dma/fsl,edma.yaml
-> b/Documentation/devicetree/bindings/dma/fsl,edma.yaml
-> index 050e6cd57727..5fd8fc604261 100644
-> --- a/Documentation/devicetree/bindings/dma/fsl,edma.yaml
-> +++ b/Documentation/devicetree/bindings/dma/fsl,edma.yaml
-> @@ -64,7 +64,7 @@ required:
-> =C2=A0=C2=A0 - dma-channels
-> =C2=A0
-> =C2=A0allOf:
-> -=C2=A0 - $ref: "dma-controller.yaml#"
-> +=C2=A0 - $ref: dma-controller.yaml#
-> =C2=A0=C2=A0 - if:
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 properties:
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 compatible:
-> diff --git a/Documentation/devicetree/bindings/dma/ingenic,dma.yaml
-> b/Documentation/devicetree/bindings/dma/ingenic,dma.yaml
-> index fd5b0a8eaed8..37400496e086 100644
-> --- a/Documentation/devicetree/bindings/dma/ingenic,dma.yaml
-> +++ b/Documentation/devicetree/bindings/dma/ingenic,dma.yaml
-> @@ -10,7 +10,7 @@ maintainers:
-> =C2=A0=C2=A0 - Paul Cercueil <paul@crapouillou.net>
-> =C2=A0
-> =C2=A0allOf:
-> -=C2=A0 - $ref: "dma-controller.yaml#"
-> +=C2=A0 - $ref: dma-controller.yaml#
-> =C2=A0
-> =C2=A0properties:
-> =C2=A0=C2=A0 compatible:
-> diff --git a/Documentation/devicetree/bindings/dma/intel,ldma.yaml
-> b/Documentation/devicetree/bindings/dma/intel,ldma.yaml
-> index a5c4be783593..d6bb553a2c6f 100644
-> --- a/Documentation/devicetree/bindings/dma/intel,ldma.yaml
-> +++ b/Documentation/devicetree/bindings/dma/intel,ldma.yaml
-> @@ -11,7 +11,7 @@ maintainers:
-> =C2=A0=C2=A0 - mallikarjunax.reddy@intel.com
-> =C2=A0
-> =C2=A0allOf:
-> -=C2=A0 - $ref: "dma-controller.yaml#"
-> +=C2=A0 - $ref: dma-controller.yaml#
-> =C2=A0
-> =C2=A0properties:
-> =C2=A0=C2=A0 compatible:
-> diff --git a/Documentation/devicetree/bindings/dma/mediatek,uart-
-> dma.yaml b/Documentation/devicetree/bindings/dma/mediatek,uart-
-> dma.yaml
-> index 9ab4d81ead35..dab468a88942 100644
-> --- a/Documentation/devicetree/bindings/dma/mediatek,uart-dma.yaml
-> +++ b/Documentation/devicetree/bindings/dma/mediatek,uart-dma.yaml
-> @@ -14,7 +14,7 @@ description: |
-> =C2=A0=C2=A0 for the UART peripheral bus.
-> =C2=A0
-> =C2=A0allOf:
-> -=C2=A0 - $ref: "dma-controller.yaml#"
-> +=C2=A0 - $ref: dma-controller.yaml#
-> =C2=A0
-> =C2=A0properties:
-> =C2=A0=C2=A0 compatible:
-> diff --git a/Documentation/devicetree/bindings/dma/nvidia,tegra186-
-> gpc-dma.yaml b/Documentation/devicetree/bindings/dma/nvidia,tegra186-
-> gpc-dma.yaml
-> index 851bd50ee67f..a790e5687844 100644
-> --- a/Documentation/devicetree/bindings/dma/nvidia,tegra186-gpc-
-> dma.yaml
-> +++ b/Documentation/devicetree/bindings/dma/nvidia,tegra186-gpc-
-> dma.yaml
-> @@ -16,7 +16,7 @@ maintainers:
-> =C2=A0=C2=A0 - Rajesh Gumasta <rgumasta@nvidia.com>
-> =C2=A0
-> =C2=A0allOf:
-> -=C2=A0 - $ref: "dma-controller.yaml#"
-> +=C2=A0 - $ref: dma-controller.yaml#
-> =C2=A0
-> =C2=A0properties:
-> =C2=A0=C2=A0 compatible:
-> diff --git a/Documentation/devicetree/bindings/dma/nvidia,tegra210-
-> adma.yaml b/Documentation/devicetree/bindings/dma/nvidia,tegra210-
-> adma.yaml
-> index fef804565b88..4003dbe94940 100644
-> --- a/Documentation/devicetree/bindings/dma/nvidia,tegra210-adma.yaml
-> +++ b/Documentation/devicetree/bindings/dma/nvidia,tegra210-adma.yaml
-> @@ -14,7 +14,7 @@ maintainers:
-> =C2=A0=C2=A0 - Jon Hunter <jonathanh@nvidia.com>
-> =C2=A0
-> =C2=A0allOf:
-> -=C2=A0 - $ref: "dma-controller.yaml#"
-> +=C2=A0 - $ref: dma-controller.yaml#
-> =C2=A0
-> =C2=A0properties:
-> =C2=A0=C2=A0 compatible:
-> diff --git a/Documentation/devicetree/bindings/dma/owl-dma.yaml
-> b/Documentation/devicetree/bindings/dma/owl-dma.yaml
-> index 93b4847554fb..ec8b3dc37ca4 100644
-> --- a/Documentation/devicetree/bindings/dma/owl-dma.yaml
-> +++ b/Documentation/devicetree/bindings/dma/owl-dma.yaml
-> @@ -15,7 +15,7 @@ maintainers:
-> =C2=A0=C2=A0 - Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> =C2=A0
-> =C2=A0allOf:
-> -=C2=A0 - $ref: "dma-controller.yaml#"
-> +=C2=A0 - $ref: dma-controller.yaml#
-> =C2=A0
-> =C2=A0properties:
-> =C2=A0=C2=A0 compatible:
-> diff --git a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
-> b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
-> index 003098caf709..f1ddcf672261 100644
-> --- a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
-> +++ b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
-> @@ -11,7 +11,7 @@ maintainers:
-> =C2=A0=C2=A0 - Bjorn Andersson <andersson@kernel.org>
-> =C2=A0
-> =C2=A0allOf:
-> -=C2=A0 - $ref: "dma-controller.yaml#"
-> +=C2=A0 - $ref: dma-controller.yaml#
-> =C2=A0
-> =C2=A0properties:
-> =C2=A0=C2=A0 compatible:
-> diff --git a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
-> b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
-> index 1dec506cd4f7..fc5de7b6f19e 100644
-> --- a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
-> +++ b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
-> @@ -14,7 +14,7 @@ description: |
-> =C2=A0=C2=A0 peripheral buses such as I2C, UART, and SPI.
-> =C2=A0
-> =C2=A0allOf:
-> -=C2=A0 - $ref: "dma-controller.yaml#"
-> +=C2=A0 - $ref: dma-controller.yaml#
-> =C2=A0
-> =C2=A0properties:
-> =C2=A0=C2=A0 compatible:
-> diff --git a/Documentation/devicetree/bindings/dma/renesas,rcar-
-> dmac.yaml b/Documentation/devicetree/bindings/dma/renesas,rcar-
-> dmac.yaml
-> index 89b591a05bce..03aa067b1229 100644
-> --- a/Documentation/devicetree/bindings/dma/renesas,rcar-dmac.yaml
-> +++ b/Documentation/devicetree/bindings/dma/renesas,rcar-dmac.yaml
-> @@ -10,7 +10,7 @@ maintainers:
-> =C2=A0=C2=A0 - Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-> =C2=A0
-> =C2=A0allOf:
-> -=C2=A0 - $ref: "dma-controller.yaml#"
-> +=C2=A0 - $ref: dma-controller.yaml#
-> =C2=A0
-> =C2=A0properties:
-> =C2=A0=C2=A0 compatible:
-> diff --git a/Documentation/devicetree/bindings/dma/renesas,rz-
-> dmac.yaml b/Documentation/devicetree/bindings/dma/renesas,rz-
-> dmac.yaml
-> index 1e25c5b0fb4d..f638d3934e71 100644
-> --- a/Documentation/devicetree/bindings/dma/renesas,rz-dmac.yaml
-> +++ b/Documentation/devicetree/bindings/dma/renesas,rz-dmac.yaml
-> @@ -10,7 +10,7 @@ maintainers:
-> =C2=A0=C2=A0 - Biju Das <biju.das.jz@bp.renesas.com>
-> =C2=A0
-> =C2=A0allOf:
-> -=C2=A0 - $ref: "dma-controller.yaml#"
-> +=C2=A0 - $ref: dma-controller.yaml#
-> =C2=A0
-> =C2=A0properties:
-> =C2=A0=C2=A0 compatible:
-> diff --git a/Documentation/devicetree/bindings/dma/renesas,rzn1-
-> dmamux.yaml b/Documentation/devicetree/bindings/dma/renesas,rzn1-
-> dmamux.yaml
-> index d83013b0dd74..ee9833dcc36c 100644
-> --- a/Documentation/devicetree/bindings/dma/renesas,rzn1-dmamux.yaml
-> +++ b/Documentation/devicetree/bindings/dma/renesas,rzn1-dmamux.yaml
-> @@ -10,7 +10,7 @@ maintainers:
-> =C2=A0=C2=A0 - Miquel Raynal <miquel.raynal@bootlin.com>
-> =C2=A0
-> =C2=A0allOf:
-> -=C2=A0 - $ref: "dma-router.yaml#"
-> +=C2=A0 - $ref: dma-router.yaml#
-> =C2=A0
-> =C2=A0properties:
-> =C2=A0=C2=A0 compatible:
-> diff --git a/Documentation/devicetree/bindings/dma/renesas,usb-
-> dmac.yaml b/Documentation/devicetree/bindings/dma/renesas,usb-
-> dmac.yaml
-> index ab287c652b2c..17813599fccb 100644
-> --- a/Documentation/devicetree/bindings/dma/renesas,usb-dmac.yaml
-> +++ b/Documentation/devicetree/bindings/dma/renesas,usb-dmac.yaml
-> @@ -10,7 +10,7 @@ maintainers:
-> =C2=A0=C2=A0 - Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-> =C2=A0
-> =C2=A0allOf:
-> -=C2=A0 - $ref: "dma-controller.yaml#"
-> +=C2=A0 - $ref: dma-controller.yaml#
-> =C2=A0
-> =C2=A0properties:
-> =C2=A0=C2=A0 compatible:
-> diff --git a/Documentation/devicetree/bindings/dma/sifive,fu540-c000-
-> pdma.yaml b/Documentation/devicetree/bindings/dma/sifive,fu540-c000-
-> pdma.yaml
-> index 3271755787b4..a1af0b906365 100644
-> --- a/Documentation/devicetree/bindings/dma/sifive,fu540-c000-
-> pdma.yaml
-> +++ b/Documentation/devicetree/bindings/dma/sifive,fu540-c000-
-> pdma.yaml
-> @@ -23,7 +23,7 @@ description: |
-> =C2=A0=C2=A0 https://static.dev.sifive.com/FU540-C000-v1.0.pdf
-> =C2=A0
-> =C2=A0allOf:
-> -=C2=A0 - $ref: "dma-controller.yaml#"
-> +=C2=A0 - $ref: dma-controller.yaml#
-> =C2=A0
-> =C2=A0properties:
-> =C2=A0=C2=A0 compatible:
-> diff --git a/Documentation/devicetree/bindings/dma/snps,dma-
-> spear1340.yaml b/Documentation/devicetree/bindings/dma/snps,dma-
-> spear1340.yaml
-> index c13649bf7f19..5da8291a7de0 100644
-> --- a/Documentation/devicetree/bindings/dma/snps,dma-spear1340.yaml
-> +++ b/Documentation/devicetree/bindings/dma/snps,dma-spear1340.yaml
-> @@ -11,7 +11,7 @@ maintainers:
-> =C2=A0=C2=A0 - Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-> =C2=A0
-> =C2=A0allOf:
-> -=C2=A0 - $ref: "dma-controller.yaml#"
-> +=C2=A0 - $ref: dma-controller.yaml#
-> =C2=A0
-> =C2=A0properties:
-> =C2=A0=C2=A0 compatible:
-> diff --git a/Documentation/devicetree/bindings/dma/snps,dw-axi-
-> dmac.yaml b/Documentation/devicetree/bindings/dma/snps,dw-axi-
-> dmac.yaml
-> index ad107a4d3b33..2bedab1f74e0 100644
-> --- a/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml
-> +++ b/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml
-> @@ -13,7 +13,7 @@ description:
-> =C2=A0=C2=A0 Synopsys DesignWare AXI DMA Controller DT Binding
-> =C2=A0
-> =C2=A0allOf:
-> -=C2=A0 - $ref: "dma-controller.yaml#"
-> +=C2=A0 - $ref: dma-controller.yaml#
-> =C2=A0
-> =C2=A0properties:
-> =C2=A0=C2=A0 compatible:
-> diff --git
-> a/Documentation/devicetree/bindings/dma/socionext,uniphier-mio-
-> dmac.yaml b/Documentation/devicetree/bindings/dma/socionext,uniphier-
-> mio-dmac.yaml
-> index e7bf6dd7da29..23c8a7bf24de 100644
-> --- a/Documentation/devicetree/bindings/dma/socionext,uniphier-mio-
-> dmac.yaml
-> +++ b/Documentation/devicetree/bindings/dma/socionext,uniphier-mio-
-> dmac.yaml
-> @@ -14,7 +14,7 @@ maintainers:
-> =C2=A0=C2=A0 - Masahiro Yamada <yamada.masahiro@socionext.com>
-> =C2=A0
-> =C2=A0allOf:
-> -=C2=A0 - $ref: "dma-controller.yaml#"
-> +=C2=A0 - $ref: dma-controller.yaml#
-> =C2=A0
-> =C2=A0properties:
-> =C2=A0=C2=A0 compatible:
-> diff --git
-> a/Documentation/devicetree/bindings/dma/socionext,uniphier-xdmac.yaml
-> b/Documentation/devicetree/bindings/dma/socionext,uniphier-xdmac.yaml
-> index 371f18773198..da61d1ddc9c3 100644
-> --- a/Documentation/devicetree/bindings/dma/socionext,uniphier-
-> xdmac.yaml
-> +++ b/Documentation/devicetree/bindings/dma/socionext,uniphier-
-> xdmac.yaml
-> @@ -15,7 +15,7 @@ maintainers:
-> =C2=A0=C2=A0 - Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
-> =C2=A0
-> =C2=A0allOf:
-> -=C2=A0 - $ref: "dma-controller.yaml#"
-> +=C2=A0 - $ref: dma-controller.yaml#
-> =C2=A0
-> =C2=A0properties:
-> =C2=A0=C2=A0 compatible:
-> diff --git a/Documentation/devicetree/bindings/dma/st,stm32-dma.yaml
-> b/Documentation/devicetree/bindings/dma/st,stm32-dma.yaml
-> index 158c791d7caa..329847ef096a 100644
-> --- a/Documentation/devicetree/bindings/dma/st,stm32-dma.yaml
-> +++ b/Documentation/devicetree/bindings/dma/st,stm32-dma.yaml
-> @@ -53,7 +53,7 @@ maintainers:
-> =C2=A0=C2=A0 - Amelie Delaunay <amelie.delaunay@foss.st.com>
-> =C2=A0
-> =C2=A0allOf:
-> -=C2=A0 - $ref: "dma-controller.yaml#"
-> +=C2=A0 - $ref: dma-controller.yaml#
-> =C2=A0
-> =C2=A0properties:
-> =C2=A0=C2=A0 "#dma-cells":
-> diff --git a/Documentation/devicetree/bindings/dma/st,stm32-
-> dmamux.yaml b/Documentation/devicetree/bindings/dma/st,stm32-
-> dmamux.yaml
-> index 3e0b82d277ca..e722fbcd8a5f 100644
-> --- a/Documentation/devicetree/bindings/dma/st,stm32-dmamux.yaml
-> +++ b/Documentation/devicetree/bindings/dma/st,stm32-dmamux.yaml
-> @@ -10,7 +10,7 @@ maintainers:
-> =C2=A0=C2=A0 - Amelie Delaunay <amelie.delaunay@foss.st.com>
-> =C2=A0
-> =C2=A0allOf:
-> -=C2=A0 - $ref: "dma-router.yaml#"
-> +=C2=A0 - $ref: dma-router.yaml#
-> =C2=A0
-> =C2=A0properties:
-> =C2=A0=C2=A0 "#dma-cells":
-> diff --git a/Documentation/devicetree/bindings/dma/st,stm32-mdma.yaml
-> b/Documentation/devicetree/bindings/dma/st,stm32-mdma.yaml
-> index 08a59bd69a2f..3874544dfa74 100644
-> --- a/Documentation/devicetree/bindings/dma/st,stm32-mdma.yaml
-> +++ b/Documentation/devicetree/bindings/dma/st,stm32-mdma.yaml
-> @@ -53,7 +53,7 @@ maintainers:
-> =C2=A0=C2=A0 - Amelie Delaunay <amelie.delaunay@foss.st.com>
-> =C2=A0
-> =C2=A0allOf:
-> -=C2=A0 - $ref: "dma-controller.yaml#"
-> +=C2=A0 - $ref: dma-controller.yaml#
-> =C2=A0
-> =C2=A0properties:
-> =C2=A0=C2=A0 "#dma-cells":
-> diff --git
-> a/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml
-> b/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml
-> index 8bddfb3b6fa0..664ee61a00d8 100644
-> --- a/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml
-> +++ b/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml
-> @@ -10,7 +10,7 @@ maintainers:
-> =C2=A0=C2=A0 - Linus Walleij <linus.walleij@linaro.org>
-> =C2=A0
-> =C2=A0allOf:
-> -=C2=A0 - $ref: "dma-controller.yaml#"
-> +=C2=A0 - $ref: dma-controller.yaml#
-> =C2=A0
-> =C2=A0properties:
-> =C2=A0=C2=A0 "#dma-cells":
+diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c b/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
+index 9a24ed463abd..0c05838032c5 100644
+--- a/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
+@@ -1257,11 +1257,11 @@ static void dce_v10_0_audio_write_latency_fields(struct drm_encoder *encoder,
+ 
+ 	if (mode->flags & DRM_MODE_FLAG_INTERLACE)
+ 		interlace = 1;
+-	if (connector->latency_present[interlace]) {
++	if (connector->display_info.latency_present[interlace]) {
+ 		tmp = REG_SET_FIELD(0, AZALIA_F0_CODEC_PIN_CONTROL_RESPONSE_LIPSYNC,
+-				    VIDEO_LIPSYNC, connector->video_latency[interlace]);
++				    VIDEO_LIPSYNC, connector->display_info.video_latency[interlace]);
+ 		tmp = REG_SET_FIELD(0, AZALIA_F0_CODEC_PIN_CONTROL_RESPONSE_LIPSYNC,
+-				    AUDIO_LIPSYNC, connector->audio_latency[interlace]);
++				    AUDIO_LIPSYNC, connector->display_info.audio_latency[interlace]);
+ 	} else {
+ 		tmp = REG_SET_FIELD(0, AZALIA_F0_CODEC_PIN_CONTROL_RESPONSE_LIPSYNC,
+ 				    VIDEO_LIPSYNC, 0);
+diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v11_0.c b/drivers/gpu/drm/amd/amdgpu/dce_v11_0.c
+index c14b70350a51..896f0416b69f 100644
+--- a/drivers/gpu/drm/amd/amdgpu/dce_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/dce_v11_0.c
+@@ -1283,11 +1283,11 @@ static void dce_v11_0_audio_write_latency_fields(struct drm_encoder *encoder,
+ 
+ 	if (mode->flags & DRM_MODE_FLAG_INTERLACE)
+ 		interlace = 1;
+-	if (connector->latency_present[interlace]) {
++	if (connector->display_info.latency_present[interlace]) {
+ 		tmp = REG_SET_FIELD(0, AZALIA_F0_CODEC_PIN_CONTROL_RESPONSE_LIPSYNC,
+-				    VIDEO_LIPSYNC, connector->video_latency[interlace]);
++				    VIDEO_LIPSYNC, connector->display_info.video_latency[interlace]);
+ 		tmp = REG_SET_FIELD(0, AZALIA_F0_CODEC_PIN_CONTROL_RESPONSE_LIPSYNC,
+-				    AUDIO_LIPSYNC, connector->audio_latency[interlace]);
++				    AUDIO_LIPSYNC, connector->display_info.audio_latency[interlace]);
+ 	} else {
+ 		tmp = REG_SET_FIELD(0, AZALIA_F0_CODEC_PIN_CONTROL_RESPONSE_LIPSYNC,
+ 				    VIDEO_LIPSYNC, 0);
+diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c b/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
+index 7f85ba5b726f..4aa797726bca 100644
+--- a/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
+@@ -1158,11 +1158,11 @@ static void dce_v6_0_audio_write_latency_fields(struct drm_encoder *encoder,
+ 	if (mode->flags & DRM_MODE_FLAG_INTERLACE)
+ 		interlace = 1;
+ 
+-	if (connector->latency_present[interlace]) {
++	if (connector->display_info.latency_present[interlace]) {
+ 		tmp = REG_SET_FIELD(0, AZALIA_F0_CODEC_PIN_CONTROL_RESPONSE_LIPSYNC,
+-				VIDEO_LIPSYNC, connector->video_latency[interlace]);
++				VIDEO_LIPSYNC, connector->display_info.video_latency[interlace]);
+ 		tmp = REG_SET_FIELD(tmp, AZALIA_F0_CODEC_PIN_CONTROL_RESPONSE_LIPSYNC,
+-				AUDIO_LIPSYNC, connector->audio_latency[interlace]);
++				AUDIO_LIPSYNC, connector->display_info.audio_latency[interlace]);
+ 	} else {
+ 		tmp = REG_SET_FIELD(0, AZALIA_F0_CODEC_PIN_CONTROL_RESPONSE_LIPSYNC,
+ 				VIDEO_LIPSYNC, 0);
+diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c b/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
+index d421a268c9ff..c84421510a46 100644
+--- a/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
+@@ -1195,11 +1195,11 @@ static void dce_v8_0_audio_write_latency_fields(struct drm_encoder *encoder,
+ 	}
+ 
+ 	if (mode->flags & DRM_MODE_FLAG_INTERLACE) {
+-		if (connector->latency_present[1])
++		if (connector->display_info.latency_present[1])
+ 			tmp =
+-			(connector->video_latency[1] <<
++			(connector->display_info.video_latency[1] <<
+ 			 AZALIA_F0_CODEC_PIN_CONTROL_RESPONSE_LIPSYNC__VIDEO_LIPSYNC__SHIFT) |
+-			(connector->audio_latency[1] <<
++			(connector->display_info.audio_latency[1] <<
+ 			 AZALIA_F0_CODEC_PIN_CONTROL_RESPONSE_LIPSYNC__AUDIO_LIPSYNC__SHIFT);
+ 		else
+ 			tmp =
+@@ -1208,11 +1208,11 @@ static void dce_v8_0_audio_write_latency_fields(struct drm_encoder *encoder,
+ 			(0 <<
+ 			 AZALIA_F0_CODEC_PIN_CONTROL_RESPONSE_LIPSYNC__AUDIO_LIPSYNC__SHIFT);
+ 	} else {
+-		if (connector->latency_present[0])
++		if (connector->display_info.latency_present[0])
+ 			tmp =
+-			(connector->video_latency[0] <<
++			(connector->display_info.video_latency[0] <<
+ 			 AZALIA_F0_CODEC_PIN_CONTROL_RESPONSE_LIPSYNC__VIDEO_LIPSYNC__SHIFT) |
+-			(connector->audio_latency[0] <<
++			(connector->display_info.audio_latency[0] <<
+ 			 AZALIA_F0_CODEC_PIN_CONTROL_RESPONSE_LIPSYNC__AUDIO_LIPSYNC__SHIFT);
+ 		else
+ 			tmp =
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index c61c388bddf2..4db61c346280 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -894,8 +894,8 @@ static int amdgpu_dm_audio_component_get_eld(struct device *kdev, int port,
+ 			continue;
+ 
+ 		*enabled = true;
+-		ret = drm_eld_size(connector->eld);
+-		memcpy(buf, connector->eld, min(max_bytes, ret));
++		ret = drm_eld_size(connector->display_info.eld);
++		memcpy(buf, connector->display_info.eld, min(max_bytes, ret));
+ 
+ 		break;
+ 	}
+@@ -5386,9 +5386,9 @@ static void fill_audio_info(struct audio_info *audio_info,
+ 	audio_info->flags.all = edid_caps->speaker_flags;
+ 
+ 	/* TODO: We only check for the progressive mode, check for interlace mode too */
+-	if (drm_connector->latency_present[0]) {
+-		audio_info->video_latency = drm_connector->video_latency[0];
+-		audio_info->audio_latency = drm_connector->audio_latency[0];
++	if (drm_connector->display_info.latency_present[0]) {
++		audio_info->video_latency = drm_connector->display_info.video_latency[0];
++		audio_info->audio_latency = drm_connector->display_info.audio_latency[0];
+ 	}
+ 
+ 	/* TODO: For DP, video and audio latency should be calculated from DPCD caps */
+diff --git a/drivers/gpu/drm/bridge/analogix/anx7625.c b/drivers/gpu/drm/bridge/analogix/anx7625.c
+index 6846199a2ee1..04a29950228c 100644
+--- a/drivers/gpu/drm/bridge/analogix/anx7625.c
++++ b/drivers/gpu/drm/bridge/analogix/anx7625.c
+@@ -1982,8 +1982,8 @@ static int anx7625_audio_get_eld(struct device *dev, void *data,
+ 		memset(buf, 0, len);
+ 	} else {
+ 		dev_dbg(dev, "audio copy eld\n");
+-		memcpy(buf, ctx->connector->eld,
+-		       min(sizeof(ctx->connector->eld), len));
++		memcpy(buf, ctx->connector->display_info.eld,
++		       min(sizeof(ctx->connector->display_info.eld), len));
+ 	}
+ 
+ 	return 0;
+diff --git a/drivers/gpu/drm/bridge/ite-it66121.c b/drivers/gpu/drm/bridge/ite-it66121.c
+index a2d723d6a4be..1a5e0741d33b 100644
+--- a/drivers/gpu/drm/bridge/ite-it66121.c
++++ b/drivers/gpu/drm/bridge/ite-it66121.c
+@@ -1448,8 +1448,8 @@ static int it66121_audio_get_eld(struct device *dev, void *data,
+ 
+ 	mutex_lock(&ctx->lock);
+ 
+-	memcpy(buf, ctx->connector->eld,
+-	       min(sizeof(ctx->connector->eld), len));
++	memcpy(buf, ctx->connector->display_info.eld,
++	       min(sizeof(ctx->connector->display_info.eld), len));
+ 
+ 	mutex_unlock(&ctx->lock);
+ 
+diff --git a/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c b/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c
+index aa51c61a78c7..1f235960fd33 100644
+--- a/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c
++++ b/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c
+@@ -789,7 +789,7 @@ static u8 *hdmi_audio_get_eld(struct dw_hdmi *hdmi)
+ 	if (!hdmi->curr_conn)
+ 		return NULL;
+ 
+-	return hdmi->curr_conn->eld;
++	return hdmi->curr_conn->display_info.eld;
+ }
+ 
+ static void dw_hdmi_gp_audio_enable(struct dw_hdmi *hdmi)
+diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
+index 1ce3f153868d..a1b06b374af8 100644
+--- a/drivers/gpu/drm/drm_edid.c
++++ b/drivers/gpu/drm/drm_edid.c
+@@ -5369,29 +5369,30 @@ drm_parse_hdr_metadata_block(struct drm_connector *connector, const u8 *db)
+ static void
+ drm_parse_hdmi_vsdb_audio(struct drm_connector *connector, const u8 *db)
+ {
++	struct drm_display_info *info = &connector->display_info;
+ 	u8 len = cea_db_payload_len(db);
+ 
+ 	if (len >= 6 && (db[6] & (1 << 7)))
+-		connector->eld[DRM_ELD_SAD_COUNT_CONN_TYPE] |= DRM_ELD_SUPPORTS_AI;
++		info->eld[DRM_ELD_SAD_COUNT_CONN_TYPE] |= DRM_ELD_SUPPORTS_AI;
+ 
+ 	if (len >= 10 && hdmi_vsdb_latency_present(db)) {
+-		connector->latency_present[0] = true;
+-		connector->video_latency[0] = db[9];
+-		connector->audio_latency[0] = db[10];
++		info->latency_present[0] = true;
++		info->video_latency[0] = db[9];
++		info->audio_latency[0] = db[10];
+ 	}
+ 
+ 	if (len >= 12 && hdmi_vsdb_i_latency_present(db)) {
+-		connector->latency_present[1] = true;
+-		connector->video_latency[1] = db[11];
+-		connector->audio_latency[1] = db[12];
++		info->latency_present[1] = true;
++		info->video_latency[1] = db[11];
++		info->audio_latency[1] = db[12];
+ 	}
+ 
+ 	drm_dbg_kms(connector->dev,
+ 		    "[CONNECTOR:%d:%s] HDMI: latency present %d %d, video latency %d %d, audio latency %d %d\n",
+ 		    connector->base.id, connector->name,
+-		    connector->latency_present[0], connector->latency_present[1],
+-		    connector->video_latency[0], connector->video_latency[1],
+-		    connector->audio_latency[0], connector->audio_latency[1]);
++		    info->latency_present[0], info->latency_present[1],
++		    info->video_latency[0], info->video_latency[1],
++		    info->audio_latency[0], info->audio_latency[1]);
+ }
+ 
+ static void
+@@ -5453,18 +5454,6 @@ void drm_edid_get_monitor_name(const struct edid *edid, char *name, int bufsize)
+ }
+ EXPORT_SYMBOL(drm_edid_get_monitor_name);
+ 
+-static void clear_eld(struct drm_connector *connector)
+-{
+-	memset(connector->eld, 0, sizeof(connector->eld));
+-
+-	connector->latency_present[0] = false;
+-	connector->latency_present[1] = false;
+-	connector->video_latency[0] = 0;
+-	connector->audio_latency[0] = 0;
+-	connector->video_latency[1] = 0;
+-	connector->audio_latency[1] = 0;
+-}
+-
+ /*
+  * drm_edid_to_eld - build ELD from EDID
+  * @connector: connector corresponding to the HDMI/DP sink
+@@ -5479,7 +5468,7 @@ static void drm_edid_to_eld(struct drm_connector *connector,
+ 	const struct drm_display_info *info = &connector->display_info;
+ 	const struct cea_db *db;
+ 	struct cea_db_iter iter;
+-	uint8_t *eld = connector->eld;
++	u8 *eld = connector->display_info.eld;
+ 	int total_sad_count = 0;
+ 	int mnl;
+ 
+@@ -5659,16 +5648,17 @@ EXPORT_SYMBOL(drm_edid_to_speaker_allocation);
+ int drm_av_sync_delay(struct drm_connector *connector,
+ 		      const struct drm_display_mode *mode)
+ {
++	const struct drm_display_info *info = &connector->display_info;
+ 	int i = !!(mode->flags & DRM_MODE_FLAG_INTERLACE);
+ 	int a, v;
+ 
+-	if (!connector->latency_present[0])
++	if (!info->latency_present[0])
+ 		return 0;
+-	if (!connector->latency_present[1])
++	if (!info->latency_present[1])
+ 		i = 0;
+ 
+-	a = connector->audio_latency[i];
+-	v = connector->video_latency[i];
++	a = info->audio_latency[i];
++	v = info->video_latency[i];
+ 
+ 	/*
+ 	 * HDMI/DP sink doesn't support audio or video?
+@@ -6437,7 +6427,6 @@ static void update_display_info(struct drm_connector *connector,
+ 	const struct edid *edid;
+ 
+ 	drm_reset_display_info(connector);
+-	clear_eld(connector);
+ 
+ 	if (!drm_edid)
+ 		return;
+diff --git a/drivers/gpu/drm/exynos/exynos_hdmi.c b/drivers/gpu/drm/exynos/exynos_hdmi.c
+index b7c11bdce2c8..22a0160977d7 100644
+--- a/drivers/gpu/drm/exynos/exynos_hdmi.c
++++ b/drivers/gpu/drm/exynos/exynos_hdmi.c
+@@ -1640,7 +1640,7 @@ static int hdmi_audio_get_eld(struct device *dev, void *data, uint8_t *buf,
+ 	struct hdmi_context *hdata = dev_get_drvdata(dev);
+ 	struct drm_connector *connector = &hdata->connector;
+ 
+-	memcpy(buf, connector->eld, min(sizeof(connector->eld), len));
++	memcpy(buf, connector->display_info.eld, min(sizeof(connector->display_info.eld), len));
+ 
+ 	return 0;
+ }
+diff --git a/drivers/gpu/drm/i915/display/intel_audio.c b/drivers/gpu/drm/i915/display/intel_audio.c
+index 626c47e96a6d..f4241d46ba65 100644
+--- a/drivers/gpu/drm/i915/display/intel_audio.c
++++ b/drivers/gpu/drm/i915/display/intel_audio.c
+@@ -336,7 +336,7 @@ static void g4x_audio_codec_enable(struct intel_encoder *encoder,
+ 	struct drm_i915_private *i915 = to_i915(encoder->base.dev);
+ 	struct intel_crtc *crtc = to_intel_crtc(crtc_state->uapi.crtc);
+ 	struct drm_connector *connector = conn_state->connector;
+-	const u32 *eld = (const u32 *)connector->eld;
++	const u32 *eld = (const u32 *)connector->display_info.eld;
+ 	int eld_buffer_size, len, i;
+ 
+ 	intel_crtc_wait_for_next_vblank(crtc);
+@@ -345,7 +345,7 @@ static void g4x_audio_codec_enable(struct intel_encoder *encoder,
+ 		     G4X_ELD_VALID | G4X_ELD_ADDRESS_MASK, 0);
+ 
+ 	eld_buffer_size = g4x_eld_buffer_size(i915);
+-	len = min(drm_eld_size(connector->eld) / 4, eld_buffer_size);
++	len = min(drm_eld_size(connector->display_info.eld) / 4, eld_buffer_size);
+ 
+ 	for (i = 0; i < len; i++)
+ 		intel_de_write(i915, G4X_HDMIW_HDMIEDID, eld[i]);
+@@ -620,7 +620,7 @@ static void hsw_audio_codec_enable(struct intel_encoder *encoder,
+ 	struct intel_crtc *crtc = to_intel_crtc(crtc_state->uapi.crtc);
+ 	struct drm_connector *connector = conn_state->connector;
+ 	enum transcoder cpu_transcoder = crtc_state->cpu_transcoder;
+-	const u32 *eld = (const u32 *)connector->eld;
++	const u32 *eld = (const u32 *)connector->display_info.eld;
+ 	int eld_buffer_size, len, i;
+ 
+ 	mutex_lock(&i915->display.audio.mutex);
+@@ -644,7 +644,7 @@ static void hsw_audio_codec_enable(struct intel_encoder *encoder,
+ 		     IBX_ELD_ADDRESS_MASK, 0);
+ 
+ 	eld_buffer_size = hsw_eld_buffer_size(i915, cpu_transcoder);
+-	len = min(drm_eld_size(connector->eld) / 4, eld_buffer_size);
++	len = min(drm_eld_size(connector->display_info.eld) / 4, eld_buffer_size);
+ 
+ 	for (i = 0; i < len; i++)
+ 		intel_de_write(i915, HSW_AUD_EDID_DATA(cpu_transcoder), eld[i]);
+@@ -748,7 +748,7 @@ static void ilk_audio_codec_enable(struct intel_encoder *encoder,
+ 	struct drm_i915_private *i915 = to_i915(encoder->base.dev);
+ 	struct intel_crtc *crtc = to_intel_crtc(crtc_state->uapi.crtc);
+ 	struct drm_connector *connector = conn_state->connector;
+-	const u32 *eld = (const u32 *)connector->eld;
++	const u32 *eld = (const u32 *)connector->display_info.eld;
+ 	enum port port = encoder->port;
+ 	enum pipe pipe = crtc->pipe;
+ 	int eld_buffer_size, len, i;
+@@ -772,7 +772,7 @@ static void ilk_audio_codec_enable(struct intel_encoder *encoder,
+ 		     IBX_ELD_ADDRESS_MASK, 0);
+ 
+ 	eld_buffer_size = ilk_eld_buffer_size(i915, pipe);
+-	len = min(drm_eld_size(connector->eld) / 4, eld_buffer_size);
++	len = min(drm_eld_size(connector->display_info.eld) / 4, eld_buffer_size);
+ 
+ 	for (i = 0; i < len; i++)
+ 		intel_de_write(i915, regs.hdmiw_hdmiedid, eld[i]);
+@@ -837,15 +837,15 @@ void intel_audio_codec_enable(struct intel_encoder *encoder,
+ 	drm_dbg_kms(&i915->drm, "[CONNECTOR:%d:%s][ENCODER:%d:%s] Enable audio codec on pipe %c, %u bytes ELD\n",
+ 		    connector->base.id, connector->name,
+ 		    encoder->base.base.id, encoder->base.name,
+-		    pipe_name(pipe), drm_eld_size(connector->eld));
++		    pipe_name(pipe), drm_eld_size(connector->display_info.eld));
+ 
+ 	/* FIXME precompute the ELD in .compute_config() */
+-	if (!connector->eld[0])
++	if (!connector->display_info.eld[0])
+ 		drm_dbg_kms(&i915->drm,
+ 			    "Bogus ELD on [CONNECTOR:%d:%s]\n",
+ 			    connector->base.id, connector->name);
+ 
+-	connector->eld[6] = drm_av_sync_delay(connector, adjusted_mode) / 2;
++	connector->display_info.eld[6] = drm_av_sync_delay(connector, adjusted_mode) / 2;
+ 
+ 	if (i915->display.funcs.audio)
+ 		i915->display.funcs.audio->audio_codec_enable(encoder,
+@@ -868,7 +868,7 @@ void intel_audio_codec_enable(struct intel_encoder *encoder,
+ 						      (int)port, (int)pipe);
+ 	}
+ 
+-	intel_lpe_audio_notify(i915, pipe, port, connector->eld,
++	intel_lpe_audio_notify(i915, pipe, port, connector->display_info.eld,
+ 			       crtc_state->port_clock,
+ 			       intel_crtc_has_dp_encoder(crtc_state));
+ }
+@@ -1236,7 +1236,7 @@ static int i915_audio_component_get_eld(struct device *kdev, int port,
+ 	ret = 0;
+ 	*enabled = intel_encoder->audio_connector != NULL;
+ 	if (*enabled) {
+-		eld = intel_encoder->audio_connector->eld;
++		eld = intel_encoder->audio_connector->display_info.eld;
+ 		ret = drm_eld_size(eld);
+ 		memcpy(buf, eld, min(max_bytes, ret));
+ 	}
+diff --git a/drivers/gpu/drm/i915/display/intel_sdvo.c b/drivers/gpu/drm/i915/display/intel_sdvo.c
+index 21805c15d5eb..582bbc194305 100644
+--- a/drivers/gpu/drm/i915/display/intel_sdvo.c
++++ b/drivers/gpu/drm/i915/display/intel_sdvo.c
+@@ -1756,7 +1756,7 @@ static void intel_sdvo_enable_audio(struct intel_sdvo *intel_sdvo,
+ 	const struct drm_display_mode *adjusted_mode =
+ 		&crtc_state->hw.adjusted_mode;
+ 	struct drm_connector *connector = conn_state->connector;
+-	u8 *eld = connector->eld;
++	u8 *eld = connector->display_info.eld;
+ 
+ 	eld[6] = drm_av_sync_delay(connector, adjusted_mode) / 2;
+ 
+diff --git a/drivers/gpu/drm/mediatek/mtk_dp.c b/drivers/gpu/drm/mediatek/mtk_dp.c
+index b4feaabdb6a7..3fd448a6d8d1 100644
+--- a/drivers/gpu/drm/mediatek/mtk_dp.c
++++ b/drivers/gpu/drm/mediatek/mtk_dp.c
+@@ -2432,7 +2432,7 @@ static int mtk_dp_audio_get_eld(struct device *dev, void *data, uint8_t *buf,
+ 	struct mtk_dp *mtk_dp = dev_get_drvdata(dev);
+ 
+ 	if (mtk_dp->enabled)
+-		memcpy(buf, mtk_dp->conn->eld, len);
++		memcpy(buf, mtk_dp->conn->display_info.eld, len);
+ 	else
+ 		memset(buf, 0, len);
+ 
+diff --git a/drivers/gpu/drm/mediatek/mtk_hdmi.c b/drivers/gpu/drm/mediatek/mtk_hdmi.c
+index 0a8e0a13f516..edc96b32cf4c 100644
+--- a/drivers/gpu/drm/mediatek/mtk_hdmi.c
++++ b/drivers/gpu/drm/mediatek/mtk_hdmi.c
+@@ -1634,7 +1634,8 @@ static int mtk_hdmi_audio_get_eld(struct device *dev, void *data, uint8_t *buf,
+ 	struct mtk_hdmi *hdmi = dev_get_drvdata(dev);
+ 
+ 	if (hdmi->enabled)
+-		memcpy(buf, hdmi->curr_conn->eld, min(sizeof(hdmi->curr_conn->eld), len));
++		memcpy(buf, hdmi->curr_conn->display_info.eld,
++		       min(sizeof(hdmi->curr_conn->display_info.eld), len));
+ 	else
+ 		memset(buf, 0, len);
+ 	return 0;
+diff --git a/drivers/gpu/drm/msm/dp/dp_audio.c b/drivers/gpu/drm/msm/dp/dp_audio.c
+index 6666783e1468..993b248fd9e9 100644
+--- a/drivers/gpu/drm/msm/dp/dp_audio.c
++++ b/drivers/gpu/drm/msm/dp/dp_audio.c
+@@ -499,8 +499,8 @@ static int dp_audio_get_eld(struct device *dev,
+ 		return -ENODEV;
+ 	}
+ 
+-	memcpy(buf, dp_display->connector->eld,
+-		min(sizeof(dp_display->connector->eld), len));
++	memcpy(buf, dp_display->connector->display_info.eld,
++	       min(sizeof(dp_display->connector->display_info.eld), len));
+ 
+ 	return 0;
+ }
+diff --git a/drivers/gpu/drm/radeon/dce6_afmt.c b/drivers/gpu/drm/radeon/dce6_afmt.c
+index 4a1d5447eac1..cf92c108e377 100644
+--- a/drivers/gpu/drm/radeon/dce6_afmt.c
++++ b/drivers/gpu/drm/radeon/dce6_afmt.c
+@@ -134,15 +134,15 @@ void dce6_afmt_write_latency_fields(struct drm_encoder *encoder,
+ 		return;
+ 
+ 	if (mode->flags & DRM_MODE_FLAG_INTERLACE) {
+-		if (connector->latency_present[1])
+-			tmp = VIDEO_LIPSYNC(connector->video_latency[1]) |
+-				AUDIO_LIPSYNC(connector->audio_latency[1]);
++		if (connector->display_info.latency_present[1])
++			tmp = VIDEO_LIPSYNC(connector->display_info.video_latency[1]) |
++				AUDIO_LIPSYNC(connector->display_info.audio_latency[1]);
+ 		else
+ 			tmp = VIDEO_LIPSYNC(0) | AUDIO_LIPSYNC(0);
+ 	} else {
+-		if (connector->latency_present[0])
+-			tmp = VIDEO_LIPSYNC(connector->video_latency[0]) |
+-				AUDIO_LIPSYNC(connector->audio_latency[0]);
++		if (connector->display_info.latency_present[0])
++			tmp = VIDEO_LIPSYNC(connector->display_info.video_latency[0]) |
++				AUDIO_LIPSYNC(connector->display_info.audio_latency[0]);
+ 		else
+ 			tmp = VIDEO_LIPSYNC(0) | AUDIO_LIPSYNC(0);
+ 	}
+diff --git a/drivers/gpu/drm/radeon/evergreen_hdmi.c b/drivers/gpu/drm/radeon/evergreen_hdmi.c
+index 5f3078f8ab95..ef6e0f3003a3 100644
+--- a/drivers/gpu/drm/radeon/evergreen_hdmi.c
++++ b/drivers/gpu/drm/radeon/evergreen_hdmi.c
+@@ -102,15 +102,15 @@ void dce4_afmt_write_latency_fields(struct drm_encoder *encoder,
+ 	u32 tmp = 0;
+ 
+ 	if (mode->flags & DRM_MODE_FLAG_INTERLACE) {
+-		if (connector->latency_present[1])
+-			tmp = VIDEO_LIPSYNC(connector->video_latency[1]) |
+-				AUDIO_LIPSYNC(connector->audio_latency[1]);
++		if (connector->display_info.latency_present[1])
++			tmp = VIDEO_LIPSYNC(connector->display_info.video_latency[1]) |
++				AUDIO_LIPSYNC(connector->display_info.audio_latency[1]);
+ 		else
+ 			tmp = VIDEO_LIPSYNC(255) | AUDIO_LIPSYNC(255);
+ 	} else {
+-		if (connector->latency_present[0])
+-			tmp = VIDEO_LIPSYNC(connector->video_latency[0]) |
+-				AUDIO_LIPSYNC(connector->audio_latency[0]);
++		if (connector->display_info.latency_present[0])
++			tmp = VIDEO_LIPSYNC(connector->display_info.video_latency[0]) |
++				AUDIO_LIPSYNC(connector->display_info.audio_latency[0]);
+ 		else
+ 			tmp = VIDEO_LIPSYNC(255) | AUDIO_LIPSYNC(255);
+ 	}
+diff --git a/drivers/gpu/drm/radeon/radeon_audio.c b/drivers/gpu/drm/radeon/radeon_audio.c
+index d6ccaf24ee0c..8e075e18f8e8 100644
+--- a/drivers/gpu/drm/radeon/radeon_audio.c
++++ b/drivers/gpu/drm/radeon/radeon_audio.c
+@@ -769,8 +769,8 @@ static int radeon_audio_component_get_eld(struct device *kdev, int port,
+ 		if (!connector)
+ 			continue;
+ 		*enabled = true;
+-		ret = drm_eld_size(connector->eld);
+-		memcpy(buf, connector->eld, min(max_bytes, ret));
++		ret = drm_eld_size(connector->display_info.eld);
++		memcpy(buf, connector->display_info.eld, min(max_bytes, ret));
+ 		break;
+ 	}
+ 
+diff --git a/drivers/gpu/drm/sti/sti_hdmi.c b/drivers/gpu/drm/sti/sti_hdmi.c
+index 8539fe1fedc4..bbffe0b379f5 100644
+--- a/drivers/gpu/drm/sti/sti_hdmi.c
++++ b/drivers/gpu/drm/sti/sti_hdmi.c
+@@ -1220,7 +1220,7 @@ static int hdmi_audio_get_eld(struct device *dev, void *data, uint8_t *buf, size
+ 	struct drm_connector *connector = hdmi->drm_connector;
+ 
+ 	DRM_DEBUG_DRIVER("\n");
+-	memcpy(buf, connector->eld, min(sizeof(connector->eld), len));
++	memcpy(buf, connector->display_info.eld, min(sizeof(connector->display_info.eld), len));
+ 
+ 	return 0;
+ }
+diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
+index 14628864487a..05181e152168 100644
+--- a/drivers/gpu/drm/vc4/vc4_hdmi.c
++++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
+@@ -2411,7 +2411,7 @@ static int vc4_hdmi_audio_get_eld(struct device *dev, void *data,
+ 	struct drm_connector *connector = &vc4_hdmi->connector;
+ 
+ 	mutex_lock(&vc4_hdmi->mutex);
+-	memcpy(buf, connector->eld, min(sizeof(connector->eld), len));
++	memcpy(buf, connector->display_info.eld, min(sizeof(connector->display_info.eld), len));
+ 	mutex_unlock(&vc4_hdmi->mutex);
+ 
+ 	return 0;
+diff --git a/include/drm/drm_connector.h b/include/drm/drm_connector.h
+index 627bedc47511..30f51e8a7985 100644
+--- a/include/drm/drm_connector.h
++++ b/include/drm/drm_connector.h
+@@ -738,6 +738,29 @@ struct drm_display_info {
+ 	 * @quirks: EDID based quirks. Internal to EDID parsing.
+ 	 */
+ 	u32 quirks;
++
++#define MAX_ELD_BYTES	128
++	/**
++	 * @eld: EDID-like data, if present
++	 */
++	u8 eld[MAX_ELD_BYTES];
++
++	/**
++	 * @latency_present: AV delay info from ELD, if found
++	 */
++	bool latency_present[2];
++
++	/**
++	 * @video_latency: Video latency info from ELD, if found.
++	 * [0]: progressive, [1]: interlaced
++	 */
++	int video_latency[2];
++
++	/**
++	 * @audio_latency: audio latency info from ELD, if found
++	 * [0]: progressive, [1]: interlaced
++	 */
++	int audio_latency[2];
+ };
+ 
+ int drm_display_info_set_bus_formats(struct drm_display_info *info,
+@@ -1685,22 +1708,6 @@ struct drm_connector {
+ 	 */
+ 	struct drm_encoder *encoder;
+ 
+-#define MAX_ELD_BYTES	128
+-	/** @eld: EDID-like data, if present */
+-	uint8_t eld[MAX_ELD_BYTES];
+-	/** @latency_present: AV delay info from ELD, if found */
+-	bool latency_present[2];
+-	/**
+-	 * @video_latency: Video latency info from ELD, if found.
+-	 * [0]: progressive, [1]: interlaced
+-	 */
+-	int video_latency[2];
+-	/**
+-	 * @audio_latency: audio latency info from ELD, if found
+-	 * [0]: progressive, [1]: interlaced
+-	 */
+-	int audio_latency[2];
+-
+ 	/**
+ 	 * @ddc: associated ddc adapter.
+ 	 * A connector usually has its associated ddc adapter. If a driver uses
+-- 
+2.34.1
 
