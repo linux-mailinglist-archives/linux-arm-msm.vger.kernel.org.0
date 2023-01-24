@@ -2,157 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D03D067948F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 10:53:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AF23E6794A4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 10:59:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233660AbjAXJxo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Jan 2023 04:53:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42620 "EHLO
+        id S229451AbjAXJ7y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Jan 2023 04:59:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233118AbjAXJxn (ORCPT
+        with ESMTP id S233577AbjAXJ7w (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Jan 2023 04:53:43 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F22C513DDD
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 01:53:40 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id x36so17599096ede.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 01:53:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=a1g8H/5EnuQai7vsKQsMU+CVyFb5uB83EziQawtgMDQ=;
-        b=HsW4hd0EVtalcgoAB9hWy6LlmDh3lURTTRSpesp5SDsjNGmCbR+cEONIcIpoizPWf/
-         FRxM8H1Sgf44koNfbNGoc7ZCEkE1m4kuN2rRO7tgFYY0WRn78enCKCskBxQYfpDZb6du
-         nV9cuRLr/grGZgcPi2IEwsknwJ5NbZLkPRYAu/nRbSVmQQlsge192hGtxUk6/Kp/sxq0
-         nhbJWUikw/OD+X1PnZqgxQ/rsmurjPmAxXLltDm2gbXtlxdwcH/bV6gTkOfhyWtkcfGx
-         rdZQr0oMIOeRZkTcS26l2J+dPFL/kUtdjw/hw/XrsEM3Azn2TBRTQJl48eMWog1hN26I
-         lb1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=a1g8H/5EnuQai7vsKQsMU+CVyFb5uB83EziQawtgMDQ=;
-        b=e+Bzh4I+RNRTi/M6u0O6jLwHuqgOJdpJTtx53mYt1goJspxZ+/DfNeH/XEFlWEmB+m
-         OJCWWjotYEIAszj+GzjDlSQKxPPNh4iqqPt3G8oSrK7dHIpufXJGLP/7HCqtLK1r9TJF
-         A+A7ihFj03mIFMtJ6Y3lJERdFtWFYm8clFbKhTTLYKBBFJO8OehEIs/Y8PwtwKqNKyAU
-         ZVWa59IsvJHVUp69WMWJ+g37bGbE9VO0LxPa2Dd9LyFxxqrqFCLPhwgRvlHFTjsW+deH
-         LRADb25bPCfZJhIUgKDAdwqzr1q9DcjaGkDbgLyNLFFrCpKhANc2EWm+Cg2eZra55wME
-         AQAg==
-X-Gm-Message-State: AFqh2krC0XAYjwa40GIu1ofLQGGyqtfxU3l4NbrtM6C9jewIu1b8VzI8
-        p1nRa/V4R8aMiuVWz+xywIweFfK3JDg+XStH
-X-Google-Smtp-Source: AMrXdXszMWKFzeKzx2qqlPjinJPLCfT/0Vnzgr9rLpPiGyJVEZ6b9td/Jy3JQyUhQ1r09CegVatXpA==
-X-Received: by 2002:a05:6402:cf:b0:45c:835c:1ecc with SMTP id i15-20020a05640200cf00b0045c835c1eccmr39299686edu.26.1674554019357;
-        Tue, 24 Jan 2023 01:53:39 -0800 (PST)
-Received: from [192.168.1.101] (abyl109.neoplus.adsl.tpnet.pl. [83.9.31.109])
-        by smtp.gmail.com with ESMTPSA id j15-20020aa7de8f000000b0049622a61f8fsm840057edv.30.2023.01.24.01.53.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Jan 2023 01:53:39 -0800 (PST)
-Message-ID: <d73f0eec-6e02-e72f-79d7-2c56245f7651@linaro.org>
-Date:   Tue, 24 Jan 2023 10:53:35 +0100
+        Tue, 24 Jan 2023 04:59:52 -0500
+Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E505739BA1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 01:59:49 -0800 (PST)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id D98884152E;
+        Tue, 24 Jan 2023 10:59:45 +0100 (CET)
+Date:   Tue, 24 Jan 2023 10:59:44 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        freedreno@lists.freedesktop.org,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        dri-devel@lists.freedesktop.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        David Airlie <airlied@gmail.com>
+Subject: Re: [1/2] drm/msm/dpu: fix clocks settings for msm8998 SSPP blocks
+Message-ID: <20230124095944.4zez2jmidjuh3nvf@SoMainline.org>
+References: <20230115124143.464809-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH 2/7] clk: qcom: Add Global Clock Controller driver for
- IPQ9574
-Content-Language: en-US
-To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
-        sboyd@kernel.org, linus.walleij@linaro.org,
-        catalin.marinas@arm.com, will@kernel.org, p.zabel@pengutronix.de,
-        shawnguo@kernel.org, arnd@arndb.de, marcel.ziswiler@toradex.com,
-        dmitry.baryshkov@linaro.org, nfraprado@collabora.com,
-        broonie@kernel.org, tdas@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
-        quic_poovendh@quicinc.com
-References: <20230110121316.24892-1-quic_devipriy@quicinc.com>
- <20230110121316.24892-3-quic_devipriy@quicinc.com>
- <de346d71-1fe7-e357-d220-d4468e4bb933@linaro.org>
- <afd2e5c8-fa5a-ac1f-4ede-4ab1f91c0d0d@quicinc.com>
- <9bdf757d-1fa0-106f-eb77-7f2a8593213f@linaro.org>
- <2852fc37-284f-6534-f163-45b37b153db1@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <2852fc37-284f-6534-f163-45b37b153db1@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230115124143.464809-1-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 24.01.2023 08:27, Devi Priya wrote:
+On 2023-01-15 14:41:42, Dmitry Baryshkov wrote:
+> DMA2 and DMA3 planes on msm8998 should use corresponding DMA2 and DMA3
+> clocks rather than CURSOR0/1 clocks (which are used for the CURSOR
+> planes). Correct corresponding SSPP declarations.
 > 
+> Fixes: 94391a14fc27 ("drm/msm/dpu1: Add MSM8998 to hw catalog")
+> Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> Cc: Jami Kettunen <jami.kettunen@somainline.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> On 1/13/2023 7:39 PM, Konrad Dybcio wrote:
->>
->>
->> On 13.01.2023 14:21, Devi Priya wrote:
->>>
->>>
->>> On 1/10/2023 6:07 PM, Konrad Dybcio wrote:
->>>>
->>>>
->>>> On 10.01.2023 13:13, devi priya wrote:
->>>>> Add Global Clock Controller (GCC) driver for ipq9574 based devices
->>>>>
->>>>> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
->>>>> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
->>>>> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
->>>>> ---
->> [...]
->>
->>>>> +static struct clk_branch gcc_blsp1_qup6_i2c_apps_clk = {
->>>>> +    .halt_reg = 0x07024,
->>>>> +    .clkr = {
->>>>> +        .enable_reg = 0x07024,
->>>>> +        .enable_mask = BIT(0),
->>>>> +        .hw.init = &(struct clk_init_data) {
->>>>> +            .name = "gcc_blsp1_qup6_i2c_apps_clk",
->>>>> +            .parent_hws = (const struct clk_hw *[]) {
->>>>> +                    &blsp1_qup6_i2c_apps_clk_src.clkr.hw },
->>>>> +            .num_parents = 1,
->>>>> +            .flags = CLK_SET_RATE_PARENT | CLK_IGNORE_UNUSED,
->>>> Sounds very much like a hack..
->>> Got it, will remove the clock entry as it is not being used in linux
->> I'm not sure removing it is the best option, somebody might have a
->> funky board where they use this particular QUP for I2C for whatever
->> reason and then the clock would have to be re-added..
-> Sure, Understood
-> This clock is used by the RPM component to communicate with PMIC and we
-> would add the critical flag here
-Okay, so this SoC is intended to ship with some RPM PMICs and
-*always* with an I2C companion that's required for some basic
-functionality, correct?
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> index 0f3da480b066..ad0c55464154 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> @@ -1180,9 +1180,9 @@ static const struct dpu_sspp_cfg msm8998_sspp[] = {
+>  	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000,  DMA_MSM8998_MASK,
+>  		sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA1),
+>  	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000,  DMA_CURSOR_MSM8998_MASK,
 
-Otherwise, if it's just for wifi/multimedia/etc (like PM8008ij
-on some newer devices), you should not make it critical and
-simply rely on Linux keeping it alive like so:
+Drop the _CURSOR mask here?  And the double space....
 
-consumer takes a regulator
-the regulator does not go to sleep because it's consumed
-the PMIC is active because a regulator on it is being used
-the I2C bus is active because its child PMIC is used
-the I2C clocks are alive because there's an active user
+> -		sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR0),
+> +		sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA2),
+>  	SSPP_BLK("sspp_11", SSPP_DMA3, 0x2a000,  DMA_CURSOR_MSM8998_MASK,
+> -		sdm845_dma_sblk_3, 13, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR1),
+> +		sdm845_dma_sblk_3, 13, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA3),
 
-Konrad
-> 
->> Thanks for addressing all of the review comments so thoroughly!
->>
->> Konrad
-> 
-> Best Regards,
-> Devi Priya
+Yes, msm8998_mdp defines both DMA2/3 and CURSOR0/1 clocks.  R-b after
+using DMA_MSM8998_MASK without the DPU_SSPP_CURSOR bit.
+
+However, my downstream sources still define cursor SSPPs that are
+missing here (after all, there's clk-ctrl for these already), at xin ID
+2 and 10 with addresses 0x3500 and 0x37000 downstream (-0x1000 here):
+
+	SSPP_BLK("sspp_?", SSPP_CURSOR0, 0x34000, DMA_CURSOR_SM8998_MASK,
+		cursor sblk?, 2, SSPP_TYPE_CURSOR, DPU_CLK_CTRL_CURSOR0),
+	SSPP_BLK("sspp_?", SSPP_CURSOR1, 0x36000, DMA_CURSOR_SM8998_MASK,
+		cursor sblk?, 10, SSPP_TYPE_CURSOR, DPU_CLK_CTRL_CURSOR1),
+
+Or should you/I send that as a separate folloup patch?
+
+- Marijn
+
+>  };
+>  
+>  static const struct dpu_sspp_cfg sdm845_sspp[] = {
