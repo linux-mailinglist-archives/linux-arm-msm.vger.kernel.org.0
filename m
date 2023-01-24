@@ -2,99 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7460367920A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 08:33:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8404E679217
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Jan 2023 08:35:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232748AbjAXHdd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Jan 2023 02:33:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55814 "EHLO
+        id S232605AbjAXHfn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Jan 2023 02:35:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232535AbjAXHdb (ORCPT
+        with ESMTP id S232152AbjAXHfm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Jan 2023 02:33:31 -0500
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E27C3E617
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 23:33:30 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id j17so10737603wms.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 23:33:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=VioeWI7fDwNpte8u/og+P3r1iFMquT/ZLdVEZmxjD30=;
-        b=kL/8pPRLca9pT8CwPPJX9gVr4pZr4ASBHoE2bO6sxg5BEoVyPI1pVE5Kajk04v2QaZ
-         bkhQeP1/+kPC3nMDtg7JUUKow+Z/xDr8gNnSrDhxhXWxqIy3z7v4SWGUFo6Iv/JwnUUv
-         8Mbz05bvvaTzUC4UpgRERU6St6nN0Cqaatfko6DKAaIMoUzfKf8qHoBciooWnvTmGJ4Y
-         aQJvB/Wx6JaBR2oIG81v3T7o9w6LmdzxZLf0Rdjuy8rlNHXa0TXPjvpvuma2EL/xw4+T
-         OpIujKcsGU9rVXRuEWzCJs0Gxbc7cCHU6TMVeYhyzvNWbzj8qHlqm/3LuXkRBVGPyZAQ
-         bQRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VioeWI7fDwNpte8u/og+P3r1iFMquT/ZLdVEZmxjD30=;
-        b=XDnIslcO20nzvxZdaSRKNDScSsTIkHKoS71qsIJKFIFyhADCbF+WKHPnzulciqAbKn
-         Z43gCW+Z995S8xEWS1+NgqkKTHEZ/ZjM0Z4S06bp3xqcVaUG2+DAi/VctB4/UrRa4dBb
-         5h3tft1Uc8L8phXVDjTHVA/8zfkQIo8txsPUqSIK1WRLn0ZHse6uq9B6ea0njcGnOUI9
-         xFb4L+G6CXOVV+ei7XV5nBGiig/r1hw/KZt8gWyOjY/z6tB/z5y9VzF3rMltTJjYVBi5
-         TWC4qZj8uR/U+mHtSrcl/Bx8ESQMWdTIkrotQT/8iBB3/0EW1G7A8KF9EER57kbn4EI9
-         +0kg==
-X-Gm-Message-State: AFqh2krN7VJLBySUQVJyiDK5naQSID4vxtd1s6ryDOezx0K8ERjutQNZ
-        7znXMOXpqp6lgNOMbVASGkBG7g==
-X-Google-Smtp-Source: AMrXdXurEEJZySEUTYGGRgrRONt2uhutFxZWT59gOGx520/9HB6lqe8/xs+a5uaCqFPi8yjdcSDWSw==
-X-Received: by 2002:a05:600c:6006:b0:3db:21b8:5f58 with SMTP id az6-20020a05600c600600b003db21b85f58mr19271221wmb.2.1674545609039;
-        Mon, 23 Jan 2023 23:33:29 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id z18-20020a05600c079200b003d9780466b0sm1148217wmo.31.2023.01.23.23.33.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Jan 2023 23:33:28 -0800 (PST)
-Message-ID: <b1eb09c4-c94f-8828-c7f8-f01bae2d7b29@linaro.org>
-Date:   Tue, 24 Jan 2023 08:33:27 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH] dt-bindings: arm: qcom,ids: Add Soc IDs for IPQ8064 and
- variants
-Content-Language: en-US
-To:     Christian Marangi <ansuelsmth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
+        Tue, 24 Jan 2023 02:35:42 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82AC23E617
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Jan 2023 23:35:41 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 33DEEB810DC
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 07:35:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D06F1C433EF;
+        Tue, 24 Jan 2023 07:35:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1674545738;
+        bh=pDKgWUoua20YmE6cBGGrAAjwPz/aziIlCSE60NBy7gg=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=XrqByYokM3qTW2JuVOUIiaNnz5AGptMJoXAau5XqV4NH5iTKQZaFe9t7W3zn1l+pj
+         1H2D0aohnobycL5To58trZ/FbiYeLbSh29wJ9caRRAF2BUFaEhLj/zC6fOokbBOogV
+         TMKporNpvh92G7KchymYu1Wr7QmK8ogJbaL9H8xE5U/3gSYTIDaO0xp+5EtLb99uSb
+         iZLRc8QMxbRODwO/yJYg/evGvPZHGNJ5/wdi3K1vBGb+Hpin31qLnn16EySgU+NS6+
+         z3bPX6owF/m42+JaFoWeA6Bjcj3zXtpWkjXQfRSndkIldCEkCpepYJAVmIZDHuDH+b
+         IFMX/x26jC7bQ==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pKDqD-0003fc-Ql; Tue, 24 Jan 2023 08:35:38 +0100
+Date:   Tue, 24 Jan 2023 08:35:37 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230123211727.21542-1-ansuelsmth@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230123211727.21542-1-ansuelsmth@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: Re: [PATCH] phy: qcom-qmp-combo: correct DP register offsets
+Message-ID: <Y8+KSV/0Jk9nnntK@hovoldconsulting.com>
+References: <20230123120807.3101313-1-dmitry.baryshkov@linaro.org>
+ <Y86TDYOKtpcLdZYx@hovoldconsulting.com>
+ <CAA8EJppU4nQRYWwAahWtjrVbU1ywF4P+zxHs1PZm98bzKswiZA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAA8EJppU4nQRYWwAahWtjrVbU1ywF4P+zxHs1PZm98bzKswiZA@mail.gmail.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/01/2023 22:17, Christian Marangi wrote:
-> Add Soc IDs for Qualcomm IPQ8064 and variants.
+On Mon, Jan 23, 2023 at 08:59:48PM +0200, Dmitry Baryshkov wrote:
+> On Mon, 23 Jan 2023 at 16:00, Johan Hovold <johan@kernel.org> wrote:
+> >
+> > On Mon, Jan 23, 2023 at 02:08:07PM +0200, Dmitry Baryshkov wrote:
+> > > Correct DP register offsets used with new DT bindings scheme. First, DP
+> > > TX registers reside in separate regions, not in the same regions as USB
+> > > TX registers do. Second, correct DP_PHY region offset to follow the
+> > > offset used for earlier generations/bindings.
+> >
+> > No, this patch is broken. SC8280XP is different, doesn't seem to have
+> > separate DP TX regions and the DP_PHY registers lies at a different
+> > offset than on previous generations.
+> >
+> > You can't just pull these numbers out of your ... ;)
+> >
+> > This is the only platform that I can test the DP part on and it is
+> > working. If that happens to be by chance, then you need to blame the
+> > commit adding support for sc8280xp (i.e. not the one that fixed the
+> > binding). And note that this was added by Bjorn who do have access to
+> > the documentation for this SoC (as well as actual hardware).
 > 
-> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> ---
->  include/dt-bindings/arm/qcom,ids.h | 6 ++++++
->  1 file changed, 6 insertions(+)
+> Ack, let's wait for Bjorn to check the offsets. I find it extremely
+> suspicious that dp_txa/txb use the same region as usb txa/txb do.
 
+Yeah, I agree, it seems odd, but then again the sc8280xp PHY is a
+different beast which also supports USB4, etc. The DP_PHY offset comes
+from the header file in the vendor tree and there are no separate DP TX
+registers there.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+By the way, I forgot that Bjorn actually copy-pasted the devicetree
+nodes from an earlier platform when first adding the PHY and only later
+realised that the DP part did not work. The fix for that (e.g. to use
+the same TX registers) was never merged to mainline (instead we
+temporarily disabled the DP part) so the Fixes tag you used would have
+been correct if this turns out to be wrong.
 
-What about qcom/socinfo.c patch?
+> > > Cc: Johan Hovold <johan+linaro@kernel.org>
+> > > Fixes: 83a0bbe39b17 ("phy: qcom-qmp-combo: add support for updated sc8280xp binding")
+> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-
-Best regards,
-Krzysztof
-
+Johan
