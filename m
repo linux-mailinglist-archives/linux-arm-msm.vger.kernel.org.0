@@ -2,119 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2AD0D67BD62
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 21:51:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C537F67BD67
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 21:53:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236588AbjAYUv4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Jan 2023 15:51:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54088 "EHLO
+        id S235920AbjAYUxX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Jan 2023 15:53:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236107AbjAYUvz (ORCPT
+        with ESMTP id S235174AbjAYUxW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Jan 2023 15:51:55 -0500
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADD8F4C16;
-        Wed, 25 Jan 2023 12:51:54 -0800 (PST)
-Received: from g550jk.localnet (unknown [62.108.10.64])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 735C1CD52B;
-        Wed, 25 Jan 2023 20:51:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1674679882; bh=zyYeu0H+dDft3MxWwUV/3yLkJL0OcVfUcMzYpR4kdUY=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=H7Kaox9TbDxekWdwpukOzR4VRM9hZfaEiZu+n6SKIYJge5kTQYu0WNd1L+CeMeqxe
-         ukwvsMs7+U8l/xMrx12gXchU58bdKho2Jk6wsUiNaFiavXDiHy3XR9G6u3w5qieNKT
-         MhywND3/TApyl6t4411x+cdR+IdgMWy3tvY6W9wQ=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 5/5] ARM: dts: qcom: msm8974-oneplus-bacon: Add notification LED
-Date:   Wed, 25 Jan 2023 21:51:21 +0100
-Message-ID: <4455893.LvFx2qVVIh@g550jk>
-In-Reply-To: <02e5bf79-3e2d-02c8-67e7-61bbff32ba29@linaro.org>
-References: <20230122-msm8974-bacon-features-v1-0-4049f565c24c@z3ntu.xyz>
- <20230122-msm8974-bacon-features-v1-5-4049f565c24c@z3ntu.xyz>
- <02e5bf79-3e2d-02c8-67e7-61bbff32ba29@linaro.org>
+        Wed, 25 Jan 2023 15:53:22 -0500
+Received: from mailrelay2-1.pub.mailoutpod2-cph3.one.com (mailrelay2-1.pub.mailoutpod2-cph3.one.com [46.30.211.177])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C12DF22A1F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 12:53:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ravnborg.org; s=rsa2;
+        h=in-reply-to:content-type:mime-version:references:message-id:subject:cc:to:
+         from:date:from;
+        bh=/NbmLZPfTUBNuvwpuIq7jzdYXjOyhys3va43pns/wME=;
+        b=fXzCVuKRusidZBn0C8DUfgcuqFi/xH4Dq66tyHbKA0oEuRzZuyoIBOiLjsOwSvr+XkS5Aj6/8FjfS
+         f1d19b3n2z0KUneSoilCiaNmzUWxDKPyG6eKXAoW0igFvtDQo9SGKXCtGVlpoN0OfqSLgAw+CIbCVN
+         csYcffChBpGi6AJIHGSwJinq5tjrmRtv6oc2CdNm9Q7TFsLahoU5Ms05Lebn4W0llb1eVofn1EdPxe
+         GpcepYkR9FhzvhXT8jy0QE5+B9n5nSxXE3HPA8K05S/hpAQso901xLBhlv7iXHZHbmXbLK3ua9aUzv
+         Z0NFaunagWqq8MfE3TtCNIwsrOjBVtg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed;
+        d=ravnborg.org; s=ed2;
+        h=in-reply-to:content-type:mime-version:references:message-id:subject:cc:to:
+         from:date:from;
+        bh=/NbmLZPfTUBNuvwpuIq7jzdYXjOyhys3va43pns/wME=;
+        b=H0mcFvUdtrxvOtOWjFbsUaf7rnbOCi8U9iXjFrJBOzDccJr1E5qa1ZOuQ3ZOe3mcbAztOHHM8l8/s
+         V3o0dAlBQ==
+X-HalOne-ID: 24b509b3-9cf2-11ed-a537-3df7d73157c4
+Received: from ravnborg.org (2-105-2-98-cable.dk.customer.tdc.net [2.105.2.98])
+        by mailrelay2 (Halon) with ESMTPSA
+        id 24b509b3-9cf2-11ed-a537-3df7d73157c4;
+        Wed, 25 Jan 2023 20:52:16 +0000 (UTC)
+Date:   Wed, 25 Jan 2023 21:52:14 +0100
+From:   Sam Ravnborg <sam@ravnborg.org>
+To:     Thomas Zimmermann <tzimmermann@suse.de>
+Cc:     airlied@gmail.com, daniel@ffwll.ch,
+        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        javierm@redhat.com, linux-samsung-soc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
+        linux-tegra@vger.kernel.org, freedreno@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v3 01/10] drm/client: Test for connectors before sending
+ hotplug event
+Message-ID: <Y9GWfi4EiCDPa6BJ@ravnborg.org>
+References: <20230125200415.14123-1-tzimmermann@suse.de>
+ <20230125200415.14123-2-tzimmermann@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,DKIM_INVALID,
-        DKIM_SIGNED,FROM_SUSPICIOUS_NTLD,SPF_HELO_NONE,SPF_PASS,
-        T_PDS_OTHER_BAD_TLD autolearn=no autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230125200415.14123-2-tzimmermann@suse.de>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Montag, 23. J=E4nner 2023 18:18:16 CET Krzysztof Kozlowski wrote:
-> On 22/01/2023 17:48, Luca Weiss wrote:
-> > Add the node describing the sn3193 that's used to provide notification
-> > LED.
-> >=20
-> > Unfortunately the driver currently supports neither multicolor API nor
-> > using the properties function & color, so we use label instead.
-> >=20
-> > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> > ---
-> >=20
-> >  .../arm/boot/dts/qcom-msm8974pro-oneplus-bacon.dts | 28
-> >  ++++++++++++++++++++++ 1 file changed, 28 insertions(+)
-> >=20
-> > diff --git a/arch/arm/boot/dts/qcom-msm8974pro-oneplus-bacon.dts
-> > b/arch/arm/boot/dts/qcom-msm8974pro-oneplus-bacon.dts index
-> > ffb486ceb6a6..a672c45d7070 100644
-> > --- a/arch/arm/boot/dts/qcom-msm8974pro-oneplus-bacon.dts
-> > +++ b/arch/arm/boot/dts/qcom-msm8974pro-oneplus-bacon.dts
-> > @@ -114,6 +114,34 @@ led@0 {
-> >=20
-> >  			default-brightness =3D <80>;
-> >  	=09
-> >  		};
-> >  =09
-> >  	};
-> >=20
-> > +
-> > +	led-controller@68 {
-> > +		compatible =3D "si-en,sn3193";
-> > +		reg =3D <0x68>;
-> > +
-> > +		shutdown-gpios =3D <&tlmm 45 GPIO_ACTIVE_HIGH>;
-> > +
-> > +		#address-cells =3D <1>;
-> > +		#size-cells =3D <0>;
-> > +
-> > +		led@1 {
-> > +			reg =3D <1>;
-> > +			label =3D "red:status";
->=20
-> These should be colors and functions.
+Hi Thomas,
 
-Hi Krzysztof,
+On Wed, Jan 25, 2023 at 09:04:06PM +0100, Thomas Zimmermann wrote:
+> Test for connectors in the client code and remove a similar test
+> from the generic fbdev emulation. Do nothing if the test fails.
+> Not having connectors indicates a driver bug.
+> 
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+> ---
+>  drivers/gpu/drm/drm_client.c        | 5 +++++
+>  drivers/gpu/drm/drm_fbdev_generic.c | 5 -----
+>  2 files changed, 5 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/drm_client.c b/drivers/gpu/drm/drm_client.c
+> index 262ec64d4397..09ac191c202d 100644
+> --- a/drivers/gpu/drm/drm_client.c
+> +++ b/drivers/gpu/drm/drm_client.c
+> @@ -198,6 +198,11 @@ void drm_client_dev_hotplug(struct drm_device *dev)
+>  	if (!drm_core_check_feature(dev, DRIVER_MODESET))
+>  		return;
+>  
+> +	if (!dev->mode_config.num_connector) {
+> +		drm_dbg_kms(dev, "No connectors found, will not send hotplug events!\n");
+> +		return;
+This deserves a more visible logging - if a driver fails here it would
+be good to spot it in the normal kernel log.
+drm_info or drm_notice?
 
-please check the commit message for this. I tried using it but it didn't wo=
-rk,=20
-the driver in general might need an overhaul at some point...
+The original code had this on the debug level, but when moving the log
+level could also be updated.
 
-> Unfortunately the driver currently supports neither multicolor API nor
-> using the properties function & color, so we use label instead.
+	Sam
 
-Or maybe I messed up but pretty sure this was the case when I wrote the dts.
-
-Regards
-Luca
-
->=20
->=20
-> Best regards,
-> Krzysztof
-
-
-
-
+> +	}
+> +
+>  	mutex_lock(&dev->clientlist_mutex);
+>  	list_for_each_entry(client, &dev->clientlist, list) {
+>  		if (!client->funcs || !client->funcs->hotplug)
+> diff --git a/drivers/gpu/drm/drm_fbdev_generic.c b/drivers/gpu/drm/drm_fbdev_generic.c
+> index 0a4c160e0e58..3d455a2e3fb5 100644
+> --- a/drivers/gpu/drm/drm_fbdev_generic.c
+> +++ b/drivers/gpu/drm/drm_fbdev_generic.c
+> @@ -389,11 +389,6 @@ static int drm_fbdev_client_hotplug(struct drm_client_dev *client)
+>  	if (dev->fb_helper)
+>  		return drm_fb_helper_hotplug_event(dev->fb_helper);
+>  
+> -	if (!dev->mode_config.num_connector) {
+> -		drm_dbg_kms(dev, "No connectors found, will not create framebuffer!\n");
+> -		return 0;
+> -	}
+> -
+>  	drm_fb_helper_prepare(dev, fb_helper, &drm_fb_helper_generic_funcs);
+>  
+>  	ret = drm_fb_helper_init(dev, fb_helper);
+> -- 
+> 2.39.0
