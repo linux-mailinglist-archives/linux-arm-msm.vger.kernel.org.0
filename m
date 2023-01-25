@@ -2,160 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 975D767B26B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 13:13:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B57C367B361
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 14:34:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235416AbjAYMNH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Jan 2023 07:13:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52084 "EHLO
+        id S235416AbjAYNez (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Jan 2023 08:34:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235387AbjAYMNF (ORCPT
+        with ESMTP id S234869AbjAYNex (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Jan 2023 07:13:05 -0500
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D079614E8C;
-        Wed, 25 Jan 2023 04:13:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1674648782; x=1706184782;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=BlYL5ZWxfpIGJfWCOvZGguBgymIDRUM5a8fZph+HpbU=;
-  b=IVms/xwalWAAxbxSySt4IZtjNoJfVX+X4bN6bFWWFIeJC4tNGsBhus6Y
-   Bv+2jVbRe75jnV0o+m4bmtbRLZcaGpu/aKmB9ifJLs/MYpqRiAXS82j6v
-   2yGtPPHHqWH9vcaEY/JhBdH5KyxGqlswSO9FK7ctcEtjVDUz6MWGAF0lQ
-   TMABESVcDhXcoGhriDVw8iG32Uw5qchAasm6RGwVX0HbF1GTJHd9fz//v
-   ZOxLM86mF/3lzcLlB2y4KYCTNUTt8IVaSEWRKWGYQYruBM80FzwSi4qP+
-   XFh5tmLm9GpeV9g4CS6GoAJU9FXKhubop6iSwOf+7AXcMA4ljDyq4sGG1
-   A==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10600"; a="391044966"
-X-IronPort-AV: E=Sophos;i="5.97,245,1669104000"; 
-   d="scan'208";a="391044966"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jan 2023 04:13:02 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10600"; a="725833858"
-X-IronPort-AV: E=Sophos;i="5.97,245,1669104000"; 
-   d="scan'208";a="725833858"
-Received: from lkp-server01.sh.intel.com (HELO 5646d64e7320) ([10.239.97.150])
-  by fmsmga008.fm.intel.com with ESMTP; 25 Jan 2023 04:12:57 -0800
-Received: from kbuild by 5646d64e7320 with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1pKee9-0007He-0L;
-        Wed, 25 Jan 2023 12:12:57 +0000
-Date:   Wed, 25 Jan 2023 20:12:30 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Thomas Zimmermann <tzimmermann@suse.de>, airlied@gmail.com,
-        daniel@ffwll.ch, maarten.lankhorst@linux.intel.com,
-        mripard@kernel.org, javierm@redhat.com
-Cc:     llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        amd-gfx@lists.freedesktop.org,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        linux-tegra@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [Intel-gfx] [PATCH v2 06/10] drm/fb-helper: Initialize
- fb-helper's preferred BPP in prepare function
-Message-ID: <202301252016.vm7ksFra-lkp@intel.com>
-References: <20230124134010.30263-7-tzimmermann@suse.de>
+        Wed, 25 Jan 2023 08:34:53 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C39A56EF7;
+        Wed, 25 Jan 2023 05:34:53 -0800 (PST)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30PDQDl8019535;
+        Wed, 25 Jan 2023 13:34:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : reply-to : references : mime-version :
+ content-type : in-reply-to; s=qcppdkim1;
+ bh=bVExUW5TsBTIAyHKVhS2iVtTheeV6yIVPn1bahdiUQ8=;
+ b=XXmCCdoCQdD9UXAKSUXLYddVShB0WLzlE/Ij8QVvJwh47j9nQad8GjkzcsD/ELLeNCLR
+ vdjp3s5HL6boHgb0ngQV1/S6srUkeCspOgpwFsFzpLk61xKY6qVoDxKo4w2SVZpc64IA
+ jw9ufR9P6EAPi7wGwHJF2Jrk2CjaPgObEwfBpED5hGOX0lfjtX8s3ZBReMEDPh340Ggt
+ 8SLEy2xC/f8+6SYNCRbQo39PX4KDG7c82IE3rFn9Pn6Q7JvDvj+AfXwO6GEvLn1+UCf3
+ Wd8+4jse/em2dr2MOVm6AMo94F3zi3A+IEQ1tOQwjam4Xaw3RjL7xvbwxqXB+F5ENO0R dQ== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3n89hk74xm-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 25 Jan 2023 13:34:35 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30PDYYLe000852
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 25 Jan 2023 13:34:34 GMT
+Received: from quicinc.com (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 25 Jan
+ 2023 05:34:28 -0800
+Date:   Wed, 25 Jan 2023 19:04:24 +0530
+From:   Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
+To:     Elliot Berman <quic_eberman@quicinc.com>
+CC:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Alex Elder <elder@linaro.org>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Marc Zyngier <maz@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+Subject: Re: [PATCH v9 13/27] gunyah: vm_mgr: Add/remove user memory regions
+Message-ID: <20230125133424.GA332@quicinc.com>
+Reply-To: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
+References: <20230120224627.4053418-1-quic_eberman@quicinc.com>
+ <20230120224627.4053418-14-quic_eberman@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="iso-8859-1"
 Content-Disposition: inline
-In-Reply-To: <20230124134010.30263-7-tzimmermann@suse.de>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20230120224627.4053418-14-quic_eberman@quicinc.com>
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: jaB3vNnrEZlj2BcTgEhiu4QVKnZcfpEO
+X-Proofpoint-ORIG-GUID: jaB3vNnrEZlj2BcTgEhiu4QVKnZcfpEO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-25_08,2023-01-25_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=706 phishscore=0
+ suspectscore=0 clxscore=1015 mlxscore=0 impostorscore=0 spamscore=0
+ adultscore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301250121
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Thomas,
+* Elliot Berman <quic_eberman@quicinc.com> [2023-01-20 14:46:12]:
 
-I love your patch! Yet something to improve:
+> +	/* Check for overlap */
+> +	list_for_each_entry(tmp_mapping, &ghvm->memory_mappings, list) {
+> +		if (!((mapping->guest_phys_addr + (mapping->npages << PAGE_SHIFT) <=
+> +			tmp_mapping->guest_phys_addr) ||
+> +			(mapping->guest_phys_addr >=
+> +			tmp_mapping->guest_phys_addr + (tmp_mapping->npages << PAGE_SHIFT)))) {
+> +			ret = -EEXIST;
+> +			goto unlock;
+> +		}
+> +	}
+> +
+> +	list_add(&mapping->list, &ghvm->memory_mappings);
 
-[auto build test ERROR on 7d3e7f64a42d66ba8da6e7b66a8d85457ef84570]
+I think the potential race condition described last time is still possible. Pls
+check.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Thomas-Zimmermann/drm-client-Test-for-connectors-before-sending-hotplug-event/20230124-214220
-base:   7d3e7f64a42d66ba8da6e7b66a8d85457ef84570
-patch link:    https://lore.kernel.org/r/20230124134010.30263-7-tzimmermann%40suse.de
-patch subject: [Intel-gfx] [PATCH v2 06/10] drm/fb-helper: Initialize fb-helper's preferred BPP in prepare function
-config: x86_64-randconfig-a014-20230123 (https://download.01.org/0day-ci/archive/20230125/202301252016.vm7ksFra-lkp@intel.com/config)
-compiler: clang version 14.0.6 (https://github.com/llvm/llvm-project f28c006a5895fc0e329fe15fead81e37457cb1d1)
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/70e38534e74e4d12bb02b3b352bba2aed417f541
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Thomas-Zimmermann/drm-client-Test-for-connectors-before-sending-hotplug-event/20230124-214220
-        git checkout 70e38534e74e4d12bb02b3b352bba2aed417f541
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=x86_64 olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=x86_64 SHELL=/bin/bash drivers/gpu/drm/gma500/
+> +unlock:
+> +	mutex_unlock(&ghvm->mm_lock);
+> +	if (ret)
+> +		goto free_mapping;
+> +
+> +	mapping->pages = kcalloc(mapping->npages, sizeof(*mapping->pages), GFP_KERNEL);
+> +	if (!mapping->pages) {
+> +		ret = -ENOMEM;
+> +		goto reclaim;
 
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
+Same comment as last time. Can you check this error path? We seem to call
+unpin_user_page() in this path, which is not correct.
 
-All errors (new ones prefixed by >>):
+> +	}
+> +
+> +	pinned = pin_user_pages_fast(region->userspace_addr, mapping->npages,
+> +					FOLL_WRITE | FOLL_LONGTERM, mapping->pages);
+> +	if (pinned < 0) {
+> +		ret = pinned;
+> +		goto reclaim;
 
->> drivers/gpu/drm/gma500/framebuffer.c:412:44: error: too many arguments to function call, expected 3, have 4
-           drm_fb_helper_prepare(dev, fb_helper, 32, &psb_fb_helper_funcs);
-           ~~~~~~~~~~~~~~~~~~~~~                     ^~~~~~~~~~~~~~~~~~~~
-   include/drm/drm_fb_helper.h:295:20: note: 'drm_fb_helper_prepare' declared here
-   static inline void drm_fb_helper_prepare(struct drm_device *dev,
-                      ^
->> drivers/gpu/drm/gma500/framebuffer.c:421:46: error: too few arguments to function call, expected 2, have 1
-           ret = drm_fb_helper_initial_config(fb_helper);
-                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~          ^
-   include/drm/drm_fb_helper.h:459:19: note: 'drm_fb_helper_initial_config' declared here
-   static inline int drm_fb_helper_initial_config(struct drm_fb_helper *fb_helper,
-                     ^
-   2 errors generated.
+Same comment as above.
 
-
-vim +412 drivers/gpu/drm/gma500/framebuffer.c
-
-   397	
-   398	int psb_fbdev_init(struct drm_device *dev)
-   399	{
-   400		struct drm_fb_helper *fb_helper;
-   401		struct drm_psb_private *dev_priv = to_drm_psb_private(dev);
-   402		int ret;
-   403	
-   404		fb_helper = kzalloc(sizeof(*fb_helper), GFP_KERNEL);
-   405		if (!fb_helper) {
-   406			dev_err(dev->dev, "no memory\n");
-   407			return -ENOMEM;
-   408		}
-   409	
-   410		dev_priv->fb_helper = fb_helper;
-   411	
- > 412		drm_fb_helper_prepare(dev, fb_helper, 32, &psb_fb_helper_funcs);
-   413	
-   414		ret = drm_fb_helper_init(dev, fb_helper);
-   415		if (ret)
-   416			goto free;
-   417	
-   418		/* disable all the possible outputs/crtcs before entering KMS mode */
-   419		drm_helper_disable_unused_functions(dev);
-   420	
- > 421		ret = drm_fb_helper_initial_config(fb_helper);
-   422		if (ret)
-   423			goto fini;
-   424	
-   425		return 0;
-   426	
-   427	fini:
-   428		drm_fb_helper_fini(fb_helper);
-   429	free:
-   430		kfree(fb_helper);
-   431		return ret;
-   432	}
-   433	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
