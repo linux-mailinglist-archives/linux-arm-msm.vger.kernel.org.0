@@ -2,124 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7571867AB74
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 09:14:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E8F0667ABC3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 09:31:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235049AbjAYIOm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Jan 2023 03:14:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54184 "EHLO
+        id S235126AbjAYIbi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Jan 2023 03:31:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234745AbjAYIOm (ORCPT
+        with ESMTP id S235138AbjAYIbh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Jan 2023 03:14:42 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 378C214238;
-        Wed, 25 Jan 2023 00:14:41 -0800 (PST)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30P823C6024376;
-        Wed, 25 Jan 2023 08:14:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=keL/V4bFVJjqoggiHb3seMd7EdlHsokOIRNrZhWi3n4=;
- b=jOkI/TIpG7rD7usDvSTOYYYNfO/S//pTLv0YOr8Rp8Tdam3BR+JfHEVjyoZ9FUeUbS6G
- ogYq8Eq1MH/Hcy/gEsa0mZDpMGLr3mQ3WrhVba2y5WdzgqirllwsgReIPP6QGMwY3Vpn
- nfTQqzGFpU6KghZ9CtnsxOmiA/gQ/Wyiy+DDN/Z7G7Z7iUP0c0HLkZyeNJlif3iRt6Qq
- R3vyuNdpuLaYHK09rkrJl3DdwpMcCVKdVuvVqSxj5NZul52HEr7axWM00vfJ8GzUQvOe
- xCHjTOXv7Nb32wyOyObvWdQnoRnOjF01dsLr6ThkbSnr1ue8UQ546XMjIf+oKhk4Dl4Q IA== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3najqa9bw3-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 25 Jan 2023 08:14:35 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30P8EY0D015986
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 25 Jan 2023 08:14:34 GMT
-Received: from hu-namajain-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Wed, 25 Jan 2023 00:14:31 -0800
-From:   Naman Jain <quic_namajain@quicinc.com>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
-        Naman Jain <quic_namajain@quicinc.com>
-Subject: [PATCH] soc: qcom: socinfo: Add support for new field in revision 17
-Date:   Wed, 25 Jan 2023 13:44:07 +0530
-Message-ID: <20230125081407.31833-1-quic_namajain@quicinc.com>
-X-Mailer: git-send-email 2.17.1
+        Wed, 25 Jan 2023 03:31:37 -0500
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20C924FCDC
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 00:30:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1674635447;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=kr0S8akD6qUBjK/SM2fF6lu+0ihmEwSHU9fQtaMUMNo=;
+        b=c82vQHfGvl69RfAXVYFrW2N0W8Ijsjsjpnjk1bowJm/pXrJxdkxGqIuUhU5SsgTTLLfChe
+        WCLgudtbd4i2a67T5yUtWti3Rrnvc7tjBjBAa2DISqSv0KJPjNuKUh2mamIk8uLrVTgKsh
+        45QcAOaKX2KrCFHZDN0PbyR4zQgJDHI=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-99-Zbda1sw5Mj6C-o5AvGLLmg-1; Wed, 25 Jan 2023 03:30:45 -0500
+X-MC-Unique: Zbda1sw5Mj6C-o5AvGLLmg-1
+Received: by mail-wr1-f71.google.com with SMTP id v5-20020adf8b45000000b002bde0366b11so3002882wra.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 00:30:45 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=kr0S8akD6qUBjK/SM2fF6lu+0ihmEwSHU9fQtaMUMNo=;
+        b=MI03L7dmGLDmy1ijx2JztvRGkbS6XB+G1A6y0kppbhStIkSmLO0QsbV7MYfckqgniW
+         X6YJW6oNrNaMEboTtnLK/8R6C4telcIzduCTU8yupA87fomHpJJXGYmy1/7bNC2OfKXT
+         anh3KGnztifqY98XK1WYdu5dKD+sLLhED+5VO0FL/I+hr1vHTHoD2VLTBRNZEdItFViE
+         b9kkiPP4hA/L7WCJOFb5EGOBaUsKGFOLTQa/tF9cwu/iePAKKslYBeovfsaxoqXN4Lvc
+         j+QZ9bNk2DT1vVbzxqv2gOQTLULmqSAny8/YUSRLol7SX6sxOM/ptqg5QBW2SdO+3ECb
+         8jqQ==
+X-Gm-Message-State: AFqh2krtFxbi+hR8w+0NhTjn+XXbTjM0xFryOODhnkErJpuBlkN3YIU9
+        NCZuHdPrZprlq46KHUZ1RCGTwo9nLTTkTvF+ZQqSJJfiN98c11iuriqTUAlmVbNiia/MubYz3p2
+        2tg06WJiz8KUKVU+wtbORpABPTw==
+X-Received: by 2002:a05:6000:388:b0:2bc:7ec3:8b2 with SMTP id u8-20020a056000038800b002bc7ec308b2mr29736119wrf.68.1674635444579;
+        Wed, 25 Jan 2023 00:30:44 -0800 (PST)
+X-Google-Smtp-Source: AMrXdXvJXEPl3F4VP/2Wui1NMuiLkn1RDtzF7t2lLspd9Qgz+v3EiIOxwRmTCt+QhhFH4DIAkfWI6g==
+X-Received: by 2002:a05:6000:388:b0:2bc:7ec3:8b2 with SMTP id u8-20020a056000038800b002bc7ec308b2mr29736083wrf.68.1674635444065;
+        Wed, 25 Jan 2023 00:30:44 -0800 (PST)
+Received: from [192.168.1.130] (205.pool92-176-231.dynamic.orange.es. [92.176.231.205])
+        by smtp.gmail.com with ESMTPSA id n17-20020a5d67d1000000b002425be3c9e2sm3716862wrw.60.2023.01.25.00.30.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 Jan 2023 00:30:43 -0800 (PST)
+Message-ID: <296bcff0-9d75-3d6b-e101-dddb26edadf1@redhat.com>
+Date:   Wed, 25 Jan 2023 09:30:42 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ojc2Bmut0we8S9VQ6RJk0mdjzxPaNbwQ
-X-Proofpoint-ORIG-GUID: ojc2Bmut0we8S9VQ6RJk0mdjzxPaNbwQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-25_04,2023-01-24_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
- malwarescore=0 adultscore=0 spamscore=0 mlxscore=0 clxscore=1015
- impostorscore=0 priorityscore=1501 mlxlogscore=999 suspectscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301250075
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH v2 01/10] drm/client: Test for connectors before sending
+ hotplug event
+Content-Language: en-US
+To:     Thomas Zimmermann <tzimmermann@suse.de>, airlied@gmail.com,
+        daniel@ffwll.ch, maarten.lankhorst@linux.intel.com,
+        mripard@kernel.org
+Cc:     dri-devel@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        amd-gfx@lists.freedesktop.org, linux-tegra@vger.kernel.org
+References: <20230124134010.30263-1-tzimmermann@suse.de>
+ <20230124134010.30263-2-tzimmermann@suse.de>
+From:   Javier Martinez Canillas <javierm@redhat.com>
+In-Reply-To: <20230124134010.30263-2-tzimmermann@suse.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for new field coming with socinfo structure under v17 to get
-hardware platform's oem variant id. This is to enable OEMs to have minor
-changes in the board, but to use the same platform subtype as the one
-supported by Qualcomm. The new field is to be used in platform overlay
-file. Default value is 0, reserved for Qualcomm platforms. Also, add
-debugfs support to read this field for a device.
+Hello Thomas,
 
-Change-Id: I18f80084bc75466f3fcccd55fd21b37d69245aa6
----
- drivers/soc/qcom/socinfo.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+On 1/24/23 14:40, Thomas Zimmermann wrote:
+> Test for connectors in the client code and remove a similar test
+> from the generic fbdev emulation. Do nothing if the test fails.
+> Not having connectors indicates a driver bug.
+> 
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> ---
 
-diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-index 10efdbcfdf05..10cdd32ce74d 100644
---- a/drivers/soc/qcom/socinfo.c
-+++ b/drivers/soc/qcom/socinfo.c
-@@ -174,6 +174,8 @@ struct socinfo {
- 	__le32  pcode;
- 	__le32  npartnamemap_offset;
- 	__le32  nnum_partname_mapping;
-+	/* Version 17 */
-+	__le32 oem_variant;
- };
- 
- #ifdef CONFIG_DEBUG_FS
-@@ -196,6 +198,7 @@ struct socinfo_params {
- 	u32 nmodem_supported;
- 	u32 feature_code;
- 	u32 pcode;
-+	u32 oem_variant;
- };
- 
- struct smem_image_version {
-@@ -519,6 +522,11 @@ static void socinfo_debugfs_init(struct qcom_socinfo *qcom_socinfo,
- 			   &qcom_socinfo->info.fmt);
- 
- 	switch (qcom_socinfo->info.fmt) {
-+	case SOCINFO_VERSION(0, 17):
-+		qcom_socinfo->info.oem_variant = __le32_to_cpu(info->oem_variant);
-+		debugfs_create_u32("oem_variant", 0444, qcom_socinfo->dbg_root,
-+				   &qcom_socinfo->info.oem_variant);
-+		fallthrough;
- 	case SOCINFO_VERSION(0, 16):
- 		qcom_socinfo->info.feature_code = __le32_to_cpu(info->feature_code);
- 		qcom_socinfo->info.pcode = __le32_to_cpu(info->pcode);
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+
+but I've a question below.
+
+>  drivers/gpu/drm/drm_client.c        | 5 +++++
+>  drivers/gpu/drm/drm_fbdev_generic.c | 5 -----
+>  2 files changed, 5 insertions(+), 5 deletions(-)
+
+[...]
+
+> --- a/drivers/gpu/drm/drm_fbdev_generic.c
+> +++ b/drivers/gpu/drm/drm_fbdev_generic.c
+> @@ -389,11 +389,6 @@ static int drm_fbdev_client_hotplug(struct drm_client_dev *client)
+>  	if (dev->fb_helper)
+>  		return drm_fb_helper_hotplug_event(dev->fb_helper);
+>  
+> -	if (!dev->mode_config.num_connector) {
+> -		drm_dbg_kms(dev, "No connectors found, will not create framebuffer!\n");
+> -		return 0;
+> -	}
+> -
+
+What about the following code snippet:
+
+	if (!drm_drv_uses_atomic_modeset(dev))
+		drm_helper_disable_unused_functions(dev);
+
+that seems to be something that should be in the core client dev hotplug
+as well, since it isn't specific to the fbdev emulation client ?
+
 -- 
-2.17.1
+Best regards,
+
+Javier Martinez Canillas
+Core Platforms
+Red Hat
 
