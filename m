@@ -2,65 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D13567A859
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 02:21:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5DDC167A864
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 02:30:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233370AbjAYBVX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Jan 2023 20:21:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36286 "EHLO
+        id S233265AbjAYBaC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Jan 2023 20:30:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232483AbjAYBVW (ORCPT
+        with ESMTP id S230229AbjAYBaB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Jan 2023 20:21:22 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 040A62DE60
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 17:21:19 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id d14so11890561wrr.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 17:21:18 -0800 (PST)
+        Tue, 24 Jan 2023 20:30:01 -0500
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11DCF49560
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 17:29:59 -0800 (PST)
+Received: by mail-ej1-x634.google.com with SMTP id mg12so43768273ejc.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 17:29:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=AeC8Lz3v3hJMYsusmsRkMr4xYB6Ha27L69duAHb9mKM=;
-        b=Ud6P8OCrFe0z/+QdXBd1mKo/ZqaN044vpJLqVlc/fnaOzxre8MMmrAKX7QCUmS8Pb9
-         ZMU5U/WzDQXQjMUeQ4ioSzJHpNZ38ynGq4X/4MIVT/GdmrNtTRNhGqnaNdGrLGM+8Tjq
-         yQ1zTadj1BBqYGGaUMBtonsiyBy6lGtcd1FkWdM3kSqFoJbjiRwmTNPjb4pix5WS7t+7
-         pLcljzO9snzVueS7VAjnO+jOWdsLUDeHoYoTwE5/YknzBesQWPiQAJbkuYaJk+Foa769
-         u9BijpZmxtz6ofE42ft6rv+GSXDc1i+bHBhuo1w7XROtzGj0a7CLGtHCGPf9Pqbf+uyg
-         8+ug==
+        bh=SaTjOuIxXBK83AxAjFBiHjZe+rvlU5L1GQ57PTy+V+k=;
+        b=yP6iFUSjrUYFUjhhXgQ8jMXrNm2Pl6JUcT1uP5Qs4D9kVD9Zc7BAf756uRWCC53G32
+         1ZRzezlEDYI1OYDHQHSGk5TrNQW2iZKQ/m8YKDsOq5eqL2GuZEITVdibJ7Tb7KXAZ8wm
+         982in2ckWMU5bIi+V+AF9tX4+RyiODm1pg39CqR6yV1KDAdewkoGpnI2YdR1IRVWT+9B
+         mOsSuWf0hmJwt39Xg6o/LX92qw5WRSmVbRpExlvD4jEe9o1HVHX2PLuv5OcoNXRr4Hcz
+         gHAG7KN30cfOqje9+eCM9UkySB2ASt1mUPcme6MhqYyryuT2MS3W3NpRBxnwqX/Xpmvc
+         sZuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AeC8Lz3v3hJMYsusmsRkMr4xYB6Ha27L69duAHb9mKM=;
-        b=B6EBuw+lsURp4UUt4vPiUuInc0ZUwj4TVJLcC+u1BvB0h8q29016Qw+fv5nT8xZOcS
-         pEYejiJ+fFSEPTYoVkpIuM4laChnbBn7IF02HwrAyqDy7nGaNkk2tkBrghjZ8twbGj/3
-         DL/mxZJvjlHH0xnxOso0A5mLbLuhOnaH+dm5pi1rn9TwPjNKnRYtuc80Ysf5Ng6eUlY/
-         fgoTGgdIIH+KOC81xJ2Sp7mRQhk/60NndThXLz6d7mQXWMLi7KI769dwP2qkeeOlKARX
-         2Z/g0Snn0970klhU02R81oT0M4zDditYwvncYZJeuP+MjxxzxVgzijxFRNC5cNctIO8x
-         NMww==
-X-Gm-Message-State: AFqh2kqTQcMCItsg9A103AVLMDvQ5+aD0V/lwxoZsBdhqFWA+EOTQVph
-        22NXoJDDbmwg5IZ8SBm9u4DDhw==
-X-Google-Smtp-Source: AMrXdXttekA4Amb/EkylKkuARPrERkYzjGISbzec8dpr9PJvLO3PHENv/Iu2Pa+xe6WMjfkdn1PB5A==
-X-Received: by 2002:adf:f10b:0:b0:2bd:e215:4372 with SMTP id r11-20020adff10b000000b002bde2154372mr22444176wro.20.1674609677425;
-        Tue, 24 Jan 2023 17:21:17 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id g9-20020adff3c9000000b002bfb29d19e4sm2184275wrp.88.2023.01.24.17.21.16
+        bh=SaTjOuIxXBK83AxAjFBiHjZe+rvlU5L1GQ57PTy+V+k=;
+        b=mC0B6FXLPnHQxbnq+gTQDWZ9+VbION48kPqlYWDhotktQ4NGXbbEJ1jAu8eZ2IfYsI
+         lYe9SYdrG+wyHKwbkutBVmwYwyF2sNnbgn4Jse8OZEbbWlLkgxmCWVfiwGUvtMOf3Xgk
+         ni76m/7/x4EMQEHyPjhk1SZlrIyUXi3S5eYwdyPed+lWEvWpF6DRqWzHf53JJ/aQ3jA0
+         5f2+I80RBAr+Y69t3VLwqjPO8qzSJvjrELmSmN9hfVDU11DgRTdZN3FbOftnQhQjQpSB
+         0hB07MuxXeyLvlLabTbMU+sWxcUqc+OZnUSUXD52zoTuv+WaCeXdLcZQyoiAP/f37ln6
+         PN2g==
+X-Gm-Message-State: AFqh2kpW+1ux0AfTjxy4XuPj7Y0bc0t9wwHYUszSM3aA30oQFpVvVnMG
+        +obbM4H6yvkdNpi/HsmWT8YpjA==
+X-Google-Smtp-Source: AMrXdXt0PeTUnVDTymw1fNMhzslQjfo10NEpW/gwcwWm/osV3KylhDxWrk2c8K1wpDcdiRFuxxKwig==
+X-Received: by 2002:a17:906:a04d:b0:84d:4325:7f7a with SMTP id bg13-20020a170906a04d00b0084d43257f7amr28065424ejb.65.1674610197141;
+        Tue, 24 Jan 2023 17:29:57 -0800 (PST)
+Received: from [192.168.1.101] (abyl109.neoplus.adsl.tpnet.pl. [83.9.31.109])
+        by smtp.gmail.com with ESMTPSA id ks27-20020a170906f85b00b0085fc3dec567sm1637654ejb.175.2023.01.24.17.29.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Jan 2023 17:21:16 -0800 (PST)
-Message-ID: <8dd1ce3c-82ea-cfc3-a84c-c022cbaec8a0@linaro.org>
-Date:   Wed, 25 Jan 2023 01:21:15 +0000
+        Tue, 24 Jan 2023 17:29:56 -0800 (PST)
+Message-ID: <0597e178-d563-0afc-a998-ca7c54ee56b5@linaro.org>
+Date:   Wed, 25 Jan 2023 02:29:54 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
+ Thunderbird/102.7.0
 Subject: Re: [PATCH v4 5/6] arm64: dts: qcom: Add Square apq8039-t2 board
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        djakov@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        agross@kernel.org, andersson@kernel.org, djakov@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org
 Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         benl@squareup.com, shawn.guo@linaro.org, fabien.parent@linaro.org,
@@ -72,136 +72,146 @@ Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
 References: <20230123023127.1186619-1-bryan.odonoghue@linaro.org>
  <20230123023127.1186619-6-bryan.odonoghue@linaro.org>
  <e80b98bc-54e8-f7ab-b9a9-dd888108a0cd@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <e80b98bc-54e8-f7ab-b9a9-dd888108a0cd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+ <8dd1ce3c-82ea-cfc3-a84c-c022cbaec8a0@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <8dd1ce3c-82ea-cfc3-a84c-c022cbaec8a0@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/01/2023 16:29, Krzysztof Kozlowski wrote:
-> On 23/01/2023 03:31, Bryan O'Donoghue wrote:
->> The apq8039-t2 is an apq8039 based board paired with a wcn3680b WiFi
->> chipset.
+
+
+On 25.01.2023 02:21, Bryan O'Donoghue wrote:
+> On 23/01/2023 16:29, Krzysztof Kozlowski wrote:
+>> On 23/01/2023 03:31, Bryan O'Donoghue wrote:
+>>> The apq8039-t2 is an apq8039 based board paired with a wcn3680b WiFi
+>>> chipset.
+>>>
+>>> Co-developed-by: Shawn Guo <shawn.guo@linaro.org>
+>>> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+>>> Co-developed-by: Jun Nie <jun.nie@linaro.org>
+>>> Signed-off-by: Jun Nie <jun.nie@linaro.org>
+>>> Co-developed-by: Benjamin Li <benl@squareup.com>
+>>> Signed-off-by: Benjamin Li <benl@squareup.com>
+>>> Co-developed-by: James Willcox <jwillcox@squareup.com>
+>>> Signed-off-by: James Willcox <jwillcox@squareup.com>
+>>> Co-developed-by: Leo Yan <leo.yan@linaro.org>
+>>> Signed-off-by: Leo Yan <leo.yan@linaro.org>
+>>> Co-developed-by: Joseph Gates <jgates@squareup.com>
+>>> Signed-off-by: Joseph Gates <jgates@squareup.com>
+>>> Co-developed-by: Max Chen <mchen@squareup.com>
+>>> Signed-off-by: Max Chen <mchen@squareup.com>
+>>> Co-developed-by: Zac Crosby <zac@squareup.com>
+>>> Signed-off-by: Zac Crosby <zac@squareup.com>
+>>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>>> ---
+>>>   arch/arm64/boot/dts/qcom/Makefile       |   1 +
+>>>   arch/arm64/boot/dts/qcom/apq8039-t2.dts | 545 ++++++++++++++++++++++++
+>>>   2 files changed, 546 insertions(+)
+>>>   create mode 100644 arch/arm64/boot/dts/qcom/apq8039-t2.dts
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+>>> index b0423ca3e79fd..73ff8d3213d99 100644
+>>> --- a/arch/arm64/boot/dts/qcom/Makefile
+>>> +++ b/arch/arm64/boot/dts/qcom/Makefile
+>>> @@ -1,5 +1,6 @@
+>>>   # SPDX-License-Identifier: GPL-2.0
+>>>   dtb-$(CONFIG_ARCH_QCOM)    += apq8016-sbc.dtb
+>>> +dtb-$(CONFIG_ARCH_QCOM)    += apq8039-t2.dtb
+>>>   dtb-$(CONFIG_ARCH_QCOM)    += apq8094-sony-xperia-kitakami-karin_windy.dtb
+>>>   dtb-$(CONFIG_ARCH_QCOM)    += apq8096-db820c.dtb
+>>>   dtb-$(CONFIG_ARCH_QCOM)    += apq8096-ifc6640.dtb
+>>> diff --git a/arch/arm64/boot/dts/qcom/apq8039-t2.dts b/arch/arm64/boot/dts/qcom/apq8039-t2.dts
+>>> new file mode 100644
+>>> index 0000000000000..734b4d6054132
+>>> --- /dev/null
+>>> +++ b/arch/arm64/boot/dts/qcom/apq8039-t2.dts
+>>> @@ -0,0 +1,545 @@
+>>> +// SPDX-License-Identifier: GPL-2.0
+>>> +/*
+>>> + * Copyright (c) 2015, The Linux Foundation. All rights reserved.
+>>> + * Copyright (c) 2020-2023, Linaro Ltd.
+>>> + *
+>>> + */
+>>> +
+>>> +/dts-v1/;
+>>> +
+>>> +#include "msm8939.dtsi"
+>>> +#include "msm8939-pm8916.dtsi"
+>>> +#include <dt-bindings/arm/qcom,ids.h>
+>>> +#include <dt-bindings/gpio/gpio.h>
+>>> +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+>>> +#include <dt-bindings/sound/apq8016-lpass.h>
+>>> +
+>>> +/ {
+>>> +    model = "Square, Inc. T2 Devkit";
+>>> +    compatible = "square,apq8039-t2", "qcom,msm8939";
 >>
->> Co-developed-by: Shawn Guo <shawn.guo@linaro.org>
->> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
->> Co-developed-by: Jun Nie <jun.nie@linaro.org>
->> Signed-off-by: Jun Nie <jun.nie@linaro.org>
->> Co-developed-by: Benjamin Li <benl@squareup.com>
->> Signed-off-by: Benjamin Li <benl@squareup.com>
->> Co-developed-by: James Willcox <jwillcox@squareup.com>
->> Signed-off-by: James Willcox <jwillcox@squareup.com>
->> Co-developed-by: Leo Yan <leo.yan@linaro.org>
->> Signed-off-by: Leo Yan <leo.yan@linaro.org>
->> Co-developed-by: Joseph Gates <jgates@squareup.com>
->> Signed-off-by: Joseph Gates <jgates@squareup.com>
->> Co-developed-by: Max Chen <mchen@squareup.com>
->> Signed-off-by: Max Chen <mchen@squareup.com>
->> Co-developed-by: Zac Crosby <zac@squareup.com>
->> Signed-off-by: Zac Crosby <zac@squareup.com>
->> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> ---
->>   arch/arm64/boot/dts/qcom/Makefile       |   1 +
->>   arch/arm64/boot/dts/qcom/apq8039-t2.dts | 545 ++++++++++++++++++++++++
->>   2 files changed, 546 insertions(+)
->>   create mode 100644 arch/arm64/boot/dts/qcom/apq8039-t2.dts
+>> There is no square vendor prefix.
+> 
+> commit d3e2262cd0d1105bb3a71012693876d01e8de203
+> Author: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Date:   Tue Jan 17 02:48:39 2023 +0000
+> 
+>     dt-bindings: arm: qcom: Document MSM8939 SoC binding
+> 
+> +      - items:
+> +          - enum:
+> +              - sony,kanuti-tulip
+> +              - square,apq8039-t2
+> +          - const: qcom,msm8939
+> 
+This is the board compatible. Krzysztof meant an entry for Square
+in Documentation/devicetree/bindings/vendor-prefixes.yaml.
+
+> 
+>>> +
+>>> +    qcom,board-id = <0x53 0x54>;
+>>> +    qcom,msm-id = <QCOM_ID_MSM8939 0>, <QCOM_ID_MSM8939 0x30000>, <QCOM_ID_APQ8039 0x30000>;
+>>> +
+> 
+>>> +
+>>> +    lcd_avdd_reg: lcd-avdd-regulator {
 >>
->> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
->> index b0423ca3e79fd..73ff8d3213d99 100644
->> --- a/arch/arm64/boot/dts/qcom/Makefile
->> +++ b/arch/arm64/boot/dts/qcom/Makefile
->> @@ -1,5 +1,6 @@
->>   # SPDX-License-Identifier: GPL-2.0
->>   dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc.dtb
->> +dtb-$(CONFIG_ARCH_QCOM)	+= apq8039-t2.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)	+= apq8094-sony-xperia-kitakami-karin_windy.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-db820c.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-ifc6640.dtb
->> diff --git a/arch/arm64/boot/dts/qcom/apq8039-t2.dts b/arch/arm64/boot/dts/qcom/apq8039-t2.dts
->> new file mode 100644
->> index 0000000000000..734b4d6054132
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/apq8039-t2.dts
->> @@ -0,0 +1,545 @@
->> +// SPDX-License-Identifier: GPL-2.0
->> +/*
->> + * Copyright (c) 2015, The Linux Foundation. All rights reserved.
->> + * Copyright (c) 2020-2023, Linaro Ltd.
->> + *
->> + */
->> +
->> +/dts-v1/;
->> +
->> +#include "msm8939.dtsi"
->> +#include "msm8939-pm8916.dtsi"
->> +#include <dt-bindings/arm/qcom,ids.h>
->> +#include <dt-bindings/gpio/gpio.h>
->> +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
->> +#include <dt-bindings/sound/apq8016-lpass.h>
->> +
->> +/ {
->> +	model = "Square, Inc. T2 Devkit";
->> +	compatible = "square,apq8039-t2", "qcom,msm8939";
+>> Since we try to have nodes ordered, how about naming them
+>> "regulator-xxx", so whatever is added later will not spread them all over?
 > 
-> There is no square vendor prefix.
-
-commit d3e2262cd0d1105bb3a71012693876d01e8de203
-Author: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Date:   Tue Jan 17 02:48:39 2023 +0000
-
-     dt-bindings: arm: qcom: Document MSM8939 SoC binding
-
-+      - items:
-+          - enum:
-+              - sony,kanuti-tulip
-+              - square,apq8039-t2
-+          - const: qcom,msm8939
-
-
->> +
->> +	qcom,board-id = <0x53 0x54>;
->> +	qcom,msm-id = <QCOM_ID_MSM8939 0>, <QCOM_ID_MSM8939 0x30000>, <QCOM_ID_APQ8039 0x30000>;
->> +
-
->> +
->> +	lcd_avdd_reg: lcd-avdd-regulator {
+> Point taken.
 > 
-> Since we try to have nodes ordered, how about naming them
-> "regulator-xxx", so whatever is added later will not spread them all over?
-
-Point taken.
-
-vreg_ looks like a more common prefix
-
-arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts: 
-vreg_edp_3p3: regulator-edp-3p3 {
-vreg_edp_bl: regulator-edp-bl {
-vreg_misc_3p3: regulator-misc-3p3 {
-vreg_nvme: regulator-nvme {
-vreg_vph_pwr: regulator-vph-pwr {
-vreg_wlan: regulator-wlan {
-vreg_wwan: regulator-wwan {
-
->> +	status = "okay";
->> +
->> +	typec: tps6598x@38 {
+> vreg_ looks like a more common prefix
 > 
-> Node names should be generic.
-> https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
+> arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts: vreg_edp_3p3: regulator-edp-3p3 {
+> vreg_edp_bl: regulator-edp-bl {
+> vreg_misc_3p3: regulator-misc-3p3 {
+> vreg_nvme: regulator-nvme {
+> vreg_vph_pwr: regulator-vph-pwr {
+> vreg_wlan: regulator-wlan {
+> vreg_wwan: regulator-wwan {
+> 
+>>> +    status = "okay";
+>>> +
+>>> +    typec: tps6598x@38 {
+>>
+>> Node names should be generic.
+>> https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
+> 
+> None of those fit really
+> 
+> typec_pd is upstream for the same IC, I'll reuse that.
+Names, not labels.
 
-None of those fit really
+label: name@unitaddress {
 
-typec_pd is upstream for the same IC, I'll reuse that.
-
-arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi
-
----
-bod
+Konrad
+> 
+> arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi
+> 
+> ---
+> bod
