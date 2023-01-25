@@ -2,190 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7977267AAB7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 08:11:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C0DA467AABD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 08:16:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233434AbjAYHLG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Jan 2023 02:11:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52964 "EHLO
+        id S233674AbjAYHQJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Jan 2023 02:16:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54294 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229783AbjAYHLG (ORCPT
+        with ESMTP id S234912AbjAYHQI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Jan 2023 02:11:06 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98CA05260;
-        Tue, 24 Jan 2023 23:11:01 -0800 (PST)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30P5wYg8018646;
-        Wed, 25 Jan 2023 07:10:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=RBqV54Nrv3kEwv1XiZhZaXvmfcZ+NG4YbScD4yT8hfY=;
- b=TPn1qqnRFxfPfz1TlM7g2K1qT46MS3mCAp3/jZ/KsgncT4lju4RmYqPvzlTzx2Qvi1s1
- zbKWCZmwf628mgWa2ZjsCBebAb8EgqOY/dE3DFHUkdRIgIImQaik0yNDsziqKbSXbG/+
- TBUI+YMfJPyMrstLuaT3nks09MhRyVaUt5UGgt2SY/S/nrfElDXSJXbHDkTU3xwFF28/
- AwLPgaaVaw4lu0ZcO/LYo4K1uVFTkp3oJC2BahvjTy8dQZGErVCMOxB99u+daTH2HRja
- BIBpv77aDGT6CYUUVawODdwCLsHb7ZerXJ1Jgr8xJv5Rw+ZEyad75TOl9GieCMY9f4Bd Ig== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3napvhgqv2-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 25 Jan 2023 07:10:57 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30P7AuLI010384
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 25 Jan 2023 07:10:56 GMT
-Received: from [10.110.119.13] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 24 Jan
- 2023 23:10:56 -0800
-Message-ID: <6289c682-d5e0-8871-36a2-f9a02d98829d@quicinc.com>
-Date:   Tue, 24 Jan 2023 23:10:55 -0800
+        Wed, 25 Jan 2023 02:16:08 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4170C37F2B
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 23:16:03 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id h16so16047485wrz.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 23:16:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=KqVnz5dHE+H8EBqWuT4m2bnfmcW1edtMXQTUn/uHibA=;
+        b=iI1Q+Ner3x7gfdxiAzK3mur3wDEWCKn9dxfIlWuEpFSxsQzxWuRG7X2pLeQN1I5xel
+         +/v3dUdnrUtxdcuwqtWLOkUW+eJngWmIT+MPRIQXRgW175yJpTmLSxcFB0w7vsu7ZRG6
+         5KWHHkNWIilYMfDYT4uI/vwyF3PIBy/TuwDWygtGcvDeeaDbaOZU09haKxYnGMYAGkn3
+         c5FIebWU0ol3EqoHLIYnxGUiaxfdB2ltNWnOxNiia87ULZoB9CL5bp+F1isWrpWsfGLO
+         FZbcb2brECcbs+PkKYu6x+NgahwJrTM0Bux310+vKUbOiZGSFuj7v5f1d0IaU4Ane4lx
+         JJlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=KqVnz5dHE+H8EBqWuT4m2bnfmcW1edtMXQTUn/uHibA=;
+        b=hq4enDCHzXEHgHm9WsmxPEViCwxVRBQWU2oe7zLpak8sRVIPp7jZzGps1Oj6GfFDUj
+         Q6VzODAGUPcafBx9mHqot1EKrpMEwQ8RxDzJALfCqmpTGR6dP+r+K/6Bm6LCqGa+DnWN
+         3kzmm3lotKiWiaO982Arpv+NkCDHX53YplIxnY3zRU34Q7a5+bW03gl9Y0OrU6tSXYBm
+         yjsKrmuIrb2fs07YALQD1B36N+T0mpdy/WFD7Z9yWWC/qfSmMqLJnyg50WzdCPsrmnCw
+         FbtWjBqJwNoU0wHq3I8dXZTpCOvWSAP4ZiNwUaCtejm/bmu241gK6Z01N5DHpD1aW92X
+         j0DA==
+X-Gm-Message-State: AFqh2kppK5r4yrdfj6NeuXb0CFxoiWy+/p9V/cFvdUPUGj9IBi566ofY
+        rBbl60x0NXK9Rbo/0nCg88yo6A==
+X-Google-Smtp-Source: AMrXdXsQTc3tcSZ5O/Y+CPqj3BvK3F17J/9RhcE/qU182Xl1ciIA3AMHZDscUVB9vIS8xkIVoWcA6Q==
+X-Received: by 2002:a05:6000:1816:b0:2bd:fe5a:b579 with SMTP id m22-20020a056000181600b002bdfe5ab579mr24770799wrh.70.1674630961690;
+        Tue, 24 Jan 2023 23:16:01 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id x6-20020a5d4906000000b002bc6c180738sm4135881wrq.90.2023.01.24.23.15.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 Jan 2023 23:16:01 -0800 (PST)
+Message-ID: <c1e206f2-7e86-a7ad-c6fa-c80cc1c3f77d@linaro.org>
+Date:   Wed, 25 Jan 2023 08:15:58 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.1.2
-Subject: Re: [PATCH 3/6] rpmsg: glink: rpm: Wrap driver context
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH v4 5/6] arm64: dts: qcom: Add Square apq8039-t2 board
 Content-Language: en-US
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20230109224001.1706516-1-quic_bjorande@quicinc.com>
- <20230109224001.1706516-4-quic_bjorande@quicinc.com>
-From:   Chris Lew <quic_clew@quicinc.com>
-In-Reply-To: <20230109224001.1706516-4-quic_bjorande@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, djakov@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        benl@squareup.com, shawn.guo@linaro.org, fabien.parent@linaro.org,
+        leo.yan@linaro.org, dmitry.baryshkov@linaro.org,
+        stephan@gerhold.net, Jun Nie <jun.nie@linaro.org>,
+        James Willcox <jwillcox@squareup.com>,
+        Joseph Gates <jgates@squareup.com>,
+        Max Chen <mchen@squareup.com>, Zac Crosby <zac@squareup.com>
+References: <20230123023127.1186619-1-bryan.odonoghue@linaro.org>
+ <20230123023127.1186619-6-bryan.odonoghue@linaro.org>
+ <e80b98bc-54e8-f7ab-b9a9-dd888108a0cd@linaro.org>
+ <8dd1ce3c-82ea-cfc3-a84c-c022cbaec8a0@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <8dd1ce3c-82ea-cfc3-a84c-c022cbaec8a0@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: -HQpqmMNeT3IMh7e-5SX6wsEx7u13S08
-X-Proofpoint-ORIG-GUID: -HQpqmMNeT3IMh7e-5SX6wsEx7u13S08
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-25_03,2023-01-24_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- lowpriorityscore=0 bulkscore=0 malwarescore=0 mlxlogscore=999 phishscore=0
- adultscore=0 impostorscore=0 mlxscore=0 spamscore=0 suspectscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301250065
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 1/9/2023 2:39 PM, Bjorn Andersson wrote:
-> As with the SMEM driver update, wrap the RPM context in a struct to
-> facilitate the upcoming changes of moving IRQ and mailbox registration
-> to the driver.
+On 25/01/2023 02:21, Bryan O'Donoghue wrote:
+> On 23/01/2023 16:29, Krzysztof Kozlowski wrote:
+>> On 23/01/2023 03:31, Bryan O'Donoghue wrote:
+>>> The apq8039-t2 is an apq8039 based board paired with a wcn3680b WiFi
+>>> chipset.
+>>>
+>>> Co-developed-by: Shawn Guo <shawn.guo@linaro.org>
+>>> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+>>> Co-developed-by: Jun Nie <jun.nie@linaro.org>
+>>> Signed-off-by: Jun Nie <jun.nie@linaro.org>
+>>> Co-developed-by: Benjamin Li <benl@squareup.com>
+>>> Signed-off-by: Benjamin Li <benl@squareup.com>
+>>> Co-developed-by: James Willcox <jwillcox@squareup.com>
+>>> Signed-off-by: James Willcox <jwillcox@squareup.com>
+>>> Co-developed-by: Leo Yan <leo.yan@linaro.org>
+>>> Signed-off-by: Leo Yan <leo.yan@linaro.org>
+>>> Co-developed-by: Joseph Gates <jgates@squareup.com>
+>>> Signed-off-by: Joseph Gates <jgates@squareup.com>
+>>> Co-developed-by: Max Chen <mchen@squareup.com>
+>>> Signed-off-by: Max Chen <mchen@squareup.com>
+>>> Co-developed-by: Zac Crosby <zac@squareup.com>
+>>> Signed-off-by: Zac Crosby <zac@squareup.com>
+>>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>>> ---
+>>>   arch/arm64/boot/dts/qcom/Makefile       |   1 +
+>>>   arch/arm64/boot/dts/qcom/apq8039-t2.dts | 545 ++++++++++++++++++++++++
+>>>   2 files changed, 546 insertions(+)
+>>>   create mode 100644 arch/arm64/boot/dts/qcom/apq8039-t2.dts
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+>>> index b0423ca3e79fd..73ff8d3213d99 100644
+>>> --- a/arch/arm64/boot/dts/qcom/Makefile
+>>> +++ b/arch/arm64/boot/dts/qcom/Makefile
+>>> @@ -1,5 +1,6 @@
+>>>   # SPDX-License-Identifier: GPL-2.0
+>>>   dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc.dtb
+>>> +dtb-$(CONFIG_ARCH_QCOM)	+= apq8039-t2.dtb
+>>>   dtb-$(CONFIG_ARCH_QCOM)	+= apq8094-sony-xperia-kitakami-karin_windy.dtb
+>>>   dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-db820c.dtb
+>>>   dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-ifc6640.dtb
+>>> diff --git a/arch/arm64/boot/dts/qcom/apq8039-t2.dts b/arch/arm64/boot/dts/qcom/apq8039-t2.dts
+>>> new file mode 100644
+>>> index 0000000000000..734b4d6054132
+>>> --- /dev/null
+>>> +++ b/arch/arm64/boot/dts/qcom/apq8039-t2.dts
+>>> @@ -0,0 +1,545 @@
+>>> +// SPDX-License-Identifier: GPL-2.0
+>>> +/*
+>>> + * Copyright (c) 2015, The Linux Foundation. All rights reserved.
+>>> + * Copyright (c) 2020-2023, Linaro Ltd.
+>>> + *
+>>> + */
+>>> +
+>>> +/dts-v1/;
+>>> +
+>>> +#include "msm8939.dtsi"
+>>> +#include "msm8939-pm8916.dtsi"
+>>> +#include <dt-bindings/arm/qcom,ids.h>
+>>> +#include <dt-bindings/gpio/gpio.h>
+>>> +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+>>> +#include <dt-bindings/sound/apq8016-lpass.h>
+>>> +
+>>> +/ {
+>>> +	model = "Square, Inc. T2 Devkit";
+>>> +	compatible = "square,apq8039-t2", "qcom,msm8939";
+>>
+>> There is no square vendor prefix.
 > 
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> ---
-
-Reviewed-by: Chris Lew <quic_clew@quicinc.com>
-
->   drivers/rpmsg/qcom_glink_rpm.c | 44 ++++++++++++++++++++--------------
->   1 file changed, 26 insertions(+), 18 deletions(-)
+> commit d3e2262cd0d1105bb3a71012693876d01e8de203
+> Author: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Date:   Tue Jan 17 02:48:39 2023 +0000
 > 
-> diff --git a/drivers/rpmsg/qcom_glink_rpm.c b/drivers/rpmsg/qcom_glink_rpm.c
-> index f64f45d1a735..6443843df6ca 100644
-> --- a/drivers/rpmsg/qcom_glink_rpm.c
-> +++ b/drivers/rpmsg/qcom_glink_rpm.c
-> @@ -53,6 +53,13 @@ struct glink_rpm_pipe {
->   	void __iomem *fifo;
->   };
->   
-> +struct glink_rpm {
-> +	struct qcom_glink *glink;
-> +
-> +	struct glink_rpm_pipe rx_pipe;
-> +	struct glink_rpm_pipe tx_pipe;
-> +};
-> +
->   static size_t glink_rpm_rx_avail(struct qcom_glink_pipe *glink_pipe)
->   {
->   	struct glink_rpm_pipe *pipe = to_rpm_pipe(glink_pipe);
-> @@ -257,8 +264,7 @@ static int glink_rpm_parse_toc(struct device *dev,
->   static int glink_rpm_probe(struct platform_device *pdev)
->   {
->   	struct qcom_glink *glink;
-> -	struct glink_rpm_pipe *rx_pipe;
-> -	struct glink_rpm_pipe *tx_pipe;
-> +	struct glink_rpm *rpm;
->   	struct device_node *np;
->   	void __iomem *msg_ram;
->   	size_t msg_ram_size;
-> @@ -266,9 +272,8 @@ static int glink_rpm_probe(struct platform_device *pdev)
->   	struct resource r;
->   	int ret;
->   
-> -	rx_pipe = devm_kzalloc(&pdev->dev, sizeof(*rx_pipe), GFP_KERNEL);
-> -	tx_pipe = devm_kzalloc(&pdev->dev, sizeof(*tx_pipe), GFP_KERNEL);
-> -	if (!rx_pipe || !tx_pipe)
-> +	rpm = devm_kzalloc(&pdev->dev, sizeof(*rpm), GFP_KERNEL);
-> +	if (!rpm)
->   		return -ENOMEM;
->   
->   	np = of_parse_phandle(dev->of_node, "qcom,rpm-msg-ram", 0);
-> @@ -283,36 +288,39 @@ static int glink_rpm_probe(struct platform_device *pdev)
->   		return -ENOMEM;
->   
->   	ret = glink_rpm_parse_toc(dev, msg_ram, msg_ram_size,
-> -				  rx_pipe, tx_pipe);
-> +				  &rpm->rx_pipe, &rpm->tx_pipe);
->   	if (ret)
->   		return ret;
->   
->   	/* Pipe specific accessors */
-> -	rx_pipe->native.avail = glink_rpm_rx_avail;
-> -	rx_pipe->native.peak = glink_rpm_rx_peak;
-> -	rx_pipe->native.advance = glink_rpm_rx_advance;
-> -	tx_pipe->native.avail = glink_rpm_tx_avail;
-> -	tx_pipe->native.write = glink_rpm_tx_write;
-> +	rpm->rx_pipe.native.avail = glink_rpm_rx_avail;
-> +	rpm->rx_pipe.native.peak = glink_rpm_rx_peak;
-> +	rpm->rx_pipe.native.advance = glink_rpm_rx_advance;
-> +	rpm->tx_pipe.native.avail = glink_rpm_tx_avail;
-> +	rpm->tx_pipe.native.write = glink_rpm_tx_write;
->   
-> -	writel(0, tx_pipe->head);
-> -	writel(0, rx_pipe->tail);
-> +	writel(0, rpm->tx_pipe.head);
-> +	writel(0, rpm->rx_pipe.tail);
->   
-> -	glink = qcom_glink_native_probe(&pdev->dev,
-> +	glink = qcom_glink_native_probe(dev,
->   					0,
-> -					&rx_pipe->native,
-> -					&tx_pipe->native,
-> +					&rpm->rx_pipe.native,
-> +					&rpm->tx_pipe.native,
->   					true);
->   	if (IS_ERR(glink))
->   		return PTR_ERR(glink);
->   
-> -	platform_set_drvdata(pdev, glink);
-> +	rpm->glink = glink;
-> +
-> +	platform_set_drvdata(pdev, rpm);
->   
->   	return 0;
->   }
->   
->   static int glink_rpm_remove(struct platform_device *pdev)
->   {
-> -	struct qcom_glink *glink = platform_get_drvdata(pdev);
-> +	struct glink_rpm *rpm = platform_get_drvdata(pdev);
-> +	struct qcom_glink *glink = rpm->glink;
->   
->   	qcom_glink_native_remove(glink);
->   
+>      dt-bindings: arm: qcom: Document MSM8939 SoC binding
+> 
+> +      - items:
+> +          - enum:
+> +              - sony,kanuti-tulip
+> +              - square,apq8039-t2
+> +          - const: qcom,msm8939
+
+This is board compatible. You still missing vendor prefix in
+vendor-prefixes.
+
+Best regards,
+Krzysztof
+
