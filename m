@@ -2,161 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E81167BAEA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 20:39:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A4EE67BBA3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 21:04:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229449AbjAYTjv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Jan 2023 14:39:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44490 "EHLO
+        id S236044AbjAYUED (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Jan 2023 15:04:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35872 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235311AbjAYTju (ORCPT
+        with ESMTP id S235331AbjAYUEC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Jan 2023 14:39:50 -0500
-Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB6054ED02
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 11:39:47 -0800 (PST)
-Received: by mail-io1-xd36.google.com with SMTP id 203so8920462iou.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 11:39:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=frG7daRlPkHUCZSTj7yl9cmfDSyJwEcRRiTwTJz40tw=;
-        b=Lx5Wvh6qnib0iPwmeeSYv6L/G+RC0TX6OqyaWCP0p+fVgPt2KKio3PJbtuD2BTQ8hW
-         4TDafm0OB26/Yz6alnsxJZe7/W2UDGsC+RHmeUqrw/f2U14SWfAWkI9G1kAxihQLUyLv
-         YlOO+eVHTfNYNRnLDcCbuQJ/MaJQZQITMFsVA=
+        Wed, 25 Jan 2023 15:04:02 -0500
+Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E1FA27D5F;
+        Wed, 25 Jan 2023 12:04:01 -0800 (PST)
+Received: by mail-oi1-f180.google.com with SMTP id s124so17286463oif.1;
+        Wed, 25 Jan 2023 12:04:01 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=frG7daRlPkHUCZSTj7yl9cmfDSyJwEcRRiTwTJz40tw=;
-        b=i3S8L67qqFitWRNqxq/fIn5GxEsKcGDiCiOV5A6le99p/IIOKKqrW8FICBOhyGKljh
-         BNSOYsG3i99HqDFI3Bz6EX7P5J0bTcXbpdVBeiO/Syb76biCpSFKCcQqccvIJ9jXsmMp
-         NF0KPJnSJMQ7DtzbO50dUkKFmYUo8otQySf7URI1dg3NmdgnHm11XedPYAR5p2acjmCs
-         sEgug1CH6JGlzm+kk1Rub5+Yk2VF0tNwQ6PL9Xn2jseml/7dKgA6TsAUxjAS1SNb28yq
-         gBpd3rF+D9JeO/55VXBDElHYQlMLBrO0JLH2kcMN6cpNeiGHOjMyEWbi2T5lsNrYNtTA
-         Zzxg==
-X-Gm-Message-State: AFqh2kqeOdUHCjpkgBZmVWJFmuFL/8Ru/Ydfbvp9+I6vZCYJO89yz/3W
-        aBIPOWHDsVoYgZk8K6MBflinlw==
-X-Google-Smtp-Source: AMrXdXtLGnVeTtvdhGDiJLdxGeOW45WmielkenQ/UYhHzWxKlNj1/F43o6KPvqRRBN7oLBjipRef3g==
-X-Received: by 2002:a05:6602:1244:b0:707:9415:c334 with SMTP id o4-20020a056602124400b007079415c334mr14824200iou.16.1674675587083;
-        Wed, 25 Jan 2023 11:39:47 -0800 (PST)
-Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
-        by smtp.gmail.com with UTF8SMTPSA id c11-20020a056638028b00b0039e8c12414asm1901433jaq.164.2023.01.25.11.39.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Jan 2023 11:39:46 -0800 (PST)
-Date:   Wed, 25 Jan 2023 19:39:46 +0000
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Jonathan Cameron <jic23@kernel.org>,
+        bh=0Gkcdkob2Y6ObYYrpnf1Losk1qJrdTh8H2I4YXgC+Dk=;
+        b=XtIyImpax2ZxYf7X/jqiGHzpwUFOwg+ALUk7l6pjePHUWXMB22O6me9NbQVDUTpUMz
+         XI1HXVJqFcbOWSieti/6fAu107pq8OeMCUxt7BxOfeZQLs8sCYGWMHI0V9m62RwNMpTF
+         7iBGTjZdAp1FrDFYyrMaZAs2gnY80vgB/92dnlclu1f2CNWwdLo0FjJaQ0TJA/NRXryG
+         5E2dEP09iXuq7386RGMPbqNp9J3ZFd9/5pHHS31AsyxfyfPmPvFPorGLl68FMvCY1w28
+         Jo+TN5lRtBdz2GAvI3kp91eujYL8MMHuurWcWZOOZrzD1K/X4nkQmWtvV0UuAu1sXZ5y
+         MZ6w==
+X-Gm-Message-State: AFqh2krxi3CYuJmWzBVAxOeDRfZ7w++m4kSoXzpPiTIFmwP/7rkwNy50
+        6PDU77nNm07xieE4mYGJkQ==
+X-Google-Smtp-Source: AMrXdXvFtWE+6e2FsDqQXpT3BBXJS/1t8Fhvmq3xKkeGeQdttgRtxg5rjf30XlBDjQNS36QwjR+NjQ==
+X-Received: by 2002:aca:1012:0:b0:364:cacc:515b with SMTP id 18-20020aca1012000000b00364cacc515bmr13031084oiq.52.1674677040479;
+        Wed, 25 Jan 2023 12:04:00 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id q64-20020acac043000000b0035e7ed5daa1sm2599650oif.26.2023.01.25.12.03.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Jan 2023 12:04:00 -0800 (PST)
+Received: (nullmailer pid 2761036 invoked by uid 1000);
+        Wed, 25 Jan 2023 20:03:58 -0000
+Date:   Wed, 25 Jan 2023 14:03:58 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Hector Martin <marcan@marcan.st>,
+        Viresh Kumar <vireshk@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Biju Das <biju.das.jz@bp.renesas.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Andy Gross <agross@kernel.org>, Chen-Yu Tsai <wens@csie.org>,
+        Samuel Holland <samuel@sholland.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        =?UTF-8?B?77+9ZXI=?= <povik+lin@cutebit.org>,
+        Masahiro Yamada <yamada.masahiro@socionext.com>,
+        linux-arm-kernel@lists.infradead.org,
+        Paul Cercueil <paul@crapouillou.net>,
+        =?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Long Cheng <long.cheng@mediatek.com>,
+        Stefan Roese <sr@denx.de>, Palmer Debbelt <palmer@sifive.com>,
+        Peng Fan <peng.fan@nxp.com>,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-mediatek@lists.infradead.org, linux-kernel@vger.kernel.org,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+        Olivier Dautricourt <olivierdautricourt@gmail.com>,
+        devicetree@vger.kernel.org, Masami Hiramatsu <mhiramat@kernel.org>,
         Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-        Nuno =?utf-8?B?U8Oh?= <nuno.sa@analog.com>,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        linux-riscv@lists.infradead.org,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        Vinod Koul <vkoul@kernel.org>,
+        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-sunxi@lists.linux.dev,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        - <chuanhua.lei@intel.com>, Sven Peter <sven@svenpeter.dev>,
+        asahi@lists.linux.dev, Maxime Ripard <mripard@kernel.org>,
+        Rajesh Gumasta <rgumasta@nvidia.com>,
+        dmaengine@vger.kernel.org, Green Wan <green.wan@sifive.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Amelie Delaunay <amelie.delaunay@foss.st.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
         Bjorn Andersson <andersson@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH v2 1/1] iio: adc: qcom-spmi-adc5: Fix the channel name
-Message-ID: <Y9GFgseSx9A+rBY6@google.com>
-References: <20230118100623.42255-1-andriy.shevchenko@linux.intel.com>
- <20230122172441.4f8d75f5@jic23-huawei>
- <22fa80f5-0cf0-85bd-03a4-e1eb80272420@linaro.org>
- <CAD=FV=WVEfi2u-uHcZAoMd4HXPcZrwb95HQzTE8V6YmAW9mhPA@mail.gmail.com>
+        linux-actions@lists.infradead.org,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] dt-bindings: dma: cleanup examples - indentation,
+ lowercase hex
+Message-ID: <167467703767.2760981.10110618536644439258.robh@kernel.org>
+References: <20230124081117.31186-1-krzysztof.kozlowski@linaro.org>
+ <20230124081117.31186-2-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAD=FV=WVEfi2u-uHcZAoMd4HXPcZrwb95HQzTE8V6YmAW9mhPA@mail.gmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+In-Reply-To: <20230124081117.31186-2-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 23, 2023 at 03:12:06PM -0800, Doug Anderson wrote:
-> Hi,
-> 
-> On Mon, Jan 23, 2023 at 8:35 AM Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
-> >
-> > On 22.01.2023 18:24, Jonathan Cameron wrote:
-> > > On Wed, 18 Jan 2023 12:06:23 +0200
-> > > Andy Shevchenko <andriy.shevchenko@linux.intel.com> wrote:
-> > >
-> > >> The node name can contain an address part which is unused
-> > >> by the driver. Moreover, this string is propagated into
-> > >> the userspace label, sysfs filenames *and breaking ABI*.
-> > >>
-> > >> Cut the address part out before assigning the channel name.
-> > >>
-> > >> Fixes: 4f47a236a23d ("iio: adc: qcom-spmi-adc5: convert to device properties")
-> > >> Reported-by: Marijn Suijten <marijn.suijten@somainline.org>
-> > >> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-> > >
-> > > LGTM, but given it will have ABI impact, I'd like to hear from
-> > > Andy, Bjorn or Konrad as maintainers and /or Dmitry as someone
-> > > who has touched this driver fairly recently.
-> > + Doug
-> >
-> > Unless the Chromium folks relied on the old names (they're the
-> > only ones I can think of that actually could have tapped into
-> > this), I say green light!
-> 
-> Thanks for the CC. I _think_ the only place we use these ADCs is for
-> certain thermistors and I think that those are all just hooked up in
-> the device tree, so the channel name doesn't matter. I'll also note
-> that no Qualcomm Chromebooks are shipping with anything newer than
-> kernel 5.15 right now, and (I checked) the ChromeOS 5.15 tree doesn't
-> have commit 4f47a236a23d ("iio: adc: qcom-spmi-adc5: convert to device
-> properties"). Thus, even if I'm wrong and the name is used someplace
-> hidden then the "old" name would be better for us. I haven't tested
-> the patch myself, but it sounds as if ${SUBJECT} patch is actually
-> moving us back to the old name.
-> 
-> +Matthias to keep me honest since he's spent more time with the ADCs.
 
-Agreed that the channel name doesn't matter, Chrome OS currently only
-uses the ADCs for thermal zones controlled by the kernel.
+On Tue, 24 Jan 2023 09:11:17 +0100, Krzysztof Kozlowski wrote:
+> Cleanup examples:
+>  - use 4-space indentation (for cases when it is neither 4 not 2 space),
+>  - use lowercase hex,
+>  - drop unused node's label.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> ---
+> 
+> Changes since v1:
+> 1. Drop unused label, correct indentation.
+> ---
+>  .../bindings/dma/snps,dw-axi-dmac.yaml        | 36 +++++++++----------
+>  .../bindings/dma/stericsson,dma40.yaml        | 16 ++++-----
+>  2 files changed, 26 insertions(+), 26 deletions(-)
+> 
 
-> > > Mostly I want to be sure they know this exists before it causes surprise.
-> > >
-> > > Jonathan
-> > >
-> > >> ---
-> > >> v2: rephrased commit message (Marijn), fixed compilation issue (Marijin)
-> > >>  drivers/iio/adc/qcom-spmi-adc5.c | 10 +++++++++-
-> > >>  1 file changed, 9 insertions(+), 1 deletion(-)
-> > >>
-> > >> diff --git a/drivers/iio/adc/qcom-spmi-adc5.c b/drivers/iio/adc/qcom-spmi-adc5.c
-> > >> index e90c299c913a..c2d5e06f137a 100644
-> > >> --- a/drivers/iio/adc/qcom-spmi-adc5.c
-> > >> +++ b/drivers/iio/adc/qcom-spmi-adc5.c
-> > >> @@ -628,12 +628,20 @@ static int adc5_get_fw_channel_data(struct adc5_chip *adc,
-> > >>                                  struct fwnode_handle *fwnode,
-> > >>                                  const struct adc5_data *data)
-> > >>  {
-> > >> -    const char *name = fwnode_get_name(fwnode), *channel_name;
-> > >> +    const char *channel_name;
-> > >> +    char *name;
-> > >>      u32 chan, value, varr[2];
-> > >>      u32 sid = 0;
-> > >>      int ret;
-> > >>      struct device *dev = adc->dev;
-> > >>
-> > >> +    name = devm_kasprintf(dev, GFP_KERNEL, "%pfwP", fwnode);
-> > >> +    if (!name)
-> > >> +            return -ENOMEM;
-> > >> +
-> > >> +    /* Cut the address part */
-> > >> +    name[strchrnul(name, '@') - name] = '\0';
-> > >> +
-> > >>      ret = fwnode_property_read_u32(fwnode, "reg", &chan);
-> > >>      if (ret) {
-> > >>              dev_err(dev, "invalid channel number %s\n", name);
-> > >
+Reviewed-by: Rob Herring <robh@kernel.org>
