@@ -2,69 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E840167B16A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 12:34:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C426767B196
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 12:37:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235426AbjAYLet (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Jan 2023 06:34:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53418 "EHLO
+        id S235784AbjAYLhR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Jan 2023 06:37:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235146AbjAYLer (ORCPT
+        with ESMTP id S235703AbjAYLg7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Jan 2023 06:34:47 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE32215C82
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 03:34:45 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id y1so12244686wru.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 03:34:45 -0800 (PST)
+        Wed, 25 Jan 2023 06:36:59 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 379BF58283
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 03:36:24 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id l8so13515560wms.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 03:36:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=l0whpO4cbXzR1tiN4DzvNKJ/HfGU7YFSCpWie8Zua84=;
-        b=RWwzCj7DK1Fz/TN8EFMu7rDdV1mSR/g0Wz3R8BwTGXUXr8yUXYGZQxTLgQHRdsA2Ap
-         36LcVagHyyadflB0xtMaLbmSD0ADo0vejz1kKy/2MyaDI85e5mhgrXXpXtASMorWgIMa
-         SDRnX4yOV+eopZn/JOmDZEJuldoOZ2OtLMPa8dq32fqwq/bve/8wxOeqEeexaoUCRDvh
-         qGL1cMJEQKOTKnn5+wAkVFynC5kHwxFplTQOxOYflsdArjuXjzlSMODjgP/2WA2pD29T
-         +rxwLf0M3ozMPPBHtg2UM1fa+SdTJp54C+kXiZ+PyBK+M3HcBwY892q6c6yebxQ0e6jU
-         qq1w==
+        bh=5dVhlUNjqsBL30qFj7Fwhndj9IVP6//dpSPYEVekBIY=;
+        b=Kfhm/onlZx2XNp3mdcPwUJXKM/RQ9cXvyvfCBFaza36IV80QSJlRXc6u8VFbj0YDCU
+         5CaxDqL7o8JrgR9Qe7ocBOkJ1eLv8Rfx0irZCdhwepiMbfh1btuRiajQ36SlDAArAOqz
+         3x4Lc1aLNYGJt9UalXa7G6rtWEBbCqkFmkSXOaizotUJndK5Ce9a/bhRZufzro8qCkhv
+         y7ZU3RdNDDxWg56tKp5MQq+03MBS6vjUL6eHmqjnbo+AfYS24K/7Q19Xce31qkKfZJMw
+         bo6TPMS/Q3BoZqAC4Td+Nm0J79kLe5u/5a4ziZDNgJCAP6u8ho6T4cgYO4GCZ9I8STeD
+         F50g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=l0whpO4cbXzR1tiN4DzvNKJ/HfGU7YFSCpWie8Zua84=;
-        b=HkD7+gtU7xCzHi5fEdgkzq0tJYyzyQTZOTojO/FpkGSU9PcAWupB3W/84CZfUy9mie
-         sJEbBx62ZSz77WKCc78SBAjnIghCpT2EwNxC42/9hN6dbqjeTKAsB7oeYDzNFbMubLJf
-         s3INvYac+PSkiJJRhmU3LQxaUcfNiFCTxmwr8r0KNPxDH3CwEq2WySRq2w50cRH+cDXf
-         Hf/vSgOPABDd1n3mPMOMWUJgIc5IClRFHWv/RBWh6nceBW5rkxeZTAi0vKXPuG0eDloC
-         kqxH8IS7MOzYWVlXfVMd2Wk7Gx43qmZU4PaXEdrFFyxOGTIr/Sir9AIGtMH43pF0wSFv
-         nfHA==
-X-Gm-Message-State: AFqh2kpSj0ZCOQgITMzwznkp58HGuCsEa+TxS2YxGvukEdUGT0xIMPWD
-        bYdCYwkxzdjaNqPo6HPk/DyqHK5zFttnIeZz
-X-Google-Smtp-Source: AMrXdXtME4KCY+RVtSIc4GGY1hVD6gUYg4Y0Dc+IxuYWScp4BM/4Z6IuD8cxwhvwY2aeimwydwh6Ew==
-X-Received: by 2002:adf:fbd1:0:b0:2bd:bae0:8de5 with SMTP id d17-20020adffbd1000000b002bdbae08de5mr25285912wrs.58.1674646484139;
-        Wed, 25 Jan 2023 03:34:44 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id g9-20020adfa489000000b002b065272da2sm4338563wrb.13.2023.01.25.03.34.43
+        bh=5dVhlUNjqsBL30qFj7Fwhndj9IVP6//dpSPYEVekBIY=;
+        b=P8iHO1RXZNv47duK6rITT//zFZqvCAtTiF0UG2Bm1AMJRipOmU3EGpCOsXBRXGUZQb
+         rQ6M9MGaLH0V1RumKA45Ug5knwxRp86idPvS8oQYY2RL7vv0ocm9L3JJtdjqDX+NdA9d
+         C7i9dF0daU5Z47aQ0iQdu6cUEpfgKfoZqjNFqct4uEPBAULPV9fHAvQ4vpyndVJYrmpZ
+         0NNBVYKVS782q+xCfn6g2SVRBPmKT5RAy/5DHM1/QoHEZvsIGfyxhdBvqRN0bGy2erHw
+         AL9GMsYEQFkLH2G5w5pLoz3CHkkoCm2aJRcIvOuglML+lZ4fADehda/VWKy3qT3IU1vI
+         zv/w==
+X-Gm-Message-State: AFqh2kpA0CknOWCgwE+hPAux7C0XlzDL7xHtRFbd/rJxUdK3gHZTpsNK
+        c2+kFJLL+y5/hB7kSJMuXnRIgA==
+X-Google-Smtp-Source: AMrXdXsIWEY9FTI1OV1UwP/0HQPv4v1+dM8bovEcXISKZKpdILaC0A7PO/9NZBTVAPpZTTdVsdtfqw==
+X-Received: by 2002:a05:600c:3556:b0:3db:331b:bd2d with SMTP id i22-20020a05600c355600b003db331bbd2dmr20147637wmq.18.1674646577387;
+        Wed, 25 Jan 2023 03:36:17 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id n13-20020a05600c500d00b003db2b81660esm1642996wmr.21.2023.01.25.03.36.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Jan 2023 03:34:43 -0800 (PST)
-Message-ID: <78479f8d-4565-cff0-5ba0-bdfb0e40642e@linaro.org>
-Date:   Wed, 25 Jan 2023 11:34:42 +0000
+        Wed, 25 Jan 2023 03:36:17 -0800 (PST)
+Message-ID: <a768138f-a960-16b4-7097-9212638141a5@linaro.org>
+Date:   Wed, 25 Jan 2023 12:36:14 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: camss: Missing cleanup on probe error
+ Thunderbird/102.7.0
+Subject: Re: [PATCH v2 1/2] dt-bindings: arm: qcom: Add Xiaomi Mi Pad 5 Pro
+ (xiaomi-elish)
 Content-Language: en-US
-To:     Luca Weiss <luca@z3ntu.xyz>, Todor Tomov <todor.too@gmail.com>,
-        Robert Foss <robert.foss@linaro.org>
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-References: <5898403.lOV4Wx5bFT@g550jk>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <5898403.lOV4Wx5bFT@g550jk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Jianhua Lu <lujianhua000@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Kees Cook <keescook@chromium.org>,
+        Tony Luck <tony.luck@intel.com>,
+        "Guilherme G . Piccoli" <gpiccoli@igalia.com>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+References: <20230125112903.10710-1-lujianhua000@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230125112903.10710-1-lujianhua000@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -76,72 +85,14 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/01/2023 20:02, Luca Weiss wrote:
-> Hi all,
+On 25/01/2023 12:29, Jianhua Lu wrote:
+> Add a compatible for Xiaomi Mi Pad 5 Pro.
 > 
-> I hit an issue that was already fixed with upstream commit 3d658980e6da
-> ("media: camss: Do not attach an already attached power domain on MSM8916
-> platform") but this showed that some error handling is missing in camss_probe.
-> 
-> After these errors the resources aren't cleaned up and e.g. sensor drivers
-> still try to probe but fail quite badly because some things are NULL or
-> whatever.
-> 
-> [    1.979098] qcom-camss fda0ac00.camss: Failed to configure power domains:
-> -17
-> [    1.989327] qcom-camss: probe of fda0ac00.camss failed with error -17
-> 
-> The commit causing this (or at least part of this) is 2f6f8af67203 ("media:
-> camss: Refactor VFE power domain toggling")
-> 
-> I tried a bit to add some error handling but in this case it now fails at
-> v4l2_device_unregister_subdev -> media_device_unregister_entity ->
-> __media_device_unregister_entity -> ida_free.
-> And I'm not really sure how to fix (and honestly not super motivated).
-> 
-> See following patch (formatting probably messed up, sorry). Maybe someone who
-> knows a bit more about the driver or the media subsystem can fix this, thanks!
-> 
-> Regards
-> Luca
-> 
-> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/
-> platform/qcom/camss/camss.c
-> index 16545cecc4f4..0ba3c378d241 100644
-> --- a/drivers/media/platform/qcom/camss/camss.c
-> +++ b/drivers/media/platform/qcom/camss/camss.c
-> @@ -1836,21 +1836,26 @@ static int camss_probe(struct platform_device *pdev)
->   		}
->   	}
->   
-> -	ret = camss_configure_pd(camss);
-> +	//ret = camss_configure_pd(camss);
-> +	ret = -17;
->   	if (ret < 0) {
->   		dev_err(dev, "Failed to configure power domains: %d\n",
-> ret);
-> -		return ret;
-> +		goto err_configure_pd;
->   	}
->   
->   	pm_runtime_enable(dev);
->   
->   	return 0;
->   
-> +err_configure_pd:
-> +	media_device_unregister(&camss->media_dev);
-> +	media_device_cleanup(&camss->media_dev);
->   err_register_subdevs:
->   	camss_unregister_entities(camss);
->   err_register_entities:
->   	v4l2_device_unregister(&camss->v4l2_dev);
->   err_cleanup:
-> +	v4l2_async_nf_unregister(&camss->notifier);
->   	v4l2_async_nf_cleanup(&camss->notifier);
->   
->   	return ret;
-> 
-> 
-> 
+> Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
 
-I'll take a look
+
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
+
