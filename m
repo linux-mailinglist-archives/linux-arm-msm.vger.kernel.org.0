@@ -2,163 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C56567AD93
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 10:17:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D686C67ADA5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 10:19:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235042AbjAYJPj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Jan 2023 04:15:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39248 "EHLO
+        id S233330AbjAYJTo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Jan 2023 04:19:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234885AbjAYJPi (ORCPT
+        with ESMTP id S229884AbjAYJTn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Jan 2023 04:15:38 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77C6343462
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 01:15:37 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id j17so13254696wms.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 01:15:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:from:references
-         :cc:to:content-language:subject:reply-to:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=hLYyMf8v6sX0CmntSwjS63uxAxPxvpyOkk5T320V7ls=;
-        b=vQIeg+80cD1Jh0nHmdw6lIMdBYusiJ8CWnr+acIqPUQ8bgzxwSQV+fGSXvKjFVIEtz
-         iwFgfpQ+PqMQT7N7huipewrSougdMtpDfSqzHshcM+zcqO/0qigO7GUsIx+ZVib7Vgmc
-         4YzGL45GG3DY4I5YhdNjC6bkHnl7jh5Skej2L7BHl793N7X9B5DKoSApVtLxrece0pl7
-         LDttDDg5eljQPKDffr1lM4ltoLQUC2uhAw+Jc/g+r5OA1itaP0kFHGJXxFzCmvu4a09A
-         pDvFwZjLQippIXa/8ZeT9dFxC8PCnQJTHnoMHNaDJOtUYns09Nrw/vg51pEUhnfDbA6L
-         +QRQ==
+        Wed, 25 Jan 2023 04:19:43 -0500
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7256646D61
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 01:18:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1674638330;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=a55Ot/a9auPBUYlSWbJ1dfW1qxB2YBfP2IFn3I6erq0=;
+        b=id71cs2y0pmpBUX+4jkURRpJX4LMm70nAveHI+GNSVU2Ga+DHms5wMpS8mpvOgRqBuWoPy
+        0JZfPGkQSMa9IVxN5nhosqk+o+o/OawdLTPEirT8u1v8jprBYQsYsGzI/eWe9nVzMqMUEy
+        COoJdsvJrwKUMLQh35JeJDQ7av5D02c=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-554-jXEDh2P9PA2CSt5i1BAZZQ-1; Wed, 25 Jan 2023 04:18:49 -0500
+X-MC-Unique: jXEDh2P9PA2CSt5i1BAZZQ-1
+Received: by mail-wm1-f70.google.com with SMTP id n16-20020a05600c3b9000b003db127e03c5so1618438wms.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 01:18:49 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:from:references
-         :cc:to:content-language:subject:reply-to:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hLYyMf8v6sX0CmntSwjS63uxAxPxvpyOkk5T320V7ls=;
-        b=H/Uiz3blnsjW96T3SMLRJJEOeafATEkzTX+UOpJ7uMpNPnR7goGMeiHIPW7T/mVbFK
-         M4DXP2LYcSdYxiC/6GJylwN5whvuoS/fymWP9kCtq/uSD6Y8P2QUfdi0iGcvVTVD37Ve
-         MkpXMPtlrZHETc/y/kCQYylz3mjh1ofrj0qa97R/IXGWDI9s88WUxbIRYNrO/VyjDZol
-         8VZPaobK7EHZ/G3I2F+mPbEeyz1oH9mki7rYMYsEL37aosn6GE3q5n0r4UqhL28yREeJ
-         PBUR4bOL2s1yHyb9a8Fb1KUupeH6SmgIGXGOUthvTjTmuVeOpIW2CfpeySb2b7ZfR/YG
-         GREQ==
-X-Gm-Message-State: AFqh2kr8BCLT/xKrtF/5KEcy2NNP7ADjSTR78HnQkxbfOStIPD5w5l/k
-        C77n5jR5368MLLGkJ9Hrc7LXcw==
-X-Google-Smtp-Source: AMrXdXvWRskL0ALdre/zwBQd4CWcE4EeqG3qOzIokfuCHYl0YnH8WVH4If4CW54QDvyDULTACzs7sw==
-X-Received: by 2002:a05:600c:35d4:b0:3dc:b1b:830 with SMTP id r20-20020a05600c35d400b003dc0b1b0830mr6688372wmq.33.1674638135988;
-        Wed, 25 Jan 2023 01:15:35 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:ad2f:6fa7:d25a:7047? ([2a01:e0a:982:cbb0:ad2f:6fa7:d25a:7047])
-        by smtp.gmail.com with ESMTPSA id x26-20020a1c7c1a000000b003db01178b62sm1191493wmc.40.2023.01.25.01.15.35
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=a55Ot/a9auPBUYlSWbJ1dfW1qxB2YBfP2IFn3I6erq0=;
+        b=bTJG/hF2HHeTcCjgwKni12GDf2Xd9zAGS1r+BrO4vgxrJeWL330lT865ErT+P6cbFC
+         mtXqWhvzp4P4LJqr130Rugp9YgyVnBIsBWKYa2XfJuM3jes+pCcj0GiMB/Smwx1aJl4e
+         oIJN7MjqgF92axv+Jqu9gAOvQmk0Q9RwYNWcxkmBCSeHx1F9+p1x9T0j8TPTI63OPILA
+         lmTJgu2sJYcw8Q9hj4LrWVuoI+E40EaTf6q0za4Uo2cN5I+mPGPRtS2+G4RF5hR7iwEh
+         B/2l6t4yjYITX7VWrDjan3jTlyFKncYzkRyzXJOFWmIiFiGLsZxXlhVckqM2itvacabd
+         0gOg==
+X-Gm-Message-State: AFqh2kq+gXqYQM7+YO303IDAsHBm5tqaF176KHjv41CcgG0XMprz0iMm
+        cPPRE3r5QqCH4uRaKthMz87PY91p5qbbaax/KsG58E/edLzrj/AXV6UsNvGD0LJdmjXoWIgXPuj
+        VVnMGeJRU3hqvb22XACb0f4qTuA==
+X-Received: by 2002:adf:feca:0:b0:2bf:9582:1378 with SMTP id q10-20020adffeca000000b002bf95821378mr16119709wrs.37.1674638328235;
+        Wed, 25 Jan 2023 01:18:48 -0800 (PST)
+X-Google-Smtp-Source: AMrXdXsMVsply5zUceDY+rfGRdP7xOLgJXzgPpsW/TV5uP5Pe3bOpgzxt5mZhJQXuF/HpRE9cQuOiw==
+X-Received: by 2002:adf:feca:0:b0:2bf:9582:1378 with SMTP id q10-20020adffeca000000b002bf95821378mr16119688wrs.37.1674638328019;
+        Wed, 25 Jan 2023 01:18:48 -0800 (PST)
+Received: from [192.168.1.130] (205.pool92-176-231.dynamic.orange.es. [92.176.231.205])
+        by smtp.gmail.com with ESMTPSA id bj7-20020a0560001e0700b002bfb5618ee7sm2235669wrb.91.2023.01.25.01.18.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Jan 2023 01:15:35 -0800 (PST)
-Message-ID: <47b12a29-1438-3930-b471-69136d41e148@linaro.org>
-Date:   Wed, 25 Jan 2023 10:15:34 +0100
+        Wed, 25 Jan 2023 01:18:47 -0800 (PST)
+Message-ID: <2a007c84-1dd6-ed8a-39ac-8c7c070513f3@redhat.com>
+Date:   Wed, 25 Jan 2023 10:18:46 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH] arm64: dts: qcom: sm8250: Disable wsamacro and swr0 by
- default
+Subject: Re: [PATCH v2 03/10] drm/fb-helper: Introduce
+ drm_fb_helper_unprepare()
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230124164616.228619-1-konrad.dybcio@linaro.org>
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <20230124164616.228619-1-konrad.dybcio@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Thomas Zimmermann <tzimmermann@suse.de>, airlied@gmail.com,
+        daniel@ffwll.ch, maarten.lankhorst@linux.intel.com,
+        mripard@kernel.org
+Cc:     linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        amd-gfx@lists.freedesktop.org, linux-tegra@vger.kernel.org,
+        freedreno@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20230124134010.30263-1-tzimmermann@suse.de>
+ <20230124134010.30263-4-tzimmermann@suse.de>
+From:   Javier Martinez Canillas <javierm@redhat.com>
+In-Reply-To: <20230124134010.30263-4-tzimmermann@suse.de>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/01/2023 17:46, Konrad Dybcio wrote:
-> They are not used on all boards, so disable them by default.
-> Enable them back on MTP/RB5, which were the only current users.
+On 1/24/23 14:40, Thomas Zimmermann wrote:
+> Move the fb-helper clean-up code into drm_fb_helper_unprepare(). No
+> functional changes.
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> v2:
+> 	* declare as static inline (kernel test robot)
+> 
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
 > ---
->   arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 6 ++++++
->   arch/arm64/boot/dts/qcom/sm8250-mtp.dts  | 6 ++++++
->   arch/arm64/boot/dts/qcom/sm8250.dtsi     | 4 ++++
->   3 files changed, 16 insertions(+)
+>  drivers/gpu/drm/drm_fb_helper.c | 14 +++++++++++++-
+>  include/drm/drm_fb_helper.h     |  5 +++++
+>  2 files changed, 18 insertions(+), 1 deletion(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> index 8c64cb060e21..6802d36fb20c 100644
-> --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> @@ -1007,6 +1007,8 @@ can@0 {
->   };
->   
->   &swr0 {
-> +	status = "okay";
-> +
->   	left_spkr: speaker@0,3 {
->   		compatible = "sdw10217211000";
->   		reg = <0 3>;
-> @@ -1322,6 +1324,10 @@ &venus {
->   	status = "okay";
->   };
->   
-> +&wsamacro {
-> +	status = "okay";
-> +};
-> +
->   /* PINCTRL - additions to nodes defined in sm8250.dtsi */
->   &qup_spi0_cs_gpio {
->   	drive-strength = <6>;
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-> index 0991b34a8e49..c0d83fa9a73b 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
-> @@ -759,6 +759,8 @@ codec {
->   };
->   
->   &swr0 {
-> +	status = "okay";
-> +
->   	left_spkr: speaker@0,3 {
->   		compatible = "sdw10217211000";
->   		reg = <0 3>;
-> @@ -892,3 +894,7 @@ &usb_2_qmpphy {
->   &venus {
->   	status = "okay";
->   };
-> +
-> +&wsamacro {
-> +	status = "okay";
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> index 95f1a6afcd43..a0ba166f89d8 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> @@ -2277,6 +2277,8 @@ wsamacro: codec@3240000 {
->   
->   			pinctrl-names = "default";
->   			pinctrl-0 = <&wsa_swr_active>;
-> +
-> +			status = "disabled";
->   		};
->   
->   		swr0: soundwire-controller@3250000 {
-> @@ -2297,6 +2299,8 @@ swr0: soundwire-controller@3250000 {
->   			#sound-dai-cells = <1>;
->   			#address-cells = <2>;
->   			#size-cells = <0>;
-> +
-> +			status = "disabled";
->   		};
->   
->   		audiocc: clock-controller@3300000 {
+> diff --git a/drivers/gpu/drm/drm_fb_helper.c b/drivers/gpu/drm/drm_fb_helper.c
+> index c5c13e192b64..4379bcd7718b 100644
+> --- a/drivers/gpu/drm/drm_fb_helper.c
+> +++ b/drivers/gpu/drm/drm_fb_helper.c
+> @@ -435,6 +435,18 @@ void drm_fb_helper_prepare(struct drm_device *dev, struct drm_fb_helper *helper,
+>  }
+>  EXPORT_SYMBOL(drm_fb_helper_prepare);
+>  
+> +/**
+> + * drm_fb_helper_unprepare - clean up a drm_fb_helper structure
+> + * @fb_helper: driver-allocated fbdev helper structure to set up
+> + *
+> + * Cleans up the framebuffer helper. Inverse of drm_fb_helper_prepare().
+> + */
+> +void drm_fb_helper_unprepare(struct drm_fb_helper *fb_helper)
+> +{
+> +	mutex_destroy(&fb_helper->lock);
+> +}
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+I like that we have an _unprepare that is the inverse of the _prepare, but
+since is only destroying the mutex, maybe is an unneeded indirection level?
+
+Or do you plan to add more cleanup to that _unprepare function? Otherwise I
+would just make it an inline function.
+
+> +EXPORT_SYMBOL(drm_fb_helper_unprepare);
+> +
+
+Does it have to be an exported symbol? AFAICT the only user for now is the
+drm_fb_helper_fini() function, so the function could be a static inline.
+
+[...]
+
+> diff --git a/include/drm/drm_fb_helper.h b/include/drm/drm_fb_helper.h
+> index f443e1f11654..39710c570a04 100644
+> --- a/include/drm/drm_fb_helper.h
+> +++ b/include/drm/drm_fb_helper.h
+> @@ -230,6 +230,7 @@ drm_fb_helper_from_client(struct drm_client_dev *client)
+>  #ifdef CONFIG_DRM_FBDEV_EMULATION
+>  void drm_fb_helper_prepare(struct drm_device *dev, struct drm_fb_helper *helper,
+>  			   const struct drm_fb_helper_funcs *funcs);
+> +void drm_fb_helper_unprepare(struct drm_fb_helper *fb_helper);
+>  int drm_fb_helper_init(struct drm_device *dev, struct drm_fb_helper *helper);
+>  void drm_fb_helper_fini(struct drm_fb_helper *helper);
+>  int drm_fb_helper_blank(int blank, struct fb_info *info);
+> @@ -296,6 +297,10 @@ static inline void drm_fb_helper_prepare(struct drm_device *dev,
+>  {
+>  }
+>  
+> +static inline void drm_fb_helper_unprepare(struct drm_fb_helper *fb_helper)
+> +{
+> +}
+> +
+
+And you should be able to remove this stub if you limit the scope of the helper.
+
+No strong opinion though. So if you prefer to keep it as is, feel free to add:
+
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+
+-- 
+Best regards,
+
+Javier Martinez Canillas
+Core Platforms
+Red Hat
+
