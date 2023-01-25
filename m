@@ -2,59 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 090B067BCA6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 21:35:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E6CB067BD33
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 21:44:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235174AbjAYUfT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Jan 2023 15:35:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35128 "EHLO
+        id S236044AbjAYUoT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Jan 2023 15:44:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230064AbjAYUfT (ORCPT
+        with ESMTP id S236173AbjAYUoS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Jan 2023 15:35:19 -0500
+        Wed, 25 Jan 2023 15:44:18 -0500
 Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9412A3F298;
-        Wed, 25 Jan 2023 12:35:18 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E1A015C94;
+        Wed, 25 Jan 2023 12:44:14 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 44733B819C1;
-        Wed, 25 Jan 2023 20:35:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D60F8C433D2;
-        Wed, 25 Jan 2023 20:35:15 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id C9B10B81B33;
+        Wed, 25 Jan 2023 20:44:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 679D6C433D2;
+        Wed, 25 Jan 2023 20:44:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1674678916;
-        bh=8U2DugR9MKz12cxFiXKOhg5icyU2FP2WpZ+gq9wbYaA=;
+        s=k20201202; t=1674679451;
+        bh=p2N3zgnQfCgQxKWK2hV2QHveHQZJmLSmPQnhVgKDPGw=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=OQH3KGpP8uLcJIeQ6j+iZSMcfDEhvOegromXyLnN+AYR9+IMAXXnDLLYyW79LSYHz
-         2LR6a8xl8Uevg21g23XOMaa49u8at72bYs8Ox2L+TnH9fdpNeDNoXlA4DTdkVtLvye
-         sBBMlZgYqlMyzN6uxjbrxhJe7Fl+iU3fflfNPruzh1cDGtGhWD8CkcLR7dw6hGXryU
-         nMzvM1wPSWXePgfrknMw/fksQapG+m4oLaFpWsVkb4MRqVfq3RavNAR8ImiPPZyug+
-         Yp1pS3KFJ8Va2/ouZ06qV/ZmUcZkObTgYruNotw+DibQTcDxRGTpk+sq6Yt3h71Os7
-         ifLkpMloV5Y/g==
-Message-ID: <e9277836f6797a1b2aaca2300190da9a.sboyd@kernel.org>
+        b=a1oLHuIaQSxSu8FHUP1v+t4E5UxLNAC3cEkZVpqX8oTmjZV98R7eTVlNIbnEzRaw3
+         1Y+nV8Z2x2KrFRshFKGQuEe+zl8h1bcFU7AATqViHg15o+/fMaiKqqhC/2AN8uO9eQ
+         z80ynMNhom7b07I4/X61erLKmHFNuvPN5v9wa9lKlJqIJUJ1F4vqu82C0iBQFE8MQe
+         1GPrnjmWb74dznomeuF0L4Q9RQ3cDy70iTeLk6sqThWxeRcr1UyKSCykXBViHPOwVp
+         MCWNG5xm3GLBU+Ni2GlaZIUnE/Pm2sWQK1BQtsnsUiajiPHO3g3uiEV4pgvjcjvtb+
+         6GsTlxavh3Tsw==
+Message-ID: <7ddf5c74de84c5dc291996423cb1eb46.sboyd@kernel.org>
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20230125104520.89684-4-quic_kathirav@quicinc.com>
-References: <20230125104520.89684-1-quic_kathirav@quicinc.com> <20230125104520.89684-4-quic_kathirav@quicinc.com>
-Subject: Re: [PATCH 03/10] clk: qcom: Add STROMER PLUS PLL type for IPQ5332
+In-Reply-To: <20230123094925.54824-2-krzysztof.kozlowski@linaro.org>
+References: <20230123094925.54824-1-krzysztof.kozlowski@linaro.org> <20230123094925.54824-2-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH 2/2] clk: qcom: restrict drivers per ARM/ARM64
 From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Kathiravan T <quic_kathirav@quicinc.com>
-To:     Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>,
-        agross@kernel.org, andersson@kernel.org, arnd@arndb.de,
-        bhupesh.sharma@linaro.org, broonie@kernel.org,
-        catalin.marinas@arm.com, devicetree@vger.kernel.org,
-        dmitry.baryshkov@linaro.org, konrad.dybcio@linaro.org,
-        krzysztof.kozlowski+dt@linaro.org, linus.walleij@linaro.org,
-        linux-arm-kernel@lists.infradead.org,
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-mmc@vger.kernel.org, marcel.ziswiler@toradex.com,
-        mturquette@baylibre.com, nfraprado@collabora.com,
-        quic_gurus@quicinc.com, robh+dt@kernel.org, robimarko@gmail.com,
-        shawnguo@kernel.org, ulf.hansson@linaro.org, will@kernel.org
-Date:   Wed, 25 Jan 2023 12:35:13 -0800
+        linux-kernel@vger.kernel.org
+Date:   Wed, 25 Jan 2023 12:44:07 -0800
 User-Agent: alot/0.10
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
@@ -65,17 +59,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kathiravan Thirumoorthy (2023-01-25 02:45:13)
-> From: Kathiravan T <quic_kathirav@quicinc.com>
->=20
-> Add the support for stromer plus pll, which is found on the IPQ5332
-> SoCs. Programming sequence is same as the stromer pll, so we can re-use
-> the same.
->=20
-> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
-> ---
+Quoting Krzysztof Kozlowski (2023-01-23 01:49:25)
+> There is no point to allow selecting pin-controller drivers for Qualcomm
 
-Reviewed-by: Stephen Boyd <sboyd@kernel.org>
+pin controllers?
 
-I'm amazed that we need so many different register layouts for PLLs. Was
-it really never standardized? So sad.
+> ARMv7 SoCs when building ARM64 kernel, and vice versa.  This makes
+> kernel configuration more difficult as many do not remember the Qualcomm
+> SoCs model names/numbers.  There won't be a single image for ARMv7 and
+> ARMv8/9 SoCs, so no features/options are lost.
+
+Are the drivers used in arm32 emulation mode on these SoCs? I recall
+there are some SoCs they run with the arm architecture.
