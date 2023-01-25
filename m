@@ -2,145 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 181D967BF89
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 23:05:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 836C167BFB2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 23:14:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230016AbjAYWFd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Jan 2023 17:05:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55654 "EHLO
+        id S235570AbjAYWOD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Jan 2023 17:14:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229515AbjAYWFc (ORCPT
+        with ESMTP id S235567AbjAYWOC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Jan 2023 17:05:32 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D4C84608D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 14:05:31 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id fi26so225968edb.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 14:05:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RKFA19R6xv2eymSUsNElEgL5ULZ+IvWXQQkJeAKXWVk=;
-        b=Mv922n4G+JBjWDAthtVTqODJI6w1dOPq/YvqZMHNFTXZyw/hFSs42eLyj+18CT3xoz
-         IxSSgNi1jq6/WWvMdECZPSqI5nFfQwSGHXyvi5VLgp4b9m8oINijX6hrUbIee1VuEl+B
-         R2gN1m3eOBw7XlBS4KGcEOucAbqrR59FWB6toRnHP/dDWdwTYotvXJE+AO3mpeE4WcmK
-         OkThC3RzV6NnwiV09T+bcfkZr5PthUVwgXSj1B9U7z245xtFojcJ4oHc2qLkWtJv5Z+U
-         bTALDK+gAM2Z/XzFrSIZRVJM0Ck/4s4UuJDPmWSPMQy7CRB3WwNEF5H+QPcTNNSWxGFY
-         KKTQ==
+        Wed, 25 Jan 2023 17:14:02 -0500
+Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45B4E518E1;
+        Wed, 25 Jan 2023 14:14:02 -0800 (PST)
+Received: by mail-oi1-f173.google.com with SMTP id v17so17598879oie.5;
+        Wed, 25 Jan 2023 14:14:02 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RKFA19R6xv2eymSUsNElEgL5ULZ+IvWXQQkJeAKXWVk=;
-        b=qrGCwOUzwVhfUJbfue9E5wQD+8JcVHoDCvCAK8IstouHN582lqTCbZyKBUxTkROJ7U
-         ZyWzxxESyu3eGxMvzYuSdRy5LQ+JE1T040TAns/gMMBXzV9y2r/QnM0S1rPXLCpWfM4b
-         891nQgKQCIexnnmIf69wBXjUxAFxv8JZzSY6YxgPWxoQW53jgT4j0pMXwDOPpvP8Knvn
-         dwpv+Lfd9gu7m1FjXTiI4KQAUrJxfhvio2NSJX03/beSRdGxUFSvgAozWVSpxd/gB8bn
-         COGxI6+WrtznEJGV5Yai1M8tn/A0+fpwWUFrkFige8oyJZQiM1CBp/iWA8T6u0Px+Kye
-         VCWA==
-X-Gm-Message-State: AFqh2kpx/Y9D+x1oJEiWtVZqYS/EKEQvnIrRoeEBOi5g0+3gxTyU9PYF
-        UjITxAcSuqhzm9VwygDVMjn7JQ==
-X-Google-Smtp-Source: AMrXdXte6HidAfuRLRPGrzkYFjXGReU+SQgPe2DkHhMIRxDK8wTCY04tVP73Wx4a4BoX1D03IP2SWw==
-X-Received: by 2002:aa7:c619:0:b0:49e:6e34:c363 with SMTP id h25-20020aa7c619000000b0049e6e34c363mr26774712edq.35.1674684329832;
-        Wed, 25 Jan 2023 14:05:29 -0800 (PST)
-Received: from [192.168.1.101] (abyk108.neoplus.adsl.tpnet.pl. [83.9.30.108])
-        by smtp.gmail.com with ESMTPSA id cy5-20020a0564021c8500b0049ef56c01d0sm2871624edb.79.2023.01.25.14.05.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Jan 2023 14:05:29 -0800 (PST)
-Message-ID: <df133e5a-8030-0774-091c-6f8e0692e945@linaro.org>
-Date:   Wed, 25 Jan 2023 23:05:27 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH v4 7/7] clk: qcom: add the driver for the MSM8996 APCS
- clocks
-Content-Language: en-US
-To:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dJ9z57UwZG4tTNorqhSO8lGfimRHzs0UtM70Y/wGFLA=;
+        b=sxEJsutjqbIT88DxXVutPafEaKKf417BDyUyUfT44d6Vt/CEmRW73OHOwpo0hK84AS
+         DME5yzPKC0oxR9mLf14NFtnvw+Krk1B4zejOsFnzDy9e61RFGofD3mXlBdbXfx45xyd3
+         4qaQvjNLfP6Y/Xm2S70eCrp+NU6hnAWal/HDSzgmmZTp+bSxAQrZdratER1xNGX+/2fX
+         qoQkTmExXohzuuJBx3nTpt7UbrhAc7y6H8yUHe6sGMrCAoE7GmaIFzvJX0PcRAqrNiae
+         20OdBDzXABm06CQW5bYtSOHrHJN9y7ElMlgqMokaQfIXYY4QndCNaUbK5XB24Mzxix/j
+         Uwgw==
+X-Gm-Message-State: AO0yUKXIWN3s+S0mmutVUV4GZoDdLOGolAyHPsJF055Kj5eYPu+GpY5u
+        QONlUbL6If9DPphv9aUysByIR4K76w==
+X-Google-Smtp-Source: AK7set8GspnsCWGYKbxKN1uTZJxpgT1DCK5rPr1zBkbIBamx+JrDWk3S0vq7V9yELy/gC+8h18sZYA==
+X-Received: by 2002:aca:45c4:0:b0:36d:9536:160 with SMTP id s187-20020aca45c4000000b0036d95360160mr7317oia.32.1674684841524;
+        Wed, 25 Jan 2023 14:14:01 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id j2-20020a056808034200b003648b84a2b5sm2780771oie.33.2023.01.25.14.14.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Jan 2023 14:14:01 -0800 (PST)
+Received: (nullmailer pid 3057738 invoked by uid 1000);
+        Wed, 25 Jan 2023 22:14:00 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230118132254.2356209-1-dmitry.baryshkov@linaro.org>
- <20230118132254.2356209-8-dmitry.baryshkov@linaro.org>
- <7055af43f4a8894ac34e53c5847fb3de.sboyd@kernel.org>
- <63f017c7-d320-a996-7bda-33d263a847bc@linaro.org>
- <525ef5cdefe987c3412249760324eb09.sboyd@kernel.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <525ef5cdefe987c3412249760324eb09.sboyd@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] dt-bindings: display: msm: Drop type from 'memory-region'
+Date:   Wed, 25 Jan 2023 16:13:56 -0600
+Message-Id: <20230125221357.3057655-1-robh@kernel.org>
+X-Mailer: git-send-email 2.39.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+'memory-region' is a common property and already has a type.
 
+Signed-off-by: Rob Herring <robh@kernel.org>
+---
+ Documentation/devicetree/bindings/display/msm/gpu.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-On 25.01.2023 22:56, Stephen Boyd wrote:
-> Quoting Konrad Dybcio (2023-01-25 13:48:54)
->>
->>
->> On 25.01.2023 22:38, Stephen Boyd wrote:
->>> Quoting Dmitry Baryshkov (2023-01-18 05:22:54)
->>>> diff --git a/drivers/clk/qcom/apcs-msm8996.c b/drivers/clk/qcom/apcs-msm8996.c
->>>> new file mode 100644
->>>> index 000000000000..7e46ea8ed444
->>>> --- /dev/null
->>>> +++ b/drivers/clk/qcom/apcs-msm8996.c
->>>> @@ -0,0 +1,76 @@
->>> [...]
->>>> +
->>>> +static int qcom_apcs_msm8996_clk_probe(struct platform_device *pdev)
->>>> +{
->>>> +       struct device *dev = &pdev->dev;
->>>> +       struct device *parent = dev->parent;
->>>> +       struct regmap *regmap;
->>>> +       struct clk_hw *hw;
->>>> +       unsigned int val;
->>>> +       int ret = -ENODEV;
->>>> +
->>>> +       regmap = dev_get_regmap(parent, NULL);
->>>> +       if (!regmap) {
->>>> +               dev_err(dev, "failed to get regmap: %d\n", ret);
->>>> +               return ret;
->>>> +       }
->>>> +
->>>> +       regmap_read(regmap, APCS_AUX_OFFSET, &val);
->>>> +       regmap_update_bits(regmap, APCS_AUX_OFFSET, APCS_AUX_DIV_MASK,
->>>> +                          FIELD_PREP(APCS_AUX_DIV_MASK, APCS_AUX_DIV_2));
->>>> +
->>>> +       /* Hardware mandated delay */
->>>
->>> Delay for what? Setting the divider? What if the register value didn't
->>> change at all? Can you skip the delay in that case?
->> Waiting 5 us unconditionally in exchange for ensured CPU clock
->> source stability sounds like a rather fair deal.. Checking if
->> the register value changed would not save us much time..
-> 
-> So it is waiting for the CPU clk to be stable? The comment is not clear.
-Okay, so perhaps this is just a misunderstanding because of a lackluster
-comment.. This SYS_APCS_AUX (provided by this driver) is one of the CPU
-clock sources (and probably the "safest" of them all, as it's fed by
-GPLL0 and not the CPU PLLs) the delay is there to ensure it can
-stabilize after setting the divider to DIV2. In a theoretical case, the
-big 8996 cpucc driver could select this clock as a target for one (or
-both) of the per-cluster muxes and it could put the CPUs in a weird state.
-
-As unlikely as that would be, especially considering 8996 (AFAIK) doesn't
-use this clock source coming out of reset / bootloader, this lets us
-ensure one less thing can break.
-
-Konrad
+diff --git a/Documentation/devicetree/bindings/display/msm/gpu.yaml b/Documentation/devicetree/bindings/display/msm/gpu.yaml
+index c5f49842dc7b..304525f81563 100644
+--- a/Documentation/devicetree/bindings/display/msm/gpu.yaml
++++ b/Documentation/devicetree/bindings/display/msm/gpu.yaml
+@@ -89,7 +89,7 @@ properties:
+       help bring the GPU out of secure mode.
+     properties:
+       memory-region:
+-        $ref: /schemas/types.yaml#/definitions/phandle
++        maxItems: 1
+ 
+       firmware-name:
+         description: |
+-- 
+2.39.0
 
