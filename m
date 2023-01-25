@@ -2,130 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A4EE67BBA3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 21:04:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4628E67BBA7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 21:04:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236044AbjAYUED (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Jan 2023 15:04:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35872 "EHLO
+        id S236155AbjAYUEU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Jan 2023 15:04:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36266 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235331AbjAYUEC (ORCPT
+        with ESMTP id S235303AbjAYUET (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Jan 2023 15:04:02 -0500
-Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E1FA27D5F;
-        Wed, 25 Jan 2023 12:04:01 -0800 (PST)
-Received: by mail-oi1-f180.google.com with SMTP id s124so17286463oif.1;
-        Wed, 25 Jan 2023 12:04:01 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0Gkcdkob2Y6ObYYrpnf1Losk1qJrdTh8H2I4YXgC+Dk=;
-        b=XtIyImpax2ZxYf7X/jqiGHzpwUFOwg+ALUk7l6pjePHUWXMB22O6me9NbQVDUTpUMz
-         XI1HXVJqFcbOWSieti/6fAu107pq8OeMCUxt7BxOfeZQLs8sCYGWMHI0V9m62RwNMpTF
-         7iBGTjZdAp1FrDFYyrMaZAs2gnY80vgB/92dnlclu1f2CNWwdLo0FjJaQ0TJA/NRXryG
-         5E2dEP09iXuq7386RGMPbqNp9J3ZFd9/5pHHS31AsyxfyfPmPvFPorGLl68FMvCY1w28
-         Jo+TN5lRtBdz2GAvI3kp91eujYL8MMHuurWcWZOOZrzD1K/X4nkQmWtvV0UuAu1sXZ5y
-         MZ6w==
-X-Gm-Message-State: AFqh2krxi3CYuJmWzBVAxOeDRfZ7w++m4kSoXzpPiTIFmwP/7rkwNy50
-        6PDU77nNm07xieE4mYGJkQ==
-X-Google-Smtp-Source: AMrXdXvFtWE+6e2FsDqQXpT3BBXJS/1t8Fhvmq3xKkeGeQdttgRtxg5rjf30XlBDjQNS36QwjR+NjQ==
-X-Received: by 2002:aca:1012:0:b0:364:cacc:515b with SMTP id 18-20020aca1012000000b00364cacc515bmr13031084oiq.52.1674677040479;
-        Wed, 25 Jan 2023 12:04:00 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id q64-20020acac043000000b0035e7ed5daa1sm2599650oif.26.2023.01.25.12.03.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Jan 2023 12:04:00 -0800 (PST)
-Received: (nullmailer pid 2761036 invoked by uid 1000);
-        Wed, 25 Jan 2023 20:03:58 -0000
-Date:   Wed, 25 Jan 2023 14:03:58 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Hector Martin <marcan@marcan.st>,
-        Viresh Kumar <vireshk@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Biju Das <biju.das.jz@bp.renesas.com>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Andy Gross <agross@kernel.org>, Chen-Yu Tsai <wens@csie.org>,
-        Samuel Holland <samuel@sholland.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        =?UTF-8?B?77+9ZXI=?= <povik+lin@cutebit.org>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
+        Wed, 25 Jan 2023 15:04:19 -0500
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6499D38B75;
+        Wed, 25 Jan 2023 12:04:18 -0800 (PST)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by smtp-out2.suse.de (Postfix) with ESMTPS id 2176D1FEAB;
+        Wed, 25 Jan 2023 20:04:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1674677057; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+        bh=v+JlmQ6zOfEmYINTHVQmCD4th6Md9FT33+9hsBuYtF0=;
+        b=ZYXGBufK6ZysZF46pzEz6pO8QsVPqQxiPg0dI4p58wnguxY20j00SqYdb5T8v0wEyeNhDU
+        KuHfhSkvsoTbyvsQpVfYqQZhtSrdNRLQr0VMO0glCEO8pnev9yKZg6kzX5FTh1qAgRQTJF
+        z1j/fzW3MmUkH4j+DiIj+LKdJJfAOSw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1674677057;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+        bh=v+JlmQ6zOfEmYINTHVQmCD4th6Md9FT33+9hsBuYtF0=;
+        b=Ps1LBq6ihdGq0l9dLNZQOj0dx+OAD1f6QwcR9DesgnfXMDZau86WlxrDGHkgZR7JPGoNt5
+        rItaN1arPvlWbHCg==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id CF1141339E;
+        Wed, 25 Jan 2023 20:04:16 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap2.suse-dmz.suse.de with ESMTPSA
+        id +UmVMUCL0WMDeAAAMHmgww
+        (envelope-from <tzimmermann@suse.de>); Wed, 25 Jan 2023 20:04:16 +0000
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+To:     airlied@gmail.com, daniel@ffwll.ch,
+        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        javierm@redhat.com
+Cc:     dri-devel@lists.freedesktop.org,
         linux-arm-kernel@lists.infradead.org,
-        Paul Cercueil <paul@crapouillou.net>,
-        =?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Long Cheng <long.cheng@mediatek.com>,
-        Stefan Roese <sr@denx.de>, Palmer Debbelt <palmer@sifive.com>,
-        Peng Fan <peng.fan@nxp.com>,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-mediatek@lists.infradead.org, linux-kernel@vger.kernel.org,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-        Olivier Dautricourt <olivierdautricourt@gmail.com>,
-        devicetree@vger.kernel.org, Masami Hiramatsu <mhiramat@kernel.org>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        linux-riscv@lists.infradead.org,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Vinod Koul <vkoul@kernel.org>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        linux-sunxi@lists.linux.dev,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        - <chuanhua.lei@intel.com>, Sven Peter <sven@svenpeter.dev>,
-        asahi@lists.linux.dev, Maxime Ripard <mripard@kernel.org>,
-        Rajesh Gumasta <rgumasta@nvidia.com>,
-        dmaengine@vger.kernel.org, Green Wan <green.wan@sifive.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Amelie Delaunay <amelie.delaunay@foss.st.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-actions@lists.infradead.org,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] dt-bindings: dma: cleanup examples - indentation,
- lowercase hex
-Message-ID: <167467703767.2760981.10110618536644439258.robh@kernel.org>
-References: <20230124081117.31186-1-krzysztof.kozlowski@linaro.org>
- <20230124081117.31186-2-krzysztof.kozlowski@linaro.org>
+        linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        amd-gfx@lists.freedesktop.org, linux-tegra@vger.kernel.org,
+        Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH v3 00/10] drm/fb-helper: Various cleanups
+Date:   Wed, 25 Jan 2023 21:04:05 +0100
+Message-Id: <20230125200415.14123-1-tzimmermann@suse.de>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230124081117.31186-2-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add various cleanups and changes to DRM's fbdev helpers and the
+generic fbdev emulation. There's no clear theme here, just lots
+of small things that need to be updated.
+ 
+In the end, the code will better reflect which parts are in the 
+DRM client, which is fbdev emulation, and which are shared fbdev
+helpers.
 
-On Tue, 24 Jan 2023 09:11:17 +0100, Krzysztof Kozlowski wrote:
-> Cleanup examples:
->  - use 4-space indentation (for cases when it is neither 4 not 2 space),
->  - use lowercase hex,
->  - drop unused node's label.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> ---
-> 
-> Changes since v1:
-> 1. Drop unused label, correct indentation.
-> ---
->  .../bindings/dma/snps,dw-axi-dmac.yaml        | 36 +++++++++----------
->  .../bindings/dma/stericsson,dma40.yaml        | 16 ++++-----
->  2 files changed, 26 insertions(+), 26 deletions(-)
-> 
+v3:
+	* various minor fixes (Javier))
+	* build with CONFIG_DRM_FBDEV_EMULATION unset (kernel test robot)
+v2:
+	* cleanups in drm_fbdev_fb_destroy() (Sam)
+	* fix declaration of drm_fb_helper_unprepare()
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Thomas Zimmermann (10):
+  drm/client: Test for connectors before sending hotplug event
+  drm/client: Add hotplug_failed flag
+  drm/fb-helper: Introduce drm_fb_helper_unprepare()
+  drm/fbdev-generic: Initialize fb-helper structure in generic setup
+  drm/fb-helper: Remove preferred_bpp parameter from fbdev internals
+  drm/fb-helper: Initialize fb-helper's preferred BPP in prepare
+    function
+  drm/fbdev-generic: Minimize hotplug error handling
+  drm/fbdev-generic: Minimize client unregistering
+  drm/fbdev-generic: Inline clean-up helpers into drm_fbdev_fb_destroy()
+  drm/fbdev-generic: Rename struct fb_info 'fbi' to 'info'
+
+ drivers/gpu/drm/armada/armada_fbdev.c      |   4 +-
+ drivers/gpu/drm/drm_client.c               |  10 ++
+ drivers/gpu/drm/drm_fb_helper.c            |  58 ++++++---
+ drivers/gpu/drm/drm_fbdev_generic.c        | 131 ++++++++-------------
+ drivers/gpu/drm/exynos/exynos_drm_fbdev.c  |   4 +-
+ drivers/gpu/drm/gma500/framebuffer.c       |   4 +-
+ drivers/gpu/drm/i915/display/intel_fbdev.c |  11 +-
+ drivers/gpu/drm/msm/msm_fbdev.c            |   4 +-
+ drivers/gpu/drm/omapdrm/omap_fbdev.c       |   4 +-
+ drivers/gpu/drm/radeon/radeon_fb.c         |   4 +-
+ drivers/gpu/drm/tegra/fb.c                 |   7 +-
+ include/drm/drm_client.h                   |   8 ++
+ include/drm/drm_fb_helper.h                |  16 ++-
+ 13 files changed, 138 insertions(+), 127 deletions(-)
+
+
+base-commit: 7d3e7f64a42d66ba8da6e7b66a8d85457ef84570
+-- 
+2.39.0
+
