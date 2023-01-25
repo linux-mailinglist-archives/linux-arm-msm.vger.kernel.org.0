@@ -2,305 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9479D67A817
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 01:58:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0435367A83B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 02:05:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233674AbjAYA6G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Jan 2023 19:58:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55784 "EHLO
+        id S233674AbjAYBFJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Jan 2023 20:05:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234107AbjAYA6D (ORCPT
+        with ESMTP id S229528AbjAYBFI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Jan 2023 19:58:03 -0500
-Received: from mail-vs1-xe31.google.com (mail-vs1-xe31.google.com [IPv6:2607:f8b0:4864:20::e31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B8C223674
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 16:57:55 -0800 (PST)
-Received: by mail-vs1-xe31.google.com with SMTP id q125so18408431vsb.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 16:57:55 -0800 (PST)
+        Tue, 24 Jan 2023 20:05:08 -0500
+Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CA56366AD
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 17:04:47 -0800 (PST)
+Received: by mail-io1-xd2f.google.com with SMTP id c66so2459777iof.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 17:04:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google;
-        h=cc:to:subject:message-id:date:thread-index:mime-version:in-reply-to
-         :references:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=NYEWLwnYeyQ3UqP1ULlyZ7Tphf5V4mbrA1YeL53Qo/E=;
-        b=GsTZdl0GcyZrASl44EGKa2FNleIlHgBtAV/Dmr8wvarh5GzVoR+AWVWkbpPgJ6XuKG
-         IjUrb1ah/Cw7ziqdmyl18gnmIjtlA3uiccnejOBmf5r9uGMMPljtsfb37J/qsB4Uq5uV
-         fK+V4ifHkeSnuwbNkwvqWZW2QZxqQIgDJhE6Q=
+        d=chromium.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=3irqnNBdQ9Wio7OIw4BasqAgdBTVFcPBsPir/dXgS1Y=;
+        b=IOhwJoNGWrc6Ssnx/rAzo4+y8kZcnZglqC3ihgrdZFG6wunsTG50yW0kFXrmLkq6wY
+         rEVQpwBEsMe3uSn3IZIJ8+JLIO1TOlyKwoi0tuNASYXyrXKzVDAq/MEZPmAP2J22J6U7
+         9KS1ixqxzrKW8x6WZJ+ra5B8ySlxf7nmPJhbY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:thread-index:mime-version:in-reply-to
-         :references:from:x-gm-message-state:from:to:cc:subject:date
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NYEWLwnYeyQ3UqP1ULlyZ7Tphf5V4mbrA1YeL53Qo/E=;
-        b=HVImr8y4zoLGBACLqDW2scbe0dnsmouT+RaD/s4LYSWb8bQRjR79Czgu6tUwD726L4
-         jPVMUqLDroJHXMlvn1GUuVWOSnBzdiMimHmT229NeemlIsOBuR5aTyBivaWhwLtxCFAO
-         IGOdFROjaoJ7ww7r1wVeyD0+B+llBHike1l/7YExmAjlag63nwx31ux2HL93ZHSB0rcY
-         BPNHCNkkfq3ikJQV5RJ2PpkhMgIc5PfO6bahHkJy/MtuhtAYpVGUhOCwXNyaz9714P8p
-         EK4TzNZkO31Cnig718fUad4011lDkE+8u1v8oJ8Gg/iMPsDktjkOjypsCEMh/g3Dxh4I
-         LXqQ==
-X-Gm-Message-State: AFqh2kq79GxyCvXe5GInkIqsTtRau4ukYAJ1EFTbGSt0OSHOGtPYoN2Z
-        APTDL+tKOCmlAkxEFKzv0p2ReRS4GwVMN87BG4cKrg==
-X-Google-Smtp-Source: AMrXdXu0WEVAHtkl/7WrGp7gsGmIxeNAjZACQY1znOQilpBjqALn5uFkSCuep3Y6cqMY533KDesP8Mmq99uNyBp2hTA=
-X-Received: by 2002:a67:f246:0:b0:3b1:5690:a240 with SMTP id
- y6-20020a67f246000000b003b15690a240mr3921552vsm.68.1674608274113; Tue, 24 Jan
- 2023 16:57:54 -0800 (PST)
-From:   William Zhang <william.zhang@broadcom.com>
-References: <20230119185342.2093323-1-amit.kumar-mahapatra@amd.com> <20230119185342.2093323-3-amit.kumar-mahapatra@amd.com>
-In-Reply-To: <20230119185342.2093323-3-amit.kumar-mahapatra@amd.com>
+        bh=3irqnNBdQ9Wio7OIw4BasqAgdBTVFcPBsPir/dXgS1Y=;
+        b=Pl3vVha7L8lLClh9kHk9lTEbFjkM3gZL9WE3D3K9HZdtNAP/6O8GfsfFeKp8QOn4oZ
+         YASkmfNTBtrzJxK2fTVUSYO4OlUKKLPG9G5XZAAZoYZR7i6+QOeFvOm/cvWZImKS50x6
+         vcsT6PoFDAFKJY0iXt4HxXg6GSKW70fz2QbC6YKrk3EMYOwKxz3MqBMD9e2Ua98CJhPb
+         D5heUsz/xGjCr8sbla9/6G37RzdMOcKQF4dfQg6uPrOjDU+2UARt7KkxvKo6l3F+5Wr1
+         r4ExiPqsA9scmhO9auu4JuHV7rYL9WbM2nFqR9hUmKEXYpVwiCZT1LOonEcgBqZb47aX
+         xkfA==
+X-Gm-Message-State: AFqh2krx1ZZeBLvyzrj1p0t40v6ZgeExIIDeo6L85nr+qj8DkBnqwFhD
+        xt2BI5khbE/Nq7I2HYu+glaatg==
+X-Google-Smtp-Source: AMrXdXsRTdO6kwJYFVkU1zh46cZoVczKlZniDBt22SEYCqwL/5QpIXZ8R4L6sjO0V/W4PTg85CEzmw==
+X-Received: by 2002:a5d:950a:0:b0:704:cf41:8a24 with SMTP id d10-20020a5d950a000000b00704cf418a24mr19093320iom.15.1674608686462;
+        Tue, 24 Jan 2023 17:04:46 -0800 (PST)
+Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
+        by smtp.gmail.com with UTF8SMTPSA id g11-20020a05660203cb00b006bc039e3224sm1021116iov.17.2023.01.24.17.04.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 Jan 2023 17:04:46 -0800 (PST)
+Date:   Wed, 25 Jan 2023 01:04:45 +0000
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Georgi Djakov <djakov@kernel.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@somainline.org,
+        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-pm@vger.kernel.org, Douglas Anderson <dianders@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>
+Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: sc7280: Add cpu and llcc BWMON
+ (=> interconnect issue)
+Message-ID: <Y9CALT+ec6fxXlWZ@google.com>
+References: <20220902043511.17130-1-quic_rjendra@quicinc.com>
+ <20220902043511.17130-5-quic_rjendra@quicinc.com>
+ <Y8Ggh6RObbB1cxSS@google.com>
+ <dc5487d8-d31e-28c6-07e8-8d1ff54a4ba4@linaro.org>
+ <Y8baZWlKB9vNGYJw@google.com>
+ <754f8193-09ec-8bbf-e0d4-898525dc242f@linaro.org>
+ <Y8bfIv6GJU1TD4Dh@google.com>
+ <Y8sIf+41EGJuPQrP@google.com>
+ <2d064077-d4ec-31c4-19a9-4cc9aec8d85b@kernel.org>
 MIME-Version: 1.0
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQGsd40KKMSPSaowQedOCmq8Q0lhhQIBWekOAbfQgXk=
-Date:   Tue, 24 Jan 2023 16:57:49 -0800
-Message-ID: <36840e0caeca5f53eef4fab615fc7976@mail.gmail.com>
-Subject: Re: [PATCH v2 02/13] spi: Replace all spi->chip_select and
- spi->cs_gpiod references with function call
-To:     Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>,
-        broonie@kernel.org, miquel.raynal@bootlin.com, richard@nod.at,
-        vigneshr@ti.com, jic23@kernel.org, tudor.ambarus@microchip.com,
-        pratyush@kernel.org, sanju.mehta@amd.com,
-        chin-ting_kuo@aspeedtech.com, clg@kaod.org, kdasu.kdev@gmail.com,
-        f.fainelli@gmail.com, rjui@broadcom.com, sbranden@broadcom.com,
-        eajames@linux.ibm.com, olteanv@gmail.com, han.xu@nxp.com,
-        john.garry@huawei.com, shawnguo@kernel.org, s.hauer@pengutronix.de,
-        narmstrong@baylibre.com, khilman@baylibre.com,
-        matthias.bgg@gmail.com, haibo.chen@nxp.com,
-        linus.walleij@linaro.org, daniel@zonque.org,
-        haojian.zhuang@gmail.com, robert.jarzmik@free.fr,
-        agross@kernel.org, bjorn.andersson@linaro.org, heiko@sntech.de,
-        krzysztof.kozlowski@linaro.org, andi@etezian.org,
-        mcoquelin.stm32@gmail.com, alexandre.torgue@foss.st.com,
-        wens@csie.org, jernej.skrabec@gmail.com, samuel@sholland.org,
-        masahisa.kojima@linaro.org, jaswinder.singh@linaro.org,
-        rostedt@goodmis.org, mingo@redhat.com, l.stelmach@samsung.com,
-        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, alex.aring@gmail.com, stefan@datenfreihafen.org,
-        kvalo@kernel.org, thierry.reding@gmail.com, jonathanh@nvidia.com,
-        skomatineni@nvidia.com, sumit.semwal@linaro.org,
-        christian.koenig@amd.com, j.neuschaefer@gmx.net,
-        vireshk@kernel.org, rmfrfs@gmail.com, johan@kernel.org,
-        elder@kernel.org, gregkh@linuxfoundation.org
-Cc:     git@amd.com, linux-spi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, joel@jms.id.au, andrew@aj.id.au,
-        radu_nicolae.pirea@upb.ro, nicolas.ferre@microchip.com,
-        alexandre.belloni@bootlin.com, claudiu.beznea@microchip.com,
-        bcm-kernel-feedback-list@broadcom.com, fancer.lancer@gmail.com,
-        kernel@pengutronix.de, festevam@gmail.com, linux-imx@nxp.com,
-        jbrunet@baylibre.com, martin.blumenstingl@googlemail.com,
-        avifishman70@gmail.com, tmaimon77@gmail.com, tali.perry1@gmail.com,
-        venture@google.com, yuenn@google.com, benjaminfair@google.com,
-        yogeshgaur.83@gmail.com, konrad.dybcio@somainline.org,
-        alim.akhtar@samsung.com, ldewangan@nvidia.com,
-        michal.simek@amd.com, linux-aspeed@lists.ozlabs.org,
-        openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org,
-        linux-rpi-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-        netdev@vger.kernel.org, linux-wpan@vger.kernel.org,
-        libertas-dev@lists.infradead.org, linux-wireless@vger.kernel.org,
-        linux-mtd@lists.infradead.org, lars@metafoo.de,
-        Michael.Hennerich@analog.com, linux-iio@vger.kernel.org,
-        michael@walle.cc, palmer@dabbelt.com,
-        linux-riscv@lists.infradead.org, linux-media@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, greybus-dev@lists.linaro.org,
-        linux-staging@lists.linux.dev, amitrkcian2002@gmail.com
-Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-        boundary="00000000000056779305f30c1f13"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <2d064077-d4ec-31c4-19a9-4cc9aec8d85b@kernel.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---00000000000056779305f30c1f13
-Content-Type: text/plain; charset="UTF-8"
+Hi Georgi,
 
-On 01/19/2023 10:53 AM, 'Amit Kumar Mahapatra' via
-BCM-KERNEL-FEEDBACK-LIST,PDL wrote:
-> diff --git a/drivers/spi/spi-bcm63xx-hsspi.c
-> b/drivers/spi/spi-bcm63xx-hsspi.c
-> index b871fd810d80..dc179c4677d4 100644
-> --- a/drivers/spi/spi-bcm63xx-hsspi.c
-> +++ b/drivers/spi/spi-bcm63xx-hsspi.c
-> @@ -130,7 +130,7 @@ static void bcm63xx_hsspi_set_cs(struct bcm63xx_hsspi
-> *bs, unsigned int cs,
->   static void bcm63xx_hsspi_set_clk(struct bcm63xx_hsspi *bs,
->   				  struct spi_device *spi, int hz)
->   {
-> -	unsigned int profile = spi->chip_select;
-> +	unsigned int profile = spi_get_chipselect(spi, 0);
->   	u32 reg;
->
->   	reg = DIV_ROUND_UP(2048, DIV_ROUND_UP(bs->speed_hz, hz));
-> @@ -157,7 +157,7 @@ static void bcm63xx_hsspi_set_clk(struct bcm63xx_hsspi
-> *bs,
->   static int bcm63xx_hsspi_do_txrx(struct spi_device *spi, struct
-> spi_transfer *t)
->   {
->   	struct bcm63xx_hsspi *bs = spi_master_get_devdata(spi->master);
-> -	unsigned int chip_select = spi->chip_select;
-> +	unsigned int chip_select = spi_get_chipselect(spi, 0);
->   	u16 opcode = 0;
->   	int pending = t->len;
->   	int step_size = HSSPI_BUFFER_LEN;
-> @@ -165,7 +165,7 @@ static int bcm63xx_hsspi_do_txrx(struct spi_device
-> *spi, struct spi_transfer *t)
->   	u8 *rx = t->rx_buf;
->
->   	bcm63xx_hsspi_set_clk(bs, spi, t->speed_hz);
-> -	bcm63xx_hsspi_set_cs(bs, spi->chip_select, true);
-> +	bcm63xx_hsspi_set_cs(bs, spi_get_chipselect(spi, 0), true);
->
->   	if (tx && rx)
->   		opcode = HSSPI_OP_READ_WRITE;
-> @@ -228,14 +228,14 @@ static int bcm63xx_hsspi_setup(struct spi_device
-> *spi)
->   	u32 reg;
->
->   	reg = __raw_readl(bs->regs +
-> -			  HSSPI_PROFILE_SIGNAL_CTRL_REG(spi->chip_select));
-> +			  HSSPI_PROFILE_SIGNAL_CTRL_REG(spi_get_chipselect(spi, 0)));
->   	reg &= ~(SIGNAL_CTRL_LAUNCH_RISING | SIGNAL_CTRL_LATCH_RISING);
->   	if (spi->mode & SPI_CPHA)
->   		reg |= SIGNAL_CTRL_LAUNCH_RISING;
->   	else
->   		reg |= SIGNAL_CTRL_LATCH_RISING;
->   	__raw_writel(reg, bs->regs +
-> -		     HSSPI_PROFILE_SIGNAL_CTRL_REG(spi->chip_select));
-> +		     HSSPI_PROFILE_SIGNAL_CTRL_REG(spi_get_chipselect(spi, 0)));
->
->   	mutex_lock(&bs->bus_mutex);
->   	reg = __raw_readl(bs->regs + HSSPI_GLOBAL_CTRL_REG);
-> @@ -243,16 +243,16 @@ static int bcm63xx_hsspi_setup(struct spi_device
-> *spi)
->   	/* only change actual polarities if there is no transfer */
->   	if ((reg & GLOBAL_CTRL_CS_POLARITY_MASK) == bs->cs_polarity) {
->   		if (spi->mode & SPI_CS_HIGH)
-> -			reg |= BIT(spi->chip_select);
-> +			reg |= BIT(spi_get_chipselect(spi, 0));
->   		else
-> -			reg &= ~BIT(spi->chip_select);
-> +			reg &= ~BIT(spi_get_chipselect(spi, 0));
->   		__raw_writel(reg, bs->regs + HSSPI_GLOBAL_CTRL_REG);
->   	}
->
->   	if (spi->mode & SPI_CS_HIGH)
-> -		bs->cs_polarity |= BIT(spi->chip_select);
-> +		bs->cs_polarity |= BIT(spi_get_chipselect(spi, 0));
->   	else
-> -		bs->cs_polarity &= ~BIT(spi->chip_select);
-> +		bs->cs_polarity &= ~BIT(spi_get_chipselect(spi, 0));
->
->   	mutex_unlock(&bs->bus_mutex);
->
-> @@ -283,7 +283,7 @@ static int bcm63xx_hsspi_transfer_one(struct
-> spi_master *master,
->   	 * e. At the end restore the polarities again to their default values.
->   	 */
->
-> -	dummy_cs = !spi->chip_select;
-> +	dummy_cs = !spi_get_chipselect(spi, 0);
->   	bcm63xx_hsspi_set_cs(bs, dummy_cs, true);
->
->   	list_for_each_entry(t, &msg->transfers, transfer_list) {
-> @@ -296,7 +296,7 @@ static int bcm63xx_hsspi_transfer_one(struct
-> spi_master *master,
->   		spi_transfer_delay_exec(t);
->
->   		if (t->cs_change)
-> -			bcm63xx_hsspi_set_cs(bs, spi->chip_select, false);
-> +			bcm63xx_hsspi_set_cs(bs, spi_get_chipselect(spi, 0), false);
->   	}
->
->   	mutex_lock(&bs->bus_mutex);
+Thanks for your reply!
 
-For bcm63xx-hsspi driver,
+On Tue, Jan 24, 2023 at 02:02:36AM +0200, Georgi Djakov wrote:
+> Hi Matthias,
+> 
+> On 20.01.23 23:32, Matthias Kaehlcke wrote:
+> > On Tue, Jan 17, 2023 at 05:47:14PM +0000, Matthias Kaehlcke wrote:
+> > > On Tue, Jan 17, 2023 at 06:33:41PM +0100, Krzysztof Kozlowski wrote:
+> > > > On 17/01/2023 18:27, Matthias Kaehlcke wrote:
+> > > > > 
+> > > > > > > which would set the initially bandwidths to 0 and determine the actually
+> > > > > > > needed bandwidth. But since the driver isn't probed the initial
+> > > > > > > bandwidths stay at INT_MAX.
+> > > > > > > 
+> > > > > > > This isn't actually an issue with this patch, but how the interconnect
+> > > > > > > framework deals with devices that are registered on the bus, but aren't
+> > > > > > > probed (yet). Not sure how this would be best fixed. Georgi, do you have
+> > > > > > > any ideas?
+> > > > > > 
+> > > > > > Why the device is not probed (yet)? If it is registered, it will come
+> > > > > > soon during boot up.
+> > > > > 
+> > > > > Because CONFIG_QCOM_ICC_BWMON is not enabled for the board in question (see
+> > > > > above). It could be enabled as a short term mitigtion, however we shouldn't
+> > > > > require drivers to be enabled just because the DT has a corresponding node.
+> > > > 
+> > > > It's the same case as with all other interconnect leafs/consumers. The
+> > > > same behavior if you do not have it enabled, right? If not, I wonder
+> > > > what is here different?
+> > > 
+> > > Right, this is a general issue. The problem on sc7280 (and probably other
+> > > Qualcomm SoCs) is that the interconnect link at full throttle prevents the
+> > > SoC from entering its low power mode (AOSS sleep) during system suspend.
+> > > On many boards this might go unnoticed, on herobrine the condition is
+> > > detected by the embedded controller (EC) and considered a failed suspend,
+> > > which results in waking up the system.
+> > 
+> > I did some hackery to convince the EC to enter/stay in S3, despite AOSS
+> > no entering sleep mode. That allowed me to take power measurements. With
+> > the kernel suspended but the AOSS remaining on the power consumption of
+> > the Qcard is more than 7x higher than when the AOSS enters sleep mode!
+> > On a Qcard system I can't break the power consumption further down, but
+> > I think the extra power consumption must be coming mostly from the SoC
+> > itself, since the kernel and the EC are essentially in the same state as
+> > during a suspend with AOSS in sleep mode.
+> > 
+> > The enormous increase in power consumption suggests that this is a serious
+> > issue for non-Chrome OS platforms as well. On herobrine and trogdor boards
+> > we have the 'luxury' of being able to detect that AOSS stays awake (though
+> > it comes with the caveat that the system can't suspend when that happens).
+> > On other boards this goes likely unnoticed until someone measures suspend
+> > power or notices a significant regression in S3 battery life.
+> > 
+> > It seems something needs to be done at the interconnect core to fix this.
+> > Is it really necessary to init all link to max bandwidth? Maybe it is
+> > needed for certain links, but not all of them? What is the background
+> > here?
+> 
+> The basic idea here is to do some initial configuration of the system and
+> enable the interconnect buses until all consumers have probed. Otherwise
+> it might disable the bus to some hardware, whose driver (module) is not
+> loaded yet (and didn't had a chance to express it's bandwidth needs).
 
-Acked-by: William Zhang <william.zhang@broadcom.com>
+I imagine this is an issue for a subset of consumers that are already using
+the interconnects before they are probed (like an early-console UART). For
+most consumers (like SPI, USB, eMMC, GPU, ...) I'd expect that it should be
+fine if the interconnect is disabled until the driver is probed and
+specifies the bandwidth requirements.
 
---00000000000056779305f30c1f13
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Description: S/MIME Cryptographic Signature
+> The max bandwidth is the default, but we can implement the get_bw() for a
+> given platform to return the current (or initial) value. It would be best
+> if we could read this value from the hardware, but as this is not possible
+> on this board, maybe we can implement get_bw() to return something else.
 
-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
-YDZuuBJwnyCzevMoPtVYPharioL5H3BRnQi8YoTXH7/uRo33dewYFm474yFjwwnt82TFtveVZkVq
-6h4WIQ4wTcwFfET8zMkELnGzS5SHCl8sPD+lNxxJ1JDZYwIDAQABo4IB2zCCAdcwDgYDVR0PAQH/
-BAQDAgWgMIGjBggrBgEFBQcBAQSBljCBkzBOBggrBgEFBQcwAoZCaHR0cDovL3NlY3VyZS5nbG9i
-YWxzaWduLmNvbS9jYWNlcnQvZ3NnY2NyM3BlcnNvbmFsc2lnbjJjYTIwMjAuY3J0MEEGCCsGAQUF
-BzABhjVodHRwOi8vb2NzcC5nbG9iYWxzaWduLmNvbS9nc2djY3IzcGVyc29uYWxzaWduMmNhMjAy
-MDBNBgNVHSAERjBEMEIGCisGAQQBoDIBKAowNDAyBggrBgEFBQcCARYmaHR0cHM6Ly93d3cuZ2xv
-YmFsc2lnbi5jb20vcmVwb3NpdG9yeS8wCQYDVR0TBAIwADBJBgNVHR8EQjBAMD6gPKA6hjhodHRw
-Oi8vY3JsLmdsb2JhbHNpZ24uY29tL2dzZ2NjcjNwZXJzb25hbHNpZ24yY2EyMDIwLmNybDAlBgNV
-HREEHjAcgRp3aWxsaWFtLnpoYW5nQGJyb2FkY29tLmNvbTATBgNVHSUEDDAKBggrBgEFBQcDBDAf
-BgNVHSMEGDAWgBSWM9HmWBdbNHWKgVZk1b5I3qGPzzAdBgNVHQ4EFgQUq65GzwZxydFHjjYEU/9h
-xHhPWlwwDQYJKoZIhvcNAQELBQADggEBAA2hGG3JPAdGPH0ZdohGUCIVjKz+U+EFuIDbS6A/5jqX
-VhYAxZlzj7tSjUIM7G7IhyfqPC46GKJ/4x+Amz1Z6YxNGy71L68kYD6hIbBcA5AM42QBUufly6Oa
-/ppSz3WoflVyFFQ5YXniZ+eU+2/cdnYZg4aVUnFjimOF5o3NfMLzOkhQNxbaDjFUfUYD8hKmU6v4
-0vUBj8KZ9Gi1LIagLKUREn8jku0lcLsRbnJ5Ey5ScajC/FESPyYWasOW8j8/1EoJksmhbYGKNS6C
-urb/KlmDGfVrIRYDbL0ckhGQIP5c6L+kSQZ2sHnQK0e0WgIaZYxaPYeY5u0GLCOze+3vyRMxggJt
-MIICaQIBATBrMFsxCzAJBgNVBAYTAkJFMRkwFwYDVQQKExBHbG9iYWxTaWduIG52LXNhMTEwLwYD
-VQQDEyhHbG9iYWxTaWduIEdDQyBSMyBQZXJzb25hbFNpZ24gMiBDQSAyMDIwAgwxuh2XG3FXRL1W
-JOEwDQYJYIZIAWUDBAIBBQCggdQwLwYJKoZIhvcNAQkEMSIEIPV0GPci7PjhkOLQr5YYlwfjp9bZ
-8n4Nhqy3DqNgqzROMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTIz
-MDEyNTAwNTc1NFowaQYJKoZIhvcNAQkPMVwwWjALBglghkgBZQMEASowCwYJYIZIAWUDBAEWMAsG
-CWCGSAFlAwQBAjAKBggqhkiG9w0DBzALBgkqhkiG9w0BAQowCwYJKoZIhvcNAQEHMAsGCWCGSAFl
-AwQCATANBgkqhkiG9w0BAQEFAASCAQCDeRwW7sqpu5MnOyyvjxmJvRUbfI/L5CP1JkPtuA2BZ0WX
-P6pe/eXLFP9A//7IMZwRnMYubkHF2KOwoW3nTAZfFZU1MJtjpUcUMyAey4sODSCw78wnDub+b0R4
-rbtgWN26AOILOF9V7rUdA5hd4ZZZWrSVlZOxQOnkEnrrXwRMTZ6H4LILkENVRytDPX6WcNSzofVt
-bTZisKrK4TQRGwagjsH1XbjDJQy3in8wE53Bemw/woVR/U5dKkgH5bIc7O+yvfRkg3Dze87oKtUn
-0jlTOX7lGBKRqMHxDVl2SRBQXJ+ytWpT1WR9l3AFCBIp4QCo4isjywLpWTF5YramMP+j
---00000000000056779305f30c1f13--
+If my above assumption is correct maybe it would be an option to return
+a bandwidth of zero, except for the select links that might be used before
+the driver is probed.
+
+> I guess that you see some int_max values in interconnect_summary for the
+> ebi and llcc nodes that stay forever?
+
+Exactly:
+
+grep -e llcc_mc -e ebi /sys/kernel/debug/interconnect/interconnect_summary
+llcc_mc                                      2148483647   2147483647
+ebi                                          2148483647   2147483647
