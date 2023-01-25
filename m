@@ -2,123 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C537F67BD67
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 21:53:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CEF0067BD6B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 21:54:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235920AbjAYUxX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Jan 2023 15:53:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55100 "EHLO
+        id S236600AbjAYUym (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Jan 2023 15:54:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235174AbjAYUxW (ORCPT
+        with ESMTP id S229453AbjAYUym (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Jan 2023 15:53:22 -0500
-Received: from mailrelay2-1.pub.mailoutpod2-cph3.one.com (mailrelay2-1.pub.mailoutpod2-cph3.one.com [46.30.211.177])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C12DF22A1F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 12:53:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ravnborg.org; s=rsa2;
-        h=in-reply-to:content-type:mime-version:references:message-id:subject:cc:to:
-         from:date:from;
-        bh=/NbmLZPfTUBNuvwpuIq7jzdYXjOyhys3va43pns/wME=;
-        b=fXzCVuKRusidZBn0C8DUfgcuqFi/xH4Dq66tyHbKA0oEuRzZuyoIBOiLjsOwSvr+XkS5Aj6/8FjfS
-         f1d19b3n2z0KUneSoilCiaNmzUWxDKPyG6eKXAoW0igFvtDQo9SGKXCtGVlpoN0OfqSLgAw+CIbCVN
-         csYcffChBpGi6AJIHGSwJinq5tjrmRtv6oc2CdNm9Q7TFsLahoU5Ms05Lebn4W0llb1eVofn1EdPxe
-         GpcepYkR9FhzvhXT8jy0QE5+B9n5nSxXE3HPA8K05S/hpAQso901xLBhlv7iXHZHbmXbLK3ua9aUzv
-         Z0NFaunagWqq8MfE3TtCNIwsrOjBVtg==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed;
-        d=ravnborg.org; s=ed2;
-        h=in-reply-to:content-type:mime-version:references:message-id:subject:cc:to:
-         from:date:from;
-        bh=/NbmLZPfTUBNuvwpuIq7jzdYXjOyhys3va43pns/wME=;
-        b=H0mcFvUdtrxvOtOWjFbsUaf7rnbOCi8U9iXjFrJBOzDccJr1E5qa1ZOuQ3ZOe3mcbAztOHHM8l8/s
-         V3o0dAlBQ==
-X-HalOne-ID: 24b509b3-9cf2-11ed-a537-3df7d73157c4
-Received: from ravnborg.org (2-105-2-98-cable.dk.customer.tdc.net [2.105.2.98])
-        by mailrelay2 (Halon) with ESMTPSA
-        id 24b509b3-9cf2-11ed-a537-3df7d73157c4;
-        Wed, 25 Jan 2023 20:52:16 +0000 (UTC)
-Date:   Wed, 25 Jan 2023 21:52:14 +0100
-From:   Sam Ravnborg <sam@ravnborg.org>
-To:     Thomas Zimmermann <tzimmermann@suse.de>
-Cc:     airlied@gmail.com, daniel@ffwll.ch,
-        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        javierm@redhat.com, linux-samsung-soc@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
-        linux-tegra@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v3 01/10] drm/client: Test for connectors before sending
- hotplug event
-Message-ID: <Y9GWfi4EiCDPa6BJ@ravnborg.org>
-References: <20230125200415.14123-1-tzimmermann@suse.de>
- <20230125200415.14123-2-tzimmermann@suse.de>
+        Wed, 25 Jan 2023 15:54:42 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 431854A237;
+        Wed, 25 Jan 2023 12:54:41 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id CBBAD615AD;
+        Wed, 25 Jan 2023 20:54:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B378C433EF;
+        Wed, 25 Jan 2023 20:54:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1674680080;
+        bh=jLzNKjyc09opMzRxjkf1IrKwt5abM/dWPoSM+2ilEkk=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=X/uDu3O5qXsiTWl6cqsmS+r3tM9PmmYl/gFX19wihE3gUQssRRRgZbXD/YR3Wiuqk
+         IDIOALPim0r8rA8sD99J+rL7RbcPKZHAqIShXKxxm20xyRARghupyDkZFnTF07p1Gg
+         x7JmCz7CT4EIbHToFXV/QEnk9aW3XzDnctemrD8C8d8lnlSF1y1AqY+DD2bTM9EgjZ
+         rLyHtU7lgSfEPSlueZesJyGbxtnJb3D59IZqPaa13fq5yleqo56ZMgQQGZL92OPVOb
+         PcN24IDwrkFTwLT+82hERv8tlcCyzyaPZzORg8i4LHKihykE/jVpLlPgqmGxZ0UHeE
+         1KCji5hDKRu5Q==
+Message-ID: <9cf8a94f7ec4d8912bcf507631991999.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230125200415.14123-2-tzimmermann@suse.de>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20230125104520.89684-6-quic_kathirav@quicinc.com>
+References: <20230125104520.89684-1-quic_kathirav@quicinc.com> <20230125104520.89684-6-quic_kathirav@quicinc.com>
+Subject: Re: [PATCH 05/10] clk: qcom: add Global Clock controller (GCC) driver for IPQ5332 SoC
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Kathiravan T <quic_kathirav@quicinc.com>
+To:     Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>,
+        agross@kernel.org, andersson@kernel.org, arnd@arndb.de,
+        bhupesh.sharma@linaro.org, broonie@kernel.org,
+        catalin.marinas@arm.com, devicetree@vger.kernel.org,
+        dmitry.baryshkov@linaro.org, konrad.dybcio@linaro.org,
+        krzysztof.kozlowski+dt@linaro.org, linus.walleij@linaro.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-mmc@vger.kernel.org, marcel.ziswiler@toradex.com,
+        mturquette@baylibre.com, nfraprado@collabora.com,
+        quic_gurus@quicinc.com, robh+dt@kernel.org, robimarko@gmail.com,
+        shawnguo@kernel.org, ulf.hansson@linaro.org, will@kernel.org
+Date:   Wed, 25 Jan 2023 12:54:37 -0800
+User-Agent: alot/0.10
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Thomas,
-
-On Wed, Jan 25, 2023 at 09:04:06PM +0100, Thomas Zimmermann wrote:
-> Test for connectors in the client code and remove a similar test
-> from the generic fbdev emulation. Do nothing if the test fails.
-> Not having connectors indicates a driver bug.
-> 
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-> Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-> ---
->  drivers/gpu/drm/drm_client.c        | 5 +++++
->  drivers/gpu/drm/drm_fbdev_generic.c | 5 -----
->  2 files changed, 5 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/drm_client.c b/drivers/gpu/drm/drm_client.c
-> index 262ec64d4397..09ac191c202d 100644
-> --- a/drivers/gpu/drm/drm_client.c
-> +++ b/drivers/gpu/drm/drm_client.c
-> @@ -198,6 +198,11 @@ void drm_client_dev_hotplug(struct drm_device *dev)
->  	if (!drm_core_check_feature(dev, DRIVER_MODESET))
->  		return;
->  
-> +	if (!dev->mode_config.num_connector) {
-> +		drm_dbg_kms(dev, "No connectors found, will not send hotplug events!\n");
-> +		return;
-This deserves a more visible logging - if a driver fails here it would
-be good to spot it in the normal kernel log.
-drm_info or drm_notice?
-
-The original code had this on the debug level, but when moving the log
-level could also be updated.
-
-	Sam
-
-> +	}
+Quoting Kathiravan Thirumoorthy (2023-01-25 02:45:15)
+> diff --git a/drivers/clk/qcom/gcc-ipq5332.c b/drivers/clk/qcom/gcc-ipq533=
+2.c
+> new file mode 100644
+> index 000000000000..8351096a4d32
+> --- /dev/null
+> +++ b/drivers/clk/qcom/gcc-ipq5332.c
+> @@ -0,0 +1,3954 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights r=
+eserved.
+> + */
 > +
->  	mutex_lock(&dev->clientlist_mutex);
->  	list_for_each_entry(client, &dev->clientlist, list) {
->  		if (!client->funcs || !client->funcs->hotplug)
-> diff --git a/drivers/gpu/drm/drm_fbdev_generic.c b/drivers/gpu/drm/drm_fbdev_generic.c
-> index 0a4c160e0e58..3d455a2e3fb5 100644
-> --- a/drivers/gpu/drm/drm_fbdev_generic.c
-> +++ b/drivers/gpu/drm/drm_fbdev_generic.c
-> @@ -389,11 +389,6 @@ static int drm_fbdev_client_hotplug(struct drm_client_dev *client)
->  	if (dev->fb_helper)
->  		return drm_fb_helper_hotplug_event(dev->fb_helper);
->  
-> -	if (!dev->mode_config.num_connector) {
-> -		drm_dbg_kms(dev, "No connectors found, will not create framebuffer!\n");
-> -		return 0;
-> -	}
-> -
->  	drm_fb_helper_prepare(dev, fb_helper, &drm_fb_helper_generic_funcs);
->  
->  	ret = drm_fb_helper_init(dev, fb_helper);
-> -- 
-> 2.39.0
+> +#include <linux/clk-provider.h>
+> +#include <linux/module.h>
+> +#include <linux/of_device.h>
+> +#include <linux/regmap.h>
+[...]
+> +
+> +static const struct freq_tbl ftbl_gcc_pcnoc_bfdcd_clk_src[] =3D {
+> +       F(24000000, P_XO, 1, 0, 0),
+> +       F(50000000, P_GPLL0_OUT_MAIN, 16, 0, 0),
+> +       F(100000000, P_GPLL0_OUT_MAIN, 8, 0, 0),
+> +       { }
+> +};
+> +
+> +static struct clk_rcg2 gcc_pcnoc_bfdcd_clk_src =3D {
+> +       .cmd_rcgr =3D 0x31004,
+> +       .mnd_width =3D 0,
+> +       .hid_width =3D 5,
+> +       .parent_map =3D gcc_parent_map_0,
+> +       .freq_tbl =3D ftbl_gcc_pcnoc_bfdcd_clk_src,
+> +       .clkr.hw.init =3D &(const struct clk_init_data){
+> +               .name =3D "gcc_pcnoc_bfdcd_clk_src",
+> +               .parent_data =3D gcc_parent_data_0,
+> +               .num_parents =3D ARRAY_SIZE(gcc_parent_data_0),
+> +               .ops =3D &clk_rcg2_ops,
+> +               .flags =3D CLK_IS_CRITICAL,
+
+Why not just turn these clks on in probe and never register them with
+the framework? That saves some memory for clks that there is no desire
+to control from linux. This is an RCG, so in theory the frequency can
+change, but does it really? Usually bus clks are controlled by the
+interconnect driver.
