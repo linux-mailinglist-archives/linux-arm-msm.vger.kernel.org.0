@@ -2,163 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 10D5B67BABF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 20:23:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E81167BAEA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 20:39:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236218AbjAYTXS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Jan 2023 14:23:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39076 "EHLO
+        id S229449AbjAYTjv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Jan 2023 14:39:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236162AbjAYTXF (ORCPT
+        with ESMTP id S235311AbjAYTju (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Jan 2023 14:23:05 -0500
-Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E049C72B5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 11:22:50 -0800 (PST)
-Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-501c3a414acso213786087b3.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 11:22:50 -0800 (PST)
+        Wed, 25 Jan 2023 14:39:50 -0500
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB6054ED02
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 11:39:47 -0800 (PST)
+Received: by mail-io1-xd36.google.com with SMTP id 203so8920462iou.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 11:39:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=PCnMypYs8jymH6Ufuva+9r/69Y/DZs8kYxwQEYrzQFk=;
-        b=hXTUs83qvSMCw0sqrewtph/1zyRGQA8EwV9VOqASoIhN1O27YlTeLHvU30LwpkaPKE
-         6ZtbduOBpeU0Mk6yScQyxHGjdOZ8W8NbAK7HCSbKR2qQVwpslpoP2Mqh8DnM60UrkSEV
-         Fy/rJx/xAj6ReR1yQheSDvUeiLsUOZe36GsXUe+/pA5dp4+pot+ScO1k5jhTafZOkoJo
-         vEjMe7B3/0BupSIQn5CSlkYjolaKBFMYB73xyId061H8p1ZYZbkvvK9SPdZltanRDpUl
-         vOuM+M/xFo7tmOP85pcv8h038+SVqlBqYWxO3Lgun0O5W06va+PJHK2pFsHgrhvmIiGL
-         lvow==
+        d=chromium.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=frG7daRlPkHUCZSTj7yl9cmfDSyJwEcRRiTwTJz40tw=;
+        b=Lx5Wvh6qnib0iPwmeeSYv6L/G+RC0TX6OqyaWCP0p+fVgPt2KKio3PJbtuD2BTQ8hW
+         4TDafm0OB26/Yz6alnsxJZe7/W2UDGsC+RHmeUqrw/f2U14SWfAWkI9G1kAxihQLUyLv
+         YlOO+eVHTfNYNRnLDcCbuQJ/MaJQZQITMFsVA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=PCnMypYs8jymH6Ufuva+9r/69Y/DZs8kYxwQEYrzQFk=;
-        b=E04qBEmSobNh6wVbbX2f5Dhsxgts83Ak37iE+gvBQ61xWgQEFAUgdlsIrm12NxuXIS
-         3oUoIBtyK08ySAmg7jZLSeHsfhK3OBjiIbj162W2T3n6vUD3lxbKyhhVqXwuQCS/mXdx
-         SNkS0juO8iMKUvzEe4onGcNaAwvM9YJf8h3k30i/CRt7CZBvNoRjCAuBr+USKn0tsKib
-         86JRh8nUu0PXwezQmPAtGZLUST9fMHIUhX2EbKf4W1CcTQDR50q0iZhd4qsV2+6q8h0I
-         ROYMfBh6rdzDuOJPfhyHMXnJSc/9SmAbHjLwTl84n8U8Z5+7WZLRYH5Yo6NFzWgszTVT
-         L8Og==
-X-Gm-Message-State: AO0yUKUYp1KP8U9IUJRS+ykHFjprdtTwZdp9ZF1ymrEKEZfblvHWsYpd
-        XkOi2iCW5DxZ+7W1xrjzHzyBXUiv1HFdg+Y/ZH7WAw==
-X-Google-Smtp-Source: AK7set/Rj29H3r8vHaYccCmp943Un+QyMRF/w8dcRdt99GFw8apI+/L+5tSmXBTsBLdlTBniti7hA8kyFbpjr3H10kc=
-X-Received: by 2002:a0d:d456:0:b0:507:26dc:ebd with SMTP id
- w83-20020a0dd456000000b0050726dc0ebdmr298632ywd.455.1674674569763; Wed, 25
- Jan 2023 11:22:49 -0800 (PST)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=frG7daRlPkHUCZSTj7yl9cmfDSyJwEcRRiTwTJz40tw=;
+        b=i3S8L67qqFitWRNqxq/fIn5GxEsKcGDiCiOV5A6le99p/IIOKKqrW8FICBOhyGKljh
+         BNSOYsG3i99HqDFI3Bz6EX7P5J0bTcXbpdVBeiO/Syb76biCpSFKCcQqccvIJ9jXsmMp
+         NF0KPJnSJMQ7DtzbO50dUkKFmYUo8otQySf7URI1dg3NmdgnHm11XedPYAR5p2acjmCs
+         sEgug1CH6JGlzm+kk1Rub5+Yk2VF0tNwQ6PL9Xn2jseml/7dKgA6TsAUxjAS1SNb28yq
+         gBpd3rF+D9JeO/55VXBDElHYQlMLBrO0JLH2kcMN6cpNeiGHOjMyEWbi2T5lsNrYNtTA
+         Zzxg==
+X-Gm-Message-State: AFqh2kqeOdUHCjpkgBZmVWJFmuFL/8Ru/Ydfbvp9+I6vZCYJO89yz/3W
+        aBIPOWHDsVoYgZk8K6MBflinlw==
+X-Google-Smtp-Source: AMrXdXtLGnVeTtvdhGDiJLdxGeOW45WmielkenQ/UYhHzWxKlNj1/F43o6KPvqRRBN7oLBjipRef3g==
+X-Received: by 2002:a05:6602:1244:b0:707:9415:c334 with SMTP id o4-20020a056602124400b007079415c334mr14824200iou.16.1674675587083;
+        Wed, 25 Jan 2023 11:39:47 -0800 (PST)
+Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
+        by smtp.gmail.com with UTF8SMTPSA id c11-20020a056638028b00b0039e8c12414asm1901433jaq.164.2023.01.25.11.39.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 Jan 2023 11:39:46 -0800 (PST)
+Date:   Wed, 25 Jan 2023 19:39:46 +0000
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+        Nuno =?utf-8?B?U8Oh?= <nuno.sa@analog.com>,
+        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v2 1/1] iio: adc: qcom-spmi-adc5: Fix the channel name
+Message-ID: <Y9GFgseSx9A+rBY6@google.com>
+References: <20230118100623.42255-1-andriy.shevchenko@linux.intel.com>
+ <20230122172441.4f8d75f5@jic23-huawei>
+ <22fa80f5-0cf0-85bd-03a4-e1eb80272420@linaro.org>
+ <CAD=FV=WVEfi2u-uHcZAoMd4HXPcZrwb95HQzTE8V6YmAW9mhPA@mail.gmail.com>
 MIME-Version: 1.0
-References: <20230125083851.27759-1-surenb@google.com> <20230125083851.27759-2-surenb@google.com>
- <Y9F19QEDX5d/44EV@casper.infradead.org>
-In-Reply-To: <Y9F19QEDX5d/44EV@casper.infradead.org>
-From:   Suren Baghdasaryan <surenb@google.com>
-Date:   Wed, 25 Jan 2023 11:22:38 -0800
-Message-ID: <CAJuCfpH+LMFX=TT04gSMA05cz_-CXMum6fobRrduWvzm1HWPmQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/6] mm: introduce vma->vm_flags modifier functions
-To:     Matthew Wilcox <willy@infradead.org>
-Cc:     akpm@linux-foundation.org, michel@lespinasse.org,
-        jglisse@google.com, mhocko@suse.com, vbabka@suse.cz,
-        hannes@cmpxchg.org, mgorman@techsingularity.net, dave@stgolabs.net,
-        liam.howlett@oracle.com, peterz@infradead.org,
-        ldufour@linux.ibm.com, paulmck@kernel.org, luto@kernel.org,
-        songliubraving@fb.com, peterx@redhat.com, david@redhat.com,
-        dhowells@redhat.com, hughd@google.com, bigeasy@linutronix.de,
-        kent.overstreet@linux.dev, punit.agrawal@bytedance.com,
-        lstoakes@gmail.com, peterjung1337@gmail.com, rientjes@google.com,
-        axelrasmussen@google.com, joelaf@google.com, minchan@google.com,
-        jannh@google.com, shakeelb@google.com, tatashin@google.com,
-        edumazet@google.com, gthelen@google.com, gurua@google.com,
-        arjunroy@google.com, soheil@google.com, hughlynch@google.com,
-        leewalsh@google.com, posk@google.com, will@kernel.org,
-        aneesh.kumar@linux.ibm.com, npiggin@gmail.com,
-        chenhuacai@kernel.org, tglx@linutronix.de, mingo@redhat.com,
-        bp@alien8.de, dave.hansen@linux.intel.com, richard@nod.at,
-        anton.ivanov@cambridgegreys.com, johannes@sipsolutions.net,
-        qianweili@huawei.com, wangzhou1@hisilicon.com,
-        herbert@gondor.apana.org.au, davem@davemloft.net, vkoul@kernel.org,
-        airlied@gmail.com, daniel@ffwll.ch,
-        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        tzimmermann@suse.de, l.stach@pengutronix.de,
-        krzysztof.kozlowski@linaro.org, patrik.r.jakobsson@gmail.com,
-        matthias.bgg@gmail.com, robdclark@gmail.com,
-        quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
-        tomba@kernel.org, hjc@rock-chips.com, heiko@sntech.de,
-        ray.huang@amd.com, kraxel@redhat.com, sre@kernel.org,
-        mcoquelin.stm32@gmail.com, alexandre.torgue@foss.st.com,
-        tfiga@chromium.org, m.szyprowski@samsung.com, mchehab@kernel.org,
-        dimitri.sivanich@hpe.com, zhangfei.gao@linaro.org,
-        jejb@linux.ibm.com, martin.petersen@oracle.com,
-        dgilbert@interlog.com, hdegoede@redhat.com, mst@redhat.com,
-        jasowang@redhat.com, alex.williamson@redhat.com, deller@gmx.de,
-        jayalk@intworks.biz, viro@zeniv.linux.org.uk, nico@fluxnic.net,
-        xiang@kernel.org, chao@kernel.org, tytso@mit.edu,
-        adilger.kernel@dilger.ca, miklos@szeredi.hu,
-        mike.kravetz@oracle.com, muchun.song@linux.dev, bhe@redhat.com,
-        andrii@kernel.org, yoshfuji@linux-ipv6.org, dsahern@kernel.org,
-        kuba@kernel.org, pabeni@redhat.com, perex@perex.cz, tiwai@suse.com,
-        haojian.zhuang@gmail.com, robert.jarzmik@free.fr,
-        linux-mm@kvack.org, linux-arm-kernel@lists.infradead.org,
-        linuxppc-dev@lists.ozlabs.org, x86@kernel.org,
-        linux-kernel@vger.kernel.org, linux-graphics-maintainer@vmware.com,
-        linux-ia64@vger.kernel.org, linux-arch@vger.kernel.org,
-        loongarch@lists.linux.dev, kvm@vger.kernel.org,
-        linux-s390@vger.kernel.org, linux-sgx@vger.kernel.org,
-        linux-um@lists.infradead.org, linux-acpi@vger.kernel.org,
-        linux-crypto@vger.kernel.org, nvdimm@lists.linux.dev,
-        dmaengine@vger.kernel.org, amd-gfx@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, etnaviv@lists.freedesktop.org,
-        linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org,
-        linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        xen-devel@lists.xenproject.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-rdma@vger.kernel.org, linux-media@vger.kernel.org,
-        linux-accelerators@lists.ozlabs.org, sparclinux@vger.kernel.org,
-        linux-scsi@vger.kernel.org, linux-staging@lists.linux.dev,
-        target-devel@vger.kernel.org, linux-usb@vger.kernel.org,
-        netdev@vger.kernel.org, linux-fbdev@vger.kernel.org,
-        linux-aio@kvack.org, linux-fsdevel@vger.kernel.org,
-        linux-erofs@lists.ozlabs.org, linux-ext4@vger.kernel.org,
-        devel@lists.orangefs.org, kexec@lists.infradead.org,
-        linux-xfs@vger.kernel.org, bpf@vger.kernel.org,
-        linux-perf-users@vger.kernel.org, kasan-dev@googlegroups.com,
-        selinux@vger.kernel.org, alsa-devel@alsa-project.org,
-        kernel-team@android.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-17.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        ENV_AND_HDR_SPF_MATCH,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAD=FV=WVEfi2u-uHcZAoMd4HXPcZrwb95HQzTE8V6YmAW9mhPA@mail.gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 25, 2023 at 10:33 AM Matthew Wilcox <willy@infradead.org> wrote:
->
-> On Wed, Jan 25, 2023 at 12:38:46AM -0800, Suren Baghdasaryan wrote:
-> > +/* Use when VMA is not part of the VMA tree and needs no locking */
-> > +static inline void init_vm_flags(struct vm_area_struct *vma,
-> > +                              unsigned long flags)
-> > +{
-> > +     vma->vm_flags = flags;
->
-> vm_flags are supposed to have type vm_flags_t.  That's not been
-> fully realised yet, but perhaps we could avoid making it worse?
->
-> >       pgprot_t vm_page_prot;
-> > -     unsigned long vm_flags;         /* Flags, see mm.h. */
-> > +
-> > +     /*
-> > +      * Flags, see mm.h.
-> > +      * WARNING! Do not modify directly.
-> > +      * Use {init|reset|set|clear|mod}_vm_flags() functions instead.
-> > +      */
-> > +     unsigned long vm_flags;
->
-> Including changing this line to vm_flags_t
+On Mon, Jan 23, 2023 at 03:12:06PM -0800, Doug Anderson wrote:
+> Hi,
+> 
+> On Mon, Jan 23, 2023 at 8:35 AM Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> >
+> > On 22.01.2023 18:24, Jonathan Cameron wrote:
+> > > On Wed, 18 Jan 2023 12:06:23 +0200
+> > > Andy Shevchenko <andriy.shevchenko@linux.intel.com> wrote:
+> > >
+> > >> The node name can contain an address part which is unused
+> > >> by the driver. Moreover, this string is propagated into
+> > >> the userspace label, sysfs filenames *and breaking ABI*.
+> > >>
+> > >> Cut the address part out before assigning the channel name.
+> > >>
+> > >> Fixes: 4f47a236a23d ("iio: adc: qcom-spmi-adc5: convert to device properties")
+> > >> Reported-by: Marijn Suijten <marijn.suijten@somainline.org>
+> > >> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> > >
+> > > LGTM, but given it will have ABI impact, I'd like to hear from
+> > > Andy, Bjorn or Konrad as maintainers and /or Dmitry as someone
+> > > who has touched this driver fairly recently.
+> > + Doug
+> >
+> > Unless the Chromium folks relied on the old names (they're the
+> > only ones I can think of that actually could have tapped into
+> > this), I say green light!
+> 
+> Thanks for the CC. I _think_ the only place we use these ADCs is for
+> certain thermistors and I think that those are all just hooked up in
+> the device tree, so the channel name doesn't matter. I'll also note
+> that no Qualcomm Chromebooks are shipping with anything newer than
+> kernel 5.15 right now, and (I checked) the ChromeOS 5.15 tree doesn't
+> have commit 4f47a236a23d ("iio: adc: qcom-spmi-adc5: convert to device
+> properties"). Thus, even if I'm wrong and the name is used someplace
+> hidden then the "old" name would be better for us. I haven't tested
+> the patch myself, but it sounds as if ${SUBJECT} patch is actually
+> moving us back to the old name.
+> 
+> +Matthias to keep me honest since he's spent more time with the ADCs.
 
-Good point. Will make the change. Thanks!
+Agreed that the channel name doesn't matter, Chrome OS currently only
+uses the ADCs for thermal zones controlled by the kernel.
+
+> > > Mostly I want to be sure they know this exists before it causes surprise.
+> > >
+> > > Jonathan
+> > >
+> > >> ---
+> > >> v2: rephrased commit message (Marijn), fixed compilation issue (Marijin)
+> > >>  drivers/iio/adc/qcom-spmi-adc5.c | 10 +++++++++-
+> > >>  1 file changed, 9 insertions(+), 1 deletion(-)
+> > >>
+> > >> diff --git a/drivers/iio/adc/qcom-spmi-adc5.c b/drivers/iio/adc/qcom-spmi-adc5.c
+> > >> index e90c299c913a..c2d5e06f137a 100644
+> > >> --- a/drivers/iio/adc/qcom-spmi-adc5.c
+> > >> +++ b/drivers/iio/adc/qcom-spmi-adc5.c
+> > >> @@ -628,12 +628,20 @@ static int adc5_get_fw_channel_data(struct adc5_chip *adc,
+> > >>                                  struct fwnode_handle *fwnode,
+> > >>                                  const struct adc5_data *data)
+> > >>  {
+> > >> -    const char *name = fwnode_get_name(fwnode), *channel_name;
+> > >> +    const char *channel_name;
+> > >> +    char *name;
+> > >>      u32 chan, value, varr[2];
+> > >>      u32 sid = 0;
+> > >>      int ret;
+> > >>      struct device *dev = adc->dev;
+> > >>
+> > >> +    name = devm_kasprintf(dev, GFP_KERNEL, "%pfwP", fwnode);
+> > >> +    if (!name)
+> > >> +            return -ENOMEM;
+> > >> +
+> > >> +    /* Cut the address part */
+> > >> +    name[strchrnul(name, '@') - name] = '\0';
+> > >> +
+> > >>      ret = fwnode_property_read_u32(fwnode, "reg", &chan);
+> > >>      if (ret) {
+> > >>              dev_err(dev, "invalid channel number %s\n", name);
+> > >
