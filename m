@@ -2,340 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A8DD467A93C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 04:28:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BD4E467A9BC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 05:51:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234410AbjAYD17 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Jan 2023 22:27:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46268 "EHLO
+        id S233949AbjAYEvv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Jan 2023 23:51:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234403AbjAYD14 (ORCPT
+        with ESMTP id S229625AbjAYEvt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Jan 2023 22:27:56 -0500
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E5FA7EEB
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 19:27:44 -0800 (PST)
-Received: by mail-ej1-x636.google.com with SMTP id os24so502284ejb.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 19:27:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Cief22734797WLDji2/FiBHV81HsLlTLIjX7CLjaTOI=;
-        b=qr3JfmufZtzlwaTKlB6fcSo6b305UALGQXcBhxrKzE+ijkP3z/S6yLySjSqUKw0MEv
-         P9ue8Hf4a0tWL2TKPmjHGF79Zc4sZvSl/sHqFhPgWGmompy1UP0mm9ptAfiJz7imQR7V
-         9OHHCe4XC61N93JA2XRSLy6voxA4DHR279bxy2gwfym5B0uJ9+zfGoxYBUFC582f59Zs
-         34ezuR4SICD3FFtqk77VTxpYk+vzJNMGStw/mlDNp4VACPLyh8M5wlAWEDcGJ2kXR5sz
-         +gf6oJqoIgEkPfwnEiA+0fbtnoWb31ZBztxgy9cRlPJg8HdiK3Yj9J0ixGeZ9CyKqYhK
-         64sw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Cief22734797WLDji2/FiBHV81HsLlTLIjX7CLjaTOI=;
-        b=BgWHeWvsU6eJJn7v9W4h/WtWsX4CnkGGoNfAsqpbnd7WCa8yrp7Aao2ZMegd9maZ2F
-         Cl50SFC3ZQWVrAru/S+BpdBBfmE8lGSFzr15rEnXGEqZnW/Vdoof+HaVRlOrlNgUwNK1
-         iuDNjUkP5Xbpc1r8vGR6YdtulaSYA8Ly2rZZHy6Xgbi+zQVrJDjeNvSHb8N3hy/YeomN
-         ME30DjqEropgRXhP9uA8JK0tV0z4gB3Xgylm4lxR2K/JnQTiXBGEBlKn921lCx7ymXCd
-         4CsEyt7zDuHUCaPlVK0kiAGO+/wAf+NWnt3lZpCJfQV4XkFwhSBaa92YN6eUlqO/lKGw
-         hanQ==
-X-Gm-Message-State: AFqh2kpHqFoy9ChmlB1yV//5MX+5IdQ1BDb1QUpXs2iCllcSYxpiu/J9
-        VadcfAQaqrqJkh75SA3vPg3v/76u+osofrLy
-X-Google-Smtp-Source: AMrXdXurwtd5M69j9S698o4730diroz1ESxFgNbeO/qFNQau/6JuTJA9T6LXZlNxx3VKMVClhakhCg==
-X-Received: by 2002:a17:907:d401:b0:872:1b27:1a43 with SMTP id vi1-20020a170907d40100b008721b271a43mr35217202ejc.31.1674617262730;
-        Tue, 24 Jan 2023 19:27:42 -0800 (PST)
-Received: from localhost.localdomain (abyl109.neoplus.adsl.tpnet.pl. [83.9.31.109])
-        by smtp.gmail.com with ESMTPSA id if10-20020a170906df4a00b00738795e7d9bsm1742913ejc.2.2023.01.24.19.27.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Jan 2023 19:27:42 -0800 (PST)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 7/7] soc: qcom: rpmpd: Make bindings assignments consistent
-Date:   Wed, 25 Jan 2023 04:27:28 +0100
-Message-Id: <20230125032728.611640-8-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230125032728.611640-1-konrad.dybcio@linaro.org>
-References: <20230125032728.611640-1-konrad.dybcio@linaro.org>
+        Tue, 24 Jan 2023 23:51:49 -0500
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9D6C41B52;
+        Tue, 24 Jan 2023 20:51:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1674622307; x=1706158307;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=KD4JMgqxwED5gr4VrmwBvzAy0O3wbRpFXRdRP7EMoe0=;
+  b=HXV4kAdmq932Nq+W5ELE4m//hKu4InBd4wvmpg1dicgSIn5F0Y5Zo8cy
+   6HgFQue5SFNZkRl3LlPF9DRSCDu0wdrQ82v6znmc3ijqBElJlPl2rdcL7
+   Bu7oFlLBjEiZhrlcwU9TIKY35FRxI9O7o7wOJUvsuwbPd/gRIOcZmr34t
+   rVIM6VnS3U5GLcHMucxxo9Npl46XneU7wDAJ8G2Ap0U03nrrIFK68hrC1
+   Sce8gklmBDNwOIx/KWWMidNZjvHAnlVAJRnnHxGjF5tLnSG+2Dxmj4DUA
+   hAGPGiPUFBPB6FIXlFRpup9tS2EOosJ0ma6YJjcErbyNbUTzl9oz8yvZK
+   g==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10600"; a="310057096"
+X-IronPort-AV: E=Sophos;i="5.97,244,1669104000"; 
+   d="scan'208";a="310057096"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jan 2023 20:51:47 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10600"; a="725743677"
+X-IronPort-AV: E=Sophos;i="5.97,244,1669104000"; 
+   d="scan'208";a="725743677"
+Received: from lkp-server01.sh.intel.com (HELO 5646d64e7320) ([10.239.97.150])
+  by fmsmga008.fm.intel.com with ESMTP; 24 Jan 2023 20:51:42 -0800
+Received: from kbuild by 5646d64e7320 with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1pKXl7-00072i-39;
+        Wed, 25 Jan 2023 04:51:41 +0000
+Date:   Wed, 25 Jan 2023 12:51:20 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Thomas Zimmermann <tzimmermann@suse.de>, airlied@gmail.com,
+        daniel@ffwll.ch, maarten.lankhorst@linux.intel.com,
+        mripard@kernel.org, javierm@redhat.com
+Cc:     llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        amd-gfx@lists.freedesktop.org,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        linux-tegra@vger.kernel.org, freedreno@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [Intel-gfx] [PATCH v2 06/10] drm/fb-helper: Initialize
+ fb-helper's preferred BPP in prepare function
+Message-ID: <202301251250.eyIn4zjn-lkp@intel.com>
+References: <20230124134010.30263-7-tzimmermann@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230124134010.30263-7-tzimmermann@suse.de>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,
+        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently the whitespace between [DT_BINDING] = &struct is all over
-the place.. some SoC structs have a space, others have a tab, others
-have N tabs.. Make that a single space for everybody to keep things
-coherent.
+Hi Thomas,
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/soc/qcom/rpmpd.c | 164 +++++++++++++++++++--------------------
- 1 file changed, 82 insertions(+), 82 deletions(-)
+I love your patch! Yet something to improve:
 
-diff --git a/drivers/soc/qcom/rpmpd.c b/drivers/soc/qcom/rpmpd.c
-index ca4e18cb9e84..8f34fd826cbb 100644
---- a/drivers/soc/qcom/rpmpd.c
-+++ b/drivers/soc/qcom/rpmpd.c
-@@ -474,12 +474,12 @@ static struct rpmpd sscx_l26a_corner_vfc = {
- };
- 
- static struct rpmpd *mdm9607_rpmpds[] = {
--	[MDM9607_VDDCX] =	&cx_s3a_lvl,
--	[MDM9607_VDDCX_AO] =	&cx_s3a_lvl_ao,
--	[MDM9607_VDDCX_VFL] =	&cx_s3a_lvl_vfl,
--	[MDM9607_VDDMX] =		&mx_l12a_lvl,
--	[MDM9607_VDDMX_AO] =	&mx_l12a_lvl_ao,
--	[MDM9607_VDDMX_VFL] =	&mx_l12a_lvl_vfl,
-+	[MDM9607_VDDCX] = &cx_s3a_lvl,
-+	[MDM9607_VDDCX_AO] = &cx_s3a_lvl_ao,
-+	[MDM9607_VDDCX_VFL] = &cx_s3a_lvl_vfl,
-+	[MDM9607_VDDMX] = &mx_l12a_lvl,
-+	[MDM9607_VDDMX_AO] = &mx_l12a_lvl_ao,
-+	[MDM9607_VDDMX_VFL] = &mx_l12a_lvl_vfl,
- };
- 
- static const struct rpmpd_desc mdm9607_desc = {
-@@ -489,9 +489,9 @@ static const struct rpmpd_desc mdm9607_desc = {
- };
- 
- static struct rpmpd *msm8226_rpmpds[] = {
--	[MSM8226_VDDCX] =	&cx_s1a_corner,
--	[MSM8226_VDDCX_AO] =	&cx_s1a_corner_ao,
--	[MSM8226_VDDCX_VFC] =	&cx_s1a_corner_vfc,
-+	[MSM8226_VDDCX] = &cx_s1a_corner,
-+	[MSM8226_VDDCX_AO] = &cx_s1a_corner_ao,
-+	[MSM8226_VDDCX_VFC] = &cx_s1a_corner_vfc,
- };
- 
- static const struct rpmpd_desc msm8226_desc = {
-@@ -501,14 +501,14 @@ static const struct rpmpd_desc msm8226_desc = {
- };
- 
- static struct rpmpd *msm8939_rpmpds[] = {
--	[MSM8939_VDDMDCX] =	&md_s1a_corner,
--	[MSM8939_VDDMDCX_AO] =	&md_s1a_corner_ao,
--	[MSM8939_VDDMDCX_VFC] =	&md_s1a_corner_vfc,
--	[MSM8939_VDDCX] =	&cx_s2a_corner,
--	[MSM8939_VDDCX_AO] =	&cx_s2a_corner_ao,
--	[MSM8939_VDDCX_VFC] =	&cx_s2a_corner_vfc,
--	[MSM8939_VDDMX] =	&mx_l3a_corner,
--	[MSM8939_VDDMX_AO] =	&mx_l3a_corner_ao,
-+	[MSM8939_VDDMDCX] = &md_s1a_corner,
-+	[MSM8939_VDDMDCX_AO] = &md_s1a_corner_ao,
-+	[MSM8939_VDDMDCX_VFC] = &md_s1a_corner_vfc,
-+	[MSM8939_VDDCX] = &cx_s2a_corner,
-+	[MSM8939_VDDCX_AO] = &cx_s2a_corner_ao,
-+	[MSM8939_VDDCX_VFC] = &cx_s2a_corner_vfc,
-+	[MSM8939_VDDMX] = &mx_l3a_corner,
-+	[MSM8939_VDDMX_AO] = &mx_l3a_corner_ao,
- };
- 
- static const struct rpmpd_desc msm8939_desc = {
-@@ -518,11 +518,11 @@ static const struct rpmpd_desc msm8939_desc = {
- };
- 
- static struct rpmpd *msm8916_rpmpds[] = {
--	[MSM8916_VDDCX] =	&cx_s1a_corner,
--	[MSM8916_VDDCX_AO] =	&cx_s1a_corner_ao,
--	[MSM8916_VDDCX_VFC] =	&cx_s1a_corner_vfc,
--	[MSM8916_VDDMX] =	&mx_l3a_corner,
--	[MSM8916_VDDMX_AO] =	&mx_l3a_corner_ao,
-+	[MSM8916_VDDCX] = &cx_s1a_corner,
-+	[MSM8916_VDDCX_AO] = &cx_s1a_corner_ao,
-+	[MSM8916_VDDCX_VFC] = &cx_s1a_corner_vfc,
-+	[MSM8916_VDDMX] = &mx_l3a_corner,
-+	[MSM8916_VDDMX_AO] = &mx_l3a_corner_ao,
- };
- 
- static const struct rpmpd_desc msm8916_desc = {
-@@ -532,13 +532,13 @@ static const struct rpmpd_desc msm8916_desc = {
- };
- 
- static struct rpmpd *msm8953_rpmpds[] = {
--	[MSM8953_VDDMD] =	&md_s1a_lvl,
--	[MSM8953_VDDMD_AO] =	&md_s1a_lvl_ao,
--	[MSM8953_VDDCX] =	&cx_s2a_lvl,
--	[MSM8953_VDDCX_AO] =	&cx_s2a_lvl_ao,
--	[MSM8953_VDDCX_VFL] =	&cx_s2a_lvl_vfl,
--	[MSM8953_VDDMX] =	&mx_s7a_lvl,
--	[MSM8953_VDDMX_AO] =	&mx_s7a_lvl_ao,
-+	[MSM8953_VDDMD] = &md_s1a_lvl,
-+	[MSM8953_VDDMD_AO] = &md_s1a_lvl_ao,
-+	[MSM8953_VDDCX] = &cx_s2a_lvl,
-+	[MSM8953_VDDCX_AO] = &cx_s2a_lvl_ao,
-+	[MSM8953_VDDCX_VFL] = &cx_s2a_lvl_vfl,
-+	[MSM8953_VDDMX] = &mx_s7a_lvl,
-+	[MSM8953_VDDMX_AO] = &mx_s7a_lvl_ao,
- };
- 
- static const struct rpmpd_desc msm8953_desc = {
-@@ -548,12 +548,12 @@ static const struct rpmpd_desc msm8953_desc = {
- };
- 
- static struct rpmpd *msm8976_rpmpds[] = {
--	[MSM8976_VDDCX] =	&cx_s2a_lvl,
--	[MSM8976_VDDCX_AO] =	&cx_s2a_lvl_ao,
--	[MSM8976_VDDCX_VFL] =	&cx_s2a_lvl_vfl,
--	[MSM8976_VDDMX] =	&mx_s6a_lvl,
--	[MSM8976_VDDMX_AO] =	&mx_s6a_lvl_ao,
--	[MSM8976_VDDMX_VFL] =	&mx_s6a_lvl_vfl,
-+	[MSM8976_VDDCX] = &cx_s2a_lvl,
-+	[MSM8976_VDDCX_AO] = &cx_s2a_lvl_ao,
-+	[MSM8976_VDDCX_VFL] = &cx_s2a_lvl_vfl,
-+	[MSM8976_VDDMX] = &mx_s6a_lvl,
-+	[MSM8976_VDDMX_AO] = &mx_s6a_lvl_ao,
-+	[MSM8976_VDDMX_VFL] = &mx_s6a_lvl_vfl,
- };
- 
- static const struct rpmpd_desc msm8976_desc = {
-@@ -563,13 +563,13 @@ static const struct rpmpd_desc msm8976_desc = {
- };
- 
- static struct rpmpd *msm8994_rpmpds[] = {
--	[MSM8994_VDDCX] =	&cx_s1a_corner,
--	[MSM8994_VDDCX_AO] =	&cx_s1a_corner_ao,
--	[MSM8994_VDDCX_VFC] =	&cx_s1a_corner_vfc,
--	[MSM8994_VDDMX] =	&mx_s2a_corner,
--	[MSM8994_VDDMX_AO] =	&mx_s2a_corner_ao,
--	[MSM8994_VDDGFX] =	&gfx_s2b_corner,
--	[MSM8994_VDDGFX_VFC] =	&gfx_s2b_corner_vfc,
-+	[MSM8994_VDDCX] = &cx_s1a_corner,
-+	[MSM8994_VDDCX_AO] = &cx_s1a_corner_ao,
-+	[MSM8994_VDDCX_VFC] = &cx_s1a_corner_vfc,
-+	[MSM8994_VDDMX] = &mx_s2a_corner,
-+	[MSM8994_VDDMX_AO] = &mx_s2a_corner_ao,
-+	[MSM8994_VDDGFX] = &gfx_s2b_corner,
-+	[MSM8994_VDDGFX_VFC] = &gfx_s2b_corner_vfc,
- };
- 
- static const struct rpmpd_desc msm8994_desc = {
-@@ -579,12 +579,12 @@ static const struct rpmpd_desc msm8994_desc = {
- };
- 
- static struct rpmpd *msm8996_rpmpds[] = {
--	[MSM8996_VDDCX] =	&cx_s1a_corner,
--	[MSM8996_VDDCX_AO] =	&cx_s1a_corner_ao,
--	[MSM8996_VDDCX_VFC] =	&cx_s1a_corner_vfc,
--	[MSM8996_VDDMX] =	&mx_s2a_corner,
--	[MSM8996_VDDMX_AO] =	&mx_s2a_corner_ao,
--	[MSM8996_VDDSSCX] =	&sscx_l26a_corner,
-+	[MSM8996_VDDCX] = &cx_s1a_corner,
-+	[MSM8996_VDDCX_AO] = &cx_s1a_corner_ao,
-+	[MSM8996_VDDCX_VFC] = &cx_s1a_corner_vfc,
-+	[MSM8996_VDDMX] = &mx_s2a_corner,
-+	[MSM8996_VDDMX_AO] = &mx_s2a_corner_ao,
-+	[MSM8996_VDDSSCX] = &sscx_l26a_corner,
- 	[MSM8996_VDDSSCX_VFC] =	&sscx_l26a_corner_vfc,
- };
- 
-@@ -595,16 +595,16 @@ static const struct rpmpd_desc msm8996_desc = {
- };
- 
- static struct rpmpd *msm8998_rpmpds[] = {
--	[MSM8998_VDDCX] =		&rwcx0_lvl,
--	[MSM8998_VDDCX_AO] =		&rwcx0_lvl_ao,
--	[MSM8998_VDDCX_VFL] =		&rwcx0_lvl_vfl,
--	[MSM8998_VDDMX] =		&rwmx0_lvl,
--	[MSM8998_VDDMX_AO] =		&rwmx0_lvl_ao,
--	[MSM8998_VDDMX_VFL] =		&rwmx0_lvl_vfl,
--	[MSM8998_SSCCX] =		&rwsc0_lvl,
--	[MSM8998_SSCCX_VFL] =		&rwsc0_lvl_vfl,
--	[MSM8998_SSCMX] =		&rwsm0_lvl,
--	[MSM8998_SSCMX_VFL] =		&rwsm0_lvl_vfl,
-+	[MSM8998_VDDCX] = &rwcx0_lvl,
-+	[MSM8998_VDDCX_AO] = &rwcx0_lvl_ao,
-+	[MSM8998_VDDCX_VFL] = &rwcx0_lvl_vfl,
-+	[MSM8998_VDDMX] = &rwmx0_lvl,
-+	[MSM8998_VDDMX_AO] = &rwmx0_lvl_ao,
-+	[MSM8998_VDDMX_VFL] = &rwmx0_lvl_vfl,
-+	[MSM8998_SSCCX] = &rwsc0_lvl,
-+	[MSM8998_SSCCX_VFL] = &rwsc0_lvl_vfl,
-+	[MSM8998_SSCMX] = &rwsm0_lvl,
-+	[MSM8998_SSCMX_VFL] = &rwsm0_lvl_vfl,
- };
- 
- static const struct rpmpd_desc msm8998_desc = {
-@@ -630,16 +630,16 @@ static const struct rpmpd_desc qcs404_desc = {
- };
- 
- static struct rpmpd *sdm660_rpmpds[] = {
--	[SDM660_VDDCX] =		&rwcx0_lvl,
--	[SDM660_VDDCX_AO] =		&rwcx0_lvl_ao,
--	[SDM660_VDDCX_VFL] =		&rwcx0_lvl_vfl,
--	[SDM660_VDDMX] =		&rwmx0_lvl,
--	[SDM660_VDDMX_AO] =		&rwmx0_lvl_ao,
--	[SDM660_VDDMX_VFL] =		&rwmx0_lvl_vfl,
--	[SDM660_SSCCX] =		&rwlc0_lvl,
--	[SDM660_SSCCX_VFL] =		&rwlc0_lvl_vfl,
--	[SDM660_SSCMX] =		&rwlm0_lvl,
--	[SDM660_SSCMX_VFL] =		&rwlm0_lvl_vfl,
-+	[SDM660_VDDCX] = &rwcx0_lvl,
-+	[SDM660_VDDCX_AO] = &rwcx0_lvl_ao,
-+	[SDM660_VDDCX_VFL] = &rwcx0_lvl_vfl,
-+	[SDM660_VDDMX] = &rwmx0_lvl,
-+	[SDM660_VDDMX_AO] = &rwmx0_lvl_ao,
-+	[SDM660_VDDMX_VFL] = &rwmx0_lvl_vfl,
-+	[SDM660_SSCCX] = &rwlc0_lvl,
-+	[SDM660_SSCCX_VFL] = &rwlc0_lvl_vfl,
-+	[SDM660_SSCMX] = &rwlm0_lvl,
-+	[SDM660_SSCMX_VFL] = &rwlm0_lvl_vfl,
- };
- 
- static const struct rpmpd_desc sdm660_desc = {
-@@ -649,14 +649,14 @@ static const struct rpmpd_desc sdm660_desc = {
- };
- 
- static struct rpmpd *sm6115_rpmpds[] = {
--	[SM6115_VDDCX] =		&rwcx0_lvl,
--	[SM6115_VDDCX_AO] =		&rwcx0_lvl_ao,
--	[SM6115_VDDCX_VFL] =		&rwcx0_lvl_vfl,
--	[SM6115_VDDMX] =		&rwmx0_lvl,
--	[SM6115_VDDMX_AO] =		&rwmx0_lvl_ao,
--	[SM6115_VDDMX_VFL] =		&rwmx0_lvl_vfl,
--	[SM6115_VDD_LPI_CX] =		&rwlc0_lvl,
--	[SM6115_VDD_LPI_MX] =		&rwlm0_lvl,
-+	[SM6115_VDDCX] = &rwcx0_lvl,
-+	[SM6115_VDDCX_AO] = &rwcx0_lvl_ao,
-+	[SM6115_VDDCX_VFL] = &rwcx0_lvl_vfl,
-+	[SM6115_VDDMX] = &rwmx0_lvl,
-+	[SM6115_VDDMX_AO] = &rwmx0_lvl_ao,
-+	[SM6115_VDDMX_VFL] = &rwmx0_lvl_vfl,
-+	[SM6115_VDD_LPI_CX] = &rwlc0_lvl,
-+	[SM6115_VDD_LPI_MX] = &rwlm0_lvl,
- };
- 
- static const struct rpmpd_desc sm6115_desc = {
-@@ -666,12 +666,12 @@ static const struct rpmpd_desc sm6115_desc = {
- };
- 
- static struct rpmpd *sm6125_rpmpds[] = {
--	[SM6125_VDDCX] =		&rwcx0_lvl,
--	[SM6125_VDDCX_AO] =		&rwcx0_lvl_ao,
--	[SM6125_VDDCX_VFL] =		&rwcx0_lvl_vfl,
--	[SM6125_VDDMX] =		&rwmx0_lvl,
--	[SM6125_VDDMX_AO] =		&rwmx0_lvl_ao,
--	[SM6125_VDDMX_VFL] =		&rwmx0_lvl_vfl,
-+	[SM6125_VDDCX] = &rwcx0_lvl,
-+	[SM6125_VDDCX_AO] = &rwcx0_lvl_ao,
-+	[SM6125_VDDCX_VFL] = &rwcx0_lvl_vfl,
-+	[SM6125_VDDMX] = &rwmx0_lvl,
-+	[SM6125_VDDMX_AO] = &rwmx0_lvl_ao,
-+	[SM6125_VDDMX_VFL] = &rwmx0_lvl_vfl,
- };
- 
- static const struct rpmpd_desc sm6125_desc = {
+[auto build test ERROR on 7d3e7f64a42d66ba8da6e7b66a8d85457ef84570]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Thomas-Zimmermann/drm-client-Test-for-connectors-before-sending-hotplug-event/20230124-214220
+base:   7d3e7f64a42d66ba8da6e7b66a8d85457ef84570
+patch link:    https://lore.kernel.org/r/20230124134010.30263-7-tzimmermann%40suse.de
+patch subject: [Intel-gfx] [PATCH v2 06/10] drm/fb-helper: Initialize fb-helper's preferred BPP in prepare function
+config: riscv-randconfig-r042-20230123 (https://download.01.org/0day-ci/archive/20230125/202301251250.eyIn4zjn-lkp@intel.com/config)
+compiler: clang version 16.0.0 (https://github.com/llvm/llvm-project 4196ca3278f78c6e19246e54ab0ecb364e37d66a)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # install riscv cross compiling tool for clang build
+        # apt-get install binutils-riscv64-linux-gnu
+        # https://github.com/intel-lab-lkp/linux/commit/70e38534e74e4d12bb02b3b352bba2aed417f541
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Thomas-Zimmermann/drm-client-Test-for-connectors-before-sending-hotplug-event/20230124-214220
+        git checkout 70e38534e74e4d12bb02b3b352bba2aed417f541
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=riscv olddefconfig
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=riscv SHELL=/bin/bash drivers/gpu/drm/radeon/
+
+If you fix the issue, kindly add following tag where applicable
+| Reported-by: kernel test robot <lkp@intel.com>
+
+All errors (new ones prefixed by >>):
+
+>> drivers/gpu/drm/radeon/radeon_fb.c:352:10: error: too many arguments to function call, expected 3, have 4
+                                 &radeon_fb_helper_funcs);
+                                 ^~~~~~~~~~~~~~~~~~~~~~~
+   include/drm/drm_fb_helper.h:295:20: note: 'drm_fb_helper_prepare' declared here
+   static inline void drm_fb_helper_prepare(struct drm_device *dev,
+                      ^
+>> drivers/gpu/drm/radeon/radeon_fb.c:361:52: error: too few arguments to function call, expected 2, have 1
+           ret = drm_fb_helper_initial_config(&rfbdev->helper);
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~                ^
+   include/drm/drm_fb_helper.h:459:19: note: 'drm_fb_helper_initial_config' declared here
+   static inline int drm_fb_helper_initial_config(struct drm_fb_helper *fb_helper,
+                     ^
+   2 errors generated.
+
+
+vim +352 drivers/gpu/drm/radeon/radeon_fb.c
+
+386516744ba45d Dave Airlie       2010-03-30  326  
+386516744ba45d Dave Airlie       2010-03-30  327  int radeon_fbdev_init(struct radeon_device *rdev)
+386516744ba45d Dave Airlie       2010-03-30  328  {
+8be48d924c307e Dave Airlie       2010-03-30  329  	struct radeon_fbdev *rfbdev;
+4abe35204af82a Dave Airlie       2010-03-30  330  	int bpp_sel = 32;
+5a79395b2791cc Chris Wilson      2010-06-06  331  	int ret;
+4abe35204af82a Dave Airlie       2010-03-30  332  
+e5f243bd2edd95 Alex Deucher      2016-03-10  333  	/* don't enable fbdev if no connectors */
+e5f243bd2edd95 Alex Deucher      2016-03-10  334  	if (list_empty(&rdev->ddev->mode_config.connector_list))
+e5f243bd2edd95 Alex Deucher      2016-03-10  335  		return 0;
+e5f243bd2edd95 Alex Deucher      2016-03-10  336  
+7b8bd6bb4298ac Egbert Eich       2017-07-18  337  	/* select 8 bpp console on 8MB cards, or 16 bpp on RN50 or 32MB */
+7b8bd6bb4298ac Egbert Eich       2017-07-18  338  	if (rdev->mc.real_vram_size <= (8*1024*1024))
+4abe35204af82a Dave Airlie       2010-03-30  339  		bpp_sel = 8;
+7b8bd6bb4298ac Egbert Eich       2017-07-18  340  	else if (ASIC_IS_RN50(rdev) ||
+7b8bd6bb4298ac Egbert Eich       2017-07-18  341  		 rdev->mc.real_vram_size <= (32*1024*1024))
+7b8bd6bb4298ac Egbert Eich       2017-07-18  342  		bpp_sel = 16;
+8be48d924c307e Dave Airlie       2010-03-30  343  
+8be48d924c307e Dave Airlie       2010-03-30  344  	rfbdev = kzalloc(sizeof(struct radeon_fbdev), GFP_KERNEL);
+8be48d924c307e Dave Airlie       2010-03-30  345  	if (!rfbdev)
+8be48d924c307e Dave Airlie       2010-03-30  346  		return -ENOMEM;
+771fe6b912fca5 Jerome Glisse     2009-06-05  347  
+8be48d924c307e Dave Airlie       2010-03-30  348  	rfbdev->rdev = rdev;
+8be48d924c307e Dave Airlie       2010-03-30  349  	rdev->mode_info.rfbdev = rfbdev;
+10a231026574f9 Thierry Reding    2014-06-27  350  
+70e38534e74e4d Thomas Zimmermann 2023-01-24  351  	drm_fb_helper_prepare(rdev->ddev, &rfbdev->helper, bpp_sel,
+10a231026574f9 Thierry Reding    2014-06-27 @352  			      &radeon_fb_helper_funcs);
+785b93ef8c3097 Dave Airlie       2009-08-28  353  
+2dea2d1182179e Pankaj Bharadiya  2020-03-05  354  	ret = drm_fb_helper_init(rdev->ddev, &rfbdev->helper);
+01934c2a691882 Thierry Reding    2014-12-19  355  	if (ret)
+01934c2a691882 Thierry Reding    2014-12-19  356  		goto free;
+5a79395b2791cc Chris Wilson      2010-06-06  357  
+76a39dbfb2d1bc Daniel Vetter     2013-01-20  358  	/* disable all the possible outputs/crtcs before entering KMS mode */
+76a39dbfb2d1bc Daniel Vetter     2013-01-20  359  	drm_helper_disable_unused_functions(rdev->ddev);
+76a39dbfb2d1bc Daniel Vetter     2013-01-20  360  
+70e38534e74e4d Thomas Zimmermann 2023-01-24 @361  	ret = drm_fb_helper_initial_config(&rfbdev->helper);
+01934c2a691882 Thierry Reding    2014-12-19  362  	if (ret)
+01934c2a691882 Thierry Reding    2014-12-19  363  		goto fini;
+01934c2a691882 Thierry Reding    2014-12-19  364  
+771fe6b912fca5 Jerome Glisse     2009-06-05  365  	return 0;
+01934c2a691882 Thierry Reding    2014-12-19  366  
+01934c2a691882 Thierry Reding    2014-12-19  367  fini:
+01934c2a691882 Thierry Reding    2014-12-19  368  	drm_fb_helper_fini(&rfbdev->helper);
+01934c2a691882 Thierry Reding    2014-12-19  369  free:
+01934c2a691882 Thierry Reding    2014-12-19  370  	kfree(rfbdev);
+01934c2a691882 Thierry Reding    2014-12-19  371  	return ret;
+386516744ba45d Dave Airlie       2010-03-30  372  }
+386516744ba45d Dave Airlie       2010-03-30  373  
+
 -- 
-2.39.1
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests
