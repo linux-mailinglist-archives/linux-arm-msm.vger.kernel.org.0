@@ -2,88 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0679567C129
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 00:50:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1997867C130
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 00:51:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235756AbjAYXuP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Jan 2023 18:50:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49546 "EHLO
+        id S235965AbjAYXvv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Jan 2023 18:51:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230193AbjAYXuO (ORCPT
+        with ESMTP id S236123AbjAYXvu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Jan 2023 18:50:14 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26D9656EFE
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 15:50:13 -0800 (PST)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30PNddZo005868;
-        Wed, 25 Jan 2023 23:50:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Xm7+7VfxhSdrQbLq2D/SLlWeNKxF8IKdK4IuGO82f44=;
- b=h8IBku641I1vuC2qS6iS7/yB3Qf/v1+djq2efDDDlNoUSAlt+iKKSG35VHMaBM2jWSZv
- FAjmkU3Z6lyTpmDjfk1E81neamDW6fmdsRfRrDlUcJ3nA+VJyOt1f5gvI0vmwzJill60
- kP9p9NO3t9dPiztSe/OhV9vLecvOIK0GxJCB2CAt9f8MNs7RdgVYYE3+gmf7V66D39/F
- W5Dxfc8FX0kqu7m3f17XgCtfPXH1DypxSQFFvJixRmXV34rrhfzKb1irmQBxzNsY1WH9
- 0oPAekeX7UodahwxEo6FTgsYWPMlOqrRt7o7FgZfOuO9IbXAcuB1ukJJyY/Bka2k9SFQ IQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3najkhb2xw-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 25 Jan 2023 23:50:06 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30PNo5Tt028834
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 25 Jan 2023 23:50:05 GMT
-Received: from [10.110.33.211] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 25 Jan
- 2023 15:50:04 -0800
-Message-ID: <aac9b347-eef8-7aaf-3a5f-4da3a4ede66e@quicinc.com>
-Date:   Wed, 25 Jan 2023 15:50:04 -0800
+        Wed, 25 Jan 2023 18:51:50 -0500
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E7185E520
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 15:51:48 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id vw16so845907ejc.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 15:51:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=U9XT09mLl+WL75rONS6rQhpQoBUs7qqRw2NNTRg0O6k=;
+        b=pv4WXCr+6wBryHfT+d4az9VDABrkTkr/Mt8wTrLz4zzuPgYQeBtq8MC+0DKEHWxG2K
+         RXkUqhmbEuKLlBVVabiHUShGoLJb43VfnA/cW7KD+5kqJi3CqFyhVgVajS/qQ793gbQr
+         fUghME+AK6AUVisJ0L4YwOtfzOMKU5yGby8OYkE34zuIdDrlZBR0Tvl2sLQ1HeFd3iMQ
+         7a3ypqF6hBes157/Rlv766hpRo5jaX1wA1WgfMC+RQH3uFlusktqN5X9Bvke9/2VGuHR
+         YRKEYqwIHEuGN64JjP3tYMKpOzgiEaRS0KZIjQk8zy84aQgNW31DAsZJW4K9+q+7CkmF
+         SKEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=U9XT09mLl+WL75rONS6rQhpQoBUs7qqRw2NNTRg0O6k=;
+        b=cTotHf57NS4ym2oDq9iYi+xEObSfamMas1hcmaqu0DT0yZSjGKpmOiS/yinEe6UoJA
+         sE+rYrQKz1gzgVFJmWX+YDk2vgW/1qQHCZVygJ0RLHcyr7tx5Sf4lp9XBy65YM1+KCy4
+         +3+CixMVhxxq4JAEpzJpa7rIrHuW/rGxtHEmrja57HgLIZBohfnbRJ224yk/wpcYDF9r
+         4ZIZOvykFNukdimHbL2JHPg8Ld+lE+NU92qxX8zePHAaXwvwafB1axX1vwlgJrEN8l9I
+         NfB3hVyPj7VtWEc4OD2TWt0sqryXt1x5gLW68P9hAKvOxb4U8EBCeEBKaOUcwi/r+hjd
+         263g==
+X-Gm-Message-State: AFqh2kqr+ILmgZzBXuqpcpMRH42ZWxvSCVPSZoFTrkrAZYbaebJTKgm8
+        INPVlTqxGchC+IZvujc2Ep/QjQ==
+X-Google-Smtp-Source: AMrXdXtG7YeI2EgukM4aRVXZxZXYOEg+kNxLpQpBhdz1+oh0SF8iTmG7EotpsVLaqqWRhbrzJ8YTpw==
+X-Received: by 2002:a17:906:4755:b0:877:6845:adda with SMTP id j21-20020a170906475500b008776845addamr29737120ejs.50.1674690707160;
+        Wed, 25 Jan 2023 15:51:47 -0800 (PST)
+Received: from [192.168.1.101] (abyk108.neoplus.adsl.tpnet.pl. [83.9.30.108])
+        by smtp.gmail.com with ESMTPSA id x27-20020a1709060a5b00b0084debc351b3sm3035266ejf.20.2023.01.25.15.51.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 Jan 2023 15:51:46 -0800 (PST)
+Message-ID: <bd788bbd-bc62-4a16-994e-f7b527f58fe5@linaro.org>
+Date:   Thu, 26 Jan 2023 00:51:43 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [Freedreno] [PATCH] drm/msm/dpu: disable features unsupported by
- QCM2290
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH V1 4/8] pinctrl: qcom: Add IPQ9574 pinctrl driver
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     <freedreno@lists.freedesktop.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <dri-devel@lists.freedesktop.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        <linux-arm-msm@vger.kernel.org>, David Airlie <airlied@gmail.com>
-References: <20230123071145.3056242-1-dmitry.baryshkov@linaro.org>
- <ecec7adb-a1ab-ba38-c38a-26f23f81cf68@quicinc.com>
- <df8a130f-2020-833c-d4f1-088c1fd7e5ef@linaro.org>
- <1642c43b-9d71-17ee-402d-d1e415e1ecc8@quicinc.com>
- <CAA8EJpo+ARnJ29BrOVkrg1FkTOVKYXQJiqAqhBzhZyNVYZw2qQ@mail.gmail.com>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <CAA8EJpo+ARnJ29BrOVkrg1FkTOVKYXQJiqAqhBzhZyNVYZw2qQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     devi priya <quic_devipriy@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
+        sboyd@kernel.org, ulf.hansson@linaro.org, linus.walleij@linaro.org,
+        catalin.marinas@arm.com, will@kernel.org, p.zabel@pengutronix.de,
+        shawnguo@kernel.org, arnd@arndb.de, marcel.ziswiler@toradex.com,
+        dmitry.baryshkov@linaro.org, nfraprado@collabora.com,
+        broonie@kernel.org, tdas@codeaurora.org, bhupesh.sharma@linaro.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-mmc@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
+        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
+        quic_poovendh@quicinc.com
+References: <20230124141541.8290-1-quic_devipriy@quicinc.com>
+ <20230124141541.8290-5-quic_devipriy@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230124141541.8290-5-quic_devipriy@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: dGhrVA86_Ulkhyaez6-UaWz0TCH350bB
-X-Proofpoint-GUID: dGhrVA86_Ulkhyaez6-UaWz0TCH350bB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-25_13,2023-01-25_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
- adultscore=0 spamscore=0 suspectscore=0 mlxlogscore=999 clxscore=1015
- lowpriorityscore=0 impostorscore=0 mlxscore=0 priorityscore=1501
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301250212
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -92,151 +91,157 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 1/24/2023 10:46 PM, Dmitry Baryshkov wrote:
-> Hi,
+On 24.01.2023 15:15, devi priya wrote:
+> Add pinctrl definitions for the TLMM of IPQ9574
 > 
-> On Wed, 25 Jan 2023 at 02:22, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->> On 1/24/2023 12:22 AM, Dmitry Baryshkov wrote:
->>> On 24/01/2023 03:32, Abhinav Kumar wrote:
->>>> On 1/22/2023 11:11 PM, Dmitry Baryshkov wrote:
->>>>> QCM2290 doesn't seem to support reg-dma, smart-dma, UBWC, CDP, exclusion
->>>>> rectangles and CSC. Drop corresponding features being incorrectly
->>>>> enabled for qcm2290.
->>>>>
->>>>
->>>> Can you please point me to which vendor DT you are referring to for this?
->>>>
->>>> CSC is supported on the VIG SSPPs from what I can see.
->>>
->>> https://github.com/MiCode/kernel_devicetree/blob/psyche-r-oss/qcom/scuba-sde.dtsi
->>>
->>>
->>> No CSC, smart-dma, excl-rect, CDP, etc.
->>
->> Sorry I am missing something here.
->>
->> It has one Vig and one DMA
->>
->> https://github.com/MiCode/kernel_devicetree/blob/psyche-r-oss/qcom/scuba-sde.dtsi#L68
-> 
-> Correct
-> 
->>
->> If Vig is present, CSC is supported.
-> 
-> This actually puzzled me. Usually the dtsi has qcom,sde-sspp-csc-off
-> and qcom,sde-csc-type properties. But not in this case.
-> 
->>
->> Even for smart DMA I can see it supported
->> https://github.com/MiCode/kernel_devicetree/blob/psyche-r-oss/qcom/scuba-sde.dtsi#L76
->> on the DMA SSPP.
->>
->> Same for excl rectangle too
->> https://github.com/MiCode/kernel_devicetree/blob/psyche-r-oss/qcom/scuba-sde.dtsi#L74
-> 
-> Ack, my mistake. Maybe I was looking at the wrong dtsi then (or just
-> mixed something). I'll add them back. And I see that CDP is also
-> there.
-> 
-> So, this leaves us only with the question regarding CSC. Could you
-> please doublecheck it?
-> 
-I went through the internal documents.
+> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
+> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
+> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
+> ---
+[...]
 
-This chipset supports only RGB formats for Vig pipe and hence there is 
-no CSC (surprise for me too).
+> +enum ipq9574_functions {
+> +	msm_mux_atest_char,
+> +	msm_mux_atest_char0,
+> +	msm_mux_atest_char1,
+> +	msm_mux_atest_char2,
+> +	msm_mux_atest_char3,
+> +	msm_mux_audio_pdm0,
+> +	msm_mux_audio_pdm1,
+> +	msm_mux_audio_pri,
+> +	msm_mux_audio_sec,
+> +	msm_mux_blsp0_spi,
+> +	msm_mux_blsp0_uart,
+> +	msm_mux_blsp1_i2c,
+> +	msm_mux_blsp1_spi,
+> +	msm_mux_blsp1_uart,
+> +	msm_mux_blsp2_i2c,
+> +	msm_mux_blsp2_spi,
+> +	msm_mux_blsp2_uart,
+> +	msm_mux_blsp3_i2c,
+> +	msm_mux_blsp3_spi,
+> +	msm_mux_blsp3_uart,
+> +	msm_mux_blsp4_i2c,
+> +	msm_mux_blsp4_spi,
+> +	msm_mux_blsp4_uart,
+> +	msm_mux_blsp5_i2c,
+> +	msm_mux_blsp5_uart,
+> +	msm_mux_cri_trng0,
+> +	msm_mux_cri_trng1,
+> +	msm_mux_cri_trng2,
+> +	msm_mux_cri_trng3,
+> +	msm_mux_cxc0,
+> +	msm_mux_cxc1,
+> +	msm_mux_dbg_out,
+> +	msm_mux_dwc_ddrphy,
+> +	msm_mux_gcc_plltest,
+> +	msm_mux_gcc_tlmm,
+> +	msm_mux_gpio,
 
+> +	msm_mux_mac00,
+> +	msm_mux_mac01,
+> +	msm_mux_mac10,
+> +	msm_mux_mac11,
+msm_mux_mac?
 
-> I also don't see the UBWC (qcom,sde-ubwc-version) and regdma
-> (qcom,sde-reg-dma-off) properties. Are corresponding features present
-> on the QCM2290?
-> 
+> +	msm_mux_mdc,
+> +	msm_mux_mdio,
+> +	msm_mux_pcie0_clk,
+> +	msm_mux_pcie0_wake,
+> +	msm_mux_pcie1_clk,
+> +	msm_mux_pcie1_wake,
+> +	msm_mux_pcie2_clk,
+> +	msm_mux_pcie2_wake,
+> +	msm_mux_pcie3_clk,
+> +	msm_mux_pcie3_wake,
+> +	msm_mux_prng_rosc0,
+> +	msm_mux_prng_rosc1,
+> +	msm_mux_prng_rosc2,
+> +	msm_mux_prng_rosc3,
 
-Yes UBWC is also not supported.
+> +	msm_mux_pta1_0,
+> +	msm_mux_pta1_1,
+> +	msm_mux_pta1_2,
+> +	msm_mux_pta20,
+> +	msm_mux_pta21,
+msm_mux_pta?
 
-You can now go ahead and update v2.
+> +	msm_mux_pwm00,
+> +	msm_mux_pwm01,
+> +	msm_mux_pwm02,
+> +	msm_mux_pwm03,
+> +	msm_mux_pwm04,
+> +	msm_mux_pwm10,
+> +	msm_mux_pwm11,
+> +	msm_mux_pwm12,
+> +	msm_mux_pwm13,
+> +	msm_mux_pwm14,
+> +	msm_mux_pwm20,
+> +	msm_mux_pwm21,
+> +	msm_mux_pwm22,
+> +	msm_mux_pwm23,
+> +	msm_mux_pwm24,
+> +	msm_mux_pwm30,
+> +	msm_mux_pwm31,
+> +	msm_mux_pwm32,
+> +	msm_mux_pwm33,
+msm_mux_pwm?
 
->>>
->>>> QCM2290 should be using the same MDP version as 6115 from the HW version.
->>>
->>> It is 6.3 vs 6.5 if I remember correctly.
->>>
->>>>
->>>>
->>>>> Cc: Loic Poulain <loic.poulain@linaro.org>
->>>>> Fixes: 5334087ee743 ("drm/msm: add support for QCM2290 MDSS")
->>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>>> ---
->>>>>    .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 20 +++++++++++--------
->>>>>    1 file changed, 12 insertions(+), 8 deletions(-)
->>>>>
->>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->>>>> index 289fb11f99d1..1c3ffa922794 100644
->>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->>>>> @@ -12,10 +12,14 @@
->>>>>    #include "dpu_hw_catalog.h"
->>>>>    #include "dpu_kms.h"
->>>>> -#define VIG_MASK \
->>>>> +#define VIG_BASE_MASK \
->>>>>        (BIT(DPU_SSPP_SRC) | BIT(DPU_SSPP_QOS) |\
->>>>> +    BIT(DPU_SSPP_TS_PREFILL))
->>>>> +
->>>>> +#define VIG_MASK \
->>>>> +    (VIG_BASE_MASK | \
->>>>>        BIT(DPU_SSPP_CSC_10BIT) | BIT(DPU_SSPP_CDP) |\
->>>>> -    BIT(DPU_SSPP_TS_PREFILL) | BIT(DPU_SSPP_EXCL_RECT))
->>>>> +    BIT(DPU_SSPP_EXCL_RECT))
->>>>>    #define VIG_MSM8998_MASK \
->>>>>        (VIG_MASK | BIT(DPU_SSPP_SCALER_QSEED3))
->>>>> @@ -29,7 +33,7 @@
->>>>>    #define VIG_SM8250_MASK \
->>>>>        (VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) |
->>>>> BIT(DPU_SSPP_SCALER_QSEED3LITE))
->>>>> -#define VIG_QCM2290_MASK (VIG_MASK | BIT(DPU_SSPP_QOS_8LVL))
->>>>> +#define VIG_QCM2290_MASK (VIG_BASE_MASK | BIT(DPU_SSPP_QOS_8LVL))
->>>>>    #define DMA_MSM8998_MASK \
->>>>>        (BIT(DPU_SSPP_SRC) | BIT(DPU_SSPP_QOS) |\
->>>>> @@ -50,6 +54,10 @@
->>>>>    #define DMA_CURSOR_MSM8998_MASK \
->>>>>        (DMA_MSM8998_MASK | BIT(DPU_SSPP_CURSOR))
->>>>> +#define DMA_QCM2290_MASK \
->>>>> +    (BIT(DPU_SSPP_SRC) | BIT(DPU_SSPP_QOS) | BIT(DPU_SSPP_QOS_8LVL) |\
->>>>> +    BIT(DPU_SSPP_TS_PREFILL) | BIT(DPU_SSPP_TS_PREFILL_REC1))
->>>>> +
->>>>>    #define MIXER_MSM8998_MASK \
->>>>>        (BIT(DPU_MIXER_SOURCESPLIT) | BIT(DPU_DIM_LAYER))
->>>>> @@ -316,8 +324,6 @@ static const struct dpu_caps msm8998_dpu_caps = {
->>>>>    static const struct dpu_caps qcm2290_dpu_caps = {
->>>>>        .max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
->>>>>        .max_mixer_blendstages = 0x4,
->>>>> -    .smart_dma_rev = DPU_SSPP_SMART_DMA_V2,
->>>>> -    .ubwc_version = DPU_HW_UBWC_VER_20,
->>>>>        .has_dim_layer = true,
->>>>>        .has_idle_pc = true,
->>>>>        .max_linewidth = 2160,
->>>>> @@ -1384,7 +1390,7 @@ static const struct dpu_sspp_sub_blks
->>>>> qcm2290_dma_sblk_0 = _DMA_SBLK("8", 1);
->>>>>    static const struct dpu_sspp_cfg qcm2290_sspp[] = {
->>>>>        SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_QCM2290_MASK,
->>>>>             qcm2290_vig_sblk_0, 0, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
->>>>> -    SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000,  DMA_SDM845_MASK,
->>>>> +    SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000,  DMA_QCM2290_MASK,
->>>>>             qcm2290_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
->>>>>    };
->>>>> @@ -2836,8 +2842,6 @@ static const struct dpu_mdss_cfg
->>>>> qcm2290_dpu_cfg = {
->>>>>        .intf = qcm2290_intf,
->>>>>        .vbif_count = ARRAY_SIZE(sdm845_vbif),
->>>>>        .vbif = sdm845_vbif,
->>>>> -    .reg_dma_count = 1,
->>>>> -    .dma_cfg = &sdm845_regdma,
->>>>>        .perf = &qcm2290_perf_data,
->>>>>        .mdss_irqs = IRQ_SC7180_MASK,
->>>>>    };
->>>
-> 
-> 
-> 
+[...]
+
+> +
+> +static const int ipq9574_reserved_gpios[] = {
+> +	59, -1
+> +};
+We know it's necessary and it's good that you take care
+of it, but it would be even nicer if you left a comment
+explaining why the rx0/pwm23/qdss_tracedata_a gpio can
+not be accessed and what it's used for.
+
+Konrad 
+> +
+> +static const struct msm_pinctrl_soc_data ipq9574_pinctrl = {
+> +	.pins = ipq9574_pins,
+> +	.npins = ARRAY_SIZE(ipq9574_pins),
+> +	.functions = ipq9574_functions,
+> +	.nfunctions = ARRAY_SIZE(ipq9574_functions),
+> +	.groups = ipq9574_groups,
+> +	.ngroups = ARRAY_SIZE(ipq9574_groups),
+> +	.reserved_gpios = ipq9574_reserved_gpios,
+> +	.ngpios = 65,
+> +};
+> +
+> +static int ipq9574_pinctrl_probe(struct platform_device *pdev)
+> +{
+> +	return msm_pinctrl_probe(pdev, &ipq9574_pinctrl);
+> +}
+> +
+> +static const struct of_device_id ipq9574_pinctrl_of_match[] = {
+> +	{ .compatible = "qcom,ipq9574-tlmm", },
+> +	{ },
+> +};
+> +
+> +static struct platform_driver ipq9574_pinctrl_driver = {
+> +	.driver = {
+> +		.name = "ipq9574-tlmm",
+> +		.of_match_table = ipq9574_pinctrl_of_match,
+> +	},
+> +	.probe = ipq9574_pinctrl_probe,
+> +	.remove = msm_pinctrl_remove,
+> +};
+> +
+> +static int __init ipq9574_pinctrl_init(void)
+> +{
+> +	return platform_driver_register(&ipq9574_pinctrl_driver);
+> +}
+> +arch_initcall(ipq9574_pinctrl_init);
+> +
+> +static void __exit ipq9574_pinctrl_exit(void)
+> +{
+> +	platform_driver_unregister(&ipq9574_pinctrl_driver);
+> +}
+> +module_exit(ipq9574_pinctrl_exit);
+> +
+> +MODULE_DESCRIPTION("QTI IPQ9574 TLMM driver");
+> +MODULE_LICENSE("GPL");
+> +MODULE_DEVICE_TABLE(of, ipq9574_pinctrl_of_match);
