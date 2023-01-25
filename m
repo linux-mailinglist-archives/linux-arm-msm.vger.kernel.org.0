@@ -2,69 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AD06D67AD57
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 10:09:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F3D1967AD5B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 10:09:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229646AbjAYJIM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Jan 2023 04:08:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32960 "EHLO
+        id S234138AbjAYJI7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Jan 2023 04:08:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233135AbjAYJIL (ORCPT
+        with ESMTP id S234005AbjAYJI6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Jan 2023 04:08:11 -0500
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDB1342BC5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 01:08:06 -0800 (PST)
-Received: by mail-ej1-x632.google.com with SMTP id ss4so45651235ejb.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 01:08:06 -0800 (PST)
+        Wed, 25 Jan 2023 04:08:58 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78A473A84A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 01:08:56 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id e19-20020a05600c439300b003db1cac0c1fso738243wmn.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 01:08:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=i2XUBr6mewmiPBl5OYmyWzaQUcYCO2uD+Ydn8zp2onA=;
-        b=dfDHbfiAnoSY9UbqNuN45Goe/Zk1oIL6lTucUIO0BPvTShJwK4iGo++KJ4vXkJoQHY
-         ub8wN3UIpqhFUdiTP8DFpM5QDqZEMADkM2xDnBPok8+RP7qCFAu1gVthdUHc/MggLYtp
-         +1JH8To8J5XAPsmKOwBf6zUjhgykyLR8bzDoQAsoqpwMPMKwvmiN2YUzLeN+tNz0uZMl
-         y0QG6hJ4NYRPd5nBVJ/J7LKD7R7XeoJKS37m7fO69D6XoktLaGs+L1CN26mNz+ml7N2f
-         1k/EXbdaaH2y+Fhppbe/UX3TOt3hLHocIbnvx+Ug7d2apsORBRiyj3RLpdmiNLP2QCM1
-         JYrg==
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:reply-to:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=6TtgPkbCdpmWueCCZKRjvZBvWyeUob334SpBx4tImis=;
+        b=LIgV6OxS+JhH3RpbniLXzz+m69QrnlgL4BippuNwgV1NqTn9mOhVKU9Tu0EvEE26dk
+         l7FyIdKRO08Y3dVyRdfOJgFsrpYFaWzP8ykKRC+Ns0HNnStMTGhdU/Gw3qqp3prMAhkI
+         zaKQN8eb+tlGNcy8hQJP9aMekY0joG/PoPitFbJ4I46ZH+hdb31O8KQoTJZv+/DPLHyP
+         zMUlbGdWEnI/Bi00SKPvTl994ijhShCF5+W9xj5JJS0VAdD34Y9gaTIh9ho6hoqW8VgG
+         K/s6z3rICIRXlywBY9sLEBhN7HyDrE1TGgG5AQRRZBwNX+yuYUI3v+O1Fdii3UrK1fFn
+         uMeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=i2XUBr6mewmiPBl5OYmyWzaQUcYCO2uD+Ydn8zp2onA=;
-        b=fGn+BvQ2RvJetqOG9q6NbPOOWJwps842YA6nU7R1e9vv6X/CsMdwryGv5Z0zGRJLoT
-         PWTupboSLlIoqcglz3sEFXvRT5cASRVoQGPhsdDwWa3iiaaRJYhFtQvD8+rFx8oiLh7N
-         pCYVQOoBaFyjIiYS/8pn4yUFd+ZZ6+BrYzQGbRHqgnpEDnqa200xZ/H7wJQ256ETkhe+
-         ox7ZpI1AtC1HyKBM9ynp4AhuLlHxsekF32bpJGQ40L74aJo8nPBCluzs+rOxWfkGypbw
-         gdb5D75nv0pf05N2qemUV8D8Hb5HYCkX8eMpKdfcVq2iPhuErAloUOI7DOLEPv7ee/Jk
-         5GZg==
-X-Gm-Message-State: AFqh2kr7seHav2Iqose/Hcv9iaAREQxCkxjbklhnfEri8jNsVl+YcQXo
-        J138UZBv/zQBeSsWYVGBhZN4TQ==
-X-Google-Smtp-Source: AMrXdXtJTelrDG6WoMCRrLpPH3bLCjHiaAD120Ec90X/hWOH2EdlYwNi6AG0QZdXTunVVqc9t5S2Gw==
-X-Received: by 2002:a17:906:c409:b0:863:73ee:bb67 with SMTP id u9-20020a170906c40900b0086373eebb67mr32523218ejz.73.1674637684157;
-        Wed, 25 Jan 2023 01:08:04 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id lr26-20020a170906fb9a00b008566b807d8asm2073673ejb.73.2023.01.25.01.08.03
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:reply-to:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6TtgPkbCdpmWueCCZKRjvZBvWyeUob334SpBx4tImis=;
+        b=Eev24/HE7oNRZd8Br0EJ/wH5z3NvexdqrAwUz9Mm8wr0ijhkMXBo9sX3KjTL1b2H64
+         P9Tj5LSHCXzPhA4Qgakl3WUlcJvpJtWspxfN/Wg/VYtyqis20wA0EaHUveeH7jGKfmml
+         ZNT5l8mVaZKWymCmUx1hPVqSF2PHY7efFnbkwD0sDvGo4Yc0FTWzrmtlMszxXGjbJVes
+         q63vgllfS7edQZD6TAJE2dqQuMjmXZbdmi1q4vyrW+CUFIGgcWWHRbsyKe19Gj6t4VXu
+         BE1BFmg10JcvMMGqHs85U0AJdsqZ1v8njX99Godt5DTUmnvVRBHQWtYsrLqTS0kWFQdY
+         ICKQ==
+X-Gm-Message-State: AFqh2kpyVtJi2Hk+t1MwHLu9o9XXpVC+tloEMKId26jTL4Yau+Tw0o7p
+        BKoJgnnU4/ksYwWSIDwaX3lnew==
+X-Google-Smtp-Source: AMrXdXvZrXeQjw594Z0T1+4tC0efU2qVxBH471U4WrdTSn8wXVgL+9WQUpESS0FDQQ9xTJQ9uqfEqw==
+X-Received: by 2002:a05:600c:539b:b0:3d9:f836:3728 with SMTP id hg27-20020a05600c539b00b003d9f8363728mr31301182wmb.11.1674637734893;
+        Wed, 25 Jan 2023 01:08:54 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:ad2f:6fa7:d25a:7047? ([2a01:e0a:982:cbb0:ad2f:6fa7:d25a:7047])
+        by smtp.gmail.com with ESMTPSA id l21-20020a05600c4f1500b003b47b80cec3sm1272896wmq.42.2023.01.25.01.08.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Jan 2023 01:08:03 -0800 (PST)
-Message-ID: <13b0be51-b36e-4e91-aa70-ded7a6d0914d@linaro.org>
-Date:   Wed, 25 Jan 2023 11:08:02 +0200
+        Wed, 25 Jan 2023 01:08:54 -0800 (PST)
+Message-ID: <5506bf98-2241-338f-b865-c3227a6f5bb5@linaro.org>
+Date:   Wed, 25 Jan 2023 10:08:53 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH 2/7] soc: qcom: rpmpd: Expand #defines into structs
-Content-Language: en-GB
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org, linux-kernel@vger.kernel.org
-References: <20230125032728.611640-1-konrad.dybcio@linaro.org>
- <20230125032728.611640-3-konrad.dybcio@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230125032728.611640-3-konrad.dybcio@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v1 12/14] drm/msm/disp/dpu1: revise timing engine
+ programming to work for DSC
+Content-Language: en-US
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, andersson@kernel.org, quic_abhinavk@quicinc.com,
+        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <1674498274-6010-1-git-send-email-quic_khsieh@quicinc.com>
+ <1674498274-6010-13-git-send-email-quic_khsieh@quicinc.com>
+ <8392e1f3-8459-4408-41de-564a41980b4c@linaro.org>
+ <3588a5d0-ca28-918f-e072-35f15a5a5132@quicinc.com>
+ <20230124233631.rojijcfy6xhntl3p@SoMainline.org>
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Organization: Linaro Developer Services
+In-Reply-To: <20230124233631.rojijcfy6xhntl3p@SoMainline.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -76,18 +88,82 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/01/2023 05:27, Konrad Dybcio wrote:
-> Expand preprocessor macros into human-readable structs for easier
-> reference.
+On 25/01/2023 00:36, Marijn Suijten wrote:
+> On 2023-01-24 09:55:24, Kuogee Hsieh wrote:
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->   drivers/soc/qcom/rpmpd.c | 839 +++++++++++++++++++++++++++++++++------
->   1 file changed, 722 insertions(+), 117 deletions(-)
+> <snip>
+> 
+>> This timing engine code is derived from our downstream code directly and
+>> it has been used at many mobile devices by many vendors for many years
+>> already.
+>>
+>> On the other words, it had been tested very thorough and works on
+>> dsi/dp/hdmi/dsc/widebus applications.
+> 
+> And the code already in mainline has seen 12 rounds of review, with a
+> focus on inter-SoC compatibility.  Regardless of that, we have processes
+> to make changes on mainline: formatting changes (when actually making an
+> improvement) go separate from semantic changes.  Bugfixes are clearly
+> described in individual patches with Fixes: tags.  If you really think
+> the code has to be as proposed in this patch, follow Dmitry's advice and
+> split this accordingly.
+> 
+>> When i brought dsc v1.2 over, I just merged it over and did not consider
+>> too much.
+> 
+> And that is exactly what is wrong with this *entire* series: copying
+> over downstream code without "considering too much", stomping over
+> previous review and even reverting bugfixes [1] [2] without giving it
+> ANY ATTENTION in your patch description.  That's unacceptable and
+> insulting to contributors and reviewers.  Full stop.  Or did you expect
+> us to turn a blind eye?  This is mainline, not some techpack playground.
+> 
+> [1]: https://lore.kernel.org/linux-arm-msm/20230123201133.zzt2zbyaw3pfkzi6@SoMainline.org/
+> [2]: https://lore.kernel.org/linux-arm-msm/20221026182824.876933-10-marijn.suijten@somainline.org/
+> 
+>> Can we adapt this code so that both upstream and down stream shared same
+>> timing engine programming so that easier to maintain?
+> 
+> Easy, I've said this before in IRC and will state it again: stop this
+> techpack nonsense and focus on upstream-first.  When something passes
+> mainline review (and please don't bother maintainers and reviewers with
+> series like this) it is inevitably good enough to be copied to
+> techpack... at which point techpack becomes worthless as you can just
+> backport a mainline patch or use a recent-enough kernel.
+> 
+> 
+> tl;dr: it seems like you nor anyone involved in pre-reviewing/vetting
+> this series is familiar with upstream guidelines.  Follow the global
+> advice from Dmitry [3] to reach a more efficient v2, and please don't
+> let this run to v10 (or beyond) again.
+> 
+> One suggestion to improve efficiency: split off the DPU v1.2 hardware
+> block addition (and related changes) into a separate series.  A smaller
+> series (and properly split patches!) will give everyone less moving
+> parts to worry about, and paves the way for DSI support without blocking
+> on DP.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Yes to split DSC 1.2 integration and DP+DSC in 2 patchsets, with the various
+fixes not necessary to make DP+DSC work in separate patches.
 
--- 
-With best wishes
-Dmitry
+Be aware the rule is to make sure each single change doesn't break boot and builds
+without warning, the rule is to make sure each single kernel change can be built
+and doesn't break booting. And build the code with "W=1" to the make parameter to
+trigger advanced GCC warnings.
+
+This rule exists to permit running a git bisect to determine which commit introduces
+a regression.
+
+And the second most important rule is: a single change per patch, and a clear description
+of the change in the commit message.
+If your message needs a "change this and also change this" then it's wrong and it must be reworked.
+
+Do incremental changes, like introduce a new struct, then use it afterwards.
+
+Neil
+
+> 
+> [3]: https://lore.kernel.org/linux-arm-msm/47c83e8c-09f1-d1dd-ca79-574122638256@linaro.org/
+> 
+> - Marijn
 
