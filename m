@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 991FE67B16C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 12:34:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E840167B16A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 12:34:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235269AbjAYLeu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Jan 2023 06:34:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53398 "EHLO
+        id S235426AbjAYLet (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Jan 2023 06:34:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235692AbjAYLei (ORCPT
+        with ESMTP id S235146AbjAYLer (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Jan 2023 06:34:38 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B80061164E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 03:34:36 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id b7so16748914wrt.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 03:34:36 -0800 (PST)
+        Wed, 25 Jan 2023 06:34:47 -0500
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE32215C82
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 03:34:45 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id y1so12244686wru.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 03:34:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20210112.gappssmtp.com; s=20210112;
+        d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
         bh=l0whpO4cbXzR1tiN4DzvNKJ/HfGU7YFSCpWie8Zua84=;
-        b=CK2Et2ENldqVneTdeYBGCfDSADiC+JkZV9SYegfHCo46+6tX4hXP6e7gc1hZJRMIam
-         gMQ4eIYhcW9MlUUTmUTBIvJmrjs54uEA5crk72FlVonOxx9atVFPAQtE6td1NFkaWXJu
-         QdT+6NiMTS4gQ9P13schTIVsWV/MN8psRO2rF3GR/JDnoelCN1H9KcEoRD1Uq+qhe3M/
-         BnjkO00eOzi1MuzWd3UiX70Dcbxly2rdzRA2SjfmrL2LlmnPdWKNF5UprlbmZZg26JcP
-         +bXfoRrOmgsIhioAOqpiOpUmYW5wnMDKJDo/iWQjPhNxvVBYO3eNF+O4bsW0JojDVQ/e
-         q3pg==
+        b=RWwzCj7DK1Fz/TN8EFMu7rDdV1mSR/g0Wz3R8BwTGXUXr8yUXYGZQxTLgQHRdsA2Ap
+         36LcVagHyyadflB0xtMaLbmSD0ADo0vejz1kKy/2MyaDI85e5mhgrXXpXtASMorWgIMa
+         SDRnX4yOV+eopZn/JOmDZEJuldoOZ2OtLMPa8dq32fqwq/bve/8wxOeqEeexaoUCRDvh
+         qGL1cMJEQKOTKnn5+wAkVFynC5kHwxFplTQOxOYflsdArjuXjzlSMODjgP/2WA2pD29T
+         +rxwLf0M3ozMPPBHtg2UM1fa+SdTJp54C+kXiZ+PyBK+M3HcBwY892q6c6yebxQ0e6jU
+         qq1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
         bh=l0whpO4cbXzR1tiN4DzvNKJ/HfGU7YFSCpWie8Zua84=;
-        b=ziyOD9QZW/tmfQsH9at172Clxqsil1zk53TtjwvUUX8/369rBRS9AzeC1yrOjkje4X
-         Su98CN2WxMtGeUxDf6p00NnSrBS5Pa8C6Ipge+gpFOWOCvrW6JGcq63DnpzEFbY/MAMS
-         GPGUW8uO1elol7OS4mBPcmooai++U7/GiCp+6UlOOsgN6OnoEhLjPcFZkA4Op3MGVx9v
-         wlD2V4CWxXeszb+hWqBff1DngtU3bVvflbkb5uArBv717mj208/+2cM5GKuXHc3hI5rP
-         U/StZxneMmJ51BXgUM6xRQbIubMuFpZAufthpXAcBOA+CIS9NoeKcUbpANM47qEV3LHP
-         XpSg==
-X-Gm-Message-State: AO0yUKXmceG8YWWixnQbN+7Cu5ifjO0laGyJJ9pPcz+yS9z0Q/YVLwT1
-        BBF6+pAZ9/nsX58PibLJuLufPw==
-X-Google-Smtp-Source: AK7set/8+c33YavXOYtKD1LSh3zE+1ZWgScYR5anmuPGJvgD9aiQ4pFIQMGKXfwcJplkA009zs+OxQ==
-X-Received: by 2002:adf:ec0f:0:b0:2bf:b661:87d9 with SMTP id x15-20020adfec0f000000b002bfb66187d9mr3089897wrn.50.1674646475202;
-        Wed, 25 Jan 2023 03:34:35 -0800 (PST)
+        b=HkD7+gtU7xCzHi5fEdgkzq0tJYyzyQTZOTojO/FpkGSU9PcAWupB3W/84CZfUy9mie
+         sJEbBx62ZSz77WKCc78SBAjnIghCpT2EwNxC42/9hN6dbqjeTKAsB7oeYDzNFbMubLJf
+         s3INvYac+PSkiJJRhmU3LQxaUcfNiFCTxmwr8r0KNPxDH3CwEq2WySRq2w50cRH+cDXf
+         Hf/vSgOPABDd1n3mPMOMWUJgIc5IClRFHWv/RBWh6nceBW5rkxeZTAi0vKXPuG0eDloC
+         kqxH8IS7MOzYWVlXfVMd2Wk7Gx43qmZU4PaXEdrFFyxOGTIr/Sir9AIGtMH43pF0wSFv
+         nfHA==
+X-Gm-Message-State: AFqh2kpSj0ZCOQgITMzwznkp58HGuCsEa+TxS2YxGvukEdUGT0xIMPWD
+        bYdCYwkxzdjaNqPo6HPk/DyqHK5zFttnIeZz
+X-Google-Smtp-Source: AMrXdXtME4KCY+RVtSIc4GGY1hVD6gUYg4Y0Dc+IxuYWScp4BM/4Z6IuD8cxwhvwY2aeimwydwh6Ew==
+X-Received: by 2002:adf:fbd1:0:b0:2bd:bae0:8de5 with SMTP id d17-20020adffbd1000000b002bdbae08de5mr25285912wrs.58.1674646484139;
+        Wed, 25 Jan 2023 03:34:44 -0800 (PST)
 Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id q14-20020adff78e000000b002be07cbefb2sm5011854wrp.18.2023.01.25.03.34.33
+        by smtp.gmail.com with ESMTPSA id g9-20020adfa489000000b002b065272da2sm4338563wrb.13.2023.01.25.03.34.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Jan 2023 03:34:34 -0800 (PST)
-Message-ID: <ae3d5dd0-8d68-9d4e-c98c-7284d1ebeccc@nexus-software.ie>
-Date:   Wed, 25 Jan 2023 11:34:33 +0000
+        Wed, 25 Jan 2023 03:34:43 -0800 (PST)
+Message-ID: <78479f8d-4565-cff0-5ba0-bdfb0e40642e@linaro.org>
+Date:   Wed, 25 Jan 2023 11:34:42 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.5.0
@@ -62,13 +62,14 @@ To:     Luca Weiss <luca@z3ntu.xyz>, Todor Tomov <todor.too@gmail.com>,
 Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
 References: <5898403.lOV4Wx5bFT@g550jk>
-From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 In-Reply-To: <5898403.lOV4Wx5bFT@g550jk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
