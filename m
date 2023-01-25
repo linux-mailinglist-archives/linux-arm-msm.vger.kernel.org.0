@@ -2,68 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C66F167AAEA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 08:29:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EB58867AB43
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 08:59:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235024AbjAYH35 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Jan 2023 02:29:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33868 "EHLO
+        id S234640AbjAYH7z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Jan 2023 02:59:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234859AbjAYH34 (ORCPT
+        with ESMTP id S234138AbjAYH7z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Jan 2023 02:29:56 -0500
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B294315C83
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 23:29:54 -0800 (PST)
-Received: by mail-yb1-xb29.google.com with SMTP id p141so19139804ybg.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 23:29:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=jiUco/MLWVperT+ljPIQcmiNiz70RTXeJN32A7WBZAE=;
-        b=S/ln1RZql+to1V/PDE8qCa9YsjAWNciBXkVrwXshY9NY82yY5MbtlJoXmqCwr2MNNn
-         mqzUfjpohETcsYn60FFjhZH/11MG9LZPhzhQ0CyHa00Z9ht4HCM1IRAjbLD2OYkSQPpq
-         gYQhq2zHRtq29JDPeFJ5aWiGz3sSArRclV2SAulIUQ63tcqr5m0qg75fAmjH3LJh5Wd6
-         rZTRug2UAAVlEXErrJFLg+UJ+7jqcw41aoMMFj1BxD7TZwc/gz48iC1WwvZ8ori2Vrxg
-         3iY2BJAnAKo9u7Kq9X7npVROY+V2Kk5ElSXA3AZ1Qqcpw/gHtfWI6AXtPDUbym3NMGui
-         JFTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=jiUco/MLWVperT+ljPIQcmiNiz70RTXeJN32A7WBZAE=;
-        b=bepEPxzRyzdM0v4zQbqhPk0QFIkF3IoiHmzjHRbDUp8QsZBd+6Ouo6B7iugsmcf/j8
-         rwVttpCVaT8AeBp1N0ltv6Wr1a1FqZy6NDFQC4RIsm6uO458pvzd3pnXXmZ2UxrWSQ9P
-         M8al7RfZwICiEtAtk8nnsxKfMVIdAUWl+sBikdv1jGzgSSR4jlrogEfWzHGwf24QgT5e
-         oxvTfj4x3FfDL/66wVUIU3Q/SgiUCkawbYulH+3dBL1IDSt9XLzZUl9MlyXKBrSLJTAy
-         tDUc4cwwTgFxs87/XursExzl9xW00UZEtxA8SO/tOKJaax6RIF1gkO1KBoLdvurNjyPt
-         mFAw==
-X-Gm-Message-State: AFqh2kr00jK+H52o2Ubk5IONFAp3RX9gZzmPUVnZZ/NBYzjCERdDC+Hp
-        NclTrWkhhJ4I6K989rJGEdbP9wRMUyJHGH2AU5O9Zw==
-X-Google-Smtp-Source: AMrXdXuV1GZHhmhD/tdTHvoaqpjmOZP/HVHwmSPKdVrLl7BG7O4krg7GeVU8E5L8HhOUaHJHga/g9DnNxP3NYpuSqRk=
-X-Received: by 2002:a25:a87:0:b0:800:ea7e:bb0 with SMTP id 129-20020a250a87000000b00800ea7e0bb0mr2335459ybk.516.1674631793823;
- Tue, 24 Jan 2023 23:29:53 -0800 (PST)
+        Wed, 25 Jan 2023 02:59:55 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFCA245BFC;
+        Tue, 24 Jan 2023 23:59:53 -0800 (PST)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30P7jCEl010113;
+        Wed, 25 Jan 2023 07:59:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=tbmwcRINlEFcXEbMDAVwgpPTxxQYRDQfGvNfRvkTt3g=;
+ b=BTkIdnF1fhp4rV5Nvy91YOp7LGNKNxaAHqIU8pXCRBtsnAtStHQBnB7j2NefKo4UkIpA
+ JGgClzqrZFK20PWiBVbqtEAEK4tn9BL3eHgONv4hpq5YoXU6b+XIu39L5Nk3CsVlzbf1
+ EEfx6ZtOsPgDdrqShU86FvwDomunFLjw9248muWLoDUHnvDgtOmSRpHQzurhtDVZK55/
+ H3y2Lpjchd7lDw7xfxJzRQL2F3OJYoPEj1us+5nxTk+grrYbPejuPsmalgdRxRlDeTMr
+ KMie9MJoB8aG19QPtBwZ51fr93+omSEW7knfU5HXmJs9uOpuTuvajc/+6Of1zG5E5e05 dQ== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3najqa9bba-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 25 Jan 2023 07:59:36 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30P7xZ77010821
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 25 Jan 2023 07:59:35 GMT
+Received: from [10.50.40.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 24 Jan
+ 2023 23:59:30 -0800
+Message-ID: <5ca6868c-4e1b-9770-a6e3-d3a961eea757@quicinc.com>
+Date:   Wed, 25 Jan 2023 13:29:11 +0530
 MIME-Version: 1.0
-References: <20220617233328.1143665-1-dmitry.baryshkov@linaro.org>
- <20220617233328.1143665-5-dmitry.baryshkov@linaro.org> <37cf7080-8c4c-556c-a97c-ef0b0db1db11@quicinc.com>
-In-Reply-To: <37cf7080-8c4c-556c-a97c-ef0b0db1db11@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 25 Jan 2023 09:29:42 +0200
-Message-ID: <CAA8EJpod2r1VKVxG7Tf409+T7FQR4VPFmUudxhD+cs8_y3Go+w@mail.gmail.com>
-Subject: Re: [PATCH v6 4/4] drm/msm: stop storing the array of CRTCs in struct msm_drm_private
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, kernel test robot <lkp@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH V0 1/1] soc: qcom: dcc: Add QAD, Cti-trigger and
+ Bootconfig support for DCC
+Content-Language: en-US
+To:     kernel test robot <lkp@intel.com>, Andy Gross <agross@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>
+CC:     <oe-kbuild-all@lists.linux.dev>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>, <vkoul@kernel.org>
+References: <8337e5672559b197a13699d2c0ee69f18f6167a6.1673247689.git.quic_schowdhu@quicinc.com>
+ <202301092313.RPU8Nsb1-lkp@intel.com>
+From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+In-Reply-To: <202301092313.RPU8Nsb1-lkp@intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: IIeIRvrTZ3jeEwbgDxBf-4yzTtghF-4g
+X-Proofpoint-ORIG-GUID: IIeIRvrTZ3jeEwbgDxBf-4yzTtghF-4g
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-25_04,2023-01-24_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
+ malwarescore=0 adultscore=0 spamscore=0 mlxscore=0 clxscore=1011
+ impostorscore=0 priorityscore=1501 mlxlogscore=999 suspectscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301250073
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,236 +89,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 25 Jan 2023 at 04:14, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->
->
->
-> On 6/17/2022 4:33 PM, Dmitry Baryshkov wrote:
-> > The array of CRTC in the struct msm_drm_private duplicates a list of
-> > CRTCs in the drm_device. Drop it and use the existing list for CRTC
-> > enumeration.
-> >
-> > Reported-by: kernel test robot <lkp@intel.com>
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  |  2 +-
-> >   drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c |  2 +-
-> >   drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c |  2 +-
-> >   drivers/gpu/drm/msm/msm_drv.c            | 44 +++++++++++++-----------
-> >   drivers/gpu/drm/msm/msm_drv.h            |  3 +-
-> >   5 files changed, 27 insertions(+), 26 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> > index e23e2552e802..e79f0a8817ac 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> > @@ -806,7 +806,7 @@ static int _dpu_kms_drm_obj_init(struct dpu_kms *dpu_kms)
-> >                       ret = PTR_ERR(crtc);
-> >                       return ret;
-> >               }
-> > -             priv->crtcs[priv->num_crtcs++] = crtc;
-> > +             priv->num_crtcs++;
-> >       }
-> >
-> >       /* All CRTCs are compatible with all encoders */
-> > diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-> > index fb48c8c19ec3..7449c1693e45 100644
-> > --- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-> > +++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-> > @@ -337,7 +337,7 @@ static int modeset_init(struct mdp4_kms *mdp4_kms)
-> >                       goto fail;
-> >               }
-> >
-> > -             priv->crtcs[priv->num_crtcs++] = crtc;
-> > +             priv->num_crtcs++;
-> >       }
-> >
-> >       /*
-> > diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> > index 3d5621a68f85..36808990f840 100644
-> > --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> > +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> > @@ -497,7 +497,7 @@ static int modeset_init(struct mdp5_kms *mdp5_kms)
-> >                       DRM_DEV_ERROR(dev->dev, "failed to construct crtc %d (%d)\n", i, ret);
-> >                       goto fail;
-> >               }
-> > -             priv->crtcs[priv->num_crtcs++] = crtc;
-> > +             priv->num_crtcs++;
-> >       }
-> >
-> >       /*
-> > diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> > index 1aab6bf86278..567e77dae43b 100644
-> > --- a/drivers/gpu/drm/msm/msm_drv.c
-> > +++ b/drivers/gpu/drm/msm/msm_drv.c
-> > @@ -149,7 +149,7 @@ static void msm_irq_uninstall(struct drm_device *dev)
-> >
-> >   struct msm_vblank_work {
-> >       struct work_struct work;
-> > -     int crtc_id;
-> > +     struct drm_crtc *crtc;
-> >       bool enable;
-> >       struct msm_drm_private *priv;
-> >   };
-> > @@ -162,15 +162,15 @@ static void vblank_ctrl_worker(struct work_struct *work)
-> >       struct msm_kms *kms = priv->kms;
-> >
->
-> Is there any chance of vbl_work->crtc becoming NULL before this gets
-> executed?
-
-No. The worker is created in vblank_ctrl_queue_work. The
-vbl_work->crtc is filled at the time of creation.
-
-> So do we need to protect this like
->
-> if (vbl_work->enable && vbl_work->crtc)
->
-> Because the layers below this dont seem to have NULL protection.
->
->
-> >       if (vbl_work->enable)
-> > -             kms->funcs->enable_vblank(kms, priv->crtcs[vbl_work->crtc_id]);
-> > +             kms->funcs->enable_vblank(kms, vbl_work->crtc);
-> >       else
-> > -             kms->funcs->disable_vblank(kms, priv->crtcs[vbl_work->crtc_id]);
-> > +             kms->funcs->disable_vblank(kms, vbl_work->crtc);
-> >
-> >       kfree(vbl_work);
-> >   }
-> >
-> >   static int vblank_ctrl_queue_work(struct msm_drm_private *priv,
-> > -                                     int crtc_id, bool enable)
-> > +                                     struct drm_crtc *crtc, bool enable)
-> >   {
-> >       struct msm_vblank_work *vbl_work;
-> >
-> > @@ -180,7 +180,7 @@ static int vblank_ctrl_queue_work(struct msm_drm_private *priv,
-> >
-> >       INIT_WORK(&vbl_work->work, vblank_ctrl_worker);
-> >
-> > -     vbl_work->crtc_id = crtc_id;
-> > +     vbl_work->crtc = crtc;
-> >       vbl_work->enable = enable;
-> >       vbl_work->priv = priv;
-> >
-> > @@ -354,7 +354,8 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
-> >       struct msm_drm_private *priv = dev_get_drvdata(dev);
-> >       struct drm_device *ddev;
-> >       struct msm_kms *kms;
-> > -     int ret, i;
-> > +     struct drm_crtc *crtc;
-> > +     int ret;
-> >
-> >       if (drm_firmware_drivers_only())
-> >               return -ENODEV;
-> > @@ -427,20 +428,23 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
-> >       ddev->mode_config.funcs = &mode_config_funcs;
-> >       ddev->mode_config.helper_private = &mode_config_helper_funcs;
-> >
-> > -     for (i = 0; i < priv->num_crtcs; i++) {
-> > +     drm_for_each_crtc(crtc, ddev) {
-> > +             struct msm_drm_thread *ev_thread;
-> > +
-> >               /* initialize event thread */
-> > -             priv->event_thread[i].crtc_id = priv->crtcs[i]->base.id;
-> > -             priv->event_thread[i].dev = ddev;
-> > -             priv->event_thread[i].worker = kthread_create_worker(0,
-> > -                     "crtc_event:%d", priv->event_thread[i].crtc_id);
-> > -             if (IS_ERR(priv->event_thread[i].worker)) {
-> > -                     ret = PTR_ERR(priv->event_thread[i].worker);
-> > +             ev_thread = &priv->event_thread[drm_crtc_index(crtc)];
-> > +             ev_thread->crtc = crtc;
-> > +             ev_thread->dev = ddev;
-> > +             ev_thread->worker = kthread_create_worker(0,
-> > +                     "crtc_event:%d", ev_thread->crtc->base.id);
->
-> Please correct me if wrong.
->
-> Today, other than just populating the name for the worker is the
-> ev_thread->crtc used anywhere?
->
-> If so, can we just drop crtc from msm_drm_thread and while creating the
-> worker just use kthread_create_worker(0, "crtc_event:%d", crtc->base.id);
-
-It seems so. I'll take a look for v2.
-
-However your questions actually raised another question in my head. I
-went on looking for the reason for such complex vblank handling. It
-was added by Hai Li in the commit 78b1d470d57d ("drm/msm: Enable
-clocks during enable/disable_vblank() callbacks"). However I don't
-fully understand why the code will toggle vblank handling while the
-DPU/MDP5/MDP4 device is not resumed already. Maybe I just missed
-something here. Do you know the story behind the change?
-
->
-> > +             if (IS_ERR(ev_thread->worker)) {
-> > +                     ret = PTR_ERR(ev_thread->worker);
-> >                       DRM_DEV_ERROR(dev, "failed to create crtc_event kthread\n");
-> > -                     priv->event_thread[i].worker = NULL;
-> > +                     ev_thread->worker = NULL;
-> >                       goto err_msm_uninit;
-> >               }
-> >
-> > -             sched_set_fifo(priv->event_thread[i].worker->task);
-> > +             sched_set_fifo(ev_thread->worker->task);
-> >       }
-> >
-> >       ret = drm_vblank_init(ddev, priv->num_crtcs);
-> > @@ -563,25 +567,23 @@ static void msm_postclose(struct drm_device *dev, struct drm_file *file)
-> >   int msm_crtc_enable_vblank(struct drm_crtc *crtc)
-> >   {
-> >       struct drm_device *dev = crtc->dev;
-> > -     unsigned int pipe = crtc->index;
-> >       struct msm_drm_private *priv = dev->dev_private;
-> >       struct msm_kms *kms = priv->kms;
-> >       if (!kms)
-> >               return -ENXIO;
-> > -     drm_dbg_vbl(dev, "crtc=%u", pipe);
-> > -     return vblank_ctrl_queue_work(priv, pipe, true);
-> > +     drm_dbg_vbl(dev, "crtc=%u", crtc->base.id);
-> > +     return vblank_ctrl_queue_work(priv, crtc, true);
-> >   }
-> >
-> >   void msm_crtc_disable_vblank(struct drm_crtc *crtc)
-> >   {
-> >       struct drm_device *dev = crtc->dev;
-> > -     unsigned int pipe = crtc->index;
-> >       struct msm_drm_private *priv = dev->dev_private;
-> >       struct msm_kms *kms = priv->kms;
-> >       if (!kms)
-> >               return;
-> > -     drm_dbg_vbl(dev, "crtc=%u", pipe);
-> > -     vblank_ctrl_queue_work(priv, pipe, false);
-> > +     drm_dbg_vbl(dev, "crtc=%u", crtc->base.id);
-> > +     vblank_ctrl_queue_work(priv, crtc, false);
-> >   }
-> >
-> >   /*
-> > diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-> > index 08388d742d65..0e98b6f161df 100644
-> > --- a/drivers/gpu/drm/msm/msm_drv.h
-> > +++ b/drivers/gpu/drm/msm/msm_drv.h
-> > @@ -102,7 +102,7 @@ struct msm_display_topology {
-> >   /* Commit/Event thread specific structure */
-> >   struct msm_drm_thread {
-> >       struct drm_device *dev;
-> > -     unsigned int crtc_id;
-> > +     struct drm_crtc *crtc;
-> >       struct kthread_worker *worker;
-> >   };
-> >
-> > @@ -178,7 +178,6 @@ struct msm_drm_private {
-> >       struct workqueue_struct *wq;
-> >
-> >       unsigned int num_crtcs;
-> > -     struct drm_crtc *crtcs[MAX_CRTCS];
-> >
-> >       struct msm_drm_thread event_thread[MAX_CRTCS];
-> >
 
 
+On 1/9/2023 8:58 PM, kernel test robot wrote:
+> Hi Souradeep,
+> 
+> I love your patch! Yet something to improve:
+> 
+> [auto build test ERROR on next-20230109]
+> [cannot apply to clk/clk-next soc/for-next linus/master v6.2-rc3 v6.2-rc2 v6.2-rc1 v6.2-rc3]
+> [If your patch is applied to the wrong git tree, kindly drop us a note.
+> And when submitting patch, we suggest to use '--base' as documented in
+> https://git-scm.com/docs/git-format-patch#_base_tree_information]
+> 
+> url:    https://github.com/intel-lab-lkp/linux/commits/Souradeep-Chowdhury/soc-qcom-dcc-Add-QAD-Cti-trigger-and-Bootconfig-support-for-DCC/20230109-181920
+> patch link:    https://lore.kernel.org/r/8337e5672559b197a13699d2c0ee69f18f6167a6.1673247689.git.quic_schowdhu%40quicinc.com
+> patch subject: [PATCH V0 1/1] soc: qcom: dcc: Add QAD, Cti-trigger and Bootconfig support for DCC
+> config: powerpc-allmodconfig
+> compiler: powerpc-linux-gcc (GCC) 12.1.0
+> reproduce (this is a W=1 build):
+>          wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+>          chmod +x ~/bin/make.cross
+>          # https://github.com/intel-lab-lkp/linux/commit/887ce0321641a448b3c53ad5e3f5b05a47c83ae9
+>          git remote add linux-review https://github.com/intel-lab-lkp/linux
+>          git fetch --no-tags linux-review Souradeep-Chowdhury/soc-qcom-dcc-Add-QAD-Cti-trigger-and-Bootconfig-support-for-DCC/20230109-181920
+>          git checkout 887ce0321641a448b3c53ad5e3f5b05a47c83ae9
+>          # save the config file
+>          mkdir build_dir && cp config build_dir/.config
+>          COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=powerpc olddefconfig
+>          COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=powerpc SHELL=/bin/bash
+> 
+> If you fix the issue, kindly add following tag where applicable
+> | Reported-by: kernel test robot <lkp@intel.com>
+> 
+> All errors (new ones prefixed by >>, old ones prefixed by <<):
+> 
+>>> ERROR: modpost: "xbc_node_get_child" [drivers/soc/qcom/dcc.ko] undefined!
+>>> ERROR: modpost: "xbc_node_get_next" [drivers/soc/qcom/dcc.ko] undefined!
+>>> ERROR: modpost: "xbc_node_find_value" [drivers/soc/qcom/dcc.ko] undefined!
+>>> ERROR: modpost: "xbc_node_get_data" [drivers/soc/qcom/dcc.ko] undefined!
+>>> ERROR: modpost: "xbc_node_find_subkey" [drivers/soc/qcom/dcc.ko] undefined!
+> 
 
--- 
-With best wishes
-Dmitry
+This error is getting thrown again because 'QCOM_DCC' is declared as 
+tristate. Since DCC is using bootconfig apis which belongs to the __init 
+section of the kernel, it can no longer be used as an external module to 
+link with bootconfig apis. Will be changing it to bool in the next 
+version. Thank you.
