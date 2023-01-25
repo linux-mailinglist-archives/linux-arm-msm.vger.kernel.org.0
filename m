@@ -2,58 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A29567BC91
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 21:32:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B2E067BC97
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 21:33:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236391AbjAYUcL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Jan 2023 15:32:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60390 "EHLO
+        id S236123AbjAYUdK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Jan 2023 15:33:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236332AbjAYUcK (ORCPT
+        with ESMTP id S235991AbjAYUdJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Jan 2023 15:32:10 -0500
+        Wed, 25 Jan 2023 15:33:09 -0500
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA6834DBEE;
-        Wed, 25 Jan 2023 12:32:09 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C586345BED;
+        Wed, 25 Jan 2023 12:33:07 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 1A1AE61610;
-        Wed, 25 Jan 2023 20:32:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AEC8C433EF;
-        Wed, 25 Jan 2023 20:32:08 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 42A9F615E4;
+        Wed, 25 Jan 2023 20:33:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9945DC433EF;
+        Wed, 25 Jan 2023 20:33:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1674678728;
-        bh=q0VRdRwpXP7FsVF4ZbtxJ6aYm3asCpN+2fDBGNWxCxI=;
-        h=In-Reply-To:References:Subject:From:To:Date:From;
-        b=LModYztWvXKNZwQBVMF8CkEsDJTyMgKcUsC1x3db8eMwrEBbvHZCq1EO7F6nvD82E
-         a36BmU8DEAqSmD90yOYt7PdvdemfYHZ0IdfKW6qowp66R6bqJ5lnCH2v6rfUYdGUpR
-         1wizBF1UqsbA5gVPZxgcl9TRPp/90wEq/o3PQcAq3dMZU8lwdObe/I8ejspQOqasvw
-         ERWKE67StJS+iBZUAl/LU8u7NeJdSX2xT8tY14+J6nxiffTz8Bc8JBrxfMAbSHVyH+
-         xs0t9BMMp6f/KOjz+EV/QQfO3gSBxPqegNZAhfOAdtqmgQIp5TdsNSg3x5INXB733v
-         DanbYiFL1Crqw==
-Message-ID: <dfaa9ea3598e9a59d262b4afa7a52999.sboyd@kernel.org>
+        s=k20201202; t=1674678786;
+        bh=kOrIbcbj0AibIbFMrG7bhxU6+zC8SRrgbN/woFPSsKg=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=Zo4XEHW8ZblceqGd+p3yERWjg0f8CiXcS1lvlbKJB2cvtNbSWdocfKfFmjf1I7XZi
+         ADO6+nM4Z4i+nRJF/SlG/QOqo8aKOmitDfgv75xM67JjrvKcCE3u/GEs8HBxxmVQGT
+         CcHY+OJWjBg6zVHSW0IVq+geJp6lYqlqZytxzO2esB9PFhudoNFBJANdMHsyMKFQ7u
+         fA0JglKXwIN0BLObwDQ53K+kQKJuQd87KERyKpNqhlLi9rhCQFLbyxcVhcLe+F8Eqf
+         ctdIpoEqmvfuhP//fcLs+ovRIqyVaSpQ1TLN+sXcowMUxRbVMq3mIFJwPPJd44pPja
+         z0QLNF3utBCog==
+Message-ID: <5e790f5b2d77a19f78e217c68b5bc0eb.sboyd@kernel.org>
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <277a46d9-587f-324b-10cf-064302bdd2c5@linaro.org>
-References: <20230119130028.106817-1-krzysztof.kozlowski@linaro.org> <b676c36565da1b73c53ced6218ef6de1.sboyd@kernel.org> <277a46d9-587f-324b-10cf-064302bdd2c5@linaro.org>
-Subject: Re: [PATCH 1/2] dt-bindings: clock: qcom,sm8450-camcc: constrain required-opps
+In-Reply-To: <20230123201812.1230039-1-krzysztof.kozlowski@linaro.org>
+References: <20230123201812.1230039-1-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH 1/3] clk: qcom: cpu-8996: add missing cputype include
 From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Michael Turquette <mturquette@baylibre.com>,
-        Nishanth Menon <nm@ti.com>, Rob Herring <robh+dt@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org
-Date:   Wed, 25 Jan 2023 12:32:06 -0800
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Date:   Wed, 25 Jan 2023 12:33:04 -0800
 User-Agent: alot/0.10
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
@@ -64,22 +60,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Krzysztof Kozlowski (2023-01-21 10:59:21)
-> On 20/01/2023 23:15, Stephen Boyd wrote:
-> > Quoting Krzysztof Kozlowski (2023-01-19 05:00:27)
-> >> Be specific how many required-opps are allowed.
-> >>
-> >> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> >>
-> >> ---
-> >>
-> >> This change is independent, although logically is connected with my
-> >> dtschema pull:
-> >> https://github.com/devicetree-org/dt-schema/pull/95
-> >=20
-> > Do you want to take it through dt tree?
->=20
-> I think it would be better if you take it.
->=20
+Quoting Krzysztof Kozlowski (2023-01-23 12:18:10)
+> diff --git a/drivers/clk/qcom/clk-cpu-8996.c b/drivers/clk/qcom/clk-cpu-8=
+996.c
+> index ee76ef958d31..40c4dabc20a7 100644
+> --- a/drivers/clk/qcom/clk-cpu-8996.c
+> +++ b/drivers/clk/qcom/clk-cpu-8996.c
+> @@ -49,6 +49,7 @@
+>   * detect voltage droops.
+>   */
+> =20
+> +#include <asm/cputype.h>
 
-Ok, applied to clk-next.
+Please include asm headers after linux headers
+
+>  #include <linux/bitfield.h>
+>  #include <linux/clk.h>
+>  #include <linux/clk-provider.h>
