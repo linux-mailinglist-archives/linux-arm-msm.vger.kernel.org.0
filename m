@@ -2,191 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 44D0167BBC2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 21:04:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 14DE167BC08
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 21:05:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234924AbjAYUE0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Jan 2023 15:04:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36314 "EHLO
+        id S236173AbjAYUFq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Jan 2023 15:05:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236197AbjAYUEW (ORCPT
+        with ESMTP id S235525AbjAYUFp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Jan 2023 15:04:22 -0500
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [IPv6:2001:67c:2178:6::1d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 218A045887;
-        Wed, 25 Jan 2023 12:04:21 -0800 (PST)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by smtp-out2.suse.de (Postfix) with ESMTPS id B52E21FF18;
-        Wed, 25 Jan 2023 20:04:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1674677059; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=y/gEPYKc6u74/1ZhA3KTyyGoxjq8IY3iL1CCJO+JrM4=;
-        b=vYkGvI84jV3ZN70tW/1DxVKWRlpUTiM5LSBJKNLkbDFTA3SmMAeAiKqQA29Ng+6IC9NFmI
-        ea7zG/GftgVyiVIUhnOzHS8cbedbaNyYJcHHsnS93YbVGURVhNo2fcy6SayA7ooeOoaFin
-        ymCNUA3zys6+Ef5ngIpKTMdpsSgrpfk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1674677059;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=y/gEPYKc6u74/1ZhA3KTyyGoxjq8IY3iL1CCJO+JrM4=;
-        b=7YStTZ9T/UfO30CN7zcek5I/OMQLBvqLdS5t3eKRDjSuaB/KkRB8BtNpxTsyF2IAlTqdir
-        4jfZSVKwM3Y08IAw==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 7D4811339E;
-        Wed, 25 Jan 2023 20:04:19 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id wKTSHUOL0WMDeAAAMHmgww
-        (envelope-from <tzimmermann@suse.de>); Wed, 25 Jan 2023 20:04:19 +0000
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-To:     airlied@gmail.com, daniel@ffwll.ch,
-        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        javierm@redhat.com
-Cc:     dri-devel@lists.freedesktop.org,
+        Wed, 25 Jan 2023 15:05:45 -0500
+Received: from mail-oa1-f43.google.com (mail-oa1-f43.google.com [209.85.160.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 810CB12587;
+        Wed, 25 Jan 2023 12:05:43 -0800 (PST)
+Received: by mail-oa1-f43.google.com with SMTP id 586e51a60fabf-15b9c93848dso22813893fac.1;
+        Wed, 25 Jan 2023 12:05:43 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8kqCnvG5HfBYMdFzmIrllsGYjZVwDWefqF05Cmky4HA=;
+        b=1MkdHccN4sTH4t9xBZvyUQIxoYOq7j8fZzdGNnazpcF2mE85RiQc+0HFSP1Z/3DKYS
+         WnIb0QEc4RdWG7FAw0qbFSsXDZ4+cdo45vccV7EDix/1G4+hKJ4kgikaoUfV5SE+FbKM
+         X+ALhCtuuwtE+QlexxVkbkhd5lOVr3PED0pDep9hs0Gm94/DVYEnW4XINdP6GDm9co/q
+         9scVxhpfpOADKuIe6EchvP4EjwDM4tqzgGAJSwjA/oEiZA6qmNhdief8rcSc8kJdV9pv
+         3lq5+h28KgV2C/kVO0K9hc8rYCvHxMoaqqFD2DdS2r3v3MJAkGxsSNF15sT012OVOVg4
+         sBVg==
+X-Gm-Message-State: AO0yUKUD5ZeFxQsUh/9oHbyjsD9L9fqTzkpbEq6ZlOwuB1mr7ICd3rNx
+        W2JLtY3BMbx45vM3aVctOQ==
+X-Google-Smtp-Source: AK7set+KlYA9hOhKxY3yXbw1+jJFui+axb/K8qUGpNYSrXD6fL93Qjufe/ZRHNh9bIxZbHxYbUPr4A==
+X-Received: by 2002:a05:6870:14d5:b0:163:45a2:e276 with SMTP id l21-20020a05687014d500b0016345a2e276mr684576oab.9.1674677142691;
+        Wed, 25 Jan 2023 12:05:42 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id n20-20020a056870559400b0010d7242b623sm2325869oao.21.2023.01.25.12.05.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Jan 2023 12:05:42 -0800 (PST)
+Received: (nullmailer pid 2768672 invoked by uid 1000);
+        Wed, 25 Jan 2023 20:05:39 -0000
+Date:   Wed, 25 Jan 2023 14:05:39 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     linux-sunxi@lists.linux.dev, openbmc@lists.ozlabs.org,
+        Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Li-hao Kuo <lhjeff911@gmail.com>, Han Xu <han.xu@nxp.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Yogesh Gaur <yogeshgaur.83@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Birger Koblitz <mail@birger-koblitz.de>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        ", Bert Vermeulen" <bert@biot.com>, Marek Vasut <marex@denx.de>,
+        linux-mediatek@lists.infradead.org, linux-tegra@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        ", Christophe Kerello" <christophe.kerello@foss.st.com>,
         linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        amd-gfx@lists.freedesktop.org, linux-tegra@vger.kernel.org,
-        Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH v3 10/10] drm/fbdev-generic: Rename struct fb_info 'fbi' to 'info'
-Date:   Wed, 25 Jan 2023 21:04:15 +0100
-Message-Id: <20230125200415.14123-11-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230125200415.14123-1-tzimmermann@suse.de>
-References: <20230125200415.14123-1-tzimmermann@suse.de>
+        Haibo Chen <haibo.chen@nxp.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Kamal Dasu <kdasu.kdev@gmail.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        linux-arm-msm@vger.kernel.org,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Vaishnav Achath <vaishnav.a@ti.com>,
+        =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        ", Broadcom internal kernel review list" 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        Samuel Holland <samuel@sholland.org>,
+        Andrew Jeffery <andrew@aj.id.au>, linux-spi@vger.kernel.org,
+        linux-amlogic@lists.infradead.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Pragnesh Patel <pragnesh.patel@sifive.com>,
+        linux-riscv@lists.infradead.org,
+        Leilk Liu <leilk.liu@mediatek.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-rockchip@lists.infradead.org,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        devicetree@vger.kernel.org, Joel Stanley <joel@jms.id.au>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        =?UTF-8?B?77+9ZWNraQ==?= <rafal@milecki.pl>,
+        Serge Semin <fancer.lancer@gmail.com>,
+        linux-aspeed@lists.ozlabs.org, Gabor Juhos <juhosg@openwrt.org>,
+        Anson Huang <Anson.Huang@nxp.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Erwan Leray <erwan.leray@foss.st.com>,
+        Patrice Chotard <patrice.chotard@foss.st.com>,
+        Chris Packham <chris.packham@alliedtelesis.co.nz>,
+        Kuldeep Singh <singh.kuldeep87k@gmail.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Maxime Ripard <mripard@kernel.org>,
+        Parshuram Thombare <pthombar@cadence.com>,
+        ", Fabio Estevam" <festevam@gmail.com>,
+        Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: Re: [PATCH v2 2/2] spi: dt-bindings: cleanup examples - indentation,
+ lowercase hex
+Message-ID: <167467713905.2768614.7865748447151198568.robh@kernel.org>
+References: <20230124083342.34869-1-krzysztof.kozlowski@linaro.org>
+ <20230124083342.34869-2-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230124083342.34869-2-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The generic fbdev emulation names variables of type struct fb_info
-both 'fbi' and 'info'. The latter seems to be more common in fbdev
-code, so name fbi accordingly.
 
-Also replace the duplicate variable in drm_fbdev_fb_destroy().
+On Tue, 24 Jan 2023 09:33:42 +0100, Krzysztof Kozlowski wrote:
+> Cleanup examples:
+>  - use 4-space indentation (for cases when it is neither 4 not 2 space),
+>  - drop redundant blank lines,
+>  - use lowercase hex.
+> 
+> No functional impact except adjusting to preferred coding style.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be> # renesas
+> Reviewed-by: Andrew Jeffery <andrew@aj.id.au> # aspeed
+> Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org> # meson
+> 
+> ---
+> 
+> Changes since v1:
+> 1. Adjust indentation in two more examples (cdns,qspi-nor, st,stm32-spi)
+> 2. Add tags
+> ---
+>  .../bindings/spi/amlogic,meson-gx-spicc.yaml  |  26 +--
+>  .../bindings/spi/amlogic,meson6-spifc.yaml    |  22 +--
+>  .../bindings/spi/aspeed,ast2600-fmc.yaml      |  24 +--
+>  .../bindings/spi/brcm,spi-bcm-qspi.yaml       | 156 +++++++++---------
+>  .../bindings/spi/cdns,qspi-nor.yaml           |  34 ++--
+>  .../bindings/spi/nvidia,tegra210-quad.yaml    |  42 ++---
+>  .../bindings/spi/qcom,spi-qcom-qspi.yaml      |   1 -
+>  .../devicetree/bindings/spi/renesas,rspi.yaml |  22 +--
+>  .../bindings/spi/spi-sunplus-sp7021.yaml      |   4 +-
+>  .../devicetree/bindings/spi/st,stm32-spi.yaml |  23 ++-
+>  10 files changed, 176 insertions(+), 178 deletions(-)
+> 
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
----
- drivers/gpu/drm/drm_fbdev_generic.c | 47 ++++++++++++++---------------
- 1 file changed, 23 insertions(+), 24 deletions(-)
-
-diff --git a/drivers/gpu/drm/drm_fbdev_generic.c b/drivers/gpu/drm/drm_fbdev_generic.c
-index 68ce652e3a14..43f94aa9e015 100644
---- a/drivers/gpu/drm/drm_fbdev_generic.c
-+++ b/drivers/gpu/drm/drm_fbdev_generic.c
-@@ -46,16 +46,15 @@ static int drm_fbdev_fb_release(struct fb_info *info, int user)
- static void drm_fbdev_fb_destroy(struct fb_info *info)
- {
- 	struct drm_fb_helper *fb_helper = info->par;
--	struct fb_info *fbi = fb_helper->info;
- 	void *shadow = NULL;
- 
- 	if (!fb_helper->dev)
- 		return;
- 
--	if (fbi->fbdefio)
--		fb_deferred_io_cleanup(fbi);
-+	if (info->fbdefio)
-+		fb_deferred_io_cleanup(info);
- 	if (drm_fbdev_use_shadow_fb(fb_helper))
--		shadow = fbi->screen_buffer;
-+		shadow = info->screen_buffer;
- 
- 	drm_fb_helper_fini(fb_helper);
- 
-@@ -171,7 +170,7 @@ static int drm_fbdev_fb_probe(struct drm_fb_helper *fb_helper,
- 	struct drm_device *dev = fb_helper->dev;
- 	struct drm_client_buffer *buffer;
- 	struct drm_framebuffer *fb;
--	struct fb_info *fbi;
-+	struct fb_info *info;
- 	u32 format;
- 	struct iosys_map map;
- 	int ret;
-@@ -190,35 +189,35 @@ static int drm_fbdev_fb_probe(struct drm_fb_helper *fb_helper,
- 	fb_helper->fb = buffer->fb;
- 	fb = buffer->fb;
- 
--	fbi = drm_fb_helper_alloc_info(fb_helper);
--	if (IS_ERR(fbi))
--		return PTR_ERR(fbi);
-+	info = drm_fb_helper_alloc_info(fb_helper);
-+	if (IS_ERR(info))
-+		return PTR_ERR(info);
- 
--	fbi->fbops = &drm_fbdev_fb_ops;
--	fbi->screen_size = sizes->surface_height * fb->pitches[0];
--	fbi->fix.smem_len = fbi->screen_size;
--	fbi->flags = FBINFO_DEFAULT;
-+	info->fbops = &drm_fbdev_fb_ops;
-+	info->screen_size = sizes->surface_height * fb->pitches[0];
-+	info->fix.smem_len = info->screen_size;
-+	info->flags = FBINFO_DEFAULT;
- 
--	drm_fb_helper_fill_info(fbi, fb_helper, sizes);
-+	drm_fb_helper_fill_info(info, fb_helper, sizes);
- 
- 	if (drm_fbdev_use_shadow_fb(fb_helper)) {
--		fbi->screen_buffer = vzalloc(fbi->screen_size);
--		if (!fbi->screen_buffer)
-+		info->screen_buffer = vzalloc(info->screen_size);
-+		if (!info->screen_buffer)
- 			return -ENOMEM;
--		fbi->flags |= FBINFO_VIRTFB | FBINFO_READS_FAST;
-+		info->flags |= FBINFO_VIRTFB | FBINFO_READS_FAST;
- 
--		fbi->fbdefio = &drm_fbdev_defio;
--		fb_deferred_io_init(fbi);
-+		info->fbdefio = &drm_fbdev_defio;
-+		fb_deferred_io_init(info);
- 	} else {
- 		/* buffer is mapped for HW framebuffer */
- 		ret = drm_client_buffer_vmap(fb_helper->buffer, &map);
- 		if (ret)
- 			return ret;
- 		if (map.is_iomem) {
--			fbi->screen_base = map.vaddr_iomem;
-+			info->screen_base = map.vaddr_iomem;
- 		} else {
--			fbi->screen_buffer = map.vaddr;
--			fbi->flags |= FBINFO_VIRTFB;
-+			info->screen_buffer = map.vaddr;
-+			info->flags |= FBINFO_VIRTFB;
- 		}
- 
- 		/*
-@@ -227,10 +226,10 @@ static int drm_fbdev_fb_probe(struct drm_fb_helper *fb_helper,
- 		 * case.
- 		 */
- #if IS_ENABLED(CONFIG_DRM_FBDEV_LEAK_PHYS_SMEM)
--		if (fb_helper->hint_leak_smem_start && fbi->fix.smem_start == 0 &&
-+		if (fb_helper->hint_leak_smem_start && info->fix.smem_start == 0 &&
- 		    !drm_WARN_ON_ONCE(dev, map.is_iomem))
--			fbi->fix.smem_start =
--				page_to_phys(virt_to_page(fbi->screen_buffer));
-+			info->fix.smem_start =
-+				page_to_phys(virt_to_page(info->screen_buffer));
- #endif
- 	}
- 
--- 
-2.39.0
-
+Reviewed-by: Rob Herring <robh@kernel.org>
