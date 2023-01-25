@@ -2,129 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B402C67AFE0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 11:42:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D3F4167AFF3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 11:46:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235239AbjAYKml (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Jan 2023 05:42:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44082 "EHLO
+        id S233356AbjAYKqC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Jan 2023 05:46:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234279AbjAYKml (ORCPT
+        with ESMTP id S232999AbjAYKqB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Jan 2023 05:42:41 -0500
-Received: from mail-il1-f200.google.com (mail-il1-f200.google.com [209.85.166.200])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F0781042A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 02:42:40 -0800 (PST)
-Received: by mail-il1-f200.google.com with SMTP id z8-20020a056e02088800b0030c247efc7dso12255089ils.15
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 02:42:40 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:from:subject:message-id:date:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=c2orMjLOVvDEreFzT3yDkDcGRcoylFJF29UL7OlIXu4=;
-        b=2spluyAxzQZSnxNuSMGEmxS9HCdbcKiE1tU2NC6W9eHa19frJtp3CCbewrb8E8ubS/
-         jMl8JTSXW6LxugWzGS2mZDf0b5PFrRL+iZxqQ5/06YkM0Zhf13b9VBOFdHwLGPX+QAlG
-         Ma5z6bC2mRXrUynr7s17MyirZK2X2pa6eWau9K8sGT9s1dcN0rG+S2StdXrLzHclKf8C
-         AL/O9XGsu/wlHdxN88aLeIE3HDJnsREnamVLidyhZEKnXSza0fCdn4MPeIPAUxVunn/8
-         kTfUCVE15jNjxSVCpMDOUXHBG0FzNfzp4Vcbh0/wECkWBrB8/h7EiRu1nlzzq1RNMS3Z
-         yxPg==
-X-Gm-Message-State: AFqh2kpQr4YmoIP+F5MXops7Xx/U8sxQz+sKTyNHDwtEVG6eWxzr4aoj
-        sESmbMicz30rUIxvH5Y1riASY6e8OF9NPrYiSyFNfsECEVsu
-X-Google-Smtp-Source: AMrXdXsDyHMwPyrfIR3G7jVx7r39rE62in+kvwIsTTWGz8uGjf+f/YEon21aM3hzF0jeA2HWa1EI9UrRxuaVLrb4/JL4/W7nQiTp
+        Wed, 25 Jan 2023 05:46:01 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07E032D56;
+        Wed, 25 Jan 2023 02:46:00 -0800 (PST)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30P7U2Ma007077;
+        Wed, 25 Jan 2023 10:45:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=/rE7plyDah/nBJmzuMFXucz4lzFGzHs4vSiVS7Yw+7Q=;
+ b=UXwi27jp13YLSmhUWkt1BGSdTz2wC3pssRAZCSpfwFjgvEF5IvELRoejYJR9Y1IKh9jg
+ PcoOC2wr4t/bFAVSlsFN1c4RqH6c/9jTvqZkpRaT880+NiL9i0wEjFidNn2jezGhClln
+ e6p2ka+68m9/HPNpGblulTsPHodXFWWPQZVIgl8PewXRBqctqDh9ROpADimj+vAi8AnP
+ ty/WW9Q/q9iJX3QY2gHD1s+1dR7Fp8dXBMnHH7zvLwBnAWsFhor2K8deE+8DityLIeBs
+ vpf8a2NsDtkL9SPGf3OTqn7UG77zi9JTkAAfaMn/RlF5WmDwaG9W6cqAfa4L5M6IMIyK Lw== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nag309xwd-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 25 Jan 2023 10:45:43 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30PAjg5k000913
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 25 Jan 2023 10:45:42 GMT
+Received: from win-platform-upstream01.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Wed, 25 Jan 2023 02:45:34 -0800
+From:   Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <ulf.hansson@linaro.org>,
+        <linus.walleij@linaro.org>, <catalin.marinas@arm.com>,
+        <will@kernel.org>, <shawnguo@kernel.org>, <arnd@arndb.de>,
+        <marcel.ziswiler@toradex.com>, <dmitry.baryshkov@linaro.org>,
+        <nfraprado@collabora.com>, <broonie@kernel.org>,
+        <robimarko@gmail.com>, <quic_gurus@quicinc.com>,
+        <bhupesh.sharma@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+CC:     Kathiravan T <quic_kathirav@quicinc.com>
+Subject: [PATCH 00/10] Add minimal boot support for IPQ5332
+Date:   Wed, 25 Jan 2023 16:15:10 +0530
+Message-ID: <20230125104520.89684-1-quic_kathirav@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-X-Received: by 2002:a02:cf9e:0:b0:3a5:73ac:b6c1 with SMTP id
- w30-20020a02cf9e000000b003a573acb6c1mr3306246jar.40.1674643359334; Wed, 25
- Jan 2023 02:42:39 -0800 (PST)
-Date:   Wed, 25 Jan 2023 02:42:39 -0800
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <0000000000008f0a6505f3144a6c@google.com>
-Subject: [syzbot] KMSAN: uninit-value in qrtr_tx_resume
-From:   syzbot <syzbot+4436c9630a45820fda76@syzkaller.appspotmail.com>
-To:     davem@davemloft.net, edumazet@google.com, glider@google.com,
-        kuba@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mani@kernel.org,
-        netdev@vger.kernel.org, pabeni@redhat.com,
-        syzkaller-bugs@googlegroups.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=0.9 required=5.0 tests=BAYES_00,FROM_LOCAL_HEX,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SORTED_RECIPS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 0y2CuRzgWXyyYHKpRuNV58BgtErF3Mjg
+X-Proofpoint-GUID: 0y2CuRzgWXyyYHKpRuNV58BgtErF3Mjg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-25_05,2023-01-25_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxscore=0
+ suspectscore=0 bulkscore=0 adultscore=0 phishscore=0 lowpriorityscore=0
+ mlxlogscore=579 clxscore=1015 priorityscore=1501 impostorscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301250098
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello,
+From: Kathiravan T <quic_kathirav@quicinc.com>
 
-syzbot found the following issue on:
+The IPQ5332 is Qualcomm's 802.11ax SoC for Routers, Gateways and
+Access Points.
 
-HEAD commit:    41c66f470616 kmsan: silence -Wmissing-prototypes warnings
-git tree:       https://github.com/google/kmsan.git master
-console+strace: https://syzkaller.appspot.com/x/log.txt?x=155a4ffe480000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=a9a22da1efde3af6
-dashboard link: https://syzkaller.appspot.com/bug?extid=4436c9630a45820fda76
-compiler:       clang version 15.0.0 (https://github.com/llvm/llvm-project.git 610139d2d9ce6746b3c617fb3e2f7886272d26ff), GNU ld (GNU Binutils for Debian) 2.35.2
-syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=12254a76480000
-C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=11cdf796480000
+This series adds minimal board boot support for ipq5332-mi01.2 board.
 
-Downloadable assets:
-disk image: https://storage.googleapis.com/syzbot-assets/69d5eef879e6/disk-41c66f47.raw.xz
-vmlinux: https://storage.googleapis.com/syzbot-assets/e91a447c44a2/vmlinux-41c66f47.xz
-kernel image: https://storage.googleapis.com/syzbot-assets/c549edb9c410/bzImage-41c66f47.xz
+Also, this series depends on the below patch
+https://lore.kernel.org/linux-arm-msm/20230120082631.22053-1-quic_kathirav@quicinc.com/
 
-IMPORTANT: if you fix the issue, please add the following tag to the commit:
-Reported-by: syzbot+4436c9630a45820fda76@syzkaller.appspotmail.com
+Kathiravan T (10):
+  dt-bindings: pinctrl: qcom: add IPQ5332 pinctrl
+  pinctrl: qcom: Introduce IPQ5332 TLMM driver
+  clk: qcom: Add STROMER PLUS PLL type for IPQ5332
+  dt-bindings: clock: Add Qualcomm IPQ5332 GCC
+  clk: qcom: add Global Clock controller (GCC) driver for IPQ5332 SoC
+  dt-bindings: qcom: add ipq5332 boards
+  dt-bindings: firmware: document IPQ5332 SCM
+  dt-bindings: mmc: sdhci-msm: add IPQ5332 compatible
+  arm64: dts: qcom: add IPQ5332 SoC and MI01.2 board support
+  arm64: defconfig: Enable IPQ5332 SoC base configs
 
-=====================================================
-BUG: KMSAN: uninit-value in qrtr_tx_resume+0x185/0x1f0 net/qrtr/af_qrtr.c:230
- qrtr_tx_resume+0x185/0x1f0 net/qrtr/af_qrtr.c:230
- qrtr_endpoint_post+0xf85/0x11b0 net/qrtr/af_qrtr.c:519
- qrtr_tun_write_iter+0x270/0x400 net/qrtr/tun.c:108
- call_write_iter include/linux/fs.h:2189 [inline]
- aio_write+0x63a/0x950 fs/aio.c:1600
- io_submit_one+0x1d1c/0x3bf0 fs/aio.c:2019
- __do_sys_io_submit fs/aio.c:2078 [inline]
- __se_sys_io_submit+0x293/0x770 fs/aio.c:2048
- __x64_sys_io_submit+0x92/0xd0 fs/aio.c:2048
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
+ .../devicetree/bindings/arm/qcom.yaml         |    7 +
+ .../bindings/clock/qcom,ipq5332-gcc.yaml      |   55 +
+ .../bindings/firmware/qcom,scm.yaml           |    1 +
+ .../devicetree/bindings/mmc/sdhci-msm.yaml    |    1 +
+ .../pinctrl/qcom,ipq5332-pinctrl.yaml         |  134 +
+ arch/arm64/boot/dts/qcom/Makefile             |    1 +
+ arch/arm64/boot/dts/qcom/ipq5332-mi01.2.dts   |   71 +
+ arch/arm64/boot/dts/qcom/ipq5332.dtsi         |  273 ++
+ arch/arm64/configs/defconfig                  |    2 +
+ drivers/clk/qcom/Kconfig                      |    7 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/clk-alpha-pll.c              |   11 +
+ drivers/clk/qcom/clk-alpha-pll.h              |    1 +
+ drivers/clk/qcom/gcc-ipq5332.c                | 3954 +++++++++++++++++
+ drivers/pinctrl/qcom/Kconfig                  |   10 +
+ drivers/pinctrl/qcom/Makefile                 |    1 +
+ drivers/pinctrl/qcom/pinctrl-ipq5332.c        | 1008 +++++
+ include/dt-bindings/clock/qcom,gcc-ipq5332.h  |  359 ++
+ 18 files changed, 5897 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,ipq5332-gcc.yaml
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,ipq5332-pinctrl.yaml
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq5332-mi01.2.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq5332.dtsi
+ create mode 100644 drivers/clk/qcom/gcc-ipq5332.c
+ create mode 100644 drivers/pinctrl/qcom/pinctrl-ipq5332.c
+ create mode 100644 include/dt-bindings/clock/qcom,gcc-ipq5332.h
 
-Uninit was created at:
- slab_post_alloc_hook mm/slab.h:766 [inline]
- slab_alloc_node mm/slub.c:3452 [inline]
- __kmem_cache_alloc_node+0x71f/0xce0 mm/slub.c:3491
- __do_kmalloc_node mm/slab_common.c:967 [inline]
- __kmalloc_node_track_caller+0x114/0x3b0 mm/slab_common.c:988
- kmalloc_reserve net/core/skbuff.c:492 [inline]
- __alloc_skb+0x3af/0x8f0 net/core/skbuff.c:565
- __netdev_alloc_skb+0x120/0x7d0 net/core/skbuff.c:630
- qrtr_endpoint_post+0xbd/0x11b0 net/qrtr/af_qrtr.c:446
- qrtr_tun_write_iter+0x270/0x400 net/qrtr/tun.c:108
- call_write_iter include/linux/fs.h:2189 [inline]
- aio_write+0x63a/0x950 fs/aio.c:1600
- io_submit_one+0x1d1c/0x3bf0 fs/aio.c:2019
- __do_sys_io_submit fs/aio.c:2078 [inline]
- __se_sys_io_submit+0x293/0x770 fs/aio.c:2048
- __x64_sys_io_submit+0x92/0xd0 fs/aio.c:2048
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
+-- 
+2.34.1
 
-CPU: 0 PID: 4984 Comm: syz-executor328 Not tainted 6.2.0-rc5-syzkaller-80200-g41c66f470616 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/12/2023
-=====================================================
-
-
----
-This report is generated by a bot. It may contain errors.
-See https://goo.gl/tpsmEJ for more information about syzbot.
-syzbot engineers can be reached at syzkaller@googlegroups.com.
-
-syzbot will keep track of this issue. See:
-https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
-syzbot can test patches for this issue, for details see:
-https://goo.gl/tpsmEJ#testing-patches
