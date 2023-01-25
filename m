@@ -2,135 +2,235 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 07F8567B55C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 16:04:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7BF4867B64E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 16:53:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235264AbjAYPEb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Jan 2023 10:04:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34008 "EHLO
+        id S235602AbjAYPxF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Jan 2023 10:53:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229517AbjAYPEb (ORCPT
+        with ESMTP id S235248AbjAYPxE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Jan 2023 10:04:31 -0500
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2126.outbound.protection.outlook.com [40.107.220.126])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BBF640F4;
-        Wed, 25 Jan 2023 07:04:30 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=gYue36nVnRPPPhydnGJ1wokPSomp/tyk3P/xQHQQojADSYljLMtLwDv3071zVkeoBIraEd7/XgdR/WFgtn/Krk7q8BUvugOyoFen1bfCSIKawfmLJA6E1rktticNrLz2Y3ZFxUwFQWCv3MUTqb/bXQ8nE+u9Z6EZz4eUFKp0Mll3S8dFWaohke0+qtJ9wz8TRVfwIY2O8JyTCgnjrSQ7zkbbNI9KXLdhUoNoH3y4ZhFS5aWDBD8lPVqAcg+kqtDFGYjgz9x6GgZKM+sl3h24PN3Dc+MS18LaYR7WjTXRuTBPuyHKra7hZU0ptl36V1HiDCJ641h7oLL0SkAeeiSq3w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=EuE/3uep11OpjKA3rPW5x2npKbMx/XXhDKBCHgHAgSc=;
- b=KN+uAIFeQiTrllYqF/dASeb5I9qWjzmG0j7o3pMABRe6vwoUoC1nuXv44kpmmVEQks/oMc/648PYJ92XU/VqTJ7B1mLRf3JoFP31vtT+lvk9eUl3MOqvCJnc8b5AfeeJWTscGXNZs5O/PO2LwpH8snlc4pCojGPJ0KD2TwNX0Y+9VBARnkIW0gGB92PTNH82UtRuEBJppLdWavrTrdbQpMgRfkQWkhWojXm0zuQb2Q4bBxwm0CMCd5WxKySpdQrcqpj327vBNJ+dvahBiA7jxu4OoWuu7jPilLIFp17/pLQ2rp4erGACDBFcyPH6yf3/8Or+zLEaO/sNqgMSkDU/Rg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=corigine.com; dmarc=pass action=none header.from=corigine.com;
- dkim=pass header.d=corigine.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=corigine.onmicrosoft.com; s=selector2-corigine-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=EuE/3uep11OpjKA3rPW5x2npKbMx/XXhDKBCHgHAgSc=;
- b=kW+9GTLrPPfE5rpGgG87gY1/6ta39N7ml/t2ADUPipRZBTMUTlorD/K5L9VSgyeeg6/5eh91DrJa/0m3sBsCGMKW4nsydB7W9R2QJ4PxdolQKCKJNMcJXm91MEZDbklGhF6bZzAM0mi7kO/UolwnIEfLwf1mdamYaLOBy1PHqDg=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=corigine.com;
-Received: from PH0PR13MB4842.namprd13.prod.outlook.com (2603:10b6:510:78::6)
- by DS7PR13MB4686.namprd13.prod.outlook.com (2603:10b6:5:3a3::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6043.21; Wed, 25 Jan
- 2023 15:04:27 +0000
-Received: from PH0PR13MB4842.namprd13.prod.outlook.com
- ([fe80::eb5c:910f:3730:fd65]) by PH0PR13MB4842.namprd13.prod.outlook.com
- ([fe80::eb5c:910f:3730:fd65%6]) with mapi id 15.20.6043.021; Wed, 25 Jan 2023
- 15:04:26 +0000
-Date:   Wed, 25 Jan 2023 16:04:20 +0100
-From:   Simon Horman <simon.horman@corigine.com>
-To:     Natalia Petrova <n.petrova@fintech.ru>
-Cc:     Manivannan Sadhasivam <mani@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        lvc-project@linuxtesting.org
-Subject: Re: [PATCH] net: qrtr: free memory on error path in
- radix_tree_insert()
-Message-ID: <Y9FE9E4G/arTAHjL@corigine.com>
-References: <20230125134831.8090-1-n.petrova@fintech.ru>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230125134831.8090-1-n.petrova@fintech.ru>
-X-ClientProxiedBy: AM0PR04CA0027.eurprd04.prod.outlook.com
- (2603:10a6:208:122::40) To PH0PR13MB4842.namprd13.prod.outlook.com
- (2603:10b6:510:78::6)
+        Wed, 25 Jan 2023 10:53:04 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 899E9212F;
+        Wed, 25 Jan 2023 07:53:03 -0800 (PST)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30PErW9V014743;
+        Wed, 25 Jan 2023 15:52:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=6eEpNVI0rNe3xJIlW8P6xrZ8Jv6Y1y+7RCqksyUlwbQ=;
+ b=eD+CKS3pgqypHvg52j739dRv+nbE/8JCU93kbN6v0EZ4WrOsFaSXUU45k/Z+wsKayq7a
+ zPd2+ByxhZG7A8vin3ahTXR8fqSbOCbdivpC+3+s1Oy8kjmMnjAkRi4LnRk/pZEAoUMw
+ 3heWIiImLUrkACp5KUTPtoXD8mHdhyfhdix7xBftWTLc70g/FRSRU7DIRE7pmkWdSwOn
+ 5n0KIwU2fm2FzJSvTkrkHWKAyom+lSldfy6RjCp5WdBvtjs7luwZnx3WUBeOpnkfPl/w
+ QWeRa+rmQUXN0Zv78KgMbF9xRYjWdylQoOLBZc4KXLYn2F0t71R9MDRZCSsQeB58TgQ4 xg== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nb6jc83um-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 25 Jan 2023 15:52:43 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30PFnjHj004361
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 25 Jan 2023 15:49:45 GMT
+Received: from [10.50.43.172] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 25 Jan
+ 2023 07:49:36 -0800
+Message-ID: <0b28f4a3-c445-7473-501b-39cbcfdb9889@quicinc.com>
+Date:   Wed, 25 Jan 2023 21:19:33 +0530
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR13MB4842:EE_|DS7PR13MB4686:EE_
-X-MS-Office365-Filtering-Correlation-Id: 43487519-dc98-4345-d8d2-08dafee5738a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: sxkl1R/0nmH0tD/zC3W1JZjL6wa2xAsFobtDsQZeOTAjjk7sCh4i+GfBr2WMlEBxhGKDbZ8Ftxrd+xC0ITRXupdqk7pxrCiYM9xHC1p0p3mU0+erMV/2z8wSlrsM/G7FfkEgofdGu52KfucPEwUlvNtMN01iGAmORYDnBvqWXP6Z8+uj5ndoCUQWw8cETYfjuozJOrH0IJi0Ca34w1ZbAacbHdC1GhUPs2JwAVPJSA0GSEKaJx5ysY4P4njFKD+EMV14TlJH/qSznOdISwNYGJ9I8MSaX6XtFLht34WI9JJGa3398a+5BbMnTuj8MKi6/V8JyJAqGN47PBq7jymOtxKJM2xW8PCx/DwcsuajAZ8jKr+o4Y/jR6KBV8kLovWZ/9bocbhilAxD6asHCfFHpqvdFLNxgBD5cR91mi9ksM813/OPt+45XXrPww1x4QEQiwNHhETfCuN+XIfAowdXRmQfE2sNkMnPNo3mH7/VhnmyWzEnX49tC0lPcDrM3XrshWjhIZ1BWdHZpvbPSbT2wWzKC/0ZoaV91re4c5JYs6RNBfzUiCrjdWCBE9aYX6E9EIK4pgddBzr47l+yUqOeGhbFlYAUqnRWIYZA4lHGAGgNdOi0BRe0+lslx3OLEFy3yEGuZFNWlZy0VoLfrhPMdQ==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH0PR13MB4842.namprd13.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(4636009)(136003)(39830400003)(376002)(346002)(366004)(396003)(451199018)(2906002)(2616005)(316002)(4744005)(54906003)(44832011)(41300700001)(86362001)(7416002)(5660300002)(8936002)(66556008)(66476007)(8676002)(66946007)(6916009)(4326008)(6666004)(6506007)(6512007)(186003)(6486002)(478600001)(36756003)(38100700002)(83380400001);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?WQY1KKKcQex9aQkTruBK/iup+K4gO6+OWouO0i5rUZUUSNpWanFLd1voZWUC?=
- =?us-ascii?Q?IYa/GGSy12CxVFB7GgOHSR7+wSa3acaJW4HzaeiEPlT0RVoSY22I/0EJn9gR?=
- =?us-ascii?Q?CBqf+IkH99vjqAl9XWwu2gC16iBnJj8ZOxBIKEFNFKB2730sudQU8j88Hb5N?=
- =?us-ascii?Q?l1/I+7MrN6idmmZlFtJP9hDBSPP69NSdVSs69SNlt6k8fQR3x3a8FVZk6Ob6?=
- =?us-ascii?Q?QpP2NcrrWRdhX8Cur079khV+FMLyNtPynu2LyVJNHcJ6un8yU509BVe5AvQN?=
- =?us-ascii?Q?8eeYCXlC1UwrYMAs65Gf1iyihrXvAXydS4L+bEB2Ls78L/hqIOU2or1U66GC?=
- =?us-ascii?Q?q25DWNh/TIg6FWYPodZwIs/uL/MHxObNmeWaxvqXbpkeF3OOhbWOPAq8lW/z?=
- =?us-ascii?Q?8uh2dPcn5XySA6JQTYDOWeUcsOgmGBo08hQrR2Y9woMr8pA8aVr2gS+GSGTL?=
- =?us-ascii?Q?KmPfRkdfS/SYGgQNdGwcCwvgO5nlFBYnaDJxsDyU1gt8PbIX/oy4DHCVP6K3?=
- =?us-ascii?Q?hW/yWlizDqnGzP0IbDA4A9wF0Nmj8hZfgbQu7nWQ++sIxNE/ekiByoz0AuSk?=
- =?us-ascii?Q?JwLVhOwjs//Ttr2NzAKRISfuoN9GJraHdlpm7irh/tfHk4G3Ce46wu0sgy0L?=
- =?us-ascii?Q?w/P46CZ6uE3GzR6zvMjSGHepRdLL4Kt2qpz+dppTJ2cWxnQrNwbi/xSaV0nB?=
- =?us-ascii?Q?1wNOgl1bhTwAUHuYWZdE1TU2z5Bf6nvX6vzJ0I88bHftORkDH7Ij4Ned0u3Z?=
- =?us-ascii?Q?PFWCNhYEo8tOMjeQUxI6ZIE20kvA+XJhMnlJI5B2+H5/ODTCsfqTJlKFmV9d?=
- =?us-ascii?Q?0Fm2g2uSnIXnLjrRh0CGiXTTKW9PAz0n+jMhk/lhstyCj9r89Dv/KhOEpIol?=
- =?us-ascii?Q?64u1fA/RkIqs8kDWyqLMSl53UMQiERmiCvhxBJRpRztjOAX7ZaEY/3c01tNz?=
- =?us-ascii?Q?QydtoKlDC2d4i8w3gIaF0t9LkVugjXknd8ap+qdEv8WEFju9egb38JnoCvkX?=
- =?us-ascii?Q?cdGdu4UjVCgm9JzN0ox4p96vCJS5yLIiVWvL9krFzajgZGN7tMFgODFsWKh/?=
- =?us-ascii?Q?Kje5mHMOKpmfrhilQEG/MTWIbXJG27phpmEN4AIRGCLSivLlNV7w+8GHjgKm?=
- =?us-ascii?Q?+KWVc0VBf5rOPpWKc/SOKWFWlh+Qpa5cLFsitFNOn1Wolr/gbddl0eC6lPbc?=
- =?us-ascii?Q?sh15aIQb4ipHQn82wgAtj2oROLC09W1PaX9S7Q5zcvbLwjSuLkVsf6sqdHb4?=
- =?us-ascii?Q?jaRnSBrq3QsBynX5/VEBwYhU8oNGAY9gymK6JKVDXB4aaJH3LYSLNwoJfhTH?=
- =?us-ascii?Q?UB71ef/LkFsIqzHGEZCUFUbi09LcE5Y4JTGSkh+v4SSu02T5Rs7GrIhrIolC?=
- =?us-ascii?Q?QiUASOBmSkszv3PcL64f8lxgKRcLSH/uBO/tb7CldVVhNc4hCXJh2ZMa9s1m?=
- =?us-ascii?Q?mgHbmrRNoqc17hJXkLixR6adr+2PIFvrskdvGNvNEw3pLEkvA5TtS++RA/Z8?=
- =?us-ascii?Q?NpFGHMGKpunKk/JVvHfpXwq2oAxl1QqLIEiceIOImUwZToLTNHCwOOvzG1FH?=
- =?us-ascii?Q?X1VptXU6CnUdM15v9w1cxX/ouWwcFDETEVu+C7S0QB5N5O+MOGseUC0cFHq/?=
- =?us-ascii?Q?cGxsDeXLgCVg5FiG0EpLK69hOZppDjaPV0OorXHexNZgpQCy9JH7AOxIdlke?=
- =?us-ascii?Q?9f9gSA=3D=3D?=
-X-OriginatorOrg: corigine.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 43487519-dc98-4345-d8d2-08dafee5738a
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR13MB4842.namprd13.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Jan 2023 15:04:26.8303
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: fe128f2c-073b-4c20-818e-7246a585940c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: EfeZNtBWaEmoxuxs3PMEsIBRccCBLsHKimpTRO5yZ3SHa6jwItVyv7K3KLcpzXMZUKep3eamkbCk29FxKA9dSFCcPC1gc/KsAhTy1QgYKAA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR13MB4686
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH 01/10] dt-bindings: pinctrl: qcom: add IPQ5332 pinctrl
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <ulf.hansson@linaro.org>,
+        <linus.walleij@linaro.org>, <catalin.marinas@arm.com>,
+        <will@kernel.org>, <shawnguo@kernel.org>, <arnd@arndb.de>,
+        <marcel.ziswiler@toradex.com>, <dmitry.baryshkov@linaro.org>,
+        <nfraprado@collabora.com>, <broonie@kernel.org>,
+        <robimarko@gmail.com>, <quic_gurus@quicinc.com>,
+        <bhupesh.sharma@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+References: <20230125104520.89684-1-quic_kathirav@quicinc.com>
+ <20230125104520.89684-2-quic_kathirav@quicinc.com>
+ <50ec54ba-3468-3448-3fab-f28e97549ad2@linaro.org>
+Content-Language: en-US
+From:   Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+In-Reply-To: <50ec54ba-3468-3448-3fab-f28e97549ad2@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: yhun6mfdqR7DHk1Zl3e9Yppvn_YUKEsV
+X-Proofpoint-GUID: yhun6mfdqR7DHk1Zl3e9Yppvn_YUKEsV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-25_09,2023-01-25_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ phishscore=0 impostorscore=0 adultscore=0 priorityscore=1501 bulkscore=0
+ suspectscore=0 clxscore=1015 mlxscore=0 spamscore=0 mlxlogscore=999
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301250141
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 25, 2023 at 04:48:31PM +0300, Natalia Petrova wrote:
-> Function radix_tree_insert() returns errors if the node hasn't
-> been initialized and added to the tree.
-> 
-> "kfree(node)" and return value "NULL" of node_get() help
-> to avoid using unclear node in other calls.
-> 
-> Found by Linux Verification Center (linuxtesting.org) with SVACE.
-> 
-> Fixes: 0c2204a4ad71 ("net: qrtr: Migrate nameservice to kernel from userspace")
-> Signed-off-by: Natalia Petrova <n.petrova@fintech.ru>
 
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
+On 1/25/2023 4:40 PM, Krzysztof Kozlowski wrote:
+> On 25/01/2023 11:45, Kathiravan Thirumoorthy wrote:
+>> From: Kathiravan T <quic_kathirav@quicinc.com>
+>>
+>> Add device tree bindings for IPQ5332 TLMM block.
+>>
+>> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+>> ---
+>>   .../pinctrl/qcom,ipq5332-pinctrl.yaml         | 134 ++++++++++++++++++
+>>   1 file changed, 134 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,ipq5332-pinctrl.yaml
+>>
+>> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,ipq5332-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,ipq5332-pinctrl.yaml
+>> new file mode 100644
+>> index 000000000000..d101ee04b8b7
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,ipq5332-pinctrl.yaml
+> Name matching compatible, please.
+
+
+Sure, will rename it accordingly.
+
+
+>
+>> @@ -0,0 +1,134 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/pinctrl/qcom,ipq5332-pinctrl.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm IPQ5332 TLMM pin controller
+>> +
+>> +maintainers:
+>> +  - Bjorn Andersson <andersson@kernel.org>
+>> +  - Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> +
+>> +description: |
+>> +  Top Level Mode Multiplexer pin controller in Qualcomm IPQ5332 SoC.
+>> +
+>> +allOf:
+>> +  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
+>> +
+>> +properties:
+>> +  compatible:
+>> +    const: qcom,ipq5332-tlmm
+>> +
+>> +  reg:
+>> +    maxItems: 1
+>> +
+>> +  interrupts: true
+> missing maxItems
+>
+> Rebase your patches on latest next and use the latest bindings and
+> drivers as starting point.
+
+
+Changes are based on v6.2-rc1.  I see the maxItems changes in 
+linux-next. Will update this in V2.
+
+
+>> +  interrupt-controller: true
+>> +  "#interrupt-cells": true
+>> +  gpio-controller: true
+>> +  "#gpio-cells": true
+>> +  gpio-ranges: true
+>> +  wakeup-parent: true
+>> +
+>> +  gpio-reserved-ranges:
+>> +    minItems: 1
+>> +    maxItems: 27
+>> +
+>> +  gpio-line-names:
+>> +    maxItems: 53
+> You have 54 GPIOs.
+
+
+Sorry, GPIO ranges are from 0-52, will update it in all places in V2.
+
+
+>
+>> +
+>> +patternProperties:
+>> +  "-state$":
+>> +    oneOf:
+>> +      - $ref: "#/$defs/qcom-ipq5332-tlmm-state"
+>> +      - patternProperties:
+>> +          "-pins$":
+>> +            $ref: "#/$defs/qcom-ipq5332-tlmm-state"
+>> +        additionalProperties: false
+>> +
+>> +$defs:
+>> +  qcom-ipq5332-tlmm-state:
+>> +    type: object
+>> +    description:
+>> +      Pinctrl node's client devices use subnodes for desired pin configuration.
+>> +      Client device subnodes use below standard properties.
+>> +    $ref: qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state
+>> +
+>> +    properties:
+>> +      pins:
+>> +        description:
+>> +          List of gpio pins affected by the properties specified in this
+>> +          subnode.
+>> +        items:
+>> +          pattern: "^gpio([0-9]|[1-4][0-9]|5[0-3])$"
+>> +        minItems: 1
+>> +        maxItems: 36
+>> +
+>> +      function:
+>> +        description:
+>> +          Specify the alternative function to be configured for the specified
+>> +          pins.
+>> +
+>> +        enum: [ PTA_0, PTA_2, PTA_1, atest_char, atest_char0, atest_char1,
+> 1. lowercase only
+>
+> 2. order all these by name
+
+
+Ack.
+
+
+>
+>
+>> +                atest_char2, atest_char3, atest_tic, audio_pri, audio_pri0,
+>> +                audio_pri1, audio_sec, audio_sec0, audio_sec1, blsp0_i2c,
+>> +                blsp0_spi, blsp0_uart0, blsp0_uart1, blsp1_i2c0, blsp1_i2c1,
+>> +                blsp1_spi0, blsp1_spi1, blsp1_uart0, blsp1_uart1, blsp1_uart2,
+>> +                blsp2_i2c0, blsp2_i2c1, blsp2_spi, blsp2_spi0, blsp2_spi1,
+>> +                core_voltage, cri_trng0, cri_trng1, cri_trng2, cri_trng3,
+>> +                cxc_clk, cxc_data, dbg_out, gcc_plltest, gcc_tlmm, gpio,
+>> +                lock_det, mac0, mac1, mdc0, mdc1, mdio0, mdio1, pc, pcie0_clk,
+> Best regards,
+> Krzysztof
+
+
+Thanks,
+
+Kathiravan T.
 
