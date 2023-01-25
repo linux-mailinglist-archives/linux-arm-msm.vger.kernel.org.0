@@ -2,86 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DF56B67AD95
+	by mail.lfdr.de (Postfix) with ESMTP id 3C56567AD93
 	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 10:17:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235073AbjAYJOb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Jan 2023 04:14:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38772 "EHLO
+        id S235042AbjAYJPj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Jan 2023 04:15:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235043AbjAYJOa (ORCPT
+        with ESMTP id S234885AbjAYJPi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Jan 2023 04:14:30 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD7FE4392A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 01:14:27 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id d14so12656936wrr.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 01:14:27 -0800 (PST)
+        Wed, 25 Jan 2023 04:15:38 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77C6343462
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 01:15:37 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id j17so13254696wms.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 01:15:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=hc4egPtkQ64b0FEbo02Uoe7pc1GGb6uUcEvT9CW2GlM=;
-        b=LgbgqtQsBGbOy2kKL/s2CXN7B0Va4kyOODgbHl7A68rPZg3Y+DfGPMbi2537c+uaN6
-         3TuOYPtEvSvJeiSAkuuEUGpE5NuX01wqY55krQTAHIK7MnowYJC9uijfok3Kt5Id6Wul
-         zt4Femiu06/arHYCCSNst1kQvA6t+29+xGx4+Wrc/x7Gr0FHzTUMA5a+yiynBIxwQ0WS
-         RMnV6ZqJp/F1UcGfIsPY+q0rG6LnAQB4Uplq8d4P1pabfh7VABlgNquIzuDt4ErCIkbj
-         /dCdQ2biMFEeeWM0vKxFHRlIFy3iUo3ue2QuJj9XGBmf3FxzT0uJ1vHY6LkrNQW022RC
-         3H4g==
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:reply-to:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=hLYyMf8v6sX0CmntSwjS63uxAxPxvpyOkk5T320V7ls=;
+        b=vQIeg+80cD1Jh0nHmdw6lIMdBYusiJ8CWnr+acIqPUQ8bgzxwSQV+fGSXvKjFVIEtz
+         iwFgfpQ+PqMQT7N7huipewrSougdMtpDfSqzHshcM+zcqO/0qigO7GUsIx+ZVib7Vgmc
+         4YzGL45GG3DY4I5YhdNjC6bkHnl7jh5Skej2L7BHl793N7X9B5DKoSApVtLxrece0pl7
+         LDttDDg5eljQPKDffr1lM4ltoLQUC2uhAw+Jc/g+r5OA1itaP0kFHGJXxFzCmvu4a09A
+         pDvFwZjLQippIXa/8ZeT9dFxC8PCnQJTHnoMHNaDJOtUYns09Nrw/vg51pEUhnfDbA6L
+         +QRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hc4egPtkQ64b0FEbo02Uoe7pc1GGb6uUcEvT9CW2GlM=;
-        b=l0hi8SzEze0pNZdxVNMdS/ggnv+xZHZSjI+PrtJ2a/33w4ZNKQMCYM2R7SOta7R2DH
-         ufk0UoEUUd9QFacHWJaPAYV+HZTzLR1GO2vYRjb8mchhG3x8CNeh9u5f22FGbxyw+x5p
-         vQ/dohu2vNPoLoGptXws5msVis07mYhXI+XmDBc3kMSLzdSYzfBpl/Vkw9RjQTZ8WDG9
-         Iy/lQbzrNiHV3rSP9rGjZn4vIyoLZSlx3S4kZuali3xi84MDfhdsICZonZBtAo6eZa2J
-         OPZwfx6As0SUxEDUdDLB8POt1QHpJCDFGLKhnX4yWH3fJVtbaRXXtmoBUv8tFntu0yuo
-         ppNA==
-X-Gm-Message-State: AFqh2kqobGmXiXwCMjckWkmRe4OhZ4T10lwyAz0vJZSFkUUWDKKi+ODM
-        poz9Y1Yr/4AZKldIl1pD7PTW+w==
-X-Google-Smtp-Source: AMrXdXuwxHGrUcOdE1INuh713o6CIr/hcRn6h0E8yd3uD97y7b+mbl27OCR5aakJ9hopl5M/5G07yQ==
-X-Received: by 2002:a5d:410b:0:b0:2bc:7fdd:9248 with SMTP id l11-20020a5d410b000000b002bc7fdd9248mr25106933wrp.9.1674638066212;
-        Wed, 25 Jan 2023 01:14:26 -0800 (PST)
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:reply-to:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hLYyMf8v6sX0CmntSwjS63uxAxPxvpyOkk5T320V7ls=;
+        b=H/Uiz3blnsjW96T3SMLRJJEOeafATEkzTX+UOpJ7uMpNPnR7goGMeiHIPW7T/mVbFK
+         M4DXP2LYcSdYxiC/6GJylwN5whvuoS/fymWP9kCtq/uSD6Y8P2QUfdi0iGcvVTVD37Ve
+         MkpXMPtlrZHETc/y/kCQYylz3mjh1ofrj0qa97R/IXGWDI9s88WUxbIRYNrO/VyjDZol
+         8VZPaobK7EHZ/G3I2F+mPbEeyz1oH9mki7rYMYsEL37aosn6GE3q5n0r4UqhL28yREeJ
+         PBUR4bOL2s1yHyb9a8Fb1KUupeH6SmgIGXGOUthvTjTmuVeOpIW2CfpeySb2b7ZfR/YG
+         GREQ==
+X-Gm-Message-State: AFqh2kr8BCLT/xKrtF/5KEcy2NNP7ADjSTR78HnQkxbfOStIPD5w5l/k
+        C77n5jR5368MLLGkJ9Hrc7LXcw==
+X-Google-Smtp-Source: AMrXdXvWRskL0ALdre/zwBQd4CWcE4EeqG3qOzIokfuCHYl0YnH8WVH4If4CW54QDvyDULTACzs7sw==
+X-Received: by 2002:a05:600c:35d4:b0:3dc:b1b:830 with SMTP id r20-20020a05600c35d400b003dc0b1b0830mr6688372wmq.33.1674638135988;
+        Wed, 25 Jan 2023 01:15:35 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:982:cbb0:ad2f:6fa7:d25a:7047? ([2a01:e0a:982:cbb0:ad2f:6fa7:d25a:7047])
-        by smtp.gmail.com with ESMTPSA id u13-20020a5d6acd000000b002bc7f64efa3sm3770776wrw.29.2023.01.25.01.14.25
+        by smtp.gmail.com with ESMTPSA id x26-20020a1c7c1a000000b003db01178b62sm1191493wmc.40.2023.01.25.01.15.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Jan 2023 01:14:25 -0800 (PST)
-Message-ID: <27c57fa8-8fcc-1339-8290-547ecceeb2f0@linaro.org>
-Date:   Wed, 25 Jan 2023 10:14:24 +0100
+        Wed, 25 Jan 2023 01:15:35 -0800 (PST)
+Message-ID: <47b12a29-1438-3930-b471-69136d41e148@linaro.org>
+Date:   Wed, 25 Jan 2023 10:15:34 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-From:   Neil Armstrong <neil.armstrong@linaro.org>
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH] drm/msm/dpu: Add DSC hardware blocks to register snapshot
+Subject: Re: [PATCH] arm64: dts: qcom: sm8250: Disable wsamacro and swr0 by
+ default
 Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        phone-devel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Vinod Polimera <quic_vpolimer@quicinc.com>,
-        Liu Shixin <liushixin2@huawei.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20230125091315.133283-1-marijn.suijten@somainline.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     marijn.suijten@somainline.org, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230124164616.228619-1-konrad.dybcio@linaro.org>
+From:   Neil Armstrong <neil.armstrong@linaro.org>
 Organization: Linaro Developer Services
-In-Reply-To: <20230125091315.133283-1-marijn.suijten@somainline.org>
+In-Reply-To: <20230124164616.228619-1-konrad.dybcio@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -94,33 +82,83 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/01/2023 10:13, Marijn Suijten wrote:
-> Add missing DSC hardware block register ranges to the snapshot utility
-> to include them in dmesg (on MSM_DISP_SNAPSHOT_DUMP_IN_CONSOLE) and the
-> kms debugfs file.
+On 24/01/2023 17:46, Konrad Dybcio wrote:
+> They are not used on all boards, so disable them by default.
+> Enable them back on MTP/RB5, which were the only current users.
 > 
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 5 +++++
->   1 file changed, 5 insertions(+)
+>   arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 6 ++++++
+>   arch/arm64/boot/dts/qcom/sm8250-mtp.dts  | 6 ++++++
+>   arch/arm64/boot/dts/qcom/sm8250.dtsi     | 4 ++++
+>   3 files changed, 16 insertions(+)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index ad08fb7e7105..44648da310f2 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -930,6 +930,11 @@ static void dpu_kms_mdp_snapshot(struct msm_disp_state *disp_state, struct msm_k
->   		msm_disp_snapshot_add_block(disp_state, cat->wb[i].len,
->   				dpu_kms->mmio + cat->wb[i].base, "wb_%d", i);
+> diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> index 8c64cb060e21..6802d36fb20c 100644
+> --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> @@ -1007,6 +1007,8 @@ can@0 {
+>   };
 >   
-> +	/* dump DSC sub-blocks HW regs info */
-> +	for (i = 0; i < cat->dsc_count; i++)
-> +		msm_disp_snapshot_add_block(disp_state, cat->dsc[i].len,
-> +				dpu_kms->mmio + cat->dsc[i].base, "dsc_%d", i);
+>   &swr0 {
+> +	status = "okay";
 > +
->   	msm_disp_snapshot_add_block(disp_state, cat->mdp[0].len,
->   			dpu_kms->mmio + cat->mdp[0].base, "top");
+>   	left_spkr: speaker@0,3 {
+>   		compatible = "sdw10217211000";
+>   		reg = <0 3>;
+> @@ -1322,6 +1324,10 @@ &venus {
+>   	status = "okay";
+>   };
 >   
-
-Thanks for the addition, it was missing :-)
+> +&wsamacro {
+> +	status = "okay";
+> +};
+> +
+>   /* PINCTRL - additions to nodes defined in sm8250.dtsi */
+>   &qup_spi0_cs_gpio {
+>   	drive-strength = <6>;
+> diff --git a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
+> index 0991b34a8e49..c0d83fa9a73b 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
+> @@ -759,6 +759,8 @@ codec {
+>   };
+>   
+>   &swr0 {
+> +	status = "okay";
+> +
+>   	left_spkr: speaker@0,3 {
+>   		compatible = "sdw10217211000";
+>   		reg = <0 3>;
+> @@ -892,3 +894,7 @@ &usb_2_qmpphy {
+>   &venus {
+>   	status = "okay";
+>   };
+> +
+> +&wsamacro {
+> +	status = "okay";
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> index 95f1a6afcd43..a0ba166f89d8 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> @@ -2277,6 +2277,8 @@ wsamacro: codec@3240000 {
+>   
+>   			pinctrl-names = "default";
+>   			pinctrl-0 = <&wsa_swr_active>;
+> +
+> +			status = "disabled";
+>   		};
+>   
+>   		swr0: soundwire-controller@3250000 {
+> @@ -2297,6 +2299,8 @@ swr0: soundwire-controller@3250000 {
+>   			#sound-dai-cells = <1>;
+>   			#address-cells = <2>;
+>   			#size-cells = <0>;
+> +
+> +			status = "disabled";
+>   		};
+>   
+>   		audiocc: clock-controller@3300000 {
 
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
