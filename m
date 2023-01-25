@@ -2,115 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E371F67A886
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 02:57:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B134267A89C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Jan 2023 03:13:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230334AbjAYB5e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Jan 2023 20:57:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44342 "EHLO
+        id S232680AbjAYCND (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Jan 2023 21:13:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230160AbjAYB5d (ORCPT
+        with ESMTP id S229528AbjAYCM6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Jan 2023 20:57:33 -0500
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0694942DDC
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 17:57:31 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id tz11so43952777ejc.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 17:57:30 -0800 (PST)
+        Tue, 24 Jan 2023 21:12:58 -0500
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E86727986
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 18:12:53 -0800 (PST)
+Received: by mail-pj1-x1035.google.com with SMTP id nn18-20020a17090b38d200b0022bfb584987so584959pjb.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Jan 2023 18:12:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/mKFyQdCK+sFsQ62/Alg3KP7i9MMdCNwigkeF8QsM/A=;
-        b=moVGq3j7mY9vwiXNvzJqg0s8DHlSR9CmEAz6WBRUWUIqUb/5upUHGzWQ0TdWfmSIUE
-         1gnpPFhe5NPFqlhU0dgwNuAILQ77w5Ed7YG9OzzRDs7c42mSZGHJWZ/97IboecLqehVs
-         jcQ5EjUe/Z4grGvkQo8xV1UZvNTJfPPoPPJa96NNIzvXNRI2ZVf1HcCuPSoqPvesf8OJ
-         DEULqAsp/JGIYkwD9qurOSdj7iJ3FrrVYvGPsA5mA9kdzGsEIue10/9RsKtNvlhC3z+0
-         giWN9CyoAPDwhoUzUeNvlgLjF97IiEyWWW8boz+yj3AcC8d7SNRynJmzeehPCUN+YxYM
-         UJEA==
+        d=google.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=wyo4ScdnKnOpNdEhwobdQ9WeYs+jQOexpJlhKGainQs=;
+        b=WQyTcKY9Wn6wifrEjH06aIMPm5KuR8cVj90LyYYJz6t1gLRSgzj4DxVSOIXQrDTHeL
+         9zuk9jn2JQ1RAshLv1HMdYfn/ObWLARV+rYWZAYhvVg0ex573km+2YS9+iAxnzzFPWab
+         xk3UswT1bRiKDvYUUrjYuisGK3SXVxzpr1oMSX5KjT2qJDBLIOulxdjgfeAMQccwgUNC
+         m72LoKWAg5fYvJETfDRi+uSLf6VdRf0ewoX7PM5gLhfDyex8y4ln3R0dJFbdWLLF0w05
+         oTABPC3xvqhglWITFsiPtJPXWGmtTLJ6lfAY3IQ23XLwQ1j8xvdZOy65FOU+2aHNk8Tj
+         dZ/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/mKFyQdCK+sFsQ62/Alg3KP7i9MMdCNwigkeF8QsM/A=;
-        b=rQFA4iZzYzalb50pTqPiGp2AbtC3MEu/O18Rh5+tVuh6v0Js4mK62CFSDTWBTbHB2w
-         RrcxquxkiKIOPekl5UIaszSC6TddojLkcQvWRoV2yufxYLLhN82pvcv26/c4hShThrTZ
-         JWwcM4alPYcIQl2JeEj4JIOGE27T12qhpKnNU0Uz4eBMAyMtxsdRmAoia9ZuRyS2UiN7
-         fpWqWJdLwxRRZiybsn1eNlDy1cNuGo5ihbumwqX7FNGnqOmpyF/CUzeN7WjA9p4jgLxJ
-         jk+xIFZkIAZ6HwoUfo4hnm3z7nUompcc3mn0CjLvIScbTB4meW4EXAIs1LWrYdIbsq9Q
-         Qy1Q==
-X-Gm-Message-State: AFqh2krqXQq7vbe+cu6iyfD7EWrb3U8sgWYVmxULbi3i6DlD+zEeIAEq
-        s1Ge+/c6nw9n5OOkdRphhiJCfg==
-X-Google-Smtp-Source: AMrXdXvvfVLo6uoOWYvx6AfYZxEwfpNt+CFEl9MEZT7I7eIv0P0XG4dhVAgWPJtV9+bKMd/U1gslog==
-X-Received: by 2002:a17:907:9548:b0:86f:fe6b:57f7 with SMTP id ex8-20020a170907954800b0086ffe6b57f7mr27293741ejc.62.1674611849499;
-        Tue, 24 Jan 2023 17:57:29 -0800 (PST)
-Received: from [192.168.1.101] (abyl109.neoplus.adsl.tpnet.pl. [83.9.31.109])
-        by smtp.gmail.com with ESMTPSA id t9-20020a170906608900b00871cb1b8f63sm1636301ejj.26.2023.01.24.17.57.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Jan 2023 17:57:28 -0800 (PST)
-Message-ID: <7781e371-781c-c301-6504-99fdeb7f2b36@linaro.org>
-Date:   Wed, 25 Jan 2023 02:57:26 +0100
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wyo4ScdnKnOpNdEhwobdQ9WeYs+jQOexpJlhKGainQs=;
+        b=TZ0VPMgDQd3oc8a1eFFgtuOodV2X6m2VcP5SxEkeJzhdi3FnFuBuPVJO3NlwNZTho/
+         x1tiyb+wnxBRxo0SB/mWLzbHRoiDAYLLPfVzLp5a/9F79uE928XyNq+irzE7yGhchOnh
+         011Vy4oTcF3yBHCT3KrFUVPmw7XkKG+H53Lx+wile0ayID7bbfePdfwP3xlq+PSSkFkS
+         D6lelgHUeN4erk0jwuC1vymxyVkT/iQk56s9pMLTAvXb7A/XrlC4FoLPEBf87yo1o947
+         gJTUQlI9fz8zxbS+y7hW0f0COjYFB4I0K3rg6BcFar0Jz77hp0wK2WPDv7HX6Hz75TXY
+         ylWA==
+X-Gm-Message-State: AFqh2kpC0WhQRafnQJaoXk8vl8wngpAjqiN3tWyK9MTagp5P0y0pVZ5d
+        dZpLPesum5IZ7WJWYVpvrEDcWlXwkXWcyYViOhGAGg==
+X-Google-Smtp-Source: AMrXdXsVEndUelWqeTOq/yI0y1T7Go1AUXK7I4T+7m8PmMng+9RYf16DOxvQdM/cJ77ZduwDlA9DcaAtqzg9qyhk06g=
+X-Received: by 2002:a17:90a:e646:b0:229:ca6a:d742 with SMTP id
+ ep6-20020a17090ae64600b00229ca6ad742mr3309663pjb.221.1674612772253; Tue, 24
+ Jan 2023 18:12:52 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH v3 2/9] interconnect: qcom: rpm: Always set QoS params on
- QNoC
-Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org, Georgi Djakov <djakov@kernel.org>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Shawn Guo <shawn.guo@linaro.org>
-References: <20230116132152.405535-1-konrad.dybcio@linaro.org>
- <20230116132152.405535-3-konrad.dybcio@linaro.org>
- <8673ef49-a37e-2d76-b800-bf9b10875006@linaro.org>
- <eac4a16e-c6b2-64ae-f5a2-84dab64476df@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <eac4a16e-c6b2-64ae-f5a2-84dab64476df@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20230118091122.2205452-1-dmitry.baryshkov@linaro.org> <CAL_JsqJ=0neiZ4wkPiMqJMT4E1O_xO0uLrTmEGUcnZMqxkw4UQ@mail.gmail.com>
+In-Reply-To: <CAL_JsqJ=0neiZ4wkPiMqJMT4E1O_xO0uLrTmEGUcnZMqxkw4UQ@mail.gmail.com>
+From:   Saravana Kannan <saravanak@google.com>
+Date:   Tue, 24 Jan 2023 18:12:15 -0800
+Message-ID: <CAGETcx8Xy5OzsbW3123esxsbQJq-SqDkP1S5g2mmwzoCz4shtQ@mail.gmail.com>
+Subject: Re: [RESEND PATCH] of: property: do not create clocks device link for
+ clock controllers
+To:     Rob Herring <robh+dt@kernel.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Frank Rowand <frowand.list@gmail.com>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Abel Vesa <abel.vesa@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-17.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        ENV_AND_HDR_SPF_MATCH,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Jan 18, 2023 at 5:35 AM Rob Herring <robh+dt@kernel.org> wrote:
+>
+> On Wed, Jan 18, 2023 at 3:11 AM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+> >
+> > Do not create device link for clock controllers. Some of the clocks
+> > provided to the device via OF can be the clocks that are just parents to
+> > the clocks provided by this clock controller. Clock subsystem already
+> > has support for handling missing clock parents correctly (clock
+> > orphans). Later when the parent clock is registered, clocks get
+> > populated properly.
+> >
+> > An example of the system where this matters is the SDM8450 MTP board
+> > (see arch/arm64/boot/dts/qcom/sdm845-mtp.dts). Here the dispcc uses
+> > clocks provided by dsi0_phy and dsi1_phy device tree nodes. However the
+> > dispcc itself provides clocks to both PHYs, to the PHY parent device,
+> > etc. With just dsi0_phy in place devlink is able to break the
+> > dependency, but with two PHYs, dispcc doesn't get probed at all, thus
+> > breaking display support.
+> >
+> > Cc: Bjorn Andersson <andersson@kernel.org>
+> > Cc: Stephen Boyd <sboyd@kernel.org>
+> > Cc: Saravana Kannan <saravanak@google.com>
+> > Cc: Abel Vesa <abel.vesa@linaro.org>
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >
+> > This patch has been posted a year ago in January 2022 ([1]). Since that time
+> > Saravana failed to produce patches to assist in debugging the issue
+> > ([2]) or to fix the issue ([3]). The issue we observe has been described
+> > by Abel at ([4]). As we work on adding support for Dual DSI
+> > configurations, the issue becomes more and more important, since binding
+> > the whole display subsystem fails.
 
+I did send out a patch series[1] to try and fix this. Heck I even
+talked about this in LPC 2022. So I don't think it's accurate to say I
+didn't help debug this or fix this. There's some email thread in lore
+where Abel gave more details and I figured out the issue and we didn't
+need any more debugging. And then I sent out [1]. Sorry I missed you
+in the cc lise for [1] -- I try to keep track of everyone to cc but
+things slip through the cracks sometimes. But at the same time, it's
+easy to check for emails from me before saying I didn't help or didn't
+send out fixes :)
 
-On 19.01.2023 01:27, Bryan O'Donoghue wrote:
-> On 18/01/2023 20:36, Konrad Dybcio wrote:
->> Would be very nice if somebody could test this one in particular
->> on QCM2290 to make sure it does not regress that SoC..
->>
->> Shawn, Loic?
->>
->> Konrad
-> 
-> I have a 2290.
-> 
-> Since I'm already helping with review, I'm happy to help with test too.
-Thanks!
+If you do try to give [1] a shot, there are a bunch of bugs that
+people pointed out for which I gave fixes on top of [1] in the
+replies. I was supposed to work on v2 over the holidays, but that
+didn't happen because of stuff outside my control.
 
-I'm afraid it won't be necessary though..
+> That's ample time to fix this, so I intend to apply this. But I'll
+> give it a few days for comments.
 
-This patch gives more trouble than it solves. Here's the thing:
+Rob, I'd recommend not applying this because it'll fix it for Dmitry
+but break someone else's use case. That's the whole reason it takes me
+a while to send out patches -- it's easy to fix it for a subset of
+devices, but fixing something without breaking someone else is harder
+(I still believe it's doable) and it takes a while to test them on all
+the devices I want to test before sending them out.
 
-It was working perfectly on my SM6375 for quite some time and then
-I rebased my branch on a newer -next and suddenly it makes things go
-boom boom.. I think I'll drop it in the next revision, even if that's
-what downstream does.. At least until I pretend to be an archaeologist
-surgeon again and debug this..
-
-Konrad
-
-> 
-> ---
-> bod
+-Saravana
+[1] - https://lore.kernel.org/lkml/20220810060040.321697-1-saravanak@google.com/
