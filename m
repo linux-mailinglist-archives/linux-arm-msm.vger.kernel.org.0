@@ -2,222 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C1E2B67C732
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 10:28:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C96267C74A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 10:29:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236895AbjAZJ16 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Jan 2023 04:27:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37526 "EHLO
+        id S236733AbjAZJ3Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Jan 2023 04:29:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236733AbjAZJ15 (ORCPT
+        with ESMTP id S236836AbjAZJ3P (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Jan 2023 04:27:57 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC06411EA4;
-        Thu, 26 Jan 2023 01:27:55 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 41B696177A;
-        Thu, 26 Jan 2023 09:27:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3921C433EF;
-        Thu, 26 Jan 2023 09:27:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1674725274;
-        bh=SoMuUCKccvLBFFlS2yaoZNAJ6vi8hf11UD5LIFXhHPI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=j//Fl5kIolRbc8e9oVCQ2yHwbpz0TuieYLSj+mDFLpa1qwKxXUhf5PJmcO75Ujh3s
-         twG4fOSIQIUcY+3MnnJB2LFgFpgYd/SthHle/+axd8X6B40DgEguPrzEIDstErfxF8
-         ko0Mb6Gc7DtRkgMx2KamDNuuhnb/IfTXyWRUAI8okoWPpJCrU+5VBwHmsXg3EJf5FZ
-         gJ2/jlRLLWN+Ab/FNlmJJeHDKv+eOxzvt50mhgYbacQHyS9BYwkvyF434NJwFVAGsI
-         dA9tzS1LLkbpY2wsykh131+0o90nnu9297soO8LSNeHRZppCk70KOOayN+gSrVyob+
-         3jVum/MlvC8IQ==
-Date:   Thu, 26 Jan 2023 11:26:58 +0200
-From:   Mike Rapoport <rppt@kernel.org>
-To:     Suren Baghdasaryan <surenb@google.com>
-Cc:     akpm@linux-foundation.org, michel@lespinasse.org,
-        jglisse@google.com, mhocko@suse.com, vbabka@suse.cz,
-        hannes@cmpxchg.org, mgorman@techsingularity.net, dave@stgolabs.net,
-        willy@infradead.org, liam.howlett@oracle.com, peterz@infradead.org,
-        ldufour@linux.ibm.com, paulmck@kernel.org, luto@kernel.org,
-        songliubraving@fb.com, peterx@redhat.com, david@redhat.com,
-        dhowells@redhat.com, hughd@google.com, bigeasy@linutronix.de,
-        kent.overstreet@linux.dev, punit.agrawal@bytedance.com,
-        lstoakes@gmail.com, peterjung1337@gmail.com, rientjes@google.com,
-        axelrasmussen@google.com, joelaf@google.com, minchan@google.com,
-        jannh@google.com, shakeelb@google.com, tatashin@google.com,
-        edumazet@google.com, gthelen@google.com, gurua@google.com,
-        arjunroy@google.com, soheil@google.com, hughlynch@google.com,
-        leewalsh@google.com, posk@google.com, will@kernel.org,
-        aneesh.kumar@linux.ibm.com, npiggin@gmail.com,
-        chenhuacai@kernel.org, tglx@linutronix.de, mingo@redhat.com,
-        bp@alien8.de, dave.hansen@linux.intel.com, richard@nod.at,
-        anton.ivanov@cambridgegreys.com, johannes@sipsolutions.net,
-        qianweili@huawei.com, wangzhou1@hisilicon.com,
-        herbert@gondor.apana.org.au, davem@davemloft.net, vkoul@kernel.org,
-        airlied@gmail.com, daniel@ffwll.ch,
-        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        tzimmermann@suse.de, l.stach@pengutronix.de,
-        krzysztof.kozlowski@linaro.org, patrik.r.jakobsson@gmail.com,
-        matthias.bgg@gmail.com, robdclark@gmail.com,
-        quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
-        tomba@kernel.org, hjc@rock-chips.com, heiko@sntech.de,
-        ray.huang@amd.com, kraxel@redhat.com, sre@kernel.org,
-        mcoquelin.stm32@gmail.com, alexandre.torgue@foss.st.com,
-        tfiga@chromium.org, m.szyprowski@samsung.com, mchehab@kernel.org,
-        dimitri.sivanich@hpe.com, zhangfei.gao@linaro.org,
-        jejb@linux.ibm.com, martin.petersen@oracle.com,
-        dgilbert@interlog.com, hdegoede@redhat.com, mst@redhat.com,
-        jasowang@redhat.com, alex.williamson@redhat.com, deller@gmx.de,
-        jayalk@intworks.biz, viro@zeniv.linux.org.uk, nico@fluxnic.net,
-        xiang@kernel.org, chao@kernel.org, tytso@mit.edu,
-        adilger.kernel@dilger.ca, miklos@szeredi.hu,
-        mike.kravetz@oracle.com, muchun.song@linux.dev, bhe@redhat.com,
-        andrii@kernel.org, yoshfuji@linux-ipv6.org, dsahern@kernel.org,
-        kuba@kernel.org, pabeni@redhat.com, perex@perex.cz, tiwai@suse.com,
-        haojian.zhuang@gmail.com, robert.jarzmik@free.fr,
-        linux-mm@kvack.org, linux-arm-kernel@lists.infradead.org,
-        linuxppc-dev@lists.ozlabs.org, x86@kernel.org,
-        linux-kernel@vger.kernel.org, linux-graphics-maintainer@vmware.com,
-        linux-ia64@vger.kernel.org, linux-arch@vger.kernel.org,
-        loongarch@lists.linux.dev, kvm@vger.kernel.org,
-        linux-s390@vger.kernel.org, linux-sgx@vger.kernel.org,
-        linux-um@lists.infradead.org, linux-acpi@vger.kernel.org,
-        linux-crypto@vger.kernel.org, nvdimm@lists.linux.dev,
-        dmaengine@vger.kernel.org, amd-gfx@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, etnaviv@lists.freedesktop.org,
-        linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org,
-        linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        xen-devel@lists.xenproject.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-rdma@vger.kernel.org, linux-media@vger.kernel.org,
-        linux-accelerators@lists.ozlabs.org, sparclinux@vger.kernel.org,
-        linux-scsi@vger.kernel.org, linux-staging@lists.linux.dev,
-        target-devel@vger.kernel.org, linux-usb@vger.kernel.org,
-        netdev@vger.kernel.org, linux-fbdev@vger.kernel.org,
-        linux-aio@kvack.org, linux-fsdevel@vger.kernel.org,
-        linux-erofs@lists.ozlabs.org, linux-ext4@vger.kernel.org,
-        devel@lists.orangefs.org, kexec@lists.infradead.org,
-        linux-xfs@vger.kernel.org, bpf@vger.kernel.org,
-        linux-perf-users@vger.kernel.org, kasan-dev@googlegroups.com,
-        selinux@vger.kernel.org, alsa-devel@alsa-project.org,
-        kernel-team@android.com
-Subject: Re: [PATCH v2 4/6] mm: replace vma->vm_flags indirect modification
- in ksm_madvise
-Message-ID: <Y9JHYvihjxGpAFPg@kernel.org>
-References: <20230125083851.27759-1-surenb@google.com>
- <20230125083851.27759-5-surenb@google.com>
+        Thu, 26 Jan 2023 04:29:15 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 042F29EFB;
+        Thu, 26 Jan 2023 01:29:15 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id m14so650332wrg.13;
+        Thu, 26 Jan 2023 01:29:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2TMGf0x6Yj1FSsXabSbdX1Eb3jJ9xtPHTfrzgF7BXbM=;
+        b=Z/LwmRDVP2Z01bmql6t+8rD5RN+E4ElNyGI+HN7i1RsXrokHBqZDly19xfnLfZuyK9
+         WeHLimaxuQnpirzi6fsRffYTgPhfeXeVobZN4pxh8slmzePsLin85mhjgTEVnXMYb3eD
+         d+7innz7fd+KKCCYqlxUId0YRmBbBA2wWvVT/4DwksnhpsiS0jw7etJ4akdgnyOyV3S/
+         va+dnKtYWMYoZoqG3+bnW7Ke6FU1H7WwUzza3MwzVh5eP9ilmsnCZCu52v0/yeTr3yeB
+         OQO3ilbuh4m5kUGai2/7I8kS7k3W/eo+E7fqQA0AgbfpOeTIZifPIKbBJyXLcXbVrwNM
+         F2bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2TMGf0x6Yj1FSsXabSbdX1Eb3jJ9xtPHTfrzgF7BXbM=;
+        b=PKEVoQe+Ql1jJ1KBEsWyrqd5l55TALIkaY4S37D9LNpLmsmg/KzXmQy46JD+I72WuZ
+         PcmKmoEKcHxXg6bCyZYhhMne9xwaWrlpWX2cfjw8NKmPysIBvLl8HZwgh64b132VQAtx
+         Hhsk+lTUbbFZUsQiiGUaSYyh+1zcbK4wg0Tah1EqlVC7PhqT2EsVD8tJYcYDH1luG4QD
+         IdZPFlMr3VxR9Bryd80kk0IgO1KKpJzgb+CS+UQSLQIp0KRvidlwJ2v3AazoxJohMqI8
+         +Tt42I4WDzxEkfNPI99zVQ7WzgA87JrapwoDZSKEJVFgH0lkPlUsTRCUrwG5CkuY1coG
+         6bdw==
+X-Gm-Message-State: AO0yUKXM6jqph+ECLv6nCI2c14taSSiQYEIj2mBWuoSLoj75shieP98v
+        r4rtdNW10HxIzyC2udUxY7ALUOBI7rJvCQ==
+X-Google-Smtp-Source: AK7set8YapJdyyMzZYPyaW5m8mk0iBf7Sf+RNWhXX9zD2B3BOK4diZmPVtm63Vv6D3DY8DFjyPYg0Q==
+X-Received: by 2002:a5d:6e05:0:b0:2bf:b92b:8a8a with SMTP id h5-20020a5d6e05000000b002bfb92b8a8amr4837241wrz.7.1674725353522;
+        Thu, 26 Jan 2023 01:29:13 -0800 (PST)
+Received: from localhost ([102.36.222.112])
+        by smtp.gmail.com with ESMTPSA id t4-20020a05600001c400b002bdcce37d31sm873136wrx.99.2023.01.26.01.29.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Jan 2023 01:29:13 -0800 (PST)
+Date:   Thu, 26 Jan 2023 12:29:10 +0300
+From:   Dan Carpenter <error27@gmail.com>
+To:     Manivannan Sadhasivam <mani@kernel.org>
+Cc:     Alex Elder <elder@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, kernel-janitors@vger.kernel.org
+Subject: [PATCH] bus: mhi: ep: Fix off by one in  mhi_ep_process_cmd_ring()
+Message-ID: <Y9JH5sudiZWvbODv@kili>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230125083851.27759-5-surenb@google.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Mailer: git-send-email haha only kidding
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 25, 2023 at 12:38:49AM -0800, Suren Baghdasaryan wrote:
-> Replace indirect modifications to vma->vm_flags with calls to modifier
-> functions to be able to track flag changes and to keep vma locking
-> correctness. Add a BUG_ON check in ksm_madvise() to catch indirect
-> vm_flags modification attempts.
-> 
-> Signed-off-by: Suren Baghdasaryan <surenb@google.com>
+The > comparison should be changed to >= to prevent an out of bounds
+access into the mhi_cntrl->mhi_chan[] array.  The mhi_cntrl->mhi_chan[]
+array is allocated in mhi_ep_chan_init() and has mhi_cntrl->max_chan
+elements.
 
-Acked-by: Mike Rapoport (IBM) <rppt@kernel.org>
+Fixes: 2527ad44ddb2 ("bus: mhi: ep: Check if the channel is supported by the controller")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+---
+ drivers/bus/mhi/ep/main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> ---
->  arch/powerpc/kvm/book3s_hv_uvmem.c | 5 ++++-
->  arch/s390/mm/gmap.c                | 5 ++++-
->  mm/khugepaged.c                    | 2 ++
->  mm/ksm.c                           | 2 ++
->  4 files changed, 12 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/powerpc/kvm/book3s_hv_uvmem.c b/arch/powerpc/kvm/book3s_hv_uvmem.c
-> index 1d67baa5557a..325a7a47d348 100644
-> --- a/arch/powerpc/kvm/book3s_hv_uvmem.c
-> +++ b/arch/powerpc/kvm/book3s_hv_uvmem.c
-> @@ -393,6 +393,7 @@ static int kvmppc_memslot_page_merge(struct kvm *kvm,
->  {
->  	unsigned long gfn = memslot->base_gfn;
->  	unsigned long end, start = gfn_to_hva(kvm, gfn);
-> +	unsigned long vm_flags;
->  	int ret = 0;
->  	struct vm_area_struct *vma;
->  	int merge_flag = (merge) ? MADV_MERGEABLE : MADV_UNMERGEABLE;
-> @@ -409,12 +410,14 @@ static int kvmppc_memslot_page_merge(struct kvm *kvm,
->  			ret = H_STATE;
->  			break;
->  		}
-> +		vm_flags = vma->vm_flags;
->  		ret = ksm_madvise(vma, vma->vm_start, vma->vm_end,
-> -			  merge_flag, &vma->vm_flags);
-> +			  merge_flag, &vm_flags);
->  		if (ret) {
->  			ret = H_STATE;
->  			break;
->  		}
-> +		reset_vm_flags(vma, vm_flags);
->  		start = vma->vm_end;
->  	} while (end > vma->vm_end);
->  
-> diff --git a/arch/s390/mm/gmap.c b/arch/s390/mm/gmap.c
-> index 3a695b8a1e3c..d5eb47dcdacb 100644
-> --- a/arch/s390/mm/gmap.c
-> +++ b/arch/s390/mm/gmap.c
-> @@ -2587,14 +2587,17 @@ int gmap_mark_unmergeable(void)
->  {
->  	struct mm_struct *mm = current->mm;
->  	struct vm_area_struct *vma;
-> +	unsigned long vm_flags;
->  	int ret;
->  	VMA_ITERATOR(vmi, mm, 0);
->  
->  	for_each_vma(vmi, vma) {
-> +		vm_flags = vma->vm_flags;
->  		ret = ksm_madvise(vma, vma->vm_start, vma->vm_end,
-> -				  MADV_UNMERGEABLE, &vma->vm_flags);
-> +				  MADV_UNMERGEABLE, &vm_flags);
->  		if (ret)
->  			return ret;
-> +		reset_vm_flags(vma, vm_flags);
->  	}
->  	mm->def_flags &= ~VM_MERGEABLE;
->  	return 0;
-> diff --git a/mm/khugepaged.c b/mm/khugepaged.c
-> index 8abc59345bf2..76b24cd0c179 100644
-> --- a/mm/khugepaged.c
-> +++ b/mm/khugepaged.c
-> @@ -354,6 +354,8 @@ struct attribute_group khugepaged_attr_group = {
->  int hugepage_madvise(struct vm_area_struct *vma,
->  		     unsigned long *vm_flags, int advice)
->  {
-> +	/* vma->vm_flags can be changed only using modifier functions */
-> +	BUG_ON(vm_flags == &vma->vm_flags);
->  	switch (advice) {
->  	case MADV_HUGEPAGE:
->  #ifdef CONFIG_S390
-> diff --git a/mm/ksm.c b/mm/ksm.c
-> index 04f1c8c2df11..992b2be9f5e6 100644
-> --- a/mm/ksm.c
-> +++ b/mm/ksm.c
-> @@ -2573,6 +2573,8 @@ int ksm_madvise(struct vm_area_struct *vma, unsigned long start,
->  	struct mm_struct *mm = vma->vm_mm;
->  	int err;
->  
-> +	/* vma->vm_flags can be changed only using modifier functions */
-> +	BUG_ON(vm_flags == &vma->vm_flags);
->  	switch (advice) {
->  	case MADV_MERGEABLE:
->  		/*
-> -- 
-> 2.39.1
-> 
-> 
+diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
+index bcaaba97ef63..be2d56e7f392 100644
+--- a/drivers/bus/mhi/ep/main.c
++++ b/drivers/bus/mhi/ep/main.c
+@@ -125,7 +125,7 @@ static int mhi_ep_process_cmd_ring(struct mhi_ep_ring *ring, struct mhi_ring_ele
+ 	ch_id = MHI_TRE_GET_CMD_CHID(el);
+ 
+ 	/* Check if the channel is supported by the controller */
+-	if ((ch_id > mhi_cntrl->max_chan) || !mhi_cntrl->mhi_chan[ch_id].name) {
++	if ((ch_id >= mhi_cntrl->max_chan) || !mhi_cntrl->mhi_chan[ch_id].name) {
+ 		dev_err(dev, "Channel (%u) not supported!\n", ch_id);
+ 		return -ENODEV;
+ 	}
+-- 
+2.35.1
+
