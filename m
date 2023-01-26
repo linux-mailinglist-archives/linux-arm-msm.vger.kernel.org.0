@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CD46C67C95F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 12:03:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9568067C965
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 12:05:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236951AbjAZLDZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Jan 2023 06:03:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53390 "EHLO
+        id S236622AbjAZLFy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Jan 2023 06:05:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236966AbjAZLDW (ORCPT
+        with ESMTP id S236057AbjAZLFx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Jan 2023 06:03:22 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F7521DB8F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 03:03:19 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id y1so1384668wru.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 03:03:19 -0800 (PST)
+        Thu, 26 Jan 2023 06:05:53 -0500
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CA1A29167
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 03:05:51 -0800 (PST)
+Received: by mail-wm1-x32e.google.com with SMTP id f12-20020a7bc8cc000000b003daf6b2f9b9so3005999wml.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 03:05:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=u7vCrE7q/VPLeTXLg6KW/8CfPxh94AhXp/Mdu/doGko=;
-        b=Ocn7Y8wYq1w5CE2BQNmoD7/PgjoqMViaN5x/i/CG2nzNDplo2dw1NyjE6D8lOd20If
-         XDGwpwhkiGSUsqs/HZWFJ5/TFs2RLZZT9TVl5taOHEoRGbFevexTH1RI3spP1/LIU9xK
-         SNNjnEdyfGFKSylVbyWs3xZy+zZXoIPnOo/GO+WytDe45RUa2+L/+k3pzhqJquXo8/Ze
-         iQP1Ci72opixlb/HHh8UKVuTvsAyPU6qHEGGQWmsSRW0K9jlMwQyVoESvuTgwT3Acww6
-         NiSqVmKyy1d8zq2BnBXufJKDMvvXBtCVBYOm0E0dRT5z2RHucMuWl+7kpSbgTIIDNAx7
-         +eQw==
+        bh=heZJw59T2BEIPcQJQ4uYDF/GEiW8kKbaj33CVJ4j0QA=;
+        b=OGHW+YWFhgFliomeTrCvXab/b3ztik8IkLjKZrHCJPgZPJEHLNFlEWIsIs9obDB+4h
+         qooeXwfrAccrxy0oVyS43oDAfvwjg5eahrRVHlcm7WR0QZbpNObdzPwi5N7RpzC+Paiz
+         ugeJJDCKAZJqHcK3WSht20960TThpI74MvA6Z3juB0fb486A3gR9ExR6iubOwTz78VEw
+         jaz/by3NaHMxtuEeCqFtviLmWEJzRXqnbGA5JnOcgT23kYEuwVpHufJyBVgeYd8nT+aL
+         m7SSJ9cD6ig3rrZ7yUyf56wiBn5j53eVA9AHiwoReUR2qhTJUacNEGIpqgtOW7MMzMuQ
+         SI8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=u7vCrE7q/VPLeTXLg6KW/8CfPxh94AhXp/Mdu/doGko=;
-        b=wr3w4lbkY3qi0aEPkFCNWPYfkeis9aiFB8ahiQeWRm9kbPR3dA5XsLFqnyruk3z9TL
-         tGuLxi1pkWR8q8JuYoJme3opQIp8lsoY4l1S8r00GiodQB2rrIGC9Onnn2bDs4TdFhIx
-         DEu6nrZ3E28E220+uUhFH+iogtZF+yjJ4HiFhVBK8dY2mmQ5GG88KoK2fdGcDhRUXlwx
-         1ZGx1h967xakSr2+grI21XslLJEwsNvk5Db51vOy9PGfJqnL639Wq4NDkguLWqpNwTxI
-         +l1BCNAy+JkMqThvteGzJdqBLis7O1L5EAa3ps1x04bPHRxpXnavO6OUIX4e/cgnz+jo
-         HhyA==
-X-Gm-Message-State: AFqh2kridScsA2vB9YnsduB0NwozqWg3yEbPesEXGBxyQfV3dxK3ANH6
-        MVVllvv1Tm8623aswrzdbBagzg==
-X-Google-Smtp-Source: AMrXdXvqpDZOxx5pX8SxZSPMgEW0upg3chd+5e2q4Gd1AURW4q3uxbcLqtlr0+GZqZJ25qGwXEd4yw==
-X-Received: by 2002:adf:edd1:0:b0:2bd:c6ce:7bfc with SMTP id v17-20020adfedd1000000b002bdc6ce7bfcmr32384945wro.42.1674730997639;
-        Thu, 26 Jan 2023 03:03:17 -0800 (PST)
+        bh=heZJw59T2BEIPcQJQ4uYDF/GEiW8kKbaj33CVJ4j0QA=;
+        b=YEkZEZLH8aFCeknvN3lyBliV1i9Shi113SuMTYqRhNojHLDqxdH2u+AgsBBUUykTgF
+         bLq9XJwlwIx6boEMVFTNm1NC5cLSpBc3oNUtHw8jMJRjisbQQ9XIGvGIwge3t2T+RCa4
+         MvVonYHrtaatpqNChIDO+jRpK6lAdqZsCOY/dUlTgZ+VawPTM/AOT5Qm0Bwb6ZBLqKs2
+         MFlqE69i1bp/+1YUpT7eMIKWnpURTR108cxNhLkyc0ta5dcGCSvLkK5PYKp3w2D4Va8k
+         x71h1VjntvPHijtQgFeykI93yqDqJMe+MeK+v21btCyrSIUvqrH0VjJjRKekhS1JSHNk
+         1EKA==
+X-Gm-Message-State: AFqh2krtVGTctey68NWuCIet6zEu+IO8fENNhcj6ki+NXIXoj5Ak5R3B
+        B3f8vKrYk3Tbqh0/wq3sdcVX+g==
+X-Google-Smtp-Source: AMrXdXvm+/munbFIM9dMJkjNlLF8RunOzyerbBIAKGs4KuqxNnxcHriBwiL0Tytcq9WgMoOagu8Dag==
+X-Received: by 2002:a05:600c:304a:b0:3d9:8635:a916 with SMTP id n10-20020a05600c304a00b003d98635a916mr36734444wmh.9.1674731149736;
+        Thu, 26 Jan 2023 03:05:49 -0800 (PST)
 Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id b14-20020adff90e000000b002be34f87a34sm1061340wrr.1.2023.01.26.03.03.15
+        by smtp.gmail.com with ESMTPSA id m14-20020a05600c4f4e00b003a3442f1229sm5016139wmq.29.2023.01.26.03.05.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Jan 2023 03:03:17 -0800 (PST)
-Message-ID: <184f6a3a-63a5-7247-535c-ac7a1654528e@linaro.org>
-Date:   Thu, 26 Jan 2023 12:03:14 +0100
+        Thu, 26 Jan 2023 03:05:49 -0800 (PST)
+Message-ID: <64c5cd0d-86ef-2b98-36f4-62106edd657a@linaro.org>
+Date:   Thu, 26 Jan 2023 12:05:47 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.0
-Subject: Re: [PATCH v5 01/12] dt-bindings: phy: Add QMP PCIe PHY comptible for
- SM8550
+Subject: Re: [PATCH v5 09/12] dt-bindings: PCI: qcom: Add SM8550 compatible
 Content-Language: en-US
 To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -75,9 +74,9 @@ Cc:     linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         linux-phy@lists.infradead.org
 References: <20230124124714.3087948-1-abel.vesa@linaro.org>
- <20230124124714.3087948-2-abel.vesa@linaro.org>
+ <20230124124714.3087948-10-abel.vesa@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230124124714.3087948-2-abel.vesa@linaro.org>
+In-Reply-To: <20230124124714.3087948-10-abel.vesa@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -91,12 +90,11 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 24/01/2023 13:47, Abel Vesa wrote:
-> Document the QMP PCIe PHY compatible for SM8550.
+> Add the SM8550 platform to the binding.
 > 
 > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
 > 
-> This patchset relies on the following patchset:
 
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
