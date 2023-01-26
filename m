@@ -2,135 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3026067D699
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 21:42:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 55DEC67D785
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 22:18:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232212AbjAZUmF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Jan 2023 15:42:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48668 "EHLO
+        id S232464AbjAZVSt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Jan 2023 16:18:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231488AbjAZUmE (ORCPT
+        with ESMTP id S232430AbjAZVSp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Jan 2023 15:42:04 -0500
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25B997AB0;
-        Thu, 26 Jan 2023 12:42:01 -0800 (PST)
-Received: from g550jk.localnet (unknown [62.108.10.64])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 2321CCB452;
-        Thu, 26 Jan 2023 20:41:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1674765719; bh=m+AyRkpU35PI1/KK7hJz1VYCQdwvbwm4TM5BZi0YkKY=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=fkgTKbVsA5M4qFr25+D09azhzbUKoiPxHsuTvfCIoyc2q1D7DW5QpVXyswaM5f0q0
-         Xtc3y0opFRlUxed8Jr4pHo5OM6caQavk5ROBAx0ofGPJMK+9bhZ1IF3AckUDuJBTV0
-         Ww2/MqtwCS62j1NSJ8oYLhhy3YLhRs0/i7yzSaCc=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
+        Thu, 26 Jan 2023 16:18:45 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A52896F236;
+        Thu, 26 Jan 2023 13:18:38 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4131461948;
+        Thu, 26 Jan 2023 21:18:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47B1FC433EF;
+        Thu, 26 Jan 2023 21:18:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1674767917;
+        bh=2Uqy/ORn+z83G19kbhBCW6Xg57SBjM5PofFXKPOAD6g=;
+        h=From:To:Cc:Subject:Date:From;
+        b=AuO93D4U+OQ3/vexpY74D12VjYbPp5Wg8cNSQazKcxNR8ZfBnQHjQS6BO0/ShaHZr
+         0Me1nQfvraPC+rxhbxm6xxH4ucdAKzz9bM2JWMfMwDT/Em6Fyu58n1VNmJ8qOE5KDU
+         kcQ5nlxra0yTCl6hnnblVuJEJs3RcmiS0hH9DBqDAennFUTbopmEDLy/Xu+N7U7kCC
+         lxen4Kw1anJDdBxptCPesnp94rbsobU5HS4Eh/MggyFLQ/WKgwxZAmjYiQmD+dV34P
+         YSslNdobgMqQBQUN8hCdRgAEH5dvD97B43p9kllxOWdeEYAtC6wx8rJG5WytkCG/e6
+         Bz2wAMjdOEI5A==
+From:   Arnd Bergmann <arnd@kernel.org>
+To:     "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Can Guo <quic_cang@quicinc.com>
+Cc:     Arnd Bergmann <arnd@arndb.de>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 5/5] ARM: dts: qcom: msm8974-oneplus-bacon: Add notification LED
-Date:   Thu, 26 Jan 2023 21:41:58 +0100
-Message-ID: <1840339.tdWV9SEqCh@g550jk>
-In-Reply-To: <dbfa802a-968f-0504-a131-59e2a8f52c9f@linaro.org>
-References: <20230122-msm8974-bacon-features-v1-0-4049f565c24c@z3ntu.xyz>
- <4455893.LvFx2qVVIh@g550jk> <dbfa802a-968f-0504-a131-59e2a8f52c9f@linaro.org>
+        Bart Van Assche <bvanassche@acm.org>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bean Huo <beanhuo@micron.com>, Jason Gunthorpe <jgg@ziepe.ca>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH] scsi: ufs: qcom: fix platform_msi_domain_free_irqs() reference
+Date:   Thu, 26 Jan 2023 22:17:31 +0100
+Message-Id: <20230126211831.2274211-1-arnd@kernel.org>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,DKIM_INVALID,
-        DKIM_SIGNED,FROM_SUSPICIOUS_NTLD,SPF_HELO_NONE,SPF_PASS,
-        T_PDS_OTHER_BAD_TLD autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Donnerstag, 26. J=E4nner 2023 10:41:24 CET Krzysztof Kozlowski wrote:
-> On 25/01/2023 21:51, Luca Weiss wrote:
-> > On Montag, 23. J=E4nner 2023 18:18:16 CET Krzysztof Kozlowski wrote:
-> >> On 22/01/2023 17:48, Luca Weiss wrote:
-> >>> Add the node describing the sn3193 that's used to provide notification
-> >>> LED.
-> >>>=20
-> >>> Unfortunately the driver currently supports neither multicolor API nor
-> >>> using the properties function & color, so we use label instead.
-> >>>=20
-> >>> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> >>> ---
-> >>>=20
-> >>>  .../arm/boot/dts/qcom-msm8974pro-oneplus-bacon.dts | 28
-> >>>  ++++++++++++++++++++++ 1 file changed, 28 insertions(+)
-> >>>=20
-> >>> diff --git a/arch/arm/boot/dts/qcom-msm8974pro-oneplus-bacon.dts
-> >>> b/arch/arm/boot/dts/qcom-msm8974pro-oneplus-bacon.dts index
-> >>> ffb486ceb6a6..a672c45d7070 100644
-> >>> --- a/arch/arm/boot/dts/qcom-msm8974pro-oneplus-bacon.dts
-> >>> +++ b/arch/arm/boot/dts/qcom-msm8974pro-oneplus-bacon.dts
-> >>> @@ -114,6 +114,34 @@ led@0 {
-> >>>=20
-> >>>  			default-brightness =3D <80>;
-> >>>  	=09
-> >>>  		};
-> >>>  =09
-> >>>  	};
-> >>>=20
-> >>> +
-> >>> +	led-controller@68 {
-> >>> +		compatible =3D "si-en,sn3193";
-> >>> +		reg =3D <0x68>;
-> >>> +
-> >>> +		shutdown-gpios =3D <&tlmm 45 GPIO_ACTIVE_HIGH>;
-> >>> +
-> >>> +		#address-cells =3D <1>;
-> >>> +		#size-cells =3D <0>;
-> >>> +
-> >>> +		led@1 {
-> >>> +			reg =3D <1>;
-> >>> +			label =3D "red:status";
-> >>=20
-> >> These should be colors and functions.
-> >=20
-> > Hi Krzysztof,
-> >=20
-> > please check the commit message for this. I tried using it but it didn't
-> > work, the driver in general might need an overhaul at some point...
-> >=20
-> >> Unfortunately the driver currently supports neither multicolor API nor
-> >> using the properties function & color, so we use label instead.
-> >=20
-> > Or maybe I messed up but pretty sure this was the case when I wrote the
-> > dts.
-> I don't understand how driver is related here - it's not the driver's
-> property, but LED core. If the driver "supports" label, then it supports
-> color and status.
+From: Arnd Bergmann <arnd@arndb.de>
 
-The leds-is31fl319x.c driver uses devm_led_classdev_register but the functi=
-on=20
-where 'function' and 'color' is parsed is led_parse_fwnode_props which is=20
-called from led_compose_name which is called from led_classdev_register_ext=
-=20
-(or with the devm_ prefix), and not called from the register method without=
-=20
-_ext suffix.
+The newly added MSI support is mostly hidden inside of an #ifdef,
+except for one line that now causes a build failure when MSI
+is disabled:
 
-So in other words, the led driver would need changes to use the new=20
-registration API to be able to use 'function' and 'color' instead of 'label=
-'.
+drivers/ufs/host/ufs-qcom.c: In function 'ufs_qcom_remove':
+drivers/ufs/host/ufs-qcom.c:1698:9: error: implicit declaration of function 'platform_msi_domain_free_irqs' [-Werror=i]
+ 1698 |         platform_msi_domain_free_irqs(hba->dev);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Regards
-Luca
+Above that, the symbol that guards the other call was recently
+removed, so that is all dead code at the moment.
 
->=20
-> Best regards,
-> Krzysztof
+Remove the incorrect #ifdef and instead of a Kconfig dependency
+to only allow building the driver when CONFIG_GENERIC_MSI_IRQ
+is enabled. This symbol is always present when PCI_MSI
+or ARM_GIC_V3_ITS are enabled, both of which should be present
+on kernels that can run on Qualcomm SoCs.
 
+The 'select RESET_CONTROLLER' in combination with this dependency
+unfortunately causes a dependency loop and this is a user-visible
+symbol, so it's better to change both to 'depends on'.
 
+Fixes: 519b6274a777 ("scsi: ufs: qcom: Add MCQ ESI config vendor specific ops")
+Fixes: 13e7accb81d6 ("genirq: Get rid of GENERIC_MSI_IRQ_DOMAIN")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+---
+Not sure if this is the best solution, both the GENERIC_MSI_IRQ
+dependencies and the RESET_CONTROLLER dependencies are a bit
+inconsistent already. Feel free to pick another approach that
+addresses both of the bugs I found.
+---
+ drivers/ufs/host/Kconfig    | 3 ++-
+ drivers/ufs/host/ufs-qcom.c | 8 --------
+ 2 files changed, 2 insertions(+), 9 deletions(-)
 
+diff --git a/drivers/ufs/host/Kconfig b/drivers/ufs/host/Kconfig
+index 139064e70a34..663881437921 100644
+--- a/drivers/ufs/host/Kconfig
++++ b/drivers/ufs/host/Kconfig
+@@ -57,8 +57,9 @@ config SCSI_UFS_DWC_TC_PLATFORM
+ config SCSI_UFS_QCOM
+ 	tristate "QCOM specific hooks to UFS controller platform driver"
+ 	depends on SCSI_UFSHCD_PLATFORM && ARCH_QCOM
++	depends on GENERIC_MSI_IRQ
++	depends on RESET_CONTROLLER
+ 	select QCOM_SCM if SCSI_UFS_CRYPTO
+-	select RESET_CONTROLLER
+ 	help
+ 	  This selects the QCOM specific additions to UFSHCD platform driver.
+ 	  UFS host on QCOM needs some vendor specific configuration before
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index 681da3ea7154..eb66b5f6cf19 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -1538,7 +1538,6 @@ static int ufs_qcom_get_outstanding_cqs(struct ufs_hba *hba,
+ 	return 0;
+ }
+ 
+-#ifdef CONFIG_GENERIC_MSI_IRQ_DOMAIN
+ static void ufs_qcom_write_msi_msg(struct msi_desc *desc, struct msi_msg *msg)
+ {
+ 	struct device *dev = msi_desc_to_dev(desc);
+@@ -1626,13 +1625,6 @@ static int ufs_qcom_config_esi(struct ufs_hba *hba)
+ 	return ret;
+ }
+ 
+-#else
+-static int ufs_qcom_config_esi(struct ufs_hba *hba)
+-{
+-	return -EOPNOTSUPP;
+-}
+-#endif
+-
+ /*
+  * struct ufs_hba_qcom_vops - UFS QCOM specific variant operations
+  *
+-- 
+2.39.0
 
