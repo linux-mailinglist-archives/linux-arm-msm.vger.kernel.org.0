@@ -2,170 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0268267D9A5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 00:35:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4577F67D9CA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 00:42:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232844AbjAZXfn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Jan 2023 18:35:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45652 "EHLO
+        id S233546AbjAZXl7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Jan 2023 18:41:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229498AbjAZXfm (ORCPT
+        with ESMTP id S233541AbjAZXl6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Jan 2023 18:35:42 -0500
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B58936E8D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 15:35:40 -0800 (PST)
-Received: by mail-ed1-x530.google.com with SMTP id g11so3309181eda.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 15:35:40 -0800 (PST)
+        Thu, 26 Jan 2023 18:41:58 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0958F6DFD4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 15:41:28 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id d14so3457554wrr.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 15:41:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Hzo3sFEc0rrT2DBc4hVlM+1SiVGoPIKepFO94/n3CJk=;
-        b=aDDZmr9bRaxGmTx/CMesBvr5efvVLQ0uNblfGbTc3A2Iouva3ybE7fa9mzo8ahJt3q
-         AKlMLCSK2rE0YsfR6bHBeIfr2AKFXJQTH3+3GmlF2ueLU+UBelbYa6NgXDhlxAyHNDHD
-         JE2oHu26ugxiubsGcOTcm6otAa5wXI4IugT/a1ixWzIErQLq616jjZlVkV/m+ZLmJ37S
-         UwmCdok7WWsAbRgb7pfKCb8XFLFgUAgsRpLPcIvura2H69t3waXOvdOfz0L8WZ/IRqyK
-         50w9av/3224OYgWLHBDCMY9flRToQiv9Ly/O1bi6yrXGNJpr5CWEyj00gvNh4qTS5hv0
-         7IhQ==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=PnAyme+18j6KOPf6iRNbRr3tHa520TeEGKv2pHUyxsg=;
+        b=EVaGZ2eSnG+0XVwaIjbh+ZI03+/vFgVhoQhIG3OghMLgQ5R+zljPkZIZTclKyOWu/l
+         f+GYYrKqS3qHX9MaWjVNZ0zEhtWAWq0fv4LqpdcpR4mSEnb8Ns36h+DVRh6gOVfOcxsP
+         rMMeGeL/krHqLBVhNJ7QG0Cr8f7+K/6bh3hRzkHXjW0HCiLXpohwfSbYPVSrASdbTho/
+         /WmsfmMnkx84ZELcOG2C0kxnY/bkqatTcX6efPE0z9kpIeM5xdQY8n0nV3Ptgt2kF+49
+         hEP0vR8XEupELCm0FWZXNlftC+3k+76Y5KGkuOopclEZiGXqZnp2pa9WbcoVOfcIoCA6
+         5iog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Hzo3sFEc0rrT2DBc4hVlM+1SiVGoPIKepFO94/n3CJk=;
-        b=kBrSbqLGs9ayAW6zkIYzYgfXVA2DRHc/Lw0KmEZA4J9VrHRfd1GPD3OgC+mcVNneAa
-         cK8GUW9O/Mkia3qnUkqXoV9hK7DY0rqfjBjsRuEJ1FTzFpmClNl6XjW3yM5qAZT3NwSn
-         UtJ953wG3WUE8/bZIhtW5Ry1xCJ1LccOiKp8ezvx0cFLdIwNNYW5+z1w+Zm1qraxQCeo
-         GXzDkrsG8+waudd0hL5RC+ya86h8zyoHbhDUMTK5qK73mwMezptoIVzeTY5ndQwR4A4a
-         CUl70aiwVe4VB1/fp4uFvJGRZB2gVzbCfqAwwhJAtTBQk1Fn4MJJtmFQAcvo3fJlJRwP
-         vZuQ==
-X-Gm-Message-State: AFqh2kqNELM9htqkXJDTTHAf1eXa1xcbRx6spa3RV1yBxi91MjbX7tmu
-        RROXfjsqJVyR4Ogf/SuiJJstMQ==
-X-Google-Smtp-Source: AMrXdXvx27D+sTT4yn7XqkM6+ujwe2QR+RCFnO1b8ormrj04Pluko4Yf1pUSp7WHdEyfpbxBZoGVdA==
-X-Received: by 2002:a05:6402:27cf:b0:488:e7ae:5cc4 with SMTP id c15-20020a05640227cf00b00488e7ae5cc4mr47577513ede.41.1674776139293;
-        Thu, 26 Jan 2023 15:35:39 -0800 (PST)
-Received: from [192.168.1.101] (abyl20.neoplus.adsl.tpnet.pl. [83.9.31.20])
-        by smtp.gmail.com with ESMTPSA id p11-20020a50cd8b000000b004972644b19fsm1424101edi.16.2023.01.26.15.35.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Jan 2023 15:35:38 -0800 (PST)
-Message-ID: <5a638130-89c3-871b-c233-55048a162870@linaro.org>
-Date:   Fri, 27 Jan 2023 00:35:37 +0100
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PnAyme+18j6KOPf6iRNbRr3tHa520TeEGKv2pHUyxsg=;
+        b=NawyhV5qiSV2EDqzniRiMeRSw0UIUiwNLbKwswCwb+zyxZ1I8thHG43Pi2sonQ6Fnt
+         tZv9GFxX60urGBpML3hMiLAgUZOItHHe9xopruPXCMDAKsMTWDuZPS0ZRMWTr9P39IkE
+         b1kSZoCMYG+WCbwSBmzrsJXYJm5JvHxQsvrJ55jcgqMxQbupDkMnoWfMztIEd590x4Oj
+         WsihGiJ9kudu8HMjodvs2Y5Rn/gdBS8rVvv4MjO54AKIuf/Z1bDQzj3fZJHmLrUpM/P9
+         iHDo9yXNSfbqFagOg1SIjsM/auxliUDrJjBUd+5BJuyzD06I2aOah1v5IH8TGuZQIezS
+         6BMQ==
+X-Gm-Message-State: AFqh2kowYlP1IkFIL7AFKlpCS3Pfoqq87aII4FXKJO7Z4dyCLEFqoeQR
+        wRk5WPI/YAoXU85m7YXe0XLDTODdVr5MBLm2
+X-Google-Smtp-Source: AMrXdXt7ZykcZm8+avHGdBvOtqm7wIEodJMiz/bX3gyWZfzVQr/vlnHzmmcdMAu5FAZDPJXoB1VG1A==
+X-Received: by 2002:adf:e197:0:b0:2be:546f:50c2 with SMTP id az23-20020adfe197000000b002be546f50c2mr25865313wrb.12.1674776425507;
+        Thu, 26 Jan 2023 15:40:25 -0800 (PST)
+Received: from hackbox.lan ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id s5-20020a5d5105000000b002bdfcd8c77csm2481182wrt.101.2023.01.26.15.40.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Jan 2023 15:40:24 -0800 (PST)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     "Rafael J . Wysocki" <rafael@kernel.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-pm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>
+Subject: [RFC] PM: domains: Skip disabling unused domains if provider has sync_state
+Date:   Fri, 27 Jan 2023 01:40:13 +0200
+Message-Id: <20230126234013.3638425-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: sa8295p-adp: Add max20411 on
- i2c12
-Content-Language: en-US
-To:     Andrew Halaney <ahalaney@redhat.com>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20230124184440.1421074-1-quic_bjorande@quicinc.com>
- <20230124184440.1421074-4-quic_bjorande@quicinc.com>
- <20230126225446.rjckq5p35zeozphq@halaney-x13s>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230126225446.rjckq5p35zeozphq@halaney-x13s>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Currently, there are cases when a domain needs to remain enabled until
+the consumer driver probes. Sometimes such consumer drivers may be built
+as modules. Since the genpd_power_off_unused is called too early for
+such consumer driver modules to get a chance to probe, the domain, since
+it is unused, will get disabled. On the other hand, the best time for
+an unused domain to be disabled is on the provider's sync_state
+callback. So, if the provider has registered a sync_state callback,
+assume the unused domains for that provider will be disabled on its
+sync_state callback.
 
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
 
-On 26.01.2023 23:54, Andrew Halaney wrote:
-> On Tue, Jan 24, 2023 at 10:44:40AM -0800, Bjorn Andersson wrote:
->> From: Bjorn Andersson <bjorn.andersson@linaro.org>
->>
->> The SA8295P ADP has a Maxim max20411 step-down converter on i2c12.
->>
->> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
->> ---
->>
->> Changes since v1:
->> - i2c node had changed name
->>
->>  arch/arm64/boot/dts/qcom/sa8295p-adp.dts | 41 ++++++++++++++++++++++++
->>  1 file changed, 41 insertions(+)
-> 
-> I realized today this has to do with the comment over at:
-> 
->     https://lore.kernel.org/all/30166208-ba9d-e6e6-1cd2-807a80536052@quicinc.com/
-> 
-> and I just didn't realize that the schematic I've started looking at
-> black boxes the SOM/SIP which holds this... darn I thought I could see
-> more than I could :(
-> 
-> I took a similiar patch for a spin on sa8540p-ride (which I'll later
-> submit), and things worked fine (I'm not really consuming the output of
-> the regulator mind you).
-> 
-> Downstream devicetree indicates all of this looks ok except for possibly
-> the below comment:
-> 
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
->> index bb4270e8f551..642000d95812 100644
->> --- a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
->> +++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
->> @@ -266,6 +266,27 @@ &dispcc1 {
->>  	status = "okay";
->>  };
->>  
->> +&i2c12 {
->> +	pinctrl-names = "default";
->> +	pinctrl-0 = <&i2c12_state>;
->> +
->> +	status = "okay";
->> +
->> +	vdd_gfx: regulator@39 {
->> +		compatible = "maxim,max20411";
->> +		reg = <0x39>;
->> +
->> +		regulator-name = "vdd_gfx";
->> +		regulator-min-microvolt = <800000>;
-> 
-> Is there a reason you chose this instead of the 500000 I see downstream?
-> 
->> +		regulator-max-microvolt = <968750>;
-> 
-> Likewise, I see in this brief description of the regulator
-> that the upper bound is higher than this (1.275 V). I am not sure if
-> the values in the devicetree are supposed to describe the
-> min/max of the regulator itself, or of what your board can really
-> handle/needs (the latter I guess makes more sense since you wouldn't want to
-> accidentally request a current draw that could melt something.. that can
-> be fun). I do see you've got that min/max in the driver itself (now that
-> I peaked at that patch).
-Yes, your suspicions are correct and the DT sets the actual ranges
-for the voltage regulators on this specific board while the
-hardware reachable ranges are defined in the .c driver.
+This approach has been applied for unused clocks as well.
+With this patch merged in, all the providers that have sync_state
+callback registered will leave the domains enabled unless the provider's
+sync_state callback explicitly disables them. So those providers will
+need to add the disabling part to their sync_state callback. On the
+other hand, the platforms that have cases where domains need to remain
+enabled (even if unused) until the consumer driver probes, will be able,
+with this patch in, to run without the pd_ignore_unused kernel argument,
+which seems to be the case for most Qualcomm platforms, at this moment.
 
-Konrad
-> 
-> https://www.analog.com/en/products/MAX20411.html#product-overview
-> 
-> For what it is worth, I also see a SIP document that states vdd_gfx min/max
-> is 0.56/1.03 V, which is ultimately what you'd feed this into. The
-> downstream devicetree uses the max value you provide though.
-> 
-> No idea how much faith I should put into the SIP document's bounds, or
-> downstream, but I thought I should at least highlight them.
-> 
-> Thanks,
-> Andrew
-> 
+ drivers/base/power/domain.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+index 84662d338188..8e72e8e38c77 100644
+--- a/drivers/base/power/domain.c
++++ b/drivers/base/power/domain.c
+@@ -1099,7 +1099,8 @@ static int __init genpd_power_off_unused(void)
+ 	mutex_lock(&gpd_list_lock);
+ 
+ 	list_for_each_entry(genpd, &gpd_list, gpd_list_node)
+-		genpd_queue_power_off_work(genpd);
++		if (!dev_has_sync_state(genpd->provider->dev))
++			genpd_queue_power_off_work(genpd);
+ 
+ 	mutex_unlock(&gpd_list_lock);
+ 
+-- 
+2.34.1
+
