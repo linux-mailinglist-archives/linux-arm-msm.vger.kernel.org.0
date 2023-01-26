@@ -2,87 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1997867C130
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 00:51:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B484F67C154
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 01:07:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235965AbjAYXvv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Jan 2023 18:51:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49638 "EHLO
+        id S229481AbjAZAHc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Jan 2023 19:07:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236123AbjAYXvu (ORCPT
+        with ESMTP id S229772AbjAZAHb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Jan 2023 18:51:50 -0500
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E7185E520
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 15:51:48 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id vw16so845907ejc.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 15:51:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=U9XT09mLl+WL75rONS6rQhpQoBUs7qqRw2NNTRg0O6k=;
-        b=pv4WXCr+6wBryHfT+d4az9VDABrkTkr/Mt8wTrLz4zzuPgYQeBtq8MC+0DKEHWxG2K
-         RXkUqhmbEuKLlBVVabiHUShGoLJb43VfnA/cW7KD+5kqJi3CqFyhVgVajS/qQ793gbQr
-         fUghME+AK6AUVisJ0L4YwOtfzOMKU5yGby8OYkE34zuIdDrlZBR0Tvl2sLQ1HeFd3iMQ
-         7a3ypqF6hBes157/Rlv766hpRo5jaX1wA1WgfMC+RQH3uFlusktqN5X9Bvke9/2VGuHR
-         YRKEYqwIHEuGN64JjP3tYMKpOzgiEaRS0KZIjQk8zy84aQgNW31DAsZJW4K9+q+7CkmF
-         SKEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=U9XT09mLl+WL75rONS6rQhpQoBUs7qqRw2NNTRg0O6k=;
-        b=cTotHf57NS4ym2oDq9iYi+xEObSfamMas1hcmaqu0DT0yZSjGKpmOiS/yinEe6UoJA
-         sE+rYrQKz1gzgVFJmWX+YDk2vgW/1qQHCZVygJ0RLHcyr7tx5Sf4lp9XBy65YM1+KCy4
-         +3+CixMVhxxq4JAEpzJpa7rIrHuW/rGxtHEmrja57HgLIZBohfnbRJ224yk/wpcYDF9r
-         4ZIZOvykFNukdimHbL2JHPg8Ld+lE+NU92qxX8zePHAaXwvwafB1axX1vwlgJrEN8l9I
-         NfB3hVyPj7VtWEc4OD2TWt0sqryXt1x5gLW68P9hAKvOxb4U8EBCeEBKaOUcwi/r+hjd
-         263g==
-X-Gm-Message-State: AFqh2kqr+ILmgZzBXuqpcpMRH42ZWxvSCVPSZoFTrkrAZYbaebJTKgm8
-        INPVlTqxGchC+IZvujc2Ep/QjQ==
-X-Google-Smtp-Source: AMrXdXtG7YeI2EgukM4aRVXZxZXYOEg+kNxLpQpBhdz1+oh0SF8iTmG7EotpsVLaqqWRhbrzJ8YTpw==
-X-Received: by 2002:a17:906:4755:b0:877:6845:adda with SMTP id j21-20020a170906475500b008776845addamr29737120ejs.50.1674690707160;
-        Wed, 25 Jan 2023 15:51:47 -0800 (PST)
-Received: from [192.168.1.101] (abyk108.neoplus.adsl.tpnet.pl. [83.9.30.108])
-        by smtp.gmail.com with ESMTPSA id x27-20020a1709060a5b00b0084debc351b3sm3035266ejf.20.2023.01.25.15.51.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Jan 2023 15:51:46 -0800 (PST)
-Message-ID: <bd788bbd-bc62-4a16-994e-f7b527f58fe5@linaro.org>
-Date:   Thu, 26 Jan 2023 00:51:43 +0100
+        Wed, 25 Jan 2023 19:07:31 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B912A12F32
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 16:07:29 -0800 (PST)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30Q079x6008791;
+        Thu, 26 Jan 2023 00:07:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=hM5zsqLzlY4xqpbd94nlkU4eo6QgD1iehKzlT7lXj+Q=;
+ b=B7qNDTSFwwUT8tlAXu96+RvslOKRaIcSa/MS9Zm4gHgcXkGBDrI006hw7fzRr23dTa5A
+ 3up2XKWDE1fPS4ehLRLLnrJdZPnVYpE4NaKWI8iMgKqu1pHCPmvGphO2ghSvFRfL4D5a
+ gvbEcVu5mq2pc9n3W/HWF3S161KMql3Q3xNu1m88oCCunl/NV/80Hc7gX7z/bvQoEnqf
+ gveOuw6Sw9Cm4u0OzR6OYz1bcJOLMQlednlo8bevJIKNp1t96D83MPNvoOU9DuFgccqD
+ bs9ZTUmjVXXqVE71V+ukHcN9GaOGjftun9T6i9EvB6VxjyVv1p3iUqySaPhCYL5/41ah 1w== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nb6jc94pc-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 26 Jan 2023 00:07:17 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30Q07Gw2000988
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 26 Jan 2023 00:07:16 GMT
+Received: from [10.110.33.211] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 25 Jan
+ 2023 16:07:15 -0800
+Message-ID: <8ebd01e3-00be-b0da-e91a-ab1a4e074074@quicinc.com>
+Date:   Wed, 25 Jan 2023 16:07:14 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH V1 4/8] pinctrl: qcom: Add IPQ9574 pinctrl driver
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH] drm/msm/dsi: simplify pixel clk rate handling
 Content-Language: en-US
-To:     devi priya <quic_devipriy@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
-        sboyd@kernel.org, ulf.hansson@linaro.org, linus.walleij@linaro.org,
-        catalin.marinas@arm.com, will@kernel.org, p.zabel@pengutronix.de,
-        shawnguo@kernel.org, arnd@arndb.de, marcel.ziswiler@toradex.com,
-        dmitry.baryshkov@linaro.org, nfraprado@collabora.com,
-        broonie@kernel.org, tdas@codeaurora.org, bhupesh.sharma@linaro.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
-        quic_poovendh@quicinc.com
-References: <20230124141541.8290-1-quic_devipriy@quicinc.com>
- <20230124141541.8290-5-quic_devipriy@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230124141541.8290-5-quic_devipriy@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230118130031.2345941-1-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20230118130031.2345941-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: XkKsUgYW5xrhNIjx_O-hIMPe2q9_VI5y
+X-Proofpoint-GUID: XkKsUgYW5xrhNIjx_O-hIMPe2q9_VI5y
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-25_14,2023-01-25_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ phishscore=0 impostorscore=0 adultscore=0 priorityscore=1501 bulkscore=0
+ suspectscore=0 clxscore=1015 mlxscore=0 spamscore=0 mlxlogscore=999
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301250215
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -91,157 +85,114 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 24.01.2023 15:15, devi priya wrote:
-> Add pinctrl definitions for the TLMM of IPQ9574
+On 1/18/2023 5:00 AM, Dmitry Baryshkov wrote:
+> Move a call to dsi_calc_pclk() out of calc_clk_rate directly towards
+> msm_dsi_host_get_phy_clk_req(). It is called for both 6g and v2 hosts.
 > 
-> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
-> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
-> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
+> Also, while we are at it, replace another dsi_get_pclk_rate() invocation
+> with using the stored value at msm_host->pixel_clk_rate.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
-[...]
-
-> +enum ipq9574_functions {
-> +	msm_mux_atest_char,
-> +	msm_mux_atest_char0,
-> +	msm_mux_atest_char1,
-> +	msm_mux_atest_char2,
-> +	msm_mux_atest_char3,
-> +	msm_mux_audio_pdm0,
-> +	msm_mux_audio_pdm1,
-> +	msm_mux_audio_pri,
-> +	msm_mux_audio_sec,
-> +	msm_mux_blsp0_spi,
-> +	msm_mux_blsp0_uart,
-> +	msm_mux_blsp1_i2c,
-> +	msm_mux_blsp1_spi,
-> +	msm_mux_blsp1_uart,
-> +	msm_mux_blsp2_i2c,
-> +	msm_mux_blsp2_spi,
-> +	msm_mux_blsp2_uart,
-> +	msm_mux_blsp3_i2c,
-> +	msm_mux_blsp3_spi,
-> +	msm_mux_blsp3_uart,
-> +	msm_mux_blsp4_i2c,
-> +	msm_mux_blsp4_spi,
-> +	msm_mux_blsp4_uart,
-> +	msm_mux_blsp5_i2c,
-> +	msm_mux_blsp5_uart,
-> +	msm_mux_cri_trng0,
-> +	msm_mux_cri_trng1,
-> +	msm_mux_cri_trng2,
-> +	msm_mux_cri_trng3,
-> +	msm_mux_cxc0,
-> +	msm_mux_cxc1,
-> +	msm_mux_dbg_out,
-> +	msm_mux_dwc_ddrphy,
-> +	msm_mux_gcc_plltest,
-> +	msm_mux_gcc_tlmm,
-> +	msm_mux_gpio,
-
-> +	msm_mux_mac00,
-> +	msm_mux_mac01,
-> +	msm_mux_mac10,
-> +	msm_mux_mac11,
-msm_mux_mac?
-
-> +	msm_mux_mdc,
-> +	msm_mux_mdio,
-> +	msm_mux_pcie0_clk,
-> +	msm_mux_pcie0_wake,
-> +	msm_mux_pcie1_clk,
-> +	msm_mux_pcie1_wake,
-> +	msm_mux_pcie2_clk,
-> +	msm_mux_pcie2_wake,
-> +	msm_mux_pcie3_clk,
-> +	msm_mux_pcie3_wake,
-> +	msm_mux_prng_rosc0,
-> +	msm_mux_prng_rosc1,
-> +	msm_mux_prng_rosc2,
-> +	msm_mux_prng_rosc3,
-
-> +	msm_mux_pta1_0,
-> +	msm_mux_pta1_1,
-> +	msm_mux_pta1_2,
-> +	msm_mux_pta20,
-> +	msm_mux_pta21,
-msm_mux_pta?
-
-> +	msm_mux_pwm00,
-> +	msm_mux_pwm01,
-> +	msm_mux_pwm02,
-> +	msm_mux_pwm03,
-> +	msm_mux_pwm04,
-> +	msm_mux_pwm10,
-> +	msm_mux_pwm11,
-> +	msm_mux_pwm12,
-> +	msm_mux_pwm13,
-> +	msm_mux_pwm14,
-> +	msm_mux_pwm20,
-> +	msm_mux_pwm21,
-> +	msm_mux_pwm22,
-> +	msm_mux_pwm23,
-> +	msm_mux_pwm24,
-> +	msm_mux_pwm30,
-> +	msm_mux_pwm31,
-> +	msm_mux_pwm32,
-> +	msm_mux_pwm33,
-msm_mux_pwm?
-
-[...]
-
+>   drivers/gpu/drm/msm/dsi/dsi.h      |  4 ++--
+>   drivers/gpu/drm/msm/dsi/dsi_cfg.h  |  2 +-
+>   drivers/gpu/drm/msm/dsi/dsi_host.c | 24 ++++++++++++------------
+>   3 files changed, 15 insertions(+), 15 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
+> index bd3763a5d723..93ec54478eb6 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi.h
+> +++ b/drivers/gpu/drm/msm/dsi/dsi.h
+> @@ -129,8 +129,8 @@ int dsi_dma_base_get_6g(struct msm_dsi_host *msm_host, uint64_t *iova);
+>   int dsi_dma_base_get_v2(struct msm_dsi_host *msm_host, uint64_t *iova);
+>   int dsi_clk_init_v2(struct msm_dsi_host *msm_host);
+>   int dsi_clk_init_6g_v2(struct msm_dsi_host *msm_host);
+> -int dsi_calc_clk_rate_v2(struct msm_dsi_host *msm_host, bool is_bonded_dsi);
+> -int dsi_calc_clk_rate_6g(struct msm_dsi_host *msm_host, bool is_bonded_dsi);
+> +int dsi_calc_clk_rate_v2(struct msm_dsi_host *msm_host);
+> +int dsi_calc_clk_rate_6g(struct msm_dsi_host *msm_host);
+>   void msm_dsi_host_snapshot(struct msm_disp_state *disp_state, struct mipi_dsi_host *host);
+>   void msm_dsi_host_test_pattern_en(struct mipi_dsi_host *host);
+>   struct drm_dsc_config *msm_dsi_host_get_dsc_config(struct mipi_dsi_host *host);
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.h b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+> index 44be4a88aa83..5106e66846c3 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+> @@ -51,7 +51,7 @@ struct msm_dsi_host_cfg_ops {
+>   	void* (*tx_buf_get)(struct msm_dsi_host *msm_host);
+>   	void (*tx_buf_put)(struct msm_dsi_host *msm_host);
+>   	int (*dma_base_get)(struct msm_dsi_host *msm_host, uint64_t *iova);
+> -	int (*calc_clk_rate)(struct msm_dsi_host *msm_host, bool is_bonded_dsi);
+> +	int (*calc_clk_rate)(struct msm_dsi_host *msm_host);
+>   };
+>   
+>   struct msm_dsi_cfg_handler {
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index 18fa30e1e858..7d99a108bff6 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -616,28 +616,21 @@ static void dsi_calc_pclk(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>   
+>   }
+>   
+> -int dsi_calc_clk_rate_6g(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+> +int dsi_calc_clk_rate_6g(struct msm_dsi_host *msm_host)
+>   {
+> -	if (!msm_host->mode) {
+> -		pr_err("%s: mode not set\n", __func__);
+> -		return -EINVAL;
+> -	}
+> -
+> -	dsi_calc_pclk(msm_host, is_bonded_dsi);
+>   	msm_host->esc_clk_rate = clk_get_rate(msm_host->esc_clk);
 > +
-> +static const int ipq9574_reserved_gpios[] = {
-> +	59, -1
-> +};
-We know it's necessary and it's good that you take care
-of it, but it would be even nicer if you left a comment
-explaining why the rx0/pwm23/qdss_tracedata_a gpio can
-not be accessed and what it's used for.
+>   	return 0;
+>   }
+>   
+> -int dsi_calc_clk_rate_v2(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+> +int dsi_calc_clk_rate_v2(struct msm_dsi_host *msm_host)
+>   {
+>   	u32 bpp = dsi_get_bpp(msm_host->format);
+>   	u64 pclk_bpp;
+>   	unsigned int esc_mhz, esc_div;
+>   	unsigned long byte_mhz;
+>   
+> -	dsi_calc_pclk(msm_host, is_bonded_dsi);
+> -
+> -	pclk_bpp = (u64)dsi_get_pclk_rate(msm_host->mode, is_bonded_dsi) * bpp;
+> +	pclk_bpp = msm_host->pixel_clk_rate * bpp;
+>   	do_div(pclk_bpp, 8);
+>   	msm_host->src_clk_rate = pclk_bpp;
+>   
+> @@ -2292,7 +2285,14 @@ void msm_dsi_host_get_phy_clk_req(struct mipi_dsi_host *host,
+>   	const struct msm_dsi_cfg_handler *cfg_hnd = msm_host->cfg_hnd;
+>   	int ret;
+>   
+> -	ret = cfg_hnd->ops->calc_clk_rate(msm_host, is_bonded_dsi);
+> +	if (!msm_host->mode) {
+> +		pr_err("%s: mode not set\n", __func__);
+> +		return;
+> +	}
+> +
+> +	dsi_calc_pclk(msm_host, is_bonded_dsi);
+> +
+> +	ret = cfg_hnd->ops->calc_clk_rate(msm_host);
 
-Konrad 
-> +
-> +static const struct msm_pinctrl_soc_data ipq9574_pinctrl = {
-> +	.pins = ipq9574_pins,
-> +	.npins = ARRAY_SIZE(ipq9574_pins),
-> +	.functions = ipq9574_functions,
-> +	.nfunctions = ARRAY_SIZE(ipq9574_functions),
-> +	.groups = ipq9574_groups,
-> +	.ngroups = ARRAY_SIZE(ipq9574_groups),
-> +	.reserved_gpios = ipq9574_reserved_gpios,
-> +	.ngpios = 65,
-> +};
-> +
-> +static int ipq9574_pinctrl_probe(struct platform_device *pdev)
-> +{
-> +	return msm_pinctrl_probe(pdev, &ipq9574_pinctrl);
-> +}
-> +
-> +static const struct of_device_id ipq9574_pinctrl_of_match[] = {
-> +	{ .compatible = "qcom,ipq9574-tlmm", },
-> +	{ },
-> +};
-> +
-> +static struct platform_driver ipq9574_pinctrl_driver = {
-> +	.driver = {
-> +		.name = "ipq9574-tlmm",
-> +		.of_match_table = ipq9574_pinctrl_of_match,
-> +	},
-> +	.probe = ipq9574_pinctrl_probe,
-> +	.remove = msm_pinctrl_remove,
-> +};
-> +
-> +static int __init ipq9574_pinctrl_init(void)
-> +{
-> +	return platform_driver_register(&ipq9574_pinctrl_driver);
-> +}
-> +arch_initcall(ipq9574_pinctrl_init);
-> +
-> +static void __exit ipq9574_pinctrl_exit(void)
-> +{
-> +	platform_driver_unregister(&ipq9574_pinctrl_driver);
-> +}
-> +module_exit(ipq9574_pinctrl_exit);
-> +
-> +MODULE_DESCRIPTION("QTI IPQ9574 TLMM driver");
-> +MODULE_LICENSE("GPL");
-> +MODULE_DEVICE_TABLE(of, ipq9574_pinctrl_of_match);
+I am not too sure what we are gaining by this.
+
+Its not that we are replacing dsi_get_pclk_rate().
+
+We are moving the dsi_get_pclk_rate() from the calc_clk_rate() to the 
+msm_dsi_host_get_phy_clk_req().
+
+Also, with this change, dsi_calc_clk_rate_6g() looks kind of empty to 
+stand on its own.
+
+The original intention of the calc_clk_rate() op seems to be calculate 
+and store all the clocks (byte, pixel and esc).
+
+Why change that behavior by breaking it up?
+
+>   	if (ret) {
+>   		pr_err("%s: unable to calc clk rate, %d\n", __func__, ret);
+>   		return;
