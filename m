@@ -2,56 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 053CE67C19B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 01:29:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 84B7267C1A0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 01:29:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236001AbjAZA3H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Jan 2023 19:29:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40276 "EHLO
+        id S236311AbjAZA3k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Jan 2023 19:29:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236034AbjAZA3E (ORCPT
+        with ESMTP id S236343AbjAZA3b (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Jan 2023 19:29:04 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD6D664D95;
-        Wed, 25 Jan 2023 16:29:02 -0800 (PST)
+        Wed, 25 Jan 2023 19:29:31 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C71A765EDD;
+        Wed, 25 Jan 2023 16:29:13 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 5A7C5616F1;
-        Thu, 26 Jan 2023 00:29:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87372C4339E;
-        Thu, 26 Jan 2023 00:28:58 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 5AE2AB81C76;
+        Thu, 26 Jan 2023 00:29:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2CECC433EF;
+        Thu, 26 Jan 2023 00:29:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1674692941;
-        bh=d4HSQHdGnlTFmLj+LdiMNKnyGFgOUaR5G/kz7dGHLhc=;
-        h=From:To:In-Reply-To:References:Subject:Date:From;
-        b=Ne+nDVS4cq2sqBXf+4BfrBvFkiDT+2mSiafpt8HwbUHceLylv87Nn2BkShpX1Et/N
-         YJCyn1UvB0jV65XuzIEpw47qpKuOqjhuNN6cwuZRZSJBeK1tbop+Sl71jaDDCAmd0i
-         YoiWODGbhuoaPT88WBJjHUKCS5Zw1u9p1GUo9YT7c1aCN9cYBxxniZ+3lpLHqe8E/+
-         sd+ERuluGjzAiR1w1XgAiPyOwh1WhifDmrLAUp0FWzeNfNhyJPx8jBBuBttxPairRS
-         S9oTKrt8JQ0SDzRVRE19CWsOQJr0mCK+ppjjoezxVKkr/HTi9OqWgBLj40nZ3eqsXo
-         uks+2MH7Eekrw==
+        s=k20201202; t=1674692951;
+        bh=+X7IZsXvCYbpuPeCa2h6DxvcsySzQEe1Kfi3Nqp6O1s=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=j6G85m+ULe65NHEQDxekpiCalWEuIdk7iJgD5oBT5JFQFXTMfv03XNHyKO/kslG+S
+         6SDzqCPyYcUjn3lpusaqiryBMTa/YM4g/KHRwOPC/eEnBPi25tSvB3tCmG6a7ZGeJY
+         GYSeofcLljUI4+0ujtB/m7vW71To/oPThxTt8+UmXHJ0FKXK+R+vAirapCMh5FWZFq
+         pBZz/dW6eL1VYxY5IKFnebiUXDSm3gwbmItGQmyb2AFjMDY3WefzO5QvHytkhel7xE
+         FZGQ5MnjkiG0awMqWOwzXFt+3y4JPgZbql4zTnTCSXAmIEqxj149DQ4fa8HexBZ0SB
+         CT0h3D18axUOw==
 From:   Mark Brown <broonie@kernel.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
+To:     Liam Girdwood <lgirdwood@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230118101542.96705-1-krzysztof.kozlowski@linaro.org>
-References: <20230118101542.96705-1-krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH 1/2] ASoC: dt-bindings: qcom,sm8250: use fallback for
- SDM845 sound cards
-Message-Id: <167469293821.2696228.18433894144147250698.b4-ty@kernel.org>
-Date:   Thu, 26 Jan 2023 00:28:58 +0000
+        Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+In-Reply-To: <20230124184440.1421074-1-quic_bjorande@quicinc.com>
+References: <20230124184440.1421074-1-quic_bjorande@quicinc.com>
+Subject: Re: [PATCH v2 0/3] regulator: Add Maxim MAX20411 support
+Message-Id: <167469294846.2698045.11083009704658424877.b4-ty@kernel.org>
+Date:   Thu, 26 Jan 2023 00:29:08 +0000
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
@@ -65,22 +60,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 18 Jan 2023 11:15:41 +0100, Krzysztof Kozlowski wrote:
-> All SDM845 sound cards are compatible with each other, so use one
-> generic fallback compatible for them.
+On Tue, 24 Jan 2023 10:44:37 -0800, Bjorn Andersson wrote:
+> Introduce binding and driver for the Maxim MAX20411, and wire these up
+> on the Qualcomm SA8295P ADP.
 > 
+> Bjorn Andersson (3):
+>   regulator: dt-bindings: Describe Maxim MAX20411
+>   regulator: Introduce Maxim MAX20411 Step-Down converter
+>   arm64: dts: qcom: sa8295p-adp: Add max20411 on i2c12
 > 
+> [...]
 
 Applied to
 
-   broonie/sound.git for-next
+   broonie/regulator.git for-next
 
 Thanks!
 
-[1/2] ASoC: dt-bindings: qcom,sm8250: use fallback for SDM845 sound cards
-      commit: b4090b7cda255daafe816a00f2848f4f8e761786
-[2/2] ASoC: qcom: sdm845: add remark about unneeded compatibles
-      commit: 3a14adc51605452fdf1c009cc3333c7e399821d9
+[1/3] regulator: dt-bindings: Describe Maxim MAX20411
+      commit: c1bf8de25d0aa6e399399d6410b1140d4402c2e0
+[2/3] regulator: Introduce Maxim MAX20411 Step-Down converter
+      commit: 047ebaffd8171a47eb5462aec0f6006416fbe62e
+[3/3] arm64: dts: qcom: sa8295p-adp: Add max20411 on i2c12
+      (no commit info)
 
 All being well this means that it will be integrated into the linux-next
 tree (usually sometime in the next 24 hours) and sent to Linus during
