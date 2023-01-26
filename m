@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D95C67D4DC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 20:01:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E4A867D4DF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 20:01:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232344AbjAZTBV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Jan 2023 14:01:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45216 "EHLO
+        id S232365AbjAZTBZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Jan 2023 14:01:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232301AbjAZTBR (ORCPT
+        with ESMTP id S232169AbjAZTBU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Jan 2023 14:01:17 -0500
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85D5120680
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 11:01:16 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id rl14so7747145ejb.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 11:01:16 -0800 (PST)
+        Thu, 26 Jan 2023 14:01:20 -0500
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6E1565346
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 11:01:17 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id ud5so7711806ejc.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 11:01:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=A5OO1vXNMuogp5FzRqCMwDv1MFLEw13Hj5NTMjVEboo=;
-        b=Pyqcgbo++qOcEMsc2AqRFKZRy8mbM4wk+UJh84lwLvV0BOXx3hmDDJQbI7heDfJWlN
-         ZDgx3cSv0s22d/aAmjoYGF0ZNkWWAIljso1fpU2kAHj3bfEWfA7hH67kyEag3j7KDltr
-         LAGW/0FTrS4trMXGfRUk2o+vTZpgw8LiPS3yI4z7DKLnC+yKptCczDRSjh3+oGzlG0Pe
-         lvjWeWKpkx+GB+xMbGTswnKRTM1wujz6Y08lJqb2rQQ/Ipwo/3sD3CQ7evLtMJBcvbB/
-         tc3DBtY35vosiHT/FoZ+U0f1Zm/nB/7shnmBycwEYuFnlsdpqaW31BIx0M4k3gKML0Z9
-         7Gfg==
+        bh=b9GuZIQFiQiPaXRH54eN2BlHrDLxxiKxYVwEtE53efA=;
+        b=Ls4xDl5ETNxM4rGQg/ALFS1DnJdwaHO8rUjvrCve3UHHfUGrE5T/aKPakNWoAbEmRi
+         YxI3xWWHOo+j6pFL06KYxnoq8kWpaHgcw1SnD1iHaJNmjLfpjnXT1w+iIYgcXHFt5YeB
+         Q/hdXuiNk4JgQ5OsO54SChqNONavdWTDTDDJtPBohXB8J74mOTZzgLmuT+Iu5cV+s3JB
+         +blkT7pkT0ceTmVj66qMq0IY/YQVSbqXR3Tp9AXUdEWEgKIDPeVTBdobBmWS8MWhSTtx
+         XvbvrgfP+vZw1NaRNRcy7y/wUGSIfWMbqiQEflDlyR/LjGSYqeL7xGJIXrMRr7peJjUJ
+         dEtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=A5OO1vXNMuogp5FzRqCMwDv1MFLEw13Hj5NTMjVEboo=;
-        b=USqTpMOc1wSjpBJG+Q6HhNUKMRE4KayVK/5R118wTNE+FZqhGncovKlU35rTbv4Bg4
-         uTN6a8qhyWWVozcJnzLj8JxlTvGQ7js5UpTwxYc6CbdjjmQJfbZBPpu8kBHeC1jRvdOn
-         abN0/c6bMHSNh33U5HfZC1v9k67j7hHnTi565cof+Xj/V9A49bneFu7kyJ1NBxrsr1gv
-         3m2nymv7Fh1HXK6Ajv/LjbmEavkMHxFHOgRUfPoX1oObeAY7fxss7ATYYs90pDxyteeF
-         KVzBSi7WCC3vFfL0pkiI0RQdbdIl90fjedceWi7abflhVCjGcxvwWuCP0Mwa7O+7DUdI
-         wruw==
-X-Gm-Message-State: AFqh2koBfaKa2EWLnXfpr5X9Hj54DfdvwiO6COo6C02aNoy62ohALL8t
-        90uYNPFM33Gd5gEeJ5mSozvxrQ==
-X-Google-Smtp-Source: AMrXdXs45m9oAj8817Rp0dU4ASHvwKG2QDpOUBnK9orIJUBMDotXFa/sVcaJfjsWE5S/LLwMAqtDiw==
-X-Received: by 2002:a17:906:ecb9:b0:874:9ac1:40e with SMTP id qh25-20020a170906ecb900b008749ac1040emr36694894ejb.19.1674759674894;
-        Thu, 26 Jan 2023 11:01:14 -0800 (PST)
+        bh=b9GuZIQFiQiPaXRH54eN2BlHrDLxxiKxYVwEtE53efA=;
+        b=fZr7B9WHS0TM5B0252w7KTW5tc9TDwK4ITwrhu4sR41ClhDp4WD0/TrIt5wt8DdJtA
+         tEXmrhKnweqeK/0xW4fDFGr/zctZaPAqMlx2QvAnl9YbbV15ZQKDegcMP0w8RNBPoK0X
+         a5ErBSaBA6CTE+XoR64Au0CNq6l6JgQ4QFzDFKGhgtiw1O5sBQn+cRv7Ae5EalLE5vop
+         SXeEokYyFdGTrQHD3Zh3+KIwfj0nreKevhQ8ezJcYmG6BorXjmpzEbL5UayrNi/s+xKc
+         6BZ4lOxgDL90ZpzwRmmd8IC50+GlpOfHDa0Kcp6bbAjzRxfm7Wk56OT8Y5FgwO4HbNrA
+         cuVw==
+X-Gm-Message-State: AFqh2koAyz7bvtKWDTRSZcKYyf7OTYlX9DnTdAwubFp7wW/4kMeTgGEZ
+        HE1pK1fgmY2CpyMohPBnSLVe1g==
+X-Google-Smtp-Source: AMrXdXvBONRphu/IOhYxlFKyGySVwQAB6PjdJ4S/MaO6+PdZGJOQS4Vf2zGp9Dz+pTfYlrjHWqo7gA==
+X-Received: by 2002:a17:906:3b01:b0:84d:4767:734 with SMTP id g1-20020a1709063b0100b0084d47670734mr47874459ejf.6.1674759676003;
+        Thu, 26 Jan 2023 11:01:16 -0800 (PST)
 Received: from eriador.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id o25-20020a1709061b1900b0084d4e9a13cbsm974982ejg.221.2023.01.26.11.01.13
+        by smtp.gmail.com with ESMTPSA id o25-20020a1709061b1900b0084d4e9a13cbsm974982ejg.221.2023.01.26.11.01.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Jan 2023 11:01:14 -0800 (PST)
+        Thu, 26 Jan 2023 11:01:15 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -60,12 +60,12 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: Re: [PATCH] drm/msm/dpu: sc7180: add missing WB2 clock control
-Date:   Thu, 26 Jan 2023 21:00:58 +0200
-Message-Id: <167475959092.3954305.17650572108076539649.b4-ty@linaro.org>
+Subject: Re: [PATCH] drm/msm/dsi: properly handle the case of empty OPP table in dsi_mgr_bridge_mode_valid
+Date:   Thu, 26 Jan 2023 21:00:59 +0200
+Message-Id: <167475959087.3954305.17231782796910998330.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230116103055.780767-1-dmitry.baryshkov@linaro.org>
-References: <20230116103055.780767-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230124203600.3488766-1-dmitry.baryshkov@linaro.org>
+References: <20230124203600.3488766-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -79,15 +79,22 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Mon, 16 Jan 2023 12:30:55 +0200, Dmitry Baryshkov wrote:
-> Add missing DPU_CLK_CTRL_WB2 to sc7180_mdp clocks array.
+On Tue, 24 Jan 2023 22:36:00 +0200, Dmitry Baryshkov wrote:
+> It was left unnoticed during the review that even if there is no OPP
+> table in device tree, one will be created by a call to the function
+> devm_pm_opp_set_clkname(). This leads to dsi_mgr_bridge_mode_valid()
+> rejecting all modes if DT contains no OPP table for the DSI host.
 > 
+> Rework dsi_mgr_bridge_mode_valid() to handle this case by actually
+> checking that the table is populated with frequency entries before
+> returning an error.
 > 
+> [...]
 
 Applied, thanks!
 
-[1/1] drm/msm/dpu: sc7180: add missing WB2 clock control
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/255f056181ac
+[1/1] drm/msm/dsi: properly handle the case of empty OPP table in dsi_mgr_bridge_mode_valid
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/2ec56b232b97
 
 Best regards,
 -- 
