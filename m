@@ -2,175 +2,240 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F50967D96C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 00:12:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A6C0667D999
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 00:29:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233404AbjAZXMn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Jan 2023 18:12:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35546 "EHLO
+        id S230271AbjAZX3W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Jan 2023 18:29:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233400AbjAZXMm (ORCPT
+        with ESMTP id S229756AbjAZX3V (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Jan 2023 18:12:42 -0500
-Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62F4A6813A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 15:12:41 -0800 (PST)
-Received: by mail-pg1-x52d.google.com with SMTP id g68so2128397pgc.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 15:12:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=eYLVA/gRkxab4CDoKFtmpi4//JzmqCN3sb4llxXQnLk=;
-        b=GC/ln1AGRSi6pi9wZSidaaWtTLpWWynSl5Ze8kPaV9o4vVQiUVdHyWLtKQ0QX7/ib9
-         4DzmLl/LHgcvmN0CqhmjyW6rf4sGWKpkVI8uuAktvCq+Nv2FGmhEngEHsne0C/uAzogI
-         9K4OBdtBBJMf6BE2ZqF4KnZoxvaUsxwtvgaAQqbR8Rx06B3E7zN0Y0PLal3wBiYDL0fC
-         JzsbGgToy9FZd1MeqdwYc5Ht0lGF/Axvo8JTl97ZWJLKbRLAwEr8ELqqs5Q6prh0hptt
-         kfyb6sCDCNGDeA8L4wRV5/E1IwVEob3NypbiWtxQldmWglejolKjDTXGKAfYYmGu2GGW
-         TY1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=eYLVA/gRkxab4CDoKFtmpi4//JzmqCN3sb4llxXQnLk=;
-        b=lHRrMLi9TZcNa85A9yEgTtYOsX2sB/djWaT4+NSyu/wSt1U8d4dWRY5hpf7Wk1+1+1
-         uGn4GTXo8HmNi1daN9JJ+8WAVON2lsw/VKQEqwAzItRuZhEzTxbXJyiSDFqvfgM97Rsd
-         X28XhxKEJrvzQ+9Tr9N0IRKEDW9RT3j6tjM8RTEaYkDze49m9vqygiwVISIalRTeW+6H
-         DFcROfomus0OaKSI2P997XzxhnP4xkpboomXp/VdUvtgxIBTjTy6twlWN7rBV+Zy7aok
-         BSlN1iqph6UDM2A1vOXDqGgDjRWZOZBXGUMKpEeJs/MQ2eIz7KWAvmETYbisWUTGTTJD
-         E24g==
-X-Gm-Message-State: AFqh2kodunS/su9nYhXOIagecGI3Pa6vkVZtqr3DwbJHgH3yBdOdSQ1D
-        Hl4gWUUOwTbCC2LolpBieGpsZca1BZG3+P38nYJ6Lw==
-X-Google-Smtp-Source: AMrXdXu3T7s6gIIBTZ9tgSV12SqZY4xMClivlwfFp3NOjU+PIdpgLhQFkWXTkpIFv9NVgyVKUSnCQ2sp/0RZKwP+qAU=
-X-Received: by 2002:aa7:820f:0:b0:58d:a713:d1dd with SMTP id
- k15-20020aa7820f000000b0058da713d1ddmr4588377pfi.59.1674774760248; Thu, 26
- Jan 2023 15:12:40 -0800 (PST)
+        Thu, 26 Jan 2023 18:29:21 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A71036474
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 15:29:20 -0800 (PST)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30QKj4iK018289;
+        Thu, 26 Jan 2023 23:29:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=bC8GfZc8JCE+o+WvlB/q5mcAgqu51EkjuzZaVa3E7DI=;
+ b=Ohs25HK0Q6uUz/Jv7clsFrzHFz3qn5grjX1dAj9POGvpXJdOPFeBT9Lrsl67xpwuJ1Dj
+ GGlW6AX/cnlWUXz0+XfZhaHH1X9RMAsGonO7npnxxHVIG9r4d1bvyJGBmMNdwZ1enBb0
+ EeFEeXbrcAoBicBff33j0bj8SKalGFXctvOPnj+zhGNiKyf6kiEXwqNhUMYn6JOCTG0Y
+ c1CZsvA8Y+mgxh2wVd9fJeZAc0MiBSKBa4WIXgzroAP2ZHFynNeaGufhBnSSu/iihcX8
+ FP7zGs4ZRWB1OOVYUzFQADUZ2n5Zl03n5ttcb0oV8c+pNXxQrkQrD7U7jLSLjDb5y0CT cQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nbyma0bex-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 26 Jan 2023 23:29:13 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30QNTCvB006564
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 26 Jan 2023 23:29:12 GMT
+Received: from [10.110.33.211] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Thu, 26 Jan
+ 2023 15:29:11 -0800
+Message-ID: <b72dabe3-4de2-7d9a-1fca-01edfc588529@quicinc.com>
+Date:   Thu, 26 Jan 2023 15:29:11 -0800
 MIME-Version: 1.0
-References: <20230118091122.2205452-1-dmitry.baryshkov@linaro.org>
- <CAL_JsqJ=0neiZ4wkPiMqJMT4E1O_xO0uLrTmEGUcnZMqxkw4UQ@mail.gmail.com>
- <CAGETcx8Xy5OzsbW3123esxsbQJq-SqDkP1S5g2mmwzoCz4shtQ@mail.gmail.com>
- <20230125190926.GA2697290-robh@kernel.org> <505fc434-c31f-726e-b1cb-0bbfd5f83490@linaro.org>
-In-Reply-To: <505fc434-c31f-726e-b1cb-0bbfd5f83490@linaro.org>
-From:   Saravana Kannan <saravanak@google.com>
-Date:   Thu, 26 Jan 2023 15:12:03 -0800
-Message-ID: <CAGETcx-f9vy7MDB2vFWP9CL26UY7W65oJArvhzksCu8QG6Y4nw@mail.gmail.com>
-Subject: Re: [RESEND PATCH] of: property: do not create clocks device link for
- clock controllers
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Herring <robh@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH v2 03/27] drm/msm/dpu: move SSPP allocation to the RM
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
-        Abel Vesa <abel.vesa@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-17.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        ENV_AND_HDR_SPF_MATCH,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20221229191856.3508092-1-dmitry.baryshkov@linaro.org>
+ <20221229191856.3508092-4-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20221229191856.3508092-4-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: XsX4Tq1qRfFgfDaAxJd38BDRZSturfXT
+X-Proofpoint-GUID: XsX4Tq1qRfFgfDaAxJd38BDRZSturfXT
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-26_09,2023-01-26_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 mlxscore=0 bulkscore=0 spamscore=0 clxscore=1015
+ impostorscore=0 lowpriorityscore=0 phishscore=0 suspectscore=0
+ mlxlogscore=977 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2212070000 definitions=main-2301260218
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 26, 2023 at 2:51 PM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On 25/01/2023 21:09, Rob Herring wrote:
-> > On Tue, Jan 24, 2023 at 06:12:15PM -0800, Saravana Kannan wrote:
-> >> On Wed, Jan 18, 2023 at 5:35 AM Rob Herring <robh+dt@kernel.org> wrote:
-> >>>
-> >>> On Wed, Jan 18, 2023 at 3:11 AM Dmitry Baryshkov
-> >>> <dmitry.baryshkov@linaro.org> wrote:
-> >>>>
-> >>>> Do not create device link for clock controllers. Some of the clocks
-> >>>> provided to the device via OF can be the clocks that are just parents to
-> >>>> the clocks provided by this clock controller. Clock subsystem already
-> >>>> has support for handling missing clock parents correctly (clock
-> >>>> orphans). Later when the parent clock is registered, clocks get
-> >>>> populated properly.
-> >>>>
-> >>>> An example of the system where this matters is the SDM8450 MTP board
-> >>>> (see arch/arm64/boot/dts/qcom/sdm845-mtp.dts). Here the dispcc uses
-> >>>> clocks provided by dsi0_phy and dsi1_phy device tree nodes. However the
-> >>>> dispcc itself provides clocks to both PHYs, to the PHY parent device,
-> >>>> etc. With just dsi0_phy in place devlink is able to break the
-> >>>> dependency, but with two PHYs, dispcc doesn't get probed at all, thus
-> >>>> breaking display support.
-> >>>>
-> >>>> Cc: Bjorn Andersson <andersson@kernel.org>
-> >>>> Cc: Stephen Boyd <sboyd@kernel.org>
-> >>>> Cc: Saravana Kannan <saravanak@google.com>
-> >>>> Cc: Abel Vesa <abel.vesa@linaro.org>
-> >>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >>>> ---
-> >>>>
-> >>>> This patch has been posted a year ago in January 2022 ([1]). Since that time
-> >>>> Saravana failed to produce patches to assist in debugging the issue
-> >>>> ([2]) or to fix the issue ([3]). The issue we observe has been described
-> >>>> by Abel at ([4]). As we work on adding support for Dual DSI
-> >>>> configurations, the issue becomes more and more important, since binding
-> >>>> the whole display subsystem fails.
-> >>
-> >> I did send out a patch series[1] to try and fix this. Heck I even
-> >> talked about this in LPC 2022. So I don't think it's accurate to say I
-> >> didn't help debug this or fix this. There's some email thread in lore
-> >> where Abel gave more details and I figured out the issue and we didn't
-> >> need any more debugging. And then I sent out [1]. Sorry I missed you
-> >> in the cc lise for [1] -- I try to keep track of everyone to cc but
-> >> things slip through the cracks sometimes. But at the same time, it's
-> >> easy to check for emails from me before saying I didn't help or didn't
-> >> send out fixes :)
-> >>
-> >> If you do try to give [1] a shot, there are a bunch of bugs that
-> >> people pointed out for which I gave fixes on top of [1] in the
-> >> replies. I was supposed to work on v2 over the holidays, but that
-> >> didn't happen because of stuff outside my control.
-> >>
-> >>> That's ample time to fix this, so I intend to apply this. But I'll
-> >>> give it a few days for comments.
-> >>
-> >> Rob, I'd recommend not applying this because it'll fix it for Dmitry
-> >> but break someone else's use case. That's the whole reason it takes me
-> >> a while to send out patches -- it's easy to fix it for a subset of
-> >> devices, but fixing something without breaking someone else is harder
-> >> (I still believe it's doable) and it takes a while to test them on all
-> >> the devices I want to test before sending them out.
->
-> This case is really simple, I think. Clock controllers (and
-> clock-core-framework) are prepared to handle clock orphans properly.
-> Moreover they have been supposed to work in such way for quite a while.
-> In other words, I don't think we should save them from this
-> -EPROBE_DEFERRED.
 
-A clock controller can depend on other clock controllers for non clock
-tree reasons. For example, it might need a clock ON to access its
-registers. So, while the CCF can handle orphans properly, that's not
-the only dependency. Also, fw_devlink is not just about probing
-either. It also has to do with proper sync_state() callbacks.
 
-Also, I already fixed the issue you are referring to while not
-breaking the conditions I'm referring to. So, I don't know why you are
-so opposed to that. See Abel's Tested-by here:
-https://lore.kernel.org/lkml/YvonlAwXAoXTUTZe@linaro.org/
+On 12/29/2022 11:18 AM, Dmitry Baryshkov wrote:
+> Follow the example of all other hw blocks and initialize SSPP blocks in
+> Resource Manager.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 17 ++++-------------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c    | 22 ++++++++++++++++++++++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h    | 12 ++++++++++++
+>   3 files changed, 38 insertions(+), 13 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index e1cdd71716f0..e443799de2c1 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -1275,8 +1275,6 @@ static void dpu_plane_destroy(struct drm_plane *plane)
+>   		/* this will destroy the states as well */
+>   		drm_plane_cleanup(plane);
+>   
+> -		dpu_hw_sspp_destroy(pdpu->pipe_hw);
+> -
+We removed from here so the flow will be msm_drm_uninit calls 
+drm_mode_config_cleanup() which will call kms->destroy() which shall 
+call dpu_rm_destroy() where this will be released now right?
 
-> Thus I think it is better to let them continue doing their job of
-> handling probe deferrals on their own, at least for the time being.
 
-I'm pretty sure your patch will break other Qualcomm platforms because
-they depend on sync_state() callbacks to boot up properly when
-all/most of their drivers are built as modules.
+>   		kfree(pdpu);
+>   	}
+>   }
+> @@ -1482,14 +1480,10 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
+>   	pdpu->pipe = pipe;
+>   
+>   	/* initialize underlying h/w driver */
+> -	pdpu->pipe_hw = dpu_hw_sspp_init(pipe, kms->mmio, kms->catalog);
+> -	if (IS_ERR(pdpu->pipe_hw)) {
+> -		DPU_ERROR("[%u]SSPP init failed\n", pipe);
+> -		ret = PTR_ERR(pdpu->pipe_hw);
+> +	pdpu->pipe_hw = dpu_rm_get_sspp(&kms->rm, pipe);
+> +	if (!pdpu->pipe_hw || !pdpu->pipe_hw->cap || !pdpu->pipe_hw->cap->sblk) {
+> +		DPU_ERROR("[%u]SSPP is invalid\n", pipe);
 
-> And
-> then, when your patches are finished, we can think about reenabling
-> current behaviour. As a reminder, currently, all Qualcomm platforms
-> trying to use double DSI configuration are broken and have to use
-> fw_devlink= kernel params.
+I know this was existing code but can there be a case where pipe_hw->cap 
+exists but pipe_hw->cap->sblk doesnt?
 
-I'm/was working on sending out the v2 when I got your email. Hold
-tight please. It shouldn't take too long.
-
--Saravana
+>   		goto clean_plane;
+> -	} else if (!pdpu->pipe_hw->cap || !pdpu->pipe_hw->cap->sblk) {
+> -		DPU_ERROR("[%u]SSPP init returned invalid cfg\n", pipe);
+> -		goto clean_sspp;
+>   	}
+>   
+>   	format_list = pdpu->pipe_hw->cap->sblk->format_list;
+> @@ -1499,7 +1493,7 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
+>   				format_list, num_formats,
+>   				supported_format_modifiers, type, NULL);
+>   	if (ret)
+> -		goto clean_sspp;
+> +		goto clean_plane;
+>   
+>   	pdpu->catalog = kms->catalog;
+>   
+> @@ -1532,9 +1526,6 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
+>   					pipe, plane->base.id);
+>   	return plane;
+>   
+> -clean_sspp:
+> -	if (pdpu && pdpu->pipe_hw)
+> -		dpu_hw_sspp_destroy(pdpu->pipe_hw);
+>   clean_plane:
+>   	kfree(pdpu);
+>   	return ERR_PTR(ret);
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> index 73b3442e7467..0668009cc9ed 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> @@ -8,6 +8,7 @@
+>   #include "dpu_hw_lm.h"
+>   #include "dpu_hw_ctl.h"
+>   #include "dpu_hw_pingpong.h"
+> +#include "dpu_hw_sspp.h"
+>   #include "dpu_hw_intf.h"
+>   #include "dpu_hw_wb.h"
+>   #include "dpu_hw_dspp.h"
+> @@ -91,6 +92,9 @@ int dpu_rm_destroy(struct dpu_rm *rm)
+>   	for (i = 0; i < ARRAY_SIZE(rm->hw_wb); i++)
+>   		dpu_hw_wb_destroy(rm->hw_wb[i]);
+>   
+> +	for (i = 0; i < ARRAY_SIZE(rm->hw_sspp); i++)
+> +		dpu_hw_sspp_destroy(rm->hw_sspp[i]);
+> +
+>   	return 0;
+>   }
+>   
+> @@ -255,6 +259,24 @@ int dpu_rm_init(struct dpu_rm *rm,
+>   		rm->dsc_blks[dsc->id - DSC_0] = &hw->base;
+>   	}
+>   
+> +	for (i = 0; i < cat->sspp_count; i++) {
+> +		struct dpu_hw_sspp *hw;
+> +		const struct dpu_sspp_cfg *sspp = &cat->sspp[i];
+> +
+> +		if (sspp->id < SSPP_NONE || sspp->id >= SSPP_MAX) {
+> +			DPU_ERROR("skip intf %d with invalid id\n", sspp->id);
+> +			continue;
+> +		}
+> +
+> +		hw = dpu_hw_sspp_init(sspp->id, mmio, cat);
+> +		if (IS_ERR(hw)) {
+> +			rc = PTR_ERR(hw);
+> +			DPU_ERROR("failed sspp object creation: err %d\n", rc);
+> +			goto fail;
+> +		}
+> +		rm->hw_sspp[sspp->id - SSPP_NONE] = hw;
+> +	}
+> +
+>   	return 0;
+>   
+>   fail:
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+> index 59de72b381f9..d62c2edb2460 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+> @@ -21,6 +21,7 @@ struct dpu_global_state;
+>    * @hw_intf: array of intf hardware resources
+>    * @hw_wb: array of wb hardware resources
+>    * @dspp_blks: array of dspp hardware resources
+> + * @hw_sspp: array of sspp hardware resources
+>    */
+>   struct dpu_rm {
+>   	struct dpu_hw_blk *pingpong_blks[PINGPONG_MAX - PINGPONG_0];
+> @@ -31,6 +32,7 @@ struct dpu_rm {
+>   	struct dpu_hw_blk *dspp_blks[DSPP_MAX - DSPP_0];
+>   	struct dpu_hw_blk *merge_3d_blks[MERGE_3D_MAX - MERGE_3D_0];
+>   	struct dpu_hw_blk *dsc_blks[DSC_MAX - DSC_0];
+> +	struct dpu_hw_sspp *hw_sspp[SSPP_MAX - SSPP_NONE];
+>   };
+>   
+>   /**
+> @@ -108,5 +110,15 @@ static inline struct dpu_hw_wb *dpu_rm_get_wb(struct dpu_rm *rm, enum dpu_wb wb_
+>   	return rm->hw_wb[wb_idx - WB_0];
+>   }
+>   
+> +/**
+> + * dpu_rm_get_sspp - Return a struct dpu_hw_sspp instance given it's index.
+> + * @rm: DPU Resource Manager handle
+> + * @sspp_idx: SSPP index
+> + */
+> +static inline struct dpu_hw_sspp *dpu_rm_get_sspp(struct dpu_rm *rm, enum dpu_sspp sspp_idx)
+> +{
+> +	return rm->hw_sspp[sspp_idx - SSPP_NONE];
+> +}
+> +
+>   #endif /* __DPU_RM_H__ */
+>   
