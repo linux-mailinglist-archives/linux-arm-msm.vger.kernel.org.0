@@ -2,145 +2,362 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FD9267D826
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 23:05:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F4C967D838
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 23:12:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232757AbjAZWFv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Jan 2023 17:05:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45752 "EHLO
+        id S231651AbjAZWMP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Jan 2023 17:12:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232506AbjAZWFu (ORCPT
+        with ESMTP id S229976AbjAZWMO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Jan 2023 17:05:50 -0500
-Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B24F28D16;
-        Thu, 26 Jan 2023 14:05:49 -0800 (PST)
-Received: by mail-oo1-f50.google.com with SMTP id u13-20020a4aa34d000000b004f5219f9424so415004ool.5;
-        Thu, 26 Jan 2023 14:05:49 -0800 (PST)
+        Thu, 26 Jan 2023 17:12:14 -0500
+Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AEA8A24B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 14:12:13 -0800 (PST)
+Received: by mail-il1-x130.google.com with SMTP id d10so1377093ilc.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 14:12:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=PH5bYda4UNvBQbrP3sSsZzNGvFBGhD2UePSzdVYPBSE=;
+        b=Jxu2paTDCzqX2ZdByp8uGp/ZUXkFphjS2x6wEZrihFtVNb51FJ//0/eqlZLztRC2rl
+         1IcOpw5f+Pg7VG04V8iNuzPu7pKFHTz9zgGAULZzd0n+WH4zrHpPgEV972X2MrOO2jsM
+         WKzkr7x2eke75d5s0PJ9LLCS+9+PEmJGjCi5IVtBaBAxiHiwMX6pYP43F/m9iB/dbCDq
+         jToofTJoxw9Ywbe4EFLryYd0wf71LvHlmBVNDiTZElPSo4XpPrVuc96RSFKgAp8WrCqy
+         tud4YX/IDe9uGbavcxFWiu1Tila+knQBQByZT3FX0cBEusmwKZN0/jYadS6Ikkeig0RI
+         ywuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=9zvA6aaRxT5oA+vWQpnnbfeU47UvhMD3eanCgwim0e8=;
-        b=xYHbqplskkupYptyDToOpBB1J0tOjt5D6YIOKq9jxgE1RbdxGajZctF/P3slwHhs1w
-         3VzEcK+b2EvtmZvoP7aPJo2l1kdS/ZggEbjvWtEf+vFjbtLycg/AQq2Zw6LrmRE2h9xJ
-         NyWhIJM65geGvwx0M6eGuo0cs585TfRlb4/45RtD7xu5huxnKPY66CdPO6yTDMBv5uIH
-         8v0bjYr/Ug3zHm7R+38ovznKRpYsmyr3m/NjDRfzVX2n3Alub7NKqx570xYsKtxRtwgD
-         a2qVqHeTJGYQ8y/KVjcTSDLGZF7Msb/2+2QuCOP7lt5/p0gWl7QOEtfA4x04FnJJPgHf
-         /4VA==
-X-Gm-Message-State: AFqh2kp2Qfxixug5/4XOpH7+mPL4IMH9GcyFF+8O9dWSqvtbbp4TaGsj
-        gZDWPSyFKBevJ+G7SU4PkA==
-X-Google-Smtp-Source: AMrXdXsvaBNueDbm+FAsWOVEltyyLIwFN/xjB4zgkZ/QVZx+C93Cg+LW+hQsXWhlIx9Od+L1CajrIw==
-X-Received: by 2002:a4a:b5cb:0:b0:4f2:f0f8:b7b5 with SMTP id u11-20020a4ab5cb000000b004f2f0f8b7b5mr15440701ooo.7.1674770748256;
-        Thu, 26 Jan 2023 14:05:48 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id o20-20020a4ad494000000b004a394578e14sm990927oos.32.2023.01.26.14.05.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Jan 2023 14:05:47 -0800 (PST)
-Received: (nullmailer pid 2669511 invoked by uid 1000);
-        Thu, 26 Jan 2023 22:05:46 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=PH5bYda4UNvBQbrP3sSsZzNGvFBGhD2UePSzdVYPBSE=;
+        b=MpqPrxwYslyJzBf6bz7JaXlk8cX20dSPGElcZnynxo61O6JVyhqRzvCGI6jYCVvCSc
+         O/Xezb0gFN7ethZZMi27pldmZMXedmpmh1PsNthu5ixMnknrkRYZk+SO3A0z3rgz5M7M
+         4DLo4rIPa+G6URskQEyV5I+yTk10kB56qmWhQUBjMdkAd1Qckme7bwkl3pYWK2UWxztX
+         FrpSfoROJJ9z1rroB7Genp4b3+CLe3wJ19zy4jPjgbBUvm4JnoPYiExromd5E6wjVw7b
+         QiweNdqHtPSzwfaae6IyorvQsOXRSe9xfg2xa+D12/6Q3SWACNqXj8NMwkcgmYd20JW2
+         c7lw==
+X-Gm-Message-State: AO0yUKVTtmYV2OY2U4kMH2Fcr/GI5R/DB0EMfLzDEhtLLFFnsPddS9ef
+        QBfPCeWdtNJhCxmST1GxfY8qfQ==
+X-Google-Smtp-Source: AK7set/EJ1dXjthCHXs/J2OOXy51vDxyFCKtXch5kSdtM5JcNkzDVoRI5CduvPkI76BJGfPLePa5Iw==
+X-Received: by 2002:a05:6e02:1a85:b0:310:a34b:b1c0 with SMTP id k5-20020a056e021a8500b00310a34bb1c0mr5852660ilv.10.1674771132595;
+        Thu, 26 Jan 2023 14:12:12 -0800 (PST)
+Received: from [192.168.2.31] ([194.204.33.9])
+        by smtp.gmail.com with ESMTPSA id h31-20020a022b1f000000b00363f8e0ab41sm808132jaa.152.2023.01.26.14.12.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 26 Jan 2023 14:12:12 -0800 (PST)
+Message-ID: <acbb8d20-2e7e-e38c-9edb-8f8fa203a094@linaro.org>
+Date:   Fri, 27 Jan 2023 00:12:08 +0200
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Christian Marangi <ansuelsmth@gmail.com>
-Cc:     Ilia Lin <ilia.lin@kernel.org>, linux-pm@vger.kernel.org,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Nishanth Menon <nm@ti.com>, devicetree@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-In-Reply-To: <20230126150026.14590-1-ansuelsmth@gmail.com>
-References: <20230126150026.14590-1-ansuelsmth@gmail.com>
-Message-Id: <167475624070.2087166.4816561741085643801.robh@kernel.org>
-Subject: Re: [PATCH v4 1/3] dt-bindings: cpufreq: qcom-cpufreq-nvmem: make cpr
- bindings optional
-Date:   Thu, 26 Jan 2023 16:05:46 -0600
-X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH v2 2/6] clk: qcom: Add GPU clock controller driver for
+ SM6125
+Content-Language: en-GB
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     marijn.suijten@somainline.org,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org
+References: <20230126181335.12970-1-konrad.dybcio@linaro.org>
+ <20230126181335.12970-3-konrad.dybcio@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230126181335.12970-3-konrad.dybcio@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Thu, 26 Jan 2023 16:00:24 +0100, Christian Marangi wrote:
-> The qcom-cpufreq-nvmem driver supports 2 kind of devices:
-> - pre-cpr that doesn't have power-domains and base everything on nvmem
->   cells and multiple named microvolt bindings.
->   Doesn't need required-opp binding in the opp nodes as they are only
->   used for genpd based devices.
-> - cpr-based that require power-domain in the cpu nodes and use various
->   source to decide the correct voltage and freq
->   Require required-opp binding since they need to be linked to the
->   related opp-level.
+On 26/01/2023 20:13, Konrad Dybcio wrote:
+> Add support for the GPU clock controller found on SM6125.
 > 
-> When the schema was introduced, it was wrongly set to always require these
-> binding but this is not the case for pre-cpr devices.
-> 
-> Make the power-domain and the required-opp optional and set them required
-> only for qcs404 based devices.
-> 
-> Fixes: ec24d1d55469 ("dt-bindings: opp: Convert qcom-nvmem-cpufreq to DT schema")
-> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
-> Changes v4:
-> - Explain why required-opp needs to be conditional
-> - Split additional ref part
-> Changesv3:
-> - No change
-> Changes v2:
-> - Reword commit description
-> - Fix condition order
-> - Add allOf
+> v1 -> v2:
 > 
->  .../bindings/cpufreq/qcom-cpufreq-nvmem.yaml  | 62 +++++++++++--------
->  1 file changed, 37 insertions(+), 25 deletions(-)
+> - Add "depends on" (Krzysztof)
+
+With three nits fixed,
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+> 
+>   drivers/clk/qcom/Kconfig        |   9 +
+>   drivers/clk/qcom/Makefile       |   1 +
+>   drivers/clk/qcom/gpucc-sm6125.c | 444 ++++++++++++++++++++++++++++++++
+>   3 files changed, 454 insertions(+)
+>   create mode 100644 drivers/clk/qcom/gpucc-sm6125.c
 > 
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+[skipped]
 
-yamllint warnings/errors:
+> +static struct clk_branch gpu_cc_gx_gfx3d_clk = {
+> +	.halt_reg = 0x1054,
+> +	.halt_check = BRANCH_HALT_SKIP,
+> +	.clkr = {
+> +		.enable_reg = 0x1054,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(struct clk_init_data){
+> +			.name = "gpu_cc_gx_gfx3d_clk",
+> +			.parent_data = &(const struct clk_parent_data) {
+> +				.hw = &gpu_cc_gx_gfx3d_clk_src.clkr.hw,
+> +			},
 
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml: 'anyOf' conditional failed, one must be fixed:
-	'type' is a required property
-	'properties' is a required property
-	'patternProperties' is a required property
-	hint: 'additionalProperties' depends on 'properties' or 'patternProperties'
-	from schema $id: http://devicetree.org/meta-schemas/keywords.yaml#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml: 'anyOf' conditional failed, one must be fixed:
-	'properties' is a required property
-	'patternProperties' is a required property
-	hint: Metaschema for devicetree binding documentation
-	from schema $id: http://devicetree.org/meta-schemas/core.yaml#
+parent_hws
 
-doc reference errors (make refcheckdocs):
+> +			.num_parents = 1,
+> +			.flags = CLK_SET_RATE_PARENT,
+> +			.ops = &clk_branch2_ops,
+> +		},
+> +	},
+> +};
+> +
+> +static struct clk_branch gpu_cc_cx_gfx3d_clk = {
+> +	.halt_reg = 0x10a4,
+> +	.halt_check = BRANCH_HALT_DELAY,
+> +	.clkr = {
+> +		.enable_reg = 0x10a4,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(struct clk_init_data){
+> +			.name = "gpu_cc_cx_gfx3d_clk",
+> +			.parent_data = &(const struct clk_parent_data) {
+> +				.hw = &gpu_cc_gx_gfx3d_clk.clkr.hw,
+> +			},
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230126150026.14590-1-ansuelsmth@gmail.com
+parent_hws
 
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
+> +			.num_parents = 1,
+> +			.flags = CLK_SET_RATE_PARENT,
+> +			.ops = &clk_branch2_ops,
+> +		},
+> +	},
+> +};
+> +
+> +static struct clk_branch gpu_cc_cx_gmu_clk = {
+> +	.halt_reg = 0x1098,
+> +	.halt_check = BRANCH_HALT,
+> +	.clkr = {
+> +		.enable_reg = 0x1098,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(struct clk_init_data){
+> +			.name = "gpu_cc_cx_gmu_clk",
+> +			.parent_data = &(const struct clk_parent_data) {
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
+parent_hws
 
-pip3 install dtschema --upgrade
+> +				.hw = &gpu_cc_gmu_clk_src.clkr.hw,
+> +			},
+> +			.num_parents = 1,
+> +			.flags = CLK_SET_RATE_PARENT,
+> +			.ops = &clk_branch2_ops,
+> +		},
+> +	},
+> +};
+> +
+> +static struct clk_branch gpu_cc_cx_snoc_dvm_clk = {
+> +	.halt_reg = 0x108c,
+> +	.halt_check = BRANCH_HALT_DELAY,
+> +	.clkr = {
+> +		.enable_reg = 0x108c,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(struct clk_init_data){
+> +			.name = "gpu_cc_cx_snoc_dvm_clk",
+> +			.ops = &clk_branch2_ops,
+> +		},
+> +	},
+> +};
+> +
+> +static struct clk_branch gpu_cc_cxo_aon_clk = {
+> +	.halt_reg = 0x1004,
+> +	.halt_check = BRANCH_HALT_DELAY,
+> +	.clkr = {
+> +		.enable_reg = 0x1004,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(struct clk_init_data){
+> +			.name = "gpu_cc_cxo_aon_clk",
+> +			.ops = &clk_branch2_ops,
+> +		},
+> +	},
+> +};
+> +
+> +static struct clk_branch gpu_cc_cxo_clk = {
+> +	.halt_reg = 0x109c,
+> +	.halt_check = BRANCH_HALT,
+> +	.clkr = {
+> +		.enable_reg = 0x109c,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(struct clk_init_data){
+> +			.name = "gpu_cc_cxo_clk",
+> +			.ops = &clk_branch2_ops,
+> +		},
+> +	},
+> +};
+> +
+> +static struct clk_branch gpu_cc_sleep_clk = {
+> +	.halt_reg = 0x1090,
+> +	.halt_check = BRANCH_HALT_DELAY,
+> +	.clkr = {
+> +		.enable_reg = 0x1090,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(struct clk_init_data){
+> +			.name = "gpu_cc_sleep_clk",
+> +			.ops = &clk_branch2_ops,
+> +		},
+> +	},
+> +};
+> +
+> +static struct clk_branch gpu_cc_ahb_clk = {
+> +	.halt_reg = 0x1078,
+> +	.halt_check = BRANCH_HALT_DELAY,
+> +	.clkr = {
+> +		.enable_reg = 0x1078,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(struct clk_init_data){
+> +			.name = "gpu_cc_ahb_clk",
+> +			.flags = CLK_IS_CRITICAL,
+> +			.ops = &clk_branch2_ops,
+> +		},
+> +	},
+> +};
+> +
+> +static struct clk_branch gpu_cc_hlos1_vote_gpu_smmu_clk = {
+> +	.halt_reg = 0x5000,
+> +	.halt_check = BRANCH_VOTED,
+> +	.clkr = {
+> +		.enable_reg = 0x5000,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(struct clk_init_data){
+> +			.name = "gpu_cc_hlos1_vote_gpu_smmu_clk",
+> +			.ops = &clk_branch2_ops,
+> +		},
+> +	},
+> +};
+> +
+> +static struct gdsc gpu_cx_gdsc = {
+> +	.gdscr = 0x106c,
+> +	.gds_hw_ctrl = 0x1540,
+> +	.pd = {
+> +		.name = "gpu_cx_gdsc",
+> +	},
+> +	.pwrsts = PWRSTS_OFF_ON,
+> +	.flags = VOTABLE,
+> +};
+> +
+> +static struct gdsc gpu_gx_gdsc = {
+> +	.gdscr = 0x100c,
+> +	.pd = {
+> +		.name = "gpu_gx_gdsc",
+> +	},
+> +	.pwrsts = PWRSTS_OFF_ON,
+> +	.flags = VOTABLE,
+> +};
+> +
+> +static struct clk_regmap *gpu_cc_sm6125_clocks[] = {
+> +	[GPU_CC_CRC_AHB_CLK] = &gpu_cc_crc_ahb_clk.clkr,
+> +	[GPU_CC_CX_APB_CLK] = &gpu_cc_cx_apb_clk.clkr,
+> +	[GPU_CC_CX_GFX3D_CLK] = &gpu_cc_cx_gfx3d_clk.clkr,
+> +	[GPU_CC_CX_GMU_CLK] = &gpu_cc_cx_gmu_clk.clkr,
+> +	[GPU_CC_CX_SNOC_DVM_CLK] = &gpu_cc_cx_snoc_dvm_clk.clkr,
+> +	[GPU_CC_CXO_AON_CLK] = &gpu_cc_cxo_aon_clk.clkr,
+> +	[GPU_CC_CXO_CLK] = &gpu_cc_cxo_clk.clkr,
+> +	[GPU_CC_GMU_CLK_SRC] = &gpu_cc_gmu_clk_src.clkr,
+> +	[GPU_CC_PLL0_OUT_AUX2] = &gpu_cc_pll0_out_aux2.clkr,
+> +	[GPU_CC_PLL1_OUT_AUX2] = &gpu_cc_pll1_out_aux2.clkr,
+> +	[GPU_CC_SLEEP_CLK] = &gpu_cc_sleep_clk.clkr,
+> +	[GPU_CC_GX_GFX3D_CLK] = &gpu_cc_gx_gfx3d_clk.clkr,
+> +	[GPU_CC_GX_GFX3D_CLK_SRC] = &gpu_cc_gx_gfx3d_clk_src.clkr,
+> +	[GPU_CC_AHB_CLK] = &gpu_cc_ahb_clk.clkr,
+> +	[GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK] = &gpu_cc_hlos1_vote_gpu_smmu_clk.clkr,
+> +};
+> +
+> +static struct gdsc *gpucc_sm6125_gdscs[] = {
+> +	[GPU_CX_GDSC] = &gpu_cx_gdsc,
+> +	[GPU_GX_GDSC] = &gpu_gx_gdsc,
+> +};
+> +
+> +static const struct regmap_config gpu_cc_sm6125_regmap_config = {
+> +	.reg_bits = 32,
+> +	.reg_stride = 4,
+> +	.val_bits = 32,
+> +	.max_register = 0x9000,
+> +	.fast_io = true,
+> +};
+> +
+> +static const struct qcom_cc_desc gpu_cc_sm6125_desc = {
+> +	.config = &gpu_cc_sm6125_regmap_config,
+> +	.clks = gpu_cc_sm6125_clocks,
+> +	.num_clks = ARRAY_SIZE(gpu_cc_sm6125_clocks),
+> +	.gdscs = gpucc_sm6125_gdscs,
+> +	.num_gdscs = ARRAY_SIZE(gpucc_sm6125_gdscs),
+> +};
+> +
+> +static const struct of_device_id gpu_cc_sm6125_match_table[] = {
+> +	{ .compatible = "qcom,sm6125-gpucc" },
+> +	{ }
+> +};
+> +MODULE_DEVICE_TABLE(of, gpu_cc_sm6125_match_table);
+> +
+> +static int gpu_cc_sm6125_probe(struct platform_device *pdev)
+> +{
+> +	struct regmap *regmap;
+> +	unsigned int value, mask;
+> +
+> +	regmap = qcom_cc_map(pdev, &gpu_cc_sm6125_desc);
+> +	if (IS_ERR(regmap))
+> +		return PTR_ERR(regmap);
+> +
+> +	clk_alpha_pll_configure(&gpu_cc_pll0_out_aux2, regmap, &gpu_pll0_config);
+> +	clk_alpha_pll_configure(&gpu_cc_pll1_out_aux2, regmap, &gpu_pll1_config);
+> +
+> +	/* Recommended WAKEUP/SLEEP settings for the gpu_cc_cx_gmu_clk */
+> +	mask = CX_GMU_CBCR_WAKE_MASK << CX_GMU_CBCR_WAKE_SHIFT;
+> +	mask |= CX_GMU_CBCR_SLEEP_MASK << CX_GMU_CBCR_SLEEP_SHIFT;
+> +	value = 0xf << CX_GMU_CBCR_WAKE_SHIFT | 0xf << CX_GMU_CBCR_SLEEP_SHIFT;
+> +	regmap_update_bits(regmap, gpu_cc_cx_gmu_clk.clkr.enable_reg, mask, value);
+> +
+> +	/* Set up PERIPH/MEM retain on the GPU core clock */
+> +	regmap_update_bits(regmap, gpu_cc_gx_gfx3d_clk.halt_reg,
+> +			   (BIT(14) | BIT(13)), (BIT(14) | BIT(13)));
+> +
+> +	return qcom_cc_really_probe(pdev, &gpu_cc_sm6125_desc, regmap);
+> +}
+> +
+> +static struct platform_driver gpu_cc_sm6125_driver = {
+> +	.probe = gpu_cc_sm6125_probe,
+> +	.driver = {
+> +		.name = "gpucc-sm6125",
+> +		.of_match_table = gpu_cc_sm6125_match_table,
+> +	},
+> +};
+> +
+> +static int __init gpu_cc_sm6125_init(void)
+> +{
+> +	return platform_driver_register(&gpu_cc_sm6125_driver);
+> +}
+> +subsys_initcall(gpu_cc_sm6125_init);
+> +
+> +static void __exit gpu_cc_sm6125_exit(void)
+> +{
+> +	platform_driver_unregister(&gpu_cc_sm6125_driver);
+> +}
+> +module_exit(gpu_cc_sm6125_exit);
+> +
+> +MODULE_DESCRIPTION("QTI GPUCC SM6125 Driver");
+> +MODULE_LICENSE("GPL");
 
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+-- 
+With best wishes
+Dmitry
 
