@@ -2,136 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 09BC367D1AA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 17:32:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A30B067D1BF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 17:36:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229579AbjAZQcY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Jan 2023 11:32:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41988 "EHLO
+        id S231586AbjAZQf6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Jan 2023 11:35:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229873AbjAZQcX (ORCPT
+        with ESMTP id S231523AbjAZQfz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Jan 2023 11:32:23 -0500
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9BF72069B
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 08:32:19 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id q8so1509063wmo.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 08:32:19 -0800 (PST)
+        Thu, 26 Jan 2023 11:35:55 -0500
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 963D053549
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 08:35:53 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id v10so2370718edi.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 08:35:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Ht6SLMPOXpO5uQjEKRBlkeAFxtNjyW1ofM/NJzMtXes=;
-        b=bQUKqFOePcwq2+andSurp3CyehEw/rCw1c3LYc7LOeoXkGX1+8eWEqskfuK06Ku9cq
-         latkyqL/y3AVFaLVtFzWf55vMnVx49WLM+I434CoMoggsC+6nhlEbJlDvxA5cqTLydzh
-         z8WIoAAvZG9n8B1FVbRtm0sNn9f2fdvXLUYKLtWXs/ZOOtIKyc5SC6bu1A6UOcUSYvg4
-         9VWuqka7d9K/wf0135wn6kZNLCeevbDgrDzryTjmByxjiT6xz/bNsXaaj2+rALWez4WN
-         pweX25STJgKwGIgMxDuqt6TXvs1CjXV+EF5KXICf1sIYgPvu88lCdQrJjhjLde21oxmX
-         76Zw==
+        bh=afez1nsKlZmE+ENEERE7Oo/V5VhLLIWK6OgZUW8xIho=;
+        b=cvhnX0fWR5gLtPdV8uzCMk0K87aF0P1NkjL7UbHZZwQwDjKaLGLKdJuiGcE9pO3Ne6
+         jYpCr4xptwHNwgB4Yw3ba8yohEdlfpwPyGGZy4LX4u5vay/33iWUpx4O3LrATSGkQw/b
+         jhXV/KJ8SKTr0pM8z4X1BiZb2FM0fMKE2r3fe8WbyjmdBHvpRwE6BS39v0n8izjR0vfW
+         1LmFvibAgrN2OD1nE7VoUj6oImoD7PgLaDYWIfo8AwPcR2lgcIdeSHFBgwk8JcU7crQh
+         cObk+cmzFvq+LxN1f7JfrRfdvhktdkNgH8dYTnxNRo97I5IT17Y1cbjQjHpb0MGWmG41
+         dcHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ht6SLMPOXpO5uQjEKRBlkeAFxtNjyW1ofM/NJzMtXes=;
-        b=gazRcc9Al23QZF+b9cItXeKNBc6Vroq/GkbN8tkh/d/Cudf/w9vb+X0T+GoERU2mMw
-         zTVpPzmmurMr6Co6t+g7VyeQwP/dwVYr8PhOD9B+jgSruPrWV/TOC5/W0dVz8DVLnXAC
-         kQAUS1TZdYUtgSNk/gn6y5SWpHwHkgTEvyrQJKYN98X6+fmclEvNGNLGlGyBCrQ0fieY
-         qCoS9mUKCj9rKovE1eb0uKx9kaVIsmdifx+VkYxyM4J134lPqpui670X4Gh1+r7kmouR
-         6FdChdbLZRxZRVdHDfK6DC3JPxkoLWC39r281BHTSFc2vwkzQKsdq2NTTbahQq+ij99q
-         OH9g==
-X-Gm-Message-State: AFqh2krLPw0b65lKu1DEkLR+mV3P/qhPvJrJYfemlerF7FDpvGS0rB+1
-        ls45PfgdAtneCrRTXyr/FUYKug==
-X-Google-Smtp-Source: AMrXdXueF3WB3UYX7Y62NPQUcdVtJfLtkKm2OG2DuDdwF6CXMCUWMJCTRgiP0i0grNrhL7mpvJ2Hhg==
-X-Received: by 2002:a05:600c:c10:b0:3da:f5e6:a320 with SMTP id fm16-20020a05600c0c1000b003daf5e6a320mr40747301wmb.22.1674750738488;
-        Thu, 26 Jan 2023 08:32:18 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id ip6-20020a05600ca68600b003d04e4ed873sm5027940wmb.22.2023.01.26.08.32.17
+        bh=afez1nsKlZmE+ENEERE7Oo/V5VhLLIWK6OgZUW8xIho=;
+        b=A8SLUfmvR3zf2/nHskEwE/pBeKBJhnEjh3X3W9rHfHhsr8eIv+bUoysNuzLsKilH2S
+         SXRTnA/8mrPJNlChOPwUnDDmWl9SaMynKJdt2Jd4iaRfs/T2FCZL0FfzdHmKTUCWKJ3M
+         xwXZdUJIDTELv9WanDJlrgvUHhOo7q2Z+MVFavzzh26jkU9z0RtoZMzStTLEeSLOd4U3
+         dyxLVwkY6qED4iUyhNLHSkQ3AKJjV4MJQE8hzx4s8HCV1mfDb2pQP7eKbxO+ftiTCJ+r
+         R8Zr2kL68P5dptqjIksf+aZlUscSV9fUYcpUlobXiLxmAW5ULS++WUNUtgqK+eP86dsE
+         bmww==
+X-Gm-Message-State: AFqh2krvq15xA4z5/+CLuzf8v9OPP1l4YQ49yvC2m12Q5p9NAxAVgMVS
+        bIf3wKry7XLmGPeJCsa71qVajQ==
+X-Google-Smtp-Source: AMrXdXu/trqwU0wO6hcbTWNdvL7JmToL9lOSDZ0+tnzXlz5ZWkKoQjyYDauMEG0SU0okMmsikNA/Jw==
+X-Received: by 2002:aa7:de95:0:b0:49d:be2b:b9b1 with SMTP id j21-20020aa7de95000000b0049dbe2bb9b1mr37564501edv.36.1674750952116;
+        Thu, 26 Jan 2023 08:35:52 -0800 (PST)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id w25-20020aa7d299000000b0048789661fa2sm952239edq.66.2023.01.26.08.35.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Jan 2023 08:32:18 -0800 (PST)
-Message-ID: <b7343ea6-7194-e709-8fed-4a1a17f7beb5@linaro.org>
-Date:   Thu, 26 Jan 2023 16:32:17 +0000
+        Thu, 26 Jan 2023 08:35:51 -0800 (PST)
+Message-ID: <e1291152-2c74-514c-00a5-526564d7d827@linaro.org>
+Date:   Thu, 26 Jan 2023 16:35:50 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: [PATCH v4 0/6] Add MSM8939 SoC support with two devices
+ Thunderbird/102.4.2
+Subject: Re: [RFC PATCH v2 11/22] ASoC: qcom: Add USB backend ASoC driver for
+ Q6
+To:     Wesley Cheng <quic_wcheng@quicinc.com>, mathias.nyman@intel.com,
+        perex@perex.cz, lgirdwood@gmail.com, andersson@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, gregkh@linuxfoundation.org,
+        Thinh.Nguyen@synopsys.com, broonie@kernel.org,
+        bgoswami@quicinc.com, tiwai@suse.com, robh+dt@kernel.org,
+        agross@kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-usb@vger.kernel.org, quic_jackp@quicinc.com,
+        quic_plai@quicinc.com
+References: <20230126031424.14582-1-quic_wcheng@quicinc.com>
+ <20230126031424.14582-12-quic_wcheng@quicinc.com>
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>
-Cc:     agross@kernel.org, andersson@kernel.org, djakov@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        benl@squareup.com, shawn.guo@linaro.org, fabien.parent@linaro.org,
-        leo.yan@linaro.org, dmitry.baryshkov@linaro.org
-References: <20230123023127.1186619-1-bryan.odonoghue@linaro.org>
- <42baa874-c926-9111-b0b3-2df2562d8de6@linaro.org>
- <Y86CPmgvAi+kChQI@gerhold.net>
- <87192098-b7f4-060f-9274-933d974c0a7d@linaro.org>
- <df4c76eb-aec7-823e-28f9-5ba96cc200c6@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <df4c76eb-aec7-823e-28f9-5ba96cc200c6@linaro.org>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20230126031424.14582-12-quic_wcheng@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/01/2023 15:34, Konrad Dybcio wrote:
->>> To me this looks like a confirmation of what downstream does, that both
->>> DSI byte clocks are actually sourced from the dsi0_phy and the PLL of
->> A better name would have been dsiX_phy_pll_out_byteclk.
-> I believe Stephan is just confused what the clock source of both
-> pairs of GCC DSI clocks are, as you're suggesting that:
-> 
-> phy_clock0
->    |_gcc_clock0
-> 
-> and
-> 
-> phy_clock0 (yes, zero)
->    |_gcc_clock1
-> 
-> whereas on most other SoCs the following is true:
-> 
-> phy_clock0
->    |_gcc_clock0
-> 
-> phy_clock1
->    |_gcc_clock_1
-> 
-> Konrad
 
-The only input clock to GCC is XO or buffered CXO if routed through the 
-PMIC.
 
-You can select via GCC::RCGR where dsiX_phy_pll_out_byteclk is *sourced* 
-from XO, GPLL0_AUX or P_DSI0_PHYPLL_BYTE.
+On 26/01/2023 03:14, Wesley Cheng wrote:
+> +}
+> +
+> +static int q6usb_dai_dev_probe(struct platform_device *pdev)
+> +{
+...
+> +	data->priv.domain = iommu_domain_alloc(pdev->dev.bus);
+> +	if (!data->priv.domain) {
+> +		dev_err(&pdev->dev, "failed to allocate iommu domain\n");
+> +		return -ENODEV;
+> +	}
+> +
+> +	/* attach to external processor iommu */
+> +	ret = iommu_attach_device(data->priv.domain, &pdev->dev);
+> +	if (ret) {
+> +		dev_err(&pdev->dev, "failed to attach device ret = %d\n", ret);
+> +		goto free_domain;
+> +	}
+> +
+Why are we doing this manually here? device core should take care of 
+attaching iommu to the device instance.
 
-So, obvs the byte clock can be any one of those input sources.
+...
 
-But the question is, if you select dsi0_phy_pll_out_byteclk - what 
-provides it ?
 
-Reviewing the LK bootloader for 3.18, it *looks* to me like the dsi0 pll 
-is always switched on. The downstream kernel tree doesn't represent that.
-
-0x01A9811C MDSS_DSI_0_CLK_CTRL
-Type: RW
-Reset State: 0x00000000 -> BIT(4) -> Turns on/off BYTECLK for the DSI. 
-If set to 1, clock is ON.
-
-Hmm. I think actually it must be the case that DSI1 is a slave of DSI0.
-
-You can have both interfaces running or just DSI0 on its own.
-
-Hmm, I'll change it.
-
----
-bod
+> +detach_device:
+> +	iommu_detach_device(data->priv.domain, &pdev->dev);
+> +free_domain:
+> +	iommu_domain_free(data->priv.domain);
+> +
+> +	return ret;
+> +}
+> +
+> +static int q6usb_dai_dev_remove(struct platform_device *pdev)
+> +{
+> +	struct q6usb_port_data *data = platform_get_drvdata(pdev);
+> +
+> +	iommu_detach_device(data->priv.domain, &pdev->dev);
+> +	iommu_domain_free(data->priv.domain);
+> +
