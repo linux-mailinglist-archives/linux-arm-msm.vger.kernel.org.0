@@ -2,108 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 52B2967C835
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 11:16:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7EFF367C897
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 11:31:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230112AbjAZKP7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Jan 2023 05:15:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38430 "EHLO
+        id S236286AbjAZKbf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Jan 2023 05:31:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237074AbjAZKPm (ORCPT
+        with ESMTP id S230178AbjAZKbe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Jan 2023 05:15:42 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C0EB13A;
-        Thu, 26 Jan 2023 02:15:23 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30Q9jw0Z003060;
-        Thu, 26 Jan 2023 10:15:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=pKv8w7uR5wAI9JticJAXtQh6P199EYXCddfynwTNuNI=;
- b=b8FM8Ef3kBf5/ldLwZrL3lspuPYctKygVr2+LXGxrkRrMLv8epyMOabJEazSMSp8RAaL
- D+JHCZDW/Hm4IH4wmzDD/G0IUatk82PsFxgeMxIaMt1tPMpnf0T/0XwqsM0igSRZ3Xmr
- st1jAR7IKi6f50AfY3PRqJhOVjVJlEB1tUy/DQTrQLTCYT3x0txXo9P46a79iqcMKFJj
- CYcKuHAlSz5IK7pkHg1Rx800cwWAUOHZ1FRH4Ry7YsCxBo6USfNlrtxkPL/QoSZvaC73
- 4YZmCn+zOjxARlpm17WFhmWWMl53s5+QXORLTrmiodkz3vxohysDTkBv6Ocq4bo/JVv6 BQ== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nasr0k03u-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 26 Jan 2023 10:15:14 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30QAFDBH015342
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 26 Jan 2023 10:15:13 GMT
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Thu, 26 Jan 2023 02:15:08 -0800
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <swboyd@chromium.org>, <agross@kernel.org>, <andersson@kernel.org>,
-        <robh+dt@kernel.org>, <broonie@kernel.org>,
-        <quic_plai@quicinc.com>, <krzysztof.kozlowski+dt@linaro.org>,
-        <konrad.dybcio@somainline.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_rohkumar@quicinc.com>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Subject: [PATCH v6 6/6] clk: qcom: lpassaudiocc-sc7280: Skip lpass_aon_cc_pll config
-Date:   Thu, 26 Jan 2023 15:44:25 +0530
-Message-ID: <1674728065-24955-7-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1674728065-24955-1-git-send-email-quic_srivasam@quicinc.com>
-References: <1674728065-24955-1-git-send-email-quic_srivasam@quicinc.com>
+        Thu, 26 Jan 2023 05:31:34 -0500
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F5D734015
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 02:31:33 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id q8so801437wmo.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 02:31:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=w5KI1HfwZehVRZCGq9eIEmT6FtE92VCThGr2hKIL1AU=;
+        b=RpcROijhZnixVsRVbtQU7mzqkw6dLIHWg8jcS2pTsxhoIM/nM3CaAheXllwTzvmgLa
+         YV3+iZ8GgBj5rnsJvC4dL0ZaZi+mcipvxWVHj4v3N2nT0/vQrXWwVf4g50EcPPdku6gt
+         JFxr/oXyOb2YFyjenshWTrvIhUIjLQ83h3c5td/ptSdB4l9fvdHoStWGQxohjf25tzVf
+         km9DUcvSzZKxovAsrH2S7UTn8Loto1GxAamJpBtoOmp8B8n/r+EbWWFuHNBU8cinb6gH
+         N4wQDVkdQqE6GUKD2UcMGog4fsF8ZjO+Z0+PLfe10DxqFgnh/Qi0MLr5QVWeUQifsa3T
+         kT+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=w5KI1HfwZehVRZCGq9eIEmT6FtE92VCThGr2hKIL1AU=;
+        b=xtyaN8wy3C/7qhGaH9zf1JUOMezauUkzf3KbeYJn+EwiGpLPwyhfHacTodShOgtl6n
+         jxK3iQkdAIKvIgABnSmaN6NOv6wA6b8QOpoiNrdAFbShCHPYG40n3x8cTSi7wSVc+SO9
+         x20KatsDQIN5ZlaDtbM+V43uKeQqaSx4I/mI6lYBWf2LGWCnSdU72OJYQ2hb0fGpkhkT
+         ex5o/WqSPrkhjqivPlyWhawlsU1WKSXKYfgVgYZBMucV8kIgx2gU2z7z3436CSF9U0/I
+         e5vBhtWREeidfTHtrDsHku+Ipwk9mVD/5jB9WO8pmkfj260R1x7Gt14CGYO601QRrRgs
+         wPdA==
+X-Gm-Message-State: AFqh2ko4zwGyQdsDh0QFKUjmQTvSnL4ucOY7cb1xB9rV46i7c+TlfnL4
+        aezldr9bexS8OB4rLJVgAJWNvg==
+X-Google-Smtp-Source: AMrXdXtg5Jkxnnjlzoz4W7gv8azVosHtM4Vq45Cb7Q+R/cBkuLpo8hAksiaeq5bunaf/ycP/7TddiQ==
+X-Received: by 2002:a05:600c:4a27:b0:3da:fae5:7e2f with SMTP id c39-20020a05600c4a2700b003dafae57e2fmr34777603wmp.3.1674729091567;
+        Thu, 26 Jan 2023 02:31:31 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id i21-20020a1c5415000000b003dc23574bf4sm1088415wmb.7.2023.01.26.02.31.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 26 Jan 2023 02:31:31 -0800 (PST)
+Message-ID: <98938065-2678-bf0e-26fd-3ac8302431b4@linaro.org>
+Date:   Thu, 26 Jan 2023 11:31:29 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: otUCfWNerGFlXsHE7KFPiQrGCDy-iNAk
-X-Proofpoint-ORIG-GUID: otUCfWNerGFlXsHE7KFPiQrGCDy-iNAk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-26_04,2023-01-25_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=0
- mlxlogscore=999 clxscore=1015 phishscore=0 lowpriorityscore=0 adultscore=0
- priorityscore=1501 mlxscore=0 malwarescore=0 impostorscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2301260098
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [GIT PULL] pinctrl: dt-bindings: qcom: bindings for v6.3
+Content-Language: en-US
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>
+References: <20230120174631.353345-1-krzysztof.kozlowski@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230120174631.353345-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Skip lpass_aon_cc_pll configuration for ADSP based platforms
-based on qcom,adsp-pil-mode property.
-This is to avoid ADSP out of reset fail.
+On 20/01/2023 18:46, Krzysztof Kozlowski wrote:
+> The following changes since commit 1b929c02afd37871d5afb9d498426f83432e71c2:
+> 
+>   Linux 6.2-rc1 (2022-12-25 13:41:39 -0800)
+> 
+> are available in the Git repository at:
+> 
+>   https://git.kernel.org/pub/scm/linux/kernel/git/krzk/linux-dt.git tags/qcom-pinctrl-6.3
+> 
+> for you to fetch changes up to 5b8c304c94d79f44aea8ee273ce70ca380804156:
+> 
+>   dt-bindings: pinctrl: qcom,pmic-mpp: Rename "mpp" child node names to "-pins$" (2023-01-20 18:43:06 +0100)
+> 
+> ----------------------------------------------------------------
+> Qualcomm pinctrl Devicetree bindings changes for v6.3
+> 
+> Set of cleanups and fixes for Qualcomm pin controller bindings, to match
+> existing DTS and correct the schema.
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Tested-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
----
- drivers/clk/qcom/lpassaudiocc-sc7280.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Hi Linus,
 
-diff --git a/drivers/clk/qcom/lpassaudiocc-sc7280.c b/drivers/clk/qcom/lpassaudiocc-sc7280.c
-index 8e2f433..1511337 100644
---- a/drivers/clk/qcom/lpassaudiocc-sc7280.c
-+++ b/drivers/clk/qcom/lpassaudiocc-sc7280.c
-@@ -847,7 +847,8 @@ static int lpass_aon_cc_sc7280_probe(struct platform_device *pdev)
- 		goto exit;
- 	}
- 
--	clk_lucid_pll_configure(&lpass_aon_cc_pll, regmap, &lpass_aon_cc_pll_config);
-+	if (!of_property_read_bool(pdev->dev.of_node, "qcom,adsp-pil-mode"))
-+		clk_lucid_pll_configure(&lpass_aon_cc_pll, regmap, &lpass_aon_cc_pll_config);
- 
- 	ret = qcom_cc_really_probe(pdev, &lpass_aon_cc_sc7280_desc, regmap);
- 	if (ret) {
--- 
-2.7.4
+Just reminding about this pull so it won't get lost.
+
+Best regards,
+Krzysztof
 
