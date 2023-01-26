@@ -2,168 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E88767D8CD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 23:51:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1842267D8D3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 23:52:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231655AbjAZWvJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Jan 2023 17:51:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49934 "EHLO
+        id S231691AbjAZWv6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Jan 2023 17:51:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232388AbjAZWvI (ORCPT
+        with ESMTP id S229510AbjAZWv5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Jan 2023 17:51:08 -0500
-Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02674485AF
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 14:51:06 -0800 (PST)
-Received: by mail-io1-xd34.google.com with SMTP id 203so1174017iou.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 14:51:05 -0800 (PST)
+        Thu, 26 Jan 2023 17:51:57 -0500
+Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 870B047ED3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 14:51:56 -0800 (PST)
+Received: by mail-il1-x134.google.com with SMTP id p12so1424662ilq.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 14:51:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=7zvY1NZIKVudFjIBW9E/G/NnVjL+16aZwag2juBW8hg=;
-        b=PqSCzzSwgfPbeBwBYPYREBBLEW6iHqVw8wj07TiWAyIpMp1ebEGAwiMpW1VTodraYN
-         G/HLMa/GIIQv3SdmPB2F3ZNSqZ5Sf+49w22fJhcdTi0z8irz26iikYm+6IEofGWo8thi
-         2YqtStdW3bHgIrNJlxjR2vM3ovEo/CNbdlcv5xDjXdOuSEJNHxu5+eTQ5t1xI8m92mi7
-         ZZOOXfJxa/3XE+4IDcpHSGGW936gOt8HIrYKQdKrqTP8oUCSf/WIVSSWohxZ4lJLO/tQ
-         3EfEMckl85d67DhJ8hZzn2zrkJHTdVP/aYFlP3nNWj4MvdS2AGrh6meL/RhAlqq++l9i
-         W3Lg==
+        bh=uo4DJ1lMHTQjHl0PyGseokoZraJeV8jwhzCuVW5LRgY=;
+        b=BzaQCkIizxh8plvJG7iydcbwTBB2KmS90zskK8PMkXY+40JZpDWrHFSmX1FvFS8AQq
+         gZW5s9WXuFdHxOnB7dPDwIFBKJpKWAFpm/WPOK1/u4buJPzzYAJK6PNfV6Sw31SOTnwC
+         4F5j8ycoLc2Z7lQo4j0wZgglXF8dtgjNYd99AGLhkPmuFKo3cA4rhOulWrt6Nz+ZO1CH
+         iXlBrWfIY+zg1YY8FeHxA6GeUTvN1pLO082IlYYkVHq2DHK952C8rlvndAlJ4yqgS1Hk
+         dMpRiz3xn0LyB+zCzCv2KAJMq5X9SqND0HLPyhZNUHiP+iqayXPuDYbAdpZJzo1J0ISF
+         0y3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7zvY1NZIKVudFjIBW9E/G/NnVjL+16aZwag2juBW8hg=;
-        b=OP6qGuW6m7RdvAdnPXcOlp9dWpx3jjxzRUqQkgGuisnKWJKL1KqT91TVqMAJSWUZMm
-         F6YqWAyQNTWwXSXgU+egvE8sB3JjbNQ/znX4m3WUEAPxCrL5TIivrWuAZhgb6vor8NjL
-         Sdz43uApDUoeKeZAjnpnZCdDhvS+N5vW03Vpuen2oOW31pmgWi7OCf/sbmBT1i3QHhVN
-         2JhM0wwRN05rgzcnodNyoAMZxyDPVEd3+lFkQfrTY/eg8Odtq5gbsonzcrmoBcS/ZBKZ
-         RweMIoAX4IY8xbFvFZP+aID2Cvs0v4PNfx//G7s+qH/5GdaBlYpFe4Roa/sUmqrt9W4n
-         zi4Q==
-X-Gm-Message-State: AFqh2kovPm0xI0TKrLTxMRaOI33tGi97bdeibIYAXyxhcsfezTQg0Q4b
-        0894ewyb3S+mAsqgDhXYYWOElA==
-X-Google-Smtp-Source: AMrXdXs8V40PLbV/yhExX2kRHQCY1Yo9wbM7q84dlGOei7EhLtS3so+HtLLiv2VHa+z7t8Tv2X3jvg==
-X-Received: by 2002:a6b:c8c3:0:b0:704:d3b0:3029 with SMTP id y186-20020a6bc8c3000000b00704d3b03029mr24381288iof.17.1674773465391;
-        Thu, 26 Jan 2023 14:51:05 -0800 (PST)
+        bh=uo4DJ1lMHTQjHl0PyGseokoZraJeV8jwhzCuVW5LRgY=;
+        b=jylbBHV7ZiE4ww4GRXXosZaMhEvdv6pwMd6GkNF4gQdWbKc0VYeHAYe1Whrq+7MloA
+         exkr9S4znb13aHW6HEMCzZOYx4lil1L06b3qZpzrwkwQTRn3Un4hOYgg0Hltw7ou1mct
+         T/vpf+u+fHMi+0fula19Qlb8oHoUcLm1ohk60SKrlAyW738QOHJvJ2exVd3tIB+9trZc
+         1xTTSim4919P1l8KsxWp3bCm52eKWfhTUbNsBxtTGantqM6D4RuCUOSxzkGaHc1emSZs
+         uuHB793zgrQYBxmc62E20o2n5+jIQCbMoKm32/KSNtlBFuCHKrMg+mHunzYBAo94ZU0l
+         vrNg==
+X-Gm-Message-State: AFqh2krqbU+ZXM9gBVQM2hyNleiGVseR8fuhHiaJ7W6vVgsvVio0d0iV
+        xgXmUnlQ9m4/DK1QTds9raj0sg==
+X-Google-Smtp-Source: AMrXdXtchiQCUB3Dd3Ffougvu41joys5qhOIRIUqMHGgA5iHVseRT58AFLQqOicQNrt5nO3h2n27Tg==
+X-Received: by 2002:a92:bd12:0:b0:30f:36d8:e4ca with SMTP id c18-20020a92bd12000000b0030f36d8e4camr21487379ile.21.1674773515927;
+        Thu, 26 Jan 2023 14:51:55 -0800 (PST)
 Received: from [192.168.2.31] ([194.204.33.9])
-        by smtp.gmail.com with ESMTPSA id y18-20020a056638039200b003a20a8f6bd2sm853151jap.153.2023.01.26.14.51.02
+        by smtp.gmail.com with ESMTPSA id e5-20020a022105000000b003755aa71fffsm869305jaa.105.2023.01.26.14.51.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Jan 2023 14:51:04 -0800 (PST)
-Message-ID: <505fc434-c31f-726e-b1cb-0bbfd5f83490@linaro.org>
-Date:   Fri, 27 Jan 2023 00:51:01 +0200
+        Thu, 26 Jan 2023 14:51:55 -0800 (PST)
+Message-ID: <7d0582ac-e5c1-7dbf-8063-f6ea8cb59862@linaro.org>
+Date:   Fri, 27 Jan 2023 00:51:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [RESEND PATCH] of: property: do not create clocks device link for
- clock controllers
+Subject: Re: [PATCH v4 7/7] clk: qcom: add the driver for the MSM8996 APCS
+ clocks
 Content-Language: en-GB
-To:     Rob Herring <robh@kernel.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc:     Frank Rowand <frowand.list@gmail.com>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+To:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Abel Vesa <abel.vesa@linaro.org>
-References: <20230118091122.2205452-1-dmitry.baryshkov@linaro.org>
- <CAL_JsqJ=0neiZ4wkPiMqJMT4E1O_xO0uLrTmEGUcnZMqxkw4UQ@mail.gmail.com>
- <CAGETcx8Xy5OzsbW3123esxsbQJq-SqDkP1S5g2mmwzoCz4shtQ@mail.gmail.com>
- <20230125190926.GA2697290-robh@kernel.org>
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230118132254.2356209-1-dmitry.baryshkov@linaro.org>
+ <20230118132254.2356209-8-dmitry.baryshkov@linaro.org>
+ <7055af43f4a8894ac34e53c5847fb3de.sboyd@kernel.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230125190926.GA2697290-robh@kernel.org>
+In-Reply-To: <7055af43f4a8894ac34e53c5847fb3de.sboyd@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/01/2023 21:09, Rob Herring wrote:
-> On Tue, Jan 24, 2023 at 06:12:15PM -0800, Saravana Kannan wrote:
->> On Wed, Jan 18, 2023 at 5:35 AM Rob Herring <robh+dt@kernel.org> wrote:
->>>
->>> On Wed, Jan 18, 2023 at 3:11 AM Dmitry Baryshkov
->>> <dmitry.baryshkov@linaro.org> wrote:
->>>>
->>>> Do not create device link for clock controllers. Some of the clocks
->>>> provided to the device via OF can be the clocks that are just parents to
->>>> the clocks provided by this clock controller. Clock subsystem already
->>>> has support for handling missing clock parents correctly (clock
->>>> orphans). Later when the parent clock is registered, clocks get
->>>> populated properly.
->>>>
->>>> An example of the system where this matters is the SDM8450 MTP board
->>>> (see arch/arm64/boot/dts/qcom/sdm845-mtp.dts). Here the dispcc uses
->>>> clocks provided by dsi0_phy and dsi1_phy device tree nodes. However the
->>>> dispcc itself provides clocks to both PHYs, to the PHY parent device,
->>>> etc. With just dsi0_phy in place devlink is able to break the
->>>> dependency, but with two PHYs, dispcc doesn't get probed at all, thus
->>>> breaking display support.
->>>>
->>>> Cc: Bjorn Andersson <andersson@kernel.org>
->>>> Cc: Stephen Boyd <sboyd@kernel.org>
->>>> Cc: Saravana Kannan <saravanak@google.com>
->>>> Cc: Abel Vesa <abel.vesa@linaro.org>
->>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>> ---
->>>>
->>>> This patch has been posted a year ago in January 2022 ([1]). Since that time
->>>> Saravana failed to produce patches to assist in debugging the issue
->>>> ([2]) or to fix the issue ([3]). The issue we observe has been described
->>>> by Abel at ([4]). As we work on adding support for Dual DSI
->>>> configurations, the issue becomes more and more important, since binding
->>>> the whole display subsystem fails.
->>
->> I did send out a patch series[1] to try and fix this. Heck I even
->> talked about this in LPC 2022. So I don't think it's accurate to say I
->> didn't help debug this or fix this. There's some email thread in lore
->> where Abel gave more details and I figured out the issue and we didn't
->> need any more debugging. And then I sent out [1]. Sorry I missed you
->> in the cc lise for [1] -- I try to keep track of everyone to cc but
->> things slip through the cracks sometimes. But at the same time, it's
->> easy to check for emails from me before saying I didn't help or didn't
->> send out fixes :)
->>
->> If you do try to give [1] a shot, there are a bunch of bugs that
->> people pointed out for which I gave fixes on top of [1] in the
->> replies. I was supposed to work on v2 over the holidays, but that
->> didn't happen because of stuff outside my control.
->>
->>> That's ample time to fix this, so I intend to apply this. But I'll
->>> give it a few days for comments.
->>
->> Rob, I'd recommend not applying this because it'll fix it for Dmitry
->> but break someone else's use case. That's the whole reason it takes me
->> a while to send out patches -- it's easy to fix it for a subset of
->> devices, but fixing something without breaking someone else is harder
->> (I still believe it's doable) and it takes a while to test them on all
->> the devices I want to test before sending them out.
+On 25/01/2023 23:38, Stephen Boyd wrote:
+> Quoting Dmitry Baryshkov (2023-01-18 05:22:54)
+>> diff --git a/drivers/clk/qcom/apcs-msm8996.c b/drivers/clk/qcom/apcs-msm8996.c
+>> new file mode 100644
+>> index 000000000000..7e46ea8ed444
+>> --- /dev/null
+>> +++ b/drivers/clk/qcom/apcs-msm8996.c
+>> @@ -0,0 +1,76 @@
+> [...]
+>> +
+>> +static int qcom_apcs_msm8996_clk_probe(struct platform_device *pdev)
+>> +{
+>> +       struct device *dev = &pdev->dev;
+>> +       struct device *parent = dev->parent;
+>> +       struct regmap *regmap;
+>> +       struct clk_hw *hw;
+>> +       unsigned int val;
+>> +       int ret = -ENODEV;
+>> +
+>> +       regmap = dev_get_regmap(parent, NULL);
+>> +       if (!regmap) {
+>> +               dev_err(dev, "failed to get regmap: %d\n", ret);
+>> +               return ret;
+>> +       }
+>> +
+>> +       regmap_read(regmap, APCS_AUX_OFFSET, &val);
+>> +       regmap_update_bits(regmap, APCS_AUX_OFFSET, APCS_AUX_DIV_MASK,
+>> +                          FIELD_PREP(APCS_AUX_DIV_MASK, APCS_AUX_DIV_2));
+>> +
+>> +       /* Hardware mandated delay */
+> 
+> Delay for what? Setting the divider? What if the register value didn't
+> change at all? Can you skip the delay in that case?
 
-This case is really simple, I think. Clock controllers (and 
-clock-core-framework) are prepared to handle clock orphans properly. 
-Moreover they have been supposed to work in such way for quite a while. 
-In other words, I don't think we should save them from this 
--EPROBE_DEFERRED.
-
-Thus I think it is better to let them continue doing their job of 
-handling probe deferrals on their own, at least for the time being. And 
-then, when your patches are finished, we can think about reenabling 
-current behaviour. As a reminder, currently, all Qualcomm platforms 
-trying to use double DSI configuration are broken and have to use 
-fw_devlink= kernel params.
-
-Stephen, do you have any comments regarding this fw_devlink usage vs CCF?
+Ack, I'll expand the comment.
 
 > 
-> Okay, will give it a bit longer.
+>> +       udelay(5);
+>> +
+>> +       /*
+>> +        * Register the clock as fixed rate instead of being a child of gpll0
+>> +        * to let the driver register probe as early as possible.
 > 
-> Rob
+> The function doesn't block or return EPROBE_DEFER if the clk is orphaned
+> when registered. Why is this necessary? Are you getting defered by the
+> fw_devlink logic thinking it needs to defer probe of this driver until
+> gpll0 provider probes? We should fix fw_devlink to not do that. Maybe if
+> the node is a clk provider (#clock-cells exists) then we don't wait for
+> clocks property to be provided, because the clk core already handles
+> that itself.
+
+Letting clock-controllers probe was my idea for the patch, but it was 
+delayed again by Saravana, see [1], [2]
+
+[1] 
+https://lore.kernel.org/all/20230118091122.2205452-1-dmitry.baryshkov@linaro.org/
+
+[2] 
+https://lore.kernel.org/all/CAGETcx8Xy5OzsbW3123esxsbQJq-SqDkP1S5g2mmwzoCz4shtQ@mail.gmail.com/
+
+> 
+>> +        */
+>> +       hw = devm_clk_hw_register_fixed_rate(dev, "sys_apcs_aux", NULL, 0, 300000000);
 
 -- 
 With best wishes
