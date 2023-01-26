@@ -2,77 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D6D467D99D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 00:33:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0268267D9A5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 00:35:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232339AbjAZXc7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Jan 2023 18:32:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44646 "EHLO
+        id S232844AbjAZXfn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Jan 2023 18:35:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229502AbjAZXc7 (ORCPT
+        with ESMTP id S229498AbjAZXfm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Jan 2023 18:32:59 -0500
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1CCCFF3E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 15:32:56 -0800 (PST)
-Received: by mail-ej1-x631.google.com with SMTP id me3so9372856ejb.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 15:32:56 -0800 (PST)
+        Thu, 26 Jan 2023 18:35:42 -0500
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B58936E8D
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 15:35:40 -0800 (PST)
+Received: by mail-ed1-x530.google.com with SMTP id g11so3309181eda.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 15:35:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=OKgZ/poIpGJWM5cLb9CWvinBk87AHczhWKzm6hX+O4w=;
-        b=dMVT3Kg5WjyArEpQyZrvnzWzkhYZ1aYLhuMyDlRgsKcQFpP/Hmqf9V7eL5/b5ZRihG
-         xFttLd8LqSHZzVb/SbYUy891SlnB1s8C6Z6oH3FBWbc5vHzT2Tr3jDtWNywru16qf1OI
-         YU2keEklZjd2ZuS96E4FVMQtGp6fthxunCpU3+kb1N7mZg6jE5czDLzMdVFPp7hI0eTs
-         zdviiuS9o/SYdsyf8vFh/+KQsRrYWGjx/hkGSnkuwXv6Z26ccuTBI4ZaFRMq5h0A5czb
-         hMuYEhh+mT9Z0T8Bv1W8EV5aH5LT1aZ4f0EpQx8zIbtlRCbdWMVlT2YhP0xI3uyiQT+N
-         YXCw==
+        bh=Hzo3sFEc0rrT2DBc4hVlM+1SiVGoPIKepFO94/n3CJk=;
+        b=aDDZmr9bRaxGmTx/CMesBvr5efvVLQ0uNblfGbTc3A2Iouva3ybE7fa9mzo8ahJt3q
+         AKlMLCSK2rE0YsfR6bHBeIfr2AKFXJQTH3+3GmlF2ueLU+UBelbYa6NgXDhlxAyHNDHD
+         JE2oHu26ugxiubsGcOTcm6otAa5wXI4IugT/a1ixWzIErQLq616jjZlVkV/m+ZLmJ37S
+         UwmCdok7WWsAbRgb7pfKCb8XFLFgUAgsRpLPcIvura2H69t3waXOvdOfz0L8WZ/IRqyK
+         50w9av/3224OYgWLHBDCMY9flRToQiv9Ly/O1bi6yrXGNJpr5CWEyj00gvNh4qTS5hv0
+         7IhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OKgZ/poIpGJWM5cLb9CWvinBk87AHczhWKzm6hX+O4w=;
-        b=oIOqWFUYadVAzETUK6jSwal7bPDBtnQmWAKO4c10Vpp3k5jvt5GtN8xWHrRIxCxXaa
-         5rO/nzD6yGc53T4ZCCCQED4V6MASzKZN8Gz+ZEaeiHnjSO6+DTDSnZnjBJp4wo1GS4rr
-         LYNxn4PByDqxZnwNN84fwTJBnrMU0tA8x21qS7yGC1QNo3I1A91D7qyXbAz02YZhS5aN
-         PI7He2JoxgDnRi4MlrGpRWSNlTW74VoWhLW92WfWjfpNuCYPlD+5hFjizvWOyuoo8233
-         zE4+KxhSx2yrqfPo42GgLxvON2hsCQ1UXS/epc/s+vz5ARPbOmJ6c726v6hxyDpfWLNV
-         ub0g==
-X-Gm-Message-State: AFqh2koaK/+Kuyq63uAPPFtaHg93MDrgoVYCFexpoj9O2CgQA4PS5BDn
-        bSFtQ+HBmcBq/TGUhYxx/S/qGA==
-X-Google-Smtp-Source: AMrXdXtgqXraXM/O+xAGX7e9lH6r1vl84rwFRa03KZYcGerC4TryIqmA2oyYApcBe/Xt70ZG3nsPtg==
-X-Received: by 2002:a17:906:150d:b0:7c1:458b:a947 with SMTP id b13-20020a170906150d00b007c1458ba947mr37761802ejd.26.1674775974968;
-        Thu, 26 Jan 2023 15:32:54 -0800 (PST)
+        bh=Hzo3sFEc0rrT2DBc4hVlM+1SiVGoPIKepFO94/n3CJk=;
+        b=kBrSbqLGs9ayAW6zkIYzYgfXVA2DRHc/Lw0KmEZA4J9VrHRfd1GPD3OgC+mcVNneAa
+         cK8GUW9O/Mkia3qnUkqXoV9hK7DY0rqfjBjsRuEJ1FTzFpmClNl6XjW3yM5qAZT3NwSn
+         UtJ953wG3WUE8/bZIhtW5Ry1xCJ1LccOiKp8ezvx0cFLdIwNNYW5+z1w+Zm1qraxQCeo
+         GXzDkrsG8+waudd0hL5RC+ya86h8zyoHbhDUMTK5qK73mwMezptoIVzeTY5ndQwR4A4a
+         CUl70aiwVe4VB1/fp4uFvJGRZB2gVzbCfqAwwhJAtTBQk1Fn4MJJtmFQAcvo3fJlJRwP
+         vZuQ==
+X-Gm-Message-State: AFqh2kqNELM9htqkXJDTTHAf1eXa1xcbRx6spa3RV1yBxi91MjbX7tmu
+        RROXfjsqJVyR4Ogf/SuiJJstMQ==
+X-Google-Smtp-Source: AMrXdXvx27D+sTT4yn7XqkM6+ujwe2QR+RCFnO1b8ormrj04Pluko4Yf1pUSp7WHdEyfpbxBZoGVdA==
+X-Received: by 2002:a05:6402:27cf:b0:488:e7ae:5cc4 with SMTP id c15-20020a05640227cf00b00488e7ae5cc4mr47577513ede.41.1674776139293;
+        Thu, 26 Jan 2023 15:35:39 -0800 (PST)
 Received: from [192.168.1.101] (abyl20.neoplus.adsl.tpnet.pl. [83.9.31.20])
-        by smtp.gmail.com with ESMTPSA id lf16-20020a170907175000b008787134a939sm1212371ejc.18.2023.01.26.15.32.52
+        by smtp.gmail.com with ESMTPSA id p11-20020a50cd8b000000b004972644b19fsm1424101edi.16.2023.01.26.15.35.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Jan 2023 15:32:54 -0800 (PST)
-Message-ID: <96ab46f1-3733-e11c-ee4e-a70096fd400f@linaro.org>
-Date:   Fri, 27 Jan 2023 00:32:52 +0100
+        Thu, 26 Jan 2023 15:35:38 -0800 (PST)
+Message-ID: <5a638130-89c3-871b-c233-55048a162870@linaro.org>
+Date:   Fri, 27 Jan 2023 00:35:37 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.0
-Subject: Re: [PATCH v5 7/7] clk: qcom: add the driver for the MSM8996 APCS
- clocks
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: sa8295p-adp: Add max20411 on
+ i2c12
+Content-Language: en-US
+To:     Andrew Halaney <ahalaney@redhat.com>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230126230319.3977109-1-dmitry.baryshkov@linaro.org>
- <20230126230319.3977109-8-dmitry.baryshkov@linaro.org>
-Content-Language: en-US
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20230124184440.1421074-1-quic_bjorande@quicinc.com>
+ <20230124184440.1421074-4-quic_bjorande@quicinc.com>
+ <20230126225446.rjckq5p35zeozphq@halaney-x13s>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230126230319.3977109-8-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230126225446.rjckq5p35zeozphq@halaney-x13s>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -86,129 +86,86 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 27.01.2023 00:03, Dmitry Baryshkov wrote:
-> Add a simple driver handling the APCS clocks on MSM8996. For now it
-> supports just a single aux clock, linking GPLL0 to CPU and CBF clocks.
+On 26.01.2023 23:54, Andrew Halaney wrote:
+> On Tue, Jan 24, 2023 at 10:44:40AM -0800, Bjorn Andersson wrote:
+>> From: Bjorn Andersson <bjorn.andersson@linaro.org>
+>>
+>> The SA8295P ADP has a Maxim max20411 step-down converter on i2c12.
+>>
+>> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+>> ---
+>>
+>> Changes since v1:
+>> - i2c node had changed name
+>>
+>>  arch/arm64/boot/dts/qcom/sa8295p-adp.dts | 41 ++++++++++++++++++++++++
+>>  1 file changed, 41 insertions(+)
 > 
-> Note, there is little sense in registering sys_apcs_aux as a child of
-> gpll0. The PLL is always-on. And listing the gpll0 as a property of the
-> apcs would delay its probing until the GCC has been probed (while we
-> would like for the apcs to be probed as early as possible).
+> I realized today this has to do with the comment over at:
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>     https://lore.kernel.org/all/30166208-ba9d-e6e6-1cd2-807a80536052@quicinc.com/
+> 
+> and I just didn't realize that the schematic I've started looking at
+> black boxes the SOM/SIP which holds this... darn I thought I could see
+> more than I could :(
+> 
+> I took a similiar patch for a spin on sa8540p-ride (which I'll later
+> submit), and things worked fine (I'm not really consuming the output of
+> the regulator mind you).
+> 
+> Downstream devicetree indicates all of this looks ok except for possibly
+> the below comment:
+> 
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+>> index bb4270e8f551..642000d95812 100644
+>> --- a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+>> @@ -266,6 +266,27 @@ &dispcc1 {
+>>  	status = "okay";
+>>  };
+>>  
+>> +&i2c12 {
+>> +	pinctrl-names = "default";
+>> +	pinctrl-0 = <&i2c12_state>;
+>> +
+>> +	status = "okay";
+>> +
+>> +	vdd_gfx: regulator@39 {
+>> +		compatible = "maxim,max20411";
+>> +		reg = <0x39>;
+>> +
+>> +		regulator-name = "vdd_gfx";
+>> +		regulator-min-microvolt = <800000>;
+> 
+> Is there a reason you chose this instead of the 500000 I see downstream?
+> 
+>> +		regulator-max-microvolt = <968750>;
+> 
+> Likewise, I see in this brief description of the regulator
+> that the upper bound is higher than this (1.275 V). I am not sure if
+> the values in the devicetree are supposed to describe the
+> min/max of the regulator itself, or of what your board can really
+> handle/needs (the latter I guess makes more sense since you wouldn't want to
+> accidentally request a current draw that could melt something.. that can
+> be fun). I do see you've got that min/max in the driver itself (now that
+> I peaked at that patch).
+Yes, your suspicions are correct and the DT sets the actual ranges
+for the voltage regulators on this specific board while the
+hardware reachable ranges are defined in the .c driver.
 
 Konrad
->  drivers/clk/qcom/Makefile       |  2 +-
->  drivers/clk/qcom/apcs-msm8996.c | 88 +++++++++++++++++++++++++++++++++
->  2 files changed, 89 insertions(+), 1 deletion(-)
->  create mode 100644 drivers/clk/qcom/apcs-msm8996.c
 > 
-> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
-> index 3194465dd02c..a8ed1f38b2f7 100644
-> --- a/drivers/clk/qcom/Makefile
-> +++ b/drivers/clk/qcom/Makefile
-> @@ -52,7 +52,7 @@ obj-$(CONFIG_MSM_MMCC_8998) += mmcc-msm8998.o
->  obj-$(CONFIG_QCOM_A53PLL) += a53-pll.o
->  obj-$(CONFIG_QCOM_A7PLL) += a7-pll.o
->  obj-$(CONFIG_QCOM_CLK_APCS_MSM8916) += apcs-msm8916.o
-> -obj-$(CONFIG_QCOM_CLK_APCC_MSM8996) += clk-cpu-8996.o
-> +obj-$(CONFIG_QCOM_CLK_APCC_MSM8996) += apcs-msm8996.o clk-cpu-8996.o
->  obj-$(CONFIG_QCOM_CLK_APCS_SDX55) += apcs-sdx55.o
->  obj-$(CONFIG_QCOM_CLK_RPM) += clk-rpm.o
->  obj-$(CONFIG_QCOM_CLK_RPMH) += clk-rpmh.o
-> diff --git a/drivers/clk/qcom/apcs-msm8996.c b/drivers/clk/qcom/apcs-msm8996.c
-> new file mode 100644
-> index 000000000000..48d22572b6ae
-> --- /dev/null
-> +++ b/drivers/clk/qcom/apcs-msm8996.c
-> @@ -0,0 +1,88 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Qualcomm APCS clock controller driver
-> + *
-> + * Copyright (c) 2022, Linaro Limited
-> + * Author: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> + */
-> +
-> +#include <linux/bits.h>
-> +#include <linux/clk-provider.h>
-> +#include <linux/delay.h>
-> +#include <linux/module.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/regmap.h>
-> +
-> +#define APCS_AUX_OFFSET	0x50
-> +
-> +#define APCS_AUX_DIV_MASK GENMASK(17, 16)
-> +#define APCS_AUX_DIV_2 0x1
-> +
-> +static int qcom_apcs_msm8996_clk_probe(struct platform_device *pdev)
-> +{
-> +	struct device *dev = &pdev->dev;
-> +	struct device *parent = dev->parent;
-> +	struct regmap *regmap;
-> +	struct clk_hw *hw;
-> +	unsigned int val;
-> +	int ret = -ENODEV;
-> +
-> +	regmap = dev_get_regmap(parent, NULL);
-> +	if (!regmap) {
-> +		dev_err(dev, "failed to get regmap: %d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	regmap_read(regmap, APCS_AUX_OFFSET, &val);
-> +	regmap_update_bits(regmap, APCS_AUX_OFFSET, APCS_AUX_DIV_MASK,
-> +			   FIELD_PREP(APCS_AUX_DIV_MASK, APCS_AUX_DIV_2));
-> +
-> +	/*
-> +	 * This clock is used during CPU cluster setup while setting up CPU PLLs.
-> +	 * Add hardware mandated delay to make sure that the sys_apcs_aux clock
-> +	 * is stable (after setting the divider) before continuing
-> +	 * bootstrapping to keep CPUs from ending up in a weird state.
-> +	 */
-> +	udelay(5);
-> +
-> +	/*
-> +	 * As this clocks is a parent of the CPU cluster clocks and is actually
-> +	 * used as a parent during CPU clocks setup, we want for it to gegister
-> +	 * as early as possible, without letting fw_devlink to delay probing of
-> +	 * either of the drivers.
-> +	 *
-> +	 * The sys_apcs_aux is a child (divider) of gpll0, but we register it
-> +	 * as a fixed rate clock instead to ease bootstrapping procedure. By
-> +	 * doing this we make sure that CPU cluster clocks are able to be setup
-> +	 * early during the boot process (as it is recommended by Qualcomm).
-> +	 */
-> +	hw = devm_clk_hw_register_fixed_rate(dev, "sys_apcs_aux", NULL, 0, 300000000);
-> +	if (IS_ERR(hw))
-> +		return PTR_ERR(hw);
-> +
-> +	return devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get, hw);
-> +}
-> +
-> +static struct platform_driver qcom_apcs_msm8996_clk_driver = {
-> +	.probe = qcom_apcs_msm8996_clk_probe,
-> +	.driver = {
-> +		.name = "qcom-apcs-msm8996-clk",
-> +	},
-> +};
-> +
-> +/* Register early enough to fix the clock to be used for other cores */
-> +static int __init qcom_apcs_msm8996_clk_init(void)
-> +{
-> +	return platform_driver_register(&qcom_apcs_msm8996_clk_driver);
-> +}
-> +postcore_initcall(qcom_apcs_msm8996_clk_init);
-> +
-> +static void __exit qcom_apcs_msm8996_clk_exit(void)
-> +{
-> +	platform_driver_unregister(&qcom_apcs_msm8996_clk_driver);
-> +}
-> +module_exit(qcom_apcs_msm8996_clk_exit);
-> +
-> +MODULE_AUTHOR("Dmitry Baryshkov <dmitry.baryshkov@linaro.org>");
-> +MODULE_LICENSE("GPL");
-> +MODULE_DESCRIPTION("Qualcomm MSM8996 APCS clock driver");
+> https://www.analog.com/en/products/MAX20411.html#product-overview
+> 
+> For what it is worth, I also see a SIP document that states vdd_gfx min/max
+> is 0.56/1.03 V, which is ultimately what you'd feed this into. The
+> downstream devicetree uses the max value you provide though.
+> 
+> No idea how much faith I should put into the SIP document's bounds, or
+> downstream, but I thought I should at least highlight them.
+> 
+> Thanks,
+> Andrew
+> 
