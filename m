@@ -2,360 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F4C967D838
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 23:12:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E88767D8CD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 23:51:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231651AbjAZWMP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Jan 2023 17:12:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49470 "EHLO
+        id S231655AbjAZWvJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Jan 2023 17:51:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229976AbjAZWMO (ORCPT
+        with ESMTP id S232388AbjAZWvI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Jan 2023 17:12:14 -0500
-Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AEA8A24B
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 14:12:13 -0800 (PST)
-Received: by mail-il1-x130.google.com with SMTP id d10so1377093ilc.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 14:12:13 -0800 (PST)
+        Thu, 26 Jan 2023 17:51:08 -0500
+Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02674485AF
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 14:51:06 -0800 (PST)
+Received: by mail-io1-xd34.google.com with SMTP id 203so1174017iou.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 14:51:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=PH5bYda4UNvBQbrP3sSsZzNGvFBGhD2UePSzdVYPBSE=;
-        b=Jxu2paTDCzqX2ZdByp8uGp/ZUXkFphjS2x6wEZrihFtVNb51FJ//0/eqlZLztRC2rl
-         1IcOpw5f+Pg7VG04V8iNuzPu7pKFHTz9zgGAULZzd0n+WH4zrHpPgEV972X2MrOO2jsM
-         WKzkr7x2eke75d5s0PJ9LLCS+9+PEmJGjCi5IVtBaBAxiHiwMX6pYP43F/m9iB/dbCDq
-         jToofTJoxw9Ywbe4EFLryYd0wf71LvHlmBVNDiTZElPSo4XpPrVuc96RSFKgAp8WrCqy
-         tud4YX/IDe9uGbavcxFWiu1Tila+knQBQByZT3FX0cBEusmwKZN0/jYadS6Ikkeig0RI
-         ywuQ==
+        bh=7zvY1NZIKVudFjIBW9E/G/NnVjL+16aZwag2juBW8hg=;
+        b=PqSCzzSwgfPbeBwBYPYREBBLEW6iHqVw8wj07TiWAyIpMp1ebEGAwiMpW1VTodraYN
+         G/HLMa/GIIQv3SdmPB2F3ZNSqZ5Sf+49w22fJhcdTi0z8irz26iikYm+6IEofGWo8thi
+         2YqtStdW3bHgIrNJlxjR2vM3ovEo/CNbdlcv5xDjXdOuSEJNHxu5+eTQ5t1xI8m92mi7
+         ZZOOXfJxa/3XE+4IDcpHSGGW936gOt8HIrYKQdKrqTP8oUCSf/WIVSSWohxZ4lJLO/tQ
+         3EfEMckl85d67DhJ8hZzn2zrkJHTdVP/aYFlP3nNWj4MvdS2AGrh6meL/RhAlqq++l9i
+         W3Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PH5bYda4UNvBQbrP3sSsZzNGvFBGhD2UePSzdVYPBSE=;
-        b=MpqPrxwYslyJzBf6bz7JaXlk8cX20dSPGElcZnynxo61O6JVyhqRzvCGI6jYCVvCSc
-         O/Xezb0gFN7ethZZMi27pldmZMXedmpmh1PsNthu5ixMnknrkRYZk+SO3A0z3rgz5M7M
-         4DLo4rIPa+G6URskQEyV5I+yTk10kB56qmWhQUBjMdkAd1Qckme7bwkl3pYWK2UWxztX
-         FrpSfoROJJ9z1rroB7Genp4b3+CLe3wJ19zy4jPjgbBUvm4JnoPYiExromd5E6wjVw7b
-         QiweNdqHtPSzwfaae6IyorvQsOXRSe9xfg2xa+D12/6Q3SWACNqXj8NMwkcgmYd20JW2
-         c7lw==
-X-Gm-Message-State: AO0yUKVTtmYV2OY2U4kMH2Fcr/GI5R/DB0EMfLzDEhtLLFFnsPddS9ef
-        QBfPCeWdtNJhCxmST1GxfY8qfQ==
-X-Google-Smtp-Source: AK7set/EJ1dXjthCHXs/J2OOXy51vDxyFCKtXch5kSdtM5JcNkzDVoRI5CduvPkI76BJGfPLePa5Iw==
-X-Received: by 2002:a05:6e02:1a85:b0:310:a34b:b1c0 with SMTP id k5-20020a056e021a8500b00310a34bb1c0mr5852660ilv.10.1674771132595;
-        Thu, 26 Jan 2023 14:12:12 -0800 (PST)
+        bh=7zvY1NZIKVudFjIBW9E/G/NnVjL+16aZwag2juBW8hg=;
+        b=OP6qGuW6m7RdvAdnPXcOlp9dWpx3jjxzRUqQkgGuisnKWJKL1KqT91TVqMAJSWUZMm
+         F6YqWAyQNTWwXSXgU+egvE8sB3JjbNQ/znX4m3WUEAPxCrL5TIivrWuAZhgb6vor8NjL
+         Sdz43uApDUoeKeZAjnpnZCdDhvS+N5vW03Vpuen2oOW31pmgWi7OCf/sbmBT1i3QHhVN
+         2JhM0wwRN05rgzcnodNyoAMZxyDPVEd3+lFkQfrTY/eg8Odtq5gbsonzcrmoBcS/ZBKZ
+         RweMIoAX4IY8xbFvFZP+aID2Cvs0v4PNfx//G7s+qH/5GdaBlYpFe4Roa/sUmqrt9W4n
+         zi4Q==
+X-Gm-Message-State: AFqh2kovPm0xI0TKrLTxMRaOI33tGi97bdeibIYAXyxhcsfezTQg0Q4b
+        0894ewyb3S+mAsqgDhXYYWOElA==
+X-Google-Smtp-Source: AMrXdXs8V40PLbV/yhExX2kRHQCY1Yo9wbM7q84dlGOei7EhLtS3so+HtLLiv2VHa+z7t8Tv2X3jvg==
+X-Received: by 2002:a6b:c8c3:0:b0:704:d3b0:3029 with SMTP id y186-20020a6bc8c3000000b00704d3b03029mr24381288iof.17.1674773465391;
+        Thu, 26 Jan 2023 14:51:05 -0800 (PST)
 Received: from [192.168.2.31] ([194.204.33.9])
-        by smtp.gmail.com with ESMTPSA id h31-20020a022b1f000000b00363f8e0ab41sm808132jaa.152.2023.01.26.14.12.09
+        by smtp.gmail.com with ESMTPSA id y18-20020a056638039200b003a20a8f6bd2sm853151jap.153.2023.01.26.14.51.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Jan 2023 14:12:12 -0800 (PST)
-Message-ID: <acbb8d20-2e7e-e38c-9edb-8f8fa203a094@linaro.org>
-Date:   Fri, 27 Jan 2023 00:12:08 +0200
+        Thu, 26 Jan 2023 14:51:04 -0800 (PST)
+Message-ID: <505fc434-c31f-726e-b1cb-0bbfd5f83490@linaro.org>
+Date:   Fri, 27 Jan 2023 00:51:01 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH v2 2/6] clk: qcom: Add GPU clock controller driver for
- SM6125
+Subject: Re: [RESEND PATCH] of: property: do not create clocks device link for
+ clock controllers
 Content-Language: en-GB
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org
-References: <20230126181335.12970-1-konrad.dybcio@linaro.org>
- <20230126181335.12970-3-konrad.dybcio@linaro.org>
+To:     Rob Herring <robh@kernel.org>,
+        Saravana Kannan <saravanak@google.com>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     Frank Rowand <frowand.list@gmail.com>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Abel Vesa <abel.vesa@linaro.org>
+References: <20230118091122.2205452-1-dmitry.baryshkov@linaro.org>
+ <CAL_JsqJ=0neiZ4wkPiMqJMT4E1O_xO0uLrTmEGUcnZMqxkw4UQ@mail.gmail.com>
+ <CAGETcx8Xy5OzsbW3123esxsbQJq-SqDkP1S5g2mmwzoCz4shtQ@mail.gmail.com>
+ <20230125190926.GA2697290-robh@kernel.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230126181335.12970-3-konrad.dybcio@linaro.org>
+In-Reply-To: <20230125190926.GA2697290-robh@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/01/2023 20:13, Konrad Dybcio wrote:
-> Add support for the GPU clock controller found on SM6125.
+On 25/01/2023 21:09, Rob Herring wrote:
+> On Tue, Jan 24, 2023 at 06:12:15PM -0800, Saravana Kannan wrote:
+>> On Wed, Jan 18, 2023 at 5:35 AM Rob Herring <robh+dt@kernel.org> wrote:
+>>>
+>>> On Wed, Jan 18, 2023 at 3:11 AM Dmitry Baryshkov
+>>> <dmitry.baryshkov@linaro.org> wrote:
+>>>>
+>>>> Do not create device link for clock controllers. Some of the clocks
+>>>> provided to the device via OF can be the clocks that are just parents to
+>>>> the clocks provided by this clock controller. Clock subsystem already
+>>>> has support for handling missing clock parents correctly (clock
+>>>> orphans). Later when the parent clock is registered, clocks get
+>>>> populated properly.
+>>>>
+>>>> An example of the system where this matters is the SDM8450 MTP board
+>>>> (see arch/arm64/boot/dts/qcom/sdm845-mtp.dts). Here the dispcc uses
+>>>> clocks provided by dsi0_phy and dsi1_phy device tree nodes. However the
+>>>> dispcc itself provides clocks to both PHYs, to the PHY parent device,
+>>>> etc. With just dsi0_phy in place devlink is able to break the
+>>>> dependency, but with two PHYs, dispcc doesn't get probed at all, thus
+>>>> breaking display support.
+>>>>
+>>>> Cc: Bjorn Andersson <andersson@kernel.org>
+>>>> Cc: Stephen Boyd <sboyd@kernel.org>
+>>>> Cc: Saravana Kannan <saravanak@google.com>
+>>>> Cc: Abel Vesa <abel.vesa@linaro.org>
+>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>> ---
+>>>>
+>>>> This patch has been posted a year ago in January 2022 ([1]). Since that time
+>>>> Saravana failed to produce patches to assist in debugging the issue
+>>>> ([2]) or to fix the issue ([3]). The issue we observe has been described
+>>>> by Abel at ([4]). As we work on adding support for Dual DSI
+>>>> configurations, the issue becomes more and more important, since binding
+>>>> the whole display subsystem fails.
+>>
+>> I did send out a patch series[1] to try and fix this. Heck I even
+>> talked about this in LPC 2022. So I don't think it's accurate to say I
+>> didn't help debug this or fix this. There's some email thread in lore
+>> where Abel gave more details and I figured out the issue and we didn't
+>> need any more debugging. And then I sent out [1]. Sorry I missed you
+>> in the cc lise for [1] -- I try to keep track of everyone to cc but
+>> things slip through the cracks sometimes. But at the same time, it's
+>> easy to check for emails from me before saying I didn't help or didn't
+>> send out fixes :)
+>>
+>> If you do try to give [1] a shot, there are a bunch of bugs that
+>> people pointed out for which I gave fixes on top of [1] in the
+>> replies. I was supposed to work on v2 over the holidays, but that
+>> didn't happen because of stuff outside my control.
+>>
+>>> That's ample time to fix this, so I intend to apply this. But I'll
+>>> give it a few days for comments.
+>>
+>> Rob, I'd recommend not applying this because it'll fix it for Dmitry
+>> but break someone else's use case. That's the whole reason it takes me
+>> a while to send out patches -- it's easy to fix it for a subset of
+>> devices, but fixing something without breaking someone else is harder
+>> (I still believe it's doable) and it takes a while to test them on all
+>> the devices I want to test before sending them out.
+
+This case is really simple, I think. Clock controllers (and 
+clock-core-framework) are prepared to handle clock orphans properly. 
+Moreover they have been supposed to work in such way for quite a while. 
+In other words, I don't think we should save them from this 
+-EPROBE_DEFERRED.
+
+Thus I think it is better to let them continue doing their job of 
+handling probe deferrals on their own, at least for the time being. And 
+then, when your patches are finished, we can think about reenabling 
+current behaviour. As a reminder, currently, all Qualcomm platforms 
+trying to use double DSI configuration are broken and have to use 
+fw_devlink= kernel params.
+
+Stephen, do you have any comments regarding this fw_devlink usage vs CCF?
+
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
-> v1 -> v2:
+> Okay, will give it a bit longer.
 > 
-> - Add "depends on" (Krzysztof)
-
-With three nits fixed,
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-> 
->   drivers/clk/qcom/Kconfig        |   9 +
->   drivers/clk/qcom/Makefile       |   1 +
->   drivers/clk/qcom/gpucc-sm6125.c | 444 ++++++++++++++++++++++++++++++++
->   3 files changed, 454 insertions(+)
->   create mode 100644 drivers/clk/qcom/gpucc-sm6125.c
-> 
-
-[skipped]
-
-> +static struct clk_branch gpu_cc_gx_gfx3d_clk = {
-> +	.halt_reg = 0x1054,
-> +	.halt_check = BRANCH_HALT_SKIP,
-> +	.clkr = {
-> +		.enable_reg = 0x1054,
-> +		.enable_mask = BIT(0),
-> +		.hw.init = &(struct clk_init_data){
-> +			.name = "gpu_cc_gx_gfx3d_clk",
-> +			.parent_data = &(const struct clk_parent_data) {
-> +				.hw = &gpu_cc_gx_gfx3d_clk_src.clkr.hw,
-> +			},
-
-parent_hws
-
-> +			.num_parents = 1,
-> +			.flags = CLK_SET_RATE_PARENT,
-> +			.ops = &clk_branch2_ops,
-> +		},
-> +	},
-> +};
-> +
-> +static struct clk_branch gpu_cc_cx_gfx3d_clk = {
-> +	.halt_reg = 0x10a4,
-> +	.halt_check = BRANCH_HALT_DELAY,
-> +	.clkr = {
-> +		.enable_reg = 0x10a4,
-> +		.enable_mask = BIT(0),
-> +		.hw.init = &(struct clk_init_data){
-> +			.name = "gpu_cc_cx_gfx3d_clk",
-> +			.parent_data = &(const struct clk_parent_data) {
-> +				.hw = &gpu_cc_gx_gfx3d_clk.clkr.hw,
-> +			},
-
-parent_hws
-
-> +			.num_parents = 1,
-> +			.flags = CLK_SET_RATE_PARENT,
-> +			.ops = &clk_branch2_ops,
-> +		},
-> +	},
-> +};
-> +
-> +static struct clk_branch gpu_cc_cx_gmu_clk = {
-> +	.halt_reg = 0x1098,
-> +	.halt_check = BRANCH_HALT,
-> +	.clkr = {
-> +		.enable_reg = 0x1098,
-> +		.enable_mask = BIT(0),
-> +		.hw.init = &(struct clk_init_data){
-> +			.name = "gpu_cc_cx_gmu_clk",
-> +			.parent_data = &(const struct clk_parent_data) {
-
-parent_hws
-
-> +				.hw = &gpu_cc_gmu_clk_src.clkr.hw,
-> +			},
-> +			.num_parents = 1,
-> +			.flags = CLK_SET_RATE_PARENT,
-> +			.ops = &clk_branch2_ops,
-> +		},
-> +	},
-> +};
-> +
-> +static struct clk_branch gpu_cc_cx_snoc_dvm_clk = {
-> +	.halt_reg = 0x108c,
-> +	.halt_check = BRANCH_HALT_DELAY,
-> +	.clkr = {
-> +		.enable_reg = 0x108c,
-> +		.enable_mask = BIT(0),
-> +		.hw.init = &(struct clk_init_data){
-> +			.name = "gpu_cc_cx_snoc_dvm_clk",
-> +			.ops = &clk_branch2_ops,
-> +		},
-> +	},
-> +};
-> +
-> +static struct clk_branch gpu_cc_cxo_aon_clk = {
-> +	.halt_reg = 0x1004,
-> +	.halt_check = BRANCH_HALT_DELAY,
-> +	.clkr = {
-> +		.enable_reg = 0x1004,
-> +		.enable_mask = BIT(0),
-> +		.hw.init = &(struct clk_init_data){
-> +			.name = "gpu_cc_cxo_aon_clk",
-> +			.ops = &clk_branch2_ops,
-> +		},
-> +	},
-> +};
-> +
-> +static struct clk_branch gpu_cc_cxo_clk = {
-> +	.halt_reg = 0x109c,
-> +	.halt_check = BRANCH_HALT,
-> +	.clkr = {
-> +		.enable_reg = 0x109c,
-> +		.enable_mask = BIT(0),
-> +		.hw.init = &(struct clk_init_data){
-> +			.name = "gpu_cc_cxo_clk",
-> +			.ops = &clk_branch2_ops,
-> +		},
-> +	},
-> +};
-> +
-> +static struct clk_branch gpu_cc_sleep_clk = {
-> +	.halt_reg = 0x1090,
-> +	.halt_check = BRANCH_HALT_DELAY,
-> +	.clkr = {
-> +		.enable_reg = 0x1090,
-> +		.enable_mask = BIT(0),
-> +		.hw.init = &(struct clk_init_data){
-> +			.name = "gpu_cc_sleep_clk",
-> +			.ops = &clk_branch2_ops,
-> +		},
-> +	},
-> +};
-> +
-> +static struct clk_branch gpu_cc_ahb_clk = {
-> +	.halt_reg = 0x1078,
-> +	.halt_check = BRANCH_HALT_DELAY,
-> +	.clkr = {
-> +		.enable_reg = 0x1078,
-> +		.enable_mask = BIT(0),
-> +		.hw.init = &(struct clk_init_data){
-> +			.name = "gpu_cc_ahb_clk",
-> +			.flags = CLK_IS_CRITICAL,
-> +			.ops = &clk_branch2_ops,
-> +		},
-> +	},
-> +};
-> +
-> +static struct clk_branch gpu_cc_hlos1_vote_gpu_smmu_clk = {
-> +	.halt_reg = 0x5000,
-> +	.halt_check = BRANCH_VOTED,
-> +	.clkr = {
-> +		.enable_reg = 0x5000,
-> +		.enable_mask = BIT(0),
-> +		.hw.init = &(struct clk_init_data){
-> +			.name = "gpu_cc_hlos1_vote_gpu_smmu_clk",
-> +			.ops = &clk_branch2_ops,
-> +		},
-> +	},
-> +};
-> +
-> +static struct gdsc gpu_cx_gdsc = {
-> +	.gdscr = 0x106c,
-> +	.gds_hw_ctrl = 0x1540,
-> +	.pd = {
-> +		.name = "gpu_cx_gdsc",
-> +	},
-> +	.pwrsts = PWRSTS_OFF_ON,
-> +	.flags = VOTABLE,
-> +};
-> +
-> +static struct gdsc gpu_gx_gdsc = {
-> +	.gdscr = 0x100c,
-> +	.pd = {
-> +		.name = "gpu_gx_gdsc",
-> +	},
-> +	.pwrsts = PWRSTS_OFF_ON,
-> +	.flags = VOTABLE,
-> +};
-> +
-> +static struct clk_regmap *gpu_cc_sm6125_clocks[] = {
-> +	[GPU_CC_CRC_AHB_CLK] = &gpu_cc_crc_ahb_clk.clkr,
-> +	[GPU_CC_CX_APB_CLK] = &gpu_cc_cx_apb_clk.clkr,
-> +	[GPU_CC_CX_GFX3D_CLK] = &gpu_cc_cx_gfx3d_clk.clkr,
-> +	[GPU_CC_CX_GMU_CLK] = &gpu_cc_cx_gmu_clk.clkr,
-> +	[GPU_CC_CX_SNOC_DVM_CLK] = &gpu_cc_cx_snoc_dvm_clk.clkr,
-> +	[GPU_CC_CXO_AON_CLK] = &gpu_cc_cxo_aon_clk.clkr,
-> +	[GPU_CC_CXO_CLK] = &gpu_cc_cxo_clk.clkr,
-> +	[GPU_CC_GMU_CLK_SRC] = &gpu_cc_gmu_clk_src.clkr,
-> +	[GPU_CC_PLL0_OUT_AUX2] = &gpu_cc_pll0_out_aux2.clkr,
-> +	[GPU_CC_PLL1_OUT_AUX2] = &gpu_cc_pll1_out_aux2.clkr,
-> +	[GPU_CC_SLEEP_CLK] = &gpu_cc_sleep_clk.clkr,
-> +	[GPU_CC_GX_GFX3D_CLK] = &gpu_cc_gx_gfx3d_clk.clkr,
-> +	[GPU_CC_GX_GFX3D_CLK_SRC] = &gpu_cc_gx_gfx3d_clk_src.clkr,
-> +	[GPU_CC_AHB_CLK] = &gpu_cc_ahb_clk.clkr,
-> +	[GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK] = &gpu_cc_hlos1_vote_gpu_smmu_clk.clkr,
-> +};
-> +
-> +static struct gdsc *gpucc_sm6125_gdscs[] = {
-> +	[GPU_CX_GDSC] = &gpu_cx_gdsc,
-> +	[GPU_GX_GDSC] = &gpu_gx_gdsc,
-> +};
-> +
-> +static const struct regmap_config gpu_cc_sm6125_regmap_config = {
-> +	.reg_bits = 32,
-> +	.reg_stride = 4,
-> +	.val_bits = 32,
-> +	.max_register = 0x9000,
-> +	.fast_io = true,
-> +};
-> +
-> +static const struct qcom_cc_desc gpu_cc_sm6125_desc = {
-> +	.config = &gpu_cc_sm6125_regmap_config,
-> +	.clks = gpu_cc_sm6125_clocks,
-> +	.num_clks = ARRAY_SIZE(gpu_cc_sm6125_clocks),
-> +	.gdscs = gpucc_sm6125_gdscs,
-> +	.num_gdscs = ARRAY_SIZE(gpucc_sm6125_gdscs),
-> +};
-> +
-> +static const struct of_device_id gpu_cc_sm6125_match_table[] = {
-> +	{ .compatible = "qcom,sm6125-gpucc" },
-> +	{ }
-> +};
-> +MODULE_DEVICE_TABLE(of, gpu_cc_sm6125_match_table);
-> +
-> +static int gpu_cc_sm6125_probe(struct platform_device *pdev)
-> +{
-> +	struct regmap *regmap;
-> +	unsigned int value, mask;
-> +
-> +	regmap = qcom_cc_map(pdev, &gpu_cc_sm6125_desc);
-> +	if (IS_ERR(regmap))
-> +		return PTR_ERR(regmap);
-> +
-> +	clk_alpha_pll_configure(&gpu_cc_pll0_out_aux2, regmap, &gpu_pll0_config);
-> +	clk_alpha_pll_configure(&gpu_cc_pll1_out_aux2, regmap, &gpu_pll1_config);
-> +
-> +	/* Recommended WAKEUP/SLEEP settings for the gpu_cc_cx_gmu_clk */
-> +	mask = CX_GMU_CBCR_WAKE_MASK << CX_GMU_CBCR_WAKE_SHIFT;
-> +	mask |= CX_GMU_CBCR_SLEEP_MASK << CX_GMU_CBCR_SLEEP_SHIFT;
-> +	value = 0xf << CX_GMU_CBCR_WAKE_SHIFT | 0xf << CX_GMU_CBCR_SLEEP_SHIFT;
-> +	regmap_update_bits(regmap, gpu_cc_cx_gmu_clk.clkr.enable_reg, mask, value);
-> +
-> +	/* Set up PERIPH/MEM retain on the GPU core clock */
-> +	regmap_update_bits(regmap, gpu_cc_gx_gfx3d_clk.halt_reg,
-> +			   (BIT(14) | BIT(13)), (BIT(14) | BIT(13)));
-> +
-> +	return qcom_cc_really_probe(pdev, &gpu_cc_sm6125_desc, regmap);
-> +}
-> +
-> +static struct platform_driver gpu_cc_sm6125_driver = {
-> +	.probe = gpu_cc_sm6125_probe,
-> +	.driver = {
-> +		.name = "gpucc-sm6125",
-> +		.of_match_table = gpu_cc_sm6125_match_table,
-> +	},
-> +};
-> +
-> +static int __init gpu_cc_sm6125_init(void)
-> +{
-> +	return platform_driver_register(&gpu_cc_sm6125_driver);
-> +}
-> +subsys_initcall(gpu_cc_sm6125_init);
-> +
-> +static void __exit gpu_cc_sm6125_exit(void)
-> +{
-> +	platform_driver_unregister(&gpu_cc_sm6125_driver);
-> +}
-> +module_exit(gpu_cc_sm6125_exit);
-> +
-> +MODULE_DESCRIPTION("QTI GPUCC SM6125 Driver");
-> +MODULE_LICENSE("GPL");
+> Rob
 
 -- 
 With best wishes
