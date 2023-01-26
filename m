@@ -2,54 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A27867D3F5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 19:19:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 58AF767D4A2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 19:50:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230227AbjAZSTm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Jan 2023 13:19:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39444 "EHLO
+        id S229777AbjAZSul (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Jan 2023 13:50:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230282AbjAZSTl (ORCPT
+        with ESMTP id S231281AbjAZSuj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Jan 2023 13:19:41 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69B585E504;
-        Thu, 26 Jan 2023 10:19:40 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 2258DB81EC9;
-        Thu, 26 Jan 2023 18:19:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22712C433EF;
-        Thu, 26 Jan 2023 18:19:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1674757177;
-        bh=fMbvpdY4LhT/plsYFJopPqhOxAufgim8fKxCWytJLaQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=rcILIp7kPxYF23bBgm/G20DBJ9ES7nqnnZX4jep/Ttz/YQIA6rYoViK0wToZ+aRiS
-         FmchqdUTmyQn5u+t3FWe64ZJwf0vaBvLH+axoImbEOK1lQirPGXRxEeqiJn282cCL8
-         tUfkku3R5jQwEl4AmjVrA308mKS5Rwatj6rUjxctbYlFDx66cOwWUdD5SLbVh8zX8V
-         RzQ+2M31UdObPbquc7jk0CYZyoDZIFiND4wGLdCvG9VVfn8TlCmVjZ6/60imsqCQA8
-         va6Ny9rMFUieaUxczbUwHyDRfFDLnJZgD3hWXRQM4hCx7KQndmfs4dlCvSZ0rBUJko
-         ja3VL4rnEDlSw==
-Date:   Thu, 26 Jan 2023 12:19:35 -0600
-From:   Bjorn Andersson <andersson@kernel.org>
+        Thu, 26 Jan 2023 13:50:39 -0500
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23C18125A5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 10:50:38 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id fl24so1791291wmb.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 10:50:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=J/whTD282K6WecPGYHs6gXgw7rwbNpkwpfrS4Ud3OEM=;
+        b=KQhZ3EBb7Ll1P2eOPpRQovChfAHLXhEBnBsa2cH4KAhXmTUQFp2fdXv6HJ8HvJTNEj
+         gO278RWGJruX+GK6CigrXiriSjJwx4wy2w6/9sP3aIXc20BUB15DFCmMTIoXILdYpoB9
+         SnDvQB3A+6sc/nnPWGuU5MqgqCagWNofmN1NvOe5BFb/MZx3mGSwIDZv+WBSifnglctG
+         Is7nYK/qauYvWssFU418bAyqMO7qFl/czEU3PZJM5IcZnE6nIRWrhHY+NQYsm/0XJb69
+         rO8f5L/96GSsdQAegc7mYDwBvul19Sha0v8r+Lpy98WZu4v3/T1bNlG2pGYiAKfRR10W
+         CsPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=J/whTD282K6WecPGYHs6gXgw7rwbNpkwpfrS4Ud3OEM=;
+        b=T17Usvqc+K2BPmhYkgDo21HEOSh/sTYVmmxCn2op7ObHZU8SghcKzI+FkdSYpG6kdh
+         P40E6TM/y+4Ws1kgQnlskOqDTYZhNEYcjulpHu5imcG8CB6OhTYmGHnG2uzFIk1uaAA7
+         ctM9ycTqX8K1lP++xWuBzM+0utOn/psxs4rQ4OxI/WrNaMkJAZcfPqsKWgji8SuMNn5d
+         v9lqjcOh3TxVw07GFysPfGSZdy13nKqU5fLZNfMvx9ZEOdutfdPJMkf5wPNpiiAjyd3i
+         20/H0/fqoqcq2/zFFdNQUzUfTtoHqHhuJo8lPTwbVVok7wLpIoHx9EHSMZ16RPUtCzgN
+         NUSA==
+X-Gm-Message-State: AFqh2krAYRDn/MyEa2LpPmHHqELPxSbhYcXZ9v3V8zrLWRgZN5LvI1eW
+        uWou8NK2vZ8MyG8eWRWGNUL5+g==
+X-Google-Smtp-Source: AMrXdXv3PKUpNXo2uUsfIjSLP4FdvSGa04WQE2S+MRjCR54k63+fjCwjur4D7WpHQ3oE8IQQ69WHaA==
+X-Received: by 2002:a05:600c:1c86:b0:3da:fa75:ce58 with SMTP id k6-20020a05600c1c8600b003dafa75ce58mr39807792wms.21.1674759036713;
+        Thu, 26 Jan 2023 10:50:36 -0800 (PST)
+Received: from linaro.org ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id r25-20020adfa159000000b00297dcfdc90fsm2049532wrr.24.2023.01.26.10.50.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Jan 2023 10:50:36 -0800 (PST)
+Date:   Thu, 26 Jan 2023 20:50:34 +0200
+From:   Abel Vesa <abel.vesa@linaro.org>
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
-        krzysztof.kozlowski@linaro.org, marijn.suijten@somainline.org,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org
-Subject: Re: [PATCH 2/6] clk: qcom: Add GPU clock controller driver for SM6125
-Message-ID: <20230126181935.mg7eida2e5vp42hc@builder.lan>
-References: <20230126144033.216206-1-konrad.dybcio@linaro.org>
- <20230126144033.216206-3-konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] soc: qcom: llcc: Fix slice configuration values for
+ SC8280XP
+Message-ID: <Y9LLehs4PSvHE6qf@linaro.org>
+References: <20230126171636.2319496-1-abel.vesa@linaro.org>
+ <09bf9907-27b9-146f-4a94-dcab51350d5a@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230126144033.216206-3-konrad.dybcio@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+In-Reply-To: <09bf9907-27b9-146f-4a94-dcab51350d5a@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -57,60 +75,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 26, 2023 at 03:40:29PM +0100, Konrad Dybcio wrote:
-> diff --git a/drivers/clk/qcom/gpucc-sm6125.c b/drivers/clk/qcom/gpucc-sm6125.c
-[..]
-> +static int gpu_cc_sm6125_probe(struct platform_device *pdev)
-> +{
-> +	struct regmap *regmap;
-> +	unsigned int value, mask;
-> +
-> +	regmap = qcom_cc_map(pdev, &gpu_cc_sm6125_desc);
-> +	if (IS_ERR(regmap))
-> +		return PTR_ERR(regmap);
-> +
-> +	clk_alpha_pll_configure(&gpu_cc_pll0_out_aux2, regmap, &gpu_pll0_config);
-> +	clk_alpha_pll_configure(&gpu_cc_pll1_out_aux2, regmap, &gpu_pll1_config);
-> +
-> +	/* Recommended WAKEUP/SLEEP settings for the gpu_cc_cx_gmu_clk */
-> +	mask = CX_GMU_CBCR_WAKE_MASK << CX_GMU_CBCR_WAKE_SHIFT;
-> +	mask |= CX_GMU_CBCR_SLEEP_MASK << CX_GMU_CBCR_SLEEP_SHIFT;
-> +	value = 0xf << CX_GMU_CBCR_WAKE_SHIFT | 0xf << CX_GMU_CBCR_SLEEP_SHIFT;
+On 23-01-26 18:25:52, Konrad Dybcio wrote:
+> 
+> 
+> On 26.01.2023 18:16, Abel Vesa wrote:
+> > The new values have been taken from downstream kernel.
+> > 
+> > Fixes: ec69dfbdc426 ("soc: qcom: llcc: Add sc8180x and sc8280xp configurations")
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > ---
+> >  drivers/soc/qcom/llcc-qcom.c | 10 +++++-----
+> >  1 file changed, 5 insertions(+), 5 deletions(-)
+> > 
+> > diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+> > index 23ce2f78c4ed..5702354fb946 100644
+> > --- a/drivers/soc/qcom/llcc-qcom.c
+> > +++ b/drivers/soc/qcom/llcc-qcom.c
+> > @@ -183,17 +183,17 @@ static const struct llcc_slice_config sc8280xp_data[] = {
+> >  	{ LLCC_AUDIO,    6,  1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 0, 0 },
+> >  	{ LLCC_CMPT,     10, 6144, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 0, 0 },
+> >  	{ LLCC_GPUHTW,   11, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+> > -	{ LLCC_GPU,      12, 4096, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 1 },
+> > +	{ LLCC_GPU,      12, 4608, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 1 },
+> priority (the arg right after 4608) should be 0 per downstream
 
-Perhaps I'm missing something here, but isn't mask == value after this?
+Actually according to Sai's review [1], I need to revert this part.
 
-Feels like this could be written cleaner using FIELD_PREP(), or perhaps
-even moved to a helper function, so that we don't need to open code this
-if it's needed in other places?
+> 
+> 
+> >  	{ LLCC_MMUHWT,   13, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
+> >  	{ LLCC_DISP,     16, 6144, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+> >  	{ LLCC_AUDHW,    22, 2048, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+> >  	{ LLCC_DRE,      26, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+> >  	{ LLCC_CVP,      28, 512,  3, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+> >  	{ LLCC_APTCM,    30, 1024, 3, 1, 0x0,   0x1, 1, 0, 0, 1, 0, 0 },
+> > -	{ LLCC_WRCACHE,  31, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
+> > -	{ LLCC_CVPFW,    32, 512,  1, 0, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+> > -	{ LLCC_CPUSS1,   33, 2048, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+> > -	{ LLCC_CPUHWT,   36, 512,  1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
+> > +	{ LLCC_WRCACHE,  31, 512, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
 
-> +	regmap_update_bits(regmap, gpu_cc_cx_gmu_clk.clkr.enable_reg, mask, value);
-> +
-> +	/* Set up PERIPH/MEM retain on the GPU core clock */
-> +	regmap_update_bits(regmap, gpu_cc_gx_gfx3d_clk.halt_reg,
-> +			   (BIT(14) | BIT(13)), (BIT(14) | BIT(13)));
+Same goes for this line above.
 
-You don't need the extra parenthesis here.
+> > +	{ LLCC_CVPFW,    17, 512,  1, 0, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+> > +	{ LLCC_CPUSS1,   3, 2048, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+> > +	{ LLCC_CPUHWT,   5, 512,  1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
 
-> +
-> +	return qcom_cc_really_probe(pdev, &gpu_cc_sm6125_desc, regmap);
-> +}
-> +
-> +static struct platform_driver gpu_cc_sm6125_driver = {
-> +	.probe = gpu_cc_sm6125_probe,
-> +	.driver = {
-> +		.name = "gpucc-sm6125",
-> +		.of_match_table = gpu_cc_sm6125_match_table,
-> +	},
-> +};
-> +
-> +static int __init gpu_cc_sm6125_init(void)
-> +{
-> +	return platform_driver_register(&gpu_cc_sm6125_driver);
-> +}
-> +subsys_initcall(gpu_cc_sm6125_init);
+As for these 3 slice_ids, I need to doable check.
 
-You don't need GPU at subsys, module_platform_driver() should be
-sufficient (and =m in defconfig).
+> CMPT1 (id 34) is still missing.
 
-Thanks,
-Bjorn
+And Sai also says that CAMEXP0 (the upstream name of CMPT1) needs to be
+dropped.
+
+> 
+> With that:
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> 
+> Konrad
+> >  };
+> >  
+> >  static const struct llcc_slice_config sdm845_data[] =  {
+
+[1] https://lore.kernel.org/lkml/8a627cc0-8f9b-0bda-c9b5-6d51a788948a@quicinc.com/
