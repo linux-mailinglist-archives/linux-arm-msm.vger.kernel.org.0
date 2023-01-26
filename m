@@ -2,145 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 526CA67C79F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 10:41:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B6D2467C81F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 11:15:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236312AbjAZJlc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Jan 2023 04:41:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46954 "EHLO
+        id S229908AbjAZKPA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Jan 2023 05:15:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236281AbjAZJlb (ORCPT
+        with ESMTP id S229483AbjAZKO7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Jan 2023 04:41:31 -0500
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02D8D5D10C
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 01:41:28 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id l8so721019wms.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 01:41:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gWbckZbLscUSiQK6kSvhvYmXnDbgSSyOehKbYKBrl+8=;
-        b=bQUVcZ6Rt7OTd6EQSbi8KR7R+YlACETTdb8AerLmjoGgGdRJyrkFQKUSawGn698Wp/
-         8COeb+kXxWr0ert8SlZoOetmJtVtS9s97CEFZiW46wqD1XD7Bgeb6HbEt488SuVczmK0
-         TRlm2/p4EmqWIc5WWXwG/STtBjpdf9JniVJbIaZ9ayXTTlkEaB3eOge9rI/EoBgqxR7f
-         iOzVaqa6K0rpg5kXbPFcj7HiVGaPqgUaYAXbhP2aWqxAlfzYtKWXxna5VnQAnOyEcn9A
-         XQMalvQBICYrskkqIpmALsrocd790cwDPAhueTwwgZsO/ykTtfRBKYvOb/Bz9gXW2R+d
-         cQnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gWbckZbLscUSiQK6kSvhvYmXnDbgSSyOehKbYKBrl+8=;
-        b=zInfuOHfd5z4iwtkySjjywfMU+KA95HzaO/zqdowNdI49mm1cYrIo8P6UVfG64agCA
-         yGVW/O1ScO1SECCHuZ4G00x7T5O2lqqtRQG7KnwQfG0Wy6YG2fvLu5s9PflXbGzWXTlp
-         zz7Z7NQ/Rt+FsfbWf8bCyfVlIvXFF+c47kWsXotwneOW386ORB1JX8P2fEsirjxAl3Rp
-         XtVFU9VQp0ZA+Ud+cQquQgVViBAcwl+lxtXJa88b4jyQkJHW7MW44HTv3dH53ODT48Jx
-         89CuAWZF7mPn77VAmxhcYvruEef9um8o1hggyiSglCaqSXpiSIa4BY2HlGi7chl8eQqQ
-         /hhw==
-X-Gm-Message-State: AFqh2krSBlKnbt65lBeWgqdq+krtC//+LVecTei7kTHa0+NpulgkM4+t
-        shrClcZWlb698wwf+6Bqjz47Zw==
-X-Google-Smtp-Source: AMrXdXvSx2my3NGGu6iqTh8FJBDjJRGEoIXP9s1KJSvSez8DU8+sI6sZ3tPjsNy2pNFH1/hC0DXKtQ==
-X-Received: by 2002:a05:600c:4e08:b0:3db:1a41:663a with SMTP id b8-20020a05600c4e0800b003db1a41663amr29235114wmq.20.1674726086529;
-        Thu, 26 Jan 2023 01:41:26 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id i20-20020a05600c071400b003db0ad636d1sm4018509wmn.28.2023.01.26.01.41.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Jan 2023 01:41:26 -0800 (PST)
-Message-ID: <dbfa802a-968f-0504-a131-59e2a8f52c9f@linaro.org>
-Date:   Thu, 26 Jan 2023 10:41:24 +0100
+        Thu, 26 Jan 2023 05:14:59 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8F77110;
+        Thu, 26 Jan 2023 02:14:58 -0800 (PST)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30Q91Eic020388;
+        Thu, 26 Jan 2023 10:14:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=h+vmPxPfeK1+Sip+dbj1iRWCx9mbIQXFtYIghwmRAEA=;
+ b=mdo5TeAiL9NwK2kHd8GBCk9LScXHD++NcGjQRqNSk74OkMObMD3TOyWFH+E4vtOLsssU
+ QwkUd7DpOezaZ7anapidaVxf7/mSloueKuPZxzEBXP7P1QFrqB19iwid/wzbTqWW4jK7
+ qf7R+Y+Fm1+5NPVg7sshqkHBCKLZnMywRoQ40dg9hA6z0ywP5lvXTl9TzJQM+4AuN0G5
+ ibcKs5UcaZYNZnkLq8JgYEY8mO7AzRTAt/k81LXGduOcfYmSBYOwVO3PvpT+8JDIvqac
+ 4ooEThagBBiywngPqZcH/51klUtbc005UTzPjx0DP4R+fIPdNdhrzSHOrOky48eVg9g6 Gg== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3najkhbt5t-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 26 Jan 2023 10:14:45 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30QAEiBY014604
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 26 Jan 2023 10:14:44 GMT
+Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Thu, 26 Jan 2023 02:14:39 -0800
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     <swboyd@chromium.org>, <agross@kernel.org>, <andersson@kernel.org>,
+        <robh+dt@kernel.org>, <broonie@kernel.org>,
+        <quic_plai@quicinc.com>, <krzysztof.kozlowski+dt@linaro.org>,
+        <konrad.dybcio@somainline.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_rohkumar@quicinc.com>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: [PATCH v6 0/6] Add resets for ADSP based audio clock controller driver
+Date:   Thu, 26 Jan 2023 15:44:19 +0530
+Message-ID: <1674728065-24955-1-git-send-email-quic_srivasam@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH 5/5] ARM: dts: qcom: msm8974-oneplus-bacon: Add
- notification LED
-Content-Language: en-US
-To:     Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
-        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230122-msm8974-bacon-features-v1-0-4049f565c24c@z3ntu.xyz>
- <20230122-msm8974-bacon-features-v1-5-4049f565c24c@z3ntu.xyz>
- <02e5bf79-3e2d-02c8-67e7-61bbff32ba29@linaro.org> <4455893.LvFx2qVVIh@g550jk>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <4455893.LvFx2qVVIh@g550jk>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: C3P2uJTEnJXOENHa3djLIm-fiZB8iLrR
+X-Proofpoint-GUID: C3P2uJTEnJXOENHa3djLIm-fiZB8iLrR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-26_03,2023-01-25_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
+ adultscore=0 spamscore=0 suspectscore=0 mlxlogscore=788 clxscore=1015
+ lowpriorityscore=0 impostorscore=0 mlxscore=0 priorityscore=1501
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301260097
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/01/2023 21:51, Luca Weiss wrote:
-> On Montag, 23. Jänner 2023 18:18:16 CET Krzysztof Kozlowski wrote:
->> On 22/01/2023 17:48, Luca Weiss wrote:
->>> Add the node describing the sn3193 that's used to provide notification
->>> LED.
->>>
->>> Unfortunately the driver currently supports neither multicolor API nor
->>> using the properties function & color, so we use label instead.
->>>
->>> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
->>> ---
->>>
->>>  .../arm/boot/dts/qcom-msm8974pro-oneplus-bacon.dts | 28
->>>  ++++++++++++++++++++++ 1 file changed, 28 insertions(+)
->>>
->>> diff --git a/arch/arm/boot/dts/qcom-msm8974pro-oneplus-bacon.dts
->>> b/arch/arm/boot/dts/qcom-msm8974pro-oneplus-bacon.dts index
->>> ffb486ceb6a6..a672c45d7070 100644
->>> --- a/arch/arm/boot/dts/qcom-msm8974pro-oneplus-bacon.dts
->>> +++ b/arch/arm/boot/dts/qcom-msm8974pro-oneplus-bacon.dts
->>> @@ -114,6 +114,34 @@ led@0 {
->>>
->>>  			default-brightness = <80>;
->>>  		
->>>  		};
->>>  	
->>>  	};
->>>
->>> +
->>> +	led-controller@68 {
->>> +		compatible = "si-en,sn3193";
->>> +		reg = <0x68>;
->>> +
->>> +		shutdown-gpios = <&tlmm 45 GPIO_ACTIVE_HIGH>;
->>> +
->>> +		#address-cells = <1>;
->>> +		#size-cells = <0>;
->>> +
->>> +		led@1 {
->>> +			reg = <1>;
->>> +			label = "red:status";
->>
->> These should be colors and functions.
-> 
-> Hi Krzysztof,
-> 
-> please check the commit message for this. I tried using it but it didn't work, 
-> the driver in general might need an overhaul at some point...
-> 
->> Unfortunately the driver currently supports neither multicolor API nor
->> using the properties function & color, so we use label instead.
-> 
-> Or maybe I messed up but pretty sure this was the case when I wrote the dts.
+Add resets and remove qdsp6ss clcok controller for audioreach based platforms. 
 
-I don't understand how driver is related here - it's not the driver's
-property, but LED core. If the driver "supports" label, then it supports
-color and status.
+Changes since v5:
+    -- Fix compilation issue.
+Changes since v4:
+    -- Update Fixes tag in Merge lpasscc into lpass_aon patch.
+    -- Revert removal of clk_regmap structure in Merge lpasscc into lpass_aon patch.
 
-Best regards,
-Krzysztof
+Changes since v3:
+    -- Remove duplicate clock resets patch.
+    -- Add binding headers for q6 clocks.
+    -- Create new patch for merging lpasscc q6 clocks into lpass_aon.
+    -- Create new patches for handling conflicts of ADSP and bypass solution.
+
+Changes since v2:
+    -- Revert removing qdsp6ss clock control.
+    -- Add Conditional check for qdsp6ss clock registration.
+Changes since v1:
+    -- Update commit message.
+    -- Remove qdsp6ss clock control.
+
+Srinivasa Rao Mandadapu (6):
+  dt-bindings: clock: qcom,sc7280-lpasscc: Add qcom,adsp-pil-mode
+    property
+  dt-bindings: clock: lpassaudiocc-sc7280: Add binding headers for
+    lpasscc
+  clk: qcom: lpasscc-sc7280: Skip qdsp6ss clock registration
+  clk: qcom: lpasscorecc-sc7280: Skip lpasscorecc registration
+  clk: qcom: lpassaudiocc-sc7280: Merge lpasscc into lpass_aon
+  clk: qcom: lpassaudiocc-sc7280: Skip lpass_aon_cc_pll config
+
+ .../devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml   |  7 +++++++
+ drivers/clk/qcom/lpassaudiocc-sc7280.c                   | 16 +++++++++++-----
+ drivers/clk/qcom/lpasscc-sc7280.c                        | 12 +++++++-----
+ drivers/clk/qcom/lpasscorecc-sc7280.c                    |  3 +++
+ include/dt-bindings/clock/qcom,lpassaudiocc-sc7280.h     |  2 ++
+ 5 files changed, 30 insertions(+), 10 deletions(-)
+
+-- 
+2.7.4
 
