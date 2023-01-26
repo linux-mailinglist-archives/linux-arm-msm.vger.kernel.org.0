@@ -2,80 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B484F67C154
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 01:07:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8729667C18B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 01:26:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229481AbjAZAHc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Jan 2023 19:07:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56780 "EHLO
+        id S236115AbjAZA00 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Jan 2023 19:26:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229772AbjAZAHb (ORCPT
+        with ESMTP id S236144AbjAZA0N (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Jan 2023 19:07:31 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B912A12F32
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Jan 2023 16:07:29 -0800 (PST)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30Q079x6008791;
-        Thu, 26 Jan 2023 00:07:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=hM5zsqLzlY4xqpbd94nlkU4eo6QgD1iehKzlT7lXj+Q=;
- b=B7qNDTSFwwUT8tlAXu96+RvslOKRaIcSa/MS9Zm4gHgcXkGBDrI006hw7fzRr23dTa5A
- 3up2XKWDE1fPS4ehLRLLnrJdZPnVYpE4NaKWI8iMgKqu1pHCPmvGphO2ghSvFRfL4D5a
- gvbEcVu5mq2pc9n3W/HWF3S161KMql3Q3xNu1m88oCCunl/NV/80Hc7gX7z/bvQoEnqf
- gveOuw6Sw9Cm4u0OzR6OYz1bcJOLMQlednlo8bevJIKNp1t96D83MPNvoOU9DuFgccqD
- bs9ZTUmjVXXqVE71V+ukHcN9GaOGjftun9T6i9EvB6VxjyVv1p3iUqySaPhCYL5/41ah 1w== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nb6jc94pc-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 26 Jan 2023 00:07:17 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30Q07Gw2000988
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 26 Jan 2023 00:07:16 GMT
-Received: from [10.110.33.211] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 25 Jan
- 2023 16:07:15 -0800
-Message-ID: <8ebd01e3-00be-b0da-e91a-ab1a4e074074@quicinc.com>
-Date:   Wed, 25 Jan 2023 16:07:14 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH] drm/msm/dsi: simplify pixel clk rate handling
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        Wed, 25 Jan 2023 19:26:13 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4AD862D08;
+        Wed, 25 Jan 2023 16:25:52 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id ADD55B81C65;
+        Thu, 26 Jan 2023 00:25:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A33C433D2;
+        Thu, 26 Jan 2023 00:25:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1674692736;
+        bh=rcUgsNadKKTYCHHFUAWb2M6WYShRxFqUqgbGPO0Ctyo=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=USfPHSeVEkf75rA9BZhlvuBgt3C7xXOJz8CoJRO6VnKLCjKvOAvSuVOAAHVjwSZuH
+         JX2uNAzawrEKpN+IqKJBN8lZGMGtxJCIlcga2OR/Jokxood0zP+0bznprQUUG8DKwD
+         QQ4K8QcBAABfVqaYdZkX1GDNvLDUpOqo8lT76FcMgCjtCOTzSgIuGkJP+fXUzUf6dD
+         100h5T1y3ypmPfXHYY5ic0/FD44fBeYBRbgvrs6b+RGsQdN+Y9IGXhlnFK4zWS8fRh
+         7XQZeHxve4rzsEvNEN1VoemmfZArPIZ/VVHfPgRMbQaX3uomO1YRRPxzlGNr8JKnr3
+         01bMP8uE6lW7Q==
+From:   Mark Brown <broonie@kernel.org>
+To:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>,
+        =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+        Joel Stanley <joel@jms.id.au>,
+        Andrew Jeffery <andrew@aj.id.au>,
+        Kamal Dasu <kdasu.kdev@gmail.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>, Han Xu <han.xu@nxp.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20230118130031.2345941-1-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20230118130031.2345941-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Serge Semin <fancer.lancer@gmail.com>,
+        Haibo Chen <haibo.chen@nxp.com>,
+        Yogesh Gaur <yogeshgaur.83@gmail.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Li-hao Kuo <lhjeff911@gmail.com>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        =?utf-8?q?=EF=BF=BDecki?= <rafal@milecki.pl>,
+        Vaishnav Achath <vaishnav.a@ti.com>,
+        Parshuram Thombare <pthombar@cadence.com>,
+        Leilk Liu <leilk.liu@mediatek.com>,
+        Gabor Juhos <juhosg@openwrt.org>,
+        Bert Vermeulen <bert@biot.com>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Marek Vasut <marex@denx.de>,
+        Birger Koblitz <mail@birger-koblitz.de>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Anson Huang <Anson.Huang@nxp.com>,
+        Chris Packham <chris.packham@alliedtelesis.co.nz>,
+        Kuldeep Singh <singh.kuldeep87k@gmail.com>,
+        Pragnesh Patel <pragnesh.patel@sifive.com>,
+        Christophe Kerello <christophe.kerello@foss.st.com>,
+        Patrice Chotard <patrice.chotard@foss.st.com>,
+        Erwan Leray <erwan.leray@foss.st.com>,
+        Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+        linux-spi@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
+        linux-kernel@vger.kernel.org, linux-amlogic@lists.infradead.org,
+        linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
+        linux-mediatek@lists.infradead.org, linux-tegra@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org,
+        linux-riscv@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Rob Herring <robh@kernel.org>
+In-Reply-To: <20230124083342.34869-1-krzysztof.kozlowski@linaro.org>
+References: <20230124083342.34869-1-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v2 1/2] spi: dt-bindings: drop unneeded quotes
+Message-Id: <167469271489.2661317.15374060752399847689.b4-ty@kernel.org>
+Date:   Thu, 26 Jan 2023 00:25:14 +0000
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: XkKsUgYW5xrhNIjx_O-hIMPe2q9_VI5y
-X-Proofpoint-GUID: XkKsUgYW5xrhNIjx_O-hIMPe2q9_VI5y
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-25_14,2023-01-25_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- phishscore=0 impostorscore=0 adultscore=0 priorityscore=1501 bulkscore=0
- suspectscore=0 clxscore=1015 mlxscore=0 spamscore=0 mlxlogscore=999
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301250215
-X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+X-Mailer: b4 0.12.0
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,116 +121,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 1/18/2023 5:00 AM, Dmitry Baryshkov wrote:
-> Move a call to dsi_calc_pclk() out of calc_clk_rate directly towards
-> msm_dsi_host_get_phy_clk_req(). It is called for both 6g and v2 hosts.
+On Tue, 24 Jan 2023 09:33:41 +0100, Krzysztof Kozlowski wrote:
+> Cleanup by removing unneeded quotes from refs and redundant blank lines.
+> No functional impact except adjusting to preferred coding style.
 > 
-> Also, while we are at it, replace another dsi_get_pclk_rate() invocation
-> with using the stored value at msm_host->pixel_clk_rate.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/dsi/dsi.h      |  4 ++--
->   drivers/gpu/drm/msm/dsi/dsi_cfg.h  |  2 +-
->   drivers/gpu/drm/msm/dsi/dsi_host.c | 24 ++++++++++++------------
->   3 files changed, 15 insertions(+), 15 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
-> index bd3763a5d723..93ec54478eb6 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi.h
-> +++ b/drivers/gpu/drm/msm/dsi/dsi.h
-> @@ -129,8 +129,8 @@ int dsi_dma_base_get_6g(struct msm_dsi_host *msm_host, uint64_t *iova);
->   int dsi_dma_base_get_v2(struct msm_dsi_host *msm_host, uint64_t *iova);
->   int dsi_clk_init_v2(struct msm_dsi_host *msm_host);
->   int dsi_clk_init_6g_v2(struct msm_dsi_host *msm_host);
-> -int dsi_calc_clk_rate_v2(struct msm_dsi_host *msm_host, bool is_bonded_dsi);
-> -int dsi_calc_clk_rate_6g(struct msm_dsi_host *msm_host, bool is_bonded_dsi);
-> +int dsi_calc_clk_rate_v2(struct msm_dsi_host *msm_host);
-> +int dsi_calc_clk_rate_6g(struct msm_dsi_host *msm_host);
->   void msm_dsi_host_snapshot(struct msm_disp_state *disp_state, struct mipi_dsi_host *host);
->   void msm_dsi_host_test_pattern_en(struct mipi_dsi_host *host);
->   struct drm_dsc_config *msm_dsi_host_get_dsc_config(struct mipi_dsi_host *host);
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.h b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-> index 44be4a88aa83..5106e66846c3 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-> @@ -51,7 +51,7 @@ struct msm_dsi_host_cfg_ops {
->   	void* (*tx_buf_get)(struct msm_dsi_host *msm_host);
->   	void (*tx_buf_put)(struct msm_dsi_host *msm_host);
->   	int (*dma_base_get)(struct msm_dsi_host *msm_host, uint64_t *iova);
-> -	int (*calc_clk_rate)(struct msm_dsi_host *msm_host, bool is_bonded_dsi);
-> +	int (*calc_clk_rate)(struct msm_dsi_host *msm_host);
->   };
->   
->   struct msm_dsi_cfg_handler {
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index 18fa30e1e858..7d99a108bff6 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -616,28 +616,21 @@ static void dsi_calc_pclk(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->   
->   }
->   
-> -int dsi_calc_clk_rate_6g(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
-> +int dsi_calc_clk_rate_6g(struct msm_dsi_host *msm_host)
->   {
-> -	if (!msm_host->mode) {
-> -		pr_err("%s: mode not set\n", __func__);
-> -		return -EINVAL;
-> -	}
-> -
-> -	dsi_calc_pclk(msm_host, is_bonded_dsi);
->   	msm_host->esc_clk_rate = clk_get_rate(msm_host->esc_clk);
-> +
->   	return 0;
->   }
->   
-> -int dsi_calc_clk_rate_v2(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
-> +int dsi_calc_clk_rate_v2(struct msm_dsi_host *msm_host)
->   {
->   	u32 bpp = dsi_get_bpp(msm_host->format);
->   	u64 pclk_bpp;
->   	unsigned int esc_mhz, esc_div;
->   	unsigned long byte_mhz;
->   
-> -	dsi_calc_pclk(msm_host, is_bonded_dsi);
-> -
-> -	pclk_bpp = (u64)dsi_get_pclk_rate(msm_host->mode, is_bonded_dsi) * bpp;
-> +	pclk_bpp = msm_host->pixel_clk_rate * bpp;
->   	do_div(pclk_bpp, 8);
->   	msm_host->src_clk_rate = pclk_bpp;
->   
-> @@ -2292,7 +2285,14 @@ void msm_dsi_host_get_phy_clk_req(struct mipi_dsi_host *host,
->   	const struct msm_dsi_cfg_handler *cfg_hnd = msm_host->cfg_hnd;
->   	int ret;
->   
-> -	ret = cfg_hnd->ops->calc_clk_rate(msm_host, is_bonded_dsi);
-> +	if (!msm_host->mode) {
-> +		pr_err("%s: mode not set\n", __func__);
-> +		return;
-> +	}
-> +
-> +	dsi_calc_pclk(msm_host, is_bonded_dsi);
-> +
-> +	ret = cfg_hnd->ops->calc_clk_rate(msm_host);
 
-I am not too sure what we are gaining by this.
+Applied to
 
-Its not that we are replacing dsi_get_pclk_rate().
+   broonie/spi.git for-next
 
-We are moving the dsi_get_pclk_rate() from the calc_clk_rate() to the 
-msm_dsi_host_get_phy_clk_req().
+Thanks!
 
-Also, with this change, dsi_calc_clk_rate_6g() looks kind of empty to 
-stand on its own.
+[1/2] spi: dt-bindings: drop unneeded quotes
+      commit: 99a7fa0e75a3a595a577fb5efa4b84a491f664a2
+[2/2] spi: dt-bindings: cleanup examples - indentation, lowercase hex
+      commit: ee8d422c91d87ebe230769b2cb89f087e56b560a
 
-The original intention of the calc_clk_rate() op seems to be calculate 
-and store all the clocks (byte, pixel and esc).
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
-Why change that behavior by breaking it up?
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
 
->   	if (ret) {
->   		pr_err("%s: unable to calc clk rate, %d\n", __func__, ret);
->   		return;
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
