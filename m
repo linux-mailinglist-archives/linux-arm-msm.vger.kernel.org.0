@@ -2,120 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 26FCA67D687
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 21:37:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3026067D699
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 21:42:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232176AbjAZUhT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Jan 2023 15:37:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44872 "EHLO
+        id S232212AbjAZUmF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Jan 2023 15:42:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232626AbjAZUhO (ORCPT
+        with ESMTP id S231488AbjAZUmE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Jan 2023 15:37:14 -0500
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 571237448C
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 12:36:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1674765381;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=Sw4KxlWv6KpVe3egxVDGwOgJo4CmF2S3SgyJLNLgqiQ=;
-        b=cn7homqOyIzm7ZJdk6+nx3iEokSS+D63wU1xwHMePU5BA8kTciXiDMsKl9PM5U14f+cDsc
-        KXXMgJ34ez8wqSw13o4ksPWkTadtLBHoltqFCncYNwyHuSrFEwql4SaPtNi4bhXoHrNmTb
-        I7zZN58TNGjlMOqDosWOJ4mNLYhZZyc=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-391-pCYiKmljNEicobZ4a5vmzw-1; Thu, 26 Jan 2023 15:36:20 -0500
-X-MC-Unique: pCYiKmljNEicobZ4a5vmzw-1
-Received: by mail-qk1-f197.google.com with SMTP id bi7-20020a05620a318700b007091d3fe2d3so1771415qkb.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 12:36:20 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Sw4KxlWv6KpVe3egxVDGwOgJo4CmF2S3SgyJLNLgqiQ=;
-        b=J9w8zGDZzi0vbmS+drcvHCjPdt8A8C9v26JLy4WIK1Gj66EtZAI6xNjW2kzJZVkyU4
-         /PZlGDUhzx5QJ3OvURWOoAKlHSzeaSlJUZ++8r6TFljKmNlk3/Ff0OM8j38cLePUNKJE
-         k8QSujAqa25T1wN4zjt9oYlvxntnKOHZY41GR+kAaDz25uNIg/sCqEizj5+IF3MlS/nn
-         dLTU/UWGuBfPClfQJ+9pxEDmS3No/NkcQ/wu91w1oIt0VxHJE/0xD1lKc7u5QZfy00U1
-         9fzKMWVp7IZsXgYXlCR6krQzBPYDCRVu3vxMkNTSkMuK3puG2DvEuI+5eJjfHyooeIh+
-         4vtg==
-X-Gm-Message-State: AFqh2kodYg58mmgIeR9tn+3lvMSDH3Y23n9U53ymdrTzd+95Pu2SW5WY
-        pzWqbzA+QtyyV8ssyrd66eFg5ZCE+sHnzVQLaMJfg3cTbV+M19Z2AprLJ0jvLLWsjAwa3ZvUDNY
-        aKlVDxiTZbonKVFhzzG6FZ5oMSg==
-X-Received: by 2002:a05:6214:5e04:b0:531:e1dd:c4d0 with SMTP id li4-20020a0562145e0400b00531e1ddc4d0mr54232903qvb.37.1674765379844;
-        Thu, 26 Jan 2023 12:36:19 -0800 (PST)
-X-Google-Smtp-Source: AMrXdXvwOFBTT+t6+IREbUQb6eiBYg2AMk1i+IREHkHQzlfvLVMlpLpWNUZpAG89LRG9LhLj1H0Jxw==
-X-Received: by 2002:a05:6214:5e04:b0:531:e1dd:c4d0 with SMTP id li4-20020a0562145e0400b00531e1ddc4d0mr54232878qvb.37.1674765379636;
-        Thu, 26 Jan 2023 12:36:19 -0800 (PST)
-Received: from localhost (nat-pool-bos-t.redhat.com. [66.187.233.206])
-        by smtp.gmail.com with ESMTPSA id c2-20020a37e102000000b006fec1c0754csm1526771qkm.87.2023.01.26.12.36.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Jan 2023 12:36:19 -0800 (PST)
-Date:   Thu, 26 Jan 2023 15:36:18 -0500
-From:   Eric Chanudet <echanude@redhat.com>
-To:     Bartosz Golaszewski <brgl@bgdev.pl>
-Cc:     Andy Gross <agross@kernel.org>,
+        Thu, 26 Jan 2023 15:42:04 -0500
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25B997AB0;
+        Thu, 26 Jan 2023 12:42:01 -0800 (PST)
+Received: from g550jk.localnet (unknown [62.108.10.64])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 2321CCB452;
+        Thu, 26 Jan 2023 20:41:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1674765719; bh=m+AyRkpU35PI1/KK7hJz1VYCQdwvbwm4TM5BZi0YkKY=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=fkgTKbVsA5M4qFr25+D09azhzbUKoiPxHsuTvfCIoyc2q1D7DW5QpVXyswaM5f0q0
+         Xtc3y0opFRlUxed8Jr4pHo5OM6caQavk5ROBAx0ofGPJMK+9bhZ1IF3AckUDuJBTV0
+         Ww2/MqtwCS62j1NSJ8oYLhhy3YLhRs0/i7yzSaCc=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v2 1/2] dt-bindings: interconnect: qcom: document the
- interconnects for sa8775p
-Message-ID: <20230126203618.nbqwppaddncq7on7@echanude>
-References: <20230118140825.242544-1-brgl@bgdev.pl>
- <20230118140825.242544-2-brgl@bgdev.pl>
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 5/5] ARM: dts: qcom: msm8974-oneplus-bacon: Add notification LED
+Date:   Thu, 26 Jan 2023 21:41:58 +0100
+Message-ID: <1840339.tdWV9SEqCh@g550jk>
+In-Reply-To: <dbfa802a-968f-0504-a131-59e2a8f52c9f@linaro.org>
+References: <20230122-msm8974-bacon-features-v1-0-4049f565c24c@z3ntu.xyz>
+ <4455893.LvFx2qVVIh@g550jk> <dbfa802a-968f-0504-a131-59e2a8f52c9f@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230118140825.242544-2-brgl@bgdev.pl>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,DKIM_INVALID,
+        DKIM_SIGNED,FROM_SUSPICIOUS_NTLD,SPF_HELO_NONE,SPF_PASS,
+        T_PDS_OTHER_BAD_TLD autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 18, 2023 at 03:08:24PM +0100, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> Add a DT binding document for the RPMh interconnects on Qualcomm sa8775p
-> platforms.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
->  .../interconnect/qcom,sa8775p-rpmh.yaml       |  50 ++++
->  .../interconnect/qcom,sa8775p-rpmh.h          | 231 ++++++++++++++++++
->  2 files changed, 281 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,sa8775p-rpmh.yaml
->  create mode 100644 include/dt-bindings/interconnect/qcom,sa8775p-rpmh.h
-> 
-> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,sa8775p-rpmh.yaml b/Documentation/devicetree/bindings/interconnect/qcom,sa8775p-rpmh.yaml
-> new file mode 100644
-> index 000000000000..672c7aaa8ed7
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/interconnect/qcom,sa8775p-rpmh.yaml
-> @@ -0,0 +1,50 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/interconnect/qcom,sa8775p-rpmh.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm RPMh Network-On-Chip Interconnect on SA8875P
+On Donnerstag, 26. J=E4nner 2023 10:41:24 CET Krzysztof Kozlowski wrote:
+> On 25/01/2023 21:51, Luca Weiss wrote:
+> > On Montag, 23. J=E4nner 2023 18:18:16 CET Krzysztof Kozlowski wrote:
+> >> On 22/01/2023 17:48, Luca Weiss wrote:
+> >>> Add the node describing the sn3193 that's used to provide notification
+> >>> LED.
+> >>>=20
+> >>> Unfortunately the driver currently supports neither multicolor API nor
+> >>> using the properties function & color, so we use label instead.
+> >>>=20
+> >>> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> >>> ---
+> >>>=20
+> >>>  .../arm/boot/dts/qcom-msm8974pro-oneplus-bacon.dts | 28
+> >>>  ++++++++++++++++++++++ 1 file changed, 28 insertions(+)
+> >>>=20
+> >>> diff --git a/arch/arm/boot/dts/qcom-msm8974pro-oneplus-bacon.dts
+> >>> b/arch/arm/boot/dts/qcom-msm8974pro-oneplus-bacon.dts index
+> >>> ffb486ceb6a6..a672c45d7070 100644
+> >>> --- a/arch/arm/boot/dts/qcom-msm8974pro-oneplus-bacon.dts
+> >>> +++ b/arch/arm/boot/dts/qcom-msm8974pro-oneplus-bacon.dts
+> >>> @@ -114,6 +114,34 @@ led@0 {
+> >>>=20
+> >>>  			default-brightness =3D <80>;
+> >>>  	=09
+> >>>  		};
+> >>>  =09
+> >>>  	};
+> >>>=20
+> >>> +
+> >>> +	led-controller@68 {
+> >>> +		compatible =3D "si-en,sn3193";
+> >>> +		reg =3D <0x68>;
+> >>> +
+> >>> +		shutdown-gpios =3D <&tlmm 45 GPIO_ACTIVE_HIGH>;
+> >>> +
+> >>> +		#address-cells =3D <1>;
+> >>> +		#size-cells =3D <0>;
+> >>> +
+> >>> +		led@1 {
+> >>> +			reg =3D <1>;
+> >>> +			label =3D "red:status";
+> >>=20
+> >> These should be colors and functions.
+> >=20
+> > Hi Krzysztof,
+> >=20
+> > please check the commit message for this. I tried using it but it didn't
+> > work, the driver in general might need an overhaul at some point...
+> >=20
+> >> Unfortunately the driver currently supports neither multicolor API nor
+> >> using the properties function & color, so we use label instead.
+> >=20
+> > Or maybe I messed up but pretty sure this was the case when I wrote the
+> > dts.
+> I don't understand how driver is related here - it's not the driver's
+> property, but LED core. If the driver "supports" label, then it supports
+> color and status.
 
-s/SA8875P/SA8775P/
+The leds-is31fl319x.c driver uses devm_led_classdev_register but the functi=
+on=20
+where 'function' and 'color' is parsed is led_parse_fwnode_props which is=20
+called from led_compose_name which is called from led_classdev_register_ext=
+=20
+(or with the devm_ prefix), and not called from the register method without=
+=20
+_ext suffix.
 
--- 
-Eric Chanudet
+So in other words, the led driver would need changes to use the new=20
+registration API to be able to use 'function' and 'color' instead of 'label=
+'.
+
+Regards
+Luca
+
+>=20
+> Best regards,
+> Krzysztof
+
+
+
 
