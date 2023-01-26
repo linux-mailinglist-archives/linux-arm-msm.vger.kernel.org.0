@@ -2,125 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4FC3B67CDBF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 15:23:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A3BCE67CDFA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 15:25:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232027AbjAZOXL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Jan 2023 09:23:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56326 "EHLO
+        id S231889AbjAZOZI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Jan 2023 09:25:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231939AbjAZOXD (ORCPT
+        with ESMTP id S232070AbjAZOYb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Jan 2023 09:23:03 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DAFD241ED;
-        Thu, 26 Jan 2023 06:23:02 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 2055C61843;
-        Thu, 26 Jan 2023 14:23:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82F47C433A1;
-        Thu, 26 Jan 2023 14:23:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1674742981;
-        bh=5UwR9QbyWi/Z/2mgCV5ah8EZM6pifSRECiAKO2qRn28=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=uoAiN7RLIltAF2itdi3Ajs7/6S33o92wkpcy+qExHZNJo+NeZy1wAm5c8lDdbmCj/
-         Y7/do4gY6riMzI6mBqMH8aJB+0YJkh41cyZeWwHMSOPcx8UKe+94GDN8lYf8ivezIT
-         r2LjK+N8Vwj3ko5OVXCN3gXzffaET5/HLEFbqJ6osHexUbhLeDIx9xSYQX5x2AwGb9
-         GOrRVhWZQIQDcuWCr2FbND7cUkG7AWElZKRBsY+ipbZqu94DFtwIpMLi7d3RQrlqhS
-         J05jHWiqLRMKeyPv8PmleXqtaweyzMgdm3b7hMTlHIAig502LNjiSBg4d5JZYGR8U8
-         tbGdCvx76bkow==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1pL39e-0006jI-2J; Thu, 26 Jan 2023 15:23:06 +0100
-From:   Johan Hovold <johan+linaro@kernel.org>
-To:     Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Thu, 26 Jan 2023 09:24:31 -0500
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BAE770D62;
+        Thu, 26 Jan 2023 06:23:47 -0800 (PST)
+Received: by mail-pj1-x1030.google.com with SMTP id m7-20020a17090a71c700b0022c0c070f2eso4703655pjs.4;
+        Thu, 26 Jan 2023 06:23:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=NwoVoQA2ou9ZRpL3U7Nv6BoSj96XgNeTjb66AejG9oo=;
+        b=C7mY4qLZs14JoAswZVkEF5r2W0VbCtBoT8WDTR4NsktGZ2KsL0JQTyyYDzhqGqeMXl
+         CTJFwX6+QXFzQnQNrGrfhEIuvurhS+zkieW2urHA0lEJA5OltK2SCBzcafKxohIhd20Z
+         pRbf5WJuq9Of03ouclf7XM/YdZyarwNVSD1Sy/xyXGD450I/WVDpPCyH9b4vE7vscLUV
+         aIHDbv1/qiyp0frl7XOgmG+2bSKPLlyJZDCdS3IXgkerJNziKNHd1E5+pUDLZDM+EV96
+         XLLBqGKxLd8kAJqcWOce2yCMmJF7Iqn9bmiNMFMtvlUNX1tC/401WHgPlgA+FOS81V8E
+         ujqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NwoVoQA2ou9ZRpL3U7Nv6BoSj96XgNeTjb66AejG9oo=;
+        b=oRsz5tENoCfnQtDkJVjQPuHenVFPBwwOGmJNKV7RWwI7UVzlVuWYTtlIx8DJib/JGI
+         tfhiDnOKnTUhoCGfOcN051obygfBsPaJLIDXnjW43vNLPfzM4ghjXa2jOAZz0pLm57N0
+         N4Mq9ouLWszn3O/bl6NRfdeL2SV8uPX6nV5/hDMiNJJAuBQyi50pupJlLwaXPXfADCDm
+         tljvJRAvIfAh+GtP33JnivusNtkQHNslEsm/HcCeFVygCiRVFf0rsKaYxk8YddeKJtxO
+         JBJ8cDab4YJnMLy2IeHEHm+b8hofN1vAeqGguyly0NyaM06nRLQ3B8j/Jv9jmzDfW9gR
+         fKWQ==
+X-Gm-Message-State: AFqh2kr6bGbzGNp/4PJa27LTtpv7lYjbeHrnYju7r7ajHPoF2krIoLYr
+        gxXegvpXSzWId842NnRW1/g=
+X-Google-Smtp-Source: AMrXdXu1eJSJ4Kajr/piBp62I0tu+/NNq031brXbWC2VMZMEa2QlZId8ebXZgHyk3kNX83hMsvciyg==
+X-Received: by 2002:a17:902:eb44:b0:189:377c:9ab with SMTP id i4-20020a170902eb4400b00189377c09abmr36285630pli.51.1674743024748;
+        Thu, 26 Jan 2023 06:23:44 -0800 (PST)
+Received: from localhost.localdomain (n220246252084.netvigator.com. [220.246.252.84])
+        by smtp.gmail.com with ESMTPSA id c8-20020a170902d48800b001960706141fsm1047268plg.149.2023.01.26.06.23.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Jan 2023 06:23:44 -0800 (PST)
+From:   Jianhua Lu <lujianhua000@gmail.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Alessandro Zummo <a.zummo@towertech.it>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Maximilian Luz <luzmaximilian@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-rtc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 24/24] arm64: dts: qcom: sc8280xp-x13s: enable rtc
-Date:   Thu, 26 Jan 2023 15:20:57 +0100
-Message-Id: <20230126142057.25715-25-johan+linaro@kernel.org>
+        Kees Cook <keescook@chromium.org>,
+        Tony Luck <tony.luck@intel.com>,
+        "Guilherme G . Piccoli" <gpiccoli@igalia.com>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Jianhua Lu <lujianhua000@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v3 1/2] dt-bindings: arm: qcom: Add Xiaomi Mi Pad 5 Pro (xiaomi-elish)
+Date:   Thu, 26 Jan 2023 22:23:33 +0800
+Message-Id: <20230126142334.8080-1-lujianhua000@gmail.com>
 X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230126142057.25715-1-johan+linaro@kernel.org>
-References: <20230126142057.25715-1-johan+linaro@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Lenovo X13s firmware does not implement the UEFI time runtime
-services so the RTC in the PM8280K PMIC needs to be accessed directly.
+Add a compatible for Xiaomi Mi Pad 5 Pro.
 
-To complicate things further, the RTC control and time registers are
-read-only on this platform so an offset must be stored in some other
-machine-specific non-volatile memory which an RTC driver can take into
-account when reading or updating the time.
-
-The UEFI firmware (and Windows) use a UEFI variable for this:
-
-	882f8c2b-9646-435f-8de5-f208ff80c1bd-RTCInfo
-
-but the offset can only be accessed via the Qualcomm UEFI Secure
-Application residing in the TEE as the firmware does not implement the
-variable runtime services either.
-
-While it is possible to access this UEFI variable from Linux on the
-X13s, this requires using a fairly complex and reverse-engineered
-firmware interface. As the only benefit of doing so is to make sure that
-the UEFI (Windows) and Linux time never gets out of sync, it seems
-preferable to use the PMIC scratch registers for storing an offset
-instead. This also avoids flash wear in case of RTC drift, etc.
-
-So instead of using the UEFI RTC offset, reserve four bytes in one of
-the PMIC SDAM blocks to hold the RTC offset.
-
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- .../dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+Changes in v3:
+  - Pick up Krzysztof's A-b
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-index db406f7774de..6e88e0bb6871 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -683,6 +683,21 @@ &pmk8280_pon_resin {
- 	status = "okay";
- };
+Changes in v2:
+  - Move compatible "xiaomi-elish" down.
+
+ Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index 22553637c519..398ff26e6e0e 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -875,6 +875,7 @@ properties:
+               - qcom,sm8250-mtp
+               - sony,pdx203-generic
+               - sony,pdx206-generic
++              - xiaomi,elish
+           - const: qcom,sm8250
  
-+&pmk8280_rtc {
-+	nvmem-cells = <&rtc_offset>;
-+	nvmem-cell-names = "offset";
-+
-+	status = "okay";
-+};
-+
-+&pmk8280_sdam_6 {
-+	status = "okay";
-+
-+	rtc_offset: rtc-offset@bc {
-+		reg = <0xbc 0x4>;
-+	};
-+};
-+
- &pmk8280_vadc {
- 	status = "okay";
- 
+       - items:
 -- 
 2.39.1
 
