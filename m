@@ -2,163 +2,200 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A1EF067CEE2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 15:51:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E64667CF13
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 16:00:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232305AbjAZOvw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Jan 2023 09:51:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57414 "EHLO
+        id S231640AbjAZPAh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Jan 2023 10:00:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232029AbjAZOvt (ORCPT
+        with ESMTP id S229452AbjAZPAh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Jan 2023 09:51:49 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92C7A23862;
-        Thu, 26 Jan 2023 06:51:48 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 5798A61842;
-        Thu, 26 Jan 2023 14:51:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3695EC433EF;
-        Thu, 26 Jan 2023 14:51:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1674744706;
-        bh=vTtNm5B4uxkFGkyUcD6bt7bUv740cC5zoLQ3n4iCXig=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=r54XDevqCxaIthjhpV90e/3PReNDit6CxkjYziBMldcr+DpwGPcGH7s0yFhPlYu8B
-         NohDoJ7KVIUCX5Zs7V0ydKB7t9XQRchAYOCR8XLnEbVPCZ8e7MIHv0UEcp73VODAq8
-         aFhcsGcrVCc28IZRly/gODnl3cguu4R9trJCc4u2GtQ9ygUwR4IFSGftEKj188geBR
-         3987kGANtDLWA/GzBI6W69E/F450ClXU14kAngo3y+A1wCivQR2InkOef4HeCwIwVj
-         QYEspA95Wv7WS3mfCUr9QMGnsDd2HsZvTUBOWl52ZSZiQBqHvpwy1Yy3PsmXixNWVQ
-         B28KDvwGClVRQ==
-Date:   Thu, 26 Jan 2023 16:50:59 +0200
-From:   Mike Rapoport <rppt@kernel.org>
-To:     Suren Baghdasaryan <surenb@google.com>
-Cc:     akpm@linux-foundation.org, michel@lespinasse.org,
-        jglisse@google.com, mhocko@suse.com, vbabka@suse.cz,
-        hannes@cmpxchg.org, mgorman@techsingularity.net, dave@stgolabs.net,
-        willy@infradead.org, liam.howlett@oracle.com, peterz@infradead.org,
-        ldufour@linux.ibm.com, paulmck@kernel.org, luto@kernel.org,
-        songliubraving@fb.com, peterx@redhat.com, david@redhat.com,
-        dhowells@redhat.com, hughd@google.com, bigeasy@linutronix.de,
-        kent.overstreet@linux.dev, punit.agrawal@bytedance.com,
-        lstoakes@gmail.com, peterjung1337@gmail.com, rientjes@google.com,
-        axelrasmussen@google.com, joelaf@google.com, minchan@google.com,
-        jannh@google.com, shakeelb@google.com, tatashin@google.com,
-        edumazet@google.com, gthelen@google.com, gurua@google.com,
-        arjunroy@google.com, soheil@google.com, hughlynch@google.com,
-        leewalsh@google.com, posk@google.com, will@kernel.org,
-        aneesh.kumar@linux.ibm.com, npiggin@gmail.com,
-        chenhuacai@kernel.org, tglx@linutronix.de, mingo@redhat.com,
-        bp@alien8.de, dave.hansen@linux.intel.com, richard@nod.at,
-        anton.ivanov@cambridgegreys.com, johannes@sipsolutions.net,
-        qianweili@huawei.com, wangzhou1@hisilicon.com,
-        herbert@gondor.apana.org.au, davem@davemloft.net, vkoul@kernel.org,
-        airlied@gmail.com, daniel@ffwll.ch,
-        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        tzimmermann@suse.de, l.stach@pengutronix.de,
-        krzysztof.kozlowski@linaro.org, patrik.r.jakobsson@gmail.com,
-        matthias.bgg@gmail.com, robdclark@gmail.com,
-        quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
-        tomba@kernel.org, hjc@rock-chips.com, heiko@sntech.de,
-        ray.huang@amd.com, kraxel@redhat.com, sre@kernel.org,
-        mcoquelin.stm32@gmail.com, alexandre.torgue@foss.st.com,
-        tfiga@chromium.org, m.szyprowski@samsung.com, mchehab@kernel.org,
-        dimitri.sivanich@hpe.com, zhangfei.gao@linaro.org,
-        jejb@linux.ibm.com, martin.petersen@oracle.com,
-        dgilbert@interlog.com, hdegoede@redhat.com, mst@redhat.com,
-        jasowang@redhat.com, alex.williamson@redhat.com, deller@gmx.de,
-        jayalk@intworks.biz, viro@zeniv.linux.org.uk, nico@fluxnic.net,
-        xiang@kernel.org, chao@kernel.org, tytso@mit.edu,
-        adilger.kernel@dilger.ca, miklos@szeredi.hu,
-        mike.kravetz@oracle.com, muchun.song@linux.dev, bhe@redhat.com,
-        andrii@kernel.org, yoshfuji@linux-ipv6.org, dsahern@kernel.org,
-        kuba@kernel.org, pabeni@redhat.com, perex@perex.cz, tiwai@suse.com,
-        haojian.zhuang@gmail.com, robert.jarzmik@free.fr,
-        linux-mm@kvack.org, linux-arm-kernel@lists.infradead.org,
-        linuxppc-dev@lists.ozlabs.org, x86@kernel.org,
-        linux-kernel@vger.kernel.org, linux-graphics-maintainer@vmware.com,
-        linux-ia64@vger.kernel.org, linux-arch@vger.kernel.org,
-        loongarch@lists.linux.dev, kvm@vger.kernel.org,
-        linux-s390@vger.kernel.org, linux-sgx@vger.kernel.org,
-        linux-um@lists.infradead.org, linux-acpi@vger.kernel.org,
-        linux-crypto@vger.kernel.org, nvdimm@lists.linux.dev,
-        dmaengine@vger.kernel.org, amd-gfx@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, etnaviv@lists.freedesktop.org,
-        linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org,
-        linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        xen-devel@lists.xenproject.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-rdma@vger.kernel.org, linux-media@vger.kernel.org,
-        linux-accelerators@lists.ozlabs.org, sparclinux@vger.kernel.org,
-        linux-scsi@vger.kernel.org, linux-staging@lists.linux.dev,
-        target-devel@vger.kernel.org, linux-usb@vger.kernel.org,
-        netdev@vger.kernel.org, linux-fbdev@vger.kernel.org,
-        linux-aio@kvack.org, linux-fsdevel@vger.kernel.org,
-        linux-erofs@lists.ozlabs.org, linux-ext4@vger.kernel.org,
-        devel@lists.orangefs.org, kexec@lists.infradead.org,
-        linux-xfs@vger.kernel.org, bpf@vger.kernel.org,
-        linux-perf-users@vger.kernel.org, kasan-dev@googlegroups.com,
-        selinux@vger.kernel.org, alsa-devel@alsa-project.org,
-        kernel-team@android.com
-Subject: Re: [PATCH v2 1/6] mm: introduce vma->vm_flags modifier functions
-Message-ID: <Y9KTUw/04FmBVplw@kernel.org>
-References: <20230125083851.27759-1-surenb@google.com>
- <20230125083851.27759-2-surenb@google.com>
- <Y9JFFYjfJf9uDijE@kernel.org>
+        Thu, 26 Jan 2023 10:00:37 -0500
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D972E62249;
+        Thu, 26 Jan 2023 07:00:35 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id fl11-20020a05600c0b8b00b003daf72fc844so3431724wmb.0;
+        Thu, 26 Jan 2023 07:00:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=76nzNYcvbX35QXLbvfMyhTGZcru6UNYtBlqgYDNzIKU=;
+        b=N9eBWIh7rqM6gnde5S1TbQc2zp+jgfMsAJHG9aj2RmehPIUPOPvKhM1SYVoIJktWd7
+         nD1KAAKL1GVBEAQlbydNgyu4fd7GB2bAl9CO6fiZIvtFByhJPIzYRrYdiPTqCVKojz9h
+         D9mFRJd0biyyi4CVeuK7O7xGfKKgL9XICuKQflqsP5IG4VH3DsYvZdjYlW6aQHEk2kEo
+         aPCKi3/tyIYonUqvfDwACEhXSHu+VQUY9wyahSgQnC2hkXjawhkm0hzR8WRwvfS1V8+T
+         STSQd2cxPFlLMVLurRSZmINmkmJrNjSyySZNOFLMMyjS+ePEriM3G8hE/7cFE106R7AQ
+         nupg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=76nzNYcvbX35QXLbvfMyhTGZcru6UNYtBlqgYDNzIKU=;
+        b=HeUJWuczMXV6fVdEdGd+jDxb90g/8f0cSPuWf4tviDX5BfXIZopYJN6QkVicb3se37
+         KcBOb5h8lxdkhrkbeAvpxalbu52NzgGjrHVdmjRZ230tHNRcqTc4muar/u3/a2hPW4vK
+         MwmhQ/TvQXNDKeWN4uu+f4xxZQoYtpCRBHQamTh78VVfJbrncRkSHb6f/rdat8XALydD
+         hpEUC9hRT5wRocbcmRMj2Rr03QNBOkXCmCez3sxbYu0kP3oxjMvneK5YoRzCJHiggJHL
+         uE9jmjQcQSy+U17bzDKU5jESxEKKL8bK9RYbd4yGwCIq2dYS+DdGbxFPxob9aFO9sIJL
+         K8bA==
+X-Gm-Message-State: AFqh2krG3eN+bts1u9FbDHE2OptCJxOwUHmDMqbfLLvF44fX3YFCTfhP
+        AOsEuVypmCD96iw7lv4xDZw=
+X-Google-Smtp-Source: AMrXdXu1y7wrhu8v4ShNof4x6zjjXZT2iGTtyUsMx7I+9W7zX2+dTs+tawjrVWzfoGwAr+9/rG/zPw==
+X-Received: by 2002:a05:600c:6006:b0:3db:21b8:5f58 with SMTP id az6-20020a05600c600600b003db21b85f58mr28431843wmb.2.1674745234130;
+        Thu, 26 Jan 2023 07:00:34 -0800 (PST)
+Received: from localhost.localdomain (93-34-89-61.ip49.fastwebnet.it. [93.34.89.61])
+        by smtp.googlemail.com with ESMTPSA id g12-20020a05600c310c00b003db012d49b7sm11353115wmo.2.2023.01.26.07.00.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Jan 2023 07:00:33 -0800 (PST)
+From:   Christian Marangi <ansuelsmth@gmail.com>
+To:     Ilia Lin <ilia.lin@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>,
+        Yassine Oudjana <y.oudjana@protonmail.com>,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Christian Marangi <ansuelsmth@gmail.com>
+Subject: [PATCH v4 1/3] dt-bindings: cpufreq: qcom-cpufreq-nvmem: make cpr bindings optional
+Date:   Thu, 26 Jan 2023 16:00:24 +0100
+Message-Id: <20230126150026.14590-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y9JFFYjfJf9uDijE@kernel.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 26, 2023 at 11:17:09AM +0200, Mike Rapoport wrote:
-> On Wed, Jan 25, 2023 at 12:38:46AM -0800, Suren Baghdasaryan wrote:
-> > vm_flags are among VMA attributes which affect decisions like VMA merging
-> > and splitting. Therefore all vm_flags modifications are performed after
-> > taking exclusive mmap_lock to prevent vm_flags updates racing with such
-> > operations. Introduce modifier functions for vm_flags to be used whenever
-> > flags are updated. This way we can better check and control correct
-> > locking behavior during these updates.
-> > 
-> > Signed-off-by: Suren Baghdasaryan <surenb@google.com>
-> > ---
-> >  include/linux/mm.h       | 37 +++++++++++++++++++++++++++++++++++++
-> >  include/linux/mm_types.h |  8 +++++++-
-> >  2 files changed, 44 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/include/linux/mm.h b/include/linux/mm.h
-> > index c2f62bdce134..b71f2809caac 100644
-> > --- a/include/linux/mm.h
-> > +++ b/include/linux/mm.h
-> > @@ -627,6 +627,43 @@ static inline void vma_init(struct vm_area_struct *vma, struct mm_struct *mm)
-> >  	INIT_LIST_HEAD(&vma->anon_vma_chain);
-> >  }
-> >  
-> > +/* Use when VMA is not part of the VMA tree and needs no locking */
-> > +static inline void init_vm_flags(struct vm_area_struct *vma,
-> > +				 unsigned long flags)
-> 
-> I'd suggest to make it vm_flags_init() etc.
+The qcom-cpufreq-nvmem driver supports 2 kind of devices:
+- pre-cpr that doesn't have power-domains and base everything on nvmem
+  cells and multiple named microvolt bindings.
+  Doesn't need required-opp binding in the opp nodes as they are only
+  used for genpd based devices.
+- cpr-based that require power-domain in the cpu nodes and use various
+  source to decide the correct voltage and freq
+  Require required-opp binding since they need to be linked to the
+  related opp-level.
 
-Thinking more about it, it will be even clearer to name these vma_flags_xyz()
+When the schema was introduced, it was wrongly set to always require these
+binding but this is not the case for pre-cpr devices.
 
-> Except that
-> 
-> Acked-by: Mike Rapoport (IBM) <rppt@kernel.org>
-> 
+Make the power-domain and the required-opp optional and set them required
+only for qcs404 based devices.
 
---
-Sincerely yours,
-Mike.
+Fixes: ec24d1d55469 ("dt-bindings: opp: Convert qcom-nvmem-cpufreq to DT schema")
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+---
+Changes v4:
+- Explain why required-opp needs to be conditional
+- Split additional ref part
+Changesv3:
+- No change
+Changes v2:
+- Reword commit description
+- Fix condition order
+- Add allOf
+
+ .../bindings/cpufreq/qcom-cpufreq-nvmem.yaml  | 62 +++++++++++--------
+ 1 file changed, 37 insertions(+), 25 deletions(-)
+
+diff --git a/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml b/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
+index 9c086eac6ca7..89e99a198281 100644
+--- a/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
++++ b/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
+@@ -17,6 +17,9 @@ description: |
+   on the CPU OPP in use. The CPUFreq driver sets the CPR power domain level
+   according to the required OPPs defined in the CPU OPP tables.
+ 
++  For old implementation efuses are parsed to select the correct opp table and
++  voltage and CPR is not supported/used.
++
+ select:
+   properties:
+     compatible:
+@@ -33,37 +36,46 @@ select:
+   required:
+     - compatible
+ 
+-properties:
+-  cpus:
+-    type: object
++allOf:
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,qcs404
+ 
+-    patternProperties:
+-      '^cpu@[0-9a-f]+$':
+-        type: object
++    then:
++      properties:
++        cpus:
++          type: object
+ 
+-        properties:
+-          power-domains:
+-            maxItems: 1
++          patternProperties:
++            '^cpu@[0-9a-f]+$':
++              type: object
+ 
+-          power-domain-names:
+-            items:
+-              - const: cpr
++              properties:
++                power-domains:
++                  maxItems: 1
+ 
+-        required:
+-          - power-domains
+-          - power-domain-names
++                power-domain-names:
++                  items:
++                    - const: cpr
++
++              required:
++                - power-domains
++                - power-domain-names
+ 
+-patternProperties:
+-  '^opp-table(-[a-z0-9]+)?$':
+-    if:
+-      properties:
+-        compatible:
+-          const: operating-points-v2-kryo-cpu
+-    then:
+       patternProperties:
+-        '^opp-?[0-9]+$':
+-          required:
+-            - required-opps
++        '^opp-table(-[a-z0-9]+)?$':
++          if:
++            properties:
++              compatible:
++                const: operating-points-v2-kryo-cpu
++          then:
++            patternProperties:
++              '^opp-?[0-9]+$':
++                required:
++                  - required-opps
+ 
+ additionalProperties: true
+ 
+-- 
+2.38.1
+
