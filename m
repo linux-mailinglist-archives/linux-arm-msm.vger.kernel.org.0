@@ -2,82 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A6C0667D999
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 00:29:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D6D467D99D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 00:33:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230271AbjAZX3W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Jan 2023 18:29:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43876 "EHLO
+        id S232339AbjAZXc7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Jan 2023 18:32:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229756AbjAZX3V (ORCPT
+        with ESMTP id S229502AbjAZXc7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Jan 2023 18:29:21 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A71036474
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 15:29:20 -0800 (PST)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30QKj4iK018289;
-        Thu, 26 Jan 2023 23:29:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=bC8GfZc8JCE+o+WvlB/q5mcAgqu51EkjuzZaVa3E7DI=;
- b=Ohs25HK0Q6uUz/Jv7clsFrzHFz3qn5grjX1dAj9POGvpXJdOPFeBT9Lrsl67xpwuJ1Dj
- GGlW6AX/cnlWUXz0+XfZhaHH1X9RMAsGonO7npnxxHVIG9r4d1bvyJGBmMNdwZ1enBb0
- EeFEeXbrcAoBicBff33j0bj8SKalGFXctvOPnj+zhGNiKyf6kiEXwqNhUMYn6JOCTG0Y
- c1CZsvA8Y+mgxh2wVd9fJeZAc0MiBSKBa4WIXgzroAP2ZHFynNeaGufhBnSSu/iihcX8
- FP7zGs4ZRWB1OOVYUzFQADUZ2n5Zl03n5ttcb0oV8c+pNXxQrkQrD7U7jLSLjDb5y0CT cQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nbyma0bex-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 26 Jan 2023 23:29:13 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30QNTCvB006564
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 26 Jan 2023 23:29:12 GMT
-Received: from [10.110.33.211] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Thu, 26 Jan
- 2023 15:29:11 -0800
-Message-ID: <b72dabe3-4de2-7d9a-1fca-01edfc588529@quicinc.com>
-Date:   Thu, 26 Jan 2023 15:29:11 -0800
+        Thu, 26 Jan 2023 18:32:59 -0500
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1CCCFF3E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 15:32:56 -0800 (PST)
+Received: by mail-ej1-x631.google.com with SMTP id me3so9372856ejb.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 15:32:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OKgZ/poIpGJWM5cLb9CWvinBk87AHczhWKzm6hX+O4w=;
+        b=dMVT3Kg5WjyArEpQyZrvnzWzkhYZ1aYLhuMyDlRgsKcQFpP/Hmqf9V7eL5/b5ZRihG
+         xFttLd8LqSHZzVb/SbYUy891SlnB1s8C6Z6oH3FBWbc5vHzT2Tr3jDtWNywru16qf1OI
+         YU2keEklZjd2ZuS96E4FVMQtGp6fthxunCpU3+kb1N7mZg6jE5czDLzMdVFPp7hI0eTs
+         zdviiuS9o/SYdsyf8vFh/+KQsRrYWGjx/hkGSnkuwXv6Z26ccuTBI4ZaFRMq5h0A5czb
+         hMuYEhh+mT9Z0T8Bv1W8EV5aH5LT1aZ4f0EpQx8zIbtlRCbdWMVlT2YhP0xI3uyiQT+N
+         YXCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OKgZ/poIpGJWM5cLb9CWvinBk87AHczhWKzm6hX+O4w=;
+        b=oIOqWFUYadVAzETUK6jSwal7bPDBtnQmWAKO4c10Vpp3k5jvt5GtN8xWHrRIxCxXaa
+         5rO/nzD6yGc53T4ZCCCQED4V6MASzKZN8Gz+ZEaeiHnjSO6+DTDSnZnjBJp4wo1GS4rr
+         LYNxn4PByDqxZnwNN84fwTJBnrMU0tA8x21qS7yGC1QNo3I1A91D7qyXbAz02YZhS5aN
+         PI7He2JoxgDnRi4MlrGpRWSNlTW74VoWhLW92WfWjfpNuCYPlD+5hFjizvWOyuoo8233
+         zE4+KxhSx2yrqfPo42GgLxvON2hsCQ1UXS/epc/s+vz5ARPbOmJ6c726v6hxyDpfWLNV
+         ub0g==
+X-Gm-Message-State: AFqh2koaK/+Kuyq63uAPPFtaHg93MDrgoVYCFexpoj9O2CgQA4PS5BDn
+        bSFtQ+HBmcBq/TGUhYxx/S/qGA==
+X-Google-Smtp-Source: AMrXdXtgqXraXM/O+xAGX7e9lH6r1vl84rwFRa03KZYcGerC4TryIqmA2oyYApcBe/Xt70ZG3nsPtg==
+X-Received: by 2002:a17:906:150d:b0:7c1:458b:a947 with SMTP id b13-20020a170906150d00b007c1458ba947mr37761802ejd.26.1674775974968;
+        Thu, 26 Jan 2023 15:32:54 -0800 (PST)
+Received: from [192.168.1.101] (abyl20.neoplus.adsl.tpnet.pl. [83.9.31.20])
+        by smtp.gmail.com with ESMTPSA id lf16-20020a170907175000b008787134a939sm1212371ejc.18.2023.01.26.15.32.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 26 Jan 2023 15:32:54 -0800 (PST)
+Message-ID: <96ab46f1-3733-e11c-ee4e-a70096fd400f@linaro.org>
+Date:   Fri, 27 Jan 2023 00:32:52 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v2 03/27] drm/msm/dpu: move SSPP allocation to the RM
-Content-Language: en-US
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH v5 7/7] clk: qcom: add the driver for the MSM8996 APCS
+ clocks
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20221229191856.3508092-1-dmitry.baryshkov@linaro.org>
- <20221229191856.3508092-4-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20221229191856.3508092-4-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Jassi Brar <jassisinghbrar@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230126230319.3977109-1-dmitry.baryshkov@linaro.org>
+ <20230126230319.3977109-8-dmitry.baryshkov@linaro.org>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230126230319.3977109-8-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: XsX4Tq1qRfFgfDaAxJd38BDRZSturfXT
-X-Proofpoint-GUID: XsX4Tq1qRfFgfDaAxJd38BDRZSturfXT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-26_09,2023-01-26_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 mlxscore=0 bulkscore=0 spamscore=0 clxscore=1015
- impostorscore=0 lowpriorityscore=0 phishscore=0 suspectscore=0
- mlxlogscore=977 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2212070000 definitions=main-2301260218
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -86,156 +86,129 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 12/29/2022 11:18 AM, Dmitry Baryshkov wrote:
-> Follow the example of all other hw blocks and initialize SSPP blocks in
-> Resource Manager.
+On 27.01.2023 00:03, Dmitry Baryshkov wrote:
+> Add a simple driver handling the APCS clocks on MSM8996. For now it
+> supports just a single aux clock, linking GPLL0 to CPU and CBF clocks.
+> 
+> Note, there is little sense in registering sys_apcs_aux as a child of
+> gpll0. The PLL is always-on. And listing the gpll0 as a property of the
+> apcs would delay its probing until the GCC has been probed (while we
+> would like for the apcs to be probed as early as possible).
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 17 ++++-------------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c    | 22 ++++++++++++++++++++++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h    | 12 ++++++++++++
->   3 files changed, 38 insertions(+), 13 deletions(-)
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Konrad
+>  drivers/clk/qcom/Makefile       |  2 +-
+>  drivers/clk/qcom/apcs-msm8996.c | 88 +++++++++++++++++++++++++++++++++
+>  2 files changed, 89 insertions(+), 1 deletion(-)
+>  create mode 100644 drivers/clk/qcom/apcs-msm8996.c
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index e1cdd71716f0..e443799de2c1 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -1275,8 +1275,6 @@ static void dpu_plane_destroy(struct drm_plane *plane)
->   		/* this will destroy the states as well */
->   		drm_plane_cleanup(plane);
->   
-> -		dpu_hw_sspp_destroy(pdpu->pipe_hw);
-> -
-We removed from here so the flow will be msm_drm_uninit calls 
-drm_mode_config_cleanup() which will call kms->destroy() which shall 
-call dpu_rm_destroy() where this will be released now right?
-
-
->   		kfree(pdpu);
->   	}
->   }
-> @@ -1482,14 +1480,10 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
->   	pdpu->pipe = pipe;
->   
->   	/* initialize underlying h/w driver */
-> -	pdpu->pipe_hw = dpu_hw_sspp_init(pipe, kms->mmio, kms->catalog);
-> -	if (IS_ERR(pdpu->pipe_hw)) {
-> -		DPU_ERROR("[%u]SSPP init failed\n", pipe);
-> -		ret = PTR_ERR(pdpu->pipe_hw);
-> +	pdpu->pipe_hw = dpu_rm_get_sspp(&kms->rm, pipe);
-> +	if (!pdpu->pipe_hw || !pdpu->pipe_hw->cap || !pdpu->pipe_hw->cap->sblk) {
-> +		DPU_ERROR("[%u]SSPP is invalid\n", pipe);
-
-I know this was existing code but can there be a case where pipe_hw->cap 
-exists but pipe_hw->cap->sblk doesnt?
-
->   		goto clean_plane;
-> -	} else if (!pdpu->pipe_hw->cap || !pdpu->pipe_hw->cap->sblk) {
-> -		DPU_ERROR("[%u]SSPP init returned invalid cfg\n", pipe);
-> -		goto clean_sspp;
->   	}
->   
->   	format_list = pdpu->pipe_hw->cap->sblk->format_list;
-> @@ -1499,7 +1493,7 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
->   				format_list, num_formats,
->   				supported_format_modifiers, type, NULL);
->   	if (ret)
-> -		goto clean_sspp;
-> +		goto clean_plane;
->   
->   	pdpu->catalog = kms->catalog;
->   
-> @@ -1532,9 +1526,6 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
->   					pipe, plane->base.id);
->   	return plane;
->   
-> -clean_sspp:
-> -	if (pdpu && pdpu->pipe_hw)
-> -		dpu_hw_sspp_destroy(pdpu->pipe_hw);
->   clean_plane:
->   	kfree(pdpu);
->   	return ERR_PTR(ret);
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> index 73b3442e7467..0668009cc9ed 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> @@ -8,6 +8,7 @@
->   #include "dpu_hw_lm.h"
->   #include "dpu_hw_ctl.h"
->   #include "dpu_hw_pingpong.h"
-> +#include "dpu_hw_sspp.h"
->   #include "dpu_hw_intf.h"
->   #include "dpu_hw_wb.h"
->   #include "dpu_hw_dspp.h"
-> @@ -91,6 +92,9 @@ int dpu_rm_destroy(struct dpu_rm *rm)
->   	for (i = 0; i < ARRAY_SIZE(rm->hw_wb); i++)
->   		dpu_hw_wb_destroy(rm->hw_wb[i]);
->   
-> +	for (i = 0; i < ARRAY_SIZE(rm->hw_sspp); i++)
-> +		dpu_hw_sspp_destroy(rm->hw_sspp[i]);
+> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
+> index 3194465dd02c..a8ed1f38b2f7 100644
+> --- a/drivers/clk/qcom/Makefile
+> +++ b/drivers/clk/qcom/Makefile
+> @@ -52,7 +52,7 @@ obj-$(CONFIG_MSM_MMCC_8998) += mmcc-msm8998.o
+>  obj-$(CONFIG_QCOM_A53PLL) += a53-pll.o
+>  obj-$(CONFIG_QCOM_A7PLL) += a7-pll.o
+>  obj-$(CONFIG_QCOM_CLK_APCS_MSM8916) += apcs-msm8916.o
+> -obj-$(CONFIG_QCOM_CLK_APCC_MSM8996) += clk-cpu-8996.o
+> +obj-$(CONFIG_QCOM_CLK_APCC_MSM8996) += apcs-msm8996.o clk-cpu-8996.o
+>  obj-$(CONFIG_QCOM_CLK_APCS_SDX55) += apcs-sdx55.o
+>  obj-$(CONFIG_QCOM_CLK_RPM) += clk-rpm.o
+>  obj-$(CONFIG_QCOM_CLK_RPMH) += clk-rpmh.o
+> diff --git a/drivers/clk/qcom/apcs-msm8996.c b/drivers/clk/qcom/apcs-msm8996.c
+> new file mode 100644
+> index 000000000000..48d22572b6ae
+> --- /dev/null
+> +++ b/drivers/clk/qcom/apcs-msm8996.c
+> @@ -0,0 +1,88 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Qualcomm APCS clock controller driver
+> + *
+> + * Copyright (c) 2022, Linaro Limited
+> + * Author: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> + */
 > +
->   	return 0;
->   }
->   
-> @@ -255,6 +259,24 @@ int dpu_rm_init(struct dpu_rm *rm,
->   		rm->dsc_blks[dsc->id - DSC_0] = &hw->base;
->   	}
->   
-> +	for (i = 0; i < cat->sspp_count; i++) {
-> +		struct dpu_hw_sspp *hw;
-> +		const struct dpu_sspp_cfg *sspp = &cat->sspp[i];
+> +#include <linux/bits.h>
+> +#include <linux/clk-provider.h>
+> +#include <linux/delay.h>
+> +#include <linux/module.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/regmap.h>
 > +
-> +		if (sspp->id < SSPP_NONE || sspp->id >= SSPP_MAX) {
-> +			DPU_ERROR("skip intf %d with invalid id\n", sspp->id);
-> +			continue;
-> +		}
+> +#define APCS_AUX_OFFSET	0x50
 > +
-> +		hw = dpu_hw_sspp_init(sspp->id, mmio, cat);
-> +		if (IS_ERR(hw)) {
-> +			rc = PTR_ERR(hw);
-> +			DPU_ERROR("failed sspp object creation: err %d\n", rc);
-> +			goto fail;
-> +		}
-> +		rm->hw_sspp[sspp->id - SSPP_NONE] = hw;
+> +#define APCS_AUX_DIV_MASK GENMASK(17, 16)
+> +#define APCS_AUX_DIV_2 0x1
+> +
+> +static int qcom_apcs_msm8996_clk_probe(struct platform_device *pdev)
+> +{
+> +	struct device *dev = &pdev->dev;
+> +	struct device *parent = dev->parent;
+> +	struct regmap *regmap;
+> +	struct clk_hw *hw;
+> +	unsigned int val;
+> +	int ret = -ENODEV;
+> +
+> +	regmap = dev_get_regmap(parent, NULL);
+> +	if (!regmap) {
+> +		dev_err(dev, "failed to get regmap: %d\n", ret);
+> +		return ret;
 > +	}
 > +
->   	return 0;
->   
->   fail:
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-> index 59de72b381f9..d62c2edb2460 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-> @@ -21,6 +21,7 @@ struct dpu_global_state;
->    * @hw_intf: array of intf hardware resources
->    * @hw_wb: array of wb hardware resources
->    * @dspp_blks: array of dspp hardware resources
-> + * @hw_sspp: array of sspp hardware resources
->    */
->   struct dpu_rm {
->   	struct dpu_hw_blk *pingpong_blks[PINGPONG_MAX - PINGPONG_0];
-> @@ -31,6 +32,7 @@ struct dpu_rm {
->   	struct dpu_hw_blk *dspp_blks[DSPP_MAX - DSPP_0];
->   	struct dpu_hw_blk *merge_3d_blks[MERGE_3D_MAX - MERGE_3D_0];
->   	struct dpu_hw_blk *dsc_blks[DSC_MAX - DSC_0];
-> +	struct dpu_hw_sspp *hw_sspp[SSPP_MAX - SSPP_NONE];
->   };
->   
->   /**
-> @@ -108,5 +110,15 @@ static inline struct dpu_hw_wb *dpu_rm_get_wb(struct dpu_rm *rm, enum dpu_wb wb_
->   	return rm->hw_wb[wb_idx - WB_0];
->   }
->   
-> +/**
-> + * dpu_rm_get_sspp - Return a struct dpu_hw_sspp instance given it's index.
-> + * @rm: DPU Resource Manager handle
-> + * @sspp_idx: SSPP index
-> + */
-> +static inline struct dpu_hw_sspp *dpu_rm_get_sspp(struct dpu_rm *rm, enum dpu_sspp sspp_idx)
-> +{
-> +	return rm->hw_sspp[sspp_idx - SSPP_NONE];
+> +	regmap_read(regmap, APCS_AUX_OFFSET, &val);
+> +	regmap_update_bits(regmap, APCS_AUX_OFFSET, APCS_AUX_DIV_MASK,
+> +			   FIELD_PREP(APCS_AUX_DIV_MASK, APCS_AUX_DIV_2));
+> +
+> +	/*
+> +	 * This clock is used during CPU cluster setup while setting up CPU PLLs.
+> +	 * Add hardware mandated delay to make sure that the sys_apcs_aux clock
+> +	 * is stable (after setting the divider) before continuing
+> +	 * bootstrapping to keep CPUs from ending up in a weird state.
+> +	 */
+> +	udelay(5);
+> +
+> +	/*
+> +	 * As this clocks is a parent of the CPU cluster clocks and is actually
+> +	 * used as a parent during CPU clocks setup, we want for it to gegister
+> +	 * as early as possible, without letting fw_devlink to delay probing of
+> +	 * either of the drivers.
+> +	 *
+> +	 * The sys_apcs_aux is a child (divider) of gpll0, but we register it
+> +	 * as a fixed rate clock instead to ease bootstrapping procedure. By
+> +	 * doing this we make sure that CPU cluster clocks are able to be setup
+> +	 * early during the boot process (as it is recommended by Qualcomm).
+> +	 */
+> +	hw = devm_clk_hw_register_fixed_rate(dev, "sys_apcs_aux", NULL, 0, 300000000);
+> +	if (IS_ERR(hw))
+> +		return PTR_ERR(hw);
+> +
+> +	return devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get, hw);
 > +}
 > +
->   #endif /* __DPU_RM_H__ */
->   
+> +static struct platform_driver qcom_apcs_msm8996_clk_driver = {
+> +	.probe = qcom_apcs_msm8996_clk_probe,
+> +	.driver = {
+> +		.name = "qcom-apcs-msm8996-clk",
+> +	},
+> +};
+> +
+> +/* Register early enough to fix the clock to be used for other cores */
+> +static int __init qcom_apcs_msm8996_clk_init(void)
+> +{
+> +	return platform_driver_register(&qcom_apcs_msm8996_clk_driver);
+> +}
+> +postcore_initcall(qcom_apcs_msm8996_clk_init);
+> +
+> +static void __exit qcom_apcs_msm8996_clk_exit(void)
+> +{
+> +	platform_driver_unregister(&qcom_apcs_msm8996_clk_driver);
+> +}
+> +module_exit(qcom_apcs_msm8996_clk_exit);
+> +
+> +MODULE_AUTHOR("Dmitry Baryshkov <dmitry.baryshkov@linaro.org>");
+> +MODULE_LICENSE("GPL");
+> +MODULE_DESCRIPTION("Qualcomm MSM8996 APCS clock driver");
