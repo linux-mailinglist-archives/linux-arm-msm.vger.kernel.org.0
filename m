@@ -2,153 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1842267D8D3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 23:52:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3101267D8E6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Jan 2023 23:55:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231691AbjAZWv6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Jan 2023 17:51:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50478 "EHLO
+        id S233225AbjAZWz4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Jan 2023 17:55:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229510AbjAZWv5 (ORCPT
+        with ESMTP id S233076AbjAZWzt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Jan 2023 17:51:57 -0500
-Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 870B047ED3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 14:51:56 -0800 (PST)
-Received: by mail-il1-x134.google.com with SMTP id p12so1424662ilq.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 14:51:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=uo4DJ1lMHTQjHl0PyGseokoZraJeV8jwhzCuVW5LRgY=;
-        b=BzaQCkIizxh8plvJG7iydcbwTBB2KmS90zskK8PMkXY+40JZpDWrHFSmX1FvFS8AQq
-         gZW5s9WXuFdHxOnB7dPDwIFBKJpKWAFpm/WPOK1/u4buJPzzYAJK6PNfV6Sw31SOTnwC
-         4F5j8ycoLc2Z7lQo4j0wZgglXF8dtgjNYd99AGLhkPmuFKo3cA4rhOulWrt6Nz+ZO1CH
-         iXlBrWfIY+zg1YY8FeHxA6GeUTvN1pLO082IlYYkVHq2DHK952C8rlvndAlJ4yqgS1Hk
-         dMpRiz3xn0LyB+zCzCv2KAJMq5X9SqND0HLPyhZNUHiP+iqayXPuDYbAdpZJzo1J0ISF
-         0y3g==
+        Thu, 26 Jan 2023 17:55:49 -0500
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5508F568B8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 14:54:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1674773692;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=p5Ykxjtl3TsXTsPdCfEmgAHl6ut65lEBsB3rbec3S1g=;
+        b=Eb6ok/WQi0UMu/mIdXk944q/xUH9jrt3rkQGdwMjqFi2olSvBnILAH4GVEUqcXFx3457DK
+        xqFg7KZZNP+sRQTCKVmuaH6D2zWLY9f7eK2ICawZ1yGpfzMJuuORS8EgvSdyw+U+AtP7L0
+        X5krHlU5aYhQAI04KpSTiHdE3k/vapQ=
+Received: from mail-oi1-f197.google.com (mail-oi1-f197.google.com
+ [209.85.167.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-66-f3IbAXcIP-ie3hJ3jNz8HQ-1; Thu, 26 Jan 2023 17:54:51 -0500
+X-MC-Unique: f3IbAXcIP-ie3hJ3jNz8HQ-1
+Received: by mail-oi1-f197.google.com with SMTP id bg13-20020a056808178d00b00364af0a66f9so1264899oib.14
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 14:54:51 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uo4DJ1lMHTQjHl0PyGseokoZraJeV8jwhzCuVW5LRgY=;
-        b=jylbBHV7ZiE4ww4GRXXosZaMhEvdv6pwMd6GkNF4gQdWbKc0VYeHAYe1Whrq+7MloA
-         exkr9S4znb13aHW6HEMCzZOYx4lil1L06b3qZpzrwkwQTRn3Un4hOYgg0Hltw7ou1mct
-         T/vpf+u+fHMi+0fula19Qlb8oHoUcLm1ohk60SKrlAyW738QOHJvJ2exVd3tIB+9trZc
-         1xTTSim4919P1l8KsxWp3bCm52eKWfhTUbNsBxtTGantqM6D4RuCUOSxzkGaHc1emSZs
-         uuHB793zgrQYBxmc62E20o2n5+jIQCbMoKm32/KSNtlBFuCHKrMg+mHunzYBAo94ZU0l
-         vrNg==
-X-Gm-Message-State: AFqh2krqbU+ZXM9gBVQM2hyNleiGVseR8fuhHiaJ7W6vVgsvVio0d0iV
-        xgXmUnlQ9m4/DK1QTds9raj0sg==
-X-Google-Smtp-Source: AMrXdXtchiQCUB3Dd3Ffougvu41joys5qhOIRIUqMHGgA5iHVseRT58AFLQqOicQNrt5nO3h2n27Tg==
-X-Received: by 2002:a92:bd12:0:b0:30f:36d8:e4ca with SMTP id c18-20020a92bd12000000b0030f36d8e4camr21487379ile.21.1674773515927;
-        Thu, 26 Jan 2023 14:51:55 -0800 (PST)
-Received: from [192.168.2.31] ([194.204.33.9])
-        by smtp.gmail.com with ESMTPSA id e5-20020a022105000000b003755aa71fffsm869305jaa.105.2023.01.26.14.51.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Jan 2023 14:51:55 -0800 (PST)
-Message-ID: <7d0582ac-e5c1-7dbf-8063-f6ea8cb59862@linaro.org>
-Date:   Fri, 27 Jan 2023 00:51:51 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH v4 7/7] clk: qcom: add the driver for the MSM8996 APCS
- clocks
-Content-Language: en-GB
-To:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=p5Ykxjtl3TsXTsPdCfEmgAHl6ut65lEBsB3rbec3S1g=;
+        b=bqPNIGCZyAEtPL3AUlRfsaj1Nl6i1fBz08iIB4BKy3lAj+pCETkvkG+WNZntS95+DK
+         jgGdbxzCvABFkJoeCUiaL6YAPLedET+iAD1zpr3TwMgDfTQjo1eyz8tiVS0VW9pp3d7Q
+         WmNPVpI0InSYfjlS4ozCdG8DewtjYhpfnayQkxfj0q1r2T+oi3/lGngKv0imu8EqGoZs
+         BTjNTVK6jgFQ1ebH8U5Qz600PtT0wbqSQ2sjmb0udeJsfGq4kutwVBA2CVVvCvPlGFVz
+         ArFJIH7hgs+3fgRJvYM15sWuIWy6fxfCJBi7ignoDuxZBLLms0mDsA04koIbkMbBTfdS
+         vAnQ==
+X-Gm-Message-State: AFqh2kr+GElxbolR5q0S/xuJSk2Al/NGNESnM1rH0x2NB5KoE5I2A/nL
+        60mXaijOSFsKL7aKZJDRPl8nrC7o9rYw1+rE1VEXYLxp7elAmSTdDq/IOgiojHg6ROGkNvtqmZq
+        ddy4VQiOQ/YJ2CDjZl+i93H3PSA==
+X-Received: by 2002:a05:6870:1609:b0:15e:ce8d:f65c with SMTP id b9-20020a056870160900b0015ece8df65cmr23449621oae.23.1674773689407;
+        Thu, 26 Jan 2023 14:54:49 -0800 (PST)
+X-Google-Smtp-Source: AMrXdXsdeliN+wRD0ouJycj0uRxI8ORwWz77jZBv4UziUIwkNFHcqUC+w2hRdyGCIUFpexruansoig==
+X-Received: by 2002:a05:6870:1609:b0:15e:ce8d:f65c with SMTP id b9-20020a056870160900b0015ece8df65cmr23449601oae.23.1674773689119;
+        Thu, 26 Jan 2023 14:54:49 -0800 (PST)
+Received: from halaney-x13s ([2600:1700:1ff0:d0e0::21])
+        by smtp.gmail.com with ESMTPSA id u2-20020a056870304200b0015b64f8ff2bsm1043015oau.52.2023.01.26.14.54.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Jan 2023 14:54:48 -0800 (PST)
+Date:   Thu, 26 Jan 2023 16:54:46 -0600
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230118132254.2356209-1-dmitry.baryshkov@linaro.org>
- <20230118132254.2356209-8-dmitry.baryshkov@linaro.org>
- <7055af43f4a8894ac34e53c5847fb3de.sboyd@kernel.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <7055af43f4a8894ac34e53c5847fb3de.sboyd@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: sa8295p-adp: Add max20411 on
+ i2c12
+Message-ID: <20230126225446.rjckq5p35zeozphq@halaney-x13s>
+References: <20230124184440.1421074-1-quic_bjorande@quicinc.com>
+ <20230124184440.1421074-4-quic_bjorande@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230124184440.1421074-4-quic_bjorande@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/01/2023 23:38, Stephen Boyd wrote:
-> Quoting Dmitry Baryshkov (2023-01-18 05:22:54)
->> diff --git a/drivers/clk/qcom/apcs-msm8996.c b/drivers/clk/qcom/apcs-msm8996.c
->> new file mode 100644
->> index 000000000000..7e46ea8ed444
->> --- /dev/null
->> +++ b/drivers/clk/qcom/apcs-msm8996.c
->> @@ -0,0 +1,76 @@
-> [...]
->> +
->> +static int qcom_apcs_msm8996_clk_probe(struct platform_device *pdev)
->> +{
->> +       struct device *dev = &pdev->dev;
->> +       struct device *parent = dev->parent;
->> +       struct regmap *regmap;
->> +       struct clk_hw *hw;
->> +       unsigned int val;
->> +       int ret = -ENODEV;
->> +
->> +       regmap = dev_get_regmap(parent, NULL);
->> +       if (!regmap) {
->> +               dev_err(dev, "failed to get regmap: %d\n", ret);
->> +               return ret;
->> +       }
->> +
->> +       regmap_read(regmap, APCS_AUX_OFFSET, &val);
->> +       regmap_update_bits(regmap, APCS_AUX_OFFSET, APCS_AUX_DIV_MASK,
->> +                          FIELD_PREP(APCS_AUX_DIV_MASK, APCS_AUX_DIV_2));
->> +
->> +       /* Hardware mandated delay */
+On Tue, Jan 24, 2023 at 10:44:40AM -0800, Bjorn Andersson wrote:
+> From: Bjorn Andersson <bjorn.andersson@linaro.org>
 > 
-> Delay for what? Setting the divider? What if the register value didn't
-> change at all? Can you skip the delay in that case?
+> The SA8295P ADP has a Maxim max20411 step-down converter on i2c12.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> ---
+> 
+> Changes since v1:
+> - i2c node had changed name
+> 
+>  arch/arm64/boot/dts/qcom/sa8295p-adp.dts | 41 ++++++++++++++++++++++++
+>  1 file changed, 41 insertions(+)
 
-Ack, I'll expand the comment.
+I realized today this has to do with the comment over at:
+
+    https://lore.kernel.org/all/30166208-ba9d-e6e6-1cd2-807a80536052@quicinc.com/
+
+and I just didn't realize that the schematic I've started looking at
+black boxes the SOM/SIP which holds this... darn I thought I could see
+more than I could :(
+
+I took a similiar patch for a spin on sa8540p-ride (which I'll later
+submit), and things worked fine (I'm not really consuming the output of
+the regulator mind you).
+
+Downstream devicetree indicates all of this looks ok except for possibly
+the below comment:
 
 > 
->> +       udelay(5);
->> +
->> +       /*
->> +        * Register the clock as fixed rate instead of being a child of gpll0
->> +        * to let the driver register probe as early as possible.
-> 
-> The function doesn't block or return EPROBE_DEFER if the clk is orphaned
-> when registered. Why is this necessary? Are you getting defered by the
-> fw_devlink logic thinking it needs to defer probe of this driver until
-> gpll0 provider probes? We should fix fw_devlink to not do that. Maybe if
-> the node is a clk provider (#clock-cells exists) then we don't wait for
-> clocks property to be provided, because the clk core already handles
-> that itself.
+> diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+> index bb4270e8f551..642000d95812 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+> @@ -266,6 +266,27 @@ &dispcc1 {
+>  	status = "okay";
+>  };
+>  
+> +&i2c12 {
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&i2c12_state>;
+> +
+> +	status = "okay";
+> +
+> +	vdd_gfx: regulator@39 {
+> +		compatible = "maxim,max20411";
+> +		reg = <0x39>;
+> +
+> +		regulator-name = "vdd_gfx";
+> +		regulator-min-microvolt = <800000>;
 
-Letting clock-controllers probe was my idea for the patch, but it was 
-delayed again by Saravana, see [1], [2]
+Is there a reason you chose this instead of the 500000 I see downstream?
 
-[1] 
-https://lore.kernel.org/all/20230118091122.2205452-1-dmitry.baryshkov@linaro.org/
+> +		regulator-max-microvolt = <968750>;
 
-[2] 
-https://lore.kernel.org/all/CAGETcx8Xy5OzsbW3123esxsbQJq-SqDkP1S5g2mmwzoCz4shtQ@mail.gmail.com/
+Likewise, I see in this brief description of the regulator
+that the upper bound is higher than this (1.275 V). I am not sure if
+the values in the devicetree are supposed to describe the
+min/max of the regulator itself, or of what your board can really
+handle/needs (the latter I guess makes more sense since you wouldn't want to
+accidentally request a current draw that could melt something.. that can
+be fun). I do see you've got that min/max in the driver itself (now that
+I peaked at that patch).
 
-> 
->> +        */
->> +       hw = devm_clk_hw_register_fixed_rate(dev, "sys_apcs_aux", NULL, 0, 300000000);
+https://www.analog.com/en/products/MAX20411.html#product-overview
 
--- 
-With best wishes
-Dmitry
+For what it is worth, I also see a SIP document that states vdd_gfx min/max
+is 0.56/1.03 V, which is ultimately what you'd feed this into. The
+downstream devicetree uses the max value you provide though.
+
+No idea how much faith I should put into the SIP document's bounds, or
+downstream, but I thought I should at least highlight them.
+
+Thanks,
+Andrew
 
