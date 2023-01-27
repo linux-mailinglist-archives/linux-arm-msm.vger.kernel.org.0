@@ -2,53 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 39C9767E9A4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 16:37:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E7D267E9BC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 16:41:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234478AbjA0Phs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Jan 2023 10:37:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35032 "EHLO
+        id S234407AbjA0PlZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Jan 2023 10:41:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234130AbjA0Phr (ORCPT
+        with ESMTP id S231991AbjA0PlY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Jan 2023 10:37:47 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96CE88240F;
-        Fri, 27 Jan 2023 07:37:45 -0800 (PST)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30RElq1x003993;
-        Fri, 27 Jan 2023 15:37:30 GMT
+        Fri, 27 Jan 2023 10:41:24 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5013147438;
+        Fri, 27 Jan 2023 07:41:20 -0800 (PST)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30RFeLIb015405;
+        Fri, 27 Jan 2023 15:40:59 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=s35fDMFuCDI7snKGOAqNIeD5EWEdWYcstsPeRIwrdA8=;
- b=ChXqT+ASEnz5yU1AO9NLHunpdfRwuRg+TgxmQH3fZLwTnlGMtn4Pzcre2q7/T9kVzl8l
- aVB5FqiuRwdXZ/5FUXeC9OL69HYGH4YhUYHC7jbtXU27IFyi3jaL/zpJRUU5naQf/oIz
- nLVLoF9L0sVYmTgrRNob4gJGlC3NlCLCBiS8y+U+4/yZeqrqQR/0A99pAnF+CUpM9pdL
- iXeddagZCRjFkXPhWiL/zRQgiYBGwYC3210il7JnCz5guRscOJoroy/DKCDttFdnKOyJ
- ywmRZYCVno5xjLXm3TvDumf91RM6TSEriv/rYC7T1h08QXnKAg2nLBINgLeXP7FgTlP2 iQ== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ncavc0kw7-1
+ bh=5gn0+SYkfxx8cxZnFQGwVZA6r5W4V8MyqQnERsnSs4k=;
+ b=KJHp3rKwxkTIA8nDTmQBENudpLJKJwORZXMY7z4fCrKBh/5IwM2qKcIZnGFHcVrNjmzc
+ JSLsD25TqXCwmbVi6gsqeqdvrfSVZSIwqBl8mER18b3Nv4jleidLIP/bbrPK7XGco2JF
+ Ge3wxo7pqE6gtKmNB09PcA3JDaqXeTB/rpBuAt9ciw8ffQM6Bl8y6mmmb6pKZrzZi22v
+ 5OoxblFdjZg/d6S4HT49X+YpaxMQd9ctTRklkiaukvQJg/PqL/0ZXx9lX0W1cRZqWYm8
+ XxqmJy9rstryE6wAlqUKUcLL4pi18S+m2hZRgIl16bMBzKide9YZaphqb2Mf7Cv5cKBW rA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ncheyr044-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 27 Jan 2023 15:37:30 +0000
+        Fri, 27 Jan 2023 15:40:59 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30RFbSM2022803
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30RFew9R031365
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 27 Jan 2023 15:37:28 GMT
+        Fri, 27 Jan 2023 15:40:58 GMT
 Received: from [10.50.41.100] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Fri, 27 Jan
- 2023 07:37:20 -0800
-Message-ID: <410f1674-cda4-a1ac-e72d-eb32a3fead98@quicinc.com>
-Date:   Fri, 27 Jan 2023 21:07:17 +0530
+ 2023 07:40:50 -0800
+Message-ID: <0b1df267-4f89-5b83-eb2e-351ea1596017@quicinc.com>
+Date:   Fri, 27 Jan 2023 21:10:47 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.2
 Subject: Re: [PATCH 1/6] dt-bindings: clock: Add YAML schemas for QCOM A73 PLL
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <robh+dt@kernel.org>,
         <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
         <sboyd@kernel.org>, <jassisinghbrar@gmail.com>,
         <catalin.marinas@arm.com>, <will@kernel.org>,
@@ -64,9 +63,9 @@ CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
         <quic_poovendh@quicinc.com>
 References: <20230113143647.14961-1-quic_devipriy@quicinc.com>
  <20230113143647.14961-2-quic_devipriy@quicinc.com>
- <0337e1ad-b8b4-8728-f5f1-be153b950fe6@linaro.org>
+ <e9025ca7-c955-5c49-ce66-701e9639129b@linaro.org>
 From:   Devi Priya <quic_devipriy@quicinc.com>
-In-Reply-To: <0337e1ad-b8b4-8728-f5f1-be153b950fe6@linaro.org>
+In-Reply-To: <e9025ca7-c955-5c49-ce66-701e9639129b@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
@@ -74,19 +73,19 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 86bz_1uNXXO4otPIl1sMJ7bg24mAdj3v
-X-Proofpoint-ORIG-GUID: 86bz_1uNXXO4otPIl1sMJ7bg24mAdj3v
+X-Proofpoint-ORIG-GUID: G4mfedJwC_Bm_nflvfiujW809mmQHG3v
+X-Proofpoint-GUID: G4mfedJwC_Bm_nflvfiujW809mmQHG3v
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
  definitions=2023-01-27_09,2023-01-27_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1015
- lowpriorityscore=0 spamscore=0 phishscore=0 suspectscore=0 adultscore=0
- mlxlogscore=999 impostorscore=0 priorityscore=1501 bulkscore=0 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2301270144
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 phishscore=0 adultscore=0 mlxscore=0 clxscore=1015
+ bulkscore=0 mlxlogscore=999 spamscore=0 suspectscore=0 lowpriorityscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301270145
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -95,19 +94,24 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Thanks for taking time to review the patch!
 
-On 1/13/2023 8:27 PM, Krzysztof Kozlowski wrote:
-> On 13/01/2023 15:36, devi priya wrote:
+On 1/13/2023 8:35 PM, Konrad Dybcio wrote:
+> 
+> 
+> On 13.01.2023 15:36, devi priya wrote:
 >> Add schema for primary CPU PLL found on few Qualcomm platforms.
-> 
-> Subject: drop redundant "YAML schemas for"
-> 
-Sure, okay
-> 
 >>
 >> Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
 >> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
 >> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
 >> ---
+> Doesn't this belong in Documentation/devicetree/bindings/clock/qcom,a53pll.yaml?
+> 
+> It looks identical, so it may be as simple as adding your
+> new compatible there..
+> 
+As the name was specific to a53pll, added a new yaml for a73.
+Will add the a73 compatible in qcom,a53pll.yaml if that's accepted!
+> Konrad
 >>   .../bindings/clock/qcom,a73pll.yaml           | 52 +++++++++++++++++++
 >>   1 file changed, 52 insertions(+)
 >>   create mode 100644 Documentation/devicetree/bindings/clock/qcom,a73pll.yaml
@@ -153,11 +157,6 @@ Sure, okay
 >> +      - const: xo
 >> +
 >> +  operating-points-v2: true
-> 
-> Drop. I'll fix the other bindings.
-> 
-As suggested by konrad, will drop this file change and add the 
-compatible in qcom,a53pll.yaml
 >> +
 >> +required:
 >> +  - compatible
@@ -170,17 +169,10 @@ compatible in qcom,a53pll.yaml
 >> +  - |
 >> +    a73pll: clock@b116000 {
 >> +            compatible = "qcom,ipq9574-a73pll";
-> 
-> Use 4 spaces for example indentation.
-> 
 >> +            reg = <0x0b116000 0x40>;
 >> +            #clock-cells = <0>;
 >> +            clocks = <&xo_board_clk>;
 >> +            clock-names = "xo";
 >> +    };
-> 
-> Best regards,
-> Krzysztof
-> 
 Best Regards,
 Devi Priya
