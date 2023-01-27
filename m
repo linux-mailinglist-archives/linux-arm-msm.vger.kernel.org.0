@@ -2,112 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6FC4C67E679
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 14:20:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 50D8767E692
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 14:26:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234691AbjA0NUp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Jan 2023 08:20:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35116 "EHLO
+        id S233880AbjA0N0K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Jan 2023 08:26:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234698AbjA0NUZ (ORCPT
+        with ESMTP id S232854AbjA0N0J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Jan 2023 08:20:25 -0500
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3392413511
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 05:19:46 -0800 (PST)
-Received: by mail-ed1-x529.google.com with SMTP id s3so4731086edd.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 05:19:46 -0800 (PST)
+        Fri, 27 Jan 2023 08:26:09 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9437780159
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 05:26:07 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id d14so4958219wrr.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 05:26:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=OcgPAMgrAZ/C7xPMvBkfJEfxIjKIhIiRt6e2oEpw2P8=;
-        b=QeQDzrGiKaOpTK0L4ffCwsCnXl55BXQ2SKM3wzAUrretYfLqPKBeAxLZgnLV17ELto
-         c8S4Mw75ZK4P9OGJOLmntTJDb+I72QcNAUcgM3vGgBhd1Yrk/XR98o0geLrPp2T+jFyl
-         8vSz/GoPJ+tnsQtMwegXUK6pm4AfUZ98q2+920rv0OoBYgddgk04LoHnAMesbT5Hohww
-         hBsKQD1Fi2zgZHuMjF0ul0aF2q5nfUKtgvi2y3X2U/jGs3G5psoS0xUhmjKtU8Lnogjr
-         ewLR3QTEE0lXaZJM6ufM1F6Sf26iYV5ooSNdJSW9HG3qqXiDEdcQnVIIMuP+aH1kV5KX
-         0ozg==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=CZd+JWIjDaKYpzBxZXlaUPrja5cm3GEdrEIrnzSxg1A=;
+        b=bvD1H6lI5hOPKvzUhnX/f1mraAjS5TO2SBRO11Nqdd1onSn+pVzM2tBBmSFEjLBp8x
+         20nHqzRNWlmWjVSit2glAPGgnq1LvEb9pLDEqMJ9bGCGQgPLDDZ0w/tdIOpejPm2xuCK
+         Q6uV2SkgWwH90irqtOpsLTSgzD2VmafIQnZnug7rny4BULDppVXicqhnb/XxBx2XazXQ
+         lr6CMRaI+2iOiQM345L/8yVH6Er7j/bQXUycDZCWDWfnuiOJ4DCBRxPAPGkcd+e6b0nw
+         361M47k8NIkKFwJzgVA9400bTyQa381ANuprfXCmUTCDYligJXZ2EsaaJW9OdIWvSzqF
+         HV2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OcgPAMgrAZ/C7xPMvBkfJEfxIjKIhIiRt6e2oEpw2P8=;
-        b=lpF34ttja5VzlpWXRTfGG1zOEKHk9RFTSL86XXiGEtdr5ok3x+aEvN7JByb7lum4ZE
-         NzbE/qT2Fm0pgONB2aerK2A1aaG/WsjD6kPWeYuVr5cRHfMtapESBfj7rCneFmoRnEFc
-         AUd0Wmylgzya8GrwVm+9n3hGSmgVfvrioYy0ejaDCX+H+ff/ieP5zZgQFPXA4cRtQeTC
-         vY1QOZQSp1NlbomdCWqnqNVP8H4PFoMAOvZg6I75nGU/vSk1tYFUfltfedjQkUkA8Zq+
-         eZcJC0MKsiOUbuQ1rCTtObWKXzg7hfaCkSijr05bB+vC4oP5Pbuk7myw9DXuyEH2bobE
-         Swlg==
-X-Gm-Message-State: AFqh2kqKewhTCmWHy9L6WEkNS8PmdNh1nQzg363xe9y2gmhqGSvkufAY
-        1To9/aB30rqjKwBfhmlTeuoPxg==
-X-Google-Smtp-Source: AMrXdXuQF/+vduGhh7O4LY2Mxe6x5n/9zOd0Pawa+WdOyFosu/ndcYTzHQOWa4l/PZN3CukIRJxNig==
-X-Received: by 2002:a05:6402:4d6:b0:46c:6ed1:83ac with SMTP id n22-20020a05640204d600b0046c6ed183acmr41608812edw.9.1674825584239;
-        Fri, 27 Jan 2023 05:19:44 -0800 (PST)
-Received: from [192.168.1.101] (abyl20.neoplus.adsl.tpnet.pl. [83.9.31.20])
-        by smtp.gmail.com with ESMTPSA id e9-20020a50fb89000000b0048ecd372fc9sm2335204edq.2.2023.01.27.05.19.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Jan 2023 05:19:43 -0800 (PST)
-Message-ID: <7da76295-7d0f-f401-1501-7932f31ecbee@linaro.org>
-Date:   Fri, 27 Jan 2023 14:19:42 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH] arm64: dts: qcom: sm8550: Fix the aoss_qmp node name
-Content-Language: en-US
-To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CZd+JWIjDaKYpzBxZXlaUPrja5cm3GEdrEIrnzSxg1A=;
+        b=3dD2Xvnz5rwPWgcAceTBOjSsiEW2uPQFXKwcNxAVWO+L4ChWCkdr2LgnVbn3G6ebwY
+         9py4t+ayTHy2Fic5boY0OabVW07L8z0fGgOo6t/3oVjiaNBIRdwoQOCyktg2LvqnngW2
+         1sjoCA5FXnQdx+Vt2coSovCzH4OFU0bg2ikumE7w7cIrvc5oznZiGKTlou7BLWlnnS33
+         Hk4841G9Z6V7CouSNr1vlwtYNwlQBlzcfeBSIBLB3iP9GwEdk9xuSm3C7u+gyvS3QK1i
+         fZwEKid4m6cBQbIj5YEHMGkkR5Ynqar7xW/AuWRN1qZSCTdlrTwiguBKAhfVdvcH+usU
+         erog==
+X-Gm-Message-State: AO0yUKV6qyQLjGu7Qw2dF9SfRUDWp5B9+0qc6ollQVeTOuBoayQMmAYX
+        SRMbNKFR3tKRH0qAVS4R5H51pA==
+X-Google-Smtp-Source: AK7set+jTjYlToxLv7HWQHoOXBqVASbP6hK8bv/7nOmcOahZ6nnLj42BD8VTI1PqExDUkUHpsgpU0w==
+X-Received: by 2002:a5d:4283:0:b0:2bf:d428:a768 with SMTP id k3-20020a5d4283000000b002bfd428a768mr1958419wrq.49.1674825966132;
+        Fri, 27 Jan 2023 05:26:06 -0800 (PST)
+Received: from hackbox.lan ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id z14-20020a5d4c8e000000b002bfc2d0eff0sm4021515wrs.47.2023.01.27.05.26.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Jan 2023 05:26:05 -0800 (PST)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>
 Cc:     devicetree@vger.kernel.org,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org
-References: <20230127131441.1157679-1-abel.vesa@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230127131441.1157679-1-abel.vesa@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        linux-arm-msm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2] dt-bindings: qcom,pdc: Add compatible for SM8550
+Date:   Fri, 27 Jan 2023 15:25:58 +0200
+Message-Id: <20230127132558.1176730-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Document the compatible for SM8550 PDC.
 
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
 
-On 27.01.2023 14:14, Abel Vesa wrote:
-> The proper name for it is power-management. Currently, with the node
-> name being power-controller, the bindings check fails due to the
-> property #power-domain-cells missing.
-> 
-> Fixes: ffc50b2d3828 ("arm64: dts: qcom: Add base SM8550 dtsi")
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+The v1 is here:
+https://lore.kernel.org/all/20221116114210.2673902-1-abel.vesa@linaro.org/
 
-Konrad
+Changes since v1:
+ * rebased on next-20230125
+ * added Krzysztof's R-b tag
 
->  arch/arm64/boot/dts/qcom/sm8550.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> index 6ff135191ee0..57878ea64ee0 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> @@ -2503,7 +2503,7 @@ tsens2: thermal-sensor@c273000 {
->  			#thermal-sensor-cells = <1>;
->  		};
->  
-> -		aoss_qmp: power-controller@c300000 {
-> +		aoss_qmp: power-management@c300000 {
->  			compatible = "qcom,sm8550-aoss-qmp", "qcom,aoss-qmp";
->  			reg = <0 0x0c300000 0 0x400>;
->  			interrupt-parent = <&ipcc>;
+ .../devicetree/bindings/interrupt-controller/qcom,pdc.yaml       | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
+index 94791e261c42..5a733bd76b57 100644
+--- a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
++++ b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
+@@ -37,6 +37,7 @@ properties:
+           - qcom,sm8250-pdc
+           - qcom,sm8350-pdc
+           - qcom,sm8450-pdc
++          - qcom,sm8550-pdc
+       - const: qcom,pdc
+ 
+   reg:
+-- 
+2.34.1
+
