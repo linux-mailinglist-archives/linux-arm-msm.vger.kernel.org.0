@@ -2,65 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B3B0167E223
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 11:46:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CCC6367E255
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 11:57:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232493AbjA0Kqc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Jan 2023 05:46:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58740 "EHLO
+        id S229445AbjA0K5c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Jan 2023 05:57:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230201AbjA0KqV (ORCPT
+        with ESMTP id S229379AbjA0K5b (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Jan 2023 05:46:21 -0500
-Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE2A47920C
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 02:46:06 -0800 (PST)
-Received: by mail-yb1-xb2b.google.com with SMTP id d132so5485410ybb.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 02:46:06 -0800 (PST)
+        Fri, 27 Jan 2023 05:57:31 -0500
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C99089ED8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 02:57:29 -0800 (PST)
+Received: by mail-pj1-x102d.google.com with SMTP id e8-20020a17090a9a8800b0022c387f0f93so3211676pjp.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 02:57:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=yEIvFhK3IIlErsVgToB5qFHQjVAAQfk7keFlobxxWmQ=;
-        b=pbRiHizXgqKLgJi0SZFHnlopsAQ2dHzA++kqIfzVt60x7aFpDvVIK8jIuZ/e+bHQIr
-         TsToNjrN77cQxH7RuLXAD01snstWf+mgyrY4tQ+Yji1eFenSGboymtMKPOgqLeX2HPBA
-         1J8WDoPq0J9kfaNBUn0mNnj5oODs+1OdTCAnIFbpUROdGOnaAF7b1mqF4EjjgSk8FnX9
-         3xe/ZNyWEnkMxPqOzBgDEu8sO/y+g0aQhoshBqQ1MuRJFoXw/rZahh+ggq0dorOvjrCo
-         gKEskc21+60VDKHdlqowmvelAntxyM6fffX/JEcdB6p1UQFrNg43bvsgBe+So4DTpzyV
-         v1VQ==
+        bh=0aTkPI+ubuKbzX2JNdC/dWfilw1TCJxuUE5W+uV+LEs=;
+        b=NmJUlnhgEI4JeSVj0TYtQdVtMz6iwCd816KUbIUK6n58sX6rOUMJNIZ/B/VfNCPHWj
+         PcxjhADWi3Ygbjwx3GY8ANbKNK3vk674UfY/vw6JIMF4luoDAzl7IR4Rplx2Z3Yg81AS
+         yeXTUhKbqVvuQr4vECpR0xNTMr9/1NVs/umGPV7IsgwaEUbrwcE2wbB9fEKTvRB1DXaZ
+         HMFhwB0sL3n6WJR7tdLP4DsCDbPgBt7wE8bHawjfl5Tb1oYzw6L9ks5FM4CqjKRgAFTu
+         H0ZXjcwvAG6B9TL3HlcU65eMOd6QQxjTd1bci3cUeJhn1lyCUoqrnZMAeerOglBKaJ4F
+         5XhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=yEIvFhK3IIlErsVgToB5qFHQjVAAQfk7keFlobxxWmQ=;
-        b=Q4J11d4FWzIfo67khFto76fzp2N6G28VsGAJcLWGQuPm1zAzxd7ikNoDZ9XimMkj/L
-         X0a8giIPA6L7t/g+kUUTZxvPo2wQWdVsyNHJyOhEw+MoyLVwL0Cf5M17xtwV7DfAgo8+
-         dP0yd05QehN6ciqTVncrIJRVikHk9glTbLFp3y9N2ZolfPmtuYvdSYGBsNNKUi4BmL4u
-         wuYUEwnt7dTKf9Ob0RmYc178qNpOpiiprLw8FKI++eQ3Hud//3hTvO0Dq4wKyiM4DA79
-         lWSqACCOXD0r5Jqlc4I6EdI8VhZ36AAheIXqh1fbBvn+v4f7qYIh675gEB8VrAw/DwmM
-         DjNg==
-X-Gm-Message-State: AO0yUKUW2HCYKSD6vJcxIFpfLH4tvaRIbb3yc3bVn9JZTZIKzmmuDbML
-        4VMgvncaxROmEFSa3zTaKJESNdLZb5rtFAyVbzYoF0TADlv5211EC00=
-X-Google-Smtp-Source: AK7set8CEjnHi7EVPneHsLI4xDP7Wr4mxQeL1iOel0vamGF0k7QBKC5yCvd7idAVuR1tV91uJqvlYEJIbDj6l19NjRo=
-X-Received: by 2002:a25:d84f:0:b0:80e:9132:a7fe with SMTP id
- p76-20020a25d84f000000b0080e9132a7femr88574ybg.516.1674816366185; Fri, 27 Jan
- 2023 02:46:06 -0800 (PST)
+        bh=0aTkPI+ubuKbzX2JNdC/dWfilw1TCJxuUE5W+uV+LEs=;
+        b=rSO2XpzW9zbExRTSwGnjqn2j/age6TVdZFxvsrp3ennwvEIVAJle+wDRRcKEW4yj1u
+         FzM6o+DHLF8EgmiSGIWbsoz2QU4Ojg+ZX2xOnFgFynI9Ebw5KFWS4SvV+xPs05Fp0lfb
+         Xh0csOAI8Vig3AndLX4PZ6RZNS0DGr2KdvLaOcRgm9kkxVlDs/8LLNr3L3UaxCYGuhnH
+         fEMSwMX91RBFWEhO7Z9NUF6p+YwPfRRWyXv2QeWHcs9ASimI4yl3izXLba0kB3tXN6hK
+         2qyw40JlTnN/jKDwQb5CjAdqm3F4lqKyygzrfd5sgqb27WllkzO2r2WQY9isH6u/T5lH
+         hqaQ==
+X-Gm-Message-State: AFqh2kqHELYr8D7bs796uFcmItTFQdjnW2iw2cSbNkwO8JvzyA620Fly
+        c+SSms8hoh7j9yDrEMHGAtDuydbE0zhqTbW512egWw==
+X-Google-Smtp-Source: AMrXdXvnzz3ZpnHx/XmGCd35q5P+zooYE94/XE7raSNlvHYRmWHeCfHv0OlsELoyqCIE6l7P5JjHb2a3omXLwYpk91o=
+X-Received: by 2002:a17:90a:5102:b0:229:f71e:fe3 with SMTP id
+ t2-20020a17090a510200b00229f71e0fe3mr3758143pjh.47.1674817049307; Fri, 27 Jan
+ 2023 02:57:29 -0800 (PST)
 MIME-Version: 1.0
-References: <1674814545-9453-1-git-send-email-quic_kalyant@quicinc.com> <1674814545-9453-3-git-send-email-quic_kalyant@quicinc.com>
-In-Reply-To: <1674814545-9453-3-git-send-email-quic_kalyant@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 27 Jan 2023 12:45:55 +0200
-Message-ID: <CAA8EJprX-8fcoi3FBR7ZUOa2ehhCGEAngq2+UDdC64hHMraqfA@mail.gmail.com>
-Subject: Re: [PATCH 2/3] drm/msm/disp/dpu1: add dspps into reservation if
- there is a ctm request
-To:     Kalyan Thota <quic_kalyant@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, robdclark@chromium.org,
-        dianders@chromium.org, swboyd@chromium.org,
-        quic_vpolimer@quicinc.com, quic_abhinavk@quicinc.com,
-        marijn.suijten@somainline.org
+References: <20230124141541.8290-1-quic_devipriy@quicinc.com> <20230124141541.8290-7-quic_devipriy@quicinc.com>
+In-Reply-To: <20230124141541.8290-7-quic_devipriy@quicinc.com>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Fri, 27 Jan 2023 11:56:53 +0100
+Message-ID: <CAPDyKFqjiXp28M4uaBqvdsdwy_gtpV_K-nAJgZQJyQir-7orCA@mail.gmail.com>
+Subject: Re: [PATCH V1 6/8] dt-bindings: mmc: sdhci-msm: Document the IPQ9574 compatible
+To:     devi priya <quic_devipriy@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org,
+        linus.walleij@linaro.org, catalin.marinas@arm.com, will@kernel.org,
+        p.zabel@pengutronix.de, shawnguo@kernel.org, arnd@arndb.de,
+        marcel.ziswiler@toradex.com, dmitry.baryshkov@linaro.org,
+        nfraprado@collabora.com, broonie@kernel.org, tdas@codeaurora.org,
+        bhupesh.sharma@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-mmc@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
+        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
+        quic_poovendh@quicinc.com
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -71,71 +79,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 27 Jan 2023 at 12:15, Kalyan Thota <quic_kalyant@quicinc.com> wrote:
+On Tue, 24 Jan 2023 at 15:17, devi priya <quic_devipriy@quicinc.com> wrote:
 >
-> Add dspp blocks into the topology for reservation, if there is a ctm
-> request for that composition.
-
-... rather than just allocating them for DSI encoders.
-
-With this fixed (and one nit below):
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+> Document the compatible for SDHCI on IPQ9574.
 >
-> Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
+> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
+
+Applied for next, thanks!
+
+Kind regards
+Uffe
+
+
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 13 ++++++-------
->  1 file changed, 6 insertions(+), 7 deletions(-)
+>  Documentation/devicetree/bindings/mmc/sdhci-msm.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 >
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index 9c6817b..8d76cb3 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -545,7 +545,8 @@ bool dpu_encoder_use_dsc_merge(struct drm_encoder *drm_enc)
->  static struct msm_display_topology dpu_encoder_get_topology(
->                         struct dpu_encoder_virt *dpu_enc,
->                         struct dpu_kms *dpu_kms,
-> -                       struct drm_display_mode *mode)
-> +                       struct drm_display_mode *mode,
-> +                       struct drm_crtc_state *crtc_state)
->  {
->         struct msm_display_topology topology = {0};
->         int i, intf_count = 0;
-> @@ -573,11 +574,9 @@ static struct msm_display_topology dpu_encoder_get_topology(
->         else
->                 topology.num_lm = (mode->hdisplay > MAX_HDISPLAY_SPLIT) ? 2 : 1;
->
-> -       if (dpu_enc->disp_info.intf_type == DRM_MODE_ENCODER_DSI) {
-> -               if (dpu_kms->catalog->dspp &&
-> -                       (dpu_kms->catalog->dspp_count >= topology.num_lm))
-> -                       topology.num_dspp = topology.num_lm;
-> -       }
-> +       if (dpu_kms->catalog->dspp && crtc_state->ctm &&
-
-Could you please move the second condition to a separate line? Also
-possibly it would be good to indent the conditions to the opening
-parenthesis.
-
-> +               (dpu_kms->catalog->dspp_count >= topology.num_lm))
-> +               topology.num_dspp = topology.num_lm;
->
->         topology.num_enc = 0;
->         topology.num_intf = intf_count;
-> @@ -643,7 +642,7 @@ static int dpu_encoder_virt_atomic_check(
->                 }
->         }
->
-> -       topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode);
-> +       topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode, crtc_state);
->
->         /* Reserve dynamic resources now. */
->         if (!ret) {
+> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> index 6b89238f0565..5af61789a8c2 100644
+> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> @@ -34,6 +34,7 @@ properties:
+>            - const: qcom,sdhci-msm-v4 # for sdcc versions less than 5.0
+>        - items:
+>            - enum:
+> +              - qcom,ipq9574-sdhci
+>                - qcom,qcs404-sdhci
+>                - qcom,sc7180-sdhci
+>                - qcom,sc7280-sdhci
 > --
-> 2.7.4
+> 2.17.1
 >
-
-
--- 
-With best wishes
-Dmitry
