@@ -2,183 +2,193 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CD8D67DA84
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 01:15:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0180D67DAAC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 01:22:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231480AbjA0APs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Jan 2023 19:15:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51030 "EHLO
+        id S232173AbjA0AU7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Jan 2023 19:20:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229531AbjA0APp (ORCPT
+        with ESMTP id S231540AbjA0AU4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Jan 2023 19:15:45 -0500
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 179789EFF
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 16:15:11 -0800 (PST)
-Received: by mail-pj1-x1030.google.com with SMTP id z9-20020a17090a468900b00226b6e7aeeaso3361631pjf.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 16:15:11 -0800 (PST)
+        Thu, 26 Jan 2023 19:20:56 -0500
+Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6231D2128
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 16:20:27 -0800 (PST)
+Received: by mail-qt1-x82d.google.com with SMTP id h24so2809204qta.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 16:20:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
+        d=chromium.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=SV8n+sv9BcaztAN5AOFhigw2IH4btE9Uee+/u0u3DYQ=;
-        b=fshS+KEKNQQq8kpAv2Ge/k8hcVQXj/xJtIpLlKztLPJZBCDC8HTaWsu/D2MG4yT6Dk
-         nxrcZ3ILGw8ih2z3YUPICeeBHDAaKbSzCyGpaTfKjddxOYwqOPIqlDXxgaylQYqXdltD
-         ia1mHg2eURSbHmxfaf7GaZrvEkk8CKPLBSBNQoEoS50wmj45Jt028QX+AQbnRwNTSSYA
-         yPqto+XvSHqDO1EFXgnz+oLdB6KUX5MHrWdaCQAGIGZuPiY3ZA7MY9dJSimwpR2bzgJF
-         0OmUR525TXXIu3lwHXrM9nbE6Nj4J0v8DH1J5YvWsRVsL0QxmRoZysTHmyXYGWH0GTgd
-         nSlg==
+        bh=zpmDswi/wSigvewXIn7qeq2QNhLH9j+uFliOJerl3lI=;
+        b=OsZ8dXBoYhzZZ+SDvz0bZZkdfFSs1vHlgrFlAn8uyjA2zFJyTwHyDBRRywqSGIvvVy
+         +Ul/d89CbpIla0hrjNvJ0A55rDuffKixQywKL37Wylwihl91tTVpfsoO2Vuoiu2Odhkx
+         uaeGVL62yT1cNxnk9T0AomAe8JrddORL1eRtw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=SV8n+sv9BcaztAN5AOFhigw2IH4btE9Uee+/u0u3DYQ=;
-        b=ag1Cup5PTG340Sht3AV2O+GpV9b1zkWpdqJ1hmtZsD22PTfmwH06KxkDEiEB+PTVEP
-         9aWga3w99OyF8UGsW/uhBoEWO6wOIjdbrAjhbLtlnVOkMSB4WidtamzW/GCK/wBRRbA8
-         yf3484ZWv/MM6wlXHwrXSisX1vnINXvTvUotA66ZL9ns93Ro41Dl5wJZaKx/h2zKT5WM
-         Bc2FYZ2iCTHbc7AOT9GEo5qFLywmoioVZCqHYJr31LiqetFOs1LdcF10jkeZj0z4a03h
-         diRcdtXO4FxcaBsyLpE4aZr6X6gZj6TPtxI0hXc88aC0EA6Jfh6fzV5tRDINl48nhT/B
-         3ZSg==
-X-Gm-Message-State: AFqh2komOr16VApa2XbPJqCt5hs2Cb3jz1tOSOHeLuIYfvVOdCNk1gfm
-        ezeV5QdkxNkqjFdMFSnstu09v2nhc5n04H/L/ixVAA==
-X-Google-Smtp-Source: AMrXdXtXkEkodBM0H0kD2v/QRlxJqTeLyShq9hF94/2MQSJ3jdKYhYn0Fe/ha2FNJivkLCekNVn+wIw7neI3BHF2JdY=
-X-Received: by 2002:a17:90a:7e8d:b0:225:d307:95ce with SMTP id
- j13-20020a17090a7e8d00b00225d30795cemr4641690pjl.136.1674778465910; Thu, 26
- Jan 2023 16:14:25 -0800 (PST)
+        bh=zpmDswi/wSigvewXIn7qeq2QNhLH9j+uFliOJerl3lI=;
+        b=CZfz4xnMrfX3mjLzwiy/eAmNbkCPdymsu2ba0RyGtXEPIFEZiFAuiomtQuEsA6RlC0
+         i9Tt+N9Bec7ir9O1AzUxmqmaLaT8C09frDyMrGOC30p4seWy1z7ZJDxQq6WHWpHUoT1K
+         VihxEkiPxuwKjOISrvyArNd3fKMSBqTAyg3oHirdzTI5kR0ZoGNEEDapBpX6v/zuCjSK
+         Oo+EuCETvokIWV3rceFdoBySlYfxc+BY01RL1W2jApUIekNwLm3UYfNKDYCYbgLDDmAX
+         71Mo5hrBAL0K5c+D/54nRxQyScFG+OlfXIjtP1L7rNb82YFTY5wiz+/iPzcBAd32+Jmk
+         7UDQ==
+X-Gm-Message-State: AFqh2kp4EZUNkpOFrLjoqBejZO0Jpoj2j3OxIJhWE2bhuCG0fAvSaa5q
+        oqtr/ohgfatcTQa+So8Uu8dudiq5G+knmwdpdg0=
+X-Google-Smtp-Source: AMrXdXtMM0PvMhn7UrRXmB7UhVIZ41x5oCiqgTSd/vPNTHE5KGWaWyE827oJM9SAysFCLd/whGdpDQ==
+X-Received: by 2002:ac8:7ef6:0:b0:3b6:9414:7f45 with SMTP id r22-20020ac87ef6000000b003b694147f45mr42337805qtc.37.1674778825672;
+        Thu, 26 Jan 2023 16:20:25 -0800 (PST)
+Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com. [209.85.219.181])
+        by smtp.gmail.com with ESMTPSA id cf12-20020a05622a400c00b003b81401c952sm1411883qtb.56.2023.01.26.16.20.24
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 26 Jan 2023 16:20:24 -0800 (PST)
+Received: by mail-yb1-f181.google.com with SMTP id d8so2204692ybe.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 16:20:24 -0800 (PST)
+X-Received: by 2002:a25:4b41:0:b0:803:e799:d7b9 with SMTP id
+ y62-20020a254b41000000b00803e799d7b9mr2481898yba.16.1674778823633; Thu, 26
+ Jan 2023 16:20:23 -0800 (PST)
 MIME-Version: 1.0
-References: <20230118091122.2205452-1-dmitry.baryshkov@linaro.org>
- <CAL_JsqJ=0neiZ4wkPiMqJMT4E1O_xO0uLrTmEGUcnZMqxkw4UQ@mail.gmail.com>
- <CAGETcx8Xy5OzsbW3123esxsbQJq-SqDkP1S5g2mmwzoCz4shtQ@mail.gmail.com>
- <20230125190926.GA2697290-robh@kernel.org> <505fc434-c31f-726e-b1cb-0bbfd5f83490@linaro.org>
- <CAGETcx-f9vy7MDB2vFWP9CL26UY7W65oJArvhzksCu8QG6Y4nw@mail.gmail.com>
-In-Reply-To: <CAGETcx-f9vy7MDB2vFWP9CL26UY7W65oJArvhzksCu8QG6Y4nw@mail.gmail.com>
-From:   Saravana Kannan <saravanak@google.com>
-Date:   Thu, 26 Jan 2023 16:13:49 -0800
-Message-ID: <CAGETcx_v+yFvVFGY64t2Y6Su4jdCXaLnTUh9sKQR0t7+HoZ_vg@mail.gmail.com>
-Subject: Re: [RESEND PATCH] of: property: do not create clocks device link for
- clock controllers
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Herring <robh@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        Abel Vesa <abel.vesa@linaro.org>
+References: <20221216112918.1243-1-quic_rjendra@quicinc.com>
+ <Y5x+WEwTtpoV0gaR@google.com> <fd23e295-fea0-1b0a-752c-3cce26b57346@quicinc.com>
+ <Y6HHCrl0q5BhrHOY@google.com> <e269300d-539e-9eb8-8b3c-d309f3abca1b@quicinc.com>
+ <bbc3c257-0a49-4c80-4586-c179c8997b50@linaro.org> <CAD=FV=X3DyMrEWESV2cWvqg_TQYnj+VGFBQodAp+gfbhBz6X3Q@mail.gmail.com>
+ <9f6bd192-2a42-0a23-0032-df8b01921bdc@linaro.org> <CAD=FV=U6KhJR+9q49=T3-aYppukRNmLrgvhaxP_ZtLP=VgSaDA@mail.gmail.com>
+ <18c2bd9a-0216-c4fc-773e-601aea030b48@quicinc.com>
+In-Reply-To: <18c2bd9a-0216-c4fc-773e-601aea030b48@quicinc.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 26 Jan 2023 16:20:10 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=WJWnGKgw74nW_VteSwaMswskT7_sQ3iz3YZvsBMfOyxA@mail.gmail.com>
+Message-ID: <CAD=FV=WJWnGKgw74nW_VteSwaMswskT7_sQ3iz3YZvsBMfOyxA@mail.gmail.com>
+Subject: Re: [PATCH v4 1/2] dt-bindings: arm: qcom: Document the sc7280 CRD
+ Pro boards
+To:     Rajendra Nayak <quic_rjendra@quicinc.com>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        andersson@kernel.org, Matthias Kaehlcke <mka@chromium.org>,
+        agross@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@linaro.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-17.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        ENV_AND_HDR_SPF_MATCH,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 26, 2023 at 3:12 PM Saravana Kannan <saravanak@google.com> wrote:
+Hi,
+
+On Mon, Jan 9, 2023 at 8:21 PM Rajendra Nayak <quic_rjendra@quicinc.com> wrote:
 >
-> On Thu, Jan 26, 2023 at 2:51 PM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
+>
+> On 1/10/2023 3:12 AM, Doug Anderson wrote:
+> > Hi,
 > >
-> > On 25/01/2023 21:09, Rob Herring wrote:
-> > > On Tue, Jan 24, 2023 at 06:12:15PM -0800, Saravana Kannan wrote:
-> > >> On Wed, Jan 18, 2023 at 5:35 AM Rob Herring <robh+dt@kernel.org> wrote:
-> > >>>
-> > >>> On Wed, Jan 18, 2023 at 3:11 AM Dmitry Baryshkov
-> > >>> <dmitry.baryshkov@linaro.org> wrote:
-> > >>>>
-> > >>>> Do not create device link for clock controllers. Some of the clocks
-> > >>>> provided to the device via OF can be the clocks that are just parents to
-> > >>>> the clocks provided by this clock controller. Clock subsystem already
-> > >>>> has support for handling missing clock parents correctly (clock
-> > >>>> orphans). Later when the parent clock is registered, clocks get
-> > >>>> populated properly.
-> > >>>>
-> > >>>> An example of the system where this matters is the SDM8450 MTP board
-> > >>>> (see arch/arm64/boot/dts/qcom/sdm845-mtp.dts). Here the dispcc uses
-> > >>>> clocks provided by dsi0_phy and dsi1_phy device tree nodes. However the
-> > >>>> dispcc itself provides clocks to both PHYs, to the PHY parent device,
-> > >>>> etc. With just dsi0_phy in place devlink is able to break the
-> > >>>> dependency, but with two PHYs, dispcc doesn't get probed at all, thus
-> > >>>> breaking display support.
-> > >>>>
-> > >>>> Cc: Bjorn Andersson <andersson@kernel.org>
-> > >>>> Cc: Stephen Boyd <sboyd@kernel.org>
-> > >>>> Cc: Saravana Kannan <saravanak@google.com>
-> > >>>> Cc: Abel Vesa <abel.vesa@linaro.org>
-> > >>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > >>>> ---
-> > >>>>
-> > >>>> This patch has been posted a year ago in January 2022 ([1]). Since that time
-> > >>>> Saravana failed to produce patches to assist in debugging the issue
-> > >>>> ([2]) or to fix the issue ([3]). The issue we observe has been described
-> > >>>> by Abel at ([4]). As we work on adding support for Dual DSI
-> > >>>> configurations, the issue becomes more and more important, since binding
-> > >>>> the whole display subsystem fails.
-> > >>
-> > >> I did send out a patch series[1] to try and fix this. Heck I even
-> > >> talked about this in LPC 2022. So I don't think it's accurate to say I
-> > >> didn't help debug this or fix this. There's some email thread in lore
-> > >> where Abel gave more details and I figured out the issue and we didn't
-> > >> need any more debugging. And then I sent out [1]. Sorry I missed you
-> > >> in the cc lise for [1] -- I try to keep track of everyone to cc but
-> > >> things slip through the cracks sometimes. But at the same time, it's
-> > >> easy to check for emails from me before saying I didn't help or didn't
-> > >> send out fixes :)
-> > >>
-> > >> If you do try to give [1] a shot, there are a bunch of bugs that
-> > >> people pointed out for which I gave fixes on top of [1] in the
-> > >> replies. I was supposed to work on v2 over the holidays, but that
-> > >> didn't happen because of stuff outside my control.
-> > >>
-> > >>> That's ample time to fix this, so I intend to apply this. But I'll
-> > >>> give it a few days for comments.
-> > >>
-> > >> Rob, I'd recommend not applying this because it'll fix it for Dmitry
-> > >> but break someone else's use case. That's the whole reason it takes me
-> > >> a while to send out patches -- it's easy to fix it for a subset of
-> > >> devices, but fixing something without breaking someone else is harder
-> > >> (I still believe it's doable) and it takes a while to test them on all
-> > >> the devices I want to test before sending them out.
-> >
-> > This case is really simple, I think. Clock controllers (and
-> > clock-core-framework) are prepared to handle clock orphans properly.
-> > Moreover they have been supposed to work in such way for quite a while.
-> > In other words, I don't think we should save them from this
-> > -EPROBE_DEFERRED.
+> > On Mon, Jan 9, 2023 at 1:36 PM Dmitry Baryshkov
+> > <dmitry.baryshkov@linaro.org> wrote:
+> >>
+> >> On 09/01/2023 23:00, Doug Anderson wrote:
+> >>> Hi,
+> >>>
+> >>> On Tue, Dec 20, 2022 at 9:12 AM Dmitry Baryshkov
+> >>> <dmitry.baryshkov@linaro.org> wrote:
+> >>>>
+> >>>> On 20/12/2022 18:20, Rajendra Nayak wrote:
+> >>>>>
+> >>>>>
+> >>>>> On 12/20/2022 8:00 PM, Matthias Kaehlcke wrote:
+> >>>>>> On Tue, Dec 20, 2022 at 10:30:32AM +0530, Rajendra Nayak wrote:
+> >>>>>>>
+> >>>>>>> On 12/16/2022 7:49 PM, Matthias Kaehlcke wrote:
+> >>>>>>>> On Fri, Dec 16, 2022 at 04:59:17PM +0530, Rajendra Nayak wrote:
+> >>>>>>>>> Add compatibles for the Pro SKU of the sc7280 CRD boards
+> >>>>>>>>> which come with a Pro variant of the qcard.
+> >>>>>>>>> The Pro qcard variant has smps9 from pm8350c ganged up with
+> >>>>>>>>> smps7 and smps8.
+> >>>>>>>>>
+> >>>>>>>>> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+> >>>>>>>>> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> >>>>>>>>> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> >>>>>>>>> ---
+> >>>>>>>>> v4 changes:
+> >>>>>>>>> Added the zoglin-sku1536 compatible along with hoglin-sku1536.
+> >>>>>>>>> Zoglin is same as the Hoglin variant, with the SPI Flash reduced
+> >>>>>>>>> from 64MB to 8MB
+> >>>>>>>>>
+> >>>>>>>>>      Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
+> >>>>>>>>>      1 file changed, 6 insertions(+)
+> >>>>>>>>>
+> >>>>>>>>> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml
+> >>>>>>>>> b/Documentation/devicetree/bindings/arm/qcom.yaml
+> >>>>>>>>> index 1b5ac6b02bc5..07771d4c91bd 100644
+> >>>>>>>>> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> >>>>>>>>> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> >>>>>>>>> @@ -558,6 +558,12 @@ properties:
+> >>>>>>>>>                - const: google,hoglin
+> >>>>>>>>>                - const: qcom,sc7280
+> >>>>>>>>> +      - description: Qualcomm Technologies, Inc. sc7280 CRD Pro
+> >>>>>>>>> platform (newest rev)
+> >>>>>>>>> +        items:
+> >>>>>>>>> +          - const: google,zoglin-sku1536
+> >>>>>>>>> +          - const: google,hoglin-sku1536
+> >>>>>>>>
+> >>>>>>>> Is there actually such a thing as a 'hoglin-sku1536', i.e. the Pro
+> >>>>>>>> qcard
+> >>>>>>>> with 64MB of SPI flash, or do they all have 8MB of flash?
+> >>>>>>>
+> >>>>>>> The SPI flash is on the CRD mother-board and not on the qcards, so if
+> >>>>>>> you replace
+> >>>>>>> the qcards on the CRDs with 64MB flash you would need the
+> >>>>>>> hoglin-sku1536 to
+> >>>>>>> boot on those.
+> >>>>>>
+> >>>>>> With such a configuration how does the bootloader know it should pass
+> >>>>>> the kernel
+> >>>>>> the device tree for 'hoglin-sku1536' (pro) and not the non-pro
+> >>>>>> variant? IIUC the
+> >>>>>> device tree is selected based on pin strappings on the mother-board,
+> >>>>>> not the
+> >>>>>> qcard.
+> >>>>>
+> >>>>> The device tree is selected based on the pin strappings _and_ additional
+> >>>>> logic
+> >>>>> to dynamically identify modem/non-modem(wifi) as well as pro/non-pro
+> >>>>> SKUs which
+> >>>>> was added in the bootloaders.
+> >>>>
+> >>>> Just to clarify things, when you mention pro SKU, is it a separate SoC
+> >>>> revision (like sc7280-pro vs bare sc7280), or is it a CRD revision (CRD
+> >>>> Pro vs bare CRD)?
+> >>>
+> >>> I guess Rajendra never responded, but since I know the answer: it's a
 >
-> A clock controller can depend on other clock controllers for non clock
-> tree reasons. For example, it might need a clock ON to access its
-> registers. So, while the CCF can handle orphans properly, that's not
-> the only dependency. Also, fw_devlink is not just about probing
-> either. It also has to do with proper sync_state() callbacks.
+> Thanks Doug for the clarifications, I seem to have missed responding to this
+> once I was back from vacation,
 >
-> Also, I already fixed the issue you are referring to while not
-> breaking the conditions I'm referring to. So, I don't know why you are
-> so opposed to that. See Abel's Tested-by here:
-> https://lore.kernel.org/lkml/YvonlAwXAoXTUTZe@linaro.org/
+> >>> different SoC revision. ...but the SoC in this case is on a daughter
+> >>> card, so you could remove the daughter card containing the SoC and put
+> >>> a new daughtercard on. That would have the effect of making an old CRD
+> >>> revision have the new Pro SKU SoC.
+> >>
+> >> So, this is a new SoC. Is it 100% compatible with the sc7280? In other
+> >> words: does it require any additional customizations (in OPP tables, in
+> >> frequences, speed bins, etc)?
 >
-> > Thus I think it is better to let them continue doing their job of
-> > handling probe deferrals on their own, at least for the time being.
->
-> I'm pretty sure your patch will break other Qualcomm platforms because
-> they depend on sync_state() callbacks to boot up properly when
-> all/most of their drivers are built as modules.
->
-> > And
-> > then, when your patches are finished, we can think about reenabling
-> > current behaviour. As a reminder, currently, all Qualcomm platforms
-> > trying to use double DSI configuration are broken and have to use
-> > fw_devlink= kernel params.
->
-> I'm/was working on sending out the v2 when I got your email. Hold
-> tight please. It shouldn't take too long.
+> Yes, the OPP differences are taken care of with no changes needed in kernel.
+> We describe a superset of *all* OPPs supported by a SoC family in DT and the
+> cpufreq driver then queries the firmware for supported OPPs on a given
+> SoC variant and ends up disabling the rest.
 
-There!
-https://lore.kernel.org/lkml/20230127001141.407071-1-saravanak@google.com/
+I saw that Bjorn just send out a pull request but it didn't include
+this patch. Bjorn: are you expecting anything from Rajendra here, or
+did it just get missed? I think Rajendra responded to all of Dmitry's
+comments, but I could be mistaken.
 
-Happy? :)
-
--Saravana
+-Doug
