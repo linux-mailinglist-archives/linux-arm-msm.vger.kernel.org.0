@@ -2,95 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 852EC67DE19
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 08:00:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 82CD267DEF2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 09:18:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232103AbjA0HAX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Jan 2023 02:00:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58178 "EHLO
+        id S232038AbjA0ISl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Jan 2023 03:18:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232142AbjA0HAO (ORCPT
+        with ESMTP id S229550AbjA0ISk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Jan 2023 02:00:14 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76A9D222FF;
-        Thu, 26 Jan 2023 23:00:13 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id DB98361A04;
-        Fri, 27 Jan 2023 07:00:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0D29C433EF;
-        Fri, 27 Jan 2023 07:00:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1674802812;
-        bh=bWVN+OTliEjC/t2AVEdhiTatxpI8RYyW/A4NxbNdTMg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Asnn3+OSDHyfYdubzgNrVsAHzWZR4c8hXSurNlKWoQDlQD9Fw/TdaJnfLmmdPolXU
-         EXRIuPFPd6Iz/hvjCzuLpnP5cYdExrxqd2uMaRG5rP66EpM2N/sWaybsNLIfGx3+Rl
-         9KJLZ6q+DEDQOdpwV9g5nL5OQdzGyzCVei0Fo+uUTxKuLvO1gwdMDsni9phlyEq5pI
-         g34YsSpxClnnTkjINn8b0l/Q9aUM20m+qvrLPxA59FykuLRUWf0TTH/me5qcB8Jt5i
-         fdu4sfrx3f++5w+YWJNSrq3eO/nshT0Uf677wkoHi4aylDIwJOTgrxNLFsYOrJ+UqD
-         QHK1vl9LC+wZQ==
-Date:   Fri, 27 Jan 2023 12:29:58 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Dan Carpenter <error27@gmail.com>
-Cc:     Manivannan Sadhasivam <mani@kernel.org>,
-        Alex Elder <elder@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, kernel-janitors@vger.kernel.org
-Subject: Re: [PATCH] bus: mhi: ep: Fix off by one in mhi_ep_process_cmd_ring()
-Message-ID: <20230127065958.GG7809@thinkpad>
-References: <Y9JH5sudiZWvbODv@kili>
+        Fri, 27 Jan 2023 03:18:40 -0500
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4831538026;
+        Fri, 27 Jan 2023 00:18:36 -0800 (PST)
+Received: from [127.0.0.1] (144-178-202-138.static.ef-service.nl [144.178.202.138])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 2A86CCD52C;
+        Fri, 27 Jan 2023 08:18:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1674807485; bh=scsgDr8Bc4H9mjfkHESouNbjZqJgzTX2xBO0EFeMwAA=;
+        h=Date:From:To:CC:Subject:In-Reply-To:References;
+        b=q+kCCfHnPQWDPrOKoCSsb+f1u43YZoNE+XpXNS7pD9O62FvDxeLLiD0KtBqSkJn2Z
+         S13s4FojPNyg9r3HVTwtiPYnIBQ+pWBIHUKn7h7MovolxStKznNSNvJGLr62BiGpeG
+         zJ24Pt/NwvMBuR4uyYbCx4CHMvw0Edq0VFTpKADs=
+Date:   Fri, 27 Jan 2023 09:18:03 +0100
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     ~postmarketos/upstreaming@lists.sr.ht,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rayyan Ansari <rayyan@ansari.sh>, linux-arm-msm@vger.kernel.org
+CC:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        devicetree@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Luca Weiss <luca.weiss@fairphone.com>
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v4_1/3=5D_clk=3A_qcom=3A_smd=3A_A?= =?US-ASCII?Q?dd_XO_RPM_clocks_for_MSM8226/MSM8974?=
+User-Agent: K-9 Mail for Android
+In-Reply-To: <b24dbfb4-8b02-bb30-d859-a313a4aaa363@linaro.org>
+References: <20230121192540.9177-1-rayyan@ansari.sh> <20230121192540.9177-2-rayyan@ansari.sh> <06d53a3fa48080d902476b71308e69bd.sboyd@kernel.org> <4c531c68-b74f-2f90-e8f6-98a4b0316cd4@ansari.sh> <a7058fb92642a1661995d7d3ca6411bd.sboyd@kernel.org> <b24dbfb4-8b02-bb30-d859-a313a4aaa363@linaro.org>
+Message-ID: <E190B1BB-29C1-4E25-B658-7BDF4EF74197@z3ntu.xyz>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Y9JH5sudiZWvbODv@kili>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
+        SPF_HELO_NONE,SPF_PASS,T_PDS_OTHER_BAD_TLD autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 26, 2023 at 12:29:10PM +0300, Dan Carpenter wrote:
-> The > comparison should be changed to >= to prevent an out of bounds
-> access into the mhi_cntrl->mhi_chan[] array.  The mhi_cntrl->mhi_chan[]
-> array is allocated in mhi_ep_chan_init() and has mhi_cntrl->max_chan
-> elements.
-> 
-> Fixes: 2527ad44ddb2 ("bus: mhi: ep: Check if the channel is supported by the controller")
-> Signed-off-by: Dan Carpenter <error27@gmail.com>
+Hi,
 
-Applied to mhi-next!
+Checking clk_summary in debugfs it looks fine on msn8974pro-fairphone-fp2
 
-Thanks,
-Mani
+Tested-by: Luca Weiss <luca@z3ntu=2Exyz>
 
-> ---
->  drivers/bus/mhi/ep/main.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-> index bcaaba97ef63..be2d56e7f392 100644
-> --- a/drivers/bus/mhi/ep/main.c
-> +++ b/drivers/bus/mhi/ep/main.c
-> @@ -125,7 +125,7 @@ static int mhi_ep_process_cmd_ring(struct mhi_ep_ring *ring, struct mhi_ring_ele
->  	ch_id = MHI_TRE_GET_CMD_CHID(el);
->  
->  	/* Check if the channel is supported by the controller */
-> -	if ((ch_id > mhi_cntrl->max_chan) || !mhi_cntrl->mhi_chan[ch_id].name) {
-> +	if ((ch_id >= mhi_cntrl->max_chan) || !mhi_cntrl->mhi_chan[ch_id].name) {
->  		dev_err(dev, "Channel (%u) not supported!\n", ch_id);
->  		return -ENODEV;
->  	}
-> -- 
-> 2.35.1
-> 
+Regards
+Luca
 
--- 
-மணிவண்ணன் சதாசிவம்
+Konrad Dybcio <konrad=2Edybcio@linaro=2Eorg> schreef op 26 januari 2023 00=
+:33:42 CET:
+>
+>
+>On 26=2E01=2E2023 00:00, Stephen Boyd wrote:
+>> Quoting Rayyan Ansari (2023-01-25 14:25:08)
+>>> On 25/01/2023 20:58, Stephen Boyd wrote:
+>>>> Quoting Rayyan Ansari (2023-01-21 11:25:38)
+>>>>> Add the XO and XO_A clocks to the MSM8974 clock list, which is also
+>>>>> used on MSM8226=2E
+>>>>
+>>>> Why was this missing for so long? Does this break suspend? Why are yo=
+u
+>>>> adding it now?
+>>>
+>>> I am adding it because of a recommendation from a maintainer on an old=
+er=20
+>>> patch version=2E
+>>> See=20
+>>> https://lore=2Ekernel=2Eorg/linux-arm-msm/20230119023337=2Eh6a7f56lizh=
+v4tcy@builder=2Elan/#t
+>>=20
+>> So nobody has tested this on msm8974? Can you add this information to
+>> the commit text?
+>
+>
+>And can it be tested on msm8974?
+>+ Luca
+>
+>^ could you, please?
+>
+>Konrad
