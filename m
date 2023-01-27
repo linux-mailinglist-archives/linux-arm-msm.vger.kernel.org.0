@@ -2,181 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F2D767EA04
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 16:51:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 773CF67EA0A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 16:54:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233847AbjA0Pvh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Jan 2023 10:51:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47540 "EHLO
+        id S232493AbjA0Pyn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Jan 2023 10:54:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233248AbjA0Pv3 (ORCPT
+        with ESMTP id S232280AbjA0Pym (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Jan 2023 10:51:29 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D694A86256;
-        Fri, 27 Jan 2023 07:51:21 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 7F837B807E4;
-        Fri, 27 Jan 2023 15:51:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 251D1C433D2;
-        Fri, 27 Jan 2023 15:51:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1674834679;
-        bh=IW0tQWKLcqGw/S8oUUD4S9kO5J98FlyPY+T0QPayjA4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=tbKKnT47GjJgGQ2zTPOlDLQzTBtmr4ssjQW5toFrQRmIzH/Fp5a0Z6AS02AOblo6I
-         qL5ixqPPPH3REnkLr/70L8Nh00Rngb955FHGNFqr0TwMX4ieJ4zN9PH4OTMUQaZbiG
-         mhV6JXayl88dgGsz0ySJv4zffOrHz9VpRU4rSaTu+pQJ5xl5yvXOG+Q63GhilkMwAj
-         7gOF3Q0EcbIjhJN28oDE/E6B56muhAeE78MYPfjHszKrVKqJgEYwK1BGaNootP+gbz
-         LpG6xlKeO/L/ULzDne2dVCPUVOwUbxtoNEA7SlVzmnYFIFF0X+kX2kAtKyISePQ+81
-         EicuRx2osBbHg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1pLR0h-0001Nw-RU; Fri, 27 Jan 2023 16:51:28 +0100
-Date:   Fri, 27 Jan 2023 16:51:27 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Alexandre Belloni <alexandre.belloni@bootlin.com>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Alessandro Zummo <a.zummo@towertech.it>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Maximilian Luz <luzmaximilian@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-rtc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 16/24] rtc: pm8xxx: add support for nvmem offset
-Message-ID: <Y9Py/+GpI8x8ldDG@hovoldconsulting.com>
-References: <20230126142057.25715-1-johan+linaro@kernel.org>
- <20230126142057.25715-17-johan+linaro@kernel.org>
- <Y9PpQkW3Rtm+bi2V@mail.local>
+        Fri, 27 Jan 2023 10:54:42 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44A3779F2F;
+        Fri, 27 Jan 2023 07:54:41 -0800 (PST)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30REtukc016281;
+        Fri, 27 Jan 2023 15:54:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=t2dYPpz3UZYdEtdmlskh7wuq6K08Q/6kAgphXiMGzq0=;
+ b=L3ixwtTHKpICTtkL6sIQaPFdCz+HVjY3VuTjMU7OUZh/yp8vUct7SKChSyYZmlIe9uq2
+ cV6R/YQB3PXcQVe9U/uX/PFJoCldozF2WrFOjjNzX/PrPSUfwWRZcTT+0zMVhGhT3OPb
+ cKZ4XhPgvOOKnE1X6DYh9t6+rb+j2+n68SGlVu3U08ddPE+CUBdQDJI6nPe9ZSAMWVL7
+ S2/U0GSAKcONL0+FI1gFo5kvBCM0+5lWWZD7gJq90nhhaWxwPGIgpEzpsZQd+ybs1y+V
+ OJpNmkM8PRFUkQm2HdaofvsfbIMlvGrHrNyd3CNl4rNipfgkqA8ilJWDwGG4vgaLpsay RA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ncavc0mxp-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 27 Jan 2023 15:54:37 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30RFsajN014826
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 27 Jan 2023 15:54:36 GMT
+Received: from [10.50.41.100] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Fri, 27 Jan
+ 2023 07:54:31 -0800
+Message-ID: <707a8e33-f138-d9ef-bb98-6732bf7e7c83@quicinc.com>
+Date:   Fri, 27 Jan 2023 21:24:28 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y9PpQkW3Rtm+bi2V@mail.local>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH 1/6] soc: qcom: smd-rpm: Add IPQ9574 compatible
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <lgirdwood@gmail.com>,
+        <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>
+CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
+        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
+        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_poovendh@quicinc.com>
+References: <20230113150310.29709-1-quic_devipriy@quicinc.com>
+ <20230113150310.29709-2-quic_devipriy@quicinc.com>
+ <37755ba1-e8d0-cd9e-73a4-6501746022d8@linaro.org>
+From:   Devi Priya <quic_devipriy@quicinc.com>
+In-Reply-To: <37755ba1-e8d0-cd9e-73a4-6501746022d8@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: fVpjDeNWE_MELuswf4O-53OLvE1ovNka
+X-Proofpoint-ORIG-GUID: fVpjDeNWE_MELuswf4O-53OLvE1ovNka
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-27_09,2023-01-27_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1015
+ lowpriorityscore=0 spamscore=0 phishscore=0 suspectscore=0 adultscore=0
+ mlxlogscore=841 impostorscore=0 priorityscore=1501 bulkscore=0 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2301270147
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 27, 2023 at 04:09:54PM +0100, Alexandre Belloni wrote:
-> On 26/01/2023 15:20:49+0100, Johan Hovold wrote:
-> > On many Qualcomm platforms the PMIC RTC control and time registers are
-> > read-only so that the RTC time can not be updated. Instead an offset
-> > needs be stored in some machine-specific non-volatile memory, which the
-> > driver can take into account.
-> > 
-> > Add support for storing a 32-bit offset from the Epoch in an nvmem cell
-> > so that the RTC time can be set on such platforms.
-> > 
-> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > ---
-> >  drivers/rtc/rtc-pm8xxx.c | 134 +++++++++++++++++++++++++++++++++++----
-> >  1 file changed, 123 insertions(+), 11 deletions(-)
-> > 
-> > diff --git a/drivers/rtc/rtc-pm8xxx.c b/drivers/rtc/rtc-pm8xxx.c
-> > index 922aef0f0241..09816b9f6282 100644
-> > --- a/drivers/rtc/rtc-pm8xxx.c
-> > +++ b/drivers/rtc/rtc-pm8xxx.c
-> > @@ -3,6 +3,7 @@
-> >   */
-> >  #include <linux/of.h>
-> >  #include <linux/module.h>
-> > +#include <linux/nvmem-consumer.h>
-> >  #include <linux/init.h>
-> >  #include <linux/rtc.h>
-> >  #include <linux/platform_device.h>
-> > @@ -49,6 +50,8 @@ struct pm8xxx_rtc_regs {
-> >   * @alarm_irq:		alarm irq number
-> >   * @regs:		register description
-> >   * @dev:		device structure
-> > + * @nvmem_cell:		nvmem cell for offset
-> > + * @offset:		offset from epoch in seconds
-> >   */
-> >  struct pm8xxx_rtc {
-> >  	struct rtc_device *rtc;
-> > @@ -57,8 +60,60 @@ struct pm8xxx_rtc {
-> >  	int alarm_irq;
-> >  	const struct pm8xxx_rtc_regs *regs;
-> >  	struct device *dev;
-> > +	struct nvmem_cell *nvmem_cell;
-> > +	u32 offset;
-> >  };
-> >  
-> > +static int pm8xxx_rtc_read_nvmem_offset(struct pm8xxx_rtc *rtc_dd)
-> > +{
-> > +	size_t len;
-> > +	void *buf;
-> > +	int rc;
-> > +
-> > +	buf = nvmem_cell_read(rtc_dd->nvmem_cell, &len);
-> > +	if (IS_ERR(buf)) {
-> > +		rc = PTR_ERR(buf);
-> > +		dev_err(rtc_dd->dev, "failed to read nvmem offset: %d\n", rc);
+
+
+On 1/13/2023 10:12 PM, Krzysztof Kozlowski wrote:
+> On 13/01/2023 16:03, devi priya wrote:
+>> Adding compatible string to support RPM communication over SMD for
+>> IPQ9574 SoC
+>>
+>> Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+>> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
 > 
-> You removed many dev_err strings in your previous patch and now this is
-> verbose. Honestly, there is not much to do apart from reying the
-> operation so I don't think the strings are worth it.
-
-There's a difference. The SPMI ones are basically equivalent to mmio
-reads, which we also don't expect to fail (and other spmi drivers also
-ignore them).
-
-These nvmem error paths I actually hit during development and it could
-help someone trying to enable this feature on a new platform.
- 
-> > +		return rc;
-> > +	}
-> > +
-> > +	if (len != sizeof(u32)) {
-> > +		dev_err(rtc_dd->dev, "unexpected nvmem cell size %zu\n", len);
-> > +		kfree(buf);
-> > +		return -EINVAL;
-> > +	}
-> > +
-> > +	rtc_dd->offset = get_unaligned_le32(buf);
-> > +
-> > +	kfree(buf);
-> > +
-> > +	return 0;
-> > +}
-
-> > @@ -380,9 +478,23 @@ static int pm8xxx_rtc_probe(struct platform_device *pdev)
-> >  	rtc_dd->allow_set_time = of_property_read_bool(pdev->dev.of_node,
-> >  						      "allow-set-time");
-> >  
-> > +	rtc_dd->nvmem_cell = devm_nvmem_cell_get(&pdev->dev, "offset");
+> What exactly was developed here but the other author?
 > 
-> Maybe we should get something more specific than just "offset" so this
-> could be parsed in the RTC core at some point (this is the second RTC to
-> behave like this)
+The intention was to mention folks who supported with the patch series 
+development using the co-developed-by tag on the individual patches.
+But yeah, for patches with minimal changes, will trim down the tag as 
+suggested.
 
-Yes, that thought crossed my mind, but it's an nvmem cell name (label)
-and not a generic devicetree property. If you look at the binding
-document I think the name makes sense given the current description, and
-I'm not sure changing to something like 'base' would be much of an
-improvement.
 
-I also don't expect there to be more broken RTCs out there like these
-ones. Hopefully Qualcomm will even get this fixed at some point
-themselves.
-
-And I assume you were think of the old Atmel driver which uses a timer
-counter and a scratch register as a base? That one is also a bit
-different in that the timer can be reset, just not set.
-
-> > +	if (IS_ERR(rtc_dd->nvmem_cell)) {
-> > +		rc = PTR_ERR(rtc_dd->nvmem_cell);
-> > +		if (rc != -ENOENT)
-> > +			return rc;
-> > +		rtc_dd->nvmem_cell = NULL;
-> > +	}
-
-Johan
+>> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
+>> ---
+>>   drivers/soc/qcom/smd-rpm.c | 1 +
+>>   1 file changed, 1 insertion(+)
+>>
+> 
+> Best regards,
+> Krzysztof
+> 
+Best Regards,
+Devi Priya
