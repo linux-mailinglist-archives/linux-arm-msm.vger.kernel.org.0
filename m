@@ -2,100 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 087C767E984
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 16:33:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 39C9767E9A4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 16:37:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234083AbjA0Pdi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Jan 2023 10:33:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59672 "EHLO
+        id S234478AbjA0Phs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Jan 2023 10:37:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35032 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234564AbjA0Pdg (ORCPT
+        with ESMTP id S234130AbjA0Phr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Jan 2023 10:33:36 -0500
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2761C80FA7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 07:33:35 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id bg13-20020a05600c3c8d00b003d9712b29d2so5671293wmb.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 07:33:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=BNGvS2ID0Pc1q19b8jVCARHoPS77fpPLbsMdQVhJjRU=;
-        b=jupml07bP3Bg4HgWDYrj5yhkar2XTFy/mzaT7nmJaAKRDc7HajJAQSLRasOIEMYbgW
-         toa5tC6p4fdIli6TzFjsiLoQYK6kIerLkRffjHfjfNsKfk5JNnr/sAsYCbMevPU7GNX1
-         oT/3+f8ZqRAp3AW6ihO1j6D6HNirmOVn+W36iy+fpPuNOx0RIdlcG+eYPTPz8MH6Wvzs
-         gi2B464Dj9KV3uZ69Se4zf/l6ijENcoFZt7cFy9HqhxO8Zy+yB0f1c55lD4QwWfEUzyF
-         qK3f29c4U8gAG3B2ck+j5p2gKUHXNCRjV2dI9gGRukoUT6PQSvKWbM49vHgSYsap8Dwa
-         ZXmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BNGvS2ID0Pc1q19b8jVCARHoPS77fpPLbsMdQVhJjRU=;
-        b=tRRmor3pGfhKCZUTha+KiwCc8rGnTHbkerskGWJ1k20eK+Suw+sPvFWb20fDn12WYD
-         r3wQYp8M2EuLQ8Xn/Uvc7YM/qLPbo1fACC74Y1u2FyJKXiuFOW8XyVXA4mYj9DbM3tP7
-         5IIblyozucs0I1wnSyv/FHeeEZCUsJcwedF/0RlajCQU74FMZ+NrFmDvFYcCAy0VstTY
-         Mcd7mGCJqAD8C+QuRtnQXkLNBJ3mAfk3N8k3h2NWVhJhiwAbSsdc1bFzsIsftD12HtwC
-         8jTkGMMVFBqTXQm33yy+Uraka+M2Mw6qCZXRWmC2XUQc4WNU3CJXJaE7XGeD1ztoSvUd
-         bCbA==
-X-Gm-Message-State: AFqh2koOcPBAoG2c86YgSC0igON7F5zstihoyyN1c9qzvwBwaDSG0a9k
-        hLMMsOXL0xQruIAsrQv8vLttbw==
-X-Google-Smtp-Source: AMrXdXtB+suh5m7saotaP8clkeCqLgJ+9SlofDAlsQ/ZtH13Uj0zCpjo1eW7fJyzu6be3Zzr1nS+3A==
-X-Received: by 2002:a05:600c:995:b0:3da:f4f5:ad0e with SMTP id w21-20020a05600c099500b003daf4f5ad0emr39233519wmp.9.1674833613373;
-        Fri, 27 Jan 2023 07:33:33 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id l16-20020a7bc350000000b003d9aa76dc6asm9724450wmj.0.2023.01.27.07.33.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Jan 2023 07:33:32 -0800 (PST)
-Message-ID: <7428b6d9-1653-4a4a-8e12-bc7ededef8a0@linaro.org>
-Date:   Fri, 27 Jan 2023 16:33:31 +0100
+        Fri, 27 Jan 2023 10:37:47 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96CE88240F;
+        Fri, 27 Jan 2023 07:37:45 -0800 (PST)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30RElq1x003993;
+        Fri, 27 Jan 2023 15:37:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=s35fDMFuCDI7snKGOAqNIeD5EWEdWYcstsPeRIwrdA8=;
+ b=ChXqT+ASEnz5yU1AO9NLHunpdfRwuRg+TgxmQH3fZLwTnlGMtn4Pzcre2q7/T9kVzl8l
+ aVB5FqiuRwdXZ/5FUXeC9OL69HYGH4YhUYHC7jbtXU27IFyi3jaL/zpJRUU5naQf/oIz
+ nLVLoF9L0sVYmTgrRNob4gJGlC3NlCLCBiS8y+U+4/yZeqrqQR/0A99pAnF+CUpM9pdL
+ iXeddagZCRjFkXPhWiL/zRQgiYBGwYC3210il7JnCz5guRscOJoroy/DKCDttFdnKOyJ
+ ywmRZYCVno5xjLXm3TvDumf91RM6TSEriv/rYC7T1h08QXnKAg2nLBINgLeXP7FgTlP2 iQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ncavc0kw7-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 27 Jan 2023 15:37:30 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30RFbSM2022803
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 27 Jan 2023 15:37:28 GMT
+Received: from [10.50.41.100] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Fri, 27 Jan
+ 2023 07:37:20 -0800
+Message-ID: <410f1674-cda4-a1ac-e72d-eb32a3fead98@quicinc.com>
+Date:   Fri, 27 Jan 2023 21:07:17 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH] arm64: dts: qcom: Fix regulators node names
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH 1/6] dt-bindings: clock: Add YAML schemas for QCOM A73 PLL
 Content-Language: en-US
-To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org
-References: <20230127130106.1136226-1-abel.vesa@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230127130106.1136226-1-abel.vesa@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <jassisinghbrar@gmail.com>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <shawnguo@kernel.org>, <arnd@arndb.de>,
+        <marcel.ziswiler@toradex.com>, <dmitry.baryshkov@linaro.org>,
+        <nfraprado@collabora.com>, <broonie@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
+        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
+        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_poovendh@quicinc.com>
+References: <20230113143647.14961-1-quic_devipriy@quicinc.com>
+ <20230113143647.14961-2-quic_devipriy@quicinc.com>
+ <0337e1ad-b8b4-8728-f5f1-be153b950fe6@linaro.org>
+From:   Devi Priya <quic_devipriy@quicinc.com>
+In-Reply-To: <0337e1ad-b8b4-8728-f5f1-be153b950fe6@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 86bz_1uNXXO4otPIl1sMJ7bg24mAdj3v
+X-Proofpoint-ORIG-GUID: 86bz_1uNXXO4otPIl1sMJ7bg24mAdj3v
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-27_09,2023-01-27_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1015
+ lowpriorityscore=0 spamscore=0 phishscore=0 suspectscore=0 adultscore=0
+ mlxlogscore=999 impostorscore=0 priorityscore=1501 bulkscore=0 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2301270144
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/01/2023 14:01, Abel Vesa wrote:
-> Bindings check fails as the schema expects the regulator node names to
-> have the suffix -regulators, so use the name and the id of the pmic to
-> compile the node name instead.
+Thanks for taking time to review the patch!
+
+On 1/13/2023 8:27 PM, Krzysztof Kozlowski wrote:
+> On 13/01/2023 15:36, devi priya wrote:
+>> Add schema for primary CPU PLL found on few Qualcomm platforms.
 > 
-> Fixes: 71342fb91eae ("arm64: dts: qcom: Add base SM8550 MTP dts")
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
-
-No, the original code is what we requested.
-
-You are making it now incorrect (although bindings need to catch up).
-
-See:
-https://lore.kernel.org/linux-arm-msm/9e805614-8d21-4f8b-1b31-790686c95aa5@linaro.org/T/#t
-
-Best regards,
-Krzysztof
-
+> Subject: drop redundant "YAML schemas for"
+> 
+Sure, okay
+> 
+>>
+>> Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+>> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+>> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
+>> ---
+>>   .../bindings/clock/qcom,a73pll.yaml           | 52 +++++++++++++++++++
+>>   1 file changed, 52 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/clock/qcom,a73pll.yaml
+>>
+>> diff --git a/Documentation/devicetree/bindings/clock/qcom,a73pll.yaml b/Documentation/devicetree/bindings/clock/qcom,a73pll.yaml
+>> new file mode 100644
+>> index 000000000000..a0e81094db8d
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/clock/qcom,a73pll.yaml
+>> @@ -0,0 +1,52 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/clock/qcom,a73pll.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm A73 PLL clock
+>> +
+>> +maintainers:
+>> +  - Bjorn Andersson <andersson@kernel.org>
+>> +
+>> +description:
+>> +  The A73 PLL on few Qualcomm platforms is the main CPU PLL used for
+>> +  frequencies above 1GHz.
+>> +
+>> +properties:
+>> +  compatible:
+>> +    enum:
+>> +      - qcom,ipq9574-a73pll
+>> +
+>> +  reg:
+>> +    maxItems: 1
+>> +
+>> +  '#clock-cells':
+>> +    const: 0
+>> +
+>> +  clocks:
+>> +    items:
+>> +      - description: board XO clock
+>> +
+>> +  clock-names:
+>> +    items:
+>> +      - const: xo
+>> +
+>> +  operating-points-v2: true
+> 
+> Drop. I'll fix the other bindings.
+> 
+As suggested by konrad, will drop this file change and add the 
+compatible in qcom,a53pll.yaml
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg
+>> +  - '#clock-cells'
+>> +
+>> +additionalProperties: false
+>> +
+>> +examples:
+>> +  - |
+>> +    a73pll: clock@b116000 {
+>> +            compatible = "qcom,ipq9574-a73pll";
+> 
+> Use 4 spaces for example indentation.
+> 
+>> +            reg = <0x0b116000 0x40>;
+>> +            #clock-cells = <0>;
+>> +            clocks = <&xo_board_clk>;
+>> +            clock-names = "xo";
+>> +    };
+> 
+> Best regards,
+> Krzysztof
+> 
+Best Regards,
+Devi Priya
