@@ -2,63 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5DC6967E60A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 14:05:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8596267E647
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 14:12:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233560AbjA0NFC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Jan 2023 08:05:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46240 "EHLO
+        id S232557AbjA0NMx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Jan 2023 08:12:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233250AbjA0NEn (ORCPT
+        with ESMTP id S234012AbjA0NMt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Jan 2023 08:04:43 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F31917CCAD;
-        Fri, 27 Jan 2023 05:04:41 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 03523B81F21;
-        Fri, 27 Jan 2023 13:04:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C603C433EF;
-        Fri, 27 Jan 2023 13:04:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1674824678;
-        bh=s2Kl2DFTjPfURrm0RC4TBfPUoYKL+iGruFychEwP8JI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=BJghCqq5cgDU8pgSAyW0RJujDszQQxmqA3HnnnVs5m3L9NegM1AByLIVMFfiTncv6
-         Fm0HqtN9qnv1bMftwkPxidpLn5FuyLBjprgYUpUigPUtLFrMEwoJDjNREKhTy40xCu
-         3BakLwyCN/bGXcF7vYp5EAjRAu9ZWTeukbfIE9qguUJptfBzTNjBmKKQaaRi2hC8EL
-         J0c3ujHb29vhPyZm4oxQ3hi0LmiAhu+9TgEGyezNnQ/fU1SS0/TxNu5+K9L+2bOn6q
-         2gGqzb91/x7eKybEVBg628llCRZKLd/TBKG3XEABgLes0+MSqWLNkmMtSmIyCJlh8y
-         HeRFLmuymua3w==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1pLOPP-0008L8-Li; Fri, 27 Jan 2023 14:04:47 +0100
-Date:   Fri, 27 Jan 2023 14:04:47 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Alexandre Belloni <alexandre.belloni@bootlin.com>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Alessandro Zummo <a.zummo@towertech.it>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Maximilian Luz <luzmaximilian@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-rtc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 17/24] rtc: pm8xxx: add copyright notice
-Message-ID: <Y9PL73mTJZ3hayur@hovoldconsulting.com>
-References: <20230126142057.25715-1-johan+linaro@kernel.org>
- <20230126142057.25715-18-johan+linaro@kernel.org>
- <Y9Kk/AYBUfnoPCcP@mail.local>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y9Kk/AYBUfnoPCcP@mail.local>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        Fri, 27 Jan 2023 08:12:49 -0500
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A134A80143
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 05:12:18 -0800 (PST)
+Received: by mail-ej1-x62a.google.com with SMTP id mg12so13594514ejc.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 05:12:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Pu1HTphj/Rd+hvsmfPEOQ6MqsGz846VOWoOD9sOistQ=;
+        b=W/E5rIznkAUn0gpNPXRTLyh4NVlL5sSBE3DMefgPKKEJfF0sP62XHai51Ky8UKJRup
+         1Jo++Y1Q0N42fbS71zOEpwOtEqWOEvD6MMGiJ+iSsoPzGDDKjVZaENephTqcMrOP1kUV
+         DqRUr2ZjY2EUpzh1DYsi/pruy7lsyBCvEIK1ooaOtVj3qqxvzCiKUtc6JD9vf6ZE/x2x
+         sPU8+qKbIug0hwUnydlz0bpv9dHu/kFyoQPYcVfoHqAN2sIOl0hYQUP1jdxD+It6lNOQ
+         mcUvvhPP4zOHAkmN7tqCV3TAb78hvVzJ92I9EuwDrEK6C9/LZFpN4HeF5dFkHq1dG82r
+         fYGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Pu1HTphj/Rd+hvsmfPEOQ6MqsGz846VOWoOD9sOistQ=;
+        b=0KdE0EeGU/cEI5GNZvrVOyWFLS3SE3bvBpAIeGv52xCVvZTMd7oACZLSo2OcIwyFZU
+         RwjyTV/QBsjUhDveZz1s7YME+42baX4aZD2JJ3QWAIFoa6hALxUIFz30sC27kloptkAq
+         Tvna0Xe8ZMBXKrGjKQZewvWVR2myLAfcWk8INWol66BPXaOVBzh535yfgY96mQoMGEkq
+         xDMPscpLCfnhX2tnnb8P+I9mZxerR1idfavcV1QhBNovG/LH9U9T5P/aH3eIlm8a9sQN
+         q0xGBKXyRCPHtwmQui1Hh2Pd1PAeUnXH1xc15osJFBapIfILZ6XDxjXFtYdEAjAUu7qh
+         8c3g==
+X-Gm-Message-State: AFqh2kpVPDnq5PIWbpf4kXD1sK6CIJUiaCQ1HTf7GmsIm7N4b4moDLfJ
+        fKHZ/KoBMVoOPwKXRySCYtBnvg==
+X-Google-Smtp-Source: AMrXdXtSn4UtqYZrwl5P+2ddPBf9wah+lahWSRiqA6L8PTwwWCdsQoRkV9HoNaXhwa8nKtrN4I01bw==
+X-Received: by 2002:a17:906:b806:b0:84d:430a:5e63 with SMTP id dv6-20020a170906b80600b0084d430a5e63mr39507156ejb.27.1674825091449;
+        Fri, 27 Jan 2023 05:11:31 -0800 (PST)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id n5-20020a1709061d0500b0084d420503a3sm2234999ejh.178.2023.01.27.05.11.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 27 Jan 2023 05:11:30 -0800 (PST)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Fri, 27 Jan 2023 14:11:30 +0100
+Message-Id: <CQ2ZY0W1M4F5.32SLTSYMILGOS@otso>
+Subject: Re: [PATCH v2 2/4] arm64: dts: qcom: sm6350: Add camera clock
+ controller
+From:   "Luca Weiss" <luca.weiss@fairphone.com>
+To:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        "Andy Gross" <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        "Loic Poulain" <loic.poulain@linaro.org>,
+        "Robert Foss" <rfoss@kernel.org>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>
+Cc:     <~postmarketos/upstreaming@lists.sr.ht>,
+        <phone-devel@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+X-Mailer: aerc 0.14.0
+References: <20221213-sm6350-cci-v2-0-15c2c14c34bb@fairphone.com>
+ <20221213-sm6350-cci-v2-2-15c2c14c34bb@fairphone.com>
+ <e5ff49d4-45c7-8c4a-d624-d8f7cc9ce2cb@linaro.org>
+ <CQ0I4ONEI6J4.3KWS1KBE7RTKD@otso>
+ <3ae863df-3260-4863-d88f-da4d3f442174@linaro.org>
+ <CQ2ZDQKO11XZ.HA5CXLK5MTFB@otso>
+ <2989138a-8f4b-50a0-3e90-98b6785f2690@linaro.org>
+In-Reply-To: <2989138a-8f4b-50a0-3e90-98b6785f2690@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -66,44 +88,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 26, 2023 at 05:06:20PM +0100, Alexandre Belloni wrote:
-> On 26/01/2023 15:20:50+0100, Johan Hovold wrote:
-> > Add a copyright notice for Linaro and add myself as a (primary) author
-> > of this driver.
-> > 
-> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > ---
-> >  drivers/rtc/rtc-pm8xxx.c | 7 ++++++-
-> >  1 file changed, 6 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/drivers/rtc/rtc-pm8xxx.c b/drivers/rtc/rtc-pm8xxx.c
-> > index 09816b9f6282..25bdd804b4d2 100644
-> > --- a/drivers/rtc/rtc-pm8xxx.c
-> > +++ b/drivers/rtc/rtc-pm8xxx.c
-> > @@ -1,5 +1,9 @@
-> >  // SPDX-License-Identifier: GPL-2.0-only
-> > -/* Copyright (c) 2010-2011, Code Aurora Forum. All rights reserved.
-> > +/*
-> > + * pm8xxx RTC driver
-> > + *
-> > + * Copyright (c) 2010-2011, Code Aurora Forum. All rights reserved.
-> > + * Copyright (c) 2023, Linaro Limited
-> 
-> Is this really useful? The authoritative source is going to be git
-> anyway.
+On Fri Jan 27, 2023 at 1:49 PM CET, Bryan O'Donoghue wrote:
+> On 27/01/2023 12:45, Luca Weiss wrote:
+> > Can I reference <&camcc TITAN_TOP_GDSC> from itself? I know that having
+> > it on is required to turn on at least some clocks (maybe all clocks).
+> > But from what I understand how power domains are normally handled, the
+> > driver core enables them before the driver is probed, so self
+> > referencing wouldn't work.
+> >=20
+> > And at least no other SoC upstream references TITAN_TOP_GDSC in camcc.
+> >=20
+> > Regards
+> > Luca
+>
+> Doh I meant to say a power-domain to an mmcx a la
+>
+> power-domains =3D <&rpmhpd SM8250_MMCX>;
+> required-opps =3D <&rpmhpd_opp_low_svs>;
+>
+> TITAN_TOP should be in your cci and camss dt nodes.
 
-Sure, but in this case the driver ended up being almost completely
-reworked so I think it is warranted.
- 
-> >   */
-> >  #include <linux/of.h>
-> >  #include <linux/module.h>
-> > @@ -551,3 +555,4 @@ MODULE_ALIAS("platform:rtc-pm8xxx");
-> >  MODULE_DESCRIPTION("PMIC8xxx RTC driver");
-> >  MODULE_LICENSE("GPL v2");
-> >  MODULE_AUTHOR("Anirudh Ghayal <aghayal@codeaurora.org>");
-> > +MODULE_AUTHOR("Johan Hovold <johan@kernel.org>");
-> > -- 
-> > 2.39.1
+Okay, that makes more sense.
 
-Johan
+What I don't quite understand is why sm8250 only has MMCX listed there
+since downstream has both vdd_mx-supply =3D <&VDD_MX_LEVEL> and
+vdd_mm-supply =3D <&VDD_MMCX_LEVEL> and both "supplies" are used for
+different clocks using .vdd_class
+
+But back to sm6350, downstream has vdd_mx-supply =3D <&VDD_MX_LEVEL> and
+vdd_cx-supply =3D <&VDD_CX_LEVEL> and like sm8250 uses cx and mx for
+different clocks.
+Not sure if I should add both, and I guess mainline also currently
+doesn't use higher ops for the power domain when higher clock rate is
+needed, from what I understand?
+
+>
+> ---
+> bod
+
