@@ -2,90 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B33E467E729
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 14:56:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B30C567E7E1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 15:14:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233409AbjA0N4y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Jan 2023 08:56:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35450 "EHLO
+        id S231833AbjA0ONl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Jan 2023 09:13:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230124AbjA0N4w (ORCPT
+        with ESMTP id S233745AbjA0ON0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Jan 2023 08:56:52 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E5E17C717
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 05:56:50 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id y19so4803380edc.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 05:56:50 -0800 (PST)
+        Fri, 27 Jan 2023 09:13:26 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD3897CCB8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 06:13:24 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id y1so5111975wru.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 06:13:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=yXA46BdA2s0F2yreUEYFr6AiDGQqI1YBsrC9BTQ1VjY=;
-        b=B5tnFz61tRu/w0bu3UUA6g2CJbLy6qum2pJHpXh/UqrC+3aXQtkWnKBUvNcH+qQb3w
-         F3nRhVHNflBWo1/L9jwe5S6TzQ7+/Ze3X5HCUnlynOtmyf3Jf3rWc39HGojfwz/tqEw5
-         b6qtJNIs4CWtYLNAuxOLDylJEcNfIo0nsivOxG9NUAodn068NachewhCLgzyOdv+yp1L
-         mD2n+1fI2pvhUDxzFVOb69JdqGvxxg5hV7lMPNFgWgwnBi+dvfCwWhF8RGG/sZrzfxu5
-         3F/KtdkAGfqSk2iQcYnfnw95eQLVp+tqUxPhsKQfq9HbiBoRTESpV+RMNRdWqNs9SGrA
-         rPzg==
+        bh=mVctv5eDwfoxIjLhTETlJMvtbUx+PQOv7ZLAfMpykYo=;
+        b=efpKEqP+zZNsaIrRViELne5gnS27yO4dinEoccIQGZDp7CB9wAAYGNoJYhEzdy/CcV
+         VjKgx4YcMwPw+lh95dN6W6o4wjRmrC0M7Yams/GWGTfI7g9EhcHMuBWHm3u+rJvGdq1U
+         zRAEht79DkiluZHuD9NAKIxUSLvBe65z9txT7DZLTn/El+9B2ndW/fGOgoP7vdmiMEL8
+         Z/QdKAlM7AWY3Wy7ALnjauUp8EUM0JegUkwS89B1hpGoMMGyWZz+QQQglJ99CL1JW5RU
+         VfwJUCX56lL4bMKfiOWr5/gGzf6c/NvtE58142cN6+eZfMeiO3u51BRNxiONi9voTLMs
+         r0Mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yXA46BdA2s0F2yreUEYFr6AiDGQqI1YBsrC9BTQ1VjY=;
-        b=tAb08wcxYi2aWSGl/iowF5UesAc4f+Y9nkQgmX7sHzj8gX2QerIqOc6e63jLvhXbK5
-         KoGniUyQEmxX1r03G9fJAgxnjJ64rBYwZ4AVnFZfuoDwnM6KmTuQDLNt++uo0YD6a1M+
-         G65hLWxYWadzI3GibxO5FvZ1Cajp7Bo95tBWxKCl3jjHxaiWXcmINTtIwxlFB+RbHCBE
-         bFugDrVdwHGdIJD+eNkDpcRsxB0TmmzJdXwpcPY8MSUNrDm9xA0VfSr5uuHL/xy++MiI
-         bfUrTj4ryiLxdZnxoR+FTfe1PXj3c1dd2qeB470YbGpzJ+xsCatNqPl60+U0OrY33O1w
-         j9Gw==
-X-Gm-Message-State: AFqh2krM3HdXfgeEAXBlWpUTNB8nz7vjLb31YXqLTa+AMMMIlSYNQ54c
-        EnvAg5SsToBljZtbeAknp+htLg==
-X-Google-Smtp-Source: AMrXdXuwhrwldFsvH3ia+JZ4iUQf2dgKsJOxomlz5XN6l+4R/avTB57m49f1J8bn5L0CNVp+46p3uw==
-X-Received: by 2002:a05:6402:5110:b0:492:846d:e86d with SMTP id m16-20020a056402511000b00492846de86dmr52421707edd.23.1674827809163;
-        Fri, 27 Jan 2023 05:56:49 -0800 (PST)
-Received: from [192.168.1.101] (abyl20.neoplus.adsl.tpnet.pl. [83.9.31.20])
-        by smtp.gmail.com with ESMTPSA id y8-20020a056402134800b004610899742asm2344343edw.13.2023.01.27.05.56.47
+        bh=mVctv5eDwfoxIjLhTETlJMvtbUx+PQOv7ZLAfMpykYo=;
+        b=8DKP+ys1CJUOkpliTAmSA2xj9zlWNsH5kj/JCuSVZIByeBAc/8BsZnX5F+69WtG6GR
+         bUoa0qHJ95ofByUvcl//g16m9rtz3g51IHHSjGe8RNPRBgE4r5P08+4xnMzicvYsnXsj
+         11VM7pQSCdKRvygK2mAt3GElIUeuK1JHmy9BOrW19F2NWwsyuDzgg9yela/mNJxj+xoM
+         qmaqG7f2oFq/Bdjz7+stzBtcKVAMhMdnfsHvEYFMRRX7UHXZOoJ7IHm2h4T1xKDXHFkM
+         LUJCw1XyFz1urPWBlHjqH28QiEtAd0hEEtdd6SFi45U99thpEnuBlqNDezWY7qeX6Jwm
+         OJ+g==
+X-Gm-Message-State: AO0yUKVY6sFwhcHaHSRngeF6C2FituC8f6NbqI/croZA9R+jdrcEN4Oe
+        ArIx9Rju9xIF36JDKS3bWl3JwQ==
+X-Google-Smtp-Source: AK7set8wCkVuAc7TPOvZ2ORkiCGPcKdWseqtrdWE6YkOgeblgrpB1xcuodXvJ9Y4ooNTTu04lXygjg==
+X-Received: by 2002:adf:e842:0:b0:2bf:c58b:9cba with SMTP id d2-20020adfe842000000b002bfc58b9cbamr6185515wrn.60.1674828803425;
+        Fri, 27 Jan 2023 06:13:23 -0800 (PST)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id f1-20020a7bc8c1000000b003c6bbe910fdsm9297442wml.9.2023.01.27.06.13.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Jan 2023 05:56:48 -0800 (PST)
-Message-ID: <7456978a-47ce-2e8d-e030-2917da992c34@linaro.org>
-Date:   Fri, 27 Jan 2023 14:56:46 +0100
+        Fri, 27 Jan 2023 06:13:22 -0800 (PST)
+Message-ID: <85481368-b32e-61aa-f83a-fb42d58c351a@linaro.org>
+Date:   Fri, 27 Jan 2023 14:13:21 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH v2 2/4] arm64: dts: qcom: sm6350: Add camera clock
- controller
+ Thunderbird/102.4.2
+Subject: Re: [PATCH 16/24] rtc: pm8xxx: add support for nvmem offset
 Content-Language: en-US
-To:     Bryan O'Donoghue <pure.logic@nexus-software.ie>,
-        Luca Weiss <luca.weiss@fairphone.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
+To:     Johan Hovold <johan+linaro@kernel.org>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Alessandro Zummo <a.zummo@towertech.it>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-rtc@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20221213-sm6350-cci-v2-0-15c2c14c34bb@fairphone.com>
- <20221213-sm6350-cci-v2-2-15c2c14c34bb@fairphone.com>
- <e5ff49d4-45c7-8c4a-d624-d8f7cc9ce2cb@linaro.org>
- <CQ0I4ONEI6J4.3KWS1KBE7RTKD@otso>
- <3ae863df-3260-4863-d88f-da4d3f442174@linaro.org>
- <CQ2ZDQKO11XZ.HA5CXLK5MTFB@otso>
- <2989138a-8f4b-50a0-3e90-98b6785f2690@linaro.org>
- <CQ2ZY0W1M4F5.32SLTSYMILGOS@otso>
- <951e4459-6d98-f083-1dd9-fc0b12e53c96@nexus-software.ie>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <951e4459-6d98-f083-1dd9-fc0b12e53c96@nexus-software.ie>
-Content-Type: text/plain; charset=UTF-8
+References: <20230126142057.25715-1-johan+linaro@kernel.org>
+ <20230126142057.25715-17-johan+linaro@kernel.org>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20230126142057.25715-17-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -94,34 +86,51 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 27.01.2023 14:54, Bryan O'Donoghue wrote:
-> On 27/01/2023 13:11, Luca Weiss wrote:
->>> Doh I meant to say a power-domain to an mmcx a la
->>>
->>> power-domains = <&rpmhpd SM8250_MMCX>;
->>> required-opps = <&rpmhpd_opp_low_svs>;
->>>
->>> TITAN_TOP should be in your cci and camss dt nodes.
->> Okay, that makes more sense.
->>
->> What I don't quite understand is why sm8250 only has MMCX listed there
->> since downstream has both vdd_mx-supply = <&VDD_MX_LEVEL> and
->> vdd_mm-supply = <&VDD_MMCX_LEVEL> and both "supplies" are used for
->> different clocks using .vdd_class
+On 26/01/2023 14:20, Johan Hovold wrote:
+> On many Qualcomm platforms the PMIC RTC control and time registers are
+> read-only so that the RTC time can not be updated. Instead an offset
+> needs be stored in some machine-specific non-volatile memory, which the
+> driver can take into account.
 > 
-> power-domains = <&rpmhpd SM8250_MMCX>; == MMCX_LEVEL required for camcc
-> power-domains = <&camcc TITAN_TOP_GDSC>; required for cci/camss
+> Add support for storing a 32-bit offset from the Epoch in an nvmem cell
+> so that the RTC time can be set on such platforms.
 > 
-> now that you ask the question about MX_LEVEL you're making me doubt we have a 100% complete representation upstream TB perfectly honest, warrants a deep dive..
-> 
-> I just remember that on 8250 we tripped over MMCX not being switched on when - display I think was switched off.
-There's no MMCX on 6350 and MX is a parent of CX, so if we just stick
-CX here and add the lowest level to required-opps and add corresponding
-PM ops to the clk driver, it'll all be taken care of!
-
-Konrad
-
-> 
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > ---
-> bod
+>   drivers/rtc/rtc-pm8xxx.c | 134 +++++++++++++++++++++++++++++++++++----
+>   1 file changed, 123 insertions(+), 11 deletions(-)
 > 
+> diff --git a/drivers/rtc/rtc-pm8xxx.c b/drivers/rtc/rtc-pm8xxx.c
+> index 922aef0f0241..09816b9f6282 100644
+> --- a/drivers/rtc/rtc-pm8xxx.c
+> +++ b/drivers/rtc/rtc-pm8xxx.c
+> @@ -3,6 +3,7 @@
+>    */
+> +static int pm8xxx_rtc_read_nvmem_offset(struct pm8xxx_rtc *rtc_dd)
+> +{
+> +	size_t len;
+> +	void *buf;
+> +	int rc;
+> +
+> +	buf = nvmem_cell_read(rtc_dd->nvmem_cell, &len);
+> +	if (IS_ERR(buf)) {
+> +		rc = PTR_ERR(buf);
+> +		dev_err(rtc_dd->dev, "failed to read nvmem offset: %d\n", rc);
+> +		return rc;
+> +	}
+> +
+> +	if (len != sizeof(u32)) {
+> +		dev_err(rtc_dd->dev, "unexpected nvmem cell size %zu\n", len);
+> +		kfree(buf);
+> +		return -EINVAL;
+> +	}
+how about us nvmem_cell_read_u32()
+
+> +
+> +	rtc_dd->offset = get_unaligned_le32(buf);
+> +
+> +	kfree(buf);
+> +
+> +	return 0;
+> +}
+> +
