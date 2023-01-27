@@ -2,85 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ED1AC67D9E1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 00:45:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1CD8D67DA84
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 01:15:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233216AbjAZXpe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Jan 2023 18:45:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56322 "EHLO
+        id S231480AbjA0APs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Jan 2023 19:15:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51030 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233416AbjAZXp3 (ORCPT
+        with ESMTP id S229531AbjA0APp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Jan 2023 18:45:29 -0500
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DDF444BDD
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 15:44:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1674776640;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=D6x+r4xBxzWNTUBQ9wWxJcF9cSfkhbk7GYZAcyVsQuE=;
-        b=XNsjjnCTjjAEm3ZVYto6w3FrLulcqLmhxbKArwX9Z67p3zX4+aEXu6EkNXzcOtRQVaLZym
-        D0DIP4uzDuaYQ41aJsU53ukOWQtq0O+dRzG5Kc1KsNIEwpNv7xhIWlE20lYBewbperwZCw
-        d0pfWq0+ZF7mdnEkpSjWnp2gL5YL9wM=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-674-qQmkV4ZROmSeM10pTToEWA-1; Thu, 26 Jan 2023 18:43:59 -0500
-X-MC-Unique: qQmkV4ZROmSeM10pTToEWA-1
-Received: by mail-qv1-f71.google.com with SMTP id i17-20020a0cfcd1000000b005377f5ce3baso1729680qvq.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 15:43:59 -0800 (PST)
+        Thu, 26 Jan 2023 19:15:45 -0500
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 179789EFF
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 16:15:11 -0800 (PST)
+Received: by mail-pj1-x1030.google.com with SMTP id z9-20020a17090a468900b00226b6e7aeeaso3361631pjf.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 16:15:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=SV8n+sv9BcaztAN5AOFhigw2IH4btE9Uee+/u0u3DYQ=;
+        b=fshS+KEKNQQq8kpAv2Ge/k8hcVQXj/xJtIpLlKztLPJZBCDC8HTaWsu/D2MG4yT6Dk
+         nxrcZ3ILGw8ih2z3YUPICeeBHDAaKbSzCyGpaTfKjddxOYwqOPIqlDXxgaylQYqXdltD
+         ia1mHg2eURSbHmxfaf7GaZrvEkk8CKPLBSBNQoEoS50wmj45Jt028QX+AQbnRwNTSSYA
+         yPqto+XvSHqDO1EFXgnz+oLdB6KUX5MHrWdaCQAGIGZuPiY3ZA7MY9dJSimwpR2bzgJF
+         0OmUR525TXXIu3lwHXrM9nbE6Nj4J0v8DH1J5YvWsRVsL0QxmRoZysTHmyXYGWH0GTgd
+         nSlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=D6x+r4xBxzWNTUBQ9wWxJcF9cSfkhbk7GYZAcyVsQuE=;
-        b=LTKqQEVfEUNN7Kgognmqkg23VdpkMsm7Mb+xP+p9XYYdymLMajZGo8uoPjbuNWn9+b
-         N5b7B6qBckFuVDk0IG/9cJhDlJPoLHsxvL0NEsYhnBsXD0S9qFL6phJAk0P7P+08JAEl
-         MzLIpmZSkMSGb7H1miUnrN+/0WdRjDYlSeOfcVWC98ndM81xcvMOFfrAU9HSO23tjsBC
-         X7Fv+NF57ZRHe4ehWCVF+w2MWGf+1qXm+/p34ZlqVLBOI3z0hlfauYHc4mc0blvLlQHX
-         cgMQz324WWGc1Xn5++UuYP3u0r7/NTR5gmdmOXTkjo7RL3CW6DuGdJX38QLsP7WKF/5k
-         8HxQ==
-X-Gm-Message-State: AFqh2kpXAIhNHLmYkrGArEt89S00ajg5h2QVtfEEbEds9A0oRMYpNn5m
-        /jV+wCcO30RmXuLFOJEMCrcVmd3fT5fFtbQo/iNVqvbuYmZW0hApSeXZhgaIktCvcnWeCt9JFby
-        n1GkL4rRYsNFBld3BP+IOBrDpuQ==
-X-Received: by 2002:ac8:5b90:0:b0:3a8:30c9:ba8f with SMTP id a16-20020ac85b90000000b003a830c9ba8fmr75296073qta.28.1674776637543;
-        Thu, 26 Jan 2023 15:43:57 -0800 (PST)
-X-Google-Smtp-Source: AMrXdXtLlX6+9As1/MaxSpF4UPb/cDCzNiumeo2i7JN2dW6PE3AVlgjfl2TMXpyrpihN2fyrXG6xnQ==
-X-Received: by 2002:ac8:5b90:0:b0:3a8:30c9:ba8f with SMTP id a16-20020ac85b90000000b003a830c9ba8fmr75296051qta.28.1674776637308;
-        Thu, 26 Jan 2023 15:43:57 -0800 (PST)
-Received: from halaney-x13s ([2600:1700:1ff0:d0e0::21])
-        by smtp.gmail.com with ESMTPSA id o12-20020a05622a044c00b003a82ca4e81csm1622521qtx.80.2023.01.26.15.43.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Jan 2023 15:43:56 -0800 (PST)
-Date:   Thu, 26 Jan 2023 17:43:54 -0600
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: sa8295p-adp: Add max20411 on
- i2c12
-Message-ID: <20230126234354.437bajx7lckafg4z@halaney-x13s>
-References: <20230124184440.1421074-1-quic_bjorande@quicinc.com>
- <20230124184440.1421074-4-quic_bjorande@quicinc.com>
- <20230126225446.rjckq5p35zeozphq@halaney-x13s>
- <5a638130-89c3-871b-c233-55048a162870@linaro.org>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=SV8n+sv9BcaztAN5AOFhigw2IH4btE9Uee+/u0u3DYQ=;
+        b=ag1Cup5PTG340Sht3AV2O+GpV9b1zkWpdqJ1hmtZsD22PTfmwH06KxkDEiEB+PTVEP
+         9aWga3w99OyF8UGsW/uhBoEWO6wOIjdbrAjhbLtlnVOkMSB4WidtamzW/GCK/wBRRbA8
+         yf3484ZWv/MM6wlXHwrXSisX1vnINXvTvUotA66ZL9ns93Ro41Dl5wJZaKx/h2zKT5WM
+         Bc2FYZ2iCTHbc7AOT9GEo5qFLywmoioVZCqHYJr31LiqetFOs1LdcF10jkeZj0z4a03h
+         diRcdtXO4FxcaBsyLpE4aZr6X6gZj6TPtxI0hXc88aC0EA6Jfh6fzV5tRDINl48nhT/B
+         3ZSg==
+X-Gm-Message-State: AFqh2komOr16VApa2XbPJqCt5hs2Cb3jz1tOSOHeLuIYfvVOdCNk1gfm
+        ezeV5QdkxNkqjFdMFSnstu09v2nhc5n04H/L/ixVAA==
+X-Google-Smtp-Source: AMrXdXtXkEkodBM0H0kD2v/QRlxJqTeLyShq9hF94/2MQSJ3jdKYhYn0Fe/ha2FNJivkLCekNVn+wIw7neI3BHF2JdY=
+X-Received: by 2002:a17:90a:7e8d:b0:225:d307:95ce with SMTP id
+ j13-20020a17090a7e8d00b00225d30795cemr4641690pjl.136.1674778465910; Thu, 26
+ Jan 2023 16:14:25 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5a638130-89c3-871b-c233-55048a162870@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+References: <20230118091122.2205452-1-dmitry.baryshkov@linaro.org>
+ <CAL_JsqJ=0neiZ4wkPiMqJMT4E1O_xO0uLrTmEGUcnZMqxkw4UQ@mail.gmail.com>
+ <CAGETcx8Xy5OzsbW3123esxsbQJq-SqDkP1S5g2mmwzoCz4shtQ@mail.gmail.com>
+ <20230125190926.GA2697290-robh@kernel.org> <505fc434-c31f-726e-b1cb-0bbfd5f83490@linaro.org>
+ <CAGETcx-f9vy7MDB2vFWP9CL26UY7W65oJArvhzksCu8QG6Y4nw@mail.gmail.com>
+In-Reply-To: <CAGETcx-f9vy7MDB2vFWP9CL26UY7W65oJArvhzksCu8QG6Y4nw@mail.gmail.com>
+From:   Saravana Kannan <saravanak@google.com>
+Date:   Thu, 26 Jan 2023 16:13:49 -0800
+Message-ID: <CAGETcx_v+yFvVFGY64t2Y6Su4jdCXaLnTUh9sKQR0t7+HoZ_vg@mail.gmail.com>
+Subject: Re: [RESEND PATCH] of: property: do not create clocks device link for
+ clock controllers
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Herring <robh@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Abel Vesa <abel.vesa@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-17.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        ENV_AND_HDR_SPF_MATCH,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,85 +77,108 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 27, 2023 at 12:35:37AM +0100, Konrad Dybcio wrote:
-> 
-> 
-> On 26.01.2023 23:54, Andrew Halaney wrote:
-> > On Tue, Jan 24, 2023 at 10:44:40AM -0800, Bjorn Andersson wrote:
-> >> From: Bjorn Andersson <bjorn.andersson@linaro.org>
-> >>
-> >> The SA8295P ADP has a Maxim max20411 step-down converter on i2c12.
-> >>
-> >> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> >> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> >> ---
-> >>
-> >> Changes since v1:
-> >> - i2c node had changed name
-> >>
-> >>  arch/arm64/boot/dts/qcom/sa8295p-adp.dts | 41 ++++++++++++++++++++++++
-> >>  1 file changed, 41 insertions(+)
-> > 
-> > I realized today this has to do with the comment over at:
-> > 
-> >     https://lore.kernel.org/all/30166208-ba9d-e6e6-1cd2-807a80536052@quicinc.com/
-> > 
-> > and I just didn't realize that the schematic I've started looking at
-> > black boxes the SOM/SIP which holds this... darn I thought I could see
-> > more than I could :(
-> > 
-> > I took a similiar patch for a spin on sa8540p-ride (which I'll later
-> > submit), and things worked fine (I'm not really consuming the output of
-> > the regulator mind you).
-> > 
-> > Downstream devicetree indicates all of this looks ok except for possibly
-> > the below comment:
-> > 
-> >>
-> >> diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> >> index bb4270e8f551..642000d95812 100644
-> >> --- a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> >> +++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
-> >> @@ -266,6 +266,27 @@ &dispcc1 {
-> >>  	status = "okay";
-> >>  };
-> >>  
-> >> +&i2c12 {
-> >> +	pinctrl-names = "default";
-> >> +	pinctrl-0 = <&i2c12_state>;
-> >> +
-> >> +	status = "okay";
-> >> +
-> >> +	vdd_gfx: regulator@39 {
-> >> +		compatible = "maxim,max20411";
-> >> +		reg = <0x39>;
-> >> +
-> >> +		regulator-name = "vdd_gfx";
-> >> +		regulator-min-microvolt = <800000>;
-> > 
-> > Is there a reason you chose this instead of the 500000 I see downstream?
-> > 
-> >> +		regulator-max-microvolt = <968750>;
-> > 
-> > Likewise, I see in this brief description of the regulator
-> > that the upper bound is higher than this (1.275 V). I am not sure if
-> > the values in the devicetree are supposed to describe the
-> > min/max of the regulator itself, or of what your board can really
-> > handle/needs (the latter I guess makes more sense since you wouldn't want to
-> > accidentally request a current draw that could melt something.. that can
-> > be fun). I do see you've got that min/max in the driver itself (now that
-> > I peaked at that patch).
-> Yes, your suspicions are correct and the DT sets the actual ranges
-> for the voltage regulators on this specific board while the
-> hardware reachable ranges are defined in the .c driver.
-> 
-> Konrad
+On Thu, Jan 26, 2023 at 3:12 PM Saravana Kannan <saravanak@google.com> wrote:
+>
+> On Thu, Jan 26, 2023 at 2:51 PM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+> >
+> > On 25/01/2023 21:09, Rob Herring wrote:
+> > > On Tue, Jan 24, 2023 at 06:12:15PM -0800, Saravana Kannan wrote:
+> > >> On Wed, Jan 18, 2023 at 5:35 AM Rob Herring <robh+dt@kernel.org> wrote:
+> > >>>
+> > >>> On Wed, Jan 18, 2023 at 3:11 AM Dmitry Baryshkov
+> > >>> <dmitry.baryshkov@linaro.org> wrote:
+> > >>>>
+> > >>>> Do not create device link for clock controllers. Some of the clocks
+> > >>>> provided to the device via OF can be the clocks that are just parents to
+> > >>>> the clocks provided by this clock controller. Clock subsystem already
+> > >>>> has support for handling missing clock parents correctly (clock
+> > >>>> orphans). Later when the parent clock is registered, clocks get
+> > >>>> populated properly.
+> > >>>>
+> > >>>> An example of the system where this matters is the SDM8450 MTP board
+> > >>>> (see arch/arm64/boot/dts/qcom/sdm845-mtp.dts). Here the dispcc uses
+> > >>>> clocks provided by dsi0_phy and dsi1_phy device tree nodes. However the
+> > >>>> dispcc itself provides clocks to both PHYs, to the PHY parent device,
+> > >>>> etc. With just dsi0_phy in place devlink is able to break the
+> > >>>> dependency, but with two PHYs, dispcc doesn't get probed at all, thus
+> > >>>> breaking display support.
+> > >>>>
+> > >>>> Cc: Bjorn Andersson <andersson@kernel.org>
+> > >>>> Cc: Stephen Boyd <sboyd@kernel.org>
+> > >>>> Cc: Saravana Kannan <saravanak@google.com>
+> > >>>> Cc: Abel Vesa <abel.vesa@linaro.org>
+> > >>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > >>>> ---
+> > >>>>
+> > >>>> This patch has been posted a year ago in January 2022 ([1]). Since that time
+> > >>>> Saravana failed to produce patches to assist in debugging the issue
+> > >>>> ([2]) or to fix the issue ([3]). The issue we observe has been described
+> > >>>> by Abel at ([4]). As we work on adding support for Dual DSI
+> > >>>> configurations, the issue becomes more and more important, since binding
+> > >>>> the whole display subsystem fails.
+> > >>
+> > >> I did send out a patch series[1] to try and fix this. Heck I even
+> > >> talked about this in LPC 2022. So I don't think it's accurate to say I
+> > >> didn't help debug this or fix this. There's some email thread in lore
+> > >> where Abel gave more details and I figured out the issue and we didn't
+> > >> need any more debugging. And then I sent out [1]. Sorry I missed you
+> > >> in the cc lise for [1] -- I try to keep track of everyone to cc but
+> > >> things slip through the cracks sometimes. But at the same time, it's
+> > >> easy to check for emails from me before saying I didn't help or didn't
+> > >> send out fixes :)
+> > >>
+> > >> If you do try to give [1] a shot, there are a bunch of bugs that
+> > >> people pointed out for which I gave fixes on top of [1] in the
+> > >> replies. I was supposed to work on v2 over the holidays, but that
+> > >> didn't happen because of stuff outside my control.
+> > >>
+> > >>> That's ample time to fix this, so I intend to apply this. But I'll
+> > >>> give it a few days for comments.
+> > >>
+> > >> Rob, I'd recommend not applying this because it'll fix it for Dmitry
+> > >> but break someone else's use case. That's the whole reason it takes me
+> > >> a while to send out patches -- it's easy to fix it for a subset of
+> > >> devices, but fixing something without breaking someone else is harder
+> > >> (I still believe it's doable) and it takes a while to test them on all
+> > >> the devices I want to test before sending them out.
+> >
+> > This case is really simple, I think. Clock controllers (and
+> > clock-core-framework) are prepared to handle clock orphans properly.
+> > Moreover they have been supposed to work in such way for quite a while.
+> > In other words, I don't think we should save them from this
+> > -EPROBE_DEFERRED.
+>
+> A clock controller can depend on other clock controllers for non clock
+> tree reasons. For example, it might need a clock ON to access its
+> registers. So, while the CCF can handle orphans properly, that's not
+> the only dependency. Also, fw_devlink is not just about probing
+> either. It also has to do with proper sync_state() callbacks.
+>
+> Also, I already fixed the issue you are referring to while not
+> breaking the conditions I'm referring to. So, I don't know why you are
+> so opposed to that. See Abel's Tested-by here:
+> https://lore.kernel.org/lkml/YvonlAwXAoXTUTZe@linaro.org/
+>
+> > Thus I think it is better to let them continue doing their job of
+> > handling probe deferrals on their own, at least for the time being.
+>
+> I'm pretty sure your patch will break other Qualcomm platforms because
+> they depend on sync_state() callbacks to boot up properly when
+> all/most of their drivers are built as modules.
+>
+> > And
+> > then, when your patches are finished, we can think about reenabling
+> > current behaviour. As a reminder, currently, all Qualcomm platforms
+> > trying to use double DSI configuration are broken and have to use
+> > fw_devlink= kernel params.
+>
+> I'm/was working on sending out the v2 when I got your email. Hold
+> tight please. It shouldn't take too long.
 
-Thanks Konrad, then I think:
+There!
+https://lore.kernel.org/lkml/20230127001141.407071-1-saravanak@google.com/
 
-Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
-Tested-by: Andrew Halaney <ahalaney@redhat.com>
+Happy? :)
 
-is appropriate since things are within range on all accounts. I would
-appreciate an explanation on the current min/max values though if possible!
-
+-Saravana
