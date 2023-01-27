@@ -2,117 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 24B2E67ED50
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 19:19:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 93F5E67EDC4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 19:47:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235262AbjA0STl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Jan 2023 13:19:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54528 "EHLO
+        id S233920AbjA0SrE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Jan 2023 13:47:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50596 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235363AbjA0ST1 (ORCPT
+        with ESMTP id S232406AbjA0SrD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Jan 2023 13:19:27 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44BD57C327
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 10:19:07 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id d30so9416690lfv.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 10:19:07 -0800 (PST)
+        Fri, 27 Jan 2023 13:47:03 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2738757BE;
+        Fri, 27 Jan 2023 10:47:01 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id bg13-20020a05600c3c8d00b003d9712b29d2so6017650wmb.2;
+        Fri, 27 Jan 2023 10:47:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=AUaKiLXkBTVTN6xzUIH+1Wou99sq5rEjXu7LjVpS3hY=;
-        b=eEgKjHr2GuAG2bxqoFSDusbK3Pkd5EQdFPAtOj6nMCQX2iJMi+70TGOds6dCklO2Gr
-         xWyX8QhO2yo31VqQP5hRHpxAPyjHzWlxxMNaZWH4ozpllZ7Qy8NG+ZVxGwoqVYaXB8ow
-         XupcuHsuwYxNPlWwws+kr07KITGYO6C60dl4l/W1uUwtKegtplTusU6v8uV8rjRZXA14
-         c1kaxUxkOunw/5R6X51prM4k3nJTu5a0+wCOzsUNrQCfeS0I8gdX1iU+DUPX5hZV0ROi
-         Mph6Z75xlRuc14PCchLnXfR9YKpddZHF01LhIhCq9NqY49GOW4wddVOrTV6J4VF2Zkk5
-         Ex2A==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=LOd4MaOi70eTswd7u4FzE7uVQwcH+9a89ao4D+uNHTk=;
+        b=Q0hrfw64vXMJ/FAGMTz9DA9s8596eI+mPllIZK+Fq29tu60izkVAs3mFVfAZUcyHTR
+         tqQ0BlyLE1iel0o4ZFFSzIwtxXqnwnwUfGtH8LW+SsmTMwnjuJaQsoX9ibFkrd7+fGVB
+         oPfTexW+jdWNqu90AQhvtk2fVCR6ZST4vJbof4CnLyrJ/0btozti/VRdzhKPm+kY6jkB
+         mcO0m2islB0OuAMkBsCQjjdAwlaEy2h5cUZbvU1Y5IuSxJok9JPK8HMJXDCREczSgtxp
+         oTHNA3w9HBguxoGkm7o2Ebtf52TzO3v1eRoIVKB9/8P4ERAFdyQbOexrF76LMoNmaCVK
+         lU9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AUaKiLXkBTVTN6xzUIH+1Wou99sq5rEjXu7LjVpS3hY=;
-        b=Tut/InbwqfOvVunMXNmlH+hYbPJpCDhtfTsos/EYmMgkz06/9/CkLVXJwt+86MWf/G
-         qcxKTxnijSTyVtK2QyJJWDFMeGdLoYGs6BSb+xqVMMIxIg6gsVjHM87KPHG1Ztu+SpmO
-         TJdXch7um6nXPfzzWZ2qqaqVFb8IyY3UJQY24Rg7T7EqfT4s0duVg5KfNGHhUbBXYgjz
-         I3L5HeRPKVTzDKEoZKnA32VNDAAZhaJVMmJakpA2Ig2GZ78SH6JA18QckMIbrgHHAfbB
-         G0vFHLWPQL6QbfI79UQ2wVDRd/a48NMNnSTdodwH4Ylw/nzL0EgteYg4/CEu2lCYnTPv
-         6MSg==
-X-Gm-Message-State: AFqh2kqaDSbR2qzAdFCrZ9ULcvTWtLg5YVv8Ye0FlKWLEs9eHQ2xr8ku
-        f+i4BI0LFCgmKCkUCwkcWUJGMsgLxZ6NDUVVv2c35Q==
-X-Google-Smtp-Source: AMrXdXvXuRF3ZtGn76AVL0uRnkNQJ72scg7giBslgTue4sZWP7HgeOdPtHUCSnNiW/hwzdW+EwZ9gg==
-X-Received: by 2002:ac2:5699:0:b0:4cb:2b23:9965 with SMTP id 25-20020ac25699000000b004cb2b239965mr9928150lfr.63.1674843545439;
-        Fri, 27 Jan 2023 10:19:05 -0800 (PST)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id v17-20020a056512349100b004cc590975f7sm324824lfr.183.2023.01.27.10.19.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Jan 2023 10:19:04 -0800 (PST)
-Message-ID: <9314a5f4-32a0-b71a-62cc-b338ccdcff07@linaro.org>
-Date:   Fri, 27 Jan 2023 20:19:04 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH v3 4/8] clk: qcom: cbf-msm8996: scale CBF clock according
- to the CPUfreq
-Content-Language: en-GB
-To:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LOd4MaOi70eTswd7u4FzE7uVQwcH+9a89ao4D+uNHTk=;
+        b=dWfgKQclSRHikulFD7CMFLJT5li/ufRq3wcGVugioAALTh5she2fg9IomGgfyrNdML
+         rc3/SR/r3C+QJfrCrJpAZwXCfUQ11LqFEaDY5y/A5/2GxVkE+TaexsS2HztKffBMBm2L
+         zCTApVIT/Zwx7OfjgMA7BozqMSgNrgHA37Dr8AoWs97awXVLu6T6t8ogmHad/hEBZ/Kb
+         DVidtKRCJ3FIHSEC8f0SRbR8E6+kc6MNDaUvnt5cqzd80B4PNDbVZ6LRBd94An3JwucQ
+         ecDHyz/yLlGZGxRokd9s7SMXhfNKZA1lt1RHLX35RdsIIeGG2Ln4dFngwV3BNWMk3t1l
+         8ROQ==
+X-Gm-Message-State: AO0yUKUQDsOKgjKAkRFjNCZlpFryesgaPAqT0ncUv+JYC6Q9HRtV+VNg
+        YOmDF1J0VzT0LURkoIbYEls=
+X-Google-Smtp-Source: AK7set/gEzWkZhyaLRTt2b8FFgXZPieBFRu9D2u4vPEFozdj4nKODUy9Ve+ghxWfozB/47czSvoZFQ==
+X-Received: by 2002:a05:600c:3512:b0:3dc:2c7c:6616 with SMTP id h18-20020a05600c351200b003dc2c7c6616mr6348952wmq.21.1674845220107;
+        Fri, 27 Jan 2023 10:47:00 -0800 (PST)
+Received: from xws.localdomain (pd9ea339c.dip0.t-ipconnect.de. [217.234.51.156])
+        by smtp.gmail.com with ESMTPSA id g12-20020a05600c310c00b003db012d49b7sm16234208wmo.2.2023.01.27.10.46.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Jan 2023 10:46:59 -0800 (PST)
+From:   Maximilian Luz <luzmaximilian@gmail.com>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Maximilian Luz <luzmaximilian@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
+        Ard Biesheuvel <ardb@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230120061417.2623751-1-dmitry.baryshkov@linaro.org>
- <20230120061417.2623751-5-dmitry.baryshkov@linaro.org>
- <078c5a8254ac006b65fc5fa81dfbc515.sboyd@kernel.org>
- <3a355075-cc29-957a-678b-2a05aed25587@linaro.org>
- <b4dd052421f926b60728f1578e4922e0.sboyd@kernel.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <b4dd052421f926b60728f1578e4922e0.sboyd@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Johan Hovold <johan@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Sumit Garg <sumit.garg@linaro.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2 0/4] firmware: Add support for Qualcomm UEFI Secure Application
+Date:   Fri, 27 Jan 2023 19:46:46 +0100
+Message-Id: <20230127184650.756795-1-luzmaximilian@gmail.com>
+X-Mailer: git-send-email 2.39.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/01/2023 23:40, Stephen Boyd wrote:
-> Quoting Dmitry Baryshkov (2023-01-20 14:53:21)
->> On 21/01/2023 00:11, Stephen Boyd wrote:
->>> Quoting Dmitry Baryshkov (2023-01-19 22:14:13)
->>>> diff --git a/drivers/clk/qcom/clk-cbf-8996.c b/drivers/clk/qcom/clk-cbf-8996.c
->>>> index 9cde0e660228..b049b4f7b270 100644
->>>> --- a/drivers/clk/qcom/clk-cbf-8996.c
->>>> +++ b/drivers/clk/qcom/clk-cbf-8996.c
->>>> @@ -225,6 +228,133 @@ static const struct regmap_config cbf_msm8996_regmap_config = {
->>>>           .val_format_endian      = REGMAP_ENDIAN_LITTLE,
->>>>    };
->>>>    
->>>> +#ifdef CONFIG_INTERCONNECT
->>>
->>> Can you move this driver to drivers/interconnect/ ?
->>
->> Only the interconnect part? At some point I considered dropping the
-> 
-> Yes only the interconnect part. Use auxiliary bus.
+This series adds basic support for the QSEECOM interface used to
+communicate with secure applications running in the TrustZone on certain
+Qualcomm devices. In addition to that, it also provides a driver for
+"uefisecapp", the secure application managing access to UEFI variables
+on such platforms.
 
-Stephen, Bjorn, since the interconnect parts are already separated (to 
-patches 2, 4, 8, would it be possible to merge the rest into 6.3?
+For a more detailed description, see the blurb of v1, which can be found
+at https://lore.kernel.org/lkml/20220723224949.1089973-1-luzmaximilian@gmail.com/.
 
-Just having the CBF enabled and set to maximum frequency helps to boot 
-msm8996 performance cluster. Without this patchset, it is kind of a 
-lottery, with stable kernel boot achievable only with 'maxcpus=2'.
+
+This series depends on the following series:
+
+ - "efi: efivars: drop kobject from efivars_register()"
+   (https://lore.kernel.org/lkml/20230117124310.16594-1-johan+linaro@kernel.org/)
+
+ - "efi: verify that variable services are supported"
+   (https://lore.kernel.org/lkml/20230119164255.28091-1-johan+linaro@kernel.org/)
+
+   with subsequent fix
+
+   "efivarfs: fix NULL-deref on mount when no efivars"
+   (https://lore.kernel.org/lkml/20230126112129.4602-1-johan+linaro@kernel.org/)
+
+which have all been included in the "next" branch of
+
+  https://git.kernel.org/pub/scm/linux/kernel/git/efi/efi.git
+
+
+Changes in v2:
+
+ - Bind the qseecom interface to a device.
+
+ - Establish a device link between the new qseecom device and the SCM
+   device to ensure proper PM and remove ordering.
+
+ - Remove the compatible for uefisecapp. Instead, introduce a compatible
+   for the qseecom device. This directly reflects ACPI tables and the
+   QCOM0476 device described therein, which is responsible for the
+   secure app / qseecom interface (i.e., the same purpose).
+
+   Client devices representing apps handled by the kernel (such as
+   uefisecapp) are now directly instantiated by the qseecom driver,
+   based on the respective platform-specific compatible.
+
+ - Rename the base name (qctree -> qseecom) to allow differentiation
+   between old (qseecom) and new (smcinvoke) interfaces to the trusted
+   execution environment. This directly reflects downstream naming by
+   Qualcomm.
+
+
+Maximilian Luz (4):
+  firmware: qcom_scm: Export SCM call functions
+  firmware: Add support for Qualcomm Secure Execution Environment SCM
+    interface
+  dt-bindings: firmware: Add Qualcomm QSEECOM interface
+  firmware: Add support for Qualcomm UEFI Secure Application
+
+ .../bindings/firmware/qcom,qseecom.yaml       |  49 ++
+ MAINTAINERS                                   |  14 +
+ drivers/firmware/Kconfig                      |  31 +
+ drivers/firmware/Makefile                     |   2 +
+ drivers/firmware/qcom_qseecom.c               | 323 ++++++++
+ drivers/firmware/qcom_qseecom_uefisecapp.c    | 746 ++++++++++++++++++
+ drivers/firmware/qcom_scm.c                   | 118 ++-
+ drivers/firmware/qcom_scm.h                   |  47 --
+ include/linux/qcom_qseecom.h                  | 190 +++++
+ include/linux/qcom_scm.h                      |  49 ++
+ 10 files changed, 1483 insertions(+), 86 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/firmware/qcom,qseecom.yaml
+ create mode 100644 drivers/firmware/qcom_qseecom.c
+ create mode 100644 drivers/firmware/qcom_qseecom_uefisecapp.c
+ create mode 100644 include/linux/qcom_qseecom.h
 
 -- 
-With best wishes
-Dmitry
+2.39.0
 
