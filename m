@@ -2,243 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D8F0067E152
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 11:16:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7AA8067E173
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 11:21:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233345AbjA0KQF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Jan 2023 05:16:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53954 "EHLO
+        id S230476AbjA0KVM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Jan 2023 05:21:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233081AbjA0KQD (ORCPT
+        with ESMTP id S229651AbjA0KVJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Jan 2023 05:16:03 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C257922014;
-        Fri, 27 Jan 2023 02:15:58 -0800 (PST)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30R9Dsnm030800;
-        Fri, 27 Jan 2023 10:15:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references; s=qcppdkim1;
- bh=klYU2WW6Oj610KyLuzELQMiZ3+aP6za33DGSZGfHcZo=;
- b=S3JoyMCDkVXbXtIyEhSsW0Pa8bk4a/r2x6vWeD3TRcdK0068ULBS21A6D/lNxnzCvCvL
- KTva5q6+l/kMhVCU2YCkJqo19BDwY0+GoPuGI3hpftkxfUC537dt+x6O5tIsHGGlgqMA
- zaTSzNzOfylvRS+ZF3Qgt9UFcXpzEnbTCfFzAji+0OktYcRPP6HPrAPRbC8GRE4yINFr
- t4kj95YfWaWyRLgDABVV70Ykg6QW8LMUxNg0nbY/0j/HQ0juNJKPfC7h/bH7Q0JXTPEH
- vO3cz9oR2tP93IQLy422M2eaikM9EYc59lG5zhXk4fQwUKhm5DJbq1WRm9NyAHyiilp0 pg== 
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ncavc05c6-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 27 Jan 2023 10:15:54 +0000
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 30RAFlU9002355;
-        Fri, 27 Jan 2023 10:15:51 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3n894m35kg-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Fri, 27 Jan 2023 10:15:51 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 30RAEo5i001332;
-        Fri, 27 Jan 2023 10:15:50 GMT
-Received: from kalyant-linux.qualcomm.com (kalyant-linux.qualcomm.com [10.204.66.210])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 30RAFokw002416;
-        Fri, 27 Jan 2023 10:15:50 +0000
-Received: by kalyant-linux.qualcomm.com (Postfix, from userid 94428)
-        id B5F224B79; Fri, 27 Jan 2023 02:15:49 -0800 (PST)
-From:   Kalyan Thota <quic_kalyant@quicinc.com>
-To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     Kalyan Thota <quic_kalyant@quicinc.com>,
-        linux-kernel@vger.kernel.org, robdclark@chromium.org,
-        dianders@chromium.org, swboyd@chromium.org,
-        quic_vpolimer@quicinc.com, dmitry.baryshkov@linaro.org,
-        quic_abhinavk@quicinc.com, marijn.suijten@somainline.org
-Subject: [PATCH 3/3] drm/msm/disp/dpu1: reserve the resources on topology change
-Date:   Fri, 27 Jan 2023 02:15:45 -0800
-Message-Id: <1674814545-9453-4-git-send-email-quic_kalyant@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1674814545-9453-1-git-send-email-quic_kalyant@quicinc.com>
-References: <1674814545-9453-1-git-send-email-quic_kalyant@quicinc.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: eFjpw4bID8rvCmAFgyOx3L17SupeGxfD
-X-Proofpoint-ORIG-GUID: eFjpw4bID8rvCmAFgyOx3L17SupeGxfD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-27_06,2023-01-27_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1015
- lowpriorityscore=0 spamscore=0 phishscore=0 suspectscore=0 adultscore=0
- mlxlogscore=999 impostorscore=0 priorityscore=1501 bulkscore=0 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2301270096
-X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,SPF_HELO_NONE,
-        SPF_NONE autolearn=no autolearn_force=no version=3.4.6
+        Fri, 27 Jan 2023 05:21:09 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A4BB1EBC4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 02:21:04 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id iv8-20020a05600c548800b003db04a0a46bso5407403wmb.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 02:21:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5M8wwaIB6hTb2DPTPd13/t9PHi09rEsWJLeVtxBFkfU=;
+        b=PAxQb29zuGGv5AA29BFPSf3KAUsQ3nHyP+xRhfvF4wlTZjFlRtOHf07wE8ZMIhv9cu
+         jf4nlnMmKPwH8nhbJGw7qgwMbyN65/N1EPFnm2XcdZSaz2wbns20UjxAO5kw+WwJgo5U
+         Jaam+M2+lX1EQ2TGy3Ar2YFaVRq9oJQ8awLb42jrhol8vaJp0yiXyxBlipNiNPJRjJyl
+         A5GaIV0mecZi2notqu/t5bNq9XS1HYsbvpJJks93DaHmBjFh159zmpe7Mu5NZ2/qD0b0
+         AUVG3lBormCjK1Dkba0DSUQtcWi0xVaSq1mpXxvJxrsnRZ9I8gwC0yfTUfvXLLTEP+tT
+         Xr+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5M8wwaIB6hTb2DPTPd13/t9PHi09rEsWJLeVtxBFkfU=;
+        b=VDQ+BeB6IX8p+ofTyH7XPnLXq40SMXxlmB5iXvzgr/GbfxC24+XHmSjD0LWNa3+huD
+         S/dGSrE1TzTefWOW9bUOMcMXSgR7wjkcE6R1siw0oIMjPfU1lROaxUgtCWqT6chaO8Qw
+         +NoTYSQBmQgT7/NKCY8g1a3y35xMWZxu1CjDgs6AJb8GZK9P9sPUmk5zNUt0Wh/wxZ5p
+         TaK7dj8OXDJCzkvIC7vfzbThZeYmxhovKHNOeGrJ1gNsF758PJIrWB87GDgEKGpeo9lf
+         vqsyrbyo2SzZEIsWS19EOlr5n2x6ec/fDe5wotJpAVM88aDNV17cgzzNaUHWoir78QYJ
+         NU7Q==
+X-Gm-Message-State: AFqh2krdM0fp4XUA+BCV3VSBndV4RiODoZEVlIjsHXTwpcLUDBki48R9
+        EdtUD7j+uyLllot/rfgWve7f4Q==
+X-Google-Smtp-Source: AMrXdXtQgHrtT79dnJjv5rE9O7zhxmcspNgS9NhZpF3jn1szrHImeCZB/Se7RvSrAv7pSLj85FXSuA==
+X-Received: by 2002:a05:600c:3b1b:b0:3da:11d7:dba3 with SMTP id m27-20020a05600c3b1b00b003da11d7dba3mr37744059wms.5.1674814863127;
+        Fri, 27 Jan 2023 02:21:03 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id bh6-20020a05600c3d0600b003daffc2ecdesm7243158wmb.13.2023.01.27.02.21.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 27 Jan 2023 02:21:02 -0800 (PST)
+Message-ID: <8c0b2020-cca7-7b16-5bb3-a0e5eddc9709@linaro.org>
+Date:   Fri, 27 Jan 2023 11:21:01 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH v2 1/6] dt-bindings: clock: Add Qcom SM6125 GPUCC
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     marijn.suijten@somainline.org,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230126181335.12970-1-konrad.dybcio@linaro.org>
+ <20230126181335.12970-2-konrad.dybcio@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230126181335.12970-2-konrad.dybcio@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some features like ctm can be enabled dynamically. Release and reserve
-the dpu resources whenever a topology change occurs such that
-required hw blocks are allocated appropriately.
+On 26/01/2023 19:13, Konrad Dybcio wrote:
+> Add device tree bindings for graphics clock controller for Qualcomm
+> Technology Inc's SM6125 SoCs.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+> v1 -> v2:
+> 
 
-Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h    |  1 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 41 ++++++++++++++++++++++++++---
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  4 ++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     |  2 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c      |  4 ---
- 5 files changed, 42 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-index 539b68b..89afe04 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-@@ -225,6 +225,7 @@ struct dpu_crtc_state {
- 
- 	enum dpu_crtc_crc_source crc_source;
- 	int crc_frame_skip_count;
-+	struct msm_display_topology topology;
- };
- 
- #define to_dpu_crtc_state(x) \
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index 8d76cb3..db417f5 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -217,6 +217,18 @@ static u32 dither_matrix[DITHER_MATRIX_SZ] = {
- 	15, 7, 13, 5, 3, 11, 1, 9, 12, 4, 14, 6, 0, 8, 2, 10
- };
- 
-+static void dpu_encoder_virt_atomic_mode_set(struct drm_encoder *drm_enc,
-+					     struct drm_crtc_state *crtc_state,
-+					     struct drm_connector_state *conn_state);
-+
-+static bool _dpu_enc_is_topology_changed(struct drm_crtc_state *crtc_state,
-+	struct msm_display_topology topology)
-+{
-+	struct dpu_crtc_state *cstate = to_dpu_crtc_state(crtc_state);
-+
-+	return !!memcmp(&cstate->topology,
-+		&topology, sizeof(struct msm_display_topology));
-+}
- 
- bool dpu_encoder_is_widebus_enabled(const struct drm_encoder *drm_enc)
- {
-@@ -650,12 +662,16 @@ static int dpu_encoder_virt_atomic_check(
- 		 * Release and Allocate resources on every modeset
- 		 * Dont allocate when active is false.
- 		 */
--		if (drm_atomic_crtc_needs_modeset(crtc_state)) {
-+		if (drm_atomic_crtc_needs_modeset(crtc_state) ||
-+			_dpu_enc_is_topology_changed(crtc_state, topology)) {
- 			dpu_rm_release(global_state, drm_enc);
- 
--			if (!crtc_state->active_changed || crtc_state->active)
-+			if (crtc_state->enable) {
- 				ret = dpu_rm_reserve(&dpu_kms->rm, global_state,
- 						drm_enc, crtc_state, topology);
-+				if (!ret)
-+					dpu_enc->topology = topology;
-+			}
- 		}
- 	}
- 
-@@ -1089,7 +1105,7 @@ static void dpu_encoder_virt_atomic_mode_set(struct drm_encoder *drm_enc,
- 	}
- 
- 	cstate->num_mixers = num_lm;
--
-+	cstate->topology = dpu_enc->topology;
- 	dpu_enc->connector = conn_state->connector;
- 
- 	for (i = 0; i < dpu_enc->num_phys_encs; i++) {
-@@ -2076,11 +2092,14 @@ void dpu_encoder_helper_phys_cleanup(struct dpu_encoder_phys *phys_enc)
- 	ctl->ops.clear_pending_flush(ctl);
- }
- 
--void dpu_encoder_prepare_commit(struct drm_encoder *drm_enc)
-+void dpu_encoder_prepare_commit(struct drm_encoder *drm_enc,
-+	struct drm_crtc_state *crtc_state)
- {
- 	struct dpu_encoder_virt *dpu_enc;
- 	struct dpu_encoder_phys *phys;
- 	int i;
-+	struct list_head *connector_list;
-+	struct drm_connector *conn = NULL, *conn_iter;
- 
- 	if (!drm_enc) {
- 		DPU_ERROR("invalid encoder\n");
-@@ -2088,6 +2107,20 @@ void dpu_encoder_prepare_commit(struct drm_encoder *drm_enc)
- 	}
- 	dpu_enc = to_dpu_encoder_virt(drm_enc);
- 
-+	connector_list = &drm_enc->dev->mode_config.connector_list;
-+	list_for_each_entry(conn_iter, connector_list, head)
-+		if (conn_iter->state->best_encoder == drm_enc)
-+			conn = conn_iter;
-+
-+	/*
-+	 * In case of modeset, DRM kernel will trigger a atomic_mode_set
-+	 * call back, for usecases where there is no mode change but a topology
-+	 * change, update the resources from here.
-+	 */
-+	if (!drm_atomic_crtc_needs_modeset(crtc_state) &&
-+		_dpu_enc_is_topology_changed(crtc_state, dpu_enc->topology))
-+		dpu_encoder_virt_atomic_mode_set(drm_enc, crtc_state, conn->state);
-+
- 	for (i = 0; i < dpu_enc->num_phys_encs; i++) {
- 		phys = dpu_enc->phys_encs[i];
- 		if (phys->ops.prepare_commit)
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-index 9e7236e..4cbe20c 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-@@ -150,8 +150,10 @@ int dpu_encoder_setup(struct drm_device *dev, struct drm_encoder *enc,
-  * dpu_encoder_prepare_commit - prepare encoder at the very beginning of an
-  *	atomic commit, before any registers are written
-  * @drm_enc:    Pointer to previously created drm encoder structure
-+ * @crtc_state: Pointer to drm crtc state
-  */
--void dpu_encoder_prepare_commit(struct drm_encoder *drm_enc);
-+void dpu_encoder_prepare_commit(struct drm_encoder *drm_enc,
-+		struct drm_crtc_state *crtc_state);
- 
- /**
-  * dpu_encoder_set_idle_timeout - set the idle timeout for video
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index 7a5fabc..f111120 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -455,7 +455,7 @@ static void dpu_kms_prepare_commit(struct msm_kms *kms,
- 	for_each_new_crtc_in_state(state, crtc, crtc_state, i) {
- 		drm_for_each_encoder_mask(encoder, crtc->dev,
- 					  crtc_state->encoder_mask) {
--			dpu_encoder_prepare_commit(encoder);
-+			dpu_encoder_prepare_commit(encoder, crtc_state);
- 		}
- 	}
- }
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-index 718ea0a..341c3af 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-@@ -586,10 +586,6 @@ int dpu_rm_reserve(
- 	struct dpu_rm_requirements reqs;
- 	int ret;
- 
--	/* Check if this is just a page-flip */
--	if (!drm_atomic_crtc_needs_modeset(crtc_state))
--		return 0;
--
- 	if (IS_ERR(global_state)) {
- 		DPU_ERROR("failed to global state\n");
- 		return PTR_ERR(global_state);
--- 
-2.7.4
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
 
