@@ -2,67 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 38C5767E724
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 14:55:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B33E467E729
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 14:56:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233253AbjA0NzB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Jan 2023 08:55:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34092 "EHLO
+        id S233409AbjA0N4y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Jan 2023 08:56:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233221AbjA0NzA (ORCPT
+        with ESMTP id S230124AbjA0N4w (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Jan 2023 08:55:00 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEB5D1EBEA
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 05:54:57 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id t18so5066600wro.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 05:54:57 -0800 (PST)
+        Fri, 27 Jan 2023 08:56:52 -0500
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E5E17C717
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 05:56:50 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id y19so4803380edc.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 05:56:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20210112.gappssmtp.com; s=20210112;
+        d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=AvWGdXV/thMosfYPTWfHg4iggB9oYYlKgsQ4IGe6GwM=;
-        b=zJTsB5rxzOcR/IQYI9B8TxrquxjCdAbnkHrTFD8HEyhKVAeUU0jRRpKo5Onkmgw+8f
-         LecJidjIYiWCZ5uOeBhO+LrbIofHOyJjGmRONA5EbKaB3OvpeGJsni6GpV9RPj2X2zJK
-         zmf41T0tUELAUdLRqRexXHiVBwbFmp+pp9i1m3klI4+GhOLbQFnpqtIGLeXAOwZnEFWg
-         V4hxqgs5YYzT5o1wU+W2H01NRiD0I76vFvd87pbAjZV/+Qp5eda/WReQe3ykkQc92Hx1
-         2y9mI+x+37TnvknkQiiRR5+x4FpS22rkz7euvU4biICD3IIgIVLmqAMv700+7+8k7qx3
-         vO8g==
+        bh=yXA46BdA2s0F2yreUEYFr6AiDGQqI1YBsrC9BTQ1VjY=;
+        b=B5tnFz61tRu/w0bu3UUA6g2CJbLy6qum2pJHpXh/UqrC+3aXQtkWnKBUvNcH+qQb3w
+         F3nRhVHNflBWo1/L9jwe5S6TzQ7+/Ze3X5HCUnlynOtmyf3Jf3rWc39HGojfwz/tqEw5
+         b6qtJNIs4CWtYLNAuxOLDylJEcNfIo0nsivOxG9NUAodn068NachewhCLgzyOdv+yp1L
+         mD2n+1fI2pvhUDxzFVOb69JdqGvxxg5hV7lMPNFgWgwnBi+dvfCwWhF8RGG/sZrzfxu5
+         3F/KtdkAGfqSk2iQcYnfnw95eQLVp+tqUxPhsKQfq9HbiBoRTESpV+RMNRdWqNs9SGrA
+         rPzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AvWGdXV/thMosfYPTWfHg4iggB9oYYlKgsQ4IGe6GwM=;
-        b=Fp949T0j2J/n1HQ68m0f7XEAN+oAZcJOQ5ZwecX/Du9zQ07AcuO5GE/tya/3G57gtN
-         a3SyFgtV17aHqgaxFyp/Ykkvtb6PHU+9JU6AyG4Dsb+D6xPrqKdnNhrlVo5mhsj2emqe
-         tjGeg+F9ctA8Y6tWeqOiRD0VdGG99EvgkIkRJx58btiXeUWv8ry8aRn37bEtTPFe/UJd
-         nigjBQPSX2vCXWzvnMC5GEfxd6O/k78lVFLLgD4bS/ygPs1Dd4RL6msNETHTVW+BlS//
-         +/+yy6lY9dzPy7kIouXyXk/AF5XAnGsxa197lZ8ZWW1HrkE5aUvsVNehTdoMd6nSyIJx
-         TQiA==
-X-Gm-Message-State: AO0yUKXzOXESK6SUzk+WrUqrzRptplhxblH/XUC6lWOvCV6PhfTY1ur9
-        flMvu6Ms0Gir4HKALdaDXxj8HQ==
-X-Google-Smtp-Source: AK7set/VMRyDDltG22cGu8ihRDW1/IpQliCrs2cHrRkWoMH5gk2TrOoECuH9qH4INUYj9vpys2Hgew==
-X-Received: by 2002:a5d:4988:0:b0:2bf:b3e9:d338 with SMTP id r8-20020a5d4988000000b002bfb3e9d338mr11210015wrq.31.1674827696348;
-        Fri, 27 Jan 2023 05:54:56 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id s5-20020a5d5105000000b002bdfcd8c77csm4073373wrt.101.2023.01.27.05.54.55
+        bh=yXA46BdA2s0F2yreUEYFr6AiDGQqI1YBsrC9BTQ1VjY=;
+        b=tAb08wcxYi2aWSGl/iowF5UesAc4f+Y9nkQgmX7sHzj8gX2QerIqOc6e63jLvhXbK5
+         KoGniUyQEmxX1r03G9fJAgxnjJ64rBYwZ4AVnFZfuoDwnM6KmTuQDLNt++uo0YD6a1M+
+         G65hLWxYWadzI3GibxO5FvZ1Cajp7Bo95tBWxKCl3jjHxaiWXcmINTtIwxlFB+RbHCBE
+         bFugDrVdwHGdIJD+eNkDpcRsxB0TmmzJdXwpcPY8MSUNrDm9xA0VfSr5uuHL/xy++MiI
+         bfUrTj4ryiLxdZnxoR+FTfe1PXj3c1dd2qeB470YbGpzJ+xsCatNqPl60+U0OrY33O1w
+         j9Gw==
+X-Gm-Message-State: AFqh2krM3HdXfgeEAXBlWpUTNB8nz7vjLb31YXqLTa+AMMMIlSYNQ54c
+        EnvAg5SsToBljZtbeAknp+htLg==
+X-Google-Smtp-Source: AMrXdXuwhrwldFsvH3ia+JZ4iUQf2dgKsJOxomlz5XN6l+4R/avTB57m49f1J8bn5L0CNVp+46p3uw==
+X-Received: by 2002:a05:6402:5110:b0:492:846d:e86d with SMTP id m16-20020a056402511000b00492846de86dmr52421707edd.23.1674827809163;
+        Fri, 27 Jan 2023 05:56:49 -0800 (PST)
+Received: from [192.168.1.101] (abyl20.neoplus.adsl.tpnet.pl. [83.9.31.20])
+        by smtp.gmail.com with ESMTPSA id y8-20020a056402134800b004610899742asm2344343edw.13.2023.01.27.05.56.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Jan 2023 05:54:55 -0800 (PST)
-Message-ID: <951e4459-6d98-f083-1dd9-fc0b12e53c96@nexus-software.ie>
-Date:   Fri, 27 Jan 2023 13:54:54 +0000
+        Fri, 27 Jan 2023 05:56:48 -0800 (PST)
+Message-ID: <7456978a-47ce-2e8d-e030-2917da992c34@linaro.org>
+Date:   Fri, 27 Jan 2023 14:56:46 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
+ Thunderbird/102.7.0
 Subject: Re: [PATCH v2 2/4] arm64: dts: qcom: sm6350: Add camera clock
  controller
 Content-Language: en-US
-To:     Luca Weiss <luca.weiss@fairphone.com>,
+To:     Bryan O'Donoghue <pure.logic@nexus-software.ie>,
+        Luca Weiss <luca.weiss@fairphone.com>,
         Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Loic Poulain <loic.poulain@linaro.org>,
         Robert Foss <rfoss@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -78,43 +78,50 @@ References: <20221213-sm6350-cci-v2-0-15c2c14c34bb@fairphone.com>
  <CQ2ZDQKO11XZ.HA5CXLK5MTFB@otso>
  <2989138a-8f4b-50a0-3e90-98b6785f2690@linaro.org>
  <CQ2ZY0W1M4F5.32SLTSYMILGOS@otso>
-From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
-In-Reply-To: <CQ2ZY0W1M4F5.32SLTSYMILGOS@otso>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ <951e4459-6d98-f083-1dd9-fc0b12e53c96@nexus-software.ie>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <951e4459-6d98-f083-1dd9-fc0b12e53c96@nexus-software.ie>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/01/2023 13:11, Luca Weiss wrote:
->> Doh I meant to say a power-domain to an mmcx a la
+
+
+On 27.01.2023 14:54, Bryan O'Donoghue wrote:
+> On 27/01/2023 13:11, Luca Weiss wrote:
+>>> Doh I meant to say a power-domain to an mmcx a la
+>>>
+>>> power-domains = <&rpmhpd SM8250_MMCX>;
+>>> required-opps = <&rpmhpd_opp_low_svs>;
+>>>
+>>> TITAN_TOP should be in your cci and camss dt nodes.
+>> Okay, that makes more sense.
 >>
->> power-domains = <&rpmhpd SM8250_MMCX>;
->> required-opps = <&rpmhpd_opp_low_svs>;
->>
->> TITAN_TOP should be in your cci and camss dt nodes.
-> Okay, that makes more sense.
+>> What I don't quite understand is why sm8250 only has MMCX listed there
+>> since downstream has both vdd_mx-supply = <&VDD_MX_LEVEL> and
+>> vdd_mm-supply = <&VDD_MMCX_LEVEL> and both "supplies" are used for
+>> different clocks using .vdd_class
 > 
-> What I don't quite understand is why sm8250 only has MMCX listed there
-> since downstream has both vdd_mx-supply = <&VDD_MX_LEVEL> and
-> vdd_mm-supply = <&VDD_MMCX_LEVEL> and both "supplies" are used for
-> different clocks using .vdd_class
+> power-domains = <&rpmhpd SM8250_MMCX>; == MMCX_LEVEL required for camcc
+> power-domains = <&camcc TITAN_TOP_GDSC>; required for cci/camss
+> 
+> now that you ask the question about MX_LEVEL you're making me doubt we have a 100% complete representation upstream TB perfectly honest, warrants a deep dive..
+> 
+> I just remember that on 8250 we tripped over MMCX not being switched on when - display I think was switched off.
+There's no MMCX on 6350 and MX is a parent of CX, so if we just stick
+CX here and add the lowest level to required-opps and add corresponding
+PM ops to the clk driver, it'll all be taken care of!
 
-power-domains = <&rpmhpd SM8250_MMCX>; == MMCX_LEVEL required for camcc
-power-domains = <&camcc TITAN_TOP_GDSC>; required for cci/camss
+Konrad
 
-now that you ask the question about MX_LEVEL you're making me doubt we 
-have a 100% complete representation upstream TB perfectly honest, 
-warrants a deep dive..
-
-I just remember that on 8250 we tripped over MMCX not being switched on 
-when - display I think was switched off.
-
----
-bod
-
+> 
+> ---
+> bod
+> 
