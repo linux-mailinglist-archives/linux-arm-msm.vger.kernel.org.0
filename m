@@ -2,69 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2153767ED12
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 19:12:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 743A967ED43
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 19:17:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233585AbjA0SMf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Jan 2023 13:12:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46462 "EHLO
+        id S233599AbjA0SR2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Jan 2023 13:17:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233108AbjA0SMe (ORCPT
+        with ESMTP id S233585AbjA0SR1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Jan 2023 13:12:34 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF6EC1ADDE
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 10:12:32 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id j17so9456141lfr.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 10:12:32 -0800 (PST)
+        Fri, 27 Jan 2023 13:17:27 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CD5B7921A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 10:16:45 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id bp15so9381333lfb.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 10:16:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=8KKYur1D6vGHF9gs814CKbLsD8Ur+nkTM9SmNPJrR/g=;
-        b=suTe1IFat9G7xPogzM5K+2rXvHh21IiPvcS3F5KcxUKM7YqDxvkZdad5J1uSl8Wquo
-         TL31iF/tM6S3Nduqu7hZGeQuqUTkQwqiDf14pl0jsVwTxKfImB9fZpQVPyHfj65htIfm
-         Egt+n1ESiUF8/JMnog0cQP1zdS5oGPWmMO8p+4jhj0AneAmyXyopwUL4+StFTRL0UUib
-         2fD/fLo6tUPG/keiW6CmwevnpNvl+PqmyH4uXTnStjTbIJE5gquULxmYBy+7hvMxZBQL
-         rP1J16ahTUEvu+oyfnrnCZeWtFLIBjWWtFXV9zeO1t+q0sJRajwh8HOiGs8GUckcuPsd
-         /Ypg==
+        bh=TdY0ESoBUaWZOArZ4vbd/ZemLGuFiIQedZqcEf/+K3U=;
+        b=e/sDelb/tJo8tE/e2g1IyrTy165rcKSrlvn3QwBk5D/AezBI28mLMdK9E+yjxgs6/z
+         3Rocx/zh2Dhi/IDlaBPTbv4WaHNP7v8rU9GxfuOmWdEBCdVDwCmIMSs9kwh0VzJ5JNfY
+         surZuIX2m3ZdlPA0SaPNAodVPcnDW+vwYjwc/Z1Rj7+V+B1OupxnAK/Lw5y+y78QReay
+         67drD+13oD7vOoKL+5C6sqqiKyTQjiOnK8Ut0J1zEry5Ia6k0Wgmpog+rjOiZrjo+vdF
+         JxpO3IZ+2NlBHVItcH29N6RSeLw6rqzEvPaaptlTN5SgE2UNy33Ej1bs6sKI3EjAq7tX
+         Navg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8KKYur1D6vGHF9gs814CKbLsD8Ur+nkTM9SmNPJrR/g=;
-        b=SM/IPQA5pjlQI4xhabbmfgsn1l9Q7ErBcReu14vLg7JPVhsa7w9xuu7gOPH+CO8Qmh
-         AZFNmj6vbLECFVRqjN7qWpr2vcKQRUjWcmW7rjvDoERGykq6N2XHd+Im/C7biavq22Co
-         3hzIOZzDQAO1pFRPrvnJPZraabBgsfAg2AlVmXqpdjC58XbF4bHvn0hjA6HJBvkR7oOi
-         Dyeg2FQUrXCFQ8bJpjdFPNTIiAoPEnhMvrgSItm26lLqBxr2tiFSl6NTxb6zKHky0HSY
-         eWHIEhp1sjFm0XuC2zAjF7i8mHhTDa9fq0ecck5kJrMwP+iMRZbyifyXNjSU5RXCewon
-         Kxjw==
-X-Gm-Message-State: AFqh2kodX3km3MLhNeUqevB3I2P4ipHpgDbSjGAYLI31TmnMPt1Iu5m6
-        b5VYMgCAlAZvNbTKb1JTKpxEeg==
-X-Google-Smtp-Source: AMrXdXsFsbQF7dn1lPmxAQ3UIH7dlHwM40RfW0Pju0Ppy38dFJDTJHq7QJsm2acc7HxdmVtJOopEoQ==
-X-Received: by 2002:a05:6512:32d4:b0:4b5:7925:8707 with SMTP id f20-20020a05651232d400b004b579258707mr11111863lfg.26.1674843151257;
-        Fri, 27 Jan 2023 10:12:31 -0800 (PST)
+        bh=TdY0ESoBUaWZOArZ4vbd/ZemLGuFiIQedZqcEf/+K3U=;
+        b=FWRPrA/pwrZ5OpZSfTuXIdpRTnNGxamhG/KnDt9nBAuSWwD9ET2uwtHhPmaIxDfEqt
+         3deIZcTg+0nlbT2Kl/7cYSDKtNUtozd582SrABfpr91qxV7yEI9qyhOGB1kU6L22Tb7l
+         L/gYUsTnk94GSgZRD2k/P3KbyjSIE5U0TMs1uK9gmbaWWrLeRJAjROTyBjfMnJ3AMjsI
+         wQy8LTVZqHWsS4s41Pv30QFWaimROqPvlHXgppa/DxB+OT1IpVcyfaLEDo3IBid61rAq
+         l+QYtGQSAQv6oK454xZ5YwefgE3NMM/PKAEPZ+TjodMouECSa3hGUXSC0XaddDn4hPZq
+         nFWg==
+X-Gm-Message-State: AFqh2krkh6cBSJ6UhG70jFIJiPSJaE715o83psoT0O8AWLt1S0KOZz/4
+        8YrC+ubh+eYzVgSXeNSEUTNu0A==
+X-Google-Smtp-Source: AMrXdXs+VRosPsnuZ3eEvFioqHrKCKqFZEcHh81RW5sZkjmCc4T+79oJt1dTSYNoGXShlhCinXgCng==
+X-Received: by 2002:a05:6512:1044:b0:4b6:ec96:bb9a with SMTP id c4-20020a056512104400b004b6ec96bb9amr13594948lfb.60.1674843329982;
+        Fri, 27 Jan 2023 10:15:29 -0800 (PST)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id g11-20020a0565123b8b00b00498fc3d4cfdsm317192lfv.189.2023.01.27.10.12.30
+        by smtp.gmail.com with ESMTPSA id 13-20020ac2482d000000b004cafe65883dsm324170lft.122.2023.01.27.10.15.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Jan 2023 10:12:30 -0800 (PST)
-Message-ID: <cf1b0a29-a145-6f47-dd8e-6cb619f54bad@linaro.org>
-Date:   Fri, 27 Jan 2023 20:12:29 +0200
+        Fri, 27 Jan 2023 10:15:29 -0800 (PST)
+Message-ID: <92240215-b336-48c8-d9f0-a33890f44907@linaro.org>
+Date:   Fri, 27 Jan 2023 20:15:28 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH] arm64: defconfig: enable SM8450 DISPCC clock driver
+Subject: Re: [PATCH v5 0/7] clk: qcom: msm8996: add APCS clock driver
 Content-Language: en-GB
-To:     Neil Armstrong <neil.armstrong@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20230127-topic-sm8450-upstream-defconfig-v1-1-93cf603db08b@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230127-topic-sm8450-upstream-defconfig-v1-1-93cf603db08b@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Jassi Brar <jassisinghbrar@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230126230319.3977109-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230126230319.3977109-1-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -76,16 +82,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/01/2023 18:34, Neil Armstrong wrote:
-> Build the Qualcomm SM8450 Display Clock Controller driver as a module
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->   arch/arm64/configs/defconfig | 1 +
->   1 file changed, 1 insertion(+)
->
+On 27/01/2023 01:03, Dmitry Baryshkov wrote:
+> The sys_apcs_aux clock can be used by CPU and CBF clock drivers to drive
+> those clocks from GPLL0 while doing initial setup. Add simple driver to
+> setup and export this clock.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Jassi, please excuse me for this ping. Since the only questions are 
+related to the clock driver (and hopefully they all are resolved), do 
+you plan to merge the patches 1-6 for 6.3?
+
+> 
+> Changes since v4:
+> - Expand comments in the apcs-msm8996 driver describing the delay and
+>    the reason for setting up the sys_apcs_aux clock as a fixed rate
+>    rather than a fixed factor clock.
+> 
+> Changes since v3:
+> - Split the patch 3/6 into two: first one moves existing strings, second
+>    one adds new compatible strings to the conditionals.
+> 
+> Changes since v2:
+> - Added the conditional clause to schema forbidding usage of clocks and
+>    clock-names on platforms which do not pass additional clocks to the
+>    APCS device node (Krzysztof)
+> - Added SDX55 compat string
+> - Moved MSM8976 compat to the list of platforms using syscon.
+> 
+> Changes since v1:
+> - Removed the clk.h header inclusion (Stephen)
+> - Changed the module license from GPL v2 to bare GPL.
+> 
+> 
+> Dmitry Baryshkov (7):
+>    dt-bindings: mailbox: qcom: add SDX55 compatible
+>    dt-bindings: mailbox: qcom: enable syscon compatible for msm8976
+>    dt-bindings: mailbox: qcom: correct the list of platforms using clocks
+>    dt-bindings: mailbox: qcom: add missing platforms to conditional
+>      clauses
+>    dt-bindings: mailbox: qcom: add #clock-cells to msm8996 example
+>    mailbox: qcom-apcs-ipc: enable APCS clock device for MSM8996
+>    clk: qcom: add the driver for the MSM8996 APCS clocks
+> 
+>   .../mailbox/qcom,apcs-kpss-global.yaml        | 37 ++++++--
+>   drivers/clk/qcom/Makefile                     |  2 +-
+>   drivers/clk/qcom/apcs-msm8996.c               | 88 +++++++++++++++++++
+>   drivers/mailbox/qcom-apcs-ipc-mailbox.c       |  2 +-
+>   4 files changed, 118 insertions(+), 11 deletions(-)
+>   create mode 100644 drivers/clk/qcom/apcs-msm8996.c
+> 
 
 -- 
 With best wishes
