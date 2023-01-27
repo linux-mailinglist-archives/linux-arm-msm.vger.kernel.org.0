@@ -2,142 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E01E067EF3A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 21:06:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A229267EF61
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 21:13:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233604AbjA0UGd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Jan 2023 15:06:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49996 "EHLO
+        id S231439AbjA0UNA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Jan 2023 15:13:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233037AbjA0UGJ (ORCPT
+        with ESMTP id S231686AbjA0UM4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Jan 2023 15:06:09 -0500
-Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on20627.outbound.protection.outlook.com [IPv6:2a01:111:f400:7e88::627])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0B043A87C;
-        Fri, 27 Jan 2023 12:05:13 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=mIG6GzZbsr0lrv5MBoky3paRa9iZWjwo2nkipGreTUj7HR/0KpmRo88/VqXGpk3bqce6lzVtU9R0TewHUqvgAOOweRStRyOWJ58pOASX10SW0STre6/eh/5F/e5qkc04s95OviUdu2+pIc+xEddEtlpy5utnPa+AanqDuaRd55iKh3+Tc+8GgSJ2S1pBUOj4pP6/dyGiV+fSazxuw/R+pZsMtNpsGcoOMtyPtAVNG/T3yqwMSJdbS2X08lMj6XP9Lh1CxTfdSsHbbEm/xKLn9Hf1HP33dD894sXJ73UsTaL8dE+Kx0W1Uh8Aiqp6X5JmzzjKvsdMoARdH7MAkCqEJw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=o7EmmtTfdC1T2cy1HdvKUC7kTulqclX17gm9CF+M76o=;
- b=RQCY3oEDTPRqE7cyizjGO9M+j83o4d1gLgGKOIqEQWxtLegS7QdBwF4EHxm1lXbrpfqAu3VC3VuSmniJMBs2pvEMsbsW9pGkIIA/SbnRRsOIrcGZrFonVgybMIJyK43RZFQUxpD8f5j7HkUTqq32TLODOtUGpwbzpGjF/Syr4ubf4CQi86876ihOUojsE34kc4NrySGnEc1NTKXsqLvPqIlJApAL6XjA+JhSFdipT5jT3n7ecTqXoBbXArQ43sLgNpNQBF2R8S7NgdZtHSrsPxBhEbUQTx1KDx1XyFiPwAwO/Dbwvacuqcrzqww8QaOnOuAaJwTvnyzI0gYz9/96+g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=lists.infradead.org
- smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
- header.from=nvidia.com; dkim=none (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=o7EmmtTfdC1T2cy1HdvKUC7kTulqclX17gm9CF+M76o=;
- b=asCisvUzJrfR14Og7RP/mS0grPh2gsbr777KreyStjvscxOBUhvtQVPLBVXLvqwaU1AFCtrxWIdTCvBI0ftYFVErTiDCZVpvoq0DUc08QjecUgyi9KkczxK3XxuOGUttTTCiJ4NP52K0Qi3PA6N3B5EPS4UcUAjUHGR2Csk4chhQuRxijYlSsAc8kWhEMKuR4VnyELda04BCd6kGmHMZhQ98sVSu8QkOl2Rhed5MJ7VYnpWwefm6No3S4N1as+5SovWjH9oHAobUfNUCdnv5hd1seMUvhRh1mAdpJyAR/5OWIrLtNWovuhWBqNNFTax6wRoh2OdGuLBJEhCCVFc3rg==
-Received: from BN0PR04CA0065.namprd04.prod.outlook.com (2603:10b6:408:ea::10)
- by DS0PR12MB8365.namprd12.prod.outlook.com (2603:10b6:8:f8::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6043.20; Fri, 27 Jan
- 2023 20:05:11 +0000
-Received: from BN8NAM11FT039.eop-nam11.prod.protection.outlook.com
- (2603:10b6:408:ea:cafe::10) by BN0PR04CA0065.outlook.office365.com
- (2603:10b6:408:ea::10) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6043.22 via Frontend
- Transport; Fri, 27 Jan 2023 20:05:11 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- BN8NAM11FT039.mail.protection.outlook.com (10.13.177.169) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6043.21 via Frontend Transport; Fri, 27 Jan 2023 20:05:11 +0000
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Fri, 27 Jan
- 2023 12:05:02 -0800
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail205.nvidia.com
- (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Fri, 27 Jan
- 2023 12:05:02 -0800
-Received: from Asurada-Nvidia.nvidia.com (10.127.8.12) by mail.nvidia.com
- (10.129.68.10) with Microsoft SMTP Server id 15.2.986.36 via Frontend
- Transport; Fri, 27 Jan 2023 12:05:00 -0800
-From:   Nicolin Chen <nicolinc@nvidia.com>
-To:     <jgg@nvidia.com>, <kevin.tian@intel.com>, <robin.murphy@arm.com>,
-        <joro@8bytes.org>, <will@kernel.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <yong.wu@mediatek.com>, <matthias.bgg@gmail.com>,
-        <thierry.reding@gmail.com>, <alex.williamson@redhat.com>,
-        <cohuck@redhat.com>
-CC:     <vdumpa@nvidia.com>, <jonathanh@nvidia.com>,
-        <iommu@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-mediatek@lists.infradead.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-tegra@vger.kernel.org>, <kvm@vger.kernel.org>
-Subject: [PATCH 4/4] vfio: Do not allocate domain if broken_unmanaged_domain
-Date:   Fri, 27 Jan 2023 12:04:20 -0800
-Message-ID: <42f5cec9d3f03eab3af9509bd5a730f6a1414989.1674849118.git.nicolinc@nvidia.com>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <cover.1674849118.git.nicolinc@nvidia.com>
-References: <cover.1674849118.git.nicolinc@nvidia.com>
+        Fri, 27 Jan 2023 15:12:56 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22875CC1C;
+        Fri, 27 Jan 2023 12:12:55 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A16AB61DA0;
+        Fri, 27 Jan 2023 20:12:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2B61C433A0;
+        Fri, 27 Jan 2023 20:12:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1674850373;
+        bh=ESp4ivxCGFPFObDgvtxKFzxjuSZPqA+13GuDHfzNnKQ=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=hLlshlrWA11JQFyx8kJctNNRBypOFsY1qHeYDQKv6HpkS8kU67Zo4QJmFalWo5iiw
+         sefVI2xlwVULeio3nc7RFNX1AKusGR+9TKdNnMyZ2G3O7/CWzkdqtqLJNiikp6Z+IU
+         7XezxAy4X9QNH7L8bO9ZJgJixSGwI4rCaUO+sfAHS1mgMi8AxzybVx4Wxpdi718yGE
+         DgyaIkVNfv3i6iyaq+bBTSkKGTZHiyFRYN3HgbFvMu0wEUFKztLpJHVAQhg3REMIzQ
+         KriDVATMAK0dBYLY26nEkNIHH6fjq0sTTMLItEPoXXQ0QG5Ze6AzlpqLtfhGr5gnTF
+         GpN9OEQbmACuA==
+Received: by mail-vs1-f44.google.com with SMTP id h19so4703474vsv.13;
+        Fri, 27 Jan 2023 12:12:53 -0800 (PST)
+X-Gm-Message-State: AO0yUKWBXPLG9ZOMbCrEsxQYfNXRV4Ua9j955BzZFBDn1xaIUmjaMA+d
+        RaVToPNQSPKUUxtPIkb0xcw46ZE5RCXfu76IGg==
+X-Google-Smtp-Source: AK7set8wQJdZmsM8dWkryhTXCAqQig8VcqnjonDtkAIpepzNG8FdkE5HSko39Te2boXO0fc2vqvdvVcFtGldT10mXgY=
+X-Received: by 2002:a67:fe41:0:b0:3ea:c8c:48a5 with SMTP id
+ m1-20020a67fe41000000b003ea0c8c48a5mr1321838vsr.53.1674850372847; Fri, 27 Jan
+ 2023 12:12:52 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN8NAM11FT039:EE_|DS0PR12MB8365:EE_
-X-MS-Office365-Filtering-Correlation-Id: 16aa347e-5ccd-4e8c-007b-08db00a1cc0b
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: R6jo/E9hj+aFlwNh+ZQngKjzIs7s9C8Rr0TWz7tvftdukTv9brVHYi1ddAvd/5iVqpfpkuimTGThpauWSYwJVkpg1YpiKR3l80PUi97R+UEmGlMmpRMplN8zDQBw/XcFc0qAbYoiRU7q7zqFYpY3NAvGiMA9FAnR6rXHhpvCkS9tw8bGSjTqAV/5Top83N4/+Uh6zWp212eKGEiRT6dxeWdONz2z0urkGUdQ7ZkPnAb5SpWSj7Kt+hahPTAM8VMiFhpTdrv28fYSc/LwO5xc+BN0Iznsnm3NXQjBOeXo98voPXVDyrc2F1rHxROhyiSblkSo11tVDICFujNSRW25kdEVu8wERS2Zp1sOJourGD16KBPP4VBXW8zeyOiGIzXQXfHvU7pYO9sdcF/iGLFMGHLik5mSdVtqlpbuN/YXR6lswn8ecbA5TDhuqoyueOVjKPSVe044afcqHdNFlJ+B80i7HKB+JVmpQH3as6ogq+4CJjTFwxqwKetgCFzcYkfl05bxVSJJfk96zrQGi/VUkuNRRRpOZl3jEBjpzq3oKdGr8Ee741cGkUycZhDOkT6SgohZoOG54yQl/O1cKer3eVyEXcY2KrA4rc3v+Obfxjdx6My61NZpLi2/eM2n+eUimeXTWCxnaBDQyanfshLiaPgkbFra79JkWXr8p3OhzBPBV/9d39Hn3SlJUVOiNB2Aj1CUfl/i5UyDMutc/9p2sv2ZiLOymE9zIC7VH6ETIh8=
-X-Forefront-Antispam-Report: CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230025)(4636009)(396003)(376002)(39860400002)(136003)(346002)(451199018)(36840700001)(46966006)(40470700004)(8936002)(2616005)(5660300002)(41300700001)(70206006)(2906002)(70586007)(4326008)(8676002)(7696005)(336012)(186003)(6666004)(26005)(83380400001)(426003)(86362001)(82310400005)(47076005)(82740400003)(316002)(7636003)(4744005)(7416002)(478600001)(54906003)(110136005)(36756003)(356005)(40460700003)(40480700001)(921005)(36860700001);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jan 2023 20:05:11.4190
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 16aa347e-5ccd-4e8c-007b-08db00a1cc0b
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN8NAM11FT039.eop-nam11.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8365
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
-        SPF_HELO_PASS,SPF_NONE autolearn=no autolearn_force=no version=3.4.6
+References: <20230113150310.29709-1-quic_devipriy@quicinc.com>
+ <20230113150310.29709-5-quic_devipriy@quicinc.com> <20230117183835.GA3427325-robh@kernel.org>
+ <11a5fa34-c438-a567-6364-4bf1d0d369e3@quicinc.com>
+In-Reply-To: <11a5fa34-c438-a567-6364-4bf1d0d369e3@quicinc.com>
+From:   Rob Herring <robh@kernel.org>
+Date:   Fri, 27 Jan 2023 14:12:41 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqKMpW7O_sQ4j+ZBfjGZdJUDosM-kVhcFjaUmXvXCC4L8A@mail.gmail.com>
+Message-ID: <CAL_JsqKMpW7O_sQ4j+ZBfjGZdJUDosM-kVhcFjaUmXvXCC4L8A@mail.gmail.com>
+Subject: Re: [PATCH 4/6] regulator: qcom_smd: Add PMIC compatible for IPQ9574
+To:     Devi Priya <quic_devipriy@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        lgirdwood@gmail.com, broonie@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
+        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
+        quic_poovendh@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a sanity of the broken_unmanaged_domain flag to reject the use of
-vfio_iommu_type1 in the early stage, if the flag is set by the iommu
-driver.
+On Fri, Jan 27, 2023 at 10:05 AM Devi Priya <quic_devipriy@quicinc.com> wrote:
+>
+>
+>
+> On 1/18/2023 12:08 AM, Rob Herring wrote:
+> > On Fri, Jan 13, 2023 at 08:33:08PM +0530, devi priya wrote:
+> >> Add mp5496 PMIC compatible string for IPQ9574 SoC
+> >>
+> >> Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+> >> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+> >> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
+> >> ---
+> >>   .../devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml  | 3 ++-
+> >>   1 file changed, 2 insertions(+), 1 deletion(-)
+> >>
+> >> diff --git a/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
+> >> index 8c45f53212b1..7907d9385583 100644
+> >> --- a/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
+> >> +++ b/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
+> >> @@ -22,7 +22,7 @@ description:
+> >>     Each sub-node is identified using the node's name, with valid values listed
+> >>     for each of the pmics below.
+> >>
+> >> -  For mp5496, s2
+> >> +  For mp5496, s1, s2
+> >>
+> >>     For pm2250, s1, s2, s3, s4, l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11,
+> >>     l12, l13, l14, l15, l16, l17, l18, l19, l20, l21, l22
+> >> @@ -84,6 +84,7 @@ properties:
+> >>     compatible:
+> >>       enum:
+> >>         - qcom,rpm-mp5496-regulators
+> >> +      - qcom,rpm-ipq9574-mp5496-regulators
+> >
+> > Is this a different part than just mp5496? Or used in a different,
+> > incompatible way?
+> IPQ6018 and IPQ9574 platforms use the same PMIC MP5496 but they have a
+> different power layout.So, we plan to update the compatible:
+> qcom,rpm-mp5496-regulators to
+> qcom,rpm-ipq6018-mp5496-regulators(target-specific) in the next patchset
+> as the regulators serve different purposes
 
-Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
----
- drivers/vfio/vfio_iommu_type1.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+You can't just change compatibles. It is an ABI.
 
-diff --git a/drivers/vfio/vfio_iommu_type1.c b/drivers/vfio/vfio_iommu_type1.c
-index 23c24fe98c00..6ec238aefe89 100644
---- a/drivers/vfio/vfio_iommu_type1.c
-+++ b/drivers/vfio/vfio_iommu_type1.c
-@@ -2170,7 +2170,10 @@ static int vfio_iommu_domain_alloc(struct device *dev, void *data)
- {
- 	struct iommu_domain **domain = data;
- 
--	*domain = iommu_domain_alloc(dev->bus);
-+	if (device_iommu_unmanaged_supported(dev))
-+		*domain = iommu_domain_alloc(dev->bus);
-+	else
-+		*domain = NULL;
- 	return 1; /* Don't iterate */
- }
- 
--- 
-2.39.1
+This still doesn't make sense to me. The PMIC hasn't changed, so the
+binding shouldn't. It should be flexible enough to be hooked up to
+different platforms. That's why we have all the per regulator
+configuration. What are you missing?
 
+Rob
