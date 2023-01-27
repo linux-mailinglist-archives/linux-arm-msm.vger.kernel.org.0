@@ -2,82 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CC59567DAF6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 01:52:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1862167DB0F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 02:09:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232834AbjA0Awz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Jan 2023 19:52:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42354 "EHLO
+        id S232960AbjA0BJg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Jan 2023 20:09:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232862AbjA0Awy (ORCPT
+        with ESMTP id S229701AbjA0BJe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Jan 2023 19:52:54 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5095361BF
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 16:52:48 -0800 (PST)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30R011Bw005442;
-        Fri, 27 Jan 2023 00:52:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=g/BWPrQCrLtWe1icFxEYMZ+4GwL6fbJk+yO+k2Lfq/g=;
- b=bINnAZvft8m4ssOBxJTDWq5iUzVyw9fI2iA7ELFVfm7NIcXP0EZ/hKuqco9cUWSRXgTC
- Ow9NPCD2MtJTG70mZk0tU0ObYTYVX0VhQQkpGQdzNDdcKTz3ksMmt2KU6JJ1r5Z9q2Ai
- UVC65OSZE5WsDpiLtZ6e0m2hfk1n4uvXVZEbs39JXBf9RcG7RZSUuVu4IGC0rKUJ4VPq
- h2XA3RQ/TCg7hkPbT1WRy1zwvK4RgVHmkCuUKDqaLw6MXyQ8Jx5Sp4oRzNxwq1KgA4W2
- 4pzWDh0P2sbWsbhQn0aUhYa7Jn6p+kif0KbOa0ozTU21+07pEHppw2/JCHcg5Bi3zBNn +Q== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nb6jcb9mc-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 27 Jan 2023 00:52:36 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30R0qZO3028155
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 27 Jan 2023 00:52:35 GMT
-Received: from [10.110.33.211] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Thu, 26 Jan
- 2023 16:52:35 -0800
-Message-ID: <aaeb287f-de41-3f63-fd93-b08532964d59@quicinc.com>
-Date:   Thu, 26 Jan 2023 16:52:34 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v2 05/27] drm/msm/dpu: drop EAGAIN check from
- dpu_format_populate_layout
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
+        Thu, 26 Jan 2023 20:09:34 -0500
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C16D542BFA
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 17:09:32 -0800 (PST)
+Received: by mail-pj1-x1030.google.com with SMTP id n20-20020a17090aab9400b00229ca6a4636so7137570pjq.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 17:09:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=uORFmtwf+WIQa4zOQDY675hMQt16yP5oZ3IJbiKasy0=;
+        b=cy4ezLsgrRklfSsdqOdGdWX5lEWLqYyxBbiuayCxSoCVZxvsNERAEbRDC6sIO8N0SP
+         5t8NR2mH7YDnmFBcLlXAnK3ACyXGW+i4Xbh4FpIIkeZf4UoWg0RjnTxyciPChZrzfO2i
+         rm3+Ik9KgiFSAolP2dlfyisJFU/KEPyCQcD+8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=uORFmtwf+WIQa4zOQDY675hMQt16yP5oZ3IJbiKasy0=;
+        b=ANT8lNFEkHFdB8RU+YVsm97kY/s/vWyemHQDz9SOHz77rsoIYgKJT8VZwYbE8IsVhD
+         qIMRTTy7OeUXiXOmpXM0kTnXDsZpr1mOhHNxztZkE3FaWtCwuT2HmTjAaP36tnqksV0u
+         QUXYHGYioTb2ItdSBF4jRi/ZXRbc8JiB6eh/wgzsgL72QyrfQf59tGKANPEza47Fw0nM
+         jxdA/hs4BuwZ6q20Agg7mWiF1AsWT/UFq+JkJgd2hyF2xOW/UHR/kRJ4HQ51QRrAGPA+
+         Tu1sQWTcW0MLCKOiBPK4xOGrb0eg+6qt5FKZXmwSIv/WoYfKwmxXSD9YrC6hZFBCaSUn
+         sGwA==
+X-Gm-Message-State: AO0yUKVpKGIZwCzCMaAHkrCSYFks5nYG+3y6ouFm+E1BvVwWCTCHdgbb
+        6Ul7fcWsARiWVIJhTZT5XCtRXg==
+X-Google-Smtp-Source: AK7set8kBA9xN88GbvXCLUMiaJzbtATe4aJ6bx8xM9K5BXIVMOQOziSXvCSOt+tC3QvT5JHScBunow==
+X-Received: by 2002:a17:90b:3806:b0:22c:3052:47dd with SMTP id mq6-20020a17090b380600b0022c305247ddmr3446534pjb.17.1674781772234;
+        Thu, 26 Jan 2023 17:09:32 -0800 (PST)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:9d:2:d3b5:7433:dc03:ca1f])
+        by smtp.gmail.com with ESMTPSA id s10-20020a17090a760a00b0022bbbba9801sm3843981pjk.37.2023.01.26.17.09.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Jan 2023 17:09:31 -0800 (PST)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Douglas Anderson <dianders@chromium.org>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20221229191856.3508092-1-dmitry.baryshkov@linaro.org>
- <20221229191856.3508092-6-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20221229191856.3508092-6-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: N8eB2ZHPhta3_Ee-UacVNsg-wEQJTE2Z
-X-Proofpoint-GUID: N8eB2ZHPhta3_Ee-UacVNsg-wEQJTE2Z
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-26_09,2023-01-26_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- phishscore=0 impostorscore=0 adultscore=0 priorityscore=1501 bulkscore=0
- suspectscore=0 clxscore=1015 mlxscore=0 spamscore=0 mlxlogscore=999
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301270003
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        David Airlie <airlied@gmail.com>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2 1/2] drm/msm/dp: Clean up handling of DP AUX interrupts
+Date:   Thu, 26 Jan 2023 17:09:12 -0800
+Message-Id: <20230126170745.v2.1.I90ffed3ddd21e818ae534f820cb4d6d8638859ab@changeid>
+X-Mailer: git-send-email 2.39.1.456.gfc5497dd1b-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,78 +75,205 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The DP AUX interrupt handling was a bit of a mess.
+* There were two functions (one for "native" transfers and one for
+  "i2c" transfers) that were quite similar. It was hard to say how
+  many of the differences between the two functions were on purpose
+  and how many of them were just an accident of how they were coded.
+* Each function sometimes used "else if" to test for error bits and
+  sometimes didn't and again it was hard to say if this was on purpose
+  or just an accident.
+* The two functions wouldn't notice whether "unknown" bits were
+  set. For instance, there seems to be a bit "DP_INTR_PLL_UNLOCKED"
+  and if it was set there would be no indication.
+* The two functions wouldn't notice if more than one error was set.
 
+Let's fix this by being more consistent / explicit about what we're
+doing.
 
-On 12/29/2022 11:18 AM, Dmitry Baryshkov wrote:
-> The pipe's layout is not cached, corresponding data structure is zeroed
-> out each time in the dpu_plane_sspp_atomic_update(), right before the
-> call to _dpu_plane_set_scanout() -> dpu_format_populate_layout().
-> 
-> Drop plane_addr comparison against previous layout and corresponding
-> EAGAIN handling.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+By design this could cause different handling for AUX transfers,
+though I'm not actually aware of any bug fixed as a result of
+this patch (this patch was created because we simply noticed how odd
+the old code was by code inspection). Specific notes here:
+1. In the old native transfer case if we got "done + wrong address"
+   we'd ignore the "wrong address" (because of the "else if"). Now we
+   won't.
+2. In the old native transfer case if we got "done + timeout" we'd
+   ignore the "timeout" (because of the "else if"). Now we won't.
+3. In the old native transfer case we'd see "nack_defer" and translate
+   it to the error number for "nack". This differed from the i2c
+   transfer case where "nack_defer" was given the error number for
+   "nack_defer". This 100% can't matter because the only user of this
+   error number treats "nack defer" the same as "nack", so it's clear
+   that the difference between the "native" and "i2c" was pointless
+   here.
+4. In the old i2c transfer case if we got "done" plus any error
+   besides "nack" or "defer" then we'd ignore the error. Now we don't.
+5. If there is more than one error signaled by the hardware it's
+   possible that we'll report a different one than we used to. I don't
+   know if this matters. If someone is aware of a case this matters we
+   should document it and change the code to make it explicit.
+6. One quirk we keep (I don't know if this is important) is that in
+   the i2c transfer case if we see "done + defer" we report that as a
+   "nack". That seemed too intentional in the old code to just drop.
 
-The change itself LGTM, hence
+After this change we will add extra logging, including:
+* A warning if we see more than one error bit set.
+* A warning if we see an unexpected interrupt.
+* A warning if we get an AUX transfer interrupt when shouldn't.
 
-But, shouldnt we add this EAGAIN validation or in other words fix this 
-rather than drop this?
+It actually turns out that as a result of this change then at boot we
+sometimes see an error:
+  [drm:dp_aux_isr] *ERROR* Unexpected DP AUX IRQ 0x01000000 when not busy
+That means that, during init, we are seeing DP_INTR_PLL_UNLOCKED. For
+now I'm going to say that leaving this error reported in the logs is
+OK-ish and hopefully it will encourage someone to track down what's
+going on at init time.
 
-Like I wrote in the review last time, this makes sure to fail the commit 
-if the same addr is being programmed.
+One last note here is that this change renames one of the interrupt
+bits. The bit named "i2c done" clearly was used for native transfers
+being done too, so I renamed it to indicate this.
 
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c | 10 +---------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c   |  4 +---
->   2 files changed, 2 insertions(+), 12 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-> index d95540309d4d..ec1001e10f4f 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-> @@ -918,8 +918,7 @@ int dpu_format_populate_layout(
->   		struct drm_framebuffer *fb,
->   		struct dpu_hw_fmt_layout *layout)
->   {
-> -	uint32_t plane_addr[DPU_MAX_PLANES];
-> -	int i, ret;
-> +	int ret;
->   
->   	if (!fb || !layout) {
->   		DRM_ERROR("invalid arguments\n");
-> @@ -940,9 +939,6 @@ int dpu_format_populate_layout(
->   	if (ret)
->   		return ret;
->   
-> -	for (i = 0; i < DPU_MAX_PLANES; ++i)
-> -		plane_addr[i] = layout->plane_addr[i];
-> -
->   	/* Populate the addresses given the fb */
->   	if (DPU_FORMAT_IS_UBWC(layout->format) ||
->   			DPU_FORMAT_IS_TILE(layout->format))
-> @@ -950,10 +946,6 @@ int dpu_format_populate_layout(
->   	else
->   		ret = _dpu_format_populate_addrs_linear(aspace, fb, layout);
->   
-> -	/* check if anything changed */
-> -	if (!ret && !memcmp(plane_addr, layout->plane_addr, sizeof(plane_addr)))
-> -		ret = -EAGAIN;
-> -
->   	return ret;
->   }
->   
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index cdde7b9ec882..43fb8e00ada6 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -476,9 +476,7 @@ static void _dpu_plane_set_scanout(struct drm_plane *plane,
->   	int ret;
->   
->   	ret = dpu_format_populate_layout(aspace, fb, &pipe_cfg->layout);
-> -	if (ret == -EAGAIN)
-> -		DPU_DEBUG_PLANE(pdpu, "not updating same src addrs\n");
-> -	else if (ret)
-> +	if (ret)
->   		DPU_ERROR_PLANE(pdpu, "failed to get format layout, %d\n", ret);
->   	else if (pdpu->pipe_hw->ops.setup_sourceaddress) {
->   		trace_dpu_plane_set_scanout(pdpu->pipe_hw->idx,
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
+I don't have good test coverage for this change and it does have the
+potential to change behavior. I confirmed that eDP and DP still
+continue to work OK on one machine. Hopefully folks can test it more.
+
+Changes in v2:
+- Moved DP_INTR_AUX_XFER_DONE to the end of the if else chain.
+
+ drivers/gpu/drm/msm/dp/dp_aux.c     | 80 ++++++++++++-----------------
+ drivers/gpu/drm/msm/dp/dp_catalog.c |  2 +-
+ drivers/gpu/drm/msm/dp/dp_catalog.h |  2 +-
+ 3 files changed, 36 insertions(+), 48 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/dp/dp_aux.c b/drivers/gpu/drm/msm/dp/dp_aux.c
+index cc3efed593aa..84f9e3e5f964 100644
+--- a/drivers/gpu/drm/msm/dp/dp_aux.c
++++ b/drivers/gpu/drm/msm/dp/dp_aux.c
+@@ -162,47 +162,6 @@ static ssize_t dp_aux_cmd_fifo_rx(struct dp_aux_private *aux,
+ 	return i;
+ }
+ 
+-static void dp_aux_native_handler(struct dp_aux_private *aux, u32 isr)
+-{
+-	if (isr & DP_INTR_AUX_I2C_DONE)
+-		aux->aux_error_num = DP_AUX_ERR_NONE;
+-	else if (isr & DP_INTR_WRONG_ADDR)
+-		aux->aux_error_num = DP_AUX_ERR_ADDR;
+-	else if (isr & DP_INTR_TIMEOUT)
+-		aux->aux_error_num = DP_AUX_ERR_TOUT;
+-	if (isr & DP_INTR_NACK_DEFER)
+-		aux->aux_error_num = DP_AUX_ERR_NACK;
+-	if (isr & DP_INTR_AUX_ERROR) {
+-		aux->aux_error_num = DP_AUX_ERR_PHY;
+-		dp_catalog_aux_clear_hw_interrupts(aux->catalog);
+-	}
+-}
+-
+-static void dp_aux_i2c_handler(struct dp_aux_private *aux, u32 isr)
+-{
+-	if (isr & DP_INTR_AUX_I2C_DONE) {
+-		if (isr & (DP_INTR_I2C_NACK | DP_INTR_I2C_DEFER))
+-			aux->aux_error_num = DP_AUX_ERR_NACK;
+-		else
+-			aux->aux_error_num = DP_AUX_ERR_NONE;
+-	} else {
+-		if (isr & DP_INTR_WRONG_ADDR)
+-			aux->aux_error_num = DP_AUX_ERR_ADDR;
+-		else if (isr & DP_INTR_TIMEOUT)
+-			aux->aux_error_num = DP_AUX_ERR_TOUT;
+-		if (isr & DP_INTR_NACK_DEFER)
+-			aux->aux_error_num = DP_AUX_ERR_NACK_DEFER;
+-		if (isr & DP_INTR_I2C_NACK)
+-			aux->aux_error_num = DP_AUX_ERR_NACK;
+-		if (isr & DP_INTR_I2C_DEFER)
+-			aux->aux_error_num = DP_AUX_ERR_DEFER;
+-		if (isr & DP_INTR_AUX_ERROR) {
+-			aux->aux_error_num = DP_AUX_ERR_PHY;
+-			dp_catalog_aux_clear_hw_interrupts(aux->catalog);
+-		}
+-	}
+-}
+-
+ static void dp_aux_update_offset_and_segment(struct dp_aux_private *aux,
+ 					     struct drm_dp_aux_msg *input_msg)
+ {
+@@ -427,13 +386,42 @@ void dp_aux_isr(struct drm_dp_aux *dp_aux)
+ 	if (!isr)
+ 		return;
+ 
+-	if (!aux->cmd_busy)
++	if (!aux->cmd_busy) {
++		DRM_ERROR("Unexpected DP AUX IRQ %#010x when not busy\n", isr);
+ 		return;
++	}
+ 
+-	if (aux->native)
+-		dp_aux_native_handler(aux, isr);
+-	else
+-		dp_aux_i2c_handler(aux, isr);
++	/*
++	 * The logic below assumes only one error bit is set (other than "done"
++	 * which can apparently be set at the same time as some of the other
++	 * bits). Warn if more than one get set so we know we need to improve
++	 * the logic.
++	 */
++	if (hweight32(isr & ~DP_INTR_AUX_XFER_DONE) > 1)
++		DRM_WARN("Some DP AUX interrupts unhandled: %#010x\n", isr);
++
++	if (isr & DP_INTR_AUX_ERROR) {
++		aux->aux_error_num = DP_AUX_ERR_PHY;
++		dp_catalog_aux_clear_hw_interrupts(aux->catalog);
++	} else if (isr & DP_INTR_NACK_DEFER) {
++		aux->aux_error_num = DP_AUX_ERR_NACK_DEFER;
++	} else if (isr & DP_INTR_WRONG_ADDR) {
++		aux->aux_error_num = DP_AUX_ERR_ADDR;
++	} else if (isr & DP_INTR_TIMEOUT) {
++		aux->aux_error_num = DP_AUX_ERR_TOUT;
++	} else if (!aux->native && (isr & DP_INTR_I2C_NACK)) {
++		aux->aux_error_num = DP_AUX_ERR_NACK;
++	} else if (!aux->native && (isr & DP_INTR_I2C_DEFER)) {
++		if (isr & DP_INTR_AUX_XFER_DONE)
++			aux->aux_error_num = DP_AUX_ERR_NACK;
++		else
++			aux->aux_error_num = DP_AUX_ERR_DEFER;
++	} else if (isr & DP_INTR_AUX_XFER_DONE) {
++		aux->aux_error_num = DP_AUX_ERR_NONE;
++	} else {
++		DRM_WARN("Unexpected interrupt: %#010x\n", isr);
++		return;
++	}
+ 
+ 	complete(&aux->comp);
+ }
+diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
+index 676279d0ca8d..421391755427 100644
+--- a/drivers/gpu/drm/msm/dp/dp_catalog.c
++++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
+@@ -27,7 +27,7 @@
+ #define DP_INTF_CONFIG_DATABUS_WIDEN     BIT(4)
+ 
+ #define DP_INTERRUPT_STATUS1 \
+-	(DP_INTR_AUX_I2C_DONE| \
++	(DP_INTR_AUX_XFER_DONE| \
+ 	DP_INTR_WRONG_ADDR | DP_INTR_TIMEOUT | \
+ 	DP_INTR_NACK_DEFER | DP_INTR_WRONG_DATA_CNT | \
+ 	DP_INTR_I2C_NACK | DP_INTR_I2C_DEFER | \
+diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.h b/drivers/gpu/drm/msm/dp/dp_catalog.h
+index 1f717f45c115..f36b7b372a06 100644
+--- a/drivers/gpu/drm/msm/dp/dp_catalog.h
++++ b/drivers/gpu/drm/msm/dp/dp_catalog.h
+@@ -13,7 +13,7 @@
+ 
+ /* interrupts */
+ #define DP_INTR_HPD		BIT(0)
+-#define DP_INTR_AUX_I2C_DONE	BIT(3)
++#define DP_INTR_AUX_XFER_DONE	BIT(3)
+ #define DP_INTR_WRONG_ADDR	BIT(6)
+ #define DP_INTR_TIMEOUT		BIT(9)
+ #define DP_INTR_NACK_DEFER	BIT(12)
+-- 
+2.39.1.456.gfc5497dd1b-goog
+
