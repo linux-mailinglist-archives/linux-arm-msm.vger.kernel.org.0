@@ -2,224 +2,514 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4FEA667F254
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Jan 2023 00:39:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 58FCE67F27C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Jan 2023 00:54:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232511AbjA0Xjz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Jan 2023 18:39:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42514 "EHLO
+        id S229757AbjA0Xyp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Jan 2023 18:54:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232504AbjA0Xjx (ORCPT
+        with ESMTP id S231491AbjA0Xyo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Jan 2023 18:39:53 -0500
-Received: from NAM04-DM6-obe.outbound.protection.outlook.com (mail-dm6nam04on2056.outbound.protection.outlook.com [40.107.102.56])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A238386EAF;
-        Fri, 27 Jan 2023 15:39:50 -0800 (PST)
+        Fri, 27 Jan 2023 18:54:44 -0500
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on20631.outbound.protection.outlook.com [IPv6:2a01:111:f400:7eab::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40B848B043;
+        Fri, 27 Jan 2023 15:54:25 -0800 (PST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=XXtmFrbPX3Rlhiz3SBLD8PS8kxz4N4LpqF4I75UDDQIakx0dZCtG+bIKoWx2zlRZaQK6xQ+6FwUh1tUQ47r6UQC2GpHoEX7079wb9HteTfF30H56fDckYDiTz3eOrE1v5lxnFSQNCeavT2E5YM5znqcqcEN6ZWKxQCFsMRS2zmsjG8hzDk7eGko9nIk4psKXJhbglDzsksS/8pG9bdT2R+wisTNVTSAYPxp5HewsySyHkdbT+YGu22g2RosoQFORBZTAv2A2mmHtnVvc4Ehl+KDLT0pV+pjBDP26isySo4U8cz1scTdUWshn5DtxRNnukpCVXGIzuor7fXG6l+0bhg==
+ b=EL+vWRN+xOTYRgOwzcRS/vg3nscrBiT8VD1tapRdshlA5rZRW/ZHwDT3dDBZfcHElMqnRomD+jEOfZPN5DitbZAxwyTwuMqNjP3TYFCoDzXds74wpUUiEA1i7ldHLlbJk2ua+BPQCc400QsOhhpfjVP7ARrvAEwOPNdZ/SGU8iJwx/+HtBz8T/sgpL5Wfy5AZn3OjILS9v7d6QirGtqtvdqPTNAU5c6scKiNMXmKf1+tApEn9lIei+70e00RBd3ZGNGMUvfggNP/Svfws8LwU4Z+srJQdHUzVOdvx656LoksolwbGfGtA6BOf3jQ2sf/oPqVoojBjbzLxtbORsPmTw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=MejMPe4SqMXIR5PkO5uOpdNlnYeezfagIFnSND5JyXk=;
- b=X/F/lVcJFZPodQ1E3/3cQpisfntM/tvCOhv9GylI40CIJfNgUVSrnCM4FyCXsgX63gJp4r51LSJhF2JCtV3hhRFwnElBxU5hs42zh/TXhAlryNnssHoZUcVi6tkKzfTuKkX6gtS2EpT1vbPiVobAXNHuDd2VqAxZHyrM/3iq9xh55hzJAJ6oMA3fhfGby/UjDmh+ll7u/wcIQa6IpKhWNkSJWrISUBJ/FR3PZGdnLakK+pKRODMlWt1YtqsSb7SNSMoSp19KxKmIbS/RfaHTsV0QTugRPVYvYMEhQX8zYEEaSFVGuvtwQd1zo1C1Lll6wGJSPSQaEUdoGMMieINDEw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.232) smtp.rcpttodomain=lists.infradead.org
- smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
- header.from=nvidia.com; dkim=none (message not signed); arc=none
+ bh=qzuFQTUWtdSZhAu0f4ik4flo4LL9FPYeFSXUDbavn+8=;
+ b=byqv9MX8sAbDQ54ml+k/3X62k16FYeFh5lORJDNRFeZGqtPVyiqeVf0UPYFxLphLvVP2zVEjTn30NanGHq3xVgdSxaMs+xLdrf2AjgNhx5op2JnkGo4z4K48/S+QNqM3CJAbKW6dADiPVpzAdppPhHrv5UlSpZXGv/Wi9tzq5kR4WEEyzRs9kXcLwuqnsZSve6IApzEXkERBpKHClD9XqCuFPMqaBWjCJ+AHHpDepKbYdM+C+WiNHOlwbotxZlCmiokRGGZOwAC2TYPdSS0aJ3A0HkL0tyhBMROgF7V0mmA2erKGHdssSDDwtdZ8Bw0aFjpCoYbS4gfJZF4FM/H/Mw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=MejMPe4SqMXIR5PkO5uOpdNlnYeezfagIFnSND5JyXk=;
- b=XrH1T5B3A2qSMR7hcWB2kVA6RW9VXS3/5OuiT9aX4eDN1dXt3YmGjPU314YHqRRnGAdeiuGa265JTONSZPJt9l5c2pH+KeGbEBgCDy6Ul5tZgjNI1C5P+iYqnfxFtOuusI08eFBRSWs2F4NLDOjU8vE7ULQdHNvwonoaAMDChIAhdEdW2dZ5bJ8zs4C0mbi3VM1UTL0MxPVQc8wItOmsZ0XQ9ucA6qmVqPbxanuIVgBa6UEy/PLVYk4Iiws7PnwByF8FB5SuqC5ywIIWIucaO5+ca9braOqfwva1v9b1AG10W4IUWU+g1SrxvUWC681clMbeljsN5t/mfqU4TOiHWQ==
-Received: from BN8PR15CA0031.namprd15.prod.outlook.com (2603:10b6:408:c0::44)
- by DM4PR12MB5937.namprd12.prod.outlook.com (2603:10b6:8:68::11) with
+ bh=qzuFQTUWtdSZhAu0f4ik4flo4LL9FPYeFSXUDbavn+8=;
+ b=eG5d6Cffe5dOAtKUltzjM2HjuCMSRTouev+4HDi3W5pjv11XkeVNXk6r8TowJrVcC37T0oyfi31M8kUEWnX+tCG1xu1n1+IuBRXcTIDkpuU4FNY+76w0uIK/Lq9nC/lNFzq5jWum7AAFtt1JPCnYbi3XlOmoCXZKuXaP/MDoY+KbhqLUm4IlC3MV5NgRN7hqnQmiyf5aZd4IYwx9H2x3zG2hfSOe8fWBF8iGDvOgGJNaWerwAOjRBqpLH4DdwYB42fJrb0SmdbyIc7FyGDvq3Smh1+y8EcQcLtsOUPmDeuHQ/KxZK5VsSke/DVT23rRD6qKtLfw9FyoBxL8y4YOaJg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
+ by DS0PR12MB7770.namprd12.prod.outlook.com (2603:10b6:8:138::18) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6043.21; Fri, 27 Jan
- 2023 23:39:49 +0000
-Received: from BN8NAM11FT085.eop-nam11.prod.protection.outlook.com
- (2603:10b6:408:c0:cafe::82) by BN8PR15CA0031.outlook.office365.com
- (2603:10b6:408:c0::44) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6043.25 via Frontend
- Transport; Fri, 27 Jan 2023 23:39:49 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.232) by
- BN8NAM11FT085.mail.protection.outlook.com (10.13.176.100) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6043.25 via Frontend Transport; Fri, 27 Jan 2023 23:39:48 +0000
-Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
- (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Fri, 27 Jan
- 2023 15:39:41 -0800
-Received: from drhqmail203.nvidia.com (10.126.190.182) by
- drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Fri, 27 Jan 2023 15:39:41 -0800
-Received: from Asurada-Nvidia (10.127.8.12) by mail.nvidia.com
- (10.126.190.182) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36 via Frontend
- Transport; Fri, 27 Jan 2023 15:39:40 -0800
-Date:   Fri, 27 Jan 2023 15:39:38 -0800
-From:   Nicolin Chen <nicolinc@nvidia.com>
-To:     <jgg@nvidia.com>, Robin Murphy <robin.murphy@arm.com>
-CC:     <kevin.tian@intel.com>, <joro@8bytes.org>, <will@kernel.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <yong.wu@mediatek.com>,
-        <matthias.bgg@gmail.com>, <thierry.reding@gmail.com>,
-        <alex.williamson@redhat.com>, <cohuck@redhat.com>,
-        <vdumpa@nvidia.com>, <jonathanh@nvidia.com>,
-        <iommu@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-mediatek@lists.infradead.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-tegra@vger.kernel.org>, <kvm@vger.kernel.org>
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6043.22; Fri, 27 Jan
+ 2023 23:54:05 +0000
+Received: from LV2PR12MB5869.namprd12.prod.outlook.com
+ ([fe80::3cb3:2fce:5c8f:82ee]) by LV2PR12MB5869.namprd12.prod.outlook.com
+ ([fe80::3cb3:2fce:5c8f:82ee%4]) with mapi id 15.20.6043.021; Fri, 27 Jan 2023
+ 23:54:05 +0000
+Date:   Fri, 27 Jan 2023 19:54:03 -0400
+From:   Jason Gunthorpe <jgg@nvidia.com>
+To:     Robin Murphy <robin.murphy@arm.com>
+Cc:     Nicolin Chen <nicolinc@nvidia.com>, kevin.tian@intel.com,
+        joro@8bytes.org, will@kernel.org, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        yong.wu@mediatek.com, matthias.bgg@gmail.com,
+        thierry.reding@gmail.com, alex.williamson@redhat.com,
+        cohuck@redhat.com, vdumpa@nvidia.com, jonathanh@nvidia.com,
+        iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
+        kvm@vger.kernel.org
 Subject: Re: [PATCH 1/4] iommu: Add a broken_unmanaged_domain flag in
  iommu_ops
-Message-ID: <Y9RgunVm+Gbec7a2@Asurada-Nvidia>
+Message-ID: <Y9RkG2dejdXptUTB@nvidia.com>
 References: <cover.1674849118.git.nicolinc@nvidia.com>
  <0875479d24a53670e17db8a11945664a6bb4a25b.1674849118.git.nicolinc@nvidia.com>
  <dfad6d75-6f4d-99ef-1c6a-4bf397dcaa13@arm.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <dfad6d75-6f4d-99ef-1c6a-4bf397dcaa13@arm.com>
-X-EOPAttributedMessage: 0
+X-ClientProxiedBy: BL0PR03CA0005.namprd03.prod.outlook.com
+ (2603:10b6:208:2d::18) To LV2PR12MB5869.namprd12.prod.outlook.com
+ (2603:10b6:408:176::16)
+MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN8NAM11FT085:EE_|DM4PR12MB5937:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5bc398bf-c11a-49f5-09e4-08db00bfc7a0
+X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|DS0PR12MB7770:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7b9884b2-55d1-4d3b-9c16-08db00c1c57b
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: fGTbHqIAr3MUlirte2Y5LOEq8T00RMe7f6ViRCYYRBuCFjI+mK+/lZmXbQngeHWpB9vgsMrzaPPVMzIm+cG9tNtIug8GpmXZ2WQKorlp9att19yD96FkLx4cRpUjIX6qoCR+QzS+mNMywhPdYBCNBmKwvYNebhf6Nj2wbkT5qLxNxzgbRx6K1dsOUyLmACBkgow0rrzt/aggINTe8+K4eA5u7hs//uuC2hcMGQqUbuPAewEDy5/hEstTfHQdSec5vaxTVFUWGvf2fGVgkuDg6A5PcSbwhat7G5IQLRabBgUeyPYWui6QFgvGLn2G3/huB6CooYL5DkvoD+yW11l7W68rvZ0wXwI0zMZMYltZA/bVo4bc6GL8eUtCzZJbIbPb3C6Gx0vZ0BwfM84D6hfqDFscPWtuLtsVPhNz6DWoHYXJlYZhB6Hg+BrJ4jib9u6dnx8bmccSid8tm0LPJYNtxE7CczGc1BTre7rGxx8+Cd/JDzjWx50sDkp0lBvAHhMbdT9SNUEAuUBIOvRE+olbVyG7IaSyxZdsFAPZNFcWo1vd0i4Bnox6lNhva6GqF89kEa9sbkXEwxReOzs/bBuCRgwWR9RjzRqKvzKPzM1FIl28UJQfSOZid3Xpbaaou8e0CH8z31PIoV2SijYGmaPqZVSjn4OoVHhwk4chON51kST4KXxm67Rcc7brRHq8e2DjZ10cNoXs8NwpKsFxIR0vAwIJq4zVeJfDRs9qULxBpd0=
-X-Forefront-Antispam-Report: CIP:216.228.118.232;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge1.nvidia.com;CAT:NONE;SFS:(13230025)(4636009)(396003)(346002)(39860400002)(376002)(136003)(451199018)(40470700004)(36840700001)(46966006)(70586007)(82310400005)(26005)(186003)(86362001)(9686003)(478600001)(36860700001)(40460700003)(316002)(110136005)(40480700001)(54906003)(33716001)(8676002)(4326008)(55016003)(70206006)(356005)(336012)(41300700001)(47076005)(426003)(8936002)(53546011)(83380400001)(82740400003)(5660300002)(7416002)(2906002)(7636003)(67856001);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam-Message-Info: i4npsE5Grig1BPculNcm20TX+iyiPlPw55M2T77Fsa/sBaDEjYgYZAZATFdL/bX2dowU65z7ZeaJyZFuc1h/THF8eWpUcmBc7PFs6/v3DAYQOnIIJf+5skVuBgin1HBgHWtgcTy6qa9j2V8oTRxd5TZHLuK/7ZPnUNgAfp3DvaxY187Rp6ku0g385KgWQc13A8+7gAmAzfkwhwozuUJeZuNE3FPsKw7NqqVq7XISbM2f0EFZNCtg10mOxits8LucWc2Moec9KWQg3Xt8LudL2dHFgM8QpRtMtwqr2HREtumwhHl8W+lHLJH+WJVFaMNM+WM/pR7pKsXfgmQMlm44mboUnJ51tULTfsWSLPxxlXHtvbseTjanJaPiZE54GYxmC0k0zzGvMamyCmHClt9Ut2LKkslcgKd+1XYlAgiHejvJVCQ49MCAiPffN8eavvXROrWM5hOcSGaioMEBW/oGZjwNWEeALNl8G6dpvRsX2ZLwxy5MQWrzrALosh65Azv4a80hJr0lqrzjEP3hLAxpuJNW0cEj9niEILltQybr+i3r9pitWELQwFPwh85L20mkelwpG8WZ0OtkU6Z72YWsLlfVSCNcfCvaSybc1m0yUmru6PHn6/T5Yu/RNhkMlF6T2FUXKbvBAPR8vIQ3VjUuNSdAKyBdaAIW5kXIoPxIbYF/PBohUr6Y71JzHGgy/6HcmgQrGzId4WFNvEiUcNzWESzGSvX7EQWAEsB7xsFlD2M=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(4636009)(136003)(366004)(396003)(39860400002)(346002)(376002)(451199018)(6486002)(186003)(26005)(478600001)(6512007)(966005)(2616005)(83380400001)(316002)(41300700001)(8676002)(38100700002)(6506007)(8936002)(4326008)(86362001)(5660300002)(66946007)(30864003)(66556008)(66476007)(7416002)(6916009)(36756003)(2906002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?md89QhdynuW4QGDRC75zcdp+1sqltjv2O0wm9T/IacARIj1XLn23Dgymf7sK?=
+ =?us-ascii?Q?k1tf8AfS+BpdIKlQyukEvRiHXVbIQep5DzKG9iR3HSU9uUWmBytZek/wCMR2?=
+ =?us-ascii?Q?SAlgUExZFkiLUDw9tuYuLWPSfsfseqsj3+hl/nHBiJjfGv+Xe1x1TN9Yu8es?=
+ =?us-ascii?Q?8LSu3J7LTp+iz67ChHdkrq6+uNef6Tx8ZQpoV/3N1LBJBvz+ReCIzemc+CXD?=
+ =?us-ascii?Q?d897TRz7BPinQDzRrEuyEcsavXJ6EAuv3e2saZCB9s2Sgs4RHGXDeJsLxw9J?=
+ =?us-ascii?Q?0uviq69cRYT8u+FqqE9ZO/d7HGgHxpQSkpZdIp5J6LRNNLizgR3yDWRhaVCC?=
+ =?us-ascii?Q?dr26QREwvSv2aURcGFeiMlbOAH0J7F4XyuQRFswMalH1Q1JvWpIQqJR3jdoB?=
+ =?us-ascii?Q?OTlJHYuswG+0MKJEFDSfRaFalLPwQZJOkSTVMebFHZHiWx7ftBBSO4TiY5p6?=
+ =?us-ascii?Q?DI4RxkkTqdeBYj1PtOa/p/MVgRLzXiMtTQbcJDijQrdV/rNBr8vZ5QuSTFZq?=
+ =?us-ascii?Q?SOg+6D9pvsXeA7RZAwl1gD+53EKGluYPgaXqW2p8JqniUFIxvrFEWYGJJwkW?=
+ =?us-ascii?Q?hwTTj2XQFUoRhD+sQ3oHtJ9Dkr2aVdCcN+8tKStu8C4Q/etD72iBK0dP9Vly?=
+ =?us-ascii?Q?nE37GHbvi0mi8/RcgISQQJIt8foMMUXioATyVqSwfV0Dswa683h+EVi/r/B0?=
+ =?us-ascii?Q?lCeYlNDM2KVr3ko4gjiWdnN5HBUvOk0eifq90uzCi+wCQcs2Mu7WeH44LhfQ?=
+ =?us-ascii?Q?xoa5+VGcw53ZTx3S480268gjkfab0sKDaqvCW0IFLi/w809CWV3MIUjef9wK?=
+ =?us-ascii?Q?0IjoqbXyp1EZbzWtXrq1KuUR4KOO9jZ/NTA1GtpSq84cvMgGyFf4oTkLDrfZ?=
+ =?us-ascii?Q?v0Q9bVSHV1rDWqzCF0b0KtZ5qQ16zGM8hKeU4nwfpExGUZ2M5EMSnbD70eIh?=
+ =?us-ascii?Q?gUYYyUXBjEq0uuGRg66aL7e/8/PieDt56xcOxO//ZPv8DfNQ56VaUbNyJNjU?=
+ =?us-ascii?Q?Ps1Ul5OqNRgADRqjAfMWSRE5vyweaN2+v73xIwDRtxGeQQLeY9cO8DK84Tgf?=
+ =?us-ascii?Q?DrFoUWsLNYG28z1YxigjqBN3jIrijUboAGcZFtKMIu9WUVobKys2CzIfCp1S?=
+ =?us-ascii?Q?HP0KtrDZ2qLjLM596d6V+ys9VMpxd+EFbrOK5gLE6iveoCOyuhwsiFsHDW1u?=
+ =?us-ascii?Q?6I89aIfbxEsr/ijpM78lBk61uGiwJAtS8JD7kn6YR5iGhpEfRdCwxsExbzeK?=
+ =?us-ascii?Q?kPLAoFpt9fD34LJR5424dTI1kS6gdy/8PtMo1sqkdJJSL5FEDr6MsSRDTlfC?=
+ =?us-ascii?Q?bQhc1COABQhwanoyq1+J+IoCveP4LWbAoUP06I4PreCEsElJ7ZhI8XI2c5rT?=
+ =?us-ascii?Q?HnEtqgskD2LADTt+bKjCQq4yWYT9S+deCJ/g6+I00VHqEAaBO33PCP2hres1?=
+ =?us-ascii?Q?gqEs+Pd4vIyQm4JTv6ekrGojIOd8Lsix1D3SC4vwEqG3Hr7OIvw5Rk9X0rYp?=
+ =?us-ascii?Q?2EPgE1wP5wSx3ggCwIij/x2FN2roMZdJHR6H8Gh5UDfqB4syNoV0BcySW7hl?=
+ =?us-ascii?Q?g95rSpl07KbkRjSK4Kw9+m212z09SsVk2kWeXa02?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jan 2023 23:39:48.0496
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7b9884b2-55d1-4d3b-9c16-08db00c1c57b
+X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jan 2023 23:54:04.8082
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5bc398bf-c11a-49f5-09e4-08db00bfc7a0
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.232];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN8NAM11FT085.eop-nam11.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB5937
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: oCd4jnlnJwW0mpb6pMLkZuUdgyf7C97Ym4he0dWtoI2fggkds1wGfUU6qLOQmm+j
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB7770
 X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE
-        autolearn=no autolearn_force=no version=3.4.6
+        SPF_HELO_PASS,SPF_NONE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Robin.
-
 On Fri, Jan 27, 2023 at 09:58:46PM +0000, Robin Murphy wrote:
-> External email: Use caution opening links or attachments
-> 
-> 
-> On 2023-01-27 20:04, Nicolin Chen wrote:
-> > Both IOMMU_DOMAIN_UNMANAGED and IOMMU_DOMAIN_DMA require the support
-> > of __IOMMU_DOMAIN_PAGING capability, i.e. iommu_map/unmap. However,
-> > some older iommu drivers do not fully support that, and these drivers
-> > also do not advertise support for dma-iommu.c via IOMMU_DOMAIN_DMA,
-> > or use arm_iommu_create_mapping(), so largely their implementations
-> > of IOMMU_DOMAIN_UNMANAGED are untested. This means that a user like
-> > vfio/iommufd does not likely work with them.
-> > 
-> > Several of them have obvious problems:
-> >    * fsl_pamu_domain.c
-> >      Without map/unmap ops in the default_domain_ops, it isn't an
-> >      unmanaged domain at all.
-> >    * mtk_iommu_v1.c
-> >      With a fixed 4M "pagetable", it can only map exactly 4G of
-> >      memory, but doesn't set the aperture.
-> 
-> The aperture is easily fixed (one could argue that what's broken there
-> are the ARM DMA ops for assuming every IOMMU has a 32-bit IOVA space and
-> not checking).
->
-> >    * tegra-gart.c
-> >      Its notion of attach/detach and groups has to be a complete lie to
-> >      get around all the other API expectations.
-> 
-> That's true, and the domain is tiny and not isolated from the rest of
-> the address space outside the aperture, but the one thing it does do is
-> support iommu_map/unmap just fine, which is what this flag is documented
-> as saying it doesn't.
-> 
-> > Some others might work but have never been tested with vfio/iommufd:
-> >    * msm_iommu.c
-> >    * omap-iommu.c
-> >    * tegra-smmu.c
-> 
-> And yet they all have other in-tree users (GPUs on MSM and Tegra,
-> remoteproc on OMAP) that allocate unmanaged domains and use
-> iommu_map/unmap just fine, so they're clearly not broken either.
-> 
-> On the flipside, you're also missing cases like apple-dart, which can
-> have broken unmanaged domains by any definition, but only under certain
-> conditions (at least it "fails safe" and they will refuse attempts to
-> attach anything). I'd also question sprd-iommu, which hardly has a
-> generally-useful domain size, and has only just recently gained the
-> ability to unmap anything successfully. TBH none of the SoC IOMMUs are
-> likely to ever be of interest to VFIO or IOMMUFD, since the only things
-> they could assign to userspace are the individual devices - usually
-> graphics and media engines - that they're coupled to, whose useful
-> functionality tends to depend on clocks, phys, and random other
-> low-level stuff that would be somewhere between impractical and
-> downright unsafe to attempt to somehow expose as well.
 
-Thanks for all the inputs.
-
-> > Thus, mark all these drivers as having "broken" UNAMANGED domains and
-> > add a new device_iommu_unmanaged_supported() API for vfio/iommufd and
-> > dma-iommu to refuse to work with these drivers.
-> > 
-> > Co-developed-by: Jason Gunthorpe <jgg@nvidia.com>
-> > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> > Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> 
-> [...]
-> 
-> > diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-> > index 46e1347bfa22..919a5dbad75b 100644
-> > --- a/include/linux/iommu.h
-> > +++ b/include/linux/iommu.h
-> > @@ -245,6 +245,10 @@ struct iommu_iotlb_gather {
-> >    *                    pasid, so that any DMA transactions with this pasid
-> >    *                    will be blocked by the hardware.
-> >    * @pgsize_bitmap: bitmap of all possible supported page sizes
-> > + * @broken_unmanaged_domain: IOMMU_DOMAIN_UNMANAGED is not fully functional; the
-> > + *                           driver does not really support iommu_map/unmap, but
-> > + *                           uses UNMANAGED domains for the IOMMU API, called by
-> > + *                           other SOC drivers.
-> 
-> "uses UNMANAGED domains for the IOMMU API" is literally the definition
-> of unmanaged domains :/
-> 
-> Some "other SOC drivers" use more of the IOMMU API than VFIO does :/
-> 
 > Please just add IOMMU_CAP_IOMMUFD to represent whatever the nebulous
-> requirements of IOMMUFD actually are (frankly it's no less informative
-> than calling domains "broken"), handle that in the drivers you care
-> about and have tested, and use device_iommu_capable(). What you're
-> describing in this series is a capability, and we have a perfectly good
-> API for drivers to express those already. Plus, as demonstrated above, a
-> positive capability based on empirical testing will be infinitely more
-> robust than a negative one based on guessing.
+> requirements of IOMMUFD actually are (frankly it's no less informative than
+> calling domains "broken"), handle that in the drivers you care about
+> and
 
-OK. I can change to IOMMU_CAP_IOMMUFD, and add to the drivers that
-are tested. And an IOMMU driver that wants to use IOMMUFD can add
-such a CAP later whenever it's ready.
+I don't want to tie this to iommufd, that isn't the point.
 
-Yet, "IOMMU_CAP_IOMMUFD" would make the VFIO change suspicious, so
-perhaps the next version is just one CAP patch + one IOMMUFD patch.
-@Jason, any concern?
+We clearly have drivers that don't implement the iommu kernel API
+properly, because their only use is between the iommu driver and some
+other same-SOC driver.
 
-Thank you
-Nicolin
+As a user of the iommu API iommufd and VFIO want to avoid these
+drivers.
+
+We have that acknowledgment already via the IOMMU_DOMAIN_DMA stuff
+protecting the dma_iommu.c from those same drivers.
+
+So, how about this below instead. Imagine it is followed by something along
+the lines of my other sketch:
+
+https://lore.kernel.org/linux-iommu/Y4%2FLsZKmR3iWFphU@nvidia.com/
+
+And we completely delete IOMMU_DOMAIN_DMA/_FQ and get dma-iommu.c
+mostly out of driver code.
+
+iommufd/vfio would refuse to work with drivers that don't indicate
+they support dma_iommu.c, that is good enough.
+
+We'd eventually rename IOMMU_DOMAIN_UNMANAGED to IOMMU_DOMAIN_MAPPING.
+
+Subject: [PATCH] iommu: Remove IOMMU_DOMAIN_DMA from drivers
+
+The IOMMU_DOMAIN_DMA is exactly the same driver functionality as
+IOMMU_DOMAIN_UNMANAGED, except it also implies that dma_iommu.c should
+be able to use this driver.
+
+As a first step to removing IOMMU_DOMAIN_DMA remove all references to
+it from the drivers. Two simple ops flags are enough to indicate if
+the driver is compatible with dma_iommu.c and if the driver will allow
+the FQ mode to be selected. When dma-iommu.c needs an a domain it will
+request an IOMMU_DOMAIN_UNMANAGED.
+
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+---
+ drivers/iommu/apple-dart.c                  |  3 ++-
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c |  4 +--
+ drivers/iommu/arm/arm-smmu/arm-smmu.c       | 11 ++++----
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c     |  3 ++-
+ drivers/iommu/exynos-iommu.c                |  3 ++-
+ drivers/iommu/intel/iommu.c                 |  3 +--
+ drivers/iommu/iommu.c                       | 29 ++++++++++++++++-----
+ drivers/iommu/ipmmu-vmsa.c                  |  3 ++-
+ drivers/iommu/mtk_iommu.c                   |  3 ++-
+ drivers/iommu/rockchip-iommu.c              |  3 ++-
+ drivers/iommu/sprd-iommu.c                  |  3 ++-
+ drivers/iommu/sun50i-iommu.c                |  4 +--
+ drivers/iommu/virtio-iommu.c                |  2 +-
+ include/linux/iommu.h                       |  2 ++
+ 14 files changed, 50 insertions(+), 26 deletions(-)
+
+diff --git a/drivers/iommu/apple-dart.c b/drivers/iommu/apple-dart.c
+index 4f4a323be0d0ff..0eb3eb857d7e9e 100644
+--- a/drivers/iommu/apple-dart.c
++++ b/drivers/iommu/apple-dart.c
+@@ -580,7 +580,7 @@ static struct iommu_domain *apple_dart_domain_alloc(unsigned int type)
+ {
+ 	struct apple_dart_domain *dart_domain;
+ 
+-	if (type != IOMMU_DOMAIN_DMA && type != IOMMU_DOMAIN_UNMANAGED &&
++	if (type != IOMMU_DOMAIN_UNMANAGED &&
+ 	    type != IOMMU_DOMAIN_IDENTITY && type != IOMMU_DOMAIN_BLOCKED)
+ 		return NULL;
+ 
+@@ -769,6 +769,7 @@ static void apple_dart_get_resv_regions(struct device *dev,
+ }
+ 
+ static const struct iommu_ops apple_dart_iommu_ops = {
++	.use_dma_iommu = true,
+ 	.domain_alloc = apple_dart_domain_alloc,
+ 	.probe_device = apple_dart_probe_device,
+ 	.release_device = apple_dart_release_device,
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+index ab160198edd6b1..2253c5598092d0 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -2013,8 +2013,6 @@ static struct iommu_domain *arm_smmu_domain_alloc(unsigned type)
+ 		return arm_smmu_sva_domain_alloc();
+ 
+ 	if (type != IOMMU_DOMAIN_UNMANAGED &&
+-	    type != IOMMU_DOMAIN_DMA &&
+-	    type != IOMMU_DOMAIN_DMA_FQ &&
+ 	    type != IOMMU_DOMAIN_IDENTITY)
+ 		return NULL;
+ 
+@@ -2844,6 +2842,8 @@ static void arm_smmu_remove_dev_pasid(struct device *dev, ioasid_t pasid)
+ }
+ 
+ static struct iommu_ops arm_smmu_ops = {
++	.use_dma_iommu		= true,
++	.allow_dma_fq		= true,
+ 	.capable		= arm_smmu_capable,
+ 	.domain_alloc		= arm_smmu_domain_alloc,
+ 	.probe_device		= arm_smmu_probe_device,
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+index 719fbca1fe52a0..7bb160bdc4b594 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+@@ -855,11 +855,9 @@ static struct iommu_domain *arm_smmu_domain_alloc(unsigned type)
+ {
+ 	struct arm_smmu_domain *smmu_domain;
+ 
+-	if (type != IOMMU_DOMAIN_UNMANAGED && type != IOMMU_DOMAIN_IDENTITY) {
+-		if (using_legacy_binding ||
+-		    (type != IOMMU_DOMAIN_DMA && type != IOMMU_DOMAIN_DMA_FQ))
+-			return NULL;
+-	}
++	if (type != IOMMU_DOMAIN_UNMANAGED && type != IOMMU_DOMAIN_IDENTITY)
++		return NULL;
++
+ 	/*
+ 	 * Allocate the domain and initialise some of its data structures.
+ 	 * We can't really do anything meaningful until we've added a
+@@ -1555,6 +1553,8 @@ static int arm_smmu_def_domain_type(struct device *dev)
+ }
+ 
+ static struct iommu_ops arm_smmu_ops = {
++	.use_dma_iommu		= true,
++	.allow_dma_fq		= true,
+ 	.capable		= arm_smmu_capable,
+ 	.domain_alloc		= arm_smmu_domain_alloc,
+ 	.probe_device		= arm_smmu_probe_device,
+@@ -1982,6 +1982,7 @@ static int arm_smmu_device_dt_probe(struct arm_smmu_device *smmu,
+ 				  IS_ENABLED(CONFIG_ARM_SMMU_LEGACY_DT_BINDINGS) ? "DMA API" : "SMMU");
+ 		}
+ 		using_legacy_binding = true;
++		arm_smmu_ops.use_dma_iommu = false;
+ 	} else if (!legacy_binding && !using_legacy_binding) {
+ 		using_generic_binding = true;
+ 	} else {
+diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+index 270c3d9128bab8..babd20108f6a17 100644
+--- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
++++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+@@ -323,7 +323,7 @@ static struct iommu_domain *qcom_iommu_domain_alloc(unsigned type)
+ {
+ 	struct qcom_iommu_domain *qcom_domain;
+ 
+-	if (type != IOMMU_DOMAIN_UNMANAGED && type != IOMMU_DOMAIN_DMA)
++	if (type != IOMMU_DOMAIN_UNMANAGED)
+ 		return NULL;
+ 	/*
+ 	 * Allocate the domain and initialise some of its data structures.
+@@ -575,6 +575,7 @@ static int qcom_iommu_of_xlate(struct device *dev, struct of_phandle_args *args)
+ }
+ 
+ static const struct iommu_ops qcom_iommu_ops = {
++	.use_dma_iommu  = true,
+ 	.capable	= qcom_iommu_capable,
+ 	.domain_alloc	= qcom_iommu_domain_alloc,
+ 	.probe_device	= qcom_iommu_probe_device,
+diff --git a/drivers/iommu/exynos-iommu.c b/drivers/iommu/exynos-iommu.c
+index b0cde22119875e..824350551e5933 100644
+--- a/drivers/iommu/exynos-iommu.c
++++ b/drivers/iommu/exynos-iommu.c
+@@ -825,7 +825,7 @@ static struct iommu_domain *exynos_iommu_domain_alloc(unsigned type)
+ 	/* Check if correct PTE offsets are initialized */
+ 	BUG_ON(PG_ENT_SHIFT < 0 || !dma_dev);
+ 
+-	if (type != IOMMU_DOMAIN_DMA && type != IOMMU_DOMAIN_UNMANAGED)
++	if (type != IOMMU_DOMAIN_UNMANAGED)
+ 		return NULL;
+ 
+ 	domain = kzalloc(sizeof(*domain), GFP_KERNEL);
+@@ -1396,6 +1396,7 @@ static int exynos_iommu_of_xlate(struct device *dev,
+ }
+ 
+ static const struct iommu_ops exynos_iommu_ops = {
++	.use_dma_iommu = true,
+ 	.domain_alloc = exynos_iommu_domain_alloc,
+ 	.device_group = generic_device_group,
+ 	.probe_device = exynos_iommu_probe_device,
+diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
+index 59df7e42fd533c..bb34d3f641f17b 100644
+--- a/drivers/iommu/intel/iommu.c
++++ b/drivers/iommu/intel/iommu.c
+@@ -4165,8 +4165,6 @@ static struct iommu_domain *intel_iommu_domain_alloc(unsigned type)
+ 	switch (type) {
+ 	case IOMMU_DOMAIN_BLOCKED:
+ 		return &blocking_domain;
+-	case IOMMU_DOMAIN_DMA:
+-	case IOMMU_DOMAIN_DMA_FQ:
+ 	case IOMMU_DOMAIN_UNMANAGED:
+ 		dmar_domain = alloc_domain(type);
+ 		if (!dmar_domain) {
+@@ -4761,6 +4759,7 @@ static void intel_iommu_remove_dev_pasid(struct device *dev, ioasid_t pasid)
+ }
+ 
+ const struct iommu_ops intel_iommu_ops = {
++	.use_dma_iommu		= true,
+ 	.capable		= intel_iommu_capable,
+ 	.domain_alloc		= intel_iommu_domain_alloc,
+ 	.probe_device		= intel_iommu_probe_device,
+diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+index de91dd88705bd3..877ef0a58b07f4 100644
+--- a/drivers/iommu/iommu.c
++++ b/drivers/iommu/iommu.c
+@@ -1618,17 +1618,32 @@ static int iommu_group_alloc_default_domain(struct bus_type *bus,
+ {
+ 	struct iommu_domain *dom;
+ 
+-	dom = __iommu_domain_alloc(bus, type);
+-	if (!dom && type != IOMMU_DOMAIN_DMA) {
+-		dom = __iommu_domain_alloc(bus, IOMMU_DOMAIN_DMA);
+-		if (dom)
++	/*
++	 * Keep the DMA domain type out of the drivers, eventually it will go
++	 * away completely.
++	 */
++	if (type == IOMMU_DOMAIN_IDENTITY) {
++		dom = __iommu_domain_alloc(bus, IOMMU_DOMAIN_IDENTITY);
++		if (!dom)
++			return -ENOMEM;
++	} else if (type == IOMMU_DOMAIN_DMA_FQ || type == IOMMU_DOMAIN_DMA) {
++		if (!bus->iommu_ops->use_dma_iommu)
++			return -EINVAL;
++
++		dom = __iommu_domain_alloc(bus, IOMMU_DOMAIN_UNMANAGED);
++		if (!dom)
++			return -ENOMEM;
++		if (type == IOMMU_DOMAIN_DMA_FQ &&
++		    !bus->iommu_ops->allow_dma_fq) {
+ 			pr_warn("Failed to allocate default IOMMU domain of type %u for group %s - Falling back to IOMMU_DOMAIN_DMA",
+ 				type, group->name);
++			type = IOMMU_DOMAIN_DMA;
++		}
++		dom->type = type;
++	} else {
++		return -EINVAL;
+ 	}
+ 
+-	if (!dom)
+-		return -ENOMEM;
+-
+ 	group->default_domain = dom;
+ 	if (!group->domain)
+ 		group->domain = dom;
+diff --git a/drivers/iommu/ipmmu-vmsa.c b/drivers/iommu/ipmmu-vmsa.c
+index a003bd5fc65c13..a22df69f7f4775 100644
+--- a/drivers/iommu/ipmmu-vmsa.c
++++ b/drivers/iommu/ipmmu-vmsa.c
+@@ -571,7 +571,7 @@ static struct iommu_domain *ipmmu_domain_alloc(unsigned type)
+ {
+ 	struct ipmmu_vmsa_domain *domain;
+ 
+-	if (type != IOMMU_DOMAIN_UNMANAGED && type != IOMMU_DOMAIN_DMA)
++	if (type != IOMMU_DOMAIN_UNMANAGED)
+ 		return NULL;
+ 
+ 	domain = kzalloc(sizeof(*domain), GFP_KERNEL);
+@@ -866,6 +866,7 @@ static struct iommu_group *ipmmu_find_group(struct device *dev)
+ }
+ 
+ static const struct iommu_ops ipmmu_ops = {
++	.use_dma_iommu = true,
+ 	.domain_alloc = ipmmu_domain_alloc,
+ 	.probe_device = ipmmu_probe_device,
+ 	.release_device = ipmmu_release_device,
+diff --git a/drivers/iommu/mtk_iommu.c b/drivers/iommu/mtk_iommu.c
+index 2badd6acfb23d6..e27cb428bd9583 100644
+--- a/drivers/iommu/mtk_iommu.c
++++ b/drivers/iommu/mtk_iommu.c
+@@ -636,7 +636,7 @@ static struct iommu_domain *mtk_iommu_domain_alloc(unsigned type)
+ {
+ 	struct mtk_iommu_domain *dom;
+ 
+-	if (type != IOMMU_DOMAIN_DMA && type != IOMMU_DOMAIN_UNMANAGED)
++	if (type != IOMMU_DOMAIN_UNMANAGED)
+ 		return NULL;
+ 
+ 	dom = kzalloc(sizeof(*dom), GFP_KERNEL);
+@@ -936,6 +936,7 @@ static void mtk_iommu_get_resv_regions(struct device *dev,
+ }
+ 
+ static const struct iommu_ops mtk_iommu_ops = {
++	.use_dma_iommu  = true,
+ 	.domain_alloc	= mtk_iommu_domain_alloc,
+ 	.probe_device	= mtk_iommu_probe_device,
+ 	.release_device	= mtk_iommu_release_device,
+diff --git a/drivers/iommu/rockchip-iommu.c b/drivers/iommu/rockchip-iommu.c
+index a68eadd64f38db..fa3ec38e5244db 100644
+--- a/drivers/iommu/rockchip-iommu.c
++++ b/drivers/iommu/rockchip-iommu.c
+@@ -1061,7 +1061,7 @@ static struct iommu_domain *rk_iommu_domain_alloc(unsigned type)
+ {
+ 	struct rk_iommu_domain *rk_domain;
+ 
+-	if (type != IOMMU_DOMAIN_UNMANAGED && type != IOMMU_DOMAIN_DMA)
++	if (type != IOMMU_DOMAIN_UNMANAGED)
+ 		return NULL;
+ 
+ 	if (!dma_dev)
+@@ -1184,6 +1184,7 @@ static int rk_iommu_of_xlate(struct device *dev,
+ }
+ 
+ static const struct iommu_ops rk_iommu_ops = {
++	.use_dma_iommu = true,
+ 	.domain_alloc = rk_iommu_domain_alloc,
+ 	.probe_device = rk_iommu_probe_device,
+ 	.release_device = rk_iommu_release_device,
+diff --git a/drivers/iommu/sprd-iommu.c b/drivers/iommu/sprd-iommu.c
+index 219bfa11f7f48f..fbff1831c16e78 100644
+--- a/drivers/iommu/sprd-iommu.c
++++ b/drivers/iommu/sprd-iommu.c
+@@ -136,7 +136,7 @@ static struct iommu_domain *sprd_iommu_domain_alloc(unsigned int domain_type)
+ {
+ 	struct sprd_iommu_domain *dom;
+ 
+-	if (domain_type != IOMMU_DOMAIN_DMA && domain_type != IOMMU_DOMAIN_UNMANAGED)
++	if (domain_type != IOMMU_DOMAIN_UNMANAGED)
+ 		return NULL;
+ 
+ 	dom = kzalloc(sizeof(*dom), GFP_KERNEL);
+@@ -406,6 +406,7 @@ static int sprd_iommu_of_xlate(struct device *dev, struct of_phandle_args *args)
+ 
+ 
+ static const struct iommu_ops sprd_iommu_ops = {
++	.use_dma_iommu  = true,
+ 	.domain_alloc	= sprd_iommu_domain_alloc,
+ 	.probe_device	= sprd_iommu_probe_device,
+ 	.device_group	= sprd_iommu_device_group,
+diff --git a/drivers/iommu/sun50i-iommu.c b/drivers/iommu/sun50i-iommu.c
+index 5b585eace3d46f..de2a033f65197a 100644
+--- a/drivers/iommu/sun50i-iommu.c
++++ b/drivers/iommu/sun50i-iommu.c
+@@ -671,8 +671,7 @@ static struct iommu_domain *sun50i_iommu_domain_alloc(unsigned type)
+ {
+ 	struct sun50i_iommu_domain *sun50i_domain;
+ 
+-	if (type != IOMMU_DOMAIN_DMA &&
+-	    type != IOMMU_DOMAIN_UNMANAGED)
++	if (type != IOMMU_DOMAIN_UNMANAGED)
+ 		return NULL;
+ 
+ 	sun50i_domain = kzalloc(sizeof(*sun50i_domain), GFP_KERNEL);
+@@ -827,6 +826,7 @@ static int sun50i_iommu_of_xlate(struct device *dev,
+ }
+ 
+ static const struct iommu_ops sun50i_iommu_ops = {
++	.use_dma_iommu  = true,
+ 	.pgsize_bitmap	= SZ_4K,
+ 	.device_group	= sun50i_iommu_device_group,
+ 	.domain_alloc	= sun50i_iommu_domain_alloc,
+diff --git a/drivers/iommu/virtio-iommu.c b/drivers/iommu/virtio-iommu.c
+index 5b8fe9bfa9a5b9..8afa21a9c0b9d6 100644
+--- a/drivers/iommu/virtio-iommu.c
++++ b/drivers/iommu/virtio-iommu.c
+@@ -642,7 +642,6 @@ static struct iommu_domain *viommu_domain_alloc(unsigned type)
+ 	struct viommu_domain *vdomain;
+ 
+ 	if (type != IOMMU_DOMAIN_UNMANAGED &&
+-	    type != IOMMU_DOMAIN_DMA &&
+ 	    type != IOMMU_DOMAIN_IDENTITY)
+ 		return NULL;
+ 
+@@ -1018,6 +1017,7 @@ static bool viommu_capable(struct device *dev, enum iommu_cap cap)
+ }
+ 
+ static struct iommu_ops viommu_ops = {
++	.use_dma_iommu		= true,
+ 	.capable		= viommu_capable,
+ 	.domain_alloc		= viommu_domain_alloc,
+ 	.probe_device		= viommu_probe_device,
+diff --git a/include/linux/iommu.h b/include/linux/iommu.h
+index 46e1347bfa2286..954db8e77491c7 100644
+--- a/include/linux/iommu.h
++++ b/include/linux/iommu.h
+@@ -277,6 +277,8 @@ struct iommu_ops {
+ 
+ 	const struct iommu_domain_ops *default_domain_ops;
+ 	unsigned long pgsize_bitmap;
++	u8 use_dma_iommu : 1;
++	u8 allow_dma_fq : 1;
+ 	struct module *owner;
+ };
+ 
+-- 
+2.39.0
+
