@@ -2,77 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3052467E89D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 15:50:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E77DD67E8D2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 16:01:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233276AbjA0OuG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Jan 2023 09:50:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57822 "EHLO
+        id S233538AbjA0PBL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Jan 2023 10:01:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229547AbjA0OuF (ORCPT
+        with ESMTP id S233427AbjA0PBJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Jan 2023 09:50:05 -0500
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDC3E5BA5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 06:50:03 -0800 (PST)
-Received: by mail-ed1-x52c.google.com with SMTP id y11so4937859edd.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 06:50:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0ZPG9Z5Pk+99+CAtPa4G8jXmIilkOFP59E89fWS9Tno=;
-        b=tgjPvxh/pJfAXMdziXyEeEF9U6sLvikVD18AyVQeSqbni1jNMdiVXGmXJwb8BYq7o/
-         iS6c2stGPYd5uv00n+c1TtHLW0RvvXj3AHE5B7g0YCL+yF4uaDjorHDH4jc0Q2KLXbXP
-         IYpJcBIsM5Y1kW3/j4eagcFg7s9OOAT4FhUtd3+vUJYK7JyBCrSKCkUozzQjwtQqRJXK
-         cSwNX5brhxox/d1ORN4PhGD2yfdMlhKpNScw4qabnrJmzaHEKX528G8o4PkVMlr98fXx
-         6/u8aaXQ0E0gTiTr3bCFKS9GXf5nt78rJiEz8sgT5haYhBNOK6s7LNH8Jwp/xoI8uInW
-         2fUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0ZPG9Z5Pk+99+CAtPa4G8jXmIilkOFP59E89fWS9Tno=;
-        b=MU/SKRDqbyfHcrK3+3ju9zVmefMLkmJJC2706gSifl4QgOH63vi31jpSjH8lbhX2IZ
-         HIEbSkWKgUqRmxdAgongbvcwXfRIQtxByLhB4oZBk5OflSauKkbfUhMsBb3KPAoX19jC
-         HoEHl/0qppKwBOkiKDNgQLmtxxIzUFfxdTrVKX8Fsys7giPnbPvrlhqvfrDvh6lEJPmR
-         Wdz0xAhOYy0q/U38IJ9/Ox70rEwcoTetQoTJX8SzYr9WitoVpSoYQVXAZR9t7nEzgxt+
-         yyeOdZpM4kK/b1D38n37EuSoIMxYcz/fuv9Ro9Kv8FEnRm2EL2ThpbXQfucxy63II/Ee
-         FexQ==
-X-Gm-Message-State: AFqh2krTgxNvnCNLHPiTCQNImwq629gtzKy8oqCZCJhBbFiBiDCkyYb2
-        Ek6jMtDJqza1tBrO9SFTIQGVRqWbfIsmta7T
-X-Google-Smtp-Source: AMrXdXvraQZzNrnRPnzCeg3q9+hqR7m0LyKh+Wfqcowzj33Bm+AtmyN6Ks68Us/hw/fqTlwk090EDQ==
-X-Received: by 2002:a05:6402:159:b0:49d:a87f:ba7b with SMTP id s25-20020a056402015900b0049da87fba7bmr40539457edu.39.1674831002335;
-        Fri, 27 Jan 2023 06:50:02 -0800 (PST)
-Received: from [192.168.1.101] (abyl20.neoplus.adsl.tpnet.pl. [83.9.31.20])
-        by smtp.gmail.com with ESMTPSA id y8-20020a056402134800b004610899742asm2410252edw.13.2023.01.27.06.49.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Jan 2023 06:50:01 -0800 (PST)
-Message-ID: <27878e7c-b345-06e9-6e69-e9ac397a9ec1@linaro.org>
-Date:   Fri, 27 Jan 2023 15:49:58 +0100
+        Fri, 27 Jan 2023 10:01:09 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6BA77ECA;
+        Fri, 27 Jan 2023 07:01:08 -0800 (PST)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30REi24Q031361;
+        Fri, 27 Jan 2023 15:00:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=VXS2X5drfdkQujhXGlbWe/JnBB0qmbiddFlUZ+R2+KU=;
+ b=DAQUjsihEAH3oYvxEXAK+kG3KIunWFSl0GCAHJZ09jeHkMY4N0wviKMTCjKpT5rJgdW3
+ xWeiSMeoeQ1U/h85Tf+AMtUCGEcp1PwBzyTNd4gchwlKmkzBzTjWq4+Lav9TtyozZPU4
+ wk6SAaWrM5MnS640uzX7cf6pKQi3RSClXTyk/QgCXUHygareEqn+Isc88j7ykf0sy1xF
+ a0uVPARYKTmrnpjuHMZjIcAwEX2prheMGhE1iJctXdqR39K3M6rppij9ZXsd8YTbTcAL
+ oqvrdnUeuRJy3WkHjYCIm/dYPBzr7oXzRq/xzD7XtOtNfRn3pDPJFb2vnrUf3KSEHTF2 4g== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nbp1varhj-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 27 Jan 2023 15:00:49 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30RF0mIu015203
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 27 Jan 2023 15:00:48 GMT
+Received: from [10.216.31.125] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Fri, 27 Jan
+ 2023 07:00:40 -0800
+Message-ID: <659c81b0-b75e-9a6f-bd26-878bb9868397@quicinc.com>
+Date:   Fri, 27 Jan 2023 20:30:36 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH v2] soc: qcom: llcc: Fix slice configuration values for
- SC8280XP
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH 3/5] firmware: scm: Modify only the DLOAD bit in TCSR
+ register for download mode
 Content-Language: en-US
-To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        Johan Hovold <johan@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-References: <20230127144724.1292580-1-abel.vesa@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230127144724.1292580-1-abel.vesa@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+To:     Guru Das Srinagesh <quic_gurus@quicinc.com>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <lee@kernel.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <shawnguo@kernel.org>, <arnd@arndb.de>,
+        <marcel.ziswiler@toradex.com>, <dmitry.baryshkov@linaro.org>,
+        <nfraprado@collabora.com>, <broonie@kernel.org>,
+        <robimarko@gmail.com>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
+        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
+        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_devipriy@quicinc.com>
+References: <20230113160012.14893-1-quic_poovendh@quicinc.com>
+ <20230113160012.14893-4-quic_poovendh@quicinc.com>
+ <20230114011606.GA24659@quicinc.com>
+From:   POOVENDHAN SELVARAJ <quic_poovendh@quicinc.com>
+In-Reply-To: <20230114011606.GA24659@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: t3eg6psULoo0zN33VBxDls_iuoXEBlzU
+X-Proofpoint-GUID: t3eg6psULoo0zN33VBxDls_iuoXEBlzU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-27_09,2023-01-27_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 clxscore=1015 spamscore=0 phishscore=0 bulkscore=0
+ suspectscore=0 adultscore=0 mlxlogscore=776 mlxscore=0 lowpriorityscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301270142
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -80,44 +94,17 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-
-On 27.01.2023 15:47, Abel Vesa wrote:
-> These new values are now based on the latest LLCC SC table.
-> 
-> Fixes: ec69dfbdc426 ("soc: qcom: llcc: Add sc8180x and sc8280xp configurations")
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
-I can't verify this, but it looks sound so:
-
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
-> 
-> The v1 is here:
-> https://lore.kernel.org/all/20230126171636.2319496-1-abel.vesa@linaro.org/
-> 
-> Changes since v1:
->  * dropped the LLCC_GPU and LLCC_WRCACHE max_cap changes
->  * took the new values from documentatio this time rather than
->    downstream kernel
-> 
->  drivers/soc/qcom/llcc-qcom.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-> index 23ce2f78c4ed..26efe12012a0 100644
-> --- a/drivers/soc/qcom/llcc-qcom.c
-> +++ b/drivers/soc/qcom/llcc-qcom.c
-> @@ -191,9 +191,9 @@ static const struct llcc_slice_config sc8280xp_data[] = {
->  	{ LLCC_CVP,      28, 512,  3, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
->  	{ LLCC_APTCM,    30, 1024, 3, 1, 0x0,   0x1, 1, 0, 0, 1, 0, 0 },
->  	{ LLCC_WRCACHE,  31, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
-> -	{ LLCC_CVPFW,    32, 512,  1, 0, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
-> -	{ LLCC_CPUSS1,   33, 2048, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
-> -	{ LLCC_CPUHWT,   36, 512,  1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
-> +	{ LLCC_CVPFW,    17, 512,  1, 0, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
-> +	{ LLCC_CPUSS1,   3, 2048, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
-> +	{ LLCC_CPUHWT,   5, 512,  1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
->  };
->  
->  static const struct llcc_slice_config sdm845_data[] =  {
+On 1/14/2023 6:46 AM, Guru Das Srinagesh wrote:
+> On Jan 13 2023 21:30, Poovendhan Selvaraj wrote:
+>> Add support to read-modify-write TCSR register to modify only DLOAD bit.
+> Could you please add more details on what problem this patch is fixing, and why
+> this patch is needed?
+>
+> CrashDump collection is based on the DLOAD bit of TCSR register. To retain other bits, we read the register and modify only the DLOAD bit as the other bits have their own significance.
+>
+> Thank you.
+>
+> Guru Das.
+>
+> Regards,
+> Poovendhan S
