@@ -2,167 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B853B67DD56
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 07:05:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B4F3567DD6B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 07:27:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230432AbjA0GFj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Jan 2023 01:05:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57978 "EHLO
+        id S231482AbjA0G1Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Jan 2023 01:27:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229510AbjA0GFi (ORCPT
+        with ESMTP id S231691AbjA0G1P (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Jan 2023 01:05:38 -0500
-Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2022D48A03
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 22:05:37 -0800 (PST)
-Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-4ff1fa82bbbso53905687b3.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 22:05:37 -0800 (PST)
+        Fri, 27 Jan 2023 01:27:15 -0500
+Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECE156DFD8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 22:27:12 -0800 (PST)
+Received: by mail-qt1-x82b.google.com with SMTP id x5so3319209qti.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 22:27:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=odMtKOfoNkQ4B9p3SnpsiAi9zMJKcUAjwtL3wnlE3AA=;
-        b=RNyPF0+/ap+ruzzg1wD4e4PQNxBwSYFgd/1RKZQWm7+tGU5pEDz9xHwy9meDhUTt8A
-         k01qy6gj7R26es5SVivJcFe/+ZHjxRdStaLCxd07iP+ckGDbcTqYmA+6+jLjIjGr1PAF
-         kQf0eXWfctWKX5H28QxZJ65rON5FbTwxGpqKKuyOYNuzNtywDhS6G+MHhtKD69qV/nwW
-         6/xql/i2GTvIxTL2DXRbB8FthgaG9V58xWpxwAkBkaOK5esAHwWRhFxvMhlYXymdT8em
-         K6uytowwxdf3Qqr6ehsFB9yhOm+s8zEi9fUAlS2f5GTiWjhT0D9iNCN1CwEXfe09njMh
-         fM9A==
+        bh=0aWZpGFELfbdnYfESYZXXP75fpqFOpqbk6j8seUM1IY=;
+        b=bmvtle+uR7LgOpFr6NPKTt0cz44Ut/VSmygItH61ogyN/F4nDNGg6FgbJ7n+6B6wb3
+         SIc1zfPBPYy1+2bvWtzAet/Lpd/tcrSYjlXCbFeNCtR4+9nQc/eWGY/mQBGkWxcDQP2A
+         sHSbnYL3pPEozCvduCs7vlMDfxFEHQVTP78/9RV/wA5HqGbN0wVIb/QfEUiOqtobxiaV
+         0Vg38cQ90cJNTRIhL+SAk23WRbCVxI8PPQwgRyRHk2QQB/ZHVVmBEC6AxLoP9rI5MKcN
+         9K5mU9YvzDqTgpPXLrqZJzb7h+iM5+me+ULTVncmv0oIXKIqH3+VDF8X4SkumiE/TwdC
+         q9JA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=odMtKOfoNkQ4B9p3SnpsiAi9zMJKcUAjwtL3wnlE3AA=;
-        b=k2+9/6c3m530LL68jAy1Y96w7EQD41oe9zr6LvWRjHdFo4ZftRG8IapFMMpWJ87OmK
-         n5enaqFcogm3QZz4TZQ794/c+cvwTecgJfy2l2hWoAhEQ+MKY5lyfQJDWlUbtP5d0hBD
-         dJnBV+meeOIdJI9RWpt+lF0sbWtThYsmuidaV5pzIZ3RySoD75TsUXVYSPWb4Lq/i+mg
-         CWwmRvQXx8BK2gzpUkF5eeKSk+xzYL8K5OVrSVHtliz+RLRiRWWD3yBgKLsrXP2RslkM
-         aoKt3PhSzXA8/ZbGW6Q+YFyFQ/siAAk8n+m+1jwfMtyPWsv//KmWGpZVl1pHwhwICVoA
-         kXXA==
-X-Gm-Message-State: AFqh2kqjm3OijPaw/Bf0kBcTjcLFCl9PSEl6Hgp5KAYkRFqbh7d3jhqQ
-        tTu8B15CqmsVRcvO4fYWOBOixccTQTKDibPm4bMCrg==
-X-Google-Smtp-Source: AMrXdXtEg1A7UCnm6yhyPrtoBPuOsCDqdR8WlThIEy7XXoaoDuLIrk+YOHX+XdWZcy5CZthipKVrrohYdWsEzfHIRGM=
-X-Received: by 2002:a0d:fd07:0:b0:3d6:2151:4038 with SMTP id
- n7-20020a0dfd07000000b003d621514038mr4491500ywf.418.1674799536315; Thu, 26
- Jan 2023 22:05:36 -0800 (PST)
+        bh=0aWZpGFELfbdnYfESYZXXP75fpqFOpqbk6j8seUM1IY=;
+        b=8O+/G2KZc9Ag43WTdGhcHzm6e3NWevWPKBUBP133Q+q+dWWfvGvmp9UEh9Nqj2YBRd
+         M20iPlNMCTsAKVqWzyMyP7G96fGae9307XBau71mpJxkcaI8Aq9mHls/b3SlBAa0FRV5
+         SNV8MLFEclQ8cQXJbXLTxo3/ZA1DoiB/Hxa63XsUH6IcOzJSHd/z0iQx6Mh6CFne55OO
+         5TRA6jfAIyOdoPocJ8baB6DzQP/uwg16Zru9FUJXrz3w/zDbq9oqa9Gj+5DCz0+DCwXH
+         mCNU+3mxWRojdoskUxaP9t/D0VjFN8ggXAHzRcbC1Fn0ku+CwYCYtpDjRIntcJTssihx
+         IzlQ==
+X-Gm-Message-State: AFqh2kph+UuaYOcX0B+CFriOuO0CaV4NpoqJZEX4qVy7GTR2uF1fj1HT
+        nzXNMC2qcKeamErEV4CjFXocFy7w+vv9qg7BoBm1xw==
+X-Google-Smtp-Source: AMrXdXsx4Hwyv/0QcCZQtECAgeaV3PT0x1I6Ste4FFeEN5Xoc29DAJH8HwWtUurLYy91dN/6oCG1WZiEbO9jAuAZpY4=
+X-Received: by 2002:ac8:7c98:0:b0:3ad:83e0:2a7d with SMTP id
+ y24-20020ac87c98000000b003ad83e02a7dmr1616920qtv.477.1674800832038; Thu, 26
+ Jan 2023 22:27:12 -0800 (PST)
 MIME-Version: 1.0
-References: <20221229191856.3508092-1-dmitry.baryshkov@linaro.org>
- <20221229191856.3508092-6-dmitry.baryshkov@linaro.org> <aaeb287f-de41-3f63-fd93-b08532964d59@quicinc.com>
-In-Reply-To: <aaeb287f-de41-3f63-fd93-b08532964d59@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 27 Jan 2023 08:05:25 +0200
-Message-ID: <CAA8EJprHMyPDmHhqZF-AZpqiLNkK7QuoQz-sZu6kSabZ7y76Dw@mail.gmail.com>
-Subject: Re: [PATCH v2 05/27] drm/msm/dpu: drop EAGAIN check from dpu_format_populate_layout
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
+References: <20230124183257.1525376-1-amit.pundir@linaro.org> <b47b5a49-6e68-c827-a88e-f61fb85521c8@gmail.com>
+In-Reply-To: <b47b5a49-6e68-c827-a88e-f61fb85521c8@gmail.com>
+From:   Amit Pundir <amit.pundir@linaro.org>
+Date:   Fri, 27 Jan 2023 11:56:36 +0530
+Message-ID: <CAMi1Hd2F0DZVU1dpju1C0MGfb59qnEyi3Lz3qY+sT=hFbycfZw@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sdm845-xiaomi-beryllium-tianma: Add
+ reserved memory region
+To:     Joel Selvaraj <joelselvaraj.oss@gmail.com>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dt <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        phone-devel <phone-devel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 27 Jan 2023 at 02:52, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+On Thu, 26 Jan 2023 at 11:45, Joel Selvaraj <joelselvaraj.oss@gmail.com> wrote:
+>
+> Hi Amit Pundir,
+>
+> I have a Poco F1 (EBBG) variant and I can confirm that the framebuffer
+> address is same for the EBBG variant too.
+>
+> I did a quick check by running the following command based on this link[1]:
+>
+> xiber:~$ strings /dev/disk/by-partlabel/xbl_a | grep "Display Reserved"
+>
+> 0x9D400000, 0x02400000, "Display Reserved",  AddMem, MEM_RES,
+> SYS_MEM_CAP, Reserv, WRITE_BACK_XN
+>
+> So I think it's safe to move this to sdm845-xiaomi-beryllium-common.dtsi
+
+ACK. Sending v2 shortly.
+
+>
+> Regards,
+> Joel Selvaraj
+>
+> [1]
+> https://wiki.postmarketos.org/wiki/SDM845_Mainlining#Find_the_framebuffer_address
 >
 >
 >
-> On 12/29/2022 11:18 AM, Dmitry Baryshkov wrote:
-> > The pipe's layout is not cached, corresponding data structure is zeroed
-> > out each time in the dpu_plane_sspp_atomic_update(), right before the
-> > call to _dpu_plane_set_scanout() -> dpu_format_populate_layout().
+>
+> On 24/01/23 12:32, Amit Pundir wrote:
+> > Put cont splash memory region under the reserved-memory as
+> > confirmed by the downstream code for Tianma variant as well.
 > >
-> > Drop plane_addr comparison against previous layout and corresponding
-> > EAGAIN handling.
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->
-> The change itself LGTM, hence
->
-> But, shouldnt we add this EAGAIN validation or in other words fix this
-> rather than drop this?
-
-What for? Does it really save us anything? What's the price of
-re-programming the SSPP_SRC0_ADDR registers?
-
->
-> Like I wrote in the review last time, this makes sure to fail the commit
-> if the same addr is being programmed.
-
-First, there is nothing wrong with committing the same source addr.
-For example setting the atomic property incurs an internal
-drm_atomic_commit() with no change to addresses at all.
-And then, this doesn't make atomic_commit fail. Instead it just
-shortcuts a call to SSPP->setup_sourceaddress.
-
->
+> > Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
 > > ---
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c | 10 +---------
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c   |  4 +---
-> >   2 files changed, 2 insertions(+), 12 deletions(-)
+> > This change should probably go in sdm845-xiaomi-beryllium-common but
+> > I don't have EBBG variant's downstream code nor the device to test.
 > >
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-> > index d95540309d4d..ec1001e10f4f 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-> > @@ -918,8 +918,7 @@ int dpu_format_populate_layout(
-> >               struct drm_framebuffer *fb,
-> >               struct dpu_hw_fmt_layout *layout)
-> >   {
-> > -     uint32_t plane_addr[DPU_MAX_PLANES];
-> > -     int i, ret;
-> > +     int ret;
+> >  .../boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts      | 8 ++++++++
+> >  1 file changed, 8 insertions(+)
 > >
-> >       if (!fb || !layout) {
-> >               DRM_ERROR("invalid arguments\n");
-> > @@ -940,9 +939,6 @@ int dpu_format_populate_layout(
-> >       if (ret)
-> >               return ret;
+> > diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts
+> > index 8e176111e599..47cbf725b0e3 100644
+> > --- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts
+> > +++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts
+> > @@ -7,6 +7,14 @@
+> >  / {
+> >       model = "Xiaomi Pocophone F1 (Tianma)";
+> >       compatible = "xiaomi,beryllium", "qcom,sdm845";
+> > +
+> > +     reserved-memory {
+> > +             /* Cont splash region set up by the bootloader */
+> > +             cont_splash_mem: framebuffer@9d400000 {
+> > +                     reg = <0x0 0x9d400000 0x0 0x2400000>;
+> > +                     no-map;
+> > +             };
+> > +     };
+> >  };
 > >
-> > -     for (i = 0; i < DPU_MAX_PLANES; ++i)
-> > -             plane_addr[i] = layout->plane_addr[i];
-> > -
-> >       /* Populate the addresses given the fb */
-> >       if (DPU_FORMAT_IS_UBWC(layout->format) ||
-> >                       DPU_FORMAT_IS_TILE(layout->format))
-> > @@ -950,10 +946,6 @@ int dpu_format_populate_layout(
-> >       else
-> >               ret = _dpu_format_populate_addrs_linear(aspace, fb, layout);
-> >
-> > -     /* check if anything changed */
-> > -     if (!ret && !memcmp(plane_addr, layout->plane_addr, sizeof(plane_addr)))
-> > -             ret = -EAGAIN;
-> > -
-> >       return ret;
-> >   }
-> >
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> > index cdde7b9ec882..43fb8e00ada6 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> > @@ -476,9 +476,7 @@ static void _dpu_plane_set_scanout(struct drm_plane *plane,
-> >       int ret;
-> >
-> >       ret = dpu_format_populate_layout(aspace, fb, &pipe_cfg->layout);
-> > -     if (ret == -EAGAIN)
-> > -             DPU_DEBUG_PLANE(pdpu, "not updating same src addrs\n");
-> > -     else if (ret)
-> > +     if (ret)
-> >               DPU_ERROR_PLANE(pdpu, "failed to get format layout, %d\n", ret);
-> >       else if (pdpu->pipe_hw->ops.setup_sourceaddress) {
-> >               trace_dpu_plane_set_scanout(pdpu->pipe_hw->idx,
-
-
-
--- 
-With best wishes
-Dmitry
+> >  &display_panel {
