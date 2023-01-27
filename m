@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A944967E4B7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 13:10:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E1FE967E43C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 12:54:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232590AbjA0MKl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Jan 2023 07:10:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39206 "EHLO
+        id S234150AbjA0LyJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Jan 2023 06:54:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232279AbjA0MK1 (ORCPT
+        with ESMTP id S234149AbjA0Lxm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Jan 2023 07:10:27 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56A8E8D0BE
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 04:04:23 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id x10so4509003edd.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 04:04:23 -0800 (PST)
+        Fri, 27 Jan 2023 06:53:42 -0500
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0D217CC92
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 03:51:07 -0800 (PST)
+Received: by mail-wr1-f43.google.com with SMTP id m14so4278034wrg.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 03:51:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=IXd1Cay0PuoVNLquWy4+5A9Hje1OZ6HIZgO3KYLNKCU=;
-        b=EM+BulHUseAsmgsDpFK679ddP8Z3AeuM8tLmktr0DE2abRVZJ5wKMKNsz/nK3VPE30
-         OHzifBu8lcuElJLZ/r83ZfXSGbz/jju0ZVtRUuyOodRDgKYRUJVg3dmfiVfNWyqrSvpB
-         Vhyu2yeRGICk4vclE5hwkNNByXgNlwuDEHwlaD+n5oYnkWqIBkDPYKPqmnW8l4vBli1y
-         jRkIWbUUIFh5eIHXaIBIBByJk7zDU7ESsYtndEVGMKz8BBWorqXSuhHZq4Kysc314DI7
-         wWUFay+YPLrKHhMn3KMex813AlP9Q25mxEHDb3rI11K6+kC6SuquhPHXrjKZVaHQHIfJ
-         sChQ==
+        bh=VUxkjbPI2hGs2bTAnhOWhZx0Y3u570fRt/MEL0+XvDc=;
+        b=nPrIxS6CM21G3+sUYx9go7df0QKfN3/Dtsq+WpA/kOh5cKqckydPi/hrYpQrqkUKAZ
+         QIgTraYG/K8jnwZsSQq8ymhiarXYxgGcNmaXEJBiuZUy1gEgkcb0aRm8TbSfLwCGOz8Z
+         IyoTBq5NwNaOPQdwoVrKMQAOHmUdK/7LjNJmKRHYMLnTlqvY+slLeTtIXtOu/GWf766p
+         Taxs8meQgkIFyjj22jSYK0We4LS0nKuMo01qrQ2CR2DCa6d7qGQ2OmG4ax8pb+3vpTRK
+         mfQe5Tewu6PrfbGmvyFSLdx480x+SOLB8FTvch5JebZVHMbGryve27Q325tOj62McMmS
+         3QpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IXd1Cay0PuoVNLquWy4+5A9Hje1OZ6HIZgO3KYLNKCU=;
-        b=Xk7dqR0VTyf+WXphtYYjihh69hMsEI/HrLpKZmb6RsrFTDV55Y9P+X5h3Lpb10fFKq
-         hqhP8AB/P/r7T4uuYCuEJ7BfPa42qn5lGBSUVs8zgKDfK8A7qCrT090WQ0zdzu4bH98b
-         Lu71OFuSJAuxde5SPb1Dkoiw7OpKseZdZPW/QFCSPSVYxFcuaxYpFifp2iXnmh8p6UuF
-         3UHvb4YoSjKR+BBX5OkSag7QOKHSY3EYfk0vn/16AL78PTsqxoa154B8EVbD0CL9RzfZ
-         CXlWrSMo0gYSxUZSz5R/UixMYnAbqe7QkVV9NEsEFmOcgse7VP4C4hfKuNybgNxuGrKh
-         vsIw==
-X-Gm-Message-State: AO0yUKX73tf1DU9Q47OOzoPdWzMDCwzpT4IhVy3DbQatc3KW2aAUp9s+
-        ZNt0Oh/MElPATp3zFjYa+e/JKZ+CbG/sNgwW
-X-Google-Smtp-Source: AMrXdXs1krk+6o/FfFny7AmBPlSTXvn2eo0l3icgMKTakzX2LZT41di38a+DLnWs8FhhuiSaNmhY8g==
-X-Received: by 2002:a05:600c:4e16:b0:3db:15b1:fafd with SMTP id b22-20020a05600c4e1600b003db15b1fafdmr32933179wmq.24.1674820175891;
-        Fri, 27 Jan 2023 03:49:35 -0800 (PST)
+        bh=VUxkjbPI2hGs2bTAnhOWhZx0Y3u570fRt/MEL0+XvDc=;
+        b=JaY+dw6sMWwIOpDQ1MDQy7SAXwX/BEoK0upLGy7CX12eCDpZszsbcHMxLEK3YihgsB
+         9hhaWvb0zyYvLsz3JaAoCnKc2dj+xKeZG4ui752RRThSWwqBj2SpOzF+WfUoMvjPPca+
+         B+9Zg/oFBaOLio5R0eGlzDMCvmk1mwqSUjrj30zUSTnlQ1FH+JeDiFjYMzPgdQAASaM5
+         1ZGjBZlPt7XK312FSYoPuyLaAF2bWwI7hh5i2sNs1jfDvHAV0XMfs3szrmTooRbGJFvt
+         lQ7G9NRYUd+g2RgkaNI17xXHYfCW5B936CMdSfOTjofQdJLErkBeslyMGGkm3BKUYSGT
+         PMbw==
+X-Gm-Message-State: AFqh2kpRRE12ruriXYrM9k0tJ9ytBIaWmAMp/s6fMImzrHpHlYyrwXNw
+        i3trFW2iYhyaGFLwsrTgq+4KLb9ZK+vqf/yo
+X-Google-Smtp-Source: AMrXdXu/ppR95kNTQmFZaEgCcnWnz2FywoDoW01+9eBW7RnHLZ/01Gr9HpcBmhdtrkOjZiIM+x1cyw==
+X-Received: by 2002:adf:e18c:0:b0:2be:493f:3b34 with SMTP id az12-20020adfe18c000000b002be493f3b34mr33144295wrb.26.1674820267487;
+        Fri, 27 Jan 2023 03:51:07 -0800 (PST)
 Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id p20-20020a05600c2e9400b003d9862ec435sm4075479wmn.20.2023.01.27.03.49.33
+        by smtp.gmail.com with ESMTPSA id p2-20020a5d4582000000b002b6bcc0b64dsm3804434wrq.4.2023.01.27.03.51.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Jan 2023 03:49:35 -0800 (PST)
-Message-ID: <9f4666db-9b0b-77d4-e02b-708c2a1ebb4e@linaro.org>
-Date:   Fri, 27 Jan 2023 12:49:33 +0100
+        Fri, 27 Jan 2023 03:51:07 -0800 (PST)
+Message-ID: <2d368c6f-5240-8aec-ef27-a86b2a361856@linaro.org>
+Date:   Fri, 27 Jan 2023 12:51:05 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [PATCH v3 7/8] arm64: dts: qcom: sm8550: Add USB PHYs and
+Subject: Re: [PATCH v2 7/8] arm64: dts: qcom: sm8550: Add USB PHYs and
  controller nodes
 Content-Language: en-US
 To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
@@ -69,31 +69,95 @@ To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         linux-phy@lists.infradead.org
-References: <20230126131415.1453741-1-abel.vesa@linaro.org>
- <20230126131415.1453741-8-abel.vesa@linaro.org>
+References: <20230126124651.1362533-1-abel.vesa@linaro.org>
+ <20230126124651.1362533-8-abel.vesa@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230126131415.1453741-8-abel.vesa@linaro.org>
+In-Reply-To: <20230126124651.1362533-8-abel.vesa@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/01/2023 14:14, Abel Vesa wrote:
+On 26/01/2023 13:46, Abel Vesa wrote:
 > Add USB host controller and PHY nodes.
 > 
 > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
-
-
-(...)
-
+> 
+> NOTE: This patch has been already merged. It is here only to provide
+> context for the rest of the patchset. There is a change with respect to the
+> clocks, but that will be sent as a separate/individual fix patch.
+> 
+>  arch/arm64/boot/dts/qcom/sm8550.dtsi | 92 +++++++++++++++++++++++++++-
+>  1 file changed, 91 insertions(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> index 4daf1f03d79f..6801454bbe10 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> @@ -13,6 +13,7 @@
+>  #include <dt-bindings/mailbox/qcom-ipcc.h>
+>  #include <dt-bindings/power/qcom-rpmpd.h>
+>  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+> +#include <dt-bindings/phy/phy-qcom-qmp.h>
+>  #include <dt-bindings/thermal/thermal.h>
+>  
+>  / {
+> @@ -652,7 +653,7 @@ gcc: clock-controller@100000 {
+>  				 <&ufs_mem_phy 0>,
+>  				 <&ufs_mem_phy 1>,
+>  				 <&ufs_mem_phy 2>,
+> -				 <0>;
+> +				 <&usb_dp_qmpphy QMP_USB43DP_USB3_PIPE_CLK>;
+>  		};
+>  
+>  		ipcc: mailbox@408000 {
+> @@ -1924,6 +1925,95 @@ opp-202000000 {
+>  			};
+>  		};
+>  
+> +		usb_1_hsphy: phy@88e3000 {
+> +			compatible = "qcom,sm8550-snps-eusb2-phy";
+> +			reg = <0x0 0x088e3000 0x0 0x154>;
+> +			#phy-cells = <0>;
+> +
+> +			clocks = <&tcsr TCSR_USB2_CLKREF_EN>;
+> +			clock-names = "ref";
+> +
+> +			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
+> +
+> +			status = "disabled";
+> +		};
+> +
+> +		usb_dp_qmpphy: phy@88e8000 {
+> +			compatible = "qcom,sm8550-qmp-usb3-dp-phy";
+> +			reg = <0x0 0x088e8000 0x0 0x3000>;
+> +
+> +			clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
+> +				 <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>,
+> +				 <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
+> +			clock-names = "aux", "ref", "com_aux", "usb3_pipe";
+> +
+> +			power-domains = <&gcc USB3_PHY_GDSC>;
+> +
+> +			resets = <&gcc GCC_USB3_DP_PHY_PRIM_BCR>,
+> +				 <&gcc GCC_USB3_PHY_PRIM_BCR>;
+> +			reset-names = "phy", "common";
+> +
+> +			#clock-cells = <1>;
+> +			#phy-cells = <1>;
+> +
+> +			status = "disabled";
+> +		};
+> +
 > +		usb_1: usb@a6f8800 {
 > +			compatible = "qcom,sm8550-dwc3", "qcom,dwc3";
 > +			reg = <0x0 0x0a6f8800 0x0 0x400>;
@@ -130,10 +194,10 @@ On 26/01/2023 14:14, Abel Vesa wrote:
 > +			power-domains = <&gcc USB30_PRIM_GDSC>;
 > +			required-opps = <&rpmhpd_opp_nom>;
 
-This is not accepted, so far. Can we drop it?
+This part was merged but it is not correct without [1]. Are we going to
+revive [1] or should we drop it?
 
-Or revive:
-https://lore.kernel.org/all/YXcBK7zqny0s4gd4@ripper/
+[1] https://lore.kernel.org/all/YXcBK7zqny0s4gd4@ripper/
 
 Best regards,
 Krzysztof
