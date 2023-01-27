@@ -2,115 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2523567E877
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 15:40:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0920767E892
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 15:47:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233036AbjA0Ok4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Jan 2023 09:40:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50814 "EHLO
+        id S233253AbjA0Orf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Jan 2023 09:47:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229511AbjA0Okz (ORCPT
+        with ESMTP id S232305AbjA0Ore (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Jan 2023 09:40:55 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FF0212596;
-        Fri, 27 Jan 2023 06:40:54 -0800 (PST)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30RDmjCA022601;
-        Fri, 27 Jan 2023 14:40:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=wk13knnpPS0ir92OkbA0UPnhSib867snF/BNjSIFnFQ=;
- b=Z1D52k9kuFqDf7I5UZhVj/VaFwvdCI/zzPv+bh43Paghk9BQUt5MI12bqgNZf4D6GAjy
- LiNoJIlW2f1mpikdpQYwswHUa97PSdY6MBcMueL59wgvXP238Eo5rUy8rmlISccN1dt2
- nQ2f1g4qAB/AXaSEz0peIco6/5kbRQ1GFrBpp07NIIBfHwCm7LQNfpObyYum553CUO0X
- Jz72aa3GS7DCiGo+/StRr+dH1V73bkpDXTKdwtLh6RLvjybr7CDaDvPXfS5njBWp6Zbl
- XcPAobHQ4co8pBE0LfNHbplAjVW6tUaIdRz72iCppl1iXXKT87c+KT/aJwxusgYcZ56l Ig== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ncacmgjuw-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 27 Jan 2023 14:40:38 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30REeb2Q029815
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 27 Jan 2023 14:40:37 GMT
-Received: from [10.216.31.125] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Fri, 27 Jan
- 2023 06:40:28 -0800
-Message-ID: <0cc27ec7-ddaa-41fa-ee9c-189ec839a5e5@quicinc.com>
-Date:   Fri, 27 Jan 2023 20:10:25 +0530
+        Fri, 27 Jan 2023 09:47:34 -0500
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CA4E7EFC8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 06:47:33 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id e19-20020a05600c439300b003db1cac0c1fso5553722wmn.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 06:47:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1KKJUq5WKhzjaSp+Mwo81aQ4gVmuVUpw2n+7Kp/Unuo=;
+        b=jdR+Ko3ozAmvYFX9JLmNVn5iV4Csy6QSZG1a/YPXUY/+s0qx9oppoMcDIzS/yMXo11
+         cJqFXITk2Gb7eu2JCNtJIgmYbAZaNi1hXFy8qX8ipThmzZ4aLU+nCNHvz+SMb98Y3h5V
+         GusdNp0oXBaNNfiv/fnxupM07T1MnwVeiV/XDX/FdOR5PVuJTv4f6gp+IHkcnMShxBnv
+         aNaDCAgF1tSJJSTPwjfTS72J+dqao8PO2hKQZabvSveQ3tKnZTs0Z9ZZUKRwiuKQ1qFu
+         YDdgCCBYsdsgWYWidcp9F6wfCwFFpOgOXVUMVzW4SalPbcKBqI9BbhgbVOe0OqEPwH1E
+         QLkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1KKJUq5WKhzjaSp+Mwo81aQ4gVmuVUpw2n+7Kp/Unuo=;
+        b=oHKao2aslJt1U67owLSgCjj0rHtiFt+gqjtnZ3UAkXy8y5q602tAbV4eNTHoTE48aI
+         DM1BKM3GhEZOcgZxm8BUq/ZmC8mG9eWBsGXsu8/yJ4Mdf576oCgWuajJUi1KRvE44cRZ
+         sCF1a7K7wiYi1A0FERXcTLWXJ7VeO2uQjEh/uAD6imICs7RiMNJPCOcpzpnB/K0SisHP
+         AjnH9Gc6q7Y7jlEzbCAHdLjckofS1vYBuwrMu7zgKeErnnlQKE39EpPUHm+dCKNAPiEL
+         4GRMLcMiZuEdP9agBy9oiYOf7Hu7kqu11tkCrs+bSZkCu1f9lu9eamFkXNb0T3U0fTvv
+         /otA==
+X-Gm-Message-State: AFqh2krtU8grBgK1VKSdRAQEtNfJsoj2eIGh6iPuzsZAGNjKdwfx4f9l
+        683cJJBiW1g7jOfo6jdEUC7C9A==
+X-Google-Smtp-Source: AMrXdXv4N0OXmz+FUj99xgWrogLlCVx4448xlj97WtMIyfMl+0CKekDVru6FDwQXvG7KAqgZYZasIQ==
+X-Received: by 2002:a05:600c:3c92:b0:3d3:4007:9c88 with SMTP id bg18-20020a05600c3c9200b003d340079c88mr41317427wmb.18.1674830851600;
+        Fri, 27 Jan 2023 06:47:31 -0800 (PST)
+Received: from hackbox.lan ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id q9-20020a05600c330900b003dc1763da37sm4656118wmp.17.2023.01.27.06.47.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Jan 2023 06:47:30 -0800 (PST)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Johan Hovold <johan@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: [PATCH v2] soc: qcom: llcc: Fix slice configuration values for SC8280XP
+Date:   Fri, 27 Jan 2023 16:47:24 +0200
+Message-Id: <20230127144724.1292580-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH 5/5] dt-bindings: tcsr: Add compatible for IPQ9574
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <lee@kernel.org>,
-        <catalin.marinas@arm.com>, <will@kernel.org>,
-        <shawnguo@kernel.org>, <arnd@arndb.de>,
-        <marcel.ziswiler@toradex.com>, <dmitry.baryshkov@linaro.org>,
-        <nfraprado@collabora.com>, <broonie@kernel.org>,
-        <robimarko@gmail.com>, <quic_gurus@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
-        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
-        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
-        <quic_devipriy@quicinc.com>
-References: <20230113160012.14893-1-quic_poovendh@quicinc.com>
- <20230113160012.14893-6-quic_poovendh@quicinc.com>
- <823a9052-bfd5-3b14-191e-84f049a7693e@linaro.org>
-From:   POOVENDHAN SELVARAJ <quic_poovendh@quicinc.com>
-In-Reply-To: <823a9052-bfd5-3b14-191e-84f049a7693e@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: A6-mR7yPlZzmm9vHJhyJylfjTrmNZbGM
-X-Proofpoint-ORIG-GUID: A6-mR7yPlZzmm9vHJhyJylfjTrmNZbGM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-27_09,2023-01-27_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- priorityscore=1501 clxscore=1015 mlxscore=0 adultscore=0 suspectscore=0
- mlxlogscore=676 lowpriorityscore=0 spamscore=0 malwarescore=0
- impostorscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2212070000 definitions=main-2301270139
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+These new values are now based on the latest LLCC SC table.
 
-On 1/13/2023 10:10 PM, Krzysztof Kozlowski wrote:
-> On 13/01/2023 17:00, Poovendhan Selvaraj wrote:
->> Add the tcsr compatible string for IPQ9574 SoC
->>
->> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
->> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
->> Co-developed-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
->> Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-> Same question...
->
-> okay Sure, will address.
->> Signed-off-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
->> ---
-> Best regards,
-> Krzysztof
+Fixes: ec69dfbdc426 ("soc: qcom: llcc: Add sc8180x and sc8280xp configurations")
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
 
-Best Regards,
+The v1 is here:
+https://lore.kernel.org/all/20230126171636.2319496-1-abel.vesa@linaro.org/
 
-Poovendhan S
+Changes since v1:
+ * dropped the LLCC_GPU and LLCC_WRCACHE max_cap changes
+ * took the new values from documentatio this time rather than
+   downstream kernel
+
+ drivers/soc/qcom/llcc-qcom.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+index 23ce2f78c4ed..26efe12012a0 100644
+--- a/drivers/soc/qcom/llcc-qcom.c
++++ b/drivers/soc/qcom/llcc-qcom.c
+@@ -191,9 +191,9 @@ static const struct llcc_slice_config sc8280xp_data[] = {
+ 	{ LLCC_CVP,      28, 512,  3, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+ 	{ LLCC_APTCM,    30, 1024, 3, 1, 0x0,   0x1, 1, 0, 0, 1, 0, 0 },
+ 	{ LLCC_WRCACHE,  31, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
+-	{ LLCC_CVPFW,    32, 512,  1, 0, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+-	{ LLCC_CPUSS1,   33, 2048, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
+-	{ LLCC_CPUHWT,   36, 512,  1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
++	{ LLCC_CVPFW,    17, 512,  1, 0, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
++	{ LLCC_CPUSS1,   3, 2048, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0 },
++	{ LLCC_CPUHWT,   5, 512,  1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
+ };
+ 
+ static const struct llcc_slice_config sdm845_data[] =  {
+-- 
+2.34.1
 
