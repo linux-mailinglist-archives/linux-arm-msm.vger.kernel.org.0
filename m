@@ -2,111 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B630767DD76
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 07:34:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 00A9767DDFB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 07:50:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229956AbjA0GeI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Jan 2023 01:34:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36908 "EHLO
+        id S232063AbjA0Gul (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Jan 2023 01:50:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229948AbjA0GeH (ORCPT
+        with ESMTP id S233009AbjA0GuQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Jan 2023 01:34:07 -0500
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89E613A593
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 22:34:02 -0800 (PST)
-Received: by mail-pj1-x102c.google.com with SMTP id m7-20020a17090a71c700b0022c0c070f2eso6976453pjs.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Jan 2023 22:34:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:author:mime-version:message-id:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=6N+UBn2rnpBa97iC9jvCaWmiVqPMRKzilYeorfm1ieE=;
-        b=DgQyxZJo9eaUdZ2iRw8PaWRrWt/hoB2wXhf1CWWiGABXiB3WBnJ3PJooko/P988Bzt
-         g+jPFHDF/3V2SGGOif53DoF2X+D4b4lS/DJU2L5t5u8hnX4xGG2c3Fitky6onwNgFrBU
-         4X+7K6feOW7x20scVBBSYrMS9CxCHwjVsjOL8dXbhBzxecosB9ciXxLvRpi19Y5umpTg
-         Sj5SOhQRU1YT19rJ4ahRz98U3g/qUcoel6NZPT937VLKoQHJLyRks9Iztw8EfJbkv/Ky
-         e4hqBJn2T+d5/PzmKMbUmcWedwoOX1b9HWdaleei1TuO0RATVwQPBOa7JZX15k0GZant
-         4CvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:author:mime-version:message-id:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6N+UBn2rnpBa97iC9jvCaWmiVqPMRKzilYeorfm1ieE=;
-        b=RkVLONjVvA3O9a+QN5XaojH4d9iDHDpQ+CnzZB+glErwC6J15yC4vTHcz8v0wjgfGR
-         aiiv1IkvYHa+fqtC0HT74TC1klv/rDknMll2toU7llTDp1RFQaFbeEzeiIIca+598D77
-         ogKXBrvv9iHNql9xkJoU3svoDKpGoaKbF+emakrVq80sVujbZPFYTFMlUN/WNA3q5X0t
-         hJDrwI6kIYCAV8Qr6x9q1VnS49rXtt9BmtLnO1fS+KpFHc2Vi74F7IUB6+7iBqubr32z
-         Sq1bEKXq4m6oDe+BTyY/b5rtpP0S3zwN54DmXAu+J/W6jN/JXtR6u8amyC0ZqTbIBv1m
-         ybiA==
-X-Gm-Message-State: AFqh2kqRFhzByEGvM8gkC3uK08j4BavIb1Alnb4cmU88S3hAlaTDoWG8
-        00Xzn5BgnCAzmQOXKTx0t3ttMg==
-X-Google-Smtp-Source: AMrXdXvLo+rgivVpPZYlIb+v2QmhY8jJauPV00jAmDz2jJwGWr9u4/ArU0Re+wFiw/eHfac5bRGy7g==
-X-Received: by 2002:a17:902:ea0e:b0:195:f0f9:a9fb with SMTP id s14-20020a170902ea0e00b00195f0f9a9fbmr30711803plg.11.1674801242004;
-        Thu, 26 Jan 2023 22:34:02 -0800 (PST)
-Received: from localhost.localdomain ([122.171.17.192])
-        by smtp.gmail.com with ESMTPSA id m129-20020a625887000000b005921c46cbadsm1910358pfb.99.2023.01.26.22.33.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Jan 2023 22:34:01 -0800 (PST)
-From:   Amit Pundir <amit.pundir@linaro.org>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Caleb Connolly <caleb.connolly@linaro.org>,
-        Joel Selvaraj <joelselvaraj.oss@gmail.com>
-Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dt <devicetree@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        phone-devel <phone-devel@vger.kernel.org>
-Subject: [PATCH v2] arm64: dts: qcom: sdm845-xiaomi-beryllium: Add reserved memory region
-Date:   Fri, 27 Jan 2023 12:03:55 +0530
-Message-Id: <20230127063355.1775246-1-amit.pundir@linaro.org>
-X-Mailer: git-send-email 2.25.1
+        Fri, 27 Jan 2023 01:50:16 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A135777528;
+        Thu, 26 Jan 2023 22:47:32 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id F1A6FB81F6F;
+        Fri, 27 Jan 2023 06:46:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E2C0C433EF;
+        Fri, 27 Jan 2023 06:46:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1674801994;
+        bh=/69QGgxaCKzr+3hTfqCfapjnc3rskY33QiorSfy6fVA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=GDp0zEMu9yiBlFB3TDmoQMTVPpbbT2wFR0E3Qrg10fQ2nNAmCFhYUOk/sy56K0HXx
+         o466IcvNd4fF+3Y1nC1OUOI1Olt1MDH6xER96/iA5GO61HZzJldOClUlLEQreyJ4pY
+         qXOHKHS/zegoHWMMCil9tCQMWWTSeE8QgGnT3ppWwZEgiSIyhghUm/3xw6KgULER/D
+         BK0wZGlMFpxP2cX1skqfb286qPS9NZ+khpFngn+4enHpwgmAChD6+u5U36gdLfyWYG
+         3eetfiyAXDOYDoPv18v6nxALzAQ5cJuuWAxdOdfhWevW2kSsZwnI8MQ4fdGktDBKu7
+         gj5MqeCVCAj8Q==
+Date:   Fri, 27 Jan 2023 12:16:21 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Dan Carpenter <error27@gmail.com>
+Cc:     Alex Elder <elder@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, kernel-janitors@vger.kernel.org
+Subject: Re: [PATCH] bus: mhi: ep: Fix off by one in mhi_ep_process_cmd_ring()
+Message-ID: <20230127064621.GC7809@thinkpad>
+References: <Y9JH5sudiZWvbODv@kili>
 MIME-Version: 1.0
-Author: Amit Pundir <amit.pundir@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+In-Reply-To: <Y9JH5sudiZWvbODv@kili>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Put cont splash memory region under the reserved-memory as
-confirmed by the downstream code for both Tianma and EBBG variants.
+On Thu, Jan 26, 2023 at 12:29:10PM +0300, Dan Carpenter wrote:
+> The > comparison should be changed to >= to prevent an out of bounds
+> access into the mhi_cntrl->mhi_chan[] array.  The mhi_cntrl->mhi_chan[]
+> array is allocated in mhi_ep_chan_init() and has mhi_cntrl->max_chan
+> elements.
+> 
+> Fixes: 2527ad44ddb2 ("bus: mhi: ep: Check if the channel is supported by the controller")
+> Signed-off-by: Dan Carpenter <error27@gmail.com>
 
-Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
----
-v2: The framebuffer address is same for the EBBG variant too,
-    so moved this change from -tianma.dts to -common.dtsi.
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
 
- .../arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi | 6 ++++++
- 1 file changed, 6 insertions(+)
+Thanks,
+Mani
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-index eb6b2b676eca..37591daace73 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-@@ -97,6 +97,12 @@ spss_mem: memory@97f00000 {
- 			no-map;
- 		};
- 
-+		/* Cont splash region set up by the bootloader */
-+		cont_splash_mem: framebuffer@9d400000 {
-+			reg = <0 0x9d400000 0 0x2400000>;
-+			no-map;
-+		};
-+
- 		rmtfs_mem: memory@f6301000 {
- 			compatible = "qcom,rmtfs-mem";
- 			reg = <0 0xf6301000 0 0x200000>;
+> ---
+>  drivers/bus/mhi/ep/main.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
+> index bcaaba97ef63..be2d56e7f392 100644
+> --- a/drivers/bus/mhi/ep/main.c
+> +++ b/drivers/bus/mhi/ep/main.c
+> @@ -125,7 +125,7 @@ static int mhi_ep_process_cmd_ring(struct mhi_ep_ring *ring, struct mhi_ring_ele
+>  	ch_id = MHI_TRE_GET_CMD_CHID(el);
+>  
+>  	/* Check if the channel is supported by the controller */
+> -	if ((ch_id > mhi_cntrl->max_chan) || !mhi_cntrl->mhi_chan[ch_id].name) {
+> +	if ((ch_id >= mhi_cntrl->max_chan) || !mhi_cntrl->mhi_chan[ch_id].name) {
+>  		dev_err(dev, "Channel (%u) not supported!\n", ch_id);
+>  		return -ENODEV;
+>  	}
+> -- 
+> 2.35.1
+> 
+
 -- 
-2.25.1
-
+மணிவண்ணன் சதாசிவம்
