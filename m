@@ -2,91 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 61B9A67E600
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 14:02:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5DC6967E60A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 14:05:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234436AbjA0NCq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Jan 2023 08:02:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43936 "EHLO
+        id S233560AbjA0NFC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Jan 2023 08:05:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234489AbjA0NCq (ORCPT
+        with ESMTP id S233250AbjA0NEn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Jan 2023 08:02:46 -0500
-Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 306881E9F1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 05:02:44 -0800 (PST)
-Received: by mail-yb1-xb31.google.com with SMTP id b1so5836226ybn.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 05:02:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=DB/VwgUOhDeWeHT3z0pZDhsu54GOVI4oKcLH0pJ6Yjc=;
-        b=CYNu0ZSqCgfpiSSSlH4hBB7pwg6nhfPch4mIi/rF+KmWONMg80ZZqfE9lidSr6gtHY
-         k1v2TAb9cbq0dSGpl5tDxrwJPvB0Ry7LYZ6ue+En2mSE3WCv71eQov9/NleqU9RTaMw3
-         r0ccjtW0sF+Stqx23dcBX+886BAPtTxAP1lbdm5akilsbPLB98/s4elF9wbrL/Dwenfo
-         AP4bzPcAKNplihrq+SeKaOGMix13cf3AvlbuRMNA1qEnWBzaRaNEm2mdig64oMu750dU
-         Dln09sOzEOa9wOyc4z7jAAjh6bNpHYHLqW7xcJM2etO3wNWGy8ZJ1KhFGZ4xbYWuwxfr
-         CWtg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DB/VwgUOhDeWeHT3z0pZDhsu54GOVI4oKcLH0pJ6Yjc=;
-        b=0ul70MbrhTjekleWrGyZVG7gdsPs98e5HvLAUpJKtXSGMIJj0ZSr3HkYAXKCnqonir
-         Rn+CruSt/5WmS+5sDlEyNjC9KphfBqx6+9erFSM9LJ3+5eTtp2hHtXgU94pc7pL3Vb/O
-         xlc+vYdAQEJS0A0x9D4+ysv7ArplC0q7Nshsenp0Wy41WlO2uzfEb/T0MVRsjyEO+VZj
-         q9D+sE+VcFDIuLpn8eaf3SrfPkESpBwI2Fy6aJ5UnjrvmPgrVWoMFPtYVVd7jXE0Qaej
-         t+2GTK8m99/boViTt1xEfnn/G5yiMNY+7+E9PNLGu+AHrJz5rI5kFb29LTBmTTnk3HbB
-         bs9Q==
-X-Gm-Message-State: AO0yUKVmej3j8ALUqdyU/EyFCLhG8VnBmJVFInGuZYNbAtHfgFowMIRQ
-        H1kTnG+iBZ85UhH+RtYzWEJ4ihsVznioi99rzYyscQ==
-X-Google-Smtp-Source: AK7set/TTpymxO5qx7/c8vpKBYpS1jQegrvVN6lTGO3M26bGQ2hNBb8NJpV0TgjZOgLF2LXIgn/FyvD2IuM7IlpAhug=
-X-Received: by 2002:a25:f81b:0:b0:80b:821f:b621 with SMTP id
- u27-20020a25f81b000000b0080b821fb621mr1091077ybd.24.1674824563392; Fri, 27
- Jan 2023 05:02:43 -0800 (PST)
-MIME-Version: 1.0
-References: <20230120174631.353345-1-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230120174631.353345-1-krzysztof.kozlowski@linaro.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Fri, 27 Jan 2023 14:02:32 +0100
-Message-ID: <CACRpkdbvsgZ+bgJyNt1rU0dcWfZj+qFUt1T0+SqCdVbxyFKkzw@mail.gmail.com>
-Subject: Re: [GIT PULL] pinctrl: dt-bindings: qcom: bindings for v6.3
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Fri, 27 Jan 2023 08:04:43 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F31917CCAD;
+        Fri, 27 Jan 2023 05:04:41 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 03523B81F21;
+        Fri, 27 Jan 2023 13:04:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C603C433EF;
+        Fri, 27 Jan 2023 13:04:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1674824678;
+        bh=s2Kl2DFTjPfURrm0RC4TBfPUoYKL+iGruFychEwP8JI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=BJghCqq5cgDU8pgSAyW0RJujDszQQxmqA3HnnnVs5m3L9NegM1AByLIVMFfiTncv6
+         Fm0HqtN9qnv1bMftwkPxidpLn5FuyLBjprgYUpUigPUtLFrMEwoJDjNREKhTy40xCu
+         3BakLwyCN/bGXcF7vYp5EAjRAu9ZWTeukbfIE9qguUJptfBzTNjBmKKQaaRi2hC8EL
+         J0c3ujHb29vhPyZm4oxQ3hi0LmiAhu+9TgEGyezNnQ/fU1SS0/TxNu5+K9L+2bOn6q
+         2gGqzb91/x7eKybEVBg628llCRZKLd/TBKG3XEABgLes0+MSqWLNkmMtSmIyCJlh8y
+         HeRFLmuymua3w==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pLOPP-0008L8-Li; Fri, 27 Jan 2023 14:04:47 +0100
+Date:   Fri, 27 Jan 2023 14:04:47 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Alexandre Belloni <alexandre.belloni@bootlin.com>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Alessandro Zummo <a.zummo@towertech.it>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-rtc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 17/24] rtc: pm8xxx: add copyright notice
+Message-ID: <Y9PL73mTJZ3hayur@hovoldconsulting.com>
+References: <20230126142057.25715-1-johan+linaro@kernel.org>
+ <20230126142057.25715-18-johan+linaro@kernel.org>
+ <Y9Kk/AYBUfnoPCcP@mail.local>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y9Kk/AYBUfnoPCcP@mail.local>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 20, 2023 at 6:46 PM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
+On Thu, Jan 26, 2023 at 05:06:20PM +0100, Alexandre Belloni wrote:
+> On 26/01/2023 15:20:50+0100, Johan Hovold wrote:
+> > Add a copyright notice for Linaro and add myself as a (primary) author
+> > of this driver.
+> > 
+> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> > ---
+> >  drivers/rtc/rtc-pm8xxx.c | 7 ++++++-
+> >  1 file changed, 6 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/drivers/rtc/rtc-pm8xxx.c b/drivers/rtc/rtc-pm8xxx.c
+> > index 09816b9f6282..25bdd804b4d2 100644
+> > --- a/drivers/rtc/rtc-pm8xxx.c
+> > +++ b/drivers/rtc/rtc-pm8xxx.c
+> > @@ -1,5 +1,9 @@
+> >  // SPDX-License-Identifier: GPL-2.0-only
+> > -/* Copyright (c) 2010-2011, Code Aurora Forum. All rights reserved.
+> > +/*
+> > + * pm8xxx RTC driver
+> > + *
+> > + * Copyright (c) 2010-2011, Code Aurora Forum. All rights reserved.
+> > + * Copyright (c) 2023, Linaro Limited
+> 
+> Is this really useful? The authoritative source is going to be git
+> anyway.
 
-> The following changes since commit 1b929c02afd37871d5afb9d498426f83432e71c2:
->
->   Linux 6.2-rc1 (2022-12-25 13:41:39 -0800)
->
-> are available in the Git repository at:
->
->   https://git.kernel.org/pub/scm/linux/kernel/git/krzk/linux-dt.git tags/qcom-pinctrl-6.3
->
-> for you to fetch changes up to 5b8c304c94d79f44aea8ee273ce70ca380804156:
->
->   dt-bindings: pinctrl: qcom,pmic-mpp: Rename "mpp" child node names to "-pins$" (2023-01-20 18:43:06 +0100)
+Sure, but in this case the driver ended up being almost completely
+reworked so I think it is warranted.
+ 
+> >   */
+> >  #include <linux/of.h>
+> >  #include <linux/module.h>
+> > @@ -551,3 +555,4 @@ MODULE_ALIAS("platform:rtc-pm8xxx");
+> >  MODULE_DESCRIPTION("PMIC8xxx RTC driver");
+> >  MODULE_LICENSE("GPL v2");
+> >  MODULE_AUTHOR("Anirudh Ghayal <aghayal@codeaurora.org>");
+> > +MODULE_AUTHOR("Johan Hovold <johan@kernel.org>");
+> > -- 
+> > 2.39.1
 
-Pulled into the pinctrl tree for v6.3!
-
-Thanks!
-Linus Walleij
+Johan
