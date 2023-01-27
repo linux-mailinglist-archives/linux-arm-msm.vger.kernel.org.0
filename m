@@ -2,192 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 99C4F67EA90
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 17:15:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D0E4D67EAF2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 17:30:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234518AbjA0QPh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Jan 2023 11:15:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42836 "EHLO
+        id S233483AbjA0QaF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Jan 2023 11:30:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232664AbjA0QPg (ORCPT
+        with ESMTP id S234882AbjA0QaE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Jan 2023 11:15:36 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 674E67C318
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 08:15:25 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id m5-20020a05600c4f4500b003db03b2559eso3845246wmq.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 08:15:25 -0800 (PST)
+        Fri, 27 Jan 2023 11:30:04 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BEF47E073
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 08:30:02 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id bk16so5438931wrb.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 08:30:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=DPjHEyov1hE02QP/IWcle2+g2W2JIKUquq/K/wU0SWA=;
-        b=qOoFMXb1cKR3k/N+SPlBH1PaUaJT3I7mQzzcvKr1UZShX0hiUB/1qY2MoSNmuhZ7Y+
-         w+7bRv+zFfehEe9NnClsvIwCykjjnpf5l6wqCrzN4eAf1qi895ASC6Ex0E+obvHagJMi
-         Bamm+EH3nlxOSI19g/x1qgCvsEJHpcfQYi3X82XT237VSqzmGAn28zFkFDVAGnC/trcb
-         jEOv2+/Yzhi852IB/S2Y4ahULhYBwzUTtTGemHM8qW21JkASI2CjRGbuTs+zkOT2B7A0
-         THUm5in/tt1em2JMi+KPkF2C0ObzJt36DkkeKhEwNdtz6baP5S9/NhVNohBeJx1ZSjsy
-         dM5Q==
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:reply-to:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=ztAvsoAzYQImTyVwJUVqfrV/IQgOhB+RwyTM9zN6WaY=;
+        b=UW/5znNUwWsxvfsjtLLjFNwuhIHaKoEBOcjG2bb+eyjm4LFBQQU/uNvVu8hyIHuIfg
+         TrF8XHNzNV2W6mFSxW2/d9VqXhW7qvciaeq278xXYgm2FjbNy01st3qhl1swl+CQXS7T
+         OhBgh/PiSDjYTubUwawJO32zi4WG9aqdJ+lLDSj+KkbzxjE+N5D4z2oZOtmmj4sReDwJ
+         +R6NqIZUoSnBip5r6zKeuL5ViswQCe8l+vpr/x8olZsehlBdPaSslP2ze9TQ3D0VPT7W
+         KykIByDJomJsKVDZcf0gbaPAEG51J61vOJRAzEooe11Iiw5rgbh2+yEq/hKIbnVyDhdv
+         qq1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:reply-to:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DPjHEyov1hE02QP/IWcle2+g2W2JIKUquq/K/wU0SWA=;
-        b=YcMvoDn0I7yYuYxVn5shny8gEqolNDfitr94qG3hwDOzCRy22VGswobfFMRXLTcGZN
-         0pbal3z6zBxvt9Ncq2QHOPfmKsTKast4ukyRWjTpK4f7HwLNzNlD48eHh+AUSwcrRvw/
-         +qoX5jmBusij2CY7cpHzZzUMjRDQLeeRC6GynFtJujQdnYTqMpS937/l7B925kQvF7pP
-         FmDOWkdcDfRAxZWVEvRSPJwwNrkSd4phhWKK8O2l3fIns5i0jMIlenv3iVKhVCZ2f2AT
-         CvjNX7Ns+i9rqU7FN2FAlH8V9UD0rJrYCaEwUUZb8pj+8yijkTOGGtNtWiu8rAx4Hhpb
-         Xqfw==
-X-Gm-Message-State: AFqh2kpje96ngYN5xUKafKBaNt0kcNlhchrnyqhfFH6bclJG2enEuMda
-        oaW9hTteHBEWNZQPuuxQkE58Gw==
-X-Google-Smtp-Source: AMrXdXsHZMrsOuFl/Ku+TEw4XWa+mKf4Dw63rhhK2821jnvwFWV6eidUT6wJEEuGAnWn8Qk2hM4PGw==
-X-Received: by 2002:a05:600c:3296:b0:3cf:82b9:2fe6 with SMTP id t22-20020a05600c329600b003cf82b92fe6mr42347426wmp.8.1674836123961;
-        Fri, 27 Jan 2023 08:15:23 -0800 (PST)
-Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id v10-20020a05600c12ca00b003d9df9e59c4sm7826593wmd.37.2023.01.27.08.15.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Jan 2023 08:15:23 -0800 (PST)
-Date:   Fri, 27 Jan 2023 18:15:22 +0200
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] clk: qcom: gdsc: Disable HW control until supported
-Message-ID: <Y9P4mhSIK1BvZ38k@linaro.org>
-References: <20230112135224.3837820-1-quic_bjorande@quicinc.com>
+        bh=ztAvsoAzYQImTyVwJUVqfrV/IQgOhB+RwyTM9zN6WaY=;
+        b=kWZ8cAawcIV32GDh1clRKySVnToO39C4LgAeqDvdOzKPP2VU5PNS0VBRRJYroT8bKd
+         z9XC3HcAY/KrH1lFZ1YC5SA/SxFLUFvIS5E2x3sVL5WKEnMZ/JVc+z4omVyOKtUtPa2P
+         k2hy44iQsKiNiArGIDZiYOMIrre9oBFyEBUVGLcGG3ntAIVpfEFZ72c+NQx/fOt1ESrZ
+         x3LVQeSFIL7HrYgCKCrwSEL+Tb9Pr3/cuM/iLOHeypns9XEPv38tI1p39U7FhpjVi6iR
+         h6Jt6/H6yML5lkyhNN5NQjwnDmGNRkX/jugHHLStIEkloOlqsWFfjEYT5aSRs9rh2Kt5
+         M8EQ==
+X-Gm-Message-State: AO0yUKXyrF9dlRG8NgDeUJhbe6X4sU1qLF084AP2IpfKkDseYbL2A21K
+        SttNzRrz1ufYBSr5j2HmrNA0Tg==
+X-Google-Smtp-Source: AK7set/UDizDnyMvruCOZDEScNCNmOdz+58xyORUaEm+CmHCC7J/2oz7CtwVd6r4oePH8H84tPN3ZA==
+X-Received: by 2002:adf:c7d0:0:b0:2bf:b113:8ae2 with SMTP id y16-20020adfc7d0000000b002bfb1138ae2mr12176745wrg.15.1674837000960;
+        Fri, 27 Jan 2023 08:30:00 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:d4ec:15ea:873c:61e6? ([2a01:e0a:982:cbb0:d4ec:15ea:873c:61e6])
+        by smtp.gmail.com with ESMTPSA id b14-20020a05600010ce00b0029e1aa67fd2sm4447762wrx.115.2023.01.27.08.29.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 27 Jan 2023 08:30:00 -0800 (PST)
+Message-ID: <575d7d75-7fe7-77cb-c39c-4385a14c1f61@linaro.org>
+Date:   Fri, 27 Jan 2023 17:29:59 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230112135224.3837820-1-quic_bjorande@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH] arm64: dts: qcom: sm8450: Fix DSIn PHY compatible
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     marijn.suijten@somainline.org, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230123200552.553181-1-konrad.dybcio@linaro.org>
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Organization: Linaro Developer Services
+In-Reply-To: <20230123200552.553181-1-konrad.dybcio@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23-01-12 05:52:24, Bjorn Andersson wrote:
-> Software normally uses the SW_COLLAPSE bit to collapse a GDSC, but in
-> some scenarios it's beneficial to let the hardware perform this without
-> software intervention.
+On 23/01/2023 21:05, Konrad Dybcio wrote:
+> Use the correct compatible so that the driver can probe properly.
 > 
-> This is done by configuring the GDSC in "hardware control" state, in
-> which case the SW_COLLAPSE bit is ignored and some hardware signal is
-> relies upon instead.
-> 
-> The GDSCs are modelled as power-domains in Linux and as such it's
-> reasonable to assume that the device drivers intend for the hardware
-> block to be accessible when their power domain is active.
-> 
-> But in the current implementation, any GDSC that is marked to support
-> hardware control, gets hardware control unconditionally while the
-> client driver requests it to be active. It's therefor conceivable that
-> the hardware collapses a GDSC while Linux is accessing resources
-> depending on it.
-> 
-> There are ongoing discussions about how to properly expose this control
-> to the client drivers, but until conclusion in that discussion is
-> reached, the safer option would be to keep the GDSC in software control
-> mode.
-> 
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-
+> Fixes: a6dd1206e45a ("arm64: dts: qcom: sm8450: add display hardware devices")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->  drivers/clk/qcom/gdsc.c | 48 ++++++-----------------------------------
->  1 file changed, 7 insertions(+), 41 deletions(-)
+>   arch/arm64/boot/dts/qcom/sm8450.dtsi | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-> index 9e4d6ce891aa..6d3b36a52a48 100644
-> --- a/drivers/clk/qcom/gdsc.c
-> +++ b/drivers/clk/qcom/gdsc.c
-> @@ -291,22 +291,6 @@ static int gdsc_enable(struct generic_pm_domain *domain)
->  	 */
->  	udelay(1);
->  
-> -	/* Turn on HW trigger mode if supported */
-> -	if (sc->flags & HW_CTRL) {
-> -		ret = gdsc_hwctrl(sc, true);
-> -		if (ret)
-> -			return ret;
-> -		/*
-> -		 * Wait for the GDSC to go through a power down and
-> -		 * up cycle.  In case a firmware ends up polling status
-> -		 * bits for the gdsc, it might read an 'on' status before
-> -		 * the GDSC can finish the power cycle.
-> -		 * We wait 1us before returning to ensure the firmware
-> -		 * can't immediately poll the status bits.
-> -		 */
-> -		udelay(1);
-> -	}
-> -
->  	if (sc->flags & RETAIN_FF_ENABLE)
->  		gdsc_retain_ff_on(sc);
->  
-> @@ -321,24 +305,6 @@ static int gdsc_disable(struct generic_pm_domain *domain)
->  	if (sc->pwrsts == PWRSTS_ON)
->  		return gdsc_assert_reset(sc);
->  
-> -	/* Turn off HW trigger mode if supported */
-> -	if (sc->flags & HW_CTRL) {
-> -		ret = gdsc_hwctrl(sc, false);
-> -		if (ret < 0)
-> -			return ret;
-> -		/*
-> -		 * Wait for the GDSC to go through a power down and
-> -		 * up cycle.  In case we end up polling status
-> -		 * bits for the gdsc before the power cycle is completed
-> -		 * it might read an 'on' status wrongly.
-> -		 */
-> -		udelay(1);
-> -
-> -		ret = gdsc_poll_status(sc, GDSC_ON);
-> -		if (ret)
-> -			return ret;
-> -	}
-> -
->  	if (sc->pwrsts & PWRSTS_OFF)
->  		gdsc_clear_mem_on(sc);
->  
-> @@ -419,13 +385,6 @@ static int gdsc_init(struct gdsc *sc)
->  				goto err_disable_supply;
->  		}
->  
-> -		/* Turn on HW trigger mode if supported */
-> -		if (sc->flags & HW_CTRL) {
-> -			ret = gdsc_hwctrl(sc, true);
-> -			if (ret < 0)
-> -				goto err_disable_supply;
-> -		}
-> -
->  		/*
->  		 * Make sure the retain bit is set if the GDSC is already on,
->  		 * otherwise we end up turning off the GDSC and destroying all
-> @@ -439,6 +398,13 @@ static int gdsc_init(struct gdsc *sc)
->  		on = true;
->  	}
->  
-> +	/* Disable HW trigger mode until propertly supported */
-> +	if (sc->flags & HW_CTRL) {
-> +		ret = gdsc_hwctrl(sc, false);
-> +		if (ret < 0)
-> +			return ret;
-> +	}
-> +
->  	if (on || (sc->pwrsts & PWRSTS_RET))
->  		gdsc_force_mem_on(sc);
->  	else
-> -- 
-> 2.37.3
-> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> index d66dcd8fe61f..8d85a3139849 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> @@ -2873,7 +2873,7 @@ opp-358000000 {
+>   			};
+>   
+>   			mdss_dsi0_phy: phy@ae94400 {
+> -				compatible = "qcom,dsi-phy-5nm-8450";
+> +				compatible = "qcom,sm8450-dsi-phy-5nm";
+>   				reg = <0 0x0ae94400 0 0x200>,
+>   				      <0 0x0ae94600 0 0x280>,
+>   				      <0 0x0ae94900 0 0x260>;
+> @@ -2946,7 +2946,7 @@ mdss_dsi1_out: endpoint {
+>   			};
+>   
+>   			mdss_dsi1_phy: phy@ae96400 {
+> -				compatible = "qcom,dsi-phy-5nm-8450";
+> +				compatible = "qcom,sm8450-dsi-phy-5nm";
+>   				reg = <0 0x0ae96400 0 0x200>,
+>   				      <0 0x0ae96600 0 0x280>,
+>   				      <0 0x0ae96900 0 0x260>;
+
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on HDK8450
