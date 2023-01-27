@@ -2,115 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B083567EA14
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 16:57:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C02B67EA25
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 16:59:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231582AbjA0P5w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Jan 2023 10:57:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51848 "EHLO
+        id S233912AbjA0P7y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Jan 2023 10:59:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230313AbjA0P5v (ORCPT
+        with ESMTP id S234501AbjA0P7k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Jan 2023 10:57:51 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDFD5FF31;
-        Fri, 27 Jan 2023 07:57:50 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30RFVHkI018014;
-        Fri, 27 Jan 2023 15:57:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=yu37LESpuJzTHACVz2qu9ifN28/IfF4Kd6w+Kg375ec=;
- b=kpQkie2qInefAzJMG/T1Khbae0NotYO5QZDj5IXypGlg7xVKiu13HZ1wsmhUP4pSHYUc
- +7TJM9VVmgHcogNnMUEHwoQBldna5JUeEViveVRO49rM1r3lav2PL8MJrwtkY2sYri7a
- Fr5cjXLA7K6pTEdn9oaT4Z+Bf+HJN8c9TSBIYl8zdNiarYQCPapMgWoHx1tkl5LLZt99
- r9mObCDS2n7oD9BTELq3r/ooV8zosmPYTrFqyb4BuDL6n1O2JJ/MdZx+QyYRJnedFRDG
- YKaxINcOLPwGWJQm5ig2clgDXfj7WQcjmpDsbdBktbvh876XhZN9dkWlQBtjDgMM9djr kg== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nc956rt24-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 27 Jan 2023 15:57:46 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30RFvj1p030736
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 27 Jan 2023 15:57:45 GMT
-Received: from [10.50.41.100] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Fri, 27 Jan
- 2023 07:57:40 -0800
-Message-ID: <4829f14a-5d00-3c00-f963-25f039ee74bd@quicinc.com>
-Date:   Fri, 27 Jan 2023 21:27:37 +0530
+        Fri, 27 Jan 2023 10:59:40 -0500
+Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 329DC8661F;
+        Fri, 27 Jan 2023 07:59:19 -0800 (PST)
+Received: (Authenticated sender: alexandre.belloni@bootlin.com)
+        by mail.gandi.net (Postfix) with ESMTPSA id 076C4FF80D;
+        Fri, 27 Jan 2023 15:59:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+        t=1674835152;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=RwUvyQY9yRU9Kps/tTQepr1PT3uk85OHb20x3oTLZeE=;
+        b=H8V67OhRZxSoFiHjZbsrUqofjNWKaI8I5plOXWne5ntYSeawDb7JbPcU5mzIu38NiKs8Nz
+        Tuijj7CgTKJ3GUTNvF3xdCd3Pwvwx9R4TqSmtln/PpSQD+IKPki1gVvVXKjH4VHAEBqu06
+        Bfx79Qj4IkG7MYunWVQJElwUG33JdJNTWQucc8mjJ9fKdyxnss+O3jShAdURfpyIZqspyY
+        cVBj+ReQxmvQSBxBGAt9iBP8B0wQQsdZBz77XzgS+2pCErbjQMgYl/PMwlltA06+Or8vek
+        5RklEXrtEelCkUlTeM935v28bpRT417JmFcVzS9vpBWwQqQJgPVg7PHjNp216Q==
+Date:   Fri, 27 Jan 2023 16:59:10 +0100
+From:   Alexandre Belloni <alexandre.belloni@bootlin.com>
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Alessandro Zummo <a.zummo@towertech.it>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-rtc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 19/24] rtc: pm8xxx: add support for uefi offset
+Message-ID: <Y9P0zuovXqBbFSLs@mail.local>
+References: <20230126142057.25715-1-johan+linaro@kernel.org>
+ <20230126142057.25715-20-johan+linaro@kernel.org>
+ <Y9PrdqLHZpZrdGJ4@mail.local>
+ <Y9PtIiD1o8eBq2wk@hovoldconsulting.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 1/6] soc: qcom: smd-rpm: Add IPQ9574 compatible
-Content-Language: en-US
-To:     Mark Brown <broonie@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <lgirdwood@gmail.com>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <quic_srichara@quicinc.com>,
-        <quic_gokulsri@quicinc.com>, <quic_sjaganat@quicinc.com>,
-        <quic_kathirav@quicinc.com>, <quic_arajkuma@quicinc.com>,
-        <quic_anusha@quicinc.com>, <quic_poovendh@quicinc.com>
-References: <20230113150310.29709-1-quic_devipriy@quicinc.com>
- <20230113150310.29709-2-quic_devipriy@quicinc.com>
- <37755ba1-e8d0-cd9e-73a4-6501746022d8@linaro.org>
- <Y8UxHZx6Mkt3sHXq@sirena.org.uk>
-From:   Devi Priya <quic_devipriy@quicinc.com>
-In-Reply-To: <Y8UxHZx6Mkt3sHXq@sirena.org.uk>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: fcOXEIAyNG8v0BpcuzC6TTUrnYjkQmu4
-X-Proofpoint-ORIG-GUID: fcOXEIAyNG8v0BpcuzC6TTUrnYjkQmu4
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-27_09,2023-01-27_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 spamscore=0
- lowpriorityscore=0 phishscore=0 impostorscore=0 priorityscore=1501
- bulkscore=0 suspectscore=0 malwarescore=0 clxscore=1015 mlxscore=0
- mlxlogscore=549 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301270148
-X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y9PtIiD1o8eBq2wk@hovoldconsulting.com>
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 1/16/2023 4:42 PM, Mark Brown wrote:
-> On Fri, Jan 13, 2023 at 05:42:36PM +0100, Krzysztof Kozlowski wrote:
->> On 13/01/2023 16:03, devi priya wrote:
->>> Adding compatible string to support RPM communication over SMD for
->>> IPQ9574 SoC
->>>
->>> Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
->>> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
->>
->> What exactly was developed here but the other author?
+On 27/01/2023 16:26:26+0100, Johan Hovold wrote:
+> On Fri, Jan 27, 2023 at 04:19:18PM +0100, Alexandre Belloni wrote:
+> > On 26/01/2023 15:20:52+0100, Johan Hovold wrote:
+> > > On many Qualcomm platforms the PMIC RTC control and time registers are
+> > > read-only so that the RTC time can not be updated. Instead an offset
+> > > needs be stored in some machine-specific non-volatile memory, which the
+> > > driver can take into account.
+> > > 
+> > > Add support for storing a 32-bit offset from the GPS time epoch in a
+> > > UEFI variable so that the RTC time can be set on such platforms.
+> > > 
+> > 
+> > Why are you using the GPS epoch? This seems pretty random.
 > 
-> It's fairly clear looking at this in the context of the series
-> that the same tags have been applied to every patch in the
-> series.  Probably a patch like this was actually written by just
-> one person but there's a decent chance that it's just been
-> forgotten who it was and fundamentally it just doesn't matter
-> that much.
+> Tell that to the Qualcomm firmware team. ;)
+> 
+> Perhaps I could have made it more clear, but this is the format that the
+> firmware uses so Linux is not free to pick a different base here (or
+> time would differ ten years between UEFI/Windows and Linux).
 
-Yeah!
-Will drop the tag
+I expected this answer so please add this to the commit message, this
+will be the fifth epoch we ave to handle then...
 
+> 
+> > > The UEFI variable is
+> > > 
+> > >             882f8c2b-9646-435f-8de5-f208ff80c1bd-RTCInfo
+> > > 
+> > > and holds a 12-byte structure where the first four bytes is a GPS time
+> > > offset in little-endian byte order.
+> 
+> Johan
 
-Best Regards,
-Devi Priya
+-- 
+Alexandre Belloni, co-owner and COO, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
