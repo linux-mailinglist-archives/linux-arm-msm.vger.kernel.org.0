@@ -2,78 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A91A867E514
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 13:24:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BA10667E54D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 13:34:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234067AbjA0MYO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Jan 2023 07:24:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58908 "EHLO
+        id S233442AbjA0MeF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Jan 2023 07:34:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234044AbjA0MXU (ORCPT
+        with ESMTP id S233285AbjA0MeE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Jan 2023 07:23:20 -0500
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 602AA83976
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 04:20:58 -0800 (PST)
-Received: by mail-ej1-x633.google.com with SMTP id mg12so13240585ejc.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 04:20:58 -0800 (PST)
+        Fri, 27 Jan 2023 07:34:04 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B68E460BB
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 04:34:03 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id k16so3344918wms.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 04:34:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=qOYF+3qUnJddQFsYUcJ62Jiu4L7Qu1GdHxMgw91mBqU=;
-        b=myQhG9HDilY1GzeyfrFZNBO6j6Vlr2z1Y0aOBwNCEQU88JAH6Wnx8VMVCKEYs2zO/A
-         JeQEYVITFZb4JiEB1Jl049r2+OAdm5TxTjaPc89TYuElKEnVSkwOYHCjmWB3wh6dJqJr
-         XzlXJoN0EUioPWdc3srO4aRMu/Ov4XzZmPNq+8NgVwZ8yZy6M/dzo0lBSbDY+FpDTeFs
-         RVQ27K7WCXTa/djkEME4lKfy7/aola4sHmFaRAWImaCd1W5bMEZ4bCIJdhkYd9TCealL
-         /D363b6qmei8TwI3XNheNIPm2g1yRqkmGEDanzmfg47ff6ZAErV8RsBoA/ATkr/PJP20
-         5GyA==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=gkkZWm0jYbAzVOnv75XVFVpaSeVft9HvU2ScU/AepsU=;
+        b=k6DtoBkkWQ+VKkR925OP60Ow6nAWC9Su+jNMeYPJyLL+L5/wosMlLGEb82S51fkfSq
+         zyyx16z7Tv2m3eiK4sWoBzVBMd8ERfg/aLU4JhtDgjIjTKdNFLGhmZ+2vZTh/gaMJtpE
+         G8u+d2x8p8DN3pt6V0hVTbQ/tpOo62seP4JwSZyk33zeCKc4lBOCKNYi1zfBZrkWhHqL
+         /HJwtNSlGZYbHKsAbA5j4Wyu6ZL0rwo0qU3W6KbsK6WtrFQLd1whgD5Zzr2RCPPIyHeb
+         cAk3CKYIX32eulJXfS330bmChr2irCoU+Sa3Xg/VP/oyYjCLPHoMsQrhLnIMA/Vwrn9W
+         VHhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qOYF+3qUnJddQFsYUcJ62Jiu4L7Qu1GdHxMgw91mBqU=;
-        b=Mmr/dfi8s4YmPoinuuIEd8NtwRRZUHvd8lcx2Nbf5TxJAHVzbnaGaiBzNFx8/HGkdj
-         RJWkEEJqsGP4mSgVZoh3zXFQxZ4zTR4VLQ0FzWPA1SZZlW+r2z1scJAcoFyVgKfM6vkH
-         f9aTq/fASPMUI1HVCfcZDpkSJB8a9ek3tQxKd8sBMKJ6Uf+mpDQRIDddhJJTRDvocWQT
-         x5KJHId+hjwtuG2kPLs3dy9TAMcGrb8KiFItTlD5w1LAJ+7dfOo52oiDsMm1iR6ALkhn
-         qmiodvcqOqTSVX0QFpRlLJwvQGT+9fmmiMos6fQeGihhGrDajOiTerR4GrCB0OYQ6xKF
-         2feQ==
-X-Gm-Message-State: AO0yUKVcglEnEc1A1ZdJ2Rz5mAko05Y8+4qy7kV3GE7gCC6Dsm/gcap1
-        uP03C0j2BpUbOTbcROz9gBR6tQ==
-X-Google-Smtp-Source: AK7set/bzLSICsz6SEla+oD3HPGPduOExiC7tvy1uIHl9zjLgo+hkCneJg2VyI6NObv3OXJ0Y1NKVw==
-X-Received: by 2002:a17:906:2dd6:b0:878:714b:5e16 with SMTP id h22-20020a1709062dd600b00878714b5e16mr5563467eji.28.1674822055032;
-        Fri, 27 Jan 2023 04:20:55 -0800 (PST)
-Received: from [192.168.1.101] (abyl20.neoplus.adsl.tpnet.pl. [83.9.31.20])
-        by smtp.gmail.com with ESMTPSA id gn19-20020a1709070d1300b008512e1379dbsm2207959ejc.171.2023.01.27.04.20.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Jan 2023 04:20:54 -0800 (PST)
-Message-ID: <0841c8ee-de55-3592-1e34-6a6890bfb165@linaro.org>
-Date:   Fri, 27 Jan 2023 13:20:53 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH v2] arm64: dts: qcom: sm8550-mtp: correct
- vdd-l5-l16-supply
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gkkZWm0jYbAzVOnv75XVFVpaSeVft9HvU2ScU/AepsU=;
+        b=y5ErPJrYQcfVT69GuF8e/eEZ0MgqlBZJRKnNGljoU1+Mqck/5Yqr/+wam97RdHgMpp
+         SHuiUgLXLcmjJRltDfno4vKVu3ykMTOKcGrDrat6yB43dtlVMug5Jt9OijiuNQEiBNvy
+         mRXwyyt2RfbylcG+xopojvFZYbHNkokkx+Zbokv/mRW4i3ZyHzS3bCVgNDdQd0XNLfv2
+         od4e+vNnTcf9l4xVDkYZH6LofiGfikFRjmyBoX9RN+dqCY9He3DttkheGBGcWlgShkGk
+         p/kdELBA3+h9hrjCnRPkOQHk2n8G+n3YsctFUBLTw80TpnvfMkvmhyXPBP8jxnrOcgyq
+         fM6g==
+X-Gm-Message-State: AO0yUKVYECJy/t9QIRi1LWOWPsK45e8atfwEghEbACbneGUv4eapUEDs
+        DBw1kfVjwQSruwZ1US6+FJA1bg==
+X-Google-Smtp-Source: AK7set9syTDWnXModInkzSuSIyW5gANkugJsvCMPlZofBuFLNZbDcKgQgsf9aTY2EMbgJHQmE9bfng==
+X-Received: by 2002:a05:600c:b56:b0:3dc:353c:8b34 with SMTP id k22-20020a05600c0b5600b003dc353c8b34mr2357486wmr.7.1674822841774;
+        Fri, 27 Jan 2023 04:34:01 -0800 (PST)
+Received: from linaro.org ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id g9-20020a05600c308900b003db0dbbea53sm4016008wmn.30.2023.01.27.04.34.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Jan 2023 04:34:01 -0800 (PST)
+Date:   Fri, 27 Jan 2023 14:34:00 +0200
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20230127121843.349738-1-krzysztof.kozlowski@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230127121843.349738-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Subject: Re: [PATCH] arm64: dts: qcom: sm8550: add specific SMMU compatible
+Message-ID: <Y9PEuMD6TIHghzTo@linaro.org>
+References: <20230127115513.268843-1-krzysztof.kozlowski@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230127115513.268843-1-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,35 +75,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 27.01.2023 13:18, Krzysztof Kozlowski wrote:
-> Fix typo in vdd-l5-l16 supply of qcom,pm8550-rpmh-regulators.
+On 23-01-27 12:55:13, Krzysztof Kozlowski wrote:
+> Generic SMMU compatibles are not allowed alone and we expect specific
+> one.
 > 
-> Fixes: 71342fb91eae ("arm64: dts: qcom: Add base SM8550 MTP dts")
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > 
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Konrad
-> 
-> Changes since v1:
-> 1. Correct, not drop (Abel, Konrad).
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+
 > ---
->  arch/arm64/boot/dts/qcom/sm8550-mtp.dts | 2 +-
+> 
+> Compatible is documented here:
+> https://lore.kernel.org/all/20221116114001.2669003-1-abel.vesa@linaro.org/
+> ---
+>  arch/arm64/boot/dts/qcom/sm8550.dtsi | 2 +-
 >  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-> index 725d3bc3ee72..5db6e789e6b8 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-> @@ -47,7 +47,7 @@ regulators-0 {
->  		vdd-bob2-supply = <&vph_pwr>;
->  		vdd-l2-l13-l14-supply = <&vreg_bob1>;
->  		vdd-l3-supply = <&vreg_s4g_1p3>;
-> -		vdd-l6-l16-supply = <&vreg_bob1>;
-> +		vdd-l5-l16-supply = <&vreg_bob1>;
->  		vdd-l6-l7-supply = <&vreg_bob1>;
->  		vdd-l8-l9-supply = <&vreg_bob1>;
->  		vdd-l11-supply = <&vreg_s4g_1p3>;
+> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> index 0307b853ec4f..e385432e7a22 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> @@ -3053,7 +3053,7 @@ data-pins {
+>  		};
+>  
+>  		apps_smmu: iommu@15000000 {
+> -			compatible = "qcom,smmu-500", "arm,mmu-500";
+> +			compatible = "qcom,sm8550-smmu-500", "qcom,smmu-500", "arm,mmu-500";
+>  			reg = <0 0x15000000 0 0x100000>;
+>  			#iommu-cells = <2>;
+>  			#global-interrupts = <1>;
+> -- 
+> 2.34.1
+> 
