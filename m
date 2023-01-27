@@ -2,84 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 90F9567E82B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 15:23:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A39167E874
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 15:39:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229511AbjA0OXc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Jan 2023 09:23:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36492 "EHLO
+        id S232305AbjA0Ojb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Jan 2023 09:39:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231802AbjA0OX1 (ORCPT
+        with ESMTP id S229511AbjA0Ojb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Jan 2023 09:23:27 -0500
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2598F783D8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 06:23:03 -0800 (PST)
-Received: by mail-ej1-x630.google.com with SMTP id v6so14145575ejg.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 06:23:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1ldzFZEqDhcEGgVtJre8PmwCOxuUI7/pRZAmkiQNvpI=;
-        b=EwdgZzNx2hEGN7vw25sw1Rjsq80EYXivvQ+6yLDcwdsEkmgc3BlP14ymg+4s8LcJRh
-         //zchkSEHl7AFZjOUkCM9bmLfEcPxta8zrNxTe9gK5aIh6vv8Pko/E+gf3JH7LNz1/Y4
-         J3c7zYrEWsw5Xz39ld5GfaVqlzM2SM6tRaoQ7Ecmhtywfs8zRrMuKNklOfNyr6km9j0g
-         bHs8sj+m1QPaWkFvv1zv9VmZSKpUeAkOm1DXmP4apsxmsGtwjk4ALSYU6qtSo76llPXq
-         1sI1eAO07mTTL8s+VgSY1nl6+8nPkkDyJlKNTfH7bxVVuXzC/3GNQZGJ+48Z+blxh6hz
-         dz9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1ldzFZEqDhcEGgVtJre8PmwCOxuUI7/pRZAmkiQNvpI=;
-        b=xILUxFVFokRtsxCKA6+HDmwKAbfDQnmFJ8Y3E0K2xA09kR1FDJjB5KUHMpxtISrrwX
-         1xmK32fD7Y/coqqMwcUfWXB8BBhgvt+xzhNTegZuVC20tbgSLOcyZpBkXHhgdpkJ4gcu
-         Aj7miyQVDvU5LUyEdOcFaMf90+ZLNZGcGNSE8JV1XbeFQZ5Ifd422+2zelL77VKlZzg5
-         vNSO9Ke0DbR11NrJhCJtUhmltWhgaqFhtXptqllExB2DwjkacIa7igDsk/NBsTPqZLFQ
-         hzfw3fmgaVo6Xh8w7L5+9i78/Tozhu3vnOFOFSWHbPQiM2g87lq2y3x+eU0Iuk84GwS2
-         AkxQ==
-X-Gm-Message-State: AO0yUKUU0C6Iyq8p0JeZsuiL4UgbR1GOq9olU7BYqMZ7JjqxrrsNRzES
-        PeTX/QFdcim3q75MGU09G+hHqw==
-X-Google-Smtp-Source: AK7set/pNDqvl32J5PrSB2nSJPU5Iq8uerNs8RxzmjCRiF9JfTAGwRSHw3gNaUtK5WntivT7LlZWrw==
-X-Received: by 2002:a17:906:d8b8:b0:878:b890:38bb with SMTP id qc24-20020a170906d8b800b00878b89038bbmr3013074ejb.67.1674829378159;
-        Fri, 27 Jan 2023 06:22:58 -0800 (PST)
-Received: from [192.168.1.101] (abyl20.neoplus.adsl.tpnet.pl. [83.9.31.20])
-        by smtp.gmail.com with ESMTPSA id b2-20020a170906490200b0084d1b34973dsm2327844ejq.61.2023.01.27.06.22.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Jan 2023 06:22:57 -0800 (PST)
-Message-ID: <b8cfbb20-917d-2b19-b0f3-9e7092103392@linaro.org>
-Date:   Fri, 27 Jan 2023 15:22:55 +0100
+        Fri, 27 Jan 2023 09:39:31 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23EF41711;
+        Fri, 27 Jan 2023 06:39:30 -0800 (PST)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30REc2cQ015961;
+        Fri, 27 Jan 2023 14:39:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=Azi2zrZkJ0JoCxD5w7zQtz9tjVFvDjWbyLvEkV/iUkQ=;
+ b=Iq41qq7r66B7cympnf+xBxbwlMggIZCdT8ss/fS3qOJCSA95uFXug7grnKQ41P7jFtXh
+ As34Ri+yo0/RSpdlxLwaG92htz2mTjfaJyXgKv0LhGmCPOSzenLEs+kL3L9GNaA3e2f8
+ nUSWG0gBGHp6dSA6UHefU/U6FUHN3p0w8op/8Z688Ch3zO2mXYy/fdBDYANLHAr+EyIy
+ l7ApnaCmUm/jTI7D5ngKrqcrGKuLbLbDJG28GKDHx4K8X8Jc+oaZg/jNyiZKZE7SWQQ7
+ FQqXGac5sk+uFZEIPh9vDKb5NuvEPWP/zeO+OKk5mF2CV4Nn5+fEvmevkZ4VSi6QEeVI jg== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nc95jrnhb-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 27 Jan 2023 14:39:09 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30REd8lu022873
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 27 Jan 2023 14:39:08 GMT
+Received: from [10.216.31.125] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Fri, 27 Jan
+ 2023 06:38:59 -0800
+Message-ID: <d2a938c4-c89d-96d2-d4ce-ea11c6faed6b@quicinc.com>
+Date:   Fri, 27 Jan 2023 20:08:11 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH 13/14] drm/msm/a6xx: Add A619_holi speedbin support
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH 1/5] dt-bindings: scm: Add compatible for IPQ9574
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <lee@kernel.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <shawnguo@kernel.org>, <arnd@arndb.de>,
+        <marcel.ziswiler@toradex.com>, <dmitry.baryshkov@linaro.org>,
+        <nfraprado@collabora.com>, <broonie@kernel.org>,
+        <robimarko@gmail.com>, <quic_gurus@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
+        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
+        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_devipriy@quicinc.com>
+References: <20230113160012.14893-1-quic_poovendh@quicinc.com>
+ <20230113160012.14893-2-quic_poovendh@quicinc.com>
+ <8a305883-7f7f-2f2d-a7a1-8c2a6b5e72fd@linaro.org>
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Chia-I Wu <olvaffe@gmail.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-References: <20230126151618.225127-1-konrad.dybcio@linaro.org>
- <20230126151618.225127-14-konrad.dybcio@linaro.org>
- <c8d9d5f0-dab8-4dca-5a32-1f4e11ecc964@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <c8d9d5f0-dab8-4dca-5a32-1f4e11ecc964@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+From:   POOVENDHAN SELVARAJ <quic_poovendh@quicinc.com>
+In-Reply-To: <8a305883-7f7f-2f2d-a7a1-8c2a6b5e72fd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: InEbBL1TS81fJvNmPBPmKAoZ8OI9gD5G
+X-Proofpoint-ORIG-GUID: InEbBL1TS81fJvNmPBPmKAoZ8OI9gD5G
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-27_09,2023-01-27_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=757
+ clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0 suspectscore=0
+ spamscore=0 priorityscore=1501 phishscore=0 bulkscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2301270139
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -87,79 +94,27 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-
-On 27.01.2023 15:19, Dmitry Baryshkov wrote:
-> On 26/01/2023 17:16, Konrad Dybcio wrote:
->> A619_holi is implemented on at least two SoCs: SM4350 (holi) and SM6375
->> (blair). This is what seems to be a first occurrence of this happening,
->> but it's easy to overcome by guarding the SoC-specific fuse values with
->> of_machine_is_compatible(). Do just that to enable frequency limiting
->> on these SoCs.
+On 1/13/2023 10:05 PM, Krzysztof Kozlowski wrote:
+> On 13/01/2023 17:00, Poovendhan Selvaraj wrote:
+>> Add the scm compatible string for IPQ9574 SoC
 >>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 31 +++++++++++++++++++++++++++
->>   1 file changed, 31 insertions(+)
->>
->> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->> index 452ba32699b2..89990bec897f 100644
->> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->> @@ -2091,6 +2091,34 @@ static u32 a618_get_speed_bin(u32 fuse)
->>       return UINT_MAX;
->>   }
->>   +static u32 a619_holi_get_speed_bin(u32 fuse)
->> +{
->> +    /*
->> +     * There are (at least) two SoCs implementing A619_holi: SM4350 (holi)
->> +     * and SM6375 (blair). Limit the fuse matching to the corresponding
->> +     * SoC to prevent bogus frequency setting (as improbable as it may be,
->> +     * given unexpected fuse values are.. unexpected! But still possible.)
->> +     */
->> +
->> +    if (fuse == 0)
->> +        return 0;
->> +
->> +    if (of_machine_is_compatible("qcom,sm4350")) {
->> +        if (fuse == 138)
->> +            return 1;
->> +        else if (fuse == 92)
->> +            return 2;
->> +    } else if (of_machine_is_compatible("qcom,sm6375")) {
->> +        if (fuse == 190)
->> +            return 1;
->> +        else if (fuse == 177)
->> +            return 2;
->> +    } else
->> +        pr_warn("Unknown SoC implementing A619_holi!\n");
-> 
-> I think, we might be better to introduce "qcom,SoC-adreno" compat string instead, ignore it in the bindings
-I can hear Krzysztof hiring a hitman already..
+>> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
+>> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
+>> Co-developed-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+>> Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+> Three people were co-developing single compatible line? I have some
+> doubts... Please include only real entries.
+  Co-developed by tags were added for those who  contributed to all the 
+patches related to the series. But as suggested, we will drop the tags  
+for patches with minimal changes.
 
-and only care about it here. This might seem an overkill thinking from the single Adreno version. However this issue also affects other revisions.
-> 
-> For example, for the A618 there are at least three platforms which use the same Adreno version: SC7180, SM7125 and SM7150. Only first one is supported (thus the speed_bin function is simple). However according to the vendor dts files all three platforms use different fuse values to specify the speed bin.
-Or we may switch to simply matching SoCs based on platform
-compatible, as it's really the SoC-specific and not GPU-specific.
-
-Konrad> 
->> +
->> +    return UINT_MAX;
->> +}
->> +
->>   static u32 a619_get_speed_bin(u32 fuse)
->>   {
->>       if (fuse == 0)
->> @@ -2150,6 +2178,9 @@ static u32 fuse_to_supp_hw(struct device *dev, struct adreno_rev rev, u32 fuse)
->>       if (adreno_cmp_rev(ADRENO_REV(6, 1, 8, ANY_ID), rev))
->>           val = a618_get_speed_bin(fuse);
->>   +    else if (adreno_cmp_rev(ADRENO_REV(6, 1, 9, 1), rev))
->> +        val = a619_holi_get_speed_bin(fuse);
->> +
-> 
-> Are we sure that SM6350, the unholi A619 user, doesn't use patchid .1? (note I do not know a thing about Adreno patch ids and its usage between different platforms).
-> 
->>       else if (adreno_cmp_rev(ADRENO_REV(6, 1, 9, ANY_ID), rev))
->>           val = a619_get_speed_bin(fuse);
->>   
-> 
+> Anyway you miss changes to allOf (and/or rebasing on
+> https://lore.kernel.org/all/20221122092345.44369-2-krzysztof.kozlowski@linaro.org/
+> )
+> Yeah, Agreed and will rebase it on linux-next.
+>
+> Best regards,
+> Krzysztof
+>
+> Best Regards,
+> Poovendhan S
