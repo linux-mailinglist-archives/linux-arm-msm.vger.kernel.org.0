@@ -2,127 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8596267E647
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 14:12:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 90E5A67E658
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 14:16:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232557AbjA0NMx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Jan 2023 08:12:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56456 "EHLO
+        id S234728AbjA0NQH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Jan 2023 08:16:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234012AbjA0NMt (ORCPT
+        with ESMTP id S234660AbjA0NPt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Jan 2023 08:12:49 -0500
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A134A80143
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 05:12:18 -0800 (PST)
-Received: by mail-ej1-x62a.google.com with SMTP id mg12so13594514ejc.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 05:12:18 -0800 (PST)
+        Fri, 27 Jan 2023 08:15:49 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C59307F6AE
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 05:15:21 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id z5so4941380wrt.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 05:15:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Pu1HTphj/Rd+hvsmfPEOQ6MqsGz846VOWoOD9sOistQ=;
-        b=W/E5rIznkAUn0gpNPXRTLyh4NVlL5sSBE3DMefgPKKEJfF0sP62XHai51Ky8UKJRup
-         1Jo++Y1Q0N42fbS71zOEpwOtEqWOEvD6MMGiJ+iSsoPzGDDKjVZaENephTqcMrOP1kUV
-         DqRUr2ZjY2EUpzh1DYsi/pruy7lsyBCvEIK1ooaOtVj3qqxvzCiKUtc6JD9vf6ZE/x2x
-         sPU8+qKbIug0hwUnydlz0bpv9dHu/kFyoQPYcVfoHqAN2sIOl0hYQUP1jdxD+It6lNOQ
-         mcUvvhPP4zOHAkmN7tqCV3TAb78hvVzJ92I9EuwDrEK6C9/LZFpN4HeF5dFkHq1dG82r
-         fYGg==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q1/i8HRUIQevoqQyNxhOKILdilu7Ol6BsCbFP0mV8Ms=;
+        b=i+jiFsKrA3zgtC2I8IEJAZyCGW6+jHVKNL8KESaldA+ljIIuDA1rXRIh9VanTksvmg
+         YGEmmvkYJpEvxv4o0DouQb6SXWeNYgKsIOPoYtP7nDQtVfQz+slqBznlMdaEuz9tFDU+
+         0YGecnkttP8ezTkHew81yUgsjkMHGg1fQJ4I8B5w1nkU+SDPgbFd5CH5YrDYuj7VQawU
+         ayZvrtxB4FHjIzOpM2XPtzbaZRTKVYjiDuM5YaqO8wNLOZGS0/UDa8etCAA3lV+wTxnU
+         ol9Gb7c0etd+FRzjhbUdkY9l6RTU0O4kJVQ/FM0czoBMJXZft0U1PVWIpeOZiFLZ9IYI
+         iZog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Pu1HTphj/Rd+hvsmfPEOQ6MqsGz846VOWoOD9sOistQ=;
-        b=0KdE0EeGU/cEI5GNZvrVOyWFLS3SE3bvBpAIeGv52xCVvZTMd7oACZLSo2OcIwyFZU
-         RwjyTV/QBsjUhDveZz1s7YME+42baX4aZD2JJ3QWAIFoa6hALxUIFz30sC27kloptkAq
-         Tvna0Xe8ZMBXKrGjKQZewvWVR2myLAfcWk8INWol66BPXaOVBzh535yfgY96mQoMGEkq
-         xDMPscpLCfnhX2tnnb8P+I9mZxerR1idfavcV1QhBNovG/LH9U9T5P/aH3eIlm8a9sQN
-         q0xGBKXyRCPHtwmQui1Hh2Pd1PAeUnXH1xc15osJFBapIfILZ6XDxjXFtYdEAjAUu7qh
-         8c3g==
-X-Gm-Message-State: AFqh2kpVPDnq5PIWbpf4kXD1sK6CIJUiaCQ1HTf7GmsIm7N4b4moDLfJ
-        fKHZ/KoBMVoOPwKXRySCYtBnvg==
-X-Google-Smtp-Source: AMrXdXtSn4UtqYZrwl5P+2ddPBf9wah+lahWSRiqA6L8PTwwWCdsQoRkV9HoNaXhwa8nKtrN4I01bw==
-X-Received: by 2002:a17:906:b806:b0:84d:430a:5e63 with SMTP id dv6-20020a170906b80600b0084d430a5e63mr39507156ejb.27.1674825091449;
-        Fri, 27 Jan 2023 05:11:31 -0800 (PST)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id n5-20020a1709061d0500b0084d420503a3sm2234999ejh.178.2023.01.27.05.11.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Jan 2023 05:11:30 -0800 (PST)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Fri, 27 Jan 2023 14:11:30 +0100
-Message-Id: <CQ2ZY0W1M4F5.32SLTSYMILGOS@otso>
-Subject: Re: [PATCH v2 2/4] arm64: dts: qcom: sm6350: Add camera clock
- controller
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
-        "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        "Loic Poulain" <loic.poulain@linaro.org>,
-        "Robert Foss" <rfoss@kernel.org>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>
-Cc:     <~postmarketos/upstreaming@lists.sr.ht>,
-        <phone-devel@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-X-Mailer: aerc 0.14.0
-References: <20221213-sm6350-cci-v2-0-15c2c14c34bb@fairphone.com>
- <20221213-sm6350-cci-v2-2-15c2c14c34bb@fairphone.com>
- <e5ff49d4-45c7-8c4a-d624-d8f7cc9ce2cb@linaro.org>
- <CQ0I4ONEI6J4.3KWS1KBE7RTKD@otso>
- <3ae863df-3260-4863-d88f-da4d3f442174@linaro.org>
- <CQ2ZDQKO11XZ.HA5CXLK5MTFB@otso>
- <2989138a-8f4b-50a0-3e90-98b6785f2690@linaro.org>
-In-Reply-To: <2989138a-8f4b-50a0-3e90-98b6785f2690@linaro.org>
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Q1/i8HRUIQevoqQyNxhOKILdilu7Ol6BsCbFP0mV8Ms=;
+        b=I8E7kl0X1Pf0Q0Bxmx9EZ0qBUnuev6OPtTJwVbjrGWleW6vCTmAWzF7w1/KnIJK8D4
+         qzp7ySwa89XP95U33pLoBbwOT0bbblJdRnfIHFTv7nZlvN5mX8lANBgi9x+mO9bnmKVM
+         b0fKuA4l3WH4rOEVBAaBHOKc+5/5rg1oPyJ4w0nfy9TIyNleWiTOs+yiromvJvyoKJmJ
+         Mj1EVDX7QVg0nrUBwmB5rAZwCcflfrolo2p2bUmC8k+jdUQvra83bc4xqrfGergviMNU
+         +fIiufnhbpO821/YhFeCakTgqkr2PS02BbjsGX/3rMAl7RhEuSMe413ub3CJlmM7gThn
+         WxqQ==
+X-Gm-Message-State: AO0yUKWV7lk4mh35rR2VWUZ7xPfV+cRcPQX0k3wvUixRZWhAIYttE5Dt
+        OHcEqUFE4yuPmrOBD+1G3u5KhA==
+X-Google-Smtp-Source: AK7set/anTV6XicubpRlw2HH2aUQEYPRTgpeUam1ELUNXOPB8Kip+bHD+49HJCAIiBVzY1Dq+99dnA==
+X-Received: by 2002:adf:a156:0:b0:2bf:b672:689b with SMTP id r22-20020adfa156000000b002bfb672689bmr9702037wrr.62.1674825291718;
+        Fri, 27 Jan 2023 05:14:51 -0800 (PST)
+Received: from hackbox.lan ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id u14-20020a5d434e000000b002bfbda53b98sm3924733wrr.35.2023.01.27.05.14.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Jan 2023 05:14:51 -0800 (PST)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+Cc:     devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sm8550: Fix the aoss_qmp node name
+Date:   Fri, 27 Jan 2023 15:14:41 +0200
+Message-Id: <20230127131441.1157679-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri Jan 27, 2023 at 1:49 PM CET, Bryan O'Donoghue wrote:
-> On 27/01/2023 12:45, Luca Weiss wrote:
-> > Can I reference <&camcc TITAN_TOP_GDSC> from itself? I know that having
-> > it on is required to turn on at least some clocks (maybe all clocks).
-> > But from what I understand how power domains are normally handled, the
-> > driver core enables them before the driver is probed, so self
-> > referencing wouldn't work.
-> >=20
-> > And at least no other SoC upstream references TITAN_TOP_GDSC in camcc.
-> >=20
-> > Regards
-> > Luca
->
-> Doh I meant to say a power-domain to an mmcx a la
->
-> power-domains =3D <&rpmhpd SM8250_MMCX>;
-> required-opps =3D <&rpmhpd_opp_low_svs>;
->
-> TITAN_TOP should be in your cci and camss dt nodes.
+The proper name for it is power-management. Currently, with the node
+name being power-controller, the bindings check fails due to the
+property #power-domain-cells missing.
 
-Okay, that makes more sense.
+Fixes: ffc50b2d3828 ("arm64: dts: qcom: Add base SM8550 dtsi")
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-What I don't quite understand is why sm8250 only has MMCX listed there
-since downstream has both vdd_mx-supply =3D <&VDD_MX_LEVEL> and
-vdd_mm-supply =3D <&VDD_MMCX_LEVEL> and both "supplies" are used for
-different clocks using .vdd_class
-
-But back to sm6350, downstream has vdd_mx-supply =3D <&VDD_MX_LEVEL> and
-vdd_cx-supply =3D <&VDD_CX_LEVEL> and like sm8250 uses cx and mx for
-different clocks.
-Not sure if I should add both, and I guess mainline also currently
-doesn't use higher ops for the power domain when higher clock rate is
-needed, from what I understand?
-
->
-> ---
-> bod
+diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+index 6ff135191ee0..57878ea64ee0 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+@@ -2503,7 +2503,7 @@ tsens2: thermal-sensor@c273000 {
+ 			#thermal-sensor-cells = <1>;
+ 		};
+ 
+-		aoss_qmp: power-controller@c300000 {
++		aoss_qmp: power-management@c300000 {
+ 			compatible = "qcom,sm8550-aoss-qmp", "qcom,aoss-qmp";
+ 			reg = <0 0x0c300000 0 0x400>;
+ 			interrupt-parent = <&ipcc>;
+-- 
+2.34.1
 
