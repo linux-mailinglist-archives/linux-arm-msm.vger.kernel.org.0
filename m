@@ -2,66 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A229267EF61
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 21:13:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C87667EF8A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 21:28:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231439AbjA0UNA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Jan 2023 15:13:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60174 "EHLO
+        id S229909AbjA0U2H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Jan 2023 15:28:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231686AbjA0UM4 (ORCPT
+        with ESMTP id S229464AbjA0U2G (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Jan 2023 15:12:56 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22875CC1C;
-        Fri, 27 Jan 2023 12:12:55 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id A16AB61DA0;
-        Fri, 27 Jan 2023 20:12:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2B61C433A0;
-        Fri, 27 Jan 2023 20:12:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1674850373;
-        bh=ESp4ivxCGFPFObDgvtxKFzxjuSZPqA+13GuDHfzNnKQ=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=hLlshlrWA11JQFyx8kJctNNRBypOFsY1qHeYDQKv6HpkS8kU67Zo4QJmFalWo5iiw
-         sefVI2xlwVULeio3nc7RFNX1AKusGR+9TKdNnMyZ2G3O7/CWzkdqtqLJNiikp6Z+IU
-         7XezxAy4X9QNH7L8bO9ZJgJixSGwI4rCaUO+sfAHS1mgMi8AxzybVx4Wxpdi718yGE
-         DgyaIkVNfv3i6iyaq+bBTSkKGTZHiyFRYN3HgbFvMu0wEUFKztLpJHVAQhg3REMIzQ
-         KriDVATMAK0dBYLY26nEkNIHH6fjq0sTTMLItEPoXXQ0QG5Ze6AzlpqLtfhGr5gnTF
-         GpN9OEQbmACuA==
-Received: by mail-vs1-f44.google.com with SMTP id h19so4703474vsv.13;
-        Fri, 27 Jan 2023 12:12:53 -0800 (PST)
-X-Gm-Message-State: AO0yUKWBXPLG9ZOMbCrEsxQYfNXRV4Ua9j955BzZFBDn1xaIUmjaMA+d
-        RaVToPNQSPKUUxtPIkb0xcw46ZE5RCXfu76IGg==
-X-Google-Smtp-Source: AK7set8wQJdZmsM8dWkryhTXCAqQig8VcqnjonDtkAIpepzNG8FdkE5HSko39Te2boXO0fc2vqvdvVcFtGldT10mXgY=
-X-Received: by 2002:a67:fe41:0:b0:3ea:c8c:48a5 with SMTP id
- m1-20020a67fe41000000b003ea0c8c48a5mr1321838vsr.53.1674850372847; Fri, 27 Jan
- 2023 12:12:52 -0800 (PST)
+        Fri, 27 Jan 2023 15:28:06 -0500
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E81913518
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 12:28:02 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id f12-20020a7bc8cc000000b003daf6b2f9b9so6143858wml.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 12:28:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=E36sg80cHuyRt0XGtoLq9DTjdMzSXiI8iQQN7CENzSA=;
+        b=r9y9DJaKCGGii9qXCniQ7ae7UoZsPcGFTXpyZ4XcO7FToGCeApaKLsS+z2rIMJ/IVy
+         CRGHdjFf2P4YPlNhIFErtdSd9ryNfQlV/QIO3yJdDscd3tF6umznqgddgokHPJIP3B0R
+         ftI3FtJcCDhZ1xRP54MYAY9jhFm2xYBk+MKBvh0PfiCy3HZ4ddfVRoqUk1136ZGoQKdg
+         xHQXKDzT4p1q54glFMlJ5JqGpWsqPGi/u2cowQCmeNqc7xzRnelvjXpqWi8mp6DPIWGj
+         IPuvlDZxHYX58EAvB6Os1RidiQ/CclZFt8A/RZftEPNZxsYhE9e2NDR8Q5XA/ymJh/UM
+         LujA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=E36sg80cHuyRt0XGtoLq9DTjdMzSXiI8iQQN7CENzSA=;
+        b=0bJn3rLCy7a3Eefi3rXKuDpUOtqJRTQFe7YaZWaArrwyNARtW8sHwxUu1LNmf9wqtY
+         DN/7hgS2/0QcMe6jZo1eaSkVsDu7Lt8BCUN5zgKjQ4HB4eR1Mjf7mRaV74EOzK1pME5a
+         hJLTb8oykjosmKehVa4SKkrVqKJSKK+xZVcqiBQS7cnmkCuSjKJU3cQCTLIZS3Qwr5qg
+         E84G5VNXCta3yQ+I2AKYepnpC38wwBxHe3gdQQEP0x9j40tfmZYpszeXiFOotUqkWctU
+         8QChvi+mY7VdYvbwKtheeCZqW+1buBS1pUYeH/X06oY/fHf9XIW62ZMCgivKZRW1KbIa
+         TDZA==
+X-Gm-Message-State: AFqh2ko0zRRMc9voJw4aJbBZr5H0le0f95llTw71BVIuQD+FG9kvrtVD
+        S/tKdjQc/VZmRX2Q8vdxYbO/mA==
+X-Google-Smtp-Source: AMrXdXu/50ah/BTrwPVEMgEt0G96C4r5Q5YlMv/QfqVvKscWkfCDovsrSso0O5kPHDfOQKym/6OyFg==
+X-Received: by 2002:a05:600c:225a:b0:3d3:5c21:dd99 with SMTP id a26-20020a05600c225a00b003d35c21dd99mr40514413wmm.18.1674851281070;
+        Fri, 27 Jan 2023 12:28:01 -0800 (PST)
+Received: from lion.. (cpc76484-cwma10-2-0-cust274.7-3.cable.virginm.net. [82.31.201.19])
+        by smtp.gmail.com with ESMTPSA id f21-20020a5d58f5000000b00236883f2f5csm4836124wrd.94.2023.01.27.12.27.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Jan 2023 12:28:00 -0800 (PST)
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+To:     Alex Elder <elder@linaro.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>
+Cc:     elder@kernel.org, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org
+Subject: [PATCH net-next] net: ipa: use dev PM wakeirq handling
+Date:   Fri, 27 Jan 2023 20:27:58 +0000
+Message-Id: <20230127202758.2913612-1-caleb.connolly@linaro.org>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-References: <20230113150310.29709-1-quic_devipriy@quicinc.com>
- <20230113150310.29709-5-quic_devipriy@quicinc.com> <20230117183835.GA3427325-robh@kernel.org>
- <11a5fa34-c438-a567-6364-4bf1d0d369e3@quicinc.com>
-In-Reply-To: <11a5fa34-c438-a567-6364-4bf1d0d369e3@quicinc.com>
-From:   Rob Herring <robh@kernel.org>
-Date:   Fri, 27 Jan 2023 14:12:41 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqKMpW7O_sQ4j+ZBfjGZdJUDosM-kVhcFjaUmXvXCC4L8A@mail.gmail.com>
-Message-ID: <CAL_JsqKMpW7O_sQ4j+ZBfjGZdJUDosM-kVhcFjaUmXvXCC4L8A@mail.gmail.com>
-Subject: Re: [PATCH 4/6] regulator: qcom_smd: Add PMIC compatible for IPQ9574
-To:     Devi Priya <quic_devipriy@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        lgirdwood@gmail.com, broonie@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
-        quic_poovendh@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -69,53 +72,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 27, 2023 at 10:05 AM Devi Priya <quic_devipriy@quicinc.com> wrote:
->
->
->
-> On 1/18/2023 12:08 AM, Rob Herring wrote:
-> > On Fri, Jan 13, 2023 at 08:33:08PM +0530, devi priya wrote:
-> >> Add mp5496 PMIC compatible string for IPQ9574 SoC
-> >>
-> >> Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-> >> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-> >> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
-> >> ---
-> >>   .../devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml  | 3 ++-
-> >>   1 file changed, 2 insertions(+), 1 deletion(-)
-> >>
-> >> diff --git a/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
-> >> index 8c45f53212b1..7907d9385583 100644
-> >> --- a/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
-> >> +++ b/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
-> >> @@ -22,7 +22,7 @@ description:
-> >>     Each sub-node is identified using the node's name, with valid values listed
-> >>     for each of the pmics below.
-> >>
-> >> -  For mp5496, s2
-> >> +  For mp5496, s1, s2
-> >>
-> >>     For pm2250, s1, s2, s3, s4, l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11,
-> >>     l12, l13, l14, l15, l16, l17, l18, l19, l20, l21, l22
-> >> @@ -84,6 +84,7 @@ properties:
-> >>     compatible:
-> >>       enum:
-> >>         - qcom,rpm-mp5496-regulators
-> >> +      - qcom,rpm-ipq9574-mp5496-regulators
-> >
-> > Is this a different part than just mp5496? Or used in a different,
-> > incompatible way?
-> IPQ6018 and IPQ9574 platforms use the same PMIC MP5496 but they have a
-> different power layout.So, we plan to update the compatible:
-> qcom,rpm-mp5496-regulators to
-> qcom,rpm-ipq6018-mp5496-regulators(target-specific) in the next patchset
-> as the regulators serve different purposes
+Replace the enable_irq_wake() call with one to dev_pm_set_wake_irq()
+instead. This will let the dev PM framework automatically manage the
+the wakeup capability of the ipa IRQ and ensure that userspace requests
+to enable/disable wakeup for the IPA via sysfs are respected.
 
-You can't just change compatibles. It is an ABI.
+Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+---
+ drivers/net/ipa/ipa_interrupt.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-This still doesn't make sense to me. The PMIC hasn't changed, so the
-binding shouldn't. It should be flexible enough to be hooked up to
-different platforms. That's why we have all the per regulator
-configuration. What are you missing?
+diff --git a/drivers/net/ipa/ipa_interrupt.c b/drivers/net/ipa/ipa_interrupt.c
+index c19cd27ac852..9a1153e80a3a 100644
+--- a/drivers/net/ipa/ipa_interrupt.c
++++ b/drivers/net/ipa/ipa_interrupt.c
+@@ -22,6 +22,7 @@
+ #include <linux/types.h>
+ #include <linux/interrupt.h>
+ #include <linux/pm_runtime.h>
++#include <linux/pm_wakeirq.h>
+ 
+ #include "ipa.h"
+ #include "ipa_reg.h"
+@@ -269,9 +270,9 @@ struct ipa_interrupt *ipa_interrupt_config(struct ipa *ipa)
+ 		goto err_kfree;
+ 	}
+ 
+-	ret = enable_irq_wake(irq);
++	ret = dev_pm_set_wake_irq(dev, irq);
+ 	if (ret) {
+-		dev_err(dev, "error %d enabling wakeup for \"ipa\" IRQ\n", ret);
++		dev_err(dev, "error %d registering \"ipa\" IRQ as wakeirq\n", ret);
+ 		goto err_free_irq;
+ 	}
+ 
+@@ -289,11 +290,8 @@ struct ipa_interrupt *ipa_interrupt_config(struct ipa *ipa)
+ void ipa_interrupt_deconfig(struct ipa_interrupt *interrupt)
+ {
+ 	struct device *dev = &interrupt->ipa->pdev->dev;
+-	int ret;
+ 
+-	ret = disable_irq_wake(interrupt->irq);
+-	if (ret)
+-		dev_err(dev, "error %d disabling \"ipa\" IRQ wakeup\n", ret);
++	dev_pm_clear_wake_irq(dev);
+ 	free_irq(interrupt->irq, interrupt);
+ 	kfree(interrupt);
+ }
+-- 
+2.39.0
 
-Rob
