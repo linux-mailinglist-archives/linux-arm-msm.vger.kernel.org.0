@@ -2,93 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 33FC567F16B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 23:52:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7949467F19B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Jan 2023 23:59:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229464AbjA0WwE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Jan 2023 17:52:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43106 "EHLO
+        id S232284AbjA0W7y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Jan 2023 17:59:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50798 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229804AbjA0WwE (ORCPT
+        with ESMTP id S232256AbjA0W7p (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Jan 2023 17:52:04 -0500
+        Fri, 27 Jan 2023 17:59:45 -0500
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1096669B2B;
-        Fri, 27 Jan 2023 14:52:01 -0800 (PST)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30RMN3GK011656;
-        Fri, 27 Jan 2023 22:51:49 GMT
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9354118
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 14:59:43 -0800 (PST)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30RMxcqw031151;
+        Fri, 27 Jan 2023 22:59:38 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=DivZZRpJunTMmulEfjiquRfkZvbdxXEDfzzZMsYGUPI=;
- b=ed2zVvE97vTibuORzrk/P1aBNaljp/7udVAu2W1FGOqmMgyD87Pt5OvXHZM2damoPPI6
- aAHHRHQ/yYdtPvifITu50OdUSu44PpR+fEbx+Y626jgxIX7sCvHgRXWSCCMFsKxPXJwa
- mXGiwirFRT7s0lGoK8t2HBGj902L7xihFhzY+jey/oa6HGNj2fTNVAQYRnD5nGoV/iNi
- k6ralBEdvC4f1K1v4KPMz0jOGelT6KshJbTfRoqemuoYu8SEgUo+SKp0hRrcFatXs3jv
- kPOy3VIb7bBZGluVSTaaWXb8W5GlD2/klwHkc5in63TVgNMnn4bsgwp5cVRyhiWL7F89 rg== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ncacmhftf-1
+ bh=LygHyUZAIPC2tTipDfkT12ByLaAtfzl3p7o0ABYR8hQ=;
+ b=BB4W+DfN4xmR5gddVo4kQ2Wpn984QMWP6dm938Rsvbz1PvRdpW5y7WAu/YVV0a0pqsNs
+ FBbTfNcpveV5cyRunOLNhIZb3ccFTKfndrMjRLW/obaQKdb0oN7PjPh+2XH6rtn7YBcD
+ wld81NOrofgGEwPGZvr9UFYIj2CGkU12dgJxL6i1ZOZ9SVEW9ia61q1L4CrtNjUXy5PO
+ nfmly3EWsspUtPihLgsCpZWdzNOjU+9+mMnckdxHXV/zGd+StWFaN8LsXLucuvID3P1I
+ YhzLEG5F1gZ5nTHxPhZdaTPIz3MYUohQ8VkT2077RDC3P8Sh5LN7+qL+I35VO2omEhGy /Q== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nbp1vbn7x-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 27 Jan 2023 22:51:49 +0000
+        Fri, 27 Jan 2023 22:59:37 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30RMpmYJ004884
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30RMxaMn007820
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 27 Jan 2023 22:51:48 GMT
+        Fri, 27 Jan 2023 22:59:36 GMT
 Received: from [10.110.19.240] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Fri, 27 Jan
- 2023 14:51:47 -0800
-Message-ID: <1af170ec-9fa4-d0c6-5736-6a9336ceab17@quicinc.com>
-Date:   Fri, 27 Jan 2023 14:51:46 -0800
+ 2023 14:59:35 -0800
+Message-ID: <163d6bf4-9fba-04d4-f9ec-263c2cf5f2fc@quicinc.com>
+Date:   Fri, 27 Jan 2023 14:59:35 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.2
-Subject: Re: [Freedreno] [RFT PATCH 2/2] drm/msm/dsi: Stop unconditionally
- powering up DSI hosts at modeset
+Subject: Re: [PATCH v2 03/27] drm/msm/dpu: move SSPP allocation to the RM
 Content-Language: en-US
-To:     Doug Anderson <dianders@chromium.org>
-CC:     Sean Paul <sean@poorly.run>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        <linux-kernel@vger.kernel.org>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        ye xingchen <ye.xingchen@zte.com.cn>,
-        Dave Stevenson <dave.stevenson@raspberrypi.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Stephen Boyd <swboyd@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        <dri-devel@lists.freedesktop.org>, Daniel Vetter <daniel@ffwll.ch>,
-        <linux-arm-msm@vger.kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <freedreno@lists.freedesktop.org>,
         David Airlie <airlied@gmail.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
-References: <20230113155547.RFT.1.I723a3761d57ea60c5dd754c144aed6c3b2ea6f5a@changeid>
- <20230113155547.RFT.2.I4cfeab9d0e07e98ead23dd0736ab4461e6c69002@changeid>
- <31a0b303-64a4-8ac4-383d-6656f05a541b@quicinc.com>
- <CAD=FV=XCq8urY2vEjLwJ_nYkntaz=dZhxLTnZGvY+xcQrJo9OQ@mail.gmail.com>
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20221229191856.3508092-1-dmitry.baryshkov@linaro.org>
+ <20221229191856.3508092-4-dmitry.baryshkov@linaro.org>
+ <b72dabe3-4de2-7d9a-1fca-01edfc588529@quicinc.com>
+ <CAA8EJpra7UOWeB=YK8Xy5+Ro3EqShOe3HJtavqU8FSPywoukdQ@mail.gmail.com>
 From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <CAD=FV=XCq8urY2vEjLwJ_nYkntaz=dZhxLTnZGvY+xcQrJo9OQ@mail.gmail.com>
+In-Reply-To: <CAA8EJpra7UOWeB=YK8Xy5+Ro3EqShOe3HJtavqU8FSPywoukdQ@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: PLhVNU-Jky1oyLLY7RHGKgyTJY-_Px_W
-X-Proofpoint-ORIG-GUID: PLhVNU-Jky1oyLLY7RHGKgyTJY-_Px_W
+X-Proofpoint-ORIG-GUID: iJdy9zCjKuTG2950PPUOt8iLgE2eX64k
+X-Proofpoint-GUID: iJdy9zCjKuTG2950PPUOt8iLgE2eX64k
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
  definitions=2023-01-27_14,2023-01-27_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- priorityscore=1501 clxscore=1015 mlxscore=0 adultscore=0 suspectscore=0
- mlxlogscore=999 lowpriorityscore=0 spamscore=0 malwarescore=0
- impostorscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2212070000 definitions=main-2301270210
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 clxscore=1015 spamscore=0 phishscore=0 bulkscore=0
+ suspectscore=0 adultscore=0 mlxlogscore=999 mlxscore=0 lowpriorityscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301270211
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
         SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -100,131 +88,181 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 1/27/2023 2:33 PM, Doug Anderson wrote:
-> Hi,
-> 
-> On Fri, Jan 27, 2023 at 10:54 AM Abhinav Kumar
-> <quic_abhinavk@quicinc.com> wrote:
+On 1/26/2023 9:56 PM, Dmitry Baryshkov wrote:
+> On Fri, 27 Jan 2023 at 01:29, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
 >>
->> On 1/13/2023 3:56 PM, Douglas Anderson wrote:
->>> In commit 7d8e9a90509f ("drm/msm/dsi: move DSI host powerup to modeset
->>> time"), we moved powering up DSI hosts to modeset time. This wasn't
->>> because it was an elegant design, but there were no better options.
->>>
->>> That commit actually ended up breaking ps8640, and thus was born
->>> commit ec7981e6c614 ("drm/msm/dsi: don't powerup at modeset time for
->>> parade-ps8640") as a temporary hack to un-break ps8640 by moving it to
->>> the old way of doing things. It turns out that ps8640 _really_ doesn't
->>> like its pre_enable() function to be called after
->>> dsi_mgr_bridge_power_on(). Specifically (from experimentation, not
->>> because I have any inside knowledge), it looks like the assertion of
->>> "RST#" in the ps8640 runtime resume handler seems like it's not
->>> allowed to happen after dsi_mgr_bridge_power_on()
->>>
->>> Recently, Dave Stevenson's series landed allowing bridges some control
->>> over pre_enable ordering. The meaty commit for our purposes is commit
->>> 4fb912e5e190 ("drm/bridge: Introduce pre_enable_prev_first to alter
->>> bridge init order"). As documented by that series, if a bridge doesn't
->>> set "pre_enable_prev_first" then we should use the old ordering.
->>>
->>> Now that we have the commit ("drm/bridge: tc358762: Set
->>> pre_enable_prev_first") we can go back to the old ordering, which also
->>> allows us to remove the ps8640 special case.
->>>
->>> One last note is that even without reverting commit 7d8e9a90509f
->>> ("drm/msm/dsi: move DSI host powerup to modeset time"), if you _just_
->>> revert the ps8640 special case and try it out then it doesn't seem to
->>> fail anymore. I spent time bisecting / debugging this and it turns out
->>> to be mostly luck, so we still want this patch to make sure it's
->>> solid. Specifically the reason it sorta works these days is because
->>> we implemented wait_hpd_asserted() in ps8640 now, plus the magic of
->>> "pm_runtime" autosuspend. The fact that we have wait_hpd_asserted()
->>> implemented means that we actually power the bridge chip up just a wee
->>> bit earlier and then the bridge happens to stay on because of
->>> autosuspend and thus ends up powered before dsi_mgr_bridge_power_on().
->>>
->>> Cc: Dave Stevenson <dave.stevenson@raspberrypi.com>
->>> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
->>> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 >>
->> Why is the patch title showing 2/2? I am not seeing any 1/2 here.
-> 
-> Is it a problem with your mail filters? You can see it at:
-> 
-> https://lore.kernel.org/r/20230113155547.RFT.1.I723a3761d57ea60c5dd754c144aed6c3b2ea6f5a@changeid/
-> 
-> You are listed on the "To:" line. ;-)
-
-Ah, I see what happened. The first patch did not have freedreno CCed but 
-the second one did.
-
-So freedreno PW got confused thinking , hey where is the first patch? :)
-
-https://patchwork.freedesktop.org/series/112824/
-
-And so did I :)
-
-Perhaps freedreno should be CCed on both patches because its a series.
-
-> 
-> 
->>> @@ -349,7 +297,16 @@ static void dsi_mgr_bridge_pre_enable(struct drm_bridge *bridge)
->>>    host1_en_fail:
->>>        msm_dsi_host_disable(host);
->>>    host_en_fail:
+>>
+>> On 12/29/2022 11:18 AM, Dmitry Baryshkov wrote:
+>>> Follow the example of all other hw blocks and initialize SSPP blocks in
+>>> Resource Manager.
+>>>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 17 ++++-------------
+>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c    | 22 ++++++++++++++++++++++
+>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h    | 12 ++++++++++++
+>>>    3 files changed, 38 insertions(+), 13 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>>> index e1cdd71716f0..e443799de2c1 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>>> @@ -1275,8 +1275,6 @@ static void dpu_plane_destroy(struct drm_plane *plane)
+>>>                /* this will destroy the states as well */
+>>>                drm_plane_cleanup(plane);
+>>>
+>>> -             dpu_hw_sspp_destroy(pdpu->pipe_hw);
 >>> -
->>> +     msm_dsi_host_disable_irq(host);
->>> +     if (is_bonded_dsi && msm_dsi1) {
->>> +             msm_dsi_host_disable_irq(msm_dsi1->host);
->>> +             msm_dsi_host_power_off(msm_dsi1->host);
+>> We removed from here so the flow will be msm_drm_uninit calls
+>> drm_mode_config_cleanup() which will call kms->destroy() which shall
+>> call dpu_rm_destroy() where this will be released now right?
+> 
+> Yes. _dpu_kms_hw_destroy() calls dpu_rm_destroy(), which destroys all
+> RM-allocated objects.
+> 
+Ack, thanks
+>>
+>>
+>>>                kfree(pdpu);
+>>>        }
+>>>    }
+>>> @@ -1482,14 +1480,10 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
+>>>        pdpu->pipe = pipe;
+>>>
+>>>        /* initialize underlying h/w driver */
+>>> -     pdpu->pipe_hw = dpu_hw_sspp_init(pipe, kms->mmio, kms->catalog);
+>>> -     if (IS_ERR(pdpu->pipe_hw)) {
+>>> -             DPU_ERROR("[%u]SSPP init failed\n", pipe);
+>>> -             ret = PTR_ERR(pdpu->pipe_hw);
+>>> +     pdpu->pipe_hw = dpu_rm_get_sspp(&kms->rm, pipe);
+>>> +     if (!pdpu->pipe_hw || !pdpu->pipe_hw->cap || !pdpu->pipe_hw->cap->sblk) {
+>>> +             DPU_ERROR("[%u]SSPP is invalid\n", pipe);
+>>
+>> I know this was existing code but can there be a case where pipe_hw->cap
+>> exists but pipe_hw->cap->sblk doesnt?
+> 
+> There is none up to now, granted that SSPP has a lot of extra data in
+> sblk. However, as you said, it's an existing code. No need to change
+> it here. And it's good as a safety net.
+> Granted that SRC offset is always 0, we can safely drop the src_sblk
+> and always access it via main register space.
+> 
+Alright, since this is existing code, lets have it as a separate change.
+
+Hence,
+
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>>
+>>>                goto clean_plane;
+>>> -     } else if (!pdpu->pipe_hw->cap || !pdpu->pipe_hw->cap->sblk) {
+>>> -             DPU_ERROR("[%u]SSPP init returned invalid cfg\n", pipe);
+>>> -             goto clean_sspp;
+>>>        }
+>>>
+>>>        format_list = pdpu->pipe_hw->cap->sblk->format_list;
+>>> @@ -1499,7 +1493,7 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
+>>>                                format_list, num_formats,
+>>>                                supported_format_modifiers, type, NULL);
+>>>        if (ret)
+>>> -             goto clean_sspp;
+>>> +             goto clean_plane;
+>>>
+>>>        pdpu->catalog = kms->catalog;
+>>>
+>>> @@ -1532,9 +1526,6 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
+>>>                                        pipe, plane->base.id);
+>>>        return plane;
+>>>
+>>> -clean_sspp:
+>>> -     if (pdpu && pdpu->pipe_hw)
+>>> -             dpu_hw_sspp_destroy(pdpu->pipe_hw);
+>>>    clean_plane:
+>>>        kfree(pdpu);
+>>>        return ERR_PTR(ret);
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+>>> index 73b3442e7467..0668009cc9ed 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+>>> @@ -8,6 +8,7 @@
+>>>    #include "dpu_hw_lm.h"
+>>>    #include "dpu_hw_ctl.h"
+>>>    #include "dpu_hw_pingpong.h"
+>>> +#include "dpu_hw_sspp.h"
+>>>    #include "dpu_hw_intf.h"
+>>>    #include "dpu_hw_wb.h"
+>>>    #include "dpu_hw_dspp.h"
+>>> @@ -91,6 +92,9 @@ int dpu_rm_destroy(struct dpu_rm *rm)
+>>>        for (i = 0; i < ARRAY_SIZE(rm->hw_wb); i++)
+>>>                dpu_hw_wb_destroy(rm->hw_wb[i]);
+>>>
+>>> +     for (i = 0; i < ARRAY_SIZE(rm->hw_sspp); i++)
+>>> +             dpu_hw_sspp_destroy(rm->hw_sspp[i]);
+>>> +
+>>>        return 0;
+>>>    }
+>>>
+>>> @@ -255,6 +259,24 @@ int dpu_rm_init(struct dpu_rm *rm,
+>>>                rm->dsc_blks[dsc->id - DSC_0] = &hw->base;
+>>>        }
+>>>
+>>> +     for (i = 0; i < cat->sspp_count; i++) {
+>>> +             struct dpu_hw_sspp *hw;
+>>> +             const struct dpu_sspp_cfg *sspp = &cat->sspp[i];
+>>> +
+>>> +             if (sspp->id < SSPP_NONE || sspp->id >= SSPP_MAX) {
+>>> +                     DPU_ERROR("skip intf %d with invalid id\n", sspp->id);
+>>> +                     continue;
+>>> +             }
+>>> +
+>>> +             hw = dpu_hw_sspp_init(sspp->id, mmio, cat);
+>>> +             if (IS_ERR(hw)) {
+>>> +                     rc = PTR_ERR(hw);
+>>> +                     DPU_ERROR("failed sspp object creation: err %d\n", rc);
+>>> +                     goto fail;
+>>> +             }
+>>> +             rm->hw_sspp[sspp->id - SSPP_NONE] = hw;
 >>> +     }
->>
->> In addition to Dmitry's comment of keeping the bridge_power_on() name,
->>
->> this part of the change seems independent of the patch. This was missing
->> cleanup for DSI1 (esp the disable_irq part).
->>
->> So can we break it up into two parts.
->>
->> 1) Add missing cleanup for DSI1
->> 2) Just get rid of dsi_mgr_power_on_early() and keep the call
->> dsi_mgr_bridge_power_on() in dsi_mgr_bridge_pre_enable() unconditionally.
+>>> +
+>>>        return 0;
+>>>
+>>>    fail:
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+>>> index 59de72b381f9..d62c2edb2460 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+>>> @@ -21,6 +21,7 @@ struct dpu_global_state;
+>>>     * @hw_intf: array of intf hardware resources
+>>>     * @hw_wb: array of wb hardware resources
+>>>     * @dspp_blks: array of dspp hardware resources
+>>> + * @hw_sspp: array of sspp hardware resources
+>>>     */
+>>>    struct dpu_rm {
+>>>        struct dpu_hw_blk *pingpong_blks[PINGPONG_MAX - PINGPONG_0];
+>>> @@ -31,6 +32,7 @@ struct dpu_rm {
+>>>        struct dpu_hw_blk *dspp_blks[DSPP_MAX - DSPP_0];
+>>>        struct dpu_hw_blk *merge_3d_blks[MERGE_3D_MAX - MERGE_3D_0];
+>>>        struct dpu_hw_blk *dsc_blks[DSC_MAX - DSC_0];
+>>> +     struct dpu_hw_sspp *hw_sspp[SSPP_MAX - SSPP_NONE];
+>>>    };
+>>>
+>>>    /**
+>>> @@ -108,5 +110,15 @@ static inline struct dpu_hw_wb *dpu_rm_get_wb(struct dpu_rm *rm, enum dpu_wb wb_
+>>>        return rm->hw_wb[wb_idx - WB_0];
+>>>    }
+>>>
+>>> +/**
+>>> + * dpu_rm_get_sspp - Return a struct dpu_hw_sspp instance given it's index.
+>>> + * @rm: DPU Resource Manager handle
+>>> + * @sspp_idx: SSPP index
+>>> + */
+>>> +static inline struct dpu_hw_sspp *dpu_rm_get_sspp(struct dpu_rm *rm, enum dpu_sspp sspp_idx)
+>>> +{
+>>> +     return rm->hw_sspp[sspp_idx - SSPP_NONE];
+>>> +}
+>>> +
+>>>    #endif /* __DPU_RM_H__ */
+>>>
 > 
-> I didn't intentionally fix any bug in my patch--I just reverted it all
-> back to how it was before. ;-)
 > 
-No sure what I am missing here but I certainly dont see 
-msm_dsi_host_disable_irq() being part of any error handling labels which 
-made me think you fixed that.
-
-> So looking more closely, it looks like overall the current code (AKA
-> what's landed today and without ${SUBJECT} patch) doesn't really
-> handle errors with dsi_mgr_bridge_power_on() very well. The normal
-> case of calling dsi_mgr_bridge_power_on() from modeset is totally
-> ignored because modeset returns no error. Then the special workaround
-> for ps8640 just followed the same pattern and assumed that
-> dsi_mgr_bridge_power_on() succeeded. It also assumed that if the rest
-> of dsi_mgr_bridge_pre_enable() failed that it didn't need to undo
-> dsi_mgr_bridge_power_on() because it wouldn't have undone it in the
-> modeset case.
 > 
-
-Yes thats right.
-
-> While the current code isn't the best, it's not like the pre_enable()
-> call could have returned errors anyway. It probably wasn't truly the
-> end of the world to behave the way it did.
-> 
-> With all that, I guess my plan would be to do as Dmitry says and just
-> always call dsi_mgr_bridge_power_on() from
-> dsi_mgr_bridge_pre_enable(). In the first patch I'll just do that and
-> remove the ps8640 workaround. Then I can add a 2nd patch that improves
-> the error handling by having dsi_mgr_bridge_power_on() return an error
-> code and then adding a matching dsi_mgr_bridge_power_off() that will
-> undo it and include the extra cleanup.
-> 
-
-Sounds good to me.
-
-> -Doug
