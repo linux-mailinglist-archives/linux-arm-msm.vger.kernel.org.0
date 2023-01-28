@@ -2,122 +2,323 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0ECBA67F782
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Jan 2023 12:23:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D6F967F7FC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Jan 2023 14:26:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231575AbjA1LXR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 28 Jan 2023 06:23:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33940 "EHLO
+        id S233971AbjA1N0l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 28 Jan 2023 08:26:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230502AbjA1LXR (ORCPT
+        with ESMTP id S230104AbjA1N0l (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 28 Jan 2023 06:23:17 -0500
-Received: from mail-vs1-xe2c.google.com (mail-vs1-xe2c.google.com [IPv6:2607:f8b0:4864:20::e2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 194AD17CD2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Jan 2023 03:23:10 -0800 (PST)
-Received: by mail-vs1-xe2c.google.com with SMTP id 187so7830033vsv.10
-        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Jan 2023 03:23:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20210112.gappssmtp.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wOS2C+Pc5lRvy5tY8Ds1g0+sULUy/XgMmx38xtTIc5o=;
-        b=ar2/Wb2oJ4e+gcNKm2vX3Ibo1Y0AwZXg/eyJ/KCKuGZjn9ISSK+9XG5OsGJKyu0RiG
-         dWQcpPX3kpURUWFoZCLFAK84d2HtbyR5J4VMMma/BGVRdec+sLzvgYy2gZrp/0/L6GbM
-         REFj+G8uBZrIy4cC2ArTm1QZZMtox/+uWl+gi0Fc7Nvr8CCavhkGz4JD7WQ8jxfEdfHJ
-         MceYSaEZRLjtBYF424R3JgN4uOq/VL4x0EHwswXUJ8DxqYQRUWnXYzPNorp5Q1Yrp/Ie
-         nUqJPv7CdKdIkNnmUrqY9RXPHLDr8gQ1P12gb0Xbk/XeeTDAf/96iefjDuHoe0Sl+oaG
-         vBfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wOS2C+Pc5lRvy5tY8Ds1g0+sULUy/XgMmx38xtTIc5o=;
-        b=1De4kuMh3Nl/RAbhg+q091KftxxKhO8OXSskhs4Z6lN2W+aEuk9UcYQio9Wurd3ud1
-         6sUj7Xm0sFh5cDf38tWVt4taHMW5RK+OKPK6VbuAttP39jvPp+1Uc+oPtnEgtDxVqFbE
-         fLjit2E+PUzgVrHwtgXI2gNb46znsIFYz/RSO63WYQOAE3L26D0JV6YvmVLH02G+5wpZ
-         WnNzXI5quDqIC9g2wF322/AfCP3RVH2uCN1cbEzIg8ieD4wzzIvlA5K86Qn1Hhz9xIdi
-         Vskl+VHmRHAbZHmBUZjJzpBg8jx66307jAmGOH44do6YAUiN7xZhhz8UTkZlwPQ55zUc
-         eEJw==
-X-Gm-Message-State: AO0yUKUBszlULKhzXIkNSwJLZtQS9cne0Oi7E7qWlIZjcbmSb8VuR/h4
-        spK7mFg0cpRQ7prpkSQKPdOtpSN6YadjoC9qLB22Dg==
-X-Google-Smtp-Source: AK7set9f2AlafEu+pnq1cQhww1WTz5nq7+zC/t0fzyBmIXjie2SP0/mWF4QJFiXIJTjPKBK5iXV3ACjUtWEY0FdTXZ4=
-X-Received: by 2002:a05:6102:10c1:b0:3f2:58c2:5358 with SMTP id
- t1-20020a05610210c100b003f258c25358mr111725vsr.62.1674904989255; Sat, 28 Jan
- 2023 03:23:09 -0800 (PST)
+        Sat, 28 Jan 2023 08:26:41 -0500
+Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8912A2E800;
+        Sat, 28 Jan 2023 05:26:39 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by sin.source.kernel.org (Postfix) with ESMTPS id 3308CCE0ADD;
+        Sat, 28 Jan 2023 13:26:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90FFEC4339B;
+        Sat, 28 Jan 2023 13:26:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1674912395;
+        bh=8sTfmspWNrxkeaaJD+PTKLjxUW2F1n5lgYhmYXWgwss=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=deJNq9nAafXE+G7TxIzrakUsMW891/vlP7TGVYC5OMaav7z3Ryp0LFKFb80Seba+F
+         Gv/gsnCj5gZoAeWjWGA6B42y5NPMgRfUMCCBPl5/GL5Lfw61dliyKlQLxGNPj2ydJn
+         kZL5C1vGG8DwyeWtAVtBe1rrcI+ytrHixw8FkmA4=
+Date:   Sat, 28 Jan 2023 14:26:32 +0100
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Wesley Cheng <quic_wcheng@quicinc.com>
+Cc:     srinivas.kandagatla@linaro.org, mathias.nyman@intel.com,
+        perex@perex.cz, lgirdwood@gmail.com, andersson@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, Thinh.Nguyen@synopsys.com,
+        broonie@kernel.org, bgoswami@quicinc.com, tiwai@suse.com,
+        robh+dt@kernel.org, agross@kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-usb@vger.kernel.org, quic_jackp@quicinc.com,
+        quic_plai@quicinc.com
+Subject: Re: [RFC PATCH v2 07/22] ASoC: Add SOC USB APIs for adding an USB
+ backend
+Message-ID: <Y9UiiMbJFjkzyEol@kroah.com>
+References: <20230126031424.14582-1-quic_wcheng@quicinc.com>
+ <20230126031424.14582-8-quic_wcheng@quicinc.com>
 MIME-Version: 1.0
-References: <20230127192139.299228-1-brgl@bgdev.pl> <52508584-47c5-2497-68c8-2c0044911aca@linaro.org>
- <CACMJSevqcaqjLQJ6_5Xn=hMbrsjdxGVM=9RYwYQ8hW_Uy-tRzA@mail.gmail.com> <8dba267b-62b4-1085-c307-3d2608ae5857@linaro.org>
-In-Reply-To: <8dba267b-62b4-1085-c307-3d2608ae5857@linaro.org>
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-Date:   Sat, 28 Jan 2023 12:22:58 +0100
-Message-ID: <CAMRc=MeL_sGhbEagdqriPecxLXs_ecXSgo5_0zAEr226PG2J5Q@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: firmware: qcom,scm: add qcom,scm-sa8775p compatible
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230126031424.14582-8-quic_wcheng@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Jan 28, 2023 at 11:13 AM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 27/01/2023 22:22, Bartosz Golaszewski wrote:
-> > On Fri, 27 Jan 2023 at 20:56, Krzysztof Kozlowski
-> > <krzysztof.kozlowski@linaro.org> wrote:
-> >>
-> >> On 27/01/2023 20:21, Bartosz Golaszewski wrote:
-> >>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >>>
-> >>> Add a compatible for the sa8775p platform's Secure Channel Manager
-> >>> firmware interface.
-> >>>
-> >>> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >>> ---
-> >>>  Documentation/devicetree/bindings/firmware/qcom,scm.yaml | 1 +
-> >>>  1 file changed, 1 insertion(+)
-> >>
-> >> If you send bindings separately from DTS (which is fine), please provi=
-de
-> >> the link to the user - either DTS or driver for this compatible. Drive=
-r
-> >> does not use it, thus to the DTS.
-> >>
-> >> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> >>
-> >
-> > Can you specify what kind of link you're expecting? I'm looking at
-> > previous commits for this file and not seeing anything. There's no
-> > upstream user of this compatible in any DTS yet.
->
->
-> I expect lore link to the patchset you sent using this binding, so we
-> can verify whether you used it correctly or not. If people were testing
-> their DTS against bindings they write, this would not be needed.
-> Unfortunately people do not do that...
->
+On Wed, Jan 25, 2023 at 07:14:09PM -0800, Wesley Cheng wrote:
+> diff --git a/include/sound/soc-usb.h b/include/sound/soc-usb.h
+> new file mode 100644
+> index 000000000000..ec422a8a834f
+> --- /dev/null
+> +++ b/include/sound/soc-usb.h
+> @@ -0,0 +1,33 @@
+> +/* SPDX-License-Identifier: GPL-2.0
+> + *
+> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
 
-Touch=C3=A9. I am making sure v2 passes dtbs_check though. :)
+It is now 2023 :)
 
-v1 didn't have this compatible and used the fallback directly, hence
-this patch being sent before v2. There's no link yet, as I'm still
-polishing the dts for sa8775p-ride. Will remember to add one in the
-future.
+> + */
+> +
+> +#ifndef __LINUX_SND_SOC_USB_H
+> +#define __LINUX_SND_SOC_USB_H
+> +
+> +/**
+> + * struct snd_soc_usb
+> + * @component - Reference to DAPM component
+> + * @connection_status_cb - callback to notify connection events
+> + * @priv_data - vendor data
 
-Bart
+You do not document all items in the structure so you will get build
+warnings :(
+
+And what exactly is "vendor data"?  You use that term in a few places in
+this series, there is no such thing as a "vendor" in the kernel.  This
+could be a device or driver specific data, but not a "vendor".
+
+> --- /dev/null
+> +++ b/sound/soc/soc-usb.c
+> @@ -0,0 +1,202 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +#include <linux/of.h>
+> +#include <linux/usb.h>
+> +#include <sound/soc.h>
+> +#include <sound/soc-usb.h>
+> +#include "../usb/card.h"
+> +
+> +static DEFINE_MUTEX(ctx_mutex);
+> +static LIST_HEAD(usb_ctx_list);
+
+What is this a list of?  Why a list?  This should be dynamic and tied to
+the device itself somehow, not a separate list you have to walk.
+
+> +
+> +#define for_each_usb_ctx(ctx)			\
+> +	list_for_each_entry(ctx, &usb_ctx_list, list)
+
+No need for a #define like this, just spell it out.
+
+
+> +
+> +static struct device_node *snd_soc_find_phandle(struct device *dev)
+> +{
+> +	struct device_node *node;
+> +
+> +	node = of_parse_phandle(dev->of_node, "usb-soc-be", 0);
+> +	if (!node)
+> +		return ERR_PTR(-ENODEV);
+> +
+> +	return node;
+> +}
+> +
+> +static struct snd_soc_usb *snd_soc_find_usb_ctx(struct device *dev)
+> +{
+> +	struct device_node *node;
+> +	struct snd_soc_usb *ctx = NULL;
+> +
+> +	node = snd_soc_find_phandle(dev);
+> +	if (IS_ERR(node))
+> +		return NULL;
+> +
+> +	mutex_lock(&ctx_mutex);
+> +	for_each_usb_ctx(ctx) {
+> +		if (ctx->dev->of_node == node) {
+> +			of_node_put(node);
+> +			mutex_unlock(&ctx_mutex);
+> +			return ctx;
+> +		}
+> +	}
+> +	of_node_put(node);
+> +	mutex_unlock(&ctx_mutex);
+> +
+> +	return NULL;
+> +}
+> +
+> +/**
+> + * snd_soc_usb_get_priv_data() - Retrieve private data stored
+> + * @usbdev: USB bus sysdev
+> + *
+> + * Fetch the private data stored in the USB SND SOC structure.  This is
+> + * intended to be called by the USB offloading class driver, in order to
+> + * attain parameters about the USB backend device.
+> + *
+> + */
+> +void *snd_soc_usb_get_priv_data(struct device *usbdev)
+> +{
+> +	struct snd_soc_usb *ctx;
+> +
+> +	if (!usbdev)
+> +		return NULL;
+
+How could usbdev ever be NULL?
+
+> +
+> +	ctx = snd_soc_find_usb_ctx(usbdev);
+> +
+> +	return ctx ? ctx->priv_data : NULL;
+> +}
+> +EXPORT_SYMBOL_GPL(snd_soc_usb_get_priv_data);
+> +
+> +/**
+> + * snd_soc_usb_set_priv_data() - Set private data stored
+> + * @dev: USB backend device
+> + * @priv: private data to store
+> + *
+> + * Save data describing the USB backend device parameters.  This is intended
+> + * to be called by the ASoC USB backend driver.
+> + *
+> + */
+> +void snd_soc_usb_set_priv_data(struct device *dev, void *priv)
+> +{
+> +	struct snd_soc_usb *ctx;
+
+
+Why does this function take a "struct device" but the get function take
+a USB device?
+
+> +
+> +	mutex_lock(&ctx_mutex);
+> +	for_each_usb_ctx(ctx) {
+> +		if (dev->of_node == ctx->dev->of_node) {
+> +			ctx->priv_data = priv;
+> +			break;
+> +		}
+> +	}
+> +	mutex_unlock(&ctx_mutex);
+> +}
+> +EXPORT_SYMBOL_GPL(snd_soc_usb_set_priv_data);
+> +
+> +/**
+> + * snd_soc_usb_add_port() - Add a USB backend port
+> + * @dev: USB backend device
+> + * @connection_cb: connection status callback
+> + *
+> + * Register a USB backend device to the SND USB SOC framework.  Memory is
+> + * allocated as part of the USB backend device.
+> + *
+> + */
+> +struct snd_soc_usb *snd_soc_usb_add_port(struct device *dev,
+> +			int (*connection_cb)(struct snd_soc_usb *usb, int card_idx,
+> +			int connected))
+> +{
+> +	struct snd_soc_usb *usb;
+> +
+> +	usb = devm_kzalloc(dev, sizeof(*usb), GFP_KERNEL);
+> +	if (!usb)
+> +		return ERR_PTR(-ENOMEM);
+> +
+> +	usb->connection_status_cb = connection_cb;
+> +	usb->dev = dev;
+> +
+> +	mutex_lock(&ctx_mutex);
+> +	list_add_tail(&usb->list, &usb_ctx_list);
+> +	mutex_unlock(&ctx_mutex);
+
+Again, why a list?
+
+
+> +
+> +	return usb;
+> +}
+> +EXPORT_SYMBOL_GPL(snd_soc_usb_add_port);
+> +
+> +/**
+> + * snd_soc_usb_remove_port() - Remove a USB backend port
+> + * @dev: USB backend device
+> + *
+> + * Remove a USB backend device from USB SND SOC.  Memory is freed when USB
+> + * backend is removed.
+> + *
+> + */
+> +int snd_soc_usb_remove_port(struct device *dev)
+> +{
+> +	struct snd_soc_usb *ctx, *tmp;
+> +
+> +	mutex_lock(&ctx_mutex);
+> +	list_for_each_entry_safe(ctx, tmp, &usb_ctx_list, list) {
+> +		if (ctx->dev == dev) {
+> +			list_del(&ctx->list);
+> +			break;
+> +		}
+> +	}
+> +	mutex_unlock(&ctx_mutex);
+> +
+> +	return 0;
+> +}
+> +EXPORT_SYMBOL_GPL(snd_soc_usb_remove_port);
+> +
+> +/**
+> + * snd_soc_usb_connect() - Notification of USB device connection
+> + * @usbdev: USB bus device
+> + * @card_idx: USB SND card instance
+> + *
+> + * Notify of a new USB SND device connection.  The card_idx can be used to
+> + * handle how the USB backend selects, which device to enable offloading on.
+> + *
+> + */
+> +int snd_soc_usb_connect(struct device *usbdev, int card_idx)
+> +{
+> +	struct snd_soc_usb *ctx;
+> +
+> +	if (!usbdev)
+> +		return -ENODEV;
+> +
+> +	ctx = snd_soc_find_usb_ctx(usbdev);
+> +	if (!ctx)
+> +		return -ENODEV;
+> +
+> +	if (ctx->connection_status_cb)
+> +		ctx->connection_status_cb(ctx, card_idx, 1);
+> +
+> +	return 0;
+> +}
+> +EXPORT_SYMBOL_GPL(snd_soc_usb_connect);
+> +
+> +/**
+> + * snd_soc_usb_connect() - Notification of USB device connection
+> + * @usbdev: USB bus device
+> + *
+> + * Notify of a new USB SND device disconnection to the USB backend.
+> + *
+> + */
+> +int snd_soc_usb_disconnect(struct device *usbdev)
+> +{
+> +	struct snd_soc_usb *ctx;
+> +
+> +	if (!usbdev)
+> +		return -ENODEV;
+> +
+> +	ctx = snd_soc_find_usb_ctx(usbdev);
+> +	if (!ctx)
+> +		return -ENODEV;
+> +
+> +	if (ctx->connection_status_cb)
+> +		ctx->connection_status_cb(ctx, -1, 0);
+> +
+> +	return 0;
+> +}
+> +EXPORT_SYMBOL_GPL(snd_soc_usb_disconnect);
+
+Meta-comment, why are all of these in the sound directory?  They are
+only operating on USB devices, nothing else.  So why here?
+
+thanks,
+
+greg k-h
