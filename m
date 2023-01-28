@@ -2,236 +2,287 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BF53167F4F6
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Jan 2023 06:35:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 23DEA67F50B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Jan 2023 06:43:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229540AbjA1Ffe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 28 Jan 2023 00:35:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56756 "EHLO
+        id S232525AbjA1FnJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 28 Jan 2023 00:43:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231809AbjA1Ffd (ORCPT
+        with ESMTP id S232489AbjA1FnI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 28 Jan 2023 00:35:33 -0500
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBD9281B0B
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 21:35:30 -0800 (PST)
-Received: by mail-pl1-x629.google.com with SMTP id m2so1937284plg.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 21:35:30 -0800 (PST)
+        Sat, 28 Jan 2023 00:43:08 -0500
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4608288F35
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 21:43:06 -0800 (PST)
+Received: by mail-pl1-x62f.google.com with SMTP id k13so7006432plg.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 21:43:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gE9vgJ8RdpcnO9r+b86XorHTfhIOu45f5k1CvwyApiM=;
-        b=MCKyMbw4lEcYsAxtGYPOhnuTHJPUuS7wM1LhDShDcz/vMV0R2DunPxSGSY+vsiSAya
-         uVHMuCHcKP3oI2wAgvJXpQFWBCpciER6jcddiyDMy+sPLGFZsRmBXyI87axD1WLsxvDF
-         IskIru9cOWQMTgDp5QOf9ZkVRJuYTZZl1aNlJFkDrR0GQZunsrZHxOJqNHBA677ugCYn
-         LhHam8sbPRbcTogNXV6e0RDfEV6+8+KG/f7J4DIPwNbWhHdjJ5jL093DWNhQ6Ybw+Jp/
-         hBbrai4la0bHuDalbRY41CEvVQi1T/j+MKdGevYxZmYI2IFSrv+C02j+BUgPTPMVNqcr
-         dwmw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=/8VxpsHV5WKUuSdcC12zr6rfa3YLWkOF8OKQA8HH7Pw=;
+        b=yNVhadQdNEzFR3QzmUk6DP0j5rURrnaO7xTF1izrpoNBEfXaGt177Wd+S0rSuCHgX0
+         t6FE5XYq0J/Wh/VJ0vmDNHnkmeX+1eznr5gMmzaI0apjX9Gg9w/FMEpcVNo5P+gqSqpz
+         9145+9eNCL07tZC+a93bO2Q18242OYkW6C9KleXUThUo4YuAqc8Y5lH+kaSr0cTO79Qy
+         EbX3lYJhyS4RtvrSCy0flENaaf70Dfkx0H93tKvaEWkhcHm9v7nuHzclokdJmLH5IzB1
+         HDqFug0GyOBwE1+CyWNkktu6zVYWAx6W0vejpdcGwa7Kdz6L1Ywideb8Smb/K4wFHtY7
+         HOwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gE9vgJ8RdpcnO9r+b86XorHTfhIOu45f5k1CvwyApiM=;
-        b=JoYAjqpps307Bg9GuREnnhiCyTSW+LhC0iI+4g6FOEgkZgdizagfdPASVeqNuucepZ
-         ja7CsmiLnLaXPMHXeW0CWi2e26oV2qZQtSmrErPObq9US2UAxhhwSLfBhkkzMtXXbS91
-         n7FuW+1J+PbCIVRqyH1IY9Y+K7qZFaGVQNprXedxXK1X1WutJ4ln5yUiquJHQxpyYZTm
-         yXY9PSQ5y9TQNhxEEtlJPcK37OwJeCbek52pUsVL3tWKn1J9Sv0+VjkswaFZ/NBsao4C
-         4z9iQUy0AwGKzsHdVmE9wmb9MfS3osphxH7WqL48+4xnETNaDCkEhXtuW9bEeGjgzE0S
-         MfEg==
-X-Gm-Message-State: AFqh2krfUusjyLZQ/oduvfulftIpevDkq8R8NnoOGSYf3Iy4Rz1YDPRe
-        D5GQB5OGoMGzf1juV7hB7d2w48se/IAKkdoY
-X-Google-Smtp-Source: AMrXdXvmJZgr6nK/MJnHyaDBvPmYtfsEzDGpR2DeIEFqi1UKDFJCc79QZ++Loyt8L9F3hZ1GxEVmyg==
-X-Received: by 2002:a05:6a20:c990:b0:a4:aa40:2253 with SMTP id gy16-20020a056a20c99000b000a4aa402253mr36384451pzb.21.1674884129831;
-        Fri, 27 Jan 2023 21:35:29 -0800 (PST)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/8VxpsHV5WKUuSdcC12zr6rfa3YLWkOF8OKQA8HH7Pw=;
+        b=tFC3j3uvdlhTcrizmjlonsIXMf+by6pgYyte1iqDSXApGxEnKHnWEVuZDlcEerseP5
+         i1sgy8HuWhEF+L5uqM24EgLDLgCutllwQnj1QzwSEmxOlXa5PS3m1/dHz9bcUwiKyzJt
+         /E2LqrScOmy5bWOJEYUJcxBu+pWpIMUrZ8djljEDDUsq5m9Wijo0CYIvKkEft/ykye4A
+         bSyv1sYTFmbWaQhfth8CVLONdEs9R5ffWNdAHIOq105JrddDj+J0NyfgffBPN8w1Algy
+         0jQExWUyywOO29Ua9Zn/OrkcVInmPW1FvNx73RxGQNBi/yoEynTgxKaOeH6K5QuXGP0V
+         1EQA==
+X-Gm-Message-State: AO0yUKXb0Fa0YgXaSGQZpolKvxQz00TPYPoppQcvM5puEUpqUaojTcxB
+        kC4RnDhB0Dgz70WoVOn62k/c+oG8gmB/6D0h
+X-Google-Smtp-Source: AK7set+RI9a8eoE9bIEwgagbR47Be5Hxl5I1KNRdY4e5CP3wOgr/IWCKymk6YXZ6J1Coivgm4nNntw==
+X-Received: by 2002:a17:903:41d0:b0:196:3096:82a4 with SMTP id u16-20020a17090341d000b00196309682a4mr13171934ple.63.1674884585292;
+        Fri, 27 Jan 2023 21:43:05 -0800 (PST)
 Received: from localhost.localdomain ([223.233.74.24])
-        by smtp.gmail.com with ESMTPSA id p15-20020a170902a40f00b00195e77c20a9sm3726841plq.163.2023.01.27.21.35.25
+        by smtp.gmail.com with ESMTPSA id b13-20020a170902b60d00b001947982eb8fsm2041317pls.60.2023.01.27.21.43.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Jan 2023 21:35:29 -0800 (PST)
+        Fri, 27 Jan 2023 21:43:04 -0800 (PST)
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     mani@kernel.org, mathieu.poirier@linaro.org, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        bhupesh.linux@gmail.com, bhupesh.sharma@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org
-Subject: [PATCH 2/2] dt-bindings: remoteproc: qcom: Add sm6115 pas yaml file
-Date:   Sat, 28 Jan 2023 11:05:04 +0530
-Message-Id: <20230128053504.2099620-2-bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
+        bhupesh.sharma@linaro.org, linux-remoteproc@vger.kernel.org,
+        robh+dt@kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sm6115: Add remoteproc nodes
+Date:   Sat, 28 Jan 2023 11:12:56 +0530
+Message-Id: <20230128054256.2100501-1-bhupesh.sharma@linaro.org>
 X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20230128053504.2099620-1-bhupesh.sharma@linaro.org>
-References: <20230128053504.2099620-1-bhupesh.sharma@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This documents the aDSP, cDSP and MPSS DSPs present
-on the SM6115 SoC.
+Add the adsp, cdsp and modem remoteproc nodes to sm6115.
 
 Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 ---
- .../bindings/remoteproc/qcom,sm6115-pas.yaml  | 143 ++++++++++++++++++
- 1 file changed, 143 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,sm6115-pas.yaml
+- Depends on the dt-binding and driver change submitted via [1].
+[1]. https://lore.kernel.org/linux-arm-msm/20230128053504.2099620-1-bhupesh.sharma@linaro.org
 
-diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sm6115-pas.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sm6115-pas.yaml
-new file mode 100644
-index 000000000000..f5d1fa9f45f1
---- /dev/null
-+++ b/Documentation/devicetree/bindings/remoteproc/qcom,sm6115-pas.yaml
-@@ -0,0 +1,143 @@
-+# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/remoteproc/qcom,sm6115-pas.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
+ arch/arm64/boot/dts/qcom/sm6115.dtsi | 184 +++++++++++++++++++++++++++
+ 1 file changed, 184 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+index 3c66f998a81b..3540cd24af5c 100644
+--- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+@@ -1309,6 +1309,39 @@ dispcc: clock-controller@5f00000 {
+ 			#power-domain-cells = <1>;
+ 		};
+ 
++		remoteproc_mpss: remoteproc@6080000 {
++			compatible = "qcom,sm6115-mpss-pas";
++			reg = <0x06080000 0x100>;
 +
-+title: Qualcomm SM6115 Peripheral Authentication Service
++			interrupts-extended = <&intc GIC_SPI 307 IRQ_TYPE_EDGE_RISING>,
++					      <&modem_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
++					      <&modem_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
++					      <&modem_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
++					      <&modem_smp2p_in 3 IRQ_TYPE_EDGE_RISING>,
++					      <&modem_smp2p_in 7 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "wdog", "fatal", "ready", "handover",
++					  "stop-ack", "shutdown-ack";
 +
-+maintainers:
-+  - Bhupesh Sharma <bhupesh.sharma@linaro.org>
++			clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>;
++			clock-names = "xo";
 +
-+description:
-+  Qualcomm SM6115 SoC Peripheral Authentication Service loads and boots
-+  firmware on the Qualcomm DSP Hexagon cores.
++			power-domains = <&rpmpd SM6115_VDDCX>;
 +
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,sm6115-adsp-pas
-+      - qcom,sm6115-cdsp-pas
-+      - qcom,sm6115-mpss-pas
++			memory-region = <&pil_modem_mem>;
 +
-+  reg:
-+    maxItems: 1
++			qcom,smem-states = <&modem_smp2p_out 0>;
++			qcom,smem-state-names = "stop";
 +
-+  clocks:
-+    items:
-+      - description: XO clock
++			status = "disabled";
 +
-+  clock-names:
-+    items:
-+      - const: xo
++			glink-edge {
++				interrupts = <GIC_SPI 68 IRQ_TYPE_EDGE_RISING>;
++				label = "mpss";
++				qcom,remote-pid = <1>;
++				mboxes = <&apcs_glb 12>;
++			};
++		};
 +
-+  memory-region:
-+    minItems: 1
-+    description: Reference to the reserved-memory for the Hexagon core
+ 		stm@8002000 {
+ 			compatible = "arm,coresight-stm", "arm,primecell";
+ 			reg = <0x08002000 0x1000>,
+@@ -1921,6 +1954,157 @@ funnel_apss1_in: endpoint {
+ 			};
+ 		};
+ 
++		remoteproc_adsp: remoteproc@ab00000 {
++			compatible = "qcom,sm6115-adsp-pas";
++			reg = <0x0ab00000 0x100>;
 +
-+  smd-edge: false
++			interrupts-extended = <&intc GIC_SPI 282 IRQ_TYPE_EDGE_RISING>,
++					      <&adsp_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
++					      <&adsp_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
++					      <&adsp_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
++					      <&adsp_smp2p_in 3 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "wdog", "fatal", "ready",
++					  "handover", "stop-ack";
 +
-+  firmware-name:
-+    $ref: /schemas/types.yaml#/definitions/string
-+    description: Firmware name for the Hexagon core
++			clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>;
++			clock-names = "xo";
 +
-+required:
-+  - compatible
-+  - reg
++			power-domains = <&rpmpd SM6115_VDD_LPI_CX>,
++					<&rpmpd SM6115_VDD_LPI_MX>;
 +
-+allOf:
-+  - $ref: /schemas/remoteproc/qcom,pas-common.yaml#
-+  - if:
-+      properties:
-+        compatible:
-+          enum:
-+            - qcom,sm6115-adsp-pas
-+            - qcom,sm6115-cdsp-pas
-+    then:
-+      properties:
-+        interrupts:
-+          maxItems: 5
-+        interrupt-names:
-+          maxItems: 5
-+    else:
-+      properties:
-+        interrupts:
-+          minItems: 6
-+        interrupt-names:
-+          minItems: 6
++			memory-region = <&pil_adsp_mem>;
 +
-+  - if:
-+      properties:
-+        compatible:
-+          enum:
-+            - qcom,sm6115-cdsp-pas
-+            - qcom,sm6115-mpss-pas
-+    then:
-+      properties:
-+        power-domains:
-+          items:
-+            - description: CX power domain
-+        power-domain-names:
-+          items:
-+            - const: cx
++			qcom,smem-states = <&adsp_smp2p_out 0>;
++			qcom,smem-state-names = "stop";
 +
-+  - if:
-+      properties:
-+        compatible:
-+          enum:
-+            - qcom,sm6115-adsp-pas
-+    then:
-+      properties:
-+        power-domains:
-+          items:
-+            - description: LPI CX power domain
-+            - description: LPI MX power domain
-+        power-domain-names:
-+          items:
-+            - const: lcx
-+            - const: lmx
++			status = "disabled";
 +
-+unevaluatedProperties: false
++			glink-edge {
++				interrupts = <GIC_SPI 277 IRQ_TYPE_EDGE_RISING>;
++				label = "lpass";
++				qcom,remote-pid = <2>;
++				mboxes = <&apcs_glb 8>;
 +
-+examples:
-+  - |
-+    #include <dt-bindings/clock/qcom,rpmcc.h>
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+    #include <dt-bindings/power/qcom-rpmpd.h>
++				fastrpc {
++					compatible = "qcom,fastrpc";
++					qcom,glink-channels = "fastrpcglink-apps-dsp";
++					label = "adsp";
++					qcom,non-secure-domain;
++					#address-cells = <1>;
++					#size-cells = <0>;
 +
-+    remoteproc@ab00000 {
-+        compatible = "qcom,sm6115-adsp-pas";
-+        reg = <0x0ab00000 0x100>;
++					compute-cb@3 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <3>;
++						iommus = <&apps_smmu 0x01c3 0x0>;
++					};
 +
-+        clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>;
-+        clock-names = "xo";
++					compute-cb@4 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <4>;
++						iommus = <&apps_smmu 0x01c4 0x0>;
++					};
 +
-+        firmware-name = "qcom/sm6115/adsp.mdt";
++					compute-cb@5 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <5>;
++						iommus = <&apps_smmu 0x01c5 0x0>;
++					};
 +
-+        interrupts-extended = <&intc GIC_SPI 282 IRQ_TYPE_EDGE_RISING>,
-+                              <&adsp_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
-+                              <&adsp_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
-+                              <&adsp_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
-+                              <&adsp_smp2p_in 3 IRQ_TYPE_EDGE_RISING>;
-+        interrupt-names = "wdog", "fatal", "ready",
-+                          "handover", "stop-ack";
++					compute-cb@6 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <6>;
++						iommus = <&apps_smmu 0x01c6 0x0>;
++					};
 +
-+        memory-region = <&pil_adsp_mem>;
++					compute-cb@7 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <7>;
++						iommus = <&apps_smmu 0x01c7 0x0>;
++					};
++				};
++			};
++		};
 +
-+        power-domains = <&rpmpd SM6115_VDD_LPI_CX>,
-+                        <&rpmpd SM6115_VDD_LPI_MX>;
++		remoteproc_cdsp: remoteproc@b300000 {
++			compatible = "qcom,sm6115-cdsp-pas";
++			reg = <0x0b300000 0x100000>;
 +
-+        qcom,smem-states = <&adsp_smp2p_out 0>;
-+        qcom,smem-state-names = "stop";
++			interrupts-extended = <&intc GIC_SPI 265 IRQ_TYPE_EDGE_RISING>,
++					      <&cdsp_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
++					      <&cdsp_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
++					      <&cdsp_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
++					      <&cdsp_smp2p_in 3 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "wdog", "fatal", "ready",
++					  "handover", "stop-ack";
 +
-+        glink-edge {
-+            interrupts = <GIC_SPI 277 IRQ_TYPE_EDGE_RISING>;
-+            label = "lpass";
-+            qcom,remote-pid = <2>;
-+            mboxes = <&apcs_glb 8>;
++			clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>;
++			clock-names = "xo";
 +
-+            /* ... */
++			power-domains = <&rpmpd SM6115_VDDCX>;
 +
-+        };
-+    };
++			memory-region = <&pil_cdsp_mem>;
++
++			qcom,smem-states = <&cdsp_smp2p_out 0>;
++			qcom,smem-state-names = "stop";
++
++			status = "disabled";
++
++			glink-edge {
++				interrupts = <GIC_SPI 261 IRQ_TYPE_EDGE_RISING>;
++				label = "cdsp";
++				qcom,remote-pid = <5>;
++				mboxes = <&apcs_glb 28>;
++
++				fastrpc {
++					compatible = "qcom,fastrpc";
++					qcom,glink-channels = "fastrpcglink-apps-dsp";
++					label = "cdsp";
++					qcom,non-secure-domain;
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					compute-cb@1 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <1>;
++						iommus = <&apps_smmu 0x0c01 0x0>;
++					};
++
++					compute-cb@2 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <2>;
++						iommus = <&apps_smmu 0x0c02 0x0>;
++					};
++
++					compute-cb@3 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <3>;
++						iommus = <&apps_smmu 0x0c03 0x0>;
++					};
++
++					compute-cb@4 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <4>;
++						iommus = <&apps_smmu 0x0c04 0x0>;
++					};
++
++					compute-cb@5 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <5>;
++						iommus = <&apps_smmu 0x0c05 0x0>;
++					};
++
++					compute-cb@6 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <6>;
++						iommus = <&apps_smmu 0x0c06 0x0>;
++					};
++
++					/* note: secure cb9 in downstream */
++				};
++			};
++		};
++
+ 		apps_smmu: iommu@c600000 {
+ 			compatible = "qcom,sm6115-smmu-500", "qcom,smmu-500", "arm,mmu-500";
+ 			reg = <0x0c600000 0x80000>;
 -- 
 2.38.1
 
