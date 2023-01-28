@@ -2,101 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 65A4367F42F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Jan 2023 04:04:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B89967F4BF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Jan 2023 05:41:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229681AbjA1DEz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Jan 2023 22:04:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48176 "EHLO
+        id S230482AbjA1Elu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Jan 2023 23:41:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231975AbjA1DEy (ORCPT
+        with ESMTP id S229933AbjA1Elt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Jan 2023 22:04:54 -0500
-X-Greylist: delayed 941 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 27 Jan 2023 19:04:52 PST
-Received: from m12.mail.163.com (m12.mail.163.com [123.126.96.233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 3B2967264D
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 19:04:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-        s=s110527; h=From:Subject:Date:Message-Id:MIME-Version:
-        Content-Type; bh=z4JngmKmsUiT6Go8w637Ajw0YEGtBAe0+3wXDZzMYvg=;
-        b=kVuso8PSwtcAuQ2ZHvxkpAdJpB13oJnDQ30kpcUR2cgTS1r44qWR0c2jvymaUe
-        xZh9VKeH7XHjtIoniXIjHcmuTuNtNHx8tjt3Hz41r5urW6u36uZ6E5Ngzj3KCRAh
-        UHQOZMefaRF8g2tC0JMIqY0LXSvmEvC2Sb6Bk2RweN8+o=
-Received: from ubuntu.localdomain (unknown [220.180.239.55])
-        by smtp19 (Coremail) with SMTP id R9xpCgDHwKTgjNRjTovaBw--.8240S2;
-        Sat, 28 Jan 2023 10:48:03 +0800 (CST)
-From:   =?UTF-8?q?Duke=20Xin=28=E8=BE=9B=E5=AE=89=E6=96=87=29?= 
-        <duke_xinanwen@163.com>
-To:     mani@kernel.org, slark_xiao@163.com
-Cc:     loic.poulain@linaro.org, gregkh@linuxfoundation.org,
-        dnlplm@gmail.com, yonglin.tan@outlook.com,
-        fabio.porcedda@gmail.com, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, inux-kernel@vger.kernel.org,
-        jerry.meng@quectel.com, duke.xin@quectel.com,
-        =?UTF-8?q?Duke=20Xin=28=E8=BE=9B=E5=AE=89=E6=96=87=29?= 
-        <duke_xinanwen@163.com>
-Subject: [PATCH v3] bus: mhi: host: pci_generic: Add support for Quectel RM520N-GL modem
-Date:   Fri, 27 Jan 2023 18:47:54 -0800
-Message-Id: <20230128024754.2562-1-duke_xinanwen@163.com>
-X-Mailer: git-send-email 2.25.1
+        Fri, 27 Jan 2023 23:41:49 -0500
+Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B860D7DBD4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 20:41:44 -0800 (PST)
+Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-4a263c4ddbaso93746647b3.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Jan 2023 20:41:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=sk2uvbVYmWxZx30YmA9hD6P375aPkKMFnV8oJPYyEUE=;
+        b=ftR7bw3x0mcHGGqDiSMb6HSL2dkiA7QFwZUpGfCZzV0s37x8J3jC/iNgBp4oO1OOZi
+         Olr/Ci62jdkirbX0fCCC54YqKwP2BCBvfndYi9SMW7bVxzyWUiTc9vPlKYzIJjRvFonR
+         LLwPUcmsbQXtduywUQ6W2xMpa30ALxQCOAVRlIzdyw6cqPiyOA0cbEwxYN7xLb0paADs
+         KeDHmE78vOSXupmLsAcrRr+3LHyzY+yPk98UCSL7sAb/3cpwxXuuSfKs8n0Gznmz2sj+
+         apaf3Bn6X8hHOJoorNjbZS6+JAdNARekU6ah1erJn0Ynu+IIDaROKjAVBUXoFe6YlPe6
+         OFiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=sk2uvbVYmWxZx30YmA9hD6P375aPkKMFnV8oJPYyEUE=;
+        b=W5XctUZNpmx/vH9+lsIqOfx/WQTp9Q2jwe7ZmghorWL1E+dRQ4WR1AysIv2SGTGcaW
+         wp8WiN83enPMbPUPw3mcgQhamg39kN9nddftUEA7Mf/ITJEnNYZ+PV4bwFHEj2DI2nCJ
+         toCPHzreOCszC7vncaPhT+eFNi+SC/y+6WtFQS7wfrvXkZYOdjWv0GnGUe18fQH3N4k3
+         odvp79OdJgGuhHsuxe290gTPCCB3yL7GvwzwOJt2Aa+aGXcvEzlL+vsKhHl1kh4qbQIg
+         ga5g3opT3LHdjhOkIS4Qp4bjvSxMDwbxN5RsGuVxLfdNZ4kHniPkf7UmMuFT4pqBS5wc
+         Ebsw==
+X-Gm-Message-State: AFqh2kp5foTGrfTUXIOoWJcdKlOOoP7sX2FGqjTTfiLWapFmHag9J0HN
+        DaJeHR/JEFZJb/9o4DFdYgywAh+EV8vcRpnjEgsx0Q==
+X-Google-Smtp-Source: AMrXdXvJl+3i5ra24zoyj2IqtlDmcC26Np35O8vZad9nyF+r+ClApK8YDh2ZGveHDpktG78JfDs0lG3GnuKnYNzKcUM=
+X-Received: by 2002:a0d:f807:0:b0:477:b56e:e1d6 with SMTP id
+ i7-20020a0df807000000b00477b56ee1d6mr5257138ywf.188.1674880903690; Fri, 27
+ Jan 2023 20:41:43 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: R9xpCgDHwKTgjNRjTovaBw--.8240S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW7tF1DtryfWr1kuw48KFy8Zrb_yoW8AFWfpF
-        45ZrWIvF4ktFW5ta97A34DGFn5Wwsxury7KFnrG34IgF1qy3yYqryvgF12vF4Y9a95XF13
-        tFyrJr9Ig3WqkFUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0JUn_-gUUUUU=
-X-Originating-IP: [220.180.239.55]
-X-CM-SenderInfo: 5gxnvsp0lqt0xzhqqiywtou0bp/1tbiPRQFe2I0VCdKYAABsZ
+References: <20230118091122.2205452-1-dmitry.baryshkov@linaro.org>
+ <CAL_JsqJ=0neiZ4wkPiMqJMT4E1O_xO0uLrTmEGUcnZMqxkw4UQ@mail.gmail.com>
+ <CAGETcx8Xy5OzsbW3123esxsbQJq-SqDkP1S5g2mmwzoCz4shtQ@mail.gmail.com>
+ <20230125190926.GA2697290-robh@kernel.org> <505fc434-c31f-726e-b1cb-0bbfd5f83490@linaro.org>
+ <CAGETcx-f9vy7MDB2vFWP9CL26UY7W65oJArvhzksCu8QG6Y4nw@mail.gmail.com>
+In-Reply-To: <CAGETcx-f9vy7MDB2vFWP9CL26UY7W65oJArvhzksCu8QG6Y4nw@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sat, 28 Jan 2023 06:41:32 +0200
+Message-ID: <CAA8EJpo-mFxq+eGW=YaMxea+zi2Z64QWocuO36aNsM7Wmtu3sA@mail.gmail.com>
+Subject: Re: [RESEND PATCH] of: property: do not create clocks device link for
+ clock controllers
+To:     Saravana Kannan <saravanak@google.com>
+Cc:     Rob Herring <robh@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Abel Vesa <abel.vesa@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The project is based on Qualcomm's sdx6x chips for laptop,so the mhi interface definition and
-enumeration align with previous Quectel sdx24 configuration
+On Fri, 27 Jan 2023 at 01:12, Saravana Kannan <saravanak@google.com> wrote:
+>
+> On Thu, Jan 26, 2023 at 2:51 PM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+> >
+> > On 25/01/2023 21:09, Rob Herring wrote:
+> > > On Tue, Jan 24, 2023 at 06:12:15PM -0800, Saravana Kannan wrote:
+> > >> On Wed, Jan 18, 2023 at 5:35 AM Rob Herring <robh+dt@kernel.org> wrote:
+> > >>>
+> > >>> On Wed, Jan 18, 2023 at 3:11 AM Dmitry Baryshkov
+> > >>> <dmitry.baryshkov@linaro.org> wrote:
+> > >>>>
+> > >>>> Do not create device link for clock controllers. Some of the clocks
+> > >>>> provided to the device via OF can be the clocks that are just parents to
+> > >>>> the clocks provided by this clock controller. Clock subsystem already
+> > >>>> has support for handling missing clock parents correctly (clock
+> > >>>> orphans). Later when the parent clock is registered, clocks get
+> > >>>> populated properly.
+> > >>>>
+> > >>>> An example of the system where this matters is the SDM8450 MTP board
+> > >>>> (see arch/arm64/boot/dts/qcom/sdm845-mtp.dts). Here the dispcc uses
+> > >>>> clocks provided by dsi0_phy and dsi1_phy device tree nodes. However the
+> > >>>> dispcc itself provides clocks to both PHYs, to the PHY parent device,
+> > >>>> etc. With just dsi0_phy in place devlink is able to break the
+> > >>>> dependency, but with two PHYs, dispcc doesn't get probed at all, thus
+> > >>>> breaking display support.
+> > >>>>
+> > >>>> Cc: Bjorn Andersson <andersson@kernel.org>
+> > >>>> Cc: Stephen Boyd <sboyd@kernel.org>
+> > >>>> Cc: Saravana Kannan <saravanak@google.com>
+> > >>>> Cc: Abel Vesa <abel.vesa@linaro.org>
+> > >>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > >>>> ---
+> > >>>>
+> > >>>> This patch has been posted a year ago in January 2022 ([1]). Since that time
+> > >>>> Saravana failed to produce patches to assist in debugging the issue
+> > >>>> ([2]) or to fix the issue ([3]). The issue we observe has been described
+> > >>>> by Abel at ([4]). As we work on adding support for Dual DSI
+> > >>>> configurations, the issue becomes more and more important, since binding
+> > >>>> the whole display subsystem fails.
+> > >>
+> > >> I did send out a patch series[1] to try and fix this. Heck I even
+> > >> talked about this in LPC 2022. So I don't think it's accurate to say I
+> > >> didn't help debug this or fix this. There's some email thread in lore
+> > >> where Abel gave more details and I figured out the issue and we didn't
+> > >> need any more debugging. And then I sent out [1]. Sorry I missed you
+> > >> in the cc lise for [1] -- I try to keep track of everyone to cc but
+> > >> things slip through the cracks sometimes. But at the same time, it's
+> > >> easy to check for emails from me before saying I didn't help or didn't
+> > >> send out fixes :)
+> > >>
+> > >> If you do try to give [1] a shot, there are a bunch of bugs that
+> > >> people pointed out for which I gave fixes on top of [1] in the
+> > >> replies. I was supposed to work on v2 over the holidays, but that
+> > >> didn't happen because of stuff outside my control.
+> > >>
+> > >>> That's ample time to fix this, so I intend to apply this. But I'll
+> > >>> give it a few days for comments.
+> > >>
+> > >> Rob, I'd recommend not applying this because it'll fix it for Dmitry
+> > >> but break someone else's use case. That's the whole reason it takes me
+> > >> a while to send out patches -- it's easy to fix it for a subset of
+> > >> devices, but fixing something without breaking someone else is harder
+> > >> (I still believe it's doable) and it takes a while to test them on all
+> > >> the devices I want to test before sending them out.
+> >
+> > This case is really simple, I think. Clock controllers (and
+> > clock-core-framework) are prepared to handle clock orphans properly.
+> > Moreover they have been supposed to work in such way for quite a while.
+> > In other words, I don't think we should save them from this
+> > -EPROBE_DEFERRED.
+>
+> A clock controller can depend on other clock controllers for non clock
+> tree reasons. For example, it might need a clock ON to access its
+> registers. So, while the CCF can handle orphans properly, that's not
+> the only dependency. Also, fw_devlink is not just about probing
+> either. It also has to do with proper sync_state() callbacks.
 
-Signed-off-by: Duke Xin(辛安文) <duke_xinanwen@163.com>
----
- drivers/bus/mhi/host/pci_generic.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+Just a question, please excuse if I'm misunderstanding it. Does
+fw_devlink created this way also impose any runtime PM dependencies?
 
-diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-index f39657f71483..416dabe2c282 100644
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -335,6 +335,16 @@ static const struct mhi_pci_dev_info mhi_quectel_em1xx_info = {
- 	.sideband_wake = true,
- };
- 
-+static const struct mhi_pci_dev_info mhi_quectel_rm5xx_info = {
-+	.name = "quectel-rm5xx",
-+	.edl = "qcom/prog_firehose_sdx6x.elf",
-+	.config = &modem_quectel_em1xx_config,
-+	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-+	.dma_data_width = 32,
-+	.mru_default = 32768,
-+	.sideband_wake = true,
-+};
-+
- static const struct mhi_channel_config mhi_foxconn_sdx55_channels[] = {
- 	MHI_CHANNEL_CONFIG_UL(0, "LOOPBACK", 32, 0),
- 	MHI_CHANNEL_CONFIG_DL(1, "LOOPBACK", 32, 0),
-@@ -569,6 +579,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
- 		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x2001), /* EM120R-GL for FCCL (sdx24) */
- 		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
-+	/* RM520N-GL (sdx6x), eSIM Project */
-+	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1004),
-+		.driver_data = (kernel_ulong_t) &mhi_quectel_rm5xx_info },
- 	/* T99W175 (sdx55), Both for eSIM and Non-eSIM */
- 	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0ab),
- 		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
+>
+> Also, I already fixed the issue you are referring to while not
+> breaking the conditions I'm referring to. So, I don't know why you are
+> so opposed to that. See Abel's Tested-by here:
+> https://lore.kernel.org/lkml/YvonlAwXAoXTUTZe@linaro.org/
+>
+> > Thus I think it is better to let them continue doing their job of
+> > handling probe deferrals on their own, at least for the time being.
+>
+> I'm pretty sure your patch will break other Qualcomm platforms because
+> they depend on sync_state() callbacks to boot up properly when
+> all/most of their drivers are built as modules.
+
+Qualcomm platforms did not use sync state for clock controllers. Only
+for the icc drivers.
+
+>
+> > And
+> > then, when your patches are finished, we can think about reenabling
+> > current behaviour. As a reminder, currently, all Qualcomm platforms
+> > trying to use double DSI configuration are broken and have to use
+> > fw_devlink= kernel params.
+>
+> I'm/was working on sending out the v2 when I got your email. Hold
+> tight please. It shouldn't take too long.
+
+I'll give v2 a test next week, thank you!
+
 -- 
-2.25.1
-
+With best wishes
+Dmitry
