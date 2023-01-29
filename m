@@ -2,206 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0AB9E6801FE
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Jan 2023 22:52:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E8559680265
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Jan 2023 23:51:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235246AbjA2Vwe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 29 Jan 2023 16:52:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57586 "EHLO
+        id S235255AbjA2Wvo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 29 Jan 2023 17:51:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235264AbjA2Vwa (ORCPT
+        with ESMTP id S230206AbjA2Wvn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 29 Jan 2023 16:52:30 -0500
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AFD31EBC9
-        for <linux-arm-msm@vger.kernel.org>; Sun, 29 Jan 2023 13:52:05 -0800 (PST)
-Received: by mail-oi1-x22f.google.com with SMTP id d188so8628953oia.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 29 Jan 2023 13:52:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Yz+FkVg3d7pGHf5kpyEB9/wRCprKyRRYjM/y0EJ+DBw=;
-        b=NO5FmqzTPfKQGSAJFuNQXcl2/Qwzk4V6Re/JvCoc2IjaRyulashjR8KWmE/UTwsoDd
-         HIVdOJs4TwzSlKFcRg+FdezQD/LAA/vlBxIgoIvrBqC2qLNt+7KYcL7J+Xytu95sr/wo
-         tRMx8V5RFrb6ew1gunJew1xwXwyEXUluGp/U7OIfTuTsUDeO74pms6YH6GQALgwbZAeP
-         xTD0onQAafrw0xKMlb6ufLPIAHACOQje2ciSL2/3Ya3gVY2sK9oeiLKp/oVAu4QS404C
-         Jqn12RYLi22IaL8XBhDhE95svQpiib+eCMduXy1lPLD4to1P/6d4KURs+RwHFJHkgBw4
-         hTZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Yz+FkVg3d7pGHf5kpyEB9/wRCprKyRRYjM/y0EJ+DBw=;
-        b=ojovFTV3f6xJuoDluPEOjcdoUdVDX/b+rjmRtExIMsDs0k2QfUtaEqAOZlQc3vyrU+
-         9ICggOFoGIsQc3F88ii3vIpv6JmGIeyR7JPeq2zxvr+wlqFq4xk++mB+7CNAUNx9py8G
-         1j08vMoq9U8dls1QPq1qqR2h8jzMkIQEK6mZbnH6PGEquoab7tw3Xe978gLrXAbkczrt
-         SpFQuc/couqHM7IuPcSAwV6Eoaa+sqB4MqvEnM6FGU33MIHRKEtNwQ81YoDw70PaQtyH
-         scwnWXid8eIJi9jNUVWaLMzT2QHPBwWouZ2s+VP3iY4m8p/qTSFbNkvSElCQaGvvGCYY
-         KH6A==
-X-Gm-Message-State: AFqh2ko87ycCnDj8ElKo3Qr2fKD4Qr7bgkVuOR1gK3H5X11pvQS71jGX
-        yv7nuuOGKlDEH7+rvJ+8xOIo1Q==
-X-Google-Smtp-Source: AMrXdXvoNs3Xkmc83sz5OAeNDxC7M6qRfUCSu1WdB6CBf96rnsNfFOfqoKDQXJVDudUDlt65txNtvA==
-X-Received: by 2002:a05:6808:1144:b0:35e:6a80:5e17 with SMTP id u4-20020a056808114400b0035e6a805e17mr30085582oiu.56.1675029119998;
-        Sun, 29 Jan 2023 13:51:59 -0800 (PST)
-Received: from localhost (23-118-233-243.lightspeed.snantx.sbcglobal.net. [23.118.233.243])
-        by smtp.gmail.com with ESMTPSA id f12-20020a9d7b4c000000b00660e833baddsm4667139oto.29.2023.01.29.13.51.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 29 Jan 2023 13:51:59 -0800 (PST)
-From:   Steev Klimaszewski <steev@kali.org>
-To:     steev@kali.org
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Sven Peter <sven@svenpeter.dev>,
-        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
-        Rocky Liao <rjliao@codeaurora.org>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org
-Subject: [PATCH 4/4] arm64: dts: qcom: thinkpad-x13s: Add bluetooth
-Date:   Sun, 29 Jan 2023 15:51:30 -0600
-Message-Id: <20230129215136.5557-5-steev@kali.org>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230129215136.5557-4-steev@kali.org>
-References: <20230129215136.5557-1-steev@kali.org>
- <20230129215136.5557-2-steev@kali.org>
- <20230129215136.5557-3-steev@kali.org>
- <20230129215136.5557-4-steev@kali.org>
+        Sun, 29 Jan 2023 17:51:43 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 763F94204;
+        Sun, 29 Jan 2023 14:51:42 -0800 (PST)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30TMigc6021440;
+        Sun, 29 Jan 2023 22:51:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=06UAkjv2IQRsahvZGsFUmQxlW+avpP/PI5OpkRrwtG4=;
+ b=GnvvsbxR4SmJN7PnVeItVpLRck3ebSKSBdTFxuixm9k+w/+0u+5VmA8zdptXYtyU7IBH
+ jCYNwiQQH27j188fgLSlZrc8JhYrf87Eh5q54auqIIxJPJYvXXnqApj3w7C6dCY8AR9K
+ bFkiFtrS2cmROelVIlx8dwQL302Ai3MgbB9uE4KQchzpS20M1rUKq2GteJZZOO4TNsgE
+ mXMPUJioI/uxXQN2OfWy4pymAycj4hrGqYR8zEhvqexDJsbRqcpxaFUltQZQO3yJSuJu
+ Ng8UCSyUMjANApCV/55wjS1seNXx9y7q05uIYurwZGIA7k1purf7bgfE1I1DH5xUTGMN Qg== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ncvvu2ajc-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 29 Jan 2023 22:51:39 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30TMpcoB029252
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 29 Jan 2023 22:51:38 GMT
+Received: from hu-satyap-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Sun, 29 Jan 2023 14:51:38 -0800
+From:   Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>
+To:     <andersson@kernel.org>, <mathieu.poirier@linaro.org>
+CC:     Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+Subject: [PATCH] remoteproc: sysfs: fix race while updating recovery flag
+Date:   Sun, 29 Jan 2023 14:51:06 -0800
+Message-ID: <20230129225106.10606-1-quic_satyap@quicinc.com>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: z8nN0swIQBXRgLgv8Ihe2m89wHk5fivW
+X-Proofpoint-ORIG-GUID: z8nN0swIQBXRgLgv8Ihe2m89wHk5fivW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-29_13,2023-01-27_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ mlxlogscore=999 suspectscore=0 spamscore=0 mlxscore=0 phishscore=0
+ clxscore=1011 lowpriorityscore=0 priorityscore=1501 bulkscore=0
+ adultscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2212070000 definitions=main-2301290227
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Signed-off-by: Steev Klimaszewski <steev@kali.org>
----
- .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 68 +++++++++++++++++++
- 1 file changed, 68 insertions(+)
+When multiple clients try to update the recovery flag, it is
+possible that, race condition would lead to undesired results
+as updates to recovery flag isn't protected by any mechanism
+today. To avoid such issues, take remoteproc mutex lock before
+updating recovery flag and release the lock once done.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-index e51f93476b8d..a9d653e02a2b 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -25,6 +25,8 @@ / {
- 	aliases {
- 		i2c4 = &i2c4;
- 		i2c21 = &i2c21;
-+		serial0 = &uart17;
-+		serial1 = &uart2;
- 	};
+Signed-off-by: Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>
+---
+ drivers/remoteproc/remoteproc_sysfs.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/drivers/remoteproc/remoteproc_sysfs.c b/drivers/remoteproc/remoteproc_sysfs.c
+index 8c7ea8922638..ec37176e1589 100644
+--- a/drivers/remoteproc/remoteproc_sysfs.c
++++ b/drivers/remoteproc/remoteproc_sysfs.c
+@@ -48,16 +48,21 @@ static ssize_t recovery_store(struct device *dev,
+ {
+ 	struct rproc *rproc = to_rproc(dev);
  
- 	wcd938x: audio-codec {
-@@ -886,6 +888,32 @@ &qup0 {
- 	status = "okay";
- };
++	mutex_lock(&rproc->lock);
+ 	if (sysfs_streq(buf, "enabled")) {
+ 		/* change the flag and begin the recovery process if needed */
+ 		rproc->recovery_disabled = false;
++		mutex_unlock(&rproc->lock);
+ 		rproc_trigger_recovery(rproc);
+ 	} else if (sysfs_streq(buf, "disabled")) {
+ 		rproc->recovery_disabled = true;
++		mutex_unlock(&rproc->lock);
+ 	} else if (sysfs_streq(buf, "recover")) {
+ 		/* begin the recovery process without changing the flag */
++		mutex_unlock(&rproc->lock);
+ 		rproc_trigger_recovery(rproc);
+ 	} else {
++		mutex_unlock(&rproc->lock);
+ 		return -EINVAL;
+ 	}
  
-+&uart2 {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&uart2_state>;
-+
-+	bluetooth {
-+		compatible = "qcom,wcn6855-bt";
-+
-+/*
-+		vddio-supply = <&vreg_s4a_1p8>;
-+		vddxo-supply = <&vreg_l7a_1p8>;
-+		vddrf-supply = <&vreg_l17a_1p3>;
-+		vddch0-supply = <&vreg_l25a_3p3>;
-+		vddch1-supply = <&vreg_l23a_3p3>;
-+*/
-+		max-speed = <3200000>;
-+
-+		enable-gpios = <&tlmm 133 GPIO_ACTIVE_HIGH>;
-+		swctrl-gpios = <&tlmm 132 GPIO_ACTIVE_HIGH>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&bt_en>;
-+	};
-+};
-+
- &qup1 {
- 	status = "okay";
- };
-@@ -894,6 +922,12 @@ &qup2 {
- 	status = "okay";
- };
- 
-+&uart17 {
-+	compatible = "qcom,geni-debug-uart";
-+
-+	status = "okay";
-+};
-+
- &remoteproc_adsp {
- 	firmware-name = "qcom/sc8280xp/LENOVO/21BX/qcadsp8280.mbn";
- 
-@@ -1154,6 +1188,19 @@ hastings_reg_en: hastings-reg-en-state {
- &tlmm {
- 	gpio-reserved-ranges = <70 2>, <74 6>, <83 4>, <125 2>, <128 2>, <154 7>;
- 
-+	bt_en: bt-en-state {
-+		hstp-sw-ctrl {
-+			pins = "gpio132";
-+			function = "gpio";
-+		};
-+
-+		hstp-bt-en {
-+			pins = "gpio133";
-+			function = "gpio";
-+			drive-strength = <16>;
-+		};
-+	};
-+
- 	edp_reg_en: edp-reg-en-state {
- 		pins = "gpio25";
- 		function = "gpio";
-@@ -1175,6 +1222,27 @@ i2c4_default: i2c4-default-state {
- 		bias-disable;
- 	};
- 
-+	uart2_state: uart2-state {
-+		cts {
-+			pins = "gpio122";
-+			function = "qup2";
-+			bias-disable;
-+		};
-+
-+		rts-tx {
-+			pins = "gpio122", "gpio123";
-+			function = "qup2";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+
-+		rx {
-+			pins = "gpio124";
-+			function = "qup2";
-+			bias-pull-up;
-+		};
-+	};
-+
- 	i2c21_default: i2c21-default-state {
- 		pins = "gpio81", "gpio82";
- 		function = "qup21";
 -- 
-2.39.0
+2.38.1
 
