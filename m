@@ -2,79 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E896C680159
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Jan 2023 21:35:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 240986801E8
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Jan 2023 22:51:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229769AbjA2Uf4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 29 Jan 2023 15:35:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42078 "EHLO
+        id S235232AbjA2Vvm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 29 Jan 2023 16:51:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230365AbjA2Ufz (ORCPT
+        with ESMTP id S235203AbjA2Vvl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 29 Jan 2023 15:35:55 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9245D18B30
-        for <linux-arm-msm@vger.kernel.org>; Sun, 29 Jan 2023 12:35:51 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id bk16so9329191wrb.11
-        for <linux-arm-msm@vger.kernel.org>; Sun, 29 Jan 2023 12:35:51 -0800 (PST)
+        Sun, 29 Jan 2023 16:51:41 -0500
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E42A8199C9
+        for <linux-arm-msm@vger.kernel.org>; Sun, 29 Jan 2023 13:51:38 -0800 (PST)
+Received: by mail-oi1-x236.google.com with SMTP id s66so8617644oib.7
+        for <linux-arm-msm@vger.kernel.org>; Sun, 29 Jan 2023 13:51:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=j8aqki5CcPtcLzfCY7Wo7lQT4J4ibEQGFMyeTxDiGAQ=;
-        b=OZbq6tnzL8TeplhGciC1YL9kquoVfH5YeTYjfDIHV2BoCrfBcqQ1q/vIXUwCcoMDjJ
-         pqDgytiooxv2G1ZkM02XtHEAQ0oshsEFq6ZK6JmzfORnilUVjG4H1cIWStj2wn/xBFqP
-         S/2gIwfobAtjdt44Wb6Dyo6OhcWj8NjoxLr3ZbH5MLvjNbye3Sbvf6+UrRsBDGitvBp0
-         Ajp895PriLJw8dkJ37MTZR1Yep6rFPnDjEol2N98R9Lo/OGvu2SMd5O6zzpbW6jhr6e6
-         gs1nvbeWF9FotGztoyXUR3XZ3HHWq56h85mokLqeii/pJpJVzai9+9oGFr0d6vL3dbI8
-         ildg==
+        d=kali.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=zFiSJsxbVNP6iSln86409bsy54CkshWpdq97AEc134M=;
+        b=E94+MPEpN/TNYg3BdBZ5EFjP5Yautut+jtwYkZvz2oMLpUiI9Yrles+AUblQ4bPboY
+         EsVgf1k0JYvmBannURtMUw96aEgju921qStOkHoYWZskNasd02kGOFHT20/h4Bj3k4bu
+         SeFj0NFFfiiyl3ZPzSGdNtPM8ILTPmqLcwbVWH1WLR4KSTuROICFs8sfzgZOxSrEtFwZ
+         rYjc21gMXHYl5s0exgKzKbiVUH/vKHhoeLL3Nn8997ko+BwbTb1P7n1rK6EvP1OXH/ga
+         s6pfYI5O2XYvzBinAb4+NdyHFv0yhl2VVp1IV8H4wRNp9LQpMb+RG1Z33todyfrlF12k
+         K3tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=j8aqki5CcPtcLzfCY7Wo7lQT4J4ibEQGFMyeTxDiGAQ=;
-        b=oWU+Mqh14lsgIVmgyzH+s1aDO2v+pNU4RXJC+dF7yvPJrJ1ofVkAmT7IqdcoSjWXr7
-         htRLTIUR+kELmiiuxPDZxzF8f/WNYOs/CNzOtFICEBZzf4Rijt9g2S31CLTirsk5W/xN
-         VBuE5tgFrWNY7NUPneKZX54yzIu/0bG02B6TFdJCu7diknfcWZsUg2p+4tX2YZTf9JLw
-         AwVIUgMz3fAGz4Llp+AFjFkX/k1pBOvZSfz6oS1od7Gz9uT+ViXT/tagv8TOpehvaHUo
-         gmVZtVWItX/hvVijA5IM7WHU1seSBv2941lCeclkFGr5toL1nMbs8TSroJUSmVrElSkO
-         3WEg==
-X-Gm-Message-State: AO0yUKUjRAU6k8BJt5pT4Nxmeh4j1QUr3te5LSluFwjYlsErx/c+qmlm
-        qt/kmCCE/5Uq7+NB8ubWly9G+w==
-X-Google-Smtp-Source: AK7set8mh4lwRHVWgzw9plGkhTC0LxGuzA2btm4FE97PRWONLb5ri8GZ01gKo2/yhwB4ocF497kPxw==
-X-Received: by 2002:adf:f409:0:b0:2bf:bb71:dc55 with SMTP id g9-20020adff409000000b002bfbb71dc55mr16253917wro.52.1675024549902;
-        Sun, 29 Jan 2023 12:35:49 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id f28-20020a5d58fc000000b002be5401ef5fsm10204173wrd.39.2023.01.29.12.35.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 29 Jan 2023 12:35:49 -0800 (PST)
-Message-ID: <47ee24cd-4239-772b-6dc6-d0741e813f15@linaro.org>
-Date:   Sun, 29 Jan 2023 21:35:46 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH v7 1/2] power: supply: add Qualcomm PMI8998 SMB2 Charger
- driver
-To:     Sebastian Reichel <sebastian.reichel@collabora.com>,
-        Caleb Connolly <caleb.connolly@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zFiSJsxbVNP6iSln86409bsy54CkshWpdq97AEc134M=;
+        b=lWFeXnctIRoOyiDN09UnnqoNsoFqRPmExD9bNNofPjEZbjCenJto6hmrTaJqIcNaLj
+         17jBaM/rP9ksRfH266/wTFCn8m/wvd1mlpfq0TBeIJKRXeVIWhLc31RVCyb/5qWae2XR
+         ELVq4gBnTl/u+Polo6npFb41WTn/68xSL9yDT+Z8IhHVuHQwBNg+r1ntaT1rkIF9Fbi+
+         od/nfFuJJG8bCZ9wonWWrFna5AihFdu+t2/E/HT8aFIZmtxDVQMclUGXLdymoubAHaSm
+         331dp3V8AbCjnWVJgWd8087C93VcqMyfTjABenEiTAGk372ppuVdT7uHbT3If5KYcOmS
+         stsQ==
+X-Gm-Message-State: AFqh2krbLstfkEKo4em4Swu7Kp6KlzA3HbqQXuf1ewYMWWLzXQlbrDVu
+        H2Zf50gp4MFEgPjIzYgqjqqCOQ==
+X-Google-Smtp-Source: AMrXdXsOzuRHTVu/dKRYKIffFpHK3+YqjNy/Qee5C9BkP0mcJqEfueB2r2Xo3WoZEODLX6Zn+RbirA==
+X-Received: by 2002:a05:6808:1982:b0:35e:bd7e:c89a with SMTP id bj2-20020a056808198200b0035ebd7ec89amr31944819oib.16.1675029098237;
+        Sun, 29 Jan 2023 13:51:38 -0800 (PST)
+Received: from localhost (23-118-233-243.lightspeed.snantx.sbcglobal.net. [23.118.233.243])
+        by smtp.gmail.com with ESMTPSA id de5-20020a056808608500b00377ee54431asm2847836oib.57.2023.01.29.13.51.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 29 Jan 2023 13:51:37 -0800 (PST)
+From:   Steev Klimaszewski <steev@kali.org>
+To:     steev@kali.org
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        phone-devel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20230127230506.3140297-1-caleb.connolly@linaro.org>
- <20230129202043.w6mylxeccz2fyxl2@mercury.elektranox.org>
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230129202043.w6mylxeccz2fyxl2@mercury.elektranox.org>
-Content-Type: text/plain; charset=UTF-8
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Sven Peter <sven@svenpeter.dev>,
+        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
+        Rocky Liao <rjliao@codeaurora.org>, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org
+Subject: [PATCH 0/4] Attempt at adding WCN6855 BT support
+Date:   Sun, 29 Jan 2023 15:51:26 -0600
+Message-Id: <20230129215136.5557-1-steev@kali.org>
+X-Mailer: git-send-email 2.39.0
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,34 +84,107 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/01/2023 21:20, Sebastian Reichel wrote:
-> Hi,
-> 
-> I tried applying this, but it generates a compiler warning:
-> 
-> On Fri, Jan 27, 2023 at 11:05:05PM +0000, Caleb Connolly wrote:
->> [...]
->> +static int smb2_probe(struct platform_device *pdev)
->> +{
->> [...]
->> +	desc->name = devm_kasprintf(chip->dev, GFP_KERNEL, "%s-charger",
->> +				    device_get_match_data(chip->dev));
-> 
-> drivers/power/supply/qcom_pmi8998_charger.c: In function ‘smb2_probe’:
-> drivers/power/supply/qcom_pmi8998_charger.c:979:62: warning: format ‘%s’ expects argument of type ‘char *’, but argument 4 has type ‘const void *’ [-Wformat=]
->   979 |         desc->name = devm_kasprintf(chip->dev, GFP_KERNEL, "%s-charger",
->       |                                                             ~^
->       |                                                              |
->       |                                                              char *
->       |                                                             %p
->   980 |                                     device_get_match_data(chip->dev));
->       |                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->       |                                     |
->       |                                     const void *
+This patchset is somewhat of an RFC/RFT, and also just something to get this out
+there.
 
-This was also reported now by kernel test robot. I wonder why there were
-no earlier reports...
+First things first, I do not have access to the specs nor the schematics, so a
+lot of this was done via guess work, looking at the acpi tables, and looking at
+how a similar device (wcn6750) was added.
 
-Best regards,
-Krzysztof
+There are definitely checkpatch warnings, and I do apologize to those who won't
+review things until there are no warnings for wasting your time.
+
+One example is that I have the vregs commented out, the dt-bindings say that
+they are required since it's based on the wcn6750 work but also like the 6750,
+I've added defaults into the driver, and those seem to work, at least for the
+initial testing.
+
+The end result is that we do have a working device, but not entirely reliable.
+
+Hopefully by getting this out there, people who do have access to the specs or
+schematics can see where the improvements or fixes need to come.
+
+There are a few things that I am not sure why they happen, and don't have the
+knowledge level to figure out why they happen or debugging it.
+
+Bluetooth: hci0: setting up wcn6855
+Bluetooth: hci0: Frame reassembly failed (-84)
+Bluetooth: hci0: QCA Product ID   :0x00000013
+Bluetooth: hci0: QCA SOC Version  :0x400c0210
+Bluetooth: hci0: QCA ROM Version  :0x00000201
+Bluetooth: hci0: QCA Patch Version:0x000038e6
+Bluetooth: hci0: QCA controller version 0x02100201
+Bluetooth: hci0: unexpected event for opcode 0xfc48
+Bluetooth: hci0: Sending QCA Patch config failed (-110)
+Bluetooth: hci0: QCA Downloading qca/hpbtfw21.tlv
+Bluetooth: hci0: QCA Downloading qca/hpnv21g.bin
+Bluetooth: hci0: QCA setup on UART is completed
+
+I do not know why the Frame assembly failed, nor the unexpected event.
+
+Likewise, I'm not entirely sure why it says the patch config send times out, and
+*then* seems to send it?
+
+The BD Address also seems to be incorrect, and I'm not sure what is going on
+there either.
+
+Additionally, I've tried with an additional patch that I'm not including that is
+based on commit 059924fdf6c1 ("Bluetooth: btqca: Use NVM files based on SoC ID
+for WCN3991") to try using the hpnv21g.bin or hpnv21.bin, and the firmware acted
+the same regardless, so I am assuming I don't truly need the "g" firmware on my
+Thinkpad X13s.
+
+Testing was done by connecting a Razer Orochi bluetooth mouse, and using it, as
+well as connecting to and using an H2GO bluetooth speaker and playing audio out
+via canberra-gtk-play as well as a couple of YouTube videos in a browser.
+
+The mouse only seems to work when < 2 ft. from the laptop, and for the speaker, only
+"A2DP Sink, codec SBC" would provide audio output, and while I could see that
+data was being sent to the speaker, it wasn't always outputting, and going >
+4ft. away, would often disconnect.
+
+steev@wintermute:~$ hciconfig -a
+hci0:   Type: Primary  Bus: UART
+        BD Address: 00:00:00:00:5A:AD  ACL MTU: 1024:8  SCO MTU: 240:4
+        UP RUNNING PSCAN
+        RX bytes:1492 acl:0 sco:0 events:126 errors:0
+        TX bytes:128743 acl:0 sco:0 commands:597 errors:0
+        Features: 0xff 0xfe 0x8f 0xfe 0xd8 0x3f 0x5b 0x87
+        Packet type: DM1 DM3 DM5 DH1 DH3 DH5 HV1 HV2 HV3
+        Link policy: RSWITCH HOLD SNIFF
+        Link mode: PERIPHERAL ACCEPT
+        Name: 'wintermute'
+        Class: 0x0c010c
+        Service Classes: Rendering, Capturing
+        Device Class: Computer, Laptop
+        HCI Version:  (0xc)  Revision: 0x0
+        LMP Version:  (0xc)  Subversion: 0x46f7
+        Manufacturer: Qualcomm (29)
+
+steev@wintermute:~$ dmesg | grep Razer
+[ 3089.235440] input: Razer Orochi as /devices/virtual/misc/uhid/0005:1532:0056.0003/input/input11
+[ 3089.238580] hid-generic 0005:1532:0056.0003: input,hidraw2: BLUETOOTH HID v0.01 Mouse [Razer Orochi] on 00:00:00:00:5a:ad
+steev@wintermute:~$ dmesg | grep H2GO
+[ 3140.959947] input: H2GO Speaker (AVRCP) as /devices/virtual/input/input12
+
+Bjorn Andersson (1):
+  arm64: dts: qcom: sc8280xp: Enable BT
+
+Steev Klimaszewski (3):
+  dt-bindings: net: Add WCN6855 Bluetooth bindings
+  Bluetooth: hci_qca: Add support for QTI Bluetooth chip wcn6855
+  arm64: dts: qcom: thinkpad-x13s: Add bluetooth
+
+ .../net/bluetooth/qualcomm-bluetooth.yaml     |  2 +
+ .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 68 +++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi        | 14 ++++
+ drivers/bluetooth/btqca.c                     | 24 ++++++-
+ drivers/bluetooth/btqca.h                     | 10 +++
+ drivers/bluetooth/hci_qca.c                   | 59 ++++++++++++----
+ 6 files changed, 162 insertions(+), 15 deletions(-)
+
+
+base-commit: e2f86c02fdc96ca29ced53221a3cbf50aa6f8b49
+-- 
+2.39.0
 
