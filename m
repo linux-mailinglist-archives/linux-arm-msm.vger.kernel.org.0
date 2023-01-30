@@ -2,162 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EA03A681700
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 17:54:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D7B4A68171B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 18:02:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237474AbjA3Qy5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Jan 2023 11:54:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53182 "EHLO
+        id S237028AbjA3RCW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Jan 2023 12:02:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236292AbjA3Qyt (ORCPT
+        with ESMTP id S236938AbjA3RCV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Jan 2023 11:54:49 -0500
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69EF83D93C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jan 2023 08:54:47 -0800 (PST)
-Received: by mail-ej1-x633.google.com with SMTP id p26so22395756ejx.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jan 2023 08:54:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ufhJAWNpVWI5s+uFKzVFnYTvPvLzKFeYy7PIx77olTQ=;
-        b=GOoodPz+j/Nj3krXYVUmcMvp7eE4Q9UnmiITSbTtixmCz/KCJv/O6ZSWAte9XLOJNx
-         EoYDCRXJVT4C5BBRlNTB2AwOe3F5exjMz23eDTpl/ISOgpFuMd53TJYDzlc5yzTq0Q7p
-         FV8E3uD+zyzedG3+64Q1DBSYdkCJiTZwLdzg/d2/7czrMJcFhH1iRpoAwM/jQleWbbkX
-         0adA11S0DNb1eY4JMhEBvQmCWXkctklrW47nmZ0StqH446q98+48qUNgmYQDdDgWUQKT
-         e9+p+kIOvT7lwhLsKDdg23VtyqMAIK/V+wUt8RPWnJHYWWKB0yA2q7wUhTaQAI8kSjxs
-         ErUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ufhJAWNpVWI5s+uFKzVFnYTvPvLzKFeYy7PIx77olTQ=;
-        b=naa0qaewmXSH2UvWFt3Rl+pj/JJyLLZpD/Jg3lfOrqryW7vOvYRFdU2RIq9OBOucNf
-         5L8aIkKnN5om700y7OL/nZoC7o0i2gNt1QRaONWA2VvIUJDbR6uDn2W4BrB1JYdmIukX
-         JpzWVGl4K0sb+kfNWzAF1O/uNratWA5MYMViIoY88Psx/2bxJ5Whsb/ZaDCUHK9TMKa7
-         Qw0YEFwuVXe1KwcHxR/pPNcmVlzkZ6V1WIXm+LOxmyDpBMECB6gW/OdRQQ9cIFSnDand
-         PuReTj4mZZtF7LHsN/PxFUUrWXjF0pFDWLJJ9ZyfBNtIw1dum1kxq1tGMsZh7dJkgmwK
-         WPDA==
-X-Gm-Message-State: AO0yUKVO5yLyZLMPgKuUcIbLsJR8DZY6sNEqj0iOJplrraUUUgwgb6vj
-        z0ggblu6VFjw6Pa+ULNko8FH17xQR49zKMcn
-X-Google-Smtp-Source: AK7set9N7uRLgO4eAE1Paw3D3zsrQ3qY4m8inwATd9YUXZRpAgs/GLFR396GwUyTsSUXxvW6BwSHjA==
-X-Received: by 2002:a17:907:8b90:b0:87b:db63:1e18 with SMTP id tb16-20020a1709078b9000b0087bdb631e18mr122730ejc.71.1675097685873;
-        Mon, 30 Jan 2023 08:54:45 -0800 (PST)
-Received: from localhost.localdomain (abyl20.neoplus.adsl.tpnet.pl. [83.9.31.20])
-        by smtp.gmail.com with ESMTPSA id lj14-20020a170906f9ce00b0088744fc7084sm2590651ejb.38.2023.01.30.08.54.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Jan 2023 08:54:45 -0800 (PST)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [RFC PATCH 2/2] pinctrl: pinconf-generic: Add an overridable way to set bias property
-Date:   Mon, 30 Jan 2023 17:54:35 +0100
-Message-Id: <20230130165435.2347569-2-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230130165435.2347569-1-konrad.dybcio@linaro.org>
-References: <20230130165435.2347569-1-konrad.dybcio@linaro.org>
+        Mon, 30 Jan 2023 12:02:21 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC78EFF11;
+        Mon, 30 Jan 2023 09:02:18 -0800 (PST)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30UEO31n006571;
+        Mon, 30 Jan 2023 17:02:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=2z6IWrm09lruGKFJYOS7E9jOrBVTkH7sZzY1C69I47M=;
+ b=Ki2k9TDS5dn77XJSTPpOjE/huCb4bxeX7TSLHChF7aV53DqBIEZk/CFt0Ir+bI/M8stW
+ Ds3IksC/lkiqnDxCP+Xk3gLm7ECkYumeUf9Croa3kzz1Sx/ManGrKlH5yPM0P+48hajt
+ p11qbXJXI14Kemy7lbnjUMjA2lyS952EwMI6aJPXkh5AZ9IsGxCugyx+/NRBKatwP4UY
+ rUNX5yxpPbThW08HJLtO/nOdkMO60grVqy3aZUwHBS/qiEzeL6yyajDESRJZySe+/u/v
+ DUMEDv3MYqg7fP/Uw2uvy1TASO4qL7KNrjKZJ2jAEY5FmWk1jNU09HN9GXGzeKuiQ7KE rQ== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nefmfrbh5-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 30 Jan 2023 17:02:13 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30UH2CHO018066
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 30 Jan 2023 17:02:12 GMT
+Received: from kathirav-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Mon, 30 Jan 2023 09:02:09 -0800
+From:   Kathiravan T <quic_kathirav@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <lee@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     Kathiravan T <quic_kathirav@quicinc.com>
+Subject: [PATCH 0/3] Add the download mode support for IPQ5332
+Date:   Mon, 30 Jan 2023 22:31:52 +0530
+Message-ID: <20230130170155.27266-1-quic_kathirav@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: SOo-i6PkPgabvng6LOiwL1fU8rfMW87d
+X-Proofpoint-GUID: SOo-i6PkPgabvng6LOiwL1fU8rfMW87d
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-30_16,2023-01-30_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 adultscore=0
+ priorityscore=1501 mlxlogscore=679 suspectscore=0 bulkscore=0 mlxscore=0
+ impostorscore=0 phishscore=0 lowpriorityscore=0 spamscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2301300165
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-We came to a point where we sometimes we support a few dozen boards
-with a given SoC. Sometimes, we have to take into consideration
-configurations which deviate rather significatly from the reference
-or most common designs. In the context of pinctrl, this often comes
-down to wildly different pin configurations. While pins, function and
-drive-strength are easily overridable, the (mostly) boolean properties
-associated with setting bias, aren't. This wouldn't be much of a
-problem if they didn't differ between boards so often, preventing us
-from having a "nice" baseline setup without inevitably having to go
-with an ugly /delete-property/.
+Enable the support for download mode to collect the RAM dumps if
+system crashes, to perform the post mortem analysis.
 
-Introduce logic to handle bias-type, a property which sets a single
-boolean type of bias on the pin (more than one type of BIAS_ does not
-make sense, anyway) to make it easily overridable.
+During the bootup, bootloaders initialize the SMEM. However the bootup
+after crash, SMEM will not be intialized again. If the memory for the
+SMEM is not reserved, linux consumes that region, which leads to the
+loss of SMEM data. So, during the next bootup after crash, bootloaders
+will hang due to invalid data present in the SMEM region. Due to this,
+added the SMEM support along with this series.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/pinctrl/pinconf-generic.c       | 35 ++++++++++++++++++++++---
- include/linux/pinctrl/pinconf-generic.h |  1 +
- 2 files changed, 32 insertions(+), 4 deletions(-)
+This series depends on the IPQ5332 baseport patches
+https://lore.kernel.org/linux-arm-msm/20230130114702.20606-1-quic_kathirav@quicinc.com/T/#t
 
-diff --git a/drivers/pinctrl/pinconf-generic.c b/drivers/pinctrl/pinconf-generic.c
-index 365c4b0ca465..b99c2a85486e 100644
---- a/drivers/pinctrl/pinconf-generic.c
-+++ b/drivers/pinctrl/pinconf-generic.c
-@@ -206,11 +206,38 @@ static void parse_dt_cfg(struct device_node *np,
- 			 unsigned int count, unsigned long *cfg,
- 			 unsigned int *ncfg)
- {
--	int i;
-+	int i, ret;
-+	u32 val;
-+
-+	/* Let's assume only one type of bias is used.. as it should be.. */
-+	ret = of_property_read_u32(np, "bias-type", &val);
-+	if (!ret) {
-+		/* Bias properties end at idx PIN_CONFIG_BIAS_PULL_UP */
-+		if (ret > PIN_CONFIG_BIAS_PULL_UP) {
-+			pr_err("invalid type: %u\n", val);
-+			goto generic_parse;
-+		}
- 
--	for (i = 0; i < count; i++) {
--		u32 val;
--		int ret;
-+		pr_debug("found bias type %u\n", val);
-+		/*
-+		 * Properties between PIN_CONFIG_BIAS_PULL_DOWN and PIN_CONFIG_BIAS_PULL_UP
-+		 * have a default value of one, others default to zero.
-+		 */
-+		cfg[*ncfg] = pinconf_to_config_packed(val, val >= PIN_CONFIG_BIAS_PULL_DOWN);
-+		(*ncfg)++;
-+
-+		/* Start the generic property read loop where bias properties end. */
-+		i = PIN_CONFIG_DRIVE_OPEN_DRAIN;
-+	} else {
-+		/*
-+		 * If we don't set bias through bias-type, search for all DT
-+		 * properties like nothing ever happened.
-+		 */
-+generic_parse:
-+		i = 0;
-+	}
-+
-+	for (; i < count; i++) {
- 		const struct pinconf_generic_params *par = &params[i];
- 
- 		ret = of_property_read_u32(np, par->property, &val);
-diff --git a/include/linux/pinctrl/pinconf-generic.h b/include/linux/pinctrl/pinconf-generic.h
-index d74b7a4ea154..bcf68ba1ea46 100644
---- a/include/linux/pinctrl/pinconf-generic.h
-+++ b/include/linux/pinctrl/pinconf-generic.h
-@@ -117,6 +117,7 @@ struct pinctrl_map;
-  *	presented using the packed format.
-  */
- enum pin_config_param {
-+	/* Keep in sync with dt-bindings/pinctrl/pinconf-generic.h! */
- 	PIN_CONFIG_BIAS_BUS_HOLD,
- 	PIN_CONFIG_BIAS_DISABLE,
- 	PIN_CONFIG_BIAS_HIGH_IMPEDANCE,
+Kathiravan T (3):
+  dt-bindings: mfd: qcom,tcsr: add compatible for IPQ5332
+  arm64: dts: qcom: ipq5332: enable the download mode support
+  arm64: dts: qcom: ipq5332: add SMEM support
+
+ .../devicetree/bindings/mfd/qcom,tcsr.yaml    |  1 +
+ arch/arm64/boot/dts/qcom/ipq5332.dtsi         | 20 +++++++++++++++++++
+ 2 files changed, 21 insertions(+)
+
 -- 
-2.39.1
+2.17.1
 
