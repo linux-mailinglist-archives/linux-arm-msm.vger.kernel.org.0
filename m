@@ -2,65 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 24EFB6819A5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 19:49:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 85E4C6819CD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 20:04:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237784AbjA3Stu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Jan 2023 13:49:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57100 "EHLO
+        id S237655AbjA3TEY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Jan 2023 14:04:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237418AbjA3Str (ORCPT
+        with ESMTP id S229573AbjA3TEX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Jan 2023 13:49:47 -0500
-Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4253E30299;
-        Mon, 30 Jan 2023 10:49:46 -0800 (PST)
-Received: by mail-ot1-f46.google.com with SMTP id r17-20020a056830449100b0068bb088317aso2985924otv.12;
-        Mon, 30 Jan 2023 10:49:46 -0800 (PST)
+        Mon, 30 Jan 2023 14:04:23 -0500
+Received: from mail-oa1-f49.google.com (mail-oa1-f49.google.com [209.85.160.49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FF333865D;
+        Mon, 30 Jan 2023 11:04:20 -0800 (PST)
+Received: by mail-oa1-f49.google.com with SMTP id 586e51a60fabf-142b72a728fso16328719fac.9;
+        Mon, 30 Jan 2023 11:04:20 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=kW8ohaGrxXkWGPa0FCZ4hef9tIH5Omh7JAoheQeQ1mM=;
-        b=XvRq2B2vWZR99W+dD+o+96j6GFbyBvVrPcV69KM3EJfvF57DQuIJHTvyqwHFvkSV0N
-         SeULFPm6mesoUsvF+ivH7QwqoK6PPOq/pfKKvJSWs8+/b4PZfkCM7tz490MPx3sIAFgK
-         9Ne0Kq2V6O/pQ4+rlFz/xIrhuZZRXasvSxPShdXtRX6YMRVi3RlIxFI0zE8Y4ohxM3Jm
-         Kk0o3aZJvRuOkpNjefSJKU7m/uUKlnGmva5SyANZfptLw8hL+X94kQ45xrEH8YJwOUmk
-         wOD20KilXHPqkh1iI44TjuUmZRcCKtUCY5lWllSpUvLOlHgN2sQbo++Vrk6fUU27Osto
-         8eaA==
-X-Gm-Message-State: AO0yUKVcV0wDfGO5jQK4I2sTKDIH3F3wiTjxTxmotqHbGi9xQ79A4Hwf
-        CXDJWAcR4fCwd7dJHevvKQ==
-X-Google-Smtp-Source: AK7set86dmjvFduMxGNkWsXujIuVf9i07CX6Jh1NynnRWXs51cFLdSm6bR69XaKevU8S8H7Y/GAGmQ==
-X-Received: by 2002:a05:6830:50:b0:68b:cdc3:78d7 with SMTP id d16-20020a056830005000b0068bcdc378d7mr2581366otp.8.1675104585466;
-        Mon, 30 Jan 2023 10:49:45 -0800 (PST)
+        bh=2KJ9Rz1Ynh3fjcAdkx5iP/6JNhfuUpXfGWr8jMXGpK8=;
+        b=DfFQEal8N3PGF1mRijjLtabH4AolzTqXVelRSeOgDbNMIOjj37h+wjT30VnvGhRfoV
+         i+rHqIk7GuBOQQdM4146l7COV0WOys+Vih20hhJ/a/TM0ZNd7SmzGMNZXgN9attYPVqv
+         rl5YiR27TQkP1H5K4MxXg/CT6tWB6ZAVO34NH/QT/945umkahsy/XFuLi1YlPhl10ndu
+         cOrDWbirqh5jKoANg8uWEH75FlyxfRcBoojmcf3brcfRXGalBURg3V2zrEllQcug78YJ
+         96pDfPWvihmD3J6LFD4inkx4X1LpwiaycNKLZ2GJwIEaFN9NVLerS3e48CktvKQWA0cQ
+         R/jw==
+X-Gm-Message-State: AFqh2krQNxmFOa4zoUXnrxBqiK7R566DHmpDAu3EwBcmAckvly6741VT
+        ZEjp/+k/+eTZFZv7KdnQkA==
+X-Google-Smtp-Source: AMrXdXtjE2UK5IbXgI+0HH5dQJ2HxAVZhp2l7U70Q5qV6hgbDhg9WyJ89Jl7Cr6tB34YfAkN15nwIw==
+X-Received: by 2002:a05:6870:828a:b0:15f:dac1:7e7d with SMTP id q10-20020a056870828a00b0015fdac17e7dmr19809449oae.25.1675105459938;
+        Mon, 30 Jan 2023 11:04:19 -0800 (PST)
 Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id f88-20020a9d03e1000000b0068bcadcad5bsm2577345otf.57.2023.01.30.10.49.44
+        by smtp.gmail.com with ESMTPSA id mv7-20020a0568706a8700b0015f4d1b195bsm5567310oab.36.2023.01.30.11.04.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Jan 2023 10:49:45 -0800 (PST)
-Received: (nullmailer pid 3105156 invoked by uid 1000);
-        Mon, 30 Jan 2023 18:49:44 -0000
-Date:   Mon, 30 Jan 2023 12:49:44 -0600
+        Mon, 30 Jan 2023 11:04:19 -0800 (PST)
+Received: (nullmailer pid 3125626 invoked by uid 1000);
+        Mon, 30 Jan 2023 19:04:18 -0000
+Date:   Mon, 30 Jan 2023 13:04:18 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+To:     Bartosz Golaszewski <brgl@bgdev.pl>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Alessandro Zummo <a.zummo@towertech.it>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Maximilian Luz <luzmaximilian@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-rtc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [RFC 18/24] dt-bindings: rtc: qcom-pm8xxx: add uefi-variable
- offset
-Message-ID: <20230130184944.GA3096050-robh@kernel.org>
-References: <20230126142057.25715-1-johan+linaro@kernel.org>
- <20230126142057.25715-19-johan+linaro@kernel.org>
+        Eric Chanudet <echanude@redhat.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: interconnect: qcom,sa8775p-rpmh: fix a typo
+Message-ID: <167510545823.3125572.248582702391244849.robh@kernel.org>
+References: <20230127092615.39690-1-brgl@bgdev.pl>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230126142057.25715-19-johan+linaro@kernel.org>
+In-Reply-To: <20230127092615.39690-1-brgl@bgdev.pl>
 X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
@@ -72,27 +72,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 26, 2023 at 03:20:51PM +0100, Johan Hovold wrote:
-> On many Qualcomm platforms the PMIC RTC control and time registers are
-> read-only so that the RTC time can not be updated. Instead an offset
-> needs be stored in some machine-specific non-volatile memory, which a
-> driver can take into account.
-> 
-> Add a 'qcom,uefi-rtc-info' boolean flag which indicates that the RTC
-> offset is stored in a Qualcomm specific UEFI variable so that the RTC
-> time can be updated on such platforms.
-> 
-> The UEFI variable is
-> 
-> 	882f8c2b-9646-435f-8de5-f208ff80c1bd-RTCInfo
-> 
-> and holds a 12-byte structure where the first four bytes is a GPS time
-> offset in little-endian byte order.
 
-Can't you just try to read the UEFI variable and use it if that 
-succeeds?
+On Fri, 27 Jan 2023 10:26:15 +0100, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> 
+> The name of the chip is sa8775p, not sa8875p.
+> 
+> Reported-by: Eric Chanudet <echanude@redhat.com>
+> Link: https://lore.kernel.org/lkml/20230126203618.nbqwppaddncq7on7@echanude/
+> Fixes: 2579af94c813 ("dt-bindings: interconnect: qcom: document the interconnects for sa8775p")
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> ---
+>  .../devicetree/bindings/interconnect/qcom,sa8775p-rpmh.yaml     | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
 
-I don't like this in DT because what if lots of devices start storing 
-lots of things in vendor specific UEFI variables. It doesn't scale.
-
-Rob
+Acked-by: Rob Herring <robh@kernel.org>
