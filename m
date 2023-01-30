@@ -2,110 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E0546813CF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 15:53:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D828C681405
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 16:03:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237864AbjA3Oxf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Jan 2023 09:53:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37074 "EHLO
+        id S230469AbjA3PDn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Jan 2023 10:03:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237815AbjA3Oxe (ORCPT
+        with ESMTP id S235600AbjA3PDm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Jan 2023 09:53:34 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88C472942E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jan 2023 06:53:33 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id o36so2155848wms.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jan 2023 06:53:33 -0800 (PST)
+        Mon, 30 Jan 2023 10:03:42 -0500
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49E1116AC4;
+        Mon, 30 Jan 2023 07:03:41 -0800 (PST)
+Received: by mail-ej1-x62b.google.com with SMTP id bk15so32519888ejb.9;
+        Mon, 30 Jan 2023 07:03:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ySyb+9DeL5fJ0AqcUKPoABZaZNyjzAc//xSJ1ODmiuU=;
-        b=JvdL81gB+V5vx6+HLY85U0rgTxjMwC0gvfTyDTmtTOCx8xh8EBdnu0pDspLJV0HZo3
-         TCnPIi9tr+cFIbjmt9foLdiGqiM9fP2CawjIdBHp+Mhqe3vhIQkikf7wyGAl+/kubDrB
-         ZESx1z6oMb2R3Z0IHUCuVtiIoCSFaJl4jhG2U6wsawPJc645tVzoKjA931jFvdwA0J18
-         zVtKMlc4GvWnjskN2h5TwVqKB4/AtbB1SUeVT58cpfhGZbk3r/lswQQx78G9muEkvoCa
-         KhviC8rbuAH1qpRjMjIcSDaIdqKE3UWLoWEMFZIhYiqAQc5a+8jgVzSKx8tBpnb2+OpH
-         yjgA==
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=LjoKg9IIWCpmfznwDQBQg5+I7y2t/W1mP0IQadL98vk=;
+        b=jOHJcl+CZMZyevmTRcgFypVuXSpw/TrhSP9GH+VmtuacF3shfUXk+TJdrbzN8g8Mco
+         ewlAMTNHawxokh5QSKWkuWnbxSD43wx+kbFFMRsCHIHFbOC7pARk2WVjG68wAteRC1Jt
+         AZ0qdHqO+f17Yd7WP08SkBJWogHS8w4cukaucIgtprop/Gg3X815KsCzMMS+0ua9qcFD
+         ubOUkQRXDOhkeIJHgb5Pgk9io4MORtRwhFql4SHQQw9rpXZF2yJk+xyXK9MlBkOaClTD
+         wLFmMsjqJDShQ1hFoYPYjAD3sz9aW7HN/HzwdqtJ0J7mkDhE7kEvLTwEAXgExhv9zim4
+         643A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ySyb+9DeL5fJ0AqcUKPoABZaZNyjzAc//xSJ1ODmiuU=;
-        b=GZjussXix/gYj5C6GkDlN8RDeqQMmJB03+Moue44C+Cnss/Hm8SFox1a7c5gKMCza+
-         FJ8f8j6WBqwDHC5s7yIhR76ai/I5xPeZFujDqoQhHA9WDcGhHnq2fVTHKRWdD1voYNHR
-         r0Koayk2CKKl9BGRL7VNQ3/W5QvBxtgZR8ozKCskJfpH3aQgZdID368ETxgNAAuHH33Z
-         hVRRrVPO6SVwDD1G3zvpSWyLkvcp7hBp5uSKVPpV2AUfTffz1QbsPyW6Cr+eYQG3mJGg
-         Rokb0YUsKfC4OiP/R0YtD5INs/trxJDH9GDD2Cc8ERkTdPSmc587JSTdvfuiugce0CuV
-         /42w==
-X-Gm-Message-State: AO0yUKVzZRDt+3qByixg7gNQa+vUutYwNC/hQX79wYGlPcvsBfb3n4lP
-        JNHTE9eULk52N4XcX44jMI5DRQ==
-X-Google-Smtp-Source: AK7set+7061y1dLtcQauJpeIRhWsE/OPFF1N/OwHvBvzWw6ZsTiAcij0rsvYYsbhx/z3ZiOR6whsfw==
-X-Received: by 2002:a05:600c:5008:b0:3d9:f559:1f7e with SMTP id n8-20020a05600c500800b003d9f5591f7emr6446029wmr.20.1675090412131;
-        Mon, 30 Jan 2023 06:53:32 -0800 (PST)
-Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id x7-20020a5d6b47000000b002bbed1388a5sm12167977wrw.15.2023.01.30.06.53.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Jan 2023 06:53:30 -0800 (PST)
-Date:   Mon, 30 Jan 2023 16:53:28 +0200
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Peng Fan <peng.fan@nxp.com>, djakov@kernel.org
-Cc:     Mike Tipton <quic_mdtipton@quicinc.com>,
-        Vivek Aknurwar <quic_viveka@quicinc.com>, djakov@kernel.org,
-        quic_okukatla@quicinc.com, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        "abel >> Philipp Zabel" <p.zabel@pengutronix.de>,
-        abelvesa@kernel.org, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Subject: Re: [PATCH] interconnect: Skip call into provider if initial bw is
- zero
-Message-ID: <Y9fZ6GUzWsCMXzba@linaro.org>
-References: <1673647679-15216-1-git-send-email-quic_viveka@quicinc.com>
- <83a7bfed-3b16-3d01-b1b2-f197252bd0b1@linaro.org>
- <5e1f37ba-494a-19d2-e412-7631508ab142@linaro.org>
- <151790dd-02e5-a1f5-aab5-360f39e21c57@quicinc.com>
- <35dcb764-e340-5fe7-6637-cdb5f84266ce@linaro.org>
- <6dd7b0b0-f6fb-9de4-c365-d6cbfe04f2c0@quicinc.com>
- <742ff9cd-e7be-11b8-3805-5b60aba6b2f1@linaro.org>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LjoKg9IIWCpmfznwDQBQg5+I7y2t/W1mP0IQadL98vk=;
+        b=ZoUnPJOaib4k2a2RBdOJg1VUciMaggFJ3S3Pr5AfBvAlluqKY/aec8gZNjyEgKlWwp
+         wNyzupH1Wq5Os87eW8O4ISe5sHUDrvqa135a4sA9uzNKyfMitARWIz5lag9bFS+ZcyOn
+         d0nLD3bUJMoGOxhRlkxFqZSzqMnVtxGe/3hcOE1Y/zQiwUhSY2j0bypc3Zi/eUE99BvW
+         nPL+pFaOSJ04CRdGk9oQ9BZzcqs7H6hvqC5IJ1AIZfUj6+s+8xQTiwg0d/LDVc0DySe7
+         GzGFJ9V72yZQT+T53t5PB9rxCg0zAW+rsDOU9LSi3ts/Vq1IAQrr0061D/PPXI2qH+Sk
+         2XNQ==
+X-Gm-Message-State: AFqh2krK0pKaQaGNvdVDvcw06A5lLNAQD1e64h9XSbILc3T7294Kb9yb
+        OKIloobL8smPU3uc9aGXPgae95h/zU0r+4sNLRQ=
+X-Google-Smtp-Source: AMrXdXuRoNOaQ+UrouHilV5a0cOt6+WCe+BfGZzITf8awSdCaroBrAVZAt5cpGe8NPOJTeourc8Cqbu6WLdlTCwKWGE=
+X-Received: by 2002:a17:907:2358:b0:86f:41b2:49 with SMTP id
+ we24-20020a170907235800b0086f41b20049mr7578777ejb.194.1675091019768; Mon, 30
+ Jan 2023 07:03:39 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <742ff9cd-e7be-11b8-3805-5b60aba6b2f1@linaro.org>
+References: <20230128055214.33648-1-jamiemdouglass@gmail.com>
+ <CAB1t1CwzUCEL1josABxfyqX91Z6DsrbEuopsDYsgq-eNxh6Btw@mail.gmail.com> <fd879d4e-13d7-bb82-8668-a1423fc7e428@linaro.org>
+In-Reply-To: <fd879d4e-13d7-bb82-8668-a1423fc7e428@linaro.org>
+From:   Petr Vorel <petr.vorel@gmail.com>
+Date:   Mon, 30 Jan 2023 16:03:27 +0100
+Message-ID: <CAB1t1CyGeXev-nfvgAfK+Wpny0EfyAiovNc6rH0miHzAWEoM=g@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: msm8992-lg-bullhead: Correct memory
+ overlap with SMEM region
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Jamie Douglass <jamiemdouglass@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Dominik Kobinski <dominikkobinski314@gmail.com>,
+        Konrad Dybico <konrad.dybico@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23-01-23 22:58:49, Bryan O'Donoghue wrote:
-> On 23/01/2023 20:37, Mike Tipton wrote:
-> > 
-> > This isn't actually changing it for all providers. Only for those that
-> > define the get_bw() callback. Right now that's only qcom/msm8974 and
-> > imx/imx. If get_bw() isn't defined, then icc_node_add() defaults to
-> > INT_MAX. So, the logical behavior in that case is unchanged. Which means
-> > this isn't even changing the behavior for rpmh yet, either.
-> 
-> Yes that adds up.
-> 
-> Looking at the commit for get_bw() for the 8974, I think this change would
-> be OK with the intent of this commit
-> 
-> commit 9caf2d956cfa254c6d89c5f4d7b3f8235d75b28f
-> Author: Georgi Djakov <georgi.djakov@linaro.org>
-> Date:   Mon Nov 9 14:45:12 2020 +0200
-> 
-> @Abel what effect will skipping pre->aggregation() have on i.MX ?
+On Mon, 30 Jan 2023 at 15:21, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+>
+>
+> On 30.01.2023 15:19, Petr Vorel wrote:
+> > Hi Jamie,
+> >
+> > On Sat, 28 Jan 2023 at 06:53, Jamie Douglass <jamiemdouglass@gmail.com> wrote:
+> >>
+> >> A previously committed reserved memory region was overlapping with the
+> >
+> > IMHO there should be marked commit which you're fixing:
+> > Fixes: 22c7e1a0fa45 ("arm64: dts: msm8992-bullhead: add memory hole region")
+> Yes
+>
+> >
+> >> SMEM memory region, causing an error message in dmesg:
+> >>         OF: reserved mem: OVERLAP DETECTED!
+> >>         reserved@5000000 (0x0000000005000000--0x0000000007200000)
+> >>         overlaps with smem_region@6a00000
+> >>         (0x0000000006a00000--0x0000000006c00000)
+> >> This patch splits the previous reserved memory region into two
+> >> reserved sections either side of the SMEM memory region.
+> >
+> > Reviewed-by: Petr Vorel <pvorel@suse.cz>
+> > Tested-by: Petr Vorel <pvorel@suse.cz>
+> > ...
+> >> +++ b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
+> >> @@ -53,8 +53,13 @@ cont_splash_mem: memory@3400000 {
+> >>                         no-map;
+> >>                 };
+> >>
+> >> -               removed_region: reserved@5000000 {
+> >> -                       reg = <0 0x05000000 0 0x2200000>;
+> >> +               reserved@5000000 {
+> > Can we keep "removed_region:" ?
+> > removed_region: reserved@5000000 {
+> >
+> >> +                       reg = <0x0 0x05000000 0x0 0x1a00000>;
+> >> +                       no-map;
+> >> +               };
+> >> +
+> >> +               reserved@6c00000 {
+> > Not sure which label to add, maybe append 2?
+> > removed_region2: reserved@6c00000 {
+> > @Konrad @Krzysztof WDYT?
+> Generally, if you don't expect that there'll be a need to
+> amend/reference the node from somewhere else, the label is
+> rather useless..
 
-I don't think there is any impact on i.MX platforms.
+Thank you for info. To be honest I have no idea. Previously the label
+was added, but that does not mean that it's used.
+'git grep -l removed_region' shows only labels in few dts/dtsi, IMHO
+it's not used. IMHO it looks ok to avoid it.
 
-Peng, any input?
+Kind regards,
+Petr
 
-> 
-> ---
-> bod
+>
+> Konrad
+>
+> >
+> > Kind regards,
+> > Petr
+> >
+> >> +                       reg = <0x0 0x06c00000 0x0 0x400000>;
+> >>                         no-map;
+> >>                 };
+> >>         };
