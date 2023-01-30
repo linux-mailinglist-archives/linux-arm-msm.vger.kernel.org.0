@@ -2,55 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 63A51681E1A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 23:30:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A9081681E20
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 23:31:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231599AbjA3WaY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Jan 2023 17:30:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40256 "EHLO
+        id S231600AbjA3WbU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Jan 2023 17:31:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230087AbjA3WaX (ORCPT
+        with ESMTP id S229502AbjA3WbP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Jan 2023 17:30:23 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 887E52ED68;
-        Mon, 30 Jan 2023 14:30:12 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Mon, 30 Jan 2023 17:31:15 -0500
+Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [5.144.164.165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2BF32FCEB
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jan 2023 14:31:13 -0800 (PST)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 37DB7B8118D;
-        Mon, 30 Jan 2023 22:30:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB2B8C433EF;
-        Mon, 30 Jan 2023 22:30:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1675117809;
-        bh=d9G8/QnUInkOhp8U+UKSxXG01HfHMeg7Z48itkC2/EA=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=eo6j30SL57qwi0oTX4fKOlrj+t/+4Jpv4pqJPEWUOk0Jw6uY7YsXbhh3xw3+sbuvl
-         WNMSU9rBpb1vVFlSUBrNjoGG8ecNrr9ltvdZSkv8NA9hq1FYPXN4SnHr9LEOho7rJu
-         NgPMKCKHt4v/Giy1FedYeZbi8CLA9Xj2imEjEUEl3UTcZl4rTW24GecwzEzRytxD8r
-         hdBGA/iI+3az6sQW7ATm7prJuALC//YbTKO35kWCSD88FPEwe7VYGPqXQog51SZiy9
-         l8lG7uSR1LCaBRbMKQVojdPfjHIFPCu0VzK+KROWjE05ElOTYPTxbsGfOL1DpFazQb
-         lohilWY9hnlKw==
-Message-ID: <5243dd0a8ca7ca5c319ec42c98b22430.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id BB55D1F68E;
+        Mon, 30 Jan 2023 23:31:11 +0100 (CET)
+Date:   Mon, 30 Jan 2023 23:31:10 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, dmitry.baryshkov@linaro.org,
+        andersson@kernel.org, quic_sbillaka@quicinc.com,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1 10/14] drm/msm/disp/dpu: add supports of DSC encoder
+ v1.2 engine
+Message-ID: <20230130223110.abjh7k32fjs4kola@SoMainline.org>
+References: <1674498274-6010-1-git-send-email-quic_khsieh@quicinc.com>
+ <1674498274-6010-11-git-send-email-quic_khsieh@quicinc.com>
+ <20230123201133.zzt2zbyaw3pfkzi6@SoMainline.org>
+ <926021c1-d9d1-4449-f01b-f405b48f326a@quicinc.com>
+ <20230130201654.vlr7p7id3a7vxc2b@SoMainline.org>
+ <0a0c3a12-51e9-b0d0-9307-847023dbe1f7@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20230130135555.3268172-1-arnd@kernel.org>
-References: <20230130135555.3268172-1-arnd@kernel.org>
-Subject: Re: [PATCH] clk: qcom: gcc-qcs404: fix duplicate initializer warning
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Arnd Bergmann <arnd@arndb.de>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-To:     Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>
-Date:   Mon, 30 Jan 2023 14:30:07 -0800
-User-Agent: alot/0.10
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0a0c3a12-51e9-b0d0-9307-847023dbe1f7@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -58,20 +53,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Arnd Bergmann (2023-01-30 05:55:47)
-> From: Arnd Bergmann <arnd@arndb.de>
->=20
-> In one of the clocks, a redundant initialization for .num_parents
-> got left behind by a recent patch:
->=20
-> drivers/clk/qcom/gcc-qcs404.c:63:32: error: initialized field overwritten=
- [-Werror=3Doverride-init]
->    63 |                 .num_parents =3D 1,
->       |                                ^
->=20
-> Fixes: 2ce81afa0c7c ("clk: qcom: gcc-qcs404: sort out the cxo clock")
-> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-> ---
+Abhinav,
 
-This is https://lore.kernel.org/r/20230123201812.1230039-2-krzysztof.kozlow=
-ski@linaro.org
+On 2023-01-30 13:22:03, Abhinav Kumar wrote:
+> Hi Marijn
+> 
+> On 1/30/2023 12:16 PM, Marijn Suijten wrote:
+> > On 2023-01-24 15:52:46, Kuogee Hsieh wrote:
+> > 
+> > <snip>
+> > 
+> > If only replying to a small chunk somewhere in the middle of a diff
+> > and/or large review, please cut out unnecessary bits to make your reply
+> > easier to find :)
+> > 
+> >>>> +	data = (dsc->flatness_min_qp & 0x1f);
+> >>>> +	data |= (dsc->flatness_max_qp & 0x1f) << 5;
+> >>>> +	data |= (dsc_info->det_thresh_flatness & 0xff) << 10;
+> >>> dpu_hw_dsc.c computes this on the fly.  After removing that, and
+> >>> using initial_lines from the function parameters, only
+> >>> dsc_info->num_active_ss_per_enc remains.  Do you really need that
+> >>> msm_display_dsc_info struct here, do you need it at all?
+> >>
+> >> I ported these code from our down stream code base.
+> >>
+> >> I make it work first, then clean it up will follow.
+> >>
+> >> I submit it for review since it looks like you guy like to have code sooner.
+> > 
+> > Correct, I was looking forward to these patches albeit complete with the
+> > promised DSI support from Jessica, which still seems to be pending.
+> > 
+> 
+> DSI support is still being worked upon.
+> 
+> I dont think we promised DSC 1.2 will come with DSI together in the same 
+> series. It was always going to be DSC 1.2 + DP followed by another 
+> series from Jessica for DSI.
+> 
+> Lets set the expectations right.
+
+Not saying that these patches were promised as part of this series (as
+said, "which still seem to be pending"), just making clear that this
+series if of no use to me (no hurry to get the code in my hands sooner)
+until the DSI patches are also shared which I would have started working
+on myself if I didn't know QUIC was picking it up to distract from the
+current v1.1 broken-ness on SM8150 and SM8250.
+
+To set my (and at least Neil's) expectations straight as well: DSC 1.2
+HW support should come in a separate series without DP support.  Smaller
+series (not to mention appropriately split-up patches) lead to a
+decrease in scope, less dependencies and hopefully more efficient v2 -
+for all involved.
+
+- Marijn
