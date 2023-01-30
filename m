@@ -2,111 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 21D48680A2E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 10:55:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C1868680A40
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 10:59:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236340AbjA3Jzp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Jan 2023 04:55:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58218 "EHLO
+        id S236084AbjA3J7Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Jan 2023 04:59:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236189AbjA3Jze (ORCPT
+        with ESMTP id S236071AbjA3J7P (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Jan 2023 04:55:34 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB4122F7B7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jan 2023 01:55:09 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id q10so10468466wrm.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jan 2023 01:55:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=am8cCJUJQkxtFMDP5ZppaJ0gQfCKelJ/SbE5wCiC308=;
-        b=oQdcara/a0kV9QfOauSUBjLCvzUzrCzrqWw5RvkJIhkWKSQXxz/t/jnMSgcF9Q0bna
-         6iVPvZ0swe8nD3UddtjRpGc2PtSETz7/AzvKKnDPwbtHDPoTD3G03VCzGHy8yqRvE2Ih
-         HGejqd4E/lUD0cWx1ii5/YFxOvLvic1L1VYVxkN1beELf/5HBA0Wzu72op5n925aleMF
-         ViheilACLiOSxYYOJ5LvEb8k9zPc05ofoZLsQKYX+WQFIgZMR5Uj+IhS/4KppjzNXi65
-         KiYMvv9riAUrY3YxKTV4UKADVfOaI3iCHSfbRD/xgnv5OEo78na+K9IeEPIqMcgGff+h
-         jEHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=am8cCJUJQkxtFMDP5ZppaJ0gQfCKelJ/SbE5wCiC308=;
-        b=0iOJUb+ucBQGzDmiZzKdx0hS2HeCG7Y0QvAAnPC30zqel2Er1l0rB7c04iBeID/cgl
-         xP6rfCPeP/z1lPhAoF/nB2VAf74c17SsN+J96jf9FaA4HUmQdK462C5PWgtYIVNGcc38
-         MKQ9n8mEmZvN5jUJx4LkDpHMl773xB1zx7eaoOJKuFZHRmMpVFFscauGPGt417NO18ex
-         gs7VtTW5e9O1iaLFSB9aw0x6SYYKVq+kezwsXthFz4GWNZ4ke4XKWCgBwOI0DCQElMMh
-         ue3G9ATzpPGzXj+5HrrIdfeZfeIMBujVh1UkLOI0qwClcbtVnxHKWqk8HU6+87IlsM7i
-         zXnA==
-X-Gm-Message-State: AO0yUKW7zO6u5WwN+8+S/KEgbsRqUTOhtBTed1Na0pDPawf6sz4j+2a1
-        WoDqOVR7LVvKpsNFaYWSWoW7FGr3siT4TQL5RPI=
-X-Google-Smtp-Source: AK7set/8vbu4TzSJeux1hMy/ZZNg34uDTVo0or8MG9lP7LcIumzl1FwleOu9J+Mpt0pALA666QVaQQ==
-X-Received: by 2002:adf:f410:0:b0:2bf:e778:6500 with SMTP id g16-20020adff410000000b002bfe7786500mr4769352wro.64.1675072481926;
-        Mon, 30 Jan 2023 01:54:41 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id k4-20020a5d4284000000b00241fde8fe04sm11453537wrq.7.2023.01.30.01.54.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Jan 2023 01:54:41 -0800 (PST)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Mon, 30 Jan 2023 10:54:38 +0100
-Subject: [PATCH 7/7] arm64: defconfig: add PMIC GLINK modules
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230130-topic-sm8450-upstream-pmic-glink-v1-7-0b0acfad301e@linaro.org>
-References: <20230130-topic-sm8450-upstream-pmic-glink-v1-0-0b0acfad301e@linaro.org>
-In-Reply-To: <20230130-topic-sm8450-upstream-pmic-glink-v1-0-0b0acfad301e@linaro.org>
-To:     Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mon, 30 Jan 2023 04:59:15 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C71272FCD5;
+        Mon, 30 Jan 2023 01:58:53 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 5F161B80EC1;
+        Mon, 30 Jan 2023 09:58:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 790B3C433D2;
+        Mon, 30 Jan 2023 09:58:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1675072703;
+        bh=SoUfX9t3uCDqd1KJttPmVP1c1Ha1TQ8GZrulQxL7hxA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=wEm+cw30u676F7aZTqiojYzEAkm9l6+AeVd6HYEv9qylFDXixh3cqrLwm7ZG6qGQg
+         TJdddpypqc8wJTRQDnjNru6+DEoxJXKOffILX6KmELj7CokLks8oAOmfuMnSX9nUNi
+         /eFUydHeAHuNtzJs3le2XqxpoMwDdJaymmNNPD8g=
+Date:   Mon, 30 Jan 2023 10:58:20 +0100
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Elliot Berman <quic_eberman@quicinc.com>
+Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Alex Elder <elder@linaro.org>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
         Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
+        Will Deacon <will@kernel.org>, Marc Zyngier <maz@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.12.0
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v9 03/27] gunyah: Common types and error codes for Gunyah
+ hypercalls
+Message-ID: <Y9eUvP0YQlLtAPpk@kroah.com>
+References: <20230120224627.4053418-1-quic_eberman@quicinc.com>
+ <20230120224627.4053418-4-quic_eberman@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230120224627.4053418-4-quic_eberman@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the PMIC GLINK core, altmode, battery and UCSI
-aux drivers as module.
+On Fri, Jan 20, 2023 at 02:46:02PM -0800, Elliot Berman wrote:
+> Add architecture-independent standard error codes, types, and macros for
+> Gunyah hypercalls.
+> 
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> ---
+>  MAINTAINERS            |  1 +
+>  include/linux/gunyah.h | 74 ++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 75 insertions(+)
+>  create mode 100644 include/linux/gunyah.h
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index d9205cb9e988..f1e07e39b2f5 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -9048,6 +9048,7 @@ L:	linux-arm-msm@vger.kernel.org
+>  S:	Supported
+>  F:	Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
+>  F:	Documentation/virt/gunyah/
+> +F:	include/linux/gunyah.h
+>  
+>  HABANALABS PCI DRIVER
+>  M:	Oded Gabbay <ogabbay@kernel.org>
+> diff --git a/include/linux/gunyah.h b/include/linux/gunyah.h
+> new file mode 100644
+> index 000000000000..985c6086348e
+> --- /dev/null
+> +++ b/include/linux/gunyah.h
+> @@ -0,0 +1,74 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#ifndef _LINUX_GUNYAH_H
+> +#define _LINUX_GUNYAH_H
+> +
+> +#include <linux/errno.h>
+> +#include <linux/limits.h>
+> +
+> +/* Common Gunyah macros */
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- arch/arm64/configs/defconfig | 4 ++++
- 1 file changed, 4 insertions(+)
+Macros?
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 984553d55e17..918ccab4678d 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -285,6 +285,10 @@ CONFIG_VIRTIO_BLK=y
- CONFIG_BLK_DEV_NVME=m
- CONFIG_QCOM_COINCELL=m
- CONFIG_QCOM_FASTRPC=m
-+CONFIG_BATTERY_QCOM_BATTMGR=m
-+CONFIG_QCOM_PMIC_GLINK=m
-+CONFIG_TYPEC_UCSI=m
-+CONFIG_UCSI_PMIC_GLINK=m
- CONFIG_SRAM=y
- CONFIG_PCI_ENDPOINT_TEST=m
- CONFIG_EEPROM_AT24=m
+> +#define GH_CAPID_INVAL	U64_MAX
+> +#define GH_VMID_ROOT_VM	0xff
 
--- 
-2.34.1
+These are all simple defines :)
 
+> +
+> +#define GH_ERROR_OK			0
+> +
+> +#define GH_ERROR_UNIMPLEMENTED		-1
+> +#define GH_ERROR_RETRY			-2
+
+All of these values, they come from the hypervisor?
+
+And then you:
+
+> +static inline int gh_remap_error(int gh_error)
+> +{
+> +	switch (gh_error) {
+> +	case GH_ERROR_OK:
+> +		return 0;
+> +	case GH_ERROR_NOMEM:
+> +		return -ENOMEM;
+> +	case GH_ERROR_DENIED:
+> +	case GH_ERROR_CSPACE_CAP_NULL:
+> +	case GH_ERROR_CSPACE_CAP_REVOKED:
+> +	case GH_ERROR_CSPACE_WRONG_OBJ_TYPE:
+> +	case GH_ERROR_CSPACE_INSUF_RIGHTS:
+> +	case GH_ERROR_CSPACE_FULL:
+> +		return -EACCES;
+> +	case GH_ERROR_BUSY:
+> +	case GH_ERROR_IDLE:
+> +		return -EBUSY;
+> +	case GH_ERROR_IRQ_BOUND:
+> +	case GH_ERROR_IRQ_UNBOUND:
+> +	case GH_ERROR_MSGQUEUE_FULL:
+> +	case GH_ERROR_MSGQUEUE_EMPTY:
+> +		return -EPERM;
+> +	default:
+> +		return -EINVAL;
+> +	}
+> +}
+
+Convert it to a Linux-kernel related value?
+
+If so, please say that in the documentation here (where the value came
+from, etc...)
+
+Also, why isn't gh_error an enumerated type so you can have some type
+safety and it's obvious when a value comes from the hypervisor what it
+should be and should not be.
+
+thanks,
+
+greg k-h
