@@ -2,138 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E82A681960
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 19:37:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4BA13681964
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 19:37:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238275AbjA3Sh3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Jan 2023 13:37:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45084 "EHLO
+        id S238330AbjA3Shr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Jan 2023 13:37:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238291AbjA3Sgg (ORCPT
+        with ESMTP id S238182AbjA3ShP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Jan 2023 13:36:36 -0500
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A5F513D6C;
-        Mon, 30 Jan 2023 10:36:22 -0800 (PST)
-Received: from g550jk.localnet (unknown [62.108.10.64])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 705A3CD5B1;
-        Mon, 30 Jan 2023 18:36:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1675103780; bh=w7+XQVClETXGlfL757dC4kjjZ78YoUiBNlAl+eRVAD0=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=bzTQoAHp/z69+jSIf9SrDybNnMQQWbWkbdUIQk/Q+iUUwgpKs3bO96N/sILAGW3EB
-         tPEaZoJCwp3fVxaWwUnRJ6koXJh639cxKs5UNP34wyUYcoHVrHu8hoZgxBHI5vXoaH
-         RCpblWn8pYkhC4cQVsa+A4oLF3fiOjzM1QQG1sDg=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Eduardo Valentin <edubezval@gmail.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Cc:     Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Craig Tatlor <ctatlor97@gmail.com>
-Subject: Re: [PATCH] ARM: dts: qcom: msm8974: correct qfprom node reg
-Date:   Mon, 30 Jan 2023 19:36:19 +0100
-Message-ID: <1886214.taCxCBeP46@g550jk>
-In-Reply-To: <3112b531-45df-672c-c0a7-aefbdcceb727@linaro.org>
-References: <20230130-msm8974-qfprom-v1-1-975aa0e5e083@z3ntu.xyz>
- <3112b531-45df-672c-c0a7-aefbdcceb727@linaro.org>
+        Mon, 30 Jan 2023 13:37:15 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2DD32D74
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jan 2023 10:36:37 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id v13so11873966eda.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jan 2023 10:36:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cZhLOD9IjFhT2rw5mFVQaRWDwbDZlqozjoeDC3b7Esw=;
+        b=N1dmJr/r8/XSvyoUxRNc2HjR0kOQkzvm2Ls4s4KX7nE03ug0BnSqPpeXukRW1nGVGO
+         mUNRdd4Pgm344uL3hROdKa9/JQoe/K9mDXJEiqYLeKq64hBwquTI6wAy7No2AYzt8VYp
+         f/43I6o4AvhVx/LkESOysg0UhYz9vKsX4N5uF2J46mZTTLdCfLSDC9xTGSu7WRvCebeG
+         7rdw9mYyXqXClvmJkPy845MjgFT8wMU6Hn3UJKSpJ7bMMJIBGwEwRSmgIjY+AyKb5H8A
+         mX3OQI4Nl6yFKOvE9PV46OQ4XGBvUib7ghHLBkTf81y6X3LJ+/c0Gno1SfrdAIyOyca6
+         N6+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cZhLOD9IjFhT2rw5mFVQaRWDwbDZlqozjoeDC3b7Esw=;
+        b=xRRx/d0cKP1I86Y7cYWssI/DT0gln4/Dj4YEaTZ/y3xwP0BJf9wqamfmjJ2mPGaLL7
+         pcRZj7K7TbbGWkK7AHsQPLl2dj7GBccCu7UzOPtf/cLBPVxFJ+X3I/acL/iEllXbQNsv
+         nBPfHzqkV5w2Q/+5SJ5pU5OMp8sOWhx9c8FNlYrG3Ma37fVZDp7+Uk9r8b1HvMzQdzep
+         TuqZw3mtOjdfYwTLmnqyCweusW0y/txG86PDEUz6U0/gnJW8JBkaZt57/90TqZQacdax
+         FIMNMD4tgBdlTjBWIn61gj01N6/YadQluGIb+mCvuIB0+GOuzFGF7gV6EP3A/CJdWrhK
+         SXMQ==
+X-Gm-Message-State: AFqh2koh7DkxdAbdUEn1KUqz9A8jn3hDdnBfhxIvcYnLXr0gVRYlV7Wz
+        TlY1Jj2iSQMGQA+UrzeU4ZzCJQ==
+X-Google-Smtp-Source: AMrXdXvR5Q6KvIhrUEwYGvqNhBkWgrUuFEJSdmc3ZGDzFQa57T8TClhZRDJYjAW55lqTmNIGI4NywQ==
+X-Received: by 2002:a05:6402:298e:b0:496:6a20:6b61 with SMTP id eq14-20020a056402298e00b004966a206b61mr57790399edb.22.1675103796373;
+        Mon, 30 Jan 2023 10:36:36 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id fd22-20020a056402389600b004a1d4142543sm5937753edb.27.2023.01.30.10.36.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 30 Jan 2023 10:36:35 -0800 (PST)
+Message-ID: <e9b238af-28dd-f38e-24e3-4065c39d4e25@linaro.org>
+Date:   Mon, 30 Jan 2023 20:36:34 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
-X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
-        SPF_HELO_NONE,SPF_PASS,T_PDS_OTHER_BAD_TLD autolearn=no
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [v1 2/3] drm/msm/disp/dpu1: add dspps into reservation if there
+ is a ctm request
+Content-Language: en-GB
+To:     Kalyan Thota <quic_kalyant@quicinc.com>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, robdclark@chromium.org,
+        dianders@chromium.org, swboyd@chromium.org,
+        quic_vpolimer@quicinc.com, quic_abhinavk@quicinc.com,
+        marijn.suijten@somainline.org
+References: <1675092092-26412-1-git-send-email-quic_kalyant@quicinc.com>
+ <1675092092-26412-3-git-send-email-quic_kalyant@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <1675092092-26412-3-git-send-email-quic_kalyant@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Montag, 30. J=E4nner 2023 19:30:04 CET Konrad Dybcio wrote:
-> On 30.01.2023 19:20, luca@z3ntu.xyz wrote:
-> > From: Craig Tatlor <ctatlor97@gmail.com>
-> >=20
-> > The qfprom actually starts at 0xfc4b8000 instead of 0xfc4bc000 as
-> > defined previously. Adjust the tsens offsets accordingly.
-> >=20
-> > [luca@z3ntu.xyz: extract to standalone patch]
-> >=20
-> > Fixes: c59ffb519357 ("arm: dts: msm8974: Add thermal zones, tsens and
-> > qfprom nodes") Signed-off-by: Craig Tatlor <ctatlor97@gmail.com>
-> > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> > ---
->=20
-> Isn't this a raw vs ecc-corrected values problem?
+On 30/01/2023 17:21, Kalyan Thota wrote:
+> Add dspp blocks into the topology for reservation, if there is a ctm
+> request for that composition.
+> 
+> Changes in v1:
+> - Minor nits (Dmitry)
+> 
+> Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 13 ++++++-------
+>   1 file changed, 6 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index 9c6817b..3bd46b4 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -545,7 +545,8 @@ bool dpu_encoder_use_dsc_merge(struct drm_encoder *drm_enc)
+>   static struct msm_display_topology dpu_encoder_get_topology(
+>   			struct dpu_encoder_virt *dpu_enc,
+>   			struct dpu_kms *dpu_kms,
+> -			struct drm_display_mode *mode)
+> +			struct drm_display_mode *mode,
+> +			struct drm_crtc_state *crtc_state)
+>   {
+>   	struct msm_display_topology topology = {0};
+>   	int i, intf_count = 0;
+> @@ -573,11 +574,9 @@ static struct msm_display_topology dpu_encoder_get_topology(
+>   	else
+>   		topology.num_lm = (mode->hdisplay > MAX_HDISPLAY_SPLIT) ? 2 : 1;
+>   
+> -	if (dpu_enc->disp_info.intf_type == DRM_MODE_ENCODER_DSI) {
+> -		if (dpu_kms->catalog->dspp &&
+> -			(dpu_kms->catalog->dspp_count >= topology.num_lm))
+> -			topology.num_dspp = topology.num_lm;
+> -	}
+> +	if (dpu_kms->catalog->dspp &&
+> +	    crtc_state->ctm && (dpu_kms->catalog->dspp_count >= topology.num_lm))
 
-Not quite sure what you mean.
+This condition doesn't look correct anymore for the following reasons:
+- if there are no DSPPs we will completely ignore the ctm property
+- if there are not enough DSPPs, the CTM property will be ignore
 
-The original intention behind this patch is to allow to use the pvs fuse at=
-=20
-(now) 0xb0 which was inaccessible with the former definition.
+I think, this should be just:
 
-    pvs: pvs@b0 {
-        reg =3D <0xb0 0x8>;
-    };
-
-Regards
-Luca
-
->=20
-> Konrad
->=20
-> >  arch/arm/boot/dts/qcom-msm8974.dtsi | 12 ++++++------
-> >  1 file changed, 6 insertions(+), 6 deletions(-)
-> >=20
-> > diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi
-> > b/arch/arm/boot/dts/qcom-msm8974.dtsi index 8d216a3c0851..922d235c6065
-> > 100644
-> > --- a/arch/arm/boot/dts/qcom-msm8974.dtsi
-> > +++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
-> > @@ -1132,16 +1132,16 @@ restart@fc4ab000 {
-> >=20
-> >  			reg =3D <0xfc4ab000 0x4>;
-> >  	=09
-> >  		};
-> >=20
-> > -		qfprom: qfprom@fc4bc000 {
-> > +		qfprom: qfprom@fc4b8000 {
-> >=20
-> >  			compatible =3D "qcom,msm8974-qfprom",=20
-"qcom,qfprom";
-> >=20
-> > -			reg =3D <0xfc4bc000 0x1000>;
-> > +			reg =3D <0xfc4b8000 0x7000>;
-> >=20
-> >  			#address-cells =3D <1>;
-> >  			#size-cells =3D <1>;
-> >=20
-> > -			tsens_calib: calib@d0 {
-> > -				reg =3D <0xd0 0x18>;
-> > +			tsens_calib: calib@40d0 {
-> > +				reg =3D <0x40d0 0x18>;
-> >=20
-> >  			};
-> >=20
-> > -			tsens_backup: backup@440 {
-> > -				reg =3D <0x440 0x10>;
-> > +			tsens_backup: backup@4440 {
-> > +				reg =3D <0x4440 0x10>;
-> >=20
-> >  			};
-> >  	=09
-> >  		};
-> >=20
-> > ---
-> > base-commit: 6d796c50f84ca79f1722bb131799e5a5710c4700
-> > change-id: 20230130-msm8974-qfprom-619c0e8f26eb
-> >=20
-> > Best regards,
+if (crtc_state->ctm)
+     topology.num_dspp = topology.num_lm;
 
 
 
+
+> +		topology.num_dspp = topology.num_lm;
+>   
+>   	topology.num_enc = 0;
+>   	topology.num_intf = intf_count;
+> @@ -643,7 +642,7 @@ static int dpu_encoder_virt_atomic_check(
+>   		}
+>   	}
+>   
+> -	topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode);
+> +	topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode, crtc_state);
+>   
+>   	/* Reserve dynamic resources now. */
+>   	if (!ret) {
+
+-- 
+With best wishes
+Dmitry
 
