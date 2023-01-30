@@ -2,76 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 12C856806D0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 09:03:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AA24368074F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 09:20:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231370AbjA3ID4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Jan 2023 03:03:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57736 "EHLO
+        id S235959AbjA3IUm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Jan 2023 03:20:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230024AbjA3IDz (ORCPT
+        with ESMTP id S235409AbjA3IUm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Jan 2023 03:03:55 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADE2312F3B;
-        Mon, 30 Jan 2023 00:03:54 -0800 (PST)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30U7CEnm019701;
-        Mon, 30 Jan 2023 08:03:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=wUEmNGtY5YBXH0Iwf0vKCRpxgYtWM4Y6TFuANozd8as=;
- b=CvG7swZbFO20g1stkWC7haQXLYZKqLNbC+RhEPkm6LaeeB3GCkj7a1YlFM6a+4celj+m
- FvEvkHHwlSiUMoJ30v5hirICE0I0/h5xVb3WI32rOdYCpxNWC2wauruWzDUqyBYhkpM4
- HWT0fg4MtIdM/kP0dTFgZMeg8AiXZIVJMfjOssbkO2sIkd8nEn5TxOW3p+7s0Zf9Lulu
- kFqyCIjBHu2a0WHR1dggpsDup0Lg2A8nt1+CCAgUHmF+/3nDaKEbuTAoctiiSSH2m1u9
- /jdCUikGxlFeK/2X/yJ8s/XUcxTBU4Ivb4HkzF3ZUxMKowXr7SdZklx64mKH0dvxUaLO lA== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ncvfpax72-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 30 Jan 2023 08:03:49 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30U83mjQ018349
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 30 Jan 2023 08:03:48 GMT
-Received: from [10.216.24.235] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 30 Jan
- 2023 00:03:45 -0800
-Message-ID: <d9708f4b-e533-e400-acbf-3d8e816f242e@quicinc.com>
-Date:   Mon, 30 Jan 2023 13:33:42 +0530
+        Mon, 30 Jan 2023 03:20:42 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38A0D180;
+        Mon, 30 Jan 2023 00:20:41 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id EB3A6B80DF3;
+        Mon, 30 Jan 2023 08:20:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA0F5C433D2;
+        Mon, 30 Jan 2023 08:20:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1675066838;
+        bh=Vl/j6mc1CDCgRSUfCSphWECoE2GmiM4hVfic/CU8lW4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=BZ/buxg0Jhg1JWgdSmyCy/y0JtN993BZqG1bVfA+8tgA3Qi9LiBuzCOznSqmY6d3k
+         Tp4r2CBROYHRPqJY/l5YfrNvIxAVg5fltRDi9JI2JfRLFztnQFyOUbtfX573y0otLx
+         nAaS6avGlS19OM2eUehwQqpGzhu2VlkyFdxNafPKgn0DIq8TT9abjfTJpsGkqzsny3
+         aoQKAUH+uPPwaCAM4pxvdU3QCB6xv67BXdN33nTLoHOGKrGgt/S/1AR+/QoGFptV/M
+         FU7Ky+V3WYA6e0USOpa/cR3seHjpMIvrbU2JrGlRECF9/j+V4JhB3vgLBgo6bgCSPO
+         dfupS3fIDQ88w==
+Date:   Mon, 30 Jan 2023 08:20:33 +0000
+From:   Lee Jones <lee@kernel.org>
+To:     Mukesh Ojha <quic_mojha@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 1/2] dt-bindings: mfd: qcom,tcsr: Add compatible for
+ sm8450
+Message-ID: <Y9d90TwyLKdhkj13@google.com>
+References: <1673513697-30173-1-git-send-email-quic_mojha@quicinc.com>
+ <3a4675f8-c182-a98c-38e8-be1b4480f612@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH] remoteproc: sysfs: fix race while updating recovery flag
-Content-Language: en-US
-To:     Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-        <andersson@kernel.org>, <mathieu.poirier@linaro.org>
-CC:     <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20230129225106.10606-1-quic_satyap@quicinc.com>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <20230129225106.10606-1-quic_satyap@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: PFfgtZ5PI_aMMULWC5h9AeWpLcjoPgCJ
-X-Proofpoint-ORIG-GUID: PFfgtZ5PI_aMMULWC5h9AeWpLcjoPgCJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-30_06,2023-01-27_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 adultscore=0
- spamscore=0 mlxscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
- priorityscore=1501 phishscore=0 mlxlogscore=921 bulkscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301300075
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <3a4675f8-c182-a98c-38e8-be1b4480f612@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,60 +58,45 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Sun, 29 Jan 2023, Mukesh Ojha wrote:
 
-On 1/30/2023 4:21 AM, Satya Durga Srinivasu Prabhala wrote:
-> When multiple clients try to update the recovery flag, it is
-
-Multiple user-space clients ?
-
-> possible that, race condition would lead to undesired results
-> as updates to recovery flag isn't protected by any mechanism
-> today. To avoid such issues, take remoteproc mutex lock before
-> updating recovery flag and release the lock once done.
-
-But your patch also adds locks for the case which does not update 
-recovery flag..
-
+> +Jones
 > 
-> Signed-off-by: Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>
-> ---
->   drivers/remoteproc/remoteproc_sysfs.c | 5 +++++
->   1 file changed, 5 insertions(+)
+> Jones,
 > 
-> diff --git a/drivers/remoteproc/remoteproc_sysfs.c b/drivers/remoteproc/remoteproc_sysfs.c
-> index 8c7ea8922638..ec37176e1589 100644
-> --- a/drivers/remoteproc/remoteproc_sysfs.c
-> +++ b/drivers/remoteproc/remoteproc_sysfs.c
-> @@ -48,16 +48,21 @@ static ssize_t recovery_store(struct device *dev,
->   {
->   	struct rproc *rproc = to_rproc(dev);
->   
-> +	mutex_lock(&rproc->lock);
->   	if (sysfs_streq(buf, "enabled")) {
->   		/* change the flag and begin the recovery process if needed */
->   		rproc->recovery_disabled = false;
-> +		mutex_unlock(&rproc->lock);
->   		rproc_trigger_recovery(rproc);
->   	} else if (sysfs_streq(buf, "disabled")) {
->   		rproc->recovery_disabled = true;
-> +		mutex_unlock(&rproc->lock);
->   	} else if (sysfs_streq(buf, "recover")) {
->   		/* begin the recovery process without changing the flag */
-> +		mutex_unlock(&rproc->lock);
+> Can this patch be taken into your tree ?
 
-is it really needed for this case?
+If it is sent to me properly, then yes.
 
->   		rproc_trigger_recovery(rproc);
->   	} else {
-> +		mutex_unlock(&rproc->lock);
+> On 1/12/2023 2:24 PM, Mukesh Ojha wrote:
+> > Document the qcom,sm8450-tcsr compatible.
+> > 
+> > Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+> > ---
+> > Change in v3:
+> >    - Align with new format mentioned at
+> >      Documentation/devicetree/bindings/arm/qcom-soc.yaml
+> > 
+> > Change in v2:
+> >    - Considering here it as v2 as this patch came out from comment
+> >      made on its v1 https://lore.kernel.org/lkml/c5dc8042-717b-22eb-79f6-d18ab10d6685@linaro.org/
+> > 
+> > 
+> >   Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml | 1 +
+> >   1 file changed, 1 insertion(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml b/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
+> > index adcae6c..4290062 100644
+> > --- a/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
+> > +++ b/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
+> > @@ -26,6 +26,7 @@ properties:
+> >             - qcom,sdm630-tcsr
+> >             - qcom,sdm845-tcsr
+> >             - qcom,sm8150-tcsr
+> > +          - qcom,sm8450-tcsr
+> >             - qcom,tcsr-apq8064
+> >             - qcom,tcsr-apq8084
+> >             - qcom,tcsr-ipq6018
 
-same here..
-
->   		return -EINVAL;
->   	}
->   
-
-Do you also need to add lock for rproc_recovery_write in 
-drivers/remoteproc/remoteproc_debugfs.c ?
-
--Mukesh
+-- 
+Lee Jones [李琼斯]
