@@ -2,168 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D8E0680DB6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 13:32:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0CECD680E21
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 13:56:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236867AbjA3McZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Jan 2023 07:32:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60124 "EHLO
+        id S236935AbjA3M4f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Jan 2023 07:56:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236877AbjA3McX (ORCPT
+        with ESMTP id S236937AbjA3M4e (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Jan 2023 07:32:23 -0500
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65D7F3755B;
-        Mon, 30 Jan 2023 04:32:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1675081927; x=1706617927;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=VRScn7azVs3RNAip1lwo/iLiGA4aPiARFKff3Doh2wE=;
-  b=UwD+4OnQrkNoRnZvSDs8ZHcSpTS2b9OLoDWMyUTsymyqxpfLDk0EmDW4
-   Y5I5KKk/rkzGLIA6+wPvvpPw4sEpk1ovxFeGtSvZnYlyX8nQFi+TJnJPq
-   xM5sR5Y/y8qWxRsIo2+b2wITFHHeeZM4xeThiFuJ6L1uWxQssT6idnOXJ
-   a7DEUlPhv5BPOBtqpVj2y4Lqjy2AkRjKxdHxYhK2cC1JskFc8G45JHFuX
-   IB5+f4B98rLPnDI0eJnA4/bd4O3/U2qzhNSN4qaAMu9eIfTGMMdy+kOhI
-   zjRQtsAr6v8SDaAIWemDPwWrdKIq9ry/QYRwJvi++YlwLyeyIX9v8u4o5
-   g==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10605"; a="325241599"
-X-IronPort-AV: E=Sophos;i="5.97,257,1669104000"; 
-   d="scan'208";a="325241599"
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Jan 2023 04:32:06 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10605"; a="837953665"
-X-IronPort-AV: E=Sophos;i="5.97,257,1669104000"; 
-   d="scan'208";a="837953665"
-Received: from lkp-server01.sh.intel.com (HELO ffa7f14d1d0f) ([10.239.97.150])
-  by orsmga005.jf.intel.com with ESMTP; 30 Jan 2023 04:32:03 -0800
-Received: from kbuild by ffa7f14d1d0f with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1pMTKL-0003cU-36;
-        Mon, 30 Jan 2023 12:32:01 +0000
-Date:   Mon, 30 Jan 2023 20:31:54 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     =?utf-8?Q?Micha=C5=82?= Krawczyk <mk@semihalf.com>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>
-Cc:     oe-kbuild-all@lists.linux.dev, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        =?utf-8?Q?Micha=C5=82?= Krawczyk <mk@semihalf.com>
-Subject: Re: [PATCH] media: venus: dec: Fix handling of the start cmd
-Message-ID: <202301302043.AAXAiTHh-lkp@intel.com>
-References: <20230130105423.1338554-1-mk@semmihalf.com>
+        Mon, 30 Jan 2023 07:56:34 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92C4C367CA;
+        Mon, 30 Jan 2023 04:56:33 -0800 (PST)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30UBUcgY022003;
+        Mon, 30 Jan 2023 12:56:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=081hhb1xu20Ax/S4B5L14JjuI9A+K1VwD+7hio7vcKA=;
+ b=Sm7L/CIzDtgTvDPOJSMfRAxxppAQ11VyVeGhg2f8/Ymn2ruH+eh77Ayx2HEZaXT0K27O
+ CoogoegLAYj5E7dOnJqJZuIyUUufH+bfgjtHXIcQdJxS91VPgm/ptiIZ4p4a6IWuSBqz
+ GLuhIx5r459coZO6XvV3oNCOPv38MgQjRCnPcu95UwpAnszYQgS2DdzGmAeakU8zukUx
+ /p21jHdVesVDHu2MyPmgyio60P2j2rXBsFvkwmMIB0CYERmFMj1zrq17etX2u2PHcpa8
+ aiLoZpFu4tNdE7QeZp+lrI5JZVhRnY8CiIO6ZekKw2kw4FL6Am+NJ6/+slWpFlMH5sTC XA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nctqgkxs6-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 30 Jan 2023 12:56:10 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30UCu1am014630
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 30 Jan 2023 12:56:01 GMT
+Received: from devipriy-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Mon, 30 Jan 2023 04:55:53 -0800
+From:   devi priya <quic_devipriy@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <linus.walleij@linaro.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <p.zabel@pengutronix.de>, <shawnguo@kernel.org>, <arnd@arndb.de>,
+        <marcel.ziswiler@toradex.com>, <dmitry.baryshkov@linaro.org>,
+        <nfraprado@collabora.com>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
+        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
+        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_poovendh@quicinc.com>
+Subject: [PATCH V3 0/7] Add minimal boot support for IPQ9574
+Date:   Mon, 30 Jan 2023 18:25:21 +0530
+Message-ID: <20230130125528.11509-1-quic_devipriy@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230130105423.1338554-1-mk@semmihalf.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: SN-LGbd0NzQluwgSsrKwmLY5T7bD9tJR
+X-Proofpoint-ORIG-GUID: SN-LGbd0NzQluwgSsrKwmLY5T7bD9tJR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-30_10,2023-01-30_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=0
+ bulkscore=0 clxscore=1015 priorityscore=1501 impostorscore=0
+ lowpriorityscore=0 phishscore=0 mlxscore=0 adultscore=0 malwarescore=0
+ mlxlogscore=739 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301300124
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Michał,
+The IPQ9574 is Qualcomm's 802.11ax SoC for Routers,
+Gateways and Access Points.
 
-Thank you for the patch! Perhaps something to improve:
+This series adds minimal board boot support for ipq9574-al02-c7 board
 
-[auto build test WARNING on media-tree/master]
-[also build test WARNING on linus/master v6.2-rc6 next-20230130]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Posting V3 series, considering the previously posted version as V2
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Micha-Krawczyk/media-venus-dec-Fix-handling-of-the-start-cmd/20230130-185626
-base:   git://linuxtv.org/media_tree.git master
-patch link:    https://lore.kernel.org/r/20230130105423.1338554-1-mk%40semmihalf.com
-patch subject: [PATCH] media: venus: dec: Fix handling of the start cmd
-config: m68k-allyesconfig (https://download.01.org/0day-ci/archive/20230130/202301302043.AAXAiTHh-lkp@intel.com/config)
-compiler: m68k-linux-gcc (GCC) 12.1.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/3aa2620bc66440999bc7906165d2a5adb129402f
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Micha-Krawczyk/media-venus-dec-Fix-handling-of-the-start-cmd/20230130-185626
-        git checkout 3aa2620bc66440999bc7906165d2a5adb129402f
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=m68k olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=m68k SHELL=/bin/bash drivers/media/
+Changes in V3:
+	- Rebased on linux-next/master
+	- Dropped the 'dt-bindings: mmc: sdhci-msm: Document the IPQ9574
+	  compatible' since it is already part of the linux-next/master
+	- Detailed change log is added in the respective patches
+	- V2 can be found at
+	  https://lore.kernel.org/linux-arm-msm/f81e4605-9111-7f70-abb3-72067d68f8e2@quicinc.com/
 
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
+devi priya (7):
+  dt-bindings: Add ipq9574 clock and reset definitions
+  clk: qcom: Add Global Clock Controller driver for IPQ9574
+  dt-bindings: pinctrl: qcom: Add support for IPQ9574
+  pinctrl: qcom: Add IPQ9574 pinctrl driver
+  dt-bindings: arm: qcom: Add ipq9574 compatible
+  arm64: dts: qcom: Add ipq9574 SoC and AL02 board support
+  arm64: defconfig: Enable IPQ9574 SoC base configs
 
-All warnings (new ones prefixed by >>):
+ .../devicetree/bindings/arm/qcom.yaml         |    7 +
+ .../bindings/clock/qcom,ipq9574-gcc.yaml      |   72 +
+ .../bindings/pinctrl/qcom,ipq9574-tlmm.yaml   |  137 +
+ arch/arm64/boot/dts/qcom/Makefile             |    1 +
+ arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dts  |   78 +
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi         |  285 ++
+ arch/arm64/configs/defconfig                  |    2 +
+ drivers/clk/qcom/Kconfig                      |    8 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/gcc-ipq9574.c                | 4302 +++++++++++++++++
+ drivers/pinctrl/qcom/Kconfig                  |   11 +
+ drivers/pinctrl/qcom/Makefile                 |    1 +
+ drivers/pinctrl/qcom/pinctrl-ipq9574.c        |  861 ++++
+ include/dt-bindings/clock/qcom,ipq9574-gcc.h  |  213 +
+ include/dt-bindings/reset/qcom,ipq9574-gcc.h  |  164 +
+ 15 files changed, 6143 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,ipq9574-gcc.yaml
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,ipq9574-tlmm.yaml
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq9574.dtsi
+ create mode 100644 drivers/clk/qcom/gcc-ipq9574.c
+ create mode 100644 drivers/pinctrl/qcom/pinctrl-ipq9574.c
+ create mode 100644 include/dt-bindings/clock/qcom,ipq9574-gcc.h
+ create mode 100644 include/dt-bindings/reset/qcom,ipq9574-gcc.h
 
-   drivers/media/platform/qcom/venus/vdec.c: In function 'vdec_decoder_cmd':
->> drivers/media/platform/qcom/venus/vdec.c:529:27: warning: variable 'dst_vq' set but not used [-Wunused-but-set-variable]
-     529 |         struct vb2_queue *dst_vq;
-         |                           ^~~~~~
 
-
-vim +/dst_vq +529 drivers/media/platform/qcom/venus/vdec.c
-
-   524	
-   525	static int
-   526	vdec_decoder_cmd(struct file *file, void *fh, struct v4l2_decoder_cmd *cmd)
-   527	{
-   528		struct venus_inst *inst = to_inst(file);
- > 529		struct vb2_queue *dst_vq;
-   530		struct hfi_frame_data fdata = {0};
-   531		int ret;
-   532	
-   533		ret = v4l2_m2m_ioctl_try_decoder_cmd(file, fh, cmd);
-   534		if (ret)
-   535			return ret;
-   536	
-   537		mutex_lock(&inst->lock);
-   538	
-   539		if (cmd->cmd == V4L2_DEC_CMD_STOP) {
-   540			/*
-   541			 * Implement V4L2_DEC_CMD_STOP by enqueue an empty buffer on
-   542			 * decoder input to signal EOS.
-   543			 */
-   544			if (!(inst->streamon_out && inst->streamon_cap))
-   545				goto unlock;
-   546	
-   547			fdata.buffer_type = HFI_BUFFER_INPUT;
-   548			fdata.flags |= HFI_BUFFERFLAG_EOS;
-   549			if (IS_V6(inst->core))
-   550				fdata.device_addr = 0;
-   551			else
-   552				fdata.device_addr = 0xdeadb000;
-   553	
-   554			ret = hfi_session_process_buf(inst, &fdata);
-   555	
-   556			if (!ret && inst->codec_state == VENUS_DEC_STATE_DECODING) {
-   557				inst->codec_state = VENUS_DEC_STATE_DRAIN;
-   558				inst->drain_active = true;
-   559			}
-   560		} else if (cmd->cmd == V4L2_DEC_CMD_START &&
-   561			   inst->codec_state == VENUS_DEC_STATE_STOPPED) {
-   562			dst_vq = v4l2_m2m_get_vq(inst->fh.m2m_ctx,
-   563						 V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE);
-   564			vb2_clear_last_buffer_dequeued(&inst->fh.m2m_ctx->cap_q_ctx.q);
-   565	
-   566			inst->codec_state = VENUS_DEC_STATE_DECODING;
-   567		}
-   568	
-   569	unlock:
-   570		mutex_unlock(&inst->lock);
-   571		return ret;
-   572	}
-   573	
-
+base-commit: e2f86c02fdc96ca29ced53221a3cbf50aa6f8b49
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
+2.17.1
+
