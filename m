@@ -2,78 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EE4E668147B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 16:14:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 283916814A9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 16:19:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238034AbjA3POK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Jan 2023 10:14:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53822 "EHLO
+        id S238050AbjA3PTb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Jan 2023 10:19:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238028AbjA3PNw (ORCPT
+        with ESMTP id S238099AbjA3PTY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Jan 2023 10:13:52 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B7133D0B4;
-        Mon, 30 Jan 2023 07:13:32 -0800 (PST)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30UEH3na009861;
-        Mon, 30 Jan 2023 15:13:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=EUscz9X1XiQjhgHda6/DsXnSzvYxVopJBX9wf5Haj3Q=;
- b=K8aRBH6dSJt0kXESp3E2wP+0phPJess7lux4lcYEFtZ03Cg91GPWAKrB1mMgjhwKRhKY
- TH1Th87Z8Jr9e0dgbpdWXbjWVy6CJJH4OObaRsoQ4U+5Wru60nKBSbiuR9qDXSVnfNRu
- Z2iKJW0Ky3XZiCSUM8Q5/1Bx6/asHtqSNPnsFUKgYAhZ0XcZ84quMk9vj7Itwb03rsiu
- ZsTYZj6TRkGPVgYlqwS2d99JTlHbaO1jEVFFWLHbWnJyAVH5b9SqKDqzhm80vzXxJ0XJ
- OqvmvsJoaXXXqfIlQE7d1oog029jBhQwaUtfl5cx8X7nAlcauF/un9f26dK07TzfXAQ+ BA== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ncvfpbssw-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 30 Jan 2023 15:13:08 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30UFD7Ks017058
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 30 Jan 2023 15:13:07 GMT
-Received: from vpolimer-linux.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Mon, 30 Jan 2023 07:13:02 -0800
-From:   Vinod Polimera <quic_vpolimer@quicinc.com>
-To:     <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>
-CC:     Vinod Polimera <quic_vpolimer@quicinc.com>,
-        <linux-kernel@vger.kernel.org>, <robdclark@gmail.com>,
-        <dianders@chromium.org>, <swboyd@chromium.org>,
-        <quic_kalyant@quicinc.com>, <dmitry.baryshkov@linaro.org>,
-        <quic_khsieh@quicinc.com>, <quic_vproddut@quicinc.com>,
-        <quic_bjorande@quicinc.com>, <quic_abhinavk@quicinc.com>,
-        <quic_sbillaka@quicinc.com>
-Subject: [PATCH v12 14/14] drm/msm/disp/dpu: update dpu_enc crtc state on crtc enable/disable during self refresh
-Date:   Mon, 30 Jan 2023 20:41:34 +0530
-Message-ID: <1675091494-13988-15-git-send-email-quic_vpolimer@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1675091494-13988-1-git-send-email-quic_vpolimer@quicinc.com>
-References: <1675091494-13988-1-git-send-email-quic_vpolimer@quicinc.com>
-MIME-Version: 1.0
+        Mon, 30 Jan 2023 10:19:24 -0500
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A8FE3526F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jan 2023 07:19:15 -0800 (PST)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+        by mailout.nyi.internal (Postfix) with ESMTP id 0CEC45C0153;
+        Mon, 30 Jan 2023 10:19:12 -0500 (EST)
+Received: from imap51 ([10.202.2.101])
+  by compute6.internal (MEProxy); Mon, 30 Jan 2023 10:19:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+        :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to; s=fm3; t=1675091952; x=1675178352; bh=fNr7HPmcev
+        8OSbt0brbJfgY8SuJhTkFSSZxPEwoacvM=; b=BsPqJfNUIcZMYHDI3tm7jqASE7
+        qvd22Aib3spis77PI/BlLEQCM6PrNY3lGIunNl7rQIIbpsTidJYO84Vcnfxz8AlG
+        DACvRB0xuCj/zPRjM7vwqX70RrN/KgEZFlayZ65F5ZAIzDirhB0P3+uU4ORnILqC
+        +Jgf3dHzcpO7zljTh+Caa0+VhCQyyx0GzsaPjBQ6535FmkvfEUBGVYwnHkdRQ6dz
+        CbAac8RAI15DiTKJQ1XSt5sZK00z+XAywN5wYNn6ADC/cRaELGV1j5JwwdNnicMl
+        B3vsD+XAbNq5QE+P5+/binppw8GrgcQwJbrFzQZZTByhBJsGP5pvg5xRwJVQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to
+        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+        fm3; t=1675091952; x=1675178352; bh=fNr7HPmcev8OSbt0brbJfgY8SuJh
+        TkFSSZxPEwoacvM=; b=ih8wItzeIps5NfJdvGTbhI0edhG0JwHvMj0fEPOYYHZt
+        ld7KKuSd+7k5HgJwdBDhv4a/cxPdnh0fFQ4zll4s2IOGC9Uwe+v8JFe3zOxDKFlR
+        OlLNEMv0KugpIF+3OgT4brzVjg/9PIC+7JO1FNgsrgIWvjSTnaf34xxzm+t74wxl
+        UIZ9zWCNZCBOqzVLFrx6v4xl44RcbKVAb4xd9xmve+l+GwCZ0fY+HUyV6B8DK43b
+        /I+Yg7RD+cllDX8Sw4Z3YoR9Ncw5CeHOLumIzID/9rrSviYz1rSIemutaKBRQAsj
+        UJW9InTfD0/4x0doOGNHR2dzb3gXDspsE/LKHpuaiw==
+X-ME-Sender: <xms:79_XY7bLQX2KOyliHI7ZwJ__-rDsX7wQ9SikMSjOluiW39lTcrl1YA>
+    <xme:79_XY6Zcx1kRXtHOmAbiX2a6CsPImHbzP0ohVKQwthShh3jPOEJwcuZi9G_onuSRM
+    XUFdQOLwIYWXhMfl34>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrudefvddgjeejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehr
+    nhguuceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrth
+    htvghrnhepffehueegteeihfegtefhjefgtdeugfegjeelheejueethfefgeeghfektdek
+    teffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprg
+    hrnhgusegrrhhnuggsrdguvg
+X-ME-Proxy: <xmx:79_XY9_uh6uadoNBHlpE3IryKLOmMGu7aiwrWl5OlsNsY_LarcEVug>
+    <xmx:79_XYxp79AWtQ2T_ztYllXpU_lnO4SE07f7DIbVACoiAiq_jju-utg>
+    <xmx:79_XY2qK7XNgwoRELVrAVmKQ3cGvlkyrm_M_Qx8z_1uRg_ABZagEZQ>
+    <xmx:8N_XYzq-vLAWyV737KI2wZNT2Ioh2TwJQyqmjIIWs_wNUS_PcXQB8A>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id 887FDB60086; Mon, 30 Jan 2023 10:19:11 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-85-gd6d859e0cf-fm-20230116.001-gd6d859e0
+Mime-Version: 1.0
+Message-Id: <cdcff86c-77fe-4c5d-b8e8-58b815b9e969@app.fastmail.com>
+In-Reply-To: <20230126163008.3676950-1-andersson@kernel.org>
+References: <20230126163008.3676950-1-andersson@kernel.org>
+Date:   Mon, 30 Jan 2023 16:18:45 +0100
+From:   "Arnd Bergmann" <arnd@arndb.de>
+To:     "Bjorn Andersson" <andersson@kernel.org>, arm <arm@kernel.org>,
+        soc@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        "Andy Gross" <agross@kernel.org>,
+        "Olof Johansson" <olof@lixom.net>,
+        "Kevin Hilman" <khilman@baylibre.com>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        "Stephan Gerhold" <stephan@gerhold.net>,
+        "Souradeep Chowdhury" <quic_schowdhu@quicinc.com>,
+        "AngeloGioacchino Del Regno" 
+        <angelogioacchino.delregno@collabora.com>,
+        "Bagas Sanjaya" <bagasdotme@gmail.com>,
+        "Bartosz Golaszewski" <bartosz.golaszewski@linaro.org>,
+        "Guru Das Srinagesh" <quic_gurus@quicinc.com>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
+        "Bjorn Andersson" <quic_bjorande@quicinc.com>,
+        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        "Dawei Li" <set_pte_at@outlook.com>,
+        "Loic Poulain" <loic.poulain@linaro.org>,
+        "Melody Olvera" <quic_molvera@quicinc.com>,
+        "Naman Jain" <quic_namajain@quicinc.com>,
+        "Neil Armstrong" <neil.armstrong@linaro.org>,
+        "Yang Li" <yang.lee@linux.alibaba.com>,
+        "Alexander Shishkin" <alexander.shishkin@linux.intel.com>,
+        coresight@lists.linaro.org,
+        "Mathieu Poirier" <mathieu.poirier@linaro.org>,
+        "Suzuki K Poulose" <suzuki.poulose@arm.com>,
+        "Mike Leach" <mike.leach@linaro.org>,
+        "Leo Yan" <leo.yan@linaro.org>
+Subject: Re: [GIT PULL] Qualcomm driver updates for v6.3
 Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: TuprCkyobcEsyKxeDUG5kM0MKIKFbuRZ
-X-Proofpoint-ORIG-GUID: TuprCkyobcEsyKxeDUG5kM0MKIKFbuRZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-30_14,2023-01-30_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
- spamscore=0 mlxscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
- priorityscore=1501 phishscore=0 mlxlogscore=999 bulkscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301300147
 X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
         SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,78 +109,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Populate the enocder software structure to reflect the updated
-crtc appropriately during crtc enable/disable for a new commit
-while taking care of the self refresh transitions when crtc
-disable is triggered from the drm self refresh library.
+On Thu, Jan 26, 2023, at 17:30, Bjorn Andersson wrote:
+> The following changes since commit 6049aae52392539e505bfb8ccbcff3c26f1d2f0b:
+>
+> ----------------------------------------------------------------
+> Qualcomm driver updates for v6.3
+>
+> This introduces a new driver for the Data Capture and Compare block,
+> which provides a mechanism for capturing hardware state (access MMIO
+> registers) either upon request of triggered automatically e.g. upon a
+> watchdog bite, for post mortem analysis.
+>
+> The remote filesystem memory share driver gains support for having its
+> memory bound to more than a single VMID.
+>
+> The SCM driver gains the minimal support needed to support a new
+> mechanism where secure world can put calls on hold and later request
+> them to be retried.
+>
+> Support for the new SA8775P platform is added to rpmhpd, QDU1000 is
+> added to the SCM driver and a long list of platforms are added to the
+> socinfo driver. Support for socinfo data revision 16 is also introduced.
+>
+> Lastly a driver to program the ramp controller in MSM8976 is introduced.
 
-Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 29 +++++++++++++++++++++++++----
- 1 file changed, 25 insertions(+), 4 deletions(-)
+Hi Bjorn,
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index 60e5984..b1ec0c3 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -1022,8 +1022,17 @@ static void dpu_crtc_disable(struct drm_crtc *crtc,
- 
- 	DRM_DEBUG_KMS("crtc%d\n", crtc->base.id);
- 
--	if (old_crtc_state->self_refresh_active)
-+	/* If disable is triggered while in self refresh mode,
-+	 * reset the encoder software state so that in enable
-+	 * it won't trigger a warn while assigning crtc.
-+	 */
-+	if (old_crtc_state->self_refresh_active) {
-+		drm_for_each_encoder_mask(encoder, crtc->dev,
-+					old_crtc_state->encoder_mask) {
-+			dpu_encoder_assign_crtc(encoder, NULL);
-+		}
- 		return;
-+	}
- 
- 	/* Disable/save vblank irq handling */
- 	drm_crtc_vblank_off(crtc);
-@@ -1036,7 +1045,14 @@ static void dpu_crtc_disable(struct drm_crtc *crtc,
- 		 */
- 		if (dpu_encoder_get_intf_mode(encoder) == INTF_MODE_VIDEO)
- 			release_bandwidth = true;
--		dpu_encoder_assign_crtc(encoder, NULL);
-+
-+		/*
-+		 * If disable is triggered during psr active(e.g: screen dim in PSR),
-+		 * we will need encoder->crtc connection to process the device sleep &
-+		 * preserve it during psr sequence.
-+		 */
-+		if (!crtc->state->self_refresh_active)
-+			dpu_encoder_assign_crtc(encoder, NULL);
- 	}
- 
- 	/* wait for frame_event_done completion */
-@@ -1084,6 +1100,9 @@ static void dpu_crtc_enable(struct drm_crtc *crtc,
- 	struct dpu_crtc *dpu_crtc = to_dpu_crtc(crtc);
- 	struct drm_encoder *encoder;
- 	bool request_bandwidth = false;
-+	struct drm_crtc_state *old_crtc_state;
-+
-+	old_crtc_state = drm_atomic_get_old_crtc_state(state, crtc);
- 
- 	pm_runtime_get_sync(crtc->dev->dev);
- 
-@@ -1106,8 +1125,10 @@ static void dpu_crtc_enable(struct drm_crtc *crtc,
- 	trace_dpu_crtc_enable(DRMID(crtc), true, dpu_crtc);
- 	dpu_crtc->enabled = true;
- 
--	drm_for_each_encoder_mask(encoder, crtc->dev, crtc->state->encoder_mask)
--		dpu_encoder_assign_crtc(encoder, crtc);
-+	if (!old_crtc_state->self_refresh_active) {
-+		drm_for_each_encoder_mask(encoder, crtc->dev, crtc->state->encoder_mask)
-+			dpu_encoder_assign_crtc(encoder, crtc);
-+	}
- 
- 	/* Enable/restore vblank irq handling */
- 	drm_crtc_vblank_on(crtc);
--- 
-2.7.4
+I don't feel comfortable merging the DCC driver through drivers/soc/
+at this point: This is the first time I see the driver and it introduces
+a complex user space ABI that I have no time to review as part of the
+merge process.
 
+I usually try to avoid adding any custom user space interfaces
+in drivers/soc, as these tend to be things that end up being
+similar to other chips and need a generic interface.
+
+In particular I don't see an explanation about how the new interface
+relates to the established drivers/hwtracing/ subsystem and why it
+shouldn't be part of that (adding the hwtracing and coresight
+maintainers to Cc in case they have looked at this already).
+
+Can you send an updated pull request that leaves out the
+DCC driver until we have clarified these points?
+
+      Arnd
