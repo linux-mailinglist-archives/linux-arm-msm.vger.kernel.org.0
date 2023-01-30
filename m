@@ -2,78 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F1FB66817E2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 18:43:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CD15681812
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 18:58:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237919AbjA3Rns (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Jan 2023 12:43:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58596 "EHLO
+        id S230464AbjA3R6e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Jan 2023 12:58:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237855AbjA3Rnr (ORCPT
+        with ESMTP id S229522AbjA3R6d (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Jan 2023 12:43:47 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C03412861;
-        Mon, 30 Jan 2023 09:43:45 -0800 (PST)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30UDc0N1003605;
-        Mon, 30 Jan 2023 17:43:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=subject : to : cc :
- references : from : message-id : date : mime-version : in-reply-to :
+        Mon, 30 Jan 2023 12:58:33 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D80D11EFF3;
+        Mon, 30 Jan 2023 09:58:31 -0800 (PST)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30UHodMo023069;
+        Mon, 30 Jan 2023 17:58:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=SMg5fZWjmH7Mss820pAqb7ZUrjtwWWTAwGNzWfphj+U=;
- b=ZAZL35vHMZGVKqbsfViWruO5O8Qc73AyanoN1S4v+Cv59UKDG1CMK4x4GN6p4YgvRN9E
- +/OIBACsDAIfrDCGPPrMypyTPa+WdPBTMVPWOFataB9jW4xVQutVYWCblWKJowMIu06q
- SH519zU0HzzB53PNdVw//jk1qsIQzvS3o77u3thczrdL1qTeS19lGqIPOEOanDF/3X5+
- 7U/asP8khvMyEBpw1f+WSH12qWQkTB0saPVp/PRWgrZIfBFmSQqFjgU58A8KqNxQhSkX
- lZ2KTnrex+wZnFUZhYl7bxWIH3PDP6iPyjrryMhussSVcR31heEPtBEU1vzEkg94Rokg kw== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ncsdpvg7t-1
+ bh=T0Gw0uDvKcfSOofRb9wLkX8UfN4CkwRLUOpkaJ3t9uc=;
+ b=U+eNmATzs3ZO7/hBhDnXlza/glU/tPlI6oPtmfg6sUNqPnen05MQyDKcZ56Zq6RxG6kb
+ sX88kiiZFTEBVTMtf1/ixK/Ip76+oJWQOTkX6sn12m1gNikIXksA72oxX0QwMtYOogPW
+ CpO0HJGg9yGPLdJweMPBFlG6Nnrh4dZbXRJ4NeDGdTmuWEjuUIYlWKsw+KOf4tajrvdD
+ FXYJZ+gFs9ezfVPMAnxNZ1FQ6tD6vl3EPKvgoTpQNhCNmilw1x7fCU0YF7Dk7aNGzaHO
+ CkT173R6oz7kWfJUKOPGbMk7REEvrjtsE7re3ehygD93wpsSssPW90ov2UmN/i6ZkWe5 PA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nefmfrgnn-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 30 Jan 2023 17:43:42 +0000
+        Mon, 30 Jan 2023 17:58:25 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30UHhbAM005333
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30UHwOYm009700
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 30 Jan 2023 17:43:37 GMT
-Received: from [10.47.234.156] (10.49.16.6) by nalasex01a.na.qualcomm.com
+        Mon, 30 Jan 2023 17:58:24 GMT
+Received: from [10.110.115.177] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 30 Jan
- 2023 09:43:37 -0800
-Subject: Re: [PATCH] remoteproc: sysfs: fix race while updating recovery flag
-To:     Mukesh Ojha <quic_mojha@quicinc.com>, <andersson@kernel.org>,
-        <mathieu.poirier@linaro.org>
-CC:     <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20230129225106.10606-1-quic_satyap@quicinc.com>
- <d9708f4b-e533-e400-acbf-3d8e816f242e@quicinc.com>
-From:   Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>
-Message-ID: <941b8600-9f7c-b646-9f8a-c30a2a332e37@quicinc.com>
-Date:   Mon, 30 Jan 2023 09:43:37 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+ 2023 09:58:23 -0800
+Message-ID: <39a4f145-6190-db47-c334-a20cbf1a9808@quicinc.com>
+Date:   Mon, 30 Jan 2023 09:58:22 -0800
 MIME-Version: 1.0
-In-Reply-To: <d9708f4b-e533-e400-acbf-3d8e816f242e@quicinc.com>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [Freedreno] [PATCH v2 1/2] drm/msm/dp: Clean up handling of DP
+ AUX interrupts
 Content-Language: en-US
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+To:     Douglas Anderson <dianders@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     <freedreno@lists.freedesktop.org>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        "Sean Paul" <sean@poorly.run>, <dri-devel@lists.freedesktop.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        <linux-kernel@vger.kernel.org>
+References: <20230126170745.v2.1.I90ffed3ddd21e818ae534f820cb4d6d8638859ab@changeid>
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <20230126170745.v2.1.I90ffed3ddd21e818ae534f820cb4d6d8638859ab@changeid>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: NwER8QJqwMNSBBQHF_SmcEdJJl8CW-KI
-X-Proofpoint-ORIG-GUID: NwER8QJqwMNSBBQHF_SmcEdJJl8CW-KI
+X-Proofpoint-ORIG-GUID: NsdjxEOS-atocLfLYUKKIwY9u9hhmAbn
+X-Proofpoint-GUID: NsdjxEOS-atocLfLYUKKIwY9u9hhmAbn
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
  definitions=2023-01-30_16,2023-01-30_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- lowpriorityscore=0 bulkscore=0 adultscore=0 suspectscore=0 mlxlogscore=914
- spamscore=0 clxscore=1015 impostorscore=0 mlxscore=0 phishscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301300171
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
+ priorityscore=1501 mlxlogscore=999 suspectscore=0 bulkscore=0 mlxscore=0
+ impostorscore=0 phishscore=0 lowpriorityscore=0 spamscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2301300171
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -81,71 +90,208 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+On 1/26/2023 5:09 PM, Douglas Anderson wrote:
+> The DP AUX interrupt handling was a bit of a mess.
+> * There were two functions (one for "native" transfers and one for
+>    "i2c" transfers) that were quite similar. It was hard to say how
+>    many of the differences between the two functions were on purpose
+>    and how many of them were just an accident of how they were coded.
+> * Each function sometimes used "else if" to test for error bits and
+>    sometimes didn't and again it was hard to say if this was on purpose
+>    or just an accident.
+> * The two functions wouldn't notice whether "unknown" bits were
+>    set. For instance, there seems to be a bit "DP_INTR_PLL_UNLOCKED"
+>    and if it was set there would be no indication.
+> * The two functions wouldn't notice if more than one error was set.
+>
+> Let's fix this by being more consistent / explicit about what we're
+> doing.
+>
+> By design this could cause different handling for AUX transfers,
+> though I'm not actually aware of any bug fixed as a result of
+> this patch (this patch was created because we simply noticed how odd
+> the old code was by code inspection). Specific notes here:
+> 1. In the old native transfer case if we got "done + wrong address"
+>     we'd ignore the "wrong address" (because of the "else if"). Now we
+>     won't.
+> 2. In the old native transfer case if we got "done + timeout" we'd
+>     ignore the "timeout" (because of the "else if"). Now we won't.
+> 3. In the old native transfer case we'd see "nack_defer" and translate
+>     it to the error number for "nack". This differed from the i2c
+>     transfer case where "nack_defer" was given the error number for
+>     "nack_defer". This 100% can't matter because the only user of this
+>     error number treats "nack defer" the same as "nack", so it's clear
+>     that the difference between the "native" and "i2c" was pointless
+>     here.
+> 4. In the old i2c transfer case if we got "done" plus any error
+>     besides "nack" or "defer" then we'd ignore the error. Now we don't.
+> 5. If there is more than one error signaled by the hardware it's
+>     possible that we'll report a different one than we used to. I don't
+>     know if this matters. If someone is aware of a case this matters we
+>     should document it and change the code to make it explicit.
+> 6. One quirk we keep (I don't know if this is important) is that in
+>     the i2c transfer case if we see "done + defer" we report that as a
+>     "nack". That seemed too intentional in the old code to just drop.
+>
+> After this change we will add extra logging, including:
+> * A warning if we see more than one error bit set.
+> * A warning if we see an unexpected interrupt.
+> * A warning if we get an AUX transfer interrupt when shouldn't.
+>
+> It actually turns out that as a result of this change then at boot we
+> sometimes see an error:
+>    [drm:dp_aux_isr] *ERROR* Unexpected DP AUX IRQ 0x01000000 when not busy
+This normal, when suspend/unplug the pll will  loss locked and at that 
+time aux is not busy.
+> That means that, during init, we are seeing DP_INTR_PLL_UNLOCKED. For
+> now I'm going to say that leaving this error reported in the logs is
+> OK-ish and hopefully it will encourage someone to track down what's
+> going on at init time.
+>
+> One last note here is that this change renames one of the interrupt
+> bits. The bit named "i2c done" clearly was used for native transfers
+> being done too, so I renamed it to indicate this.
+>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Tested-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Reviewed-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 
-On 1/30/23 12:03 AM, Mukesh Ojha wrote:
+> ---
+> I don't have good test coverage for this change and it does have the
+> potential to change behavior. I confirmed that eDP and DP still
+> continue to work OK on one machine. Hopefully folks can test it more.
 >
-> On 1/30/2023 4:21 AM, Satya Durga Srinivasu Prabhala wrote:
->> When multiple clients try to update the recovery flag, it is
+> Changes in v2:
+> - Moved DP_INTR_AUX_XFER_DONE to the end of the if else chain.
 >
-> Multiple user-space clients ?
+>   drivers/gpu/drm/msm/dp/dp_aux.c     | 80 ++++++++++++-----------------
+>   drivers/gpu/drm/msm/dp/dp_catalog.c |  2 +-
+>   drivers/gpu/drm/msm/dp/dp_catalog.h |  2 +-
+>   3 files changed, 36 insertions(+), 48 deletions(-)
 >
-Yes, on SMP systems, it is possible that there can be multiple user 
-space clients (can simply be fuzzing kind of scripts) which could be 
-updating the recovery flag.
->> possible that, race condition would lead to undesired results
->> as updates to recovery flag isn't protected by any mechanism
->> today. To avoid such issues, take remoteproc mutex lock before
->> updating recovery flag and release the lock once done.
->
-> But your patch also adds locks for the case which does not update
-> recovery flag..
-Yes, was trying to cover entire function, can be restricted to only when 
-recovery flag is being updated as well.
->>
->> Signed-off-by: Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>
->> ---
->>   drivers/remoteproc/remoteproc_sysfs.c | 5 +++++
->>   1 file changed, 5 insertions(+)
->>
->> diff --git a/drivers/remoteproc/remoteproc_sysfs.c 
->> b/drivers/remoteproc/remoteproc_sysfs.c
->> index 8c7ea8922638..ec37176e1589 100644
->> --- a/drivers/remoteproc/remoteproc_sysfs.c
->> +++ b/drivers/remoteproc/remoteproc_sysfs.c
->> @@ -48,16 +48,21 @@ static ssize_t recovery_store(struct device *dev,
->>   {
->>       struct rproc *rproc = to_rproc(dev);
->>
->> +    mutex_lock(&rproc->lock);
->>       if (sysfs_streq(buf, "enabled")) {
->>           /* change the flag and begin the recovery process if needed */
->>           rproc->recovery_disabled = false;
->> +        mutex_unlock(&rproc->lock);
->>           rproc_trigger_recovery(rproc);
->>       } else if (sysfs_streq(buf, "disabled")) {
->>           rproc->recovery_disabled = true;
->> +        mutex_unlock(&rproc->lock);
->>       } else if (sysfs_streq(buf, "recover")) {
->>           /* begin the recovery process without changing the flag */
->> +        mutex_unlock(&rproc->lock);
->
-> is it really needed for this case?
-As mentioned above, was trying to cover entire function. Not really 
-needed in this case as such.
->
->>           rproc_trigger_recovery(rproc);
->>       } else {
->> +        mutex_unlock(&rproc->lock);
->
-> same here..
->
->>           return -EINVAL;
->>       }
->>
->
-> Do you also need to add lock for rproc_recovery_write in
-> drivers/remoteproc/remoteproc_debugfs.c ?
->
-Thanks, yes. Debug FS needs to be updated too.
-> -Mukesh
-
+> diff --git a/drivers/gpu/drm/msm/dp/dp_aux.c b/drivers/gpu/drm/msm/dp/dp_aux.c
+> index cc3efed593aa..84f9e3e5f964 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_aux.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_aux.c
+> @@ -162,47 +162,6 @@ static ssize_t dp_aux_cmd_fifo_rx(struct dp_aux_private *aux,
+>   	return i;
+>   }
+>   
+> -static void dp_aux_native_handler(struct dp_aux_private *aux, u32 isr)
+> -{
+> -	if (isr & DP_INTR_AUX_I2C_DONE)
+> -		aux->aux_error_num = DP_AUX_ERR_NONE;
+> -	else if (isr & DP_INTR_WRONG_ADDR)
+> -		aux->aux_error_num = DP_AUX_ERR_ADDR;
+> -	else if (isr & DP_INTR_TIMEOUT)
+> -		aux->aux_error_num = DP_AUX_ERR_TOUT;
+> -	if (isr & DP_INTR_NACK_DEFER)
+> -		aux->aux_error_num = DP_AUX_ERR_NACK;
+> -	if (isr & DP_INTR_AUX_ERROR) {
+> -		aux->aux_error_num = DP_AUX_ERR_PHY;
+> -		dp_catalog_aux_clear_hw_interrupts(aux->catalog);
+> -	}
+> -}
+> -
+> -static void dp_aux_i2c_handler(struct dp_aux_private *aux, u32 isr)
+> -{
+> -	if (isr & DP_INTR_AUX_I2C_DONE) {
+> -		if (isr & (DP_INTR_I2C_NACK | DP_INTR_I2C_DEFER))
+> -			aux->aux_error_num = DP_AUX_ERR_NACK;
+> -		else
+> -			aux->aux_error_num = DP_AUX_ERR_NONE;
+> -	} else {
+> -		if (isr & DP_INTR_WRONG_ADDR)
+> -			aux->aux_error_num = DP_AUX_ERR_ADDR;
+> -		else if (isr & DP_INTR_TIMEOUT)
+> -			aux->aux_error_num = DP_AUX_ERR_TOUT;
+> -		if (isr & DP_INTR_NACK_DEFER)
+> -			aux->aux_error_num = DP_AUX_ERR_NACK_DEFER;
+> -		if (isr & DP_INTR_I2C_NACK)
+> -			aux->aux_error_num = DP_AUX_ERR_NACK;
+> -		if (isr & DP_INTR_I2C_DEFER)
+> -			aux->aux_error_num = DP_AUX_ERR_DEFER;
+> -		if (isr & DP_INTR_AUX_ERROR) {
+> -			aux->aux_error_num = DP_AUX_ERR_PHY;
+> -			dp_catalog_aux_clear_hw_interrupts(aux->catalog);
+> -		}
+> -	}
+> -}
+> -
+>   static void dp_aux_update_offset_and_segment(struct dp_aux_private *aux,
+>   					     struct drm_dp_aux_msg *input_msg)
+>   {
+> @@ -427,13 +386,42 @@ void dp_aux_isr(struct drm_dp_aux *dp_aux)
+>   	if (!isr)
+>   		return;
+>   
+> -	if (!aux->cmd_busy)
+> +	if (!aux->cmd_busy) {
+> +		DRM_ERROR("Unexpected DP AUX IRQ %#010x when not busy\n", isr);
+>   		return;
+> +	}
+>   
+> -	if (aux->native)
+> -		dp_aux_native_handler(aux, isr);
+> -	else
+> -		dp_aux_i2c_handler(aux, isr);
+> +	/*
+> +	 * The logic below assumes only one error bit is set (other than "done"
+> +	 * which can apparently be set at the same time as some of the other
+> +	 * bits). Warn if more than one get set so we know we need to improve
+> +	 * the logic.
+> +	 */
+> +	if (hweight32(isr & ~DP_INTR_AUX_XFER_DONE) > 1)
+> +		DRM_WARN("Some DP AUX interrupts unhandled: %#010x\n", isr);
+> +
+> +	if (isr & DP_INTR_AUX_ERROR) {
+> +		aux->aux_error_num = DP_AUX_ERR_PHY;
+> +		dp_catalog_aux_clear_hw_interrupts(aux->catalog);
+> +	} else if (isr & DP_INTR_NACK_DEFER) {
+> +		aux->aux_error_num = DP_AUX_ERR_NACK_DEFER;
+> +	} else if (isr & DP_INTR_WRONG_ADDR) {
+> +		aux->aux_error_num = DP_AUX_ERR_ADDR;
+> +	} else if (isr & DP_INTR_TIMEOUT) {
+> +		aux->aux_error_num = DP_AUX_ERR_TOUT;
+> +	} else if (!aux->native && (isr & DP_INTR_I2C_NACK)) {
+> +		aux->aux_error_num = DP_AUX_ERR_NACK;
+> +	} else if (!aux->native && (isr & DP_INTR_I2C_DEFER)) {
+> +		if (isr & DP_INTR_AUX_XFER_DONE)
+> +			aux->aux_error_num = DP_AUX_ERR_NACK;
+> +		else
+> +			aux->aux_error_num = DP_AUX_ERR_DEFER;
+> +	} else if (isr & DP_INTR_AUX_XFER_DONE) {
+> +		aux->aux_error_num = DP_AUX_ERR_NONE;
+> +	} else {
+> +		DRM_WARN("Unexpected interrupt: %#010x\n", isr);
+> +		return;
+> +	}
+>   
+>   	complete(&aux->comp);
+>   }
+> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
+> index 676279d0ca8d..421391755427 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
+> @@ -27,7 +27,7 @@
+>   #define DP_INTF_CONFIG_DATABUS_WIDEN     BIT(4)
+>   
+>   #define DP_INTERRUPT_STATUS1 \
+> -	(DP_INTR_AUX_I2C_DONE| \
+> +	(DP_INTR_AUX_XFER_DONE| \
+>   	DP_INTR_WRONG_ADDR | DP_INTR_TIMEOUT | \
+>   	DP_INTR_NACK_DEFER | DP_INTR_WRONG_DATA_CNT | \
+>   	DP_INTR_I2C_NACK | DP_INTR_I2C_DEFER | \
+> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.h b/drivers/gpu/drm/msm/dp/dp_catalog.h
+> index 1f717f45c115..f36b7b372a06 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_catalog.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.h
+> @@ -13,7 +13,7 @@
+>   
+>   /* interrupts */
+>   #define DP_INTR_HPD		BIT(0)
+> -#define DP_INTR_AUX_I2C_DONE	BIT(3)
+> +#define DP_INTR_AUX_XFER_DONE	BIT(3)
+>   #define DP_INTR_WRONG_ADDR	BIT(6)
+>   #define DP_INTR_TIMEOUT		BIT(9)
+>   #define DP_INTR_NACK_DEFER	BIT(12)
