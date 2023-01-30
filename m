@@ -2,63 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 652FB681344
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 15:30:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9AA41681346
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 15:32:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237846AbjA3Oaj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Jan 2023 09:30:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49478 "EHLO
+        id S237807AbjA3OcL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Jan 2023 09:32:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237794AbjA3OaZ (ORCPT
+        with ESMTP id S237782AbjA3Oby (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Jan 2023 09:30:25 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04EB341B42
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jan 2023 06:28:54 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id q10-20020a1cf30a000000b003db0edfdb74so8703932wmq.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jan 2023 06:28:54 -0800 (PST)
+        Mon, 30 Jan 2023 09:31:54 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A3F644BD3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jan 2023 06:30:14 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id d14so11227897wrr.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jan 2023 06:30:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:organization:references:cc:to
          :content-language:subject:reply-to:from:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=3McM8N2nTNHlQJb+34FnCzXtbwo9fjKoxA+DQBRkosk=;
-        b=W+4S0TS5rGn11tvXQnBUz4wkUQ6e6spHYiWdjrHK+MrbxNyoj92UoUEx93cmEwXl0a
-         A25bJY74OMfuP9Yo4JDKC+u9zJt4J6aFd+OdgcHPN5xo0nQFjKkuOvNPZAiTv9iNqL5w
-         BrUd1V6BPIKRa9aVyR9vvikKJAthwPQCW0KqxiIJBasgaLSGUcLDjBQ23Np6Pw2U+rn4
-         TNlEUSLzvo1NMP1aj6VPEvpBleY3kjj2zcQwQZgZ6nag6MlVL/2XM2j5VlPg8aIXJ7AM
-         LbHtN5cTU0bFaoOOwLfQvIpPKcAZ/gMK5tuDVEr6ld5vVxi0bENYztBWilGB4Nn1UY3X
-         VeVA==
+        bh=F66bY08dMNPtmtwYL17v3A+FulNzCrtIG98eK06he9I=;
+        b=hgDSa2U0PfGi0F0fcdrmEQqNXHbzzPUStTlWvjDue53tVn3xDxiHoOMBt11mS8RNti
+         7vx30tgEha+USbvac0qnIfBBxyOp9cL4lRjmR6T+Ow1MV5V3NHFGZDRWX2CkiuMJFfKF
+         jGmAJTKrZmKqBQLrkInuItoFlqJOvdMNT6nxZG5FEvBV/j6dEU6lNrJl445Ueno5SdGB
+         FOVmt5zubGdruPQqm6uUW/IfK/m0yW0EGGjNszokE7dHe5g+F+TeZghbAVeNr9WgvfLp
+         wYL4FQnYQ1PcA0l9zt4yh0/pgEA9iAuqLVDtKu8B/vQLBkYn+43uvsJYiFB4NEpTYzN7
+         FfAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:organization:references:cc:to
          :content-language:subject:reply-to:from:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=3McM8N2nTNHlQJb+34FnCzXtbwo9fjKoxA+DQBRkosk=;
-        b=kqIm1bOgOUJ6aZGAFhDa59Q/UPYp/e8X+4jpFGZrJ+nRyaJ5CP8XNiGHtv6O4QFPN+
-         fKgeFafgbJOw7p28s1MDUrftbLu+BX+vKdQwtaXb/k9H1g7vJEimNI+mB7ZMXHMjCDxe
-         PxqWtVO+2fmA1qm4T5oqrfWDJXO6snxNZADcwStRKp+hXrLMasX5jt1dpmi01s7t4mfC
-         kiZFM4PACItkRSYwZOJwi/4I79JLPNWaSwvzXwynlFfJ3/WRvVqNifxmkg6t8VG9Mkzl
-         ekImsJifw73OLH52pkrMCMDCXxXltqdYp2t39tGEYd4CisIlzweBERSE67b8jmdoxzq5
-         PnDA==
-X-Gm-Message-State: AO0yUKXM+hG+1DKgXRU3iXDuglLew6ejR57/DNO3Bgte+JVnDLB3Ghad
-        qZepznp44zcI0TKBRDz6eEKFzg==
-X-Google-Smtp-Source: AK7set+s835IjnjqvQA+6fK2qQWO3YZKjyof+ji04X1Em1crGP9Vi/S4SYGCAvDntgVbNdkPzFpE0g==
-X-Received: by 2002:a05:600c:2283:b0:3da:b40f:7a55 with SMTP id 3-20020a05600c228300b003dab40f7a55mr4473493wmf.6.1675088933535;
-        Mon, 30 Jan 2023 06:28:53 -0800 (PST)
+        bh=F66bY08dMNPtmtwYL17v3A+FulNzCrtIG98eK06he9I=;
+        b=DapzTt7n4CEpCzHDjMz8X+/32ma+UqvzfJB/GXf3IYR3vW6aKe3R2IpFw2p9SQSnkB
+         JRJKscjb8JwGUQ0D8/FqhONetGzNo7JZQt4ttFtZ0gAZETjo13c6jR/hN/bQQdr2ulSP
+         PN/ZRo/PPjXHQ9jNANCLEa+UKRMrVUQGcT26yG1oS+yREMZcowRevlAz7k1LDoZq1FKf
+         tYd4QbMfkXcYepAwSL7GvvIaDOS6WkqthO/6ZucdHD2D6E/fizE/C4K+xCgGUPDV6z8q
+         Q89xmudSKWYg+63oIKv8PO/IkI0JDbplm/Z4QWbd0ORR+iLS9Z//5DzvAC1OfsSM+Xzt
+         FX4Q==
+X-Gm-Message-State: AFqh2kq1Nd0IEdQgEoGYt3PHRviVXyyhPyoz21/t8NtsFoiAP+4Qr2ZW
+        42UQzDWxNGM69oRXQNtzy0yrGg==
+X-Google-Smtp-Source: AMrXdXtfnj4rstjbSHlIlbiQ0wUlyLEoMF3Nc68wCzRHiud9ME3mAqNrg22eJ69bjTy9NkQX9EkoFA==
+X-Received: by 2002:a05:6000:a03:b0:2bd:e7b4:aee3 with SMTP id co3-20020a0560000a0300b002bde7b4aee3mr47550026wrb.66.1675089013427;
+        Mon, 30 Jan 2023 06:30:13 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:982:cbb0:5f17:219:cb05:7cd? ([2a01:e0a:982:cbb0:5f17:219:cb05:7cd])
-        by smtp.gmail.com with ESMTPSA id r38-20020a05600c322600b003dd19baf45asm813738wmp.40.2023.01.30.06.28.52
+        by smtp.gmail.com with ESMTPSA id f28-20020a5d58fc000000b002be5401ef5fsm12477975wrd.39.2023.01.30.06.30.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Jan 2023 06:28:53 -0800 (PST)
-Message-ID: <624f2924-ec30-e0c0-1022-610d1aee761f@linaro.org>
-Date:   Mon, 30 Jan 2023 15:28:52 +0100
+        Mon, 30 Jan 2023 06:30:13 -0800 (PST)
+Message-ID: <5ace1821-1892-ace5-c230-34200119cc55@linaro.org>
+Date:   Mon, 30 Jan 2023 15:30:11 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
 From:   Neil Armstrong <neil.armstrong@linaro.org>
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v3 3/4] soc: qcom: pmic_glink: Introduce altmode support
+Subject: Re: [PATCH v3 4/4] power: supply: Introduce Qualcomm PMIC GLINK power
+ supply
 Content-Language: en-US
 To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
         Andy Gross <agross@kernel.org>,
@@ -72,9 +73,9 @@ Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>,
         Johan Hovold <johan@kernel.org>
 References: <20230130042003.577063-1-quic_bjorande@quicinc.com>
- <20230130042003.577063-4-quic_bjorande@quicinc.com>
+ <20230130042003.577063-5-quic_bjorande@quicinc.com>
 Organization: Linaro Developer Services
-In-Reply-To: <20230130042003.577063-4-quic_bjorande@quicinc.com>
+In-Reply-To: <20230130042003.577063-5-quic_bjorande@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -89,30 +90,34 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 On 30/01/2023 05:20, Bjorn Andersson wrote:
 > From: Bjorn Andersson <bjorn.andersson@linaro.org>
 > 
-> With the PMIC GLINK service, the host OS subscribes to USB-C altmode
-> messages, which are sent by the firmware to notify the host OS about
-> state updates and HPD interrupts.
+> The PMIC GLINK service, running on a coprocessor of modern Qualcomm
+> platforms, deals with battery charging and fuel gauging, as well as
+> reporting status of AC and wireless power supplies.
 > 
-> The pmic_glink_altmode driver registers for these notifications and
-> propagates the notifications as typec_mux, typec_switch and DRM OOB
-> notifications as necessary to implement DisplayPort altmode support.
+> As this is just one of the functionalities provided by the PMIC GLINK
+> service, this power supply driver is implemented as an auxilirary bus
+> driver, spawned by the main "pmic glink" driver when the PMIC GLINK
+> service is detected.
 > 
 > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
 > Tested-by: Konrad Dybcio <konrad.dybcio@linaro.org> # SM8350 PDX215
 > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 > ---
 > 
 > Changes since v2:
-> - Include bitfield.h
+> - None
 > 
->   drivers/soc/qcom/Makefile             |   1 +
->   drivers/soc/qcom/pmic_glink_altmode.c | 478 ++++++++++++++++++++++++++
->   2 files changed, 479 insertions(+)
->   create mode 100644 drivers/soc/qcom/pmic_glink_altmode.c
+>   drivers/power/supply/Kconfig        |    9 +
+>   drivers/power/supply/Makefile       |    1 +
+>   drivers/power/supply/qcom_battmgr.c | 1421 +++++++++++++++++++++++++++
+>   3 files changed, 1431 insertions(+)
+>   create mode 100644 drivers/power/supply/qcom_battmgr.c
 > 
 
 <snip>
 
+
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+
+Devices doesn't have a battery, but it behaved as expected and values were coherent:
 Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-MTP & SM8450-HDK
