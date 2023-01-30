@@ -2,125 +2,180 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 121B0680B59
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 11:55:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E1A66680B6B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 11:59:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236254AbjA3KzE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Jan 2023 05:55:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44146 "EHLO
+        id S236007AbjA3K7C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Jan 2023 05:59:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46362 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236513AbjA3KzB (ORCPT
+        with ESMTP id S235384AbjA3K7B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Jan 2023 05:55:01 -0500
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF40230E83
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jan 2023 02:54:57 -0800 (PST)
-Received: by mail-ej1-x62a.google.com with SMTP id kt14so30551186ejc.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jan 2023 02:54:57 -0800 (PST)
+        Mon, 30 Jan 2023 05:59:01 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7D866585
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jan 2023 02:58:59 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id m5-20020a05600c4f4500b003db03b2559eso7837762wmq.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jan 2023 02:58:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=semihalf.com; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=RM8U9+B1EhA1/hpyYh3BZmmd/DRaMkOQKBIReWojWE0=;
-        b=cv3yc3hLcy6abkqAAPYgBfLHXl8MIBezAIwxfl/w8Upau1eWpjL9jI1fTECoYetQw7
-         zjH6xrm8Zuoqaxs2WOtTBMxkQhiJH5rD1ya08Bgo3+kmMci6LRh921yjnkEL0D7U0pXT
-         dksHktrE0uY+nXnRjuXRMB3syKpjMCHDJy9nevYNmrsBZpMN6ICpU1Pu7gcy5dxWKW0H
-         aAIWgE3YSlxn5d8LprOMj/Kz/gs0cLLghtQISOqs6ZMSy2qx4yctPZNRpFCWSsQJWBA0
-         NpPmZYNgXahi/0pjV3hO/1UF4wreVE0Hc2CW7Q4CMXCPiVKhgoeqPn1vNz26LHqOYXsl
-         0rPQ==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=crdBLJjZ8xjVRAu8KJba7OYDgK3CPZF1IA5JdFdJbwU=;
+        b=g2Q0Ff4zAeNuvtFeFpbpYdAQd9H0Mxx3aXygc7KzaUDNoB4tQ172cm6fGO0Tqt1/X6
+         sy+eKO/mN68xD640n0qiJOcnuXssb7xiFcuR7NDaCpKD17SG7KmkB1svAgtlMMztdJaX
+         qlM3WANBedE4GZDUfQQlz3tMFDMsBAdyb17CtOLwQ/I+VRlaWPcg9f3j+D5W62+7MoAz
+         LEdnoLyZ3OZlWG/7IKjwnarJQV5MeCxxyIUDhHLOfwCmAPHns/t2K8xo/5XiveorLaY6
+         G5er5ZPvwmuka6MUoNMY/6+Xg6p8UDU84J3odI60gsyQ9b3n+k7YcKVJX/XV1HcaPfH9
+         0fqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=RM8U9+B1EhA1/hpyYh3BZmmd/DRaMkOQKBIReWojWE0=;
-        b=gXTDGlnLbhXfVebPFtogoy/bcve7HIFdMBARmAK4+8Wne8Q5TdaHEMtoJ52JMn8a4M
-         GoE5VxCO/ffIclOO0JPOdE7+/S5NIBUvFQeKIi3R7aIlFQlzY9DSb4MPb/px4Uy27syh
-         CLQP8r7ovQq38ddpgmvztBYWG3MSlMFUwVv/J7q23cLr/HUL3Lo/tm0a4h4/RJxHF4DN
-         0DMeT2ZJsvadVP7LABgl7UjWMHBmTLF/qW2giXAFGIC3aObP9tFufKqWvs2rY2M8AfO9
-         nIWDia+jFcXYsCfm2xYlPKm9zXtS/aNY+wBnThVQO34qoeM0/HwY3RW7v6bP5/rKvoiP
-         pb6g==
-X-Gm-Message-State: AFqh2kpjmojnSAq8mvY78y4axPfZ4B8NgqZzLdhAIU556hAj6EjehOQI
-        oAZ85scMPHxB9YVJWoJb7Pd1Gg==
-X-Google-Smtp-Source: AMrXdXvwt9D641Ii6B8VTtLcYp+/Pqtgi0XOcjujklWNr3DjsMFgPwyOH41jdBeSf3vl2jq1HPfbrg==
-X-Received: by 2002:a17:907:6c16:b0:86f:3dfa:4016 with SMTP id rl22-20020a1709076c1600b0086f3dfa4016mr58255800ejc.7.1675076096407;
-        Mon, 30 Jan 2023 02:54:56 -0800 (PST)
-Received: from mikrawczyk.c.googlers.com.com (12.196.204.35.bc.googleusercontent.com. [35.204.196.12])
-        by smtp.gmail.com with ESMTPSA id d20-20020a17090694d400b00887830e535csm2054742ejy.159.2023.01.30.02.54.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Jan 2023 02:54:55 -0800 (PST)
-From:   "=?UTF-8?q?Micha=C5=82=20Krawczyk?=" <mk@semihalf.com>
-X-Google-Original-From: =?UTF-8?q?Micha=C5=82=20Krawczyk?= <mk@semmihalf.com>
-To:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        =?UTF-8?q?Micha=C5=82=20Krawczyk?= <mk@semihalf.com>
-Subject: [PATCH] media: venus: dec: Fix handling of the start cmd
-Date:   Mon, 30 Jan 2023 10:54:23 +0000
-Message-Id: <20230130105423.1338554-1-mk@semmihalf.com>
-X-Mailer: git-send-email 2.39.1.456.gfc5497dd1b-goog
+        bh=crdBLJjZ8xjVRAu8KJba7OYDgK3CPZF1IA5JdFdJbwU=;
+        b=oZ3aGIG6kzaANbjagxwh5wsCKUj97xmsd8fkR2px2PFKYXIPAAtnIwjNujROkRYagP
+         39NJWIdZbN+nSJkDQrZEW5igT2D3ldsYKXFOzyxiPsvfqgVSZ3NMDjBcFEEeaqD9qACL
+         zJ8s2qc2ycCV6B8p8kwunRxs4FaIld0z/W2bpEPgsVTRAE9D+MgKf4bcE6ufcmV3x3gC
+         Xk0SGFV5tQR31TjIxhU3rID9EAfNJ0H7MDudRtPdyKiql3eRRdaKfQIxy+2r/ZgpK9x9
+         LHO/OU1WLe0hU9K7dd7cqB3MojGDYHY7POWd3YaD/U6A2MlaE3LSl2OkTtgoHReZMKLR
+         /qkw==
+X-Gm-Message-State: AO0yUKV6SnJJv/tb4DBYGm/26hicxrmyA3Fna4IJmWC0ObHhtC9YoIJ7
+        25oqQ4vmanl6O0fK3JbP6P9vjQ==
+X-Google-Smtp-Source: AK7set+TP4uDjfgYi/r+gKabtLWtFYwZugrC1KUC0d8m1femfHdRjJcqAi/edEDKkxvgOQFk10c9qQ==
+X-Received: by 2002:a7b:c4d6:0:b0:3dc:5674:66e6 with SMTP id g22-20020a7bc4d6000000b003dc567466e6mr4107666wmk.25.1675076338341;
+        Mon, 30 Jan 2023 02:58:58 -0800 (PST)
+Received: from [192.168.7.111] (679773502.box.freepro.com. [212.114.21.58])
+        by smtp.gmail.com with ESMTPSA id a19-20020a05600c349300b003cfa622a18asm16544888wmq.3.2023.01.30.02.58.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 30 Jan 2023 02:58:57 -0800 (PST)
+Message-ID: <6cde6bce-ce28-2dd0-1f16-4868ae93fb3f@linaro.org>
+Date:   Mon, 30 Jan 2023 11:58:56 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 5/7] arm64: dts: qcom: sm8450-hdk: add pmic glink node
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20230130-topic-sm8450-upstream-pmic-glink-v1-0-0b0acfad301e@linaro.org>
+ <20230130-topic-sm8450-upstream-pmic-glink-v1-5-0b0acfad301e@linaro.org>
+ <1c3fa66b-651f-c3c1-1751-af3f43c86c49@linaro.org>
+Organization: Linaro Developer Services
+In-Reply-To: <1c3fa66b-651f-c3c1-1751-af3f43c86c49@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Michał Krawczyk <mk@semihalf.com>
+On 30/01/2023 11:40, Konrad Dybcio wrote:
+> 
+> 
+> On 30.01.2023 10:54, Neil Armstrong wrote:
+>> Add the pmic glink node linked with the DWC3 USB controller
+>> switched to OTG mode and tagged with usb-role-switch.
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Missing commit message
 
-The decoder driver should clear the last_buffer_dequeued flag of the
-capture queue upon receiving V4L2_DEC_CMD_START.
+??
 
-The last_buffer_dequeued flag is set upon receiving EOS (which always
-happens upon receiving V4L2_DEC_CMD_STOP).
+> 
+>> ---
+>>   arch/arm64/boot/dts/qcom/sm8450-hdk.dts | 34 ++++++++++++++++++++++++++++++++-
+>>   1 file changed, 33 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
+>> index 5bdc2c1159ae..5ab12c911bfe 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
+>> @@ -87,6 +87,31 @@ lt9611_3v3: lt9611-3v3-regulator {
+>>   		enable-active-high;
+>>   	};
+>>   
+>> +	pmic-glink {
+>> +		compatible = "qcom,sm8450-pmic-glink", "qcom,pmic-glink";
+>> +
+> You could remove this newline
+>> +		#address-cells = <1>;
+>> +		#size-cells = <0>;
+>> +
+>> +		connector@0 {
+>> +			compatible = "usb-c-connector";
+>> +			reg = <0>;
+>> +			power-role = "dual";
+>> +			data-role = "dual";
+>> +
+>> +			ports {
+>> +				#address-cells = <1>;
+>> +				#size-cells = <0>;
+> And add one here
+> 
+>> +				port@0 {
+>> +					reg = <0>;
+> And here
+> 
 
-Without this patch, after issuing the V4L2_DEC_CMD_STOP and
-V4L2_DEC_CMD_START, the vb2_dqbuf() function will always fail, even if
-the buffers are completed by the hardware.
+Ack
 
-Fixes: beac82904a87 ("media: venus: make decoder compliant with stateful codec API")
+>> +					pmic_glink_dwc3_in: endpoint {
+>> +						remote-endpoint = <&usb_1_dwc3_out>;
+>> +					};
+>> +				};
+>> +			};
+>> +		};
+>> +	};
+>> +
+>>   	vph_pwr: vph-pwr-regulator {
+>>   		compatible = "regulator-fixed";
+>>   		regulator-name = "vph_pwr";
+>> @@ -724,7 +749,14 @@ &usb_1 {
+>>   };
+>>   
+>>   &usb_1_dwc3 {
+>> -	dr_mode = "peripheral";
+>> +	dr_mode = "otg";
+>> +	usb-role-switch;
+>> +
+>> +	port {
+> Hm, maybe this could be moved to 8450 dtsi?
 
-Signed-off-by: Michał Krawczyk <mk@semihalf.com>
----
- drivers/media/platform/qcom/venus/vdec.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+Nop because it depends on the board layout, I think dr_mode
+and eventual connector description should really stay in
+the board dts.
 
-diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index 4ceaba37e2e5..175488ea08ff 100644
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -526,6 +526,7 @@ static int
- vdec_decoder_cmd(struct file *file, void *fh, struct v4l2_decoder_cmd *cmd)
- {
- 	struct venus_inst *inst = to_inst(file);
-+	struct vb2_queue *dst_vq;
- 	struct hfi_frame_data fdata = {0};
- 	int ret;
- 
-@@ -556,6 +557,13 @@ vdec_decoder_cmd(struct file *file, void *fh, struct v4l2_decoder_cmd *cmd)
- 			inst->codec_state = VENUS_DEC_STATE_DRAIN;
- 			inst->drain_active = true;
- 		}
-+	} else if (cmd->cmd == V4L2_DEC_CMD_START &&
-+		   inst->codec_state == VENUS_DEC_STATE_STOPPED) {
-+		dst_vq = v4l2_m2m_get_vq(inst->fh.m2m_ctx,
-+					 V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE);
-+		vb2_clear_last_buffer_dequeued(&inst->fh.m2m_ctx->cap_q_ctx.q);
-+
-+		inst->codec_state = VENUS_DEC_STATE_DECODING;
- 	}
- 
- unlock:
--- 
-2.39.1.456.gfc5497dd1b-goog
+Thanks,
+Neil
+
+> 
+> Konrad
+>> +		usb_1_dwc3_out: endpoint {
+>> +		      remote-endpoint = <&pmic_glink_dwc3_in>;
+>> +	      };
+>> +	};
+>>   };
+>>   
+>>   &usb_1_hsphy {
+>>
 
