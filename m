@@ -2,94 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 438F7681957
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 19:36:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E82A681960
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 19:37:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238299AbjA3Sgh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Jan 2023 13:36:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43850 "EHLO
+        id S238275AbjA3Sh3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Jan 2023 13:37:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236984AbjA3Sg2 (ORCPT
+        with ESMTP id S238291AbjA3Sgg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Jan 2023 13:36:28 -0500
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A86A97D96
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jan 2023 10:35:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1675103736;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=Lt1BSrHjqGxTuQATN1FHlMVFUULtc3t75DalFc1DJkQ=;
-        b=fz5yxH4r+1zcsNy7z44xpI2WNdxoSQoDfDFDk4ZoIuQ0xyTMZubhBfWuw0Nqge9a+e16ys
-        KXsU1GFv7HpWUuJIFOhbZNAKyr+RNuGMNVI1c/0YeCt/bitLRiD/R6hlOtALYu5Vo43Z0l
-        7AxtdG/NoAIMT3GnZvZ0+MwSKa0+65c=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-621-YzQw-j87MlSz0WLXKCnWxQ-1; Mon, 30 Jan 2023 13:35:35 -0500
-X-MC-Unique: YzQw-j87MlSz0WLXKCnWxQ-1
-Received: by mail-qt1-f200.google.com with SMTP id x16-20020ac87ed0000000b003b82d873b38so3447304qtj.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jan 2023 10:35:35 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Lt1BSrHjqGxTuQATN1FHlMVFUULtc3t75DalFc1DJkQ=;
-        b=JtNstvUyrINepLaD8sWA4bw0/CufikcHcylk35ypFI05k9T32nc+pGisB4rP82vfIY
-         A/0VL4u77TxOgUVGVTGc8kP1lTyReto3Rqhu5yxR06uzCgP7dGVrM4Sp14U6viyiMe3c
-         3eY0JzZG7FhmKmLmzSSmUjNVxn7srqyXp8NnPprv0WSe6WoSLgO2ahSS7BIld321IiDT
-         g8rmlTwcN4nebxnyO1nEpj39YfVGAmpF7txvfbJp/0BJOiWi6MrKS9PZub0sTQXjt5HW
-         twMpRS6DsSyDjWxBE864FGF2k8YR9VJ0hWeXwamQwPbzP5B6dH8lKt5ZggKv2mbVLQDS
-         pjwA==
-X-Gm-Message-State: AO0yUKVazAO4Fd1LmX8H7mTVTBfbpb9XhIxn4yca985DfQtA5id5wr/o
-        vJqIhzfBC/xuVuOlWsLhOU/pp/0w2SEMP28EAd1lAa0uc6f85uxB/etlacptfaFAQ4fMRaoIzCr
-        noX+g/Y13174j4L2/ExmPLwmBNQ==
-X-Received: by 2002:a05:6214:5086:b0:537:7335:144f with SMTP id kk6-20020a056214508600b005377335144fmr33146787qvb.24.1675103734834;
-        Mon, 30 Jan 2023 10:35:34 -0800 (PST)
-X-Google-Smtp-Source: AK7set/FPPbNpiUIaqVWHe+TRyIn3OsGXWnrIppmyHYJIz3KP+w5i9mRZLJBY8tMr/xBanz2UMPsXg==
-X-Received: by 2002:a05:6214:5086:b0:537:7335:144f with SMTP id kk6-20020a056214508600b005377335144fmr33146764qvb.24.1675103734613;
-        Mon, 30 Jan 2023 10:35:34 -0800 (PST)
-Received: from x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
-        by smtp.gmail.com with ESMTPSA id o4-20020a05620a0d4400b006ea7f9d8644sm8448062qkl.96.2023.01.30.10.35.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Jan 2023 10:35:33 -0800 (PST)
-Date:   Mon, 30 Jan 2023 13:35:32 -0500
-From:   Brian Masney <bmasney@redhat.com>
-To:     Steev Klimaszewski <steev@kali.org>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Mon, 30 Jan 2023 13:36:36 -0500
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A5F513D6C;
+        Mon, 30 Jan 2023 10:36:22 -0800 (PST)
+Received: from g550jk.localnet (unknown [62.108.10.64])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 705A3CD5B1;
+        Mon, 30 Jan 2023 18:36:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1675103780; bh=w7+XQVClETXGlfL757dC4kjjZ78YoUiBNlAl+eRVAD0=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=bzTQoAHp/z69+jSIf9SrDybNnMQQWbWkbdUIQk/Q+iUUwgpKs3bO96N/sILAGW3EB
+         tPEaZoJCwp3fVxaWwUnRJ6koXJh639cxKs5UNP34wyUYcoHVrHu8hoZgxBHI5vXoaH
+         RCpblWn8pYkhC4cQVsa+A4oLF3fiOjzM1QQG1sDg=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Eduardo Valentin <edubezval@gmail.com>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Sven Peter <sven@svenpeter.dev>,
-        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
-        Rocky Liao <rjliao@codeaurora.org>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: sc8280xp: Enable BT
-Message-ID: <Y9gN9IKAr6y3xzh7@x1>
-References: <20230129215136.5557-1-steev@kali.org>
- <20230129215136.5557-2-steev@kali.org>
- <20230129215136.5557-3-steev@kali.org>
- <20230129215136.5557-4-steev@kali.org>
+        linux-arm-msm@vger.kernel.org
+Cc:     Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Craig Tatlor <ctatlor97@gmail.com>
+Subject: Re: [PATCH] ARM: dts: qcom: msm8974: correct qfprom node reg
+Date:   Mon, 30 Jan 2023 19:36:19 +0100
+Message-ID: <1886214.taCxCBeP46@g550jk>
+In-Reply-To: <3112b531-45df-672c-c0a7-aefbdcceb727@linaro.org>
+References: <20230130-msm8974-qfprom-v1-1-975aa0e5e083@z3ntu.xyz>
+ <3112b531-45df-672c-c0a7-aefbdcceb727@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230129215136.5557-4-steev@kali.org>
-User-Agent: Mutt/2.2.7 (2022-08-07)
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
+X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
+        SPF_HELO_NONE,SPF_PASS,T_PDS_OTHER_BAD_TLD autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -97,31 +54,86 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Jan 29, 2023 at 03:51:29PM -0600, Steev Klimaszewski wrote:
-> From: Bjorn Andersson <bjorn.andersson@linaro.org>
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+On Montag, 30. J=E4nner 2023 19:30:04 CET Konrad Dybcio wrote:
+> On 30.01.2023 19:20, luca@z3ntu.xyz wrote:
+> > From: Craig Tatlor <ctatlor97@gmail.com>
+> >=20
+> > The qfprom actually starts at 0xfc4b8000 instead of 0xfc4bc000 as
+> > defined previously. Adjust the tsens offsets accordingly.
+> >=20
+> > [luca@z3ntu.xyz: extract to standalone patch]
+> >=20
+> > Fixes: c59ffb519357 ("arm: dts: msm8974: Add thermal zones, tsens and
+> > qfprom nodes") Signed-off-by: Craig Tatlor <ctatlor97@gmail.com>
+> > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> > ---
+>=20
+> Isn't this a raw vs ecc-corrected values problem?
 
-You should also add your Signed-off-by. Also the title of the patch
-should be updated to say define uart2 instead of enable BT.
+Not quite sure what you mean.
 
-> ---
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 14 ++++++++++++++
->  1 file changed, 14 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> index 122afa03bb40..2d98687fb1ea 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> @@ -1244,6 +1244,20 @@ spi3: spi@98c000 {
->  				status = "disabled";
->  			};
->  
-> +			uart2: serial@988000 {
+The original intention behind this patch is to allow to use the pvs fuse at=
+=20
+(now) 0xb0 which was inaccessible with the former definition.
 
-This node needs to go after spi2 instead of spi3.
+    pvs: pvs@b0 {
+        reg =3D <0xb0 0x8>;
+    };
 
-Everything else looks good to me.
+Regards
+Luca
 
-Brian
+>=20
+> Konrad
+>=20
+> >  arch/arm/boot/dts/qcom-msm8974.dtsi | 12 ++++++------
+> >  1 file changed, 6 insertions(+), 6 deletions(-)
+> >=20
+> > diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi
+> > b/arch/arm/boot/dts/qcom-msm8974.dtsi index 8d216a3c0851..922d235c6065
+> > 100644
+> > --- a/arch/arm/boot/dts/qcom-msm8974.dtsi
+> > +++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
+> > @@ -1132,16 +1132,16 @@ restart@fc4ab000 {
+> >=20
+> >  			reg =3D <0xfc4ab000 0x4>;
+> >  	=09
+> >  		};
+> >=20
+> > -		qfprom: qfprom@fc4bc000 {
+> > +		qfprom: qfprom@fc4b8000 {
+> >=20
+> >  			compatible =3D "qcom,msm8974-qfprom",=20
+"qcom,qfprom";
+> >=20
+> > -			reg =3D <0xfc4bc000 0x1000>;
+> > +			reg =3D <0xfc4b8000 0x7000>;
+> >=20
+> >  			#address-cells =3D <1>;
+> >  			#size-cells =3D <1>;
+> >=20
+> > -			tsens_calib: calib@d0 {
+> > -				reg =3D <0xd0 0x18>;
+> > +			tsens_calib: calib@40d0 {
+> > +				reg =3D <0x40d0 0x18>;
+> >=20
+> >  			};
+> >=20
+> > -			tsens_backup: backup@440 {
+> > -				reg =3D <0x440 0x10>;
+> > +			tsens_backup: backup@4440 {
+> > +				reg =3D <0x4440 0x10>;
+> >=20
+> >  			};
+> >  	=09
+> >  		};
+> >=20
+> > ---
+> > base-commit: 6d796c50f84ca79f1722bb131799e5a5710c4700
+> > change-id: 20230130-msm8974-qfprom-619c0e8f26eb
+> >=20
+> > Best regards,
+
+
+
 
