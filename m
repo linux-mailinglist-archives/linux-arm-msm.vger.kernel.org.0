@@ -2,121 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D20C681724
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 18:02:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 11877681755
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 18:11:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236678AbjA3RCi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Jan 2023 12:02:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57552 "EHLO
+        id S236255AbjA3RLt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Jan 2023 12:11:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237496AbjA3RCf (ORCPT
+        with ESMTP id S236114AbjA3RLt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Jan 2023 12:02:35 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A76240BE6;
-        Mon, 30 Jan 2023 09:02:28 -0800 (PST)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30UEO212006565;
-        Mon, 30 Jan 2023 17:02:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=9LFRpLyRhXWyH+7jrPEhrD02rrf8/HqGRJ6PpLDFJWI=;
- b=N0TP8iVMmfA28jwro09ztdIs3wdKqdbnpQc17/beCp2/3yW9A6K8PP6QGDz0xNZAAxot
- zvXgdRNm6qssHOmFByQjnQubeC4Gvpldumwn7Wl6wUgQFPrPQPQsgQzcSheDkvyjbeem
- ZRU/FYJOdMALla7NmA16kHpFHXC2Tx8cF4TnwFByIVCCOVxfUFDiABRKVZTR2MkJOQyg
- Y3vnZqsi6Pt5+Pov6EcjdLPVIjcjJTHO6oXErDXhu1BUvkavZMMwjO5mPJVwxFjJDd2e
- djl5vKb/TQiUUI/VKPTBtXEJGowL6BXnrWD9lK0yi7/nfgkOFEJ1hjd9BNGldU36hEST yA== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nefmfrbhp-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 30 Jan 2023 17:02:25 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30UH2O8i006723
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 30 Jan 2023 17:02:24 GMT
-Received: from kathirav-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Mon, 30 Jan 2023 09:02:20 -0800
-From:   Kathiravan T <quic_kathirav@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <lee@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-CC:     Kathiravan T <quic_kathirav@quicinc.com>
-Subject: [PATCH 3/3] arm64: dts: qcom: ipq5332: add SMEM support
-Date:   Mon, 30 Jan 2023 22:31:55 +0530
-Message-ID: <20230130170155.27266-4-quic_kathirav@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230130170155.27266-1-quic_kathirav@quicinc.com>
-References: <20230130170155.27266-1-quic_kathirav@quicinc.com>
-MIME-Version: 1.0
+        Mon, 30 Jan 2023 12:11:49 -0500
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34D0240BDD;
+        Mon, 30 Jan 2023 09:11:47 -0800 (PST)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+        by mailout.nyi.internal (Postfix) with ESMTP id D439F5C00C8;
+        Mon, 30 Jan 2023 12:11:44 -0500 (EST)
+Received: from imap51 ([10.202.2.101])
+  by compute6.internal (MEProxy); Mon, 30 Jan 2023 12:11:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+        :content-type:date:date:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to; s=fm3; t=1675098704; x=1675185104; bh=8g5jhxs1ye
+        CDrjfLIf+8U8LlK1MXTqncFvTNe1mMJWo=; b=qqgWjZIs+GIIXlXlQscQhT6+Ia
+        kyZGJikgz1VoROG4ltqTM8VX/1YSKTj9Czq4SeJgeKAuEdJZ8mBlkfkXic5SftJU
+        iq7jyxSB+BXByUTVk7CByJBj3B3wgBOjPkDqs8MfHpxOK9be+OX0fyTGDWlG1E3e
+        vtiDgLlLogvFHkYZQcif7WuSWlMHOTTD+3K2SeKoy2VX+1HnluwciIkoRFmcfw3R
+        FdrYp3HdAenXZ4S44+fmYraIxm+K6WYYTxQXNI5BBxLGVsL8UNM5lebORuxILBI0
+        dPVQ0F+kv/BGb9SNdrpZaEAuu8+r/Prs1K3a4ax9FEi3zxStLT5GD8gJn0OQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:date:feedback-id
+        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to
+        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+        fm3; t=1675098704; x=1675185104; bh=8g5jhxs1yeCDrjfLIf+8U8LlK1MX
+        TqncFvTNe1mMJWo=; b=kVtf/GzsRe7Ufz9KnzY7w4t8qmuSx5ze2fyXzaFvm/JC
+        mg4wKHKEaSvfCk8KspwJ3Vi08vYZgnAQQxHHuQNStMx4NDHnn8iBx8X29yV2mXT+
+        VtQfYMJWwyNkzTiuul+MCh0O0Wybt9uds1dPyfHI/uXh3uysVcOm6oHpHg1Vtyof
+        6J/XPnFhFyp+n6oHzSS+ieuv8XjRZG0m+YTcfRdG4rvkbgjPMwrsUFraUywxIOMu
+        qT8WN8Wsd/R4fHdR1yAr72izkeleJPZ+Lx6vesRmhtXnsOk4dEnnHDO0zWlitTCA
+        yEwRLYL84LYJV+m2MarOKv67JeG1pZDqRQMDFvnoYQ==
+X-ME-Sender: <xms:T_rXY4D1VxwvoYSgVp0iTHLfixLrNRJOXnJ_707xOpYTylAM73pDFA>
+    <xme:T_rXY6ij-rFoP4n1D1sV1tfik-ne6nvazoN59pEJag_u9HUzQ1riUZcFYk-cXCeb7
+    TlJOuyr7Lw_vabY6yg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrudefvddguddttdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehr
+    nhguuceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrth
+    htvghrnhepffegffdutddvhefffeeltefhjeejgedvleffjeeigeeuteelvdettddulefg
+    udfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprg
+    hrnhgusegrrhhnuggsrdguvg
+X-ME-Proxy: <xmx:T_rXY7n2AH0WdgbhHdwgSwIGEHKNxu9eRjx1pbS7k_0nzd9oqUUiIQ>
+    <xmx:T_rXY-yugjxUAeNrmRWeYJDU1aUCVH6a_s-MDyrY4SvXybppXrmVvg>
+    <xmx:T_rXY9RGoFIPLzWaQ6wGkkdRVwN44TZujenS2kE-S-8gOzGLzGy-5g>
+    <xmx:UPrXY5rZOjN1IwZu-rXrVDkWffDb9WfHYSzy86V5U4r0-OwGxuJdaw>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id AE699B60086; Mon, 30 Jan 2023 12:11:43 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-106-gfe3ab13a96-fm-20230124.001-gfe3ab13a
+Mime-Version: 1.0
+Message-Id: <7c5dfa87-41df-4ba7-b0e4-72c8386402a8@app.fastmail.com>
+In-Reply-To: <20230113164449.906002-8-robimarko@gmail.com>
+References: <20230113164449.906002-1-robimarko@gmail.com>
+ <20230113164449.906002-8-robimarko@gmail.com>
+Date:   Mon, 30 Jan 2023 18:11:24 +0100
+From:   "Arnd Bergmann" <arnd@arndb.de>
+To:     "Robert Marko" <robimarko@gmail.com>,
+        "Andy Gross" <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>, bhelgaas@google.com,
+        lpieralisi@kernel.org, "Rob Herring" <robh@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+        krzysztof.kozlowski+dt@linaro.org,
+        "Manivannan Sadhasivam" <mani@kernel.org>, svarbanov@mm-sol.com,
+        shawn.guo@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, "Abel Vesa" <abelvesa@kernel.org>
+Subject: Re: [PATCH v2 8/9] arm64: dts: qcom: ipq8074: fix Gen3 PCIe node
 Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Zt_-Er4yQ3xTEIFVKHexE24jCadnr2xB
-X-Proofpoint-GUID: Zt_-Er4yQ3xTEIFVKHexE24jCadnr2xB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-30_16,2023-01-30_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
- priorityscore=1501 mlxlogscore=732 suspectscore=0 bulkscore=0 mlxscore=0
- impostorscore=0 phishscore=0 lowpriorityscore=0 spamscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2301300165
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-add SMEM support by adding required nodes.
+On Fri, Jan 13, 2023, at 17:44, Robert Marko wrote:
+> IPQ8074 comes in 2 silicon versions:
+> * v1 with 2x Gen2 PCIe ports and QMP PHY-s
+> * v2 with 1x Gen3 and 1x Gen2 PCIe ports and QMP PHY-s
+>
+> v2 is the final and production version that is actually supported by the
+> kernel, however it looks like PCIe related nodes were added for the v1 SoC.
+>
+> Finish the PCIe fixup by using the correct compatible, adding missing ATU
+> register space, declaring max-link-speed, use correct ranges, add missing
+> clocks and resets.
+>
+> Fixes: 33057e1672fe ("ARM: dts: ipq8074: Add pcie nodes")
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
 
-Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
----
- arch/arm64/boot/dts/qcom/ipq5332.dtsi | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+I was reading through the pull request today and saw this patch
+along with the Gen2 one:
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-index 6a1d0cc927ef..17f30118f9fd 100644
---- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-@@ -99,6 +99,14 @@
- 			no-map;
- 			reg = <0x0 0x4a600000 0x0 0x200000>;
- 		};
-+
-+		smem@4a800000 {
-+			compatible = "qcom,smem";
-+			reg = <0x0 0x4a800000 0x0 0x00100000>;
-+			no-map;
-+
-+			hwlocks = <&tcsr_mutex 0>;
-+		};
- 	};
- 
- 	soc@0 {
-@@ -143,6 +151,12 @@
- 				 <0>;
- 		};
- 
-+		tcsr_mutex: hwlock@1905000 {
-+			compatible = "qcom,tcsr-mutex";
-+			reg = <0x01905000 0x20000>;
-+			#hwlock-cells = <1>;
-+		};
-+
- 		tcsr: syscon@193d100 {
- 			compatible = "qcom,tcsr-ipq5332", "syscon";
- 			reg = <0x0193d100 0x4>;
--- 
-2.17.1
 
+> @@ -871,9 +873,9 @@ pcie0: pci@20000000 {
+>  			phy-names = "pciephy";
+> 
+>  			ranges = <0x81000000 0 0x20200000 0x20200000
+> -				  0 0x100000   /* downstream I/O */
+> +				  0 0x10000>, /* downstream I/O */
+
+Fixing the length here seems fine, but the bus-side address
+still looks wrong: 0x20200000 is way outside of the usual
+port ranges from 0 to 0x10000 on the local bus.
+
+> -				  0x82000000 0 0x20300000 0x20300000
+> -				  0 0xd00000>; /* non-prefetchable memory */
+> +				 <0x82000000 0 0x20220000 0x20220000
+> +				  0 0xfde0000>; /* non-prefetchable memory */
+
+I see the total size of the memory space is under 256MB. Are you
+sure that there is no 64-bit BAR in addition to this?
+
+I also see commit 7d1158c984d3 ("arm64: dts: qcom: sm8550: Add
+PCIe PHYs and controllers nodes") introduce the same broken
+I/O port range (oversized 1MB space wiht an identity map) for a
+new SoC. This should probably be fixed as well, along with
+reviewing the other ones.
+
+Has the I/O space mapping on any of these actually been tested,
+or just copied from one SoC to another? Very few devices actually
+use I/O space, so it wouldn't be surprising if it never worked
+in the first place.
+
+       Arnd
