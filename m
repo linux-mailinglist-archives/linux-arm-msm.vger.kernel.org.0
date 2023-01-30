@@ -2,139 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D137B680796
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 09:40:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 827586807E8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 09:54:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235507AbjA3IkM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Jan 2023 03:40:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57068 "EHLO
+        id S235761AbjA3Iyb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Jan 2023 03:54:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235394AbjA3IkK (ORCPT
+        with ESMTP id S234978AbjA3Iya (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Jan 2023 03:40:10 -0500
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70ABF193ED;
-        Mon, 30 Jan 2023 00:40:09 -0800 (PST)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by smtp-out1.suse.de (Postfix) with ESMTPS id 1D4E721904;
-        Mon, 30 Jan 2023 08:40:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1675068008; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=2SVfhz4vtI64h5SERZ/9fRgC8aqv2ev6ARHJYCOeeH4=;
-        b=G2mVqFvKEL/BlzFzerKAcMGLe5N4yjYl5NQQhVVFOPOvi8MDzhZ/HfgNTmcGw1vpcO3+V/
-        qC2QH1B7wcDHgG+hGne07hmu22/jcjJ1CCma6zbPvY0lpxpR6UFScXgGG2P+7VuhSN5y91
-        K5HvfO+CrgNfQvoR+K30ExwPDfcMQtA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1675068008;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=2SVfhz4vtI64h5SERZ/9fRgC8aqv2ev6ARHJYCOeeH4=;
-        b=2J6FYGxp4Pro5SY2sXN5uFjh9m5a2UI3v22+JjjdQpCOqwELpLu5MyUzkzpZ0cFkCqJCYs
-        GRUiM7cHFllcEbBQ==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id D7E4D13A06;
-        Mon, 30 Jan 2023 08:40:07 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id QqG+M2eC12PIUwAAMHmgww
-        (envelope-from <tzimmermann@suse.de>); Mon, 30 Jan 2023 08:40:07 +0000
-Message-ID: <23bcc048-5c74-5781-33a7-98d28fafbdf8@suse.de>
-Date:   Mon, 30 Jan 2023 09:40:07 +0100
+        Mon, 30 Jan 2023 03:54:30 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B7577DA3;
+        Mon, 30 Jan 2023 00:54:29 -0800 (PST)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30U4mJkp019976;
+        Mon, 30 Jan 2023 08:54:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : reply-to : references : mime-version :
+ content-type : in-reply-to; s=qcppdkim1;
+ bh=OlA92o5gOGaNjtD2eEvU1jdJTaTRmV/rUevgrh/YtbY=;
+ b=X71m282pGhqAK4HSBoW7lf3I34BM2Q69yp5OHSONPs36btabYdbFm1D3MPf5ipwJPZ6a
+ JyVIBuxty53MC4OPfb+NhvbKUfPm1E7PZlgYtN9LvtjakJZiTtkUbuyWHnwFbhtBpAQ4
+ IfEs61zCw98dgzE6ZGh5h8bWE7qDaB0z4XJ+3Pec4rY9RbRunyJiu9ViDsEdPMYNDAox
+ BTNNrwHlW1k4WQBZQIrDvaBScRJjI3ugv+C8SKEfz7aBqM8E0VhhIUcm+8nq+gozkY3Z
+ sucx9/arusLhwThNDO9mNNW/0Wt0Vw7Ic0PSGjqvr8Ay5+COiqZrd+hYNZnwJz0J6nkt OQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ncua8udk6-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 30 Jan 2023 08:54:11 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30U8sA2o025310
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 30 Jan 2023 08:54:10 GMT
+Received: from quicinc.com (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 30 Jan
+ 2023 00:54:03 -0800
+Date:   Mon, 30 Jan 2023 14:23:59 +0530
+From:   Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
+To:     Elliot Berman <quic_eberman@quicinc.com>
+CC:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Alex Elder <elder@linaro.org>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Marc Zyngier <maz@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+Subject: Re: [PATCH v9 14/27] gunyah: vm_mgr: Add ioctls to support basic
+ non-proxy VM boot
+Message-ID: <20230130085359.GC4169015@quicinc.com>
+Reply-To: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
+References: <20230120224627.4053418-1-quic_eberman@quicinc.com>
+ <20230120224627.4053418-15-quic_eberman@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v3 01/10] drm/client: Test for connectors before sending
- hotplug event
-Content-Language: en-US
-To:     Simon Ser <contact@emersion.fr>
-Cc:     freedreno@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org,
-        amd-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        intel-gfx@lists.freedesktop.org, javierm@redhat.com,
-        dri-devel@lists.freedesktop.org, linux-tegra@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230125200415.14123-1-tzimmermann@suse.de>
- <20230125200415.14123-2-tzimmermann@suse.de>
- <tc_igyYrgA_B5xJ15j6H2fQ00aA6vzd4nuQ8XusqeJqWWNZDJx8fFRgBAWoWOV8L5BEhjFDMYgANfdKXLqJZ0DMcsZfy8OUHDRatj36oOXo=@emersion.fr>
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-In-Reply-To: <tc_igyYrgA_B5xJ15j6H2fQ00aA6vzd4nuQ8XusqeJqWWNZDJx8fFRgBAWoWOV8L5BEhjFDMYgANfdKXLqJZ0DMcsZfy8OUHDRatj36oOXo=@emersion.fr>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------9hAz08szS0xR2UsvN0rZCqf5"
-X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+In-Reply-To: <20230120224627.4053418-15-quic_eberman@quicinc.com>
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: sh86p9gSCoJaJhdPgk9trdqNIHJSMXWr
+X-Proofpoint-ORIG-GUID: sh86p9gSCoJaJhdPgk9trdqNIHJSMXWr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-30_07,2023-01-27_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 clxscore=1015
+ lowpriorityscore=0 bulkscore=0 phishscore=0 suspectscore=0 malwarescore=0
+ mlxlogscore=999 impostorscore=0 mlxscore=0 priorityscore=1501 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2301300084
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------9hAz08szS0xR2UsvN0rZCqf5
-Content-Type: multipart/mixed; boundary="------------WtGY1Ja0eVD12VghFsROTVfh";
- protected-headers="v1"
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: Simon Ser <contact@emersion.fr>
-Cc: freedreno@lists.freedesktop.org, linux-samsung-soc@vger.kernel.org,
- amd-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
- intel-gfx@lists.freedesktop.org, javierm@redhat.com,
- dri-devel@lists.freedesktop.org, linux-tegra@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org
-Message-ID: <23bcc048-5c74-5781-33a7-98d28fafbdf8@suse.de>
-Subject: Re: [PATCH v3 01/10] drm/client: Test for connectors before sending
- hotplug event
-References: <20230125200415.14123-1-tzimmermann@suse.de>
- <20230125200415.14123-2-tzimmermann@suse.de>
- <tc_igyYrgA_B5xJ15j6H2fQ00aA6vzd4nuQ8XusqeJqWWNZDJx8fFRgBAWoWOV8L5BEhjFDMYgANfdKXLqJZ0DMcsZfy8OUHDRatj36oOXo=@emersion.fr>
-In-Reply-To: <tc_igyYrgA_B5xJ15j6H2fQ00aA6vzd4nuQ8XusqeJqWWNZDJx8fFRgBAWoWOV8L5BEhjFDMYgANfdKXLqJZ0DMcsZfy8OUHDRatj36oOXo=@emersion.fr>
+* Elliot Berman <quic_eberman@quicinc.com> [2023-01-20 14:46:13]:
 
---------------WtGY1Ja0eVD12VghFsROTVfh
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+> +static int gh_vm_start(struct gunyah_vm *ghvm)
+> +{
+> +	struct gunyah_vm_memory_mapping *mapping;
+> +	u64 dtb_offset;
+> +	u32 mem_handle;
+> +	int ret;
+> +
+> +	down_write(&ghvm->status_lock);
+> +	if (ghvm->vm_status != GH_RM_VM_STATUS_NO_STATE) {
+> +		up_write(&ghvm->status_lock);
+> +		return 0;
 
-SGkNCg0KQW0gMjcuMDEuMjMgdW0gMTk6MDIgc2NocmllYiBTaW1vbiBTZXI6DQo+IE9uIFdl
-ZG5lc2RheSwgSmFudWFyeSAyNXRoLCAyMDIzIGF0IDIxOjA0LCBUaG9tYXMgWmltbWVybWFu
-biA8dHppbW1lcm1hbm5Ac3VzZS5kZT4gd3JvdGU6DQo+IA0KPj4gTm90IGhhdmluZyBjb25u
-ZWN0b3JzIGluZGljYXRlcyBhIGRyaXZlciBidWcuDQo+IA0KPiBJcyBpdD8gV2hhdCBpZiBh
-bGwgY29ubmVjdG9ycyBhcmUgb2YgdGhlIERQLU1TVCB0eXBlLCBpZS4gdGhleSBhcmUNCj4g
-Y3JlYXRlZCBvbi10aGUtZmx5Pw0KDQpNeSBjb21taXQgbWVzc2FnZSB3YXMgbm9uc2Vuc2Uu
-IEkgZXZlbiB3cml0ZSB0aGlzIGhlcmUgdGhhdCBoYXZpbmcgbm8gDQpjb25uZWN0b3JzIGlz
-IGxlZ2l0aW1hdGUuDQoNCkJlc3QgcmVnYXJkcw0KVGhvbWFzDQoNCg0KLS0gDQpUaG9tYXMg
-WmltbWVybWFubg0KR3JhcGhpY3MgRHJpdmVyIERldmVsb3Blcg0KU1VTRSBTb2Z0d2FyZSBT
-b2x1dGlvbnMgR2VybWFueSBHbWJIDQpNYXhmZWxkc3RyLiA1LCA5MDQwOSBOw7xybmJlcmcs
-IEdlcm1hbnkNCihIUkIgMzY4MDksIEFHIE7DvHJuYmVyZykNCkdlc2Now6RmdHNmw7xocmVy
-OiBJdm8gVG90ZXYNCg==
+return -EINVAL in this case.
 
---------------WtGY1Ja0eVD12VghFsROTVfh--
+Additionally check if its already GH_RM_VM_STATUS_READY and return 0 in that
+case.
 
---------------9hAz08szS0xR2UsvN0rZCqf5
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
+[snip]
 
------BEGIN PGP SIGNATURE-----
 
-wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmPXgmcFAwAAAAAACgkQlh/E3EQov+AQ
-Lw//aZ2S6JqzI3HN2smO8qU+8YYo347edHPSYqgFtXYNPh3cskycgaxH6JIls8ewpLF85X5KdCnL
-XBt1OEkxB971xIY+IIKEpyYtSogk036qBJGGlGkhHDvPNKAjvOJqZaUjiRDPNd/pMIbQy9TUlqjo
-QITr7Pz5mfdt5iW+OEOUYWPSIDMvYjxK9CHPPmsVsVNaIsl7cW9jyVCdbv4SYqqJTwCoHONNB2XW
-vGu/wsa1c+Qtj2LRN6kx7WkEJmx9qwmgwuc5zJ7ucRRs5ODZ28FWfVxPTi7BY4yilClpvctXZLpw
-EZvCnFgjb2TASEqS1dTes6yP50lvv1wXbwc+2ujM6gqIG1HqaxAEOBUcjdUOuhTBXf2890OWaAzM
-wa/sMoxafn5lGDGT8vLnz/aUfqUIeY8xrDyb/HED/bryXsaepjUYxI8rUmXNiQsNIjG/ONle8LZd
-mKWCreWhoowp/ezL1/Hgk8vE9rlazNvx17ydqIhLK3DwrbsiH3YwY2lfYahS3sIjcnjPeOdWNGgs
-rbyNvA4m/h7VCdby8PTEthQxkkU5S5yXwJrd5Jk+d4Eewmqx0SWhr/zV9AIJ9eemNfq531zvX3Se
-E7Fmz390mmQVdwr88P2wDs1Wp8h9s9oZ+tbgYjpsVRMgzO+dUM4fYRnWvXUq4EU+1dtQLoHc0s3v
-J50=
-=3ibD
------END PGP SIGNATURE-----
+> +	mem_handle = mapping->parcel.mem_handle;
+> +	dtb_offset = ghvm->dtb_config.gpa - mapping->guest_phys_addr;
+> +
+> +	ret = gh_rm_vm_configure(ghvm->rm, ghvm->vmid, ghvm->auth, mem_handle,
+> +				0, 0, dtb_offset, ghvm->dtb_config.size);
 
---------------9hAz08szS0xR2UsvN0rZCqf5--
+Default value of auth is 0 (GH_RM_VM_AUTH_NONE). Is that what you wanted here?
+Perhaps initialize default value of auth to be GH_RM_VM_AUTH_QCOM_PIL_ELF?
+
