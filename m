@@ -2,194 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D5291680A4B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 11:01:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1BCC3680A8E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 11:15:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236255AbjA3KB2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Jan 2023 05:01:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37202 "EHLO
+        id S236128AbjA3KPS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Jan 2023 05:15:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234005AbjA3KB0 (ORCPT
+        with ESMTP id S233899AbjA3KPQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Jan 2023 05:01:26 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F80D2716;
-        Mon, 30 Jan 2023 02:01:25 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 9B64960F19;
-        Mon, 30 Jan 2023 10:01:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D98F4C433D2;
-        Mon, 30 Jan 2023 10:01:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1675072884;
-        bh=o4dqwsRXEnWX6zVfh/4HE2Z0WTuD083NeZjgbIqzrOg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=SsxUv9ALlxr1+btx1VMsLmDXaeHRixyoG6l4HT4SP89eEXSaquKGXjt69Wurw+0Fd
-         SokJY8XgP5jjIF1nU0Rxg3zRVLZMM3S4OcUt2RbGsSjse81kG2m/Pi/xEcNsJWWpl0
-         TuwaUgufjL348Sq1b8R3tU60akMoA03yL6Y7iags=
-Date:   Mon, 30 Jan 2023 11:01:20 +0100
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+        Mon, 30 Jan 2023 05:15:16 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBA2F5252;
+        Mon, 30 Jan 2023 02:15:15 -0800 (PST)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30U6LBr4028583;
+        Mon, 30 Jan 2023 10:15:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : reply-to : references : mime-version :
+ content-type : in-reply-to; s=qcppdkim1;
+ bh=FQ25Ocj9mmDa26Q4Qbvq4/AjPwDuTjYyZW7kxiBvCw4=;
+ b=BZi8IdZDbX5hx6pjZrgv/HIi1W23MKVBMB0rmvPOzvHxatgRF61leNff6FStpwl9emy0
+ va3LN1khxdjFM4WEEzq82Nc2zSuoU1XD9RlgUuQ7jrJSst3oTHR5WUJIpJUEsIldq4+D
+ ZFd9ONjt69t9qYre5l9DmPMUJqoZoIBu+Z5hYP47hD/dr7PVnDImaD506x4AvEyH6Wu8
+ QgummUH5FKBwl7slhEmTxcN8+5E21YnSpbOIW3XmpM+gp4eDcTdhjvKEQClt88987UqQ
+ /zNhxclZ27zUV89K5/Ten0g0cZdzM2RWQccXqduoLeEHdZfWNxp5Qd73QmUjTqPc6FhP Mg== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ncvvu36p9-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 30 Jan 2023 10:15:00 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30UAEx3E005764
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 30 Jan 2023 10:14:59 GMT
+Received: from quicinc.com (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 30 Jan
+ 2023 02:14:51 -0800
+Date:   Mon, 30 Jan 2023 15:44:45 +0530
+From:   Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
 To:     Elliot Berman <quic_eberman@quicinc.com>
-Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+CC:     Bjorn Andersson <quic_bjorande@quicinc.com>,
         Alex Elder <elder@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
         Murali Nalajala <quic_mnalajal@quicinc.com>,
         Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
         Carl van Schaik <quic_cvanscha@quicinc.com>,
         Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Arnd Bergmann <arnd@arndb.de>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Jonathan Corbet <corbet@lwn.net>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
-        Marc Zyngier <maz@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Marc Zyngier <maz@kernel.org>,
         Jassi Brar <jassisinghbrar@gmail.com>,
         Sudeep Holla <sudeep.holla@arm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v9 04/27] virt: gunyah: Add hypercalls to identify Gunyah
-Message-ID: <Y9eVcHM9nZZ/4ZSh@kroah.com>
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+Subject: Re: [PATCH v9 12/27] gunyah: rsc_mgr: Add RPC for sharing memory
+Message-ID: <20230130101445.GB332@quicinc.com>
+Reply-To: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
 References: <20230120224627.4053418-1-quic_eberman@quicinc.com>
- <20230120224627.4053418-5-quic_eberman@quicinc.com>
+ <20230120224627.4053418-13-quic_eberman@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="iso-8859-1"
 Content-Disposition: inline
-In-Reply-To: <20230120224627.4053418-5-quic_eberman@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20230120224627.4053418-13-quic_eberman@quicinc.com>
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: QKEya6Z32GHI_o5Kft3PK1XLQziwReYd
+X-Proofpoint-ORIG-GUID: QKEya6Z32GHI_o5Kft3PK1XLQziwReYd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-30_10,2023-01-27_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ mlxlogscore=802 suspectscore=0 spamscore=0 mlxscore=0 phishscore=0
+ clxscore=1015 lowpriorityscore=0 priorityscore=1501 bulkscore=0
+ adultscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2212070000 definitions=main-2301300098
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 20, 2023 at 02:46:03PM -0800, Elliot Berman wrote:
-> Add hypercalls to identify when Linux is running a virtual machine under
-> Gunyah.
-> 
-> There are two calls to help identify Gunyah:
-> 
-> 1. gh_hypercall_get_uid() returns a UID when running under a Gunyah
->    hypervisor.
-> 2. gh_hypercall_hyp_identify() returns build information and a set of
->    feature flags that are supported by Gunyah.
-> 
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> ---
->  MAINTAINERS                          |  2 +
->  arch/arm64/Kbuild                    |  1 +
->  arch/arm64/gunyah/Makefile           |  3 ++
->  arch/arm64/gunyah/gunyah_hypercall.c | 75 ++++++++++++++++++++++++++++
->  drivers/virt/Kconfig                 |  2 +
->  drivers/virt/gunyah/Kconfig          | 14 ++++++
->  include/linux/gunyah.h               | 33 ++++++++++++
->  7 files changed, 130 insertions(+)
->  create mode 100644 arch/arm64/gunyah/Makefile
->  create mode 100644 arch/arm64/gunyah/gunyah_hypercall.c
->  create mode 100644 drivers/virt/gunyah/Kconfig
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index f1e07e39b2f5..fe19e71efc6d 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -9048,6 +9048,8 @@ L:	linux-arm-msm@vger.kernel.org
->  S:	Supported
->  F:	Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
->  F:	Documentation/virt/gunyah/
-> +F:	arch/arm64/gunyah/
-> +F:	drivers/virt/gunyah/
->  F:	include/linux/gunyah.h
->  
->  HABANALABS PCI DRIVER
-> diff --git a/arch/arm64/Kbuild b/arch/arm64/Kbuild
-> index 5bfbf7d79c99..e4847ba0e3c9 100644
-> --- a/arch/arm64/Kbuild
-> +++ b/arch/arm64/Kbuild
-> @@ -3,6 +3,7 @@ obj-y			+= kernel/ mm/ net/
->  obj-$(CONFIG_KVM)	+= kvm/
->  obj-$(CONFIG_XEN)	+= xen/
->  obj-$(subst m,y,$(CONFIG_HYPERV))	+= hyperv/
-> +obj-$(CONFIG_GUNYAH)	+= gunyah/
->  obj-$(CONFIG_CRYPTO)	+= crypto/
->  
->  # for cleaning
-> diff --git a/arch/arm64/gunyah/Makefile b/arch/arm64/gunyah/Makefile
-> new file mode 100644
-> index 000000000000..84f1e38cafb1
-> --- /dev/null
-> +++ b/arch/arm64/gunyah/Makefile
-> @@ -0,0 +1,3 @@
-> +# SPDX-License-Identifier: GPL-2.0
-> +
-> +obj-$(CONFIG_GUNYAH) += gunyah_hypercall.o
-> diff --git a/arch/arm64/gunyah/gunyah_hypercall.c b/arch/arm64/gunyah/gunyah_hypercall.c
-> new file mode 100644
-> index 000000000000..ffed4b71641f
-> --- /dev/null
-> +++ b/arch/arm64/gunyah/gunyah_hypercall.c
-> @@ -0,0 +1,75 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#include <linux/arm-smccc.h>
-> +#include <linux/module.h>
-> +#include <linux/gunyah.h>
-> +
-> +static const uint32_t gunyah_known_uuids[][4] = {
+* Elliot Berman <quic_eberman@quicinc.com> [2023-01-20 14:46:11]:
 
-uint32_t is not a kernel type, please use sane ones, like u32.
-
-> +	{0x19bd54bd, 0x0b37571b, 0x946f609b, 0x54539de6}, /* QC_HYP (Qualcomm's build) */
-> +	{0x673d5f14, 0x9265ce36, 0xa4535fdb, 0xc1d58fcd}, /* GUNYAH (open source build) */
-
-And why not use the kernel uuid type here?  Why create your own?
-
-> +};
-> +
-> +#define GH_HYPERCALL_HYP_IDENTIFY		GH_HYPERCALL(0x0000)
-> +
-> +/**
-> + * gh_hypercall_get_uid() - Returns a UID when running under a Gunyah hypervisor
-> + * @uid: An array of 4 u32's (u32 uid[4];)
-> + *
-> + * Caller should compare the resulting UID to a list of known Gunyah UIDs to
-> + * confirm that Linux is running as a guest of Gunyah.
-> + */
-> +void gh_hypercall_get_uid(u32 uid[4])
+> +static int gh_rm_mem_lend_common(struct gh_rm *rm, u32 message_id, struct gh_rm_mem_parcel *p)
 > +{
-> +	struct arm_smccc_res res;
-> +	u32 uid[4];
-
-How does this work when you have a local variable the same name as the
-parameter to the function?  What shadows what and how?  The compiler
-didn't complain about this?
-
-> +	int i;
+> +	size_t msg_size = 0, initial_n_mem_entries = p->n_mem_entries;
+> +	void *msg;
+> +	__le32 *resp;
+> +	struct gh_mem_share_req_header *req_header;
+> +	struct gh_mem_share_req_acl_section *acl_section;
+> +	struct gh_mem_share_req_mem_section *mem_section;
+> +	u32 *mem_attr_section;
+> +	size_t resp_size;
+> +	int ret;
 > +
-> +	arm_smccc_1_1_hvc(ARM_SMCCC_VENDOR_HYP_CALL_UID_FUNC_ID, &res);
+> +	if (!p->acl_entries || !p->n_acl_entries || !p->mem_entries || !p->n_mem_entries ||
+> +	    p->n_acl_entries > U8_MAX || p->mem_handle != GH_MEM_HANDLE_INVAL)
+> +		return -EINVAL;
 > +
-> +	uid[0] = lower_32_bits(res.a0);
-> +	uid[1] = lower_32_bits(res.a1);
-> +	uid[2] = lower_32_bits(res.a2);
-> +	uid[3] = lower_32_bits(res.a3);
+> +	if (initial_n_mem_entries > GH_RM_MAX_MEM_ENTRIES)
+> +		initial_n_mem_entries = GH_RM_MAX_MEM_ENTRIES;
 > +
-> +	for (i = 0; i < ARRAY_SIZE(gunyah_known_uuids); i++)
-> +		if (!memcmp(uid, gunyah_known_uuids[i], sizeof(uid)))
-> +			break;
+> +	/* The format of the message goes:
+> +	 * request header
+> +	 * ACL entries (which VMs get what kind of access to this memory parcel)
+> +	 * Memory entries (list of memory regions to share)
+> +	 * Memory attributes (currently unused, we'll hard-code the size to 0)
+> +	 */
+> +	msg_size += sizeof(struct gh_mem_share_req_header);
+> +	msg_size += offsetof(struct gh_mem_share_req_acl_section, entries[p->n_acl_entries]);
+> +	msg_size += offsetof(struct gh_mem_share_req_mem_section, entries[initial_n_mem_entries]);
+> +	msg_size += sizeof(u32); /* for memory attributes, currently unused */
 > +
-> +	return i != ARRAY_SIZE(gunyah_known_uuids);
+> +	msg = kzalloc(msg_size, GFP_KERNEL);
+> +	if (!msg)
+> +		return -ENOMEM;
+> +
+> +	ret = gh_rm_platform_pre_mem_share(rm, p);
 
-How can a function that returns void actually return anything?
+Hmm ..I think gh_rm_platform_pre_mem_share() is not yet defined as of this
+patch, so you probably want this in a later patch.
 
-This obviously was never compiled.  I'm stopping here in my review.
-
-greg k-h
+> +	if (ret) {
+> +		kfree(msg);
+> +		return ret;
+> +	}
+> +
