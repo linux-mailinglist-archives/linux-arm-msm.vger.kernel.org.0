@@ -2,38 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C1868680A40
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 10:59:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D5291680A4B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 11:01:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236084AbjA3J7Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Jan 2023 04:59:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34638 "EHLO
+        id S236255AbjA3KB2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Jan 2023 05:01:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236071AbjA3J7P (ORCPT
+        with ESMTP id S234005AbjA3KB0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Jan 2023 04:59:15 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C71272FCD5;
-        Mon, 30 Jan 2023 01:58:53 -0800 (PST)
+        Mon, 30 Jan 2023 05:01:26 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F80D2716;
+        Mon, 30 Jan 2023 02:01:25 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 5F161B80EC1;
-        Mon, 30 Jan 2023 09:58:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 790B3C433D2;
-        Mon, 30 Jan 2023 09:58:22 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 9B64960F19;
+        Mon, 30 Jan 2023 10:01:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D98F4C433D2;
+        Mon, 30 Jan 2023 10:01:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1675072703;
-        bh=SoUfX9t3uCDqd1KJttPmVP1c1Ha1TQ8GZrulQxL7hxA=;
+        s=korg; t=1675072884;
+        bh=o4dqwsRXEnWX6zVfh/4HE2Z0WTuD083NeZjgbIqzrOg=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=wEm+cw30u676F7aZTqiojYzEAkm9l6+AeVd6HYEv9qylFDXixh3cqrLwm7ZG6qGQg
-         TJdddpypqc8wJTRQDnjNru6+DEoxJXKOffILX6KmELj7CokLks8oAOmfuMnSX9nUNi
-         /eFUydHeAHuNtzJs3le2XqxpoMwDdJaymmNNPD8g=
-Date:   Mon, 30 Jan 2023 10:58:20 +0100
+        b=SsxUv9ALlxr1+btx1VMsLmDXaeHRixyoG6l4HT4SP89eEXSaquKGXjt69Wurw+0Fd
+         SokJY8XgP5jjIF1nU0Rxg3zRVLZMM3S4OcUt2RbGsSjse81kG2m/Pi/xEcNsJWWpl0
+         TuwaUgufjL348Sq1b8R3tU60akMoA03yL6Y7iags=
+Date:   Mon, 30 Jan 2023 11:01:20 +0100
 From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To:     Elliot Berman <quic_eberman@quicinc.com>
 Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
         Alex Elder <elder@linaro.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
         Murali Nalajala <quic_mnalajal@quicinc.com>,
         Trilok Soni <quic_tsoni@quicinc.com>,
         Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
@@ -45,22 +47,20 @@ Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Jonathan Corbet <corbet@lwn.net>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Marc Zyngier <maz@kernel.org>,
+        Marc Zyngier <maz@kernel.org>,
         Jassi Brar <jassisinghbrar@gmail.com>,
         Sudeep Holla <sudeep.holla@arm.com>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v9 03/27] gunyah: Common types and error codes for Gunyah
- hypercalls
-Message-ID: <Y9eUvP0YQlLtAPpk@kroah.com>
+Subject: Re: [PATCH v9 04/27] virt: gunyah: Add hypercalls to identify Gunyah
+Message-ID: <Y9eVcHM9nZZ/4ZSh@kroah.com>
 References: <20230120224627.4053418-1-quic_eberman@quicinc.com>
- <20230120224627.4053418-4-quic_eberman@quicinc.com>
+ <20230120224627.4053418-5-quic_eberman@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230120224627.4053418-4-quic_eberman@quicinc.com>
+In-Reply-To: <20230120224627.4053418-5-quic_eberman@quicinc.com>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -70,102 +70,126 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 20, 2023 at 02:46:02PM -0800, Elliot Berman wrote:
-> Add architecture-independent standard error codes, types, and macros for
-> Gunyah hypercalls.
+On Fri, Jan 20, 2023 at 02:46:03PM -0800, Elliot Berman wrote:
+> Add hypercalls to identify when Linux is running a virtual machine under
+> Gunyah.
 > 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> There are two calls to help identify Gunyah:
+> 
+> 1. gh_hypercall_get_uid() returns a UID when running under a Gunyah
+>    hypervisor.
+> 2. gh_hypercall_hyp_identify() returns build information and a set of
+>    feature flags that are supported by Gunyah.
+> 
 > Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 > ---
->  MAINTAINERS            |  1 +
->  include/linux/gunyah.h | 74 ++++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 75 insertions(+)
->  create mode 100644 include/linux/gunyah.h
+>  MAINTAINERS                          |  2 +
+>  arch/arm64/Kbuild                    |  1 +
+>  arch/arm64/gunyah/Makefile           |  3 ++
+>  arch/arm64/gunyah/gunyah_hypercall.c | 75 ++++++++++++++++++++++++++++
+>  drivers/virt/Kconfig                 |  2 +
+>  drivers/virt/gunyah/Kconfig          | 14 ++++++
+>  include/linux/gunyah.h               | 33 ++++++++++++
+>  7 files changed, 130 insertions(+)
+>  create mode 100644 arch/arm64/gunyah/Makefile
+>  create mode 100644 arch/arm64/gunyah/gunyah_hypercall.c
+>  create mode 100644 drivers/virt/gunyah/Kconfig
 > 
 > diff --git a/MAINTAINERS b/MAINTAINERS
-> index d9205cb9e988..f1e07e39b2f5 100644
+> index f1e07e39b2f5..fe19e71efc6d 100644
 > --- a/MAINTAINERS
 > +++ b/MAINTAINERS
-> @@ -9048,6 +9048,7 @@ L:	linux-arm-msm@vger.kernel.org
+> @@ -9048,6 +9048,8 @@ L:	linux-arm-msm@vger.kernel.org
 >  S:	Supported
 >  F:	Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
 >  F:	Documentation/virt/gunyah/
-> +F:	include/linux/gunyah.h
+> +F:	arch/arm64/gunyah/
+> +F:	drivers/virt/gunyah/
+>  F:	include/linux/gunyah.h
 >  
 >  HABANALABS PCI DRIVER
->  M:	Oded Gabbay <ogabbay@kernel.org>
-> diff --git a/include/linux/gunyah.h b/include/linux/gunyah.h
+> diff --git a/arch/arm64/Kbuild b/arch/arm64/Kbuild
+> index 5bfbf7d79c99..e4847ba0e3c9 100644
+> --- a/arch/arm64/Kbuild
+> +++ b/arch/arm64/Kbuild
+> @@ -3,6 +3,7 @@ obj-y			+= kernel/ mm/ net/
+>  obj-$(CONFIG_KVM)	+= kvm/
+>  obj-$(CONFIG_XEN)	+= xen/
+>  obj-$(subst m,y,$(CONFIG_HYPERV))	+= hyperv/
+> +obj-$(CONFIG_GUNYAH)	+= gunyah/
+>  obj-$(CONFIG_CRYPTO)	+= crypto/
+>  
+>  # for cleaning
+> diff --git a/arch/arm64/gunyah/Makefile b/arch/arm64/gunyah/Makefile
 > new file mode 100644
-> index 000000000000..985c6086348e
+> index 000000000000..84f1e38cafb1
 > --- /dev/null
-> +++ b/include/linux/gunyah.h
-> @@ -0,0 +1,74 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +++ b/arch/arm64/gunyah/Makefile
+> @@ -0,0 +1,3 @@
+> +# SPDX-License-Identifier: GPL-2.0
+> +
+> +obj-$(CONFIG_GUNYAH) += gunyah_hypercall.o
+> diff --git a/arch/arm64/gunyah/gunyah_hypercall.c b/arch/arm64/gunyah/gunyah_hypercall.c
+> new file mode 100644
+> index 000000000000..ffed4b71641f
+> --- /dev/null
+> +++ b/arch/arm64/gunyah/gunyah_hypercall.c
+> @@ -0,0 +1,75 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
 > +/*
 > + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
 > + */
 > +
-> +#ifndef _LINUX_GUNYAH_H
-> +#define _LINUX_GUNYAH_H
+> +#include <linux/arm-smccc.h>
+> +#include <linux/module.h>
+> +#include <linux/gunyah.h>
 > +
-> +#include <linux/errno.h>
-> +#include <linux/limits.h>
+> +static const uint32_t gunyah_known_uuids[][4] = {
+
+uint32_t is not a kernel type, please use sane ones, like u32.
+
+> +	{0x19bd54bd, 0x0b37571b, 0x946f609b, 0x54539de6}, /* QC_HYP (Qualcomm's build) */
+> +	{0x673d5f14, 0x9265ce36, 0xa4535fdb, 0xc1d58fcd}, /* GUNYAH (open source build) */
+
+And why not use the kernel uuid type here?  Why create your own?
+
+> +};
 > +
-> +/* Common Gunyah macros */
-
-Macros?
-
-> +#define GH_CAPID_INVAL	U64_MAX
-> +#define GH_VMID_ROOT_VM	0xff
-
-These are all simple defines :)
-
+> +#define GH_HYPERCALL_HYP_IDENTIFY		GH_HYPERCALL(0x0000)
 > +
-> +#define GH_ERROR_OK			0
-> +
-> +#define GH_ERROR_UNIMPLEMENTED		-1
-> +#define GH_ERROR_RETRY			-2
-
-All of these values, they come from the hypervisor?
-
-And then you:
-
-> +static inline int gh_remap_error(int gh_error)
+> +/**
+> + * gh_hypercall_get_uid() - Returns a UID when running under a Gunyah hypervisor
+> + * @uid: An array of 4 u32's (u32 uid[4];)
+> + *
+> + * Caller should compare the resulting UID to a list of known Gunyah UIDs to
+> + * confirm that Linux is running as a guest of Gunyah.
+> + */
+> +void gh_hypercall_get_uid(u32 uid[4])
 > +{
-> +	switch (gh_error) {
-> +	case GH_ERROR_OK:
-> +		return 0;
-> +	case GH_ERROR_NOMEM:
-> +		return -ENOMEM;
-> +	case GH_ERROR_DENIED:
-> +	case GH_ERROR_CSPACE_CAP_NULL:
-> +	case GH_ERROR_CSPACE_CAP_REVOKED:
-> +	case GH_ERROR_CSPACE_WRONG_OBJ_TYPE:
-> +	case GH_ERROR_CSPACE_INSUF_RIGHTS:
-> +	case GH_ERROR_CSPACE_FULL:
-> +		return -EACCES;
-> +	case GH_ERROR_BUSY:
-> +	case GH_ERROR_IDLE:
-> +		return -EBUSY;
-> +	case GH_ERROR_IRQ_BOUND:
-> +	case GH_ERROR_IRQ_UNBOUND:
-> +	case GH_ERROR_MSGQUEUE_FULL:
-> +	case GH_ERROR_MSGQUEUE_EMPTY:
-> +		return -EPERM;
-> +	default:
-> +		return -EINVAL;
-> +	}
-> +}
+> +	struct arm_smccc_res res;
+> +	u32 uid[4];
 
-Convert it to a Linux-kernel related value?
+How does this work when you have a local variable the same name as the
+parameter to the function?  What shadows what and how?  The compiler
+didn't complain about this?
 
-If so, please say that in the documentation here (where the value came
-from, etc...)
+> +	int i;
+> +
+> +	arm_smccc_1_1_hvc(ARM_SMCCC_VENDOR_HYP_CALL_UID_FUNC_ID, &res);
+> +
+> +	uid[0] = lower_32_bits(res.a0);
+> +	uid[1] = lower_32_bits(res.a1);
+> +	uid[2] = lower_32_bits(res.a2);
+> +	uid[3] = lower_32_bits(res.a3);
+> +
+> +	for (i = 0; i < ARRAY_SIZE(gunyah_known_uuids); i++)
+> +		if (!memcmp(uid, gunyah_known_uuids[i], sizeof(uid)))
+> +			break;
+> +
+> +	return i != ARRAY_SIZE(gunyah_known_uuids);
 
-Also, why isn't gh_error an enumerated type so you can have some type
-safety and it's obvious when a value comes from the hypervisor what it
-should be and should not be.
+How can a function that returns void actually return anything?
 
-thanks,
+This obviously was never compiled.  I'm stopping here in my review.
 
 greg k-h
