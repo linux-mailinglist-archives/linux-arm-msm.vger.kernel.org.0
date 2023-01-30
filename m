@@ -2,55 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B008A681FA1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Jan 2023 00:30:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 387B7681FDC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Jan 2023 00:46:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230078AbjA3XaV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Jan 2023 18:30:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52360 "EHLO
+        id S230028AbjA3Xq2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Jan 2023 18:46:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230348AbjA3XaU (ORCPT
+        with ESMTP id S229742AbjA3XqZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Jan 2023 18:30:20 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6F4329E10;
-        Mon, 30 Jan 2023 15:30:18 -0800 (PST)
+        Mon, 30 Jan 2023 18:46:25 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 202602BF23;
+        Mon, 30 Jan 2023 15:46:14 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4CA7A612C5;
-        Mon, 30 Jan 2023 23:30:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BAC6C433EF;
-        Mon, 30 Jan 2023 23:30:17 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id B9D476130B;
+        Mon, 30 Jan 2023 23:46:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EBDCC433D2;
+        Mon, 30 Jan 2023 23:46:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1675121417;
-        bh=Clp5BMnnUdxApbXplgRLMJC/Be26Vp2UYv/I6BzVaiU=;
-        h=In-Reply-To:References:Subject:From:To:Date:From;
-        b=dn1Ud/wbWS+IurE5VWhFcWLFMBQBK5PHvdozOL6YFBot78UqC+wrFjFE0tGku5oEf
-         bGbMBlQFP2/1nD/f81Ve0SenN6TcdJZz8JPzOuWaobyYGplYatarJtTrIpXQg2Yvh7
-         scWZsRx49krbXUePwoCfHTZqNcICAPOvdcMRkrzKs69JWf+YpdJiyk96ph9v/qo884
-         G+g+zh8QSb3nRUK6mw48LApSSRubLdfZA9gNxN6O0k3PpHUT0tdfImw360nb9C5HAc
-         VtEACfmNpZAWBioAxwEX7PVKVJB96SZQNAhdnBVVtwOJ18DDd4fg8CKbCrxcnae1Sz
-         YrFeYglp/Oa9w==
-Message-ID: <9367139a425dc7e4811c757b62f33a4e.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+        s=k20201202; t=1675122373;
+        bh=6CiSYBjoesluD+/5chzBuwYHxxi09E0qRpjcMY/XoCc=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=XKE9BsNvuE0GjpcOpEqbs2SyYxQi1MMnfclArHK8SuekqZCwPhhlqiCUjLHfCTvjq
+         XzDHm58hq/RAgAKvgEEBBGJp+PiyN3ZeDkxZZH1y0R4bnQl6sYplp652vJ3LIjr7GG
+         tw1k8Dsjz+Duovs+JDCQDLsrKP0G97wFQHCU3y5J8jDCy+ua5Tanpqb4S12IVR6xrp
+         17E3pDef13AHn+wPlxSix+NQQ/2ub52+srs5JeZ1qE6aIeCphIzIz4KFQtasM9w+2V
+         Uydo0gU6hSEtPyswuMAjgpTAjeydNIbUWXHdtNy/p6sRSTo/whRn1GUakxBlx1ej+r
+         aSZWQXjgSUPCA==
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     dmitry.baryshkov@linaro.org, Andy Gross <agross@kernel.org>,
+        konrad.dybcio@linaro.org, mturquette@baylibre.com, arnd@kernel.org,
+        sboyd@kernel.org
+Cc:     linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Arnd Bergmann <arnd@arndb.de>
+Subject: Re: [PATCH] clk: qcom: gcc-qcs404: fix duplicate initializer warning
+Date:   Mon, 30 Jan 2023 17:46:09 -0600
+Message-Id: <167512236603.4092892.5518902407835115318.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.37.1
+In-Reply-To: <20230130135555.3268172-1-arnd@kernel.org>
+References: <20230130135555.3268172-1-arnd@kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <febd59ed-ff7b-ffc4-5568-d856703c9123@linaro.org>
-References: <20230123094925.54824-1-krzysztof.kozlowski@linaro.org> <20230123094925.54824-2-krzysztof.kozlowski@linaro.org> <7ddf5c74de84c5dc291996423cb1eb46.sboyd@kernel.org> <febd59ed-ff7b-ffc4-5568-d856703c9123@linaro.org>
-Subject: Re: [PATCH 2/2] clk: qcom: restrict drivers per ARM/ARM64
-From:   Stephen Boyd <sboyd@kernel.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Date:   Mon, 30 Jan 2023 15:30:15 -0800
-User-Agent: alot/0.10
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -58,38 +56,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Krzysztof Kozlowski (2023-01-26 01:31:55)
-> On 25/01/2023 21:44, Stephen Boyd wrote:
-> > Quoting Krzysztof Kozlowski (2023-01-23 01:49:25)
-> >> There is no point to allow selecting pin-controller drivers for Qualco=
-mm
-> >=20
-> > pin controllers?
->=20
-> Copy-paste, I'll fix it.
->=20
-> >=20
-> >> ARMv7 SoCs when building ARM64 kernel, and vice versa.  This makes
-> >> kernel configuration more difficult as many do not remember the Qualco=
-mm
-> >> SoCs model names/numbers.  There won't be a single image for ARMv7 and
-> >> ARMv8/9 SoCs, so no features/options are lost.
-> >=20
-> > Are the drivers used in arm32 emulation mode on these SoCs? I recall
-> > there are some SoCs they run with the arm architecture.
->=20
-> I did not add it to the few SoCs which have upstream DTS in ARM and
-> ARM64. I added only to the ones which are in one specific folder. Also
-> my patch does not affect defconfigs (qcom_defconfig and arm64/defconfig).
+On Mon, 30 Jan 2023 14:55:47 +0100, Arnd Bergmann wrote:
+> From: Arnd Bergmann <arnd@arndb.de>
+> 
+> In one of the clocks, a redundant initialization for .num_parents
+> got left behind by a recent patch:
+> 
+> drivers/clk/qcom/gcc-qcs404.c:63:32: error: initialized field overwritten [-Werror=override-init]
+>    63 |                 .num_parents = 1,
+>       |                                ^
+> 
+> [...]
 
-Cool, thanks for checking. Is it possible to take a dtb from arm64 dts
-directory and boot it on an armv8 CPU running in 32-bit mode? Just
-wondering if even having the dts file exist in the arm64 architecture
-really matters here.
+Applied, thanks!
 
->=20
-> Whether downstream could be affected, I do not know. Anyway, what's
-> downstream it's the downstream's problem...
->=20
+[1/1] clk: qcom: gcc-qcs404: fix duplicate initializer warning
+      commit: d4cb3e7113f82f7378527890aa7b4006234665fe
 
-Agreed. I wasn't asking about downstream.
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
