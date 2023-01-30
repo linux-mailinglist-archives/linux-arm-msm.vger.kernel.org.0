@@ -2,166 +2,193 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C4B31680648
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 07:53:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4FAD86806B0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 08:45:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235843AbjA3Gx1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Jan 2023 01:53:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35860 "EHLO
+        id S235351AbjA3HpQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Jan 2023 02:45:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231161AbjA3Gx0 (ORCPT
+        with ESMTP id S229764AbjA3HpP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Jan 2023 01:53:26 -0500
-Received: from mx3.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3E34113CB;
-        Sun, 29 Jan 2023 22:53:23 -0800 (PST)
-Received: from [10.59.106.37] (unknown [77.235.169.38])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        Mon, 30 Jan 2023 02:45:15 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33294166D8;
+        Sun, 29 Jan 2023 23:45:14 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: pmenzel)
-        by mx.molgen.mpg.de (Postfix) with ESMTPSA id 4030661CC457B;
-        Mon, 30 Jan 2023 07:53:21 +0100 (CET)
-Message-ID: <8d61fb12-eec4-0bc4-f1f4-87fdb7c5407f@molgen.mpg.de>
-Date:   Mon, 30 Jan 2023 07:53:20 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH 0/4] Attempt at adding WCN6855 BT support
-Content-Language: en-US
-To:     Steev Klimaszewski <steev@kali.org>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        by ams.source.kernel.org (Postfix) with ESMTPS id DDA6CB80DEA;
+        Mon, 30 Jan 2023 07:45:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EF81C433EF;
+        Mon, 30 Jan 2023 07:45:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1675064711;
+        bh=pYwcsUsVtDE+CD0pM+qfd07SzUAWDxtCJQsikCIFxWQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=hYTf8T6Tu/8quBK6k1D0bjtKcSK1Ic4d+mRNxLFth6vYO+0k1nFQJ7FEYd1pQERXm
+         4P1tHR+LgRaSMVOykg3z5DuUczSPk8uolVjlqvRP6tOFqAPqTY/zEj5Dc0ad8GWKlz
+         uwThHKAZPdYrjsYHA/yoW/8fNMUwKG7RJPRkmgaP2Mv3jIR5etGp9wXdaJQvQMbp44
+         dsbg6m16D9WCumWufDXFsAw8J+OVhwMKkYu8VX39GAFYxsrm0hS1uz9nxb5GWm6NGJ
+         j8KQ0SlnjPiWBAHBACmRkCH36FWw/yYxRHO3q1xtV4fpB9j4VxsoswB2ffN/pR1FyZ
+         C6+gP0RZb3c9A==
+Date:   Mon, 30 Jan 2023 13:15:00 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Can Guo <quic_cang@quicinc.com>
+Cc:     Arnd Bergmann <arnd@kernel.org>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Arnd Bergmann <arnd@arndb.de>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Sven Peter <sven@svenpeter.dev>,
-        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org
-References: <20230129215136.5557-1-steev@kali.org>
-From:   Paul Menzel <pmenzel@molgen.mpg.de>
-In-Reply-To: <20230129215136.5557-1-steev@kali.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        Bart Van Assche <bvanassche@acm.org>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bean Huo <beanhuo@micron.com>, Jason Gunthorpe <jgg@ziepe.ca>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] scsi: ufs: qcom: fix platform_msi_domain_free_irqs()
+ reference
+Message-ID: <20230130074500.GA12687@thinkpad>
+References: <20230126211831.2274211-1-arnd@kernel.org>
+ <20230127060221.GB7809@thinkpad>
+ <9ff005f0-0cef-65d6-6f69-8394f1ba3e3c@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <9ff005f0-0cef-65d6-6f69-8394f1ba3e3c@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-[Cc: Remove undeliverable rjliao@codeaurora.org]
+On Mon, Jan 30, 2023 at 12:03:45PM +0800, Can Guo wrote:
+> Hi Mani and Arnd,
+> 
+> On 1/27/2023 2:02 PM, Manivannan Sadhasivam wrote:
+> > On Thu, Jan 26, 2023 at 10:17:31PM +0100, Arnd Bergmann wrote:
+> > > From: Arnd Bergmann <arnd@arndb.de>
+> > > 
+> > > The newly added MSI support is mostly hidden inside of an #ifdef,
+> > > except for one line that now causes a build failure when MSI
+> > > is disabled:
+> > > 
+> > > drivers/ufs/host/ufs-qcom.c: In function 'ufs_qcom_remove':
+> > > drivers/ufs/host/ufs-qcom.c:1698:9: error: implicit declaration of function 'platform_msi_domain_free_irqs' [-Werror=i]
+> > >   1698 |         platform_msi_domain_free_irqs(hba->dev);
+> > >        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> > > 
+> > > Above that, the symbol that guards the other call was recently
+> > > removed, so that is all dead code at the moment.
+> > > 
+> > > Remove the incorrect #ifdef and instead of a Kconfig dependency
+> > > to only allow building the driver when CONFIG_GENERIC_MSI_IRQ
+> > > is enabled. This symbol is always present when PCI_MSI
+> > > or ARM_GIC_V3_ITS are enabled, both of which should be present
+> > > on kernels that can run on Qualcomm SoCs.
+> > > 
+> > > The 'select RESET_CONTROLLER' in combination with this dependency
+> > > unfortunately causes a dependency loop and this is a user-visible
+> > > symbol, so it's better to change both to 'depends on'.
+> > > 
+> > > Fixes: 519b6274a777 ("scsi: ufs: qcom: Add MCQ ESI config vendor specific ops")
+> > > Fixes: 13e7accb81d6 ("genirq: Get rid of GENERIC_MSI_IRQ_DOMAIN")
+> > > Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+> > Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+> > 
+> > > ---
+> > > Not sure if this is the best solution, both the GENERIC_MSI_IRQ
+> > > dependencies and the RESET_CONTROLLER dependencies are a bit
+> > > inconsistent already. Feel free to pick another approach that
+> > > addresses both of the bugs I found.
+> > I think your proposed solution works best at the moment.
+> > 
+> > Thanks,
+> > Mani
+> > 
+> > > ---
+> > >   drivers/ufs/host/Kconfig    | 3 ++-
+> > >   drivers/ufs/host/ufs-qcom.c | 8 --------
+> > >   2 files changed, 2 insertions(+), 9 deletions(-)
+> > > 
+> > > diff --git a/drivers/ufs/host/Kconfig b/drivers/ufs/host/Kconfig
+> > > index 139064e70a34..663881437921 100644
+> > > --- a/drivers/ufs/host/Kconfig
+> > > +++ b/drivers/ufs/host/Kconfig
+> > > @@ -57,8 +57,9 @@ config SCSI_UFS_DWC_TC_PLATFORM
+> > >   config SCSI_UFS_QCOM
+> > >   	tristate "QCOM specific hooks to UFS controller platform driver"
+> > >   	depends on SCSI_UFSHCD_PLATFORM && ARCH_QCOM
+> > > +	depends on GENERIC_MSI_IRQ
+> > > +	depends on RESET_CONTROLLER
+> > >   	select QCOM_SCM if SCSI_UFS_CRYPTO
+> > > -	select RESET_CONTROLLER
+> > >   	help
+> > >   	  This selects the QCOM specific additions to UFSHCD platform driver.
+> > >   	  UFS host on QCOM needs some vendor specific configuration before
+> > > diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> > > index 681da3ea7154..eb66b5f6cf19 100644
+> > > --- a/drivers/ufs/host/ufs-qcom.c
+> > > +++ b/drivers/ufs/host/ufs-qcom.c
+> > > @@ -1538,7 +1538,6 @@ static int ufs_qcom_get_outstanding_cqs(struct ufs_hba *hba,
+> > >   	return 0;
+> > >   }
+> > > -#ifdef CONFIG_GENERIC_MSI_IRQ_DOMAIN
+> > >   static void ufs_qcom_write_msi_msg(struct msi_desc *desc, struct msi_msg *msg)
+> > >   {
+> > >   	struct device *dev = msi_desc_to_dev(desc);
+> > > @@ -1626,13 +1625,6 @@ static int ufs_qcom_config_esi(struct ufs_hba *hba)
+> > >   	return ret;
+> > >   }
+> > > -#else
+> > > -static int ufs_qcom_config_esi(struct ufs_hba *hba)
+> > > -{
+> > > -	return -EOPNOTSUPP;
+> > > -}
+> > > -#endif
+> > > -
+> > >   /*
+> > >    * struct ufs_hba_qcom_vops - UFS QCOM specific variant operations
+> > >    *
+> > > -- 
+> > > 2.39.0
+> > > 
+> 
+> Thank you for pointing to 13e7accb81d6 ("genirq: Get rid of
+> GENERIC_MSI_IRQ_DOMAIN"),
+> 
+> which I was not aware of. I am thinking about fixing it just like how
+> 
+> 13e7accb81d6 ("genirq: Get rid of GENERIC_MSI_IRQ_DOMAIN") is fixing
+> drivers/dma/qcom/hidma.c -
+> 
+> In ufs-qcom.c, use CONFIG_GENERIC_MSI_IRQ instead of
+> CONFIG_GENERIC_MSI_IRQ_DOMAIN,
+> 
+> and meanwhile add #ifdef check before calling
+> platform_msi_domain_free_irqs().
+> 
+> Please let me know your idea.
+> 
 
-Am 29.01.23 um 22:51 schrieb Steev Klimaszewski:
-> This patchset is somewhat of an RFC/RFT, and also just something to get this out
-> there.
+No. Let's get rid of the ifdef's please... I like Arnd's patch as it models the
+dependency nicely in Kconfig. And most (all?) of the qcom platforms require
+GENERIC_MSI_IRQ and RESET_CONTROLLER one way or the other anyway.
+
+Thanks,
+Mani
+
 > 
-> First things first, I do not have access to the specs nor the schematics, so a
-> lot of this was done via guess work, looking at the acpi tables, and looking at
-> how a similar device (wcn6750) was added.
-> 
-> There are definitely checkpatch warnings, and I do apologize to those who won't
-> review things until there are no warnings for wasting your time.
-> 
-> One example is that I have the vregs commented out, the dt-bindings say that
-> they are required since it's based on the wcn6750 work but also like the 6750,
-> I've added defaults into the driver, and those seem to work, at least for the
-> initial testing.
-> 
-> The end result is that we do have a working device, but not entirely reliable.
-> 
-> Hopefully by getting this out there, people who do have access to the specs or
-> schematics can see where the improvements or fixes need to come.
-> 
-> There are a few things that I am not sure why they happen, and don't have the
-> knowledge level to figure out why they happen or debugging it.
-> 
-> Bluetooth: hci0: setting up wcn6855
-> Bluetooth: hci0: Frame reassembly failed (-84)
-> Bluetooth: hci0: QCA Product ID   :0x00000013
-> Bluetooth: hci0: QCA SOC Version  :0x400c0210
-> Bluetooth: hci0: QCA ROM Version  :0x00000201
-> Bluetooth: hci0: QCA Patch Version:0x000038e6
-> Bluetooth: hci0: QCA controller version 0x02100201
-> Bluetooth: hci0: unexpected event for opcode 0xfc48
-> Bluetooth: hci0: Sending QCA Patch config failed (-110)
-> Bluetooth: hci0: QCA Downloading qca/hpbtfw21.tlv
-> Bluetooth: hci0: QCA Downloading qca/hpnv21g.bin
-> Bluetooth: hci0: QCA setup on UART is completed
-> 
-> I do not know why the Frame assembly failed, nor the unexpected event.
-> 
-> Likewise, I'm not entirely sure why it says the patch config send times out, and
-> *then* seems to send it?
-> 
-> The BD Address also seems to be incorrect, and I'm not sure what is going on
-> there either.
-> 
-> Additionally, I've tried with an additional patch that I'm not including that is
-> based on commit 059924fdf6c1 ("Bluetooth: btqca: Use NVM files based on SoC ID
-> for WCN3991") to try using the hpnv21g.bin or hpnv21.bin, and the firmware acted
-> the same regardless, so I am assuming I don't truly need the "g" firmware on my
-> Thinkpad X13s.
-> 
-> Testing was done by connecting a Razer Orochi bluetooth mouse, and using it, as
-> well as connecting to and using an H2GO bluetooth speaker and playing audio out
-> via canberra-gtk-play as well as a couple of YouTube videos in a browser.
-> 
-> The mouse only seems to work when < 2 ft. from the laptop, and for the speaker, only
-> "A2DP Sink, codec SBC" would provide audio output, and while I could see that
-> data was being sent to the speaker, it wasn't always outputting, and going >
-> 4ft. away, would often disconnect.
-> 
-> steev@wintermute:~$ hciconfig -a
-> hci0:   Type: Primary  Bus: UART
->          BD Address: 00:00:00:00:5A:AD  ACL MTU: 1024:8  SCO MTU: 240:4
->          UP RUNNING PSCAN
->          RX bytes:1492 acl:0 sco:0 events:126 errors:0
->          TX bytes:128743 acl:0 sco:0 commands:597 errors:0
->          Features: 0xff 0xfe 0x8f 0xfe 0xd8 0x3f 0x5b 0x87
->          Packet type: DM1 DM3 DM5 DH1 DH3 DH5 HV1 HV2 HV3
->          Link policy: RSWITCH HOLD SNIFF
->          Link mode: PERIPHERAL ACCEPT
->          Name: 'wintermute'
->          Class: 0x0c010c
->          Service Classes: Rendering, Capturing
->          Device Class: Computer, Laptop
->          HCI Version:  (0xc)  Revision: 0x0
->          LMP Version:  (0xc)  Subversion: 0x46f7
->          Manufacturer: Qualcomm (29)
-> 
-> steev@wintermute:~$ dmesg | grep Razer
-> [ 3089.235440] input: Razer Orochi as /devices/virtual/misc/uhid/0005:1532:0056.0003/input/input11
-> [ 3089.238580] hid-generic 0005:1532:0056.0003: input,hidraw2: BLUETOOTH HID v0.01 Mouse [Razer Orochi] on 00:00:00:00:5a:ad
-> steev@wintermute:~$ dmesg | grep H2GO
-> [ 3140.959947] input: H2GO Speaker (AVRCP) as /devices/virtual/input/input12
-> 
-> Bjorn Andersson (1):
->    arm64: dts: qcom: sc8280xp: Enable BT
-> 
-> Steev Klimaszewski (3):
->    dt-bindings: net: Add WCN6855 Bluetooth bindings
->    Bluetooth: hci_qca: Add support for QTI Bluetooth chip wcn6855
->    arm64: dts: qcom: thinkpad-x13s: Add bluetooth
-> 
->   .../net/bluetooth/qualcomm-bluetooth.yaml     |  2 +
->   .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 68 +++++++++++++++++++
->   arch/arm64/boot/dts/qcom/sc8280xp.dtsi        | 14 ++++
->   drivers/bluetooth/btqca.c                     | 24 ++++++-
->   drivers/bluetooth/btqca.h                     | 10 +++
->   drivers/bluetooth/hci_qca.c                   | 59 ++++++++++++----
->   6 files changed, 162 insertions(+), 15 deletions(-)
+> Thanks.
+> Regards,
+> Can Guo
 > 
 > 
-> base-commit: e2f86c02fdc96ca29ced53221a3cbf50aa6f8b49
+
+-- 
+மணிவண்ணன் சதாசிவம்
