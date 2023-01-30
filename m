@@ -2,156 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D2A12681C47
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 22:06:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BC3E0681C9C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 22:22:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230348AbjA3VGD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Jan 2023 16:06:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60760 "EHLO
+        id S230432AbjA3VWS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Jan 2023 16:22:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229501AbjA3VF7 (ORCPT
+        with ESMTP id S230425AbjA3VWR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Jan 2023 16:05:59 -0500
-Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEAFA49006;
-        Mon, 30 Jan 2023 13:05:37 -0800 (PST)
-Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-1631b928691so16791574fac.11;
-        Mon, 30 Jan 2023 13:05:37 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3bDd1jgGPleNHLSh/W4VrKXbMGb3ktlbueVN9qKBZG4=;
-        b=2nOABbYcEvw1N/2dIe0umGsl1eCE9s7+ZKKIp91bZVvt0cDk9mR8vGCjMlGV7Djs/V
-         akIoYsgQYLmAaYO5KifjBaarV+0zFT6nxzo7eRYXREgxMR9Utmle9OUZ+5x6dXd5bk39
-         b7pqUdyas+rFpB7TIy0wbnE9cdPZsxH6GGytpmfsVmOioQZtnMJXE6pqNfWfKDCEDwex
-         xKJ8BHzx/UsPXHi04yHxdQ1and5TWOEJkhvFJ9QJMlDyrjrRIDCLlnhrEMvvzUXl7+gm
-         7i8OM8z6CInUpbQYS9MrU/xMJnb/bjjKTEbGAtIPW2z/09ee95zayu7WnPAqfLmV676D
-         iSdQ==
-X-Gm-Message-State: AO0yUKWZzMZFDyHuaVFVJLRe5yGyRq6jL7O2kPrO0yNUk/t5WeBeZOQ8
-        d0VETRrgoRF7bSPsoZ/FFQ==
-X-Google-Smtp-Source: AK7set8W5VSaITyoezV5/0tyHz+aNDmkc87eJvP+VEyOzUsiTylWRDvv7advZGMcm8ohCJ5LGJO+dQ==
-X-Received: by 2002:a05:6870:8089:b0:163:1f0b:d84c with SMTP id q9-20020a056870808900b001631f0bd84cmr6115127oab.1.1675112732231;
-        Mon, 30 Jan 2023 13:05:32 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id a7-20020a056870e0c700b001636786f7absm4811365oab.43.2023.01.30.13.05.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Jan 2023 13:05:31 -0800 (PST)
-Received: (nullmailer pid 3351739 invoked by uid 1000);
-        Mon, 30 Jan 2023 21:05:30 -0000
-Date:   Mon, 30 Jan 2023 15:05:30 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Maximilian Luz <luzmaximilian@gmail.com>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ard Biesheuvel <ardb@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Johan Hovold <johan@kernel.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Sumit Garg <sumit.garg@linaro.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 3/4] dt-bindings: firmware: Add Qualcomm QSEECOM
- interface
-Message-ID: <20230130210530.GA3339716-robh@kernel.org>
-References: <20230127184650.756795-1-luzmaximilian@gmail.com>
- <20230127184650.756795-4-luzmaximilian@gmail.com>
+        Mon, 30 Jan 2023 16:22:17 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF13746D4B;
+        Mon, 30 Jan 2023 13:22:15 -0800 (PST)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30ULGS64023980;
+        Mon, 30 Jan 2023 21:22:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=rP644CWlFJnXB8zVRnRZJwV9nPo/mrHkmJtrCSumVBQ=;
+ b=C6OY5lzRivZ41m7WBRNno5M3lIflnGhHHh03FZVlWUUzE5a3T3ZOkn16FQ4Gd9tozn5K
+ lsQwxaXTcCGR/MFPYruruzlAZb+HmwsD5LXkpFFiATDS/4ldwth9b9x8d+qyUIpMAx+G
+ PlGiBfjybjGqYAu+eCLAeDgzSzNw7r+7KIYbJF+Z6ea6IiZLoixNbO5lU0ykve1t4JQu
+ n7rwRHN0BHPdhk1mO+PjgHLUu04Cb8LJfiQLsn3GviUDSGBvJruRtTJpvUappMXOva0a
+ UHCturUu95QalwdVMgZRZcEFZJ7Kx32+tZW8LFc0lIc+MhfD1XlmChd1WuPsRjIxviKT IA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nefmfruvx-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 30 Jan 2023 21:22:06 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30ULM5wk030052
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 30 Jan 2023 21:22:05 GMT
+Received: from [10.110.114.165] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 30 Jan
+ 2023 13:22:04 -0800
+Message-ID: <0a0c3a12-51e9-b0d0-9307-847023dbe1f7@quicinc.com>
+Date:   Mon, 30 Jan 2023 13:22:03 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230127184650.756795-4-luzmaximilian@gmail.com>
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH v1 10/14] drm/msm/disp/dpu: add supports of DSC encoder
+ v1.2 engine
+Content-Language: en-US
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>
+CC:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
+        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <andersson@kernel.org>, <quic_sbillaka@quicinc.com>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1674498274-6010-1-git-send-email-quic_khsieh@quicinc.com>
+ <1674498274-6010-11-git-send-email-quic_khsieh@quicinc.com>
+ <20230123201133.zzt2zbyaw3pfkzi6@SoMainline.org>
+ <926021c1-d9d1-4449-f01b-f405b48f326a@quicinc.com>
+ <20230130201654.vlr7p7id3a7vxc2b@SoMainline.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20230130201654.vlr7p7id3a7vxc2b@SoMainline.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: jBjiJ9x80LuoOecV3mr4f9tKLkgnKl8X
+X-Proofpoint-GUID: jBjiJ9x80LuoOecV3mr4f9tKLkgnKl8X
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-30_17,2023-01-30_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
+ priorityscore=1501 mlxlogscore=999 suspectscore=0 bulkscore=0 mlxscore=0
+ impostorscore=0 phishscore=0 lowpriorityscore=0 spamscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2301300199
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 27, 2023 at 07:46:49PM +0100, Maximilian Luz wrote:
-> Add bindings for the Qualcomm Secure Execution Environment interface
-> (QSEECOM).
-> 
-> Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
-> ---
-> 
-> Changes in v2:
->  - Replaces uefisecapp bindings.
->  - Fix various dt-checker complaints.
-> 
-> ---
->  .../bindings/firmware/qcom,qseecom.yaml       | 49 +++++++++++++++++++
->  MAINTAINERS                                   |  1 +
->  2 files changed, 50 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/firmware/qcom,qseecom.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/firmware/qcom,qseecom.yaml b/Documentation/devicetree/bindings/firmware/qcom,qseecom.yaml
-> new file mode 100644
-> index 000000000000..540a604f81bc
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/firmware/qcom,qseecom.yaml
-> @@ -0,0 +1,49 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/firmware/qcom,qseecom.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Secure Execution Environment Communication Interface
-> +
-> +maintainers:
-> +  - Maximilian Luz <luzmaximilian@gmail.com>
-> +
-> +description: |
-> +  QSEECOM provides an interface to Qualcomm's Secure Execution Environment
-> +  (SEE) running in the Trust Zone via SCM calls. In particular, it allows
+Hi Marijn
 
-SCM is SMCCC or something else?
+On 1/30/2023 12:16 PM, Marijn Suijten wrote:
+> On 2023-01-24 15:52:46, Kuogee Hsieh wrote:
+> 
+> <snip>
+> 
+> If only replying to a small chunk somewhere in the middle of a diff
+> and/or large review, please cut out unnecessary bits to make your reply
+> easier to find :)
+> 
+>>>> +	data = (dsc->flatness_min_qp & 0x1f);
+>>>> +	data |= (dsc->flatness_max_qp & 0x1f) << 5;
+>>>> +	data |= (dsc_info->det_thresh_flatness & 0xff) << 10;
+>>> dpu_hw_dsc.c computes this on the fly.  After removing that, and
+>>> using initial_lines from the function parameters, only
+>>> dsc_info->num_active_ss_per_enc remains.  Do you really need that
+>>> msm_display_dsc_info struct here, do you need it at all?
+>>
+>> I ported these code from our down stream code base.
+>>
+>> I make it work first, then clean it up will follow.
+>>
+>> I submit it for review since it looks like you guy like to have code sooner.
+> 
+> Correct, I was looking forward to these patches albeit complete with the
+> promised DSI support from Jessica, which still seems to be pending.
+> 
 
-> +  communication with secure applications running therein.
-> +
-> +  Applications running in this environment can, for example, include
-> +  'uefisecapp', which is required for accessing UEFI variables on certain
-> +  systems as these cannot be accessed directly.
-> +
-> +properties:
-> +  compatible:
-> +    items:
-> +      - enum:
-> +          - qcom,qseecom-sc8280xp
-> +      - const: qcom,qseecom
-> +
-> +  qcom,scm:
-> +    $ref: '/schemas/types.yaml#/definitions/phandle'
-> +    description:
-> +      A phandle pointing to the QCOM SCM device (see ./qcom,scm.yaml).
-> +
-> +required:
-> +  - compatible
-> +  - qcom,scm
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    firmware {
-> +        scm {
-> +            compatible = "qcom,scm-sc8280xp", "qcom,scm";
-> +        };
-> +        qseecom {
-> +            compatible = "qcom,qseecom-sc8280xp", "qcom,qseecom";
-> +            qcom,scm = <&scm>;
+DSI support is still being worked upon.
 
-Why do you need this in DT? If you already know you have a firmware 
-interface (via "qcom,scm"), then query the firmware to see if the SEE is 
-there.
+I dont think we promised DSC 1.2 will come with DSI together in the same 
+series. It was always going to be DSC 1.2 + DP followed by another 
+series from Jessica for DSI.
 
-Rob
+Lets set the expectations right.
+
+Thanks
+
+Abhinav
+> When sending patches to that extent, with the intent of getting quick
+> turnaround but knowing that they are not ready for prime time yet (or
+> were they, based on your "submit it for review" mention? Don't you mean
+> testing?), please annotate the series with an RFC tag accompanied with a
+> description what still needs to be done and why.  That would have saved
+> a great deal of comments and review.
+> 
+>> yes, eliminate msm_display_dsc_info is my next target and hope it can be
+>> done.
+> 
+> Thank you.  Again, if that was the intent from the get-go, that's
+> perfect material to put in an RFC series' cover letter.
+> 
+> - Marijn
