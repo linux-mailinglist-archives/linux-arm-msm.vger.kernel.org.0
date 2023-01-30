@@ -2,143 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 11877681755
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 18:11:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F1FB66817E2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 18:43:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236255AbjA3RLt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Jan 2023 12:11:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36202 "EHLO
+        id S237919AbjA3Rns (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Jan 2023 12:43:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58596 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236114AbjA3RLt (ORCPT
+        with ESMTP id S237855AbjA3Rnr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Jan 2023 12:11:49 -0500
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34D0240BDD;
-        Mon, 30 Jan 2023 09:11:47 -0800 (PST)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-        by mailout.nyi.internal (Postfix) with ESMTP id D439F5C00C8;
-        Mon, 30 Jan 2023 12:11:44 -0500 (EST)
-Received: from imap51 ([10.202.2.101])
-  by compute6.internal (MEProxy); Mon, 30 Jan 2023 12:11:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-        :content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm3; t=1675098704; x=1675185104; bh=8g5jhxs1ye
-        CDrjfLIf+8U8LlK1MXTqncFvTNe1mMJWo=; b=qqgWjZIs+GIIXlXlQscQhT6+Ia
-        kyZGJikgz1VoROG4ltqTM8VX/1YSKTj9Czq4SeJgeKAuEdJZ8mBlkfkXic5SftJU
-        iq7jyxSB+BXByUTVk7CByJBj3B3wgBOjPkDqs8MfHpxOK9be+OX0fyTGDWlG1E3e
-        vtiDgLlLogvFHkYZQcif7WuSWlMHOTTD+3K2SeKoy2VX+1HnluwciIkoRFmcfw3R
-        FdrYp3HdAenXZ4S44+fmYraIxm+K6WYYTxQXNI5BBxLGVsL8UNM5lebORuxILBI0
-        dPVQ0F+kv/BGb9SNdrpZaEAuu8+r/Prs1K3a4ax9FEi3zxStLT5GD8gJn0OQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:date:feedback-id
-        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
-        :mime-version:references:reply-to:sender:subject:subject:to:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm3; t=1675098704; x=1675185104; bh=8g5jhxs1yeCDrjfLIf+8U8LlK1MX
-        TqncFvTNe1mMJWo=; b=kVtf/GzsRe7Ufz9KnzY7w4t8qmuSx5ze2fyXzaFvm/JC
-        mg4wKHKEaSvfCk8KspwJ3Vi08vYZgnAQQxHHuQNStMx4NDHnn8iBx8X29yV2mXT+
-        VtQfYMJWwyNkzTiuul+MCh0O0Wybt9uds1dPyfHI/uXh3uysVcOm6oHpHg1Vtyof
-        6J/XPnFhFyp+n6oHzSS+ieuv8XjRZG0m+YTcfRdG4rvkbgjPMwrsUFraUywxIOMu
-        qT8WN8Wsd/R4fHdR1yAr72izkeleJPZ+Lx6vesRmhtXnsOk4dEnnHDO0zWlitTCA
-        yEwRLYL84LYJV+m2MarOKv67JeG1pZDqRQMDFvnoYQ==
-X-ME-Sender: <xms:T_rXY4D1VxwvoYSgVp0iTHLfixLrNRJOXnJ_707xOpYTylAM73pDFA>
-    <xme:T_rXY6ij-rFoP4n1D1sV1tfik-ne6nvazoN59pEJag_u9HUzQ1riUZcFYk-cXCeb7
-    TlJOuyr7Lw_vabY6yg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrudefvddguddttdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehr
-    nhguuceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrth
-    htvghrnhepffegffdutddvhefffeeltefhjeejgedvleffjeeigeeuteelvdettddulefg
-    udfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprg
-    hrnhgusegrrhhnuggsrdguvg
-X-ME-Proxy: <xmx:T_rXY7n2AH0WdgbhHdwgSwIGEHKNxu9eRjx1pbS7k_0nzd9oqUUiIQ>
-    <xmx:T_rXY-yugjxUAeNrmRWeYJDU1aUCVH6a_s-MDyrY4SvXybppXrmVvg>
-    <xmx:T_rXY9RGoFIPLzWaQ6wGkkdRVwN44TZujenS2kE-S-8gOzGLzGy-5g>
-    <xmx:UPrXY5rZOjN1IwZu-rXrVDkWffDb9WfHYSzy86V5U4r0-OwGxuJdaw>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id AE699B60086; Mon, 30 Jan 2023 12:11:43 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-106-gfe3ab13a96-fm-20230124.001-gfe3ab13a
-Mime-Version: 1.0
-Message-Id: <7c5dfa87-41df-4ba7-b0e4-72c8386402a8@app.fastmail.com>
-In-Reply-To: <20230113164449.906002-8-robimarko@gmail.com>
-References: <20230113164449.906002-1-robimarko@gmail.com>
- <20230113164449.906002-8-robimarko@gmail.com>
-Date:   Mon, 30 Jan 2023 18:11:24 +0100
-From:   "Arnd Bergmann" <arnd@arndb.de>
-To:     "Robert Marko" <robimarko@gmail.com>,
-        "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>, bhelgaas@google.com,
-        lpieralisi@kernel.org, "Rob Herring" <robh@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
-        krzysztof.kozlowski+dt@linaro.org,
-        "Manivannan Sadhasivam" <mani@kernel.org>, svarbanov@mm-sol.com,
-        shawn.guo@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, "Abel Vesa" <abelvesa@kernel.org>
-Subject: Re: [PATCH v2 8/9] arm64: dts: qcom: ipq8074: fix Gen3 PCIe node
-Content-Type: text/plain
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        Mon, 30 Jan 2023 12:43:47 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C03412861;
+        Mon, 30 Jan 2023 09:43:45 -0800 (PST)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30UDc0N1003605;
+        Mon, 30 Jan 2023 17:43:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=SMg5fZWjmH7Mss820pAqb7ZUrjtwWWTAwGNzWfphj+U=;
+ b=ZAZL35vHMZGVKqbsfViWruO5O8Qc73AyanoN1S4v+Cv59UKDG1CMK4x4GN6p4YgvRN9E
+ +/OIBACsDAIfrDCGPPrMypyTPa+WdPBTMVPWOFataB9jW4xVQutVYWCblWKJowMIu06q
+ SH519zU0HzzB53PNdVw//jk1qsIQzvS3o77u3thczrdL1qTeS19lGqIPOEOanDF/3X5+
+ 7U/asP8khvMyEBpw1f+WSH12qWQkTB0saPVp/PRWgrZIfBFmSQqFjgU58A8KqNxQhSkX
+ lZ2KTnrex+wZnFUZhYl7bxWIH3PDP6iPyjrryMhussSVcR31heEPtBEU1vzEkg94Rokg kw== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ncsdpvg7t-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 30 Jan 2023 17:43:42 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30UHhbAM005333
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 30 Jan 2023 17:43:37 GMT
+Received: from [10.47.234.156] (10.49.16.6) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 30 Jan
+ 2023 09:43:37 -0800
+Subject: Re: [PATCH] remoteproc: sysfs: fix race while updating recovery flag
+To:     Mukesh Ojha <quic_mojha@quicinc.com>, <andersson@kernel.org>,
+        <mathieu.poirier@linaro.org>
+CC:     <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20230129225106.10606-1-quic_satyap@quicinc.com>
+ <d9708f4b-e533-e400-acbf-3d8e816f242e@quicinc.com>
+From:   Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>
+Message-ID: <941b8600-9f7c-b646-9f8a-c30a2a332e37@quicinc.com>
+Date:   Mon, 30 Jan 2023 09:43:37 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
+MIME-Version: 1.0
+In-Reply-To: <d9708f4b-e533-e400-acbf-3d8e816f242e@quicinc.com>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: NwER8QJqwMNSBBQHF_SmcEdJJl8CW-KI
+X-Proofpoint-ORIG-GUID: NwER8QJqwMNSBBQHF_SmcEdJJl8CW-KI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-30_16,2023-01-30_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ lowpriorityscore=0 bulkscore=0 adultscore=0 suspectscore=0 mlxlogscore=914
+ spamscore=0 clxscore=1015 impostorscore=0 mlxscore=0 phishscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301300171
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 13, 2023, at 17:44, Robert Marko wrote:
-> IPQ8074 comes in 2 silicon versions:
-> * v1 with 2x Gen2 PCIe ports and QMP PHY-s
-> * v2 with 1x Gen3 and 1x Gen2 PCIe ports and QMP PHY-s
+
+
+On 1/30/23 12:03 AM, Mukesh Ojha wrote:
 >
-> v2 is the final and production version that is actually supported by the
-> kernel, however it looks like PCIe related nodes were added for the v1 SoC.
+> On 1/30/2023 4:21 AM, Satya Durga Srinivasu Prabhala wrote:
+>> When multiple clients try to update the recovery flag, it is
 >
-> Finish the PCIe fixup by using the correct compatible, adding missing ATU
-> register space, declaring max-link-speed, use correct ranges, add missing
-> clocks and resets.
+> Multiple user-space clients ?
 >
-> Fixes: 33057e1672fe ("ARM: dts: ipq8074: Add pcie nodes")
-> Signed-off-by: Robert Marko <robimarko@gmail.com>
+Yes, on SMP systems, it is possible that there can be multiple user 
+space clients (can simply be fuzzing kind of scripts) which could be 
+updating the recovery flag.
+>> possible that, race condition would lead to undesired results
+>> as updates to recovery flag isn't protected by any mechanism
+>> today. To avoid such issues, take remoteproc mutex lock before
+>> updating recovery flag and release the lock once done.
+>
+> But your patch also adds locks for the case which does not update
+> recovery flag..
+Yes, was trying to cover entire function, can be restricted to only when 
+recovery flag is being updated as well.
+>>
+>> Signed-off-by: Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>
+>> ---
+>>   drivers/remoteproc/remoteproc_sysfs.c | 5 +++++
+>>   1 file changed, 5 insertions(+)
+>>
+>> diff --git a/drivers/remoteproc/remoteproc_sysfs.c 
+>> b/drivers/remoteproc/remoteproc_sysfs.c
+>> index 8c7ea8922638..ec37176e1589 100644
+>> --- a/drivers/remoteproc/remoteproc_sysfs.c
+>> +++ b/drivers/remoteproc/remoteproc_sysfs.c
+>> @@ -48,16 +48,21 @@ static ssize_t recovery_store(struct device *dev,
+>>   {
+>>       struct rproc *rproc = to_rproc(dev);
+>>
+>> +    mutex_lock(&rproc->lock);
+>>       if (sysfs_streq(buf, "enabled")) {
+>>           /* change the flag and begin the recovery process if needed */
+>>           rproc->recovery_disabled = false;
+>> +        mutex_unlock(&rproc->lock);
+>>           rproc_trigger_recovery(rproc);
+>>       } else if (sysfs_streq(buf, "disabled")) {
+>>           rproc->recovery_disabled = true;
+>> +        mutex_unlock(&rproc->lock);
+>>       } else if (sysfs_streq(buf, "recover")) {
+>>           /* begin the recovery process without changing the flag */
+>> +        mutex_unlock(&rproc->lock);
+>
+> is it really needed for this case?
+As mentioned above, was trying to cover entire function. Not really 
+needed in this case as such.
+>
+>>           rproc_trigger_recovery(rproc);
+>>       } else {
+>> +        mutex_unlock(&rproc->lock);
+>
+> same here..
+>
+>>           return -EINVAL;
+>>       }
+>>
+>
+> Do you also need to add lock for rproc_recovery_write in
+> drivers/remoteproc/remoteproc_debugfs.c ?
+>
+Thanks, yes. Debug FS needs to be updated too.
+> -Mukesh
 
-I was reading through the pull request today and saw this patch
-along with the Gen2 one:
-
-
-> @@ -871,9 +873,9 @@ pcie0: pci@20000000 {
->  			phy-names = "pciephy";
-> 
->  			ranges = <0x81000000 0 0x20200000 0x20200000
-> -				  0 0x100000   /* downstream I/O */
-> +				  0 0x10000>, /* downstream I/O */
-
-Fixing the length here seems fine, but the bus-side address
-still looks wrong: 0x20200000 is way outside of the usual
-port ranges from 0 to 0x10000 on the local bus.
-
-> -				  0x82000000 0 0x20300000 0x20300000
-> -				  0 0xd00000>; /* non-prefetchable memory */
-> +				 <0x82000000 0 0x20220000 0x20220000
-> +				  0 0xfde0000>; /* non-prefetchable memory */
-
-I see the total size of the memory space is under 256MB. Are you
-sure that there is no 64-bit BAR in addition to this?
-
-I also see commit 7d1158c984d3 ("arm64: dts: qcom: sm8550: Add
-PCIe PHYs and controllers nodes") introduce the same broken
-I/O port range (oversized 1MB space wiht an identity map) for a
-new SoC. This should probably be fixed as well, along with
-reviewing the other ones.
-
-Has the I/O space mapping on any of these actually been tested,
-or just copied from one SoC to another? Very few devices actually
-use I/O space, so it wouldn't be surprising if it never worked
-in the first place.
-
-       Arnd
