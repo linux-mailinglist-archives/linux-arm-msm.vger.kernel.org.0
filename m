@@ -2,137 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 240BF680F60
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 14:52:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D5E84680F9E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 14:55:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235759AbjA3NwF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Jan 2023 08:52:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58912 "EHLO
+        id S236468AbjA3NzT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Jan 2023 08:55:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34158 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234447AbjA3NwE (ORCPT
+        with ESMTP id S236448AbjA3NzS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Jan 2023 08:52:04 -0500
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 850A236FE9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jan 2023 05:52:02 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id c10-20020a05600c0a4a00b003db0636ff84so8224435wmq.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jan 2023 05:52:02 -0800 (PST)
+        Mon, 30 Jan 2023 08:55:18 -0500
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B4971EFE2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jan 2023 05:55:17 -0800 (PST)
+Received: by mail-ej1-x62b.google.com with SMTP id dr8so10323761ejc.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jan 2023 05:55:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=a7n0PxcebcHmKgUAZTbAc0QU/gWAxsFXWO0xPIkTGuE=;
-        b=AzBN0CYjuUoXUor1L2wXmADp/jKdt1fLSUw4BXTQXmQIX8JJUXqU3bGFykXN7Dd0aK
-         kIh/5CAftp6r+yowWZ7oQxylHCcPunMtRLy4qtfyRE36wd8KbN3ATUNs75geIg6P0w1N
-         92yf9XvsW9OByiccT3P0fbfCCB27QBP0qT4PQxCbqxa1rhiEDslu2y4kc3wWgL5utpx3
-         r+E/icPV8wSFsjhpQAQZHmEJOdYXrUHdwMBf4WWJUXv2spJ/i8INt6nIxwUKu8bRxse7
-         nKAbLvE3ILORq54UE2EKe8aJ96//TnkSpCLRR3P5Wv1umcdIpdLkfnvVxgtTSNR0z0T5
-         j51w==
+        d=semihalf.com; s=google;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FB2g2c4rIfuYP/zAUAb6cfWJDSl3EKVoz2j41/PaiwQ=;
+        b=oKKlyJ2KD24h9FCrjwuz/haUT4fzJRmeTAUFdwJELfay8Hmrr9RdTuldtoXPKk7l3p
+         wjKE05wTsqwxE5Pwrlk+viGHJ0zt5C88PFLySSl6dpFly3lU7rEyNJbhlQhQSfteMStA
+         Dolm5Q6viMft++3VFIlYMcJr8QTay8FUw/huQfHa5Qs5iC0uTR+zgPrjPBKveRITU5g5
+         CLUuP7zVsF46o9mCmdOEbmUE+fpgKU+51AfmEabkJIWdHGRcF3u86F4tz+tkoNLvuDGM
+         /B9ZZSAVlSJUSid0Tz1xI2bhfxk1SOPrxYdmQvZdXeJ7wbLNefyCRwRCJW8ivCDCVNnk
+         GmyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=a7n0PxcebcHmKgUAZTbAc0QU/gWAxsFXWO0xPIkTGuE=;
-        b=fNtWK+50sLz7zDbDRn7oPsqu3tIEocB30d7DCWUzrU84UTpFeRc9s2DUrIik0GANqn
-         69wGFRtUUjA8BpATlh4ilNL9ScCe3SHBhbwMg94i4/Z+zXrTPKcxarobRfcjYXsfDPTI
-         fHQNm9cfi9tqw3ze9VPOidlSqQXlberPVydeOOFhP/Sx52EtWFjHLgsjGAGV+qawetm1
-         baM+exmB6H6yxXGUUA6vctlMKym1dProGXfxtrQHDd9EUYYQLJiAtZMulf3aKJ826fLd
-         iDDQ5A4UZCeAeH2o/v3cjzC/Ejlhq1jLp1u6EibPS8v0TMGQAHTYh9BHw1tDiLRgqRIo
-         INmA==
-X-Gm-Message-State: AO0yUKU711VhKJnwWrsmrrfjjhF1bAGAT9xHB21K+1u8IXHkaaIBBT9F
-        Cgxj5f+49IIO4ZJdYEmSFWUJnw==
-X-Google-Smtp-Source: AK7set83eYIYLeNX/W2zorUjCu7uQCvek/ASGg64yVz08SKysalxjaHTJ4xzGbNCKX3gfOe5UaTbHg==
-X-Received: by 2002:a05:600c:35d6:b0:3dc:443e:3a8b with SMTP id r22-20020a05600c35d600b003dc443e3a8bmr9419572wmq.16.1675086721024;
-        Mon, 30 Jan 2023 05:52:01 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:5f17:219:cb05:7cd? ([2a01:e0a:982:cbb0:5f17:219:cb05:7cd])
-        by smtp.gmail.com with ESMTPSA id hg6-20020a05600c538600b003dafbd859a6sm16320125wmb.43.2023.01.30.05.52.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Jan 2023 05:52:00 -0800 (PST)
-Message-ID: <a2c364da-16ba-2a9f-ec4b-507313c78477@linaro.org>
-Date:   Mon, 30 Jan 2023 14:51:59 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v2] usb: dwc3: qcom: enable vbus override when in OTG
- dr-mode
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=FB2g2c4rIfuYP/zAUAb6cfWJDSl3EKVoz2j41/PaiwQ=;
+        b=Jvprv0T+whkvx8RjiQea2zXFKYDWsYVXpKwKWK1ljzU5Lvzafb263WMYb+xQRj2zrZ
+         KqB8LBhVIFCYHweNETEMRLSPVY77p8fsYgU/rNnRRDk/QTl+UhCPnlMSDYx/5RzezM+y
+         Id/9Bw7In55nrZ00U7tvHLdazUbatNtYLYlDnYH0009bSFMf9OuDsTkElXuMsn9CFMTP
+         cgnIwWOJdzpf+RL5WhJViQ8JzkL5pZL1ezLz8E5TxiDplu3CFSUY9jNoLpFFftMaC/dj
+         7dMikFwpZJq2WCvoCfgSC2wvc2U1W8PNkoqjonEOfTMd9AjXKwBw085yxyo4ASrvlkj+
+         IG4g==
+X-Gm-Message-State: AO0yUKWM26Ro/UAfau/0tCn4F5uw2kSTGztSR0NQWUUBBPGoaqqG2cYO
+        B1rpMeCX+4CS/gYEtl4D8xYznQ==
+X-Google-Smtp-Source: AK7set8RiuC4MJp0K/vak5+3A+l8zKpBr/VhleJ2+63A+X8OKSsDz4eoJInidBH7tvWLzyPa7G0hYQ==
+X-Received: by 2002:a17:906:b353:b0:87d:dd22:a93 with SMTP id cd19-20020a170906b35300b0087ddd220a93mr12275786ejb.54.1675086915736;
+        Mon, 30 Jan 2023 05:55:15 -0800 (PST)
+Received: from mikrawczyk.c.googlers.com.com (12.196.204.35.bc.googleusercontent.com. [35.204.196.12])
+        by smtp.gmail.com with ESMTPSA id a6-20020aa7cf06000000b004a23558f01fsm2817513edy.43.2023.01.30.05.55.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Jan 2023 05:55:15 -0800 (PST)
+From:   "=?UTF-8?q?Micha=C5=82=20Krawczyk?=" <mk@semihalf.com>
+X-Google-Original-From: =?UTF-8?q?Micha=C5=82=20Krawczyk?= <mk@semmihalf.com>
+To:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230123-topic-sm8550-upstream-dwc3-qcom-otg-v2-1-2d400e598463@linaro.org>
- <5dee594f-b05f-1211-7444-c45691455b9c@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <5dee594f-b05f-1211-7444-c45691455b9c@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mw@semihalf.com,
+        =?UTF-8?q?Micha=C5=82=20Krawczyk?= <mk@semihalf.com>
+Subject: [PATCH v2] media: venus: dec: Fix handling of the start cmd
+Date:   Mon, 30 Jan 2023 13:54:18 +0000
+Message-Id: <20230130135418.1604455-1-mk@semmihalf.com>
+X-Mailer: git-send-email 2.39.1.456.gfc5497dd1b-goog
+In-Reply-To: <20230130105423.1338554-1-mk@semmihalf.com>
+References: <20230130105423.1338554-1-mk@semmihalf.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/01/2023 14:37, Konrad Dybcio wrote:
-> 
-> 
-> On 24.01.2023 09:31, Neil Armstrong wrote:
->> With vbus override enabled when in OTG dr_mode, Host<->Peripheral
->> switch now works on SM8550, otherwise the DWC3 seems to be stuck
->> in Host mode only.
->>
->> Fixes: a4333c3a6ba9 ("usb: dwc3: Add Qualcomm DWC3 glue driver")
->> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
-> Required for SM6115P Lenovo Tab P11 to switch to peripheral
-> with otg dr_mode as well!
+From: Michał Krawczyk <mk@semihalf.com>
 
-Thanks for testing, seems it was applied by Greg
+The decoder driver should clear the last_buffer_dequeued flag of the
+capture queue upon receiving V4L2_DEC_CMD_START.
 
-Neil
+The last_buffer_dequeued flag is set upon receiving EOS (which always
+happens upon receiving V4L2_DEC_CMD_STOP).
 
-> 
-> Tested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> 
-> Konrad
->> Changes in v2:
->> - Added Bryan's reviewed-by
->> - Added Fixes tag
->> - Link to v1: https://lore.kernel.org/r/20230123-topic-sm8550-upstream-dwc3-qcom-otg-v1-1-e287a418aa5f@linaro.org
->> ---
->>   drivers/usb/dwc3/dwc3-qcom.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
->> index b0a0351d2d8b..959fc925ca7c 100644
->> --- a/drivers/usb/dwc3/dwc3-qcom.c
->> +++ b/drivers/usb/dwc3/dwc3-qcom.c
->> @@ -901,7 +901,7 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
->>   	qcom->mode = usb_get_dr_mode(&qcom->dwc3->dev);
->>   
->>   	/* enable vbus override for device mode */
->> -	if (qcom->mode == USB_DR_MODE_PERIPHERAL)
->> +	if (qcom->mode != USB_DR_MODE_HOST)
->>   		dwc3_qcom_vbus_override_enable(qcom, true);
->>   
->>   	/* register extcon to override sw_vbus on Vbus change later */
->>
->> ---
->> base-commit: 1b929c02afd37871d5afb9d498426f83432e71c2
->> change-id: 20230123-topic-sm8550-upstream-dwc3-qcom-otg-81795ea148db
->>
->> Best regards,
+Without this patch, after issuing the V4L2_DEC_CMD_STOP and
+V4L2_DEC_CMD_START, the vb2_dqbuf() function will always fail, even if
+the buffers are completed by the hardware.
+
+Fixes: beac82904a87 ("media: venus: make decoder compliant with stateful codec API")
+
+Signed-off-by: Michał Krawczyk <mk@semihalf.com>
+---
+V1 -> V2: Fix warning regarding unused variable
+
+ drivers/media/platform/qcom/venus/vdec.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+index 4ceaba37e2e5..9d26587716bf 100644
+--- a/drivers/media/platform/qcom/venus/vdec.c
++++ b/drivers/media/platform/qcom/venus/vdec.c
+@@ -526,6 +526,7 @@ static int
+ vdec_decoder_cmd(struct file *file, void *fh, struct v4l2_decoder_cmd *cmd)
+ {
+ 	struct venus_inst *inst = to_inst(file);
++	struct vb2_queue *dst_vq;
+ 	struct hfi_frame_data fdata = {0};
+ 	int ret;
+ 
+@@ -556,6 +557,13 @@ vdec_decoder_cmd(struct file *file, void *fh, struct v4l2_decoder_cmd *cmd)
+ 			inst->codec_state = VENUS_DEC_STATE_DRAIN;
+ 			inst->drain_active = true;
+ 		}
++	} else if (cmd->cmd == V4L2_DEC_CMD_START &&
++		   inst->codec_state == VENUS_DEC_STATE_STOPPED) {
++		dst_vq = v4l2_m2m_get_vq(inst->fh.m2m_ctx,
++					 V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE);
++		vb2_clear_last_buffer_dequeued(dst_vq);
++
++		inst->codec_state = VENUS_DEC_STATE_DECODING;
+ 	}
+ 
+ unlock:
+-- 
+2.39.1.456.gfc5497dd1b-goog
 
