@@ -2,70 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 85E4C6819CD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 20:04:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 879226819D6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 20:05:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237655AbjA3TEY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Jan 2023 14:04:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36024 "EHLO
+        id S236046AbjA3TFu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Jan 2023 14:05:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36942 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229573AbjA3TEX (ORCPT
+        with ESMTP id S229573AbjA3TFt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Jan 2023 14:04:23 -0500
-Received: from mail-oa1-f49.google.com (mail-oa1-f49.google.com [209.85.160.49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FF333865D;
-        Mon, 30 Jan 2023 11:04:20 -0800 (PST)
-Received: by mail-oa1-f49.google.com with SMTP id 586e51a60fabf-142b72a728fso16328719fac.9;
-        Mon, 30 Jan 2023 11:04:20 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2KJ9Rz1Ynh3fjcAdkx5iP/6JNhfuUpXfGWr8jMXGpK8=;
-        b=DfFQEal8N3PGF1mRijjLtabH4AolzTqXVelRSeOgDbNMIOjj37h+wjT30VnvGhRfoV
-         i+rHqIk7GuBOQQdM4146l7COV0WOys+Vih20hhJ/a/TM0ZNd7SmzGMNZXgN9attYPVqv
-         rl5YiR27TQkP1H5K4MxXg/CT6tWB6ZAVO34NH/QT/945umkahsy/XFuLi1YlPhl10ndu
-         cOrDWbirqh5jKoANg8uWEH75FlyxfRcBoojmcf3brcfRXGalBURg3V2zrEllQcug78YJ
-         96pDfPWvihmD3J6LFD4inkx4X1LpwiaycNKLZ2GJwIEaFN9NVLerS3e48CktvKQWA0cQ
-         R/jw==
-X-Gm-Message-State: AFqh2krQNxmFOa4zoUXnrxBqiK7R566DHmpDAu3EwBcmAckvly6741VT
-        ZEjp/+k/+eTZFZv7KdnQkA==
-X-Google-Smtp-Source: AMrXdXtjE2UK5IbXgI+0HH5dQJ2HxAVZhp2l7U70Q5qV6hgbDhg9WyJ89Jl7Cr6tB34YfAkN15nwIw==
-X-Received: by 2002:a05:6870:828a:b0:15f:dac1:7e7d with SMTP id q10-20020a056870828a00b0015fdac17e7dmr19809449oae.25.1675105459938;
-        Mon, 30 Jan 2023 11:04:19 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id mv7-20020a0568706a8700b0015f4d1b195bsm5567310oab.36.2023.01.30.11.04.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Jan 2023 11:04:19 -0800 (PST)
-Received: (nullmailer pid 3125626 invoked by uid 1000);
-        Mon, 30 Jan 2023 19:04:18 -0000
-Date:   Mon, 30 Jan 2023 13:04:18 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Bartosz Golaszewski <brgl@bgdev.pl>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Eric Chanudet <echanude@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: interconnect: qcom,sa8775p-rpmh: fix a typo
-Message-ID: <167510545823.3125572.248582702391244849.robh@kernel.org>
-References: <20230127092615.39690-1-brgl@bgdev.pl>
+        Mon, 30 Jan 2023 14:05:49 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F4C138668;
+        Mon, 30 Jan 2023 11:05:48 -0800 (PST)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30UHnAqJ015621;
+        Mon, 30 Jan 2023 19:05:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=5GNIkhVp6wjOm5iEvu3ujOX68JBENnpJ0gN3RaSIKT0=;
+ b=LTmotiit1WWBk+LDgzMq6CVrozjHbqewNNzRvHBTrkb3s/Cxb1aZp8EG0klXF45sgZSB
+ fNbzXftw/DDyjMwbI9UpXLjAvC6cYpsd85f8n3JRLxsUn2WUcB2Ovoh0HWeB5bLvAJcb
+ BvOq74pOEIjlAeVf6FXrzJVA6BHEnnuyHXpVqr2s3bxwgRAqAwqwz+MPN+yh0E0O8am+
+ N4E2UsRBg87+qoZkaRryomSp6qP2L4DHn4s+LkILcUpSNzxSHTEese3WDti5cKbDcvxp
+ 4xeFfXyeqiMEYZBYgyZ3K2LRO9J8HC/aaGMaSbWRz2AQiUYmPBi6PRD5c0zRXuQDQVMg 5g== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ncsdpvnet-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 30 Jan 2023 19:05:27 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30UJ5Qa0023506
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 30 Jan 2023 19:05:26 GMT
+Received: from [10.134.67.48] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 30 Jan
+ 2023 11:05:26 -0800
+Message-ID: <5dbce62b-5c51-6989-d08d-16955d97b4e6@quicinc.com>
+Date:   Mon, 30 Jan 2023 11:05:25 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230127092615.39690-1-brgl@bgdev.pl>
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v9 04/27] virt: gunyah: Add hypercalls to identify Gunyah
+Content-Language: en-US
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Alex Elder <elder@linaro.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Marc Zyngier <maz@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+References: <20230120224627.4053418-1-quic_eberman@quicinc.com>
+ <20230120224627.4053418-5-quic_eberman@quicinc.com>
+ <Y9eVcHM9nZZ/4ZSh@kroah.com>
+From:   Elliot Berman <quic_eberman@quicinc.com>
+In-Reply-To: <Y9eVcHM9nZZ/4ZSh@kroah.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 6J-mrU5vzFJKFIzMsMuHIadiSuzMK0mq
+X-Proofpoint-ORIG-GUID: 6J-mrU5vzFJKFIzMsMuHIadiSuzMK0mq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-30_17,2023-01-30_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ lowpriorityscore=0 bulkscore=0 adultscore=0 suspectscore=0 mlxlogscore=999
+ spamscore=0 clxscore=1015 impostorscore=0 mlxscore=0 phishscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301300180
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -73,18 +100,131 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Fri, 27 Jan 2023 10:26:15 +0100, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+
+On 1/30/2023 2:01 AM, Greg Kroah-Hartman wrote:
+> On Fri, Jan 20, 2023 at 02:46:03PM -0800, Elliot Berman wrote:
+>> Add hypercalls to identify when Linux is running a virtual machine under
+>> Gunyah.
+>>
+>> There are two calls to help identify Gunyah:
+>>
+>> 1. gh_hypercall_get_uid() returns a UID when running under a Gunyah
+>>     hypervisor.
+>> 2. gh_hypercall_hyp_identify() returns build information and a set of
+>>     feature flags that are supported by Gunyah.
+>>
+>> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+>> ---
+>>   MAINTAINERS                          |  2 +
+>>   arch/arm64/Kbuild                    |  1 +
+>>   arch/arm64/gunyah/Makefile           |  3 ++
+>>   arch/arm64/gunyah/gunyah_hypercall.c | 75 ++++++++++++++++++++++++++++
+>>   drivers/virt/Kconfig                 |  2 +
+>>   drivers/virt/gunyah/Kconfig          | 14 ++++++
+>>   include/linux/gunyah.h               | 33 ++++++++++++
+>>   7 files changed, 130 insertions(+)
+>>   create mode 100644 arch/arm64/gunyah/Makefile
+>>   create mode 100644 arch/arm64/gunyah/gunyah_hypercall.c
+>>   create mode 100644 drivers/virt/gunyah/Kconfig
+>>
+>> diff --git a/MAINTAINERS b/MAINTAINERS
+>> index f1e07e39b2f5..fe19e71efc6d 100644
+>> --- a/MAINTAINERS
+>> +++ b/MAINTAINERS
+>> @@ -9048,6 +9048,8 @@ L:	linux-arm-msm@vger.kernel.org
+>>   S:	Supported
+>>   F:	Documentation/devicetree/bindings/firmware/gunyah-hypervisor.yaml
+>>   F:	Documentation/virt/gunyah/
+>> +F:	arch/arm64/gunyah/
+>> +F:	drivers/virt/gunyah/
+>>   F:	include/linux/gunyah.h
+>>   
+>>   HABANALABS PCI DRIVER
+>> diff --git a/arch/arm64/Kbuild b/arch/arm64/Kbuild
+>> index 5bfbf7d79c99..e4847ba0e3c9 100644
+>> --- a/arch/arm64/Kbuild
+>> +++ b/arch/arm64/Kbuild
+>> @@ -3,6 +3,7 @@ obj-y			+= kernel/ mm/ net/
+>>   obj-$(CONFIG_KVM)	+= kvm/
+>>   obj-$(CONFIG_XEN)	+= xen/
+>>   obj-$(subst m,y,$(CONFIG_HYPERV))	+= hyperv/
+>> +obj-$(CONFIG_GUNYAH)	+= gunyah/
+>>   obj-$(CONFIG_CRYPTO)	+= crypto/
+>>   
+>>   # for cleaning
+>> diff --git a/arch/arm64/gunyah/Makefile b/arch/arm64/gunyah/Makefile
+>> new file mode 100644
+>> index 000000000000..84f1e38cafb1
+>> --- /dev/null
+>> +++ b/arch/arm64/gunyah/Makefile
+>> @@ -0,0 +1,3 @@
+>> +# SPDX-License-Identifier: GPL-2.0
+>> +
+>> +obj-$(CONFIG_GUNYAH) += gunyah_hypercall.o
+>> diff --git a/arch/arm64/gunyah/gunyah_hypercall.c b/arch/arm64/gunyah/gunyah_hypercall.c
+>> new file mode 100644
+>> index 000000000000..ffed4b71641f
+>> --- /dev/null
+>> +++ b/arch/arm64/gunyah/gunyah_hypercall.c
+>> @@ -0,0 +1,75 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/*
+>> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
+>> + */
+>> +
+>> +#include <linux/arm-smccc.h>
+>> +#include <linux/module.h>
+>> +#include <linux/gunyah.h>
+>> +
+>> +static const uint32_t gunyah_known_uuids[][4] = {
 > 
-> The name of the chip is sa8775p, not sa8875p.
+> uint32_t is not a kernel type, please use sane ones, like u32.
 > 
-> Reported-by: Eric Chanudet <echanude@redhat.com>
-> Link: https://lore.kernel.org/lkml/20230126203618.nbqwppaddncq7on7@echanude/
-> Fixes: 2579af94c813 ("dt-bindings: interconnect: qcom: document the interconnects for sa8775p")
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
->  .../devicetree/bindings/interconnect/qcom,sa8775p-rpmh.yaml     | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>> +	{0x19bd54bd, 0x0b37571b, 0x946f609b, 0x54539de6}, /* QC_HYP (Qualcomm's build) */
+>> +	{0x673d5f14, 0x9265ce36, 0xa4535fdb, 0xc1d58fcd}, /* GUNYAH (open source build) */
+> 
+> And why not use the kernel uuid type here?  Why create your own?
+> 
+>> +};
+>> +
+>> +#define GH_HYPERCALL_HYP_IDENTIFY		GH_HYPERCALL(0x0000)
+>> +
+>> +/**
+>> + * gh_hypercall_get_uid() - Returns a UID when running under a Gunyah hypervisor
+>> + * @uid: An array of 4 u32's (u32 uid[4];)
+>> + *
+>> + * Caller should compare the resulting UID to a list of known Gunyah UIDs to
+>> + * confirm that Linux is running as a guest of Gunyah.
+>> + */
+>> +void gh_hypercall_get_uid(u32 uid[4])
+>> +{
+>> +	struct arm_smccc_res res;
+>> +	u32 uid[4];
+> 
+> How does this work when you have a local variable the same name as the
+> parameter to the function?  What shadows what and how?  The compiler
+> didn't complain about this?
+> 
+>> +	int i;
+>> +
+>> +	arm_smccc_1_1_hvc(ARM_SMCCC_VENDOR_HYP_CALL_UID_FUNC_ID, &res);
+>> +
+>> +	uid[0] = lower_32_bits(res.a0);
+>> +	uid[1] = lower_32_bits(res.a1);
+>> +	uid[2] = lower_32_bits(res.a2);
+>> +	uid[3] = lower_32_bits(res.a3);
+>> +
+>> +	for (i = 0; i < ARRAY_SIZE(gunyah_known_uuids); i++)
+>> +		if (!memcmp(uid, gunyah_known_uuids[i], sizeof(uid)))
+>> +			break;
+>> +
+>> +	return i != ARRAY_SIZE(gunyah_known_uuids);
+> 
+> How can a function that returns void actually return anything?
+> 
+> This obviously was never compiled.  I'm stopping here in my review.
 > 
 
-Acked-by: Rob Herring <robh@kernel.org>
+Fell victim to trusting automatic git commit --fixup tools here. I'll 
+send out v10 with proper bisectability.
+
