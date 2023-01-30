@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 28F33680A2B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 10:55:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 21D48680A2E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 10:55:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236302AbjA3Jzj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Jan 2023 04:55:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57866 "EHLO
+        id S236340AbjA3Jzp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Jan 2023 04:55:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236093AbjA3JzZ (ORCPT
+        with ESMTP id S236189AbjA3Jze (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Jan 2023 04:55:25 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69F1FBB8A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jan 2023 01:55:05 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id h12so10447097wrv.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jan 2023 01:55:05 -0800 (PST)
+        Mon, 30 Jan 2023 04:55:34 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB4122F7B7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jan 2023 01:55:09 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id q10so10468466wrm.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jan 2023 01:55:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=o6tXivOycAR46BboOZwUImctP3fWSo9t2fCAHiXxtD4=;
-        b=zBU36uQlaBUD9O8IjqKEc3xjCQn6hVSzmBRQ0Klk3pQb6lIGqLhIs2QVdzbSftvaZ1
-         16xgX8oYVxe2YLbml8oGABj9XxlHrhliuuc0zha6qShhc+VHIeVjzP76LSMHA88phhZP
-         qxZiCRw0gRAWtWn48UTeInK4CUoObX449MrByvLA8h6U3HuFv8W8iWDtbicOmBY1HWXK
-         0tYIuIZddKtBcw3siP3AgF7ObWrXMXgyCYXK/Wo87x9pvCpm02sb4Ng+mRvwiXOmf64s
-         W6cwTs6vkYCtnALq63Td5FsTkZAA/Do8lkhgS8uS07ecR/hqk2kLdu46Csd2+lC1NIta
-         u6uQ==
+        bh=am8cCJUJQkxtFMDP5ZppaJ0gQfCKelJ/SbE5wCiC308=;
+        b=oQdcara/a0kV9QfOauSUBjLCvzUzrCzrqWw5RvkJIhkWKSQXxz/t/jnMSgcF9Q0bna
+         6iVPvZ0swe8nD3UddtjRpGc2PtSETz7/AzvKKnDPwbtHDPoTD3G03VCzGHy8yqRvE2Ih
+         HGejqd4E/lUD0cWx1ii5/YFxOvLvic1L1VYVxkN1beELf/5HBA0Wzu72op5n925aleMF
+         ViheilACLiOSxYYOJ5LvEb8k9zPc05ofoZLsQKYX+WQFIgZMR5Uj+IhS/4KppjzNXi65
+         KiYMvv9riAUrY3YxKTV4UKADVfOaI3iCHSfbRD/xgnv5OEo78na+K9IeEPIqMcgGff+h
+         jEHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=o6tXivOycAR46BboOZwUImctP3fWSo9t2fCAHiXxtD4=;
-        b=YFOrQJfLMN/3G1MjmWPZXzv9yXizkRhs+/ZzT0uXqUAgfAky5/omzJzPrA6j+kb0r5
-         Xshh9F6acWFTptHE6SCg83Ke9o4EmoamOug37JMnRNyskSj44N0XvHLv2gRXUf+ZifkR
-         FpZCpA0GMvv2oNpF/Aut1geP3cs5xG2sBq7RfFyqoUFII7qH/8CtzFt1HH4yu9QMj97Q
-         ei7ZZMwMchR9lGRxEBHmB+YVkhC5ox4b5RUXtT9LHnbUHONO8GLyzxOa627mvhr0ngVf
-         N5SR2EyKlW5fq+6jXteUutVvaOykTTU8o9PmfOX1DduMVAA6g9CVfItEMsrV3hDMl5X+
-         KhZw==
-X-Gm-Message-State: AO0yUKVOIdeZg7QcsHnedvYBuBy7/Z+CED6rKrMPz3hKJdFmLO5wVLM6
-        g2UMO/A9HvK6AAlkv3kSY0ln5iPyV/8HVgzqnmc=
-X-Google-Smtp-Source: AK7set8PGYqkMFJa6IFKH+M9yhDpbzCTSa6FR+18RVkjgfqNYGPED+Mmllg7jNIF1e1UHUm0+E51iA==
-X-Received: by 2002:a5d:664f:0:b0:2bf:be0f:b016 with SMTP id f15-20020a5d664f000000b002bfbe0fb016mr16724270wrw.23.1675072481026;
+        bh=am8cCJUJQkxtFMDP5ZppaJ0gQfCKelJ/SbE5wCiC308=;
+        b=0iOJUb+ucBQGzDmiZzKdx0hS2HeCG7Y0QvAAnPC30zqel2Er1l0rB7c04iBeID/cgl
+         xP6rfCPeP/z1lPhAoF/nB2VAf74c17SsN+J96jf9FaA4HUmQdK462C5PWgtYIVNGcc38
+         MKQ9n8mEmZvN5jUJx4LkDpHMl773xB1zx7eaoOJKuFZHRmMpVFFscauGPGt417NO18ex
+         gs7VtTW5e9O1iaLFSB9aw0x6SYYKVq+kezwsXthFz4GWNZ4ke4XKWCgBwOI0DCQElMMh
+         ue3G9ATzpPGzXj+5HrrIdfeZfeIMBujVh1UkLOI0qwClcbtVnxHKWqk8HU6+87IlsM7i
+         zXnA==
+X-Gm-Message-State: AO0yUKW7zO6u5WwN+8+S/KEgbsRqUTOhtBTed1Na0pDPawf6sz4j+2a1
+        WoDqOVR7LVvKpsNFaYWSWoW7FGr3siT4TQL5RPI=
+X-Google-Smtp-Source: AK7set/8vbu4TzSJeux1hMy/ZZNg34uDTVo0or8MG9lP7LcIumzl1FwleOu9J+Mpt0pALA666QVaQQ==
+X-Received: by 2002:adf:f410:0:b0:2bf:e778:6500 with SMTP id g16-20020adff410000000b002bfe7786500mr4769352wro.64.1675072481926;
         Mon, 30 Jan 2023 01:54:41 -0800 (PST)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id k4-20020a5d4284000000b00241fde8fe04sm11453537wrq.7.2023.01.30.01.54.40
+        by smtp.gmail.com with ESMTPSA id k4-20020a5d4284000000b00241fde8fe04sm11453537wrq.7.2023.01.30.01.54.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Jan 2023 01:54:40 -0800 (PST)
+        Mon, 30 Jan 2023 01:54:41 -0800 (PST)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Mon, 30 Jan 2023 10:54:37 +0100
-Subject: [PATCH 6/7] arm64: dts: qcom: sm8550-mtp: add pmic glink node
+Date:   Mon, 30 Jan 2023 10:54:38 +0100
+Subject: [PATCH 7/7] arm64: defconfig: add PMIC GLINK modules
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230130-topic-sm8450-upstream-pmic-glink-v1-6-0b0acfad301e@linaro.org>
+Message-Id: <20230130-topic-sm8450-upstream-pmic-glink-v1-7-0b0acfad301e@linaro.org>
 References: <20230130-topic-sm8450-upstream-pmic-glink-v1-0-0b0acfad301e@linaro.org>
 In-Reply-To: <20230130-topic-sm8450-upstream-pmic-glink-v1-0-0b0acfad301e@linaro.org>
 To:     Heikki Krogerus <heikki.krogerus@linux.intel.com>,
@@ -75,73 +75,37 @@ Cc:     linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
 X-Mailer: b4 0.12.0
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the pmic glink node linked with the DWC3 USB controller
-switched to OTG mode and tagged with usb-role-switch.
+Enable the PMIC GLINK core, altmode, battery and UCSI
+aux drivers as module.
 
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm8550-mtp.dts | 34 ++++++++++++++++++++++++++++++++-
- 1 file changed, 33 insertions(+), 1 deletion(-)
+ arch/arm64/configs/defconfig | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-index 725d3bc3ee72..f054c11fe1f6 100644
---- a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-@@ -27,6 +27,31 @@ chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
- 
-+	pmic-glink {
-+		compatible = "qcom,sm8450-pmic-glink", "qcom,pmic-glink";
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		connector@0 {
-+			compatible = "usb-c-connector";
-+			reg = <0>;
-+			power-role = "dual";
-+			data-role = "dual";
-+
-+			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				port@0 {
-+					reg = <0>;
-+					pmic_glink_dwc3_in: endpoint {
-+						remote-endpoint = <&usb_1_dwc3_out>;
-+					};
-+				};
-+			};
-+		};
-+	};
-+
- 	vph_pwr: vph-pwr-regulator {
- 		compatible = "regulator-fixed";
- 		regulator-name = "vph_pwr";
-@@ -546,7 +571,14 @@ &usb_1 {
- };
- 
- &usb_1_dwc3 {
--	dr_mode = "peripheral";
-+	dr_mode = "otg";
-+	usb-role-switch;
-+
-+	port {
-+		usb_1_dwc3_out: endpoint {
-+		      remote-endpoint = <&pmic_glink_dwc3_in>;
-+	      };
-+	};
- };
- 
- &usb_1_hsphy {
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index 984553d55e17..918ccab4678d 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -285,6 +285,10 @@ CONFIG_VIRTIO_BLK=y
+ CONFIG_BLK_DEV_NVME=m
+ CONFIG_QCOM_COINCELL=m
+ CONFIG_QCOM_FASTRPC=m
++CONFIG_BATTERY_QCOM_BATTMGR=m
++CONFIG_QCOM_PMIC_GLINK=m
++CONFIG_TYPEC_UCSI=m
++CONFIG_UCSI_PMIC_GLINK=m
+ CONFIG_SRAM=y
+ CONFIG_PCI_ENDPOINT_TEST=m
+ CONFIG_EEPROM_AT24=m
 
 -- 
 2.34.1
