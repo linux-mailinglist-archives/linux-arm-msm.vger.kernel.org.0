@@ -2,93 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D259C681816
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 18:59:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 83849681879
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Jan 2023 19:16:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235820AbjA3R7J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Jan 2023 12:59:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37492 "EHLO
+        id S236233AbjA3SQW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Jan 2023 13:16:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235278AbjA3R7I (ORCPT
+        with ESMTP id S237508AbjA3SQO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Jan 2023 12:59:08 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E03093BDB4;
-        Mon, 30 Jan 2023 09:59:06 -0800 (PST)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30UHnXvO013674;
-        Mon, 30 Jan 2023 17:58:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=BV6XR0RBp42aonh6zuw8wujt94XdiReA8ZopGts225I=;
- b=ovcqXzrZp+2jxTLlDM/vx3S18DfuBGQ4hAtsCB24QObRd+9Egd6xnaH0pG0DIL3Ofm+g
- v/Cmuoe7nvpcI4+kJhXaZLPX5e0te9CSxI+EfdS7Y2FDYmsqeVSNYxMeLUEkYT6EiEVB
- ODehyfntggf06pbI0EsUlOa1t1+c9FDNjDChi5vrzii8gyeS6GDuk6zRJ/zFzjryZev5
- lrLFwv+6Cw5AqslMVRQ7sKa8ov3v2H+7nVcsUa1Pd1WOTNqZ9VtIJ8oZPJzNLopcZxwP
- 4jhqunowHg4yfPMawz4anWedTBe0NX+1pW2DqmgoxpZjMqWWN77jYjltx/1Pkqke035b Eg== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ncut2mpm1-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 30 Jan 2023 17:58:55 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30UHwrEG010316
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 30 Jan 2023 17:58:53 GMT
-Received: from [10.110.115.177] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 30 Jan
- 2023 09:58:52 -0800
-Message-ID: <5c49a2d2-2c67-502c-ca1a-5c3acddd5797@quicinc.com>
-Date:   Mon, 30 Jan 2023 09:58:51 -0800
+        Mon, 30 Jan 2023 13:16:14 -0500
+Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C7AA44BF8;
+        Mon, 30 Jan 2023 10:16:09 -0800 (PST)
+Received: by mail-ot1-f41.google.com with SMTP id e12-20020a0568301e4c00b0068bc93e7e34so1713796otj.4;
+        Mon, 30 Jan 2023 10:16:09 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=G7bb455SP8TO1b2p4o1VPwtrIH2klzrLn8qwOehGPvI=;
+        b=R9uzLqsGJ790Jdn1vUMi11/uarnRhHJ8F4Fxc+9SpFUrAf6E7BAwCfgiKcGq/Y5XWg
+         NL6vAvV5/YvbTlwGHsu1nnqw1iBMQazJTKv6XSpfZuNF9zxoA8VG3S1QaTatQFN2jvHa
+         OGzJrzqCIERTC9Kt+bGrzoHvP0GOzm5IBOJzv5I7Po3OCtKaGAC5gVKoXODpEmmtJvkH
+         rzlKB6FXXht3NGsphzGi12ZkOTC8yanN8+Bnwj1qqFzDELCaJKStl5eNeKSSj3Q8VjLQ
+         UBKx6P0P8OROJRQaSz/4S1iy3aeCumZS3gNSPUPFoNJjw51rddXPvsjZtlzZnq49yITu
+         dcRQ==
+X-Gm-Message-State: AO0yUKV14Mw0FQBX1e4z/G7CCI5S7WFBiVcGMMzb7B2FgcoQEOzSWXSk
+        1zgbYC+3Xs9rOzSoetmO+Q==
+X-Google-Smtp-Source: AK7set8FrVHMNoEHAdLjytXCeX5uEnWuM2t6vdS0Beh/CVdEt/BsnVh76wgyLd1X+eb1EX1hfyXuJw==
+X-Received: by 2002:a9d:410a:0:b0:68b:d1c7:4eb4 with SMTP id o10-20020a9d410a000000b0068bd1c74eb4mr2404075ote.16.1675102568352;
+        Mon, 30 Jan 2023 10:16:08 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id h5-20020a056808014500b003785996ef36sm1111724oie.19.2023.01.30.10.16.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Jan 2023 10:16:07 -0800 (PST)
+Received: (nullmailer pid 3060316 invoked by uid 1000);
+        Mon, 30 Jan 2023 18:16:07 -0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v2 2/2] drm/msm/dp: Return IRQ_NONE for unhandled
- interrupts
-Content-Language: en-US
-To:     Douglas Anderson <dianders@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@gmail.com>,
-        "Javier Martinez Canillas" <javierm@redhat.com>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Lyude Paul <lyude@redhat.com>,
-        "Sankeerth Billakanti" <quic_sbillaka@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        "Thomas Zimmermann" <tzimmermann@suse.de>,
-        <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20230126170745.v2.1.I90ffed3ddd21e818ae534f820cb4d6d8638859ab@changeid>
- <20230126170745.v2.2.I2d7aec2fadb9c237cd0090a47d6a8ba2054bf0f8@changeid>
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-In-Reply-To: <20230126170745.v2.2.I2d7aec2fadb9c237cd0090a47d6a8ba2054bf0f8@changeid>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: iWRA8gfiOv9x6uN4QOZknzls3Msg_y4m
-X-Proofpoint-ORIG-GUID: iWRA8gfiOv9x6uN4QOZknzls3Msg_y4m
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-30_16,2023-01-30_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
- phishscore=0 lowpriorityscore=0 adultscore=0 malwarescore=0 spamscore=0
- suspectscore=0 mlxlogscore=999 impostorscore=0 priorityscore=1501
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301300172
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+From:   Rob Herring <robh@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Michael Turquette <mturquette@baylibre.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, agross@kernel.org,
+        krzysztof.kozlowski@linaro.org, marijn.suijten@somainline.org,
+        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        andersson@kernel.org, Stephen Boyd <sboyd@kernel.org>
+In-Reply-To: <20230130153252.2310882-8-konrad.dybcio@linaro.org>
+References: <20230130153252.2310882-1-konrad.dybcio@linaro.org>
+ <20230130153252.2310882-8-konrad.dybcio@linaro.org>
+Message-Id: <167510252236.3059233.560325193993095939.robh@kernel.org>
+Subject: Re: [PATCH v3 7/8] dt-bindings: clock: Add Qcom SM6115 GPUCC
+Date:   Mon, 30 Jan 2023 12:16:07 -0600
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -96,202 +70,47 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 1/26/2023 5:09 PM, Douglas Anderson wrote:
-> If our interrupt handler gets called and we don't really handle the
-> interrupt then we should return IRQ_NONE. The current interrupt
-> handler didn't do this, so let's fix it.
->
-> NOTE: for some of the cases it's clear that we should return IRQ_NONE
-> and some cases it's clear that we should return IRQ_HANDLED. However,
-> there are a few that fall somewhere in between. Specifically, the
-> documentation for when to return IRQ_NONE vs. IRQ_HANDLED is probably
-> best spelled out in the commit message of commit d9e4ad5badf4
-> ("Document that IRQ_NONE should be returned when IRQ not actually
-> handled"). That commit makes it clear that we should return
-> IRQ_HANDLED if we've done something to make the interrupt stop
-> happening.
->
-> The case where it's unclear is, for instance, in dp_aux_isr() after
-> we've read the interrupt using dp_catalog_aux_get_irq() and confirmed
-> that "isr" is non-zero. The function dp_catalog_aux_get_irq() not only
-> reads the interrupts but it also "ack"s all the interrupts that are
-> returned. For an "unknown" interrupt this has a very good chance of
-> actually stopping the interrupt from happening. That would mean we've
-> identified that it's our device and done something to stop them from
-> happening and should return IRQ_HANDLED. Specifically, it should be
-> noted that most interrupts that need "ack"ing are ones that are
-> one-time events and doing an "ack" is enough to clear them. However,
-> since these interrupts are unknown then, by definition, it's unknown
-> if "ack"ing them is truly enough to clear them. It's possible that we
-> also need to remove the original source of the interrupt. In this
-> case, IRQ_NONE would be a better choice.
->
-> Given that returning an occasional IRQ_NONE isn't the absolute end of
-> the world, however, let's choose that course of action. The IRQ
-> framework will forgive a few IRQ_NONE returns now and again (and it
-> won't even log them, which is why we have to log them ourselves). This
-> means that if we _do_ end hitting an interrupt where "ack"ing isn't
-> enough the kernel will eventually detect the problem and shut our
-> device down.
->
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Tested-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Reviewed-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-
+On Mon, 30 Jan 2023 16:32:51 +0100, Konrad Dybcio wrote:
+> Add device tree bindings for graphics clock controller for Qualcomm
+> Technology Inc's SM6115 SoCs.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->
-> (no changes since v1)
->
->   drivers/gpu/drm/msm/dp/dp_aux.c     | 12 +++++++-----
->   drivers/gpu/drm/msm/dp/dp_aux.h     |  2 +-
->   drivers/gpu/drm/msm/dp/dp_ctrl.c    | 10 ++++++++--
->   drivers/gpu/drm/msm/dp/dp_ctrl.h    |  2 +-
->   drivers/gpu/drm/msm/dp/dp_display.c |  8 +++++---
->   5 files changed, 22 insertions(+), 12 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_aux.c b/drivers/gpu/drm/msm/dp/dp_aux.c
-> index 84f9e3e5f964..8e3b677f35e6 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_aux.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_aux.c
-> @@ -368,14 +368,14 @@ static ssize_t dp_aux_transfer(struct drm_dp_aux *dp_aux,
->   	return ret;
->   }
->   
-> -void dp_aux_isr(struct drm_dp_aux *dp_aux)
-> +irqreturn_t dp_aux_isr(struct drm_dp_aux *dp_aux)
->   {
->   	u32 isr;
->   	struct dp_aux_private *aux;
->   
->   	if (!dp_aux) {
->   		DRM_ERROR("invalid input\n");
-> -		return;
-> +		return IRQ_NONE;
->   	}
->   
->   	aux = container_of(dp_aux, struct dp_aux_private, dp_aux);
-> @@ -384,11 +384,11 @@ void dp_aux_isr(struct drm_dp_aux *dp_aux)
->   
->   	/* no interrupts pending, return immediately */
->   	if (!isr)
-> -		return;
-> +		return IRQ_NONE;
->   
->   	if (!aux->cmd_busy) {
->   		DRM_ERROR("Unexpected DP AUX IRQ %#010x when not busy\n", isr);
-> -		return;
-> +		return IRQ_NONE;
->   	}
->   
->   	/*
-> @@ -420,10 +420,12 @@ void dp_aux_isr(struct drm_dp_aux *dp_aux)
->   		aux->aux_error_num = DP_AUX_ERR_NONE;
->   	} else {
->   		DRM_WARN("Unexpected interrupt: %#010x\n", isr);
-> -		return;
-> +		return IRQ_NONE;
->   	}
->   
->   	complete(&aux->comp);
-> +
-> +	return IRQ_HANDLED;
->   }
->   
->   void dp_aux_reconfig(struct drm_dp_aux *dp_aux)
-> diff --git a/drivers/gpu/drm/msm/dp/dp_aux.h b/drivers/gpu/drm/msm/dp/dp_aux.h
-> index e930974bcb5b..511305da4f66 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_aux.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_aux.h
-> @@ -11,7 +11,7 @@
->   
->   int dp_aux_register(struct drm_dp_aux *dp_aux);
->   void dp_aux_unregister(struct drm_dp_aux *dp_aux);
-> -void dp_aux_isr(struct drm_dp_aux *dp_aux);
-> +irqreturn_t dp_aux_isr(struct drm_dp_aux *dp_aux);
->   void dp_aux_init(struct drm_dp_aux *dp_aux);
->   void dp_aux_deinit(struct drm_dp_aux *dp_aux);
->   void dp_aux_reconfig(struct drm_dp_aux *dp_aux);
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> index dd26ca651a05..1a5377ef1967 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> @@ -1979,27 +1979,33 @@ int dp_ctrl_off(struct dp_ctrl *dp_ctrl)
->   	return ret;
->   }
->   
-> -void dp_ctrl_isr(struct dp_ctrl *dp_ctrl)
-> +irqreturn_t dp_ctrl_isr(struct dp_ctrl *dp_ctrl)
->   {
->   	struct dp_ctrl_private *ctrl;
->   	u32 isr;
-> +	irqreturn_t ret = IRQ_NONE;
->   
->   	if (!dp_ctrl)
-> -		return;
-> +		return IRQ_NONE;
->   
->   	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
->   
->   	isr = dp_catalog_ctrl_get_interrupt(ctrl->catalog);
->   
-> +
->   	if (isr & DP_CTRL_INTR_READY_FOR_VIDEO) {
->   		drm_dbg_dp(ctrl->drm_dev, "dp_video_ready\n");
->   		complete(&ctrl->video_comp);
-> +		ret = IRQ_HANDLED;
->   	}
->   
->   	if (isr & DP_CTRL_INTR_IDLE_PATTERN_SENT) {
->   		drm_dbg_dp(ctrl->drm_dev, "idle_patterns_sent\n");
->   		complete(&ctrl->idle_comp);
-> +		ret = IRQ_HANDLED;
->   	}
-> +
-> +	return ret;
->   }
->   
->   struct dp_ctrl *dp_ctrl_get(struct device *dev, struct dp_link *link,
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-> index 9f29734af81c..c3af06dc87b1 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-> @@ -25,7 +25,7 @@ int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl);
->   int dp_ctrl_off_link(struct dp_ctrl *dp_ctrl);
->   int dp_ctrl_off(struct dp_ctrl *dp_ctrl);
->   void dp_ctrl_push_idle(struct dp_ctrl *dp_ctrl);
-> -void dp_ctrl_isr(struct dp_ctrl *dp_ctrl);
-> +irqreturn_t dp_ctrl_isr(struct dp_ctrl *dp_ctrl);
->   void dp_ctrl_handle_sink_request(struct dp_ctrl *dp_ctrl);
->   struct dp_ctrl *dp_ctrl_get(struct device *dev, struct dp_link *link,
->   			struct dp_panel *panel,	struct drm_dp_aux *aux,
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index bde1a7ce442f..b5343c9f1c1e 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -1204,7 +1204,7 @@ static int dp_hpd_event_thread_start(struct dp_display_private *dp_priv)
->   static irqreturn_t dp_display_irq_handler(int irq, void *dev_id)
->   {
->   	struct dp_display_private *dp = dev_id;
-> -	irqreturn_t ret = IRQ_HANDLED;
-> +	irqreturn_t ret = IRQ_NONE;
->   	u32 hpd_isr_status;
->   
->   	if (!dp) {
-> @@ -1232,13 +1232,15 @@ static irqreturn_t dp_display_irq_handler(int irq, void *dev_id)
->   
->   		if (hpd_isr_status & DP_DP_HPD_UNPLUG_INT_MASK)
->   			dp_add_event(dp, EV_HPD_UNPLUG_INT, 0, 0);
-> +
-> +		ret = IRQ_HANDLED;
->   	}
->   
->   	/* DP controller isr */
-> -	dp_ctrl_isr(dp->ctrl);
-> +	ret |= dp_ctrl_isr(dp->ctrl);
->   
->   	/* DP aux isr */
-> -	dp_aux_isr(dp->aux);
-> +	ret |= dp_aux_isr(dp->aux);
->   
->   	return ret;
->   }
+> v2 -> v3:
+> 
+> - Mention resets in description:
+> - Use gcc.yaml
+> 
+>  .../bindings/clock/qcom,sm6115-gpucc.yaml     | 58 +++++++++++++++++++
+>  include/dt-bindings/clock/qcom,sm6115-gpucc.h | 36 ++++++++++++
+>  2 files changed, 94 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm6115-gpucc.yaml
+>  create mode 100644 include/dt-bindings/clock/qcom,sm6115-gpucc.h
+> 
+
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,sm6115-gpucc.example.dtb: clock-controller@5990000: '#clock-cells', '#power-domain-cells', '#reset-cells', 'reg' do not match any of the regexes: 'pinctrl-[0-9]+'
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,sm6115-gpucc.yaml
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230130153252.2310882-8-konrad.dybcio@linaro.org
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
