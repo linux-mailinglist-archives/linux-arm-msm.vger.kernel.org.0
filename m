@@ -2,129 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F1F7E68364E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Jan 2023 20:20:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 22283683646
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Jan 2023 20:19:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231664AbjAaTUh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Jan 2023 14:20:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36502 "EHLO
+        id S229875AbjAaTT5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Jan 2023 14:19:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231681AbjAaTUe (ORCPT
+        with ESMTP id S231509AbjAaTTs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Jan 2023 14:20:34 -0500
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EE2517140;
-        Tue, 31 Jan 2023 11:20:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1675192825; x=1706728825;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=4eEAXkCsMiRzEm5Yn2joG4NPrqKqRgO+NgUHqn/u2ak=;
-  b=RiPh6MuR1OaohiANvArVfZNUsN1BTonq2es2iZSxIfMx0h0ahuuuTRth
-   a8kzEBzOg4Lo8KThR4LlD7JOKTjY4EVYYUaWPCK1jlYcV1JHKN/z+Zrw5
-   r/tWUGRcMUXBIAbMkJy//GDaTzZqDcx/unQi85Fj9EDKCdF7abHaI6gkq
-   6QmmQio0p2sMLrzHxEU2DYb2B3A1lNGj4xmrJ0lzr1EI6hkgN2yxUG2kT
-   ol62qTZ8vEhL9YG+mF2Ub6qWd0Rf1FyA2M+jo2dFbQfb/zClxMkyNHAJe
-   by6LyaRjsXjDTh9XilAjGMn4FXDOs268Z0BcxcS5+p2AmUBkJ94Ind5Ma
-   Q==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10607"; a="308276530"
-X-IronPort-AV: E=Sophos;i="5.97,261,1669104000"; 
-   d="scan'208";a="308276530"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Jan 2023 11:20:25 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10607"; a="658011492"
-X-IronPort-AV: E=Sophos;i="5.97,261,1669104000"; 
-   d="scan'208";a="658011492"
-Received: from lkp-server01.sh.intel.com (HELO ffa7f14d1d0f) ([10.239.97.150])
-  by orsmga007.jf.intel.com with ESMTP; 31 Jan 2023 11:20:22 -0800
-Received: from kbuild by ffa7f14d1d0f with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1pMwB3-0004eY-1T;
-        Tue, 31 Jan 2023 19:20:21 +0000
-Date:   Wed, 1 Feb 2023 03:19:22 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Tue, 31 Jan 2023 14:19:48 -0500
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2B11144AD
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 11:19:46 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id n6so12820496edo.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 11:19:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=TknF9ez1i9mYFjSeMX9CHkG5E9Ti+NVIIB/8UZbo7kI=;
+        b=c79OJQMbJ6jYG0JsqF9libOA2r6DD/9K7H1yJTHROa1tyM0EW9mr0IZf6P1/v2po0D
+         Lt3qQ6cRLCU8BL44l5kMefi9fC4UA/29TRKKBwSjyg6RXiiRh0QhnA+UzC988J/rO9/4
+         BxgtkYCyVry9H2A9LZ8rC9dirmbvbSxwNrAwVlGbo9DvzBbTaFL+M9Hlhz006XH2Jkpx
+         TO0bvscxhROjoNK0R/nyA+8lDIDOxd3sdObC9npKVvUoj/ek8s02u/zXay3G409VuSqO
+         9mOfJHagVwJLYFpXcv/Rl51lXq0cIvsur4JMjqmH7uYpBaFfjkG8Hv6/abnmtAvmH4eD
+         5Jww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TknF9ez1i9mYFjSeMX9CHkG5E9Ti+NVIIB/8UZbo7kI=;
+        b=VRZLx+bX+tMwb/MUYE4TIv5VVgwFZnmPdDKm6H2a0j2IdkDG3tqDckI1kRHgWgRzrA
+         JkVVjiE2XSX65yONtLqZGM1Ri5T1jYPDTcSKMyqZvB02Tn9R3ZIIpPvXnfbGSoyReVOx
+         MTYpOvOx6wluUd9yNO9WE33ZuC+T1yG5L73nMIrvL8a7gO51vnLJp67Ut3Upju5NS0pn
+         TwA3M/9xyPlJpLHbqqZ8oU7nRkcGHizmyKJGpq8mlk1Szni4wZn38bFDdkndllmdBQEN
+         Wu1+iGYI6a0SZ/y6gPmjlxaqwOKlwwUyzLe1oGdLF4m5ls/q/AUFxQxwwsDmRP/HoutE
+         2n7A==
+X-Gm-Message-State: AO0yUKV6cB9RTrbOi4uU22EBd+RxvhWbu/oXD6wA0IIejB/IrfOaWzuc
+        5WB7llIgbkKP8AP7Nr1hkF6nIL82nKOnR4du
+X-Google-Smtp-Source: AK7set97AdQmeSZfU9qeHJgvw6OEfqdFyxEugOOiZbJsMALb91xFzkfXbgZyeKYOsJdq6/Dyi6fUvw==
+X-Received: by 2002:a05:6402:3814:b0:499:d374:e18b with SMTP id es20-20020a056402381400b00499d374e18bmr153459edb.35.1675192784991;
+        Tue, 31 Jan 2023 11:19:44 -0800 (PST)
+Received: from localhost.localdomain (abyl20.neoplus.adsl.tpnet.pl. [83.9.31.20])
+        by smtp.gmail.com with ESMTPSA id f9-20020a056402354900b0049e9e9204basm8642344edd.21.2023.01.31.11.19.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 31 Jan 2023 11:19:44 -0800 (PST)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     marijn.suijten@somainline.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <quic_tdas@quicinc.com>
-Cc:     oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org
-Subject: Re: [PATCH 2/2] clk: qcom: gpucc-sdm845: fix clk_dis_wait being
- programmed for CX GDSC
-Message-ID: <202302010346.2R8hxnlM-lkp@intel.com>
-References: <20230131092432.122711-2-dmitry.baryshkov@linaro.org>
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Marc Zyngier <maz@kernel.org>,
+        D Scott Phillips <scott@os.amperecomputing.com>,
+        James Morse <james.morse@arm.com>,
+        Chanho Park <chanho61.park@samsung.com>,
+        Linu Cherian <lcherian@marvell.com>,
+        Michal Orzel <michal.orzel@arm.com>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: Add a couple of missing part numbers
+Date:   Tue, 31 Jan 2023 20:19:40 +0100
+Message-Id: <20230131191940.2903908-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230131092432.122711-2-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry,
+Add Cortex X1C and add/clarify various recent Qualcomm Kryo cores,
+which almost exclusively mimic ARM IDs nowadays.
 
-I love your patch! Yet something to improve:
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ arch/arm64/include/asm/cputype.h | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-[auto build test ERROR on clk/clk-next]
-[also build test ERROR on linus/master v6.2-rc6 next-20230131]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Dmitry-Baryshkov/clk-qcom-gpucc-sdm845-fix-clk_dis_wait-being-programmed-for-CX-GDSC/20230131-172656
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git clk-next
-patch link:    https://lore.kernel.org/r/20230131092432.122711-2-dmitry.baryshkov%40linaro.org
-patch subject: [PATCH 2/2] clk: qcom: gpucc-sdm845: fix clk_dis_wait being programmed for CX GDSC
-config: arm-randconfig-r046-20230130 (https://download.01.org/0day-ci/archive/20230201/202302010346.2R8hxnlM-lkp@intel.com/config)
-compiler: arm-linux-gnueabi-gcc (GCC) 12.1.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/8222d81144cbdf9b51ffe1ffc61e16b471456329
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Dmitry-Baryshkov/clk-qcom-gpucc-sdm845-fix-clk_dis_wait-being-programmed-for-CX-GDSC/20230131-172656
-        git checkout 8222d81144cbdf9b51ffe1ffc61e16b471456329
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arm olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash drivers/clk/qcom/
-
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
-
-All errors (new ones prefixed by >>):
-
->> drivers/clk/qcom/gpucc-sdm845.c:122:10: error: 'struct gdsc' has no member named 'clk_dis_wait'; did you mean 'clk_dis_wait_val'?
-     122 |         .clk_dis_wait = 0x8,
-         |          ^~~~~~~~~~~~
-         |          clk_dis_wait_val
-
-
-vim +122 drivers/clk/qcom/gpucc-sdm845.c
-
-   118	
-   119	static struct gdsc gpu_cx_gdsc = {
-   120		.gdscr = 0x106c,
-   121		.gds_hw_ctrl = 0x1540,
- > 122		.clk_dis_wait = 0x8,
-   123		.pd = {
-   124			.name = "gpu_cx_gdsc",
-   125		},
-   126		.pwrsts = PWRSTS_OFF_ON,
-   127		.flags = VOTABLE,
-   128	};
-   129	
-
+diff --git a/arch/arm64/include/asm/cputype.h b/arch/arm64/include/asm/cputype.h
+index 683ca3af4084..4b79a0d44c65 100644
+--- a/arch/arm64/include/asm/cputype.h
++++ b/arch/arm64/include/asm/cputype.h
+@@ -84,6 +84,7 @@
+ #define ARM_CPU_PART_CORTEX_X2		0xD48
+ #define ARM_CPU_PART_NEOVERSE_N2	0xD49
+ #define ARM_CPU_PART_CORTEX_A78C	0xD4B
++#define ARM_CPU_PART_CORTEX_X1C		0xD4C
+ 
+ #define APM_CPU_PART_POTENZA		0x000
+ 
+@@ -107,9 +108,17 @@
+ #define QCOM_CPU_PART_KRYO		0x200
+ #define QCOM_CPU_PART_KRYO_2XX_GOLD	0x800
+ #define QCOM_CPU_PART_KRYO_2XX_SILVER	0x801
++#define QCOM_CPU_PART_KRYO_3XX_GOLD	0x802
+ #define QCOM_CPU_PART_KRYO_3XX_SILVER	0x803
+ #define QCOM_CPU_PART_KRYO_4XX_GOLD	0x804
+-#define QCOM_CPU_PART_KRYO_4XX_SILVER	0x805
++#define QCOM_CPU_PART_KRYO_4XX_SILVER_V2	0x805
++#define QCOM_CPU_PART_KRYO_5XX_GOLD	ARM_CPU_PART_CORTEX_A77
++#define QCOM_CPU_PART_KRYO_6XX_GOLD	ARM_CPU_PART_CORTEX_A78
++#define QCOM_CPU_PART_KRYO_6XX_GOLDPLUS	ARM_CPU_PART_CORTEX_X1
++#define QCOM_CPU_PART_KRYO_6XX_SILVER_V1	ARM_CPU_PART_CORTEX_A55
++#define QCOM_CPU_PART_KRYO_7XX_GOLD	ARM_CPU_PART_CORTEX_A710
++#define QCOM_CPU_PART_KRYO_7XX_GOLDPLUS	ARM_CPU_PART_CORTEX_X2
++#define QCOM_CPU_PART_KRYO_7XX_SILVER	ARM_CPU_PART_CORTEX_A510
+ 
+ #define NVIDIA_CPU_PART_DENVER		0x003
+ #define NVIDIA_CPU_PART_CARMEL		0x004
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
+2.39.1
+
