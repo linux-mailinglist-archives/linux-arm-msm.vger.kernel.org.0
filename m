@@ -2,123 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 34A216828E3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Jan 2023 10:32:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6FE15682905
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Jan 2023 10:37:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230513AbjAaJb7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Jan 2023 04:31:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59974 "EHLO
+        id S232227AbjAaJhu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Jan 2023 04:37:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230526AbjAaJb6 (ORCPT
+        with ESMTP id S232093AbjAaJhq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Jan 2023 04:31:58 -0500
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B31C815C8A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 01:31:56 -0800 (PST)
-Received: by mail-ej1-x631.google.com with SMTP id ml19so16224245ejb.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 01:31:56 -0800 (PST)
+        Tue, 31 Jan 2023 04:37:46 -0500
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B4EC41B5D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 01:37:38 -0800 (PST)
+Received: by mail-ej1-x62c.google.com with SMTP id k4so34342889eje.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 01:37:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=A4df+YMYrca5Xl2bwz5EZIKoolwQF6iGlzj7p2qVcIs=;
-        b=FW6x0jGkYIwA8TqNbVVgHK6Pk0O6Kaaope8iCCGlh6oY+LWTKdTA8pusjVlZNT7Gzh
-         CNY9EN1wJRyIe3MRgcfrzyBE7CQW3lHlVsR+FoATiiOB78YeAEHJ9h120WXXyaivantA
-         iUlA5vz9fRD/aQCIv21oyz0nKAZvpyBYoGwnlYZDcCBWktphCnwDi81jfIUIkAWc9Z5R
-         P0cV3wujZFXuYRvmb8HIBIW4k7lx0oaN5jx7Eu6ekY9RBiCya8zAskNBQlzMAmhwKVq7
-         bd/kooO2gMj3eJrlol0eSJEvYvxXHLzRNZub9OFr7PwcMRSi5C+OX3oeLk1OqR5+bOtH
-         LH+A==
+        bh=OD7XGDv2KxphkB7RKHdi18VA1OrEATdEVb4Xqu3ljXI=;
+        b=sDHQCupikeKKp8TKGc3h0zG38YF3g16GDGBLuAJ067k7cn74z7VyLz1l9ExAe2IjEU
+         8FQ9WA83qmyUIclvYHtmZ9tADHXjYqDJnWIW5r5yJawZ/5LKqPxXV9JYoBb9Ks79IGVg
+         C6Ro1Gmj/oh3mogBGJpp/Mo0WNLUJTdQUswgGQUDqYvQrdZ5VXp/AL6iQV0k3jQZkIbN
+         +M4tisiX+nkxUtLibZQtB8BRFWDpjyfKQwaRZsoflGWuXhhSAPYMZxnhbwy2S//9ZZwt
+         qecdG8vGjFi6hbLK5SIJH6iON7oiuP1CGAEANlsxwhahNjHlikwYDtx5jpqYmyabTiAW
+         kj+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=A4df+YMYrca5Xl2bwz5EZIKoolwQF6iGlzj7p2qVcIs=;
-        b=StgMoUx1D+UO19c7baONv0Kg9nS2Zezb0weGy3tYVdBMsLxet+KSkpCNL9BLqWb/U1
-         F4t6zLPPT3kPDxWoGMj6S1s68qXPtzZTxeI2v5riQi60cdB4une/bJHmmd7EpA5oXlk1
-         s1OmQvrkxImX6PnsqGgmnehRoiGncjNW2cnwaQZZUVOEqRdpp5GVh1Jzn92YQJc25fRY
-         0DwvpQK5Cn9jMhyZQWdlimO2eoqo2BK63JwESGCgsVWdLJR6Yef78NJyHVJIJMqSdDPv
-         /CDOKT0tN9g9Any3twFTur5mjJwhfJIcGQS9RNTsBTZDcU+utfoHLg5IF0lgS3Ka6j50
-         Ob7w==
-X-Gm-Message-State: AFqh2krG/yKEKe6ZV8VC8p0IxedLSnCoMTohK3PpsagUHzDmuUs7+Zvn
-        iTNei9uwL2z6UPTTzN1VMtbebw==
-X-Google-Smtp-Source: AMrXdXvTI20pQa3xMP9ePTvSO6XvhZBS1sBCWdguw5OSM5xobqPC9/TI+CS7Z+mYGsluohhXwBtJuA==
-X-Received: by 2002:a17:907:971d:b0:870:d15a:c2dc with SMTP id jg29-20020a170907971d00b00870d15ac2dcmr73161479ejc.74.1675157515261;
-        Tue, 31 Jan 2023 01:31:55 -0800 (PST)
+        bh=OD7XGDv2KxphkB7RKHdi18VA1OrEATdEVb4Xqu3ljXI=;
+        b=BhISAlNVXztXrwu4jbP41lJX1w5f3okD8wcQnBbTRaQWQzZDBgROXMxxQWRPt6kSxc
+         IwpGpBa8sadYZ3lriMLOA+LRnM9wq8VXwnxM4EB/c198ZdpX4OQD2JCcmgogQtzvhj/r
+         ZeUrUjLBaGGxe8Avs2w8wWC5mpr5ThQsevNDkQjmpdI79FOY4sTsWDXqRlaLJWVu/SjE
+         0aEhXhB4CYsmGpT8Wpn00z5zDgkC89OeWTR0Jp5gWI9wReW+Z6sKD14avraMxz5EfEfg
+         dKbk72iJlMJfBpBKesscjyMfDXssWclcnI/1kHyqnebSUxkXOjB8PjUinbujpexverNG
+         Vd5Q==
+X-Gm-Message-State: AO0yUKUcYq65dePO2lbvawXf34oI9lQmUuTutW1Zz6W3eeLim8slwzVC
+        v/+d/X0Hdp6jtRA4KcEJyBKJtg==
+X-Google-Smtp-Source: AK7set+Ur+1jFhf3cQKjyDZW0knZ3vKYTjCUuqEnWcmp3+BZdR/2r2TdHRbfsZU2YQ4/OcXEPTHl8g==
+X-Received: by 2002:a17:907:9054:b0:878:6519:c740 with SMTP id az20-20020a170907905400b008786519c740mr11015916ejc.44.1675157856950;
+        Tue, 31 Jan 2023 01:37:36 -0800 (PST)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id j6-20020a170906474600b0088ba2de323csm1088152ejs.181.2023.01.31.01.31.53
+        by smtp.gmail.com with ESMTPSA id a4-20020a170906274400b0088224df181asm5285585ejd.224.2023.01.31.01.37.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 31 Jan 2023 01:31:54 -0800 (PST)
-Message-ID: <b8b90989-4bc9-f3a9-516e-2101bfc2293d@linaro.org>
-Date:   Tue, 31 Jan 2023 11:31:53 +0200
+        Tue, 31 Jan 2023 01:37:36 -0800 (PST)
+Message-ID: <3813f262-8d36-2b1c-2230-cbb5a161d4c1@linaro.org>
+Date:   Tue, 31 Jan 2023 11:37:35 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
-Subject: Re: [PATCH 3/6] arm64: defconfig: Enable ipq6018 apss clock and PLL
- controller
+Subject: Re: [PATCH 6/6] regulator: qcom_smd: Add support to define the bootup
+ voltage
 Content-Language: en-GB
 To:     devi priya <quic_devipriy@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
-        sboyd@kernel.org, jassisinghbrar@gmail.com,
-        catalin.marinas@arm.com, will@kernel.org, shawnguo@kernel.org,
-        arnd@arndb.de, marcel.ziswiler@toradex.com,
-        nfraprado@collabora.com, broonie@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        lgirdwood@gmail.com, broonie@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
 Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
         quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
         quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
         quic_poovendh@quicinc.com
-References: <20230113143647.14961-1-quic_devipriy@quicinc.com>
- <20230113143647.14961-4-quic_devipriy@quicinc.com>
+References: <20230113150310.29709-1-quic_devipriy@quicinc.com>
+ <20230113150310.29709-7-quic_devipriy@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230113143647.14961-4-quic_devipriy@quicinc.com>
+In-Reply-To: <20230113150310.29709-7-quic_devipriy@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/01/2023 16:36, devi priya wrote:
-> Enable the PLL controller and IPQ6018 APSS clock controller
-
-... it is used on several IPQ platforms to clock the CPU so it should be 
-enabled and built-in.
-
+On 13/01/2023 17:03, devi priya wrote:
+> Kernel does not know the initial voltage set by the bootloaders.
+> During regulator registration, the voltage variable is just declared
+> and it is zero. Based on that, the regulator framework considers current
+> the voltage as zero and tries to bring up each regulator to minimum
+> the supported voltage.
+> 
+> This introduces a dip in the voltage during kernel boot and gets
+> stabilized once the voltage scaling comes into picture.
+> 
+> To avoid the voltage dip, adding support to define the
+> bootup voltage set by the boodloaders and based on it, regulator
+> framework understands that proper voltage is already set
 > 
 > Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
 > Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
 > Signed-off-by: devi priya <quic_devipriy@quicinc.com>
-
-Just to check: is the capitalization correct in your name here and 
-everywhere else? (please excuse my ignorance here, I do not know all the 
-spelling/capitalization rules).
-
 > ---
->   arch/arm64/configs/defconfig | 1 +
->   1 file changed, 1 insertion(+)
+>   drivers/regulator/qcom_smd-regulator.c | 6 +++++-
+>   1 file changed, 5 insertions(+), 1 deletion(-)
 > 
-> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> index e0ae0996d5ad..8de3979b10a3 100644
-> --- a/arch/arm64/configs/defconfig
-> +++ b/arch/arm64/configs/defconfig
-> @@ -1092,6 +1092,7 @@ CONFIG_QCOM_CLK_APCS_MSM8916=y
->   CONFIG_QCOM_CLK_APCC_MSM8996=y
->   CONFIG_QCOM_CLK_SMD_RPM=y
->   CONFIG_QCOM_CLK_RPMH=y
-> +CONFIG_IPQ_APSS_6018=y
->   CONFIG_IPQ_GCC_6018=y
->   CONFIG_IPQ_GCC_8074=y
->   CONFIG_IPQ_GCC_9574=y
+> diff --git a/drivers/regulator/qcom_smd-regulator.c b/drivers/regulator/qcom_smd-regulator.c
+> index 1eb17d378897..49a36b07397c 100644
+> --- a/drivers/regulator/qcom_smd-regulator.c
+> +++ b/drivers/regulator/qcom_smd-regulator.c
+> @@ -800,6 +800,7 @@ struct rpm_regulator_data {
+>   	u32 id;
+>   	const struct regulator_desc *desc;
+>   	const char *supply;
+> +	int boot_uV; /* To store the bootup voltage set by bootloaders */
+>   };
+>   
+>   static const struct rpm_regulator_data rpm_mp5496_regulators[] = {
+> @@ -809,7 +810,7 @@ static const struct rpm_regulator_data rpm_mp5496_regulators[] = {
+>   };
+>   
+>   static const struct rpm_regulator_data rpm_ipq9574_mp5496_regulators[] = {
+> -	{ "s1", QCOM_SMD_RPM_SMPA, 1, &ipq9574_mp5496_smpa1, "s1" },
+> +	{ "s1", QCOM_SMD_RPM_SMPA, 1, &ipq9574_mp5496_smpa1, "s1", 875000 },
+
+I think this is a peculiarity of the particular board that than a 
+property of the PMIC. Please describe this in the board or SoC DTS if 
+the value can not be read using the software .
+
+>   	{}
+>   };
+>   
+> @@ -1394,6 +1395,9 @@ static int rpm_regulator_init_vreg(struct qcom_rpm_reg *vreg, struct device *dev
+>   	vreg->type	= rpm_data->type;
+>   	vreg->id	= rpm_data->id;
+>   
+> +	if (rpm_data->boot_uV)
+> +		vreg->uV = rpm_data->boot_uV;
+> +
+>   	memcpy(&vreg->desc, rpm_data->desc, sizeof(vreg->desc));
+>   	vreg->desc.name = rpm_data->name;
+>   	vreg->desc.supply_name = rpm_data->supply;
 
 -- 
 With best wishes
