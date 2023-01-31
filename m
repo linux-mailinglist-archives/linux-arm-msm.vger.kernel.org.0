@@ -2,184 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DD564682914
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Jan 2023 10:40:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F4736829EB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Jan 2023 11:07:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232202AbjAaJko (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Jan 2023 04:40:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38480 "EHLO
+        id S230044AbjAaKGz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Jan 2023 05:06:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36026 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232230AbjAaJkm (ORCPT
+        with ESMTP id S231538AbjAaKGw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Jan 2023 04:40:42 -0500
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C703830B13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 01:40:35 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id dr8so18253297ejc.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 01:40:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8FobEID21vrhz/x7tIIWEc7olkgtXkakThsSq+isdsU=;
-        b=Fk3UFZnlTDJE8IVYGJtWGPh7tv9fdGnLugEN8pbkcaWK1YjsxjniyN+1v1n2VTiTpp
-         9ExYUWg815eWW2VDRNjwSAUJSMljuiFhrdRuL8jWYs1BSha2nIkAKdE0LwiaHmmJeZrW
-         gfkpz7qPS0+MHSPwWHCoFnAk6Ze2TeMVl9AxURoNHsbCqI3J9bVt6Swn4bxpsyRVoLPI
-         R/4/7cPpHxr+6gCjp11TqXy+KVlzsEnT/sVZhou9Z8c8apUF3PQJc42lV2p3IfGhyj7R
-         xKBKLe+3lshnvAolE4xdHJBaoZLDSHocnX7GMDJqtvGrJeXcv9PPhuB8lT8p91t9YaW7
-         uH3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8FobEID21vrhz/x7tIIWEc7olkgtXkakThsSq+isdsU=;
-        b=bBmSV/H1+GRLegVcApPTtDg1Fb+3FB6G9xVjZAf5p1Q0NdoSzty3np+IPEVPxJGCFd
-         Zgi69PjY2g0OM5MDA6BoNBnrbCeWUJ3ERWPXEL9wA0ESGnWZ6ZdopPmUGEKcpRmExP2q
-         Ljz4dpMIt/dKbQJgB/+neV2EcF8MmHlSOnJOYtwpaNufQvx49/3ODHHdcO7UwSxkZ3Lq
-         91dFrcdWFs6j4o7bLgRjDo3so2/ccEVqdT0mH+weFQm5z5SRo403i/0BqT3k5kZLEcUP
-         eM4DcMOcvd0o5PxzRHV10WcFP1QNepJ3U29N7d4H3ZokaIYICPYytw85IKNySQbvM2WG
-         Cadw==
-X-Gm-Message-State: AO0yUKUK8ZDxdEDqdNK3y4D4VJ0S2AnQgrvOJwM8ypkKfLolPjRHC76S
-        YCvs4b1McOrvd/cQ0qFdGGi15g==
-X-Google-Smtp-Source: AK7set/LGLUMnDyv+2FKks7oabkDIrzZkTP34i0BVUx415eZV4xEiaCORYIlekBOjPZb9yNfkSGB+w==
-X-Received: by 2002:a17:906:2b09:b0:889:dc6c:c4fb with SMTP id a9-20020a1709062b0900b00889dc6cc4fbmr6309699ejg.40.1675158034323;
-        Tue, 31 Jan 2023 01:40:34 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id d18-20020a170906c21200b0084ce5d5d21bsm8063382ejz.22.2023.01.31.01.40.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 31 Jan 2023 01:40:33 -0800 (PST)
-Message-ID: <b8eee15f-e3e4-4a2d-853e-31e966c19cf5@linaro.org>
-Date:   Tue, 31 Jan 2023 11:40:32 +0200
+        Tue, 31 Jan 2023 05:06:52 -0500
+Received: from mail-4317.proton.ch (mail-4317.proton.ch [185.70.43.17])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02B564B8A2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 02:06:51 -0800 (PST)
+Date:   Tue, 31 Jan 2023 10:06:39 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=emersion.fr;
+        s=protonmail; t=1675159608; x=1675418808;
+        bh=PKjpB873KFVEKBlEethlWB5JT7+2UnaIsAv0b3E2kIs=;
+        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+         Message-ID:BIMI-Selector;
+        b=wsuOR3mX603RNEeWhABWWFmL2nbJYBaLdk8yrFbaio/m0XrH/Sy/Kt6xgSjDJSeV5
+         GP7z7pl1OWG1AXhl9IBrPmjfBsK4QyElr+Me+wOu3Jl4WY7Ye6XIcECf+A6lSSYPQm
+         ckdzRe3aK3Q+Ehk7D/XtwcrVqP5S75ZlCG+G3x4AmeFAXROjgCIRdHHywO+h4NOASu
+         XK+5QRcX/wVTHAtlZSe3tKrzyae5weCO+FNRz5uWBY3o8MkyFw25gpX/Do6fm+bx0F
+         K6fEcLUjTsEpPAiQo0ZDvpRtxNhvZDBKvbbLeqc31PG6rNGZl8Otf77HuWUkNoDVVk
+         j7H6oOD6Fi51A==
+To:     Pekka Paalanen <ppaalanen@gmail.com>
+From:   Simon Ser <contact@emersion.fr>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        seanpaul@chromium.org, swboyd@chromium.org,
+        quic_abhinavk@quicinc.com, daniel.vetter@ffwll.ch,
+        laurent.pinchart@ideasonboard.com, sebastian.wick@redhat.com,
+        wayland-devel@lists.freedesktop.org, ville.syrjala@linux.intel.com
+Subject: Re: [RFC PATCH v3 0/3] Support for Solid Fill Planes
+Message-ID: <9Q0ano1jjZ1LTNWaVcVkDp0-jsTSUJKoNrKwvpGpIuejUSB33DK-uOpeLmyMbbk6tdfWG8RS83AGyB--EPEHqJe5shq6RC_gVpPLR7sUScY=@emersion.fr>
+In-Reply-To: <20230131112527.32ab8ba5@eldfell>
+References: <20230104234036.636-1-quic_jesszhan@quicinc.com> <Y7a1hCmsvJHKdW1Y@phenom.ffwll.local> <58caf08c-3a02-82ce-4452-8ae7f22f373d@quicinc.com> <CAA8EJppnAmN6+S-emEfXJEc1iVf+DjeLBmCQpGd-nRY2M2AAQQ@mail.gmail.com> <Y7hrWDpg8msuefgZ@phenom.ffwll.local> <CAA8EJppoejPPNhu3eHBc_vsstHvEEwYx67HZLo8+4W3K-gHkag@mail.gmail.com> <20230131112527.32ab8ba5@eldfell>
+Feedback-ID: 1358184:user:proton
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH 6/6] clk: qcom: Fix APSS PLL and RCG Configuration
-Content-Language: en-GB
-To:     Devi Priya <quic_devipriy@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
-        sboyd@kernel.org, jassisinghbrar@gmail.com,
-        catalin.marinas@arm.com, will@kernel.org, shawnguo@kernel.org,
-        arnd@arndb.de, marcel.ziswiler@toradex.com,
-        nfraprado@collabora.com, broonie@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
-        quic_poovendh@quicinc.com
-References: <20230113143647.14961-1-quic_devipriy@quicinc.com>
- <20230113143647.14961-7-quic_devipriy@quicinc.com>
- <b87ab80d-0936-5a5a-25da-35c0dbdede33@linaro.org>
- <ea0dbbf0-958c-145b-abaa-3bbcb620df5c@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <ea0dbbf0-958c-145b-abaa-3bbcb620df5c@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31/01/2023 11:17, Devi Priya wrote:
-> Thanks for taking time to review the patch
-> 
-> On 1/13/2023 8:50 PM, Konrad Dybcio wrote:
->>
->>
->> On 13.01.2023 15:36, devi priya wrote:
->>> Included CLK_IS_CRITICAL flag which helps to properly enable
->>> the APSS PLL during bootup.
->> Please describe the issue and not only the user-visible impact it
->> makes. Does the PLL get shut down by clk_ignore_unused? Maybe you
->> would be interested in the sync_state changes that landed in recent
->> -next that may solve it for you?
->>
->> I don't think it should be always-on, as you have an alternate source
->> for low power modes, adding CLK_IS_CRITICAL will keep the PLL enabled
->> even if you're not using it.
-> Yeah, got it. Will drop the critical flag
->>
->>> clk_rcg2_ops should be used for APSS clock RCG, as other ops
->>> will not configure the RCG register
->> RCG register meaning RCG register*s*, meaning in this case M/N/D
->> which would be required for proper rate setting and not only input
->> switching (which arguably doesn't seem to be of much concern on a
->> single-parent clock)? This all is not obvious..
->>
->> Konrad
-> The source selection is done by configuring the RCGR config register 
-> with the source entry (P_APSS_PLL_EARLY) added to the frequency table. 
-> Proper rate is achieved by configuring the PLL and hence M/N/D values 
-> are not configured
+On Tuesday, January 31st, 2023 at 10:25, Pekka Paalanen <ppaalanen@gmail.co=
+m> wrote:
 
-But the clk_rcg2_mux_closest_ops also programs the parent for the clock. 
-So from your description it isn't obvious what is wrong with the current 
-_ops used for the clock.
+> indeed, what about simply using a 1x1 framebuffer for real? Why was that
+> approach rejected?
 
->>>
->>> Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
->>> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
->>> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
->>> ---
->>>   drivers/clk/qcom/apss-ipq-pll.c | 1 +
->>>   drivers/clk/qcom/apss-ipq6018.c | 8 +++++++-
->>>   2 files changed, 8 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/drivers/clk/qcom/apss-ipq-pll.c 
->>> b/drivers/clk/qcom/apss-ipq-pll.c
->>> index dd0c01bf5a98..75486a124fcd 100644
->>> --- a/drivers/clk/qcom/apss-ipq-pll.c
->>> +++ b/drivers/clk/qcom/apss-ipq-pll.c
->>> @@ -33,6 +33,7 @@ static struct clk_alpha_pll ipq_pll = {
->>>               },
->>>               .num_parents = 1,
->>>               .ops = &clk_alpha_pll_huayra_ops,
->>> +            .flags = CLK_IS_CRITICAL,
->>>           },
->>>       },
->>>   };
->>> diff --git a/drivers/clk/qcom/apss-ipq6018.c 
->>> b/drivers/clk/qcom/apss-ipq6018.c
->>> index f2f502e2d5a4..0d0e7196a4dc 100644
->>> --- a/drivers/clk/qcom/apss-ipq6018.c
->>> +++ b/drivers/clk/qcom/apss-ipq6018.c
->>> @@ -33,15 +33,21 @@ static const struct parent_map 
->>> parents_apcs_alias0_clk_src_map[] = {
->>>       { P_APSS_PLL_EARLY, 5 },
->>>   };
->>> +static const struct freq_tbl ftbl_apcs_alias0_clk_src[] = {
->>> +    { .src = P_APSS_PLL_EARLY, .pre_div = 1 },
->>> +    { }
->>> +};
->>> +
->>>   static struct clk_rcg2 apcs_alias0_clk_src = {
->>>       .cmd_rcgr = 0x0050,
->>> +    .freq_tbl = ftbl_apcs_alias0_clk_src,
->>>       .hid_width = 5,
->>>       .parent_map = parents_apcs_alias0_clk_src_map,
->>>       .clkr.hw.init = &(struct clk_init_data){
->>>           .name = "apcs_alias0_clk_src",
->>>           .parent_data = parents_apcs_alias0_clk_src,
->>>           .num_parents = ARRAY_SIZE(parents_apcs_alias0_clk_src),
->>> -        .ops = &clk_rcg2_mux_closest_ops,
->>> +        .ops = &clk_rcg2_ops,
->>>           .flags = CLK_SET_RATE_PARENT,
->>>       },
->>>   };
-> Best Regards,
-> Devi Priya
+Ideally we don't want to allocate any GPU memory for the solid-fill
+stuff. And if we special-case 1x1 FB creation to not be backed by real
+GPU memory then we hit several situations where user-space expects a
+real FB but there isn't: for instance, GETFB2 converts from FB object
+ID to GEM handles. Even if we make GETFB2 fail and accept that this
+breaks user-space, then there is no way for user-space to recover the
+FB color for flicker-free transitions and such.
 
--- 
-With best wishes
-Dmitry
-
+This is all purely from a uAPI PoV, completely ignoring the potential
+issues with the internal kernel abstractions which might not be suitable
+for this either.
