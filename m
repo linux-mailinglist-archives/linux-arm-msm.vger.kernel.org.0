@@ -2,316 +2,205 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CBCDB68228B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Jan 2023 04:09:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9654A6822C6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Jan 2023 04:24:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229742AbjAaDJV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Jan 2023 22:09:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39016 "EHLO
+        id S229810AbjAaDYp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Jan 2023 22:24:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229651AbjAaDJT (ORCPT
+        with ESMTP id S229651AbjAaDYo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Jan 2023 22:09:19 -0500
-Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E1443C28;
-        Mon, 30 Jan 2023 19:09:18 -0800 (PST)
-Received: by mail-qk1-x72b.google.com with SMTP id j22so1816585qka.0;
-        Mon, 30 Jan 2023 19:09:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=1ZOfd2zx+NjgQww/0mU3ZaJ9v79cmnQrDykMgvyCyxY=;
-        b=mzAZo9UKt2apBG+a8Vk+YCpQ2F+UrwegjTc4F5sZHyb/tpmwnBW+FQVFlZv5cFkdTM
-         Fj5UP+IddswiXOskayD5RsC7RdozQ/oVuxzQjiEoFOv7RVpn5VlS+ML+LDykzx778FmC
-         /V2lnjbg+Ko3orxv1yk8tyX2llLuBqKo5OpnW8aKoMTvSPJRiTwVXKHWBqzzjnuuCWRx
-         8iix8Y9x9v4Ox26Zxcq6BJ0ROZyd8tJ254zafSXx08PxCm/dqdecN3l20K/42ZKXn4mQ
-         R9Lxt5ocxE65yPdm3kHMn2yRhfJuV4YCoutiqYVk/m3aJ6fpGygeHBrQjqS4CxJEzOmB
-         hBsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=1ZOfd2zx+NjgQww/0mU3ZaJ9v79cmnQrDykMgvyCyxY=;
-        b=wu0tvGS5Ifh09Kk2TUpav2xlE4cMEl9G8u9x8g7IqSTM6C6NN2HaiXAhUV6bQ4xbLC
-         lqCgKOMNHd09HU8SZfh+1sgRkfbHZSnS4QCC6utemAF2jiyQWrY1xPEfpZbk8+d2/mpP
-         84iQ+X4h2xn9OSO0ydh4IZgKsAXIrS5Hd2vaaYoE8QuHg8uthnIR6EQZgBwr72L0bIXY
-         SErkpRL2AVp6LafIducXITo5rLTDtu/Eje401Kc39jHzwaCFoOPCmwpSYzkzAlvaKs+v
-         yoaMbs5tqp22xnpTaZwNy3G2EODdFM9p+Xy3z2PAEiMTVoE0/1Z6hh0DrDIkkXl9T+F9
-         yZDQ==
-X-Gm-Message-State: AO0yUKVqL5Mc/uDYuFsx7Jjc9SxlXblCPI8nm1OYWVJGvtwV4adalyyh
-        OnCDmGKybE2Q0Xs7LnK1R247eDz20MSGpG7yxcI=
-X-Google-Smtp-Source: AK7set/0nBTFpX0vgIbgrVXsLzjuAA5v6zMOAXCuo7yTj9cK+cCPb3/FTeGJLfxyzfnTCHWhJu0cPJPDYnef62asg/Y=
-X-Received: by 2002:a05:620a:2042:b0:724:3c65:e6ee with SMTP id
- d2-20020a05620a204200b007243c65e6eemr206666qka.456.1675134557070; Mon, 30 Jan
- 2023 19:09:17 -0800 (PST)
+        Mon, 30 Jan 2023 22:24:44 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64BB6210D;
+        Mon, 30 Jan 2023 19:24:43 -0800 (PST)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30V2LA4X016345;
+        Tue, 31 Jan 2023 03:24:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=5Ly9k2vbaRfxNYTkMAZxUzQjFn6BER4QVrRQ2fK++34=;
+ b=JVr98NlFWJJynZI4nlRGsds0N0I/DSMnClZJpID478d8kdNKyJ/evFi0GnUuqPujUrI8
+ 3kI1eNiOkcPSnT2b8hE6napZse7KydDXgyolXcHUg9TW+2iJDEDYraLpxDbr+abJfKfj
+ 3CSznaR0M+c94RXkCAThJC6Xy71teg88HhbxngnEZ7yPMyCqzMaWe8s1TFvXh8yyPkRJ
+ wfbJ5Ul2Ue1hJiTpS4pVSeshkasZHGCMEu5dw5Egk9+M9OgvH4quX9XaxDk4eQH49CF3
+ 0EKDfvhSxpik0rYQhkhotFddUcJxXK60X8hVz7i6pqRHgOBhO2RVUwRMHD7Liocfoou1 QA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ncut2nkba-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 31 Jan 2023 03:24:28 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30V3ORTl003028
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 31 Jan 2023 03:24:27 GMT
+Received: from [10.253.75.6] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 30 Jan
+ 2023 19:24:21 -0800
+Message-ID: <058241be-ffa8-6fc6-7262-705ec41e849c@quicinc.com>
+Date:   Tue, 31 Jan 2023 11:23:10 +0800
 MIME-Version: 1.0
-References: <20230130064656.106793-1-michael@allwinnertech.com>
-In-Reply-To: <20230130064656.106793-1-michael@allwinnertech.com>
-From:   Wenchao Chen <wenchao.chen666@gmail.com>
-Date:   Tue, 31 Jan 2023 11:09:06 +0800
-Message-ID: <CA+Da2qzJBxn5up1YLiaguhMJ=W7JkVExyyiFco9KyPE+3jEn8w@mail.gmail.com>
-Subject: Re: [PATCH] mmc:mmc-cqhci:support interrupt coalescing
-To:     Michael Wu <michael@allwinnertech.com>
-Cc:     adrian.hunter@intel.com, riteshh@codeaurora.org,
-        asutoshd@codeaurora.org, ulf.hansson@linaro.org,
-        chaotian.jing@mediatek.com, matthias.bgg@gmail.com,
-        kdasu.kdev@gmail.com, alcooperx@gmail.com, f.fainelli@gmail.com,
-        haibo.chen@nxp.com, shawnguo@kernel.org, agross@kernel.org,
-        andersson@kernel.org, michal.simek@xilinx.com,
-        thierry.reding@gmail.com, jonathanh@nvidia.com,
-        bcm-kernel-feedback-list@broadcom.com, kernel@pengutronix.de,
-        festevam@gmail.com, linux-imx@nxp.com, konrad.dybcio@linaro.org,
-        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-tegra@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v2 1/9] dt-bindings: arm: Add support for DSB element
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC:     Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <bjorn.andersson@linaro.org>,
+        Tao Zhang <taozha@qti.qualcomm.com>
+References: <1674114105-16651-1-git-send-email-quic_taozha@quicinc.com>
+ <1674114105-16651-2-git-send-email-quic_taozha@quicinc.com>
+ <cd7a2eac-5d70-6dcd-ddbd-317e1cbd7d23@linaro.org>
+Content-Language: en-US
+From:   Tao Zhang <quic_taozha@quicinc.com>
+In-Reply-To: <cd7a2eac-5d70-6dcd-ddbd-317e1cbd7d23@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: wkRiWcp08z695MHa2FB5N0gTQcoQdeFB
+X-Proofpoint-ORIG-GUID: wkRiWcp08z695MHa2FB5N0gTQcoQdeFB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-30_19,2023-01-30_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
+ phishscore=0 lowpriorityscore=0 adultscore=0 malwarescore=0 spamscore=0
+ suspectscore=0 mlxlogscore=951 impostorscore=0 priorityscore=1501
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301310029
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 30, 2023 at 2:49 PM Michael Wu <michael@allwinnertech.com> wrote:
->
-> Support interrupt coalescing to reduce the frequency of mmc interrupts
->
+Hi Krzysztof,
 
-Hi Michael
-The CQIS register does not have any configuration.
-Usually ICCTH needs to be enabled.
+On 1/19/2023 6:44 PM, Krzysztof Kozlowski wrote:
+> On 19/01/2023 08:41, Tao Zhang wrote:
+>> Add property "qcom,dsb-elem-size" to support DSB(Discrete Single
+>> Bit) element for TPDA. Specifies the DSB element size supported
+>> by each monitor connected to the aggregator on each port. Should
+>> be specified in pairs (port, dsb element size).
+>>
+>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+>> Signed-off-by: Tao Zhang <taozha@qti.qualcomm.com>
+> You are the same person and it is still the same organization
+> (Qualcomm), right? Only one SoB.
+I will change and update this in the next patch series.
+>
+>> ---
+>>   .../bindings/arm/qcom,coresight-tpda.yaml          | 22 ++++++++++++++++++++++
+>>   1 file changed, 22 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml
+>> index 2ec9b5b..298db7f 100644
+>> --- a/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml
+>> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml
+>> @@ -58,6 +58,26 @@ properties:
+>>       minItems: 1
+>>       maxItems: 2
+>>   
+>> +  qcom,dsb-element-size:
+>> +    description: |
+>> +      Specifies the DSB(Discrete Single Bit) element size supported by
+>> +      each monitor connected to the aggregator on each port. Should be
+>> +      specified in pairs <port, dsb element size>.
+> s/port/port number/
 
-> Signed-off-by: Michael Wu <michael@allwinnertech.com>
-> ---
->  drivers/mmc/host/cqhci-core.c      | 20 +++++++++++++++-----
->  drivers/mmc/host/cqhci.h           |  5 ++++-
->  drivers/mmc/host/mtk-sd.c          |  2 +-
->  drivers/mmc/host/sdhci-brcmstb.c   |  2 +-
->  drivers/mmc/host/sdhci-esdhc-imx.c |  2 +-
->  drivers/mmc/host/sdhci-msm.c       |  2 +-
->  drivers/mmc/host/sdhci-of-arasan.c |  2 +-
->  drivers/mmc/host/sdhci-pci-core.c  |  2 +-
->  drivers/mmc/host/sdhci-pci-gli.c   |  2 +-
->  drivers/mmc/host/sdhci-tegra.c     |  2 +-
->  drivers/mmc/host/sdhci_am654.c     |  2 +-
->  11 files changed, 28 insertions(+), 15 deletions(-)
+It should be "port number" here.
+
+I will change "<port, dsb element size>" to "<port number, DSB element 
+size>" in the next patch series.
+
+>> +
+>> +      Note: The maximum value of the port number depends on how many
+>> +      input ports the current TPDA has. DSB element size currently only
+>> +      supports 32-bit and 64-bit.
+>> +    $ref: /schemas/types.yaml#/definitions/uint32-matrix
+>> +    items:
+> Are some reasonable maxItems known?
+
+This is related to hardware design, depending on how many input ports 
+the TPDA has.
+
+We cannot limit it to a reasonable maximum value from the software.
+
+According to the existing hardware design, TPDA with the most input 
+ports has about 30 input ports.
+
+But there may be TPDA with more input ports.
+
 >
-> diff --git a/drivers/mmc/host/cqhci-core.c b/drivers/mmc/host/cqhci-core.c
-> index b3d7d6d8d654..f9cdf9f04bfc 100644
-> --- a/drivers/mmc/host/cqhci-core.c
-> +++ b/drivers/mmc/host/cqhci-core.c
-> @@ -420,7 +420,7 @@ static void cqhci_disable(struct mmc_host *mmc)
->  }
+>> +      items:
+>> +        - description: |
+>> +            "port" indicates TPDA input port number
+> What is "port"? You quoted it like it was some name of variable or
+> property. Where is then?
+
+The "port" here refers to the port number of other Coresight devices 
+connected to the TPDA input port.
+
+I will change and update it in the next patch series.
+
+>> +          minimum: 0
+>> +        - description: |
+>> +            "dsb element size" indicates dsb element size
+> "A" indicates A. This sentence does not make sense.
 >
->  static void cqhci_prep_task_desc(struct mmc_request *mrq,
-> -                                struct cqhci_host *cq_host, int tag)
-> +                                struct cqhci_host *cq_host, int tag, int intr)
->  {
->         __le64 *task_desc = (__le64 __force *)get_desc(cq_host, tag);
->         u32 req_flags = mrq->data->flags;
-> @@ -428,7 +428,7 @@ static void cqhci_prep_task_desc(struct mmc_request *mrq,
+> Also missing units.
 >
->         desc0 = CQHCI_VALID(1) |
->                 CQHCI_END(1) |
-> -               CQHCI_INT(1) |
-> +               CQHCI_INT(intr) |
->                 CQHCI_ACT(0x5) |
->                 CQHCI_FORCED_PROG(!!(req_flags & MMC_DATA_FORCED_PRG)) |
->                 CQHCI_DATA_TAG(!!(req_flags & MMC_DATA_DAT_TAG)) |
-> @@ -621,7 +621,7 @@ static int cqhci_request(struct mmc_host *mmc, struct mmc_request *mrq)
->         }
+> s/dsb/DSB/
+"DSB element size" indicate the size of the element in DSB. DSB(Discrete 
+Single
+
+Bit) is a data collection unit.
+
+I will change and update it in the next patch series.
+
 >
->         if (mrq->data) {
-> -               cqhci_prep_task_desc(mrq, cq_host, tag);
-> +               cqhci_prep_task_desc(mrq, cq_host, tag, (cq_host->intr_clsc ? 0 : 1));
->
->                 err = cqhci_prep_tran_desc(mrq, cq_host, tag);
->                 if (err) {
-> @@ -812,7 +812,7 @@ static void cqhci_finish_mrq(struct mmc_host *mmc, unsigned int tag)
->  irqreturn_t cqhci_irq(struct mmc_host *mmc, u32 intmask, int cmd_error,
->                       int data_error)
->  {
-> -       u32 status;
-> +       u32 status, rval;
->         unsigned long tag = 0, comp_status;
->         struct cqhci_host *cq_host = mmc->cqe_private;
->
-> @@ -856,6 +856,15 @@ irqreturn_t cqhci_irq(struct mmc_host *mmc, u32 intmask, int cmd_error,
->                 spin_unlock(&cq_host->lock);
->         }
->
-> +       if (cq_host->intr_clsc) {
-> +               rval = cqhci_readl(cq_host, CQHCI_IC);
-> +               rval |= CQHCI_IC_RESET;
-> +               cqhci_writel(cq_host, rval, CQHCI_IC);
-> +               rval = cqhci_readl(cq_host, CQHCI_IC);
-> +               rval &= (~CQHCI_IC_RESET);
-> +               cqhci_writel(cq_host, rval, CQHCI_IC);
-> +       }
-> +
->         if (status & CQHCI_IS_TCL)
->                 wake_up(&cq_host->wait_queue);
->
-> @@ -1172,11 +1181,12 @@ static unsigned int cqhci_ver_minor(struct cqhci_host *cq_host)
->  }
->
->  int cqhci_init(struct cqhci_host *cq_host, struct mmc_host *mmc,
-> -             bool dma64)
-> +             bool dma64, bool intr_clsc)
->  {
->         int err;
->
->         cq_host->dma64 = dma64;
-> +       cq_host->intr_clsc = intr_clsc;
->         cq_host->mmc = mmc;
->         cq_host->mmc->cqe_private = cq_host;
->
-> diff --git a/drivers/mmc/host/cqhci.h b/drivers/mmc/host/cqhci.h
-> index ba9387ed90eb..acf90773c30a 100644
-> --- a/drivers/mmc/host/cqhci.h
-> +++ b/drivers/mmc/host/cqhci.h
-> @@ -227,6 +227,9 @@ struct cqhci_host {
->
->         /* 64 bit DMA */
->         bool dma64;
-> +
-> +       /* interrupt coalescing*/
-> +       bool intr_clsc;
->         int num_slots;
->         int qcnt;
->
-> @@ -312,7 +315,7 @@ struct platform_device;
->
->  irqreturn_t cqhci_irq(struct mmc_host *mmc, u32 intmask, int cmd_error,
->                       int data_error);
-> -int cqhci_init(struct cqhci_host *cq_host, struct mmc_host *mmc, bool dma64);
-> +int cqhci_init(struct cqhci_host *cq_host, struct mmc_host *mmc, bool dma64, bool intr_clsc);
->  struct cqhci_host *cqhci_pltfm_init(struct platform_device *pdev);
->  int cqhci_deactivate(struct mmc_host *mmc);
->  static inline int cqhci_suspend(struct mmc_host *mmc)
-> diff --git a/drivers/mmc/host/mtk-sd.c b/drivers/mmc/host/mtk-sd.c
-> index edade0e54a0c..2c18f954d4b8 100644
-> --- a/drivers/mmc/host/mtk-sd.c
-> +++ b/drivers/mmc/host/mtk-sd.c
-> @@ -2796,7 +2796,7 @@ static int msdc_drv_probe(struct platform_device *pdev)
->                 host->cq_host->caps |= CQHCI_TASK_DESC_SZ_128;
->                 host->cq_host->mmio = host->base + 0x800;
->                 host->cq_host->ops = &msdc_cmdq_ops;
-> -               ret = cqhci_init(host->cq_host, mmc, true);
-> +               ret = cqhci_init(host->cq_host, mmc, true, false);
->                 if (ret)
->                         goto host_free;
->                 mmc->max_segs = 128;
-> diff --git a/drivers/mmc/host/sdhci-brcmstb.c b/drivers/mmc/host/sdhci-brcmstb.c
-> index f2cf3d70db79..4aeaeddbbf25 100644
-> --- a/drivers/mmc/host/sdhci-brcmstb.c
-> +++ b/drivers/mmc/host/sdhci-brcmstb.c
-> @@ -231,7 +231,7 @@ static int sdhci_brcmstb_add_host(struct sdhci_host *host,
->                 cq_host->caps |= CQHCI_TASK_DESC_SZ_128;
->         }
->
-> -       ret = cqhci_init(cq_host, host->mmc, dma64);
-> +       ret = cqhci_init(cq_host, host->mmc, dma64, false);
->         if (ret)
->                 goto cleanup;
->
-> diff --git a/drivers/mmc/host/sdhci-esdhc-imx.c b/drivers/mmc/host/sdhci-esdhc-imx.c
-> index 9e73c34b6401..7aef7abe71f1 100644
-> --- a/drivers/mmc/host/sdhci-esdhc-imx.c
-> +++ b/drivers/mmc/host/sdhci-esdhc-imx.c
-> @@ -1712,7 +1712,7 @@ static int sdhci_esdhc_imx_probe(struct platform_device *pdev)
->                 cq_host->mmio = host->ioaddr + ESDHC_CQHCI_ADDR_OFFSET;
->                 cq_host->ops = &esdhc_cqhci_ops;
->
-> -               err = cqhci_init(cq_host, host->mmc, false);
-> +               err = cqhci_init(cq_host, host->mmc, false, false);
->                 if (err)
->                         goto disable_ahb_clk;
->         }
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index 4ac8651d0b29..b6549d1e43ec 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -2153,7 +2153,7 @@ static int sdhci_msm_cqe_add_host(struct sdhci_host *host,
->         if (ret)
->                 goto cleanup;
->
-> -       ret = cqhci_init(cq_host, host->mmc, dma64);
-> +       ret = cqhci_init(cq_host, host->mmc, dma64, false);
->         if (ret) {
->                 dev_err(&pdev->dev, "%s: CQE init: failed (%d)\n",
->                                 mmc_hostname(host->mmc), ret);
-> diff --git a/drivers/mmc/host/sdhci-of-arasan.c b/drivers/mmc/host/sdhci-of-arasan.c
-> index 89c431a34c43..811f8686532d 100644
-> --- a/drivers/mmc/host/sdhci-of-arasan.c
-> +++ b/drivers/mmc/host/sdhci-of-arasan.c
-> @@ -1610,7 +1610,7 @@ static int sdhci_arasan_add_host(struct sdhci_arasan_data *sdhci_arasan)
->         if (dma64)
->                 cq_host->caps |= CQHCI_TASK_DESC_SZ_128;
->
-> -       ret = cqhci_init(cq_host, host->mmc, dma64);
-> +       ret = cqhci_init(cq_host, host->mmc, dma64, false);
->         if (ret)
->                 goto cleanup;
->
-> diff --git a/drivers/mmc/host/sdhci-pci-core.c b/drivers/mmc/host/sdhci-pci-core.c
-> index c359f867df0a..6f6cae6355a7 100644
-> --- a/drivers/mmc/host/sdhci-pci-core.c
-> +++ b/drivers/mmc/host/sdhci-pci-core.c
-> @@ -964,7 +964,7 @@ static int glk_emmc_add_host(struct sdhci_pci_slot *slot)
->         if (dma64)
->                 cq_host->caps |= CQHCI_TASK_DESC_SZ_128;
->
-> -       ret = cqhci_init(cq_host, host->mmc, dma64);
-> +       ret = cqhci_init(cq_host, host->mmc, dma64, false);
->         if (ret)
->                 goto cleanup;
->
-> diff --git a/drivers/mmc/host/sdhci-pci-gli.c b/drivers/mmc/host/sdhci-pci-gli.c
-> index 633a8ee8f8c5..6917ba339aa9 100644
-> --- a/drivers/mmc/host/sdhci-pci-gli.c
-> +++ b/drivers/mmc/host/sdhci-pci-gli.c
-> @@ -908,7 +908,7 @@ static int gl9763e_add_host(struct sdhci_pci_slot *slot)
->         if (dma64)
->                 cq_host->caps |= CQHCI_TASK_DESC_SZ_128;
->
-> -       ret = cqhci_init(cq_host, host->mmc, dma64);
-> +       ret = cqhci_init(cq_host, host->mmc, dma64, false);
->         if (ret)
->                 goto cleanup;
->
-> diff --git a/drivers/mmc/host/sdhci-tegra.c b/drivers/mmc/host/sdhci-tegra.c
-> index bff084f178c9..f98a468e8f43 100644
-> --- a/drivers/mmc/host/sdhci-tegra.c
-> +++ b/drivers/mmc/host/sdhci-tegra.c
-> @@ -1620,7 +1620,7 @@ static int sdhci_tegra_add_host(struct sdhci_host *host)
->         if (dma64)
->                 cq_host->caps |= CQHCI_TASK_DESC_SZ_128;
->
-> -       ret = cqhci_init(cq_host, host->mmc, dma64);
-> +       ret = cqhci_init(cq_host, host->mmc, dma64, false);
->         if (ret)
->                 goto cleanup;
->
-> diff --git a/drivers/mmc/host/sdhci_am654.c b/drivers/mmc/host/sdhci_am654.c
-> index 7ef828942df3..8e7fbee70e16 100644
-> --- a/drivers/mmc/host/sdhci_am654.c
-> +++ b/drivers/mmc/host/sdhci_am654.c
-> @@ -568,7 +568,7 @@ static int sdhci_am654_cqe_add_host(struct sdhci_host *host)
->
->         host->mmc->caps2 |= MMC_CAP2_CQE;
->
-> -       return cqhci_init(cq_host, host->mmc, 1);
-> +       return cqhci_init(cq_host, host->mmc, 1, false);
->  }
->
->  static int sdhci_am654_get_otap_delay(struct sdhci_host *host,
-> --
-> 2.29.0
->
+>> +          minimum: 0
+>> +          maximum: 64
+>> +
+>>     clocks:
+>>       maxItems: 1
+>>   
+>> @@ -100,6 +120,8 @@ examples:
+>>          compatible = "qcom,coresight-tpda", "arm,primecell";
+>>          reg = <0x6004000 0x1000>;
+>>   
+>> +       qcom,dsb-element-size = <0 32>;
+>> +
+>>          clocks = <&aoss_qmp>;
+>>          clock-names = "apb_pclk";
+>>   
+> Best regards,
+> Krzysztof
+
+Best,
+
+Tao
+
