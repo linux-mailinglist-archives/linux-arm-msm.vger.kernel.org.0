@@ -2,119 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 90796682CD3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Jan 2023 13:44:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 281C0682CDA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Jan 2023 13:45:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231910AbjAaMog (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Jan 2023 07:44:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54388 "EHLO
+        id S231931AbjAaMpR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Jan 2023 07:45:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231917AbjAaMof (ORCPT
+        with ESMTP id S231926AbjAaMpQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Jan 2023 07:44:35 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0472B4B884
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 04:44:31 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id o18so4613870wrj.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 04:44:30 -0800 (PST)
+        Tue, 31 Jan 2023 07:45:16 -0500
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DFBB3B3D5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 04:45:15 -0800 (PST)
+Received: by mail-ej1-x62a.google.com with SMTP id qw12so25319125ejc.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 04:45:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20210112.gappssmtp.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=13nzaN0F+f/sYz2TUmotbNZznv3QFhLhfctCZvdaWMw=;
-        b=LzQuafCXiUu+/QVLuOx5+U472+tuIKY2ZoqVxBhNSMf1+0nTYu65UV++V4INo1WdLh
-         NyWEzpLR4IR7mlrKPrk932zeVkzFbqVtAhFR158sVE2A1F0+Edr9iSmRtaY0BI/+O7CO
-         65mVYDvDL1J6UgwfFJx9t4nxWofkcVaxPRzqmEIhkh5nPJM9wRnG26EQVTK0FqhkpLEa
-         OoPYssOcwDIVZ/YN9CMgYwmOdcoCqzBoP3N7o/o90MHnphM9p1P7K3nDmAduwpdVsbXA
-         aa6Yo40ZhJCs8VfFwWKOKLWbgg7RWcyJUWh3cwCGNSMlBFAmjZVI5310bnPgAfT9rpvu
-         cNrA==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=HIG4XCWjRacvl+h1hS8hIYQoTLHGrO/Gz0j3qRIlm64=;
+        b=WC9q9+AcVkB8YRxKL2W95jTF2dL4MjcIVw5SXWpMf/DDk5VRIe3q/jqP9dDxf/vNfm
+         kD3U7Hs6/64Ny0PlKw+FNVVJNSUP6VNCEaBg1FKC/zYYwGm1Ko5b15kaOG1mfHF0FX7n
+         JIzvt9nVvG+aEtGIP+l+4pPzRDx7o0G2uNyqlhPdyhNFBlXdKwghHRrzYlSdbJFkyxJ4
+         Eo5pCltNdFsegIQ62mXSdDjumO0ft68uaupd9x10bCesW0IFJrZWkVHXmz1Mgh2m4NPh
+         /s0+FHv5FtP/4k9hjYMJw/ay/BQA9B+NclSiyWHUy++DA6WiKb7LwboWN9QmosfRQ9iJ
+         0hSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=13nzaN0F+f/sYz2TUmotbNZznv3QFhLhfctCZvdaWMw=;
-        b=uDzBgxVqDarwIaONXdADkKdziWShcyUNCeS/vUOf0DpPQUG5ADTyGkUSk5KVABsY6B
-         fp6hsL696kiTvFXBr7WeTqSk/lC/jm+ZXKBcnC8fVgzrkovv6WJOabhnng2ACVOhpMkk
-         /mwnNgOKXT5FcRkMlIWiKTs1VB4yd9n9pPYRRzDNPJpHw8TVkDWrcg0chFA8G6DsYKNO
-         +jXtWkRYaADrIHyTzk//Mzs2YnvKGZb4qLgaoLlq7cRS2yqiqM75311j27NgngFqV23e
-         oa/86v4ef0a5fBtILKNvvhg8jUmBxoOmLiEDbAxMr81ZUH8AdlwmyyL9lc91FuA1C5Eh
-         7G/g==
-X-Gm-Message-State: AO0yUKVG7FvWt/xI8k5wMdfY10kl842RExMoJFPzgw9t7aZrhhRb5t1J
-        KNTiTqN2/NROUe9CLSuwJucNmuqxaoScI4ch
-X-Google-Smtp-Source: AK7set/j7xPrDGmbtp/qX4EpqTxjiUfqVFmdkLYAZw64K9V04dEjHh+gj+fF7FVSYTC/ycpetwe+pw==
-X-Received: by 2002:adf:ba07:0:b0:2bf:ecee:acc6 with SMTP id o7-20020adfba07000000b002bfeceeacc6mr7185523wrg.61.1675169069219;
-        Tue, 31 Jan 2023 04:44:29 -0800 (PST)
-Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:d566:ca83:9120:7d5])
-        by smtp.gmail.com with ESMTPSA id az19-20020adfe193000000b002bdc3f5945dsm1767262wrb.89.2023.01.31.04.44.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Jan 2023 04:44:28 -0800 (PST)
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH] dt-bindings: arm: qcom: add the sa8775p-ride board
-Date:   Tue, 31 Jan 2023 13:44:24 +0100
-Message-Id: <20230131124424.167827-1-brgl@bgdev.pl>
-X-Mailer: git-send-email 2.37.2
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=HIG4XCWjRacvl+h1hS8hIYQoTLHGrO/Gz0j3qRIlm64=;
+        b=WW5d6Tx7b1+WW216k+jJbkpbEsaZZS/4kfK8vEt747EaD62TbOMOMdatqZsC8iXHQF
+         wQbL6TCwX7cExPozBQDuSDuIQi05fArbeB0zpdg0Y906dPzDKrTNVuzLW/skZ2JvYZgr
+         Ob9k/zYNGJhcM+tuFgfFSkbBuUoX55hZjQUVUb3aRO2iUDfGdyiV1a2e7n6T3U9BhPJ6
+         HeU9tyPcUxj89xRE4/lxFmAlaPyke/SZbuzRTnPyxu1DO0Jmv3u1VlM3bknHMWaJXoOW
+         gXysz0anNlGXV/8uIS9gsYaGT1T3ReJl0HJjVRFyqRmBWrPHBTDwCTzKg9+8Wee7gXui
+         zZqQ==
+X-Gm-Message-State: AO0yUKVW/oR2gyY/bMHqHcU4vherpmOVThyWRX8WNK7y9NqzxItLAnvE
+        5NWpEQUd6xCRaOM3UPQRqOBPVQ==
+X-Google-Smtp-Source: AK7set82TTA740e3Z9R3mAUKNQBmbrXEzO4uR+swZlBIfH0iu+8ZyrzILJWos0jQfidYz4HDsCZSsQ==
+X-Received: by 2002:a17:906:d0c2:b0:878:5fdc:3850 with SMTP id bq2-20020a170906d0c200b008785fdc3850mr22855998ejb.48.1675169113959;
+        Tue, 31 Jan 2023 04:45:13 -0800 (PST)
+Received: from [192.168.1.101] (abyl20.neoplus.adsl.tpnet.pl. [83.9.31.20])
+        by smtp.gmail.com with ESMTPSA id i4-20020a170906264400b0084d35ffbc20sm8372561ejc.68.2023.01.31.04.45.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 31 Jan 2023 04:45:13 -0800 (PST)
+Message-ID: <1a840d88-e5b1-711c-b980-f57620c54472@linaro.org>
+Date:   Tue, 31 Jan 2023 13:45:12 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH] arm64: dts: qcom: sdm845-db845c: Mark cont splash memory
+ region as reserved
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     Amit Pundir <amit.pundir@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dt <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+References: <20230124182857.1524912-1-amit.pundir@linaro.org>
+ <39751511-3f06-7c39-9c21-208d4c272113@linaro.org>
+ <CAA8EJppLBuA08hkqTrZx_wwbtCxK9sAjv48c9_DxgPENgo7a8Q@mail.gmail.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <CAA8EJppLBuA08hkqTrZx_wwbtCxK9sAjv48c9_DxgPENgo7a8Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Document the sa8775p SoC and its reference board: sa8775p-ride.
 
-Link: https://lore.kernel.org/linux-arm-msm/20230131124026.167281-1-brgl@bgdev.pl/
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
- Documentation/devicetree/bindings/arm/qcom.yaml | 7 +++++++
- 1 file changed, 7 insertions(+)
+On 31.01.2023 12:06, Dmitry Baryshkov wrote:
+> On Tue, 31 Jan 2023 at 12:54, Bryan O'Donoghue
+> <bryan.odonoghue@linaro.org> wrote:
+>>
+>> On 24/01/2023 18:28, Amit Pundir wrote:
+>>> Put cont splash memory region under the reserved-memory
+>>> as confirmed by the downstream code as well.
+>>>
+>>> Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+>>> ---
+>>>   arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 8 ++++++++
+>>>   1 file changed, 8 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+>>> index f41c6d600ea8..2ae59432cbda 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+>>> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+>>> @@ -100,6 +100,14 @@ hdmi_con: endpoint {
+>>>               };
+>>>       };
+>>>
+>>> +     reserved-memory {
+>>> +             /* Cont splash region set up by the bootloader */
+>>> +             cont_splash_mem: framebuffer@9d400000 {
+>>> +                     reg = <0x0 0x9d400000 0x0 0x2400000>;
+>>> +                     no-map;
+>>> +             };
+>>> +     };
+>>> +
+>>>       lt9611_1v8: lt9611-vdd18-regulator {
+>>>               compatible = "regulator-fixed";
+>>>               regulator-name = "LT9611_1V8";
+>>
+>> Doesn't this mean we loose 0x2400000 of DRAM for all rb3 platforms
+>> though ? About what 37 megabytes.. ?
+> 
+> I think this memory is further used for display memory allocation. So
+> we are not loosing it, but dedicating it to the framebuffer memory.
+Not exactly, to do so, you'd have to use the memory-region property
+with mdss, which nobody does. Otherwise it's just a hole for Linux.
 
-diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index 22553637c519..6709e64a4480 100644
---- a/Documentation/devicetree/bindings/arm/qcom.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -49,6 +49,7 @@ description: |
-         qru1000
-         sa8155p
-         sa8540p
-+        sa8775p
-         sc7180
-         sc7280
-         sc8180x
-@@ -89,6 +90,7 @@ description: |
-         liquid
-         mtp
-         qrd
-+        ride
-         sbc
-         x100
- 
-@@ -805,6 +807,11 @@ properties:
-               - qcom,sa8540p-ride
-           - const: qcom,sa8540p
- 
-+      - items:
-+          - enum:
-+              - qcom,sa8775p-ride
-+          - const: qcom,sa8775p
-+
-       - items:
-           - enum:
-               - google,cheza
--- 
-2.37.2
-
+Konrad
+> 
+> 
