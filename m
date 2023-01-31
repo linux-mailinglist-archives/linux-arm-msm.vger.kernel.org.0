@@ -2,114 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9EE2E682B56
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Jan 2023 12:21:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E9FB1682BA2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Jan 2023 12:40:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230007AbjAaLVa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Jan 2023 06:21:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55762 "EHLO
+        id S231364AbjAaLkU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Jan 2023 06:40:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229742AbjAaLV3 (ORCPT
+        with ESMTP id S230033AbjAaLkT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Jan 2023 06:21:29 -0500
-Received: from mail-4022.proton.ch (mail-4022.proton.ch [185.70.40.22])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34E351EBFC
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 03:21:28 -0800 (PST)
-Date:   Tue, 31 Jan 2023 11:21:18 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=emersion.fr;
-        s=protonmail; t=1675164085; x=1675423285;
-        bh=wMBxUbNSUDFZW+gyeVupAV5mIR5Os1XJkplKbhfwl7U=;
-        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-         Message-ID:BIMI-Selector;
-        b=fHhrgFKacSy8/HkcjtkjcqUrBWOOhbn7uLoyY7iOWHVs6PdYT9+7bZvvWBqmbBLam
-         9gjtJResaOf1tQH8ucrULnxH+UdolwsPeXyKUZLCJj/05bjvJwvvcgBqPtEMtlZ52a
-         G8ntIHJ7AOnfaA6Fp9krpbki+QvtZkL7z1SEjOvtPV31jx3fhOPTz/+ldX2cGQkvSW
-         Y9T4TB5VCrq2G4JqZ7psVnhpid0HHreAzJxopn/mUKM0ynPb0rRUYqfbIfDj8WIC+Y
-         d2kdh6gx52/mKvj6vmFYOMXetizWVuQLE67KqpCYj2WB8JKycbgiNBQlRIfza5hA/u
-         jP6b6btR4se4g==
-To:     Pekka Paalanen <ppaalanen@gmail.com>
-From:   Simon Ser <contact@emersion.fr>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        seanpaul@chromium.org, swboyd@chromium.org,
-        quic_abhinavk@quicinc.com, daniel.vetter@ffwll.ch,
-        laurent.pinchart@ideasonboard.com, sebastian.wick@redhat.com,
-        wayland-devel@lists.freedesktop.org, ville.syrjala@linux.intel.com
-Subject: Re: [RFC PATCH v3 0/3] Support for Solid Fill Planes
-Message-ID: <x3f8jyn_QDj34hYn9rgumw2uhFTpWzOw2E-715WYVOfwNOpthv26sefM6ePtwqbuHH54ATupqQzzz9qIWqAbDvMpb06bhdiU5BJlMjsaCdo=@emersion.fr>
-In-Reply-To: <20230131131326.75b43152@eldfell>
-References: <20230104234036.636-1-quic_jesszhan@quicinc.com> <Y7a1hCmsvJHKdW1Y@phenom.ffwll.local> <58caf08c-3a02-82ce-4452-8ae7f22f373d@quicinc.com> <CAA8EJppnAmN6+S-emEfXJEc1iVf+DjeLBmCQpGd-nRY2M2AAQQ@mail.gmail.com> <Y7hrWDpg8msuefgZ@phenom.ffwll.local> <CAA8EJppoejPPNhu3eHBc_vsstHvEEwYx67HZLo8+4W3K-gHkag@mail.gmail.com> <20230131112527.32ab8ba5@eldfell> <9Q0ano1jjZ1LTNWaVcVkDp0-jsTSUJKoNrKwvpGpIuejUSB33DK-uOpeLmyMbbk6tdfWG8RS83AGyB--EPEHqJe5shq6RC_gVpPLR7sUScY=@emersion.fr> <20230131131326.75b43152@eldfell>
-Feedback-ID: 1358184:user:proton
+        Tue, 31 Jan 2023 06:40:19 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AF6D59DC;
+        Tue, 31 Jan 2023 03:40:18 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 1AD3A614CE;
+        Tue, 31 Jan 2023 11:40:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEFB6C433EF;
+        Tue, 31 Jan 2023 11:40:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1675165217;
+        bh=fpVdmUsizy21lgvSqpax4jkq48QkKwIQbejaACB1vKE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=R3ZxQFZuTN8z6yWlWMEhMJ5fx9HoxiWNCOpxTJlaGzug/OST5NPe7ynhkK2FTXIFY
+         GOQfAZaeCdhvBgjVvKymAmOjH+lB/PYbcINkzl4PoaWNR1lQdgZ76373hQFxLIUr/T
+         Exe6YHyRk9WzvOi/ssPSKbC2pic9/o+inpzUeEJCgEjVb/gMMkdfjD9xDlHEAQYAcz
+         ktZ+nrlqnETS9t0zzme0zWfX/9BwB5RQZORl0Q3F6CaDd4IBIa+FxtJ5jtwNggTd38
+         E6NK51YzqIVw4r+9SjyEu42UKh5ywrFUnSnqqh3T+iCXix+JREe6MFEaeGf+pByprJ
+         m+YPvoun1VOKA==
+Date:   Tue, 31 Jan 2023 13:40:13 +0200
+From:   Leon Romanovsky <leon@kernel.org>
+To:     Alex Elder <elder@linaro.org>
+Cc:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com, caleb.connolly@linaro.org, mka@chromium.org,
+        evgreen@chromium.org, andersson@kernel.org,
+        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
+        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
+        elder@kernel.org, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net-next 0/8] net: ipa: remaining IPA v5.0 support
+Message-ID: <Y9j+Ha5t+DSB+rRm@unreal>
+References: <20230130210158.4126129-1-elder@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230130210158.4126129-1-elder@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tuesday, January 31st, 2023 at 12:13, Pekka Paalanen <ppaalanen@gmail.co=
-m> wrote:
+On Mon, Jan 30, 2023 at 03:01:50PM -0600, Alex Elder wrote:
+> This series includes almost all remaining IPA code changes required
+> to support IPA v5.0.  IPA register definitions and configuration
+> data for IPA v5.0 will be sent later (soon).  Note that the GSI
+> register definitions still require work.  GSI for IPA v5.0 supports
+> up to 256 (rather than 32) channels, and this changes the way GSI
+> register offsets are calculated.  A few GSI register fields also
+> change.
+> 
+> The first patch in this series increases the number of IPA endpoints
+> supported by the driver, from 32 to 36.  The next updates the width
+> of the destination field for the IP_PACKET_INIT immediate command so
+> it can represent up to 256 endpoints rather than just 32.  The next
+> adds a few definitions of some IPA registers and fields that are
+> first available in IPA v5.0.
+> 
+> The next two patches update the code that handles router and filter
+> table caches.  Previously these were referred to as "hashed" tables,
+> and the IPv4 and IPv6 tables are now combined into one "unified"
+> table.  The sixth and seventh patches add support for a new pulse
+> generator, which allows time periods to be specified with a wider
+> range of clock resolution.  And the last patch just defines two new
+> memory regions that were not previously used.
+> 
+> 					-Alex
+> 
+> Alex Elder (8):
+>   net: ipa: support more endpoints
+>   net: ipa: extend endpoints in packet init command
+>   net: ipa: define IPA v5.0+ registers
+>   net: ipa: update table cache flushing
+>   net: ipa: support zeroing new cache tables
+>   net: ipa: greater timer granularity options
+>   net: ipa: support a third pulse register
+>   net: ipa: define two new memory regions
+> 
 
-> On Tue, 31 Jan 2023 10:06:39 +0000
-> Simon Ser <contact@emersion.fr> wrote:
->=20
-> > On Tuesday, January 31st, 2023 at 10:25, Pekka Paalanen <ppaalanen@gmai=
-l.com> wrote:
-> >=20
-> > > indeed, what about simply using a 1x1 framebuffer for real? Why was t=
-hat
-> > > approach rejected? =20
-> >=20
-> > Ideally we don't want to allocate any GPU memory for the solid-fill
-> > stuff. And if we special-case 1x1 FB creation to not be backed by real
-> > GPU memory then we hit several situations where user-space expects a
-> > real FB but there isn't: for instance, GETFB2 converts from FB object
-> > ID to GEM handles. Even if we make GETFB2 fail and accept that this
-> > breaks user-space, then there is no way for user-space to recover the
-> > FB color for flicker-free transitions and such.
-> >=20
-> > This is all purely from a uAPI PoV, completely ignoring the potential
-> > issues with the internal kernel abstractions which might not be suitabl=
-e
-> > for this either.
->=20
-> I mean a real 1x1 buffer: a dumb buffer.
->=20
-> It would be absolutely compatible with anything existing, because it is
-> a real FB. As a dumb buffer it would be trivial to write into and read
-> out. As 1x1 it would be tiny (one page?). Even if something needs to
-> raw-access uncached memory over 33 MHz PCI bus or whatever the worst
-> case is, it's just one pixel, so it's fast enough, right? And it only
-> needs to be read once when set, like USB display drivers do. The driver
-> does not need to manually apply any color operations, because none are
-> supported in this special case.
->=20
-> One can put all these limitations and even pixel format in the plane
-> property that tells userspace that a 1x1 FB works here.
->=20
-> To recap, the other alternatives under discussion I see right now are:
->=20
-> - this proposal of dedicated fill color property
-> - stuffing something new into FB_ID property
->=20
-> There is also the question of other kinds of plane content sources like
-> live camera feeds where userspace won't be shovelling each frame
-> individually like we do now.
->=20
-> 1x1 dumb buffer is not as small and lean as a dedicated fill color
-> property, but the UAPI design questions seem to be much less. What's
-> the best trade-off and for whom?
-
-By "real memory" yes I mean the 1 page.
-
-Using a real buffer also brings back other discussions, e.g. the one about
-which pixel formats to accept.
+Thanks,
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
