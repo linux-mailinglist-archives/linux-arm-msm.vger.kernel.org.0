@@ -2,75 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8CD9E682CBD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Jan 2023 13:38:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8350A682CC3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Jan 2023 13:40:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231678AbjAaMin (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Jan 2023 07:38:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51188 "EHLO
+        id S231305AbjAaMk1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Jan 2023 07:40:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52030 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231588AbjAaMim (ORCPT
+        with ESMTP id S230207AbjAaMk1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Jan 2023 07:38:42 -0500
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 313BF40FE
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 04:38:41 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id hx15so21638328ejc.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 04:38:41 -0800 (PST)
+        Tue, 31 Jan 2023 07:40:27 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EF8D4696
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 04:40:25 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id a3so7379848wrt.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 04:40:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=CAwB84/ZLTKABeybjLHE8x7NDspYcIkJgFYz/67K4gc=;
-        b=chcRZipYoaLZqFyu8QtBoDIK4eDRDkKc87Ye/C504U3KX+pu3Rid+dR3sIfQCnnr1I
-         k1p0K42YK3qTbpwcXzw0RVhXiN7vY5lDWp7mM3kHqFRO9zy+gbpUSYtNW2OfCQ4ya6V5
-         ixAvVthPzBUZrDyDmq15ylsDPsfVeUHUSPcfIWXCwiKlnmkJhD3Mi9MgnTZY9hZT37lM
-         UGgC/e5xNokrtn3rGoT05oj+Zo7ikaTppjSvS/7dEyZG3/Yk4c6qkxcSZBbKIvzcm+gm
-         /VwTLbRB4aMChhmiJNo3tuZUoSqcA/IoHikVvTj5orSqfHjPXtc38mQqrWQKHSjxS9WC
-         hTKw==
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=km5bb+J2n8O2YGZgnVojQpP73/T1V6fvTyMDCssAh/Y=;
+        b=evrjlELfBbDKVmmpYnV1gLNYkAtwsJZ5TwEcGsLVrsGBuV7xHO2nQXaB5p2FpknLaU
+         ANTU+bkLM0a0XxgBxdcsyMbCFMwt61DxN1cgtPST1NmkJcEx/KL+b4cYlWFhYAjvgi7j
+         0ehnfnJRi04fe+TdbllnZNxYxS98WLT9urj6BD2cNFD/zHyPh4DL2NkT8dtL6tBgv8Sb
+         Caa1Ocu1U8Ur9/tzZAWC9zttXyPjL6z4XaQfrSjTfQz5fPb/tTpQYul7dHj0rQs5vh5B
+         wGH6XcMac7vjml+JDQHP1yCbv50SK3Y0NWtvJsbWKa1dOGolOo0DKyn7u25g3G5p/UGT
+         im4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CAwB84/ZLTKABeybjLHE8x7NDspYcIkJgFYz/67K4gc=;
-        b=h/Svks93lwf8QOzt+ebyrA23q1lCyQikyEitPLTetVA/BWlUw93aOhzt/hQqOxcDTS
-         M1Y8n29NPVYM2ChdDvUjqH1R0yEG11CrS4HA6sYXubfzwv5R3vO5ksvNjpsHbl7QnSOc
-         0R9bC/j8FQUOMWzpi60YTm3nPEOI4sDtMjnVGHrwa2R6CsTFN6IYyT4MDyLBOM03pbJK
-         hokyd9p30/+h2qg2w8uKt2dD9sUXLDgAqjza8I2LbKJHYVJUWYSsZ2CcBAByc1cpycb7
-         7wZajNtmBM7lG0MZxA6G1ujIgfLKk0cVmCzUyca0lNrh+FzpHYnxbRPIq8yfU8+ek+Su
-         AP8Q==
-X-Gm-Message-State: AO0yUKVaFgLvJhA7JYhYRUX5AXR3A32eb6ap9qbOul/rdwBy4h0ltAxr
-        NWAD3qy2LQEN7HVuU3m0RR7rMg==
-X-Google-Smtp-Source: AK7set//+6SOcbEvweNAhtm7cKrmpGTRGAFTiADDWw09PueMUKZRe3XT1Rbro1Vh+6lBe83Na++5PA==
-X-Received: by 2002:a17:906:28d2:b0:87d:f29:3a14 with SMTP id p18-20020a17090628d200b0087d0f293a14mr15839280ejd.68.1675168719766;
-        Tue, 31 Jan 2023 04:38:39 -0800 (PST)
-Received: from [192.168.1.101] (abyl20.neoplus.adsl.tpnet.pl. [83.9.31.20])
-        by smtp.gmail.com with ESMTPSA id kv11-20020a17090778cb00b0088a2397cb2csm2310925ejc.143.2023.01.31.04.38.38
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=km5bb+J2n8O2YGZgnVojQpP73/T1V6fvTyMDCssAh/Y=;
+        b=icneY8mhE+YtOzb44FyYScCcOpMNHNnXKD9DtCNKfvYn4O8Gc0eMhtYqOOu8Mhz6sP
+         rcqFQG2aj8WbfcnMpYPUNgp++matD5gd6+oDmDKssSAI8Q+FUBFIRzslhFGrBdRocErf
+         6zNt8pWVtNTPaFGQ8SwAr63g3Qxa/g5uT5YBRSWTlzeD1jcqEHjPq2RI6yX2igFCoXPW
+         cH1xg1lMg5cMwbP+N0LBKeJhLPHESVWdlniJkAm93Xv+Vs0O1JmHhuQcETk8pqNhZKTf
+         L267XBXmAJSLtK756dvrIA0sibxfMaGQh4AZcDO+4oxKGUblWuPaqD34tEEoc9+bS444
+         yD0g==
+X-Gm-Message-State: AFqh2koTQIO118S9K5s5GIqQu0yMOHeIwDoR8UL4avqOxwvM18G1o0/K
+        3FcbmBrXcph4A8RV9DYF26J+YA==
+X-Google-Smtp-Source: AMrXdXsK9hPuDm5YrvFlpCBOEcv36CNjIasOgd5xdB/1AiWzSTRRRNDTXialllYdQYIdLgfjcACl5A==
+X-Received: by 2002:adf:e9d2:0:b0:2bd:dca8:a4b with SMTP id l18-20020adfe9d2000000b002bddca80a4bmr45525489wrn.63.1675168823731;
+        Tue, 31 Jan 2023 04:40:23 -0800 (PST)
+Received: from [192.168.0.30] (cpc76484-cwma10-2-0-cust274.7-3.cable.virginm.net. [82.31.201.19])
+        by smtp.gmail.com with ESMTPSA id z14-20020a5d4c8e000000b002bfc2d0eff0sm14538379wrs.47.2023.01.31.04.40.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 31 Jan 2023 04:38:39 -0800 (PST)
-Message-ID: <d5a37ebd-6614-be91-f500-46ba7be1bed6@linaro.org>
-Date:   Tue, 31 Jan 2023 13:38:37 +0100
+        Tue, 31 Jan 2023 04:40:23 -0800 (PST)
+Message-ID: <bc54d9ea-aaa5-eea6-a954-807b3451d070@linaro.org>
+Date:   Tue, 31 Jan 2023 12:40:21 +0000
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.0
-Subject: Re: [PATCH v4 8/8] clk: qcom: Add GPU clock controller driver for
- SM6115
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org
-References: <20230130235926.2419776-1-konrad.dybcio@linaro.org>
- <20230130235926.2419776-9-konrad.dybcio@linaro.org>
- <550dd5e8-6238-0e48-bac7-7c9b6e67cb00@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <550dd5e8-6238-0e48-bac7-7c9b6e67cb00@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH net-next] net: ipa: use dev PM wakeirq handling
+Content-Language: en-GB, en-US
+To:     Alex Elder <elder@linaro.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>
+Cc:     elder@kernel.org, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org
+References: <20230127202758.2913612-1-caleb.connolly@linaro.org>
+ <8deaed16-385b-6108-e971-0168df2b3c2f@linaro.org>
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+Organization: Linaro
+In-Reply-To: <8deaed16-385b-6108-e971-0168df2b3c2f@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -84,61 +84,82 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 31.01.2023 10:25, Dmitry Baryshkov wrote:
-> On 31/01/2023 01:59, Konrad Dybcio wrote:
->> Add support for the GPU clock controller found on SM6115.
+On 1/28/23 13:47, Alex Elder wrote:
+> On 1/27/23 2:27 PM, Caleb Connolly wrote:
+>> Replace the enable_irq_wake() call with one to dev_pm_set_wake_irq()
+>> instead. This will let the dev PM framework automatically manage the
+>> the wakeup capability of the ipa IRQ and ensure that userspace requests
+>> to enable/disable wakeup for the IPA via sysfs are respected.
 >>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>   drivers/clk/qcom/Kconfig        |   9 +
->>   drivers/clk/qcom/Makefile       |   1 +
->>   drivers/clk/qcom/gpucc-sm6115.c | 512 ++++++++++++++++++++++++++++++++
->>   3 files changed, 522 insertions(+)
->>   create mode 100644 drivers/clk/qcom/gpucc-sm6115.c
+>> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
 > 
-> [skipped]
-> 
->> +static int gpu_cc_sm6115_probe(struct platform_device *pdev)
->> +{
->> +    struct regmap *regmap;
->> +    unsigned int value, mask;
->> +
->> +    regmap = qcom_cc_map(pdev, &gpu_cc_sm6115_desc);
->> +    if (IS_ERR(regmap))
->> +        return PTR_ERR(regmap);
->> +
->> +    clk_alpha_pll_configure(&gpu_cc_pll0, regmap, &gpu_cc_pll0_config);
->> +    clk_alpha_pll_configure(&gpu_cc_pll1, regmap, &gpu_cc_pll1_config);
->> +
->> +    /* Recommended WAKEUP/SLEEP settings for the gpu_cc_cx_gmu_clk */
->> +    mask = CX_GMU_CBCR_WAKE_MASK << CX_GMU_CBCR_WAKE_SHIFT;
->> +    mask |= CX_GMU_CBCR_SLEEP_MASK << CX_GMU_CBCR_SLEEP_SHIFT;
->> +    value = 0xf << CX_GMU_CBCR_WAKE_SHIFT | 0xf << CX_GMU_CBCR_SLEEP_SHIFT;
->> +    regmap_update_bits(regmap, gpu_cc_cx_gmu_clk.clkr.enable_reg, mask, value);
->> +
->> +    /* Set up PERIPH/MEM retain on the GPU core clock */
->> +    regmap_update_bits(regmap, gpu_cc_gx_gfx3d_clk.halt_reg,
->> +               (BIT(14) | BIT(13)), (BIT(14) | BIT(13)));
-> 
-> But you have your new helpers to set these values, don't you?
-Welp, that's what I get for managing 3 almost-identical drivers
-at once ;) Will fix.
+> Looks OK to me.  Can you say something about how you
+> tested this, and what the result was?  Thanks.
 
-Konrad
+Ah yeah. This was tested on the SDM845 (IPA 3.5.1) based SHIFT6mq in the 
+UK with an EE SIM card.
+
+All network connections were disabled except for mobile data which was 
+configured using ModemManager. Then I set up a basic TCP server using 
+netcat on a public IP address and connected to it from the device.
+
+It is then possible to validate that the wakeirq fires and the interrupt 
+is handled correctly by putting the device into s2idle sleep (echo mem > 
+/sys/power/state) and typing some data into the server terminal.
+
+Then I disabled the wakeup as follows and repeated the test to ensure 
+that the device would no longer wake up on incoming data, and that the 
+data was received when the device resumes.
+
+echo disabled > /sys/devices/platform/soc\@0/1e40000.ipa/power/wakeup
+
 > 
->> +
->> +    return qcom_cc_really_probe(pdev, &gpu_cc_sm6115_desc, regmap);
->> +}
->> +
->> +static struct platform_driver gpu_cc_sm6115_driver = {
->> +    .probe = gpu_cc_sm6115_probe,
->> +    .driver = {
->> +        .name = "sm6115-gpucc",
->> +        .of_match_table = gpu_cc_sm6115_match_table,
->> +    },
->> +};
->> +module_platform_driver(gpu_cc_sm6115_driver);
->> +
->> +MODULE_DESCRIPTION("QTI GPU_CC SM6115 Driver");
->> +MODULE_LICENSE("GPL");
+>                      -Alex
 > 
+>> ---
+>>   drivers/net/ipa/ipa_interrupt.c | 10 ++++------
+>>   1 file changed, 4 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/drivers/net/ipa/ipa_interrupt.c 
+>> b/drivers/net/ipa/ipa_interrupt.c
+>> index c19cd27ac852..9a1153e80a3a 100644
+>> --- a/drivers/net/ipa/ipa_interrupt.c
+>> +++ b/drivers/net/ipa/ipa_interrupt.c
+>> @@ -22,6 +22,7 @@
+>>   #include <linux/types.h>
+>>   #include <linux/interrupt.h>
+>>   #include <linux/pm_runtime.h>
+>> +#include <linux/pm_wakeirq.h>
+>>   #include "ipa.h"
+>>   #include "ipa_reg.h"
+>> @@ -269,9 +270,9 @@ struct ipa_interrupt *ipa_interrupt_config(struct 
+>> ipa *ipa)
+>>           goto err_kfree;
+>>       }
+>> -    ret = enable_irq_wake(irq);
+>> +    ret = dev_pm_set_wake_irq(dev, irq);
+>>       if (ret) {
+>> -        dev_err(dev, "error %d enabling wakeup for \"ipa\" IRQ\n", ret);
+>> +        dev_err(dev, "error %d registering \"ipa\" IRQ as wakeirq\n", 
+>> ret);
+>>           goto err_free_irq;
+>>       }
+>> @@ -289,11 +290,8 @@ struct ipa_interrupt *ipa_interrupt_config(struct 
+>> ipa *ipa)
+>>   void ipa_interrupt_deconfig(struct ipa_interrupt *interrupt)
+>>   {
+>>       struct device *dev = &interrupt->ipa->pdev->dev;
+>> -    int ret;
+>> -    ret = disable_irq_wake(interrupt->irq);
+>> -    if (ret)
+>> -        dev_err(dev, "error %d disabling \"ipa\" IRQ wakeup\n", ret);
+>> +    dev_pm_clear_wake_irq(dev);
+>>       free_irq(interrupt->irq, interrupt);
+>>       kfree(interrupt);
+>>   }
+> 
+
+-- 
+--
+Kind Regards,
+Caleb (they/them)
