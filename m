@@ -2,202 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F052968236B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Jan 2023 05:39:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EEFEE68238B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Jan 2023 05:52:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231126AbjAaEjv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Jan 2023 23:39:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43018 "EHLO
+        id S229518AbjAaEwg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Jan 2023 23:52:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229956AbjAaEjD (ORCPT
+        with ESMTP id S229460AbjAaEwf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Jan 2023 23:39:03 -0500
-Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81EE93B666
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jan 2023 20:38:25 -0800 (PST)
-Received: by mail-oi1-x236.google.com with SMTP id bx13so6109268oib.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jan 2023 20:38:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eVFjUAudhz48B1PG37PF0oDcvMhXp172jIwuWPlj7hM=;
-        b=WxKR1qFCYmq75yM8ksUFDRSsFWXpnPcTkqYKr/NifhNqXlx+tnPSHWA/IqxgveYdHa
-         qcGsxnQdHae2UyazsMBt6XhYQAy+fGBPn7rR7N7t/PpyTTwKbA9KYbRrtYpHMHPwQYxa
-         I0wYi3HqYWr6l8ejdFryo9/Pbe0UW5pbpP2y8uuz58a0TqUgGOyLuUy2euTmy2MlqMxW
-         4p/gnpw+B40IBjEY6IGQ2ODiCaNOs1jroe7eP73Wh3LtVg1IR2122ooawoFA5p85TRfA
-         BC3EcovRFWsbDd43Kkv/4P++7ZcZxQEPQ+rgmTXuE0wkAaiWHLJFyiqZsDV7orw2Dwi9
-         g8Vw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=eVFjUAudhz48B1PG37PF0oDcvMhXp172jIwuWPlj7hM=;
-        b=pAgZi0kYOLjAgPXLeKGbPz5ZrDOSQpj/x+D4U13D9QF5k928Z/Y0w617XmGGeGuMAD
-         k4tjnBddByWZQ2HRIEXcLVN5si/7m5BbpxpL1LkpAzVzK4fjWPlFp57g9DAgSVr/c6Eb
-         Gphm17na9SG244SBwN1sdJA58iCef82IXxURs30tRs2jV+w1OuTrgtaqnFiFQO+JLyMU
-         Z2cniE3yenX9R3JviTP37f1umU2TqIggW0V/M/7FxBr3/x3Nqtli9R3MpjzMSZ0X1va4
-         //iulSaD9PJhBDsMuF9Ov8JXlSWWMuyPVmX7+0rWjfwdTFTw+w3i39Q616oo8URZN8RP
-         X8YA==
-X-Gm-Message-State: AFqh2kr34laoEOEk10RekuqDxore7CUnFzGYdNjR+ixC9dWxGNYXIeAI
-        nF2LAH5XrGPr6WN26j4lmE+27w==
-X-Google-Smtp-Source: AMrXdXvaEIEHQxmGGUSLDqOZjf++5rSIBsjsT19PE0dlt7VSbc4D+DUnkT6Qp/lNws2gihhJ93yCeA==
-X-Received: by 2002:a05:6808:1247:b0:360:e643:7e27 with SMTP id o7-20020a056808124700b00360e6437e27mr30333622oiv.36.1675139904792;
-        Mon, 30 Jan 2023 20:38:24 -0800 (PST)
-Received: from localhost (23-118-233-243.lightspeed.snantx.sbcglobal.net. [23.118.233.243])
-        by smtp.gmail.com with ESMTPSA id u14-20020a056808150e00b0035418324b78sm4276083oiw.11.2023.01.30.20.38.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Jan 2023 20:38:24 -0800 (PST)
-From:   Steev Klimaszewski <steev@kali.org>
-To:     Steev Klimaszewski <steev@kali.org>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Sven Peter <sven@svenpeter.dev>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        Mark Pearson <markpearson@lenovo.com>
-Subject: [PATCH v2 4/4] arm64: dts: qcom: thinkpad-x13s: Add bluetooth
-Date:   Mon, 30 Jan 2023 22:38:16 -0600
-Message-Id: <20230131043816.4525-5-steev@kali.org>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230131043816.4525-1-steev@kali.org>
-References: <20230131043816.4525-1-steev@kali.org>
+        Mon, 30 Jan 2023 23:52:35 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 646B0CA0D;
+        Mon, 30 Jan 2023 20:52:33 -0800 (PST)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30V2tUb6014894;
+        Tue, 31 Jan 2023 04:52:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=awNgFRVp8lSxLrOJJUbczcUtxqgim8oex5qs0NUrYlc=;
+ b=HbaPJjJlJK9cIq12Ak959Yryw+knB/BCnZAkaiJMfr4Pv0YI2ub+mPFSsJAveoEtMdJD
+ GckupzK0SdNW+yVL3ngBYkWIvj6AVZPRQ5jgUF4vBB9GWOqoV44TXIyKNNl8xthHqi9b
+ Lt0DidIu/dppvdHucwd7nYf1j51W1KAhJE6DOq14xSYXrnq75KnLAOY/e5qj5oZRZDLn
+ Ml95IBxpApF0w+iuNtL3+4Ho+f/ryjeFCNaQ9D9lZdjFfETTv+Za14WX1hDinlgBhWAh
+ brr92IJq0KlXaJaBqotQjReUGnYmcXG4tOCvASWXiIsmmxX4Hb44rl/49FqsLVnMqqM5 Zg== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ncsdpwjmq-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 31 Jan 2023 04:52:29 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30V4qS99012120
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 31 Jan 2023 04:52:28 GMT
+Received: from [10.50.4.92] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 30 Jan
+ 2023 20:52:25 -0800
+Message-ID: <99c91609-61ce-fa30-96b1-ba45e9fe1e1e@quicinc.com>
+Date:   Tue, 31 Jan 2023 10:22:22 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH V5] clk: qcom: clk-alpha-pll: Add support for Stromer PLLs
+To:     Stephen Boyd <sboyd@kernel.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <mturquette@baylibre.com>
+CC:     Varadarajan Narayanan <quic_varada@quicinc.com>,
+        Sricharan R <quic_srichara@quicinc.com>
+References: <20230120082631.22053-1-quic_kathirav@quicinc.com>
+ <2987f2ce9377bd17d1cd85fce4bd3c28.sboyd@kernel.org>
+Content-Language: en-US
+From:   Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+In-Reply-To: <2987f2ce9377bd17d1cd85fce4bd3c28.sboyd@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: gE-cOFG_4Zp0Ag0GGlkUZwTgc3dNmcuP
+X-Proofpoint-ORIG-GUID: gE-cOFG_4Zp0Ag0GGlkUZwTgc3dNmcuP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-01-31_02,2023-01-30_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ lowpriorityscore=0 bulkscore=0 adultscore=0 suspectscore=0 mlxlogscore=737
+ spamscore=0 clxscore=1015 impostorscore=0 mlxscore=0 phishscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301310043
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Signed-off-by: Steev Klimaszewski <steev@kali.org>
----
- .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 68 +++++++++++++++++++
- 1 file changed, 68 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-index f936b020a71d..951438ac5946 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -24,6 +24,8 @@ / {
- 	aliases {
- 		i2c4 = &i2c4;
- 		i2c21 = &i2c21;
-+		serial0 = &uart17;
-+		serial1 = &uart2;
- 	};
- 
- 	wcd938x: audio-codec {
-@@ -712,6 +714,32 @@ &qup0 {
- 	status = "okay";
- };
- 
-+&uart2 {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&uart2_state>;
-+
-+	bluetooth {
-+		compatible = "qcom,wcn6855-bt";
-+
-+/*
-+		vddio-supply = <&vreg_s4a_1p8>;
-+		vddxo-supply = <&vreg_l7a_1p8>;
-+		vddrf-supply = <&vreg_l17a_1p3>;
-+		vddch0-supply = <&vreg_l25a_3p3>;
-+		vddch1-supply = <&vreg_l23a_3p3>;
-+*/
-+		max-speed = <3200000>;
-+
-+		enable-gpios = <&tlmm 133 GPIO_ACTIVE_HIGH>;
-+		swctrl-gpios = <&tlmm 132 GPIO_ACTIVE_HIGH>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&bt_en>;
-+	};
-+};
-+
- &qup1 {
- 	status = "okay";
- };
-@@ -720,6 +748,12 @@ &qup2 {
- 	status = "okay";
- };
- 
-+&uart17 {
-+	compatible = "qcom,geni-debug-uart";
-+
-+	status = "okay";
-+};
-+
- &remoteproc_adsp {
- 	firmware-name = "qcom/sc8280xp/LENOVO/21BX/qcadsp8280.mbn";
- 
-@@ -980,6 +1014,19 @@ hastings_reg_en: hastings-reg-en-state {
- &tlmm {
- 	gpio-reserved-ranges = <70 2>, <74 6>, <83 4>, <125 2>, <128 2>, <154 7>;
- 
-+	bt_en: bt-en-state {
-+		hstp-sw-ctrl {
-+			pins = "gpio132";
-+			function = "gpio";
-+		};
-+
-+		hstp-bt-en {
-+			pins = "gpio133";
-+			function = "gpio";
-+			drive-strength = <16>;
-+		};
-+	};
-+
- 	edp_reg_en: edp-reg-en-state {
- 		pins = "gpio25";
- 		function = "gpio";
-@@ -1001,6 +1048,27 @@ i2c4_default: i2c4-default-state {
- 		bias-disable;
- 	};
- 
-+	uart2_state: uart2-state {
-+		cts {
-+			pins = "gpio122";
-+			function = "qup2";
-+			bias-disable;
-+		};
-+
-+		rts-tx {
-+			pins = "gpio122", "gpio123";
-+			function = "qup2";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+
-+		rx {
-+			pins = "gpio124";
-+			function = "qup2";
-+			bias-pull-up;
-+		};
-+	};
-+
- 	i2c21_default: i2c21-default-state {
- 		pins = "gpio81", "gpio82";
- 		function = "qup21";
--- 
-2.39.0
+On 1/26/2023 2:59 AM, Stephen Boyd wrote:
+> Quoting Kathiravan Thirumoorthy (2023-01-20 00:26:31)
+>> From: Varadarajan Narayanan <quic_varada@quicinc.com>
+>>
+>> Add programming sequence support for managing the Stromer
+>> PLLs.
+>>
+>> Co-developed-by: Sricharan R <quic_srichara@quicinc.com>
+>> Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
+>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+>> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+>> ---
+> Reviewed-by: Stephen Boyd <sboyd@kernel.org>
+
+Thanks Stephen. Bjorn, is it possible to pick up this patch for v6.3?
+
+Thanks, Kathiravan T.
 
