@@ -2,136 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C42ED683962
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Jan 2023 23:34:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 488DA683A53
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 00:22:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229963AbjAaWed (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Jan 2023 17:34:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58028 "EHLO
+        id S232167AbjAaXWd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Jan 2023 18:22:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229613AbjAaWec (ORCPT
+        with ESMTP id S232159AbjAaXWc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Jan 2023 17:34:32 -0500
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6066113EB;
-        Tue, 31 Jan 2023 14:34:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1675204471; x=1706740471;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=D8gJi0ehG5WvTwectwLP//Bmc1IPekTGj1oNIj2Eicc=;
-  b=kYqXdS+tad65k8TxdjpmShBjc/tLDWJZf2mMhbdEfbpZujosdjsU1TI7
-   01RY/89bsWuqdmmltgsFACUkhVx5qDf8Rlnc1qQo9nXghrqGB3btGXVZ4
-   EJgbgXL0eZ8OC/GacOi8Qw/yLuFY9ViCV9t65NStrtVlGFRcepm9DcqNA
-   yEUeHeBYyr5Fvvnwfgv7LPMR6cXGtuf/XirIkNvbSi6abnm6viiGoQ8ip
-   4ap1TDcg0mk+3F4Pw3AxTQzSiLrmP+MCZAUp28WmElqT1vrzN9D8O+2PK
-   oy8gcskVMW15CcieCeTklckrQRSOdOOVsGicfDtiNiZXku9eiYccQzD8b
-   A==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10607"; a="315948019"
-X-IronPort-AV: E=Sophos;i="5.97,261,1669104000"; 
-   d="scan'208";a="315948019"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Jan 2023 14:34:31 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10607"; a="788619371"
-X-IronPort-AV: E=Sophos;i="5.97,261,1669104000"; 
-   d="scan'208";a="788619371"
-Received: from lkp-server01.sh.intel.com (HELO ffa7f14d1d0f) ([10.239.97.150])
-  by orsmga004.jf.intel.com with ESMTP; 31 Jan 2023 14:34:28 -0800
-Received: from kbuild by ffa7f14d1d0f with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1pMzCt-0004lK-2T;
-        Tue, 31 Jan 2023 22:34:27 +0000
-Date:   Wed, 1 Feb 2023 06:33:38 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        Tue, 31 Jan 2023 18:22:32 -0500
+Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9CC75649D;
+        Tue, 31 Jan 2023 15:22:31 -0800 (PST)
+Received: by mail-oi1-f178.google.com with SMTP id s124so14292671oif.1;
+        Tue, 31 Jan 2023 15:22:31 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=urnNCd4URXg4rozsY6uRpjkFdQjTtg7Q0jsgYorUKeI=;
+        b=Jjk2knwGnUUOY/4q6nIeQr5MFSDvTA3jURYHDyscoQtQ6zsyV7fFxxivfDEOsksZ3H
+         A/txXFZv2XLCZTfME/h/hNZHPf5LGt7xFPykCvDvb//Cnhh2yKLUNbyI1hYDmPIqC3RJ
+         Cp5m3GaRtuDknPr66jDoDe2G0v4Kl8ci3HCfI5b45aoSmq/XsOdlh1ZuwP0O7YBATQUZ
+         MJd9FSvyZCH4lbSeQRNGB2kqDvFI9NDYXcVB4rRq4UK36D1Wqvf4Ft5I6Xt2iZmWDEIn
+         uizEDRioYSFoF76rqK5p8HsObgdizZPCnNc0Z9KUIB//YL4FbSd0p1wrRLAELglEZ9UX
+         GBAw==
+X-Gm-Message-State: AO0yUKVvIA/sLbOTSvHDFhzS3HaNGruUF5xdldhDDomlz8MnxnB58Rfk
+        FG0KvNGc167gueupFp8WIw==
+X-Google-Smtp-Source: AK7set8VKbE+giXOgvwEkFnFPJqhvTpwEZvJuIW+z00jUVJQBwGz+tj6WYdFvE2Wi9xW42BxNwV9yg==
+X-Received: by 2002:a05:6808:124f:b0:378:53b:f56d with SMTP id o15-20020a056808124f00b00378053bf56dmr247614oiv.37.1675207351042;
+        Tue, 31 Jan 2023 15:22:31 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id m7-20020aca6507000000b003631fe1810dsm3597890oim.47.2023.01.31.15.22.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 31 Jan 2023 15:22:30 -0800 (PST)
+Received: (nullmailer pid 2138586 invoked by uid 1000);
+        Tue, 31 Jan 2023 23:22:29 -0000
+Date:   Tue, 31 Jan 2023 17:22:29 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Bartosz Golaszewski <brgl@bgdev.pl>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <quic_tdas@quicinc.com>
-Cc:     llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH 2/2] clk: qcom: gpucc-sdm845: fix clk_dis_wait being
- programmed for CX GDSC
-Message-ID: <202302010608.GDyw4Xuo-lkp@intel.com>
-References: <20230131092432.122711-2-dmitry.baryshkov@linaro.org>
+        Georgi Djakov <djakov@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH] dt-bindings: watchdog: qcom-wdt: add
+ qcom,apss-wdt-sa8775p compatible
+Message-ID: <20230131232229.GA2136940-robh@kernel.org>
+References: <20230130130756.144160-1-brgl@bgdev.pl>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230131092432.122711-2-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20230130130756.144160-1-brgl@bgdev.pl>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry,
+On Mon, Jan 30, 2023 at 02:07:56PM +0100, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> 
+> Add a compatible for the sa8775p platform's KPSS watchdog.
+> 
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> ---
+> Krzysztof: I'm now adding any link here as the v1 of the sa8775p DTS patch
+> did not use this compatible and v2 is still WiP.
+> 
+>  Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 
-I love your patch! Yet something to improve:
+I don't see the watchdog maintainers copied as they would normally apply 
+this.
 
-[auto build test ERROR on clk/clk-next]
-[also build test ERROR on linus/master v6.2-rc6 next-20230131]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Dmitry-Baryshkov/clk-qcom-gpucc-sdm845-fix-clk_dis_wait-being-programmed-for-CX-GDSC/20230131-172656
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git clk-next
-patch link:    https://lore.kernel.org/r/20230131092432.122711-2-dmitry.baryshkov%40linaro.org
-patch subject: [PATCH 2/2] clk: qcom: gpucc-sdm845: fix clk_dis_wait being programmed for CX GDSC
-config: arm64-randconfig-r016-20230130 (https://download.01.org/0day-ci/archive/20230201/202302010608.GDyw4Xuo-lkp@intel.com/config)
-compiler: clang version 16.0.0 (https://github.com/llvm/llvm-project 4196ca3278f78c6e19246e54ab0ecb364e37d66a)
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # install arm64 cross compiling tool for clang build
-        # apt-get install binutils-aarch64-linux-gnu
-        # https://github.com/intel-lab-lkp/linux/commit/8222d81144cbdf9b51ffe1ffc61e16b471456329
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Dmitry-Baryshkov/clk-qcom-gpucc-sdm845-fix-clk_dis_wait-being-programmed-for-CX-GDSC/20230131-172656
-        git checkout 8222d81144cbdf9b51ffe1ffc61e16b471456329
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm64 olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash drivers/clk/qcom/
-
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
-
-All errors (new ones prefixed by >>):
-
->> drivers/clk/qcom/gpucc-sdm845.c:122:3: error: field designator 'clk_dis_wait' does not refer to any field in type 'struct gdsc'; did you mean 'clk_dis_wait_val'?
-           .clk_dis_wait = 0x8,
-            ^~~~~~~~~~~~
-            clk_dis_wait_val
-   drivers/clk/qcom/gdsc.h:47:17: note: 'clk_dis_wait_val' declared here
-           unsigned int                    clk_dis_wait_val;
-                                           ^
-   1 error generated.
-
-
-vim +122 drivers/clk/qcom/gpucc-sdm845.c
-
-   118	
-   119	static struct gdsc gpu_cx_gdsc = {
-   120		.gdscr = 0x106c,
-   121		.gds_hw_ctrl = 0x1540,
- > 122		.clk_dis_wait = 0x8,
-   123		.pd = {
-   124			.name = "gpu_cx_gdsc",
-   125		},
-   126		.pwrsts = PWRSTS_OFF_ON,
-   127		.flags = VOTABLE,
-   128	};
-   129	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
+Rob
