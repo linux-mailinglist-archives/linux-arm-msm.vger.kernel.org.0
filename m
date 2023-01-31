@@ -2,150 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CB7B7682048
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Jan 2023 01:01:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B5AE68211D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Jan 2023 01:54:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231224AbjAaAA6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Jan 2023 19:00:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44508 "EHLO
+        id S229637AbjAaAyl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Jan 2023 19:54:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231296AbjAaAAw (ORCPT
+        with ESMTP id S229456AbjAaAyk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Jan 2023 19:00:52 -0500
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0DE62ED70;
-        Mon, 30 Jan 2023 16:00:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1675123220; x=1706659220;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=WUwUPxlnqbiRmgDhKOibNerjH9tu78jzKFyyYvm0Dns=;
-  b=ahNoGFSQZ6IVRlNnLiFYdmH1erqTcOlikz2ncAWDdt4F27oEV7rLg3W/
-   VHXVwTq/y3t5WRCKUjmAEG1Ly2MMrA4QyWEMPK0zmRENQsfNydwPAGZUz
-   E1/JWyyamNLFp50NDeVO5nLSVlxwI3RNiApIouMkFjOnTKJzn+dL7isO9
-   ryJ9jfZz/VYU9hdlOYYYu1ptcz+mRjgIHDcmGlsuPuD71LOmyeHRhHzit
-   glzqoTXBLP5JTDYacRXj4jmryGaatffYBIK3+UXcMqld6xxI1kgykD3Pn
-   jKETZB5o2lifY82gl3IH+fV6a5ZipIHkrSBhALYaU2nB33AUHHoGj1izx
-   A==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10606"; a="327726719"
-X-IronPort-AV: E=Sophos;i="5.97,259,1669104000"; 
-   d="scan'208";a="327726719"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Jan 2023 16:00:19 -0800
-X-IronPort-AV: E=McAfee;i="6500,9779,10606"; a="614227920"
-X-IronPort-AV: E=Sophos;i="5.97,259,1669104000"; 
-   d="scan'208";a="614227920"
-Received: from inuber-mobl5.amr.corp.intel.com (HELO [10.212.58.60]) ([10.212.58.60])
-  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Jan 2023 16:00:18 -0800
-Message-ID: <ebf8ebed-ef79-bf18-4635-360f916877a6@linux.intel.com>
-Date:   Mon, 30 Jan 2023 17:59:26 -0600
+        Mon, 30 Jan 2023 19:54:40 -0500
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF022233E6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jan 2023 16:54:38 -0800 (PST)
+Received: by mail-lf1-x133.google.com with SMTP id x40so21828657lfu.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Jan 2023 16:54:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=to:subject:message-id:date:user-agent:from:references:in-reply-to
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ugo/Rp11Fb45H+mDzf4cfNwEIawhYP8Pn644CxdkkPA=;
+        b=PYvnDS/+LOe7VQNOyY7zFZnP+e1S9naeo6h8L2hh9J8Ikeqz7+9rGPWufl2Pc3+N+P
+         /jqOcG816RXCDAidfGp94gNMSjdPnoDH+aVSNbGWp2LMKo+Pxjm6GYkrzLWsbVgs9z2v
+         tKeHF9KCJY5Hx2g3oFf13iOcadL1nD8+GLLEA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:user-agent:from:references:in-reply-to
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Ugo/Rp11Fb45H+mDzf4cfNwEIawhYP8Pn644CxdkkPA=;
+        b=Fw/KYdyZ3eRwX3y5h1AdJ5PTr0TksGolZlYn/2ztAuusMRP8TZROu+uUbjr6qxDXuo
+         ibTxIi2E6WlGv1BqPOmIilerkIol+TalaK8ZXpP3pryui6hKY6BbsuC2njvvvZoaLnVf
+         q0a43JpUYVtE14CrRB4d7QVW6Gqh9q4fKUvCPhH9VcA9KyMWw+NQpEZvT2ZMNndypHEa
+         Iz7yzaGTBUryFRjqHI7qv8zK4uF7AfXv1RFhuc9ljuzohtnsEJUKyghQQ0ZrE2b8JHez
+         dUgmYCI7yJ1DFltQtx9cucVYFGO2Y/ob/DQ9XESSabXxASAE4MUtAHYuhgCBG0JCJofM
+         +XlQ==
+X-Gm-Message-State: AO0yUKUvX2imK6X1UMlFefWtXHQ72i1K4+Ize9NInDvADAYELJBItmmh
+        oiDWb8zzzganxUSmT+gYfANt0bg0CyP8NDQwPfs6hg==
+X-Google-Smtp-Source: AK7set8QQjKAKL0ifoGu7J4JYaPIzXAt6aq03OPExYQejPI0i/d2R35fZSjE09Yh+bm7byIet7pGBQ6GCHmAc96I7js=
+X-Received: by 2002:a05:6512:3b9c:b0:4d8:62ec:1ec0 with SMTP id
+ g28-20020a0565123b9c00b004d862ec1ec0mr1141550lfv.247.1675126477214; Mon, 30
+ Jan 2023 16:54:37 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 30 Jan 2023 16:54:36 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Firefox/102.0 Thunderbird/102.4.2
-Subject: Re: [RFC PATCH v2 09/22] ASoC: qcom: qdsp6: Introduce USB AFE port to
- q6dsp
-Content-Language: en-US
-To:     Wesley Cheng <quic_wcheng@quicinc.com>,
-        srinivas.kandagatla@linaro.org, mathias.nyman@intel.com,
-        perex@perex.cz, lgirdwood@gmail.com, andersson@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, gregkh@linuxfoundation.org,
-        Thinh.Nguyen@synopsys.com, broonie@kernel.org,
-        bgoswami@quicinc.com, tiwai@suse.com, robh+dt@kernel.org,
-        agross@kernel.org
-Cc:     devicetree@vger.kernel.org, alsa-devel@alsa-project.org,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_jackp@quicinc.com,
-        quic_plai@quicinc.com
-References: <20230126031424.14582-1-quic_wcheng@quicinc.com>
- <20230126031424.14582-10-quic_wcheng@quicinc.com>
- <dea77277-6971-fe27-1ae0-ed551e84b6e4@linux.intel.com>
- <5dec443d-9894-2d06-1798-c56b8f2e1e5e@quicinc.com>
-From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-In-Reply-To: <5dec443d-9894-2d06-1798-c56b8f2e1e5e@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <1674728065-24955-5-git-send-email-quic_srivasam@quicinc.com>
+References: <1674728065-24955-1-git-send-email-quic_srivasam@quicinc.com> <1674728065-24955-5-git-send-email-quic_srivasam@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Mon, 30 Jan 2023 16:54:36 -0800
+Message-ID: <CAE-0n50n0JaBOukBvandsciHEyKpqSytU2y7K=fmR7gn8WPp5g@mail.gmail.com>
+Subject: Re: [PATCH v6 4/6] clk: qcom: lpasscorecc-sc7280: Skip lpasscorecc registration
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        agross@kernel.org, andersson@kernel.org, broonie@kernel.org,
+        konrad.dybcio@somainline.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mturquette@baylibre.com,
+        quic_plai@quicinc.com, quic_rohkumar@quicinc.com,
+        robh+dt@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Quoting Srinivasa Rao Mandadapu (2023-01-26 02:14:23)
+> Skip lpasscorecc clocks registration for ADSP based platforms
+> as it's causing NOC errors when ADSP based clocks are enabled.
+>
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Tested-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+> ---
+>  drivers/clk/qcom/lpasscorecc-sc7280.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/drivers/clk/qcom/lpasscorecc-sc7280.c b/drivers/clk/qcom/lpasscorecc-sc7280.c
+> index 6ad19b0..3aa16d8 100644
+> --- a/drivers/clk/qcom/lpasscorecc-sc7280.c
+> +++ b/drivers/clk/qcom/lpasscorecc-sc7280.c
+> @@ -395,6 +395,9 @@ static int lpass_core_cc_sc7280_probe(struct platform_device *pdev)
+>         const struct qcom_cc_desc *desc;
+>         struct regmap *regmap;
+>
+> +       if (of_property_read_bool(pdev->dev.of_node, "qcom,adsp-pil-mode"))
 
-
-On 1/30/23 16:54, Wesley Cheng wrote:
-> Hi Pierre,
-> 
-> On 1/26/2023 7:38 AM, Pierre-Louis Bossart wrote:
->>
->>
->> On 1/25/23 21:14, Wesley Cheng wrote:
->>> The QC ADSP is able to support USB playback endpoints, so that the main
->>> application processor can be placed into lower CPU power modes.  This
->>> adds
->>> the required AFE port configurations and port start command to start an
->>> audio session.
->>>
->>> Specifically, the QC ADSP can support all potential endpoints that are
->>> exposed by the audio data interface.  This includes, feedback endpoints
->>> (both implicit and explicit) as well as the isochronous (data)
->>> endpoints.
->>> The size of audio samples sent per USB frame (microframe) will be
->>> adjusted
->>> based on information received on the feedback endpoint.
->>
->> I think you meant "support all potential endpoint types"
->>
->> It's likely that some USB devices have more endpoints than what the DSP
->> can handle, no?
->>
-> 
-> True, as we discussed before, we only handle the endpoints for the audio
-> interface.  Other endpoints, such as HID, or control is still handled by
-> the main processor.
-
-The number of isoc/audio endpoints can be larger than 1 per direction,
-it's not uncommon for a USB device to have multiple connectors on the
-front side for instruments, mics, monitor speakers, you name it. Just
-google 'motu' or 'rme usb' and you'll see examples of USB devices that
-are very different from plain vanilla headsets.
-
->> And that brings me back to the question: what is a port and the
->> relationship between port/backend/endpoints?
->>
->> Sorry for being picky on terminology, but if I learned something in days
->> in standardization it's that there shouldn't be any ambiguity on
->> concepts, otherwise everyone is lost at some point.
->>
-> 
-> No worries, I can understand where you're coming from :).  After
-> re-reading some of the notations used, I can see where people may be
-> confused.
-> 
->>
->>>   static struct afe_port_map port_maps[AFE_PORT_MAX] = {
->>> +    [USB_RX] = { AFE_PORT_ID_USB_RX, USB_RX, 1, 1},
->>>       [HDMI_RX] = { AFE_PORT_ID_MULTICHAN_HDMI_RX, HDMI_RX, 1, 1},
->>>       [SLIMBUS_0_RX] = { AFE_PORT_ID_SLIMBUS_MULTI_CHAN_0_RX,
->>>                   SLIMBUS_0_RX, 1, 1},
->>
->> And if I look here a port seems to be a very specific AFE concept
->> related to interface type? Do we even need to refer to a port in the USB
->> parts?
->>
-> 
-> Well, this is a design specific to how the Q6 AFE is implemented.  There
-> is a concept for an AFE port to be opened.  However, as mentioned
-> earlier, the "port" term used in soc-usb should be more for how many USB
-> devices can be supported.
-> 
-> If there was a case the audio DSP would support more than one USB
-> device, I believe another AFE port would need to be added.
-
-
-would the suggested infrastructure work though, even if the DSP could
-deal with multiple endpoints on different devices ? You have static
-mutexes and ops, can that scale to more than one USB device?
+Why is this node enabled in DT at all if it doesn't provide any clks?
