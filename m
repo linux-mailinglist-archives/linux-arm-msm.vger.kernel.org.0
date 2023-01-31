@@ -2,87 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8CBD8682A43
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Jan 2023 11:17:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ADD6B682A5F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Jan 2023 11:23:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230334AbjAaKRM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Jan 2023 05:17:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44572 "EHLO
+        id S231295AbjAaKXD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Jan 2023 05:23:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229900AbjAaKRL (ORCPT
+        with ESMTP id S231127AbjAaKXA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Jan 2023 05:17:11 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 794134A211;
-        Tue, 31 Jan 2023 02:17:10 -0800 (PST)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30V4umH2028760;
-        Tue, 31 Jan 2023 10:17:06 GMT
+        Tue, 31 Jan 2023 05:23:00 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C333B8;
+        Tue, 31 Jan 2023 02:22:51 -0800 (PST)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30V88jOV027425;
+        Tue, 31 Jan 2023 10:22:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=MT3ILMDbCV+lqKyn4yXDQ0/1vxBQ1kSzH7A3Kr8PP0o=;
- b=ou55hD0WUnNb2e2G2oStQL4XFOIEvrF1zjzcLlkx07f8ygjFwMOJ35UStS28WxyNTUMH
- N4m4bEhoglfdGooIzqoI+Z+i3vnCSjd1H8zUkJ2edc1jP8LDaAHefyMA1dl1t/0NZdBA
- PhDQt/pk9WXqpBWsocFkibee4Zign7TbKDetRIsFWPDKrF3zLJq790mrd6c867nk2FLF
- sGYp8XFKFe8L6XFpeHgtLHx//zrvTmgskHz3ssMr4wEGkg6+wyQx6W18eDGfXsvlYby/
- GhWYsQ21By0GaDwTpJH19chg/PiGk5VtvRD81yCcIGxrKTXn+WEXHaC7Vs1Gho4UmdIl gA== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3neua98x7a-1
+ bh=ooGDWvMmAJQv6/uFVmd1tojNLIC77U8WC0NpSBrNCK0=;
+ b=Vi0FnmBW4KDTixMjnkhcGmKGcfFHRki6CBqUeHBRA/sCE1C3Am+bCFiNg7VlpCrvjkuF
+ JVymoy0UqOj7O3bes7aluKAwPawuoYZINbVUZKoJOZsdb8W6XIF7uUBnrybu2qkpck01
+ hTJulr9dDO3VffRAvYk72840cPnO8GG4ZywhKpKfZkFB5Zu9KMczR99zfpAE7qXPiCOD
+ Vcjxso/El0y/FgUX7nbs3+O1XcKSAV9qkAPDjDluwSDOri5V9Q1ZsEaX9PY85/V5tC9G
+ vPjvYro15r2ArXCqcll8lj9jpIyZeqVdqxszPSugRSJIgBjpUf5UZ5ln3szhffpdgriJ 2w== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nexg40cx0-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 31 Jan 2023 10:17:06 +0000
+        Tue, 31 Jan 2023 10:22:47 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30VAH5rR026522
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30VAMkc6017721
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 31 Jan 2023 10:17:05 GMT
+        Tue, 31 Jan 2023 10:22:46 GMT
 Received: from [10.50.40.197] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 31 Jan
- 2023 02:16:59 -0800
-Message-ID: <2d735345-b2cc-faf8-7c3c-43d481ac7116@quicinc.com>
-Date:   Tue, 31 Jan 2023 15:46:56 +0530
+ 2023 02:22:41 -0800
+Message-ID: <dc32d158-d860-54ff-50cd-e1d96c576ed6@quicinc.com>
+Date:   Tue, 31 Jan 2023 15:52:38 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.2
-Subject: Re: [PATCH 3/6] regulator: qcom_smd: Add MP5496 regulators
+Subject: Re: [PATCH 4/6] regulator: qcom_smd: Add PMIC compatible for IPQ9574
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <lgirdwood@gmail.com>,
-        <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>,
+To:     Rob Herring <robh@kernel.org>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <lgirdwood@gmail.com>,
+        <broonie@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
         <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
-        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
-        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
-        <quic_poovendh@quicinc.com>, <quic_ipkumar@quicinc.com>
+        <devicetree@vger.kernel.org>, <quic_srichara@quicinc.com>,
+        <quic_gokulsri@quicinc.com>, <quic_sjaganat@quicinc.com>,
+        <quic_kathirav@quicinc.com>, <quic_arajkuma@quicinc.com>,
+        <quic_anusha@quicinc.com>, <quic_poovendh@quicinc.com>
 References: <20230113150310.29709-1-quic_devipriy@quicinc.com>
- <20230113150310.29709-4-quic_devipriy@quicinc.com>
- <552e75a9-179a-7720-3d37-59f1846266b1@linaro.org>
- <2cc385d9-4f51-945d-cc59-2738011bd295@quicinc.com>
- <0ef104a5-fc10-a043-a458-4e6d1e07a7a7@linaro.org>
+ <20230113150310.29709-5-quic_devipriy@quicinc.com>
+ <20230117183835.GA3427325-robh@kernel.org>
+ <11a5fa34-c438-a567-6364-4bf1d0d369e3@quicinc.com>
+ <CAL_JsqKMpW7O_sQ4j+ZBfjGZdJUDosM-kVhcFjaUmXvXCC4L8A@mail.gmail.com>
 From:   Devi Priya <quic_devipriy@quicinc.com>
-In-Reply-To: <0ef104a5-fc10-a043-a458-4e6d1e07a7a7@linaro.org>
+In-Reply-To: <CAL_JsqKMpW7O_sQ4j+ZBfjGZdJUDosM-kVhcFjaUmXvXCC4L8A@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: NBu5J3l3sQz5juhUomKRqJh2IJWLdUhq
-X-Proofpoint-ORIG-GUID: NBu5J3l3sQz5juhUomKRqJh2IJWLdUhq
+X-Proofpoint-GUID: AbDZqsHKMtzHG0zfk77MP2ul1DyfGbWu
+X-Proofpoint-ORIG-GUID: AbDZqsHKMtzHG0zfk77MP2ul1DyfGbWu
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
  definitions=2023-01-31_04,2023-01-31_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
- mlxscore=0 suspectscore=0 adultscore=0 lowpriorityscore=0 malwarescore=0
- phishscore=0 priorityscore=1501 clxscore=1015 spamscore=0 mlxlogscore=999
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2301310090
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ lowpriorityscore=0 suspectscore=0 spamscore=0 phishscore=0 adultscore=0
+ priorityscore=1501 impostorscore=0 mlxscore=0 clxscore=1015
+ mlxlogscore=999 bulkscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2212070000 definitions=main-2301310090
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -91,78 +90,60 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 1/27/2023 9:33 PM, Konrad Dybcio wrote:
-> 
-> 
-> On 27.01.2023 17:01, Devi Priya wrote:
+On 1/28/2023 1:42 AM, Rob Herring wrote:
+> On Fri, Jan 27, 2023 at 10:05 AM Devi Priya <quic_devipriy@quicinc.com> wrote:
 >>
 >>
->> On 1/13/2023 8:54 PM, Konrad Dybcio wrote:
->>>
->>>
->>> On 13.01.2023 16:03, devi priya wrote:
->>>> Adding support for PMIC MP5496 on IPQ9574 SoC
+>>
+>> On 1/18/2023 12:08 AM, Rob Herring wrote:
+>>> On Fri, Jan 13, 2023 at 08:33:08PM +0530, devi priya wrote:
+>>>> Add mp5496 PMIC compatible string for IPQ9574 SoC
 >>>>
 >>>> Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
 >>>> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
 >>>> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
 >>>> ---
->>> Please simply extend the existing MP5496 support with this
->>> S1 regulator. If you don't explicitly define and set voltages
->>> for the other vregs, they will not be probed.
->>>
->>> Konrad
->> IPQ6018 and IPQ9574 platforms use the same PMIC MP5496 but they have a different power layout. IPQ9574 has S2 regulator which will be used for NSS scaling but S2 in IPQ6018 serves a different purpose. Hence it would not be possible to extend the existing MP5496 support for IPQ9574
-> Does the s2 on IPQ9574 have a different voltage range than
-> the one on IPQ6018? No? Then there's nothing blocking you
-> from using the setup for both SoCs. As I've mentioned,
-> regulators that you don't add to the device tree will
-> not even be probed.
-> 
-Yeah, understood! will update this in V2
-> Konrad
->>>>    drivers/regulator/qcom_smd-regulator.c | 16 ++++++++++++++++
->>>>    1 file changed, 16 insertions(+)
+>>>>    .../devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml  | 3 ++-
+>>>>    1 file changed, 2 insertions(+), 1 deletion(-)
 >>>>
->>>> diff --git a/drivers/regulator/qcom_smd-regulator.c b/drivers/regulator/qcom_smd-regulator.c
->>>> index 9f2b58458841..1eb17d378897 100644
->>>> --- a/drivers/regulator/qcom_smd-regulator.c
->>>> +++ b/drivers/regulator/qcom_smd-regulator.c
->>>> @@ -767,6 +767,15 @@ static const struct regulator_desc mp5496_ldoa2 = {
->>>>        .ops = &rpm_mp5496_ops,
->>>>    };
->>>>    +static const struct regulator_desc ipq9574_mp5496_smpa1 = {
->>>> +    .linear_ranges = (struct linear_range[]) {
->>>> +        REGULATOR_LINEAR_RANGE(600000, 0, 37, 12500),
->>>> +    },
->>>> +    .n_linear_ranges = 1,
->>>> +    .n_voltages = 38,
->>>> +    .ops = &rpm_mp5496_ops,
->>>> +};
->>>> +
->>>>    static const struct regulator_desc pm2250_lvftsmps = {
->>>>        .linear_ranges = (struct linear_range[]) {
->>>>            REGULATOR_LINEAR_RANGE(320000, 0, 269, 4000),
->>>> @@ -799,6 +808,11 @@ static const struct rpm_regulator_data rpm_mp5496_regulators[] = {
->>>>        {}
->>>>    };
->>>>    +static const struct rpm_regulator_data rpm_ipq9574_mp5496_regulators[] = {
->>>> +    { "s1", QCOM_SMD_RPM_SMPA, 1, &ipq9574_mp5496_smpa1, "s1" },
->>>> +    {}
->>>> +};
->>>> +
->>>>    static const struct rpm_regulator_data rpm_pm2250_regulators[] = {
->>>>        { "s1", QCOM_SMD_RPM_SMPA, 1, &pm2250_lvftsmps, "vdd_s1" },
->>>>        { "s2", QCOM_SMD_RPM_SMPA, 2, &pm2250_lvftsmps, "vdd_s2" },
->>>> @@ -1320,6 +1334,8 @@ static const struct rpm_regulator_data rpm_pms405_regulators[] = {
->>>>    };
->>>>      static const struct of_device_id rpm_of_match[] = {
->>>> +    { .compatible = "qcom,rpm-ipq9574-mp5496-regulators",
->>>> +        .data = &rpm_ipq9574_mp5496_regulators },
->>>>        { .compatible = "qcom,rpm-mp5496-regulators", .data = &rpm_mp5496_regulators },
->>>>        { .compatible = "qcom,rpm-pm2250-regulators", .data = &rpm_pm2250_regulators },
->>>>        { .compatible = "qcom,rpm-pm6125-regulators", .data = &rpm_pm6125_regulators },
->> Best Regards,
->> Devi Priya
+>>>> diff --git a/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
+>>>> index 8c45f53212b1..7907d9385583 100644
+>>>> --- a/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
+>>>> +++ b/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
+>>>> @@ -22,7 +22,7 @@ description:
+>>>>      Each sub-node is identified using the node's name, with valid values listed
+>>>>      for each of the pmics below.
+>>>>
+>>>> -  For mp5496, s2
+>>>> +  For mp5496, s1, s2
+>>>>
+>>>>      For pm2250, s1, s2, s3, s4, l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11,
+>>>>      l12, l13, l14, l15, l16, l17, l18, l19, l20, l21, l22
+>>>> @@ -84,6 +84,7 @@ properties:
+>>>>      compatible:
+>>>>        enum:
+>>>>          - qcom,rpm-mp5496-regulators
+>>>> +      - qcom,rpm-ipq9574-mp5496-regulators
+>>>
+>>> Is this a different part than just mp5496? Or used in a different,
+>>> incompatible way?
+>> IPQ6018 and IPQ9574 platforms use the same PMIC MP5496 but they have a
+>> different power layout.So, we plan to update the compatible:
+>> qcom,rpm-mp5496-regulators to
+>> qcom,rpm-ipq6018-mp5496-regulators(target-specific) in the next patchset
+>> as the regulators serve different purposes
+> 
+> You can't just change compatibles. It is an ABI.
+> 
+> This still doesn't make sense to me. The PMIC hasn't changed, so the
+> binding shouldn't. It should be flexible enough to be hooked up to
+> different platforms. That's why we have all the per regulator
+> configuration. What are you missing?
+> 
+> Rob
+Sure got it!
+It should be fine to use the existing mp5496 compatible for IPQ9574 too.
+Will update this in V2
+
 Best Regards,
 Devi Priya
