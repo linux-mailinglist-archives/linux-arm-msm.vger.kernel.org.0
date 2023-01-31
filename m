@@ -2,90 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 48B41683A88
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 00:32:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B6183683ACB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 00:58:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231571AbjAaXch (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Jan 2023 18:32:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34904 "EHLO
+        id S231131AbjAaX6m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Jan 2023 18:58:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230013AbjAaXcg (ORCPT
+        with ESMTP id S230189AbjAaX6l (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Jan 2023 18:32:36 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A4F74A22E;
-        Tue, 31 Jan 2023 15:32:33 -0800 (PST)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30VNTgJA028435;
-        Tue, 31 Jan 2023 23:32:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=ELZAQk6O3jQa16QepC2O+iGAaFK4ij19+eVMDpim58A=;
- b=WAmpGXRcAFDS5IF1ZhYU7SwuwpoeJEahhsZBKc4jnYU6gONNFutYoB/LXvk/SKI2EZrx
- HqvUo44euGaByXoXSL6bQJZtrKaB+NP0xmvg1NfWmhkkuuNbHfWp5jTbisgDT2a6mdaM
- MIMP45FYS1+8OaCOWFECgd7+RMrcbNJwwytcTIwVTEAaADoqJbt1wfcMlCI6FseFLJJi
- vfT9MDtJb7N5p0HpC/CFkFkrdhz9+HhQ37qUJCntGmc99X89vKkAJjq5Zx7WZ5EGIq3u
- ddDzIeJ6ANkaHvz0/2Q50KJ6pN3HnQTyNb3uD5QDZqCNm4ZbDnQfXFKiHcyZLTVxveVt BA== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3new3uac8w-1
+        Tue, 31 Jan 2023 18:58:41 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DECC72A8;
+        Tue, 31 Jan 2023 15:58:40 -0800 (PST)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30VNeDDi018846;
+        Tue, 31 Jan 2023 23:58:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=TG0M5gWpFe21mBuXZasqDgHnDl7WU7Xs/Y57d1jNEko=;
+ b=LnQvEWxquyqesQGN9EEw8/dmEqiFSRW227IFi/vpXOWecg88qOMGWGblURXhOqWHAHYA
+ zGgzA9AbYczDkZ1B+7kE6M0t8MSaUyL5R4RXzMCCeSlF4ZA+Zu9bxKDf00LENTz7vcOb
+ CjEv96wJ33v0CDKM0Th9GUlT2QbSpoyqXrMhcgISXlbWNe4ErRvN2UyS/rb4xRhc9lwZ
+ URrsQzC6iosx4w6Ld39Zgi8i1CrDdPEOauePIGhUjQMbNphTVV3E9Rijt+fDwmN2Tklp
+ WCVtk1jkD2FoLYY92gZTFO/ZAP73fs4l4BDttjf3LYAgi1wIg6AyDoh0WUEaF7E93HnP fw== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nf70sgqh8-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 31 Jan 2023 23:32:15 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30VNWEAV007765
+        Tue, 31 Jan 2023 23:58:35 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 30VNwZEr003853
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 31 Jan 2023 23:32:14 GMT
-Received: from [10.110.114.165] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 31 Jan
- 2023 15:32:13 -0800
-Message-ID: <43095d93-29c8-b30a-08c0-0a452770c1ce@quicinc.com>
-Date:   Tue, 31 Jan 2023 15:32:12 -0800
+        Tue, 31 Jan 2023 23:58:35 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Tue, 31 Jan 2023 15:58:34 -0800
+Date:   Tue, 31 Jan 2023 15:58:33 -0800
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     Rob Herring <robh@kernel.org>
+CC:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-usb@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH v2 1/2] dt-bindings: usb: Introduce GPIO-based SBU mux
+Message-ID: <20230131235833.GA1647930@hu-bjorande-lv.qualcomm.com>
+References: <20230118180811.GB3322341@hu-bjorande-lv.qualcomm.com>
+ <20230119161132.GA1880784-robh@kernel.org>
+ <20230119173954.GB3899167@hu-bjorande-lv.qualcomm.com>
+ <CAL_Jsq+4t09XDkF0dbh+aOyTz80SY18EpRBdoGpLqQBuCPQ5=Q@mail.gmail.com>
+ <20230124170437.GA1209567@hu-bjorande-lv.qualcomm.com>
+ <CAL_JsqL+-updMkZ7AZoKPdU==PPdVv7qZC2MFc7Xw_PSo7QPGw@mail.gmail.com>
+ <20230125234013.GA2132606@hu-bjorande-lv.qualcomm.com>
+ <20230130164813.GA2730437-robh@kernel.org>
+ <20230130214214.GA953860@hu-bjorande-lv.qualcomm.com>
+ <20230131194405.GA3793867-robh@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [RFT PATCH v2 2/3] drm/msm/dsi: Stop unconditionally powering up
- DSI hosts at modeset
-Content-Language: en-US
-To:     Douglas Anderson <dianders@chromium.org>,
-        <dri-devel@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     Andrzej Hajda <andrzej.hajda@intel.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Sean Paul <sean@poorly.run>, Jonas Karlman <jonas@kwiboo.se>,
-        Vinod Koul <vkoul@kernel.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@gmail.com>,
-        <freedreno@lists.freedesktop.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Dave Stevenson <dave.stevenson@raspberrypi.com>,
-        <linux-kernel@vger.kernel.org>
-References: <20230131141756.RFT.v2.1.I723a3761d57ea60c5dd754c144aed6c3b2ea6f5a@changeid>
- <20230131141756.RFT.v2.2.I4cfeab9d0e07e98ead23dd0736ab4461e6c69002@changeid>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20230131141756.RFT.v2.2.I4cfeab9d0e07e98ead23dd0736ab4461e6c69002@changeid>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20230131194405.GA3793867-robh@kernel.org>
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: uCvkqKdiMDR6zUORD7MGoz0XKomFveNA
-X-Proofpoint-ORIG-GUID: uCvkqKdiMDR6zUORD7MGoz0XKomFveNA
+X-Proofpoint-GUID: Q9CY0WF9x-cUJA1b7DaA4oc-L5ATCih-
+X-Proofpoint-ORIG-GUID: Q9CY0WF9x-cUJA1b7DaA4oc-L5ATCih-
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
  definitions=2023-01-31_08,2023-01-31_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- phishscore=0 clxscore=1015 suspectscore=0 mlxscore=0 mlxlogscore=999
- impostorscore=0 adultscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301310202
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ mlxlogscore=999 lowpriorityscore=0 priorityscore=1501 spamscore=0
+ mlxscore=0 malwarescore=0 impostorscore=0 bulkscore=0 clxscore=1015
+ phishscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2301310205
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
         SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -93,127 +87,238 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, Jan 31, 2023 at 01:44:05PM -0600, Rob Herring wrote:
+> On Mon, Jan 30, 2023 at 01:42:14PM -0800, Bjorn Andersson wrote:
+> > On Mon, Jan 30, 2023 at 10:48:13AM -0600, Rob Herring wrote:
+> > > On Wed, Jan 25, 2023 at 03:40:13PM -0800, Bjorn Andersson wrote:
+> > > > On Tue, Jan 24, 2023 at 08:31:13PM -0600, Rob Herring wrote:
+> > > > > On Tue, Jan 24, 2023 at 11:04 AM Bjorn Andersson
+> > > > > <quic_bjorande@quicinc.com> wrote:
+[..]
+> > This is the design we have in a range of different boards:
+> 
+> *This* is what I need for every Type-C binding.
+> 
 
+Glad you like it.
 
-On 1/31/2023 2:18 PM, Douglas Anderson wrote:
-> In commit 7d8e9a90509f ("drm/msm/dsi: move DSI host powerup to modeset
-> time"), we moved powering up DSI hosts to modeset time. This wasn't
-> because it was an elegant design, but there were no better options.
+> > 
+> >                      +------------- - -
+> >  USB connector       | SoC
+> >  +-+                 |   +--------+    +-------+
+> >  | |                 |   |        |    |       |
+> >  |*|<------- HS -----|-->| HS phy |<-->| (EUD) |<--+
+> >  | |                 |   |        |    |       |   |   +--------+
+> >  | |                 |   +--------+    +-------+   +-->|        |
+> >  | |                 |                                 |  dwc3  |
+> >  | |                 |   +--------+        /---------->|        |
+> >  | |   +----------+  |   |        |<------/            +--------+
+> >  |*|<--|(redriver)|<-|-->| SS phy |
+> >  | |   +----------+  |   |        |<-\   +------------+
+> >  | |                 |   +--------+   \->|            |
+> >  | |                 |                   |     DP     |
+> >  | |     +-----+     |                   | controller |
+> >  |*|<--->| SBU |<----|------------------>|            |
+> >  | |     | mux |     |                   |            |
+> >  | |     +----+      |                   +------------+
+> >  +-+                 |
+> >                      +------------- - -
 > 
-> That commit actually ended up breaking ps8640, and thus was born
-> commit ec7981e6c614 ("drm/msm/dsi: don't powerup at modeset time for
-> parade-ps8640") as a temporary hack to un-break ps8640 by moving it to
-> the old way of doing things. It turns out that ps8640 _really_ doesn't
-> like its pre_enable() function to be called after
-> dsi_mgr_bridge_power_on(). Specifically (from experimentation, not
-> because I have any inside knowledge), it looks like the assertion of
-> "RST#" in the ps8640 runtime resume handler seems like it's not
-> allowed to happen after dsi_mgr_bridge_power_on()
+> Where's the TCPM?
 > 
-> Recently, Dave Stevenson's series landed allowing bridges some control
-> over pre_enable ordering. The meaty commit for our purposes is commit
-> 4fb912e5e190 ("drm/bridge: Introduce pre_enable_prev_first to alter
-> bridge init order"). As documented by that series, if a bridge doesn't
-> set "pre_enable_prev_first" then we should use the old ordering.
-> 
-> Now that we have the commit ("drm/bridge: tc358762: Set
-> pre_enable_prev_first") we can go back to the old ordering, which also
-> allows us to remove the ps8640 special case.
-> 
-> One last note is that even without reverting commit 7d8e9a90509f
-> ("drm/msm/dsi: move DSI host powerup to modeset time"), if you _just_
-> revert the ps8640 special case and try it out then it doesn't seem to
-> fail anymore. I spent time bisecting / debugging this and it turns out
-> to be mostly luck, so we still want this patch to make sure it's
-> solid. Specifically the reason it sorta works these days is because
-> we implemented wait_hpd_asserted() in ps8640 now, plus the magic of
-> "pm_runtime" autosuspend. The fact that we have wait_hpd_asserted()
-> implemented means that we actually power the bridge chip up just a wee
-> bit earlier and then the bridge happens to stay on because of
-> autosuspend and thus ends up powered before dsi_mgr_bridge_power_on().
-> 
-> Cc: Dave Stevenson <dave.stevenson@raspberrypi.com>
-> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
-> 
-> Changes in v2:
-> - Don't fold dsi_mgr_bridge_power_on() back into dsi_mgr_bridge_pre_enable()
-> 
->   drivers/gpu/drm/msm/dsi/dsi_manager.c | 38 +--------------------------
->   1 file changed, 1 insertion(+), 37 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> index 1bbac72dad35..2197a54b9b96 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> @@ -34,32 +34,6 @@ static struct msm_dsi_manager msm_dsim_glb;
->   #define IS_SYNC_NEEDED()	(msm_dsim_glb.is_sync_needed)
->   #define IS_MASTER_DSI_LINK(id)	(msm_dsim_glb.master_dsi_link_id == id)
->   
-> -#ifdef CONFIG_OF
-> -static bool dsi_mgr_power_on_early(struct drm_bridge *bridge)
-> -{
-> -	struct drm_bridge *next_bridge = drm_bridge_get_next_bridge(bridge);
-> -
-> -	/*
-> -	 * If the next bridge in the chain is the Parade ps8640 bridge chip
-> -	 * then don't power on early since it seems to violate the expectations
-> -	 * of the firmware that the bridge chip is running.
-> -	 *
-> -	 * NOTE: this is expected to be a temporary special case. It's expected
-> -	 * that we'll eventually have a framework that allows the next level
-> -	 * bridge to indicate whether it needs us to power on before it or
-> -	 * after it. When that framework is in place then we'll use it and
-> -	 * remove this special case.
-> -	 */
-> -	return !(next_bridge && next_bridge->of_node &&
-> -		 of_device_is_compatible(next_bridge->of_node, "parade,ps8640"));
-> -}
-> -#else
-> -static inline bool dsi_mgr_power_on_early(struct drm_bridge *bridge)
-> -{
-> -	return true;
-> -}
-> -#endif
-> -
->   static inline struct msm_dsi *dsi_mgr_get_dsi(int id)
->   {
->   	return msm_dsim_glb.dsi[id];
-> @@ -265,12 +239,6 @@ static void dsi_mgr_bridge_power_on(struct drm_bridge *bridge)
->   	int ret;
->   
->   	DBG("id=%d", id);
-> -	if (!msm_dsi_device_connected(msm_dsi))
-> -		return;
-> -
-> -	/* Do nothing with the host if it is slave-DSI in case of bonded DSI */
-> -	if (is_bonded_dsi && !IS_MASTER_DSI_LINK(id))
-> -		return;
->   
 
-Why are these two checks removed?
+The TCPM here becomes the implementation behind one more more
+USB connectors.
 
->   	ret = dsi_mgr_phy_enable(id, phy_shared_timings);
->   	if (ret)
-> @@ -327,8 +295,7 @@ static void dsi_mgr_bridge_pre_enable(struct drm_bridge *bridge)
->   	if (is_bonded_dsi && !IS_MASTER_DSI_LINK(id))
->   		return;
->   
-> -	if (!dsi_mgr_power_on_early(bridge))
-> -		dsi_mgr_bridge_power_on(bridge);
-> +	dsi_mgr_bridge_power_on(bridge);
->   
->   	ret = msm_dsi_host_enable(host);
->   	if (ret) {
-> @@ -438,9 +405,6 @@ static void dsi_mgr_bridge_mode_set(struct drm_bridge *bridge,
->   	msm_dsi_host_set_display_mode(host, adjusted_mode);
->   	if (is_bonded_dsi && other_dsi)
->   		msm_dsi_host_set_display_mode(other_dsi->host, adjusted_mode);
-> -
-> -	if (dsi_mgr_power_on_early(bridge))
-> -		dsi_mgr_bridge_power_on(bridge);
->   }
->   
->   static enum drm_mode_status dsi_mgr_bridge_mode_valid(struct drm_bridge *bridge,
+> 
+> > The EUD and redriver are only found/used in some designs.  My proposed
+> > representation of this (without those) is:
+> 
+> I'd assume a redriver is mostly transparent to s/w?
+> 
+
+There are both cases. But per our discussion (summarized below), each
+entity in the graph should represent the actual signal path.  So in the
+case where it need to be represented in the signal path, the
+implementation would have to deal with it being the port@1
+remote-endpoint.
+
+> 
+> > 
+> > /soc {
+> >     usb-controller {
+> >         dwc3 {
+> >             port {
+> >                 dwc0-out: endpoint {
+> >                     remote-endpoint = <&connector0_hs>;
+> >             };
+> >         };
+> >     };
+> > 
+> >     ss_phy: phy {
+> >         port {
+> >             ss_phy_out: endpoint {
+> >                 remote-endpoint = <&connector0_ss>;
+> >             };
+> >         };
+> >     };
+> > 
+> >     display-subsystem {
+> >         displayport-controller {
+> >             phys = <&ss_phy>;
+> >             ports {
+> >                 port@1 {
+> >                     reg = <1>;
+> >                     dp0_out: endpoint {
+> >                         remote-endpoint = <&connector0_hpd>;
+> >                     };
+> >                 };
+> >             };
+> >         };
+> >     };
+> > };
+> > 
+> > usb0-sbu-mux {
+> >     compatible = "gpio-sbu-mux";
+> > 
+> >     port {
+> >         sbu0_out: endpoint {
+> >             remote-endpoint = <&connector_sbu>;
+> >         };
+> >     };
+> > };
+> > 
+> > tcpm {
+> >     connector@0 {
+> >         compatible = "usb-c-connector";
+> >         reg = <0>;
+> >         ports {
+> >             port@0 {
+> >                 reg = <0>;
+> >                 connector0_hs: endpoint {
+> >                     remote-endpoint = <&dwc0_out>;
+> >                 };
+> >             };
+> > 
+> >             port@1 {
+> >                 reg = <1>;
+> >                 connector0_ss: endpoint@0 {
+> >                     remote-endpoint = <&ss_phy_out>;
+> >                 };
+> >                 connector0_hpd: endpoint@1 {
+> >                     remote-endpoint = <&dp0_out>;
+> >                 };
+> 
+> This just looks wrong to me because one connection is the output of the 
+> phy's mux and one is the input. The USB SS connection is implicit, but I 
+> think it should be explicit from dwc3 to ss_phy. It would need an output 
+> port and 2 input ports. I want to say we already have bindings doing 
+> this.
+> 
+
+Right, endpoint@0 represents the actual signal path, while endpoint@1
+represents the display signal source or HPD destination.
+
+It does look weird, but that's what we agreed upon in a previous
+iteration.
+
+> >             };
+> > 
+> >             port@2 {
+> >                 reg = <2>;
+> >                     connector_sbu: endpoint {
+> >                         remote-endpoint = <&sbu0_out>;
+> >                 };
+> >             };
+> >         };
+> >     };
+> > };
+> > 
+[..]
+> > 
+> > /dp-connector {
+> >     compatible = "dp-connector";
+> > 
+> >     port {
+> >         connector: endpoint {
+> >             remote-endpoint = <&dp_out>;
+> >         };
+> >     };
+> > };
+> > 
+> > /soc {
+> >     display-subsystem {
+> >         displayport-controller {
+> >             phys = <&some_dp_phy>;
+> >             ports {
+> >                 port@1 {
+> >                     reg = <1>;
+> >                     dp_out: endpoint {
+> >                         remote-endpoint = <&connector>;
+> >                     };
+> >                 };
+> >             };
+> >         };
+> >     };
+> > };
+> > 
+> > As you said previously, it doesn't make sense to represent the phy in this
+> > graph. We just define the output of the controller as port@1 and link that to
+> > the connector.
+> 
+> What I said (or meant) was we don't represent phys which are just 
+> providing the electrical interface. Your 'phy' is also a mux/switch, so 
+> it does make sense to represent it in the graph.
+> 
+
+Attempting to summarize our lengthy discussion on IRC.
+
+The output port of the display block represents the signal path.
+
+In the even that the associated phy is merely a dumb D/A converter, the
+next logical entity on that path is the connector, such as the
+dp-connector example above.
+
+If, on the other hand, the phy, or any other component, on the signal path
+is doing more than just electrical conversion, it should be represented
+in the DT and linked using the of-graph.
+
+As such, in the case where the phy is involved in e.g. orientation
+switching, the output (port@1 in the Qualcomm DP binding) of the
+display block should be tied to the phy, and then the phy should be
+connected to the next entity on the path (e.g. the usb-c-connector).
+
+In both cases, the phys property can be seen as representing the
+"control interface", and the graph is used to represent the signal path.
+
+> > 
+> > So what is the output of the dp controller in the USB case - if we're not
+> > representing that as the HPD link directly between the connector and the
+> > controller?
+> 
+> The answer lies in your block diagram... 
+> 
+
+So, each (active) component in the diagram should be represented in the
+Devicetree and the links between them should be represented by
+of-graphs.
+
+> The question I think is whether we could standardize the mux/switch 
+> graph ports. Say 'port@0' is the output to type-C connector port@1, 
+> and port@[1-9] are altmode connections to USB/DP/TB. If we did that, 
+> then generic code can walk the graph from a controller to the connector. 
+> We only need to know that port@0 goes to the connector.
+
+In the display bindings today, we use port@0 for in and port@1 for
+out, but it doesn't some universal.
+
+> However, that assumes there is only 1 entity in the middle and I don't
+> know if that holds true.
+> 
+
+We've seen examples of redrivers or the ChromeOS switch, where this
+doesn't hold. In the latter we have two outputs (one being active at a
+time)...
+
+Regards,
+Bjorn
