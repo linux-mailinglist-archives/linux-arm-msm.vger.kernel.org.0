@@ -2,82 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 040246835F9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Jan 2023 20:02:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 34FDF68363B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Jan 2023 20:15:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232125AbjAaTCD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Jan 2023 14:02:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51528 "EHLO
+        id S229651AbjAaTPK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Jan 2023 14:15:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232045AbjAaTBq (ORCPT
+        with ESMTP id S230224AbjAaTPJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Jan 2023 14:01:46 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2001B59265
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 11:01:44 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id m16-20020a05600c3b1000b003dc4050c94aso8584615wms.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 11:01:44 -0800 (PST)
+        Tue, 31 Jan 2023 14:15:09 -0500
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B75B558646
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 11:15:07 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id bg26so5265903wmb.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 11:15:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=0f5n/Bb4ZQ3NDjDGqKckIUS2qUmXXS6bLtvGcaKg4v8=;
-        b=cdxfXqElRety6rvzIlwBfnO/C4WBsJWfZ8jeoyrmxufbaHUFP6RWEQ2bt8peHS2CHX
-         V9yTNKUbAe98kiY413wXqlUwG/VEsW2YgmWauruCyeEo+k8zCoZPL2o9Po8Nqorxq1sk
-         XN1prF/g5v1Akd25JmZdQplSN5X3HRvfjRJS6tRTr1UrhXZTh0PnAk+xF/l9bCGyYsQB
-         k6+396jkxHnR2D5Ytphl4Wjqap8C0hlsMfh/qdlJ1JeTARhpxq8c9nPzNIvTImjxpT+C
-         GMRwixiuq6GeF0ElW1rqSCwjokJMVWJ6qlQC5MYHS4kR+T3ipjsCQ6wLJAnNTAUCuFaK
-         aPrw==
+        bh=58Q2UI7MHZibBsmsG2xi+vLOgq5BEQsjL7SVOWh3yD8=;
+        b=vdz/+JApBmOgLHjE7x9vndfBikGvJMsJVuF7kS/h4rEtpIU+XaUpL5C8vDmcBzCzto
+         9fo7chEpH+CEeUk1x2tx0d7C/HjZZHa7SVBlXNJGlmIFDQOXUe9jMqCBL/GKiMw8Oulu
+         Q5xekNXeunYHg+Qiattr/q0AfZZB3geDVF52T2jpbCpL5MpwswpIVJE+0/VOPyXMqFhG
+         AaxNze1F1QQHgaMHe56jabjHmXpVO2XgggHwCOJqoOp5rft42LmJG+Nj6mNhIBu2w1hl
+         ffKnkbIQHqFWppEq6tO+gB+/3hAClUm0C+PxaGlH3mk1gscciYAFJr21ZX/5OXz7d1kj
+         vDsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0f5n/Bb4ZQ3NDjDGqKckIUS2qUmXXS6bLtvGcaKg4v8=;
-        b=AaSZA9bgKEWDXf7DZx80zH/o4YXEIYmUxRa97UVtTz2eakzbr6YPSo+7JHInxq12vq
-         qjE7+zNKkI/6c7MO/l4gcJVyiMLNUjQjcApQhFe/Sk+vIeknUaPOY8Ap3Ar4R5GbVdGT
-         stIbF+eALZQea6sfGbYoVSZAK6tkZJEYZBFMtegDfrH5RdkbId9gw3gg9CbXB5QSoCYe
-         6tq/XUCzXuDV/5ubJ3BMwcx/XuVg6rCNkdrPNNdiQ6WUZs3kCamfhuss1k/BqFk+uy3w
-         y1zhsc5htdbEzr5uTRuZu1LNvhdRC7aO0a02dvN5AM7KRAZO3E4yXObGIqa9bh17wB08
-         +Rdw==
-X-Gm-Message-State: AO0yUKVr4GSdePOH+DDH+o8hM3F4SBNYsbzW5UNNoMtpHHjoKNdFfnBx
-        FJ/G3zUCZKOYn3hMv0LYI4zO6Q==
-X-Google-Smtp-Source: AK7set9a7FuW0Dzh6tzfAaUyOZas2h1eDn7WsexBmWEpoMAWXmh8wHpmKr7+Weg1cVXbQ8uHlMwQMg==
-X-Received: by 2002:a05:600c:5386:b0:3cf:9844:7b11 with SMTP id hg6-20020a05600c538600b003cf98447b11mr342875wmb.23.1675191702581;
-        Tue, 31 Jan 2023 11:01:42 -0800 (PST)
+        bh=58Q2UI7MHZibBsmsG2xi+vLOgq5BEQsjL7SVOWh3yD8=;
+        b=Mk5NlqQEENycYcZK0Bb9YGUJ/FlY/9jI9Y9lNcaW/F+u2d3Scg3c6QPgZaY+PjFUc4
+         Z+32bZhPeQYLnvqHj0zMemvIDjCc78aXm9GQ2pO2d7/un0wlkQPVmf7z+aWRrDvKYIaj
+         pRVz5AMmo0dMpWM1J5MJgiEEGfYNPniAdbM2EJyairhj0zcinOU08sCRASwkZdnraLZF
+         lCs7qj1Q0WBgKUzU+8jT+c60+8nMUE8yjstu+gZHHefQSPqP3C0mkwoPFrCqS6hoZlFl
+         OampFH+r2dqADKebgX01XRMMaWyO2MbsqRSENiB3HkPZY9fjGLGhWlo5CDa7FpWeyK0x
+         16ug==
+X-Gm-Message-State: AO0yUKXXMJQgMvveZ+x9E0iEbxRdjwMqqQisn0qlhp9fMdnvzFJvhY2D
+        Dz5Yq9gmN6dvlqkgj5/HVaRpIA==
+X-Google-Smtp-Source: AK7set9eSuU1DiJc/lhnqA6XBu/oi70gRWi+lSIjHvMNH/TFjPnfOYqqxMjfGABVcM9ka5cMIebFBw==
+X-Received: by 2002:a05:600c:4f02:b0:3dd:1b6f:4f30 with SMTP id l2-20020a05600c4f0200b003dd1b6f4f30mr5820189wmq.3.1675192506254;
+        Tue, 31 Jan 2023 11:15:06 -0800 (PST)
 Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id n15-20020a5d598f000000b002bdff778d87sm16939882wri.34.2023.01.31.11.01.40
+        by smtp.gmail.com with ESMTPSA id y3-20020a1c4b03000000b003dc434b39c2sm12382472wma.26.2023.01.31.11.15.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 31 Jan 2023 11:01:41 -0800 (PST)
-Message-ID: <c515aae3-88e4-948c-a856-7b45dd2caed9@linaro.org>
-Date:   Tue, 31 Jan 2023 20:01:39 +0100
+        Tue, 31 Jan 2023 11:15:05 -0800 (PST)
+Message-ID: <52db5c7f-8abd-c4c0-cb94-725a6ec01448@linaro.org>
+Date:   Tue, 31 Jan 2023 20:15:03 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: thinkpad-x13s: Add bluetooth
+Subject: Re: [PATCH v4 7/8] dt-bindings: clock: Add Qcom SM6115 GPUCC
 Content-Language: en-US
-To:     Steev Klimaszewski <steev@kali.org>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     marijn.suijten@somainline.org,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Sven Peter <sven@svenpeter.dev>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        Mark Pearson <markpearson@lenovo.com>
-References: <20230131043816.4525-1-steev@kali.org>
- <20230131043816.4525-5-steev@kali.org>
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230130235926.2419776-1-konrad.dybcio@linaro.org>
+ <20230130235926.2419776-8-konrad.dybcio@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230131043816.4525-5-steev@kali.org>
+In-Reply-To: <20230130235926.2419776-8-konrad.dybcio@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -90,110 +83,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31/01/2023 05:38, Steev Klimaszewski wrote:
-> Signed-off-by: Steev Klimaszewski <steev@kali.org>
-> ---
->  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 68 +++++++++++++++++++
->  1 file changed, 68 insertions(+)
+On 31/01/2023 00:59, Konrad Dybcio wrote:
+> Add device tree bindings for graphics clock controller for Qualcomm
+> Technology Inc's SM6115 SoCs.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> index f936b020a71d..951438ac5946 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> @@ -24,6 +24,8 @@ / {
->  	aliases {
->  		i2c4 = &i2c4;
->  		i2c21 = &i2c21;
-> +		serial0 = &uart17;
-> +		serial1 = &uart2;
->  	};
->  
->  	wcd938x: audio-codec {
-> @@ -712,6 +714,32 @@ &qup0 {
->  	status = "okay";
->  };
->  
-> +&uart2 {
-> +	status = "okay";
-> +
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&uart2_state>;
-> +
-> +	bluetooth {
-> +		compatible = "qcom,wcn6855-bt";
-> +
-> +/*
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
 
-Why dead code should be in the kernel?
 
-> +		vddio-supply = <&vreg_s4a_1p8>;
-> +		vddxo-supply = <&vreg_l7a_1p8>;
-> +		vddrf-supply = <&vreg_l17a_1p3>;
-> +		vddch0-supply = <&vreg_l25a_3p3>;
-> +		vddch1-supply = <&vreg_l23a_3p3>;
-> +*/
-> +		max-speed = <3200000>;
-> +
-> +		enable-gpios = <&tlmm 133 GPIO_ACTIVE_HIGH>;
-> +		swctrl-gpios = <&tlmm 132 GPIO_ACTIVE_HIGH>;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&bt_en>;
-> +	};
-> +};
-> +
->  &qup1 {
->  	status = "okay";
->  };
-> @@ -720,6 +748,12 @@ &qup2 {
->  	status = "okay";
->  };
->  
-> +&uart17 {
-> +	compatible = "qcom,geni-debug-uart";
-> +
-> +	status = "okay";
-> +};
-> +
->  &remoteproc_adsp {
->  	firmware-name = "qcom/sc8280xp/LENOVO/21BX/qcadsp8280.mbn";
->  
-> @@ -980,6 +1014,19 @@ hastings_reg_en: hastings-reg-en-state {
->  &tlmm {
->  	gpio-reserved-ranges = <70 2>, <74 6>, <83 4>, <125 2>, <128 2>, <154 7>;
->  
-> +	bt_en: bt-en-state {
-> +		hstp-sw-ctrl {
-
-Does not look like you tested the DTS against bindings. Please run `make
-dtbs_check` (see Documentation/devicetree/bindings/writing-schema.rst
-for instructions).
-
-> +			pins = "gpio132";
-> +			function = "gpio";
-> +		};
-> +
-> +		hstp-bt-en {
-> +			pins = "gpio133";
-> +			function = "gpio";
-> +			drive-strength = <16>;
-> +		};
-> +	};
-> +
->  	edp_reg_en: edp-reg-en-state {
->  		pins = "gpio25";
->  		function = "gpio";
-> @@ -1001,6 +1048,27 @@ i2c4_default: i2c4-default-state {
->  		bias-disable;
->  	};
->  
-> +	uart2_state: uart2-state {
-> +		cts {
-
-Does not look like you tested the DTS against bindings. Please run `make
-dtbs_check` (see Documentation/devicetree/bindings/writing-schema.rst
-for instructions).
-
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
