@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 999DB682CBB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Jan 2023 13:38:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8CD9E682CBD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Jan 2023 13:38:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231460AbjAaMiQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Jan 2023 07:38:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50852 "EHLO
+        id S231678AbjAaMin (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Jan 2023 07:38:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231907AbjAaMiM (ORCPT
+        with ESMTP id S231588AbjAaMim (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Jan 2023 07:38:12 -0500
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3866C3EFC0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 04:38:03 -0800 (PST)
-Received: by mail-ej1-x62b.google.com with SMTP id qw12so25263180ejc.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 04:38:03 -0800 (PST)
+        Tue, 31 Jan 2023 07:38:42 -0500
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 313BF40FE
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 04:38:41 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id hx15so21638328ejc.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 04:38:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=IKxbXbEULBKOHnps7S4m6S4/h0JUMvMF27+rV1zb/eY=;
-        b=KoQK4BP+iUuerkkYupPQ6Mfvtfw+GCDZgMZNWp3fj+UhiBjoITRpmFXWpZIkOqIu3o
-         Lc2EsgPGLh6reRhpPZY0PcmnKo2V5l2pcLIkTEXKZRWFBbaKBJBUy9uO+44HiqM1dIgt
-         uJ8gqAa5NcErmSLuyDIPhKk3VLZQ7M+eCBFNN/OwqhBIdkUU0rzR24l6fgcZp6VhWsU0
-         cBsEc7T5tmSExLTiC3LmqVuqvGqFAwG+EWBw9KEbP1xBWsra6fGUuQIYtnfeFPuDdi9n
-         m2TMoX/uXM80Nva6rNxYmJcnoZ1dBNOrEur5JIhiPMmvi0IrJ9+/0d/Rl0aPR9Jv/Sch
-         DMTg==
+        bh=CAwB84/ZLTKABeybjLHE8x7NDspYcIkJgFYz/67K4gc=;
+        b=chcRZipYoaLZqFyu8QtBoDIK4eDRDkKc87Ye/C504U3KX+pu3Rid+dR3sIfQCnnr1I
+         k1p0K42YK3qTbpwcXzw0RVhXiN7vY5lDWp7mM3kHqFRO9zy+gbpUSYtNW2OfCQ4ya6V5
+         ixAvVthPzBUZrDyDmq15ylsDPsfVeUHUSPcfIWXCwiKlnmkJhD3Mi9MgnTZY9hZT37lM
+         UGgC/e5xNokrtn3rGoT05oj+Zo7ikaTppjSvS/7dEyZG3/Yk4c6qkxcSZBbKIvzcm+gm
+         /VwTLbRB4aMChhmiJNo3tuZUoSqcA/IoHikVvTj5orSqfHjPXtc38mQqrWQKHSjxS9WC
+         hTKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IKxbXbEULBKOHnps7S4m6S4/h0JUMvMF27+rV1zb/eY=;
-        b=XAu9r8dS+l8emDFBeORJt2XNGx76JjJneZh8rLn7uwmPWCMQp1TEcDpgfULFTbwj2w
-         ZG6q+jUlJ7a8+COwOxnKx6NN6WzKGYfcIq9kNqN3PlUFcrZY6q/huzeL3yB8yjwX0f36
-         BvX2LrA8dd/Xi3duyf3YPWX9xRRPYlBwJIV2vELVm8MsWsiSlKfaxoWsxl/5uINp/RRZ
-         AJMKqNE8QfI4rYVuGyIjjFAfqF3jcAJkXvRQDcx99no1PsfAuNO2Gh64F8PZbzccyZ9n
-         dt7CmPbpD9lGdaWMYKTJ5V8i4SUXsocQgX7SH6/4MwdtCkxWMnI9U6hCPcqTEXlJ08Dm
-         uLaA==
-X-Gm-Message-State: AO0yUKXM667F0zLi8h76AIfowvJb1NsF98T9oE36JJQ8s8234dOWzMZU
-        w5Z0GUZ4DDPVj0M9pZ/CQfIgUg==
-X-Google-Smtp-Source: AK7set+tpLdZpV3Lq1clFGcWzNITzxmhts98f/KIaiISBd86thLtpFk5vBVlowdEYD8yiRezgckW1Q==
-X-Received: by 2002:a17:907:1c84:b0:889:b6ae:75fe with SMTP id nb4-20020a1709071c8400b00889b6ae75femr3706521ejc.61.1675168681710;
-        Tue, 31 Jan 2023 04:38:01 -0800 (PST)
+        bh=CAwB84/ZLTKABeybjLHE8x7NDspYcIkJgFYz/67K4gc=;
+        b=h/Svks93lwf8QOzt+ebyrA23q1lCyQikyEitPLTetVA/BWlUw93aOhzt/hQqOxcDTS
+         M1Y8n29NPVYM2ChdDvUjqH1R0yEG11CrS4HA6sYXubfzwv5R3vO5ksvNjpsHbl7QnSOc
+         0R9bC/j8FQUOMWzpi60YTm3nPEOI4sDtMjnVGHrwa2R6CsTFN6IYyT4MDyLBOM03pbJK
+         hokyd9p30/+h2qg2w8uKt2dD9sUXLDgAqjza8I2LbKJHYVJUWYSsZ2CcBAByc1cpycb7
+         7wZajNtmBM7lG0MZxA6G1ujIgfLKk0cVmCzUyca0lNrh+FzpHYnxbRPIq8yfU8+ek+Su
+         AP8Q==
+X-Gm-Message-State: AO0yUKVaFgLvJhA7JYhYRUX5AXR3A32eb6ap9qbOul/rdwBy4h0ltAxr
+        NWAD3qy2LQEN7HVuU3m0RR7rMg==
+X-Google-Smtp-Source: AK7set//+6SOcbEvweNAhtm7cKrmpGTRGAFTiADDWw09PueMUKZRe3XT1Rbro1Vh+6lBe83Na++5PA==
+X-Received: by 2002:a17:906:28d2:b0:87d:f29:3a14 with SMTP id p18-20020a17090628d200b0087d0f293a14mr15839280ejd.68.1675168719766;
+        Tue, 31 Jan 2023 04:38:39 -0800 (PST)
 Received: from [192.168.1.101] (abyl20.neoplus.adsl.tpnet.pl. [83.9.31.20])
-        by smtp.gmail.com with ESMTPSA id s9-20020a170906a18900b0088519b92074sm4504437ejy.128.2023.01.31.04.38.00
+        by smtp.gmail.com with ESMTPSA id kv11-20020a17090778cb00b0088a2397cb2csm2310925ejc.143.2023.01.31.04.38.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 31 Jan 2023 04:38:01 -0800 (PST)
-Message-ID: <8e11a80c-8056-e226-e051-c01b82f29d05@linaro.org>
-Date:   Tue, 31 Jan 2023 13:37:59 +0100
+        Tue, 31 Jan 2023 04:38:39 -0800 (PST)
+Message-ID: <d5a37ebd-6614-be91-f500-46ba7be1bed6@linaro.org>
+Date:   Tue, 31 Jan 2023 13:38:37 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.0
-Subject: Re: [PATCH v4 4/8] clk: qcom: Add GPU clock controller driver for
- SM6125
+Subject: Re: [PATCH v4 8/8] clk: qcom: Add GPU clock controller driver for
+ SM6115
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         linux-arm-msm@vger.kernel.org, andersson@kernel.org,
@@ -66,15 +66,16 @@ Cc:     marijn.suijten@somainline.org,
         Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
         linux-clk@vger.kernel.org
 References: <20230130235926.2419776-1-konrad.dybcio@linaro.org>
- <20230130235926.2419776-5-konrad.dybcio@linaro.org>
- <ac2d458c-3cb9-9117-82ca-b025b92073df@linaro.org>
+ <20230130235926.2419776-9-konrad.dybcio@linaro.org>
+ <550dd5e8-6238-0e48-bac7-7c9b6e67cb00@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <ac2d458c-3cb9-9117-82ca-b025b92073df@linaro.org>
+In-Reply-To: <550dd5e8-6238-0e48-bac7-7c9b6e67cb00@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -83,40 +84,61 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 31.01.2023 10:00, Dmitry Baryshkov wrote:
+On 31.01.2023 10:25, Dmitry Baryshkov wrote:
 > On 31/01/2023 01:59, Konrad Dybcio wrote:
->> Add support for the GPU clock controller found on SM6125.
+>> Add support for the GPU clock controller found on SM6115.
 >>
->> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 >> ---
-[...]
-
->> +    /* Set recommended WAKEUP/SLEEP settings for the gpu_cc_cx_gmu_clk */
->> +    regmap_update_bits(regmap, gpu_cc_cx_gmu_clk.clkr.enable_reg, CBCR_WAKEUP, 0xf);
->> +    regmap_update_bits(regmap, gpu_cc_cx_gmu_clk.clkr.enable_reg, CBCR_SLEEP, 0xf);
+>>   drivers/clk/qcom/Kconfig        |   9 +
+>>   drivers/clk/qcom/Makefile       |   1 +
+>>   drivers/clk/qcom/gpucc-sm6115.c | 512 ++++++++++++++++++++++++++++++++
+>>   3 files changed, 522 insertions(+)
+>>   create mode 100644 drivers/clk/qcom/gpucc-sm6115.c
 > 
-> I think you have to use FIELD_PREP here. regmap_update_bits doesn't shift the value according to the mask, does it?
+> [skipped]
 > 
-You're right.
+>> +static int gpu_cc_sm6115_probe(struct platform_device *pdev)
+>> +{
+>> +    struct regmap *regmap;
+>> +    unsigned int value, mask;
+>> +
+>> +    regmap = qcom_cc_map(pdev, &gpu_cc_sm6115_desc);
+>> +    if (IS_ERR(regmap))
+>> +        return PTR_ERR(regmap);
+>> +
+>> +    clk_alpha_pll_configure(&gpu_cc_pll0, regmap, &gpu_cc_pll0_config);
+>> +    clk_alpha_pll_configure(&gpu_cc_pll1, regmap, &gpu_cc_pll1_config);
+>> +
+>> +    /* Recommended WAKEUP/SLEEP settings for the gpu_cc_cx_gmu_clk */
+>> +    mask = CX_GMU_CBCR_WAKE_MASK << CX_GMU_CBCR_WAKE_SHIFT;
+>> +    mask |= CX_GMU_CBCR_SLEEP_MASK << CX_GMU_CBCR_SLEEP_SHIFT;
+>> +    value = 0xf << CX_GMU_CBCR_WAKE_SHIFT | 0xf << CX_GMU_CBCR_SLEEP_SHIFT;
+>> +    regmap_update_bits(regmap, gpu_cc_cx_gmu_clk.clkr.enable_reg, mask, value);
+>> +
+>> +    /* Set up PERIPH/MEM retain on the GPU core clock */
+>> +    regmap_update_bits(regmap, gpu_cc_gx_gfx3d_clk.halt_reg,
+>> +               (BIT(14) | BIT(13)), (BIT(14) | BIT(13)));
+> 
+> But you have your new helpers to set these values, don't you?
+Welp, that's what I get for managing 3 almost-identical drivers
+at once ;) Will fix.
 
 Konrad
+> 
 >> +
->> +    qcom_branch_set_force_mem_core(regmap, gpu_cc_gx_gfx3d_clk.halt_reg, true);
->> +    qcom_branch_set_force_periph_on(regmap, gpu_cc_gx_gfx3d_clk.halt_reg, true);
->> +
->> +    return qcom_cc_really_probe(pdev, &gpu_cc_sm6125_desc, regmap);
+>> +    return qcom_cc_really_probe(pdev, &gpu_cc_sm6115_desc, regmap);
 >> +}
 >> +
->> +static struct platform_driver gpu_cc_sm6125_driver = {
->> +    .probe = gpu_cc_sm6125_probe,
+>> +static struct platform_driver gpu_cc_sm6115_driver = {
+>> +    .probe = gpu_cc_sm6115_probe,
 >> +    .driver = {
->> +        .name = "gpucc-sm6125",
->> +        .of_match_table = gpu_cc_sm6125_match_table,
+>> +        .name = "sm6115-gpucc",
+>> +        .of_match_table = gpu_cc_sm6115_match_table,
 >> +    },
 >> +};
->> +module_platform_driver(gpu_cc_sm6125_driver);
+>> +module_platform_driver(gpu_cc_sm6115_driver);
 >> +
->> +MODULE_DESCRIPTION("QTI GPUCC SM6125 Driver");
+>> +MODULE_DESCRIPTION("QTI GPU_CC SM6115 Driver");
 >> +MODULE_LICENSE("GPL");
 > 
