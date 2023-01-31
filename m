@@ -2,110 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B77786834FD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Jan 2023 19:16:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B79586835CE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Jan 2023 19:56:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230007AbjAaSQf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Jan 2023 13:16:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43704 "EHLO
+        id S231760AbjAaS4d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Jan 2023 13:56:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229590AbjAaSQe (ORCPT
+        with ESMTP id S231891AbjAaS4a (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Jan 2023 13:16:34 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2521A1632E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 10:16:33 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id n28-20020a05600c3b9c00b003ddca7a2bcbso1320682wms.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 10:16:33 -0800 (PST)
+        Tue, 31 Jan 2023 13:56:30 -0500
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13871564A2;
+        Tue, 31 Jan 2023 10:56:28 -0800 (PST)
+Received: by mail-pl1-x62e.google.com with SMTP id h9so7446785plf.9;
+        Tue, 31 Jan 2023 10:56:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=UPKrSP4Ne/SNxeLI36oVC9k3148tGOXUA1eFQ1WZK8Y=;
-        b=kjKgH5WUo/W1L09w3eQ1emaWqJGQzJPLq0yAWiwSzppFk7snauHaNUm6fdJwN3WMFp
-         osmQeaMMdlVpoJOyEhp80n066EhpehO1YAVq8Skef8N90BTp2eF6mJwd+9lMqKiiO9VR
-         HQgS1I2agvVmBXXf6NpMGFRfc2yAK3Nje32KvW5LURhIo/BPEQ87E/ztwp18YmBkyaoN
-         2ErB5+KoCoqLdVVjT5ZoU8VJ/WrwZfes1uXUXiT9e9YT3XOTgLlB1D+Pca2I+FfvkzQL
-         znhq7icCbBagdjZa63x8LBxrppUCBk5rex9IB0Cfxh7JRE7I2hmyRd7L79uYXtQNk3wy
-         DwTg==
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Vo+PP5rZvWzLJ4tS2JVrm/BkjseLKTB/pXjSiJS1fiA=;
+        b=NjNUfeiwVedY7ijAaJxzQFpFTTobwOPiU41FJ5iXy/Wq+F5e9+LGe+pdUQEY6vlBEP
+         qEp3Qd9hK3vgULEWl28bIZWr7dpCCiCCIIhWKx5oYwh+6mqWsPgJtkvgDjaFsVMSmIBD
+         bi6XJqZCN0gZk22ObkHTTLAr4UWh4W6ovLJvc0WDQNyiDBlAhK9Jfezh5T+sb5b/QanF
+         b8Wl+Qd4LeMTml7+WbLs/erEBn53MSL04J8HRJBnKVCL1xeeGYhYj6XKN09HS8Vkcr4P
+         qE3ZxCjABT1vjVgmYvJr7UoFu5L7FdeQ+Uw9+qFjRUBtZyl+hWmqaoFuNEaORtoUdpvU
+         HXlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UPKrSP4Ne/SNxeLI36oVC9k3148tGOXUA1eFQ1WZK8Y=;
-        b=v8HQuwcmpW6onJKimxjiCbeu0kgTbUu/yXpdV0N0MNvfz+fKwQ56c64Sz9vcejUmev
-         cfWVTEvpSCT0Wjkfgan+E4LtS2O1KRgif+81XYnSyvQfsRkwvlY3dl7B5h95EL+HBDpN
-         +V7JcuWJtMYe0HNLqnjh+VT2MyjRlshS9+qkKMhvEHcxOXpJrrFENADVHsi6KvXPC0Kc
-         jRT3TXXRitO1OD37vSb1v49Hp7fO5raPfdPuRnN/JZ1tDrGL6/nVG/xv8uYDuKW6AOYL
-         A1ETaBn1aNU95UG5ASFAOYQi1WVivaqc26tfVPTSNNkros27JFe0BKwNB0g0aVny/FPa
-         C74w==
-X-Gm-Message-State: AO0yUKWd55JzVn/npl96OMhQPgQPCXCG/6HJfjzSX1BBXaA4PlyNgP+B
-        41+vngJ8Xxp1uWDGc26CCIj/vA==
-X-Google-Smtp-Source: AK7set8bPV+NrF1XZ7KloiOXaXxOlRpzXbUWHITAFZeTAADJ6cGnUcIbU3oPQaEmkbyjZLATQAC3ow==
-X-Received: by 2002:a05:600c:a07:b0:3dc:2137:d67d with SMTP id z7-20020a05600c0a0700b003dc2137d67dmr24054500wmp.16.1675188991728;
-        Tue, 31 Jan 2023 10:16:31 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id j25-20020a05600c1c1900b003daf6e3bc2fsm58592wms.1.2023.01.31.10.16.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 31 Jan 2023 10:16:31 -0800 (PST)
-Message-ID: <871e93e8-5a20-461a-50c0-c7c3c0a7ce8f@linaro.org>
-Date:   Tue, 31 Jan 2023 19:16:29 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH V3 1/7] dt-bindings: Add ipq9574 clock and reset
- definitions
-Content-Language: en-US
-To:     devi priya <quic_devipriy@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
-        sboyd@kernel.org, linus.walleij@linaro.org,
-        catalin.marinas@arm.com, will@kernel.org, p.zabel@pengutronix.de,
-        shawnguo@kernel.org, arnd@arndb.de, marcel.ziswiler@toradex.com,
-        dmitry.baryshkov@linaro.org, nfraprado@collabora.com,
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Vo+PP5rZvWzLJ4tS2JVrm/BkjseLKTB/pXjSiJS1fiA=;
+        b=f2xS4KwCRHAqrsUm1JxGeacLX2fOJWA9uO+gEep0wc87HFO9Y4bfIQwwxk6OTPCOlC
+         r9I+z7KZfWHSi+jwwNUQSmfxAzn1pTWEO4Dj+Tp8Vdm3j1ZhGOY2K3LkoDq0m5I4cgw8
+         UcmrOQFS1udJOVas1DtEso+LwPSBm9M9thwAK80mpfGkGDV40XnDXxnn7rvbXJkjiL68
+         meF7Yit3Y7Txbiwd5MN+0L6UWIKh0wRG5WMvvXP4gMsQ7xIzYA4H/ydVvD19hZEQWp2H
+         KTY6vM3z+8XHyVaiQwp2HGF5kLYjPb703z4XkEFkQsoDsMEPn8Olbq3bq1WmlLtBvaC+
+         nT8w==
+X-Gm-Message-State: AO0yUKVD7NZ5qo9eKoRvUYK1Hicz9w92XQiEvo1hR6EXdlaZA+6sbE6a
+        dclX0gxhoBMBdvfNKCzVgcg=
+X-Google-Smtp-Source: AK7set8BWzzHDDq6BZxjX/SxLpe2V3z0ke8s/n1Zor+AIq9deBw2h//6/n/pGYXbJImCXxooRRwO1A==
+X-Received: by 2002:a17:902:e2d3:b0:196:780a:ada8 with SMTP id l19-20020a170902e2d300b00196780aada8mr23941plc.6.1675191387610;
+        Tue, 31 Jan 2023 10:56:27 -0800 (PST)
+Received: from Gentoo (n220246252084.netvigator.com. [220.246.252.84])
+        by smtp.gmail.com with ESMTPSA id l8-20020a170903244800b0019601f98550sm1412397pls.132.2023.01.31.10.56.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 31 Jan 2023 10:56:26 -0800 (PST)
+Date:   Wed, 1 Feb 2023 02:56:20 +0800
+From:   Jianhua Lu <lujianhua000@gmail.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Kees Cook <keescook@chromium.org>,
+        Tony Luck <tony.luck@intel.com>,
+        "Guilherme G . Piccoli" <gpiccoli@igalia.com>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
-        quic_poovendh@quicinc.com
-References: <20230130125528.11509-1-quic_devipriy@quicinc.com>
- <20230130125528.11509-2-quic_devipriy@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230130125528.11509-2-quic_devipriy@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+Subject: Re: [PATCH v4 1/2] dt-bindings: arm: qcom: Add Xiaomi Mi Pad 5 Pro
+ (xiaomi-elish)
+Message-ID: <Y9lkVAbvxMoOOrdp@Gentoo>
+References: <20230131123515.833-1-lujianhua000@gmail.com>
+ <ecfd20e4-905a-3ce3-86af-c9d9ad0cfd94@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ecfd20e4-905a-3ce3-86af-c9d9ad0cfd94@linaro.org>
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/01/2023 13:55, devi priya wrote:
-> Add clock and reset ID definitions for ipq9574
+On Tue, Jan 31, 2023 at 07:06:31PM +0100, Krzysztof Kozlowski wrote:
+> On 31/01/2023 13:35, Jianhua Lu wrote:
+> > Add a compatible for Xiaomi Mi Pad 5 Pro.
+> > 
+> > Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
+> > ---
+> > No changes in v4
+> > 
+> > Changes in v3:
+> >   - Pick up Krzysztof's A-b
 > 
-> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
-> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
-> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
-> ---
-
-Subject prefixes: dt-bindings: clock:
-
->  Changes in V3:
->         - Added a separate clock binding for ipq9574 and reverted the
->           changes from qcom,gcc-other.yaml
+> Where is it?
+Sorry, I accidentally drop it when I copy paste changes log.
+I will readd it for v5, sorry.
 > 
-
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
-
+> Best regards,
+> Krzysztof
+> 
