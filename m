@@ -2,198 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 442D468394E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Jan 2023 23:23:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C42ED683962
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Jan 2023 23:34:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229875AbjAaWXA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Jan 2023 17:23:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51760 "EHLO
+        id S229963AbjAaWed (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Jan 2023 17:34:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231903AbjAaWW7 (ORCPT
+        with ESMTP id S229613AbjAaWec (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Jan 2023 17:22:59 -0500
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C98FC5B584
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 14:22:22 -0800 (PST)
-Received: by mail-pl1-x634.google.com with SMTP id b5so9330320plz.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 14:22:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rXDYbKDbTfFR4g/Nh4bZjHD3KmThZ7Sh2niPtOlScU0=;
-        b=CbHl3tEqDWlEJUBNu9QPcromD2gQpIqbwlCkQjXXAScaqPJL/MvAW1LggsaGBn4gNL
-         b5n3pTdKMYTrJUhufb291yU3gE0pxFAKrD2N+pY6CCVlDjVyr7AKStrg8h+xoBHaKfVf
-         VpgpdnzQkmCa+/5FPFl2/EymlbNT7QZ0AVRtc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=rXDYbKDbTfFR4g/Nh4bZjHD3KmThZ7Sh2niPtOlScU0=;
-        b=tMQSje/pqYFuuIRH/HSPfD/boq7gGITtCHqOb6oqw9uZuPi1kOhPNAFNY0fJ4quMsN
-         T38o5+lBC8tejr3POfilVgH3437NjEhkBN9cov4MCuXuMKRwTHCIT09gORR1/XlDtWNw
-         VDrAbXB5nj5KDsEfxzltIJ6zIQXZpdukP9hOBQu54UUeZndKObVcCB+OwBbOH0z6DALT
-         5Ix5BwnM4kzJqDmK/WGynd7z+dvlXTrVsHuBrqadeqiZiGbdzndiZY/RvQKW9D3lAMC3
-         6rp4yCA+Seq7YK0gyqAhi0OWwjjTAVquDNTMNNSW0BNPFFdEZdtdECvSd+ey6oy2NRQZ
-         xNtg==
-X-Gm-Message-State: AO0yUKXHUpSlIzJBFkl5yPoHm7gYMGXvIixdiIOL46AsdZgz6W/TjgFi
-        hhARbe+1TiRWdyOhSXB+BqrVAw==
-X-Google-Smtp-Source: AK7set9KafniYlXlikUNcVsRH/xqACci19OB3GKcIucm86pRwywvb5ce+kHpCziKTrpY5ykvp6RiFw==
-X-Received: by 2002:a17:903:2312:b0:196:8cf4:9ca7 with SMTP id d18-20020a170903231200b001968cf49ca7mr684707plh.19.1675203741972;
-        Tue, 31 Jan 2023 14:22:21 -0800 (PST)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:9d:2:138e:73d3:502:64f])
-        by smtp.gmail.com with ESMTPSA id d18-20020a170903231200b0019339f3368asm10377471plh.3.2023.01.31.14.22.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Jan 2023 14:22:21 -0800 (PST)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     dri-devel@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andrzej Hajda <andrzej.hajda@intel.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Sean Paul <sean@poorly.run>, Jonas Karlman <jonas@kwiboo.se>,
-        Vinod Koul <vkoul@kernel.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@gmail.com>,
-        freedreno@lists.freedesktop.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Dave Stevenson <dave.stevenson@raspberrypi.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-kernel@vger.kernel.org
-Subject: [RFT PATCH v2 3/3] drm/msm/dsi: More properly handle errors in regards to dsi_mgr_bridge_power_on()
-Date:   Tue, 31 Jan 2023 14:18:26 -0800
-Message-Id: <20230131141756.RFT.v2.3.I3c87b53c4ab61a7d5e05f601a4eb44c7e3809a01@changeid>
-X-Mailer: git-send-email 2.39.1.456.gfc5497dd1b-goog
-In-Reply-To: <20230131141756.RFT.v2.1.I723a3761d57ea60c5dd754c144aed6c3b2ea6f5a@changeid>
-References: <20230131141756.RFT.v2.1.I723a3761d57ea60c5dd754c144aed6c3b2ea6f5a@changeid>
+        Tue, 31 Jan 2023 17:34:32 -0500
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6066113EB;
+        Tue, 31 Jan 2023 14:34:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1675204471; x=1706740471;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=D8gJi0ehG5WvTwectwLP//Bmc1IPekTGj1oNIj2Eicc=;
+  b=kYqXdS+tad65k8TxdjpmShBjc/tLDWJZf2mMhbdEfbpZujosdjsU1TI7
+   01RY/89bsWuqdmmltgsFACUkhVx5qDf8Rlnc1qQo9nXghrqGB3btGXVZ4
+   EJgbgXL0eZ8OC/GacOi8Qw/yLuFY9ViCV9t65NStrtVlGFRcepm9DcqNA
+   yEUeHeBYyr5Fvvnwfgv7LPMR6cXGtuf/XirIkNvbSi6abnm6viiGoQ8ip
+   4ap1TDcg0mk+3F4Pw3AxTQzSiLrmP+MCZAUp28WmElqT1vrzN9D8O+2PK
+   oy8gcskVMW15CcieCeTklckrQRSOdOOVsGicfDtiNiZXku9eiYccQzD8b
+   A==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10607"; a="315948019"
+X-IronPort-AV: E=Sophos;i="5.97,261,1669104000"; 
+   d="scan'208";a="315948019"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Jan 2023 14:34:31 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10607"; a="788619371"
+X-IronPort-AV: E=Sophos;i="5.97,261,1669104000"; 
+   d="scan'208";a="788619371"
+Received: from lkp-server01.sh.intel.com (HELO ffa7f14d1d0f) ([10.239.97.150])
+  by orsmga004.jf.intel.com with ESMTP; 31 Jan 2023 14:34:28 -0800
+Received: from kbuild by ffa7f14d1d0f with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1pMzCt-0004lK-2T;
+        Tue, 31 Jan 2023 22:34:27 +0000
+Date:   Wed, 1 Feb 2023 06:33:38 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: Re: [PATCH 2/2] clk: qcom: gpucc-sdm845: fix clk_dis_wait being
+ programmed for CX GDSC
+Message-ID: <202302010608.GDyw4Xuo-lkp@intel.com>
+References: <20230131092432.122711-2-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230131092432.122711-2-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In commit 7d8e9a90509f ("drm/msm/dsi: move DSI host powerup to modeset
-time") the error handling with regards to dsi_mgr_bridge_power_on()
-got a bit worse. Specifically if we failed to power the bridge on then
-nothing would really notice. The modeset function couldn't return an
-error and thus we'd blindly go forward and try to do the pre-enable.
+Hi Dmitry,
 
-In commit ec7981e6c614 ("drm/msm/dsi: don't powerup at modeset time
-for parade-ps8640") we added a special case to move the powerup back
-to pre-enable time for ps8640. When we did that, we didn't try to
-recover the old/better error handling just for ps8640.
+I love your patch! Yet something to improve:
 
-In the patch ("drm/msm/dsi: Stop unconditionally powering up DSI hosts
-at modeset") we've now moved the powering up back to exclusively being
-during pre-enable. That means we can add the better error handling
-back in, so let's do it. To do so we'll add a new function
-dsi_mgr_bridge_power_off() that's matches how errors were handled
-prior to commit 7d8e9a90509f ("drm/msm/dsi: move DSI host powerup to
-modeset time").
+[auto build test ERROR on clk/clk-next]
+[also build test ERROR on linus/master v6.2-rc6 next-20230131]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-NOTE: Now that we have dsi_mgr_bridge_power_off(), it feels as if we
-should be calling it in dsi_mgr_bridge_post_disable(). That would make
-some sense, but doing so would change the current behavior and thus
-should be a separate patch. Specifically:
-* dsi_mgr_bridge_post_disable() always calls dsi_mgr_phy_disable()
-  even in the slave-DSI case of bonded DSI. We'd need to add special
-  handling for this if it's truly needed.
-* dsi_mgr_bridge_post_disable() calls msm_dsi_phy_pll_save_state()
-  midway through the poweroff.
-* dsi_mgr_bridge_post_disable() has a different order of some of the
-  poweroffs / IRQ disables.
-For now we'll leave dsi_mgr_bridge_post_disable() alone.
+url:    https://github.com/intel-lab-lkp/linux/commits/Dmitry-Baryshkov/clk-qcom-gpucc-sdm845-fix-clk_dis_wait-being-programmed-for-CX-GDSC/20230131-172656
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git clk-next
+patch link:    https://lore.kernel.org/r/20230131092432.122711-2-dmitry.baryshkov%40linaro.org
+patch subject: [PATCH 2/2] clk: qcom: gpucc-sdm845: fix clk_dis_wait being programmed for CX GDSC
+config: arm64-randconfig-r016-20230130 (https://download.01.org/0day-ci/archive/20230201/202302010608.GDyw4Xuo-lkp@intel.com/config)
+compiler: clang version 16.0.0 (https://github.com/llvm/llvm-project 4196ca3278f78c6e19246e54ab0ecb364e37d66a)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # install arm64 cross compiling tool for clang build
+        # apt-get install binutils-aarch64-linux-gnu
+        # https://github.com/intel-lab-lkp/linux/commit/8222d81144cbdf9b51ffe1ffc61e16b471456329
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Dmitry-Baryshkov/clk-qcom-gpucc-sdm845-fix-clk_dis_wait-being-programmed-for-CX-GDSC/20230131-172656
+        git checkout 8222d81144cbdf9b51ffe1ffc61e16b471456329
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm64 olddefconfig
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash drivers/clk/qcom/
 
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
+If you fix the issue, kindly add following tag where applicable
+| Reported-by: kernel test robot <lkp@intel.com>
 
-Changes in v2:
-- ("More properly handle errors...") new for v2.
+All errors (new ones prefixed by >>):
 
- drivers/gpu/drm/msm/dsi/dsi_manager.c | 32 ++++++++++++++++++++++-----
- 1 file changed, 26 insertions(+), 6 deletions(-)
+>> drivers/clk/qcom/gpucc-sdm845.c:122:3: error: field designator 'clk_dis_wait' does not refer to any field in type 'struct gdsc'; did you mean 'clk_dis_wait_val'?
+           .clk_dis_wait = 0x8,
+            ^~~~~~~~~~~~
+            clk_dis_wait_val
+   drivers/clk/qcom/gdsc.h:47:17: note: 'clk_dis_wait_val' declared here
+           unsigned int                    clk_dis_wait_val;
+                                           ^
+   1 error generated.
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-index 2197a54b9b96..28b8012a21f2 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-@@ -228,7 +228,7 @@ static void msm_dsi_manager_set_split_display(u8 id)
- 	}
- }
- 
--static void dsi_mgr_bridge_power_on(struct drm_bridge *bridge)
-+static int dsi_mgr_bridge_power_on(struct drm_bridge *bridge)
- {
- 	int id = dsi_mgr_bridge_get_id(bridge);
- 	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
-@@ -268,14 +268,31 @@ static void dsi_mgr_bridge_power_on(struct drm_bridge *bridge)
- 	if (is_bonded_dsi && msm_dsi1)
- 		msm_dsi_host_enable_irq(msm_dsi1->host);
- 
--	return;
-+	return 0;
- 
- host1_on_fail:
- 	msm_dsi_host_power_off(host);
- host_on_fail:
- 	dsi_mgr_phy_disable(id);
- phy_en_fail:
--	return;
-+	return ret;
-+}
-+
-+static void dsi_mgr_bridge_power_off(struct drm_bridge *bridge)
-+{
-+	int id = dsi_mgr_bridge_get_id(bridge);
-+	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
-+	struct msm_dsi *msm_dsi1 = dsi_mgr_get_dsi(DSI_1);
-+	struct mipi_dsi_host *host = msm_dsi->host;
-+	bool is_bonded_dsi = IS_BONDED_DSI();
-+
-+	msm_dsi_host_disable_irq(host);
-+	if (is_bonded_dsi && msm_dsi1) {
-+		msm_dsi_host_disable_irq(msm_dsi1->host);
-+		msm_dsi_host_power_off(msm_dsi1->host);
-+	}
-+	msm_dsi_host_power_off(host);
-+	dsi_mgr_phy_disable(id);
- }
- 
- static void dsi_mgr_bridge_pre_enable(struct drm_bridge *bridge)
-@@ -295,7 +312,11 @@ static void dsi_mgr_bridge_pre_enable(struct drm_bridge *bridge)
- 	if (is_bonded_dsi && !IS_MASTER_DSI_LINK(id))
- 		return;
- 
--	dsi_mgr_bridge_power_on(bridge);
-+	ret = dsi_mgr_bridge_power_on(bridge);
-+	if (ret) {
-+		dev_err(&msm_dsi->pdev->dev, "Power on failed: %d\n", ret);
-+		return;
-+	}
- 
- 	ret = msm_dsi_host_enable(host);
- 	if (ret) {
-@@ -316,8 +337,7 @@ static void dsi_mgr_bridge_pre_enable(struct drm_bridge *bridge)
- host1_en_fail:
- 	msm_dsi_host_disable(host);
- host_en_fail:
--
--	return;
-+	dsi_mgr_bridge_power_off(bridge);
- }
- 
- void msm_dsi_manager_tpg_enable(void)
+
+vim +122 drivers/clk/qcom/gpucc-sdm845.c
+
+   118	
+   119	static struct gdsc gpu_cx_gdsc = {
+   120		.gdscr = 0x106c,
+   121		.gds_hw_ctrl = 0x1540,
+ > 122		.clk_dis_wait = 0x8,
+   123		.pd = {
+   124			.name = "gpu_cx_gdsc",
+   125		},
+   126		.pwrsts = PWRSTS_OFF_ON,
+   127		.flags = VOTABLE,
+   128	};
+   129	
+
 -- 
-2.39.1.456.gfc5497dd1b-goog
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests
