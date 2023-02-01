@@ -2,74 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CCD40686323
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 10:51:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3DEBB686365
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 11:07:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231737AbjBAJvZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Feb 2023 04:51:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35870 "EHLO
+        id S231858AbjBAKHF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Feb 2023 05:07:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229955AbjBAJvZ (ORCPT
+        with ESMTP id S231752AbjBAKHC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Feb 2023 04:51:25 -0500
-Received: from mail-vs1-xe29.google.com (mail-vs1-xe29.google.com [IPv6:2607:f8b0:4864:20::e29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18F8232505
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Feb 2023 01:51:24 -0800 (PST)
-Received: by mail-vs1-xe29.google.com with SMTP id p10so14563970vsu.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Feb 2023 01:51:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=raspberrypi.com; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=J/VlM7cprC4lMoay4b4iDq0wmzylPk+HkhDJk/zhG2Y=;
-        b=H3SQNrssQf8a9mTT6XChvo0/W1NYkCLCBXshDml7DWgkvDYxMHwm3SC1Spd2lhiXKz
-         uqQse5Gqzkvx46gI2HD/aq6q60VRJ1LYYGzlhCIW/bsZ8DqRa32+jqSw1NSfiXJZMPku
-         FTTzBF0TKGM6zy3JEmmFBiESFxzq9OuUtyPPZEE4oynJCKrWauGmBcn23ItXCkhqRcJ6
-         f0JUMeeVAzoFk5xR5dqiDz7wzkc3F+25pY+GVDVxJF2vz3hWnvytxNQ/XaxCVx9gTTnU
-         bulEHDn9yZzFvHsawWaSIa/q66TkSaCCPty63/w5PoFd6gfWMVKsv128YlaS6NIp1lCv
-         gyrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=J/VlM7cprC4lMoay4b4iDq0wmzylPk+HkhDJk/zhG2Y=;
-        b=OkRIPg8Zao0oH66POXzO9qPfww9dDGWiI02MnKYbP1lAbzM723cFwd9yTx1ieJQBtu
-         MJeQKPH9ot0ttkxKX/P70kXgqicl957KqzyV6xcG45slbn5jponUHDlNC3DN9asBTHLm
-         PwB2PdfHoSJK6AOUEBb10zgMebJ0+SWtuYvVfUg7M74o2XGo6hIKtZT1BNHkItXQRO6r
-         uheLO5Y5i3C39DlT2dr8ZWBs3IlCduuX+jtIrgkcvcx1V9d+mWWEZXYNxmPJQAAitNIz
-         FW+iMgdHnY4/y8Jd26jLLIZ7HZL4k18vRSY37/kugrsWF1FXg9YNFPe1Mu3IECZ2WKQ6
-         k3hg==
-X-Gm-Message-State: AO0yUKVYwVCeyv7F8NJoRQv5OMFyvTvv9Q5OviDTYDGXvZj+5TWQSAdP
-        FDuNpn4KMrkpyXiaw3X9A24sH9nuy/YnhKcQTcTqxw==
-X-Google-Smtp-Source: AK7set86IzPhUo1uZ+cu7Tw/u3cqoDAPwj0LQna9LX1UbPlTaCnreZPgZXNal+QPDxwu/wJrvnP7JMh4zKK+BBpDqY8=
-X-Received: by 2002:a05:6102:1609:b0:3ed:2cb7:5695 with SMTP id
- cu9-20020a056102160900b003ed2cb75695mr375015vsb.84.1675245083209; Wed, 01 Feb
- 2023 01:51:23 -0800 (PST)
+        Wed, 1 Feb 2023 05:07:02 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A79E56227F;
+        Wed,  1 Feb 2023 02:06:41 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 4A99FB81F2D;
+        Wed,  1 Feb 2023 10:06:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A07F3C433D2;
+        Wed,  1 Feb 2023 10:06:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1675245996;
+        bh=SLnoyaEacnsPS2Yh3z9JeolmCwJoPt310N3QnpHVhJc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=J79rcS/6tptKFy0f4jXmE8h08JGZFSxobTZ+PxvUt7DYMAhXeI124TFzwLzcAwZR5
+         nuzCvRasfYhbsbf5jRRQpOlx8C5L6/fA2NWMFlaC/xJcNTUGX3zUJnXye10gfD6XQa
+         vAvin56Ypbci1HV034pM8qQxbNsJmzEn9komIf/IZD1sbJzxhnAKe9pixxioust39W
+         ksGqRErrBPdNno4rjOa8sy6kjFR9+Gqcdpx5GHm3tAEtfpz0BqgBGJs3XlfxAnKfs0
+         Zlq4QH7/M4KGVYqKxx1uhloomaG18a2WuMoTxmwdm4jb7xswcMW3qJCz85BkXXTLL9
+         PDFuAuG4SL3hQ==
+Date:   Wed, 1 Feb 2023 10:06:26 +0000
+From:   Lee Jones <lee@kernel.org>
+To:     Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org,
+        jassisinghbrar@gmail.com, catalin.marinas@arm.com, will@kernel.org,
+        shawnguo@kernel.org, arnd@arndb.de, marcel.ziswiler@toradex.com,
+        robimarko@gmail.com, dmitry.baryshkov@linaro.org,
+        nfraprado@collabora.com, broonie@kernel.org,
+        quic_gurus@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
+        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
+        quic_devipriy@quicinc.com
+Subject: Re: [PATCH V2 5/5] dt-bindings: tcsr: Add compatible for IPQ9574
+Message-ID: <Y9o5onFcETRUmqGt@google.com>
+References: <20230201090529.30446-1-quic_poovendh@quicinc.com>
+ <20230201090529.30446-6-quic_poovendh@quicinc.com>
 MIME-Version: 1.0
-References: <20230131141756.RFT.v2.1.I723a3761d57ea60c5dd754c144aed6c3b2ea6f5a@changeid>
-In-Reply-To: <20230131141756.RFT.v2.1.I723a3761d57ea60c5dd754c144aed6c3b2ea6f5a@changeid>
-From:   Dave Stevenson <dave.stevenson@raspberrypi.com>
-Date:   Wed, 1 Feb 2023 09:51:06 +0000
-Message-ID: <CAPY8ntAUhVB6UtQTeHAcxNW950Ou+NcEoGwk3JnVWLay89_0Nw@mail.gmail.com>
-Subject: Re: [RFT PATCH v2 1/3] drm/bridge: tc358762: Set pre_enable_prev_first
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     dri-devel@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        freedreno@lists.freedesktop.org,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Jonas Karlman <jonas@kwiboo.se>, linux-arm-msm@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Sean Paul <sean@poorly.run>, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230201090529.30446-6-quic_poovendh@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,46 +67,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 31 Jan 2023 at 22:22, Douglas Anderson <dianders@chromium.org> wrote:
->
-> Set the "pre_enable_prev_first" as provided by commit 4fb912e5e190
-> ("drm/bridge: Introduce pre_enable_prev_first to alter bridge init
-> order"). This should allow us to revert commit ec7981e6c614
-> ("drm/msm/dsi: don't powerup at modeset time for parade-ps8640") and
-> commit 7d8e9a90509f ("drm/msm/dsi: move DSI host powerup to modeset
-> time").
+On Wed, 01 Feb 2023, Poovendhan Selvaraj wrote:
 
-I see no reference in the TC358762 datasheet to requiring the DSI
-interface to be in any particular state.
-However, setting this flag does mean that the DSI host doesn't need to
-power up and down for each host_transfer request from
-tc358762_pre_enable/tc358762_init, so on that basis I'm good with it.
-
-Reviewed-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
-
-> Cc: Dave Stevenson <dave.stevenson@raspberrypi.com>
-> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> Add the tcsr compatible string for IPQ9574 SoC
+> 
+> Signed-off-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
 > ---
->
-> (no changes since v1)
->
->  drivers/gpu/drm/bridge/tc358762.c | 1 +
+>  Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml | 1 +
 >  1 file changed, 1 insertion(+)
->
-> diff --git a/drivers/gpu/drm/bridge/tc358762.c b/drivers/gpu/drm/bridge/tc358762.c
-> index 0b6a28436885..77f7f7f54757 100644
-> --- a/drivers/gpu/drm/bridge/tc358762.c
-> +++ b/drivers/gpu/drm/bridge/tc358762.c
-> @@ -229,6 +229,7 @@ static int tc358762_probe(struct mipi_dsi_device *dsi)
->         ctx->bridge.funcs = &tc358762_bridge_funcs;
->         ctx->bridge.type = DRM_MODE_CONNECTOR_DPI;
->         ctx->bridge.of_node = dev->of_node;
-> +       ctx->bridge.pre_enable_prev_first = true;
->
->         drm_bridge_add(&ctx->bridge);
->
-> --
-> 2.39.1.456.gfc5497dd1b-goog
->
+
+Nit: Subject should be "dt-bindings: mfd: ..."
+
+> diff --git a/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml b/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
+> index d463fb47278f..8cd0005fc8c7 100644
+> --- a/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
+> +++ b/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
+> @@ -30,6 +30,7 @@ properties:
+>            - qcom,tcsr-apq8084
+>            - qcom,tcsr-ipq6018
+>            - qcom,tcsr-ipq8064
+> +          - qcom,tcsr-ipq9574
+>            - qcom,tcsr-mdm9615
+>            - qcom,tcsr-msm8226
+>            - qcom,tcsr-msm8660
+> -- 
+> 2.17.1
+> 
+
+-- 
+Lee Jones [李琼斯]
