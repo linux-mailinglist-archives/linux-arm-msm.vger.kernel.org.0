@@ -2,174 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DAED7686C19
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 17:51:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7FF87686C41
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 17:58:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229597AbjBAQvo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Feb 2023 11:51:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51422 "EHLO
+        id S231612AbjBAQ6D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Feb 2023 11:58:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229574AbjBAQvn (ORCPT
+        with ESMTP id S231543AbjBAQ6A (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Feb 2023 11:51:43 -0500
-Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27D7773749;
-        Wed,  1 Feb 2023 08:51:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1675270302; x=1706806302;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=MPihZ1keAuSkK2h3BqSj6sByR6pdBoovP1rP5iabTMc=;
-  b=hO57vMUbGulckjuO467lb/UfMOhSwBj0WlP7uO5qwiU9XwApi/xwuu50
-   8fTjc1AmIEHlsCUrY5kgUFlMFn+v+aUGypuVD/cmO9/zEHiflbJpS0aSu
-   P83k+v8AE5B6fZv+yhV8fvYHpcC7GN5cz2qarmJ4mkyeMOmG5vClmXn97
-   pgpOqIrKnpAzOOKeCQ8KubBYANPriwbZENZkvDmXT/5UER1ZN5EZ08xhR
-   j4WT8fYRrt4Ln+5FJthRrL2Yt74sxVOmX7AP7drGzVLyaJEMSRWTf0DPe
-   WiQXzCmEZRIj7aKSFYbhufLW6NH6QyKDhzZGb+KAzVCa9HrdN0FebVYjk
-   A==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10608"; a="390588968"
-X-IronPort-AV: E=Sophos;i="5.97,263,1669104000"; 
-   d="scan'208";a="390588968"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Feb 2023 08:51:41 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10608"; a="993755960"
-X-IronPort-AV: E=Sophos;i="5.97,263,1669104000"; 
-   d="scan'208";a="993755960"
-Received: from lkp-server01.sh.intel.com (HELO ffa7f14d1d0f) ([10.239.97.150])
-  by fmsmga005.fm.intel.com with ESMTP; 01 Feb 2023 08:51:36 -0800
-Received: from kbuild by ffa7f14d1d0f with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1pNGKe-0005ay-0A;
-        Wed, 01 Feb 2023 16:51:36 +0000
-Date:   Thu, 2 Feb 2023 00:50:38 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Mohammad Rafi Shaik <quic_mohs@quicinc.com>,
-        krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
-        andersson@kernel.org, lgirdwood@gmail.com, broonie@kernel.org,
-        robh+dt@kernel.org, quic_plai@quicinc.com, bgoswami@quicinc.com,
-        srinivas.kandagatla@linaro.org, quic_rohkumar@quicinc.com,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        judyhsiao@chromium.org, devicetree@vger.kernel.org,
-        konrad.dybcio@linaro.org
-Cc:     oe-kbuild-all@lists.linux.dev,
-        Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-Subject: Re: [PATCH 10/14] ASoC: q6dsp: q6apm-dai: Add trigger/pointer
- compress DAI callbacks
-Message-ID: <202302020014.J221iZHe-lkp@intel.com>
-References: <20230201134947.1638197-11-quic_mohs@quicinc.com>
+        Wed, 1 Feb 2023 11:58:00 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18E6A7B402;
+        Wed,  1 Feb 2023 08:57:54 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 9D37961889;
+        Wed,  1 Feb 2023 16:57:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B4DFC433D2;
+        Wed,  1 Feb 2023 16:57:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1675270673;
+        bh=wgoFWDzet3MEnQEk+UbM8HUIOsFtAK8npPJ49HGAO1o=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=u9X4Gr7TjZ6UkgVwjSehC9yfCUt//67EjPYTXTHnJ+aTE6aXNoDaG/fZz03jXnElM
+         c315hFd6D+lNgE3Ekgg0QaNB3z7pxxWqm4plvstpHb14GQ0FGDiib2q7//3OZr4/JT
+         i0jWp+SqAe/OVftlr6AN17B1kIJdLkIF0i/EuIo2IVSpqxiD6qKmMLkB+1ogV6NLc6
+         JidEOiKwk15fIiFO+dc5Qsvoe66Y0tsqMeopIu++n7efbaGm5W5Uc31U7fqGait52w
+         WnE8sOF8lc6h19Dd3hynSSTPWQGh4Vapzj+sPUAC+hBsgiEQz8Z/aI5T8L99Afd+Hr
+         1f40qveSqB9TQ==
+From:   Mark Brown <broonie@kernel.org>
+To:     miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
+        jic23@kernel.org, tudor.ambarus@microchip.com, pratyush@kernel.org,
+        sanju.mehta@amd.com, chin-ting_kuo@aspeedtech.com, clg@kaod.org,
+        kdasu.kdev@gmail.com, f.fainelli@gmail.com, rjui@broadcom.com,
+        sbranden@broadcom.com, eajames@linux.ibm.com, olteanv@gmail.com,
+        han.xu@nxp.com, john.garry@huawei.com, shawnguo@kernel.org,
+        s.hauer@pengutronix.de, khilman@baylibre.com,
+        matthias.bgg@gmail.com, haibo.chen@nxp.com,
+        linus.walleij@linaro.org, daniel@zonque.org,
+        haojian.zhuang@gmail.com, robert.jarzmik@free.fr,
+        agross@kernel.org, heiko@sntech.de, krzysztof.kozlowski@linaro.org,
+        andi@etezian.org, mcoquelin.stm32@gmail.com,
+        alexandre.torgue@foss.st.com, wens@csie.org,
+        jernej.skrabec@gmail.com, samuel@sholland.org,
+        masahisa.kojima@linaro.org, jaswinder.singh@linaro.org,
+        rostedt@goodmis.org, mingo@redhat.com, l.stelmach@samsung.com,
+        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com, alex.aring@gmail.com, stefan@datenfreihafen.org,
+        kvalo@kernel.org, thierry.reding@gmail.com, jonathanh@nvidia.com,
+        skomatineni@nvidia.com, sumit.semwal@linaro.org,
+        christian.koenig@amd.com, j.neuschaefer@gmx.net,
+        vireshk@kernel.org, rmfrfs@gmail.com, johan@kernel.org,
+        elder@kernel.org, gregkh@linuxfoundation.org,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>
+Cc:     git@amd.com, linux-spi@vger.kernel.org,
+        linux-kernel@vger.kernel.org, joel@jms.id.au, andrew@aj.id.au,
+        radu_nicolae.pirea@upb.ro, nicolas.ferre@microchip.com,
+        alexandre.belloni@bootlin.com, claudiu.beznea@microchip.com,
+        bcm-kernel-feedback-list@broadcom.com, fancer.lancer@gmail.com,
+        kernel@pengutronix.de, festevam@gmail.com, linux-imx@nxp.com,
+        jbrunet@baylibre.com, martin.blumenstingl@googlemail.com,
+        avifishman70@gmail.com, tmaimon77@gmail.com, tali.perry1@gmail.com,
+        venture@google.com, yuenn@google.com, benjaminfair@google.com,
+        yogeshgaur.83@gmail.com, konrad.dybcio@somainline.org,
+        alim.akhtar@samsung.com, ldewangan@nvidia.com,
+        michal.simek@amd.com, linux-aspeed@lists.ozlabs.org,
+        openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org,
+        linux-rpi-kernel@lists.infradead.org,
+        linux-amlogic@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+        netdev@vger.kernel.org, linux-wpan@vger.kernel.org,
+        libertas-dev@lists.infradead.org, linux-wireless@vger.kernel.org,
+        linux-mtd@lists.infradead.org, lars@metafoo.de,
+        Michael.Hennerich@analog.com, linux-iio@vger.kernel.org,
+        michael@walle.cc, palmer@dabbelt.com,
+        linux-riscv@lists.infradead.org, linux-media@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, greybus-dev@lists.linaro.org,
+        linux-staging@lists.linux.dev, amitrkcian2002@gmail.com
+In-Reply-To: <20230119185342.2093323-1-amit.kumar-mahapatra@amd.com>
+References: <20230119185342.2093323-1-amit.kumar-mahapatra@amd.com>
+Subject: Re: (subset) [PATCH v2 00/13] spi: Add support for
+ stacked/parallel memories
+Message-Id: <167527065195.537421.10361370461620477483.b4-ty@kernel.org>
+Date:   Wed, 01 Feb 2023 16:57:31 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230201134947.1638197-11-quic_mohs@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.12.0
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mohammad,
+On Fri, 20 Jan 2023 00:23:29 +0530, Amit Kumar Mahapatra wrote:
+> This patch is in the continuation to the discussions which happened on
+> 'commit f89504300e94 ("spi: Stacked/parallel memories bindings")' for
+> adding dt-binding support for stacked/parallel memories.
+> 
+> This patch series updated the spi-nor, spi core and the spi drivers
+> to add stacked and parallel memories support.
+> 
+> [...]
 
-Thank you for the patch! Perhaps something to improve:
+Applied to
 
-[auto build test WARNING on broonie-sound/for-next]
-[also build test WARNING on next-20230201]
-[cannot apply to tiwai-sound/for-next tiwai-sound/for-linus linus/master v6.2-rc6]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Mohammad-Rafi-Shaik/ALSA-compress-Update-compress-set-params-for-gapless-playback/20230201-215622
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
-patch link:    https://lore.kernel.org/r/20230201134947.1638197-11-quic_mohs%40quicinc.com
-patch subject: [PATCH 10/14] ASoC: q6dsp: q6apm-dai: Add trigger/pointer compress DAI callbacks
-config: m68k-allyesconfig (https://download.01.org/0day-ci/archive/20230202/202302020014.J221iZHe-lkp@intel.com/config)
-compiler: m68k-linux-gcc (GCC) 12.1.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/2b44c079fb2d53ef9e13fc7d7b257fd4c6f4b56a
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Mohammad-Rafi-Shaik/ALSA-compress-Update-compress-set-params-for-gapless-playback/20230201-215622
-        git checkout 2b44c079fb2d53ef9e13fc7d7b257fd4c6f4b56a
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=m68k olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=m68k SHELL=/bin/bash sound/soc/
+Thanks!
 
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
+[01/13] spi: Add APIs in spi core to set/get spi->chip_select and spi->cs_gpiod
+        commit: 303feb3cc06ac0665d0ee9c1414941200e60e8a3
+[02/13] spi: Replace all spi->chip_select and spi->cs_gpiod references with function call
+        (no commit info)
+[03/13] net: Replace all spi->chip_select and spi->cs_gpiod references with function call
+        (no commit info)
+[04/13] iio: imu: Replace all spi->chip_select and spi->cs_gpiod references with function call
+        (no commit info)
+[05/13] mtd: devices: Replace all spi->chip_select and spi->cs_gpiod references with function call
+        (no commit info)
+[06/13] staging: Replace all spi->chip_select and spi->cs_gpiod references with function call
+        (no commit info)
+[07/13] platform/x86: serial-multi-instantiate: Replace all spi->chip_select and spi->cs_gpiod references with function call
+        (no commit info)
 
-All warnings (new ones prefixed by >>):
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
-   sound/soc/qcom/qdsp6/q6apm-dai.c:152:6: warning: no previous prototype for 'event_handler_compr' [-Wmissing-prototypes]
-     152 | void event_handler_compr(uint32_t opcode, uint32_t token,
-         |      ^~~~~~~~~~~~~~~~~~~
->> sound/soc/qcom/qdsp6/q6apm-dai.c:576:5: warning: no previous prototype for 'q6apm_dai_compr_trigger' [-Wmissing-prototypes]
-     576 | int q6apm_dai_compr_trigger(struct snd_soc_component *component,
-         |     ^~~~~~~~~~~~~~~~~~~~~~~
->> sound/soc/qcom/qdsp6/q6apm-dai.c:610:5: warning: no previous prototype for 'q6apm_dai_compr_ack' [-Wmissing-prototypes]
-     610 | int q6apm_dai_compr_ack(struct snd_soc_component *component, struct snd_compr_stream *stream,
-         |     ^~~~~~~~~~~~~~~~~~~
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
 
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
 
-vim +/q6apm_dai_compr_trigger +576 sound/soc/qcom/qdsp6/q6apm-dai.c
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
 
-   575	
- > 576	int q6apm_dai_compr_trigger(struct snd_soc_component *component,
-   577				    struct snd_compr_stream *stream, int cmd)
-   578	{
-   579		struct snd_compr_runtime *runtime = stream->runtime;
-   580		struct q6apm_dai_rtd *prtd = runtime->private_data;
-   581		int ret = 0;
-   582	
-   583		switch (cmd) {
-   584		case SNDRV_PCM_TRIGGER_START:
-   585		case SNDRV_PCM_TRIGGER_RESUME:
-   586		case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
-   587			ret = q6apm_write_async_compr(prtd->graph, prtd->pcm_count, 0, 0, NO_TIMESTAMP);
-   588			break;
-   589		case SNDRV_PCM_TRIGGER_STOP:
-   590			break;
-   591		case SNDRV_PCM_TRIGGER_SUSPEND:
-   592		case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
-   593			break;
-   594		case SND_COMPR_TRIGGER_NEXT_TRACK:
-   595			prtd->next_track = true;
-   596			prtd->next_track_stream_id = (prtd->graph->id == 1 ? 2 : 1);
-   597			break;
-   598		case SND_COMPR_TRIGGER_DRAIN:
-   599		case SND_COMPR_TRIGGER_PARTIAL_DRAIN:
-   600			prtd->notify_on_drain = true;
-   601			break;
-   602		default:
-   603			ret = -EINVAL;
-   604			break;
-   605		}
-   606	
-   607		return ret;
-   608	}
-   609	
- > 610	int q6apm_dai_compr_ack(struct snd_soc_component *component, struct snd_compr_stream *stream,
-   611				size_t count)
-   612	{
-   613		struct snd_compr_runtime *runtime = stream->runtime;
-   614		struct q6apm_dai_rtd *prtd = runtime->private_data;
-   615		unsigned long flags;
-   616	
-   617		spin_lock_irqsave(&prtd->lock, flags);
-   618		prtd->bytes_received += count;
-   619		spin_unlock_irqrestore(&prtd->lock, flags);
-   620	
-   621		return count;
-   622	}
-   623	
+Thanks,
+Mark
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
