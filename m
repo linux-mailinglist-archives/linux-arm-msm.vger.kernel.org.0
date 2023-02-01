@@ -2,95 +2,244 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D504C686583
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 12:43:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D76E868658C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 12:46:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229601AbjBALn5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Feb 2023 06:43:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53116 "EHLO
+        id S230054AbjBALqd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Feb 2023 06:46:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229597AbjBALn4 (ORCPT
+        with ESMTP id S230000AbjBALqc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Feb 2023 06:43:56 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0044539B4;
-        Wed,  1 Feb 2023 03:43:43 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id DF8E3B810FD;
-        Wed,  1 Feb 2023 11:43:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A586C433D2;
-        Wed,  1 Feb 2023 11:43:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1675251819;
-        bh=MmpffVf8hWOZgiIPLTUppyG844PtEs1DvL1GWwkqiDY=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=k5X21ojPzgg64FyE0xLoklKIZ3cC3qnVqQ78IQszlmXX1/dSDT+N1mfUsmFkEC5Km
-         mlxz3LFAE9E7Z6JoA28n5m9iUUP4nWyHd+L8Q61fFaTMEja9sGiLReo/8H28rHJMcy
-         S2h3siUiaQHgc0KZJn3gx7gS8XYkOVpmNWjI99OekPPUu3uq5aSnxONRrS1Mqd6NXo
-         Plvc6pukuchxj/QtAgbYYLHCs9YlHPgSlVy/dCANsZAZ9jKCI5GTsc/Tjyk01AR/gc
-         9u0dAPzipbvLYli4GXBHDl0D9ref8rySSsTbySLA3E08ilvACYevxfqWEDYkyujgQ4
-         WHVun4uDpW6Sg==
-From:   Mark Brown <broonie@kernel.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>,
-        Yassine Oudjana <yassine.oudjana@gmail.com>
-Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
-        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-In-Reply-To: <20220622061106.35071-1-y.oudjana@protonmail.com>
-References: <20220622061106.35071-1-y.oudjana@protonmail.com>
-Subject: Re: [PATCH] ASoC: qcom: apq8096: set driver name correctly
-Message-Id: <167525181733.63465.381746473105058457.b4-ty@kernel.org>
-Date:   Wed, 01 Feb 2023 11:43:37 +0000
+        Wed, 1 Feb 2023 06:46:32 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6508D5C0C2
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Feb 2023 03:46:28 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id m7so17031622wru.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Feb 2023 03:46:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/oez8AUAftX1zJ0SA+UvNi7X27OzDC/qlpA3BbcU7l0=;
+        b=Cdn+s0ZE6QVu4mi+Ioq2kDUpND2AT6VZIpijAz89k2wX9cHp5G+LbQqWU+DiL1vf8k
+         o4lpBAquerK3vfIu1VuTov4Kc21afSZkD9SCq9IMomSk9Ky1b2sv3LT1X0D/iSSyxPoM
+         am1MIdgMKfOAfD0RNwkHcmfjiRJ92p7N9IollD3vCoASRSTm7Ablz8/K7X0Pjyg9Fvfa
+         qXpvt5UEg6UbgcaTXDq2BlnM3XvtrptXSAYTggUED5DxT2P7RZyA07Xg9BDlM2J7G6NT
+         sSeUzXkz1LbYeXIPK9espZGOhyfkoYZfDOQJW8F9E5HfhnWQsFr+ifm6Zcd/YH4HGnLM
+         /+oQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/oez8AUAftX1zJ0SA+UvNi7X27OzDC/qlpA3BbcU7l0=;
+        b=OR4m5frlsrXLPL8EwTLquYCV1/0+HM0zm/Pnx5BzU8QYW11tY19X5DsO1vBFTHHSVR
+         y1yGUeY6ASGEYw0oMsDxJdsIL/bGxIoTShX2i97vMn0vwIafuYr40ZpQpHv87vQD+vpL
+         914pf8NGgQvAy+ACG7IpUj3b/KpXFBtaWlJcOqdnJDYSADVT5WHKp6NpJLvq9Es2OztJ
+         wus71CO80U5sEua4DTKDsqXJrBMWfeNqeKMH9vOpqKmbKtQvZKyiBAJkisd6JrqXDN1x
+         zoPKdpY4eynqdvKG1f+H3ZAOp0jXL21A742IFhkrYaH/x27ghD1soE+mg4fZlJaDFeSa
+         3fzA==
+X-Gm-Message-State: AO0yUKWpUzcLl5Qh2HnKauFgSUIFG++Mf49VtwUKWa85yyxV6ZjtCVHX
+        4cTmpN3WxY0tgV+Zk0YHqablPg==
+X-Google-Smtp-Source: AK7set8S6wL8+KxPQDIovLNftJR31PT8NwmtUAnAWXTN7UmhNXqTDH+yUHKWTSmGb+Wp4n5lJLs5mQ==
+X-Received: by 2002:a5d:4352:0:b0:2be:12a8:9f75 with SMTP id u18-20020a5d4352000000b002be12a89f75mr1770411wrr.55.1675251986695;
+        Wed, 01 Feb 2023 03:46:26 -0800 (PST)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id q3-20020adff503000000b002bfae1398bbsm17665550wro.42.2023.02.01.03.46.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 01 Feb 2023 03:46:26 -0800 (PST)
+Message-ID: <71ba0d05-6183-95ef-9e45-cc3dd512475f@linaro.org>
+Date:   Wed, 1 Feb 2023 11:46:25 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.12.0
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH 2/2] PM / devfreq: qcom: Introduce CCI devfreq driver
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jun Nie <jun.nie@linaro.org>, myungjoo.ham@samsung.com,
+        kyungmin.park@samsung.com, cw00.choi@samsung.com
+Cc:     bryan.odonoghue@linaro.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20230201080227.473547-1-jun.nie@linaro.org>
+ <20230201080227.473547-2-jun.nie@linaro.org>
+ <515f4e9e-2804-e03a-26f5-f2d3ac331109@linaro.org>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <515f4e9e-2804-e03a-26f5-f2d3ac331109@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 22 Jun 2022 10:11:06 +0400, Yassine Oudjana wrote:
-> Set driver name to allow matching different UCM2 configurations
-> for the multiple devices sharing the same APQ8096 ASoC.
+On 01/02/2023 11:32, Dmitry Baryshkov wrote:
+> On 01/02/2023 10:02, Jun Nie wrote:
+>> Cache Coherent Interconnect (CCI) is used by some Qualcomm SoCs. This
+>> driver is introduced so that its freqency can be adjusted. And regulator
+>> associated with opp table can be also adjusted accordingly which is
+>> shared with cpu cluster.
+>>
+>> Signed-off-by: Jun Nie <jun.nie@linaro.org>
+>> ---
+>>   drivers/devfreq/Kconfig    |   9 +++
+>>   drivers/devfreq/Makefile   |   1 +
+>>   drivers/devfreq/qcom-cci.c | 162 +++++++++++++++++++++++++++++++++++++
+>>   3 files changed, 172 insertions(+)
+>>   create mode 100644 drivers/devfreq/qcom-cci.c
 > 
+> Could you please describe in some additional details what are you trying 
+> to achieve? Should the CCI frequency be scaled manually or does it 
+> follow the cluster frequency? Do clusters vote on the CCI frequency?
+> 
+> I'm inclined to ask if it is possible to shift this to the cpufreq OPP 
+> tables?
 > 
 
-Applied to
+Might not be so easy to just append CCI opps to the cluster frequency opps
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+                 cci_cache: qcom,cci {
+                         compatible = "qcom,msm8939-cci";
+                         clock-names = "devfreq_clk";
+                         clocks = <&apcs2>;
+                         governor = "cpufreq";
+                         operating-points-v2 = <&cci_opp_table>;
+                         power-domains = <&cpr>;
+                         power-domain-names = "cpr";
+                         nvmem-cells = <&cpr_efuse_speedbin_pvs>;
+                         nvmem-cell-names = "cpr_efuse_speedbin_pvs";
+                 };
 
-Thanks!
+                 devfreq-cpufreq {
+                         cci-cpufreq {
+                                 target-dev = <&cci_cache>;
+                                 cpu-to-dev-map-0 =
+                                         <  200000  200000000 >,
+                                         <  345600  200000000 >,
+                                         <  400000  200000000 >,
+                                         <  533330  297600000 >,
+                                         <  800000  297600000 >,
+                                         <  960000  297600000 >,
+                                         < 1113600  297000000 >,
+                                         < 1344000  595200000 >,
+                                         < 1459200  595200000 >,
+                                         < 1497600  595200000 >,
+                                         < 1651200  595200000 >;
+                                 cpu-to-dev-map-4 =
+                                         <  200000 200000000 >,
+                                         <  249600 200000000 >,
+                                         <  499200 297600000 >,
+                                         <  800000 297600000 >,
+                                         <  998400 595200000 >,
+                                         < 1113600 595200000 >;
+                         };
+                 };
 
-[1/1] ASoC: qcom: apq8096: set driver name correctly
-      commit: 86b753a86f6dc31ca9bccb489ebde1968d26c89b
+         cci_opp_table: cci-opp-table {
+                 compatible = "operating-points-v2";
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+                 opp-200000000 {
+                         opp-hz = /bits/ 64 <200000000>;
+                         opp-supported-hw = <0x3f>;
+                         required-opps = <&cpr_opp3>;
+                 };
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+                 opp-297600000 {
+                         opp-hz = /bits/ 64 <297600000>;
+                         opp-supported-hw = <0x3f>;
+                         required-opps = <&cpr_opp12>;
+                 };
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
+                 opp-400000000-cpr14 {
+                         opp-hz = /bits/ 64 <400000000>;
+                         opp-supported-hw = <0x1>;
+                         required-opps = <&cpr_opp14>;
+                 };
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
+                 opp-400000000-cpr15 {
+                         opp-hz = /bits/ 64 <400000000>;
+                         opp-supported-hw = <0x3e>;
+                         required-opps = <&cpr_opp15>;
+                 };
 
-Thanks,
-Mark
+                 opp-595200000 {
+                         opp-hz = /bits/ 64 <595200000>;
+                         opp-supported-hw = <0x3f>;
+                         required-opps = <&cpr_opp17>;
+                 };
+         };
 
+
+         cpr_opp_table: cpr-opp-table {
+                 compatible = "operating-points-v2-qcom-level";
+
+                 cpr_opp1: opp1 {
+                         opp-hz = /bits/ 64 <200000000>;
+                         opp-level = <1>;
+                         qcom,opp-fuse-level = <1>;
+                 };
+                 cpr_opp2: opp2 {
+                         opp-hz = /bits/ 64 <345600000>;
+                         opp-level = <2>;
+                         qcom,opp-fuse-level = <1>;
+                 };
+                 cpr_opp3: opp3 {
+                         opp-hz = /bits/ 64 <400000000>;
+                         opp-level = <3>;
+                         qcom,opp-fuse-level = <1>;
+                 };
+                 cpr_opp4: opp4 {
+                         opp-hz = /bits/ 64 <422400000>;
+                         opp-level = <4>;
+                         qcom,opp-fuse-level = <2>;
+                 };
+                 cpr_opp5: opp5 {
+                         opp-hz = /bits/ 64 <499200000>;
+                         opp-level = <5>;
+                         qcom,opp-fuse-level = <2>;
+                 };
+                 cpr_opp6: opp6 {
+                         opp-hz = /bits/ 64 <533330000>;
+                         opp-level = <6>;
+                         qcom,opp-fuse-level = <2>;
+                 };
+                 cpr_opp7: opp7 {
+                         opp-hz = /bits/ 64 <652800000>;
+                         opp-level = <7>;
+                         qcom,opp-fuse-level = <2>;
+                 };
+                 cpr_opp8: opp8 {
+                         opp-hz = /bits/ 64 <729600000>;
+                         opp-level = <8>;
+                         qcom,opp-fuse-level = <2>;
+                 };
+                 cpr_opp9: opp9 {
+                         opp-hz = /bits/ 64 <800000000>;
+                         opp-level = <9>;
+                         qcom,opp-fuse-level = <2>;
+                 };
+                 cpr_opp10: opp10 {
+                         opp-hz = /bits/ 64 <806400000>;
+                         opp-level = <10>;
+                         qcom,opp-fuse-level = <2>;
+                 };
+                 cpr_opp11: opp11 {
+                         opp-hz = /bits/ 64 <883200000>;
+                         opp-level = <11>;
+                         qcom,opp-fuse-level = <2>;
+                 };
+                 cpr_opp12: opp12 {
+                         opp-hz = /bits/ 64 <960000000>;
+                         opp-level = <12>;
+                         qcom,opp-fuse-level = <2>;
+                 };
+         };
+
+---
+bod
