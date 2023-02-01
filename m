@@ -2,147 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 40E0D686FF1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 21:46:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1786968712A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 23:45:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231269AbjBAUpd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Feb 2023 15:45:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54054 "EHLO
+        id S230496AbjBAWpn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Feb 2023 17:45:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230046AbjBAUp1 (ORCPT
+        with ESMTP id S230494AbjBAWpm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Feb 2023 15:45:27 -0500
-Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [5.144.164.162])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CDD97B42A
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Feb 2023 12:45:02 -0800 (PST)
-Received: from localhost.localdomain (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id A2EF920396;
-        Wed,  1 Feb 2023 21:45:00 +0100 (CET)
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     phone-devel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Jonathan Cameron <jic23@kernel.org>, iio@vger.kernel.org,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Wed, 1 Feb 2023 17:45:42 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2D9C392A4
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Feb 2023 14:45:39 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id bk16so140427wrb.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Feb 2023 14:45:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=nXEg1M/8Ow65IihrBRBuML6WIDNs1pKYceWi+8rT6PE=;
+        b=qDInqtYujTo0IpmxoSiaW8ivIhtbPTHMjMQHFiUTrkQJvgGDw9nyD3Kvuo1p2aAXaR
+         e2w7d8JHOyE8bqtRS7gRpkbGqTjvKH88ZtyVyphv4L8n7ny0pv1XqJyXEei1fMC6a4EM
+         O3kviYo3Jo21H1r+SIBXtcTPlIMHRFJ/dD9i/3M/JRgIHDixrcq9AMHqLaNiHajgFMBP
+         iQYuroK/pZ+Wm0PP+imuHPHBz97BJ2Z7S9YOJ4bsEN1uT5jA6jB6dUpL6XJ8c3F45G0f
+         clmso6BDaXyj3hZjs4MfWBWRbbEahUE27DrL/wLlV+0sSoGifGUkkt54oxqwCiblSdVL
+         yipA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nXEg1M/8Ow65IihrBRBuML6WIDNs1pKYceWi+8rT6PE=;
+        b=wci65RSLE6I5z5udELmB84Z+Ns04tKiIW4l/NVXAw3yvzdGtOZ/VnPMx8zuRVijbnK
+         7k/ktarGkvKiClNobrEwvWXVGml9qdVjV5Acm2r/uh6RvxxNmFneUxYQeOmyi/fp+bEb
+         4Ao/ZCO/opautUeopwm7dBNBu6yQnmrGKfxAKuOpeI2+0jL0s6xPcB76adcpP2Ti+5Hv
+         oZbi/YMaRQdzcsPLLsbBb7gVf8I0Clc0F4xGaUNOndoMMuwWD6It0geDzzlOzvxs1Me1
+         46m3aNsBpK/4o3+gzvXABHcrN/APzlvciBkv4jzaJdZzJf9FO3Oth/zHKWj29IrcXrAf
+         MjOA==
+X-Gm-Message-State: AO0yUKVTbEixK+Lm4exqibETDnaSoKJA+ldSj2+8RRe8WJFZ70Ax3JZp
+        FvW3yR0C15SzfTlylagp4PaQvXW1204Jgkzyt7KhVQ==
+X-Google-Smtp-Source: AK7set8hlhnmbtZBx98H8ICP56Fc5lHNYHDcGn2ClEg32Z21/F1mXiNlNLipP7v0YtJ/2DJTGfai3wxLoTqjPnVhszE=
+X-Received: by 2002:adf:f94e:0:b0:2bf:edb9:78e5 with SMTP id
+ q14-20020adff94e000000b002bfedb978e5mr127102wrr.383.1675291538313; Wed, 01
+ Feb 2023 14:45:38 -0800 (PST)
+MIME-Version: 1.0
+References: <20230201150011.200613-1-brgl@bgdev.pl> <20230201150011.200613-2-brgl@bgdev.pl>
+ <e28c9048-635d-3936-e440-27e293501ff6@linaro.org> <CAMRc=Mc8gFpcB6k-qVmSAM0=iKHGBmGcqm3aV2xiyjWPG1wtvg@mail.gmail.com>
+In-Reply-To: <CAMRc=Mc8gFpcB6k-qVmSAM0=iKHGBmGcqm3aV2xiyjWPG1wtvg@mail.gmail.com>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Wed, 1 Feb 2023 23:45:25 +0100
+Message-ID: <CACRpkdaFCG+PHXrOTGW4ZLMSOcJvJ6eYKRO-VLds1J13OuTYJA@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] dt-bindings: pinctrl: describe sa8775p-tlmm
+To:     Bartosz Golaszewski <brgl@bgdev.pl>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-iio@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH v3 3/3] dt-bindings: iio: adc: Require generic adc-chan name for channel nodes
-Date:   Wed,  1 Feb 2023 21:44:47 +0100
-Message-Id: <20230201204447.542385-4-marijn.suijten@somainline.org>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230201204447.542385-1-marijn.suijten@somainline.org>
-References: <20230201204447.542385-1-marijn.suijten@somainline.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As discussed in [1] it is more convenient to use a generic adc-chan node
-name for ADC channels while storing a friendly - board-specific instead
-of PMIC-specific - name in the label, if/when desired to overwrite the
-channel description already contained (but previously unused) in the
-driver [2].
+On Wed, Feb 1, 2023 at 4:15 PM Bartosz Golaszewski <brgl@bgdev.pl> wrote:
+> On Wed, Feb 1, 2023 at 4:13 PM Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
+> >
+> > On 01/02/2023 16:00, Bartosz Golaszewski wrote:
+> > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > >
+> > > Add DT bindings for the TLMM controller on sa8775p platforms.
+> > >
+> > > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >
+> >
+> > > +
+> > > +examples:
+> > > +  - |
+> > > +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> > > +
+> > > +    tlmm: pinctrl@f000000 {
+> > > +        compatible = "qcom,sa8775p-tlmm";
+> > > +        reg = <0xf000000 0x1000000>;
+> > > +        interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
+> > > +        gpio-controller;
+> > > +        #gpio-cells = <2>;
+> > > +        interrupt-controller;
+> > > +        #interrupt-cells = <2>;
+> > > +        gpio-ranges = <&tlmm 0 0 149>;
+> >
+> > You have 148 GPIOs, so s/149/148/.
+> >
+> > I'll fix other bindings as we have such mistake in several places.
+> >
+> >
+> > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> >
+> > Best regards,
+> > Krzysztof
+> >
+>
+> Ah, cr*p, sorry for missing it. Linus - can you change it when
+> applying? I don't want to send more noise.
 
-Replace the .* name pattern with the adc-chan literal, but leave the
-label property optional for bindings to choose to fall back a channel
-label hardcoded in the driver [2] instead.
+Of course :)
 
-[1]: https://lore.kernel.org/linux-arm-msm/20221106193018.270106-1-marijn.suijten@somainline.org/T/#u
-[2]: https://lore.kernel.org/linux-arm-msm/20230116220909.196926-4-marijn.suijten@somainline.org/
-
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
----
- .../bindings/iio/adc/qcom,spmi-vadc.yaml         | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml b/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
-index bd6e0d6f6e0c..9b1a60fe7599 100644
---- a/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
-+++ b/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
-@@ -54,7 +54,7 @@ required:
-   - '#io-channel-cells'
- 
- patternProperties:
--  "^.*@[0-9a-f]+$":
-+  "^adc-chan@[0-9a-f]+$":
-     type: object
-     additionalProperties: false
-     description: |
-@@ -148,7 +148,7 @@ allOf:
- 
-     then:
-       patternProperties:
--        "^.*@[0-9a-f]+$":
-+        "^adc-chan@[0-9a-f]+$":
-           properties:
-             qcom,decimation:
-               enum: [ 512, 1024, 2048, 4096 ]
-@@ -171,7 +171,7 @@ allOf:
- 
-     then:
-       patternProperties:
--        "^.*@[0-9a-f]+$":
-+        "^adc-chan@[0-9a-f]+$":
-           properties:
-             qcom,decimation:
-               enum: [ 256, 512, 1024 ]
-@@ -194,7 +194,7 @@ allOf:
- 
-     then:
-       patternProperties:
--        "^.*@[0-9a-f]+$":
-+        "^adc-chan@[0-9a-f]+$":
-           properties:
-             qcom,decimation:
-               enum: [ 250, 420, 840 ]
-@@ -217,7 +217,7 @@ allOf:
- 
-     then:
-       patternProperties:
--        "^.*@[0-9a-f]+$":
-+        "^adc-chan@[0-9a-f]+$":
-           properties:
-             qcom,decimation:
-               enum: [ 85, 340, 1360 ]
-@@ -292,16 +292,18 @@ examples:
-             #io-channel-cells = <1>;
- 
-             /* Other properties are omitted */
--            xo-therm@44 {
-+            adc-chan@44 {
-                 reg = <PMK8350_ADC7_AMUX_THM1_100K_PU>;
-                 qcom,ratiometric;
-                 qcom,hw-settle-time = <200>;
-+                label = "xo_therm";
-             };
- 
--            conn-therm@47 {
-+            adc-chan@47 {
-                 reg = <PM8350_ADC7_AMUX_THM4_100K_PU(1)>;
-                 qcom,ratiometric;
-                 qcom,hw-settle-time = <200>;
-+                label = "conn_therm";
-             };
-         };
-     };
--- 
-2.39.1
-
+Yours,
+Linus Walleij
