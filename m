@@ -2,193 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A659E686201
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 09:49:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 16904686259
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 10:06:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230236AbjBAItE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Feb 2023 03:49:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50246 "EHLO
+        id S231561AbjBAJGU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Feb 2023 04:06:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230218AbjBAItB (ORCPT
+        with ESMTP id S231535AbjBAJGT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Feb 2023 03:49:01 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D99C919F26;
-        Wed,  1 Feb 2023 00:48:48 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id CFBB8B8214A;
-        Wed,  1 Feb 2023 08:48:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9320BC433EF;
-        Wed,  1 Feb 2023 08:48:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1675241325;
-        bh=Cir3VKUhzPcJXeAeR+y9xNSuX+UtwK3Zfk0ejS8G3Rw=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=amHVFbBlgLMs6+bhWvn0nEpAbzz2x1I8JLsRprU0o/lVMkUWPQ82swf5Eu8/m11kE
-         Kj9QApSlE7qUmVkVmbBDy0CH/EY4BehoxryMSDo8fUFnLX2oR5bFJNGa0nBvI2az6w
-         RqYm/sHnyoQuWp8YUqd9NgbGZMsJ/G5r+LVVUfNymI32+NR/0gkfjxfC1LoXR5Jba3
-         WXTLzORbba/ulur2Zp7rjyNcdQqChkTgm2k+JpvZhSYvedVo8az/vDoP8N7W5Q04gP
-         2+KaNjMev+E/ZAJ/6usOohO3vyM+eEGJY6LCxReISvN/7FoK+Y5NVrXh+NtNOjMbpp
-         9H964tr6LD8eQ==
-Message-ID: <5ecc68a6-2914-1059-460f-752adc1d3d01@kernel.org>
-Date:   Wed, 1 Feb 2023 09:48:41 +0100
+        Wed, 1 Feb 2023 04:06:19 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C06FE5D919;
+        Wed,  1 Feb 2023 01:06:16 -0800 (PST)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3117VdHg011417;
+        Wed, 1 Feb 2023 09:05:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=AwaiLSDtQw5uLGESbQnWkJ31X4EUR2PwjzEPMhtai44=;
+ b=ShxbigjZ/Bc1Dihzu03Armc04Jqr9rYSFvqrsfCN/MF3+p/gEZsgHjH5+r53nnvBWjyJ
+ IbWDYdwn6WckwZrMF5jZR5/3QJNkp+ZHRO+d/0NpZCzdIEBYWWFkvtekWnXo5eEKrZn7
+ x1tXaQ2p6dby24WKYUonQxziP3NMcKbe+/9Ow0ginMQbcFNM2+JxWCdmlv087/DGHbh7
+ 9rKSvCx1LUVfYdR5JXAIzxcRyAY5kh4J9cgODkDUgjfJx2/mP2dNyXSc0MdEUdpNiPFu
+ m9l+vywpfdfW3HmnygPNgL4FIc/wrAnbJPFM7mhI9GI5A4GwnAl45aUCpVsYy3Ca7It/ kw== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3netc4btkm-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 01 Feb 2023 09:05:57 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31195t3x023441
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 1 Feb 2023 09:05:55 GMT
+Received: from poovendh-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Wed, 1 Feb 2023 01:05:46 -0800
+From:   Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <lee@kernel.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <jassisinghbrar@gmail.com>, <catalin.marinas@arm.com>,
+        <will@kernel.org>, <shawnguo@kernel.org>, <arnd@arndb.de>,
+        <marcel.ziswiler@toradex.com>, <robimarko@gmail.com>,
+        <dmitry.baryshkov@linaro.org>, <nfraprado@collabora.com>,
+        <broonie@kernel.org>, <quic_gurus@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
+        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
+        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_devipriy@quicinc.com>
+Subject: [PATCH V2 0/5] Enable crashdump collection support for IPQ9574
+Date:   Wed, 1 Feb 2023 14:35:24 +0530
+Message-ID: <20230201090529.30446-1-quic_poovendh@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH 2/2] PM / devfreq: qcom: Introduce CCI devfreq driver
-Content-Language: en-US
-To:     Jun Nie <jun.nie@linaro.org>, myungjoo.ham@samsung.com,
-        kyungmin.park@samsung.com, cw00.choi@samsung.com
-Cc:     bryan.odonoghue@linaro.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20230201080227.473547-1-jun.nie@linaro.org>
- <20230201080227.473547-2-jun.nie@linaro.org>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-In-Reply-To: <20230201080227.473547-2-jun.nie@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: JYKSK0tXIDTmohLp25o6EZLqlz3ylFlN
+X-Proofpoint-ORIG-GUID: JYKSK0tXIDTmohLp25o6EZLqlz3ylFlN
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-02-01_03,2023-01-31_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 bulkscore=0
+ impostorscore=0 phishscore=0 mlxlogscore=698 mlxscore=0 spamscore=0
+ adultscore=0 priorityscore=1501 lowpriorityscore=0 malwarescore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302010079
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/02/2023 09:02, Jun Nie wrote:
-> Cache Coherent Interconnect (CCI) is used by some Qualcomm SoCs. This
-> driver is introduced so that its freqency can be adjusted. And regulator
-> associated with opp table can be also adjusted accordingly which is
-> shared with cpu cluster.
+Crashdump collection is enabled based on the DLOAD bit in the TCSR register.
+This bit is set during bootup and cleared during shutdown. During crash,
+dload bit is not cleared, due to which uboot starts crashdump collection.
 
-Please use scripts/get_maintainers.pl to get a list of necessary people
-and lists to CC.  It might happen, that command when run on an older
-kernel, gives you outdated entries.  Therefore please be sure you base
-your patches on recent Linux kernel.
+This patch series adds the support for crashdump collection.
 
-You need to Cc Qualcomm subarch maintainers.
+This series depends on the below patch set.
+https://lore.kernel.org/linux-arm-msm/20230201060319.20434-1-quic_devipriy@quicinc.com/
 
-> 
-> Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> ---
->  drivers/devfreq/Kconfig    |   9 +++
->  drivers/devfreq/Makefile   |   1 +
->  drivers/devfreq/qcom-cci.c | 162 +++++++++++++++++++++++++++++++++++++
+Changes in V2:
+	- rebased on linux-next/master
+        - dropped co-developed by tag wherever applicable
+	- V1 can be found at
+	  https://lore.kernel.org/linux-arm-kernel/20230113160012.14893-1-quic_poovendh@quicinc.com/
 
-Who is going to maintain this file/driver?
+Poovendhan Selvaraj (5):
+  dt-bindings: scm: Add compatible for IPQ9574
+  arm64: dts: Add support for Crashdump collection on IPQ9574
+  firmware: scm: Modify only the DLOAD bit in TCSR register for download
+    mode
+  arm64: defconfig: Enable scm download mode config for IPQ9574 SoC.
+  dt-bindings: tcsr: Add compatible for IPQ9574
 
->  3 files changed, 172 insertions(+)
->  create mode 100644 drivers/devfreq/qcom-cci.c
-> 
-
-(...)
-
-> +
-> +static int qcom_cci_probe(struct platform_device *pdev)
-> +{
-> +	struct device *dev = &pdev->dev;
-> +	struct qcom_cci *priv;
-> +	const char *gov = DEVFREQ_GOV_USERSPACE;
-> +	struct device_node *np = dev->of_node;
-> +	struct nvmem_cell *speedbin_nvmem;
-> +	int ret;
-> +	u32 version;
-> +
-> +	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
-> +	if (!priv)
-> +		return -ENOMEM;
-> +
-> +	priv->clk = devm_clk_get(dev, NULL);
-> +	if (IS_ERR(priv->clk)) {
-> +		ret = PTR_ERR(priv->clk);
-> +		dev_err(dev, "failed to fetch clk: %d\n", ret);
-> +		return ret;
-
-All these are just return dev_err_probe
+ .../bindings/firmware/qcom,scm.yaml           |  1 +
+ .../devicetree/bindings/mfd/qcom,tcsr.yaml    |  1 +
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi         | 26 ++++++++++++++++++-
+ arch/arm64/configs/defconfig                  |  1 +
+ drivers/firmware/qcom_scm.c                   | 12 ++++++---
+ 5 files changed, 36 insertions(+), 5 deletions(-)
 
 
-> +	}
-> +	platform_set_drvdata(pdev, priv);
-> +
-> +	/* Check whether we have profiled speed version per chip */
-> +	speedbin_nvmem = of_nvmem_cell_get(np, NULL);
-> +	if (IS_ERR(speedbin_nvmem))
-> +		return PTR_ERR(speedbin_nvmem);
-> +
-> +	version = qcom_get_dev_version(speedbin_nvmem);
-> +	dev_info(dev, "%s: set opp table version 0x%x\n", __func__, version);
-
-Drop __func__.
-
-> +
-> +	nvmem_cell_put(speedbin_nvmem);
-> +	ret = dev_pm_opp_set_supported_hw(dev, &version, 1);
-> +	if (ret) {
-> +		dev_err(dev, "Failed to set supported hardware\n");
-
-return dev_err_probe
-
-> +		return ret;
-> +	}
-> +
-> +	ret = dev_pm_opp_of_add_table(dev);
-> +	if (ret < 0) {
-> +		dev_err(dev, "failed to get OPP table\n");
-> +		return ret;
-
-return dev_err_probe
-
-
-> +	}
-> +
-> +	priv->profile.target = qcom_cci_target;
-> +	priv->profile.exit = qcom_cci_exit;
-> +	priv->profile.get_cur_freq = qcom_cci_get_cur_freq;
-> +	priv->profile.initial_freq = clk_get_rate(priv->clk);
-> +
-> +	priv->devfreq = devm_devfreq_add_device(dev, &priv->profile,
-> +						gov, NULL);
-> +	if (IS_ERR(priv->devfreq)) {
-> +		ret = PTR_ERR(priv->devfreq);
-> +		dev_err(dev, "failed to add devfreq device: %d\n", ret);
-
-
-ret = dev_err_probe
-
-
-> +		goto err;
-> +	}
-> +
-> +	return 0;
-> +
-> +err:
-> +	dev_pm_opp_of_remove_table(dev);
-> +	return ret;
-> +}
-> +
-> +static const struct of_device_id qcom_cci_of_match[] = {
-> +	{ .compatible = "qcom,msm8939-cci"},
-> +	{ /* sentinel */ },
-> +};
-> +MODULE_DEVICE_TABLE(of, qcom_cci_of_match);
-> +
-> +static struct platform_driver qcom_cci_platdrv = {
-> +	.probe		= qcom_cci_probe,
-> +	.driver = {
-> +		.name	= "qcom-cci-devfreq",
-> +		.of_match_table = qcom_cci_of_match,
-> +	},
-> +};
-> +module_platform_driver(qcom_cci_platdrv);
-> +
-> +MODULE_DESCRIPTION("QCOM cci frequency scaling driver");
-> +MODULE_AUTHOR("Jun Nie <jun.nie@linaro.org>");
-> +MODULE_LICENSE("GPL");
-
-Best regards,
-Krzysztof
+base-commit: 80bd9028fecadae4e8e3a278cd32d74badc2a6e0
+-- 
+2.17.1
 
