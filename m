@@ -2,252 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D94B686723
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 14:41:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A7E5686767
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 14:48:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232262AbjBANlp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Feb 2023 08:41:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34482 "EHLO
+        id S232053AbjBANsR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Feb 2023 08:48:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232243AbjBANlo (ORCPT
+        with ESMTP id S232411AbjBANsH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Feb 2023 08:41:44 -0500
-Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F11C546D65
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Feb 2023 05:41:42 -0800 (PST)
-Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-4ff1fa82bbbso246347277b3.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Feb 2023 05:41:42 -0800 (PST)
+        Wed, 1 Feb 2023 08:48:07 -0500
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC2E234022
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Feb 2023 05:48:05 -0800 (PST)
+Received: by mail-ej1-x630.google.com with SMTP id mc11so29061568ejb.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Feb 2023 05:48:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=mdaA3pQP8MkF/AGzoRUIUmInqo1H05L3juON6STJfUY=;
-        b=TJvX8Ji1HHNMzV9hzhskBOY1N43PNCMGAYu+yTAliFhO05TDK4Wp9E7bzISf8qIGr/
-         zKCX8l6fiLdV1RyGyHtWBlpXvimtXfXgJkTfi4KjxeKVGQIWgeXkTM5Hw1OtDWRieZcy
-         cwCWTfppKpzPHG2R3UYihGHmfFtOjhuid9xG47KBr3MYB7bU5lOUfJ+2gwwodGqe7l7z
-         KE9Y6Cw92oA4M8I5u1EGmA30YoWdsiRAgViSQhpXKo4NplAoBmTKF2p70VQEQYh2L8cr
-         IoLPG7B3zwKGeATzGLkGDTMrbwyuICe3Rwj5yK4lODJCzwjq07gWK5hJM3fYqOamVXKn
-         Tn0w==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+ls5wtJ6Hfc+JvUhlGR4xji5YGsJ7LEo3VaBr3I5PfU=;
+        b=qR2yX5Y+aRZrBkYeonU56wiifAgLOsoqz6bKynEf5uErCKArEXxPvKYYWDc5GmfE6S
+         52hlSedvFXg+DMsJCSJ8ZoidCU4JOsjvKcNvVtW9pVu5XQXsbKZchlCsmqDmN3tke71b
+         dYKy1lmIPKfWsWnH482VI1Dn1PzVw3Ck0NPi01U9nIkL96fCzyuLdc9Paeg2XCOhh435
+         KZ6SAzn4SgZxlwhdNEUzLPvYh48rd2CVrdyJfpcdqXJySBVH8GK2Si+2m002xzcRQqp9
+         W6D8XbBKHK+M52AeUv4oXXCjmHJiSVBLIE+pdwrODBCtGi4sp28TsjtArLD+7t5b4qJ9
+         2kIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mdaA3pQP8MkF/AGzoRUIUmInqo1H05L3juON6STJfUY=;
-        b=Qa3+nss+qzm0JRvK8rTXgcSuCK9t74JSacIKo0Rd96bXeq4qt7YlnhmqHrKfOKLtc5
-         3mR4+TKb8TYY8b4a3puc3w9rudSuV3fIgOPaf6vRgllsCAtxslbKemNpDMv4Xzkk/2vT
-         1h7kd6l0btL39BbBT9X2O5zwm8bg2IBLvyAOmROQ80FlthQY/2t/nqdzidSSB3h2Zfkv
-         qmL04jVcq1p7QuZk2GKWxlqZMvi35MLP+YEqnA57iCACGjlBISPWgtSrabf6wVGT/kWJ
-         JCQt867YwpxP55YLOf5cbT4YuTcMG+be2w9uYxWinH451BZTkhJDso868VNb3Hfgvtdy
-         je6g==
-X-Gm-Message-State: AO0yUKVftJKlX8g9j2LtexgC9pBRxZrwesWEoJxPMeNDyIl+7yvfIami
-        v96wFIt5JrlCvz/1+CS3TKha4w3o9g45teBHR3m4jg==
-X-Google-Smtp-Source: AK7set871+eaOjbi5jQpld9tkgnKYJS4StZCFqOtMRFkMLQglElI05Abd1BnT4pRMwhgQA7Aamkaq8b+O2c7LmnwWmg=
-X-Received: by 2002:a05:690c:23c5:b0:4fe:1d13:5980 with SMTP id
- do5-20020a05690c23c500b004fe1d135980mr366234ywb.378.1675258901833; Wed, 01
- Feb 2023 05:41:41 -0800 (PST)
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+ls5wtJ6Hfc+JvUhlGR4xji5YGsJ7LEo3VaBr3I5PfU=;
+        b=B97nTUfLkvPA1/YJgM4+DWD8MuMz1LlkoJB8XJsO43Rkdn0/uHcvT8Cx70oRaDyzXJ
+         kcXdza6rC6LEuxt2y9ChCP+ccVlfGJvQkE9BnABzMOu9SzVNKjWRkkS7jp9dEwGfZ99Z
+         b4XIHe8WYsEWQ73dfVwn1s8cMwNr0MFZmjjuxCZFuJM3fVnDMCXkuOpLMwEqdOETHwkV
+         0jyHPsVIBxYtXGkX+SSk9UFPcC+Fba0gMPp4F336nluyxd74SpKn/fYL4yvOhUwwxTu2
+         vuzmMhj8Lj1vbyheRbvvcP0YT3xI0KAgKA1tSCRm2bghWA55dSksr38d6Yk+deMGDif4
+         ZCTA==
+X-Gm-Message-State: AO0yUKV+NtAMUYcIYkS8TIu82LA5PGVMiyOqWtZlT1g8dUw4k6pnn0aT
+        eTqyixBFsJz70cC89ChqHkHa0g==
+X-Google-Smtp-Source: AK7set/X5KevUerlVy7HuQadHyk1nRFk3U/EKr6KdRWVgUB4dwlQ/WlSDZaUoJD+MefWqOsdrT+q9Q==
+X-Received: by 2002:a17:906:184a:b0:87f:e07d:ce5f with SMTP id w10-20020a170906184a00b0087fe07dce5fmr2474217eje.9.1675259284443;
+        Wed, 01 Feb 2023 05:48:04 -0800 (PST)
+Received: from [10.10.15.130] ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id z2-20020a170906714200b00888161349desm5103078ejj.182.2023.02.01.05.48.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 01 Feb 2023 05:48:03 -0800 (PST)
+Message-ID: <38466a0f-686d-ab19-2669-e81ca6d6ec17@linaro.org>
+Date:   Wed, 1 Feb 2023 15:48:02 +0200
 MIME-Version: 1.0
-References: <20230201080227.473547-1-jun.nie@linaro.org> <20230201080227.473547-2-jun.nie@linaro.org>
- <515f4e9e-2804-e03a-26f5-f2d3ac331109@linaro.org> <71ba0d05-6183-95ef-9e45-cc3dd512475f@linaro.org>
-In-Reply-To: <71ba0d05-6183-95ef-9e45-cc3dd512475f@linaro.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [v1 2/3] drm/msm/disp/dpu1: add dspps into reservation if there
+ is a ctm request
+Content-Language: en-GB
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Kalyan Thota <quic_kalyant@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, robdclark@chromium.org,
+        dianders@chromium.org, swboyd@chromium.org,
+        quic_vpolimer@quicinc.com, quic_abhinavk@quicinc.com
+References: <1675092092-26412-1-git-send-email-quic_kalyant@quicinc.com>
+ <1675092092-26412-3-git-send-email-quic_kalyant@quicinc.com>
+ <20230201111604.htgczy6yvdkywhvl@SoMainline.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 1 Feb 2023 15:41:30 +0200
-Message-ID: <CAA8EJpqyqC5D+O=KJnuZnWN4BwBOKcquN11nJfEp2WMSmJobBg@mail.gmail.com>
-Subject: Re: [PATCH 2/2] PM / devfreq: qcom: Introduce CCI devfreq driver
-To:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
-Cc:     Jun Nie <jun.nie@linaro.org>, myungjoo.ham@samsung.com,
-        kyungmin.park@samsung.com, cw00.choi@samsung.com,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20230201111604.htgczy6yvdkywhvl@SoMainline.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 1 Feb 2023 at 13:46, Bryan O'Donoghue
-<bryan.odonoghue@linaro.org> wrote:
->
-> On 01/02/2023 11:32, Dmitry Baryshkov wrote:
-> > On 01/02/2023 10:02, Jun Nie wrote:
-> >> Cache Coherent Interconnect (CCI) is used by some Qualcomm SoCs. This
-> >> driver is introduced so that its freqency can be adjusted. And regulator
-> >> associated with opp table can be also adjusted accordingly which is
-> >> shared with cpu cluster.
-> >>
-> >> Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> >> ---
-> >>   drivers/devfreq/Kconfig    |   9 +++
-> >>   drivers/devfreq/Makefile   |   1 +
-> >>   drivers/devfreq/qcom-cci.c | 162 +++++++++++++++++++++++++++++++++++++
-> >>   3 files changed, 172 insertions(+)
-> >>   create mode 100644 drivers/devfreq/qcom-cci.c
-> >
-> > Could you please describe in some additional details what are you trying
-> > to achieve? Should the CCI frequency be scaled manually or does it
-> > follow the cluster frequency? Do clusters vote on the CCI frequency?
-> >
-> > I'm inclined to ask if it is possible to shift this to the cpufreq OPP
-> > tables?
-> >
->
-> Might not be so easy to just append CCI opps to the cluster frequency opps
->
->                  cci_cache: qcom,cci {
->                          compatible = "qcom,msm8939-cci";
->                          clock-names = "devfreq_clk";
->                          clocks = <&apcs2>;
->                          governor = "cpufreq";
->                          operating-points-v2 = <&cci_opp_table>;
->                          power-domains = <&cpr>;
->                          power-domain-names = "cpr";
->                          nvmem-cells = <&cpr_efuse_speedbin_pvs>;
->                          nvmem-cell-names = "cpr_efuse_speedbin_pvs";
->                  };
->
->                  devfreq-cpufreq {
->                          cci-cpufreq {
->                                  target-dev = <&cci_cache>;
->                                  cpu-to-dev-map-0 =
->                                          <  200000  200000000 >,
->                                          <  345600  200000000 >,
->                                          <  400000  200000000 >,
->                                          <  533330  297600000 >,
->                                          <  800000  297600000 >,
->                                          <  960000  297600000 >,
->                                          < 1113600  297000000 >,
->                                          < 1344000  595200000 >,
->                                          < 1459200  595200000 >,
->                                          < 1497600  595200000 >,
->                                          < 1651200  595200000 >;
->                                  cpu-to-dev-map-4 =
->                                          <  200000 200000000 >,
->                                          <  249600 200000000 >,
->                                          <  499200 297600000 >,
->                                          <  800000 297600000 >,
->                                          <  998400 595200000 >,
->                                          < 1113600 595200000 >;
+On 01/02/2023 13:16, Marijn Suijten wrote:
+> On 2023-01-30 07:21:31, Kalyan Thota wrote:
+>> Add dspp blocks into the topology for reservation, if there is a ctm
+>> request for that composition.
+> 
+> DSPP
+> 
+>> Changes in v1:
+>> - Minor nits (Dmitry)
+> 
+> This should go below the triple dashes, so that it /does not/ become
+> part of the patch/commit that is applied to the tree (where review
+> history is irrelevant as it can be searched for separately).
 
-These should map to existing opp entries.
+This is one of DRM peculiarities which we have to live with.
 
-I ended up doing the interconnect driver that maps a clock to the
-interconnect. Then I can use it in the cpu opp tables.
+> 
+>> Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
+>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 13 ++++++-------
+>>   1 file changed, 6 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> index 9c6817b..3bd46b4 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> @@ -545,7 +545,8 @@ bool dpu_encoder_use_dsc_merge(struct drm_encoder *drm_enc)
+>>   static struct msm_display_topology dpu_encoder_get_topology(
+>>   			struct dpu_encoder_virt *dpu_enc,
+>>   			struct dpu_kms *dpu_kms,
+>> -			struct drm_display_mode *mode)
+>> +			struct drm_display_mode *mode,
+>> +			struct drm_crtc_state *crtc_state)
+>>   {
+>>   	struct msm_display_topology topology = {0};
+>>   	int i, intf_count = 0;
+>> @@ -573,11 +574,9 @@ static struct msm_display_topology dpu_encoder_get_topology(
+>>   	else
+>>   		topology.num_lm = (mode->hdisplay > MAX_HDISPLAY_SPLIT) ? 2 : 1;
+>>   
+>> -	if (dpu_enc->disp_info.intf_type == DRM_MODE_ENCODER_DSI) {
+>> -		if (dpu_kms->catalog->dspp &&
+>> -			(dpu_kms->catalog->dspp_count >= topology.num_lm))
+>> -			topology.num_dspp = topology.num_lm;
+>> -	}
+>> +	if (dpu_kms->catalog->dspp &&
+>> +	    crtc_state->ctm && (dpu_kms->catalog->dspp_count >= topology.num_lm))
+> 
+> Multiline-if-clause is typically indented with two tabs, not a half tab
+> (4 spaces).
 
->                          };
->                  };
->
->          cci_opp_table: cci-opp-table {
->                  compatible = "operating-points-v2";
->
->                  opp-200000000 {
->                          opp-hz = /bits/ 64 <200000000>;
->                          opp-supported-hw = <0x3f>;
->                          required-opps = <&cpr_opp3>;
+I tend to disagree here. Lately I have mostly seen it being indented to 
+the opening parenthesis, so that nested statements also indent nicely.
 
-And these should probably map to max(cpu's CPR opp, CCI's CPR opp).
+> Nit: swap the && here?  dspp and dspp_count are related, so check ctm
+> first or last but not in the middle - makes reading easier.
 
->                  };
->
->                  opp-297600000 {
->                          opp-hz = /bits/ 64 <297600000>;
->                          opp-supported-hw = <0x3f>;
->                          required-opps = <&cpr_opp12>;
->                  };
->
->                  opp-400000000-cpr14 {
->                          opp-hz = /bits/ 64 <400000000>;
->                          opp-supported-hw = <0x1>;
->                          required-opps = <&cpr_opp14>;
->                  };
->
->                  opp-400000000-cpr15 {
->                          opp-hz = /bits/ 64 <400000000>;
->                          opp-supported-hw = <0x3e>;
->                          required-opps = <&cpr_opp15>;
->                  };
->
->                  opp-595200000 {
->                          opp-hz = /bits/ 64 <595200000>;
->                          opp-supported-hw = <0x3f>;
->                          required-opps = <&cpr_opp17>;
->                  };
->          };
->
->
->          cpr_opp_table: cpr-opp-table {
->                  compatible = "operating-points-v2-qcom-level";
->
->                  cpr_opp1: opp1 {
->                          opp-hz = /bits/ 64 <200000000>;
->                          opp-level = <1>;
->                          qcom,opp-fuse-level = <1>;
->                  };
->                  cpr_opp2: opp2 {
->                          opp-hz = /bits/ 64 <345600000>;
->                          opp-level = <2>;
->                          qcom,opp-fuse-level = <1>;
->                  };
->                  cpr_opp3: opp3 {
->                          opp-hz = /bits/ 64 <400000000>;
->                          opp-level = <3>;
->                          qcom,opp-fuse-level = <1>;
->                  };
->                  cpr_opp4: opp4 {
->                          opp-hz = /bits/ 64 <422400000>;
->                          opp-level = <4>;
->                          qcom,opp-fuse-level = <2>;
->                  };
->                  cpr_opp5: opp5 {
->                          opp-hz = /bits/ 64 <499200000>;
->                          opp-level = <5>;
->                          qcom,opp-fuse-level = <2>;
->                  };
->                  cpr_opp6: opp6 {
->                          opp-hz = /bits/ 64 <533330000>;
->                          opp-level = <6>;
->                          qcom,opp-fuse-level = <2>;
->                  };
->                  cpr_opp7: opp7 {
->                          opp-hz = /bits/ 64 <652800000>;
->                          opp-level = <7>;
->                          qcom,opp-fuse-level = <2>;
->                  };
->                  cpr_opp8: opp8 {
->                          opp-hz = /bits/ 64 <729600000>;
->                          opp-level = <8>;
->                          qcom,opp-fuse-level = <2>;
->                  };
->                  cpr_opp9: opp9 {
->                          opp-hz = /bits/ 64 <800000000>;
->                          opp-level = <9>;
->                          qcom,opp-fuse-level = <2>;
->                  };
->                  cpr_opp10: opp10 {
->                          opp-hz = /bits/ 64 <806400000>;
->                          opp-level = <10>;
->                          qcom,opp-fuse-level = <2>;
->                  };
->                  cpr_opp11: opp11 {
->                          opp-hz = /bits/ 64 <883200000>;
->                          opp-level = <11>;
->                          qcom,opp-fuse-level = <2>;
->                  };
->                  cpr_opp12: opp12 {
->                          opp-hz = /bits/ 64 <960000000>;
->                          opp-level = <12>;
->                          qcom,opp-fuse-level = <2>;
->                  };
->          };
->
-> ---
-> bod
+I think we can ignore dpu_kms->catalog->dspp completely. checking 
+dspp_count should be enough for the purpose of the check (and note, the 
+check for dspp/dspp_count is misleading and should be omitted).
 
-
+> 
+>> +		topology.num_dspp = topology.num_lm;
+>>   
+>>   	topology.num_enc = 0;
+>>   	topology.num_intf = intf_count;
+>> @@ -643,7 +642,7 @@ static int dpu_encoder_virt_atomic_check(
+>>   		}
+>>   	}
+>>   
+>> -	topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode);
+>> +	topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode, crtc_state);
+>>   
+>>   	/* Reserve dynamic resources now. */
+>>   	if (!ret) {
+>> -- 
+>> 2.7.4
+>>
 
 -- 
 With best wishes
 Dmitry
+
