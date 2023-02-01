@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A4796686ACA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 16:51:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 525B5686ACC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 16:51:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232805AbjBAPvt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Feb 2023 10:51:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56088 "EHLO
+        id S232159AbjBAPvv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Feb 2023 10:51:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56190 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232389AbjBAPv1 (ORCPT
+        with ESMTP id S232413AbjBAPvd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Feb 2023 10:51:27 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8C7975192
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Feb 2023 07:51:22 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id t7so9385346wrp.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Feb 2023 07:51:22 -0800 (PST)
+        Wed, 1 Feb 2023 10:51:33 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 283D275182
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Feb 2023 07:51:24 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id t18so17771518wro.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Feb 2023 07:51:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bFn0z0++9NFRixQfP7nx/jtqdYQ6B+ogjd9YxGTGxb4=;
-        b=aFeddXUJelzWwfyWY2hrE4TKzVVDJtTdWNcklqUu5YVuYSvAWhhmQsM/ndKYRHqySm
-         9EHHhTyjhNmZDySSBuJy87K2WwgLEQwDqzi4pHdvYfCnhUJ+0rFEqx0KWLEP4ZJztp4e
-         goB10sdZWrwlC/x60P3Klw07ej3no0265VMkJQsV60HXC6GdylP+Dcbaj+B+jcCoaHmH
-         l5jJFIjYHoP/HQ6gitQRmi8F38K5RzhDjBp52dkJgjIImY2ocIAKMAP3NEhurA2XuzYd
-         +jA18fzPVQmhODyDUHhE9qPkgJS7G6bL6p7aKLy4Sm/mGa/lwUdaMAskcfH5j39WhkKq
-         KbCQ==
+        bh=4gkVO6+Tzg4fvpsjqr/AIsp9ic+ZLAa9X09QCCJKt3Q=;
+        b=Zbom2BFz1/4u7gOdMA6fUaC6/oPny6nhUG7f4m0pQJu0XAMYXS2XkqIU7AKI27vaIM
+         FSRQ5ezwKRETR6TQYJF4lYTFDcW6ukDO5fKitc4ogYOzw8AeBKfIpN3/V0ZWTMAT6wPN
+         FgDWpJT7D9He/ZgdSYnsz4e7lhVK4WG7TS6v8R4JFklBahucuCNgl6jIJgpfF6LPIPQI
+         W0nlySVv1JWLUi8go5jwfoSPADRrwN9ScvdHyunqO42pSAh75tmXMMwIm9OUgwZjKeEY
+         BR1h44rpyjSWdCdMy1b6iw9wVc4b1bJbxEN/0X9UJHiNYQylhLkTmMeMBC46qmhYnePX
+         uHXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=bFn0z0++9NFRixQfP7nx/jtqdYQ6B+ogjd9YxGTGxb4=;
-        b=JXu2XYZaMYcZYOavAtbLf0zYhoN1agohr2NN0uLbBaKRuap8RaAW2K9ZAYd0lBk75J
-         A5455ljDrYsyTthQ2FshNMnknw+mcoNCR/1eqpJvtl2agq5SayHNJgT12dI9t2zMia5S
-         EsUaDHHXxuDik4K/D3dmJWhyr1H0neyk3thzxBHJ++3+NVu2tNzn6ePzVFl6nnks23yv
-         hVQ5EBwgL7zVhZjOHUfHa6cwrWi0vPn4oK0O8w3hVM/E3h7fwAR7/uAMNg80bbL/eQie
-         gihK3YuGeOuxMjuOzVMUjclouM47fTP+bPL1bukauOhppNH3iJIprL8bFQChBs3lfS13
-         uwHw==
-X-Gm-Message-State: AO0yUKXkukkamF0GuahXipC8UOfo8Tl+gpqfkqWl0ylTPTmno+bTuPRv
-        ZwEotBpcgPU2dM1MYhqLZIBoIg==
-X-Google-Smtp-Source: AK7set+O3FgHo2qkkNaclOOX6wfEzwk1cME8BsfJkKRoUaHEsmi87pzZhXkbWDDIMYii4PH7JNZSEg==
-X-Received: by 2002:a5d:660f:0:b0:2bf:ad43:8f08 with SMTP id n15-20020a5d660f000000b002bfad438f08mr2843436wru.14.1675266681489;
-        Wed, 01 Feb 2023 07:51:21 -0800 (PST)
+        bh=4gkVO6+Tzg4fvpsjqr/AIsp9ic+ZLAa9X09QCCJKt3Q=;
+        b=1sSPw4w9XfOt48KhgdQZkVBuTyXoxjU33Z7k7jBikrB3B0RELYpkZt3ACMzlRCE2Qt
+         rtB2ka1yR/kERaHYIfudu9sKwNUXDaHAqmex/7H9nV8iXRfWxoWAIoieF8eWJxZuhxQO
+         gztKfj38ylB804iOJYTVqA2PzX1rzsSDjlWPMcV/yUMuIJWZjNWeCH/TukvwPUiWXUDk
+         a9f6Lvj5vbZRSaXz2dxYYtQuLWQZBQ5Ubv4jp711xYSL7g79clPgxWzN1YU6jBiI+24Z
+         8k8oKgA3bjurrKGrJX0GLATaZFAAL8jofgJCnAT1DIszVop1AkLTOgHFrFnGFMsJhtPS
+         4gVw==
+X-Gm-Message-State: AO0yUKUYdF3x/HSq/ZOxIgRstY4CVBesn58XAYlhkUf0ny1+hKavZllU
+        s5dt/hmLA6t4Iy7OQfHwrViLLQ==
+X-Google-Smtp-Source: AK7set8fIhWYhFx+7oY2e4OsT6BguLoUnELED0cj3wBENsd8LHb/eqzfZ5BpErIFIaGKV/Z/HZ9F1w==
+X-Received: by 2002:a5d:6411:0:b0:2bf:95d6:4789 with SMTP id z17-20020a5d6411000000b002bf95d64789mr6366652wru.2.1675266682653;
+        Wed, 01 Feb 2023 07:51:22 -0800 (PST)
 Received: from krzk-bin.. ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id t1-20020adfe441000000b002bfd524255esm14816189wrm.43.2023.02.01.07.51.20
+        by smtp.gmail.com with ESMTPSA id t1-20020adfe441000000b002bfd524255esm14816189wrm.43.2023.02.01.07.51.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Feb 2023 07:51:21 -0800 (PST)
+        Wed, 01 Feb 2023 07:51:22 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -59,9 +59,9 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [RFT PATCH 09/14] arm64: dts: qcom: sm6125: correct TLMM gpio-ranges
-Date:   Wed,  1 Feb 2023 16:51:00 +0100
-Message-Id: <20230201155105.282708-10-krzysztof.kozlowski@linaro.org>
+Subject: [RFT PATCH 10/14] arm64: dts: qcom: sm6350: correct TLMM gpio-ranges
+Date:   Wed,  1 Feb 2023 16:51:01 +0100
+Message-Id: <20230201155105.282708-11-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20230201155105.282708-1-krzysztof.kozlowski@linaro.org>
 References: <20230201155105.282708-1-krzysztof.kozlowski@linaro.org>
@@ -81,22 +81,22 @@ Correct the number of GPIOs in TLMM pin controller.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm6125.dtsi | 2 +-
+ arch/arm64/boot/dts/qcom/sm6350.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-index 65033227718a..1b7bbef5c575 100644
---- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-@@ -384,7 +384,7 @@ tlmm: pinctrl@500000 {
- 			reg-names = "west", "south", "east";
- 			interrupts = <GIC_SPI 227 IRQ_TYPE_LEVEL_HIGH>;
- 			gpio-controller;
--			gpio-ranges = <&tlmm 0 0 134>;
-+			gpio-ranges = <&tlmm 0 0 133>;
+diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+index 8224adb99948..317ed9bd3507 100644
+--- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+@@ -1511,7 +1511,7 @@ tlmm: pinctrl@f100000 {
  			#gpio-cells = <2>;
  			interrupt-controller;
  			#interrupt-cells = <2>;
+-			gpio-ranges = <&tlmm 0 0 157>;
++			gpio-ranges = <&tlmm 0 0 156>;
+ 
+ 			sdc2_off_state: sdc2-off-state {
+ 				clk-pins {
 -- 
 2.34.1
 
