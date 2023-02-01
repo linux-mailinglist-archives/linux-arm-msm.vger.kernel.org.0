@@ -2,73 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D76E868658C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 12:46:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E36A6865A7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 13:01:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230054AbjBALqd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Feb 2023 06:46:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54238 "EHLO
+        id S231473AbjBAMBq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Feb 2023 07:01:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60664 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230000AbjBALqc (ORCPT
+        with ESMTP id S231486AbjBAMBm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Feb 2023 06:46:32 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6508D5C0C2
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Feb 2023 03:46:28 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id m7so17031622wru.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Feb 2023 03:46:28 -0800 (PST)
+        Wed, 1 Feb 2023 07:01:42 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C229136458
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Feb 2023 04:01:36 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id c10-20020a05600c0a4a00b003db0636ff84so1251338wmq.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Feb 2023 04:01:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=/oez8AUAftX1zJ0SA+UvNi7X27OzDC/qlpA3BbcU7l0=;
-        b=Cdn+s0ZE6QVu4mi+Ioq2kDUpND2AT6VZIpijAz89k2wX9cHp5G+LbQqWU+DiL1vf8k
-         o4lpBAquerK3vfIu1VuTov4Kc21afSZkD9SCq9IMomSk9Ky1b2sv3LT1X0D/iSSyxPoM
-         am1MIdgMKfOAfD0RNwkHcmfjiRJ92p7N9IollD3vCoASRSTm7Ablz8/K7X0Pjyg9Fvfa
-         qXpvt5UEg6UbgcaTXDq2BlnM3XvtrptXSAYTggUED5DxT2P7RZyA07Xg9BDlM2J7G6NT
-         sSeUzXkz1LbYeXIPK9espZGOhyfkoYZfDOQJW8F9E5HfhnWQsFr+ifm6Zcd/YH4HGnLM
-         /+oQ==
+        bh=6prvu2CI3NzcBWqU0N1Xpa6iVV1xGFav24j3mlsXXA4=;
+        b=In09R1A0QdGqESTC/tbUuyeGu1hlVo9zBahaCjmLsXyT9YmlXvcrYY5h4eV9Ezsnii
+         SxS1z4Xq3xRPII5NzoBuTDG1bkxeQiSXAflfnxM34O4B1w0EkmpaKZiUUnQ0usp4PgyY
+         2n5ukflsgbrsWs/Dno1DOyK3+fwOMA2+NmNfSZ5ZkJH9b+ZiE5RAoVqhdo6LgiQlgRcn
+         pv01MQninn/TwLUdLFP/0j0fi0WSwN8w2xWQfTOGFmqDSxnSSPq1w9BiAug9sODRqZ7V
+         TiWjXSQfLoeLA0UMOoZRmUvtfluMom8Z/I7A+47kNUu7Q0QjCgDiSDNJ4w/YqX4JRDyI
+         hUYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/oez8AUAftX1zJ0SA+UvNi7X27OzDC/qlpA3BbcU7l0=;
-        b=OR4m5frlsrXLPL8EwTLquYCV1/0+HM0zm/Pnx5BzU8QYW11tY19X5DsO1vBFTHHSVR
-         y1yGUeY6ASGEYw0oMsDxJdsIL/bGxIoTShX2i97vMn0vwIafuYr40ZpQpHv87vQD+vpL
-         914pf8NGgQvAy+ACG7IpUj3b/KpXFBtaWlJcOqdnJDYSADVT5WHKp6NpJLvq9Es2OztJ
-         wus71CO80U5sEua4DTKDsqXJrBMWfeNqeKMH9vOpqKmbKtQvZKyiBAJkisd6JrqXDN1x
-         zoPKdpY4eynqdvKG1f+H3ZAOp0jXL21A742IFhkrYaH/x27ghD1soE+mg4fZlJaDFeSa
-         3fzA==
-X-Gm-Message-State: AO0yUKWpUzcLl5Qh2HnKauFgSUIFG++Mf49VtwUKWa85yyxV6ZjtCVHX
-        4cTmpN3WxY0tgV+Zk0YHqablPg==
-X-Google-Smtp-Source: AK7set8S6wL8+KxPQDIovLNftJR31PT8NwmtUAnAWXTN7UmhNXqTDH+yUHKWTSmGb+Wp4n5lJLs5mQ==
-X-Received: by 2002:a5d:4352:0:b0:2be:12a8:9f75 with SMTP id u18-20020a5d4352000000b002be12a89f75mr1770411wrr.55.1675251986695;
-        Wed, 01 Feb 2023 03:46:26 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id q3-20020adff503000000b002bfae1398bbsm17665550wro.42.2023.02.01.03.46.25
+        bh=6prvu2CI3NzcBWqU0N1Xpa6iVV1xGFav24j3mlsXXA4=;
+        b=7oia3Sqn+DCKEQUGmPTyBBbULmoCeqHOeQ5AoUBhuQGWcgctAlMOi1ghDXYUvUg1Rv
+         hQsy7DHIjWHhz8u61lurQdnsXlhLOO/OqALXgzMoHloqo99pzM+O6DJ9E/av+JV1dOy6
+         eWeXy2V3Syj52VVuu5MCxfd/5mcUh1ABoWoWF7r/mHAYBJfgdSEgnbl2YJOrANoAbwAh
+         w3KgumFa1+Wmt1kD5sBrNY5gYC5vToTdxHHGmKZEx3z2CYYN7Wr9iE+N1rnbd3s2ytkM
+         IPXdiPEjt9vtfvngrvuCexIlgrBu0AaEMdS80C15jLQuLhR5Ol7QJsAcbEDI6JQTlqIp
+         OO8A==
+X-Gm-Message-State: AO0yUKXaz3mNb0leXqHpH8RvTj9hG+aMtUQoi8y5zS7dlkyV1j9SaxR4
+        /LVWVlUIajhnLS3BD8/hsITA4A==
+X-Google-Smtp-Source: AK7set9jSoYr+KrAD0fdumuXJ7Cz89lWI/z0xkcgMMNwyBtEpC8hJTmIUDg3r3Q6CgjkEMUjQeAWuQ==
+X-Received: by 2002:a05:600c:1d03:b0:3dd:1bcc:eb17 with SMTP id l3-20020a05600c1d0300b003dd1bcceb17mr1587144wms.28.1675252894823;
+        Wed, 01 Feb 2023 04:01:34 -0800 (PST)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id y13-20020a1c4b0d000000b003dc4aae4739sm1522444wma.27.2023.02.01.04.01.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 Feb 2023 03:46:26 -0800 (PST)
-Message-ID: <71ba0d05-6183-95ef-9e45-cc3dd512475f@linaro.org>
-Date:   Wed, 1 Feb 2023 11:46:25 +0000
+        Wed, 01 Feb 2023 04:01:33 -0800 (PST)
+Message-ID: <0df20322-e520-1622-8da8-6dbb44705aec@linaro.org>
+Date:   Wed, 1 Feb 2023 12:01:32 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH 2/2] PM / devfreq: qcom: Introduce CCI devfreq driver
+ Thunderbird/102.4.2
+Subject: Re: [PATCH V2 3/5] firmware: scm: Modify only the DLOAD bit in TCSR
+ register for download mode
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jun Nie <jun.nie@linaro.org>, myungjoo.ham@samsung.com,
-        kyungmin.park@samsung.com, cw00.choi@samsung.com
-Cc:     bryan.odonoghue@linaro.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20230201080227.473547-1-jun.nie@linaro.org>
- <20230201080227.473547-2-jun.nie@linaro.org>
- <515f4e9e-2804-e03a-26f5-f2d3ac331109@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <515f4e9e-2804-e03a-26f5-f2d3ac331109@linaro.org>
+To:     Poovendhan Selvaraj <quic_poovendh@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, lee@kernel.org,
+        mturquette@baylibre.com, sboyd@kernel.org,
+        jassisinghbrar@gmail.com, catalin.marinas@arm.com, will@kernel.org,
+        shawnguo@kernel.org, arnd@arndb.de, marcel.ziswiler@toradex.com,
+        robimarko@gmail.com, dmitry.baryshkov@linaro.org,
+        nfraprado@collabora.com, broonie@kernel.org,
+        quic_gurus@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
+        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
+        quic_devipriy@quicinc.com
+References: <20230201090529.30446-1-quic_poovendh@quicinc.com>
+ <20230201090529.30446-4-quic_poovendh@quicinc.com>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20230201090529.30446-4-quic_poovendh@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -79,167 +89,74 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/02/2023 11:32, Dmitry Baryshkov wrote:
-> On 01/02/2023 10:02, Jun Nie wrote:
->> Cache Coherent Interconnect (CCI) is used by some Qualcomm SoCs. This
->> driver is introduced so that its freqency can be adjusted. And regulator
->> associated with opp table can be also adjusted accordingly which is
->> shared with cpu cluster.
->>
->> Signed-off-by: Jun Nie <jun.nie@linaro.org>
->> ---
->>   drivers/devfreq/Kconfig    |   9 +++
->>   drivers/devfreq/Makefile   |   1 +
->>   drivers/devfreq/qcom-cci.c | 162 +++++++++++++++++++++++++++++++++++++
->>   3 files changed, 172 insertions(+)
->>   create mode 100644 drivers/devfreq/qcom-cci.c
+
+
+On 01/02/2023 09:05, Poovendhan Selvaraj wrote:
+> Add support to read-modify-write TCSR register to modify only DLOAD bit.
 > 
-> Could you please describe in some additional details what are you trying 
-> to achieve? Should the CCI frequency be scaled manually or does it 
-> follow the cluster frequency? Do clusters vote on the CCI frequency?
+> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
+> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
+> Co-developed-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+> Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+> Signed-off-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+> ---
+>   drivers/firmware/qcom_scm.c | 12 ++++++++----
+>   1 file changed, 8 insertions(+), 4 deletions(-)
 > 
-> I'm inclined to ask if it is possible to shift this to the cpufreq OPP 
-> tables?
-> 
-
-Might not be so easy to just append CCI opps to the cluster frequency opps
-
-                 cci_cache: qcom,cci {
-                         compatible = "qcom,msm8939-cci";
-                         clock-names = "devfreq_clk";
-                         clocks = <&apcs2>;
-                         governor = "cpufreq";
-                         operating-points-v2 = <&cci_opp_table>;
-                         power-domains = <&cpr>;
-                         power-domain-names = "cpr";
-                         nvmem-cells = <&cpr_efuse_speedbin_pvs>;
-                         nvmem-cell-names = "cpr_efuse_speedbin_pvs";
-                 };
-
-                 devfreq-cpufreq {
-                         cci-cpufreq {
-                                 target-dev = <&cci_cache>;
-                                 cpu-to-dev-map-0 =
-                                         <  200000  200000000 >,
-                                         <  345600  200000000 >,
-                                         <  400000  200000000 >,
-                                         <  533330  297600000 >,
-                                         <  800000  297600000 >,
-                                         <  960000  297600000 >,
-                                         < 1113600  297000000 >,
-                                         < 1344000  595200000 >,
-                                         < 1459200  595200000 >,
-                                         < 1497600  595200000 >,
-                                         < 1651200  595200000 >;
-                                 cpu-to-dev-map-4 =
-                                         <  200000 200000000 >,
-                                         <  249600 200000000 >,
-                                         <  499200 297600000 >,
-                                         <  800000 297600000 >,
-                                         <  998400 595200000 >,
-                                         < 1113600 595200000 >;
-                         };
-                 };
-
-         cci_opp_table: cci-opp-table {
-                 compatible = "operating-points-v2";
-
-                 opp-200000000 {
-                         opp-hz = /bits/ 64 <200000000>;
-                         opp-supported-hw = <0x3f>;
-                         required-opps = <&cpr_opp3>;
-                 };
-
-                 opp-297600000 {
-                         opp-hz = /bits/ 64 <297600000>;
-                         opp-supported-hw = <0x3f>;
-                         required-opps = <&cpr_opp12>;
-                 };
-
-                 opp-400000000-cpr14 {
-                         opp-hz = /bits/ 64 <400000000>;
-                         opp-supported-hw = <0x1>;
-                         required-opps = <&cpr_opp14>;
-                 };
-
-                 opp-400000000-cpr15 {
-                         opp-hz = /bits/ 64 <400000000>;
-                         opp-supported-hw = <0x3e>;
-                         required-opps = <&cpr_opp15>;
-                 };
-
-                 opp-595200000 {
-                         opp-hz = /bits/ 64 <595200000>;
-                         opp-supported-hw = <0x3f>;
-                         required-opps = <&cpr_opp17>;
-                 };
-         };
+> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> index 2000323722bf..e3435587a72d 100644
+> --- a/drivers/firmware/qcom_scm.c
+> +++ b/drivers/firmware/qcom_scm.c
+> @@ -407,7 +407,7 @@ int qcom_scm_set_remote_state(u32 state, u32 id)
+>   }
+>   EXPORT_SYMBOL(qcom_scm_set_remote_state);
+>   
+> -static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
+> +static int __qcom_scm_set_dload_mode(struct device *dev, u32 val, bool enable)
+>   {
+>   	struct qcom_scm_desc desc = {
+>   		.svc = QCOM_SCM_SVC_BOOT,
+> @@ -417,7 +417,7 @@ static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
+>   		.owner = ARM_SMCCC_OWNER_SIP,
+>   	};
+>   
+> -	desc.args[1] = enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0;
+> +	desc.args[1] = enable ? val | QCOM_SCM_BOOT_SET_DLOAD_MODE : 0;
 
 
-         cpr_opp_table: cpr-opp-table {
-                 compatible = "operating-points-v2-qcom-level";
+It is not read-modify-write when enable == false, its just writing 0.
 
-                 cpr_opp1: opp1 {
-                         opp-hz = /bits/ 64 <200000000>;
-                         opp-level = <1>;
-                         qcom,opp-fuse-level = <1>;
-                 };
-                 cpr_opp2: opp2 {
-                         opp-hz = /bits/ 64 <345600000>;
-                         opp-level = <2>;
-                         qcom,opp-fuse-level = <1>;
-                 };
-                 cpr_opp3: opp3 {
-                         opp-hz = /bits/ 64 <400000000>;
-                         opp-level = <3>;
-                         qcom,opp-fuse-level = <1>;
-                 };
-                 cpr_opp4: opp4 {
-                         opp-hz = /bits/ 64 <422400000>;
-                         opp-level = <4>;
-                         qcom,opp-fuse-level = <2>;
-                 };
-                 cpr_opp5: opp5 {
-                         opp-hz = /bits/ 64 <499200000>;
-                         opp-level = <5>;
-                         qcom,opp-fuse-level = <2>;
-                 };
-                 cpr_opp6: opp6 {
-                         opp-hz = /bits/ 64 <533330000>;
-                         opp-level = <6>;
-                         qcom,opp-fuse-level = <2>;
-                 };
-                 cpr_opp7: opp7 {
-                         opp-hz = /bits/ 64 <652800000>;
-                         opp-level = <7>;
-                         qcom,opp-fuse-level = <2>;
-                 };
-                 cpr_opp8: opp8 {
-                         opp-hz = /bits/ 64 <729600000>;
-                         opp-level = <8>;
-                         qcom,opp-fuse-level = <2>;
-                 };
-                 cpr_opp9: opp9 {
-                         opp-hz = /bits/ 64 <800000000>;
-                         opp-level = <9>;
-                         qcom,opp-fuse-level = <2>;
-                 };
-                 cpr_opp10: opp10 {
-                         opp-hz = /bits/ 64 <806400000>;
-                         opp-level = <10>;
-                         qcom,opp-fuse-level = <2>;
-                 };
-                 cpr_opp11: opp11 {
-                         opp-hz = /bits/ 64 <883200000>;
-                         opp-level = <11>;
-                         qcom,opp-fuse-level = <2>;
-                 };
-                 cpr_opp12: opp12 {
-                         opp-hz = /bits/ 64 <960000000>;
-                         opp-level = <12>;
-                         qcom,opp-fuse-level = <2>;
-                 };
-         };
+Is this intentional?
 
----
-bod
+
+>   
+>   	return qcom_scm_call_atomic(__scm->dev, &desc, NULL);
+>   }
+> @@ -426,15 +426,19 @@ static void qcom_scm_set_download_mode(bool enable)
+>   {
+>   	bool avail;
+>   	int ret = 0;
+> +	u32 dload_addr_val;
+>   
+>   	avail = __qcom_scm_is_call_available(__scm->dev,
+>   					     QCOM_SCM_SVC_BOOT,
+>   					     QCOM_SCM_BOOT_SET_DLOAD_MODE);
+> +	ret = qcom_scm_io_readl(__scm->dload_mode_addr, &dload_addr_val);
+> +
+>   	if (avail) {
+> -		ret = __qcom_scm_set_dload_mode(__scm->dev, enable);
+> +		ret = __qcom_scm_set_dload_mode(__scm->dev, dload_addr_val, enable);
+>   	} else if (__scm->dload_mode_addr) {
+>   		ret = qcom_scm_io_writel(__scm->dload_mode_addr,
+> -				enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0);
+> +				enable ? dload_addr_val |
+> +					QCOM_SCM_BOOT_SET_DLOAD_MODE : 0);
+
+same here.
+
+
+--srini
+
+>   	} else {
+>   		dev_err(__scm->dev,
+>   			"No available mechanism for setting download mode\n");
