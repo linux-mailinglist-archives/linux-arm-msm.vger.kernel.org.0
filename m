@@ -2,85 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 260486860C3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 08:37:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 680B4686120
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 09:03:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231908AbjBAHhr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Feb 2023 02:37:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38048 "EHLO
+        id S231945AbjBAIDh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Feb 2023 03:03:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231639AbjBAHhp (ORCPT
+        with ESMTP id S231591AbjBAID3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Feb 2023 02:37:45 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E705E4861E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 23:37:43 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id m14so15915681wrg.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 23:37:43 -0800 (PST)
+        Wed, 1 Feb 2023 03:03:29 -0500
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B04831BAE0
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Feb 2023 00:03:20 -0800 (PST)
+Received: by mail-pf1-x435.google.com with SMTP id g9so12032026pfo.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Feb 2023 00:03:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=vtEz6HgYvxRUvaHEz9ZnWOfkR0mMjLhI8XOy+dkVNLE=;
-        b=xz0o1BDFiWYKQbIO3tBcvo/YDKW3Wb5ekPNta5Gb+/VxHCzyh/xLxdwqAmEy61FWbZ
-         GG63C5+HLPa1VxKuFeb+JHwX+Em4qy4Q2zyIehc3mSY89R2DhPcaESdOJsZhIczh9ugK
-         M9Hf1ngMucGLy6E1JpX7oMeK2MMdYZrtr6Jb3nOtzHheNcolB8/wlcub8KECYoQ+joIS
-         u8ywdn4DzTI8hKgzrizXCRcv2M2Z/qYIcgBaLqy8dtyMdxPd1AgDhlNPkpkzApNLWSD3
-         FDxmsxeQQVQMjOLPhTHc5bAf5sUuEZcNrkLcmwvU5CowUtLQ9Crxktl/94rkFKOnh/Lz
-         beFQ==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=RtQMOuLPUu9y14QU5PWL+7La4FpScoZwnwss15ZtdRI=;
+        b=Xepeu3O83s4uTvCuSV3OO+telBNV8kPanlT4gGCqWkY7eV5b1+zB2vcLHz/LSkovlj
+         LBo5/1f5zHAzrsIvMJNWZEQYugTe3D300/zr5mP9CUYSrWHA5SRFmeAoMVUiNjLj7dg/
+         8Ff51hnOlz1/faWYDGh/IxSxY7+FK4RWFl2CYzRUDhjlSXLK/1FT41WUqCqrDW9WDvL4
+         xfcoi3uyxKw9RrpYGRcaMQW+958XCjgRGO0nXGr8rN4I/ejo76AU3sr8x3OpL67u2LZJ
+         ENkp+ovUWpPQHqI+oA4eagesFJbYDOyWsNFfc4eOeAlpMu671FGGQv9pkEaV5IKmO38N
+         v6ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vtEz6HgYvxRUvaHEz9ZnWOfkR0mMjLhI8XOy+dkVNLE=;
-        b=pyb87Uh3G6IZ/z1YYVOsw57Zr7RLjamW/63zGvYQv1WSXx25dvzLH8Zbb1lL7QfZbL
-         iHdq3VFkfdxf8ERWyUKP6L3HghYwHwdrwEUusfGkDXn5Y1+Q970fOwUpzH80nMqCIc7d
-         aDKuc8pcKaxTDBRx/6HkD+b40eYTr88Oec7sClBVfrk/0Sd2kW/B36XN6RtogFlTp97n
-         nMsMhTIt3RiN21kCkNFI2L33n7VX3RMIoxRVnd1AejYKh6ubgjFCtkShFxR+Ye7I1Ym5
-         bVIjq2dZiCy3rlvrvIMjh5uyr0UTcBYmMY/BSoaXF4sxxOukiNes3xomKbiWOAi7Fc0m
-         z2HA==
-X-Gm-Message-State: AO0yUKU2k2OcFBlbNs5IeqHUZIYtWnuJ6CryBJ9QQSgRM3P9JsKt1Frt
-        jl9jv4p7ST7TTHuf2cIJRhfYjw==
-X-Google-Smtp-Source: AK7set+WxI2wxDu/UXDfZmDEZtvOwJLAs2HZa186Mvnwh+h13QxLftJaM+ds3wqNh+gw73VngtvHfg==
-X-Received: by 2002:adf:d846:0:b0:2bf:cc26:c6cd with SMTP id k6-20020adfd846000000b002bfcc26c6cdmr4938218wrl.43.1675237062411;
-        Tue, 31 Jan 2023 23:37:42 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id m8-20020a5d56c8000000b002bf94527b9esm16253376wrw.85.2023.01.31.23.37.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 31 Jan 2023 23:37:42 -0800 (PST)
-Message-ID: <91ddc32e-0e59-fe49-b8c2-b33b962c943e@linaro.org>
-Date:   Wed, 1 Feb 2023 08:37:39 +0100
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RtQMOuLPUu9y14QU5PWL+7La4FpScoZwnwss15ZtdRI=;
+        b=1j/bC6yRQYDlqIb7x1j9EIz9zfo6SRhiYEtWdn9NLI14qauG+/tD/khSNf95e4yhG7
+         biNVm1X6GoNbyDDN7clbOQzy1ZazxrB72EUjYo9GnpahFZzWOerFqN78v9cZAAu/edya
+         xU5Ks4sOmmq+NZIMRlM094J+/SyRghp/RuKdRlsruRRZybquTe7driw0l+ZQo4x8xjyM
+         LqlZ33hut8xnGUgO98Mu8UPNeUxFOYXXVpATpOQfp46BSmf3WatghQVnLEbFfSUe6qsx
+         vu+sySc27ylcezSsFThtNsL+MGdvmFuPh8CL2sUHBZCePIRg//X2cyoDOXTmuKr1r51h
+         OVOw==
+X-Gm-Message-State: AO0yUKVPQgqTUqeLhW5VsloFsBNnyTs4XHcs2fJyzINF3VEdMAW7uc4W
+        KW9L1Ke+xqQaur2YZNePjVw75A==
+X-Google-Smtp-Source: AK7set+OFG6fQlO2ibvtOffuh+zjSAy6ksInAd3moynI9d7JOfSmqP/FSK1GsxO/35VgsqsuVqBirg==
+X-Received: by 2002:aa7:96e1:0:b0:593:d46b:ab73 with SMTP id i1-20020aa796e1000000b00593d46bab73mr1308055pfq.29.1675238599923;
+        Wed, 01 Feb 2023 00:03:19 -0800 (PST)
+Received: from niej-dt-7B47.. (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id dc6-20020a056a0035c600b005897f5436c0sm10961814pfb.118.2023.02.01.00.03.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Feb 2023 00:03:19 -0800 (PST)
+From:   Jun Nie <jun.nie@linaro.org>
+To:     myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
+        cw00.choi@samsung.com
+Cc:     bryan.odonoghue@linaro.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Jun Nie <jun.nie@linaro.org>
+Subject: [PATCH 1/2] dt-bindings: interconnect: Add Qualcomm CCI dt-bindings
+Date:   Wed,  1 Feb 2023 16:02:26 +0800
+Message-Id: <20230201080227.473547-1-jun.nie@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH V4 6/7] arm64: dts: qcom: Add ipq9574 SoC and AL02 board
- support
-Content-Language: en-US
-To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
-        sboyd@kernel.org, linus.walleij@linaro.org,
-        catalin.marinas@arm.com, will@kernel.org, p.zabel@pengutronix.de,
-        shawnguo@kernel.org, arnd@arndb.de, marcel.ziswiler@toradex.com,
-        dmitry.baryshkov@linaro.org, nfraprado@collabora.com,
-        broonie@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
-        quic_poovendh@quicinc.com
-References: <20230201060319.20434-1-quic_devipriy@quicinc.com>
- <20230201060319.20434-7-quic_devipriy@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230201060319.20434-7-quic_devipriy@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -89,40 +71,101 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/02/2023 07:03, Devi Priya wrote:
-> Add initial device tree support for Qualcomm IPQ9574 SoC and AL02 board
-> 
-> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
-> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
-> Co-developed-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
-> Signed-off-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
-> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
-> ---
+Add devicetree binding of Qualcomm CCI on MSM8939.
 
+Signed-off-by: Jun Nie <jun.nie@linaro.org>
+---
+ .../bindings/interconnect/qcom,cci.yaml       | 81 +++++++++++++++++++
+ 1 file changed, 81 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,cci.yaml
 
-> +
-> +		sdhc_1: mmc@7804000 {
-> +			compatible = "qcom,ipq9574-sdhci", "qcom,sdhci-msm-v5";
-> +			reg = <0x07804000 0x1000>, <0x07805000 0x1000>;
-> +			reg-names = "hc", "cqhci";
-> +
-> +			interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "hc_irq", "pwr_irq";
-> +
-> +			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
-> +				 <&gcc GCC_SDCC1_APPS_CLK>,
-> +				 <&xo_board_clk>;
-> +			clock-names = "iface", "core", "xo";
-> +			mmc-ddr-1_8v;
-> +			mmc-hs200-1_8v;
-> +			mmc-hs400-1_8v;
-> +			mmc-hs400-enhanced-strobe;
-> +			max-frequency = <384000000>;
-> +			bus-width = <8>;
-
-None of these 6 are properties of the SoC. Move them to the DTS.
-
-Best regards,
-Krzysztof
+diff --git a/Documentation/devicetree/bindings/interconnect/qcom,cci.yaml b/Documentation/devicetree/bindings/interconnect/qcom,cci.yaml
+new file mode 100644
+index 000000000000..100c440ba220
+--- /dev/null
++++ b/Documentation/devicetree/bindings/interconnect/qcom,cci.yaml
+@@ -0,0 +1,81 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/interconnect/mediatek,cci.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Cache Coherent Interconnect (CCI) frequency and voltage scaling
++
++maintainers:
++  - Jun Nie <jun.nie@linaro.org>
++
++description: |
++  Qualcomm Cache Coherent Interconnect (CCI) is a hardware engine used by
++  MSM8939. The driver is to scale its frequency and adjust the voltage in
++  hardware accordingly. The voltage provider is modeled as power domain on
++  MSM8939, so power domain dts node is required.
++
++properties:
++  compatible:
++    enum:
++      - qcom,msm8939-cci
++
++  clocks:
++    maxItems: 1
++
++  operating-points-v2: true
++  opp-table:
++    type: object
++
++required:
++  - compatible
++  - clocks
++  - operating-points-v2
++  - nvmem-cells
++  - power-domains
++
++additionalProperties: false
++
++examples:
++  - |
++    cci: cci {
++        compatible = "qcom,msm8939-cci";
++	clocks = <&apcs2>;
++	operating-points-v2 = <&cci_opp_table>;
++	power-domains = <&cpr>;
++	nvmem-cells = <&cpr_efuse_speedbin_pvs>;
++    };
++
++    cci_opp_table: cci-opp-table {
++	compatible = "operating-points-v2";
++
++	cci_opp1: opp-200000000 {
++	       opp-hz = /bits/ 64 <200000000>;
++	       opp-supported-hw = <0x3f>;
++	       required-opps = <&cpr_opp3>;
++	};
++
++	cci_opp2: opp-297600000 {
++	       opp-hz = /bits/ 64 <297600000>;
++	       opp-supported-hw = <0x3f>;
++	       required-opps = <&cpr_opp12>;
++	};
++
++	cci_opp3: opp-400000000 {
++	       opp-hz = /bits/ 64 <400000000>;
++	       opp-supported-hw = <0x1>;
++	       required-opps = <&cpr_opp14>;
++	};
++
++	cci_opp4: opp-400000000 {
++	       opp-hz = /bits/ 64 <400000000>;
++	       opp-supported-hw = <0x3e>;
++	       required-opps = <&cpr_opp15>;
++	};
++
++	cci_opp5: opp-595200000 {
++	       opp-hz = /bits/ 64 <595200000>;
++	       opp-supported-hw = <0x3f>;
++	       required-opps = <&cpr_opp17>;
++	};
++    };
+-- 
+2.34.1
 
