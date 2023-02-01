@@ -2,70 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D5D05686123
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 09:03:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1BCA0686176
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 09:19:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231868AbjBAIDl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Feb 2023 03:03:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52706 "EHLO
+        id S230244AbjBAITt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Feb 2023 03:19:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231956AbjBAIDh (ORCPT
+        with ESMTP id S232130AbjBAITr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Feb 2023 03:03:37 -0500
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 317CB1448C
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Feb 2023 00:03:33 -0800 (PST)
-Received: by mail-pf1-x42f.google.com with SMTP id bd15so412338pfb.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Feb 2023 00:03:33 -0800 (PST)
+        Wed, 1 Feb 2023 03:19:47 -0500
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96DF02884B
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Feb 2023 00:19:46 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id c10-20020a05600c0a4a00b003db0636ff84so750180wmq.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Feb 2023 00:19:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hKaoH6voOrCeEe9wM9lehvgyF6hiz4uKs3IziBm+HRU=;
-        b=xAfQPQxRuA0JtxUnfTbeOWNFrIrGNKsL96fWIEuhZzM3nfU2jzHGOnlkgm5I+Tm2Zr
-         s6h+8qC3fkrfBRUNCwp0Pr4gLCSYm1yGzlK4uQQoKaSMDFj3o20GssBgjW7xaI6sYYRp
-         WJsYrkyIAyb9uXBJSsO8dqkyGwfRC4T+Sus8WcbB4XhlV0iD19F71B4OzrC+GeNgHLPc
-         Qf3j3bP/aWRTooQA/6Cy/1JkkBQ8ajtTDTgf7LUnPv04CMgDJpjKCy1uaL6U5iAwDMns
-         sGPeQO7iyH4pwV/4/kwm7vRc5fTcyt4uGdZ+rxf4Zo2N7xx0OEeQIZaeTckmlMxgL+lY
-         TTHw==
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=VvoNTnMSUBG9rGEWOXzGw8leDVKkmxXHRdw/8wBL9Pk=;
+        b=X70q4EIFe04waZs3aJ9oYudxeE97R4ccQO4nlrT+6KySZJAHmydxTTYbEQ+mg0PSPK
+         tE6ymg6C5SrWtA2eOnH9MIoLkKwtZ25YEH3CRAoxfEdqS2Rlxx2c/KMdkeQldRF6UT9g
+         i6FlMGcNUvrVudXubJoBlQWwBM5oHPS6X+bsymzCg7OTsJBYUntR9j0qDN0sZYe+rzcK
+         9WFbqiDXzUzCZKdnLWgc+3DNCuyP72ISb9kh1/r7Qt4i6pwr7SAsoFR6JO9BnD4Wb4JS
+         NWSy2T1CUXCdc1dji4GHqDilbC20qIt3Gd2fYaK3SKI8W9l9BkbfVl/Rg4ZpjcxOK8bB
+         vHww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hKaoH6voOrCeEe9wM9lehvgyF6hiz4uKs3IziBm+HRU=;
-        b=SOkAiaXD+WTYMDZjaaeDPNJlGaqfXcUxeu0FYAsT8qw05mJbtrHyIAyq5d77Gm8OcN
-         aP9VQYItxDDELdQIlP6J5O/27YKmtOCrHN4ITOpAZ6EG3v28yvAFKVbM+5RT0MfEUNF4
-         h0gTtH7kcvkup/cBCQTumnTDkFmQ6jFyu7JijGsApYH1ZS7p2TYiVbfzCnuVZFy/NqRF
-         70riVH9XCyZKCNfxLp3QSAnDyXNX5rPAjJvG/7cauSDjYatbfCoH3gzpfZk6/B2RH/AE
-         ZrGY144x3WdF44r+kuwo6TT/ggUPKiZ7IMGP2kuzCtTksBeIp5lBt1hmGbkI36FUQfRd
-         HVog==
-X-Gm-Message-State: AO0yUKXahJ77PcUkBe3/5gZDXU18GBkkN2u2Af7bR8YkxJ2WUe0n6j+9
-        i/B6qLyRFEyQ/OUR6BsDunfQig==
-X-Google-Smtp-Source: AK7set8ePkwRparmZt+NCaP03fc+YSNwfC2SYHoMXQGM6+HDKNuvXLb0QVeHtuMUcpzXDYWAfUIacw==
-X-Received: by 2002:aa7:990a:0:b0:583:9b05:d1f0 with SMTP id z10-20020aa7990a000000b005839b05d1f0mr1555624pff.33.1675238612851;
-        Wed, 01 Feb 2023 00:03:32 -0800 (PST)
-Received: from niej-dt-7B47.. (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id dc6-20020a056a0035c600b005897f5436c0sm10961814pfb.118.2023.02.01.00.03.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Feb 2023 00:03:32 -0800 (PST)
-From:   Jun Nie <jun.nie@linaro.org>
-To:     myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
-        cw00.choi@samsung.com
-Cc:     bryan.odonoghue@linaro.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Jun Nie <jun.nie@linaro.org>
-Subject: [PATCH 2/2] PM / devfreq: qcom: Introduce CCI devfreq driver
-Date:   Wed,  1 Feb 2023 16:02:27 +0800
-Message-Id: <20230201080227.473547-2-jun.nie@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230201080227.473547-1-jun.nie@linaro.org>
-References: <20230201080227.473547-1-jun.nie@linaro.org>
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=VvoNTnMSUBG9rGEWOXzGw8leDVKkmxXHRdw/8wBL9Pk=;
+        b=U4uECHqWIE9GtsE9//vNUlmRCPsKhK+1MzuS68pT2FRdvHxvO/ka/SjET9nlPXceit
+         aLrcsgK4KIuPMtjuh3F5EK369gIdjCf1Jaok/oSQiVpiDe/X7jrprnmWksz8xDeDoYvt
+         pWXE+z06YR2A07K1bOmNFUB7X1ZUsugRKegsPydpn5wb16D1f+zQT1CTqapGFOkdeMXR
+         3vCou2zO2tNDeMA+tMg9IX9VTg66ao/vAEdaS9bOdrW0xKKqLqJavFR3bZoBlF24P19N
+         4Q3KeKgHImOAyF9bpFFuQaSZdW/rVs+4PHLa0CGcJegpw8YGWWs8Cygk02rshnTprtO1
+         LnIg==
+X-Gm-Message-State: AO0yUKXN9sCg95lkJ751V8qHTERugQCUc2BlqvkEEZQRLyC9rY/76Zfb
+        xCsXFUuAwQy1iFuSbA2R3w6/sw==
+X-Google-Smtp-Source: AK7set8iji9QZ9s4X+GxpH1QSjtynCBbdorxCE0bUw3yPC/dlwz0uArXguJ0sbG8mdGj7TyYbOFyaQ==
+X-Received: by 2002:a05:600c:3caa:b0:3da:270b:ba6b with SMTP id bg42-20020a05600c3caa00b003da270bba6bmr1057745wmb.41.1675239585174;
+        Wed, 01 Feb 2023 00:19:45 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id p11-20020a05600c468b00b003dc4050c97bsm1785889wmo.3.2023.02.01.00.19.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 01 Feb 2023 00:19:44 -0800 (PST)
+Message-ID: <44d94a1d-47d6-f93e-4a20-d9d83375398d@linaro.org>
+Date:   Wed, 1 Feb 2023 09:19:42 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH v5 1/3] dt-bindings: cpufreq: qcom-cpufreq-nvmem: specify
+ supported opp tables
+Content-Language: en-US
+To:     Christian Marangi <ansuelsmth@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>,
+        Yassine Oudjana <y.oudjana@protonmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230131151819.16612-1-ansuelsmth@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230131151819.16612-1-ansuelsmth@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,219 +85,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Cache Coherent Interconnect (CCI) is used by some Qualcomm SoCs. This
-driver is introduced so that its freqency can be adjusted. And regulator
-associated with opp table can be also adjusted accordingly which is
-shared with cpu cluster.
+On 31/01/2023 16:18, Christian Marangi wrote:
+> Add additional info on what opp tables the defined devices in this schema
+> supports (operating-points-v2-kryo-cpu and operating-points-v2-qcom-level)
+> and reference them.
+> 
+> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> ---
+> Changes v5:
+> - Swap patch 1 and patch 2 to fix dt_check_warning on single
+>   patch bisecting 
+> Changes v4:
+> - Add patch split from patch 1
+> 
+>  .../bindings/cpufreq/qcom-cpufreq-nvmem.yaml  | 35 ++++++++++++++-----
 
-Signed-off-by: Jun Nie <jun.nie@linaro.org>
----
- drivers/devfreq/Kconfig    |   9 +++
- drivers/devfreq/Makefile   |   1 +
- drivers/devfreq/qcom-cci.c | 162 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 172 insertions(+)
- create mode 100644 drivers/devfreq/qcom-cci.c
+This patch causes new warnings:
 
-diff --git a/drivers/devfreq/Kconfig b/drivers/devfreq/Kconfig
-index 9754d8b31621..6f3f1872f3fb 100644
---- a/drivers/devfreq/Kconfig
-+++ b/drivers/devfreq/Kconfig
-@@ -130,6 +130,15 @@ config ARM_MEDIATEK_CCI_DEVFREQ
- 	  buck voltages and update a proper CCI frequency. Use the notification
- 	  to get the regulator status.
- 
-+config ARM_QCOM_CCI_DEVFREQ
-+	tristate "QUALCOMM CCI DEVFREQ Driver"
-+	depends on ARCH_QCOM || COMPILE_TEST
-+	select DEVFREQ_GOV_PASSIVE
-+	help
-+	  This adds a devfreq driver for Qualcomm Cache Coherent Interconnect which
-+	  shares the same regulator with the cpu cluster. This driver can track a
-+	  proper regulator state while CCI frequency is updated.
-+
- config ARM_RK3399_DMC_DEVFREQ
- 	tristate "ARM RK3399 DMC DEVFREQ Driver"
- 	depends on (ARCH_ROCKCHIP && HAVE_ARM_SMCCC) || \
-diff --git a/drivers/devfreq/Makefile b/drivers/devfreq/Makefile
-index bf40d04928d0..f2526d8c168d 100644
---- a/drivers/devfreq/Makefile
-+++ b/drivers/devfreq/Makefile
-@@ -12,6 +12,7 @@ obj-$(CONFIG_ARM_EXYNOS_BUS_DEVFREQ)	+= exynos-bus.o
- obj-$(CONFIG_ARM_IMX_BUS_DEVFREQ)	+= imx-bus.o
- obj-$(CONFIG_ARM_IMX8M_DDRC_DEVFREQ)	+= imx8m-ddrc.o
- obj-$(CONFIG_ARM_MEDIATEK_CCI_DEVFREQ)	+= mtk-cci-devfreq.o
-+obj-$(CONFIG_ARM_QCOM_CCI_DEVFREQ)	+= qcom-cci.o
- obj-$(CONFIG_ARM_RK3399_DMC_DEVFREQ)	+= rk3399_dmc.o
- obj-$(CONFIG_ARM_SUN8I_A33_MBUS_DEVFREQ)	+= sun8i-a33-mbus.o
- obj-$(CONFIG_ARM_TEGRA_DEVFREQ)		+= tegra30-devfreq.o
-diff --git a/drivers/devfreq/qcom-cci.c b/drivers/devfreq/qcom-cci.c
-new file mode 100644
-index 000000000000..21b5f133cddc
---- /dev/null
-+++ b/drivers/devfreq/qcom-cci.c
-@@ -0,0 +1,162 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Copyright 2023 Linaro Ltd.
-+ */
-+
-+#include <linux/clk.h>
-+#include <linux/devfreq.h>
-+#include <linux/device.h>
-+#include <linux/module.h>
-+#include <linux/nvmem-consumer.h>
-+#include <linux/of_device.h>
-+#include <linux/pm_opp.h>
-+#include <linux/platform_device.h>
-+#include <linux/slab.h>
-+
-+#define SPEED_PVS(s, p) ((s << 16) | p)
-+
-+struct qcom_cci {
-+	struct devfreq_dev_profile profile;
-+	struct devfreq *devfreq;
-+	struct clk *clk;
-+};
-+
-+static int qcom_cci_target(struct device *dev,
-+		unsigned long *freq, u32 flags)
-+{
-+	struct dev_pm_opp *new_opp;
-+	int ret;
-+
-+	new_opp = devfreq_recommended_opp(dev, freq, flags);
-+	if (IS_ERR(new_opp)) {
-+		ret = PTR_ERR(new_opp);
-+		dev_err(dev, "failed to get recommended opp: %d\n", ret);
-+		return ret;
-+	}
-+	dev_pm_opp_put(new_opp);
-+
-+	return dev_pm_opp_set_rate(dev, *freq);
-+}
-+
-+static int qcom_cci_get_cur_freq(struct device *dev, unsigned long *freq)
-+{
-+	struct qcom_cci *priv = dev_get_drvdata(dev);
-+
-+	*freq = clk_get_rate(priv->clk);
-+
-+	return 0;
-+}
-+
-+static int qcom_get_dev_version(struct nvmem_cell *speedbin_nvmem)
-+{
-+	int speed = 0, pvs = 0;
-+	u8 *speedbin;
-+	size_t len;
-+
-+	speedbin = nvmem_cell_read(speedbin_nvmem, &len);
-+	if (IS_ERR(speedbin))
-+		return PTR_ERR(speedbin);
-+
-+	speed = (speedbin[0xc] >> 2) & 0x7;
-+	pvs = (speedbin[0x3] >> 5 & 0x1) | ((speedbin[0x6] >> 2 & 0x3) << 1);
-+	kfree(speedbin);
-+
-+	/* Convert speedbin and PVS into version bit map */
-+	switch (SPEED_PVS(speed, pvs)) {
-+	case SPEED_PVS(0, 0): return 0x1;
-+	case SPEED_PVS(2, 0): return 0x2;
-+	case SPEED_PVS(2, 2): return 0x4;
-+	case SPEED_PVS(4, 0): return 0x8;
-+	case SPEED_PVS(5, 0): return 0x10;
-+	case SPEED_PVS(5, 6): return 0x20;
-+	default:
-+		return 0x1;
-+	}
-+}
-+
-+static void qcom_cci_exit(struct device *dev)
-+{
-+	dev_pm_opp_of_remove_table(dev);
-+}
-+
-+static int qcom_cci_probe(struct platform_device *pdev)
-+{
-+	struct device *dev = &pdev->dev;
-+	struct qcom_cci *priv;
-+	const char *gov = DEVFREQ_GOV_USERSPACE;
-+	struct device_node *np = dev->of_node;
-+	struct nvmem_cell *speedbin_nvmem;
-+	int ret;
-+	u32 version;
-+
-+	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
-+	if (!priv)
-+		return -ENOMEM;
-+
-+	priv->clk = devm_clk_get(dev, NULL);
-+	if (IS_ERR(priv->clk)) {
-+		ret = PTR_ERR(priv->clk);
-+		dev_err(dev, "failed to fetch clk: %d\n", ret);
-+		return ret;
-+	}
-+	platform_set_drvdata(pdev, priv);
-+
-+	/* Check whether we have profiled speed version per chip */
-+	speedbin_nvmem = of_nvmem_cell_get(np, NULL);
-+	if (IS_ERR(speedbin_nvmem))
-+		return PTR_ERR(speedbin_nvmem);
-+
-+	version = qcom_get_dev_version(speedbin_nvmem);
-+	dev_info(dev, "%s: set opp table version 0x%x\n", __func__, version);
-+
-+	nvmem_cell_put(speedbin_nvmem);
-+	ret = dev_pm_opp_set_supported_hw(dev, &version, 1);
-+	if (ret) {
-+		dev_err(dev, "Failed to set supported hardware\n");
-+		return ret;
-+	}
-+
-+	ret = dev_pm_opp_of_add_table(dev);
-+	if (ret < 0) {
-+		dev_err(dev, "failed to get OPP table\n");
-+		return ret;
-+	}
-+
-+	priv->profile.target = qcom_cci_target;
-+	priv->profile.exit = qcom_cci_exit;
-+	priv->profile.get_cur_freq = qcom_cci_get_cur_freq;
-+	priv->profile.initial_freq = clk_get_rate(priv->clk);
-+
-+	priv->devfreq = devm_devfreq_add_device(dev, &priv->profile,
-+						gov, NULL);
-+	if (IS_ERR(priv->devfreq)) {
-+		ret = PTR_ERR(priv->devfreq);
-+		dev_err(dev, "failed to add devfreq device: %d\n", ret);
-+		goto err;
-+	}
-+
-+	return 0;
-+
-+err:
-+	dev_pm_opp_of_remove_table(dev);
-+	return ret;
-+}
-+
-+static const struct of_device_id qcom_cci_of_match[] = {
-+	{ .compatible = "qcom,msm8939-cci"},
-+	{ /* sentinel */ },
-+};
-+MODULE_DEVICE_TABLE(of, qcom_cci_of_match);
-+
-+static struct platform_driver qcom_cci_platdrv = {
-+	.probe		= qcom_cci_probe,
-+	.driver = {
-+		.name	= "qcom-cci-devfreq",
-+		.of_match_table = qcom_cci_of_match,
-+	},
-+};
-+module_platform_driver(qcom_cci_platdrv);
-+
-+MODULE_DESCRIPTION("QCOM cci frequency scaling driver");
-+MODULE_AUTHOR("Jun Nie <jun.nie@linaro.org>");
-+MODULE_LICENSE("GPL");
--- 
-2.34.1
+arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb: /: opp-table-cluster0:
+Unevaluated properties are not allowed ('compatible', 'nvmem-cells',
+'opp-1036800000', 'opp-1113600000', 'opp-1190400000', 'opp-1228800000',
+'opp-1324800000', 'opp-1363200000', 'opp-1401600000', 'opp-1478400000',
+'opp-1497600000', 'opp-1593600000', 'opp-307200000', 'opp-422400000',
+'opp-480000000', 'opp-556800000', 'opp-652800000', 'opp-729600000',
+'opp-844800000', 'opp-960000000', 'opp-shared' were unexpected)
+
+
+Best regards,
+Krzysztof
 
