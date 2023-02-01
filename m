@@ -2,103 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7FF87686C41
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 17:58:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 298FA686C7C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 18:12:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231612AbjBAQ6D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Feb 2023 11:58:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57668 "EHLO
+        id S231918AbjBARMT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Feb 2023 12:12:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231543AbjBAQ6A (ORCPT
+        with ESMTP id S231970AbjBARMQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Feb 2023 11:58:00 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18E6A7B402;
-        Wed,  1 Feb 2023 08:57:54 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 9D37961889;
-        Wed,  1 Feb 2023 16:57:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B4DFC433D2;
-        Wed,  1 Feb 2023 16:57:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1675270673;
-        bh=wgoFWDzet3MEnQEk+UbM8HUIOsFtAK8npPJ49HGAO1o=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=u9X4Gr7TjZ6UkgVwjSehC9yfCUt//67EjPYTXTHnJ+aTE6aXNoDaG/fZz03jXnElM
-         c315hFd6D+lNgE3Ekgg0QaNB3z7pxxWqm4plvstpHb14GQ0FGDiib2q7//3OZr4/JT
-         i0jWp+SqAe/OVftlr6AN17B1kIJdLkIF0i/EuIo2IVSpqxiD6qKmMLkB+1ogV6NLc6
-         JidEOiKwk15fIiFO+dc5Qsvoe66Y0tsqMeopIu++n7efbaGm5W5Uc31U7fqGait52w
-         WnE8sOF8lc6h19Dd3hynSSTPWQGh4Vapzj+sPUAC+hBsgiEQz8Z/aI5T8L99Afd+Hr
-         1f40qveSqB9TQ==
-From:   Mark Brown <broonie@kernel.org>
-To:     miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
-        jic23@kernel.org, tudor.ambarus@microchip.com, pratyush@kernel.org,
-        sanju.mehta@amd.com, chin-ting_kuo@aspeedtech.com, clg@kaod.org,
-        kdasu.kdev@gmail.com, f.fainelli@gmail.com, rjui@broadcom.com,
-        sbranden@broadcom.com, eajames@linux.ibm.com, olteanv@gmail.com,
-        han.xu@nxp.com, john.garry@huawei.com, shawnguo@kernel.org,
-        s.hauer@pengutronix.de, khilman@baylibre.com,
-        matthias.bgg@gmail.com, haibo.chen@nxp.com,
-        linus.walleij@linaro.org, daniel@zonque.org,
-        haojian.zhuang@gmail.com, robert.jarzmik@free.fr,
-        agross@kernel.org, heiko@sntech.de, krzysztof.kozlowski@linaro.org,
-        andi@etezian.org, mcoquelin.stm32@gmail.com,
-        alexandre.torgue@foss.st.com, wens@csie.org,
-        jernej.skrabec@gmail.com, samuel@sholland.org,
-        masahisa.kojima@linaro.org, jaswinder.singh@linaro.org,
-        rostedt@goodmis.org, mingo@redhat.com, l.stelmach@samsung.com,
-        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, alex.aring@gmail.com, stefan@datenfreihafen.org,
-        kvalo@kernel.org, thierry.reding@gmail.com, jonathanh@nvidia.com,
-        skomatineni@nvidia.com, sumit.semwal@linaro.org,
-        christian.koenig@amd.com, j.neuschaefer@gmx.net,
-        vireshk@kernel.org, rmfrfs@gmail.com, johan@kernel.org,
-        elder@kernel.org, gregkh@linuxfoundation.org,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>
-Cc:     git@amd.com, linux-spi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, joel@jms.id.au, andrew@aj.id.au,
-        radu_nicolae.pirea@upb.ro, nicolas.ferre@microchip.com,
-        alexandre.belloni@bootlin.com, claudiu.beznea@microchip.com,
-        bcm-kernel-feedback-list@broadcom.com, fancer.lancer@gmail.com,
-        kernel@pengutronix.de, festevam@gmail.com, linux-imx@nxp.com,
-        jbrunet@baylibre.com, martin.blumenstingl@googlemail.com,
-        avifishman70@gmail.com, tmaimon77@gmail.com, tali.perry1@gmail.com,
-        venture@google.com, yuenn@google.com, benjaminfair@google.com,
-        yogeshgaur.83@gmail.com, konrad.dybcio@somainline.org,
-        alim.akhtar@samsung.com, ldewangan@nvidia.com,
-        michal.simek@amd.com, linux-aspeed@lists.ozlabs.org,
-        openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org,
-        linux-rpi-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-        netdev@vger.kernel.org, linux-wpan@vger.kernel.org,
-        libertas-dev@lists.infradead.org, linux-wireless@vger.kernel.org,
-        linux-mtd@lists.infradead.org, lars@metafoo.de,
-        Michael.Hennerich@analog.com, linux-iio@vger.kernel.org,
-        michael@walle.cc, palmer@dabbelt.com,
-        linux-riscv@lists.infradead.org, linux-media@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, greybus-dev@lists.linaro.org,
-        linux-staging@lists.linux.dev, amitrkcian2002@gmail.com
-In-Reply-To: <20230119185342.2093323-1-amit.kumar-mahapatra@amd.com>
-References: <20230119185342.2093323-1-amit.kumar-mahapatra@amd.com>
-Subject: Re: (subset) [PATCH v2 00/13] spi: Add support for
- stacked/parallel memories
-Message-Id: <167527065195.537421.10361370461620477483.b4-ty@kernel.org>
-Date:   Wed, 01 Feb 2023 16:57:31 +0000
+        Wed, 1 Feb 2023 12:12:16 -0500
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D1D67C336
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Feb 2023 09:12:11 -0800 (PST)
+Received: by mail-ej1-x630.google.com with SMTP id mc11so30912703ejb.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Feb 2023 09:12:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=aIk8eTkHo9ODpAtWDwlPuTWs0EkV2MBMW4e9Fd7x0Bg=;
+        b=Xd9IQ8CygVxb+cxSfiP0jxkT3PjUDD6/f4eBckP5BXvNvGVln9bD02GRS/vkVI7i4L
+         2Gi7M8D/vin+eFf0XBTM4TQRKXhNkJX+vqskmCmmcsMSZam5s6nuEr+HRMrZJ+Hq6GTx
+         wNIsopA4ascfllYHWOpPubwNcFkL6NJRm/Ig/Et1ImCxpnFdZvfEFdpApfYkWv3SDid4
+         +7OGBu1HcIiDUworcCzhMQPwh0opbqc0YLCYsYnM5qPXhSdUFQtyy9UmemFgaF0bGy2F
+         NNWhcww1mqBr0ME6Ond7HaAFnipwrsUeP8xQ1iXa4mel/AB3rSMzS+KLw+DvJ5K4lDz1
+         Dt0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=aIk8eTkHo9ODpAtWDwlPuTWs0EkV2MBMW4e9Fd7x0Bg=;
+        b=yMA17jJagv4OIzEzao/gtxTh99/1OraKNgM/tdxDZeP6F2pcmkfi40EFYa1UT18ggU
+         M4nvMd7asdL6i3A04FzJ4i41HEZJfd3ZpAJ8orzNHWivu3iM83OCtHxmJ0XTj0hjAZ2k
+         uhuL0kEd1HtdkMrjtZY2SxRYG6ViHbARlcsH89C1u39Fbpjg3maaWe1YDw6UbV3hRVfD
+         iYCMFV6UdXCZOBJLiLlKxDoBMhDxQpEOvnFJ7YKqCK6KoBkMbb+N7K3OAnsrwo4c8TO+
+         RqxZyjWAicA6+la8zlY1exuV72kcj1UqdySZLYwfsPysai7wI1nD/sJNVvD0c9gwD3OY
+         FFKQ==
+X-Gm-Message-State: AO0yUKXJHFEI0ge7bvLftAcoUgF6NakPrnHOG93lBZN8EQzRWWcMAO8f
+        3uUIRIcZ3LQqB0foPPFCfLdqQQ==
+X-Google-Smtp-Source: AK7set/nFljA0OyJjPBvnk643gWGAo83BWFR6mbUZYcU9GRlajhBxQ3DgRyxoercqjfd1D96harVtg==
+X-Received: by 2002:a17:906:16d4:b0:88a:7408:384c with SMTP id t20-20020a17090616d400b0088a7408384cmr3167010ejd.47.1675271529484;
+        Wed, 01 Feb 2023 09:12:09 -0800 (PST)
+Received: from [10.10.15.130] ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id ay10-20020a170906d28a00b00882f9130eb3sm7183306ejb.223.2023.02.01.09.12.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 01 Feb 2023 09:12:09 -0800 (PST)
+Message-ID: <2a0ce32c-d100-d5c3-ac0c-ccd7100a2c06@linaro.org>
+Date:   Wed, 1 Feb 2023 19:12:08 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.12.0
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH 2/2] PM / devfreq: qcom: Introduce CCI devfreq driver
+Content-Language: en-GB
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     Jun Nie <jun.nie@linaro.org>, myungjoo.ham@samsung.com,
+        kyungmin.park@samsung.com, cw00.choi@samsung.com,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20230201080227.473547-1-jun.nie@linaro.org>
+ <20230201080227.473547-2-jun.nie@linaro.org>
+ <515f4e9e-2804-e03a-26f5-f2d3ac331109@linaro.org>
+ <71ba0d05-6183-95ef-9e45-cc3dd512475f@linaro.org>
+ <CAA8EJpqyqC5D+O=KJnuZnWN4BwBOKcquN11nJfEp2WMSmJobBg@mail.gmail.com>
+ <58a5e856-3e8b-d660-09ee-7a18b184452f@linaro.org>
+ <1d33eb58-95d1-643d-52cc-2888ff0cea43@linaro.org>
+ <86478fbd-590a-f94f-6cc1-f4d06a96826e@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <86478fbd-590a-f94f-6cc1-f4d06a96826e@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -106,53 +83,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 20 Jan 2023 00:23:29 +0530, Amit Kumar Mahapatra wrote:
-> This patch is in the continuation to the discussions which happened on
-> 'commit f89504300e94 ("spi: Stacked/parallel memories bindings")' for
-> adding dt-binding support for stacked/parallel memories.
-> 
-> This patch series updated the spi-nor, spi core and the spi drivers
-> to add stacked and parallel memories support.
-> 
-> [...]
+On 01/02/2023 17:17, Bryan O'Donoghue wrote:
+> On 01/02/2023 14:58, Dmitry Baryshkov wrote:
+>> On 01/02/2023 16:45, Bryan O'Donoghue wrote:
+>>> On 01/02/2023 13:41, Dmitry Baryshkov wrote:
+>>>>>                           cci-cpufreq {
+>>>>>                                   target-dev = <&cci_cache>;
+>>>>>                                   cpu-to-dev-map-0 =
+>>>>>                                           <  200000  200000000 >,
+>>>>>                                           <  345600  200000000 >,
+>>>>>                                           <  400000  200000000 >,
+>>>>>                                           <  533330  297600000 >,
+>>>>>                                           <  800000  297600000 >,
+>>>>>                                           <  960000  297600000 >,
+>>>>>                                           < 1113600  297000000 >,
+>>>>>                                           < 1344000  595200000 >,
+>>>>>                                           < 1459200  595200000 >,
+>>>>>                                           < 1497600  595200000 >,
+>>>>>                                           < 1651200  595200000 >;
+>>>>>                                   cpu-to-dev-map-4 =
+>>>>>                                           <  200000 200000000 >,
+>>>>>                                           <  249600 200000000 >,
+>>>>>                                           <  499200 297600000 >,
+>>>>>                                           <  800000 297600000 >,
+>>>>>                                           <  998400 595200000 >,
+>>>>>                                           < 1113600 595200000 >;
+>>>> These should map to existing opp entries.
+>>>>
+>>>> I ended up doing the interconnect driver that maps a clock to the
+>>>> interconnect. Then I can use it in the cpu opp tables.
+>>>>
+>>>
+>>> Can you point us at what it is you are proposing ?
+>>
+>> https://patchwork.kernel.org/project/linux-arm-msm/patch/20230120061417.2623751-9-dmitry.baryshkov@linaro.org/
+>>
+> Is there no driver code too ?
 
-Applied to
+There are two parts, one is the 'CBF clock' driver, which just provides 
+a clock, another part actually connects the clock and interconnect. 
+Initially I implemented it as a part of the CBF driver (see 
+https://patchwork.kernel.org/project/linux-arm-msm/patch/20230120061417.2623751-5-dmitry.baryshkov@linaro.org/), 
+next revision will move the interconnect part to drivers/interconnect.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
-
-Thanks!
-
-[01/13] spi: Add APIs in spi core to set/get spi->chip_select and spi->cs_gpiod
-        commit: 303feb3cc06ac0665d0ee9c1414941200e60e8a3
-[02/13] spi: Replace all spi->chip_select and spi->cs_gpiod references with function call
-        (no commit info)
-[03/13] net: Replace all spi->chip_select and spi->cs_gpiod references with function call
-        (no commit info)
-[04/13] iio: imu: Replace all spi->chip_select and spi->cs_gpiod references with function call
-        (no commit info)
-[05/13] mtd: devices: Replace all spi->chip_select and spi->cs_gpiod references with function call
-        (no commit info)
-[06/13] staging: Replace all spi->chip_select and spi->cs_gpiod references with function call
-        (no commit info)
-[07/13] platform/x86: serial-multi-instantiate: Replace all spi->chip_select and spi->cs_gpiod references with function call
-        (no commit info)
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+-- 
+With best wishes
+Dmitry
 
