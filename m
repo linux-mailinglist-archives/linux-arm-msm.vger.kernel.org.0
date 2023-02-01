@@ -2,128 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 75F6C6865B0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 13:05:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E1FD66866C9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 14:25:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231524AbjBAMFo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Feb 2023 07:05:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34240 "EHLO
+        id S232305AbjBANZr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Feb 2023 08:25:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230261AbjBAMFn (ORCPT
+        with ESMTP id S232292AbjBANZq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Feb 2023 07:05:43 -0500
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D263D38B78;
-        Wed,  1 Feb 2023 04:05:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1675253142; x=1706789142;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=IUmTbh4hUQOuFl5FodoOUryg4j8Mjb0onvpio+YorNs=;
-  b=EPOSPfW6OF0iyuJmRLWYsV3KmbQSEv82AGLxeFdsZjybiWRhu6OumrZM
-   J7eEcNX3j2NV6y+AZh74cbajXYgISYPkP/9ZEylgJrsmifryhMdndeHTp
-   C/G6I/uI8/D6ktWpmpqfGaeL1SDEmHfjsE8aECjM37dX324oHdwsKNn85
-   4=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 01 Feb 2023 04:05:41 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.45.79.139])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Feb 2023 04:05:41 -0800
-Received: from [10.216.32.242] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 1 Feb 2023
- 04:05:38 -0800
-Message-ID: <22bcf613-5c0f-3043-f8ad-41bf45c5dc07@quicinc.com>
-Date:   Wed, 1 Feb 2023 17:35:35 +0530
+        Wed, 1 Feb 2023 08:25:46 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1AD94C0C;
+        Wed,  1 Feb 2023 05:25:45 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 438A0B8218B;
+        Wed,  1 Feb 2023 13:25:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9C49C433D2;
+        Wed,  1 Feb 2023 13:25:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1675257942;
+        bh=m+7xfJY2QuIs0LiTvWRIRniZk0c6MbfS5LgsPsE+s6M=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=qgMj9a7z7B8rtMsJy3GbnF5yrUWpokZIHTjIntJCPrkQg9jFKwK42ZcP/M0vqLjRm
+         cV8E3+qUhDwFyNEgctl1I5mP5f8RbhZggIPLJNjiILTfyxDjyzzyiyCrV8z4I2fDC4
+         KT0pxm6cXLqiZ84DLlv1SCUGaMRuGooIlazemHgCj5J5kUVLwQP0NDzIBvUE3O0GzT
+         6ufVIjNaBIpjJYB5imjrvcdtBrG53e4pWBXg3afx9kVVYTQvd003ojGMl+K+h4oxWw
+         y6E8tEwrKXWo6eEQCbhbXF2kViCFXgcJZyCAqfnMYu7nmgiC2CRFII3EhJQiQ2x7Cg
+         DbvqZ/das6QAQ==
+Message-ID: <5f7f8d14-6769-83dd-ec36-416b4fdb38e9@kernel.org>
+Date:   Wed, 1 Feb 2023 14:25:36 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH v2] remoteproc: sysfs/debugfs: fix race while updating
- recovery flag
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH v2] WIP: dt-bindings: soc: qcom: convert GLINK binding to
+ yaml
 Content-Language: en-US
-To:     Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-        <andersson@kernel.org>, <mathieu.poirier@linaro.org>
-CC:     <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20230201054609.14575-1-quic_satyap@quicinc.com>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <20230201054609.14575-1-quic_satyap@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     David Heidelberg <david@ixit.cz>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220424135609.22388-1-david@ixit.cz>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+In-Reply-To: <20220424135609.22388-1-david@ixit.cz>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 2/1/2023 11:16 AM, Satya Durga Srinivasu Prabhala wrote:
-> When multiple clients try to update the recovery flag, it is
-> possible that, race condition would lead to undesired results
-> as updates to recovery flag isn't protected by any mechanism
-> today. To avoid such issues, take remoteproc mutex lock before
-> updating recovery flag and release the lock once done.
+On 24/04/2022 15:56, David Heidelberg wrote:
+> Convert Qualcomm GLINK binding to the yaml format.
 > 
-> Signed-off-by: Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>
-
-LGTM.
-
-Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
-
--Mukesh
+> Signed-off-by: David Heidelberg <david@ixit.cz>
 > ---
-> v1 -> v2:
-> - addressed comments from Mukesh Ojha
->    1. take & release lock only while updating recovery flag
->    2. update debugfs
-> 
->   drivers/remoteproc/remoteproc_debugfs.c | 4 ++++
->   drivers/remoteproc/remoteproc_sysfs.c   | 4 ++++
->   2 files changed, 8 insertions(+)
-> 
-> diff --git a/drivers/remoteproc/remoteproc_debugfs.c b/drivers/remoteproc/remoteproc_debugfs.c
-> index b86c1d09c70c..2c44d375024e 100644
-> --- a/drivers/remoteproc/remoteproc_debugfs.c
-> +++ b/drivers/remoteproc/remoteproc_debugfs.c
-> @@ -226,10 +226,14 @@ rproc_recovery_write(struct file *filp, const char __user *user_buf,
->   
->   	if (!strncmp(buf, "enabled", count)) {
->   		/* change the flag and begin the recovery process if needed */
-> +		mutex_lock(&rproc->lock);
->   		rproc->recovery_disabled = false;
-> +		mutex_unlock(&rproc->lock);
->   		rproc_trigger_recovery(rproc);
->   	} else if (!strncmp(buf, "disabled", count)) {
-> +		mutex_lock(&rproc->lock);
->   		rproc->recovery_disabled = true;
-> +		mutex_unlock(&rproc->lock);
->   	} else if (!strncmp(buf, "recover", count)) {
->   		/* begin the recovery process without changing the flag */
->   		rproc_trigger_recovery(rproc);
-> diff --git a/drivers/remoteproc/remoteproc_sysfs.c b/drivers/remoteproc/remoteproc_sysfs.c
-> index 8c7ea8922638..628e0de9a132 100644
-> --- a/drivers/remoteproc/remoteproc_sysfs.c
-> +++ b/drivers/remoteproc/remoteproc_sysfs.c
-> @@ -50,10 +50,14 @@ static ssize_t recovery_store(struct device *dev,
->   
->   	if (sysfs_streq(buf, "enabled")) {
->   		/* change the flag and begin the recovery process if needed */
-> +		mutex_lock(&rproc->lock);
->   		rproc->recovery_disabled = false;
-> +		mutex_unlock(&rproc->lock);
->   		rproc_trigger_recovery(rproc);
->   	} else if (sysfs_streq(buf, "disabled")) {
-> +		mutex_lock(&rproc->lock);
->   		rproc->recovery_disabled = true;
-> +		mutex_unlock(&rproc->lock);
->   	} else if (sysfs_streq(buf, "recover")) {
->   		/* begin the recovery process without changing the flag */
->   		rproc_trigger_recovery(rproc);
+> v2:
+>  - fix multiple issues
+>  - V2 is JUST a placeholder until I get back to it! Do NOT review yet.
+> ---
+>  .../bindings/soc/qcom/qcom,glink.txt          | 94 ------------------
+>  .../bindings/soc/qcom/qcom,glink.yaml         | 96 +++++++++++++++++++
+>  2 files changed, 96 insertions(+), 94 deletions(-)
+
+Thanks David for the work.
+
+It has been 9 months, so I assume the work is abandoned and you are not
+going to continue with this.
+
+Best regards,
+Krzysztof
+
