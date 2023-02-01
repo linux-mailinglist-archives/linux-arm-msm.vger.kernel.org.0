@@ -2,60 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 990E7686441
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 11:28:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A573E68648E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 11:41:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230366AbjBAK2C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Feb 2023 05:28:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37138 "EHLO
+        id S231953AbjBAKlZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Feb 2023 05:41:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229771AbjBAK2B (ORCPT
+        with ESMTP id S232228AbjBAKk7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Feb 2023 05:28:01 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5A8E4683;
-        Wed,  1 Feb 2023 02:27:57 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 52E9261757;
-        Wed,  1 Feb 2023 10:27:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4D47C4339E;
-        Wed,  1 Feb 2023 10:27:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1675247276;
-        bh=Zgeq1cLeqnv2FV5fbn2e26/TPr0F1TegeFxIqyZ5c2Y=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=gEIiChRfk3g/6HYCxmuax10BZVudMxnJC4ndp/VKm4gXNGlgmUJ4vPWTNFGQHttoz
-         sZKFl3zMo85DDzIRhutUA4ovOX9QiI0fEFlv7mJ0/jNWXqora1lb0I5k+LHJ3bahhL
-         j0dnRi85T+lAPFsQoE334msDtXdvB4f5kqbYTsmTnYwZQI3VHo0etlSI2foQADJgFq
-         yrR8Kn4DUmN3aeG8TYAotfHxzPd9a1yDDI4WL70Usi5QHn3oi4VvIWACymZCIJ9YLq
-         zIngXYaonZPhbbourPxm3zPxUyMD0YtRHhJgW0aEzKFofxnSboc0Jb4tipTTN3fDlf
-         aJFYnOJMGjxbA==
-Date:   Wed, 1 Feb 2023 15:57:48 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        Asutosh Das <quic_asutoshd@quicinc.com>,
-        Bean Huo <beanhuo@micron.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Jinyoung Choi <j-young.choi@samsung.com>,
-        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] scsi: ufs: core: Limit DMA alignment check
-Message-ID: <20230201102748.GA62808@thinkpad>
-References: <20230201034917.1902330-1-quic_bjorande@quicinc.com>
+        Wed, 1 Feb 2023 05:40:59 -0500
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9033923678
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Feb 2023 02:40:37 -0800 (PST)
+Received: by mail-ej1-x631.google.com with SMTP id ml19so26525207ejb.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Feb 2023 02:40:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=akVFYb7eyxwgivRRMnUHCdAP1zAt0L+6NAmMhYaMXo0=;
+        b=x1kVc/0t7XOvLu8n7/fpZorROVEFqokMu1Dyq0UsEwgQ6VEA7XYueTtn8DK/7v2Cr3
+         fK8KSnc3ypYeC8QSUT95EkHNQIT5nCmwAYR5/kqX/9/oolB2vI3/Oo/vFpLPgegKGwMg
+         r1XIhHXdQplWd8ZR4kCj6Go5FT7Jh8DkInqrsEtpj9UcikVa5JLltts764di9pszsRjb
+         OxVxqA7rOlM6U2NCzCIMbosFAga+Jw+3+MvTFbsKGfgP8QVdckswUz92mWwjpk/cJs01
+         ucmhp8JiKf6/iCK/NZr4gB3BNFctf3I35M+ng9bJdEImw40R2f+SyCwsLi2RH6seF72r
+         3SWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=akVFYb7eyxwgivRRMnUHCdAP1zAt0L+6NAmMhYaMXo0=;
+        b=RTjfttfg0RRd3UVKfVfeTDmlD9taQy63sUUW/k46mbkkKMLXK7UC74X+lpA71BjZp4
+         Wu4Ap4ghuHqquHv8ZNcUuOi/cDUr5w9HpcqATYDwCLBAjctLZ54gFHwCcDQRxosZdkZj
+         fOg8NYADtNO8sn9WTmL1B1ICObHcMDcANDEW70HbpgGyurXH7q06MoyIfAutVEXW4Pfv
+         GMPHGidoZBW60+mMx7pgeo+6O8neiJ43i0SdmM+SlAo+QlswqIpCGNThPbSNRRV6nuX2
+         zFccvYVpngZK1Hkzpwd70aIkixLSX2t4x9upH+TQYGFN+ZWdazS+GeIUNP+VEWE2VUc9
+         z1Cg==
+X-Gm-Message-State: AO0yUKVoRayWLwmtH5faUk/CQe/AkRbAT1RZrPLgfmSBKK2dOHk5AJJl
+        4extyrZHX6cssIQ1xlh52mpfI+NHhmFoPena
+X-Google-Smtp-Source: AK7set954JPkWgXwQ8nW8dvSZPB66mOuuccfEFBg4BjCBBYwQJ3B8dYoamn9U5AYum8r9leJoJ1WqA==
+X-Received: by 2002:a17:907:1c95:b0:881:7f2d:7a87 with SMTP id nb21-20020a1709071c9500b008817f2d7a87mr1534595ejc.63.1675248035239;
+        Wed, 01 Feb 2023 02:40:35 -0800 (PST)
+Received: from [192.168.1.101] (abyl20.neoplus.adsl.tpnet.pl. [83.9.31.20])
+        by smtp.gmail.com with ESMTPSA id 21-20020a170906311500b0087045ae5935sm9813939ejx.1.2023.02.01.02.40.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 01 Feb 2023 02:40:34 -0800 (PST)
+Message-ID: <11859977-4e29-e4d7-acd4-94e3d3227c27@linaro.org>
+Date:   Wed, 1 Feb 2023 11:40:32 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230201034917.1902330-1-quic_bjorande@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH v2] arm64: Add a couple of missing part numbers
+To:     Anshuman Khandual <anshuman.khandual@arm.com>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     marijn.suijten@somainline.org,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Marc Zyngier <maz@kernel.org>,
+        James Morse <james.morse@arm.com>,
+        D Scott Phillips <scott@os.amperecomputing.com>,
+        Michal Orzel <michal.orzel@arm.com>,
+        Linu Cherian <lcherian@marvell.com>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+References: <20230201000900.3150295-1-konrad.dybcio@linaro.org>
+ <e1688749-bcdf-14f4-ac34-137a602286e1@arm.com>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <e1688749-bcdf-14f4-ac34-137a602286e1@arm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -63,79 +83,64 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jan 31, 2023 at 07:49:17PM -0800, Bjorn Andersson wrote:
-> The three DMA memory regions allocated for the host memory space is
-> documented to require alignment of 128, 1024 and 1024 respectively, but
-> the returned address is checked for PAGE_SIZE alignment.
+
+
+On 1.02.2023 05:50, Anshuman Khandual wrote:
 > 
-> In the case these allocations are serviced by e.g. the Arm SMMU, the
-> size and alignment will be determined by its supported page sizes. In
-> most cases SZ_4K and a few larger sizes are available.
 > 
-> In the typical configuration this does not cause problems, but in the
-> event that the system PAGE_SIZE is increased beyond 4k, it's no longer
-> reasonable to expect that the allocation will be PAGE_SIZE aligned.
+> On 2/1/23 05:39, Konrad Dybcio wrote:
+>> Add Cortex X1C and add/clarify various recent Qualcomm Kryo cores,
+>> which almost exclusively mimic ARM IDs nowadays.
 > 
-> Limit the DMA alignment check to the actual alignment requirements
-> written in the comments in the code, to avoid the UFS core refusing to
-> initialize with such configuration.
+> Why add these cpu numbers ? Is there an errata being worked on for them ?
+> Without specific implementation requirement, these might not be necessary.
+Generally I was under the impression that this header
+double-served as sort of a documentation. I checked
+my board and they seem to even use the Arm implementer
+ID (instead of their own, as they did in the past),
+so I suppose they may be using actual Cortex parts
+with no modifications and this patch is not very
+beneficial.
 
-Isn't dma_alloc_coherent() supposed to return PAGE_SIZE aligned dma and cpu
-addresses? I suppose that could be reason for checking against PAGE_SIZE.
-
+Konrad
 > 
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-
-But it doesn't hurt to check for the actual alignment.
-
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-
-Thanks,
-Mani
-
-> ---
->  drivers/ufs/core/ufshcd.c | 9 +++------
->  1 file changed, 3 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-> index ec732e4bbbf4..d7f3f1ba9d12 100644
-> --- a/drivers/ufs/core/ufshcd.c
-> +++ b/drivers/ufs/core/ufshcd.c
-> @@ -3724,12 +3724,9 @@ static int ufshcd_memory_alloc(struct ufs_hba *hba)
->  
->  	/*
->  	 * UFSHCI requires UTP command descriptor to be 128 byte aligned.
-> -	 * make sure hba->ucdl_dma_addr is aligned to PAGE_SIZE
-> -	 * if hba->ucdl_dma_addr is aligned to PAGE_SIZE, then it will
-> -	 * be aligned to 128 bytes as well
->  	 */
->  	if (!hba->ucdl_base_addr ||
-> -	    WARN_ON(hba->ucdl_dma_addr & (PAGE_SIZE - 1))) {
-> +	    WARN_ON(hba->ucdl_dma_addr & (128 - 1))) {
->  		dev_err(hba->dev,
->  			"Command Descriptor Memory allocation failed\n");
->  		goto out;
-> @@ -3745,7 +3742,7 @@ static int ufshcd_memory_alloc(struct ufs_hba *hba)
->  						   &hba->utrdl_dma_addr,
->  						   GFP_KERNEL);
->  	if (!hba->utrdl_base_addr ||
-> -	    WARN_ON(hba->utrdl_dma_addr & (PAGE_SIZE - 1))) {
-> +	    WARN_ON(hba->utrdl_dma_addr & (1024 - 1))) {
->  		dev_err(hba->dev,
->  			"Transfer Descriptor Memory allocation failed\n");
->  		goto out;
-> @@ -3769,7 +3766,7 @@ static int ufshcd_memory_alloc(struct ufs_hba *hba)
->  						    &hba->utmrdl_dma_addr,
->  						    GFP_KERNEL);
->  	if (!hba->utmrdl_base_addr ||
-> -	    WARN_ON(hba->utmrdl_dma_addr & (PAGE_SIZE - 1))) {
-> +	    WARN_ON(hba->utmrdl_dma_addr & (1024 - 1))) {
->  		dev_err(hba->dev,
->  		"Task Management Descriptor Memory allocation failed\n");
->  		goto out;
-> -- 
-> 2.25.1
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
+>>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+>> v1 -> v2:
+>>
+>> - Don't change the name of QCOM_CPU_PART_KRYO_4XX_SILVER
+>>
+>>  arch/arm64/include/asm/cputype.h | 9 +++++++++
+>>  1 file changed, 9 insertions(+)
+>>
+>> diff --git a/arch/arm64/include/asm/cputype.h b/arch/arm64/include/asm/cputype.h
+>> index 683ca3af4084..a4260d3194fc 100644
+>> --- a/arch/arm64/include/asm/cputype.h
+>> +++ b/arch/arm64/include/asm/cputype.h
+>> @@ -84,6 +84,7 @@
+>>  #define ARM_CPU_PART_CORTEX_X2		0xD48
+>>  #define ARM_CPU_PART_NEOVERSE_N2	0xD49
+>>  #define ARM_CPU_PART_CORTEX_A78C	0xD4B
+>> +#define ARM_CPU_PART_CORTEX_X1C		0xD4C
+>>  
+>>  #define APM_CPU_PART_POTENZA		0x000
+>>  
+>> @@ -107,9 +108,17 @@
+>>  #define QCOM_CPU_PART_KRYO		0x200
+>>  #define QCOM_CPU_PART_KRYO_2XX_GOLD	0x800
+>>  #define QCOM_CPU_PART_KRYO_2XX_SILVER	0x801
+>> +#define QCOM_CPU_PART_KRYO_3XX_GOLD	0x802
+>>  #define QCOM_CPU_PART_KRYO_3XX_SILVER	0x803
+>>  #define QCOM_CPU_PART_KRYO_4XX_GOLD	0x804
+>>  #define QCOM_CPU_PART_KRYO_4XX_SILVER	0x805
+>> +#define QCOM_CPU_PART_KRYO_5XX_GOLD	ARM_CPU_PART_CORTEX_A77
+>> +#define QCOM_CPU_PART_KRYO_6XX_GOLD	ARM_CPU_PART_CORTEX_A78
+>> +#define QCOM_CPU_PART_KRYO_6XX_GOLDPLUS	ARM_CPU_PART_CORTEX_X1
+>> +#define QCOM_CPU_PART_KRYO_6XX_SILVER_V1	ARM_CPU_PART_CORTEX_A55
+>> +#define QCOM_CPU_PART_KRYO_7XX_GOLD	ARM_CPU_PART_CORTEX_A710
+>> +#define QCOM_CPU_PART_KRYO_7XX_GOLDPLUS	ARM_CPU_PART_CORTEX_X2
+>> +#define QCOM_CPU_PART_KRYO_7XX_SILVER	ARM_CPU_PART_CORTEX_A510
+>>  
+>>  #define NVIDIA_CPU_PART_DENVER		0x003
+>>  #define NVIDIA_CPU_PART_CARMEL		0x004
