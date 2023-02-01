@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C730068652C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 12:17:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D26A7686542
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 12:19:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232308AbjBALQ7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Feb 2023 06:16:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40224 "EHLO
+        id S232153AbjBALTK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Feb 2023 06:19:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232292AbjBALQ4 (ORCPT
+        with ESMTP id S232452AbjBALTD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Feb 2023 06:16:56 -0500
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C5144DCEA
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Feb 2023 03:16:55 -0800 (PST)
-Received: by mail-ej1-x635.google.com with SMTP id p26so39155861ejx.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Feb 2023 03:16:55 -0800 (PST)
+        Wed, 1 Feb 2023 06:19:03 -0500
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E538EC56
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Feb 2023 03:18:32 -0800 (PST)
+Received: by mail-ed1-x531.google.com with SMTP id m8so8095432edd.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Feb 2023 03:18:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=nUrDb3EKbEwP1E+cTaz4aoYhl8shzIQnqUH5alCaiS4=;
-        b=CBZPUQGhVvP6T/uXZYCqwU9h2SJ8G56BHcnskNnJ4P0subv/PysGZm16NTqJX1rNSa
-         G9qxcy8HOE9gDyCRrxRyRM5n2HElWKS9VoU6rRRLzNkUrYYjn18cQ+QAeZY/agndj2er
-         Ma39+WR3sTZ86HZeCDTAe6bLAazBG7aNtTDkQ4dERuKaRm1/irT2MrLCHGvVmA6naIyO
-         wXn6L0Un4Hw/JsoKwLHyFJCDa28qry65QnVV2J+JrVksf2q3sdiEn+AjHo2eRJd7+MpF
-         +QRfN6Mrbva9jAyigyKP/BWMnZkT7Eyxaq7IP1XZ+cI7JT9U/L3de8S84po2NEGfML3o
-         vyig==
+        bh=LmkNkwc/roPUBoxOIRfaMs2JmM8/cj5oMwOtaYpttR0=;
+        b=DmnxSKU7s6WIyUgSYiMgSy6s+OPOlWELHyjPOLn68AIZ/TRnmhV3B4rswEkHQbvUqk
+         Y3nvRwRgX7qEMRWldjUqTrmEmSDuUsjz2RnaVKK2zFbnK3ugSuXqt2Qc9UzNq+PH4GYa
+         3JmaNKcn2jcFB4r0BxD6Ps+GbVUFcFbRJueFzcaHEro9R1tC7CXCefdo1+OY7EHnVhSN
+         ti3PkVGtzR4StfY990ViG0dDVR2WOvgj5yqV57QApSP3p+XmiqksrGtrUY3ujHsn51/0
+         wj9xJVvbjXF93sMxw2SACtJjegkpiv1BjUW+GnKLrWsd8ORz9/1eYHzsBiEvExRHNjoF
+         5sWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nUrDb3EKbEwP1E+cTaz4aoYhl8shzIQnqUH5alCaiS4=;
-        b=v+qhYCx+/ek+8dPw8q4Z+iAQJMSbQg51JEYa8yVCtE7oUwkDIkwQGhrRpfyn8QUEg7
-         VqwDBLVcvdZpsbM551oKYAptGxmuYs3gOzFZO7mhBmkH1TDzmitFoW+iezh76iNGHHbS
-         ScV4dAOOgRpclYfEGEbFHRqpSZuEJfJknQvKNR7UfmTxHSO9fPhGYfQXcDgH3yY3ZxQa
-         unLjJNm5Xu8Xz/cgRCO1Ad9caJk22sbXE8NFoTLZUzDpUJMlH/JXKc37eqGBbLOBzypB
-         YjiUKMK3mP28DokYSwGM1zbnEDVOIkRgK+DkRuKQU6SM5nMjomM7YVMhIfy4VYB+5XQG
-         f8NQ==
-X-Gm-Message-State: AO0yUKXRJ57/O4yNI7K3ExVkZpeIAYLT81BvRWZ7URpZShXNu6DQzNE3
-        4Tm1n3EG4ZChDY1zHt/SanxDig==
-X-Google-Smtp-Source: AK7set8nZ5tenjhJ1UYP/fKSzZRqpA5VSaBodwJMTzJ2q15pnSFNExgvYIEYEGfWJP3FuMhx61MO4w==
-X-Received: by 2002:a17:906:ae5a:b0:878:81d7:9f6f with SMTP id lf26-20020a170906ae5a00b0087881d79f6fmr1945277ejb.67.1675250213863;
-        Wed, 01 Feb 2023 03:16:53 -0800 (PST)
+        bh=LmkNkwc/roPUBoxOIRfaMs2JmM8/cj5oMwOtaYpttR0=;
+        b=f2p0md79EwK68w6h3MRDNO7VNLJFbps7JZ6ijcDlMn+/ebiV+vWR2XbePJgsWEd44w
+         8jW7mfzmWDvj0KT+c8tZXgELeptC7MyrL4Qd6241ca2tt2XT5JWi0kVyNghsfLKXwbRm
+         MBQ3PXXH0F1KLcoD4rwaJK/n8G9D2wmFcfjQ8udmJfFEtGGNOLF7tKrv35qUpLjOYIWv
+         kNmPB/5F3V5AxWvRdzKcQZkpd/8qFPXpZp6qfpJtRmDtV2tFN9MCxMJInxfXzBjuyNFe
+         AiituINFIRQJ254OFAoYNCKQpRXOL4edndTR6oVFpQZjkJG9uIofi7R65MfYWn1GRU9U
+         xSOw==
+X-Gm-Message-State: AO0yUKXT4IYC2Lk49iG7zvdon7SSruwD0esl/T8T+IkG7RUSuJ3EQcO2
+        /Lx0AWG6h98accmc0SXf7b5jng==
+X-Google-Smtp-Source: AK7set8RBAqgYqL/UHyvViSxh65icsNQZmgKHSdri9gKC/VCfijAbqmy6paNIDeBSH0CtXt3GutdKw==
+X-Received: by 2002:aa7:cd53:0:b0:4a3:43c1:843c with SMTP id v19-20020aa7cd53000000b004a343c1843cmr1313349edw.16.1675250311234;
+        Wed, 01 Feb 2023 03:18:31 -0800 (PST)
 Received: from [192.168.1.101] (abyl20.neoplus.adsl.tpnet.pl. [83.9.31.20])
-        by smtp.gmail.com with ESMTPSA id w5-20020a1709061f0500b0086a2e31d1c1sm9832739ejj.28.2023.02.01.03.16.51
+        by smtp.gmail.com with ESMTPSA id t21-20020a170906065500b007a4e02e32ffsm9949372ejb.60.2023.02.01.03.18.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 Feb 2023 03:16:53 -0800 (PST)
-Message-ID: <9b7813d0-ec4e-a4a1-168f-de0797bcdf64@linaro.org>
-Date:   Wed, 1 Feb 2023 12:16:50 +0100
+        Wed, 01 Feb 2023 03:18:30 -0800 (PST)
+Message-ID: <93bec467-d8ff-efd0-4c7f-69e6bd42afbb@linaro.org>
+Date:   Wed, 1 Feb 2023 12:18:28 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.0
-Subject: Re: [PATCH 02/23] interconnect: fix icc_provider_del() error handling
+Subject: Re: [PATCH 01/23] interconnect: fix mem leak when freeing nodes
 Content-Language: en-US
 To:     Johan Hovold <johan+linaro@kernel.org>,
         Georgi Djakov <djakov@kernel.org>
@@ -75,11 +75,11 @@ Cc:     Shawn Guo <shawnguo@kernel.org>,
         linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
         linux-arm-msm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
         linux-tegra@vger.kernel.org, linux-kernel@vger.kernel.org,
-        stable@vger.kernel.org
+        stable@vger.kernel.org, Georgi Djakov <georgi.djakov@linaro.org>
 References: <20230201101559.15529-1-johan+linaro@kernel.org>
- <20230201101559.15529-3-johan+linaro@kernel.org>
+ <20230201101559.15529-2-johan+linaro@kernel.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230201101559.15529-3-johan+linaro@kernel.org>
+In-Reply-To: <20230201101559.15529-2-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -95,55 +95,29 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 1.02.2023 11:15, Johan Hovold wrote:
-> The interconnect framework currently expects that providers are only
-> removed when there are no users and after all nodes have been removed.
-> 
-> There is currently nothing that guarantees this to be the case and the
-> framework does not do any reference counting, but refusing to remove the
-> provider is never correct as that would leave a dangling pointer to a
-> resource that is about to be released in the global provider list (e.g.
-> accessible through debugfs).
-> 
-> Replace the current sanity checks with WARN_ON() so that the provider is
-> always removed.
-I spent a considerable amount of time scratching my head what WARN_ON has
-to do with removing list items.. I suppose "don't return early and replace
-pr_warn with WARN_ON" would have been clearer, but maybe that's just me
-in the morning..
-
+> The node link array is allocated when adding links to a node but is not
+> deallocated when nodes are destroyed.
 > 
 > Fixes: 11f1ceca7031 ("interconnect: Add generic on-chip interconnect API")
-> Cc: stable@vger.kernel.org      # 5.1: 680f8666baf6: interconnect: Make icc_provider_del() return void
+> Cc: stable@vger.kernel.org      # 5.1
+> Cc: Georgi Djakov <georgi.djakov@linaro.org>
 > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
->  drivers/interconnect/core.c | 14 ++------------
->  1 file changed, 2 insertions(+), 12 deletions(-)
+>  drivers/interconnect/core.c | 1 +
+>  1 file changed, 1 insertion(+)
 > 
 > diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
-> index dc61620a0191..43c5c8503ee8 100644
+> index 423f875d4b54..dc61620a0191 100644
 > --- a/drivers/interconnect/core.c
 > +++ b/drivers/interconnect/core.c
-> @@ -1062,18 +1062,8 @@ EXPORT_SYMBOL_GPL(icc_provider_add);
->  void icc_provider_del(struct icc_provider *provider)
->  {
->  	mutex_lock(&icc_lock);
-> -	if (provider->users) {
-> -		pr_warn("interconnect provider still has %d users\n",
-> -			provider->users);
-> -		mutex_unlock(&icc_lock);
-> -		return;
-> -	}
-> -
-> -	if (!list_empty(&provider->nodes)) {
-> -		pr_warn("interconnect provider still has nodes\n");
-> -		mutex_unlock(&icc_lock);
-> -		return;
-> -	}
-> +	WARN_ON(provider->users);
-> +	WARN_ON(!list_empty(&provider->nodes));
+> @@ -850,6 +850,7 @@ void icc_node_destroy(int id)
 >  
->  	list_del(&provider->provider_list);
 >  	mutex_unlock(&icc_lock);
+>  
+> +	kfree(node->links);
+>  	kfree(node);
+>  }
+>  EXPORT_SYMBOL_GPL(icc_node_destroy);
