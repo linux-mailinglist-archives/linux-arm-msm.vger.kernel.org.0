@@ -2,73 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E236768643B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 11:27:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 990E7686441
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 11:28:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229940AbjBAK1a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Feb 2023 05:27:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36634 "EHLO
+        id S230366AbjBAK2C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Feb 2023 05:28:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229597AbjBAK13 (ORCPT
+        with ESMTP id S229771AbjBAK2B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Feb 2023 05:27:29 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99FDE166E0
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Feb 2023 02:27:28 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id q10so16825290wrm.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Feb 2023 02:27:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=O/v+SPim2TMK89Jvx/Fmdof1mWi2+HuLSg2Ll3qs1mg=;
-        b=tNI1ucmQSvzmYci1AwFz8KNia8T70igmA0nmWM7jMTeHJhaj4/uN0p6P+L8XmTEzc0
-         1GgdVuSV2wfN4bxYu6YX8jA//5zgO2H4bkkmCsK/NibIByBloCFffpxqBoEy0QlOF/Nj
-         MFeelSbDDXOLPJnEV7PIRbhoN0OftcvYIKnODSOyiMq3jWIn4RhX7IzsUsvzFDuNRsuh
-         UkUph8y0ZHveQE9FFADlp3botjVHNCReKUE5oOXXqpnLpdCh6SlpwrRHasTuMUwSwxVy
-         Oe1T+F1sqFOoIYGm4BlDBuhfu3A5Qn+EWnHxPiiz796c1wgeptoPHin+jPpQPA2WanGr
-         Tcvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=O/v+SPim2TMK89Jvx/Fmdof1mWi2+HuLSg2Ll3qs1mg=;
-        b=Ix5XhdeQ/q/AM5/v8fUuASfztC8JbmF7xh4ljJ7nsMsVnr5/rp7Hw0Iw/OcvCFKUAN
-         D4BNp9alp3DzmHkUc3O0oraFQ8w8CXhPQIUnb88L6O80hhVpIeWU+/7MxIMPPjC3zk0R
-         Gg82pWpyvDmAQ3V8UyZbWbdWP1X22dAt2xIjTqN++t+JrNqBnRRPdFfd4xig+XadJlWo
-         oSRSsvtdgH1+Iyr1p8e6IlYyZ02xzKFYNzkPCtfOVRXwd6aO7hiwcvS2tLf/otUEyrrO
-         COpI/xZr0ZcKc1KNKhNddJJcdFReqEhDkYdLZNBYBlm9aHuTZrlBaNhT46enY46GGQh9
-         narQ==
-X-Gm-Message-State: AO0yUKXjNhbi37mE1IWbyFoJbPRujU29wcr7lPurexGGJA8gOLbpP1gM
-        MinkEQeD4qV3s8ffZh92miL+Yg==
-X-Google-Smtp-Source: AK7set9iu65V+O8RIGaCGpDyfjKqbyK1T3EgcROLhAZNaDkQMLOHvG/glHc3T8xv+DE00T9waooAig==
-X-Received: by 2002:a5d:6d8b:0:b0:2bf:dcfb:b58a with SMTP id l11-20020a5d6d8b000000b002bfdcfbb58amr2772815wrs.68.1675247247183;
-        Wed, 01 Feb 2023 02:27:27 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id g8-20020adfe408000000b002bdda9856b5sm17199371wrm.50.2023.02.01.02.27.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 Feb 2023 02:27:26 -0800 (PST)
-Message-ID: <d83949e7-d221-a5c1-4e96-19acbeff3d98@linaro.org>
-Date:   Wed, 1 Feb 2023 10:27:25 +0000
+        Wed, 1 Feb 2023 05:28:01 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5A8E4683;
+        Wed,  1 Feb 2023 02:27:57 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 52E9261757;
+        Wed,  1 Feb 2023 10:27:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4D47C4339E;
+        Wed,  1 Feb 2023 10:27:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1675247276;
+        bh=Zgeq1cLeqnv2FV5fbn2e26/TPr0F1TegeFxIqyZ5c2Y=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=gEIiChRfk3g/6HYCxmuax10BZVudMxnJC4ndp/VKm4gXNGlgmUJ4vPWTNFGQHttoz
+         sZKFl3zMo85DDzIRhutUA4ovOX9QiI0fEFlv7mJ0/jNWXqora1lb0I5k+LHJ3bahhL
+         j0dnRi85T+lAPFsQoE334msDtXdvB4f5kqbYTsmTnYwZQI3VHo0etlSI2foQADJgFq
+         yrR8Kn4DUmN3aeG8TYAotfHxzPd9a1yDDI4WL70Usi5QHn3oi4VvIWACymZCIJ9YLq
+         zIngXYaonZPhbbourPxm3zPxUyMD0YtRHhJgW0aEzKFofxnSboc0Jb4tipTTN3fDlf
+         aJFYnOJMGjxbA==
+Date:   Wed, 1 Feb 2023 15:57:48 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc:     Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Asutosh Das <quic_asutoshd@quicinc.com>,
+        Bean Huo <beanhuo@micron.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Jinyoung Choi <j-young.choi@samsung.com>,
+        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] scsi: ufs: core: Limit DMA alignment check
+Message-ID: <20230201102748.GA62808@thinkpad>
+References: <20230201034917.1902330-1-quic_bjorande@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH 2/2] PM / devfreq: qcom: Introduce CCI devfreq driver
-Content-Language: en-US
-To:     Jun Nie <jun.nie@linaro.org>, myungjoo.ham@samsung.com,
-        kyungmin.park@samsung.com, cw00.choi@samsung.com
-Cc:     linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230201080227.473547-1-jun.nie@linaro.org>
- <20230201080227.473547-2-jun.nie@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20230201080227.473547-2-jun.nie@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230201034917.1902330-1-quic_bjorande@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,21 +63,79 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/02/2023 08:02, Jun Nie wrote:
-> Cache Coherent Interconnect (CCI) is used by some Qualcomm SoCs. This
-> driver is introduced so that its freqency can be adjusted. And regulator
-> associated with opp table can be also adjusted accordingly which is
-> shared with cpu cluster.
+On Tue, Jan 31, 2023 at 07:49:17PM -0800, Bjorn Andersson wrote:
+> The three DMA memory regions allocated for the host memory space is
+> documented to require alignment of 128, 1024 and 1024 respectively, but
+> the returned address is checked for PAGE_SIZE alignment.
 > 
-> Signed-off-by: Jun Nie <jun.nie@linaro.org>
+> In the case these allocations are serviced by e.g. the Arm SMMU, the
+> size and alignment will be determined by its supported page sizes. In
+> most cases SZ_4K and a few larger sizes are available.
+> 
+> In the typical configuration this does not cause problems, but in the
+> event that the system PAGE_SIZE is increased beyond 4k, it's no longer
+> reasonable to expect that the allocation will be PAGE_SIZE aligned.
+> 
+> Limit the DMA alignment check to the actual alignment requirements
+> written in the comments in the code, to avoid the UFS core refusing to
+> initialize with such configuration.
 
-Nice work.
+Isn't dma_alloc_coherent() supposed to return PAGE_SIZE aligned dma and cpu
+addresses? I suppose that could be reason for checking against PAGE_SIZE.
 
-Thanks for taking the time to follow up on this. I had a look at the 
-4.19 out-of-tree version of this we have and this code looks just about 
-right.
+> 
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-With Krzysztof's comments addressed please add my
+But it doesn't hurt to check for the actual alignment.
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
 
+Thanks,
+Mani
+
+> ---
+>  drivers/ufs/core/ufshcd.c | 9 +++------
+>  1 file changed, 3 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+> index ec732e4bbbf4..d7f3f1ba9d12 100644
+> --- a/drivers/ufs/core/ufshcd.c
+> +++ b/drivers/ufs/core/ufshcd.c
+> @@ -3724,12 +3724,9 @@ static int ufshcd_memory_alloc(struct ufs_hba *hba)
+>  
+>  	/*
+>  	 * UFSHCI requires UTP command descriptor to be 128 byte aligned.
+> -	 * make sure hba->ucdl_dma_addr is aligned to PAGE_SIZE
+> -	 * if hba->ucdl_dma_addr is aligned to PAGE_SIZE, then it will
+> -	 * be aligned to 128 bytes as well
+>  	 */
+>  	if (!hba->ucdl_base_addr ||
+> -	    WARN_ON(hba->ucdl_dma_addr & (PAGE_SIZE - 1))) {
+> +	    WARN_ON(hba->ucdl_dma_addr & (128 - 1))) {
+>  		dev_err(hba->dev,
+>  			"Command Descriptor Memory allocation failed\n");
+>  		goto out;
+> @@ -3745,7 +3742,7 @@ static int ufshcd_memory_alloc(struct ufs_hba *hba)
+>  						   &hba->utrdl_dma_addr,
+>  						   GFP_KERNEL);
+>  	if (!hba->utrdl_base_addr ||
+> -	    WARN_ON(hba->utrdl_dma_addr & (PAGE_SIZE - 1))) {
+> +	    WARN_ON(hba->utrdl_dma_addr & (1024 - 1))) {
+>  		dev_err(hba->dev,
+>  			"Transfer Descriptor Memory allocation failed\n");
+>  		goto out;
+> @@ -3769,7 +3766,7 @@ static int ufshcd_memory_alloc(struct ufs_hba *hba)
+>  						    &hba->utmrdl_dma_addr,
+>  						    GFP_KERNEL);
+>  	if (!hba->utmrdl_base_addr ||
+> -	    WARN_ON(hba->utmrdl_dma_addr & (PAGE_SIZE - 1))) {
+> +	    WARN_ON(hba->utmrdl_dma_addr & (1024 - 1))) {
+>  		dev_err(hba->dev,
+>  		"Task Management Descriptor Memory allocation failed\n");
+>  		goto out;
+> -- 
+> 2.25.1
+> 
+
+-- 
+மணிவண்ணன் சதாசிவம்
