@@ -2,83 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E81176869C0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 16:15:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 47CCA6869CD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 16:16:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232176AbjBAPP6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Feb 2023 10:15:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52690 "EHLO
+        id S232605AbjBAPQE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Feb 2023 10:16:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232320AbjBAPPf (ORCPT
+        with ESMTP id S232001AbjBAPPu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Feb 2023 10:15:35 -0500
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E00E827D6F
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Feb 2023 07:15:13 -0800 (PST)
-Received: by mail-lf1-x136.google.com with SMTP id u12so19191809lfq.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Feb 2023 07:15:13 -0800 (PST)
+        Wed, 1 Feb 2023 10:15:50 -0500
+Received: from mail-vk1-xa36.google.com (mail-vk1-xa36.google.com [IPv6:2607:f8b0:4864:20::a36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A68C96A70
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Feb 2023 07:15:25 -0800 (PST)
+Received: by mail-vk1-xa36.google.com with SMTP id b81so9290219vkf.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Feb 2023 07:15:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=bgdev-pl.20210112.gappssmtp.com; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=lLX7pM7hqpU4TFyVN86DeJVlh/KarrGEhTFMLvDtTOs=;
-        b=hjwajA05EUmyxHZfZu4qw7wCS12SG2M/0HznMKoVMNYUs7IE2wl44TQOqWT2G820xw
-         YE/KLGqmLVq2VuzSCCu95XoF/b+FKqKtPMgd2GIMuHWuAli975mt+4ULJLj1DQmc20Xz
-         Mbq5uKgwFHJcDKJbrTT/LEaDeNCVRmhXUx+fjIn5z8eQ+gkE3/isLyg5fC6Gdfs6fwRh
-         NOOr4NF1zGGuoBJsZVpaauqKp/TPu9OBiyUyOzIucVWL/egrkdTb4zN9xdsvyMCR/XQF
-         YqQSX+4D6tqpdl+qQ9Y0HMSnTcM4EPGt5P1H6+tk5YynZ/FLtdw8Zg/br2c7bla12+1x
-         UnBg==
+        bh=P2xP6eCF3TqKX2hPAQtTqyhRnHPd6nA+ZAl9lx1s02E=;
+        b=cPd9ZK+s9OOnXPyWMp4YxzVTUmzWE5mddvFUShs3EAUOGbyfSahgZTkFtkeEfUiX12
+         pNNTxcFBD0mva/RhwyvK7Io1ueQL9HvERq/amx0mzc4NpMB0rbJx65UGb1cPDFqtV8vD
+         ySeo01oX7qk+TeOAaGW59fg4EXTrfVZc44IZkiH45LO9pG7aixZ7T9cD9wFR1mxJjjif
+         eO5UFLZpiDZPZshCPN07y60s2zdJy7AY13+65IlTLncbdxdP93yA9Fp3Moa96T4mIwgr
+         CyiCwFC701oqylACrCbaZ6AoaVp8SfP/4Moy20GuM+mZ5R6pnqvvAl9wL2hDcFj3WPhZ
+         7Qkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=lLX7pM7hqpU4TFyVN86DeJVlh/KarrGEhTFMLvDtTOs=;
-        b=kV7D9WteMMFD7pxDE76fDhJBBthvEKT9/q5MboliVUrx5VutZFiDlprOCyOm8yW4ZQ
-         bUccgE+F8dr8Irrv6ydDeCYvXw5iwQYo+9N0FoWz3540Kf4gLlBmPc2otAQujerwymDw
-         kS5fOgqDk17AizVm7WRTNFH4w6Op3CzJhfOdhNqHvEby0JVhHRSzYftToE6yNlkeBPto
-         97f8HKQUxBgAVR0utiji3Iiz3l6kxAw4k2+WTTpWdI2Ee4ttUvaoWhP2PSmcMSSE4ziC
-         JZbfRh+MXFs+s3AiP6SiHJYqfcrE6Nr2cUFSvb63NRF4B0tHCnS2cV6zB18JUq2SEOrn
-         w6sw==
-X-Gm-Message-State: AO0yUKVAZyYFduw9BRDoR9omQA/+cIBSR7csE7qNrY5XY71/BjVBdStE
-        gRWFeU4TOF1lpSQ89nvSd0Ocboqn4sKI6f2YfxGdFg==
-X-Google-Smtp-Source: AK7set9FlH3YuQTbPCgh8mr0LjPnk5XhZB1nXXLdBvl7PGkvQMWtqwoUMM40I3hsgJ9TvVKQ6Wl7KoC5IoZD0JPcu+Q=
-X-Received: by 2002:ac2:43d0:0:b0:4d2:e530:d53c with SMTP id
- u16-20020ac243d0000000b004d2e530d53cmr434756lfl.8.1675264512162; Wed, 01 Feb
- 2023 07:15:12 -0800 (PST)
+        bh=P2xP6eCF3TqKX2hPAQtTqyhRnHPd6nA+ZAl9lx1s02E=;
+        b=tzuZnU9tEefA5hVG5W1VhDFgucwO3ln/saqAO+7rV8FlrYmKq/imDRnJJNq5jNcoQq
+         yf2hE8jhqU33zrxhhIxAY/s/fcsnpMjcd8B5j3l9YeOvNgTmFfB7j4nK8km9FYIuaqYR
+         Nw42rmNv1ribVSEfbdrbWV2ews5IwIWCPxwlM4c7dwaiFaKebEOrNUsjzkXPWMd/1LbS
+         ziT5e+bnPItUpBQsO0PhcJ/Pw7UkBIfrdFogQjfqdDtzU5Qhh671AZPCWg4eiPwZdKXD
+         NolRFQOtRtOdko/ZcD6wSj2iDc/0r+K/CyUgPq/wq21gxAbAYFQaPmKOnpNeO7O5MJR+
+         ghoQ==
+X-Gm-Message-State: AO0yUKX0hnxxp5XihpMnBRTTCfQLLq3FxikCBemdW9hv/9KjCQFNU2Zr
+        vnXglSeY1tPjqhrobik6K3i0jyAT6rMgyBZ6rDeWew==
+X-Google-Smtp-Source: AK7set/a9n8DhEWml4oeRIbxJr7piLem7ocXP6IYnly6d6H3q6ePiYA+VD+PX3blmVuO3ebrdTGmoiIBa20h4UH/ECM=
+X-Received: by 2002:a05:6122:691:b0:3ea:22a8:aef with SMTP id
+ n17-20020a056122069100b003ea22a80aefmr383731vkq.25.1675264524773; Wed, 01 Feb
+ 2023 07:15:24 -0800 (PST)
 MIME-Version: 1.0
-References: <20230201080227.473547-1-jun.nie@linaro.org> <20230201080227.473547-2-jun.nie@linaro.org>
- <5ecc68a6-2914-1059-460f-752adc1d3d01@kernel.org>
-In-Reply-To: <5ecc68a6-2914-1059-460f-752adc1d3d01@kernel.org>
-From:   Jun Nie <jun.nie@linaro.org>
-Date:   Wed, 1 Feb 2023 23:15:08 +0800
-Message-ID: <CABymUCP0sC58vi1nU=0BM9JmwWh2eNTt883_VGwXdoaZ3ZZUJQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] PM / devfreq: qcom: Introduce CCI devfreq driver
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
-        cw00.choi@samsung.com, bryan.odonoghue@linaro.org,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
+References: <20230201150011.200613-1-brgl@bgdev.pl> <20230201150011.200613-2-brgl@bgdev.pl>
+ <e28c9048-635d-3936-e440-27e293501ff6@linaro.org>
+In-Reply-To: <e28c9048-635d-3936-e440-27e293501ff6@linaro.org>
+From:   Bartosz Golaszewski <brgl@bgdev.pl>
+Date:   Wed, 1 Feb 2023 16:15:13 +0100
+Message-ID: <CAMRc=Mc8gFpcB6k-qVmSAM0=iKHGBmGcqm3aV2xiyjWPG1wtvg@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] dt-bindings: pinctrl: describe sa8775p-tlmm
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> > Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> > ---
-> >  drivers/devfreq/Kconfig    |   9 +++
-> >  drivers/devfreq/Makefile   |   1 +
-> >  drivers/devfreq/qcom-cci.c | 162 +++++++++++++++++++++++++++++++++++++
+On Wed, Feb 1, 2023 at 4:13 PM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
 >
-> Who is going to maintain this file/driver?
+> On 01/02/2023 16:00, Bartosz Golaszewski wrote:
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >
+> > Add DT bindings for the TLMM controller on sa8775p platforms.
+> >
+> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 >
-I will add myself as maintainer of this file.
-All other comments will be addressed in next version. Thanks!
+>
+> > +
+> > +examples:
+> > +  - |
+> > +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> > +
+> > +    tlmm: pinctrl@f000000 {
+> > +        compatible = "qcom,sa8775p-tlmm";
+> > +        reg = <0xf000000 0x1000000>;
+> > +        interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
+> > +        gpio-controller;
+> > +        #gpio-cells = <2>;
+> > +        interrupt-controller;
+> > +        #interrupt-cells = <2>;
+> > +        gpio-ranges = <&tlmm 0 0 149>;
+>
+> You have 148 GPIOs, so s/149/148/.
+>
+> I'll fix other bindings as we have such mistake in several places.
+>
+>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>
+> Best regards,
+> Krzysztof
+>
 
-- Jun
+Ah, cr*p, sorry for missing it. Linus - can you change it when
+applying? I don't want to send more noise.
+
+Bart
