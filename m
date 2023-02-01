@@ -2,81 +2,43 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 598406864BD
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 11:51:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 695E06864EE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 12:01:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232054AbjBAKvK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Feb 2023 05:51:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54686 "EHLO
+        id S232353AbjBALBt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Feb 2023 06:01:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230496AbjBAKvJ (ORCPT
+        with ESMTP id S232380AbjBALBl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Feb 2023 05:51:09 -0500
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B60640BE2
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Feb 2023 02:51:08 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id ml19so26608005ejb.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Feb 2023 02:51:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9syDN6lVof2BYFuxSBHicwMUB0VPrCisO1VbIHSe+6A=;
-        b=SHPXpNCRVqPweEXV0hlapMi/VQuvoK5IvsIRNK7hZ8PhKscyS7ct4IkMeIJHsbWRor
-         9k32ljOamOWyTl9lhUrBJx2meuyF2/A1C7bD2hEcZ80InE9vmokiad7A8hz5KCXA2KSI
-         InWKiYKeBp5rwqPR5j/zBbKXHNJiLUS2I4PWZXME2baGmG0Z2P4n7YmiSEJq25yDcYvo
-         nmNFf2aWUctvcWQcJFOIcLiaCf2Rg5q+lpBtJBRPSt911V2v7wKt9SJUxMYMK6l9qvCc
-         FPBzZy/hpMattSEqXyQlLZuJW4MlE6M2kC4LPF8Waij6LVkG77QzTm+kjbDHc1MoN3MO
-         AQiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9syDN6lVof2BYFuxSBHicwMUB0VPrCisO1VbIHSe+6A=;
-        b=dgTEz0La7kaq2n8Uj9bxDZ809pqKCkJt7CCoL8/SogUBBEhJY6cuo1Ynvpy4/HMXg2
-         SHHqnCeFOXLZ6XUbm4XTxDw8B+6Iv+8T/Ov62OfeVXnhzZYkR2RSahjL5qhEzvxlsLXy
-         LIp6cJPEjCMzP12lqglPdsFGb9el4tJJdMeo+a+SQqIQUAmdf683Zh9p6e+/lGSzvHyr
-         aCKMMIJk0DiIlkmPepH3yuJ/jrvc0h8XjKoNebL/opNzC0kfalGdMa/3BMiUco6Ov/k9
-         wFztIqmdg3NcTlSFajBJFrO4qy98qBPkO4OHWjArgRTM7880W4zo3pnv3NsriDXsi3R/
-         ODXQ==
-X-Gm-Message-State: AO0yUKUU1t6rDBo1+3ER/oUYuAYVQlxcKlSOhYgprmP1AiBGinMcGTgJ
-        qwwUWWr31gtnyIQRFY+RgVjXKQ==
-X-Google-Smtp-Source: AK7set/ZlvzNCR642AtQEOigZkb5AINCHT4epDo5VZqT7HU14gSKMAjDoCe9mm67WxPQ9hW27+m5TA==
-X-Received: by 2002:a17:907:c78a:b0:878:7349:5ce6 with SMTP id tz10-20020a170907c78a00b0087873495ce6mr2037849ejc.71.1675248666940;
-        Wed, 01 Feb 2023 02:51:06 -0800 (PST)
-Received: from [192.168.1.101] (abyl20.neoplus.adsl.tpnet.pl. [83.9.31.20])
-        by smtp.gmail.com with ESMTPSA id l15-20020a1709066b8f00b00886faa3d569sm5484873ejr.58.2023.02.01.02.51.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 Feb 2023 02:51:06 -0800 (PST)
-Message-ID: <b844c47e-8ee4-8163-3888-43a06edfd1a2@linaro.org>
-Date:   Wed, 1 Feb 2023 11:51:04 +0100
+        Wed, 1 Feb 2023 06:01:41 -0500
+Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [5.144.164.165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A2055A37B;
+        Wed,  1 Feb 2023 03:01:39 -0800 (PST)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 6362C200EB;
+        Wed,  1 Feb 2023 12:01:37 +0100 (CET)
+Date:   Wed, 1 Feb 2023 12:01:36 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Kalyan Thota <quic_kalyant@quicinc.com>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, robdclark@chromium.org,
+        dianders@chromium.org, swboyd@chromium.org,
+        quic_vpolimer@quicinc.com, quic_abhinavk@quicinc.com
+Subject: Re: [PATCH 0/3] Reserve dspps based on user request
+Message-ID: <20230201110136.xy5xifym624ehthb@SoMainline.org>
+References: <1675092092-26412-1-git-send-email-quic_kalyant@quicinc.com>
+ <31661b18-8519-cadb-0c56-6a1fa34633b2@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH 02/14] drm/msm/a6xx: Extend UBWC config
-Content-Language: en-US
-To:     Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, Chia-I Wu <olvaffe@gmail.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-References: <20230126151618.225127-1-konrad.dybcio@linaro.org>
- <20230126151618.225127-3-konrad.dybcio@linaro.org>
- <3644f111-0d69-1006-f032-782e1b00cd17@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <3644f111-0d69-1006-f032-782e1b00cd17@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <31661b18-8519-cadb-0c56-6a1fa34633b2@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,96 +46,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 1.02.2023 10:30, Akhil P Oommen wrote:
-> On 1/26/2023 8:46 PM, Konrad Dybcio wrote:
->> Port setting min_access_length, ubwc_mode and upper_bit from downstream.
->> Values were validated using downstream device trees for SM8[123]50 and
->> left default (as per downstream) elsewhere.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 26 ++++++++++++++++++--------
->>  1 file changed, 18 insertions(+), 8 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->> index c5f5d0bb3fdc..ad5d791b804c 100644
->> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->> @@ -786,17 +786,22 @@ static void a6xx_set_cp_protect(struct msm_gpu *gpu)
->>  static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
->>  {
->>  	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->> -	u32 lower_bit = 2;
->> +	u32 lower_bit = 1;
-> Wouldn't this break a630?
-
-// highest_bank_bit = 15 on 845, from "qcom,highest-bank-bit" in dt
-
-bit = adreno_dev->highest_bank_bit ? adreno_dev->highest_bank_bit - 13 : 0;
-// => bit = 2
-
-lower_bit = bit & 0x3;
-// => lower_bit = 2
-
-Yes it would! Thanks for catching that, I'll add the A630 case in v2.
-
-The 1 default value comes from the fact that highest_bank_bit is 13
-when it's unset in dt, which makes lower_bit 1.
-
-
-Konrad
-
+On 2023-01-30 21:18:30, Dmitry Baryshkov wrote:
+> On 30/01/2023 17:21, Kalyan Thota wrote:
+> > This series will enable color features on sc7280 target which has primary panel as eDP
+> > 
+> > The series removes dspp allocation based on encoder type and allows the dspp reservation
+> > based on user request via ctm.
+> > 
+> > The series will release/reserve the dpu resources when ever there is a topology change
+> > to suit the new requirements.
 > 
-> -Akhil.
->> +	u32 upper_bit = 0;
->>  	u32 amsbc = 0;
->>  	u32 rgb565_predicator = 0;
->>  	u32 uavflagprd_inv = 0;
->> +	u32 min_acc_len = 0;
->> +	u32 ubwc_mode = 0;
->>  
->>  	/* a618 is using the hw default values */
->>  	if (adreno_is_a618(adreno_gpu))
->>  		return;
->>  
->> -	if (adreno_is_a640_family(adreno_gpu))
->> +	if (adreno_is_a640_family(adreno_gpu)) {
->>  		amsbc = 1;
->> +		lower_bit = 2;
->> +	}
->>  
->>  	if (adreno_is_a650(adreno_gpu) || adreno_is_a660(adreno_gpu)) {
->>  		/* TODO: get ddr type from bootloader and use 2 for LPDDR4 */
->> @@ -807,18 +812,23 @@ static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
->>  	}
->>  
->>  	if (adreno_is_7c3(adreno_gpu)) {
->> -		lower_bit = 1;
->>  		amsbc = 1;
->>  		rgb565_predicator = 1;
->>  		uavflagprd_inv = 2;
->>  	}
->>  
->>  	gpu_write(gpu, REG_A6XX_RB_NC_MODE_CNTL,
->> -		rgb565_predicator << 11 | amsbc << 4 | lower_bit << 1);
->> -	gpu_write(gpu, REG_A6XX_TPL1_NC_MODE_CNTL, lower_bit << 1);
->> -	gpu_write(gpu, REG_A6XX_SP_NC_MODE_CNTL,
->> -		uavflagprd_inv << 4 | lower_bit << 1);
->> -	gpu_write(gpu, REG_A6XX_UCHE_MODE_CNTL, lower_bit << 21);
->> +		  rgb565_predicator << 11 | upper_bit << 10 | amsbc << 4 |
->> +		  min_acc_len << 3 | lower_bit << 1 | ubwc_mode);
->> +
->> +	gpu_write(gpu, REG_A6XX_TPL1_NC_MODE_CNTL, upper_bit << 4 |
->> +		  min_acc_len << 3 | lower_bit << 1 | ubwc_mode);
->> +
->> +	gpu_write(gpu, REG_A6XX_SP_NC_MODE_CNTL, upper_bit << 10 |
->> +		  uavflagprd_inv << 4 | min_acc_len << 3 |
->> +		  lower_bit << 1 | ubwc_mode);
->> +
->> +	gpu_write(gpu, REG_A6XX_UCHE_MODE_CNTL, min_acc_len << 23 | lower_bit << 21);
->>  }
->>  
->>  static int a6xx_cp_init(struct msm_gpu *gpu)
+> Nit: the subject of the cover letter should include the version, if you 
+> are including one into the individual patches Subject.
+
+Indeed this makes it hard to tell the versions apart, and lore also
+confusingly bundles both series in "loose matches on Subject: below".
+
+Nit ^2: and individual patches should still have the PATCH moniker, i.e.
+[PATCH v2 1/3].  git format-patch -v2 --cover-letter ... takes care of
+/all this/ this for you.
+
+And one more: as DSPP is an abbreviation, can we capitalize it?  So
+DSPP / DSPPs in these titles?
+
+> > 
+> > Kalyan Thota (3):
+> >    drm/msm/disp/dpu1: clear dspp reservations in rm release
+> >    drm/msm/disp/dpu1: add dspps into reservation if there is a ctm
+> >      request
+> >    drm/msm/disp/dpu1: reserve the resources on topology change
+
+We just discussed in the DSC series that the subsystem prefix is
+drm/msm/dpu.
+
+- Marijn
+
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h    |  1 +
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 54 +++++++++++++++++++++++------
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  4 ++-
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     |  2 +-
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c      |  6 ++--
+> >   5 files changed, 50 insertions(+), 17 deletions(-)
+> > 
+> 
+> -- 
+> With best wishes
+> Dmitry
 > 
