@@ -2,130 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E73C2686CCA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 18:23:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F3262686D3B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 18:42:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232239AbjBARXP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Feb 2023 12:23:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49792 "EHLO
+        id S229454AbjBARmT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Feb 2023 12:42:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232198AbjBARXM (ORCPT
+        with ESMTP id S230268AbjBARmS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Feb 2023 12:23:12 -0500
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFF9865F30
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Feb 2023 09:23:09 -0800 (PST)
-Received: by mail-ej1-x62c.google.com with SMTP id lu11so16195125ejb.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Feb 2023 09:23:09 -0800 (PST)
+        Wed, 1 Feb 2023 12:42:18 -0500
+Received: from mail-ua1-x936.google.com (mail-ua1-x936.google.com [IPv6:2607:f8b0:4864:20::936])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F6667A91
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Feb 2023 09:42:16 -0800 (PST)
+Received: by mail-ua1-x936.google.com with SMTP id q19so3637256uac.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Feb 2023 09:42:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uk3rBfWXYWGglBbtHFn72sDtxH1nQI4oY7t4ppOv/uA=;
-        b=cg9tcovsWu5OofGQGy0dnQIzHuGQtUFEnVY4TcYrWfYnFmK8u/isiy8qu4pRDGq/4L
-         C5ARkoAoame9xBEWNWhsIkHGns78KH+ctJTlVXfNMhXIAWMSfrqZJNn6Il8vyrRyP3yI
-         M7jdQA/YO/IMMz9JvrLDOa9cBO1JMwhderWDSgSFGhB7Bj7eo+Yb63MikHKvIWB4flBH
-         qHxOl2kFbmhVTDB2To1o7uJhMLsWQYDb7YwBXEEvp78DpNH5c1bc1iSdJSAtX9DAE2vj
-         pZeDfT2DQxvvK6XixBppRWOvZbIS15YSvtiZFNlqPJIAImSEiZKnc/8iJiN7ifEHiSIh
-         J0lg==
+        d=nexus-software-ie.20210112.gappssmtp.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=DzirROuW9olkK+Ab7CaPax/vy26m83TvhoASTzgpe7s=;
+        b=MgduefyYKmVH0/uphx6SmYvMlqkdXAAesGCV3Esm2Na0ZtEPza9FAvPg41uHcdDMt8
+         XFiCtee1BLy9bIK+7eKVrb8MMHOmXZ5JrdVfzEAahsp/CNNgSSvMtPaSl7HxkW3aWBr8
+         1BO4IEjKMxJYGWi6/FNc4nAo7vqI5eZ5zih72sFyX0rlUgurMcK40SK6mxfTk9rF6aLt
+         pJXkgbrlKXZ+dqQCrOX5rJMNO0jKqg5Opvwv0ntdS/17ijXxWM5R4liQrlupxyGgsvdW
+         NtJIJborEXuvz6pIfVvb7tI32TCqXs2NLLLDva8UihCYmJ3Tcd7r/WRfzZmF1j4F4xmN
+         IJeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=uk3rBfWXYWGglBbtHFn72sDtxH1nQI4oY7t4ppOv/uA=;
-        b=QJXLS06V8aCGs+INbBpRIIemLksnZgxH60Pfru55t0aGuOglf9k0dvhr9pHn30Bqls
-         GCTzVHJ6Bdx9qcGcVfNJR8Xk55SXD8cd1ePNU2H2/XQqITGX7xBV+XwFzRhKRXmD+JOD
-         tlrsbomy/Y+jIyBY0pHIqEy8+pjlPRKq0xUAwU5vwbfr8myimX9u6MyQlgx5SXlqhgeQ
-         LWCtD+NJ+ZnpphN9gpDnn02bXT1rp9p9+Y5k/FNajAXiCKGnplcJkHGUl6LoztYMeTqP
-         ePaUbXWIaMEiEXP2aTuGYBeDqGhY6y59LaHsu6eZCKQ0jgUPJvFArOg1bm+7FKt9nllX
-         nIlw==
-X-Gm-Message-State: AO0yUKXPVK2cchgfkMQEgqv1bhPDDJ8zexR4vt2++HgWE2GHXAZzVkyY
-        0RTbU+OmsovgaraXWia+C0qOTQ==
-X-Google-Smtp-Source: AK7set+rjw+4ID3i6qHlaYQG4SdQ3bhwrqalqusMwnMrmfcFcaSbJuWsEYy+R6siwzOE1Hx6xfNLBA==
-X-Received: by 2002:a17:907:7094:b0:88a:72bf:9670 with SMTP id yj20-20020a170907709400b0088a72bf9670mr2936763ejb.50.1675272188560;
-        Wed, 01 Feb 2023 09:23:08 -0800 (PST)
-Received: from eriador.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id ci20-20020a170906c35400b0088e5f3e1faesm601873ejb.36.2023.02.01.09.23.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Feb 2023 09:23:08 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <quic_tdas@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: [PATCH v2 2/2] clk: qcom: gpucc-sdm845: fix clk_dis_wait being programmed for CX GDSC
-Date:   Wed,  1 Feb 2023 19:23:05 +0200
-Message-Id: <20230201172305.993146-2-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230201172305.993146-1-dmitry.baryshkov@linaro.org>
-References: <20230201172305.993146-1-dmitry.baryshkov@linaro.org>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DzirROuW9olkK+Ab7CaPax/vy26m83TvhoASTzgpe7s=;
+        b=AoTk6jHbWjd6pkNwIhka6kAoxyRW8UD6ohAICD/kzHfNBCux+GahB7kFeqdDebWlW0
+         hRqSGF0XJtWQD/Gl02zivP08shU8b7H6EU8EuGgOsyMgCqvU0nDRsq0exnIdaxlwG87D
+         GWDFMJOk+P3Uj+Z89zzrJ81iuLpmnYKLppeWL/TscsZ+ozCXuoYBvEW/tI4AQe/6vCYE
+         6Iazu3K+wUPic32EBXg/6BJevI6u8Kw5l7guek9WjIRfd1i4iMbNJcD4DAi0KZTVVaXb
+         dcoAp/dgOdYo0CLNjj5iVgKanC7i0mVUwvtE4V1V8NiF/keTETj3xHuwzRlfkA+yL2Pi
+         ffkQ==
+X-Gm-Message-State: AO0yUKX9IyQTUlp8KXwKUq5UxJB63laAi1rcegobd3KqbyDY5aNwke/R
+        HJv6DUxP6b4hFoCaxAqzjx7PZXfbuQ+WktqNYFOz3Q==
+X-Google-Smtp-Source: AK7set9K8iWamQeVl4gcRrPOuazz8kMD8IjiJpud3M+NGaEqOWUJZVWLGASNYq+6DRVt5LzXsPpa+mReJvoXpxRewDo=
+X-Received: by 2002:ab0:3008:0:b0:655:7634:8e78 with SMTP id
+ f8-20020ab03008000000b0065576348e78mr482909ual.1.1675273335463; Wed, 01 Feb
+ 2023 09:42:15 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20230126215125.4069751-1-kbusch@meta.com> <20230126215125.4069751-12-kbusch@meta.com>
+In-Reply-To: <20230126215125.4069751-12-kbusch@meta.com>
+From:   "Bryan O'Donoghue" <pure.logic@nexus-software.ie>
+Date:   Wed, 1 Feb 2023 17:42:04 +0000
+Message-ID: <CAJB8c05HgmDqMn9KwOi2P6+s-c8zt6-oiW6gOo==CDv6=HNahQ@mail.gmail.com>
+Subject: Re: [PATCHv4 11/12] dmapool: link blocks across pages
+To:     Keith Busch <kbusch@meta.com>
+Cc:     linux-mm@kvack.org, linux-kernel@vger.kernel.org,
+        willy@infradead.org, hch@lst.de, tonyb@cybernetics.com,
+        akpm@linux-foundation.org, kernel-team@meta.com,
+        Keith Busch <kbusch@kernel.org>,
+        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The gdsc_init() function will rewrite the CLK_DIS_WAIT field while
-registering the GDSC (writing the value 0x2 by default). This will
-override the setting done in the driver's probe function.
+On Thu, Jan 26, 2023 at 9:55 PM Keith Busch <kbusch@meta.com> wrote:
+>
+> From: Keith Busch <kbusch@kernel.org>
+>
+> The allocated dmapool pages are never freed for the lifetime of the
+> pool. There is no need for the two level list+stack lookup for finding a
+> free block since nothing is ever removed from the list. Just use a
+> simple stack, reducing time complexity to constant.
+>
+> The implementation inserts the stack linking elements and the dma handle
+> of the block within itself when freed. This means the smallest possible
+> dmapool block is increased to at most 16 bytes to accomodate these
+> fields, but there are no exisiting users requesting a dma pool smaller
+> than that anyway.
+>
+> Removing the list has a significant change in performance. Using the
+> kernel's micro-benchmarking self test:
+>
+> Before:
+>
+>   # modprobe dmapool_test
+>   dmapool test: size:16   blocks:8192   time:57282
+>   dmapool test: size:64   blocks:8192   time:172562
+>   dmapool test: size:256  blocks:8192   time:789247
+>   dmapool test: size:1024 blocks:2048   time:371823
+>   dmapool test: size:4096 blocks:1024   time:362237
+>
+> After:
+>
+>   # modprobe dmapool_test
+>   dmapool test: size:16   blocks:8192   time:24997
+>   dmapool test: size:64   blocks:8192   time:26584
+>   dmapool test: size:256  blocks:8192   time:33542
+>   dmapool test: size:1024 blocks:2048   time:9022
+>   dmapool test: size:4096 blocks:1024   time:6045
+>
+> The module test allocates quite a few blocks that may not accurately
+> represent how these pools are used in real life. For a more marco level
+> benchmark, running fio high-depth + high-batched on nvme, this patch
+> shows submission and completion latency reduced by ~100usec each, 1%
+> IOPs improvement, and perf record's time spent in dma_pool_alloc/free
+> were reduced by half.
+>
+> Reviewed-by: Christoph Hellwig <hch@lst.de>
+> Signed-off-by: Keith Busch <kbusch@kernel.org>
 
-Set cx_gdsc.clk_dis_wait_val to 8 to follow the intention of the probe
-function.
+So.
 
-Fixes: 453361cdd757 ("clk: qcom: Add graphics clock controller driver for SDM845")
-Reviewed-by: Stephen Boyd <sboyd@kernel.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Somehow this commit has broken USB device mode for me with the
+Chipidea IP on msm8916 and msm8939.
+
+Bisecting down I find this is the inflection point
+
+commit ced6d06a81fb69e2f625b0c4b272b687a3789faa (HEAD -> usb-test-delete)
+Author: Keith Busch <kbusch@kernel.org>
+Date:   Thu Jan 26 13:51:24 2023 -0800
+
+Host side sees
+[128418.779220] usb 5-1.3: New USB device found, idVendor=18d1,
+idProduct=d00d, bcdDevice= 1.00
+[128418.779225] usb 5-1.3: New USB device strings: Mfr=1, Product=2,
+SerialNumber=3
+[128418.779227] usb 5-1.3: Product: Android
+[128418.779228] usb 5-1.3: Manufacturer: Google
+[128418.779229] usb 5-1.3: SerialNumber: 1628e0d7
+[128432.387235] usb 5-1.3: USB disconnect, device number 88
+[128510.296291] usb 5-1.3: new full-speed USB device number 89 using xhci_hcd
+[128525.812946] usb 5-1.3: device descriptor read/64, error -110
+[128541.382920] usb 5-1.3: device descriptor read/64, error -110
+
+The commit immediately prior is fine
+
+commit c1e5fc194960aa3d3daa4f102a29e962f25a64d1
+Author: Keith Busch <kbusch@kernel.org>
+Date:   Thu Jan 26 13:51:23 2023 -0800
+
+    dmapool: don't memset on free twice
+
+[128750.414739] usb 5-1.3: New USB device found, idVendor=18d1,
+idProduct=d00d, bcdDevice= 1.00
+[128750.414745] usb 5-1.3: New USB device strings: Mfr=1, Product=2,
+SerialNumber=3
+[128750.414746] usb 5-1.3: Product: Android
+[128750.414747] usb 5-1.3: Manufacturer: Google
+[128750.414748] usb 5-1.3: SerialNumber: 1628e0d7
+[128764.035758] usb 5-1.3: USB disconnect, device number 91
+[128788.305767] usb 5-1.3: new full-speed USB device number 92 using xhci_hcd
+[128788.406795] usb 5-1.3: not running at top speed; connect to a high speed hub
+[128788.427793] usb 5-1.3: New USB device found, idVendor=0525,
+idProduct=a4a2, bcdDevice= 6.02
+[128788.427798] usb 5-1.3: New USB device strings: Mfr=1, Product=2,
+SerialNumber=0
+[128788.427799] usb 5-1.3: Product: RNDIS/Ethernet Gadget
+[128788.427801] usb 5-1.3: Manufacturer: Linux
+6.2.0-rc4-00517-gc1e5fc194960-dirty with ci_hdrc_msm
+[128788.490939] cdc_ether 5-1.3:1.0 usb0: register 'cdc_ether' at
+usb-0000:31:00.3-1.3, CDC Ethernet Device, 36:0e:12:58:48:ec
+
 ---
-
-Changes since v1:
-- Fixed the _val suffix in .clk_dis_wait_val.
-
----
- drivers/clk/qcom/gpucc-sdm845.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
-
-diff --git a/drivers/clk/qcom/gpucc-sdm845.c b/drivers/clk/qcom/gpucc-sdm845.c
-index 110b54401bc6..970d7414bdf0 100644
---- a/drivers/clk/qcom/gpucc-sdm845.c
-+++ b/drivers/clk/qcom/gpucc-sdm845.c
-@@ -22,8 +22,6 @@
- #define CX_GMU_CBCR_SLEEP_SHIFT		4
- #define CX_GMU_CBCR_WAKE_MASK		0xf
- #define CX_GMU_CBCR_WAKE_SHIFT		8
--#define CLK_DIS_WAIT_SHIFT		12
--#define CLK_DIS_WAIT_MASK		(0xf << CLK_DIS_WAIT_SHIFT)
- 
- enum {
- 	P_BI_TCXO,
-@@ -121,6 +119,7 @@ static struct clk_branch gpu_cc_cxo_clk = {
- static struct gdsc gpu_cx_gdsc = {
- 	.gdscr = 0x106c,
- 	.gds_hw_ctrl = 0x1540,
-+	.clk_dis_wait_val = 0x8,
- 	.pd = {
- 		.name = "gpu_cx_gdsc",
- 	},
-@@ -193,10 +192,6 @@ static int gpu_cc_sdm845_probe(struct platform_device *pdev)
- 	value = 0xf << CX_GMU_CBCR_WAKE_SHIFT | 0xf << CX_GMU_CBCR_SLEEP_SHIFT;
- 	regmap_update_bits(regmap, 0x1098, mask, value);
- 
--	/* Configure clk_dis_wait for gpu_cx_gdsc */
--	regmap_update_bits(regmap, 0x106c, CLK_DIS_WAIT_MASK,
--						8 << CLK_DIS_WAIT_SHIFT);
--
- 	return qcom_cc_really_probe(pdev, &gpu_cc_sdm845_desc, regmap);
- }
- 
--- 
-2.39.1
-
+bod
