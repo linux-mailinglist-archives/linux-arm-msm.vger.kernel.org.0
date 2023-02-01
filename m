@@ -2,167 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A7E5686767
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 14:48:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DD455686778
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 14:51:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232053AbjBANsR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Feb 2023 08:48:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40346 "EHLO
+        id S232487AbjBANvT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Feb 2023 08:51:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232411AbjBANsH (ORCPT
+        with ESMTP id S232259AbjBANvP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Feb 2023 08:48:07 -0500
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC2E234022
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Feb 2023 05:48:05 -0800 (PST)
-Received: by mail-ej1-x630.google.com with SMTP id mc11so29061568ejb.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Feb 2023 05:48:05 -0800 (PST)
+        Wed, 1 Feb 2023 08:51:15 -0500
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51580EB42;
+        Wed,  1 Feb 2023 05:51:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+ls5wtJ6Hfc+JvUhlGR4xji5YGsJ7LEo3VaBr3I5PfU=;
-        b=qR2yX5Y+aRZrBkYeonU56wiifAgLOsoqz6bKynEf5uErCKArEXxPvKYYWDc5GmfE6S
-         52hlSedvFXg+DMsJCSJ8ZoidCU4JOsjvKcNvVtW9pVu5XQXsbKZchlCsmqDmN3tke71b
-         dYKy1lmIPKfWsWnH482VI1Dn1PzVw3Ck0NPi01U9nIkL96fCzyuLdc9Paeg2XCOhh435
-         KZ6SAzn4SgZxlwhdNEUzLPvYh48rd2CVrdyJfpcdqXJySBVH8GK2Si+2m002xzcRQqp9
-         W6D8XbBKHK+M52AeUv4oXXCjmHJiSVBLIE+pdwrODBCtGi4sp28TsjtArLD+7t5b4qJ9
-         2kIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+ls5wtJ6Hfc+JvUhlGR4xji5YGsJ7LEo3VaBr3I5PfU=;
-        b=B97nTUfLkvPA1/YJgM4+DWD8MuMz1LlkoJB8XJsO43Rkdn0/uHcvT8Cx70oRaDyzXJ
-         kcXdza6rC6LEuxt2y9ChCP+ccVlfGJvQkE9BnABzMOu9SzVNKjWRkkS7jp9dEwGfZ99Z
-         b4XIHe8WYsEWQ73dfVwn1s8cMwNr0MFZmjjuxCZFuJM3fVnDMCXkuOpLMwEqdOETHwkV
-         0jyHPsVIBxYtXGkX+SSk9UFPcC+Fba0gMPp4F336nluyxd74SpKn/fYL4yvOhUwwxTu2
-         vuzmMhj8Lj1vbyheRbvvcP0YT3xI0KAgKA1tSCRm2bghWA55dSksr38d6Yk+deMGDif4
-         ZCTA==
-X-Gm-Message-State: AO0yUKV+NtAMUYcIYkS8TIu82LA5PGVMiyOqWtZlT1g8dUw4k6pnn0aT
-        eTqyixBFsJz70cC89ChqHkHa0g==
-X-Google-Smtp-Source: AK7set/X5KevUerlVy7HuQadHyk1nRFk3U/EKr6KdRWVgUB4dwlQ/WlSDZaUoJD+MefWqOsdrT+q9Q==
-X-Received: by 2002:a17:906:184a:b0:87f:e07d:ce5f with SMTP id w10-20020a170906184a00b0087fe07dce5fmr2474217eje.9.1675259284443;
-        Wed, 01 Feb 2023 05:48:04 -0800 (PST)
-Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id z2-20020a170906714200b00888161349desm5103078ejj.182.2023.02.01.05.48.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 Feb 2023 05:48:03 -0800 (PST)
-Message-ID: <38466a0f-686d-ab19-2669-e81ca6d6ec17@linaro.org>
-Date:   Wed, 1 Feb 2023 15:48:02 +0200
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1675259473; x=1706795473;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=5pZy22fgi/Cqs6/TrC4Ul5oC6fmyYexDIjImkw1GxWI=;
+  b=Pdpwee/SdTekpgfvU2/tiV8hq1qJSOeTju3Z22qVTuedSWf0SiyEfSmk
+   FJI0HgXzddUKuf8Ej4QrnVfV+K0irN+WkrEi+wZtcw7aBAeXOI2fTRY47
+   9jtzY2KSS+VKw91nEKU1GLY7DfgQamvPtHSdNqfdZkEViZ0xQXls0nKBR
+   M=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 01 Feb 2023 05:51:13 -0800
+X-QCInternal: smtphost
+Received: from nalasex01b.na.qualcomm.com ([10.47.209.197])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Feb 2023 05:51:11 -0800
+Received: from hu-mohs-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Wed, 1 Feb 2023 05:51:04 -0800
+From:   Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+To:     <krzysztof.kozlowski+dt@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <lgirdwood@gmail.com>,
+        <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <quic_plai@quicinc.com>, <bgoswami@quicinc.com>,
+        <srinivas.kandagatla@linaro.org>, <quic_rohkumar@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <alsa-devel@alsa-project.org>,
+        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
+        <judyhsiao@chromium.org>, <devicetree@vger.kernel.org>,
+        <konrad.dybcio@linaro.org>
+CC:     Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+Subject: [PATCH 00/14] Add support for compress offload and gapless playback.
+Date:   Wed, 1 Feb 2023 19:19:33 +0530
+Message-ID: <20230201134947.1638197-1-quic_mohs@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [v1 2/3] drm/msm/disp/dpu1: add dspps into reservation if there
- is a ctm request
-Content-Language: en-GB
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Kalyan Thota <quic_kalyant@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, robdclark@chromium.org,
-        dianders@chromium.org, swboyd@chromium.org,
-        quic_vpolimer@quicinc.com, quic_abhinavk@quicinc.com
-References: <1675092092-26412-1-git-send-email-quic_kalyant@quicinc.com>
- <1675092092-26412-3-git-send-email-quic_kalyant@quicinc.com>
- <20230201111604.htgczy6yvdkywhvl@SoMainline.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230201111604.htgczy6yvdkywhvl@SoMainline.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/02/2023 13:16, Marijn Suijten wrote:
-> On 2023-01-30 07:21:31, Kalyan Thota wrote:
->> Add dspp blocks into the topology for reservation, if there is a ctm
->> request for that composition.
-> 
-> DSPP
-> 
->> Changes in v1:
->> - Minor nits (Dmitry)
-> 
-> This should go below the triple dashes, so that it /does not/ become
-> part of the patch/commit that is applied to the tree (where review
-> history is irrelevant as it can be searched for separately).
+Add support for compress offload and gapless playback in audioreach
+platform drivers.
 
-This is one of DRM peculiarities which we have to live with.
+Mohammad Rafi Shaik (14):
+  ALSA: compress: Update compress set params for gapless playback
+  ASoC: qcom: SC7280: audioreach: Add sc7280 hardware param fixup
+    callback
+  ASoC: q6dsp: audioreach: Add placeholder decoder for compress playback
+  ASoC: q6dsp: audioreach: Add support for compress offload commands
+  ASoC: q6dsp: audioreach: Add support to set compress params
+  ASoC: q6dsp: audioreach: Add support for sending real module ID to
+    ADSP
+  ASoC: q6dsp: q6apm-dai: Add async compress write support
+  ASoC: q6dsp: q6apm-dai: Add open/free compress DAI callbacks
+  ASoC: q6dsp: q6apm-dai: Add compress DAI and codec caps get callbacks
+  ASoC: q6dsp: q6apm-dai: Add trigger/pointer compress DAI callbacks
+  ASoC: q6dsp: q6apm-dai: Add compress set params and metadata DAI
+    callbacks
+  ASoC: q6dsp: q6apm-dai: Add mmap and copy compress DAI callbacks
+  ASoC: qdsp6: audioreach: Add MP3, AAC and FLAC compress format support
+  ASoC: q6dsp: audioreach: Add gapless feature support
 
-> 
->> Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
->> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 13 ++++++-------
->>   1 file changed, 6 insertions(+), 7 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->> index 9c6817b..3bd46b4 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->> @@ -545,7 +545,8 @@ bool dpu_encoder_use_dsc_merge(struct drm_encoder *drm_enc)
->>   static struct msm_display_topology dpu_encoder_get_topology(
->>   			struct dpu_encoder_virt *dpu_enc,
->>   			struct dpu_kms *dpu_kms,
->> -			struct drm_display_mode *mode)
->> +			struct drm_display_mode *mode,
->> +			struct drm_crtc_state *crtc_state)
->>   {
->>   	struct msm_display_topology topology = {0};
->>   	int i, intf_count = 0;
->> @@ -573,11 +574,9 @@ static struct msm_display_topology dpu_encoder_get_topology(
->>   	else
->>   		topology.num_lm = (mode->hdisplay > MAX_HDISPLAY_SPLIT) ? 2 : 1;
->>   
->> -	if (dpu_enc->disp_info.intf_type == DRM_MODE_ENCODER_DSI) {
->> -		if (dpu_kms->catalog->dspp &&
->> -			(dpu_kms->catalog->dspp_count >= topology.num_lm))
->> -			topology.num_dspp = topology.num_lm;
->> -	}
->> +	if (dpu_kms->catalog->dspp &&
->> +	    crtc_state->ctm && (dpu_kms->catalog->dspp_count >= topology.num_lm))
-> 
-> Multiline-if-clause is typically indented with two tabs, not a half tab
-> (4 spaces).
-
-I tend to disagree here. Lately I have mostly seen it being indented to 
-the opening parenthesis, so that nested statements also indent nicely.
-
-> Nit: swap the && here?  dspp and dspp_count are related, so check ctm
-> first or last but not in the middle - makes reading easier.
-
-I think we can ignore dpu_kms->catalog->dspp completely. checking 
-dspp_count should be enough for the purpose of the check (and note, the 
-check for dspp/dspp_count is misleading and should be omitted).
-
-> 
->> +		topology.num_dspp = topology.num_lm;
->>   
->>   	topology.num_enc = 0;
->>   	topology.num_intf = intf_count;
->> @@ -643,7 +642,7 @@ static int dpu_encoder_virt_atomic_check(
->>   		}
->>   	}
->>   
->> -	topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode);
->> +	topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode, crtc_state);
->>   
->>   	/* Reserve dynamic resources now. */
->>   	if (!ret) {
->> -- 
->> 2.7.4
->>
+ sound/core/compress_offload.c     |  12 +-
+ sound/soc/qcom/qdsp6/audioreach.c | 299 +++++++++++++++++--
+ sound/soc/qcom/qdsp6/audioreach.h |  56 ++++
+ sound/soc/qcom/qdsp6/q6apm-dai.c  | 464 ++++++++++++++++++++++++++++++
+ sound/soc/qcom/qdsp6/q6apm.c      | 117 ++++++++
+ sound/soc/qcom/qdsp6/q6apm.h      |   8 +
+ sound/soc/qcom/sc7280.c           |  21 +-
+ 7 files changed, 950 insertions(+), 27 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.25.1
 
