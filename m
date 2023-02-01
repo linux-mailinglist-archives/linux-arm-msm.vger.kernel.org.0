@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C1373686CC8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 18:23:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E73C2686CCA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 18:23:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232217AbjBARXN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Feb 2023 12:23:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49728 "EHLO
+        id S232239AbjBARXP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Feb 2023 12:23:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232093AbjBARXK (ORCPT
+        with ESMTP id S232198AbjBARXM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Feb 2023 12:23:10 -0500
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEC5165ED6
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Feb 2023 09:23:08 -0800 (PST)
-Received: by mail-ej1-x633.google.com with SMTP id bk15so53464979ejb.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Feb 2023 09:23:08 -0800 (PST)
+        Wed, 1 Feb 2023 12:23:12 -0500
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFF9865F30
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Feb 2023 09:23:09 -0800 (PST)
+Received: by mail-ej1-x62c.google.com with SMTP id lu11so16195125ejb.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Feb 2023 09:23:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=blLbGHjcnInKnpgLd74KkVGuQXPZCKH7VadoYSWViY0=;
-        b=EUEhmI4hTcVmH1QCRrvubxL9Zc99+YSbqDWb71VuEnrY0OVDAFiSzuXLBclkpwJXrN
-         R0sIcsi7QE/X/B93awonJ4jKDg5YdTuvxkngERfQiGI381f2nKUbDAljOs/pPHBuTPbx
-         Mc51AG9+GjeYoxWUbQe6A0CnRsL32IssJ19QVfp6QeI+VBpXVVyir3ssFFne4u7nOSzK
-         JTUoYDNNiOMGLncgIIk04P764dGpxonrNmHo6rhbP51Tqi48USA/DknKd6RH/qu+/eFw
-         cs7flz+wIBkcjqUhcmh228bFlVp/B9khpPjLx1qTci70hcVhHq+9Usluf8mOheYM6YBF
-         jwvg==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uk3rBfWXYWGglBbtHFn72sDtxH1nQI4oY7t4ppOv/uA=;
+        b=cg9tcovsWu5OofGQGy0dnQIzHuGQtUFEnVY4TcYrWfYnFmK8u/isiy8qu4pRDGq/4L
+         C5ARkoAoame9xBEWNWhsIkHGns78KH+ctJTlVXfNMhXIAWMSfrqZJNn6Il8vyrRyP3yI
+         M7jdQA/YO/IMMz9JvrLDOa9cBO1JMwhderWDSgSFGhB7Bj7eo+Yb63MikHKvIWB4flBH
+         qHxOl2kFbmhVTDB2To1o7uJhMLsWQYDb7YwBXEEvp78DpNH5c1bc1iSdJSAtX9DAE2vj
+         pZeDfT2DQxvvK6XixBppRWOvZbIS15YSvtiZFNlqPJIAImSEiZKnc/8iJiN7ifEHiSIh
+         J0lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=blLbGHjcnInKnpgLd74KkVGuQXPZCKH7VadoYSWViY0=;
-        b=hR9sSQpWpvb+Tm5OjCQES/u1qO/g5UvGQ9y2s6sn5wwg3//A6NW85Si/WLQ96zt912
-         etVbksO8tzTzn2/13n4CSqpbaJTaXTNFq/p+faSbpCx43ILvpe64+HvgQsWaa176DhEI
-         kWRmpHE3WrcaUEnWKKYKEDEHApmVxVniZT4f/KmxdMININlwh01XOq3KRvyG7DJLpj9r
-         tGXvkzc6NpsyE2G4bY5zhitfHxJmkC3vFakrkpyWOGevhJuNvkZQsHJ3Rsitq0P6EaNd
-         NHOK5g/xv8++cb835BCisyTwT6Ja6A7QhuJb3z9xhUGWMtgLFlz3onl2JNta99WH9xpE
-         1uqQ==
-X-Gm-Message-State: AO0yUKUdjNGwjhod0Fw34QJBlRkjqVjzBoJffmc9oHP+uiHyQXLy2ObB
-        VbPlv38tuaDgg5nOzD9XNDpmlw==
-X-Google-Smtp-Source: AK7set8DmlMk6MrvJNkeil+R4XuQz+m6Fo0xCbjSSUmgujF13VWztguD605FoDk3nOEp1vBjXsNQbA==
-X-Received: by 2002:a17:906:694c:b0:881:ad59:97f5 with SMTP id c12-20020a170906694c00b00881ad5997f5mr2829732ejs.2.1675272187367;
-        Wed, 01 Feb 2023 09:23:07 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=uk3rBfWXYWGglBbtHFn72sDtxH1nQI4oY7t4ppOv/uA=;
+        b=QJXLS06V8aCGs+INbBpRIIemLksnZgxH60Pfru55t0aGuOglf9k0dvhr9pHn30Bqls
+         GCTzVHJ6Bdx9qcGcVfNJR8Xk55SXD8cd1ePNU2H2/XQqITGX7xBV+XwFzRhKRXmD+JOD
+         tlrsbomy/Y+jIyBY0pHIqEy8+pjlPRKq0xUAwU5vwbfr8myimX9u6MyQlgx5SXlqhgeQ
+         LWCtD+NJ+ZnpphN9gpDnn02bXT1rp9p9+Y5k/FNajAXiCKGnplcJkHGUl6LoztYMeTqP
+         ePaUbXWIaMEiEXP2aTuGYBeDqGhY6y59LaHsu6eZCKQ0jgUPJvFArOg1bm+7FKt9nllX
+         nIlw==
+X-Gm-Message-State: AO0yUKXPVK2cchgfkMQEgqv1bhPDDJ8zexR4vt2++HgWE2GHXAZzVkyY
+        0RTbU+OmsovgaraXWia+C0qOTQ==
+X-Google-Smtp-Source: AK7set+rjw+4ID3i6qHlaYQG4SdQ3bhwrqalqusMwnMrmfcFcaSbJuWsEYy+R6siwzOE1Hx6xfNLBA==
+X-Received: by 2002:a17:907:7094:b0:88a:72bf:9670 with SMTP id yj20-20020a170907709400b0088a72bf9670mr2936763ejb.50.1675272188560;
+        Wed, 01 Feb 2023 09:23:08 -0800 (PST)
 Received: from eriador.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id ci20-20020a170906c35400b0088e5f3e1faesm601873ejb.36.2023.02.01.09.23.06
+        by smtp.gmail.com with ESMTPSA id ci20-20020a170906c35400b0088e5f3e1faesm601873ejb.36.2023.02.01.09.23.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Feb 2023 09:23:06 -0800 (PST)
+        Wed, 01 Feb 2023 09:23:08 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -57,10 +58,12 @@ To:     Andy Gross <agross@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
         Taniya Das <quic_tdas@quicinc.com>
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: [PATCH v2 1/2] clk: qcom: gpucc-sc7180: fix clk_dis_wait being programmed for CX GDSC
-Date:   Wed,  1 Feb 2023 19:23:04 +0200
-Message-Id: <20230201172305.993146-1-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 2/2] clk: qcom: gpucc-sdm845: fix clk_dis_wait being programmed for CX GDSC
+Date:   Wed,  1 Feb 2023 19:23:05 +0200
+Message-Id: <20230201172305.993146-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20230201172305.993146-1-dmitry.baryshkov@linaro.org>
+References: <20230201172305.993146-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -79,43 +82,48 @@ override the setting done in the driver's probe function.
 Set cx_gdsc.clk_dis_wait_val to 8 to follow the intention of the probe
 function.
 
-Fixes: 745ff069a49c ("clk: qcom: Add graphics clock controller driver for SC7180")
+Fixes: 453361cdd757 ("clk: qcom: Add graphics clock controller driver for SDM845")
 Reviewed-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/clk/qcom/gpucc-sc7180.c | 7 +------
+
+Changes since v1:
+- Fixed the _val suffix in .clk_dis_wait_val.
+
+---
+ drivers/clk/qcom/gpucc-sdm845.c | 7 +------
  1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/drivers/clk/qcom/gpucc-sc7180.c b/drivers/clk/qcom/gpucc-sc7180.c
-index d738251cba17..6839b4b71a2f 100644
---- a/drivers/clk/qcom/gpucc-sc7180.c
-+++ b/drivers/clk/qcom/gpucc-sc7180.c
-@@ -21,8 +21,6 @@
+diff --git a/drivers/clk/qcom/gpucc-sdm845.c b/drivers/clk/qcom/gpucc-sdm845.c
+index 110b54401bc6..970d7414bdf0 100644
+--- a/drivers/clk/qcom/gpucc-sdm845.c
++++ b/drivers/clk/qcom/gpucc-sdm845.c
+@@ -22,8 +22,6 @@
  #define CX_GMU_CBCR_SLEEP_SHIFT		4
- #define CX_GMU_CBCR_WAKE_MASK		0xF
+ #define CX_GMU_CBCR_WAKE_MASK		0xf
  #define CX_GMU_CBCR_WAKE_SHIFT		8
 -#define CLK_DIS_WAIT_SHIFT		12
 -#define CLK_DIS_WAIT_MASK		(0xf << CLK_DIS_WAIT_SHIFT)
  
  enum {
  	P_BI_TCXO,
-@@ -160,6 +158,7 @@ static struct clk_branch gpu_cc_cxo_clk = {
- static struct gdsc cx_gdsc = {
+@@ -121,6 +119,7 @@ static struct clk_branch gpu_cc_cxo_clk = {
+ static struct gdsc gpu_cx_gdsc = {
  	.gdscr = 0x106c,
  	.gds_hw_ctrl = 0x1540,
-+	.clk_dis_wait_val = 8,
++	.clk_dis_wait_val = 0x8,
  	.pd = {
- 		.name = "cx_gdsc",
+ 		.name = "gpu_cx_gdsc",
  	},
-@@ -242,10 +241,6 @@ static int gpu_cc_sc7180_probe(struct platform_device *pdev)
- 	value = 0xF << CX_GMU_CBCR_WAKE_SHIFT | 0xF << CX_GMU_CBCR_SLEEP_SHIFT;
+@@ -193,10 +192,6 @@ static int gpu_cc_sdm845_probe(struct platform_device *pdev)
+ 	value = 0xf << CX_GMU_CBCR_WAKE_SHIFT | 0xf << CX_GMU_CBCR_SLEEP_SHIFT;
  	regmap_update_bits(regmap, 0x1098, mask, value);
  
 -	/* Configure clk_dis_wait for gpu_cx_gdsc */
 -	regmap_update_bits(regmap, 0x106c, CLK_DIS_WAIT_MASK,
 -						8 << CLK_DIS_WAIT_SHIFT);
 -
- 	return qcom_cc_really_probe(pdev, &gpu_cc_sc7180_desc, regmap);
+ 	return qcom_cc_really_probe(pdev, &gpu_cc_sdm845_desc, regmap);
  }
  
 -- 
