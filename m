@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 75465685DAC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 04:05:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D8F7685DBD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 04:13:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230043AbjBADFr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Jan 2023 22:05:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40624 "EHLO
+        id S231564AbjBADNy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Jan 2023 22:13:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231157AbjBADFo (ORCPT
+        with ESMTP id S230189AbjBADNx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Jan 2023 22:05:44 -0500
-Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C19BBB90
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 19:05:42 -0800 (PST)
-Received: by mail-qt1-x831.google.com with SMTP id w3so6985675qts.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 19:05:42 -0800 (PST)
+        Tue, 31 Jan 2023 22:13:53 -0500
+Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com [IPv6:2607:f8b0:4864:20::c2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A5C53E0A7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 19:13:51 -0800 (PST)
+Received: by mail-oo1-xc2d.google.com with SMTP id z138-20020a4a4990000000b005175b8ae66cso975004ooa.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Jan 2023 19:13:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=kali.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=J2BzMaWSUkj8EDnF8fjbvdcop5Q3Avd1JgESuZNfB+o=;
-        b=Is/6fOxIVI8M0bd8R7Fy/4Ihdq6UXuaz4tnnYG5hYI5231f+oLXxe/Ik/pKsUXsxsS
-         jiOkbeNd2+Z141DkDk6AxqJvIoxEIHwdDGudSbge3kcH6Onnwg4+/nsCLiPXThQSH90G
-         o7Qdx7yHnoKqwwm82XE5YreaSJcZPXgnNMOfKyDerLjzS78i9D3uYI0ze/bvBSbUm5N+
-         yyELOTVNIG/v0THZh9i1dNVDRNkiPA4bWwQ7rItS36DaJWeNoN3JenGtHRdhxdyarpht
-         eO5GKma5LsT6e5ckz6YMtp9IuHHdv82KocJSpe6d5Z3hclzE5Gnf9rYa/MctwsYwmUq5
-         PBVw==
+        bh=D3YwzPamfjwuuQEM2RnT++paWIr3qoCEOZrgbHTxW64=;
+        b=MOgnvtiSozTzruoGwOmugYaSILZTBMfknxbWXgCDJACJwzf+1UZiN6+wiVvYcGk7hS
+         3Ykc1fwKnTojw9Wm5OgQ8BpUoCLku3rvaI6tXVMYcDPxb8EO0TGKuEg2lJdlHlffzY5a
+         iAboOfuZ4vOqXbRUNRdi0zokHiNFc/+JgGWKVrYe96+3Kr5blF0F6cweRCcXlGX4x1db
+         IGJ7W4sTAxOhfIK1M43AFkfPidRW9hlU8lEti2zi/bOGTaWXtJWHZOId244O+adzZvKb
+         OHDLWj+X3dgw5XqRV8SZ9NJ1hPRrN6QWZ4qCWmkmFHyhZTcb1x9WI92nbJdES5N0a+9m
+         QO6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=J2BzMaWSUkj8EDnF8fjbvdcop5Q3Avd1JgESuZNfB+o=;
-        b=bWoV/1dMPj4I/yvy/Go1lQL3NhEtcUjy6Y7Tsate9/cnLnGTtg3pFmiRzPl4ewsY0o
-         6lgAMBM4Sz5EILkMIQ5bseK7VxzRRbRz0OjDJP0l0xcJ8Cx/nas13/B7zto41WQDwXpE
-         uE6MLQ+uzt5BfbtWEngou3/ifTt2Lb17PSHzHb7wZsRRikE4ehPzD8SL2aMKaB77ERWL
-         drFPaNgYrbsXyfw3+ZD9WYPd8hlBM0Q4E+0CpRzK5POB6l4PDkgLY2cfWso80MtZGoBq
-         pfokw/de1hKa0f3F4W536wP1GuRXr7OxFCctz6LrapLXML9XcUT+oIcC/4FJzC8i3b4Q
-         dTyg==
-X-Gm-Message-State: AO0yUKWcljSiODhX3brlMzX/E0n5haYQajZoUrpeF/aqDmqnhclMTXLB
-        cDYsGXLOaDaMMpMESW3Wal4Sjl5/vrpArmbzjrU=
-X-Google-Smtp-Source: AK7set9Uvevz/T7MAM3nTgoNdTHemNw5IFZm6aotpv9qD/FICRJqTFmELsTReDvgcu32Pzdpsj9qTQ==
-X-Received: by 2002:a05:622a:11d0:b0:3b9:b9ae:1476 with SMTP id n16-20020a05622a11d000b003b9b9ae1476mr1134250qtk.40.1675220740964;
-        Tue, 31 Jan 2023 19:05:40 -0800 (PST)
+        bh=D3YwzPamfjwuuQEM2RnT++paWIr3qoCEOZrgbHTxW64=;
+        b=OSfdUWirS+28/5PjxbjTGWufejjMIIpBZdHf3CfpnzKN6t4dhis98Rsp3h8z28hOnG
+         QZ9Mt6KYQqdiiSsAggSVvlLwxXf3rEHB8dQz+G0OKK7lbv5XmcGMbMRHtdWJZw3DgMRA
+         ED120h8CT4ToUiLB6K/rRqbL+83SqOEQFRLrMVb12N5f5NdnYAvMZ/8jTQ0NI/7ujIfK
+         ANJMujXDnq41VIQjjs1pVx1Hxo+C6feqhIIqGajOwhtrncNoQSedKlYJ9wuqz+PQZutE
+         9fzdK3nIIWG4k49wgzfqUGwmG38GHI6+A7yj4cu9ecZTZYv8DU5sF4hJW5p0WbeRtQRB
+         3uow==
+X-Gm-Message-State: AO0yUKUdibG+GIRN/k07/BRgZdidtIkXD0kZJJtk+rch2na/WRpqCwrz
+        t0Ef+VQY/C5wKb91RGgEml9Xcw==
+X-Google-Smtp-Source: AK7set9KsGzjn5wBbpVtqFW2yRyYfDcWH3ZWqT6jjr/GW26QHQ0Hxu1/dF14CQcqYitui3cWEdRFBw==
+X-Received: by 2002:a4a:a2c9:0:b0:517:640f:5905 with SMTP id r9-20020a4aa2c9000000b00517640f5905mr464907ool.3.1675221230905;
+        Tue, 31 Jan 2023 19:13:50 -0800 (PST)
 Received: from localhost (23-118-233-243.lightspeed.snantx.sbcglobal.net. [23.118.233.243])
-        by smtp.gmail.com with ESMTPSA id q1-20020ae9e401000000b006fc2f74ad12sm11306592qkc.92.2023.01.31.19.05.40
+        by smtp.gmail.com with ESMTPSA id k68-20020a4a4a47000000b005176974faf3sm3557618oob.35.2023.01.31.19.13.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Jan 2023 19:05:40 -0800 (PST)
+        Tue, 31 Jan 2023 19:13:50 -0800 (PST)
 From:   Steev Klimaszewski <steev@kali.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc:     "David S. Miller" <davem@davemloft.net>,
@@ -68,12 +68,12 @@ Cc:     "David S. Miller" <davem@davemloft.net>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
         Mark Pearson <markpearson@lenovo.com>
-Subject: Re: [PATCH v2 2/4] Bluetooth: hci_qca: Add support for QTI Bluetooth chip wcn6855
-Date:   Tue, 31 Jan 2023 21:05:38 -0600
-Message-Id: <20230201030538.56293-1-steev@kali.org>
+Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: thinkpad-x13s: Add bluetooth
+Date:   Tue, 31 Jan 2023 21:13:49 -0600
+Message-Id: <20230201031349.56405-1-steev@kali.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <a18751a0-f51b-0a3a-58ff-2062a9dc46fb@linaro.org>
-References: <a18751a0-f51b-0a3a-58ff-2062a9dc46fb@linaro.org>
+In-Reply-To: <c515aae3-88e4-948c-a856-7b45dd2caed9@linaro.org>
+References: <c515aae3-88e4-948c-a856-7b45dd2caed9@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -87,18 +87,62 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 >On 31/01/2023 05:38, Steev Klimaszewski wrote:
->> Added regulators,GPIOs and changes required to power on/off wcn6855.
->> Added support for firmware download for wcn6855.
+>> Signed-off-by: Steev Klimaszewski <steev@kali.org>
+>> ---
+>>  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 68 +++++++++++++++++++
+>>  1 file changed, 68 insertions(+)
 >> 
->> This is based on commit d8f97da1b92d ("Bluetooth: hci_qca: Add support for QTI Bluetooth chip wcn6750")
+>> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+>> index f936b020a71d..951438ac5946 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+>> @@ -24,6 +24,8 @@ / {
+>>  	aliases {
+>>  		i2c4 = &i2c4;
+>>  		i2c21 = &i2c21;
+>> +		serial0 = &uart17;
+>> +		serial1 = &uart2;
+>>  	};
+>>  
+>>  	wcd938x: audio-codec {
+>> @@ -712,6 +714,32 @@ &qup0 {
+>>  	status = "okay";
+>>  };
+>>  
+>> +&uart2 {
+>> +	status = "okay";
+>> +
+>> +	pinctrl-names = "default";
+>> +	pinctrl-0 = <&uart2_state>;
+>> +
+>> +	bluetooth {
+>> +		compatible = "qcom,wcn6855-bt";
+>> +
+>> +/*
 
->Drop. If that commit is merged, how is it useful to keep it in git
->history forever?
+> Why dead code should be in the kernel?
 
-Sorry if that wasn't clear enough, what I meant to say here is that I used that
-commit id as the basis for my work, and it's not based on having access to the
-schematics or spec sheets.
+As mentioned in the cover letter, this is a bit closer to an RFC than ready to
+go in, and I do apologize that it wasn't clear enough.  I do not have access to
+the schematics, and based on my reading of the schema for bluetooth, these
+entries are supposed to be required, however, like the wcn6750, I have dummy
+data entered into the qca_soc_data_wcn6855 struct.  I know that these should be
+there, I just do not have access to the correct information to put, if that
+makes sense?
+
+
+<snip>
+
+>Does not look like you tested the DTS against bindings. Please run `make
+>dtbs_check` (see Documentation/devicetree/bindings/writing-schema.rst
+>for instructions).
+
+Correct I had not, but I have now, and will make the corrections test and they
+will be included in v3.
+
+>Best regards,
+>Krzysztof
+
+I appreciate the guidance for what I was doing incorrectly.
 
 -- steev
-
-
