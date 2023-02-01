@@ -2,111 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0024A686272
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 10:07:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D3ED6862C8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 10:29:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231770AbjBAJHr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Feb 2023 04:07:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32776 "EHLO
+        id S231697AbjBAJ3a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Feb 2023 04:29:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231743AbjBAJHo (ORCPT
+        with ESMTP id S229940AbjBAJ33 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Feb 2023 04:07:44 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 145F660CAD;
-        Wed,  1 Feb 2023 01:07:20 -0800 (PST)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31196dBo003219;
-        Wed, 1 Feb 2023 09:06:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=Ol91MnLoQckjNwXK/CMREgyj9md3Td1K1QiO4ZMiwCo=;
- b=ifXJbyJQS7nEoa7rZJcHcqzJ0NQdl1u5DXUUF4B0I+eBh2E9njLwNN9oQdokJErmU3d7
- EOQ4zubdQuMpJyFzPynprPqysVqPLZA9WFHr+rsxQGkWbYuKL1uPbiWymzPY9+akzlPu
- D1cv5sE8zDAh6QtzYc1G3Cy+9emuizzxb9TmGmHiBTaT1vQvW8j7piw+4g2hUHVBHOnJ
- vdI+2HBKo3XRZ0U7U3N+pgBvucX3YlI4aevfgeB4zhqjGntBVeM413+KM8xURvoRRgbH
- dxzaty1M2xMtXiPbKbEaejjKsdFkq+TIq/+HgGLaSa3WCJ3QIPq/SbfXl8jPW0ij8E4w KA== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nfn5j002d-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 01 Feb 2023 09:06:41 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31196fli029387
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 1 Feb 2023 09:06:41 GMT
-Received: from poovendh-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Wed, 1 Feb 2023 01:06:32 -0800
-From:   Poovendhan Selvaraj <quic_poovendh@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <lee@kernel.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <jassisinghbrar@gmail.com>, <catalin.marinas@arm.com>,
-        <will@kernel.org>, <shawnguo@kernel.org>, <arnd@arndb.de>,
-        <marcel.ziswiler@toradex.com>, <robimarko@gmail.com>,
-        <dmitry.baryshkov@linaro.org>, <nfraprado@collabora.com>,
-        <broonie@kernel.org>, <quic_gurus@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
-        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
-        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
-        <quic_devipriy@quicinc.com>
-Subject: [PATCH V2 5/5] dt-bindings: tcsr: Add compatible for IPQ9574
-Date:   Wed, 1 Feb 2023 14:35:29 +0530
-Message-ID: <20230201090529.30446-6-quic_poovendh@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230201090529.30446-1-quic_poovendh@quicinc.com>
-References: <20230201090529.30446-1-quic_poovendh@quicinc.com>
+        Wed, 1 Feb 2023 04:29:29 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D80F75B597
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Feb 2023 01:29:27 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id y1so16678496wru.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Feb 2023 01:29:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=bS8u9dCXaSOWNsP7B7Sh+H7V+3DTgLiBLBtS8ycyLEc=;
+        b=LmmGVpowRS29RQUjxz4ZJFIt5f8Qs7RZanr1gRW76BGvy1BKPvxXtyL5tDtYEixLvq
+         S27mgLjagerJEezr8drBZGER+VEgZXY7Hasgjr0LhdtiW/en+ZhUX6L16cY8guV2BG76
+         dXsePUdP/goKeiLhu3XaDSdDvIB5vAy6sP7pDoCezOSR8nyaM7Kh50leLBvjNUa13eba
+         +w+R2oumx+n9EKEO2/L6UVfDH+YIs27dT4/NQeFmzYYcmK8lWsBAi/hnTN6bx6ZoMfPx
+         E7pl4H3y6HJ1S/co5awLWDbEiL6Egt/9gtFWoSul2zjHHpcXVhdOm4+1JpsZRipn9YFZ
+         KMqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=bS8u9dCXaSOWNsP7B7Sh+H7V+3DTgLiBLBtS8ycyLEc=;
+        b=6XUH2SKuWQz3KkPHW4kB+PPZVzBiSxjA239t2HmLrdlAiHtKKrQiXF1RrGb6DOVr6V
+         elWUfVoqOrWdPRnFIyskK9Nq5Y4hoAORpfMoUZv8Ar07ODSs97Gcr6h5xtvovIuVzcdx
+         aCC+0sicC6u2L28r0PF82QdT3oq1e0BGgjDEGrcQbW+DdKUYPPQqBun2k0WP0VEijKnT
+         79y0VZs0ISgpHIBvrZ6qvZGHymjJyIifhIwkHSRlkmhNAcv8L5FvO4eDZ5Omry0HnROI
+         3hj+BcASf6l/o1Ll+Q2aeTr2fuuhKELjRLrvtH8wXDYvu4X4cRcc/AkRlLJYkEmxtNlM
+         q8FA==
+X-Gm-Message-State: AO0yUKXcyf/pJgtbRtYHu3ayHYLwf5a7g1PddlDLrYOedcWHvGFkciPa
+        rtShFaJ3dAjnSz6As3UrpRgVvg==
+X-Google-Smtp-Source: AK7set81cMnSNDvxJINFe7dfS34mhVEhPHLeliCWQnE2YDzX/9iwv01Ne9fckDEuo9bFuRsiZYUJMw==
+X-Received: by 2002:a5d:4561:0:b0:2bf:65ac:ebcc with SMTP id a1-20020a5d4561000000b002bf65acebccmr1580523wrc.17.1675243766435;
+        Wed, 01 Feb 2023 01:29:26 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id z12-20020adff74c000000b00291f1a5ced6sm17010536wrp.53.2023.02.01.01.29.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 01 Feb 2023 01:29:26 -0800 (PST)
+Message-ID: <13a4bd83-e4a3-c423-4d4e-32ea94c71e68@linaro.org>
+Date:   Wed, 1 Feb 2023 10:29:22 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: MKQ6zz4907EJSBuA4gsFo-4I4qCLrhiw
-X-Proofpoint-GUID: MKQ6zz4907EJSBuA4gsFo-4I4qCLrhiw
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-02-01_03,2023-01-31_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
- lowpriorityscore=0 malwarescore=0 suspectscore=0 clxscore=1015
- adultscore=0 mlxscore=0 impostorscore=0 bulkscore=0 priorityscore=1501
- spamscore=0 mlxlogscore=900 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2212070000 definitions=main-2302010079
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH V2 1/5] dt-bindings: scm: Add compatible for IPQ9574
+Content-Language: en-US
+To:     Poovendhan Selvaraj <quic_poovendh@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, lee@kernel.org,
+        mturquette@baylibre.com, sboyd@kernel.org,
+        jassisinghbrar@gmail.com, catalin.marinas@arm.com, will@kernel.org,
+        shawnguo@kernel.org, arnd@arndb.de, marcel.ziswiler@toradex.com,
+        robimarko@gmail.com, dmitry.baryshkov@linaro.org,
+        nfraprado@collabora.com, broonie@kernel.org,
+        quic_gurus@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
+        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
+        quic_devipriy@quicinc.com
+References: <20230201090529.30446-1-quic_poovendh@quicinc.com>
+ <20230201090529.30446-2-quic_poovendh@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230201090529.30446-2-quic_poovendh@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the tcsr compatible string for IPQ9574 SoC
+On 01/02/2023 10:05, Poovendhan Selvaraj wrote:
+> Add the scm compatible string for IPQ9574 SoC
+> 
+> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
+> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
+> Co-developed-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+> Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+> Signed-off-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
 
-Signed-off-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
----
- Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml | 1 +
- 1 file changed, 1 insertion(+)
+I don't think this improved. This patch adds one line with one value -
+one new compatible. Are you sure that three people were working on
+exactly that line and that compatible? Especially that it is essentially
+copy-paste of other compatibles so there is nothing to work on here?
 
-diff --git a/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml b/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
-index d463fb47278f..8cd0005fc8c7 100644
---- a/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
-+++ b/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
-@@ -30,6 +30,7 @@ properties:
-           - qcom,tcsr-apq8084
-           - qcom,tcsr-ipq6018
-           - qcom,tcsr-ipq8064
-+          - qcom,tcsr-ipq9574
-           - qcom,tcsr-mdm9615
-           - qcom,tcsr-msm8226
-           - qcom,tcsr-msm8660
--- 
-2.17.1
+Best regards,
+Krzysztof
 
