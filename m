@@ -2,248 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 283FB686A5E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 16:31:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 367CB686A78
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Feb 2023 16:36:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230208AbjBAPbF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Feb 2023 10:31:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42312 "EHLO
+        id S232004AbjBAPgR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Feb 2023 10:36:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232533AbjBAPa4 (ORCPT
+        with ESMTP id S229546AbjBAPgP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Feb 2023 10:30:56 -0500
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77DCB728D5
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Feb 2023 07:30:45 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id j29-20020a05600c1c1d00b003dc52fed235so1759233wms.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Feb 2023 07:30:45 -0800 (PST)
+        Wed, 1 Feb 2023 10:36:15 -0500
+Received: from mail-oa1-x2e.google.com (mail-oa1-x2e.google.com [IPv6:2001:4860:4864:20::2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FCA8DBD5;
+        Wed,  1 Feb 2023 07:36:14 -0800 (PST)
+Received: by mail-oa1-x2e.google.com with SMTP id 586e51a60fabf-163adf0cfc4so12732499fac.7;
+        Wed, 01 Feb 2023 07:36:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sTCQQQp9TwvWEkEmZNUkDX50epuJR3X4sS8N8mIieaw=;
-        b=Bm9NAsiCudfLJ/6CdP0tFaQmonDdijhbPyzibAfaAl3T2d7Jj7zQsIvx5ltcJ6EjIk
-         Hdvsh+Qk5cNfF6WunqZz8nPyref6ljGUtZVyMVU0Tuy7GENKb15sNTpo3FZ9sQAEFlpm
-         yYE1nLJaC19+tt0VxYJ0ZTYZCJxvaRClJKhtRpDctXeqL7G+dsMh2hQ6lKrgrTGDZ4Ed
-         zJwWdP/7nUcoXLpcLS3ymjm1ABHAa/1InBBdOTAnNXWripHLPzrCQejx4Pto5oqbKAn0
-         yEa2utax+zyHlvo47cSXD3X2VPgHiPljSTuVDDYFIpxTY62NGpAbuACyb++ZEZYkszd/
-         HbZw==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=NFYUq1UHHpAPd1DZlwdJHjaueRcQBU3XOakS876IeHw=;
+        b=fLMHcwSqAFQlV+yeyrftFdJhak/zLnuEc7k2FNTTtfw55UWXnnG+/bjM3GKCeuKSvP
+         /3vTqM5K0uVPSn8D5ikg8OQ18ZJmQ7Gn26lLK/JThMc657ioMpEGfDRm+NLemq6DooJN
+         N9+35wyEEYb/OpqTL8x4IqhL8kEf0iYVWw1LIJWUrListUJ1vuBFQW85EXCqXkcH8Ygf
+         QRBcgWu1zQOxey6JObOV97foENfGfdPz/d/81UMZ189Fz1ZxjEo9fw8Mk0dKfAKrdUWs
+         ONaPLt+7Otsi6BZB9CPcMKXSnspIysRcGzh65NHFm0ZbKTwsMqn1+FN8nmAoz7+XrtUa
+         rAhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=sTCQQQp9TwvWEkEmZNUkDX50epuJR3X4sS8N8mIieaw=;
-        b=F1Q1R23OFP1fZiAhOFPA4A0z7qeMHva2kU5gbSyCn4AVETY0vXH9DbOPxzwlkyQLHz
-         ZbIkqkA4H9vI/CARfLXKb9vVLdYetxYSQqVsDfSSLpvmxiEqqQWGzKIqKhQ9a1fnrGIn
-         VDOSy36k0CQi9CMBo6nlTdrjoTSm0Zoh3LRXadnSFgzMM5uD01NPEPlDq+/q8/UUpUY1
-         RMdsCDW/fs8oDMqSmrBXBHhLIxIFXGYuUI05by6uSjOyqoGKu2UmYxWaosXc3h7Caphn
-         o99E2GVOyYBhGIan18vIPpx51SKqC0U1UIc0HNlGBnkqHDgmMIRISga+sAmYo56+PQAC
-         jY4g==
-X-Gm-Message-State: AO0yUKUXG/rV836DzR9aO8vX33Vdbg6SFNbWBDV6MkEEoZGi0rJ8D9f4
-        sm7EIvsclAefJh/gWQ4PcuLGJA==
-X-Google-Smtp-Source: AK7set8dXAZkzmcB4bGaw0aGWlqD6c7f1rHrnFCUIrJR0h4d7ovQJB0AekylezAJcM6W1ItfhI7b0w==
-X-Received: by 2002:a1c:4b15:0:b0:3dd:1b6f:4f30 with SMTP id y21-20020a1c4b15000000b003dd1b6f4f30mr2778255wma.3.1675265444964;
-        Wed, 01 Feb 2023 07:30:44 -0800 (PST)
-Received: from krzk-bin.. ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id p11-20020a1c544b000000b003dc4fd6e624sm2168032wmi.19.2023.02.01.07.30.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Feb 2023 07:30:44 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NFYUq1UHHpAPd1DZlwdJHjaueRcQBU3XOakS876IeHw=;
+        b=knX7hb3QMPFBXWx1eCdj2IvIyGBPwgm5o5uUaECgqqpgIAcP+vEZO9/8OhfHYKROO4
+         hcbOhivstMY9BiFesxsDrcdC9Z5F3dmem1VkzzFsMgTrAj1ljQ20v42UVWpIXfW7d8Si
+         n6h1wyOEeAnZd4mvct1rbHL+oKUVg1PPRE48ZndXYlewhOzjcyhs2NLphoDACvN9XJE5
+         M1lIOebRSZ664HDpXc+9MMPr9P/lQA8r/l8WaDp8TprkTxEMlU9/xVNfBk0tP81+PNuM
+         cX+5U+goXlsQ0h/0PYl14x/A15LkYFFibkStJJf5OHguFIAk5ZDatrsHdGl1Sbx75CAa
+         HnFA==
+X-Gm-Message-State: AO0yUKXdCeE9j1pNvKd3S/JXhACoukTpej++SjyJ3achKaRdef2hXJYd
+        h8mnrWbYY1jA7tOuSllNw4XYDgqt+os=
+X-Google-Smtp-Source: AK7set8JX0xBRBNIW+Fwk0Ten3Ro26q5ALiTbACElfPSe9co2byEHbj+qo/r+hoEbVobWUNLQ/7yig==
+X-Received: by 2002:a05:6870:6487:b0:163:5c8a:d150 with SMTP id cz7-20020a056870648700b001635c8ad150mr1423715oab.14.1675265772611;
+        Wed, 01 Feb 2023 07:36:12 -0800 (PST)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id et10-20020a0568705cca00b00163263f84dasm7819228oab.12.2023.02.01.07.36.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 01 Feb 2023 07:36:11 -0800 (PST)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <fab39e83-63ed-89aa-376f-e03ebce3d3a5@roeck-us.net>
+Date:   Wed, 1 Feb 2023 07:36:09 -0800
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH v3 3/5] dt-bindings: watchdog: qcom-wdt: add
+ qcom,apss-wdt-sa8775p compatible
+Content-Language: en-US
+To:     Bartosz Golaszewski <brgl@bgdev.pl>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Richard Acayan <mailingradian@gmail.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        krishna Lanka <quic_vamslank@quicinc.com>,
-        Iskren Chernev <me@iskren.info>,
-        Martin Botka <martin.botka@somainline.org>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 7/7] dt-bindings: pinctrl: qcom: correct gpio-ranges in examples
-Date:   Wed,  1 Feb 2023 16:30:19 +0100
-Message-Id: <20230201153019.269718-7-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230201153019.269718-1-krzysztof.kozlowski@linaro.org>
-References: <20230201153019.269718-1-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-watchdog@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+References: <20230201152038.203387-1-brgl@bgdev.pl>
+ <20230201152038.203387-4-brgl@bgdev.pl>
+From:   Guenter Roeck <linux@roeck-us.net>
+In-Reply-To: <20230201152038.203387-4-brgl@bgdev.pl>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Correct the number of GPIOs in gpio-ranges to match reality.
+On 2/1/23 07:20, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> 
+> Add a compatible for the sa8775p platform's KPSS watchdog.
+> 
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- .../devicetree/bindings/pinctrl/qcom,sc7180-pinctrl.yaml        | 2 +-
- .../devicetree/bindings/pinctrl/qcom,sc8280xp-tlmm.yaml         | 2 +-
- Documentation/devicetree/bindings/pinctrl/qcom,sdm670-tlmm.yaml | 2 +-
- .../devicetree/bindings/pinctrl/qcom,sdm845-pinctrl.yaml        | 2 +-
- Documentation/devicetree/bindings/pinctrl/qcom,sdx65-tlmm.yaml  | 2 +-
- Documentation/devicetree/bindings/pinctrl/qcom,sm6115-tlmm.yaml | 2 +-
- Documentation/devicetree/bindings/pinctrl/qcom,sm6125-tlmm.yaml | 2 +-
- Documentation/devicetree/bindings/pinctrl/qcom,sm6350-tlmm.yaml | 2 +-
- .../devicetree/bindings/pinctrl/qcom,sm8150-pinctrl.yaml        | 2 +-
- Documentation/devicetree/bindings/pinctrl/qcom,sm8450-tlmm.yaml | 2 +-
- Documentation/devicetree/bindings/pinctrl/qcom,sm8550-tlmm.yaml | 2 +-
- 11 files changed, 11 insertions(+), 11 deletions(-)
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
 
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sc7180-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sc7180-pinctrl.yaml
-index f33792a1af6c..77a5aaefddbe 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,sc7180-pinctrl.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,sc7180-pinctrl.yaml
-@@ -138,7 +138,7 @@ examples:
-         #gpio-cells = <2>;
-         interrupt-controller;
-         #interrupt-cells = <2>;
--        gpio-ranges = <&tlmm 0 0 120>;
-+        gpio-ranges = <&tlmm 0 0 119>;
-         wakeup-parent = <&pdc>;
- 
-         dp_hot_plug_det: dp-hot-plug-det-state {
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-tlmm.yaml
-index 97b27d6835e9..854bbb5b6f5d 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-tlmm.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-tlmm.yaml
-@@ -128,7 +128,7 @@ examples:
-         #gpio-cells = <2>;
-         interrupt-controller;
-         #interrupt-cells = <2>;
--        gpio-ranges = <&tlmm 0 0 230>;
-+        gpio-ranges = <&tlmm 0 0 228>;
- 
-         gpio-wo-subnode-state {
-             pins = "gpio1";
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sdm670-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sdm670-tlmm.yaml
-index f586b3aa138e..03c7b5c97599 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,sdm670-tlmm.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,sdm670-tlmm.yaml
-@@ -119,7 +119,7 @@ examples:
-         #gpio-cells = <2>;
-         interrupt-controller;
-         #interrupt-cells = <2>;
--        gpio-ranges = <&tlmm 0 0 151>;
-+        gpio-ranges = <&tlmm 0 0 150>;
- 
-         qup-i2c9-state {
-             pins = "gpio6", "gpio7";
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sdm845-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sdm845-pinctrl.yaml
-index 23d7c030fec0..a08e4557d8b7 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,sdm845-pinctrl.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,sdm845-pinctrl.yaml
-@@ -134,7 +134,7 @@ examples:
-         #gpio-cells = <2>;
-         interrupt-controller;
-         #interrupt-cells = <2>;
--        gpio-ranges = <&tlmm 0 0 151>;
-+        gpio-ranges = <&tlmm 0 0 150>;
-         wakeup-parent = <&pdc_intc>;
- 
-         ap-suspend-l-hog {
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sdx65-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sdx65-tlmm.yaml
-index 89c5562583d1..96375f58fa22 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,sdx65-tlmm.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,sdx65-tlmm.yaml
-@@ -140,7 +140,7 @@ examples:
-         reg = <0x03000000 0xdc2000>;
-         gpio-controller;
-         #gpio-cells = <2>;
--        gpio-ranges = <&tlmm 0 0 109>;
-+        gpio-ranges = <&tlmm 0 0 108>;
-         interrupt-controller;
-         #interrupt-cells = <2>;
-         interrupts = <GIC_SPI 212 IRQ_TYPE_LEVEL_HIGH>;
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm6115-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm6115-tlmm.yaml
-index 29325483cd2b..d35db4f4581b 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,sm6115-tlmm.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm6115-tlmm.yaml
-@@ -121,7 +121,7 @@ examples:
-         #gpio-cells = <2>;
-         interrupt-controller;
-         #interrupt-cells = <2>;
--        gpio-ranges = <&tlmm 0 0 114>;
-+        gpio-ranges = <&tlmm 0 0 113>;
- 
-         sdc2_on_state: sdc2-on-state {
-             clk-pins {
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm6125-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm6125-tlmm.yaml
-index c9bc4893e8e8..83848950cc3b 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,sm6125-tlmm.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm6125-tlmm.yaml
-@@ -125,7 +125,7 @@ examples:
-         reg-names = "west", "south", "east";
-         interrupts = <GIC_SPI 227 IRQ_TYPE_LEVEL_HIGH>;
-         gpio-controller;
--        gpio-ranges = <&tlmm 0 0 134>;
-+        gpio-ranges = <&tlmm 0 0 133>;
-         #gpio-cells = <2>;
-         interrupt-controller;
-         #interrupt-cells = <2>;
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm6350-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm6350-tlmm.yaml
-index d95935fcc8b5..3fe1f1668fbc 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,sm6350-tlmm.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm6350-tlmm.yaml
-@@ -142,7 +142,7 @@ examples:
-         #gpio-cells = <2>;
-         interrupt-controller;
-         #interrupt-cells = <2>;
--        gpio-ranges = <&tlmm 0 0 157>;
-+        gpio-ranges = <&tlmm 0 0 156>;
- 
-         gpio-wo-subnode-state {
-             pins = "gpio1";
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm8150-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm8150-pinctrl.yaml
-index 4376a9bd4d70..4c9ad9079e69 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,sm8150-pinctrl.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm8150-pinctrl.yaml
-@@ -136,7 +136,7 @@ examples:
-               <0x03d00000 0x300000>;
-         reg-names = "west", "east", "north", "south";
-         interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
--        gpio-ranges = <&tlmm 0 0 176>;
-+        gpio-ranges = <&tlmm 0 0 175>;
-         gpio-controller;
-         #gpio-cells = <2>;
-         interrupt-controller;
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm8450-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm8450-tlmm.yaml
-index 56c8046f1be0..c4cec40cbb92 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,sm8450-tlmm.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm8450-tlmm.yaml
-@@ -124,7 +124,7 @@ examples:
-         reg = <0x0f100000 0x300000>;
-         gpio-controller;
-         #gpio-cells = <2>;
--        gpio-ranges = <&tlmm 0 0 211>;
-+        gpio-ranges = <&tlmm 0 0 210>;
-         interrupt-controller;
-         #interrupt-cells = <2>;
-         interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm8550-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm8550-tlmm.yaml
-index a457425ba112..6ecc1ad6ccd4 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,sm8550-tlmm.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm8550-tlmm.yaml
-@@ -136,7 +136,7 @@ examples:
-         reg = <0x0f100000 0x300000>;
-         gpio-controller;
-         #gpio-cells = <2>;
--        gpio-ranges = <&tlmm 0 0 211>;
-+        gpio-ranges = <&tlmm 0 0 210>;
-         interrupt-controller;
-         #interrupt-cells = <2>;
-         interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
--- 
-2.34.1
+> ---
+>   Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+> index d8ac0be36e6c..27fb484d5f8d 100644
+> --- a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+> +++ b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+> @@ -18,6 +18,7 @@ properties:
+>         - items:
+>             - enum:
+>                 - qcom,apss-wdt-qcs404
+> +              - qcom,apss-wdt-sa8775p
+>                 - qcom,apss-wdt-sc7180
+>                 - qcom,apss-wdt-sc7280
+>                 - qcom,apss-wdt-sc8180x
 
