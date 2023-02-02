@@ -2,72 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B2FE687C0D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 12:17:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F1AB1687C14
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 12:19:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229479AbjBBLRk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Feb 2023 06:17:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47926 "EHLO
+        id S231371AbjBBLT3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 06:19:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229671AbjBBLRi (ORCPT
+        with ESMTP id S230404AbjBBLT3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 06:17:38 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 859348AC18
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 03:17:34 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id bg26so1134325wmb.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 03:17:34 -0800 (PST)
+        Thu, 2 Feb 2023 06:19:29 -0500
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04D1E49426
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 03:19:27 -0800 (PST)
+Received: by mail-ed1-x532.google.com with SMTP id be12so1635483edb.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 03:19:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=wofwQ+O48BFnhw82cu3ez4Q+Jbd6Fia6+jXbEPT3puI=;
-        b=MuwydOyGgiMaGjFlfnBR83BxQ1X6Lpy5MFVO5ZZfPwKETCKTnznrkm9TUp85ZSbVR5
-         j5iLj73jYsHmSdc70M3sim2sIOzpGxQ1hoPllvxSfBIBondjXSYigUmEmm7tAXQWQV+r
-         wm7Yy15XqknanGs+TKnPUM6MJgfEEYroUKY40k22fImiQ+YZ7aSR/p7DADSo7c0v0J7Y
-         jiRRA9GuElfwOX53BDuFwOoc7SppoBW7srv+6vfpsTVoTbkSBveeaapzIRg5HIK9A55L
-         N6fe/f5tVjAndGoBr6t10On2eC2XVT57K0/9iRZHyA/nQ0Lw0Tllxr7Pbri0vKH0NM1F
-         6Sig==
+        bh=5lqBGy3xyiLZ+uDQPzZ1hsLEdYkc91Ze4wrm9P+Lw80=;
+        b=RJwRtlKXAU2yQGFCUlKvMZBg3wHojpszX+YYkT1OAyb1nukVCBTsHmoHRtSP8GAYNg
+         Poc83j6BNYiJ8ewxRNBaitufk3cTBuYTonbJi48av2yUiLsubOF2ajHIn+8CkdV6AHLm
+         z81WuJwWJUdNj8gEu97EUuud/+UeT/Yy9wboCffYYCrS+Ydgos9eUuhwabRiZZUPPEFD
+         +0YX7bG/soas5GZ92Vo0Zp8Ta4T77lfzIjYBdclPaE4SdremAStzXBP+MY2ujhj16EjY
+         2m/nnLBThX4V9DVnkkYKo32s2WLYu9Sx2JOOrHX89cnzr++Yk+2NdR7Vzf8o43WupCq5
+         71ZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wofwQ+O48BFnhw82cu3ez4Q+Jbd6Fia6+jXbEPT3puI=;
-        b=Xh7tITK0goyBI+oLx3YQw8ZrGmpD26CzDCvCm4evrjv/Dl21p4GS6XzF92V/ksc6YN
-         Fxk3/h3mjjBjjl4ok+sJtLCp4NFBV1UOdbRjXPla2n7r01Fzrm1QjZbKWN2JB7dQqZU2
-         kldOGN/sqRY0q/G6fUQsm8R1WCGwJ262KMvzXEPW56DWVpErDrgSKW6DuK5uoF7+A1oT
-         VuMXmLISyC26BVm+t8GMVBJ+NC5Tmm5F4T2EOCBoIXjmmYBIjOjcrCuz5/qv9V+FXGco
-         nH8j2wNNYUT8Rzj1IPUBFdw8HVRx/2aP2tWAtdHk7W9uYLBJWRIAX5Mw04SlHifiooDW
-         7l9Q==
-X-Gm-Message-State: AO0yUKXXyQXjzUw+LkQ7wNmJp/eDfQqstkEJiiBiXaf1W6vR1p6ktvuh
-        GP0BGz8qUz2gDqu8eyZWcUln44BpnWRbwRNA
-X-Google-Smtp-Source: AK7set/91WZRLtCPBifuMsUrFxGX2wIh5W+rBcLvwOCfX1upKB4l4gUsRoJDOUxk4mJg6DP367KnfA==
-X-Received: by 2002:a05:600c:3789:b0:3dc:54e9:dfd7 with SMTP id o9-20020a05600c378900b003dc54e9dfd7mr5652827wmr.25.1675336653033;
-        Thu, 02 Feb 2023 03:17:33 -0800 (PST)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id y21-20020a05600c17d500b003dc5b59ed7asm4082366wmo.11.2023.02.02.03.17.31
+        bh=5lqBGy3xyiLZ+uDQPzZ1hsLEdYkc91Ze4wrm9P+Lw80=;
+        b=r8uWOj14KzyFr/MBIxydbD6XuHKk4RrH2H8hss4OPm3ngt2esssx4C3TW4UfV7M1Zu
+         M6qKkIZsA2xJV/bm5Ip1YK3bn+IjtJhVLyVr89WiDNlCn2ZLCVixo6LnwKzDOP8Bycie
+         M74ws29l+4aaVq9qljFw6+zdr1w0lTr/aEj1mOwfNuPqL2qDaVjuHIbm0CB7nzPGR2n8
+         NidHgxo7es7eMvNDfepVpsCPidoW0kmWRsVnglpTEl4zQyLi9sVSJEtm6xUHobG5dndB
+         AEynr5M0xDA6bn4mZ2Q5dxFiyprQktlzBX/FE2g1THz/rMzaHbLblJoxCYurk7dGx1o8
+         cpxQ==
+X-Gm-Message-State: AO0yUKVsiGe7YSDJMk13algoK70n4fM34LubWmtIcShrOi01uG42StVB
+        JywF8fI9K+EQsn5nFQ9xakJ7ZA==
+X-Google-Smtp-Source: AK7set/vEiR/9/5KwI31m2BtJbT7NVoCdcuzNNO/1JzUew9cQH1z9NQ6sS/gMsYr4isYZn/LvUPTVg==
+X-Received: by 2002:a05:6402:4cb:b0:492:8c77:7da9 with SMTP id n11-20020a05640204cb00b004928c777da9mr5414198edw.9.1675336765547;
+        Thu, 02 Feb 2023 03:19:25 -0800 (PST)
+Received: from [192.168.1.101] (abyl20.neoplus.adsl.tpnet.pl. [83.9.31.20])
+        by smtp.gmail.com with ESMTPSA id a20-20020a50ff14000000b004a211283100sm9249762edu.44.2023.02.02.03.19.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Feb 2023 03:17:32 -0800 (PST)
-Message-ID: <0e3b9803-2492-87ec-3ae9-00ac820c87ce@linaro.org>
-Date:   Thu, 2 Feb 2023 11:17:27 +0000
+        Thu, 02 Feb 2023 03:19:25 -0800 (PST)
+Message-ID: <d90e1d20-37f7-19c8-1375-dc6cf8856097@linaro.org>
+Date:   Thu, 2 Feb 2023 12:19:22 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH] firmware: qcom_scm: modify qcom_scm_set_download_mode()
+ Thunderbird/102.7.0
+Subject: Re: [PATCH v2] arm64: dts: qcom: msm8992-lg-bullhead: Correct memory
+ overlaps with the SMEM and MPSS memory regions
+To:     Jamie Douglass <jamiemdouglass@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Petr Vorel <petr.vorel@gmail.com>,
+        Dominik Kobinski <dominikkobinski314@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Petr Vorel <pvorel@suse.cz>
+References: <20230202054819.16079-1-jamiemdouglass@gmail.com>
 Content-Language: en-US
-To:     Mukesh Ojha <quic_mojha@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <1674562755-5378-1-git-send-email-quic_mojha@quicinc.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <1674562755-5378-1-git-send-email-quic_mojha@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230202054819.16079-1-jamiemdouglass@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -76,25 +86,56 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 24/01/2023 12:19, Mukesh Ojha wrote:
-> -static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
-> +static int __qcom_scm_set_dload_mode(struct device *dev, enum qcom_download_mode mode)
->   {
->   	struct qcom_scm_desc desc = {
->   		.svc = QCOM_SCM_SVC_BOOT,
->   		.cmd = QCOM_SCM_BOOT_SET_DLOAD_MODE,
->   		.arginfo = QCOM_SCM_ARGS(2),
-> -		.args[0] = QCOM_SCM_BOOT_SET_DLOAD_MODE,
-> +		.args[0] = mode,
+On 2.02.2023 06:48, Jamie Douglass wrote:
+> The memory region reserved by a previous commit (see fixes tag below)
+> overlaps with the SMEM and MPSS memory regions, causing error messages in
+> dmesg:
+> 	OF: reserved mem: OVERLAP DETECTED!
+> 	reserved@5000000 (0x0000000005000000--0x0000000007200000)
+> 	overlaps with smem_region@6a00000
+> 	(0x0000000006a00000--0x0000000006c00000)
+> 
+> 	OF: reserved mem: OVERLAP DETECTED!
+> 	reserved@6c00000 (0x0000000006c00000--0x0000000007200000)
+> 	overlaps with memory@7000000
+> 	(0x0000000007000000--0x000000000ca00000)
+> 
+> This patch resolves both of these by splitting the previously reserved
+> memory region into two sections either side of the SMEM region and by
+> cutting off the second memory region to 0x7000000.
+> 
+> Fixes: 22c7e1a0fa45 ("arm64: dts: msm8992-bullhead: add memory hole region")
+> Signed-off-by: Jamie Douglass <jamiemdouglass@gmail.com>
+> Reviewed-by: Petr Vorel <pvorel@suse.cz>
+> Tested-by: Petr Vorel <pvorel@suse.cz>
+> 
+> ---
+> v1 -> v2: Added detail about second memory overlap and fixed commit to commit
+> message
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Is this a bug fix? why are we changing arg[0]?
-
---srini
->   		.owner = ARM_SMCCC_OWNER_SIP,
->   	};
->   
-> -	desc.args[1] = enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0;
-> +	desc.args[1] = mode;
->   
->   	return qcom_scm_call_atomic(__scm->dev, &desc, NULL);
->   }
+Konrad
+>  arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi | 9 +++++++--
+>  1 file changed, 7 insertions(+), 2 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
+> index 79de9cc395c4..5e375ea73c79 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
+> @@ -53,8 +53,13 @@ cont_splash_mem: memory@3400000 {
+>  			no-map;
+>  		};
+>  
+> -		removed_region: reserved@5000000 {
+> -			reg = <0 0x05000000 0 0x2200000>;
+> +		reserved@5000000 {
+> +			reg = <0x0 0x05000000 0x0 0x1a00000>;
+> +			no-map;
+> +		};
+> +
+> +		reserved@6c00000 {
+> +			reg = <0x0 0x06c00000 0x0 0x400000>;
+>  			no-map;
+>  		};
+>  	};
