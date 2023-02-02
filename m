@@ -2,99 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2AC7968847F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 17:33:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C170D68849F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 17:39:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229608AbjBBQdr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Feb 2023 11:33:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44740 "EHLO
+        id S231359AbjBBQjf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 11:39:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231697AbjBBQdq (ORCPT
+        with ESMTP id S230140AbjBBQje (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 11:33:46 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 340956951F
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 08:33:42 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id h12so2218084wrv.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 08:33:42 -0800 (PST)
+        Thu, 2 Feb 2023 11:39:34 -0500
+Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19F3068AD3
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 08:39:33 -0800 (PST)
+Received: by mail-il1-x132.google.com with SMTP id z2so984057ilq.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 08:39:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ELhAk9cmPsEFAZpdfPOCHRf6Rnr5gKS4WgJbFOoKs04=;
-        b=Ops8gJoXuzFr1QL91bR08/jWApYqV65k1CXQwmYeh1wfsrjCyt7uSHgnq/FWhLImmg
-         Y9d/mFMdkI/nEs47hsoIKYRXxyWomze8NDn2zzxQ8TurA60Mp5dETyIp/EZVa5+ShsEF
-         QDtHflsj4lzBLaVrQ1UETUbVuEEuzNZRH35AOGGWcUV3asFKc2saDDVx8jtWh5zjjhZZ
-         ylr6iup02ZEQHQCRsdZKYWweOsKygP+YhK9WK4O3nYOTtUVF6kVPAi6vEBBTHVT15SBI
-         sLxg6JAls+67Gy6R1T2gZ0cqPgeIQJz0nDtKvPpkhpMYXMAwrVpSZmyySa+wD1y617yB
-         gldA==
+        d=chromium.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ot6L1ecH9+J5351ioCfiXK7b7j3GD/N/gMOwzzurxQE=;
+        b=f5j8udaog8zjMPPKGZqIHB3k8DCngfxB2Q7j44u97r9dsxlNmuQgyoyhWWbV0/E1Rv
+         9ojM5cksrxhZG8UZOl5OA3CNE72ukkH1UWjHKi2UgvZQ+LT+v8CfOSW1bAaVoLgKsPuT
+         00hTXg5TYYSofIAl+McIcTSQwTd2KlEQJBZFw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ELhAk9cmPsEFAZpdfPOCHRf6Rnr5gKS4WgJbFOoKs04=;
-        b=HVtqrpkpRp4ScCLm1s2D5426i2hfczy6QhFOMUpVCya8IcDrSw4IC+5dVaZfAM3K+w
-         K42YBnRCfMEP6kyBCgvVzRkELKMpf4GjoszdqahQQrpsJ/ytlRNmdOjY3gUUjKbNSNRD
-         1JYvjLCoWJwMKaTPsv8WU0ih1d4FNA5ou3XROjPf9DQuF0P9cxlidHOZFedJa0PoLPkD
-         vcpj1pqfMyN6dj8UkbPe+MKcJz4hRBV1bfg4fKHRA7aizca96iMmCXPjsnsf806Q96ip
-         5aE9C4jYjgcqxq2+pzJLVv4QEZmMMlCuD6+19cucIDOwbkNYKxOiPDGQvAcexiPKA8pk
-         JMcQ==
-X-Gm-Message-State: AO0yUKX9Hb2KmgIzo0DFKqKJvfE5vG7FPx7Hc5MqUScAcZn9VKTTUtJW
-        ozmxwHJNtVXnX4qyX9S33Hjjbw==
-X-Google-Smtp-Source: AK7set8Kr1+4XSAPiGPRYfumuWZuFHg32pJQbheua8CIT1j8p0VuhRy0BL287FCD6xQHjlmbhHELQA==
-X-Received: by 2002:a05:6000:151:b0:2bf:ec0f:af79 with SMTP id r17-20020a056000015100b002bfec0faf79mr6357504wrx.63.1675355620765;
-        Thu, 02 Feb 2023 08:33:40 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id u13-20020a05600c19cd00b003dc434b39c2sm5599993wmq.26.2023.02.02.08.33.39
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ot6L1ecH9+J5351ioCfiXK7b7j3GD/N/gMOwzzurxQE=;
+        b=ga2JTukgZpCJcOptIFe4mUBHuy7hoVfxgaCzXSZ+TL5PkCS9UZaa1E/J+2atv7b4bw
+         96m/XlttHT+cyMQpUtdUIL3ULJ6ejqARjb1DoCOTrZUxRdLo26Fbm30//2cImrKVt9vG
+         XjvUOi8TbvtXRIw/1yBY9dy7XQ5yZKGXBCnATxdldIAdryv1seVgULj9djR/uKcM/q1t
+         E1TRaOholO6OyZcbwFJnvEOOrxMbSTICA4NC/GvIOg8Uyer2VjoLWQGzk4sU2G6Sp2Iy
+         79lkh7Mr1H+wyl2ZZ5fpl20/rxTG4d7SA2JY5uPdfknyML1qEpUyvCEfYQJqEZq8/QXl
+         9dfQ==
+X-Gm-Message-State: AO0yUKVcL/JjFtGqyafyjd6MzQqOHuU1JOzVORa7UVXc5Lp+o6YKkpwv
+        zLJSzALbAfTUeRrKDU3lvxD6vg==
+X-Google-Smtp-Source: AK7set8v/Z9VpK+S9jRdYg90eH7l5Y11Tt4SFysEb2res8ONv4zlV1+aY1AtG9vZwR+KIdBTec10Fw==
+X-Received: by 2002:a05:6e02:1d03:b0:310:c411:125d with SMTP id i3-20020a056e021d0300b00310c411125dmr5335512ila.12.1675355972412;
+        Thu, 02 Feb 2023 08:39:32 -0800 (PST)
+Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
+        by smtp.gmail.com with UTF8SMTPSA id m14-20020a056e020dee00b0030d6f952221sm25745ilj.75.2023.02.02.08.39.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Feb 2023 08:33:40 -0800 (PST)
-Message-ID: <fa6dc60c-3799-d384-da24-f282b7cbd3ef@linaro.org>
-Date:   Thu, 2 Feb 2023 17:33:39 +0100
+        Thu, 02 Feb 2023 08:39:31 -0800 (PST)
+Date:   Thu, 2 Feb 2023 16:39:31 +0000
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>
+Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Fritz Koenig <frkoenig@chromium.org>,
+        Nathan Hebert <nhebert@chromium.org>,
+        regressions@lists.linux.dev
+Subject: Re: [REGRESSION][PATCH 2/3] venus: firmware: Correct non-pix start
+ and end addresses
+Message-ID: <Y9vnQxQlRgVMvowZ@google.com>
+References: <20221005083730.963322-1-stanimir.varbanov@linaro.org>
+ <20221005083730.963322-3-stanimir.varbanov@linaro.org>
+ <Y9LSMap+jRxbtpC8@google.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH 00/13] mailbox/arm64/ qcom: rework compatibles for
- fallback
-Content-Language: en-US
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230202161856.385825-1-krzysztof.kozlowski@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230202161856.385825-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Y9LSMap+jRxbtpC8@google.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/02/2023 17:18, Krzysztof Kozlowski wrote:
-> Hi,
+On Thu, Jan 26, 2023 at 07:19:13PM +0000, Matthias Kaehlcke wrote:
+> Hi Stanimir,
 > 
-> If entire approach is accepted (and correct), there are no dependencies and
-> patches can be picked independently.  Although the best in the same cycle, so
-> there will be no new `dtbs_check` warnings.
+> On Wed, Oct 05, 2022 at 11:37:29AM +0300, Stanimir Varbanov wrote:
+> > The default values for those registers are zero.
+> > 
+> > Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+> > ---
+> >  drivers/media/platform/qcom/venus/firmware.c | 4 ++--
+> >  1 file changed, 2 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
+> > index 3851cedc3329..71e43611d1cf 100644
+> > --- a/drivers/media/platform/qcom/venus/firmware.c
+> > +++ b/drivers/media/platform/qcom/venus/firmware.c
+> > @@ -38,8 +38,8 @@ static void venus_reset_cpu(struct venus_core *core)
+> >  	writel(fw_size, wrapper_base + WRAPPER_FW_END_ADDR);
+> >  	writel(0, wrapper_base + WRAPPER_CPA_START_ADDR);
+> >  	writel(fw_size, wrapper_base + WRAPPER_CPA_END_ADDR);
+> > -	writel(fw_size, wrapper_base + WRAPPER_NONPIX_START_ADDR);
+> > -	writel(fw_size, wrapper_base + WRAPPER_NONPIX_END_ADDR);
+> > +	writel(0, wrapper_base + WRAPPER_NONPIX_START_ADDR);
+> > +	writel(0, wrapper_base + WRAPPER_NONPIX_END_ADDR);
+> >  
+> >  	if (IS_V6(core)) {
+> >  		/* Bring XTSS out of reset */
 > 
+> I found that this commit prevents the AOSS from entering sleep mode during
+> system suspend at least on sc7180 and sc7280. AOSS not entering sleep mode
+> leads to a (apparently significant) increase in S3 power consumption, on
+> trogdor and herobrine it prevents the system from staying suspended, because
+> the embedded controller detect the condition and wakes the sytem up again.
+> 
+> Testing is slightly involved, since unfortunately this is not the only issue
+> in v6.2-rcN that impacts AOSS sleep.
+> 
+> To reach AOSS sleep you also have to revert this commit:
+> 
+> 3a39049f88e4 soc: qcom: rpmhpd: Use highest corner until sync_state
+> 
+> And apply something like the diff below (or enable the bwmon driver).
+> 
+> On a trogdor device you will see something like this when AOSS doesn't
+> enter sleep mode during system suspend:
+> 
+>   [   32.882869] EC detected sleep transition timeout. Total sleep transitions: 0
+>   [   32.882886] WARNING: CPU: 7 PID: 5682 at drivers/platform/chrome/cros_ec.c:146 cros_ec_sleep_event+0x100/0x10c
+>   [   32.900393] Modules linked in: uinput veth uvcvideo videobuf2_vmalloc venus_enc venus_dec videobuf2_dma_contig videobuf2_memops onboard_usb_hub cros_ec_typec typec hci_uart btqca xt_MASQUERADE venus_core v4l2_mem2mem videobuf2_v4l2 videobuf2_common qcom_q6v5_mss qcom_pil_v
+>   [   32.940015] CPU: 7 PID: 5682 Comm: cat Tainted: G        W          6.1.0-rc2+ #295 d14276115b3f6b03fc99220174e5d7724847cbd6
+>   [   32.951525] Hardware name: Google Villager (rev1+) with LTE (DT)
+>   [   32.957695] pstate: 60400009 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+>   [   32.964848] pc : cros_ec_sleep_event+0x100/0x10c
+>   [   32.969596] lr : cros_ec_sleep_event+0x100/0x10c
+> 
+> I'm also happy to help with testing if you have a candidate fix.
 
-This patchset will conflict with:
-https://lore.kernel.org/all/20230126230319.3977109-2-dmitry.baryshkov@linaro.org/
+This change introduced an important regression at least for sc7180 and sc7280,
+and probably other QC SoCs, I wonder if it should be reverted unless there is
+an obvious better fix.
 
-In few places it actually re-does Dmitry's patch, so probably we should
-both come with unified solution.
-
-Best regards,
-Krzysztof
-
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index 0adf13399e64..c1f6952764c5 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -3488,7 +3488,7 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
+>                 };
+> 
+>                 pmu@9091000 {
+> 		-                       compatible = "qcom,sc7280-llcc-bwmon";
+> 		+                       // compatible = "qcom,sc7280-llcc-bwmon";
+> 		                        reg = <0 0x9091000 0 0x1000>;
+> 
+>                         interrupts = <GIC_SPI 81 IRQ_TYPE_LEVEL_HIGH>;
+> 			@@ -3528,7 +3528,7 @@ opp-7 {
+> 			                };
+> 
+>                 pmu@90b6400 {
+> 		-                       compatible = "qcom,sc7280-cpu-bwmon", "qcom,msm8998-bwmon";
+> 		+                       // compatible = "qcom,sc7280-cpu-bwmon", "qcom,msm8998-bwmon";
+> 		                        reg = <0 0x090b6400 0 0x600>;
+> 
+>                         interrupts = <GIC_SPI 581 IRQ_TYPE_LEVEL_HIGH>;
