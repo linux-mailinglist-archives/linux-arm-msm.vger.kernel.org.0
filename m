@@ -2,79 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D59336886E5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 19:42:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EDCB688710
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 19:49:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232893AbjBBSmu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Feb 2023 13:42:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51378 "EHLO
+        id S233000AbjBBStP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 13:49:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232897AbjBBSmq (ORCPT
+        with ESMTP id S233007AbjBBStM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 13:42:46 -0500
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A8CE7C736
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 10:42:23 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id u21so3004327edv.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 10:42:22 -0800 (PST)
+        Thu, 2 Feb 2023 13:49:12 -0500
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 764E67E68D
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 10:49:09 -0800 (PST)
+Received: by mail-pj1-x1033.google.com with SMTP id j5so2749082pjn.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 10:49:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xcrcjjpdxvOP+BtTWSce/AMhT/iVFENiab+a0FrVMNY=;
-        b=Zq5rgzbS0KG7vA/hbRRwx8FMDWWoH+HMBofRc4RXhyH0JA+vo6cspQgeCOg073eYLg
-         JVW4O5Bl/vJP3zPtG8mBj2EZtEYdo2G712RAmmWCMto+zmX548hNamQBkmvM8GIwR7HN
-         Yf+2rVtyxzoy/6lYE8A/UbCTYq/HEG8ikcN1wUwtJ9AZNa1KpvppyWt654JYu1FMWP/C
-         HFGHb4C/P7dKZea/6an8hJz5BD85sgieJvm2Wv+6jomVI2gDarS1uxf0S5Ep145pWYQR
-         HomCcXEv8RjLDmdQbP3OrURKPLdOhIOaRxvZQG6iEqeG6Y/5p9h7hbqsSncnyUP+1qmw
-         scww==
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=LS+eL8j93Bm2Dqlju3KsjlMYi6jTYAL0RYTxmxzvITo=;
+        b=LKgu3eaNLjrg1DzjepWTEDeJ1VXBUGPr3gGeBSIaXfoosj4qpgIF7p9od55q4tE6sD
+         vehqP6S833+SVY3qLvgoWZquo9JIwLZRqcHtQ4wFQxs0qqX78kCLTVyNhhE+ybBhLxVa
+         yhDvP6Gj/IcGVTjtrsU8Mb9CiydIL6kuk4oJc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xcrcjjpdxvOP+BtTWSce/AMhT/iVFENiab+a0FrVMNY=;
-        b=JMOAYJazG9HbQT03flBTmm/f4GNfAIAAt2wdgkT6RUk38kWCls5k5er4XPDyUyvdDC
-         tIsJlDamQDqFO9rdOXBaTSYMG/sqnttBHRhBR8NimW/J0dkW8MgU1tGU/v6uHhLwdAc0
-         wz7sCDs8c0xPR4ajNyEz/F6x5Y6JSktWfeg9hFyz+wNZ5zV1uESlLZQWMzJJloHEsCYg
-         lvV6blMKLk0BXocgxFWYtLERdPPy8p6s2LUPnZYRHxlxTi7YmsW5h6G13obsYotEQ41E
-         FjzOIt1L7Z5PfZtbaC+FdgT54e1KujhBUNjuVRwZCbqtHeoTFgEq11kw44dbquZ4Y6uA
-         JyCw==
-X-Gm-Message-State: AO0yUKUede+DEjxKPU06NJ0ZFFLIKs4TLzp/PkO2FQ1It0nW5lUmaPi8
-        yYtd8r12M3UXRYLkJgELe+aKrA==
-X-Google-Smtp-Source: AK7set9QtIgxHBGYAaFywJ96klO+lAs7/+Uzw91KAaSUtY2UwhASS1NxneJienf7Xi743nxWcj9h6g==
-X-Received: by 2002:a50:ce47:0:b0:4a2:45e3:ede3 with SMTP id k7-20020a50ce47000000b004a245e3ede3mr7384955edj.14.1675363334632;
-        Thu, 02 Feb 2023 10:42:14 -0800 (PST)
-Received: from [192.168.1.101] (abyl20.neoplus.adsl.tpnet.pl. [83.9.31.20])
-        by smtp.gmail.com with ESMTPSA id eq6-20020a056402298600b00497d8613532sm81243edb.5.2023.02.02.10.42.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Feb 2023 10:42:14 -0800 (PST)
-Message-ID: <406e91ae-5477-4d8e-4e98-b30fc18e9e94@linaro.org>
-Date:   Thu, 2 Feb 2023 19:42:12 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH 5/6] mailbox: qcom-apcs-ipc: add IPQ5332 APSS clock
- support
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Kathiravan T <quic_kathirav@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        jassisinghbrar@gmail.com, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LS+eL8j93Bm2Dqlju3KsjlMYi6jTYAL0RYTxmxzvITo=;
+        b=s93kqVQhghhh7enOm41znAhrGIlwerZo2WYYB2clOXVcFQHhD2L+BtaAIBUB/24a2f
+         blO/B3bcKvqOQU63l7CcIYfCbW0ELS8MAjKKq1OTfl9KM6JeP5j7hfyn9qvUn4bwuG6s
+         HYzic+B9KhuCMtQCgQbFTr8gXdZ5bNbZ7oT/r68UEzMiwcwNV2xCyuBKPT8ow5j1CyiA
+         pOpd2uyYKHA8/O1pjP0jBTjP0q4QrlnUiNq+OK1zHNJ71etwS+FSuMcUpm0J946YC0he
+         2XyoQWj+wHTFRf9zYwDY1t7dPE0PHSQdsy9Rx/SCSwZ6YMNksJnO797rFW9dBFDgEOjL
+         hF7Q==
+X-Gm-Message-State: AO0yUKUAWFGXBHUD4gG/ZLARSMW6bUaZo2wVIbS8yYIppT/5bYVl7Oky
+        ogYaJ/OpsSkOL2eIZgyNu/SGMw==
+X-Google-Smtp-Source: AK7set8+tzva0Ro0cvmF7RzvMsh/1xs0ka7mFEuFCBLl9n4ZQkczf3w4G6LCKwF5u8qsV1+Gi0HAQA==
+X-Received: by 2002:a05:6a20:1612:b0:b8:c659:9d51 with SMTP id l18-20020a056a20161200b000b8c6599d51mr10020404pzj.56.1675363748616;
+        Thu, 02 Feb 2023 10:49:08 -0800 (PST)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:9d:2:f71:fcf9:d3e0:e9c0])
+        by smtp.gmail.com with ESMTPSA id h68-20020a628347000000b005772d55df03sm18282pfe.35.2023.02.02.10.49.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Feb 2023 10:49:08 -0800 (PST)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Chia-I Wu <olvaffe@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@gmail.com>,
+        Geert Uytterhoeven <geert@linux-m68k.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20230202145208.2328032-1-quic_kathirav@quicinc.com>
- <20230202145208.2328032-6-quic_kathirav@quicinc.com>
- <2433c2c7-664d-0d1f-12ae-374cbd093dc0@linaro.org>
- <1b75ab1a-44c9-c4a8-7fa4-d601fc710d2a@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <1b75ab1a-44c9-c4a8-7fa4-d601fc710d2a@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Subject: [PATCH] drm/msm/a6xx: Make GPU destroy a bit safer
+Date:   Thu,  2 Feb 2023 10:48:43 -0800
+Message-Id: <20230202104822.1.I0e49003bf4dd1dead9be4a29dbee41f3b1236e48@changeid>
+X-Mailer: git-send-email 2.39.1.519.gcb327c4b5f-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,31 +75,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+If, for whatever reason, we're trying process adreno_runtime_resume()
+at the same time that a6xx_destroy() is running then things can go
+boom. Specifically adreno_runtime_resume() will eventually call
+a6xx_pm_resume() and that may try to resume the gmu.
 
+Let's grab the GMU lock as we're destroying the GMU. That will solve
+the race because a6xx_pm_resume() grabs the same lock. That makes the
+access of `gmu->initialized` in a6xx_gmu_resume() safe.
 
-On 2.02.2023 16:30, Krzysztof Kozlowski wrote:
-> On 02/02/2023 16:16, Konrad Dybcio wrote:
->>
->>
->> On 2.02.2023 15:52, Kathiravan T wrote:
->>> IPQ5332 has the APSS clock controller utilizing the same register space
->>> as the APCS, so provide access to the APSS utilizing a child device like
->>> other IPQ chipsets.
->>>
->>> Like IPQ6018, the same controller and driver is used, so utilize IPQ6018
->>> match data for IPQ5332.
->>>
->>> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
->>> ---
->> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> 
-> While this is not the fault of this patch, but we keep adding
-> compatibles with same driver data. I think this should start using
-> fallbacks at some point...
-Fair.
+We'll also return an error code in a6xx_gmu_resume() if we see that
+`gmu->initialized` was false. If this happens we'll bail out of the
+rest of a6xx_pm_resume(), which is good because the rest of that
+function is also not good to do if we're racing with a6xx_destroy().
 
-Konrad
-> 
-> Best regards,
-> Krzysztof
-> 
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
+This doesn't _really_ matter for upstream, but downstream in ChromeOS
+we have a GPU inputboost patch. That inputboost patch was related to
+adreno_runtime_resume() getting called at the same time that
+a6xx_destroy() was running. This was seen at bootup when the panel
+failed to probe.
+
+Despite the fact that this isn't truly fixing any bugs upstream, it
+still seems like a general improvement for the GPU driver.
+
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 2 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 2 ++
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index f3c9600221d4..7f5bc73b2040 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -974,7 +974,7 @@ int a6xx_gmu_resume(struct a6xx_gpu *a6xx_gpu)
+ 	int status, ret;
+ 
+ 	if (WARN(!gmu->initialized, "The GMU is not set up yet\n"))
+-		return 0;
++		return -EINVAL;
+ 
+ 	gmu->hung = false;
+ 
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index aae60cbd9164..6faea5049f76 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -1746,7 +1746,9 @@ static void a6xx_destroy(struct msm_gpu *gpu)
+ 
+ 	a6xx_llc_slices_destroy(a6xx_gpu);
+ 
++	mutex_lock(&a6xx_gpu->gmu.lock);
+ 	a6xx_gmu_remove(a6xx_gpu);
++	mutex_unlock(&a6xx_gpu->gmu.lock);
+ 
+ 	adreno_gpu_cleanup(adreno_gpu);
+ 
+-- 
+2.39.1.519.gcb327c4b5f-goog
+
