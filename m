@@ -2,113 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 361C6687FDA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 15:23:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 94398688099
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 15:53:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229479AbjBBOXL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Feb 2023 09:23:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39318 "EHLO
+        id S232523AbjBBOxB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 09:53:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232425AbjBBOXJ (ORCPT
+        with ESMTP id S232142AbjBBOwx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 09:23:09 -0500
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 358E9241F1
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 06:23:05 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id q10-20020a1cf30a000000b003db0edfdb74so4128625wmq.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 06:23:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=YB4h/C/CtbFY4rXmucKBqG0MqbmHC4KWkwhlRlIb+2I=;
-        b=bzo3nwG7ZmwfN9KX3sxXEcPruFfXZNJTO5B2WFHTKCYsxSVEzj+Y6q35NuOHb84umr
-         cq5wnf0sUjSTAleMT8Fum8Iac+2tBlg/2F486oM7FdVjQ66EpIRpraiRWfW0MhFXeU4W
-         nF3gmIXQl9wLgpOnwKz5/7Z+4G4Lj/RZza1yZC7x/l6Li/ar9PVMLZ5aBuoN7t2GLphI
-         wB5hNk5q1rqAKAL5bgKJJInH72Rjrm2dg5u0oKufxSGEtvcQ52jknKvSGfdrGNAreO1p
-         zsRd9kBWMQTolj1TajyH0FlTmRxpGIyfVUD+2DgXd+c8V16+T1Ss69clGoqAHFXwxLho
-         kCRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YB4h/C/CtbFY4rXmucKBqG0MqbmHC4KWkwhlRlIb+2I=;
-        b=f2/CrQVfrKNDhUc+dJr2C16RGgLJjLrXSbecEoN4tEAqfckNclrmecXEgBM9Yvi1LA
-         VU0jhFRFzLPHH8JM5wDBWt3Eo10lhQw6GMGXqsGYJvIciQgbkAit/nVyCuNxRhp4arSm
-         Ma1lazd8Tq+WFAyvJeMPP4IPDcsvGTYb/2t1zfDtP7jrQWngiDvlJhB27IThyIs4NGNX
-         UHQ+SruCYbHqcpOvGFWteY2YuX4tEzIMw5998IgZ7/grAnvhZnGLBx5np+QgKUZgG6DP
-         JSIm7V8x883o8sGrMHflwVTDwSIDve9GM71eYXGlfVnLbIROvU+syyLjZZes9gh7QWGz
-         r/3w==
-X-Gm-Message-State: AO0yUKVPn9wGOh53HD3yRTNvpA/8J/Vo7L7p1e3QvR/p2jXxsk2NOs6Y
-        9RhKAVHCmhU+S+fmU8ljAWlY9Q==
-X-Google-Smtp-Source: AK7set/HE5p2w/dzpHWaV2sxuNs7PJNgTft5opkJSpseRkiLmxy5Popw8z4rysmsYdiYCtz3baLOrQ==
-X-Received: by 2002:a05:600c:5491:b0:3dc:16d3:8c95 with SMTP id iv17-20020a05600c549100b003dc16d38c95mr6366493wmb.30.1675347783631;
-        Thu, 02 Feb 2023 06:23:03 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id u6-20020a5d4346000000b002bc84c55758sm21647028wrr.63.2023.02.02.06.23.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Feb 2023 06:23:03 -0800 (PST)
-Message-ID: <cc0cc6a0-2403-82e5-fff0-630dcce99b89@linaro.org>
-Date:   Thu, 2 Feb 2023 15:23:01 +0100
+        Thu, 2 Feb 2023 09:52:53 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF6E74204;
+        Thu,  2 Feb 2023 06:52:33 -0800 (PST)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 312EbVDA007329;
+        Thu, 2 Feb 2023 14:52:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=bq/+gpa+Xc2tW3MBRu7pzVh4bcUQjgzBhx8XLYKtPXg=;
+ b=cDTsqgHnmaxdS10L59R/zyWOnnK3zJX8fz7sePFTKn9b+H2rI90gLa4+yzNGhXiP3M88
+ +ktmT0TWQl97VChBgD8FMDSwVHHOJ4qlir8mBmcgq82AeDvW9DNQhB5dVUOjKOtRGYhc
+ xc1RQ8Rq3GzyO6nbA5bnL8cqs1MJuMKF/7J7TBjrGovhlJuDmA0kVskBLF6OA+utU8sC
+ LhUAKN7Yz4YePkxUZ0a6Bd0uPQA66CvV/BfSOOdTLQm0x38OJ5z0JT/a035fMKI3wc5b
+ 2h272J7LvBmpzqnfe2ROsO0q9ACu+h+uqHkY+4ql0GJkatGr8tie8JtYS0XldhtWhYLr fQ== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nfn5j357e-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 02 Feb 2023 14:52:28 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 312EqRac002881
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 2 Feb 2023 14:52:27 GMT
+Received: from win-platform-upstream01.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Thu, 2 Feb 2023 06:52:23 -0800
+From:   Kathiravan T <quic_kathirav@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <jassisinghbrar@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+CC:     Kathiravan T <quic_kathirav@quicinc.com>
+Subject: [PATCH 0/6] Add APSS clock driver support for IPQ5332
+Date:   Thu, 2 Feb 2023 20:22:02 +0530
+Message-ID: <20230202145208.2328032-1-quic_kathirav@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH v8 5/9] dt-bindings: qcom-qce: document clocks and
- clock-names as optional
-Content-Language: en-US
-To:     neil.armstrong@linaro.org,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-crypto@vger.kernel.org
-References: <20230202135036.2635376-1-vladimir.zapolskiy@linaro.org>
- <20230202135036.2635376-6-vladimir.zapolskiy@linaro.org>
- <32c23da1-45f0-82a4-362d-ae5c06660e20@linaro.org>
- <36b6f8f2-c438-f5e6-b48f-326e8b709de8@linaro.org>
- <a2e4dff0-af8f-dccb-9074-8244b054c448@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <a2e4dff0-af8f-dccb-9074-8244b054c448@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Q-pJWIfo6uQUe2rJGC--uhRO6cZJtVaY
+X-Proofpoint-GUID: Q-pJWIfo6uQUe2rJGC--uhRO6cZJtVaY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-02-02_04,2023-02-02_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
+ lowpriorityscore=0 malwarescore=0 suspectscore=0 clxscore=1011
+ adultscore=0 mlxscore=0 impostorscore=0 bulkscore=0 priorityscore=1501
+ spamscore=0 mlxlogscore=846 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2212070000 definitions=main-2302020133
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/02/2023 15:21, Neil Armstrong wrote:
-> On 02/02/2023 15:04, Vladimir Zapolskiy wrote:
->> Hi Krzysztof,
->>
->> On 2/2/23 15:53, Krzysztof Kozlowski wrote:
->>> On 02/02/2023 14:50, Vladimir Zapolskiy wrote:
->>>> From: Neil Armstrong <neil.armstrong@linaro.org>
->>>>
->>>> On certain Snapdragon processors, the crypto engine clocks are enabled by
->>>> default by security firmware.
->>>
->>> Then probably we should not require them only on these variants.
->>
->> I don't have the exact list of the affected SoCs, I believe Neil can provide
->> such a list, if you find it crucial.
-> 
-> It's the case for SM8350, SM8450 & SM8550.
+This series adds support for the APSS clock to bump the CPU frequency
+above 800MHz.
 
-So let's keep them required for explicit list of compatibles (older
-devices).
+APSS PLL found in the IPQ5332 is of type Stromer Plus. However the
+existing IPQ targets uses the Huayra PLL. So the driver has to
+refactored to accommodate the different PLL types. The first patch in
+the series does the refactoring, which can be independenty merged.
 
-Best regards,
-Krzysztof
+For the Stromer PLL separate function clk_stromer_pll_configure is
+introduced, so the 3rd patch in the series depends on the below patch
+https://lore.kernel.org/linux-arm-msm/20230120082631.22053-1-quic_kathirav@quicinc.com/
+
+DTS patch depends on the IPQ5332 baseport series
+https://lore.kernel.org/linux-arm-msm/20230130114702.20606-1-quic_kathirav@quicinc.com/
+
+Kathiravan T (6):
+  clk: qcom: apss-ipq-pll: refactor the driver to accommodate different
+    PLL types
+  dt-bindings: clock: qcom,a53pll: add IPQ5332 compatible
+  clk: qcom: apss-ipq-pll: add support for IPQ5332
+  dt-bindings: mailbox: qcom: add compatible for the IPQ5332 SoC
+  mailbox: qcom-apcs-ipc: add IPQ5332 APSS clock support
+  arm64: dts: qcom: ipq5332: enable the CPUFreq support
+
+ .../bindings/clock/qcom,a53pll.yaml           |   1 +
+ .../mailbox/qcom,apcs-kpss-global.yaml        |   3 +
+ arch/arm64/boot/dts/qcom/ipq5332.dtsi         |  36 ++++++
+ drivers/clk/qcom/apss-ipq-pll.c               | 111 +++++++++++++++---
+ drivers/mailbox/qcom-apcs-ipc-mailbox.c       |   1 +
+ 5 files changed, 133 insertions(+), 19 deletions(-)
+
+-- 
+2.34.1
 
