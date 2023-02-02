@@ -2,227 +2,214 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 964E66887C8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 20:50:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C76866887CD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 20:53:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232640AbjBBTu5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Feb 2023 14:50:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41310 "EHLO
+        id S232165AbjBBTxt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 14:53:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232479AbjBBTu4 (ORCPT
+        with ESMTP id S232494AbjBBTxr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 14:50:56 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A97E528876
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 11:50:54 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id q19so3194373edd.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 11:50:54 -0800 (PST)
+        Thu, 2 Feb 2023 14:53:47 -0500
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44DAE6A31A
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 11:53:45 -0800 (PST)
+Received: by mail-ej1-x635.google.com with SMTP id hx15so9119430ejc.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 11:53:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=vU6b1/DyW9VF99p038CT5rL7cz19rU/zHJDhT4ApbFc=;
-        b=qFo6Zs4zc/E7ttK81jaTeAILjmRH5v3tgoYVgjr6j/geeokXq8B3VKC1pad3rpZa5z
-         Hx9aluvyOeNlG/2t/IxUqJKbWmnWj8CdxyMA1jK8k/tj9FveSRBkAaYJC2Ks7QmLpinM
-         ho7p6AP7jt5VbSWhkHP8/2a0cLQP/b98mdx9WZGKea13BendXKvIiiLPwEp4sQg8W9Kr
-         4kPHEyZP2DzxfUYQpUpP7nLPaXwQ3NPYdyzX29/ZCFhWw1uNQqzcOktQep/WzBX59D0r
-         YeVPI49AW2fyIGS8rPUAfXPADxjZXADDlQGjJGGpUbZ+TB2SMs0YW4F/lM/HadrYG4Rr
-         S93Q==
+        bh=HaDFfxxzuLwN75YKvylnJiXNpCrcwXxrygiD4ELDOQ8=;
+        b=XnDYP7IO5pP3GcYGNn52WSskJ+9C8pMoab6FbCgKr170kOCMuDWUXBcbX7btW0HnQo
+         EZKOEMsrplHxOm1VnWwjwTKunmvW/usk/seSp+huso6WA7eavXC1OKPn/G0Zh+NpOjrf
+         FRkxZSeMg3fOYkM0evBQOQQOw57ODLZi1FqsKgr0eNd1aQbrijkKnPz6Zd041HztH24H
+         8hf/GWL8cyM/R3GUmzJ0JHfUWy+bijeqr+whbQgljM4fZ2iW1UXdVWK8Ou0qravrvRGC
+         tSQ8dw0kFG90dyvw4RlZ2epCBXKnCJpQ1iSqVMR3GhhhAVeFVfgnj8wFfC1U851sD9Dj
+         UZxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vU6b1/DyW9VF99p038CT5rL7cz19rU/zHJDhT4ApbFc=;
-        b=xf21F54hgI4JpDug2FCjyQB7qh48ClMKSGlV5fqPc1ZUC/5uwcbwd10wDrj3OB3tlR
-         /sBq6RlmEdugxsFZUGVQk+SQQe92y2EE74T+GbqZE4RBW6qpkoBuhBcn3GPfdk7v4xJI
-         dGPGHAXc5Afgs9/CjH945wQSVqs1vh4Naom1maA2JmjnZOQ71cyGZf8/NxXUgKSm/Z/q
-         sRlcOHShqHVMEiZZi4iOKz/y8C/nYob38p4bV/HnXy5y88rPG1urugf5YMiR3UtEEJPn
-         O7kXrG78fXPjJNawpSEOQ+14NhlXbkWcCl0LNd+4x8r1tR/J+VISOKceXQIMLbOnW750
-         R9yg==
-X-Gm-Message-State: AO0yUKXQ/MArrbEZBX5mKV6Ab+G5kGD9txMFi/LNkt2ddOYeUNwECiF/
-        nWW6Bb/QGFBn0hiYetmi/HPxHA==
-X-Google-Smtp-Source: AK7set9amC5pThCDH+9E/vyf4TogzP4SRLeuHMPo01KOUugOmYukuiSJFsLqp102YzKiW0olzQcJrQ==
-X-Received: by 2002:a05:6402:22a7:b0:4a2:2d79:dce2 with SMTP id cx7-20020a05640222a700b004a22d79dce2mr7371719edb.10.1675367453255;
-        Thu, 02 Feb 2023 11:50:53 -0800 (PST)
+        bh=HaDFfxxzuLwN75YKvylnJiXNpCrcwXxrygiD4ELDOQ8=;
+        b=uxfcYvBQM2Kl2lEAOHYkHm2y2ZMQA6LX7YcgXFEjHKCANjKMK6D7nlhEm+j0ar4XtS
+         XeznWo34UvsK0fNPU494Y1rEpj8LsuGpnanCJWSsWHSzcwT8N2M74jVyY/CwbYQzpPOE
+         4ZsrFj3o8ZmrGAfCOAy8zg1b2gXURS2imEUGamAC2tzgAa4cf3GjDODlFad1hWYuyUrq
+         ufU0EoPWs9PIiyTKasz5Z/fWGK52V4oI4mx92e8HZIqmz/NdDX32hE1s8XWweOZRn6dv
+         TJphm4U8mltxeKSGdbRZnJnNoAES+H3nCBBkCJtIC/UXa6XFC3UCuaMnhzSlfAOliZcd
+         XskQ==
+X-Gm-Message-State: AO0yUKUAKkYgitHbPdexBk2diJtSpYhLTm+I76gNAGpJxYU97iB/BGR3
+        WUuI82V6AP28LzQVlDl5soIK4A==
+X-Google-Smtp-Source: AK7set8hm8gggwv/GPzDyAxsPPsvhLgacTc1mEed2aWQZaE/x/C55oTALWz/ayjBDYtn8nt5/jY/jA==
+X-Received: by 2002:a17:906:60d2:b0:86f:3dfa:4016 with SMTP id f18-20020a17090660d200b0086f3dfa4016mr8447911ejk.7.1675367623820;
+        Thu, 02 Feb 2023 11:53:43 -0800 (PST)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id er18-20020a056402449200b0046892e493dcsm150837edb.26.2023.02.02.11.50.51
+        by smtp.gmail.com with ESMTPSA id a15-20020a50ff0f000000b004a2067d6ba4sm146536edu.52.2023.02.02.11.53.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Feb 2023 11:50:52 -0800 (PST)
-Message-ID: <093a50dc-8f9e-39c9-ba31-906628e54e35@linaro.org>
-Date:   Thu, 2 Feb 2023 21:50:51 +0200
+        Thu, 02 Feb 2023 11:53:43 -0800 (PST)
+Message-ID: <3826e0e6-bb2b-409d-d1c3-ed361305bce3@linaro.org>
+Date:   Thu, 2 Feb 2023 21:53:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [PATCH v6 11/12] arm64: dts: qcom: sm8550: Add PCIe PHYs and
- controllers nodes
-To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        "vkoul@kernel.org" <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-References: <20230202123902.3831491-1-abel.vesa@linaro.org>
- <20230202123902.3831491-12-abel.vesa@linaro.org>
+Subject: Re: [RFC PATCH v2 1/2] PM: domains: Skip disabling unused domains if
+ provider has sync_state
 Content-Language: en-GB
+To:     Matthias Kaehlcke <mka@chromium.org>,
+        Abel Vesa <abel.vesa@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     "Rafael J . Wysocki" <rafael@kernel.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-pm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
+        Doug Anderson <dianders@chromium.org>
+References: <20230127104054.895129-1-abel.vesa@linaro.org>
+ <Y9v/z8CYik3faHh7@google.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230202123902.3831491-12-abel.vesa@linaro.org>
+In-Reply-To: <Y9v/z8CYik3faHh7@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/02/2023 14:39, Abel Vesa wrote:
-> Add PCIe controllers and PHY nodes.
+On 02/02/2023 20:24, Matthias Kaehlcke wrote:
+> Hi Abel,
 > 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
+> On Fri, Jan 27, 2023 at 12:40:53PM +0200, Abel Vesa wrote:
+>> Currently, there are cases when a domain needs to remain enabled until
+>> the consumer driver probes. Sometimes such consumer drivers may be built
+>> as modules. Since the genpd_power_off_unused is called too early for
+>> such consumer driver modules to get a chance to probe, the domain, since
+>> it is unused, will get disabled. On the other hand, the best time for
+>> an unused domain to be disabled is on the provider's sync_state
+>> callback. So, if the provider has registered a sync_state callback,
+>> assume the unused domains for that provider will be disabled on its
+>> sync_state callback. Also provide a generic sync_state callback which
+>> disables all the domains unused for the provider that registers it.
+>>
+>> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+>> ---
+>>
+>> This approach has been applied for unused clocks as well.
+>> With this patch merged in, all the providers that have sync_state
+>> callback registered will leave the domains enabled unless the provider's
+>> sync_state callback explicitly disables them. So those providers will
+>> need to add the disabling part to their sync_state callback. On the
+>> other hand, the platforms that have cases where domains need to remain
+>> enabled (even if unused) until the consumer driver probes, will be able,
+>> with this patch in, to run without the pd_ignore_unused kernel argument,
+>> which seems to be the case for most Qualcomm platforms, at this moment.
 > 
-> This patch does not have a v3, but since it is now part of the same
-> patchset with the controller and the phy drivers patches, I had to
-> bump the version to 4.
+> I recently encountered a related issue on a Qualcomm platform with a
+> v6.2-rc kernel, which includes 3a39049f88e4 ("soc: qcom: rpmhpd: Use
+> highest corner until sync_state"). The issue involves a DT node with a
+> rpmhpd, the DT node is enabled, however the corresponding device driver
+> is not enabled in the kernel. In such a scenario the sync_state callback
+> is never called, because the genpd consumer never probes. As a result
+> the Always-on subsystem (AOSS) of the SoC doesn't enter sleep mode during
+> system suspend, which results in a substantially higher power consumption
+> in S3.
 > 
-> The v5 was here:
-> https://lore.kernel.org/all/20230124124714.3087948-12-abel.vesa@linaro.org/
-> 
-> Changes since v5:
->   * renamed nocsr_com to phy_nocsr as discussed off-list with Bjorn and Johan
-> 
-> Changes since v4:
->   * renamed noc_aggr_4 back to noc_aggr
->   * moved pinctrl properties out to MTP dts
->   * renamed nocsr to nocsr_com
-> 
-> Changes since v2:
->   * renamed the pcie_1_link_down_reset to simply link_down
->   * dropped the pipe from clock-names
->   * renamed aggre clock-names to noc_aggr_4
->   * dropped the _pcie infix from cnoc_pcie_sf_axi
->   * dropped the aux_phy clock from the pcie1
->   
-> Changes since v1:
->   * ordered pcie related nodes alphabetically in MTP dts
->   * dropped the pipe_mux, phy_pipe and ref clocks from the pcie nodes
->   * dropped the child node from the phy nodes, like Johan suggested,
->     and updated to use the sc8280xp binding scheme
->   * changed "pcie_1_nocsr_com_phy_reset" 2nd reset name of pcie1_phy
->     to "nocsr"
->   * reordered all pcie nodes properties to look similar to the ones
->     from sc8280xp
-> 
-> 
->   arch/arm64/boot/dts/qcom/sm8550.dtsi | 203 ++++++++++++++++++++++++++-
->   1 file changed, 200 insertions(+), 3 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> index be2d85ee1f20..a85d2ae7d155 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> @@ -740,9 +740,9 @@ gcc: clock-controller@100000 {
->   			#reset-cells = <1>;
->   			#power-domain-cells = <1>;
->   			clocks = <&bi_tcxo_div2>, <&sleep_clk>,
-> -				 <0>,
-> -				 <0>,
-> -				 <0>,
-> +				 <&pcie0_phy>,
-> +				 <&pcie1_phy>,
-> +				 <&pcie_1_phy_aux_clk>,
->   				 <&ufs_mem_phy 0>,
->   				 <&ufs_mem_phy 1>,
->   				 <&ufs_mem_phy 2>,
-> @@ -1641,6 +1641,203 @@ mmss_noc: interconnect@1780000 {
->   			qcom,bcm-voters = <&apps_bcm_voter>;
->   		};
->   
-> +		pcie0: pci@1c00000 {
-> +			device_type = "pci";
-> +			compatible = "qcom,pcie-sm8550";
-> +			reg = <0 0x01c00000 0 0x3000>,
-> +			      <0 0x60000000 0 0xf1d>,
-> +			      <0 0x60000f20 0 0xa8>,
-> +			      <0 0x60001000 0 0x1000>,
-> +			      <0 0x60100000 0 0x100000>;
-> +			reg-names = "parf", "dbi", "elbi", "atu", "config";
-> +			#address-cells = <3>;
-> +			#size-cells = <2>;
-> +			ranges = <0x01000000 0x0 0x60200000 0 0x60200000 0x0 0x100000>,
-> +				 <0x02000000 0x0 0x60300000 0 0x60300000 0x0 0x3d00000>;
-> +			bus-range = <0x00 0xff>;
-> +
-> +			dma-coherent;
-> +
-> +			linux,pci-domain = <0>;
-> +			num-lanes = <2>;
-> +
-> +			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "msi";
-> +
-> +			#interrupt-cells = <1>;
-> +			interrupt-map-mask = <0 0 0 0x7>;
-> +			interrupt-map = <0 0 0 1 &intc 0 0 0 149 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
-> +					<0 0 0 2 &intc 0 0 0 150 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
-> +					<0 0 0 3 &intc 0 0 0 151 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
-> +					<0 0 0 4 &intc 0 0 0 152 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
-> +
-> +			clocks = <&gcc GCC_PCIE_0_AUX_CLK>,
-> +				 <&gcc GCC_PCIE_0_CFG_AHB_CLK>,
-> +				 <&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
-> +				 <&gcc GCC_PCIE_0_SLV_AXI_CLK>,
-> +				 <&gcc GCC_PCIE_0_SLV_Q2A_AXI_CLK>,
-> +				 <&gcc GCC_DDRSS_PCIE_SF_QTB_CLK>,
-> +				 <&gcc GCC_AGGRE_NOC_PCIE_AXI_CLK>;
-> +			clock-names = "aux",
-> +				      "cfg",
-> +				      "bus_master",
-> +				      "bus_slave",
-> +				      "slave_q2a",
-> +				      "ddrss_sf_tbu",
-> +				      "noc_aggr";
-> +
-> +			interconnects = <&pcie_noc MASTER_PCIE_0 0 &mc_virt SLAVE_EBI1 0>,
-> +					<&gem_noc MASTER_APPSS_PROC 0 &cnoc_main SLAVE_PCIE_0 0>;
-> +			interconnect-names = "pcie-mem", "cpu-pcie";
-> +
-> +			iommus = <&apps_smmu 0x1400 0x7f>;
-> +			iommu-map = <0x0   &apps_smmu 0x1400 0x1>,
-> +				    <0x100 &apps_smmu 0x1401 0x1>;
-> +
-> +			resets = <&gcc GCC_PCIE_0_BCR>;
-> +			reset-names = "pci";
-> +
-> +			power-domains = <&gcc PCIE_0_GDSC>;
-> +
-> +			phys = <&pcie0_phy>;
-> +			phy-names = "pciephy";
-> +
-> +			perst-gpios = <&tlmm 94 GPIO_ACTIVE_LOW>;
-> +			wake-gpios = <&tlmm 96 GPIO_ACTIVE_HIGH>;
+> I wonder if genpd (and some other frameworks) needs something like
+> regulator_init_complete(), which turns off unused regulators 30s after
+> system boot. That's conceptually similar to the current
+> genpd_power_off_unused(), but would provide time for modules being loaded.
 
-As we have moved pinctrl to board files, it would be logical to also 
-move these gpios to the board file too. Following the same logic, each 
-board can use it's own set of perst/wake gpios for PCIe.
+I think the overall goal is to move away from ad-hoc implementations 
+like clk_disable_unused/genpd_power_off_unused/regulator_init_complete 
+towards the sync_state.
 
-> +
-> +			status = "disabled";
-> +		};
-> +
-[skipped the rest]
+So inherently one either has to provide drivers for all devices in 
+question or disable unused devices in DT.
+
+> 
+>> The v1 is here:
+>> https://lore.kernel.org/all/20230126234013.3638425-1-abel.vesa@linaro.org/
+>>
+>> Changes since v1:
+>>   * added a generic sync state callback to be registered by providers in
+>>     order to disable the unused domains on their sync state. Also
+>>     mentioned this in the commit message.
+>>
+>>   drivers/base/power/domain.c | 17 ++++++++++++++++-
+>>   include/linux/pm_domain.h   |  3 +++
+>>   2 files changed, 19 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+>> index 84662d338188..c2a5f77c01f3 100644
+>> --- a/drivers/base/power/domain.c
+>> +++ b/drivers/base/power/domain.c
+>> @@ -1099,7 +1099,8 @@ static int __init genpd_power_off_unused(void)
+>>   	mutex_lock(&gpd_list_lock);
+>>   
+>>   	list_for_each_entry(genpd, &gpd_list, gpd_list_node)
+>> -		genpd_queue_power_off_work(genpd);
+>> +		if (!dev_has_sync_state(genpd->provider->dev))
+>> +			genpd_queue_power_off_work(genpd);
+>>   
+>>   	mutex_unlock(&gpd_list_lock);
+>>   
+>> @@ -1107,6 +1108,20 @@ static int __init genpd_power_off_unused(void)
+>>   }
+>>   late_initcall(genpd_power_off_unused);
+>>   
+>> +void genpd_power_off_unused_sync_state(struct device *dev)
+>> +{
+>> +	struct generic_pm_domain *genpd;
+>> +
+>> +	mutex_lock(&gpd_list_lock);
+>> +
+>> +	list_for_each_entry(genpd, &gpd_list, gpd_list_node)
+>> +		if (genpd->provider->dev == dev)
+>> +			genpd_queue_power_off_work(genpd);
+>> +
+>> +	mutex_unlock(&gpd_list_lock);
+>> +}
+>> +EXPORT_SYMBOL_GPL(genpd_power_off_unused_sync_state);
+>> +
+>>   #ifdef CONFIG_PM_SLEEP
+>>   
+>>   /**
+>> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
+>> index f776fb93eaa0..1fd5aa500c81 100644
+>> --- a/include/linux/pm_domain.h
+>> +++ b/include/linux/pm_domain.h
+>> @@ -351,6 +351,7 @@ struct device *genpd_dev_pm_attach_by_id(struct device *dev,
+>>   					 unsigned int index);
+>>   struct device *genpd_dev_pm_attach_by_name(struct device *dev,
+>>   					   const char *name);
+>> +void genpd_power_off_unused_sync_state(struct device *dev);
+>>   #else /* !CONFIG_PM_GENERIC_DOMAINS_OF */
+>>   static inline int of_genpd_add_provider_simple(struct device_node *np,
+>>   					struct generic_pm_domain *genpd)
+>> @@ -419,6 +420,8 @@ struct generic_pm_domain *of_genpd_remove_last(struct device_node *np)
+>>   {
+>>   	return ERR_PTR(-EOPNOTSUPP);
+>>   }
+>> +
+>> +static inline genpd_power_off_unused_sync_state(struct device *dev) {}
+>>   #endif /* CONFIG_PM_GENERIC_DOMAINS_OF */
+>>   
+>>   #ifdef CONFIG_PM
+>> -- 
+>> 2.34.1
+>>
 
 -- 
 With best wishes
