@@ -2,195 +2,223 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A55816889DB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 23:35:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B2FCA6889ED
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 23:37:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231579AbjBBWfn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Feb 2023 17:35:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50962 "EHLO
+        id S232937AbjBBWhn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 17:37:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231748AbjBBWfn (ORCPT
+        with ESMTP id S232950AbjBBWhe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 17:35:43 -0500
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0661F6952D
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 14:35:41 -0800 (PST)
-Received: by mail-ej1-x635.google.com with SMTP id gr7so10365907ejb.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 14:35:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=p5KWg5y49R2vNdnwv3VPU/YYr23YbKuqRtcEwTW8lnU=;
-        b=faXd1jvBVV8qaSefQLmDyUjuLWCiiCySIAhofQhhZwqCmH2I3/KUFXigCG3p2PwOGp
-         OU+qvDEpVE0N8zjwb1o97mNvLaeWHLcwswrcQcVSaMw4td6IWgt8rPjx9x6DyGDKHsWC
-         sHvwHxzMIqu6ITHklysS+xe1Q45B7XpfolZcP1M9++kFJaW5kBlDZh76EcAVTPDPCCsO
-         nk43n0Y6rKyCJPa6EA7TyJcQ0FdffY989Gy2QhKugW+njQRGHVAQ9pcOx1zq+jsB/299
-         1YFQZ6AJNfxPvNcTpX9yfcucEB1dHOHEqgQ46iw5hzPwD3eqr2S8x3e0+9M9ZipyrFz1
-         vWIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=p5KWg5y49R2vNdnwv3VPU/YYr23YbKuqRtcEwTW8lnU=;
-        b=uDhzN0DfEztLBuXl2e+77V7gkXavxgEXvh4G83KMZg5nTbgFZYP71bwBQXEQXGJi0b
-         fUiT2Mtt1ybCBR0gw1ptZyn40g6B1lggInp2EyrmmsKQWgCQkstj3/RG8eW8A+Ru3+RK
-         NXBpSLgMnxC97JHnVkPf0a3F1/Xyook+rIoSLmVKLDAZlWh8SgwXYEBuQG1y7SisEONu
-         EgGR9x8YSElNeVrI0bMoyfGVhdcVIvL3laaIL+/91BxicDJ8Sk00mbcAZ3CISJ9eZHBI
-         LHfNaI8UB+dVTDrRSa1MykybR3yf5AylK2RYAmKRsiHw6l8G7XwBEJDDHCiL83yigri0
-         U2Ig==
-X-Gm-Message-State: AO0yUKVP+fVurB6f90bonp1XCf2gVTnB4Io/RKg3LbjduWYv7ibEaJ9/
-        ozOaec39qVFYiH4J9IM1UIOy8w==
-X-Google-Smtp-Source: AK7set82YGgN8WEkYacPEvPUc5oB/aKlORz10ksuFOaSSDoBCOzsMGJK3ak/e39EFz2f3k9B2dI3xg==
-X-Received: by 2002:a17:907:1607:b0:88a:8e57:f05b with SMTP id hb7-20020a170907160700b0088a8e57f05bmr10486582ejc.22.1675377339474;
-        Thu, 02 Feb 2023 14:35:39 -0800 (PST)
-Received: from [192.168.1.101] (abyl20.neoplus.adsl.tpnet.pl. [83.9.31.20])
-        by smtp.gmail.com with ESMTPSA id gz22-20020a170906f2d600b0088f88d1d36bsm395490ejb.166.2023.02.02.14.35.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Feb 2023 14:35:39 -0800 (PST)
-Message-ID: <7968db3b-8545-0601-4302-301a4006f3bc@linaro.org>
-Date:   Thu, 2 Feb 2023 23:35:37 +0100
+        Thu, 2 Feb 2023 17:37:34 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 377D4719BD;
+        Thu,  2 Feb 2023 14:37:09 -0800 (PST)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 312Krteq031923;
+        Thu, 2 Feb 2023 22:36:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=Zb2iiTn/hxWLIV0At+HfK90unnptLpCLFr+PlLGfKH4=;
+ b=kPxJgKUqsrVeSB2tSnPBWTgiI7HgbJ0LVzvWWWH+naUFLQ05RKNRzNbtQkg1kHswHuXH
+ B7k3JiZckOZJKr6b48b6apLighkKI0z4r6b+Q0VQxrmKj1aJrGlk8M0R45+raStpI7tu
+ TwXHAamBStc4ZUYAwaHnXOvZ347SPVsLvXBL/ZjxMUq8GhR+Hdini2cu/7xkha3VK69p
+ WF664pI+JPqlttDiBwwbUo7EbadazuKiAT2UoRkb6D3ygLZqRnRJmAw80Ksli0fPfuKY
+ 1jOqOrIvy5t/VTIIGcFV3PzgmcsxoPRODKzKFXEG42e5ovdZC5cndvDXERra7fCHw73A 4A== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nfqsybup9-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 02 Feb 2023 22:36:54 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 312Mar6x010723
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 2 Feb 2023 22:36:53 GMT
+Received: from [10.110.99.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Thu, 2 Feb 2023
+ 14:36:52 -0800
+Message-ID: <0419b0c8-fb30-f8df-1b9a-19e106680948@quicinc.com>
+Date:   Thu, 2 Feb 2023 14:36:52 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH] cpufreq: qcom-hw: Fix cpufreq_driver->get() for non-LMH
- systems
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [Freedreno] [RFT PATCH v2 3/3] drm/msm/dsi: More properly handle
+ errors in regards to dsi_mgr_bridge_power_on()
 Content-Language: en-US
 To:     Douglas Anderson <dianders@chromium.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>
-Cc:     swboyd@chromium.org, mka@chromium.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
-References: <20230202140005.1.I4b30aaa027c73372ec4068cc0f0dc665af8b938d@changeid>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230202140005.1.I4b30aaa027c73372ec4068cc0f0dc665af8b938d@changeid>
-Content-Type: text/plain; charset=UTF-8
+        <dri-devel@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     <freedreno@lists.freedesktop.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        <linux-arm-msm@vger.kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Dave Stevenson <dave.stevenson@raspberrypi.com>,
+        David Airlie <airlied@gmail.com>, Sean Paul <sean@poorly.run>,
+        <linux-kernel@vger.kernel.org>
+References: <20230131141756.RFT.v2.1.I723a3761d57ea60c5dd754c144aed6c3b2ea6f5a@changeid>
+ <20230131141756.RFT.v2.3.I3c87b53c4ab61a7d5e05f601a4eb44c7e3809a01@changeid>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20230131141756.RFT.v2.3.I3c87b53c4ab61a7d5e05f601a4eb44c7e3809a01@changeid>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ze0mav3Cf9-e3WS1O6K6m670fF7H8_r5
+X-Proofpoint-ORIG-GUID: ze0mav3Cf9-e3WS1O6K6m670fF7H8_r5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-02-02_14,2023-02-02_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ suspectscore=0 bulkscore=0 phishscore=0 spamscore=0 lowpriorityscore=0
+ malwarescore=0 clxscore=1015 mlxscore=0 mlxlogscore=859 priorityscore=1501
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302020201
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Doug
 
-
-On 2.02.2023 23:00, Douglas Anderson wrote:
-> On a sc7180-based Chromebook, when I go to
-> /sys/devices/system/cpu/cpu0/cpufreq I can see:
+On 1/31/2023 2:18 PM, Douglas Anderson wrote:
+> In commit 7d8e9a90509f ("drm/msm/dsi: move DSI host powerup to modeset
+> time") the error handling with regards to dsi_mgr_bridge_power_on()
+> got a bit worse. Specifically if we failed to power the bridge on then
+> nothing would really notice. The modeset function couldn't return an
+> error and thus we'd blindly go forward and try to do the pre-enable.
 > 
->   cpuinfo_cur_freq:2995200
->   cpuinfo_max_freq:1804800
->   scaling_available_frequencies:300000 576000 ... 1708800 1804800
->   scaling_cur_freq:1804800
->   scaling_max_freq:1804800
+> In commit ec7981e6c614 ("drm/msm/dsi: don't powerup at modeset time
+> for parade-ps8640") we added a special case to move the powerup back
+> to pre-enable time for ps8640. When we did that, we didn't try to
+> recover the old/better error handling just for ps8640.
 > 
-> As you can see the `cpuinfo_cur_freq` is bogus. It turns out that this
-> bogus info started showing up as of commit 205f5e984d30 ("cpufreq:
-> qcom-hw: Fix the frequency returned by cpufreq_driver->get()"). That
-> commit seems to assume that everyone is on the LMH bandwagon, but
-> sc7180 isn't.
+> In the patch ("drm/msm/dsi: Stop unconditionally powering up DSI hosts
+> at modeset") we've now moved the powering up back to exclusively being
+> during pre-enable. That means we can add the better error handling
+> back in, so let's do it. To do so we'll add a new function
+> dsi_mgr_bridge_power_off() that's matches how errors were handled
+> prior to commit 7d8e9a90509f ("drm/msm/dsi: move DSI host powerup to
+> modeset time").
 > 
-> Let's go back to the old code in the case where LMH isn't used.
+> NOTE: Now that we have dsi_mgr_bridge_power_off(), it feels as if we
+> should be calling it in dsi_mgr_bridge_post_disable(). That would make
+> some sense, but doing so would change the current behavior and thus
+> should be a separate patch. Specifically:
+> * dsi_mgr_bridge_post_disable() always calls dsi_mgr_phy_disable()
+>    even in the slave-DSI case of bonded DSI. We'd need to add special
+>    handling for this if it's truly needed.
+> * dsi_mgr_bridge_post_disable() calls msm_dsi_phy_pll_save_state()
+>    midway through the poweroff.
+> * dsi_mgr_bridge_post_disable() has a different order of some of the
+>    poweroffs / IRQ disables.
+> For now we'll leave dsi_mgr_bridge_post_disable() alone.
 > 
-> Fixes: 205f5e984d30 ("cpufreq: qcom-hw: Fix the frequency returned by cpufreq_driver->get()")
 > Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > ---
-Actually I hit the exact same issue when working on CPRh-aware
-cpufreq with manual OSM programming.. LMh gets enabled by the firmware
-on most recent platforms, but it's not the case for some old-timers.
-
-I figured that adding a bool broken_lmh_freq in driver data would be
-a good middleground between reverting that patch and ignoring the
-issue, because it *does* matter what this function reports on LMh-
-enabled platforms (yes, the subsystems are bluepilled between each
-other and OSM/EPSS does not know the *real* throttled frequency),
-but obviously we don't want to report 2.99Ghz otherwise..
-
-I think 7280 had an issue where a SoC-specific compatible was not
-introduced when the DT part was first merged, same goes for 6115.
-6115 does have firmware-enabled LMh, not sure about 7280. In case
-you wanted to go that route, I think it would be suitable to add
-a blacklist of retroactively-broken platforms (match-by-machine-
-compatible; don't scream at me bindings folks, I guess that's the
-least messy solution) in addition to either matching the SoC-specific
-compatible to epss_broken_lmh_driver_data.
-
-Or we can forget about old DTs and just bind qcom,sc7180-cpufreq-hw
-(and 7280, maybe? please check.) to this new driver data without
-checking the machine compatible.
-
-
-
-Konrad
 > 
->  drivers/cpufreq/qcom-cpufreq-hw.c | 24 +++++++++++++-----------
->  1 file changed, 13 insertions(+), 11 deletions(-)
+> Changes in v2:
+> - ("More properly handle errors...") new for v2.
 > 
-> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-> index 9505a812d6a1..957cf6bb8c05 100644
-> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
-> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-> @@ -143,40 +143,42 @@ static unsigned long qcom_lmh_get_throttle_freq(struct qcom_cpufreq_data *data)
->  	return lval * xo_rate;
->  }
->  
-> -/* Get the current frequency of the CPU (after throttling) */
-> -static unsigned int qcom_cpufreq_hw_get(unsigned int cpu)
-> +/* Get the frequency requested by the cpufreq core for the CPU */
-> +static unsigned int qcom_cpufreq_get_freq(unsigned int cpu)
->  {
->  	struct qcom_cpufreq_data *data;
-> +	const struct qcom_cpufreq_soc_data *soc_data;
->  	struct cpufreq_policy *policy;
-> +	unsigned int index;
->  
->  	policy = cpufreq_cpu_get_raw(cpu);
->  	if (!policy)
->  		return 0;
->  
->  	data = policy->driver_data;
-> +	soc_data = qcom_cpufreq.soc_data;
->  
-> -	return qcom_lmh_get_throttle_freq(data) / HZ_PER_KHZ;
-> +	index = readl_relaxed(data->base + soc_data->reg_perf_state);
-> +	index = min(index, LUT_MAX_ENTRIES - 1);
+>   drivers/gpu/drm/msm/dsi/dsi_manager.c | 32 ++++++++++++++++++++++-----
+>   1 file changed, 26 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> index 2197a54b9b96..28b8012a21f2 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> @@ -228,7 +228,7 @@ static void msm_dsi_manager_set_split_display(u8 id)
+>   	}
+>   }
+>   
+> -static void dsi_mgr_bridge_power_on(struct drm_bridge *bridge)
+> +static int dsi_mgr_bridge_power_on(struct drm_bridge *bridge)
+>   {
+>   	int id = dsi_mgr_bridge_get_id(bridge);
+>   	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
+> @@ -268,14 +268,31 @@ static void dsi_mgr_bridge_power_on(struct drm_bridge *bridge)
+>   	if (is_bonded_dsi && msm_dsi1)
+>   		msm_dsi_host_enable_irq(msm_dsi1->host);
+>   
+> -	return;
+> +	return 0;
+>   
+>   host1_on_fail:
+>   	msm_dsi_host_power_off(host);
+>   host_on_fail:
+>   	dsi_mgr_phy_disable(id);
+>   phy_en_fail:
+> -	return;
+> +	return ret;
+> +}
 > +
-> +	return policy->freq_table[index].frequency;
->  }
->  
-> -/* Get the frequency requested by the cpufreq core for the CPU */
-> -static unsigned int qcom_cpufreq_get_freq(unsigned int cpu)
-> +static unsigned int qcom_cpufreq_hw_get(unsigned int cpu)
->  {
->  	struct qcom_cpufreq_data *data;
-> -	const struct qcom_cpufreq_soc_data *soc_data;
->  	struct cpufreq_policy *policy;
-> -	unsigned int index;
->  
->  	policy = cpufreq_cpu_get_raw(cpu);
->  	if (!policy)
->  		return 0;
->  
->  	data = policy->driver_data;
-> -	soc_data = qcom_cpufreq.soc_data;
->  
-> -	index = readl_relaxed(data->base + soc_data->reg_perf_state);
-> -	index = min(index, LUT_MAX_ENTRIES - 1);
-> +	if (data->throttle_irq >= 0)
-> +		return qcom_lmh_get_throttle_freq(data) / HZ_PER_KHZ;
->  
-> -	return policy->freq_table[index].frequency;
-> +	return qcom_cpufreq_get_freq(cpu);
->  }
->  
->  static unsigned int qcom_cpufreq_hw_fast_switch(struct cpufreq_policy *policy,
+> +static void dsi_mgr_bridge_power_off(struct drm_bridge *bridge)
+> +{
+> +	int id = dsi_mgr_bridge_get_id(bridge);
+> +	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
+> +	struct msm_dsi *msm_dsi1 = dsi_mgr_get_dsi(DSI_1);
+> +	struct mipi_dsi_host *host = msm_dsi->host;
+> +	bool is_bonded_dsi = IS_BONDED_DSI();
+> +
+> +	msm_dsi_host_disable_irq(host);
+> +	if (is_bonded_dsi && msm_dsi1) {
+> +		msm_dsi_host_disable_irq(msm_dsi1->host);
+> +		msm_dsi_host_power_off(msm_dsi1->host);
+> +	}
+
+The order of disabling the IRQs should be opposite of how they were enabled.
+
+So while enabling it was DSI0 and then DSI1.
+
+Hence while disabling it should be DSI1 and then DSI0.
+
+So the order here should be
+
+DSI1 irq disable
+DSI0 irq disable
+DSI1 host power off
+DSI0 host power off
+
+> +	msm_dsi_host_power_off(host);
+> +	dsi_mgr_phy_disable(id);
+>   }
+>   
+>   static void dsi_mgr_bridge_pre_enable(struct drm_bridge *bridge)
+> @@ -295,7 +312,11 @@ static void dsi_mgr_bridge_pre_enable(struct drm_bridge *bridge)
+>   	if (is_bonded_dsi && !IS_MASTER_DSI_LINK(id))
+>   		return;
+>   
+> -	dsi_mgr_bridge_power_on(bridge);
+> +	ret = dsi_mgr_bridge_power_on(bridge);
+> +	if (ret) {
+> +		dev_err(&msm_dsi->pdev->dev, "Power on failed: %d\n", ret);
+> +		return;
+> +	}
+>   
+>   	ret = msm_dsi_host_enable(host);
+>   	if (ret) {
+> @@ -316,8 +337,7 @@ static void dsi_mgr_bridge_pre_enable(struct drm_bridge *bridge)
+>   host1_en_fail:
+>   	msm_dsi_host_disable(host);
+>   host_en_fail:
+> -
+> -	return;
+> +	dsi_mgr_bridge_power_off(bridge);
+>   }
+>   
+>   void msm_dsi_manager_tpg_enable(void)
