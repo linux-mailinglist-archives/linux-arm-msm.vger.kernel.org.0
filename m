@@ -2,188 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 19ABB687BB1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 12:10:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E191687BB4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 12:10:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231907AbjBBLKP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S231936AbjBBLKP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Thu, 2 Feb 2023 06:10:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39942 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232460AbjBBLKD (ORCPT
+        with ESMTP id S232520AbjBBLKE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 06:10:03 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DF236AC86;
-        Thu,  2 Feb 2023 03:09:35 -0800 (PST)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 312AZamq000969;
-        Thu, 2 Feb 2023 11:09:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=t6iPFNPeYgRzyXRHfMsbwcJXOpplwMl9gokhd0iu2vk=;
- b=QRf7IzX8VRv0Szgl5FbhKhtfKS009CZLIRjYM5emLa+VrJYKkX6CFwmouVIsi3yFL/lt
- Hp0OBfsBbHzRTpV7KkJa/vY7VPqcp/QOPqrjSoUr7Wet5+W9DQyShIYoQZ/t3XLbniAL
- fBkVpkhNxbnTx2eQtGkAkkf/VPlg+XPjQaSgZY8UjWw+JfQcZJ1A8SOjbPvSxGGJ68FM
- OHVdHBfeNi/z5M/81+8MEKby4SWX2wCl9Yr3N5ci1k7lQWG71fwNXf0iD7/Jq+Rm2Yf8
- Mpo86nHffJIUYvuZNyJ4IWxcfDHJ58Rvj9sU7s8n0VtSimJNuFTIzePiW5Avmj+HhQm+ dw== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nfqsyagbp-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 02 Feb 2023 11:09:31 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 312B9Uw3023663
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 2 Feb 2023 11:09:30 GMT
-Received: from [10.50.17.72] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Thu, 2 Feb 2023
- 03:09:23 -0800
-Message-ID: <05c01db8-1ca1-475f-8cb4-41fddff8b85a@quicinc.com>
-Date:   Thu, 2 Feb 2023 16:39:19 +0530
+        Thu, 2 Feb 2023 06:10:04 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCF3D6B009
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 03:09:36 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id c10-20020a05600c0a4a00b003db0636ff84so1103190wmq.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 03:09:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zGhcwfRQP1vbMhQHFBN3FkAYqNe4cdk/CFn8QpsceBo=;
+        b=FDpSb+mwnlw8m5dHv+86Ui3ZrmgaXz6GfNCWc2N7biOdmOXsemof67Z+Ql7/ScD270
+         vlo8IXDmUvSzX9EhLRxmlbY9GUQ2qr7Mi+Uw9lo8o86w3HSbNgAb2Q3x2R43VIf1Bfyp
+         9SKdNxy+e8QEaLvjNrvMFx+Rq7O0NHz4qOzdedbPqbKPI2IRknH0xNWJ/J0HyJg2l+cm
+         A1rqYTSdb+EiYaI/wLKGn0+KRytAoOvUcEp4ERC4c/M6ajPmWxxUwL0Nuv8JlRXbwhKx
+         0L3YQMXEu7x+DqKQuRcOR0+LyW1/LcIUZxHzR4heBcWPZkJQ5sNvCrtOdfcYipx3Reww
+         7hvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zGhcwfRQP1vbMhQHFBN3FkAYqNe4cdk/CFn8QpsceBo=;
+        b=xt/dlDitoBsM/ipueq/KHfREzvYbBYBlZtAVhZfkVWbQO1oznTJBD9Lx2xgW2SsOkj
+         ABbumd3qWtf6GeolKSFJitJD3TUR9+T8viWqs+E4dS2jwDSqWJk8b5tuAIttQdHQp3An
+         eY5Dii9EFYztiSOUofbnY4EkZkhlJ1SVw++GtnZXl6Uj1Jy2Q01eCuiRs8gEpI6xKoty
+         nL+A8UNPtMb5nkPyJste7U8W71w3DRKQd3ZhXXXoAgkSkqV3kDXHdLzKn8zALu8w5DRW
+         ZLn5uFK+QIvDSmhDfzTRLjq+r3tPK09yMsXYehA/T1JfB/CTp4xQXEGPqNwi6pxeNSdS
+         6kFQ==
+X-Gm-Message-State: AO0yUKXiBdOXGh34cDHubLnBPQKxuHwEObjJjN0Ffx3r/qdFaTMbl3zj
+        jrEGIsDWhXHF/mYhCAcLXGoASQ==
+X-Google-Smtp-Source: AK7set97949CQomMTHJXrUmVYXoP68F1grpSho+nTxTkUvOOSDw/afzyYWDMSQ0qCS57Wk1H9+6yeg==
+X-Received: by 2002:a05:600c:35cc:b0:3dc:55e6:fffd with SMTP id r12-20020a05600c35cc00b003dc55e6fffdmr5502802wmq.15.1675336175028;
+        Thu, 02 Feb 2023 03:09:35 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id o6-20020a05600c2e0600b003dcc82ce53fsm4247203wmf.38.2023.02.02.03.09.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Feb 2023 03:09:34 -0800 (PST)
+Message-ID: <40d0fff4-5d1c-3e93-1eed-132c7e1aa92e@linaro.org>
+Date:   Thu, 2 Feb 2023 12:09:32 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 6/6] regulator: qcom_smd: Add support to define the bootup
- voltage
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH 16/23] interconnect: exynos: drop redundant link destroy
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <lgirdwood@gmail.com>,
-        <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
-        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
-        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
-        <quic_poovendh@quicinc.com>, <quic_ipkumar@quicinc.com>
-References: <20230113150310.29709-1-quic_devipriy@quicinc.com>
- <20230113150310.29709-7-quic_devipriy@quicinc.com>
- <77d84408-166e-8a02-227a-67654a4d31f2@linaro.org>
- <df6c1cd6-ea70-e65c-b4e8-3da80697242f@quicinc.com>
- <cc037133-7c45-325f-4a1d-9855d033ae5c@linaro.org>
- <6bb22160-5966-43d3-ffba-489b77b3a095@quicinc.com>
- <de6e69d6-18cd-2732-9a18-f4dfd29be6dd@linaro.org>
-From:   Devi Priya <quic_devipriy@quicinc.com>
-In-Reply-To: <de6e69d6-18cd-2732-9a18-f4dfd29be6dd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 8YlC8aBvDPrsPPWW_mNqLBdRyymzxTEI
-X-Proofpoint-ORIG-GUID: 8YlC8aBvDPrsPPWW_mNqLBdRyymzxTEI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-02-02_02,2023-02-02_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- suspectscore=0 bulkscore=0 phishscore=0 spamscore=0 lowpriorityscore=0
- malwarescore=0 clxscore=1015 mlxscore=0 mlxlogscore=999 priorityscore=1501
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302020101
+To:     Johan Hovold <johan+linaro@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>
+Cc:     Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        =?UTF-8?B?QXJ0dXIgxZp3aWdvxYQ=?= <a.swigon@samsung.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-tegra@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230201101559.15529-1-johan+linaro@kernel.org>
+ <20230201101559.15529-17-johan+linaro@kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230201101559.15529-17-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 01/02/2023 11:15, Johan Hovold wrote:
+> There is no longer any need to explicitly destroy node links as this is
+> now done when the node is destroyed as part of icc_nodes_remove().
+> 
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+>  drivers/interconnect/samsung/exynos.c | 6 ------
+>  1 file changed, 6 deletions(-)
 
 
-On 1/31/2023 6:14 PM, Konrad Dybcio wrote:
-> 
-> 
-> On 31.01.2023 10:28, Devi Priya wrote:
->>
->>
->> On 1/27/2023 9:40 PM, Konrad Dybcio wrote:
->>>
->>>
->>> On 27.01.2023 17:07, Devi Priya wrote:
->>>>
->>>>
->>>> On 1/13/2023 9:07 PM, Konrad Dybcio wrote:
->>>>>
->>>>>
->>>>> On 13.01.2023 16:03, devi priya wrote:
->>>>>> Kernel does not know the initial voltage set by the bootloaders.
->>>>>> During regulator registration, the voltage variable is just declared
->>>>>> and it is zero. Based on that, the regulator framework considers current
->>>>>> the voltage as zero and tries to bring up each regulator to minimum
->>>>>> the supported voltage.
->>>>>>
->>>>>> This introduces a dip in the voltage during kernel boot and gets
->>>>>> stabilized once the voltage scaling comes into picture.
->>>>>>
->>>>>> To avoid the voltage dip, adding support to define the
->>>>>> bootup voltage set by the boodloaders and based on it, regulator
->>>>>> framework understands that proper voltage is already set
->>>>>>
->>>>>> Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
->>>>>> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
->>>>>> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
->>>>>> ---
->>>>> Or maybe hook it up to the spmi_regulator_common_get_voltage()
->>>>> from the SPMI regulator driver and read the real voltage instead
->>>>> of relying on hardcoded values thay may differ between boards?
->>>>>
->>>>> Konrad
->>>> In IPQ9574, SPMI regulator is not used. We are using RPM-Glink communication and the regulators are controlled by RPM.
->>>> In this case, we don't have an option to readback the bootup voltage and so, we have hardcoded the values
->>> Unless something changed, RPM regulator framework is simply a
->>> fancy front-end for communicating with the PMIC over SPMI, AFAIK..
->>>
->>> Konrad
->> Currently in our driver, the voltage write request will be sent to RPM via GLINK which then writes it to the PMIC over I2C using the below APIs
->> qcom_rpm_smd_write -> rpmsg_send
->> In IPQ9574, we do not have SPMI support or the support to readback voltage.
-> Okay, I didn't quite catch that there's *only* an i2c PMIC on this
-> platform.. Looking at the MP5496 datasheet though, reading back
-> the voltage should be possible via simply reading the fields that
-> are used to set it.
-> 
-> Konrad
-The CPR regulator operates in closed loop mode and the RPM can 
-independently update the PMIC voltage.
-So, Performing an i2c read to the PMIC would introduce conflicts when 
-RPM uses the i2c for any of the voltage write or read operations.
->>
->>>>
->>>>>>     drivers/regulator/qcom_smd-regulator.c | 6 +++++-
->>>>>>     1 file changed, 5 insertions(+), 1 deletion(-)
->>>>>>
->>>>>> diff --git a/drivers/regulator/qcom_smd-regulator.c b/drivers/regulator/qcom_smd-regulator.c
->>>>>> index 1eb17d378897..49a36b07397c 100644
->>>>>> --- a/drivers/regulator/qcom_smd-regulator.c
->>>>>> +++ b/drivers/regulator/qcom_smd-regulator.c
->>>>>> @@ -800,6 +800,7 @@ struct rpm_regulator_data {
->>>>>>         u32 id;
->>>>>>         const struct regulator_desc *desc;
->>>>>>         const char *supply;
->>>>>> +    int boot_uV; /* To store the bootup voltage set by bootloaders */
->>>>>>     };
->>>>>>       static const struct rpm_regulator_data rpm_mp5496_regulators[] = {
->>>>>> @@ -809,7 +810,7 @@ static const struct rpm_regulator_data rpm_mp5496_regulators[] = {
->>>>>>     };
->>>>>>       static const struct rpm_regulator_data rpm_ipq9574_mp5496_regulators[] = {
->>>>>> -    { "s1", QCOM_SMD_RPM_SMPA, 1, &ipq9574_mp5496_smpa1, "s1" },
->>>>>> +    { "s1", QCOM_SMD_RPM_SMPA, 1, &ipq9574_mp5496_smpa1, "s1", 875000 },
->>>>>>         {}
->>>>>>     };
->>>>>>     @@ -1394,6 +1395,9 @@ static int rpm_regulator_init_vreg(struct qcom_rpm_reg *vreg, struct device *dev
->>>>>>         vreg->type    = rpm_data->type;
->>>>>>         vreg->id    = rpm_data->id;
->>>>>>     +    if (rpm_data->boot_uV)
->>>>>> +        vreg->uV = rpm_data->boot_uV;
->>>>>> +
->>>>>>         memcpy(&vreg->desc, rpm_data->desc, sizeof(vreg->desc));
->>>>>>         vreg->desc.name = rpm_data->name;
->>>>>>         vreg->desc.supply_name = rpm_data->supply;
->>>> Best Regards,
->>>> Devi Priya
->> Best Regards,
->> Devi Priya
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+
+Best regards,
+Krzysztof
+
