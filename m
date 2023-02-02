@@ -2,73 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5CF776889BC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 23:28:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A55816889DB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 23:35:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232736AbjBBW2l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Feb 2023 17:28:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47330 "EHLO
+        id S231579AbjBBWfn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 17:35:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233319AbjBBW2h (ORCPT
+        with ESMTP id S231748AbjBBWfn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 17:28:37 -0500
-Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FD945CFFF
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 14:28:36 -0800 (PST)
-Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-50660e2d2ffso46272497b3.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 14:28:36 -0800 (PST)
+        Thu, 2 Feb 2023 17:35:43 -0500
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0661F6952D
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 14:35:41 -0800 (PST)
+Received: by mail-ej1-x635.google.com with SMTP id gr7so10365907ejb.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 14:35:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=xYHYyCk0Uk2jKz+BSxgBQ9AdeZqvnor3lzbcWcmYzSE=;
-        b=nWAVD9UCkiGgNNR6RDSDBB64X6TZzBF+Rs5zhnPVI8JQKfTW64CiVrzCpzvpKr9sUW
-         nKhHwXL60EAuMxto3sMXYPBFgmaQCoYxHn3XySbd/DuTSs0BKjTH8mlS2WrSOt/S5g+H
-         fjlJRexHmOjVTnwDtef/w0xdADZVcdT5R16kk6ptrKH4dpRzHS7Oq1tPgbpBpLjZUfxP
-         kj3VGUPmIGr5u9tQs/w0AnsLv/6oSXLNw3JDU3AvozwGaLCL8/nN6TI4gBUPIFgJ7bo9
-         UCVoVV6PdFmx+VVzneMukpGT1sSEDuNGdAsKpLrHtw1TrfyMaRm3UcMqzvtUfb15jNmO
-         D0Kw==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=p5KWg5y49R2vNdnwv3VPU/YYr23YbKuqRtcEwTW8lnU=;
+        b=faXd1jvBVV8qaSefQLmDyUjuLWCiiCySIAhofQhhZwqCmH2I3/KUFXigCG3p2PwOGp
+         OU+qvDEpVE0N8zjwb1o97mNvLaeWHLcwswrcQcVSaMw4td6IWgt8rPjx9x6DyGDKHsWC
+         sHvwHxzMIqu6ITHklysS+xe1Q45B7XpfolZcP1M9++kFJaW5kBlDZh76EcAVTPDPCCsO
+         nk43n0Y6rKyCJPa6EA7TyJcQ0FdffY989Gy2QhKugW+njQRGHVAQ9pcOx1zq+jsB/299
+         1YFQZ6AJNfxPvNcTpX9yfcucEB1dHOHEqgQ46iw5hzPwD3eqr2S8x3e0+9M9ZipyrFz1
+         vWIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xYHYyCk0Uk2jKz+BSxgBQ9AdeZqvnor3lzbcWcmYzSE=;
-        b=SrkBAWee6HcWVkYnsL/0vsip51xYysLpcJwHhqr+NIfxXKlI5EsIkZRH7ZhpOmzPxJ
-         WBsGJFER7ITKhlwyEtTHc2r6mL82AfOflcmd4TimidkvAG+/+v+i+JJVECmD2yLlCnQn
-         cjCfHtjjq2BiHlf+DUIMnEY38XRZoaSGjvLZNu23Ot8PoU5IRRJWLB80hY0XdWOvkq1q
-         GVjSWpEsgG46/X0Axfi3tU/5JCfqk8I9UQwvaSmq88xInfTjh2zqpmcttyYZSJOAT5Yg
-         cM+2Apy81kzk27ZNdnPesFk1PaV731tl8EnPOor7eCvD3PVbmqyFd8hfJttE2p45Gg9W
-         a7qA==
-X-Gm-Message-State: AO0yUKX9YzNfrYUfc5GEawselNnjmZme1JFFITqheERjKXrE8slh2/yr
-        diYG5PHfiuNKR+b7xDYu3ACbuuqNWdPDIliVMTkO6w==
-X-Google-Smtp-Source: AK7set9tiyqBptIgECT4gz7vMnDVbMgEyqORV3g7fqx360QWQA8YTMy9wa+AnpGZQjChyeYW/LLFlq9e2OcdIBVM9MI=
-X-Received: by 2002:a81:d46:0:b0:4ff:e4bc:b56f with SMTP id
- 67-20020a810d46000000b004ffe4bcb56fmr894826ywn.488.1675376915341; Thu, 02 Feb
- 2023 14:28:35 -0800 (PST)
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=p5KWg5y49R2vNdnwv3VPU/YYr23YbKuqRtcEwTW8lnU=;
+        b=uDhzN0DfEztLBuXl2e+77V7gkXavxgEXvh4G83KMZg5nTbgFZYP71bwBQXEQXGJi0b
+         fUiT2Mtt1ybCBR0gw1ptZyn40g6B1lggInp2EyrmmsKQWgCQkstj3/RG8eW8A+Ru3+RK
+         NXBpSLgMnxC97JHnVkPf0a3F1/Xyook+rIoSLmVKLDAZlWh8SgwXYEBuQG1y7SisEONu
+         EgGR9x8YSElNeVrI0bMoyfGVhdcVIvL3laaIL+/91BxicDJ8Sk00mbcAZ3CISJ9eZHBI
+         LHfNaI8UB+dVTDrRSa1MykybR3yf5AylK2RYAmKRsiHw6l8G7XwBEJDDHCiL83yigri0
+         U2Ig==
+X-Gm-Message-State: AO0yUKVP+fVurB6f90bonp1XCf2gVTnB4Io/RKg3LbjduWYv7ibEaJ9/
+        ozOaec39qVFYiH4J9IM1UIOy8w==
+X-Google-Smtp-Source: AK7set82YGgN8WEkYacPEvPUc5oB/aKlORz10ksuFOaSSDoBCOzsMGJK3ak/e39EFz2f3k9B2dI3xg==
+X-Received: by 2002:a17:907:1607:b0:88a:8e57:f05b with SMTP id hb7-20020a170907160700b0088a8e57f05bmr10486582ejc.22.1675377339474;
+        Thu, 02 Feb 2023 14:35:39 -0800 (PST)
+Received: from [192.168.1.101] (abyl20.neoplus.adsl.tpnet.pl. [83.9.31.20])
+        by smtp.gmail.com with ESMTPSA id gz22-20020a170906f2d600b0088f88d1d36bsm395490ejb.166.2023.02.02.14.35.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Feb 2023 14:35:39 -0800 (PST)
+Message-ID: <7968db3b-8545-0601-4302-301a4006f3bc@linaro.org>
+Date:   Thu, 2 Feb 2023 23:35:37 +0100
 MIME-Version: 1.0
-References: <20230202104452.299048-1-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230202104452.299048-1-krzysztof.kozlowski@linaro.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Thu, 2 Feb 2023 23:28:24 +0100
-Message-ID: <CACRpkdb_OHXfAGMYwFv3gzRWyDJw6=eNuJedteMxiEvPtQxvWw@mail.gmail.com>
-Subject: Re: [PATCH v2 00/10] pinctrl/ARM/arm64: qcom: correct TLMM
- gpio-ranges and GPIO pin names
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH] cpufreq: qcom-hw: Fix cpufreq_driver->get() for non-LMH
+ systems
+Content-Language: en-US
+To:     Douglas Anderson <dianders@chromium.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>
+Cc:     swboyd@chromium.org, mka@chromium.org,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Vinod Koul <vkoul@kernel.org>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        Luca Weiss <luca@z3ntu.xyz>, Iskren Chernev <me@iskren.info>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
+References: <20230202140005.1.I4b30aaa027c73372ec4068cc0f0dc665af8b938d@changeid>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230202140005.1.I4b30aaa027c73372ec4068cc0f0dc665af8b938d@changeid>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -77,19 +82,115 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Feb 2, 2023 at 11:45 AM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
 
-> Changes since v1:
-> 1. Match the driver's ngpios (so usually include the ufs-reset where
->    applicable). Several patches were dropped, other rewritten.
-> 2. Add tags
 
-Needless to say I'm a big fan of the series:
-Acked-by: Linus Walleij <linus.walleij@linaro.org>
+On 2.02.2023 23:00, Douglas Anderson wrote:
+> On a sc7180-based Chromebook, when I go to
+> /sys/devices/system/cpu/cpu0/cpufreq I can see:
+> 
+>   cpuinfo_cur_freq:2995200
+>   cpuinfo_max_freq:1804800
+>   scaling_available_frequencies:300000 576000 ... 1708800 1804800
+>   scaling_cur_freq:1804800
+>   scaling_max_freq:1804800
+> 
+> As you can see the `cpuinfo_cur_freq` is bogus. It turns out that this
+> bogus info started showing up as of commit 205f5e984d30 ("cpufreq:
+> qcom-hw: Fix the frequency returned by cpufreq_driver->get()"). That
+> commit seems to assume that everyone is on the LMH bandwagon, but
+> sc7180 isn't.
+> 
+> Let's go back to the old code in the case where LMH isn't used.
+> 
+> Fixes: 205f5e984d30 ("cpufreq: qcom-hw: Fix the frequency returned by cpufreq_driver->get()")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+Actually I hit the exact same issue when working on CPRh-aware
+cpufreq with manual OSM programming.. LMh gets enabled by the firmware
+on most recent platforms, but it's not the case for some old-timers.
 
-Will you send me a pull request for the pinctrl things as soon as
-you feel confident it is finished, and I'll queue it up for v6.3?
+I figured that adding a bool broken_lmh_freq in driver data would be
+a good middleground between reverting that patch and ignoring the
+issue, because it *does* matter what this function reports on LMh-
+enabled platforms (yes, the subsystems are bluepilled between each
+other and OSM/EPSS does not know the *real* throttled frequency),
+but obviously we don't want to report 2.99Ghz otherwise..
 
-Yours,
-Linus Walleij
+I think 7280 had an issue where a SoC-specific compatible was not
+introduced when the DT part was first merged, same goes for 6115.
+6115 does have firmware-enabled LMh, not sure about 7280. In case
+you wanted to go that route, I think it would be suitable to add
+a blacklist of retroactively-broken platforms (match-by-machine-
+compatible; don't scream at me bindings folks, I guess that's the
+least messy solution) in addition to either matching the SoC-specific
+compatible to epss_broken_lmh_driver_data.
+
+Or we can forget about old DTs and just bind qcom,sc7180-cpufreq-hw
+(and 7280, maybe? please check.) to this new driver data without
+checking the machine compatible.
+
+
+
+Konrad
+> 
+>  drivers/cpufreq/qcom-cpufreq-hw.c | 24 +++++++++++++-----------
+>  1 file changed, 13 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+> index 9505a812d6a1..957cf6bb8c05 100644
+> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
+> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+> @@ -143,40 +143,42 @@ static unsigned long qcom_lmh_get_throttle_freq(struct qcom_cpufreq_data *data)
+>  	return lval * xo_rate;
+>  }
+>  
+> -/* Get the current frequency of the CPU (after throttling) */
+> -static unsigned int qcom_cpufreq_hw_get(unsigned int cpu)
+> +/* Get the frequency requested by the cpufreq core for the CPU */
+> +static unsigned int qcom_cpufreq_get_freq(unsigned int cpu)
+>  {
+>  	struct qcom_cpufreq_data *data;
+> +	const struct qcom_cpufreq_soc_data *soc_data;
+>  	struct cpufreq_policy *policy;
+> +	unsigned int index;
+>  
+>  	policy = cpufreq_cpu_get_raw(cpu);
+>  	if (!policy)
+>  		return 0;
+>  
+>  	data = policy->driver_data;
+> +	soc_data = qcom_cpufreq.soc_data;
+>  
+> -	return qcom_lmh_get_throttle_freq(data) / HZ_PER_KHZ;
+> +	index = readl_relaxed(data->base + soc_data->reg_perf_state);
+> +	index = min(index, LUT_MAX_ENTRIES - 1);
+> +
+> +	return policy->freq_table[index].frequency;
+>  }
+>  
+> -/* Get the frequency requested by the cpufreq core for the CPU */
+> -static unsigned int qcom_cpufreq_get_freq(unsigned int cpu)
+> +static unsigned int qcom_cpufreq_hw_get(unsigned int cpu)
+>  {
+>  	struct qcom_cpufreq_data *data;
+> -	const struct qcom_cpufreq_soc_data *soc_data;
+>  	struct cpufreq_policy *policy;
+> -	unsigned int index;
+>  
+>  	policy = cpufreq_cpu_get_raw(cpu);
+>  	if (!policy)
+>  		return 0;
+>  
+>  	data = policy->driver_data;
+> -	soc_data = qcom_cpufreq.soc_data;
+>  
+> -	index = readl_relaxed(data->base + soc_data->reg_perf_state);
+> -	index = min(index, LUT_MAX_ENTRIES - 1);
+> +	if (data->throttle_irq >= 0)
+> +		return qcom_lmh_get_throttle_freq(data) / HZ_PER_KHZ;
+>  
+> -	return policy->freq_table[index].frequency;
+> +	return qcom_cpufreq_get_freq(cpu);
+>  }
+>  
+>  static unsigned int qcom_cpufreq_hw_fast_switch(struct cpufreq_policy *policy,
