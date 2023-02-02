@@ -2,153 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 50C3C6875D9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 07:24:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 09C906875E9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 07:34:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231661AbjBBGY4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Feb 2023 01:24:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59182 "EHLO
+        id S229640AbjBBGe2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 01:34:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230323AbjBBGYv (ORCPT
+        with ESMTP id S229595AbjBBGe1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 01:24:51 -0500
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55909244B0;
-        Wed,  1 Feb 2023 22:24:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1675319090; x=1706855090;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=e5rVxPWN2FtKhwqigD0t6hckmWgKeeiQhwIFXblR4CY=;
-  b=GxBGpkImb8C9mZ0K8Eu+17YNbl0hUmn15uTqXccBqNwU/PdedgdpdjAS
-   /1UUbWy2OPpZbwuxijDwmsv79qI+XNvupSgzXiErWQUZ2Sfmzakj5RmjG
-   yNQABg5iXp+RhZVk08GXLNqw0xuLyyC7DqEWqTIc1IrT4vw9lWbtj9wuo
-   A=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 01 Feb 2023 22:24:49 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.45.79.139])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Feb 2023 22:24:49 -0800
-Received: from [10.216.62.140] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 1 Feb 2023
- 22:24:47 -0800
-Message-ID: <e5238ebc-bd8d-8452-2cbe-0692ec2a2213@quicinc.com>
-Date:   Thu, 2 Feb 2023 11:54:44 +0530
+        Thu, 2 Feb 2023 01:34:27 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4A1A20D0C;
+        Wed,  1 Feb 2023 22:34:26 -0800 (PST)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3124Oscx009309;
+        Thu, 2 Feb 2023 06:34:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=SD+Uulm2RDb3jeFAH3JgTFpfb8auI2A6K79Gn0pNxUY=;
+ b=cuxscoOXDKnzgrLObBz1AS34mzcplNpXMF+m2g5gl0ei0pI6gPo/uYsVvPSXEuTeGOQN
+ Kcp9qKB8lfkWm2yvc13rkke5jzyWUer+BDRf4ncw1VKhH+2OI5t16+dpe9xxz4ZznTlq
+ tV0WeVt8lI0i9mM8nDBu8YdISDhDub9L3dCX2Nu6Ki3G9msYZKe3nWA/0wMr5eDun4tQ
+ Bg1wp1Wm0PZ4UUfRCD0s/rPOPPMIxV1zlp+cyvVaKDXswMRSB/HiZ9znsdpBWI/2XvBC
+ elHhViUrn54F7V08nR2eMuYg1IASKb+aIGuV9b1o8j2pgPR3TvMLswJ/ip3j15GrsNTX 4A== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nfvgbhbe0-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 02 Feb 2023 06:34:19 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3126YIZJ010389
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 2 Feb 2023 06:34:18 GMT
+Received: from fenglinw2-gv.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Wed, 1 Feb 2023 22:34:15 -0800
+From:   Fenglin Wu <quic_fenglinw@quicinc.com>
+To:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <pavel@ucw.cz>, <krzysztof.kozlowski@linaro.org>, <lee@kernel.org>
+CC:     <quic_collinsd@quicinc.com>, <quic_subbaram@quicinc.com>,
+        <quic_fenglinw@quicinc.com>
+Subject: [PATCH v6 0/2] Add LED driver for flash module in QCOM PMICs
+Date:   Thu, 2 Feb 2023 14:29:04 +0800
+Message-ID: <20230202062906.211565-1-quic_fenglinw@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH] firmware: qcom_scm: modify qcom_scm_set_download_mode()
-Content-Language: en-US
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <1674562755-5378-1-git-send-email-quic_mojha@quicinc.com>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <1674562755-5378-1-git-send-email-quic_mojha@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: rdqTfPc9X1DsaiiDVC7fCk5QHVKUazPF
+X-Proofpoint-ORIG-GUID: rdqTfPc9X1DsaiiDVC7fCk5QHVKUazPF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-02-01_15,2023-01-31_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
+ spamscore=0 mlxscore=0 impostorscore=0 malwarescore=0 suspectscore=0
+ phishscore=0 clxscore=1015 mlxlogscore=693 lowpriorityscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302020060
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Friendly reminder ..
+Initial driver and binding document changes for supporting flash LED
+module in Qualcomm Technologies, Inc. PMICs.
 
--Mukesh
-On 1/24/2023 5:49 PM, Mukesh Ojha wrote:
-> Modify qcom_scm_set_download_mode() such that it can support
-> multiple modes. There is no functional change with this change.
-> 
-> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-> ---
->   drivers/firmware/qcom_scm.c | 17 ++++++++---------
->   include/linux/qcom_scm.h    |  5 +++++
->   2 files changed, 13 insertions(+), 9 deletions(-)
-> 
-> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-> index cdbfe54..712bb03 100644
-> --- a/drivers/firmware/qcom_scm.c
-> +++ b/drivers/firmware/qcom_scm.c
-> @@ -400,22 +400,22 @@ int qcom_scm_set_remote_state(u32 state, u32 id)
->   }
->   EXPORT_SYMBOL(qcom_scm_set_remote_state);
->   
-> -static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
-> +static int __qcom_scm_set_dload_mode(struct device *dev, enum qcom_download_mode mode)
->   {
->   	struct qcom_scm_desc desc = {
->   		.svc = QCOM_SCM_SVC_BOOT,
->   		.cmd = QCOM_SCM_BOOT_SET_DLOAD_MODE,
->   		.arginfo = QCOM_SCM_ARGS(2),
-> -		.args[0] = QCOM_SCM_BOOT_SET_DLOAD_MODE,
-> +		.args[0] = mode,
->   		.owner = ARM_SMCCC_OWNER_SIP,
->   	};
->   
-> -	desc.args[1] = enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0;
-> +	desc.args[1] = mode;
->   
->   	return qcom_scm_call_atomic(__scm->dev, &desc, NULL);
->   }
->   
-> -static void qcom_scm_set_download_mode(bool enable)
-> +static void qcom_scm_set_download_mode(enum qcom_download_mode mode)
->   {
->   	bool avail;
->   	int ret = 0;
-> @@ -424,10 +424,9 @@ static void qcom_scm_set_download_mode(bool enable)
->   					     QCOM_SCM_SVC_BOOT,
->   					     QCOM_SCM_BOOT_SET_DLOAD_MODE);
->   	if (avail) {
-> -		ret = __qcom_scm_set_dload_mode(__scm->dev, enable);
-> +		ret = __qcom_scm_set_dload_mode(__scm->dev, mode);
->   	} else if (__scm->dload_mode_addr) {
-> -		ret = qcom_scm_io_writel(__scm->dload_mode_addr,
-> -				enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0);
-> +		ret = qcom_scm_io_writel(__scm->dload_mode_addr, mode);
->   	} else {
->   		dev_err(__scm->dev,
->   			"No available mechanism for setting download mode\n");
-> @@ -1410,7 +1409,7 @@ static int qcom_scm_probe(struct platform_device *pdev)
->   	 * disabled below by a clean shutdown/reboot.
->   	 */
->   	if (download_mode)
-> -		qcom_scm_set_download_mode(true);
-> +		qcom_scm_set_download_mode(QCOM_DOWNLOAD_FULLDUMP);
->   
->   	return 0;
->   }
-> @@ -1419,7 +1418,7 @@ static void qcom_scm_shutdown(struct platform_device *pdev)
->   {
->   	/* Clean shutdown, disable download mode to allow normal restart */
->   	if (download_mode)
-> -		qcom_scm_set_download_mode(false);
-> +		qcom_scm_set_download_mode(QCOM_DOWNLOAD_NODUMP);
->   }
->   
->   static const struct of_device_id qcom_scm_dt_match[] = {
-> diff --git a/include/linux/qcom_scm.h b/include/linux/qcom_scm.h
-> index f833564..f9bc84e 100644
-> --- a/include/linux/qcom_scm.h
-> +++ b/include/linux/qcom_scm.h
-> @@ -14,6 +14,11 @@
->   #define QCOM_SCM_CPU_PWR_DOWN_L2_OFF	0x1
->   #define QCOM_SCM_HDCP_MAX_REQ_CNT	5
->   
-> +enum qcom_download_mode {
-> +	QCOM_DOWNLOAD_NODUMP    = 0x00,
-> +	QCOM_DOWNLOAD_FULLDUMP  = 0x10,
-> +};
-> +
->   struct qcom_scm_hdcp_req {
->   	u32 addr;
->   	u32 val;
+Changes in V6:
+  1. Update the driver to address review comments from Jones,Lee.
+
+Changes in V5:
+  1. Add MODULE_DEVICE_TABLE for auto-loading.
+
+Changes in V4:
+  1. Added Tested-By tag.
+  2. Addressed review comments in the binding change and added
+     Reviewed-by tag.
+
+Changes in V3:
+  1. Updated the driver to use regmap_field for register access.
+  2. Adressed the review comments in binding document change.
+
+Changes in V2:
+  1. Addressed review comments in binding change, thanks Krzysztof!
+  2. Updated driver to address the compilation issue reported by
+     kernel test robot.
+
+
+Fenglin Wu (2):
+  leds: flash: add driver to support flash LED module in QCOM PMICs
+  dt-bindings: leds: add QCOM flash LED controller
+
+ .../bindings/leds/qcom,spmi-flash-led.yaml    | 116 +++
+ drivers/leds/flash/Kconfig                    |  15 +
+ drivers/leds/flash/Makefile                   |   1 +
+ drivers/leds/flash/leds-qcom-flash.c          | 768 ++++++++++++++++++
+ 4 files changed, 900 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml
+ create mode 100644 drivers/leds/flash/leds-qcom-flash.c
+
+-- 
+2.25.1
+
