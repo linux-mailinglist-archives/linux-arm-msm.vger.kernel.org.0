@@ -2,181 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 161EF6880B4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 15:53:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DDDC6880FE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 16:04:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232500AbjBBOxs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Feb 2023 09:53:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60282 "EHLO
+        id S232344AbjBBPEA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 10:04:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232477AbjBBOxL (ORCPT
+        with ESMTP id S232206AbjBBPD4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 09:53:11 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27E4A3C24;
-        Thu,  2 Feb 2023 06:52:57 -0800 (PST)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 312DsRF9001719;
-        Thu, 2 Feb 2023 14:52:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=NKg+buQ61NH+8eNOC2tz/6bTj6nJ7m3J/rWhZSWO/5Q=;
- b=fN4Lgw9f5XJEGTSJ9cLpUFs1Ky9hVK92tuxeJ2IywLEyg9tkqid94nohClotUD5K4sJ0
- PbNok5Jy/MpyTwRGVvETOBVojjdh1jQcElbefCYWtkf2JHyD5xmxy9D5ho8QRT08W00R
- e1X25xei8+CaO5ien/XhQC/UPGZdQLOLYaugmUGIK5+y1VW8kMD9V3+HE+Knf7fUYNO0
- Fycae2ktvxY4pUgcjBnCJv2pKHdARXogKm2c765EGN9Vs59d7QlRu2POii3zdhchDcw/
- LVdo2+h4KX33tOZuN2mUWpg3CQxBS5gtm5XAFT8jhKMB+SiQQmt9jtCrRnDSQ8KrI4Pa wg== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nfqsyavex-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 02 Feb 2023 14:52:53 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 312Eqq4e019715
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 2 Feb 2023 14:52:52 GMT
-Received: from win-platform-upstream01.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Thu, 2 Feb 2023 06:52:48 -0800
-From:   Kathiravan T <quic_kathirav@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <jassisinghbrar@gmail.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-CC:     Kathiravan T <quic_kathirav@quicinc.com>
-Subject: [PATCH 6/6] arm64: dts: qcom: ipq5332: enable the CPUFreq support
-Date:   Thu, 2 Feb 2023 20:22:08 +0530
-Message-ID: <20230202145208.2328032-7-quic_kathirav@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230202145208.2328032-1-quic_kathirav@quicinc.com>
-References: <20230202145208.2328032-1-quic_kathirav@quicinc.com>
-MIME-Version: 1.0
+        Thu, 2 Feb 2023 10:03:56 -0500
+Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D013821A08;
+        Thu,  2 Feb 2023 07:03:37 -0800 (PST)
+Received: by mail-oi1-f178.google.com with SMTP id r28so1652158oiw.3;
+        Thu, 02 Feb 2023 07:03:37 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=eaGBuW2eiAUWLAbhvcH7sX8zp4za8aw/4jDrYwgHmCA=;
+        b=lHj4tFYCjqudewVrreBSLAFExfFuQzgGYtvV/u7yvsxKcKK/kt2i+ytI8rG5um1y8H
+         AqGY5dvLu4XqBPsQLslIYIECgih2E1ZBpyjgQsfxrWPkq9m+OC77MO8HWqLMPNEuSjkM
+         jtFIlMxMzO2zcW/Z9srje7ozIwwz/sET31agWwczsq8mz26uUl3ElpKW8Q6aNT4oUS7I
+         naz0Qh7He/59cQD5zjYFBk94loX25B2VFkuGjJ/Wfud8tZ892NOElX0m2aS9XXKiA/cV
+         E+SfSWHrQyCR5hlWJ7yWkhqQBIPMfhg1WayaokAzhgoi48Yrlx/NT++5elCUfxT5WV21
+         c7bg==
+X-Gm-Message-State: AO0yUKUfgcavOy31aos6KuwRHEpyfVI+1d5KmKVEe+iihRZqmcRiuUJr
+        G0dvS8Ool58ajiR2Hj/146G1+aIGYQ==
+X-Google-Smtp-Source: AK7set/zJDHBmEsnM2EiuNQ+EOQRgpUewV4nbZTL+K+udzmJHwcrQzAad3Em6PvVUuZy6oh+DZt6ig==
+X-Received: by 2002:a05:6808:221b:b0:365:367:7c7a with SMTP id bd27-20020a056808221b00b0036503677c7amr4142713oib.11.1675350216914;
+        Thu, 02 Feb 2023 07:03:36 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id g131-20020acab689000000b0036e9160f57csm8075076oif.20.2023.02.02.07.03.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Feb 2023 07:03:36 -0800 (PST)
+Received: (nullmailer pid 1858082 invoked by uid 1000);
+        Thu, 02 Feb 2023 15:03:31 -0000
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ObdVxgaFqcwL-m64ip_YkdBQkAGQvQH_
-X-Proofpoint-ORIG-GUID: ObdVxgaFqcwL-m64ip_YkdBQkAGQvQH_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-02-02_04,2023-02-02_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- suspectscore=0 bulkscore=0 phishscore=0 spamscore=0 lowpriorityscore=0
- malwarescore=0 clxscore=1015 mlxscore=0 mlxlogscore=999 priorityscore=1501
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302020133
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+MIME-Version: 1.0
+From:   Rob Herring <robh@kernel.org>
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>, vkoul@kernel.org,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Lee Jones <lee@kernel.org>, linux-phy@lists.infradead.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+In-Reply-To: <20230202133816.4026990-3-abel.vesa@linaro.org>
+References: <20230202133816.4026990-1-abel.vesa@linaro.org>
+ <20230202133816.4026990-3-abel.vesa@linaro.org>
+Message-Id: <167535003913.1854224.16066209140007684917.robh@kernel.org>
+Subject: Re: [RFC v3 2/7] dt-bindings: phy: Add qcom,snps-eusb2-repeater
+ schema file
+Date:   Thu, 02 Feb 2023 09:03:31 -0600
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the APCS, A53 PLL, cpu-opp-table nodes to enable the CPU frequency
-above 800MHz.
 
-Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
----
- arch/arm64/boot/dts/qcom/ipq5332.dtsi | 36 +++++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
+On Thu, 02 Feb 2023 15:38:11 +0200, Abel Vesa wrote:
+> The SM8550 SoC uses Synopsis eUSB2 repeater found in PM8550b.
+> Add a dt-binding schema for the new driver.
+> 
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+>  .../phy/qcom,snps-eusb2-repeater.yaml         | 48 +++++++++++++++++++
+>  1 file changed, 48 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/phy/qcom,snps-eusb2-repeater.yaml
+> 
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-index 7f0ba2ec339c..483bd89817b6 100644
---- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-@@ -5,6 +5,7 @@
-  * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
-+#include <dt-bindings/clock/qcom,apss-ipq.h>
- #include <dt-bindings/clock/qcom,ipq5332-gcc.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- 
-@@ -35,6 +36,8 @@ CPU0: cpu@0 {
- 			reg = <0x0>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
-+			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
-+			operating-points-v2 = <&cpu_opp_table>;
- 		};
- 
- 		CPU1: cpu@1 {
-@@ -43,6 +46,8 @@ CPU1: cpu@1 {
- 			reg = <0x1>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
-+			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
-+			operating-points-v2 = <&cpu_opp_table>;
- 		};
- 
- 		CPU2: cpu@2 {
-@@ -51,6 +56,8 @@ CPU2: cpu@2 {
- 			reg = <0x2>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
-+			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
-+			operating-points-v2 = <&cpu_opp_table>;
- 		};
- 
- 		CPU3: cpu@3 {
-@@ -59,6 +66,8 @@ CPU3: cpu@3 {
- 			reg = <0x3>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
-+			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
-+			operating-points-v2 = <&cpu_opp_table>;
- 		};
- 
- 		L2_0: l2-cache {
-@@ -67,6 +76,16 @@ L2_0: l2-cache {
- 		};
- 	};
- 
-+	cpu_opp_table: opp-table-cpu{
-+		compatible = "operating-points-v2";
-+		opp-shared;
-+
-+		opp-1488000000 {
-+			opp-hz = /bits/ 64 <1488000000>;
-+			clock-latency-ns = <200000>;
-+		};
-+	};
-+
- 	firmware {
- 		scm {
- 			compatible = "qcom,scm-ipq5332", "qcom,scm";
-@@ -203,6 +222,23 @@ v2m2: v2m@2 {
- 			};
- 		};
- 
-+		apcs_glb: mailbox@b111000 {
-+			compatible = "qcom,ipq5332-apcs-apps-global";
-+			reg = <0x0b111000 0x1000>;
-+			#clock-cells = <1>;
-+			clocks = <&a53pll>, <&xo_board>;
-+			clock-names = "pll", "xo";
-+			#mbox-cells = <1>;
-+		};
-+
-+		a53pll: clock@b116000 {
-+			compatible = "qcom,ipq5332-a53pll";
-+			reg = <0x0b116000 0x40>;
-+			#clock-cells = <0>;
-+			clocks = <&xo_board>;
-+			clock-names = "xo";
-+		};
-+
- 		timer@b120000 {
- 			compatible = "arm,armv7-timer-mem";
- 			reg = <0x0b120000 0x1000>;
--- 
-2.34.1
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-repeater.example.dtb: pmic@7: compatible:0: 'qcom,pm8550' is not one of ['qcom,pm6125', 'qcom,pm6150', 'qcom,pm6150l', 'qcom,pm6350', 'qcom,pm660', 'qcom,pm660l', 'qcom,pm7250b', 'qcom,pm7325', 'qcom,pm8004', 'qcom,pm8005', 'qcom,pm8009', 'qcom,pm8019', 'qcom,pm8028', 'qcom,pm8110', 'qcom,pm8150', 'qcom,pm8150b', 'qcom,pm8150c', 'qcom,pm8150l', 'qcom,pm8226', 'qcom,pm8350', 'qcom,pm8350b', 'qcom,pm8350c', 'qcom,pm8841', 'qcom,pm8909', 'qcom,pm8916', 'qcom,pm8941', 'qcom,pm8950', 'qcom,pm8953', 'qcom,pm8994', 'qcom,pm8998', 'qcom,pma8084', 'qcom,pmd9635', 'qcom,pmi8950', 'qcom,pmi8962', 'qcom,pmi8994', 'qcom,pmi8998', 'qcom,pmk8002', 'qcom,pmk8350', 'qcom,pmm8155au', 'qcom,pmp8074', 'qcom,pmr735a', 'qcom,pmr735b', 'qcom,pms405', 'qcom,pmx55', 'qcom,pmx65', 'qcom,smb2351']
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-repeater.example.dtb: pmic@7: 'phy@fd00' does not match any of the regexes: '(.*)?(wled|leds)@[0-9a-f]+$', '^adc-tm@[0-9a-f]+$', '^adc@[0-9a-f]+$', '^audio-codec@[0-9a-f]+$', '^charger@[0-9a-f]+$', '^mpps@[0-9a-f]+$', '^rtc@[0-9a-f]+$', '^temp-alarm@[0-9a-f]+$', '^usb-detect@[0-9a-f]+$', '^usb-vbus-regulator@[0-9a-f]+$', '^vibrator@[0-9a-f]+$', 'gpio@[0-9a-f]+$', 'pinctrl-[0-9]+', 'pon@[0-9a-f]+$'
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+Documentation/devicetree/bindings/phy/qcom,snps-eusb2-repeater.example.dtb: /example-0/pmic@7: failed to match any schema with compatible: ['qcom,pm8550', 'qcom,spmi-pmic']
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230202133816.4026990-3-abel.vesa@linaro.org
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
 
