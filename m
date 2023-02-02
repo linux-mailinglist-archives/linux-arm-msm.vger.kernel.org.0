@@ -2,193 +2,219 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D926E6873CD
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 04:27:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 954E7687428
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 04:50:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231339AbjBBD1n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Feb 2023 22:27:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56232 "EHLO
+        id S230169AbjBBDuZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Feb 2023 22:50:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231178AbjBBD1n (ORCPT
+        with ESMTP id S229612AbjBBDuY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Feb 2023 22:27:43 -0500
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D1DD75789
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Feb 2023 19:27:41 -0800 (PST)
-Received: by mail-pf1-x431.google.com with SMTP id 203so279022pfx.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Feb 2023 19:27:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=NEs5w/Zuj5wi2jqaUcX6USJbxYIAIBIiduwj0besJYU=;
-        b=Er9p4ruloeDgtE97PWkkgGUfOMgTWGb33ZGTtzso4x+xbGjyvYTtB3szmIC5iY+gBG
-         UbGbF09HlC+/NT099w43eGqGvM7SaOjhHEx2E+B/4Qo+GJ3uVcOEi+suPTokZ1cjQmJQ
-         RJ9Oo/9PhDsk7TZRoChqnxAAn5ryxPkfP9pALXBwvS5IJjpQPy7t7It5+O/yKXhqZC87
-         dysYwdK1TiMwAqv2CWWfpGVG4lgeJPKyLairBIs9nAkhR5XD8Zaz8Js/V4QwFhexldP/
-         10aqJe4HAkgjE04U4wPDH6KVqghzg9hKbVnVLrnen+qxt96CiPDpj50GrT5iT5t7NWR5
-         SBRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NEs5w/Zuj5wi2jqaUcX6USJbxYIAIBIiduwj0besJYU=;
-        b=xjAjlXEyw6TODbyVYieQvqlTGPI780lv18kD4nzH/yBVapNHWv5Kdy8Je92rb8i/8h
-         PHmQCaWW2H6BPyc9DJls1yc2DBIl8GsPcY68wcqSFfkAiIKMDN5q+9bew5c2QQCypKyw
-         rzrI7SE2zZecAdnZE82Qt/+UAEwL5DQ1BS54nbqZBjq4718ZZjep40nQL+VxTj7bPc48
-         UQQAj4a3Y/aeE85ap7cvVdq97ArPj7xcbCHDmmNtj8O39R0GefvAvVQCRI0VmTqt3l58
-         NM4TDWVh/tfGMMQeEMfKPZJPTBKgRu4l+zr97nx8rDSToIhFBjU/p781ntTv6CNWnt6B
-         s57w==
-X-Gm-Message-State: AO0yUKVMJg3Ax9usL6dJ+XOhCvZj3TB2rjYCLPE/UYAboe0aU0l90DNj
-        Cuc943PZvExVzkAREMF560mIzXDVzFcjQyqjXS+rSw==
-X-Google-Smtp-Source: AK7set822feNK2aygLQhxg0zxiYQdkrAh7n34aKi0XQ7S7HdOj1+Gw0U91RA9yWTIGj9Fw8fujtqKQHV5HIhDmdGVxs=
-X-Received: by 2002:a65:408d:0:b0:4de:7028:d2fc with SMTP id
- t13-20020a65408d000000b004de7028d2fcmr825133pgp.122.1675308460516; Wed, 01
- Feb 2023 19:27:40 -0800 (PST)
+        Wed, 1 Feb 2023 22:50:24 -0500
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E3D77BE61;
+        Wed,  1 Feb 2023 19:50:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1675309823; x=1706845823;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=VRvgZHNe7ra9m4s5E9GktRBZ7PTO6blvfnKeKReW0js=;
+  b=Gn88+2pxauMxaOm2uG30vCAbGqVwoAg3CYvlN0NjA5uRhHm+s5N+Fv5k
+   KhrGlFTumZNQ3stZ4egJcBJG8N90advhWkkY17bMpqAWTk6HK/lldQVvN
+   j7VAHXa+zqk3g+nubFD1c8jLlAc18/8TdS6lATSNzLemUigbrZShIs183
+   sfSG1QyFnj0Hp+feHbEemV/Xeb8b5QqcO4s2PHBpWM8iIcUNcSDz9Ccoo
+   kGLfB9TAo6XlxqNOeROkZPNi9VbOMe0jv4jZZbDctjsyTsgD9eAsuA/p/
+   Bx6NNcAGJUqcONK6yvll5RgLs2AMTYsHn/Vcu0Yl+fXxH86UqHbEX56WF
+   Q==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10608"; a="392924511"
+X-IronPort-AV: E=Sophos;i="5.97,266,1669104000"; 
+   d="scan'208";a="392924511"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Feb 2023 19:50:19 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10608"; a="789135407"
+X-IronPort-AV: E=Sophos;i="5.97,266,1669104000"; 
+   d="scan'208";a="789135407"
+Received: from orsmsx602.amr.corp.intel.com ([10.22.229.15])
+  by orsmga004.jf.intel.com with ESMTP; 01 Feb 2023 19:50:19 -0800
+Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.16; Wed, 1 Feb 2023 19:50:19 -0800
+Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.16; Wed, 1 Feb 2023 19:50:18 -0800
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.16 via Frontend Transport; Wed, 1 Feb 2023 19:50:18 -0800
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (104.47.58.169)
+ by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.16; Wed, 1 Feb 2023 19:50:18 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=eqSm60rOooax6NBS/WOsbeoVGYrVwK8pXKV/0LJjslpYUnOWZ56KjIQljwQ2pp+jt377b1ekm/e68gxUC5yxh8fPn0GJ7vea3e0b8Z0tfH812VZScn6On8l47qEZ1aJQzOR0wf29ZakZaEWivxzvU/pBAB4LPaugWexfCQn/xdGQm7+aOXirnuGWlN/+J+Zb+7JEO04VDn2IAh9oZ2Pu7nZNKfClfk3K6QGaYtK0mZruHxAPLcQNeixU4JSzlEn5RYCq4l7tnDgE5JHOxJFJvuIrYdTBbdmB+s0COjWU5TXY2ZERy+Ldu+1Z0ER0V0LIPDBtADtCMWghcO1YMEOHYQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=VRvgZHNe7ra9m4s5E9GktRBZ7PTO6blvfnKeKReW0js=;
+ b=Dk7EGjY3rVpIzbineJCfz8CjGa9ywFYQx2GL8EoBxhwTMrA1mdq140ZWE7JzBoDpWgO0c4YmsC3TEvuYNSgyHYIEFGwvqXsjaxSCzT/ARQNZkFMC+4+zFaFrNRkvdr+OeXk5C2ErBZbXeffUCu3c8HRHgy+GRYMfFZPHhRwBloqSSVpS/7pk5XAJQmuhQfYapYg+bmVBNWcp7CfKySr6fjbLnqMqfJSiA+CIiJK/U5fmfjNPwPq7ada2KUPWEqkl8TncJe1Cbl5p2j4Q0knENuD1bER02zgq/xLrDDuSzWY56HmPejg3DV9qTZtRch0AMjCkPBr3pP/KP/cOVxaQew==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from BN9PR11MB5276.namprd11.prod.outlook.com (2603:10b6:408:135::18)
+ by CY8PR11MB7800.namprd11.prod.outlook.com (2603:10b6:930:72::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6043.38; Thu, 2 Feb
+ 2023 03:50:16 +0000
+Received: from BN9PR11MB5276.namprd11.prod.outlook.com
+ ([fe80::6a8d:b95:e1b5:d79d]) by BN9PR11MB5276.namprd11.prod.outlook.com
+ ([fe80::6a8d:b95:e1b5:d79d%8]) with mapi id 15.20.6064.027; Thu, 2 Feb 2023
+ 03:50:15 +0000
+From:   "Tian, Kevin" <kevin.tian@intel.com>
+To:     Jason Gunthorpe <jgg@nvidia.com>
+CC:     Robin Murphy <robin.murphy@arm.com>,
+        Nicolin Chen <nicolinc@nvidia.com>,
+        "joro@8bytes.org" <joro@8bytes.org>,
+        "will@kernel.org" <will@kernel.org>,
+        "agross@kernel.org" <agross@kernel.org>,
+        "andersson@kernel.org" <andersson@kernel.org>,
+        "konrad.dybcio@linaro.org" <konrad.dybcio@linaro.org>,
+        "yong.wu@mediatek.com" <yong.wu@mediatek.com>,
+        "matthias.bgg@gmail.com" <matthias.bgg@gmail.com>,
+        "thierry.reding@gmail.com" <thierry.reding@gmail.com>,
+        "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+        "cohuck@redhat.com" <cohuck@redhat.com>,
+        "vdumpa@nvidia.com" <vdumpa@nvidia.com>,
+        "jonathanh@nvidia.com" <jonathanh@nvidia.com>,
+        "iommu@lists.linux.dev" <iommu@lists.linux.dev>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-mediatek@lists.infradead.org" 
+        <linux-mediatek@lists.infradead.org>,
+        "linux-arm-kernel@lists.infradead.org" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>,
+        "kvm@vger.kernel.org" <kvm@vger.kernel.org>
+Subject: RE: [PATCH 1/4] iommu: Add a broken_unmanaged_domain flag in
+ iommu_ops
+Thread-Topic: [PATCH 1/4] iommu: Add a broken_unmanaged_domain flag in
+ iommu_ops
+Thread-Index: AQHZMoqzsVwORV4fDkqb25GPYvi+2K6yz/kAgAAgNYCAAhsCEIAB7paAgAJ2Q5CAAMVyAIAA2Chg
+Date:   Thu, 2 Feb 2023 03:50:15 +0000
+Message-ID: <BN9PR11MB52766E8C47B04FC4FE252D0F8CD69@BN9PR11MB5276.namprd11.prod.outlook.com>
+References: <cover.1674849118.git.nicolinc@nvidia.com>
+ <0875479d24a53670e17db8a11945664a6bb4a25b.1674849118.git.nicolinc@nvidia.com>
+ <dfad6d75-6f4d-99ef-1c6a-4bf397dcaa13@arm.com> <Y9RkG2dejdXptUTB@nvidia.com>
+ <BN9PR11MB5276C9BDCCA7FB295C25BC738CD29@BN9PR11MB5276.namprd11.prod.outlook.com>
+ <Y9fHJSTIP6zXAStX@nvidia.com>
+ <BN9PR11MB52769E3A3DD09983C11677F88CD19@BN9PR11MB5276.namprd11.prod.outlook.com>
+ <Y9p9ehPsg9Hdn1OK@nvidia.com>
+In-Reply-To: <Y9p9ehPsg9Hdn1OK@nvidia.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: BN9PR11MB5276:EE_|CY8PR11MB7800:EE_
+x-ms-office365-filtering-correlation-id: 46b46fcb-354b-4535-9dba-08db04d09844
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: DJEfSYbZ6YbO+gs97SsNl5cmV0kXh00MYEVztvjYcdRVyw30Bf1Z9vGhqLfUgvEemCXLIfP+7TVU0JMa9ok3Wc9h2SLJDivPWI0U89buwd8n0JwU8m2Kic0mBA8ynP5OUD9AYRglmgkwEIWChkbJkKCunplsKUKWLifua6xG4iAo7FJ++3F4CjdVX+VzHFs4N5M5mdR4xuiwKnrp40+KQxczgkRMNnNVSGziIWNdoT1xHyKcuHQscc9W/pW3C0w1k5YbacxGv0Iq6J3byBJZ8s7HgKNHG6ohnZJqvISzCOfPrZkAds0NCspWWG3mzn+PyK3iEG2frMMfgdCkTMEpwmEs2eihUjxXBAtYLl/9XIweAsdRtLfF87Oug18ePusAjjnioj9PpMK0KEdL1TJCdRIUtbHcRKFggJXlgyH5KstsZMTnXYZ7Fg1dL0DwvQwkVDzSoQmrtOAXVUzwze+j3k4UrF8fYAGxl2DVHdiCVKmktpeJFFtTkaDqQ6XB8m3OWPhuL/Ud1dCpwPFHH1EnGNtUHrAWv2XdCZ86mez7syNMW48S0FO4mfQwfiaT0sX543vKI2LIYwuLWE9mSF+Ads0wYIC8DLhMjV4zjzNYwRT+2V8KiemntBi0DMHCOVvR0KyDA70HCYTGSx/pzZw7soiAj7kQt9FB0M23XSGIH8P/283Ir1Wr8THfuKJ7v6U9zQuNx2vLpZ59OEc+ZF3APg==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN9PR11MB5276.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(366004)(39860400002)(396003)(376002)(136003)(346002)(451199018)(38100700002)(83380400001)(71200400001)(54906003)(8676002)(33656002)(2906002)(316002)(122000001)(82960400001)(66446008)(66946007)(6506007)(76116006)(66476007)(6916009)(26005)(7696005)(9686003)(186003)(478600001)(41300700001)(52536014)(64756008)(55016003)(86362001)(66556008)(4326008)(7416002)(8936002)(38070700005)(5660300002);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?kGwUmhbsjXWydpyDnezmfm+GNC5nSPvr3aCOw+1Vr5PqDLOJ6WEo+qh6fWyo?=
+ =?us-ascii?Q?zCLvRiYbNWKiUKeuFqy8M+LVG4n5bquPwv43VU3/iqq9zieSkAw0pEF87Ip4?=
+ =?us-ascii?Q?CMUvuBUDBzC3y3V/6XenDm2idheJlvSGPPXCXE3zwcYfVRUKnEs9dQ4sw5dI?=
+ =?us-ascii?Q?mGSErJKb0vChEDvsoXa4cO9dG5rxRsvRyHyJaAAu4IbLUYvbSPmuO/6BcQ3Y?=
+ =?us-ascii?Q?TKe939UuRoD7ijCgX6i1Mov/7VvE6JiQBqZ1FkulMKoqLj5kXYlYhtRbnfSG?=
+ =?us-ascii?Q?rL9umD01RQjaE4ErNqTuzxEZXGZjUhlQZquLskg3aChZmXnvBE19FIAf4Awd?=
+ =?us-ascii?Q?e+GwCb4PUFPOzcyZxGreM2xCVxEu9mMe4UtBet5q2ra5+dL8hutTz0dZvrd9?=
+ =?us-ascii?Q?LN8wF9AA8tc7+gnP1kaONQcden/YW3XivZzZCHqBTH3bh07QUI/wO2af+6eL?=
+ =?us-ascii?Q?qDuCmQr5E55MjNRA6k7PpzCwiZsSFvOGYLWpO6UGLKvrgJtpqIHcsS3w0QVQ?=
+ =?us-ascii?Q?oOa4SfXyzfSuLqb+TSCi0ycR4XwwXne+ueW3Fo/B1Y6CNXmec3bhCrtcfKKu?=
+ =?us-ascii?Q?FEekSCb6HDWAUpBz1LLfbuegVJKeQb/V0D9UlSkB4l24+apL4vn8eqQp+GHe?=
+ =?us-ascii?Q?Hgzh9nfRFMtN6a9QNnQ1ah8kvH2z7FY8Gh9KjyFfm9uqVWIrMsgGLwR9jmu7?=
+ =?us-ascii?Q?SRharjy/ynr6V3xAdG0t+2u7ZVq1h6lZvvjaRUd/JnbvrAQPvgmVAXRk1EAI?=
+ =?us-ascii?Q?G22bEVyeW1mwVzUpq66Fx1uM9RacKLD7ToLgBpAlTI6FjkMovNy84kKuxZqB?=
+ =?us-ascii?Q?zoMlKYam0600XTaFZlJl0A6axHmR454iIdNZqiewk0KvkXCV9EtfdYWpw1+p?=
+ =?us-ascii?Q?1/5Agl6G/owdVtmhBlcRHiTnjNTSWuSAGGoKM6rjpr1X0drc8hw1IfEwa0B5?=
+ =?us-ascii?Q?lFog2tVmribguoBBkxRN+ApfupHqW+/FwNLgzVj8wHHz56PtvaQuNpCF01Qh?=
+ =?us-ascii?Q?G0WWyxX3jtVYKfPLJNz5nJnEHIwX1R8P+jdjF76rTUbROGaGHR6bj8msvZ8W?=
+ =?us-ascii?Q?S61hHizmdpC7npPA3Tch68xnHyforEAPeA2GupJHkQJnicV59gLpAfbd8yRG?=
+ =?us-ascii?Q?oaZVS/Zm6pUFwvw6O/cPplZeP7qkh+s8Pk3b+ShSe8aLphY3kSvFRkx7alaA?=
+ =?us-ascii?Q?0+t2vTuoUwblvmrO3vP+z2//6qM5DRMLTWiqt7Wyd3wykJoTEewMvyPcM29h?=
+ =?us-ascii?Q?Hx7et4Pmt6FlbSqALS+VEhUjXlQt3t8D+pEbpsitmoR1rs7hsIb5x3W9uOOF?=
+ =?us-ascii?Q?VoQC8RcuNFs8IJeNeaOuwQLr2cY1r3pi/PI1n9EfcN4hJOI0th5/KHbx/oWc?=
+ =?us-ascii?Q?10OEi0odEwmQ/3FdVyA70YugvsVkXNqgqXtWC2QIU1Ymb3J0X8s7xXQYIabh?=
+ =?us-ascii?Q?7oprTjQoH2fQ9o6bNzyGSCpEuGxMEcKvsuOLJpsuOzclUkgGBozdPd6BEYUW?=
+ =?us-ascii?Q?vnuZDGaS09klzdRi+OrtPmQ26AP/8ydyXPQAJYQYUppjLpZB6I849RTDJD3v?=
+ =?us-ascii?Q?TxNQsJXru+qGenx5zBJ+jZE1sm9KZDYfkcGDVW+s?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-References: <20230118091122.2205452-1-dmitry.baryshkov@linaro.org>
- <CAL_JsqJ=0neiZ4wkPiMqJMT4E1O_xO0uLrTmEGUcnZMqxkw4UQ@mail.gmail.com>
- <CAGETcx8Xy5OzsbW3123esxsbQJq-SqDkP1S5g2mmwzoCz4shtQ@mail.gmail.com>
- <20230125190926.GA2697290-robh@kernel.org> <505fc434-c31f-726e-b1cb-0bbfd5f83490@linaro.org>
- <CAGETcx-f9vy7MDB2vFWP9CL26UY7W65oJArvhzksCu8QG6Y4nw@mail.gmail.com> <CAA8EJpo-mFxq+eGW=YaMxea+zi2Z64QWocuO36aNsM7Wmtu3sA@mail.gmail.com>
-In-Reply-To: <CAA8EJpo-mFxq+eGW=YaMxea+zi2Z64QWocuO36aNsM7Wmtu3sA@mail.gmail.com>
-From:   Saravana Kannan <saravanak@google.com>
-Date:   Wed, 1 Feb 2023 19:27:03 -0800
-Message-ID: <CAGETcx-koZH3U7fHXErxOHESdvLME1O+2hs2j-OixoYcmmpMgQ@mail.gmail.com>
-Subject: Re: [RESEND PATCH] of: property: do not create clocks device link for
- clock controllers
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Herring <robh@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        Abel Vesa <abel.vesa@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-17.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        ENV_AND_HDR_SPF_MATCH,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL autolearn=ham
-        autolearn_force=no version=3.4.6
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BN9PR11MB5276.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 46b46fcb-354b-4535-9dba-08db04d09844
+X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Feb 2023 03:50:15.7087
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: V54JMvDmgdpB6ZTicbwoBacPnuSJQJTAegmODN27hSBN3/U5jy9dUitfgs4um+K5sztSC2yt0s9nilCZQBXrog==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR11MB7800
+X-OriginatorOrg: intel.com
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 27, 2023 at 8:41 PM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On Fri, 27 Jan 2023 at 01:12, Saravana Kannan <saravanak@google.com> wrote:
-> >
-> > On Thu, Jan 26, 2023 at 2:51 PM Dmitry Baryshkov
-> > <dmitry.baryshkov@linaro.org> wrote:
+> From: Jason Gunthorpe <jgg@nvidia.com>
+> Sent: Wednesday, February 1, 2023 10:56 PM
+>=20
+> On Wed, Feb 01, 2023 at 03:14:03AM +0000, Tian, Kevin wrote:
+> > > From: Jason Gunthorpe <jgg@nvidia.com>
+> > > Sent: Monday, January 30, 2023 9:33 PM
 > > >
-> > > On 25/01/2023 21:09, Rob Herring wrote:
-> > > > On Tue, Jan 24, 2023 at 06:12:15PM -0800, Saravana Kannan wrote:
-> > > >> On Wed, Jan 18, 2023 at 5:35 AM Rob Herring <robh+dt@kernel.org> wrote:
-> > > >>>
-> > > >>> On Wed, Jan 18, 2023 at 3:11 AM Dmitry Baryshkov
-> > > >>> <dmitry.baryshkov@linaro.org> wrote:
-> > > >>>>
-> > > >>>> Do not create device link for clock controllers. Some of the clocks
-> > > >>>> provided to the device via OF can be the clocks that are just parents to
-> > > >>>> the clocks provided by this clock controller. Clock subsystem already
-> > > >>>> has support for handling missing clock parents correctly (clock
-> > > >>>> orphans). Later when the parent clock is registered, clocks get
-> > > >>>> populated properly.
-> > > >>>>
-> > > >>>> An example of the system where this matters is the SDM8450 MTP board
-> > > >>>> (see arch/arm64/boot/dts/qcom/sdm845-mtp.dts). Here the dispcc uses
-> > > >>>> clocks provided by dsi0_phy and dsi1_phy device tree nodes. However the
-> > > >>>> dispcc itself provides clocks to both PHYs, to the PHY parent device,
-> > > >>>> etc. With just dsi0_phy in place devlink is able to break the
-> > > >>>> dependency, but with two PHYs, dispcc doesn't get probed at all, thus
-> > > >>>> breaking display support.
-> > > >>>>
-> > > >>>> Cc: Bjorn Andersson <andersson@kernel.org>
-> > > >>>> Cc: Stephen Boyd <sboyd@kernel.org>
-> > > >>>> Cc: Saravana Kannan <saravanak@google.com>
-> > > >>>> Cc: Abel Vesa <abel.vesa@linaro.org>
-> > > >>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > >>>> ---
-> > > >>>>
-> > > >>>> This patch has been posted a year ago in January 2022 ([1]). Since that time
-> > > >>>> Saravana failed to produce patches to assist in debugging the issue
-> > > >>>> ([2]) or to fix the issue ([3]). The issue we observe has been described
-> > > >>>> by Abel at ([4]). As we work on adding support for Dual DSI
-> > > >>>> configurations, the issue becomes more and more important, since binding
-> > > >>>> the whole display subsystem fails.
-> > > >>
-> > > >> I did send out a patch series[1] to try and fix this. Heck I even
-> > > >> talked about this in LPC 2022. So I don't think it's accurate to say I
-> > > >> didn't help debug this or fix this. There's some email thread in lore
-> > > >> where Abel gave more details and I figured out the issue and we didn't
-> > > >> need any more debugging. And then I sent out [1]. Sorry I missed you
-> > > >> in the cc lise for [1] -- I try to keep track of everyone to cc but
-> > > >> things slip through the cracks sometimes. But at the same time, it's
-> > > >> easy to check for emails from me before saying I didn't help or didn't
-> > > >> send out fixes :)
-> > > >>
-> > > >> If you do try to give [1] a shot, there are a bunch of bugs that
-> > > >> people pointed out for which I gave fixes on top of [1] in the
-> > > >> replies. I was supposed to work on v2 over the holidays, but that
-> > > >> didn't happen because of stuff outside my control.
-> > > >>
-> > > >>> That's ample time to fix this, so I intend to apply this. But I'll
-> > > >>> give it a few days for comments.
-> > > >>
-> > > >> Rob, I'd recommend not applying this because it'll fix it for Dmitry
-> > > >> but break someone else's use case. That's the whole reason it takes me
-> > > >> a while to send out patches -- it's easy to fix it for a subset of
-> > > >> devices, but fixing something without breaking someone else is harder
-> > > >> (I still believe it's doable) and it takes a while to test them on all
-> > > >> the devices I want to test before sending them out.
+> > > On Sun, Jan 29, 2023 at 08:11:48AM +0000, Tian, Kevin wrote:
 > > >
-> > > This case is really simple, I think. Clock controllers (and
-> > > clock-core-framework) are prepared to handle clock orphans properly.
-> > > Moreover they have been supposed to work in such way for quite a while.
-> > > In other words, I don't think we should save them from this
-> > > -EPROBE_DEFERRED.
+> > > > " I'd also question sprd-iommu, which hardly has a generally-useful
+> > > > domain size, and has only just recently gained the ability to unmap
+> > > > anything successfully."
+> > >
+> > > So long as it has a correct kernel API and exposes the right (small)
+> > > aperture then it is OK.
+> > >
+> > > The device will not be useful for qemu, but it would run some dpdk
+> > > configurations just fine.
 > >
-> > A clock controller can depend on other clock controllers for non clock
-> > tree reasons. For example, it might need a clock ON to access its
-> > registers. So, while the CCF can handle orphans properly, that's not
-> > the only dependency. Also, fw_devlink is not just about probing
-> > either. It also has to do with proper sync_state() callbacks.
->
-> Just a question, please excuse if I'm misunderstanding it. Does
-> fw_devlink created this way also impose any runtime PM dependencies?
->
-> >
-> > Also, I already fixed the issue you are referring to while not
-> > breaking the conditions I'm referring to. So, I don't know why you are
-> > so opposed to that. See Abel's Tested-by here:
-> > https://lore.kernel.org/lkml/YvonlAwXAoXTUTZe@linaro.org/
-> >
-> > > Thus I think it is better to let them continue doing their job of
-> > > handling probe deferrals on their own, at least for the time being.
-> >
-> > I'm pretty sure your patch will break other Qualcomm platforms because
-> > they depend on sync_state() callbacks to boot up properly when
-> > all/most of their drivers are built as modules.
->
-> Qualcomm platforms did not use sync state for clock controllers. Only
-> for the icc drivers.
->
-> >
-> > > And
-> > > then, when your patches are finished, we can think about reenabling
-> > > current behaviour. As a reminder, currently, all Qualcomm platforms
-> > > trying to use double DSI configuration are broken and have to use
-> > > fw_devlink= kernel params.
-> >
-> > I'm/was working on sending out the v2 when I got your email. Hold
-> > tight please. It shouldn't take too long.
->
-> I'll give v2 a test next week, thank you!
+> > I still didn't get the restriction here. Can you elaborate why it works
+> > with dpdk but not qemu?
+>=20
+> dpdk needs like, say, 64M of aperture and doesn't care what the IOVAs
+> are
+>=20
+> qemu needs the entire guest memory of aperture and must have IOVAs
+> that are 1:1 with the GPA.
+>=20
+> So aperture size and location can exclude qemu
+>=20
+> > Can qemu verify this restriction via existing path or need new uAPI
+> > flag to communicate?
+>=20
+> It already happens, the aperture/etc is convayed to qemu through
+> IOMMUFD_CMD_IOAS_IOVA_RANGES and if qemu cannot get the IOVA's it
+> needs to create the guest it should fail.
+>=20
 
-Nudge... I rushed out the series for you.
-
--Saravana
+Make sense.
