@@ -2,201 +2,216 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 734DB6889F8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 23:45:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2474E688A0F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 23:54:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232888AbjBBWpk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Feb 2023 17:45:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55962 "EHLO
+        id S231339AbjBBWyS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 17:54:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60148 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231744AbjBBWpj (ORCPT
+        with ESMTP id S230173AbjBBWyR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 17:45:39 -0500
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 072AB6A31A
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 14:45:36 -0800 (PST)
-Received: by mail-ej1-x62b.google.com with SMTP id m2so10395345ejb.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 14:45:36 -0800 (PST)
+        Thu, 2 Feb 2023 17:54:17 -0500
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E76071F5D7
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 14:54:15 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id bk15so10437638ejb.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 14:54:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Yv+EBHuwHRJqAJbrlM2T5g6XZ+NYEb35c1jHq1XFpd8=;
-        b=DdKMwjtuuSPaZBdeG3xXuH/Vf6SecI9XZEr5bt0Spw83Pcj1Owzs7iX7s7BxsTmGMI
-         UZPTM/26GVxWvF202KSMVKHVxikMtw76xWAz+EcqEY648xsII+uwn0fWLtPJsYwF469t
-         BEYQsYcVHAKo57ThA27P8arJkjC8r9XxBZcDQ66TXgNBVS0AEI3K8psL6XBcPV2pIFT+
-         Ym2Z7iWu2jCunXWVN2qNBHMIunlon+8zbPUaSmKgUQOEKpmZR0L3f7U8Ctzc9esEDb/R
-         y5N114iwBcXGscpRLDTwcRH41E7dCdLk/SVfljai0oEw8iBnbOk+FNY0Xx/yLIT/oqSI
-         DHtw==
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=C1Zy7sOZ5NJ3j2LxJM2vtlRy4fRlrjKvTjIjmDKiY9Y=;
+        b=YXejx0l91bIRJHmBkjw2F1DWFq8WI5oZFDo7cBfimDt7DApqnIDC4jqpiheYZuhv0n
+         6PZfAB4Bl+CmDfBPxp3hUUBqwxOutPaU+FPOnHSiQQW/QAORaw1HgVuFFp3aRA9sPUCn
+         lwX3pIZfcrI0Rxsc0WablBxbsBANAXHLbI9Pk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Yv+EBHuwHRJqAJbrlM2T5g6XZ+NYEb35c1jHq1XFpd8=;
-        b=JB3W6Dpnjy87xtO1uB1B9WeKYZgFCMULBTDPmhnoQfbFWDEwElyzlOX9uz2EIs06U8
-         jErvdWOE2wYiHQHEiWZpeVDSPicfmMsTmFxxbIEiPZJ/Vl77SG6G5uQopfcCIOashNGS
-         yXMzRisHf8TxDvo/GBzV17ZvSGEbR3KOag9SGKLUYTpN8ZgQPMWy7iLZLAKfDqSaMZmA
-         1U10Q/TBdiu37HGHDB8iGA2URZeAJuasMj++hx39/5KMaCYPjPDPptNLeOwN2HPH6bzN
-         +g5LEbUqPw1PqC2QD83QkARkWT2jn782Yq6gS8yvG7sA1gv6IyvdtmakRwTdocmbD3UV
-         OP7w==
-X-Gm-Message-State: AO0yUKUxC25tTiRHvbouBXxK3EVNEYS//Mu39Exti/2B/BL7BJbLiMXw
-        jfeDcT6BFf9yRWynea9Asw3FOg==
-X-Google-Smtp-Source: AK7set/R40EN2B7UrrceJs69WdSfiP2XjBzXCmGzAwIbF5ySDgMVbLqAPHFDkcmqb/TXIIugK9+DOg==
-X-Received: by 2002:a17:906:6a24:b0:86d:7c2d:f65b with SMTP id qw36-20020a1709066a2400b0086d7c2df65bmr10810332ejc.27.1675377935184;
-        Thu, 02 Feb 2023 14:45:35 -0800 (PST)
-Received: from [192.168.1.101] (abyl20.neoplus.adsl.tpnet.pl. [83.9.31.20])
-        by smtp.gmail.com with ESMTPSA id k7-20020a170906158700b0088385cd6166sm401506ejd.195.2023.02.02.14.45.33
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=C1Zy7sOZ5NJ3j2LxJM2vtlRy4fRlrjKvTjIjmDKiY9Y=;
+        b=ovtV6vCJENOLgvF+5h8pK8C0HSSC8zWqbIF7mk0j8OtwLeOK9f/YJPhcMsdyCZpXt8
+         Gw92WoI+c9EBtsBFPnufncUj6DAop1CKals12iXeJRxLJVbtD1dPIyU8lgyvbrmSfZBO
+         HR8iYXW3EW8HsVdVkTdWg8jL0L3oz4YUbJSU6Ufj+vXD6Lu4wYk+cRrn/sCIADBNx6yg
+         XRIzR6YtwKz+LI4L1+4HhBbhuLbtmxwUjX5FB4lo2ZVcRcqbJjscSTP7C/oM8klyNIYk
+         +Gv32FWWovhFX6wJLzH6TITMAP0NjBxPKBJ4xV+lK6VesN6rrgCpAQmwJBKOcIyrvnb+
+         MDVA==
+X-Gm-Message-State: AO0yUKV/7utYp/hyrHqv6wTBOpiQy76DcYpOwnBTmXQvO5dkOnycLVXd
+        Bx1K8Wwp1C6qeUIs8Jv9lqvqcvuHj2pd8FilntU=
+X-Google-Smtp-Source: AK7set9S0tfUrxGgdDamldsPvx0T//M6dG5mpMLXuTGJXfFn1TDwOoVpwdwIRaw1LOUOMOvJdZn2ag==
+X-Received: by 2002:a17:907:6d15:b0:88a:7037:8562 with SMTP id sa21-20020a1709076d1500b0088a70378562mr10603208ejc.31.1675378454296;
+        Thu, 02 Feb 2023 14:54:14 -0800 (PST)
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com. [209.85.128.52])
+        by smtp.gmail.com with ESMTPSA id j17-20020a1709064b5100b00878130e170bsm419413ejv.131.2023.02.02.14.54.14
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Feb 2023 14:45:34 -0800 (PST)
-Message-ID: <df4da23b-d589-7353-65b0-bedbd6c31412@linaro.org>
-Date:   Thu, 2 Feb 2023 23:45:33 +0100
+        Thu, 02 Feb 2023 14:54:14 -0800 (PST)
+Received: by mail-wm1-f52.google.com with SMTP id j29-20020a05600c1c1d00b003dc52fed235so2626199wms.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 14:54:14 -0800 (PST)
+X-Received: by 2002:a05:600c:1912:b0:3d7:fa4a:6827 with SMTP id
+ j18-20020a05600c191200b003d7fa4a6827mr250843wmq.188.1675378043111; Thu, 02
+ Feb 2023 14:47:23 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH] cpufreq: qcom-hw: Fix cpufreq_driver->get() for non-LMH
- systems
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     Douglas Anderson <dianders@chromium.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>
-Cc:     swboyd@chromium.org, mka@chromium.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
-References: <20230202140005.1.I4b30aaa027c73372ec4068cc0f0dc665af8b938d@changeid>
- <7968db3b-8545-0601-4302-301a4006f3bc@linaro.org>
-In-Reply-To: <7968db3b-8545-0601-4302-301a4006f3bc@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20230131141756.RFT.v2.1.I723a3761d57ea60c5dd754c144aed6c3b2ea6f5a@changeid>
+ <20230131141756.RFT.v2.3.I3c87b53c4ab61a7d5e05f601a4eb44c7e3809a01@changeid> <0419b0c8-fb30-f8df-1b9a-19e106680948@quicinc.com>
+In-Reply-To: <0419b0c8-fb30-f8df-1b9a-19e106680948@quicinc.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 2 Feb 2023 14:46:52 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=Xk6qFokozxEa+MaCgii3zpSWZRDe52FoP17E-DOFXoyg@mail.gmail.com>
+Message-ID: <CAD=FV=Xk6qFokozxEa+MaCgii3zpSWZRDe52FoP17E-DOFXoyg@mail.gmail.com>
+Subject: Re: [Freedreno] [RFT PATCH v2 3/3] drm/msm/dsi: More properly handle
+ errors in regards to dsi_mgr_bridge_power_on()
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        freedreno@lists.freedesktop.org,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jonas Karlman <jonas@kwiboo.se>, linux-arm-msm@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Dave Stevenson <dave.stevenson@raspberrypi.com>,
+        David Airlie <airlied@gmail.com>, Sean Paul <sean@poorly.run>,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
+On Thu, Feb 2, 2023 at 2:37 PM Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>
+> Hi Doug
+>
+> On 1/31/2023 2:18 PM, Douglas Anderson wrote:
+> > In commit 7d8e9a90509f ("drm/msm/dsi: move DSI host powerup to modeset
+> > time") the error handling with regards to dsi_mgr_bridge_power_on()
+> > got a bit worse. Specifically if we failed to power the bridge on then
+> > nothing would really notice. The modeset function couldn't return an
+> > error and thus we'd blindly go forward and try to do the pre-enable.
+> >
+> > In commit ec7981e6c614 ("drm/msm/dsi: don't powerup at modeset time
+> > for parade-ps8640") we added a special case to move the powerup back
+> > to pre-enable time for ps8640. When we did that, we didn't try to
+> > recover the old/better error handling just for ps8640.
+> >
+> > In the patch ("drm/msm/dsi: Stop unconditionally powering up DSI hosts
+> > at modeset") we've now moved the powering up back to exclusively being
+> > during pre-enable. That means we can add the better error handling
+> > back in, so let's do it. To do so we'll add a new function
+> > dsi_mgr_bridge_power_off() that's matches how errors were handled
+> > prior to commit 7d8e9a90509f ("drm/msm/dsi: move DSI host powerup to
+> > modeset time").
+> >
+> > NOTE: Now that we have dsi_mgr_bridge_power_off(), it feels as if we
+> > should be calling it in dsi_mgr_bridge_post_disable(). That would make
+> > some sense, but doing so would change the current behavior and thus
+> > should be a separate patch. Specifically:
+> > * dsi_mgr_bridge_post_disable() always calls dsi_mgr_phy_disable()
+> >    even in the slave-DSI case of bonded DSI. We'd need to add special
+> >    handling for this if it's truly needed.
+> > * dsi_mgr_bridge_post_disable() calls msm_dsi_phy_pll_save_state()
+> >    midway through the poweroff.
+> > * dsi_mgr_bridge_post_disable() has a different order of some of the
+> >    poweroffs / IRQ disables.
+> > For now we'll leave dsi_mgr_bridge_post_disable() alone.
+> >
+> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> > ---
+> >
+> > Changes in v2:
+> > - ("More properly handle errors...") new for v2.
+> >
+> >   drivers/gpu/drm/msm/dsi/dsi_manager.c | 32 ++++++++++++++++++++++-----
+> >   1 file changed, 26 insertions(+), 6 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> > index 2197a54b9b96..28b8012a21f2 100644
+> > --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> > +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> > @@ -228,7 +228,7 @@ static void msm_dsi_manager_set_split_display(u8 id)
+> >       }
+> >   }
+> >
+> > -static void dsi_mgr_bridge_power_on(struct drm_bridge *bridge)
+> > +static int dsi_mgr_bridge_power_on(struct drm_bridge *bridge)
+> >   {
+> >       int id = dsi_mgr_bridge_get_id(bridge);
+> >       struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
+> > @@ -268,14 +268,31 @@ static void dsi_mgr_bridge_power_on(struct drm_bridge *bridge)
+> >       if (is_bonded_dsi && msm_dsi1)
+> >               msm_dsi_host_enable_irq(msm_dsi1->host);
+> >
+> > -     return;
+> > +     return 0;
+> >
+> >   host1_on_fail:
+> >       msm_dsi_host_power_off(host);
+> >   host_on_fail:
+> >       dsi_mgr_phy_disable(id);
+> >   phy_en_fail:
+> > -     return;
+> > +     return ret;
+> > +}
+> > +
+> > +static void dsi_mgr_bridge_power_off(struct drm_bridge *bridge)
+> > +{
+> > +     int id = dsi_mgr_bridge_get_id(bridge);
+> > +     struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
+> > +     struct msm_dsi *msm_dsi1 = dsi_mgr_get_dsi(DSI_1);
+> > +     struct mipi_dsi_host *host = msm_dsi->host;
+> > +     bool is_bonded_dsi = IS_BONDED_DSI();
+> > +
+> > +     msm_dsi_host_disable_irq(host);
+> > +     if (is_bonded_dsi && msm_dsi1) {
+> > +             msm_dsi_host_disable_irq(msm_dsi1->host);
+> > +             msm_dsi_host_power_off(msm_dsi1->host);
+> > +     }
+>
+> The order of disabling the IRQs should be opposite of how they were enabled.
+>
+> So while enabling it was DSI0 and then DSI1.
+>
+> Hence while disabling it should be DSI1 and then DSI0.
+>
+> So the order here should be
+>
+> DSI1 irq disable
+> DSI0 irq disable
+> DSI1 host power off
+> DSI0 host power off
 
-On 2.02.2023 23:35, Konrad Dybcio wrote:
-> 
-> 
-> On 2.02.2023 23:00, Douglas Anderson wrote:
->> On a sc7180-based Chromebook, when I go to
->> /sys/devices/system/cpu/cpu0/cpufreq I can see:
->>
->>   cpuinfo_cur_freq:2995200
->>   cpuinfo_max_freq:1804800
->>   scaling_available_frequencies:300000 576000 ... 1708800 1804800
->>   scaling_cur_freq:1804800
->>   scaling_max_freq:1804800
->>
->> As you can see the `cpuinfo_cur_freq` is bogus. It turns out that this
->> bogus info started showing up as of commit 205f5e984d30 ("cpufreq:
->> qcom-hw: Fix the frequency returned by cpufreq_driver->get()"). That
->> commit seems to assume that everyone is on the LMH bandwagon, but
->> sc7180 isn't.
->>
->> Let's go back to the old code in the case where LMH isn't used.
->>
->> Fixes: 205f5e984d30 ("cpufreq: qcom-hw: Fix the frequency returned by cpufreq_driver->get()")
->> Signed-off-by: Douglas Anderson <dianders@chromium.org>
->> ---
-> Actually I hit the exact same issue when working on CPRh-aware
-> cpufreq with manual OSM programming.. LMh gets enabled by the firmware
-> on most recent platforms, but it's not the case for some old-timers.
-> 
-Ignore this email, I can't read.
+Right. Normally you want to go opposite. I guess a few points, though:
 
-Konrad
-> I figured that adding a bool broken_lmh_freq in driver data would be
-> a good middleground between reverting that patch and ignoring the
-> issue, because it *does* matter what this function reports on LMh-
-> enabled platforms (yes, the subsystems are bluepilled between each
-> other and OSM/EPSS does not know the *real* throttled frequency),
-> but obviously we don't want to report 2.99Ghz otherwise..
-> 
-> I think 7280 had an issue where a SoC-specific compatible was not
-> introduced when the DT part was first merged, same goes for 6115.
-> 6115 does have firmware-enabled LMh, not sure about 7280. In case
-> you wanted to go that route, I think it would be suitable to add
-> a blacklist of retroactively-broken platforms (match-by-machine-
-> compatible; don't scream at me bindings folks, I guess that's the
-> least messy solution) in addition to either matching the SoC-specific
-> compatible to epss_broken_lmh_driver_data.
-> 
-> Or we can forget about old DTs and just bind qcom,sc7180-cpufreq-hw
-> (and 7280, maybe? please check.) to this new driver data without
-> checking the machine compatible.
-> 
-> 
-> 
-> Konrad
->>
->>  drivers/cpufreq/qcom-cpufreq-hw.c | 24 +++++++++++++-----------
->>  1 file changed, 13 insertions(+), 11 deletions(-)
->>
->> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
->> index 9505a812d6a1..957cf6bb8c05 100644
->> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
->> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
->> @@ -143,40 +143,42 @@ static unsigned long qcom_lmh_get_throttle_freq(struct qcom_cpufreq_data *data)
->>  	return lval * xo_rate;
->>  }
->>  
->> -/* Get the current frequency of the CPU (after throttling) */
->> -static unsigned int qcom_cpufreq_hw_get(unsigned int cpu)
->> +/* Get the frequency requested by the cpufreq core for the CPU */
->> +static unsigned int qcom_cpufreq_get_freq(unsigned int cpu)
->>  {
->>  	struct qcom_cpufreq_data *data;
->> +	const struct qcom_cpufreq_soc_data *soc_data;
->>  	struct cpufreq_policy *policy;
->> +	unsigned int index;
->>  
->>  	policy = cpufreq_cpu_get_raw(cpu);
->>  	if (!policy)
->>  		return 0;
->>  
->>  	data = policy->driver_data;
->> +	soc_data = qcom_cpufreq.soc_data;
->>  
->> -	return qcom_lmh_get_throttle_freq(data) / HZ_PER_KHZ;
->> +	index = readl_relaxed(data->base + soc_data->reg_perf_state);
->> +	index = min(index, LUT_MAX_ENTRIES - 1);
->> +
->> +	return policy->freq_table[index].frequency;
->>  }
->>  
->> -/* Get the frequency requested by the cpufreq core for the CPU */
->> -static unsigned int qcom_cpufreq_get_freq(unsigned int cpu)
->> +static unsigned int qcom_cpufreq_hw_get(unsigned int cpu)
->>  {
->>  	struct qcom_cpufreq_data *data;
->> -	const struct qcom_cpufreq_soc_data *soc_data;
->>  	struct cpufreq_policy *policy;
->> -	unsigned int index;
->>  
->>  	policy = cpufreq_cpu_get_raw(cpu);
->>  	if (!policy)
->>  		return 0;
->>  
->>  	data = policy->driver_data;
->> -	soc_data = qcom_cpufreq.soc_data;
->>  
->> -	index = readl_relaxed(data->base + soc_data->reg_perf_state);
->> -	index = min(index, LUT_MAX_ENTRIES - 1);
->> +	if (data->throttle_irq >= 0)
->> +		return qcom_lmh_get_throttle_freq(data) / HZ_PER_KHZ;
->>  
->> -	return policy->freq_table[index].frequency;
->> +	return qcom_cpufreq_get_freq(cpu);
->>  }
->>  
->>  static unsigned int qcom_cpufreq_hw_fast_switch(struct cpufreq_policy *policy,
+1. As talked about in the commit message, the order I have matches the
+order we had prior to commit 7d8e9a90509f ("drm/msm/dsi: move DSI host
+powerup to modeset time").
+
+2. I'd be curious if it matters. The order you request means we need
+to check for `(is_bonded_dsi && msm_dsi1)` twice. While that's not a
+big deal if it's important, it's nice not to have to do so.
+
+3. As talked about in the commit message, eventually we should
+probably resolve this order with the order of things in
+dsi_mgr_bridge_post_disable(), which is yet a different ordering.
+Ideally this resolution would be done by someone who actually has
+proper documentation of the hardware and how it's supposed to work
+(AKA not me).
+
+So my preference would be to either land or drop ${SUBJECT} patch
+(either is fine with me) and then someone at Qualcomm could then take
+over further cleanup.
+
+-Doug
