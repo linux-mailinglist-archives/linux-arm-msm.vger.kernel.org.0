@@ -2,69 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2106E6879D5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 11:11:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DC66C6879E2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 11:12:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232629AbjBBKLA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Feb 2023 05:11:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48506 "EHLO
+        id S230246AbjBBKMw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 05:12:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232600AbjBBKK6 (ORCPT
+        with ESMTP id S232001AbjBBKMu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 05:10:58 -0500
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B008888F33
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 02:10:54 -0800 (PST)
-Received: by mail-yb1-xb35.google.com with SMTP id g2so1513321ybk.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 02:10:54 -0800 (PST)
+        Thu, 2 Feb 2023 05:12:50 -0500
+Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E39CD71981
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 02:12:46 -0800 (PST)
+Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-50e7a0f0cc8so20018937b3.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 02:12:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=fIr6opegPYfpGWKNlATi3aulrpwL9ZZFwjdVeIsGg20=;
-        b=NIhoncgdsLnAr7fLeP22RntrW5UuVkPsVZUIag071PSTqztaYTAYp1IOOQJaYJ1m9s
-         SfTv3VPsrOOlwypaPvpob3JYUWfzCESKKMtXxapPEYGr1QYbSNs3lV5BrH/Vq+BTaUQg
-         CjHi2kIkioQSpUc2bD5JWP1ersrxhxuH5lyyTwogjKdv5oaKDB3NAt/KnkUksXZw48nL
-         KpfGESNoQHQwBi8SLAaIhNQgdA4XrPB1fUDe2C8R55SALsZ/0CAmo2hZMeQyP4Cry2T7
-         HEICtNTPJCtJvi8JSrjRp+hyjF5wREoEXsDy9FIzJL7rSYAmstamzuGnKzu1zIbFmCK4
-         2xAQ==
+        bh=Gjb62+lXPdUY1rPIYnUIQiGvb9ZLzScX+izmbGPK+3U=;
+        b=b3jpffC5QBAc6Y0TX3tWib7NdtevvGs482SwwlvxxVIzWpdp0THhhvPRHonMjuC56G
+         QaOxFkd5SECO1HeAgD0nXM/KYX+NdgpwstiNNj8aa73OpdbDMUsd9pW7m9SBTLggf/Eh
+         HT0yjtlrlHtFCaWktqQehIwvRx612HCrQTSKD31tVBJ0qK2p6Hjj00cUaoWwq8Dn5Pal
+         g/Ldpbkl+YKtoqod16DVEJS+XNfdSczTr9PkkhFJGk2IOI9kNd9qgjPXIjDb6fTRi3g5
+         md6HjM2N/EzCQYl3PdjWqWquKb9upmwhDQqMDH+aHFM1UzfKTdz/YaKHXFSlOM1GWeks
+         nXyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=fIr6opegPYfpGWKNlATi3aulrpwL9ZZFwjdVeIsGg20=;
-        b=kLC3PlBAnjs+ShmwQlqFb0fIQ31Q5jRGJmjee146WZDSe1pRgfjt7ygTPoSe1IkKad
-         ufccQCST2Q8L0j511ptPmJ4WYbjHNU1MaIH5STFIKH/d9q2iCAt6vNEOuIzSc0bWkBHp
-         OpzlZYtFqzUb1WT+pYZku+CsN8Ddv+S+12rjA3FD95754d4mewyVAJoenalVzavAXn5Q
-         Np/pcJyDkCrgBs10aziXlYkbqP70JhTsnTRjPl4Bb3jEMXmu40AS6l8aWt5L9pGWba8x
-         6QKf93dcijmZxFQQh71yz923VUb4DGXfEbR+5Eeu5Zh1yNZ03ahassp1/3DvR9iZrEoD
-         91sw==
-X-Gm-Message-State: AO0yUKU4mIeA32d76cf9IQoBfbzPLvsuz1hYZBPQBUHuUyN0BQS3HL4N
-        mLPxBiUSzKyExgsiYdX70tOJiXOQeGL++0sWt7iCdA==
-X-Google-Smtp-Source: AK7set8OAHlZDQN+AkaE+B1uLRGDzAJWAAoIau5RgOokIKEP9uytufptVUjIEheTX4tybvgMJGNNdQFwLK7ApmxAr4Q=
-X-Received: by 2002:a25:bf90:0:b0:6e0:c7d3:f026 with SMTP id
- l16-20020a25bf90000000b006e0c7d3f026mr692420ybk.275.1675332653827; Thu, 02
- Feb 2023 02:10:53 -0800 (PST)
+        bh=Gjb62+lXPdUY1rPIYnUIQiGvb9ZLzScX+izmbGPK+3U=;
+        b=D1LP4vTEjd78cDZBf5Eq9/mOkup3FTMCqf/+0PdlA3bDL9/jZFZDiXeymicM+H0D/Q
+         5LtRfQtzCAp9N+Ns1xSMvkUzKbF15y6lMP5wB0qXmMPFEjytL5pN84RS0fkWGCuTbsWF
+         0C94WwxNllMPlP3aho7EEgL3zP53m5UrRQ4rgcsvfgDhSyCAEynjgtqKPJgWlD8nNmTf
+         wLYawt9Wz60LdaUtXHgIybnUsEU4mnVMVntVj14+7vWFCljh4CQOnEy7c8jA/ZIaQkpR
+         JCNyzEgu8zViT7ILEV1mgAwJZw9UdBeAz/3+0Zel6L6SWUw1l/W0ivfWk9cbURjR0aZY
+         pefg==
+X-Gm-Message-State: AO0yUKV3a0eNT8ZI4X6JxHNQV8YajLbeZuuCFU6r0LmkjJ9STHEo+9PZ
+        UsGhBIjfKlMLKKT157pj8LGRYjikPyB2REqbDW5M7Q==
+X-Google-Smtp-Source: AK7set8t5AtXPUHdkAT5542L7e945bse78Iansl0jQRe0L8gTrJLOYwhUI4/KVM9pHXA3uiayA2diX9Vwhy5JiestRk=
+X-Received: by 2002:a05:690c:f93:b0:506:79fc:3df6 with SMTP id
+ df19-20020a05690c0f9300b0050679fc3df6mr593658ywb.127.1675332766077; Thu, 02
+ Feb 2023 02:12:46 -0800 (PST)
 MIME-Version: 1.0
-References: <20221115121237.28361-2-quic_vboma@quicinc.com>
- <20230202064712.5804-1-quic_vboma@quicinc.com> <20230202064712.5804-2-quic_vboma@quicinc.com>
-In-Reply-To: <20230202064712.5804-2-quic_vboma@quicinc.com>
+References: <1674562755-5378-1-git-send-email-quic_mojha@quicinc.com>
+In-Reply-To: <1674562755-5378-1-git-send-email-quic_mojha@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 2 Feb 2023 12:10:42 +0200
-Message-ID: <CAA8EJpqp7D3kBwPNNtdWHPdp=N+VZ_7dZEB7+O7nMxT44ZJ-5w@mail.gmail.com>
-Subject: Re: [PATCH V2 1/1] venus: Enable sufficient sequence change support
- for sc7180 and fix for Decoder STOP command issue.
-To:     quic_vboma@quicinc.com
-Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Vikash Garodia <vgarodia@qti.qualcomm.com>
+Date:   Thu, 2 Feb 2023 12:12:35 +0200
+Message-ID: <CAA8EJpoeSMr5+-EBE7zYsqo7G-agFWwP8o-+jk_D0fLopHwFxA@mail.gmail.com>
+Subject: Re: [PATCH] firmware: qcom_scm: modify qcom_scm_set_download_mode()
+To:     Mukesh Ojha <quic_mojha@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -76,172 +67,102 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 2 Feb 2023 at 08:47, <quic_vboma@quicinc.com> wrote:
+On Tue, 24 Jan 2023 at 14:19, Mukesh Ojha <quic_mojha@quicinc.com> wrote:
 >
-> From: Viswanath Boma <quic_vboma@quicinc.com>
+> Modify qcom_scm_set_download_mode() such that it can support
+> multiple modes. There is no functional change with this change.
+
+Please describe usecases for such a change. Without them it's just an
+unused complication.
+
 >
-> For VP9 bitstreams, there could be a change in resolution at interframe,
-> for driver to get notified of such resolution change,
-> enable the property in video firmware.
-> Also, EOS handling is now made same in video firmware across all V6 SOCs,
-> hence above a certain firmware version, the driver handling is
-> made generic for all V6s
->
-> Signed-off-by: Vikash Garodia <vgarodia@qti.qualcomm.com>
-> Signed-off-by: Viswanath Boma <quic_vboma@quicinc.com>
-> Tested-by: Nathan Hebert <nhebert@chromium.org>
+> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
 > ---
->  drivers/media/platform/qcom/venus/core.h       | 18 ++++++++++++++++++
->  drivers/media/platform/qcom/venus/hfi_cmds.c   |  1 +
->  drivers/media/platform/qcom/venus/hfi_helper.h |  2 ++
->  drivers/media/platform/qcom/venus/hfi_msgs.c   | 11 +++++++++--
->  drivers/media/platform/qcom/venus/vdec.c       | 12 +++++++++++-
->  5 files changed, 41 insertions(+), 3 deletions(-)
-
-Several generic comments:
-- Please move your work on top of the recent kernels. 5.15 was
-released half of the year ago. I'm not going to mention 5.4 age.
-- Please split your patch into smaller logical patches.
-
+>  drivers/firmware/qcom_scm.c | 17 ++++++++---------
+>  include/linux/qcom_scm.h    |  5 +++++
+>  2 files changed, 13 insertions(+), 9 deletions(-)
 >
-> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-> index 32551c2602a9..8f94d795cc2b 100644
-> --- a/drivers/media/platform/qcom/venus/core.h
-> +++ b/drivers/media/platform/qcom/venus/core.h
-> @@ -202,6 +202,11 @@ struct venus_core {
->         unsigned int core0_usage_count;
->         unsigned int core1_usage_count;
->         struct dentry *root;
-> +       struct venus_img_version {
-> +               u32 major;
-> +               u32 minor;
-> +               u32 rev;
-> +       } venus_ver;
->  };
->
->  struct vdec_controls {
-> @@ -500,4 +505,17 @@ venus_caps_by_codec(struct venus_core *core, u32 codec, u32 domain)
->         return NULL;
+> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> index cdbfe54..712bb03 100644
+> --- a/drivers/firmware/qcom_scm.c
+> +++ b/drivers/firmware/qcom_scm.c
+> @@ -400,22 +400,22 @@ int qcom_scm_set_remote_state(u32 state, u32 id)
 >  }
+>  EXPORT_SYMBOL(qcom_scm_set_remote_state);
 >
-> +static inline int
-> +is_fw_rev_or_newer(struct venus_core *core, u32 vmajor, u32 vminor, u32 vrev)
-> +{
-> +       return ((core)->venus_ver.major == vmajor && (core)->venus_ver.minor ==
-> +               vminor && (core)->venus_ver.rev >= vrev);
-
-Please make the indentation logical here (and below).
-Also is 5.6.1 (e.g.) newer than 5.4.51? Or 5.4.1 newer than 4.2.0?
-
-> +}
-> +
-> +static inline int
-> +is_fw_rev_or_older(struct venus_core *core, u32 vmajor, u32 vminor, u32 vrev)
-> +{
-> +       return ((core)->venus_ver.major == vmajor && (core)->venus_ver.minor ==
-> +               vminor && (core)->venus_ver.rev <= vrev);
-> +}
->  #endif
-> diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
-> index 930b743f225e..e2539b58340f 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_cmds.c
-> +++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
-> @@ -521,6 +521,7 @@ static int pkt_session_set_property_1x(struct hfi_session_set_property_pkt *pkt,
->                 pkt->shdr.hdr.size += sizeof(u32) + sizeof(*en);
->                 break;
->         }
-> +       case HFI_PROPERTY_PARAM_VDEC_ENABLE_SUFFICIENT_SEQCHANGE_EVENT:
->         case HFI_PROPERTY_CONFIG_VDEC_POST_LOOP_DEBLOCKER: {
->                 struct hfi_enable *in = pdata;
->                 struct hfi_enable *en = prop_data;
-> diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
-> index d2d6719a2ba4..20516b4361d3 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_helper.h
-> +++ b/drivers/media/platform/qcom/venus/hfi_helper.h
-> @@ -469,6 +469,8 @@
->  #define HFI_PROPERTY_PARAM_VDEC_PIXEL_BITDEPTH                 0x1003007
->  #define HFI_PROPERTY_PARAM_VDEC_PIC_STRUCT                     0x1003009
->  #define HFI_PROPERTY_PARAM_VDEC_COLOUR_SPACE                   0x100300a
-> +#define HFI_PROPERTY_PARAM_VDEC_ENABLE_SUFFICIENT_SEQCHANGE_EVENT \
-> +                                                               0x0100300b
->
->  /*
->   * HFI_PROPERTY_CONFIG_VDEC_COMMON_START
-> diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.c b/drivers/media/platform/qcom/venus/hfi_msgs.c
-> index df96db3761a7..07ac0fcd2852 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_msgs.c
-> +++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
-> @@ -248,9 +248,10 @@ static void hfi_sys_init_done(struct venus_core *core, struct venus_inst *inst,
->  }
->
->  static void
-> -sys_get_prop_image_version(struct device *dev,
-> +sys_get_prop_image_version(struct venus_core *core,
->                            struct hfi_msg_sys_property_info_pkt *pkt)
+> -static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
+> +static int __qcom_scm_set_dload_mode(struct device *dev, enum qcom_download_mode mode)
 >  {
-> +       struct device *dev = core->dev;
->         u8 *smem_tbl_ptr;
->         u8 *img_ver;
->         int req_bytes;
-> @@ -263,6 +264,12 @@ sys_get_prop_image_version(struct device *dev,
->                 return;
+>         struct qcom_scm_desc desc = {
+>                 .svc = QCOM_SCM_SVC_BOOT,
+>                 .cmd = QCOM_SCM_BOOT_SET_DLOAD_MODE,
+>                 .arginfo = QCOM_SCM_ARGS(2),
+> -               .args[0] = QCOM_SCM_BOOT_SET_DLOAD_MODE,
+> +               .args[0] = mode,
+>                 .owner = ARM_SMCCC_OWNER_SIP,
+>         };
 >
->         img_ver = pkt->data;
-> +       if (IS_V4(core))
-> +               sscanf(img_ver, "14:VIDEO.VE.%u.%u-%u-PROD",
-> +                      &core->venus_ver.major, &core->venus_ver.minor, &core->venus_ver.rev);
-> +       else if (IS_V6(core))
-> +               sscanf(img_ver, "14:VIDEO.VPU.%u.%u-%u-PROD",
-> +                      &core->venus_ver.major, &core->venus_ver.minor, &core->venus_ver.rev);
-
-What about older (V1/V3) cores?
-
+> -       desc.args[1] = enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0;
+> +       desc.args[1] = mode;
 >
->         dev_dbg(dev, VDBGL "F/W version: %s\n", img_ver);
+>         return qcom_scm_call_atomic(__scm->dev, &desc, NULL);
+>  }
 >
-> @@ -286,7 +293,7 @@ static void hfi_sys_property_info(struct venus_core *core,
+> -static void qcom_scm_set_download_mode(bool enable)
+> +static void qcom_scm_set_download_mode(enum qcom_download_mode mode)
+>  {
+>         bool avail;
+>         int ret = 0;
+> @@ -424,10 +424,9 @@ static void qcom_scm_set_download_mode(bool enable)
+>                                              QCOM_SCM_SVC_BOOT,
+>                                              QCOM_SCM_BOOT_SET_DLOAD_MODE);
+>         if (avail) {
+> -               ret = __qcom_scm_set_dload_mode(__scm->dev, enable);
+> +               ret = __qcom_scm_set_dload_mode(__scm->dev, mode);
+>         } else if (__scm->dload_mode_addr) {
+> -               ret = qcom_scm_io_writel(__scm->dload_mode_addr,
+> -                               enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0);
+> +               ret = qcom_scm_io_writel(__scm->dload_mode_addr, mode);
+>         } else {
+>                 dev_err(__scm->dev,
+>                         "No available mechanism for setting download mode\n");
+> @@ -1410,7 +1409,7 @@ static int qcom_scm_probe(struct platform_device *pdev)
+>          * disabled below by a clean shutdown/reboot.
+>          */
+>         if (download_mode)
+> -               qcom_scm_set_download_mode(true);
+> +               qcom_scm_set_download_mode(QCOM_DOWNLOAD_FULLDUMP);
 >
->         switch (pkt->property) {
->         case HFI_PROPERTY_SYS_IMAGE_VERSION:
-> -               sys_get_prop_image_version(dev, pkt);
-> +               sys_get_prop_image_version(core, pkt);
->                 break;
->         default:
->                 dev_dbg(dev, VDBGL "unknown property data\n");
-> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-> index 4ceaba37e2e5..36c88858ea9d 100644
-> --- a/drivers/media/platform/qcom/venus/vdec.c
-> +++ b/drivers/media/platform/qcom/venus/vdec.c
-> @@ -545,7 +545,7 @@ vdec_decoder_cmd(struct file *file, void *fh, struct v4l2_decoder_cmd *cmd)
+>         return 0;
+>  }
+> @@ -1419,7 +1418,7 @@ static void qcom_scm_shutdown(struct platform_device *pdev)
+>  {
+>         /* Clean shutdown, disable download mode to allow normal restart */
+>         if (download_mode)
+> -               qcom_scm_set_download_mode(false);
+> +               qcom_scm_set_download_mode(QCOM_DOWNLOAD_NODUMP);
+>  }
 >
->                 fdata.buffer_type = HFI_BUFFER_INPUT;
->                 fdata.flags |= HFI_BUFFERFLAG_EOS;
-> -               if (IS_V6(inst->core))
-> +               if (IS_V6(inst->core) && is_fw_rev_or_older(inst->core, 1, 0, 87))
->                         fdata.device_addr = 0;
->                 else
->                         fdata.device_addr = 0xdeadb000;
-> @@ -671,6 +671,16 @@ static int vdec_set_properties(struct venus_inst *inst)
->                         return ret;
->         }
+>  static const struct of_device_id qcom_scm_dt_match[] = {
+> diff --git a/include/linux/qcom_scm.h b/include/linux/qcom_scm.h
+> index f833564..f9bc84e 100644
+> --- a/include/linux/qcom_scm.h
+> +++ b/include/linux/qcom_scm.h
+> @@ -14,6 +14,11 @@
+>  #define QCOM_SCM_CPU_PWR_DOWN_L2_OFF   0x1
+>  #define QCOM_SCM_HDCP_MAX_REQ_CNT      5
 >
-> +       /* Enabling sufficient sequence change support for VP9 */
-> +       if (of_device_is_compatible(inst->core->dev->of_node, "qcom,sc7180-venus")) {
-
-Do newer chips support this property? Do you intend to list all of them here?
-
-> +               if (is_fw_rev_or_newer(inst->core, 5, 4, 51)) {
-> +                       ptype = HFI_PROPERTY_PARAM_VDEC_ENABLE_SUFFICIENT_SEQCHANGE_EVENT;
-> +                       ret = hfi_session_set_property(inst, ptype, &en);
-> +                       if (ret)
-> +                               return ret;
-> +               }
-> +       }
+> +enum qcom_download_mode {
+> +       QCOM_DOWNLOAD_NODUMP    = 0x00,
+> +       QCOM_DOWNLOAD_FULLDUMP  = 0x10,
+> +};
 > +
->         ptype = HFI_PROPERTY_PARAM_VDEC_CONCEAL_COLOR;
->         conceal = ctr->conceal_color & 0xffff;
->         conceal |= ((ctr->conceal_color >> 16) & 0xffff) << 10;
-
+>  struct qcom_scm_hdcp_req {
+>         u32 addr;
+>         u32 val;
+> --
+> 2.7.4
+>
 
 
 -- 
