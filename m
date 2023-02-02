@@ -2,28 +2,28 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6571068857C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 18:34:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D92768858A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 18:36:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232007AbjBBReY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Feb 2023 12:34:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55808 "EHLO
+        id S231766AbjBBRgg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 12:36:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231722AbjBBReX (ORCPT
+        with ESMTP id S231722AbjBBRge (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 12:34:23 -0500
+        Thu, 2 Feb 2023 12:36:34 -0500
 Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92DF2712DF;
-        Thu,  2 Feb 2023 09:34:15 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A887074C1E;
+        Thu,  2 Feb 2023 09:36:33 -0800 (PST)
 Received: from g550jk.localnet (unknown [62.108.10.64])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id C6C5ECD52C;
-        Thu,  2 Feb 2023 17:33:43 +0000 (UTC)
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id F3703CD52C;
+        Thu,  2 Feb 2023 17:36:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1675359224; bh=89NIZqClh0XOO29LJCvpiqXNMG5Y6aeTmCeKVbe3aFc=;
+        t=1675359392; bh=OTyDkxpr2/8OyEpapjyVq0VRTuVQfP0EbcF0UYFilLg=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=fuq84wTkhk0BH39og3UfbLA2soir4P5R2HP2TmqVAYe2ySPBahuj5kSAIFeKGRYp4
-         J2tEDFygpWRkyk7adRqIhaPnZDHfnURyfuqUMl+OTLbtJgLYgpMYlnI76aOAJm9W3U
-         9MmJzw88fcsb+YmOjFPdbRL8txpj6/efwZ8/Z4cU=
+        b=wg5K3m1vDyspNHizdP4SIt0k/XvIy7pXWILoGm8Jz+O1VjnNrH9ULfie6E0NPLuVW
+         YDJ5FbAy0gQ38HRUBxf1JnbpXse3YjQss6sUckP5iU1WGIN2DpgrYE/gh3XXoxecw3
+         AyJJuym6d4vJYvDcpgw3vgsm7BPi1eH/h+qT7R38=
 From:   Luca Weiss <luca@z3ntu.xyz>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -39,13 +39,12 @@ To:     Andy Gross <agross@kernel.org>,
         linux-kernel@vger.kernel.org,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v2 04/10] dt-bindings: pinctrl: qcom,msm8953: correct GPIO name
- pattern
-Date:   Thu, 02 Feb 2023 18:33:43 +0100
-Message-ID: <3205321.oiGErgHkdL@z3ntu.xyz>
-In-Reply-To: <20230202104452.299048-5-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v2 09/10] arm64: dts: qcom: msm8953: correct TLMM gpio-ranges
+Date:   Thu, 02 Feb 2023 18:36:31 +0100
+Message-ID: <6520866.4vTCxPXJkl@z3ntu.xyz>
+In-Reply-To: <20230202104452.299048-10-krzysztof.kozlowski@linaro.org>
 References: <20230202104452.299048-1-krzysztof.kozlowski@linaro.org>
- <20230202104452.299048-5-krzysztof.kozlowski@linaro.org>
+ <20230202104452.299048-10-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7Bit
 Content-Type: text/plain; charset="us-ascii"
@@ -59,32 +58,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Donnerstag, 2. Februar 2023 11:44:46 CET Krzysztof Kozlowski wrote:
-> The MSM8953 TLMM pin controller has GPIOs 0-141, so narrow the pattern.
+On Donnerstag, 2. Februar 2023 11:44:51 CET Krzysztof Kozlowski wrote:
+> Correct the number of GPIOs in TLMM pin controller.
 > 
+> Fixes: 9fb08c801923 ("arm64: dts: qcom: Add MSM8953 device tree")
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Given msm8953 has gpio0 - gpio141, 142 looks correct.
 
 Reviewed-by: Luca Weiss <luca@z3ntu.xyz>
 
 > ---
->  .../devicetree/bindings/pinctrl/qcom,msm8953-pinctrl.yaml       | 2 +-
+>  arch/arm64/boot/dts/qcom/msm8953.dtsi | 2 +-
 >  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git
-> a/Documentation/devicetree/bindings/pinctrl/qcom,msm8953-pinctrl.yaml
-> b/Documentation/devicetree/bindings/pinctrl/qcom,msm8953-pinctrl.yaml index
-> 6bcd52080801..ce219827ccc8 100644
-> --- a/Documentation/devicetree/bindings/pinctrl/qcom,msm8953-pinctrl.yaml
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,msm8953-pinctrl.yaml
-> @@ -53,7 +53,7 @@ $defs:
->            subnode.
->          items:
->            oneOf:
-> -            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-7][0-9])$"
-> +            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-3][0-9]|14[01])$"
->              - enum: [ sdc1_clk, sdc1_cmd, sdc1_data, sdc1_rclk, sdc2_clk,
->                        sdc2_cmd, sdc2_data, qdsd_clk, qdsd_cmd, qdsd_data0,
->                        qdsd_data1, qdsd_data2, qdsd_data3 ]
+> diff --git a/arch/arm64/boot/dts/qcom/msm8953.dtsi
+> b/arch/arm64/boot/dts/qcom/msm8953.dtsi index 4e17bc9f8167..610f3e3fc0c2
+> 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8953.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8953.dtsi
+> @@ -399,7 +399,7 @@ tlmm: pinctrl@1000000 {
+>  			reg = <0x1000000 0x300000>;
+>  			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
+>  			gpio-controller;
+> -			gpio-ranges = <&tlmm 0 0 155>;
+> +			gpio-ranges = <&tlmm 0 0 142>;
+>  			#gpio-cells = <2>;
+>  			interrupt-controller;
+>  			#interrupt-cells = <2>;
 
 
 
