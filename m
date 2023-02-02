@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 26A8A687ECD
+	by mail.lfdr.de (Postfix) with ESMTP id 7BE7A687ECE
 	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 14:38:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231359AbjBBNia (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Feb 2023 08:38:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36648 "EHLO
+        id S232391AbjBBNib (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 08:38:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230147AbjBBNi3 (ORCPT
+        with ESMTP id S232125AbjBBNia (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 08:38:29 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 222F188CD3
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 05:38:28 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id o36so1421978wms.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 05:38:28 -0800 (PST)
+        Thu, 2 Feb 2023 08:38:30 -0500
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CAD98937F
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 05:38:29 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id o36so1422022wms.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 05:38:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=C2GNH5vdMMAxeW3/q88hsHEut53C5OA4g89R8Sa30oA=;
-        b=sHeLh7rejmRl+Gs2HPwza9sBAUoFpbJedUDKUDHSvVf62Tt9ocWNLHxaEhcWrift9c
-         WXietGBQxmTdvzLyoc8L7B3aVXpk7Rm6he0GNmhG6CQEN3iwwIMbR1SxYZ1t0CFfWwF0
-         Sr5WK/9m8siRIGJebaEnnl7PchVOqiGUqRzzW+5pmOrlHwqNeLuAK4zoNiCHnaTqnDru
-         bnSf9zC402o9bfX4a4QfzUo2befObSYEKoDcevtFqKuStcTtd0POLq1OgDDV45qbPz0H
-         BIQZrkO64QCVPHYv0C8YBFMtmmKBrHs2vrVJpgFYMO7lHbiCPqiIQqBK2x2vNAxFlhsX
-         rjHg==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KlnEmmK+mxpU2hlLI+Gvfd0nScZypGzNM1BgswRGTnA=;
+        b=D/nQ4GR3dSQbLqg6I6//g3oBsSG/b41aAlnM5Yufajj05bmK/+DsKRO+n9oumxgDRI
+         G2RhKUVYG8EWkwk6AquEpFY7mo7ENGkqqn9/58rzLIrcphE9KFK8LotJnFGF98o5eG/j
+         BBta75jGyHpzijTzIe80l9wsn1ehQxvKs3ekgQPdjzOv9zk7Amqm1mrZX6G4RnG7IA+1
+         mYyLuKLlxJ0VYsKRZtajgxpjwnm1tu/6nrev06GFZlHlRiA1Ae6MCpgK3AlpewhOHCJx
+         mGgvHPsLmEUYGm5niLk2stCIBSRLnZAuKNPmbCSLOAbis4w56YgkUD/GSiZJWEyr9rOo
+         8vmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=C2GNH5vdMMAxeW3/q88hsHEut53C5OA4g89R8Sa30oA=;
-        b=2sPv4my64A5TDjEifsXcveP/GUQ3mQLFhM86IJ2+0crjBf/QHm2ClBL3LREFatLqXY
-         D+mhynQ3i+1eN1hEOyPMn5E0Bd6eygeJ+43OJYWLgHf5KS63Q5xvSfcY6vfVIB1jMatV
-         ofF9gQZ+kXgZBQzTHfqP2p6Yp6ILv/ut/itCtoiqAX6rC9XatwMo5R4zRDnQS52S1uv0
-         j7uBRBG8YZytZagy3RwpvAg7CVqwCxLqZq6e69P8iITa5uSAP6t7PI0nans0VcOHmno/
-         cGoQBFGoinNVAkoEW7DduNXH8v+ZX3wDcRDuial5vrPE64jiPVYt5yF76sOxX8RAyDqS
-         E3Aw==
-X-Gm-Message-State: AO0yUKVihmPZWZCJzj4xlWlDOsoyZEihSErSR9g6R+PVQtQfvvh0ZJFO
-        zgtYF2lJAvSpwS7Wlp0o9X+jiA==
-X-Google-Smtp-Source: AK7set/pSxSbtteJLy+n0jBpDdMHf8zvoXMVU/bki2S6y/dGnUgfpt3devM6jAVBRRAIgjX33ZWNLQ==
-X-Received: by 2002:a05:600c:5113:b0:3df:9858:c02e with SMTP id o19-20020a05600c511300b003df9858c02emr1920935wms.3.1675345106716;
-        Thu, 02 Feb 2023 05:38:26 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=KlnEmmK+mxpU2hlLI+Gvfd0nScZypGzNM1BgswRGTnA=;
+        b=mZ3oVXSmYxgSBQZ2JL+jT92VAPTVcGQVc4vg9Q0Z7hDeCCdQKMCiboYz03wlvlSJxe
+         9mcfKeVDkONZhq4KraqgjCuu8zG7DsSoxUnqACFoK++tARI4FmN6FfVHBYW4Mo22IMjo
+         Zxa+uvuF1fLsoC2lcTUo7A36L1qooK/KEnV+qRLzBywWdhjlpQIrZWKXcsyWG/4KE/HY
+         3K/+B+MzHniPkFbJjoU477mmfiA3KMnOMXs3YAGQa3ZtPYbJdTGT6wSmWIvXrtx68OuS
+         ipl2/hZ04Tne5EkbZfUR+OWBiXyxGMGC1eSR4ZIGM0sqqKBabL+mbnTxAmB6eVAEiMmQ
+         Hbnw==
+X-Gm-Message-State: AO0yUKXwoNhDuATOQGeiGfKtan8OazuVrYrS6XZ/WRi48IrxLARvCxMo
+        vd+5C6ufyAzbLNvS219e+jfv+w==
+X-Google-Smtp-Source: AK7set/HruKLuPPKZqpPir9fHCiHYxHpi8qYjeVph/FYB2s7tGyUsL58Of7GtXwbLYNB13s2fnE7gg==
+X-Received: by 2002:a7b:cc83:0:b0:3de:25f2:3aee with SMTP id p3-20020a7bcc83000000b003de25f23aeemr5981561wma.31.1675345107899;
+        Thu, 02 Feb 2023 05:38:27 -0800 (PST)
 Received: from hackbox.lan ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id y10-20020a05600c364a00b003daf7721bb3sm4672657wmq.12.2023.02.02.05.38.25
+        by smtp.gmail.com with ESMTPSA id y10-20020a05600c364a00b003daf7721bb3sm4672657wmq.12.2023.02.02.05.38.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Feb 2023 05:38:26 -0800 (PST)
+        Thu, 02 Feb 2023 05:38:27 -0800 (PST)
 From:   Abel Vesa <abel.vesa@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -60,64 +61,47 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         linux-phy@lists.infradead.org
-Subject: [RFC v3 0/7] sm8550: Add support for eUSB2 repeater
-Date:   Thu,  2 Feb 2023 15:38:09 +0200
-Message-Id: <20230202133816.4026990-1-abel.vesa@linaro.org>
+Subject: [RFC v3 1/7] dt-bindings: mfd: qcom,spmi-pmic: Add pattern property for phy
+Date:   Thu,  2 Feb 2023 15:38:10 +0200
+Message-Id: <20230202133816.4026990-2-abel.vesa@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20230202133816.4026990-1-abel.vesa@linaro.org>
+References: <20230202133816.4026990-1-abel.vesa@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patchset adds support for the eUSB2 repeater found in pmic PM8550B,
-used along with SM8550. Since there is no dedicated generic framework
-for eUSB2 repeaters, the most appropriate subsystem to model it is the
-generic phy. This patchset also adds support for such repeater to the
-eUSB2 PHY found in SM8550. Basically, the eUSB2 PHY will have its own
-"phy" which is actually a repeater.
+The phy pattern property will be used for providing eUSB2 repeater
+functionality. This will be modelled as a Qualcomm PHY driver.
 
-This patchset is based on the following patchset:
-https://lore.kernel.org/all/?q=20230126131415.1453741-1-abel.vesa%40linaro.org
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+ Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-Changes since v2:
- * moved the bindings qcom,spmi-pmic patch before the repeater schema
-   patch in order to avoid the repeater schema validation failure due to
-   phy pattern property not being found in qcom,spmi-pmic schema
-
-Changes since v1:
- * the repeater driver is implemented now as a PHY rather than adding
-   a new generic framework for USB repeaters
-
-Abel Vesa (5):
-  dt-bindings: mfd: qcom,spmi-pmic: Add pattern property for phy
-  dt-bindings: phy: Add qcom,snps-eusb2-repeater schema file
-  dt-bindings: phy: qcom,snps-eusb2-repeater: Add phy related properties
-  phy: qcom: Add QCOM SNPS eUSB2 repeater driver
-  arm64: dts: qcom: sm8550-mtp: Add eUSB2 repeater node
-
-Neil Armstrong (2):
-  phy: qcom: phy-qcom-snps-eusb2: Add support for eUSB2 repeater
-  arm64: dts: qcom: pm8550b: Add eUSB2 repeater node
-
- .../bindings/mfd/qcom,spmi-pmic.yaml          |   4 +
- .../bindings/phy/qcom,snps-eusb2-phy.yaml     |   9 +
- .../phy/qcom,snps-eusb2-repeater.yaml         |  48 +++
- arch/arm64/boot/dts/qcom/pm8550b.dtsi         |   6 +
- arch/arm64/boot/dts/qcom/sm8550-mtp.dts       |   8 +
- drivers/phy/qualcomm/Kconfig                  |   9 +
- drivers/phy/qualcomm/Makefile                 |   1 +
- .../phy/qualcomm/phy-qcom-eusb2-repeater.c    | 278 ++++++++++++++++++
- drivers/phy/qualcomm/phy-qcom-snps-eusb2.c    |  18 +-
- 9 files changed, 380 insertions(+), 1 deletion(-)
- create mode 100644 Documentation/devicetree/bindings/phy/qcom,snps-eusb2-repeater.yaml
- create mode 100644 drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
-
+diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+index adf88245c409..1e6fadec1301 100644
+--- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
++++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+@@ -135,6 +135,10 @@ patternProperties:
+     type: object
+     $ref: /schemas/pinctrl/qcom,pmic-gpio.yaml#
+ 
++  "phy@[0-9a-f]+$":
++    type: object
++    $ref: /schemas/phy/qcom,snps-eusb2-repeater.yaml#
++
+   "pon@[0-9a-f]+$":
+     type: object
+     $ref: /schemas/power/reset/qcom,pon.yaml#
 -- 
 2.34.1
 
