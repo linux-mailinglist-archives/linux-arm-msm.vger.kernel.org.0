@@ -2,174 +2,195 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E616D6885F0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 19:02:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 79A7A68864C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 19:24:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232604AbjBBSCQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Feb 2023 13:02:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43498 "EHLO
+        id S231949AbjBBSYU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 13:24:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232409AbjBBSBi (ORCPT
+        with ESMTP id S229761AbjBBSYT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 13:01:38 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 096D66CCBD;
-        Thu,  2 Feb 2023 10:01:18 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 8C19461B50;
-        Thu,  2 Feb 2023 18:01:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05723C433D2;
-        Thu,  2 Feb 2023 18:01:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1675360877;
-        bh=NFYHR5UWsU7uUN2XV/Epd32P9hvqIXjTWTM+74ua634=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Jn8eCAWSiVdMb34f3gBBXHp8E1xKezUu4ex3rUtKsRFmwX7Ovjyo2SXhiUetovM9u
-         rwU28/BMszIi59fsYuhvodYIHoS4dg0kHkFXepMNrA91I+Y/KrIDcVKDwuzR1UJubN
-         E2N64VHMG4rLKJd6ylvkHeYrTa00rTKlvN05GtdtgYuC5nrqsY9pWyYr6PDMs963/z
-         omkPvSs6j/rDFtAxDY90dw2ChK7wPMECcglEtwu0SQMXQB6MFSrUdjVYeuSDQcTvVX
-         NhafMThU+UbaScbbR+HLe7vKV+iqR4W8kEpv7htVTbntehhjqEa8Ljgx9rZS8f7+37
-         /2BgVPi7MNaIg==
-Date:   Thu, 2 Feb 2023 23:31:08 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        Asutosh Das <quic_asutoshd@quicinc.com>,
-        Bean Huo <beanhuo@micron.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Jinyoung Choi <j-young.choi@samsung.com>,
-        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] scsi: ufs: core: Limit DMA alignment check
-Message-ID: <20230202180108.GD257939@thinkpad>
-References: <20230201034917.1902330-1-quic_bjorande@quicinc.com>
- <20230201102748.GA62808@thinkpad>
- <20230201162841.GA2238350@hu-bjorande-lv.qualcomm.com>
+        Thu, 2 Feb 2023 13:24:19 -0500
+Received: from mail-il1-x12c.google.com (mail-il1-x12c.google.com [IPv6:2607:f8b0:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 598BB62799
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 10:24:17 -0800 (PST)
+Received: by mail-il1-x12c.google.com with SMTP id l7so1141607ilf.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 10:24:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=KEsmcJxef9VraaSjmZ5P/yOda1aam7+tcb0WcmIGD+U=;
+        b=PU5h0yer48rjaHfee+8288jQgBceANhYgi8H1PXRAs83jtgY72r/RgtBmqmLHJOWp6
+         5s8hDpF3xWy0X7NWca3kqIM54lN3NBM20vDPWqJ5T5qcyGl4FWRyzFEHksC7ST+GoDNi
+         RXl0HGI3sn9K6iSjlq2rdhJsGshEQB6KmfmEY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KEsmcJxef9VraaSjmZ5P/yOda1aam7+tcb0WcmIGD+U=;
+        b=H/BcDH0rUTOo7GVLev3msT5/RrtP/86ALoGcPxqdQTtcM9RdNam6kB5RCZkwZqeM8t
+         BtRQoUp19fx1qn9yIkS7WUxYXwPfWm2cylnUtWXP48GNPJ9KAl4JRULvxOY9nmwS4+38
+         TPtoxwosJwP0Dfr6YNSiqv7zYs4oa0KnuMD50P7rRLb0zKHa0fUAbhefL0dy2gHaSTRP
+         7SMcGpSKNXf+LX9zI8zfS1VL9DnkReLQ23h+i159hhcati6NWj/aWBmG7a/CPOSPu7N+
+         CAVzN/Hmce/ieEk76FAnVeTKUdOf1jipMallHtrfxTsftd/pgDePkVxgF1zvdAElWRhg
+         NjSQ==
+X-Gm-Message-State: AO0yUKU9YY59PsLOJ8zQGNlaF66Rr6AqyJjeUUPCrWBlrRI/2KSTmDJL
+        j6PQY8PT4Qw8TH9cVwi3UVfGyg==
+X-Google-Smtp-Source: AK7set/Bt5lPVoYdpAgFbksnowpbSms8I5kGIMJaY607UlltxZIsWVhxOEXhGk1wL1oWEF9mcRK0lQ==
+X-Received: by 2002:a05:6e02:198e:b0:30d:c671:48c5 with SMTP id g14-20020a056e02198e00b0030dc67148c5mr5812112ilf.16.1675362256461;
+        Thu, 02 Feb 2023 10:24:16 -0800 (PST)
+Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
+        by smtp.gmail.com with UTF8SMTPSA id f15-20020a056e0212af00b0030c2c6f5aa1sm94040ilr.70.2023.02.02.10.24.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Feb 2023 10:24:16 -0800 (PST)
+Date:   Thu, 2 Feb 2023 18:24:15 +0000
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Abel Vesa <abel.vesa@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     "Rafael J . Wysocki" <rafael@kernel.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-pm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Doug Anderson <dianders@chromium.org>
+Subject: Re: [RFC PATCH v2 1/2] PM: domains: Skip disabling unused domains if
+ provider has sync_state
+Message-ID: <Y9v/z8CYik3faHh7@google.com>
+References: <20230127104054.895129-1-abel.vesa@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230201162841.GA2238350@hu-bjorande-lv.qualcomm.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20230127104054.895129-1-abel.vesa@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 01, 2023 at 08:28:41AM -0800, Bjorn Andersson wrote:
-> On Wed, Feb 01, 2023 at 03:57:48PM +0530, Manivannan Sadhasivam wrote:
-> > On Tue, Jan 31, 2023 at 07:49:17PM -0800, Bjorn Andersson wrote:
-> > > The three DMA memory regions allocated for the host memory space is
-> > > documented to require alignment of 128, 1024 and 1024 respectively, but
-> > > the returned address is checked for PAGE_SIZE alignment.
-> > > 
-> > > In the case these allocations are serviced by e.g. the Arm SMMU, the
-> > > size and alignment will be determined by its supported page sizes. In
-> > > most cases SZ_4K and a few larger sizes are available.
-> > > 
-> > > In the typical configuration this does not cause problems, but in the
-> > > event that the system PAGE_SIZE is increased beyond 4k, it's no longer
-> > > reasonable to expect that the allocation will be PAGE_SIZE aligned.
-> > > 
-> > > Limit the DMA alignment check to the actual alignment requirements
-> > > written in the comments in the code, to avoid the UFS core refusing to
-> > > initialize with such configuration.
-> > 
-> > Isn't dma_alloc_coherent() supposed to return PAGE_SIZE aligned dma and cpu
-> > addresses? I suppose that could be reason for checking against PAGE_SIZE.
-> > 
-> 
-> If the allocating device has associated dma_mem, the requested size will
-> be rounded up to the next order and you will get an allocation which is
-> sized and aligned to that.
-> Given the three allocations on my device is 98304, 1024 and 640. The
-> latter two would only be aligned to 1kb if this code path is taken...
-> 
-> 
-> But in our case, the comment for __iommu_dma_alloc_noncontiguous() seems
-> to give us the reason for the issue.
-> 
-> /*
->  * If size is less than PAGE_SIZE, then a full CPU page will be allocated,
->  * but an IOMMU which supports smaller pages might not map the whole thing.
->  */
-> 
+Hi Abel,
 
-Ah, missed this part. Thanks for enlightening me :)
-
-- Mani
-
-> Our iommu reports supporting mapping of 4kb pages.
+On Fri, Jan 27, 2023 at 12:40:53PM +0200, Abel Vesa wrote:
+> Currently, there are cases when a domain needs to remain enabled until
+> the consumer driver probes. Sometimes such consumer drivers may be built
+> as modules. Since the genpd_power_off_unused is called too early for
+> such consumer driver modules to get a chance to probe, the domain, since
+> it is unused, will get disabled. On the other hand, the best time for
+> an unused domain to be disabled is on the provider's sync_state
+> callback. So, if the provider has registered a sync_state callback,
+> assume the unused domains for that provider will be disabled on its
+> sync_state callback. Also provide a generic sync_state callback which
+> disables all the domains unused for the provider that registers it.
 > 
-> > > 
-> > > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> > 
-> > But it doesn't hurt to check for the actual alignment.
-> > 
-> > Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-> > 
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
 > 
-> Thanks,
-> Bjorn
-> 
-> > Thanks,
-> > Mani
-> > 
-> > > ---
-> > >  drivers/ufs/core/ufshcd.c | 9 +++------
-> > >  1 file changed, 3 insertions(+), 6 deletions(-)
-> > > 
-> > > diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-> > > index ec732e4bbbf4..d7f3f1ba9d12 100644
-> > > --- a/drivers/ufs/core/ufshcd.c
-> > > +++ b/drivers/ufs/core/ufshcd.c
-> > > @@ -3724,12 +3724,9 @@ static int ufshcd_memory_alloc(struct ufs_hba *hba)
-> > >  
-> > >  	/*
-> > >  	 * UFSHCI requires UTP command descriptor to be 128 byte aligned.
-> > > -	 * make sure hba->ucdl_dma_addr is aligned to PAGE_SIZE
-> > > -	 * if hba->ucdl_dma_addr is aligned to PAGE_SIZE, then it will
-> > > -	 * be aligned to 128 bytes as well
-> > >  	 */
-> > >  	if (!hba->ucdl_base_addr ||
-> > > -	    WARN_ON(hba->ucdl_dma_addr & (PAGE_SIZE - 1))) {
-> > > +	    WARN_ON(hba->ucdl_dma_addr & (128 - 1))) {
-> > >  		dev_err(hba->dev,
-> > >  			"Command Descriptor Memory allocation failed\n");
-> > >  		goto out;
-> > > @@ -3745,7 +3742,7 @@ static int ufshcd_memory_alloc(struct ufs_hba *hba)
-> > >  						   &hba->utrdl_dma_addr,
-> > >  						   GFP_KERNEL);
-> > >  	if (!hba->utrdl_base_addr ||
-> > > -	    WARN_ON(hba->utrdl_dma_addr & (PAGE_SIZE - 1))) {
-> > > +	    WARN_ON(hba->utrdl_dma_addr & (1024 - 1))) {
-> > >  		dev_err(hba->dev,
-> > >  			"Transfer Descriptor Memory allocation failed\n");
-> > >  		goto out;
-> > > @@ -3769,7 +3766,7 @@ static int ufshcd_memory_alloc(struct ufs_hba *hba)
-> > >  						    &hba->utmrdl_dma_addr,
-> > >  						    GFP_KERNEL);
-> > >  	if (!hba->utmrdl_base_addr ||
-> > > -	    WARN_ON(hba->utmrdl_dma_addr & (PAGE_SIZE - 1))) {
-> > > +	    WARN_ON(hba->utmrdl_dma_addr & (1024 - 1))) {
-> > >  		dev_err(hba->dev,
-> > >  		"Task Management Descriptor Memory allocation failed\n");
-> > >  		goto out;
-> > > -- 
-> > > 2.25.1
-> > > 
-> > 
-> > -- 
-> > மணிவண்ணன் சதாசிவம்
+> This approach has been applied for unused clocks as well.
+> With this patch merged in, all the providers that have sync_state
+> callback registered will leave the domains enabled unless the provider's
+> sync_state callback explicitly disables them. So those providers will
+> need to add the disabling part to their sync_state callback. On the
+> other hand, the platforms that have cases where domains need to remain
+> enabled (even if unused) until the consumer driver probes, will be able,
+> with this patch in, to run without the pd_ignore_unused kernel argument,
+> which seems to be the case for most Qualcomm platforms, at this moment.
 
--- 
-மணிவண்ணன் சதாசிவம்
+I recently encountered a related issue on a Qualcomm platform with a
+v6.2-rc kernel, which includes 3a39049f88e4 ("soc: qcom: rpmhpd: Use
+highest corner until sync_state"). The issue involves a DT node with a
+rpmhpd, the DT node is enabled, however the corresponding device driver
+is not enabled in the kernel. In such a scenario the sync_state callback
+is never called, because the genpd consumer never probes. As a result
+the Always-on subsystem (AOSS) of the SoC doesn't enter sleep mode during
+system suspend, which results in a substantially higher power consumption
+in S3.
+
+I wonder if genpd (and some other frameworks) needs something like
+regulator_init_complete(), which turns off unused regulators 30s after
+system boot. That's conceptually similar to the current
+genpd_power_off_unused(), but would provide time for modules being loaded.
+
+> The v1 is here:
+> https://lore.kernel.org/all/20230126234013.3638425-1-abel.vesa@linaro.org/
+> 
+> Changes since v1:
+>  * added a generic sync state callback to be registered by providers in
+>    order to disable the unused domains on their sync state. Also
+>    mentioned this in the commit message.
+> 
+>  drivers/base/power/domain.c | 17 ++++++++++++++++-
+>  include/linux/pm_domain.h   |  3 +++
+>  2 files changed, 19 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+> index 84662d338188..c2a5f77c01f3 100644
+> --- a/drivers/base/power/domain.c
+> +++ b/drivers/base/power/domain.c
+> @@ -1099,7 +1099,8 @@ static int __init genpd_power_off_unused(void)
+>  	mutex_lock(&gpd_list_lock);
+>  
+>  	list_for_each_entry(genpd, &gpd_list, gpd_list_node)
+> -		genpd_queue_power_off_work(genpd);
+> +		if (!dev_has_sync_state(genpd->provider->dev))
+> +			genpd_queue_power_off_work(genpd);
+>  
+>  	mutex_unlock(&gpd_list_lock);
+>  
+> @@ -1107,6 +1108,20 @@ static int __init genpd_power_off_unused(void)
+>  }
+>  late_initcall(genpd_power_off_unused);
+>  
+> +void genpd_power_off_unused_sync_state(struct device *dev)
+> +{
+> +	struct generic_pm_domain *genpd;
+> +
+> +	mutex_lock(&gpd_list_lock);
+> +
+> +	list_for_each_entry(genpd, &gpd_list, gpd_list_node)
+> +		if (genpd->provider->dev == dev)
+> +			genpd_queue_power_off_work(genpd);
+> +
+> +	mutex_unlock(&gpd_list_lock);
+> +}
+> +EXPORT_SYMBOL_GPL(genpd_power_off_unused_sync_state);
+> +
+>  #ifdef CONFIG_PM_SLEEP
+>  
+>  /**
+> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
+> index f776fb93eaa0..1fd5aa500c81 100644
+> --- a/include/linux/pm_domain.h
+> +++ b/include/linux/pm_domain.h
+> @@ -351,6 +351,7 @@ struct device *genpd_dev_pm_attach_by_id(struct device *dev,
+>  					 unsigned int index);
+>  struct device *genpd_dev_pm_attach_by_name(struct device *dev,
+>  					   const char *name);
+> +void genpd_power_off_unused_sync_state(struct device *dev);
+>  #else /* !CONFIG_PM_GENERIC_DOMAINS_OF */
+>  static inline int of_genpd_add_provider_simple(struct device_node *np,
+>  					struct generic_pm_domain *genpd)
+> @@ -419,6 +420,8 @@ struct generic_pm_domain *of_genpd_remove_last(struct device_node *np)
+>  {
+>  	return ERR_PTR(-EOPNOTSUPP);
+>  }
+> +
+> +static inline genpd_power_off_unused_sync_state(struct device *dev) {}
+>  #endif /* CONFIG_PM_GENERIC_DOMAINS_OF */
+>  
+>  #ifdef CONFIG_PM
+> -- 
+> 2.34.1
+> 
