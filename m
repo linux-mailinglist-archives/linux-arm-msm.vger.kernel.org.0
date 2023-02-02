@@ -2,91 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4752D687DF3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 13:54:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 82D8D687DF9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 13:55:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231836AbjBBMyh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Feb 2023 07:54:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54028 "EHLO
+        id S231661AbjBBMz1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 07:55:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232182AbjBBMyf (ORCPT
+        with ESMTP id S231761AbjBBMzV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 07:54:35 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7C9CA5C0
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 04:54:31 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id q10-20020a1cf30a000000b003db0edfdb74so4009186wmq.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 04:54:31 -0800 (PST)
+        Thu, 2 Feb 2023 07:55:21 -0500
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDE678E493
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 04:55:09 -0800 (PST)
+Received: by mail-lf1-x133.google.com with SMTP id v17so2821508lfd.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 04:55:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rGDp7716sT1eqe9YQ1tcc7XxxRqLoBRLLBmsSB6reNM=;
-        b=XQiMlQml0DXKzG0v891loqgy94caSyXEo6hOVw75KMQtB45YNQHXfUZ2uWY2mmsqpr
-         yXkuFmY9nV3dU7bYpjmO17TyUFiSXXzHZEZmGWTCqrH+Q7C36ZMEP4df7A7oRRmMhs2O
-         wh/WwfMeoYwowxursdZ2aj1dWsqSxi8N9vyzNy7oRU515J5zSjzUbNhDLq0q34doAI1S
-         QirB1D5XM+o9C3dZ9XeWc94P9phZL2WNoe5TuoLXPYJ/BqmOHO9piPVJGi3Lqh5rDkqo
-         FBpiHpvtWd79F5X6WiNffbBye10mCfXDvZypYzXMrWwF5Nlt5O5pkVckRU1tmGGxb1CH
-         2wQg==
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=p0OggBaEVM084sMCW8HBWOrUa7UEjlo8LtE+1sylal4=;
+        b=wMflCs4LRrR6rx0v5FUohA45XpEpxNpUO82rPsPLRH/jXDhlIwsosRKYSnnLSjfisK
+         fI/DEgEyzseoBqcbf32s22RhlWE8jJAnWYL7dAXc7BvCrm3PouFpS1sS9TQsHE23wpBI
+         BFrG3dVV0Iyo2S1xUHRj6rrjfIVSNHfiQhvYHJURC102lItPydI+18WNfObcViw6zGIr
+         dCcl0osS0YaevOaR/UsGDBbfP5ZWN1ClX3oS7raXmTATGdHvomOR9P+LktGumcknhvvd
+         H33l5FmbJWokijfLdjLWu/B2hXZ3fneak/KwX0OmqgM0OC736TEucbKOESx6S326gHXe
+         6KGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rGDp7716sT1eqe9YQ1tcc7XxxRqLoBRLLBmsSB6reNM=;
-        b=EMljOnI0y2GBK8JzgqXwVR0vfeBcTFcruXjwXo7Ow5ui62Mb0Q+w9WDRzq+iH3LMM9
-         nTRB4FvjqBM0SWBFR9GVgc466lhMtnNpGl1MNpTA74itglMI1wCVSyGF0s3aaKPGx9/H
-         xavieUH30dHW8XrTk7Gx7Mb+jd7a7MYzqVpVsRZVaoT/Fu7BUNvbzSrib8mSyrmj9+CI
-         imLVysQCwsQ6eFK3SV6T6XaVJHV2PCIk7mPqkoACOHB0h3Pxg4E1VubTN1beWvXx3llL
-         CQFZ6bhGlxze+9UZf43kHnqiVPZB9o7vUDwzbFCTmw3q23KDLmwnDvl9GG9jNydh3e+2
-         0iSg==
-X-Gm-Message-State: AO0yUKVEEQyBdwznRgzUJ12lAO+CcJIbh3MOEx/zV5jL6aN5r14DKYOg
-        vExXzb4vRD2z1xFZuhLhdSXT43AWn6RfV/u1
-X-Google-Smtp-Source: AK7set8RcJmr7/yTpbHp90WCkCjakBS0ObD2W5bqUa1QHbIhJtRmuYEiQTp0JLl1H9gYQ0z4JzshGA==
-X-Received: by 2002:a05:600c:4f96:b0:3cf:9844:7b11 with SMTP id n22-20020a05600c4f9600b003cf98447b11mr6136169wmq.23.1675342470159;
-        Thu, 02 Feb 2023 04:54:30 -0800 (PST)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id u1-20020a05600c00c100b003a3442f1229sm4682183wmm.29.2023.02.02.04.54.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Feb 2023 04:54:29 -0800 (PST)
-Message-ID: <5c5bec7d-e3de-ef7e-b0fc-83d6c0481af1@linaro.org>
-Date:   Thu, 2 Feb 2023 12:54:26 +0000
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=p0OggBaEVM084sMCW8HBWOrUa7UEjlo8LtE+1sylal4=;
+        b=mqeLkarTObg78eRk+/O+TpMzvqjhza347VSbF4L26lbeb2tscJ7WkN7/kR7/1qhcBg
+         jsYYhuJb71U9ZLkbZMccLLvlmP6Z1XlXfwoOkZR95mtyt1XnKc+R2jLPqnT1esq/tDvo
+         VR3AP731lv/VUaOcl3mVzsTvRILE62skExSyQbVRzMidVa6payt+3h+uI4hq06l7MHoy
+         AGNrRlWYUePXeLYjHuhqlsLcPFV07P0QlrrUpr7agAC40WtLrZojZq74CC2khi1SdIzs
+         EEG/BonQxxr7BA/TWp6TKJGV6fo1T0E+htFTU2Rvudl6Iqul4CzSgk4flCB8vvGJEK9W
+         iPmA==
+X-Gm-Message-State: AO0yUKXsu52vIQlBssTgMr9ppDDG1qgfZg/6L9ySfvOKDX2PRerzDgrf
+        9IC6+Vp4g8yRHIhjZbCEojb1cWvN4em/1r+zHrAwlA==
+X-Google-Smtp-Source: AK7set/mWmeaWd2wkMNBFXbA51O652xW98OUEb1CzsuGrHbl8sBzDY3nLrJoIabdvmMj4YTWwXKt7B5+qymwtAEVesA=
+X-Received: by 2002:a05:6512:3d28:b0:4d8:8ad1:a05c with SMTP id
+ d40-20020a0565123d2800b004d88ad1a05cmr836274lfv.140.1675342508144; Thu, 02
+ Feb 2023 04:55:08 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v9 11/27] gunyah: vm_mgr: Introduce basic VM Manager
-Content-Language: en-US
-To:     Elliot Berman <quic_eberman@quicinc.com>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Alex Elder <elder@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>
-Cc:     Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Marc Zyngier <maz@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230120224627.4053418-1-quic_eberman@quicinc.com>
- <20230120224627.4053418-12-quic_eberman@quicinc.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20230120224627.4053418-12-quic_eberman@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+References: <20230201080227.473547-1-jun.nie@linaro.org> <20230201080227.473547-2-jun.nie@linaro.org>
+ <515f4e9e-2804-e03a-26f5-f2d3ac331109@linaro.org> <71ba0d05-6183-95ef-9e45-cc3dd512475f@linaro.org>
+ <CAA8EJpqyqC5D+O=KJnuZnWN4BwBOKcquN11nJfEp2WMSmJobBg@mail.gmail.com>
+In-Reply-To: <CAA8EJpqyqC5D+O=KJnuZnWN4BwBOKcquN11nJfEp2WMSmJobBg@mail.gmail.com>
+From:   Jun Nie <jun.nie@linaro.org>
+Date:   Thu, 2 Feb 2023 20:55:04 +0800
+Message-ID: <CABymUCMJdRXG3AcLeS18JFuYmCv1kw=rJNkCv8sL7AjPD4ZR+A@mail.gmail.com>
+Subject: Re: [PATCH 2/2] PM / devfreq: qcom: Introduce CCI devfreq driver
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
+        cw00.choi@samsung.com, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -95,358 +73,203 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org> =E4=BA=8E2023=E5=B9=B42=E6=
+=9C=881=E6=97=A5=E5=91=A8=E4=B8=89 21:41=E5=86=99=E9=81=93=EF=BC=9A
+>
+> On Wed, 1 Feb 2023 at 13:46, Bryan O'Donoghue
+> <bryan.odonoghue@linaro.org> wrote:
+> >
+> > On 01/02/2023 11:32, Dmitry Baryshkov wrote:
+> > > On 01/02/2023 10:02, Jun Nie wrote:
+> > >> Cache Coherent Interconnect (CCI) is used by some Qualcomm SoCs. Thi=
+s
+> > >> driver is introduced so that its freqency can be adjusted. And regul=
+ator
+> > >> associated with opp table can be also adjusted accordingly which is
+> > >> shared with cpu cluster.
+> > >>
+> > >> Signed-off-by: Jun Nie <jun.nie@linaro.org>
+> > >> ---
+> > >>   drivers/devfreq/Kconfig    |   9 +++
+> > >>   drivers/devfreq/Makefile   |   1 +
+> > >>   drivers/devfreq/qcom-cci.c | 162 +++++++++++++++++++++++++++++++++=
+++++
+> > >>   3 files changed, 172 insertions(+)
+> > >>   create mode 100644 drivers/devfreq/qcom-cci.c
+> > >
+> > > Could you please describe in some additional details what are you try=
+ing
+> > > to achieve? Should the CCI frequency be scaled manually or does it
+> > > follow the cluster frequency? Do clusters vote on the CCI frequency?
+> > >
+> > > I'm inclined to ask if it is possible to shift this to the cpufreq OP=
+P
+> > > tables?
+> > >
+> >
+> > Might not be so easy to just append CCI opps to the cluster frequency o=
+pps
+> >
+> >                  cci_cache: qcom,cci {
+> >                          compatible =3D "qcom,msm8939-cci";
+> >                          clock-names =3D "devfreq_clk";
+> >                          clocks =3D <&apcs2>;
+> >                          governor =3D "cpufreq";
+> >                          operating-points-v2 =3D <&cci_opp_table>;
+> >                          power-domains =3D <&cpr>;
+> >                          power-domain-names =3D "cpr";
+> >                          nvmem-cells =3D <&cpr_efuse_speedbin_pvs>;
+> >                          nvmem-cell-names =3D "cpr_efuse_speedbin_pvs";
+> >                  };
+> >
+> >                  devfreq-cpufreq {
+> >                          cci-cpufreq {
+> >                                  target-dev =3D <&cci_cache>;
+> >                                  cpu-to-dev-map-0 =3D
+> >                                          <  200000  200000000 >,
+> >                                          <  345600  200000000 >,
+> >                                          <  400000  200000000 >,
+> >                                          <  533330  297600000 >,
+> >                                          <  800000  297600000 >,
+> >                                          <  960000  297600000 >,
+> >                                          < 1113600  297000000 >,
+> >                                          < 1344000  595200000 >,
+> >                                          < 1459200  595200000 >,
+> >                                          < 1497600  595200000 >,
+> >                                          < 1651200  595200000 >;
+> >                                  cpu-to-dev-map-4 =3D
+> >                                          <  200000 200000000 >,
+> >                                          <  249600 200000000 >,
+> >                                          <  499200 297600000 >,
+> >                                          <  800000 297600000 >,
+> >                                          <  998400 595200000 >,
+> >                                          < 1113600 595200000 >;
+>
+> These should map to existing opp entries.
+>
+> I ended up doing the interconnect driver that maps a clock to the
+> interconnect. Then I can use it in the cpu opp tables.
+>
+> >                          };
+> >                  };
+> >
+> >          cci_opp_table: cci-opp-table {
+> >                  compatible =3D "operating-points-v2";
+> >
+> >                  opp-200000000 {
+> >                          opp-hz =3D /bits/ 64 <200000000>;
+> >                          opp-supported-hw =3D <0x3f>;
+> >                          required-opps =3D <&cpr_opp3>;
+>
+> And these should probably map to max(cpu's CPR opp, CCI's CPR opp).
 
+The plan is opp framework to handle it when CPU opp requires both cpr
+power domain
+opp and CCI opp. While CCI opp will also requires specific cpr opp. Because=
+ CPU
+have a opp match table per pvs/speed, while CCI has another match
+table, it seems
+ impossible to write the cpr opp requirements in the code statically.
 
-On 20/01/2023 22:46, Elliot Berman wrote:
-> Gunyah VM manager is a kernel moduel which exposes an interface to
-> Gunyah userspace to load, run, and interact with other Gunyah virtual
-> machines. The interface is a character device at /dev/gunyah.
-> 
-> Add a basic VM manager driver. Upcoming patches will add more ioctls
-> into this driver.
-> 
-> Co-developed-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
-> Signed-off-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> ---
->   .../userspace-api/ioctl/ioctl-number.rst      |   1 +
->   drivers/virt/gunyah/Makefile                  |   2 +-
->   drivers/virt/gunyah/rsc_mgr.c                 |  51 +++++++-
->   drivers/virt/gunyah/vm_mgr.c                  | 117 ++++++++++++++++++
->   drivers/virt/gunyah/vm_mgr.h                  |  20 +++
->   include/linux/gunyah_rsc_mgr.h                |   3 +
->   include/uapi/linux/gunyah.h                   |  23 ++++
->   7 files changed, 215 insertions(+), 2 deletions(-)
->   create mode 100644 drivers/virt/gunyah/vm_mgr.c
->   create mode 100644 drivers/virt/gunyah/vm_mgr.h
->   create mode 100644 include/uapi/linux/gunyah.h
-> 
-> diff --git a/Documentation/userspace-api/ioctl/ioctl-number.rst b/Documentation/userspace-api/ioctl/ioctl-number.rst
-> index eb045fc495a4..8696dc3cdd83 100644
-> --- a/Documentation/userspace-api/ioctl/ioctl-number.rst
-> +++ b/Documentation/userspace-api/ioctl/ioctl-number.rst
-> @@ -137,6 +137,7 @@ Code  Seq#    Include File                                           Comments
->   'F'   DD     video/sstfb.h                                           conflict!
->   'G'   00-3F  drivers/misc/sgi-gru/grulib.h                           conflict!
->   'G'   00-0F  xen/gntalloc.h, xen/gntdev.h                            conflict!
-> +'G'   00-0f  linux/gunyah.h                                          conflict!
->   'H'   00-7F  linux/hiddev.h                                          conflict!
->   'H'   00-0F  linux/hidraw.h                                          conflict!
->   'H'   01     linux/mei.h                                             conflict!
-> diff --git a/drivers/virt/gunyah/Makefile b/drivers/virt/gunyah/Makefile
-> index de29769f2f3f..03951cf82023 100644
-> --- a/drivers/virt/gunyah/Makefile
-> +++ b/drivers/virt/gunyah/Makefile
-> @@ -2,5 +2,5 @@
->   
->   obj-$(CONFIG_GUNYAH) += gunyah.o
->   
-> -gunyah_rsc_mgr-y += rsc_mgr.o rsc_mgr_rpc.o
-> +gunyah_rsc_mgr-y += rsc_mgr.o rsc_mgr_rpc.o vm_mgr.o
->   obj-$(CONFIG_GUNYAH) += gunyah_rsc_mgr.o
-> diff --git a/drivers/virt/gunyah/rsc_mgr.c b/drivers/virt/gunyah/rsc_mgr.c
-> index 382f9943fd31..95f4aa928aaf 100644
-> --- a/drivers/virt/gunyah/rsc_mgr.c
-> +++ b/drivers/virt/gunyah/rsc_mgr.c
-> @@ -16,8 +16,10 @@
->   #include <linux/completion.h>
->   #include <linux/gunyah_rsc_mgr.h>
->   #include <linux/platform_device.h>
-> +#include <linux/miscdevice.h>
->   
->   #include "rsc_mgr.h"
-> +#include "vm_mgr.h"
->   
->   #define RM_RPC_API_VERSION_MASK		GENMASK(3, 0)
->   #define RM_RPC_HEADER_WORDS_MASK	GENMASK(7, 4)
-> @@ -105,6 +107,7 @@ struct gh_rm {
->   	struct kmem_cache *cache;
->   	struct mutex send_lock;
->   
-> +	struct miscdevice miscdev;
->   	struct work_struct recv_work;
->   };
->   
-> @@ -526,6 +529,33 @@ int gh_rm_call(struct gh_rm *rm, u32 message_id, void *req_buff, size_t req_buff
->   	return ret;
->   }
->   
-> +void get_gh_rm(struct gh_rm *rm)
-> +{
-> +	get_device(rm->dev);
-> +}
-> +EXPORT_SYMBOL_GPL(get_gh_rm);
-
-We have 4/5 different vairants of exported symbols now.
-
-EXPORT_SYMBOL_GPL(gunyah_vm_function_unregister);
-EXPORT_SYMBOL_GPL(ghvm_add_resource_ticket);
-EXPORT_SYMBOL_GPL(gh_vm_mgr_mmio_write);
-EXPORT_SYMBOL_GPL(put_gh_rm);
-EXPORT_SYMBOL_GPL(get_gunyah_vm);
-
-I think this needs to be cleaned up for consistency reasons.
-
-> +
-> +void put_gh_rm(struct gh_rm *rm)
-> +{
-> +	put_device(rm->dev);
-> +}
-> +EXPORT_SYMBOL_GPL(put_gh_rm);
-> +
-> +static long gh_dev_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
-> +{
-> +	struct miscdevice *miscdev = filp->private_data;
-> +	struct gh_rm *rm = container_of(miscdev, struct gh_rm, miscdev);
-> +
-> +	return gh_dev_vm_mgr_ioctl(rm, cmd, arg);
-> +}
-> +
-> +static const struct file_operations gh_dev_fops = {
-> +	.owner		= THIS_MODULE,
-> +	.unlocked_ioctl	= gh_dev_ioctl,
-> +	.compat_ioctl	= compat_ptr_ioctl,
-> +	.llseek		= noop_llseek,
-> +};
-> +
->   static int gh_msgq_platform_probe_direction(struct platform_device *pdev,
->   					bool tx, int idx, struct gunyah_resource *ghrsc)
->   {
-> @@ -582,13 +612,32 @@ static int gh_rm_drv_probe(struct platform_device *pdev)
->   	rm->msgq_client.rx_callback = gh_rm_msgq_rx_data;
->   	rm->msgq_client.tx_done = gh_rm_msgq_tx_done;
->   
-> -	return gh_msgq_init(&pdev->dev, &rm->msgq, &rm->msgq_client, &rm->tx_ghrsc, &rm->rx_ghrsc);
-> +	ret = gh_msgq_init(&pdev->dev, &rm->msgq, &rm->msgq_client, &rm->tx_ghrsc, &rm->rx_ghrsc);
-> +	if (ret)
-> +		goto err_cache;
-> +
-> +	rm->miscdev.name = "gunyah";
-> +	rm->miscdev.minor = MISC_DYNAMIC_MINOR;
-> +	rm->miscdev.fops = &gh_dev_fops;
-> +
-> +	ret = misc_register(&rm->miscdev);
-> +	if (ret)
-> +		goto err_msgq;
-> +
-> +	return 0;
-> +err_msgq:
-> +	mbox_free_channel(gh_msgq_chan(&rm->msgq));
-> +	gh_msgq_remove(&rm->msgq);
-> +err_cache:
-> +	kmem_cache_destroy(rm->cache);
-> +	return ret;
->   }
->   
->   static int gh_rm_drv_remove(struct platform_device *pdev)
->   {
->   	struct gh_rm *rm = platform_get_drvdata(pdev);
->   
-> +	misc_deregister(&rm->miscdev);
->   	mbox_free_channel(gh_msgq_chan(&rm->msgq));
->   	gh_msgq_remove(&rm->msgq);
->   	kmem_cache_destroy(rm->cache);
-> diff --git a/drivers/virt/gunyah/vm_mgr.c b/drivers/virt/gunyah/vm_mgr.c
-> new file mode 100644
-> index 000000000000..0864dbd77e28
-> --- /dev/null
-> +++ b/drivers/virt/gunyah/vm_mgr.c
-> @@ -0,0 +1,117 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#define pr_fmt(fmt) "gh_vm_mgr: " fmt
-> +
-> +#include <linux/anon_inodes.h>
-> +#include <linux/file.h>
-> +#include <linux/gunyah_rsc_mgr.h>
-> +#include <linux/miscdevice.h>
-> +#include <linux/module.h>
-> +
-> +#include <uapi/linux/gunyah.h>
-> +
-> +#include "vm_mgr.h"
-> +
-> +static __must_check struct gunyah_vm *gunyah_vm_alloc(struct gh_rm_rpc *rm)
-> +{
-> +	struct gunyah_vm *ghvm;
-> +	int vmid;
-> +
-> +	vmid = gh_rm_alloc_vmid(rm, 0);
-> +	if (vmid < 0)
-> +		return ERR_PTR(vmid);
-> +
-> +	ghvm = kzalloc(sizeof(*ghvm), GFP_KERNEL);
-> +	if (!ghvm) {
-> +		gh_rm_dealloc_vmid(rm, vmid);
-> +		return ghvm;
-
-return ERR_PTR(-ENOMEM);
-
-> +	}
-> +
-> +	get_gh_rm(rm);
-> +
-> +	ghvm->vmid = vmid;
-> +	ghvm->rm = rm;
-> +
-> +	return ghvm;
-> +}
-> +
-> +static long gh_vm_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
-> +{
-> +	long r;
-> +
-> +	switch (cmd) {
-> +	default:
-> +		r = -ENOTTY;
-> +		break;
-> +	}
-
-this function looks like dummy, why do we need this in this patch?
-
-> +
-> +	return r;
-> +}
-> +
-> +static int gh_vm_release(struct inode *inode, struct file *filp)
-> +{
-> +	struct gunyah_vm *ghvm = filp->private_data;
-> +
-> +	put_gh_rm(ghvm->rm);
-> +	kfree(ghvm);
-> +	return 0;
-> +}
-> +
-> +static const struct file_operations gh_vm_fops = {
-> +	.unlocked_ioctl = gh_vm_ioctl,
-> +	.release = gh_vm_release,
-> +	.compat_ioctl	= compat_ptr_ioctl,
-> +	.llseek = noop_llseek,
-> +};
-> +
-> +static long gh_dev_ioctl_create_vm(struct gh_rm *rm, unsigned long arg)
-> +{
-> +	struct gunyah_vm *ghvm;
-> +	struct file *file;
-> +	int fd, err;
-> +
-> +	/* arg reserved for future use. */
-> +	if (arg)
-> +		return -EINVAL;
-
-Bit confused here, GH_CREATE_VM IOCTL does not take any arguments so why 
-is this arg reserved for future use. Are you going to change the ABI for 
-GH_CREATE_VM?
-
-
-> +
-> +	ghvm = gunyah_vm_alloc(rm);
-> +	if (IS_ERR_OR_NULL(ghvm))
-> +		return PTR_ERR(ghvm) ? : -ENOMEM;
-> +
-> +	fd = get_unused_fd_flags(O_CLOEXEC);
-> +	if (fd < 0) {
-> +		err = fd;
-> +		goto err_destroy_vm;
-> +	}
-> +
-> +	file = anon_inode_getfile("gunyah-vm", &gh_vm_fops, ghvm, O_RDWR);
-> +	if (IS_ERR(file)) {
-> +		err = PTR_ERR(file);
-> +		goto err_put_fd;
-> +	}
-> +
-> +	fd_install(fd, file);
-> +
-> +	return fd;
-> +
-> +err_put_fd:
-> +	put_unused_fd(fd);
-> +err_destroy_vm:
-> +	kfree(ghvm);
-> +	return err;
-> +}
-> +
-> +long gh_dev_vm_mgr_ioctl(struct gh_rm *rm, unsigned int cmd, unsigned long arg)
-> +{
-> +	switch (cmd) {
-> +	case GH_CREATE_VM:
-> +		return gh_dev_ioctl_create_vm(rm, arg);
-> +	default:
-> +		return -ENOIOCTLCMD;
-> +	}
-> +}
-> +EXPORT_SYMBOL_GPL(gh_dev_vm_mgr_ioctl);
-> +
-> diff --git a/drivers/virt/gunyah/vm_mgr.h b/drivers/virt/gunyah/vm_mgr.h
-> new file mode 100644
-> index 000000000000..e47f34de7f9e
-> --- /dev/null
-> +++ b/drivers/virt/gunyah/vm_mgr.h
-> @@ -0,0 +1,20 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +/*
-> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#ifndef _GH_PRIV_VM_MGR_H
-> +#define _GH_PRIV_VM_MGR_H
-> +
-> +#include <linux/gunyah_rsc_mgr.h>
-> +
-> +#include <uapi/linux/gunyah.h>
-> +
-> +long gh_dev_vm_mgr_ioctl(struct gh_rm *rm, unsigned int cmd, unsigned long arg);
-> +
-> +struct gunyah_vm {
-> +	u16 vmid;
-> +	struct gh_rm_rpc *rm;
-> +};
-> +
-> +#endif
-> diff --git a/include/linux/gunyah_rsc_mgr.h b/include/linux/gunyah_rsc_mgr.h
-> index be0bce5507b1..9a9a037b349a 100644
-> --- a/include/linux/gunyah_rsc_mgr.h
-> +++ b/include/linux/gunyah_rsc_mgr.h
-> @@ -17,6 +17,9 @@
->   
->   struct gh_rm;
->   
-> +void get_gh_rm(struct gh_rm *rm);
-> +void put_gh_rm(struct gh_rm *rm);
-> +
->   enum gh_rm_vm_status {
->   	GH_RM_VM_STATUS_NO_STATE	= 0,
->   	GH_RM_VM_STATUS_INIT		= 1,
-> diff --git a/include/uapi/linux/gunyah.h b/include/uapi/linux/gunyah.h
-> new file mode 100644
-> index 000000000000..88a40d6e0b96
-> --- /dev/null
-> +++ b/include/uapi/linux/gunyah.h
-> @@ -0,0 +1,23 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only WITH Linux-syscall-note */
-> +/*
-> + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#ifndef _UAPI_LINUX_GUNYAH
-> +#define _UAPI_LINUX_GUNYAH
-> +
-> +/*
-> + * Userspace interface for /dev/gunyah - gunyah based virtual machine
-> + */
-> +
-> +#include <linux/types.h>
-> +#include <linux/ioctl.h>
-> +
-> +#define GH_IOCTL_TYPE			'G'
-> +
-> +/*
-> + * ioctls for /dev/gunyah fds:
-> + */
-> +#define GH_CREATE_VM			_IO(GH_IOCTL_TYPE, 0x0) /* Returns a Gunyah VM fd */
-> +
-> +#endif
+>
+> >                  };
+> >
+> >                  opp-297600000 {
+> >                          opp-hz =3D /bits/ 64 <297600000>;
+> >                          opp-supported-hw =3D <0x3f>;
+> >                          required-opps =3D <&cpr_opp12>;
+> >                  };
+> >
+> >                  opp-400000000-cpr14 {
+> >                          opp-hz =3D /bits/ 64 <400000000>;
+> >                          opp-supported-hw =3D <0x1>;
+> >                          required-opps =3D <&cpr_opp14>;
+> >                  };
+> >
+> >                  opp-400000000-cpr15 {
+> >                          opp-hz =3D /bits/ 64 <400000000>;
+> >                          opp-supported-hw =3D <0x3e>;
+> >                          required-opps =3D <&cpr_opp15>;
+> >                  };
+> >
+> >                  opp-595200000 {
+> >                          opp-hz =3D /bits/ 64 <595200000>;
+> >                          opp-supported-hw =3D <0x3f>;
+> >                          required-opps =3D <&cpr_opp17>;
+> >                  };
+> >          };
+> >
+> >
+> >          cpr_opp_table: cpr-opp-table {
+> >                  compatible =3D "operating-points-v2-qcom-level";
+> >
+> >                  cpr_opp1: opp1 {
+> >                          opp-hz =3D /bits/ 64 <200000000>;
+> >                          opp-level =3D <1>;
+> >                          qcom,opp-fuse-level =3D <1>;
+> >                  };
+> >                  cpr_opp2: opp2 {
+> >                          opp-hz =3D /bits/ 64 <345600000>;
+> >                          opp-level =3D <2>;
+> >                          qcom,opp-fuse-level =3D <1>;
+> >                  };
+> >                  cpr_opp3: opp3 {
+> >                          opp-hz =3D /bits/ 64 <400000000>;
+> >                          opp-level =3D <3>;
+> >                          qcom,opp-fuse-level =3D <1>;
+> >                  };
+> >                  cpr_opp4: opp4 {
+> >                          opp-hz =3D /bits/ 64 <422400000>;
+> >                          opp-level =3D <4>;
+> >                          qcom,opp-fuse-level =3D <2>;
+> >                  };
+> >                  cpr_opp5: opp5 {
+> >                          opp-hz =3D /bits/ 64 <499200000>;
+> >                          opp-level =3D <5>;
+> >                          qcom,opp-fuse-level =3D <2>;
+> >                  };
+> >                  cpr_opp6: opp6 {
+> >                          opp-hz =3D /bits/ 64 <533330000>;
+> >                          opp-level =3D <6>;
+> >                          qcom,opp-fuse-level =3D <2>;
+> >                  };
+> >                  cpr_opp7: opp7 {
+> >                          opp-hz =3D /bits/ 64 <652800000>;
+> >                          opp-level =3D <7>;
+> >                          qcom,opp-fuse-level =3D <2>;
+> >                  };
+> >                  cpr_opp8: opp8 {
+> >                          opp-hz =3D /bits/ 64 <729600000>;
+> >                          opp-level =3D <8>;
+> >                          qcom,opp-fuse-level =3D <2>;
+> >                  };
+> >                  cpr_opp9: opp9 {
+> >                          opp-hz =3D /bits/ 64 <800000000>;
+> >                          opp-level =3D <9>;
+> >                          qcom,opp-fuse-level =3D <2>;
+> >                  };
+> >                  cpr_opp10: opp10 {
+> >                          opp-hz =3D /bits/ 64 <806400000>;
+> >                          opp-level =3D <10>;
+> >                          qcom,opp-fuse-level =3D <2>;
+> >                  };
+> >                  cpr_opp11: opp11 {
+> >                          opp-hz =3D /bits/ 64 <883200000>;
+> >                          opp-level =3D <11>;
+> >                          qcom,opp-fuse-level =3D <2>;
+> >                  };
+> >                  cpr_opp12: opp12 {
+> >                          opp-hz =3D /bits/ 64 <960000000>;
+> >                          opp-level =3D <12>;
+> >                          qcom,opp-fuse-level =3D <2>;
+> >                  };
+> >          };
+> >
+> > ---
+> > bod
+>
+>
+>
+> --
+> With best wishes
+> Dmitry
