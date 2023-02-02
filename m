@@ -2,199 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EEC2B6872C2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 02:08:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 394D968733C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 03:06:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230213AbjBBBIY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Feb 2023 20:08:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54616 "EHLO
+        id S229546AbjBBCG5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Feb 2023 21:06:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230203AbjBBBIW (ORCPT
+        with ESMTP id S229471AbjBBCG4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Feb 2023 20:08:22 -0500
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3D27EB4A;
-        Wed,  1 Feb 2023 17:08:16 -0800 (PST)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-        by mailout.west.internal (Postfix) with ESMTP id B62BD3200A7A;
-        Wed,  1 Feb 2023 20:08:14 -0500 (EST)
-Received: from imap50 ([10.202.2.100])
-  by compute6.internal (MEProxy); Wed, 01 Feb 2023 20:08:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=cc
-        :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm2; t=1675300094; x=1675386494; bh=393xPKJKfY
-        /8d1G07ko6nYGhFyfE4P61UQ4EPe1PY0w=; b=DGpYVDqYZoAir7gS/jBBw7RMQe
-        MWS+ar1T1io/UJfQBy+Gig54QMqc6BFeTXAZeb4JXMVmVDGNdDRUEZ7NLq/rjskn
-        UaQLoepSVu44fZhSAgrIBQ7Bp60u4RR94kM4YBjazEPBdZgjfJzQY9f3YMUgLMiZ
-        kvb5umEAFmogtCLw1Yw/bamxfFQY+UG6jTFp+TTQBuJyDyZkMgpExHkKD/nbFUgj
-        Mx7Nbky/hQMvWgBtOgi9c0n96fhy/9RBy3sxuP+YQhSCER5qKBWEVR8hv3at5CP1
-        6/cPA6k3eiFaaMTKMcC1tm05MfKS639sxmxBCN622efS87YIoejQB/vK6pxQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
-        :mime-version:references:reply-to:sender:subject:subject:to:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm3; t=1675300094; x=1675386494; bh=393xPKJKfY/8d1G07ko6nYGhFyfE
-        4P61UQ4EPe1PY0w=; b=JxfzcEDWHIN6iT/UW/DKNncolyHFNGsUoobadPvAiNBx
-        4jUTq3HDzq0H1uHud5xlo1KHDjJFlKGA1Cz00rxctqcpd3ZTIXHwb4Skss/ujDp2
-        +b0qpjOnNlnhuMbzLLtA9l1at0yy9RdAL7W1W9TgpiV6A/fjTfuTlxpvS1krvEj8
-        IHQRAtdDEntR/XBxMBSJiAACHR7q9laCn2sZ1ql8wuvrzKR5raDqbC2aZqYnZ6PB
-        e6mSXx4S5uBW5fbxqT6YdAG6jtZXKKOcqArVsVGfxxAHnY3j7PRS0guWAsEGTSqz
-        w2MGzfM4/hRs7CNKxbeU/cYn2omGWGWoQDXyqV8YwA==
-X-ME-Sender: <xms:_QzbY-WTlRjVicya1zrlXA1b12oygeUMtzMLZlK4K-_NZq89jz7KJQ>
-    <xme:_QzbY6nSoQ8uQatMd5fJScpCenw_AZ1BeyfFRU5WmrwpeeNawkEeQd2DZLEv06InB
-    52C-pJWMeMGjzSkYw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrudefjedgfeefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehn
-    ughrvgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtf
-    frrghtthgvrhhnpeelgfejleeuleefvdefieetgfeghedutdfftdekgeekhfdvueegfedv
-    feegveeiueenucffohhmrghinhepkhgvrhhnvghlrdhorhhgpdhgihhthhhusgdrtghomh
-    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgu
-    rhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:_QzbYybgVsSI2-T2X1ZgHkWom-ZjJ1v15qYY7_HdsQs785vD4Jf0cw>
-    <xmx:_QzbY1UAS4J6T6menWKwt-VloKmyO0X-guJrpDvJS_dT72S7IX8aew>
-    <xmx:_QzbY4lG2xwwSfADF-4IXcqUXr1X_si0uI0_Zqe-iLI9ns3muBGfAA>
-    <xmx:_gzbYxeNtPB-IcBuKujXA1mLxFWMTf35Xmw_Bw75jV6QTvLOl7gM7A>
-Feedback-ID: idfb84289:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id 4DE401700090; Wed,  1 Feb 2023 20:08:13 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-107-g82c3c54364-fm-20230131.002-g82c3c543
-Mime-Version: 1.0
-Message-Id: <76f4dea0-9a39-4238-a213-0167477f5d54@app.fastmail.com>
-In-Reply-To: <63da97b5.3V1HSQEat507LFIr%lkp@intel.com>
-References: <63da97b5.3V1HSQEat507LFIr%lkp@intel.com>
-Date:   Thu, 02 Feb 2023 11:37:20 +1030
-From:   "Andrew Jeffery" <andrew@aj.id.au>
-To:     "Neal Liu" <neal_liu@aspeedtech.com>
-Cc:     "kbuild test robot" <lkp@intel.com>,
-        "Andrew Morton" <akpm@linux-foundation.org>,
-        devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
-        linux-arm-msm@vger.kernel.org, amd-gfx@lists.freedesktop.org,
-        "Linux Memory Management List" <linux-mm@kvack.org>,
-        kvmarm@lists.linux.dev, linux-riscv@lists.infradead.org,
-        kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
-        linux-trace-kernel@vger.kernel.org
-Subject: Re: [linux-next:master] BUILD REGRESSION
- 66eee64b235411d512bed4d672c2d00683239daf
-Content-Type: text/plain
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Wed, 1 Feb 2023 21:06:56 -0500
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D2BC568AD
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Feb 2023 18:06:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1675303615; x=1706839615;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=zP6cZeQbRqQo0oBq/eg3pij2npt8bVl1qApyNAD2kSo=;
+  b=rFDL0ZJE9VIjC2B/7AfSygUHloEKxuFoNWb70jStrH02tGLUlwEeGvsK
+   9/Iu5fDMLH+foW0/+zFGN8ZUHjUxQk+QYg6DTz+2t7Xak+J3Bu2sAh25v
+   G5QRkv2DTTKBgvB1G01E9hHjGU40a09ezhiT41DMD8iyMPtq2PfLY/bSc
+   A=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 01 Feb 2023 18:06:55 -0800
+X-QCInternal: smtphost
+Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Feb 2023 18:06:54 -0800
+Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 1 Feb 2023
+ 18:06:54 -0800
+Message-ID: <5376994b-99f6-0f48-139f-6e622a8b0778@quicinc.com>
+Date:   Wed, 1 Feb 2023 18:06:41 -0800
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [RFC PATCH v3 0/3] Support for Solid Fill Planes
+To:     Pekka Paalanen <ppaalanen@gmail.com>,
+        Simon Ser <contact@emersion.fr>
+CC:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <seanpaul@chromium.org>, <swboyd@chromium.org>,
+        <quic_abhinavk@quicinc.com>, <daniel.vetter@ffwll.ch>,
+        <laurent.pinchart@ideasonboard.com>, <sebastian.wick@redhat.com>,
+        <wayland-devel@lists.freedesktop.org>,
+        <ville.syrjala@linux.intel.com>
+References: <20230104234036.636-1-quic_jesszhan@quicinc.com>
+ <Y7a1hCmsvJHKdW1Y@phenom.ffwll.local>
+ <58caf08c-3a02-82ce-4452-8ae7f22f373d@quicinc.com>
+ <CAA8EJppnAmN6+S-emEfXJEc1iVf+DjeLBmCQpGd-nRY2M2AAQQ@mail.gmail.com>
+ <Y7hrWDpg8msuefgZ@phenom.ffwll.local>
+ <CAA8EJppoejPPNhu3eHBc_vsstHvEEwYx67HZLo8+4W3K-gHkag@mail.gmail.com>
+ <20230131112527.32ab8ba5@eldfell>
+ <9Q0ano1jjZ1LTNWaVcVkDp0-jsTSUJKoNrKwvpGpIuejUSB33DK-uOpeLmyMbbk6tdfWG8RS83AGyB--EPEHqJe5shq6RC_gVpPLR7sUScY=@emersion.fr>
+ <20230131131326.75b43152@eldfell>
+ <x3f8jyn_QDj34hYn9rgumw2uhFTpWzOw2E-715WYVOfwNOpthv26sefM6ePtwqbuHH54ATupqQzzz9qIWqAbDvMpb06bhdiU5BJlMjsaCdo=@emersion.fr>
+ <20230131144913.5ff840dd@eldfell>
+Content-Language: en-US
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <20230131144913.5ff840dd@eldfell>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Neal,
 
-On Thu, 2 Feb 2023, at 03:17, kernel test robot wrote:
-> tree/branch: 
-> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git 
-> master
-> branch HEAD: 66eee64b235411d512bed4d672c2d00683239daf  Add linux-next 
-> specific files for 20230201
->
->
-> Unverified Error/Warning (likely false positive, please contact us if 
-> interested):
->
-> drivers/crypto/aspeed/aspeed-acry.c:295:37: sparse: sparse: incorrect 
-> type in assignment (different base types)
-> drivers/crypto/aspeed/aspeed-acry.c:305:28: sparse: sparse: cast 
-> removes address space '__iomem' of expression
-> drivers/crypto/aspeed/aspeed-acry.c:606:24: sparse: sparse: symbol 
-> 'aspeed_acry_akcipher_algs' was not declared. Should it be static?
 
-Can you please look into these issues with the ACRY driver?
+On 1/31/2023 4:49 AM, Pekka Paalanen wrote:
+> On Tue, 31 Jan 2023 11:21:18 +0000
+> Simon Ser <contact@emersion.fr> wrote:
+> 
+>> On Tuesday, January 31st, 2023 at 12:13, Pekka Paalanen <ppaalanen@gmail.com> wrote:
+>>
+>>> On Tue, 31 Jan 2023 10:06:39 +0000
+>>> Simon Ser <contact@emersion.fr> wrote:
+>>>    
+>>>> On Tuesday, January 31st, 2023 at 10:25, Pekka Paalanen <ppaalanen@gmail.com> wrote:
+>>>>    
+>>>>> indeed, what about simply using a 1x1 framebuffer for real? Why was that
+>>>>> approach rejected?
+>>>>
+>>>> Ideally we don't want to allocate any GPU memory for the solid-fill
+>>>> stuff. And if we special-case 1x1 FB creation to not be backed by real
+>>>> GPU memory then we hit several situations where user-space expects a
+>>>> real FB but there isn't: for instance, GETFB2 converts from FB object
+>>>> ID to GEM handles. Even if we make GETFB2 fail and accept that this
+>>>> breaks user-space, then there is no way for user-space to recover the
+>>>> FB color for flicker-free transitions and such.
+>>>>
+>>>> This is all purely from a uAPI PoV, completely ignoring the potential
+>>>> issues with the internal kernel abstractions which might not be suitable
+>>>> for this either.
+>>>
+>>> I mean a real 1x1 buffer: a dumb buffer.
+>>>
+>>> It would be absolutely compatible with anything existing, because it is
+>>> a real FB. As a dumb buffer it would be trivial to write into and read
+>>> out. As 1x1 it would be tiny (one page?). Even if something needs to
+>>> raw-access uncached memory over 33 MHz PCI bus or whatever the worst
+>>> case is, it's just one pixel, so it's fast enough, right? And it only
+>>> needs to be read once when set, like USB display drivers do. The driver
+>>> does not need to manually apply any color operations, because none are
+>>> supported in this special case.
+>>>
+>>> One can put all these limitations and even pixel format in the plane
+>>> property that tells userspace that a 1x1 FB works here.
+>>>
+>>> To recap, the other alternatives under discussion I see right now are:
+>>>
+>>> - this proposal of dedicated fill color property
+>>> - stuffing something new into FB_ID property
+>>>
+>>> There is also the question of other kinds of plane content sources like
+>>> live camera feeds where userspace won't be shovelling each frame
+>>> individually like we do now.
+>>>
+>>> 1x1 dumb buffer is not as small and lean as a dedicated fill color
+>>> property, but the UAPI design questions seem to be much less. What's
+>>> the best trade-off and for whom?
+>>
+>> By "real memory" yes I mean the 1 page.
+>>
+>> Using a real buffer also brings back other discussions, e.g. the one about
+>> which pixel formats to accept.
+> 
+> Yeah, which is why I wrote: "One can put all these limitations and even
+> pixel format in the plane property". It doesn't even need to be a
+> variable in the UAPI, it can be hardcoded in the UAPI doc.
+> 
+> Please, do not understand this as me strongly advocating for the real FB
+> approach! I just don't want that option to be misunderstood.
+> 
+> I don't really care which design is chosen, but I do care about
+> documenting why other designs were rejected. If the rejection reasons
+> were false, they should be revised, even if the decision does not
+> change.
 
-Cheers,
+Hi Pekka/Daniel,
 
-Andrew
+Looks like the general sentiment is to keep solid fill as a separate 
+property, so I will stick with that implementation for v4.
 
->
-> elapsed time: 722m
->
-> configs tested: 69
-> configs skipped: 2
->
-> gcc tested configs:
-> x86_64                          rhel-8.3-func
-> x86_64                    rhel-8.3-kselftests
-> ia64                             allmodconfig
-> x86_64                            allnoconfig
-> um                             i386_defconfig
-> um                           x86_64_defconfig
-> arc                                 defconfig
-> i386                                defconfig
-> x86_64                              defconfig
-> alpha                               defconfig
-> arm                                 defconfig
-> mips                             allyesconfig
-> x86_64                           rhel-8.3-syz
-> x86_64               randconfig-a001-20230130
-> x86_64                         rhel-8.3-kunit
-> x86_64               randconfig-a003-20230130
-> x86_64                           rhel-8.3-bpf
-> powerpc                           allnoconfig
-> x86_64               randconfig-a004-20230130
-> x86_64                               rhel-8.3
-> x86_64               randconfig-a002-20230130
-> powerpc                          allmodconfig
-> sh                               allmodconfig
-> x86_64               randconfig-a006-20230130
-> x86_64                           allyesconfig
-> i386                          randconfig-a001
-> x86_64                           rhel-8.3-kvm
-> i386                          randconfig-a003
-> x86_64               randconfig-a005-20230130
-> arm64                            allyesconfig
-> i386                             allyesconfig
-> i386                          randconfig-a005
-> arc                  randconfig-r043-20230129
-> i386                          randconfig-c001
-> arm                              allyesconfig
-> s390                                defconfig
-> s390                             allmodconfig
-> arm                  randconfig-r046-20230129
-> arm                  randconfig-r046-20230130
-> s390                             allyesconfig
-> arc                  randconfig-r043-20230130
-> m68k                             allyesconfig
-> m68k                             allmodconfig
-> alpha                            allyesconfig
-> arc                              allyesconfig
->
-> clang tested configs:
-> x86_64                          rhel-8.3-rust
-> x86_64               randconfig-a012-20230130
-> x86_64               randconfig-a013-20230130
-> x86_64               randconfig-a011-20230130
-> x86_64               randconfig-a014-20230130
-> i386                 randconfig-a013-20230130
-> i386                          randconfig-a002
-> i386                 randconfig-a012-20230130
-> i386                 randconfig-a014-20230130
-> i386                          randconfig-a004
-> x86_64               randconfig-a015-20230130
-> i386                 randconfig-a015-20230130
-> x86_64               randconfig-a016-20230130
-> i386                 randconfig-a011-20230130
-> hexagon              randconfig-r041-20230129
-> i386                 randconfig-a016-20230130
-> riscv                randconfig-r042-20230129
-> i386                          randconfig-a006
-> riscv                randconfig-r042-20230130
-> hexagon              randconfig-r045-20230130
-> hexagon              randconfig-r041-20230130
-> hexagon              randconfig-r045-20230129
-> s390                 randconfig-r044-20230129
-> s390                 randconfig-r044-20230130
->
-> -- 
-> 0-DAY CI Kernel Test Service
-> https://github.com/intel/lkp-tests
+I can document the reason why we chose this approach over 1x1 FB in the 
+cover letter, but to summarize here:
+
+Allocating an FB for solid_fill brings in unnecessary overhead (ex. 
+having to allocate memory for the FB). In addition, since memory fetch 
+is disabled when solid fill is enabled, having a separate property that 
+doesn't do any memory allocation for solid fill better reflects the 
+behavior of this feature within driver.
+
+We also wanted to avoid having FB_ID accept a property blob as it would 
+involve loosening some drm_property checks, which could cause issues 
+with other property ioctls.
+
+
+
+Also, re: other plane sources -- FWIW, I have tried implementing a 
+source enum as Ville suggested, but ultimately dropped the change as it 
+would require userspace to set properties in a specific order (i.e. to 
+enable solid_fill, userspace would have to first set FB_ID to NULL then 
+set SOLID_FILL).
+
+I'm not sure how much of a can of worms that would be for userspace, but 
+if you're fine with having that as a requirement the I can re-add the code.
+
+Thanks,
+
+Jessica Zhang
+
+> 
+> 
+> Thanks,
+> pq
