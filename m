@@ -2,151 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C22A687F8D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 15:09:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D4E5687F89
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 15:09:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231907AbjBBOJ4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Feb 2023 09:09:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56356 "EHLO
+        id S231866AbjBBOJu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 09:09:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229609AbjBBOJz (ORCPT
+        with ESMTP id S229609AbjBBOJt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 09:09:55 -0500
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17EB389F84;
-        Thu,  2 Feb 2023 06:09:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1675346994; x=1706882994;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=3+PmYJAt+gLm3nMqcE/gerTYxQtrGS9tvLkR1pRwWLI=;
-  b=Outo3eMJpog4tnoIJqJ7w9xs9qaKZyQhq/7TzgMxDbgBS598vDJz8kur
-   5eQwvdw+37mw+pMxqtMG+iRHKTcsfK35mj+Q4F3aCMOVsaexYJuG9E9Cm
-   +olBKcXdXrTJocrwZm8JGAKcSHfC1TIqxwuZK7tqMzChsczsZns4e2aCE
-   QwN3wliLEkpWF4e7wHdT3GDH/DA9C0vlzUABA5BEnJVeFmyDDDbx+PXcM
-   mKSJ732u8CCzXp97c/9LWceAG161PjR9NP9rtRU2UOfxmT9/wfXnppWHF
-   WUBPUakAxB6T6thN9A2hVRWROVQzxB765UchaC1IirOtTTAQIEzjECpgr
-   A==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10608"; a="355793865"
-X-IronPort-AV: E=Sophos;i="5.97,267,1669104000"; 
-   d="scan'208";a="355793865"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Feb 2023 06:09:43 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10608"; a="733949410"
-X-IronPort-AV: E=Sophos;i="5.97,267,1669104000"; 
-   d="scan'208";a="733949410"
-Received: from lkp-server01.sh.intel.com (HELO ffa7f14d1d0f) ([10.239.97.150])
-  by fmsmga004.fm.intel.com with ESMTP; 02 Feb 2023 06:09:39 -0800
-Received: from kbuild by ffa7f14d1d0f with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1pNaHN-0006Zo-2I;
-        Thu, 02 Feb 2023 14:09:33 +0000
-Date:   Thu, 2 Feb 2023 22:08:57 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Kalyan Thota <quic_kalyant@quicinc.com>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     oe-kbuild-all@lists.linux.dev,
-        Kalyan Thota <quic_kalyant@quicinc.com>,
-        linux-kernel@vger.kernel.org, robdclark@chromium.org,
-        dianders@chromium.org, swboyd@chromium.org,
-        quic_vpolimer@quicinc.com, dmitry.baryshkov@linaro.org,
-        quic_abhinavk@quicinc.com, marijn.suijten@somainline.org
-Subject: Re: [v1 3/3] drm/msm/disp/dpu1: reserve the resources on topology
- change
-Message-ID: <202302022254.37XyfGnR-lkp@intel.com>
-References: <1675092092-26412-4-git-send-email-quic_kalyant@quicinc.com>
+        Thu, 2 Feb 2023 09:09:49 -0500
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 481018A7C4
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 06:09:48 -0800 (PST)
+Received: by mail-ed1-x52a.google.com with SMTP id f7so2117685edw.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 06:09:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Juz5ueJFXhL7XKrszOQfs1PBXZrl+c4YL8+rqK6U1U8=;
+        b=j+WEHtOCCfA7VlRwL3Iqo65d8MZ3CI+SwAlrN5hO4rNGo+gqFwATS9fqlJq0nJTLxW
+         5zY3WEL3+fCQvy8mpdZzFfDHJbCmZ9Kbtb4wm6vd8DgQC7FXZsvva0ZFIMbo5QBaNrdd
+         YfRAleetYwSoObIcZpWVx2kkVzhZPZn3W6x7yedvDbnhRavShn8cb4Bc5Gc+WT55AsdA
+         pbA9dJuhSdxrSCuMhqj94VOAG2nxgiW8iOkj7md17E8VRCMgk2FnaIjUZFOQqYqlP+nB
+         HWVr5BTar24Pr20pp5RdPNnOlKk/XfpTMB8/54smOyTgcDyvXVoaFCJ5x1SvnNV5RJnH
+         QDmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Juz5ueJFXhL7XKrszOQfs1PBXZrl+c4YL8+rqK6U1U8=;
+        b=hN07UTbmGjAo4drvAwDO8ul+wzhstIi+dlJEeeDw8VAPTYNhWCSk3B3Z5pP1jgrvY0
+         D7/nx+lgMFAarzROq8rGugSZOvZmZRBSTlJgZQUChnCs6zHHu+Gm7LgbsKfK8+t4c2Kj
+         2STTj1+v7UOMSlsvw01QN2Zier16gRIl8FLWJiQZMwsfgJ5LhVRbxxw962KXcvX+GZ7J
+         JTN+LX8f2OZSfx3x8hSD38GcZ+TvE/hGxavzN/fTIX64zTJE/h+4ru26aMtOrgb50xGN
+         YrW74eJV2F2cFx+JIznsX74VT/JzsV5F/wM3kDvp/1W1J0yzsMB1qqXapZPeDUsdC587
+         SJgg==
+X-Gm-Message-State: AO0yUKX1wBOYvioH5foJ70X1Q9LuqAAh9+wkHsrigPtv0ysz+PpY/Sx4
+        hS4x4ncDHahTaK8YJHcl7swVYA==
+X-Google-Smtp-Source: AK7set/VHn/9zc33kX4W55nqc1RPP2cZPMZ9u7RS018t6p6yIh4L+e2MMUigyutlhqIzXxHqdt80PQ==
+X-Received: by 2002:a05:6402:34cc:b0:4a2:5b11:1a51 with SMTP id w12-20020a05640234cc00b004a25b111a51mr6831769edc.2.1675346986772;
+        Thu, 02 Feb 2023 06:09:46 -0800 (PST)
+Received: from [192.168.1.102] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id z3-20020a50eb43000000b0045b4b67156fsm11197555edp.45.2023.02.02.06.09.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Feb 2023 06:09:46 -0800 (PST)
+Message-ID: <65aefb8a-7384-ce0c-9aab-cb8fd38bc1c6@linaro.org>
+Date:   Thu, 2 Feb 2023 16:09:44 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1675092092-26412-4-git-send-email-quic_kalyant@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.0.2
+Subject: Re: [PATCH v8 6/9] dt-bindings: qcom-qce: Add new SoC compatible
+ strings for qcom-qce
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-crypto@vger.kernel.org, Rob Herring <robh@kernel.org>,
+        Jordan Crouse <jorcrous@amazon.com>
+References: <20230202135036.2635376-1-vladimir.zapolskiy@linaro.org>
+ <20230202135036.2635376-7-vladimir.zapolskiy@linaro.org>
+ <0fc4c509-2db4-0bce-75c6-11835d6987d0@linaro.org>
+From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <0fc4c509-2db4-0bce-75c6-11835d6987d0@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Kalyan,
+Hi Krzysztof,
 
-Thank you for the patch! Yet something to improve:
+On 2/2/23 15:57, Krzysztof Kozlowski wrote:
+> On 02/02/2023 14:50, Vladimir Zapolskiy wrote:
+>> From: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+>>
+>> Newer Qualcomm chips support newer versions of the qce crypto IP, so add
+>> soc specific compatible strings for qcom-qce instead of using crypto
+>> IP version specific ones.
+>>
+>> Keep the old strings for backward-compatibility, but mark them as
+>> deprecated.
+>>
+>> Cc: Bjorn Andersson <andersson@kernel.org>
+>> Reviewed-by: Rob Herring <robh@kernel.org>
+>> Tested-by: Jordan Crouse <jorcrous@amazon.com>
+>> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+>> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+>> ---
+>>   .../devicetree/bindings/crypto/qcom-qce.yaml  | 19 +++++++++++++++++--
+>>   1 file changed, 17 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
+>> index a159089e8a6a..4e0b63b85267 100644
+>> --- a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
+>> +++ b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
+>> @@ -15,7 +15,22 @@ description:
+>>   
+>>   properties:
+>>     compatible:
+>> -    const: qcom,crypto-v5.1
+>> +    oneOf:
+>> +      - const: qcom,crypto-v5.1
+>> +        deprecated: true
+>> +        description: Kept only for ABI backward compatibility
+>> +      - items:
+> 
+> Drop items.
+> 
+>> +          - enum:
+>> +              - qcom,ipq4019-qce
+>> +              - qcom,ipq6018-qce
+>> +              - qcom,ipq8074-qce
+>> +              - qcom,msm8996-qce
+>> +              - qcom,sdm845-qce
+>> +              - qcom,sm8150-qce
+>> +              - qcom,sm8250-qce
+>> +              - qcom,sm8350-qce
+>> +              - qcom,sm8450-qce
+>> +              - qcom,sm8550-qce
+> 
+> Unfortunately my comments from v6 was not addressed, nor responded to.
+> 
+> We already got a public comment from community that we handle Qualcomm
+> bindings in a too loose way. I don't think we should be doing this (so
+> keep ignoring ABI), just for the sanity of cleanup.
+> 
+> It's fine to discuss it with me, but since v6 there was no discussion,
+> so let's be clear here - NAK on ABI break.
 
-[auto build test ERROR on drm-misc/drm-misc-next]
-[also build test ERROR on drm/drm-next drm-exynos/exynos-drm-next drm-intel/for-linux-next drm-intel/for-linux-next-fixes drm-tip/drm-tip linus/master v6.2-rc6]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Can you please elaborate, what is the ABI break you find here?
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Kalyan-Thota/drm-msm-disp-dpu1-clear-dspp-reservations-in-rm-release/20230130-232224
-base:   git://anongit.freedesktop.org/drm/drm-misc drm-misc-next
-patch link:    https://lore.kernel.org/r/1675092092-26412-4-git-send-email-quic_kalyant%40quicinc.com
-patch subject: [v1 3/3] drm/msm/disp/dpu1: reserve the resources on topology change
-config: arm64-randconfig-r034-20230129 (https://download.01.org/0day-ci/archive/20230202/202302022254.37XyfGnR-lkp@intel.com/config)
-compiler: aarch64-linux-gcc (GCC) 12.1.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/4c49c3233fc18f3b746a96b5ff4ce5008da3bfec
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Kalyan-Thota/drm-msm-disp-dpu1-clear-dspp-reservations-in-rm-release/20230130-232224
-        git checkout 4c49c3233fc18f3b746a96b5ff4ce5008da3bfec
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arm64 olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash drivers/gpu/
+As for me it looks like an incremental change, thus I don't understand
+your comment why ABI is broken.
 
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
-
-All errors (new ones prefixed by >>):
-
->> drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c:2091:6: error: conflicting types for 'dpu_encoder_prepare_commit'; have 'void(struct drm_encoder *)'
-    2091 | void dpu_encoder_prepare_commit(struct drm_encoder *drm_enc)
-         |      ^~~~~~~~~~~~~~~~~~~~~~~~~~
-   In file included from drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h:19,
-                    from drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c:29:
-   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h:155:6: note: previous declaration of 'dpu_encoder_prepare_commit' with type 'void(struct drm_encoder *, struct drm_crtc_state *)'
-     155 | void dpu_encoder_prepare_commit(struct drm_encoder *drm_enc,
-         |      ^~~~~~~~~~~~~~~~~~~~~~~~~~
 --
-   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c: In function 'dpu_kms_prepare_commit':
->> drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c:443:25: error: too few arguments to function 'dpu_encoder_prepare_commit'
-     443 |                         dpu_encoder_prepare_commit(encoder);
-         |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~
-   In file included from drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c:30:
-   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h:155:6: note: declared here
-     155 | void dpu_encoder_prepare_commit(struct drm_encoder *drm_enc,
-         |      ^~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-vim +2091 drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-
-ae4d721ce10057 Abhinav Kumar     2022-04-26  2090  
-25fdd5933e4c0f Jeykumar Sankaran 2018-06-27 @2091  void dpu_encoder_prepare_commit(struct drm_encoder *drm_enc)
-25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  2092  {
-25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  2093  	struct dpu_encoder_virt *dpu_enc;
-25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  2094  	struct dpu_encoder_phys *phys;
-25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  2095  	int i;
-25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  2096  
-25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  2097  	if (!drm_enc) {
-25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  2098  		DPU_ERROR("invalid encoder\n");
-25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  2099  		return;
-25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  2100  	}
-25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  2101  	dpu_enc = to_dpu_encoder_virt(drm_enc);
-25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  2102  
-25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  2103  	for (i = 0; i < dpu_enc->num_phys_encs; i++) {
-25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  2104  		phys = dpu_enc->phys_encs[i];
-b6fadcade62704 Drew Davenport    2019-12-06  2105  		if (phys->ops.prepare_commit)
-25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  2106  			phys->ops.prepare_commit(phys);
-25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  2107  	}
-25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  2108  }
-25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  2109  
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
+Best wishes,
+Vladimir
