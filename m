@@ -2,78 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FD66688A19
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 23:59:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E73E7688A93
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Feb 2023 00:14:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232195AbjBBW7R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Feb 2023 17:59:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60826 "EHLO
+        id S230057AbjBBXOl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 18:14:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231905AbjBBW7R (ORCPT
+        with ESMTP id S232509AbjBBXOk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 17:59:17 -0500
+        Thu, 2 Feb 2023 18:14:40 -0500
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BDC17C71A
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 14:58:32 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A52EB83040
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 15:13:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1675378711;
+        s=mimecast20190719; t=1675379627;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:content-type:content-type:
          in-reply-to:in-reply-to:references:references;
-        bh=lEHSVIVicg+eRhy1uVj7EmYyc3zjgu6fM5PclI9TmE8=;
-        b=BFUdLU2MOhaax2keJcfRCvlFI41twSwR3JZCo5b4+rQBOUmdXuVD0y/Dd2Q/VKhrCUQi0p
-        uHWrzpES9hhyQZiq0jMN7DRSPQbbJOGI740O6NxnZKE9+73pQ1JU7ywNkCN8xgAKi0FiVf
-        t3fNQgSZXD8iO6RbB2A0zcyKUczNeBc=
-Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
- [209.85.166.70]) by relay.mimecast.com with ESMTP with STARTTLS
+        bh=kXVHvL7Zc9SvpXlyodElHL/El9p9PH7Vp09KDuKNQ7k=;
+        b=UZSsENMhMyiq0vTVZM7cqcrB4nyoqHJi/tkIFKdWIFh38FBUhz4H/xoZ98ObPRjQwNz/KD
+        ur5WN3y4wPiHyavJFKuZxh6kA4DHfc/GvHJEosj1h01G89E+gfy3nR8ipkcfuLeyZgjp0P
+        vX/sjuzFbK/LeS3w3cAbiFrt3uq8/Ko=
+Received: from mail-io1-f71.google.com (mail-io1-f71.google.com
+ [209.85.166.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-665-QG5HlmGDMbeqITC45-xQhw-1; Thu, 02 Feb 2023 17:58:30 -0500
-X-MC-Unique: QG5HlmGDMbeqITC45-xQhw-1
-Received: by mail-io1-f70.google.com with SMTP id e16-20020a6b5010000000b00719041c51ebso2021179iob.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 14:58:30 -0800 (PST)
+ us-mta-619-pmLLHqXLO9mXqwVLiQxonw-1; Thu, 02 Feb 2023 18:13:46 -0500
+X-MC-Unique: pmLLHqXLO9mXqwVLiQxonw-1
+Received: by mail-io1-f71.google.com with SMTP id y22-20020a5d94d6000000b007076e06ba3dso2022570ior.20
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 15:13:46 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=user-agent:in-reply-to:content-disposition:mime-version:references
          :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=lEHSVIVicg+eRhy1uVj7EmYyc3zjgu6fM5PclI9TmE8=;
-        b=ecP4oO454ftLJexlI94pr+XDYKLyWNC9u/S6vXvDkpLrrfTpcSHSARdiv717hJT0uz
-         qGamoxvO4CG0Uhr+U+VKFzxgPYr/FL6EFY5SRVMZvy1TmMlJ5k3s3oF9Z/5lsr7Hm4v1
-         OFAP1iL8HWyJinSSP2UP3L3Co4l5UgD+Cu5CoyoITzSGweg6nLvgwJ4AWJprHVA+uz7e
-         xNZ1Lw7bzeYVLovqChedGuNJjzBAGD7sFeweOK80VotbkJPfIZQT56/hjLCWnqxv2Yih
-         T2pOG7VjZYh8DovpYUpbY44uOsJbu7AyfSu0i7/G3R+cD9WczDhMA5m4zkQZKpmD0Bza
-         Eh7Q==
-X-Gm-Message-State: AO0yUKUYVS3RYq+ShgRTR5jqyQo+UDADgnHuC06/E8laFtk6wOsrwSJ5
-        +gX/q8MxL1hzpXf3ziiMG9vBQz/GNUQCzRLi0XYr504OZr4HMPsmdQruyLSneIJyrp3onJN/1I/
-        Eb+O6mTYmlhtHgUNHFuKYodvt6w==
-X-Received: by 2002:a5d:8456:0:b0:71c:1516:1b09 with SMTP id w22-20020a5d8456000000b0071c15161b09mr4724952ior.0.1675378709566;
-        Thu, 02 Feb 2023 14:58:29 -0800 (PST)
-X-Google-Smtp-Source: AK7set9sgMoyXqOZL07OUt40qn/JePX4OLj4TW1cUpkZcRm14UaauZJKfKVhAH9sT0rma+zI8iaoYQ==
-X-Received: by 2002:a5d:8456:0:b0:71c:1516:1b09 with SMTP id w22-20020a5d8456000000b0071c15161b09mr4724941ior.0.1675378709288;
-        Thu, 02 Feb 2023 14:58:29 -0800 (PST)
+        bh=kXVHvL7Zc9SvpXlyodElHL/El9p9PH7Vp09KDuKNQ7k=;
+        b=InHqZkA8Y9XddR41M90w31WvzitU/dVSh+Qi4cHBs9hpmj9AF5h0Ix2+acA4LBmpoq
+         IBHtSZ4t4ADJVDs//atKaMVtoqnGib+e78DnDUFklh7a1+qEewVoAWj1+uprVIX7zoXL
+         tJJRVuptXFWVDpABaZt0WvYvvobbTKKd1waSCWuYHZ5lXN7j/jXrEyybaL3FLHVzpaUK
+         8Z//sIQpW58e+RQdPV52jAtJTeSul8NrnsLSlnsegZoSKZAh9gxHn3RlzqczI1siL2Wl
+         u5/tOmirUlg0x6i2k6gLrQO6fVNTPYc2NlnzA8HjujNTpQFQ0aVXm2sLHucBsBMj/MN0
+         MJVQ==
+X-Gm-Message-State: AO0yUKUqyXoKn4cDGM5YELyPl8jRyR0tfLGdDUeK7v303/Hw4f6OyHNK
+        rQVxNhR1HvPzFWMqXjrgt5pfr5N7lULDgZgzQEmGsSi7gKnAOvkozQjVKmdI1ztxxLyYJ2Zev/4
+        VR7kdN3h87v27kdFwJrvIWDc3Bg==
+X-Received: by 2002:a05:6602:2dc2:b0:707:d9c9:458e with SMTP id l2-20020a0566022dc200b00707d9c9458emr3293865iow.1.1675379625353;
+        Thu, 02 Feb 2023 15:13:45 -0800 (PST)
+X-Google-Smtp-Source: AK7set8MFntk5bjnEw1nbcEwPglzwxtEbs/VR6tLktByEWuRryxfTh9CCM+W/HuYuBK+h7W/qw1aLw==
+X-Received: by 2002:a05:6602:2dc2:b0:707:d9c9:458e with SMTP id l2-20020a0566022dc200b00707d9c9458emr3293860iow.1.1675379625133;
+        Thu, 02 Feb 2023 15:13:45 -0800 (PST)
 Received: from x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
-        by smtp.gmail.com with ESMTPSA id z12-20020a02938c000000b0039ea34dffcdsm305250jah.129.2023.02.02.14.58.27
+        by smtp.gmail.com with ESMTPSA id a7-20020a5e8e07000000b007192441e5e6sm274085ion.45.2023.02.02.15.13.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Feb 2023 14:58:28 -0800 (PST)
-Date:   Thu, 2 Feb 2023 17:58:26 -0500
+        Thu, 02 Feb 2023 15:13:44 -0800 (PST)
+Date:   Thu, 2 Feb 2023 18:13:41 -0500
 From:   Brian Masney <bmasney@redhat.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+To:     Johan Hovold <johan+linaro@kernel.org>
+Cc:     Georgi Djakov <djakov@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [RFT PATCH 05/14] arm64: dts: qcom: sc8280xp: correct TLMM
- gpio-ranges
-Message-ID: <Y9xAEoc0QXe222D0@x1>
-References: <20230201155105.282708-1-krzysztof.kozlowski@linaro.org>
- <20230201155105.282708-6-krzysztof.kozlowski@linaro.org>
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Artur =?utf-8?B?xZp3aWdvxYQ=?= <a.swigon@samsung.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-tegra@vger.kernel.org, linux-kernel@vger.kernel.org,
+        stable@vger.kernel.org
+Subject: Re: [PATCH 11/23] interconnect: qcom: msm8974: fix registration race
+Message-ID: <Y9xDpSxL+3Iny+hF@x1>
+References: <20230201101559.15529-1-johan+linaro@kernel.org>
+ <20230201101559.15529-12-johan+linaro@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230201155105.282708-6-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230201101559.15529-12-johan+linaro@kernel.org>
 User-Agent: Mutt/2.2.7 (2022-08-07)
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -85,43 +95,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 01, 2023 at 04:50:56PM +0100, Krzysztof Kozlowski wrote:
-> Correct the number of GPIOs in TLMM pin controller.
+On Wed, Feb 01, 2023 at 11:15:47AM +0100, Johan Hovold wrote:
+> The current interconnect provider registration interface is inherently
+> racy as nodes are not added until the after adding the provider. This
+> can specifically cause racing DT lookups to fail.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> Switch to using the new API where the provider is not registered until
+> after it has been fully initialised.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> index fa2d0d7d1367..17e8c26a9ae6 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> @@ -3533,7 +3533,7 @@ tlmm: pinctrl@f100000 {
->  			#gpio-cells = <2>;
->  			interrupt-controller;
->  			#interrupt-cells = <2>;
-> -			gpio-ranges = <&tlmm 0 0 230>;
-> +			gpio-ranges = <&tlmm 0 0 228>;
->  		};
-
-I verified that this count matches what's in downstream.
+> Fixes: 4e60a9568dc6 ("interconnect: qcom: add msm8974 driver")
+> Cc: stable@vger.kernel.org      # 5.5
+> Cc: Brian Masney <bmasney@redhat.com>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
 Reviewed-by: Brian Masney <bmasney@redhat.com>
-
-
-However, I noticed in upstream that we're using this reg property:
-
-   reg = <0 0x0f100000 0 0x300000>;
-
-Downstream has a different base address and a wider size. Note: I added
-spaces for easy comparison.
-
-   reg = <  0x0F000000   0x1000000>;
-
-I don't have access to the appropriate documents to see which is
-correct. I assume the base address in upstream is at least correct since
-pinctrl is working on this platform.
-
-Brian
 
