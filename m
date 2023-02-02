@@ -2,78 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F1AB1687C14
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 12:19:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 18A07687C86
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 12:43:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231371AbjBBLT3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Feb 2023 06:19:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49668 "EHLO
+        id S231970AbjBBLnt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 06:43:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36664 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230404AbjBBLT3 (ORCPT
+        with ESMTP id S232113AbjBBLnr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 06:19:29 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04D1E49426
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 03:19:27 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id be12so1635483edb.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 03:19:26 -0800 (PST)
+        Thu, 2 Feb 2023 06:43:47 -0500
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BB088C1EF
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 03:43:46 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id lu11so5186110ejb.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 03:43:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=5lqBGy3xyiLZ+uDQPzZ1hsLEdYkc91Ze4wrm9P+Lw80=;
-        b=RJwRtlKXAU2yQGFCUlKvMZBg3wHojpszX+YYkT1OAyb1nukVCBTsHmoHRtSP8GAYNg
-         Poc83j6BNYiJ8ewxRNBaitufk3cTBuYTonbJi48av2yUiLsubOF2ajHIn+8CkdV6AHLm
-         z81WuJwWJUdNj8gEu97EUuud/+UeT/Yy9wboCffYYCrS+Ydgos9eUuhwabRiZZUPPEFD
-         +0YX7bG/soas5GZ92Vo0Zp8Ta4T77lfzIjYBdclPaE4SdremAStzXBP+MY2ujhj16EjY
-         2m/nnLBThX4V9DVnkkYKo32s2WLYu9Sx2JOOrHX89cnzr++Yk+2NdR7Vzf8o43WupCq5
-         71ZA==
+        bh=yZAt+sBj7b9ea62wSim/pGj5JLU/j6Lhld7tQV45g/o=;
+        b=y/rffQSEv8KB0tcUVGuq4maNsP9uwDHf8Zp2tRsQgdJz06O3iO55PddIUzZ9YqAzcG
+         HDER74nq5Tw5ROmhthxAaDyttFd0urmpKaZK/sz4MiJnlEIkeOKabvKbstlAPqbPIRyD
+         MeK2NOsoFir/PgJMCCqglnMceb8cyh5igIe+Y+VbvLfxgsOjddMqeK9NL7Qmw9/s919G
+         mbtnZUBFEqfcClYSUEByczQkdfxF40MW2D3I7tnxAwOkUTqUv0X2i6lkoIxwi/wRjD9i
+         OwsZjVJynSAuTWvE4Gt3F4npj8h9tROVId+5L78P2zMRnlF1J4eGILzpggqUpZJsa2lM
+         NvQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5lqBGy3xyiLZ+uDQPzZ1hsLEdYkc91Ze4wrm9P+Lw80=;
-        b=r8uWOj14KzyFr/MBIxydbD6XuHKk4RrH2H8hss4OPm3ngt2esssx4C3TW4UfV7M1Zu
-         M6qKkIZsA2xJV/bm5Ip1YK3bn+IjtJhVLyVr89WiDNlCn2ZLCVixo6LnwKzDOP8Bycie
-         M74ws29l+4aaVq9qljFw6+zdr1w0lTr/aEj1mOwfNuPqL2qDaVjuHIbm0CB7nzPGR2n8
-         NidHgxo7es7eMvNDfepVpsCPidoW0kmWRsVnglpTEl4zQyLi9sVSJEtm6xUHobG5dndB
-         AEynr5M0xDA6bn4mZ2Q5dxFiyprQktlzBX/FE2g1THz/rMzaHbLblJoxCYurk7dGx1o8
-         cpxQ==
-X-Gm-Message-State: AO0yUKVsiGe7YSDJMk13algoK70n4fM34LubWmtIcShrOi01uG42StVB
-        JywF8fI9K+EQsn5nFQ9xakJ7ZA==
-X-Google-Smtp-Source: AK7set/vEiR/9/5KwI31m2BtJbT7NVoCdcuzNNO/1JzUew9cQH1z9NQ6sS/gMsYr4isYZn/LvUPTVg==
-X-Received: by 2002:a05:6402:4cb:b0:492:8c77:7da9 with SMTP id n11-20020a05640204cb00b004928c777da9mr5414198edw.9.1675336765547;
-        Thu, 02 Feb 2023 03:19:25 -0800 (PST)
+        bh=yZAt+sBj7b9ea62wSim/pGj5JLU/j6Lhld7tQV45g/o=;
+        b=1qFk5vMlBDp6EzWJvSB9mp47vQVb3L7ydbnxpKKbWDGH67hQ+7ZqZEtK3dsCcOBLWb
+         YLcVjQmqWqBBe3lKDMX2DtnDMcdJuCJTzxKGpieQ++hHgQ1N8MhH2Yf6OE/ntnYK6fZy
+         uqTcHAWZWb5AAeLJavUJud4H5JXHfRLDswHBUtc3LP2VQu8QVaLUeDOpezYy3PTXKCcO
+         PiTR3Q2+AshUGOxjZw//LNe+Npwi84kLIJBhwNYqH5s8zYWquBAiFpbltkdf5eSJD3aT
+         RH/y+B91bOm/PGYB2++3GtyL8nWNE/ekeHO6ESUUMmlTR0ZEnQlqqwuHjPTGCTirNEgV
+         5SoQ==
+X-Gm-Message-State: AO0yUKViPmJNgVIZ/mmu9cmMc69HikowqwnvsP3tBrAmQB1ORqaHPPnv
+        m3HithKuFblPaXaYeYnGbVLEEQ==
+X-Google-Smtp-Source: AK7set+UstQhVXjt1uoO1Uw4d4FbGYZxZ2+/NYh4RIRme6OjpdxP19lGUozRH/aiEvHjLW9chzgkiA==
+X-Received: by 2002:a17:906:3bc3:b0:87f:89f2:c012 with SMTP id v3-20020a1709063bc300b0087f89f2c012mr5968386ejf.24.1675338224778;
+        Thu, 02 Feb 2023 03:43:44 -0800 (PST)
 Received: from [192.168.1.101] (abyl20.neoplus.adsl.tpnet.pl. [83.9.31.20])
-        by smtp.gmail.com with ESMTPSA id a20-20020a50ff14000000b004a211283100sm9249762edu.44.2023.02.02.03.19.23
+        by smtp.gmail.com with ESMTPSA id aa7-20020a170907354700b00889310a3fcbsm5959229ejc.210.2023.02.02.03.43.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Feb 2023 03:19:25 -0800 (PST)
-Message-ID: <d90e1d20-37f7-19c8-1375-dc6cf8856097@linaro.org>
-Date:   Thu, 2 Feb 2023 12:19:22 +0100
+        Thu, 02 Feb 2023 03:43:44 -0800 (PST)
+Message-ID: <bab449de-73c9-f65e-24fa-84749fbc51bb@linaro.org>
+Date:   Thu, 2 Feb 2023 12:43:42 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.0
-Subject: Re: [PATCH v2] arm64: dts: qcom: msm8992-lg-bullhead: Correct memory
- overlaps with the SMEM and MPSS memory regions
-To:     Jamie Douglass <jamiemdouglass@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Petr Vorel <petr.vorel@gmail.com>,
-        Dominik Kobinski <dominikkobinski314@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Petr Vorel <pvorel@suse.cz>
-References: <20230202054819.16079-1-jamiemdouglass@gmail.com>
+Subject: Re: [PATCH 6/6] regulator: qcom_smd: Add support to define the bootup
+ voltage
 Content-Language: en-US
+To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, lgirdwood@gmail.com, broonie@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
+        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
+        quic_poovendh@quicinc.com, quic_ipkumar@quicinc.com
+References: <20230113150310.29709-1-quic_devipriy@quicinc.com>
+ <20230113150310.29709-7-quic_devipriy@quicinc.com>
+ <77d84408-166e-8a02-227a-67654a4d31f2@linaro.org>
+ <df6c1cd6-ea70-e65c-b4e8-3da80697242f@quicinc.com>
+ <cc037133-7c45-325f-4a1d-9855d033ae5c@linaro.org>
+ <6bb22160-5966-43d3-ffba-489b77b3a095@quicinc.com>
+ <de6e69d6-18cd-2732-9a18-f4dfd29be6dd@linaro.org>
+ <05c01db8-1ca1-475f-8cb4-41fddff8b85a@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230202054819.16079-1-jamiemdouglass@gmail.com>
+In-Reply-To: <05c01db8-1ca1-475f-8cb4-41fddff8b85a@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -86,56 +91,102 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 2.02.2023 06:48, Jamie Douglass wrote:
-> The memory region reserved by a previous commit (see fixes tag below)
-> overlaps with the SMEM and MPSS memory regions, causing error messages in
-> dmesg:
-> 	OF: reserved mem: OVERLAP DETECTED!
-> 	reserved@5000000 (0x0000000005000000--0x0000000007200000)
-> 	overlaps with smem_region@6a00000
-> 	(0x0000000006a00000--0x0000000006c00000)
+On 2.02.2023 12:09, Devi Priya wrote:
 > 
-> 	OF: reserved mem: OVERLAP DETECTED!
-> 	reserved@6c00000 (0x0000000006c00000--0x0000000007200000)
-> 	overlaps with memory@7000000
-> 	(0x0000000007000000--0x000000000ca00000)
 > 
-> This patch resolves both of these by splitting the previously reserved
-> memory region into two sections either side of the SMEM region and by
-> cutting off the second memory region to 0x7000000.
-> 
-> Fixes: 22c7e1a0fa45 ("arm64: dts: msm8992-bullhead: add memory hole region")
-> Signed-off-by: Jamie Douglass <jamiemdouglass@gmail.com>
-> Reviewed-by: Petr Vorel <pvorel@suse.cz>
-> Tested-by: Petr Vorel <pvorel@suse.cz>
-> 
-> ---
-> v1 -> v2: Added detail about second memory overlap and fixed commit to commit
-> message
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> On 1/31/2023 6:14 PM, Konrad Dybcio wrote:
+>>
+>>
+>> On 31.01.2023 10:28, Devi Priya wrote:
+>>>
+>>>
+>>> On 1/27/2023 9:40 PM, Konrad Dybcio wrote:
+>>>>
+>>>>
+>>>> On 27.01.2023 17:07, Devi Priya wrote:
+>>>>>
+>>>>>
+>>>>> On 1/13/2023 9:07 PM, Konrad Dybcio wrote:
+>>>>>>
+>>>>>>
+>>>>>> On 13.01.2023 16:03, devi priya wrote:
+>>>>>>> Kernel does not know the initial voltage set by the bootloaders.
+>>>>>>> During regulator registration, the voltage variable is just declared
+>>>>>>> and it is zero. Based on that, the regulator framework considers current
+>>>>>>> the voltage as zero and tries to bring up each regulator to minimum
+>>>>>>> the supported voltage.
+>>>>>>>
+>>>>>>> This introduces a dip in the voltage during kernel boot and gets
+>>>>>>> stabilized once the voltage scaling comes into picture.
+>>>>>>>
+>>>>>>> To avoid the voltage dip, adding support to define the
+>>>>>>> bootup voltage set by the boodloaders and based on it, regulator
+>>>>>>> framework understands that proper voltage is already set
+>>>>>>>
+>>>>>>> Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+>>>>>>> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+>>>>>>> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
+>>>>>>> ---
+>>>>>> Or maybe hook it up to the spmi_regulator_common_get_voltage()
+>>>>>> from the SPMI regulator driver and read the real voltage instead
+>>>>>> of relying on hardcoded values thay may differ between boards?
+>>>>>>
+>>>>>> Konrad
+>>>>> In IPQ9574, SPMI regulator is not used. We are using RPM-Glink communication and the regulators are controlled by RPM.
+>>>>> In this case, we don't have an option to readback the bootup voltage and so, we have hardcoded the values
+>>>> Unless something changed, RPM regulator framework is simply a
+>>>> fancy front-end for communicating with the PMIC over SPMI, AFAIK..
+>>>>
+>>>> Konrad
+>>> Currently in our driver, the voltage write request will be sent to RPM via GLINK which then writes it to the PMIC over I2C using the below APIs
+>>> qcom_rpm_smd_write -> rpmsg_send
+>>> In IPQ9574, we do not have SPMI support or the support to readback voltage.
+>> Okay, I didn't quite catch that there's *only* an i2c PMIC on this
+>> platform.. Looking at the MP5496 datasheet though, reading back
+>> the voltage should be possible via simply reading the fields that
+>> are used to set it.
+>>
+>> Konrad
+> The CPR regulator operates in closed loop mode and the RPM can independently update the PMIC voltage.
+> So, Performing an i2c read to the PMIC would introduce conflicts when RPM uses the i2c for any of the voltage write or read operations.
+So.. are we even going to set voltage from Linux at all, for example
+for DCVS? If not, maybe we can simply not register the regulator and
+let the non-APSS parts handle it themselves?
 
 Konrad
->  arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi | 9 +++++++--
->  1 file changed, 7 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
-> index 79de9cc395c4..5e375ea73c79 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
-> @@ -53,8 +53,13 @@ cont_splash_mem: memory@3400000 {
->  			no-map;
->  		};
->  
-> -		removed_region: reserved@5000000 {
-> -			reg = <0 0x05000000 0 0x2200000>;
-> +		reserved@5000000 {
-> +			reg = <0x0 0x05000000 0x0 0x1a00000>;
-> +			no-map;
-> +		};
-> +
-> +		reserved@6c00000 {
-> +			reg = <0x0 0x06c00000 0x0 0x400000>;
->  			no-map;
->  		};
->  	};
+>>>
+>>>>>
+>>>>>>>     drivers/regulator/qcom_smd-regulator.c | 6 +++++-
+>>>>>>>     1 file changed, 5 insertions(+), 1 deletion(-)
+>>>>>>>
+>>>>>>> diff --git a/drivers/regulator/qcom_smd-regulator.c b/drivers/regulator/qcom_smd-regulator.c
+>>>>>>> index 1eb17d378897..49a36b07397c 100644
+>>>>>>> --- a/drivers/regulator/qcom_smd-regulator.c
+>>>>>>> +++ b/drivers/regulator/qcom_smd-regulator.c
+>>>>>>> @@ -800,6 +800,7 @@ struct rpm_regulator_data {
+>>>>>>>         u32 id;
+>>>>>>>         const struct regulator_desc *desc;
+>>>>>>>         const char *supply;
+>>>>>>> +    int boot_uV; /* To store the bootup voltage set by bootloaders */
+>>>>>>>     };
+>>>>>>>       static const struct rpm_regulator_data rpm_mp5496_regulators[] = {
+>>>>>>> @@ -809,7 +810,7 @@ static const struct rpm_regulator_data rpm_mp5496_regulators[] = {
+>>>>>>>     };
+>>>>>>>       static const struct rpm_regulator_data rpm_ipq9574_mp5496_regulators[] = {
+>>>>>>> -    { "s1", QCOM_SMD_RPM_SMPA, 1, &ipq9574_mp5496_smpa1, "s1" },
+>>>>>>> +    { "s1", QCOM_SMD_RPM_SMPA, 1, &ipq9574_mp5496_smpa1, "s1", 875000 },
+>>>>>>>         {}
+>>>>>>>     };
+>>>>>>>     @@ -1394,6 +1395,9 @@ static int rpm_regulator_init_vreg(struct qcom_rpm_reg *vreg, struct device *dev
+>>>>>>>         vreg->type    = rpm_data->type;
+>>>>>>>         vreg->id    = rpm_data->id;
+>>>>>>>     +    if (rpm_data->boot_uV)
+>>>>>>> +        vreg->uV = rpm_data->boot_uV;
+>>>>>>> +
+>>>>>>>         memcpy(&vreg->desc, rpm_data->desc, sizeof(vreg->desc));
+>>>>>>>         vreg->desc.name = rpm_data->name;
+>>>>>>>         vreg->desc.supply_name = rpm_data->supply;
+>>>>> Best Regards,
+>>>>> Devi Priya
+>>> Best Regards,
+>>> Devi Priya
