@@ -2,74 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6DDC9688AEA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Feb 2023 00:39:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2AE71688B11
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Feb 2023 00:46:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232602AbjBBXjB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Feb 2023 18:39:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53320 "EHLO
+        id S233294AbjBBXqQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 18:46:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233257AbjBBXjA (ORCPT
+        with ESMTP id S233202AbjBBXqN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 18:39:00 -0500
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51E255EF9A
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 15:38:58 -0800 (PST)
-Received: by mail-ej1-x62a.google.com with SMTP id qw12so10810194ejc.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 15:38:58 -0800 (PST)
+        Thu, 2 Feb 2023 18:46:13 -0500
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DED97E042
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 15:45:53 -0800 (PST)
+Received: by mail-ej1-x62b.google.com with SMTP id ud5so10812317ejc.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 15:45:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Vn4PQtcHeiNXiYDIa1iNQ6Auk9PT6RoWaXhg2pdbr5A=;
-        b=L396GH6MkAGCgAqw8JbfIVAxC58XO9h1DjYHO0bnAcvYww1P1+Hcv7pq9D3i4GPe4F
-         90XKu3hvQ9//QbvEb5PvzxwsmwCk91U+yxoZL8totIlYDZaVG1OiCgjXGDoNqInH4d+q
-         zLJvvrZsesXxKYnIRloPhnanv8PyYsJdA7hMNdusZcx8kT57YKDedbBQHYJvFkQy4/Nr
-         nHj3TLBSOiS4jO4vtyw+2KrXc/sXjjivd6luMl0J2J9epPMpsw6xsCN0Xc7gY3ho1gIU
-         GMChvQnL3PP9jRGcTLN332DQZDAzXEqZStWJg+R8SVhTpIjHJlHpjkbn9DM1ZXH3HTmp
-         rjHA==
+        bh=p7JE+gPpsu3PeppuOjAm6wJ3zvzLvO/TFsK3LVPhrwA=;
+        b=Xrio21vv2fzSQE/6eyDRHI1+Ed++kclLsWHvKOGzma7sEdgflNvU2xu5Hl4ZGVxdUS
+         8kO/wTtNe9aQWPGBfBgjd3/PYjUXs5ApuY7hqVUkNfezx1WVN1+x264q5oiEoTAp6bQn
+         EAoRtSTc13baM9xzQvQW0RAa9mIuN2+1bQSWjY7n5Xk9/u/M+kEYs1kRXep0506B/tAJ
+         AQNL+Ebqc6in7CAfYBw2SFLt3idCCtSA29/Iv6METHFRy98X/LqhGopMXqJMj4Pnv145
+         fmC1XHV2S16Wxe1IVHYiofH4lYbK6YQtzYM+tvFyABcSZd63pzwpUgdA5uLdhfi4VruC
+         a7Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Vn4PQtcHeiNXiYDIa1iNQ6Auk9PT6RoWaXhg2pdbr5A=;
-        b=flgB5DeGO5maXjI1NUpTRMoPJhKACRCVWZU1YPYK045JC4RAybfrS/+ikUbUVMlGI4
-         qjdCq6DZWrwXd6bcyunAZAHCNqO6YUN2LiFjQbAObpS1ioCliimqIN9FVwe+ltztn2Sf
-         RoNC244LuiTF/C9Ub2k0CLijfhXznkGkb8HujthRruoresJloNck5m4TykHpJYD2RXLg
-         wVFQthvD6KktEV1JEXh27J47Gk9R5BM58WOs7GpNqYQXEEoWoG8lcsFfskhHMSYkMz5N
-         FD+JQ7LrdeADsE/ITwyZajfkBvViE4pX9PbXEg1qdVBAfG8Grw2JuDGKqTzVVURs8hN8
-         6Wyg==
-X-Gm-Message-State: AO0yUKVeWp4Yvv3kAXJIdjejVLLr8mbCHW6+2HctVn0OThnHMQ/pAWwp
-        l0Pj0A4hvCNJiv2S8pl5NLSOCw==
-X-Google-Smtp-Source: AK7set8LnSv/lCQamnPesVGE2x8Z7Qk617GP4KCKtgP+mXB1g/Ij9HnphFIl78XYCc6xXvAlw7F4Kg==
-X-Received: by 2002:a17:907:8d15:b0:88f:5676:52c8 with SMTP id tc21-20020a1709078d1500b0088f567652c8mr4026181ejc.74.1675381136875;
-        Thu, 02 Feb 2023 15:38:56 -0800 (PST)
+        bh=p7JE+gPpsu3PeppuOjAm6wJ3zvzLvO/TFsK3LVPhrwA=;
+        b=MiyqvnKf8EkXdxi44EZ7+qF4oPdLpZnnbak3d5e4l0yCvM+HtgtPC8SgvaPlhDVG8C
+         DHRw0cOqRidgPSOmINsA719afKPavHDr/NWJhMtermk944tIq0quKe8OiMPJFT4DjHPW
+         NS99ziZxRy/QCKzT662r1uvRFOV5jv1X6x11yByTpSHR7qyi0Oxzw7apL980KYcoUXZo
+         tmxuhs+soIspn+x5l382JMHBd07Dk4CMRLvXviD+7LhALNHK/akxbMmZxTiPvA/96BvN
+         /dfW9+T2nEOUFXmBnmnIp0wTsIA3t7NR/xQeS8J3pqZjdch4QgBgTx6M40v6aVNMkdxe
+         BzVw==
+X-Gm-Message-State: AO0yUKXVkRwCSJ8U+pZT6w8YUQ15ked8R0m7Y1/WYr2VN+YTHkTAR3d1
+        /O7SbiWgoyCLNzpfsqp5QpOJj/BhvbvcYoKC
+X-Google-Smtp-Source: AK7set+5GSXpbEFfipGFy7AaGe8F4GDTTdDTG8KviZBbg8YpaDmooz4Af3KugzKkldwBxXx/k9hAZw==
+X-Received: by 2002:a17:906:cf83:b0:887:6c23:193f with SMTP id um3-20020a170906cf8300b008876c23193fmr7869480ejb.44.1675381551564;
+        Thu, 02 Feb 2023 15:45:51 -0800 (PST)
 Received: from [192.168.1.101] (abyl20.neoplus.adsl.tpnet.pl. [83.9.31.20])
-        by smtp.gmail.com with ESMTPSA id bk21-20020a170906b0d500b0087873afb1b4sm481047ejb.41.2023.02.02.15.38.55
+        by smtp.gmail.com with ESMTPSA id t13-20020a170906268d00b00888fddc4eb2sm464379ejc.164.2023.02.02.15.45.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Feb 2023 15:38:56 -0800 (PST)
-Message-ID: <64493723-d8a8-fc87-ae14-c2f9c8d38ef7@linaro.org>
-Date:   Fri, 3 Feb 2023 00:38:54 +0100
+        Thu, 02 Feb 2023 15:45:51 -0800 (PST)
+Message-ID: <25f5a750-b51c-7d7b-0d50-5b2f78de8512@linaro.org>
+Date:   Fri, 3 Feb 2023 00:45:49 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.0
-Subject: Re: [PATCH] cpufreq: qcom-hw: Fix cpufreq_driver->get() for non-LMH
- systems
+Subject: Re: [RFT PATCH 05/14] arm64: dts: qcom: sc8280xp: correct TLMM
+ gpio-ranges
 Content-Language: en-US
-To:     Douglas Anderson <dianders@chromium.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>
-Cc:     swboyd@chromium.org, mka@chromium.org,
-        Andy Gross <agross@kernel.org>,
+To:     Brian Masney <bmasney@redhat.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
-References: <20230202140005.1.I4b30aaa027c73372ec4068cc0f0dc665af8b938d@changeid>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230201155105.282708-1-krzysztof.kozlowski@linaro.org>
+ <20230201155105.282708-6-krzysztof.kozlowski@linaro.org>
+ <Y9xAEoc0QXe222D0@x1>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230202140005.1.I4b30aaa027c73372ec4068cc0f0dc665af8b938d@changeid>
+In-Reply-To: <Y9xAEoc0QXe222D0@x1>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -84,91 +85,60 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 2.02.2023 23:00, Douglas Anderson wrote:
-> On a sc7180-based Chromebook, when I go to
-> /sys/devices/system/cpu/cpu0/cpufreq I can see:
-> 
->   cpuinfo_cur_freq:2995200
->   cpuinfo_max_freq:1804800
->   scaling_available_frequencies:300000 576000 ... 1708800 1804800
->   scaling_cur_freq:1804800
->   scaling_max_freq:1804800
-> 
-> As you can see the `cpuinfo_cur_freq` is bogus. It turns out that this
-> bogus info started showing up as of commit 205f5e984d30 ("cpufreq:
-> qcom-hw: Fix the frequency returned by cpufreq_driver->get()"). That
-> commit seems to assume that everyone is on the LMH bandwagon, but
-> sc7180 isn't.
-> 
-> Let's go back to the old code in the case where LMH isn't used.
-> 
-> Fixes: 205f5e984d30 ("cpufreq: qcom-hw: Fix the frequency returned by cpufreq_driver->get()")
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
-I read it again, this time properly.
+On 2.02.2023 23:58, Brian Masney wrote:
+> On Wed, Feb 01, 2023 at 04:50:56PM +0100, Krzysztof Kozlowski wrote:
+>> Correct the number of GPIOs in TLMM pin controller.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>> index fa2d0d7d1367..17e8c26a9ae6 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>> @@ -3533,7 +3533,7 @@ tlmm: pinctrl@f100000 {
+>>  			#gpio-cells = <2>;
+>>  			interrupt-controller;
+>>  			#interrupt-cells = <2>;
+>> -			gpio-ranges = <&tlmm 0 0 230>;
+>> +			gpio-ranges = <&tlmm 0 0 228>;
+Won't that kill the UFS pins?
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+>>  		};
+> 
+> I verified that this count matches what's in downstream.
+> 
+> Reviewed-by: Brian Masney <bmasney@redhat.com>
+> 
+> 
+> However, I noticed in upstream that we're using this reg property:
+> 
+>    reg = <0 0x0f100000 0 0x300000>;
+> 
+> Downstream has a different base address and a wider size. Note: I added
+> spaces for easy comparison.
+> 
+>    reg = <  0x0F000000   0x1000000>;
+> 
+> I don't have access to the appropriate documents to see which is
+> correct. I assume the base address in upstream is at least correct since
+> pinctrl is working on this platform.
+Downstream offsets things in the driver
+
+https://git.codelinaro.org/clo/la/kernel/msm-5.4/-/blob/LV.AU.1.2.3.r1-03600-gen3meta.0/drivers/pinctrl/qcom/pinctrl-direwolf.c#L20
+
+Notice how UFS/QDSD pins addresses differ by 0x1000... up- and downstream too.
+I'd imagine Bjorn/Johan/whoever did that used magic PDFs instead of not-very-
+tested downstream sources.
+
+Another note, the downstream driver may be incomplete/wrong, as Linux was
+not exactly the main usecase of 8280xp so the testing there was most likely
+only basic.
 
 Konrad
 > 
->  drivers/cpufreq/qcom-cpufreq-hw.c | 24 +++++++++++++-----------
->  1 file changed, 13 insertions(+), 11 deletions(-)
+> Brian
 > 
-> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-> index 9505a812d6a1..957cf6bb8c05 100644
-> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
-> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-> @@ -143,40 +143,42 @@ static unsigned long qcom_lmh_get_throttle_freq(struct qcom_cpufreq_data *data)
->  	return lval * xo_rate;
->  }
->  
-> -/* Get the current frequency of the CPU (after throttling) */
-> -static unsigned int qcom_cpufreq_hw_get(unsigned int cpu)
-> +/* Get the frequency requested by the cpufreq core for the CPU */
-> +static unsigned int qcom_cpufreq_get_freq(unsigned int cpu)
->  {
->  	struct qcom_cpufreq_data *data;
-> +	const struct qcom_cpufreq_soc_data *soc_data;
->  	struct cpufreq_policy *policy;
-> +	unsigned int index;
->  
->  	policy = cpufreq_cpu_get_raw(cpu);
->  	if (!policy)
->  		return 0;
->  
->  	data = policy->driver_data;
-> +	soc_data = qcom_cpufreq.soc_data;
->  
-> -	return qcom_lmh_get_throttle_freq(data) / HZ_PER_KHZ;
-> +	index = readl_relaxed(data->base + soc_data->reg_perf_state);
-> +	index = min(index, LUT_MAX_ENTRIES - 1);
-> +
-> +	return policy->freq_table[index].frequency;
->  }
->  
-> -/* Get the frequency requested by the cpufreq core for the CPU */
-> -static unsigned int qcom_cpufreq_get_freq(unsigned int cpu)
-> +static unsigned int qcom_cpufreq_hw_get(unsigned int cpu)
->  {
->  	struct qcom_cpufreq_data *data;
-> -	const struct qcom_cpufreq_soc_data *soc_data;
->  	struct cpufreq_policy *policy;
-> -	unsigned int index;
->  
->  	policy = cpufreq_cpu_get_raw(cpu);
->  	if (!policy)
->  		return 0;
->  
->  	data = policy->driver_data;
-> -	soc_data = qcom_cpufreq.soc_data;
->  
-> -	index = readl_relaxed(data->base + soc_data->reg_perf_state);
-> -	index = min(index, LUT_MAX_ENTRIES - 1);
-> +	if (data->throttle_irq >= 0)
-> +		return qcom_lmh_get_throttle_freq(data) / HZ_PER_KHZ;
->  
-> -	return policy->freq_table[index].frequency;
-> +	return qcom_cpufreq_get_freq(cpu);
->  }
->  
->  static unsigned int qcom_cpufreq_hw_fast_switch(struct cpufreq_policy *policy,
