@@ -2,91 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A79CA687DCF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 13:47:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A420F687DF1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 13:54:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232138AbjBBMrg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Feb 2023 07:47:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47488 "EHLO
+        id S232256AbjBBMyg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 07:54:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54032 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232093AbjBBMrg (ORCPT
+        with ESMTP id S232195AbjBBMyf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 07:47:36 -0500
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2E128E048
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 04:46:59 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id bg26so1322472wmb.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 04:46:59 -0800 (PST)
+        Thu, 2 Feb 2023 07:54:35 -0500
+Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFFA945887
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 04:54:33 -0800 (PST)
+Received: by mail-yb1-xb32.google.com with SMTP id d132so2027435ybb.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 04:54:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=CMREe2uGtxx1nQqz2nFqLj1yAVyLLBzCpm3Pj5KHG8I=;
-        b=SW9cZKxm6PgkcityeOHL1ayZKT2W6D1zVMZ6bNuiJgTu9MXtyRqW5+dNNzjeBUwD5g
-         Ys+sYrByLF0Hmg9rXGBLmLUE8Z98ellVKsw5yzzgizraZM7YT5vTv2/Qf98Ls82FrrVc
-         gGNFGNYoSoVav5FHCf2eaiMYK5zzXLYYkwyNrAqHPXw+t11K0q95H99dBQbe7RcQM+t4
-         bKV0y2w46+6Kpz3n4zHq3Zgkt9IkK45+O71qGcZTGJNjRvtkFMabQElvHWcCu+nbSlcf
-         Cb6yhTz0P0a9nrdS+g6sYeV6WaZeUEBbKPIGWTJW1D69td/hlPzRt3kkxaW5tdV+CNp0
-         AYaQ==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Hou2cpFBpeYFXDjBngNxUrkbjF+eRNy5ueebEuZYyZQ=;
+        b=D7N1rGfNtk+hVf8eAwCjQmKZlTV+LjudLUiUdxC1DYZxkJ7TPk1xdmrU7ZUlp1MNOp
+         iYIl+scDP8BaLzYbePblz0If/LgYb4apxSDsg1Rp84h+XvuFDnNW4ZH0jZQlojWm9ABt
+         ECB18wQ1z+kIE6F3Qdg3QoBOLLqhLykYhQ1TrWhjRgpY9SANz+KiEp1eLkCRcS+9SI+v
+         WdYEhSZQi7UnzC1YxOEtA/jeMBtHbkwTZyneDRb5tLL2ahdjC56c6U6/BOJM7OQIvXTw
+         evgrfv1Jut2TJ4CWvyDXV4JXse+Kuxl9AAsle1hToSRY0z9OXrpHnzJRTBjb7P2ciPvS
+         /MJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CMREe2uGtxx1nQqz2nFqLj1yAVyLLBzCpm3Pj5KHG8I=;
-        b=YbzGUmjJ9cMvo1YxmKIkWvW4TWasab8Z+24uYjStoZsuEjVeVYCablItSE8gzub2Bt
-         s1xfrTWcBGqMCGOyAninJRU3T9v18CK2y9yLhgMjNSmQOwiXj07bIsEpRiq4JKk19CDb
-         uzGcqdRFiCbKmE3IdfcAl0LIAWklw/hkzoKBYPkjx8l2rotiUYMTtRJraySQhoPAkAZs
-         veb5OQAS+4R6VVTnPyAqLeMowYSVpB3XoR3Xj3++byQlNL9z2dXhIbAdudhaR/6g1wqr
-         IP4TpfiOqWSrzmLVVgL63spWaKlNVJ2avYH//oeWjpI+hqEqDNRKfj0fCoGJNHVsCF7W
-         wnMQ==
-X-Gm-Message-State: AO0yUKU9xh9RvA45Kx4D5hWYN85pgSVkkjsJsMiQAL8S7PEydssjgeN2
-        KPyByM6F0jqwz0HJHUCglyj8Iw==
-X-Google-Smtp-Source: AK7set+WNwJz4TnWff/70DvPPqlwttfQ1PgMlqPF7yWZ8USPZa5eZhEZX2n5IkEZfQl71fh0KES7VA==
-X-Received: by 2002:a05:600c:540d:b0:3dc:1687:9b9a with SMTP id he13-20020a05600c540d00b003dc16879b9amr5702617wmb.37.1675341978409;
-        Thu, 02 Feb 2023 04:46:18 -0800 (PST)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id bd16-20020a05600c1f1000b003db0ee277b2sm4763745wmb.5.2023.02.02.04.46.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Feb 2023 04:46:17 -0800 (PST)
-Message-ID: <4db1c760-10d9-3a22-106a-dda141dd5381@linaro.org>
-Date:   Thu, 2 Feb 2023 12:46:14 +0000
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Hou2cpFBpeYFXDjBngNxUrkbjF+eRNy5ueebEuZYyZQ=;
+        b=a3maljrlDqaXkBLxYUkB9sBNJIHkftF570VOhZjGm5ns7VAXGouH0kec+qeFV9oXi/
+         cvYU1iS2HJRMek3Nya+HrCB+ODg8tSTgncfIkhFWh8GtGh5Q1ZHB8iBgjhijPXeMxGYa
+         Ffg4jdRi1RIUCwevmd3Iq+Z0K32QfI6XA9yUbc+jeivrYDSLyIWHES4ZtTIC+FprJvno
+         wus6YWnAPDfuZjFwS4qv+2S/XbTOC1JCdatxmubveB0VZKdnRVjKTJ9EZA6hQWmDQFfF
+         9yBs2V+zolGEeEIULoWdW7dmrQw1YvKz5wPShulTH5VIU0+MiZBDItjKv7EW1G+MKvs/
+         bo8A==
+X-Gm-Message-State: AO0yUKXWubtrOkdSgxuLUv5NxnJ9ViPAcGVejGYC3dGMjZO/uSLa4XbE
+        OLgYFRaL1mLYIgMb+oilG6d9g2b6dG2s2bfb4Fr69Q==
+X-Google-Smtp-Source: AK7set9JcP4LrmflM2Vg6wAshx+OZbIoXMQmJnLVzau1kHRpZ2Qk6Tzv2+8Kf+dRoEUlxIU3UHfaYHhnIjYMwvPjxZ0=
+X-Received: by 2002:a25:fe0a:0:b0:7ca:9b40:72a7 with SMTP id
+ k10-20020a25fe0a000000b007ca9b4072a7mr435653ybe.130.1675342473108; Thu, 02
+ Feb 2023 04:54:33 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v9 10/27] gunyah: rsc_mgr: Add VM lifecycle RPC
-Content-Language: en-US
-To:     Elliot Berman <quic_eberman@quicinc.com>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Alex Elder <elder@linaro.org>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>
-Cc:     Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+References: <20230201150011.200613-1-brgl@bgdev.pl> <CACRpkdYEQkxEJ23Xt4hjwu3Jxct-QXZktdzze5Pf6SBNYj80Fg@mail.gmail.com>
+ <CAMRc=MdDwSi+DDJmn3Yrnh5m8EK5EJEfLrejXHN0+0k41DKx3w@mail.gmail.com>
+In-Reply-To: <CAMRc=MdDwSi+DDJmn3Yrnh5m8EK5EJEfLrejXHN0+0k41DKx3w@mail.gmail.com>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Thu, 2 Feb 2023 13:54:21 +0100
+Message-ID: <CACRpkdbLjcGUvycX9p=hYjMwS6UJOkUTOJvbEcNtddx5mnbSuQ@mail.gmail.com>
+Subject: Re: [PATCH v3 0/2] pinctrl: qcom: add dt-bindings and driver for sa8775p-tlmm
+To:     Bartosz Golaszewski <brgl@bgdev.pl>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Marc Zyngier <maz@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230120224627.4053418-1-quic_eberman@quicinc.com>
- <20230120224627.4053418-11-quic_eberman@quicinc.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20230120224627.4053418-11-quic_eberman@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -95,349 +74,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, Feb 2, 2023 at 9:25 AM Bartosz Golaszewski <brgl@bgdev.pl> wrote:
+> On Wed, Feb 1, 2023 at 11:46 PM Linus Walleij <linus.walleij@linaro.org> wrote:
+> >
+> > On Wed, Feb 1, 2023 at 4:00 PM Bartosz Golaszewski <brgl@bgdev.pl> wrote:
+> >
+> > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > >
+> > > This series contains the device-tree bindings and the pinctrl driver for the
+> > > SA8775P platforms.
+> > >
+> > > v2 -> v3 (Changes in DT bindings only)
+> > > - fix the gpio pattern property (platform has 148 GPIOs)
+> > > - add blank lines for better readability
+> >
+> > v3 patch set applied, fixing the 149->148 number in the example
+> > in patch 1!
+> >
+>
+> Thanks! Seems like only patch 1/2 got into your branch?
 
+That's confusing, it looks to me like they are both there?
+https://git.kernel.org/pub/scm/linux/kernel/git/linusw/linux-pinctrl.git/log/?h=devel
 
-On 20/01/2023 22:46, Elliot Berman wrote:
-> Add Gunyah Resource Manager RPC to launch an unauthenticated VM.
-> 
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> ---
->   drivers/virt/gunyah/Makefile      |   2 +-
->   drivers/virt/gunyah/rsc_mgr.h     |  36 +++++
->   drivers/virt/gunyah/rsc_mgr_rpc.c | 238 ++++++++++++++++++++++++++++++
->   include/linux/gunyah_rsc_mgr.h    |  55 +++++++
->   4 files changed, 330 insertions(+), 1 deletion(-)
->   create mode 100644 drivers/virt/gunyah/rsc_mgr_rpc.c
-> 
-> diff --git a/drivers/virt/gunyah/Makefile b/drivers/virt/gunyah/Makefile
-> index cc864ff5abbb..de29769f2f3f 100644
-> --- a/drivers/virt/gunyah/Makefile
-> +++ b/drivers/virt/gunyah/Makefile
-> @@ -2,5 +2,5 @@
->   
->   obj-$(CONFIG_GUNYAH) += gunyah.o
->   
-> -gunyah_rsc_mgr-y += rsc_mgr.o
-> +gunyah_rsc_mgr-y += rsc_mgr.o rsc_mgr_rpc.o
->   obj-$(CONFIG_GUNYAH) += gunyah_rsc_mgr.o
-> diff --git a/drivers/virt/gunyah/rsc_mgr.h b/drivers/virt/gunyah/rsc_mgr.h
-> index 824749e63a54..2f12f31a2ea6 100644
-> --- a/drivers/virt/gunyah/rsc_mgr.h
-> +++ b/drivers/virt/gunyah/rsc_mgr.h
-> @@ -68,4 +68,40 @@ struct gh_rm;
->   int gh_rm_call(struct gh_rm *rsc_mgr, u32 message_id, void *req_buff, size_t req_buff_size,
->   		void **resp_buf, size_t *resp_buff_size);
->   
-> +/* Message IDs: VM Management */
-> +#define GH_RM_RPC_VM_ALLOC_VMID			0x56000001
-> +#define GH_RM_RPC_VM_DEALLOC_VMID		0x56000002
-> +#define GH_RM_RPC_VM_START			0x56000004
-> +#define GH_RM_RPC_VM_STOP			0x56000005
-> +#define GH_RM_RPC_VM_CONFIG_IMAGE		0x56000009
-> +#define GH_RM_RPC_VM_INIT			0x5600000B
-> +#define GH_RM_RPC_VM_GET_HYP_RESOURCES		0x56000020
-> +#define GH_RM_RPC_VM_GET_VMID			0x56000024
-> +
-> +struct gh_vm_common_vmid_req {
-> +	__le16 vmid;
-> +	__le16 reserved0;
-> +} __packed;
-> +
-> +/* Call: VM_STOP */
-> +struct gh_vm_stop_req {
-> +	__le16 vmid;
-> +	u8 flags; /* currently not used */
-> +	u8 reserved;
-> +	__le32 stop_reason; /* currently not used */
-> +} __packed;
-> +
-> +/* Call: VM_CONFIG_IMAGE */
-> +struct gh_vm_config_image_req {
-> +	__le16 vmid;
-> +	__le16 auth_mech;
-> +	__le32 mem_handle;
-> +	__le64 image_offset;
-> +	__le64 image_size;
-> +	__le64 dtb_offset;
-> +	__le64 dtb_size;
-> +} __packed;
-> +
-> +/* Call: GET_HYP_RESOURCES */
-> +
->   #endif
-> diff --git a/drivers/virt/gunyah/rsc_mgr_rpc.c b/drivers/virt/gunyah/rsc_mgr_rpc.c
-> new file mode 100644
-> index 000000000000..b6935dfac1fe
-> --- /dev/null
-> +++ b/drivers/virt/gunyah/rsc_mgr_rpc.c
-> @@ -0,0 +1,238 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#include <linux/gunyah_rsc_mgr.h>
-> +
-> +#include "rsc_mgr.h"
-> +
-> +/*
-> + * Several RM calls take only a VMID as a parameter and give only standard
-> + * response back. Deduplicate boilerplate code by using this common call.
-> + */
-> +static int gh_rm_common_vmid_call(struct gh_rm *rm, u32 message_id, u16 vmid)
-> +{
-> +	void *resp;
-> +	struct gh_vm_common_vmid_req req_payload = {
-> +		.vmid = cpu_to_le16(vmid),
-> +	};
-> +	size_t resp_size;
-> +	int ret;
-> +
-> +	ret = gh_rm_call(rm, message_id, &req_payload, sizeof(req_payload), &resp, &resp_size);
-> +	if (!ret && resp_size) {
+Isn't "pinctrl: qcom: add the tlmm driver sa8775p platforms" patch 2/2?
 
-Am struggling to understand these type of checks in success case, when a 
-command is not expecting any response why are we checking for response 
-here, This sounds like a bug in either RM or hypervisor.
-
-Or Is this something that happens due to some firmware behaviour?
-Could you elobrate on this.
-
-
-> +		pr_warn("Unexpected payload size: %ld Expected: 0", resp_size);
-> +		dump_stack();
-> +		kfree(resp);
-> +		return -EBADMSG;
-> +	}
-> +
-> +	return ret;
-> +}
-> +
-> +/**
-> + * gh_rm_alloc_vmid() - Allocate a new VM in Gunyah. Returns the VM identifier.
-> + * @vmid: Use GH_VMID_INVAL or GH_VMID_SELF (0) to dynamically allocate a VM. A reserved VMID can
-> + *        be supplied to request allocation of a platform-defined VM.
-> + *
-> + * Returns - the allocated VMID or negative value on error
-> + */
-> +int gh_rm_alloc_vmid(struct gh_rm *rm, u16 vmid)
-> +{
-> +	void *resp;
-> +	struct gh_vm_common_vmid_req req_payload = {
-> +		.vmid = cpu_to_le16(vmid),
-we pass vmid that is recevied  here.
-
-> +	};
-> +	struct gh_vm_alloc_vmid_resp *resp_payload;
-> +	size_t resp_size;
-> +	int ret;
-> +
-> +	if (vmid == GH_VMID_INVAL)
-> +		vmid = 0;
-
-then we change this to 0.
-
-> +
-> +	ret = gh_rm_call(rm, GH_RM_RPC_VM_ALLOC_VMID, &req_payload, sizeof(req_payload), &resp,
-> +			&resp_size);
-> +	if (ret)
-> +		return ret;
-> +
-> +	if (!vmid) {
-then here we check agaist zero.
-
-Why not just do
-
-if (vmid == GH_VMID_INVAL || vmid == GH_VMID_SELF)
-
-this will make core more reader friendly and match to what is in kerneldoc.
-
-> +		if (resp_size != sizeof(*resp_payload)) {
-> +			pr_warn("%s: unexpected payload size: %ld Expected: %ld", __func__,
-> +				resp_size, sizeof(*resp_payload));
-> +			ret = -EBADMSG;
-> +		} else {
-> +			resp_payload = resp;
-> +			ret = le16_to_cpu(resp_payload->vmid);
-> +		}
-> +	}
-> +	kfree(resp);
-> +
-> +	return ret;
-> +}
-> +EXPORT_SYMBOL_GPL(gh_rm_alloc_vmid);
-> +
-> +/**
-> + * gh_rm_dealloc_vmid() - Dispose the VMID
-> + * @vmid: VM identifier
-> + */
-> +int gh_rm_dealloc_vmid(struct gh_rm *rm, u16 vmid)
-> +{
-> +	return gh_rm_common_vmid_call(rm, GH_RM_RPC_VM_DEALLOC_VMID, vmid);
-> +}
-> +EXPORT_SYMBOL_GPL(gh_rm_dealloc_vmid);
-> +
-> +/**
-> + * gh_rm_vm_start() - Move the VM into "ready to run" state
-> + * @vmid: VM identifier
-> + *
-> + * On VMs which use proxy scheduling, vcpu_run is needed to actually run the VM.
-> + * On VMs which use Gunyah's scheduling, the vCPUs start executing in accordance with Gunyah
-> + * scheduling policies.
-> + */
-> +int gh_rm_vm_start(struct gh_rm *rm, u16 vmid)
-> +{
-> +	return gh_rm_common_vmid_call(rm, GH_RM_RPC_VM_START, vmid);
-> +}
-> +EXPORT_SYMBOL_GPL(gh_rm_vm_start);
-> +
-> +/**
-> + * gh_rm_vm_stop() - Send a request to Resource Manager VM to stop a VM.
-> + * @vmid: VM identifier
-> + *
-> + * Returns - 0 on success; negative value on failure
-> + */
-> +int gh_rm_vm_stop(struct gh_rm *rm, u16 vmid)
-> +{
-> +	struct gh_vm_stop_req req_payload = {
-> +		.vmid = cpu_to_le16(vmid),
-> +	};
-> +	void *resp;
-> +	size_t resp_size;
-> +	int ret;
-> +
-> +	ret = gh_rm_call(rm, GH_RM_RPC_VM_STOP, &req_payload, sizeof(req_payload),
-> +			&resp, &resp_size);
-> +	if (!ret && resp_size) {
-same comment as the first one.
-> +		pr_warn("%s: unexpected payload size: %ld Expected: 0", __func__, resp_size);
-> +		kfree(resp);
-> +		return -EBADMSG;
-> +	}
-> +
-> +	return ret;
-> +}
-> +EXPORT_SYMBOL_GPL(gh_rm_vm_stop);
-> +
-> +int gh_rm_vm_configure(struct gh_rm *rm, u16 vmid, enum gh_rm_vm_auth_mechanism auth_mechanism,
-> +		u32 mem_handle, u64 image_offset, u64 image_size, u64 dtb_offset, u64 dtb_size)
-> +{
-> +	struct gh_vm_config_image_req req_payload = { 0 };
-> +	void *resp;
-> +	size_t resp_size;
-> +	int ret;
-> +
-> +	req_payload.vmid = cpu_to_le16(vmid);
-> +	req_payload.auth_mech = cpu_to_le16(auth_mechanism);
-> +	req_payload.mem_handle = cpu_to_le32(mem_handle);
-> +	req_payload.image_offset = cpu_to_le64(image_offset);
-> +	req_payload.image_size = cpu_to_le64(image_size);
-> +	req_payload.dtb_offset = cpu_to_le64(dtb_offset);
-> +	req_payload.dtb_size = cpu_to_le64(dtb_size);
-> +
-> +	ret = gh_rm_call(rm, GH_RM_RPC_VM_CONFIG_IMAGE, &req_payload, sizeof(req_payload),
-> +			&resp, &resp_size);
-> +	if (!ret && resp_size) {
-same comment as the first one.
-> +		pr_warn("%s: unexpected payload size: %ld Expected: 0", __func__, resp_size);
-> +		kfree(resp);
-> +		return -EBADMSG;
-> +	}
-> +
-> +	return ret;
-> +}
-> +EXPORT_SYMBOL_GPL(gh_rm_vm_configure);
-> +
-> +/**
-> + * gh_rm_vm_init() - Move the VM to initialized state.
-> + * @vmid: VM identifier
-> + *
-> + * RM will allocate needed resources for the VM. After gh_rm_vm_init, gh_rm_get_hyp_resources()
-> + * can be called to learn of the capabilities we can use with the new VM.
-> + *
-> + * Returns - 0 on success; negative value on failure
-> + */
-> +int gh_rm_vm_init(struct gh_rm *rm, u16 vmid)
-> +{
-> +	return gh_rm_common_vmid_call(rm, GH_RM_RPC_VM_INIT, vmid);
-> +}
-> +EXPORT_SYMBOL_GPL(gh_rm_vm_init);
-> +
-> +/**
-> + * gh_rm_get_hyp_resources() - Retrieve hypervisor resources (capabilities) associated with a VM
-> + * @vmid: VMID of the other VM to get the resources of
-> + * @resources: Set by gh_rm_get_hyp_resources and contains the returned hypervisor resources.
-> + *
-> + * Returns - 0 on success; negative value on failure
-> + */
-> +int gh_rm_get_hyp_resources(struct gh_rm *rm, u16 vmid,
-> +				struct gh_rm_hyp_resources **resources)
-> +{
-> +	struct gh_rm_hyp_resources *resp;
-> +	size_t resp_size;
-> +	int ret;
-> +	struct gh_vm_common_vmid_req req_payload = {
-> +		.vmid = cpu_to_le16(vmid),
-> +	};
-> +
-> +	ret = gh_rm_call(rm, GH_RM_RPC_VM_GET_HYP_RESOURCES,
-> +			 &req_payload, sizeof(req_payload),
-> +			 (void **)&resp, &resp_size);
-we can go upto 100 chars.
-
-> +	if (ret)
-> +		return ret;
-> +
-> +	if (!resp_size)
-> +		return -EBADMSG;
-
-This is again another check that falls under the first category, how can 
-a command pass and return incorrect responses?
-
-Or are we doing to many unnecessary checks?
-
-> +
-> +	if (resp_size < struct_size(resp, entries, 0) ||
-> +		resp_size != struct_size(resp, entries, le32_to_cpu(resp->n_entries))) {
-> +		kfree(resp);
-> +		return -EBADMSG;
-> +	}
-> +
-> +	*resources = resp;
-> +	return 0;
-> +}
-> +EXPORT_SYMBOL_GPL(gh_rm_get_hyp_resources);
-> +
-> +/**
-> + * gh_rm_get_vmid() - Retrieve VMID of this virtual machine
-> + * @vmid: Filled with the VMID of this VM
-> + */
-> +int gh_rm_get_vmid(struct gh_rm *rm, u16 *vmid)
-> +{
-> +	static u16 cached_vmid = GH_VMID_INVAL;
-> +	__le16 *resp;
-> +	size_t resp_size;
-> +	int ret;
-> +
-> +	if (cached_vmid != GH_VMID_INVAL) {
-> +		*vmid = cached_vmid;
-> +		return 0;
-> +	}
-> +
-> +	ret = gh_rm_call(rm, GH_RM_RPC_VM_GET_VMID, NULL, 0, (void **)&resp, &resp_size);
-> +	if (ret)
-> +		return ret;
-> +
-> +	if (resp_size != sizeof(*resp)) {
-> +		pr_warn("%s: unexpected payload size: %ld Expected: %ld", __func__,
-> +			resp_size, sizeof(*resp));
-> +		ret = -EBADMSG;
-> +		goto out;
-> +	}
-> +
-> +	*vmid = cached_vmid = le16_to_cpu(*resp);
-> +out:
-> +	kfree(resp);
-> +	return ret;
-> +}
-> +EXPORT_SYMBOL_GPL(gh_rm_get_vmid);
+Yours,
+Linus Walleij
