@@ -2,120 +2,212 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 533926887F3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 21:01:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CA6168880C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 21:10:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231185AbjBBUBy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Feb 2023 15:01:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47588 "EHLO
+        id S232515AbjBBUKZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 15:10:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229710AbjBBUBx (ORCPT
+        with ESMTP id S230070AbjBBUKX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 15:01:53 -0500
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7D2674C19
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 12:01:51 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id bk15so9216083ejb.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 12:01:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:references:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fxM9HSg7LJAXbn7ENAypRMHLklYazMOh09jYix5Uw6E=;
-        b=TrgOINh6q9JsQaHyOaEFAUKvJS025pXWFlHU3arvlNbLBnK3qcsGuaaMCbjbJN04ZO
-         3IlOf2lr6noFQliEHbf+rC9NgB3jAok4fEfbVtF+MywGorktax/oUFYU1xpF5Zau1qmB
-         8hq5h44U+elUuZzAW8XFbnpkXiY8ssOyfB4dr13WJ/qtnykslbWA66MGAzupbFzoz7K0
-         CJdyB6VXLW++6J0RmyCOgXWJrSnDfUguUwDCMrVjiMZ/xIElI3SKLwY0Fxxvp7z/1b2g
-         1plpTYByibYUq0+1x1yJo9bnQHj9K2HIQ7G+X0SMfqGPKuPxlrjKkNeU7vHb+r+ZpDOm
-         wQrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fxM9HSg7LJAXbn7ENAypRMHLklYazMOh09jYix5Uw6E=;
-        b=V4mRF0TkKSmdHaSR4/C31MLB/p0KvXsl5T1Pd+6x6OPwfFtigWx3A6RC29A3pipIwI
-         Hl9BiThOJc+eSur5Z94mNQiRWL0LKIQ61AuzEa5n6679Ffn+xFxCEXe1scSSwcTbRYU6
-         giKfvC3JubGezf34BviFXnhdWiFpPM1tqZQ0LZE6aF2bIipHfPjDHiBE0HTaPLeUl4h2
-         w63q6wj3zkZTXBqyl430PdNysYtH5UFeAHaZxhfAHX9KZOE0AMo1mcmPu/k1T74/rsER
-         uVMGMAkkhrrnVgGaNLxXCTQzrFUYZM7ytm007ClaXtt17y8iWxA0xkGMjfesr09hKNuS
-         /REg==
-X-Gm-Message-State: AO0yUKUAlXV/0lxWBXFew8xCHjWkjgzOXMHe+k5TDUtL4XAenV0Jg2qK
-        WTKwaxkHJfsi2pMRp8Oj+B9hjQ==
-X-Google-Smtp-Source: AK7set9JKwd3BkoJ3sv3/meRokBhU/jYIVthMrh8D+corP149rVnlLcP+5twV+Gr3Na6gp+EK9USwA==
-X-Received: by 2002:a17:906:3885:b0:877:6a03:9ad4 with SMTP id q5-20020a170906388500b008776a039ad4mr7284363ejd.56.1675368110320;
-        Thu, 02 Feb 2023 12:01:50 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id 1-20020a170906318100b008787134a939sm257789ejy.18.2023.02.02.12.01.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Feb 2023 12:01:49 -0800 (PST)
-Message-ID: <a3b6560a-764f-203f-4926-871c814a556a@linaro.org>
-Date:   Thu, 2 Feb 2023 22:01:48 +0200
+        Thu, 2 Feb 2023 15:10:23 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8FC67D2A2;
+        Thu,  2 Feb 2023 12:10:21 -0800 (PST)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 312K7Lj6001915;
+        Thu, 2 Feb 2023 20:10:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=w9Xm2c23ybA3d5ETV1KVEB5XO3UXo1W7M3lqJi5nADQ=;
+ b=NhM+ov+O8mN2uwrdN8u0TSayqnExrHn5MgDe3KkapBdN0PZrq1nFJWzM5Q0gYPvZQvK8
+ 7Rz7BoCQI5bmSI+dU6ITQzd6sGd1jHPQJjvL+02lbTx0Tv8gVXhi5uNOg1hMMk1eUoz5
+ hhPlxVvB3r5QuEchQiWu/UcIMzwOHuioCR3BD1XmTn+sU/8H1yUsAh/0zORT2CBV3ty6
+ +yRwaC5GLnyPfcHM7ldcBdUX8ZCQb3hwJK5oghHV80pGf0yIQwTPjHKDqmlIytyZaKy+
+ G49+aDobKUFtJligZmtj40Tw+sbNHsw/RtT7yHRTuLUZVc6pPB/nxV0uRlmMWlgsZyr1 jg== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nfqt3kete-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 02 Feb 2023 20:10:07 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 312KA6RF021373
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 2 Feb 2023 20:10:06 GMT
+Received: from [10.110.99.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Thu, 2 Feb 2023
+ 12:10:05 -0800
+Message-ID: <74594853-6ab9-c44d-6f67-38d65fc46466@quicinc.com>
+Date:   Thu, 2 Feb 2023 12:10:04 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH 4/6] dt-bindings: mailbox: qcom: add compatible for the
- IPQ5332 SoC
-Content-Language: en-GB
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Kathiravan T <quic_kathirav@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, jassisinghbrar@gmail.com,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230202145208.2328032-1-quic_kathirav@quicinc.com>
- <20230202145208.2328032-5-quic_kathirav@quicinc.com>
- <3a346606-576b-ab89-78f5-5bbaca729090@linaro.org>
- <8766f07e-a5d2-b59c-d130-f8cc2da64556@linaro.org>
-In-Reply-To: <8766f07e-a5d2-b59c-d130-f8cc2da64556@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [RFT PATCH v2 2/3] drm/msm/dsi: Stop unconditionally powering up
+ DSI hosts at modeset
+Content-Language: en-US
+To:     Doug Anderson <dianders@chromium.org>
+CC:     <dri-devel@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Sean Paul <sean@poorly.run>, Jonas Karlman <jonas@kwiboo.se>,
+        Vinod Koul <vkoul@kernel.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@gmail.com>,
+        <freedreno@lists.freedesktop.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Dave Stevenson <dave.stevenson@raspberrypi.com>,
+        <linux-kernel@vger.kernel.org>
+References: <20230131141756.RFT.v2.1.I723a3761d57ea60c5dd754c144aed6c3b2ea6f5a@changeid>
+ <20230131141756.RFT.v2.2.I4cfeab9d0e07e98ead23dd0736ab4461e6c69002@changeid>
+ <43095d93-29c8-b30a-08c0-0a452770c1ce@quicinc.com>
+ <CAD=FV=X6A4aZVCaqhT9yP0tD82R3fnaDak67w+p8+Z=WkaRxfw@mail.gmail.com>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAD=FV=X6A4aZVCaqhT9yP0tD82R3fnaDak67w+p8+Z=WkaRxfw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: bfA7HV8UXRTuB82Wtoq4iHgIatb5n-Xn
+X-Proofpoint-GUID: bfA7HV8UXRTuB82Wtoq4iHgIatb5n-Xn
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-02-02_14,2023-02-02_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
+ bulkscore=0 adultscore=0 mlxlogscore=999 impostorscore=0
+ priorityscore=1501 mlxscore=0 phishscore=0 spamscore=0 lowpriorityscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302020180
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/02/2023 22:00, Dmitry Baryshkov wrote:
-> On 02/02/2023 17:35, Krzysztof Kozlowski wrote:
->> On 02/02/2023 15:52, Kathiravan T wrote:
->>> Add the mailbox compatible for the IPQ5332 SoC.
->>>
->>> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
->>> ---
->>>   .../devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml     | 3 +++
->>>   1 file changed, 3 insertions(+)
->>>
->>> diff --git 
->>> a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
->>> index 943f9472ae10..8d8cd1bbe67e 100644
->>> --- 
->>> a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
->>> +++ 
->>> b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
->>> @@ -18,6 +18,7 @@ properties:
->>>       oneOf:
->>
->> - items:
->>      - enum:
->>          - qcom,ipq5332-apcs-apps-global
->>      - const: qcom,ipq6018-apcs-apps-global
->>
->> and drop the next patch
+
+
+On 2/1/2023 6:33 AM, Doug Anderson wrote:
+> Hi,
 > 
-> Is it still ok even if the two devices are not fully compatible (iow, 
-> using different PLL types)?
+> On Tue, Jan 31, 2023 at 3:32 PM Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>
+>> On 1/31/2023 2:18 PM, Douglas Anderson wrote:
+>>> In commit 7d8e9a90509f ("drm/msm/dsi: move DSI host powerup to modeset
+>>> time"), we moved powering up DSI hosts to modeset time. This wasn't
+>>> because it was an elegant design, but there were no better options.
+>>>
+>>> That commit actually ended up breaking ps8640, and thus was born
+>>> commit ec7981e6c614 ("drm/msm/dsi: don't powerup at modeset time for
+>>> parade-ps8640") as a temporary hack to un-break ps8640 by moving it to
+>>> the old way of doing things. It turns out that ps8640 _really_ doesn't
+>>> like its pre_enable() function to be called after
+>>> dsi_mgr_bridge_power_on(). Specifically (from experimentation, not
+>>> because I have any inside knowledge), it looks like the assertion of
+>>> "RST#" in the ps8640 runtime resume handler seems like it's not
+>>> allowed to happen after dsi_mgr_bridge_power_on()
+>>>
+>>> Recently, Dave Stevenson's series landed allowing bridges some control
+>>> over pre_enable ordering. The meaty commit for our purposes is commit
+>>> 4fb912e5e190 ("drm/bridge: Introduce pre_enable_prev_first to alter
+>>> bridge init order"). As documented by that series, if a bridge doesn't
+>>> set "pre_enable_prev_first" then we should use the old ordering.
+>>>
+>>> Now that we have the commit ("drm/bridge: tc358762: Set
+>>> pre_enable_prev_first") we can go back to the old ordering, which also
+>>> allows us to remove the ps8640 special case.
+>>>
+>>> One last note is that even without reverting commit 7d8e9a90509f
+>>> ("drm/msm/dsi: move DSI host powerup to modeset time"), if you _just_
+>>> revert the ps8640 special case and try it out then it doesn't seem to
+>>> fail anymore. I spent time bisecting / debugging this and it turns out
+>>> to be mostly luck, so we still want this patch to make sure it's
+>>> solid. Specifically the reason it sorta works these days is because
+>>> we implemented wait_hpd_asserted() in ps8640 now, plus the magic of
+>>> "pm_runtime" autosuspend. The fact that we have wait_hpd_asserted()
+>>> implemented means that we actually power the bridge chip up just a wee
+>>> bit earlier and then the bridge happens to stay on because of
+>>> autosuspend and thus ends up powered before dsi_mgr_bridge_power_on().
+>>>
+>>> Cc: Dave Stevenson <dave.stevenson@raspberrypi.com>
+>>> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>>> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+>>> ---
+>>>
+>>> Changes in v2:
+>>> - Don't fold dsi_mgr_bridge_power_on() back into dsi_mgr_bridge_pre_enable()
+>>>
+>>>    drivers/gpu/drm/msm/dsi/dsi_manager.c | 38 +--------------------------
+>>>    1 file changed, 1 insertion(+), 37 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+>>> index 1bbac72dad35..2197a54b9b96 100644
+>>> --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
+>>> +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+>>> @@ -34,32 +34,6 @@ static struct msm_dsi_manager msm_dsim_glb;
+>>>    #define IS_SYNC_NEEDED()    (msm_dsim_glb.is_sync_needed)
+>>>    #define IS_MASTER_DSI_LINK(id)      (msm_dsim_glb.master_dsi_link_id == id)
+>>>
+>>> -#ifdef CONFIG_OF
+>>> -static bool dsi_mgr_power_on_early(struct drm_bridge *bridge)
+>>> -{
+>>> -     struct drm_bridge *next_bridge = drm_bridge_get_next_bridge(bridge);
+>>> -
+>>> -     /*
+>>> -      * If the next bridge in the chain is the Parade ps8640 bridge chip
+>>> -      * then don't power on early since it seems to violate the expectations
+>>> -      * of the firmware that the bridge chip is running.
+>>> -      *
+>>> -      * NOTE: this is expected to be a temporary special case. It's expected
+>>> -      * that we'll eventually have a framework that allows the next level
+>>> -      * bridge to indicate whether it needs us to power on before it or
+>>> -      * after it. When that framework is in place then we'll use it and
+>>> -      * remove this special case.
+>>> -      */
+>>> -     return !(next_bridge && next_bridge->of_node &&
+>>> -              of_device_is_compatible(next_bridge->of_node, "parade,ps8640"));
+>>> -}
+>>> -#else
+>>> -static inline bool dsi_mgr_power_on_early(struct drm_bridge *bridge)
+>>> -{
+>>> -     return true;
+>>> -}
+>>> -#endif
+>>> -
+>>>    static inline struct msm_dsi *dsi_mgr_get_dsi(int id)
+>>>    {
+>>>        return msm_dsim_glb.dsi[id];
+>>> @@ -265,12 +239,6 @@ static void dsi_mgr_bridge_power_on(struct drm_bridge *bridge)
+>>>        int ret;
+>>>
+>>>        DBG("id=%d", id);
+>>> -     if (!msm_dsi_device_connected(msm_dsi))
+>>> -             return;
+>>> -
+>>> -     /* Do nothing with the host if it is slave-DSI in case of bonded DSI */
+>>> -     if (is_bonded_dsi && !IS_MASTER_DSI_LINK(id))
+>>> -             return;
+>>>
+>>
+>> Why are these two checks removed?
+> 
+> After this patch there is now one caller to this function and the one
+> caller does those exact same two checks immediately before calling
+> this function. Thus, they no longer do anything useful.
+> 
+> -Doug
 
-Ignore my question, I mixed the A53 and APCS clocks.
+Ack, understood. dsi_mgr_bridge_pre_enable() has the same checks. Hence,
 
--- 
-With best wishes
-Dmitry
-
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
