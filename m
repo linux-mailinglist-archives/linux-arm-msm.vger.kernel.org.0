@@ -2,274 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 82D8D687DF9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 13:55:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D4CD3687E3B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 14:03:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231661AbjBBMz1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Feb 2023 07:55:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54820 "EHLO
+        id S230366AbjBBNDk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 08:03:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36852 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231761AbjBBMzV (ORCPT
+        with ESMTP id S230147AbjBBNDi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 07:55:21 -0500
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDE678E493
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 04:55:09 -0800 (PST)
-Received: by mail-lf1-x133.google.com with SMTP id v17so2821508lfd.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 04:55:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=p0OggBaEVM084sMCW8HBWOrUa7UEjlo8LtE+1sylal4=;
-        b=wMflCs4LRrR6rx0v5FUohA45XpEpxNpUO82rPsPLRH/jXDhlIwsosRKYSnnLSjfisK
-         fI/DEgEyzseoBqcbf32s22RhlWE8jJAnWYL7dAXc7BvCrm3PouFpS1sS9TQsHE23wpBI
-         BFrG3dVV0Iyo2S1xUHRj6rrjfIVSNHfiQhvYHJURC102lItPydI+18WNfObcViw6zGIr
-         dCcl0osS0YaevOaR/UsGDBbfP5ZWN1ClX3oS7raXmTATGdHvomOR9P+LktGumcknhvvd
-         H33l5FmbJWokijfLdjLWu/B2hXZ3fneak/KwX0OmqgM0OC736TEucbKOESx6S326gHXe
-         6KGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=p0OggBaEVM084sMCW8HBWOrUa7UEjlo8LtE+1sylal4=;
-        b=mqeLkarTObg78eRk+/O+TpMzvqjhza347VSbF4L26lbeb2tscJ7WkN7/kR7/1qhcBg
-         jsYYhuJb71U9ZLkbZMccLLvlmP6Z1XlXfwoOkZR95mtyt1XnKc+R2jLPqnT1esq/tDvo
-         VR3AP731lv/VUaOcl3mVzsTvRILE62skExSyQbVRzMidVa6payt+3h+uI4hq06l7MHoy
-         AGNrRlWYUePXeLYjHuhqlsLcPFV07P0QlrrUpr7agAC40WtLrZojZq74CC2khi1SdIzs
-         EEG/BonQxxr7BA/TWp6TKJGV6fo1T0E+htFTU2Rvudl6Iqul4CzSgk4flCB8vvGJEK9W
-         iPmA==
-X-Gm-Message-State: AO0yUKXsu52vIQlBssTgMr9ppDDG1qgfZg/6L9ySfvOKDX2PRerzDgrf
-        9IC6+Vp4g8yRHIhjZbCEojb1cWvN4em/1r+zHrAwlA==
-X-Google-Smtp-Source: AK7set/mWmeaWd2wkMNBFXbA51O652xW98OUEb1CzsuGrHbl8sBzDY3nLrJoIabdvmMj4YTWwXKt7B5+qymwtAEVesA=
-X-Received: by 2002:a05:6512:3d28:b0:4d8:8ad1:a05c with SMTP id
- d40-20020a0565123d2800b004d88ad1a05cmr836274lfv.140.1675342508144; Thu, 02
- Feb 2023 04:55:08 -0800 (PST)
+        Thu, 2 Feb 2023 08:03:38 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB464273F;
+        Thu,  2 Feb 2023 05:03:37 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 9D45DB82661;
+        Thu,  2 Feb 2023 13:03:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BDCCC433EF;
+        Thu,  2 Feb 2023 13:03:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1675343015;
+        bh=7nZ7vEEU2cxHmgw1TBI/DSL6WgN09SclwXUQVkPAxgE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=nvB/5NpzbUUoLHtHm/UWgpeUECI8ScoRC6lISPFfwj3n0GlUUZZeBNE9zpx7J7faU
+         kGPDt0+B2bGD7IPZjwGdZGzCCzOx8zpjXQTBLCpptA/AK1SYdCi29OQNKTiBn/uWGi
+         5GVgln+H6ZtqwJ/0nN4A1A4m2s3NscKpdFdBgspK3EaEcnJnPzfdKYu40q5yLGvM0H
+         g6TGiRUl8Go4eL1UD1U5lNythuSfXV0FsdxmOrpYf5i5I4soFuiP5K2gT0xsIGIusj
+         MXC+QuV8gCX0eTdRckMMMq9F3cmn9bOSzQ6GEs1iYn5apeLYS3KGTWhr3fuETyb79V
+         QnGbvUbKG0qGw==
+Date:   Thu, 2 Feb 2023 18:33:30 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Johan Hovold <johan@kernel.org>
+Subject: Re: [PATCH v5 0/6] phy: qualcomm: Add UFS support for SM8550
+Message-ID: <Y9u0oo597Y1YaSxo@matsya>
+References: <20230117224148.1914627-1-abel.vesa@linaro.org>
 MIME-Version: 1.0
-References: <20230201080227.473547-1-jun.nie@linaro.org> <20230201080227.473547-2-jun.nie@linaro.org>
- <515f4e9e-2804-e03a-26f5-f2d3ac331109@linaro.org> <71ba0d05-6183-95ef-9e45-cc3dd512475f@linaro.org>
- <CAA8EJpqyqC5D+O=KJnuZnWN4BwBOKcquN11nJfEp2WMSmJobBg@mail.gmail.com>
-In-Reply-To: <CAA8EJpqyqC5D+O=KJnuZnWN4BwBOKcquN11nJfEp2WMSmJobBg@mail.gmail.com>
-From:   Jun Nie <jun.nie@linaro.org>
-Date:   Thu, 2 Feb 2023 20:55:04 +0800
-Message-ID: <CABymUCMJdRXG3AcLeS18JFuYmCv1kw=rJNkCv8sL7AjPD4ZR+A@mail.gmail.com>
-Subject: Re: [PATCH 2/2] PM / devfreq: qcom: Introduce CCI devfreq driver
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
-        myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
-        cw00.choi@samsung.com, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230117224148.1914627-1-abel.vesa@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org> =E4=BA=8E2023=E5=B9=B42=E6=
-=9C=881=E6=97=A5=E5=91=A8=E4=B8=89 21:41=E5=86=99=E9=81=93=EF=BC=9A
->
-> On Wed, 1 Feb 2023 at 13:46, Bryan O'Donoghue
-> <bryan.odonoghue@linaro.org> wrote:
-> >
-> > On 01/02/2023 11:32, Dmitry Baryshkov wrote:
-> > > On 01/02/2023 10:02, Jun Nie wrote:
-> > >> Cache Coherent Interconnect (CCI) is used by some Qualcomm SoCs. Thi=
-s
-> > >> driver is introduced so that its freqency can be adjusted. And regul=
-ator
-> > >> associated with opp table can be also adjusted accordingly which is
-> > >> shared with cpu cluster.
-> > >>
-> > >> Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> > >> ---
-> > >>   drivers/devfreq/Kconfig    |   9 +++
-> > >>   drivers/devfreq/Makefile   |   1 +
-> > >>   drivers/devfreq/qcom-cci.c | 162 +++++++++++++++++++++++++++++++++=
-++++
-> > >>   3 files changed, 172 insertions(+)
-> > >>   create mode 100644 drivers/devfreq/qcom-cci.c
-> > >
-> > > Could you please describe in some additional details what are you try=
-ing
-> > > to achieve? Should the CCI frequency be scaled manually or does it
-> > > follow the cluster frequency? Do clusters vote on the CCI frequency?
-> > >
-> > > I'm inclined to ask if it is possible to shift this to the cpufreq OP=
-P
-> > > tables?
-> > >
-> >
-> > Might not be so easy to just append CCI opps to the cluster frequency o=
-pps
-> >
-> >                  cci_cache: qcom,cci {
-> >                          compatible =3D "qcom,msm8939-cci";
-> >                          clock-names =3D "devfreq_clk";
-> >                          clocks =3D <&apcs2>;
-> >                          governor =3D "cpufreq";
-> >                          operating-points-v2 =3D <&cci_opp_table>;
-> >                          power-domains =3D <&cpr>;
-> >                          power-domain-names =3D "cpr";
-> >                          nvmem-cells =3D <&cpr_efuse_speedbin_pvs>;
-> >                          nvmem-cell-names =3D "cpr_efuse_speedbin_pvs";
-> >                  };
-> >
-> >                  devfreq-cpufreq {
-> >                          cci-cpufreq {
-> >                                  target-dev =3D <&cci_cache>;
-> >                                  cpu-to-dev-map-0 =3D
-> >                                          <  200000  200000000 >,
-> >                                          <  345600  200000000 >,
-> >                                          <  400000  200000000 >,
-> >                                          <  533330  297600000 >,
-> >                                          <  800000  297600000 >,
-> >                                          <  960000  297600000 >,
-> >                                          < 1113600  297000000 >,
-> >                                          < 1344000  595200000 >,
-> >                                          < 1459200  595200000 >,
-> >                                          < 1497600  595200000 >,
-> >                                          < 1651200  595200000 >;
-> >                                  cpu-to-dev-map-4 =3D
-> >                                          <  200000 200000000 >,
-> >                                          <  249600 200000000 >,
-> >                                          <  499200 297600000 >,
-> >                                          <  800000 297600000 >,
-> >                                          <  998400 595200000 >,
-> >                                          < 1113600 595200000 >;
->
-> These should map to existing opp entries.
->
-> I ended up doing the interconnect driver that maps a clock to the
-> interconnect. Then I can use it in the cpu opp tables.
->
-> >                          };
-> >                  };
-> >
-> >          cci_opp_table: cci-opp-table {
-> >                  compatible =3D "operating-points-v2";
-> >
-> >                  opp-200000000 {
-> >                          opp-hz =3D /bits/ 64 <200000000>;
-> >                          opp-supported-hw =3D <0x3f>;
-> >                          required-opps =3D <&cpr_opp3>;
->
-> And these should probably map to max(cpu's CPR opp, CCI's CPR opp).
+On 18-01-23, 00:41, Abel Vesa wrote:
+> The v4 of this patchset is:
+> https://lore.kernel.org/all/20230117142015.509675-1-abel.vesa@linaro.org/
 
-The plan is opp framework to handle it when CPU opp requires both cpr
-power domain
-opp and CCI opp. While CCI opp will also requires specific cpr opp. Because=
- CPU
-have a opp match table per pvs/speed, while CCI has another match
-table, it seems
- impossible to write the cpr opp requirements in the code statically.
+Applied, thanks
 
->
-> >                  };
-> >
-> >                  opp-297600000 {
-> >                          opp-hz =3D /bits/ 64 <297600000>;
-> >                          opp-supported-hw =3D <0x3f>;
-> >                          required-opps =3D <&cpr_opp12>;
-> >                  };
-> >
-> >                  opp-400000000-cpr14 {
-> >                          opp-hz =3D /bits/ 64 <400000000>;
-> >                          opp-supported-hw =3D <0x1>;
-> >                          required-opps =3D <&cpr_opp14>;
-> >                  };
-> >
-> >                  opp-400000000-cpr15 {
-> >                          opp-hz =3D /bits/ 64 <400000000>;
-> >                          opp-supported-hw =3D <0x3e>;
-> >                          required-opps =3D <&cpr_opp15>;
-> >                  };
-> >
-> >                  opp-595200000 {
-> >                          opp-hz =3D /bits/ 64 <595200000>;
-> >                          opp-supported-hw =3D <0x3f>;
-> >                          required-opps =3D <&cpr_opp17>;
-> >                  };
-> >          };
-> >
-> >
-> >          cpr_opp_table: cpr-opp-table {
-> >                  compatible =3D "operating-points-v2-qcom-level";
-> >
-> >                  cpr_opp1: opp1 {
-> >                          opp-hz =3D /bits/ 64 <200000000>;
-> >                          opp-level =3D <1>;
-> >                          qcom,opp-fuse-level =3D <1>;
-> >                  };
-> >                  cpr_opp2: opp2 {
-> >                          opp-hz =3D /bits/ 64 <345600000>;
-> >                          opp-level =3D <2>;
-> >                          qcom,opp-fuse-level =3D <1>;
-> >                  };
-> >                  cpr_opp3: opp3 {
-> >                          opp-hz =3D /bits/ 64 <400000000>;
-> >                          opp-level =3D <3>;
-> >                          qcom,opp-fuse-level =3D <1>;
-> >                  };
-> >                  cpr_opp4: opp4 {
-> >                          opp-hz =3D /bits/ 64 <422400000>;
-> >                          opp-level =3D <4>;
-> >                          qcom,opp-fuse-level =3D <2>;
-> >                  };
-> >                  cpr_opp5: opp5 {
-> >                          opp-hz =3D /bits/ 64 <499200000>;
-> >                          opp-level =3D <5>;
-> >                          qcom,opp-fuse-level =3D <2>;
-> >                  };
-> >                  cpr_opp6: opp6 {
-> >                          opp-hz =3D /bits/ 64 <533330000>;
-> >                          opp-level =3D <6>;
-> >                          qcom,opp-fuse-level =3D <2>;
-> >                  };
-> >                  cpr_opp7: opp7 {
-> >                          opp-hz =3D /bits/ 64 <652800000>;
-> >                          opp-level =3D <7>;
-> >                          qcom,opp-fuse-level =3D <2>;
-> >                  };
-> >                  cpr_opp8: opp8 {
-> >                          opp-hz =3D /bits/ 64 <729600000>;
-> >                          opp-level =3D <8>;
-> >                          qcom,opp-fuse-level =3D <2>;
-> >                  };
-> >                  cpr_opp9: opp9 {
-> >                          opp-hz =3D /bits/ 64 <800000000>;
-> >                          opp-level =3D <9>;
-> >                          qcom,opp-fuse-level =3D <2>;
-> >                  };
-> >                  cpr_opp10: opp10 {
-> >                          opp-hz =3D /bits/ 64 <806400000>;
-> >                          opp-level =3D <10>;
-> >                          qcom,opp-fuse-level =3D <2>;
-> >                  };
-> >                  cpr_opp11: opp11 {
-> >                          opp-hz =3D /bits/ 64 <883200000>;
-> >                          opp-level =3D <11>;
-> >                          qcom,opp-fuse-level =3D <2>;
-> >                  };
-> >                  cpr_opp12: opp12 {
-> >                          opp-hz =3D /bits/ 64 <960000000>;
-> >                          opp-level =3D <12>;
-> >                          qcom,opp-fuse-level =3D <2>;
-> >                  };
-> >          };
-> >
-> > ---
-> > bod
->
->
->
-> --
-> With best wishes
-> Dmitry
+-- 
+~Vinod
