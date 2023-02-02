@@ -2,144 +2,255 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 209E8688783
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 20:25:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 845D3688798
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 20:38:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231691AbjBBTZp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Feb 2023 14:25:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55732 "EHLO
+        id S232676AbjBBTix (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 14:38:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231426AbjBBTZp (ORCPT
+        with ESMTP id S229711AbjBBTiw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 14:25:45 -0500
-Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08D8D6F720
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 11:25:44 -0800 (PST)
-Received: by mail-qv1-xf2c.google.com with SMTP id k2so1581302qvd.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 11:25:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=JXDOSIgEEoHR6xTZYXK64ggEfAX9oGh0xr53bP11U+I=;
-        b=L8jTekOKG7ZkdA59DuF4ggneg4XbzgOCkCPGFxmBkHXzkeKPFn1dHq8BsBArzQ70lM
-         xMv/JuswS+sNL9Ef+sdqxPdJyZfAR/afJyB7Bn0di3cCO53pWQjCpvKm6Jun/fRWlUL4
-         iUYvhfpGl3yRUBIl+3e+5eUTvQworRHZo1vrY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=JXDOSIgEEoHR6xTZYXK64ggEfAX9oGh0xr53bP11U+I=;
-        b=Re4zlT4KeFHrVprKdAeFSDzuEkArW2ZyjiqPOX7LdToSAimOLZcu7z/yGxFcQzNRDU
-         RUvi/lrvmwnBS/pu2DgVkwHWmgfSTy/qPae2iy/7fGcKT9QUjm3QdMuiWiZL1Yxb8hM4
-         eigh3bnO27oDaB0H+zB/Zx40MKuSqWZ0ViXN1RRtC/9VTq8GvmLm1jPMXzqdUcIVdv2u
-         /fRMqgd14JWyB8fCtH8Us5goYMkMrPqEM1aE89K0EJPyb1UhgHdOoeBlb2VK9nQwDDhb
-         XAfKJ/csgqMMPyb9BgwWjEFH6vmpfG1eAgTTJHcxHRSF+YLwqUVbKqDQvqOQoKZNcfVy
-         2jNw==
-X-Gm-Message-State: AO0yUKWS3YwpYgdl7sGKW+2kkB+gLPVSY+ZxI5kSD0RmEZxBM8MFiEV6
-        djAIURzl5aKOPA50pm5f9Kx7cwIWo048WfuB
-X-Google-Smtp-Source: AK7set8YLRlyikerhIzmXdIPqbd/XSyo5dnWs5gzGBKaJutLhc8xVs7thv2textjgjK1e1Bh52qNGg==
-X-Received: by 2002:ad4:4150:0:b0:557:a5c5:7dfc with SMTP id z16-20020ad44150000000b00557a5c57dfcmr4435517qvp.20.1675365942694;
-        Thu, 02 Feb 2023 11:25:42 -0800 (PST)
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com. [209.85.128.181])
-        by smtp.gmail.com with ESMTPSA id 71-20020a37034a000000b00706c1fc62desm261964qkd.112.2023.02.02.11.25.42
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Feb 2023 11:25:42 -0800 (PST)
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-5063029246dso40045577b3.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 11:25:42 -0800 (PST)
-X-Received: by 2002:a25:ab2e:0:b0:862:2861:6e7b with SMTP id
- u43-20020a25ab2e000000b0086228616e7bmr168861ybi.211.1675365619797; Thu, 02
- Feb 2023 11:20:19 -0800 (PST)
+        Thu, 2 Feb 2023 14:38:52 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 149F67AE4E
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 11:38:47 -0800 (PST)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 312EdkP1017358;
+        Thu, 2 Feb 2023 19:38:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=eDaJr7JmoiuiTgEqE3MFED58kixjS/PFbqpQGNtbCnw=;
+ b=Ef3hEEVyxMJ2FLlAqHoss6C3fovGeg9K7V4EMsWJB9eMoj/yXzlUKvNwKJ8MowntdVqa
+ wbGOkk9e7y+ELhH1GJcrhtiB3Smx5tS5DoYnrHbv5jaxIjJzOwyrEUYLcFpRPoov+Tkw
+ Maz4hMNaxXbG79JL4KOgQjDHdLNWDRaoMtizLZIDrs5OBqBOLBJgwX4mEX41a2JoyTqp
+ ilQrIW3tZGl11lMOvLQ3CtWcgTBXptshFuqp4w6dE1VUHiAfFCWJXkh71W6JQ4G4OjVZ
+ +QjQTs1LMV7a48oDQRoqLHLJvLKuKnjFnYvesSG1o+jdnxAa8ufjvZLGfOxrpFCO4aI9 nQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nfkj4c147-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 02 Feb 2023 19:38:39 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 312Jcd8q003070
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 2 Feb 2023 19:38:39 GMT
+Received: from [10.110.99.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Thu, 2 Feb 2023
+ 11:38:38 -0800
+Message-ID: <77764494-8a74-8450-ac75-33d6de0b2f8d@quicinc.com>
+Date:   Thu, 2 Feb 2023 11:38:37 -0800
 MIME-Version: 1.0
-References: <20230127104054.895129-1-abel.vesa@linaro.org> <Y9v/z8CYik3faHh7@google.com>
-In-Reply-To: <Y9v/z8CYik3faHh7@google.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 2 Feb 2023 11:20:08 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=XsiANcf1bp9aVuiQsDD8cRO=yzWMW7pffHwv9D9djvfw@mail.gmail.com>
-Message-ID: <CAD=FV=XsiANcf1bp9aVuiQsDD8cRO=yzWMW7pffHwv9D9djvfw@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 1/2] PM: domains: Skip disabling unused domains if
- provider has sync_state
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Abel Vesa <abel.vesa@linaro.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH v2 12/27] drm/msm/dpu: remove dpu_hw_fmt_layout from
+ struct dpu_hw_pipe_cfg
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-pm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20221229191856.3508092-1-dmitry.baryshkov@linaro.org>
+ <20221229191856.3508092-13-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20221229191856.3508092-13-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: LElXjxnlJw5_KN8-p27zQ7LTaNUKVhw7
+X-Proofpoint-ORIG-GUID: LElXjxnlJw5_KN8-p27zQ7LTaNUKVhw7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-02-02_14,2023-02-02_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
+ impostorscore=0 mlxscore=0 clxscore=1015 lowpriorityscore=0
+ priorityscore=1501 suspectscore=0 mlxlogscore=999 spamscore=0 phishscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302020175
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
 
-On Thu, Feb 2, 2023 at 10:24 AM Matthias Kaehlcke <mka@chromium.org> wrote:
->
-> Hi Abel,
->
-> On Fri, Jan 27, 2023 at 12:40:53PM +0200, Abel Vesa wrote:
-> > Currently, there are cases when a domain needs to remain enabled until
-> > the consumer driver probes. Sometimes such consumer drivers may be built
-> > as modules. Since the genpd_power_off_unused is called too early for
-> > such consumer driver modules to get a chance to probe, the domain, since
-> > it is unused, will get disabled. On the other hand, the best time for
-> > an unused domain to be disabled is on the provider's sync_state
-> > callback. So, if the provider has registered a sync_state callback,
-> > assume the unused domains for that provider will be disabled on its
-> > sync_state callback. Also provide a generic sync_state callback which
-> > disables all the domains unused for the provider that registers it.
-> >
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > ---
-> >
-> > This approach has been applied for unused clocks as well.
-> > With this patch merged in, all the providers that have sync_state
-> > callback registered will leave the domains enabled unless the provider's
-> > sync_state callback explicitly disables them. So those providers will
-> > need to add the disabling part to their sync_state callback. On the
-> > other hand, the platforms that have cases where domains need to remain
-> > enabled (even if unused) until the consumer driver probes, will be able,
-> > with this patch in, to run without the pd_ignore_unused kernel argument,
-> > which seems to be the case for most Qualcomm platforms, at this moment.
->
-> I recently encountered a related issue on a Qualcomm platform with a
-> v6.2-rc kernel, which includes 3a39049f88e4 ("soc: qcom: rpmhpd: Use
-> highest corner until sync_state"). The issue involves a DT node with a
-> rpmhpd, the DT node is enabled, however the corresponding device driver
-> is not enabled in the kernel. In such a scenario the sync_state callback
-> is never called, because the genpd consumer never probes. As a result
-> the Always-on subsystem (AOSS) of the SoC doesn't enter sleep mode during
-> system suspend, which results in a substantially higher power consumption
-> in S3.
->
-> I wonder if genpd (and some other frameworks) needs something like
-> regulator_init_complete(), which turns off unused regulators 30s after
-> system boot. That's conceptually similar to the current
-> genpd_power_off_unused(), but would provide time for modules being loaded.
 
-Just for completeness, there are at least a few other similar concepts
-in the kernel where the kernel needs to decide that it's going to stop
-waiting for modules to show up and it just shuts off anything that's
-unused. The other one that jumps to the top of my head is related to
-"driver_deferred_probe_timeout". There we give 10 seconds (by default)
-for userspace to load modules. After that point in time we start
-returning errors instead of waiting longer. You can even see that the
-default depends on whether "CONFIG_MODULES" is set.
+On 12/29/2022 11:18 AM, Dmitry Baryshkov wrote:
+> Remove dpu_hw_fmt_layout instance from struct dpu_hw_pipe_cfg, leaving
+> only src_rect and dst_rect. This way right and left pipes will have
+> separate dpu_hw_pipe_cfg isntances, while the layout is common to both
+> of them.
+> 
 
--Doug
+Sorry for not responding to this comment earlier.
+
+https://patchwork.freedesktop.org/patch/473168/?series=99909&rev=1#comment_875370
+
+ From the perspective of wide planes you are right that the layout is 
+common but not true from smart DMA point of view.
+
+For wide planes, yes, its usually the same buffer with just the src_x 
+being different but conceptually and even HW wise each rectangle of the 
+smart DMA is capable of fetching from a different buffer.
+
+ From the pov, this decision of not having the dpu_hw_fmt_layout as part 
+of dpu_hw_pipe_cfg seems incorrect to me.
+
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c | 30 ++++++++++-----------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h |  6 ++---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c   | 10 +++----
+>   3 files changed, 22 insertions(+), 24 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+> index 2bd39c13d54d..400d043f37fa 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+> @@ -486,7 +486,7 @@ static void dpu_hw_sspp_setup_rects(struct dpu_sw_pipe *pipe,
+>   }
+>   
+>   static void dpu_hw_sspp_setup_sourceaddress(struct dpu_sw_pipe *pipe,
+> -		struct dpu_hw_pipe_cfg *cfg)
+> +		struct dpu_hw_fmt_layout *layout)
+>   {
+>   	struct dpu_hw_sspp *ctx = pipe->sspp;
+>   	u32 ystride0, ystride1;
+> @@ -497,41 +497,41 @@ static void dpu_hw_sspp_setup_sourceaddress(struct dpu_sw_pipe *pipe,
+>   		return;
+>   
+>   	if (pipe->multirect_index == DPU_SSPP_RECT_SOLO) {
+> -		for (i = 0; i < ARRAY_SIZE(cfg->layout.plane_addr); i++)
+> +		for (i = 0; i < ARRAY_SIZE(layout->plane_addr); i++)
+>   			DPU_REG_WRITE(&ctx->hw, SSPP_SRC0_ADDR + idx + i * 0x4,
+> -					cfg->layout.plane_addr[i]);
+> +					layout->plane_addr[i]);
+>   	} else if (pipe->multirect_index == DPU_SSPP_RECT_0) {
+>   		DPU_REG_WRITE(&ctx->hw, SSPP_SRC0_ADDR + idx,
+> -				cfg->layout.plane_addr[0]);
+> +				layout->plane_addr[0]);
+>   		DPU_REG_WRITE(&ctx->hw, SSPP_SRC2_ADDR + idx,
+> -				cfg->layout.plane_addr[2]);
+> +				layout->plane_addr[2]);
+>   	} else {
+>   		DPU_REG_WRITE(&ctx->hw, SSPP_SRC1_ADDR + idx,
+> -				cfg->layout.plane_addr[0]);
+> +				layout->plane_addr[0]);
+>   		DPU_REG_WRITE(&ctx->hw, SSPP_SRC3_ADDR + idx,
+> -				cfg->layout.plane_addr[2]);
+> +				layout->plane_addr[2]);
+>   	}
+>   
+>   	if (pipe->multirect_index == DPU_SSPP_RECT_SOLO) {
+> -		ystride0 = (cfg->layout.plane_pitch[0]) |
+> -			(cfg->layout.plane_pitch[1] << 16);
+> -		ystride1 = (cfg->layout.plane_pitch[2]) |
+> -			(cfg->layout.plane_pitch[3] << 16);
+> +		ystride0 = (layout->plane_pitch[0]) |
+> +			(layout->plane_pitch[1] << 16);
+> +		ystride1 = (layout->plane_pitch[2]) |
+> +			(layout->plane_pitch[3] << 16);
+>   	} else {
+>   		ystride0 = DPU_REG_READ(&ctx->hw, SSPP_SRC_YSTRIDE0 + idx);
+>   		ystride1 = DPU_REG_READ(&ctx->hw, SSPP_SRC_YSTRIDE1 + idx);
+>   
+>   		if (pipe->multirect_index == DPU_SSPP_RECT_0) {
+>   			ystride0 = (ystride0 & 0xFFFF0000) |
+> -				(cfg->layout.plane_pitch[0] & 0x0000FFFF);
+> +				(layout->plane_pitch[0] & 0x0000FFFF);
+>   			ystride1 = (ystride1 & 0xFFFF0000)|
+> -				(cfg->layout.plane_pitch[2] & 0x0000FFFF);
+> +				(layout->plane_pitch[2] & 0x0000FFFF);
+>   		} else {
+>   			ystride0 = (ystride0 & 0x0000FFFF) |
+> -				((cfg->layout.plane_pitch[0] << 16) &
+> +				((layout->plane_pitch[0] << 16) &
+>   				 0xFFFF0000);
+>   			ystride1 = (ystride1 & 0x0000FFFF) |
+> -				((cfg->layout.plane_pitch[2] << 16) &
+> +				((layout->plane_pitch[2] << 16) &
+>   				 0xFFFF0000);
+>   		}
+>   	}
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+> index c713343378aa..8dad52eb2a90 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+> @@ -154,13 +154,11 @@ struct dpu_hw_pixel_ext {
+>   
+>   /**
+>    * struct dpu_hw_pipe_cfg : Pipe description
+> - * @layout:    format layout information for programming buffer to hardware
+>    * @src_rect:  src ROI, caller takes into account the different operations
+>    *             such as decimation, flip etc to program this field
+>    * @dest_rect: destination ROI.
+>    */
+>   struct dpu_hw_pipe_cfg {
+> -	struct dpu_hw_fmt_layout layout;
+>   	struct drm_rect src_rect;
+>   	struct drm_rect dst_rect;
+>   };
+> @@ -243,10 +241,10 @@ struct dpu_hw_sspp_ops {
+>   	/**
+>   	 * setup_sourceaddress - setup pipe source addresses
+>   	 * @pipe: Pointer to software pipe context
+> -	 * @cfg: Pointer to pipe config structure
+> +	 * @layout: format layout information for programming buffer to hardware
+>   	 */
+>   	void (*setup_sourceaddress)(struct dpu_sw_pipe *ctx,
+> -				    struct dpu_hw_pipe_cfg *cfg);
+> +				    struct dpu_hw_fmt_layout *layout);
+>   
+>   	/**
+>   	 * setup_csc - setup color space coversion
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index cbff4dea8662..0d2a7170e0ab 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -471,21 +471,21 @@ static void _dpu_plane_set_qos_remap(struct drm_plane *plane)
+>   
+>   static void _dpu_plane_set_scanout(struct drm_plane *plane,
+>   		struct dpu_plane_state *pstate,
+> -		struct dpu_hw_pipe_cfg *pipe_cfg,
+>   		struct drm_framebuffer *fb)
+>   {
+>   	struct dpu_plane *pdpu = to_dpu_plane(plane);
+>   	struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
+>   	struct msm_gem_address_space *aspace = kms->base.aspace;
+> +	struct dpu_hw_fmt_layout layout;
+>   	int ret;
+>   
+> -	ret = dpu_format_populate_layout(aspace, fb, &pipe_cfg->layout);
+> +	ret = dpu_format_populate_layout(aspace, fb, &layout);
+>   	if (ret)
+>   		DPU_ERROR_PLANE(pdpu, "failed to get format layout, %d\n", ret);
+>   	else if (pstate->pipe.sspp->ops.setup_sourceaddress) {
+>   		trace_dpu_plane_set_scanout(&pstate->pipe,
+> -					    &pipe_cfg->layout);
+> -		pstate->pipe.sspp->ops.setup_sourceaddress(&pstate->pipe, pipe_cfg);
+> +					    &layout);
+> +		pstate->pipe.sspp->ops.setup_sourceaddress(&pstate->pipe, &layout);
+>   	}
+>   }
+>   
+> @@ -1134,7 +1134,7 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
+>   
+>   	memset(&pipe_cfg, 0, sizeof(struct dpu_hw_pipe_cfg));
+>   
+> -	_dpu_plane_set_scanout(plane, pstate, &pipe_cfg, fb);
+> +	_dpu_plane_set_scanout(plane, pstate, fb);
+>   
+>   	pstate->pending = true;
+>   
