@@ -2,205 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 209AA68818D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 16:19:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D29276881A3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 16:22:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231827AbjBBPTF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Feb 2023 10:19:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35446 "EHLO
+        id S232036AbjBBPWF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 10:22:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232118AbjBBPS7 (ORCPT
+        with ESMTP id S231614AbjBBPWE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 10:18:59 -0500
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0B3E71668
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 07:18:32 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id dr8so6802999ejc.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 07:18:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Qso+/v0jjViUogFJotdIoyTWkD5ZvdgsxWyF9DZddKY=;
-        b=Y5JCHiE0BLlQLU6It/RY5ICxSiK25fhmCBvSMJr+r9CKEnM+S3VKNSmK5dyAKnN/4S
-         b5jXFlVGQt0r3c+66xAvM0LlyhwI7SAapK2hJbvmU3g23U3Yt/p4pk+G7omxwf090xr1
-         nlaM0kBb7uhXUc5DIU9EUYc4h07v9oIqnsX8/HLzEmVmbvfUHcPAZHUnX0UwtipHwdx4
-         /Ti3uBby2G+rl7AUlv249sQVg7PhFg7kCd//h1UpdWi38DY51nISdb0q1A3x/xYTrze5
-         bDI7NvBwBh+vtdcUqctc6XF28Tbx/hsgy9+3W0Ec6hms+BhoVxNZk5wbCHF+kq/6811I
-         vAHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Qso+/v0jjViUogFJotdIoyTWkD5ZvdgsxWyF9DZddKY=;
-        b=8L95uga3/RGqyZPAl9tPJ5lizhdz6dNV7NOSI0N8jhpskwJMcJKD266B/C/6wEWGJu
-         ndck4xQhDrVLYHJceB9A8S7oXqjSbo9EqkBKqnd3zSpLkYKweniq/D65tY83rBy1D6PC
-         JTmt718i5XkeU4dKRiAn30V5eddlfMNFtg8OXSIexleZtVw9s4V9YGXgBn/ZcUdDE9RW
-         cnn9IU92lL6hO3k0j6FNYZ6PrYz5FL+w7H8ivJq5rg+TkJ3FKJwDXGrLQ1aGEVxW+v6h
-         7lWRn1ZB9cuIZ9ry09eGV2NLZFo+TxappP0i0LV4b69FHs47DcgRtOx+cTHBmlY9XFxi
-         44mg==
-X-Gm-Message-State: AO0yUKWZNUbwFFXoGDfiCUA16UJwagsGo8BhScMxF2YIgcsSnueZ9BZJ
-        T7TvGiQBAlg1uwnO8Cg76I44Zw==
-X-Google-Smtp-Source: AK7set+qv0MK4YNSCw7pypa8ByystHnREluX9vZSDsLAiowBcdtkXMGgVygMdPmFEjGsjIWYMg3d/A==
-X-Received: by 2002:a17:906:2ad4:b0:871:dd2:4af0 with SMTP id m20-20020a1709062ad400b008710dd24af0mr6847922eje.26.1675351109364;
-        Thu, 02 Feb 2023 07:18:29 -0800 (PST)
-Received: from [192.168.1.101] (abyl20.neoplus.adsl.tpnet.pl. [83.9.31.20])
-        by smtp.gmail.com with ESMTPSA id kw5-20020a170907770500b0088519b9206bsm7931641ejc.130.2023.02.02.07.18.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Feb 2023 07:18:28 -0800 (PST)
-Message-ID: <f60678a4-4dc7-9744-a8a2-e7af8a9594d1@linaro.org>
-Date:   Thu, 2 Feb 2023 16:18:27 +0100
+        Thu, 2 Feb 2023 10:22:04 -0500
+Received: from relay7-d.mail.gandi.net (relay7-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::227])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93FD65FED;
+        Thu,  2 Feb 2023 07:22:02 -0800 (PST)
+Received: (Authenticated sender: alexandre.belloni@bootlin.com)
+        by mail.gandi.net (Postfix) with ESMTPSA id EDF5020008;
+        Thu,  2 Feb 2023 15:21:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+        t=1675351320;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=XNx1XchKzZSpJj1ujuH5U8jbslu3IqnhbHCw5cDW5jA=;
+        b=H4oDQ+Rr6ysWLSLtwPnOshk7gxyK4XPM8IhyHwwekTj89qge2tw0MGZKE2yyxZmoXIF3aI
+        d2jyqmfARSMb9Px1aT4/kcyggNP5xc8QxbN/ejBPJX8mQSWIHr61pm9L42+/zt0TdAqllZ
+        VG1SbAHJFYqWlN0WvhjCvfdZB0dQJ6P4ONDtCYVj7Puxgnvk9S33bYez3XyKbq3ioL8hoC
+        ThE2ituKWy0IrzYunOJsC3WnKlkVUJKZAoGLm54qkrU9Naqj8NnUdocTSIUzlt+vy7sh16
+        Oq9laYHpnjbQICtGKwFipH+TW49NsSrQcK15IimUGekqKnubwY851Kf+bbW2dQ==
+Date:   Thu, 2 Feb 2023 16:21:58 +0100
+From:   Alexandre Belloni <alexandre.belloni@bootlin.com>
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Alessandro Zummo <a.zummo@towertech.it>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-rtc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 16/24] rtc: pm8xxx: add support for nvmem offset
+Message-ID: <Y9vVFtoIXglQpplh@mail.local>
+References: <20230126142057.25715-1-johan+linaro@kernel.org>
+ <20230126142057.25715-17-johan+linaro@kernel.org>
+ <Y9PpQkW3Rtm+bi2V@mail.local>
+ <Y9Py/+GpI8x8ldDG@hovoldconsulting.com>
+ <Y9P2L9sNiHIZt3On@mail.local>
+ <Y9vS4TpVHDnGN0G/@hovoldconsulting.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH 3/6] clk: qcom: apss-ipq-pll: add support for IPQ5332
-Content-Language: en-US
-To:     Kathiravan T <quic_kathirav@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        jassisinghbrar@gmail.com, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230202145208.2328032-1-quic_kathirav@quicinc.com>
- <20230202145208.2328032-4-quic_kathirav@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230202145208.2328032-4-quic_kathirav@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y9vS4TpVHDnGN0G/@hovoldconsulting.com>
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 02/02/2023 16:12:33+0100, Johan Hovold wrote:
+> On Fri, Jan 27, 2023 at 05:05:03PM +0100, Alexandre Belloni wrote:
+> > On 27/01/2023 16:51:27+0100, Johan Hovold wrote:
+> 
+> > > > > @@ -380,9 +478,23 @@ static int pm8xxx_rtc_probe(struct platform_device *pdev)
+> > > > >  	rtc_dd->allow_set_time = of_property_read_bool(pdev->dev.of_node,
+> > > > >  						      "allow-set-time");
+> > > > >  
+> > > > > +	rtc_dd->nvmem_cell = devm_nvmem_cell_get(&pdev->dev, "offset");
+> > > > 
+> > > > Maybe we should get something more specific than just "offset" so this
+> > > > could be parsed in the RTC core at some point (this is the second RTC to
+> > > > behave like this)
+> > > 
+> > > Yes, that thought crossed my mind, but it's an nvmem cell name (label)
+> > > and not a generic devicetree property. If you look at the binding
+> > > document I think the name makes sense given the current description, and
+> > > I'm not sure changing to something like 'base' would be much of an
+> > > improvement.
+> > > 
+> > > I also don't expect there to be more broken RTCs out there like these
+> > > ones. Hopefully Qualcomm will even get this fixed at some point
+> > > themselves.
+> > > 
+> > > And I assume you were think of the old Atmel driver which uses a timer
+> > > counter and a scratch register as a base? That one is also a bit
+> > > different in that the timer can be reset, just not set.
+> > 
+> > Nope, I'm thinking about the gamecube one and probably the nintendo
+> > switch one which seems to behave similarly (no driver in the kernel
+> > though).
+> 
+> Found the gamecube one now (misread you comment above to imply that it
+> was also out of tree).
+> 
+> That one is also different in that the timer in that RTC can also be
+> set (e.g. like the atmel one), but for consistency with some firmware an
+> offset also needs to be read from SRAM (not NVRAM) and applied. That
+> offset is also never updated by Linux.
+
+Yeah, I deally, the gamecube counter shouldn't be updated, the switch
+one doesn't seem to be updatable. I guess the idea being that games need
+to be able to know if you are messing with the RTC to get an advantage.
 
 
-On 2.02.2023 15:52, Kathiravan T wrote:
-> IPQ5332 APSS PLL is of type Stromer Plus. Add support for the same.
-> 
-> To configure the stromer plus PLL separate API
-> (clock_stromer_pll_configure) to be used. To achieve this, introduce the
-> new member pll_type in device data structure and call the appropriate
-> function based on this.
-> 
-> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
-> ---
->  drivers/clk/qcom/apss-ipq-pll.c | 58 ++++++++++++++++++++++++++++++++-
->  1 file changed, 57 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/clk/qcom/apss-ipq-pll.c b/drivers/clk/qcom/apss-ipq-pll.c
-> index 6e815e8b7fe4..023a854f2c21 100644
-> --- a/drivers/clk/qcom/apss-ipq-pll.c
-> +++ b/drivers/clk/qcom/apss-ipq-pll.c
-> @@ -19,6 +19,17 @@ static const u8 ipq_pll_offsets[][PLL_OFF_MAX_REGS] = {
->  		[PLL_OFF_TEST_CTL] = 0x30,
->  		[PLL_OFF_TEST_CTL_U] = 0x34,
->  	},
-> +	[CLK_ALPHA_PLL_TYPE_STROMER_PLUS] = {
-> +		[PLL_OFF_L_VAL] = 0x08,
-> +		[PLL_OFF_ALPHA_VAL] = 0x10,
-> +		[PLL_OFF_ALPHA_VAL_U] = 0x14,
-> +		[PLL_OFF_USER_CTL] = 0x18,
-> +		[PLL_OFF_USER_CTL_U] = 0x1c,
-> +		[PLL_OFF_CONFIG_CTL] = 0x20,
-> +		[PLL_OFF_STATUS] = 0x28,
-> +		[PLL_OFF_TEST_CTL] = 0x30,
-> +		[PLL_OFF_TEST_CTL_U] = 0x34,
-> +	},
-Any reason this couldn't use clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_STROMER_PLUS]
-exported from clk-alpha-pll.c?
-
-Konrad
->  };
->  
->  static struct clk_alpha_pll ipq_pll_huayra = {
-> @@ -39,6 +50,38 @@ static struct clk_alpha_pll ipq_pll_huayra = {
->  	},
->  };
->  
-> +static struct clk_alpha_pll ipq_pll_stromer_plus = {
-> +	.offset = 0x0,
-> +	.regs = ipq_pll_offsets[CLK_ALPHA_PLL_TYPE_STROMER_PLUS],
-> +	.flags = SUPPORTS_DYNAMIC_UPDATE,
-> +	.clkr = {
-> +		.enable_reg = 0x0,
-> +		.enable_mask = BIT(0),
-> +		.hw.init = &(struct clk_init_data){
-> +			.name = "a53pll",
-> +			.parent_data = &(const struct clk_parent_data) {
-> +				.fw_name = "xo",
-> +			},
-> +			.num_parents = 1,
-> +			.ops = &clk_alpha_pll_stromer_ops,
-> +		},
-> +	},
-> +};
-> +
-> +static const struct alpha_pll_config ipq5332_pll_config = {
-> +	.l = 0x3e,
-> +	.config_ctl_val = 0x4001075b,
-> +	.config_ctl_hi_val = 0x304,
-> +	.main_output_mask = BIT(0),
-> +	.aux_output_mask = BIT(1),
-> +	.early_output_mask = BIT(3),
-> +	.alpha_en_mask = BIT(24),
-> +	.status_val = 0x3,
-> +	.status_mask = GENMASK(10, 8),
-> +	.lock_det = BIT(2),
-> +	.test_ctl_hi_val = 0x00400003,
-> +};
-> +
->  static const struct alpha_pll_config ipq6018_pll_config = {
->  	.l = 0x37,
->  	.config_ctl_val = 0x240d4828,
-> @@ -64,16 +107,25 @@ static const struct alpha_pll_config ipq8074_pll_config = {
->  };
->  
->  struct apss_pll_data {
-> +	int pll_type;
->  	struct clk_alpha_pll *pll;
->  	const struct alpha_pll_config *pll_config;
->  };
->  
-> +static struct apss_pll_data ipq5332_pll_data = {
-> +	.pll_type = CLK_ALPHA_PLL_TYPE_STROMER_PLUS,
-> +	.pll = &ipq_pll_stromer_plus,
-> +	.pll_config = &ipq5332_pll_config,
-> +};
-> +
->  static struct apss_pll_data ipq8074_pll_data = {
-> +	.pll_type = CLK_ALPHA_PLL_TYPE_HUAYRA,
->  	.pll = &ipq_pll_huayra,
->  	.pll_config = &ipq8074_pll_config,
->  };
->  
->  static struct apss_pll_data ipq6018_pll_data = {
-> +	.pll_type = CLK_ALPHA_PLL_TYPE_HUAYRA,
->  	.pll = &ipq_pll_huayra,
->  	.pll_config = &ipq6018_pll_config,
->  };
-> @@ -106,7 +158,10 @@ static int apss_ipq_pll_probe(struct platform_device *pdev)
->  	if (!data)
->  		return -ENODEV;
->  
-> -	clk_alpha_pll_configure(data->pll, regmap, data->pll_config);
-> +	if (data->pll_type == CLK_ALPHA_PLL_TYPE_HUAYRA)
-> +		clk_alpha_pll_configure(data->pll, regmap, data->pll_config);
-> +	else if (data->pll_type == CLK_ALPHA_PLL_TYPE_STROMER_PLUS)
-> +		clk_stromer_pll_configure(data->pll, regmap, data->pll_config);
->  
->  	ret = devm_clk_register_regmap(dev, &data->pll->clkr);
->  	if (ret)
-> @@ -117,6 +172,7 @@ static int apss_ipq_pll_probe(struct platform_device *pdev)
->  }
->  
->  static const struct of_device_id apss_ipq_pll_match_table[] = {
-> +	{ .compatible = "qcom,ipq5332-a53pll", .data = &ipq5332_pll_data },
->  	{ .compatible = "qcom,ipq6018-a53pll", .data = &ipq6018_pll_data },
->  	{ .compatible = "qcom,ipq8074-a53pll", .data = &ipq8074_pll_data },
->  	{ }
+-- 
+Alexandre Belloni, co-owner and COO, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
