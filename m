@@ -2,122 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5DD8E687781
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 09:32:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1EE1C6877DF
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 09:50:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232305AbjBBIce (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Feb 2023 03:32:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47550 "EHLO
+        id S231827AbjBBIut (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 03:50:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232319AbjBBIcX (ORCPT
+        with ESMTP id S231888AbjBBIur (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 03:32:23 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1619387595;
-        Thu,  2 Feb 2023 00:32:14 -0800 (PST)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3127OKNj029812;
-        Thu, 2 Feb 2023 08:31:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=1E7KEBBYZ5bLXQHYsH+o+DFJLF2aRnrLuqJT7vKcoHw=;
- b=ZcMmbLqzFaRAT/SPdV4k7vzDXMCbBFJmJ93JpyzWAoIPdfxZ9TIlnkXgK2BmdmePQIe3
- Ryf0SVuT5m5GvKQmEJirZjiSrxj4UZUjUDoeBb92BdYefhe49pxK64R7QqAL7+UvWpJx
- hZwVc5AWUpqYHraPv3zo/dlTVMXx8f2OhkoQEhep4eyK6vvm9aZ7lpQT1ng+TzYreUVI
- DOYkcrVPAyC66n+fV4cj7rxni+lK9BVMUilsCM6OQFH9kBmvBhwALLm76mfVedFtWQC7
- IllZ3IyCLhte8AVMgyTiVLyGGoUP7rg2jpnGh8yaRpw6Cx2sNv5z4a9GvdCa8k9yFDb9 qg== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nfnyhjd5a-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 02 Feb 2023 08:31:59 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3128Vw3O000539
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 2 Feb 2023 08:31:58 GMT
-Received: from devipriy-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Thu, 2 Feb 2023 00:31:49 -0800
-From:   Devi Priya <quic_devipriy@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <linus.walleij@linaro.org>,
-        <catalin.marinas@arm.com>, <will@kernel.org>,
-        <p.zabel@pengutronix.de>, <shawnguo@kernel.org>, <arnd@arndb.de>,
-        <marcel.ziswiler@toradex.com>, <dmitry.baryshkov@linaro.org>,
-        <nfraprado@collabora.com>, <broonie@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
-        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
-        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
-        <quic_poovendh@quicinc.com>
-Subject: [PATCH V5 7/7] arm64: defconfig: Enable IPQ9574 SoC base configs
-Date:   Thu, 2 Feb 2023 14:00:31 +0530
-Message-ID: <20230202083031.10457-8-quic_devipriy@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230202083031.10457-1-quic_devipriy@quicinc.com>
-References: <20230202083031.10457-1-quic_devipriy@quicinc.com>
+        Thu, 2 Feb 2023 03:50:47 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DBAA7E06E
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 00:50:37 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id r2so984019wrv.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 00:50:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=lWsS/bWtmzpN07I8KCqWUmAN50eHOe+8qZxUIv9ebfk=;
+        b=DhE+qH2Jh0jcOidrifO6y3KFacKb/NTJtxQwmSfveojslNuY0ynUu/hmWt0zwGCl5j
+         RwIdGLze1WSWVVjV7f1TgHiVfI11qs2KRaP5FwfCwCTPzoOg8nFexWn7AxSetvk6ILNM
+         hzaxsAjh6Nxu+lBRdwDLnCkD9tNq5rrxZHfCUjoC4F+mbgGQ09sxZDNQUnrDBvrhJZW7
+         qMfBGpToy9EUsu025mNOZWYh1QoZRXzGG6k2YIjkIRYrWITr+/YqCAB15BBnHG8+8k3b
+         8wrFk6y+gzBQbtylAYs/jBG5R+zK01THylvRZocRcZgY6f6rQ6uQ8O7N56tWq6peDI4Q
+         9erQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=lWsS/bWtmzpN07I8KCqWUmAN50eHOe+8qZxUIv9ebfk=;
+        b=IfaAGLMoIxSVRFU5ebu0ABbSQaoy8ooO74YwdbayKSZRjQE9KfFXtudeJcY20XYQaj
+         sdP7w71u0veboUG1paH+kPoq5gJ+gG8dsVaEdSRgB5ATeH5H7ph5ePQPzzeuFNepXqQh
+         2x4onPhN+CyWWgUbd/aKkrOBdQgIp0MJFzcJ8ZOS4vth4hQsrm07yIlhd3bte7FysFUb
+         +p0tWBrGOlUxteQh+UNA6OqjZvMIdnFRN+1OPOy9a5uLCpgdqe7R3bX6HvdEXhA+WKVj
+         6VG2WSadOEu9FFNCxmEBXs8MvYSSYKk61AI1+GiQBEIP2yHKDCGICwShToPyBOANPiCg
+         SGXw==
+X-Gm-Message-State: AO0yUKV/B9v7C4zn8V4cRHcBgpDg3BjBiXtRR4146RCVl3F9QFuW9NFI
+        0qEAxUCaReR5PuDKz1nsVT6bYg==
+X-Google-Smtp-Source: AK7set9myootvaumTc3dok0xH8h+eb7NWBe3lMq35UW9l8J+0ooRSfnkXePoQFIOiooeOPeghyIV/Q==
+X-Received: by 2002:adf:c713:0:b0:2bf:e9dc:5536 with SMTP id k19-20020adfc713000000b002bfe9dc5536mr5744516wrg.45.1675327835629;
+        Thu, 02 Feb 2023 00:50:35 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id e10-20020a5d500a000000b002be0b1e556esm18993213wrt.59.2023.02.02.00.50.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Feb 2023 00:50:35 -0800 (PST)
+Message-ID: <d046c9b3-3cd0-0e2c-4db4-50e8e772bfb0@linaro.org>
+Date:   Thu, 2 Feb 2023 09:50:33 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 5WOGSddzsVZzw2tPBOkQsX3heMFXj7ut
-X-Proofpoint-ORIG-GUID: 5WOGSddzsVZzw2tPBOkQsX3heMFXj7ut
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-02-01_15,2023-01-31_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=777
- priorityscore=1501 bulkscore=0 adultscore=0 spamscore=0 clxscore=1015
- impostorscore=0 suspectscore=0 mlxscore=0 lowpriorityscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302020079
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH v3 3/3] dt-bindings: iio: adc: Require generic adc-chan
+ name for channel nodes
+Content-Language: en-US
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Jonathan Cameron <jic23@kernel.org>, iio@vger.kernel.org,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-iio@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20230201204447.542385-1-marijn.suijten@somainline.org>
+ <20230201204447.542385-4-marijn.suijten@somainline.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230201204447.542385-4-marijn.suijten@somainline.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enables clk & pinctrl related configs
+On 01/02/2023 21:44, Marijn Suijten wrote:
+> As discussed in [1] it is more convenient to use a generic adc-chan node
+> name for ADC channels while storing a friendly - board-specific instead
+> of PMIC-specific - name in the label, if/when desired to overwrite the
+> channel description already contained (but previously unused) in the
+> driver [2].
+> 
+> Replace the .* name pattern with the adc-chan literal, but leave the
+> label property optional for bindings to choose to fall back a channel
+> label hardcoded in the driver [2] instead.
+> 
+> [1]: https://lore.kernel.org/linux-arm-msm/20221106193018.270106-1-marijn.suijten@somainline.org/T/#u
+> [2]: https://lore.kernel.org/linux-arm-msm/20230116220909.196926-4-marijn.suijten@somainline.org/
+> 
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> ---
+>  .../bindings/iio/adc/qcom,spmi-vadc.yaml         | 16 +++++++++-------
+>  1 file changed, 9 insertions(+), 7 deletions(-)
+> 
 
-Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
----
- Changes in V5:
-	- No changes
 
- arch/arm64/configs/defconfig | 2 ++
- 1 file changed, 2 insertions(+)
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index a8c74a419d95..3f6d883b4bb2 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -556,6 +556,7 @@ CONFIG_PINCTRL_IMX93=y
- CONFIG_PINCTRL_MSM=y
- CONFIG_PINCTRL_IPQ8074=y
- CONFIG_PINCTRL_IPQ6018=y
-+CONFIG_PINCTRL_IPQ9574=y
- CONFIG_PINCTRL_MSM8916=y
- CONFIG_PINCTRL_MSM8953=y
- CONFIG_PINCTRL_MSM8976=y
-@@ -1131,6 +1132,7 @@ CONFIG_QCOM_CLK_SMD_RPM=y
- CONFIG_QCOM_CLK_RPMH=y
- CONFIG_IPQ_GCC_6018=y
- CONFIG_IPQ_GCC_8074=y
-+CONFIG_IPQ_GCC_9574=y
- CONFIG_MSM_GCC_8916=y
- CONFIG_MSM_GCC_8994=y
- CONFIG_MSM_MMCC_8996=y
--- 
-2.17.1
+Best regards,
+Krzysztof
 
