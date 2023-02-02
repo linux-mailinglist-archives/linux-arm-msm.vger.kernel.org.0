@@ -2,285 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 480A86887D6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 20:54:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 89F426887EF
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 21:00:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231345AbjBBTys (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Feb 2023 14:54:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43288 "EHLO
+        id S232733AbjBBUAg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 15:00:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46798 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232816AbjBBTyo (ORCPT
+        with ESMTP id S232727AbjBBUAa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 14:54:44 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7419D6B35E
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 11:54:42 -0800 (PST)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 312JotaC024398;
-        Thu, 2 Feb 2023 19:54:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=qKbOhAe9paxsOQhap9T7MNDcLAgv6A3Ta1dIkEmrPJE=;
- b=VfwJnQhKtiImw6ZkMaLuOUiRMzSyLfFHcN11ZpLcHjMyYrFsANuYclgWD9xdVagFcNie
- +2prwLX+KUdybkSAqZq9FR/+zbZ3nsWrsWRHfINX/+DruqIHEqU/U4MqY+rxtlu/h0/t
- OlSynPZSEG66bdQGg1ADiAvBionX1MFUczfTPOBXKfbGyvUrF8Ei/XEdVW2if581crJj
- 9MriGOSE+/1uS/Yj1dJSHWa8Q05dhDbIi7ZzAoxmBM/Gx5LSZzLTMQr6bpWbvnJdApD/
- KgZGNVr909Ny3iIxeJ/8NrE+yx/V820PFRQj0gdvo8eIgZryEX9omP7J5/0QPMIK/uY3 FQ== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nfm9cv0dm-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 02 Feb 2023 19:54:35 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 312JsYZb032019
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 2 Feb 2023 19:54:34 GMT
-Received: from [10.110.99.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Thu, 2 Feb 2023
- 11:54:33 -0800
-Message-ID: <62ace381-2c59-9096-2b4f-412b329ad78e@quicinc.com>
-Date:   Thu, 2 Feb 2023 11:54:32 -0800
+        Thu, 2 Feb 2023 15:00:30 -0500
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F04308003D
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 12:00:25 -0800 (PST)
+Received: by mail-ed1-x531.google.com with SMTP id m8so3182967edd.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 12:00:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=3NoqwPWGdPAAWq3tFe6UZV9Xjkz8TFbiEHT4UnURl68=;
+        b=Tn28cTUSKVUffrD7pCt/S1MhVB2RkrGSUwZX/JySWEYfCCwjY0OGIbyUa/ZCwJFffY
+         apfQkcw3TMBqChoq4X37lw40vtgOLTx0jwMxK7xd21TYs7M7uNtqkxqK6tJTIA4jbk3F
+         lr0s8xjSde00oNu5sxyac8YAn4DJakT1oN6Njx39tGn6hpYtheIen5hx2aqhR6Q6XWgZ
+         JJBKXwZVfTZd4jDAnnZFQ26FFZJYJz5Xq7PSi5/c9He0Q22yjnj0KWOcTs5yvPthItKq
+         kNmTSaCq/aB65gkTgiS8uHjYmW/GwH25E6jurgCa8WKKM7cVdmra1RyC1mbhWMD2PaVB
+         mOfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3NoqwPWGdPAAWq3tFe6UZV9Xjkz8TFbiEHT4UnURl68=;
+        b=dfzpfVgTxapyKH5oqRoDHIDuhiOl1g/yMvU+LI0N2YDHGWxUzTzq0PV+8707F03KZT
+         aL0RHRcm0HFcQRWi2xXiWU6jqlNahIwRJWW3CiX73JUrFAcmJnSiQUKwEN8PYd/3r5Tz
+         zd2+RDF/f/uL56MQDqWLmDjAk7j1iB6aDrS/jSJMvFCc2bt8cXdGEM38Te3cEJx7hmh3
+         fWsG8IMofWe/YOtEREkSjc+WthHZ9S9s0+3XdAfwiCjLZV0eLvVjXcFQMc2Ia92eK/oj
+         iO1xH6fBHWJ8w1kMmKlol57N4QQk0F3/uyvELjjAOce3kR6bbG2CUlt43YO/EZiJDXHr
+         FQLg==
+X-Gm-Message-State: AO0yUKWYn42MMTtmw9sj8acW4ZUxCb6f9VmYCejhd6YdHvybWiA1eZcu
+        jCqP8ngGl2pEad3gpf0KtDqAUA==
+X-Google-Smtp-Source: AK7set+rkkWRJNhGP6gyYP8lfc64qT2+M4TGBD1kvog85pXPp56JMHboaZCnQxFv3pufpNjZiZNnxQ==
+X-Received: by 2002:a05:6402:5288:b0:49d:a87f:ba7b with SMTP id en8-20020a056402528800b0049da87fba7bmr7635461edb.39.1675368024344;
+        Thu, 02 Feb 2023 12:00:24 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id el8-20020a056402360800b004a2470f920esm160692edb.25.2023.02.02.12.00.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Feb 2023 12:00:23 -0800 (PST)
+Message-ID: <8766f07e-a5d2-b59c-d130-f8cc2da64556@linaro.org>
+Date:   Thu, 2 Feb 2023 22:00:22 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v2 12/27] drm/msm/dpu: remove dpu_hw_fmt_layout from
- struct dpu_hw_pipe_cfg
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20221229191856.3508092-1-dmitry.baryshkov@linaro.org>
- <20221229191856.3508092-13-dmitry.baryshkov@linaro.org>
- <77764494-8a74-8450-ac75-33d6de0b2f8d@quicinc.com>
- <CAA8EJpq4ybOQg-Mb5RM+dcrBbR+3WrWSgvd4d20C6NKa90C15Q@mail.gmail.com>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <CAA8EJpq4ybOQg-Mb5RM+dcrBbR+3WrWSgvd4d20C6NKa90C15Q@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH 4/6] dt-bindings: mailbox: qcom: add compatible for the
+ IPQ5332 SoC
+Content-Language: en-GB
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Kathiravan T <quic_kathirav@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, jassisinghbrar@gmail.com,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230202145208.2328032-1-quic_kathirav@quicinc.com>
+ <20230202145208.2328032-5-quic_kathirav@quicinc.com>
+ <3a346606-576b-ab89-78f5-5bbaca729090@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <3a346606-576b-ab89-78f5-5bbaca729090@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: jdWLeJvMZHaKzN9e4Up1mSLCoh-nAET0
-X-Proofpoint-GUID: jdWLeJvMZHaKzN9e4Up1mSLCoh-nAET0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-02-02_14,2023-02-02_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
- suspectscore=0 spamscore=0 clxscore=1015 impostorscore=0
- lowpriorityscore=0 phishscore=0 adultscore=0 mlxlogscore=999
- priorityscore=1501 mlxscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2212070000 definitions=main-2302020178
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 2/2/2023 11:45 AM, Dmitry Baryshkov wrote:
-> On Thu, 2 Feb 2023 at 21:38, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+On 02/02/2023 17:35, Krzysztof Kozlowski wrote:
+> On 02/02/2023 15:52, Kathiravan T wrote:
+>> Add the mailbox compatible for the IPQ5332 SoC.
 >>
+>> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+>> ---
+>>   .../devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml     | 3 +++
+>>   1 file changed, 3 insertions(+)
 >>
->>
->> On 12/29/2022 11:18 AM, Dmitry Baryshkov wrote:
->>> Remove dpu_hw_fmt_layout instance from struct dpu_hw_pipe_cfg, leaving
->>> only src_rect and dst_rect. This way right and left pipes will have
->>> separate dpu_hw_pipe_cfg isntances, while the layout is common to both
->>> of them.
->>>
->>
->> Sorry for not responding to this comment earlier.
->>
->> https://patchwork.freedesktop.org/patch/473168/?series=99909&rev=1#comment_875370
->>
->>   From the perspective of wide planes you are right that the layout is
->> common but not true from smart DMA point of view.
->>
->> For wide planes, yes, its usually the same buffer with just the src_x
->> being different but conceptually and even HW wise each rectangle of the
->> smart DMA is capable of fetching from a different buffer.
->>
->>   From the pov, this decision of not having the dpu_hw_fmt_layout as part
->> of dpu_hw_pipe_cfg seems incorrect to me.
+>> diff --git a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
+>> index 943f9472ae10..8d8cd1bbe67e 100644
+>> --- a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
+>> +++ b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
+>> @@ -18,6 +18,7 @@ properties:
+>>       oneOf:
 > 
-> Yes, each rectangle/pipe can fetch from a different buffer. However in
-> our use case the layout is not defined for each pipe. It is defined
-> for a plane, no matter how many pipes are used for the plane, since
-> the buffer is also defined per plane.
+> - items:
+>      - enum:
+>          - qcom,ipq5332-apcs-apps-global
+>      - const: qcom,ipq6018-apcs-apps-global
 > 
-Even if the layout is defined per plane.
+> and drop the next patch
 
-So lets say
+Is it still ok even if the two devices are not fully compatible (iow, 
+using different PLL types)?
 
-plane A with layout A maps to rect 1 of DMA0
-plane B with layout B maps to rect 2 of DMA0
+-- 
+With best wishes
+Dmitry
 
-How can layout be assumed to be duplicated in this case?
-
-This is not a wide plane use-case but just smartDMA case of two 
-different layers.
-
-Maybe I am missing something but this is the example i am interested about.
-
->>
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c | 30 ++++++++++-----------
->>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h |  6 ++---
->>>    drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c   | 10 +++----
->>>    3 files changed, 22 insertions(+), 24 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
->>> index 2bd39c13d54d..400d043f37fa 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
->>> @@ -486,7 +486,7 @@ static void dpu_hw_sspp_setup_rects(struct dpu_sw_pipe *pipe,
->>>    }
->>>
->>>    static void dpu_hw_sspp_setup_sourceaddress(struct dpu_sw_pipe *pipe,
->>> -             struct dpu_hw_pipe_cfg *cfg)
->>> +             struct dpu_hw_fmt_layout *layout)
->>>    {
->>>        struct dpu_hw_sspp *ctx = pipe->sspp;
->>>        u32 ystride0, ystride1;
->>> @@ -497,41 +497,41 @@ static void dpu_hw_sspp_setup_sourceaddress(struct dpu_sw_pipe *pipe,
->>>                return;
->>>
->>>        if (pipe->multirect_index == DPU_SSPP_RECT_SOLO) {
->>> -             for (i = 0; i < ARRAY_SIZE(cfg->layout.plane_addr); i++)
->>> +             for (i = 0; i < ARRAY_SIZE(layout->plane_addr); i++)
->>>                        DPU_REG_WRITE(&ctx->hw, SSPP_SRC0_ADDR + idx + i * 0x4,
->>> -                                     cfg->layout.plane_addr[i]);
->>> +                                     layout->plane_addr[i]);
->>>        } else if (pipe->multirect_index == DPU_SSPP_RECT_0) {
->>>                DPU_REG_WRITE(&ctx->hw, SSPP_SRC0_ADDR + idx,
->>> -                             cfg->layout.plane_addr[0]);
->>> +                             layout->plane_addr[0]);
->>>                DPU_REG_WRITE(&ctx->hw, SSPP_SRC2_ADDR + idx,
->>> -                             cfg->layout.plane_addr[2]);
->>> +                             layout->plane_addr[2]);
->>>        } else {
->>>                DPU_REG_WRITE(&ctx->hw, SSPP_SRC1_ADDR + idx,
->>> -                             cfg->layout.plane_addr[0]);
->>> +                             layout->plane_addr[0]);
->>>                DPU_REG_WRITE(&ctx->hw, SSPP_SRC3_ADDR + idx,
->>> -                             cfg->layout.plane_addr[2]);
->>> +                             layout->plane_addr[2]);
->>>        }
->>>
->>>        if (pipe->multirect_index == DPU_SSPP_RECT_SOLO) {
->>> -             ystride0 = (cfg->layout.plane_pitch[0]) |
->>> -                     (cfg->layout.plane_pitch[1] << 16);
->>> -             ystride1 = (cfg->layout.plane_pitch[2]) |
->>> -                     (cfg->layout.plane_pitch[3] << 16);
->>> +             ystride0 = (layout->plane_pitch[0]) |
->>> +                     (layout->plane_pitch[1] << 16);
->>> +             ystride1 = (layout->plane_pitch[2]) |
->>> +                     (layout->plane_pitch[3] << 16);
->>>        } else {
->>>                ystride0 = DPU_REG_READ(&ctx->hw, SSPP_SRC_YSTRIDE0 + idx);
->>>                ystride1 = DPU_REG_READ(&ctx->hw, SSPP_SRC_YSTRIDE1 + idx);
->>>
->>>                if (pipe->multirect_index == DPU_SSPP_RECT_0) {
->>>                        ystride0 = (ystride0 & 0xFFFF0000) |
->>> -                             (cfg->layout.plane_pitch[0] & 0x0000FFFF);
->>> +                             (layout->plane_pitch[0] & 0x0000FFFF);
->>>                        ystride1 = (ystride1 & 0xFFFF0000)|
->>> -                             (cfg->layout.plane_pitch[2] & 0x0000FFFF);
->>> +                             (layout->plane_pitch[2] & 0x0000FFFF);
->>>                } else {
->>>                        ystride0 = (ystride0 & 0x0000FFFF) |
->>> -                             ((cfg->layout.plane_pitch[0] << 16) &
->>> +                             ((layout->plane_pitch[0] << 16) &
->>>                                 0xFFFF0000);
->>>                        ystride1 = (ystride1 & 0x0000FFFF) |
->>> -                             ((cfg->layout.plane_pitch[2] << 16) &
->>> +                             ((layout->plane_pitch[2] << 16) &
->>>                                 0xFFFF0000);
->>>                }
->>>        }
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
->>> index c713343378aa..8dad52eb2a90 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
->>> @@ -154,13 +154,11 @@ struct dpu_hw_pixel_ext {
->>>
->>>    /**
->>>     * struct dpu_hw_pipe_cfg : Pipe description
->>> - * @layout:    format layout information for programming buffer to hardware
->>>     * @src_rect:  src ROI, caller takes into account the different operations
->>>     *             such as decimation, flip etc to program this field
->>>     * @dest_rect: destination ROI.
->>>     */
->>>    struct dpu_hw_pipe_cfg {
->>> -     struct dpu_hw_fmt_layout layout;
->>>        struct drm_rect src_rect;
->>>        struct drm_rect dst_rect;
->>>    };
->>> @@ -243,10 +241,10 @@ struct dpu_hw_sspp_ops {
->>>        /**
->>>         * setup_sourceaddress - setup pipe source addresses
->>>         * @pipe: Pointer to software pipe context
->>> -      * @cfg: Pointer to pipe config structure
->>> +      * @layout: format layout information for programming buffer to hardware
->>>         */
->>>        void (*setup_sourceaddress)(struct dpu_sw_pipe *ctx,
->>> -                                 struct dpu_hw_pipe_cfg *cfg);
->>> +                                 struct dpu_hw_fmt_layout *layout);
->>>
->>>        /**
->>>         * setup_csc - setup color space coversion
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
->>> index cbff4dea8662..0d2a7170e0ab 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
->>> @@ -471,21 +471,21 @@ static void _dpu_plane_set_qos_remap(struct drm_plane *plane)
->>>
->>>    static void _dpu_plane_set_scanout(struct drm_plane *plane,
->>>                struct dpu_plane_state *pstate,
->>> -             struct dpu_hw_pipe_cfg *pipe_cfg,
->>>                struct drm_framebuffer *fb)
->>>    {
->>>        struct dpu_plane *pdpu = to_dpu_plane(plane);
->>>        struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
->>>        struct msm_gem_address_space *aspace = kms->base.aspace;
->>> +     struct dpu_hw_fmt_layout layout;
->>>        int ret;
->>>
->>> -     ret = dpu_format_populate_layout(aspace, fb, &pipe_cfg->layout);
->>> +     ret = dpu_format_populate_layout(aspace, fb, &layout);
->>>        if (ret)
->>>                DPU_ERROR_PLANE(pdpu, "failed to get format layout, %d\n", ret);
->>>        else if (pstate->pipe.sspp->ops.setup_sourceaddress) {
->>>                trace_dpu_plane_set_scanout(&pstate->pipe,
->>> -                                         &pipe_cfg->layout);
->>> -             pstate->pipe.sspp->ops.setup_sourceaddress(&pstate->pipe, pipe_cfg);
->>> +                                         &layout);
->>> +             pstate->pipe.sspp->ops.setup_sourceaddress(&pstate->pipe, &layout);
->>>        }
->>>    }
->>>
->>> @@ -1134,7 +1134,7 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
->>>
->>>        memset(&pipe_cfg, 0, sizeof(struct dpu_hw_pipe_cfg));
->>>
->>> -     _dpu_plane_set_scanout(plane, pstate, &pipe_cfg, fb);
->>> +     _dpu_plane_set_scanout(plane, pstate, fb);
->>>
->>>        pstate->pending = true;
->>>
-> 
-> 
-> 
