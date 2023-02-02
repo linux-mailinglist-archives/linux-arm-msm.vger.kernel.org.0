@@ -2,65 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E4BEC688158
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 16:12:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C256F688171
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 16:15:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229915AbjBBPMt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Feb 2023 10:12:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55618 "EHLO
+        id S231989AbjBBPPj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 10:15:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232066AbjBBPMp (ORCPT
+        with ESMTP id S232059AbjBBPPf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 10:12:45 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32E0592EDE;
-        Thu,  2 Feb 2023 07:12:16 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6C7DB61BAC;
-        Thu,  2 Feb 2023 15:12:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C732AC433D2;
-        Thu,  2 Feb 2023 15:12:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1675350729;
-        bh=FADAJ7fzOlAj6IlWfkCJlp2pM9Mc7N/7WkC1EFkVr6E=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=D+JWXkktcZdpk+sJtWfWAUm/6ii8C9Z6B0+YMXdmxO+2q0Tv7ih8mv2D40/kIAaF3
-         GGv/znKepBtd8jW7asVpLY7ZPIhbREaNIuaT9ydleVbx+itZqwa6BPiOXdtY8w3raO
-         EmQT+3Dv7RBhD/4FwSn3qyntQU0U+WCxXa7ima3A8xoYNPjXQb7/GsL6eoTZAvTKtu
-         bT+vzQkcLpvVtyuBClIPmNb7Xyzrk+e/lmgqyjT3MCdEM1UpZCyH8UvSpTMqCyiA/Q
-         GSJLSGscUgYl0siR5b0oFIRalHhMKqBW0Ewl+LWa1UpBPKQQtbTzqXcL6XKHZKeZfi
-         jRF1g5Dijx9gA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1pNbGL-0003yq-C3; Thu, 02 Feb 2023 16:12:34 +0100
-Date:   Thu, 2 Feb 2023 16:12:33 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Alexandre Belloni <alexandre.belloni@bootlin.com>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Alessandro Zummo <a.zummo@towertech.it>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Maximilian Luz <luzmaximilian@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-rtc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 16/24] rtc: pm8xxx: add support for nvmem offset
-Message-ID: <Y9vS4TpVHDnGN0G/@hovoldconsulting.com>
-References: <20230126142057.25715-1-johan+linaro@kernel.org>
- <20230126142057.25715-17-johan+linaro@kernel.org>
- <Y9PpQkW3Rtm+bi2V@mail.local>
- <Y9Py/+GpI8x8ldDG@hovoldconsulting.com>
- <Y9P2L9sNiHIZt3On@mail.local>
+        Thu, 2 Feb 2023 10:15:35 -0500
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19CB34CE61
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 07:15:34 -0800 (PST)
+Received: by mail-ed1-x530.google.com with SMTP id q19so2342504edd.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 07:15:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ukv4NBtRI8MLSY6KEjlzpqBPPrtbUy7c27/VcefhpeY=;
+        b=yZxM6CmUqW0LYbmoUE/J4E0WqP0AIm/PxVeclFJbrZIZK9C0avmqCW8ppUfQ1ljgQ4
+         I3EguR+002RtKMROPy2x/KNQXT0KbS1RPgR3OWO3+rQePyA7KZmTBnQe1ksjIiIgfRtn
+         9GDykdkjgJXFt6ydZZ32qAdDseoTCodJmgVsqFzH/Nv85+fsZpCooYcD2UOvtcKnsLOU
+         8vRBRPApZK8YeufBqryHhshXvtvVO9k5WZv7PZbq+lrc+tjmY8RDk/jnI/tPyKevFCUc
+         m5e58uk7+pIW1wrrlkdjqB6eL7yv0SVmJy3Ry9cHhBaIO5kbUjw2EW6Gy7zCQXu12lfn
+         d+rA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ukv4NBtRI8MLSY6KEjlzpqBPPrtbUy7c27/VcefhpeY=;
+        b=OeqgQ9MRSXnNyH6IDMauBsfNKtg1y95/LJ76w609JKV/PbevIGPRK5RlNWpMOdc6GA
+         IJDRBhkJ7F1QcI0rSyxf8sBjQV7A53WnvILN0D5Kes17lyVn715SWzojXDlXJRcMMbLy
+         0Zv/245FzELCSBL5iz3Bgvm30zC4vt2Wvz7A7xURkuHGQnIvgPU5Blm+YpD+4yCXiCAt
+         ENxmm+LXMn5pQLrEeC3eV9roKx3PM0CSMi9KdWqrfIo7k7FWyxNBqqwtB2z0HUOIQ0mu
+         tNalP+pqeWUnwWbHY2t7iU0ppq+5343jbBNmSND76x7M6DKMBQsMiWxBowhQKCx8dulF
+         z8XA==
+X-Gm-Message-State: AO0yUKWbXR8huF51bYtQe1mlgCw3HGHqgCXcVrkZQPyCKtWWVeW2fT1c
+        hcG1REtzF6lsBLMYJWpaTgHzJPONPha9+fXu
+X-Google-Smtp-Source: AK7set9rvgYa+vT4KdCrVhR7NljBs3AEulmAX91ah+LXTRGmZylfhsj9+nHwKPFYtUxk8x0Boafb9w==
+X-Received: by 2002:a05:6402:1519:b0:47e:d7ea:d980 with SMTP id f25-20020a056402151900b0047ed7ead980mr6992730edw.14.1675350932636;
+        Thu, 02 Feb 2023 07:15:32 -0800 (PST)
+Received: from [192.168.1.101] (abyl20.neoplus.adsl.tpnet.pl. [83.9.31.20])
+        by smtp.gmail.com with ESMTPSA id h17-20020a1709066d9100b0087856bd9dbbsm11861623ejt.97.2023.02.02.07.15.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Feb 2023 07:15:32 -0800 (PST)
+Message-ID: <97e9ae36-6736-0db8-4044-4e874c5af5f4@linaro.org>
+Date:   Thu, 2 Feb 2023 16:15:30 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y9P2L9sNiHIZt3On@mail.local>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH 1/6] clk: qcom: apss-ipq-pll: refactor the driver to
+ accommodate different PLL types
+Content-Language: en-US
+To:     Kathiravan T <quic_kathirav@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        jassisinghbrar@gmail.com, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230202145208.2328032-1-quic_kathirav@quicinc.com>
+ <20230202145208.2328032-2-quic_kathirav@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230202145208.2328032-2-quic_kathirav@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -68,43 +79,121 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 27, 2023 at 05:05:03PM +0100, Alexandre Belloni wrote:
-> On 27/01/2023 16:51:27+0100, Johan Hovold wrote:
 
-> > > > @@ -380,9 +478,23 @@ static int pm8xxx_rtc_probe(struct platform_device *pdev)
-> > > >  	rtc_dd->allow_set_time = of_property_read_bool(pdev->dev.of_node,
-> > > >  						      "allow-set-time");
-> > > >  
-> > > > +	rtc_dd->nvmem_cell = devm_nvmem_cell_get(&pdev->dev, "offset");
-> > > 
-> > > Maybe we should get something more specific than just "offset" so this
-> > > could be parsed in the RTC core at some point (this is the second RTC to
-> > > behave like this)
-> > 
-> > Yes, that thought crossed my mind, but it's an nvmem cell name (label)
-> > and not a generic devicetree property. If you look at the binding
-> > document I think the name makes sense given the current description, and
-> > I'm not sure changing to something like 'base' would be much of an
-> > improvement.
-> > 
-> > I also don't expect there to be more broken RTCs out there like these
-> > ones. Hopefully Qualcomm will even get this fixed at some point
-> > themselves.
-> > 
-> > And I assume you were think of the old Atmel driver which uses a timer
-> > counter and a scratch register as a base? That one is also a bit
-> > different in that the timer can be reset, just not set.
+
+On 2.02.2023 15:52, Kathiravan T wrote:
+> APSS PLL found on the IPQ8074 and IPQ6018 are of type Huayra PLL. But,
+> IPQ5332 APSS PLL is of type Stromer Plus. To accommodate both these PLLs,
+> refactor the driver to take the clk_alpha_pll, alpha_pll_config via device
+> data.
 > 
-> Nope, I'm thinking about the gamecube one and probably the nintendo
-> switch one which seems to behave similarly (no driver in the kernel
-> though).
+> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+> ---
+>  drivers/clk/qcom/apss-ipq-pll.c | 55 +++++++++++++++++++++------------
+>  1 file changed, 36 insertions(+), 19 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/apss-ipq-pll.c b/drivers/clk/qcom/apss-ipq-pll.c
+> index a5aea27eb867..6e815e8b7fe4 100644
+> --- a/drivers/clk/qcom/apss-ipq-pll.c
+> +++ b/drivers/clk/qcom/apss-ipq-pll.c
+> @@ -8,20 +8,22 @@
+>  
+>  #include "clk-alpha-pll.h"
+>  
+> -static const u8 ipq_pll_offsets[] = {
+> -	[PLL_OFF_L_VAL] = 0x08,
+> -	[PLL_OFF_ALPHA_VAL] = 0x10,
+> -	[PLL_OFF_USER_CTL] = 0x18,
+> -	[PLL_OFF_CONFIG_CTL] = 0x20,
+> -	[PLL_OFF_CONFIG_CTL_U] = 0x24,
+> -	[PLL_OFF_STATUS] = 0x28,
+> -	[PLL_OFF_TEST_CTL] = 0x30,
+> -	[PLL_OFF_TEST_CTL_U] = 0x34,
+> +static const u8 ipq_pll_offsets[][PLL_OFF_MAX_REGS] = {
+> +	[CLK_ALPHA_PLL_TYPE_HUAYRA] =  {
+Is it really huayra? The definition in clk-alpha-pll.c is
+different..
 
-Found the gamecube one now (misread you comment above to imply that it
-was also out of tree).
 
-That one is also different in that the timer in that RTC can also be
-set (e.g. like the atmel one), but for consistency with some firmware an
-offset also needs to be read from SRAM (not NVRAM) and applied. That
-offset is also never updated by Linux.
-
-Johan
+Konrad
+> +		[PLL_OFF_L_VAL] = 0x08,
+> +		[PLL_OFF_ALPHA_VAL] = 0x10,
+> +		[PLL_OFF_USER_CTL] = 0x18,
+> +		[PLL_OFF_CONFIG_CTL] = 0x20,
+> +		[PLL_OFF_CONFIG_CTL_U] = 0x24,
+> +		[PLL_OFF_STATUS] = 0x28,
+> +		[PLL_OFF_TEST_CTL] = 0x30,
+> +		[PLL_OFF_TEST_CTL_U] = 0x34,
+> +	},
+>  };
+>  
+> -static struct clk_alpha_pll ipq_pll = {
+> +static struct clk_alpha_pll ipq_pll_huayra = {
+>  	.offset = 0x0,
+> -	.regs = ipq_pll_offsets,
+> +	.regs = ipq_pll_offsets[CLK_ALPHA_PLL_TYPE_HUAYRA],
+>  	.flags = SUPPORTS_DYNAMIC_UPDATE,
+>  	.clkr = {
+>  		.enable_reg = 0x0,
+> @@ -61,6 +63,21 @@ static const struct alpha_pll_config ipq8074_pll_config = {
+>  	.test_ctl_hi_val = 0x4000,
+>  };
+>  
+> +struct apss_pll_data {
+> +	struct clk_alpha_pll *pll;
+> +	const struct alpha_pll_config *pll_config;
+> +};
+> +
+> +static struct apss_pll_data ipq8074_pll_data = {
+> +	.pll = &ipq_pll_huayra,
+> +	.pll_config = &ipq8074_pll_config,
+> +};
+> +
+> +static struct apss_pll_data ipq6018_pll_data = {
+> +	.pll = &ipq_pll_huayra,
+> +	.pll_config = &ipq6018_pll_config,
+> +};
+> +
+>  static const struct regmap_config ipq_pll_regmap_config = {
+>  	.reg_bits		= 32,
+>  	.reg_stride		= 4,
+> @@ -71,7 +88,7 @@ static const struct regmap_config ipq_pll_regmap_config = {
+>  
+>  static int apss_ipq_pll_probe(struct platform_device *pdev)
+>  {
+> -	const struct alpha_pll_config *ipq_pll_config;
+> +	const struct apss_pll_data *data;
+>  	struct device *dev = &pdev->dev;
+>  	struct regmap *regmap;
+>  	void __iomem *base;
+> @@ -85,23 +102,23 @@ static int apss_ipq_pll_probe(struct platform_device *pdev)
+>  	if (IS_ERR(regmap))
+>  		return PTR_ERR(regmap);
+>  
+> -	ipq_pll_config = of_device_get_match_data(&pdev->dev);
+> -	if (!ipq_pll_config)
+> +	data = of_device_get_match_data(&pdev->dev);
+> +	if (!data)
+>  		return -ENODEV;
+>  
+> -	clk_alpha_pll_configure(&ipq_pll, regmap, ipq_pll_config);
+> +	clk_alpha_pll_configure(data->pll, regmap, data->pll_config);
+>  
+> -	ret = devm_clk_register_regmap(dev, &ipq_pll.clkr);
+> +	ret = devm_clk_register_regmap(dev, &data->pll->clkr);
+>  	if (ret)
+>  		return ret;
+>  
+>  	return devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get,
+> -					   &ipq_pll.clkr.hw);
+> +					   &data->pll->clkr.hw);
+>  }
+>  
+>  static const struct of_device_id apss_ipq_pll_match_table[] = {
+> -	{ .compatible = "qcom,ipq6018-a53pll", .data = &ipq6018_pll_config },
+> -	{ .compatible = "qcom,ipq8074-a53pll", .data = &ipq8074_pll_config },
+> +	{ .compatible = "qcom,ipq6018-a53pll", .data = &ipq6018_pll_data },
+> +	{ .compatible = "qcom,ipq8074-a53pll", .data = &ipq8074_pll_data },
+>  	{ }
+>  };
+>  MODULE_DEVICE_TABLE(of, apss_ipq_pll_match_table);
