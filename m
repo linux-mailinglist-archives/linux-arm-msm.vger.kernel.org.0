@@ -2,131 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A571268758D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 06:51:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E8F616875B5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 07:18:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232193AbjBBFvO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Feb 2023 00:51:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46716 "EHLO
+        id S231149AbjBBGSM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 01:18:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231733AbjBBFu5 (ORCPT
+        with ESMTP id S230048AbjBBGSL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 00:50:57 -0500
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8A8D84B41;
-        Wed,  1 Feb 2023 21:49:18 -0800 (PST)
-Received: by mail-pj1-x1036.google.com with SMTP id cq16-20020a17090af99000b0022c9791ac39so4534992pjb.4;
-        Wed, 01 Feb 2023 21:49:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=WJHXGcMPbsm+TmmE5w1mIelrfxQREvYv7aDDpU6QASI=;
-        b=qrdSJen2Lhi8KMNi67rpuVfFDR2u1/7ixhoCQBMKUvNNf6F9XwVmZlkklNVvfBuK1d
-         SXS45Mo6t87Cg+7uAKrTVcv/+Imq81X0NWXZb6ljcZtN2wauRc7C1za2p75XRwx9nqFL
-         glgc/ftarg/ODmKm57NdK71oeBOU0UggyfcB8y1YaGjDgECdz+NIaO/V9/NdIaxbtb8A
-         9QAIrUTCOIb5TFAWizCzB+1EKnDMtANWQ9AnJ5VIJn4jGC02A7AUipDBa6RB8BG7DahO
-         cqnIOC620Ss/zar7/cJ0h2V4qNo4zQFd1HCJmWMg+KFBu026cSjUjudJhUQ1qfiIJjp3
-         Mbjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=WJHXGcMPbsm+TmmE5w1mIelrfxQREvYv7aDDpU6QASI=;
-        b=ytfW6OopMnBg2dpD1nrVGeQpuFzr6SB9oD11qGiM4vlHsd6trXhU8W8dpNbWizV+ku
-         sSWdj4/FzKzPcJ9rqDi7/x+A1yWTR80x2Ot3qjijQUPnHGtDYi4sw+rlCaarJQg8LSkQ
-         uDyG5uI8+XWj6i57yEOf1PAc1bDNwBV4MayDrUxGaKioXwT7KW7blW8GlprQoGXDfXcx
-         5ZDlx8wbU7l1EVKcsv9h/J2ZT4M6cp/lmhgiYQ6NFcn101inm6vZ4BentwV7d/nC9df8
-         x/A3vNhxsazXkraJ1iOJVDZ2nAJlMMoDEtMCIIGqgGQVr9+dWEpB8hRkHqJSgXxxzqXh
-         lovQ==
-X-Gm-Message-State: AO0yUKWCarx4vKMqAf2IgkyFS6Nd8I00qEzqV6BNqAu7YZ4zY9m6xUiH
-        axRX427JuKAEsLCgmDJY7a3nregFTO9mc/VE
-X-Google-Smtp-Source: AK7set/HgJa7X3WaoyT0tTT3yKffJPnO8l0WP5fQK9tcre9o2nIaxnhSWDbxn8wrNkqldQ5FVFKObw==
-X-Received: by 2002:a17:902:e748:b0:196:6308:c9d3 with SMTP id p8-20020a170902e74800b001966308c9d3mr6482887plf.0.1675316957436;
-        Wed, 01 Feb 2023 21:49:17 -0800 (PST)
-Received: from jamie-desktop.lan ([2001:8003:cce7:dc00:39b1:aea0:8c97:186])
-        by smtp.gmail.com with ESMTPSA id ik26-20020a170902ab1a00b001895f7c8a71sm12686145plb.97.2023.02.01.21.49.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Feb 2023 21:49:16 -0800 (PST)
-From:   Jamie Douglass <jamiemdouglass@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Petr Vorel <petr.vorel@gmail.com>,
-        Dominik Kobinski <dominikkobinski314@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Jamie Douglass <jamiemdouglass@gmail.com>,
-        Petr Vorel <pvorel@suse.cz>
-Subject: [PATCH v2] arm64: dts: qcom: msm8992-lg-bullhead: Correct memory overlaps with the SMEM and MPSS memory regions
-Date:   Thu,  2 Feb 2023 16:48:19 +1100
-Message-Id: <20230202054819.16079-1-jamiemdouglass@gmail.com>
-X-Mailer: git-send-email 2.25.1
+        Thu, 2 Feb 2023 01:18:11 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 976C147082;
+        Wed,  1 Feb 2023 22:18:10 -0800 (PST)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3124XZ7M020937;
+        Thu, 2 Feb 2023 06:17:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=HPeaZUKkvoNvUEjAj0SPIW0tyYoWGW+sybMQkUOpRbw=;
+ b=A8JOQp9Q8pf8hkB3vV0OYeFk/eCWZIv2th+PThUHVXH9Qd7zn0aU4WAoIYIr5bkrMFAV
+ bTe5ExVAEZuO6icuS6r8kltHF9FqCvh5r09N4GMJ9XQ9ZwL7kbVAStnBpZlBBLIj3HUk
+ N1OKtQ9LMfWHMz0vT2cF/+aZG73ohc24oZSUrItSixsCJ8zM5jU0AXk3Ki3FAjONGjyA
+ 0NAEA89geksyDZzY3ZYyN19WjMZLVmrs3ZVw7eGIV8JbplVURq2Vzmk4IQUnQC3iuhFz
+ pB/ajTsBLGZtbXExSuluO8ETgeydNiH8y+3tmeuXiVXFgl2VEl64kYHcHU729H5ccG8/ hw== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nfn5j27tf-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 02 Feb 2023 06:17:56 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3126HtnZ000306
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 2 Feb 2023 06:17:55 GMT
+Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Wed, 1 Feb 2023 22:17:50 -0800
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     <swboyd@chromium.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <broonie@kernel.org>, <quic_plai@quicinc.com>,
+        <konrad.dybcio@somainline.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_rohkumar@quicinc.com>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: [PATCH v7 0/5] Add resets for ADSP based audio clock controller driver
+Date:   Thu, 2 Feb 2023 11:47:28 +0530
+Message-ID: <1675318653-28352-1-git-send-email-quic_srivasam@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: IaDi8DZx5OaYK91wpU-SPBVYucm8_rfn
+X-Proofpoint-GUID: IaDi8DZx5OaYK91wpU-SPBVYucm8_rfn
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-02-01_15,2023-01-31_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
+ lowpriorityscore=0 malwarescore=0 suspectscore=0 clxscore=1015
+ adultscore=0 mlxscore=0 impostorscore=0 bulkscore=0 priorityscore=1501
+ spamscore=0 mlxlogscore=721 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2212070000 definitions=main-2302020058
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The memory region reserved by a previous commit (see fixes tag below)
-overlaps with the SMEM and MPSS memory regions, causing error messages in
-dmesg:
-	OF: reserved mem: OVERLAP DETECTED!
-	reserved@5000000 (0x0000000005000000--0x0000000007200000)
-	overlaps with smem_region@6a00000
-	(0x0000000006a00000--0x0000000006c00000)
+Add resets and remove qdsp6ss clcok controller for audioreach based platforms. 
 
-	OF: reserved mem: OVERLAP DETECTED!
-	reserved@6c00000 (0x0000000006c00000--0x0000000007200000)
-	overlaps with memory@7000000
-	(0x0000000007000000--0x000000000ca00000)
+Changes since v6:
+    -- Update commit message in "Merge lpasscc into lpass_aon patch" patch.
+    -- Drop "Skip lpasscorecc registration" patch.
+    -- Add comment in the code in "Skip lpass_aon_cc_pll config" patch.
+Changes since v5:
+    -- Fix compilation issue.
+Changes since v4:
+    -- Update Fixes tag in Merge lpasscc into lpass_aon patch.
+    -- Revert removal of clk_regmap structure in Merge lpasscc into lpass_aon patch.
 
-This patch resolves both of these by splitting the previously reserved
-memory region into two sections either side of the SMEM region and by
-cutting off the second memory region to 0x7000000.
+Changes since v3:
+    -- Remove duplicate clock resets patch.
+    -- Add binding headers for q6 clocks.
+    -- Create new patch for merging lpasscc q6 clocks into lpass_aon.
+    -- Create new patches for handling conflicts of ADSP and bypass solution.
 
-Fixes: 22c7e1a0fa45 ("arm64: dts: msm8992-bullhead: add memory hole region")
-Signed-off-by: Jamie Douglass <jamiemdouglass@gmail.com>
-Reviewed-by: Petr Vorel <pvorel@suse.cz>
-Tested-by: Petr Vorel <pvorel@suse.cz>
+Changes since v2:
+    -- Revert removing qdsp6ss clock control.
+    -- Add Conditional check for qdsp6ss clock registration.
+Changes since v1:
+    -- Update commit message.
+    -- Remove qdsp6ss clock control.
 
----
-v1 -> v2: Added detail about second memory overlap and fixed commit to commit
-message
----
- arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+Srinivasa Rao Mandadapu (5):
+  dt-bindings: clock: qcom,sc7280-lpasscc: Add qcom,adsp-pil-mode
+    property
+  dt-bindings: clock: lpassaudiocc-sc7280: Add binding headers for
+    lpasscc
+  clk: qcom: lpasscc-sc7280: Skip qdsp6ss clock registration
+  clk: qcom: lpassaudiocc-sc7280: Merge AHB clocks into lpass_aon
+  clk: qcom: lpassaudiocc-sc7280: Skip lpass_aon_cc_pll config
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
-index 79de9cc395c4..5e375ea73c79 100644
---- a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
-@@ -53,8 +53,13 @@ cont_splash_mem: memory@3400000 {
- 			no-map;
- 		};
- 
--		removed_region: reserved@5000000 {
--			reg = <0 0x05000000 0 0x2200000>;
-+		reserved@5000000 {
-+			reg = <0x0 0x05000000 0x0 0x1a00000>;
-+			no-map;
-+		};
-+
-+		reserved@6c00000 {
-+			reg = <0x0 0x06c00000 0x0 0x400000>;
- 			no-map;
- 		};
- 	};
+ .../bindings/clock/qcom,sc7280-lpasscc.yaml         |  7 +++++++
+ drivers/clk/qcom/lpassaudiocc-sc7280.c              | 21 ++++++++++++++++-----
+ drivers/clk/qcom/lpasscc-sc7280.c                   | 12 +++++++-----
+ .../dt-bindings/clock/qcom,lpassaudiocc-sc7280.h    |  2 ++
+ 4 files changed, 32 insertions(+), 10 deletions(-)
+
 -- 
-2.25.1
+2.7.4
 
