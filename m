@@ -2,96 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7CE376874F9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 06:19:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A571268758D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 06:51:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231486AbjBBFTL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Feb 2023 00:19:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55480 "EHLO
+        id S232193AbjBBFvO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 00:51:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230046AbjBBFTL (ORCPT
+        with ESMTP id S231733AbjBBFu5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 00:19:11 -0500
-Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 197BE4B77B;
-        Wed,  1 Feb 2023 21:19:07 -0800 (PST)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-        by mailout.west.internal (Postfix) with ESMTP id 14D823200907;
-        Thu,  2 Feb 2023 00:19:03 -0500 (EST)
-Received: from imap50 ([10.202.2.100])
-  by compute6.internal (MEProxy); Thu, 02 Feb 2023 00:19:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=cc
-        :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm2; t=1675315142; x=1675401542; bh=qlB8J5fcQ9
-        pWFGZPh4fvEz5uOnYTgBjr7dz+WP8j5yc=; b=Dkrt63HtIe6vqployzDjAFGg6L
-        YWsfnUolSV9YToK6J0XcZpBbyRMwKffcs6c6PspuyKxA5FDVZmhNC2zBMyZ19tqQ
-        uazskdwpzP7acDAdBylGVWotvR+xame+DNvgfuxdPWtKW9iG9xgFMNIvPD0gKMpR
-        fko2tgLTCHv4SFzLW2yH1j4HY4lXQVILhYGFaKF7Gf7Ia9tY1GYYygJJq5jHJ4zJ
-        eDsbHKRKRaHPRFTjWHp7o7eKDOAV+ThsTX4FTc92LnvCtG1G0uiGNjqgqDphaLDj
-        GfjlCuQtpqb9VScZ/fmse+7Yp9t6atvCYqGf/1OpOKgktIpRZOtnO/BD2T3A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
-        :mime-version:references:reply-to:sender:subject:subject:to:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm3; t=1675315142; x=1675401542; bh=qlB8J5fcQ9pWFGZPh4fvEz5uOnYT
-        gBjr7dz+WP8j5yc=; b=Brz+nTBfPhT7mfU2URl1sQT+Gn+skyv9wCEli/6Rgu+6
-        EVU+zWfliZW6k4izI6Hl26mlHhCVnivLV+ld+4PdePm1D97vISJwK97lXhtm5h/J
-        UCCSQJT+MpZezEylekW2/7qbrEkbDiXbLbL6Y6HHB/QJZ+AJZQfV2m2OYDrSrdTt
-        ZELV3Nwd5h9ldz6t/7wmo0sr/3TAEM32x0ts3uYHppxdLeAnyOn4AF/42B2ObMRh
-        RFBIreOxwdAv8MnrCVONw2iZYwt6UPZPgc+meIu4tWHWtVqO39jzlcfDxHyS4vsc
-        yJAs9i7HGv/jgY27K0Fx4xBcdJJrXd8jHdNP4wxnng==
-X-ME-Sender: <xms:xkfbY3GLvG03Yvc7lDMoY4m0yFTOUpnLTq4PeyavsBv49HJYZ20eSA>
-    <xme:xkfbY0UBsfDzpqQACwkLaAGnxZsw3tAGOVfopqDnA6jXhm87o69vG3P3luH-qyrxo
-    -JuMHpc9-cUH8bC8w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrudefjedgkeehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehn
-    ughrvgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtf
-    frrghtthgvrhhnpeeujedvleduveetfffhlefhtdfgfedvteffhefhtedtheeffefggeei
-    fedvheehhfenucffohhmrghinhepkhgvrhhnvghlrdhorhhgpdhoiihlrggsshdrohhrgh
-    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgu
-    rhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:xkfbY5LgfXvw1p-Z0x93AFPz6dQvAP8X_Mg835dKllBOCGvaYO0WQw>
-    <xmx:xkfbY1E215NRPYIJpqDp6dXQF6PmZZIBKleovQk9FN5piRGEm3v2LA>
-    <xmx:xkfbY9WqXtrtEDIk8nPnHLUzZf_JjSCOfvCOp8DrJj4iYtUWashmbg>
-    <xmx:xkfbY2OcSQi637wFrBWuNAma7rjwfzhtm43HxYrfBxju2yj6GU2CkA>
-Feedback-ID: idfb84289:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id 413C81700089; Thu,  2 Feb 2023 00:19:02 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-107-g82c3c54364-fm-20230131.002-g82c3c543
-Mime-Version: 1.0
-Message-Id: <8f165a30-4adc-4a39-a467-4cd3d466e850@app.fastmail.com>
-In-Reply-To: <TY2PR06MB321334CFD4ED1BD4AF97965380D69@TY2PR06MB3213.apcprd06.prod.outlook.com>
-References: <63da97b5.3V1HSQEat507LFIr%lkp@intel.com>
- <76f4dea0-9a39-4238-a213-0167477f5d54@app.fastmail.com>
- <TY2PR06MB321334CFD4ED1BD4AF97965380D69@TY2PR06MB3213.apcprd06.prod.outlook.com>
-Date:   Thu, 02 Feb 2023 15:48:35 +1030
-From:   "Andrew Jeffery" <andrew@aj.id.au>
-To:     "Neal Liu" <neal_liu@aspeedtech.com>
-Cc:     "kbuild test robot" <lkp@intel.com>,
-        "Andrew Morton" <akpm@linux-foundation.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "amd-gfx@lists.freedesktop.org" <amd-gfx@lists.freedesktop.org>,
-        "Linux Memory Management List" <linux-mm@kvack.org>,
-        "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
-        "linux-riscv@lists.infradead.org" <linux-riscv@lists.infradead.org>,
-        "kvmarm@lists.cs.columbia.edu" <kvmarm@lists.cs.columbia.edu>,
-        "linux-arm-kernel@lists.infradead.org" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "linux-trace-kernel@vger.kernel.org" 
-        <linux-trace-kernel@vger.kernel.org>
-Subject: Re: [linux-next:master] BUILD REGRESSION
- 66eee64b235411d512bed4d672c2d00683239daf
-Content-Type: text/plain
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS autolearn=ham
+        Thu, 2 Feb 2023 00:50:57 -0500
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8A8D84B41;
+        Wed,  1 Feb 2023 21:49:18 -0800 (PST)
+Received: by mail-pj1-x1036.google.com with SMTP id cq16-20020a17090af99000b0022c9791ac39so4534992pjb.4;
+        Wed, 01 Feb 2023 21:49:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=WJHXGcMPbsm+TmmE5w1mIelrfxQREvYv7aDDpU6QASI=;
+        b=qrdSJen2Lhi8KMNi67rpuVfFDR2u1/7ixhoCQBMKUvNNf6F9XwVmZlkklNVvfBuK1d
+         SXS45Mo6t87Cg+7uAKrTVcv/+Imq81X0NWXZb6ljcZtN2wauRc7C1za2p75XRwx9nqFL
+         glgc/ftarg/ODmKm57NdK71oeBOU0UggyfcB8y1YaGjDgECdz+NIaO/V9/NdIaxbtb8A
+         9QAIrUTCOIb5TFAWizCzB+1EKnDMtANWQ9AnJ5VIJn4jGC02A7AUipDBa6RB8BG7DahO
+         cqnIOC620Ss/zar7/cJ0h2V4qNo4zQFd1HCJmWMg+KFBu026cSjUjudJhUQ1qfiIJjp3
+         Mbjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=WJHXGcMPbsm+TmmE5w1mIelrfxQREvYv7aDDpU6QASI=;
+        b=ytfW6OopMnBg2dpD1nrVGeQpuFzr6SB9oD11qGiM4vlHsd6trXhU8W8dpNbWizV+ku
+         sSWdj4/FzKzPcJ9rqDi7/x+A1yWTR80x2Ot3qjijQUPnHGtDYi4sw+rlCaarJQg8LSkQ
+         uDyG5uI8+XWj6i57yEOf1PAc1bDNwBV4MayDrUxGaKioXwT7KW7blW8GlprQoGXDfXcx
+         5ZDlx8wbU7l1EVKcsv9h/J2ZT4M6cp/lmhgiYQ6NFcn101inm6vZ4BentwV7d/nC9df8
+         x/A3vNhxsazXkraJ1iOJVDZ2nAJlMMoDEtMCIIGqgGQVr9+dWEpB8hRkHqJSgXxxzqXh
+         lovQ==
+X-Gm-Message-State: AO0yUKWCarx4vKMqAf2IgkyFS6Nd8I00qEzqV6BNqAu7YZ4zY9m6xUiH
+        axRX427JuKAEsLCgmDJY7a3nregFTO9mc/VE
+X-Google-Smtp-Source: AK7set/HgJa7X3WaoyT0tTT3yKffJPnO8l0WP5fQK9tcre9o2nIaxnhSWDbxn8wrNkqldQ5FVFKObw==
+X-Received: by 2002:a17:902:e748:b0:196:6308:c9d3 with SMTP id p8-20020a170902e74800b001966308c9d3mr6482887plf.0.1675316957436;
+        Wed, 01 Feb 2023 21:49:17 -0800 (PST)
+Received: from jamie-desktop.lan ([2001:8003:cce7:dc00:39b1:aea0:8c97:186])
+        by smtp.gmail.com with ESMTPSA id ik26-20020a170902ab1a00b001895f7c8a71sm12686145plb.97.2023.02.01.21.49.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Feb 2023 21:49:16 -0800 (PST)
+From:   Jamie Douglass <jamiemdouglass@gmail.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Petr Vorel <petr.vorel@gmail.com>,
+        Dominik Kobinski <dominikkobinski314@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Jamie Douglass <jamiemdouglass@gmail.com>,
+        Petr Vorel <pvorel@suse.cz>
+Subject: [PATCH v2] arm64: dts: qcom: msm8992-lg-bullhead: Correct memory overlaps with the SMEM and MPSS memory regions
+Date:   Thu,  2 Feb 2023 16:48:19 +1100
+Message-Id: <20230202054819.16079-1-jamiemdouglass@gmail.com>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -99,47 +78,55 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The memory region reserved by a previous commit (see fixes tag below)
+overlaps with the SMEM and MPSS memory regions, causing error messages in
+dmesg:
+	OF: reserved mem: OVERLAP DETECTED!
+	reserved@5000000 (0x0000000005000000--0x0000000007200000)
+	overlaps with smem_region@6a00000
+	(0x0000000006a00000--0x0000000006c00000)
 
+	OF: reserved mem: OVERLAP DETECTED!
+	reserved@6c00000 (0x0000000006c00000--0x0000000007200000)
+	overlaps with memory@7000000
+	(0x0000000007000000--0x000000000ca00000)
 
-On Thu, 2 Feb 2023, at 13:29, Neal Liu wrote:
->> Hi Neal,
->> 
->> On Thu, 2 Feb 2023, at 03:17, kernel test robot wrote:
->> > tree/branch:
->> > https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git
->> > master
->> > branch HEAD: 66eee64b235411d512bed4d672c2d00683239daf  Add
->> linux-next
->> > specific files for 20230201
->> >
->> >
->> > Unverified Error/Warning (likely false positive, please contact us if
->> > interested):
->> >
->> > drivers/crypto/aspeed/aspeed-acry.c:295:37: sparse: sparse: incorrect
->> > type in assignment (different base types)
->> > drivers/crypto/aspeed/aspeed-acry.c:305:28: sparse: sparse: cast
->> > removes address space '__iomem' of expression
->> > drivers/crypto/aspeed/aspeed-acry.c:606:24: sparse: sparse: symbol
->> > 'aspeed_acry_akcipher_algs' was not declared. Should it be static?
->> 
->> Can you please look into these issues with the ACRY driver?
->> 
->> Cheers,
->> 
->> Andrew
->
-> I just send patch to fix the first 2 warnings,
+This patch resolves both of these by splitting the previously reserved
+memory region into two sections either side of the SMEM region and by
+cutting off the second memory region to 0x7000000.
 
-Thanks.
+Fixes: 22c7e1a0fa45 ("arm64: dts: msm8992-bullhead: add memory hole region")
+Signed-off-by: Jamie Douglass <jamiemdouglass@gmail.com>
+Reviewed-by: Petr Vorel <pvorel@suse.cz>
+Tested-by: Petr Vorel <pvorel@suse.cz>
 
-> and the last one warning 
-> is already fixed by another patch.
-> [PATCH-next] crypto: aspeed: fix type warnings
-> https://patchwork.ozlabs.org/project/linux-aspeed/patch/20230119014859.1900136-1-yangyingliang@huawei.com/
-> Thanks
->
+---
+v1 -> v2: Added detail about second memory overlap and fixed commit to commit
+message
+---
+ arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-Great!
+diff --git a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
+index 79de9cc395c4..5e375ea73c79 100644
+--- a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
+@@ -53,8 +53,13 @@ cont_splash_mem: memory@3400000 {
+ 			no-map;
+ 		};
+ 
+-		removed_region: reserved@5000000 {
+-			reg = <0 0x05000000 0 0x2200000>;
++		reserved@5000000 {
++			reg = <0x0 0x05000000 0x0 0x1a00000>;
++			no-map;
++		};
++
++		reserved@6c00000 {
++			reg = <0x0 0x06c00000 0x0 0x400000>;
+ 			no-map;
+ 		};
+ 	};
+-- 
+2.25.1
 
-Andrew
