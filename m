@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C2CF687AF5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 11:59:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E7DD687B76
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 12:05:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232178AbjBBK66 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Feb 2023 05:58:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56996 "EHLO
+        id S230463AbjBBLFz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 06:05:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229602AbjBBK65 (ORCPT
+        with ESMTP id S231773AbjBBLFm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 05:58:57 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9A88712C1
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 02:58:55 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id c10-20020a05600c0a4a00b003db0636ff84so1077262wmq.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 02:58:55 -0800 (PST)
+        Thu, 2 Feb 2023 06:05:42 -0500
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEA5F8394D
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 03:04:58 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id m16-20020a05600c3b1000b003dc4050c94aso1057940wms.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 03:04:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=UVC3BbCIKGwKEURboffcV34GlxCVIjCwQdv8Aw/FvBc=;
-        b=NSlTIDIuXmr9NgzQl2ljftdQqscbgLmM96D3y9V9sYNrZSiu7WXdyrOZf1aaNeVxXJ
-         CuunDZjDr09/Cn+xmJ6lxD49d4UDmurgZv+j8P8UFRDkZmjyQ/Sc0yTJ3sXCCUv56pYy
-         bfDiIHEvJGj0Z0iIOpv03yIbxpVwUUUbRU4mvE5KjVQzts5vFFju1ZuCUmuBwhJzzfMQ
-         uFl8/km3hcqaTjZ3oh7N3c9q1FB/k10A+v1QatIqEXQQqZKnuDt/pk2iDp0M8oZkKqlH
-         C9uzeMyVPZ0ag98zy3c8OHcROza1M1HLe5QiFdnu6cFEaLoJBIkOT1Cjb+R+W+AsoTtz
-         HHsw==
+        bh=84LdQG7FtMDJskUXUfOk9gQLMSBtSXh4k9NsYiJXRp8=;
+        b=YY/PxCI0eSZTB1pdl42r362jpO42bOCq9Yw+LX8Ec62FpLPKaXUgZMLo4Up3JrS8Mp
+         w/GqZ+LnGAQ/5Pj5cAd2zhHn6wzlhbFjrftMDnUqEhBMAlV1EQV0dNVXzBALcKPmHHe5
+         NPly/afncSbS4UlFwDmGuDJxRC79BghUj/WdQ+RF205Q76FrLNzY6z3WqmJfgTOwOkGY
+         uccm2bazfSmmgIa7yT6+oV+DNtsBK3Z/ydro3dd5QZ3k7Nt0Uxciowi5vfJXF3jeHPsP
+         ELWV3AgenUEy3XigQD2p6ix69Fn5VHeqgUwHjfloJ369zdyxPEgbUYu5j7uE/cgZvDzt
+         haag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UVC3BbCIKGwKEURboffcV34GlxCVIjCwQdv8Aw/FvBc=;
-        b=4YKZmLI9B39HxRrcn1unoiVUCKaFzAq/rclkkgY4UoEFzmk0ptqw1Beakzy5UyTzOs
-         6gpyyPWblQ37mbtzdDGIb2hNuLqvrFfFGSQzoAMBlum/p4rn1kxguOe2rX5yDLdQA4gN
-         vYevQO/vPp1/CfP+ww8eGT26r7GVBzMTv+0P+sCkYbJZxUm9OX7n6PpevYPj+f5U9kmu
-         lujv0K8OKj3QSH3KBJEmEm/KxahxGZDi2Zt5Ovf6AHKSsX+hIpgLdz0qzOWKc4Uu3fGL
-         JiTnaeuYdhgdO/M6d2kBm+N4T0omQYOaHsA13SsZzoT8+nOXLMnRhaxSjgOu7iTKrsFI
-         3rNg==
-X-Gm-Message-State: AO0yUKWeFvs9d0+aq8mFa1I/R99BWLBXE868xvGaYlEv5PbrH6vE8Bgz
-        RA4uP4D5u9Q+5Xp2AzzFgq9+bQ==
-X-Google-Smtp-Source: AK7set83lIl4nGCVu7Pf1aCB5oUVzv4rO6WDAnBXErPnHSfhSs/9z3OqQW47YCDl+K02oT7+vlDn0w==
-X-Received: by 2002:a05:600c:4f41:b0:3d7:889:7496 with SMTP id m1-20020a05600c4f4100b003d708897496mr5231407wmq.17.1675335534471;
-        Thu, 02 Feb 2023 02:58:54 -0800 (PST)
+        bh=84LdQG7FtMDJskUXUfOk9gQLMSBtSXh4k9NsYiJXRp8=;
+        b=pQQKqOpbbwpYlGMw94yEm6IaJCZyQbZ2flERK6VARtPIyw0FFqcBEhsPnQd0PMMFy2
+         ME31WMvxWn1EI5ewj55aLvm823zamB5QbPs88gQCjSGn0yDGYscZi03H9joSgrQgF4cZ
+         L+9bt08z3FncSGeAOXXgDWxzK1G/CYQ6CcJ1vm+VhAfEQ4of8R8lKx/S1glc4b+CrJOD
+         5HEISVVjVgsRgOaYZNks/WQ+GUHVBRqniV0GDpopUt8EzoezGnvAckK0lGW/JMakcK6h
+         TC537ycvjY1QMIcJ3dFJOAneONJVfbYE22ZHnJE69pYHZbAqacWULpkrOf0MRvDBqdE3
+         XtYg==
+X-Gm-Message-State: AO0yUKVTRxU4MjjYJkQPHLxz+dALjl2/r/TywJWSnE6aUmS0BGzgXRAK
+        wltdjpp7Gjw85XbM5TvUqThMeg==
+X-Google-Smtp-Source: AK7set9bhwS4j0q/7L9EvuG4nE3Tl5dVTO9q14HaPAJVMDLA/gZQo/8p5swe04iHnL1tsJwtBlw2iw==
+X-Received: by 2002:a1c:7906:0:b0:3d3:49db:9b25 with SMTP id l6-20020a1c7906000000b003d349db9b25mr5335894wme.26.1675335892189;
+        Thu, 02 Feb 2023 03:04:52 -0800 (PST)
 Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id n6-20020a7bcbc6000000b003d237d60318sm4322832wmi.2.2023.02.02.02.58.52
+        by smtp.gmail.com with ESMTPSA id r38-20020a05600c322600b003dd7edcc960sm4125824wmp.45.2023.02.02.03.04.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Feb 2023 02:58:53 -0800 (PST)
-Message-ID: <d006ea43-6aa1-89d9-ec6a-a44810d31bff@linaro.org>
-Date:   Thu, 2 Feb 2023 11:58:51 +0100
+        Thu, 02 Feb 2023 03:04:51 -0800 (PST)
+Message-ID: <e706bb89-bb79-33e3-f319-268ec4695015@linaro.org>
+Date:   Thu, 2 Feb 2023 12:04:49 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [PATCH 14/23] interconnect: exynos: fix node leak in probe PM QoS
- error path
+Subject: Re: [PATCH 15/23] interconnect: exynos: fix registration race
 Content-Language: en-US
 To:     Johan Hovold <johan+linaro@kernel.org>,
         Georgi Djakov <djakov@kernel.org>
@@ -78,14 +77,15 @@ Cc:     Shawn Guo <shawnguo@kernel.org>,
         linux-tegra@vger.kernel.org, linux-kernel@vger.kernel.org,
         stable@vger.kernel.org
 References: <20230201101559.15529-1-johan+linaro@kernel.org>
- <20230201101559.15529-15-johan+linaro@kernel.org>
+ <20230201101559.15529-16-johan+linaro@kernel.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230201101559.15529-15-johan+linaro@kernel.org>
+In-Reply-To: <20230201101559.15529-16-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -93,18 +93,72 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 01/02/2023 11:15, Johan Hovold wrote:
-> Make sure to add the newly allocated interconnect node to the provider
-> before adding the PM QoS request so that the node is freed on errors.
+> The current interconnect provider registration interface is inherently
+> racy as nodes are not added until the after adding the provider. This
+> can specifically cause racing DT lookups to trigger a NULL-pointer
+> deference when either a NULL pointer or not fully initialised node is
+> returned from exynos_generic_icc_xlate().
+> 
+> Switch to using the new API where the provider is not registered until
+> after it has been fully initialised.
 > 
 > Fixes: 2f95b9d5cf0b ("interconnect: Add generic interconnect driver for Exynos SoCs")
 > Cc: stable@vger.kernel.org      # 5.11
 > Cc: Sylwester Nawrocki <s.nawrocki@samsung.com>
 > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > ---
->  drivers/interconnect/samsung/exynos.c | 6 +++---
+>  drivers/interconnect/samsung/exynos.c | 20 ++++++++++----------
+>  1 file changed, 10 insertions(+), 10 deletions(-)
+> 
+> diff --git a/drivers/interconnect/samsung/exynos.c b/drivers/interconnect/samsung/exynos.c
+> index e70665899482..72e42603823b 100644
+> --- a/drivers/interconnect/samsung/exynos.c
+> +++ b/drivers/interconnect/samsung/exynos.c
+> @@ -98,12 +98,13 @@ static int exynos_generic_icc_remove(struct platform_device *pdev)
+>  	struct exynos_icc_priv *priv = platform_get_drvdata(pdev);
+>  	struct icc_node *parent_node, *node = priv->node;
+>  
+> +	icc_provider_deregister(&priv->provider);
+> +
+>  	parent_node = exynos_icc_get_parent(priv->dev->parent->of_node);
+>  	if (parent_node && !IS_ERR(parent_node))
+>  		icc_link_destroy(node, parent_node);
+>  
+>  	icc_nodes_remove(&priv->provider);
+> -	icc_provider_del(&priv->provider);
+>  
+>  	return 0;
+>  }
+> @@ -132,15 +133,11 @@ static int exynos_generic_icc_probe(struct platform_device *pdev)
+>  	provider->inter_set = true;
+>  	provider->data = priv;
+>  
+> -	ret = icc_provider_add(provider);
+> -	if (ret < 0)
+> -		return ret;
+> +	icc_provider_init(provider);
+>  
+>  	icc_node = icc_node_create(pdev->id);
+> -	if (IS_ERR(icc_node)) {
+> -		ret = PTR_ERR(icc_node);
+> -		goto err_prov_del;
+> -	}
+> +	if (IS_ERR(icc_node))
+> +		return PTR_ERR(icc_node);
+>  
+>  	priv->node = icc_node;
+>  	icc_node->name = devm_kasprintf(&pdev->dev, GFP_KERNEL, "%pOFn",
+> @@ -171,14 +168,17 @@ static int exynos_generic_icc_probe(struct platform_device *pdev)
+>  			goto err_pmqos_del;
+>  	}
+>  
+> +	ret = icc_provider_register(provider);
+> +	if (ret < 0)
+> +		goto err_pmqos_del;
 
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+If I understand correctly there is no need for icc_link_destroy() in
+error path here, right? Even in case of probe retry (defer or whatever
+reason) - the link will be removed with icc_nodes_remove()?
 
 Best regards,
 Krzysztof
