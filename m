@@ -2,70 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6DB646887B9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 20:45:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 964E66887C8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 20:50:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230456AbjBBTpx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Feb 2023 14:45:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38402 "EHLO
+        id S232640AbjBBTu5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 14:50:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229761AbjBBTpw (ORCPT
+        with ESMTP id S232479AbjBBTu4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 14:45:52 -0500
-Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6258D61BF
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 11:45:50 -0800 (PST)
-Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-520dad0a7d2so40730207b3.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 11:45:50 -0800 (PST)
+        Thu, 2 Feb 2023 14:50:56 -0500
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A97E528876
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 11:50:54 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id q19so3194373edd.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 11:50:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=7+D3VuHhE0GLQM94j3huvE8BMstAn428Idt0uwUFfaI=;
-        b=SkHmtKrtY/Al/KXJIy3g3NBArnlesGj6rZAq9497R9RfCz0a+ht5enEXR+nHvzoZIp
-         gSot5XBSiIT75mU3Cmb1xQ0sMljVCjP/uePL5ezIAqm1Ue6Fmh/KCrTkvwsB2ssYa5BZ
-         pFWbqtODqdnZPZIW2yE93AvdOd3E66FYGc0TCA57wGlVYy3tgDk2jVaoJoj0coWzrNaU
-         XdvCOmyyF1kY9gnbHgRWzBtVadZxY5i04F3mSoV7XpzZegwp1BQTftuja4gKQbqYayMx
-         YOFqevy428Bb5zbS+9JcOcZzFhM6kZRgNyJl+tmvU0LP1xn/cJiMpnZoShZIWpxYWxhS
-         KShg==
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=vU6b1/DyW9VF99p038CT5rL7cz19rU/zHJDhT4ApbFc=;
+        b=qFo6Zs4zc/E7ttK81jaTeAILjmRH5v3tgoYVgjr6j/geeokXq8B3VKC1pad3rpZa5z
+         Hx9aluvyOeNlG/2t/IxUqJKbWmnWj8CdxyMA1jK8k/tj9FveSRBkAaYJC2Ks7QmLpinM
+         ho7p6AP7jt5VbSWhkHP8/2a0cLQP/b98mdx9WZGKea13BendXKvIiiLPwEp4sQg8W9Kr
+         4kPHEyZP2DzxfUYQpUpP7nLPaXwQ3NPYdyzX29/ZCFhWw1uNQqzcOktQep/WzBX59D0r
+         YeVPI49AW2fyIGS8rPUAfXPADxjZXADDlQGjJGGpUbZ+TB2SMs0YW4F/lM/HadrYG4Rr
+         S93Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7+D3VuHhE0GLQM94j3huvE8BMstAn428Idt0uwUFfaI=;
-        b=1wEakcaTOBjh0udqkU8mZN3IFvWy3dFDLdbraZgGL/MuDxJa1xBgNRhisOLKbxIncW
-         IxnWd3e/VYqxT8S0HD+tvTq7w/JmfXgTYmlTOcbpAqxd33+SfAbxM1Ong9siKtuPBWlz
-         4rO4HRQHu5BkoZDkSMMneZDn7+3TNuFpCd5ag5n5gT/ZjSvKtfbyai+6+zYXw/0LN2DS
-         uZEhg2jlp83j8DLpDA1k1vV5XEttgmpLrpsBzDk3pAV0jZBLqAqpV3JBipVEqPQX3w6A
-         enJTxeDMubhBbL2/ZbM916xQocSjwLM1NcODNrM/iW5PzyAzdR01V3GaZsefjpfRqToz
-         /VVQ==
-X-Gm-Message-State: AO0yUKX6Xx4BeXQDqyvJ/7VS50KNSbIrV/IXUnZ8Ew2AdjAQeT0VMPYb
-        jjm0XkwAWgffrYllEZ5tUYzHQsEdzOBocJUVtxjgkw==
-X-Google-Smtp-Source: AK7set8dN9lZasfRqZHVZHhgUP5sDRWxfDRVHHnmPo8uW+yjl5MBxOAY46+bTs1BCofVnzRNGDMlaNaiwjQUoXcvroA=
-X-Received: by 2002:a0d:dfd6:0:b0:51b:1df9:ebac with SMTP id
- i205-20020a0ddfd6000000b0051b1df9ebacmr857906ywe.138.1675367149530; Thu, 02
- Feb 2023 11:45:49 -0800 (PST)
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vU6b1/DyW9VF99p038CT5rL7cz19rU/zHJDhT4ApbFc=;
+        b=xf21F54hgI4JpDug2FCjyQB7qh48ClMKSGlV5fqPc1ZUC/5uwcbwd10wDrj3OB3tlR
+         /sBq6RlmEdugxsFZUGVQk+SQQe92y2EE74T+GbqZE4RBW6qpkoBuhBcn3GPfdk7v4xJI
+         dGPGHAXc5Afgs9/CjH945wQSVqs1vh4Naom1maA2JmjnZOQ71cyGZf8/NxXUgKSm/Z/q
+         sRlcOHShqHVMEiZZi4iOKz/y8C/nYob38p4bV/HnXy5y88rPG1urugf5YMiR3UtEEJPn
+         O7kXrG78fXPjJNawpSEOQ+14NhlXbkWcCl0LNd+4x8r1tR/J+VISOKceXQIMLbOnW750
+         R9yg==
+X-Gm-Message-State: AO0yUKXQ/MArrbEZBX5mKV6Ab+G5kGD9txMFi/LNkt2ddOYeUNwECiF/
+        nWW6Bb/QGFBn0hiYetmi/HPxHA==
+X-Google-Smtp-Source: AK7set9amC5pThCDH+9E/vyf4TogzP4SRLeuHMPo01KOUugOmYukuiSJFsLqp102YzKiW0olzQcJrQ==
+X-Received: by 2002:a05:6402:22a7:b0:4a2:2d79:dce2 with SMTP id cx7-20020a05640222a700b004a22d79dce2mr7371719edb.10.1675367453255;
+        Thu, 02 Feb 2023 11:50:53 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id er18-20020a056402449200b0046892e493dcsm150837edb.26.2023.02.02.11.50.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Feb 2023 11:50:52 -0800 (PST)
+Message-ID: <093a50dc-8f9e-39c9-ba31-906628e54e35@linaro.org>
+Date:   Thu, 2 Feb 2023 21:50:51 +0200
 MIME-Version: 1.0
-References: <20221229191856.3508092-1-dmitry.baryshkov@linaro.org>
- <20221229191856.3508092-13-dmitry.baryshkov@linaro.org> <77764494-8a74-8450-ac75-33d6de0b2f8d@quicinc.com>
-In-Reply-To: <77764494-8a74-8450-ac75-33d6de0b2f8d@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 2 Feb 2023 21:45:38 +0200
-Message-ID: <CAA8EJpq4ybOQg-Mb5RM+dcrBbR+3WrWSgvd4d20C6NKa90C15Q@mail.gmail.com>
-Subject: Re: [PATCH v2 12/27] drm/msm/dpu: remove dpu_hw_fmt_layout from
- struct dpu_hw_pipe_cfg
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH v6 11/12] arm64: dts: qcom: sm8550: Add PCIe PHYs and
+ controllers nodes
+To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+References: <20230202123902.3831491-1-abel.vesa@linaro.org>
+ <20230202123902.3831491-12-abel.vesa@linaro.org>
+Content-Language: en-GB
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230202123902.3831491-12-abel.vesa@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,186 +87,144 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 2 Feb 2023 at 21:38, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->
->
->
-> On 12/29/2022 11:18 AM, Dmitry Baryshkov wrote:
-> > Remove dpu_hw_fmt_layout instance from struct dpu_hw_pipe_cfg, leaving
-> > only src_rect and dst_rect. This way right and left pipes will have
-> > separate dpu_hw_pipe_cfg isntances, while the layout is common to both
-> > of them.
-> >
->
-> Sorry for not responding to this comment earlier.
->
-> https://patchwork.freedesktop.org/patch/473168/?series=99909&rev=1#comment_875370
->
->  From the perspective of wide planes you are right that the layout is
-> common but not true from smart DMA point of view.
->
-> For wide planes, yes, its usually the same buffer with just the src_x
-> being different but conceptually and even HW wise each rectangle of the
-> smart DMA is capable of fetching from a different buffer.
->
->  From the pov, this decision of not having the dpu_hw_fmt_layout as part
-> of dpu_hw_pipe_cfg seems incorrect to me.
+On 02/02/2023 14:39, Abel Vesa wrote:
+> Add PCIe controllers and PHY nodes.
+> 
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+> 
+> This patch does not have a v3, but since it is now part of the same
+> patchset with the controller and the phy drivers patches, I had to
+> bump the version to 4.
+> 
+> The v5 was here:
+> https://lore.kernel.org/all/20230124124714.3087948-12-abel.vesa@linaro.org/
+> 
+> Changes since v5:
+>   * renamed nocsr_com to phy_nocsr as discussed off-list with Bjorn and Johan
+> 
+> Changes since v4:
+>   * renamed noc_aggr_4 back to noc_aggr
+>   * moved pinctrl properties out to MTP dts
+>   * renamed nocsr to nocsr_com
+> 
+> Changes since v2:
+>   * renamed the pcie_1_link_down_reset to simply link_down
+>   * dropped the pipe from clock-names
+>   * renamed aggre clock-names to noc_aggr_4
+>   * dropped the _pcie infix from cnoc_pcie_sf_axi
+>   * dropped the aux_phy clock from the pcie1
+>   
+> Changes since v1:
+>   * ordered pcie related nodes alphabetically in MTP dts
+>   * dropped the pipe_mux, phy_pipe and ref clocks from the pcie nodes
+>   * dropped the child node from the phy nodes, like Johan suggested,
+>     and updated to use the sc8280xp binding scheme
+>   * changed "pcie_1_nocsr_com_phy_reset" 2nd reset name of pcie1_phy
+>     to "nocsr"
+>   * reordered all pcie nodes properties to look similar to the ones
+>     from sc8280xp
+> 
+> 
+>   arch/arm64/boot/dts/qcom/sm8550.dtsi | 203 ++++++++++++++++++++++++++-
+>   1 file changed, 200 insertions(+), 3 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> index be2d85ee1f20..a85d2ae7d155 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> @@ -740,9 +740,9 @@ gcc: clock-controller@100000 {
+>   			#reset-cells = <1>;
+>   			#power-domain-cells = <1>;
+>   			clocks = <&bi_tcxo_div2>, <&sleep_clk>,
+> -				 <0>,
+> -				 <0>,
+> -				 <0>,
+> +				 <&pcie0_phy>,
+> +				 <&pcie1_phy>,
+> +				 <&pcie_1_phy_aux_clk>,
+>   				 <&ufs_mem_phy 0>,
+>   				 <&ufs_mem_phy 1>,
+>   				 <&ufs_mem_phy 2>,
+> @@ -1641,6 +1641,203 @@ mmss_noc: interconnect@1780000 {
+>   			qcom,bcm-voters = <&apps_bcm_voter>;
+>   		};
+>   
+> +		pcie0: pci@1c00000 {
+> +			device_type = "pci";
+> +			compatible = "qcom,pcie-sm8550";
+> +			reg = <0 0x01c00000 0 0x3000>,
+> +			      <0 0x60000000 0 0xf1d>,
+> +			      <0 0x60000f20 0 0xa8>,
+> +			      <0 0x60001000 0 0x1000>,
+> +			      <0 0x60100000 0 0x100000>;
+> +			reg-names = "parf", "dbi", "elbi", "atu", "config";
+> +			#address-cells = <3>;
+> +			#size-cells = <2>;
+> +			ranges = <0x01000000 0x0 0x60200000 0 0x60200000 0x0 0x100000>,
+> +				 <0x02000000 0x0 0x60300000 0 0x60300000 0x0 0x3d00000>;
+> +			bus-range = <0x00 0xff>;
+> +
+> +			dma-coherent;
+> +
+> +			linux,pci-domain = <0>;
+> +			num-lanes = <2>;
+> +
+> +			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "msi";
+> +
+> +			#interrupt-cells = <1>;
+> +			interrupt-map-mask = <0 0 0 0x7>;
+> +			interrupt-map = <0 0 0 1 &intc 0 0 0 149 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
+> +					<0 0 0 2 &intc 0 0 0 150 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
+> +					<0 0 0 3 &intc 0 0 0 151 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
+> +					<0 0 0 4 &intc 0 0 0 152 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
+> +
+> +			clocks = <&gcc GCC_PCIE_0_AUX_CLK>,
+> +				 <&gcc GCC_PCIE_0_CFG_AHB_CLK>,
+> +				 <&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
+> +				 <&gcc GCC_PCIE_0_SLV_AXI_CLK>,
+> +				 <&gcc GCC_PCIE_0_SLV_Q2A_AXI_CLK>,
+> +				 <&gcc GCC_DDRSS_PCIE_SF_QTB_CLK>,
+> +				 <&gcc GCC_AGGRE_NOC_PCIE_AXI_CLK>;
+> +			clock-names = "aux",
+> +				      "cfg",
+> +				      "bus_master",
+> +				      "bus_slave",
+> +				      "slave_q2a",
+> +				      "ddrss_sf_tbu",
+> +				      "noc_aggr";
+> +
+> +			interconnects = <&pcie_noc MASTER_PCIE_0 0 &mc_virt SLAVE_EBI1 0>,
+> +					<&gem_noc MASTER_APPSS_PROC 0 &cnoc_main SLAVE_PCIE_0 0>;
+> +			interconnect-names = "pcie-mem", "cpu-pcie";
+> +
+> +			iommus = <&apps_smmu 0x1400 0x7f>;
+> +			iommu-map = <0x0   &apps_smmu 0x1400 0x1>,
+> +				    <0x100 &apps_smmu 0x1401 0x1>;
+> +
+> +			resets = <&gcc GCC_PCIE_0_BCR>;
+> +			reset-names = "pci";
+> +
+> +			power-domains = <&gcc PCIE_0_GDSC>;
+> +
+> +			phys = <&pcie0_phy>;
+> +			phy-names = "pciephy";
+> +
+> +			perst-gpios = <&tlmm 94 GPIO_ACTIVE_LOW>;
+> +			wake-gpios = <&tlmm 96 GPIO_ACTIVE_HIGH>;
 
-Yes, each rectangle/pipe can fetch from a different buffer. However in
-our use case the layout is not defined for each pipe. It is defined
-for a plane, no matter how many pipes are used for the plane, since
-the buffer is also defined per plane.
+As we have moved pinctrl to board files, it would be logical to also 
+move these gpios to the board file too. Following the same logic, each 
+board can use it's own set of perst/wake gpios for PCIe.
 
->
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c | 30 ++++++++++-----------
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h |  6 ++---
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c   | 10 +++----
-> >   3 files changed, 22 insertions(+), 24 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> > index 2bd39c13d54d..400d043f37fa 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> > @@ -486,7 +486,7 @@ static void dpu_hw_sspp_setup_rects(struct dpu_sw_pipe *pipe,
-> >   }
-> >
-> >   static void dpu_hw_sspp_setup_sourceaddress(struct dpu_sw_pipe *pipe,
-> > -             struct dpu_hw_pipe_cfg *cfg)
-> > +             struct dpu_hw_fmt_layout *layout)
-> >   {
-> >       struct dpu_hw_sspp *ctx = pipe->sspp;
-> >       u32 ystride0, ystride1;
-> > @@ -497,41 +497,41 @@ static void dpu_hw_sspp_setup_sourceaddress(struct dpu_sw_pipe *pipe,
-> >               return;
-> >
-> >       if (pipe->multirect_index == DPU_SSPP_RECT_SOLO) {
-> > -             for (i = 0; i < ARRAY_SIZE(cfg->layout.plane_addr); i++)
-> > +             for (i = 0; i < ARRAY_SIZE(layout->plane_addr); i++)
-> >                       DPU_REG_WRITE(&ctx->hw, SSPP_SRC0_ADDR + idx + i * 0x4,
-> > -                                     cfg->layout.plane_addr[i]);
-> > +                                     layout->plane_addr[i]);
-> >       } else if (pipe->multirect_index == DPU_SSPP_RECT_0) {
-> >               DPU_REG_WRITE(&ctx->hw, SSPP_SRC0_ADDR + idx,
-> > -                             cfg->layout.plane_addr[0]);
-> > +                             layout->plane_addr[0]);
-> >               DPU_REG_WRITE(&ctx->hw, SSPP_SRC2_ADDR + idx,
-> > -                             cfg->layout.plane_addr[2]);
-> > +                             layout->plane_addr[2]);
-> >       } else {
-> >               DPU_REG_WRITE(&ctx->hw, SSPP_SRC1_ADDR + idx,
-> > -                             cfg->layout.plane_addr[0]);
-> > +                             layout->plane_addr[0]);
-> >               DPU_REG_WRITE(&ctx->hw, SSPP_SRC3_ADDR + idx,
-> > -                             cfg->layout.plane_addr[2]);
-> > +                             layout->plane_addr[2]);
-> >       }
-> >
-> >       if (pipe->multirect_index == DPU_SSPP_RECT_SOLO) {
-> > -             ystride0 = (cfg->layout.plane_pitch[0]) |
-> > -                     (cfg->layout.plane_pitch[1] << 16);
-> > -             ystride1 = (cfg->layout.plane_pitch[2]) |
-> > -                     (cfg->layout.plane_pitch[3] << 16);
-> > +             ystride0 = (layout->plane_pitch[0]) |
-> > +                     (layout->plane_pitch[1] << 16);
-> > +             ystride1 = (layout->plane_pitch[2]) |
-> > +                     (layout->plane_pitch[3] << 16);
-> >       } else {
-> >               ystride0 = DPU_REG_READ(&ctx->hw, SSPP_SRC_YSTRIDE0 + idx);
-> >               ystride1 = DPU_REG_READ(&ctx->hw, SSPP_SRC_YSTRIDE1 + idx);
-> >
-> >               if (pipe->multirect_index == DPU_SSPP_RECT_0) {
-> >                       ystride0 = (ystride0 & 0xFFFF0000) |
-> > -                             (cfg->layout.plane_pitch[0] & 0x0000FFFF);
-> > +                             (layout->plane_pitch[0] & 0x0000FFFF);
-> >                       ystride1 = (ystride1 & 0xFFFF0000)|
-> > -                             (cfg->layout.plane_pitch[2] & 0x0000FFFF);
-> > +                             (layout->plane_pitch[2] & 0x0000FFFF);
-> >               } else {
-> >                       ystride0 = (ystride0 & 0x0000FFFF) |
-> > -                             ((cfg->layout.plane_pitch[0] << 16) &
-> > +                             ((layout->plane_pitch[0] << 16) &
-> >                                0xFFFF0000);
-> >                       ystride1 = (ystride1 & 0x0000FFFF) |
-> > -                             ((cfg->layout.plane_pitch[2] << 16) &
-> > +                             ((layout->plane_pitch[2] << 16) &
-> >                                0xFFFF0000);
-> >               }
-> >       }
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-> > index c713343378aa..8dad52eb2a90 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-> > @@ -154,13 +154,11 @@ struct dpu_hw_pixel_ext {
-> >
-> >   /**
-> >    * struct dpu_hw_pipe_cfg : Pipe description
-> > - * @layout:    format layout information for programming buffer to hardware
-> >    * @src_rect:  src ROI, caller takes into account the different operations
-> >    *             such as decimation, flip etc to program this field
-> >    * @dest_rect: destination ROI.
-> >    */
-> >   struct dpu_hw_pipe_cfg {
-> > -     struct dpu_hw_fmt_layout layout;
-> >       struct drm_rect src_rect;
-> >       struct drm_rect dst_rect;
-> >   };
-> > @@ -243,10 +241,10 @@ struct dpu_hw_sspp_ops {
-> >       /**
-> >        * setup_sourceaddress - setup pipe source addresses
-> >        * @pipe: Pointer to software pipe context
-> > -      * @cfg: Pointer to pipe config structure
-> > +      * @layout: format layout information for programming buffer to hardware
-> >        */
-> >       void (*setup_sourceaddress)(struct dpu_sw_pipe *ctx,
-> > -                                 struct dpu_hw_pipe_cfg *cfg);
-> > +                                 struct dpu_hw_fmt_layout *layout);
-> >
-> >       /**
-> >        * setup_csc - setup color space coversion
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> > index cbff4dea8662..0d2a7170e0ab 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> > @@ -471,21 +471,21 @@ static void _dpu_plane_set_qos_remap(struct drm_plane *plane)
-> >
-> >   static void _dpu_plane_set_scanout(struct drm_plane *plane,
-> >               struct dpu_plane_state *pstate,
-> > -             struct dpu_hw_pipe_cfg *pipe_cfg,
-> >               struct drm_framebuffer *fb)
-> >   {
-> >       struct dpu_plane *pdpu = to_dpu_plane(plane);
-> >       struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
-> >       struct msm_gem_address_space *aspace = kms->base.aspace;
-> > +     struct dpu_hw_fmt_layout layout;
-> >       int ret;
-> >
-> > -     ret = dpu_format_populate_layout(aspace, fb, &pipe_cfg->layout);
-> > +     ret = dpu_format_populate_layout(aspace, fb, &layout);
-> >       if (ret)
-> >               DPU_ERROR_PLANE(pdpu, "failed to get format layout, %d\n", ret);
-> >       else if (pstate->pipe.sspp->ops.setup_sourceaddress) {
-> >               trace_dpu_plane_set_scanout(&pstate->pipe,
-> > -                                         &pipe_cfg->layout);
-> > -             pstate->pipe.sspp->ops.setup_sourceaddress(&pstate->pipe, pipe_cfg);
-> > +                                         &layout);
-> > +             pstate->pipe.sspp->ops.setup_sourceaddress(&pstate->pipe, &layout);
-> >       }
-> >   }
-> >
-> > @@ -1134,7 +1134,7 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
-> >
-> >       memset(&pipe_cfg, 0, sizeof(struct dpu_hw_pipe_cfg));
-> >
-> > -     _dpu_plane_set_scanout(plane, pstate, &pipe_cfg, fb);
-> > +     _dpu_plane_set_scanout(plane, pstate, fb);
-> >
-> >       pstate->pending = true;
-> >
-
-
+> +
+> +			status = "disabled";
+> +		};
+> +
+[skipped the rest]
 
 -- 
 With best wishes
 Dmitry
+
