@@ -2,150 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A6EA7687464
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 05:23:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CE376874F9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Feb 2023 06:19:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230013AbjBBEXT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Feb 2023 23:23:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57400 "EHLO
+        id S231486AbjBBFTL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 00:19:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229632AbjBBEXR (ORCPT
+        with ESMTP id S230046AbjBBFTL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Feb 2023 23:23:17 -0500
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE07151C6F;
-        Wed,  1 Feb 2023 20:23:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1675311794; x=1706847794;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=jRjDoncShj8+SssxokKgsGrrecQq1hGkUGW2vyCqEh0=;
-  b=UANfDHhxCQuGbKePnFUAefodDR+/fh2cFQfYB6DHHoftuyGap3TT/nno
-   y+2YuBiBurBrvbs1kyrqVLlaGHvBEnV+pgMPmtxVRc0rjaxNB/y3/Kt5U
-   xXEJnwZU7Q/P920ig8DD02qcC+aIn2N/ey4/yPdx1NQ1QRAZY90+ftt2a
-   5NRPtVTLeWwgS74eihSO12R9VDqLxsws77aehAwQiWwp0lAb//fXxZM/X
-   5jqrWqQfhDcj3SKrEQtWlFIU+4stvivfM0GoFwXJ4V5OJuNwabiv3O3ye
-   wmdQnk7v1/NDXy15pxkGTvj0Zv3ntqqzia93wS4GRZbclf+43btq1zdPO
-   w==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10608"; a="311992907"
-X-IronPort-AV: E=Sophos;i="5.97,266,1669104000"; 
-   d="scan'208";a="311992907"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Feb 2023 20:23:13 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10608"; a="642736779"
-X-IronPort-AV: E=Sophos;i="5.97,266,1669104000"; 
-   d="scan'208";a="642736779"
-Received: from lkp-server01.sh.intel.com (HELO ffa7f14d1d0f) ([10.239.97.150])
-  by orsmga006.jf.intel.com with ESMTP; 01 Feb 2023 20:23:09 -0800
-Received: from kbuild by ffa7f14d1d0f with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1pNR7s-00068m-34;
-        Thu, 02 Feb 2023 04:23:08 +0000
-Date:   Thu, 2 Feb 2023 12:22:34 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Kalyan Thota <quic_kalyant@quicinc.com>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-        Kalyan Thota <quic_kalyant@quicinc.com>,
-        linux-kernel@vger.kernel.org, robdclark@chromium.org,
-        dianders@chromium.org, swboyd@chromium.org,
-        quic_vpolimer@quicinc.com, dmitry.baryshkov@linaro.org,
-        quic_abhinavk@quicinc.com, marijn.suijten@somainline.org
-Subject: Re: [v1 3/3] drm/msm/disp/dpu1: reserve the resources on topology
- change
-Message-ID: <202302021238.o9yx7MKs-lkp@intel.com>
-References: <1675092092-26412-4-git-send-email-quic_kalyant@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1675092092-26412-4-git-send-email-quic_kalyant@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,
-        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+        Thu, 2 Feb 2023 00:19:11 -0500
+Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 197BE4B77B;
+        Wed,  1 Feb 2023 21:19:07 -0800 (PST)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+        by mailout.west.internal (Postfix) with ESMTP id 14D823200907;
+        Thu,  2 Feb 2023 00:19:03 -0500 (EST)
+Received: from imap50 ([10.202.2.100])
+  by compute6.internal (MEProxy); Thu, 02 Feb 2023 00:19:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=cc
+        :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to; s=fm2; t=1675315142; x=1675401542; bh=qlB8J5fcQ9
+        pWFGZPh4fvEz5uOnYTgBjr7dz+WP8j5yc=; b=Dkrt63HtIe6vqployzDjAFGg6L
+        YWsfnUolSV9YToK6J0XcZpBbyRMwKffcs6c6PspuyKxA5FDVZmhNC2zBMyZ19tqQ
+        uazskdwpzP7acDAdBylGVWotvR+xame+DNvgfuxdPWtKW9iG9xgFMNIvPD0gKMpR
+        fko2tgLTCHv4SFzLW2yH1j4HY4lXQVILhYGFaKF7Gf7Ia9tY1GYYygJJq5jHJ4zJ
+        eDsbHKRKRaHPRFTjWHp7o7eKDOAV+ThsTX4FTc92LnvCtG1G0uiGNjqgqDphaLDj
+        GfjlCuQtpqb9VScZ/fmse+7Yp9t6atvCYqGf/1OpOKgktIpRZOtnO/BD2T3A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to
+        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+        fm3; t=1675315142; x=1675401542; bh=qlB8J5fcQ9pWFGZPh4fvEz5uOnYT
+        gBjr7dz+WP8j5yc=; b=Brz+nTBfPhT7mfU2URl1sQT+Gn+skyv9wCEli/6Rgu+6
+        EVU+zWfliZW6k4izI6Hl26mlHhCVnivLV+ld+4PdePm1D97vISJwK97lXhtm5h/J
+        UCCSQJT+MpZezEylekW2/7qbrEkbDiXbLbL6Y6HHB/QJZ+AJZQfV2m2OYDrSrdTt
+        ZELV3Nwd5h9ldz6t/7wmo0sr/3TAEM32x0ts3uYHppxdLeAnyOn4AF/42B2ObMRh
+        RFBIreOxwdAv8MnrCVONw2iZYwt6UPZPgc+meIu4tWHWtVqO39jzlcfDxHyS4vsc
+        yJAs9i7HGv/jgY27K0Fx4xBcdJJrXd8jHdNP4wxnng==
+X-ME-Sender: <xms:xkfbY3GLvG03Yvc7lDMoY4m0yFTOUpnLTq4PeyavsBv49HJYZ20eSA>
+    <xme:xkfbY0UBsfDzpqQACwkLaAGnxZsw3tAGOVfopqDnA6jXhm87o69vG3P3luH-qyrxo
+    -JuMHpc9-cUH8bC8w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrudefjedgkeehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehn
+    ughrvgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtf
+    frrghtthgvrhhnpeeujedvleduveetfffhlefhtdfgfedvteffhefhtedtheeffefggeei
+    fedvheehhfenucffohhmrghinhepkhgvrhhnvghlrdhorhhgpdhoiihlrggsshdrohhrgh
+    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgu
+    rhgvfiesrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:xkfbY5LgfXvw1p-Z0x93AFPz6dQvAP8X_Mg835dKllBOCGvaYO0WQw>
+    <xmx:xkfbY1E215NRPYIJpqDp6dXQF6PmZZIBKleovQk9FN5piRGEm3v2LA>
+    <xmx:xkfbY9WqXtrtEDIk8nPnHLUzZf_JjSCOfvCOp8DrJj4iYtUWashmbg>
+    <xmx:xkfbY2OcSQi637wFrBWuNAma7rjwfzhtm43HxYrfBxju2yj6GU2CkA>
+Feedback-ID: idfb84289:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id 413C81700089; Thu,  2 Feb 2023 00:19:02 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-107-g82c3c54364-fm-20230131.002-g82c3c543
+Mime-Version: 1.0
+Message-Id: <8f165a30-4adc-4a39-a467-4cd3d466e850@app.fastmail.com>
+In-Reply-To: <TY2PR06MB321334CFD4ED1BD4AF97965380D69@TY2PR06MB3213.apcprd06.prod.outlook.com>
+References: <63da97b5.3V1HSQEat507LFIr%lkp@intel.com>
+ <76f4dea0-9a39-4238-a213-0167477f5d54@app.fastmail.com>
+ <TY2PR06MB321334CFD4ED1BD4AF97965380D69@TY2PR06MB3213.apcprd06.prod.outlook.com>
+Date:   Thu, 02 Feb 2023 15:48:35 +1030
+From:   "Andrew Jeffery" <andrew@aj.id.au>
+To:     "Neal Liu" <neal_liu@aspeedtech.com>
+Cc:     "kbuild test robot" <lkp@intel.com>,
+        "Andrew Morton" <akpm@linux-foundation.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "amd-gfx@lists.freedesktop.org" <amd-gfx@lists.freedesktop.org>,
+        "Linux Memory Management List" <linux-mm@kvack.org>,
+        "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
+        "linux-riscv@lists.infradead.org" <linux-riscv@lists.infradead.org>,
+        "kvmarm@lists.cs.columbia.edu" <kvmarm@lists.cs.columbia.edu>,
+        "linux-arm-kernel@lists.infradead.org" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "linux-trace-kernel@vger.kernel.org" 
+        <linux-trace-kernel@vger.kernel.org>
+Subject: Re: [linux-next:master] BUILD REGRESSION
+ 66eee64b235411d512bed4d672c2d00683239daf
+Content-Type: text/plain
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Kalyan,
-
-Thank you for the patch! Yet something to improve:
-
-[auto build test ERROR on drm-misc/drm-misc-next]
-[also build test ERROR on drm/drm-next drm-exynos/exynos-drm-next drm-intel/for-linux-next drm-intel/for-linux-next-fixes drm-tip/drm-tip linus/master v6.2-rc6 next-20230201]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Kalyan-Thota/drm-msm-disp-dpu1-clear-dspp-reservations-in-rm-release/20230130-232224
-base:   git://anongit.freedesktop.org/drm/drm-misc drm-misc-next
-patch link:    https://lore.kernel.org/r/1675092092-26412-4-git-send-email-quic_kalyant%40quicinc.com
-patch subject: [v1 3/3] drm/msm/disp/dpu1: reserve the resources on topology change
-config: riscv-randconfig-r042-20230130 (https://download.01.org/0day-ci/archive/20230202/202302021238.o9yx7MKs-lkp@intel.com/config)
-compiler: clang version 16.0.0 (https://github.com/llvm/llvm-project 4196ca3278f78c6e19246e54ab0ecb364e37d66a)
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # install riscv cross compiling tool for clang build
-        # apt-get install binutils-riscv64-linux-gnu
-        # https://github.com/intel-lab-lkp/linux/commit/4c49c3233fc18f3b746a96b5ff4ce5008da3bfec
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Kalyan-Thota/drm-msm-disp-dpu1-clear-dspp-reservations-in-rm-release/20230130-232224
-        git checkout 4c49c3233fc18f3b746a96b5ff4ce5008da3bfec
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=riscv olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=riscv SHELL=/bin/bash drivers/gpu/drm/msm/
-
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
-
-All errors (new ones prefixed by >>):
-
->> drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c:2091:6: error: conflicting types for 'dpu_encoder_prepare_commit'
-   void dpu_encoder_prepare_commit(struct drm_encoder *drm_enc)
-        ^
-   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h:155:6: note: previous declaration is here
-   void dpu_encoder_prepare_commit(struct drm_encoder *drm_enc,
-        ^
-   1 error generated.
---
->> drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c:443:38: error: too few arguments to function call, expected 2, have 1
-                           dpu_encoder_prepare_commit(encoder);
-                           ~~~~~~~~~~~~~~~~~~~~~~~~~~        ^
-   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h:155:6: note: 'dpu_encoder_prepare_commit' declared here
-   void dpu_encoder_prepare_commit(struct drm_encoder *drm_enc,
-        ^
-   1 error generated.
 
 
-vim +/dpu_encoder_prepare_commit +2091 drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+On Thu, 2 Feb 2023, at 13:29, Neal Liu wrote:
+>> Hi Neal,
+>> 
+>> On Thu, 2 Feb 2023, at 03:17, kernel test robot wrote:
+>> > tree/branch:
+>> > https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git
+>> > master
+>> > branch HEAD: 66eee64b235411d512bed4d672c2d00683239daf  Add
+>> linux-next
+>> > specific files for 20230201
+>> >
+>> >
+>> > Unverified Error/Warning (likely false positive, please contact us if
+>> > interested):
+>> >
+>> > drivers/crypto/aspeed/aspeed-acry.c:295:37: sparse: sparse: incorrect
+>> > type in assignment (different base types)
+>> > drivers/crypto/aspeed/aspeed-acry.c:305:28: sparse: sparse: cast
+>> > removes address space '__iomem' of expression
+>> > drivers/crypto/aspeed/aspeed-acry.c:606:24: sparse: sparse: symbol
+>> > 'aspeed_acry_akcipher_algs' was not declared. Should it be static?
+>> 
+>> Can you please look into these issues with the ACRY driver?
+>> 
+>> Cheers,
+>> 
+>> Andrew
+>
+> I just send patch to fix the first 2 warnings,
 
-ae4d721ce10057a Abhinav Kumar     2022-04-26  2090  
-25fdd5933e4c0f5 Jeykumar Sankaran 2018-06-27 @2091  void dpu_encoder_prepare_commit(struct drm_encoder *drm_enc)
-25fdd5933e4c0f5 Jeykumar Sankaran 2018-06-27  2092  {
-25fdd5933e4c0f5 Jeykumar Sankaran 2018-06-27  2093  	struct dpu_encoder_virt *dpu_enc;
-25fdd5933e4c0f5 Jeykumar Sankaran 2018-06-27  2094  	struct dpu_encoder_phys *phys;
-25fdd5933e4c0f5 Jeykumar Sankaran 2018-06-27  2095  	int i;
-25fdd5933e4c0f5 Jeykumar Sankaran 2018-06-27  2096  
-25fdd5933e4c0f5 Jeykumar Sankaran 2018-06-27  2097  	if (!drm_enc) {
-25fdd5933e4c0f5 Jeykumar Sankaran 2018-06-27  2098  		DPU_ERROR("invalid encoder\n");
-25fdd5933e4c0f5 Jeykumar Sankaran 2018-06-27  2099  		return;
-25fdd5933e4c0f5 Jeykumar Sankaran 2018-06-27  2100  	}
-25fdd5933e4c0f5 Jeykumar Sankaran 2018-06-27  2101  	dpu_enc = to_dpu_encoder_virt(drm_enc);
-25fdd5933e4c0f5 Jeykumar Sankaran 2018-06-27  2102  
-25fdd5933e4c0f5 Jeykumar Sankaran 2018-06-27  2103  	for (i = 0; i < dpu_enc->num_phys_encs; i++) {
-25fdd5933e4c0f5 Jeykumar Sankaran 2018-06-27  2104  		phys = dpu_enc->phys_encs[i];
-b6fadcade627040 Drew Davenport    2019-12-06  2105  		if (phys->ops.prepare_commit)
-25fdd5933e4c0f5 Jeykumar Sankaran 2018-06-27  2106  			phys->ops.prepare_commit(phys);
-25fdd5933e4c0f5 Jeykumar Sankaran 2018-06-27  2107  	}
-25fdd5933e4c0f5 Jeykumar Sankaran 2018-06-27  2108  }
-25fdd5933e4c0f5 Jeykumar Sankaran 2018-06-27  2109  
+Thanks.
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
+> and the last one warning 
+> is already fixed by another patch.
+> [PATCH-next] crypto: aspeed: fix type warnings
+> https://patchwork.ozlabs.org/project/linux-aspeed/patch/20230119014859.1900136-1-yangyingliang@huawei.com/
+> Thanks
+>
+
+Great!
+
+Andrew
