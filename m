@@ -2,193 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D6C868A353
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Feb 2023 21:00:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E37368A367
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Feb 2023 21:12:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231302AbjBCUAd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Feb 2023 15:00:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50040 "EHLO
+        id S232716AbjBCUMW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Feb 2023 15:12:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229782AbjBCUAc (ORCPT
+        with ESMTP id S229853AbjBCUMV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Feb 2023 15:00:32 -0500
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39D0FA6C07
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Feb 2023 12:00:31 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id gr7so18355657ejb.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Feb 2023 12:00:31 -0800 (PST)
+        Fri, 3 Feb 2023 15:12:21 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 964FFA8406;
+        Fri,  3 Feb 2023 12:12:19 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id w11so9354404lfu.11;
+        Fri, 03 Feb 2023 12:12:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=sNZmUjalO4LYPOF+eUW4Y82TvsAb7nT3IdQ/0VgTds0=;
-        b=jRO/fAYuRFzZElK1szOUEDoXkIWGt9DLNv8LIQSon7G1JPsu0NOzevjM9U1nQ2uFcH
-         XPNXZAIIkMHZYgLD5JCkk/vNJEn147aFKV0AMOXJapzgLkYItcG0U7GqSRR9Z5cX31W9
-         YbQUK3ZuPQ0D7Lhq5uXjMRVURnc2o9MLqJhW9k9R0UqPf0QrJQ+KMZ8Q2Ige0M/0V3dX
-         kdNevz55C1T3VbHyb1lyn20CuxxFlyaPvtHnAiurioz9Ul8sbBaluJGm6OOK7OKDGMAC
-         frDZaX852xLspqd0U/4XFPQS90L8VAFlAzWbsY1mfz4Pwz4ODm8AVo7ch0G+oWQE8w2+
-         SJsg==
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=fMFQuyDg7tzX9gWE8PkvqDa2BwLHKqigIWrByTh8BSQ=;
+        b=LFTRXggel9ZZC0labNf019of7WFJApVT4MNwQ9heLNLFnbftDdcBTZDTR0/6cd6NKG
+         E93QlMno29mNd0kaZi3n14LXkPWwy6hN+AFUri1mrApaoOIhQZGAp/pE8aJ9Qy94nZNZ
+         md9Y7PYFbMydk/LvLlTpWix6tokVhzoeiRCoHU/ovhH6QTjipchlPX0fm9/NFTs6ZBQH
+         5WyKkamEQmsRuqVZF8F9Xq0oM2lbOH+2WqnNx2F+RsvMXvWSrhmpLvd2Yo3TNSajf53P
+         AaHSZCLrKl34IIrgAqGCRHSoqXD6SPSkgGP3W8d8Kvw/SJXs58X77LpQ5Olztr8qCnK/
+         j5OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sNZmUjalO4LYPOF+eUW4Y82TvsAb7nT3IdQ/0VgTds0=;
-        b=FPMjaadxfStJ1qF7SkvdxAN+idl7kQ4ZZqBavEzhpbfgl4MJybyLTD/uPduQ4oOruR
-         wVDX7n5ppqmcVkHCBUKW3IPdG5Tip/iFP+b/KN3sniwcLjNCd+cpAKPZ51hJMFH6hu9+
-         qeXt57ivnhmvqn2xuwpaST1eY6zjA46hoa8tV7UzZaouGiDa6Vm9Cv24xaxPD/yAU7ZS
-         DGy2nI+8cw5P2ZqY/d+wTMPT/O6DfpKd33vdWZi/X4Tjc4tHG268s5mPHNfuCS9T1p69
-         1ZDTuMDd3vPmeD70uIOChBj/IrDcXKeqv320V1uZUtg/qjiNSd+j8irxIeOfi/HlZTb5
-         15mg==
-X-Gm-Message-State: AO0yUKUhN6PFyGEGuz9tiNmGQHQi8Oo6ik7mlwFYevAf9f9w8WgywImS
-        D7BwyV6y3+nDqixRscOGCXHbfA==
-X-Google-Smtp-Source: AK7set+Hqp7GLl37iJsFJtTsBfbQ7Klfcp1/GqtqztuTu8LNSWYByMnYkwJg7BMR+qyE6Y51Kd5CiA==
-X-Received: by 2002:a17:906:1181:b0:7c1:6e08:4c20 with SMTP id n1-20020a170906118100b007c16e084c20mr12474122eja.7.1675454429730;
-        Fri, 03 Feb 2023 12:00:29 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id u7-20020a1709060b0700b0087bdae9a1ebsm1823437ejg.94.2023.02.03.12.00.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 03 Feb 2023 12:00:28 -0800 (PST)
-Message-ID: <9b8af6b3-9ab5-12f8-5576-1a93c58a26c1@linaro.org>
-Date:   Fri, 3 Feb 2023 22:00:27 +0200
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fMFQuyDg7tzX9gWE8PkvqDa2BwLHKqigIWrByTh8BSQ=;
+        b=Th8O+tw6w22V9i91o1wSBZKJA6GkLxcwJ7HBsp2oanPoPbi9t0YV1nAoucMmwj5qGC
+         43AoGbpCHYWVPpdJkoa5GfoVREwd+ZU7mx5i6eiYvKWWrsCJIiCahFcaJZm0szCWUyLZ
+         0E1mJlxRsiX9/XVXdIKX+5pBqFHW8CBHQgTR7L+N/kztoZSzR5whSbmW+tblYPhJILOE
+         Q10d5gSkL2KbovBlKQjtZp2Y0Qt0v/uBC53QW5uXNLJTWGy57IweCdxZLjDFZoBi1/Zx
+         k7/sqk6MTva7F5tk6Eh8eUWeGLTc5sbo63UdQGqDqIx0F2zJf9Q+NWA5Cs2Cr0a1g8ko
+         sRFg==
+X-Gm-Message-State: AO0yUKXteMp5iIzik5IrGUwGhyfPyurYq5OhW/cg6agJOcQmGh+888JE
+        WN/2oQE3W6EkwNnqxtwqbDQ9EFvbLN2NqRp7MEc=
+X-Google-Smtp-Source: AK7set980B/SyaxkQ4aequbMQN+w2UzmzAl2fl4+/i5eO8RMGJ/dkHt8aBuu4Sr9iTH2xmZ1SsP1U5uuT/L1DyJdN+w=
+X-Received: by 2002:a05:6512:3190:b0:4b5:b87a:3271 with SMTP id
+ i16-20020a056512319000b004b5b87a3271mr2198518lfe.18.1675455137699; Fri, 03
+ Feb 2023 12:12:17 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [RFC PATCH v2 1/2] PM: domains: Skip disabling unused domains if
- provider has sync_state
-Content-Language: en-GB
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Abel Vesa <abel.vesa@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+References: <c515aae3-88e4-948c-a856-7b45dd2caed9@linaro.org> <20230201031349.56405-1-steev@kali.org>
+In-Reply-To: <20230201031349.56405-1-steev@kali.org>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Fri, 3 Feb 2023 12:12:06 -0800
+Message-ID: <CABBYNZJPZChB0eOn05oFd2mknzOmr1RJRW3LFf3jbq_jpQ1UGA@mail.gmail.com>
+Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: thinkpad-x13s: Add bluetooth
+To:     Steev Klimaszewski <steev@kali.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-pm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
-        Doug Anderson <dianders@chromium.org>
-References: <20230127104054.895129-1-abel.vesa@linaro.org>
- <Y9v/z8CYik3faHh7@google.com>
- <3826e0e6-bb2b-409d-d1c3-ed361305bce3@linaro.org>
- <Y9xhbq/MIOgssslh@google.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <Y9xhbq/MIOgssslh@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Sven Peter <sven@svenpeter.dev>, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        Mark Pearson <markpearson@lenovo.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/02/2023 03:20, Matthias Kaehlcke wrote:
-> Hi Dmitry,
-> 
-> On Thu, Feb 02, 2023 at 09:53:41PM +0200, Dmitry Baryshkov wrote:
->> On 02/02/2023 20:24, Matthias Kaehlcke wrote:
->>> Hi Abel,
->>>
->>> On Fri, Jan 27, 2023 at 12:40:53PM +0200, Abel Vesa wrote:
->>>> Currently, there are cases when a domain needs to remain enabled until
->>>> the consumer driver probes. Sometimes such consumer drivers may be built
->>>> as modules. Since the genpd_power_off_unused is called too early for
->>>> such consumer driver modules to get a chance to probe, the domain, since
->>>> it is unused, will get disabled. On the other hand, the best time for
->>>> an unused domain to be disabled is on the provider's sync_state
->>>> callback. So, if the provider has registered a sync_state callback,
->>>> assume the unused domains for that provider will be disabled on its
->>>> sync_state callback. Also provide a generic sync_state callback which
->>>> disables all the domains unused for the provider that registers it.
->>>>
->>>> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
->>>> ---
->>>>
->>>> This approach has been applied for unused clocks as well.
->>>> With this patch merged in, all the providers that have sync_state
->>>> callback registered will leave the domains enabled unless the provider's
->>>> sync_state callback explicitly disables them. So those providers will
->>>> need to add the disabling part to their sync_state callback. On the
->>>> other hand, the platforms that have cases where domains need to remain
->>>> enabled (even if unused) until the consumer driver probes, will be able,
->>>> with this patch in, to run without the pd_ignore_unused kernel argument,
->>>> which seems to be the case for most Qualcomm platforms, at this moment.
->>>
->>> I recently encountered a related issue on a Qualcomm platform with a
->>> v6.2-rc kernel, which includes 3a39049f88e4 ("soc: qcom: rpmhpd: Use
->>> highest corner until sync_state"). The issue involves a DT node with a
->>> rpmhpd, the DT node is enabled, however the corresponding device driver
->>> is not enabled in the kernel. In such a scenario the sync_state callback
->>> is never called, because the genpd consumer never probes. As a result
->>> the Always-on subsystem (AOSS) of the SoC doesn't enter sleep mode during
->>> system suspend, which results in a substantially higher power consumption
->>> in S3.
->>>
->>> I wonder if genpd (and some other frameworks) needs something like
->>> regulator_init_complete(), which turns off unused regulators 30s after
->>> system boot. That's conceptually similar to the current
->>> genpd_power_off_unused(), but would provide time for modules being loaded.
->>
->> I think the overall goal is to move away from ad-hoc implementations like
->> clk_disable_unused/genpd_power_off_unused/regulator_init_complete towards
->> the sync_state.
-> 
-> I generally agree with the goal of using common mechanisms whenever possible.
-> 
->> So inherently one either has to provide drivers for all devices in question
->> or disable unused devices in DT.
-> 
-> I don't think that's a great solution, it essentially hands the issue down to
-> the users or downstream maintainers of the kernel, who might not be aware that
-> there is an issue, nor know about the specifics of genpd (or interconnects and
-> clocks which have similar problems).
+Hi Steev,
 
-The goal is to move the control down to individual drivers. Previously 
-we had issues with clk_disable_unused() disabling mdss/mdp clocks 
-incorrectly, which frequently led to broken display output. Other 
-clock/genpd/regulator drivers might have other internal dependencies. 
-Thus it is not really possible to handle resource shutdown in the common 
-  (framework) code.
+On Tue, Jan 31, 2023 at 7:13 PM Steev Klimaszewski <steev@kali.org> wrote:
+>
+> >On 31/01/2023 05:38, Steev Klimaszewski wrote:
+> >> Signed-off-by: Steev Klimaszewski <steev@kali.org>
+> >> ---
+> >>  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 68 +++++++++++++++++++
+> >>  1 file changed, 68 insertions(+)
+> >>
+> >> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> >> index f936b020a71d..951438ac5946 100644
+> >> --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> >> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> >> @@ -24,6 +24,8 @@ / {
+> >>      aliases {
+> >>              i2c4 = &i2c4;
+> >>              i2c21 = &i2c21;
+> >> +            serial0 = &uart17;
+> >> +            serial1 = &uart2;
+> >>      };
+> >>
+> >>      wcd938x: audio-codec {
+> >> @@ -712,6 +714,32 @@ &qup0 {
+> >>      status = "okay";
+> >>  };
+> >>
+> >> +&uart2 {
+> >> +    status = "okay";
+> >> +
+> >> +    pinctrl-names = "default";
+> >> +    pinctrl-0 = <&uart2_state>;
+> >> +
+> >> +    bluetooth {
+> >> +            compatible = "qcom,wcn6855-bt";
+> >> +
+> >> +/*
+>
+> > Why dead code should be in the kernel?
+>
+> As mentioned in the cover letter, this is a bit closer to an RFC than ready to
+> go in, and I do apologize that it wasn't clear enough.  I do not have access to
+> the schematics, and based on my reading of the schema for bluetooth, these
+> entries are supposed to be required, however, like the wcn6750, I have dummy
+> data entered into the qca_soc_data_wcn6855 struct.  I know that these should be
+> there, I just do not have access to the correct information to put, if that
+> makes sense?
 
-> 
-> In general symptoms are probably subtle, like a (potentially substantially)
-> increased power consumption during system suspend. The issue might have been
-> introduced by an update to a newer kernel, which now includes a DT node for a
-> new SoC feature which wasn't supported by the 'old' kernel. It's common
-> practice to use the 'old' .config, at least as a starting point, which
-> obviously doesn't enable the new driver. That happend to me with [1] when
-> testing v6.1. It took me quite some time to track the 'culprit' commit down
-> and then some debugging to understand what's going on. Shortly after that I
-> ran into a related issue involving genpds when testing v6.2-rc, which again
-> took a non-trivial amount of time to track down (and I'm familiar with the SoC
-> platform and the general nature of the issue). I don't think it's reasonable
-> to expect every user/downstream maintainer of an impacted system to go through
-> this, one person at a time.
+Well you don't have the RFC set in the subject which is probably why
+people are reviewing it like it is supposed to be merged, that said I
+do wonder if there is to indicate these entries are to be considered
+sort of experimental so we don't end up enabling it by default?
 
-I think it would be nice to have some way of 'sync_pending' debug 
-available (compare this to debugfs/devices_deferred).
+>
+> <snip>
+>
+> >Does not look like you tested the DTS against bindings. Please run `make
+> >dtbs_check` (see Documentation/devicetree/bindings/writing-schema.rst
+> >for instructions).
+>
+> Correct I had not, but I have now, and will make the corrections test and they
+> will be included in v3.
+>
+> >Best regards,
+> >Krzysztof
+>
+> I appreciate the guidance for what I was doing incorrectly.
+>
+> -- steev
 
-Note, we are trying to make sure that all supported drivers are enabled 
-at least as modules (if possible). If we fail, please send a patch 
-fixing the defconfig.
 
-> Maybe there could be a generic solution for drivers with a 'sync_state'
-> callback, e.g. a the driver (or framework) could have a 'sync_state_timeout'
-> callback (or similar), which is called by the driver framework if 'sync_state'
-> wasn't called (for example) 30s after the device was probed. Then the provider
-> can power off or throttle unclaimed resources.
-
-I might be missing a point somewhere, but for me it looks like a logical 
-solution. Please send a proposal.
 
 -- 
-With best wishes
-Dmitry
-
+Luiz Augusto von Dentz
