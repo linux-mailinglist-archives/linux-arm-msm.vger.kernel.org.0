@@ -2,140 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F3BD688E21
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Feb 2023 04:45:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 30BCE688E4A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Feb 2023 04:57:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231751AbjBCDpk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Feb 2023 22:45:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57562 "EHLO
+        id S232036AbjBCD5J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 22:57:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231760AbjBCDph (ORCPT
+        with ESMTP id S232168AbjBCD5I (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 22:45:37 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B06367266A
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 19:45:35 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id v17so6041170lfd.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 19:45:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8zrhD271lrTttGluQF+PCnQmCDKl2CENWlcyeC9oezU=;
-        b=EnvtQcOYczYc3Hm8HN1M+u5/bCD8+AZQuZx40gf9LLFJRhaayJZiN7xh9oQ0HbVyv5
-         WlaBYyooZpDvygERB3VBtzkrYmMoRceclFbdlBAjpw6s3BrzcsR9GMuvvHXM2bDqDLx5
-         fiEDoomZEKpQ2lVHcskZkAyOV/HWXozdlOInzcSzGZpCsnZTNVqMgP1U7axh1r7D1ybs
-         N84+JtK8ZIBIGRZSjODPD49Lj0tHIfDl6PCMPbnteNEbCC2uBDrVFrMNxX1u6RcOeMJt
-         4WxLC+55i29BnBlZlD4M/NOLRiFx0LCmRdEqYBB6SB+jV2NwBiuXG3x496+i+NVQrFB5
-         ukNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8zrhD271lrTttGluQF+PCnQmCDKl2CENWlcyeC9oezU=;
-        b=mYE/Uy862bTDTqZsI9UYl24aBQARsKzrG1+t5ln1ea4j1BhqrfHUAcrueMTFmzu0IW
-         7ksqP0xBVT54xquWxlvTsf+hpZKDfbR4AcWnG2kcjTf6wWsrdBfmNUBw9U841M4uB/Cx
-         q6TMvcAisbF439sx82wYM5iLM5rrqs9eGmzKGzpGLVJlIadmq60lz5TOAkG9p9QheNk5
-         2dJl38D+ikseTq3TyCDl0Z4UqO1SKX6kL9LVIUITmdIQ6uJRt8poH2RZLuRKlz+C9Zx5
-         USlqoLjgfEXkbqUgX58uWXiEdd9R+d2UEP9C1hKjwhlj1ITuizTqHnJ332upELaDp87u
-         wI4w==
-X-Gm-Message-State: AO0yUKVnc4HwqUY/NdDnu0U+tDMtlM1fur+2rR5rvv87/IDT7uoXMyaX
-        MtFRgHEO5vaZAmWALwt9GuPcLprJIcgnyZHoCQuLbg==
-X-Google-Smtp-Source: AK7set9mvhjgLBscCSmB7QGxYq4dFW8q88IFngk26C54TKNXnncufj9MdP1Re09yaxaXAyMUSRPNPzBfHdP7B3ZfrTs=
-X-Received: by 2002:a05:6512:3d28:b0:4d8:8ad1:a05c with SMTP id
- d40-20020a0565123d2800b004d88ad1a05cmr1245389lfv.140.1675395933982; Thu, 02
- Feb 2023 19:45:33 -0800 (PST)
+        Thu, 2 Feb 2023 22:57:08 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04AEF2C643;
+        Thu,  2 Feb 2023 19:57:06 -0800 (PST)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3133hTAB016276;
+        Fri, 3 Feb 2023 03:57:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=vzgYVV7GRzc2mmMtmxmIFFcdNmbAomDTNjEc/iAMnTQ=;
+ b=hIgfUGNq5l40awAmsZIjzdtkIfz31ZV81qDPsiwH4B94wjO68v5poAnhASKu3ohUDEtD
+ QBmXbLbITWWIMfm/vMBaw4HfrD6Fh1oANfj9hv3/J0ViRCGyxcKtBf9yN9ICxKPpPoIh
+ 11/EvSVyqKuEV1uqnSdyzXKnnwsZqVZX6taTe1Dvku+x+vE1M6CMA8oyTwReqEpzRNVJ
+ ZQ8aaWoOefWB3+gvuuB+v1tkYbgIAflisTxoBAMLRToOh4GTnAO0JUSuLR0L0byL4xxm
+ vUazKfB5/Qvfa4RxWDSdv8daxu9JlFvtHiGgvs650uj0CluGDbSZjUQkmvplHGuB4ftm bw== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ngns2gh11-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 03 Feb 2023 03:57:00 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3133uxMH005237
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 3 Feb 2023 03:56:59 GMT
+Received: from fenglinw2-gv.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Thu, 2 Feb 2023 19:56:57 -0800
+From:   Fenglin Wu <quic_fenglinw@quicinc.com>
+To:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <pavel@ucw.cz>, <krzysztof.kozlowski@linaro.org>, <lee@kernel.org>
+CC:     <quic_collinsd@quicinc.com>, <quic_subbaram@quicinc.com>,
+        <quic_fenglinw@quicinc.com>
+Subject: [PATCH v7 0/2] Add LED driver for flash module in QCOM PMICs
+Date:   Fri, 3 Feb 2023 11:56:42 +0800
+Message-ID: <20230203035644.474208-1-quic_fenglinw@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-References: <20230201080227.473547-1-jun.nie@linaro.org> <9ab7383b-f3ed-3e48-d275-3c8933be5f2f@kernel.org>
- <CABymUCNKvm9+_ascdcWAgA1xGYKPhyO5C97-+rTTK739v+UEew@mail.gmail.com> <957f2bd0-d249-169b-04cc-242b9fcf8c6b@kernel.org>
-In-Reply-To: <957f2bd0-d249-169b-04cc-242b9fcf8c6b@kernel.org>
-From:   Jun Nie <jun.nie@linaro.org>
-Date:   Fri, 3 Feb 2023 11:45:31 +0800
-Message-ID: <CABymUCMA9fxGjKAxLhpnSxr92t-oFDfe=mOSiLWb4Jjbzs=n8g@mail.gmail.com>
-Subject: Re: [PATCH 1/2] dt-bindings: interconnect: Add Qualcomm CCI dt-bindings
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
-        cw00.choi@samsung.com, bryan.odonoghue@linaro.org,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: bdAe6c7-B0sRnNRIfxeWcxHPD01dA4jv
+X-Proofpoint-ORIG-GUID: bdAe6c7-B0sRnNRIfxeWcxHPD01dA4jv
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-02-03_01,2023-02-02_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 clxscore=1015
+ spamscore=0 malwarescore=0 priorityscore=1501 suspectscore=0 mlxscore=0
+ adultscore=0 mlxlogscore=665 impostorscore=0 phishscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302030035
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Krzysztof Kozlowski <krzk@kernel.org> =E4=BA=8E2023=E5=B9=B42=E6=9C=882=E6=
-=97=A5=E5=91=A8=E5=9B=9B 17:42=E5=86=99=E9=81=93=EF=BC=9A
->
-> On 02/02/2023 10:29, Jun Nie wrote:
-> >>> +
-> >>> +properties:
-> >>> +  compatible:
-> >>> +    enum:
-> >>> +      - qcom,msm8939-cci
-> >>> +
-> >>> +  clocks:
-> >>> +    maxItems: 1
-> >>> +
-> >>> +  operating-points-v2: true
-> >>> +  opp-table:
-> >>> +    type: object
-> >>> +
-> >>> +required:
-> >>> +  - compatible
-> >>> +  - clocks
-> >>> +  - operating-points-v2
-> >>> +  - nvmem-cells
-> >>
-> >> ?? You cannot require properties which are not present.
-> >>
-> >>> +  - power-domains
-> >>
-> >> Same here.
-> >>
-> >
-> > So the properties should be added later, after cpr and fuse nodes are
-> > available in mainline, right?
->
-> No, binding should be complete, so why would you skip some properties? I
-> don't see here dependency on other bindings. Unless I missed here
-> something and there is a dependency? But then what kind? Do you
-> reference other schema?
->
-> Best regards,
-> Krzysztof
->
-Sorry, it is a copy/modified error with overlooking some added properties.
+Initial driver and binding document changes for supporting flash LED
+module in Qualcomm Technologies, Inc. PMICs.
 
-+        cci_opp3: opp-cpr14-400000000 {
-+            opp-hz =3D /bits/ 64 <400000000>;
-+            opp-supported-hw =3D <0x1>;
-+            required-opps =3D <&cpr_opp14>;
-+        };
-+
-+        cci_opp4: opp-cpr15-400000000 {
+Changes in V7:
+  1. Fix compilation issue reported by kernel test robot
 
-Documentation/devicetree/bindings/interconnect/qcom,cci.example.dtb:
-opp-table-cci: Unevaluated properties are not allowed
-('opp-cpr14-400000000', 'opp-cpr15-400000000' were unexpected)
+Changes in V6:
+  1. Update the driver to address review comments from Jones,Lee.
 
-Do you know how to fix this dts check warning?
-The cci_opp3 and cci_opp4 have the same frequency but with different
-requirements to
-power domain. So the name of the 2 opp should be identical or with a
-different tag, but there
-are warnings for both cases for the 2 lines. Thanks!
+Changes in V5:
+  1. Add MODULE_DEVICE_TABLE for auto-loading.
+
+Changes in V4:
+  1. Added Tested-By tag.
+  2. Addressed review comments in the binding change and added
+     Reviewed-by tag.
+
+Changes in V3:
+  1. Updated the driver to use regmap_field for register access.
+  2. Adressed the review comments in binding document change.
+
+Changes in V2:
+  1. Addressed review comments in binding change, thanks Krzysztof!
+  2. Updated driver to address the compilation issue reported by
+     kernel test robot.
 
 
-+            opp-hz =3D /bits/ 64 <400000000>;
-+            opp-supported-hw =3D <0x3e>;
-+            required-opps =3D <&cpr_opp15>;
-+        };
+Fenglin Wu (2):
+  leds: flash: add driver to support flash LED module in QCOM PMICs
+  dt-bindings: leds: add QCOM flash LED controller
+
+
+Fenglin Wu (2):
+  leds: flash: add driver to support flash LED module in QCOM PMICs
+  dt-bindings: leds: add QCOM flash LED controller
+
+ .../bindings/leds/qcom,spmi-flash-led.yaml    | 116 +++
+ drivers/leds/flash/Kconfig                    |  15 +
+ drivers/leds/flash/Makefile                   |   1 +
+ drivers/leds/flash/leds-qcom-flash.c          | 769 ++++++++++++++++++
+ 4 files changed, 901 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml
+ create mode 100644 drivers/leds/flash/leds-qcom-flash.c
+
+-- 
+2.25.1
+
