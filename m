@@ -2,150 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E0686896F8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Feb 2023 11:37:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A32A7689707
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Feb 2023 11:38:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232166AbjBCKgX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Feb 2023 05:36:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34354 "EHLO
+        id S233351AbjBCKht (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Feb 2023 05:37:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232560AbjBCKgU (ORCPT
+        with ESMTP id S231866AbjBCKhf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Feb 2023 05:36:20 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82D1F1287F
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Feb 2023 02:36:08 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id m5-20020a05600c4f4500b003db03b2559eso3479603wmq.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Feb 2023 02:36:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=B/Alxt640yrbBa/XKQU7mj/9+hAa4yXrPlBn7QlwrTE=;
-        b=UjMbcFzGrptxieT8o0hY0a98JtOb5i2tKgzNSLNc00SCxbYt/RbwL2n0oavc/67Wki
-         NaDqSTrkPlpjAUzlZLYGxtrXVOxw6iFOedrlC1W4FZFBIvq4o7oylRzqr8t4mK3WPQxM
-         9+Yg5tkXnHqIf+wjjK6SaOWUmNujCKLWwDIVUMjokI/tm5QPr9eAvPeXN2L2fI0b4naC
-         7gCAhJhPJZ1BwLQpQOaIuxcOo8vqCzlkan0H79F6ESArv4JAq3c29OZmVvdTBC5ffow0
-         lVthbZ3HSGI+IinbBlShyBximjaEZKjmT8UdtMG+RclwdjK4K+f7vy2FdTvcO3gZ72Fa
-         rMYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=B/Alxt640yrbBa/XKQU7mj/9+hAa4yXrPlBn7QlwrTE=;
-        b=4BVHVgRYxn6qmjQHYaV7QNCRszIIbd36fOXKMTuOLtvFH3b48QMiW0ARWN1AiFP2sY
-         jEQFkYPnebNpa+gBw693ePa4wTj+yjQIkC8sEVlG61KMJHXh7LUQooT998eDe/1UoIOn
-         K1kao9/zHuUIS7qbWbncdLsx2BBPS62aNzSUJWpfd4wOV6vDhStpWNpCgVjnVHDj9TCm
-         DmrY+JiQH0dqpKDjo3P5NJdX9U/AEH1S5y8+FY775zw4YKEOfaKiKPky8wqFaA+Dvjlq
-         F1vn/wPY3jMqul9LwwGlyEZ8JSYezJxPc67oMLuZyLMm+2xg7e5ldrPFRZ66nfTf3kik
-         pbvg==
-X-Gm-Message-State: AO0yUKUZiDmDu8RLksmBCh7enRd6wj1aMxufLXtPZ80FOeRWHTcH1oP9
-        c+xzvbvm0huegOZsVVXJYBNskg==
-X-Google-Smtp-Source: AK7set9DX2k6HQ89nim3kkE+cfA616Ab/IB497UNILR3ETsNFyXK6hLtrXWaLZGzH0PNLB6MmgDXeg==
-X-Received: by 2002:a05:600c:3542:b0:3df:ee00:d230 with SMTP id i2-20020a05600c354200b003dfee00d230mr125428wmq.11.1675420566970;
-        Fri, 03 Feb 2023 02:36:06 -0800 (PST)
-Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id i21-20020a05600c355500b003dc4b4dea31sm2460668wmq.27.2023.02.03.02.36.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Feb 2023 02:36:06 -0800 (PST)
-Date:   Fri, 3 Feb 2023 12:36:05 +0200
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Johan Hovold <johan@kernel.org>
+        Fri, 3 Feb 2023 05:37:35 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72FB3D539;
+        Fri,  3 Feb 2023 02:37:29 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id F284361ECE;
+        Fri,  3 Feb 2023 10:37:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35CE6C433EF;
+        Fri,  3 Feb 2023 10:37:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1675420648;
+        bh=3Wmz48fgl19z4byyEs0lSix0KoE1vW61hKlH5UDXIhQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=P45nY1jB+6uxc21XLPz/QKTQUwwfeDYPcqt+hNksIUdcSI2NFsEPWvH2AivDJr5m1
+         3RgQCQqcRRMyS9Zj20Tz66tX2Ip0RCISugWNubXriSgWd2qiAfXursQR9sFYd2m6WD
+         UfwnoreOnrOS0WdNATAv0VorwdMpdSzAM3EOetlCLdYy8+OjoSW5z2THqh5KS+aGG2
+         0UbLb2+nK1ljNpCdunKgXvADy9j2MvsqX1uhaaVhdRm5flI/R6N7zNhVjYgLeH9yYX
+         0tIHNQwAugVGmzh6mz3xY6tZM9p2VsoAjnvkK/KVvZut820Jh8VGZu9hcU5zAYd1M4
+         4SVL3xe/bDQyQ==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pNtS6-0001HK-Vl; Fri, 03 Feb 2023 11:37:55 +0100
+Date:   Fri, 3 Feb 2023 11:37:54 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Abel Vesa <abel.vesa@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
         "vkoul@kernel.org" <vkoul@kernel.org>,
         Kishon Vijay Abraham I <kishon@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v7 12/12] arm64: dts: qcom: sm8550-mtp: Add PCIe PHYs and
- controllers nodes
-Message-ID: <Y9zjlSl8+Dqqc/5z@linaro.org>
-References: <20230203081807.2248625-1-abel.vesa@linaro.org>
- <20230203081807.2248625-13-abel.vesa@linaro.org>
- <Y9zaT0SA5yahuBoW@hovoldconsulting.com>
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v4 3/8] dt-bindings: phy: qcom,qmp-usb: Document SM8550
+ compatible
+Message-ID: <Y9zkAjm1eNCuaajc@hovoldconsulting.com>
+References: <20230202132511.3983095-1-abel.vesa@linaro.org>
+ <20230202132511.3983095-4-abel.vesa@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Y9zaT0SA5yahuBoW@hovoldconsulting.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+In-Reply-To: <20230202132511.3983095-4-abel.vesa@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23-02-03 10:56:31, Johan Hovold wrote:
-> On Fri, Feb 03, 2023 at 10:18:07AM +0200, Abel Vesa wrote:
-> > Enable PCIe controllers and PHYs nodes on SM8550 MTP board.
-> > 
-> > Co-developed-by: Neil Armstrong <neil.armstrong@linaro.org>
-> > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > ---
+On Thu, Feb 02, 2023 at 03:25:06PM +0200, Abel Vesa wrote:
+> Add the SM8550 compatible to the list.
 > 
-> > +&pcie_1_phy_aux_clk {
-> > +	clock-frequency = <1000>;
-> > +};
-> > +
-> > +&pcie0 {
-> > +	wake-gpios = <&tlmm 96 GPIO_ACTIVE_HIGH>;
-> > +	perst-gpios = <&tlmm 94 GPIO_ACTIVE_LOW>;
-> > +
-> > +	pinctrl-names = "default";
-> > +	pinctrl-0 = <&pcie0_default_state>;
-> > +
-> > +	status = "okay";
-> > +};
-> > +
-> > +&pcie0_phy {
-> > +	vdda-phy-supply = <&vreg_l1e_0p88>;
-> > +	vdda-pll-supply = <&vreg_l3e_1p2>;
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> Acked-by: Rob Herring <robh@kernel.org>
+> ---
 > 
-> Super nit: add newline for consistency.
+> The v3 version of this patch was here:
+> https://lore.kernel.org/all/20230126131415.1453741-4-abel.vesa@linaro.org/
 > 
-> > +	status = "okay";
-> > +};
-> > +
-> > +&pcie1 {
-> > +	wake-gpios = <&tlmm 99 GPIO_ACTIVE_HIGH>;
-> > +	perst-gpios = <&tlmm 97 GPIO_ACTIVE_LOW>;
+> Changes since v3:
+>  * added Rob's A-b tag
 > 
-> Neither controller needs the new enable gpio?
+> Changes since v2:
+>  * none
+> 
+> Changes since v1:
+>  * moved to sc8280xp bindings
+> 
+>  .../devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml   | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
+> index 6f31693d9868..ec00fbc06abe 100644
+> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
+> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
+> @@ -17,6 +17,7 @@ properties:
+>    compatible:
+>      enum:
+>        - qcom,sc8280xp-qmp-usb43dp-phy
+> +      - qcom,sm8550-qmp-usb3-dp-phy
+>  
+>    reg:
+>      maxItems: 1
 
-Nope, none of the controllers need it.
+Subject prefix should be
 
-> 
-> > +
-> > +	pinctrl-names = "default";
-> > +	pinctrl-0 = <&pcie1_default_state>;
-> > +
-> > +	status = "okay";
-> > +};
-> > +
-> > +&pcie1_phy {
-> > +	vdda-phy-supply = <&vreg_l3c_0p91>;
-> > +	vdda-pll-supply = <&vreg_l3e_1p2>;
-> > +	vdda-qref-supply = <&vreg_l1e_0p88>;
-> > +
-> > +	status = "okay";
-> > +};
-> > +
-> >  &pm8550_gpios {
-> >  	sdc2_card_det_n: sdc2-card-det-state {
-> >  		pins = "gpio12";
-> 
-> Johan
+	dt-bindings: phy: qcom,sc8280xp-qmp-usb43dp: 
+
+Looks good otherwise: 
+
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
