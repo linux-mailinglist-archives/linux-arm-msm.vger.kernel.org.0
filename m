@@ -2,112 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C91E768A1ED
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Feb 2023 19:24:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4BD9D68A20A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Feb 2023 19:31:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233199AbjBCSYV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Feb 2023 13:24:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55128 "EHLO
+        id S232476AbjBCSbd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Feb 2023 13:31:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233436AbjBCSYU (ORCPT
+        with ESMTP id S232166AbjBCSbc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Feb 2023 13:24:20 -0500
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C564ADB95
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Feb 2023 10:24:13 -0800 (PST)
-Received: by mail-ej1-x630.google.com with SMTP id dr8so17622196ejc.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Feb 2023 10:24:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=54FW5UQ57LYDUUaOoRG1eWQLZeg9cuZyn479cV2SDq0=;
-        b=gfqECzwoBp8RaT3ApZKy9Fa4Cy8hWotg/eNuNS60VzcZiIkoWliF7jfw3EeDDJnXct
-         U7wPZ4oPF9qNZGbFnpYIpXdWE25M3/e3Dvo/SaeP9falxVNKrT4/KE5rdYZA5KD/cQ8Q
-         ZWpOZzhtWTmSQFaXT0h2U8sXq5AKoQWBa+3URYLHImXAFtcuyamT1nbQ5B5v3cLRLtQT
-         +n62I3dpd2CxplrS5VYb0Ne8Wvbf3rjVx7n5XXlWPZRm6YhpKWF31pBKfXUP1c59VDgI
-         UWnROeNiyIb26QFY7G2GCmw4XtxTPEmsDxKs6YLVMBhC5jhHco9nOVgKUPORuyQjxuXI
-         2XrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=54FW5UQ57LYDUUaOoRG1eWQLZeg9cuZyn479cV2SDq0=;
-        b=XHKL5Ipii8kpFFYmqhO7cH0tqpmMQ00x+8KeT2hhGX9zdZdf7iVE5hi7xEP5kDJlm8
-         OJCxF7TTd1HOGGJHmxovlHUigds4nLCsRBa04/Kzm4t9xHvuB0EeBESg9rfsdHMEjrLm
-         ea8JpxGUHQPn444Du0/mmaFaHB7NH6BHUh/x955zAtLLcQq07MfRPjeSs9A04A95WkXD
-         mtO4YpqDsiojl23su0ZNetsiPpZHclZxSN3rjegNYZrUgryWTG5ZzveJRj9wqQ4qEpMI
-         DpCnjf9VM7YIsPkTY9F1jM8i1qbhv4qO4QTCpcuTLLypiZ3qSE0YzLcKd+kuZ8Wr1L7S
-         7AWg==
-X-Gm-Message-State: AO0yUKUEyirWkRjBgvTNmmSngSO+LGjQTLfJKY8mXY3JqPUwdLwOOqcA
-        30I+vc+u4/6PRZ/guTNvSSV+SyFcufM5r9pN
-X-Google-Smtp-Source: AK7set/jRLYp2R0PI3fKAjVVQSQr4euujeoFEw8ZsadsYOId/b2rRWWXXOcVHh+zgdp4jBoRGCqp/A==
-X-Received: by 2002:a17:906:94cb:b0:879:ec1a:4ac with SMTP id d11-20020a17090694cb00b00879ec1a04acmr9868422ejy.76.1675448652002;
-        Fri, 03 Feb 2023 10:24:12 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id x16-20020a170906149000b00889c115cf6asm1713775ejc.145.2023.02.03.10.24.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 03 Feb 2023 10:24:11 -0800 (PST)
-Message-ID: <27c7f706-ba8e-c743-0465-1ca2381d12bc@linaro.org>
-Date:   Fri, 3 Feb 2023 20:24:10 +0200
+        Fri, 3 Feb 2023 13:31:32 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B6EC9F9F4;
+        Fri,  3 Feb 2023 10:31:32 -0800 (PST)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 313HIY0N019113;
+        Fri, 3 Feb 2023 18:31:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=/xHCVgzwEu8Si5xmF4rnGUMeXh7iW2ylVEuGLmpdCA8=;
+ b=N2tzG8E6kK41z2ugRxwcXmynMoMQCDKsFLLVobN4mKNZAJ81bQXydj9rWwwzkrQm170y
+ +6JrWJjjybrf74FZfibyXuprfcHByV5obn7xiDgzYlVESk/h/RKUZwEbIlx3K/OKzhSQ
+ COK58VFrOU7YnD36SeO1vKS8IGh4+FH44eIK/r6mvTNlK76SPNRNqzb6SCbDAnARzKVZ
+ CQcouWgiIw8RmT+lY06Y8s2hcGSXvVo8zqCMOie2px7jJbB1ibXzVF8zX0lW/A+bgzAE
+ T5Bxhj5U5KaRYOfbNb+ZtTLT0pkaBMKbxQoGjtA3pWeEFFyCYWAiKn8a55vn2yo59St7 0A== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ngwd01e1h-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 03 Feb 2023 18:31:29 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 313IVSeB009689
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 3 Feb 2023 18:31:28 GMT
+Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Fri, 3 Feb 2023 10:31:27 -0800
+From:   Elliot Berman <quic_eberman@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+CC:     Elliot Berman <quic_eberman@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH] MAINTAINERS: Add include/linux/qcom* to ARM/QUALCOMM
+Date:   Fri, 3 Feb 2023 10:31:14 -0800
+Message-ID: <20230203183115.2836316-1-quic_eberman@quicinc.com>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH v3 00/27] drm/msm/dpu: wide planes support
-Content-Language: en-GB
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20230203182132.1307834-1-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230203182132.1307834-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: DY5w-TLKt7DRWx41NBK_pSts5fipYwKz
+X-Proofpoint-ORIG-GUID: DY5w-TLKt7DRWx41NBK_pSts5fipYwKz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-02-03_17,2023-02-03_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
+ adultscore=0 impostorscore=0 phishscore=0 bulkscore=0 mlxscore=0
+ priorityscore=1501 spamscore=0 mlxlogscore=849 malwarescore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302030170
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/02/2023 20:21, Dmitry Baryshkov wrote:
-> The review of the first half of v2 took more than a month. Let's update
-> the reviewed patches in attempt to get the first half of the series into
-> the acked and mergeable state. This would allow us to lower the impact
-> (and the patch count). At 27 patches this series is approaching the
-> limits of manageability.
-> 
-> This patchset brings in multirect usage to support using two SSPP
-> rectangles for a single plane. Full virtual planes support is omitted
-> from this pull request, it will come later.
-> 
-> Changes since v1 (which was ages ago):
-> - Rebased on top of 6.2-rc1
-> - Dropped the controversial _dpu_crtc_blend_setup() split patch
-> - Renamed dpu_hw_pipe to dpu_hw_sspp
-> - Other misc changes
+ARM/QUALCOMM support currently includes include/linux/*/qcom* but is
+missing a few Qualcomm headers directly in include/linux/.
 
-I forgot to add it here, please excuse me:
+This effectively adds following headers directly under ARM/QUALCOMM.
+ - include/linux/qcom-geni-se.h
+ - include/linux/qcom_scm.h
 
-Changes since v2:
+Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+---
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
-- Renamed dpu_hw_pipe_cfg to dpu_hw_sspp_cfg
-- Added a patch to clean up src add / layout for the solid fill planes
-- Fixed several comments and commit messages which caused confusion
-- Added documentation for new dpu_plane_state members
-- Slightly reworked dpu_plane_atomic_check() to make it more logical and 
-obvious
+diff --git a/MAINTAINERS b/MAINTAINERS
+index f2c3d471fe8f..752cddd73bf8 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2724,6 +2724,7 @@ F:	drivers/spi/spi-qup.c
+ F:	drivers/tty/serial/msm_serial.c
+ F:	drivers/usb/dwc3/dwc3-qcom.c
+ F:	include/dt-bindings/*/qcom*
++F:	include/linux/qcom*
+ F:	include/linux/*/qcom*
+ F:	include/linux/soc/qcom/
+ 
 
+base-commit: 3866989ec2c319341e2cf69ec6116269b634a271
 -- 
-With best wishes
-Dmitry
+2.39.1
 
