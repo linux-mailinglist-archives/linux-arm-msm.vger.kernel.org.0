@@ -2,98 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1777E689577
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Feb 2023 11:24:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 33B2C6896DB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Feb 2023 11:36:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231366AbjBCKUJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Feb 2023 05:20:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38186 "EHLO
+        id S232119AbjBCKfs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Feb 2023 05:35:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232853AbjBCKUG (ORCPT
+        with ESMTP id S232717AbjBCKfd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Feb 2023 05:20:06 -0500
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B061E9D05E;
-        Fri,  3 Feb 2023 02:19:31 -0800 (PST)
+        Fri, 3 Feb 2023 05:35:33 -0500
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14A5AD539
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Feb 2023 02:35:32 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id f47-20020a05600c492f00b003dc584a7b7eso5675293wmp.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Feb 2023 02:35:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1675419571; x=1706955571;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=PL9NTO6s4JhDRpJmi1ZrsmWCRrO+lAGkVyxRVYDDEmo=;
-  b=ukNO9xT1ILR25efgMojssOEce1MU5FiwLlqsDWNgnM2dXJTXyNtt+yme
-   62qQnBWukUctE00HfRx/zJr3XWUSHAPBJLelIhVG06YW9rgNjWA4CHXHt
-   BWmgFc2yFwa1bAwaUrBjOxvvsOwIb0Fz+u8s3kJshHCzA/4+M9Tc69xQr
-   0=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 03 Feb 2023 02:18:40 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.45.79.139])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Feb 2023 02:18:40 -0800
-Received: from [10.216.62.140] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Fri, 3 Feb 2023
- 02:18:36 -0800
-Message-ID: <c0642b4b-5a36-8d30-017b-5585a124211a@quicinc.com>
-Date:   Fri, 3 Feb 2023 15:48:32 +0530
+        d=linaro.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=8nK1fKLOt07t42zA/NX2wGsyiI7WBcYF7AOE3hneo4g=;
+        b=lGlrN2dLHCqbVaz9YwNXyYBxz/D4lgr1w3rTIjvH6mHtVSex/oYRqVJZSvja++c7dX
+         xV7x/9Jc6K4Kf2xqpfN+ic1eERM9X/cvt+VW6AmxHUN3Hqwec7sIAhgdWQWZzJN1Hhr3
+         tN0RenMHGUwpg+Q3tyWOeQZjZP+z6Yi6TsDUfiZLjaOdSk87MK/BheMPucGXmc8Hpn0z
+         My3v5YVkw3WFc4Rfmx3FQSCzuU9KqW427NArdeYqNIbRD3qp9fBE3rpkjbgn7hRlf0fl
+         Mwt7JC9YMg9/Ca3s8zVtCPscyNEkz8t4F0cgEioLLX4v/bZgqrKtkyNOaHlnWNo3pI91
+         dhBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8nK1fKLOt07t42zA/NX2wGsyiI7WBcYF7AOE3hneo4g=;
+        b=3h2EFz8IbHDzU06je7nbW7qRjZlyb3Gs6vR/ybL5vVpoxlPdUF3ANVmdG2s+dVHwfg
+         XQAjDyNOMViz68OYkPRA5fZ1SDY26RNxr7x1x3TaVIP8OzPnINxWa/YvmvGCCMWefVUH
+         RtyTvrTzGvwhYfJnts4H8ipfVkuFTG7vJNI4XgN3Jg/NLkucG65u6sesfQdDWvgVxpbN
+         xFiwEvgPw7vVEklQKTMPEupKeuUnl75nIn0cIXE2lfYry+be2SzfMbzMWL28CU84LkDP
+         pEm34yFWd9bDP2blwmkQxNUpoK4WtGj2SWObPy6wb6yDIHTBXH88vDCsbf2f75KO8Y/X
+         6nNw==
+X-Gm-Message-State: AO0yUKUyFp8ejTfjcfdgbwEIdXZhSwnLRx+WmvqwkJMeNxpG2lEUQU7i
+        jbmqCodN7SKdV0JGpsKRStvFhA==
+X-Google-Smtp-Source: AK7set9RC8S35h+qhPzKZvtF5wjsR0eplkWa2WNr9zYS986q703SswD03oXnA4dKIZPQBnvNp8f3og==
+X-Received: by 2002:a05:600c:cc3:b0:3dc:42d2:aeee with SMTP id fk3-20020a05600c0cc300b003dc42d2aeeemr9366732wmb.25.1675420530617;
+        Fri, 03 Feb 2023 02:35:30 -0800 (PST)
+Received: from linaro.org ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id x33-20020a05600c18a100b003dd7edcc960sm2112414wmp.45.2023.02.03.02.35.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Feb 2023 02:35:30 -0800 (PST)
+Date:   Fri, 3 Feb 2023 12:35:28 +0200
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v7 09/12] dt-bindings: PCI: qcom: Add SM8550 compatible
+Message-ID: <Y9zjcKkknDQWEvjH@linaro.org>
+References: <20230203081807.2248625-1-abel.vesa@linaro.org>
+ <20230203081807.2248625-10-abel.vesa@linaro.org>
+ <Y9zb2X4w0WfIto9n@hovoldconsulting.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH] firmware: qcom_scm: modify qcom_scm_set_download_mode()
-Content-Language: en-US
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <1674562755-5378-1-git-send-email-quic_mojha@quicinc.com>
- <0e3b9803-2492-87ec-3ae9-00ac820c87ce@linaro.org>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <0e3b9803-2492-87ec-3ae9-00ac820c87ce@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y9zb2X4w0WfIto9n@hovoldconsulting.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 2/2/2023 4:47 PM, Srinivas Kandagatla wrote:
+On 23-02-03 11:03:05, Johan Hovold wrote:
+> On Fri, Feb 03, 2023 at 10:18:04AM +0200, Abel Vesa wrote:
+> > Add the SM8550 platform to the binding.
+> > 
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > ---
+> > 
+> > This patchset relies on the following patchset:
+> > https://lore.kernel.org/all/20230117224148.1914627-1-abel.vesa@linaro.org/
+> > 
+> > The v6 of this patch is:
+> > https://lore.kernel.org/all/20230202123902.3831491-10-abel.vesa@linaro.org/
+> > 
+> > Changes since v6:
+> >  * none
+> > 
+> > Changes since v5:
+> >  * added Krzysztof's R-b tag
+> > 
+> > Changes since v4:
+> >  * dropped _serdes infix from ln_shrd table name and from every ln_shrd
+> >    variable name
+> >  * added hyphen between "no CSR" in both places
+> >  * dropped has_ln_shrd_serdes_tbl
+> >  * reordered qmp_pcie_offsets_v6_20 by struct members
+> >  * added rollback for no-CSR reset in qmp_pcie_init fail path
+> >  * moved ln_shrd offset calculation after port_b
+> >  * dropped the minItems for interconnects
+> >  * made iommu related properties global
+> >  * renamed noc_aggr_4 back to noc_aggr
+> > 
+> > Changes since v3:
+> >  * renamed noc_aggr to noc_aggr_4, as found in the driver
+> > 
+> > Changes since v2:
+> >  * dropped the pipe from clock-names
+> >  * removed the pcie instance number from aggre clock-names comment
+> >  * renamed aggre clock-names to noc_aggr
+> >  * dropped the _pcie infix from cnoc_pcie_sf_axi
+> >  * renamed pcie_1_link_down_reset to simply link_down
+> >  * added enable-gpios back, since pcie1 node will use it
+> > 
+> > Changes since v1:
+> >  * Switched to single compatible for both PCIes (qcom,pcie-sm8550)
+> >  * dropped enable-gpios property
+> >  * dropped interconnects related properties, the power-domains
+> >  * properties
+> >    and resets related properties the sm8550 specific allOf:if:then
+> >  * dropped pipe_mux, phy_pipe and ref clocks from the sm8550 specific
+> >    allOf:if:then clock-names array and decreased the minItems and
+> >    maxItems for clocks property accordingly
+> >  * added "minItems: 1" to interconnects, since sm8550 pcie uses just one,
+> >    same for interconnect-names
+>  
+> > +  enable-gpios:
+> > +    description: GPIO controlled connection to ENABLE# signal
+> > +    maxItems: 1
 > 
-> 
-> On 24/01/2023 12:19, Mukesh Ojha wrote:
->> -static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
->> +static int __qcom_scm_set_dload_mode(struct device *dev, enum 
->> qcom_download_mode mode)
->>   {
->>       struct qcom_scm_desc desc = {
->>           .svc = QCOM_SCM_SVC_BOOT,
->>           .cmd = QCOM_SCM_BOOT_SET_DLOAD_MODE,
->>           .arginfo = QCOM_SCM_ARGS(2),
->> -        .args[0] = QCOM_SCM_BOOT_SET_DLOAD_MODE,
->> +        .args[0] = mode,
-> 
-> Is this a bug fix? why are we changing arg[0]?
+> What is this gpio used for? Describing it as "ENABLE#" looks wrong as
+> AFAIK it's not part of the PCIe interface.
 
-Thanks.
+Oups, that should've been dropped here as well, as I did in the dts/dtsi
+patches.
 
-This is legacy scm call and it is deprecated.
-Let's not change this.
-I will fix this in v2.
-
--Mukesh
 > 
-> --srini
->>           .owner = ARM_SMCCC_OWNER_SIP,
->>       };
->> -    desc.args[1] = enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0;
->> +    desc.args[1] = mode;
->>       return qcom_scm_call_atomic(__scm->dev, &desc, NULL);
->>   }
+> There's also no driver support being adding for this gpio as part of
+> this series and you don't use it for either controller on the MTP.
+> 
+> Are you relying on firmware to enable this one currently perhaps?
+> 
+> > +
+> >    perst-gpios:
+> >      description: GPIO controlled connection to PERST# signal
+> >      maxItems: 1
+> 
+> Johan
