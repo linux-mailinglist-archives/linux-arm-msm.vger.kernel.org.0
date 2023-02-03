@@ -2,161 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 22C026893F4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Feb 2023 10:39:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 595F7689454
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Feb 2023 10:49:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231819AbjBCJh5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Feb 2023 04:37:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56912 "EHLO
+        id S232148AbjBCJtC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Feb 2023 04:49:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232119AbjBCJhx (ORCPT
+        with ESMTP id S232111AbjBCJtB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Feb 2023 04:37:53 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5882B9B6F7;
-        Fri,  3 Feb 2023 01:37:33 -0800 (PST)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3139FqZp016986;
-        Fri, 3 Feb 2023 09:37:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : reply-to : references : mime-version :
- content-type : in-reply-to; s=qcppdkim1;
- bh=DkWeRsx6m2sDvLrRz65hCVeFQnCd0Ddk5CBoHHoxEAU=;
- b=Ay/vxQ2b3wXqQLlZVTlHow64iviS4TOx1BHyZwRnocLP9J8sJLU8Bixp2b1SseWZPJLD
- GGP/k3hzqxZFONf907GZmlCO9cOpLh+Z5UZCzlTBXOIoxEgQmh42wcqz+1ZApYJ1WeX6
- TUMcnkD17ALjxQJ/9bsBvVgDp6tEt6nW6g8+2QcNu+8pQlHSck0nAUkWr8HDEmnEEgL2
- hMpyr5Cdhske/0YLAYpl7tY1M1l0fEthjHbQ+ZTChuT7hQWieQMMZ0JjPGAIbwDND8sY
- dzMLDg7MUUjbYdjFC4V96X3+rifc7UVJZOy27u0KmLUN3wCVzGeLo0wNLLC/bdjpxsvv JQ== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ngahqtsgm-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 03 Feb 2023 09:37:16 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3139bE7P011923
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 3 Feb 2023 09:37:14 GMT
-Received: from quicinc.com (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Fri, 3 Feb 2023
- 01:37:08 -0800
-Date:   Fri, 3 Feb 2023 15:07:04 +0530
-From:   Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
-To:     Elliot Berman <quic_eberman@quicinc.com>
-CC:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Alex Elder <elder@linaro.org>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        "Jonathan Corbet" <corbet@lwn.net>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        "Carl van Schaik" <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        "Will Deacon" <will@kernel.org>, Marc Zyngier <maz@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-Subject: Re: [PATCH v9 21/27] gunyah: vm_mgr: Add framework to add VM
- Functions
-Message-ID: <20230203093704.GC332@quicinc.com>
-Reply-To: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
-References: <20230120224627.4053418-1-quic_eberman@quicinc.com>
- <20230120224627.4053418-22-quic_eberman@quicinc.com>
+        Fri, 3 Feb 2023 04:49:01 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E469E26580;
+        Fri,  3 Feb 2023 01:48:59 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 7626F61E47;
+        Fri,  3 Feb 2023 09:48:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEF38C433D2;
+        Fri,  3 Feb 2023 09:48:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1675417738;
+        bh=rXy7btraUJBuP9FasxHRz8/BmmVLJJUUb3KO9iJARDc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=mLa5WYJXS1btpT4AHaZ9QKYVurBIWHg5qFF3nYsOFpyX9cbTxHRsNM8c9z7ujFdl/
+         ZNozG6sKcYFGHkM65ky1nlGHTRN5xobGYrnq8zN3dx/G/ZhMWX92hqtyiKz9MhntTO
+         lPQrB63fG12M+NIhkTWwKiVJmPtuZhBWtWBSNhJ9g6b1K7JP5HmDBzmB8ajf9FcC7w
+         zle/k/b0C2z0Jqg8Y2sG5xo7yX7do57WAhULOUgXVzwvY/pp3CnwqqUUjFsegfJO1r
+         vfLloica/zuWgd9JOjoZ9uObM7JjQv88tgabR8SFKHixyqFTQrprDUrh0js85aDY7p
+         T/0rRtLI/zJAg==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pNshA-0000u7-FA; Fri, 03 Feb 2023 10:49:25 +0100
+Date:   Fri, 3 Feb 2023 10:49:24 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v7 10/12] PCI: qcom: Add SM8550 PCIe support
+Message-ID: <Y9zYpE/GnxUqnIyq@hovoldconsulting.com>
+References: <20230203081807.2248625-1-abel.vesa@linaro.org>
+ <20230203081807.2248625-11-abel.vesa@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230120224627.4053418-22-quic_eberman@quicinc.com>
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: dC_-8lVFVfsmcQqToeSBM2k1hEzN59H3
-X-Proofpoint-GUID: dC_-8lVFVfsmcQqToeSBM2k1hEzN59H3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-02-03_05,2023-02-02_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
- impostorscore=0 phishscore=0 bulkscore=0 priorityscore=1501
- mlxlogscore=999 malwarescore=0 adultscore=0 suspectscore=0
- lowpriorityscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2212070000 definitions=main-2302030087
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20230203081807.2248625-11-abel.vesa@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-* Elliot Berman <quic_eberman@quicinc.com> [2023-01-20 14:46:20]:
+On Fri, Feb 03, 2023 at 10:18:05AM +0200, Abel Vesa wrote:
+> Add compatible for both PCIe found on SM8550.
+> Also add the cnoc_pcie_sf_axi clock needed by the SM8550.
 
-> +static struct gunyah_vm_function_driver *__find_function(const char name[GUNYAH_FUNCTION_NAME_SIZE])
-> +	__must_hold(functions_lock)
-> +{
-> +	struct gunyah_vm_function_driver *iter, *drv = NULL;
-> +
-> +	list_for_each_entry(iter, &functions, list) {
-> +		if (!strncmp(iter->name, name, GUNYAH_FUNCTION_NAME_SIZE)) {
-> +			drv = iter;
-> +			break;
-> +		}
-> +	}
+nit: You're now also adding 'noc_aggr'
 
-Not sure how much of a hot path this is going to sit in. I can imagine VM boot
-to be in fast path for some cases (VMs spawned on usecase boundaries - I think
-some VMs like in Amazon firecracker boot in fraction of a second). This
-indirection could cost that a bit (linear search + strcmp for the right
-function). IMHO a direct interface (ex: ADD_IOEVENTFD) will be more efficient.
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+> ---
+> 
+> The v6 of this patchset is:
+> https://lore.kernel.org/all/20230202123902.3831491-11-abel.vesa@linaro.org/
+> 
+> Changes since v6:
+>  * none
+> 
+> Changes since v5:
+>  * none
+> 
+> Changes since v4:
+>  * added Mani's R-b tag
+> 
+> Changes since v3:
+>  * renamed cnoc_pcie_sf_axi to cnoc_sf_axi
+> 
+> Changes since v2:
+>  * none
+> 
+> Changes since v1:
+>  * changed the subject line prefix for the patch to match the history,
+>    like Bjorn Helgaas suggested.
+>  * added Konrad's R-b tag
+> 
+>  drivers/pci/controller/dwc/pcie-qcom.c | 25 ++++++++++++++-----------
+>  1 file changed, 14 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index a232b04af048..6a70c9c6f98d 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -182,10 +182,10 @@ struct qcom_pcie_resources_2_3_3 {
+>  
+>  /* 6 clocks typically, 7 for sm8250 */
+>  struct qcom_pcie_resources_2_7_0 {
+> -	struct clk_bulk_data clks[12];
+> +	struct clk_bulk_data clks[14];
+>  	int num_clks;
+>  	struct regulator_bulk_data supplies[2];
+> -	struct reset_control *pci_reset;
+> +	struct reset_control *rst;
 
-> +void gunyah_vm_function_unregister(struct gunyah_vm_function_driver *drv)
-> +{
-> +	struct gunyah_vm_function *f, *iter;
-> +
-> +	mutex_lock(&functions_lock);
-> +	list_for_each_entry_safe(f, iter, &drv->instances, drv_list)
-> +		gh_vm_remove_function(f);
-> +	list_del(&drv->list);
-> +	mutex_unlock(&functions_lock);
+Please name this one 'reset' or 'resets' (e.g. to avoid hard to parse
+things like res->rst below).
 
-This seems to allow essential functions to be unregistered while there are still
-active users. For example, it would allow ioeventfd or irqfd module to be
-unloaded while there are VMs depending on it. I think it would be better if we
-allow module unload (aka function_unregister) only after dependent VMs are stopped.
+>  };
+>  
+>  struct qcom_pcie_resources_2_9_0 {
+> @@ -1177,9 +1177,9 @@ static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
+>  	unsigned int idx;
+>  	int ret;
+>  
+> -	res->pci_reset = devm_reset_control_get_exclusive(dev, "pci");
+> -	if (IS_ERR(res->pci_reset))
+> -		return PTR_ERR(res->pci_reset);
+> +	res->rst = devm_reset_control_array_get_exclusive(dev);
+> +	if (IS_ERR(res->rst))
+> +		return PTR_ERR(res->rst);
 
-> +static long gh_vm_rm_function(struct gunyah_vm *ghvm, struct gh_vm_function *fn)
-> +{
-> +	long r = 0;
-> +	struct gunyah_vm_function *f, *iter;
-> +
-> +	r = mutex_lock_interruptible(&functions_lock);
-> +	if (r)
-> +		return r;
-> +
-> +	list_for_each_entry_safe(f, iter, &ghvm->functions, vm_list) {
-> +		if (!memcmp(&f->fn, fn, sizeof(*fn)))
-> +			gh_vm_remove_function(f);
-> +	}
-> +
+So the reset array implementation apparently both asserts and deasserts
+the resets in the order specified in DT (i.e. does not deassert in
+reverse order).
 
-I think we should return some error (for ioctl atleast) if given function was
-not found.
+Is that ok also for the new "pci" and "link_down" resets?
 
-> +struct gh_vm_function {
-> +	char name[GUNYAH_FUNCTION_NAME_SIZE];
-> +	union {
-> +		char data[GUNYAH_FUNCTION_MAX_ARG_SIZE];
-> +	};
+>  	res->supplies[0].supply = "vdda";
+>  	res->supplies[1].supply = "vddpe-3v3";
+> @@ -1205,9 +1205,11 @@ static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
+>  	res->clks[idx++].id = "ddrss_sf_tbu";
+>  	res->clks[idx++].id = "aggre0";
+>  	res->clks[idx++].id = "aggre1";
+> +	res->clks[idx++].id = "noc_aggr";
+>  	res->clks[idx++].id = "noc_aggr_4";
+>  	res->clks[idx++].id = "noc_aggr_south_sf";
+>  	res->clks[idx++].id = "cnoc_qx";
+> +	res->clks[idx++].id = "cnoc_sf_axi";
+>  
+>  	num_opt_clks = idx - num_clks;
+>  	res->num_clks = idx;
+> @@ -1237,17 +1239,17 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
+>  	if (ret < 0)
+>  		goto err_disable_regulators;
+>  
+> -	ret = reset_control_assert(res->pci_reset);
+> -	if (ret < 0) {
+> -		dev_err(dev, "cannot assert pci reset\n");
+> +	ret = reset_control_assert(res->rst);
+> +	if (ret) {
+> +		dev_err(dev, "reset assert failed (%d)\n", ret);
+>  		goto err_disable_clocks;
+>  	}
+>  
+>  	usleep_range(1000, 1500);
+>  
+> -	ret = reset_control_deassert(res->pci_reset);
+> -	if (ret < 0) {
+> -		dev_err(dev, "cannot deassert pci reset\n");
+> +	ret = reset_control_deassert(res->rst);
+> +	if (ret) {
+> +		dev_err(dev, "reset deassert failed (%d)\n", ret);
+>  		goto err_disable_clocks;
+>  	}
 
-Can you find a way to optimize this memory/time usage? For example, in case of
-ioevents we strictly need 28 bytes, but end up consuming 1kB.
-Also we end up comparing 1024 bytes during REMOVE_FUNCTION when strictly 28
-bytes or fewer bytes comparison was required in case of ioeventfd.
-
+Johan
