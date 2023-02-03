@@ -2,150 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F15E689752
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Feb 2023 11:55:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 42E5C68975A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Feb 2023 11:57:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232055AbjBCKyt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Feb 2023 05:54:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46098 "EHLO
+        id S233096AbjBCK4T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Feb 2023 05:56:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229785AbjBCKys (ORCPT
+        with ESMTP id S233076AbjBCK4M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Feb 2023 05:54:48 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6123E721C3;
-        Fri,  3 Feb 2023 02:54:47 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id ECE3AB82A59;
-        Fri,  3 Feb 2023 10:54:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F129C433EF;
-        Fri,  3 Feb 2023 10:54:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1675421684;
-        bh=bdrm4RmZt8Zhe1KAE3Pxv/XYpMXhajbxCxkPQpTRAIo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=rxjzdNtifff+EPlQ/Q03g/ZSxR+Yi7CGiqlUsCt8DFjRjW49/sBKsX1cSTvOfCfMN
-         LUGHAi5FOiwIeSyR0M65ui8nX3EwIgVfTzVCRwuKF0Iypl+Yp2QxxA7GYZvkcF/ChJ
-         AHQV+z5TQ3hLsFJSNAvR0vH0Wv6nCyjWGrBRXkTHpaAK7v9MPoDd2AARx9tTqgamSv
-         rHmmCOYpu/VKhhVowrOU0+i0AzEnNS4lAAODzWo1voc6ePtN6CRJMWwgOLf+/QlumX
-         u1iq8UxqTuWjbJTcfeDiaeaAzmnS8ODa1kSVXWA+2Xp5mB4puPxiIY5AvdQBspriaK
-         ECedToCDlDZKw==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1pNtip-0001Oq-Ch; Fri, 03 Feb 2023 11:55:11 +0100
-Date:   Fri, 3 Feb 2023 11:55:11 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        "vkoul@kernel.org" <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v4 7/8] arm64: dts: qcom: sm8550: Add USB PHYs and
- controller nodes
-Message-ID: <Y9zoD/eVG8zjMYNx@hovoldconsulting.com>
-References: <20230202132511.3983095-1-abel.vesa@linaro.org>
- <20230202132511.3983095-8-abel.vesa@linaro.org>
+        Fri, 3 Feb 2023 05:56:12 -0500
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FA0F991FA
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Feb 2023 02:56:03 -0800 (PST)
+Received: by mail-ej1-x632.google.com with SMTP id mc11so14182702ejb.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Feb 2023 02:56:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=BdYRjOM1n9bt8CN7mBjbmqA+shKAXX8Ovt8jaNWTShU=;
+        b=TTe8dPHkBNkUesxIWp8id6+kZt6bBhVLN1AbM9Q2yUCXy0U0dQnhiMNlSNMCzYlgVh
+         ZJW5B+IG4lEzWL1mLjJWKnN8UQFbKZMQPETLWbYmHSN0LcAy/We92w1jDFhdutqAY0XS
+         5AuBsWSWyyfvrOr6kJ315r7Lcv3OK9WY0u+NshplJxk9jO3CUwvRdr9gDuhaUcAJEel2
+         Rxk6vJlam0U+WN0pRVaHVSDFYHhIJTyfbexAko7p3nLyc6AiCCJc/MLchscD7GbZqEre
+         lCD6Dl3muFeI/L+0vtEjM8LVGU+9/lNYdSaHB03zKVEfGZTlRD99lLBWIaMdfvO+Xuu/
+         W3MA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BdYRjOM1n9bt8CN7mBjbmqA+shKAXX8Ovt8jaNWTShU=;
+        b=GUorAIR1jLrO33x2Z2AfKePWRsicZ4ecxvHupy1VTKCydEJDYrV6IhIMZ/twRlRS//
+         JL0W527jG7qMWT7Nw8je5wGRpkuRjoSoURwqdF77gylx16v9uDHYK398J7ljDZjju3wH
+         Y645Tcq1u3ZJRjqEiR1UdokBhwNM78uPSUN8NFDzSpJ69Q6cVUnasFq7nbwSn6KUF3wc
+         37GwwVpJtda8VdHQRIHnedsIQPivC5iSyBYGDTO/fFwNULSuyuYeIgFnzEcCZ15erJY5
+         om+P0kOcG+y+bujYORZfspDcviUj+1pmXFjXQ7CnGoKRr4QUW+p6XhzQRPuJJgrVZZTN
+         0pqg==
+X-Gm-Message-State: AO0yUKXfT7qhci6oPiEVhCxQk15HFXRTgb4GmuR91gtFBkwHhr7BUevG
+        UD0Kx1ADJUmaKQRlryU4WW1OlQ==
+X-Google-Smtp-Source: AK7set+MxWM0+nZqvviW/bwAcAGYQkQyWGDadUbnUIpVzeXcg1uw20STr4HiMhMPlosIWq5Jv3GQrA==
+X-Received: by 2002:a17:906:9610:b0:878:5e84:e1d6 with SMTP id s16-20020a170906961000b008785e84e1d6mr11002336ejx.75.1675421761914;
+        Fri, 03 Feb 2023 02:56:01 -0800 (PST)
+Received: from [192.168.1.101] (abyl20.neoplus.adsl.tpnet.pl. [83.9.31.20])
+        by smtp.gmail.com with ESMTPSA id p2-20020a170906498200b00878803d4049sm1219445eju.93.2023.02.03.02.55.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 03 Feb 2023 02:56:01 -0800 (PST)
+Message-ID: <e34f36b0-35a8-0b77-e6ab-49851213108e@linaro.org>
+Date:   Fri, 3 Feb 2023 11:55:58 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230202132511.3983095-8-abel.vesa@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH V6 2/7] clk: qcom: Add Global Clock Controller driver for
+ IPQ9574
+To:     Kathiravan T <quic_kathirav@quicinc.com>,
+        Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
+        sboyd@kernel.org, linus.walleij@linaro.org,
+        catalin.marinas@arm.com, will@kernel.org, p.zabel@pengutronix.de,
+        shawnguo@kernel.org, arnd@arndb.de, marcel.ziswiler@toradex.com,
+        dmitry.baryshkov@linaro.org, nfraprado@collabora.com,
+        broonie@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_arajkuma@quicinc.com,
+        quic_anusha@quicinc.com, quic_poovendh@quicinc.com
+References: <20230202150619.22425-1-quic_devipriy@quicinc.com>
+ <20230202150619.22425-3-quic_devipriy@quicinc.com>
+ <1d144aa4-6f0f-b10f-1d32-4acf4e06ae85@quicinc.com>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <1d144aa4-6f0f-b10f-1d32-4acf4e06ae85@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Feb 02, 2023 at 03:25:10PM +0200, Abel Vesa wrote:
-> Add USB host controller and PHY nodes.
-> 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
-> 
-> Changes since v3:
->  * none
-> 
-> Changes since v2:
->  * none
-> 
-> NOTE: This patch has been already merged. It is here only to provide
-> context for the rest of the patchset. There is a change with respect to
-> the clocks, but that will be sent as a separate/individual fix patch.
 
-I believe it was because of the 'phy' and 'common' resets, which have
-been switched below.
 
->  arch/arm64/boot/dts/qcom/sm8550.dtsi | 92 +++++++++++++++++++++++++++-
->  1 file changed, 91 insertions(+), 1 deletion(-)
+On 3.02.2023 06:47, Kathiravan T wrote:
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> index a85d2ae7d155..0262193e2ffe 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> @@ -14,6 +14,7 @@
->  #include <dt-bindings/mailbox/qcom-ipcc.h>
->  #include <dt-bindings/power/qcom-rpmpd.h>
->  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
-> +#include <dt-bindings/phy/phy-qcom-qmp.h>
->  #include <dt-bindings/thermal/thermal.h>
->  
->  / {
-> @@ -746,7 +747,7 @@ gcc: clock-controller@100000 {
->  				 <&ufs_mem_phy 0>,
->  				 <&ufs_mem_phy 1>,
->  				 <&ufs_mem_phy 2>,
-> -				 <0>;
-> +				 <&usb_dp_qmpphy QMP_USB43DP_USB3_PIPE_CLK>;
->  		};
->  
->  		ipcc: mailbox@408000 {
-> @@ -2060,6 +2061,95 @@ opp-202000000 {
->  			};
->  		};
->  
-> +		usb_1_hsphy: phy@88e3000 {
-> +			compatible = "qcom,sm8550-snps-eusb2-phy";
-> +			reg = <0x0 0x088e3000 0x0 0x154>;
-> +			#phy-cells = <0>;
-> +
-> +			clocks = <&tcsr TCSR_USB2_CLKREF_EN>;
-> +			clock-names = "ref";
-> +
-> +			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
-> +
-> +			status = "disabled";
-> +		};
-> +
-> +		usb_dp_qmpphy: phy@88e8000 {
-> +			compatible = "qcom,sm8550-qmp-usb3-dp-phy";
-> +			reg = <0x0 0x088e8000 0x0 0x3000>;
-> +
-> +			clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
-> +				 <&rpmhcc RPMH_CXO_CLK>,
-> +				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>,
-> +				 <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
-> +			clock-names = "aux", "ref", "com_aux", "usb3_pipe";
-> +
-> +			power-domains = <&gcc USB3_PHY_GDSC>;
-> +
-> +			resets = <&gcc GCC_USB3_DP_PHY_PRIM_BCR>,
-> +				 <&gcc GCC_USB3_PHY_PRIM_BCR>;
-> +			reset-names = "phy", "common";
-> +
-> +			#clock-cells = <1>;
-> +			#phy-cells = <1>;
-> +
-> +			status = "disabled";
-> +		};
+> On 2/2/2023 8:36 PM, Devi Priya wrote:
+>> Add Global Clock Controller (GCC) driver for ipq9574 based devices
+>>
+>> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
+>> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
+>> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+>> ---
 
-Johan
+[...]
+
+>> +static int gcc_ipq9574_probe(struct platform_device *pdev)
+>> +{
+>> +    struct regmap *regmap;
+>> +    struct qcom_cc_desc ipq9574_desc = gcc_ipq9574_desc;
+>> +
+>> +    regmap = qcom_cc_map(pdev, &ipq9574_desc);
+>> +    if (IS_ERR(regmap))
+>> +        return PTR_ERR(regmap);
+>> +
+>> +    return qcom_cc_really_probe(pdev, &ipq9574_desc, regmap);
+> 
+> 
+> can we use qcom_cc_probe as suggested here https://lore.kernel.org/linux-arm-msm/84f68577f5629e6ef6d6b14357a79f84.sboyd@kernel.org/ ?
+Yes we can.
+
+When you're answering a long long long long email, please cut off
+parts that you aren't replying to, I had to scroll and scroll and
+scroll and scroll to get to this sentence and I'm not even sure if
+you said something inbetween that I missed..
+
+Konrad
+> 
+> 
+>> +}
+>> +
+>> +static struct platform_driver gcc_ipq9574_driver = {
+>> +    .probe = gcc_ipq9574_probe,
+>> +    .driver = {
+>> +        .name   = "qcom,gcc-ipq9574",
+>> +        .of_match_table = gcc_ipq9574_match_table,
+>> +    },
+>> +};
+>> +
+>> +static int __init gcc_ipq9574_init(void)
+>> +{
+>> +    return platform_driver_register(&gcc_ipq9574_driver);
+>> +}
+>> +core_initcall(gcc_ipq9574_init);
+>> +
+>> +static void __exit gcc_ipq9574_exit(void)
+>> +{
+>> +    platform_driver_unregister(&gcc_ipq9574_driver);
+>> +}
+>> +module_exit(gcc_ipq9574_exit);
+>> +
+>> +MODULE_DESCRIPTION("Qualcomm Technologies, Inc. GCC IPQ9574 Driver");
+>> +MODULE_LICENSE("GPL");
