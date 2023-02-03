@@ -2,65 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 85C7268986B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Feb 2023 13:21:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 431306898E5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Feb 2023 13:35:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231819AbjBCMVb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Feb 2023 07:21:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33638 "EHLO
+        id S233149AbjBCMfY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Feb 2023 07:35:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232315AbjBCMVa (ORCPT
+        with ESMTP id S232491AbjBCMfS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Feb 2023 07:21:30 -0500
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 885AD9DEC6
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Feb 2023 04:21:28 -0800 (PST)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by smtp-out1.suse.de (Postfix) with ESMTPS id 24E33345FA;
-        Fri,  3 Feb 2023 12:21:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-        t=1675426887; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-        bh=Kws4om6oBsVKE4tQBTnA2CxmicCJ9sBKKIg8whkmh4Y=;
-        b=wX+zaYfaS04jeUVL0Lv99+dLirAU1tjxNPv/QPls/q6l7o6kKps2QD+O0kcS2KQFHqjmLl
-        48oOKapwHPQXXyWG0T7MHkrceLHu/DqjXWMrZPbTDsJSQDPbtgAF0THbMG1jp73klMVVxb
-        HLBHUU9wCuTh6aJKNfrBq61mMD1Qcxc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-        s=susede2_ed25519; t=1675426887;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-        bh=Kws4om6oBsVKE4tQBTnA2CxmicCJ9sBKKIg8whkmh4Y=;
-        b=Ann7z6/EWl6Wd75gqEVrnUAPbsrR1jXlEnCdy3SfZBaRoiBhbhjYJhb41D3sVfPDSWMl8Y
-        mAmyuvTRWbWKEvCA==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id B268E1358A;
-        Fri,  3 Feb 2023 12:21:26 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id aq7AKEb83GPsZAAAMHmgww
-        (envelope-from <pvorel@suse.cz>); Fri, 03 Feb 2023 12:21:26 +0000
-From:   Petr Vorel <pvorel@suse.cz>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Petr Vorel <petr.vorel@gmail.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Dominik Kobinski <dominikkobinski314@gmail.com>,
-        Jamie Douglass <jamiemdouglass@gmail.com>
-Subject: [RFC PATCH 1/1] arm64: dts: qcom: msm8994-huawei-angler: Add regulators
-Date:   Fri,  3 Feb 2023 13:21:18 +0100
-Message-Id: <20230203122118.15219-1-pvorel@suse.cz>
-X-Mailer: git-send-email 2.39.1
+        Fri, 3 Feb 2023 07:35:18 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 730B65FE5;
+        Fri,  3 Feb 2023 04:35:09 -0800 (PST)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 313ANVlV026075;
+        Fri, 3 Feb 2023 12:34:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=mMBR5w+q1boHomjumnwZghbt93c2LBQycWI9O28G1Bw=;
+ b=CPsxI74jIauecLH2Bfc3VrcDLfN7OjDae+wtVjSmmp8fXtlDHVBw6r32krn0Bb4uilJN
+ z6nCzRuI7sN9H+PRak9fH3GCnGhqHycuuKk5l7BPjFngnpt/0pwxK62cN4Q6FSY1gfo8
+ EXBl0JBnhhIOnHzdlZQZxurjN0GFvno/iSAIbdt/ri7yBbDFeBJz6mBos4BOGV2D010S
+ d2xP7MCzI/rcjO8bqT9W3Q0AttMSBUFykHbtQRWd5vy64DChEwGCf5TTyXjbBPegX+SP
+ KxB6fLS9IcQBiDwXJzQLi31G2jq6DdokpGEzwaJutPqH3G2xFLFGesj5pLDXzJYGv+D3 Sw== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ngh1ka69c-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 03 Feb 2023 12:34:47 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 313CYkvl012258
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 3 Feb 2023 12:34:46 GMT
+Received: from [10.50.53.202] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Fri, 3 Feb 2023
+ 04:34:37 -0800
+Message-ID: <b3c1e629-179f-d2c3-d3eb-3556a7df10ae@quicinc.com>
+Date:   Fri, 3 Feb 2023 18:04:34 +0530
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH V6 2/7] clk: qcom: Add Global Clock Controller driver for
+ IPQ9574
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Devi Priya <quic_devipriy@quicinc.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <linus.walleij@linaro.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <p.zabel@pengutronix.de>, <shawnguo@kernel.org>, <arnd@arndb.de>,
+        <marcel.ziswiler@toradex.com>, <dmitry.baryshkov@linaro.org>,
+        <nfraprado@collabora.com>, <broonie@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
+        <quic_sjaganat@quicinc.com>, <quic_arajkuma@quicinc.com>,
+        <quic_anusha@quicinc.com>, <quic_poovendh@quicinc.com>
+References: <20230202150619.22425-1-quic_devipriy@quicinc.com>
+ <20230202150619.22425-3-quic_devipriy@quicinc.com>
+ <1d144aa4-6f0f-b10f-1d32-4acf4e06ae85@quicinc.com>
+ <e34f36b0-35a8-0b77-e6ab-49851213108e@linaro.org>
+Content-Language: en-US
+From:   Kathiravan T <quic_kathirav@quicinc.com>
+In-Reply-To: <e34f36b0-35a8-0b77-e6ab-49851213108e@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: s73mYnFUxvt8OOjaVYgOTjdnQIb7LJA5
+X-Proofpoint-ORIG-GUID: s73mYnFUxvt8OOjaVYgOTjdnQIb7LJA5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-02-03_08,2023-02-03_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
+ suspectscore=0 spamscore=0 clxscore=1015 priorityscore=1501
+ mlxlogscore=999 adultscore=0 malwarescore=0 bulkscore=0 impostorscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302030115
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
         SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -68,399 +95,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Petr Vorel <petr.vorel@gmail.com>
 
-Signed-off-by: Petr Vorel <petr.vorel@gmail.com>
----
-Hi all,
+On 2/3/2023 4:25 PM, Konrad Dybcio wrote:
+>
+> On 3.02.2023 06:47, Kathiravan T wrote:
+>> On 2/2/2023 8:36 PM, Devi Priya wrote:
+>>> Add Global Clock Controller (GCC) driver for ipq9574 based devices
+>>>
+>>> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
+>>> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
+>>> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+>>> ---
+> [...]
+>
+>>> +static int gcc_ipq9574_probe(struct platform_device *pdev)
+>>> +{
+>>> +    struct regmap *regmap;
+>>> +    struct qcom_cc_desc ipq9574_desc = gcc_ipq9574_desc;
+>>> +
+>>> +    regmap = qcom_cc_map(pdev, &ipq9574_desc);
+>>> +    if (IS_ERR(regmap))
+>>> +        return PTR_ERR(regmap);
+>>> +
+>>> +    return qcom_cc_really_probe(pdev, &ipq9574_desc, regmap);
+>>
+>> can we use qcom_cc_probe as suggested here https://lore.kernel.org/linux-arm-msm/84f68577f5629e6ef6d6b14357a79f84.sboyd@kernel.org/ ?
+> Yes we can.
+>
+> When you're answering a long long long long email, please cut off
+> parts that you aren't replying to, I had to scroll and scroll and
+> scroll and scroll to get to this sentence and I'm not even sure if
+> you said something inbetween that I missed..
 
-please what is the mapping of qcom,init-current from downstream to
-mainline? Or is it not used at all?
 
-Also, how can I verify these connections in downstream DTB?
-	vdd_l1-supply = <&pm8994_s1>;
-	vdd_l2_26_28-supply = <&pm8994_s3>;
-	...
+Got it, Thanks.
 
-Thanks for info.
 
-Kind regards,
-Petr
-
-Downstream
-	rpm-regulator-smpa1 {
-		status = "okay";
-		qcom,hpm-min-load = <0x186a0>;
-		qcom,regulator-type = <0x01>;
-		qcom,resource-id = <0x01>;
-		qcom,resource-name = "smpa";
-		compatible = "qcom,rpm-smd-regulator-resource";
-
-		regulator-s1-corner-ao {
-			phandle = <0xba>;
-			linux,phandle = <0xba>;
-			qcom,proxy-consumer-voltage = <0x07 0x07>;
-			proxy-supply = <0xba>;
-			qcom,use-voltage-corner;
-			qcom,init-voltage-corner = <0x06>;
-			regulator-always-on;
-			regulator-max-microvolt = <0x07>;
-			regulator-min-microvolt = <0x04>;
-			qcom,set = <0x01>;
-			regulator-name = "pm8994_s1_corner_ao";
-			compatible = "qcom,rpm-smd-regulator";
-		};
-
-		regulator-s1-floor-corner {
-			phandle = <0x16c>;
-			linux,phandle = <0x16c>;
-			qcom,always-send-voltage;
-			qcom,use-voltage-floor-corner;
-			regulator-max-microvolt = <0x07>;
-			regulator-min-microvolt = <0x01>;
-			qcom,set = <0x03>;
-			regulator-name = "pm8994_s1_floor_corner";
-			compatible = "qcom,rpm-smd-regulator";
-		};
-
-		regulator-s1-corner {
-			phandle = <0xf3>;
-			linux,phandle = <0xf3>;
-			qcom,use-voltage-corner;
-			regulator-max-microvolt = <0x07>;
-			regulator-min-microvolt = <0x01>;
-			qcom,set = <0x03>;
-			regulator-name = "pm8994_s1_corner";
-			compatible = "qcom,rpm-smd-regulator";
-		};
-
-		regulator-s1 {
-			status = "disabled";
-			qcom,set = <0x03>;
-			regulator-name = "pm8994_s1";
-			compatible = "qcom,rpm-smd-regulator";
-		};
-	};
-	/* ... */
-	rpm-regulator-smpb1 {
-		status = "okay";
-		qcom,hpm-min-load = <0x186a0>;
-		qcom,regulator-type = <0x01>;
-		qcom,resource-id = <0x01>;
-		qcom,resource-name = "smpb";
-		compatible = "qcom,rpm-smd-regulator-resource";
-
-		regulator-s1 {
-			qcom,init-voltage = <0xfa3e8>;
-			regulator-max-microvolt = <0xfa3e8>;
-			regulator-min-microvolt = <0xfa3e8>;
-			status = "okay";
-			qcom,set = <0x03>;
-			regulator-name = "pmi8994_s1";
-			compatible = "qcom,rpm-smd-regulator";
-		};
-	};
-	/* ... */
-	rpm-regulator-ldoa1 {
-		status = "okay";
-		qcom,hpm-min-load = <0x2710>;
-		qcom,regulator-type = <0x00>;
-		qcom,resource-id = <0x01>;
-		qcom,resource-name = "ldoa";
-		compatible = "qcom,rpm-smd-regulator-resource";
-
-		regulator-l1 {
-			qcom,init-voltage = <0xf4240>;
-			regulator-max-microvolt = <0xf4240>;
-			regulator-min-microvolt = <0xf4240>;
-			status = "okay";
-			qcom,set = <0x03>;
-			regulator-name = "pm8994_l1";
-			compatible = "qcom,rpm-smd-regulator";
-		};
-	};
-
- .../qcom/msm8994-huawei-angler-rev-101.dts    | 267 ++++++++++++++++++
- 1 file changed, 267 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts b/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts
-index 29e79ae0849d..cdd6f58efdf0 100644
---- a/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts
-@@ -59,6 +59,273 @@ &tlmm {
- 	gpio-reserved-ranges = <85 4>;
- };
- 
-+&rpm_requests {
-+	pm8994_regulators: regulators-0 {
-+		compatible = "qcom,rpm-pm8994-regulators";
-+
-+		vdd_l1-supply = <&pm8994_s1>;
-+		vdd_l2_26_28-supply = <&pm8994_s3>;
-+		vdd_l3_11-supply = <&pm8994_s3>;
-+		vdd_l4_27_31-supply = <&pm8994_s3>;
-+		vdd_l5_7-supply = <&pm8994_s3>;
-+		vdd_l6_12_32-supply = <&pm8994_s5>;
-+		vdd_l8_16_30-supply = <&vph_pwr>;
-+		vdd_l9_10_18_22-supply = <&vph_pwr>;
-+		vdd_l13_19_23_24-supply = <&vph_pwr>;
-+		vdd_l14_15-supply = <&pm8994_s5>;
-+		vdd_l17_29-supply = <&vph_pwr>;
-+		vdd_l20_21-supply = <&vph_pwr>;
-+		vdd_l25-supply = <&pm8994_s5>;
-+		vdd_lvs1_2-supply = <&pm8994_s4>;
-+
-+		/* S1, S2, S6 and S12 are managed by RPMPD */
-+
-+		pm8994_s1: s1 {
-+			regulator-min-microvolt = <1025000>;
-+			regulator-max-microvolt = <1025000>;
-+		};
-+
-+		pm8994_s2: s2 {
-+			/* TODO */
-+		};
-+
-+		pm8994_s3: s3 {
-+			regulator-min-microvolt = <1300000>;
-+			regulator-max-microvolt = <1300000>;
-+		};
-+
-+		pm8994_s4: s4 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-allow-set-load;
-+			regulator-system-load = <325000>;
-+		};
-+
-+		pm8994_s5: s5 {
-+			regulator-min-microvolt = <2150000>;
-+			regulator-max-microvolt = <2150000>;
-+		};
-+
-+		pm8994_s7: s7 {
-+			regulator-min-microvolt = <1000000>;
-+			regulator-max-microvolt = <1000000>;
-+		};
-+
-+		/* S8, S9, S10 and S11 - SPMI-managed VDD_APC */
-+		/*
-+		 * TODO: pm8994_s8 and pm8994_s11 (pm8994_s9 and pm8994_s11 are missing)
-+			spm-regulator@2900 {
-+				phandle = <0x193>;
-+				linux,phandle = <0x193>;
-+				qcom,cpu-num = <0x00>;
-+				regulator-max-microvolt = <0x120160>;
-+				regulator-min-microvolt = <0xaae60>;
-+				regulator-name = "pm8994_s8";
-+				reg = <0x2900 0x100>;
-+				compatible = "qcom,spm-regulator";
-+			};
-+
-+			spm-regulator@3200 {
-+				phandle = <0x195>;
-+				linux,phandle = <0x195>;
-+				qcom,cpu-num = <0x04>;
-+				regulator-max-microvolt = <0x12b128>;
-+				regulator-min-microvolt = <0xaae60>;
-+				regulator-name = "pm8994_s11";
-+				reg = <0x3200 0x100>;
-+				compatible = "qcom,spm-regulator";
-+			};
-+		 */
-+
-+		pm8994_l1: l1 {
-+			regulator-min-microvolt = <1000000>;
-+			regulator-max-microvolt = <1000000>;
-+		};
-+
-+		pm8994_l2: l2 {
-+			regulator-min-microvolt = <1250000>;
-+			regulator-max-microvolt = <1250000>;
-+		};
-+
-+		pm8994_l3: l3 {
-+			regulator-min-microvolt = <1250000>;
-+			regulator-max-microvolt = <1250000>;
-+		};
-+
-+		pm8994_l4: l4 {
-+			regulator-min-microvolt = <1225000>;
-+			regulator-max-microvolt = <1225000>;
-+		};
-+
-+		/* L5 is inaccessible from RPM */
-+
-+		pm8994_l6: l6 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		/* L7 is inaccessible from RPM */
-+
-+		pm8994_l8: l8 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8994_l9: l9 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8994_l10: l10 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8994_l11: l11 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+
-+		pm8994_l12: l12 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8994_l13: l13 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2950000>;
-+		};
-+
-+		pm8994_l14: l14 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8994_l15: l15 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8994_l16: l16 {
-+			regulator-min-microvolt = <2700000>;
-+			regulator-max-microvolt = <2700000>;
-+		};
-+
-+		pm8994_l17: l17 {
-+			regulator-min-microvolt = <2700000>;
-+			regulator-max-microvolt = <2800000>;
-+		};
-+
-+		pm8994_l18: l18 {
-+			regulator-min-microvolt = <2850000>;
-+			regulator-max-microvolt = <2850000>;
-+			regulator-always-on;
-+		};
-+
-+		pm8994_l19: l19 {
-+			regulator-min-microvolt = <3300000>;
-+			regulator-max-microvolt = <3300000>;
-+		};
-+
-+		pm8994_l20: l20 {
-+			regulator-min-microvolt = <2950000>;
-+			regulator-max-microvolt = <2950000>;
-+			regulator-always-on;
-+			regulator-boot-on;
-+			regulator-allow-set-load;
-+			regulator-system-load = <570000>;
-+			/*
-+			 * TODO: downstream
-+			 * qcom,init-current = <0x2ee>;
-+			 */
-+		};
-+
-+		pm8994_l21: l21 {
-+			regulator-min-microvolt = <2950000>;
-+			regulator-max-microvolt = <2950000>;
-+			regulator-always-on;
-+		};
-+
-+		pm8994_l22: l22 {
-+			regulator-min-microvolt = <3100000>;
-+			regulator-max-microvolt = <3100000>;
-+		};
-+
-+		pm8994_l23: l23 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
-+		};
-+
-+		pm8994_l24: l24 {
-+			regulator-min-microvolt = <3075000>;
-+			regulator-max-microvolt = <3150000>;
-+		};
-+
-+		pm8994_l25: l25 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+
-+		pm8994_l26: l26 {
-+			regulator-min-microvolt = <987500>;
-+			regulator-max-microvolt = <987500>;
-+		};
-+
-+		pm8994_l27: l27 {
-+			regulator-min-microvolt = <1050000>;
-+			regulator-max-microvolt = <1050000>;
-+		};
-+
-+		pm8994_l28: l28 {
-+			regulator-min-microvolt = <1000000>;
-+			regulator-max-microvolt = <1000000>;
-+			regulator-boot-on;
-+			/*
-+			 * TODO: downstream
-+			 * qcom,init-current = <0x2d>;
-+			 */
-+		};
-+
-+		pm8994_l29: l29 {
-+			regulator-min-microvolt = <2700000>;
-+			regulator-max-microvolt = <2800000>;
-+		};
-+
-+		pm8994_l30: l30 {
-+			regulator-min-microvolt = <1850000>;
-+			regulator-max-microvolt = <1850000>;
-+		};
-+
-+		pm8994_l31: l31 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-boot-on;
-+			/*
-+			 * TODO: downstream
-+			 * qcom,init-current = <50>;
-+			 */
-+		};
-+
-+		pm8994_l32: l32 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+	};
-+
-+	pmi8994_regulators: regulators-1 {
-+		compatible = "qcom,rpm-pmi8994-regulators";
-+
-+		vdd_s1-supply = <&vph_pwr>;
-+		vdd_bst_byp-supply = <&vph_pwr>;
-+
-+		pmi8994_s1: s1 {};
-+
-+		/* S2 & S3 - VDD_GFX */
-+
-+		pmi8994_bby: boost-bypass {};
-+	};
-+};
-+
- &sdhc1 {
- 	status = "okay";
- 	mmc-hs400-1_8v;
--- 
-2.39.1
-
+>
+> Konrad
+>>
+>>> +}
+>>> +
+>>> +static struct platform_driver gcc_ipq9574_driver = {
+>>> +    .probe = gcc_ipq9574_probe,
+>>> +    .driver = {
+>>> +        .name   = "qcom,gcc-ipq9574",
+>>> +        .of_match_table = gcc_ipq9574_match_table,
+>>> +    },
+>>> +};
+>>> +
+>>> +static int __init gcc_ipq9574_init(void)
+>>> +{
+>>> +    return platform_driver_register(&gcc_ipq9574_driver);
+>>> +}
+>>> +core_initcall(gcc_ipq9574_init);
+>>> +
+>>> +static void __exit gcc_ipq9574_exit(void)
+>>> +{
+>>> +    platform_driver_unregister(&gcc_ipq9574_driver);
+>>> +}
+>>> +module_exit(gcc_ipq9574_exit);
+>>> +
+>>> +MODULE_DESCRIPTION("Qualcomm Technologies, Inc. GCC IPQ9574 Driver");
+>>> +MODULE_LICENSE("GPL");
