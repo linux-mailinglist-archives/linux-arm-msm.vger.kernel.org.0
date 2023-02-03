@@ -2,177 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C72B96891E8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Feb 2023 09:23:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D7DE68921E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Feb 2023 09:27:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232603AbjBCITp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Feb 2023 03:19:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56492 "EHLO
+        id S232287AbjBCI1N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Feb 2023 03:27:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232882AbjBCITP (ORCPT
+        with ESMTP id S232355AbjBCI0k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Feb 2023 03:19:15 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8638A6DFDE
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Feb 2023 00:18:32 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id q10-20020a1cf30a000000b003db0edfdb74so5198657wmq.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Feb 2023 00:18:32 -0800 (PST)
+        Fri, 3 Feb 2023 03:26:40 -0500
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5A84125A4
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Feb 2023 00:26:36 -0800 (PST)
+Received: by mail-ej1-x631.google.com with SMTP id hx15so13176966ejc.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Feb 2023 00:26:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gVGVV9qGjZMfe1gxAo5nZfKax+1XIxmkt82fjMeK7iM=;
-        b=P5XaQfQBAwl14ujPzil4GdTDK6ey401OHEEOGYffQJraDbJKABSVD7g1VFeQvCAqVe
-         MkQAbn9azYKRwkO6mJLuz2hKI7fooL2j08rjSdn+/BQByFiDR+ZUeoCHj4mqnYTHlp2g
-         n9TAF3xrUPgeFehRYnQiSCMI+hjvMxi/Q2/SJV5ye6X7rusrC2oUlHcKRBpPI0ayWov+
-         xgbiShkaGXrc2EMhTWSmLBaodDSsiKkrIDqic/DRrzVwTB/dE1ao3Kz/LeZ6k9PKsjwb
-         NlQfZtqhHibupfyDILF7Wt+KpfziP7amnUdQW/nTea66Pyq6AtQbEvPO0AfyRpklg1hl
-         wOFg==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=C+/90X5VKUOPdYQSfgyJKgH8aAEJvZdqb0gJuf8F3P4=;
+        b=mumRdETGnQ3PVEkTLbeobaUDC/+veipzaawXb4KKFpaEEgErudMTINCn+fQMgN6w4m
+         q/HWz9sA6Pnro2viSP9kpMKoLidWsHmeeycJpZIqvkte2wXjGJOqHpTmZCCei/51uyoH
+         mZj7de6KzsFE78uWn0KAGdu4qzswRX9HZU5P4J2c4vWDKL8wJgf9pEJbdL03FFJLGgKa
+         MubaIPUdfvC59+zpWslhqFwCSpf5axjjZQc/Hidcl2Hh2AVjDZYRCRSiOKamZmv+QAEZ
+         H7pd3nhz/F7qzwfh3XK2dO7bIXeo9Y1kKlfRJ9/ibINkP5szAXzNlIkm7GsXj3bomXCH
+         U3zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gVGVV9qGjZMfe1gxAo5nZfKax+1XIxmkt82fjMeK7iM=;
-        b=wRp4zKJddmLk7JIEJqdHIHfuleV7zyx8wru8YuQ9q00RZPlCAPe8Pfg1RLWdLHEQkf
-         Mz0c4VVtHaN8ss8RYpwKgsvWby3tU8cJheQwpG2xMRzxW8Q8ZOcaKoPTtb3/xycUIZ67
-         1nuNM0KogpgqwaQzWp0gep9OdHzEzq3/S9aqew3QegG/jQ1m6ZFEhJBNffCBMy55nqvo
-         WKxnbmsH50RHYPyysB3S3G1wTKziTn0FtCNYeONWDwRsKOGcIH/tueRsZTj65Uo+DxfM
-         1c6AA9tsn8edQ4we+ezp0Q8MGaUqECUv3OgIJFEussC309rsnCIbscXFhAqPbcKU4BIM
-         hqvg==
-X-Gm-Message-State: AO0yUKXF6AWCn268mDmL1Yat5nv26P0Jd7XPtRFbMzQlFlFeels6zx9b
-        7kzVpfKqthuxZ3V/b8PXfhVCzg==
-X-Google-Smtp-Source: AK7set8R0udVddjd/ojCWJvkTZuTIqZHPA5y5Ms5shuNv31qjwhpw/qkjuC7DWzERcBGeXX2k/OHWA==
-X-Received: by 2002:a05:600c:3553:b0:3df:578c:50d4 with SMTP id i19-20020a05600c355300b003df578c50d4mr6945705wmq.21.1675412310660;
-        Fri, 03 Feb 2023 00:18:30 -0800 (PST)
-Received: from hackbox.lan ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id az24-20020a05600c601800b003dc4baaedd3sm7316591wmb.37.2023.02.03.00.18.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Feb 2023 00:18:30 -0800 (PST)
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        "vkoul@kernel.org" <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Johan Hovold <johan+linaro@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH v7 12/12] arm64: dts: qcom: sm8550-mtp: Add PCIe PHYs and controllers nodes
-Date:   Fri,  3 Feb 2023 10:18:07 +0200
-Message-Id: <20230203081807.2248625-13-abel.vesa@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230203081807.2248625-1-abel.vesa@linaro.org>
-References: <20230203081807.2248625-1-abel.vesa@linaro.org>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=C+/90X5VKUOPdYQSfgyJKgH8aAEJvZdqb0gJuf8F3P4=;
+        b=d4qZrm3GspqouddmfYiVkGhVYz5RAsf+aqt4jmMIzlyDVCpyt0WYOKVbLnW8yz2lke
+         iiW6EumSU7Sqg/3wwql9i0/uvpIHBvp1V6Cqc4itnKKjJKMlAKyj2a55Arhh5lNqYpgG
+         yxne+HhaldtOBthYmEFgo3FXrneKcDj4xU85+Oo2RrJAbU95Rrs3tsckKxd/mCf2jRxb
+         FKjAdOI6iNmgadeKVn9a7jFQLOpuXchmn8GA4cyozdA0OKXaGnv9c8OB7shFGBoHPOcg
+         L25Qj6O6p69GZAjuzrsRsbgcKxFcF21xfPewDvsx9zZa6RG0TTnv3hKnLGrgx0Hdthlo
+         5/gQ==
+X-Gm-Message-State: AO0yUKUstLraOdS2JqJOHrFk1oHSddKl/uBC9iKSumVe3zlb8sUGNeU2
+        JT0nhTvVW+ty8D2MqPNldivyPePORfWMnRA4KoBTlA==
+X-Google-Smtp-Source: AK7set/nPc6abpHzzr2F+jWhqUYyknvQk4Ia//I/a82fvwvcUB869++d2wVBnTp56iiwNLBqhQANvQ==
+X-Received: by 2002:a17:907:1393:b0:86d:4517:a4f1 with SMTP id vs19-20020a170907139300b0086d4517a4f1mr8825173ejb.5.1675412795443;
+        Fri, 03 Feb 2023 00:26:35 -0800 (PST)
+Received: from [192.168.1.102] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id lb2-20020a170907784200b0084d494b24dcsm1021553ejc.161.2023.02.03.00.26.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 03 Feb 2023 00:26:34 -0800 (PST)
+Message-ID: <43c7cf3f-f463-90da-23f9-f6b76d9f729f@linaro.org>
+Date:   Fri, 3 Feb 2023 10:26:33 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.0.2
+Subject: Re: [PATCH v8 5/9] dt-bindings: qcom-qce: document clocks and
+ clock-names as optional
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-crypto@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+References: <20230202135036.2635376-1-vladimir.zapolskiy@linaro.org>
+ <20230202135036.2635376-6-vladimir.zapolskiy@linaro.org>
+ <32c23da1-45f0-82a4-362d-ae5c06660e20@linaro.org>
+ <22f191c4-5346-8fe7-690d-9422775bb2d5@linaro.org>
+ <ad8812e6-7dc2-5575-c44d-3f4f62aeb9e9@linaro.org>
+From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <ad8812e6-7dc2-5575-c44d-3f4f62aeb9e9@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable PCIe controllers and PHYs nodes on SM8550 MTP board.
+Hi Krzysztof,
 
-Co-developed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
+On 2/3/23 10:17, Krzysztof Kozlowski wrote:
+> On 02/02/2023 23:27, Vladimir Zapolskiy wrote:
+>> Hi Krzysztof,
+>>
+>> On 2/2/23 15:53, Krzysztof Kozlowski wrote:
+>>> On 02/02/2023 14:50, Vladimir Zapolskiy wrote:
+>>>> From: Neil Armstrong <neil.armstrong@linaro.org>
+>>>>
+>>>> On certain Snapdragon processors, the crypto engine clocks are enabled by
+>>>> default by security firmware.
+>>>
+>>> Then probably we should not require them only on these variants.
+>>
+>> the rationale is clear, but here comes a minor problem, older platforms
+>> require clocks, when newer ones do not. When a generic SoC-specific compatible
+>> is introduced, let say "qcom,ipq4019-qce", it itself requires the clocks,
+>> but then newer platforms can not be based on this particular compatible,
+>> otherwise they will require clocks and this comes as invalid.
+>>
+>> How to resolve it properly, shall there be another generic SoC-specific
+>> compatible without clocks and NOT based on that "qcom,ipq4019-qce" compatible?
+>>
+>> By the way, QCE on SM8150 also shall not need the clocks.
+> 
+> Assuming you have:
+> 1. ipq4019 requiring clocks
+> 2. msm8996 compatible with ipq4019, requiring clocks
+> 3. ipq6018 compatible with ipq4019, not requiring clocks
+> 
+> allOf:
+>    - if:
+>        properties:
+>          compatible:
+>            enum:
+>               - ipq4019-qce
+>      then:
+>        required:
+>          - clocks
+> 
+>    - if:
+>        properties:
+>          compatible:
+>            contains:
+>              enum:
+>                 - msm8996-qce
+>      then:
+>        required:
+>          - clocks
+> 
+> That's not pretty.
+> 
+> Another solution is to make non-clock-requiring variants as their own
+> family:
+> 
+> 1. msm8996-qce, ipq4019-qce
+> 2. sm8550-qce, sm8150-qce
+> 
+> and then in the driver you need two entries - ipq4019 and sm8150.
+> 
+> I like the latter, because for clock-requiring variants your driver
+> should actually get them and require. For non-clock-requiring variants,
+> you just skip the clocks (do not fail). Therefore you need different
+> driver data for these two families.
 
-This patch does not have a v3, but since it is now part of the same
-patchset with the controller and the phy drivers patches, I had to
-bump the version to 4.
+many thanks for the detailed explanation, the first of two solutions will
+be even more clumsy and convoluted, since there should be lists split into
+two baskets.
 
-The v6 was here:
-https://lore.kernel.org/all/20230202123902.3831491-13-abel.vesa@linaro.org/
+Thus I will go with the second variant and add two family compatibles.
 
-Changes since v6:
- * none
-
-Changes since v5:
- * none
-
-Changes since v4:
- * moved here the pinctrl properties and out of dtsi file
-
-Changes since v2:
- * none
-
-Changes since v1:
- * ordered pcie related nodes alphabetically in MTP dts
- * dropped the pipe_mux, phy_pipe and ref clocks from the pcie nodes
- * dropped the child node from the phy nodes, like Johan suggested,
-   and updated to use the sc8280xp binding scheme
- * changed "pcie_1_nocsr_com_phy_reset" 2nd reset name of pcie1_phy
-   to "nocsr"
- * reordered all pcie nodes properties to look similar to the ones
-   from sc8280xp
-
- arch/arm64/boot/dts/qcom/sm8550-mtp.dts | 38 +++++++++++++++++++++++++
- 1 file changed, 38 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-index e756f83a941c..265862d0e44f 100644
---- a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-@@ -407,6 +407,44 @@ &mdss_mdp {
- 	status = "okay";
- };
- 
-+&pcie_1_phy_aux_clk {
-+	clock-frequency = <1000>;
-+};
-+
-+&pcie0 {
-+	wake-gpios = <&tlmm 96 GPIO_ACTIVE_HIGH>;
-+	perst-gpios = <&tlmm 94 GPIO_ACTIVE_LOW>;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pcie0_default_state>;
-+
-+	status = "okay";
-+};
-+
-+&pcie0_phy {
-+	vdda-phy-supply = <&vreg_l1e_0p88>;
-+	vdda-pll-supply = <&vreg_l3e_1p2>;
-+	status = "okay";
-+};
-+
-+&pcie1 {
-+	wake-gpios = <&tlmm 99 GPIO_ACTIVE_HIGH>;
-+	perst-gpios = <&tlmm 97 GPIO_ACTIVE_LOW>;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pcie1_default_state>;
-+
-+	status = "okay";
-+};
-+
-+&pcie1_phy {
-+	vdda-phy-supply = <&vreg_l3c_0p91>;
-+	vdda-pll-supply = <&vreg_l3e_1p2>;
-+	vdda-qref-supply = <&vreg_l1e_0p88>;
-+
-+	status = "okay";
-+};
-+
- &pm8550_gpios {
- 	sdc2_card_det_n: sdc2-card-det-state {
- 		pins = "gpio12";
--- 
-2.34.1
-
+--
+Best wishes,
+Vladimir
