@@ -2,75 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF987689030
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Feb 2023 08:11:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 92313689034
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Feb 2023 08:11:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231889AbjBCHKh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Feb 2023 02:10:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33674 "EHLO
+        id S232127AbjBCHLc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Feb 2023 02:11:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232029AbjBCHKg (ORCPT
+        with ESMTP id S231598AbjBCHLb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Feb 2023 02:10:36 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21DA32E82C
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 23:10:35 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id bk16so3762613wrb.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 23:10:35 -0800 (PST)
+        Fri, 3 Feb 2023 02:11:31 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D52B206B3
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 23:11:30 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id m14so3750291wrg.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 23:11:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=OJ8Gf80CWUYHo8pgwGSarJleRRx0Faz3RtumkT/DIPU=;
-        b=p9UHLVpI6+WjggtIxjLt00M/ofG3tympPQyaCFDbhiwRJztc0MxTLwbLMYGHmYsaU9
-         Mfh19f4QBKsPH8UJGV4lT5+RCobv1NSuQCixc8SIFxCFzq6Ok79cmnIaSRrj9J7KjptM
-         KPOfIdx//9u4EPQNrBeI1iJBcPLYWuzL90u2DdrebiEx0coFQjN5SsO/JweeUEUURvEw
-         YZddWPEtmH2YCo9s9KlkFfa/Gnc6ntNzsHvIib8cwIJauoK2Xm/07r6JIS7cMcOumf6R
-         i+dUsFfXaracnGBbNZ/P32I5ZN0B4aFwEBCxZnbEWyq2l+ZY7SIcEo6YwjKs8bu50y0j
-         WbRg==
+        bh=VMpIUIgr72vj2KES61ZyPekdCitWfbzab3EmSUELRzs=;
+        b=M+T7ihDmZWPoR1fZf9kKLTa3I5EStvTTz8K3LOVdpY+E1Q/3lQR9exUPcduCHkNlaQ
+         Nb3b3qYCNUOLfjGLX4XMh8ZH6PU9Pb2nhoSErgTYbCuNy4SFZMDjGxCl4SiLC1h5xynh
+         iY9YfdOGRTeFQTv12ZZNECggqif1T0puu18mXbpiuqUcI9SJagu1E+KISyTxUvT3z1Oz
+         xS4BYhaR/wM2o7PR2xNOi8Ujz89pnceoS8ivYbLGuLq2rQj4cRuiPCHRVIEWka2t+zvO
+         +KCLs0B4u71jQ8I6wiUoZ6S8Qxt2pfQ5aFL0zDKt6UBWFVCamHAp3bd9xEUIob0wrk6Y
+         6XPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OJ8Gf80CWUYHo8pgwGSarJleRRx0Faz3RtumkT/DIPU=;
-        b=XVTCEza9/QvMytIQnedIKgJVb/4/T1C0ps88EZ1X+UM8J1cOpJPHTcUiBe1opckZ6C
-         Vuu1fMW4NhDT0L/r4c3yKUclKmxJOf2vJ1dgiUKn54Z7H4xWIDkYRIFyPfrA2xsVkWJU
-         NDfhvX0+NeScjBciru7DzoPaoe45wEMhC6aPmAG+YE4WoFPkiWs7Nnp22ywOXh9EWQbT
-         aXD/7xv5/TwyFnLKFrVpuNvYze0PqvwWkNvyHM8dgv8WWrbdm2qwFBZbYpMf1c9xHuLw
-         dw8a4G5iAzgT6/oa/zdb4yQuM5+i4dQs17dE5zUYR06XKtp4cHrmgC427r/a5Cfm8hCZ
-         TF3w==
-X-Gm-Message-State: AO0yUKVfcmIzAGq9h6d2QcRSRwsB0pI9VOTs+LtW0gVW/yWhDC6jlIdb
-        giHnniZaBrBX4ZUIBJ0WZAq3mw==
-X-Google-Smtp-Source: AK7set8kL5SMVr6eq6eIoqChBiL4VBPyvYeDcIXX4WXFY8mArGdb0FbNRvZ4ohplZEpfh0Rb1xn+HQ==
-X-Received: by 2002:adf:a202:0:b0:2bd:f5bd:5482 with SMTP id p2-20020adfa202000000b002bdf5bd5482mr7173996wra.28.1675408233673;
-        Thu, 02 Feb 2023 23:10:33 -0800 (PST)
+        bh=VMpIUIgr72vj2KES61ZyPekdCitWfbzab3EmSUELRzs=;
+        b=8JtfCkOCjLhSJoN09zr5fy0+q8sMelgh4RdlvAPqI2n9WKThiiVG2xYOpontAAMG/G
+         /YeTC5KcQryBQoTESUC5O2ZZ8qwCrMvajZw7s0uYYi+DG69Q6jsZUO3Ax1x6pt9iy063
+         /L465NY6b2nbobKEexGJSle0iWFc0p0LE2bBsHt3g8ydyyGEhO28ko6t42O0G/0RFa9g
+         06hbH1JjunZJZeZy6E7ON2jZqf7YsFvZgjT8i8f5fP8yMZvfgpChgyka4cbodQKp4U+v
+         jaAQhm8tzoSUM1v1VAb9/VbuizSNmRcEDx+J8eIwD2aYebksxofjPFRVr6wLUqrKUgbW
+         27+Q==
+X-Gm-Message-State: AO0yUKVRZA9ULuhef01PT5X2cwz2aGldH+kExArlvVghrgUYJHb3Gu7r
+        A2XpIBfl5IVEiyrxsBFSgXIAOA==
+X-Google-Smtp-Source: AK7set8wSgQiywPGrL5fVkji5XDmWBCGOwWzrueNmHsy/nA6CO+I1vjesYJdPBkcS2iWqRjRngCzYg==
+X-Received: by 2002:a5d:680d:0:b0:2bf:ac3f:a9da with SMTP id w13-20020a5d680d000000b002bfac3fa9damr7829808wru.7.1675408288885;
+        Thu, 02 Feb 2023 23:11:28 -0800 (PST)
 Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id s14-20020adfa28e000000b002c3be49ef94sm1257168wra.52.2023.02.02.23.10.32
+        by smtp.gmail.com with ESMTPSA id f9-20020a5d4dc9000000b002bfb37497a8sm1249205wru.31.2023.02.02.23.11.27
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Feb 2023 23:10:33 -0800 (PST)
-Message-ID: <96b2dc11-c9e2-58c9-ba95-7e7ee7218d16@linaro.org>
-Date:   Fri, 3 Feb 2023 08:10:31 +0100
+        Thu, 02 Feb 2023 23:11:28 -0800 (PST)
+Message-ID: <e2728f7c-4d6a-5920-35e8-ea24b907128d@linaro.org>
+Date:   Fri, 3 Feb 2023 08:11:26 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [RFT PATCH 05/14] arm64: dts: qcom: sc8280xp: correct TLMM
- gpio-ranges
+Subject: Re: [PATCH v2 00/10] pinctrl/ARM/arm64: qcom: correct TLMM
+ gpio-ranges and GPIO pin names
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Brian Masney <bmasney@redhat.com>
+To:     Linus Walleij <linus.walleij@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230201155105.282708-1-krzysztof.kozlowski@linaro.org>
- <20230201155105.282708-6-krzysztof.kozlowski@linaro.org>
- <Y9xAEoc0QXe222D0@x1> <25f5a750-b51c-7d7b-0d50-5b2f78de8512@linaro.org>
+        Stephan Gerhold <stephan@gerhold.net>,
+        Vinod Koul <vkoul@kernel.org>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        Luca Weiss <luca@z3ntu.xyz>, Iskren Chernev <me@iskren.info>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230202104452.299048-1-krzysztof.kozlowski@linaro.org>
+ <CACRpkdb_OHXfAGMYwFv3gzRWyDJw6=eNuJedteMxiEvPtQxvWw@mail.gmail.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <25f5a750-b51c-7d7b-0d50-5b2f78de8512@linaro.org>
+In-Reply-To: <CACRpkdb_OHXfAGMYwFv3gzRWyDJw6=eNuJedteMxiEvPtQxvWw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,32 +86,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/02/2023 00:45, Konrad Dybcio wrote:
+On 02/02/2023 23:28, Linus Walleij wrote:
+> On Thu, Feb 2, 2023 at 11:45 AM Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
 > 
+>> Changes since v1:
+>> 1. Match the driver's ngpios (so usually include the ufs-reset where
+>>    applicable). Several patches were dropped, other rewritten.
+>> 2. Add tags
 > 
-> On 2.02.2023 23:58, Brian Masney wrote:
->> On Wed, Feb 01, 2023 at 04:50:56PM +0100, Krzysztof Kozlowski wrote:
->>> Correct the number of GPIOs in TLMM pin controller.
->>>
->>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>> ---
->>>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 2 +-
->>>  1 file changed, 1 insertion(+), 1 deletion(-)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
->>> index fa2d0d7d1367..17e8c26a9ae6 100644
->>> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
->>> @@ -3533,7 +3533,7 @@ tlmm: pinctrl@f100000 {
->>>  			#gpio-cells = <2>;
->>>  			interrupt-controller;
->>>  			#interrupt-cells = <2>;
->>> -			gpio-ranges = <&tlmm 0 0 230>;
->>> +			gpio-ranges = <&tlmm 0 0 228>;
-> Won't that kill the UFS pins?
+> Needless to say I'm a big fan of the series:
+> Acked-by: Linus Walleij <linus.walleij@linaro.org>
+> 
+> Will you send me a pull request for the pinctrl things as soon as
+> you feel confident it is finished, and I'll queue it up for v6.3?
 
-This patchset is obsolete and replaced with v2. I alerady replied here
-that this was not good approach...
+Sure!
 
 Best regards,
 Krzysztof
