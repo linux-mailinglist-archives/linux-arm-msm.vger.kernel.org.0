@@ -2,79 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A7E14688DFF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Feb 2023 04:32:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F3BD688E21
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Feb 2023 04:45:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232158AbjBCDcG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Feb 2023 22:32:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51940 "EHLO
+        id S231751AbjBCDpk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Feb 2023 22:45:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232004AbjBCDcF (ORCPT
+        with ESMTP id S231760AbjBCDph (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Feb 2023 22:32:05 -0500
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C481D68132
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 19:31:57 -0800 (PST)
-Received: by mail-ej1-x62a.google.com with SMTP id mf7so11886134ejc.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 19:31:57 -0800 (PST)
+        Thu, 2 Feb 2023 22:45:37 -0500
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B06367266A
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Feb 2023 19:45:35 -0800 (PST)
+Received: by mail-lf1-x12f.google.com with SMTP id v17so6041170lfd.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Feb 2023 19:45:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3U+VBc+U8900xd5EAE+/o092MReN2kqBrk9eevhvIKU=;
-        b=low5lDLusr3RQ+ufb4mgQmtlD+OkztWKTyxvaV0jR+lH2ApeK7vCMb7vBNCX0Yw5eN
-         BKQk+annfE09U8uu/fpXWvPvK2CcpXPQyX3b0v1Cde5GmA+g+QWYbOfrl4B15c/2nqB8
-         j3/IZBcn2TRyDfcnuYjVKcJRl6rvRrpG2YJPNZKFIO3a1eqWRcrEFsFUw8NqnLeFtXQq
-         YDVpuuAuz9dIQB2GqtoS84ysImXccRKWgGauXdk5mZgeky48OzvhvQAkY350XMApp61D
-         ny7+B19aAmc8fDm5pRBcDgFUO/ynEIf2xu2NlUUJDfyWr9aSxLuJyLn2058MSC8Is7Zd
-         tXXw==
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8zrhD271lrTttGluQF+PCnQmCDKl2CENWlcyeC9oezU=;
+        b=EnvtQcOYczYc3Hm8HN1M+u5/bCD8+AZQuZx40gf9LLFJRhaayJZiN7xh9oQ0HbVyv5
+         WlaBYyooZpDvygERB3VBtzkrYmMoRceclFbdlBAjpw6s3BrzcsR9GMuvvHXM2bDqDLx5
+         fiEDoomZEKpQ2lVHcskZkAyOV/HWXozdlOInzcSzGZpCsnZTNVqMgP1U7axh1r7D1ybs
+         N84+JtK8ZIBIGRZSjODPD49Lj0tHIfDl6PCMPbnteNEbCC2uBDrVFrMNxX1u6RcOeMJt
+         4WxLC+55i29BnBlZlD4M/NOLRiFx0LCmRdEqYBB6SB+jV2NwBiuXG3x496+i+NVQrFB5
+         ukNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3U+VBc+U8900xd5EAE+/o092MReN2kqBrk9eevhvIKU=;
-        b=pnAMqsnriojGcRkragwTl5bhuSAekLSoM1OXbVAkjrSDzPrSiZk7g147VMu16kRy8w
-         qF3gKWbNGmNagmU6to/FCg2XKfmqMoSfeBd3Lvi2yQ/gq9YmNCye8zz/MLyVUUk4zTOr
-         plBsGd2Lnh16DwkqlOiE51pecgXglL4zHbJHoF3COPhOo02ZPN/OShRVpzp5EieXY9RA
-         EHMK/IF9sF/01WPwa/7NYoGstiKH41TQMUJ0X9XguX6IwW/+R9rQU4BBXDcKT/0XFOoL
-         auGcLqL7eaoBYRkJVyg+wfgiY2xdEzxkcELzi8pGiZOe2aWC/HY5SA/f7XuCjwD6ihid
-         ARmw==
-X-Gm-Message-State: AO0yUKXjL2JWqlesF1pE9htJ5MUKNIsxYFT2b/RIXPnXc/7IRWXCN2UK
-        Yz4kPIqsj09MXcMjlLotNlQESg==
-X-Google-Smtp-Source: AK7set+a2b1QYPixHmpV/BoB+ddXv4X+iXvFucmfpHR9OC/m2Llgni6j4LO+C7y0u6t3cxpX5CJ/yQ==
-X-Received: by 2002:a17:907:2c49:b0:887:2248:efd5 with SMTP id hf9-20020a1709072c4900b008872248efd5mr9230647ejc.77.1675395116303;
-        Thu, 02 Feb 2023 19:31:56 -0800 (PST)
-Received: from [192.168.1.101] (abyl20.neoplus.adsl.tpnet.pl. [83.9.31.20])
-        by smtp.gmail.com with ESMTPSA id 12-20020a170906318c00b0088b93bfa765sm698374ejy.138.2023.02.02.19.31.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Feb 2023 19:31:56 -0800 (PST)
-Message-ID: <8a3eb2d3-5cdf-8bdb-63f5-ab89798d38e6@linaro.org>
-Date:   Fri, 3 Feb 2023 04:31:54 +0100
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8zrhD271lrTttGluQF+PCnQmCDKl2CENWlcyeC9oezU=;
+        b=mYE/Uy862bTDTqZsI9UYl24aBQARsKzrG1+t5ln1ea4j1BhqrfHUAcrueMTFmzu0IW
+         7ksqP0xBVT54xquWxlvTsf+hpZKDfbR4AcWnG2kcjTf6wWsrdBfmNUBw9U841M4uB/Cx
+         q6TMvcAisbF439sx82wYM5iLM5rrqs9eGmzKGzpGLVJlIadmq60lz5TOAkG9p9QheNk5
+         2dJl38D+ikseTq3TyCDl0Z4UqO1SKX6kL9LVIUITmdIQ6uJRt8poH2RZLuRKlz+C9Zx5
+         USlqoLjgfEXkbqUgX58uWXiEdd9R+d2UEP9C1hKjwhlj1ITuizTqHnJ332upELaDp87u
+         wI4w==
+X-Gm-Message-State: AO0yUKVnc4HwqUY/NdDnu0U+tDMtlM1fur+2rR5rvv87/IDT7uoXMyaX
+        MtFRgHEO5vaZAmWALwt9GuPcLprJIcgnyZHoCQuLbg==
+X-Google-Smtp-Source: AK7set9mvhjgLBscCSmB7QGxYq4dFW8q88IFngk26C54TKNXnncufj9MdP1Re09yaxaXAyMUSRPNPzBfHdP7B3ZfrTs=
+X-Received: by 2002:a05:6512:3d28:b0:4d8:8ad1:a05c with SMTP id
+ d40-20020a0565123d2800b004d88ad1a05cmr1245389lfv.140.1675395933982; Thu, 02
+ Feb 2023 19:45:33 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH v2 17/22] rtc: pm8xxx: add support for nvmem offset
-Content-Language: en-US
-To:     Johan Hovold <johan+linaro@kernel.org>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Alessandro Zummo <a.zummo@towertech.it>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Maximilian Luz <luzmaximilian@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-rtc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230202155448.6715-1-johan+linaro@kernel.org>
- <20230202155448.6715-18-johan+linaro@kernel.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230202155448.6715-18-johan+linaro@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+References: <20230201080227.473547-1-jun.nie@linaro.org> <9ab7383b-f3ed-3e48-d275-3c8933be5f2f@kernel.org>
+ <CABymUCNKvm9+_ascdcWAgA1xGYKPhyO5C97-+rTTK739v+UEew@mail.gmail.com> <957f2bd0-d249-169b-04cc-242b9fcf8c6b@kernel.org>
+In-Reply-To: <957f2bd0-d249-169b-04cc-242b9fcf8c6b@kernel.org>
+From:   Jun Nie <jun.nie@linaro.org>
+Date:   Fri, 3 Feb 2023 11:45:31 +0800
+Message-ID: <CABymUCMA9fxGjKAxLhpnSxr92t-oFDfe=mOSiLWb4Jjbzs=n8g@mail.gmail.com>
+Subject: Re: [PATCH 1/2] dt-bindings: interconnect: Add Qualcomm CCI dt-bindings
+To:     Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
+        cw00.choi@samsung.com, bryan.odonoghue@linaro.org,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,261 +72,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Krzysztof Kozlowski <krzk@kernel.org> =E4=BA=8E2023=E5=B9=B42=E6=9C=882=E6=
+=97=A5=E5=91=A8=E5=9B=9B 17:42=E5=86=99=E9=81=93=EF=BC=9A
+>
+> On 02/02/2023 10:29, Jun Nie wrote:
+> >>> +
+> >>> +properties:
+> >>> +  compatible:
+> >>> +    enum:
+> >>> +      - qcom,msm8939-cci
+> >>> +
+> >>> +  clocks:
+> >>> +    maxItems: 1
+> >>> +
+> >>> +  operating-points-v2: true
+> >>> +  opp-table:
+> >>> +    type: object
+> >>> +
+> >>> +required:
+> >>> +  - compatible
+> >>> +  - clocks
+> >>> +  - operating-points-v2
+> >>> +  - nvmem-cells
+> >>
+> >> ?? You cannot require properties which are not present.
+> >>
+> >>> +  - power-domains
+> >>
+> >> Same here.
+> >>
+> >
+> > So the properties should be added later, after cpr and fuse nodes are
+> > available in mainline, right?
+>
+> No, binding should be complete, so why would you skip some properties? I
+> don't see here dependency on other bindings. Unless I missed here
+> something and there is a dependency? But then what kind? Do you
+> reference other schema?
+>
+> Best regards,
+> Krzysztof
+>
+Sorry, it is a copy/modified error with overlooking some added properties.
+
++        cci_opp3: opp-cpr14-400000000 {
++            opp-hz =3D /bits/ 64 <400000000>;
++            opp-supported-hw =3D <0x1>;
++            required-opps =3D <&cpr_opp14>;
++        };
++
++        cci_opp4: opp-cpr15-400000000 {
+
+Documentation/devicetree/bindings/interconnect/qcom,cci.example.dtb:
+opp-table-cci: Unevaluated properties are not allowed
+('opp-cpr14-400000000', 'opp-cpr15-400000000' were unexpected)
+
+Do you know how to fix this dts check warning?
+The cci_opp3 and cci_opp4 have the same frequency but with different
+requirements to
+power domain. So the name of the 2 opp should be identical or with a
+different tag, but there
+are warnings for both cases for the 2 lines. Thanks!
 
 
-On 2.02.2023 16:54, Johan Hovold wrote:
-> On many Qualcomm platforms the PMIC RTC control and time registers are
-> read-only so that the RTC time can not be updated. Instead an offset
-> needs be stored in some machine-specific non-volatile memory, which the
-> driver can take into account.
-> 
-> Add support for storing a 32-bit offset from the Epoch in an nvmem cell
-> so that the RTC time can be set on such platforms.
-> 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
-That's gonna be a stupid question, but just to make sure..
-
-SDAM is rewritable, right? So that when somebody sets the time to
-year 2077 by mistake, they won't have to put up with it for the next
-50 years? :D
-
-Konrad
->  drivers/rtc/rtc-pm8xxx.c | 141 +++++++++++++++++++++++++++++++++++----
->  1 file changed, 129 insertions(+), 12 deletions(-)
-> 
-> diff --git a/drivers/rtc/rtc-pm8xxx.c b/drivers/rtc/rtc-pm8xxx.c
-> index eff2782beeed..372494e82f40 100644
-> --- a/drivers/rtc/rtc-pm8xxx.c
-> +++ b/drivers/rtc/rtc-pm8xxx.c
-> @@ -1,8 +1,13 @@
->  // SPDX-License-Identifier: GPL-2.0-only
-> -/* Copyright (c) 2010-2011, Code Aurora Forum. All rights reserved.
-> +/*
-> + * pm8xxx RTC driver
-> + *
-> + * Copyright (c) 2010-2011, Code Aurora Forum. All rights reserved.
-> + * Copyright (c) 2023, Linaro Limited
->   */
->  #include <linux/of.h>
->  #include <linux/module.h>
-> +#include <linux/nvmem-consumer.h>
->  #include <linux/init.h>
->  #include <linux/rtc.h>
->  #include <linux/platform_device.h>
-> @@ -49,6 +54,8 @@ struct pm8xxx_rtc_regs {
->   * @alarm_irq:		alarm irq number
->   * @regs:		register description
->   * @dev:		device structure
-> + * @nvmem_cell:		nvmem cell for offset
-> + * @offset:		offset from epoch in seconds
->   */
->  struct pm8xxx_rtc {
->  	struct rtc_device *rtc;
-> @@ -57,8 +64,60 @@ struct pm8xxx_rtc {
->  	int alarm_irq;
->  	const struct pm8xxx_rtc_regs *regs;
->  	struct device *dev;
-> +	struct nvmem_cell *nvmem_cell;
-> +	u32 offset;
->  };
->  
-> +static int pm8xxx_rtc_read_nvmem_offset(struct pm8xxx_rtc *rtc_dd)
-> +{
-> +	size_t len;
-> +	void *buf;
-> +	int rc;
-> +
-> +	buf = nvmem_cell_read(rtc_dd->nvmem_cell, &len);
-> +	if (IS_ERR(buf)) {
-> +		rc = PTR_ERR(buf);
-> +		dev_dbg(rtc_dd->dev, "failed to read nvmem offset: %d\n", rc);
-> +		return rc;
-> +	}
-> +
-> +	if (len != sizeof(u32)) {
-> +		dev_dbg(rtc_dd->dev, "unexpected nvmem cell size %zu\n", len);
-> +		kfree(buf);
-> +		return -EINVAL;
-> +	}
-> +
-> +	rtc_dd->offset = get_unaligned_le32(buf);
-> +
-> +	kfree(buf);
-> +
-> +	return 0;
-> +}
-> +
-> +static int pm8xxx_rtc_write_nvmem_offset(struct pm8xxx_rtc *rtc_dd, u32 offset)
-> +{
-> +	u8 buf[sizeof(u32)];
-> +	int rc;
-> +
-> +	put_unaligned_le32(offset, buf);
-> +
-> +	rc = nvmem_cell_write(rtc_dd->nvmem_cell, buf, sizeof(buf));
-> +	if (rc < 0) {
-> +		dev_dbg(rtc_dd->dev, "failed to write nvmem offset: %d\n", rc);
-> +		return rc;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static int pm8xxx_rtc_read_offset(struct pm8xxx_rtc *rtc_dd)
-> +{
-> +	if (!rtc_dd->nvmem_cell)
-> +		return 0;
-> +
-> +	return pm8xxx_rtc_read_nvmem_offset(rtc_dd);
-> +}
-> +
->  static int pm8xxx_rtc_read_raw(struct pm8xxx_rtc *rtc_dd, u32 *secs)
->  {
->  	const struct pm8xxx_rtc_regs *regs = rtc_dd->regs;
-> @@ -90,6 +149,33 @@ static int pm8xxx_rtc_read_raw(struct pm8xxx_rtc *rtc_dd, u32 *secs)
->  	return 0;
->  }
->  
-> +static int pm8xxx_rtc_update_offset(struct pm8xxx_rtc *rtc_dd, u32 secs)
-> +{
-> +	u32 raw_secs;
-> +	u32 offset;
-> +	int rc;
-> +
-> +	if (!rtc_dd->nvmem_cell)
-> +		return -ENODEV;
-> +
-> +	rc = pm8xxx_rtc_read_raw(rtc_dd, &raw_secs);
-> +	if (rc)
-> +		return rc;
-> +
-> +	offset = secs - raw_secs;
-> +
-> +	if (offset == rtc_dd->offset)
-> +		return 0;
-> +
-> +	rc = pm8xxx_rtc_write_nvmem_offset(rtc_dd, offset);
-> +	if (rc)
-> +		return rc;
-> +
-> +	rtc_dd->offset = offset;
-> +
-> +	return 0;
-> +}
-> +
->  /*
->   * Steps to write the RTC registers.
->   * 1. Disable alarm if enabled.
-> @@ -99,23 +185,15 @@ static int pm8xxx_rtc_read_raw(struct pm8xxx_rtc *rtc_dd, u32 *secs)
->   * 5. Enable rtc if disabled in step 2.
->   * 6. Enable alarm if disabled in step 1.
->   */
-> -static int pm8xxx_rtc_set_time(struct device *dev, struct rtc_time *tm)
-> +static int __pm8xxx_rtc_set_time(struct pm8xxx_rtc *rtc_dd, u32 secs)
->  {
-> -	struct pm8xxx_rtc *rtc_dd = dev_get_drvdata(dev);
->  	const struct pm8xxx_rtc_regs *regs = rtc_dd->regs;
->  	u8 value[NUM_8_BIT_RTC_REGS];
->  	bool alarm_enabled;
-> -	u32 secs;
->  	int rc;
->  
-> -	if (!rtc_dd->allow_set_time)
-> -		return -ENODEV;
-> -
-> -	secs = rtc_tm_to_time64(tm);
->  	put_unaligned_le32(secs, value);
->  
-> -	dev_dbg(dev, "set time: %ptRd %ptRt (%u)\n", tm, tm, secs);
-> -
->  	rc = regmap_update_bits_check(rtc_dd->regmap, regs->alarm_ctrl,
->  				      regs->alarm_en, 0, &alarm_enabled);
->  	if (rc)
-> @@ -158,6 +236,27 @@ static int pm8xxx_rtc_set_time(struct device *dev, struct rtc_time *tm)
->  	return 0;
->  }
->  
-> +static int pm8xxx_rtc_set_time(struct device *dev, struct rtc_time *tm)
-> +{
-> +	struct pm8xxx_rtc *rtc_dd = dev_get_drvdata(dev);
-> +	u32 secs;
-> +	int rc;
-> +
-> +	secs = rtc_tm_to_time64(tm);
-> +
-> +	if (rtc_dd->allow_set_time)
-> +		rc = __pm8xxx_rtc_set_time(rtc_dd, secs);
-> +	else
-> +		rc = pm8xxx_rtc_update_offset(rtc_dd, secs);
-> +
-> +	if (rc)
-> +		return rc;
-> +
-> +	dev_dbg(dev, "set time: %ptRd %ptRt (%u + %u)\n", tm, tm,
-> +			secs - rtc_dd->offset, rtc_dd->offset);
-> +	return 0;
-> +}
-> +
->  static int pm8xxx_rtc_read_time(struct device *dev, struct rtc_time *tm)
->  {
->  	struct pm8xxx_rtc *rtc_dd = dev_get_drvdata(dev);
-> @@ -168,10 +267,11 @@ static int pm8xxx_rtc_read_time(struct device *dev, struct rtc_time *tm)
->  	if (rc)
->  		return rc;
->  
-> +	secs += rtc_dd->offset;
->  	rtc_time64_to_tm(secs, tm);
->  
-> -	dev_dbg(dev, "read time: %ptRd %ptRt (%u)\n", tm, tm, secs);
-> -
-> +	dev_dbg(dev, "read time: %ptRd %ptRt (%u + %u)\n", tm, tm,
-> +			secs - rtc_dd->offset, rtc_dd->offset);
->  	return 0;
->  }
->  
-> @@ -184,6 +284,7 @@ static int pm8xxx_rtc_set_alarm(struct device *dev, struct rtc_wkalrm *alarm)
->  	int rc;
->  
->  	secs = rtc_tm_to_time64(&alarm->time);
-> +	secs -= rtc_dd->offset;
->  	put_unaligned_le32(secs, value);
->  
->  	rc = regmap_update_bits(rtc_dd->regmap, regs->alarm_ctrl,
-> @@ -223,6 +324,7 @@ static int pm8xxx_rtc_read_alarm(struct device *dev, struct rtc_wkalrm *alarm)
->  		return rc;
->  
->  	secs = get_unaligned_le32(value);
-> +	secs += rtc_dd->offset;
->  	rtc_time64_to_tm(secs, &alarm->time);
->  
->  	rc = regmap_read(rtc_dd->regmap, regs->alarm_ctrl, &ctrl_reg);
-> @@ -378,9 +480,23 @@ static int pm8xxx_rtc_probe(struct platform_device *pdev)
->  	rtc_dd->allow_set_time = of_property_read_bool(pdev->dev.of_node,
->  						      "allow-set-time");
->  
-> +	rtc_dd->nvmem_cell = devm_nvmem_cell_get(&pdev->dev, "offset");
-> +	if (IS_ERR(rtc_dd->nvmem_cell)) {
-> +		rc = PTR_ERR(rtc_dd->nvmem_cell);
-> +		if (rc != -ENOENT)
-> +			return rc;
-> +		rtc_dd->nvmem_cell = NULL;
-> +	}
-> +
->  	rtc_dd->regs = match->data;
->  	rtc_dd->dev = &pdev->dev;
->  
-> +	if (!rtc_dd->allow_set_time) {
-> +		rc = pm8xxx_rtc_read_offset(rtc_dd);
-> +		if (rc)
-> +			return rc;
-> +	}
-> +
->  	rc = pm8xxx_rtc_enable(rtc_dd);
->  	if (rc)
->  		return rc;
-> @@ -435,3 +551,4 @@ MODULE_ALIAS("platform:rtc-pm8xxx");
->  MODULE_DESCRIPTION("PMIC8xxx RTC driver");
->  MODULE_LICENSE("GPL v2");
->  MODULE_AUTHOR("Anirudh Ghayal <aghayal@codeaurora.org>");
-> +MODULE_AUTHOR("Johan Hovold <johan@kernel.org>");
++            opp-hz =3D /bits/ 64 <400000000>;
++            opp-supported-hw =3D <0x3e>;
++            required-opps =3D <&cpr_opp15>;
++        };
