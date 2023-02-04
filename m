@@ -2,194 +2,293 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 03CFD68A851
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Feb 2023 06:11:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 62F3A68A87F
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Feb 2023 07:05:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229704AbjBDFK7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 4 Feb 2023 00:10:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39828 "EHLO
+        id S231171AbjBDGFh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 4 Feb 2023 01:05:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231160AbjBDFK5 (ORCPT
+        with ESMTP id S229449AbjBDGFg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 4 Feb 2023 00:10:57 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26C0087177
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Feb 2023 21:10:53 -0800 (PST)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3144tIu0013623;
-        Sat, 4 Feb 2023 05:10:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=znG4lOz+eAJRJ3vPw67x7mxeSqeUpXZOVsl/k+Y3mzQ=;
- b=EuBdUOXZrwd5LrDwH5wAWNJjn0ntwps8Ikf5B431qrU4wQc/sVe8LOHfecok2m0s5dFH
- 9Mozrq0uUqx3bb22hA9XhR9b/56XqV95d6RnEtEDN2nwgVAqAUX2va5oLXEe91ZxvsHR
- kgCydfZ+r88WHY8BjcxGphFfD/KkrNlJcdKybrWjMHPQq79HE2zEXKLw5TfdigVxpNrO
- 5Iv2KTVMjp6/1Uy6yr6CWgsTYcsoMG0Nge631Kq0iXuuRRJyb8bXEnw/sjFCIDx74x6Y
- DkYykev045RqpabBqG0ed2zX8YXbib6ZDNcjGtxCKLgXOSpNzqGdNeqMc//YA9o6oAFL 3g== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nhd2q88gc-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 04 Feb 2023 05:10:45 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3145AilW019532
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 4 Feb 2023 05:10:44 GMT
-Received: from [10.110.99.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Fri, 3 Feb 2023
- 21:10:43 -0800
-Message-ID: <d89a1735-4351-a9b5-c6e3-d0d05af9d283@quicinc.com>
-Date:   Fri, 3 Feb 2023 21:10:43 -0800
+        Sat, 4 Feb 2023 01:05:36 -0500
+Received: from out28-73.mail.aliyun.com (out28-73.mail.aliyun.com [115.124.28.73])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 854AE5D92C;
+        Fri,  3 Feb 2023 22:05:31 -0800 (PST)
+X-Alimail-AntiSpam: AC=CONTINUE;BC=0.07436261|-1;CH=green;DM=|CONTINUE|false|;DS=CONTINUE|ham_system_inform|0.0126545-0.000114283-0.987231;FP=0|0|0|0|0|-1|-1|-1;HT=ay29a033018047213;MF=michael@allwinnertech.com;NM=1;PH=DS;RN=27;RT=27;SR=0;TI=SMTPD_---.RAX9iuY_1675490723;
+Received: from 192.168.220.144(mailfrom:michael@allwinnertech.com fp:SMTPD_---.RAX9iuY_1675490723)
+          by smtp.aliyun-inc.com;
+          Sat, 04 Feb 2023 14:05:25 +0800
+Message-ID: <33ffa97c-5994-d6ac-da06-f998ee0071d8@allwinnertech.com>
+Date:   Sat, 4 Feb 2023 14:05:23 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v3 18/27] drm/msm/dpu: populate SmartDMA features in hw
- catalog
+ Thunderbird/91.9.0
+Subject: Re: [PATCH] mmc:mmc-cqhci:support interrupt coalescing
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20230203182132.1307834-1-dmitry.baryshkov@linaro.org>
- <20230203182132.1307834-19-dmitry.baryshkov@linaro.org>
- <c04a01d1-0375-16be-b8d0-022704ae89a5@quicinc.com>
- <3754a9a9-8b64-62ae-0b0d-f379debefa16@linaro.org>
- <ddb0de30-9e29-f6f0-028c-48530bee4a6b@quicinc.com>
- <42e6237d-9fae-0679-1354-7df74594a9db@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <42e6237d-9fae-0679-1354-7df74594a9db@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Adrian Hunter <adrian.hunter@intel.com>, riteshh@codeaurora.org,
+        asutoshd@codeaurora.org, ulf.hansson@linaro.org,
+        chaotian.jing@mediatek.com, matthias.bgg@gmail.com,
+        kdasu.kdev@gmail.com, alcooperx@gmail.com, f.fainelli@gmail.com,
+        haibo.chen@nxp.com, shawnguo@kernel.org, agross@kernel.org,
+        andersson@kernel.org, michal.simek@xilinx.com,
+        thierry.reding@gmail.com, jonathanh@nvidia.com
+Cc:     bcm-kernel-feedback-list@broadcom.com, kernel@pengutronix.de,
+        festevam@gmail.com, linux-imx@nxp.com, konrad.dybcio@linaro.org,
+        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-tegra@vger.kernel.org
+References: <20230130064656.106793-1-michael@allwinnertech.com>
+ <2463a92b-c180-87d4-0c96-2f549a397164@intel.com>
+ <610b5f73-f9e3-deb2-2754-e8939ed00ec3@allwinnertech.com>
+ <28d3348d-82ec-988f-718a-2d73bce585f3@intel.com>
+From:   Michael Wu <michael@allwinnertech.com>
+In-Reply-To: <28d3348d-82ec-988f-718a-2d73bce585f3@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Otk24bxTQX8lK7-mjiyfDG5ws8EYN5IC
-X-Proofpoint-GUID: Otk24bxTQX8lK7-mjiyfDG5ws8EYN5IC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-02-04_01,2023-02-03_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 clxscore=1015
- mlxscore=0 bulkscore=0 mlxlogscore=999 lowpriorityscore=0 spamscore=0
- priorityscore=1501 adultscore=0 suspectscore=0 impostorscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302040047
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
+        UNPARSEABLE_RELAY autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Dear Adrian,
 
-
-On 2/3/2023 8:10 PM, Dmitry Baryshkov wrote:
-> On 04/02/2023 04:43, Abhinav Kumar wrote:
+On 2023/1/31 21:32, Adrian Hunter wrote:
+> On 31/01/23 15:12, Michael Wu wrote:
+>> Dear Adrian，
 >>
->>
->> On 2/3/2023 6:29 PM, Dmitry Baryshkov wrote:
->>> On 04/02/2023 01:35, Abhinav Kumar wrote:
->>>>
->>>>
->>>> On 2/3/2023 10:21 AM, Dmitry Baryshkov wrote:
->>>>> Downstream driver uses dpu->caps->smart_dma_rev to update
->>>>> sspp->cap->features with the bit corresponding to the supported 
->>>>> SmartDMA
->>>>> version. Upstream driver does not do this, resulting in SSPP subdriver
->>>>> not enbaling setup_multirect callback. Add corresponding SmartDMA SSPP
->>>>> feature bits to dpu hw catalog.
->>>>>
->>>>
->>>> While reviewing this patch, I had a first hand experience of how we 
->>>> are reusing SSPP bitmasks for so many chipsets but I think overall 
->>>> you got them right here :)
->>>>
->>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>>> ---
->>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 10 +++++++---
->>>>>   1 file changed, 7 insertions(+), 3 deletions(-)
->>>>>
->>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c 
->>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->>>>> index cf053e8f081e..fc818b0273e7 100644
->>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->>>>> @@ -21,13 +21,16 @@
->>>>>       (VIG_MASK | BIT(DPU_SSPP_SCALER_QSEED3))
->>>>>   #define VIG_SDM845_MASK \
->>>>> -    (VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED3))
->>>>> +    (VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | 
->>>>> BIT(DPU_SSPP_SCALER_QSEED3) |\
->>>>> +    BIT(DPU_SSPP_SMART_DMA_V2))
->>>>>   #define VIG_SC7180_MASK \
->>>>> -    (VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED4))
->>>>> +    (VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | 
->>>>> BIT(DPU_SSPP_SCALER_QSEED4) |\
->>>>> +    BIT(DPU_SSPP_SMART_DMA_V2))
->>>>>   #define VIG_SM8250_MASK \
->>>>> -    (VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | 
->>>>> BIT(DPU_SSPP_SCALER_QSEED3LITE))
->>>>> +    (VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | 
->>>>> BIT(DPU_SSPP_SCALER_QSEED3LITE) |\
->>>>> +    BIT(DPU_SSPP_SMART_DMA_V2))
->>>>>   #define VIG_QCM2290_MASK (VIG_MASK | BIT(DPU_SSPP_QOS_8LVL))
->>>>> @@ -42,6 +45,7 @@
->>>>>   #define DMA_SDM845_MASK \
->>>>>       (BIT(DPU_SSPP_SRC) | BIT(DPU_SSPP_QOS) | 
->>>>> BIT(DPU_SSPP_QOS_8LVL) |\
->>>>>       BIT(DPU_SSPP_TS_PREFILL) | BIT(DPU_SSPP_TS_PREFILL_REC1) |\
->>>>> +    BIT(DPU_SSPP_SMART_DMA_V2) |\
->>>>>       BIT(DPU_SSPP_CDP) | BIT(DPU_SSPP_EXCL_RECT))
->>>>>   #define DMA_CURSOR_SDM845_MASK \
->>>>
->>>> VIG_SDM845_MASK and DMA_SDM845_MASK are used for many other chipsets 
->>>> like 8250, 8450, 8550.
->>>>
->>>> At the moment, for visual validation of this series, I only have 
->>>> sc7180/sc7280. We are leaving the rest for CI.
->>>>
->>>> Was that an intentional approach?
->>>>
->>>> If so, we will need tested-by tags from folks having 
->>>> 8350/8450/8550/sc8280x,qcm2290?
->>>>
->>>> I am only owning the visual validation on sc7280 atm.
+>> On 2023/1/30 23:59, Adrian Hunter wrote:
+>>> On 30/01/23 08:46, Michael Wu wrote:
+>>>> Support interrupt coalescing to reduce the frequency of mmc interrupts
 >>>
->>> I'm not quite sure what is your intent here. Are there any SoCs after 
->>> 845 that do not have SmartDMA 2.5? Or do you propose to enable 
->>> SmartDMA only for the chipsets that we can visually test? That sounds 
->>> strange.
+>>> There doesn't seem to be any users.  The new parameter to
+>>> cqhci_init() is always false.  New features are not usually
+>>> accepted without users.
+>>
+>> At present, I have only supported this feature on the Allwinner platform because I have not get enough information about other vendors.
 >>>
+>>> There needs to be an explanation of why the change is being made.
 >>
->> Yes I was thinking to enable smartDMA at the moment on chipsets which 
->> we can validate visually that display comes up. But I am not sure if 
->> thats entirely practical.
->>
->> But the intent was I just want to make sure basic display does come up 
->> with smartDMA enabled if we are enabling it for all chipsets.
+>> I consider reducing the number of interrupt context switches. Can you tell me why the community does not support this feature? I wonder whether I'm doing is correct. If it's correct, i will improve this patch and incorporate it
 > 
-> I don't think it is practical or logical. We don't require validating 
-> other changes on all possible chipsets, so what is so different with 
-> this one?
+> AFAIK the community has not made any comment on supporting interrupt coalescing for CQHCI, one way or another.
+> However, it is generally expected that new features will only be added if they demonstrate some benefit.
+> Just assuming that there is a benefit is not enough.
 > 
 
-Thats because with smartDMA if the programming of stages goes wrong we 
-could potentially just see a blank screen. Its not about other changes, 
-this change in particular controls enabling a feature.
+Okay,  I'll provide the performance data soon.
 
-But thats just my thought. I am not going to request to ensure this or 
-block this for this.
+>>>
+>>> Also there doesn't seem to be any configuration of the CQIC
+>>> register.
+>>
+>> At present, I am working on the hook function .cqe_enable that the ICCTH of CQIC is set in enable
+>>>
+>>>>
+>>>> Signed-off-by: Michael Wu <michael@allwinnertech.com>
+>>>> ---
+>>>>    drivers/mmc/host/cqhci-core.c      | 20 +++++++++++++++-----
+>>>>    drivers/mmc/host/cqhci.h           |  5 ++++-
+>>>>    drivers/mmc/host/mtk-sd.c          |  2 +-
+>>>>    drivers/mmc/host/sdhci-brcmstb.c   |  2 +-
+>>>>    drivers/mmc/host/sdhci-esdhc-imx.c |  2 +-
+>>>>    drivers/mmc/host/sdhci-msm.c       |  2 +-
+>>>>    drivers/mmc/host/sdhci-of-arasan.c |  2 +-
+>>>>    drivers/mmc/host/sdhci-pci-core.c  |  2 +-
+>>>>    drivers/mmc/host/sdhci-pci-gli.c   |  2 +-
+>>>>    drivers/mmc/host/sdhci-tegra.c     |  2 +-
+>>>>    drivers/mmc/host/sdhci_am654.c     |  2 +-
+>>>>    11 files changed, 28 insertions(+), 15 deletions(-)
+>>>>
+>>>> diff --git a/drivers/mmc/host/cqhci-core.c b/drivers/mmc/host/cqhci-core.c
+>>>> index b3d7d6d8d654..f9cdf9f04bfc 100644
+>>>> --- a/drivers/mmc/host/cqhci-core.c
+>>>> +++ b/drivers/mmc/host/cqhci-core.c
+>>>> @@ -420,7 +420,7 @@ static void cqhci_disable(struct mmc_host *mmc)
+>>>>    }
+>>>>      static void cqhci_prep_task_desc(struct mmc_request *mrq,
+>>>> -                 struct cqhci_host *cq_host, int tag)
+>>>> +                 struct cqhci_host *cq_host, int tag, int intr)
+>>>>    {
+>>>>        __le64 *task_desc = (__le64 __force *)get_desc(cq_host, tag);
+>>>>        u32 req_flags = mrq->data->flags;
+>>>> @@ -428,7 +428,7 @@ static void cqhci_prep_task_desc(struct mmc_request *mrq,
+>>>>          desc0 = CQHCI_VALID(1) |
+>>>>            CQHCI_END(1) |
+>>>> -        CQHCI_INT(1) |
+>>>> +        CQHCI_INT(intr) |
+>>>>            CQHCI_ACT(0x5) |
+>>>>            CQHCI_FORCED_PROG(!!(req_flags & MMC_DATA_FORCED_PRG)) |
+>>>>            CQHCI_DATA_TAG(!!(req_flags & MMC_DATA_DAT_TAG)) |
+>>>> @@ -621,7 +621,7 @@ static int cqhci_request(struct mmc_host *mmc, struct mmc_request *mrq)
+>>>>        }
+>>>>          if (mrq->data) {
+>>>> -        cqhci_prep_task_desc(mrq, cq_host, tag);
+>>>> +        cqhci_prep_task_desc(mrq, cq_host, tag, (cq_host->intr_clsc ? 0 : 1));
+>>>>              err = cqhci_prep_tran_desc(mrq, cq_host, tag);
+>>>>            if (err) {
+>>>> @@ -812,7 +812,7 @@ static void cqhci_finish_mrq(struct mmc_host *mmc, unsigned int tag)
+>>>>    irqreturn_t cqhci_irq(struct mmc_host *mmc, u32 intmask, int cmd_error,
+>>>>                  int data_error)
+>>>>    {
+>>>> -    u32 status;
+>>>> +    u32 status, rval;
+>>>>        unsigned long tag = 0, comp_status;
+>>>>        struct cqhci_host *cq_host = mmc->cqe_private;
+>>>>    @@ -856,6 +856,15 @@ irqreturn_t cqhci_irq(struct mmc_host *mmc, u32 intmask, int cmd_error,
+>>>>            spin_unlock(&cq_host->lock);
+>>>>        }
+>>>>    +    if (cq_host->intr_clsc) {
+>>>> +        rval = cqhci_readl(cq_host, CQHCI_IC);
+>>>> +        rval |= CQHCI_IC_RESET;
+>>>> +        cqhci_writel(cq_host, rval, CQHCI_IC);
+>>>> +        rval = cqhci_readl(cq_host, CQHCI_IC);
+>>>> +        rval &= (~CQHCI_IC_RESET);
+>>>> +        cqhci_writel(cq_host, rval, CQHCI_IC);
+>>>> +    }
+>>>> +
+>>>>        if (status & CQHCI_IS_TCL)
+>>>>            wake_up(&cq_host->wait_queue);
+>>>>    @@ -1172,11 +1181,12 @@ static unsigned int cqhci_ver_minor(struct cqhci_host *cq_host)
+>>>>    }
+>>>>      int cqhci_init(struct cqhci_host *cq_host, struct mmc_host *mmc,
+>>>> -          bool dma64)
+>>>> +          bool dma64, bool intr_clsc)
+>>>>    {
+>>>>        int err;
+>>>>          cq_host->dma64 = dma64;
+>>>> +    cq_host->intr_clsc = intr_clsc;
+>>>>        cq_host->mmc = mmc;
+>>>>        cq_host->mmc->cqe_private = cq_host;
+>>>>    diff --git a/drivers/mmc/host/cqhci.h b/drivers/mmc/host/cqhci.h
+>>>> index ba9387ed90eb..acf90773c30a 100644
+>>>> --- a/drivers/mmc/host/cqhci.h
+>>>> +++ b/drivers/mmc/host/cqhci.h
+>>>> @@ -227,6 +227,9 @@ struct cqhci_host {
+>>>>          /* 64 bit DMA */
+>>>>        bool dma64;
+>>>> +
+>>>> +    /* interrupt coalescing*/
+>>>> +    bool intr_clsc;
+>>>>        int num_slots;
+>>>>        int qcnt;
+>>>>    @@ -312,7 +315,7 @@ struct platform_device;
+>>>>      irqreturn_t cqhci_irq(struct mmc_host *mmc, u32 intmask, int cmd_error,
+>>>>                  int data_error);
+>>>> -int cqhci_init(struct cqhci_host *cq_host, struct mmc_host *mmc, bool dma64);
+>>>> +int cqhci_init(struct cqhci_host *cq_host, struct mmc_host *mmc, bool dma64, bool intr_clsc);
+>>>>    struct cqhci_host *cqhci_pltfm_init(struct platform_device *pdev);
+>>>>    int cqhci_deactivate(struct mmc_host *mmc);
+>>>>    static inline int cqhci_suspend(struct mmc_host *mmc)
+>>>> diff --git a/drivers/mmc/host/mtk-sd.c b/drivers/mmc/host/mtk-sd.c
+>>>> index edade0e54a0c..2c18f954d4b8 100644
+>>>> --- a/drivers/mmc/host/mtk-sd.c
+>>>> +++ b/drivers/mmc/host/mtk-sd.c
+>>>> @@ -2796,7 +2796,7 @@ static int msdc_drv_probe(struct platform_device *pdev)
+>>>>            host->cq_host->caps |= CQHCI_TASK_DESC_SZ_128;
+>>>>            host->cq_host->mmio = host->base + 0x800;
+>>>>            host->cq_host->ops = &msdc_cmdq_ops;
+>>>> -        ret = cqhci_init(host->cq_host, mmc, true);
+>>>> +        ret = cqhci_init(host->cq_host, mmc, true, false);
+>>>>            if (ret)
+>>>>                goto host_free;
+>>>>            mmc->max_segs = 128;
+>>>> diff --git a/drivers/mmc/host/sdhci-brcmstb.c b/drivers/mmc/host/sdhci-brcmstb.c
+>>>> index f2cf3d70db79..4aeaeddbbf25 100644
+>>>> --- a/drivers/mmc/host/sdhci-brcmstb.c
+>>>> +++ b/drivers/mmc/host/sdhci-brcmstb.c
+>>>> @@ -231,7 +231,7 @@ static int sdhci_brcmstb_add_host(struct sdhci_host *host,
+>>>>            cq_host->caps |= CQHCI_TASK_DESC_SZ_128;
+>>>>        }
+>>>>    -    ret = cqhci_init(cq_host, host->mmc, dma64);
+>>>> +    ret = cqhci_init(cq_host, host->mmc, dma64, false);
+>>>>        if (ret)
+>>>>            goto cleanup;
+>>>>    diff --git a/drivers/mmc/host/sdhci-esdhc-imx.c b/drivers/mmc/host/sdhci-esdhc-imx.c
+>>>> index 9e73c34b6401..7aef7abe71f1 100644
+>>>> --- a/drivers/mmc/host/sdhci-esdhc-imx.c
+>>>> +++ b/drivers/mmc/host/sdhci-esdhc-imx.c
+>>>> @@ -1712,7 +1712,7 @@ static int sdhci_esdhc_imx_probe(struct platform_device *pdev)
+>>>>            cq_host->mmio = host->ioaddr + ESDHC_CQHCI_ADDR_OFFSET;
+>>>>            cq_host->ops = &esdhc_cqhci_ops;
+>>>>    -        err = cqhci_init(cq_host, host->mmc, false);
+>>>> +        err = cqhci_init(cq_host, host->mmc, false, false);
+>>>>            if (err)
+>>>>                goto disable_ahb_clk;
+>>>>        }
+>>>> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+>>>> index 4ac8651d0b29..b6549d1e43ec 100644
+>>>> --- a/drivers/mmc/host/sdhci-msm.c
+>>>> +++ b/drivers/mmc/host/sdhci-msm.c
+>>>> @@ -2153,7 +2153,7 @@ static int sdhci_msm_cqe_add_host(struct sdhci_host *host,
+>>>>        if (ret)
+>>>>            goto cleanup;
+>>>>    -    ret = cqhci_init(cq_host, host->mmc, dma64);
+>>>> +    ret = cqhci_init(cq_host, host->mmc, dma64, false);
+>>>>        if (ret) {
+>>>>            dev_err(&pdev->dev, "%s: CQE init: failed (%d)\n",
+>>>>                    mmc_hostname(host->mmc), ret);
+>>>> diff --git a/drivers/mmc/host/sdhci-of-arasan.c b/drivers/mmc/host/sdhci-of-arasan.c
+>>>> index 89c431a34c43..811f8686532d 100644
+>>>> --- a/drivers/mmc/host/sdhci-of-arasan.c
+>>>> +++ b/drivers/mmc/host/sdhci-of-arasan.c
+>>>> @@ -1610,7 +1610,7 @@ static int sdhci_arasan_add_host(struct sdhci_arasan_data *sdhci_arasan)
+>>>>        if (dma64)
+>>>>            cq_host->caps |= CQHCI_TASK_DESC_SZ_128;
+>>>>    -    ret = cqhci_init(cq_host, host->mmc, dma64);
+>>>> +    ret = cqhci_init(cq_host, host->mmc, dma64, false);
+>>>>        if (ret)
+>>>>            goto cleanup;
+>>>>    diff --git a/drivers/mmc/host/sdhci-pci-core.c b/drivers/mmc/host/sdhci-pci-core.c
+>>>> index c359f867df0a..6f6cae6355a7 100644
+>>>> --- a/drivers/mmc/host/sdhci-pci-core.c
+>>>> +++ b/drivers/mmc/host/sdhci-pci-core.c
+>>>> @@ -964,7 +964,7 @@ static int glk_emmc_add_host(struct sdhci_pci_slot *slot)
+>>>>        if (dma64)
+>>>>            cq_host->caps |= CQHCI_TASK_DESC_SZ_128;
+>>>>    -    ret = cqhci_init(cq_host, host->mmc, dma64);
+>>>> +    ret = cqhci_init(cq_host, host->mmc, dma64, false);
+>>>>        if (ret)
+>>>>            goto cleanup;
+>>>>    diff --git a/drivers/mmc/host/sdhci-pci-gli.c b/drivers/mmc/host/sdhci-pci-gli.c
+>>>> index 633a8ee8f8c5..6917ba339aa9 100644
+>>>> --- a/drivers/mmc/host/sdhci-pci-gli.c
+>>>> +++ b/drivers/mmc/host/sdhci-pci-gli.c
+>>>> @@ -908,7 +908,7 @@ static int gl9763e_add_host(struct sdhci_pci_slot *slot)
+>>>>        if (dma64)
+>>>>            cq_host->caps |= CQHCI_TASK_DESC_SZ_128;
+>>>>    -    ret = cqhci_init(cq_host, host->mmc, dma64);
+>>>> +    ret = cqhci_init(cq_host, host->mmc, dma64, false);
+>>>>        if (ret)
+>>>>            goto cleanup;
+>>>>    diff --git a/drivers/mmc/host/sdhci-tegra.c b/drivers/mmc/host/sdhci-tegra.c
+>>>> index bff084f178c9..f98a468e8f43 100644
+>>>> --- a/drivers/mmc/host/sdhci-tegra.c
+>>>> +++ b/drivers/mmc/host/sdhci-tegra.c
+>>>> @@ -1620,7 +1620,7 @@ static int sdhci_tegra_add_host(struct sdhci_host *host)
+>>>>        if (dma64)
+>>>>            cq_host->caps |= CQHCI_TASK_DESC_SZ_128;
+>>>>    -    ret = cqhci_init(cq_host, host->mmc, dma64);
+>>>> +    ret = cqhci_init(cq_host, host->mmc, dma64, false);
+>>>>        if (ret)
+>>>>            goto cleanup;
+>>>>    diff --git a/drivers/mmc/host/sdhci_am654.c b/drivers/mmc/host/sdhci_am654.c
+>>>> index 7ef828942df3..8e7fbee70e16 100644
+>>>> --- a/drivers/mmc/host/sdhci_am654.c
+>>>> +++ b/drivers/mmc/host/sdhci_am654.c
+>>>> @@ -568,7 +568,7 @@ static int sdhci_am654_cqe_add_host(struct sdhci_host *host)
+>>>>          host->mmc->caps2 |= MMC_CAP2_CQE;
+>>>>    -    return cqhci_init(cq_host, host->mmc, 1);
+>>>> +    return cqhci_init(cq_host, host->mmc, 1, false);
+>>>>    }
+>>>>      static int sdhci_am654_get_otap_delay(struct sdhci_host *host,
+>>
 
-You can still have my
-
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-
-But think of the validations that have to be done before we merge it.
+-- 
+Regards,
+Michael Wu
