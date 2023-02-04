@@ -2,147 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 764B868A9C2
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Feb 2023 13:21:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1558B68AABA
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Feb 2023 15:58:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231348AbjBDMVu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 4 Feb 2023 07:21:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44924 "EHLO
+        id S232716AbjBDO6u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 4 Feb 2023 09:58:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229877AbjBDMVt (ORCPT
+        with ESMTP id S232999AbjBDO6r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 4 Feb 2023 07:21:49 -0500
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 123712695;
-        Sat,  4 Feb 2023 04:21:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1675513308; x=1707049308;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=J6/WHPwLYf2NNiKUv4H1tve+SuwKBjAJdENF3a4dPDI=;
-  b=IiE52I0WFznCUtfr1seTwMHU9AsBym0iAb4LFJEHy4Nthrs0TxqHDc0A
-   cJFkGIMw0/MA0LbU+ac51JtmBYk3iK4lyJDI9i3PnDgQouWs1SwXL7VvY
-   Xpt/ErxB0vYDemzXg78EzJaOQXEZZebl7fFvuStm+o9HX0V75RpZwYNNm
-   WiYF94rL0HNa8NQ4xm8z7+61SMca2aWLyNyWxsIoo/QeUjEOomlrNwYpg
-   sgHdWSBg5UqbMNEHZREWKz5nazyXEnhTo0kj/LM0ewqPKvj/vXvAfZDve
-   ys1jLgryl4/nzK02z65QcB6HQDcTqHKZmeddfB5+/x40xbI9sxDJ2Ltyl
-   g==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10610"; a="330230550"
-X-IronPort-AV: E=Sophos;i="5.97,272,1669104000"; 
-   d="scan'208";a="330230550"
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Feb 2023 04:21:47 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10610"; a="839890077"
-X-IronPort-AV: E=Sophos;i="5.97,272,1669104000"; 
-   d="scan'208";a="839890077"
-Received: from lkp-server01.sh.intel.com (HELO 4455601a8d94) ([10.239.97.150])
-  by orsmga005.jf.intel.com with ESMTP; 04 Feb 2023 04:21:44 -0800
-Received: from kbuild by 4455601a8d94 with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1pOHY7-0001Ic-1C;
-        Sat, 04 Feb 2023 12:21:43 +0000
-Date:   Sat, 4 Feb 2023 20:21:10 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-        marijn.suijten@somainline.org,
+        Sat, 4 Feb 2023 09:58:47 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08389305C1;
+        Sat,  4 Feb 2023 06:58:44 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id B3175B80B1C;
+        Sat,  4 Feb 2023 14:58:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 005BBC433EF;
+        Sat,  4 Feb 2023 14:58:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1675522722;
+        bh=obz7uiuDh/DOauLK8CVXZabOXHGwjUrwwwSUO1B6MDA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=RFjR1B66nj3HovHeeYFiJBHDZRuSTdbHxTYOHSI46bssLs7cNWC3/zi7amhz+eLMT
+         hTF/a/luloul3jV6qc5350JotSn3tjb4zorwj70LgCECK8HQjp0TGQLvWCGTsHxPVL
+         JiUMMgVmEINax67BU6KFLOJlIqwy5kzOEVrv9oFFZMxmNqoXvZSvIwUAOJBQOD+npS
+         v4nil5KmMqYWMstCd+gWpgxhwgEfZp9ahtBGhBYdL8dz201eoRQ2zllIXWuO8m1S4o
+         Gk0tqa4hT18kA/YXWUeKSIeIp1HL6x05Kanb5/8IqEC+E38GrGUVRvd/3M+Mrc9nfH
+         VICSpBwWtgqqA==
+Date:   Sat, 4 Feb 2023 20:28:34 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Viresh Kumar <viresh.kumar@linaro.org>, swboyd@chromium.org,
+        mka@chromium.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 04/10] clk: qcom: branch: Clean up branch enable
- registers
-Message-ID: <202302042015.l7uhyaz9-lkp@intel.com>
-References: <20230201183626.351211-5-konrad.dybcio@linaro.org>
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH] cpufreq: qcom-hw: Fix cpufreq_driver->get() for non-LMH
+ systems
+Message-ID: <20230204145834.GA45501@thinkpad>
+References: <20230202140005.1.I4b30aaa027c73372ec4068cc0f0dc665af8b938d@changeid>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230201183626.351211-5-konrad.dybcio@linaro.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230202140005.1.I4b30aaa027c73372ec4068cc0f0dc665af8b938d@changeid>
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Konrad,
+On Thu, Feb 02, 2023 at 02:00:23PM -0800, Douglas Anderson wrote:
+> On a sc7180-based Chromebook, when I go to
+> /sys/devices/system/cpu/cpu0/cpufreq I can see:
+> 
+>   cpuinfo_cur_freq:2995200
+>   cpuinfo_max_freq:1804800
+>   scaling_available_frequencies:300000 576000 ... 1708800 1804800
+>   scaling_cur_freq:1804800
+>   scaling_max_freq:1804800
+> 
+> As you can see the `cpuinfo_cur_freq` is bogus. It turns out that this
+> bogus info started showing up as of commit 205f5e984d30 ("cpufreq:
+> qcom-hw: Fix the frequency returned by cpufreq_driver->get()"). That
+> commit seems to assume that everyone is on the LMH bandwagon, but
+> sc7180 isn't.
+> 
 
-I love your patch! Yet something to improve:
+Ah, missed that part.
 
-[auto build test ERROR on clk/clk-next]
-[also build test ERROR on linus/master v6.2-rc6]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+> Let's go back to the old code in the case where LMH isn't used.
+> 
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Konrad-Dybcio/clk-qcom-branch-Add-helper-functions-for-setting-SLEEP-WAKE-bits/20230202-033712
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git clk-next
-patch link:    https://lore.kernel.org/r/20230201183626.351211-5-konrad.dybcio%40linaro.org
-patch subject: [PATCH v5 04/10] clk: qcom: branch: Clean up branch enable registers
-config: arm-randconfig-r013-20230204 (https://download.01.org/0day-ci/archive/20230204/202302042015.l7uhyaz9-lkp@intel.com/config)
-compiler: clang version 16.0.0 (https://github.com/llvm/llvm-project 4196ca3278f78c6e19246e54ab0ecb364e37d66a)
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # install arm cross compiling tool for clang build
-        # apt-get install binutils-arm-linux-gnueabi
-        # https://github.com/intel-lab-lkp/linux/commit/07999d2b9b99df1dc626354c217da075c5c565cb
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Konrad-Dybcio/clk-qcom-branch-Add-helper-functions-for-setting-SLEEP-WAKE-bits/20230202-033712
-        git checkout 07999d2b9b99df1dc626354c217da075c5c565cb
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash drivers/clk/qcom/
+Thanks for fixing!
 
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
+> Fixes: 205f5e984d30 ("cpufreq: qcom-hw: Fix the frequency returned by cpufreq_driver->get()")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 
-All errors (new ones prefixed by >>):
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
 
-   In file included from drivers/clk/qcom/clk-branch.c:14:
-   drivers/clk/qcom/clk-branch.h:74:7: error: call to undeclared function 'FIELD_PREP'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-                              FIELD_PREP(CBCR_WAKEUP, val));
-                              ^
-   drivers/clk/qcom/clk-branch.h:80:7: error: call to undeclared function 'FIELD_PREP'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-                              FIELD_PREP(CBCR_SLEEP, val));
-                              ^
->> drivers/clk/qcom/clk-branch.c:55:4: error: call to undeclared function 'FIELD_GET'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-                           FIELD_GET(CBCR_NOC_FSM_STATUS, val) == FSM_STATUS_ON;
-                           ^
-   3 errors generated.
+Thanks,
+Mani
 
-
-vim +/FIELD_GET +55 drivers/clk/qcom/clk-branch.c
-
-    41	
-    42	static bool clk_branch2_check_halt(const struct clk_branch *br, bool enabling)
-    43	{
-    44		u32 val;
-    45		u32 mask;
-    46	
-    47		mask = CBCR_NOC_FSM_STATUS;
-    48		mask |= CBCR_CLK_OFF;
-    49	
-    50		regmap_read(br->clkr.regmap, br->halt_reg, &val);
-    51	
-    52		if (enabling) {
-    53			val &= mask;
-    54			return (val & CBCR_CLK_OFF) == 0 ||
-  > 55				FIELD_GET(CBCR_NOC_FSM_STATUS, val) == FSM_STATUS_ON;
-    56		} else {
-    57			return val & CBCR_CLK_OFF;
-    58		}
-    59	}
-    60	
+> ---
+> 
+>  drivers/cpufreq/qcom-cpufreq-hw.c | 24 +++++++++++++-----------
+>  1 file changed, 13 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+> index 9505a812d6a1..957cf6bb8c05 100644
+> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
+> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+> @@ -143,40 +143,42 @@ static unsigned long qcom_lmh_get_throttle_freq(struct qcom_cpufreq_data *data)
+>  	return lval * xo_rate;
+>  }
+>  
+> -/* Get the current frequency of the CPU (after throttling) */
+> -static unsigned int qcom_cpufreq_hw_get(unsigned int cpu)
+> +/* Get the frequency requested by the cpufreq core for the CPU */
+> +static unsigned int qcom_cpufreq_get_freq(unsigned int cpu)
+>  {
+>  	struct qcom_cpufreq_data *data;
+> +	const struct qcom_cpufreq_soc_data *soc_data;
+>  	struct cpufreq_policy *policy;
+> +	unsigned int index;
+>  
+>  	policy = cpufreq_cpu_get_raw(cpu);
+>  	if (!policy)
+>  		return 0;
+>  
+>  	data = policy->driver_data;
+> +	soc_data = qcom_cpufreq.soc_data;
+>  
+> -	return qcom_lmh_get_throttle_freq(data) / HZ_PER_KHZ;
+> +	index = readl_relaxed(data->base + soc_data->reg_perf_state);
+> +	index = min(index, LUT_MAX_ENTRIES - 1);
+> +
+> +	return policy->freq_table[index].frequency;
+>  }
+>  
+> -/* Get the frequency requested by the cpufreq core for the CPU */
+> -static unsigned int qcom_cpufreq_get_freq(unsigned int cpu)
+> +static unsigned int qcom_cpufreq_hw_get(unsigned int cpu)
+>  {
+>  	struct qcom_cpufreq_data *data;
+> -	const struct qcom_cpufreq_soc_data *soc_data;
+>  	struct cpufreq_policy *policy;
+> -	unsigned int index;
+>  
+>  	policy = cpufreq_cpu_get_raw(cpu);
+>  	if (!policy)
+>  		return 0;
+>  
+>  	data = policy->driver_data;
+> -	soc_data = qcom_cpufreq.soc_data;
+>  
+> -	index = readl_relaxed(data->base + soc_data->reg_perf_state);
+> -	index = min(index, LUT_MAX_ENTRIES - 1);
+> +	if (data->throttle_irq >= 0)
+> +		return qcom_lmh_get_throttle_freq(data) / HZ_PER_KHZ;
+>  
+> -	return policy->freq_table[index].frequency;
+> +	return qcom_cpufreq_get_freq(cpu);
+>  }
+>  
+>  static unsigned int qcom_cpufreq_hw_fast_switch(struct cpufreq_policy *policy,
+> -- 
+> 2.39.1.519.gcb327c4b5f-goog
+> 
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
+மணிவண்ணன் சதாசிவம்
