@@ -2,67 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EF11E68AF2A
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Feb 2023 10:58:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 34CBF68AF69
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Feb 2023 12:00:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229500AbjBEJ6P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 5 Feb 2023 04:58:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51472 "EHLO
+        id S229484AbjBELAb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 5 Feb 2023 06:00:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229461AbjBEJ6O (ORCPT
+        with ESMTP id S229453AbjBELAa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 5 Feb 2023 04:58:14 -0500
-Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D4915258
-        for <linux-arm-msm@vger.kernel.org>; Sun,  5 Feb 2023 01:58:13 -0800 (PST)
-Received: by mail-yb1-xb31.google.com with SMTP id 79so1240116ybe.6
-        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Feb 2023 01:58:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=j1F9gVl0En4VCYrtfscspregFWP6uGIfRnZos/Qw5Kw=;
-        b=Nex1vn2Bu9x6szqpHOk+qI/uuz72FwVM0+mRvKONWO3iMz8h5amBGc2GGQWPIXdZYY
-         raK3PsyPpZZbhzMBmFQXL4iwJ7KdLLQRtBJ0aPh7+mxQwVERqSoVSAKBT47yC4+42r5I
-         56QwGYkvGYAzqMVUjhJkA7KbLapdmPNWrwaNMBiKeYdJpqIerO6q8csd0Cdivwb4lpX1
-         CmcvTEiO6UGt2Ev929B8/TXSYqoh1pc1y+2X4VF5p6klu9jlZnvvYlKHXMqPVHgdhpDs
-         QgQaSEDfwhlFj76rHulO16fa3qDjhcnsysZZlRj1Qnnhm6FA5ILxKuOiMAOcp5gEnCWJ
-         gmNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=j1F9gVl0En4VCYrtfscspregFWP6uGIfRnZos/Qw5Kw=;
-        b=5Ge+oZ93MC0EjbbkNukRjKWShXIdBeZCnmBLBLdmYevj0z+ujirbGrMLOf79VrzRAK
-         wOJBX1OtWGXq4Su+03PEDvHOkKbDkYxVXwGKxsAsXYd7MNzAFe7Km0subU/UMgR2m2yk
-         wp2BmP82Xb/2F5qGlLdIpBRuInClh0UfK+eJGbb6TcX7OtXR4YKdoYeO8kyXRZGNuFu9
-         f48Ha/xcTIec6zaH0dluCKAv3enw2Od3cA/r3RsnzpCwkVXtWY6aoT0CbVl/v0HFti9d
-         6NtX99DgsYearliqfx5vrUXEZEOHxPofRRz8ca5zOfLz6Gb2O8HgqRfzw1IgPXSrcPnc
-         cV7w==
-X-Gm-Message-State: AO0yUKWwIB2Zi2rxENRB9Gq13sMHq7+x0/rRrf963JEiKtPHTD78yFuu
-        llOj84zATruX7tj3OkJczjOsnD2aLFXL8/89jxYpRDbr/6U=
-X-Google-Smtp-Source: AK7set9fw/lAR9zZ28g+SQPN5Sg0olqOyDBOokHd369imwC1kfRaZYr+WEU+LiA3CiE6DTpzFrFzIsCQ9k1tvNVz/As=
-X-Received: by 2002:a5b:a0c:0:b0:80b:dedb:ec94 with SMTP id
- k12-20020a5b0a0c000000b0080bdedbec94mr1665187ybq.528.1675591092149; Sun, 05
- Feb 2023 01:58:12 -0800 (PST)
+        Sun, 5 Feb 2023 06:00:30 -0500
+Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [80.237.130.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F09E4193FB;
+        Sun,  5 Feb 2023 03:00:28 -0800 (PST)
+Received: from [2001:67c:1810:f055:bde0:6d5b:d664:e19a]; authenticated
+        by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        id 1pOcl1-0003DL-By; Sun, 05 Feb 2023 12:00:27 +0100
+Message-ID: <b2007bc9-b05f-eb17-a373-9587b01d3788@leemhuis.info>
+Date:   Sun, 5 Feb 2023 12:00:26 +0100
 MIME-Version: 1.0
-References: <20230203100952.13857-1-pvorel@suse.cz>
-In-Reply-To: <20230203100952.13857-1-pvorel@suse.cz>
-From:   Jamie Douglass <jamiemdouglass@gmail.com>
-Date:   Sun, 5 Feb 2023 20:58:01 +1100
-Message-ID: <CAETzdaH9shhDJYA63DTQGrPkwAY3GG6oBKWDUmaxbsaUAbVv_A@mail.gmail.com>
-Subject: Re: [PATCH 1/1] arm64: dts: qcom: msm8992-lg-bullhead: Enable regulators
-To:     Petr Vorel <pvorel@suse.cz>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Dominik Kobinski <dominikkobinski314@gmail.com>,
-        Jeremy McNicoll <jeremymc@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH 2/3] venus: firmware: Correct non-pix start and end
+ addresses
+Content-Language: en-US, de-DE
+To:     Matthias Kaehlcke <mka@chromium.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Fritz Koenig <frkoenig@chromium.org>,
+        Nathan Hebert <nhebert@chromium.org>
+References: <20221005083730.963322-1-stanimir.varbanov@linaro.org>
+ <20221005083730.963322-3-stanimir.varbanov@linaro.org>
+ <Y9LSMap+jRxbtpC8@google.com>
+From:   "Linux kernel regression tracking (#adding)" 
+        <regressions@leemhuis.info>
+Reply-To: Linux regressions mailing list <regressions@lists.linux.dev>
+In-Reply-To: <Y9LSMap+jRxbtpC8@google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-bounce-key: webpack.hosteurope.de;regressions@leemhuis.info;1675594829;3718c9dd;
+X-HE-SMSGID: 1pOcl1-0003DL-By
+X-Spam-Status: No, score=-3.0 required=5.0 tests=BAYES_00,NICE_REPLY_A,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -71,100 +52,123 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
->
-> Enable pm8994_s1, pm8994_l{26,29,30,32} regulators.
-> Use values from downstream kernel on bullhead rev 1.01.
->
-> NOTE: downstream kernel on angler rev 1.01 differences:
-> * pm8994_l29: regulator-min-microvolt = <2700000>
-> * pm8994_l{20,28,31}: use regulator-boot-on
->
-> Verification:
-> [    1.832460] s1: Bringing 0uV into 1025000-1025000uV
-> ...
-> [    2.057667] l26: Bringing 0uV into 987500-987500uV
-> ...
-> [    2.075722] l29: Bringing 0uV into 2800000-2800000uV
-> [    2.076604] l30: Bringing 0uV into 1800000-1800000uV
-> [    2.082431] l31: Bringing 0uV into 1262500-1262500uV
-> [    2.095767] l32: Bringing 0uV into 1800000-1800000uV
->
-> Fixes: f3b2c99e73be ("arm64: dts: Enable onboard SDHCI on msm8992")
-> Signed-off-by: Petr Vorel <pvorel@suse.cz>
+[TLDR: I'm adding this report to the list of tracked Linux kernel
+regressions; the text you find below is based on a few templates
+paragraphs you might have encountered already in similar form.
+See link in footer if these mails annoy you.]
 
-Tested-by: Jamie Douglass <jamiemdouglass@gmail.com>
+On 26.01.23 20:19, Matthias Kaehlcke wrote:
 
-> ---
->  .../boot/dts/qcom/msm8992-lg-bullhead.dtsi    | 32 ++++++-------------
->  1 file changed, 10 insertions(+), 22 deletions(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
-> index a100b05abf56..b8f2a01bcb96 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
-> @@ -89,8 +89,8 @@ pm8994_regulators: regulators-0 {
->                 /* S1, S2, S6 and S12 are managed by RPMPD */
->
->                 pm8994_s1: s1 {
-> -                       regulator-min-microvolt = <800000>;
-> -                       regulator-max-microvolt = <800000>;
-> +                       regulator-min-microvolt = <1025000>;
-> +                       regulator-max-microvolt = <1025000>;
->                 };
->
->                 pm8994_s2: s2 {
-> @@ -246,11 +246,8 @@ pm8994_l25: l25 {
->                 };
->
->                 pm8994_l26: l26 {
-> -                       /*
-> -                        * TODO: value from downstream
-> -                        * regulator-min-microvolt = <987500>;
-> -                        * fails to apply
-> -                        */
-> +                       regulator-min-microvolt = <987500>;
-> +                       regulator-max-microvolt = <987500>;
->                 };
->
->                 pm8994_l27: l27 {
-> @@ -264,19 +261,13 @@ pm8994_l28: l28 {
->                 };
->
->                 pm8994_l29: l29 {
-> -                       /*
-> -                        * TODO: Unsupported voltage range.
-> -                        * regulator-min-microvolt = <2800000>;
-> -                        * regulator-max-microvolt = <2800000>;
-> -                        */
-> +                       regulator-min-microvolt = <2800000>;
-> +                       regulator-max-microvolt = <2800000>;
->                 };
->
->                 pm8994_l30: l30 {
-> -                       /*
-> -                        * TODO: get this verified
-> -                        * regulator-min-microvolt = <1800000>;
-> -                        * regulator-max-microvolt = <1800000>;
-> -                        */
-> +                       regulator-min-microvolt = <1800000>;
-> +                       regulator-max-microvolt = <1800000>;
->                 };
->
->                 pm8994_l31: l31 {
-> @@ -285,11 +276,8 @@ pm8994_l31: l31 {
->                 };
->
->                 pm8994_l32: l32 {
-> -                       /*
-> -                        * TODO: get this verified
-> -                        * regulator-min-microvolt = <1800000>;
-> -                        * regulator-max-microvolt = <1800000>;
-> -                        */
-> +                       regulator-min-microvolt = <1800000>;
-> +                       regulator-max-microvolt = <1800000>;
->                 };
->         };
+> On Wed, Oct 05, 2022 at 11:37:29AM +0300, Stanimir Varbanov wrote:
+>> The default values for those registers are zero.
+>>
+>> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+>> ---
+>>  drivers/media/platform/qcom/venus/firmware.c | 4 ++--
+>>  1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
+>> index 3851cedc3329..71e43611d1cf 100644
+>> --- a/drivers/media/platform/qcom/venus/firmware.c
+>> +++ b/drivers/media/platform/qcom/venus/firmware.c
+>> @@ -38,8 +38,8 @@ static void venus_reset_cpu(struct venus_core *core)
+>>  	writel(fw_size, wrapper_base + WRAPPER_FW_END_ADDR);
+>>  	writel(0, wrapper_base + WRAPPER_CPA_START_ADDR);
+>>  	writel(fw_size, wrapper_base + WRAPPER_CPA_END_ADDR);
+>> -	writel(fw_size, wrapper_base + WRAPPER_NONPIX_START_ADDR);
+>> -	writel(fw_size, wrapper_base + WRAPPER_NONPIX_END_ADDR);
+>> +	writel(0, wrapper_base + WRAPPER_NONPIX_START_ADDR);
+>> +	writel(0, wrapper_base + WRAPPER_NONPIX_END_ADDR);
+>>  
+>>  	if (IS_V6(core)) {
+>>  		/* Bring XTSS out of reset */
+> 
+> I found that this commit prevents the AOSS from entering sleep mode during
+> system suspend at least on sc7180 and sc7280. AOSS not entering sleep mode
+> leads to a (apparently significant) increase in S3 power consumption, on
+> trogdor and herobrine it prevents the system from staying suspended, because
+> the embedded controller detect the condition and wakes the sytem up again.
+
+Thanks for the report. To be sure the issue doesn't fall through the
+cracks unnoticed, I'm adding it to regzbot, the Linux kernel regression
+tracking bot:
+
+#regzbot ^introduced a837e5161cfffbb32
+#regzbot title meida: venus: firmware: AOSS doesn't seel anymore on at
+least sc7180 and sc7280
+#regzbot ignore-activity
+
+This isn't a regression? This issue or a fix for it are already
+discussed somewhere else? It was fixed already? You want to clarify when
+the regression started to happen? Or point out I got the title or
+something else totally wrong? Then just reply and tell me -- ideally
+while also telling regzbot about it, as explained by the page listed in
+the footer of this mail.
+
+Developers: When fixing the issue, remember to add 'Link:' tags pointing
+to the report (the parent of this mail). See page linked in footer for
+details.
+
+Ciao, Thorsten (wearing his 'the Linux kernel's regression tracker' hat)
+--
+Everything you wanna know about Linux kernel regression tracking:
+https://linux-regtracking.leemhuis.info/about/#tldr
+That page also explains what to do if mails like this annoy you.
+
+> Testing is slightly involved, since unfortunately this is not the only issue
+> in v6.2-rcN that impacts AOSS sleep.
+> 
+> To reach AOSS sleep you also have to revert this commit:
+> 
+> 3a39049f88e4 soc: qcom: rpmhpd: Use highest corner until sync_state
+
+FWIW, for anyone that like me is wondering about that story, it can be
+found here:
+https://lore.kernel.org/all/Y9v%2Fz8CYik3faHh7@google.com/
+
+Ciao, Thorsten (wearing his 'the Linux kernel's regression tracker' hat)
+--
+Everything you wanna know about Linux kernel regression tracking:
+https://linux-regtracking.leemhuis.info/about/#tldr
+That page also explains what to do if mails like this annoy you.
+
+> And apply something like the diff below (or enable the bwmon driver).
+> 
+> On a trogdor device you will see something like this when AOSS doesn't
+> enter sleep mode during system suspend:
+> 
+>   [   32.882869] EC detected sleep transition timeout. Total sleep transitions: 0
+>   [   32.882886] WARNING: CPU: 7 PID: 5682 at drivers/platform/chrome/cros_ec.c:146 cros_ec_sleep_event+0x100/0x10c
+>   [   32.900393] Modules linked in: uinput veth uvcvideo videobuf2_vmalloc venus_enc venus_dec videobuf2_dma_contig videobuf2_memops onboard_usb_hub cros_ec_typec typec hci_uart btqca xt_MASQUERADE venus_core v4l2_mem2mem videobuf2_v4l2 videobuf2_common qcom_q6v5_mss qcom_pil_v
+>   [   32.940015] CPU: 7 PID: 5682 Comm: cat Tainted: G        W          6.1.0-rc2+ #295 d14276115b3f6b03fc99220174e5d7724847cbd6
+>   [   32.951525] Hardware name: Google Villager (rev1+) with LTE (DT)
+>   [   32.957695] pstate: 60400009 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+>   [   32.964848] pc : cros_ec_sleep_event+0x100/0x10c
+>   [   32.969596] lr : cros_ec_sleep_event+0x100/0x10c
+> 
+> I'm also happy to help with testing if you have a candidate fix.
 >
 > --
-> 2.39.1
->
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index 0adf13399e64..c1f6952764c5 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -3488,7 +3488,7 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
+>                 };
+> 
+>                 pmu@9091000 {
+> 		-                       compatible = "qcom,sc7280-llcc-bwmon";
+> 		+                       // compatible = "qcom,sc7280-llcc-bwmon";
+> 		                        reg = <0 0x9091000 0 0x1000>;
+> 
+>                         interrupts = <GIC_SPI 81 IRQ_TYPE_LEVEL_HIGH>;
+> 			@@ -3528,7 +3528,7 @@ opp-7 {
+> 			                };
+> 
+>                 pmu@90b6400 {
+> 		-                       compatible = "qcom,sc7280-cpu-bwmon", "qcom,msm8998-bwmon";
+> 		+                       // compatible = "qcom,sc7280-cpu-bwmon", "qcom,msm8998-bwmon";
+> 		                        reg = <0 0x090b6400 0 0x600>;
+> 
+>                         interrupts = <GIC_SPI 581 IRQ_TYPE_LEVEL_HIGH>;
