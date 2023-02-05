@@ -2,68 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B929E68AE3A
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Feb 2023 05:16:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EF11E68AF2A
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Feb 2023 10:58:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229542AbjBEEQM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 4 Feb 2023 23:16:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60284 "EHLO
+        id S229500AbjBEJ6P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 5 Feb 2023 04:58:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229478AbjBEEQM (ORCPT
+        with ESMTP id S229461AbjBEJ6O (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 4 Feb 2023 23:16:12 -0500
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD8B06E93;
-        Sat,  4 Feb 2023 20:16:09 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id dr8so25587516ejc.12;
-        Sat, 04 Feb 2023 20:16:09 -0800 (PST)
+        Sun, 5 Feb 2023 04:58:14 -0500
+Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D4915258
+        for <linux-arm-msm@vger.kernel.org>; Sun,  5 Feb 2023 01:58:13 -0800 (PST)
+Received: by mail-yb1-xb31.google.com with SMTP id 79so1240116ybe.6
+        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Feb 2023 01:58:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=pGmjAtSpm7T3NYEfTdl7rNgWicn+a5Oe3VNo+Eoz3Lw=;
-        b=MU+TGrCw1MEvbZ+QAC6jqR6MOQaR8PyyMr0RhYg3EKTVT8b2coqtS1GyEnQ/0zDjWX
-         PbrT9j7vMPNrPHiUnKwZB7gGyYHbrQvlI1DkF4ss4b8nKYLt4PubrWJj2aujM4gC26Yy
-         zX72cXs5xCD9rf9JKL6D3/hxzvoGV5Q2s4OGLXdasOb3wfv7u6ljXWnB3iPbljQerT0B
-         JH59fZyXEgO62k2RByu2DnWh0IpzckNI9UxswsE3YyUL1xAeh2LNnLpnjztnfZYHd0ft
-         R9fj0VL0N0bGNRxoH61Iz2OJ3YJF+Ad2NrufSAML4Sw/A1iMJIUwxSuMCy8HZSOwovkn
-         2cbQ==
+        bh=j1F9gVl0En4VCYrtfscspregFWP6uGIfRnZos/Qw5Kw=;
+        b=Nex1vn2Bu9x6szqpHOk+qI/uuz72FwVM0+mRvKONWO3iMz8h5amBGc2GGQWPIXdZYY
+         raK3PsyPpZZbhzMBmFQXL4iwJ7KdLLQRtBJ0aPh7+mxQwVERqSoVSAKBT47yC4+42r5I
+         56QwGYkvGYAzqMVUjhJkA7KbLapdmPNWrwaNMBiKeYdJpqIerO6q8csd0Cdivwb4lpX1
+         CmcvTEiO6UGt2Ev929B8/TXSYqoh1pc1y+2X4VF5p6klu9jlZnvvYlKHXMqPVHgdhpDs
+         QgQaSEDfwhlFj76rHulO16fa3qDjhcnsysZZlRj1Qnnhm6FA5ILxKuOiMAOcp5gEnCWJ
+         gmNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=pGmjAtSpm7T3NYEfTdl7rNgWicn+a5Oe3VNo+Eoz3Lw=;
-        b=AFUok83iXGxqXYXk/0Cq5+hjG8aZxUBppWZiimypC0AnOFYRkwYH+aMmbwbsEekEwh
-         0wlea9U9PxGrtK8ilZqPwfv7651NNy6iqkoHi1ZHy6P2G2blxGbjNO+YikEUOmFy+Qzb
-         tuGTB6cA1wMpczSbtAp+0eKHVLXXf0u0c8sLV+rEpzfBi2P2SCNXKLP3sdkqwLI5mvf6
-         3Jrmxjyrv74WqsbMpmCcSEKSp8gu/sTNnM7R8PQjGpyfFBsJbReFOmFXcyaW7zFy6d7f
-         AvbcxvII1hw1E3pTQEbznK9+7oDS65go/BpOoQjj7JGZBWUQ2TBlwANM3d2ZysvFukjo
-         i0jA==
-X-Gm-Message-State: AO0yUKWhPNogVdD0vVyyIDtRvmlmjfY9ik4y5DaB01VvXnraQoZhCNjw
-        j900RF/NH2xVURT2mU+52hG/jut8YSZY/K4A3Bw=
-X-Google-Smtp-Source: AK7set/Phq0+sMz3EXPsbZ2Dwtggp95sagZP3NNxuR0p3KAlHS0KLI+JnJOts17T5uTN0oi6OC8KCse3Bq8AdieGaL4=
-X-Received: by 2002:a17:906:1781:b0:878:7d2c:6ba4 with SMTP id
- t1-20020a170906178100b008787d2c6ba4mr4606698eje.42.1675570568186; Sat, 04 Feb
- 2023 20:16:08 -0800 (PST)
+        bh=j1F9gVl0En4VCYrtfscspregFWP6uGIfRnZos/Qw5Kw=;
+        b=5Ge+oZ93MC0EjbbkNukRjKWShXIdBeZCnmBLBLdmYevj0z+ujirbGrMLOf79VrzRAK
+         wOJBX1OtWGXq4Su+03PEDvHOkKbDkYxVXwGKxsAsXYd7MNzAFe7Km0subU/UMgR2m2yk
+         wp2BmP82Xb/2F5qGlLdIpBRuInClh0UfK+eJGbb6TcX7OtXR4YKdoYeO8kyXRZGNuFu9
+         f48Ha/xcTIec6zaH0dluCKAv3enw2Od3cA/r3RsnzpCwkVXtWY6aoT0CbVl/v0HFti9d
+         6NtX99DgsYearliqfx5vrUXEZEOHxPofRRz8ca5zOfLz6Gb2O8HgqRfzw1IgPXSrcPnc
+         cV7w==
+X-Gm-Message-State: AO0yUKWwIB2Zi2rxENRB9Gq13sMHq7+x0/rRrf963JEiKtPHTD78yFuu
+        llOj84zATruX7tj3OkJczjOsnD2aLFXL8/89jxYpRDbr/6U=
+X-Google-Smtp-Source: AK7set9fw/lAR9zZ28g+SQPN5Sg0olqOyDBOokHd369imwC1kfRaZYr+WEU+LiA3CiE6DTpzFrFzIsCQ9k1tvNVz/As=
+X-Received: by 2002:a5b:a0c:0:b0:80b:dedb:ec94 with SMTP id
+ k12-20020a5b0a0c000000b0080bdedbec94mr1665187ybq.528.1675591092149; Sun, 05
+ Feb 2023 01:58:12 -0800 (PST)
 MIME-Version: 1.0
-References: <20230126230319.3977109-1-dmitry.baryshkov@linaro.org> <92240215-b336-48c8-d9f0-a33890f44907@linaro.org>
-In-Reply-To: <92240215-b336-48c8-d9f0-a33890f44907@linaro.org>
-From:   Jassi Brar <jassisinghbrar@gmail.com>
-Date:   Sat, 4 Feb 2023 22:15:56 -0600
-Message-ID: <CABb+yY3WXt0NBoh+spgYXj3L_72s_L-W+hqz+sbKNyD0HgU_vw@mail.gmail.com>
-Subject: Re: [PATCH v5 0/7] clk: qcom: msm8996: add APCS clock driver
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+References: <20230203100952.13857-1-pvorel@suse.cz>
+In-Reply-To: <20230203100952.13857-1-pvorel@suse.cz>
+From:   Jamie Douglass <jamiemdouglass@gmail.com>
+Date:   Sun, 5 Feb 2023 20:58:01 +1100
+Message-ID: <CAETzdaH9shhDJYA63DTQGrPkwAY3GG6oBKWDUmaxbsaUAbVv_A@mail.gmail.com>
+Subject: Re: [PATCH 1/1] arm64: dts: qcom: msm8992-lg-bullhead: Enable regulators
+To:     Petr Vorel <pvorel@suse.cz>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+        Dominik Kobinski <dominikkobinski314@gmail.com>,
+        Jeremy McNicoll <jeremymc@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
@@ -75,18 +71,100 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 27, 2023 at 12:15 PM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
 >
-> On 27/01/2023 01:03, Dmitry Baryshkov wrote:
-> > The sys_apcs_aux clock can be used by CPU and CBF clock drivers to drive
-> > those clocks from GPLL0 while doing initial setup. Add simple driver to
-> > setup and export this clock.
+> Enable pm8994_s1, pm8994_l{26,29,30,32} regulators.
+> Use values from downstream kernel on bullhead rev 1.01.
 >
-> Jassi, please excuse me for this ping. Since the only questions are
-> related to the clock driver (and hopefully they all are resolved), do
-> you plan to merge the patches 1-6 for 6.3?
+> NOTE: downstream kernel on angler rev 1.01 differences:
+> * pm8994_l29: regulator-min-microvolt = <2700000>
+> * pm8994_l{20,28,31}: use regulator-boot-on
 >
-They have the required acks, so yes I will pick 1-6 (not 7).
+> Verification:
+> [    1.832460] s1: Bringing 0uV into 1025000-1025000uV
+> ...
+> [    2.057667] l26: Bringing 0uV into 987500-987500uV
+> ...
+> [    2.075722] l29: Bringing 0uV into 2800000-2800000uV
+> [    2.076604] l30: Bringing 0uV into 1800000-1800000uV
+> [    2.082431] l31: Bringing 0uV into 1262500-1262500uV
+> [    2.095767] l32: Bringing 0uV into 1800000-1800000uV
+>
+> Fixes: f3b2c99e73be ("arm64: dts: Enable onboard SDHCI on msm8992")
+> Signed-off-by: Petr Vorel <pvorel@suse.cz>
 
-thanks
+Tested-by: Jamie Douglass <jamiemdouglass@gmail.com>
+
+> ---
+>  .../boot/dts/qcom/msm8992-lg-bullhead.dtsi    | 32 ++++++-------------
+>  1 file changed, 10 insertions(+), 22 deletions(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
+> index a100b05abf56..b8f2a01bcb96 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
+> @@ -89,8 +89,8 @@ pm8994_regulators: regulators-0 {
+>                 /* S1, S2, S6 and S12 are managed by RPMPD */
+>
+>                 pm8994_s1: s1 {
+> -                       regulator-min-microvolt = <800000>;
+> -                       regulator-max-microvolt = <800000>;
+> +                       regulator-min-microvolt = <1025000>;
+> +                       regulator-max-microvolt = <1025000>;
+>                 };
+>
+>                 pm8994_s2: s2 {
+> @@ -246,11 +246,8 @@ pm8994_l25: l25 {
+>                 };
+>
+>                 pm8994_l26: l26 {
+> -                       /*
+> -                        * TODO: value from downstream
+> -                        * regulator-min-microvolt = <987500>;
+> -                        * fails to apply
+> -                        */
+> +                       regulator-min-microvolt = <987500>;
+> +                       regulator-max-microvolt = <987500>;
+>                 };
+>
+>                 pm8994_l27: l27 {
+> @@ -264,19 +261,13 @@ pm8994_l28: l28 {
+>                 };
+>
+>                 pm8994_l29: l29 {
+> -                       /*
+> -                        * TODO: Unsupported voltage range.
+> -                        * regulator-min-microvolt = <2800000>;
+> -                        * regulator-max-microvolt = <2800000>;
+> -                        */
+> +                       regulator-min-microvolt = <2800000>;
+> +                       regulator-max-microvolt = <2800000>;
+>                 };
+>
+>                 pm8994_l30: l30 {
+> -                       /*
+> -                        * TODO: get this verified
+> -                        * regulator-min-microvolt = <1800000>;
+> -                        * regulator-max-microvolt = <1800000>;
+> -                        */
+> +                       regulator-min-microvolt = <1800000>;
+> +                       regulator-max-microvolt = <1800000>;
+>                 };
+>
+>                 pm8994_l31: l31 {
+> @@ -285,11 +276,8 @@ pm8994_l31: l31 {
+>                 };
+>
+>                 pm8994_l32: l32 {
+> -                       /*
+> -                        * TODO: get this verified
+> -                        * regulator-min-microvolt = <1800000>;
+> -                        * regulator-max-microvolt = <1800000>;
+> -                        */
+> +                       regulator-min-microvolt = <1800000>;
+> +                       regulator-max-microvolt = <1800000>;
+>                 };
+>         };
+>
+> --
+> 2.39.1
+>
