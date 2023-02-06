@@ -2,77 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4668F68B6DD
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 08:51:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7FE6268B713
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 09:09:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229988AbjBFHvt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Feb 2023 02:51:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57922 "EHLO
+        id S229744AbjBFIJY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Feb 2023 03:09:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229994AbjBFHvf (ORCPT
+        with ESMTP id S229448AbjBFIJX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Feb 2023 02:51:35 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0E5A1D93F
-        for <linux-arm-msm@vger.kernel.org>; Sun,  5 Feb 2023 23:51:03 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id j29-20020a05600c1c1d00b003dc52fed235so8043053wms.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Feb 2023 23:51:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gomtfilXlU/uKrZlY/UhpaMP4jyyR/oCyHkG8/L6Bes=;
-        b=bbQarXqh65Ijgfmc3piYqXR5BvvYUpnYTQK8FbTJF6RqEYa07HXUUapdT2yUBRo02O
-         hqs0+OjZnWzEa5A424ejFyoMwhk+x+Qiw5Uht6Htejt8XhlmutgEpNsu88V5Ybo1hTmG
-         IO95ATSDD1rz579sJeDtT9PBjKx9z3gVu+SOpeBrLuOnuwwHQUc9Ta3GFJbDODCXikSh
-         TI8vDE1bHCl4XOQ26nrLIX4HipYQaI/UQ0kOwOCflGJlsv7YDaYcBE/s34MrmDPJB4t/
-         22A9itS+R2vPepvQ6cSpn/+N2m1ha+5SjLYQxO28UWOmztGPBld1lf3OfaGFhB9F0DmR
-         pQkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gomtfilXlU/uKrZlY/UhpaMP4jyyR/oCyHkG8/L6Bes=;
-        b=rQYgaRyn0q5cRhsViMUch5jysY7U8kB4sEGioPdUpR5mLBbUINc34L2apjqzqnY0Gs
-         L/QMTW30nHxNFueGKw0nMO6KKVGSBZGPD0utZrtPE4LnQGefbP9GIysmCFCOMBRsqYDP
-         HkX/+MjMRAjVIseSbOnIWbWDtyzj/NQzW6VFQJ0Vxu+zx9XDHwF5YxmrxNdHWoqJUXDM
-         Bpyp2zeVnw4ivC1rBFsxF89LbM/xZxDx41DshkFbCss5GhGVX/VddVGG5Yv5ZfbvRwOr
-         WZDIc6h/BVgORj34hJG1pwY5oRrJuOpCLG2kUMdAT3qLm+fCuwO2/7zaXDKoQW5Q+ZfZ
-         kDVg==
-X-Gm-Message-State: AO0yUKWYWr6gvuYd7NLP2JPfQbb6DCSMxCelrbrxPwiyrWKF7/zBMfyd
-        z8b010N3xmPK6TLoX0SK4lSJUfNDkyxnKdvi
-X-Google-Smtp-Source: AK7set+BCCqNZBY1jKut0KGQBui6vrI4GsQI/jbaVVdvjyjT7aVhug27PeIP8ty5MYYIpukgpx5KVw==
-X-Received: by 2002:a05:600c:358a:b0:3da:fcb7:39e5 with SMTP id p10-20020a05600c358a00b003dafcb739e5mr18330564wmq.23.1675669863472;
-        Sun, 05 Feb 2023 23:51:03 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id v16-20020a05600c471000b003dd1bd66e0dsm11109022wmo.3.2023.02.05.23.51.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 05 Feb 2023 23:51:03 -0800 (PST)
-Message-ID: <6da08e9c-fc8b-9dff-7c91-b31a6a0e1484@linaro.org>
-Date:   Mon, 6 Feb 2023 08:51:00 +0100
+        Mon, 6 Feb 2023 03:09:23 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8445665A6;
+        Mon,  6 Feb 2023 00:09:22 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 2756460C7C;
+        Mon,  6 Feb 2023 08:09:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7556AC433D2;
+        Mon,  6 Feb 2023 08:09:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1675670961;
+        bh=7To9ndX5DYRSorrgvB+E9BrgmwiQP7ZmPzgErIA/JBQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ZOJtPm65eUnxYkUD5jLv1uB5b/01sUtZzEarQIEi7aGVKwKW5sVJzFx4gA5+Fcti5
+         XnJxEGioz4FgaUudU65hpYsgK3r7nmxeshNS+cPH/NqSy9rEJ0BYaNxN8L9tiv7Qhq
+         NyyGeHEdTmj0eZcGJh56PD0t8qEtnMq1rvYHs6E0DSgABHxx2jCy8Pm1evruHzLAxU
+         KPFRyXJfysD4ylCP41hK2gswWzUNFFu5hhVQSiJ7pQkzuLSiFZVGuCQpt6BsYyePD5
+         5/NSMzktrd9WAHwEE+57F/JK0rA7sGck2aKAP5Wot9u5ZDTOjQ8SU8Y/f3DRW6qz1d
+         uXK6K+1CQK4CQ==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pOwZS-0003cC-Sy; Mon, 06 Feb 2023 09:09:50 +0100
+Date:   Mon, 6 Feb 2023 09:09:50 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Luca Ceresoli <luca.ceresoli@bootlin.com>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Artur =?utf-8?B?xZp3aWdvxYQ=?= <a.swigon@samsung.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+        linux-tegra@vger.kernel.org, linux-kernel@vger.kernel.org,
+        stable@vger.kernel.org, Leonard Crestez <leonard.crestez@nxp.com>,
+        Alexandre Bailon <abailon@baylibre.com>
+Subject: Re: [PATCH 04/23] interconnect: imx: fix registration race
+Message-ID: <Y+C1zpn3PvRc+6uf@hovoldconsulting.com>
+References: <20230201101559.15529-1-johan+linaro@kernel.org>
+ <20230201101559.15529-5-johan+linaro@kernel.org>
+ <20230203170121.187108bd@booty>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH v5 1/5] dt-bindings: vendor-prefixes: Add Square
-Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, djakov@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        benl@squareup.com, shawn.guo@linaro.org, fabien.parent@linaro.org,
-        leo.yan@linaro.org, dmitry.baryshkov@linaro.org,
-        stephan@gerhold.net
-References: <20230206012336.2130341-1-bryan.odonoghue@linaro.org>
- <20230206012336.2130341-2-bryan.odonoghue@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230206012336.2130341-2-bryan.odonoghue@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230203170121.187108bd@booty>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,15 +77,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/02/2023 02:23, Bryan O'Donoghue wrote:
-> Add vendor prefix for Square (https://squareup.com).
+On Fri, Feb 03, 2023 at 05:01:21PM +0100, Luca Ceresoli wrote:
+> Hello Johan,
 > 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
+> On Wed,  1 Feb 2023 11:15:40 +0100
+> Johan Hovold <johan+linaro@kernel.org> wrote:
+> 
+> > The current interconnect provider registration interface is inherently
+> > racy as nodes are not added until the after adding the provider. This
+> > can specifically cause racing DT lookups to fail.
+> > 
+> > Switch to using the new API where the provider is not registered until
+> > after it has been fully initialised.
+> > 
+> > Fixes: f0d8048525d7 ("interconnect: Add imx core driver")
+> > Cc: stable@vger.kernel.org      # 5.8
+> > Cc: Leonard Crestez <leonard.crestez@nxp.com>
+> > Cc: Alexandre Bailon <abailon@baylibre.com>
+> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> 
+> Georgi pointed me to this series after I reported a bug yesterday [0],
+> that I found on iMX8MP. So I ran some tests with my original, failing
+> tree, minus one patch with my debugging code to hunt for the bug, plus
+> patches 1-4 of this series.
+> 
+> The original code was failing approx 5~10% of the times. With your 4
+> patches applied it ran 139 times with zero errors, which looks great! I
+> won't be able to do more testing until next Monday to be extra sure.
 
+Thanks for testing.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+It indeed looks like you're hitting the same race, and as the imx
+interconnect driver also initialises the provider data num_nodes count
+before adding the nodes it results in that NULL-deref (where the qcom
+driver failed a bit more gracefully).
 
-Best regards,
-Krzysztof
+Johan
 
+> [0]
+> https://lore.kernel.org/linux-arm-kernel/20230202175525.3dba79a7@booty/T/#u
