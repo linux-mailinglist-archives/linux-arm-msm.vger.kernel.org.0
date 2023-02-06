@@ -2,208 +2,208 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A6CF868C5E5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 19:36:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0277268C61B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 19:48:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230018AbjBFSgs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Feb 2023 13:36:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51022 "EHLO
+        id S230019AbjBFSsU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Feb 2023 13:48:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229741AbjBFSgr (ORCPT
+        with ESMTP id S229994AbjBFSsT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Feb 2023 13:36:47 -0500
-Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C02F2B09B
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 10:36:46 -0800 (PST)
-Received: by mail-il1-x134.google.com with SMTP id w2so1359938ilg.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Feb 2023 10:36:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=jpLAfxyLsgp5wo9XsIKzSBijHnYVMJFhq6Za6hG4zG4=;
-        b=RbPfSpFfy3FZ/cx9eZ++rTBK3EfhpFe4zxgNBg6WKZYaZj8fcUkTcjmTiigUguxIyQ
-         Lgh6bnXFdOANZlCUMtKSHIs0FouS26T1b9TrRv00GAy7DkhJ+TG1IW7sqqTcGdbF/NVl
-         iri8hr9tmZlwnhjz4+7Pa5sprj7oASw+uBMoQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jpLAfxyLsgp5wo9XsIKzSBijHnYVMJFhq6Za6hG4zG4=;
-        b=72/XLPhOcVjNZDgS9rCQhXidS5r2gH/TQSfUMxK/N+B187k5qq6aFaw36AKJYh/OtU
-         uVNqkKkxRLkYKcjtuvRrQoivih40ch4CoMq8ZfTUIO+FRR8EJM842zMLFr0qGK6ZbZH2
-         WGprT0JF76tkZUB8hwzD7v/JoQ52g7eZXeE2mKDbMtLr/HEiJPibOD8i6mQYBRcy5N/F
-         NoGbny6wnG090psYWQZimUmyCtugZ9q5Jt0Sbz0CtN16K5x38FQyfAdTmmVIcMwKfvnn
-         1q0rk13jWlpyhLNjie+K0z/zGAsScJBS5rP5O8W9wnQecUB3F/xb7maceCGR05oBx2HS
-         cvlA==
-X-Gm-Message-State: AO0yUKWCOv3NMKqMe2v24cybSPCJGfoGJRlJHcl5NL8B00FnaJGzqLAS
-        yaoKF1OtZ9yKil38hjukQAvwpQ==
-X-Google-Smtp-Source: AK7set8U4aY9AZiC/bwoUXyakwXvZVP0rv8L/2FkJDiVbd3C0+QlBJSZPusj74fB7RgknDJnx1/M5A==
-X-Received: by 2002:a92:a001:0:b0:310:f912:5a68 with SMTP id e1-20020a92a001000000b00310f9125a68mr371241ili.3.1675708605584;
-        Mon, 06 Feb 2023 10:36:45 -0800 (PST)
-Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
-        by smtp.gmail.com with UTF8SMTPSA id o16-20020a056e02115000b00313b92e839bsm2048605ill.40.2023.02.06.10.36.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Feb 2023 10:36:45 -0800 (PST)
-Date:   Mon, 6 Feb 2023 18:36:44 +0000
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-pm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Saravana Kannan <saravanak@google.com>
-Subject: Re: [RFC PATCH v2 1/2] PM: domains: Skip disabling unused domains if
- provider has sync_state
-Message-ID: <Y+FIvEqQU+yjzEIl@google.com>
-References: <20230127104054.895129-1-abel.vesa@linaro.org>
- <Y9v/z8CYik3faHh7@google.com>
- <Y+ErWTyV8CnE3Hl+@linaro.org>
- <Y+E3T6bozU1K2sFb@google.com>
- <Y+E9Z+/+eCpPK6DE@linaro.org>
+        Mon, 6 Feb 2023 13:48:19 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C112C18B2A
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 10:48:16 -0800 (PST)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 316Cw2IY021098;
+        Mon, 6 Feb 2023 18:48:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=+mN0wS4Qamrv2ha8IcZkJhBTolEwktW9Dhp38rGq00U=;
+ b=kGVJ/7EhfQaq+qZccO8fYQSKmU00FBUvZNbXUFhS9mRWM8SNdH2tEvCKka1ZkERW05HJ
+ 9IceS3t0xTiztSM/7OZEFvvNMkIMJm3IidPNeVRkK5KRYxYd/8UwfUdnN4o4V69H3Kzx
+ d4ewp6ma1eMXyPIUOPa3LO8pLqqGw9P9UPkMxF4tl8c0ZVXlzrlZ6kkpvIUlUKu8sUJ8
+ 2S3rg129wPK+ojWKug+uamhiSh6z1L7bPbQZhXOs/Q/3Gz5kqsiLtNutysQV1IYpbCCV
+ wDD5vbamqb5aq16tSTyKngzclU/+JPO9k2j+piYh0EMvDlysYyS7gQukxL6QAdsZHHlT 3A== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nhg4rmafe-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 06 Feb 2023 18:48:10 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 316Im9Wc032340
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 6 Feb 2023 18:48:09 GMT
+Received: from [10.110.44.26] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 6 Feb 2023
+ 10:48:08 -0800
+Message-ID: <d1a524c9-a7d9-3454-5e2d-bcdd2eabd583@quicinc.com>
+Date:   Mon, 6 Feb 2023 10:48:08 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Y+E9Z+/+eCpPK6DE@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH v3 19/27] drm/msm/dpu: make _dpu_plane_calc_clk accept
+ mode directly
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230203182132.1307834-1-dmitry.baryshkov@linaro.org>
+ <20230203182132.1307834-20-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20230203182132.1307834-20-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: TWqS220bD_gk4PBdiiW4LP9iS5Q_sCrp
+X-Proofpoint-GUID: TWqS220bD_gk4PBdiiW4LP9iS5Q_sCrp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-02-06_07,2023-02-06_03,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ malwarescore=0 mlxscore=0 impostorscore=0 phishscore=0 suspectscore=0
+ clxscore=1015 priorityscore=1501 adultscore=0 bulkscore=0 spamscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302060163
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Feb 06, 2023 at 07:48:23PM +0200, Abel Vesa wrote:
+
+
+On 2/3/2023 10:21 AM, Dmitry Baryshkov wrote:
+> Rework bandwidth/clock calculation functions to use mode directly rather
+> than fetching it through the plane data.
 > 
-> CC'ed Saravana
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 39 ++++++++++-------------
+>   1 file changed, 17 insertions(+), 22 deletions(-)
 > 
-> On 23-02-06 17:22:23, Matthias Kaehlcke wrote:
-> > On Mon, Feb 06, 2023 at 06:31:21PM +0200, Abel Vesa wrote:
-> > > On 23-02-02 18:24:15, Matthias Kaehlcke wrote:
-> > > > Hi Abel,
-> > > > 
-> > > > On Fri, Jan 27, 2023 at 12:40:53PM +0200, Abel Vesa wrote:
-> > > > > Currently, there are cases when a domain needs to remain enabled until
-> > > > > the consumer driver probes. Sometimes such consumer drivers may be built
-> > > > > as modules. Since the genpd_power_off_unused is called too early for
-> > > > > such consumer driver modules to get a chance to probe, the domain, since
-> > > > > it is unused, will get disabled. On the other hand, the best time for
-> > > > > an unused domain to be disabled is on the provider's sync_state
-> > > > > callback. So, if the provider has registered a sync_state callback,
-> > > > > assume the unused domains for that provider will be disabled on its
-> > > > > sync_state callback. Also provide a generic sync_state callback which
-> > > > > disables all the domains unused for the provider that registers it.
-> > > > > 
-> > > > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > > > > ---
-> > > > > 
-> > > > > This approach has been applied for unused clocks as well.
-> > > > > With this patch merged in, all the providers that have sync_state
-> > > > > callback registered will leave the domains enabled unless the provider's
-> > > > > sync_state callback explicitly disables them. So those providers will
-> > > > > need to add the disabling part to their sync_state callback. On the
-> > > > > other hand, the platforms that have cases where domains need to remain
-> > > > > enabled (even if unused) until the consumer driver probes, will be able,
-> > > > > with this patch in, to run without the pd_ignore_unused kernel argument,
-> > > > > which seems to be the case for most Qualcomm platforms, at this moment.
-> > > > 
-> > > > I recently encountered a related issue on a Qualcomm platform with a
-> > > > v6.2-rc kernel, which includes 3a39049f88e4 ("soc: qcom: rpmhpd: Use
-> > > > highest corner until sync_state"). The issue involves a DT node with a
-> > > > rpmhpd, the DT node is enabled, however the corresponding device driver
-> > > > is not enabled in the kernel. In such a scenario the sync_state callback
-> > > > is never called, because the genpd consumer never probes. As a result
-> > > > the Always-on subsystem (AOSS) of the SoC doesn't enter sleep mode during
-> > > > system suspend, which results in a substantially higher power consumption
-> > > > in S3.
-> > > 
-> > > If I get this correctly, one of the providers is missing (doesn't matter
-> > > the reason), in which case, your kernel needs that driver, period. There
-> > > is no reason why you would expect the consumer to work without the
-> > > provider. Or, you could just remove the property in the devicetree node,
-> > > the property that makes the consumer wait for that provider. Anyway, you
-> > > should never end up with a consumer provider relationship in devicetree
-> > > without providing the provider driver.
-> > 
-> > I would agree if it was actually a provider that's missing, however it's a
-> > 'missing' consumer that prevents the sync_state() call.
-> 
-> Oh, my bad.
-> 
-> Still, why would you keep the consumer node enabled in devicetree if you don't
-> intend to allow its driver to ever probe?
-
-As Doug pointed out, the device tree is supposed to describe the hardware, but
-that shouldn't impose a user/admin/downstream maintainer to use every single
-existing piece of hardware with the potential power implications on battery
-powererd devices.
-
-I someone uses an off the shelf board like a Raspberry Pi for a project in
-which they only use a subset of the functionality, they would be forced to
-use a downstream device tree if they can't just disable the drivers they
-are not interested in. Supposedly we want people/companies to use upstream
-kernels as much as possible, however you suggest to adapt the device tree
-in a way that does not describe the hardware, which effectively forces folks
-to user downstream kernels (or at least device trees).
-
-> > > > I wonder if genpd (and some other frameworks) needs something like
-> > > > regulator_init_complete(), which turns off unused regulators 30s after
-> > > > system boot. That's conceptually similar to the current
-> > > > genpd_power_off_unused(), but would provide time for modules being loaded.
-> > > 
-> > > NACK, timeouts are just another hack in this case, specially when we
-> > > have a pretty reliable mechanism like sync_state.
-> > 
-> > It does not work properly unless all consumers are probed successfully. It
-> > makes sense to wait some time for the consumers to probe, but not eternally,
-> > it's perfectly valid that a driver for a (potential) consumer is not enabled.
-> 
-> Usually, if you have a consumer devicetree node that you consider it
-> should not probe, you should consider disabling that node in your board
-> dts, specially if you don't intend to provide its driver.
-
-Nope, the device tree is supposed to describe the hardware and the hardware
-doesn't change because a particular use case doesn't require/want the use of
-all existing parts.
-
-> Again, timeouts are bad all-around. What happens if rootfs doesn't get
-> mounted in time? Will 30 seconds be enough for every scenario? What
-> happens if I want to load the driver (module) for a consumer a day after boot?
-
-I am not sure if I have a complete/correct picture here. My understanding is
-that sync_state is above all used for handing over critical hardware from the
-bootloader to the kernel. For example the CPUs may require clocks and
-interconnects to run at a certain speed during boot, before they are 'probed'
-and can ask the provider to run the resource (at least) at a certain speed.
-
-I would expect that drivers on the roots aren't critical for the system to
-enter the rootfs, all these should be either built-in or as modules on an
-initramfs. Let's say we have an audio driver that uses a clock (provider)
-and this audio driver lives as a modules on the rootfs. For some reason our
-rootfs takes a long time to mount and sync_state() of the clock provider is
-called, due to the timeout we introduced. The provider determines that it
-hasn't received any requests for the audio clock and disables it. Now
-finally the rootfs is mounted and out audio module is loaded. The audio
-device probes, gets the clock and asks the provider to run it at certain
-speed. The clock provider puts the clock at the requested speed and audio
-works as if the sync_state timeout never happened.
-
-Am I missing/misunderstanding anything important?
-
-> IMHO, I think even the regulator_init_complete should be switched to some sync
-> state approach.
-
-Maybe, with a timeout :)
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index ee261a591d45..09a3fde1c910 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -127,20 +127,19 @@ static struct dpu_kms *_dpu_plane_get_kms(struct drm_plane *plane)
+>   
+>   /**
+>    * _dpu_plane_calc_bw - calculate bandwidth required for a plane
+> - * @plane: Pointer to drm plane.
+> + * @catalog: Points to dpu catalog structure
+>    * @fmt: Pointer to source buffer format
+> + * @mode: Pointer to drm display mode
+>    * @pipe_cfg: Pointer to pipe configuration
+>    * Result: Updates calculated bandwidth in the plane state.
+>    * BW Equation: src_w * src_h * bpp * fps * (v_total / v_dest)
+>    * Prefill BW Equation: line src bytes * line_time
+>    */
+> -static void _dpu_plane_calc_bw(struct drm_plane *plane,
+> +static u64 _dpu_plane_calc_bw(const struct dpu_mdss_cfg *catalog,
+>   	const struct dpu_format *fmt,
+> +	const struct drm_display_mode *mode,
+>   	struct dpu_hw_sspp_cfg *pipe_cfg)
+>   {
+> -	struct dpu_plane_state *pstate;
+> -	struct drm_display_mode *mode;
+> -	struct dpu_kms *dpu_kms = _dpu_plane_get_kms(plane);
+>   	int src_width, src_height, dst_height, fps;
+>   	u64 plane_prefill_bw;
+>   	u64 plane_bw;
+> @@ -148,9 +147,6 @@ static void _dpu_plane_calc_bw(struct drm_plane *plane,
+>   	u64 scale_factor;
+>   	int vbp, vpw, vfp;
+>   
+> -	pstate = to_dpu_plane_state(plane->state);
+> -	mode = &plane->state->crtc->mode;
+> -
+>   	src_width = drm_rect_width(&pipe_cfg->src_rect);
+>   	src_height = drm_rect_height(&pipe_cfg->src_rect);
+>   	dst_height = drm_rect_height(&pipe_cfg->dst_rect);
+> @@ -158,7 +154,7 @@ static void _dpu_plane_calc_bw(struct drm_plane *plane,
+>   	vbp = mode->vtotal - mode->vsync_end;
+>   	vpw = mode->vsync_end - mode->vsync_start;
+>   	vfp = mode->vsync_start - mode->vdisplay;
+> -	hw_latency_lines =  dpu_kms->catalog->perf->min_prefill_lines;
+> +	hw_latency_lines =  catalog->perf->min_prefill_lines;
+>   	scale_factor = src_height > dst_height ?
+>   		mult_frac(src_height, 1, dst_height) : 1;
+>   
+> @@ -178,37 +174,36 @@ static void _dpu_plane_calc_bw(struct drm_plane *plane,
+>   		do_div(plane_prefill_bw, hw_latency_lines);
+>   
+>   
+> -	pstate->plane_fetch_bw = max(plane_bw, plane_prefill_bw);
+> +	return max(plane_bw, plane_prefill_bw);
+>   }
+>   
+>   /**
+>    * _dpu_plane_calc_clk - calculate clock required for a plane
+> - * @plane: Pointer to drm plane.
+> + * @mode: Pointer to drm display mode
+>    * @pipe_cfg: Pointer to pipe configuration
+>    * Result: Updates calculated clock in the plane state.
+>    * Clock equation: dst_w * v_total * fps * (src_h / dst_h)
+>    */
+> -static void _dpu_plane_calc_clk(struct drm_plane *plane, struct dpu_hw_sspp_cfg *pipe_cfg)
+> +static u64 _dpu_plane_calc_clk(const struct drm_display_mode *mode,
+> +		struct dpu_hw_sspp_cfg *pipe_cfg)
+>   {
+> -	struct dpu_plane_state *pstate;
+> -	struct drm_display_mode *mode;
+>   	int dst_width, src_height, dst_height, fps;
+> -
+> -	pstate = to_dpu_plane_state(plane->state);
+> -	mode = &plane->state->crtc->mode;
+> +	u64 plane_clk;
+>   
+>   	src_height = drm_rect_height(&pipe_cfg->src_rect);
+>   	dst_width = drm_rect_width(&pipe_cfg->dst_rect);
+>   	dst_height = drm_rect_height(&pipe_cfg->dst_rect);
+>   	fps = drm_mode_vrefresh(mode);
+>   
+> -	pstate->plane_clk =
+> +	plane_clk =
+>   		dst_width * mode->vtotal * fps;
+>   
+>   	if (src_height > dst_height) {
+> -		pstate->plane_clk *= src_height;
+> -		do_div(pstate->plane_clk, dst_height);
+> +		plane_clk *= src_height;
+> +		do_div(plane_clk, dst_height);
+>   	}
+> +
+> +	return plane_clk;
+>   }
+>   
+>   /**
+> @@ -1219,9 +1214,9 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
+>   		_dpu_plane_set_qos_remap(plane, pipe);
+>   	}
+>   
+> -	_dpu_plane_calc_bw(plane, fmt, &pipe_cfg);
+> +	pstate->plane_fetch_bw = _dpu_plane_calc_bw(pdpu->catalog, fmt, &crtc->mode, &pipe_cfg);
+>   
+> -	_dpu_plane_calc_clk(plane, &pipe_cfg);
+> +	pstate->plane_clk = _dpu_plane_calc_clk(&crtc->mode, &pipe_cfg);
+>   }
+>   
+>   static void _dpu_plane_atomic_disable(struct drm_plane *plane)
