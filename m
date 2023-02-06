@@ -2,165 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 76A1C68C590
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 19:17:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 64FB068C59C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 19:19:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230034AbjBFSRw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Feb 2023 13:17:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39346 "EHLO
+        id S229741AbjBFST5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Feb 2023 13:19:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230088AbjBFSRu (ORCPT
+        with ESMTP id S230057AbjBFST5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Feb 2023 13:17:50 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D50E922A37;
-        Mon,  6 Feb 2023 10:17:44 -0800 (PST)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 316Dw1Mr003538;
-        Mon, 6 Feb 2023 18:17:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=dJJ13g6rj+xIrq0T3eUEIbV10GxuSSR5Gcak2Juy/lM=;
- b=XtQxUCLz6Y3AyjDUMsjJ1ieYJ2KdSaDxIulaEFH/QGB/1BDDVbTGFvu+MyFGgXqd3317
- +xNLSS1PvD+e09Y3jKpiWxOmkvCb2Ev0IECUyt+BlHOPjOvQzPUHzfsT+ZQwf5VkLpX7
- iEorYsQCNOeZAbupmHVEdJTDI/rI5+0fVjqGhvh7vx79GJALjqK0xOzYwswhQc3/w/4s
- JnWDniGmAmD1y0DCOC2kSGQDSPVVTYyLaDy95RraLHg2bWHDxpqbxB/rTPDywqM130Re
- /tPne3FMszTdgHZrnqA5toXJQSeZXdYB86jKm+fypK3AqDmv0az5REO2E2TqfeAS0i/E Sw== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nheb0vdak-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 06 Feb 2023 18:17:40 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 316IHdfF011629
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 6 Feb 2023 18:17:39 GMT
-Received: from [10.134.67.48] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 6 Feb 2023
- 10:17:39 -0800
-Message-ID: <298c709e-5873-7aa8-3c00-b1a0ddc5c436@quicinc.com>
-Date:   Mon, 6 Feb 2023 10:17:39 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH] soc: qcom: geni-se: Move qcom-geni-se.h to
- linux/soc/qcom/geni-se.h
-Content-Language: en-US
-To:     Andy Gross <agross@kernel.org>,
+        Mon, 6 Feb 2023 13:19:57 -0500
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 778116A56
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 10:19:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1675707547;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=lhvAU6ZF1LkEANx5C+rlnAPFw6900cnUpZORjf4RmTw=;
+        b=OPWU0u/Kwp+bD8gqeoaJW0L0hskcwCzwZ3UUuyGSYoFGynBv07XZz54xexPrxLgIL72p7A
+        l2Xxx91ALR84wyzKcVBrnA4UgNdo5nld9xEwtHGMQCyEnLYCEJQE/wdvpvM4vIM1kU6cbV
+        Alus1FGKvMbF0ymfCzucWtvdfgQlRKw=
+Received: from mail-il1-f198.google.com (mail-il1-f198.google.com
+ [209.85.166.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-124-xEJQEBVuO7KG-a7R4qiS4w-1; Mon, 06 Feb 2023 13:19:05 -0500
+X-MC-Unique: xEJQEBVuO7KG-a7R4qiS4w-1
+Received: by mail-il1-f198.google.com with SMTP id i7-20020a056e021b0700b003033a763270so8636104ilv.19
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Feb 2023 10:19:05 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=lhvAU6ZF1LkEANx5C+rlnAPFw6900cnUpZORjf4RmTw=;
+        b=zAWwViiXcHCmQzy5XzNfLvo4L5U1obHcs75zgEHTtv2mPiJxNo4/LBTkU1cN/7gyyI
+         gqj6QAZq9NGo27iqePoK4bvZAr5b8uKdrHcHMr9IT9Dt75/PALEGLNjujOGQeDZcDTLc
+         SVcewPrPELmGMEJde40e/c0wtoCdA7iOsipXO++oJ6YQD6vfl6Uw0jdJh4UlCve7kqrQ
+         rBlG19JwTGbixRl76uTCoPH6dxeuruG/yHCDP/qjLrqcaiArjhRwkfaJvrgBJSUS7hmJ
+         lISc4p8SRBqo+bBVRALYkTrnmdtr106APzetP88cV32vR7ojxlDK8ZGRjFb3ileU25ik
+         8xZg==
+X-Gm-Message-State: AO0yUKW/Ev+OyeZypK9twPfLNiijcHtKvlKdUeYWDLvimnX49eQAoDv3
+        LJA6atW8874b+hjX1p9+4VcxRHiaRL/VnBVElVaoGr2p51RC6kauXAjC/T9FCI4MOZBDbS9XtqF
+        nDfCjnGpAGkAba1g8MrTQZ3O78g==
+X-Received: by 2002:a92:9509:0:b0:310:c746:d35d with SMTP id y9-20020a929509000000b00310c746d35dmr114871ilh.25.1675707545227;
+        Mon, 06 Feb 2023 10:19:05 -0800 (PST)
+X-Google-Smtp-Source: AK7set9TfM4R1dtOBwYVl3jyt5Q5tfrV3TDUzJbAC3tAzHDXahYbVOTTf85vkwOrxpIwRDlYEHPrpg==
+X-Received: by 2002:a92:9509:0:b0:310:c746:d35d with SMTP id y9-20020a929509000000b00310c746d35dmr114858ilh.25.1675707544985;
+        Mon, 06 Feb 2023 10:19:04 -0800 (PST)
+Received: from x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
+        by smtp.gmail.com with ESMTPSA id d16-20020a056e020bf000b0030dbd1b725asm3378552ilu.80.2023.02.06.10.19.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Feb 2023 10:19:04 -0800 (PST)
+Date:   Mon, 6 Feb 2023 13:19:02 -0500
+From:   Brian Masney <bmasney@redhat.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Sebastian Reichel <sre@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mark Brown <broonie@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>
-CC:     Visweswara Tanuku <quic_vtanuku@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-spi@vger.kernel.org>,
-        <linux-serial@vger.kernel.org>
-References: <20230203210133.3552796-1-quic_eberman@quicinc.com>
-From:   Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <20230203210133.3552796-1-quic_eberman@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: UDYBliO-YNogq6ZqeomTMFdH1cyj3V5s
-X-Proofpoint-GUID: UDYBliO-YNogq6ZqeomTMFdH1cyj3V5s
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-02-06_07,2023-02-06_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
- priorityscore=1501 malwarescore=0 bulkscore=0 mlxscore=0 suspectscore=0
- mlxlogscore=999 adultscore=0 phishscore=0 clxscore=1015 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2302060158
-X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] dt-bindings: power: supply: Add Lenovo Yoga C630
+ EC
+Message-ID: <Y+FElkPUkfasI0yU@x1>
+References: <20230205152809.2233436-1-dmitry.baryshkov@linaro.org>
+ <20230205152809.2233436-2-dmitry.baryshkov@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230205152809.2233436-2-dmitry.baryshkov@linaro.org>
+User-Agent: Mutt/2.2.7 (2022-08-07)
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 2/3/2023 1:01 PM, Elliot Berman wrote:
-> Move include/linux/qcom-geni-se.h to include/linux/soc/qcom/geni-se.h.
-> This removes 1 of a few remaining Qualcomm-specific headers into a more
-> approciate subdirectory under include/.
-
-Need to s/approciate/appropriate/ (Thanks Mukesh!)
-
+On Sun, Feb 05, 2023 at 05:28:07PM +0200, Dmitry Baryshkov wrote:
+> From: Bjorn Andersson <bjorn.andersson@linaro.org>
 > 
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> Add binding for the Embedded Controller found in the Qualcomm
+> Snapdragon-based Lenovo Yoga C630.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->   drivers/i2c/busses/i2c-qcom-geni.c                   | 2 +-
->   drivers/soc/qcom/qcom-geni-se.c                      | 2 +-
->   drivers/spi/spi-geni-qcom.c                          | 2 +-
->   drivers/tty/serial/qcom_geni_serial.c                | 2 +-
->   include/linux/{qcom-geni-se.h => soc/qcom/geni-se.h} | 0
->   5 files changed, 4 insertions(+), 4 deletions(-)
->   rename include/linux/{qcom-geni-se.h => soc/qcom/geni-se.h} (100%)
+>  .../power/supply/lenovo,yoga-c630-ec.yaml     | 83 +++++++++++++++++++
+>  1 file changed, 83 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/power/supply/lenovo,yoga-c630-ec.yaml
 > 
-> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-> index fd70794bfcee..80d586b0be7a 100644
-> --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> @@ -14,7 +14,7 @@
->   #include <linux/of.h>
->   #include <linux/platform_device.h>
->   #include <linux/pm_runtime.h>
-> -#include <linux/qcom-geni-se.h>
-> +#include <linux/soc/qcom/geni-se.h>
->   #include <linux/spinlock.h>
->   
->   #define SE_I2C_TX_TRANS_LEN		0x26c
-> diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
-> index f0475b93ca73..795a2e1d59b3 100644
-> --- a/drivers/soc/qcom/qcom-geni-se.c
-> +++ b/drivers/soc/qcom/qcom-geni-se.c
-> @@ -14,7 +14,7 @@
->   #include <linux/of_platform.h>
->   #include <linux/pinctrl/consumer.h>
->   #include <linux/platform_device.h>
-> -#include <linux/qcom-geni-se.h>
-> +#include <linux/soc/qcom/geni-se.h>
->   
->   /**
->    * DOC: Overview
-> diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-> index 4e83cc5b445d..e05e40a49294 100644
-> --- a/drivers/spi/spi-geni-qcom.c
-> +++ b/drivers/spi/spi-geni-qcom.c
-> @@ -12,7 +12,7 @@
->   #include <linux/platform_device.h>
->   #include <linux/pm_opp.h>
->   #include <linux/pm_runtime.h>
-> -#include <linux/qcom-geni-se.h>
-> +#include <linux/soc/qcom/geni-se.h>
->   #include <linux/spi/spi.h>
->   #include <linux/spinlock.h>
->   
-> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-> index b487823f0e61..52f3a0184577 100644
-> --- a/drivers/tty/serial/qcom_geni_serial.c
-> +++ b/drivers/tty/serial/qcom_geni_serial.c
-> @@ -16,7 +16,7 @@
->   #include <linux/platform_device.h>
->   #include <linux/pm_runtime.h>
->   #include <linux/pm_wakeirq.h>
-> -#include <linux/qcom-geni-se.h>
-> +#include <linux/soc/qcom/geni-se.h>
->   #include <linux/serial.h>
->   #include <linux/serial_core.h>
->   #include <linux/slab.h>
-> diff --git a/include/linux/qcom-geni-se.h b/include/linux/soc/qcom/geni-se.h
-> similarity index 100%
-> rename from include/linux/qcom-geni-se.h
-> rename to include/linux/soc/qcom/geni-se.h
-> 
-> base-commit: 3866989ec2c319341e2cf69ec6116269b634a271
+> diff --git a/Documentation/devicetree/bindings/power/supply/lenovo,yoga-c630-ec.yaml b/Documentation/devicetree/bindings/power/supply/lenovo,yoga-c630-ec.yaml
+> new file mode 100644
+> index 000000000000..37977344f157
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/power/supply/lenovo,yoga-c630-ec.yaml
+> @@ -0,0 +1,83 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/power/supply/lenovo,yoga-c630-ec.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Lenovo Yoga C630 Embedded Controller.
+> +
+> +maintainers:
+> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
+
+Since this is new: Should this be updated with Bjorn's kernel.org
+address? Last I checked, this address doesn't exist anymore.
+
+Brian
+
