@@ -2,212 +2,241 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CCA1C68BF98
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 15:08:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1546A68BFA8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 15:12:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231520AbjBFOIO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Feb 2023 09:08:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48274 "EHLO
+        id S231440AbjBFOML (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Feb 2023 09:12:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231416AbjBFOHw (ORCPT
+        with ESMTP id S231487AbjBFOL2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Feb 2023 09:07:52 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D3852BECC
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 06:05:32 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id k8-20020a05600c1c8800b003dc57ea0dfeso10870282wms.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Feb 2023 06:05:32 -0800 (PST)
+        Mon, 6 Feb 2023 09:11:28 -0500
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 274B62B286
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 06:10:36 -0800 (PST)
+Received: by mail-ed1-f48.google.com with SMTP id l14so1847666eds.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Feb 2023 06:10:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=l1sBDHSdASz4ecLzalMdlfELS8RCcYMZ2sk1AegZ7C4=;
-        b=gUDkn0Nk6osoDg6kBIqb4HgThjeRoU3B4yStY9UPgtkSB4y1icRX/nUz/3C0iAIpEm
-         MEDJnt9vnKjADTSJTi/kI8xh0D1PAvXE7gH5tvVQcf8lgVPHzvsc5HnaQOH1XCzK8HqA
-         iLF14vnXPg2R+rqK6qe3qmaCI98vVcpebABOShNnLKS3xsvXq448T7tqXjuyVVxuKx9g
-         yMS5bniysbumzLDbyVXjr/7YPXLCHBoUeOW+P4N/JovSFBu+zje1qoxWataFiEkxgOE+
-         ofZGWBbvJfP+qu1nMsNHPX/6rHYDCqnit3Br9d1aFXvJkdUEMDG8tGXoizjtkjstYorr
-         zWKQ==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=MV6XLW6L8RW/R5+2kFS4UxYTCoNjk3wANf/VdVgvmZQ=;
+        b=obrZxPMx4cCoF2qc7FG3fKEj4DDxkgrHCWDr7RlB6Oaxp5rEo5zKuXAPU1AmaKEeEh
+         EmZGBYes6wS0kfe4Qwsz2msSfFGjyQh7/YeC5skCU72siY0GFnjXK4U9DI5212hKSl5g
+         zyW7X80NdKh+zrtsBiRdrMLHP7HEUZAY9MFgMxGsbBBS+2rueZmRdbZt2qfl0r0irexz
+         gkZp4xZP3p2fHiHzSjvJlKg9Q+nGIv/5BZOjkgsFLubn2DQfhOOip5qyfv64Umai11YO
+         vkpd3VhbRkUMiQqik8FyLEBUjYLtfkEeSE6IJ7iOktAbzRaQKPtDENwTbxQwViA6dFTQ
+         AOAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=l1sBDHSdASz4ecLzalMdlfELS8RCcYMZ2sk1AegZ7C4=;
-        b=yhuRiScvJdMewT9+R/h0Pd4W/J+oJimSYj0kcvatNZcK6yUocczk/A4Emmt1pPceB2
-         NhtOiGVHg3nhZEMcHn0EFY2VRptQi+sHWZVRT0wWohaXkMrcgIPDRGUqEx6jkGhQaCt3
-         wQzjoWGJ7r3sWemhnUgrDVgj4Vu3AEn2INJ8GUiu2ozU7VNAVLJhHFLhj8hlT/N/YLou
-         q4417IBr++hNg/s592LbbVP5OPVF7rdOPVKpnB6Agdo+2+8D7yvm7XZmyjY2UAL1OdsJ
-         oChp3BlXbiC8JesQHcIbbLkDmp/6kDNrHMYsM4t2x8gqWTAUCow63qGQKIqiG6cvPdGj
-         1RAw==
-X-Gm-Message-State: AO0yUKVeRxKTQLJzT4zhmQZJT+W0znHP67UJGM73FXBN1ANY7ogd29d7
-        YuQ7Y8TtQARMlYU8zCDWZonrRA==
-X-Google-Smtp-Source: AK7set8CdDqbiahcj1npFpmbebayGsvVRXrv4P1LiTprnhax7cXuxebkMZ+iX0ubTVrxQMT9rjIupw==
-X-Received: by 2002:a05:600c:3849:b0:3d5:365b:773e with SMTP id s9-20020a05600c384900b003d5365b773emr20826426wmr.39.1675692304690;
-        Mon, 06 Feb 2023 06:05:04 -0800 (PST)
-Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id q9-20020a1ce909000000b003dc34edacf8sm15917337wmc.31.2023.02.06.06.05.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Feb 2023 06:05:04 -0800 (PST)
-Date:   Mon, 6 Feb 2023 16:05:02 +0200
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        "vkoul@kernel.org" <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH v7 08/12] phy: qcom-qmp-pcie: Add support for SM8550 g3x2
- and g4x2 PCIEs
-Message-ID: <Y+EJDofgt6I/abyp@linaro.org>
-References: <20230203081807.2248625-1-abel.vesa@linaro.org>
- <20230203081807.2248625-9-abel.vesa@linaro.org>
- <Y9zU2jBdSD72W28F@hovoldconsulting.com>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=MV6XLW6L8RW/R5+2kFS4UxYTCoNjk3wANf/VdVgvmZQ=;
+        b=Ge9y10CW/ltXWU6U8PxBjmMKx678m6w9D7Y7KB2BY1Kn792meCEv6Tl7Bc0qPT/9Tx
+         /GJISYlSc8rWkEzCQw/DXshWEM0BjC3K+FgdC/VTsLn+GXrhdKmsHTCdfVRfbGCs6Ugy
+         knsuVKr3nRMap1YeiW9FK/SK6WcdRgM1TOrxvah06btBBsN/+SqRqrPazcJdx2KSZenA
+         mt9lLItCHz2b1M6lI2DIlWuEhDryP5FpgrakzeXRk3Ssgy0HLRMVC8BCRghsYTU6SSVe
+         qkm7KmxKilTpO//X/hUE95jblYynncWBPCOl/Hg8iR0M2dO0TQsB6KsS1f7Ip17MBORZ
+         ThCg==
+X-Gm-Message-State: AO0yUKUKWOCHBSBAhC8lmpUlXCK5E/EbbEkVsP9ez9uOo/u/T69KCSLH
+        BX6pqtiUucsfW8mFSpI0J+Jolg==
+X-Google-Smtp-Source: AK7set93k49Ql3FZZglKm5wgbtW71CXolFsNzmsS9eVK2BZe0KhoIkey+fpXQLvYvnx4gjmaF3Bu3A==
+X-Received: by 2002:a05:6402:500c:b0:49e:4254:60a9 with SMTP id p12-20020a056402500c00b0049e425460a9mr24946255eda.29.1675692479239;
+        Mon, 06 Feb 2023 06:07:59 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id i5-20020a1709064ec500b00877e1bb54b0sm5536958ejv.53.2023.02.06.06.07.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Feb 2023 06:07:58 -0800 (PST)
+Message-ID: <94fc3698-3568-87d8-7263-68de9ca53eab@linaro.org>
+Date:   Mon, 6 Feb 2023 16:07:57 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y9zU2jBdSD72W28F@hovoldconsulting.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH V7 2/7] clk: qcom: Add Global Clock Controller driver for
+ IPQ9574
+Content-Language: en-GB
+To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
+        sboyd@kernel.org, linus.walleij@linaro.org,
+        catalin.marinas@arm.com, will@kernel.org, p.zabel@pengutronix.de,
+        shawnguo@kernel.org, arnd@arndb.de, marcel.ziswiler@toradex.com,
+        nfraprado@collabora.com, broonie@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
+        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
+        quic_poovendh@quicinc.com
+References: <20230206103337.21000-1-quic_devipriy@quicinc.com>
+ <20230206103337.21000-3-quic_devipriy@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230206103337.21000-3-quic_devipriy@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23-02-03 10:33:14, Johan Hovold wrote:
-> On Fri, Feb 03, 2023 at 10:18:03AM +0200, Abel Vesa wrote:
-> > Add the SM8550 both g4 and g3 configurations. In addition, there is a
-> > new "lane shared" table that needs to be configured for g4, along with
-> > the No-CSR list of resets.
+On 06/02/2023 12:33, Devi Priya wrote:
+> Add Global Clock Controller (GCC) driver for ipq9574 based devices
 > 
-> Could you add a comment about the new nocsr reset and how it is used
-> here?
->  
-> > Co-developed-by: Neil Armstrong <neil.armstrong@linaro.org>
-> > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> > 
-> > This patchset relies on the following patchset:
-> > https://lore.kernel.org/all/20230117224148.1914627-1-abel.vesa@linaro.org/
-> > 
-> > The v6 of this patch is:
-> > https://lore.kernel.org/all/20230202123902.3831491-9-abel.vesa@linaro.org/
-> > 
-> > Changes since v6:
-> >  * none
-> > 
-> > Changes since v5:
-> >  * renmaed the no-CSR reset to "phy_nocsr" as discussed off-list with
-> >    Bjorn and Johan
-> > 
-> > Changes since v4:
-> >  * dropped _serdes infix from ln_shrd table name and from every ln_shrd
-> >    variable name
-> >  * added hyphen between "no CSR" in both places
-> >  * dropped has_ln_shrd_serdes_tbl
-> >  * reordered qmp_pcie_offsets_v6_20 by struct members
-> >  * added rollback for no-CSR reset in qmp_pcie_init fail path
-> >  * moved ln_shrd offset calculation after port_b
-> > 
-> > Changes since v3:
-> >  * added Dmitry's R-b tag
-> > 
-> > Changes since v2:
-> >  * none
-> > 
-> > Changes since v1:
-> >  * split all the offsets into separate patches, like Vinod suggested
-> > 
-> > 
-> >  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 367 ++++++++++++++++++++++-
-> >  1 file changed, 365 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> > index 907f3f236f05..ff6c0b526fde 100644
-> > --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> > +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> > @@ -1506,6 +1506,234 @@ static const struct qmp_phy_init_tbl sm8450_qmp_gen4x2_pcie_ep_pcs_misc_tbl[] =
-> >  	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_PCIE_OSC_DTCT_MODE2_CONFIG5, 0x08),
-> >  };
+> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
+> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
+> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+> ---
+>   Changes in V7:
+> 	- Used qcom_cc_probe instead of qcom_cc_really_probe in
+> 	  gcc_ipq9574_probe
 > 
-[...]
+>   drivers/clk/qcom/Kconfig       |    8 +
+>   drivers/clk/qcom/Makefile      |    1 +
+>   drivers/clk/qcom/gcc-ipq9574.c | 4295 ++++++++++++++++++++++++++++++++
+>   3 files changed, 4304 insertions(+)
+>   create mode 100644 drivers/clk/qcom/gcc-ipq9574.c
 > 
-> >  
-> > @@ -2214,6 +2469,68 @@ static const struct qmp_phy_cfg sm8450_qmp_gen4x2_pciephy_cfg = {
-> >  	.phy_status		= PHYSTATUS_4_20,
-> >  };
-> >  
-> > +static const struct qmp_phy_cfg sm8550_qmp_gen3x2_pciephy_cfg = {
-> > +	.lanes = 2,
-> > +
-> > +	.offsets		= &qmp_pcie_offsets_v5,
-> 
-> Did you really intend to use the v5 offsets here? It seems you use v6.20
-> defines in the tables below. This may work but it looks a little strange
-> and does not match how we name and use these resources for the other
-> SoCs (e.g. reusing structures and defines from older IP revisions is
-> fine, but not necessarily the other way round).
+> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+> index 5ab4b7dfe3c2..a9f01d67a500 100644
+> --- a/drivers/clk/qcom/Kconfig
+> +++ b/drivers/clk/qcom/Kconfig
+> @@ -173,6 +173,14 @@ config IPQ_GCC_8074
+>   	  i2c, USB, SD/eMMC, etc. Select this for the root clock
+>   	  of ipq8074.
+>   
+> +config IPQ_GCC_9574
+> +	tristate "IPQ9574 Global Clock Controller"
+> +	help
+> +	  Support for global clock controller on ipq9574 devices.
+> +	  Say Y if you want to use peripheral devices such as UART, SPI,
+> +	  i2c, USB, SD/eMMC, etc. Select this for the root clock
+> +	  of ipq9574.
+> +
+>   config MSM_GCC_8660
+>   	tristate "MSM8660 Global Clock Controller"
+>   	help
+> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
+> index 3194465dd02c..51e6e5eb187b 100644
+> --- a/drivers/clk/qcom/Makefile
+> +++ b/drivers/clk/qcom/Makefile
+> @@ -27,6 +27,7 @@ obj-$(CONFIG_IPQ_GCC_4019) += gcc-ipq4019.o
+>   obj-$(CONFIG_IPQ_GCC_6018) += gcc-ipq6018.o
+>   obj-$(CONFIG_IPQ_GCC_806X) += gcc-ipq806x.o
+>   obj-$(CONFIG_IPQ_GCC_8074) += gcc-ipq8074.o
+> +obj-$(CONFIG_IPQ_GCC_9574) += gcc-ipq9574.o
+>   obj-$(CONFIG_IPQ_LCC_806X) += lcc-ipq806x.o
+>   obj-$(CONFIG_MDM_GCC_9607) += gcc-mdm9607.o
+>   obj-$(CONFIG_MDM_GCC_9615) += gcc-mdm9615.o
+> diff --git a/drivers/clk/qcom/gcc-ipq9574.c b/drivers/clk/qcom/gcc-ipq9574.c
+> new file mode 100644
+> index 000000000000..718106a9ac7b
+> --- /dev/null
+> +++ b/drivers/clk/qcom/gcc-ipq9574.c
 
-So here is what is happening here. The actual IP block version is 6 for
-the g3x2. The offsets of the tables are the same as on v5, but the
-actual offsets of some of the registers within those tables are
-entirely different. Now, if you compare the PCS PCIe offsets (v5 vs v6)
-you'll notice that all v6 registers currently added are the same as v5
-(both names and values). With that in mind, we still need to keep the v6
-offsets for the case when a new register, that might not be in v5, might
-be added later on. As for the table offsets, since they look the same we
-should probably not add a dedicated v6 one.
-> 
-> I assume this means that the gen3 PHY is really is really v5 and using
-> a subset of the v6.20 defines happens to works as they are in fact
-> identical with respect to that subset?
-> 
-> As you have dedicated gen3x2 tables, perhaps those should use the v5
-> defines?
-> 
-> And at least add a comment about this in the commit message.
-> 
-> > +
-> > +	.tbls = {
-> > +		.serdes		= sm8550_qmp_gen3x2_pcie_serdes_tbl,
-> > +		.serdes_num	= ARRAY_SIZE(sm8550_qmp_gen3x2_pcie_serdes_tbl),
-> > +		.tx		= sm8550_qmp_gen3x2_pcie_tx_tbl,
-> > +		.tx_num		= ARRAY_SIZE(sm8550_qmp_gen3x2_pcie_tx_tbl),
-> > +		.rx		= sm8550_qmp_gen3x2_pcie_rx_tbl,
-> > +		.rx_num		= ARRAY_SIZE(sm8550_qmp_gen3x2_pcie_rx_tbl),
-> > +		.pcs		= sm8550_qmp_gen3x2_pcie_pcs_tbl,
-> > +		.pcs_num	= ARRAY_SIZE(sm8550_qmp_gen3x2_pcie_pcs_tbl),
-> > +		.pcs_misc	= sm8550_qmp_gen3x2_pcie_pcs_misc_tbl,
-> > +		.pcs_misc_num	= ARRAY_SIZE(sm8550_qmp_gen3x2_pcie_pcs_misc_tbl),
-> > +	},
-> > +	.clk_list		= sc8280xp_pciephy_clk_l,
-> > +	.num_clks		= ARRAY_SIZE(sc8280xp_pciephy_clk_l),
-> > +	.reset_list		= sdm845_pciephy_reset_l,
-> > +	.num_resets		= ARRAY_SIZE(sdm845_pciephy_reset_l),
-> > +	.vreg_list		= qmp_phy_vreg_l,
-> > +	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
-> > +	.regs			= pciephy_v5_regs_layout,
-> > +
-> > +	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
-> > +	.phy_status		= PHYSTATUS,
-> > +};
-> > +
+[skipped]
 
-[...]
+> +static struct clk_branch gcc_snoc_pcie3_2lane_s_clk = {
+> +	.halt_reg = 0x2e054,
+> +	.clkr = {
+> +		.enable_reg = 0x2e054,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(struct clk_init_data) {
+> +			.name = "gcc_snoc_pcie3_2lane_s_clk",
+> +			.parent_hws = (const struct clk_hw *[]) {
+> +				&pcie3_axi_s_clk_src.clkr.hw
+> +			},
+> +			.num_parents = 1,
+> +			.flags = CLK_SET_RATE_PARENT,
+> +			.ops = &clk_branch2_ops,
+> +		},
+> +	},
+> +};
+> +
+> +static struct clk_regmap_mux pcie0_pipe_clk_src = {
+> +	.reg = 0x28064,
+> +	.shift = 8,
+> +	.width = 2,
+> +	.parent_map = gcc_pcie30_phy0_pipe_clk_xo_map,
+> +	.clkr = {
+> +		.hw.init = &(struct clk_init_data) {
+> +			.name = "pcie0_pipe_clk_src",
+> +			.parent_data = gcc_pcie30_phy0_pipe_clk_xo,
+> +			.num_parents = ARRAY_SIZE(gcc_pcie30_phy0_pipe_clk_xo),
+> +			.flags = CLK_SET_RATE_PARENT,
+> +			.ops = &clk_regmap_mux_closest_ops,
+
+
+clk_regmap_phy_mux_ops ?
+
+> +		},
+> +	},
+> +};
+> +
+> +static struct clk_regmap_mux pcie1_pipe_clk_src = {
+> +	.reg = 0x29064,
+> +	.shift = 8,
+> +	.width = 2,
+> +	.parent_map = gcc_pcie30_phy1_pipe_clk_xo_map,
+> +	.clkr = {
+> +		.hw.init = &(struct clk_init_data) {
+> +			.name = "pcie1_pipe_clk_src",
+> +			.parent_data = gcc_pcie30_phy1_pipe_clk_xo,
+> +			.num_parents = ARRAY_SIZE(gcc_pcie30_phy1_pipe_clk_xo),
+> +			.flags = CLK_SET_RATE_PARENT,
+> +			.ops = &clk_regmap_mux_closest_ops,
+> +		},
+> +	},
+> +};
+> +
+> +static struct clk_regmap_mux pcie2_pipe_clk_src = {
+> +	.reg = 0x2a064,
+> +	.shift = 8,
+> +	.width = 2,
+> +	.parent_map = gcc_pcie30_phy2_pipe_clk_xo_map,
+> +	.clkr = {
+> +		.hw.init = &(struct clk_init_data) {
+> +			.name = "pcie2_pipe_clk_src",
+> +			.parent_data = gcc_pcie30_phy2_pipe_clk_xo,
+> +			.num_parents = ARRAY_SIZE(gcc_pcie30_phy2_pipe_clk_xo),
+> +			.flags = CLK_SET_RATE_PARENT,
+> +			.ops = &clk_regmap_mux_closest_ops,
+
+clk_regmap_phy_mux_ops ?
+
+
+> +		},
+> +	},
+> +};
+> +
+> +static struct clk_regmap_mux pcie3_pipe_clk_src = {
+> +	.reg = 0x2b064,
+> +	.shift = 8,
+> +	.width = 2,
+> +	.parent_map = gcc_pcie30_phy3_pipe_clk_xo_map,
+> +	.clkr = {
+> +		.hw.init = &(struct clk_init_data) {
+> +			.name = "pcie3_pipe_clk_src",
+> +			.parent_data = gcc_pcie30_phy3_pipe_clk_xo,
+> +			.num_parents = ARRAY_SIZE(gcc_pcie30_phy3_pipe_clk_xo),
+> +			.flags = CLK_SET_RATE_PARENT,
+> +			.ops = &clk_regmap_mux_closest_ops,
+
+clk_regmap_phy_mux_ops ?
+
+> +		},
+> +	},
+> +};
+
+-- 
+With best wishes
+Dmitry
+
