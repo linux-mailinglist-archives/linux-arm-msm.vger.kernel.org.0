@@ -2,75 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D67868BAD3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 11:57:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0535A68BADE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 12:01:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229573AbjBFK5n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Feb 2023 05:57:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54088 "EHLO
+        id S229701AbjBFLBN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Feb 2023 06:01:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229484AbjBFK5m (ORCPT
+        with ESMTP id S229518AbjBFLBL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Feb 2023 05:57:42 -0500
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FCFC7EE0
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 02:57:41 -0800 (PST)
-Received: by mail-ed1-x530.google.com with SMTP id v13so11160825eda.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Feb 2023 02:57:41 -0800 (PST)
+        Mon, 6 Feb 2023 06:01:11 -0500
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08F8113DED
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 03:01:10 -0800 (PST)
+Received: by mail-ed1-x52e.google.com with SMTP id r3so1490283edq.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Feb 2023 03:01:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=+9Gdf/2MjGZogoBIVbjV9E7gaQxvRNf+5azMe9hz9GY=;
-        b=cKlvvlV1MGIpOq1x/OezrMnsVT6hOtG8mgq3AMtaKVqrMg5ex4653EcefGF7VCU7ok
-         teEKLCLT0B4ni/PO7EJCvwmLBaP1ap0zC+IUFafrmpNUqVFIHcyVwOssQ44FHtHOKfbI
-         nULI1QIrTvXxx22TmPuu+dqqOUs0nb+iKvx+8NQa6771QaidlJiaMqDq8Oeq+EP3g4Dp
-         io/iLBgGap9HoreOnMvfh8Zces9ggdjJn5noPYBA6n3rN3neq9nKt8iO6lajkZlbaWCk
-         tdmtmfXsI42K3PPhzr0BFtEtcy00rTuGhcmcQur02xRbJ6KsjuuqNbp9w5EOyOuIi0SO
-         R/MQ==
+        bh=KwRz4A4hQ/J9QIusp/1jXDk64bWoea7Fqenc5+pmfnE=;
+        b=y6vB86/boAJml+m73otGVLoTarM87Pjnj7JSie5PXhii0ogznyY1LDXBtM3uBkReEz
+         lLio7FhDIT90pPPo5XrypDG64iZB6oJlPO56tiQUF07UuZu4VR7goz+k8EG0dC8PLT6H
+         cPK4YTPzN+sL0gI6joEc3TvrRevOmGiL2m9RT/R97S7y25ZsEUlmlwFYU8l4+FOdd3z2
+         3zTfKPsAx/J/V5Ko8ixDEmQcskkn1uIZ1v1QtjkwiyUEwccg66yZxGr1b5L1Z2MYBq/n
+         +PevY1avmoEneGws9pGyTPkGIt7sGd8mfXWwDHLJ0FyisGzXCQ+YajK1Dm5MYTz8vZTM
+         R4Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+9Gdf/2MjGZogoBIVbjV9E7gaQxvRNf+5azMe9hz9GY=;
-        b=3IFRCc1cz6bcuI0OBCd+JWw2pNMwZbEBhnw93YZ4jg/EWxLiBOoHgh7yzQf2+7JZUM
-         dp/5rlDkntneMolC1CkNsfpRMXaN/LWWv/UX7h752ZhY4HKQAaZNVUotmUmQkrrGICjP
-         pkw9HxTkhaPlssH1cOhPC2V1XkGLpMZqEYDpSFjd9vB7x56TVHCQPnAJ/pxFpn8tLAC6
-         76dO2J67Cx0ML9nXlf3a34uTorcUnfbCbDd/6wALu0lIT7VqyFod4DBvCaCPA7ztUQRu
-         imuzuyhTXQxYx3nmAst5WS0WxLbAsVezdH0mJcmfHiY82inSV9DMGZgRscwtKxZoYP+f
-         DWsQ==
-X-Gm-Message-State: AO0yUKUmSRwwLyYPHYR2QgZkCuzBszfq68YFpZAYYtKTBcOWpc3lBhZt
-        lLfofsMMY+AWuvWHyAdxR/iClQ==
-X-Google-Smtp-Source: AK7set848nDphnldzbj3Q8XWmjilP7Ti0PyzogSDzYf6E75tifBm/Bc56/LAMokGe6LGFsB/8x4kBA==
-X-Received: by 2002:a50:ee92:0:b0:4a0:e234:5351 with SMTP id f18-20020a50ee92000000b004a0e2345351mr22652476edr.15.1675681059790;
-        Mon, 06 Feb 2023 02:57:39 -0800 (PST)
+        bh=KwRz4A4hQ/J9QIusp/1jXDk64bWoea7Fqenc5+pmfnE=;
+        b=G2Hmvchhi/Jc9tppqsNlrv+b8KUiw3PG41Zb5X5Q2WNARlZxEAmArFmeOCxtiKPypw
+         7RojmhJJOTlAq1HUGGs0qouzZOH2uPUI0AIeAcs9SwsxgYmKq2/RQnkoV6kbpfr173dm
+         c+v93QFFG+RC6OaOF3qeDE3LHmpNIJEOyaoRi6pXAK/Lf+UBV5Ia1nO1AAcAWYCd2wub
+         OafoAICYWB8EGPIVNidP8Pv8a/il3of+GYcV93jBHh4eggr67ZxmwQUOLGmKoNudg7Xy
+         Ux0VYfHSoFdEkJL3bYtmo2mFmk0ASprqsXTnbe4lneupR5+J3edOm+2gdagouAcKpqwS
+         9PFg==
+X-Gm-Message-State: AO0yUKU/EeVkT0Lxp5f/ln5NDdqRvw7O8rpNo4PaNZDOp2eKeckpbnH7
+        cdGcV+fchxRFBFZWqLGxZPZOWQ==
+X-Google-Smtp-Source: AK7set/fY/ZlQZwJV7YWSAn/cECe7mID+2YbEp9fJdmXkb+zQZoxhhIklg46bHsUIgkCchCuox9cow==
+X-Received: by 2002:a05:6402:1c07:b0:499:70a8:f915 with SMTP id ck7-20020a0564021c0700b0049970a8f915mr17576170edb.21.1675681268625;
+        Mon, 06 Feb 2023 03:01:08 -0800 (PST)
 Received: from [192.168.1.101] (abyl20.neoplus.adsl.tpnet.pl. [83.9.31.20])
-        by smtp.gmail.com with ESMTPSA id b11-20020aa7c6cb000000b004a986403dc1sm4473379eds.1.2023.02.06.02.57.37
+        by smtp.gmail.com with ESMTPSA id f15-20020a50d54f000000b004aac3fd90fbsm222495edj.17.2023.02.06.03.01.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Feb 2023 02:57:39 -0800 (PST)
-Message-ID: <21074b46-1278-b442-1d32-a0ae3ae19ca2@linaro.org>
-Date:   Mon, 6 Feb 2023 11:57:36 +0100
+        Mon, 06 Feb 2023 03:01:08 -0800 (PST)
+Message-ID: <376236b5-9a5d-1c0b-65e4-346cc79e9de6@linaro.org>
+Date:   Mon, 6 Feb 2023 12:01:04 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: c630: Add Embedded Controller
- node
+Subject: Re: [PATCH 5/5] arm64: dst: qcom: sm8450: add dp controller
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sebastian Reichel <sre@kernel.org>,
+To:     Neil Armstrong <neil.armstrong@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>
-Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-References: <20230205152809.2233436-1-dmitry.baryshkov@linaro.org>
- <20230205152809.2233436-4-dmitry.baryshkov@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230206-topic-sm8450-upstream-dp-controller-v1-0-f1345872ed19@linaro.org>
+ <20230206-topic-sm8450-upstream-dp-controller-v1-5-f1345872ed19@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230205152809.2233436-4-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230206-topic-sm8450-upstream-dp-controller-v1-5-f1345872ed19@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -84,79 +88,148 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 5.02.2023 16:28, Dmitry Baryshkov wrote:
-> From: Bjorn Andersson <bjorn.andersson@linaro.org>
+On 6.02.2023 11:17, Neil Armstrong wrote:
+> Add the Display Port controller subnode to the MDSS node.
 > 
-> The Embedded Controller in the Lenovo Yoga C630 is accessible on &i2c1
-> and provides battery and adapter status, as well as altmode
-> notifications for the second USB Type-C port.
-> 
-> Add a definition for the EC.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 > ---
->  .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 35 +++++++++++++++++++
->  1 file changed, 35 insertions(+)
+>  arch/arm64/boot/dts/qcom/sm8450-hdk.dts |  4 +-
+>  arch/arm64/boot/dts/qcom/sm8450.dtsi    | 82 +++++++++++++++++++++++++++++++--
+>  2 files changed, 82 insertions(+), 4 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-> index 7038a0f7c06e..cf56ce68081c 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-> @@ -352,6 +352,33 @@ zap-shader {
->  &i2c1 {
+> diff --git a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
+> index 5bdc2c1159ae..1b4ef79f74b3 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
+> @@ -480,7 +480,9 @@ &mdss_dsi0_phy {
 >  	status = "okay";
->  	clock-frequency = <400000>;
-> +
-> +	embedded-controller@70 {
-> +		compatible = "lenovo,yoga-c630-ec";
-> +		reg = <0x70>;
-> +
-> +		interrupts-extended = <&tlmm 20 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&ec_int_state>;
-> +
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		connector@0 {
-> +			compatible = "usb-c-connector";
-> +			reg = <0>;
-> +			power-role = "source";
-> +			data-role = "host";
-> +		};
-> +
-> +		connector@1 {
-> +			compatible = "usb-c-connector";
-> +			reg = <1>;
-> +			power-role = "source";
-> +			data-role = "host";
-> +		};
-> +	};
 >  };
 >  
->  &i2c3 {
-> @@ -652,6 +679,14 @@ mode_pin_active: mode-pin-state {
->  		input-enable;
->  		bias-disable;
->  	};
+> -&mdss_mdp {
+> +&mdss_dp0 {
+> +	data-lanes = <0 1 2 3>;
 > +
-> +	ec_int_state: ec-int-state {
-> +		pins = "gpio20";
-> +		function = "gpio";
+>  	status = "okay";
+>  };
+This belongs in a separate patch.
+
+>  
+> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> index 757b7c56d5f5..8d83545d5e4a 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> @@ -2745,13 +2745,20 @@ ports {
+>  
+>  					port@0 {
+>  						reg = <0>;
+> -						dpu_intf1_out: endpoint {
+> -							remote-endpoint = <&mdss_dsi0_in>;
+> +						dpu_intf0_out: endpoint {
+> +							remote-endpoint = <&mdss_dp0_in>;
+>  						};
+>  					};
+>  
+>  					port@1 {
+>  						reg = <1>;
+> +						dpu_intf1_out: endpoint {
+> +							remote-endpoint = <&mdss_dsi0_in>;
+> +						};
+> +					};
 > +
-> +		input-enable;
-> +		bias-disable;
-Unnecessary newline + most other trees do bias- before input/output-
+> +					port@2 {
+> +						reg = <2>;
+>  						dpu_intf2_out: endpoint {
+>  							remote-endpoint = <&mdss_dsi1_in>;
+>  						};
+> @@ -2789,6 +2796,75 @@ opp-500000000 {
+>  				};
+>  			};
+>  
+> +			mdss_dp0: displayport-controller@ae90000 {
+> +				compatible = "qcom,sm8350-dp";
+> +				reg = <0 0xae90000 0 0x0fc>,
+Trim the leading zeroes from the size part, please.
 
-Other than that
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> +				      <0 0xae90200 0 0x0c0>,
+> +				      <0 0xae90400 0 0x770>,
+> +				      <0 0xae91000 0 0x098>;
+> +				interrupt-parent = <&mdss>;
+> +				interrupts = <12>;
+> +				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_DPTX0_AUX_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_DPTX0_LINK_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_DPTX0_LINK_INTF_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_DPTX0_PIXEL0_CLK>;
+> +				clock-names = "core_iface", "core_aux",
+> +					      "ctrl_link",
+> +			                      "ctrl_link_iface", "stream_pixel";
+Make this a vertical list, please.
 
 Konrad
-> +	};
->  };
->  
->  &uart6 {
+> +
+> +				assigned-clocks = <&dispcc DISP_CC_MDSS_DPTX0_LINK_CLK_SRC>,
+> +						  <&dispcc DISP_CC_MDSS_DPTX0_PIXEL0_CLK_SRC>;
+> +				assigned-clock-parents = <&usb_1_qmpphy 1>,
+> +							 <&usb_1_qmpphy 2>;
+> +
+> +				phys = <&usb_1_qmpphy 1>;
+> +			        phy-names = "dp";
+> +
+> +			        #sound-dai-cells = <0>;
+> +
+> +				operating-points-v2 = <&dp_opp_table>;
+> +				power-domains = <&rpmhpd SM8450_MMCX>;
+> +
+> +				status = "disabled";
+> +
+> +				ports {
+> +					#address-cells = <1>;
+> +					#size-cells = <0>;
+> +
+> +					port@0 {
+> +						reg = <0>;
+> +						mdss_dp0_in: endpoint {
+> +							remote-endpoint = <&dpu_intf0_out>;
+> +						};
+> +					};
+> +				};
+> +
+> +				dp_opp_table: opp-table {
+> +					compatible = "operating-points-v2";
+> +
+> +					opp-160000000 {
+> +						opp-hz = /bits/ 64 <160000000>;
+> +						required-opps = <&rpmhpd_opp_low_svs>;
+> +					};
+> +
+> +					opp-270000000 {
+> +						opp-hz = /bits/ 64 <270000000>;
+> +						required-opps = <&rpmhpd_opp_svs>;
+> +					};
+> +
+> +					opp-540000000 {
+> +						opp-hz = /bits/ 64 <540000000>;
+> +						required-opps = <&rpmhpd_opp_svs_l1>;
+> +					};
+> +
+> +					opp-810000000 {
+> +						opp-hz = /bits/ 64 <810000000>;
+> +						required-opps = <&rpmhpd_opp_nom>;
+> +					};
+> +				};
+> +			};
+> +
+>  			mdss_dsi0: dsi@ae94000 {
+>  				compatible = "qcom,sm8450-dsi-ctrl", "qcom,mdss-dsi-ctrl";
+>  				reg = <0 0x0ae94000 0 0x400>;
+> @@ -2966,8 +3042,8 @@ dispcc: clock-controller@af00000 {
+>  				 <&mdss_dsi0_phy 1>,
+>  				 <&mdss_dsi1_phy 0>,
+>  				 <&mdss_dsi1_phy 1>,
+> -				 <&usb_1_qmpphy 0>,
+>  				 <&usb_1_qmpphy 1>,
+> +				 <&usb_1_qmpphy 2>,
+>  				 <0>, /* dp1 */
+>  				 <0>,
+>  				 <0>, /* dp2 */
+> 
