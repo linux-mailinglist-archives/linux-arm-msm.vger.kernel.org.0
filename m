@@ -2,117 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ED05B68B670
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 08:31:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 377B368B694
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 08:43:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229762AbjBFHbn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Feb 2023 02:31:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46822 "EHLO
+        id S229828AbjBFHm6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Feb 2023 02:42:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229763AbjBFHbi (ORCPT
+        with ESMTP id S229758AbjBFHmy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Feb 2023 02:31:38 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 749DF1D92B;
-        Sun,  5 Feb 2023 23:31:23 -0800 (PST)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3166Em6r002272;
-        Mon, 6 Feb 2023 07:31:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=WJ2PBCzCBe5jQknbYA/Frjaf7PliducbAMo3lx1yCwA=;
- b=Ve59Ldf3wWBaqtCGjEa9mg8y6c1+mYaR9jwd+38BQ3Q+GWzuD85C6XM7l2hBNQxyycmi
- VlZZ1+0cMo94/HD7YTVuQfbP3MlrWD8iBKTEqk9MXwu+nyCsL+vXcPCKGW51qVRchqoT
- zHf7LViIx58p+Uw8HVpNjZO3lVTwkarBTokyVmO3sE8molBx9YOAl08cM0FByqwEHnG/
- zaob7X0XEuBH6P34EnWGHKWVi+qGFZTuBCTTOwKRh/apqkS1skweW2Kl56BUKVg0grpr
- O+1GqksR2Vd+11rLIv4gq/81C1z7RXv0B1weFVZATO7u7sfrUZZdSfwMTX1haKtwH4fN lw== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nhcqxu8sf-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 06 Feb 2023 07:31:20 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3167VJdG003541
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 6 Feb 2023 07:31:19 GMT
-Received: from kathirav-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Sun, 5 Feb 2023 23:31:15 -0800
-From:   Kathiravan T <quic_kathirav@quicinc.com>
-To:     <andersson@kernel.org>, <agross@kernel.org>,
-        <konrad.dybcio@linaro.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-CC:     <quic_varada@quicinc.com>, <quic_srichara@quicinc.com>,
-        Kathiravan T <quic_kathirav@quicinc.com>
-Subject: [PATCH V2] clk: qcom: ipq5332: mark GPLL4 as critical temporarily
-Date:   Mon, 6 Feb 2023 13:01:01 +0530
-Message-ID: <20230206073101.14796-1-quic_kathirav@quicinc.com>
-X-Mailer: git-send-email 2.17.1
+        Mon, 6 Feb 2023 02:42:54 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FAE9559F
+        for <linux-arm-msm@vger.kernel.org>; Sun,  5 Feb 2023 23:42:50 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id k13so2056766wrh.8
+        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Feb 2023 23:42:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2XA64voz9ivBR8UNL1Z4b6fr6//lgNZOlEzIgWzkqrI=;
+        b=Iad+7Ny2E+UALOfO6NNonPCSf+2HKHeRfPbUezACIXgAcbJUJ3G8UHXjGooNRK3KEk
+         NuwofdM+hk+PKfCB0DcqJ6du5yKbaccuJ3uTdtaVldcs04CW/ohNsPol//L4wMeG1sU/
+         RtEUvOVe93QJ0T/8b1V6fJUQ3tM1F0ty6OAxrBZZtAViiFDqpRwikB9fQdyTSczSSi8i
+         rndOCKOdsNE0xp0OgHe6AW7sqoFiV9fZzc8jQ+q/c3FPNCMf++mzw1zLATPOXSWfSgHM
+         +c/IVuPcNtRqFuow0ZU9GZ18xmDoNxsRAcx8RD3GTucjpbrzw2lrphPE4phT/+QXG7xQ
+         rXkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2XA64voz9ivBR8UNL1Z4b6fr6//lgNZOlEzIgWzkqrI=;
+        b=Toyj+peihFqpRgPKNqsAxuuvGtWEJUzR3VEkVz1ET4z67yy2UuGyJ8ci418gLrdaUu
+         7NXMILtWXnKpCBj4XfSOGBoEIhrG8l+mFbcmzcqF8eluU9e9YIDCQJ8ZDofiOYwhrscO
+         N5rMN4gcrRKwNUY/aIpSL9HjeerQRuR0HFJI9RmgBI5PlH6NdHcCtmQRv1aKnBHqNKqg
+         USWBEpTkGOa7hYF7u15iJF7g+1dmg0i+Hwt9SLuG/eFw5YqT+MHBkkw7A86YNkAt47Zh
+         BhbidWQ7C9eCg1fQxU6QUXqjEtn1OszL6KC8c0j3TViyBtl5qEe1NTNKrWFQ7M13C3N3
+         3xew==
+X-Gm-Message-State: AO0yUKVfbE0FvYlQ4nrsoZxQ0yfkj1827rFalUM/nUrvh2KqtvM8TEGj
+        uPwwtEc48rwB5caAqiCpi/t7Pw==
+X-Google-Smtp-Source: AK7set/zNQJeepBp90+pb7siQybo5fz/0fjOBRUb17obj/tzEFyZevEn0oFiVuXuge8l3CN8hkHVCg==
+X-Received: by 2002:a05:6000:136f:b0:2c3:e80f:6aa3 with SMTP id q15-20020a056000136f00b002c3e80f6aa3mr2835371wrz.51.1675669369259;
+        Sun, 05 Feb 2023 23:42:49 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id f9-20020adff989000000b002c3e6b39512sm2682210wrr.53.2023.02.05.23.42.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 05 Feb 2023 23:42:48 -0800 (PST)
+Message-ID: <5454d5c6-1151-af9b-54a3-3bdd66b621e8@linaro.org>
+Date:   Mon, 6 Feb 2023 08:42:46 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: sYETrLwmqa0Vm2Kd3Qdcp-GcUCeycAql
-X-Proofpoint-GUID: sYETrLwmqa0Vm2Kd3Qdcp-GcUCeycAql
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-02-06_03,2023-02-03_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- priorityscore=1501 suspectscore=0 clxscore=1015 mlxscore=0
- lowpriorityscore=0 bulkscore=0 spamscore=0 phishscore=0 impostorscore=0
- mlxlogscore=815 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2212070000 definitions=main-2302060064
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [RESEND PATCH v3 1/4] dt-bindings: net: Add WCN6855 Bluetooth
+Content-Language: en-US
+To:     Steev Klimaszewski <steev@kali.org>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Sven Peter <sven@svenpeter.dev>, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        Mark Pearson <markpearson@lenovo.com>
+References: <20230206001634.2566-1-steev@kali.org>
+ <20230206001634.2566-2-steev@kali.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230206001634.2566-2-steev@kali.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Clock framework disables the GPLL4 source since there are no active users
-for this source currently. Some of the clocks initialized by the
-bootloaders uses the GPLL4 as the source. Due to this, when the GPLL4 is
-disabled by the clock framework, system is going for the reboot.
+On 06/02/2023 01:16, Steev Klimaszewski wrote:
+> Add bindings for the QTI WCN6855 chipset, based on the WCN6750.
+> 
+> ---
+> - v3 No changes from v2
+> - v2 drop second binding in subject line
+> 
+> Signed-off-by: Steev Klimaszewski <steev@kali.org>
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-To avoid this, mark the GPLL4 as CRITICAL so that clock framework
-doesn't disable it. Once the users of this source is enabled, we can get
-rid of this flag.
+Still broken.
 
-Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
----
-Changes in V2:
-	- Added a comment in driver explaining the need of the flag
-
- drivers/clk/qcom/gcc-ipq5332.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
-
-diff --git a/drivers/clk/qcom/gcc-ipq5332.c b/drivers/clk/qcom/gcc-ipq5332.c
-index c8a5fa1bafca..2e043d2d0598 100644
---- a/drivers/clk/qcom/gcc-ipq5332.c
-+++ b/drivers/clk/qcom/gcc-ipq5332.c
-@@ -127,6 +127,16 @@ static struct clk_alpha_pll gpll4_main = {
- 			.parent_data = &gcc_parent_data_xo,
- 			.num_parents = 1,
- 			.ops = &clk_alpha_pll_stromer_ops,
-+			/*
-+			 * There are no consumers for this GPLL in kernel yet,
-+			 * (will be added soon), so the clock framework
-+			 * disables this source. But some of the clocks
-+			 * initialized by boot loaders uses this source. So we
-+			 * need to keep this clock ON. Add the CRITICAL flag
-+			 * so the clock will not be disabled. Once the consumer
-+			 * in kernel is added, we can get rid off this flag.
-+			 */
-+			.flags = CLK_IS_CRITICAL,
- 		},
- 	},
- };
--- 
-2.17.1
+Best regards,
+Krzysztof
 
