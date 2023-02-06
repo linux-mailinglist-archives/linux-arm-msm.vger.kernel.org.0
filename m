@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 64FB068C59C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 19:19:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6AE9D68C5BF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 19:29:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229741AbjBFST5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Feb 2023 13:19:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40040 "EHLO
+        id S229817AbjBFS3W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Feb 2023 13:29:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230057AbjBFST5 (ORCPT
+        with ESMTP id S229490AbjBFS3V (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Feb 2023 13:19:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 778116A56
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 10:19:08 -0800 (PST)
+        Mon, 6 Feb 2023 13:29:21 -0500
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E4C724103
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 10:28:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1675707547;
+        s=mimecast20190719; t=1675708117;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:content-type:content-type:
          in-reply-to:in-reply-to:references:references;
-        bh=lhvAU6ZF1LkEANx5C+rlnAPFw6900cnUpZORjf4RmTw=;
-        b=OPWU0u/Kwp+bD8gqeoaJW0L0hskcwCzwZ3UUuyGSYoFGynBv07XZz54xexPrxLgIL72p7A
-        l2Xxx91ALR84wyzKcVBrnA4UgNdo5nld9xEwtHGMQCyEnLYCEJQE/wdvpvM4vIM1kU6cbV
-        Alus1FGKvMbF0ymfCzucWtvdfgQlRKw=
-Received: from mail-il1-f198.google.com (mail-il1-f198.google.com
- [209.85.166.198]) by relay.mimecast.com with ESMTP with STARTTLS
+        bh=aE0G6LDX8lXDW0wtXNhk8AO/NAPHw5W1SphgReObSVQ=;
+        b=gv4xCoHXjmCVfzcBj88S0V0f9F+UFWC84ebkhcYy08s41nQjAcUoTzMeF+9jWhB71jV98H
+        mcapMcDC+fmkeIX0ycvguMEcZtqUS4a6ByCLN7h2CubqXLrpUzlLxta+K6wKcfqUeV3ntr
+        2RzJF+IljUuGLdDPbdd/31VcGugYAqs=
+Received: from mail-il1-f200.google.com (mail-il1-f200.google.com
+ [209.85.166.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-124-xEJQEBVuO7KG-a7R4qiS4w-1; Mon, 06 Feb 2023 13:19:05 -0500
-X-MC-Unique: xEJQEBVuO7KG-a7R4qiS4w-1
-Received: by mail-il1-f198.google.com with SMTP id i7-20020a056e021b0700b003033a763270so8636104ilv.19
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Feb 2023 10:19:05 -0800 (PST)
+ us-mta-433-g5HM6QxVNc-slnADFRBjPw-1; Mon, 06 Feb 2023 13:28:26 -0500
+X-MC-Unique: g5HM6QxVNc-slnADFRBjPw-1
+Received: by mail-il1-f200.google.com with SMTP id s12-20020a92cb0c000000b00313ceced13aso1553147ilo.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Feb 2023 10:28:26 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=user-agent:in-reply-to:content-disposition:mime-version:references
          :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=lhvAU6ZF1LkEANx5C+rlnAPFw6900cnUpZORjf4RmTw=;
-        b=zAWwViiXcHCmQzy5XzNfLvo4L5U1obHcs75zgEHTtv2mPiJxNo4/LBTkU1cN/7gyyI
-         gqj6QAZq9NGo27iqePoK4bvZAr5b8uKdrHcHMr9IT9Dt75/PALEGLNjujOGQeDZcDTLc
-         SVcewPrPELmGMEJde40e/c0wtoCdA7iOsipXO++oJ6YQD6vfl6Uw0jdJh4UlCve7kqrQ
-         rBlG19JwTGbixRl76uTCoPH6dxeuruG/yHCDP/qjLrqcaiArjhRwkfaJvrgBJSUS7hmJ
-         lISc4p8SRBqo+bBVRALYkTrnmdtr106APzetP88cV32vR7ojxlDK8ZGRjFb3ileU25ik
-         8xZg==
-X-Gm-Message-State: AO0yUKW/Ev+OyeZypK9twPfLNiijcHtKvlKdUeYWDLvimnX49eQAoDv3
-        LJA6atW8874b+hjX1p9+4VcxRHiaRL/VnBVElVaoGr2p51RC6kauXAjC/T9FCI4MOZBDbS9XtqF
-        nDfCjnGpAGkAba1g8MrTQZ3O78g==
-X-Received: by 2002:a92:9509:0:b0:310:c746:d35d with SMTP id y9-20020a929509000000b00310c746d35dmr114871ilh.25.1675707545227;
-        Mon, 06 Feb 2023 10:19:05 -0800 (PST)
-X-Google-Smtp-Source: AK7set9TfM4R1dtOBwYVl3jyt5Q5tfrV3TDUzJbAC3tAzHDXahYbVOTTf85vkwOrxpIwRDlYEHPrpg==
-X-Received: by 2002:a92:9509:0:b0:310:c746:d35d with SMTP id y9-20020a929509000000b00310c746d35dmr114858ilh.25.1675707544985;
-        Mon, 06 Feb 2023 10:19:04 -0800 (PST)
+        bh=aE0G6LDX8lXDW0wtXNhk8AO/NAPHw5W1SphgReObSVQ=;
+        b=YOztS8bR+PGUgivIE2qof6CeM5Oxtpc1z4MVLcBhJKAdB/5jV4iEPrD/jXJbjDQ6dG
+         MC+iK0PXfgo7RUsEPqlmblsx5W/9t6qiJQX+So9KtlMGFKBToKKY7EDhgpSLaAmfgnJR
+         s1hSNmtEJrT+2PbNvyhehuuEVmaVWMSZWR1HkaJm8Fi77Bkg6+zXKKMY8fL+fThcV/e6
+         7v2HQ7ouZQeKScxr5hSmj3ugc4MKOiQ4TqrpxvRjwyimerZOLTPs06JM2phUONdR2LZq
+         CWN5U5cGMcmOqeNKYl80O9hqrdrTuk+KhbSWYcwzoqp96KXG39XOxqMXhCizRRksxu25
+         DL2w==
+X-Gm-Message-State: AO0yUKU2yiipzD7Ku54YFeXBodp8EVoTXAf+1Bqm8KRBR84jjXn2kkw5
+        q+ykyde+PUvkTmTUpqAFng74aayB98+z4BgtAIoH6Kf0qkQ71veMi1s6vsGIwD9pSSRtldKQNDz
+        AOd6erTRO2wWy857uepKWDILyhw==
+X-Received: by 2002:a05:6e02:674:b0:310:9798:a26 with SMTP id l20-20020a056e02067400b0031097980a26mr134564ilt.20.1675708105898;
+        Mon, 06 Feb 2023 10:28:25 -0800 (PST)
+X-Google-Smtp-Source: AK7set/L3GshufTUSqipkhjjiZm+JjTxzP+SJFCkecxkJOuVFkOZ6xWbXOwXxcoTePIVAt8uHmx+4Q==
+X-Received: by 2002:a05:6e02:674:b0:310:9798:a26 with SMTP id l20-20020a056e02067400b0031097980a26mr134550ilt.20.1675708105706;
+        Mon, 06 Feb 2023 10:28:25 -0800 (PST)
 Received: from x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
-        by smtp.gmail.com with ESMTPSA id d16-20020a056e020bf000b0030dbd1b725asm3378552ilu.80.2023.02.06.10.19.03
+        by smtp.gmail.com with ESMTPSA id i17-20020a056e020d9100b00310ce3dd5b1sm3487877ilj.60.2023.02.06.10.28.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Feb 2023 10:19:04 -0800 (PST)
-Date:   Mon, 6 Feb 2023 13:19:02 -0500
+        Mon, 06 Feb 2023 10:28:25 -0800 (PST)
+Date:   Mon, 6 Feb 2023 13:28:23 -0500
 From:   Brian Masney <bmasney@redhat.com>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Sebastian Reichel <sre@kernel.org>,
@@ -65,16 +65,15 @@ Cc:     Sebastian Reichel <sre@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 1/3] dt-bindings: power: supply: Add Lenovo Yoga C630
- EC
-Message-ID: <Y+FElkPUkfasI0yU@x1>
+        linux-arm-msm@vger.kernel.org, Steev Klimaszewski <steev@kali.org>
+Subject: Re: [PATCH v2 2/3] power: supply: Add Lenovo Yoga C630 EC driver
+Message-ID: <Y+FGxylqBLRA+Um4@x1>
 References: <20230205152809.2233436-1-dmitry.baryshkov@linaro.org>
- <20230205152809.2233436-2-dmitry.baryshkov@linaro.org>
+ <20230205152809.2233436-3-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230205152809.2233436-2-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230205152809.2233436-3-dmitry.baryshkov@linaro.org>
 User-Agent: Mutt/2.2.7 (2022-08-07)
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -86,38 +85,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Feb 05, 2023 at 05:28:07PM +0200, Dmitry Baryshkov wrote:
-> From: Bjorn Andersson <bjorn.andersson@linaro.org>
-> 
-> Add binding for the Embedded Controller found in the Qualcomm
-> Snapdragon-based Lenovo Yoga C630.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  .../power/supply/lenovo,yoga-c630-ec.yaml     | 83 +++++++++++++++++++
->  1 file changed, 83 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/power/supply/lenovo,yoga-c630-ec.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/power/supply/lenovo,yoga-c630-ec.yaml b/Documentation/devicetree/bindings/power/supply/lenovo,yoga-c630-ec.yaml
-> new file mode 100644
-> index 000000000000..37977344f157
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/power/supply/lenovo,yoga-c630-ec.yaml
-> @@ -0,0 +1,83 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/power/supply/lenovo,yoga-c630-ec.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+On Sun, Feb 05, 2023 at 05:28:08PM +0200, Dmitry Baryshkov wrote:
+> +static int yoga_c630_ec_adpt_get_property(struct power_supply *psy,
+> +					  enum power_supply_property psp,
+> +					  union power_supply_propval *val)
+> +{
+> +	struct yoga_c630_ec *ec = power_supply_get_drvdata(psy);
+> +	int rc = 0;
 > +
-> +title: Lenovo Yoga C630 Embedded Controller.
+> +	yoga_c630_ec_update_adapter_status(ec);
 > +
-> +maintainers:
-> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
+> +	switch (psp) {
+> +	case POWER_SUPPLY_PROP_ONLINE:
+> +		val->intval = ec->adapter_online;
+> +		break;
+> +	default:
+> +		rc = -EINVAL;
+> +		break;
+> +	}
+> +
+> +	return rc;
 
-Since this is new: Should this be updated with Bjorn's kernel.org
-address? Last I checked, this address doesn't exist anymore.
+You can simplify this function by getting rid of the switch statement
+and rc variable:
+
+	if (psp == POWER_SUPPLY_PROP_ONLINE) {
+		val->intval = ec->adapter_online;
+		return 0;
+	}
+
+	return -EINVAL;
 
 Brian
 
