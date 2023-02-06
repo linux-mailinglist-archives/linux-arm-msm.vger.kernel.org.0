@@ -2,207 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 247D368BEB1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 14:50:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 449DB68BF0D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 14:59:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229758AbjBFNuK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Feb 2023 08:50:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53916 "EHLO
+        id S229879AbjBFN7d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Feb 2023 08:59:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38216 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230471AbjBFNtj (ORCPT
+        with ESMTP id S230470AbjBFN7O (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Feb 2023 08:49:39 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC762D52B;
-        Mon,  6 Feb 2023 05:49:02 -0800 (PST)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 316BNBnm029786;
-        Mon, 6 Feb 2023 13:48:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=nrt5KNpJAtsfMMxpc3BHojYVpg+wThGUJFzebOpAX14=;
- b=FXaPLwWNnsu9z6JbCgu6f6G3H5xwMhrd02mmj0hLFcxW+J7cZ7i2Bo+B5JVJac9VSA3m
- 49P1Lwhn/rW32Fy02QhVc8LplV2nHejQGma41ACH70m9UE8+OETJMHdflW3szIMyUpTo
- fC3m7W0LwEZLNRAMJuQSvwqqgrVBzswiSi/0AsT0yO+FbKQDDA1/054vw2BSewIVy47S
- tt7qlvc9eQzzLIlvxRuBA6esojmZG9r3OnnuLFlTHtAxTF/2aeg2mK1vHku6KqA0jScT
- tfZObqLKZ9EKfu6O1rIEFOtKmOmJZEr7eXWhQ16hGvB1ksYvoPW4RhM10nLlEqX/hdBr kw== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nhgng3mqs-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 06 Feb 2023 13:48:38 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 316Dmb7i027899
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 6 Feb 2023 13:48:37 GMT
-Received: from [10.50.61.251] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 6 Feb 2023
- 05:48:32 -0800
-Message-ID: <9c3801a3-9180-d955-d5b4-9a6ec39866eb@quicinc.com>
-Date:   Mon, 6 Feb 2023 19:18:29 +0530
+        Mon, 6 Feb 2023 08:59:14 -0500
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2003729408
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 05:58:34 -0800 (PST)
+Received: by mail-wr1-f49.google.com with SMTP id m14so10395025wrg.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Feb 2023 05:58:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=AnaxyOtUPNOU2cKwBwASl1WNeZj+fgcT9n0v3Etq/6A=;
+        b=SYXIzZ381IGT4ZNVpjknW0muG49Hf3FitrNNCJ+VOS+GTzHQ9i1cNTH/MMAZwjx6PH
+         /vPy6UB6zuUZkWQFsgGeXpNTrbrqOYhX9XavarHwldOaoGe229j3vbAB4SOK+lJnsfOO
+         7F6faj8uZwXArEyeB9VEwpLPcxEKnzlT6kBLX4C2mjk6Fvu/dsZp2vyLyFRl+Mu2Iwi3
+         OX4XprRqyOoIcddTADouZu7NAx6lBdy36RyNwIdMT5dJnhys/cpZZd/ej/Rj0MKPef/l
+         AlgSBu3N5kl22x8gCDHLu7XMUp1dTBo2MUaCPQmBusaMqB3BSYb7Ey7mzUb7eS+F+zUv
+         r3DQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=AnaxyOtUPNOU2cKwBwASl1WNeZj+fgcT9n0v3Etq/6A=;
+        b=UjuhIztHQn1kyEWyMRRzJTeyqmrhgD1Z+OCK8Atk+Jbtvd7cHHgaaZ0jQM1x2q5aEq
+         BNz2wrCEttt4PUWvgYrouV6P19B9z91KAPzcDkkfAhYxFuSrNSbggCgROLCDohu2Cr0U
+         B/9lHOVrLLwJGRMFblR4oG7ZaQ5Etft8BfLzTGUlrYWad3dzlAtMZlOQPBJY/dsftT1S
+         EDgzJ+B7w9iqSHf33VCHmRJFHTSddAfwQBqu47OH2AjszPlaj3lwMEv4Q1zUvzkM88O2
+         If8ElRi0mbZ2Sad4vH0NHZ4Try3HwLwZlU4YSVe9Ou7XJKXBk6r24rOlHIhz3V8ZUPyU
+         SSGA==
+X-Gm-Message-State: AO0yUKWkLhdYOJ9SP858cZTj64NMW91GfXyUSrEmioQxBB8GmMeTsOGM
+        hguAYol8xgJxYMkDimnCLQoePA==
+X-Google-Smtp-Source: AK7set9PZVXf9K91w978zpO/9vUZnxBx+llHV3epEaFUn0yWEtFTQ+0tn9pEVGuyGRMeRr2a71f1uw==
+X-Received: by 2002:adf:c713:0:b0:2bf:e05f:53ac with SMTP id k19-20020adfc713000000b002bfe05f53acmr18055137wrg.45.1675691613004;
+        Mon, 06 Feb 2023 05:53:33 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id e15-20020a5d65cf000000b002bfc0558ecdsm8839943wrw.113.2023.02.06.05.53.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Feb 2023 05:53:32 -0800 (PST)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Date:   Mon, 06 Feb 2023 14:53:31 +0100
+Subject: [PATCH] remoteproc: qcom_q6v5_pas: enable sm8550 adsp & cdsp
+ autoboot
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH 6/6] regulator: qcom_smd: Add support to define the bootup
- voltage
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <lgirdwood@gmail.com>,
-        <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
-        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
-        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
-        <quic_poovendh@quicinc.com>, <quic_ipkumar@quicinc.com>
-References: <20230113150310.29709-1-quic_devipriy@quicinc.com>
- <20230113150310.29709-7-quic_devipriy@quicinc.com>
- <77d84408-166e-8a02-227a-67654a4d31f2@linaro.org>
- <df6c1cd6-ea70-e65c-b4e8-3da80697242f@quicinc.com>
- <cc037133-7c45-325f-4a1d-9855d033ae5c@linaro.org>
- <6bb22160-5966-43d3-ffba-489b77b3a095@quicinc.com>
- <de6e69d6-18cd-2732-9a18-f4dfd29be6dd@linaro.org>
- <05c01db8-1ca1-475f-8cb4-41fddff8b85a@quicinc.com>
- <bab449de-73c9-f65e-24fa-84749fbc51bb@linaro.org>
-From:   Devi Priya <quic_devipriy@quicinc.com>
-In-Reply-To: <bab449de-73c9-f65e-24fa-84749fbc51bb@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 9dW6M3FO0NUVDJzJmCa9LUDqHFV0_9vJ
-X-Proofpoint-ORIG-GUID: 9dW6M3FO0NUVDJzJmCa9LUDqHFV0_9vJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-02-06_07,2023-02-06_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 mlxlogscore=999
- bulkscore=0 malwarescore=0 spamscore=0 mlxscore=0 suspectscore=0
- phishscore=0 impostorscore=0 adultscore=0 lowpriorityscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302060118
-X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230206-topic-sm8550-upstream-fix-remoteproc-autoboot-v1-1-11445a0c27c6@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAFoG4WMC/x2O0QoCIRBFf2XxuQHXsK1+JXrQaWyF1ZFRI1j23
+ 5Mez4F7uLuqJJGquk+7EvrEGjkPmE+TwtXlN0F8DVZGm7M2+gKNS0So6Wqthl5qE3IJQvyCUOJ
+ GRRjB9caeuYHFhULAMN8WVKPpXSXw4jKuo5r7tg1ZhMb+f+LxPI4fnUw/nJQAAAA=
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.0
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Set the SM8550 adsp & cdsp auto_boot to true to match the behavior
+of the previous platforms.
 
+Fixes: 7eddedc97563 ("remoteproc: qcom_q6v5_pas: add sm8550 adsp, cdsp & mpss compatible & data")
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+ drivers/remoteproc/qcom_q6v5_pas.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-On 2/2/2023 5:13 PM, Konrad Dybcio wrote:
-> 
-> 
-> On 2.02.2023 12:09, Devi Priya wrote:
->>
->>
->> On 1/31/2023 6:14 PM, Konrad Dybcio wrote:
->>>
->>>
->>> On 31.01.2023 10:28, Devi Priya wrote:
->>>>
->>>>
->>>> On 1/27/2023 9:40 PM, Konrad Dybcio wrote:
->>>>>
->>>>>
->>>>> On 27.01.2023 17:07, Devi Priya wrote:
->>>>>>
->>>>>>
->>>>>> On 1/13/2023 9:07 PM, Konrad Dybcio wrote:
->>>>>>>
->>>>>>>
->>>>>>> On 13.01.2023 16:03, devi priya wrote:
->>>>>>>> Kernel does not know the initial voltage set by the bootloaders.
->>>>>>>> During regulator registration, the voltage variable is just declared
->>>>>>>> and it is zero. Based on that, the regulator framework considers current
->>>>>>>> the voltage as zero and tries to bring up each regulator to minimum
->>>>>>>> the supported voltage.
->>>>>>>>
->>>>>>>> This introduces a dip in the voltage during kernel boot and gets
->>>>>>>> stabilized once the voltage scaling comes into picture.
->>>>>>>>
->>>>>>>> To avoid the voltage dip, adding support to define the
->>>>>>>> bootup voltage set by the boodloaders and based on it, regulator
->>>>>>>> framework understands that proper voltage is already set
->>>>>>>>
->>>>>>>> Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
->>>>>>>> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
->>>>>>>> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
->>>>>>>> ---
->>>>>>> Or maybe hook it up to the spmi_regulator_common_get_voltage()
->>>>>>> from the SPMI regulator driver and read the real voltage instead
->>>>>>> of relying on hardcoded values thay may differ between boards?
->>>>>>>
->>>>>>> Konrad
->>>>>> In IPQ9574, SPMI regulator is not used. We are using RPM-Glink communication and the regulators are controlled by RPM.
->>>>>> In this case, we don't have an option to readback the bootup voltage and so, we have hardcoded the values
->>>>> Unless something changed, RPM regulator framework is simply a
->>>>> fancy front-end for communicating with the PMIC over SPMI, AFAIK..
->>>>>
->>>>> Konrad
->>>> Currently in our driver, the voltage write request will be sent to RPM via GLINK which then writes it to the PMIC over I2C using the below APIs
->>>> qcom_rpm_smd_write -> rpmsg_send
->>>> In IPQ9574, we do not have SPMI support or the support to readback voltage.
->>> Okay, I didn't quite catch that there's *only* an i2c PMIC on this
->>> platform.. Looking at the MP5496 datasheet though, reading back
->>> the voltage should be possible via simply reading the fields that
->>> are used to set it.
->>>
->>> Konrad
->> The CPR regulator operates in closed loop mode and the RPM can independently update the PMIC voltage.
->> So, Performing an i2c read to the PMIC would introduce conflicts when RPM uses the i2c for any of the voltage write or read operations.
-> So.. are we even going to set voltage from Linux at all, for example
-> for DCVS? If not, maybe we can simply not register the regulator and
-> let the non-APSS parts handle it themselves?
-> 
-In IPQ9574, PMIC basically controls three rails. In that, RPM has 
-control over two rails (MX and CX) & APSS has control over the APC rail. 
-RPM controls the MX and CX rails independently. For APC rail, APSS sends 
-the voltage request to RPM via GLINK and RPM takes care of accessing the 
-PMIC via I2C for APSS voltage requests & its own requests. This approach 
-helps us to avoid arbitration. In this case, if we directly use the I2C 
-to read the PMIC we would end up having issues, if RPM is accessing the 
-PMIC.
-> Konrad
->>>>
->>>>>>
->>>>>>>>      drivers/regulator/qcom_smd-regulator.c | 6 +++++-
->>>>>>>>      1 file changed, 5 insertions(+), 1 deletion(-)
->>>>>>>>
->>>>>>>> diff --git a/drivers/regulator/qcom_smd-regulator.c b/drivers/regulator/qcom_smd-regulator.c
->>>>>>>> index 1eb17d378897..49a36b07397c 100644
->>>>>>>> --- a/drivers/regulator/qcom_smd-regulator.c
->>>>>>>> +++ b/drivers/regulator/qcom_smd-regulator.c
->>>>>>>> @@ -800,6 +800,7 @@ struct rpm_regulator_data {
->>>>>>>>          u32 id;
->>>>>>>>          const struct regulator_desc *desc;
->>>>>>>>          const char *supply;
->>>>>>>> +    int boot_uV; /* To store the bootup voltage set by bootloaders */
->>>>>>>>      };
->>>>>>>>        static const struct rpm_regulator_data rpm_mp5496_regulators[] = {
->>>>>>>> @@ -809,7 +810,7 @@ static const struct rpm_regulator_data rpm_mp5496_regulators[] = {
->>>>>>>>      };
->>>>>>>>        static const struct rpm_regulator_data rpm_ipq9574_mp5496_regulators[] = {
->>>>>>>> -    { "s1", QCOM_SMD_RPM_SMPA, 1, &ipq9574_mp5496_smpa1, "s1" },
->>>>>>>> +    { "s1", QCOM_SMD_RPM_SMPA, 1, &ipq9574_mp5496_smpa1, "s1", 875000 },
->>>>>>>>          {}
->>>>>>>>      };
->>>>>>>>      @@ -1394,6 +1395,9 @@ static int rpm_regulator_init_vreg(struct qcom_rpm_reg *vreg, struct device *dev
->>>>>>>>          vreg->type    = rpm_data->type;
->>>>>>>>          vreg->id    = rpm_data->id;
->>>>>>>>      +    if (rpm_data->boot_uV)
->>>>>>>> +        vreg->uV = rpm_data->boot_uV;
->>>>>>>> +
->>>>>>>>          memcpy(&vreg->desc, rpm_data->desc, sizeof(vreg->desc));
->>>>>>>>          vreg->desc.name = rpm_data->name;
->>>>>>>>          vreg->desc.supply_name = rpm_data->supply;
->>>>>> Best Regards,
->>>>>> Devi Priya
->>>> Best Regards,
->>>> Devi Priya
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index 4e1d9b08def4..90c5612a3045 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -1108,7 +1108,7 @@ static const struct adsp_data sm8550_adsp_resource = {
+ 	.pas_id = 1,
+ 	.dtb_pas_id = 0x24,
+ 	.minidump_id = 5,
+-	.auto_boot = false,
++	.auto_boot = true,
+ 	.proxy_pd_names = (char*[]){
+ 		"lcx",
+ 		"lmx",
+@@ -1127,7 +1127,7 @@ static const struct adsp_data sm8550_cdsp_resource = {
+ 	.pas_id = 18,
+ 	.dtb_pas_id = 0x25,
+ 	.minidump_id = 7,
+-	.auto_boot = false,
++	.auto_boot = true,
+ 	.proxy_pd_names = (char*[]){
+ 		"cx",
+ 		"mxc",
+
+---
+base-commit: ea4dabbb4ad7eb52632a2ca0b8f89f0ea7c55dcf
+change-id: 20230206-topic-sm8550-upstream-fix-remoteproc-autoboot-5c7effcf197c
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
+
