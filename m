@@ -2,284 +2,190 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C22E68C66D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 20:08:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A09868C6D8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 20:33:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229647AbjBFTIJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Feb 2023 14:08:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39020 "EHLO
+        id S229695AbjBFTdP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Feb 2023 14:33:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58054 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229479AbjBFTII (ORCPT
+        with ESMTP id S229677AbjBFTdO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Feb 2023 14:08:08 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66ECE279A7
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 11:08:07 -0800 (PST)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 316IqmxF027785;
-        Mon, 6 Feb 2023 19:08:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=uIJzNVae7twb2yzgMADriGyIb2GKZdfimt/CObM9pqc=;
- b=pNbrx3yiK8mSXhAg0iwioaAvDxEglEYt0i8TvzR5MTdfRMhS+WRWl8A/U+y4DKlXO8am
- YJ/4oO4QWfZBwxPSYMqYiDRhJhXj2861Qw2Lh0gcYHwFXJG4GUYfobJIHbR7pkEUe9uo
- +BSk0VTwgtbhKfmpeiRK6jWsc1fNDZTmprDfeXFiiAsk2zE2v+4q2qgakyYal4PGADvS
- R6PhIw3T7lS4emp9iV4CTvGDBlH5OmxLrwIfoGjDVqo6M8buzAUN4VBkEA7bbLT0r6kb
- pH9GgNPPVulfXp1bOYanwdkLgorYEl7sq4tI/siJ03bgXlv1VTw4EfF5VDWpzVc7rczd 7Q== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nhcqxvqwa-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 06 Feb 2023 19:08:00 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 316J7xFA024491
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 6 Feb 2023 19:07:59 GMT
-Received: from [10.110.44.26] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 6 Feb 2023
- 11:07:58 -0800
-Message-ID: <8e89bdc2-94ff-63b8-3089-c946e0226cff@quicinc.com>
-Date:   Mon, 6 Feb 2023 11:07:57 -0800
+        Mon, 6 Feb 2023 14:33:14 -0500
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3212712F26
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 11:33:13 -0800 (PST)
+Received: by mail-pl1-x636.google.com with SMTP id b5so13297302plz.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Feb 2023 11:33:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ozndrp9afhkdbM3aTvMQSUU+gGGmEw8bXKclZh/YFF8=;
+        b=pUN3O7Lp1aWdzxGMgt32Wj7585LyJFaDLuELuVw/HI5/kW4j9V+ioU7tUeWRPQOIUw
+         vb5/ySpmyFRyY0VBTVKT+98zMphr2JtzVS4fBXJ49LiINlI01C659kUyl2CiGnD27uQz
+         k06uddD2pS/3qNQvpm2nJTSW4uHPIGY2gxbDZdYM//BFYbuZD9vqugGr5Mqrmfo3Y9YD
+         915KjuvAasZ3HHccRzyqmW4j1jffUIL8rGtAK17ztKFvJmkDSIgXgjVzi2yuit2jANYZ
+         XKFmb4Jytr1ySKy1lV8VGppr97tcLtvQ35BASxyXGVkvkEjK3QZHYyTA6ohEHFvbjDyV
+         ujcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Ozndrp9afhkdbM3aTvMQSUU+gGGmEw8bXKclZh/YFF8=;
+        b=jXqRitMER5PwczTd/tErnBGk8cM6iPsc0SC8iXkAmncacj0J7dbOpODwy2l60f/4CY
+         efz5O3idZbeP045UO0z+n2e7OSbBFj3OYKDWtXhZeM6EuBsft1JgyZhZk8RLqJuyfqxG
+         VwKwe9DADmSp952r4C7fCzUM4pUEDCwDWE0NNRvcKor2UWGMMLNrh3rabCtD7ckFOJH7
+         KBlfk9PvDAzUZT8A7X5JwUEvmeoY+r3wCZQbnF3CHSuTYo+siBfIoyebTZVFnr2sevTD
+         j6Mmku9h3j5lOd1LhQRNMgJzgTIFTHRKHH9JxwIWPcytN3pU1nXW2pw5LXEl5wlOZHuh
+         x2wg==
+X-Gm-Message-State: AO0yUKXfboN4PzyJuLfIj34jeDsniJwks2g3ySpVEmbP6xbfnCW0MZd+
+        XkS8mjlnRH0i3VnnZJ2ndhGez6Pt2yAtCxSv4DhoKA==
+X-Google-Smtp-Source: AK7set+KtnKVLwJYDJqYkK8qj3eZxjPmwm8qA9aUuqtozbNylOwcKEu6pFJFWVgPFc4duiSgTJ+lP96Aj9YI/XjHw1I=
+X-Received: by 2002:a17:90b:344c:b0:230:9e2a:ebd8 with SMTP id
+ lj12-20020a17090b344c00b002309e2aebd8mr1457256pjb.48.1675711992252; Mon, 06
+ Feb 2023 11:33:12 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v3 20/27] drm/msm/dpu: add dpu_hw_pipe_cfg to
- dpu_plane_state
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+References: <20230127104054.895129-1-abel.vesa@linaro.org> <Y9v/z8CYik3faHh7@google.com>
+ <Y+ErWTyV8CnE3Hl+@linaro.org> <Y+E3T6bozU1K2sFb@google.com> <Y+E9Z+/+eCpPK6DE@linaro.org>
+In-Reply-To: <Y+E9Z+/+eCpPK6DE@linaro.org>
+From:   Saravana Kannan <saravanak@google.com>
+Date:   Mon, 6 Feb 2023 11:32:35 -0800
+Message-ID: <CAGETcx99ev_JdgYoifEdUg6rqNCs5LHc-CfwTc7j3Bd_zeizew@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 1/2] PM: domains: Skip disabling unused domains if
+ provider has sync_state
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     Matthias Kaehlcke <mka@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20230203182132.1307834-1-dmitry.baryshkov@linaro.org>
- <20230203182132.1307834-21-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20230203182132.1307834-21-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: d0PwH237qKeu6ikM1_mkqZok_Irj22Wl
-X-Proofpoint-GUID: d0PwH237qKeu6ikM1_mkqZok_Irj22Wl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-02-06_07,2023-02-06_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- priorityscore=1501 suspectscore=0 clxscore=1015 mlxscore=0
- lowpriorityscore=0 bulkscore=0 spamscore=0 phishscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2212070000 definitions=main-2302060166
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-pm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Doug Anderson <dianders@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-17.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        ENV_AND_HDR_SPF_MATCH,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Feb 6, 2023 at 9:48 AM Abel Vesa <abel.vesa@linaro.org> wrote:
+>
+>
+> CC'ed Saravana
 
+Thanks. Please do cc me for stuff like this from the start. I skimmed
+the series and I think it's doing one of my TODO items. So, thanks for
+the patch!
 
-On 2/3/2023 10:21 AM, Dmitry Baryshkov wrote:
-> Now as all accesses to pipe_cfg and pstate have been cleaned, re-add
-> struct dpu_hw_pipe_cfg back to dpu_plane_state, so that
-> dpu_plane_atomic_check() and dpu_plane_atomic_update() do not have a
-> chance to disagree about src/dst rectangles (currently
-> dpu_plane_atomic_check() uses unclipped rectangles, while
-> dpu_plane_atomic_update() uses clipped rectangles calculated by
-> drm_atomic_helper_check_plane_state()).
-> 
-The title of the patch should now say "add dpu_hw_sspp_cfg"
+I'll take a closer look within a few days -- trying to get through
+some existing fw_devlink stuff.
 
-I have a question on the commit text, why does it say "re-add" and not 
-"add".
+But long story short, it is the right thing to keep a supplier on
+indefinitely if there's a consumer device (that's not disabled in DT)
+that never gets probed. It's a pretty common scenario -- for example,
+say a display backlight. The default case should be functional
+correctness. And then we can add stuff that allows changing this
+behavior with command line args or something else that can be done
+from userspace.
 
-dpu_hw_pipe_cfg/dpu_hw_sspp_cfg was not a part of dpu_plane_state even 
-before and I dont recall it was removed in this series and then added back.
++1 to what Doug said elsewhere in this thread too. I'm trying to
+consolidate the "when do we give up" decision at the driver core level
+independent of what framework is being used.
 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 64 ++++++++++-------------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h |  2 +
->   2 files changed, 30 insertions(+), 36 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index 09a3fde1c910..ecf5402ab61a 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -951,7 +951,8 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
->   	struct dpu_plane_state *pstate = to_dpu_plane_state(new_plane_state);
->   	const struct drm_crtc_state *crtc_state = NULL;
->   	const struct dpu_format *fmt;
-> -	struct drm_rect src, dst, fb_rect = { 0 };
-> +	struct dpu_hw_sspp_cfg *pipe_cfg = &pstate->pipe_cfg;
-> +	struct drm_rect fb_rect = { 0 };
->   	uint32_t min_src_size, max_linewidth;
->   	unsigned int rotation;
->   	uint32_t supported_rotations;
-> @@ -984,12 +985,15 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
->   		return -EINVAL;
->   	}
->   
-> -	src.x1 = new_plane_state->src_x >> 16;
-> -	src.y1 = new_plane_state->src_y >> 16;
-> -	src.x2 = src.x1 + (new_plane_state->src_w >> 16);
-> -	src.y2 = src.y1 + (new_plane_state->src_h >> 16);
-> +	pipe_cfg->src_rect = new_plane_state->src;
->   
-> -	dst = drm_plane_state_dest(new_plane_state);
-> +	/* state->src is 16.16, src_rect is not */
-> +	pipe_cfg->src_rect.x1 >>= 16;
-> +	pipe_cfg->src_rect.x2 >>= 16;
-> +	pipe_cfg->src_rect.y1 >>= 16;
-> +	pipe_cfg->src_rect.y2 >>= 16;
-> +
-> +	pipe_cfg->dst_rect = new_plane_state->dst;
->   
->   	fb_rect.x2 = new_plane_state->fb->width;
->   	fb_rect.y2 = new_plane_state->fb->height;
-> @@ -1008,30 +1012,30 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
->   		return -EINVAL;
->   
->   	/* check src bounds */
-> -	} else if (!dpu_plane_validate_src(&src, &fb_rect, min_src_size)) {
-> +	} else if (!dpu_plane_validate_src(&pipe_cfg->src_rect, &fb_rect, min_src_size)) {
->   		DPU_DEBUG_PLANE(pdpu, "invalid source " DRM_RECT_FMT "\n",
-> -				DRM_RECT_ARG(&src));
-> +				DRM_RECT_ARG(&pipe_cfg->src_rect));
->   		return -E2BIG;
->   
->   	/* valid yuv image */
->   	} else if (DPU_FORMAT_IS_YUV(fmt) &&
-> -		   (src.x1 & 0x1 || src.y1 & 0x1 ||
-> -		    drm_rect_width(&src) & 0x1 ||
-> -		    drm_rect_height(&src) & 0x1)) {
-> +		   (pipe_cfg->src_rect.x1 & 0x1 || pipe_cfg->src_rect.y1 & 0x1 ||
-> +		    drm_rect_width(&pipe_cfg->src_rect) & 0x1 ||
-> +		    drm_rect_height(&pipe_cfg->src_rect) & 0x1)) {
->   		DPU_DEBUG_PLANE(pdpu, "invalid yuv source " DRM_RECT_FMT "\n",
-> -				DRM_RECT_ARG(&src));
-> +				DRM_RECT_ARG(&pipe_cfg->src_rect));
->   		return -EINVAL;
->   
->   	/* min dst support */
-> -	} else if (drm_rect_width(&dst) < 0x1 || drm_rect_height(&dst) < 0x1) {
-> +	} else if (drm_rect_width(&pipe_cfg->dst_rect) < 0x1 || drm_rect_height(&pipe_cfg->dst_rect) < 0x1) {
->   		DPU_DEBUG_PLANE(pdpu, "invalid dest rect " DRM_RECT_FMT "\n",
-> -				DRM_RECT_ARG(&dst));
-> +				DRM_RECT_ARG(&pipe_cfg->dst_rect));
->   		return -EINVAL;
->   
->   	/* check decimated source width */
-> -	} else if (drm_rect_width(&src) > max_linewidth) {
-> +	} else if (drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) {
->   		DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u\n",
-> -				DRM_RECT_ARG(&src), max_linewidth);
-> +				DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
->   		return -E2BIG;
->   	}
->   
-> @@ -1045,7 +1049,7 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
->   
->   	if ((pipe_hw_caps->features & BIT(DPU_SSPP_INLINE_ROTATION)) &&
->   		(rotation & DRM_MODE_ROTATE_90)) {
-> -		ret = dpu_plane_check_inline_rotation(pdpu, sblk, src, fmt);
-> +		ret = dpu_plane_check_inline_rotation(pdpu, sblk, pipe_cfg->src_rect, fmt);
->   		if (ret)
->   			return ret;
->   	}
-> @@ -1120,9 +1124,7 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
->   	bool is_rt_pipe;
->   	const struct dpu_format *fmt =
->   		to_dpu_format(msm_framebuffer_format(fb));
-> -	struct dpu_hw_sspp_cfg pipe_cfg;
-> -
-> -	memset(&pipe_cfg, 0, sizeof(struct dpu_hw_sspp_cfg));
-> +	struct dpu_hw_sspp_cfg *pipe_cfg = &pstate->pipe_cfg;
->   
->   	_dpu_plane_set_scanout(plane, pstate, fb);
->   
-> @@ -1139,16 +1141,6 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
->   			crtc->base.id, DRM_RECT_ARG(&state->dst),
->   			(char *)&fmt->base.pixel_format, DPU_FORMAT_IS_UBWC(fmt));
->   
-> -	pipe_cfg.src_rect = state->src;
-> -
-> -	/* state->src is 16.16, src_rect is not */
-> -	pipe_cfg.src_rect.x1 >>= 16;
-> -	pipe_cfg.src_rect.x2 >>= 16;
-> -	pipe_cfg.src_rect.y1 >>= 16;
-> -	pipe_cfg.src_rect.y2 >>= 16;
-> -
-> -	pipe_cfg.dst_rect = state->dst;
-> -
->   	/* override for color fill */
->   	if (pdpu->color_fill & DPU_PLANE_COLOR_FILL_FLAG) {
->   		/* skip remaining processing on color fill */
-> @@ -1157,10 +1149,10 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
->   
->   	if (pipe->sspp->ops.setup_rects) {
->   		pipe->sspp->ops.setup_rects(pipe,
-> -				&pipe_cfg);
-> +				pipe_cfg);
->   	}
->   
-> -	_dpu_plane_setup_scaler(pipe, fmt, false, &pipe_cfg, pstate->rotation);
-> +	_dpu_plane_setup_scaler(pipe, fmt, false, pipe_cfg, pstate->rotation);
->   
->   	if (pipe->sspp->ops.setup_multirect)
->   		pipe->sspp->ops.setup_multirect(
-> @@ -1201,12 +1193,12 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
->   		}
->   	}
->   
-> -	_dpu_plane_set_qos_lut(plane, pipe, fmt, &pipe_cfg);
-> +	_dpu_plane_set_qos_lut(plane, pipe, fmt, &pstate->pipe_cfg);
->   	_dpu_plane_set_danger_lut(plane, pipe, fmt);
->   
->   	if (plane->type != DRM_PLANE_TYPE_CURSOR) {
->   		_dpu_plane_set_qos_ctrl(plane, pipe, true, DPU_PLANE_QOS_PANIC_CTRL);
-> -		_dpu_plane_set_ot_limit(plane, pipe, crtc, &pipe_cfg);
-> +		_dpu_plane_set_ot_limit(plane, pipe, crtc, &pstate->pipe_cfg);
->   	}
->   
->   	if (pstate->needs_qos_remap) {
-> @@ -1214,9 +1206,9 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
->   		_dpu_plane_set_qos_remap(plane, pipe);
->   	}
->   
-> -	pstate->plane_fetch_bw = _dpu_plane_calc_bw(pdpu->catalog, fmt, &crtc->mode, &pipe_cfg);
-> +	pstate->plane_fetch_bw = _dpu_plane_calc_bw(pdpu->catalog, fmt, &crtc->mode, &pstate->pipe_cfg);
->   
-> -	pstate->plane_clk = _dpu_plane_calc_clk(&crtc->mode, &pipe_cfg);
-> +	pstate->plane_clk = _dpu_plane_calc_clk(&crtc->mode, &pstate->pipe_cfg);
->   }
->   
->   static void _dpu_plane_atomic_disable(struct drm_plane *plane)
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-> index a08b0539513b..079dad83eb37 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-> @@ -19,6 +19,7 @@
->    * @base:	base drm plane state object
->    * @aspace:	pointer to address space for input/output buffers
->    * @pipe:	software pipe description
-> + * @pipe_cfg:	software pipe configuration
->    * @stage:	assigned by crtc blender
->    * @needs_qos_remap: qos remap settings need to be updated
->    * @multirect_index: index of the rectangle of SSPP
-> @@ -33,6 +34,7 @@ struct dpu_plane_state {
->   	struct drm_plane_state base;
->   	struct msm_gem_address_space *aspace;
->   	struct dpu_sw_pipe pipe;
-> +	struct dpu_hw_sspp_cfg pipe_cfg;
->   	enum dpu_stage stage;
->   	bool needs_qos_remap;
->   	bool pending;
+-Saravana
+
+>
+> On 23-02-06 17:22:23, Matthias Kaehlcke wrote:
+> > On Mon, Feb 06, 2023 at 06:31:21PM +0200, Abel Vesa wrote:
+> > > On 23-02-02 18:24:15, Matthias Kaehlcke wrote:
+> > > > Hi Abel,
+> > > >
+> > > > On Fri, Jan 27, 2023 at 12:40:53PM +0200, Abel Vesa wrote:
+> > > > > Currently, there are cases when a domain needs to remain enabled until
+> > > > > the consumer driver probes. Sometimes such consumer drivers may be built
+> > > > > as modules. Since the genpd_power_off_unused is called too early for
+> > > > > such consumer driver modules to get a chance to probe, the domain, since
+> > > > > it is unused, will get disabled. On the other hand, the best time for
+> > > > > an unused domain to be disabled is on the provider's sync_state
+> > > > > callback. So, if the provider has registered a sync_state callback,
+> > > > > assume the unused domains for that provider will be disabled on its
+> > > > > sync_state callback. Also provide a generic sync_state callback which
+> > > > > disables all the domains unused for the provider that registers it.
+> > > > >
+> > > > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > > > > ---
+> > > > >
+> > > > > This approach has been applied for unused clocks as well.
+> > > > > With this patch merged in, all the providers that have sync_state
+> > > > > callback registered will leave the domains enabled unless the provider's
+> > > > > sync_state callback explicitly disables them. So those providers will
+> > > > > need to add the disabling part to their sync_state callback. On the
+> > > > > other hand, the platforms that have cases where domains need to remain
+> > > > > enabled (even if unused) until the consumer driver probes, will be able,
+> > > > > with this patch in, to run without the pd_ignore_unused kernel argument,
+> > > > > which seems to be the case for most Qualcomm platforms, at this moment.
+> > > >
+> > > > I recently encountered a related issue on a Qualcomm platform with a
+> > > > v6.2-rc kernel, which includes 3a39049f88e4 ("soc: qcom: rpmhpd: Use
+> > > > highest corner until sync_state"). The issue involves a DT node with a
+> > > > rpmhpd, the DT node is enabled, however the corresponding device driver
+> > > > is not enabled in the kernel. In such a scenario the sync_state callback
+> > > > is never called, because the genpd consumer never probes. As a result
+> > > > the Always-on subsystem (AOSS) of the SoC doesn't enter sleep mode during
+> > > > system suspend, which results in a substantially higher power consumption
+> > > > in S3.
+> > >
+> > > If I get this correctly, one of the providers is missing (doesn't matter
+> > > the reason), in which case, your kernel needs that driver, period. There
+> > > is no reason why you would expect the consumer to work without the
+> > > provider. Or, you could just remove the property in the devicetree node,
+> > > the property that makes the consumer wait for that provider. Anyway, you
+> > > should never end up with a consumer provider relationship in devicetree
+> > > without providing the provider driver.
+> >
+> > I would agree if it was actually a provider that's missing, however it's a
+> > 'missing' consumer that prevents the sync_state() call.
+>
+> Oh, my bad.
+>
+> Still, why would you keep the consumer node enabled in devicetree if you don't
+> intend to allow its driver to ever probe?
+>
+> >
+> > > > I wonder if genpd (and some other frameworks) needs something like
+> > > > regulator_init_complete(), which turns off unused regulators 30s after
+> > > > system boot. That's conceptually similar to the current
+> > > > genpd_power_off_unused(), but would provide time for modules being loaded.
+> > >
+> > > NACK, timeouts are just another hack in this case, specially when we
+> > > have a pretty reliable mechanism like sync_state.
+> >
+> > It does not work properly unless all consumers are probed successfully. It
+> > makes sense to wait some time for the consumers to probe, but not eternally,
+> > it's perfectly valid that a driver for a (potential) consumer is not enabled.
+>
+> Usually, if you have a consumer devicetree node that you consider it
+> should not probe, you should consider disabling that node in your board
+> dts, specially if you don't intend to provide its driver.
+>
+> Again, timeouts are bad all-around. What happens if rootfs doesn't get
+> mounted in time? Will 30 seconds be enough for every scenario? What
+> happens if I want to load the driver (module) for a consumer a day after boot?
+>
+> IMHO, I think even the regulator_init_complete should be switched to some sync
+> state approach.
