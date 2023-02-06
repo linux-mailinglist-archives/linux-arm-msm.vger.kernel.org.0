@@ -2,145 +2,245 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DEE4F68C480
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 18:22:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C58768C4EB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 18:34:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229817AbjBFRWb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Feb 2023 12:22:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55160 "EHLO
+        id S229930AbjBFReP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Feb 2023 12:34:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230140AbjBFRW2 (ORCPT
+        with ESMTP id S229868AbjBFReO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Feb 2023 12:22:28 -0500
-Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com [IPv6:2607:f8b0:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D30725E05
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 09:22:25 -0800 (PST)
-Received: by mail-il1-x12b.google.com with SMTP id k12so4962364ilv.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Feb 2023 09:22:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Yw/+BtW2ezyMBpb+PL+RAaJ796Lnvw8RBmFntpG4kQ0=;
-        b=Jsch1u1P08aMlSvbUW0czvFTL5qQZ5sk+5ctcwOSfnRo276WKpFm1yptSbGImgkR7e
-         hcI/+oSKB95NdrVTeVFmvmNAtcjz1cmgqhCBAXGH/PJFD2fuCIhGGvlsXyb4peVEn4HH
-         z4/xzFn972iPTC2/6TBrpeaw7r9We6QSqe3f4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Yw/+BtW2ezyMBpb+PL+RAaJ796Lnvw8RBmFntpG4kQ0=;
-        b=rmwqk4Pu4NLN22H4Xl9Qvoia3JFdEc9ndkV71x1xJNtSCThyFScI945bCRkJHScgMD
-         kX3vYt5WoCFtnTIpWWiL8p7JnRop7qA15YHYrtmtqGRqCZ+nI8aTPxOSDeY965QDvfGy
-         9Ru52Hx0IixUXqPUbzw76F4bdtQc5+Kj7cv/Rqk0X7HhPIixrjiaDjyVPoKa14TPpnuq
-         Au/pI0sRaMYftBgxHzgqct0ysYbyaaI23Aj8buXc+GnWsawhzhppQv4SOni5jFOXG9m4
-         Hb2boPk03e52NiVeTR4JJVt20NkRMnVzA0/Qudk1KwUVHIibLznct/WAwhSwBR2bKKUa
-         BpHw==
-X-Gm-Message-State: AO0yUKXv3WwX25UASRO4lVjTJT9zRS1lprFJ8pUEwwvpmKREaCWZewv+
-        hUu3shpy9xUsX0UuViTP7+p/Yg==
-X-Google-Smtp-Source: AK7set+9giy7MtVsRnVDSqMFV1NNAPeUBq+V7Zq6M2XdFeAjtjhTtSDqfoF4aJmoGQhN19DAYh3L5g==
-X-Received: by 2002:a05:6e02:154f:b0:313:d914:e544 with SMTP id j15-20020a056e02154f00b00313d914e544mr485892ilu.23.1675704144937;
-        Mon, 06 Feb 2023 09:22:24 -0800 (PST)
-Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
-        by smtp.gmail.com with UTF8SMTPSA id i33-20020a056638382100b003a22298d014sm3778985jav.25.2023.02.06.09.22.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Feb 2023 09:22:24 -0800 (PST)
-Date:   Mon, 6 Feb 2023 17:22:23 +0000
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-pm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Doug Anderson <dianders@chromium.org>
-Subject: Re: [RFC PATCH v2 1/2] PM: domains: Skip disabling unused domains if
- provider has sync_state
-Message-ID: <Y+E3T6bozU1K2sFb@google.com>
-References: <20230127104054.895129-1-abel.vesa@linaro.org>
- <Y9v/z8CYik3faHh7@google.com>
- <Y+ErWTyV8CnE3Hl+@linaro.org>
+        Mon, 6 Feb 2023 12:34:14 -0500
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 627BA13D7A;
+        Mon,  6 Feb 2023 09:34:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1675704852; x=1707240852;
+  h=date:from:to:cc:subject:message-id:mime-version:
+   content-transfer-encoding;
+  bh=E6FtT1y0csBMH/T1ALlQnJ2NG23R3sXvASuze+beOxk=;
+  b=ghOa+fsj74GWxDO+TunyD3eX7C1+LJBI2olXdXRpk3+Irjbw/4ZM59cy
+   XREfYYjJ6L104lTGjAMvrZF3jMpqm2AbNATPBTZVIAZLR1JaEPfta1c6x
+   Hd8vUlcBQdFimgmo7W1yLhRgb3l04PZyIqN43QrCyTEdZCiBAMLJfywoD
+   HMhH2Oo7jH5eun8mFhT+nimaC6wdOiAkBKUXISMyMup3smrpKIHSeJj+V
+   cfdSiMOk0esYj8bD8QEGgfnyh5UefLrrI1COL4L/jbAVfN0/4E8ZBX2jR
+   PpR/jRQzCpWTN0BFIQMs9CFEsF0B+M8oGJj58MgpXc9TK27dVjKZD2Bn/
+   A==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10613"; a="393863230"
+X-IronPort-AV: E=Sophos;i="5.97,276,1669104000"; 
+   d="scan'208";a="393863230"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Feb 2023 09:34:11 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10613"; a="644114477"
+X-IronPort-AV: E=Sophos;i="5.97,276,1669104000"; 
+   d="scan'208";a="644114477"
+Received: from lkp-server01.sh.intel.com (HELO 4455601a8d94) ([10.239.97.150])
+  by orsmga006.jf.intel.com with ESMTP; 06 Feb 2023 09:34:07 -0800
+Received: from kbuild by 4455601a8d94 with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1pP5NX-0002hc-0q;
+        Mon, 06 Feb 2023 17:34:07 +0000
+Date:   Tue, 07 Feb 2023 01:33:21 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Andrew Morton <akpm@linux-foundation.org>
+Cc:     linux-trace-kernel@vger.kernel.org,
+        linux-riscv@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, kvmarm@lists.linux.dev,
+        kvmarm@lists.cs.columbia.edu, intel-gfx@lists.freedesktop.org,
+        amd-gfx@lists.freedesktop.org,
+        Linux Memory Management List <linux-mm@kvack.org>
+Subject: [linux-next:master] BUILD REGRESSION
+ 129af770823407ee115a56c69a04b440fd2fbe61
+Message-ID: <63e139e1.J5AHO6vmxaALh7xv%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Y+ErWTyV8CnE3Hl+@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,SUSPICIOUS_RECIPS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Feb 06, 2023 at 06:31:21PM +0200, Abel Vesa wrote:
-> On 23-02-02 18:24:15, Matthias Kaehlcke wrote:
-> > Hi Abel,
-> > 
-> > On Fri, Jan 27, 2023 at 12:40:53PM +0200, Abel Vesa wrote:
-> > > Currently, there are cases when a domain needs to remain enabled until
-> > > the consumer driver probes. Sometimes such consumer drivers may be built
-> > > as modules. Since the genpd_power_off_unused is called too early for
-> > > such consumer driver modules to get a chance to probe, the domain, since
-> > > it is unused, will get disabled. On the other hand, the best time for
-> > > an unused domain to be disabled is on the provider's sync_state
-> > > callback. So, if the provider has registered a sync_state callback,
-> > > assume the unused domains for that provider will be disabled on its
-> > > sync_state callback. Also provide a generic sync_state callback which
-> > > disables all the domains unused for the provider that registers it.
-> > > 
-> > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > > ---
-> > > 
-> > > This approach has been applied for unused clocks as well.
-> > > With this patch merged in, all the providers that have sync_state
-> > > callback registered will leave the domains enabled unless the provider's
-> > > sync_state callback explicitly disables them. So those providers will
-> > > need to add the disabling part to their sync_state callback. On the
-> > > other hand, the platforms that have cases where domains need to remain
-> > > enabled (even if unused) until the consumer driver probes, will be able,
-> > > with this patch in, to run without the pd_ignore_unused kernel argument,
-> > > which seems to be the case for most Qualcomm platforms, at this moment.
-> > 
-> > I recently encountered a related issue on a Qualcomm platform with a
-> > v6.2-rc kernel, which includes 3a39049f88e4 ("soc: qcom: rpmhpd: Use
-> > highest corner until sync_state"). The issue involves a DT node with a
-> > rpmhpd, the DT node is enabled, however the corresponding device driver
-> > is not enabled in the kernel. In such a scenario the sync_state callback
-> > is never called, because the genpd consumer never probes. As a result
-> > the Always-on subsystem (AOSS) of the SoC doesn't enter sleep mode during
-> > system suspend, which results in a substantially higher power consumption
-> > in S3.
-> 
-> If I get this correctly, one of the providers is missing (doesn't matter
-> the reason), in which case, your kernel needs that driver, period. There
-> is no reason why you would expect the consumer to work without the
-> provider. Or, you could just remove the property in the devicetree node,
-> the property that makes the consumer wait for that provider. Anyway, you
-> should never end up with a consumer provider relationship in devicetree
-> without providing the provider driver.
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git master
+branch HEAD: 129af770823407ee115a56c69a04b440fd2fbe61  Add linux-next specific files for 20230206
 
-I would agree if it was actually a provider that's missing, however it's a
-'missing' consumer that prevents the sync_state() call.
+Error/Warning reports:
 
-> > I wonder if genpd (and some other frameworks) needs something like
-> > regulator_init_complete(), which turns off unused regulators 30s after
-> > system boot. That's conceptually similar to the current
-> > genpd_power_off_unused(), but would provide time for modules being loaded.
-> 
-> NACK, timeouts are just another hack in this case, specially when we
-> have a pretty reliable mechanism like sync_state.
+https://lore.kernel.org/oe-kbuild-all/202301230743.Xnut0Zvc-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202301300743.bp7Dpazv-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202301301801.y5O08tQx-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202301302110.mEtNwkBD-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202302011836.kA3BxqdY-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202302061911.C7xvHX9v-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202302062223.7F7gv80M-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202302062224.ByzeTXh1-lkp@intel.com
 
-It does not work properly unless all consumers are probed successfully. It
-makes sense to wait some time for the consumers to probe, but not eternally,
-it's perfectly valid that a driver for a (potential) consumer is not enabled.
+Error/Warning: (recently discovered and may have been fixed)
+
+Documentation/riscv/uabi.rst:24: WARNING: Enumerated list ends without a blank line; unexpected unindent.
+ERROR: modpost: "devm_platform_ioremap_resource" [drivers/dma/fsl-edma.ko] undefined!
+ERROR: modpost: "devm_platform_ioremap_resource" [drivers/dma/idma64.ko] undefined!
+FAILED: load BTF from vmlinux: No data available
+arch/arm64/kvm/arm.c:2207: warning: expecting prototype for Initialize Hyp(). Prototype was for kvm_arm_init() instead
+drivers/clk/qcom/gcc-sa8775p.c:313:32: warning: unused variable 'gcc_parent_map_10' [-Wunused-const-variable]
+drivers/clk/qcom/gcc-sa8775p.c:318:37: warning: unused variable 'gcc_parent_data_10' [-Wunused-const-variable]
+drivers/clk/qcom/gcc-sa8775p.c:333:32: warning: unused variable 'gcc_parent_map_12' [-Wunused-const-variable]
+drivers/clk/qcom/gcc-sa8775p.c:338:37: warning: unused variable 'gcc_parent_data_12' [-Wunused-const-variable]
+drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm.h:62:10: fatal error: mod_info_packet.h: No such file or directory
+drivers/gpu/drm/amd/amdgpu/../display/dc/dcn31/dcn31_hubbub.c:1011:6: warning: no previous prototype for 'hubbub31_init' [-Wmissing-prototypes]
+drivers/gpu/drm/amd/amdgpu/../display/dc/dcn32/dcn32_hubbub.c:948:6: warning: no previous prototype for 'hubbub32_init' [-Wmissing-prototypes]
+drivers/gpu/drm/amd/amdgpu/../display/dc/dcn32/dcn32_hubp.c:158:6: warning: no previous prototype for 'hubp32_init' [-Wmissing-prototypes]
+drivers/gpu/drm/amd/amdgpu/../display/dc/dcn32/dcn32_resource_helpers.c:62:18: warning: variable 'cursor_bpp' set but not used [-Wunused-but-set-variable]
+drivers/gpu/drm/amd/amdgpu/../display/dc/link/accessories/link_dp_trace.c:148:6: warning: no previous prototype for 'link_dp_trace_set_edp_power_timestamp' [-Wmissing-prototypes]
+drivers/gpu/drm/amd/amdgpu/../display/dc/link/accessories/link_dp_trace.c:158:10: warning: no previous prototype for 'link_dp_trace_get_edp_poweron_timestamp' [-Wmissing-prototypes]
+drivers/gpu/drm/amd/amdgpu/../display/dc/link/accessories/link_dp_trace.c:163:10: warning: no previous prototype for 'link_dp_trace_get_edp_poweroff_timestamp' [-Wmissing-prototypes]
+drivers/gpu/drm/amd/amdgpu/../display/dc/link/protocols/link_dp_capability.c:1295:32: warning: variable 'result_write_min_hblank' set but not used [-Wunused-but-set-variable]
+drivers/gpu/drm/amd/amdgpu/../display/dc/link/protocols/link_dp_capability.c:279:42: warning: variable 'ds_port' set but not used [-Wunused-but-set-variable]
+drivers/gpu/drm/amd/amdgpu/../display/dc/link/protocols/link_dp_training.c:1585:38: warning: variable 'result' set but not used [-Wunused-but-set-variable]
+libbpf: failed to find '.BTF' ELF section in vmlinux
+
+Unverified Error/Warning (likely false positive, please contact us if interested):
+
+drivers/thermal/qcom/tsens-v0_1.c:106:40: sparse: sparse: symbol 'tsens_9607_nvmem' was not declared. Should it be static?
+drivers/thermal/qcom/tsens-v0_1.c:26:40: sparse: sparse: symbol 'tsens_8916_nvmem' was not declared. Should it be static?
+drivers/thermal/qcom/tsens-v0_1.c:42:40: sparse: sparse: symbol 'tsens_8939_nvmem' was not declared. Should it be static?
+drivers/thermal/qcom/tsens-v0_1.c:62:40: sparse: sparse: symbol 'tsens_8974_nvmem' was not declared. Should it be static?
+drivers/thermal/qcom/tsens-v0_1.c:84:40: sparse: sparse: symbol 'tsens_8974_backup_nvmem' was not declared. Should it be static?
+drivers/thermal/qcom/tsens-v1.c:24:40: sparse: sparse: symbol 'tsens_qcs404_nvmem' was not declared. Should it be static?
+drivers/thermal/qcom/tsens-v1.c:45:40: sparse: sparse: symbol 'tsens_8976_nvmem' was not declared. Should it be static?
+
+Error/Warning ids grouped by kconfigs:
+
+gcc_recent_errors
+|-- alpha-randconfig-r022-20230205
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm.h:fatal-error:mod_info_packet.h:No-such-file-or-directory
+|-- alpha-randconfig-s042-20230204
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm.h:fatal-error:mod_info_packet.h:No-such-file-or-directory
+|-- arm64-allyesconfig
+|   |-- arch-arm64-kvm-arm.c:warning:expecting-prototype-for-Initialize-Hyp().-Prototype-was-for-kvm_arm_init()-instead
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-dcn31-dcn31_hubbub.c:warning:no-previous-prototype-for-hubbub31_init
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-dcn32-dcn32_hubbub.c:warning:no-previous-prototype-for-hubbub32_init
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-dcn32-dcn32_hubp.c:warning:no-previous-prototype-for-hubp32_init
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-accessories-link_dp_trace.c:warning:no-previous-prototype-for-link_dp_trace_get_edp_poweroff_timestamp
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-accessories-link_dp_trace.c:warning:no-previous-prototype-for-link_dp_trace_get_edp_poweron_timestamp
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-accessories-link_dp_trace.c:warning:no-previous-prototype-for-link_dp_trace_set_edp_power_timestamp
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-protocols-link_dp_capability.c:warning:variable-ds_port-set-but-not-used
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-protocols-link_dp_capability.c:warning:variable-result_write_min_hblank-set-but-not-used
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-protocols-link_dp_training.c:warning:variable-result-set-but-not-used
+|-- arm64-buildonly-randconfig-r006-20230205
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-accessories-link_dp_trace.c:warning:no-previous-prototype-for-link_dp_trace_get_edp_poweroff_timestamp
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-accessories-link_dp_trace.c:warning:no-previous-prototype-for-link_dp_trace_get_edp_poweron_timestamp
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-accessories-link_dp_trace.c:warning:no-previous-prototype-for-link_dp_trace_set_edp_power_timestamp
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-protocols-link_dp_capability.c:warning:variable-ds_port-set-but-not-used
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-protocols-link_dp_capability.c:warning:variable-result_write_min_hblank-set-but-not-used
+|-- arm64-randconfig-c023-20230205
+|   `-- arch-arm64-kvm-arm.c:warning:expecting-prototype-for-Initialize-Hyp().-Prototype-was-for-kvm_arm_init()-instead
+|-- arm64-randconfig-r011-20230206
+|   |-- arch-arm64-kvm-arm.c:warning:expecting-prototype-for-Initialize-Hyp().-Prototype-was-for-kvm_arm_init()-instead
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-dcn31-dcn31_hubbub.c:warning:no-previous-prototype-for-hubbub31_init
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-dcn32-dcn32_hubbub.c:warning:no-previous-prototype-for-hubbub32_init
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-dcn32-dcn32_hubp.c:warning:no-previous-prototype-for-hubp32_init
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-dcn32-dcn32_resource_helpers.c:warning:variable-cursor_bpp-set-but-not-used
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-accessories-link_dp_trace.c:warning:no-previous-prototype-for-link_dp_trace_get_edp_poweroff_timestamp
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-accessories-link_dp_trace.c:warning:no-previous-prototype-for-link_dp_trace_get_edp_poweron_timestamp
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-accessories-link_dp_trace.c:warning:no-previous-prototype-for-link_dp_trace_set_edp_power_timestamp
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-protocols-link_dp_capability.c:warning:variable-ds_port-set-but-not-used
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-protocols-link_dp_capability.c:warning:variable-result_write_min_hblank-set-but-not-used
+|-- arm64-randconfig-s041-20230206
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-amdgpu_dm-amdgpu_dm.h:fatal-error:mod_info_packet.h:No-such-file-or-directory
+|   |-- drivers-thermal-qcom-tsens-v0_1.c:sparse:sparse:symbol-tsens_8916_nvmem-was-not-declared.-Should-it-be-static
+|   |-- drivers-thermal-qcom-tsens-v0_1.c:sparse:sparse:symbol-tsens_8939_nvmem-was-not-declared.-Should-it-be-static
+|   |-- drivers-thermal-qcom-tsens-v0_1.c:sparse:sparse:symbol-tsens_8974_backup_nvmem-was-not-declared.-Should-it-be-static
+|   |-- drivers-thermal-qcom-tsens-v0_1.c:sparse:sparse:symbol-tsens_8974_nvmem-was-not-declared.-Should-it-be-static
+|   |-- drivers-thermal-qcom-tsens-v0_1.c:sparse:sparse:symbol-tsens_9607_nvmem-was-not-declared.-Should-it-be-static
+|   |-- drivers-thermal-qcom-tsens-v1.c:sparse:sparse:symbol-tsens_8976_nvmem-was-not-declared.-Should-it-be-static
+|   `-- drivers-thermal-qcom-tsens-v1.c:sparse:sparse:symbol-tsens_qcs404_nvmem-was-not-declared.-Should-it-be-static
+|-- i386-randconfig-m021
+|   `-- kernel-trace-trace_events_synth.c-trace_event_raw_event_synth()-warn:inconsistent-indenting
+|-- i386-randconfig-s001
+|   `-- drivers-gpu-drm-i915-gem-i915_gem_ttm.c:sparse:sparse:incorrect-type-in-assignment-(different-base-types)-expected-restricted-vm_fault_t-assigned-usertype-ret-got-int
+|-- i386-randconfig-s002
+|   `-- drivers-gpu-drm-i915-gem-i915_gem_ttm.c:sparse:sparse:incorrect-type-in-assignment-(different-base-types)-expected-restricted-vm_fault_t-assigned-usertype-ret-got-int
+|-- ia64-allmodconfig
+clang_recent_errors
+`-- riscv-randconfig-r003-20230204
+    |-- drivers-clk-qcom-gcc-sa8775p.c:warning:unused-variable-gcc_parent_data_10
+    |-- drivers-clk-qcom-gcc-sa8775p.c:warning:unused-variable-gcc_parent_data_12
+    |-- drivers-clk-qcom-gcc-sa8775p.c:warning:unused-variable-gcc_parent_map_10
+    `-- drivers-clk-qcom-gcc-sa8775p.c:warning:unused-variable-gcc_parent_map_12
+
+elapsed time: 721m
+
+configs tested: 55
+configs skipped: 28
+
+gcc tested configs:
+powerpc                           allnoconfig
+i386                 randconfig-a011-20230206
+i386                 randconfig-a014-20230206
+x86_64                              defconfig
+i386                 randconfig-a012-20230206
+i386                 randconfig-a013-20230206
+i386                 randconfig-a015-20230206
+i386                 randconfig-a016-20230206
+x86_64               randconfig-a013-20230206
+x86_64               randconfig-a011-20230206
+x86_64                               rhel-8.3
+x86_64                            allnoconfig
+x86_64               randconfig-a012-20230206
+x86_64               randconfig-a015-20230206
+x86_64                           allyesconfig
+x86_64               randconfig-a016-20230206
+x86_64               randconfig-a014-20230206
+sh                               allmodconfig
+mips                             allyesconfig
+s390                 randconfig-r044-20230206
+arc                  randconfig-r043-20230205
+arm                  randconfig-r046-20230205
+powerpc                          allmodconfig
+mips                  maltasmvp_eva_defconfig
+riscv                randconfig-r042-20230206
+mips                    maltaup_xpa_defconfig
+arm                           sunxi_defconfig
+arm                           tegra_defconfig
+arc                  randconfig-r043-20230206
+sh                 kfr2r09-romimage_defconfig
+m68k                           virt_defconfig
+arm64                            allyesconfig
+
+clang tested configs:
+x86_64               randconfig-a001-20230206
+x86_64               randconfig-a005-20230206
+x86_64               randconfig-a002-20230206
+i386                 randconfig-a002-20230206
+x86_64               randconfig-a004-20230206
+i386                 randconfig-a004-20230206
+x86_64               randconfig-a003-20230206
+i386                 randconfig-a003-20230206
+i386                 randconfig-a001-20230206
+hexagon              randconfig-r041-20230205
+x86_64               randconfig-a006-20230206
+riscv                randconfig-r042-20230205
+i386                 randconfig-a005-20230206
+hexagon              randconfig-r045-20230206
+hexagon              randconfig-r041-20230206
+i386                 randconfig-a006-20230206
+arm                  randconfig-r046-20230206
+s390                 randconfig-r044-20230205
+hexagon              randconfig-r045-20230205
+powerpc                      acadia_defconfig
+mips                          rm200_defconfig
+arm                          sp7021_defconfig
+x86_64                        randconfig-k001
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests
