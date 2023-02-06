@@ -2,69 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 55AAC68C0F8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 16:07:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E04B68C10E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 16:11:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230393AbjBFPHz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Feb 2023 10:07:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47686 "EHLO
+        id S230478AbjBFPLI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Feb 2023 10:11:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230351AbjBFPHx (ORCPT
+        with ESMTP id S230196AbjBFPLI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Feb 2023 10:07:53 -0500
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A972D4ECE
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 07:07:50 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id hn2-20020a05600ca38200b003dc5cb96d46so10981537wmb.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Feb 2023 07:07:50 -0800 (PST)
+        Mon, 6 Feb 2023 10:11:08 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47CA94C00
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 07:11:05 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id az4-20020a05600c600400b003dff767a1f1so3801691wmb.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Feb 2023 07:11:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=9BeWy7MExlvQJQWwtcxtXWpzzG9fVvevuvZAQJIXNVs=;
-        b=eI7rdFQX0Y6qeNx+TtElR4iZbwE+vLNnzZmQXZIZC0I/6TkTKbBZmNaetU3RXQGKp1
-         ba2Dor/gBbvV+jm3jXKo3HwuzOyn1glyGHVOa2778wEnhisnMLeouENNfDYcAhGWsiYf
-         RNhZLFJuttBKarWEoGPKbQV3V61LmjkeSBNm+BOpDu483RjYFB3rFvc8GzbbEqHeImkO
-         s088R+Jh/GgmZtVY1mw8W4aHtAF2G5lsj0Aij4+2hmHwMOmdqEtIRokKAFddXRNT8bqr
-         vJKm8dTh3BUzkq3bra2geke1W0UGRVFjs07/le/1vTUoge34VN6grNAIMwEwxz2L6vX2
-         h0rQ==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=wsmqt8kIE1pV9yLifDH7YFY8cOiugwYigL4n9E1qUpU=;
+        b=nFYl/hg4p7H1jfTK4TwO3Yu9DPxL+DnMFR01XOkVcUrHOucZ3Hrvr01EWJOMh2k7FF
+         iVgRXvlnzQZZLfd6KkQvb+yKidfaH1kkX5alW9W4SY/TFQDvPlRj1xsW/kZssZTs/Owo
+         R1T2FE3tB96gaBmE6Y28MklSLhrwd95r2px655TwLQJ9/J0AtDnLA7PZCRzJibxJ6y6r
+         m70vLYV3BZWRnBeArgLo+f+qNWNO2xt4JC2xU3tm5cbdnUFgW5MzhjNl9nJlIqEYTt5y
+         lR9nnDh5TYtcKyQ5o8RaSgEjQsmu8AICaOvOtyTy13weiTU/ihG/plKmaNY6EIqt7PWw
+         AbRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9BeWy7MExlvQJQWwtcxtXWpzzG9fVvevuvZAQJIXNVs=;
-        b=JAiyL5VVoqqSWTsCnBd+ouJR2knsgLmlEF1xRQQVukgIPgaET6IA62GR/kROOdzHSW
-         ggnBTZ9t5FrMe7QPCG9RQbjZZdZUWUaky7tg45IngU79VheP7ex64DeMeHxtcZeXb/gi
-         ttrX2syIiqfi0aOFYVQ2hM+eZlRP5xqg0FuwI3xMcv6Ws3bgvBG8Q9R+S52l+oB12EDA
-         Ort8daqxQg+ktAZbhsfw47RyTysN0pPsNMPTEKID9QqtrEquHOCug+U8v8+cIUakLHj5
-         +3BKHMGh/MF1p/GwsuG4QZdLtS15eq8m09HNO5MokFXUve6yICIAnnm/fdYzlsj/98WL
-         /sBQ==
-X-Gm-Message-State: AO0yUKXdvJhaYCbAn7ovxVlNSGQwUgNdpVQFhdnfqXO1T+L2Gt+piGws
-        VSLVfAv52+0P2ReWWxe2rpORpw==
-X-Google-Smtp-Source: AK7set/GnGaHeWHS2A9PNRzM4jxFcnBdslHPdnjcTsbUSuX5eAo9Uby50dxoo5cOGLoSDx1bWoVb3Q==
-X-Received: by 2002:a05:600c:5389:b0:3df:9858:c038 with SMTP id hg9-20020a05600c538900b003df9858c038mr11376789wmb.13.1675696069169;
-        Mon, 06 Feb 2023 07:07:49 -0800 (PST)
-Received: from krzk-bin.. ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id s15-20020a05600c45cf00b003e00c453447sm818858wmo.48.2023.02.06.07.07.47
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wsmqt8kIE1pV9yLifDH7YFY8cOiugwYigL4n9E1qUpU=;
+        b=OaBfk1K0mySgjZq/ykr2axyAbRh85GsrDYXhf+4QQwZvwUhzi418APSVZKxjXfaGjd
+         3RyoS9dJCh+xiIq1ajzW3GWeCybbuBH9xxCIqc3E+zwmuAd39adk5P4ECIOIiduR4zZ+
+         NZuMuVMW/38gM7ccQgXA7c+JyBkxEcrzmuqYZEkGQEiT7AQWlglZagZ8TgbNdum7P4mm
+         GM/17cEVFOBVLN0DMIEEqJHlX8+Sy+BXLp+Bj3mWCuMdpYDM/+f3k/I3VQoBd82Lt0fs
+         PRyBAGzQ9mtgRPU4riw4263ix0TT4yvqz0hxVpgLeOi11h/dSf/Jl7gW5pAWW2iwG+h4
+         YwZw==
+X-Gm-Message-State: AO0yUKWHjELTEOq8SvucVZaCK36k1Zs6umwa+e7elb3phCQ63feZyhdn
+        Nh3S/gp6WR66w0eA8HKe8acFLQ==
+X-Google-Smtp-Source: AK7set+nhWu+5YwsvDv/YaOf4rTRghGKDOHvVvOC7ROvQmFPq2VEHAhuvijJyVtOg2nmHTpdCqXIkQ==
+X-Received: by 2002:a05:600c:3485:b0:3db:2df0:f2b8 with SMTP id a5-20020a05600c348500b003db2df0f2b8mr1705148wmq.36.1675696263771;
+        Mon, 06 Feb 2023 07:11:03 -0800 (PST)
+Received: from linaro.org ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id k32-20020a05600c1ca000b003ddf2865aeasm17641122wms.41.2023.02.06.07.11.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Feb 2023 07:07:48 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Mon, 06 Feb 2023 07:11:02 -0800 (PST)
+Date:   Mon, 6 Feb 2023 17:11:01 +0200
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] arm64: dts: qcom: sm8550: add GPR and LPASS pin controller
-Date:   Mon,  6 Feb 2023 16:07:44 +0100
-Message-Id: <20230206150744.513967-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v7 10/12] PCI: qcom: Add SM8550 PCIe support
+Message-ID: <Y+EYhe/xYSFpI1Yn@linaro.org>
+References: <20230203081807.2248625-1-abel.vesa@linaro.org>
+ <20230203081807.2248625-11-abel.vesa@linaro.org>
+ <Y9zYpE/GnxUqnIyq@hovoldconsulting.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y9zYpE/GnxUqnIyq@hovoldconsulting.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -75,104 +86,127 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the ADSP GPR (Generic Packet Router) and LPASS LPI (Low Power Audio
-SubSystem Low Power Island) pin controller nodes used as part of audio
-subsystem on SM8550.
+On 23-02-03 10:49:24, Johan Hovold wrote:
+> On Fri, Feb 03, 2023 at 10:18:05AM +0200, Abel Vesa wrote:
+> > Add compatible for both PCIe found on SM8550.
+> > Also add the cnoc_pcie_sf_axi clock needed by the SM8550.
+> 
+> nit: You're now also adding 'noc_aggr'
+> 
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> > Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+> > ---
+> > 
+> > The v6 of this patchset is:
+> > https://lore.kernel.org/all/20230202123902.3831491-11-abel.vesa@linaro.org/
+> > 
+> > Changes since v6:
+> >  * none
+> > 
+> > Changes since v5:
+> >  * none
+> > 
+> > Changes since v4:
+> >  * added Mani's R-b tag
+> > 
+> > Changes since v3:
+> >  * renamed cnoc_pcie_sf_axi to cnoc_sf_axi
+> > 
+> > Changes since v2:
+> >  * none
+> > 
+> > Changes since v1:
+> >  * changed the subject line prefix for the patch to match the history,
+> >    like Bjorn Helgaas suggested.
+> >  * added Konrad's R-b tag
+> > 
+> >  drivers/pci/controller/dwc/pcie-qcom.c | 25 ++++++++++++++-----------
+> >  1 file changed, 14 insertions(+), 11 deletions(-)
+> > 
+> > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> > index a232b04af048..6a70c9c6f98d 100644
+> > --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> > @@ -182,10 +182,10 @@ struct qcom_pcie_resources_2_3_3 {
+> >  
+> >  /* 6 clocks typically, 7 for sm8250 */
+> >  struct qcom_pcie_resources_2_7_0 {
+> > -	struct clk_bulk_data clks[12];
+> > +	struct clk_bulk_data clks[14];
+> >  	int num_clks;
+> >  	struct regulator_bulk_data supplies[2];
+> > -	struct reset_control *pci_reset;
+> > +	struct reset_control *rst;
+> 
+> Please name this one 'reset' or 'resets' (e.g. to avoid hard to parse
+> things like res->rst below).
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Well, it would then be inconsitent with 2_3_3 and 2_9_0, which both use
+rst.
 
----
+> 
+> >  };
+> >  
+> >  struct qcom_pcie_resources_2_9_0 {
+> > @@ -1177,9 +1177,9 @@ static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
+> >  	unsigned int idx;
+> >  	int ret;
+> >  
+> > -	res->pci_reset = devm_reset_control_get_exclusive(dev, "pci");
+> > -	if (IS_ERR(res->pci_reset))
+> > -		return PTR_ERR(res->pci_reset);
+> > +	res->rst = devm_reset_control_array_get_exclusive(dev);
+> > +	if (IS_ERR(res->rst))
+> > +		return PTR_ERR(res->rst);
+> 
+> So the reset array implementation apparently both asserts and deasserts
+> the resets in the order specified in DT (i.e. does not deassert in
+> reverse order).
+> 
+> Is that ok also for the new "pci" and "link_down" resets?
 
-LPI bindings:
-https://lore.kernel.org/linux-arm-msm/20230203174645.597053-1-krzysztof.kozlowski@linaro.org/T/#t
+According to the HPG, yes, this is perfectly fine. It specifically says
+to assert the pcie reset and then continues saying to assert the
+link_down reset.
 
-IOMMUS on qcom,q6apm-dais:
-https://lore.kernel.org/linux-arm-msm/20230206150532.513468-1-krzysztof.kozlowski@linaro.org/T/#u
----
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 55 ++++++++++++++++++++++++++++
- 1 file changed, 55 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index 6ff135191ee0..c26892bddcf0 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -13,7 +13,9 @@
- #include <dt-bindings/interconnect/qcom,sm8550-rpmh.h>
- #include <dt-bindings/mailbox/qcom-ipcc.h>
- #include <dt-bindings/power/qcom-rpmpd.h>
-+#include <dt-bindings/soc/qcom,gpr.h>
- #include <dt-bindings/soc/qcom,rpmh-rsc.h>
-+#include <dt-bindings/sound/qcom,q6dsp-lpass-ports.h>
- #include <dt-bindings/phy/phy-qcom-qmp.h>
- #include <dt-bindings/thermal/thermal.h>
- 
-@@ -1996,6 +1998,19 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
- 			};
- 		};
- 
-+		lpass_tlmm: pinctrl@6e80000 {
-+			compatible = "qcom,sm8550-lpass-lpi-pinctrl";
-+			reg = <0 0x06e80000 0 0x20000>,
-+			      <0 0x0725a000 0 0x10000>;
-+			gpio-controller;
-+			#gpio-cells = <2>;
-+			gpio-ranges = <&lpass_tlmm 0 0 23>;
-+
-+			clocks = <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-+				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
-+			clock-names = "core", "audio";
-+		};
-+
- 		lpass_lpiaon_noc: interconnect@7400000 {
- 			compatible = "qcom,sm8550-lpass-lpiaon-noc";
- 			reg = <0 0x07400000 0 0x19080>;
-@@ -3513,6 +3528,46 @@ compute-cb@7 {
- 							 <&apps_smmu 0x1067 0x0>;
- 					};
- 				};
-+
-+				gpr {
-+					compatible = "qcom,gpr";
-+					qcom,glink-channels = "adsp_apps";
-+					qcom,domain = <GPR_DOMAIN_ID_ADSP>;
-+					qcom,intents = <512 20>;
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					q6apm: service@1 {
-+						compatible = "qcom,q6apm";
-+						reg = <GPR_APM_MODULE_IID>;
-+						#sound-dai-cells = <0>;
-+						qcom,protection-domain = "avs/audio",
-+									 "msm/adsp/audio_pd";
-+
-+						q6apmdai: dais {
-+							compatible = "qcom,q6apm-dais";
-+							iommus = <&apps_smmu 0x1001 0x0080>,
-+								 <&apps_smmu 0x1061 0x0>;
-+						};
-+
-+						q6apmbedai: bedais {
-+							compatible = "qcom,q6apm-lpass-dais";
-+							#sound-dai-cells = <1>;
-+						};
-+					};
-+
-+					q6prm: service@2 {
-+						compatible = "qcom,q6prm";
-+						reg = <GPR_PRM_MODULE_IID>;
-+						qcom,protection-domain = "avs/audio",
-+									 "msm/adsp/audio_pd";
-+
-+						q6prmcc: clock-controller {
-+							compatible = "qcom,q6prm-lpass-clocks";
-+							#clock-cells = <2>;
-+						};
-+					};
-+				};
- 			};
- 		};
- 
--- 
-2.34.1
-
+> 
+> >  	res->supplies[0].supply = "vdda";
+> >  	res->supplies[1].supply = "vddpe-3v3";
+> > @@ -1205,9 +1205,11 @@ static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
+> >  	res->clks[idx++].id = "ddrss_sf_tbu";
+> >  	res->clks[idx++].id = "aggre0";
+> >  	res->clks[idx++].id = "aggre1";
+> > +	res->clks[idx++].id = "noc_aggr";
+> >  	res->clks[idx++].id = "noc_aggr_4";
+> >  	res->clks[idx++].id = "noc_aggr_south_sf";
+> >  	res->clks[idx++].id = "cnoc_qx";
+> > +	res->clks[idx++].id = "cnoc_sf_axi";
+> >  
+> >  	num_opt_clks = idx - num_clks;
+> >  	res->num_clks = idx;
+> > @@ -1237,17 +1239,17 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
+> >  	if (ret < 0)
+> >  		goto err_disable_regulators;
+> >  
+> > -	ret = reset_control_assert(res->pci_reset);
+> > -	if (ret < 0) {
+> > -		dev_err(dev, "cannot assert pci reset\n");
+> > +	ret = reset_control_assert(res->rst);
+> > +	if (ret) {
+> > +		dev_err(dev, "reset assert failed (%d)\n", ret);
+> >  		goto err_disable_clocks;
+> >  	}
+> >  
+> >  	usleep_range(1000, 1500);
+> >  
+> > -	ret = reset_control_deassert(res->pci_reset);
+> > -	if (ret < 0) {
+> > -		dev_err(dev, "cannot deassert pci reset\n");
+> > +	ret = reset_control_deassert(res->rst);
+> > +	if (ret) {
+> > +		dev_err(dev, "reset deassert failed (%d)\n", ret);
+> >  		goto err_disable_clocks;
+> >  	}
+> 
+> Johan
