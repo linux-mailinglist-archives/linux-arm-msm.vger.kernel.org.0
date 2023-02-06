@@ -2,217 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F311E68B91C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 10:57:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A886468B92A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 10:59:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229774AbjBFJ5D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Feb 2023 04:57:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50110 "EHLO
+        id S229519AbjBFJ7G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Feb 2023 04:59:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229863AbjBFJ5B (ORCPT
+        with ESMTP id S230088AbjBFJ7B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Feb 2023 04:57:01 -0500
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D79B1E5EA
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 01:56:59 -0800 (PST)
-Received: by mail-ej1-x633.google.com with SMTP id lu11so32583021ejb.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Feb 2023 01:56:59 -0800 (PST)
+        Mon, 6 Feb 2023 04:59:01 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D56493F4
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 01:59:00 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id ba1so5734571wrb.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Feb 2023 01:59:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=zJj/k7VvKB4xlcpK0a5yuk9dzigt45eXUdx0sQo6xgg=;
-        b=qsDwnT0oPD/P9o4j2Duza8wQgvkzgjljScz9I+tN/nKujDiQV+aW2idzgUHMhiDIRw
-         kSvSp5BvIHehlLXrJuuUpj7R7XDxorcbJluzCHIZBWTIIFNbV9qtgDZtzRWwp7Nja6bD
-         ZonZx+Gq0SbVPwQmzv+frswq+zQz6Oj4TpygAw7PdswHd0MMrjgsveDNjyqbCGgXmQSA
-         UkNFBDkWvCXANdEORQk7o4AsNc8/fMRQTQdVYdwZPx94e/7M2ys560OCWRIaN8+kiGLz
-         VXDlCyPYesZ9OT/lxEeGpZJq09egPzmL1tJJm2tY7ZOV7OPptHaaDtAxOBD194xXzE6x
-         C5dQ==
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=QjrenaW0UoS+7aeZaLJfjkMywdu9OcZmza4GA92KqhU=;
+        b=BdsqYPuquByq/fZMeZEU46FAGdmns0+K+kVSr8LUz6V8HyFKIMMdxXqSgzK8bmTtwX
+         ZHjJbl2TZqjvzHU+MP/HQXeBugOyniaFYKdhxHM5m0ObUdWJmLj6UXLifdUz/RRKVC/r
+         fI8jyS4ERR5tmSmLtLrfX4M6N+gdprXPuEQGjHIecn9qastU52WU4vD40lyaKRVSqY/5
+         El+IP7sk17yhnXMoau6gFOLrWSUjumafKtCq/NV6Eszlajjsf43bPimVU11GtpUQU472
+         UVuGY256W99xZj2dHkshY/NJebRI5UHgfkU5luu+2ylm5wxCUuGhyeyhVSTMDdoQkQWp
+         2Skw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zJj/k7VvKB4xlcpK0a5yuk9dzigt45eXUdx0sQo6xgg=;
-        b=M2JrU9/Oz+RSZrdOg41mR2JJOrRhFYLlaLxmoR0Sv/mU7T8mTSazEBOD8nap7nrrLK
-         KNSZOj9ouW/Mh2TmQT8QBj0cXA4pzDXbBrbSA5pe7n2YJJCgwSIP02yxf9AF3q/5twai
-         gJjKQu1AX4aStOeK9MRxJzagU8+AO/XnVxdMWqc2eK4zrm5R7zz2iAGauRGfv4VRp+RG
-         Bbn5oQ6OdABF6w0ovNnhyPEWWqlVThOj1GDNZw0Z+wG28e1TlAgM3j7+8Aum+Q1UxlLW
-         D17wK/qMuJDCBLMVvD7xAKEMvlcKETnZPSZYrBNOy1vh4reTQ7hcLbX1/pcsy3EQmZMS
-         LBQA==
-X-Gm-Message-State: AO0yUKVlmyl0Q1JrEk5lmRlujuZscDj9iS+SlL59mQMBhrDMBOrdmgvI
-        KLNo0MrkSm3lZa5fZ3WP9owRzA==
-X-Google-Smtp-Source: AK7set9ed2vVoyml5BfH5/wSW2iJo5CiLQLMjz3SsKgWAyxlXEuXJJunTyNp1nw51Xm2O2bhzTeTdA==
-X-Received: by 2002:a17:906:135a:b0:881:d1ad:1640 with SMTP id x26-20020a170906135a00b00881d1ad1640mr18385618ejb.57.1675677418125;
-        Mon, 06 Feb 2023 01:56:58 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id j2-20020a1709066dc200b008787e94c5ccsm5206943ejt.184.2023.02.06.01.56.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Feb 2023 01:56:57 -0800 (PST)
-Message-ID: <019bf6ae-cdc4-8fa7-4d76-c39403d93b34@linaro.org>
-Date:   Mon, 6 Feb 2023 11:56:56 +0200
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QjrenaW0UoS+7aeZaLJfjkMywdu9OcZmza4GA92KqhU=;
+        b=wHD153daOL3/pfatnf3hi8WNB2ZWADQXBJdAaWOsZlDFkFLW78vymJp6vsQc7Y1eOa
+         rTdFveeASau2QYgYwzVaoF1gF2QXBgPe7lWaiu+kCSlOC0AJVP+XGoilZjTYtmcPm8bw
+         SUg0MvqHDDIZlbsZW4wYMx0p78H30bGq05DKtV76EtlSEgPAW3dY9ylkMlOKQtL5UKtN
+         wLjFFqIa01J8ZaPeUqBzSRjUUL5F1lFLFFnVdIUWaxRT6Hn96TMGvdzFJ8UkoAdCtKSg
+         hFMvfmxvSV2M5hXVZFqnUP9Q4rcIla5wh8HrGcNiR9Ewurk/5jcKYQSo6y6P1ddKC/1G
+         mUVg==
+X-Gm-Message-State: AO0yUKWO9CofQV7VcOfX5R2uLsxlUXcIHS1LxX4QrVnC1LDpq9TnhKrs
+        nw7ZeItxOb8lx8sq4FsGXzrvpQ==
+X-Google-Smtp-Source: AK7set9zMlWqyCjnJTiT9EC8eFVwaiTRfh81JnSuFOVKXPMjU7KCv01VroQXJAHxuofdEmblLO49SA==
+X-Received: by 2002:adf:e192:0:b0:2bd:fa1d:5291 with SMTP id az18-20020adfe192000000b002bdfa1d5291mr21204836wrb.67.1675677539111;
+        Mon, 06 Feb 2023 01:58:59 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id i14-20020a0560001ace00b002bfb8f829eesm8839304wry.71.2023.02.06.01.58.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Feb 2023 01:58:58 -0800 (PST)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 0/2] phy: qcom: qmp-combo: add SM8350 & SM8450 support for
+ combo USB3/DP PHY
+Date:   Mon, 06 Feb 2023 10:58:55 +0100
+Message-Id: <20230206-topic-sm8350-upstream-usb-dp-combo-phy-v1-0-ed849ae6b849@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH V3 5/9] clk: qcom: add Global Clock controller (GCC)
- driver for IPQ5332 SoC
-Content-Language: en-GB
-To:     Kathiravan T <quic_kathirav@quicinc.com>,
-        krzysztof.kozlowski@linaro.org, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
-        sboyd@kernel.org, linus.walleij@linaro.org,
-        catalin.marinas@arm.com, will@kernel.org, shawnguo@kernel.org,
-        arnd@arndb.de, marcel.ziswiler@toradex.com,
-        nfraprado@collabora.com, robimarko@gmail.com,
-        quic_gurus@quicinc.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Cc:     quic_varada@quicinc.com, quic_srichara@quicinc.com
-References: <20230206071217.29313-1-quic_kathirav@quicinc.com>
- <20230206071217.29313-6-quic_kathirav@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230206071217.29313-6-quic_kathirav@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-B4-Tracking: v=1; b=H4sIAF/P4GMC/x2Nyw7CIBAAf6XZs5sgqKi/YjwAXYSkPMIWo2n67
+ xKPM4eZDZhaJIb7tEGjd+RY8oDjYQIXTH4RxnkwSCGVkOKCa6nRIaerOgvslddGJmFni3NFV5I
+ tWMMXldI3RV6ftJcwYtYwoW0muzByuS/LkLWRj5///fHc9x+qEC4EjQAAAA==
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.0
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/02/2023 09:12, Kathiravan T wrote:
- > Add support for the global clock controller found on IPQ5332 SoC.
- >
- > Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
- > ---
- > Changes in V3:
- >     - As I mentined the bindings, changes need to be done in V2 got
- >       missed out and same has been done in V3, to call out
- >       specifically dropped the CLK_IS_CRITICAL and dropped the
- >       gcc_apss_ahb_clk, its source clock and gcc_apss_axi_clk
- >     - Used gcc_parent_data_xo wherever applicable and dropped the
- >       duplicate entries
- >     - dropped the unused parent_map_10 and parent_data_10
- >     - Used qcom_cc_probe instead of qcom_cc_really_probe
- > Changes in V2:
- >     - Added the 'dependes on' for Kconfig symbol
- >     - Dropped the CLK_IS_CRITICAL flag throughout the file
- >     - Dropped the gcc_apss_ahb_clk and gcc_apss_axi_clk as these are
- >       managed by bootloaders
+Document compatibles and add missing tables to support the USB3/DP PHY
+on the SM8350/SM8450 SoCs.
 
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Neil Armstrong (2):
+      dt-bindings: phy: qcom,qmp-usb3-dp: document sm8350 & sm8450 compatible
+      phy: qcom: com-qmp-combo: add SM8350 & SM8450 support
 
-[skipped]
+ .../phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml         |   2 +
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c          | 170 +++++++++++++++++++++
+ 2 files changed, 172 insertions(+)
+---
+base-commit: 27bc895137496cc5f83c40c58b1da2504ff04a0b
+change-id: 20230206-topic-sm8350-upstream-usb-dp-combo-phy-33793ef747f2
 
- > +static const struct freq_tbl ftbl_gcc_pcie_aux_clk_src[] = {
- > +    F(2000000, P_XO, 12, 0, 0),
- > +    { }
- > +};
- > +
- > +static struct clk_rcg2 gcc_pcie_aux_clk_src = {
- > +    .cmd_rcgr = 0x28004,
- > +    .mnd_width = 16,
- > +    .hid_width = 5,
- > +    .parent_map = gcc_parent_map_6,
- > +    .freq_tbl = ftbl_gcc_pcie_aux_clk_src,
- > +    .clkr.hw.init = &(const struct clk_init_data){
- > +        .name = "gcc_pcie_aux_clk_src",
- > +        .parent_data = gcc_parent_data_6,
- > +        .num_parents = ARRAY_SIZE(gcc_parent_data_6),
- > +        .ops = &clk_rcg2_ops,
- > +    },
- > +};
- > +
- > +static struct clk_regmap_mux pcie3x2_pipe_clk_src = {
- > +    .reg = 0x28064,
- > +    .shift = 8,
- > +    .width = 2,
- > +    .parent_map = gcc_parent_map_14,
- > +    .clkr = {
- > +        .hw.init = &(struct clk_init_data){
- > +            .name = "pcie3x2_phy_pipe_clk_src",
- > +            .parent_data = gcc_parent_data_14,
- > +            .num_parents = ARRAY_SIZE(gcc_parent_data_14),
- > +            .ops = &clk_regmap_mux_closest_ops,
-
-Should we use clk_regmap_phy_mux_ops here instead?
-
- > +            .flags = CLK_SET_RATE_PARENT,
- > +        },
- > +    },
- > +};
- > +
- > +static struct clk_regmap_mux pcie3x1_0_pipe_clk_src = {
- > +    .reg = 0x29064,
- > +    .shift = 8,
- > +    .width = 2,
- > +    .parent_map = gcc_parent_map_15,
- > +    .clkr = {
- > +        .hw.init = &(struct clk_init_data){
- > +            .name = "pcie3x1_0_phy_pipe_clk_src",
- > +            .parent_data = gcc_parent_data_15,
- > +            .num_parents = ARRAY_SIZE(gcc_parent_data_15),
- > +            .ops = &clk_regmap_mux_closest_ops,
-
-And clk_regmap_phy_mux_ops here too?
-
- > +            .flags = CLK_SET_RATE_PARENT,
- > +        },
- > +    },
- > +};
- > +
- > +static struct clk_regmap_mux pcie3x1_1_pipe_clk_src = {
- > +    .reg = 0x2A064,
- > +    .shift = 8,
- > +    .width = 2,
- > +    .parent_map = gcc_parent_map_16,
- > +    .clkr = {
- > +        .hw.init = &(struct clk_init_data){
- > +            .name = "pcie3x1_1_phy_pipe_clk_src",
- > +            .parent_data = gcc_parent_data_16,
- > +            .num_parents = ARRAY_SIZE(gcc_parent_data_16),
- > +            .ops = &clk_regmap_mux_closest_ops,
-
-And here?
-
- > +            .flags = CLK_SET_RATE_PARENT,
- > +        },
- > +    },
- > +};
- > +
-
-[skipped]
-
-
- > +
- > +static struct clk_branch gcc_pcie3x1_0_pipe_clk = {
- > +    .halt_reg = 0x29068,
- > +    .halt_check = BRANCH_HALT_DELAY,
- > +    .clkr = {
- > +        .enable_reg = 0x29068,
- > +        .enable_mask = BIT(0),
- > +        .hw.init = &(const struct clk_init_data){
- > +            .name = "gcc_pcie3x1_0_pipe_clk",
- > +            .parent_names = (const char *[]){
- > +                "pcie3x1_0_pipe_clk_src"
- > +            },
-
-Nooo. No parent_names please. You have several of them in the driver
-
- > +            .num_parents = 1,
- > +            .flags = CLK_SET_RATE_PARENT,
- > +            .ops = &clk_branch2_ops,
- > +        },
- > +    },
- > +};
- > +
-
+Best regards,
 -- 
-With best wishes
-Dmitry
+Neil Armstrong <neil.armstrong@linaro.org>
+
