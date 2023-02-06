@@ -2,138 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8422F68C039
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 15:36:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DAD4668C09B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 15:57:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231217AbjBFOg2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Feb 2023 09:36:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54034 "EHLO
+        id S230350AbjBFO5Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Feb 2023 09:57:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231245AbjBFOg1 (ORCPT
+        with ESMTP id S230353AbjBFO5O (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Feb 2023 09:36:27 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1E8024C92;
-        Mon,  6 Feb 2023 06:36:25 -0800 (PST)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 316Bv47H017711;
-        Mon, 6 Feb 2023 14:36:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=TETDB0LeiUCmf0+tJvAW84Dy4wJip4Q7KldqyimddL8=;
- b=jmjneK2odiCS9U3rBC89UzPmUiZU8XKOXop+zUu5f4oXNMIB1LlhqoBLnA0NdhXbFF3S
- vuvBMnn5QCCpPWVSSnauE9de2A7ccgj70Xfvut2b6lIb0Ubx9Eab8CDJm0xXxbLXFgSO
- dC7jUo4wSZi8qJLq4tV+F6VJ7wzgLV7bx9qxJgoxF+inm2wSsz1V20yLnW4/I01Vjjad
- faqMJ4Vknfse+bgs2/34AVWUXskzH+mSDXBFE6ZDzGrMR6N4lsoFMhzyw/PhC1fHILmt
- INh8oh6tb6C5xn7M9V4fRXpcENLUMDqiF0JG8ZA3ijhFs0gBV8gCsNiyAuwtKxaBxCjb gA== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nhechby1r-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 06 Feb 2023 14:36:22 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 316EaLaT016908
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 6 Feb 2023 14:36:21 GMT
-Received: from [10.216.55.169] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 6 Feb 2023
- 06:36:17 -0800
-Message-ID: <d1dc0c9b-eab2-0287-d0a2-ead44ecee5ce@quicinc.com>
-Date:   Mon, 6 Feb 2023 20:06:13 +0530
+        Mon, 6 Feb 2023 09:57:14 -0500
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FEF22196E
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 06:57:10 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id lu11so34993005ejb.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Feb 2023 06:57:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=cLuf1U+2WjifV8fnrslcwZDFA4TZvCGB2iPkwtWqNUI=;
+        b=oq9jViBl3HA8dQj59yZsQcWYKhAEvJWr1Mqzc1nDjWd3kRLMlEJmDIhfOc2l+p9NLd
+         sEyjvRaMXAsm/bYtTpQnIz65QqWwNZzD2ixnXeIv/n7h0wwjcYKGqo5UlUhhHj/+UxhN
+         Vjip+0N5Gcg9eBr6e9L2FgnlD02pMQtDmefHpu6L6q15uOGJwGLd6Q+iHLS5qDhwcnpv
+         jcH/BDXAdXafNKaM0EBgworEii3bTIRcz1nDLBmzdKEdZFuwosxwjqEO4W6y868kqLfD
+         btVyftrdECwXZvuYQTLDMsH366OL3edNWQJg4/Ues9yHsG8FHbMc5frF17qLpR6RVgFB
+         TLKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cLuf1U+2WjifV8fnrslcwZDFA4TZvCGB2iPkwtWqNUI=;
+        b=LyecmjnWOiC8z1TBE10PLeurT/S/rJfBAr8d1+Bk842iVk/y3F9o3Zlr6YupKooCNW
+         w/qNYQWzfb+OskXw80y5MXHOtXE3DCfmtmnzYXDc7Jfidc7kzQ7zKATb2pX9KImjJsI4
+         xNGx1FQCwZlqvlDBKwNlHNohRgR5dA3amUxcZrOSPqA2arLYog93ADl4X6hlM7LBpKMj
+         9l4bHxe/Pdk8hUE9SmUxwC9DSEbbf07NdAvkAqpn90xmlMkDZD0+j1jSfqDOf3ltp7Dr
+         lxIzHq4JhNPOesxBb225qggHJX9cl04LVuyb1SzG5YsYNGsPycbHFk4IF5JCCge8hOEJ
+         2kuQ==
+X-Gm-Message-State: AO0yUKVeBh+hj4+VsZy4DAmQuGbhIRXhzVTNZfPP7b4zqHB/q3XDvoak
+        XY5oR7JLB0/1pm1EvfkfH9I+PA==
+X-Google-Smtp-Source: AK7set/oKvZyc+ZrfLJPgnfOVLJVKoAm0Z0SgsTUoA8rN3b3dRK6zhySANFVfe+x2ByyCb7N0W7vLw==
+X-Received: by 2002:a17:907:7ba9:b0:87b:d3dd:e0ca with SMTP id ne41-20020a1709077ba900b0087bd3dde0camr13140091ejc.26.1675695429234;
+        Mon, 06 Feb 2023 06:57:09 -0800 (PST)
+Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id gw1-20020a170906f14100b0087bd4e34eb8sm5495533ejb.203.2023.02.06.06.57.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Feb 2023 06:57:08 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>
+Subject: [PATCH v2 0/8] arm64: dts: qcom: sm8350: enable GPU on the HDK board
+Date:   Mon,  6 Feb 2023 16:56:59 +0200
+Message-Id: <20230206145707.122937-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8450: Add IMEM and PIL info
- region
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1675443891-31709-1-git-send-email-quic_mojha@quicinc.com>
- <1675443891-31709-2-git-send-email-quic_mojha@quicinc.com>
- <cc30f686-dec7-db85-cf0d-c6c685a623ce@linaro.org>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <cc30f686-dec7-db85-cf0d-c6c685a623ce@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 5iQp1wmX4FYfvQOq-vRbeKaEQ-GSUrc_
-X-Proofpoint-ORIG-GUID: 5iQp1wmX4FYfvQOq-vRbeKaEQ-GSUrc_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-02-06_07,2023-02-06_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
- adultscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0
- mlxlogscore=756 priorityscore=1501 mlxscore=0 phishscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2302060126
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add A660 device to the Qualcomm SM8350 platform and enable it for the
+sm8350-hdk board. Unfortunately while adding the GPU & related devices I
+noticed that DT nodes on SM8350 are greatly out of the preagreed order,
+so patches 4-6 reorder DT nodes to follow the agreement.
 
+Changes since v1:
+- Fixed the subject and commit message for patch 1
+- Fixed GMU's clocks to follow the vendor kernel
+- Marked Adreno SMMU as dma-coherent
+- Dropped comments targeting sm8350 v1, we do not support that chip
+  revision.
 
-On 2/4/2023 3:07 AM, Konrad Dybcio wrote:
-> 
-> 
-> On 3.02.2023 18:04, Mukesh Ojha wrote:
->> Add a simple-mfd representing IMEM on SM8450 and define the PIL
->> relocation info region, so that post mortem tools will be able
->> to locate the loaded remoteprocs.
->>
->> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
->> ---
->  From XBL:
-> 
-> 0x14680000, 0x0002A000, "IMEM Base"
-> 
-> Is there anything in that wider address range that would interest
-> us? I recall Alex once dug into that when diving into IPA, but
-> I can not recall the conclusion..
-Spec-wise, yes IPA do own these 0x146A8000 - 0x146AA000 .
-But, not sure what they use it for.
+Dmitry Baryshkov (8):
+  dt-bindings: clock: Merge qcom,gpucc-sm8350 into qcom,gpucc.yaml
+  dt-bindings: power: qcom,rpmpd: add RPMH_REGULATOR_LEVEL_LOW_SVS_L1
+  dt-bindings: display/msm/gmu: add Adreno 660 support
+  arm64: dts: qcom: sm8350: reorder device nodes
+  arm64: dts: qcom: sm8350: move more nodes to correct place
+  arm64: dts: qcom: sm8350: finish reordering nodes
+  arm64: dts: qcom: sm8350: add GPU, GMU, GPU CC and SMMU nodes
+  arm64: dts: qcom: sm8350-hdk: enable GPU
 
--Mukesh
-> 
-> Konrad
->>   arch/arm64/boot/dts/qcom/sm8450.dtsi | 15 +++++++++++++++
->>   1 file changed, 15 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
->> index 5704750..474ea1b 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
->> @@ -3536,6 +3536,21 @@
->>   			};
->>   		};
->>   
->> +		sram@146aa000 {
->> +			compatible = "qcom,sm8450-imem", "syscon", "simple-mfd";
->> +			reg = <0 0x146aa000 0 0x1000>;
->> +
->> +			#address-cells = <1>;
->> +			#size-cells = <1>;
->> +
->> +			ranges = <0 0 0x146aa000 0x1000>;
->> +
->> +			pil-reloc@94c {
->> +				compatible = "qcom,pil-reloc-info";
->> +				reg = <0x94c 0xc8>;
->> +			};
->> +		};
->> +
->>   		apps_rsc: rsc@17a00000 {
->>   			label = "apps_rsc";
->>   			compatible = "qcom,rpmh-rsc";
+ .../bindings/clock/qcom,gpucc-sm8350.yaml     |   71 -
+ .../devicetree/bindings/clock/qcom,gpucc.yaml |    2 +
+ .../devicetree/bindings/display/msm/gmu.yaml  |    1 +
+ arch/arm64/boot/dts/qcom/sm8350-hdk.dts       |    8 +
+ arch/arm64/boot/dts/qcom/sm8350.dtsi          | 2512 +++++++++--------
+ include/dt-bindings/power/qcom-rpmpd.h        |    1 +
+ 6 files changed, 1357 insertions(+), 1238 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/clock/qcom,gpucc-sm8350.yaml
+
+-- 
+2.39.1
+
