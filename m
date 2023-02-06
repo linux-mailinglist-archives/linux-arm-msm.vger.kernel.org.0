@@ -2,82 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF19368C5C4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 19:30:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A6CF868C5E5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 19:36:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229868AbjBFSap (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Feb 2023 13:30:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45550 "EHLO
+        id S230018AbjBFSgs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Feb 2023 13:36:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229515AbjBFSao (ORCPT
+        with ESMTP id S229741AbjBFSgr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Feb 2023 13:30:44 -0500
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7760424119
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 10:30:42 -0800 (PST)
-Received: by mail-ej1-x62f.google.com with SMTP id qw12so36853984ejc.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Feb 2023 10:30:42 -0800 (PST)
+        Mon, 6 Feb 2023 13:36:47 -0500
+Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C02F2B09B
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 10:36:46 -0800 (PST)
+Received: by mail-il1-x134.google.com with SMTP id w2so1359938ilg.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Feb 2023 10:36:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/jYmi9IvnFIypy0mds4wMWCZZJQWX6LaMpS3CK15Nck=;
-        b=meb3gpgNV8yB3mS6e4DHFRab1mSjoBU1gs/uHV8RbeJ9ixwvDP3EFdHrl5gakVyEXs
-         el94qLuYPpmldddxpgwWxG9Z3edGYOVQkE0BcwE0EvanV6ZGm9GsEoE1uZF0V4B5GabJ
-         sLlRy5R+CjUVYLEpAXny8VmNeiJi9g3s3yWm5+wZwODLewLy+3iBxUayAmqR5WZDUSo5
-         gLJCOIKNizbpMkjTNGHLGejUlOlfBw5jTeO1MAv7WDwm21EYgARwg08KJDPiYKYnn2Kl
-         mHW590FmluZhKrOhCZ3jPQaovHMwSojFwlfGSG+9r2js9ihTfpxs4oEM4QmDvfQpyvRP
-         neTA==
+        d=chromium.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=jpLAfxyLsgp5wo9XsIKzSBijHnYVMJFhq6Za6hG4zG4=;
+        b=RbPfSpFfy3FZ/cx9eZ++rTBK3EfhpFe4zxgNBg6WKZYaZj8fcUkTcjmTiigUguxIyQ
+         Lgh6bnXFdOANZlCUMtKSHIs0FouS26T1b9TrRv00GAy7DkhJ+TG1IW7sqqTcGdbF/NVl
+         iri8hr9tmZlwnhjz4+7Pa5sprj7oASw+uBMoQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/jYmi9IvnFIypy0mds4wMWCZZJQWX6LaMpS3CK15Nck=;
-        b=a4qvmkGJvu+QfbR0p9I3XH9jxqH4zuMt1h9My7LkUxOOnXNSJGlg7y6FdgIs3Wk7ES
-         jf9C4CUsZwB0MsAn7Ytols75jRzfZjpYh+9yE9E1kzHGxXTN1C060Yfo3kSiGpQOctmX
-         PLYUzo9MDydQpu6QQEVkik4QkJAcQRqUPFW8BQAlNDhL+V374SuSlJkc3CG6F9Rz7Sm9
-         5Vm1u663m3tQxBPQ97sUQ8kyfrUhfPMQDAOhJHqZew94LWh/W9SmJwbdwGByg0jFPDIt
-         SSwGx/IHMKVu71sAupacai8h3fi2vOYjsJNSeXaVoU3pzdhvOECj3iQloZbU5nJjxlaz
-         PTWg==
-X-Gm-Message-State: AO0yUKU+O6WD7ZzAf/3fGPw0QWJrs3DwgfLdiwiu1YbMVnhzpVGcYvhl
-        huqZWsOse84UxdeHCPYJqZPDiGw8oWmLSYzQ
-X-Google-Smtp-Source: AK7set9h7k+5/mLKiqGh8P5Hj7oMyP9YAgx1ZMwdMQ1pClIoToN8Rko8Eh30kdGfwAF1NAkOZG3vcA==
-X-Received: by 2002:a17:907:9706:b0:878:4c4e:1c6a with SMTP id jg6-20020a170907970600b008784c4e1c6amr421164ejc.3.1675708240771;
-        Mon, 06 Feb 2023 10:30:40 -0800 (PST)
-Received: from [192.168.1.101] (abxh117.neoplus.adsl.tpnet.pl. [83.9.1.117])
-        by smtp.gmail.com with ESMTPSA id ui4-20020a170907c90400b0087848a5daf5sm5837441ejc.225.2023.02.06.10.30.37
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jpLAfxyLsgp5wo9XsIKzSBijHnYVMJFhq6Za6hG4zG4=;
+        b=72/XLPhOcVjNZDgS9rCQhXidS5r2gH/TQSfUMxK/N+B187k5qq6aFaw36AKJYh/OtU
+         uVNqkKkxRLkYKcjtuvRrQoivih40ch4CoMq8ZfTUIO+FRR8EJM842zMLFr0qGK6ZbZH2
+         WGprT0JF76tkZUB8hwzD7v/JoQ52g7eZXeE2mKDbMtLr/HEiJPibOD8i6mQYBRcy5N/F
+         NoGbny6wnG090psYWQZimUmyCtugZ9q5Jt0Sbz0CtN16K5x38FQyfAdTmmVIcMwKfvnn
+         1q0rk13jWlpyhLNjie+K0z/zGAsScJBS5rP5O8W9wnQecUB3F/xb7maceCGR05oBx2HS
+         cvlA==
+X-Gm-Message-State: AO0yUKWCOv3NMKqMe2v24cybSPCJGfoGJRlJHcl5NL8B00FnaJGzqLAS
+        yaoKF1OtZ9yKil38hjukQAvwpQ==
+X-Google-Smtp-Source: AK7set8U4aY9AZiC/bwoUXyakwXvZVP0rv8L/2FkJDiVbd3C0+QlBJSZPusj74fB7RgknDJnx1/M5A==
+X-Received: by 2002:a92:a001:0:b0:310:f912:5a68 with SMTP id e1-20020a92a001000000b00310f9125a68mr371241ili.3.1675708605584;
+        Mon, 06 Feb 2023 10:36:45 -0800 (PST)
+Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
+        by smtp.gmail.com with UTF8SMTPSA id o16-20020a056e02115000b00313b92e839bsm2048605ill.40.2023.02.06.10.36.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Feb 2023 10:30:40 -0800 (PST)
-Message-ID: <b5592c00-87ff-dcf7-7342-56c4c593fc42@linaro.org>
-Date:   Mon, 6 Feb 2023 19:30:30 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH 06/14] drm/msm/gpu: Use dev_pm_opp_set_rate for non-GMU
- GPUs
-Content-Language: en-US
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Mon, 06 Feb 2023 10:36:45 -0800 (PST)
+Date:   Mon, 6 Feb 2023 18:36:44 +0000
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-pm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Emma Anholt <emma@anholt.net>, Chia-I Wu <olvaffe@gmail.com>,
-        Dan Carpenter <error27@gmail.com>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-References: <20230126151618.225127-1-konrad.dybcio@linaro.org>
- <20230126151618.225127-7-konrad.dybcio@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230126151618.225127-7-konrad.dybcio@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Stephen Boyd <sboyd@kernel.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Saravana Kannan <saravanak@google.com>
+Subject: Re: [RFC PATCH v2 1/2] PM: domains: Skip disabling unused domains if
+ provider has sync_state
+Message-ID: <Y+FIvEqQU+yjzEIl@google.com>
+References: <20230127104054.895129-1-abel.vesa@linaro.org>
+ <Y9v/z8CYik3faHh7@google.com>
+ <Y+ErWTyV8CnE3Hl+@linaro.org>
+ <Y+E3T6bozU1K2sFb@google.com>
+ <Y+E9Z+/+eCpPK6DE@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Y+E9Z+/+eCpPK6DE@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -86,53 +86,124 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 26.01.2023 16:16, Konrad Dybcio wrote:
-> Currently we only utilize the OPP table connected to the GPU for
-> getting (available) frequencies. We do however need to scale the
-> voltage rail(s) accordingly to ensure that we aren't trying to
-> run the GPU at 1GHz with a VDD_LOW vote, as that would result in
-> an otherwise inexplainable hang.
+On Mon, Feb 06, 2023 at 07:48:23PM +0200, Abel Vesa wrote:
 > 
-> Tell the OPP framework that we want to scale the "core" clock
-> and swap out the clk_set_rate to a dev_pm_opp_set_rate in
-> msm_devfreq_target() to enable usage of required-opps and by
-> extension proper voltage level/corner scaling.
+> CC'ed Saravana
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
-Welp, as-is, this breaks devfreq on GPUs with a GMU.. Will fix..
+> On 23-02-06 17:22:23, Matthias Kaehlcke wrote:
+> > On Mon, Feb 06, 2023 at 06:31:21PM +0200, Abel Vesa wrote:
+> > > On 23-02-02 18:24:15, Matthias Kaehlcke wrote:
+> > > > Hi Abel,
+> > > > 
+> > > > On Fri, Jan 27, 2023 at 12:40:53PM +0200, Abel Vesa wrote:
+> > > > > Currently, there are cases when a domain needs to remain enabled until
+> > > > > the consumer driver probes. Sometimes such consumer drivers may be built
+> > > > > as modules. Since the genpd_power_off_unused is called too early for
+> > > > > such consumer driver modules to get a chance to probe, the domain, since
+> > > > > it is unused, will get disabled. On the other hand, the best time for
+> > > > > an unused domain to be disabled is on the provider's sync_state
+> > > > > callback. So, if the provider has registered a sync_state callback,
+> > > > > assume the unused domains for that provider will be disabled on its
+> > > > > sync_state callback. Also provide a generic sync_state callback which
+> > > > > disables all the domains unused for the provider that registers it.
+> > > > > 
+> > > > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > > > > ---
+> > > > > 
+> > > > > This approach has been applied for unused clocks as well.
+> > > > > With this patch merged in, all the providers that have sync_state
+> > > > > callback registered will leave the domains enabled unless the provider's
+> > > > > sync_state callback explicitly disables them. So those providers will
+> > > > > need to add the disabling part to their sync_state callback. On the
+> > > > > other hand, the platforms that have cases where domains need to remain
+> > > > > enabled (even if unused) until the consumer driver probes, will be able,
+> > > > > with this patch in, to run without the pd_ignore_unused kernel argument,
+> > > > > which seems to be the case for most Qualcomm platforms, at this moment.
+> > > > 
+> > > > I recently encountered a related issue on a Qualcomm platform with a
+> > > > v6.2-rc kernel, which includes 3a39049f88e4 ("soc: qcom: rpmhpd: Use
+> > > > highest corner until sync_state"). The issue involves a DT node with a
+> > > > rpmhpd, the DT node is enabled, however the corresponding device driver
+> > > > is not enabled in the kernel. In such a scenario the sync_state callback
+> > > > is never called, because the genpd consumer never probes. As a result
+> > > > the Always-on subsystem (AOSS) of the SoC doesn't enter sleep mode during
+> > > > system suspend, which results in a substantially higher power consumption
+> > > > in S3.
+> > > 
+> > > If I get this correctly, one of the providers is missing (doesn't matter
+> > > the reason), in which case, your kernel needs that driver, period. There
+> > > is no reason why you would expect the consumer to work without the
+> > > provider. Or, you could just remove the property in the devicetree node,
+> > > the property that makes the consumer wait for that provider. Anyway, you
+> > > should never end up with a consumer provider relationship in devicetree
+> > > without providing the provider driver.
+> > 
+> > I would agree if it was actually a provider that's missing, however it's a
+> > 'missing' consumer that prevents the sync_state() call.
+> 
+> Oh, my bad.
+> 
+> Still, why would you keep the consumer node enabled in devicetree if you don't
+> intend to allow its driver to ever probe?
 
-Konrad
->  drivers/gpu/drm/msm/adreno/adreno_gpu.c | 3 +++
->  drivers/gpu/drm/msm/msm_gpu_devfreq.c   | 2 +-
->  2 files changed, 4 insertions(+), 1 deletion(-)
+As Doug pointed out, the device tree is supposed to describe the hardware, but
+that shouldn't impose a user/admin/downstream maintainer to use every single
+existing piece of hardware with the potential power implications on battery
+powererd devices.
+
+I someone uses an off the shelf board like a Raspberry Pi for a project in
+which they only use a subset of the functionality, they would be forced to
+use a downstream device tree if they can't just disable the drivers they
+are not interested in. Supposedly we want people/companies to use upstream
+kernels as much as possible, however you suggest to adapt the device tree
+in a way that does not describe the hardware, which effectively forces folks
+to user downstream kernels (or at least device trees).
+
+> > > > I wonder if genpd (and some other frameworks) needs something like
+> > > > regulator_init_complete(), which turns off unused regulators 30s after
+> > > > system boot. That's conceptually similar to the current
+> > > > genpd_power_off_unused(), but would provide time for modules being loaded.
+> > > 
+> > > NACK, timeouts are just another hack in this case, specially when we
+> > > have a pretty reliable mechanism like sync_state.
+> > 
+> > It does not work properly unless all consumers are probed successfully. It
+> > makes sense to wait some time for the consumers to probe, but not eternally,
+> > it's perfectly valid that a driver for a (potential) consumer is not enabled.
 > 
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> index 817599766329..c85ae3845a4e 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> @@ -1047,6 +1047,9 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
->  	const char *gpu_name;
->  	u32 speedbin;
->  
-> +	/* This can only be done here, or devm_pm_opp_set_supported_hw will WARN_ON() */
-> +	devm_pm_opp_set_clkname(dev, "core");
-> +
->  	adreno_gpu->funcs = funcs;
->  	adreno_gpu->info = adreno_info(config->rev);
->  	adreno_gpu->gmem = adreno_gpu->info->gmem;
-> diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-> index e27dbf12b5e8..ea70c1c32d94 100644
-> --- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-> +++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-> @@ -48,7 +48,7 @@ static int msm_devfreq_target(struct device *dev, unsigned long *freq,
->  		gpu->funcs->gpu_set_freq(gpu, opp, df->suspended);
->  		mutex_unlock(&df->lock);
->  	} else {
-> -		clk_set_rate(gpu->core_clk, *freq);
-> +		dev_pm_opp_set_rate(dev, *freq);
->  	}
->  
->  	dev_pm_opp_put(opp);
+> Usually, if you have a consumer devicetree node that you consider it
+> should not probe, you should consider disabling that node in your board
+> dts, specially if you don't intend to provide its driver.
+
+Nope, the device tree is supposed to describe the hardware and the hardware
+doesn't change because a particular use case doesn't require/want the use of
+all existing parts.
+
+> Again, timeouts are bad all-around. What happens if rootfs doesn't get
+> mounted in time? Will 30 seconds be enough for every scenario? What
+> happens if I want to load the driver (module) for a consumer a day after boot?
+
+I am not sure if I have a complete/correct picture here. My understanding is
+that sync_state is above all used for handing over critical hardware from the
+bootloader to the kernel. For example the CPUs may require clocks and
+interconnects to run at a certain speed during boot, before they are 'probed'
+and can ask the provider to run the resource (at least) at a certain speed.
+
+I would expect that drivers on the roots aren't critical for the system to
+enter the rootfs, all these should be either built-in or as modules on an
+initramfs. Let's say we have an audio driver that uses a clock (provider)
+and this audio driver lives as a modules on the rootfs. For some reason our
+rootfs takes a long time to mount and sync_state() of the clock provider is
+called, due to the timeout we introduced. The provider determines that it
+hasn't received any requests for the audio clock and disables it. Now
+finally the rootfs is mounted and out audio module is loaded. The audio
+device probes, gets the clock and asks the provider to run it at certain
+speed. The clock provider puts the clock at the requested speed and audio
+works as if the sync_state timeout never happened.
+
+Am I missing/misunderstanding anything important?
+
+> IMHO, I think even the regulator_init_complete should be switched to some sync
+> state approach.
+
+Maybe, with a timeout :)
