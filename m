@@ -2,118 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B80668BFC6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 15:15:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8422F68C039
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 15:36:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229488AbjBFOPB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Feb 2023 09:15:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60424 "EHLO
+        id S231217AbjBFOg2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Feb 2023 09:36:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54034 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231157AbjBFOOl (ORCPT
+        with ESMTP id S231245AbjBFOg1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Feb 2023 09:14:41 -0500
-Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE210227A6
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 06:14:14 -0800 (PST)
-Received: by mail-qt1-x82d.google.com with SMTP id h24so12821584qta.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Feb 2023 06:14:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=QSDx7lR4lbIKush7SukTE/OhPs2fEUoC37d6gBX19uU=;
-        b=ERC064jLHsU/zmzw8RoyeU8P0SzprwSyrytyxl8CwLx+EClBHm9jC4OIs6DvpVHiKT
-         bCVzy3h1qM4tXtLnhXZep+n3YNCG1lFKmdcMhA2cD/gh/QUjtXepRZpyCVeQgGre1X2X
-         KnrtRxVQcz4oQRyjwKS6GLKe56g3hydKvlM6r5Ri8d3XJGWpNUnajCefgwTI4WqNL4cU
-         sru/1dQ7034KdBpTgZtly4j1p8UzyMfQFsQwIt9qdgyJXub8KYNnDl4XCuVQMqnl8C7N
-         nPj0QdiOoP5w7Mhs1gNph2awEUtYHg+xob1ow+eIUvy+fwqgdX0BK68LA16ae23n1gqu
-         GhmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QSDx7lR4lbIKush7SukTE/OhPs2fEUoC37d6gBX19uU=;
-        b=3dcKZmjGTt1lIR+7v/xwgO6Ol9yZH+FOFEZDgd/Dj38idnmW2MLxmgREScR6uIjfz6
-         gfrao7xoiDjdoW0EWCv1EneEvkXvCLtaxqsuoB4CZmFVp0iOvDPKJWQNfTo0VblcEQ3F
-         Cde9tI8UmilMR/AxgpmTSq2rsvhfYgPKKy2HiaU42dwFEtV/TeZzwUAhjtewEoTvw0zN
-         jZheGHxVOJCj66zaSFeZhYKK6CfFNeNydEUmeSUoKQuMp9VQSDf7GmsGvZ/3GNDQZdWM
-         aDYa5/szCybSaZPGioPZ5Qub08M/8VqzfJBTHZLO/seAqlNajlPnHYB9IS/hrFhoL1O9
-         7b4w==
-X-Gm-Message-State: AO0yUKX5BuXnPT/DB7eWiuApwhlsCjHCuKwFbV53tzjcRxYQ9Yvao0Zs
-        csrh+Z9SAn7xrMcyZb6X/kLmuA==
-X-Google-Smtp-Source: AK7set/JWkzW8hDZXUKQoVbyq7UY837wooVRU+m9/HcISd93PIQ91tjIFTNU42WVbQ6ZqGK+UUiStg==
-X-Received: by 2002:ac8:574f:0:b0:3b9:bd28:bb6c with SMTP id 15-20020ac8574f000000b003b9bd28bb6cmr31965755qtx.36.1675692849691;
-        Mon, 06 Feb 2023 06:14:09 -0800 (PST)
-Received: from [172.22.22.4] ([98.61.227.136])
-        by smtp.googlemail.com with ESMTPSA id d136-20020a37688e000000b006fa4ac86bfbsm7475775qkc.55.2023.02.06.06.14.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Feb 2023 06:14:09 -0800 (PST)
-Message-ID: <78e7d084-4e76-c9f1-c627-b1256772ef9d@linaro.org>
-Date:   Mon, 6 Feb 2023 08:14:07 -0600
+        Mon, 6 Feb 2023 09:36:27 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1E8024C92;
+        Mon,  6 Feb 2023 06:36:25 -0800 (PST)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 316Bv47H017711;
+        Mon, 6 Feb 2023 14:36:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=TETDB0LeiUCmf0+tJvAW84Dy4wJip4Q7KldqyimddL8=;
+ b=jmjneK2odiCS9U3rBC89UzPmUiZU8XKOXop+zUu5f4oXNMIB1LlhqoBLnA0NdhXbFF3S
+ vuvBMnn5QCCpPWVSSnauE9de2A7ccgj70Xfvut2b6lIb0Ubx9Eab8CDJm0xXxbLXFgSO
+ dC7jUo4wSZi8qJLq4tV+F6VJ7wzgLV7bx9qxJgoxF+inm2wSsz1V20yLnW4/I01Vjjad
+ faqMJ4Vknfse+bgs2/34AVWUXskzH+mSDXBFE6ZDzGrMR6N4lsoFMhzyw/PhC1fHILmt
+ INh8oh6tb6C5xn7M9V4fRXpcENLUMDqiF0JG8ZA3ijhFs0gBV8gCsNiyAuwtKxaBxCjb gA== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nhechby1r-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 06 Feb 2023 14:36:22 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 316EaLaT016908
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 6 Feb 2023 14:36:21 GMT
+Received: from [10.216.55.169] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 6 Feb 2023
+ 06:36:17 -0800
+Message-ID: <d1dc0c9b-eab2-0287-d0a2-ead44ecee5ce@quicinc.com>
+Date:   Mon, 6 Feb 2023 20:06:13 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v9 09/27] gunyah: rsc_mgr: Add resource manager RPC core
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8450: Add IMEM and PIL info
+ region
 Content-Language: en-US
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>
-Cc:     Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Marc Zyngier <maz@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230120224627.4053418-1-quic_eberman@quicinc.com>
- <20230120224627.4053418-10-quic_eberman@quicinc.com>
- <94d6f57b-de3b-1135-5a30-d1cb156581cb@linaro.org>
-From:   Alex Elder <elder@linaro.org>
-In-Reply-To: <94d6f57b-de3b-1135-5a30-d1cb156581cb@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1675443891-31709-1-git-send-email-quic_mojha@quicinc.com>
+ <1675443891-31709-2-git-send-email-quic_mojha@quicinc.com>
+ <cc30f686-dec7-db85-cf0d-c6c685a623ce@linaro.org>
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <cc30f686-dec7-db85-cf0d-c6c685a623ce@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 5iQp1wmX4FYfvQOq-vRbeKaEQ-GSUrc_
+X-Proofpoint-ORIG-GUID: 5iQp1wmX4FYfvQOq-vRbeKaEQ-GSUrc_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-02-06_07,2023-02-06_03,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
+ adultscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0
+ mlxlogscore=756 priorityscore=1501 mlxscore=0 phishscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2302060126
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2/2/23 5:53 AM, Srinivas Kandagatla wrote:
->>
->> +struct gh_rm_rpc_hdr {
->> +    u8 api;
->> +    u8 type;
->> +    __le16 seq;
->> +    __le32 msg_id;
->> +} __packed;
->> +
-> #define GH_RM_RPC_HDR_SZ    sizeof(struct gh_rm_rpc_hdr)
+
+
+On 2/4/2023 3:07 AM, Konrad Dybcio wrote:
 > 
-> You could use this in most of the places where sizeof is being called.
+> 
+> On 3.02.2023 18:04, Mukesh Ojha wrote:
+>> Add a simple-mfd representing IMEM on SM8450 and define the PIL
+>> relocation info region, so that post mortem tools will be able
+>> to locate the loaded remoteprocs.
+>>
+>> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+>> ---
+>  From XBL:
+> 
+> 0x14680000, 0x0002A000, "IMEM Base"
+> 
+> Is there anything in that wider address range that would interest
+> us? I recall Alex once dug into that when diving into IPA, but
+> I can not recall the conclusion..
+Spec-wise, yes IPA do own these 0x146A8000 - 0x146AA000 .
+But, not sure what they use it for.
 
-I'll repeat my point here.  I see no value in hiding
-the size of the structure behind a defined symbol.
-
-Use sizeof(*pointer) (if possible) or sizeof(struct foo) in
-the code; it makes it very clear that it's not something
-other than a simple object/structure size.
-
-					-Alex
+-Mukesh
+> 
+> Konrad
+>>   arch/arm64/boot/dts/qcom/sm8450.dtsi | 15 +++++++++++++++
+>>   1 file changed, 15 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>> index 5704750..474ea1b 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>> @@ -3536,6 +3536,21 @@
+>>   			};
+>>   		};
+>>   
+>> +		sram@146aa000 {
+>> +			compatible = "qcom,sm8450-imem", "syscon", "simple-mfd";
+>> +			reg = <0 0x146aa000 0 0x1000>;
+>> +
+>> +			#address-cells = <1>;
+>> +			#size-cells = <1>;
+>> +
+>> +			ranges = <0 0 0x146aa000 0x1000>;
+>> +
+>> +			pil-reloc@94c {
+>> +				compatible = "qcom,pil-reloc-info";
+>> +				reg = <0x94c 0xc8>;
+>> +			};
+>> +		};
+>> +
+>>   		apps_rsc: rsc@17a00000 {
+>>   			label = "apps_rsc";
+>>   			compatible = "qcom,rpmh-rsc";
