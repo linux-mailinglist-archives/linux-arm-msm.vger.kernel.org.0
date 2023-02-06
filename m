@@ -2,203 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 77D8668C8CC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 22:30:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C42DF68C8D1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 22:35:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229685AbjBFVay (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Feb 2023 16:30:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48048 "EHLO
+        id S229663AbjBFVfm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Feb 2023 16:35:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229545AbjBFVax (ORCPT
+        with ESMTP id S229550AbjBFVfl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Feb 2023 16:30:53 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB48F10E6;
-        Mon,  6 Feb 2023 13:30:52 -0800 (PST)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 316L60SI002709;
-        Mon, 6 Feb 2023 21:30:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=zbR5LulAkMDAwasH7HVAV3wgUEtOGkuSRw4Nc4x62YI=;
- b=U7SjhRJYz8CwVbM+Xari4paPf0x+K8tf2HQmofDjj6yK8FgStyhkIRj+aLXm3uQL16NQ
- IhtvdS3WM6bAvk/IfjjNOkQ2fcKiqEKbRnHcJRFwfdmg0t2qVuj27TDRLtJHQveovxqz
- 1Aue84D4wC1YW9Wg8qprUmNnkp5q6hfgKhY9DnmZMKIjyEy7jCRFMBnpMJ6N9IAEbgo9
- avDhY1PsMou/JeafaWTfxNIjOtj1A4qyMCFq6jNbT+CliGcRpQt2ayMatwucPAuuCRXC
- zeLEmmDW8xccOQmr+RztXgtKduhA1qdYK50GuSvfEgn9eYYH/rv71UVVOfu2hvq6nKTG aA== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nhey74rxt-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 06 Feb 2023 21:30:33 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 316LUVHl025673
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 6 Feb 2023 21:30:31 GMT
-Received: from [10.134.67.48] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 6 Feb 2023
- 13:30:31 -0800
-Message-ID: <7d73182d-9662-196a-2831-6ab50fb08040@quicinc.com>
-Date:   Mon, 6 Feb 2023 13:30:30 -0800
+        Mon, 6 Feb 2023 16:35:41 -0500
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB5F914492
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 13:35:39 -0800 (PST)
+Received: by mail-pj1-x102c.google.com with SMTP id f16-20020a17090a9b1000b0023058bbd7b2so12132253pjp.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Feb 2023 13:35:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=X8NGdCWC41Xy1O1QF4FREA4fKB18fJvnlW/AXpxCQbQ=;
+        b=S/dxotnmgHPQfzi27SmO4FE/hT3AgU4mn5yCTcqIHJi4Xf938K7m9IV5TqLHR1em8o
+         +kb9NEQTGXhnRCLypaw5ZjE9r3T4aAcQoQNO3NvCjGNccnh35oRC/OXDVa+YsliPVKAP
+         0Mku+nda/pTq7Sv7EJGqQDRt0hoc0e5ZFSwCbl6xjxHmeJyd/iz8YCuNaDJPdMsak0xV
+         C+qmX9spkqqTRtGFpFChpluOGJW17/z0x9DldPqbI14J5CwHleAVJLZnR63K8HSzZ8GO
+         MTBH7EVPRXY+pr/x1xPStIggnIoKZA6imfPGR5GT0lWMRzPi2aTv07FYJ9jRPVfM3Ibm
+         gd8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=X8NGdCWC41Xy1O1QF4FREA4fKB18fJvnlW/AXpxCQbQ=;
+        b=iDEny86lsW4fq5CYE5llhiFcAEN6m8AfWquF14Z80T/WhWGTRAJdjoUKFei3FNMF7V
+         LJLKhQaOGa/15jXabcqw0UI4Bv8576zzefUW49mxuAVtBz7chmTeS0ofhSk2iBo9StYy
+         rJDQsr0hO6pRNHEAzQpH/ESGHNzU2YXQ8fQJsLM9aud+tbQuLREODgmfkwGT3OiMZIEd
+         L2Fj0t72k0O32+K/A2GwFwnWcuATEPJ0/PuNx5u+sFRYyOfQEcVqieJasUQgt3jRPtiO
+         kVGLCJEthHwPqvcT3GVuWg8+T//+q6FkbMlUEsDFdoTuvAzBzwNaJYuTx4TjWzVCj1yb
+         7i+w==
+X-Gm-Message-State: AO0yUKXVpaF03gR9CSwLhPUdOJ3u4Z5rIknJ1y8Fo60N8rwVAFoUZoUD
+        7gtGB/kdtWUx643n+P9w+4HyKe6ibDkxCFAHTZ/Zcg==
+X-Google-Smtp-Source: AK7set+1pCQGWSs08BUT8FAH7b03HIJmaihraE7Tfy/AayH948BRiWIdVSdEWs6eX47ocmtHNlSb2GPCK4BSo4qonm4=
+X-Received: by 2002:a17:902:714b:b0:194:6253:d685 with SMTP id
+ u11-20020a170902714b00b001946253d685mr107416plm.3.1675719338917; Mon, 06 Feb
+ 2023 13:35:38 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v9 22/27] virt: gunyah: Add resource tickets
-Content-Language: en-US
-To:     Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
-CC:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Alex Elder <elder@linaro.org>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+References: <20230127104054.895129-1-abel.vesa@linaro.org> <Y9v/z8CYik3faHh7@google.com>
+ <Y+ErWTyV8CnE3Hl+@linaro.org> <Y+E3T6bozU1K2sFb@google.com>
+ <Y+E9Z+/+eCpPK6DE@linaro.org> <CAGETcx99ev_JdgYoifEdUg6rqNCs5LHc-CfwTc7j3Bd_zeizew@mail.gmail.com>
+ <CAD=FV=X3nnwuTK2=w7DJfjL_Ai7MiuvTwv8BiVJPMVEWKzR-_g@mail.gmail.com>
+In-Reply-To: <CAD=FV=X3nnwuTK2=w7DJfjL_Ai7MiuvTwv8BiVJPMVEWKzR-_g@mail.gmail.com>
+From:   Saravana Kannan <saravanak@google.com>
+Date:   Mon, 6 Feb 2023 13:35:02 -0800
+Message-ID: <CAGETcx-LJEZAXT1VazhRf7xtNpST0tfLNmgxH878gkOOP4TDAw@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 1/2] PM: domains: Skip disabling unused domains if
+ provider has sync_state
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Abel Vesa <abel.vesa@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-pm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Marc Zyngier <maz@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-References: <20230120224627.4053418-1-quic_eberman@quicinc.com>
- <20230120224627.4053418-23-quic_eberman@quicinc.com>
- <20230206095010.GF332@quicinc.com>
-From:   Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <20230206095010.GF332@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: vxeY4GnvZkx7rE5pfUFshOJZXft8JnD5
-X-Proofpoint-GUID: vxeY4GnvZkx7rE5pfUFshOJZXft8JnD5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-02-06_07,2023-02-06_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
- mlxlogscore=999 priorityscore=1501 adultscore=0 suspectscore=0 mlxscore=0
- malwarescore=0 spamscore=0 lowpriorityscore=0 impostorscore=0
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302060186
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Stephen Boyd <sboyd@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-17.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        ENV_AND_HDR_SPF_MATCH,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Feb 6, 2023 at 1:10 PM Doug Anderson <dianders@chromium.org> wrote:
+>
+> Hi,
+>
+> On Mon, Feb 6, 2023 at 11:33 AM Saravana Kannan <saravanak@google.com> wrote:
+> >
+> > On Mon, Feb 6, 2023 at 9:48 AM Abel Vesa <abel.vesa@linaro.org> wrote:
+> > >
+> > >
+> > > CC'ed Saravana
+> >
+> > Thanks. Please do cc me for stuff like this from the start. I skimmed
+> > the series and I think it's doing one of my TODO items. So, thanks for
+> > the patch!
+> >
+> > I'll take a closer look within a few days -- trying to get through
+> > some existing fw_devlink stuff.
+> >
+> > But long story short, it is the right thing to keep a supplier on
+> > indefinitely if there's a consumer device (that's not disabled in DT)
+> > that never gets probed. It's a pretty common scenario -- for example,
+> > say a display backlight. The default case should be functional
+> > correctness. And then we can add stuff that allows changing this
+> > behavior with command line args or something else that can be done
+> > from userspace.
+> >
+> > +1 to what Doug said elsewhere in this thread too. I'm trying to
+> > consolidate the "when do we give up" decision at the driver core level
+> > independent of what framework is being used.
+>
+> I'm not really sure I agree with the above, at least not without lots
+> of discussion in the community. It really goes against what the kernel
+> has been doing for years and years in the regulator and clock
+> frameworks. Those frameworks both eventually give up and power down
+> resources that no active drivers are using. Either changing the
+> regulator/clock frameworks or saying that other frameworks should work
+> in an opposite way seems like a recipe for confusion.
+>
+> Now, certainly I won't say that the way that the regulator and clock
+> frameworks function is perfect nor will I say that they don't cause
+> any problems. However, going the opposite way where resources are kept
+> at full power indefinitely will _also_ cause problems.
+>
+> Specifically, let's look at the case you mentioned of a display
+> backlight. I think you're saying that if there is no backlight driver
+> enabled in the kernel that you'd expect the backlight to just be on at
+> full brightness.
 
+No, I'm not saying that.
 
-On 2/6/2023 1:50 AM, Srivatsa Vaddagiri wrote:
-> * Elliot Berman <quic_eberman@quicinc.com> [2023-01-20 14:46:21]:
-> 
->> +int ghvm_add_resource_ticket(struct gunyah_vm *ghvm, struct gunyah_vm_resource_ticket *ticket)
->> +{
->> +	struct gunyah_vm_resource_ticket *iter;
->> +	struct gunyah_resource *ghrsc;
->> +	int ret = 0;
->> +
->> +	mutex_lock(&ghvm->resources_lock);
->> +	list_for_each_entry(iter, &ghvm->resource_tickets, list) {
->> +		if (iter->resource_type == ticket->resource_type && iter->label == ticket->label) {
->> +			ret = -EEXIST;
->> +			goto out;
->> +		}
->> +	}
->> +
->> +	if (!try_module_get(ticket->owner)) {
->> +		ret = -ENODEV;
->> +		goto out;
->> +	}
->> +
->> +	list_add(&ticket->list, &ghvm->resource_tickets);
->> +	INIT_LIST_HEAD(&ticket->resources);
->> +
->> +	list_for_each_entry(ghrsc, &ghvm->resources, list) {
->> +		if (ghrsc->type == ticket->resource_type && ghrsc->rm_label == ticket->label) {
->> +			if (!ticket->populate(ticket, ghrsc))
->> +				list_move(&ghrsc->list, &ticket->resources);
-> 
-> Do we need the search to continue in case of a hit? 'gh_vm_add_resource' seems to
-> break loop on first occurrence.
-> 
-> Also do we have examples of more than one 'gunyah_resource' being associated
-> with same 'gunyah_vm_resource_ticket'?  Both vcpu and irqfd tickets seem to deal
-> with just one resource?
-> 
+> Would you expect this even if the firmware didn't
+> leave the backlight on?
 
-I'll mention this in the commit text as well.
+sync_state() never turns on anything that wasn't already on at boot.
+So in your example, if the firmware didn't turn on the backlight, then
+it'll remain off.
 
-Resources are created by Gunyah as configured in the VM's devicetree 
-configuration. Gunyah doesn't process the label and that makes it 
-possible for userspace to create multiple resources with the same label. 
-The kernel needs to be prepared for that to happen. IMO, this isn't a 
-framework issue, so I've chosen the policy to be "many-to-one": resource 
-tickets can bind to many resources and resources are bound to only one 
-ticket. If the resource ticket handler isn't designed to accept multiple 
-resources, they can skip/ignore any further populate callbacks.
+> In any case, why do you say it's more correct?
 
->>   static int gh_vm_start(struct gunyah_vm *ghvm)
->>   {
->>   	struct gunyah_vm_memory_mapping *mapping;
->>   	u64 dtb_offset;
->>   	u32 mem_handle;
->> -	int ret;
->> +	struct gunyah_resource *ghrsc;
->> +	struct gh_rm_hyp_resources *resources;
->> +	int ret, i;
->>   
->>   	down_write(&ghvm->status_lock);
->>   	if (ghvm->vm_status != GH_RM_VM_STATUS_NO_STATE) {
->> @@ -241,6 +314,22 @@ static int gh_vm_start(struct gunyah_vm *ghvm)
->>   		goto err;
->>   	}
->>   
->> +	ret = gh_rm_get_hyp_resources(ghvm->rm, ghvm->vmid, &resources);
->> +	if (ret) {
->> +		pr_warn("Failed to get hypervisor resources for VM: %d\n", ret);
->> +		goto err;
->> +	}
->> +
->> +	for (i = 0; i < le32_to_cpu(resources->n_entries); i++) {
-> 
-> minor nit: not sure if we can rely on compiler to optimize this, but it would
-> be better if we run le32_to_cpu once and use the result in loop.
-> 
+Because if you turn off the display, the device is unusable. In other
+circumstances, it can crash a device because the firmware powered it
+on left it in a "good enough" state, but we'd go turn it off and crash
+the system.
 
-Done.
+> I suppose you'd say that the screen is at least usable like this.
+> ...except that you've broken a different feature: suspend/resume.
 
->> +		ghrsc = gh_rm_alloc_resource(ghvm->rm, &resources->entries[i]);
->> +		if (!ghrsc) {
->> +			ret = -ENOMEM;
->> +			goto err;
->> +		}
->> +
->> +		gh_vm_add_resource(ghvm, ghrsc);
-> 
-> Shouldn't we have gh_vm_add_resource()->  ticket->populate() return a result and
-> in case of failure we should bail out from this loop?
-> 
+If the display is off and the laptop is unusable, then we have bigger
+problems than suspend/resume?
 
-I'm hesitant to treat the resource ticket rejecting the resource as a 
-bail condition.
+> Without being able to turn the backlight off at suspend time the
+> device would drain tons of power. It could also overheat when you
+> stuffed it in your backpack and damage the battery or start a fire.
+> Even if you argue that in the case of the display backlight you're
+> better off, what about a keyboard backlight? It's pretty easy to use a
+> laptop without the keyboard backlight and if you didn't have a driver
+> for it you'd be in better shape leaving it off instead of leaving it
+> on 100% of the time, even when the device is suspended.
 
-Userspace is able to detect when functions didn't get set up and I 
-wanted to avoid adding further complexity to kernel drivers.
+I think you are again assuming sync_state() will cause stuff to be
+turned on if the firmware didn't leave it on before booting the
+kernel. This is not the case.
 
->> +	}
->> +
->>   	ret = gh_rm_vm_start(ghvm->rm, ghvm->vmid);
->>   	if (ret) {
->>   		pr_warn("Failed to start VM: %d\n", ret);
+But let's assume you had the same understanding, then I'd argue that
+between the default kernel configuration crashing some systems vs
+having power impact on others, I'd prefer the former. The firmware
+shouldn't have left the keyboard backlight on if it cared about
+suspend/resume.
+
+> Overall: if a kernel isn't configured for a given driver we shouldn't
+> be expecting the hardware controlled by that driver to work. The best
+> we can hope for is that it's at least in a low power state.
+>
+> In general I think that having a well-defined way to know it's time to
+> give up and power off anything for which a driver didn't probe needs
+> to be an important part of any designs here.
+
+Btw, the current compromise for deferred probes/optional suppliers is
+"keep extending the timeout by 10 seconds as long as modules are being
+loaded".
+
+As I said in my earlier email, this is just what I think it should be
+like and there's still stuff to figure out before I send out a patch
+like that. For example, we could have a sysfs file to write to to
+release sync_state() for a device. Then you'd just echo to that file
+in your example and go about your day.
+
+-Saravana
