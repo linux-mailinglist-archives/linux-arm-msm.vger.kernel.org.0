@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D6E3268C893
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 22:26:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C7ED868C897
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 22:26:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229649AbjBFV01 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Feb 2023 16:26:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41630 "EHLO
+        id S229884AbjBFV02 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Feb 2023 16:26:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229897AbjBFV00 (ORCPT
+        with ESMTP id S230011AbjBFV01 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Feb 2023 16:26:26 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF2D4EF83
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 13:26:24 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id o18so11754377wrj.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Feb 2023 13:26:24 -0800 (PST)
+        Mon, 6 Feb 2023 16:26:27 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B468CDC2
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 13:26:26 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id i5so4573900wrc.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Feb 2023 13:26:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=pXfjugPVwiiZL4YZi+/2x2YG+1ce/SaQsZb0dADm9n4=;
-        b=nZuNJknrREMRZtgrKcJs1rhNy10GsHm4Fl/LnU3lfiG+BKEuaVtySkmuvlJtsZvN36
-         Hy1DBDi6CZ4MZP0SZffv5AaE2/MnvQOHv9qsOIkOfcUbfSTWPEBe5dU1TPV/nQa8VGx7
-         x36sHfgJ9kcG8jzAfKeodYOMI+O4ywI+sfm3ojEKuX0SgKp2zjud6CCYChAz0gh9dAIC
-         zw00ahSN4TaSM/8hl6KJAkKWucYU6dNTMwcFXmJWY+bPITjAPQ3pQravyJXfNwzlf/Nm
-         wlzAvdpSzcUPpd8lATW/oasc11JRlrB/vVsS1Yf7dkdJZDHH4wJVo57WKa6uaxQ2PyEj
-         Y7mg==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=m7PS6b5vkJPFlGz4zOi2GTk2RyAin7yCEnLhrjw1nNk=;
+        b=LXT3KxxoYDTVakG2EVnFyJX0Ecoe0375mD4EVdWYvoZ0/77UtL8TqV8Rr4ebhuEDMW
+         +mO4/eJK6PdpclKyD5rGI6WbkDVILkqZrbDfmMm1/FnDlnQHucF6ReBa0s/ru5V4nUOU
+         9UnWsRtNaDOH6VR3QbMxTWC2f50gC8kffNZHAXZhAbWqkn4fPuSHbZQqJdPsuCAvqjoD
+         N4Frmd1qX4IRz32ciC5lMaxoJtcq57Vl2SgZtJVHI6TSI7V38c3MsRJ5cSXhtOWPjlIF
+         xrHbEkbQ3V90FwhhLVCyaWyjiZyK5x1bXZLXmeZx6ICWyOLjeTdzB+h8aU3+9E8gLxoW
+         VoSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pXfjugPVwiiZL4YZi+/2x2YG+1ce/SaQsZb0dADm9n4=;
-        b=1sqi8/O1TjYCgyw98tGDawrOA5c3AYzLM2Xo4Zsd+jfu/A0l3qU4mrjKGhqfmbyH92
-         9XP7V+nkU/jJHn48Tik7XBLN+hpBeM6YJ7ftrt0pjdQaoMeMNAoeSsFh7D/+jrwDkRiu
-         II2QyszAenTdAwWdrqkO4Jgat0dPEQ27uzbnMsZHcVCq1UquvMYATkn5prkj/89z+pYK
-         WUUhnXifWIPqsqFNdYtUI/95vZ8SpJcAPdbeSFRje+A29r1NwkrkC6ZAWXzzc5JtZShX
-         ZyDarUExPdJOoeKKYPnR9hKLkerBHM+3LgRpBV47GXdajs4plXQh8QRi6C4neIG5Mhfp
-         xPxw==
-X-Gm-Message-State: AO0yUKXwrQ0dQmqTFJ+sQfIdyjzatparTebAjhegGKuFOwPh2G3ymCh5
-        V8UdKBLXfegLo79CejPC2uJ8Ow==
-X-Google-Smtp-Source: AK7set8JsDj9i24v8I3bpSCZSnTJnytHnJGs1kE7mep2Eh3n0OWxurExwxy0uWSzzGewFaO2IQ5PLw==
-X-Received: by 2002:a5d:6684:0:b0:2bd:e8c2:c9bc with SMTP id l4-20020a5d6684000000b002bde8c2c9bcmr294655wru.42.1675718783464;
-        Mon, 06 Feb 2023 13:26:23 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=m7PS6b5vkJPFlGz4zOi2GTk2RyAin7yCEnLhrjw1nNk=;
+        b=kMUcCX3hrK+33XtPlwvkNWKQxdpa2z148HnTxgr2oq8FYwfmi1YZRfnbCaSpFENytn
+         KvTiJCtIbu0q7Zg7W93xNbzeUxfy+mXgVoIpL9hYOxUtiKruf0k/1YC7hRxioE+84+BZ
+         2HoPDC+LADxhxHW+V17/WtjYKVSMkJ1nQCg78AOFwOznAza//a0wj4CZoZBthkogfwSK
+         jtzGP+aKNPid5IudQG/sXKdhgE6NM3+LHbjCks4GEw/RXYpQCReX558nsrVfyUh4yOUR
+         9QTBLaWtpiIRKlkMbknrHqDh8HsjTgbVcWRLxdyhtAJPaYR8K/y8DpfT8cbNtB33WHHa
+         cU9A==
+X-Gm-Message-State: AO0yUKXFKl2x5vC+1jax+tDMHlCeCcNGb2qQ7Hg9nnWOClXZxKR9iWyb
+        s/XIhxFkPkSE2eEDiA+S4TmzHA==
+X-Google-Smtp-Source: AK7set/N0Z515Us6ba2AQzmcs4+lftZy9SCGxw2jiSRJD5nCFbPEB/efF7Y2ek9XQbT3R4s+Q25TKg==
+X-Received: by 2002:a5d:6941:0:b0:2bf:cfbd:44be with SMTP id r1-20020a5d6941000000b002bfcfbd44bemr227090wrw.69.1675718784988;
+        Mon, 06 Feb 2023 13:26:24 -0800 (PST)
 Received: from hackbox.lan ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id j11-20020a5d604b000000b002b57bae7174sm9783341wrt.5.2023.02.06.13.26.22
+        by smtp.gmail.com with ESMTPSA id j11-20020a5d604b000000b002b57bae7174sm9783341wrt.5.2023.02.06.13.26.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Feb 2023 13:26:22 -0800 (PST)
+        Mon, 06 Feb 2023 13:26:24 -0800 (PST)
 From:   Abel Vesa <abel.vesa@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -64,62 +65,135 @@ To:     Andy Gross <agross@kernel.org>,
         Johan Hovold <johan+linaro@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
         linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: [PATCH v8 00/11] sm8550: Add PCIe HC and PHY support
-Date:   Mon,  6 Feb 2023 23:26:08 +0200
-Message-Id: <20230206212619.3218741-1-abel.vesa@linaro.org>
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v8 01/11] dt-bindings: phy: Add QMP PCIe PHY comptible for SM8550
+Date:   Mon,  6 Feb 2023 23:26:09 +0200
+Message-Id: <20230206212619.3218741-2-abel.vesa@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20230206212619.3218741-1-abel.vesa@linaro.org>
+References: <20230206212619.3218741-1-abel.vesa@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-For changelogs please look at each patch individually.
+Document the QMP PCIe PHY compatible for SM8550.
 
-This time, this version has an actual fix for the already merged PCIe
-devicetree nodes, to get them in line with the SC8280XP bindings.
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+---
 
-Abel Vesa (11):
-  dt-bindings: phy: Add QMP PCIe PHY comptible for SM8550
-  phy: qcom-qmp: pcs: Add v6 register offsets
-  phy: qcom-qmp: pcs: Add v6.20 register offsets
-  phy: qcom-qmp: pcs-pcie: Add v6 register offsets
-  phy: qcom-qmp: pcs-pcie: Add v6.20 register offsets
-  phy: qcom-qmp: qserdes-txrx: Add v6.20 register offsets
-  phy: qcom-qmp: qserdes-lane-shared: Add v6 register offsets
-  phy: qcom-qmp-pcie: Add support for SM8550 g3x2 and g4x2 PCIEs
-  dt-bindings: PCI: qcom: Add SM8550 compatible
-  PCI: qcom: Add SM8550 PCIe support
-  arm64: dts: qcom: sm8550: Fix PCIe PHYs and controllers nodes
+The v7 of this patch is:
+https://lore.kernel.org/all/20230203081807.2248625-2-abel.vesa@linaro.org/
 
- .../devicetree/bindings/pci/qcom,pcie.yaml    |  40 ++
- .../phy/qcom,sc8280xp-qmp-pcie-phy.yaml       |  30 +-
- arch/arm64/boot/dts/qcom/sm8550-mtp.dts       |  10 +
- arch/arm64/boot/dts/qcom/sm8550.dtsi          |  52 +--
- drivers/pci/controller/dwc/pcie-qcom.c        |  25 +-
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 346 +++++++++++++++++-
- .../phy/qualcomm/phy-qcom-qmp-pcs-pcie-v6.h   |  15 +
- .../qualcomm/phy-qcom-qmp-pcs-pcie-v6_20.h    |  23 ++
- drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6.h    |  16 +
- drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6_20.h |  18 +
- .../phy-qcom-qmp-qserdes-ln-shrd-v6.h         |  32 ++
- .../phy-qcom-qmp-qserdes-txrx-v6_20.h         |  45 +++
- drivers/phy/qualcomm/phy-qcom-qmp.h           |   6 +
- 13 files changed, 611 insertions(+), 47 deletions(-)
- create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v6.h
- create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v6_20.h
- create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6.h
- create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6_20.h
- create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-qserdes-ln-shrd-v6.h
- create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-v6_20.h
+Changes since v7:
+ * Added Johan's R-b tag
 
+Changes since v6:
+ * none
+
+Changes since v5:
+ * added Krzysztof's R-b tag
+ * renmaed the no-CSR reset to "phy_nocsr" as discussed off-list with
+   Bjorn and Johan
+
+Changes since v4:
+ * constrained resets and reset-names to 1 for every other SoC
+
+Changes since v3:
+ * increased the allowed number of resets to allow ncsr reset
+ * added vdda-qref-supply which is used by pcie1_phy node in MTP dts
+ * added both compatibles to the allOf:if:then clause to constrain the
+   number of possible clocks to 5
+
+Changes since v2:
+ * added back the binding compatible update patch
+
+Changes since v1:
+ * split all the offsets into separate patches, like Vinod suggested
+
+ .../phy/qcom,sc8280xp-qmp-pcie-phy.yaml       | 30 ++++++++++++++++++-
+ 1 file changed, 29 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+index 8a85318d9c92..ef49efbd0a20 100644
+--- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
++++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+@@ -20,6 +20,8 @@ properties:
+       - qcom,sc8280xp-qmp-gen3x2-pcie-phy
+       - qcom,sc8280xp-qmp-gen3x4-pcie-phy
+       - qcom,sm8350-qmp-gen3x1-pcie-phy
++      - qcom,sm8550-qmp-gen3x2-pcie-phy
++      - qcom,sm8550-qmp-gen4x2-pcie-phy
+ 
+   reg:
+     minItems: 1
+@@ -43,16 +45,21 @@ properties:
+     maxItems: 1
+ 
+   resets:
+-    maxItems: 1
++    minItems: 1
++    maxItems: 2
+ 
+   reset-names:
++    minItems: 1
+     items:
+       - const: phy
++      - const: phy_nocsr
+ 
+   vdda-phy-supply: true
+ 
+   vdda-pll-supply: true
+ 
++  vdda-qref-supply: true
++
+   qcom,4ln-config-sel:
+     description: PCIe 4-lane configuration
+     $ref: /schemas/types.yaml#/definitions/phandle-array
+@@ -113,6 +120,8 @@ allOf:
+           contains:
+             enum:
+               - qcom,sm8350-qmp-gen3x1-pcie-phy
++              - qcom,sm8550-qmp-gen3x2-pcie-phy
++              - qcom,sm8550-qmp-gen4x2-pcie-phy
+     then:
+       properties:
+         clocks:
+@@ -126,6 +135,25 @@ allOf:
+         clock-names:
+           minItems: 6
+ 
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,sm8550-qmp-gen4x2-pcie-phy
++    then:
++      properties:
++        resets:
++          minItems: 2
++        reset-names:
++          minItems: 2
++    else:
++      properties:
++        resets:
++          maxItems: 1
++        reset-names:
++          maxItems: 1
++
+ examples:
+   - |
+     #include <dt-bindings/clock/qcom,gcc-sc8280xp.h>
 -- 
 2.34.1
 
