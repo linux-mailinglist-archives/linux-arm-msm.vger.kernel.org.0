@@ -2,59 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 012B668C31C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 17:24:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C957268C361
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 17:31:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229722AbjBFQYf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Feb 2023 11:24:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36980 "EHLO
+        id S229771AbjBFQb2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Feb 2023 11:31:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229509AbjBFQYe (ORCPT
+        with ESMTP id S229573AbjBFQb1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Feb 2023 11:24:34 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85E48E07E
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 08:24:33 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id d14so10901436wrr.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Feb 2023 08:24:33 -0800 (PST)
+        Mon, 6 Feb 2023 11:31:27 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E6C62822F
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 08:31:25 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id i5so3768937wrc.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Feb 2023 08:31:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=g8odKn7DP4QYY/wmzRMehcWk+ZwRVlAO+1ainCW92xA=;
-        b=l97RjWW91LuuiRfeiBJJoxQSh7JojBXrHcz0F9oZIalGZs8J89M35u+1okVkbgNExZ
-         K5qtaEcriHyDTezgopbKKvvkebo1ZvCOSAyZTcb7/kUG4mMUvHy7m0ROE+6oYzttxx/B
-         QyRwRPrallHW3jLXCaE6QESFXe1MH0JCgv9hE4Wze3U2L3dAePJX7r+hbGg/KmARE161
-         HmpoJJJT/bN96qwmkMwX3OOtKB+pD89zCd8T5CYF1T0GVfLpF3be4bqYVkOo4oKZHpar
-         yFtxkZ4HJt5ErAPnfhDoaaU4N+o5NMhaO2ofxmczbTJIjZHIn9adLMP/o1croHMrh3Rt
-         tBrw==
+        bh=J5bjcHFpmFVH3KXyAiC17ebDFZXrFoaWMGOWdWjJid8=;
+        b=juATuULNtPkiFSg/8BBW6AN+k06PLQIav/v2MR0xneT3eVbLtakvFqICe5KlRxBwiQ
+         WrmP22Qah2Yu0bplNBqQvjmM1ozth7ybdONprgD+uc1NFohq9p8egsueG8PMGmIFdVYB
+         RBhdRbUptzbR6qVGVJVfYU2xbEOY2FO2ctYwD9wuhnIKAbDpwT6cVI/8OlNp5vxCydY2
+         Olti5REy7CZQjcP9T6uQkt/yk1cu0s0inpSaJbYox/QgYhO4gk1VzbmBRW+86FlGwhLa
+         5XH+1C8SjTmRORjUZz1Si1Sv1ebGqlXf6JNK5+zkLAOwpohZX7RgeClhdIHLqSCehycH
+         W4qQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=g8odKn7DP4QYY/wmzRMehcWk+ZwRVlAO+1ainCW92xA=;
-        b=eSh1EnA+gQJcZqXu7bhON0djCdXtRSIar1G/HuTFE9oqTJTOjU/JjgmlPHj9F7zdw7
-         vTAOXY3BetemOcz4V0LHwfhJwACUNqD43PBZTP/FPEBjmgtgvHDEDHY5TdapQOOfh/B2
-         xQARbu/6wqmuStw8tOUaUUOs+JA9hgw4LzB+8/rg9NthEF/ud1dVVwGDDpKBUZ18ULbu
-         vR9TlBOScldPhRSR+kgSsEl0NTgT2stk31kOjmr+KBMgDnlBpxu7y7+d2ePQodXxM1NJ
-         N0kHssIByJpRF4mikUurEkaJIzsZgLTti2qznaZzTV7i7yhvocj6/2Ji109qijW+mBmQ
-         W0RQ==
-X-Gm-Message-State: AO0yUKVfPgKitBjgBZ4rwmEJYMbuNT2CZIdhRUlvOUAqjGXk1x7bkQ2b
-        /oyM4P3/zO6K7ddv62Dz3HzLFw==
-X-Google-Smtp-Source: AK7set8WEZAF02OcXH23YKddTtBLmAlwFIAub8wr1S/IIIwZKDgLm2uKOfrLjcDmF71n8h4+gQshBQ==
-X-Received: by 2002:adf:fc88:0:b0:2bf:d137:9945 with SMTP id g8-20020adffc88000000b002bfd1379945mr17285609wrr.51.1675700672093;
-        Mon, 06 Feb 2023 08:24:32 -0800 (PST)
+        bh=J5bjcHFpmFVH3KXyAiC17ebDFZXrFoaWMGOWdWjJid8=;
+        b=LsFTAnMpVq3vVgExWMEmWyE3oefV+v52tlbv3Q0tlNnrzI5o4iZP+461KI/CoS3L4w
+         DHPycTYpX7hyEERtNO65SS07Z8j4AA30jAEqJeGCpPBXAclVTHLQdFm02oh7XyDqN2I5
+         k0Fj4FHetKFFhw4PTZ6MTOXeURxgUh5GQegqtLT0trUSNz9/Skffe/y5DrPVgSQ5N65c
+         Z9sPvpmfmbTXPgZg6pjivaTi3hVjGk1dFnPi6MaMhynZak8pbe2+94h/Fhw1iX1wiAyw
+         WWSfXtEv4nnx+nRs6ylYzLHPMRxyJXKrQfv68ao0Ld5uWBa0ZWBJNuIS9gcB7ZqPxY0o
+         q9wA==
+X-Gm-Message-State: AO0yUKWMV5H1BUaF3sAVzM5YUORJc8OsGLGX2MF7Ogl14K5bE4KOv2ZQ
+        s+dMwa+YZarBfVa9Fmd/sW0/Kw==
+X-Google-Smtp-Source: AK7set9FCxgGOIkd4YfSDh4BJEQ7VfKvPjFWkq+zcTrZmBe5u5FZoI+6B1BrRcGLpoRHpMmwrSpIQw==
+X-Received: by 2002:adf:e192:0:b0:2bc:846a:8ead with SMTP id az18-20020adfe192000000b002bc846a8eadmr18992629wrb.37.1675701083988;
+        Mon, 06 Feb 2023 08:31:23 -0800 (PST)
 Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id i6-20020a0560001ac600b00241fde8fe04sm9736909wry.7.2023.02.06.08.24.30
+        by smtp.gmail.com with ESMTPSA id h10-20020a5d504a000000b002c3efca57e1sm1272703wrt.110.2023.02.06.08.31.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Feb 2023 08:24:31 -0800 (PST)
-Date:   Mon, 6 Feb 2023 18:24:30 +0200
+        Mon, 06 Feb 2023 08:31:23 -0800 (PST)
+Date:   Mon, 6 Feb 2023 18:31:21 +0200
 From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
         "Rafael J . Wysocki" <rafael@kernel.org>,
         Kevin Hilman <khilman@kernel.org>,
         Ulf Hansson <ulf.hansson@linaro.org>,
@@ -64,18 +62,19 @@ Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         linux-pm@vger.kernel.org,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>
+        linux-arm-msm@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Doug Anderson <dianders@chromium.org>
 Subject: Re: [RFC PATCH v2 1/2] PM: domains: Skip disabling unused domains if
  provider has sync_state
-Message-ID: <Y+EpvhIWYNp/C0V8@linaro.org>
+Message-ID: <Y+ErWTyV8CnE3Hl+@linaro.org>
 References: <20230127104054.895129-1-abel.vesa@linaro.org>
  <Y9v/z8CYik3faHh7@google.com>
- <3826e0e6-bb2b-409d-d1c3-ed361305bce3@linaro.org>
- <CAD=FV=Ue71nnCEBWSw7A9U0Tzi9pFSqZaQk_5CygakS2j+_tfw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAD=FV=Ue71nnCEBWSw7A9U0Tzi9pFSqZaQk_5CygakS2j+_tfw@mail.gmail.com>
+In-Reply-To: <Y9v/z8CYik3faHh7@google.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -85,84 +84,130 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23-02-02 14:20:56, Doug Anderson wrote:
-> Hi,
+On 23-02-02 18:24:15, Matthias Kaehlcke wrote:
+> Hi Abel,
 > 
-> On Thu, Feb 2, 2023 at 11:53 AM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
-> >
-> > On 02/02/2023 20:24, Matthias Kaehlcke wrote:
-> > > Hi Abel,
-> > >
-> > > On Fri, Jan 27, 2023 at 12:40:53PM +0200, Abel Vesa wrote:
-> > >> Currently, there are cases when a domain needs to remain enabled until
-> > >> the consumer driver probes. Sometimes such consumer drivers may be built
-> > >> as modules. Since the genpd_power_off_unused is called too early for
-> > >> such consumer driver modules to get a chance to probe, the domain, since
-> > >> it is unused, will get disabled. On the other hand, the best time for
-> > >> an unused domain to be disabled is on the provider's sync_state
-> > >> callback. So, if the provider has registered a sync_state callback,
-> > >> assume the unused domains for that provider will be disabled on its
-> > >> sync_state callback. Also provide a generic sync_state callback which
-> > >> disables all the domains unused for the provider that registers it.
-> > >>
-> > >> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > >> ---
-> > >>
-> > >> This approach has been applied for unused clocks as well.
-> > >> With this patch merged in, all the providers that have sync_state
-> > >> callback registered will leave the domains enabled unless the provider's
-> > >> sync_state callback explicitly disables them. So those providers will
-> > >> need to add the disabling part to their sync_state callback. On the
-> > >> other hand, the platforms that have cases where domains need to remain
-> > >> enabled (even if unused) until the consumer driver probes, will be able,
-> > >> with this patch in, to run without the pd_ignore_unused kernel argument,
-> > >> which seems to be the case for most Qualcomm platforms, at this moment.
-> > >
-> > > I recently encountered a related issue on a Qualcomm platform with a
-> > > v6.2-rc kernel, which includes 3a39049f88e4 ("soc: qcom: rpmhpd: Use
-> > > highest corner until sync_state"). The issue involves a DT node with a
-> > > rpmhpd, the DT node is enabled, however the corresponding device driver
-> > > is not enabled in the kernel. In such a scenario the sync_state callback
-> > > is never called, because the genpd consumer never probes. As a result
-> > > the Always-on subsystem (AOSS) of the SoC doesn't enter sleep mode during
-> > > system suspend, which results in a substantially higher power consumption
-> > > in S3.
-> > >
-> > > I wonder if genpd (and some other frameworks) needs something like
-> > > regulator_init_complete(), which turns off unused regulators 30s after
-> > > system boot. That's conceptually similar to the current
-> > > genpd_power_off_unused(), but would provide time for modules being loaded.
-> >
-> > I think the overall goal is to move away from ad-hoc implementations
-> > like clk_disable_unused/genpd_power_off_unused/regulator_init_complete
-> > towards the sync_state.
-> >
-> > So inherently one either has to provide drivers for all devices in
-> > question or disable unused devices in DT.
+> On Fri, Jan 27, 2023 at 12:40:53PM +0200, Abel Vesa wrote:
+> > Currently, there are cases when a domain needs to remain enabled until
+> > the consumer driver probes. Sometimes such consumer drivers may be built
+> > as modules. Since the genpd_power_off_unused is called too early for
+> > such consumer driver modules to get a chance to probe, the domain, since
+> > it is unused, will get disabled. On the other hand, the best time for
+> > an unused domain to be disabled is on the provider's sync_state
+> > callback. So, if the provider has registered a sync_state callback,
+> > assume the unused domains for that provider will be disabled on its
+> > sync_state callback. Also provide a generic sync_state callback which
+> > disables all the domains unused for the provider that registers it.
+> > 
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > ---
+> > 
+> > This approach has been applied for unused clocks as well.
+> > With this patch merged in, all the providers that have sync_state
+> > callback registered will leave the domains enabled unless the provider's
+> > sync_state callback explicitly disables them. So those providers will
+> > need to add the disabling part to their sync_state callback. On the
+> > other hand, the platforms that have cases where domains need to remain
+> > enabled (even if unused) until the consumer driver probes, will be able,
+> > with this patch in, to run without the pd_ignore_unused kernel argument,
+> > which seems to be the case for most Qualcomm platforms, at this moment.
 > 
-> Hmm. I guess I haven't been involved too much in those discussions,
-> but overall I thought:
-> 
-> 1. The device tree should ideally be describing the hardware. Thus if
-> the hardware is there / available to use on a given board then the
-> device should be marked enabled.
+> I recently encountered a related issue on a Qualcomm platform with a
+> v6.2-rc kernel, which includes 3a39049f88e4 ("soc: qcom: rpmhpd: Use
+> highest corner until sync_state"). The issue involves a DT node with a
+> rpmhpd, the DT node is enabled, however the corresponding device driver
+> is not enabled in the kernel. In such a scenario the sync_state callback
+> is never called, because the genpd consumer never probes. As a result
+> the Always-on subsystem (AOSS) of the SoC doesn't enter sleep mode during
+> system suspend, which results in a substantially higher power consumption
+> in S3.
 
-That is correct.
+If I get this correctly, one of the providers is missing (doesn't matter
+the reason), in which case, your kernel needs that driver, period. There
+is no reason why you would expect the consumer to work without the
+provider. Or, you could just remove the property in the devicetree node,
+the property that makes the consumer wait for that provider. Anyway, you
+should never end up with a consumer provider relationship in devicetree
+without providing the provider driver.
 
 > 
-> 2. Users are not actually required to enable drivers for all hardware
-> on their board. Things should still function OK even if a driver is
-> disabled. For instance, if the SoC had a crypto accelerator you'd
-> describe it in the device tree but it would be OK for someone to build
-> a kernel that didn't enable the crypto accelerator driver.
+> I wonder if genpd (and some other frameworks) needs something like
+> regulator_init_complete(), which turns off unused regulators 30s after
+> system boot. That's conceptually similar to the current
+> genpd_power_off_unused(), but would provide time for modules being loaded.
 
-Right, but sync state is relying on fw_devlinks to decide if there are
-any consumers left that still need to probe. So if one of the consumer
-devicetree nodes needs some provider, the consumer will simply not work
-without the provider. In theory at least.
+NACK, timeouts are just another hack in this case, specially when we
+have a pretty reliable mechanism like sync_state.
 
 > 
-> Am I mistaken? Which point did I get wrong, #1, or #2?
-> 
-> -Doug
+> > The v1 is here:
+> > https://lore.kernel.org/all/20230126234013.3638425-1-abel.vesa@linaro.org/
+> > 
+> > Changes since v1:
+> >  * added a generic sync state callback to be registered by providers in
+> >    order to disable the unused domains on their sync state. Also
+> >    mentioned this in the commit message.
+> > 
+> >  drivers/base/power/domain.c | 17 ++++++++++++++++-
+> >  include/linux/pm_domain.h   |  3 +++
+> >  2 files changed, 19 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+> > index 84662d338188..c2a5f77c01f3 100644
+> > --- a/drivers/base/power/domain.c
+> > +++ b/drivers/base/power/domain.c
+> > @@ -1099,7 +1099,8 @@ static int __init genpd_power_off_unused(void)
+> >  	mutex_lock(&gpd_list_lock);
+> >  
+> >  	list_for_each_entry(genpd, &gpd_list, gpd_list_node)
+> > -		genpd_queue_power_off_work(genpd);
+> > +		if (!dev_has_sync_state(genpd->provider->dev))
+> > +			genpd_queue_power_off_work(genpd);
+> >  
+> >  	mutex_unlock(&gpd_list_lock);
+> >  
+> > @@ -1107,6 +1108,20 @@ static int __init genpd_power_off_unused(void)
+> >  }
+> >  late_initcall(genpd_power_off_unused);
+> >  
+> > +void genpd_power_off_unused_sync_state(struct device *dev)
+> > +{
+> > +	struct generic_pm_domain *genpd;
+> > +
+> > +	mutex_lock(&gpd_list_lock);
+> > +
+> > +	list_for_each_entry(genpd, &gpd_list, gpd_list_node)
+> > +		if (genpd->provider->dev == dev)
+> > +			genpd_queue_power_off_work(genpd);
+> > +
+> > +	mutex_unlock(&gpd_list_lock);
+> > +}
+> > +EXPORT_SYMBOL_GPL(genpd_power_off_unused_sync_state);
+> > +
+> >  #ifdef CONFIG_PM_SLEEP
+> >  
+> >  /**
+> > diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
+> > index f776fb93eaa0..1fd5aa500c81 100644
+> > --- a/include/linux/pm_domain.h
+> > +++ b/include/linux/pm_domain.h
+> > @@ -351,6 +351,7 @@ struct device *genpd_dev_pm_attach_by_id(struct device *dev,
+> >  					 unsigned int index);
+> >  struct device *genpd_dev_pm_attach_by_name(struct device *dev,
+> >  					   const char *name);
+> > +void genpd_power_off_unused_sync_state(struct device *dev);
+> >  #else /* !CONFIG_PM_GENERIC_DOMAINS_OF */
+> >  static inline int of_genpd_add_provider_simple(struct device_node *np,
+> >  					struct generic_pm_domain *genpd)
+> > @@ -419,6 +420,8 @@ struct generic_pm_domain *of_genpd_remove_last(struct device_node *np)
+> >  {
+> >  	return ERR_PTR(-EOPNOTSUPP);
+> >  }
+> > +
+> > +static inline genpd_power_off_unused_sync_state(struct device *dev) {}
+> >  #endif /* CONFIG_PM_GENERIC_DOMAINS_OF */
+> >  
+> >  #ifdef CONFIG_PM
+> > -- 
+> > 2.34.1
+> > 
