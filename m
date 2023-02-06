@@ -2,125 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8591568C1F8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 16:43:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EF6168C2BB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 17:14:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229571AbjBFPnF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Feb 2023 10:43:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47660 "EHLO
+        id S231867AbjBFQN5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Feb 2023 11:13:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229577AbjBFPmp (ORCPT
+        with ESMTP id S231757AbjBFQNg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Feb 2023 10:42:45 -0500
-Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B888298E5
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 07:41:49 -0800 (PST)
-Received: by mail-il1-x132.google.com with SMTP id z17so1593855ilm.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Feb 2023 07:41:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ya1iSK0PwE6HxUwFfuaJF4yxZVg4nHtKlcACKsLmRGU=;
-        b=W/YkJki6ZwlXviPJ614uzFdt2BX/wHzE5Skxgb38EnN1zNcf707VfP+vq4SIYuFXiu
-         LiXSzWangkaoiF4lXCarJh274pb36EjTfBBLjteO2eaVrqT3Mm6+UgHx8Wa6DPCrUuge
-         RHhjM55RBX3kjlSfltd6h5n7Q0hOQYnkzXEgdMzMXyn2GoUV/AKfXbqdnXWhZKLdnESp
-         eOHjve0t0fskr5APXwdt8xUGfyhUOx1rWxU6jCKCle6aFXSHTpD4CryrZJcns3EH0Pbh
-         8mCV5jjmwQcYqVjjRfTm3lv79Ijng+S6AoxJdzESt32cONgkf5olvcsWK4xiQCJsIsSe
-         n5ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ya1iSK0PwE6HxUwFfuaJF4yxZVg4nHtKlcACKsLmRGU=;
-        b=8Dx+53Bk99hfYLC8X/NAaMGttz5TyuUhcqZy4tkzY0LmThPoedREyDV/Oyhsb5V7+J
-         Gh1y3kDkMl7YsZfpZd+IkTr43rD4ZJhCCjEWvcvOZu/TqfpJ5E2WvpMUIMMFTZhZd1Wa
-         5cx/5EZQ9EV2RehwlaR34zVx4Ab3PdSjJHhGgk52AzvwS+kMRESfFIM0Z9Karn6bYwiA
-         bCzKvVOtN1ulGGvAjMUCHJFtXLRyoDB/Q6xqfWTooFW8JP0ZnKzUOCUezL/2m3iJSD4G
-         Zv1KsFPxDVaJMEPFLKSwWQLZ+5rUG+VMb9OavHnKcEPL+KfVs42hDwo/iJP/Tt1dg7eO
-         TN9A==
-X-Gm-Message-State: AO0yUKUzSb1cRq723zL93l2U6HUZL/HjZoyV07NXgiQyCZXLTXu7bRoz
-        O6gP4LLWJhLmf3AfrAMW2I4Y2w==
-X-Google-Smtp-Source: AK7set9xFUDytMkMm3RWCn615aTLybOLKq1Z55Oif0udR87hG69FUrkkSit5QKSJolKqkiDJt7eRKw==
-X-Received: by 2002:a05:6e02:1a44:b0:313:d748:8f78 with SMTP id u4-20020a056e021a4400b00313d7488f78mr782710ilv.18.1675698072954;
-        Mon, 06 Feb 2023 07:41:12 -0800 (PST)
-Received: from [172.22.22.4] ([98.61.227.136])
-        by smtp.googlemail.com with ESMTPSA id o10-20020a02c6aa000000b0038a3b8aaf11sm3547972jan.37.2023.02.06.07.41.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Feb 2023 07:41:12 -0800 (PST)
-Message-ID: <4a584563-1fb7-22fa-5e16-e0cf5e88b76b@linaro.org>
-Date:   Mon, 6 Feb 2023 09:41:11 -0600
+        Mon, 6 Feb 2023 11:13:36 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC78B2A994;
+        Mon,  6 Feb 2023 08:13:15 -0800 (PST)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 316C0PhC015227;
+        Mon, 6 Feb 2023 15:42:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=lXF/rNvlyElCUh8Y3twha6RuV32W6dBQ0Klr8IIYMvg=;
+ b=Gn46WYZs/s+axc6bbT8kFA6sPRyOMNWRigSeCTnzbDWWHdYe1nAapQorfbsDWudbTFQa
+ n18RwxpjLxslWElA9DfEReWZBbpCs3fFQWTaGOLkXE+fCl9BcW7XsjA+mM0inb1SN6lu
+ U+DE238tzvy5yPdPoCBRtiMB5tpiEyaADWE+P0eJMv3a5urv+HOVUgaHUMWYmliOGbTG
+ upjOtvhqM+uzd4ipk++dEF16Gr7Z3tV8tnc26sOd5PyuS3kMaE4S4Dj+y6AZIRKw56/f
+ VQzkXt6RXHN86fwfA9K+laDfNlqFwQaAzgwedQ/KTM0quCd9Hmwz3CJT1aIUHD1jBuVS Yg== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nhff2m17v-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 06 Feb 2023 15:42:10 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 316Fg8gk021200
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 6 Feb 2023 15:42:08 GMT
+Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Mon, 6 Feb 2023 07:42:07 -0800
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+To:     <ogabbay@kernel.org>, <airlied@gmail.com>, <daniel@ffwll.ch>,
+        <dri-devel@lists.freedesktop.org>
+CC:     <jacek.lawrynowicz@linux.intel.com>,
+        <stanislaw.gruszka@linux.intel.com>, <quic_pkanojiy@quicinc.com>,
+        <quic_carlv@quicinc.com>, <quic_ajitpals@quicinc.com>,
+        <linux-doc@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        Jeffrey Hugo <jhugo@qti.qualcomm.com>
+Subject: [PATCH v2 0/8] QAIC accel driver
+Date:   Mon, 6 Feb 2023 08:41:37 -0700
+Message-ID: <1675698105-19025-1-git-send-email-quic_jhugo@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v9 10/27] gunyah: rsc_mgr: Add VM lifecycle RPC
-Content-Language: en-US
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>
-Cc:     Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Marc Zyngier <maz@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230120224627.4053418-1-quic_eberman@quicinc.com>
- <20230120224627.4053418-11-quic_eberman@quicinc.com>
- <4db1c760-10d9-3a22-106a-dda141dd5381@linaro.org>
-From:   Alex Elder <elder@linaro.org>
-In-Reply-To: <4db1c760-10d9-3a22-106a-dda141dd5381@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: rCZPYX2tyLX9kVyXtwd7NsRHqq1VwVAT
+X-Proofpoint-GUID: rCZPYX2tyLX9kVyXtwd7NsRHqq1VwVAT
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-02-06_07,2023-02-06_03,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 malwarescore=0
+ spamscore=0 impostorscore=0 priorityscore=1501 bulkscore=0 mlxlogscore=698
+ suspectscore=0 lowpriorityscore=0 mlxscore=0 phishscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2302060135
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2/2/23 6:46 AM, Srinivas Kandagatla wrote:
->> +    ret = gh_rm_call(rm, message_id, &req_payload, 
->> sizeof(req_payload), &resp, &resp_size);
->> +    if (!ret && resp_size) {
-> 
-> Am struggling to understand these type of checks in success case, when a 
-> command is not expecting any response why are we checking for response 
-> here, This sounds like a bug in either RM or hypervisor.
-> 
-> Or Is this something that happens due to some firmware behaviour?
-> Could you elobrate on this.
+From: Jeffrey Hugo <jhugo@qti.qualcomm.com>
 
-What I think you're talking about is error checking even when
-it's very clear something "can't happen."  It's a pattern I've
-seen in Qualcomm downstream code, and I believe sometimes it
-is done as "best practice" to avoid warnings from security scans.
-(I might be wrong about this though.)
+This series introduces a driver under the accel subsystem (QAIC -
+Qualcomm AIC) for the Qualcomm Cloud AI 100 product (AIC100).  AIC100 is
+a PCIe adapter card that hosts a dedicated machine learning inference
+accelerator.
 
-I think your underlying point though is that we can just assume
-success means "truly successful," so there's no reason to do any
-additional sanity checks.  We *assume* the hardware is doing the
-correct thing (if it's not, we might as well assume it does
-*nothing* right).
+Regarding the open userspace (see the documentation patch), the UMD and
+compiler are a week or so away from being posted in the indicated repos.
+Just need to polish some documentation.
 
-So as a very general statement, I think all checks of this type
-should go away (and I think Srini would agree).
+The previous version (RFC) can be found at:
+https://lore.kernel.org/all/1660588956-24027-1-git-send-email-quic_jhugo@quicinc.com/
 
-					-Alex
+v2:
+-Addressed comments from RFC
+-Reduced the code to the core minimum by dropping telemetery, etc
+-Conversion to accel subsystem
+-Dropped versioning
+-Add mhi_qaic_cntl component
+-Restructure the documentation
+-Pull in a few fixes from the downstream tree
+
+Jeffrey Hugo (7):
+  accel/qaic: Add documentation for AIC100 accelerator driver
+  accel/qaic: Add uapi and core driver file
+  accel/qaic: Add MHI controller
+  accel/qaic: Add control path
+  accel/qaic: Add datapath
+  accel/qaic: Add qaic driver to the build system
+  MAINTAINERS: Add entry for QAIC driver
+
+Pranjal Ramajor Asha Kanojiya (1):
+  accel/qaic: Add mhi_qaic_cntl
+
+ Documentation/accel/index.rst       |    1 +
+ Documentation/accel/qaic/aic100.rst |  498 +++++++++
+ Documentation/accel/qaic/index.rst  |   13 +
+ Documentation/accel/qaic/qaic.rst   |  169 +++
+ MAINTAINERS                         |    8 +
+ drivers/accel/Kconfig               |    1 +
+ drivers/accel/Makefile              |    1 +
+ drivers/accel/qaic/Kconfig          |   23 +
+ drivers/accel/qaic/Makefile         |   13 +
+ drivers/accel/qaic/mhi_controller.c |  576 +++++++++++
+ drivers/accel/qaic/mhi_controller.h |   19 +
+ drivers/accel/qaic/mhi_qaic_ctrl.c  |  586 +++++++++++
+ drivers/accel/qaic/mhi_qaic_ctrl.h  |   11 +
+ drivers/accel/qaic/qaic.h           |  321 ++++++
+ drivers/accel/qaic/qaic_control.c   | 1656 +++++++++++++++++++++++++++++
+ drivers/accel/qaic/qaic_data.c      | 1952 +++++++++++++++++++++++++++++++++++
+ drivers/accel/qaic/qaic_drv.c       |  771 ++++++++++++++
+ include/uapi/drm/qaic_accel.h       |  283 +++++
+ 18 files changed, 6902 insertions(+)
+ create mode 100644 Documentation/accel/qaic/aic100.rst
+ create mode 100644 Documentation/accel/qaic/index.rst
+ create mode 100644 Documentation/accel/qaic/qaic.rst
+ create mode 100644 drivers/accel/qaic/Kconfig
+ create mode 100644 drivers/accel/qaic/Makefile
+ create mode 100644 drivers/accel/qaic/mhi_controller.c
+ create mode 100644 drivers/accel/qaic/mhi_controller.h
+ create mode 100644 drivers/accel/qaic/mhi_qaic_ctrl.c
+ create mode 100644 drivers/accel/qaic/mhi_qaic_ctrl.h
+ create mode 100644 drivers/accel/qaic/qaic.h
+ create mode 100644 drivers/accel/qaic/qaic_control.c
+ create mode 100644 drivers/accel/qaic/qaic_data.c
+ create mode 100644 drivers/accel/qaic/qaic_drv.c
+ create mode 100644 include/uapi/drm/qaic_accel.h
+
+-- 
+2.7.4
+
