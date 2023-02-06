@@ -2,86 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CE2B368C84A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 22:10:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E8F668C860
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 22:15:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230124AbjBFVKh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Feb 2023 16:10:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32936 "EHLO
+        id S230196AbjBFVPJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Feb 2023 16:15:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230093AbjBFVKg (ORCPT
+        with ESMTP id S229951AbjBFVPF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Feb 2023 16:10:36 -0500
-Received: from mail-il1-x142.google.com (mail-il1-x142.google.com [IPv6:2607:f8b0:4864:20::142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82B2F241DD
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 13:10:32 -0800 (PST)
-Received: by mail-il1-x142.google.com with SMTP id u8so5219364ilq.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Feb 2023 13:10:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ei4VFwLuleRaOtoRA5G2QYwC0Oa6+F6aM5uPuhmObpA=;
-        b=PlIRFIUWOG3snK2ir5MVbWiqkHxoiQiL87CxnahwXyFLOxkF4QxihR74Xuqis0pyOS
-         7/yvGUhMgVSQ2sn6rGAuEblMfRjs4tXiZ6eE0XdjyQNQ9m8QEtNV5bxRkv5ydo2btGv2
-         vpfmlKw4l3+o4Et8xGpmNryTdEhrP16dkDshs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Ei4VFwLuleRaOtoRA5G2QYwC0Oa6+F6aM5uPuhmObpA=;
-        b=yrCjTNK2UpN1kqMLctFzsuhn8XfPoKV3M8/t2RQDmfDm0xKkz4RVcU/Ri3SOaFEiKY
-         Ct6IaDPbrpue93FdVXoQYDrJyN4ZYxZm0/Qcrm2IjXozRIMRbDW0W3lYZfzf3xa5eC7j
-         ID3Y9FJ41ZYO7D0eXHCTtfwL0eB4tZ+KTiHXNxtxMMEMyOFwgOZDAF1lM77Cp70qaERp
-         Fc1OXmIyHwnmTGW989fhKz+rgsc/e8ft6JakPrTY8+dFT2Rcg2iRsYLTz9VUuGuZhuTR
-         9DwPG79c+42I0jmw8NPedzL31p8sizqOKrUySgHoAhtfFUt6OcNQ9LLjWB4Prabx9TNU
-         Mjuw==
-X-Gm-Message-State: AO0yUKW3LmPfu69vwGbIc+KxriH0WulwKJjKjZLt+QLA2n9W/VsUmfLi
-        qEXzfUuzmz8lZ9u1i8DLMgmx2SnZe22kRdy0
-X-Google-Smtp-Source: AK7set96O0ukB37KOCntyi1IxlNIilczzL3AAU42Un/JARwcoc3ZQP0QW8QU9yt09Who7bBYXNbf6g==
-X-Received: by 2002:a05:6e02:1c26:b0:313:aa36:a4f1 with SMTP id m6-20020a056e021c2600b00313aa36a4f1mr640152ilh.1.1675717831947;
-        Mon, 06 Feb 2023 13:10:31 -0800 (PST)
-Received: from mail-io1-f48.google.com (mail-io1-f48.google.com. [209.85.166.48])
-        by smtp.gmail.com with ESMTPSA id m40-20020a05663840a800b003b49e7d990asm3682440jam.30.2023.02.06.13.10.31
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Feb 2023 13:10:31 -0800 (PST)
-Received: by mail-io1-f48.google.com with SMTP id e204so4956155iof.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Feb 2023 13:10:31 -0800 (PST)
-X-Received: by 2002:a05:6638:5af:b0:3b1:4f93:69b8 with SMTP id
- b15-20020a05663805af00b003b14f9369b8mr245586jar.117.1675717830923; Mon, 06
- Feb 2023 13:10:30 -0800 (PST)
-MIME-Version: 1.0
-References: <20230127104054.895129-1-abel.vesa@linaro.org> <Y9v/z8CYik3faHh7@google.com>
- <Y+ErWTyV8CnE3Hl+@linaro.org> <Y+E3T6bozU1K2sFb@google.com>
- <Y+E9Z+/+eCpPK6DE@linaro.org> <CAGETcx99ev_JdgYoifEdUg6rqNCs5LHc-CfwTc7j3Bd_zeizew@mail.gmail.com>
-In-Reply-To: <CAGETcx99ev_JdgYoifEdUg6rqNCs5LHc-CfwTc7j3Bd_zeizew@mail.gmail.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 6 Feb 2023 13:10:19 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=X3nnwuTK2=w7DJfjL_Ai7MiuvTwv8BiVJPMVEWKzR-_g@mail.gmail.com>
-Message-ID: <CAD=FV=X3nnwuTK2=w7DJfjL_Ai7MiuvTwv8BiVJPMVEWKzR-_g@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 1/2] PM: domains: Skip disabling unused domains if
- provider has sync_state
-To:     Saravana Kannan <saravanak@google.com>
-Cc:     Abel Vesa <abel.vesa@linaro.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Mon, 6 Feb 2023 16:15:05 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C26D12855;
+        Mon,  6 Feb 2023 13:15:04 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 06E0DB8161D;
+        Mon,  6 Feb 2023 21:15:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59CC4C433EF;
+        Mon,  6 Feb 2023 21:15:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1675718101;
+        bh=Zhq6cVTt3n8+InQ7RYqBYg1fjFMtOoVV/gNHrgePxXg=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=hTSHEm0nu/OAsNocJefNNsobCR+E7mCmUe9rAgIctEitW3fJaF8ynQEXqxASrLi8a
+         nLm/hGr0dc1/k53Ap/6pkyUec/pi/xrJTbceCMXB64PjjRvOfrZzpv+UC3/AXnRYwL
+         Cjh+vCk88bB1dZq5HVGEHSZM8Y0OT8G8WpFqfoRn0kT3J3HcpcxhLmMnVZIoXk58Yb
+         V059hporQxkHZ9orhBzLPSbdVZwYQ6NjjK8ifkwOnZr8/Ex6yC7nNBjY27WiaRgP/H
+         f4xsGfGwH5j+fgqJj2698QmoP385ahxKnWKdlNedwX3v26zij1aZLM1JdCxwySbW3U
+         hWChwpmRDUOSA==
+Date:   Mon, 6 Feb 2023 13:17:15 -0800
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Steev Klimaszewski <steev@kali.org>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-pm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Sven Peter <sven@svenpeter.dev>, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        Mark Pearson <markpearson@lenovo.com>
+Subject: Re: [RESEND PATCH v3 4/4] arm64: dts: qcom: thinkpad-x13s: Add
+ bluetooth
+Message-ID: <20230206211715.sp4kxqzql45m7bbc@ripper>
+References: <20230206001634.2566-1-steev@kali.org>
+ <20230206001634.2566-5-steev@kali.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230206001634.2566-5-steev@kali.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -89,151 +68,138 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Sun, Feb 05, 2023 at 06:16:34PM -0600, Steev Klimaszewski wrote:
+> ---
 
-On Mon, Feb 6, 2023 at 11:33 AM Saravana Kannan <saravanak@google.com> wrote:
->
-> On Mon, Feb 6, 2023 at 9:48 AM Abel Vesa <abel.vesa@linaro.org> wrote:
-> >
-> >
-> > CC'ed Saravana
->
-> Thanks. Please do cc me for stuff like this from the start. I skimmed
-> the series and I think it's doing one of my TODO items. So, thanks for
-> the patch!
->
-> I'll take a closer look within a few days -- trying to get through
-> some existing fw_devlink stuff.
->
-> But long story short, it is the right thing to keep a supplier on
-> indefinitely if there's a consumer device (that's not disabled in DT)
-> that never gets probed. It's a pretty common scenario -- for example,
-> say a display backlight. The default case should be functional
-> correctness. And then we can add stuff that allows changing this
-> behavior with command line args or something else that can be done
-> from userspace.
->
-> +1 to what Doug said elsewhere in this thread too. I'm trying to
-> consolidate the "when do we give up" decision at the driver core level
-> independent of what framework is being used.
-
-I'm not really sure I agree with the above, at least not without lots
-of discussion in the community. It really goes against what the kernel
-has been doing for years and years in the regulator and clock
-frameworks. Those frameworks both eventually give up and power down
-resources that no active drivers are using. Either changing the
-regulator/clock frameworks or saying that other frameworks should work
-in an opposite way seems like a recipe for confusion.
-
-Now, certainly I won't say that the way that the regulator and clock
-frameworks function is perfect nor will I say that they don't cause
-any problems. However, going the opposite way where resources are kept
-at full power indefinitely will _also_ cause problems.
-
-Specifically, let's look at the case you mentioned of a display
-backlight. I think you're saying that if there is no backlight driver
-enabled in the kernel that you'd expect the backlight to just be on at
-full brightness. Would you expect this even if the firmware didn't
-leave the backlight on? In any case, why do you say it's more correct?
-I suppose you'd say that the screen is at least usable like this.
-...except that you've broken a different feature: suspend/resume.
-Without being able to turn the backlight off at suspend time the
-device would drain tons of power. It could also overheat when you
-stuffed it in your backpack and damage the battery or start a fire.
-Even if you argue that in the case of the display backlight you're
-better off, what about a keyboard backlight? It's pretty easy to use a
-laptop without the keyboard backlight and if you didn't have a driver
-for it you'd be in better shape leaving it off instead of leaving it
-on 100% of the time, even when the device is suspended.
-
-Overall: if a kernel isn't configured for a given driver we shouldn't
-be expecting the hardware controlled by that driver to work. The best
-we can hope for is that it's at least in a low power state.
-
-In general I think that having a well-defined way to know it's time to
-give up and power off anything for which a driver didn't probe needs
-to be an important part of any designs here.
+This marks the end of the commit message, as such your S-o-b is
+"missing". Move it above the "---" line.
 
 
-> -Saravana
->
-> >
-> > On 23-02-06 17:22:23, Matthias Kaehlcke wrote:
-> > > On Mon, Feb 06, 2023 at 06:31:21PM +0200, Abel Vesa wrote:
-> > > > On 23-02-02 18:24:15, Matthias Kaehlcke wrote:
-> > > > > Hi Abel,
-> > > > >
-> > > > > On Fri, Jan 27, 2023 at 12:40:53PM +0200, Abel Vesa wrote:
-> > > > > > Currently, there are cases when a domain needs to remain enabled until
-> > > > > > the consumer driver probes. Sometimes such consumer drivers may be built
-> > > > > > as modules. Since the genpd_power_off_unused is called too early for
-> > > > > > such consumer driver modules to get a chance to probe, the domain, since
-> > > > > > it is unused, will get disabled. On the other hand, the best time for
-> > > > > > an unused domain to be disabled is on the provider's sync_state
-> > > > > > callback. So, if the provider has registered a sync_state callback,
-> > > > > > assume the unused domains for that provider will be disabled on its
-> > > > > > sync_state callback. Also provide a generic sync_state callback which
-> > > > > > disables all the domains unused for the provider that registers it.
-> > > > > >
-> > > > > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > > > > > ---
-> > > > > >
-> > > > > > This approach has been applied for unused clocks as well.
-> > > > > > With this patch merged in, all the providers that have sync_state
-> > > > > > callback registered will leave the domains enabled unless the provider's
-> > > > > > sync_state callback explicitly disables them. So those providers will
-> > > > > > need to add the disabling part to their sync_state callback. On the
-> > > > > > other hand, the platforms that have cases where domains need to remain
-> > > > > > enabled (even if unused) until the consumer driver probes, will be able,
-> > > > > > with this patch in, to run without the pd_ignore_unused kernel argument,
-> > > > > > which seems to be the case for most Qualcomm platforms, at this moment.
-> > > > >
-> > > > > I recently encountered a related issue on a Qualcomm platform with a
-> > > > > v6.2-rc kernel, which includes 3a39049f88e4 ("soc: qcom: rpmhpd: Use
-> > > > > highest corner until sync_state"). The issue involves a DT node with a
-> > > > > rpmhpd, the DT node is enabled, however the corresponding device driver
-> > > > > is not enabled in the kernel. In such a scenario the sync_state callback
-> > > > > is never called, because the genpd consumer never probes. As a result
-> > > > > the Always-on subsystem (AOSS) of the SoC doesn't enter sleep mode during
-> > > > > system suspend, which results in a substantially higher power consumption
-> > > > > in S3.
-> > > >
-> > > > If I get this correctly, one of the providers is missing (doesn't matter
-> > > > the reason), in which case, your kernel needs that driver, period. There
-> > > > is no reason why you would expect the consumer to work without the
-> > > > provider. Or, you could just remove the property in the devicetree node,
-> > > > the property that makes the consumer wait for that provider. Anyway, you
-> > > > should never end up with a consumer provider relationship in devicetree
-> > > > without providing the provider driver.
-> > >
-> > > I would agree if it was actually a provider that's missing, however it's a
-> > > 'missing' consumer that prevents the sync_state() call.
-> >
-> > Oh, my bad.
-> >
-> > Still, why would you keep the consumer node enabled in devicetree if you don't
-> > intend to allow its driver to ever probe?
-> >
-> > >
-> > > > > I wonder if genpd (and some other frameworks) needs something like
-> > > > > regulator_init_complete(), which turns off unused regulators 30s after
-> > > > > system boot. That's conceptually similar to the current
-> > > > > genpd_power_off_unused(), but would provide time for modules being loaded.
-> > > >
-> > > > NACK, timeouts are just another hack in this case, specially when we
-> > > > have a pretty reliable mechanism like sync_state.
-> > >
-> > > It does not work properly unless all consumers are probed successfully. It
-> > > makes sense to wait some time for the consumers to probe, but not eternally,
-> > > it's perfectly valid that a driver for a (potential) consumer is not enabled.
-> >
-> > Usually, if you have a consumer devicetree node that you consider it
-> > should not probe, you should consider disabling that node in your board
-> > dts, specially if you don't intend to provide its driver.
-> >
-> > Again, timeouts are bad all-around. What happens if rootfs doesn't get
-> > mounted in time? Will 30 seconds be enough for every scenario? What
-> > happens if I want to load the driver (module) for a consumer a day after boot?
-> >
-> > IMHO, I think even the regulator_init_complete should be switched to some sync
-> > state approach.
+It's also recommended to include some body in your commit message.
+Perhaps just "The ... has a WCN6855 Bluetooth controller on uart2, add
+this".
+
+> Changes since v2:
+
+And keep the change log here.
+
+>  - Remove dead code and add TODO comment
+>  - Make dtbs_check happy with the pin definitions
+> 
+> Signed-off-by: Steev Klimaszewski <steev@kali.org>
+> ---
+>  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 63 +++++++++++++++++++
+>  1 file changed, 63 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> index f936b020a71d..d351411d3504 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> @@ -24,6 +24,8 @@ / {
+>  	aliases {
+>  		i2c4 = &i2c4;
+>  		i2c21 = &i2c21;
+> +		serial0 = &uart17;
+> +		serial1 = &uart2;
+>  	};
+>  
+>  	wcd938x: audio-codec {
+> @@ -712,6 +714,27 @@ &qup0 {
+>  	status = "okay";
+>  };
+>  
+> +&uart2 {
+> +	status = "okay";
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&uart2_state>;
+> +
+> +	bluetooth {
+> +		compatible = "qcom,wcn6855-bt";
+> +
+> +		/* TODO: define regulators */
+
+You have the list of regulators in the driver, and there are people with
+the schematics. You should be able to fill this list out.
+
+Regards,
+Bjorn
+
+> +
+> +		max-speed = <3200000>;
+> +
+> +		enable-gpios = <&tlmm 133 GPIO_ACTIVE_HIGH>;
+> +		swctrl-gpios = <&tlmm 132 GPIO_ACTIVE_HIGH>;
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&bt_en>;
+> +	};
+> +};
+> +
+>  &qup1 {
+>  	status = "okay";
+>  };
+> @@ -720,6 +743,12 @@ &qup2 {
+>  	status = "okay";
+>  };
+>  
+> +&uart17 {
+> +	compatible = "qcom,geni-debug-uart";
+> +
+> +	status = "okay";
+> +};
+> +
+>  &remoteproc_adsp {
+>  	firmware-name = "qcom/sc8280xp/LENOVO/21BX/qcadsp8280.mbn";
+>  
+> @@ -980,6 +1009,19 @@ hastings_reg_en: hastings-reg-en-state {
+>  &tlmm {
+>  	gpio-reserved-ranges = <70 2>, <74 6>, <83 4>, <125 2>, <128 2>, <154 7>;
+>  
+> +	bt_en: bt-en-state {
+> +		hstp-sw-ctrl-pins {
+> +			pins = "gpio132";
+> +			function = "gpio";
+> +		};
+> +
+> +		hstp-bt-en-pins {
+> +			pins = "gpio133";
+> +			function = "gpio";
+> +			drive-strength = <16>;
+> +		};
+> +	};
+> +
+>  	edp_reg_en: edp-reg-en-state {
+>  		pins = "gpio25";
+>  		function = "gpio";
+> @@ -1001,6 +1043,27 @@ i2c4_default: i2c4-default-state {
+>  		bias-disable;
+>  	};
+>  
+> +	uart2_state: uart2-state {
+> +		cts-pins {
+> +			pins = "gpio122";
+> +			function = "qup2";
+> +			bias-disable;
+> +		};
+> +
+> +		rts-tx-pins {
+> +			pins = "gpio122", "gpio123";
+> +			function = "qup2";
+> +			drive-strength = <2>;
+> +			bias-disable;
+> +		};
+> +
+> +		rx-pins {
+> +			pins = "gpio124";
+> +			function = "qup2";
+> +			bias-pull-up;
+> +		};
+> +	};
+> +
+>  	i2c21_default: i2c21-default-state {
+>  		pins = "gpio81", "gpio82";
+>  		function = "qup21";
+> -- 
+> 2.39.0
+> 
