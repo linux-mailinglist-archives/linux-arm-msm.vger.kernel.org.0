@@ -2,204 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E8F668C860
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 22:15:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D6E3268C893
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 22:26:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230196AbjBFVPJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Feb 2023 16:15:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36492 "EHLO
+        id S229649AbjBFV01 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Feb 2023 16:26:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229951AbjBFVPF (ORCPT
+        with ESMTP id S229897AbjBFV00 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Feb 2023 16:15:05 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C26D12855;
-        Mon,  6 Feb 2023 13:15:04 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 06E0DB8161D;
-        Mon,  6 Feb 2023 21:15:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59CC4C433EF;
-        Mon,  6 Feb 2023 21:15:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1675718101;
-        bh=Zhq6cVTt3n8+InQ7RYqBYg1fjFMtOoVV/gNHrgePxXg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=hTSHEm0nu/OAsNocJefNNsobCR+E7mCmUe9rAgIctEitW3fJaF8ynQEXqxASrLi8a
-         nLm/hGr0dc1/k53Ap/6pkyUec/pi/xrJTbceCMXB64PjjRvOfrZzpv+UC3/AXnRYwL
-         Cjh+vCk88bB1dZq5HVGEHSZM8Y0OT8G8WpFqfoRn0kT3J3HcpcxhLmMnVZIoXk58Yb
-         V059hporQxkHZ9orhBzLPSbdVZwYQ6NjjK8ifkwOnZr8/Ex6yC7nNBjY27WiaRgP/H
-         f4xsGfGwH5j+fgqJj2698QmoP385ahxKnWKdlNedwX3v26zij1aZLM1JdCxwySbW3U
-         hWChwpmRDUOSA==
-Date:   Mon, 6 Feb 2023 13:17:15 -0800
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Steev Klimaszewski <steev@kali.org>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        Mon, 6 Feb 2023 16:26:26 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF2D4EF83
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 13:26:24 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id o18so11754377wrj.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Feb 2023 13:26:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=pXfjugPVwiiZL4YZi+/2x2YG+1ce/SaQsZb0dADm9n4=;
+        b=nZuNJknrREMRZtgrKcJs1rhNy10GsHm4Fl/LnU3lfiG+BKEuaVtySkmuvlJtsZvN36
+         Hy1DBDi6CZ4MZP0SZffv5AaE2/MnvQOHv9qsOIkOfcUbfSTWPEBe5dU1TPV/nQa8VGx7
+         x36sHfgJ9kcG8jzAfKeodYOMI+O4ywI+sfm3ojEKuX0SgKp2zjud6CCYChAz0gh9dAIC
+         zw00ahSN4TaSM/8hl6KJAkKWucYU6dNTMwcFXmJWY+bPITjAPQ3pQravyJXfNwzlf/Nm
+         wlzAvdpSzcUPpd8lATW/oasc11JRlrB/vVsS1Yf7dkdJZDHH4wJVo57WKa6uaxQ2PyEj
+         Y7mg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pXfjugPVwiiZL4YZi+/2x2YG+1ce/SaQsZb0dADm9n4=;
+        b=1sqi8/O1TjYCgyw98tGDawrOA5c3AYzLM2Xo4Zsd+jfu/A0l3qU4mrjKGhqfmbyH92
+         9XP7V+nkU/jJHn48Tik7XBLN+hpBeM6YJ7ftrt0pjdQaoMeMNAoeSsFh7D/+jrwDkRiu
+         II2QyszAenTdAwWdrqkO4Jgat0dPEQ27uzbnMsZHcVCq1UquvMYATkn5prkj/89z+pYK
+         WUUhnXifWIPqsqFNdYtUI/95vZ8SpJcAPdbeSFRje+A29r1NwkrkC6ZAWXzzc5JtZShX
+         ZyDarUExPdJOoeKKYPnR9hKLkerBHM+3LgRpBV47GXdajs4plXQh8QRi6C4neIG5Mhfp
+         xPxw==
+X-Gm-Message-State: AO0yUKXwrQ0dQmqTFJ+sQfIdyjzatparTebAjhegGKuFOwPh2G3ymCh5
+        V8UdKBLXfegLo79CejPC2uJ8Ow==
+X-Google-Smtp-Source: AK7set8JsDj9i24v8I3bpSCZSnTJnytHnJGs1kE7mep2Eh3n0OWxurExwxy0uWSzzGewFaO2IQ5PLw==
+X-Received: by 2002:a5d:6684:0:b0:2bd:e8c2:c9bc with SMTP id l4-20020a5d6684000000b002bde8c2c9bcmr294655wru.42.1675718783464;
+        Mon, 06 Feb 2023 13:26:23 -0800 (PST)
+Received: from hackbox.lan ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id j11-20020a5d604b000000b002b57bae7174sm9783341wrt.5.2023.02.06.13.26.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Feb 2023 13:26:22 -0800 (PST)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Sven Peter <sven@svenpeter.dev>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        Mark Pearson <markpearson@lenovo.com>
-Subject: Re: [RESEND PATCH v3 4/4] arm64: dts: qcom: thinkpad-x13s: Add
- bluetooth
-Message-ID: <20230206211715.sp4kxqzql45m7bbc@ripper>
-References: <20230206001634.2566-1-steev@kali.org>
- <20230206001634.2566-5-steev@kali.org>
+        Rob Herring <robh@kernel.org>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Johan Hovold <johan+linaro@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: [PATCH v8 00/11] sm8550: Add PCIe HC and PHY support
+Date:   Mon,  6 Feb 2023 23:26:08 +0200
+Message-Id: <20230206212619.3218741-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230206001634.2566-5-steev@kali.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Feb 05, 2023 at 06:16:34PM -0600, Steev Klimaszewski wrote:
-> ---
+For changelogs please look at each patch individually.
 
-This marks the end of the commit message, as such your S-o-b is
-"missing". Move it above the "---" line.
+This time, this version has an actual fix for the already merged PCIe
+devicetree nodes, to get them in line with the SC8280XP bindings.
 
+Abel Vesa (11):
+  dt-bindings: phy: Add QMP PCIe PHY comptible for SM8550
+  phy: qcom-qmp: pcs: Add v6 register offsets
+  phy: qcom-qmp: pcs: Add v6.20 register offsets
+  phy: qcom-qmp: pcs-pcie: Add v6 register offsets
+  phy: qcom-qmp: pcs-pcie: Add v6.20 register offsets
+  phy: qcom-qmp: qserdes-txrx: Add v6.20 register offsets
+  phy: qcom-qmp: qserdes-lane-shared: Add v6 register offsets
+  phy: qcom-qmp-pcie: Add support for SM8550 g3x2 and g4x2 PCIEs
+  dt-bindings: PCI: qcom: Add SM8550 compatible
+  PCI: qcom: Add SM8550 PCIe support
+  arm64: dts: qcom: sm8550: Fix PCIe PHYs and controllers nodes
 
-It's also recommended to include some body in your commit message.
-Perhaps just "The ... has a WCN6855 Bluetooth controller on uart2, add
-this".
+ .../devicetree/bindings/pci/qcom,pcie.yaml    |  40 ++
+ .../phy/qcom,sc8280xp-qmp-pcie-phy.yaml       |  30 +-
+ arch/arm64/boot/dts/qcom/sm8550-mtp.dts       |  10 +
+ arch/arm64/boot/dts/qcom/sm8550.dtsi          |  52 +--
+ drivers/pci/controller/dwc/pcie-qcom.c        |  25 +-
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 346 +++++++++++++++++-
+ .../phy/qualcomm/phy-qcom-qmp-pcs-pcie-v6.h   |  15 +
+ .../qualcomm/phy-qcom-qmp-pcs-pcie-v6_20.h    |  23 ++
+ drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6.h    |  16 +
+ drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6_20.h |  18 +
+ .../phy-qcom-qmp-qserdes-ln-shrd-v6.h         |  32 ++
+ .../phy-qcom-qmp-qserdes-txrx-v6_20.h         |  45 +++
+ drivers/phy/qualcomm/phy-qcom-qmp.h           |   6 +
+ 13 files changed, 611 insertions(+), 47 deletions(-)
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v6.h
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v6_20.h
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6.h
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6_20.h
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-qserdes-ln-shrd-v6.h
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-v6_20.h
 
-> Changes since v2:
+-- 
+2.34.1
 
-And keep the change log here.
-
->  - Remove dead code and add TODO comment
->  - Make dtbs_check happy with the pin definitions
-> 
-> Signed-off-by: Steev Klimaszewski <steev@kali.org>
-> ---
->  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 63 +++++++++++++++++++
->  1 file changed, 63 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> index f936b020a71d..d351411d3504 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> @@ -24,6 +24,8 @@ / {
->  	aliases {
->  		i2c4 = &i2c4;
->  		i2c21 = &i2c21;
-> +		serial0 = &uart17;
-> +		serial1 = &uart2;
->  	};
->  
->  	wcd938x: audio-codec {
-> @@ -712,6 +714,27 @@ &qup0 {
->  	status = "okay";
->  };
->  
-> +&uart2 {
-> +	status = "okay";
-> +
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&uart2_state>;
-> +
-> +	bluetooth {
-> +		compatible = "qcom,wcn6855-bt";
-> +
-> +		/* TODO: define regulators */
-
-You have the list of regulators in the driver, and there are people with
-the schematics. You should be able to fill this list out.
-
-Regards,
-Bjorn
-
-> +
-> +		max-speed = <3200000>;
-> +
-> +		enable-gpios = <&tlmm 133 GPIO_ACTIVE_HIGH>;
-> +		swctrl-gpios = <&tlmm 132 GPIO_ACTIVE_HIGH>;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&bt_en>;
-> +	};
-> +};
-> +
->  &qup1 {
->  	status = "okay";
->  };
-> @@ -720,6 +743,12 @@ &qup2 {
->  	status = "okay";
->  };
->  
-> +&uart17 {
-> +	compatible = "qcom,geni-debug-uart";
-> +
-> +	status = "okay";
-> +};
-> +
->  &remoteproc_adsp {
->  	firmware-name = "qcom/sc8280xp/LENOVO/21BX/qcadsp8280.mbn";
->  
-> @@ -980,6 +1009,19 @@ hastings_reg_en: hastings-reg-en-state {
->  &tlmm {
->  	gpio-reserved-ranges = <70 2>, <74 6>, <83 4>, <125 2>, <128 2>, <154 7>;
->  
-> +	bt_en: bt-en-state {
-> +		hstp-sw-ctrl-pins {
-> +			pins = "gpio132";
-> +			function = "gpio";
-> +		};
-> +
-> +		hstp-bt-en-pins {
-> +			pins = "gpio133";
-> +			function = "gpio";
-> +			drive-strength = <16>;
-> +		};
-> +	};
-> +
->  	edp_reg_en: edp-reg-en-state {
->  		pins = "gpio25";
->  		function = "gpio";
-> @@ -1001,6 +1043,27 @@ i2c4_default: i2c4-default-state {
->  		bias-disable;
->  	};
->  
-> +	uart2_state: uart2-state {
-> +		cts-pins {
-> +			pins = "gpio122";
-> +			function = "qup2";
-> +			bias-disable;
-> +		};
-> +
-> +		rts-tx-pins {
-> +			pins = "gpio122", "gpio123";
-> +			function = "qup2";
-> +			drive-strength = <2>;
-> +			bias-disable;
-> +		};
-> +
-> +		rx-pins {
-> +			pins = "gpio124";
-> +			function = "qup2";
-> +			bias-pull-up;
-> +		};
-> +	};
-> +
->  	i2c21_default: i2c21-default-state {
->  		pins = "gpio81", "gpio82";
->  		function = "qup21";
-> -- 
-> 2.39.0
-> 
