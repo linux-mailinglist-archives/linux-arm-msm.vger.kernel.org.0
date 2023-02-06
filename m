@@ -2,69 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0951768C0E5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 16:05:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 55AAC68C0F8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Feb 2023 16:07:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230262AbjBFPFl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Feb 2023 10:05:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46202 "EHLO
+        id S230393AbjBFPHz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Feb 2023 10:07:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230026AbjBFPFk (ORCPT
+        with ESMTP id S230351AbjBFPHx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Feb 2023 10:05:40 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58A4013522
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 07:05:39 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id a2so10386950wrd.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Feb 2023 07:05:39 -0800 (PST)
+        Mon, 6 Feb 2023 10:07:53 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A972D4ECE
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 07:07:50 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id hn2-20020a05600ca38200b003dc5cb96d46so10981537wmb.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Feb 2023 07:07:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=amhvuQJiOyM43SbMnQxHq99ru2XL4cfNPHdX1Hxtb1E=;
-        b=wyheIegPWInE+xuWRmetJaDQ6503y6u+ZY4Z/UZOQjNiKTXIDL9x4feew6EE7T8u97
-         ZzuCwIHrchMRL8gxV+f9j9YMxTO2FGa+vCzRrj5o5rSKyH2DGEiZ5gTFY8ysGLPw+7QD
-         5JkqDA+GzCE5VrVW3k3d2VoLwqjNaRiJiaiU0G0xbh53O4hoLaSVcMy11OooGTv5ftIb
-         jnUFO7yWjmptevIW67Fwx0V/tzyylKvZSsFvjU5KH9UCGMqi81UaotxPDh6o8+7CzSmx
-         Oqv+TC5CYH9Ocaiz9pl0mX6/S0uycTWNiJpdfFKChHlE7/JX5UU2cBCua/Oisf8JN3SF
-         YWfg==
+        bh=9BeWy7MExlvQJQWwtcxtXWpzzG9fVvevuvZAQJIXNVs=;
+        b=eI7rdFQX0Y6qeNx+TtElR4iZbwE+vLNnzZmQXZIZC0I/6TkTKbBZmNaetU3RXQGKp1
+         ba2Dor/gBbvV+jm3jXKo3HwuzOyn1glyGHVOa2778wEnhisnMLeouENNfDYcAhGWsiYf
+         RNhZLFJuttBKarWEoGPKbQV3V61LmjkeSBNm+BOpDu483RjYFB3rFvc8GzbbEqHeImkO
+         s088R+Jh/GgmZtVY1mw8W4aHtAF2G5lsj0Aij4+2hmHwMOmdqEtIRokKAFddXRNT8bqr
+         vJKm8dTh3BUzkq3bra2geke1W0UGRVFjs07/le/1vTUoge34VN6grNAIMwEwxz2L6vX2
+         h0rQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=amhvuQJiOyM43SbMnQxHq99ru2XL4cfNPHdX1Hxtb1E=;
-        b=RzDttK+tPIaud0/lREKXBKdSbYArPN21pruiClOxTQy8lEsrdVPf5fmRGLl6/Fc+eU
-         k2rWtK2P+ytty4d5X03NeRnA1U1FgqCJv1VjK359ZLqiVlbfwtFj3Nf3FyXYDoOZfkU5
-         0GcYI9wuxmUu5o6xSo8JUwbMahvc+xKMq71LXwGcs1qspEZQrCY0bN+5bTcGz20T78MX
-         LLz6Qmhbr+esgVOgQVhl8k080gV1Pw6ASaj0POSl4Cvcomhh1LqPoKBO83acLgHLbnaI
-         GEImMd4as/54Q8xhC07qJMe70HRskvOitD55SK5z6TY0K0Hog4A1Fv/aLHxnu+oJrBfY
-         sE5A==
-X-Gm-Message-State: AO0yUKVQbpAPBQ6x+Yo4l0GCHtP0EtLcMZqvuNdIJ39sVyO/aQYgx15x
-        MmiiT9cKB1ufFkrNtGTaipYT6w==
-X-Google-Smtp-Source: AK7set87ORlIh4onmuZwhL5ZeCR/96bwUDAU2cystvVCwMKhtFZxhlwVf6cQZ1UtL61nGykNveZhfg==
-X-Received: by 2002:adf:e192:0:b0:2bd:fd81:b503 with SMTP id az18-20020adfe192000000b002bdfd81b503mr18911355wrb.1.1675695937848;
-        Mon, 06 Feb 2023 07:05:37 -0800 (PST)
+        bh=9BeWy7MExlvQJQWwtcxtXWpzzG9fVvevuvZAQJIXNVs=;
+        b=JAiyL5VVoqqSWTsCnBd+ouJR2knsgLmlEF1xRQQVukgIPgaET6IA62GR/kROOdzHSW
+         ggnBTZ9t5FrMe7QPCG9RQbjZZdZUWUaky7tg45IngU79VheP7ex64DeMeHxtcZeXb/gi
+         ttrX2syIiqfi0aOFYVQ2hM+eZlRP5xqg0FuwI3xMcv6Ws3bgvBG8Q9R+S52l+oB12EDA
+         Ort8daqxQg+ktAZbhsfw47RyTysN0pPsNMPTEKID9QqtrEquHOCug+U8v8+cIUakLHj5
+         +3BKHMGh/MF1p/GwsuG4QZdLtS15eq8m09HNO5MokFXUve6yICIAnnm/fdYzlsj/98WL
+         /sBQ==
+X-Gm-Message-State: AO0yUKXdvJhaYCbAn7ovxVlNSGQwUgNdpVQFhdnfqXO1T+L2Gt+piGws
+        VSLVfAv52+0P2ReWWxe2rpORpw==
+X-Google-Smtp-Source: AK7set/GnGaHeWHS2A9PNRzM4jxFcnBdslHPdnjcTsbUSuX5eAo9Uby50dxoo5cOGLoSDx1bWoVb3Q==
+X-Received: by 2002:a05:600c:5389:b0:3df:9858:c038 with SMTP id hg9-20020a05600c538900b003df9858c038mr11376789wmb.13.1675696069169;
+        Mon, 06 Feb 2023 07:07:49 -0800 (PST)
 Received: from krzk-bin.. ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id i14-20020a0560001ace00b002bfb8f829eesm9543492wry.71.2023.02.06.07.05.36
+        by smtp.gmail.com with ESMTPSA id s15-20020a05600c45cf00b003e00c453447sm818858wmo.48.2023.02.06.07.07.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Feb 2023 07:05:37 -0800 (PST)
+        Mon, 06 Feb 2023 07:07:48 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] ASoC: dt-bindings: qcom,q6apm-dai: adjust iommus for SM8550 ADSP
-Date:   Mon,  6 Feb 2023 16:05:32 +0100
-Message-Id: <20230206150532.513468-1-krzysztof.kozlowski@linaro.org>
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: sm8550: add GPR and LPASS pin controller
+Date:   Mon,  6 Feb 2023 16:07:44 +0100
+Message-Id: <20230206150744.513967-1-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -78,27 +75,104 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It seems that SM8550 ADSP remote processor uses two IOMMUs.
+Add the ADSP GPR (Generic Packet Router) and LPASS LPI (Low Power Audio
+SubSystem Low Power Island) pin controller nodes used as part of audio
+subsystem on SM8550.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- Documentation/devicetree/bindings/sound/qcom,q6apm-dai.yaml | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/sound/qcom,q6apm-dai.yaml b/Documentation/devicetree/bindings/sound/qcom,q6apm-dai.yaml
-index a53c9ef938fa..cdbb4096fa44 100644
---- a/Documentation/devicetree/bindings/sound/qcom,q6apm-dai.yaml
-+++ b/Documentation/devicetree/bindings/sound/qcom,q6apm-dai.yaml
-@@ -17,7 +17,8 @@ properties:
-     const: qcom,q6apm-dais
+---
+
+LPI bindings:
+https://lore.kernel.org/linux-arm-msm/20230203174645.597053-1-krzysztof.kozlowski@linaro.org/T/#t
+
+IOMMUS on qcom,q6apm-dais:
+https://lore.kernel.org/linux-arm-msm/20230206150532.513468-1-krzysztof.kozlowski@linaro.org/T/#u
+---
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 55 ++++++++++++++++++++++++++++
+ 1 file changed, 55 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+index 6ff135191ee0..c26892bddcf0 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+@@ -13,7 +13,9 @@
+ #include <dt-bindings/interconnect/qcom,sm8550-rpmh.h>
+ #include <dt-bindings/mailbox/qcom-ipcc.h>
+ #include <dt-bindings/power/qcom-rpmpd.h>
++#include <dt-bindings/soc/qcom,gpr.h>
+ #include <dt-bindings/soc/qcom,rpmh-rsc.h>
++#include <dt-bindings/sound/qcom,q6dsp-lpass-ports.h>
+ #include <dt-bindings/phy/phy-qcom-qmp.h>
+ #include <dt-bindings/thermal/thermal.h>
  
-   iommus:
--    maxItems: 1
-+    minItems: 1
-+    maxItems: 2
+@@ -1996,6 +1998,19 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
+ 			};
+ 		};
  
- required:
-   - compatible
++		lpass_tlmm: pinctrl@6e80000 {
++			compatible = "qcom,sm8550-lpass-lpi-pinctrl";
++			reg = <0 0x06e80000 0 0x20000>,
++			      <0 0x0725a000 0 0x10000>;
++			gpio-controller;
++			#gpio-cells = <2>;
++			gpio-ranges = <&lpass_tlmm 0 0 23>;
++
++			clocks = <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
++				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
++			clock-names = "core", "audio";
++		};
++
+ 		lpass_lpiaon_noc: interconnect@7400000 {
+ 			compatible = "qcom,sm8550-lpass-lpiaon-noc";
+ 			reg = <0 0x07400000 0 0x19080>;
+@@ -3513,6 +3528,46 @@ compute-cb@7 {
+ 							 <&apps_smmu 0x1067 0x0>;
+ 					};
+ 				};
++
++				gpr {
++					compatible = "qcom,gpr";
++					qcom,glink-channels = "adsp_apps";
++					qcom,domain = <GPR_DOMAIN_ID_ADSP>;
++					qcom,intents = <512 20>;
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					q6apm: service@1 {
++						compatible = "qcom,q6apm";
++						reg = <GPR_APM_MODULE_IID>;
++						#sound-dai-cells = <0>;
++						qcom,protection-domain = "avs/audio",
++									 "msm/adsp/audio_pd";
++
++						q6apmdai: dais {
++							compatible = "qcom,q6apm-dais";
++							iommus = <&apps_smmu 0x1001 0x0080>,
++								 <&apps_smmu 0x1061 0x0>;
++						};
++
++						q6apmbedai: bedais {
++							compatible = "qcom,q6apm-lpass-dais";
++							#sound-dai-cells = <1>;
++						};
++					};
++
++					q6prm: service@2 {
++						compatible = "qcom,q6prm";
++						reg = <GPR_PRM_MODULE_IID>;
++						qcom,protection-domain = "avs/audio",
++									 "msm/adsp/audio_pd";
++
++						q6prmcc: clock-controller {
++							compatible = "qcom,q6prm-lpass-clocks";
++							#clock-cells = <2>;
++						};
++					};
++				};
+ 			};
+ 		};
+ 
 -- 
 2.34.1
 
