@@ -2,107 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C49C68D979
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 14:35:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 84B8568D99E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 14:46:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232257AbjBGNf4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Feb 2023 08:35:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53098 "EHLO
+        id S231793AbjBGNqy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Feb 2023 08:46:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232184AbjBGNfy (ORCPT
+        with ESMTP id S231782AbjBGNqw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Feb 2023 08:35:54 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 454FB2B295
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 05:35:51 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id g6so5587071wrv.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 05:35:51 -0800 (PST)
+        Tue, 7 Feb 2023 08:46:52 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5738BBB1
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 05:46:50 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id d14so13589208wrr.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 05:46:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=2ml4pR4jzpgCOWIQAPCUTBYh9nLmUSsHOoxXPfaQmeA=;
-        b=XvpyHbMa6iXaphQsis+8AJ3rCvsaDlzQPEQVCvb7I8F93irxmLdJYfTagXRxGKE8Qu
-         T8qQY8MNarpJxwO9sLy/bUIdMq+ik6oVQI7n/ngHRqp19LfUBQbF72JQUE7xTxNvcqUD
-         Y0z3Bg5wyRhgl7914YaF2LrWe9L/ILOu9Y67e7ABwwSWZWeVJTZO66v2vo+QmPmgGbXm
-         hRrShMVlDP0lVf7CHVQgwXIetO0OVnxY/OUIv+9wygXYBr0zcIOctHYP4/YQDL9gUZF9
-         EFRbyX7b/6xvksX+SentUc+HTaqsg0rpz6U/scb8vhUiP4VODdruyVls0al3jM9kRdV7
-         bJng==
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=aG9xyJEWq8xfzQLUkXepXFg+WW0EUsU0Fq705yW4t3s=;
+        b=iE7TjlqZz6va0JTZBey0ugvYw+Hk9P/7K2DX5kDSL+OIcRwMuWbfPZidDTq3DHc3Tz
+         A0rW8LMOAaF5X1mkf334DG4Mqk3H4XOdOUwuEYdUCVwEZ1xfrZYi6XyOPWwcZ7QaHT+t
+         Ft8Gi8YOags67/SOK0mn24qLRZhDDMq2laXisnZOm8xQBmaCxuugnyzI3uHOkRer95tM
+         ZBgQHBEfvV8R6bTQ7gUTRhAV51iIIpOQppGDf+66xzCYlXQcKC0Sb1MTXFHN9Ry4RZ4a
+         zRVmX1mqCk6kxc23+JCFQs7uYrh0PThVZWxaLesj78tROG8josCnevfnSstSWm4gZgXB
+         +L+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=2ml4pR4jzpgCOWIQAPCUTBYh9nLmUSsHOoxXPfaQmeA=;
-        b=Bq9r6U3t7iRu4wCkeOnvCIPK+TxzqsmTWDtYwx4AlxR/uXoVacA/H00GZn6l7/4LzQ
-         LddO+k+pXjuCItKks/UR3yvNpi1luY8yDIP3sNAhvhKrqWP8wS6y8WwBBBjpP6e1KOZ5
-         PWksjMRIwSzYrSsCvsI5QuBPe9bPyDoScBuW9NdI5P1CRsT+HPfiI24+6xM/YC9b2sl9
-         3H1IeX0YPt9UlGRhQIjEyCOfSZG0Xum6X/jajrnCIMtBgZiHCe3MQvbCa3UFh6V36szM
-         r31dGJQbZqKhw5yR0xc43FbIxUiyq45gyXk6TsrEvW5tJlwvEAL6hbGaT7kJrI4O8vzT
-         6r8Q==
-X-Gm-Message-State: AO0yUKXxarSMuwOL8L10Z6GIP/KRVgJPx+d8iYXHp3EmvDIB2YMV1bvF
-        kzvxwuLn416+Hd7W8AMG1f8nnA==
-X-Google-Smtp-Source: AK7set+ONLlJw/m+FpODYRPNLBiERnL0I/NeVx8rflHHKajfndvs4YUMw5JlEbwXmwLnGEXWr7pcfw==
-X-Received: by 2002:adf:f4cf:0:b0:2bf:c066:dd7e with SMTP id h15-20020adff4cf000000b002bfc066dd7emr2707923wrp.40.1675776949836;
-        Tue, 07 Feb 2023 05:35:49 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:c58c:fc5c:67d6:e5f3? ([2a01:e0a:982:cbb0:c58c:fc5c:67d6:e5f3])
-        by smtp.gmail.com with ESMTPSA id d2-20020a056000186200b002bddd75a83fsm12107449wri.8.2023.02.07.05.35.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Feb 2023 05:35:49 -0800 (PST)
-Message-ID: <a8112f61-f8d3-c1e0-9549-a9036a7e7894@linaro.org>
-Date:   Tue, 7 Feb 2023 14:35:48 +0100
+        bh=aG9xyJEWq8xfzQLUkXepXFg+WW0EUsU0Fq705yW4t3s=;
+        b=ITmpvUvStfy8C8OHMvWp2nTfQV3JC8Efr2ZfGE/OWFVkzSk4XoqZzp0mLUVOSP7P4o
+         +AOFfUqD2lbsc7vD9K25hHHi2COwiUnfsRVDRzPBNKvltFpZsBvmkuDDw9QlbiqWBa4C
+         jjGmM+tg7iZ8Zu++fcqeZ2Hq8OjpIk8IbsU5lYPdfmvL4ZMMon6HIgsMEMT4IxhVjNfH
+         ty12YIMdP/LmxBClZs1tfPOjlVGnujjkgzh5MX6O8yA4n3opQ/jvvoarYaA9jSRGqSS8
+         xbgE7gyj4w3n2CTnYmXT/oV8yRGyv9ngLo4ancF5tlSyauphmVFLelhZNVaFLvO08EwW
+         528A==
+X-Gm-Message-State: AO0yUKXcodc8KWlWL4kE/KNFdM6Ngfw8JX9VBddfjMUB2XuMr/Sxr0og
+        yPpib6UqoheGh3lsOc53ugX6vQ==
+X-Google-Smtp-Source: AK7set/foZL7LzUjzZNlYiTs9qS+b+uBwpRfHsoNPwLIc+5xmfCweBpO4Ts9Ae6+UXoQuVnEkAKxYQ==
+X-Received: by 2002:a5d:4685:0:b0:2c3:e5d5:5d77 with SMTP id u5-20020a5d4685000000b002c3e5d55d77mr2563126wrq.68.1675777608918;
+        Tue, 07 Feb 2023 05:46:48 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id s2-20020a5d69c2000000b002c3de83be0csm8610927wrw.87.2023.02.07.05.46.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Feb 2023 05:46:48 -0800 (PST)
+From:   neil.armstrong@linaro.org
+Date:   Tue, 07 Feb 2023 14:46:46 +0100
+Subject: [PATCH v2] dt-bindings: firmware: document Qualcomm SM8550 SCM
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH] dt-bindings: dma: qcom,bam-dma: add optional memory
- interconnect properties
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230207-topic-sm8550-upstream-scm-bindings-v2-1-ca12bd33fa1c@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAEZW4mMC/x2NywqDMBAAf0X23IWQNhr6K6WHPFZdMKtktRTEf
+ 2/oceYwc4JSZVJ4didU+rDyKg3srYM0B5kIOTcGa+zdWDPgvm6cUIt3zuCx6V4pFNRUMLJklkm
+ RzODjo8/96B20UAxKGGuQNLeUHMvS5FZp5O///Hpf1w/HkWbYiQAAAA==
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230207-topic-sm8550-upstream-bam-dma-bindings-fix-v1-1-57dba71e8727@linaro.org>
- <a188a52e-6327-f0ea-a54e-a23b88bca82f@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <a188a52e-6327-f0ea-a54e-a23b88bca82f@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Robert Marko <robimarko@gmail.com>,
+        Das Srinagesh <quic_gurus@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.0
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/02/2023 11:32, Dmitry Baryshkov wrote:
-> On 07/02/2023 12:03, Neil Armstrong wrote:
->> Recents SoCs like the SM8450 or SM8550 requires memory interconnect
->> in order to have functional DMA.
->>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
->>   Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml | 6 ++++++
->>   1 file changed, 6 insertions(+)
-> 
-> I suspect this will not work without a change for a driver.
-> 
+From: Abel Vesa <abel.vesa@linaro.org>
 
-I had the impression single interconnect entries would be taken in account
-by the platform core, but it doesn't seem to be the case, anyway I can;t find
-any code doing that.
+Document the compatible for Qualcomm SM8550 SCM.
 
-I'll resend with a driver change.
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Changes in v2:
+- Added missing allOf:if:then entries.
+- Link to v1: https://lore.kernel.org/all/20221116124038.2769028-1-abel.vesa@linaro.org/
+---
+ Documentation/devicetree/bindings/firmware/qcom,scm.yaml | 3 +++
+ 1 file changed, 3 insertions(+)
 
-Neil
+diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+index 4193492ba73e..4eee95f65f8e 100644
+--- a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
++++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+@@ -54,6 +54,7 @@ properties:
+           - qcom,scm-sm8250
+           - qcom,scm-sm8350
+           - qcom,scm-sm8450
++          - qcom,scm-sm8550
+           - qcom,scm-qcs404
+       - const: qcom,scm
+ 
+@@ -165,6 +166,7 @@ allOf:
+             contains:
+               enum:
+                 - qcom,scm-sm8450
++                - qcom,scm-sm8550
+     then:
+       properties:
+         interconnects: false
+@@ -177,6 +179,7 @@ allOf:
+             contains:
+               enum:
+                 - qcom,scm-sm8450
++                - qcom,scm-sm8550
+     then:
+       properties:
+         interrupts: false
+
+---
+base-commit: 49a8133221c71b935f36a7c340c0271c2a9ee2db
+change-id: 20230207-topic-sm8550-upstream-scm-bindings-e078b46d6f85
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
+
