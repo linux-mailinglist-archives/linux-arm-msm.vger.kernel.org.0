@@ -2,133 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A94868D3A9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 11:09:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 80A9F68D377
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 11:03:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230153AbjBGKJZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Feb 2023 05:09:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40138 "EHLO
+        id S230290AbjBGKDQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Feb 2023 05:03:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230149AbjBGKJS (ORCPT
+        with ESMTP id S229447AbjBGKDP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Feb 2023 05:09:18 -0500
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8843AEF93
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 02:08:56 -0800 (PST)
-Received: by mail-qt1-f171.google.com with SMTP id 5so6109343qtp.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 02:08:56 -0800 (PST)
+        Tue, 7 Feb 2023 05:03:15 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B235AD4
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 02:03:12 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id j29-20020a05600c1c1d00b003dc52fed235so11011083wms.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 02:03:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Kkp+Ll4tkGit72TXAobb+8Dz4GgYVkfmJNmgRsYUejc=;
+        b=LRZACxNr6xLylc10hfxaGCMDHYoNzUw7AbwuCI2aCOHqO8Fd1Iv9fdEZIGhwe5sw5k
+         ADjtTTlMfrNWXrTrxL7RCwfHdjvN6x6lTBgwBL3PlLK536ZolxhyxlNsrze9qSuatUy/
+         3VU7vCmD62DyHDA/q9QKBZoVG7Vy302PbYoO3dyfTDFHr0AK7p/ZdrV/uMnnAxPXzCmP
+         kBJdEOyOBTg7G2038O5JQKie8VkX3LfhVw6oZO4zpuARyDcex3k/zljLKSFa0eASPKS+
+         F9voe7MdN0Fgf2XDYP9Vrl90P6JOyRkp5ar3MtwKnMKKzO0jsQ8nEQ5P4r1vSmwEImhA
+         45/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ChFbUh5V5b2PhTg4oql0omqyT7uX9lKhtti+6M022E4=;
-        b=idipgy+qWiEffhHjv5qFFdPriISepKxzAHVSzRimz3GK5sww8XBYokRXgYZOrojgF+
-         EeJl8bX8BzP7ii12uNKEInky3sRlxNW1nB0ZoB8lpfix1RU+Z+9nbn8OpilPMBHXVgzJ
-         jnVHI+XRremH/0dVMfhORQljunRs6rl7isWBdSPyPAd8MD+5wI2WhDaSloEa79/tCmRF
-         U+A54oDMX2rIRO9XmLTJvW6813N8Xx474fTijhHsQXJoh+K2pC7v+EWNVIjRR/XOTmQu
-         dHPdn+sV2kcZPg6N7GDs6LEkzN8UCV1hA6o7VkTaBz2NDLmf/yiQMVDMRtjFX+fSjvui
-         8I+g==
-X-Gm-Message-State: AO0yUKWVJhJRsrPzwFsCAs2Ec7cZ5Cd1dbaHDuMFRAKGcSbFp7WRIjbp
-        E9XOk5sFrnbyQn8IiS/jY7mrGpa472GiUA==
-X-Google-Smtp-Source: AK7set+GlVS97G0lJuO8eJztfQBhECBlhqup4oD0M5AT6xqG7j/cqpK//lihkjs7KvXnRfRuuT46xw==
-X-Received: by 2002:a05:622a:15d1:b0:3b8:6868:2ab4 with SMTP id d17-20020a05622a15d100b003b868682ab4mr4060669qty.49.1675764515228;
-        Tue, 07 Feb 2023 02:08:35 -0800 (PST)
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com. [209.85.128.182])
-        by smtp.gmail.com with ESMTPSA id n13-20020ac81e0d000000b003b9a4a497a1sm9103083qtl.86.2023.02.07.02.08.35
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Feb 2023 02:08:35 -0800 (PST)
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-50aa54cc7c0so189524737b3.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 02:08:35 -0800 (PST)
-X-Received: by 2002:a81:6988:0:b0:52a:7537:98a6 with SMTP id
- e130-20020a816988000000b0052a753798a6mr231706ywc.384.1675764169824; Tue, 07
- Feb 2023 02:02:49 -0800 (PST)
+        bh=Kkp+Ll4tkGit72TXAobb+8Dz4GgYVkfmJNmgRsYUejc=;
+        b=G17uw6xsNjpy4lxe0qjneHv6Rrc5Pl0WGn73I7QJaCV1M+dRxjWq/nBNJzFzVgd5DX
+         ebxbSjpOu9olL6TEsOnu1KdmP27HYcWEbDZJoGDO2QT8hg+U8KpTH7LswKj2iU98yz/Y
+         HKDl6n10zgT59cVD1QLP2IOI04IkTXwd5CvxHY6TqwjW4zkpNttijYGch2qiaaRp0VRt
+         8SERCo5B9KE4UqdEH5P9j85YMYFvkeuGLa+4PNj70bjLJ+ZzbIzefZt9e8PBtlTSYasG
+         4OlzNX2XI2VwUZ1aRf3vbGLE1rZGQwiRA/5J4I+Pnk1QJNGNLpX4d9XiNoT37+w1IF+Y
+         SdrA==
+X-Gm-Message-State: AO0yUKVaQuPatVfBSEMhqJRUlIEDFQLjWW6en04N69uhe2dWN2b+lWqB
+        sEndL0Droe/GNQSFAO0wjRhVqQ==
+X-Google-Smtp-Source: AK7set9i0aBmW+7wDDLpgeqpJaDcgLuU4ehpABvZIFJKCasLAsMRYKVJh2tk4PARadiQ4MozA7GnMw==
+X-Received: by 2002:a05:600c:2e87:b0:3e0:1a9:b1f5 with SMTP id p7-20020a05600c2e8700b003e001a9b1f5mr2534413wmn.28.1675764191241;
+        Tue, 07 Feb 2023 02:03:11 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id x20-20020a05600c21d400b003dff2b493c8sm9921505wmj.36.2023.02.07.02.03.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Feb 2023 02:03:10 -0800 (PST)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Date:   Tue, 07 Feb 2023 11:03:10 +0100
+Subject: [PATCH] dt-bindings: dma: qcom,bam-dma: add optional memory
+ interconnect properties
 MIME-Version: 1.0
-References: <20221102180705.459294-1-dmitry.baryshkov@linaro.org>
- <20230109162140.yelgy2da7aqa6sqv@fsr-ub1664-121.ea.freescale.net>
- <323ec70e-4613-c0e9-0b39-ad2a0a76673d@linaro.org> <20230110065712.lgjnmb66s4tlpoly@fsr-ub1664-121.ea.freescale.net>
- <bf92569b-3886-113c-9e27-508e4cbfa4ba@linaro.org> <CAMuHMdUbgvT5i4XiJxgKSiRSmFFXO_mMEbgHBgcJDwUPxEYRRA@mail.gmail.com>
- <4bf0e5a2-23b6-1964-b30f-a5cb57f35e68@linaro.org>
-In-Reply-To: <4bf0e5a2-23b6-1964-b30f-a5cb57f35e68@linaro.org>
-From:   Geert Uytterhoeven <geert@linux-m68k.org>
-Date:   Tue, 7 Feb 2023 11:02:37 +0100
-X-Gmail-Original-Message-ID: <CAMuHMdXyMJZaeeaLjzhbb_A7_WDcyjAzpKNWG8f5gtvmZLW0AA@mail.gmail.com>
-Message-ID: <CAMuHMdXyMJZaeeaLjzhbb_A7_WDcyjAzpKNWG8f5gtvmZLW0AA@mail.gmail.com>
-Subject: Re: [PATCH v3 0/7] drm/bridge_connector: perform HPD enablement automatically
-To:     neil.armstrong@linaro.org
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Tomi Valkeinen <tomba@kernel.org>,
-        dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230207-topic-sm8550-upstream-bam-dma-bindings-fix-v1-1-57dba71e8727@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAN0h4mMC/x2OzQqDMBCEX0Vy7kKMhGpfpfSQn60umDVktRTEd
+ +/Swxy+YfiY0wg2QjGP7jQNPyS0sUJ/60xaAs8IlJWNs26wzt5h3yolkDJ6b+GosjcMBaImlwC
+ ROBPPAm/6wthPbkpDxOCTUWEMghBb4LSoko911bI21O3/wfN1XT/+Ov4tkQAAAA==
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.0
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Neil,
+Recents SoCs like the SM8450 or SM8550 requires memory interconnect
+in order to have functional DMA.
 
-On Tue, Feb 7, 2023 at 10:59 AM Neil Armstrong
-<neil.armstrong@linaro.org> wrote:
-> On 07/02/2023 10:40, Geert Uytterhoeven wrote:
-> > On Tue, Jan 10, 2023 at 5:37 PM Dmitry Baryshkov
-> > <dmitry.baryshkov@linaro.org> wrote:
-> >> On 10/01/2023 08:57, Laurentiu Palcu wrote:
-> >>> On Mon, Jan 09, 2023 at 10:26:28PM +0200, Dmitry Baryshkov wrote:
-> >>>> On 09/01/2023 18:21, Laurentiu Palcu wrote:
-> >>>>> It looks like there are some issues with this patchset... :/ I just
-> >>>>> fetched the drm-tip and, with these patches included, the "Hot plug
-> >>>>> detection already enabled" warning is back for i.MX DCSS.
-> >>>>
-> >>>> Could you please provide a backtrace?
-> >>>
-> >>> Sure, see below:
-> >>
-> >> I wondered, why didn't I see this on msm, my main target nowadays. The
-> >> msm driver is calling msm_kms_helper_poll_init() after initializing
-> >> fbdev, so all previous kms_helper_poll_enable() calls return early.
-> >>
-> >> I think I have the fix ready. Let me test it locally before posting.
-> >
-> > Is this fix available?
-> > Do you have a lore link?
->
-> The fix at [1] has been applied on 2023-01-26
->
-> [1] https://lore.kernel.org/all/20230124104548.3234554-1-dmitry.baryshkov@linaro.org/
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+ Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-Applied where? linux-next does not have it.
-Thanks!
+diff --git a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+index 003098caf709..e922fafca833 100644
+--- a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
++++ b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+@@ -36,6 +36,12 @@ properties:
+   interrupts:
+     maxItems: 1
+ 
++  interconnects:
++    description: Path leading to system memory
++
++  interconnect-names:
++    const: memory
++
+   iommus:
+     minItems: 1
+     maxItems: 4
 
-Gr{oetje,eeting}s,
+---
+base-commit: 49a8133221c71b935f36a7c340c0271c2a9ee2db
+change-id: 20230207-topic-sm8550-upstream-bam-dma-bindings-fix-81929c3bea5c
 
-                        Geert
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
 
---
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
