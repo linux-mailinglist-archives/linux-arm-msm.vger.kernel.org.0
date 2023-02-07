@@ -2,88 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E485868D91C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 14:16:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8074B68D94E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 14:30:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232676AbjBGNQK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Feb 2023 08:16:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38776 "EHLO
+        id S231222AbjBGNak (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Feb 2023 08:30:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232643AbjBGNPx (ORCPT
+        with ESMTP id S230374AbjBGNaj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Feb 2023 08:15:53 -0500
+        Tue, 7 Feb 2023 08:30:39 -0500
 Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6BED3CE39
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 05:15:35 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id i5so6343032wrc.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 05:15:35 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D0EF2278B
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 05:30:38 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id ba1so9492432wrb.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 05:30:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=AAKiHUgxqE5rg0/f1FVu8ugVDbgO9Yb63m2qLMmxHgI=;
-        b=KrYbYTMANVPB4WRowNS2b0+VIizK1Njw82xnErVjIYboGM6kaEHiRKGBTwFgHUsHLh
-         VGlmKMuGbhVasLgFPOu/gTbGwgbd9JxFGjXyQV+B2USjX+McbDXCNjq8dbeZmbjOSP5J
-         NcOqjTLmEOS7EJJLwdwW2yHBW2DaoHmY+DAf5nAGhGvGeVUJZ3hV1rhP3Pt0cvfg8jyO
-         T3kf1uj+sshGBYnyhtJ4mdgupxklCl8Ls90ZV9bPnJ48VYAxwWQaXhjtm20yUB6v2w9W
-         B6NPUnXYJBP/uSR8C+DMKbBYMQES0qlqCIKyq+7MBqSngNKAuFxvYaKZ5RNTxWbzbuSD
-         /bHQ==
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=QFRY8l975SG0htBMNX2RaAHlE3X6PIi5Arw3VidyWxk=;
+        b=PzI8UYULwWu0ZkL3TzdEroaha7ac16Lsd6ACzqnS1czR/eFkebq/zPekJHdgwUP8ey
+         gVezDX3nKvLQ84rHuN1vO7mxYWmV2ZKYubaN0tS50a7HlHT10YiMgdERvpZofoQJt5em
+         Y/BX5a1Pz/0qqveRQi680OJQ0UDfnV1LPmELwW7ONMJdQp3t6+8GNgWLTYRMHW8WFO/A
+         bA/ofZhTwXdW3nZeTFaWs9QerwLp77BmkmDlpwPAGDXH2JaRrYP0ypQ1xlcvrBYCQS02
+         PWCViepUxb+7O42yaKbjpI2mfSEAYVivKXo7oKTFJvk8IpFyge7qVCJapqwYOw/WyaWA
+         0Wpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AAKiHUgxqE5rg0/f1FVu8ugVDbgO9Yb63m2qLMmxHgI=;
-        b=0jLMueib5sbCnC5S0NVq/nNG8+B2MkISPHEfTtcxZkKNf1dTXV+QIDCXPcVTxSe2TX
-         eYsZ3O+8hyIgrQ2ZCPDncibyBWbYiekfAxo/BDSf6gnV7MUeF3APXnZYrAv5kmWwqlsB
-         B3RyhCx3mJTBf7jpteji8FpOOrW1hCw7sLkpbRm12gsqG1eECYFrq/9RT2qwwiyei2y3
-         gvdxtcT4kmbCUuFutvjEWYDIw5Ho58veyISgzqJqQG8sxQUTsVJ9DewPluGtu9nB6khN
-         9YdvNcV3tkCB+FgmZMK9N3dRCamm+tb1i1e2UZaViCjH27+ZstCClWyNnbVpWRovZsYo
-         tnOA==
-X-Gm-Message-State: AO0yUKV3sFZKgO1sCW/EBsnyorzOfaq6dUM1qyzxT5NTKGJ4lJVOVMWQ
-        HW4rfXTAgcdBL9ePD0oXf15K0Q==
-X-Google-Smtp-Source: AK7set8cn7YrruxGmcYVHi8IPBD54PsERb/K7dO57Si+k70ChOPadUGgn25vP4twccmkoVCrjvR9Mw==
-X-Received: by 2002:adf:ed43:0:b0:2c1:2a2e:34e2 with SMTP id u3-20020adfed43000000b002c12a2e34e2mr2444601wro.69.1675775734397;
-        Tue, 07 Feb 2023 05:15:34 -0800 (PST)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id i6-20020adffc06000000b002c3e28d0343sm7326438wrr.85.2023.02.07.05.15.33
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QFRY8l975SG0htBMNX2RaAHlE3X6PIi5Arw3VidyWxk=;
+        b=fvtyvt+wrWQ8c7rGiF91EDWgOv2SCFuFJWM3gzJHhjWfNFr8SG79eqHPqXl7NqTHo/
+         1MCJRHXA+vrbvTBBTVGX2u6buyVZ3l5VecKPjLsRE1SKtC09GfcL47HaiF7uaLULiZmz
+         rymCXENolGdmhw4zUZbZQdOxhZ0AB5M2eqbysJG+kRBLPLcWfvpv5GMUoHfvWuoyzXMY
+         jjH+TOE891bo3v8WYIV3CVbhchogYdhRzJt28NpWxDDLch9+JxqUeEAx3orIwKN5SFjF
+         ufI233pl9jYTX8KLGiNf3hi5hLa42QMGSk8Z4GJxDH7xX33UQ3P5UBxE8UI90Z3gX4y3
+         OZHg==
+X-Gm-Message-State: AO0yUKXW+kQK8nbLSO3gfT6lOupT+AD1iUci5y2gzt8r19eTMdzgWBEP
+        CxQB2Qfjd5MwSdZQn6pqCsICnw==
+X-Google-Smtp-Source: AK7set8lMKCObqyAdbxEb0nTgdUyVM5rVpjgn42BqxPP5fL2YunnT7ZwjsQLHDKt6pgJf9pq87hmig==
+X-Received: by 2002:adf:f007:0:b0:2b6:7876:3cd4 with SMTP id j7-20020adff007000000b002b678763cd4mr2691948wro.16.1675776636869;
+        Tue, 07 Feb 2023 05:30:36 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:c58c:fc5c:67d6:e5f3? ([2a01:e0a:982:cbb0:c58c:fc5c:67d6:e5f3])
+        by smtp.gmail.com with ESMTPSA id o21-20020a5d58d5000000b002c3f0a78e39sm2651551wrf.9.2023.02.07.05.30.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Feb 2023 05:15:33 -0800 (PST)
-Message-ID: <c1564a80-d1be-f31d-2db3-1ec0b847e921@linaro.org>
-Date:   Tue, 7 Feb 2023 13:15:32 +0000
+        Tue, 07 Feb 2023 05:30:36 -0800 (PST)
+Message-ID: <31b5a693-d9e6-1c21-9fa7-32abc431a46d@linaro.org>
+Date:   Tue, 7 Feb 2023 14:30:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v9 21/27] gunyah: vm_mgr: Add framework to add VM
- Functions
+ Thunderbird/102.7.1
+From:   neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v3 0/7] drm/bridge_connector: perform HPD enablement
+ automatically
 Content-Language: en-US
-To:     Elliot Berman <quic_eberman@quicinc.com>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Alex Elder <elder@linaro.org>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Jonathan Corbet <corbet@lwn.net>
-Cc:     Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Marc Zyngier <maz@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230120224627.4053418-1-quic_eberman@quicinc.com>
- <20230120224627.4053418-22-quic_eberman@quicinc.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20230120224627.4053418-22-quic_eberman@quicinc.com>
+To:     Geert Uytterhoeven <geert@linux-m68k.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Tomi Valkeinen <tomba@kernel.org>,
+        dri-devel@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+References: <20221102180705.459294-1-dmitry.baryshkov@linaro.org>
+ <20230109162140.yelgy2da7aqa6sqv@fsr-ub1664-121.ea.freescale.net>
+ <323ec70e-4613-c0e9-0b39-ad2a0a76673d@linaro.org>
+ <20230110065712.lgjnmb66s4tlpoly@fsr-ub1664-121.ea.freescale.net>
+ <bf92569b-3886-113c-9e27-508e4cbfa4ba@linaro.org>
+ <CAMuHMdUbgvT5i4XiJxgKSiRSmFFXO_mMEbgHBgcJDwUPxEYRRA@mail.gmail.com>
+ <4bf0e5a2-23b6-1964-b30f-a5cb57f35e68@linaro.org>
+ <CAMuHMdXyMJZaeeaLjzhbb_A7_WDcyjAzpKNWG8f5gtvmZLW0AA@mail.gmail.com>
+ <CAMuHMdUgtiuxJ9dnjcGy77onHtrhabT5krJMp2XSr4KOD31ydQ@mail.gmail.com>
+Organization: Linaro Developer Services
+In-Reply-To: <CAMuHMdUgtiuxJ9dnjcGy77onHtrhabT5krJMp2XSr4KOD31ydQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -95,427 +104,79 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 20/01/2023 22:46, Elliot Berman wrote:
-> Introduce a framework for Gunyah userspace to install VM functions. VM
-> functions are optional interfaces to the virtual machine. vCPUs,
-> ioeventfs, and irqfds are examples of such VM functions and are
-> implemented in subsequent patches.
+On 07/02/2023 11:19, Geert Uytterhoeven wrote:
+> Hi Neil,
 > 
-> A generic framework is implemented instead of individual ioctls to
-> create vCPUs, irqfds, etc., in order to simplify the VM manager core
-> implementation and allow dynamic loading of VM function modules.
+> On Tue, Feb 7, 2023 at 11:02 AM Geert Uytterhoeven <geert@linux-m68k.org> wrote:
+>> On Tue, Feb 7, 2023 at 10:59 AM Neil Armstrong
+>> <neil.armstrong@linaro.org> wrote:
+>>> On 07/02/2023 10:40, Geert Uytterhoeven wrote:
+>>>> On Tue, Jan 10, 2023 at 5:37 PM Dmitry Baryshkov
+>>>> <dmitry.baryshkov@linaro.org> wrote:
+>>>>> On 10/01/2023 08:57, Laurentiu Palcu wrote:
+>>>>>> On Mon, Jan 09, 2023 at 10:26:28PM +0200, Dmitry Baryshkov wrote:
+>>>>>>> On 09/01/2023 18:21, Laurentiu Palcu wrote:
+>>>>>>>> It looks like there are some issues with this patchset... :/ I just
+>>>>>>>> fetched the drm-tip and, with these patches included, the "Hot plug
+>>>>>>>> detection already enabled" warning is back for i.MX DCSS.
+>>>>>>>
+>>>>>>> Could you please provide a backtrace?
+>>>>>>
+>>>>>> Sure, see below:
+>>>>>
+>>>>> I wondered, why didn't I see this on msm, my main target nowadays. The
+>>>>> msm driver is calling msm_kms_helper_poll_init() after initializing
+>>>>> fbdev, so all previous kms_helper_poll_enable() calls return early.
+>>>>>
+>>>>> I think I have the fix ready. Let me test it locally before posting.
+>>>>
+>>>> Is this fix available?
+>>>> Do you have a lore link?
+>>>
+>>> The fix at [1] has been applied on 2023-01-26
+>>>
+>>> [1] https://lore.kernel.org/all/20230124104548.3234554-1-dmitry.baryshkov@linaro.org/
+>>
+>> Applied where? linux-next does not have it.
 > 
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> ---
->   Documentation/virt/gunyah/vm-manager.rst |  18 +++
->   drivers/virt/gunyah/vm_mgr.c             | 187 ++++++++++++++++++++++-
->   drivers/virt/gunyah/vm_mgr.h             |   5 +
->   include/linux/gunyah_vm_mgr.h            |  68 +++++++++
->   include/uapi/linux/gunyah.h              |  13 ++
->   5 files changed, 289 insertions(+), 2 deletions(-)
->   create mode 100644 include/linux/gunyah_vm_mgr.h
+> commit cbf143b282c64e59
+> ("drm/probe_helper: extract two helper functions") in next-20230127
+> next-20230130 next-20230131
+> commit d33a54e3991dfce8
+> ("drm/probe_helper: sort out poll_running vs poll_enabled") in
+> next-20230127 next-20230130 next-20230131
 > 
-> diff --git a/Documentation/virt/gunyah/vm-manager.rst b/Documentation/virt/gunyah/vm-manager.rst
-> index 62513af09cbf..d929f8f20b3b 100644
-> --- a/Documentation/virt/gunyah/vm-manager.rst
-> +++ b/Documentation/virt/gunyah/vm-manager.rst
-> @@ -17,6 +17,24 @@ sharing userspace memory with a VM is done via the GH_VM_SET_USER_MEM_REGION
->   ioctl. The VM itself is configured to use the memory region via the
->   devicetree.
->   
-> +Gunyah Functions
-> +================
-> +
-> +Components of a Gunyah VM's configuration that need kernel configuration are
-> +called "functions" and are built on top of a framework. Functions are identified
-> +by a string and have some argument(s) to configure them. They are typically
-> +created by the `GH_VM_ADD_FUNCTION` ioctl.
-> +
-> +Functions typically will always do at least one of these operations:
-> +
-> +1. Create resource ticket(s). Resource tickets allow a function to register
-> +   itself as the client for a Gunyah resource (e.g. doorbell or vCPU) and
-> +   the function is given the pointer to the `struct gunyah_resource` when the
-> +   VM is starting.
-> +
-> +2. Register IO handler(s). IO handlers allow a function to handle stage-2 faults
-> +   from the virtual machine.
-> +
->   Sample Userspace VMM
->   ====================
->   
-> diff --git a/drivers/virt/gunyah/vm_mgr.c b/drivers/virt/gunyah/vm_mgr.c
-> index 48bd3f06fb6c..1e795f3d19d5 100644
-> --- a/drivers/virt/gunyah/vm_mgr.c
-> +++ b/drivers/virt/gunyah/vm_mgr.c
-> @@ -16,7 +16,147 @@
->   
->   #include "vm_mgr.h"
->   
-> -static __must_check struct gunyah_vm *gunyah_vm_alloc(struct gh_rm_rpc *rm)
-> +static DEFINE_MUTEX(functions_lock);
-> +static LIST_HEAD(functions);
-> +
-> +static struct gunyah_vm_function_driver *__find_function(const char name[GUNYAH_FUNCTION_NAME_SIZE])
-> +	__must_hold(functions_lock)
-> +{
-> +	struct gunyah_vm_function_driver *iter, *drv = NULL;
-> +
-> +	list_for_each_entry(iter, &functions, list) {
-> +		if (!strncmp(iter->name, name, GUNYAH_FUNCTION_NAME_SIZE)) {
-> +			drv = iter;
-> +			break;
-> +		}
-> +	}
-> +
-> +	return drv;
-> +}
-> +
-> +int gunyah_vm_function_register(struct gunyah_vm_function_driver *drv)
-> +{
-> +	int ret = 0;
-> +
-> +	mutex_lock(&functions_lock);
-> +	if (__find_function(drv->name)) {
-> +		ret = -EEXIST;
-> +		goto out;
-> +	}
-> +
-> +	INIT_LIST_HEAD(&drv->instances);
-> +	list_add(&drv->list, &functions);
-> +out:
-> +	mutex_unlock(&functions_lock);
-> +	return ret;
-> +}
-> +EXPORT_SYMBOL_GPL(gunyah_vm_function_register);
-> +
-> +static void gh_vm_remove_function(struct gunyah_vm_function *f)
-> +	__must_hold(functions_lock)
-> +{
-> +	f->drv->release(f);
-> +	list_del(&f->vm_list);
-> +	list_del(&f->drv_list);
-> +	module_put(f->drv->mod);
-> +	kfree(f);
-> +}
-> +
-> +void gunyah_vm_function_unregister(struct gunyah_vm_function_driver *drv)
-> +{
-> +	struct gunyah_vm_function *f, *iter;
-> +
-> +	mutex_lock(&functions_lock);
-> +	list_for_each_entry_safe(f, iter, &drv->instances, drv_list)
-> +		gh_vm_remove_function(f);
-> +	list_del(&drv->list);
-> +	mutex_unlock(&functions_lock);
-> +}
-> +EXPORT_SYMBOL_GPL(gunyah_vm_function_unregister);
-> +
-> +static long gh_vm_add_function(struct gunyah_vm *ghvm, struct gunyah_vm_function *f)
-> +{
-> +	long r = 0;
-> +
-> +	mutex_lock(&functions_lock);
-> +	f->drv = __find_function(f->fn.name);
-> +	if (!f->drv) {
-> +		mutex_unlock(&functions_lock);
-> +		r = request_module("ghfunc:%s", f->fn.name);
-> +		if (r)
-> +			return r;
-> +
-> +		mutex_lock(&functions_lock);
-> +		f->drv = __find_function(f->fn.name);
-> +	}
-> +
-> +	if (!f->drv) {
-> +		r = -ENOENT;
-> +		goto out;
-> +	}
-> +
-> +	if (!try_module_get(f->drv->mod)) {
-> +		r = -ENOENT;
-> +		f->drv = NULL;
-> +		goto out;
-> +	}
-> +
-> +	f->ghvm = ghvm;
-> +	f->rm = ghvm->rm;
-> +
-> +	r = f->drv->bind(f);
-> +	if (r < 0) {
-> +		module_put(f->drv->mod);
-> +		goto out;
-> +	}
-> +
-> +	list_add(&f->vm_list, &ghvm->functions);
-> +	list_add(&f->drv_list, &f->drv->instances);
-> +out:
-> +	mutex_unlock(&functions_lock);
-> +	return r;
-> +}
-> +
-> +static long gh_vm_rm_function(struct gunyah_vm *ghvm, struct gh_vm_function *fn)
-> +{
-> +	long r = 0;
-> +	struct gunyah_vm_function *f, *iter;
-> +
-> +	r = mutex_lock_interruptible(&functions_lock);
-> +	if (r)
-> +		return r;
-> +
-> +	list_for_each_entry_safe(f, iter, &ghvm->functions, vm_list) {
-> +		if (!memcmp(&f->fn, fn, sizeof(*fn)))
-> +			gh_vm_remove_function(f);
-> +	}
-> +
-> +	mutex_unlock(&functions_lock);
-> +	return 0;
-> +}
-> +
-> +static void ghvm_put(struct kref *kref)
-> +{
-> +	struct gunyah_vm *ghvm = container_of(kref, struct gunyah_vm, kref);
-> +
-> +	gh_rm_dealloc_vmid(ghvm->rm, ghvm->vmid);
-> +	put_gh_rm(ghvm->rm);
-> +	kfree(ghvm);
-> +}
-> +
-> +int __must_check get_gunyah_vm(struct gunyah_vm *ghvm)
-> +{
-> +	return kref_get_unless_zero(&ghvm->kref);
-> +}
-> +EXPORT_SYMBOL_GPL(get_gunyah_vm);
-> +
-> +void put_gunyah_vm(struct gunyah_vm *ghvm)
-> +{
-> +	kref_put(&ghvm->kref, ghvm_put);
-> +}
-> +EXPORT_SYMBOL_GPL(put_gunyah_vm);
-> +
-> +static __must_check struct gunyah_vm *gunyah_vm_alloc(struct gh_rm *rm)
->   {
->   	struct gunyah_vm *ghvm;
->   	int vmid;
-> @@ -39,6 +179,8 @@ static __must_check struct gunyah_vm *gunyah_vm_alloc(struct gh_rm_rpc *rm)
->   	mutex_init(&ghvm->mm_lock);
->   	INIT_LIST_HEAD(&ghvm->memory_mappings);
->   	init_rwsem(&ghvm->status_lock);
-> +	kref_init(&ghvm->kref);
-> +	INIT_LIST_HEAD(&ghvm->functions);
->   
->   	return ghvm;
->   }
-> @@ -192,6 +334,39 @@ static long gh_vm_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
->   			r = -EINVAL;
->   		break;
->   	}
-> +	case GH_VM_ADD_FUNCTION: {
-> +		struct gunyah_vm_function *f;
-> +
-> +		r = -ENOMEM;
-> +		f = kzalloc(sizeof(*f), GFP_KERNEL);
-> +		if (!f)
-> +			break;
-> +
-> +		r = -EFAULT;
-> +		if (copy_from_user(&f->fn, argp, sizeof(f->fn)))
-> +			break;
-> +
-> +		r = gh_vm_add_function(ghvm, f);
-> +		if (r < 0)
-> +			kfree(f);
-> +		break;
-> +	}
-> +	case GH_VM_REMOVE_FUNCTION: {
-> +		struct gh_vm_function *fn;
-> +
-> +		r = -ENOMEM;
-> +		fn = kzalloc(sizeof(*fn), GFP_KERNEL);
-> +		if (!fn)
-> +			break;
-> +
-> +		r = -EFAULT;
-> +		if (copy_from_user(fn, argp, sizeof(*fn)))
-> +			break;
-> +
-> +		r = gh_vm_rm_function(ghvm, fn);
-> +		kfree(fn);
-> +		break;
-> +	}
->   	default:
->   		r = -ENOTTY;
->   		break;
-> @@ -204,15 +379,23 @@ static int gh_vm_release(struct inode *inode, struct file *filp)
->   {
->   	struct gunyah_vm *ghvm = filp->private_data;
->   	struct gunyah_vm_memory_mapping *mapping, *tmp;
-> +	struct gunyah_vm_function *f, *fiter;
->   
->   	gh_vm_stop(ghvm);
->   
-> +	mutex_lock(&functions_lock);
-> +	list_for_each_entry_safe(f, fiter, &ghvm->functions, vm_list) {
-> +		gh_vm_remove_function(f);
-> +	}
-> +	mutex_unlock(&functions_lock);
-> +
->   	list_for_each_entry_safe(mapping, tmp, &ghvm->memory_mappings, list) {
->   		gh_vm_mem_mapping_reclaim(ghvm, mapping);
->   		kfree(mapping);
->   	}
-> +
->   	put_gh_rm(ghvm->rm);
-> -	kfree(ghvm);
-> +	put_gunyah_vm(ghvm);
->   	return 0;
->   }
->   
-> diff --git a/drivers/virt/gunyah/vm_mgr.h b/drivers/virt/gunyah/vm_mgr.h
-> index 5c02fb305893..8d3b0678fb96 100644
-> --- a/drivers/virt/gunyah/vm_mgr.h
-> +++ b/drivers/virt/gunyah/vm_mgr.h
-> @@ -8,6 +8,7 @@
->   
->   #include <linux/gunyah_rsc_mgr.h>
->   #include <linux/list.h>
-> +#include <linux/kref.h>
->   #include <linux/miscdevice.h>
->   #include <linux/mutex.h>
->   #include <linux/rwsem.h>
-> @@ -41,8 +42,12 @@ struct gunyah_vm {
->   	enum gh_rm_vm_status vm_status;
->   	struct rw_semaphore status_lock;
->   
-> +	struct kref kref;
-> +
->   	struct mutex mm_lock;
->   	struct list_head memory_mappings;
-> +
-> +	struct list_head functions;
->   };
->   
->   struct gunyah_vm_memory_mapping *gh_vm_mem_mapping_alloc(struct gunyah_vm *ghvm,
-> diff --git a/include/linux/gunyah_vm_mgr.h b/include/linux/gunyah_vm_mgr.h
-> new file mode 100644
-> index 000000000000..69f98eb503e9
-> --- /dev/null
-> +++ b/include/linux/gunyah_vm_mgr.h
-> @@ -0,0 +1,68 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +/*
-> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#ifndef _GUNYAH_VM_MGR_H
-> +#define _GUNYAH_VM_MGR_H
-> +
-> +#include <linux/compiler_types.h>
-> +#include <linux/gunyah.h>
-> +#include <linux/gunyah_rsc_mgr.h>
-> +#include <linux/list.h>
-> +#include <linux/mod_devicetable.h>
-> +#include <linux/notifier.h>
-> +
-> +#include <uapi/linux/gunyah.h>
-> +
-> +struct gunyah_vm;
-> +
-> +int __must_check get_gunyah_vm(struct gunyah_vm *ghvm);
-> +void put_gunyah_vm(struct gunyah_vm *ghvm);
-> +
-> +struct gunyah_vm_function;
-> +struct gunyah_vm_function_driver {
-> +	const char name[GUNYAH_FUNCTION_NAME_SIZE];
-> +	struct module *mod;
-> +	long (*bind)(struct gunyah_vm_function *f);
-> +	void (*release)(struct gunyah_vm_function *f);
-> +	struct list_head list;
-> +	struct list_head instances;
-> +};
-> +
-> +struct gunyah_vm_function {
-> +	struct gh_vm_function fn;
-> +	struct gunyah_vm *ghvm;
-> +	struct gh_rm *rm;
-> +	struct gunyah_vm_function_driver *drv;
-> +	void *data;
-> +	struct list_head vm_list;
-> +	struct list_head drv_list;
-> +};
-> +
-> +int gunyah_vm_function_register(struct gunyah_vm_function_driver *f);
-> +void gunyah_vm_function_unregister(struct gunyah_vm_function_driver *f);
-> +
-> +#define DECLARE_GUNYAH_VM_FUNCTION(_name, _bind, _release)		\
-> +	static struct gunyah_vm_function_driver _name = {		\
-> +		.name = __stringify(_name),				\
-> +		.mod = THIS_MODULE,					\
-> +		.bind = _bind,						\
-> +		.release = _release,					\
-> +	};								\
-> +	MODULE_ALIAS("ghfunc:"__stringify(_name))
+> but not in any later version?
 
-lets not over kill this by having DECLARE_GUNYAH_VM_FUNCTION, this will 
-make the drivers readable in a more familar way. let the driver define 
-this static struct.
+$ git log --oneline --author=dmitry next-20230207 drivers/gpu/drm/drm_probe_helper.c
+c8268795c9a9 drm/probe-helper: enable and disable HPD on connectors
+78b991ccfa64 drm/poll-helper: merge drm_kms_helper_poll_disable() and _fini()
 
+$ cat Next/SHA1s | grep drm
+drm-fixes       4ec5183ec48656cec489c49f989c508b68b518e3
+drm-intel-fixes 4c7b9344cadbed477372c75e3c0a8cfd542f5990
+drm-misc-fixes  8f20660f053cefd4693e69cfff9cf58f4f7c4929
+drm             1c0db6d84f8e0ac8f14178f13250e36ebcf457ee
+drm-misc        d20a8f409259f1782f080b434054854020878f23
+drm-intel       155c6b16eec2eaaaf6c71abf2d5e71641770d7ba
+drm-tegra       b9930311641cf2ed905a84aabe27e8f3868aee4a
+drm-msm         dbd7a2a941b8cbf9e5f79a777ed9fe0090eebb61
+drm-msm-lumag   1d233b1cb149ec78c20fac58331b27bb460f9558
+imx-drm         927d8fd465adbaaad6cce82f840d489d7c378f29
 
-> +
-> +#define DECLARE_GUNYAH_VM_FUNCTION_INIT(_name, _bind, _release)		\
-> +	DECLARE_GUNYAH_VM_FUNCTION(_name, _bind, _release);		\
-> +	static int __init _name##_mod_init(void)			\
-> +	{								\
-> +		return gunyah_vm_function_register(&(_name));		\
-> +	}								\
-> +	module_init(_name##_mod_init);					\
-> +	static void __exit _name##_mod_exit(void)			\
-> +	{								\
-> +		gunyah_vm_function_unregister(&(_name));		\
-> +	}								\
-> +	module_exit(_name##_mod_exit)
-> +
+so weren't merged into drm-misc, I'll ping Thomas & Maxime on irc.
 
-How about:
+Neil
 
-#define module_gunyah_function_driver(__gf_driver)
-         module_driver(__gf_driver, gunyah_vm_function_register, \
-                         gunyah_vm_function_unregister)
+> 
+> Gr{oetje,eeting}s,
+> 
+>                          Geert
+> 
+> --
+> Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+> 
+> In personal conversations with technical people, I call myself a hacker. But
+> when I'm talking to journalists I just say "programmer" or something like that.
+>                                  -- Linus Torvalds
 
-Having relook at the patch, I think modeling the gunyah_vm_function as a 
-proper device and driver model will scale, you could leverage most of 
-this manual management to the existing driver model. May I suggest to 
-you take a look at  include/linux/auxiliary_bus.h
-with that you could model add_functions as
-auxiliary_device_add and the respecitive drivers as module_auxiliary_driver.
-
-> +#endif
-> diff --git a/include/uapi/linux/gunyah.h b/include/uapi/linux/gunyah.h
-> index 36359ad2175e..ec8da6fde045 100644
-> --- a/include/uapi/linux/gunyah.h
-> +++ b/include/uapi/linux/gunyah.h
-> @@ -50,4 +50,17 @@ struct gh_vm_dtb_config {
->   
->   #define GH_VM_START		_IO(GH_IOCTL_TYPE, 0x3)
->   
-> +#define GUNYAH_FUNCTION_NAME_SIZE		32
-> +#define GUNYAH_FUNCTION_MAX_ARG_SIZE		1024
-> +
-> +struct gh_vm_function {
-> +	char name[GUNYAH_FUNCTION_NAME_SIZE];
-> +	union {
-> +		char data[GUNYAH_FUNCTION_MAX_ARG_SIZE];
-
-Are we missing any thing here, its odd to see a single member union like 
-this.
-if other memembers are part of another patch please move them to this 
-one as its confusing.
-> +	};
-> +};
-> +
-> +#define GH_VM_ADD_FUNCTION	_IOW(GH_IOCTL_TYPE, 0x4, struct gh_vm_function)
-> +#define GH_VM_REMOVE_FUNCTION	_IOW(GH_IOCTL_TYPE, 0x7, struct gh_vm_function)
-> +
->   #endif
