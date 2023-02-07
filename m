@@ -2,112 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D5E8868D78F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 14:01:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 47BF768D7E0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 14:03:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230303AbjBGNBW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Feb 2023 08:01:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46642 "EHLO
+        id S232084AbjBGNDx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Feb 2023 08:03:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231977AbjBGNBH (ORCPT
+        with ESMTP id S232080AbjBGNDw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Feb 2023 08:01:07 -0500
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B406D39B8B;
-        Tue,  7 Feb 2023 05:00:28 -0800 (PST)
-Received: by mail-ot1-f49.google.com with SMTP id r34-20020a05683044a200b0068d4a8a8d2dso4135414otv.12;
-        Tue, 07 Feb 2023 05:00:28 -0800 (PST)
+        Tue, 7 Feb 2023 08:03:52 -0500
+Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 615AD360AC
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 05:03:51 -0800 (PST)
+Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-5249a65045aso162682367b3.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 05:03:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=3Xd+/5Y9VTyL6XxO9VJQ62sf2ccIN1/K2xW1odJL8Mo=;
+        b=uWLALjwdLTy33c8dzkuoCBH5sSws4MdJkcHWMKUJ68n89+1DYYNLO/nHpKqfwWIKR2
+         GckGI3CGQmfFKbnzwTbE2Qlg/MNBvKKT+R2nnvKMGsbVtyf2Cktm5eUoB4AuIOMLyiLB
+         jJKLbjIo02MIev/iBsEEKLaGLk5bwNQ4UGh34TjhXCwtdU1EZ+Rq41w6SV4dTniHkUtF
+         dMRDd6bxXLGBCT7MNb7tmxxYEZ2tq0EMBkFIu7p6suMbgxIC3QVwk2+1s6Gqjy76gz4g
+         rkGhjeWxJC+XXO0qSHQIlqmVNmEaT7tMc25EVhqMhyrufIP95/Gporvw/sIuGz/Tk+Am
+         +cFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ium/4IrRsQ+k51z0fDzl0DiGIY9oKjxvrSc3Z2yZ6vU=;
-        b=OXk+TPLfalbxityzGEMXxwy2UqzZiRsEBFHmgxk/K0n+aEv3AMcxqoGsZoIH049iLF
-         4Akz1+txCUFQhccZvINDTHcheJ1yrzTezcMNUi1UNWaTgaUYoQZCct7eIN5qPTirYYoQ
-         4ZriJ9GTNu1P5QEKCaLFLO7jzBnHRghnzL8v/LjqdICxNS8a65f79jBb8vw64sDF6qYY
-         GEsh4Jcj0mPCxLBXUZTod6hGwtMez6Nqe6BvHS8v0wOo1CKC6FKPi8QFIaCHmWLmL0w4
-         QNQvQBE+ttLW7bs8uWwHrh5n8mKIKF90VxyE9hO2iX9n0ADUwLcs5g4a4mkJh6mTmem3
-         Okkw==
-X-Gm-Message-State: AO0yUKUrKZ/HaWg+hP1eu/tQpu+GvIqwL3SIN/FOt36z2TXOS3TghXtJ
-        KkTa/PHu8Kfm4sJvgGt/rQpzIK+cDA==
-X-Google-Smtp-Source: AK7set9Voa0znJ6rIxJzug0AagTM9zQ35ONNyQ4dz2EhC9yj1CDlYyczSrfaLArtFj/3ZM5bvTmtWw==
-X-Received: by 2002:a05:6830:d19:b0:68d:972c:478d with SMTP id bu25-20020a0568300d1900b0068d972c478dmr2146993otb.16.1675774827878;
-        Tue, 07 Feb 2023 05:00:27 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id do20-20020a0568300e1400b0068bce6239a3sm2395029otb.38.2023.02.07.05.00.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Feb 2023 05:00:27 -0800 (PST)
-Received: (nullmailer pid 3216441 invoked by uid 1000);
-        Tue, 07 Feb 2023 13:00:23 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3Xd+/5Y9VTyL6XxO9VJQ62sf2ccIN1/K2xW1odJL8Mo=;
+        b=gsqIKwm3f9q02kAp+brdz9MkOagvmQTPv0wtuoD61pYNluHkGUe9FqIfXZHmF+dcc3
+         OfEpKFWA+wKZq8/3UPQThQrkRd90scoKJ5CdYl0xYe7tQOXQ1YnFCDuo/X8VyMO7qXgh
+         TZDXsWDTaQ41sWBmIKmdoGdEX7reL4Kb+Z553vqziwwQQDWT3y0gtwL/zZb+DM0STB5Q
+         Iw4gt5t4Vz9is9WBlj5ABrnXadLbkQ+g9agoSQDprjsZIhB6tMuaiotUsn3RQP+1Ywpb
+         PpYEcNB0GWEmf1rl/hvUK3X/fk11sdnA3E0Ex07WHET8inNka2lbFC7XGmEQM6xNElCx
+         DUfw==
+X-Gm-Message-State: AO0yUKU/ikpKxe/YCxn3cxYXEgwhaWTTZIewPrerrdCEvYDPy/NKJBEv
+        pCBuJed5PtPJydqlaTybpVdZXkBJTMJzsjXygceY0A==
+X-Google-Smtp-Source: AK7set80cxJ9Kb2iR+lHvpLM2k5mPTgvJUc4GK/bdANgCT+MK42k1rMj1ZkHPioNfa6E4lhwrcgs9S6voONnZ8inhxw=
+X-Received: by 2002:a81:6c81:0:b0:527:af02:df16 with SMTP id
+ h123-20020a816c81000000b00527af02df16mr317532ywc.138.1675775030572; Tue, 07
+ Feb 2023 05:03:50 -0800 (PST)
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        linux-remoteproc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+References: <20230202133816.4026990-1-abel.vesa@linaro.org>
+ <20230202133816.4026990-5-abel.vesa@linaro.org> <6f326ed7-6799-b965-fe3a-1f046546ed44@linaro.org>
+ <Y+JDQt/T7pXh2/P7@linaro.org>
+In-Reply-To: <Y+JDQt/T7pXh2/P7@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 7 Feb 2023 15:03:39 +0200
+Message-ID: <CAA8EJpq8ihMDGiJodA=AtoZOs31R6ceVrVB-9-d-vni4m8+adQ@mail.gmail.com>
+Subject: Re: [RFC v3 4/7] phy: qcom: Add QCOM SNPS eUSB2 repeater driver
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-In-Reply-To: <20230207090852.28421-4-krzysztof.kozlowski@linaro.org>
-References: <20230207090852.28421-1-krzysztof.kozlowski@linaro.org>
- <20230207090852.28421-4-krzysztof.kozlowski@linaro.org>
-Message-Id: <167577470912.3213891.8305591559369987935.robh@kernel.org>
-Subject: Re: [PATCH 4/5] dt-bindings: remoteproc: qcom,glink-rpm-edge:
- convert to DT schema
-Date:   Tue, 07 Feb 2023 07:00:23 -0600
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+        Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-phy@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, 7 Feb 2023 at 14:25, Abel Vesa <abel.vesa@linaro.org> wrote:
+>
+> On 23-02-03 18:51:13, Dmitry Baryshkov wrote:
+> > On 02/02/2023 15:38, Abel Vesa wrote:
+> > > PM8550B contains a eUSB2 repeater used for making the eUSB2 from
+> > > SM8550 USB 2.0 compliant. This can be modelled SW-wise as a Phy.
+> > > So add a new phy driver for it.
+> > >
+> > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > > ---
+> > >   drivers/phy/qualcomm/Kconfig                  |   9 +
+> > >   drivers/phy/qualcomm/Makefile                 |   1 +
+> > >   .../phy/qualcomm/phy-qcom-eusb2-repeater.c    | 278 ++++++++++++++++++
+> > >   3 files changed, 288 insertions(+)
+> > >   create mode 100644 drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
+> > >
+>
+> [ ... ]
+>
+> > > +
+> > > +static int eusb2_repeater_init(struct phy *phy)
+> > > +{
+> > > +   struct eusb2_repeater *rptr = phy_get_drvdata(phy);
+> > > +   const struct eusb2_repeater_init_tbl *init_tbl = rptr->cfg->init_tbl;
+> > > +   int num = rptr->cfg->init_tbl_num;
+> > > +   int ret = 0;
+> > > +   u32 val;
+> > > +   int i;
+> > > +
+> > > +   ret = regulator_bulk_enable(rptr->cfg->num_vregs, rptr->vregs);
+> > > +   if (ret)
+> > > +           return ret;
+> > > +
+> > > +   regmap_update_bits(rptr->regmap, rptr->base + EUSB2_EN_CTL1,
+> > > +                           EUSB2_RPTR_EN, EUSB2_RPTR_EN);
+> > > +
+> > > +   for (i = 0; i < num; i++)
+> > > +           regmap_update_bits(rptr->regmap,
+> > > +                                   rptr->base + init_tbl[i].offset,
+> > > +                                   init_tbl[i].val, init_tbl[i].val);
+> >
+> > I'd move this to a separate function. Then you can use it in the set_mode()
+> > too.
+> >
+>
+> I don't think this is necessary in set_mode.
 
-On Tue, 07 Feb 2023 10:08:51 +0100, Krzysztof Kozlowski wrote:
-> Convert Qualcomm G-Link RPM edge binding to DT schema.  Move it to
-> remoteproc as it better suits the purpose - communication channel with
-> remote processor.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  .../remoteproc/qcom,glink-rpm-edge.yaml       | 92 ++++++++++++++++++
->  .../bindings/soc/qcom/qcom,glink.txt          | 94 -------------------
->  2 files changed, 92 insertions(+), 94 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,glink-rpm-edge.yaml
->  delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,glink.txt
-> 
+It's not necessary. However as set_mode() is also a sequence of simple
+register updates, it might be easy to have everything as an
+offset-mask-value table.
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+>
+> > > +
+> > > +   ret = regmap_read_poll_timeout(rptr->regmap,
+> > > +                                   rptr->base + EUSB2_RPTR_STATUS, val,
+> > > +                                   val & RPTR_OK, 10, 5);
+> > > +   if (ret)
+> > > +           dev_err(rptr->dev, "initialization timed-out\n");
+> > > +
+> > > +   return ret;
+> > > +}
+> > > +
+>
+> [ ... ]
 
-yamllint warnings/errors:
 
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.example.dtb: rpm-glink: 'mbox-names' does not match any of the regexes: 'pinctrl-[0-9]+'
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,glink-rpm-edge.yaml
 
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230207090852.28421-4-krzysztof.kozlowski@linaro.org
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+-- 
+With best wishes
+Dmitry
