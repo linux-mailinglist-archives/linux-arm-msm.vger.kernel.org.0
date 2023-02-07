@@ -2,114 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8FB2268D651
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 13:19:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D4C468D66D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 13:25:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231233AbjBGMTp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Feb 2023 07:19:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49052 "EHLO
+        id S231741AbjBGMZp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Feb 2023 07:25:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51618 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231171AbjBGMTo (ORCPT
+        with ESMTP id S231733AbjBGMZn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Feb 2023 07:19:44 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7ADE219680;
-        Tue,  7 Feb 2023 04:19:43 -0800 (PST)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 317CFosu028678;
-        Tue, 7 Feb 2023 12:19:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : reply-to : references : mime-version :
- content-type : in-reply-to; s=qcppdkim1;
- bh=08pdHCf7P+mWHAuX1oSIS3ZoUpqc9D23ReOoKSnLbJM=;
- b=O69c/Qjt1c1S6YT6HOJwh+e4yvhIv221kugPfjhSvnMgI/CfuUsO4br28vbtmu2NDtmg
- RwCKPa2O/ZFyI4QI/t2BtiGxqZYco8AWNkHbEpYuMDJi4KHKUoZ+/fIYsvVc9FN1VnjV
- nKcMLE2fgclFWo0y5LK3t+izSEeaExoN0y+LRwEPHCohD5/nFtfcTuEPP9AkesaisuL5
- t/MTgmH3DjPKZy8CTJhFL//Gcgeaxz4g3gXjHqHcurJcU7x+wqINGXi5qtBVfkiJLJn7
- 4zV+QzufDUcTwRf8IHZokI1wQP0At0BbvrRg6+0FpF26PHNxMRcAo4MUwhsicN2G48E3 WQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nkk2d0g07-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 07 Feb 2023 12:19:24 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 317CJNS1005421
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 7 Feb 2023 12:19:23 GMT
-Received: from quicinc.com (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 7 Feb 2023
- 04:19:15 -0800
-Date:   Tue, 7 Feb 2023 17:49:11 +0530
-From:   Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
-To:     Elliot Berman <quic_eberman@quicinc.com>
-CC:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Alex Elder <elder@linaro.org>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Tue, 7 Feb 2023 07:25:43 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24BFB37F25
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 04:25:42 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id h16so13347670wrz.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 04:25:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=EnZqUDs+vOL9eLigF5zhRBTNLnRQCkndCOjGhTOrE2Y=;
+        b=JM441Qqy+1fZmCJblSylYs6tj2fTsSrjmHEBvTFWYOCXkTdIp6bWHaNlTrN/gMI2LM
+         +tuwvNETO57Xy5HH6EfrZRKMyVf5msaPShQfmXx5XED+SpBUl7jrNqS6AJwoyd0xTSQB
+         bjYsDhCfsOMCJuRHlUUxwP17LalQGdrQgi7aBZ4qtuheMEg3/7vbWf9Z8gU/sWwMqNMa
+         llN5umaTQX3fhTYJBh41eGqGHccL+Ui1Zu6pNkua9T54lMbevLn+tj62Or9yLKAdYieF
+         PIfUwyWXLHo7TC3hefPdfd6MUo0MXo6dynyMJgFbMAY1tgtBEgreMERHEAgr5+wi/Zjn
+         LtOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EnZqUDs+vOL9eLigF5zhRBTNLnRQCkndCOjGhTOrE2Y=;
+        b=HWKkrS4zEnnlzmMUkCf6QO6FyYlYgnU2RJ1CTYF/81wPaM19T4WMn0VEzASHAcwYk9
+         nuuHS0dxKSm8QgPleFmzhXjF4KUpiDR6HF3193wdR0Tebzt/T/myCNbaTAX3MCD6L0nb
+         IBUXnNiyajiPNjEJL/0d7repdetV0hwnnSySpX+gGgNkVdSmQqmpMpVy8PXxJhD8pcNQ
+         +N7RnxQvMI86gdfiRtov721mJ2j0+WHnDUGUO6YCZ80gPIQEtp857sx220y2D6fZSJfI
+         oEDO3D6wVkcjR/fUzoAXijaWEbcASjyTmw8bb+4E2YVBOHIOhwodRnicqjnfOu6zl7XY
+         1xMw==
+X-Gm-Message-State: AO0yUKV74xTJyC3Kl9wB+Au3toisFQ5M969FWZF5tnHrQ9yprdKH7+BF
+        LiLeHiEQfKT/Hf6mq90zbXSO/Q==
+X-Google-Smtp-Source: AK7set96v9kQl3blLgDHsC9KtC7U5aHC8Yd0qc798XB5lCqQIh/WZdWAaO6kvfN+pCiHtWLrDSOvog==
+X-Received: by 2002:a5d:4144:0:b0:2c3:e5f5:9fa9 with SMTP id c4-20020a5d4144000000b002c3e5f59fa9mr2444692wrq.67.1675772740668;
+        Tue, 07 Feb 2023 04:25:40 -0800 (PST)
+Received: from linaro.org ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id x18-20020adfffd2000000b002c3f1223059sm2099785wrs.36.2023.02.07.04.25.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Feb 2023 04:25:40 -0800 (PST)
+Date:   Tue, 7 Feb 2023 14:25:38 +0200
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Marc Zyngier <maz@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-Subject: Re: [PATCH v9 23/27] virt: gunyah: Add IO handlers
-Message-ID: <20230207121911.GH332@quicinc.com>
-Reply-To: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
-References: <20230120224627.4053418-1-quic_eberman@quicinc.com>
- <20230120224627.4053418-24-quic_eberman@quicinc.com>
- <20230206104637.GG332@quicinc.com>
- <5b4b0c3b-0d1f-5f6c-d541-744c9a7173f8@quicinc.com>
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-phy@lists.infradead.org
+Subject: Re: [RFC v3 4/7] phy: qcom: Add QCOM SNPS eUSB2 repeater driver
+Message-ID: <Y+JDQt/T7pXh2/P7@linaro.org>
+References: <20230202133816.4026990-1-abel.vesa@linaro.org>
+ <20230202133816.4026990-5-abel.vesa@linaro.org>
+ <6f326ed7-6799-b965-fe3a-1f046546ed44@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <5b4b0c3b-0d1f-5f6c-d541-744c9a7173f8@quicinc.com>
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: OYGe71EgD72nDZ8wuP3kIdX3x3K9VFZH
-X-Proofpoint-ORIG-GUID: OYGe71EgD72nDZ8wuP3kIdX3x3K9VFZH
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-02-07_03,2023-02-06_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 spamscore=0
- impostorscore=0 phishscore=0 lowpriorityscore=0 suspectscore=0
- mlxlogscore=522 clxscore=1015 mlxscore=0 adultscore=0 priorityscore=1501
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302070109
+In-Reply-To: <6f326ed7-6799-b965-fe3a-1f046546ed44@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-* Elliot Berman <quic_eberman@quicinc.com> [2023-02-06 19:59:30]:
+On 23-02-03 18:51:13, Dmitry Baryshkov wrote:
+> On 02/02/2023 15:38, Abel Vesa wrote:
+> > PM8550B contains a eUSB2 repeater used for making the eUSB2 from
+> > SM8550 USB 2.0 compliant. This can be modelled SW-wise as a Phy.
+> > So add a new phy driver for it.
+> > 
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > ---
+> >   drivers/phy/qualcomm/Kconfig                  |   9 +
+> >   drivers/phy/qualcomm/Makefile                 |   1 +
+> >   .../phy/qualcomm/phy-qcom-eusb2-repeater.c    | 278 ++++++++++++++++++
+> >   3 files changed, 288 insertions(+)
+> >   create mode 100644 drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
+> > 
 
-> > > +int gh_vm_mgr_add_io_handler(struct gunyah_vm *ghvm, struct gunyah_vm_io_handler *io_hdlr)
-> > > +{
-> > > +	struct rb_node **root, *parent = NULL;
-> > > +
-> > > +	if (io_hdlr->datamatch &&
-> > > +		(!io_hdlr->len || io_hdlr->len > (sizeof(io_hdlr->data) * BITS_PER_BYTE)))
+[ ... ]
 
+> > +
+> > +static int eusb2_repeater_init(struct phy *phy)
+> > +{
+> > +	struct eusb2_repeater *rptr = phy_get_drvdata(phy);
+> > +	const struct eusb2_repeater_init_tbl *init_tbl = rptr->cfg->init_tbl;
+> > +	int num = rptr->cfg->init_tbl_num;
+> > +	int ret = 0;
+> > +	u32 val;
+> > +	int i;
+> > +
+> > +	ret = regulator_bulk_enable(rptr->cfg->num_vregs, rptr->vregs);
+> > +	if (ret)
+> > +		return ret;
+> > +
+> > +	regmap_update_bits(rptr->regmap, rptr->base + EUSB2_EN_CTL1,
+> > +				EUSB2_RPTR_EN, EUSB2_RPTR_EN);
+> > +
+> > +	for (i = 0; i < num; i++)
+> > +		regmap_update_bits(rptr->regmap,
+> > +					rptr->base + init_tbl[i].offset,
+> > +					init_tbl[i].val, init_tbl[i].val);
+> 
+> I'd move this to a separate function. Then you can use it in the set_mode()
+> too.
+> 
 
-io_hdlr->len represents length in bytes AFAICS so the above test should be:
+I don't think this is necessary in set_mode.
 
-                (!io_hdlr->len || io_hdlr->len > (sizeof(io_hdlr->data) )))
+> > +
+> > +	ret = regmap_read_poll_timeout(rptr->regmap,
+> > +					rptr->base + EUSB2_RPTR_STATUS, val,
+> > +					val & RPTR_OK, 10, 5);
+> > +	if (ret)
+> > +		dev_err(rptr->dev, "initialization timed-out\n");
+> > +
+> > +	return ret;
+> > +}
+> > +
 
-?
-
+[ ... ]
