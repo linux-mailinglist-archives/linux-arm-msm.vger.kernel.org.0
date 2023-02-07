@@ -2,102 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 33E6668D36B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 11:00:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A94868D3A9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 11:09:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231842AbjBGKAl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Feb 2023 05:00:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59352 "EHLO
+        id S230153AbjBGKJZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Feb 2023 05:09:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231847AbjBGKAU (ORCPT
+        with ESMTP id S230149AbjBGKJS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Feb 2023 05:00:20 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57D0510425
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 01:59:21 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id a2so12691249wrd.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 01:59:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Gyxo1SYfYxqaPFoqXEgYr/ocAyDp0P/Afe4B05MrX2g=;
-        b=KzUsPTYWPFHfbLnnGsjoPYvqAu0p4zXIIyFAyQZ7lM/tW0/LideTaa5ZkrAqRI26GH
-         GH1/SBpFezyNWMSdg0lcwdwBVPj9PnB44iaNkrCU7HZCAq9KD04+1zceZS7NpkGGbg5T
-         49lDY1s6A0TjFPNDmGQq3I8kZhT7cNTRMoRuv71V4amdrb9f+B3BzVizxeTPLmKtG2Zk
-         jqREe0/ffmG2XeH67rlJtXrgkVKC5mpgXrVq+Z/e5bDcacOGtwetl10GLbVqdBLhq0ht
-         q2pi2euEWKbuBZWSHy8sQrTKfWZGmjJGO3dBXzAsJbE0A31Ga4sjM23sNyL3m/hdDFW4
-         BtTA==
+        Tue, 7 Feb 2023 05:09:18 -0500
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8843AEF93
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 02:08:56 -0800 (PST)
+Received: by mail-qt1-f171.google.com with SMTP id 5so6109343qtp.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 02:08:56 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Gyxo1SYfYxqaPFoqXEgYr/ocAyDp0P/Afe4B05MrX2g=;
-        b=UnWXOUWJEoRhcAwMliEtlCi0aqZMTjgwCs86DcFiIFiewvC5a6C735n90u2pWP9lfA
-         MgCWfUZa4jYWhnW917BZXFTsgWC/KaKXpPGvHhXaH8I8DS8vktGL6HiuWJde2FIargUG
-         KmiBJ9traDT9kIVmto6OAqMIayPlddeN9H6qsGbp8FhVvwHTCfzH3eFv790zu3WpKuPy
-         xNPVRnTyIH/g2879lUBv4G3/3d9W0i6LsqiQCFp0FLXfVz9MX88cfT3q2j1xcXZq0KDT
-         F9ft5TO11yY/LSP4Tlg2eIw18aQLL4K1MTQiXWrh/3dpner68Hed/0Gw9xwlmPwLos1d
-         RVbw==
-X-Gm-Message-State: AO0yUKXPZgFP8UuWngjYtY7jp8KpPBoS8lrC7tI4YIZG0y+eYq9Zkycj
-        FdxTjn7G0nP/J9577QiAhKPFog==
-X-Google-Smtp-Source: AK7set9AGUr02MY4TirPrz8+iYHIBelGFh4xaIZhKWPYG47xjHnOe3bmka69hBvzuOpVUsCNtFRL7Q==
-X-Received: by 2002:a5d:4a0d:0:b0:2c3:ea81:64bf with SMTP id m13-20020a5d4a0d000000b002c3ea8164bfmr1877549wrq.56.1675763959917;
-        Tue, 07 Feb 2023 01:59:19 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id l11-20020a05600002ab00b002bfb5ebf8cfsm11408275wry.21.2023.02.07.01.59.14
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ChFbUh5V5b2PhTg4oql0omqyT7uX9lKhtti+6M022E4=;
+        b=idipgy+qWiEffhHjv5qFFdPriISepKxzAHVSzRimz3GK5sww8XBYokRXgYZOrojgF+
+         EeJl8bX8BzP7ii12uNKEInky3sRlxNW1nB0ZoB8lpfix1RU+Z+9nbn8OpilPMBHXVgzJ
+         jnVHI+XRremH/0dVMfhORQljunRs6rl7isWBdSPyPAd8MD+5wI2WhDaSloEa79/tCmRF
+         U+A54oDMX2rIRO9XmLTJvW6813N8Xx474fTijhHsQXJoh+K2pC7v+EWNVIjRR/XOTmQu
+         dHPdn+sV2kcZPg6N7GDs6LEkzN8UCV1hA6o7VkTaBz2NDLmf/yiQMVDMRtjFX+fSjvui
+         8I+g==
+X-Gm-Message-State: AO0yUKWVJhJRsrPzwFsCAs2Ec7cZ5Cd1dbaHDuMFRAKGcSbFp7WRIjbp
+        E9XOk5sFrnbyQn8IiS/jY7mrGpa472GiUA==
+X-Google-Smtp-Source: AK7set+GlVS97G0lJuO8eJztfQBhECBlhqup4oD0M5AT6xqG7j/cqpK//lihkjs7KvXnRfRuuT46xw==
+X-Received: by 2002:a05:622a:15d1:b0:3b8:6868:2ab4 with SMTP id d17-20020a05622a15d100b003b868682ab4mr4060669qty.49.1675764515228;
+        Tue, 07 Feb 2023 02:08:35 -0800 (PST)
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com. [209.85.128.182])
+        by smtp.gmail.com with ESMTPSA id n13-20020ac81e0d000000b003b9a4a497a1sm9103083qtl.86.2023.02.07.02.08.35
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Feb 2023 01:59:19 -0800 (PST)
-Message-ID: <9f0e05ee-de21-c234-7c8e-e6105e98c0ac@linaro.org>
-Date:   Tue, 7 Feb 2023 10:59:06 +0100
+        Tue, 07 Feb 2023 02:08:35 -0800 (PST)
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-50aa54cc7c0so189524737b3.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 02:08:35 -0800 (PST)
+X-Received: by 2002:a81:6988:0:b0:52a:7537:98a6 with SMTP id
+ e130-20020a816988000000b0052a753798a6mr231706ywc.384.1675764169824; Tue, 07
+ Feb 2023 02:02:49 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH 4/5] dt-bindings: remoteproc: qcom,glink-rpm-edge: convert
- to DT schema
-Content-Language: en-US
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230207090852.28421-1-krzysztof.kozlowski@linaro.org>
- <20230207090852.28421-4-krzysztof.kozlowski@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230207090852.28421-4-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+References: <20221102180705.459294-1-dmitry.baryshkov@linaro.org>
+ <20230109162140.yelgy2da7aqa6sqv@fsr-ub1664-121.ea.freescale.net>
+ <323ec70e-4613-c0e9-0b39-ad2a0a76673d@linaro.org> <20230110065712.lgjnmb66s4tlpoly@fsr-ub1664-121.ea.freescale.net>
+ <bf92569b-3886-113c-9e27-508e4cbfa4ba@linaro.org> <CAMuHMdUbgvT5i4XiJxgKSiRSmFFXO_mMEbgHBgcJDwUPxEYRRA@mail.gmail.com>
+ <4bf0e5a2-23b6-1964-b30f-a5cb57f35e68@linaro.org>
+In-Reply-To: <4bf0e5a2-23b6-1964-b30f-a5cb57f35e68@linaro.org>
+From:   Geert Uytterhoeven <geert@linux-m68k.org>
+Date:   Tue, 7 Feb 2023 11:02:37 +0100
+X-Gmail-Original-Message-ID: <CAMuHMdXyMJZaeeaLjzhbb_A7_WDcyjAzpKNWG8f5gtvmZLW0AA@mail.gmail.com>
+Message-ID: <CAMuHMdXyMJZaeeaLjzhbb_A7_WDcyjAzpKNWG8f5gtvmZLW0AA@mail.gmail.com>
+Subject: Re: [PATCH v3 0/7] drm/bridge_connector: perform HPD enablement automatically
+To:     neil.armstrong@linaro.org
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Tomi Valkeinen <tomba@kernel.org>,
+        dri-devel@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/02/2023 10:08, Krzysztof Kozlowski wrote:
-> Convert Qualcomm G-Link RPM edge binding to DT schema.  Move it to
-> remoteproc as it better suits the purpose - communication channel with
-> remote processor.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  .../remoteproc/qcom,glink-rpm-edge.yaml       | 92 ++++++++++++++++++
->  .../bindings/soc/qcom/qcom,glink.txt          | 94 -------------------
->  2 files changed, 92 insertions(+), 94 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,glink-rpm-edge.yaml
->  delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,glink.txt
+Hi Neil,
 
-This is expected to trigger warning in other bindings, being fixed here:
-https://lore.kernel.org/linux-arm-msm/20230207095639.36537-1-krzysztof.kozlowski@linaro.org/T/#u
+On Tue, Feb 7, 2023 at 10:59 AM Neil Armstrong
+<neil.armstrong@linaro.org> wrote:
+> On 07/02/2023 10:40, Geert Uytterhoeven wrote:
+> > On Tue, Jan 10, 2023 at 5:37 PM Dmitry Baryshkov
+> > <dmitry.baryshkov@linaro.org> wrote:
+> >> On 10/01/2023 08:57, Laurentiu Palcu wrote:
+> >>> On Mon, Jan 09, 2023 at 10:26:28PM +0200, Dmitry Baryshkov wrote:
+> >>>> On 09/01/2023 18:21, Laurentiu Palcu wrote:
+> >>>>> It looks like there are some issues with this patchset... :/ I just
+> >>>>> fetched the drm-tip and, with these patches included, the "Hot plug
+> >>>>> detection already enabled" warning is back for i.MX DCSS.
+> >>>>
+> >>>> Could you please provide a backtrace?
+> >>>
+> >>> Sure, see below:
+> >>
+> >> I wondered, why didn't I see this on msm, my main target nowadays. The
+> >> msm driver is calling msm_kms_helper_poll_init() after initializing
+> >> fbdev, so all previous kms_helper_poll_enable() calls return early.
+> >>
+> >> I think I have the fix ready. Let me test it locally before posting.
+> >
+> > Is this fix available?
+> > Do you have a lore link?
+>
+> The fix at [1] has been applied on 2023-01-26
+>
+> [1] https://lore.kernel.org/all/20230124104548.3234554-1-dmitry.baryshkov@linaro.org/
 
-Best regards,
-Krzysztof
+Applied where? linux-next does not have it.
+Thanks!
 
+Gr{oetje,eeting}s,
+
+                        Geert
+
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
