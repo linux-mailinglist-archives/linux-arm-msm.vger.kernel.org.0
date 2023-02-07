@@ -2,76 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 80A9F68D377
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 11:03:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DE50168D383
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 11:05:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230290AbjBGKDQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Feb 2023 05:03:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35646 "EHLO
+        id S229585AbjBGKFk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Feb 2023 05:05:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229447AbjBGKDP (ORCPT
+        with ESMTP id S231494AbjBGKFi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Feb 2023 05:03:15 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B235AD4
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 02:03:12 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id j29-20020a05600c1c1d00b003dc52fed235so11011083wms.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 02:03:12 -0800 (PST)
+        Tue, 7 Feb 2023 05:05:38 -0500
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 663E14C26
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 02:05:35 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id i38so3680182eda.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 02:05:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Kkp+Ll4tkGit72TXAobb+8Dz4GgYVkfmJNmgRsYUejc=;
-        b=LRZACxNr6xLylc10hfxaGCMDHYoNzUw7AbwuCI2aCOHqO8Fd1Iv9fdEZIGhwe5sw5k
-         ADjtTTlMfrNWXrTrxL7RCwfHdjvN6x6lTBgwBL3PlLK536ZolxhyxlNsrze9qSuatUy/
-         3VU7vCmD62DyHDA/q9QKBZoVG7Vy302PbYoO3dyfTDFHr0AK7p/ZdrV/uMnnAxPXzCmP
-         kBJdEOyOBTg7G2038O5JQKie8VkX3LfhVw6oZO4zpuARyDcex3k/zljLKSFa0eASPKS+
-         F9voe7MdN0Fgf2XDYP9Vrl90P6JOyRkp5ar3MtwKnMKKzO0jsQ8nEQ5P4r1vSmwEImhA
-         45/w==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=CB3W+mpZUUBi2cmMXLm+4eDNlFrkIfZhze9vVo4YzYY=;
+        b=XpU/97GFhq+0wad/HeRlajCjBdroUGPLlehxDD9UX8IZRVS39ryX1GMgqvYcfjU4yR
+         ZXjQGAWMHmuNMrjHN1t81B3LlBdwB0bhmIwdciSwHrBiChLYVjWpS0SzHPxr0oLkmurC
+         A6tF7TBFCLxmh0J+rz6DeGN3Bh7FXE22w/Y/MGyySNn/9OqSeE4XsfL5X9k6VE9x9f4I
+         ULdL+KSGbyIffdt0mcze5fN9zbep3EQ+0ylRU2LxqYgA4yeZ5/c2Fc8Lr+bQIy/B443b
+         NrLLDuf0ONJ3UeXMQ6kjjc5wRO/cphf72QHW8YhFgonWTZQ77lYsscCV5DX32PBq7Ds0
+         AmXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Kkp+Ll4tkGit72TXAobb+8Dz4GgYVkfmJNmgRsYUejc=;
-        b=G17uw6xsNjpy4lxe0qjneHv6Rrc5Pl0WGn73I7QJaCV1M+dRxjWq/nBNJzFzVgd5DX
-         ebxbSjpOu9olL6TEsOnu1KdmP27HYcWEbDZJoGDO2QT8hg+U8KpTH7LswKj2iU98yz/Y
-         HKDl6n10zgT59cVD1QLP2IOI04IkTXwd5CvxHY6TqwjW4zkpNttijYGch2qiaaRp0VRt
-         8SERCo5B9KE4UqdEH5P9j85YMYFvkeuGLa+4PNj70bjLJ+ZzbIzefZt9e8PBtlTSYasG
-         4OlzNX2XI2VwUZ1aRf3vbGLE1rZGQwiRA/5J4I+Pnk1QJNGNLpX4d9XiNoT37+w1IF+Y
-         SdrA==
-X-Gm-Message-State: AO0yUKVaQuPatVfBSEMhqJRUlIEDFQLjWW6en04N69uhe2dWN2b+lWqB
-        sEndL0Droe/GNQSFAO0wjRhVqQ==
-X-Google-Smtp-Source: AK7set9i0aBmW+7wDDLpgeqpJaDcgLuU4ehpABvZIFJKCasLAsMRYKVJh2tk4PARadiQ4MozA7GnMw==
-X-Received: by 2002:a05:600c:2e87:b0:3e0:1a9:b1f5 with SMTP id p7-20020a05600c2e8700b003e001a9b1f5mr2534413wmn.28.1675764191241;
-        Tue, 07 Feb 2023 02:03:11 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id x20-20020a05600c21d400b003dff2b493c8sm9921505wmj.36.2023.02.07.02.03.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Feb 2023 02:03:10 -0800 (PST)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Tue, 07 Feb 2023 11:03:10 +0100
-Subject: [PATCH] dt-bindings: dma: qcom,bam-dma: add optional memory
- interconnect properties
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CB3W+mpZUUBi2cmMXLm+4eDNlFrkIfZhze9vVo4YzYY=;
+        b=Q73HCiImN0wOlAizk3NbFCh40NLqs2wtWLovBWfQDjdPty8bXOY3uISigDF/bV18bX
+         mK2erch6/jLLqV1mTWWgf3ohL+KVJMPlJY2DeIl69bcyoc9S1lhCQwjN/qmWjEIGXcDv
+         U8EUnn0Y9xsGLxsWzPU+LKzTSochLWossHWhsHQpjiospQIN7SRzCFyo6+q2Q0bWRmFm
+         9XRFbM8VVG9TqpkFdevapfF+qnih6DIVZb8TCd8UWMx7qUmj0Kc7u/BLxcJ9N1AVxLqH
+         LN+G9McawTgxEW5N/UFk90vGxAKti0KkhPzQTb3YHEYxxCeoGj4HlnZXjoU4krl1V30e
+         u01Q==
+X-Gm-Message-State: AO0yUKXNC/HmS1ZIiRfCzsLLqlEdmN4ssi4s5D/h7m2qlt4wC8HsQof+
+        NemsHcG2G0+OPvrTebeCv3/MiA==
+X-Google-Smtp-Source: AK7set9HKQ7a05BPrqGVABcB4J9VZ6pDC+8Kf+QwVLqM/biSJ88LjrUqCv10liTD0djs2WEBPH/E3Q==
+X-Received: by 2002:a50:d610:0:b0:491:6897:c5cb with SMTP id x16-20020a50d610000000b004916897c5cbmr2748920edi.41.1675764333968;
+        Tue, 07 Feb 2023 02:05:33 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id ef15-20020a05640228cf00b0046b471596e6sm6197560edb.57.2023.02.07.02.05.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Feb 2023 02:05:33 -0800 (PST)
+Message-ID: <ef449dd2-c385-f2e6-30f0-7c0ae803d5c5@linaro.org>
+Date:   Tue, 7 Feb 2023 12:05:31 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230207-topic-sm8550-upstream-bam-dma-bindings-fix-v1-1-57dba71e8727@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAN0h4mMC/x2OzQqDMBCEX0Vy7kKMhGpfpfSQn60umDVktRTEd
- +/Swxy+YfiY0wg2QjGP7jQNPyS0sUJ/60xaAs8IlJWNs26wzt5h3yolkDJ6b+GosjcMBaImlwC
- ROBPPAm/6wthPbkpDxOCTUWEMghBb4LSoko911bI21O3/wfN1XT/+Ov4tkQAAAA==
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH V3 4/9] dt-bindings: clock: Add Qualcomm IPQ5332 GCC
+Content-Language: en-GB
+To:     Kathiravan T <quic_kathirav@quicinc.com>,
+        krzysztof.kozlowski@linaro.org, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
+        sboyd@kernel.org, linus.walleij@linaro.org,
+        catalin.marinas@arm.com, will@kernel.org, shawnguo@kernel.org,
+        arnd@arndb.de, marcel.ziswiler@toradex.com,
+        nfraprado@collabora.com, robimarko@gmail.com,
+        quic_gurus@quicinc.com, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.12.0
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        linux-clk@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Cc:     quic_varada@quicinc.com, quic_srichara@quicinc.com
+References: <20230206071217.29313-1-quic_kathirav@quicinc.com>
+ <20230206071217.29313-5-quic_kathirav@quicinc.com>
+ <03d6c92a-c9f3-915c-218a-14ff5c5250d2@linaro.org>
+ <b82c8aaf-b574-45b2-3b44-9edc6f82d619@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <b82c8aaf-b574-45b2-3b44-9edc6f82d619@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -80,37 +88,103 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Recents SoCs like the SM8450 or SM8550 requires memory interconnect
-in order to have functional DMA.
+On 07/02/2023 06:26, Kathiravan T wrote:
+> Thanks Dmirty for taking time to review the patch.
+> 
+> 
+> On 2/6/2023 3:22 PM, Dmitry Baryshkov wrote:
+>> On 06/02/2023 09:12, Kathiravan T wrote:
+>>> Add binding for the Qualcomm IPQ5332 Global Clock Controller.
+>>>
+>>> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+>>> ---
+>>> Changes in V3:
+>>>     - Actually I missed to remove the clocks in V2 which are supposed to
+>>>       be removed. In V3 I have removed those and they are
+>>>       GCC_APSS_AHB_CLK, GCC_APSS_AHB_CLK_SRC, GCC_APSS_AXI_CLK
+>>>     - For the same, didn't add the Reviewed-By tags from Stephen and
+>>>       Krzysztof
+>>>
+>>> Changes in V2:
+>>>     - property 'clocks' is marked required
+>>>     - Renamed the include file name to match with compatible
+>>>
+>>>   .../bindings/clock/qcom,ipq5332-gcc.yaml      |  61 +++
+>>>   include/dt-bindings/clock/qcom,ipq5332-gcc.h  | 356 ++++++++++++++++++
+>>>   2 files changed, 417 insertions(+)
+>>>   create mode 100644 
+>>> Documentation/devicetree/bindings/clock/qcom,ipq5332-gcc.yaml
+>>>   create mode 100644 include/dt-bindings/clock/qcom,ipq5332-gcc.h
+>>>
+>>> diff --git 
+>>> a/Documentation/devicetree/bindings/clock/qcom,ipq5332-gcc.yaml 
+>>> b/Documentation/devicetree/bindings/clock/qcom,ipq5332-gcc.yaml
+>>> new file mode 100644
+>>> index 000000000000..961311af400c
+>>> --- /dev/null
+>>> +++ b/Documentation/devicetree/bindings/clock/qcom,ipq5332-gcc.yaml
+>>> @@ -0,0 +1,61 @@
+>>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>>> +%YAML 1.2
+>>> +---
+>>> +$id: http://devicetree.org/schemas/clock/qcom,ipq5332-gcc.yaml#
+>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>> +
+>>> +title: Qualcomm Global Clock & Reset Controller on IPQ5332
+>>> +
+>>> +maintainers:
+>>> +  - Stephen Boyd <sboyd@kernel.org>
+>>> +
+>>> +description: |
+>>> +  Qualcomm global clock control module provides the clocks, resets 
+>>> and power
+>>> +  domains on IPQ5332.
+>>> +
+>>> +  See also:: include/dt-bindings/clock/qcom,gcc-ipq5332.h
+>>> +
+>>> +allOf:
+>>> +  - $ref: qcom,gcc.yaml#
+>>> +
+>>> +properties:
+>>> +  compatible:
+>>> +    const: qcom,ipq5332-gcc
+>>> +
+>>> +  clocks:
+>>> +    items:
+>>> +      - description: Board XO clock source
+>>> +      - description: Sleep clock source
+>>> +      - description: PCIE 2lane PHY pipe clock source
+>>> +      - description: PCIE 2lane x1 PHY pipe clock source (For second 
+>>> lane)
+>>> +      - description: USB PCIE wrapper pipe clock source
+>>> +
+>>> +  clock-names:
+>>> +    items:
+>>> +      - const: xo
+>>> +      - const: sleep_clk
+>>> +      - const: pcie_2lane_phy_pipe_clk
+>>> +      - const: pcie_2lane_phy_pipe_clk_x1
+>>> +      - const: usb_pcie_wrapper_pipe_clk
+>>
+>> pcie3x1_0_pipe_clk_src, pcie3x1_1_pipe_clk_src, pcie3x2_pipe_clk_src 
+>> usb0_pipe_clk_src are missing.
+> 
+> 
+> Here is the mapping,
+> 
+> pcie_2lane_phy_pipe_clk  is the source for pcie3x2,
+> 
+> pcie_2lane_phy_pipe_clk_x1 is the source for pcie3x1_1,
+> 
+> usb_pcie_wrapper_pipe_clk is the source for pcie3x1_0_pipe_clk_src and 
+> usb0_pipe_clk_src.
+> 
+> Is this what you are expecting or am I missing something here?
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml | 6 ++++++
- 1 file changed, 6 insertions(+)
+Yes. There were three parent_name entries in your driver. So I can 
+assume that the binding might also be incorrect.
 
-diff --git a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
-index 003098caf709..e922fafca833 100644
---- a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
-+++ b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
-@@ -36,6 +36,12 @@ properties:
-   interrupts:
-     maxItems: 1
- 
-+  interconnects:
-+    description: Path leading to system memory
-+
-+  interconnect-names:
-+    const: memory
-+
-   iommus:
-     minItems: 1
-     maxItems: 4
-
----
-base-commit: 49a8133221c71b935f36a7c340c0271c2a9ee2db
-change-id: 20230207-topic-sm8550-upstream-bam-dma-bindings-fix-81929c3bea5c
-
-Best regards,
 -- 
-Neil Armstrong <neil.armstrong@linaro.org>
+With best wishes
+Dmitry
 
