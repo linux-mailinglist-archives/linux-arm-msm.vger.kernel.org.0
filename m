@@ -2,184 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 38A0668E1AD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 21:05:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5EAD268E1E6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 21:33:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229585AbjBGUFm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Feb 2023 15:05:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56216 "EHLO
+        id S229640AbjBGUdR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Feb 2023 15:33:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34488 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229559AbjBGUFk (ORCPT
+        with ESMTP id S229559AbjBGUdR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Feb 2023 15:05:40 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C92438B58
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 12:05:39 -0800 (PST)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 317I02YD018446;
-        Tue, 7 Feb 2023 20:05:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=TVn1cKFSFCh8fANtfEe6qHSAoBDsdhsGnEbmWq7Z5ME=;
- b=GlnPMKuB90Y8RmE2m2+Q01g5JWpLhT9yz3oNBkiIOeAb3QXxgEET6eHHhBnHObA5dMDk
- gt0+Kwuw4CoBS+6oXVaBRKfTsrznlotgYZFNLbn0xFu/BC1z2mMPn6j/LBzS5fQ+wjzS
- sb21BAp6/8uT42uaUMyTR/T8YdeoMn07XBSaCRe8KIO4W7J/TeRqzDniduVm4uWTVSfB
- CMB6PsqAqUvhCLJYJPe42aWFcmS2dHlrvIrEQfapQxlcg2Pqxi1k/60rBbxcKoX2Ek9/
- dAZqIkRTaRztcHcnRQkS0v45MkojqnNUxq0u3ig9k89MhfjX5k5SpTRweR5brcZnJcSO nA== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nkgafj3b6-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 07 Feb 2023 20:05:32 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 317K5V6B013615
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 7 Feb 2023 20:05:31 GMT
-Received: from [10.110.44.26] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 7 Feb 2023
- 12:05:30 -0800
-Message-ID: <b4dbe036-81c4-e56f-12fb-75cb8bb59173@quicinc.com>
-Date:   Tue, 7 Feb 2023 12:05:29 -0800
+        Tue, 7 Feb 2023 15:33:17 -0500
+Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAD1437B50;
+        Tue,  7 Feb 2023 12:33:14 -0800 (PST)
+Received: by mail-qt1-x833.google.com with SMTP id cr22so18228353qtb.10;
+        Tue, 07 Feb 2023 12:33:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ACnOp18Cw9sVFaRz+DHpDGjm7Thlarubraxtwk1GdtE=;
+        b=ZPtal6XqEg5h9vGXn3Tpj+XjFZ/AXB0sOvRcopoZ89vuN9YDvq6piWVTamHUujJSJu
+         yOkr0zBqCwNqj41Dz8DmoEnx6JEF/5PToOQnKgNeeY0Q+T8s5VAyaWu2YuGBvoGILlCk
+         92baiNX1O+lJLVVQIvW+Lodu1izfg8CflK1OnPM50j6nh+9hBQDdwUh0HyOLANnTAAeF
+         ++I5ezxwhYqxXKXVRW3upiDLEDdy4OtYq7apsDbTKW45uepaCAQJBcrp85PazgSA1rWC
+         Hnh/j8S9k+Kg7KxbRFk7/0vhe+L0ssyMQIjopquea/kVUdmhPxLsoGFmhfezjd6xfg+D
+         tktA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ACnOp18Cw9sVFaRz+DHpDGjm7Thlarubraxtwk1GdtE=;
+        b=gkYG+kmSCI5NBy8nJcVshNvV50rRx4jiQPUCvSRYbPup2piT9V4/Y0A1a69Rdv/7U5
+         OE+V4F+ZrG2R3Gr5yPQkW7f5mqN+7QCmSkKUO6Dyn5ZgmtmsxVyUSgNYSv9ZglZksLF1
+         DGKn/O6VAoWwZQlmLhnBtI4Kwi+AX6oodaPrOSD80asN0DGPIGT11iJKJt61Z8Cihs9p
+         vknCE7Cm+nvY797e4oFSzzAinOKc92KxS0wOripSQVxqZ6+qE1I2c/rtC5i7EEpfBxgV
+         eFBFIUOfVvOCEh0t+SgYimSmlCyROpfKJCzi4Ns8Us2Wi/4YtzytkUzW9uBhOaLheNLK
+         LTeQ==
+X-Gm-Message-State: AO0yUKX9Ngag1HsFYrPvw1tM6Zna0FDN4wpW5jzW472SdWn9cbdsB+HQ
+        x3nm/wlaHTUc3e2v9YeL/7Y=
+X-Google-Smtp-Source: AK7set/hNBjGKVokty8Kg7Hj+M/AZK5P9t99MexEgK0y64YxB5Ho3ND4mmbt2lgppKWclZ7x7fJtPw==
+X-Received: by 2002:a05:622a:148c:b0:3b6:2f22:75bd with SMTP id t12-20020a05622a148c00b003b62f2275bdmr8014753qtx.28.1675801993929;
+        Tue, 07 Feb 2023 12:33:13 -0800 (PST)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id z7-20020ae9c107000000b00731c30ac2e8sm3631619qki.74.2023.02.07.12.33.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Feb 2023 12:33:13 -0800 (PST)
+Message-ID: <cf4d3028-fea2-be31-4636-f739279d5806@gmail.com>
+Date:   Tue, 7 Feb 2023 12:33:01 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v3 24/27] drm/msm/dpu: rework plane CSC setting
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH] cpufreq: Make cpufreq_unregister_driver() return void
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+To:     =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?= <u.kleine-koenig@pengutronix.de>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        iresh Kumar <viresh.kumar@linaro.org>
+Cc:     Markus Mayer <mmayer@broadcom.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Kevin Hilman <khilman@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20230203182132.1307834-1-dmitry.baryshkov@linaro.org>
- <20230203182132.1307834-25-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20230203182132.1307834-25-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 2zC8IxglB6W_bevsOzeIIWLQcu7OPgpp
-X-Proofpoint-ORIG-GUID: 2zC8IxglB6W_bevsOzeIIWLQcu7OPgpp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-02-07_11,2023-02-06_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- malwarescore=0 adultscore=0 clxscore=1015 bulkscore=0 spamscore=0
- mlxlogscore=694 mlxscore=0 priorityscore=1501 suspectscore=0
- impostorscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2212070000 definitions=main-2302070175
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-omap@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, kernel@pengutronix.de
+References: <20230207195909.474953-1-u.kleine-koenig@pengutronix.de>
+From:   Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20230207195909.474953-1-u.kleine-koenig@pengutronix.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 2/3/2023 10:21 AM, Dmitry Baryshkov wrote:
-> Rework the code flushing CSC settings for the plane. Separate out the
-> pipe and pipe_cfg as a preparation for r_pipe support.
+On 2/7/23 11:59, Uwe Kleine-König wrote:
+> All but a few drivers ignore the return value of
+> cpufreq_unregister_driver(). Those few that don't only call it after
+> cpufreq_register_driver() succeeded, in which case the call doesn't
+> fail.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Make the function return no value and add a WARN_ON for the case that
+> the function is called in an invalid situation (i.e. without a previous
+> successful call to cpufreq_register_driver()).
+> 
+> Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 45 +++++++++++++----------
->   1 file changed, 25 insertions(+), 20 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index e69499490d39..05047192cb37 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -576,29 +576,18 @@ static const struct dpu_csc_cfg dpu_csc10_YUV2RGB_601L = {
->   	{ 0x00, 0x3ff, 0x00, 0x3ff, 0x00, 0x3ff,},
->   };
->   
-> -static const struct dpu_csc_cfg *_dpu_plane_get_csc(struct dpu_plane *pdpu, const struct dpu_format *fmt)
-> +static const struct dpu_csc_cfg *_dpu_plane_get_csc(struct dpu_sw_pipe *pipe, const struct dpu_format *fmt)
->   {
-> -	struct dpu_plane_state *pstate = to_dpu_plane_state(pdpu->base.state);
->   	const struct dpu_csc_cfg *csc_ptr;
->   
-> -	if (!pdpu) {
-> -		DPU_ERROR("invalid plane\n");
-> -		return NULL;
-> -	}
-> -
->   	if (!DPU_FORMAT_IS_YUV(fmt))
->   		return NULL;
->   
-> -	if (BIT(DPU_SSPP_CSC_10BIT) & pstate->pipe.sspp->cap->features)
-> +	if (BIT(DPU_SSPP_CSC_10BIT) & pipe->sspp->cap->features)
->   		csc_ptr = &dpu_csc10_YUV2RGB_601L;
->   	else
->   		csc_ptr = &dpu_csc_YUV2RGB_601L;
->   
-> -	DPU_DEBUG_PLANE(pdpu, "using 0x%X 0x%X 0x%X...\n",
-> -			csc_ptr->csc_mv[0],
-> -			csc_ptr->csc_mv[1],
-> -			csc_ptr->csc_mv[2]);
-> -
->   	return csc_ptr;
->   }
->   
-> @@ -1049,6 +1038,27 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
->   	return 0;
->   }
->   
-> +static void dpu_plane_flush_csc(struct dpu_plane *pdpu, struct dpu_sw_pipe *pipe)
-> +{
-> +	const struct dpu_format *format = to_dpu_format(msm_framebuffer_format(pdpu->base.state->fb));
-> +	const struct dpu_csc_cfg *csc_ptr;
-> +
-> +	if (!pipe->sspp || !pipe->sspp->ops.setup_csc)
-> +		return;
-> +
-> +	csc_ptr = _dpu_plane_get_csc(pipe, format);
-> +	if (!csc_ptr)
-> +		return;
-> +
-> +	DPU_DEBUG_PLANE(pdpu, "using 0x%X 0x%X 0x%X...\n",
-> +			csc_ptr->csc_mv[0],
-> +			csc_ptr->csc_mv[1],
-> +			csc_ptr->csc_mv[2]);
-> +
-> +	pipe->sspp->ops.setup_csc(pipe->sspp, csc_ptr);
-> +
-> +}
-> +
->   void dpu_plane_flush(struct drm_plane *plane)
->   {
->   	struct dpu_plane *pdpu;
-> @@ -1072,13 +1082,8 @@ void dpu_plane_flush(struct drm_plane *plane)
->   	else if (pdpu->color_fill & DPU_PLANE_COLOR_FILL_FLAG)
->   		/* force 100% alpha */
->   		_dpu_plane_color_fill(pdpu, pdpu->color_fill, 0xFF);
-> -	else if (pstate->pipe.sspp && pstate->pipe.sspp->ops.setup_csc) {
-> -		const struct dpu_format *fmt = to_dpu_format(msm_framebuffer_format(plane->state->fb));
-> -		const struct dpu_csc_cfg *csc_ptr = _dpu_plane_get_csc(pdpu, fmt);
-> -
-> -		if (csc_ptr)
-> -			pstate->pipe.sspp->ops.setup_csc(pstate->pipe.sspp, csc_ptr);
-> -	}
+>   drivers/cpufreq/brcmstb-avs-cpufreq.c | 5 +----
 
-Do we need to check for pipe being valid too (pstate->pipe) && 
-(pstate->pipe.sspp) && pstate->pipe.sspp->ops.setup_csc) ?
+Acked-by: Florian Fainelli <f.fainelli@gmail.com> # brcmstb-avs-cpufreq.c
+-- 
+Florian
 
-Before moving the pipe_hw/sw pipe to the state the code used to check 
-for pdpu->pipe_hw to be valid. Since dpu_plane_flush() can be called 
-from other files too , dont we need to check for (pstate->pipe)?
-
-> +	else
-> +		dpu_plane_flush_csc(pdpu, &pstate->pipe);
->   
->   	/* flag h/w flush complete */
->   	if (plane->state)
