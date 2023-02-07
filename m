@@ -2,97 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 306A168DD22
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 16:36:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E56E368DD58
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 16:51:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231986AbjBGPgJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Feb 2023 10:36:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42652 "EHLO
+        id S232550AbjBGPvs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Feb 2023 10:51:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230153AbjBGPgH (ORCPT
+        with ESMTP id S232239AbjBGPvq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Feb 2023 10:36:07 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 328A1C17F;
-        Tue,  7 Feb 2023 07:36:07 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id D5418B819EE;
-        Tue,  7 Feb 2023 15:36:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C22CC4339B;
-        Tue,  7 Feb 2023 15:36:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1675784164;
-        bh=twUuRWo9k9a5573XBSzemQ0MkkZj6VKOcK+Snm4pbYQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=on7gJR781lE0FEpK0kHYrD5xk+6bAxBTheM6yrUELehxQPQvUN+82j9kgc8MoH6Rv
-         ANwsPYYxde5xhhPJacBLJD/iSB6+p1rPacaSYIJ6au/q9VN7Dh+X0r80h+yMgw5SOD
-         59ISRMLHicS+F9ktW8sGdRuT0LapgpHpSy+CP2qY0FtzAQF1pJ11FXtfQP0skns7Wz
-         EOIni3uqdYBwvTJcarlq2NfgX373LNLIuTHbynIekuuaO/cYB+eAvQKoHzl386tbuN
-         7OewWkHUmdzNtLrQcx1Kil1pD+zSbomE039Zt9tp+kvQGggq6jF1Gw9/cld6d7gUTr
-         R7x84V8c35huw==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1pPQ1O-0002CR-9t; Tue, 07 Feb 2023 16:36:38 +0100
-Date:   Tue, 7 Feb 2023 16:36:38 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     David Collins <quic_collinsd@quicinc.com>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Tue, 7 Feb 2023 10:51:46 -0500
+Received: from mail-oa1-x32.google.com (mail-oa1-x32.google.com [IPv6:2001:4860:4864:20::32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D87C3170A;
+        Tue,  7 Feb 2023 07:51:44 -0800 (PST)
+Received: by mail-oa1-x32.google.com with SMTP id 586e51a60fabf-15fe106c7c7so19489890fac.8;
+        Tue, 07 Feb 2023 07:51:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=oFFVAGXmAn33jC18iARlTq1W8BZjLwMZcFPq63oKn2w=;
+        b=N0M+DO+J5+8deeO0M0F0jkP8kFzkQUYSFG9m4l8/7ha6QaAjjunm75adpx+ffgejLn
+         zT7B63dvvqOiPpxijDe19VG5AnZabeNFVByHzUAaH3soPlFhWvfEqx3yqq6OlWPdpLc9
+         TRhVwi3uox8kjgd4WS6Pf8tWiXTBXLa7My7s/14hfldBrxkWrxEDyYj0Sh39RpV/Cf+U
+         peBOKoRCIyvFXzHclmttBP8SEx33npRMewYNa3NDTZgOQOcoG9HxLTNuhLp+CtlKhy5n
+         Wkoitlm0vcKs1AXWYYF7d61Bp0GI+XMizz7CpXPjX2r0D1NKp5qXTvmoG6cy1qsgW6Rx
+         kxGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=oFFVAGXmAn33jC18iARlTq1W8BZjLwMZcFPq63oKn2w=;
+        b=GyFQT3MLGxNCnni1JsX1to/AsNt4Zkmqk/0XC6ebALx4c5SLBO1WCSOPLpWv2ZAEes
+         pzS/cu94N6CgzRnkQcsqDGW5Pp+PTNZINVdylYOIldEyUolBgrmAJ52NR03/eprj5M+K
+         oo6uJFMiDDWcZrpcf+F5Hg2pe5glW3Z8aJPJnzGWqx1CzIWC2Da/cPEKXOusDEa9481d
+         zKblP6yqlrl+EVNbjK4kGcSHBMKxBwdiaUwOKXu2i9eIMTi0jTVr3tV6T4wVPigsE+Qp
+         PvBrnjsCon/vsB75iDy/um1y4bUM1511YMp5aVSPyj3X9EBQGZTPfbtZdIvC0yDsIhFs
+         NNvA==
+X-Gm-Message-State: AO0yUKX4rIU3LFjkXPM9RyeF95Rt+9P/IGIqR9np4sGEkHJuumTec3vn
+        3YCyquKoV7d0wXsR/j597Fk=
+X-Google-Smtp-Source: AK7set8PNt0Bn7P7Em47vAQqHH8+QDOWgFLHEK1CoQh6BYQQUFWvd4MqvJ34uFVT/CoYEylUVKxGvw==
+X-Received: by 2002:a05:6870:a7a4:b0:163:af13:c4e1 with SMTP id x36-20020a056870a7a400b00163af13c4e1mr1432071oao.46.1675785104217;
+        Tue, 07 Feb 2023 07:51:44 -0800 (PST)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id m1-20020a056870194100b0014ff15936casm1818137oak.40.2023.02.07.07.51.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Feb 2023 07:51:43 -0800 (PST)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <ecd5ff48-78af-8cae-dd54-3bd3f0288434@roeck-us.net>
+Date:   Tue, 7 Feb 2023 07:51:39 -0800
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH v2 1/7] dt-bindings: watchdog: qcom-wdt: require fallback
+ for IPQ4019
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Alessandro Zummo <a.zummo@towertech.it>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Maximilian Luz <luzmaximilian@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-rtc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 17/22] rtc: pm8xxx: add support for nvmem offset
-Message-ID: <Y+JwBkhc/WbkFq25@hovoldconsulting.com>
-References: <20230202155448.6715-1-johan+linaro@kernel.org>
- <20230202155448.6715-18-johan+linaro@kernel.org>
- <f7e6203d-5773-3c40-db3c-547334efb218@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f7e6203d-5773-3c40-db3c-547334efb218@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-watchdog@vger.kernel.org,
+        Rob Herring <robh@kernel.org>
+References: <20230113103346.29381-1-krzysztof.kozlowski@linaro.org>
+ <20230113103346.29381-2-krzysztof.kozlowski@linaro.org>
+ <20230113140230.GA1606649@roeck-us.net>
+ <7e600ba9-a99e-5f07-334f-bb872f5ed7db@linaro.org>
+From:   Guenter Roeck <linux@roeck-us.net>
+In-Reply-To: <7e600ba9-a99e-5f07-334f-bb872f5ed7db@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Feb 06, 2023 at 07:16:54PM -0800, David Collins wrote:
-> On 2/2/23 07:54, Johan Hovold wrote:
-
-> > +static int pm8xxx_rtc_read_nvmem_offset(struct pm8xxx_rtc *rtc_dd)
-> > +{
-> > +	size_t len;
-> > +	void *buf;
-> > +	int rc;
-> > +
-> > +	buf = nvmem_cell_read(rtc_dd->nvmem_cell, &len);
-> > +	if (IS_ERR(buf)) {
-> > +		rc = PTR_ERR(buf);
-> > +		dev_dbg(rtc_dd->dev, "failed to read nvmem offset: %d\n", rc);
+On 2/7/23 01:17, Krzysztof Kozlowski wrote:
+> On 13/01/2023 15:02, Guenter Roeck wrote:
+>> On Fri, Jan 13, 2023 at 11:33:40AM +0100, Krzysztof Kozlowski wrote:
+>>> The device specific compatibles ("qcom,kpss-wdt-ipq4019") should be
+>>> follwed by fallback "qcom,kpss-wdt", which is actually used by Linux
+>>> driver for binding.
+>>>
+>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>> Acked-by: Rob Herring <robh@kernel.org>
+>>
+>> Reviewed-by: Guenter Roeck <linux@roeck-us.net>
 > 
-> Why is dev_dbg() used instead of dev_err() for newly added error
-> messages?  Also, why do these conditions warrant error logging when some
-> of the previous patches in this series removed older error logging?
+> The patchset was acked and reviewed, so are there any other comments?
+> Guenter/Will - are you planning to pick it up?
+> 
 
-I would have used dev_err() here and did so for v1, but Alexandre
-prefers dev_dbg() for errors that are unlikely to be seen by regular
-users but that can still be useful to developers (e.g. when enabling the
-rtc on a new platform).
+The series is in my watchdog-next branch. Wim usually picks patches
+up from there.
 
-One or two of the spmi errors I removed falls in the same category in so
-far that the control and time registers may write-protected on some
-platforms, but such errors are currently logged by the spmi controller
-driver.
+Guenter
 
-Johan
