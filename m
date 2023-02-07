@@ -2,167 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4AC0668D034
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 08:11:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F3E968D13D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 09:05:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229585AbjBGHLL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Feb 2023 02:11:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44736 "EHLO
+        id S230515AbjBGIF3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Feb 2023 03:05:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230075AbjBGHLJ (ORCPT
+        with ESMTP id S230199AbjBGIF2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Feb 2023 02:11:09 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 386792D50
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 23:11:07 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id a2so12296501wrd.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Feb 2023 23:11:07 -0800 (PST)
+        Tue, 7 Feb 2023 03:05:28 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2BAA298DF
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 00:05:25 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id d14so12651268wrr.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 00:05:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZS0V+GLlaD2KUKWgU7WfhuI+UXfHxHE5nFGEqvgoxzY=;
-        b=KDG8DY2Z+0qWLkniGX8jdRJcYQ4jrZLIdgu6z5KFhaDyVVS+un3nIKhRVjkwt8sXE1
-         4YvoBlmjNv/tjFXKfJrA55qERO0Werbaybh9iv1rhaaDmnWcJ8zDxNSTylFlNQ34Dz5q
-         LYHDt4pDa+EetASYqbdQE0iShp7LIDpITQ/onsyR2Nh2oaUcBZKbjNc9a0fQueNi4UF7
-         5VhLe+13xufFfUNG7rsLdL/fmXLIeQIh9eZKM107+8QO+NcAH2P6UwWOpMAWyiDRjPb8
-         DZMLmdXtXisjFRARgnvOxb9Xzzq0U8j4Jk7NXoLUxA6ytmM0oO4hY/WMsj0gX5FOo9K9
-         68AQ==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=E84y+vKONIcM3mXhEEy2z1fhX1fI78cKOFVSdVHWpv0=;
+        b=Yd6jGK6jhUojjZW5dnKQZI/EOMPU01Jjp4shryndwBM0hSOJVzFozY9oRvYv1i0kkI
+         6cRh9Fi1gXzfql0/lJ24R8JbdN6DTQmH1Mf+2ma2/ZKT0SiY1HxvGBAtAiYXI9vdznUL
+         DQD4k6BkLJMZ+SN+p9HR2Ceg9EmDFblXq+sF7OEOia56dhv5b2DgOgQcgf+CxNajQ3q9
+         zT4o+7G4M4+dP0PdBxUScteNxxuxHRsce5kd8tjROlcn9DgINvuZ0MpdveNL9llA5yN0
+         qQDsm5mM3/4wzmA8C6jYtQG/4sTq6QebxKJeMXGfdfKC+dooLILuSGrbJkOhKwk/i8bQ
+         QhSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZS0V+GLlaD2KUKWgU7WfhuI+UXfHxHE5nFGEqvgoxzY=;
-        b=EbNhblmLCaGi0TM9In8CJ3KS7Z9svp/MY3z9uyvk1ec+8R0iXoV/Bc77teXMhZYjdD
-         xL2kkPPQweyLnquzfIhmqWp7hlcW1cNsyqCF+Ds/y4EVz6Q4tDJgmnsqHTC/ON+0bV3h
-         4+JekmPQULhfdki8DL5Wb/KlTZhcZ5lyYXWyXABvwP8pva729BjxlfyReCD5slDRUBYQ
-         slIG/I2+3djs2aEJ9ICM4jBCxyMgt5P14hVssZ+S8J5S9/bp73SD99vfnOb+6+8ASkaC
-         hfyHG9/zFuYz6R4SD2Uz9e0xtcwHBIjpWtA/DFlr28JccZX+Kc3IFwvXXTKuEUqCRnJM
-         ellg==
-X-Gm-Message-State: AO0yUKWSY0IhoAg/XWW+iP7G6tzcunvNdCnQYBQJbFur1bo4IhbWSFI5
-        4hWYMNx0p6HhRxR7oOf7mMvTsQ==
-X-Google-Smtp-Source: AK7set/+DJI2TrZhXfy4vttaEra/sZ7v5Prc0mU2ulprWaz5rtIS9fkzlWRBcRotXQsQA5THKFnzzQ==
-X-Received: by 2002:a05:6000:1081:b0:2bf:d333:219d with SMTP id y1-20020a056000108100b002bfd333219dmr1862710wrw.17.1675753865767;
-        Mon, 06 Feb 2023 23:11:05 -0800 (PST)
-Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id d13-20020adffbcd000000b002c3f6cd1f0fsm471504wrs.83.2023.02.06.23.11.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Feb 2023 23:11:05 -0800 (PST)
-Date:   Tue, 7 Feb 2023 09:11:03 +0200
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=E84y+vKONIcM3mXhEEy2z1fhX1fI78cKOFVSdVHWpv0=;
+        b=eL+c1BuYz9YNsBhqWoaJsK/OMgADBeihaaUlO+FIoyWnMPEKD0ntVXaoHVMGhKP2CS
+         c24SVr8OGFzK0KEjsWt3K3ZWEXHV9akoZtBMhl9R7YfapK4zj7xIEZk3g7tWSh0IkW98
+         tmfM4hnjHq668Xcf2DYHnV1jkdkFC6QQakMT9X6Rc4LrZQj2N60bnFgQWbyKVLWDfFq5
+         vB/fAQKTOyYb0MneWT3OfPmrOMSSBIap11EujiQSrUqMGlIwW8KyyZVfa+54fJfuuui/
+         Ca843WT3Y8UI1UvYYMtzJ128gOManSiB0g29/ktdRMqroghrxB+qbPf2KPMEytSY3JPT
+         MRTg==
+X-Gm-Message-State: AO0yUKV+fsKh69uj3J5MWlPdAHv4tzyk22+bA20oKnDB6nW3rA91jgeQ
+        scWTzXs38NbD7ngCcnBNYyLtPw==
+X-Google-Smtp-Source: AK7set9PKPCq1x4e9ZzuqO7fkp35tM9IXqxzQ0JsTgYnwNa2tqr7oD7Ks+S9d1vMDNf7iT8Z0q0w7A==
+X-Received: by 2002:adf:e389:0:b0:2be:546f:50c2 with SMTP id e9-20020adfe389000000b002be546f50c2mr1788041wrm.12.1675757124552;
+        Tue, 07 Feb 2023 00:05:24 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id q14-20020a05600c46ce00b003dc47d458cdsm13714167wmo.15.2023.02.07.00.05.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Feb 2023 00:05:24 -0800 (PST)
+Message-ID: <b8f800ac-d9f5-c8d5-ab6b-c1c25fafbeaa@linaro.org>
+Date:   Tue, 7 Feb 2023 09:05:21 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH v4 1/4] dt-bindings: net: Add WCN6855 Bluetooth
+Content-Language: en-US
+To:     Steev Klimaszewski <steev@kali.org>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-phy@lists.infradead.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [RFC v3 5/7] phy: qcom: phy-qcom-snps-eusb2: Add support for
- eUSB2 repeater
-Message-ID: <Y+H5hxaOeGTP+wrt@linaro.org>
-References: <20230202133816.4026990-1-abel.vesa@linaro.org>
- <20230202133816.4026990-6-abel.vesa@linaro.org>
- <Y90Q4rDYw9kcXmCQ@matsya>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y90Q4rDYw9kcXmCQ@matsya>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Sven Peter <sven@svenpeter.dev>, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        Mark Pearson <markpearson@lenovo.com>
+References: <20230207052829.3996-1-steev@kali.org>
+ <20230207052829.3996-2-steev@kali.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230207052829.3996-2-steev@kali.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23-02-03 19:19:22, Vinod Koul wrote:
-> On 02-02-23, 15:38, Abel Vesa wrote:
-> > From: Neil Armstrong <neil.armstrong@linaro.org>
-> > 
-> > For USB 2.0 compliance, eUSB2 needs a repeater. The PHY needs to
-> > initialize and reset it. So add repeater support
-> > 
-> > Co-developed-by: Abel Vesa <abel.vesa@linaro.org>
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> > ---
-> >  drivers/phy/qualcomm/phy-qcom-snps-eusb2.c | 18 +++++++++++++++++-
-> >  1 file changed, 17 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/drivers/phy/qualcomm/phy-qcom-snps-eusb2.c b/drivers/phy/qualcomm/phy-qcom-snps-eusb2.c
-> > index 23ec162cc3bd..8d972d49732b 100644
-> > --- a/drivers/phy/qualcomm/phy-qcom-snps-eusb2.c
-> > +++ b/drivers/phy/qualcomm/phy-qcom-snps-eusb2.c
-> > @@ -128,6 +128,8 @@ struct qcom_snps_eusb2_hsphy {
-> >  	struct regulator_bulk_data vregs[EUSB2_NUM_VREGS];
-> >  
-> >  	enum phy_mode mode;
-> > +
-> > +	struct phy *repeater;
-> >  };
-> >  
-> >  static int qcom_snps_eusb2_hsphy_set_mode(struct phy *p, enum phy_mode mode, int submode)
-> > @@ -136,7 +138,7 @@ static int qcom_snps_eusb2_hsphy_set_mode(struct phy *p, enum phy_mode mode, int
-> >  
-> >  	phy->mode = mode;
-> >  
-> > -	return 0;
-> > +	return phy_set_mode_ext(phy->repeater, mode, submode);
-> >  }
-> >  
-> >  static void qcom_snps_eusb2_hsphy_write_mask(void __iomem *base, u32 offset,
-> > @@ -235,6 +237,12 @@ static int qcom_snps_eusb2_hsphy_init(struct phy *p)
-> >  	if (ret)
-> >  		return ret;
-> >  
-> > +	ret = phy_init(phy->repeater);
-> > +	if (ret) {
-> > +		dev_err(&p->dev, "repeater init failed. %d\n", ret);
-> > +		goto disable_vreg;
-> > +	}
-> > +
-> >  	ret = clk_prepare_enable(phy->ref_clk);
-> >  	if (ret) {
-> >  		dev_err(&p->dev, "failed to enable ref clock, %d\n", ret);
-> > @@ -342,6 +350,8 @@ static int qcom_snps_eusb2_hsphy_exit(struct phy *p)
-> >  
-> >  	regulator_bulk_disable(ARRAY_SIZE(phy->vregs), phy->vregs);
-> >  
-> > +	phy_exit(phy->repeater);
-> > +
-> >  	return 0;
-> >  }
-> >  
-> > @@ -386,6 +396,12 @@ static int qcom_snps_eusb2_hsphy_probe(struct platform_device *pdev)
-> >  	if (ret)
-> >  		return dev_err_probe(dev, ret,
-> >  				     "failed to get regulator supplies\n");
-> > +
-> > +	phy->repeater = devm_phy_get(dev, "eusb2-repeater");
-> > +	if (IS_ERR(phy->repeater))
-> > +		return dev_err_probe(dev, PTR_ERR(phy->repeater),
-> > +				     "failed to get repeater\n");
+On 07/02/2023 06:28, Steev Klimaszewski wrote:
+> Add bindings for the QTI WCN6855 chipset.
 > 
-> That implies repeater is assumed to be there for all designs, how about
-> older devices, they may not have a repeater?
-
-Well, no other (older) platform has eUSB2 support, IIRC.
-
-And the eUSB2 can't be used as USB 2.0 without the repeater.
-
+> Signed-off-by: Steev Klimaszewski <steev@kali.org>
+> ---
 > 
-> > +
-> >  	generic_phy = devm_phy_create(dev, NULL, &qcom_snps_eusb2_hsphy_ops);
-> >  	if (IS_ERR(generic_phy)) {
-> >  		dev_err(dev, "failed to create phy %d\n", ret);
-> > -- 
-> > 2.34.1
-> 
-> -- 
-> ~Vinod
+
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
+
