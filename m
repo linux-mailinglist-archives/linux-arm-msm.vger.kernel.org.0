@@ -2,125 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 400D168D9EF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 14:57:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AF5EE68DA63
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 15:19:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232405AbjBGN5O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Feb 2023 08:57:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38716 "EHLO
+        id S232343AbjBGOT5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Feb 2023 09:19:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229839AbjBGN4p (ORCPT
+        with ESMTP id S231531AbjBGOT4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Feb 2023 08:56:45 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51CB1392A2
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 05:56:19 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id ba1so9569113wrb.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 05:56:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=V1aUOJzlnvog/gfPWV5JW0Qf9tdncCWCmWydTboOvKw=;
-        b=bO5sg5C5vYk9TdSOnLjR4vlhtn9sPiCyuwTtqnTTgWRlpu6ZIHi2AuSfyxwDUhH1E3
-         7iIfij9Fjz7f1MYJpQy2hjG1h8vjsYElgJEhcWCYbarfC1ZcxdyLCyd/IPGwYUz+3Mde
-         oqQp5TY/prn2vOHVAiD4YbRNxJmoIEX9aMEGWawsmNYceIIZqF3dZuYM8TqTJFLpiItC
-         gUZj8ZewAg+J/0uxy84V7Sd9T7B9STa6We5Gn5QUkuDdBa0eSe6ZESufOyJ8RqKi93Fd
-         zZeqp4/kmqKAY2c8yu6aJKqcT81K8WZv25+Y4RCXZ0TR+A81ExbJ+Ite5QCLES6P4aWw
-         A8eA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=V1aUOJzlnvog/gfPWV5JW0Qf9tdncCWCmWydTboOvKw=;
-        b=Ooi42WdFHGoNYjPUOz+m4WeduUpUi3gHg+1h4EzwYxaw/gkd0HQR8U9Wjn59xCmz/I
-         lAzEk3s0x9Sy3mZ2nlqO573W6zsMNOv57uZb5DMqGvqVOX26XIllccRgt1KmtSjsvda4
-         Lojwv910kqjIAVFIe5gDb/gcXQHkSP79T7qhWAwOPbUe8TUz67O+u1wO19bk0VYMUN4W
-         0aHefnkIL+WPN9Wu7/xw2SMq5zt7u/vErvohlGq+vZbRl0W5Fo+gMt6LD28vl02ay7og
-         DXKKmY6OrUFqZlrM2itL0O2u5tjdnt/uJCqIQh7ue2zQxopBeWu/e6Y43lLAG0B4fGsC
-         GpRQ==
-X-Gm-Message-State: AO0yUKVpwcrCbtuadEQZKHADhxt4P99te837WY0UkJLwHaeaR4a3B1um
-        yGi4bYjuAPPTy5stw6s9NPRxkA==
-X-Google-Smtp-Source: AK7set8/7pguR2nkrh5sfxWhRMJoc0cANOCX7qiQNTzv4aIYl17VUb020gXBfptdCuTi7LOG4aoGAA==
-X-Received: by 2002:a5d:6d82:0:b0:2c3:c138:e52d with SMTP id l2-20020a5d6d82000000b002c3c138e52dmr14202450wrs.4.1675778164473;
-        Tue, 07 Feb 2023 05:56:04 -0800 (PST)
-Received: from hackbox.lan ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id p10-20020a5d59aa000000b002be5401ef5fsm11611312wrr.39.2023.02.07.05.56.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Feb 2023 05:56:03 -0800 (PST)
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Tue, 7 Feb 2023 09:19:56 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A54D29434;
+        Tue,  7 Feb 2023 06:19:54 -0800 (PST)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 317DcmHH020942;
+        Tue, 7 Feb 2023 14:19:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=k1M9nmRiFDLPQ8oXfcmTfW98qcSBYVvYTWTZ/0q5I4w=;
+ b=DZIpm5grI/gZVmCeGCJ0pYqkGEJb4FeOpZqTHjrwW0GHuWOBxqXch9AqKV/hTLPLcuDr
+ Mu+JP4Xa3P5aBpn/fDO0b/mbmESlK/IL8HfnXiYVphewn7MSGLQ4L8Qf4qLJuVVlIRpS
+ cIaTG5G2u2T+bU7ZGDjOKcjtKQy2qBX/cXQLUs0DMb5JxRdgqGx60RTRTwp3A+0LAV8R
+ aPIzNnLmxQU/UqGdO7/I1jXa5e+NLcXYKEM15dHobHh9UHxzUXsB+WmzPb4fX9Wo7ljg
+ Jxj6/El5RusyOQ/fWb6lgyOFHRlbb95lMcaUyxqL4xNDn9oW094qQUiWyS/z8UbOD9mx 9Q== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nkfes98dg-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 07 Feb 2023 14:19:48 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 317EJlPJ026357
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 7 Feb 2023 14:19:47 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Tue, 7 Feb 2023 06:19:47 -0800
+Date:   Tue, 7 Feb 2023 06:19:45 -0800
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     Sebastian Reichel <sebastian.reichel@collabora.com>
+CC:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Lee Jones <lee@kernel.org>, Rob Herring <robh@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        "vkoul@kernel.org" <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Johan Hovold <johan+linaro@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: [PATCH v4 7/7] arm64: dts: qcom: sm8550-mtp: Add eUSB2 repeater node
-Date:   Tue,  7 Feb 2023 15:55:51 +0200
-Message-Id: <20230207135551.1418637-8-abel.vesa@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230207135551.1418637-1-abel.vesa@linaro.org>
-References: <20230207135551.1418637-1-abel.vesa@linaro.org>
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        "Subbaraman Narayanamurthy" <quic_subbaram@quicinc.com>,
+        Johan Hovold <johan@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v4 4/4] power: supply: Introduce Qualcomm PMIC GLINK
+ power supply
+Message-ID: <20230207141945.GA1639831@hu-bjorande-lv.qualcomm.com>
+References: <20230201041853.1934355-1-quic_bjorande@quicinc.com>
+ <20230201041853.1934355-5-quic_bjorande@quicinc.com>
+ <20230203112720.oa7e2psevbazicqo@mercury.elektranox.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20230203112720.oa7e2psevbazicqo@mercury.elektranox.org>
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: uC5Zdx35CjGFUL6WPEEJmo0TCVbfweKQ
+X-Proofpoint-ORIG-GUID: uC5Zdx35CjGFUL6WPEEJmo0TCVbfweKQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-02-07_05,2023-02-06_03,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ adultscore=0 suspectscore=0 mlxlogscore=999 impostorscore=0 mlxscore=0
+ malwarescore=0 spamscore=0 lowpriorityscore=0 clxscore=1011 phishscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302070126
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the PMIC eUSB2 repeater node and add the usb-repeater
-property to the eUSB2 PHY to allow it to be controlled by the
-PHY driver.
+On Fri, Feb 03, 2023 at 12:27:20PM +0100, Sebastian Reichel wrote:
+> Hi,
+> 
+> On Tue, Jan 31, 2023 at 08:18:53PM -0800, Bjorn Andersson wrote:
+> ...
+> > +static const enum power_supply_property sm8350_bat_props[] = {
+> > +	POWER_SUPPLY_PROP_STATUS,
+> > +	POWER_SUPPLY_PROP_HEALTH,
+> > +	POWER_SUPPLY_PROP_PRESENT,
+> > +	POWER_SUPPLY_PROP_CHARGE_TYPE,
+> > +	POWER_SUPPLY_PROP_CAPACITY,
+> > +	POWER_SUPPLY_PROP_VOLTAGE_OCV,
+> > +	POWER_SUPPLY_PROP_VOLTAGE_NOW,
+> > +	POWER_SUPPLY_PROP_VOLTAGE_MAX,
+> > +	POWER_SUPPLY_PROP_CURRENT_NOW,
+> > +	POWER_SUPPLY_PROP_TEMP,
+> > +	POWER_SUPPLY_PROP_TECHNOLOGY,
+> > +	POWER_SUPPLY_PROP_CHARGE_COUNTER,
+> > +	POWER_SUPPLY_PROP_CYCLE_COUNT,
+> > +	POWER_SUPPLY_PROP_CHARGE_FULL_DESIGN,
+> > +	POWER_SUPPLY_PROP_CHARGE_FULL,
+> 
+> no CHARGE_NOW?
+> 
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
+This doesn't seem to be exposed by the firmware...
 
-The v3 (rfc) is here:
-https://lore.kernel.org/all/20230202133816.4026990-8-abel.vesa@linaro.org/
+> > +	POWER_SUPPLY_PROP_MODEL_NAME,
+> > +	POWER_SUPPLY_PROP_TIME_TO_FULL_AVG,
+> > +	POWER_SUPPLY_PROP_TIME_TO_EMPTY_AVG,
+> > +	POWER_SUPPLY_PROP_POWER_NOW,
+> > +};
+> 
+> ...
+> 
+> > +static struct auxiliary_driver qcom_battmgr_driver = {
+> > +	.name = "pmic_glink_power_supply",
+> > +	.probe = qcom_battmgr_probe,
+> > +	.id_table = qcom_battmgr_id_table,
+> > +};
+> > +
+> > +static int __init qcom_battmgr_init(void)
+> > +{
+> > +	return auxiliary_driver_register(&qcom_battmgr_driver);
+> > +}
+> > +module_init(qcom_battmgr_init);
+> > +
+> > +static void __exit qcom_battmgr_exit(void)
+> > +{
+> > +	auxiliary_driver_unregister(&qcom_battmgr_driver);
+> > +}
+> > +module_exit(qcom_battmgr_exit);
+> 
+> module_auxiliary_driver()
 
-Changes since v3:
- * Dropped the phy-names property from usb_1_hsphy, like Dmitry suggested
+Missed that we have one of those, will update and resend.
 
- arch/arm64/boot/dts/qcom/sm8550-mtp.dts | 7 +++++++
- 1 file changed, 7 insertions(+)
+> 
+> Otherwise LGTM.
+> 
+> -- Sebastian 
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-index 56aab7cafcbc..6b6ec0fe5e5e 100644
---- a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-@@ -457,6 +457,11 @@ sdc2_card_det_n: sdc2-card-det-state {
- 	};
- };
- 
-+&pm8550b_eusb2_repeater {
-+	vdd18-supply = <&vreg_l15b_1p8>;
-+	vdd3-supply = <&vreg_l5b_3p1>;
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
-@@ -563,6 +568,8 @@ &usb_1_hsphy {
- 	vdd-supply = <&vreg_l1e_0p88>;
- 	vdda12-supply = <&vreg_l3e_1p2>;
- 
-+	phys = <&pm8550b_eusb2_repeater>;
-+
- 	status = "okay";
- };
- 
--- 
-2.34.1
 
+Thanks,
+Bjorn
