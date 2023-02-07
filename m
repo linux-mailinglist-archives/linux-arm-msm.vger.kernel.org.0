@@ -2,104 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 857C768D23A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 10:09:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D81DA68D267
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 10:17:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231425AbjBGJJY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Feb 2023 04:09:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51212 "EHLO
+        id S231189AbjBGJR3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Feb 2023 04:17:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231426AbjBGJJN (ORCPT
+        with ESMTP id S231425AbjBGJR0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Feb 2023 04:09:13 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D226A3800D
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 01:09:02 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id d14so12807598wrr.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 01:09:02 -0800 (PST)
+        Tue, 7 Feb 2023 04:17:26 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83396298CB
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 01:17:23 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id n13so10529416wmr.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 01:17:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LdXmjFBd+X/kaLcO30rTkOZVMoICj5BRdipiUuVXnAU=;
-        b=jnlC6v2dfupPC/SJL7x5vzuVp7piZhPcGzXho47cSg3fWxHCLpPn6g7BZd6uLeSK67
-         2AJafGlRqT9ak1aN2YmKLxYBK93gin0wcbxVe16Zf4bhlye9sTwbXutAM6jqXBdi2wVH
-         0sOxgvoKras6bBjvStmG8tHk/4Rpk6mWA9JrX3dOsG6uQPjOEc4yG9SJH3FwdB6kpF55
-         mEmEDGlBkxAl+i8KWVdO95UM8As745h2RlrvcYRfTlP86AFrN4/PMxYeNYS43vYF+ATf
-         DiMT3MqpiFzY2CEydZ+fjwY7HyWUPPJBAsTir9U+ii4FYWr7BqPxS6i+3V+iPGkyNPQD
-         /gTQ==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cxgNacSbWKAoLPJGvCUOev++so7sWmiz/ADYtyXJHhM=;
+        b=q4QX9wvAso2SladkGFfXBFtH+tFjhCCjxuqsenbRr+tqB3FgMdePtUisENN32dhL8t
+         j4NAjdsKwm7A0bCfiznDnQH85XvsC4t2+NdNK7k7zulDvb1HUx6YPDfT0whOZ/uV4A4q
+         jT+OExMxDpMDl3JIxNIC4nN+WwJLt/qraOcwmCNJzdMXiL7grKe55VRQ2u0tJCZz+RCX
+         SwjA7Yy4HpOn6a2SUEPYHujzYYlva/cvpG/45V80tA7oZ+UgCaTmPFa70tObz7Kj9x7l
+         cc4+rE1I1U2z7PIW+TVCMh/8VQ+WVX0cEL596epDjB7/MGzWvfiYg1+U3ghHPjhCQEUl
+         Sibg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LdXmjFBd+X/kaLcO30rTkOZVMoICj5BRdipiUuVXnAU=;
-        b=C6Dn73Gdrtq7UUyx5T9UYpXlLgXCRlsJCZyQXUsw+8WgIYa1SB9r/KSFDVXqYTG4UI
-         Pp6X7yVi0Lucmb5+7EJ4Pnj78/0OTWi/UCO/pPBhRSVJTLdLgizgZvbvHBZpMv/XJo4B
-         QG7ltzYySS8Yi2K500wFbWRR7KGz61Hi+BPdRUFRWuN7LBNyA5FKfTbhXl7lvs26b2et
-         W8jSzNYivBpVbgjeW59ZkDrtPwbYcMTeX9BynZLZXGVCIwmkBOX0FRbNqv6Gy3Iqxx8e
-         DtWjoRks7iYYGvbTt4YPU110t8vvvFQ8GhzaPyqi8wvXJvuy6tPixsnUBBedtK8JkdGy
-         pTTg==
-X-Gm-Message-State: AO0yUKU0+e047Ws2aQJ2VgGub3/79ipbrbdN3HjobMYOWrWjpFpCmdjZ
-        yF0ok7O+PhV38gRHVkuwblRV+w==
-X-Google-Smtp-Source: AK7set8/W5KJaFEkz1RDDa+zwsnOV544Xcf8A2EUlXRFsKuAyZ13x0n0EkNmN471HkJxysliaMCEpg==
-X-Received: by 2002:a5d:5046:0:b0:2bf:ad61:6023 with SMTP id h6-20020a5d5046000000b002bfad616023mr1714314wrt.71.1675760941310;
-        Tue, 07 Feb 2023 01:09:01 -0800 (PST)
-Received: from krzk-bin.. ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id h3-20020a056000000300b002c3e5652744sm5081955wrx.46.2023.02.07.01.08.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Feb 2023 01:09:01 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cxgNacSbWKAoLPJGvCUOev++so7sWmiz/ADYtyXJHhM=;
+        b=Aax0LPWTQpn3EmihP7ape2mIfy1ueDgBGfzOQH+DYoz6ICcN1RibnSLp55vJBY26DQ
+         JqHRxiN5RfRP7gqp7j/IfLxxroRA116jXi8CggcNyiW8WXa/DKl1z/1VHCt7He0S26ic
+         HI7MEWVNBAKYVhzwZwa5wkGVFeLniCQKT29rjhFN3s9AHBH1QSCqJunKPLc6l25Zto37
+         vlbk2BD+/qvJ6WM6zGisnGRkbCDaGb4EONJrP9Si70xM4zeeIIRIuPDbLBVVnPSUCssv
+         ShONH7TLcyK9RP3AcpRKPpFnnOKKLl6qYAXt8QrOHRHpS0+GeBY9h1LozlRxPO1eYu6b
+         CltA==
+X-Gm-Message-State: AO0yUKUYBAXLRSoIS4urYB1ZlcicvmZoLC6YlshG2f4r4EzIoGKBTGQU
+        jtrVK3IlKXalFDR6OU5MgrQHAQ==
+X-Google-Smtp-Source: AK7set/HJGlRQUymSmGMyLm8oSXzb9N2ZeMGj70/h6aS3O4Kp0jDqc2sHmTH4FuaURFaLKgmDKAO6Q==
+X-Received: by 2002:a05:600c:490a:b0:3d3:4007:9c88 with SMTP id f10-20020a05600c490a00b003d340079c88mr3092839wmp.18.1675761442076;
+        Tue, 07 Feb 2023 01:17:22 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id f1-20020a1cc901000000b003df14531724sm17869217wmb.21.2023.02.07.01.17.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Feb 2023 01:17:21 -0800 (PST)
+Message-ID: <7e600ba9-a99e-5f07-334f-bb872f5ed7db@linaro.org>
+Date:   Tue, 7 Feb 2023 10:17:19 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH v2 1/7] dt-bindings: watchdog: qcom-wdt: require fallback
+ for IPQ4019
+Content-Language: en-US
+To:     Guenter Roeck <linux@roeck-us.net>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 5/5] dt-bindings: remoteproc: qcom,glink-edge: correct label description
-Date:   Tue,  7 Feb 2023 10:08:52 +0100
-Message-Id: <20230207090852.28421-5-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230207090852.28421-1-krzysztof.kozlowski@linaro.org>
-References: <20230207090852.28421-1-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-watchdog@vger.kernel.org,
+        Rob Herring <robh@kernel.org>
+References: <20230113103346.29381-1-krzysztof.kozlowski@linaro.org>
+ <20230113103346.29381-2-krzysztof.kozlowski@linaro.org>
+ <20230113140230.GA1606649@roeck-us.net>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230113140230.GA1606649@roeck-us.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Correct the description of 'label' property.
+On 13/01/2023 15:02, Guenter Roeck wrote:
+> On Fri, Jan 13, 2023 at 11:33:40AM +0100, Krzysztof Kozlowski wrote:
+>> The device specific compatibles ("qcom,kpss-wdt-ipq4019") should be
+>> follwed by fallback "qcom,kpss-wdt", which is actually used by Linux
+>> driver for binding.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> Acked-by: Rob Herring <robh@kernel.org>
+> 
+> Reviewed-by: Guenter Roeck <linux@roeck-us.net>
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- .../devicetree/bindings/remoteproc/qcom,glink-edge.yaml       | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+The patchset was acked and reviewed, so are there any other comments?
+Guenter/Will - are you planning to pick it up?
 
-diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,glink-edge.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,glink-edge.yaml
-index 8e133ab55ff3..15e6851e1ff8 100644
---- a/Documentation/devicetree/bindings/remoteproc/qcom,glink-edge.yaml
-+++ b/Documentation/devicetree/bindings/remoteproc/qcom,glink-edge.yaml
-@@ -42,7 +42,9 @@ properties:
-     maxItems: 1
- 
-   label:
--    description: The names of the state bits used for SMP2P output
-+    description:
-+      Name of the edge, used for debugging and identification purposes. The
-+      node name will be used if this is not present.
- 
-   mboxes:
-     maxItems: 1
--- 
-2.34.1
+Best regards,
+Krzysztof
 
