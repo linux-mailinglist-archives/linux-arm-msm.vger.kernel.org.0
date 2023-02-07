@@ -2,82 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 79D2468CB0D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 01:22:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 25BBB68CB1B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 01:27:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229613AbjBGAW4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Feb 2023 19:22:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55156 "EHLO
+        id S229590AbjBGA1r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Feb 2023 19:27:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230210AbjBGAWy (ORCPT
+        with ESMTP id S229523AbjBGA1r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Feb 2023 19:22:54 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2332732E53
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 16:22:38 -0800 (PST)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31709TiZ004517;
-        Tue, 7 Feb 2023 00:22:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=kLCNLFBgffF/WAO14SUibcgtWypvMVPvbIpnrk4RwNY=;
- b=Z5BGYqdTmsMHTu79jZndrcb4bFQ0jBJT5K+rYIx7Y5RvrOtPSfK0eGgBtcYgT0+5XBpD
- MM8flEGt3aztYPhGNOqIDpwFrS68TSxsXqbV9o77iKHCL63xSqqXQEXyNIsxAxrD8gRl
- 9KVte9yrBFkbNrwehCzktWnVUpt+ZHVUmIpwxaXY60VmILrxznH1GX0UfjM7SkjgNln2
- QXodDuMAtKR9alXvFBpVX+K7zipj/qqV4FXhXE8zI9NwVjAIaFiiIru3Pu21md/oslMe
- Gg3/NvGwbQTd5spai9Je45dzQPbJyeZyiIHlrkTQs0Jhtfncyngeoj7osSPYrxICMXJT 0A== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nhghv4u16-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 07 Feb 2023 00:22:14 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3170MDb4030405
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 7 Feb 2023 00:22:13 GMT
-Received: from [10.110.44.26] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 6 Feb 2023
- 16:22:12 -0800
-Message-ID: <7132b394-2e6a-20c8-fa64-3da082060226@quicinc.com>
-Date:   Mon, 6 Feb 2023 16:22:11 -0800
+        Mon, 6 Feb 2023 19:27:47 -0500
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A42031F913
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Feb 2023 16:27:45 -0800 (PST)
+Received: by mail-ej1-x633.google.com with SMTP id ud5so39155679ejc.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Feb 2023 16:27:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QNN/yEucdvE9qtFJOD7m0WYAz5jGvOE/q6P52/59zOs=;
+        b=ilNiR/gTEqo8ajK27YvjnIc8UBezZoLFKGw4FFedFXUmcDGU0uty+M6pHe1eiRzmno
+         PvRJddYdX1YpslFW1NUd83rygTu4tKP7+aTSOzU/6+5LkCv4f3kF3PF9918nOTl+Q9zl
+         70mvGmdnuGfZwyXCuEiPEcDmXeSOZFy9qHVzyAPks9WHUlO8BTwflQl3SgIZqVZnUKVl
+         aek/mnaSO8WcbnuMY++pHMpnaILPCPvHlm1OGZ4lLhNN0kcrARW2/9O0vsACUsAOYfhh
+         WjaQ/QKUCrgVY+Awfc3YgOxqqZSpMZKRHeNvbEkJ0KPa9dPHszNRf1thmaWBXtERAge6
+         /anw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QNN/yEucdvE9qtFJOD7m0WYAz5jGvOE/q6P52/59zOs=;
+        b=KYpeGsqr5/Ax+90LcaBrmh1qrRZkIs1V5dmkM0AWe+6k1s+pogEngTtInxecGhQlSF
+         oorTRsdZ5WlXMYV+N+Zz9I4rFYZQ3++63e8Xl1rtSk3+kKeqcsmYnkwtzAJQgN63a0SJ
+         LHtdWrQZejxubgSAVCW1ja+az98iG+gk/Nb3qO4XJOOEW5yg0vWehq6jMWHUmfJ/lupZ
+         QVtWJG3EzkWrIHzMWutKqyTx0z8qEk3hSs2XFwAnMGxKf79yLGhA8Wla3lmPU39iMPtH
+         184Xs4vcYhzYXCwYtpfLqkqtEmNBVod3bzl+QFmhKHxlfDl8LojlH2pyw78sU03AbLvg
+         jcnQ==
+X-Gm-Message-State: AO0yUKWoUgDGSCsNxGQao9Mk+eZfCRpjgW1N3rGgpeYmbksecsbhCZKC
+        RW1rtOjROLpNmf2gTXwOpLnhpQ==
+X-Google-Smtp-Source: AK7set+aLIxNJfR9zQNOF4rhNxXJeKjzPSyFQbAvQSWaAeqCQoLvIpVIA2q7VctyMoDt5qwdLLMdmQ==
+X-Received: by 2002:a17:906:40d3:b0:88f:895f:1ba4 with SMTP id a19-20020a17090640d300b0088f895f1ba4mr1428398ejk.57.1675729664242;
+        Mon, 06 Feb 2023 16:27:44 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id kb18-20020a1709070f9200b0088ef3c38a52sm6211460ejc.19.2023.02.06.16.27.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Feb 2023 16:27:43 -0800 (PST)
+Message-ID: <d55bb351-bf0d-e8ae-8473-3903ad9419c0@linaro.org>
+Date:   Tue, 7 Feb 2023 02:27:42 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v3 22/27] drm/msm/dpu: rework
- dpu_plane_sspp_atomic_update()
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH v3 21/27] drm/msm/dpu: simplify dpu_plane_validate_src()
+Content-Language: en-GB
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     Stephen Boyd <swboyd@chromium.org>,
+Cc:     Stephen Boyd <swboyd@chromium.org>,
         David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
 References: <20230203182132.1307834-1-dmitry.baryshkov@linaro.org>
- <20230203182132.1307834-23-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20230203182132.1307834-23-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 8TocRg8EFqMudnhS_QIbAnVd19VtZaHD
-X-Proofpoint-ORIG-GUID: 8TocRg8EFqMudnhS_QIbAnVd19VtZaHD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-02-06_07,2023-02-06_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 clxscore=1015
- bulkscore=0 impostorscore=0 spamscore=0 suspectscore=0 malwarescore=0
- mlxlogscore=999 lowpriorityscore=0 mlxscore=0 priorityscore=1501
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302070002
-X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+ <20230203182132.1307834-22-dmitry.baryshkov@linaro.org>
+ <502f2c4b-193d-07ca-3b73-8fe7a608e736@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <502f2c4b-193d-07ca-3b73-8fe7a608e736@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,202 +81,102 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 2/3/2023 10:21 AM, Dmitry Baryshkov wrote:
-> Split pipe-dependent code from dpu_plane_sspp_atomic_update() into the
-
-sspp-dependent?
-
-> separate function dpu_plane_sspp_update_pipe(). This is one of
-> preparational steps to add r_pipe support.
+On 07/02/2023 00:40, Abhinav Kumar wrote:
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-Just a couple of minor comments below but otherwise this split up lgtm
-
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 113 ++++++++++++----------
->   1 file changed, 63 insertions(+), 50 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index 0986e740b978..f94e132733f3 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -404,12 +404,13 @@ static void _dpu_plane_set_qos_ctrl(struct drm_plane *plane,
->    * _dpu_plane_set_ot_limit - set OT limit for the given plane
->    * @plane:		Pointer to drm plane
->    * @pipe:		Pointer to software pipe
-> - * @crtc:		Pointer to drm crtc
->    * @pipe_cfg:		Pointer to pipe configuration
-> + * @frame_rate:		CRTC's frame rate
+> On 2/3/2023 10:21 AM, Dmitry Baryshkov wrote:
+>> Since the driver uses clipped src coordinates, there is no need to check
+>> against the fb coordinates. Remove corresponding checks and inline
+>> dpu_plane_validate_src().
+>>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> 
+> Can you please explain how the clipping in 
+> drm_atomic_helper_check_plane_state() can allow us to remove checking 
+> the fb co-ordinates?
+> 
+> The clipping is done using the mode parameters.
+> 
+> So lets say the FB being used is smaller than the source buffer by an 
+> incorrect usermode setting.
+> 
+> Then the src sspp shall try to fetch the full image of src rectangle 
+> size from a FB which isnt that big leading to a fault.
 
-Can you please check the spacing here. There seems to be an extra tab 
-before the CRTC's frame rate
+This case is checked by the drm_atomic_plane_check().
 
->    */
->   static void _dpu_plane_set_ot_limit(struct drm_plane *plane,
->   		struct dpu_sw_pipe *pipe,
-> -		struct drm_crtc *crtc, struct dpu_hw_sspp_cfg *pipe_cfg)
-> +		struct dpu_hw_sspp_cfg *pipe_cfg,
-> +		int frame_rate)
->   {
->   	struct dpu_plane *pdpu = to_dpu_plane(plane);
->   	struct dpu_vbif_set_ot_params ot_params;
-> @@ -421,7 +422,7 @@ static void _dpu_plane_set_ot_limit(struct drm_plane *plane,
->   	ot_params.width = drm_rect_width(&pipe_cfg->src_rect);
->   	ot_params.height = drm_rect_height(&pipe_cfg->src_rect);
->   	ot_params.is_wfd = !pdpu->is_rt_pipe;
-> -	ot_params.frame_rate = drm_mode_vrefresh(&crtc->mode);
-> +	ot_params.frame_rate = frame_rate;
->   	ot_params.vbif_idx = VBIF_RT;
->   	ot_params.clk_ctrl = pipe->sspp->cap->clk_ctrl;
->   	ot_params.rd = true;
-> @@ -457,26 +458,6 @@ static void _dpu_plane_set_qos_remap(struct drm_plane *plane,
->   	dpu_vbif_set_qos_remap(dpu_kms, &qos_params);
->   }
->   
-> -static void _dpu_plane_set_scanout(struct drm_plane *plane,
-> -		struct dpu_plane_state *pstate,
-> -		struct drm_framebuffer *fb)
-> -{
-> -	struct dpu_plane *pdpu = to_dpu_plane(plane);
-> -	struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
-> -	struct msm_gem_address_space *aspace = kms->base.aspace;
-> -	struct dpu_hw_fmt_layout layout;
-> -	int ret;
-> -
-> -	ret = dpu_format_populate_layout(aspace, fb, &layout);
-> -	if (ret)
-> -		DPU_ERROR_PLANE(pdpu, "failed to get format layout, %d\n", ret);
-> -	else if (pstate->pipe.sspp->ops.setup_sourceaddress) {
-> -		trace_dpu_plane_set_scanout(&pstate->pipe,
-> -					    &layout);
-> -		pstate->pipe.sspp->ops.setup_sourceaddress(&pstate->pipe, &layout);
-> -	}
-> -}
-> -
->   static void _dpu_plane_setup_scaler3(struct dpu_hw_sspp *pipe_hw,
->   		uint32_t src_w, uint32_t src_h, uint32_t dst_w, uint32_t dst_h,
->   		struct dpu_hw_scaler3_cfg *scale_cfg,
-> @@ -1102,35 +1083,25 @@ void dpu_plane_set_error(struct drm_plane *plane, bool error)
->   	pdpu->is_error = error;
->   }
->   
-> -static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
-> +static void dpu_plane_sspp_update_pipe(struct drm_plane *plane,
-> +				       struct dpu_sw_pipe *pipe,
-> +				       struct dpu_hw_sspp_cfg *pipe_cfg,
+> 
+> How does the clipping avoid such a case?
 
-You can call this parameter sspp_cfg instead of pipe_cfg?
+clipping itself does not. However using clipped coordinates from 
+plane_state->src ensures that they already were validated against the FB 
+dimensions. I'll see if I can change the commit message to make it more 
+obvious.
 
-> +				       const struct dpu_format *fmt,
-> +				       int frame_rate,
-> +				       struct dpu_hw_fmt_layout *layout)
->   {
->   	uint32_t src_flags;
->   	struct dpu_plane *pdpu = to_dpu_plane(plane);
->   	struct drm_plane_state *state = plane->state;
->   	struct dpu_plane_state *pstate = to_dpu_plane_state(state);
-> -	struct dpu_sw_pipe *pipe = &pstate->pipe;
-> -	struct drm_crtc *crtc = state->crtc;
-> -	struct drm_framebuffer *fb = state->fb;
-> -	bool is_rt_pipe;
-> -	const struct dpu_format *fmt =
-> -		to_dpu_format(msm_framebuffer_format(fb));
-> -	struct dpu_hw_sspp_cfg *pipe_cfg = &pstate->pipe_cfg;
->   
-> -	_dpu_plane_set_scanout(plane, pstate, fb);
-> -
-> -	pstate->pending = true;
-> -
-> -	is_rt_pipe = (dpu_crtc_get_client_type(crtc) != NRT_CLIENT);
-> -	pstate->needs_qos_remap |= (is_rt_pipe != pdpu->is_rt_pipe);
-> -	pdpu->is_rt_pipe = is_rt_pipe;
-> +	if (layout && pipe->sspp->ops.setup_sourceaddress) {
-> +		trace_dpu_plane_set_scanout(pipe, layout);
-> +		pipe->sspp->ops.setup_sourceaddress(pipe, layout);
-> +	}
->   
->   	_dpu_plane_set_qos_ctrl(plane, pipe, false, DPU_PLANE_QOS_PANIC_CTRL);
->   
-> -	DPU_DEBUG_PLANE(pdpu, "FB[%u] " DRM_RECT_FP_FMT "->crtc%u " DRM_RECT_FMT
-> -			", %4.4s ubwc %d\n", fb->base.id, DRM_RECT_FP_ARG(&state->src),
-> -			crtc->base.id, DRM_RECT_ARG(&state->dst),
-> -			(char *)&fmt->base.pixel_format, DPU_FORMAT_IS_UBWC(fmt));
-> -
->   	/* override for color fill */
->   	if (pdpu->color_fill & DPU_PLANE_COLOR_FILL_FLAG) {
->   		/* skip remaining processing on color fill */
-> @@ -1183,22 +1154,64 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
->   		}
->   	}
->   
-> -	_dpu_plane_set_qos_lut(plane, pipe, fmt, &pstate->pipe_cfg);
-> +	_dpu_plane_set_qos_lut(plane, pipe, fmt, pipe_cfg);
->   	_dpu_plane_set_danger_lut(plane, pipe, fmt);
->   
->   	if (plane->type != DRM_PLANE_TYPE_CURSOR) {
->   		_dpu_plane_set_qos_ctrl(plane, pipe, true, DPU_PLANE_QOS_PANIC_CTRL);
-> -		_dpu_plane_set_ot_limit(plane, pipe, crtc, &pstate->pipe_cfg);
-> +		_dpu_plane_set_ot_limit(plane, pipe, pipe_cfg, frame_rate);
->   	}
->   
-> -	if (pstate->needs_qos_remap) {
-> -		pstate->needs_qos_remap = false;
-> +	if (pstate->needs_qos_remap)
->   		_dpu_plane_set_qos_remap(plane, pipe);
-> -	}
-> +}
-> +
-> +static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
-> +{
-> +	struct dpu_plane *pdpu = to_dpu_plane(plane);
-> +	struct drm_plane_state *state = plane->state;
-> +	struct dpu_plane_state *pstate = to_dpu_plane_state(state);
-> +	struct dpu_sw_pipe *pipe = &pstate->pipe;
-> +	struct drm_crtc *crtc = state->crtc;
-> +	struct drm_framebuffer *fb = state->fb;
-> +	bool is_rt_pipe;
-> +	const struct dpu_format *fmt =
-> +		to_dpu_format(msm_framebuffer_format(fb));
-> +	struct dpu_hw_sspp_cfg *pipe_cfg = &pstate->pipe_cfg;
-> +
-> +	struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
-> +	struct msm_gem_address_space *aspace = kms->base.aspace;
-> +	struct dpu_hw_fmt_layout layout;
-> +	bool layout_valid = false;
-> +	int ret;
-> +
-> +	ret = dpu_format_populate_layout(aspace, fb, &layout);
-> +	if (ret)
-> +		DPU_ERROR_PLANE(pdpu, "failed to get format layout, %d\n", ret);
-> +	else
-> +		layout_valid = true;
-> +
-> +	pstate->pending = true;
-> +
-> +	is_rt_pipe = (dpu_crtc_get_client_type(crtc) != NRT_CLIENT);
-> +	pstate->needs_qos_remap |= (is_rt_pipe != pdpu->is_rt_pipe);
-> +	pdpu->is_rt_pipe = is_rt_pipe;
-> +
-> +	DPU_DEBUG_PLANE(pdpu, "FB[%u] " DRM_RECT_FP_FMT "->crtc%u " DRM_RECT_FMT
-> +			", %4.4s ubwc %d\n", fb->base.id, DRM_RECT_FP_ARG(&state->src),
-> +			crtc->base.id, DRM_RECT_ARG(&state->dst),
-> +			(char *)&fmt->base.pixel_format, DPU_FORMAT_IS_UBWC(fmt));
-> +
-> +	dpu_plane_sspp_update_pipe(plane, pipe, pipe_cfg, fmt,
-> +				   drm_mode_vrefresh(&crtc->mode),
-> +				   layout_valid ? &layout: NULL);
-> +
-> +	if (pstate->needs_qos_remap)
-> +		pstate->needs_qos_remap = false;
->   
-> -	pstate->plane_fetch_bw = _dpu_plane_calc_bw(pdpu->catalog, fmt, &crtc->mode, &pstate->pipe_cfg);
-> +	pstate->plane_fetch_bw = _dpu_plane_calc_bw(pdpu->catalog, fmt, &crtc->mode, pipe_cfg);
->   
-> -	pstate->plane_clk = _dpu_plane_calc_clk(&crtc->mode, &pstate->pipe_cfg);
-> +	pstate->plane_clk = _dpu_plane_calc_clk(&crtc->mode, pipe_cfg);
->   }
->   
->   static void _dpu_plane_atomic_disable(struct drm_plane *plane)
+> 
+>> ---
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 30 ++++++++---------------
+>>   1 file changed, 10 insertions(+), 20 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c 
+>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>> index ecf5402ab61a..0986e740b978 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>> @@ -894,25 +894,6 @@ static void dpu_plane_cleanup_fb(struct drm_plane 
+>> *plane,
+>>                   old_pstate->needs_dirtyfb);
+>>   }
+>> -static bool dpu_plane_validate_src(struct drm_rect *src,
+>> -                   struct drm_rect *fb_rect,
+>> -                   uint32_t min_src_size)
+>> -{
+>> -    /* Ensure fb size is supported */
+>> -    if (drm_rect_width(fb_rect) > MAX_IMG_WIDTH ||
+>> -        drm_rect_height(fb_rect) > MAX_IMG_HEIGHT)
+>> -        return false;
+>> -
+>> -    /* Ensure src rect is above the minimum size */
+>> -    if (drm_rect_width(src) < min_src_size ||
+>> -        drm_rect_height(src) < min_src_size)
+>> -        return false;
+>> -
+>> -    /* Ensure src is fully encapsulated in fb */
+>> -    return drm_rect_intersect(fb_rect, src) &&
+>> -        drm_rect_equals(fb_rect, src);
+>> -}
+>> -
+>>   static int dpu_plane_check_inline_rotation(struct dpu_plane *pdpu,
+>>                           const struct dpu_sspp_sub_blks *sblk,
+>>                           struct drm_rect src, const struct dpu_format 
+>> *fmt)
+>> @@ -998,6 +979,14 @@ static int dpu_plane_atomic_check(struct 
+>> drm_plane *plane,
+>>       fb_rect.x2 = new_plane_state->fb->width;
+>>       fb_rect.y2 = new_plane_state->fb->height;
+>> +    /* Ensure fb size is supported */
+>> +    if (drm_rect_width(&fb_rect) > MAX_IMG_WIDTH ||
+>> +        drm_rect_height(&fb_rect) > MAX_IMG_HEIGHT) {
+>> +        DPU_DEBUG_PLANE(pdpu, "invalid framebuffer " DRM_RECT_FMT "\n",
+>> +                DRM_RECT_ARG(&fb_rect));
+>> +        return -E2BIG;
+>> +    }
+>> +
+>>       max_linewidth = pdpu->catalog->caps->max_linewidth;
+>>       fmt = to_dpu_format(msm_framebuffer_format(new_plane_state->fb));
+>> @@ -1012,7 +1001,8 @@ static int dpu_plane_atomic_check(struct 
+>> drm_plane *plane,
+>>           return -EINVAL;
+>>       /* check src bounds */
+>> -    } else if (!dpu_plane_validate_src(&pipe_cfg->src_rect, &fb_rect, 
+>> min_src_size)) {
+>> +    } else if (drm_rect_width(&pipe_cfg->src_rect) < min_src_size ||
+>> +           drm_rect_height(&pipe_cfg->src_rect) < min_src_size) {
+>>           DPU_DEBUG_PLANE(pdpu, "invalid source " DRM_RECT_FMT "\n",
+>>                   DRM_RECT_ARG(&pipe_cfg->src_rect));
+>>           return -E2BIG;
+
+-- 
+With best wishes
+Dmitry
+
