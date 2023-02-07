@@ -2,69 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A17C068E250
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 21:55:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 736FB68E263
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 21:57:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229623AbjBGUzV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Feb 2023 15:55:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42170 "EHLO
+        id S229689AbjBGU56 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Feb 2023 15:57:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229967AbjBGUyr (ORCPT
+        with ESMTP id S229632AbjBGU5y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Feb 2023 15:54:47 -0500
-Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6EF3402FA;
-        Tue,  7 Feb 2023 12:54:13 -0800 (PST)
-Received: by mail-oi1-f181.google.com with SMTP id j21so13764115oie.4;
-        Tue, 07 Feb 2023 12:54:13 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QG1dkQbvjDItv2L+Miw1rSt0efQ50QIrV6acj+RBGA0=;
-        b=Pb5HlpWt0VnQClymK4p0+Cdo7y5OOkxdqXMAsJNVViQPPYcelldhwSt/K9FpoNQ6/W
-         ZHouJmY1sFbq+gS1Jh4pj9ciHVNyV6LDb2Vpelw0BJD1j8r4uh4CnonPiMv3ymPNfPnQ
-         JljHsGNnDo4Rh+D5lnEid/UrNnxIoUEvAxpcdIgHFqFpg8Y3Q6vTHKdmzJQZtofuV69v
-         1qKtYKTjbHvgbKRR09W3j/V53DA3hmJGX2racydjAJEZ5xHTOx2fFoCLypR23TBrk4Fh
-         AUaewMM22yr2HY1Wv4wmeDBe8zqCLGe0USC8Qd+x+O4Ni4Oll6MMDs/rDpiMm4whEpri
-         7zZA==
-X-Gm-Message-State: AO0yUKVvoA15ejAy16EBhSFSx/6hHI5uO/rY10JWtynRUmYzGM0e5jBX
-        nBf1/ZqJDesWyLbz22KOfg==
-X-Google-Smtp-Source: AK7set/0vSNAvhopmd8vgvuz2HXxNJD6l+0qvCpVo6Pu4PixiCMDs8mv6MJYq8tIE8A1X5lt+F3XRg==
-X-Received: by 2002:a05:6808:b3a:b0:378:974b:4fe6 with SMTP id t26-20020a0568080b3a00b00378974b4fe6mr2084995oij.8.1675803253067;
-        Tue, 07 Feb 2023 12:54:13 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id j24-20020a056808035800b003436fa2c23bsm6123653oie.7.2023.02.07.12.54.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Feb 2023 12:54:12 -0800 (PST)
-Received: (nullmailer pid 4137996 invoked by uid 1000);
-        Tue, 07 Feb 2023 20:54:12 -0000
-Date:   Tue, 7 Feb 2023 14:54:12 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-kernel@vger.kernel.org,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, devicetree@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-phy@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>
-Subject: Re: [PATCH 1/2] dt-bindings: phy: qcom,qmp-usb3-dp: document sm8350
- & sm8450 compatible
-Message-ID: <167580325163.4137958.14459903168469624324.robh@kernel.org>
-References: <20230206-topic-sm8350-upstream-usb-dp-combo-phy-v1-0-ed849ae6b849@linaro.org>
- <20230206-topic-sm8350-upstream-usb-dp-combo-phy-v1-1-ed849ae6b849@linaro.org>
+        Tue, 7 Feb 2023 15:57:54 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F38A813DE7
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 12:57:50 -0800 (PST)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 317KGtTn003284;
+        Tue, 7 Feb 2023 20:57:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=ZK1RabY+61l7FDo017GPhpwIFxio8+eRMbe/+KRPo8A=;
+ b=pNL5wbGf4ugXqbyHpK1WzqCfXOPPFio8hh8BaWNET9PXvLSIO+yCtnVSLeRJN85TWeci
+ /1/ynTq2+CnsJR2/AQgOx6TDxKvCk47wKXH8WpufWOc2+caMaPHsdGcxZlroymIkv0KS
+ BjE9PoH5PrpZtLCYyto0JQba0Mv7Xb+ZnYlk1faE/isJy9QtG9DDqqmuBY9tTCR4avhJ
+ 1oKl6CYZiFKdQxpb4yHQ4qpTVC9a5IXnDwMSCWiqQEvufudUQzuJW8+vR6GzvFFGpFJx
+ k8H2JeN+ye/10OUkQc9k2Nqm52VIAY/NEkQhuSihdPahghUXLAlOMWYQ7+qumlqDqLHM KQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nkga2t563-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 07 Feb 2023 20:57:44 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 317KvdR8012433
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 7 Feb 2023 20:57:39 GMT
+Received: from [10.110.44.26] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 7 Feb 2023
+ 12:57:10 -0800
+Message-ID: <d908ff60-f0c9-7c20-da98-3be8db243ab9@quicinc.com>
+Date:   Tue, 7 Feb 2023 12:57:09 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230206-topic-sm8350-upstream-usb-dp-combo-phy-v1-1-ed849ae6b849@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH v3 24/27] drm/msm/dpu: rework plane CSC setting
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230203182132.1307834-1-dmitry.baryshkov@linaro.org>
+ <20230203182132.1307834-25-dmitry.baryshkov@linaro.org>
+ <b4dbe036-81c4-e56f-12fb-75cb8bb59173@quicinc.com>
+ <CAA8EJpqQJdrvx4KML1pFYwM1ogYYie6Wct+ueJYMBAYb2-k=xQ@mail.gmail.com>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAA8EJpqQJdrvx4KML1pFYwM1ogYYie6Wct+ueJYMBAYb2-k=xQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: JzCwTaOdQHiD2LCteyFTNL9Qj2WkHZW0
+X-Proofpoint-ORIG-GUID: JzCwTaOdQHiD2LCteyFTNL9Qj2WkHZW0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-02-07_13,2023-02-06_03,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
+ priorityscore=1501 lowpriorityscore=0 impostorscore=0 malwarescore=0
+ adultscore=0 mlxlogscore=712 clxscore=1015 suspectscore=0 mlxscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302070180
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -72,14 +87,118 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Mon, 06 Feb 2023 10:58:56 +0100, Neil Armstrong wrote:
-> Document the USB3/DP Combo PHY compatible found on the SM8350 & SM8450 SoCs.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->  .../devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml          | 2 ++
->  1 file changed, 2 insertions(+)
-> 
 
-Acked-by: Rob Herring <robh@kernel.org>
+On 2/7/2023 12:44 PM, Dmitry Baryshkov wrote:
+> On Tue, 7 Feb 2023 at 22:05, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 2/3/2023 10:21 AM, Dmitry Baryshkov wrote:
+>>> Rework the code flushing CSC settings for the plane. Separate out the
+>>> pipe and pipe_cfg as a preparation for r_pipe support.
+>>>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 45 +++++++++++++----------
+>>>    1 file changed, 25 insertions(+), 20 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>>> index e69499490d39..05047192cb37 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>>> @@ -576,29 +576,18 @@ static const struct dpu_csc_cfg dpu_csc10_YUV2RGB_601L = {
+>>>        { 0x00, 0x3ff, 0x00, 0x3ff, 0x00, 0x3ff,},
+>>>    };
+>>>
+>>> -static const struct dpu_csc_cfg *_dpu_plane_get_csc(struct dpu_plane *pdpu, const struct dpu_format *fmt)
+>>> +static const struct dpu_csc_cfg *_dpu_plane_get_csc(struct dpu_sw_pipe *pipe, const struct dpu_format *fmt)
+>>>    {
+>>> -     struct dpu_plane_state *pstate = to_dpu_plane_state(pdpu->base.state);
+>>>        const struct dpu_csc_cfg *csc_ptr;
+>>>
+>>> -     if (!pdpu) {
+>>> -             DPU_ERROR("invalid plane\n");
+>>> -             return NULL;
+>>> -     }
+>>> -
+>>>        if (!DPU_FORMAT_IS_YUV(fmt))
+>>>                return NULL;
+>>>
+>>> -     if (BIT(DPU_SSPP_CSC_10BIT) & pstate->pipe.sspp->cap->features)
+>>> +     if (BIT(DPU_SSPP_CSC_10BIT) & pipe->sspp->cap->features)
+>>>                csc_ptr = &dpu_csc10_YUV2RGB_601L;
+>>>        else
+>>>                csc_ptr = &dpu_csc_YUV2RGB_601L;
+>>>
+>>> -     DPU_DEBUG_PLANE(pdpu, "using 0x%X 0x%X 0x%X...\n",
+>>> -                     csc_ptr->csc_mv[0],
+>>> -                     csc_ptr->csc_mv[1],
+>>> -                     csc_ptr->csc_mv[2]);
+>>> -
+>>>        return csc_ptr;
+>>>    }
+>>>
+>>> @@ -1049,6 +1038,27 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>>>        return 0;
+>>>    }
+>>>
+>>> +static void dpu_plane_flush_csc(struct dpu_plane *pdpu, struct dpu_sw_pipe *pipe)
+>>> +{
+>>> +     const struct dpu_format *format = to_dpu_format(msm_framebuffer_format(pdpu->base.state->fb));
+>>> +     const struct dpu_csc_cfg *csc_ptr;
+>>> +
+>>> +     if (!pipe->sspp || !pipe->sspp->ops.setup_csc)
+>>> +             return;
+>>> +
+>>> +     csc_ptr = _dpu_plane_get_csc(pipe, format);
+>>> +     if (!csc_ptr)
+>>> +             return;
+>>> +
+>>> +     DPU_DEBUG_PLANE(pdpu, "using 0x%X 0x%X 0x%X...\n",
+>>> +                     csc_ptr->csc_mv[0],
+>>> +                     csc_ptr->csc_mv[1],
+>>> +                     csc_ptr->csc_mv[2]);
+>>> +
+>>> +     pipe->sspp->ops.setup_csc(pipe->sspp, csc_ptr);
+>>> +
+>>> +}
+>>> +
+>>>    void dpu_plane_flush(struct drm_plane *plane)
+>>>    {
+>>>        struct dpu_plane *pdpu;
+>>> @@ -1072,13 +1082,8 @@ void dpu_plane_flush(struct drm_plane *plane)
+>>>        else if (pdpu->color_fill & DPU_PLANE_COLOR_FILL_FLAG)
+>>>                /* force 100% alpha */
+>>>                _dpu_plane_color_fill(pdpu, pdpu->color_fill, 0xFF);
+>>> -     else if (pstate->pipe.sspp && pstate->pipe.sspp->ops.setup_csc) {
+>>> -             const struct dpu_format *fmt = to_dpu_format(msm_framebuffer_format(plane->state->fb));
+>>> -             const struct dpu_csc_cfg *csc_ptr = _dpu_plane_get_csc(pdpu, fmt);
+>>> -
+>>> -             if (csc_ptr)
+>>> -                     pstate->pipe.sspp->ops.setup_csc(pstate->pipe.sspp, csc_ptr);
+>>> -     }
+>>
+>> Do we need to check for pipe being valid too (pstate->pipe) &&
+>> (pstate->pipe.sspp) && pstate->pipe.sspp->ops.setup_csc) ?
+>>
+>> Before moving the pipe_hw/sw pipe to the state the code used to check
+>> for pdpu->pipe_hw to be valid. Since dpu_plane_flush() can be called
+>> from other files too , dont we need to check for (pstate->pipe)?
+> 
+> pstate->pipe is not a pointer, there is nothing to check.
 
+Ah my bad. Only pipe.sspp is a pointer which you are already checking. 
+In that case,
+
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+
+> 
+>>
+>>> +     else
+>>> +             dpu_plane_flush_csc(pdpu, &pstate->pipe);
+>>>
+>>>        /* flag h/w flush complete */
+>>>        if (plane->state)
+> 
+> 
+> 
