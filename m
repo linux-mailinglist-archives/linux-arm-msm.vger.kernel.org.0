@@ -2,142 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3965B68D3F0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 11:19:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 68BAB68D3FC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 11:23:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231233AbjBGKTe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Feb 2023 05:19:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48086 "EHLO
+        id S229925AbjBGKXs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Feb 2023 05:23:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230504AbjBGKTd (ORCPT
+        with ESMTP id S229738AbjBGKXr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Feb 2023 05:19:33 -0500
-Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62BDF22DC4
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 02:19:32 -0800 (PST)
-Received: by mail-qt1-f170.google.com with SMTP id f10so16094633qtv.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 02:19:32 -0800 (PST)
+        Tue, 7 Feb 2023 05:23:47 -0500
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D0A7193E4
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 02:23:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1675765380;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=kaGTXgzMg0XGfm10jL8cEFT/Bw3WHCNbxpsPm5Ff46U=;
+        b=XSY7mx6L3jX9bQKe0qwtwVGRC9lS0FgJxup/NWXS1iZ9yFGfoRQ3+aMwl6zT09DiktbUO/
+        vlOtFT4oI+R37cDA4ZVKLkh+9llXZJJd5mNB0XHg52GC8WOQv38pmDWn8b5pVVPMLkP9Bt
+        J7B2yjUvc7Bwe1zyOm4grB7FZPSzjBE=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
+ us-mta-241-eBMNWQOVOz2dW5iIXCCCiQ-1; Tue, 07 Feb 2023 05:22:58 -0500
+X-MC-Unique: eBMNWQOVOz2dW5iIXCCCiQ-1
+Received: by mail-wr1-f71.google.com with SMTP id m8-20020a5d64a8000000b002c3cf0250e3so1457790wrp.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 02:22:58 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=GAbmluMMZmuve7W2pclzwLq8UAZbC40y33BvSstz+p8=;
-        b=kFSvhI/y1PvAE3KeamC923IRK/SMX75zVUBNiKuVEfCUBCmaaLyjeWfqNnWH7bIwS6
-         YCAwaMuNHnn2Tu4gh757hMZ7xoCp+IOLz/YLvZURI40aTLS1Yepap1h4y5LD/JSPD9uJ
-         SPWQKm7l7/36FCg58qavMcERY0al+ltjw6xtEui9tkaScBdzDstui0ovqO4CN+NTVxDG
-         8iVbiS804tcf01mvLKk7F+vApQYF+EIkecYwABwoms0nnbiQVWuUb3ndit95L0QdkOtF
-         loiuG/5lwUjYdiQ2kDssQ6kbZxohio0N9VD9yveyeJOlKXZE3FBcvQCmDZ/b8WX9CP57
-         EggQ==
-X-Gm-Message-State: AO0yUKUKV01kRaRBBC/Ig7s/nLFldMHoWqjF66GuTKi4KA/C/tlFk34y
-        ZQu9Ywyor4uEUNqSkqSPKim+7zrxrEA1dw==
-X-Google-Smtp-Source: AK7set/MGkGVMWuxewXhWf6h3FINn78h8lKJ2Jf7ZU1MmUa6S1zgpHSxNEMWHcAHtwC9AuPBries6Q==
-X-Received: by 2002:ac8:58cb:0:b0:3b6:2f49:1acc with SMTP id u11-20020ac858cb000000b003b62f491accmr5020612qta.16.1675765171143;
-        Tue, 07 Feb 2023 02:19:31 -0800 (PST)
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com. [209.85.128.175])
-        by smtp.gmail.com with ESMTPSA id b13-20020ac844cd000000b003ba1ccba523sm5461393qto.93.2023.02.07.02.19.30
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Feb 2023 02:19:30 -0800 (PST)
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-52770ee8cf0so113212017b3.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 02:19:30 -0800 (PST)
-X-Received: by 2002:a0d:e9c1:0:b0:514:a90f:10ea with SMTP id
- s184-20020a0de9c1000000b00514a90f10eamr213697ywe.316.1675765170090; Tue, 07
- Feb 2023 02:19:30 -0800 (PST)
+        bh=kaGTXgzMg0XGfm10jL8cEFT/Bw3WHCNbxpsPm5Ff46U=;
+        b=KA1w3yfQaJbeKhMCu3LNuv8DSIl1ef7q2oP5jISlD1lDvWnYU4YTZKbkRS6NULWTSg
+         /WvPvDEuaXcNHE05v5sjxjpopdSIcweiE+7oqcL9V8VqJCwAphV/DTlb1+k04GYunsOU
+         lOb0qm+UM3e3I1uP2i/a78bLgAdlC4OO/tIpH+j5z9rqT4O/m8xe+1tFtfrCHTJWYrlh
+         XIf2reZqwXqekLxPpG7BeQn2akmLAHLHnU88qTVJZcBKcftsbqVN4aMv6hI7XCoo5QRc
+         dDScUE+2yEheZoQqxPjTOVokqEB8dzIZVjJ9sKmrrhTReAsbAtqH4Aq0Nm7Y7+mh0GKm
+         GUGA==
+X-Gm-Message-State: AO0yUKX1KTUkzWMPBo3Yvom7qjT/C/65+AmS0dSaLliNUpXAyHZIyzSX
+        ULpT5g5MBzQxz/uBZh5acdiXcAavUYxBG+bxbTDAw//GVeGmOqlN+T8RJmMiSqFWthwzr9IdN9T
+        8MpOfQr38kFTHPudjaaJbGnm10w==
+X-Received: by 2002:a05:600c:30d3:b0:3dc:2137:d67d with SMTP id h19-20020a05600c30d300b003dc2137d67dmr2548324wmn.16.1675765377522;
+        Tue, 07 Feb 2023 02:22:57 -0800 (PST)
+X-Google-Smtp-Source: AK7set+kFJF3IIArixCkhseEqNzPTZb4cGYHwhhx51Ic3oP3/RY+LTlDYZBBIOlKPPts4sizqXDatw==
+X-Received: by 2002:a05:600c:30d3:b0:3dc:2137:d67d with SMTP id h19-20020a05600c30d300b003dc2137d67dmr2548318wmn.16.1675765377333;
+        Tue, 07 Feb 2023 02:22:57 -0800 (PST)
+Received: from minerva.home (205.pool92-176-231.dynamic.orange.es. [92.176.231.205])
+        by smtp.gmail.com with ESMTPSA id r16-20020a05600c459000b003e00c9888besm2632708wmo.30.2023.02.07.02.22.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Feb 2023 02:22:57 -0800 (PST)
+From:   Javier Martinez Canillas <javierm@redhat.com>
+To:     linux-kernel@vger.kernel.org
+Cc:     Albert Esteve <aesteve@redhat.com>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Enric Balletbo i Serra <eballetb@redhat.com>,
+        Javier Martinez Canillas <javierm@redhat.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org
+Subject: [PATCH] Revert "venus: firmware: Correct non-pix start and end addresses"
+Date:   Tue,  7 Feb 2023 11:22:54 +0100
+Message-Id: <20230207102254.1446461-1-javierm@redhat.com>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-References: <20221102180705.459294-1-dmitry.baryshkov@linaro.org>
- <20230109162140.yelgy2da7aqa6sqv@fsr-ub1664-121.ea.freescale.net>
- <323ec70e-4613-c0e9-0b39-ad2a0a76673d@linaro.org> <20230110065712.lgjnmb66s4tlpoly@fsr-ub1664-121.ea.freescale.net>
- <bf92569b-3886-113c-9e27-508e4cbfa4ba@linaro.org> <CAMuHMdUbgvT5i4XiJxgKSiRSmFFXO_mMEbgHBgcJDwUPxEYRRA@mail.gmail.com>
- <4bf0e5a2-23b6-1964-b30f-a5cb57f35e68@linaro.org> <CAMuHMdXyMJZaeeaLjzhbb_A7_WDcyjAzpKNWG8f5gtvmZLW0AA@mail.gmail.com>
-In-Reply-To: <CAMuHMdXyMJZaeeaLjzhbb_A7_WDcyjAzpKNWG8f5gtvmZLW0AA@mail.gmail.com>
-From:   Geert Uytterhoeven <geert@linux-m68k.org>
-Date:   Tue, 7 Feb 2023 11:19:16 +0100
-X-Gmail-Original-Message-ID: <CAMuHMdUgtiuxJ9dnjcGy77onHtrhabT5krJMp2XSr4KOD31ydQ@mail.gmail.com>
-Message-ID: <CAMuHMdUgtiuxJ9dnjcGy77onHtrhabT5krJMp2XSr4KOD31ydQ@mail.gmail.com>
-Subject: Re: [PATCH v3 0/7] drm/bridge_connector: perform HPD enablement automatically
-To:     neil.armstrong@linaro.org
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Tomi Valkeinen <tomba@kernel.org>,
-        dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
-        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Neil,
+This reverts commit a837e5161cfffbb3242cc0eb574f8bf65fd32640, which broke
+probing of the venus driver, at least on the SC7180 SoC HP X2 Chromebook:
 
-On Tue, Feb 7, 2023 at 11:02 AM Geert Uytterhoeven <geert@linux-m68k.org> wrote:
-> On Tue, Feb 7, 2023 at 10:59 AM Neil Armstrong
-> <neil.armstrong@linaro.org> wrote:
-> > On 07/02/2023 10:40, Geert Uytterhoeven wrote:
-> > > On Tue, Jan 10, 2023 at 5:37 PM Dmitry Baryshkov
-> > > <dmitry.baryshkov@linaro.org> wrote:
-> > >> On 10/01/2023 08:57, Laurentiu Palcu wrote:
-> > >>> On Mon, Jan 09, 2023 at 10:26:28PM +0200, Dmitry Baryshkov wrote:
-> > >>>> On 09/01/2023 18:21, Laurentiu Palcu wrote:
-> > >>>>> It looks like there are some issues with this patchset... :/ I just
-> > >>>>> fetched the drm-tip and, with these patches included, the "Hot plug
-> > >>>>> detection already enabled" warning is back for i.MX DCSS.
-> > >>>>
-> > >>>> Could you please provide a backtrace?
-> > >>>
-> > >>> Sure, see below:
-> > >>
-> > >> I wondered, why didn't I see this on msm, my main target nowadays. The
-> > >> msm driver is calling msm_kms_helper_poll_init() after initializing
-> > >> fbdev, so all previous kms_helper_poll_enable() calls return early.
-> > >>
-> > >> I think I have the fix ready. Let me test it locally before posting.
-> > >
-> > > Is this fix available?
-> > > Do you have a lore link?
-> >
-> > The fix at [1] has been applied on 2023-01-26
-> >
-> > [1] https://lore.kernel.org/all/20230124104548.3234554-1-dmitry.baryshkov@linaro.org/
->
-> Applied where? linux-next does not have it.
+  [   11.455782] qcom-venus aa00000.video-codec: Adding to iommu group 11
+  [   11.506980] qcom-venus aa00000.video-codec: non legacy binding
+  [   12.143432] qcom-venus aa00000.video-codec: failed to reset venus core
+  [   12.156440] qcom-venus: probe of aa00000.video-codec failed with error -110
 
-commit cbf143b282c64e59
-("drm/probe_helper: extract two helper functions") in next-20230127
-next-20230130 next-20230131
-commit d33a54e3991dfce8
-("drm/probe_helper: sort out poll_running vs poll_enabled") in
-next-20230127 next-20230130 next-20230131
+Matthias Kaehlcke also reported that the same change caused a regression in
+SC7180 and sc7280, that prevents AOSS from entering sleep mode during system
+suspend. So let's revert this commit for now to fix both issues.
 
-but not in any later version?
+Fixes: a837e5161cff ("venus: firmware: Correct non-pix start and end addresses")
+Reported-by: Matthias Kaehlcke <mka@chromium.org>
+Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
+---
 
-Gr{oetje,eeting}s,
+ drivers/media/platform/qcom/venus/firmware.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-                        Geert
+diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
+index 142d4c74017c..d59ecf776715 100644
+--- a/drivers/media/platform/qcom/venus/firmware.c
++++ b/drivers/media/platform/qcom/venus/firmware.c
+@@ -38,8 +38,8 @@ static void venus_reset_cpu(struct venus_core *core)
+ 	writel(fw_size, wrapper_base + WRAPPER_FW_END_ADDR);
+ 	writel(0, wrapper_base + WRAPPER_CPA_START_ADDR);
+ 	writel(fw_size, wrapper_base + WRAPPER_CPA_END_ADDR);
+-	writel(0, wrapper_base + WRAPPER_NONPIX_START_ADDR);
+-	writel(0, wrapper_base + WRAPPER_NONPIX_END_ADDR);
++	writel(fw_size, wrapper_base + WRAPPER_NONPIX_START_ADDR);
++	writel(fw_size, wrapper_base + WRAPPER_NONPIX_END_ADDR);
+ 
+ 	if (IS_V6(core)) {
+ 		/* Bring XTSS out of reset */
+-- 
+2.39.1
 
---
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
