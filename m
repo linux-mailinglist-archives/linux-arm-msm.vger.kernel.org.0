@@ -2,97 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8074B68D94E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 14:30:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E754B68D96C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 14:33:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231222AbjBGNak (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Feb 2023 08:30:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48976 "EHLO
+        id S232252AbjBGNde (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Feb 2023 08:33:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230374AbjBGNaj (ORCPT
+        with ESMTP id S232170AbjBGNdc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Feb 2023 08:30:39 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D0EF2278B
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 05:30:38 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id ba1so9492432wrb.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 05:30:38 -0800 (PST)
+        Tue, 7 Feb 2023 08:33:32 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D615D31E3C
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 05:33:22 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id h16so13534926wrz.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 05:33:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=QFRY8l975SG0htBMNX2RaAHlE3X6PIi5Arw3VidyWxk=;
-        b=PzI8UYULwWu0ZkL3TzdEroaha7ac16Lsd6ACzqnS1czR/eFkebq/zPekJHdgwUP8ey
-         gVezDX3nKvLQ84rHuN1vO7mxYWmV2ZKYubaN0tS50a7HlHT10YiMgdERvpZofoQJt5em
-         Y/BX5a1Pz/0qqveRQi680OJQ0UDfnV1LPmELwW7ONMJdQp3t6+8GNgWLTYRMHW8WFO/A
-         bA/ofZhTwXdW3nZeTFaWs9QerwLp77BmkmDlpwPAGDXH2JaRrYP0ypQ1xlcvrBYCQS02
-         PWCViepUxb+7O42yaKbjpI2mfSEAYVivKXo7oKTFJvk8IpFyge7qVCJapqwYOw/WyaWA
-         0Wpw==
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:reply-to:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=4Gnj8mx6BQv+P/VZTc2ZRvZ4cPWBzn/d/g1R6N3t1SY=;
+        b=sywB6VKP5uMO4iMwIfYWNewUXqdyUmfAHNyhyo3OrdI4w9hMA/do0JdT6XDgbayfL+
+         hioKOeqNB9gmBTeOJ+GEqRzkacs91bBLXr18APnsVAUBpOFSSsRR/mPgDw2PAZiSngST
+         GHN3F7C6RRw0zyStZrcDu6HUwZTZEJW9//HKZNnFr8pbdBYO0ZeQTSQ1wJUc9qr39WDw
+         RAZprI560qB9/D7SJ2L2mhHzMzvqn4IkElOgb3RhfyiCRKxMOqVm8can1xTMfSUuQzTl
+         3d/Otz4g9TJG3uwzIfUqVNKE0lVe3mXM4bFnaRqiGH/VF2JhF06rxIQG2kcu+KI3CJbC
+         UTcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QFRY8l975SG0htBMNX2RaAHlE3X6PIi5Arw3VidyWxk=;
-        b=fvtyvt+wrWQ8c7rGiF91EDWgOv2SCFuFJWM3gzJHhjWfNFr8SG79eqHPqXl7NqTHo/
-         1MCJRHXA+vrbvTBBTVGX2u6buyVZ3l5VecKPjLsRE1SKtC09GfcL47HaiF7uaLULiZmz
-         rymCXENolGdmhw4zUZbZQdOxhZ0AB5M2eqbysJG+kRBLPLcWfvpv5GMUoHfvWuoyzXMY
-         jjH+TOE891bo3v8WYIV3CVbhchogYdhRzJt28NpWxDDLch9+JxqUeEAx3orIwKN5SFjF
-         ufI233pl9jYTX8KLGiNf3hi5hLa42QMGSk8Z4GJxDH7xX33UQ3P5UBxE8UI90Z3gX4y3
-         OZHg==
-X-Gm-Message-State: AO0yUKXW+kQK8nbLSO3gfT6lOupT+AD1iUci5y2gzt8r19eTMdzgWBEP
-        CxQB2Qfjd5MwSdZQn6pqCsICnw==
-X-Google-Smtp-Source: AK7set8lMKCObqyAdbxEb0nTgdUyVM5rVpjgn42BqxPP5fL2YunnT7ZwjsQLHDKt6pgJf9pq87hmig==
-X-Received: by 2002:adf:f007:0:b0:2b6:7876:3cd4 with SMTP id j7-20020adff007000000b002b678763cd4mr2691948wro.16.1675776636869;
-        Tue, 07 Feb 2023 05:30:36 -0800 (PST)
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:reply-to:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4Gnj8mx6BQv+P/VZTc2ZRvZ4cPWBzn/d/g1R6N3t1SY=;
+        b=xS+EAliPzt4uujFKFem8ysa5lUhALzAHEv5/aC6mIkZ/Ixfp9KDbn83FPXBJQ1HRa/
+         Rcqqu3/AOD6hvD3x5gHauWevVVwGLWfNmAA1CYO12gGoaDeMdU7aAlCpA2WqLGY4UNaR
+         he86+Bj/7GXnLqQznMu3FDTLmjqHp0E9JS5YBvbwvi4kV/0QMKU4l7DcOfFLKVzke9ZZ
+         86YbsI1fxwF232IKMU1BA5GlFl8M+q6dhFLFzcV4qPzD/DVLAeBqX7Y1p1qaV5uLA43o
+         Q+vVX6bW6YZyKRYNVe16cG38n61Cs7QmHyPzs3KOIjaSk63EiTX+CDHqdErlG64g2/BC
+         UleQ==
+X-Gm-Message-State: AO0yUKVNxApLaYDQtfER6XkwnyIQXkQjVYnsfhjsC2WiVRQLX4wDK7TV
+        ysfJqz3MjusZSQ0/u7bHKLX4jA==
+X-Google-Smtp-Source: AK7set9tflq7m2WGhWzU48ho/FGtJPjdoU4DUvNTQOyFDfwfzYJ/cgrUGOgVxSNmGa0o1E+FD6YRHA==
+X-Received: by 2002:a05:6000:1b0f:b0:2c3:ea4d:3f01 with SMTP id f15-20020a0560001b0f00b002c3ea4d3f01mr2338118wrz.27.1675776801421;
+        Tue, 07 Feb 2023 05:33:21 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:982:cbb0:c58c:fc5c:67d6:e5f3? ([2a01:e0a:982:cbb0:c58c:fc5c:67d6:e5f3])
-        by smtp.gmail.com with ESMTPSA id o21-20020a5d58d5000000b002c3f0a78e39sm2651551wrf.9.2023.02.07.05.30.35
+        by smtp.gmail.com with ESMTPSA id t1-20020a5d4601000000b002bdfe3aca17sm11241983wrq.51.2023.02.07.05.33.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Feb 2023 05:30:36 -0800 (PST)
-Message-ID: <31b5a693-d9e6-1c21-9fa7-32abc431a46d@linaro.org>
-Date:   Tue, 7 Feb 2023 14:30:35 +0100
+        Tue, 07 Feb 2023 05:33:21 -0800 (PST)
+Message-ID: <e8e983a7-5dac-507d-414e-0fdc1082644a@linaro.org>
+Date:   Tue, 7 Feb 2023 14:33:19 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-From:   neil.armstrong@linaro.org
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v3 0/7] drm/bridge_connector: perform HPD enablement
- automatically
+Subject: Re: [PATCH] thermal: Remove core header inclusion from drivers
 Content-Language: en-US
-To:     Geert Uytterhoeven <geert@linux-m68k.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
+To:     Daniel Lezcano <daniel.lezcano@linaro.org>,
+        rafael.j.wysocki@intel.com
+Cc:     linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Guillaume La Roque <glaroque@baylibre.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
         Shawn Guo <shawnguo@kernel.org>,
         Sascha Hauer <s.hauer@pengutronix.de>,
         Pengutronix Kernel Team <kernel@pengutronix.de>,
         Fabio Estevam <festevam@gmail.com>,
         NXP Linux Team <linux-imx@nxp.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Tomi Valkeinen <tomba@kernel.org>,
-        dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-References: <20221102180705.459294-1-dmitry.baryshkov@linaro.org>
- <20230109162140.yelgy2da7aqa6sqv@fsr-ub1664-121.ea.freescale.net>
- <323ec70e-4613-c0e9-0b39-ad2a0a76673d@linaro.org>
- <20230110065712.lgjnmb66s4tlpoly@fsr-ub1664-121.ea.freescale.net>
- <bf92569b-3886-113c-9e27-508e4cbfa4ba@linaro.org>
- <CAMuHMdUbgvT5i4XiJxgKSiRSmFFXO_mMEbgHBgcJDwUPxEYRRA@mail.gmail.com>
- <4bf0e5a2-23b6-1964-b30f-a5cb57f35e68@linaro.org>
- <CAMuHMdXyMJZaeeaLjzhbb_A7_WDcyjAzpKNWG8f5gtvmZLW0AA@mail.gmail.com>
- <CAMuHMdUgtiuxJ9dnjcGy77onHtrhabT5krJMp2XSr4KOD31ydQ@mail.gmail.com>
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        =?UTF-8?Q?Niklas_S=c3=b6derlund?= <niklas.soderlund@ragnatech.se>,
+        Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        ye xingchen <ye.xingchen@zte.com.cn>,
+        Ricardo Neri <ricardo.neri-calderon@linux.intel.com>,
+        Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+        Haowen Bai <baihaowen@meizu.com>,
+        Minghao Chi <chi.minghao@zte.com.cn>,
+        "open list:THERMAL DRIVER FOR AMLOGIC SOCS" 
+        <linux-amlogic@lists.infradead.org>,
+        "moderated list:BROADCOM BCM2711/BCM2835 ARM ARCHITECTURE" 
+        <linux-rpi-kernel@lists.infradead.org>,
+        "moderated list:BROADCOM BCM2711/BCM2835 ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        "open list:RENESAS R-CAR THERMAL DRIVERS" 
+        <linux-renesas-soc@vger.kernel.org>,
+        "open list:SAMSUNG THERMAL DRIVER" 
+        <linux-samsung-soc@vger.kernel.org>,
+        "moderated list:ARM/STM32 ARCHITECTURE" 
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        "open list:TEGRA ARCHITECTURE SUPPORT" <linux-tegra@vger.kernel.org>
+References: <20230206153432.1017282-1-daniel.lezcano@linaro.org>
+From:   Neil Armstrong <neil.armstrong@linaro.org>
 Organization: Linaro Developer Services
-In-Reply-To: <CAMuHMdUgtiuxJ9dnjcGy77onHtrhabT5krJMp2XSr4KOD31ydQ@mail.gmail.com>
+In-Reply-To: <20230206153432.1017282-1-daniel.lezcano@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -104,79 +125,64 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/02/2023 11:19, Geert Uytterhoeven wrote:
-> Hi Neil,
+On 06/02/2023 16:34, Daniel Lezcano wrote:
+> As the name states "thermal_core.h" is the header file for the core
+> components of the thermal framework.
 > 
-> On Tue, Feb 7, 2023 at 11:02 AM Geert Uytterhoeven <geert@linux-m68k.org> wrote:
->> On Tue, Feb 7, 2023 at 10:59 AM Neil Armstrong
->> <neil.armstrong@linaro.org> wrote:
->>> On 07/02/2023 10:40, Geert Uytterhoeven wrote:
->>>> On Tue, Jan 10, 2023 at 5:37 PM Dmitry Baryshkov
->>>> <dmitry.baryshkov@linaro.org> wrote:
->>>>> On 10/01/2023 08:57, Laurentiu Palcu wrote:
->>>>>> On Mon, Jan 09, 2023 at 10:26:28PM +0200, Dmitry Baryshkov wrote:
->>>>>>> On 09/01/2023 18:21, Laurentiu Palcu wrote:
->>>>>>>> It looks like there are some issues with this patchset... :/ I just
->>>>>>>> fetched the drm-tip and, with these patches included, the "Hot plug
->>>>>>>> detection already enabled" warning is back for i.MX DCSS.
->>>>>>>
->>>>>>> Could you please provide a backtrace?
->>>>>>
->>>>>> Sure, see below:
->>>>>
->>>>> I wondered, why didn't I see this on msm, my main target nowadays. The
->>>>> msm driver is calling msm_kms_helper_poll_init() after initializing
->>>>> fbdev, so all previous kms_helper_poll_enable() calls return early.
->>>>>
->>>>> I think I have the fix ready. Let me test it locally before posting.
->>>>
->>>> Is this fix available?
->>>> Do you have a lore link?
->>>
->>> The fix at [1] has been applied on 2023-01-26
->>>
->>> [1] https://lore.kernel.org/all/20230124104548.3234554-1-dmitry.baryshkov@linaro.org/
->>
->> Applied where? linux-next does not have it.
+> Too many drivers are including it. Hopefully the recent cleanups
+> helped to self encapsulate the code a bit more and prevented the
+> drivers to need this header.
 > 
-> commit cbf143b282c64e59
-> ("drm/probe_helper: extract two helper functions") in next-20230127
-> next-20230130 next-20230131
-> commit d33a54e3991dfce8
-> ("drm/probe_helper: sort out poll_running vs poll_enabled") in
-> next-20230127 next-20230130 next-20230131
+> Remove this inclusion in every place where it is possible.
 > 
-> but not in any later version?
+> Some other drivers did a confusion with the core header and the one
+> exported in linux/thermal.h. They include the former instead of the
+> latter. The changes also fix this.
+> 
+> The tegra/soctherm driver still remains as it uses an internal
+> function which need to be replaced.
+> 
+> The Intel HFI driver uses the netlink internal framework core and
+> should be changed to prevent to deal with the internals.
+> 
+> No functional changes
+> 
+> [ Applies to thermal/linux-next or linux-pm/linux-next ]
+> 
+> Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+> ---
+>   drivers/thermal/amlogic_thermal.c           | 1 -
+>   drivers/thermal/armada_thermal.c            | 2 --
+>   drivers/thermal/broadcom/bcm2835_thermal.c  | 1 -
+>   drivers/thermal/hisi_thermal.c              | 3 +--
+>   drivers/thermal/imx8mm_thermal.c            | 1 -
+>   drivers/thermal/imx_sc_thermal.c            | 1 -
+>   drivers/thermal/intel/intel_hfi.c           | 3 ++-
+>   drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 1 -
+>   drivers/thermal/qoriq_thermal.c             | 1 -
+>   drivers/thermal/rcar_gen3_thermal.c         | 1 -
+>   drivers/thermal/samsung/exynos_tmu.c        | 3 +--
+>   drivers/thermal/st/stm_thermal.c            | 1 -
+>   drivers/thermal/tegra/tegra30-tsensor.c     | 1 -
+>   drivers/thermal/uniphier_thermal.c          | 2 --
+>   14 files changed, 4 insertions(+), 18 deletions(-)
+> 
+> diff --git a/drivers/thermal/amlogic_thermal.c b/drivers/thermal/amlogic_thermal.c
+> index d30cb791e63c..9235fda4ec1e 100644
+> --- a/drivers/thermal/amlogic_thermal.c
+> +++ b/drivers/thermal/amlogic_thermal.c
+> @@ -28,7 +28,6 @@
+>   #include <linux/regmap.h>
+>   #include <linux/thermal.h>
+>   
+> -#include "thermal_core.h"
+>   #include "thermal_hwmon.h"
+>   
+>   #define TSENSOR_CFG_REG1			0x4
 
-$ git log --oneline --author=dmitry next-20230207 drivers/gpu/drm/drm_probe_helper.c
-c8268795c9a9 drm/probe-helper: enable and disable HPD on connectors
-78b991ccfa64 drm/poll-helper: merge drm_kms_helper_poll_disable() and _fini()
+For Amlogic:
 
-$ cat Next/SHA1s | grep drm
-drm-fixes       4ec5183ec48656cec489c49f989c508b68b518e3
-drm-intel-fixes 4c7b9344cadbed477372c75e3c0a8cfd542f5990
-drm-misc-fixes  8f20660f053cefd4693e69cfff9cf58f4f7c4929
-drm             1c0db6d84f8e0ac8f14178f13250e36ebcf457ee
-drm-misc        d20a8f409259f1782f080b434054854020878f23
-drm-intel       155c6b16eec2eaaaf6c71abf2d5e71641770d7ba
-drm-tegra       b9930311641cf2ed905a84aabe27e8f3868aee4a
-drm-msm         dbd7a2a941b8cbf9e5f79a777ed9fe0090eebb61
-drm-msm-lumag   1d233b1cb149ec78c20fac58331b27bb460f9558
-imx-drm         927d8fd465adbaaad6cce82f840d489d7c378f29
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 
-so weren't merged into drm-misc, I'll ping Thomas & Maxime on irc.
-
-Neil
-
-> 
-> Gr{oetje,eeting}s,
-> 
->                          Geert
-> 
-> --
-> Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-> 
-> In personal conversations with technical people, I call myself a hacker. But
-> when I'm talking to journalists I just say "programmer" or something like that.
->                                  -- Linus Torvalds
+<snip>
 
