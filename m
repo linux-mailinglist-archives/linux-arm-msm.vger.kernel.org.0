@@ -2,131 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 84B8568D99E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 14:46:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7651368D9DA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 14:56:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231793AbjBGNqy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Feb 2023 08:46:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59810 "EHLO
+        id S232281AbjBGN4o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Feb 2023 08:56:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231782AbjBGNqw (ORCPT
+        with ESMTP id S232070AbjBGN4j (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Feb 2023 08:46:52 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5738BBB1
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 05:46:50 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id d14so13589208wrr.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 05:46:50 -0800 (PST)
+        Tue, 7 Feb 2023 08:56:39 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A529F4
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 05:56:07 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id r2so13627801wrv.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 05:56:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=aG9xyJEWq8xfzQLUkXepXFg+WW0EUsU0Fq705yW4t3s=;
-        b=iE7TjlqZz6va0JTZBey0ugvYw+Hk9P/7K2DX5kDSL+OIcRwMuWbfPZidDTq3DHc3Tz
-         A0rW8LMOAaF5X1mkf334DG4Mqk3H4XOdOUwuEYdUCVwEZ1xfrZYi6XyOPWwcZ7QaHT+t
-         Ft8Gi8YOags67/SOK0mn24qLRZhDDMq2laXisnZOm8xQBmaCxuugnyzI3uHOkRer95tM
-         ZBgQHBEfvV8R6bTQ7gUTRhAV51iIIpOQppGDf+66xzCYlXQcKC0Sb1MTXFHN9Ry4RZ4a
-         zRVmX1mqCk6kxc23+JCFQs7uYrh0PThVZWxaLesj78tROG8josCnevfnSstSWm4gZgXB
-         +L+w==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=JZVy6UETjo48T8sbWkjn8fWSpf7jaH8RRC1DRDpNkX8=;
+        b=DXafruirc1KWzQxIKCu5wqiV6RseMKBRfEAUw6h4nDf9bvj5qF5DuxctY42EIn8PBP
+         DSF11ev9bfgds55L88Umbi5Vx1TS4tH1Hgu2PTu2NubZUUJFquouZ5qadV9tl0Dcm6Vq
+         2fQfVkxkHGCX4wqK1ViBYx950Rfp2WZt1/o89xbICzO+1RwerYLAxtfM3cAO0LJIYRgG
+         FH/XGH3YOfCnViE5eqhxuxToliylvf9d/M+ivvvR8u86cPZhJGkWlz4WhD+PHBNbjXeW
+         lrSkvlCF9MjmDIYBbr+/YPUXTkQBm5Ufs4jNai3TWNXn4m3WvXXrEYW+XVJo4bB/oTy8
+         1Hqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=aG9xyJEWq8xfzQLUkXepXFg+WW0EUsU0Fq705yW4t3s=;
-        b=ITmpvUvStfy8C8OHMvWp2nTfQV3JC8Efr2ZfGE/OWFVkzSk4XoqZzp0mLUVOSP7P4o
-         +AOFfUqD2lbsc7vD9K25hHHi2COwiUnfsRVDRzPBNKvltFpZsBvmkuDDw9QlbiqWBa4C
-         jjGmM+tg7iZ8Zu++fcqeZ2Hq8OjpIk8IbsU5lYPdfmvL4ZMMon6HIgsMEMT4IxhVjNfH
-         ty12YIMdP/LmxBClZs1tfPOjlVGnujjkgzh5MX6O8yA4n3opQ/jvvoarYaA9jSRGqSS8
-         xbgE7gyj4w3n2CTnYmXT/oV8yRGyv9ngLo4ancF5tlSyauphmVFLelhZNVaFLvO08EwW
-         528A==
-X-Gm-Message-State: AO0yUKXcodc8KWlWL4kE/KNFdM6Ngfw8JX9VBddfjMUB2XuMr/Sxr0og
-        yPpib6UqoheGh3lsOc53ugX6vQ==
-X-Google-Smtp-Source: AK7set/foZL7LzUjzZNlYiTs9qS+b+uBwpRfHsoNPwLIc+5xmfCweBpO4Ts9Ae6+UXoQuVnEkAKxYQ==
-X-Received: by 2002:a5d:4685:0:b0:2c3:e5d5:5d77 with SMTP id u5-20020a5d4685000000b002c3e5d55d77mr2563126wrq.68.1675777608918;
-        Tue, 07 Feb 2023 05:46:48 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id s2-20020a5d69c2000000b002c3de83be0csm8610927wrw.87.2023.02.07.05.46.48
+        bh=JZVy6UETjo48T8sbWkjn8fWSpf7jaH8RRC1DRDpNkX8=;
+        b=nC0uezMMEyzn281s/Tjio+qgrkmeWj3ElNmL4MI9G3staxImAWvORtke699RbLSPkk
+         G0rLdtlyf23S8hwb/fc6xhclFkPkz1vAGnE3lnxJXCnVeIwYu5l1tFG23siSu3Uvi1CR
+         LaUmYMw1RYchdljmz3dEmeg1j9eXSCZ481mac/OvWu5rK/nr2VVXvWD7LKd+qUC5756n
+         uxjEdx4DfnDrP4CzzGU39A5QYFrI26MvwqgraR7TBH6XdnW6Wm+hjLDdUxlBnlhUGgHE
+         UqAiuJB/EUinOM72N3VdSRSlkpPT6J3f8DTopUIAsjPGAwAqSuy+cUyPSGv+pBnzjOwb
+         nGvA==
+X-Gm-Message-State: AO0yUKUajShxznzJEBxZpeb18czxiJrn/24O7k9HVmAANjdkMNKSwHlS
+        SRbZXYXh1Scpr5sxcXisWCw+5A==
+X-Google-Smtp-Source: AK7set91Op9UQN4lc/XoWrfKxdUUccdREuCUJsx0iI1vqbpMl3cZEbxrNCdDV0wR7zpkr7cLv4vfsw==
+X-Received: by 2002:a5d:5745:0:b0:2bf:e528:336b with SMTP id q5-20020a5d5745000000b002bfe528336bmr2881141wrw.38.1675778155250;
+        Tue, 07 Feb 2023 05:55:55 -0800 (PST)
+Received: from hackbox.lan ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id p10-20020a5d59aa000000b002be5401ef5fsm11611312wrr.39.2023.02.07.05.55.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Feb 2023 05:46:48 -0800 (PST)
-From:   neil.armstrong@linaro.org
-Date:   Tue, 07 Feb 2023 14:46:46 +0100
-Subject: [PATCH v2] dt-bindings: firmware: document Qualcomm SM8550 SCM
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230207-topic-sm8550-upstream-scm-bindings-v2-1-ca12bd33fa1c@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAEZW4mMC/x2NywqDMBAAf0X23IWQNhr6K6WHPFZdMKtktRTEf
- 2/oceYwc4JSZVJ4didU+rDyKg3srYM0B5kIOTcGa+zdWDPgvm6cUIt3zuCx6V4pFNRUMLJklkm
- RzODjo8/96B20UAxKGGuQNLeUHMvS5FZp5O///Hpf1w/HkWbYiQAAAA==
+        Tue, 07 Feb 2023 05:55:54 -0800 (PST)
+From:   Abel Vesa <abel.vesa@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Lee Jones <lee@kernel.org>, Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Robert Marko <robimarko@gmail.com>,
-        Das Srinagesh <quic_gurus@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.12.0
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Johan Hovold <johan+linaro@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: [PATCH v4 0/7] sm8550: Add support for eUSB2 repeater
+Date:   Tue,  7 Feb 2023 15:55:44 +0200
+Message-Id: <20230207135551.1418637-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Abel Vesa <abel.vesa@linaro.org>
+This patchset adds support for the eUSB2 repeater found in pmic PM8550B,
+used along with SM8550. Since there is no dedicated generic framework
+for eUSB2 repeaters, the most appropriate subsystem to model it is the
+generic phy. This patchset also adds support for such repeater to the
+eUSB2 PHY found in SM8550. Basically, the eUSB2 PHY will have its own
+"phy" which is actually a repeater.
 
-Document the compatible for Qualcomm SM8550 SCM.
+This patchset is based on the following patchset:
+https://lore.kernel.org/all/20230207114024.944314-1-abel.vesa@linaro.org
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
-Changes in v2:
-- Added missing allOf:if:then entries.
-- Link to v1: https://lore.kernel.org/all/20221116124038.2769028-1-abel.vesa@linaro.org/
----
- Documentation/devicetree/bindings/firmware/qcom,scm.yaml | 3 +++
- 1 file changed, 3 insertions(+)
+Changes since v3:
+ * This time is a normal patchset, rather than an RFC
+ * reversed the order of patches 1 and 2, in order to make the repeater
+   schema available for the pmic schema update
 
-diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-index 4193492ba73e..4eee95f65f8e 100644
---- a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-+++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
-@@ -54,6 +54,7 @@ properties:
-           - qcom,scm-sm8250
-           - qcom,scm-sm8350
-           - qcom,scm-sm8450
-+          - qcom,scm-sm8550
-           - qcom,scm-qcs404
-       - const: qcom,scm
- 
-@@ -165,6 +166,7 @@ allOf:
-             contains:
-               enum:
-                 - qcom,scm-sm8450
-+                - qcom,scm-sm8550
-     then:
-       properties:
-         interconnects: false
-@@ -177,6 +179,7 @@ allOf:
-             contains:
-               enum:
-                 - qcom,scm-sm8450
-+                - qcom,scm-sm8550
-     then:
-       properties:
-         interrupts: false
+Changes since v2:
+ * moved the bindings qcom,spmi-pmic patch before the repeater schema
+   patch in order to avoid the repeater schema validation failure due to
+   phy pattern property not being found in qcom,spmi-pmic schema
 
----
-base-commit: 49a8133221c71b935f36a7c340c0271c2a9ee2db
-change-id: 20230207-topic-sm8550-upstream-scm-bindings-e078b46d6f85
+Changes since v1:
+ * the repeater driver is implemented now as a PHY rather than adding
+   a new generic framework for USB repeaters
 
-Best regards,
+Abel Vesa (5):
+  dt-bindings: phy: Add qcom,snps-eusb2-repeater schema file
+  dt-bindings: mfd: qcom,spmi-pmic: Add pattern property for phy
+  dt-bindings: phy: qcom,snps-eusb2-phy: Add phys property for the
+    repeater
+  phy: qcom: Add QCOM SNPS eUSB2 repeater driver
+  arm64: dts: qcom: sm8550-mtp: Add eUSB2 repeater node
+
+Neil Armstrong (2):
+  phy: qcom: phy-qcom-snps-eusb2: Add support for eUSB2 repeater
+  arm64: dts: qcom: pm8550b: Add eUSB2 repeater node
+
+ .../bindings/mfd/qcom,spmi-pmic.yaml          |   4 +
+ .../bindings/phy/qcom,snps-eusb2-phy.yaml     |   5 +
+ .../phy/qcom,snps-eusb2-repeater.yaml         |  48 ++++
+ arch/arm64/boot/dts/qcom/pm8550b.dtsi         |   6 +
+ arch/arm64/boot/dts/qcom/sm8550-mtp.dts       |   7 +
+ drivers/phy/qualcomm/Kconfig                  |   9 +
+ drivers/phy/qualcomm/Makefile                 |   1 +
+ .../phy/qualcomm/phy-qcom-eusb2-repeater.c    | 259 ++++++++++++++++++
+ drivers/phy/qualcomm/phy-qcom-snps-eusb2.c    |  19 +-
+ 9 files changed, 357 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,snps-eusb2-repeater.yaml
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
+
 -- 
-Neil Armstrong <neil.armstrong@linaro.org>
+2.34.1
 
