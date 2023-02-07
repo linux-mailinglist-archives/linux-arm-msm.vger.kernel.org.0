@@ -2,114 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E56E368DD58
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 16:51:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A13268DD61
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 16:55:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232550AbjBGPvs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Feb 2023 10:51:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51346 "EHLO
+        id S232624AbjBGPz4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Feb 2023 10:55:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52458 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232239AbjBGPvq (ORCPT
+        with ESMTP id S232057AbjBGPzz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Feb 2023 10:51:46 -0500
-Received: from mail-oa1-x32.google.com (mail-oa1-x32.google.com [IPv6:2001:4860:4864:20::32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D87C3170A;
-        Tue,  7 Feb 2023 07:51:44 -0800 (PST)
-Received: by mail-oa1-x32.google.com with SMTP id 586e51a60fabf-15fe106c7c7so19489890fac.8;
-        Tue, 07 Feb 2023 07:51:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=oFFVAGXmAn33jC18iARlTq1W8BZjLwMZcFPq63oKn2w=;
-        b=N0M+DO+J5+8deeO0M0F0jkP8kFzkQUYSFG9m4l8/7ha6QaAjjunm75adpx+ffgejLn
-         zT7B63dvvqOiPpxijDe19VG5AnZabeNFVByHzUAaH3soPlFhWvfEqx3yqq6OlWPdpLc9
-         TRhVwi3uox8kjgd4WS6Pf8tWiXTBXLa7My7s/14hfldBrxkWrxEDyYj0Sh39RpV/Cf+U
-         peBOKoRCIyvFXzHclmttBP8SEx33npRMewYNa3NDTZgOQOcoG9HxLTNuhLp+CtlKhy5n
-         Wkoitlm0vcKs1AXWYYF7d61Bp0GI+XMizz7CpXPjX2r0D1NKp5qXTvmoG6cy1qsgW6Rx
-         kxGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=oFFVAGXmAn33jC18iARlTq1W8BZjLwMZcFPq63oKn2w=;
-        b=GyFQT3MLGxNCnni1JsX1to/AsNt4Zkmqk/0XC6ebALx4c5SLBO1WCSOPLpWv2ZAEes
-         pzS/cu94N6CgzRnkQcsqDGW5Pp+PTNZINVdylYOIldEyUolBgrmAJ52NR03/eprj5M+K
-         oo6uJFMiDDWcZrpcf+F5Hg2pe5glW3Z8aJPJnzGWqx1CzIWC2Da/cPEKXOusDEa9481d
-         zKblP6yqlrl+EVNbjK4kGcSHBMKxBwdiaUwOKXu2i9eIMTi0jTVr3tV6T4wVPigsE+Qp
-         PvBrnjsCon/vsB75iDy/um1y4bUM1511YMp5aVSPyj3X9EBQGZTPfbtZdIvC0yDsIhFs
-         NNvA==
-X-Gm-Message-State: AO0yUKX4rIU3LFjkXPM9RyeF95Rt+9P/IGIqR9np4sGEkHJuumTec3vn
-        3YCyquKoV7d0wXsR/j597Fk=
-X-Google-Smtp-Source: AK7set8PNt0Bn7P7Em47vAQqHH8+QDOWgFLHEK1CoQh6BYQQUFWvd4MqvJ34uFVT/CoYEylUVKxGvw==
-X-Received: by 2002:a05:6870:a7a4:b0:163:af13:c4e1 with SMTP id x36-20020a056870a7a400b00163af13c4e1mr1432071oao.46.1675785104217;
-        Tue, 07 Feb 2023 07:51:44 -0800 (PST)
-Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id m1-20020a056870194100b0014ff15936casm1818137oak.40.2023.02.07.07.51.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Feb 2023 07:51:43 -0800 (PST)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <ecd5ff48-78af-8cae-dd54-3bd3f0288434@roeck-us.net>
-Date:   Tue, 7 Feb 2023 07:51:39 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v2 1/7] dt-bindings: watchdog: qcom-wdt: require fallback
- for IPQ4019
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Tue, 7 Feb 2023 10:55:55 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B2FF4687;
+        Tue,  7 Feb 2023 07:55:53 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 145B2B80AED;
+        Tue,  7 Feb 2023 15:55:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC638C4339C;
+        Tue,  7 Feb 2023 15:55:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1675785350;
+        bh=5mhpI+u4oUJT36z1i/S8OyG8M5avFgLEbPsJiJcXGh8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=HO8mbrNb0EMrF+aeW6Zq9fgZrXW4uWcZHRVsy7+J1WzP71OQzrS2VRoeS+kdjeNZ3
+         D3wfAfnTCcw3PDEEhx43sNxLGsCfjeutl/lCPN/fNqyiG3h48JSstX99jLTCieytQZ
+         qABTIZlKB18pMVBA6N573zv1e+WpcM9vIeBPuPi0uJQ3oMFUPhPiGxTb9WyiCQTqey
+         7wjlONL9aU6C7Mu+e6ka5fLDgRPNbvnR7k91HYEkXoREoXPsLhDgRY6vB6KHGZaK7Q
+         Vnp141fW7mI46vU/lNKyqf/JpoLW3Sk8fZqp/7NBaiecWJ7hKuPm9+wTS3YV1+zCcc
+         Wqzp/AzEussWA==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pPQKW-0002JP-Hx; Tue, 07 Feb 2023 16:56:24 +0100
+Date:   Tue, 7 Feb 2023 16:56:24 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     David Collins <quic_collinsd@quicinc.com>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
         Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
+        Alessandro Zummo <a.zummo@towertech.it>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-watchdog@vger.kernel.org,
-        Rob Herring <robh@kernel.org>
-References: <20230113103346.29381-1-krzysztof.kozlowski@linaro.org>
- <20230113103346.29381-2-krzysztof.kozlowski@linaro.org>
- <20230113140230.GA1606649@roeck-us.net>
- <7e600ba9-a99e-5f07-334f-bb872f5ed7db@linaro.org>
-From:   Guenter Roeck <linux@roeck-us.net>
-In-Reply-To: <7e600ba9-a99e-5f07-334f-bb872f5ed7db@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-rtc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        stable@vger.kernel.org
+Subject: Re: [PATCH v2 01/22] rtc: pm8xxx: fix set-alarm race
+Message-ID: <Y+J0qHrIcDYSuKKW@hovoldconsulting.com>
+References: <20230202155448.6715-1-johan+linaro@kernel.org>
+ <20230202155448.6715-2-johan+linaro@kernel.org>
+ <efab844a-4ffe-bc68-d99e-8688ad222e3a@quicinc.com>
+ <Y+Jqn5/Yt0BaitQd@hovoldconsulting.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y+Jqn5/Yt0BaitQd@hovoldconsulting.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2/7/23 01:17, Krzysztof Kozlowski wrote:
-> On 13/01/2023 15:02, Guenter Roeck wrote:
->> On Fri, Jan 13, 2023 at 11:33:40AM +0100, Krzysztof Kozlowski wrote:
->>> The device specific compatibles ("qcom,kpss-wdt-ipq4019") should be
->>> follwed by fallback "qcom,kpss-wdt", which is actually used by Linux
->>> driver for binding.
->>>
->>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>> Acked-by: Rob Herring <robh@kernel.org>
->>
->> Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+On Tue, Feb 07, 2023 at 04:13:36PM +0100, Johan Hovold wrote:
+> On Mon, Feb 06, 2023 at 07:12:43PM -0800, David Collins wrote:
+> > On 2/2/23 07:54, Johan Hovold wrote:
+> > > Make sure to disable the alarm before updating the four alarm time
+> > > registers to avoid spurious alarms during the update.
+> > 
+> > What scenario can encounter a spurious alarm triggering upon writing the
+> > new alarm time inside of pm8xxx_rtc_set_alarm()?
 > 
-> The patchset was acked and reviewed, so are there any other comments?
-> Guenter/Will - are you planning to pick it up?
-> 
+> The alarm is stored in four bytes in little-endian order. Consider
+> having had an alarm set and expired at:
 
-The series is in my watchdog-next branch. Wim usually picks patches
-up from there.
+This was just supposed to say "Consider having an alarm set at:" as the
+alarm must still be enabled. Let me update the example I gave:
 
-Guenter
+Consider having an alarm set at
+ 
+ 	10 01 00 00
 
+and now you want to set an alarm at
+
+ 	01 02 00 00
+ 
+Unless the alarm is disabled before the update the alarm could go off at
+ 
+ 	01 01 00 00
+ 
+after updating the first byte.
+
+Johan
