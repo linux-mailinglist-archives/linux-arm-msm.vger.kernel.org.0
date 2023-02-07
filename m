@@ -2,78 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D709F68D4D3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 11:51:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2488668D505
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 12:03:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231802AbjBGKvV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Feb 2023 05:51:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52574 "EHLO
+        id S231628AbjBGLDc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Feb 2023 06:03:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231827AbjBGKvR (ORCPT
+        with ESMTP id S229847AbjBGLDb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Feb 2023 05:51:17 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 911923866D
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 02:51:06 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id ba1so9053032wrb.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 02:51:06 -0800 (PST)
+        Tue, 7 Feb 2023 06:03:31 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6707DBDC
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 03:03:29 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id bg26so10769973wmb.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 03:03:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4zbgcjKYoWJCkhckrue0q7TZn73MXFvSGOBBrPy6j+Y=;
-        b=s4CbjzO6J6A9v5S/sUwlmOQ7sOpwKcZ2drd9lFpEQbKXN0DC52EPkz+/dF0voMq8GJ
-         FNts/ikE6jxXG87f54+V7O0rgTTljqknT1ds8ArF/vffQypPxvR0qvlyXbk3L6yXbdVY
-         Gn12EALOA1vpxLqKowcAKrIkEkl8M2L19faTbEf2sLqE2Jg6cKDdx2PnAJmlFIgV4AEU
-         3lFHFhMENCZKrxRKdedtg5APRkfBelNKXhD+TYty4K1q0FuVwjYbzO/8rj2XsRiiZd+i
-         hyKPekOLBJ7fnv0iJG4dgFHJaziCyrwffYPsQjrgY16GTWzn0HPJX0nl0s2ZWYN2OFQH
-         EKFg==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=WJ93a5Pn7pV9qf9vPyQI+os80WkoEdvC0T6foUnk8Mg=;
+        b=INmIU2NouIzVm1jjPfdrm53AB5JjOg8/iz3jZE+fI1b7pLAYBvKC7TMLsXvXEmMnZQ
+         tvcX16TPZzl8SlvyqiF5TxNKUMYyM5yxTebfEAX2rlWAA+HUitsAujtgmlJ4a0OcbvKp
+         8E5zmSXqfdwXT0d4KY3ZDO9k4vXuXxN9PyBOyRPm+3wnJPCfpXAh5V/4V8UB4b9tOHuU
+         K7pSJDwrBk41FSY187xils4uDkG/6SBfJQGcBUbIf4WTIakcMUO5FDDxVvwxRqszTNr5
+         oK/eoxuZQpvWPGGUUZgVSbTt9YU2fw93GINQrZoiQBQZRluPERuKlrOsol0IIiu+xtLd
+         k0pA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4zbgcjKYoWJCkhckrue0q7TZn73MXFvSGOBBrPy6j+Y=;
-        b=2zANRV8u3pTQG8++azO3aURYvHuN+0xyRyeVrkmer42Zv/vJcO+SFOR3sjswmQAL2Z
-         Jvd5XKTrfdhaZxprjdwuXrhUlquMgCvTxbpB2zb+xSsXsmKEHgrKHNv2UFgNSqsLCFT5
-         QSEiC/jBL3pPiy4+oAxzPpI9GjCyoyFbSlSdi1zdPWRHUJCQqVkbFrNsxuZKVo1sw8GB
-         8Aqqp5JKg8atH2fF+9VFLp1oyKY8dYuITezhyMnSF71lPPxNPkoSbLfxJ9ERYva+KZ4m
-         Z3Sdhp3Y1GYwtVw7ekdPmObL3ryRvMOGJzraEeC2948+rFGgXXf5uQ8TjlXQeigkFhQU
-         TmKQ==
-X-Gm-Message-State: AO0yUKWdQguO8xPxgCS6sCCv/33imtLZ4kL+G/OBa1Q4VCEMKA8NJtk2
-        u2jkewzzZof++4bGH02VTfowiA==
-X-Google-Smtp-Source: AK7set8ZyDYnJ2rUSDX4dEM3L1E32b7g2/1USCexOeAEGZ0Q5WtJ5TEnJ2xG8h7Cy4JEcl5mzBt1+Q==
-X-Received: by 2002:a5d:4685:0:b0:2c3:c4cd:2e28 with SMTP id u5-20020a5d4685000000b002c3c4cd2e28mr2209426wrq.26.1675767065169;
-        Tue, 07 Feb 2023 02:51:05 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id l5-20020adfe585000000b002c3e3ee7d1asm6316806wrm.79.2023.02.07.02.51.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Feb 2023 02:51:04 -0800 (PST)
-Message-ID: <dff4bad0-c2e2-ff5a-41fa-f419e3d4b957@linaro.org>
-Date:   Tue, 7 Feb 2023 11:51:03 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH 2/3] dt-bindings: arm: add the SoC ID for qcom SA8775P
-Content-Language: en-US
-To:     Bartosz Golaszewski <brgl@bgdev.pl>,
-        Andy Gross <agross@kernel.org>,
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WJ93a5Pn7pV9qf9vPyQI+os80WkoEdvC0T6foUnk8Mg=;
+        b=i6o3kobg6PwSKsyIWXLjG8nI+DDbErxZm9ZUuAVg7UBbBbhD0kbnmi/5cPR9yb4yoI
+         vG6TpwQVo5cfsZ4elfKN6gkzp3f9k9HrTEmFIvte6ymPn2Zy8Mqal4udBCCOEuiwMQYr
+         01Oqp2tJ6pUaALBD0ra2lGsN6ZJMt0qybDXJnaUqEFlYCKi3P727SEvaKSU5szO3naz6
+         FcZlqqlZxWfjKJhxZ30qIYR0jxzCNKZvB4KGxwq1UPY/aXXc1eyn3O1HDALNF8TWx8nN
+         D1vWTJODIsG4JoQWnQhOWtJxD3LHCzendeuTymcKR3IqHZyvS0BZ/i8c6UIhLiBzj8BG
+         hsfg==
+X-Gm-Message-State: AO0yUKUefsJUBKtRHggdVy26Gx5BJElf92fr3+PhRNLcANP3hTyneUqb
+        TrEiuODuz5A3YaUvn7RktS+PDw==
+X-Google-Smtp-Source: AK7set+9m5mhPHjw7qowGtSxwYkGbks55ol9xKSpV7ArSxwhymRP73uRItp25IcvPAhrZonE5E9JbA==
+X-Received: by 2002:a05:600c:4da2:b0:3dc:51f6:8f58 with SMTP id v34-20020a05600c4da200b003dc51f68f58mr2766884wmp.6.1675767808312;
+        Tue, 07 Feb 2023 03:03:28 -0800 (PST)
+Received: from linaro.org ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id s22-20020a1cf216000000b003dffe312925sm6761960wmc.15.2023.02.07.03.03.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Feb 2023 03:03:27 -0800 (PST)
+Date:   Tue, 7 Feb 2023 13:03:26 +0200
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         devicetree@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20230207100730.218725-1-brgl@bgdev.pl>
- <20230207100730.218725-3-brgl@bgdev.pl>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230207100730.218725-3-brgl@bgdev.pl>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v4 7/8] arm64: dts: qcom: sm8550: Add USB PHYs and
+ controller nodes
+Message-ID: <Y+Iv/s7V5PYkRI8D@linaro.org>
+References: <20230202132511.3983095-1-abel.vesa@linaro.org>
+ <20230202132511.3983095-8-abel.vesa@linaro.org>
+ <Y9zoD/eVG8zjMYNx@hovoldconsulting.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y9zoD/eVG8zjMYNx@hovoldconsulting.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,22 +81,91 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/02/2023 11:07, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On 23-02-03 11:55:11, Johan Hovold wrote:
+> On Thu, Feb 02, 2023 at 03:25:10PM +0200, Abel Vesa wrote:
+> > Add USB host controller and PHY nodes.
+> > 
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > ---
+> > 
+> > Changes since v3:
+> >  * none
+> > 
+> > Changes since v2:
+> >  * none
+> > 
+> > NOTE: This patch has been already merged. It is here only to provide
+> > context for the rest of the patchset. There is a change with respect to
+> > the clocks, but that will be sent as a separate/individual fix patch.
 > 
+> I believe it was because of the 'phy' and 'common' resets, which have
+> been switched below.
 
-subject prefixes:
-dt-bindings: arm: qcom:
+No, the resets haven't been switched, at least not compared to the
+already merged version.
 
-(or last piece qcom,ids)
-
-> Add the SoC ID entry for SA8775P.
 > 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-
-
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
-
+> >  arch/arm64/boot/dts/qcom/sm8550.dtsi | 92 +++++++++++++++++++++++++++-
+> >  1 file changed, 91 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> > index a85d2ae7d155..0262193e2ffe 100644
+> > --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> > @@ -14,6 +14,7 @@
+> >  #include <dt-bindings/mailbox/qcom-ipcc.h>
+> >  #include <dt-bindings/power/qcom-rpmpd.h>
+> >  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+> > +#include <dt-bindings/phy/phy-qcom-qmp.h>
+> >  #include <dt-bindings/thermal/thermal.h>
+> >  
+> >  / {
+> > @@ -746,7 +747,7 @@ gcc: clock-controller@100000 {
+> >  				 <&ufs_mem_phy 0>,
+> >  				 <&ufs_mem_phy 1>,
+> >  				 <&ufs_mem_phy 2>,
+> > -				 <0>;
+> > +				 <&usb_dp_qmpphy QMP_USB43DP_USB3_PIPE_CLK>;
+> >  		};
+> >  
+> >  		ipcc: mailbox@408000 {
+> > @@ -2060,6 +2061,95 @@ opp-202000000 {
+> >  			};
+> >  		};
+> >  
+> > +		usb_1_hsphy: phy@88e3000 {
+> > +			compatible = "qcom,sm8550-snps-eusb2-phy";
+> > +			reg = <0x0 0x088e3000 0x0 0x154>;
+> > +			#phy-cells = <0>;
+> > +
+> > +			clocks = <&tcsr TCSR_USB2_CLKREF_EN>;
+> > +			clock-names = "ref";
+> > +
+> > +			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
+> > +
+> > +			status = "disabled";
+> > +		};
+> > +
+> > +		usb_dp_qmpphy: phy@88e8000 {
+> > +			compatible = "qcom,sm8550-qmp-usb3-dp-phy";
+> > +			reg = <0x0 0x088e8000 0x0 0x3000>;
+> > +
+> > +			clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
+> > +				 <&rpmhcc RPMH_CXO_CLK>,
+> > +				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>,
+> > +				 <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
+> > +			clock-names = "aux", "ref", "com_aux", "usb3_pipe";
+> > +
+> > +			power-domains = <&gcc USB3_PHY_GDSC>;
+> > +
+> > +			resets = <&gcc GCC_USB3_DP_PHY_PRIM_BCR>,
+> > +				 <&gcc GCC_USB3_PHY_PRIM_BCR>;
+> > +			reset-names = "phy", "common";
+> > +
+> > +			#clock-cells = <1>;
+> > +			#phy-cells = <1>;
+> > +
+> > +			status = "disabled";
+> > +		};
+> 
+> Johan
