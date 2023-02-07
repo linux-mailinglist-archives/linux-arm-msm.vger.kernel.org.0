@@ -2,211 +2,184 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C2B3168E1A4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 20:59:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 38A0668E1AD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 21:05:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229928AbjBGT7n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Feb 2023 14:59:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54472 "EHLO
+        id S229585AbjBGUFm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Feb 2023 15:05:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56216 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229699AbjBGT7m (ORCPT
+        with ESMTP id S229559AbjBGUFk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Feb 2023 14:59:42 -0500
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB06E1EBF3
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 11:59:41 -0800 (PST)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1pPU7i-0004LR-Tg; Tue, 07 Feb 2023 20:59:26 +0100
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1pPU7f-003M0p-NY; Tue, 07 Feb 2023 20:59:24 +0100
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1pPU7f-001f6l-GJ; Tue, 07 Feb 2023 20:59:23 +0100
-From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>
-To:     "Rafael J. Wysocki" <rafael@kernel.org>,
-        iresh Kumar <viresh.kumar@linaro.org>
-Cc:     Markus Mayer <mmayer@broadcom.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Kevin Hilman <khilman@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-omap@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, kernel@pengutronix.de
-Subject: [PATCH] cpufreq: Make cpufreq_unregister_driver() return void
-Date:   Tue,  7 Feb 2023 20:59:09 +0100
-Message-Id: <20230207195909.474953-1-u.kleine-koenig@pengutronix.de>
-X-Mailer: git-send-email 2.39.0
+        Tue, 7 Feb 2023 15:05:40 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C92438B58
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 12:05:39 -0800 (PST)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 317I02YD018446;
+        Tue, 7 Feb 2023 20:05:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=TVn1cKFSFCh8fANtfEe6qHSAoBDsdhsGnEbmWq7Z5ME=;
+ b=GlnPMKuB90Y8RmE2m2+Q01g5JWpLhT9yz3oNBkiIOeAb3QXxgEET6eHHhBnHObA5dMDk
+ gt0+Kwuw4CoBS+6oXVaBRKfTsrznlotgYZFNLbn0xFu/BC1z2mMPn6j/LBzS5fQ+wjzS
+ sb21BAp6/8uT42uaUMyTR/T8YdeoMn07XBSaCRe8KIO4W7J/TeRqzDniduVm4uWTVSfB
+ CMB6PsqAqUvhCLJYJPe42aWFcmS2dHlrvIrEQfapQxlcg2Pqxi1k/60rBbxcKoX2Ek9/
+ dAZqIkRTaRztcHcnRQkS0v45MkojqnNUxq0u3ig9k89MhfjX5k5SpTRweR5brcZnJcSO nA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nkgafj3b6-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 07 Feb 2023 20:05:32 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 317K5V6B013615
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 7 Feb 2023 20:05:31 GMT
+Received: from [10.110.44.26] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 7 Feb 2023
+ 12:05:30 -0800
+Message-ID: <b4dbe036-81c4-e56f-12fb-75cb8bb59173@quicinc.com>
+Date:   Tue, 7 Feb 2023 12:05:29 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5250; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=JTPX5wQArjFokwps66B5mHzGddYcN7+nEQY+JlShuOM=; b=owEBbQGS/pANAwAKAcH8FHityuwJAcsmYgBj4q2KUQySq9hxhg8uj4r2ZPhCEmnFf9Ja7bJMi+Kv NbPJafSJATMEAAEKAB0WIQR+cioWkBis/z50pAvB/BR4rcrsCQUCY+KtigAKCRDB/BR4rcrsCXgeB/ 4qnB4YPMS3Lsxa/9NngHxXLycsrs4OdKxs3OEGavkqm9iGIYZvZx5N7v8fky+3JDCzMWm9aGO+VLK/ mXxXnTifr+ia/DyX7ByY7JlIGojKHnEybDdFj0DSgC8SuUuBwrT35E+SwGFAlricUaXU5tEMQG3Dvb stX8T8uCfhsGShZRpqZ2ks42bRHDeZZx1KcV9HhnVdloWxtK3NLHTcwIbNtsffSeZ+rcohZRKeGMNX ndAiCXTETKFq8w+hSYw7rt5266cymIVGf7z53jYVaxCpw2+PaFXvptsyuOfSAlNhiOgWx2b13T/alD mjryrmnrzwDhe4hIWktqRbqt8FhqYl
-X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH v3 24/27] drm/msm/dpu: rework plane CSC setting
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230203182132.1307834-1-dmitry.baryshkov@linaro.org>
+ <20230203182132.1307834-25-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20230203182132.1307834-25-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 2zC8IxglB6W_bevsOzeIIWLQcu7OPgpp
+X-Proofpoint-ORIG-GUID: 2zC8IxglB6W_bevsOzeIIWLQcu7OPgpp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-02-07_11,2023-02-06_03,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ malwarescore=0 adultscore=0 clxscore=1015 bulkscore=0 spamscore=0
+ mlxlogscore=694 mlxscore=0 priorityscore=1501 suspectscore=0
+ impostorscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2212070000 definitions=main-2302070175
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-All but a few drivers ignore the return value of
-cpufreq_unregister_driver(). Those few that don't only call it after
-cpufreq_register_driver() succeeded, in which case the call doesn't
-fail.
 
-Make the function return no value and add a WARN_ON for the case that
-the function is called in an invalid situation (i.e. without a previous
-successful call to cpufreq_register_driver()).
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
----
- drivers/cpufreq/brcmstb-avs-cpufreq.c | 5 +----
- drivers/cpufreq/cpufreq.c             | 8 +++-----
- drivers/cpufreq/davinci-cpufreq.c     | 4 +++-
- drivers/cpufreq/mediatek-cpufreq-hw.c | 4 +++-
- drivers/cpufreq/omap-cpufreq.c        | 4 +++-
- drivers/cpufreq/qcom-cpufreq-hw.c     | 4 +++-
- include/linux/cpufreq.h               | 2 +-
- 7 files changed, 17 insertions(+), 14 deletions(-)
+On 2/3/2023 10:21 AM, Dmitry Baryshkov wrote:
+> Rework the code flushing CSC settings for the plane. Separate out the
+> pipe and pipe_cfg as a preparation for r_pipe support.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 45 +++++++++++++----------
+>   1 file changed, 25 insertions(+), 20 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index e69499490d39..05047192cb37 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -576,29 +576,18 @@ static const struct dpu_csc_cfg dpu_csc10_YUV2RGB_601L = {
+>   	{ 0x00, 0x3ff, 0x00, 0x3ff, 0x00, 0x3ff,},
+>   };
+>   
+> -static const struct dpu_csc_cfg *_dpu_plane_get_csc(struct dpu_plane *pdpu, const struct dpu_format *fmt)
+> +static const struct dpu_csc_cfg *_dpu_plane_get_csc(struct dpu_sw_pipe *pipe, const struct dpu_format *fmt)
+>   {
+> -	struct dpu_plane_state *pstate = to_dpu_plane_state(pdpu->base.state);
+>   	const struct dpu_csc_cfg *csc_ptr;
+>   
+> -	if (!pdpu) {
+> -		DPU_ERROR("invalid plane\n");
+> -		return NULL;
+> -	}
+> -
+>   	if (!DPU_FORMAT_IS_YUV(fmt))
+>   		return NULL;
+>   
+> -	if (BIT(DPU_SSPP_CSC_10BIT) & pstate->pipe.sspp->cap->features)
+> +	if (BIT(DPU_SSPP_CSC_10BIT) & pipe->sspp->cap->features)
+>   		csc_ptr = &dpu_csc10_YUV2RGB_601L;
+>   	else
+>   		csc_ptr = &dpu_csc_YUV2RGB_601L;
+>   
+> -	DPU_DEBUG_PLANE(pdpu, "using 0x%X 0x%X 0x%X...\n",
+> -			csc_ptr->csc_mv[0],
+> -			csc_ptr->csc_mv[1],
+> -			csc_ptr->csc_mv[2]);
+> -
+>   	return csc_ptr;
+>   }
+>   
+> @@ -1049,6 +1038,27 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>   	return 0;
+>   }
+>   
+> +static void dpu_plane_flush_csc(struct dpu_plane *pdpu, struct dpu_sw_pipe *pipe)
+> +{
+> +	const struct dpu_format *format = to_dpu_format(msm_framebuffer_format(pdpu->base.state->fb));
+> +	const struct dpu_csc_cfg *csc_ptr;
+> +
+> +	if (!pipe->sspp || !pipe->sspp->ops.setup_csc)
+> +		return;
+> +
+> +	csc_ptr = _dpu_plane_get_csc(pipe, format);
+> +	if (!csc_ptr)
+> +		return;
+> +
+> +	DPU_DEBUG_PLANE(pdpu, "using 0x%X 0x%X 0x%X...\n",
+> +			csc_ptr->csc_mv[0],
+> +			csc_ptr->csc_mv[1],
+> +			csc_ptr->csc_mv[2]);
+> +
+> +	pipe->sspp->ops.setup_csc(pipe->sspp, csc_ptr);
+> +
+> +}
+> +
+>   void dpu_plane_flush(struct drm_plane *plane)
+>   {
+>   	struct dpu_plane *pdpu;
+> @@ -1072,13 +1082,8 @@ void dpu_plane_flush(struct drm_plane *plane)
+>   	else if (pdpu->color_fill & DPU_PLANE_COLOR_FILL_FLAG)
+>   		/* force 100% alpha */
+>   		_dpu_plane_color_fill(pdpu, pdpu->color_fill, 0xFF);
+> -	else if (pstate->pipe.sspp && pstate->pipe.sspp->ops.setup_csc) {
+> -		const struct dpu_format *fmt = to_dpu_format(msm_framebuffer_format(plane->state->fb));
+> -		const struct dpu_csc_cfg *csc_ptr = _dpu_plane_get_csc(pdpu, fmt);
+> -
+> -		if (csc_ptr)
+> -			pstate->pipe.sspp->ops.setup_csc(pstate->pipe.sspp, csc_ptr);
+> -	}
 
-diff --git a/drivers/cpufreq/brcmstb-avs-cpufreq.c b/drivers/cpufreq/brcmstb-avs-cpufreq.c
-index 4153150e20db..ffea6402189d 100644
---- a/drivers/cpufreq/brcmstb-avs-cpufreq.c
-+++ b/drivers/cpufreq/brcmstb-avs-cpufreq.c
-@@ -751,10 +751,7 @@ static int brcm_avs_cpufreq_probe(struct platform_device *pdev)
- 
- static int brcm_avs_cpufreq_remove(struct platform_device *pdev)
- {
--	int ret;
--
--	ret = cpufreq_unregister_driver(&brcm_avs_driver);
--	WARN_ON(ret);
-+	cpufreq_unregister_driver(&brcm_avs_driver);
- 
- 	brcm_avs_prepare_uninit(pdev);
- 
-diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
-index 7e56a42750ea..85a0bea2dbf1 100644
---- a/drivers/cpufreq/cpufreq.c
-+++ b/drivers/cpufreq/cpufreq.c
-@@ -2904,12 +2904,12 @@ EXPORT_SYMBOL_GPL(cpufreq_register_driver);
-  * Returns zero if successful, and -EINVAL if the cpufreq_driver is
-  * currently not initialised.
-  */
--int cpufreq_unregister_driver(struct cpufreq_driver *driver)
-+void cpufreq_unregister_driver(struct cpufreq_driver *driver)
- {
- 	unsigned long flags;
- 
--	if (!cpufreq_driver || (driver != cpufreq_driver))
--		return -EINVAL;
-+	if (WARN_ON(!cpufreq_driver || (driver != cpufreq_driver)))
-+		return;
- 
- 	pr_debug("unregistering driver %s\n", driver->name);
- 
-@@ -2926,8 +2926,6 @@ int cpufreq_unregister_driver(struct cpufreq_driver *driver)
- 
- 	write_unlock_irqrestore(&cpufreq_driver_lock, flags);
- 	cpus_read_unlock();
--
--	return 0;
- }
- EXPORT_SYMBOL_GPL(cpufreq_unregister_driver);
- 
-diff --git a/drivers/cpufreq/davinci-cpufreq.c b/drivers/cpufreq/davinci-cpufreq.c
-index 9e97f60f8199..2d23015e2abd 100644
---- a/drivers/cpufreq/davinci-cpufreq.c
-+++ b/drivers/cpufreq/davinci-cpufreq.c
-@@ -138,7 +138,9 @@ static int __exit davinci_cpufreq_remove(struct platform_device *pdev)
- 	if (cpufreq.asyncclk)
- 		clk_put(cpufreq.asyncclk);
- 
--	return cpufreq_unregister_driver(&davinci_driver);
-+	cpufreq_unregister_driver(&davinci_driver);
-+
-+	return 0;
- }
- 
- static struct platform_driver davinci_cpufreq_driver = {
-diff --git a/drivers/cpufreq/mediatek-cpufreq-hw.c b/drivers/cpufreq/mediatek-cpufreq-hw.c
-index f80339779084..f21a9e3df53d 100644
---- a/drivers/cpufreq/mediatek-cpufreq-hw.c
-+++ b/drivers/cpufreq/mediatek-cpufreq-hw.c
-@@ -317,7 +317,9 @@ static int mtk_cpufreq_hw_driver_probe(struct platform_device *pdev)
- 
- static int mtk_cpufreq_hw_driver_remove(struct platform_device *pdev)
- {
--	return cpufreq_unregister_driver(&cpufreq_mtk_hw_driver);
-+	cpufreq_unregister_driver(&cpufreq_mtk_hw_driver);
-+
-+	return 0;
- }
- 
- static const struct of_device_id mtk_cpufreq_hw_match[] = {
-diff --git a/drivers/cpufreq/omap-cpufreq.c b/drivers/cpufreq/omap-cpufreq.c
-index 1b50df06c6bc..81649a1969b6 100644
---- a/drivers/cpufreq/omap-cpufreq.c
-+++ b/drivers/cpufreq/omap-cpufreq.c
-@@ -184,7 +184,9 @@ static int omap_cpufreq_probe(struct platform_device *pdev)
- 
- static int omap_cpufreq_remove(struct platform_device *pdev)
- {
--	return cpufreq_unregister_driver(&omap_driver);
-+	cpufreq_unregister_driver(&omap_driver);
-+
-+	return 0;
- }
- 
- static struct platform_driver omap_cpufreq_platdrv = {
-diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-index 9505a812d6a1..8a1b140884af 100644
---- a/drivers/cpufreq/qcom-cpufreq-hw.c
-+++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-@@ -766,7 +766,9 @@ static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
- 
- static int qcom_cpufreq_hw_driver_remove(struct platform_device *pdev)
- {
--	return cpufreq_unregister_driver(&cpufreq_qcom_hw_driver);
-+	cpufreq_unregister_driver(&cpufreq_qcom_hw_driver);
-+
-+	return 0;
- }
- 
- static struct platform_driver qcom_cpufreq_hw_driver = {
-diff --git a/include/linux/cpufreq.h b/include/linux/cpufreq.h
-index 6a94a6eaad27..65623233ab2f 100644
---- a/include/linux/cpufreq.h
-+++ b/include/linux/cpufreq.h
-@@ -448,7 +448,7 @@ struct cpufreq_driver {
- #define CPUFREQ_NO_AUTO_DYNAMIC_SWITCHING	BIT(6)
- 
- int cpufreq_register_driver(struct cpufreq_driver *driver_data);
--int cpufreq_unregister_driver(struct cpufreq_driver *driver_data);
-+void cpufreq_unregister_driver(struct cpufreq_driver *driver_data);
- 
- bool cpufreq_driver_test_flags(u16 flags);
- const char *cpufreq_get_current_driver(void);
+Do we need to check for pipe being valid too (pstate->pipe) && 
+(pstate->pipe.sspp) && pstate->pipe.sspp->ops.setup_csc) ?
 
-base-commit: 05ecb680708a1dbe6554d6fc17e5d9a8a7cb5e6a
--- 
-2.39.0
+Before moving the pipe_hw/sw pipe to the state the code used to check 
+for pdpu->pipe_hw to be valid. Since dpu_plane_flush() can be called 
+from other files too , dont we need to check for (pstate->pipe)?
 
+> +	else
+> +		dpu_plane_flush_csc(pdpu, &pstate->pipe);
+>   
+>   	/* flag h/w flush complete */
+>   	if (plane->state)
