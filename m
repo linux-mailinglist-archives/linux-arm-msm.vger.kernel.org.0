@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E533668D5BC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 12:40:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E7E6768D5BF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 12:40:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231163AbjBGLku (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Feb 2023 06:40:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57152 "EHLO
+        id S229942AbjBGLkw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Feb 2023 06:40:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231192AbjBGLks (ORCPT
+        with ESMTP id S231295AbjBGLkv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Feb 2023 06:40:48 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6E6A12F2E
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 03:40:45 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id y1so13271643wru.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 03:40:45 -0800 (PST)
+        Tue, 7 Feb 2023 06:40:51 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31CC416325
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 03:40:47 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id az4-20020a05600c600400b003dff767a1f1so5941976wmb.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 03:40:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=0d71pvNow4MZxTy2PhdR4/s9QayMD3hQ8JhxulOfaGY=;
-        b=xkY62qqQmXp9GdszMKhWW8VUG22gdoM1zO5Y6Ierr23/D8xkYQbbEhNe2c0Xu+U6lv
-         pWf9KCzH6/lydUi3wquhFOQwCoQAJr7lQKGDFOJmalVbBYO6B8XK9cHziXDvPRD+Mv+M
-         tJurVodzvcUi6jOt/x46Kpcr2ruyBDzUnSkeyXL0HCq3FzoaNPewMwRdwMMddHj6ltE8
-         RSpTSJ8Hj/2bVNfvTQEPl+4dk4Mp4l3B3NlB74IIkma/+TZyaF834OeC1s9wt/CzmpXl
-         KEGQVTmWEg3GYRMbaKKRou/CFCCIEKYUfAuOIjaGSP41Yq/bndM6hn1QOpFT8QsBZGSf
-         UfgQ==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sDatRZBqiUI2ElF++MvN6nONqINB6h8G+ODmLux2ut8=;
+        b=UbJx6nOES/5CVkxT2y0+f0gyICo7sUHnyUxLOElgPp0ArrXCZ3ma0xG7tnuhlOM5r9
+         pUAHCZn5LeWL/sSSR949JTcfTFVLzCSVDScY4qAvlsxaasS6jDGRAB/ZOYPaSxSJ/g4I
+         zyB5KtYHrIxxL5od9AiVWQ+Fn2MIMi2Cz8a+36f7KWnzzEadtFlqW2r+QKmB66XlV1YM
+         kD71BYQW8YiUbTHfA/aHd3cbqAPKcc22dntETCWyGu2ZuAxgAd0IRkupVl7xx0xwRyox
+         4IWlYz0ywZ5A+Rmyx41HS35p3fer5vPa/1uYUPbLXX0uOAqy25u2ziNe15zRrKxZ1wzs
+         eUzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=0d71pvNow4MZxTy2PhdR4/s9QayMD3hQ8JhxulOfaGY=;
-        b=aDb6V2mhuYOkPkMYjPmqr0F1cfXPyR6/cv71ocP7+Dcya1vBdfitD3GFPlkt0YjGI8
-         26O1WufZaiA8SiF+ZD5nwmdk8c3E+AgMEvaAnuvQt9MTucHbfQCz8nkyEVu42cUwbpml
-         +HYOn6/eiVAGyWtKENljVL/NCKTQbtSQOosX5UGO3ITodQktNxSixaD7zeuhg/qblbFb
-         n35dj7zYxBaHUkKZ5mX9WHsLpnMAUy0F8BdjXXVw9NzAQn5GhdjcPZLvoJkTPUBINEv6
-         Fz9LWrbRENqO/iRe+lS9NJX7wP6BEk6xg0+bYqaJ4I3lGMPUO5FyvB4WMCbjDT+HneHR
-         qZHw==
-X-Gm-Message-State: AO0yUKWlDfRoGRQArZP+L+f4AlsX84i9tCHpfexfEIPgOb9FcPZSc+jh
-        VSGQjBc95cMOZ4XNrcRuMtfHeQ==
-X-Google-Smtp-Source: AK7set9Aeb/GAN7TJEWb/HYMU2morU4S82KZxLRl5kieGErlGBEypSmnf86+JFfUEQfR3mlL5vWGWg==
-X-Received: by 2002:a5d:510e:0:b0:2c3:e4f5:18c with SMTP id s14-20020a5d510e000000b002c3e4f5018cmr2188054wrt.30.1675770044402;
-        Tue, 07 Feb 2023 03:40:44 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=sDatRZBqiUI2ElF++MvN6nONqINB6h8G+ODmLux2ut8=;
+        b=fNJlYCwj6cAjeSD+W280+V6q6FfmT7Ve/DcQ0ruyc3ccUBgEJHXs995uCHpeQ38s09
+         8x3U2kurf1XitExjlrqn2ozxoenF0dR1L5CPrNrfIhOeBx3hOwd6Qg+NiMuVWtn6uzF0
+         aj/Mv8KVlTrksxq3qLFpeV8pWheWUsYQOB57wUdvo7xa7ZjzMTkClZLZ9e0ZXxbjqEtq
+         pU1wsiXMhcxtdb+6F7/UjXRL6ah43xuldB53dQexwLglPkzXXwDCUdXH7e5DEnmUY4Fg
+         YaMpcNvk/KAQB0W1x2n6zmzxxW7rARK1pgGVdABUU9UGOt/+a54BagG7/RgEZOFXPPr9
+         aIFA==
+X-Gm-Message-State: AO0yUKWkt9R46LInD9EH94OMck02+IKCwoMuPtXUqxlyxPAwQe3ZsiNd
+        J1TTs+xThDtirCd1ZZzgeXBZkw==
+X-Google-Smtp-Source: AK7set/wX6k+mhXbdEELuzdhFeFTnjAV+Fu7L99AhkJE//2AB1ZuyKSZQuUgvJUJbvvSWr6c1OWADg==
+X-Received: by 2002:a05:600c:713:b0:3df:e4b4:de69 with SMTP id i19-20020a05600c071300b003dfe4b4de69mr2821331wmn.27.1675770045665;
+        Tue, 07 Feb 2023 03:40:45 -0800 (PST)
 Received: from hackbox.lan ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id c7-20020a05600c0ac700b003d1d5a83b2esm18326005wmr.35.2023.02.07.03.40.43
+        by smtp.gmail.com with ESMTPSA id c7-20020a05600c0ac700b003d1d5a83b2esm18326005wmr.35.2023.02.07.03.40.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Feb 2023 03:40:43 -0800 (PST)
+        Tue, 07 Feb 2023 03:40:45 -0800 (PST)
 From:   Abel Vesa <abel.vesa@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -61,10 +62,12 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         devicetree@vger.kernel.org,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: [PATCH v5 0/6] sm8550: Add USB HC and PHYs support
-Date:   Tue,  7 Feb 2023 13:40:18 +0200
-Message-Id: <20230207114024.944314-1-abel.vesa@linaro.org>
+Subject: [PATCH v5 1/6] dt-bindings: phy: Add qcom,snps-eusb2-phy schema file
+Date:   Tue,  7 Feb 2023 13:40:19 +0200
+Message-Id: <20230207114024.944314-2-abel.vesa@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20230207114024.944314-1-abel.vesa@linaro.org>
+References: <20230207114024.944314-1-abel.vesa@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -77,39 +80,122 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patchset adds support for USB for Qualcomm SM8550 platform.
+The SM8550 SoC uses Synopsis eUSB2 PHY. Add a dt-binding schema
+for the new driver.
 
-This patchset is based on top of the following patchset:
-https://lore.kernel.org/all/20230206212619.3218741-1-abel.vesa@linaro.org/
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+
+There will be a binding check warning from Rob's bot because of the tcsr
+clock bindings missing (dt-bindings/clock/qcom,sm8550-tcsr.h), but that
+is expected as the header is already merged through Bjorn's clocks tree.
+
+The v4 version of this patch was here:
+https://lore.kernel.org/all/20230202132511.3983095-2-abel.vesa@linaro.org/
 
 Changes since v4:
- * dropped the dts/dtsi patches as there is no change needed to what is
-   already merged
- * rebased on top of next-20230206 which has Luca's patches for SM6350,
-   like Johan suggested
+ * none
 
-Abel Vesa (6):
-  dt-bindings: phy: Add qcom,snps-eusb2-phy schema file
-  phy: qcom: Add QCOM SNPS eUSB2 driver
-  dt-bindings: phy: qcom,sc8280xp-qmp-usb43dp: Document SM8550
-    compatible
-  phy: qcom-qmp: pcs-usb: Add v6 register offsets
-  phy: qcom-qmp: Add v6 DP register offsets
-  phy: qcom-qmp-combo: Add support for SM8550
+Changes since v3:
+ * removed blank line, like Rob suggested
+ * dropped quotes and reset description, like Rob suggested
+ * dropped the RPMH_CXO_PAD_CLK clock and the ref_src clock name
+   to match the schema
+ * fixed filenames of the includes in the example (sm8550-gcc and
+   sm8550-tcsr)
 
- .../phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml    |   1 +
- .../bindings/phy/qcom,snps-eusb2-phy.yaml     |  74 +++
- drivers/phy/qualcomm/Kconfig                  |   9 +
- drivers/phy/qualcomm/Makefile                 |   1 +
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c     | 409 ++++++++++++++++-
- .../phy/qualcomm/phy-qcom-qmp-pcs-usb-v6.h    |  31 ++
- drivers/phy/qualcomm/phy-qcom-qmp.h           |   4 +
- drivers/phy/qualcomm/phy-qcom-snps-eusb2.c    | 423 ++++++++++++++++++
- 8 files changed, 945 insertions(+), 7 deletions(-)
+Changes since v2:
+ * none
+
+Changes since v1:
+ * dropped the "ref src" clock
+ * dropped the usb-repeater property
+
+
+ .../bindings/phy/qcom,snps-eusb2-phy.yaml     | 74 +++++++++++++++++++
+ 1 file changed, 74 insertions(+)
  create mode 100644 Documentation/devicetree/bindings/phy/qcom,snps-eusb2-phy.yaml
- create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-usb-v6.h
- create mode 100644 drivers/phy/qualcomm/phy-qcom-snps-eusb2.c
 
+diff --git a/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-phy.yaml
+new file mode 100644
+index 000000000000..de72577e34a4
+--- /dev/null
++++ b/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-phy.yaml
+@@ -0,0 +1,74 @@
++# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/phy/qcom,snps-eusb2-phy.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm SNPS eUSB2 phy controller
++
++maintainers:
++  - Abel Vesa <abel.vesa@linaro.org>
++
++description:
++  eUSB2 controller supports LS/FS/HS usb connectivity on Qualcomm chipsets.
++
++properties:
++  compatible:
++    const: qcom,sm8550-snps-eusb2-phy
++
++  reg:
++    maxItems: 1
++
++  "#phy-cells":
++    const: 0
++
++  clocks:
++    items:
++      - description: ref
++
++  clock-names:
++    items:
++      - const: ref
++
++  resets:
++    maxItems: 1
++
++  vdd-supply:
++    description:
++      Phandle to 0.88V regulator supply to PHY digital circuit.
++
++  vdda12-supply:
++    description:
++      Phandle to 1.2V regulator supply to PHY refclk pll block.
++
++required:
++  - compatible
++  - reg
++  - "#phy-cells"
++  - clocks
++  - clock-names
++  - vdd-supply
++  - vdda12-supply
++  - resets
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,sm8550-gcc.h>
++    #include <dt-bindings/clock/qcom,rpmh.h>
++    #include <dt-bindings/clock/qcom,sm8550-tcsr.h>
++
++    usb_1_hsphy: phy@88e3000 {
++        compatible = "qcom,sm8550-snps-eusb2-phy";
++        reg = <0x88e3000 0x154>;
++        #phy-cells = <0>;
++
++        clocks = <&tcsrcc TCSR_USB2_CLKREF_EN>;
++        clock-names = "ref";
++
++        vdd-supply = <&vreg_l1e_0p88>;
++        vdda12-supply = <&vreg_l3e_1p2>;
++
++        resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
++    };
 -- 
 2.34.1
 
