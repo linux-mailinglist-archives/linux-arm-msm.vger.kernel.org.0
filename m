@@ -2,93 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B476B68D59D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 12:37:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F266B68D5AD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 12:39:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231128AbjBGLhC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Feb 2023 06:37:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54498 "EHLO
+        id S231443AbjBGLjC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Feb 2023 06:39:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229923AbjBGLhB (ORCPT
+        with ESMTP id S230176AbjBGLjB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Feb 2023 06:37:01 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EF60FF28
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 03:36:57 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id z13so3339329wmp.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 03:36:57 -0800 (PST)
+        Tue, 7 Feb 2023 06:39:01 -0500
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 666D01284F;
+        Tue,  7 Feb 2023 03:38:56 -0800 (PST)
+Received: by mail-ej1-x636.google.com with SMTP id sa10so11989863ejc.9;
+        Tue, 07 Feb 2023 03:38:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=mdps6QBYo2EpuvJeAjXIcH3c9RsvgZrrYv9TzRjo4cg=;
-        b=PwiGU5LiVPMC55a4jM5WbxdWafNPqkDEJ6q+rPKmDoWesqzTsxe5weTgyhsUiUtJLl
-         +6TQVnSw3OPz4j92KQNzOYF3LzD+WtWoktbQFWk7+vkdCJSG6WMVx1Eu8fCGKtkD0ypZ
-         LFe6ZfTUt4lPsrszA3zzWv7k0yoYPdq3PjldNi/jPbF4Gg73S5aFSJsNXBywyDpH+ndu
-         0KVZbabl7Pxa5Zlw5E70x9iZQDmAQnRewS2XBOGurDpP0F52GKCbdJ4GqyPTm73lO7u9
-         zB51SJcBRdfgkDxZ/xf6esONMzqwIzZfYQk1qkTq6uUPsmj/43zf68ImwLF5wy+oCB1J
-         pOuw==
+        d=gmail.com; s=20210112;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ypYaAIHbgwskXP956yUIa5G6SVK0QZ0JGeu03YaQuLg=;
+        b=j50wXizpSCgbltXPzxLm6o6EgUCwunOa3gUhOObCfsxS5zVmzaK1bbvvNUqvbd5N59
+         s38vLv0Ysjzb1iVZ1HiJGnplkCzTNqrii67ZhGZXcM6Nm93vBAaQpk0h4FApJ7wqBa7u
+         z1jm04ciGE4gBk8tYyYecFTbO6F4uEiBi5Tw5VGhyW22YPsF64IrPcOj1SWTrQ1HmnaR
+         f1ZNfG5UyLxIsSMw97PSgxOcFcN3yaX6IUcuonLpJGDzhifWcbo3vsJl4sdNKHkP4cqW
+         e+BPGiI5s6QzdCrSLCvvb05XtqKa5znj4Ell/XC4ul+ptUNQ8iQMRC0qxgFDioXRQMOq
+         8B3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mdps6QBYo2EpuvJeAjXIcH3c9RsvgZrrYv9TzRjo4cg=;
-        b=iNnBzCTxrgNA6evW9oeOVR4E/7cDZDuV5oPWn8TUmLFaF3eVHjuJi34AuymK2u9rpl
-         v6RKY47B9mDrxOSZlRNbPCZPpAoF9Avu+1xVd3+9HBq5xaokSWA2uPwJ+NK14fWRizp3
-         Cci2gPqvO9HV/FysZDdf6E+7NebiipbKA0dzrON1UbhO6QJlgWC17z4sALt10Dt+NVDi
-         RfGqeChqIKerq9B40elfGEyPQ85tL22KrKCPwXyxAzTHShSVm1wF4D1jL4d440dgywWh
-         D1PgVrD+gBrSCb35CEVxzeccqvUc2zGUR1hOWs9flSCkwUXnc8h6tVXbu6imVd9BhuFK
-         LFMw==
-X-Gm-Message-State: AO0yUKV/AIFwUQjN5nneabZbhuapdcXS3u+avDxPy7k1izEO4UPcB8lw
-        6hpoRzCj7625EMKkXWQD5EzMZw==
-X-Google-Smtp-Source: AK7set9n+m4pjXErkmugtRMuy4NBW/6r4G9q7oXcQhxqaTVJO4e/w06E1QNJPt8PPg3CIPLvKxJACg==
-X-Received: by 2002:a05:600c:3093:b0:3df:fbd5:690 with SMTP id g19-20020a05600c309300b003dffbd50690mr2788705wmn.17.1675769815959;
-        Tue, 07 Feb 2023 03:36:55 -0800 (PST)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id k32-20020a05600c1ca000b003ddf2865aeasm20243816wms.41.2023.02.07.03.36.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Feb 2023 03:36:55 -0800 (PST)
-Message-ID: <14d57333-02bc-6294-ed20-4c882dcd0dae@linaro.org>
-Date:   Tue, 7 Feb 2023 11:36:54 +0000
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ypYaAIHbgwskXP956yUIa5G6SVK0QZ0JGeu03YaQuLg=;
+        b=3LPUwvciaQMz/y+a1nRAkftJ3XnYtMWTS1LajHuNDY4Ksa/HS8tMVigcna/0VVukcc
+         otH72r/RfIY6Z8+TtJaYoudLRNi/c4bIBhly1XsENjw58xElDdk2xl1AmHmJhSRCV007
+         wdP2w0hxMAKe/UQ/L1iOCdSbzPVftYV8GYsFIr+tuHzTA3vWl/LZisjDdDnfWH0GUXk7
+         daUoeNj6GWB63r2INi+iUR3erthKK5cRl7YLizHFiCwI0vWjT3bnlXJ/fJjaWxsvnUOm
+         TcJFKGiU419SlpTGmrChfFAgfGW71j/2qMI8BM1kW+/vS7ZUM0OV770URb0ozn78y4fJ
+         7F2A==
+X-Gm-Message-State: AO0yUKV9SaAGwjB0rWIsLQKxlfPoFHh+uB30iA0ssFSohHX9Rt9pVr2+
+        QGkNSEKKQGc6o6h6Q7bhsDRs6xXBP7A=
+X-Google-Smtp-Source: AK7set9xPPTA4AVcwID7+M8jKZFboG1ezV/PnXsBHNVtCAEcRQMGr+q/tXVvH0nFPyJttT+0/8a26A==
+X-Received: by 2002:a17:906:2556:b0:8aa:1eb2:a806 with SMTP id j22-20020a170906255600b008aa1eb2a806mr1043783ejb.74.1675769934798;
+        Tue, 07 Feb 2023 03:38:54 -0800 (PST)
+Received: from orome (p200300e41f201d00f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f20:1d00:f22f:74ff:fe1f:3a53])
+        by smtp.gmail.com with ESMTPSA id m18-20020a056402511200b004a22ed9030csm6293794edd.56.2023.02.07.03.38.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Feb 2023 03:38:54 -0800 (PST)
+Date:   Tue, 7 Feb 2023 12:38:51 +0100
+From:   Thierry Reding <thierry.reding@gmail.com>
+To:     Daniel Lezcano <daniel.lezcano@linaro.org>
+Cc:     rafael.j.wysocki@intel.com, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Guillaume La Roque <glaroque@baylibre.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Niklas =?utf-8?Q?S=C3=B6derlund?= <niklas.soderlund@ragnatech.se>,
+        Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        ye xingchen <ye.xingchen@zte.com.cn>,
+        Ricardo Neri <ricardo.neri-calderon@linux.intel.com>,
+        Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+        Haowen Bai <baihaowen@meizu.com>,
+        Minghao Chi <chi.minghao@zte.com.cn>,
+        "open list:THERMAL DRIVER FOR AMLOGIC SOCS" 
+        <linux-amlogic@lists.infradead.org>,
+        "moderated list:BROADCOM BCM2711/BCM2835 ARM ARCHITECTURE" 
+        <linux-rpi-kernel@lists.infradead.org>,
+        "moderated list:BROADCOM BCM2711/BCM2835 ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        "open list:RENESAS R-CAR THERMAL DRIVERS" 
+        <linux-renesas-soc@vger.kernel.org>,
+        "open list:SAMSUNG THERMAL DRIVER" 
+        <linux-samsung-soc@vger.kernel.org>,
+        "moderated list:ARM/STM32 ARCHITECTURE" 
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        "open list:TEGRA ARCHITECTURE SUPPORT" <linux-tegra@vger.kernel.org>
+Subject: Re: [PATCH] thermal: Remove core header inclusion from drivers
+Message-ID: <Y+I4S7Xt4gKDYLkw@orome>
+References: <20230206153432.1017282-1-daniel.lezcano@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: Re: [PATCH v9 14/27] gunyah: vm_mgr: Add ioctls to support basic
- non-proxy VM boot
-To:     Elliot Berman <quic_eberman@quicinc.com>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Alex Elder <elder@linaro.org>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>
-Cc:     Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Marc Zyngier <maz@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230120224627.4053418-1-quic_eberman@quicinc.com>
- <20230120224627.4053418-15-quic_eberman@quicinc.com>
-Content-Language: en-US
-In-Reply-To: <20230120224627.4053418-15-quic_eberman@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="6YmCx3uIqlMso1fF"
+Content-Disposition: inline
+In-Reply-To: <20230206153432.1017282-1-daniel.lezcano@linaro.org>
+User-Agent: Mutt/2.2.9 (2022-11-12)
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -96,268 +122,73 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+--6YmCx3uIqlMso1fF
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 20/01/2023 22:46, Elliot Berman wrote:
-> Add remaining ioctls to support non-proxy VM boot:
-> 
->   - Gunyah Resource Manager uses the VM's devicetree to configure the
->     virtual machine. The location of the devicetree in the guest's
->     virtual memory can be declared via the SET_DTB_CONFIG ioctl.
->   - Trigger start of the virtual machine with VM_START ioctl.
-> 
-> Co-developed-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
-> Signed-off-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+On Mon, Feb 06, 2023 at 04:34:29PM +0100, Daniel Lezcano wrote:
+> As the name states "thermal_core.h" is the header file for the core
+> components of the thermal framework.
+>=20
+> Too many drivers are including it. Hopefully the recent cleanups
+> helped to self encapsulate the code a bit more and prevented the
+> drivers to need this header.
+>=20
+> Remove this inclusion in every place where it is possible.
+>=20
+> Some other drivers did a confusion with the core header and the one
+> exported in linux/thermal.h. They include the former instead of the
+> latter. The changes also fix this.
+>=20
+> The tegra/soctherm driver still remains as it uses an internal
+> function which need to be replaced.
+>=20
+> The Intel HFI driver uses the netlink internal framework core and
+> should be changed to prevent to deal with the internals.
+>=20
+> No functional changes
+>=20
+> [ Applies to thermal/linux-next or linux-pm/linux-next ]
+>=20
+> Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 > ---
->   drivers/virt/gunyah/vm_mgr.c    | 110 ++++++++++++++++++++++++++++++++
->   drivers/virt/gunyah/vm_mgr.h    |   9 +++
->   drivers/virt/gunyah/vm_mgr_mm.c |  24 +++++++
->   include/uapi/linux/gunyah.h     |   8 +++
->   4 files changed, 151 insertions(+)
-> 
-> diff --git a/drivers/virt/gunyah/vm_mgr.c b/drivers/virt/gunyah/vm_mgr.c
-> index b847fde63333..48bd3f06fb6c 100644
-> --- a/drivers/virt/gunyah/vm_mgr.c
-> +++ b/drivers/virt/gunyah/vm_mgr.c
-> @@ -9,6 +9,7 @@
->   #include <linux/file.h>
->   #include <linux/gunyah_rsc_mgr.h>
->   #include <linux/miscdevice.h>
-> +#include <linux/mm.h>
->   #include <linux/module.h>
->   
->   #include <uapi/linux/gunyah.h>
-> @@ -37,10 +38,98 @@ static __must_check struct gunyah_vm *gunyah_vm_alloc(struct gh_rm_rpc *rm)
->   
->   	mutex_init(&ghvm->mm_lock);
->   	INIT_LIST_HEAD(&ghvm->memory_mappings);
-> +	init_rwsem(&ghvm->status_lock);
->   
+>  drivers/thermal/amlogic_thermal.c           | 1 -
+>  drivers/thermal/armada_thermal.c            | 2 --
+>  drivers/thermal/broadcom/bcm2835_thermal.c  | 1 -
+>  drivers/thermal/hisi_thermal.c              | 3 +--
+>  drivers/thermal/imx8mm_thermal.c            | 1 -
+>  drivers/thermal/imx_sc_thermal.c            | 1 -
+>  drivers/thermal/intel/intel_hfi.c           | 3 ++-
+>  drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 1 -
+>  drivers/thermal/qoriq_thermal.c             | 1 -
+>  drivers/thermal/rcar_gen3_thermal.c         | 1 -
+>  drivers/thermal/samsung/exynos_tmu.c        | 3 +--
+>  drivers/thermal/st/stm_thermal.c            | 1 -
+>  drivers/thermal/tegra/tegra30-tsensor.c     | 1 -
+>  drivers/thermal/uniphier_thermal.c          | 2 --
+>  14 files changed, 4 insertions(+), 18 deletions(-)
 
-using read write semaphore is really not going to make any difference in 
-this particular case.
-we have just one reader (gh_vm_ensure_started) and it mostly makes 
-synchronous call to writer (vm_start).
+Acked-by: Thierry Reding <treding@nvidia.com>
 
->   	return ghvm;
->   }
->   
-> +static int gh_vm_start(struct gunyah_vm *ghvm)
-> +{
-> +	struct gunyah_vm_memory_mapping *mapping;
-> +	u64 dtb_offset;
-> +	u32 mem_handle;
-> +	int ret;
-> +
-> +	down_write(&ghvm->status_lock);
-> +	if (ghvm->vm_status != GH_RM_VM_STATUS_NO_STATE) {
-> +		up_write(&ghvm->status_lock);
-> +		return 0;
-> +	}
-> +
-> +	list_for_each_entry(mapping, &ghvm->memory_mappings, list) {
-> +		switch (mapping->share_type) {
-> +		case VM_MEM_LEND:
-> +			ret = gh_rm_mem_lend(ghvm->rm, &mapping->parcel);
-> +			break;
-> +		case VM_MEM_SHARE:
-> +			ret = gh_rm_mem_share(ghvm->rm, &mapping->parcel);
-> +			break;
-> +		}
+--6YmCx3uIqlMso1fF
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> +		if (ret > 0)
-> +			ret = -EINVAL;
+-----BEGIN PGP SIGNATURE-----
 
-why are we converting the error messages, afaiu both gh_rm_mem_lend and 
-gh_rm_mem_share return a valid error codes.
+iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmPiOEsACgkQ3SOs138+
+s6GcZg//R3MQVqmdDfUAH1wSX/RKBdIAW3IEegenVrucDauuJHfqOD6w9PZ1mhvo
+7sffnxqIcqDT4K1UrFfVoSEsDYYKTB/RbwaiHjr2bGR7DJbLe7diXmw2XZWJZ+gT
+Oyw8I6tyWR9ixwcfP5d03Vgi5h4QHSNvlAagPwCIMoYXlC8yMeK5stM5DR2pZCRJ
+ZtpT71OQa0iUf9/MP61cm1EZco7cUSbPP79b+0gkGCaEM+N9h5VRSK4wZWyDe2ED
+lRwO36ATMnOzHN27cZvYLXEsGiWRLvtSwunIfOkBW2GFf3/t0KJfLNTIIzBYyYv5
+7YWQWv2PWY7A2dx0DDskAmo3n+34qouc7lGd+pCJeoPASpEXbCRK5kXvVEVMcMW/
+fuxqLlsBpZoNLlxmMCL7LaN0xTTK5aAI930kxr1vJXlYfwvHsXN5YUBi9f+nP3lv
+k4LY4P/jgZGDJQMcjL6ysfHJ11S9yc+6mAv9D+Zd6X5sn+DitvYUbq7oH1Vid5oU
+nvu13INcwRMa/Q++f6+DOv//64fPIeZctFcq1oQr8tevgECDeJ7qy4ZTPplIcLnU
+cGEHqcomIPOkFfvAxYETborXcePZSFKpuYOzecg6YEhcZCtkYLcdiFuw9PoM8Kqn
+CYbQQDs1EKfpKznrlpqOIiaZ1PknWjl2zK4ey9b+APu0KE5eghc=
+=Zn7P
+-----END PGP SIGNATURE-----
 
-> +		if (ret) {
-> +			pr_warn("Failed to %s parcel %d: %d\n",
-> +				mapping->share_type == VM_MEM_LEND ? "lend" : "share",
-> +				mapping->parcel.label,
-> +				ret);
-> +			goto err;
-> +		}
-> +	}
-> +
-> +	mapping = gh_vm_mem_mapping_find_mapping(ghvm, ghvm->dtb_config.gpa, ghvm->dtb_config.size);
-> +	if (!mapping) {
-> +		pr_warn("Failed to find the memory_handle for DTB\n");
-> +		ret = -EINVAL;
-> +		goto err;
-> +	}
-> +
-> +	mem_handle = mapping->parcel.mem_handle;
-> +	dtb_offset = ghvm->dtb_config.gpa - mapping->guest_phys_addr;
-> +
-> +	ret = gh_rm_vm_configure(ghvm->rm, ghvm->vmid, ghvm->auth, mem_handle,
-> +				0, 0, dtb_offset, ghvm->dtb_config.size);
-> +	if (ret) {
-> +		pr_warn("Failed to configure VM: %d\n", ret);
-> +		goto err;
-> +	}
-> +
-> +	ret = gh_rm_vm_init(ghvm->rm, ghvm->vmid);
-> +	if (ret) {
-> +		pr_warn("Failed to initialize VM: %d\n", ret);
-> +		goto err;
-> +	}
-> +
-> +	ret = gh_rm_vm_start(ghvm->rm, ghvm->vmid);
-> +	if (ret) {
-> +		pr_warn("Failed to start VM: %d\n", ret);
-> +		goto err;
-> +	}
-> +
-> +	ghvm->vm_status = GH_RM_VM_STATUS_READY;
-> +
-> +	up_write(&ghvm->stvm_status = atus_lock);
-> +	return ret;
-> +err:
-> +	ghvm->vm_status = GH_RM_VM_STATUS_INIT_FAILED;
-> +	up_write(&ghvm->status_lock);
-> +	return ret;
-> +}
-> +
-> +static void gh_vm_stop(struct gunyah_vm *ghvm)
-> +{
-> +	int ret;
-> +
-> +	down_write(&ghvm->status_lock);
-> +	if (ghvm->vm_status == GH_RM_VM_STATUS_READY) {
-> +		ret = gh_rm_vm_stop(ghvm->rm, ghvm->vmid);
-> +		if (ret)
-> +			pr_warn("Failed to stop VM: %d\n", ret);
-> +	}
-> +
-> +	ghvm->vm_status = GH_RM_VM_STATUS_EXITED;
-> +	up_write(&ghvm->status_lock);
-> +}
-> +
->   static long gh_vm_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
->   {
->   	struct gunyah_vm *ghvm = filp->private_data;
-> @@ -84,6 +173,25 @@ static long gh_vm_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
->   		}
->   		break;
->   	}
-> +	case GH_VM_SET_DTB_CONFIG: {
-> +		struct gh_vm_dtb_config dtb_config;
-> +
-> +		r = -EFAULT;
-> +		if (copy_from_user(&dtb_config, argp, sizeof(dtb_config)))
-> +			break;
-> +
-same feedback as other patches on setting error codes.
-> +		dtb_config.size = PAGE_ALIGN(dtb_config.size);
-> +		ghvm->dtb_config = dtb_config;
-> +
-> +		r = 0;
-> +		break;
-> +	}
-> +	case GH_VM_START: {
-> +		r = gh_vm_start(ghvm);
-> +		if (r)
-> +			r = -EINVAL;
-> +		break;
-> +	}
->   	default:
->   		r = -ENOTTY;
->   		break;
-> @@ -97,6 +205,8 @@ static int gh_vm_release(struct inode *inode, struct file *filp)
->   	struct gunyah_vm *ghvm = filp->private_data;
->   	struct gunyah_vm_memory_mapping *mapping, *tmp;
->   
-> +	gh_vm_stop(ghvm);
-> +
->   	list_for_each_entry_safe(mapping, tmp, &ghvm->memory_mappings, list) {
->   		gh_vm_mem_mapping_reclaim(ghvm, mapping);
->   		kfree(mapping);
-> diff --git a/drivers/virt/gunyah/vm_mgr.h b/drivers/virt/gunyah/vm_mgr.h
-> index 6b38bf780f76..5c02fb305893 100644
-> --- a/drivers/virt/gunyah/vm_mgr.h
-> +++ b/drivers/virt/gunyah/vm_mgr.h
-> @@ -10,6 +10,7 @@
->   #include <linux/list.h>
->   #include <linux/miscdevice.h>
->   #include <linux/mutex.h>
-> +#include <linux/rwsem.h>
->   
->   #include <uapi/linux/gunyah.h>
->   
-> @@ -34,6 +35,12 @@ struct gunyah_vm {
->   	u16 vmid;
->   	struct gh_rm *rm;
->   
-> +	enum gh_rm_vm_auth_mechanism auth;
-> +	struct gh_vm_dtb_config dtb_config;
-> +
-> +	enum gh_rm_vm_status vm_status;
-> +	struct rw_semaphore status_lock;
-> +
->   	struct mutex mm_lock;
->   	struct list_head memory_mappings;
->   };
-> @@ -42,5 +49,7 @@ struct gunyah_vm_memory_mapping *gh_vm_mem_mapping_alloc(struct gunyah_vm *ghvm,
->   							struct gh_userspace_memory_region *region);
->   void gh_vm_mem_mapping_reclaim(struct gunyah_vm *ghvm, struct gunyah_vm_memory_mapping *mapping);
->   struct gunyah_vm_memory_mapping *gh_vm_mem_mapping_find(struct gunyah_vm *ghvm, u32 label);
-> +struct gunyah_vm_memory_mapping *gh_vm_mem_mapping_find_mapping(struct gunyah_vm *ghvm,
-> +								u64 gpa, u32 size);
->   
->   #endif
-> diff --git a/drivers/virt/gunyah/vm_mgr_mm.c b/drivers/virt/gunyah/vm_mgr_mm.c
-> index f2dbdb4ee8ab..7fcb9f8a29bf 100644
-> --- a/drivers/virt/gunyah/vm_mgr_mm.c
-> +++ b/drivers/virt/gunyah/vm_mgr_mm.c
-> @@ -53,6 +53,30 @@ void gh_vm_mem_mapping_reclaim(struct gunyah_vm *ghvm, struct gunyah_vm_memory_m
->   	mutex_unlock(&ghvm->mm_lock);
->   }
->   
-> +struct gunyah_vm_memory_mapping *gh_vm_mem_mapping_find_mapping(struct gunyah_vm *ghvm,
-> +								u64 gpa, u32 size)
-> +{
-> +	struct gunyah_vm_memory_mapping *mapping = NULL;
-> +	int ret;
-> +
-> +	ret = mutex_lock_interruptible(&ghvm->mm_lock);
-> +	if (ret)
-> +		return ERR_PTR(ret);
-> +
-> +	list_for_each_entry(mapping, &ghvm->memory_mappings, list) {
-> +		if (gpa >= mapping->guest_phys_addr &&
-> +			(gpa + size <= mapping->guest_phys_addr +
-> +			(mapping->npages << PAGE_SHIFT))) {
-> +			goto unlock;
-> +		}
-> +	}
-> +
-> +	mapping = NULL;
-> +unlock:
-> +	mutex_unlock(&ghvm->mm_lock);
-> +	return mapping;
-> +}
-> +
->   struct gunyah_vm_memory_mapping *gh_vm_mem_mapping_find(struct gunyah_vm *ghvm, u32 label)
->   {
->   	struct gunyah_vm_memory_mapping *mapping;
-> diff --git a/include/uapi/linux/gunyah.h b/include/uapi/linux/gunyah.h
-> index 574f33b198d0..36359ad2175e 100644
-> --- a/include/uapi/linux/gunyah.h
-> +++ b/include/uapi/linux/gunyah.h
-> @@ -42,4 +42,12 @@ struct gh_userspace_memory_region {
->   #define GH_VM_SET_USER_MEM_REGION	_IOW(GH_IOCTL_TYPE, 0x1, \
->   						struct gh_userspace_memory_region)
->   
-> +struct gh_vm_dtb_config {
-> +	__u64 gpa;
-
-need kernedoc, what is gpa?
-
-> +	__u64 size;
-> +};
-> +#define GH_VM_SET_DTB_CONFIG	_IOW(GH_IOCTL_TYPE, 0x2, struct gh_vm_dtb_config)
-> +
-> +#define GH_VM_START		_IO(GH_IOCTL_TYPE, 0x3)
-> +
->   #endif
+--6YmCx3uIqlMso1fF--
