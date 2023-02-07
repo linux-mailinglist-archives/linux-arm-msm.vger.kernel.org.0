@@ -2,229 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D0EC68DF47
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 18:49:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DD8168DF4B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 18:50:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230374AbjBGRtv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Feb 2023 12:49:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51468 "EHLO
+        id S232185AbjBGRuX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Feb 2023 12:50:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229447AbjBGRto (ORCPT
+        with ESMTP id S229447AbjBGRuW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Feb 2023 12:49:44 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E6AE10D
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 09:49:43 -0800 (PST)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 317CEi9w017245;
-        Tue, 7 Feb 2023 17:49:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=3XSFRJCHWXfqJqEOZdspss/LDQaL3aiuHKoET3F1TO0=;
- b=BQp0RHEDWFHexlEyow9P5Jphj9REaVGRlc24JCGHcl3ozoEZcWuLW9YesZiwSGo29qKD
- +AG1DCWfAkwlF21QiHVH6T2fCVAoz5PoHLEZW2VLHOytryrmzUq7e1t4PQW/J3CHiUwu
- CU0ID1t2g3GLsftj3mHh6VlvURZ3iX0XvNejNfODexz7gYc1YI4CgFwed2jItE/nKP3X
- 5dLpO0ioI+ExClv9PXtPp0yT1eBymrJIYG+SAGJkvzVBfLz0mDr2aChAQDLh2ZLbO/+E
- uh7pn1J2VfqyPmbihqiVR/t1mEiftEM2VlXaLRKptjMLS5ti2y+DoUs8aCYHkMrmG+P1 fQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nkeny1u88-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 07 Feb 2023 17:49:36 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 317HnZH5028952
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 7 Feb 2023 17:49:35 GMT
-Received: from [10.110.44.26] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 7 Feb 2023
- 09:49:34 -0800
-Message-ID: <04ab8d1e-d343-2d6c-c211-2cf0ffc713c2@quicinc.com>
-Date:   Tue, 7 Feb 2023 09:49:34 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v3 23/27] drm/msm/dpu: rework dpu_plane_atomic_check()
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        Tue, 7 Feb 2023 12:50:22 -0500
+Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38141272A
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 09:50:21 -0800 (PST)
+Received: by mail-io1-xd31.google.com with SMTP id l128so5971037iof.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 09:50:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=CBzkf3FCD8x/y9eVd1GA5EoRd79pK0BFSSnyzHt0mXw=;
+        b=JbWrCre30UL5YyUvJbrQQKDFP1RIID+kILrl7992LyEkzGYIQ4mC6GsR56nnuyFhlf
+         ziKrvWd9u3x2wmNenO54ZokDex9/awcXfwu4l/Uda0kqC8uGb5+rTDsn0VRD/eTcCzZO
+         3R2aKlmNS0e0oHxkaVcf+Yj34GNcF56XwQuxU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CBzkf3FCD8x/y9eVd1GA5EoRd79pK0BFSSnyzHt0mXw=;
+        b=HU5UeAGHRIZD7oqeqiuJDgI1YGFgOihQvtBJpqY5aZjEDs5cJiUkSrg/sBVIqJCyoH
+         zSP/EAcdFCChW5PRKFIP6AxV2qoG9VyPQkgQrX5kY+kJByQrLXvHdAOPuoy3ZkEPwCIh
+         F1CLOi2QIMJVrpXp5Y1T8kLkoqyifFa7P2pgzho7SB1Avfr35MakkizCYLlSRJD+mDKA
+         s6ZIt8ObqHNWvE+af3Mk4wPRsnDKy8Z4nQZjJ6zVgca+bEVWE9XZN6bUM2KKCCsjdSdc
+         zEKt3+g8EnE+Eh6oSinvlmJQKjU4QlF8QqukrYSSBm/QNX4X8pLumFGcsmIFJSUDgKmQ
+         T3Wg==
+X-Gm-Message-State: AO0yUKVx4vn8awZwR6gPRmvWUbr4WA0Ul97A9LFKsJymr9VRp7wdnM1p
+        KA4xH4dZ0aSTOyUtSbJQttys2A==
+X-Google-Smtp-Source: AK7set9TA/3RgJK3yUToPWGVriuqQo8s0O7oNuC5X8TOPoTi1ehjK4em9NIq+bjGtSmKozxSMqTYjQ==
+X-Received: by 2002:a5e:8914:0:b0:734:e4df:cd04 with SMTP id k20-20020a5e8914000000b00734e4dfcd04mr2436285ioj.12.1675792220580;
+        Tue, 07 Feb 2023 09:50:20 -0800 (PST)
+Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
+        by smtp.gmail.com with UTF8SMTPSA id q3-20020a6bf203000000b00716eb44b97esm4084698ioh.27.2023.02.07.09.50.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Feb 2023 09:50:20 -0800 (PST)
+Date:   Tue, 7 Feb 2023 17:50:19 +0000
+From:   "mka@chromium.org" <mka@chromium.org>
+To:     Vikash Garodia <vgarodia@qti.qualcomm.com>
+Cc:     Javier Martinez Canillas <javierm@redhat.com>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Albert Esteve <aesteve@redhat.com>,
+        "stanimir.varbanov@linaro.org" <stanimir.varbanov@linaro.org>,
+        Enric Balletbo i Serra <eballetb@redhat.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20230203182132.1307834-1-dmitry.baryshkov@linaro.org>
- <20230203182132.1307834-24-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20230203182132.1307834-24-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 2k6tIPl-6pSz3mLcjL1GKns4biGsCUhV
-X-Proofpoint-ORIG-GUID: 2k6tIPl-6pSz3mLcjL1GKns4biGsCUhV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-02-07_09,2023-02-06_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
- clxscore=1015 phishscore=0 spamscore=0 lowpriorityscore=0 suspectscore=0
- impostorscore=0 priorityscore=1501 malwarescore=0 mlxlogscore=999
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302070159
-X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        "Vikash Garodia (QUIC)" <quic_vgarodia@quicinc.com>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
+        Fritz Koenig <frkoenig@google.com>,
+        "Dikshita Agarwal (QUIC)" <quic_dikshita@quicinc.com>,
+        "Rajeshwar Kurapaty (QUIC)" <quic_rkurapat@quicinc.com>
+Subject: Re: [PATCH] Revert "venus: firmware: Correct non-pix start and end
+ addresses"
+Message-ID: <Y+KPW18o/Da+N8UI@google.com>
+References: <20230207102254.1446461-1-javierm@redhat.com>
+ <DM8PR02MB8169809493BF2822E6C29EECF3DB9@DM8PR02MB8169.namprd02.prod.outlook.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <DM8PR02MB8169809493BF2822E6C29EECF3DB9@DM8PR02MB8169.namprd02.prod.outlook.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Vikash,
 
+On Tue, Feb 07, 2023 at 04:40:24PM +0000, Vikash Garodia wrote:
+> Hi Javier and Matthias,
+> Can we try the attached patch if that fixes the suspend issue for sc7180 and sc7280 ?
 
-On 2/3/2023 10:21 AM, Dmitry Baryshkov wrote:
-> Split pipe-dependent code from dpu_plane_atomic_check() into the
-> separate function dpu_plane_atomic_check_pipe(). This is one of
+On my side the patch fixes the issue for sc7280, but not sc7180.
 
-Same comment as prev patch, dpu_plane_atomic_check_pipe() ---> 
-dpu_plane_atomic_check_sspp()
-
-> preparational steps to add r_pipe support.
+> > -----Original Message-----
+> > From: Javier Martinez Canillas <javierm@redhat.com>
+> > Sent: Tuesday, February 7, 2023 3:53 PM
+> > To: linux-kernel@vger.kernel.org
+> > Cc: Albert Esteve <aesteve@redhat.com>; stanimir.varbanov@linaro.org;
+> > Matthias Kaehlcke <mka@chromium.org>; Enric Balletbo i Serra
+> > <eballetb@redhat.com>; Javier Martinez Canillas <javierm@redhat.com>; Andy
+> > Gross <agross@kernel.org>; Bjorn Andersson <andersson@kernel.org>; Konrad
+> > Dybcio <konrad.dybcio@linaro.org>; Mauro Carvalho Chehab
+> > <mchehab@kernel.org>; Stanimir Varbanov
+> > <stanimir.k.varbanov@gmail.com>; Vikash Garodia (QUIC)
+> > <quic_vgarodia@quicinc.com>; linux-arm-msm@vger.kernel.org; linux-
+> > media@vger.kernel.org
+> > Subject: [PATCH] Revert "venus: firmware: Correct non-pix start and end
+> > addresses"
+> > 
+> > WARNING: This email originated from outside of Qualcomm. Please be wary of
+> > any links or attachments, and do not enable macros.
+> > 
+> > This reverts commit a837e5161cfffbb3242cc0eb574f8bf65fd32640, which
+> > broke probing of the venus driver, at least on the SC7180 SoC HP X2
+> > Chromebook:
+> > 
+> >   [   11.455782] qcom-venus aa00000.video-codec: Adding to iommu group 11
+> >   [   11.506980] qcom-venus aa00000.video-codec: non legacy binding
+> >   [   12.143432] qcom-venus aa00000.video-codec: failed to reset venus core
+> >   [   12.156440] qcom-venus: probe of aa00000.video-codec failed with error -
+> > 110
+> > 
+> > Matthias Kaehlcke also reported that the same change caused a regression in
+> > SC7180 and sc7280, that prevents AOSS from entering sleep mode during
+> > system suspend. So let's revert this commit for now to fix both issues.
+> > 
+> > Fixes: a837e5161cff ("venus: firmware: Correct non-pix start and end
+> > addresses")
+> > Reported-by: Matthias Kaehlcke <mka@chromium.org>
+> > Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
+> > ---
+> > 
+> >  drivers/media/platform/qcom/venus/firmware.c | 4 ++--
+> >  1 file changed, 2 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/drivers/media/platform/qcom/venus/firmware.c
+> > b/drivers/media/platform/qcom/venus/firmware.c
+> > index 142d4c74017c..d59ecf776715 100644
+> > --- a/drivers/media/platform/qcom/venus/firmware.c
+> > +++ b/drivers/media/platform/qcom/venus/firmware.c
+> > @@ -38,8 +38,8 @@ static void venus_reset_cpu(struct venus_core *core)
+> >         writel(fw_size, wrapper_base + WRAPPER_FW_END_ADDR);
+> >         writel(0, wrapper_base + WRAPPER_CPA_START_ADDR);
+> >         writel(fw_size, wrapper_base + WRAPPER_CPA_END_ADDR);
+> > -       writel(0, wrapper_base + WRAPPER_NONPIX_START_ADDR);
+> > -       writel(0, wrapper_base + WRAPPER_NONPIX_END_ADDR);
+> > +       writel(fw_size, wrapper_base + WRAPPER_NONPIX_START_ADDR);
+> > +       writel(fw_size, wrapper_base + WRAPPER_NONPIX_END_ADDR);
+> > 
+> >         if (IS_V6(core)) {
+> >                 /* Bring XTSS out of reset */
+> > --
+> > 2.39.1
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 88 ++++++++++++++---------
->   1 file changed, 53 insertions(+), 35 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index f94e132733f3..e69499490d39 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -903,6 +903,51 @@ static int dpu_plane_check_inline_rotation(struct dpu_plane *pdpu,
->   	return 0;
->   }
->   
-> +static int dpu_plane_atomic_check_pipe(struct dpu_plane *pdpu,
-> +		struct dpu_sw_pipe *pipe,
-> +		struct dpu_hw_sspp_cfg *pipe_cfg,
+> Thanks,
+> Vikash
 
-pipe_cfg --> sspp_cfg
 
-Also, had a question. For function parameters spreading across multiple 
-lines do we want to align to one guideline? Is it going to be two tabs 
-more than the prev line or aligning it with the opening brace of prev line?
-
-I am seeing a mix in the prev patch of the series and this one.
-
-> +		const struct dpu_format *fmt)
-> +{
-> +	uint32_t min_src_size;
-> +
-> +	min_src_size = DPU_FORMAT_IS_YUV(fmt) ? 2 : 1;
-> +
-> +	if (DPU_FORMAT_IS_YUV(fmt) &&
-> +		(!(pipe->sspp->cap->features & DPU_SSPP_SCALER) ||
-> +		 !(pipe->sspp->cap->features & DPU_SSPP_CSC_ANY))) {
-> +		DPU_DEBUG_PLANE(pdpu,
-> +				"plane doesn't have scaler/csc for yuv\n");
-> +		return -EINVAL;
-> +	}
-> +
-> +	/* check src bounds */
-> +	if (drm_rect_width(&pipe_cfg->src_rect) < min_src_size ||
-> +		   drm_rect_height(&pipe_cfg->src_rect) < min_src_size) {
-> +		DPU_DEBUG_PLANE(pdpu, "invalid source " DRM_RECT_FMT "\n",
-> +				DRM_RECT_ARG(&pipe_cfg->src_rect));
-> +		return -E2BIG;
-> +	}
-> +
-> +	/* valid yuv image */
-> +	if (DPU_FORMAT_IS_YUV(fmt) &&
-> +		   (pipe_cfg->src_rect.x1 & 0x1 || pipe_cfg->src_rect.y1 & 0x1 ||
-> +		    drm_rect_width(&pipe_cfg->src_rect) & 0x1 ||
-> +		    drm_rect_height(&pipe_cfg->src_rect) & 0x1)) {
-> +		DPU_DEBUG_PLANE(pdpu, "invalid yuv source " DRM_RECT_FMT "\n",
-> +				DRM_RECT_ARG(&pipe_cfg->src_rect));
-> +		return -EINVAL;
-> +	}
-> +
-> +	/* min dst support */
-> +	if (drm_rect_width(&pipe_cfg->dst_rect) < 0x1 || drm_rect_height(&pipe_cfg->dst_rect) < 0x1) {
-> +		DPU_DEBUG_PLANE(pdpu, "invalid dest rect " DRM_RECT_FMT "\n",
-> +				DRM_RECT_ARG(&pipe_cfg->dst_rect));
-> +		return -EINVAL;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
->   static int dpu_plane_atomic_check(struct drm_plane *plane,
->   				  struct drm_atomic_state *state)
->   {
-> @@ -915,7 +960,7 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
->   	const struct dpu_format *fmt;
->   	struct dpu_hw_sspp_cfg *pipe_cfg = &pstate->pipe_cfg;
->   	struct drm_rect fb_rect = { 0 };
-> -	uint32_t min_src_size, max_linewidth;
-> +	uint32_t max_linewidth;
->   	unsigned int rotation;
->   	uint32_t supported_rotations;
->   	const struct dpu_sspp_cfg *pipe_hw_caps = pstate->pipe.sspp->cap;
-> @@ -970,46 +1015,19 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
->   
->   	max_linewidth = pdpu->catalog->caps->max_linewidth;
->   
-> -	fmt = to_dpu_format(msm_framebuffer_format(new_plane_state->fb));
-> -
-> -	min_src_size = DPU_FORMAT_IS_YUV(fmt) ? 2 : 1;
-> -
-> -	if (DPU_FORMAT_IS_YUV(fmt) &&
-> -		(!(pipe_hw_caps->features & DPU_SSPP_SCALER) ||
-> -		 !(pipe_hw_caps->features & DPU_SSPP_CSC_ANY))) {
-> -		DPU_DEBUG_PLANE(pdpu,
-> -				"plane doesn't have scaler/csc for yuv\n");
-> -		return -EINVAL;
-> -
-> -	/* check src bounds */
-> -	} else if (drm_rect_width(&pipe_cfg->src_rect) < min_src_size ||
-> -		   drm_rect_height(&pipe_cfg->src_rect) < min_src_size) {
-> -		DPU_DEBUG_PLANE(pdpu, "invalid source " DRM_RECT_FMT "\n",
-> -				DRM_RECT_ARG(&pipe_cfg->src_rect));
-> -		return -E2BIG;
-> -
-> -	/* valid yuv image */
-> -	} else if (DPU_FORMAT_IS_YUV(fmt) &&
-> -		   (pipe_cfg->src_rect.x1 & 0x1 || pipe_cfg->src_rect.y1 & 0x1 ||
-> -		    drm_rect_width(&pipe_cfg->src_rect) & 0x1 ||
-> -		    drm_rect_height(&pipe_cfg->src_rect) & 0x1)) {
-> -		DPU_DEBUG_PLANE(pdpu, "invalid yuv source " DRM_RECT_FMT "\n",
-> -				DRM_RECT_ARG(&pipe_cfg->src_rect));
-> -		return -EINVAL;
-> -
-> -	/* min dst support */
-> -	} else if (drm_rect_width(&pipe_cfg->dst_rect) < 0x1 || drm_rect_height(&pipe_cfg->dst_rect) < 0x1) {
-> -		DPU_DEBUG_PLANE(pdpu, "invalid dest rect " DRM_RECT_FMT "\n",
-> -				DRM_RECT_ARG(&pipe_cfg->dst_rect));
-> -		return -EINVAL;
-> -
->   	/* check decimated source width */
-> -	} else if (drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) {
-> +	if (drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) {
->   		DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u\n",
->   				DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
->   		return -E2BIG;
->   	}
->   
-> +	fmt = to_dpu_format(msm_framebuffer_format(new_plane_state->fb));
-> +
-> +	ret = dpu_plane_atomic_check_pipe(pdpu, &pstate->pipe, pipe_cfg, fmt);
-> +	if (ret)
-> +		return ret;
-> +
->   	supported_rotations = DRM_MODE_REFLECT_MASK | DRM_MODE_ROTATE_0;
->   
->   	if (pipe_hw_caps->features & BIT(DPU_SSPP_INLINE_ROTATION))
