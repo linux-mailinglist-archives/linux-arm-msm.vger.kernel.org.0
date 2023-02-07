@@ -2,65 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 879DD68D53A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 12:15:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B476B68D59D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 12:37:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230323AbjBGLPi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Feb 2023 06:15:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40988 "EHLO
+        id S231128AbjBGLhC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Feb 2023 06:37:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229755AbjBGLPh (ORCPT
+        with ESMTP id S229923AbjBGLhB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Feb 2023 06:15:37 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E8F24EFA;
-        Tue,  7 Feb 2023 03:15:36 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id BE11D6131F;
-        Tue,  7 Feb 2023 11:15:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29046C433EF;
-        Tue,  7 Feb 2023 11:15:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1675768535;
-        bh=zpfS5ZRX3k0O75MjZxoCoF2L/bPP8+dq0m4PA9fXSrg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=YKSvnUbIyCdY2ldGpZSRbX0QkgAGzNyqjFavHEI0C0VEgDkkIxxnL11fgtnG7VdPe
-         5XQKE7InKJufIqUL8EKXz71OSNeTHZl7DsaM2gO42giI39xpRzRmk3sPOUgoBjr5MG
-         EuhkLhqsxd+UJ1v7cYwCXaVNfsdevoi9CtNq2LhXphNwJ+ncyEkJTdjdM4c2Egf2fy
-         2HVhMdDYWAhDUndFAS9F1JSYA+bcaLA8obGT347Zy+Pgmryd4kMORV3jKqASZhRsss
-         4/TNwVln/HVT+MwwdQ/3Awk3oG+o9bdmCpNXtSuWl8Up7CL4VtEhkzeyXpI7xuSu5K
-         FfMsqksuMCGSQ==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1pPLxH-0001eV-LF; Tue, 07 Feb 2023 12:16:08 +0100
-Date:   Tue, 7 Feb 2023 12:16:07 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        "vkoul@kernel.org" <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v4 7/8] arm64: dts: qcom: sm8550: Add USB PHYs and
- controller nodes
-Message-ID: <Y+Iy9/82q9eWMMbn@hovoldconsulting.com>
-References: <20230202132511.3983095-1-abel.vesa@linaro.org>
- <20230202132511.3983095-8-abel.vesa@linaro.org>
- <Y9zoD/eVG8zjMYNx@hovoldconsulting.com>
- <Y+Iv/s7V5PYkRI8D@linaro.org>
+        Tue, 7 Feb 2023 06:37:01 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EF60FF28
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 03:36:57 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id z13so3339329wmp.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 03:36:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=mdps6QBYo2EpuvJeAjXIcH3c9RsvgZrrYv9TzRjo4cg=;
+        b=PwiGU5LiVPMC55a4jM5WbxdWafNPqkDEJ6q+rPKmDoWesqzTsxe5weTgyhsUiUtJLl
+         +6TQVnSw3OPz4j92KQNzOYF3LzD+WtWoktbQFWk7+vkdCJSG6WMVx1Eu8fCGKtkD0ypZ
+         LFe6ZfTUt4lPsrszA3zzWv7k0yoYPdq3PjldNi/jPbF4Gg73S5aFSJsNXBywyDpH+ndu
+         0KVZbabl7Pxa5Zlw5E70x9iZQDmAQnRewS2XBOGurDpP0F52GKCbdJ4GqyPTm73lO7u9
+         zB51SJcBRdfgkDxZ/xf6esONMzqwIzZfYQk1qkTq6uUPsmj/43zf68ImwLF5wy+oCB1J
+         pOuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=mdps6QBYo2EpuvJeAjXIcH3c9RsvgZrrYv9TzRjo4cg=;
+        b=iNnBzCTxrgNA6evW9oeOVR4E/7cDZDuV5oPWn8TUmLFaF3eVHjuJi34AuymK2u9rpl
+         v6RKY47B9mDrxOSZlRNbPCZPpAoF9Avu+1xVd3+9HBq5xaokSWA2uPwJ+NK14fWRizp3
+         Cci2gPqvO9HV/FysZDdf6E+7NebiipbKA0dzrON1UbhO6QJlgWC17z4sALt10Dt+NVDi
+         RfGqeChqIKerq9B40elfGEyPQ85tL22KrKCPwXyxAzTHShSVm1wF4D1jL4d440dgywWh
+         D1PgVrD+gBrSCb35CEVxzeccqvUc2zGUR1hOWs9flSCkwUXnc8h6tVXbu6imVd9BhuFK
+         LFMw==
+X-Gm-Message-State: AO0yUKV/AIFwUQjN5nneabZbhuapdcXS3u+avDxPy7k1izEO4UPcB8lw
+        6hpoRzCj7625EMKkXWQD5EzMZw==
+X-Google-Smtp-Source: AK7set9n+m4pjXErkmugtRMuy4NBW/6r4G9q7oXcQhxqaTVJO4e/w06E1QNJPt8PPg3CIPLvKxJACg==
+X-Received: by 2002:a05:600c:3093:b0:3df:fbd5:690 with SMTP id g19-20020a05600c309300b003dffbd50690mr2788705wmn.17.1675769815959;
+        Tue, 07 Feb 2023 03:36:55 -0800 (PST)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id k32-20020a05600c1ca000b003ddf2865aeasm20243816wms.41.2023.02.07.03.36.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Feb 2023 03:36:55 -0800 (PST)
+Message-ID: <14d57333-02bc-6294-ed20-4c882dcd0dae@linaro.org>
+Date:   Tue, 7 Feb 2023 11:36:54 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y+Iv/s7V5PYkRI8D@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: Re: [PATCH v9 14/27] gunyah: vm_mgr: Add ioctls to support basic
+ non-proxy VM boot
+To:     Elliot Berman <quic_eberman@quicinc.com>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Alex Elder <elder@linaro.org>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>
+Cc:     Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Marc Zyngier <maz@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20230120224627.4053418-1-quic_eberman@quicinc.com>
+ <20230120224627.4053418-15-quic_eberman@quicinc.com>
+Content-Language: en-US
+In-Reply-To: <20230120224627.4053418-15-quic_eberman@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -68,49 +95,269 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Feb 07, 2023 at 01:03:26PM +0200, Abel Vesa wrote:
-> On 23-02-03 11:55:11, Johan Hovold wrote:
-> > On Thu, Feb 02, 2023 at 03:25:10PM +0200, Abel Vesa wrote:
-> > > Add USB host controller and PHY nodes.
-> > > 
-> > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > > ---
-> > > 
-> > > Changes since v3:
-> > >  * none
-> > > 
-> > > Changes since v2:
-> > >  * none
-> > > 
-> > > NOTE: This patch has been already merged. It is here only to provide
-> > > context for the rest of the patchset. There is a change with respect to
-> > > the clocks, but that will be sent as a separate/individual fix patch.
-> > 
-> > I believe it was because of the 'phy' and 'common' resets, which have
-> > been switched below.
+
+
+On 20/01/2023 22:46, Elliot Berman wrote:
+> Add remaining ioctls to support non-proxy VM boot:
 > 
-> No, the resets haven't been switched, at least not compared to the
-> already merged version.
+>   - Gunyah Resource Manager uses the VM's devicetree to configure the
+>     virtual machine. The location of the devicetree in the guest's
+>     virtual memory can be declared via the SET_DTB_CONFIG ioctl.
+>   - Trigger start of the virtual machine with VM_START ioctl.
+> 
+> Co-developed-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
+> Signed-off-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> ---
+>   drivers/virt/gunyah/vm_mgr.c    | 110 ++++++++++++++++++++++++++++++++
+>   drivers/virt/gunyah/vm_mgr.h    |   9 +++
+>   drivers/virt/gunyah/vm_mgr_mm.c |  24 +++++++
+>   include/uapi/linux/gunyah.h     |   8 +++
+>   4 files changed, 151 insertions(+)
+> 
+> diff --git a/drivers/virt/gunyah/vm_mgr.c b/drivers/virt/gunyah/vm_mgr.c
+> index b847fde63333..48bd3f06fb6c 100644
+> --- a/drivers/virt/gunyah/vm_mgr.c
+> +++ b/drivers/virt/gunyah/vm_mgr.c
+> @@ -9,6 +9,7 @@
+>   #include <linux/file.h>
+>   #include <linux/gunyah_rsc_mgr.h>
+>   #include <linux/miscdevice.h>
+> +#include <linux/mm.h>
+>   #include <linux/module.h>
+>   
+>   #include <uapi/linux/gunyah.h>
+> @@ -37,10 +38,98 @@ static __must_check struct gunyah_vm *gunyah_vm_alloc(struct gh_rm_rpc *rm)
+>   
+>   	mutex_init(&ghvm->mm_lock);
+>   	INIT_LIST_HEAD(&ghvm->memory_mappings);
+> +	init_rwsem(&ghvm->status_lock);
+>   
 
-The resets were wrong in the merged version just as they are below. I've
-already sent a fix here:
+using read write semaphore is really not going to make any difference in 
+this particular case.
+we have just one reader (gh_vm_ensure_started) and it mostly makes 
+synchronous call to writer (vm_start).
 
-	https://lore.kernel.org/lkml/20230123101607.2413-1-johan+linaro@kernel.org/
- 
-> > > +		usb_dp_qmpphy: phy@88e8000 {
-> > > +			compatible = "qcom,sm8550-qmp-usb3-dp-phy";
-> > > +			reg = <0x0 0x088e8000 0x0 0x3000>;
-> > > +
-> > > +			clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
-> > > +				 <&rpmhcc RPMH_CXO_CLK>,
-> > > +				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>,
-> > > +				 <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
-> > > +			clock-names = "aux", "ref", "com_aux", "usb3_pipe";
-> > > +
-> > > +			power-domains = <&gcc USB3_PHY_GDSC>;
-> > > +
-> > > +			resets = <&gcc GCC_USB3_DP_PHY_PRIM_BCR>,
-> > > +				 <&gcc GCC_USB3_PHY_PRIM_BCR>;
-> > > +			reset-names = "phy", "common";
+>   	return ghvm;
+>   }
+>   
+> +static int gh_vm_start(struct gunyah_vm *ghvm)
+> +{
+> +	struct gunyah_vm_memory_mapping *mapping;
+> +	u64 dtb_offset;
+> +	u32 mem_handle;
+> +	int ret;
+> +
+> +	down_write(&ghvm->status_lock);
+> +	if (ghvm->vm_status != GH_RM_VM_STATUS_NO_STATE) {
+> +		up_write(&ghvm->status_lock);
+> +		return 0;
+> +	}
+> +
+> +	list_for_each_entry(mapping, &ghvm->memory_mappings, list) {
+> +		switch (mapping->share_type) {
+> +		case VM_MEM_LEND:
+> +			ret = gh_rm_mem_lend(ghvm->rm, &mapping->parcel);
+> +			break;
+> +		case VM_MEM_SHARE:
+> +			ret = gh_rm_mem_share(ghvm->rm, &mapping->parcel);
+> +			break;
+> +		}
 
-Johan
+> +		if (ret > 0)
+> +			ret = -EINVAL;
+
+why are we converting the error messages, afaiu both gh_rm_mem_lend and 
+gh_rm_mem_share return a valid error codes.
+
+> +		if (ret) {
+> +			pr_warn("Failed to %s parcel %d: %d\n",
+> +				mapping->share_type == VM_MEM_LEND ? "lend" : "share",
+> +				mapping->parcel.label,
+> +				ret);
+> +			goto err;
+> +		}
+> +	}
+> +
+> +	mapping = gh_vm_mem_mapping_find_mapping(ghvm, ghvm->dtb_config.gpa, ghvm->dtb_config.size);
+> +	if (!mapping) {
+> +		pr_warn("Failed to find the memory_handle for DTB\n");
+> +		ret = -EINVAL;
+> +		goto err;
+> +	}
+> +
+> +	mem_handle = mapping->parcel.mem_handle;
+> +	dtb_offset = ghvm->dtb_config.gpa - mapping->guest_phys_addr;
+> +
+> +	ret = gh_rm_vm_configure(ghvm->rm, ghvm->vmid, ghvm->auth, mem_handle,
+> +				0, 0, dtb_offset, ghvm->dtb_config.size);
+> +	if (ret) {
+> +		pr_warn("Failed to configure VM: %d\n", ret);
+> +		goto err;
+> +	}
+> +
+> +	ret = gh_rm_vm_init(ghvm->rm, ghvm->vmid);
+> +	if (ret) {
+> +		pr_warn("Failed to initialize VM: %d\n", ret);
+> +		goto err;
+> +	}
+> +
+> +	ret = gh_rm_vm_start(ghvm->rm, ghvm->vmid);
+> +	if (ret) {
+> +		pr_warn("Failed to start VM: %d\n", ret);
+> +		goto err;
+> +	}
+> +
+> +	ghvm->vm_status = GH_RM_VM_STATUS_READY;
+> +
+> +	up_write(&ghvm->stvm_status = atus_lock);
+> +	return ret;
+> +err:
+> +	ghvm->vm_status = GH_RM_VM_STATUS_INIT_FAILED;
+> +	up_write(&ghvm->status_lock);
+> +	return ret;
+> +}
+> +
+> +static void gh_vm_stop(struct gunyah_vm *ghvm)
+> +{
+> +	int ret;
+> +
+> +	down_write(&ghvm->status_lock);
+> +	if (ghvm->vm_status == GH_RM_VM_STATUS_READY) {
+> +		ret = gh_rm_vm_stop(ghvm->rm, ghvm->vmid);
+> +		if (ret)
+> +			pr_warn("Failed to stop VM: %d\n", ret);
+> +	}
+> +
+> +	ghvm->vm_status = GH_RM_VM_STATUS_EXITED;
+> +	up_write(&ghvm->status_lock);
+> +}
+> +
+>   static long gh_vm_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
+>   {
+>   	struct gunyah_vm *ghvm = filp->private_data;
+> @@ -84,6 +173,25 @@ static long gh_vm_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
+>   		}
+>   		break;
+>   	}
+> +	case GH_VM_SET_DTB_CONFIG: {
+> +		struct gh_vm_dtb_config dtb_config;
+> +
+> +		r = -EFAULT;
+> +		if (copy_from_user(&dtb_config, argp, sizeof(dtb_config)))
+> +			break;
+> +
+same feedback as other patches on setting error codes.
+> +		dtb_config.size = PAGE_ALIGN(dtb_config.size);
+> +		ghvm->dtb_config = dtb_config;
+> +
+> +		r = 0;
+> +		break;
+> +	}
+> +	case GH_VM_START: {
+> +		r = gh_vm_start(ghvm);
+> +		if (r)
+> +			r = -EINVAL;
+> +		break;
+> +	}
+>   	default:
+>   		r = -ENOTTY;
+>   		break;
+> @@ -97,6 +205,8 @@ static int gh_vm_release(struct inode *inode, struct file *filp)
+>   	struct gunyah_vm *ghvm = filp->private_data;
+>   	struct gunyah_vm_memory_mapping *mapping, *tmp;
+>   
+> +	gh_vm_stop(ghvm);
+> +
+>   	list_for_each_entry_safe(mapping, tmp, &ghvm->memory_mappings, list) {
+>   		gh_vm_mem_mapping_reclaim(ghvm, mapping);
+>   		kfree(mapping);
+> diff --git a/drivers/virt/gunyah/vm_mgr.h b/drivers/virt/gunyah/vm_mgr.h
+> index 6b38bf780f76..5c02fb305893 100644
+> --- a/drivers/virt/gunyah/vm_mgr.h
+> +++ b/drivers/virt/gunyah/vm_mgr.h
+> @@ -10,6 +10,7 @@
+>   #include <linux/list.h>
+>   #include <linux/miscdevice.h>
+>   #include <linux/mutex.h>
+> +#include <linux/rwsem.h>
+>   
+>   #include <uapi/linux/gunyah.h>
+>   
+> @@ -34,6 +35,12 @@ struct gunyah_vm {
+>   	u16 vmid;
+>   	struct gh_rm *rm;
+>   
+> +	enum gh_rm_vm_auth_mechanism auth;
+> +	struct gh_vm_dtb_config dtb_config;
+> +
+> +	enum gh_rm_vm_status vm_status;
+> +	struct rw_semaphore status_lock;
+> +
+>   	struct mutex mm_lock;
+>   	struct list_head memory_mappings;
+>   };
+> @@ -42,5 +49,7 @@ struct gunyah_vm_memory_mapping *gh_vm_mem_mapping_alloc(struct gunyah_vm *ghvm,
+>   							struct gh_userspace_memory_region *region);
+>   void gh_vm_mem_mapping_reclaim(struct gunyah_vm *ghvm, struct gunyah_vm_memory_mapping *mapping);
+>   struct gunyah_vm_memory_mapping *gh_vm_mem_mapping_find(struct gunyah_vm *ghvm, u32 label);
+> +struct gunyah_vm_memory_mapping *gh_vm_mem_mapping_find_mapping(struct gunyah_vm *ghvm,
+> +								u64 gpa, u32 size);
+>   
+>   #endif
+> diff --git a/drivers/virt/gunyah/vm_mgr_mm.c b/drivers/virt/gunyah/vm_mgr_mm.c
+> index f2dbdb4ee8ab..7fcb9f8a29bf 100644
+> --- a/drivers/virt/gunyah/vm_mgr_mm.c
+> +++ b/drivers/virt/gunyah/vm_mgr_mm.c
+> @@ -53,6 +53,30 @@ void gh_vm_mem_mapping_reclaim(struct gunyah_vm *ghvm, struct gunyah_vm_memory_m
+>   	mutex_unlock(&ghvm->mm_lock);
+>   }
+>   
+> +struct gunyah_vm_memory_mapping *gh_vm_mem_mapping_find_mapping(struct gunyah_vm *ghvm,
+> +								u64 gpa, u32 size)
+> +{
+> +	struct gunyah_vm_memory_mapping *mapping = NULL;
+> +	int ret;
+> +
+> +	ret = mutex_lock_interruptible(&ghvm->mm_lock);
+> +	if (ret)
+> +		return ERR_PTR(ret);
+> +
+> +	list_for_each_entry(mapping, &ghvm->memory_mappings, list) {
+> +		if (gpa >= mapping->guest_phys_addr &&
+> +			(gpa + size <= mapping->guest_phys_addr +
+> +			(mapping->npages << PAGE_SHIFT))) {
+> +			goto unlock;
+> +		}
+> +	}
+> +
+> +	mapping = NULL;
+> +unlock:
+> +	mutex_unlock(&ghvm->mm_lock);
+> +	return mapping;
+> +}
+> +
+>   struct gunyah_vm_memory_mapping *gh_vm_mem_mapping_find(struct gunyah_vm *ghvm, u32 label)
+>   {
+>   	struct gunyah_vm_memory_mapping *mapping;
+> diff --git a/include/uapi/linux/gunyah.h b/include/uapi/linux/gunyah.h
+> index 574f33b198d0..36359ad2175e 100644
+> --- a/include/uapi/linux/gunyah.h
+> +++ b/include/uapi/linux/gunyah.h
+> @@ -42,4 +42,12 @@ struct gh_userspace_memory_region {
+>   #define GH_VM_SET_USER_MEM_REGION	_IOW(GH_IOCTL_TYPE, 0x1, \
+>   						struct gh_userspace_memory_region)
+>   
+> +struct gh_vm_dtb_config {
+> +	__u64 gpa;
+
+need kernedoc, what is gpa?
+
+> +	__u64 size;
+> +};
+> +#define GH_VM_SET_DTB_CONFIG	_IOW(GH_IOCTL_TYPE, 0x2, struct gh_vm_dtb_config)
+> +
+> +#define GH_VM_START		_IO(GH_IOCTL_TYPE, 0x3)
+> +
+>   #endif
