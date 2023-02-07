@@ -2,170 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2488668D505
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 12:03:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C26F068D53E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 12:16:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231628AbjBGLDc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Feb 2023 06:03:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60928 "EHLO
+        id S231422AbjBGLQK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Feb 2023 06:16:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229847AbjBGLDb (ORCPT
+        with ESMTP id S231288AbjBGLQC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Feb 2023 06:03:31 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6707DBDC
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 03:03:29 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id bg26so10769973wmb.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 03:03:29 -0800 (PST)
+        Tue, 7 Feb 2023 06:16:02 -0500
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D59022022
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 03:16:00 -0800 (PST)
+Received: by mail-pl1-x630.google.com with SMTP id i2so1889804ple.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 03:16:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=WJ93a5Pn7pV9qf9vPyQI+os80WkoEdvC0T6foUnk8Mg=;
-        b=INmIU2NouIzVm1jjPfdrm53AB5JjOg8/iz3jZE+fI1b7pLAYBvKC7TMLsXvXEmMnZQ
-         tvcX16TPZzl8SlvyqiF5TxNKUMYyM5yxTebfEAX2rlWAA+HUitsAujtgmlJ4a0OcbvKp
-         8E5zmSXqfdwXT0d4KY3ZDO9k4vXuXxN9PyBOyRPm+3wnJPCfpXAh5V/4V8UB4b9tOHuU
-         K7pSJDwrBk41FSY187xils4uDkG/6SBfJQGcBUbIf4WTIakcMUO5FDDxVvwxRqszTNr5
-         oK/eoxuZQpvWPGGUUZgVSbTt9YU2fw93GINQrZoiQBQZRluPERuKlrOsol0IIiu+xtLd
-         k0pA==
+        d=semihalf.com; s=google;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HvYHv7yD/85q93tM+/wtSvqEBzYU9y0fUg24mVC4fvA=;
+        b=Hw2z5yLwQdVTJL1/f5sxZVmnowqEyplmEF0qhc8eWNiG3WY6J4gRTWwq6/3dUCMunO
+         eOdrBtj6/cOO3S3Jxxc9sbQJaLXaTgUsscbxFInnHceGCkuWUkPmBIgmr+OWpL0KCUH1
+         9+Vo5/DD1Yid+rbwUaGW6uwioee1Bsj7IDliC2QHMBZWIHTwdl/RoKdbbioQmOSKKK4V
+         7v0s7xaD3xwYvttpQRYQFcF6hJnAiiu/lHYJMOeei50Qnpv7GHC0BTvZEhCJ31rX3UPJ
+         fvwExxJbND1gvWTHpEebB8Tui8KOq3UiXFT+PWuXSFEI4twJPVmvE8ZBGWKHZbcYkYav
+         /x9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WJ93a5Pn7pV9qf9vPyQI+os80WkoEdvC0T6foUnk8Mg=;
-        b=i6o3kobg6PwSKsyIWXLjG8nI+DDbErxZm9ZUuAVg7UBbBbhD0kbnmi/5cPR9yb4yoI
-         vG6TpwQVo5cfsZ4elfKN6gkzp3f9k9HrTEmFIvte6ymPn2Zy8Mqal4udBCCOEuiwMQYr
-         01Oqp2tJ6pUaALBD0ra2lGsN6ZJMt0qybDXJnaUqEFlYCKi3P727SEvaKSU5szO3naz6
-         FcZlqqlZxWfjKJhxZ30qIYR0jxzCNKZvB4KGxwq1UPY/aXXc1eyn3O1HDALNF8TWx8nN
-         D1vWTJODIsG4JoQWnQhOWtJxD3LHCzendeuTymcKR3IqHZyvS0BZ/i8c6UIhLiBzj8BG
-         hsfg==
-X-Gm-Message-State: AO0yUKUefsJUBKtRHggdVy26Gx5BJElf92fr3+PhRNLcANP3hTyneUqb
-        TrEiuODuz5A3YaUvn7RktS+PDw==
-X-Google-Smtp-Source: AK7set+9m5mhPHjw7qowGtSxwYkGbks55ol9xKSpV7ArSxwhymRP73uRItp25IcvPAhrZonE5E9JbA==
-X-Received: by 2002:a05:600c:4da2:b0:3dc:51f6:8f58 with SMTP id v34-20020a05600c4da200b003dc51f68f58mr2766884wmp.6.1675767808312;
-        Tue, 07 Feb 2023 03:03:28 -0800 (PST)
-Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id s22-20020a1cf216000000b003dffe312925sm6761960wmc.15.2023.02.07.03.03.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Feb 2023 03:03:27 -0800 (PST)
-Date:   Tue, 7 Feb 2023 13:03:26 +0200
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=HvYHv7yD/85q93tM+/wtSvqEBzYU9y0fUg24mVC4fvA=;
+        b=s763VpyFNI1l8HT87onttqqZ3u02GovO8ZBJxt7bJdp7WEZzU0gQQG8/F9Dq4wpOUV
+         E3N0a5cgklL4xRyny4aoKTZUYR9XbgKCt2PbRd0DkHpJo88uOw5dL62DKtZ3Mz1SyDDv
+         6pSHz0Xm0AKksZOFZxuOvRJEaYQG6xI418zj7nLAl4M8j5cfbIfRk9BnPa4Hyyi/sak0
+         zzoxusLMiA1m/D3A/0YDahThlMDNbopevuOfEixj3NyjJK+KxHsxotlL0mpusT8xwIZG
+         lakXWW/MzQ9D+Wzg8YybVdni24Am91sb1IE/3Ao7f/H7QUONJP+nSEMiPwxriMrFAdhM
+         vuGw==
+X-Gm-Message-State: AO0yUKWJM3E9J5997Biwu6fK3Kr7DszP+wUQx9AZfJp4j6he3LYGFPAX
+        efVM4aUuW/FmccADhgXmxHkjbM9dNz1CfJZw6fPRrg==
+X-Google-Smtp-Source: AK7set9h5uuwTpjeufoAv64ypcC0Gz336pTIH+AFPXK/5RxCXuzs00HPIAeZZSuzWZ2Ce91kdT6ETj/dZ1xGqrxYcqU=
+X-Received: by 2002:a17:90a:6d66:b0:230:7f32:bf01 with SMTP id
+ z93-20020a17090a6d6600b002307f32bf01mr871866pjj.1.1675768559704; Tue, 07 Feb
+ 2023 03:15:59 -0800 (PST)
+MIME-Version: 1.0
+References: <20230130105423.1338554-1-mk@semmihalf.com> <20230130135418.1604455-1-mk@semmihalf.com>
+ <CAJMMOfNJV+eOqTgUoLLWKQe2MJ=6fXL3aaP6d=YrSBQvfhOXiA@mail.gmail.com> <DM8PR02MB8169B2AC8918F8E31628F61AF3DB9@DM8PR02MB8169.namprd02.prod.outlook.com>
+In-Reply-To: <DM8PR02MB8169B2AC8918F8E31628F61AF3DB9@DM8PR02MB8169.namprd02.prod.outlook.com>
+From:   =?UTF-8?Q?Micha=C5=82_Krawczyk?= <mk@semihalf.com>
+Date:   Tue, 7 Feb 2023 12:15:48 +0100
+Message-ID: <CAJMMOfN-6fgN0VohA5ViwVXmNWtA13ycfZFoO4ys9_CLes0feA@mail.gmail.com>
+Subject: Re: [PATCH v2] media: venus: dec: Fix handling of the start cmd
+To:     Vikash Garodia <vgarodia@qti.qualcomm.com>
+Cc:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        "Vikash Garodia (QUIC)" <quic_vgarodia@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        "vkoul@kernel.org" <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v4 7/8] arm64: dts: qcom: sm8550: Add USB PHYs and
- controller nodes
-Message-ID: <Y+Iv/s7V5PYkRI8D@linaro.org>
-References: <20230202132511.3983095-1-abel.vesa@linaro.org>
- <20230202132511.3983095-8-abel.vesa@linaro.org>
- <Y9zoD/eVG8zjMYNx@hovoldconsulting.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y9zoD/eVG8zjMYNx@hovoldconsulting.com>
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "mw@semihalf.com" <mw@semihalf.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23-02-03 11:55:11, Johan Hovold wrote:
-> On Thu, Feb 02, 2023 at 03:25:10PM +0200, Abel Vesa wrote:
-> > Add USB host controller and PHY nodes.
-> > 
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > ---
-> > 
-> > Changes since v3:
-> >  * none
-> > 
-> > Changes since v2:
-> >  * none
-> > 
-> > NOTE: This patch has been already merged. It is here only to provide
-> > context for the rest of the patchset. There is a change with respect to
-> > the clocks, but that will be sent as a separate/individual fix patch.
-> 
-> I believe it was because of the 'phy' and 'common' resets, which have
-> been switched below.
+wt., 7 lut 2023 o 10:54 Vikash Garodia <vgarodia@qti.qualcomm.com> napisa=
+=C5=82(a):
+> I have reviewed the patch, and the drain sequence handling looks good to =
+me.
+> Could you share some details on the test client which you are using to ca=
+tch this issue ?
 
-No, the resets haven't been switched, at least not compared to the
-already merged version.
+Hi Vikash,
 
-> 
-> >  arch/arm64/boot/dts/qcom/sm8550.dtsi | 92 +++++++++++++++++++++++++++-
-> >  1 file changed, 91 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> > index a85d2ae7d155..0262193e2ffe 100644
-> > --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> > @@ -14,6 +14,7 @@
-> >  #include <dt-bindings/mailbox/qcom-ipcc.h>
-> >  #include <dt-bindings/power/qcom-rpmpd.h>
-> >  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
-> > +#include <dt-bindings/phy/phy-qcom-qmp.h>
-> >  #include <dt-bindings/thermal/thermal.h>
-> >  
-> >  / {
-> > @@ -746,7 +747,7 @@ gcc: clock-controller@100000 {
-> >  				 <&ufs_mem_phy 0>,
-> >  				 <&ufs_mem_phy 1>,
-> >  				 <&ufs_mem_phy 2>,
-> > -				 <0>;
-> > +				 <&usb_dp_qmpphy QMP_USB43DP_USB3_PIPE_CLK>;
-> >  		};
-> >  
-> >  		ipcc: mailbox@408000 {
-> > @@ -2060,6 +2061,95 @@ opp-202000000 {
-> >  			};
-> >  		};
-> >  
-> > +		usb_1_hsphy: phy@88e3000 {
-> > +			compatible = "qcom,sm8550-snps-eusb2-phy";
-> > +			reg = <0x0 0x088e3000 0x0 0x154>;
-> > +			#phy-cells = <0>;
-> > +
-> > +			clocks = <&tcsr TCSR_USB2_CLKREF_EN>;
-> > +			clock-names = "ref";
-> > +
-> > +			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
-> > +
-> > +			status = "disabled";
-> > +		};
-> > +
-> > +		usb_dp_qmpphy: phy@88e8000 {
-> > +			compatible = "qcom,sm8550-qmp-usb3-dp-phy";
-> > +			reg = <0x0 0x088e8000 0x0 0x3000>;
-> > +
-> > +			clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
-> > +				 <&rpmhcc RPMH_CXO_CLK>,
-> > +				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>,
-> > +				 <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
-> > +			clock-names = "aux", "ref", "com_aux", "usb3_pipe";
-> > +
-> > +			power-domains = <&gcc USB3_PHY_GDSC>;
-> > +
-> > +			resets = <&gcc GCC_USB3_DP_PHY_PRIM_BCR>,
-> > +				 <&gcc GCC_USB3_PHY_PRIM_BCR>;
-> > +			reset-names = "phy", "common";
-> > +
-> > +			#clock-cells = <1>;
-> > +			#phy-cells = <1>;
-> > +
-> > +			status = "disabled";
-> > +		};
-> 
-> Johan
+Thank you for looking at the code!
+
+I've been testing it using the Chromium implementation of the V4L2
+codec [1]. Meanwhile, we were running a test suite which changes the
+encryption method in the middle of the video decoding. This triggers
+the flush behavior and the Chromium sends the stop/start cmd to the
+V4L2 kernel component, and the test expects the video to continue the
+playback normally. Unfortunately, it was causing a stall of the video
+at the same time.
+
+[1] https://source.chromium.org/chromium/chromium/src/+/main:media/gpu/v4l2=
+/
+
+>
+> > Thank you,
+> > Micha=C5=82
+>
+> Thanks,
+> Vikash
