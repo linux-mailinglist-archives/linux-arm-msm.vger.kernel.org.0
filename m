@@ -2,84 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D81DA68D267
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 10:17:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CAC6168D279
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Feb 2023 10:18:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231189AbjBGJR3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Feb 2023 04:17:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58612 "EHLO
+        id S231451AbjBGJSK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Feb 2023 04:18:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231425AbjBGJR0 (ORCPT
+        with ESMTP id S231486AbjBGJR7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Feb 2023 04:17:26 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83396298CB
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 01:17:23 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id n13so10529416wmr.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 01:17:23 -0800 (PST)
+        Tue, 7 Feb 2023 04:17:59 -0500
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 712A6360B3
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 01:17:51 -0800 (PST)
+Received: by mail-pl1-x632.google.com with SMTP id be8so15004243plb.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 01:17:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=cxgNacSbWKAoLPJGvCUOev++so7sWmiz/ADYtyXJHhM=;
-        b=q4QX9wvAso2SladkGFfXBFtH+tFjhCCjxuqsenbRr+tqB3FgMdePtUisENN32dhL8t
-         j4NAjdsKwm7A0bCfiznDnQH85XvsC4t2+NdNK7k7zulDvb1HUx6YPDfT0whOZ/uV4A4q
-         jT+OExMxDpMDl3JIxNIC4nN+WwJLt/qraOcwmCNJzdMXiL7grKe55VRQ2u0tJCZz+RCX
-         SwjA7Yy4HpOn6a2SUEPYHujzYYlva/cvpG/45V80tA7oZ+UgCaTmPFa70tObz7Kj9x7l
-         cc4+rE1I1U2z7PIW+TVCMh/8VQ+WVX0cEL596epDjB7/MGzWvfiYg1+U3ghHPjhCQEUl
-         Sibg==
+        d=semihalf.com; s=google;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vynNRfSz8UJUJP4Q5FL14QMsef62fBn1vsCCQDDV/vY=;
+        b=R1RY8J3+sZ1bzuiDAlqrWeNM95zr0EH40rmNJmI63W739CVH13b3MkpzVaSUwdPzrG
+         Nt6CpRYcBIGPRFVB4HLt2m0DmN2l4eRhy2NTmtUSCciX7/PRY8xX3/JCC5L5Ks6ROAnr
+         P8QNKTiVHjdzpV04oO4mCxRcX7LWuzTKmWJLbtuHTHA+/gCgXor4ZqU1IPmKalccOwxu
+         WOlb0apKV7l0mCbMXTEewcMoYgijMMM+4k64Nfsy1uiTB3FGhGipm7L51TNuaO5homR8
+         5GoC46YNcJAvu2ifxEtlSXO+bgzJ2qBF8CTTdJaiIb1pMrSdHp1stpF/1rzEzfoDSfA9
+         2NdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cxgNacSbWKAoLPJGvCUOev++so7sWmiz/ADYtyXJHhM=;
-        b=Aax0LPWTQpn3EmihP7ape2mIfy1ueDgBGfzOQH+DYoz6ICcN1RibnSLp55vJBY26DQ
-         JqHRxiN5RfRP7gqp7j/IfLxxroRA116jXi8CggcNyiW8WXa/DKl1z/1VHCt7He0S26ic
-         HI7MEWVNBAKYVhzwZwa5wkGVFeLniCQKT29rjhFN3s9AHBH1QSCqJunKPLc6l25Zto37
-         vlbk2BD+/qvJ6WM6zGisnGRkbCDaGb4EONJrP9Si70xM4zeeIIRIuPDbLBVVnPSUCssv
-         ShONH7TLcyK9RP3AcpRKPpFnnOKKLl6qYAXt8QrOHRHpS0+GeBY9h1LozlRxPO1eYu6b
-         CltA==
-X-Gm-Message-State: AO0yUKUYBAXLRSoIS4urYB1ZlcicvmZoLC6YlshG2f4r4EzIoGKBTGQU
-        jtrVK3IlKXalFDR6OU5MgrQHAQ==
-X-Google-Smtp-Source: AK7set/HJGlRQUymSmGMyLm8oSXzb9N2ZeMGj70/h6aS3O4Kp0jDqc2sHmTH4FuaURFaLKgmDKAO6Q==
-X-Received: by 2002:a05:600c:490a:b0:3d3:4007:9c88 with SMTP id f10-20020a05600c490a00b003d340079c88mr3092839wmp.18.1675761442076;
-        Tue, 07 Feb 2023 01:17:22 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id f1-20020a1cc901000000b003df14531724sm17869217wmb.21.2023.02.07.01.17.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Feb 2023 01:17:21 -0800 (PST)
-Message-ID: <7e600ba9-a99e-5f07-334f-bb872f5ed7db@linaro.org>
-Date:   Tue, 7 Feb 2023 10:17:19 +0100
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vynNRfSz8UJUJP4Q5FL14QMsef62fBn1vsCCQDDV/vY=;
+        b=DxtxtNiSWz6tpCgtZijzsYcRHv0Oh90m81AOmjkknXtZ7dU4ZxdNpfEOeGuJAXsC6D
+         SyYCLDQUptUngsMr4p3cFYugwYfIE4xgLZfx9vjANqkh5dWNGC+q249qLqOUC4Y0LB/H
+         vAvJdWXo7HgQ17hKmrqHOlPLqZ4SmN1m4is+tulonKo613l41xDrBTsbdZaNMoPgyPe+
+         59IuZJVDRCEoHIGTrQ3a9hUcfahNzixL+OvbxX7i/9sBai3HsfNKgwNkXaTrZAcyEKAv
+         cj/H2bhSWloh2adncyipOsUR5UX6k8k6QQ4OpSSixquKyHlprNY3gWmMwyLNZXlRnld5
+         SZjQ==
+X-Gm-Message-State: AO0yUKWacHNQgIA5ROFZ3k1CPdgC6U4dDijAz1b2uf0v717w2w2BGdlH
+        t91hZwd22fPv/eKGiD55QTuqkthHqmNNJO/e9Ce3Uw==
+X-Google-Smtp-Source: AK7set95NxDcJOcKwkgKYhUL7CmWpq4Or5U/UqhpyeVInDXOvC3DKLJkdy89G8Uj7gYy5XkPJ7v1GVSh9cah2hMa3FM=
+X-Received: by 2002:a17:90a:6286:b0:230:86a0:4d96 with SMTP id
+ d6-20020a17090a628600b0023086a04d96mr2391839pjj.49.1675761470716; Tue, 07 Feb
+ 2023 01:17:50 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH v2 1/7] dt-bindings: watchdog: qcom-wdt: require fallback
- for IPQ4019
-Content-Language: en-US
-To:     Guenter Roeck <linux@roeck-us.net>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>
+References: <20230130105423.1338554-1-mk@semmihalf.com> <20230130135418.1604455-1-mk@semmihalf.com>
+In-Reply-To: <20230130135418.1604455-1-mk@semmihalf.com>
+From:   =?UTF-8?Q?Micha=C5=82_Krawczyk?= <mk@semihalf.com>
+Date:   Tue, 7 Feb 2023 10:17:39 +0100
+Message-ID: <CAJMMOfNJV+eOqTgUoLLWKQe2MJ=6fXL3aaP6d=YrSBQvfhOXiA@mail.gmail.com>
+Subject: Re: [PATCH v2] media: venus: dec: Fix handling of the start cmd
+To:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-watchdog@vger.kernel.org,
-        Rob Herring <robh@kernel.org>
-References: <20230113103346.29381-1-krzysztof.kozlowski@linaro.org>
- <20230113103346.29381-2-krzysztof.kozlowski@linaro.org>
- <20230113140230.GA1606649@roeck-us.net>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230113140230.GA1606649@roeck-us.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mw@semihalf.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -87,20 +73,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/01/2023 15:02, Guenter Roeck wrote:
-> On Fri, Jan 13, 2023 at 11:33:40AM +0100, Krzysztof Kozlowski wrote:
->> The device specific compatibles ("qcom,kpss-wdt-ipq4019") should be
->> follwed by fallback "qcom,kpss-wdt", which is actually used by Linux
->> driver for binding.
->>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> Acked-by: Rob Herring <robh@kernel.org>
-> 
-> Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+pon., 30 sty 2023 o 14:55 Micha=C5=82 Krawczyk <mk@semihalf.com> napisa=C5=
+=82(a):
+>
+> From: Micha=C5=82 Krawczyk <mk@semihalf.com>
+>
+> The decoder driver should clear the last_buffer_dequeued flag of the
+> capture queue upon receiving V4L2_DEC_CMD_START.
+>
+> The last_buffer_dequeued flag is set upon receiving EOS (which always
+> happens upon receiving V4L2_DEC_CMD_STOP).
+>
+> Without this patch, after issuing the V4L2_DEC_CMD_STOP and
+> V4L2_DEC_CMD_START, the vb2_dqbuf() function will always fail, even if
+> the buffers are completed by the hardware.
+>
+> Fixes: beac82904a87 ("media: venus: make decoder compliant with stateful =
+codec API")
+>
+> Signed-off-by: Micha=C5=82 Krawczyk <mk@semihalf.com>
 
-The patchset was acked and reviewed, so are there any other comments?
-Guenter/Will - are you planning to pick it up?
+Hello,
 
-Best regards,
-Krzysztof
+Did anyone have a chance to take a look at this patch? It's fairly
+simple, but lack of this fix can have a big impact on the V4L2
+applications which implement the flush mechanism using the stop/start
+commands, especially in the middle of the video.
 
+Thank you,
+Micha=C5=82
