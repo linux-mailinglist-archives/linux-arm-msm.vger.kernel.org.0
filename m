@@ -2,80 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 42A7E68F672
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 19:02:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BE21568F69B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 19:10:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231844AbjBHSCB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Feb 2023 13:02:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38454 "EHLO
+        id S231126AbjBHSKD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Feb 2023 13:10:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48266 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231970AbjBHSBZ (ORCPT
+        with ESMTP id S231897AbjBHSJv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Feb 2023 13:01:25 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FF0253E78
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Feb 2023 10:01:07 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id o36so13920856wms.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Feb 2023 10:01:07 -0800 (PST)
+        Wed, 8 Feb 2023 13:09:51 -0500
+Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 230FC1024A
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Feb 2023 10:09:49 -0800 (PST)
+Received: by mail-io1-xd31.google.com with SMTP id r6so7275582ioj.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Feb 2023 10:09:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=S84pLTPJCH/uwIFX1Bqrss8Ya9/sRzww29xePAXKGDg=;
-        b=OWbsgK5wAowu7HB3nMQtoFtJcIRiloGKze/s9KZYtplpDskAKGHGIZ2cLBUOlFTldN
-         F1q0UQqdLKfrg8g+y6t+karc07rgUjCFjcm1NiowH0px6NBw+lDeyFJWxei/JUQbN2L8
-         ZAV298fCUmv9guqNe48PsxxYst11g09THitgj7bD6jDpM8B3HcBkEArsGMBjLUcbUYSA
-         oBd+RfOwVAMOtT1rm/GnczfT69J9qVQ0CHIr1aoCrQRzZceH+A9K7H+TxFySZD3m3jVd
-         NU3MiK7ePlYGgHDhMFAK0ncEzPbm1uEAq/Wo27nelnIyWV86vxdwGK4YbcbPCG7PJCC0
-         QuGw==
+        d=chromium.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=wcOk9A3uTdyHp1L6rc14oZDeRDwX27bnymxLOXmwfSY=;
+        b=heYrv9H5hssWCGaJvgEmDDln0GaFtcLuterSOqkQFZCBjpBeXEQy3YIfyhvqi949+l
+         /jDbqwZeEAyoDXSXyeesTBP9R+abUss0E+KHd4q+BNeSv2dGosLNE+h2C1LSwb1eMK0E
+         sjJ9WBwbtm06KhKSHFoSFcT6EN2JzDBSacYew=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=S84pLTPJCH/uwIFX1Bqrss8Ya9/sRzww29xePAXKGDg=;
-        b=VeKCzq1iX1mSNxJFYPBFp8Cv782lc7onksqNK5TSCvO5KUdDHAzqvDNDOSKPXxEMjF
-         pYZw5xUs0IWAxc3zLr2hPiRzg6gWAOO+IW3gUkTw1fRVpg5R7NHEQ47nBnAlAtXFAd2E
-         FDQc8XUvr8qfnjXrwjRc3yZWw0Wnl9tOc5sSpNNmx28VbzO4Ard45AKDcatCUmhlH5+d
-         pzhzGW2QooLYRPA7WTrvRFpTiKUZ91jg+S9/gH8m/74JO9QBKWSxDsn4s4B0kc+CSB2j
-         CM76NI0ULSArHUpaA2s7A6RdloqslKAryeEAm5D0Kq6pxceLvb2MAee9kK3kV+i4qmT2
-         k7Yg==
-X-Gm-Message-State: AO0yUKXEM47Wx7zxoU3X09aBFIK/M3fXabHaIucMAK9ap8PoEMW6ZKe1
-        GY3BvCtZnOW5CVUUMWCqLY7GMA==
-X-Google-Smtp-Source: AK7set8LIAnojVY6PUG1aP0PYXhEbr07tUn+/CwvVQC7jyf60qhmICJLIeoZPPkmfA3vmuPOkOX5AA==
-X-Received: by 2002:a05:600c:1606:b0:3e0:39:ec9d with SMTP id m6-20020a05600c160600b003e00039ec9dmr7552229wmn.23.1675879265169;
-        Wed, 08 Feb 2023 10:01:05 -0800 (PST)
-Received: from hackbox.lan ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id k20-20020a05600c169400b003dc54eef495sm2370286wmn.24.2023.02.08.10.01.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Feb 2023 10:01:04 -0800 (PST)
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wcOk9A3uTdyHp1L6rc14oZDeRDwX27bnymxLOXmwfSY=;
+        b=rDyrQvme5UBup1PrxiJJoOemmQvL9yviyv5rGNcAxR/scIOsIBdcFafI0USm5oSQP6
+         /m7FPfH0wmHv0uHI3/zzsufIcilR2+BNJFV0tQtOJnn/DUWGIIOtLf6U39H9XoKg61IB
+         Ds87vWGhMoCCCaJ5MiDwHSPya/n28jW/1l1eq+1EqwVehYye2KKPAyIKs7bJrcaIjaGd
+         fOsSWeSNxZm+WqnVfeRVXeOu2NI7nHESoBDvrPSu5tTftypmbwdbKg/ViOED8tFKFGRD
+         yT9kO5h+BYveNaw/h/gdHkp0jkAcAcpA/6VFTCGoBOuXOse/c9luL76f8uGNj356JFUk
+         NrzQ==
+X-Gm-Message-State: AO0yUKV+VKwoUYEHowXB5wmkOweTDcNK1hjaIfjIZF+NiUVOTXnYkvFK
+        H2Ioecg4uvgnpXVfF9D0DQB3yg==
+X-Google-Smtp-Source: AK7set+pT9VTS51XdyHe4VGCcxeCwRNUF9W9NQ4gfUa57VRxzTTW0du58Vpq72oXlyG8Z1CUN3qNwA==
+X-Received: by 2002:a5e:a605:0:b0:71b:cc7b:db4f with SMTP id q5-20020a5ea605000000b0071bcc7bdb4fmr5887098ioi.12.1675879789035;
+        Wed, 08 Feb 2023 10:09:49 -0800 (PST)
+Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
+        by smtp.gmail.com with UTF8SMTPSA id e4-20020a6b5004000000b006884b050a0asm4750223iob.18.2023.02.08.10.09.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Feb 2023 10:09:48 -0800 (PST)
+Date:   Wed, 8 Feb 2023 18:09:48 +0000
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        "vkoul@kernel.org" <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Johan Hovold <johan+linaro@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: [PATCH v9 11/11] arm64: dts: qcom: sm8550: Fix PCIe PHYs and controllers nodes
-Date:   Wed,  8 Feb 2023 20:00:20 +0200
-Message-Id: <20230208180020.2761766-12-abel.vesa@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230208180020.2761766-1-abel.vesa@linaro.org>
-References: <20230208180020.2761766-1-abel.vesa@linaro.org>
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sc7280: Power herobrine's 3.3 eDP/TS
+ rail more properly
+Message-ID: <Y+PlbAVDLoSUKJ7U@google.com>
+References: <20230207163550.1.I5ff72b7746d5fca8f10ea61351bde4150ed1a7f8@changeid>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20230207163550.1.I5ff72b7746d5fca8f10ea61351bde4150ed1a7f8@changeid>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -84,204 +73,71 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-First, move the pinctrl related propeties out from SoC dtsi and into the
-board dts and add blank lines before status properties in the PHY nodes
-to be consistent with the rest of the nodes. Then drop the pipe clock
-from the controller nodes. Rename the aggre0 and aggre1 clocks to more
-generic noc_aggr, and then the cnoc_pcie_sf_axi to cnoc_sf_axi. Add the
-cpu-pcie interconnects to both controller nodes. Rename the pcie1 second
-reset to link_down and drop the unnecessary enable-gpios. Switch the aux
-clock to GCC_PCIE_1_PHY_AUX_CLK for the pcie1 PHY and drop the aux_phy
-from clock-names. Also rename the nocsr reset to phy_nocsr. With this
-changes we are now in line with the SC8280XP bindings.
+On Tue, Feb 07, 2023 at 04:36:10PM -0800, Douglas Anderson wrote:
+> This is the equivalent of commit f5b4811e8758 ("arm64: dts: qcom:
+> sc7180: Add trogdor eDP/touchscreen regulator off-on-time") and commit
+> 23ff866987de ("arm64: dts: qcom: sc7180: Start the trogdor
+> eDP/touchscreen regulator on"), but for herobrine instead of trogdor.
+> 
+> The motivations for herobrine are the same as for trogdor.
+> 
+> NOTES:
+> * Currently for herobrine all boards are eDP, not MIPI. If/when we
+>   have herobrine derivatives that are MIPI they we can evaluate
+>   whether the same off-on-delay makes sense for them. For trogdor we
+>   didn't add the delay to MIPI panels because the problem was found
+>   late and nobody had complained about it. For herobrine defaulting to
+>   assuming the same 500ms makes sense and if we find we need to
+>   optimize later we can.
+> * Currently there are no oddball herobrine boards like homestar where
+>   the panel really likes to be power cycled. If we have an oddball
+>   board it will need to split the eDP and touchscreen rail anyway
+>   (like homestar did) and we'll have to delete the "regulator-boot-on"
+>   from that board.
+> 
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+> This patch should be applied atop my recent series adjusting the
+> herobrine touchscreen rails [1]. If I need to send a v2 of that series
+> I will add this at the end of it as patch #8.
+> 
+> [1] https://lore.kernel.org/all/20230207024816.525938-1-dianders@chromium.org/
+> 
+>  arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+> index ded36b5d28c7..312cc0e1cbc7 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+> @@ -110,6 +110,22 @@ pp3300_left_in_mlb: pp3300-left-in-mlb-regulator {
+>  
+>  		regulator-enable-ramp-delay = <3000>;
+>  
+> +		/*
+> +		 * eDP panel specs nearly always have a spec that says you
 
-Fixes: 98a4dc3a78fa ("arm64: dts: qcom: sm8550: Add PCIe PHYs and controllers nodes")
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
----
+uber-nit: you could replace the second 'spec' with 'requirement' to avoid
+the repetition.
 
-The v8 of this patch is:
-https://lore.kernel.org/all/20230206212619.3218741-12-abel.vesa@linaro.org/
+> +		 * shouldn't turn them off an on again without waiting 500ms.
+> +		 * Add this as a board constraint since this rail is shared
+> +		 * between the panel and touchscreen.
+> +		 */
+> +		off-on-delay-us = <500000>;
+> +
+> +		/*
+> +		 * Stat the regulator on. This has the advantage of starting
 
-Changes since v8:
- * added Johan's R-b tag
+s/Stat/Start/ ?
 
- arch/arm64/boot/dts/qcom/sm8550-mtp.dts | 10 +++++
- arch/arm64/boot/dts/qcom/sm8550.dtsi    | 52 +++++++++----------------
- 2 files changed, 28 insertions(+), 34 deletions(-)
+> +		 * the slow process of powering the panel on as soon as we
+> +		 * probe the regulator. It also avoids tripping the
+> +		 * off-on-delay immediately on every bootup.
+> +		 */
+> +		regulator-boot-on;
+> +
+>  		vin-supply = <&pp3300_z1>;
+>  	};
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-index 725d3bc3ee72..56aab7cafcbc 100644
---- a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-@@ -414,18 +414,27 @@ &pcie_1_phy_aux_clk {
- &pcie0 {
- 	wake-gpios = <&tlmm 96 GPIO_ACTIVE_HIGH>;
- 	perst-gpios = <&tlmm 94 GPIO_ACTIVE_LOW>;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pcie0_default_state>;
-+
- 	status = "okay";
- };
- 
- &pcie0_phy {
- 	vdda-phy-supply = <&vreg_l1e_0p88>;
- 	vdda-pll-supply = <&vreg_l3e_1p2>;
-+
- 	status = "okay";
- };
- 
- &pcie1 {
- 	wake-gpios = <&tlmm 99 GPIO_ACTIVE_HIGH>;
- 	perst-gpios = <&tlmm 97 GPIO_ACTIVE_LOW>;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pcie1_default_state>;
-+
- 	status = "okay";
- };
- 
-@@ -433,6 +442,7 @@ &pcie1_phy {
- 	vdda-phy-supply = <&vreg_l3c_0p91>;
- 	vdda-pll-supply = <&vreg_l3e_1p2>;
- 	vdda-qref-supply = <&vreg_l1e_0p88>;
-+
- 	status = "okay";
- };
- 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index 6ff135191ee0..bba1123ea374 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -1672,25 +1672,24 @@ pcie0: pci@1c00000 {
- 					<0 0 0 3 &intc 0 0 0 151 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
- 					<0 0 0 4 &intc 0 0 0 152 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
- 
--			clocks = <&gcc GCC_PCIE_0_PIPE_CLK>,
--				 <&gcc GCC_PCIE_0_AUX_CLK>,
-+			clocks = <&gcc GCC_PCIE_0_AUX_CLK>,
- 				 <&gcc GCC_PCIE_0_CFG_AHB_CLK>,
- 				 <&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
- 				 <&gcc GCC_PCIE_0_SLV_AXI_CLK>,
- 				 <&gcc GCC_PCIE_0_SLV_Q2A_AXI_CLK>,
- 				 <&gcc GCC_DDRSS_PCIE_SF_QTB_CLK>,
- 				 <&gcc GCC_AGGRE_NOC_PCIE_AXI_CLK>;
--			clock-names = "pipe",
--				      "aux",
-+			clock-names = "aux",
- 				      "cfg",
- 				      "bus_master",
- 				      "bus_slave",
- 				      "slave_q2a",
- 				      "ddrss_sf_tbu",
--				      "aggre0";
-+				      "noc_aggr";
- 
--			interconnect-names = "pcie-mem";
--			interconnects = <&pcie_noc MASTER_PCIE_0 0 &mc_virt SLAVE_EBI1 0>;
-+			interconnects = <&pcie_noc MASTER_PCIE_0 0 &mc_virt SLAVE_EBI1 0>,
-+					<&gem_noc MASTER_APPSS_PROC 0 &cnoc_main SLAVE_PCIE_0 0>;
-+			interconnect-names = "pcie-mem", "cpu-pcie";
- 
- 			iommus = <&apps_smmu 0x1400 0x7f>;
- 			iommu-map = <0x0   &apps_smmu 0x1400 0x1>,
-@@ -1704,12 +1703,6 @@ pcie0: pci@1c00000 {
- 			phys = <&pcie0_phy>;
- 			phy-names = "pciephy";
- 
--			perst-gpios = <&tlmm 94 GPIO_ACTIVE_LOW>;
--			wake-gpios = <&tlmm 96 GPIO_ACTIVE_HIGH>;
--
--			pinctrl-names = "default";
--			pinctrl-0 = <&pcie0_default_state>;
--
- 			status = "disabled";
- 		};
- 
-@@ -1771,8 +1764,7 @@ pcie1: pci@1c08000 {
- 					<0 0 0 3 &intc 0 0 0 438 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
- 					<0 0 0 4 &intc 0 0 0 439 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
- 
--			clocks = <&gcc GCC_PCIE_1_PIPE_CLK>,
--				 <&gcc GCC_PCIE_1_AUX_CLK>,
-+			clocks = <&gcc GCC_PCIE_1_AUX_CLK>,
- 				 <&gcc GCC_PCIE_1_CFG_AHB_CLK>,
- 				 <&gcc GCC_PCIE_1_MSTR_AXI_CLK>,
- 				 <&gcc GCC_PCIE_1_SLV_AXI_CLK>,
-@@ -1780,21 +1772,21 @@ pcie1: pci@1c08000 {
- 				 <&gcc GCC_DDRSS_PCIE_SF_QTB_CLK>,
- 				 <&gcc GCC_AGGRE_NOC_PCIE_AXI_CLK>,
- 				 <&gcc GCC_CNOC_PCIE_SF_AXI_CLK>;
--			clock-names = "pipe",
--				      "aux",
-+			clock-names = "aux",
- 				      "cfg",
- 				      "bus_master",
- 				      "bus_slave",
- 				      "slave_q2a",
- 				      "ddrss_sf_tbu",
--				      "aggre1",
--				      "cnoc_pcie_sf_axi";
-+				      "noc_aggr",
-+				      "cnoc_sf_axi";
- 
- 			assigned-clocks = <&gcc GCC_PCIE_1_AUX_CLK>;
- 			assigned-clock-rates = <19200000>;
- 
--			interconnect-names = "pcie-mem";
--			interconnects = <&pcie_noc MASTER_PCIE_1 0 &mc_virt SLAVE_EBI1 0>;
-+			interconnects = <&pcie_noc MASTER_PCIE_1 0 &mc_virt SLAVE_EBI1 0>,
-+					<&gem_noc MASTER_APPSS_PROC 0 &cnoc_main SLAVE_PCIE_1 0>;
-+			interconnect-names = "pcie-mem", "cpu-pcie";
- 
- 			iommus = <&apps_smmu 0x1480 0x7f>;
- 			iommu-map = <0x0   &apps_smmu 0x1480 0x1>,
-@@ -1802,20 +1794,13 @@ pcie1: pci@1c08000 {
- 
- 			resets = <&gcc GCC_PCIE_1_BCR>,
- 				<&gcc GCC_PCIE_1_LINK_DOWN_BCR>;
--			reset-names = "pci",
--				"pcie_1_link_down_reset";
-+			reset-names = "pci", "link_down";
- 
- 			power-domains = <&gcc PCIE_1_GDSC>;
- 
- 			phys = <&pcie1_phy>;
- 			phy-names = "pciephy";
- 
--			perst-gpios = <&tlmm 97 GPIO_ACTIVE_LOW>;
--			enable-gpios = <&tlmm 99 GPIO_ACTIVE_HIGH>;
--
--			pinctrl-names = "default";
--			pinctrl-0 = <&pcie1_default_state>;
--
- 			status = "disabled";
- 		};
- 
-@@ -1823,18 +1808,17 @@ pcie1_phy: phy@1c0e000 {
- 			compatible = "qcom,sm8550-qmp-gen4x2-pcie-phy";
- 			reg = <0x0 0x01c0e000 0x0 0x2000>;
- 
--			clocks = <&gcc GCC_PCIE_1_AUX_CLK>,
-+			clocks = <&gcc GCC_PCIE_1_PHY_AUX_CLK>,
- 				 <&gcc GCC_PCIE_1_CFG_AHB_CLK>,
- 				 <&tcsr TCSR_PCIE_1_CLKREF_EN>,
- 				 <&gcc GCC_PCIE_1_PHY_RCHNG_CLK>,
--				 <&gcc GCC_PCIE_1_PIPE_CLK>,
--				 <&gcc GCC_PCIE_1_PHY_AUX_CLK>;
-+				 <&gcc GCC_PCIE_1_PIPE_CLK>;
- 			clock-names = "aux", "cfg_ahb", "ref", "rchng",
--				      "pipe", "aux_phy";
-+				      "pipe";
- 
- 			resets = <&gcc GCC_PCIE_1_PHY_BCR>,
- 				 <&gcc GCC_PCIE_1_NOCSR_COM_PHY_BCR>;
--			reset-names = "phy", "nocsr";
-+			reset-names = "phy", "phy_nocsr";
- 
- 			assigned-clocks = <&gcc GCC_PCIE_1_PHY_RCHNG_CLK>;
- 			assigned-clock-rates = <100000000>;
--- 
-2.34.1
-
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
