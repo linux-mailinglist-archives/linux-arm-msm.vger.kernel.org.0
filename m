@@ -2,121 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9668468F3A2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 17:44:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 04FDF68F3B6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 17:47:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231599AbjBHQoK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Feb 2023 11:44:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53330 "EHLO
+        id S231539AbjBHQre (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Feb 2023 11:47:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231567AbjBHQoI (ORCPT
+        with ESMTP id S231520AbjBHQrd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Feb 2023 11:44:08 -0500
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A65864E53B
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Feb 2023 08:43:40 -0800 (PST)
-Received: by mail-ej1-x633.google.com with SMTP id rp23so1519982ejb.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Feb 2023 08:43:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ASbsE/XmAlMrDircKHKs5lE92BDcQ2dh7PvE1hQ63fE=;
-        b=EXIefF7NkFQhnz6WXVJgBWhSVN0YZG69qlxFwlhMrse5t8dtnaNwCPZFR/u/pLt3gE
-         V/DWB8M+haVNDAKX3i7vWpjm/AWl2OgxMj8E40xbBxYraC5wsGXEMXy/rjkIAsvJfdx7
-         K/b9dUDLIRuFELLr1IGqZa5ry9VZBqV6eTQJxJbB/IBX66DcLa4DVIuLIAFcd/+7LY1y
-         9fUW/FIKj6lqMVcr+wd6ewBSL5QvYdZLWr0aNqmEzyIJ8KhKWdYZUdPsz1cpyK5WGNuD
-         oZpEiOtRxqhoWJTKf0E1YNTt4WanKcqrC2qJgFeBDZzgPH8x4iMIwwAHtoSA8WfMIHa3
-         jw9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ASbsE/XmAlMrDircKHKs5lE92BDcQ2dh7PvE1hQ63fE=;
-        b=OmEbOBrZD2mvjPK8BayY1732T5BD6Vf4ZTwTNnyqM1vCIWReKKAet1k+JlCcq4xJPg
-         SSD0PTqvFIfshPDh03d4vT/yBeqGrW3BUC5OJA2hrlbtDfSkC6OIJRtTIXmE7PkyxKET
-         Qxak6uvivHhNzR4dOSyZLVnZ5XU0uLWxITAcAK3fqTmUQ4uHjU/j6yB2niAxxO1bUA23
-         fTx61Cs5p3x/0UgScPzsx1r0EFMvG0/+oQFJzhMYq5GsJJPNgGPsM8vBn9BgBLHffFR5
-         fx8Qj2uer8vK6mtp3ZJk3t4WTZcKaQsgsxiEJgX78Mz35S7rO4iELAm++zikF5u68x5E
-         +lAQ==
-X-Gm-Message-State: AO0yUKUEds8eTBru6vZcmKn2xAVRU0J497Y7jRRI3rPgHDN8EmM0lVmj
-        y/tr/G8nJY8RD6iOREOjDKSInw==
-X-Google-Smtp-Source: AK7set+RAX84i4gKstXtg9gLaHvp4VUWeWIP8mak3bhwJw+R/hfeFhIOdVQu3SHtfkpRQcIdY6Zvrg==
-X-Received: by 2002:a17:906:1286:b0:88f:9c29:d232 with SMTP id k6-20020a170906128600b0088f9c29d232mr8545358ejb.57.1675874617446;
-        Wed, 08 Feb 2023 08:43:37 -0800 (PST)
-Received: from [192.168.1.101] (abxh117.neoplus.adsl.tpnet.pl. [83.9.1.117])
-        by smtp.gmail.com with ESMTPSA id t21-20020a170906609500b008a58c3b8daesm3912331ejj.164.2023.02.08.08.43.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Feb 2023 08:43:37 -0800 (PST)
-Message-ID: <9ac637ef-ab11-518a-b5bd-243712a482b3@linaro.org>
-Date:   Wed, 8 Feb 2023 17:43:34 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH v2 8/8] arm64: dts: qcom: sm8350-hdk: enable GPU
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        Wed, 8 Feb 2023 11:47:33 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADBEE3B0F8;
+        Wed,  8 Feb 2023 08:47:32 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4BC4861739;
+        Wed,  8 Feb 2023 16:47:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0D0DC433EF;
+        Wed,  8 Feb 2023 16:47:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1675874851;
+        bh=R1EhtcU+fclNZFQL8u7Brp4bwbZEsKYX6uSdRHsHv2A=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=U6bWjigrlotYRUIqlBf8CTuKUZCDW3AGSsDqyFp0kwvWC8JQRu3AlgZpFaAjcANgY
+         +7xrcdOVda0QADEWQmcdrstkLl3RUmnw6HTlO/+3VXa2n86Tff4UWmGuw4cjysRWyc
+         L4HiEDCK5VRqocjXbIEJpIdhYzGrErw31zK2EbkEbZKesAuCUQIFPObo61tkkXdh6A
+         7CzGXoDejf9KxH8Ze6wqa5LGVZNhff8HSn6o8W6M2h8xc33zdAiSy9+bFHT+qA6xbf
+         3z0LubwWlERJ8GYylBIAwRsvEljLm+KYWoCp3DDBq/ucxQtXLg9u6LUAOxypVkXzRS
+         JJrUpwUXaJ3IQ==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pPnc7-0005yV-DZ; Wed, 08 Feb 2023 17:48:08 +0100
+Date:   Wed, 8 Feb 2023 17:48:07 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-References: <20230206145707.122937-1-dmitry.baryshkov@linaro.org>
- <20230206145707.122937-9-dmitry.baryshkov@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230206145707.122937-9-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v8 08/11] phy: qcom-qmp-pcie: Add support for SM8550 g3x2
+ and g4x2 PCIEs
+Message-ID: <Y+PSR6DKUeoreGJL@hovoldconsulting.com>
+References: <20230206212619.3218741-1-abel.vesa@linaro.org>
+ <20230206212619.3218741-9-abel.vesa@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230206212619.3218741-9-abel.vesa@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 6.02.2023 15:57, Dmitry Baryshkov wrote:
-> Enable the GPU on the SM8350-HDK device. The ZAP shader is required for
-> the GPU to function properly.
+On Mon, Feb 06, 2023 at 11:26:16PM +0200, Abel Vesa wrote:
+> Add the SM8550 both g4 and g3 configurations. In addition, there is a
+> new "lane shared" table that needs to be configured for g4, along with
+> the No-CSR list of resets. The no-CSR allows resetting the PHY without
+> actually dropping the PHY configuration. The no-CSR needs to be
+> deasserted only after the PHY has been configured and the PLL has
+> stabilized.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Co-developed-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Konrad
->  arch/arm64/boot/dts/qcom/sm8350-hdk.dts | 8 ++++++++
->  1 file changed, 8 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-> index df841230d1b7..5e744423a673 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-> @@ -284,6 +284,14 @@ &gpi_dma1 {
->  	status = "okay";
->  };
+> @@ -2370,6 +2690,12 @@ static int qmp_pcie_power_on(struct phy *phy)
+>  	if (ret)
+>  		return ret;
 >  
-> +&gpu {
-> +	status = "okay";
+> +	ret = reset_control_deassert(qmp->nocsr_reset);
+> +	if (ret) {
+> +		dev_err(qmp->dev, "no-csr reset deassert failed\n");
+> +		goto err_disable_pipe_clk;
+> +	}
 > +
-> +	zap-shader {
-> +		firmware-name = "qcom/sm8350/a660_zap.mbn";
-> +	};
-> +};
+>  	/* Pull PHY out of reset state */
+>  	qphy_clrbits(pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
+>  
+> @@ -2503,6 +2829,13 @@ static int qmp_pcie_reset_init(struct qmp_pcie *qmp)
+>  	if (ret)
+>  		return dev_err_probe(dev, ret, "failed to get resets\n");
+>  
+> +	if (cfg->has_nocsr_reset) {
+> +		qmp->nocsr_reset = devm_reset_control_get_exclusive(dev, "phy_nocsr");
+> +		if (IS_ERR(qmp->nocsr_reset))
+> +			return dev_err_probe(dev, PTR_ERR(qmp->nocsr_reset),
+> +						"failed to get no-CSR reset\n");
+
+Nit: You're still using uppercase CSR here and lowercase elsewhere.
+
+> +	}
 > +
->  &i2c15 {
->  	clock-frequency = <400000>;
->  	status = "okay";
+>  	return 0;
+>  }
+
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
