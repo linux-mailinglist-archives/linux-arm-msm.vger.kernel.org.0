@@ -2,112 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C81668E74C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 06:05:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E69168E78D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 06:34:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230263AbjBHFF2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Feb 2023 00:05:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45828 "EHLO
+        id S229530AbjBHFeX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Feb 2023 00:34:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229796AbjBHFF0 (ORCPT
+        with ESMTP id S229500AbjBHFeW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Feb 2023 00:05:26 -0500
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33B891E9D8
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 21:05:26 -0800 (PST)
-Received: by mail-pg1-x530.google.com with SMTP id n3so6421639pgr.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 21:05:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ya5gJFL+sholpFu2gVvhEQXkb61wVgNoGrsK8xi1Z7M=;
-        b=YjTsp9kdEz13Y1GNS0O5pGEyWSuzSogMDi4e7ZZ7iv+IZANa948+CJPU+/06uYdiuI
-         Gghb9yPK7hJNXzFNQ8ZfboZrNIcDAIhcUwDk3RZYsxZsLFbj9LctlgfufzZINBRdA8Xb
-         SFapInnCj+0ungZBt7qV71G0MxFzBnw4U6krmO22nfdS7qe1F9BjFw3E5IXM7Aiyb3a1
-         VW0Nd6hy1INXQ8Sx3iNmy7sGVZ2LxS8Oq4s+Dudnzi6YcZIab79I78dHNFYysALOEQ/j
-         1sVe9PHlgzBQz1mAJURvaLQ5wJRIrFz6NP/d/9Q+cHPwjZVTkdIhguBLPi3UtOJy/ul1
-         CukQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ya5gJFL+sholpFu2gVvhEQXkb61wVgNoGrsK8xi1Z7M=;
-        b=VJxbskwRsWcLjiU5f68CmDzz2G5PvSZlSdavW6ukF5Rk/G21C7iDZOvtR1G/eF1XN3
-         YFgJsneiMBe38gIhmSKvOl+HvOgpGKohka6gpzLNHWe46Zn76WjDBhb2ZAkJaHI7AJ7G
-         Q52uiobHDK+9FuJGqtqcOqHDJTmAHorTtOd6EypzdU1f9c4x3C1JGzXa2AWRDdTxqm31
-         rhNIHvIWf02lBNdxmvemvVvtcjzyycbYk2/LESr+MPhcGgmGItC/+tHyU/siKwGAziqw
-         4HbD495ZqIo7gyuTYzwO20GSXynjBLLhxBsJZRAScOOxdrbHIk0y7OAzWta5qtvR+67f
-         GG/A==
-X-Gm-Message-State: AO0yUKVDoaZDTL3mUhwrCYMR+WW6hNinxK2TciGhopAFnyqZZ7XE69aj
-        5fP67yQUjABCOr6CF7deNuKeFA==
-X-Google-Smtp-Source: AK7set9UuA7k0BjdlRO0q39ZKPIN4H6BAK2nzgdoKHGELVuwsO4MfgZ2/oEHq4b2N3zB9KZnbyJYyQ==
-X-Received: by 2002:a62:1a89:0:b0:594:26a7:cbd2 with SMTP id a131-20020a621a89000000b0059426a7cbd2mr875118pfa.8.1675832725646;
-        Tue, 07 Feb 2023 21:05:25 -0800 (PST)
-Received: from localhost ([122.172.83.155])
-        by smtp.gmail.com with ESMTPSA id x14-20020aa793ae000000b005a6cb51f240sm2867924pff.109.2023.02.07.21.05.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Feb 2023 21:05:25 -0800 (PST)
-Date:   Wed, 8 Feb 2023 10:35:23 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
-        Markus Mayer <mmayer@broadcom.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Kevin Hilman <khilman@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-omap@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, kernel@pengutronix.de
-Subject: Re: [PATCH] cpufreq: Make cpufreq_unregister_driver() return void
-Message-ID: <20230208050523.p6437bes6cmpd33k@vireshk-i7>
-References: <20230207195909.474953-1-u.kleine-koenig@pengutronix.de>
+        Wed, 8 Feb 2023 00:34:22 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B08B25E18;
+        Tue,  7 Feb 2023 21:34:21 -0800 (PST)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3185Y0L9018269;
+        Wed, 8 Feb 2023 05:34:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=OvjVQPQcigxEIozH/JTu6OfAGT/nQbLlMSiDVbZhOWQ=;
+ b=Lo4grIUnlQMHF2MTuFks44BmLrXW+wPeiUVScHHd5TJjbSGPRU0wDcKe0/s1CuKSSgYm
+ 7q8gydZXZfgJKmfHdaHhf8J4ZyuT+6w3XxmT3rTV9/vIOvdDn5IY2rRl2YRpryLoNxIE
+ 33otw2meJfp41FKnXd7sObyM+XqqpBS1HNqHyYzQvdsR7SVx0L4FH4y4tjoYln5oInoi
+ MkjJ/jic8kXR834HQAC6xfg+BCbhssUKWpEWeQIXURxIzCKI+4igVujWveKk3bnPTG0s
+ rw0gPS/bkIol9DhjgrfgLZZkrRG5yhtuugdyaUEMoVuosZYCYAOEp+DEqtE7ZC2H21OY 9w== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nm1yf0h88-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 08 Feb 2023 05:34:00 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3185Xw0x018386
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 8 Feb 2023 05:33:58 GMT
+Received: from poovendh-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Tue, 7 Feb 2023 21:33:48 -0800
+From:   Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <lee@kernel.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <jassisinghbrar@gmail.com>, <catalin.marinas@arm.com>,
+        <will@kernel.org>, <shawnguo@kernel.org>, <arnd@arndb.de>,
+        <marcel.ziswiler@toradex.com>, <robimarko@gmail.com>,
+        <dmitry.baryshkov@linaro.org>, <nfraprado@collabora.com>,
+        <broonie@kernel.org>, <quic_gurus@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
+        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
+        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_devipriy@quicinc.com>
+Subject: [PATCH V3 0/5] Enable crashdump collection support for IPQ9574
+Date:   Wed, 8 Feb 2023 11:03:27 +0530
+Message-ID: <20230208053332.16537-1-quic_poovendh@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230207195909.474953-1-u.kleine-koenig@pengutronix.de>
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: XYUo76ExZ5pxeUolcPFX1CnNe6gHr7Sz
+X-Proofpoint-GUID: XYUo76ExZ5pxeUolcPFX1CnNe6gHr7Sz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-02-08_02,2023-02-06_03,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ adultscore=0 impostorscore=0 mlxscore=0 phishscore=0 clxscore=1015
+ mlxlogscore=782 suspectscore=0 malwarescore=0 bulkscore=0
+ priorityscore=1501 spamscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2212070000 definitions=main-2302080049
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07-02-23, 20:59, Uwe Kleine-König wrote:
-> All but a few drivers ignore the return value of
-> cpufreq_unregister_driver(). Those few that don't only call it after
-> cpufreq_register_driver() succeeded, in which case the call doesn't
-> fail.
-> 
-> Make the function return no value and add a WARN_ON for the case that
-> the function is called in an invalid situation (i.e. without a previous
-> successful call to cpufreq_register_driver()).
-> 
-> Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-> ---
->  drivers/cpufreq/brcmstb-avs-cpufreq.c | 5 +----
->  drivers/cpufreq/cpufreq.c             | 8 +++-----
->  drivers/cpufreq/davinci-cpufreq.c     | 4 +++-
->  drivers/cpufreq/mediatek-cpufreq-hw.c | 4 +++-
->  drivers/cpufreq/omap-cpufreq.c        | 4 +++-
->  drivers/cpufreq/qcom-cpufreq-hw.c     | 4 +++-
->  include/linux/cpufreq.h               | 2 +-
->  7 files changed, 17 insertions(+), 14 deletions(-)
+Crashdump collection is enabled based on the DLOAD bit in the TCSR register.
+This bit is set during bootup and cleared during shutdown. During crash,
+dload bit is not cleared, due to which uboot starts crashdump collection.
 
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+This patch series adds the support for crashdump collection.
 
+DTS patch depends on the IPQ9574 baseport series
+https://lore.kernel.org/linux-arm-msm/20230206103337.21000-1-quic_devipriy@quicinc.com/
+
+V3:
+	- change logs are added to the respective patches.
+
+V2 can be found at 
+https://lore.kernel.org/linux-arm-kernel/20230201090529.30446-1-quic_poovendh@quicinc.com/
+
+Changes in V2:
+	- rebased on linux-next/master
+        - dropped co-developed by tag wherever applicable
+	- V1 can be found at
+	  https://lore.kernel.org/linux-arm-kernel/20230113160012.14893-1-quic_poovendh@quicinc.com/
+
+Poovendhan Selvaraj (5):
+  dt-bindings: scm: Add compatible for IPQ9574
+  arm64: dts: qcom: Add support for Crashdump collection on IPQ9574
+  firmware: scm: Modify only the DLOAD bit in TCSR register for download
+    mode
+  arm64: defconfig: Enable scm download mode config for IPQ Targets
+  dt-bindings: mfd: Add the tcsr compatible for IPQ9574
+
+ .../bindings/firmware/qcom,scm.yaml           |  1 +
+ .../devicetree/bindings/mfd/qcom,tcsr.yaml    |  1 +
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi         | 26 ++++++++++++++++++-
+ arch/arm64/configs/defconfig                  |  1 +
+ drivers/firmware/qcom_scm.c                   | 12 ++++++---
+ 5 files changed, 36 insertions(+), 5 deletions(-)
+
+
+base-commit: 49a8133221c71b935f36a7c340c0271c2a9ee2db
 -- 
-viresh
+2.17.1
+
