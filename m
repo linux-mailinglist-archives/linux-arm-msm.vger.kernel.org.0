@@ -2,87 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2877968EF8D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 14:12:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E423D68EFF8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 14:42:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231328AbjBHNMR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Feb 2023 08:12:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56418 "EHLO
+        id S230368AbjBHNmW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Feb 2023 08:42:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229965AbjBHNMQ (ORCPT
+        with ESMTP id S229732AbjBHNmV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Feb 2023 08:12:16 -0500
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDDFE460AF;
-        Wed,  8 Feb 2023 05:12:14 -0800 (PST)
-Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: kholk11)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 670BB660209D;
-        Wed,  8 Feb 2023 13:12:12 +0000 (GMT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1675861933;
-        bh=UOCZJc3cdFQz7WthuBqxrwG8dtBB60ZKl7NVR8Pqvfo=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=kyU+9mQdEod0ItgZqYe2WGyoUkGROJ+uKVETSfQgPaNxgTuPD9jNVuf+b/4DU+Xbg
-         isKqJj80vNFveMnyV74RA48dg2zUazykij7yww34rdUwhpTwvuboAzhVdUEaPHa8HM
-         K+se12Gcx4BL5Pebq6kHLh+hBvacCeGvLfnfXZ4hNEk442X/gFWBeLK+nw8Re/PliP
-         /ncMNzw7q9IlUQrFaWIYlrg+3lp8d54W8XbwIDI+ZEo8myUvxDTcIqq8Tt9n0OrcG7
-         1sXaFrD0dy1RHdbgcj8M6bGGAwUJYRhXg9WYCkxSkEKF21c9o/xxxh42ON70sHnkVe
-         9kO9odKEySRkQ==
-Message-ID: <3b421ab5-9b97-4f50-f65e-471a6d09f568@collabora.com>
-Date:   Wed, 8 Feb 2023 14:12:09 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH] cpufreq: Make cpufreq_unregister_driver() return void
-Content-Language: en-US
-To:     =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?= <u.kleine-koenig@pengutronix.de>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        iresh Kumar <viresh.kumar@linaro.org>
-Cc:     Markus Mayer <mmayer@broadcom.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Kevin Hilman <khilman@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-omap@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, kernel@pengutronix.de
-References: <20230207195909.474953-1-u.kleine-koenig@pengutronix.de>
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-In-Reply-To: <20230207195909.474953-1-u.kleine-koenig@pengutronix.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Wed, 8 Feb 2023 08:42:21 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 765592CFFC;
+        Wed,  8 Feb 2023 05:42:20 -0800 (PST)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 318BDHPZ001389;
+        Wed, 8 Feb 2023 13:42:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=NkCxbS78vLly3nZijdZogjZfs3u+YMXxzwdQ7R3OUzQ=;
+ b=EMDg5q7XXXgWFAqDVeHA9O4iiVRb6lFHeH/fgACLcu1iZJNRde5OnAkDjIxqF+g6qABH
+ 27oGZ5gxdDGtPDQNg3O4nN2+StTRh5l59Aq8xdrDEqi9xh0dlPdZqq8pM3jcjtN/DwUm
+ Lb3Y6vqNRpERndC22dCje2OHTeHQa8p8Do5mbOKmfY3GygYggesMaTKLwHW3qERKhGUT
+ GHk33k7bOO18SFETkWeMNRJ/odA1VLN+WGNY4fGwAGlh/Gr49l3Lo3h8Zk5dyKzD6CBd
+ cPoQzWCXRlICou9ZlqzOpNMtmcnSVtS8gSV4Xga2EFiN2eksILUdc2SZmS6aoBBCnhpI mg== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nm1yf1gt0-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 08 Feb 2023 13:42:14 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 318DgArt025358;
+        Wed, 8 Feb 2023 13:42:10 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3nhgekjeqn-1;
+        Wed, 08 Feb 2023 13:42:10 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 318DgAkL025338;
+        Wed, 8 Feb 2023 13:42:10 GMT
+Received: from kalyant-linux.qualcomm.com (kalyant-linux.qualcomm.com [10.204.66.210])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 318Dg9Rq025333;
+        Wed, 08 Feb 2023 13:42:10 +0000
+Received: by kalyant-linux.qualcomm.com (Postfix, from userid 94428)
+        id 4B7614BE0; Wed,  8 Feb 2023 05:42:09 -0800 (PST)
+From:   Kalyan Thota <quic_kalyant@quicinc.com>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     Kalyan Thota <quic_kalyant@quicinc.com>,
+        linux-kernel@vger.kernel.org, robdclark@chromium.org,
+        dianders@chromium.org, swboyd@chromium.org,
+        quic_vpolimer@quicinc.com, dmitry.baryshkov@linaro.org,
+        quic_abhinavk@quicinc.com, marijn.suijten@somainline.org
+Subject: [PATCH v3 0/4] Reserve DSPPs based on user request
+Date:   Wed,  8 Feb 2023 05:42:00 -0800
+Message-Id: <1675863724-28412-1-git-send-email-quic_kalyant@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: d6N19kcpsjKIYG4VmY40cCy2Xg6iyyVG
+X-Proofpoint-GUID: d6N19kcpsjKIYG4VmY40cCy2Xg6iyyVG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-02-08_05,2023-02-08_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ adultscore=0 impostorscore=0 mlxscore=0 phishscore=0 clxscore=1015
+ mlxlogscore=693 suspectscore=0 malwarescore=0 bulkscore=0
+ priorityscore=1501 spamscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2212070000 definitions=main-2302080120
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,SPF_HELO_NONE,
+        SPF_NONE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il 07/02/23 20:59, Uwe Kleine-König ha scritto:
-> All but a few drivers ignore the return value of
-> cpufreq_unregister_driver(). Those few that don't only call it after
-> cpufreq_register_driver() succeeded, in which case the call doesn't
-> fail.
-> 
-> Make the function return no value and add a WARN_ON for the case that
-> the function is called in an invalid situation (i.e. without a previous
-> successful call to cpufreq_register_driver()).
-> 
-> Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+This series will enable color features on sc7280 target which has 
+primary panel as eDP
 
-For MTK and generic part:
+The series removes DSPP allocation based on encoder type and allows 
+the DSPP reservation based on user request via CTM.
 
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+The series will release/reserve the dpu resources when ever there is 
+a topology change to suit the new requirements.
 
+Kalyan Thota (4):
+  drm/msm/dpu: clear DSPP reservations in rm release
+  drm/msm/dpu: add DSPPs into reservation upon a CTM request
+  drm/msm/dpu: avoid unnecessary check in DPU reservations
+  drm/msm/dpu: reserve the resources on topology change
+
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h    |  2 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 58 ++++++++++++++++-------------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c      |  2 +
+ 3 files changed, 37 insertions(+), 25 deletions(-)
+
+-- 
+2.7.4
 
