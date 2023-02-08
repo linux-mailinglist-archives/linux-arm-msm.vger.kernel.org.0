@@ -2,66 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3541668EACD
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 10:15:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 98A2568EAD1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 10:15:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231379AbjBHJPo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Feb 2023 04:15:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33628 "EHLO
+        id S229953AbjBHJPq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Feb 2023 04:15:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231600AbjBHJPN (ORCPT
+        with ESMTP id S231601AbjBHJPN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Wed, 8 Feb 2023 04:15:13 -0500
 Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A112F4609B
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2BA54609E
         for <linux-arm-msm@vger.kernel.org>; Wed,  8 Feb 2023 01:13:52 -0800 (PST)
-Received: by mail-ej1-x633.google.com with SMTP id p9so3615269ejj.1
+Received: by mail-ej1-x633.google.com with SMTP id lu11so49614631ejb.3
         for <linux-arm-msm@vger.kernel.org>; Wed, 08 Feb 2023 01:13:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=J1uGzmih4+XMC1ZM4vKWiwVaIYhgM6+xBaQoDbrWO7U=;
-        b=eUSojWA5vsVoS7jzaotrGXamGrceiL0MzZc0LM6sDjTdS6w7iANxGPT17wSGO0mcfC
-         CabmBZiWdesqMmuwvRn1ooav4NqBoDNHx5u/lGmmFdzaVRf5nzBzdfJgPezRyBOe9H2F
-         HfRnrtPQznIJR1TFtRiS4/7gheyHn1dYIPE/1zXcamzeJgakg2HEtTLuLGeNotAwoJgp
-         0Br01MADkbHFFfuIfber35XmWJk10rFkzFlYufnl4wIc0UYbxAsI4Za75GrVXTEglPLF
-         Q08zXVVFH4/8LUU35WBq2ldTJeheO3edhcC0DzkCIYGSaJmzSjar4pEXBJlC8InS2+oE
-         TirA==
+        bh=mTdx2dHITQV8+kA5/WdkyW36pw2cffdM7pRJVj161AE=;
+        b=i9BwVLLxEYfhVLyfIsJbZ2f4Lr7Ad8D8Nuv1j3FMdcPPvprsat3CNcwwzsVQtUZnS6
+         /L93kwaplEDymkqEbUSjCMtxAoJf4zWjW1X45zN0omBFgrbM970kypYmcca6bg6dZO9T
+         u9L0W0bq3xfb1LjnTfrN1OqHjPEkgZ2d4yjuwY7Qq/MxE4Ck9FTdlHTD2lf2i59B1k5V
+         jky6LmB4SsdOuIE0Xr5wi2FM/djikHrCbMgJzKyphgCwxawd34EZIT1hs0Tg0w+EOFGp
+         qc+/xPhQYIixKNATSp0aGrv9uAv5Z7sah4TjKehXEWNcUuyQKVLosrbWcqgX+2ua7vZt
+         Z1CA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=J1uGzmih4+XMC1ZM4vKWiwVaIYhgM6+xBaQoDbrWO7U=;
-        b=BjLq9IXR9wKZoFo0+Hu55pxHer5xly2rrCaMl3tx/8eZ/d7dvTffdRF1fWcpEz/GOP
-         igYM5VfyqdY4V961RI+gyqVgBaX3TOeEqZDnzmAyCjr9upRA0Eo6c64XO0HKyjA1ZLZD
-         7zbbRLmHRdldzLznziOK7elb+x/8oMNvnprs8qkfS0XsJ8CmGZGUAxBCT0ShgaXkzVS3
-         rs9vlPoCtrOnpuLNpMXlKTkKpLuIRJHXwIBB503yeUeyUYgbjQfBiXh3dljkmqFGkU5x
-         DssIUPfdWRdCQhvytk1J/bVBvhqJpVWkPkITbvV4x2iTdP44oN6UsrCQYc+IgkR8OqeZ
-         rQgg==
-X-Gm-Message-State: AO0yUKWCpdC3OyQLimqblmqtf6MZXEQGOpFnd8zBi246Zm2wsTcuHFlr
-        8UN/79jM8lgAxDQJGYd/jN4x5wN3qqRSWTHX
-X-Google-Smtp-Source: AK7set+yYhaJxZaPCO+HxKU2LRX7NXQLrKK+DFOHRNvs73d8qgCtwV0QODtCus8q6sDo9R0WV6GGKA==
-X-Received: by 2002:a17:907:c683:b0:887:d0e6:fa28 with SMTP id ue3-20020a170907c68300b00887d0e6fa28mr7936532ejc.1.1675847627522;
-        Wed, 08 Feb 2023 01:13:47 -0800 (PST)
+        bh=mTdx2dHITQV8+kA5/WdkyW36pw2cffdM7pRJVj161AE=;
+        b=FKSIHhLLJ1cardm6RZqw6VLGR7TUXL70mcBQ0q/G1KpmBCYWGuTLHhOX6HESm/SkNM
+         x+EtSEkHn4OgZ83MK8ahsPj+Ju68+k8aDUAQxU4bWe4O3kUC1TVSkBKtoVwJVSF8dZSL
+         f+3rijqfgIiTcs/QoC+eDVeDZcT1oDKrz083FW29DfNDu4gg7cxC4pdtpGsE8Ipgdppb
+         NcsN1P1HTeUr2A+E451gOMD+TsA/c/pZAxrxPThoVh/TyFk6prnu9CRtCN7ylgLwJ6cQ
+         0DjqqmczHwHwR/WR/WJYvhIlvdrtDxS++SpxCqwJRvKvvemYRiJhKdefH6D/LwoliOXD
+         Tu1Q==
+X-Gm-Message-State: AO0yUKVT/arMJcfT0CcJmVaX3XBSF0VhVDcVeH2u2koTbj1IZNkYQkfF
+        3UzlzR0LdndihvDfXALAtfVN839px8lJvZPf
+X-Google-Smtp-Source: AK7set8cYKfY1jOTs0IzfGLi0MhS7aIjaoYiPCkXJeZQdSUvAuobOhlo4dc2WQY1Is0HLtt3dTil3A==
+X-Received: by 2002:a17:906:f6cd:b0:8a9:8047:a5c with SMTP id jo13-20020a170906f6cd00b008a980470a5cmr6281123ejb.7.1675847628975;
+        Wed, 08 Feb 2023 01:13:48 -0800 (PST)
 Received: from localhost.localdomain (abxh117.neoplus.adsl.tpnet.pl. [83.9.1.117])
-        by smtp.gmail.com with ESMTPSA id z2-20020a1709064e0200b00887a23bab85sm7987279eju.220.2023.02.08.01.13.46
+        by smtp.gmail.com with ESMTPSA id z2-20020a1709064e0200b00887a23bab85sm7987279eju.220.2023.02.08.01.13.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Feb 2023 01:13:47 -0800 (PST)
+        Wed, 08 Feb 2023 01:13:48 -0800 (PST)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
         agross@kernel.org, krzysztof.kozlowski@linaro.org
 Cc:     marijn.suijten@somainline.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Michael Turquette <mturquette@baylibre.com>,
         Stephen Boyd <sboyd@kernel.org>, linux-clk@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v6 02/10] clk: qcom: branch: Add helper functions for setting SLEEP/WAKE bits
-Date:   Wed,  8 Feb 2023 10:13:32 +0100
-Message-Id: <20230208091340.124641-3-konrad.dybcio@linaro.org>
+Subject: [PATCH v6 03/10] clk: qcom: branch: Move CBCR bits definitions to the header file
+Date:   Wed,  8 Feb 2023 10:13:33 +0100
+Message-Id: <20230208091340.124641-4-konrad.dybcio@linaro.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230208091340.124641-1-konrad.dybcio@linaro.org>
 References: <20230208091340.124641-1-konrad.dybcio@linaro.org>
@@ -77,60 +76,45 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-HLOS-controlled branch clocks on non-ancient Qualcomm platforms
-feature SLEEP and WAKE fields which can be written to to configure
-how long the clock hardware should wait internally before being
-(un)gated. Some very sensitive clocks need to have these values
-programmed to prevent putting the hardware in a not-exactly-good
-state. Add definitions of these fields and introduce helpers for
-setting them inside clock drivers.
+Move the definitions of CBCR bits to the branch header file.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/clk/qcom/clk-branch.h | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/clk/qcom/clk-branch.c | 5 -----
+ drivers/clk/qcom/clk-branch.h | 4 ++++
+ 2 files changed, 4 insertions(+), 5 deletions(-)
 
+diff --git a/drivers/clk/qcom/clk-branch.c b/drivers/clk/qcom/clk-branch.c
+index f869fc6aaed6..f2b577b07b7e 100644
+--- a/drivers/clk/qcom/clk-branch.c
++++ b/drivers/clk/qcom/clk-branch.c
+@@ -39,11 +39,6 @@ static bool clk_branch_check_halt(const struct clk_branch *br, bool enabling)
+ 	return !!val == !enabling;
+ }
+ 
+-#define BRANCH_CLK_OFF			BIT(31)
+-#define BRANCH_NOC_FSM_STATUS_SHIFT	28
+-#define BRANCH_NOC_FSM_STATUS_MASK	0x7
+-#define BRANCH_NOC_FSM_STATUS_ON	(0x2 << BRANCH_NOC_FSM_STATUS_SHIFT)
+-
+ static bool clk_branch2_check_halt(const struct clk_branch *br, bool enabling)
+ {
+ 	u32 val;
 diff --git a/drivers/clk/qcom/clk-branch.h b/drivers/clk/qcom/clk-branch.h
-index 55b3a2c3afed..b325f943c3e0 100644
+index b325f943c3e0..9bec563ab4ee 100644
 --- a/drivers/clk/qcom/clk-branch.h
 +++ b/drivers/clk/qcom/clk-branch.h
-@@ -4,6 +4,7 @@
- #ifndef __QCOM_CLK_BRANCH_H__
- #define __QCOM_CLK_BRANCH_H__
+@@ -39,6 +39,10 @@ struct clk_branch {
+ };
  
-+#include <linux/bitfield.h>
- #include <linux/clk-provider.h>
- 
- #include "clk-regmap.h"
-@@ -41,6 +42,8 @@ struct clk_branch {
+ /* Branch clock common bits for HLOS-owned clocks */
++#define BRANCH_CLK_OFF			BIT(31)
++#define BRANCH_NOC_FSM_STATUS_SHIFT	28
++#define BRANCH_NOC_FSM_STATUS_MASK	0x7
++#define BRANCH_NOC_FSM_STATUS_ON	(0x2 << BRANCH_NOC_FSM_STATUS_SHIFT)
  #define CBCR_FORCE_MEM_CORE_ON		BIT(14)
  #define CBCR_FORCE_MEM_PERIPH_ON	BIT(13)
  #define CBCR_FORCE_MEM_PERIPH_OFF	BIT(12)
-+#define CBCR_WAKEUP			GENMASK(11, 8)
-+#define CBCR_SLEEP			GENMASK(7, 4)
- 
- static inline void qcom_branch_set_force_mem_core(struct regmap *regmap,
- 						  struct clk_branch clk, bool on)
-@@ -63,6 +66,18 @@ static inline void qcom_branch_set_force_periph_off(struct regmap *regmap,
- 			   on ? CBCR_FORCE_MEM_PERIPH_OFF : 0);
- }
- 
-+static inline void qcom_branch_set_wakeup(struct regmap *regmap, struct clk_branch clk, u32 val)
-+{
-+	regmap_update_bits(regmap, clk.halt_reg, CBCR_WAKEUP,
-+			   FIELD_PREP(CBCR_WAKEUP, val));
-+}
-+
-+static inline void qcom_branch_set_sleep(struct regmap *regmap, struct clk_branch clk, u32 val)
-+{
-+	regmap_update_bits(regmap, clk.halt_reg, CBCR_SLEEP,
-+			   FIELD_PREP(CBCR_SLEEP, val));
-+}
-+
- extern const struct clk_ops clk_branch_ops;
- extern const struct clk_ops clk_branch2_ops;
- extern const struct clk_ops clk_branch_simple_ops;
 -- 
 2.39.1
 
