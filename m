@@ -2,767 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D713368F764
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 19:48:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DE30368F79A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 20:02:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229837AbjBHSsu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Feb 2023 13:48:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46006 "EHLO
+        id S229739AbjBHTCJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Feb 2023 14:02:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230495AbjBHSst (ORCPT
+        with ESMTP id S229972AbjBHTCH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Feb 2023 13:48:49 -0500
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2476B45BEA;
-        Wed,  8 Feb 2023 10:48:46 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id j29-20020a05600c1c1d00b003dc52fed235so2221363wms.1;
-        Wed, 08 Feb 2023 10:48:46 -0800 (PST)
+        Wed, 8 Feb 2023 14:02:07 -0500
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 821BD4DBF4
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Feb 2023 11:02:05 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id j32-20020a05600c1c2000b003dc4fd6e61dso2189788wms.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Feb 2023 11:02:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=SKtB3R9rHCWK7NstTDvxS8MuIhQzUey/gryNgu1EbKk=;
-        b=qm99wdV9MMY+hMMkh1700/WG4A7YhrnQjrU9ac/bXUUxYWkS3gU3jcuCgaaqwb4m89
-         xzyqEHicVk9x1LuBKsZH2WTMh/A48YJb4Yl1WNAvYLPGqa3iDIG8pkr3+aQPd1Hr1CC8
-         V16Q+O7McXcztziQ5sGKdJJtOvRgGdW86LkvXz/WgFdWs7yJMrNBCVI1sXHEMJCMp2e+
-         jofg39oBRSDufDqItdTLPSyub2/TZ+7dl1Er5ZXTurN9hgMNJFpQi/8XrX7Sk55472p2
-         i/l1P0jTFPJydP5d2xtmB8YXXDOG0gQOUo9UYRQlEekFZcMWVOdIbRuC7lUsFfHf1Ohw
-         T+ng==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=3A5KG8ddYt3K2NbI6U6lMWAvkEN/aV9gsP0XbAJMpVo=;
+        b=KQ/Y2/c3NdJg1E0/3saDg4EN8eLMH/ZHol8lekGfsVkkz7gVSbqot26OEIaD88s6TM
+         ZMtr3nipTC3n4XCDBlEeSHWXtBXFXrb/AIGJJrQWHZy4fQwoByMVNmlyduIZ7tbgftBU
+         Gh6r0kqwYyNPgLYWijdBIcYitcCw9zxOIO5YauoaVkdR4mKIe0cJ7Xmqc3hzpR6unI4H
+         bpz5o4p+3kZBZY9n9u01jb9DsU9mOBmyUc9QPLeHxsXMU7SrQSvPSotw2WXW3eV7rRCC
+         lN+4ZWQ/ukr3n46SblitVuvkJAOTlKjHmveC/lZdUtB+pr+e+0DQFs+L45dMk1ES8j+1
+         cfgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SKtB3R9rHCWK7NstTDvxS8MuIhQzUey/gryNgu1EbKk=;
-        b=C/5BopgHdFeff++c6rq7kQSDH41lVaImQveC62h8n0417SR9pWpm8/2LQ+6X6k3ZQO
-         9WrMenfuyh0s5P0Nl2zG3zSS77d2q242PKGaToQ2JAI31Pe8ZNMg6QxZWYRQpgm7qOwK
-         2biNcKKVKfJAgEYX2S6kfM7khl2X6qjX0qYCeAeNhc71e8cARblQzQGXfb3DSa3pmINP
-         mRZlI+7mbnAWULUeTF8CKB9xyhkEg+BxRbUIjeX/S95ghs6PKe/ZvKOWcj4e9Y+SvBbZ
-         FAv0z1+J8hp3evvVlVCJ0GaFr8RPnLqTWd5QS4ZOoMwD2AGSLtC3wPAygiJ4JDd5l4u8
-         +Khg==
-X-Gm-Message-State: AO0yUKUmWFjcOxozroD2QEHlseaWTd1wvcxZWBCFtJCEvYtKbjTygofF
-        ozLPuHLzev+IaJ96WXzA3rQ=
-X-Google-Smtp-Source: AK7set9l5HbE0jWzNtbkUrn5GI6kWXwqEcYAA5H1idTmhBauT2/gi0Al6K61b0+Ale8gTKIiwjOjKw==
-X-Received: by 2002:a05:600c:329d:b0:3dd:97d6:8f2e with SMTP id t29-20020a05600c329d00b003dd97d68f2emr7359214wmp.17.1675882124335;
-        Wed, 08 Feb 2023 10:48:44 -0800 (PST)
-Received: from Ansuel-xps. (93-34-91-73.ip49.fastwebnet.it. [93.34.91.73])
-        by smtp.gmail.com with ESMTPSA id t8-20020a7bc3c8000000b003e00c9888besm2728957wmj.30.2023.02.08.10.48.43
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3A5KG8ddYt3K2NbI6U6lMWAvkEN/aV9gsP0XbAJMpVo=;
+        b=mLH6Rz+CxA52EZnzWTLV9zrvc1y8LjbD9Etdm6edAfhLk+aVMun9fSz6OfYDg8wdIN
+         7iKGfACpZNyFn2VSBjMRcP6g5bfZm+0Qb9d66tI/jgq4btPHaGmsavlLsX600eaoR9k/
+         wXOXTeDbPNpGZ2kn/2+nOJLflqDMa1skIMgBs+Hj/9z43KWA7YfMXK+LE2FGxDNwz1EQ
+         zTpboCZ0Eq37BGp1gt69iFjraRjNpjs7bdb1FSW+o1Cwqw1b79fs/PijyqEq30F4+jWI
+         JF4OkgPWR+m+5ucs7SaZR4gRmQeamD7YxNWbfDll3nG/DrnVmJOa+IE8BAs8kES92Xy2
+         v/sg==
+X-Gm-Message-State: AO0yUKWr2nH39aDVHvkvADK3S2YRr+U0fldvYWbtOggH95BqMHu7Zi90
+        hSaFnl+ZzPhDvZhXNo/lfIB12Q==
+X-Google-Smtp-Source: AK7set82THdX95O78KDVlFQudiHHASK8Ft9xkYyq9++/erK3Gg4+fmZQAhI3tGjKYsryDyYx4Z6lBw==
+X-Received: by 2002:a05:600c:30d2:b0:3dc:4fd7:31f7 with SMTP id h18-20020a05600c30d200b003dc4fd731f7mr7142679wmn.41.1675882923974;
+        Wed, 08 Feb 2023 11:02:03 -0800 (PST)
+Received: from hackbox.lan ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id n16-20020a1c7210000000b003dc1d668866sm2650327wmc.10.2023.02.08.11.02.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Feb 2023 10:48:43 -0800 (PST)
-Message-ID: <63e3ee8b.7b0a0220.ebd26.c1b8@mx.google.com>
-X-Google-Original-Message-ID: <Y+PuizqDQ9iN8DEL@Ansuel-xps.>
-Date:   Wed, 8 Feb 2023 19:48:43 +0100
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Ilia Lin <ilia.lin@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Wed, 08 Feb 2023 11:02:03 -0800 (PST)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, linux-pm@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Lee Jones <lee@kernel.org>, Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, Nishanth Menon <nm@ti.com>,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 2/3] dt-bindings: cpufreq: qcom-cpufreq-nvmem: make
- cpr bindings optional
-References: <20230208153913.24436-1-ansuelsmth@gmail.com>
- <20230208153913.24436-2-ansuelsmth@gmail.com>
- <167588124523.2281121.12225542985317117778.robh@kernel.org>
+        "vkoul@kernel.org" <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Johan Hovold <johan+linaro@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: [PATCH v5 0/7] sm8550: Add support for eUSB2 repeater
+Date:   Wed,  8 Feb 2023 21:01:53 +0200
+Message-Id: <20230208190200.2966723-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <167588124523.2281121.12225542985317117778.robh@kernel.org>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 08, 2023 at 12:46:59PM -0600, Rob Herring wrote:
-> 
-> On Wed, 08 Feb 2023 16:39:12 +0100, Christian Marangi wrote:
-> > The qcom-cpufreq-nvmem driver supports 2 kind of devices:
-> > - pre-cpr that doesn't have power-domains and base everything on nvmem
-> >   cells and multiple named microvolt bindings.
-> >   Doesn't need required-opp binding in the opp nodes as they are only
-> >   used for genpd based devices.
-> > - cpr-based that require power-domain in the cpu nodes and use various
-> >   source to decide the correct voltage and freq
-> >   Require required-opp binding since they need to be linked to the
-> >   related opp-level.
-> > 
-> > When the schema was introduced, it was wrongly set to always require these
-> > binding but this is not the case for pre-cpr devices.
-> > 
-> > Make the power-domain and the required-opp optional and set them required
-> > only for qcs404 based devices.
-> > 
-> > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> > ---
-> > Changes v6:
-> > - Drop Fixes tag (can't be backported due to prereq changes required)
-> > Changes v5:
-> > - Swap patch 1 and patch 2 to fix dt_check_warning on single
-> > Changes v4:
-> > - Explain why required-opp needs to be conditional
-> > - Split additional ref part
-> > Changes v3:
-> > - No change
-> > Changes v2:
-> > - Reword commit description
-> > - Fix condition order
-> > - Add allOf
-> > 
-> >  .../bindings/cpufreq/qcom-cpufreq-nvmem.yaml  | 74 +++++++++++--------
-> >  1 file changed, 44 insertions(+), 30 deletions(-)
-> > 
-> 
-> Running 'make dtbs_check' with the schema in this patch gives the
-> following warnings. Consider if they are expected or the schema is
-> incorrect. These may not be new warnings.
-> 
-> Note that it is not yet a requirement to have 0 warnings for dtbs_check.
-> This will change in the future.
-> 
-> Full log is available here: https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230208153913.24436-2-ansuelsmth@gmail.com
->
+This patchset adds support for the eUSB2 repeater found in pmic PM8550B,
+used along with SM8550. Since there is no dedicated generic framework
+for eUSB2 repeaters, the most appropriate subsystem to model it is the
+generic phy. This patchset also adds support for such repeater to the
+eUSB2 PHY found in SM8550. Basically, the eUSB2 PHY will have its own
+"phy" which is actually a repeater.
 
-Just to not cause confusion since I know these are automated.
+This patchset is based on the following patchset:
+https://lore.kernel.org/all/20230208183421.2874423-1-abel.vesa@linaro.org/
 
-All fixed in patch 3.
+Changes since v4:
+ * added Krzysztof's R-b tag got patch #1 and A-b tag to patch #3
 
-> 
-> /: opp-table-cluster0:opp-1036800000:opp-supported-hw:0:0: 15 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster0:opp-1056000000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster0:opp-1113600000:opp-supported-hw:0:0: 15 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster0:opp-1132800000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster0:opp-1190400000:opp-supported-hw:0:0: 15 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster0:opp-1209600000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster0:opp-1228800000:opp-supported-hw:0:0: 15 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster0:opp-1286400000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster0:opp-1324800000:opp-supported-hw:0:0: 13 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster0:opp-1363200000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster0:opp-1401600000:opp-supported-hw:0:0: 13 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster0:opp-1440000000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster0:opp-1478400000:opp-supported-hw:0:0: 9 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster0:opp-1516800000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster0:opp-1593600000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster0:opp-1593600000:opp-supported-hw:0:0: 9 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster0:opp-1996800000:opp-supported-hw:0:0: 32 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster0:opp-2188800000:opp-supported-hw:0:0: 16 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster0:opp-307200000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster0:opp-307200000:opp-supported-hw:0:0: 15 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster0:opp-384000000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster0:opp-422400000:opp-supported-hw:0:0: 15 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster0:opp-460800000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster0:opp-480000000:opp-supported-hw:0:0: 15 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster0:opp-537600000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster0:opp-556800000:opp-supported-hw:0:0: 15 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster0:opp-614400000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster0:opp-652800000:opp-supported-hw:0:0: 15 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster0:opp-691200000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster0:opp-729600000:opp-supported-hw:0:0: 15 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster0:opp-768000000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster0:opp-844800000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster0:opp-844800000:opp-supported-hw:0:0: 15 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster0:opp-902400000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster0:opp-960000000:opp-supported-hw:0:0: 15 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster0:opp-979200000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster0: Unevaluated properties are not allowed ('compatible', 'nvmem-cells', 'opp-1036800000', 'opp-1113600000', 'opp-1190400000', 'opp-1228800000', 'opp-1324800000', 'opp-1363200000', 'opp-1401600000', 'opp-1478400000', 'opp-1497600000', 'opp-1593600000', 'opp-307200000', 'opp-422400000', 'opp-480000000', 'opp-556800000', 'opp-652800000', 'opp-729600000', 'opp-844800000', 'opp-960000000', 'opp-shared' were unexpected)
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster0: Unevaluated properties are not allowed ('compatible', 'nvmem-cells', 'opp-1056000000', 'opp-1132800000', 'opp-1209600000', 'opp-1286400000', 'opp-1363200000', 'opp-1440000000', 'opp-1516800000', 'opp-1593600000', 'opp-1996800000', 'opp-2188800000', 'opp-307200000', 'opp-384000000', 'opp-460800000', 'opp-537600000', 'opp-614400000', 'opp-691200000', 'opp-768000000', 'opp-844800000', 'opp-902400000', 'opp-979200000', 'opp-shared' were unexpected)
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster1:opp-1036800000:opp-supported-hw:0:0: 15 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster1:opp-1056000000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster1:opp-1113600000:opp-supported-hw:0:0: 15 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster1:opp-1132800000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster1:opp-1190400000:opp-supported-hw:0:0: 15 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster1:opp-1209600000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster1:opp-1248000000:opp-supported-hw:0:0: 15 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster1:opp-1286400000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster1:opp-1324800000:opp-supported-hw:0:0: 15 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster1:opp-1363200000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster1:opp-1401600000:opp-supported-hw:0:0: 15 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster1:opp-1440000000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster1:opp-1478400000:opp-supported-hw:0:0: 15 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster1:opp-1516800000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster1:opp-1555200000:opp-supported-hw:0:0: 15 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster1:opp-1593600000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster1:opp-1632000000:opp-supported-hw:0:0: 15 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster1:opp-1670400000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster1:opp-1708800000:opp-supported-hw:0:0: 15 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster1:opp-1747200000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster1:opp-1785600000:opp-supported-hw:0:0: 15 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster1:opp-1804800000:opp-supported-hw:0:0: 14 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster1:opp-1824000000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster1:opp-1900800000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster1:opp-1977600000:opp-supported-hw:0:0: 48 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster1:opp-2054400000:opp-supported-hw:0:0: 48 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster1:opp-2150400000:opp-supported-hw:0:0: 48 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster1:opp-2246400000:opp-supported-hw:0:0: 16 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster1:opp-2342400000:opp-supported-hw:0:0: 16 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster1:opp-307200000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster1:opp-307200000:opp-supported-hw:0:0: 15 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster1:opp-384000000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster1:opp-403200000:opp-supported-hw:0:0: 15 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster1:opp-460800000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster1:opp-480000000:opp-supported-hw:0:0: 15 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster1:opp-537600000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster1:opp-556800000:opp-supported-hw:0:0: 15 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster1:opp-614400000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster1:opp-652800000:opp-supported-hw:0:0: 15 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster1:opp-691200000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster1:opp-729600000:opp-supported-hw:0:0: 15 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster1:opp-748800000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster1:opp-806400000:opp-supported-hw:0:0: 15 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster1:opp-825600000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster1:opp-883200000:opp-supported-hw:0:0: 15 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster1:opp-902400000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster1:opp-940800000:opp-supported-hw:0:0: 15 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster1:opp-979200000:opp-supported-hw:0:0: 112 is greater than the maximum of 7
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
-> /: opp-table-cluster1: Unevaluated properties are not allowed ('compatible', 'nvmem-cells', 'opp-1036800000', 'opp-1113600000', 'opp-1190400000', 'opp-1248000000', 'opp-1324800000', 'opp-1401600000', 'opp-1478400000', 'opp-1555200000', 'opp-1632000000', 'opp-1708800000', 'opp-1785600000', 'opp-1804800000', 'opp-1824000000', 'opp-1900800000', 'opp-1920000000', 'opp-1996800000', 'opp-2073600000', 'opp-2150400000', 'opp-307200000', 'opp-403200000', 'opp-480000000', 'opp-556800000', 'opp-652800000', 'opp-729600000', 'opp-806400000', 'opp-883200000', 'opp-940800000', 'opp-shared' were unexpected)
-> 	arch/arm64/boot/dts/qcom/apq8096-db820c.dtb
-> 	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-mtp.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dtb
-> 
-> /: opp-table-cluster1: Unevaluated properties are not allowed ('compatible', 'nvmem-cells', 'opp-1056000000', 'opp-1132800000', 'opp-1209600000', 'opp-1286400000', 'opp-1363200000', 'opp-1440000000', 'opp-1516800000', 'opp-1593600000', 'opp-1670400000', 'opp-1747200000', 'opp-1824000000', 'opp-1900800000', 'opp-1977600000', 'opp-2054400000', 'opp-2150400000', 'opp-2246400000', 'opp-2342400000', 'opp-307200000', 'opp-384000000', 'opp-460800000', 'opp-537600000', 'opp-614400000', 'opp-691200000', 'opp-748800000', 'opp-825600000', 'opp-902400000', 'opp-979200000', 'opp-shared' were unexpected)
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-natrium.dtb
-> 	arch/arm64/boot/dts/qcom/msm8996pro-xiaomi-scorpio.dtb
-> 
+Changes since v3:
+ * This time is a normal patchset, rather than an RFC
+
+Changes since v2:
+ * moved the bindings qcom,spmi-pmic patch before the repeater schema
+   patch in order to avoid the repeater schema validation failure due to
+   phy pattern property not being found in qcom,spmi-pmic schema
+
+Changes since v1:
+ * the repeater driver is implemented now as a PHY rather than adding
+   a new generic framework for USB repeaters
+
+Abel Vesa (5):
+  dt-bindings: phy: Add qcom,snps-eusb2-repeater schema file
+  dt-bindings: mfd: qcom,spmi-pmic: Add pattern property for phy
+  dt-bindings: phy: qcom,snps-eusb2-phy: Add phys property for the
+    repeater
+  phy: qcom: Add QCOM SNPS eUSB2 repeater driver
+  arm64: dts: qcom: sm8550-mtp: Add eUSB2 repeater node
+
+Neil Armstrong (2):
+  phy: qcom: phy-qcom-snps-eusb2: Add support for eUSB2 repeater
+  arm64: dts: qcom: pm8550b: Add eUSB2 repeater node
+
+ .../bindings/mfd/qcom,spmi-pmic.yaml          |   4 +
+ .../bindings/phy/qcom,snps-eusb2-phy.yaml     |   5 +
+ .../phy/qcom,snps-eusb2-repeater.yaml         |  52 ++++
+ arch/arm64/boot/dts/qcom/pm8550b.dtsi         |   6 +
+ arch/arm64/boot/dts/qcom/sm8550-mtp.dts       |   7 +
+ drivers/phy/qualcomm/Kconfig                  |   9 +
+ drivers/phy/qualcomm/Makefile                 |   1 +
+ .../phy/qualcomm/phy-qcom-eusb2-repeater.c    | 259 ++++++++++++++++++
+ drivers/phy/qualcomm/phy-qcom-snps-eusb2.c    |  19 +-
+ 9 files changed, 361 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,snps-eusb2-repeater.yaml
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
 
 -- 
-	Ansuel
+2.34.1
+
