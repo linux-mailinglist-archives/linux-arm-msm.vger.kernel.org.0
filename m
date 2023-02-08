@@ -2,368 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 21F1C68F29E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 16:58:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C41868F2CC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 17:05:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230389AbjBHP6C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Feb 2023 10:58:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44010 "EHLO
+        id S231392AbjBHQF3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Feb 2023 11:05:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231602AbjBHP5e (ORCPT
+        with ESMTP id S230203AbjBHQFX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Feb 2023 10:57:34 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6177849550;
-        Wed,  8 Feb 2023 07:57:33 -0800 (PST)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 318B1psh013972;
-        Wed, 8 Feb 2023 15:57:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=WvEYyYHrSEfqBPCDABOTYilBuhKZZTT/0HAS0zk+d2w=;
- b=kTFuQxNGNrh80GzITqkVPuNRbBDaq9nGihF3/3h02+nOrj5BAOW1lqgXAI3zrJPJYf07
- oI8mjIxnug3mNeK9u9cqjxhHK0OaDFViTkQVmgzAhfeYrwhRxZ7EKRBt/HSez53aGIq9
- ZuOsLSPH2fUsMMDOejUNgBwmj4/pAEmd4uqky4a4+VUHqIz3zjdV7K4GlFf4Zj5rJUeY
- 0WhMhiUTXeepvXI+prl7TwC/sy7dBQ8TMTjgnA1bYXg/QLfI0maoYkhyJOXyemiYh374
- ASrkGyd+KSl8eJUjC9liZIoLTO5/ORGf2f6K0a5QCIeCmKQWW3+aTYp+kg9Y7tAzdabB lg== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nkgafmmy1-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 08 Feb 2023 15:57:23 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 318FvMxS026158
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 8 Feb 2023 15:57:22 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Wed, 8 Feb 2023 07:57:21 -0800
-Date:   Wed, 8 Feb 2023 07:57:20 -0800
-From:   Bjorn Andersson <quic_bjorande@quicinc.com>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-CC:     Andy Gross <agross@kernel.org>,
+        Wed, 8 Feb 2023 11:05:23 -0500
+Received: from NAM02-BN1-obe.outbound.protection.outlook.com (mail-bn1nam02on2047.outbound.protection.outlook.com [40.107.212.47])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A89934C0FD;
+        Wed,  8 Feb 2023 08:05:14 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=h+zsKli8gIIhv9EZepNkKBF+jDrKQiPZhoxw8e9K/6nXT3ky2BT4t/FJQOV72AxGzAwcGNhM4fqvZPRS8KqxRc6QuFxZGiipy41ubXCjo7k0e0kgRhPOyDf06rMzRrdApQXyhsbvIAQonq6g4WJABJpG7SCY1r0GPlmSQBV2ycR3jvDky2PUBRPPfxs/9i8v44ViYwEj2yF9wSe2Y6vmbzW3ZxQIEkQQVgnr9NDNSwj4lca8GTMYqyTD99X3w4rFAW/wOtsW++g6VLxvADQiS7ojchQTWH34McQByRZT0h2flNW0zBP+2xljJXT1yzYXxDLVzbJezerynbIgqS6qCg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=hL8ooqB3FGsWwxnszSNFMg3wodsGaUMHcg3sQe4IaLI=;
+ b=UCUZa4vk8b27zk2Ms1hWK7xuUCvuQ7w/Bd4mEsEQYMd6x7b69oxW6B0cqArtlHSbiqM8gFrvDZiBhruJIpY54Ggc7Qnit6yqvwZ8BY2DlsIinEB8CBRN7XtFL50nbxYpyTxWNYbzHdi6J7+EnJSvBamPbd3sLI/6cS1GlofM5vnnqyXyIXVSGhIMe0A5Var4Z/onmXTo1ZejOixi5wL3woMkhbR8eui2n+3/c+k1m33Dr6MilimFqGBKvLMrEaHnT7bEYT1lftM6NfMUGiEA3h1+9Wug3mgY8B7gJpmd0OD5ak0sDFH6ggY3mYyuMoW5177Jzs8ur6U3O6Ebx70OAw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=hL8ooqB3FGsWwxnszSNFMg3wodsGaUMHcg3sQe4IaLI=;
+ b=biJKnB4RQrrxPJ9O1eyvg8GITVlYXtw2YnDRwraooqK4IJ51y9urStIICvGRSa9FwU2AtGzvoFi7xpksrBonpUXfyjzhZwozOtg6MAZgWMV6ynZpCicBGKrCtHqsFVxgj/l10H8nm5bVokV2PUjS3PqUrMtFCDP3GM3snZZz+hk=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from BY5PR12MB3876.namprd12.prod.outlook.com (2603:10b6:a03:1a7::26)
+ by PH8PR12MB6962.namprd12.prod.outlook.com (2603:10b6:510:1bd::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6086.17; Wed, 8 Feb
+ 2023 16:05:12 +0000
+Received: from BY5PR12MB3876.namprd12.prod.outlook.com
+ ([fe80::4ac9:c4f8:b0f:a863]) by BY5PR12MB3876.namprd12.prod.outlook.com
+ ([fe80::4ac9:c4f8:b0f:a863%7]) with mapi id 15.20.6064.034; Wed, 8 Feb 2023
+ 16:05:12 +0000
+Date:   Wed, 8 Feb 2023 16:04:57 +0000
+From:   Wyes Karny <wyes.karny@amd.com>
+To:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
+        iresh Kumar <viresh.kumar@linaro.org>,
+        Markus Mayer <mmayer@broadcom.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Kevin Hilman <khilman@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-Subject: Re: [PATCH 2/4] arm64: dts: qcom: sc8280xp-crd: Introduce pmic_glink
-Message-ID: <20230208155720.GA2397622@hu-bjorande-lv.qualcomm.com>
-References: <20230208034620.2048744-1-quic_bjorande@quicinc.com>
- <20230208034620.2048744-3-quic_bjorande@quicinc.com>
- <229edfec-736f-d94d-23ba-2a0649639556@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-omap@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, kernel@pengutronix.de
+Subject: Re: [PATCH] cpufreq: Make cpufreq_unregister_driver() return void
+Message-ID: <20230208160457.ouh2kg36s4kqpahe@beas>
+References: <20230207195909.474953-1-u.kleine-koenig@pengutronix.de>
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <229edfec-736f-d94d-23ba-2a0649639556@linaro.org>
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: -LsD8rgZKXBCgeAPkSP5f1eTxTNQmrJ-
-X-Proofpoint-ORIG-GUID: -LsD8rgZKXBCgeAPkSP5f1eTxTNQmrJ-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-02-08_06,2023-02-08_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- malwarescore=0 adultscore=0 clxscore=1015 bulkscore=0 spamscore=0
- mlxlogscore=999 mlxscore=0 priorityscore=1501 suspectscore=0
- impostorscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2212070000 definitions=main-2302080141
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230207195909.474953-1-u.kleine-koenig@pengutronix.de>
+X-ClientProxiedBy: PN2PR01CA0017.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:25::22) To BY5PR12MB3876.namprd12.prod.outlook.com
+ (2603:10b6:a03:1a7::26)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BY5PR12MB3876:EE_|PH8PR12MB6962:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4b138900-e5ec-40b4-0796-08db09ee41f0
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: o9p/HFmH4NCjM+13sCOuHtPCOcP7ouS4/VeLSbj394MwcVrg5J+/UKNwEgMMjgHTCOLMIjaG9PVizeDQ7WaakFmuB9V2k3ZiFlPAUlTM8eIaQiEKJZ4h1gISW7b/Diqi0vm5aX4h1TUkBLVwYRMqxuDCTY4m4fQ1hM//n8iyQCUIjVmfoPU+5kNm2zjuQbTp5GA4vA24MlDb0UXmMmho9e/joLYxUgqs6/wjZzsdZAoial89q1LfpqVVbTd55gIQYLzkOMzbuI4vy+fv5zcNcIojtPVOz9LG6r8yJ2f2WF+/lQlMBlismX7SsnFJclve6QiIP08JKgFSpn9QzOuVOAoWw39yVmiuoDAmDQCodgvBUmv8EUv0r67ueuph9qMRw/DbZDKb/OdoYYDi0B6WtseZJQeday43wpi+2NFchVvMr2K8FTtqxQ4q6Uvw3nB1bMtnJeM82/stGTgtTtFRiNPcDwLzuQ6majB+/CUgILvCrL7C21kRkfDAQKmwPZHCmXXUvD1Gf0JiNbu+t9xJncHo+NSHFZRXzNjTbc3O7Qx/YqgjWhpHtDnrtvW/cDh91GdijVpQMLFavc45JnKmDHYQmXCL6Y8SfhrAADFLNjrMtgiRvcUILVJa6kT7tznZilY1DyJWPiVJ29igEIqcmCcOrbmwK/Pu5YJSohmgZbM217x8vDGf/T4Ilp8I+f4+
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BY5PR12MB3876.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(7916004)(4636009)(396003)(39860400002)(376002)(136003)(366004)(346002)(451199018)(5660300002)(7416002)(44832011)(2906002)(66574015)(83380400001)(38100700002)(8676002)(33716001)(4326008)(66946007)(54906003)(6916009)(66476007)(8936002)(6666004)(66556008)(41300700001)(6512007)(1076003)(186003)(6506007)(9686003)(26005)(316002)(966005)(86362001)(6486002)(478600001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?yIKY2yBmGnTJtQr7cZm9HS2oQIB6j2/aVuOyPbkkF3/p9bY5Kj6ETMFulz?=
+ =?iso-8859-1?Q?SAHESfKJhIvcuhbAn3Tcgvj952w9RhrVB4XRpxLf9rfNTq/H8Z2pLyepiT?=
+ =?iso-8859-1?Q?FPcxWaIRU2U1aXQOHCKW9oW/oY7KYtJf4Rau64dHFayBPcyboa92Wcu0S5?=
+ =?iso-8859-1?Q?QQLSBybHclc29k+UdWe/hTJ9CYPeZhBedOaamhuuexSLOd1zWEyAAksMkV?=
+ =?iso-8859-1?Q?Gz/jhYIWj2XkrtE6Ajy5ZT3jTA0TYpYDvPM4RluRaHZtu01PlG/9vTks27?=
+ =?iso-8859-1?Q?EYFvXx7RgaowqboXhqB7EhuB0w2apcrs4GnBG6SFo+dLx7yhEQciNv6Orv?=
+ =?iso-8859-1?Q?fmc7sQMzHoC3YlyFB1FghNznfR2L9jXlQHoolsgn1W6f3A9KTaFWEq6MmA?=
+ =?iso-8859-1?Q?Kfo1C6kkRTQJKv14bKtOB4r+oBJdKPDhvxdOdnLSIFk9x1RmF4d+M1H0qh?=
+ =?iso-8859-1?Q?5VCW0i8/Giq+HbUuvzWKQ1PjcRKpJ7B0fMINmXV7RkHBIgjFA/It8Lfup2?=
+ =?iso-8859-1?Q?e4RafZzipXllUTiq2trh8hIfLTwV4fEadAh77E8nD46TU6utMCtipzirHh?=
+ =?iso-8859-1?Q?9IMjf7Yt8SIAL9AmyoXgEgGx6qKYwFTWtPzAdrZuAojdN3xDjxKXRjXv4K?=
+ =?iso-8859-1?Q?6T8Zi8p6Ih9tb516kiyA4iKvg0Rb6+Nsyr/1zVJIXwlvW7cYRPQA+Q+jgO?=
+ =?iso-8859-1?Q?dubvHsiC9k9XDn276MRdRuCzXeIWDdxrdjjNZQIVIWX59nEC1+iQqHntR/?=
+ =?iso-8859-1?Q?FGOwfX8dbWAQdXHFprgYZjpEtUClUN79yai5huACW2azi4looTnl71fP3r?=
+ =?iso-8859-1?Q?EKQNWqa2yWjklYVvdmerBLvY5lMrRitdKdXu9Pxfp/n6ieS9OqMSQAKWgl?=
+ =?iso-8859-1?Q?vo2NSgyM4jqUC6e+Cwz/Uhra5AQNwGfuXuMY6jMwj/F2JFv01G73YWwem7?=
+ =?iso-8859-1?Q?Xzy54eIfIvtuuzV9XiBfEjE98ul6uaXk9MCJESK/HfuDqBGQ4HG0nLbRxt?=
+ =?iso-8859-1?Q?IYKizyz+FFG0gvleeJZWDJl3J1TxU1LO2+UlpdnREclUcBK18vSpvQqB8q?=
+ =?iso-8859-1?Q?wOL1rVGKjR7V8rvoD9TocgXBiBdop0oiKQR1RwZTt502hXGVHRuQkbHu0u?=
+ =?iso-8859-1?Q?kBXLkXRmr0CVEw+sELf5vp/c3yMuipH7PLnstlav1ww6K4f130onMDtchx?=
+ =?iso-8859-1?Q?xoacFZOcZKpgbafJdERjudNJHcqA/Av9PfxKd0JS7wuiU3l1+Grhnh0sEC?=
+ =?iso-8859-1?Q?7Ob8WRqOaxvsAcTi4Jzvpd2MO6mmdmiRqIEI1eskiIy1Bvej2IXCaPJ2Mn?=
+ =?iso-8859-1?Q?jeLwhfOznA+ZSPOsQJiBN55elVPWTP5yYStzE15R6P/cGn3cCeP+Q0GcA/?=
+ =?iso-8859-1?Q?pQZbwcUcJ0vmqb8iiMmHRekr9Z6iUDCyXwDA29deveCYo9gSWe7pjwT7vH?=
+ =?iso-8859-1?Q?Jo5CJ13sqKARTwGoEZdY1PtNWorSEMomo7OpaHEN8N9gFKgFbdI1OkHiOp?=
+ =?iso-8859-1?Q?HJrUFeczncxLx/jYoc6XRb66VSoUvIkV0BnoeJztc4HCRxvcAXLKpvh+bq?=
+ =?iso-8859-1?Q?zI2IbcU1pfUuy6gxh0CPREWWsitvgly8qgQdOviBFHa6bZCNcb4lkJ7qYH?=
+ =?iso-8859-1?Q?97Yvw8wizjao03fYuUVUukAqa3K6uCyI8K?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4b138900-e5ec-40b4-0796-08db09ee41f0
+X-MS-Exchange-CrossTenant-AuthSource: BY5PR12MB3876.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Feb 2023 16:05:11.9141
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 6A+h36ieD7es75BXW3tXSeJz8J6xoTwvnpEKBNHQ8D+hWahR488QVc1Vny5q+vK7rHnX/03g9NTEvtzYo5SKJg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB6962
+X-Spam-Status: No, score=-0.7 required=5.0 tests=BAYES_00,DKIM_INVALID,
+        DKIM_SIGNED,FORGED_SPF_HELO,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_PASS,SPF_NONE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 08, 2023 at 09:14:46AM +0100, Konrad Dybcio wrote:
-> 
-> 
-> On 8.02.2023 04:46, Bjorn Andersson wrote:
-> > From: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > 
-> > The SC8280XP CRD control over battery management and its two USB Type-C
-> > port using pmic_glink and two GPIO-based SBU muxes.
-> > 
-> > Enable the two DisplayPort instances, GPIO SBU mux instance and
-> > pmic_glink with the two connectors on the CRD.
-> > 
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> > ---
-> >  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 191 +++++++++++++++++++++-
-> >  1 file changed, 189 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> > index 3f116a879e22..35b63c3962f0 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> > +++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> > @@ -36,6 +36,77 @@ chosen {
-> >  		stdout-path = "serial0:115200n8";
-> >  	};
-> >  
-> > +	pmic-glink {
-> > +		compatible = "qcom,sc8280xp-pmic-glink", "qcom,pmic-glink";
-> > +
-> > +		#address-cells = <1>;
-> > +		#size-cells = <0>;
-> > +
-> > +		connector@0 {
-> > +			compatible = "usb-c-connector";
-> > +			reg = <0>;
-> > +			power-role = "dual";
-> > +			data-role = "dual";
-> > +
-> > +			ports {
-> > +				#address-cells = <1>;
-> > +				#size-cells = <0>;
-> Add a newline between the last propreties and first subnodes, please.
-> 
-> > +				port@0 {
-> > +					reg = <0>;
-> > +					pmic_glink_con0_hs: endpoint {
-> > +						remote-endpoint = <&usb_0_role_switch>;
-> > +					};
-> > +				};
-> > +
-> > +				port@1 {
-> > +					reg = <1>;
-> > +					pmic_glink_con0_ss: endpoint {
-> > +						remote-endpoint = <&mdss0_dp0_out>;
-> > +					};
-> > +				};
-> > +
-> > +				port@2 {
-> > +					reg = <2>;
-> > +					pmic_glink_con0_sbu: endpoint {
-> > +						remote-endpoint = <&usb0_sbu_mux>;
-> > +					};
-> > +				};
-> > +			};
-> > +		};
-> > +
-> > +		connector@1 {
-> > +			compatible = "usb-c-connector";
-> > +			reg = <1>;
-> > +			power-role = "dual";
-> > +			data-role = "dual";
-> > +
-> > +			ports {
-> > +				#address-cells = <1>;
-> > +				#size-cells = <0>;
-> > +				port@0 {
-> > +					reg = <0>;
-> > +					pmic_glink_con1_hs: endpoint {
-> > +						remote-endpoint = <&usb_1_role_switch>;
-> > +					};
-> > +				};
-> > +
-> > +				port@1 {
-> > +					reg = <1>;
-> > +					pmic_glink_con1_ss: endpoint {
-> > +						remote-endpoint = <&mdss0_dp1_out>;
-> > +					};
-> > +				};
-> > +
-> > +				port@2 {
-> > +					reg = <2>;
-> > +					pmic_glink_con1_sbu: endpoint {
-> > +						remote-endpoint = <&usb1_sbu_mux>;
-> > +					};
-> > +				};
-> > +			};
-> > +		};
-> > +	};
-> > +
-> >  	vreg_edp_3p3: regulator-edp-3p3 {
-> >  		compatible = "regulator-fixed";
-> >  
-> > @@ -139,6 +210,46 @@ linux,cma {
-> >  			linux,cma-default;
-> >  		};
-> >  	};
-> > +
-> > +	usb0-sbu-mux {
-> > +		compatible = "pericom,pi3usb102", "gpio-sbu-mux";
-> > +
-> > +		enable-gpios = <&tlmm 101 GPIO_ACTIVE_LOW>;
-> > +		select-gpios = <&tlmm 164 GPIO_ACTIVE_HIGH>;
-> > +
-> > +		pinctrl-names = "default";
-> > +		pinctrl-0 = <&usb0_sbu_default>;
-> > +
-> > +		mode-switch;
-> > +		orientation-switch;
-> > +		svid = /bits/ 16 <0xff01>;
-> > +
-> > +		port {
-> > +			usb0_sbu_mux: endpoint {
-> > +				remote-endpoint = <&pmic_glink_con0_sbu>;
-> > +			};
-> > +		};
-> > +	};
-> > +
-> > +	usb1-sbu-mux {
-> > +		compatible = "pericom,pi3usb102", "gpio-sbu-mux";
-> > +
-> > +		enable-gpios = <&tlmm 48 GPIO_ACTIVE_LOW>;
-> > +		select-gpios = <&tlmm 47 GPIO_ACTIVE_HIGH>;
-> > +
-> > +		pinctrl-names = "default";
-> > +		pinctrl-0 = <&usb1_sbu_default>;
-> > +
-> > +		mode-switch;
-> > +		orientation-switch;
-> > +		svid = /bits/ 16 <0xff01>;
-> > +
-> > +		port {
-> > +			usb1_sbu_mux: endpoint {
-> > +				remote-endpoint = <&pmic_glink_con1_sbu>;
-> > +			};
-> > +		};
-> > +	};
-> >  };
-> >  
-> >  &apps_rsc {
-> > @@ -262,6 +373,36 @@ &mdss0 {
-> >  	status = "okay";
-> >  };
-> >  
-> > +&mdss0_dp0 {
-> > +	status = "okay";
-> > +
-> > +	data-lanes = <0 1>;
-> Status last; is this really only 2 lanes?
-> 
-> > +
-> > +	ports {
-> > +		port@1 {
-> > +			reg = <1>;
-> > +			mdss0_dp0_out: endpoint {
-> > +				remote-endpoint = <&pmic_glink_con0_ss>;
-> > +			};
-> > +		};
-> > +	};
-> > +};
-> > +
-> > +&mdss0_dp1 {
-> > +	status = "okay";
-> > +
-> > +	data-lanes = <0 1>;
-> Ditto
-> 
-> > +
-> > +	ports {
-> > +		port@1 {
-> > +			reg = <1>;
-> > +			mdss0_dp1_out: endpoint {
-> > +				remote-endpoint = <&pmic_glink_con1_ss>;
-> > +			};
-> > +		};
-> > +	};
-> > +};
-> > +
-> >  &mdss0_dp3 {
-> >  	compatible = "qcom,sc8280xp-edp";
-> >  	/delete-property/ #sound-dai-cells;
-> > @@ -480,8 +621,13 @@ &usb_0 {
-> >  };
-> >  
-> >  &usb_0_dwc3 {
-> > -	/* TODO: Define USB-C connector properly */
-> >  	dr_mode = "host";
-> > +
-> > +	port {
-> > +		usb_0_role_switch: endpoint {
-> > +			remote-endpoint = <&pmic_glink_con0_hs>;
-> > +		};
-> This should be defined in the SoC DTSI, it's a standard dwc3 binding
-> with usb HS / SS / SBU ports. Especially since we can feed the endpoint
-> from any device now, as pmic-glink should work everywhere.
-> 
+Hi Uwe Kleine-König,
 
-The sa8295p/sa8540p boards, derived from sc8280xp does not implement
-pmic_glink, so it seems moving this to the soc.dtsi would be messy.
-
-> Or /omit-if-no-ref/, I suppose.
+On 07 Feb 20:59, Uwe Kleine-König wrote:
+> All but a few drivers ignore the return value of
+> cpufreq_unregister_driver(). Those few that don't only call it after
+> cpufreq_register_driver() succeeded, in which case the call doesn't
+> fail.
 > 
-
-Or you're saying I should put the skeleton of the port definition in the
-soc.dtsi and then fill it out the remote-endpoint here; and mark it
-omit-if-no-ref to avoid binding warnings?
-
-> > +	};
-> >  };
-> >  
-> >  &usb_0_hsphy {
-> > @@ -504,8 +650,13 @@ &usb_1 {
-> >  };
-> >  
-> >  &usb_1_dwc3 {
-> > -	/* TODO: Define USB-C connector properly */
-> >  	dr_mode = "host";
-> > +
-> > +	port {
-> > +		usb_1_role_switch: endpoint {
-> > +			remote-endpoint = <&pmic_glink_con1_hs>;
-> > +		};
-> > +	};
-> >  };
-> >  
-> >  &usb_1_hsphy {
-> > @@ -709,4 +860,40 @@ reset-n-pins {
-> >  			drive-strength = <16>;
-> >  		};
-> >  	};
-> > +
-> > +	usb0_sbu_default: usb0-sbu-state {
-> > +		oe-n-pins {
-> > +			pins = "gpio101";
-> > +			function = "gpio";
-> No drive-strength/bias/i/o?
+> Make the function return no value and add a WARN_ON for the case that
+> the function is called in an invalid situation (i.e. without a previous
+> successful call to cpufreq_register_driver()).
 > 
+> Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+> ---
+>  drivers/cpufreq/brcmstb-avs-cpufreq.c | 5 +----
+>  drivers/cpufreq/cpufreq.c             | 8 +++-----
+>  drivers/cpufreq/davinci-cpufreq.c     | 4 +++-
+>  drivers/cpufreq/mediatek-cpufreq-hw.c | 4 +++-
+>  drivers/cpufreq/omap-cpufreq.c        | 4 +++-
+>  drivers/cpufreq/qcom-cpufreq-hw.c     | 4 +++-
+>  include/linux/cpufreq.h               | 2 +-
+>  7 files changed, 17 insertions(+), 14 deletions(-)
 
-Seems like a reasonable ask...
+> base-commit: 05ecb680708a1dbe6554d6fc17e5d9a8a7cb5e6a
+
+You may have to rebase it on top of this [1].
+Recently this patch series was picked up by Rafael.
+You have to add the below hunk in your patch.
+
+diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
+index 168a28bed6ee..70debd5a9f40 100644
+--- a/drivers/cpufreq/amd-pstate.c
++++ b/drivers/cpufreq/amd-pstate.c
+@@ -831,7 +831,7 @@ static void amd_pstate_driver_cleanup(void)
+
+ static int amd_pstate_update_status(const char *buf, size_t size)
+ {
+-       int ret;
++       int ret = 0;
+        int mode_idx;
+
+        if (size > 7 || size < 6)
+@@ -844,7 +844,7 @@ static int amd_pstate_update_status(const char *buf,
+size_t size)
+                        return -EINVAL;
+                if (cppc_state == AMD_PSTATE_ACTIVE)
+                        return -EBUSY;
+-               ret = cpufreq_unregister_driver(current_pstate_driver);
++               cpufreq_unregister_driver(current_pstate_driver);
+                amd_pstate_driver_cleanup();
+                break;
+        case AMD_PSTATE_PASSIVE:
+
+
+Otherwise the patch looks good to me.
+
+[1]: https://lore.kernel.org/linux-pm/20230131090016.3970625-1-perry.yuan@amd.com/#t
 
 Thanks,
-Bjorn
-
-> Konrad
-> > +		};
-> > +
-> > +		sel-pins {
-> > +			pins = "gpio164";
-> > +			function = "gpio";
-> > +		};
-> > +
-> > +		mode-pins {
-> > +			pins = "gpio167";
-> > +			function = "gpio";
-> > +			output-high;
-> > +		};
-> > +	};
-> > +
-> > +	usb1_sbu_default: usb1-sbu-state {
-> > +		oe-n-pins {
-> > +			pins = "gpio48";
-> > +			function = "gpio";
-> > +		};
-> > +
-> > +		sel-pins {
-> > +			pins = "gpio47";
-> > +			function = "gpio";
-> > +		};
-> > +
-> > +		mode-pins {
-> > +			pins = "gpio50";
-> > +			function = "gpio";
-> > +			output-high;
-> > +		};
-> > +	};
-> >  };
+Wyes
+> -- 
+> 2.39.0
+> 
