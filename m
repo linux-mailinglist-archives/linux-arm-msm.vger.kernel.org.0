@@ -2,73 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B2F8F68E97E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 09:02:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 03EC768E9A0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 09:15:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230010AbjBHICi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Feb 2023 03:02:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47538 "EHLO
+        id S229741AbjBHIPA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Feb 2023 03:15:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229457AbjBHICh (ORCPT
+        with ESMTP id S229519AbjBHIO7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Feb 2023 03:02:37 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69DDE38E98
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Feb 2023 00:02:36 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id q8so12711031wmo.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Feb 2023 00:02:36 -0800 (PST)
+        Wed, 8 Feb 2023 03:14:59 -0500
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21C1543473
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Feb 2023 00:14:51 -0800 (PST)
+Received: by mail-ej1-x629.google.com with SMTP id gr7so49207649ejb.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Feb 2023 00:14:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=4pVmXav81pfLtiXP44XbehuhQ9TZgefQnc5YIUQ+J6E=;
-        b=c6t4uou8yx25E88Jrt3w04mCTLJGSqXyH8adQhprx2ssoyLli11Ja+BWpNHDy//Q5q
-         hbDxV1Bi/slcnupy6yXHSibp1hVuYbVVj5Z0IBVI56EfxZr81asSMl+58HORhxv8Pck+
-         2/2ymRN/Ry+kA1W0jUaHJux+XXWuCLX+v+S6i6aGGYUnKw0o/trbYEJ3FNepsr7USInu
-         viRqR6n/dx1E+PYkJoFIHzlLGQnZ1NZ+b24XY+MnWL0nUr+95nhhIJTR1TfEhf8A/uyo
-         c1SHa+1W6BQukp4A2R0R4ArcLIFajXNjhJljPZQVYj0bgmP+RibUWZPIhxOjqCHkmMfe
-         Gz2w==
+        bh=sgjeZUW23x9Z3Uo5qQXOs6aPRbzAd52gyL69E20+ngU=;
+        b=uLWOMzSiwNBioOlbVEGMS9FGagzk72mOcQTKDTQZmfTuatJYtmIzeMdIga9WLbOTY4
+         1sY3TXQIelTaniBhNUwvrIg6ErwQi0StnrE7qFtF9TRHbcuD/epjd/sfU7K4mtDsvHeV
+         j2VOoGZkK/GCudBF1f7YDaED0llItzC3PbvNAPmsXckXGtDgP/qo7uJnIchbknNcSoJp
+         hRItzeg0u8GUyzOCrelytvNndPMCY3tWy/vMEs/WvsxgGTdAYBI74Dl9nlhDvnERa5xM
+         Dx9eESxUM2dPVdwfD+ZVhHtPlXfKfLk5LQYyE6NuSLZsaVX0rePRlnoiQdAkHeG9Pi21
+         jv1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4pVmXav81pfLtiXP44XbehuhQ9TZgefQnc5YIUQ+J6E=;
-        b=5idh+J8JosX4mUqAzGYhEsz7Y5dHlMrHcaHVLjFsLxbYFIA+LqKnwQJbthgiDOa3IU
-         iOYZ/KaUmdNxTTgVLFnIAu21v35JdrY8HdOFhkrsHp9nJ3RAud/bvATieWXFO9wnvfYN
-         ucDjwWebCKZ5D3V4mwdRRv3rNfiBep1l2teJpc3DbK8+m7zCbU2BKWyRY8AVM7HqiGV9
-         dUuVZJXkEo86NL77ec6GnMMmKd6Y7z0D3sc8Yn25cxEoy806FI4673PmnoBhgs4gF7lz
-         L31CyikQE4EBq2BzENbdsXEe/ZumEBpIa4EsK28cQa0456mABEHWDZdZrnFueYMCur1y
-         iP4A==
-X-Gm-Message-State: AO0yUKVGmQ0piSd3lsT56DriNePpi3DiDy5ig4dsJvkHUBLVedP4Yjrc
-        Z4Aa6tw9EoBvCa5L4flY34CKDw==
-X-Google-Smtp-Source: AK7set/SZ2FNcYFFs2R31aNIpbtF+Y0jd0Sie+f4EwomceFk3zaHZLdPh2kn/l70TGbCD4ctPqMkNw==
-X-Received: by 2002:a05:600c:43c4:b0:3dc:5302:ad9 with SMTP id f4-20020a05600c43c400b003dc53020ad9mr7688573wmn.27.1675843355020;
-        Wed, 08 Feb 2023 00:02:35 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id o27-20020a05600c511b00b003e0238d9101sm1196294wms.31.2023.02.08.00.02.33
+        bh=sgjeZUW23x9Z3Uo5qQXOs6aPRbzAd52gyL69E20+ngU=;
+        b=OVW+osTuUShXt7+R89UMVGyzX8wVVGn4YWalSzWsvChhJhvEAWVGg9GzsWcmvnKzas
+         RdBETL2hGMXurRiUV+Dzup4EFALu91mlfmJ2GpHNh21U9Ke+wx806kiDd4qFpWJpTmCP
+         g5S9EKPbWVqwvFhCDuib/hki2IpZWqstd9rpJcraMU6Q0AQ6nX8FApld/c6zc7Ep3tmW
+         CVMJ+LhOcxz+DUaeqpQR9Tq9u68LZj0KReFjxPaUKrg4Oz9Dpab25MsijmwCj+wCeEar
+         XxrjP2jufh25b5zyAN1b0/tXizE6eZzMA+AxmIKOdYGzrjuGKxWX6Xd+qqSJ0T8lFAQx
+         oxlw==
+X-Gm-Message-State: AO0yUKWQF0J+xXh4cJRQ8R+ZUbgQlD2CSNiVXZ/PW9eXkayEi0AktOEj
+        /RHpHCJIzeHYc/ANhFGq4vGH8jE9RtZie08j
+X-Google-Smtp-Source: AK7set+6fn3VZiirH+RgWcqt5ou2B/TdQ8+XHS+DrNdd+dPx/PKhtmhswmFfaa5OnRquBRwg8vqisA==
+X-Received: by 2002:a17:906:b2cc:b0:878:5917:601 with SMTP id cf12-20020a170906b2cc00b0087859170601mr6836543ejb.58.1675844089408;
+        Wed, 08 Feb 2023 00:14:49 -0800 (PST)
+Received: from [192.168.1.101] (abxh117.neoplus.adsl.tpnet.pl. [83.9.1.117])
+        by smtp.gmail.com with ESMTPSA id h14-20020a170906590e00b00888161349desm7936059ejq.182.2023.02.08.00.14.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Feb 2023 00:02:34 -0800 (PST)
-Message-ID: <7a3c2cf9-728f-0287-a4ef-d9645c78dfec@linaro.org>
-Date:   Wed, 8 Feb 2023 09:02:33 +0100
+        Wed, 08 Feb 2023 00:14:48 -0800 (PST)
+Message-ID: <229edfec-736f-d94d-23ba-2a0649639556@linaro.org>
+Date:   Wed, 8 Feb 2023 09:14:46 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [PATCH V2 4/5] dt-bindings: mailbox: qcom: add compatible for the
- IPQ5332 SoC
+Subject: Re: [PATCH 2/4] arm64: dts: qcom: sc8280xp-crd: Introduce pmic_glink
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20230208034620.2048744-1-quic_bjorande@quicinc.com>
+ <20230208034620.2048744-3-quic_bjorande@quicinc.com>
 Content-Language: en-US
-To:     Kathiravan T <quic_kathirav@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, jassisinghbrar@gmail.com,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     quic_varada@quicinc.com, quic_srichara@quicinc.com
-References: <20230208042850.1687-1-quic_kathirav@quicinc.com>
- <20230208042850.1687-5-quic_kathirav@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230208042850.1687-5-quic_kathirav@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230208034620.2048744-3-quic_bjorande@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -81,18 +82,272 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/02/2023 05:28, Kathiravan T wrote:
-> Add the mailbox compatible for the IPQ5332 SoC.
+
+
+On 8.02.2023 04:46, Bjorn Andersson wrote:
+> From: Bjorn Andersson <bjorn.andersson@linaro.org>
 > 
-> Since the IPQ5332 mailbox is compatible with the IPQ6018, lets create the
-> fallback to ipq6018 compatible, so that we don't bloat the of_device_id
-> table in the driver.
+> The SC8280XP CRD control over battery management and its two USB Type-C
+> port using pmic_glink and two GPIO-based SBU muxes.
 > 
-> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+> Enable the two DisplayPort instances, GPIO SBU mux instance and
+> pmic_glink with the two connectors on the CRD.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 191 +++++++++++++++++++++-
+>  1 file changed, 189 insertions(+), 2 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+> index 3f116a879e22..35b63c3962f0 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+> @@ -36,6 +36,77 @@ chosen {
+>  		stdout-path = "serial0:115200n8";
+>  	};
+>  
+> +	pmic-glink {
+> +		compatible = "qcom,sc8280xp-pmic-glink", "qcom,pmic-glink";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		connector@0 {
+> +			compatible = "usb-c-connector";
+> +			reg = <0>;
+> +			power-role = "dual";
+> +			data-role = "dual";
+> +
+> +			ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+Add a newline between the last propreties and first subnodes, please.
 
+> +				port@0 {
+> +					reg = <0>;
+> +					pmic_glink_con0_hs: endpoint {
+> +						remote-endpoint = <&usb_0_role_switch>;
+> +					};
+> +				};
+> +
+> +				port@1 {
+> +					reg = <1>;
+> +					pmic_glink_con0_ss: endpoint {
+> +						remote-endpoint = <&mdss0_dp0_out>;
+> +					};
+> +				};
+> +
+> +				port@2 {
+> +					reg = <2>;
+> +					pmic_glink_con0_sbu: endpoint {
+> +						remote-endpoint = <&usb0_sbu_mux>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		connector@1 {
+> +			compatible = "usb-c-connector";
+> +			reg = <1>;
+> +			power-role = "dual";
+> +			data-role = "dual";
+> +
+> +			ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +				port@0 {
+> +					reg = <0>;
+> +					pmic_glink_con1_hs: endpoint {
+> +						remote-endpoint = <&usb_1_role_switch>;
+> +					};
+> +				};
+> +
+> +				port@1 {
+> +					reg = <1>;
+> +					pmic_glink_con1_ss: endpoint {
+> +						remote-endpoint = <&mdss0_dp1_out>;
+> +					};
+> +				};
+> +
+> +				port@2 {
+> +					reg = <2>;
+> +					pmic_glink_con1_sbu: endpoint {
+> +						remote-endpoint = <&usb1_sbu_mux>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +	};
+> +
+>  	vreg_edp_3p3: regulator-edp-3p3 {
+>  		compatible = "regulator-fixed";
+>  
+> @@ -139,6 +210,46 @@ linux,cma {
+>  			linux,cma-default;
+>  		};
+>  	};
+> +
+> +	usb0-sbu-mux {
+> +		compatible = "pericom,pi3usb102", "gpio-sbu-mux";
+> +
+> +		enable-gpios = <&tlmm 101 GPIO_ACTIVE_LOW>;
+> +		select-gpios = <&tlmm 164 GPIO_ACTIVE_HIGH>;
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&usb0_sbu_default>;
+> +
+> +		mode-switch;
+> +		orientation-switch;
+> +		svid = /bits/ 16 <0xff01>;
+> +
+> +		port {
+> +			usb0_sbu_mux: endpoint {
+> +				remote-endpoint = <&pmic_glink_con0_sbu>;
+> +			};
+> +		};
+> +	};
+> +
+> +	usb1-sbu-mux {
+> +		compatible = "pericom,pi3usb102", "gpio-sbu-mux";
+> +
+> +		enable-gpios = <&tlmm 48 GPIO_ACTIVE_LOW>;
+> +		select-gpios = <&tlmm 47 GPIO_ACTIVE_HIGH>;
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&usb1_sbu_default>;
+> +
+> +		mode-switch;
+> +		orientation-switch;
+> +		svid = /bits/ 16 <0xff01>;
+> +
+> +		port {
+> +			usb1_sbu_mux: endpoint {
+> +				remote-endpoint = <&pmic_glink_con1_sbu>;
+> +			};
+> +		};
+> +	};
+>  };
+>  
+>  &apps_rsc {
+> @@ -262,6 +373,36 @@ &mdss0 {
+>  	status = "okay";
+>  };
+>  
+> +&mdss0_dp0 {
+> +	status = "okay";
+> +
+> +	data-lanes = <0 1>;
+Status last; is this really only 2 lanes?
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> +
+> +	ports {
+> +		port@1 {
+> +			reg = <1>;
+> +			mdss0_dp0_out: endpoint {
+> +				remote-endpoint = <&pmic_glink_con0_ss>;
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +&mdss0_dp1 {
+> +	status = "okay";
+> +
+> +	data-lanes = <0 1>;
+Ditto
 
-Best regards,
-Krzysztof
+> +
+> +	ports {
+> +		port@1 {
+> +			reg = <1>;
+> +			mdss0_dp1_out: endpoint {
+> +				remote-endpoint = <&pmic_glink_con1_ss>;
+> +			};
+> +		};
+> +	};
+> +};
+> +
+>  &mdss0_dp3 {
+>  	compatible = "qcom,sc8280xp-edp";
+>  	/delete-property/ #sound-dai-cells;
+> @@ -480,8 +621,13 @@ &usb_0 {
+>  };
+>  
+>  &usb_0_dwc3 {
+> -	/* TODO: Define USB-C connector properly */
+>  	dr_mode = "host";
+> +
+> +	port {
+> +		usb_0_role_switch: endpoint {
+> +			remote-endpoint = <&pmic_glink_con0_hs>;
+> +		};
+This should be defined in the SoC DTSI, it's a standard dwc3 binding
+with usb HS / SS / SBU ports. Especially since we can feed the endpoint
+from any device now, as pmic-glink should work everywhere.
 
+Or /omit-if-no-ref/, I suppose.
+
+> +	};
+>  };
+>  
+>  &usb_0_hsphy {
+> @@ -504,8 +650,13 @@ &usb_1 {
+>  };
+>  
+>  &usb_1_dwc3 {
+> -	/* TODO: Define USB-C connector properly */
+>  	dr_mode = "host";
+> +
+> +	port {
+> +		usb_1_role_switch: endpoint {
+> +			remote-endpoint = <&pmic_glink_con1_hs>;
+> +		};
+> +	};
+>  };
+>  
+>  &usb_1_hsphy {
+> @@ -709,4 +860,40 @@ reset-n-pins {
+>  			drive-strength = <16>;
+>  		};
+>  	};
+> +
+> +	usb0_sbu_default: usb0-sbu-state {
+> +		oe-n-pins {
+> +			pins = "gpio101";
+> +			function = "gpio";
+No drive-strength/bias/i/o?
+
+Konrad
+> +		};
+> +
+> +		sel-pins {
+> +			pins = "gpio164";
+> +			function = "gpio";
+> +		};
+> +
+> +		mode-pins {
+> +			pins = "gpio167";
+> +			function = "gpio";
+> +			output-high;
+> +		};
+> +	};
+> +
+> +	usb1_sbu_default: usb1-sbu-state {
+> +		oe-n-pins {
+> +			pins = "gpio48";
+> +			function = "gpio";
+> +		};
+> +
+> +		sel-pins {
+> +			pins = "gpio47";
+> +			function = "gpio";
+> +		};
+> +
+> +		mode-pins {
+> +			pins = "gpio50";
+> +			function = "gpio";
+> +			output-high;
+> +		};
+> +	};
+>  };
