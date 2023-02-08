@@ -2,103 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7CDA168E7F2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 06:57:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DC1C468E80B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 07:09:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230396AbjBHF5p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Feb 2023 00:57:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42252 "EHLO
+        id S229731AbjBHGJX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Feb 2023 01:09:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230421AbjBHF5k (ORCPT
+        with ESMTP id S229519AbjBHGJX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Feb 2023 00:57:40 -0500
+        Wed, 8 Feb 2023 01:09:23 -0500
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB498442C6;
-        Tue,  7 Feb 2023 21:57:39 -0800 (PST)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3185WEEk009587;
-        Wed, 8 Feb 2023 05:57:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=P1ygoWWcvDpON3+quPfXepBnoOPp6QN6ilpf6N9HsXc=;
- b=meSsM2bRckSaY5LJRgAWSNs2ENCzfVNlhZB6QrRj+NOHL9QAkzBp1gc711395+unZfSq
- RfX6A9nZ9UT16OLUAKQ4BQm1sCYwbvhJvI7REsojWfzHHrlccY2D/DOIHJAdiD+Mo5lB
- 3WqbJZYCPqXtR+Fd+wZq60OQYgtV/CN1L1wlAl9r1pnb1SN8/LfCVQfWCYAQEho4oa+a
- K3JNGIEs47QtKY5gvo+cF16kX8ifl/QOGNc6/rRNeHvDRT4zUYXy186IJGfzN6qdevlF
- w8iQLHvXxLNW3FTvP8xxo08Uk7vZGpw0wcDGMxcd9p8FqaDKG8yFCh5BqwV/a9pMuVNY /g== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nkdeybpa4-1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 440063C2AC;
+        Tue,  7 Feb 2023 22:09:22 -0800 (PST)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3185dvVc032726;
+        Wed, 8 Feb 2023 06:09:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=C876TZIIxAKzAAhsnriSnxWWg4V33lQLM2PjsHjnBiA=;
+ b=OkdK1e9L0jAp/S5SztO2WXJyrsbIQjXsQmbjQCB/VzUB65rbN97vS1L6VdAsxmJgSD6M
+ tM/yjfX/96fupbuzqfLBKjw6fzabylE/+vTwzx4AOI3atWqQTh8qqgO3xQCeW8VLMQ5r
+ OhLloBtr26x7dgUcMTjg4u0/WZKwM6RofP1P9883wwoNI0VV8ufBibUCFKCzcGkVzgAY
+ /Tu4n70rOYlSohCPxI8v0+jsKCug764Z0kUtwbsRKNonAbuvt5G1dF4Hv1u6gmFJLtNE
+ q8bUmVBhl9pflkAxHHzs4bMRG0iVYmMwK5qmuD5B4/eMx4QsscgMvM1ROxdtxaUto2k9 zg== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nkfesbeep-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 08 Feb 2023 05:57:36 +0000
+        Wed, 08 Feb 2023 06:09:18 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3185vZHX019544
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31869Hfd029968
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 8 Feb 2023 05:57:35 GMT
-Received: from kathirav-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Tue, 7 Feb 2023 21:57:31 -0800
-From:   Kathiravan T <quic_kathirav@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-CC:     <quic_varada@quicinc.com>, <quic_srichara@quicinc.com>,
-        Kathiravan T <quic_kathirav@quicinc.com>
-Subject: [PATCH 2/2] soc: qcom: socinfo: Add IDs for IPQ5332 and its variant
-Date:   Wed, 8 Feb 2023 11:27:09 +0530
-Message-ID: <20230208055709.13162-3-quic_kathirav@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230208055709.13162-1-quic_kathirav@quicinc.com>
-References: <20230208055709.13162-1-quic_kathirav@quicinc.com>
+        Wed, 8 Feb 2023 06:09:17 GMT
+Received: from [10.50.23.208] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 7 Feb 2023
+ 22:09:12 -0800
+Message-ID: <df04b28e-3f2b-cac8-0990-55c7026b0fae@quicinc.com>
+Date:   Wed, 8 Feb 2023 11:39:02 +0530
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: (subset) [PATCH 0/6] Add regulator support for IPQ9574 SoC
+To:     Bjorn Andersson <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <agross@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <lgirdwood@gmail.com>,
+        <konrad.dybcio@linaro.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <broonie@kernel.org>, <devicetree@vger.kernel.org>
+CC:     <quic_kathirav@quicinc.com>, <quic_sjaganat@quicinc.com>,
+        <quic_arajkuma@quicinc.com>, <quic_gokulsri@quicinc.com>,
+        <quic_poovendh@quicinc.com>, <quic_srichara@quicinc.com>,
+        <quic_anusha@quicinc.com>
+References: <20230113150310.29709-1-quic_devipriy@quicinc.com>
+ <167572263442.3569822.4527590282812934469.b4-ty@kernel.org>
+Content-Language: en-US
+From:   Devi Priya <quic_devipriy@quicinc.com>
+In-Reply-To: <167572263442.3569822.4527590282812934469.b4-ty@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: VUTefQg5TGl8qqYugUGyW_94CwrphoX-
-X-Proofpoint-GUID: VUTefQg5TGl8qqYugUGyW_94CwrphoX-
+X-Proofpoint-GUID: Lym2p6nNKShWn54W0OLsArNKfTKlJoIE
+X-Proofpoint-ORIG-GUID: Lym2p6nNKShWn54W0OLsArNKfTKlJoIE
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
  definitions=2023-02-08_02,2023-02-06_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 suspectscore=0
- mlxlogscore=795 lowpriorityscore=0 priorityscore=1501 phishscore=0
- impostorscore=0 mlxscore=0 clxscore=1015 malwarescore=0 spamscore=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ adultscore=0 suspectscore=0 mlxlogscore=895 impostorscore=0 mlxscore=0
+ malwarescore=0 spamscore=0 lowpriorityscore=0 clxscore=1015 phishscore=0
  bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302080053
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+ engine=8.12.0-2212070000 definitions=main-2302080054
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add SOC ID for Qualcomm IPQ5332 and IPQ5322 variants.
 
-Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
----
- drivers/soc/qcom/socinfo.c | 2 ++
- 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-index 3b970a80f3aa..abe24e1b4022 100644
---- a/drivers/soc/qcom/socinfo.c
-+++ b/drivers/soc/qcom/socinfo.c
-@@ -439,6 +439,8 @@ static const struct soc_id soc_id[] = {
- 	{ qcom_board_id(QRU1032) },
- 	{ qcom_board_id(QRU1052) },
- 	{ qcom_board_id(QRU1062) },
-+	{ qcom_board_id(IPQ5332) },
-+	{ qcom_board_id(IPQ5322) },
- };
- 
- static const char *socinfo_machine(struct device *dev, unsigned int id)
--- 
-2.17.1
+On 2/7/2023 4:00 AM, Bjorn Andersson wrote:
+> On Fri, 13 Jan 2023 20:33:04 +0530, devi priya wrote:
+>> IPQ9574 SoC uses the PMIC MP5496 and SMPA1 regulator is used for
+>> APSS voltage scaling.
+>> This patch series adds the support for the same.
+>> Also enables the RPM communication over the RPMSG framework
+>>
+>> This series depends on the below patchset
+>> https://lore.kernel.org/linux-arm-msm/20230113143647.14961-1-quic_devipriy@quicinc.com/
+>>
+>> [...]
+> 
+> Applied, thanks!
+> 
+Thanks Bjorn!
 
+> [1/6] soc: qcom: smd-rpm: Add IPQ9574 compatible
+>        commit: 64dc69f3f36a71a95bfed8054d49600a7872415e
+> 
+> Best regards,
+Regards,
+Devi Priya
