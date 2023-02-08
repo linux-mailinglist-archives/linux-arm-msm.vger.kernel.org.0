@@ -2,125 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7395768F0CA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 15:27:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7241968F0D5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 15:30:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231403AbjBHO1Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Feb 2023 09:27:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42624 "EHLO
+        id S231393AbjBHOaz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Feb 2023 09:30:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231475AbjBHO07 (ORCPT
+        with ESMTP id S229515AbjBHOay (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Feb 2023 09:26:59 -0500
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 9F0F84C0F3;
-        Wed,  8 Feb 2023 06:26:24 -0800 (PST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 7B4671042;
-        Wed,  8 Feb 2023 06:27:06 -0800 (PST)
-Received: from [10.57.75.176] (unknown [10.57.75.176])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 23BBE3F8C6;
-        Wed,  8 Feb 2023 06:26:22 -0800 (PST)
-Message-ID: <3c105c79-f523-653e-5154-7ba641e51a96@arm.com>
-Date:   Wed, 8 Feb 2023 14:26:20 +0000
+        Wed, 8 Feb 2023 09:30:54 -0500
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3A0C422A
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Feb 2023 06:30:52 -0800 (PST)
+Received: by mail-ej1-x629.google.com with SMTP id p9so5693545ejj.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Feb 2023 06:30:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=xv/iB69rY5MDb5hV5n9uwKuD5gimFsR45T01z2ZZ+d0=;
+        b=fRjJOhiNjdNfSD6yqiiAmA+P6IXUOtpIvMuZNsZPOdJl4VideDYpQIcH7mRY3Pt7nk
+         ESXoz1egOJvuv8e6ZdWiCFGN9GGZenSpnzsU2fMDeSLQiAd9kGW9oukeBQI/ofypfA8b
+         XJlX3GnSlBN4KHxrCpUQ+ioyo7koc+XceoYo35pNQG1FQ5qZG5acAlcgbQcbXCZFnUb+
+         dKTp07QKU7H9RqoRhhqd+/bKIVrrdCC/3DU4cJtYEq0mGZu8WOcI4Q3pEs4pLUt+r2qu
+         QJQoLp64LFTUDMhShbRh0Dw3xj9D5fW5YQeBO183UpTZJydq4m7cUE3UK5vv2LMtB3lH
+         P2rQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xv/iB69rY5MDb5hV5n9uwKuD5gimFsR45T01z2ZZ+d0=;
+        b=GZVULWd2l0ibglwjjTemyXowjM2xA//ebobPY1woHiEuCny0raR9PKEXHKubTPuqoU
+         vgYL2yWhcDURwNRS7yy8Fw4vk3ObPxjfRSR+HEsr3QwuYAIULY9ct3OkSulYdLCIl/qO
+         HlSPmCip4I71s3vGr7+Cle8m8eQC+ZeQUOZ8Vl2wh4JPQ7BWpMTjAhNf5aPo5kE8+9ph
+         xukwDF9NB/1dMYwU8tupmRro0ZrXv0KgtMQFy3TFgKzSoYCNtWGfIsyiM8cSwrRkWFvj
+         bYHhPGdDm7bOZylIoPlvuTM4iIvc9eqzANNLEXOSt6aRRlqupyOqOsa50WcPMgMcZvsz
+         JVWw==
+X-Gm-Message-State: AO0yUKVPSgVGkty2dkRTT423496HcR1/hXdPo3IotqIhglE1rgJRkTFa
+        vDnr1rXg7Q87+ZIb3ug0WbEtOg==
+X-Google-Smtp-Source: AK7set/x2EDXjkMHYEQ6OzaRfTTMLZbpxjwchkhKBdHZQ4ZwIulS4CtS3mq/FdWV0ffPIP835Uo65w==
+X-Received: by 2002:a17:907:8d6:b0:8aa:1634:ba2a with SMTP id zu22-20020a17090708d600b008aa1634ba2amr5819792ejb.18.1675866651357;
+        Wed, 08 Feb 2023 06:30:51 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id lv3-20020a170906bc8300b00883410a786csm8258763ejb.207.2023.02.08.06.30.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Feb 2023 06:30:50 -0800 (PST)
+Message-ID: <ead8db2f-71bd-1b64-c663-faa0ce3bcc3e@linaro.org>
+Date:   Wed, 8 Feb 2023 16:30:49 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.6.1
-Subject: Re: [PATCH] coresight: core: Add coresight name support
-To:     Mao Jinlong <quic_jinlmao@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Mike Leach <mike.leach@linaro.org>,
-        Leo Yan <leo.yan@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc:     coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>
-References: <20230208110716.18321-1-quic_jinlmao@quicinc.com>
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <20230208110716.18321-1-quic_jinlmao@quicinc.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH v3 4/4] drm/msm/dpu: reserve the resources on topology
+ change
+Content-Language: en-GB
+To:     Kalyan Thota <quic_kalyant@quicinc.com>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, robdclark@chromium.org,
+        dianders@chromium.org, swboyd@chromium.org,
+        quic_vpolimer@quicinc.com, quic_abhinavk@quicinc.com,
+        marijn.suijten@somainline.org
+References: <1675863724-28412-1-git-send-email-quic_kalyant@quicinc.com>
+ <1675863724-28412-5-git-send-email-quic_kalyant@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <1675863724-28412-5-git-send-email-quic_kalyant@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/02/2023 11:07, Mao Jinlong wrote:
-> Apart from STM and ETM sources, there will be more sources added to
-> coresight components. For example, there are over 10 TPDM sources.
-> Add coresight name support for custom names which will be
-> easy to identify the source.
+On 08/02/2023 15:42, Kalyan Thota wrote:
+> Some features like CTM can be enabled dynamically. Release
+> and reserve the DPU resources whenever a topology change
+> occurs such that required hw blocks are allocated appropriately.
 > 
-
-As we have previously discussed, please don't make this a generic
-code change. If your device has a "specifici" name, use that for
-allocating in the driver and leave the core code alone.
-
-Suzuki
-
-
-> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+> Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
 > ---
->   drivers/hwtracing/coresight/coresight-core.c | 34 +++++++++++---------
->   1 file changed, 19 insertions(+), 15 deletions(-)
+> Changes in v1:
+> - Avoid mode_set call directly (Dmitry)
 > 
-> diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/hwtracing/coresight/coresight-core.c
-> index d3bf82c0de1d..5e95d9c7f256 100644
-> --- a/drivers/hwtracing/coresight/coresight-core.c
-> +++ b/drivers/hwtracing/coresight/coresight-core.c
-> @@ -1733,28 +1733,32 @@ char *coresight_alloc_device_name(struct coresight_dev_list *dict,
->   {
->   	int idx;
->   	char *name = NULL;
-> +	const char *coresight_name = NULL;
->   	struct fwnode_handle **list;
-> +	struct device_node *node = dev->of_node;
->   
->   	mutex_lock(&coresight_mutex);
->   
-> -	idx = coresight_search_device_idx(dict, dev_fwnode(dev));
-> -	if (idx < 0) {
-> -		/* Make space for the new entry */
-> -		idx = dict->nr_idx;
-> -		list = krealloc_array(dict->fwnode_list,
-> -				      idx + 1, sizeof(*dict->fwnode_list),
-> -				      GFP_KERNEL);
-> -		if (ZERO_OR_NULL_PTR(list)) {
-> -			idx = -ENOMEM;
-> -			goto done;
-> +	if (!of_property_read_string(node, "coresight-name", &coresight_name))
-> +		name = devm_kasprintf(dev, GFP_KERNEL, "%s", coresight_name);
-> +	else {
-> +		idx = coresight_search_device_idx(dict, dev_fwnode(dev));
-> +		if (idx < 0) {
-> +			/* Make space for the new entry */
-> +			idx = dict->nr_idx;
-> +			list = krealloc_array(dict->fwnode_list,
-> +					      idx + 1, sizeof(*dict->fwnode_list),
-> +					      GFP_KERNEL);
-> +			if (ZERO_OR_NULL_PTR(list))
-> +				goto done;
-> +
-> +			list[idx] = dev_fwnode(dev);
-> +			dict->fwnode_list = list;
-> +			dict->nr_idx = idx + 1;
->   		}
->   
-> -		list[idx] = dev_fwnode(dev);
-> -		dict->fwnode_list = list;
-> -		dict->nr_idx = idx + 1;
-> +		name = devm_kasprintf(dev, GFP_KERNEL, "%s%d", dict->pfx, idx);
->   	}
-> -
-> -	name = devm_kasprintf(dev, GFP_KERNEL, "%s%d", dict->pfx, idx);
->   done:
->   	mutex_unlock(&coresight_mutex);
->   	return name;
+> Changes in v2:
+> - Minor nits (Dmitry)
+> 
+> Changes in v3:
+> - avoid unnecessary modeset check call (Dmitry)
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h    |  2 ++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 24 +++++++++++++++++++-----
+>   2 files changed, 21 insertions(+), 5 deletions(-)
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+-- 
+With best wishes
+Dmitry
 
