@@ -2,80 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 03EC768E9A0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 09:15:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B473868E9AC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 09:17:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229741AbjBHIPA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Feb 2023 03:15:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53790 "EHLO
+        id S229923AbjBHIR1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Feb 2023 03:17:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229519AbjBHIO7 (ORCPT
+        with ESMTP id S229879AbjBHIR0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Feb 2023 03:14:59 -0500
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21C1543473
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Feb 2023 00:14:51 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id gr7so49207649ejb.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Feb 2023 00:14:51 -0800 (PST)
+        Wed, 8 Feb 2023 03:17:26 -0500
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA6E610F0
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Feb 2023 00:17:24 -0800 (PST)
+Received: by mail-ej1-x62a.google.com with SMTP id ml19so49405232ejb.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Feb 2023 00:17:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=sgjeZUW23x9Z3Uo5qQXOs6aPRbzAd52gyL69E20+ngU=;
-        b=uLWOMzSiwNBioOlbVEGMS9FGagzk72mOcQTKDTQZmfTuatJYtmIzeMdIga9WLbOTY4
-         1sY3TXQIelTaniBhNUwvrIg6ErwQi0StnrE7qFtF9TRHbcuD/epjd/sfU7K4mtDsvHeV
-         j2VOoGZkK/GCudBF1f7YDaED0llItzC3PbvNAPmsXckXGtDgP/qo7uJnIchbknNcSoJp
-         hRItzeg0u8GUyzOCrelytvNndPMCY3tWy/vMEs/WvsxgGTdAYBI74Dl9nlhDvnERa5xM
-         Dx9eESxUM2dPVdwfD+ZVhHtPlXfKfLk5LQYyE6NuSLZsaVX0rePRlnoiQdAkHeG9Pi21
-         jv1Q==
+        bh=mgNVLPP81e/ZJyUA32o0ZH9mBi/iQe4yk7ouaJGZuy0=;
+        b=ycOguIPKYX/vFlY/CaadB5taIqR8a5Z90ZR+FhhA0KfrTvQx7qS75v4O4A91qx+Ss2
+         Qe2J2ZreNR8NHh7Ezzwwuvp9J2s3ea3G+ZC1fzhQmzgaN2xs33AC3qOL1YqWIUZw9XPe
+         ENkoROCgHPYZvl55g7AQ1IzABLWOp0vAw3Go9Ti2Dx6YYEtqKuv4Fiagu+8l+VuORyO9
+         Ih7tuU2LzAGgbY2znBewTxo1ulYH5lahSn+Y7WkecAa8+eukNAGlMYSlP70N28Oq81wr
+         7Nb8pwcs706J+8BcOrV2fl9MBh4RUmEmeTAS5aD/Zgd6aMK/IU3deGZX9u6LVHQqZ0Mv
+         +RqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sgjeZUW23x9Z3Uo5qQXOs6aPRbzAd52gyL69E20+ngU=;
-        b=OVW+osTuUShXt7+R89UMVGyzX8wVVGn4YWalSzWsvChhJhvEAWVGg9GzsWcmvnKzas
-         RdBETL2hGMXurRiUV+Dzup4EFALu91mlfmJ2GpHNh21U9Ke+wx806kiDd4qFpWJpTmCP
-         g5S9EKPbWVqwvFhCDuib/hki2IpZWqstd9rpJcraMU6Q0AQ6nX8FApld/c6zc7Ep3tmW
-         CVMJ+LhOcxz+DUaeqpQR9Tq9u68LZj0KReFjxPaUKrg4Oz9Dpab25MsijmwCj+wCeEar
-         XxrjP2jufh25b5zyAN1b0/tXizE6eZzMA+AxmIKOdYGzrjuGKxWX6Xd+qqSJ0T8lFAQx
-         oxlw==
-X-Gm-Message-State: AO0yUKWQF0J+xXh4cJRQ8R+ZUbgQlD2CSNiVXZ/PW9eXkayEi0AktOEj
-        /RHpHCJIzeHYc/ANhFGq4vGH8jE9RtZie08j
-X-Google-Smtp-Source: AK7set+6fn3VZiirH+RgWcqt5ou2B/TdQ8+XHS+DrNdd+dPx/PKhtmhswmFfaa5OnRquBRwg8vqisA==
-X-Received: by 2002:a17:906:b2cc:b0:878:5917:601 with SMTP id cf12-20020a170906b2cc00b0087859170601mr6836543ejb.58.1675844089408;
-        Wed, 08 Feb 2023 00:14:49 -0800 (PST)
+        bh=mgNVLPP81e/ZJyUA32o0ZH9mBi/iQe4yk7ouaJGZuy0=;
+        b=whQ7wuvidwOjzk0cyDJ057hJQYDZxEXI18/FuoBjqcB7TbnDflNpppEnwXNgfnxSFk
+         Rkk4KWhsCbg/0IQRemkysZwiF3qBuWoflRYB9B0H+SrmmTRPil7sS22YxMhrEGpXo+ef
+         hp8FvzhJD0r6x0yw+oqMUfE2Uq+ChOlq3NZ1LHog/ZWYURh33uC1i6Lg9nR8orVfIr6k
+         rvptRVwa65zd2AcN6yJbo7HzYenpr8gqXWxyEGMZOFiLGwHgRf16gM54+fdAJxXJg9bh
+         9Dh+S+5LFkNT9+bFKfDN/h539MHIqvvd5SgTeTMrP7MNLf2WDbNLPuIhVRp3QzlumHuJ
+         6J7g==
+X-Gm-Message-State: AO0yUKW78HX8m0XF2kBJnZu3nCmlR2OqM+A0Q+syPNMQWrKG8G6HNXz3
+        jhidx8+7ecNpwWWyvdQZAAQHSw==
+X-Google-Smtp-Source: AK7set+WYZqi41ew+EAKbO82xbTbuL+1CayQDZfUvoUbK1GE7bTWHRU6wKzSpURzm1/aC0UeSRXiCg==
+X-Received: by 2002:a17:906:7952:b0:884:b467:ae4a with SMTP id l18-20020a170906795200b00884b467ae4amr8205385ejo.64.1675844243558;
+        Wed, 08 Feb 2023 00:17:23 -0800 (PST)
 Received: from [192.168.1.101] (abxh117.neoplus.adsl.tpnet.pl. [83.9.1.117])
-        by smtp.gmail.com with ESMTPSA id h14-20020a170906590e00b00888161349desm7936059ejq.182.2023.02.08.00.14.47
+        by smtp.gmail.com with ESMTPSA id g4-20020a170906348400b007add62dafbasm7954162ejb.157.2023.02.08.00.17.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Feb 2023 00:14:48 -0800 (PST)
-Message-ID: <229edfec-736f-d94d-23ba-2a0649639556@linaro.org>
-Date:   Wed, 8 Feb 2023 09:14:46 +0100
+        Wed, 08 Feb 2023 00:17:23 -0800 (PST)
+Message-ID: <79c1cc0e-137d-af37-0069-f01f9a25e99b@linaro.org>
+Date:   Wed, 8 Feb 2023 09:17:21 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [PATCH 2/4] arm64: dts: qcom: sc8280xp-crd: Introduce pmic_glink
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230208034620.2048744-1-quic_bjorande@quicinc.com>
- <20230208034620.2048744-3-quic_bjorande@quicinc.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7280: Power herobrine's 3.3 eDP/TS
+ rail more properly
 Content-Language: en-US
+To:     Douglas Anderson <dianders@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     mka@chromium.org, Andy Gross <agross@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230207163550.1.I5ff72b7746d5fca8f10ea61351bde4150ed1a7f8@changeid>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230208034620.2048744-3-quic_bjorande@quicinc.com>
+In-Reply-To: <20230207163550.1.I5ff72b7746d5fca8f10ea61351bde4150ed1a7f8@changeid>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -84,270 +80,66 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 8.02.2023 04:46, Bjorn Andersson wrote:
-> From: Bjorn Andersson <bjorn.andersson@linaro.org>
+On 8.02.2023 01:36, Douglas Anderson wrote:
+> This is the equivalent of commit f5b4811e8758 ("arm64: dts: qcom:
+> sc7180: Add trogdor eDP/touchscreen regulator off-on-time") and commit
+> 23ff866987de ("arm64: dts: qcom: sc7180: Start the trogdor
+> eDP/touchscreen regulator on"), but for herobrine instead of trogdor.
 > 
-> The SC8280XP CRD control over battery management and its two USB Type-C
-> port using pmic_glink and two GPIO-based SBU muxes.
+> The motivations for herobrine are the same as for trogdor.
 > 
-> Enable the two DisplayPort instances, GPIO SBU mux instance and
-> pmic_glink with the two connectors on the CRD.
+> NOTES:
+> * Currently for herobrine all boards are eDP, not MIPI. If/when we
+>   have herobrine derivatives that are MIPI they we can evaluate
+>   whether the same off-on-delay makes sense for them. For trogdor we
+>   didn't add the delay to MIPI panels because the problem was found
+>   late and nobody had complained about it. For herobrine defaulting to
+>   assuming the same 500ms makes sense and if we find we need to
+>   optimize later we can.
+> * Currently there are no oddball herobrine boards like homestar where
+>   the panel really likes to be power cycled. If we have an oddball
+>   board it will need to split the eDP and touchscreen rail anyway
+>   (like homestar did) and we'll have to delete the "regulator-boot-on"
+>   from that board.
 > 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > ---
->  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 191 +++++++++++++++++++++-
->  1 file changed, 189 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> index 3f116a879e22..35b63c3962f0 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> @@ -36,6 +36,77 @@ chosen {
->  		stdout-path = "serial0:115200n8";
->  	};
->  
-> +	pmic-glink {
-> +		compatible = "qcom,sc8280xp-pmic-glink", "qcom,pmic-glink";
-> +
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		connector@0 {
-> +			compatible = "usb-c-connector";
-> +			reg = <0>;
-> +			power-role = "dual";
-> +			data-role = "dual";
-> +
-> +			ports {
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-Add a newline between the last propreties and first subnodes, please.
-
-> +				port@0 {
-> +					reg = <0>;
-> +					pmic_glink_con0_hs: endpoint {
-> +						remote-endpoint = <&usb_0_role_switch>;
-> +					};
-> +				};
-> +
-> +				port@1 {
-> +					reg = <1>;
-> +					pmic_glink_con0_ss: endpoint {
-> +						remote-endpoint = <&mdss0_dp0_out>;
-> +					};
-> +				};
-> +
-> +				port@2 {
-> +					reg = <2>;
-> +					pmic_glink_con0_sbu: endpoint {
-> +						remote-endpoint = <&usb0_sbu_mux>;
-> +					};
-> +				};
-> +			};
-> +		};
-> +
-> +		connector@1 {
-> +			compatible = "usb-c-connector";
-> +			reg = <1>;
-> +			power-role = "dual";
-> +			data-role = "dual";
-> +
-> +			ports {
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +				port@0 {
-> +					reg = <0>;
-> +					pmic_glink_con1_hs: endpoint {
-> +						remote-endpoint = <&usb_1_role_switch>;
-> +					};
-> +				};
-> +
-> +				port@1 {
-> +					reg = <1>;
-> +					pmic_glink_con1_ss: endpoint {
-> +						remote-endpoint = <&mdss0_dp1_out>;
-> +					};
-> +				};
-> +
-> +				port@2 {
-> +					reg = <2>;
-> +					pmic_glink_con1_sbu: endpoint {
-> +						remote-endpoint = <&usb1_sbu_mux>;
-> +					};
-> +				};
-> +			};
-> +		};
-> +	};
-> +
->  	vreg_edp_3p3: regulator-edp-3p3 {
->  		compatible = "regulator-fixed";
->  
-> @@ -139,6 +210,46 @@ linux,cma {
->  			linux,cma-default;
->  		};
->  	};
-> +
-> +	usb0-sbu-mux {
-> +		compatible = "pericom,pi3usb102", "gpio-sbu-mux";
-> +
-> +		enable-gpios = <&tlmm 101 GPIO_ACTIVE_LOW>;
-> +		select-gpios = <&tlmm 164 GPIO_ACTIVE_HIGH>;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&usb0_sbu_default>;
-> +
-> +		mode-switch;
-> +		orientation-switch;
-> +		svid = /bits/ 16 <0xff01>;
-> +
-> +		port {
-> +			usb0_sbu_mux: endpoint {
-> +				remote-endpoint = <&pmic_glink_con0_sbu>;
-> +			};
-> +		};
-> +	};
-> +
-> +	usb1-sbu-mux {
-> +		compatible = "pericom,pi3usb102", "gpio-sbu-mux";
-> +
-> +		enable-gpios = <&tlmm 48 GPIO_ACTIVE_LOW>;
-> +		select-gpios = <&tlmm 47 GPIO_ACTIVE_HIGH>;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&usb1_sbu_default>;
-> +
-> +		mode-switch;
-> +		orientation-switch;
-> +		svid = /bits/ 16 <0xff01>;
-> +
-> +		port {
-> +			usb1_sbu_mux: endpoint {
-> +				remote-endpoint = <&pmic_glink_con1_sbu>;
-> +			};
-> +		};
-> +	};
->  };
->  
->  &apps_rsc {
-> @@ -262,6 +373,36 @@ &mdss0 {
->  	status = "okay";
->  };
->  
-> +&mdss0_dp0 {
-> +	status = "okay";
-> +
-> +	data-lanes = <0 1>;
-Status last; is this really only 2 lanes?
-
-> +
-> +	ports {
-> +		port@1 {
-> +			reg = <1>;
-> +			mdss0_dp0_out: endpoint {
-> +				remote-endpoint = <&pmic_glink_con0_ss>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +&mdss0_dp1 {
-> +	status = "okay";
-> +
-> +	data-lanes = <0 1>;
-Ditto
-
-> +
-> +	ports {
-> +		port@1 {
-> +			reg = <1>;
-> +			mdss0_dp1_out: endpoint {
-> +				remote-endpoint = <&pmic_glink_con1_ss>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
->  &mdss0_dp3 {
->  	compatible = "qcom,sc8280xp-edp";
->  	/delete-property/ #sound-dai-cells;
-> @@ -480,8 +621,13 @@ &usb_0 {
->  };
->  
->  &usb_0_dwc3 {
-> -	/* TODO: Define USB-C connector properly */
->  	dr_mode = "host";
-> +
-> +	port {
-> +		usb_0_role_switch: endpoint {
-> +			remote-endpoint = <&pmic_glink_con0_hs>;
-> +		};
-This should be defined in the SoC DTSI, it's a standard dwc3 binding
-with usb HS / SS / SBU ports. Especially since we can feed the endpoint
-from any device now, as pmic-glink should work everywhere.
-
-Or /omit-if-no-ref/, I suppose.
-
-> +	};
->  };
->  
->  &usb_0_hsphy {
-> @@ -504,8 +650,13 @@ &usb_1 {
->  };
->  
->  &usb_1_dwc3 {
-> -	/* TODO: Define USB-C connector properly */
->  	dr_mode = "host";
-> +
-> +	port {
-> +		usb_1_role_switch: endpoint {
-> +			remote-endpoint = <&pmic_glink_con1_hs>;
-> +		};
-> +	};
->  };
->  
->  &usb_1_hsphy {
-> @@ -709,4 +860,40 @@ reset-n-pins {
->  			drive-strength = <16>;
->  		};
->  	};
-> +
-> +	usb0_sbu_default: usb0-sbu-state {
-> +		oe-n-pins {
-> +			pins = "gpio101";
-> +			function = "gpio";
-No drive-strength/bias/i/o?
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
-> +		};
+> This patch should be applied atop my recent series adjusting the
+> herobrine touchscreen rails [1]. If I need to send a v2 of that series
+> I will add this at the end of it as patch #8.
+> 
+> [1] https://lore.kernel.org/all/20230207024816.525938-1-dianders@chromium.org/
+> 
+>  arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+> index ded36b5d28c7..312cc0e1cbc7 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+> @@ -110,6 +110,22 @@ pp3300_left_in_mlb: pp3300-left-in-mlb-regulator {
+>  
+>  		regulator-enable-ramp-delay = <3000>;
+>  
+> +		/*
+> +		 * eDP panel specs nearly always have a spec that says you
+> +		 * shouldn't turn them off an on again without waiting 500ms.
+> +		 * Add this as a board constraint since this rail is shared
+> +		 * between the panel and touchscreen.
+> +		 */
+> +		off-on-delay-us = <500000>;
 > +
-> +		sel-pins {
-> +			pins = "gpio164";
-> +			function = "gpio";
-> +		};
+> +		/*
+> +		 * Stat the regulator on. This has the advantage of starting
+> +		 * the slow process of powering the panel on as soon as we
+> +		 * probe the regulator. It also avoids tripping the
+> +		 * off-on-delay immediately on every bootup.
+> +		 */
+> +		regulator-boot-on;
 > +
-> +		mode-pins {
-> +			pins = "gpio167";
-> +			function = "gpio";
-> +			output-high;
-> +		};
-> +	};
-> +
-> +	usb1_sbu_default: usb1-sbu-state {
-> +		oe-n-pins {
-> +			pins = "gpio48";
-> +			function = "gpio";
-> +		};
-> +
-> +		sel-pins {
-> +			pins = "gpio47";
-> +			function = "gpio";
-> +		};
-> +
-> +		mode-pins {
-> +			pins = "gpio50";
-> +			function = "gpio";
-> +			output-high;
-> +		};
-> +	};
->  };
+>  		vin-supply = <&pp3300_z1>;
+>  	};
+>  
