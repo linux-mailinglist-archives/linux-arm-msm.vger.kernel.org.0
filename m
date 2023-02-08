@@ -2,127 +2,277 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C35968F7AE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 20:02:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7392468F7BB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 20:04:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231618AbjBHTCZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Feb 2023 14:02:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54292 "EHLO
+        id S231488AbjBHTEG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Feb 2023 14:04:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231549AbjBHTCS (ORCPT
+        with ESMTP id S231491AbjBHTEF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Feb 2023 14:02:18 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25DD5552B6
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Feb 2023 11:02:16 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id j23so2608316wra.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Feb 2023 11:02:16 -0800 (PST)
+        Wed, 8 Feb 2023 14:04:05 -0500
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A3BB56498;
+        Wed,  8 Feb 2023 11:03:27 -0800 (PST)
+Received: by mail-lj1-x22f.google.com with SMTP id h4so20507746lja.2;
+        Wed, 08 Feb 2023 11:03:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MhSD2EYMzeYmp4lc7JlIcu+kMhKbNZUjdV/v58pmN/I=;
-        b=LMc4BxAQ7oZVRUuNxPjR5pWqTFbCCwaFhO5KTA1zkMPBzmtlm55CRbxr9bIFtwBe0g
-         AVN1/LfqbG4JeWn/7ROoyQ4GBvJIXVffmWosMBZxFm3FvrcNIApzBlGpv0KqSqeRA1Zc
-         T+Agpkmlfwa5Xx2ifhi4bVx/D+QsWBHTgYR7kQa75kQwmc1NoHDLuPRNzFY+GESJcgZH
-         5nJ79Uv3NLy7NWhJq8+vMg3yItAXxejZoLzXGct0etsyVJcTS0SM2Fn+D1kNcET/nfMf
-         4mDgdDyBugnux9n4VG9nrK3yDKLWwn3nb7+nT/+bHXTBLm0FQ9DVs41juW8Kiv9cZSSm
-         Ifag==
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=iwI3aK586VHzNzcOidiZWo9e3xxjvTb1Ua8omhn3lyg=;
+        b=OdCeMA4o0UE5DSnrM0ucCNl0eFPoUKjcAsiiVlLsWP86U4IYTdFZOh0vy9pKSnEean
+         fG3N8VAhoAOnYts9hmF1G/yMl5IqfyaB+jJbC1M9jtZ2iEuoulAnoPi5xvPbpJxgOGRc
+         wxQNPRzetteZ3IzqH92gsXWYojp3siAoLEy+ENKyBkxV/GyENVtr80+YTVV4LZ+gkqCk
+         zq4QrTfojwAXO84zDl2BSHH+1F/B4/mpNVJLjmTQmAWmUFH4L4mOe69hjGM6/zMAVz6j
+         uqmna9yGSRbNNP1R1K8F6ALN6lf92C8eoMX4bdgtwS5T/Ic3ajrkizlUNZwxeXawDxD2
+         ENLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=MhSD2EYMzeYmp4lc7JlIcu+kMhKbNZUjdV/v58pmN/I=;
-        b=w/ExPWVgkNHuGsum+x5aK8aJnDgYFBcxotoD1N59fivujwRkV5DtEfpsF0wjFxhBBY
-         PKzPcgWQsohpBnm5WY8Kq6zq9CckY50EdK+ExPTL/yMjuMToPUrro2Bal3wbnQijnasf
-         tUC5qG3NX60J8FBcBBayClucz10Oihh7Kyg+INIPRNMl4mq2r0fXqNjhmAQ0VtgEUb0G
-         JENLJrA1QjBgFw3mQZi+UvOhSs5lMSLGRVKjCH5pXqtDsJIo9T0XUBloFJ9mhgS4fjel
-         vFxXHrdvRlDhvEtWzRBXLyyXd0i8doIyHrQrHSF+kMNpBX31e6Xx4nBfdQcKFXR+wqJr
-         v+ZA==
-X-Gm-Message-State: AO0yUKWhONtHRfVuX38uo44GMBoiOVmH/tfH3k006+9p9cNSxS86Duef
-        HQmDzjjuNt8wx0Iitfkgu5W6Qg==
-X-Google-Smtp-Source: AK7set+q01pJi05o5iDlEX6osfNZc0O0qfck2gCOu6I3wlt9jssBIk9OXQNFKR95bJ9+q3PIQi2utw==
-X-Received: by 2002:a5d:60d0:0:b0:2bd:ee0c:26a3 with SMTP id x16-20020a5d60d0000000b002bdee0c26a3mr7632764wrt.8.1675882934685;
-        Wed, 08 Feb 2023 11:02:14 -0800 (PST)
-Received: from hackbox.lan ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id n16-20020a1c7210000000b003dc1d668866sm2650327wmc.10.2023.02.08.11.02.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Feb 2023 11:02:14 -0800 (PST)
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Lee Jones <lee@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        "vkoul@kernel.org" <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Johan Hovold <johan+linaro@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: [PATCH v5 7/7] arm64: dts: qcom: sm8550-mtp: Add eUSB2 repeater node
-Date:   Wed,  8 Feb 2023 21:02:00 +0200
-Message-Id: <20230208190200.2966723-8-abel.vesa@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230208190200.2966723-1-abel.vesa@linaro.org>
-References: <20230208190200.2966723-1-abel.vesa@linaro.org>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iwI3aK586VHzNzcOidiZWo9e3xxjvTb1Ua8omhn3lyg=;
+        b=uyFUa4yelKHDIgr9Aowjmv1xFZvHj54cgD/FvXNTwdC3p0SnsrtHFG7DfAksEZ9PB4
+         abvI9E3Bht+wccbVae7zmia0JedVEATKXy+vR3uKSbLBrinpDB5e5qjKH5T5kh9efGO+
+         /VbYbsN9myLb5gJlLAxKW6pL1TEmYPDbVBtICbeGOALAVkpEOnYmj8Bv2RWxA7KFjt38
+         eWsSvaZRXRhArWdbj8gu9KXRemMgQkpoPs1/9ThMKyJqlsIov47wLXNhkRqz+TuG+je3
+         Dhkd0L03TiBZ2C8KXZneqSqBhKNugosWb3PVBgAhALwCbRCrWE29KVKr7O4TzLvn82wN
+         XL/A==
+X-Gm-Message-State: AO0yUKW8o3pcRe60fBOjXDh2YqVPgxXu26nT1el+PkYzdzfu6g82Vzeb
+        a0iyz7y9tY40Dvuz2JBCoyGGmnbSmFnrIOi73/4=
+X-Google-Smtp-Source: AK7set/QKhFg3n/nCb2zoNs0vGv0NPfzNfcoZ5TscCUslhnPJKO5Qq90El4R2LI0EBD/N97F4mT/h3FfOkyMi1n+tQA=
+X-Received: by 2002:a2e:9c4b:0:b0:293:ed1:ee6f with SMTP id
+ t11-20020a2e9c4b000000b002930ed1ee6fmr1602262ljj.119.1675882990791; Wed, 08
+ Feb 2023 11:03:10 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230208094038.13670-1-quic_tjiang@quicinc.com>
+In-Reply-To: <20230208094038.13670-1-quic_tjiang@quicinc.com>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Wed, 8 Feb 2023 11:02:59 -0800
+Message-ID: <CABBYNZLaOcYU-2HsSuJy4E6-OyfffmZdfK5mxWY=Wto4G84ySA@mail.gmail.com>
+Subject: Re: [PATCH v1] Bluetooth: hci_qca: Add support for Qualcomm Bluetooth
+ SoC QCA2066
+To:     Tim Jiang <quic_tjiang@quicinc.com>
+Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
+        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, quic_bgodavar@quicinc.com,
+        quic_hbandi@quicinc.com, quic_hemantg@quicinc.com, mka@chromium.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the PMIC eUSB2 repeater node and add the usb-repeater
-property to the eUSB2 PHY to allow it to be controlled by the
-PHY driver.
+Hi Tim,
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
+On Wed, Feb 8, 2023 at 1:44 AM Tim Jiang <quic_tjiang@quicinc.com> wrote:
+>
+> This patch adds support for QCA2066, including the devicetree
+> and patch/nvm downloading.
+>
+> Signed-off-by: Tim Jiang <quic_tjiang@quicinc.com>
+> ---
+>  drivers/bluetooth/btqca.c   | 85 +++++++++++++++++++++++++++++++++++++
+>  drivers/bluetooth/btqca.h   |  2 +
+>  drivers/bluetooth/hci_qca.c |  6 +++
+>  3 files changed, 93 insertions(+)
+>
+> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+> index c9064d34d830..7d00df3a1d61 100644
+> --- a/drivers/bluetooth/btqca.c
+> +++ b/drivers/bluetooth/btqca.c
+> @@ -205,6 +205,55 @@ static int qca_send_reset(struct hci_dev *hdev)
+>         return 0;
+>  }
+>
+> +static int qca_read_fw_board_id(struct hci_dev *hdev, u8 *bid)
+> +{
+> +       u8 cmd;
+> +       struct sk_buff *skb;
+> +       struct edl_event_hdr *edl;
+> +       int err;
+> +       int bid_len;
+> +
+> +       bt_dev_dbg(hdev, "QCA read board ID");
+> +
+> +       cmd = EDL_GET_BID_REQ_CMD;
+> +       skb = __hci_cmd_sync_ev(hdev, EDL_PATCH_CMD_OPCODE, EDL_PATCH_CMD_LEN,
+> +                               &cmd, 0, HCI_INIT_TIMEOUT);
+> +       if (IS_ERR(skb)) {
+> +               err = PTR_ERR(skb);
+> +               bt_dev_err(hdev, "Reading QCA board ID failed (%d)",
+> +                          err);
+> +               return err;
+> +       }
+> +
+> +       edl = (struct edl_event_hdr *)(skb->data);
 
-The v4 is here:
-https://lore.kernel.org/all/20230207135551.1418637-8-abel.vesa@linaro.org/
+Please use skb_pull_data that checks if the skb has enough data.
 
-Changes since v4:
- * none
+> +       if (!edl) {
+> +               bt_dev_err(hdev, "QCA read board ID with no header");
+> +               err = -EILSEQ;
+> +               goto out;
+> +       }
+> +
+> +       if (edl->cresp != EDL_CMD_REQ_RES_EVT ||
+> +           edl->rtype != EDL_GET_BID_REQ_CMD) {
+> +               bt_dev_err(hdev, "QCA Wrong packet received %d %d", edl->cresp,
+> +                          edl->rtype);
+> +               err = -EIO;
+> +               goto out;
+> +       }
+> +
+> +       bid_len = edl->data[0];
+> +       bid[0] = edl->data[1];
+> +       bid[1] = edl->data[2];
+> +       bt_dev_info(hdev, "QCA board ID len %d,id = %x %x", bid_len, bid[0], bid[1]);
+> +
+> +
+> +       err = 0;
+> +
+> +out:
+> +       kfree_skb(skb);
+> +       return err;
+> +}
+> +
+> +
+>  int qca_send_pre_shutdown_cmd(struct hci_dev *hdev)
+>  {
+>         struct sk_buff *skb;
+> @@ -574,6 +623,32 @@ int qca_set_bdaddr_rome(struct hci_dev *hdev, const bdaddr_t *bdaddr)
+>  }
+>  EXPORT_SYMBOL_GPL(qca_set_bdaddr_rome);
+>
+> +static void qca_generate_nvm_name(struct hci_dev *hdev, char *fwname,
+> +                  size_t max_size, struct qca_btsoc_version ver, u8 *bid)
+> +{
+> +       u8 rom_ver = 0;
+> +       u32 soc_ver;
+> +       const char *variant;
+> +
+> +       soc_ver = get_soc_ver(ver.soc_id, ver.rom_ver);
+> +       rom_ver = ((soc_ver & 0x00000f00) >> 0x04) | (soc_ver & 0x0000000f);
+> +       bt_dev_info(hdev, "bid == 0x%02x 0x%02x", bid[0], bid[1]);
+> +
+> +       if ((ver.soc_id & 0x0000ff00) == 0x1200) /*hsp gf chip*/
+> +               variant = "g";
+> +       else
+> +               variant = "";
+> +
+> +       if (bid[0] == 0 && bid[1] == 0) {
+> +               snprintf(fwname, max_size, "qca/hpnv%02x%s.bin", rom_ver, variant);
+> +       } else {
+> +               snprintf(fwname, max_size, "qca/hpnv%02x%s.%x%02x",
+> +                       rom_ver, variant, bid[0], bid[1]);
+> +       }
+> +       bt_dev_info(hdev, "%s:  %s", __func__, fwname);
+> +
+> +}
+> +
+>  int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+>                    enum qca_btsoc_type soc_type, struct qca_btsoc_version ver,
+>                    const char *firmware_name)
+> @@ -582,6 +657,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+>         int err;
+>         u8 rom_ver = 0;
+>         u32 soc_ver;
+> +       u8 bid[2] = {0};
+>
+>         bt_dev_dbg(hdev, "QCA setup on UART");
+>
+> @@ -607,6 +683,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+>         } else if (soc_type == QCA_QCA6390) {
+>                 snprintf(config.fwname, sizeof(config.fwname),
+>                          "qca/htbtfw%02x.tlv", rom_ver);
+> +       } else if (soc_type == QCA_QCA2066) {
+> +               snprintf(config.fwname, sizeof(config.fwname),
+> +                        "qca/hpbtfw%02x.tlv", rom_ver);
+>         } else if (soc_type == QCA_WCN6750) {
+>                 /* Choose mbn file by default.If mbn file is not found
+>                  * then choose tlv file
+> @@ -628,6 +707,10 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+>         /* Give the controller some time to get ready to receive the NVM */
+>         msleep(10);
+>
+> +       if (soc_type == QCA_QCA2066)
+> +               qca_read_fw_board_id(hdev, bid);
+> +
+> +
+>         /* Download NVM configuration */
+>         config.type = TLV_TYPE_NVM;
+>         if (firmware_name)
+> @@ -645,6 +728,8 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+>         else if (soc_type == QCA_QCA6390)
+>                 snprintf(config.fwname, sizeof(config.fwname),
+>                          "qca/htnv%02x.bin", rom_ver);
+> +       else if (soc_type == QCA_QCA2066)
+> +               qca_generate_nvm_name(hdev, config.fwname, sizeof(config.fwname), ver, bid);
+>         else if (soc_type == QCA_WCN6750)
+>                 snprintf(config.fwname, sizeof(config.fwname),
+>                          "qca/msnv%02x.bin", rom_ver);
+> diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
+> index 61e9a50e66ae..e762c403284a 100644
+> --- a/drivers/bluetooth/btqca.h
+> +++ b/drivers/bluetooth/btqca.h
+> @@ -13,6 +13,7 @@
+>  #define EDL_PATCH_TLV_REQ_CMD          (0x1E)
+>  #define EDL_GET_BUILD_INFO_CMD         (0x20)
+>  #define EDL_NVM_ACCESS_SET_REQ_CMD     (0x01)
+> +#define EDL_GET_BID_REQ_CMD            (0x23)
+>  #define EDL_PATCH_CONFIG_CMD           (0x28)
+>  #define MAX_SIZE_PER_TLV_SEGMENT       (243)
+>  #define QCA_PRE_SHUTDOWN_CMD           (0xFC08)
+> @@ -147,6 +148,7 @@ enum qca_btsoc_type {
+>         QCA_WCN3991,
+>         QCA_QCA6390,
+>         QCA_WCN6750,
+> +       QCA_QCA2066,
+>  };
+>
+>  #if IS_ENABLED(CONFIG_BT_QCA)
+> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+> index 3df9e692756a..596f730ff375 100644
+> --- a/drivers/bluetooth/hci_qca.c
+> +++ b/drivers/bluetooth/hci_qca.c
+> @@ -1859,6 +1859,11 @@ static const struct qca_device_data qca_soc_data_qca6390 = {
+>         .num_vregs = 0,
+>  };
+>
+> +static const struct qca_device_data qca_soc_data_qca2066 = {
+> +       .soc_type = QCA_QCA2066,
+> +       .num_vregs = 0,
+> +};
+> +
+>  static const struct qca_device_data qca_soc_data_wcn6750 = {
+>         .soc_type = QCA_WCN6750,
+>         .vregs = (struct qca_vreg []) {
+> @@ -2316,6 +2321,7 @@ static SIMPLE_DEV_PM_OPS(qca_pm_ops, qca_suspend, qca_resume);
+>  static const struct of_device_id qca_bluetooth_of_match[] = {
+>         { .compatible = "qcom,qca6174-bt" },
+>         { .compatible = "qcom,qca6390-bt", .data = &qca_soc_data_qca6390},
+> +       { .compatible = "qcom,qca2066-bt", .data = &qca_soc_data_qca2066},
 
-Changes since v3:
- * Dropped the phy-names property from usb_1_hsphy, like Dmitry suggested
+Ive been reviewing this changes and I must say I don't like this
+pattern of setting a data specific for each soc and then still having
+to check what type it is everywhere, it is probably a lot cleaner to
+have fields that are soc specific added to qca_device_data directly so
+when adding new soc type one just have to update this table.
 
- arch/arm64/boot/dts/qcom/sm8550-mtp.dts | 7 +++++++
- 1 file changed, 7 insertions(+)
+>         { .compatible = "qcom,qca9377-bt" },
+>         { .compatible = "qcom,wcn3990-bt", .data = &qca_soc_data_wcn3990},
+>         { .compatible = "qcom,wcn3991-bt", .data = &qca_soc_data_wcn3991},
+> --
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+>
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-index 56aab7cafcbc..6b6ec0fe5e5e 100644
---- a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-@@ -457,6 +457,11 @@ sdc2_card_det_n: sdc2-card-det-state {
- 	};
- };
- 
-+&pm8550b_eusb2_repeater {
-+	vdd18-supply = <&vreg_l15b_1p8>;
-+	vdd3-supply = <&vreg_l5b_3p1>;
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
-@@ -563,6 +568,8 @@ &usb_1_hsphy {
- 	vdd-supply = <&vreg_l1e_0p88>;
- 	vdda12-supply = <&vreg_l3e_1p2>;
- 
-+	phys = <&pm8550b_eusb2_repeater>;
-+
- 	status = "okay";
- };
- 
+
 -- 
-2.34.1
-
+Luiz Augusto von Dentz
