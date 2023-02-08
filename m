@@ -2,389 +2,274 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ADF6168F971
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 22:05:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E65268F99F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 22:18:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231543AbjBHVFc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Feb 2023 16:05:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40194 "EHLO
+        id S230471AbjBHVSI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Feb 2023 16:18:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232437AbjBHVEz (ORCPT
+        with ESMTP id S229512AbjBHVSH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Feb 2023 16:04:55 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC12A3EFF7;
-        Wed,  8 Feb 2023 13:04:32 -0800 (PST)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 318KqmFc015146;
-        Wed, 8 Feb 2023 21:04:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=k/v7mdhNryfqOSlWbSwdWTE1Ww7OClm6nR+hdGhYcsA=;
- b=ltW2AiLFrFxcCn1OyGR4b4mUOpcmmsnwTb77idm3/tLYS3/ps1lFa/LyENrGV+6Sc2X1
- +a4EYhXH/c+4WeuMURscUJVqI06zfuQ64yEeXZKyd8VIMGRGh2R4VkEG3/S3vmdeCe2D
- gFpuWznn6MX7tx1VTaUNXGQj3Q/+8lU0quS7c6z9whUpJiOleveGA37dzSw3MvWRGWcg
- kV7qD5/FKzeg2Lc3OZHYvjkid9RJlP8MQvL3DtYse+UwJbuFuZn55VjJxjRD/DRCXG1V
- 0C8mXTEcQXb3XbuFUHcAkFbGuR4JtRlw99zLCs4uKyA3uiz/quxLG714hfgz4wPhFUIs 4Q== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nmg9eger8-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 08 Feb 2023 21:04:18 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 318L4HEv014338
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 8 Feb 2023 21:04:17 GMT
-Received: from [10.134.67.48] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 8 Feb 2023
- 13:04:17 -0800
-Message-ID: <6f214b5a-80da-23c5-6b46-6f75a173a004@quicinc.com>
-Date:   Wed, 8 Feb 2023 13:04:16 -0800
+        Wed, 8 Feb 2023 16:18:07 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40CF9126C5;
+        Wed,  8 Feb 2023 13:18:06 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 92036B81F03;
+        Wed,  8 Feb 2023 21:18:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 863A3C433D2;
+        Wed,  8 Feb 2023 21:18:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1675891083;
+        bh=E9pZ20y6nxjUAdEDmzrCEjQTqE2cOMP7oInfuah3gNU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=CE8aDZQbQF3wnwpTEwtbXQ/oUXxPw1ZTgo3uZ/TctFhDPZ7cUwgu5C7gd80XyDlHr
+         DeWJ5uo2MXo2k8B7AUVq5jPjg7xfJH+o3LBxYqWXQfp7zflEP2na5oW18W2tkPWq7f
+         4KFZkIU+gXjQArrZNkMxUwXyJaDQCgc/hsr3q/Bi7lMdhfzYB3g1jgjQidsl3YyuNL
+         2hapsERx768w5Z06wxjktdG7AIPkugTW1tcP2pJ3JkMCSMbWev1PpI2XeVygZiR+OK
+         U+YrxxSz+xTlU7e7enh015nIDzh/QNjXiHDoHDA4itqOlrxtAxF4A87/R7iDApYVRt
+         roEeytSIzrNCA==
+Date:   Wed, 8 Feb 2023 13:20:14 -0800
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Tim Jiang <quic_tjiang@quicinc.com>
+Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
+        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, quic_bgodavar@quicinc.com,
+        quic_hbandi@quicinc.com, quic_hemantg@quicinc.com, mka@chromium.org
+Subject: Re: [PATCH v1] Bluetooth: hci_qca: Add support for Qualcomm
+ Bluetooth SoC QCA2066
+Message-ID: <20230208212014.gz3zxhysas23mxwg@ripper>
+References: <20230208094038.13670-1-quic_tjiang@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v9 14/27] gunyah: vm_mgr: Add ioctls to support basic
- non-proxy VM boot
-Content-Language: en-US
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Alex Elder <elder@linaro.org>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>
-CC:     Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Marc Zyngier <maz@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-References: <20230120224627.4053418-1-quic_eberman@quicinc.com>
- <20230120224627.4053418-15-quic_eberman@quicinc.com>
- <14d57333-02bc-6294-ed20-4c882dcd0dae@linaro.org>
-From:   Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <14d57333-02bc-6294-ed20-4c882dcd0dae@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: rEONG9HT338ZzKG4ZVM-Lz0AkwSKmOyL
-X-Proofpoint-ORIG-GUID: rEONG9HT338ZzKG4ZVM-Lz0AkwSKmOyL
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-02-08_09,2023-02-08_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
- malwarescore=0 impostorscore=0 bulkscore=0 phishscore=0 mlxlogscore=999
- priorityscore=1501 clxscore=1015 lowpriorityscore=0 adultscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302080178
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230208094038.13670-1-quic_tjiang@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Feb 08, 2023 at 05:40:38PM +0800, Tim Jiang wrote:
+> This patch adds support for QCA2066, including the devicetree
 
+What do you mean with "devicetree downloading"?
 
-On 2/7/2023 3:36 AM, Srinivas Kandagatla wrote:
+> and patch/nvm downloading.
 > 
+> Signed-off-by: Tim Jiang <quic_tjiang@quicinc.com>
+> ---
+>  drivers/bluetooth/btqca.c   | 85 +++++++++++++++++++++++++++++++++++++
+>  drivers/bluetooth/btqca.h   |  2 +
+>  drivers/bluetooth/hci_qca.c |  6 +++
+>  3 files changed, 93 insertions(+)
 > 
-> On 20/01/2023 22:46, Elliot Berman wrote:
->> Add remaining ioctls to support non-proxy VM boot:
->>
->>   - Gunyah Resource Manager uses the VM's devicetree to configure the
->>     virtual machine. The location of the devicetree in the guest's
->>     virtual memory can be declared via the SET_DTB_CONFIG ioctl.
->>   - Trigger start of the virtual machine with VM_START ioctl.
->>
->> Co-developed-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
->> Signed-off-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
->> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
->> ---
->>   drivers/virt/gunyah/vm_mgr.c    | 110 ++++++++++++++++++++++++++++++++
->>   drivers/virt/gunyah/vm_mgr.h    |   9 +++
->>   drivers/virt/gunyah/vm_mgr_mm.c |  24 +++++++
->>   include/uapi/linux/gunyah.h     |   8 +++
->>   4 files changed, 151 insertions(+)
->>
->> diff --git a/drivers/virt/gunyah/vm_mgr.c b/drivers/virt/gunyah/vm_mgr.c
->> index b847fde63333..48bd3f06fb6c 100644
->> --- a/drivers/virt/gunyah/vm_mgr.c
->> +++ b/drivers/virt/gunyah/vm_mgr.c
->> @@ -9,6 +9,7 @@
->>   #include <linux/file.h>
->>   #include <linux/gunyah_rsc_mgr.h>
->>   #include <linux/miscdevice.h>
->> +#include <linux/mm.h>
->>   #include <linux/module.h>
->>   #include <uapi/linux/gunyah.h>
->> @@ -37,10 +38,98 @@ static __must_check struct gunyah_vm 
->> *gunyah_vm_alloc(struct gh_rm_rpc *rm)
->>       mutex_init(&ghvm->mm_lock);
->>       INIT_LIST_HEAD(&ghvm->memory_mappings);
->> +    init_rwsem(&ghvm->status_lock);
-> 
-> using read write semaphore is really not going to make any difference in 
-> this particular case.
-> we have just one reader (gh_vm_ensure_started) and it mostly makes 
-> synchronous call to writer (vm_start).
-> 
+> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+> index c9064d34d830..7d00df3a1d61 100644
+> --- a/drivers/bluetooth/btqca.c
+> +++ b/drivers/bluetooth/btqca.c
+> @@ -205,6 +205,55 @@ static int qca_send_reset(struct hci_dev *hdev)
+>  	return 0;
+>  }
+>  
+> +static int qca_read_fw_board_id(struct hci_dev *hdev, u8 *bid)
+> +{
+> +	u8 cmd;
+> +	struct sk_buff *skb;
+> +	struct edl_event_hdr *edl;
+> +	int err;
+> +	int bid_len;
+> +
+> +	bt_dev_dbg(hdev, "QCA read board ID");
+> +
+> +	cmd = EDL_GET_BID_REQ_CMD;
+> +	skb = __hci_cmd_sync_ev(hdev, EDL_PATCH_CMD_OPCODE, EDL_PATCH_CMD_LEN,
+> +				&cmd, 0, HCI_INIT_TIMEOUT);
+> +	if (IS_ERR(skb)) {
+> +		err = PTR_ERR(skb);
+> +		bt_dev_err(hdev, "Reading QCA board ID failed (%d)",
+> +			   err);
+> +		return err;
+> +	}
+> +
+> +	edl = (struct edl_event_hdr *)(skb->data);
+> +	if (!edl) {
+> +		bt_dev_err(hdev, "QCA read board ID with no header");
+> +		err = -EILSEQ;
+> +		goto out;
+> +	}
+> +
+> +	if (edl->cresp != EDL_CMD_REQ_RES_EVT ||
+> +	    edl->rtype != EDL_GET_BID_REQ_CMD) {
+> +		bt_dev_err(hdev, "QCA Wrong packet received %d %d", edl->cresp,
+> +			   edl->rtype);
+> +		err = -EIO;
+> +		goto out;
+> +	}
+> +
+> +	bid_len = edl->data[0];
+> +	bid[0] = edl->data[1];
+> +	bid[1] = edl->data[2];
+> +	bt_dev_info(hdev, "QCA board ID len %d,id = %x %x", bid_len, bid[0], bid[1]);
+> +
+> +
 
-When launching multiple vCPUs, the threads might be racing to ensure the 
-VM is started. The typical case is that VM is running and we would have 
-bad performance if all the vCPUs needed to sequentially check that the 
-VM is indeed running before they're scheduled. rwsem can allow all the 
-threads to check if VM is running simultaneously and only one thread to 
-start the VM if it wasn't running.
+Please clean up the double empty lines..
 
->>       return ghvm;
->>   }
->> +static int gh_vm_start(struct gunyah_vm *ghvm)
->> +{
->> +    struct gunyah_vm_memory_mapping *mapping;
->> +    u64 dtb_offset;
->> +    u32 mem_handle;
->> +    int ret;
->> +
->> +    down_write(&ghvm->status_lock);
->> +    if (ghvm->vm_status != GH_RM_VM_STATUS_NO_STATE) {
->> +        up_write(&ghvm->status_lock);
->> +        return 0;
->> +    }
->> +
->> +    list_for_each_entry(mapping, &ghvm->memory_mappings, list) {
->> +        switch (mapping->share_type) {
->> +        case VM_MEM_LEND:
->> +            ret = gh_rm_mem_lend(ghvm->rm, &mapping->parcel);
->> +            break;
->> +        case VM_MEM_SHARE:
->> +            ret = gh_rm_mem_share(ghvm->rm, &mapping->parcel);
->> +            break;
->> +        }
-> 
->> +        if (ret > 0)
->> +            ret = -EINVAL;
-> 
-> why are we converting the error messages, afaiu both gh_rm_mem_lend and 
-> gh_rm_mem_share return a valid error codes.
-> 
+> +	err = 0;
 
-Removed.
+Why not zero-initialize err from the start?
 
->> +        if (ret) {
->> +            pr_warn("Failed to %s parcel %d: %d\n",
->> +                mapping->share_type == VM_MEM_LEND ? "lend" : "share",
->> +                mapping->parcel.label,
->> +                ret);
->> +            goto err;
->> +        }
->> +    }
->> +
->> +    mapping = gh_vm_mem_mapping_find_mapping(ghvm, 
->> ghvm->dtb_config.gpa, ghvm->dtb_config.size);
->> +    if (!mapping) {
->> +        pr_warn("Failed to find the memory_handle for DTB\n");
->> +        ret = -EINVAL;
->> +        goto err;
->> +    }
->> +
->> +    mem_handle = mapping->parcel.mem_handle;
->> +    dtb_offset = ghvm->dtb_config.gpa - mapping->guest_phys_addr;
->> +
->> +    ret = gh_rm_vm_configure(ghvm->rm, ghvm->vmid, ghvm->auth, 
->> mem_handle,
->> +                0, 0, dtb_offset, ghvm->dtb_config.size);
->> +    if (ret) {
->> +        pr_warn("Failed to configure VM: %d\n", ret);
->> +        goto err;
->> +    }
->> +
->> +    ret = gh_rm_vm_init(ghvm->rm, ghvm->vmid);
->> +    if (ret) {
->> +        pr_warn("Failed to initialize VM: %d\n", ret);
->> +        goto err;
->> +    }
->> +
->> +    ret = gh_rm_vm_start(ghvm->rm, ghvm->vmid);
->> +    if (ret) {
->> +        pr_warn("Failed to start VM: %d\n", ret);
->> +        goto err;
->> +    }
->> +
->> +    ghvm->vm_status = GH_RM_VM_STATUS_READY;
->> +
->> +    up_write(&ghvm->stvm_status = atus_lock);
->> +    return ret;
->> +err:
->> +    ghvm->vm_status = GH_RM_VM_STATUS_INIT_FAILED;
->> +    up_write(&ghvm->status_lock);
->> +    return ret;
->> +}
->> +
->> +static void gh_vm_stop(struct gunyah_vm *ghvm)
->> +{
->> +    int ret;
->> +
->> +    down_write(&ghvm->status_lock);
->> +    if (ghvm->vm_status == GH_RM_VM_STATUS_READY) {
->> +        ret = gh_rm_vm_stop(ghvm->rm, ghvm->vmid);
->> +        if (ret)
->> +            pr_warn("Failed to stop VM: %d\n", ret);
->> +    }
->> +
->> +    ghvm->vm_status = GH_RM_VM_STATUS_EXITED;
->> +    up_write(&ghvm->status_lock);
->> +}
->> +
->>   static long gh_vm_ioctl(struct file *filp, unsigned int cmd, 
->> unsigned long arg)
->>   {
->>       struct gunyah_vm *ghvm = filp->private_data;
->> @@ -84,6 +173,25 @@ static long gh_vm_ioctl(struct file *filp, 
->> unsigned int cmd, unsigned long arg)
->>           }
->>           break;
->>       }
->> +    case GH_VM_SET_DTB_CONFIG: {
->> +        struct gh_vm_dtb_config dtb_config;
->> +
->> +        r = -EFAULT;
->> +        if (copy_from_user(&dtb_config, argp, sizeof(dtb_config)))
->> +            break;
->> +
-> same feedback as other patches on setting error codes.
->> +        dtb_config.size = PAGE_ALIGN(dtb_config.size);
->> +        ghvm->dtb_config = dtb_config;
->> +
->> +        r = 0;
->> +        break;
->> +    }
->> +    case GH_VM_START: {
->> +        r = gh_vm_start(ghvm);
->> +        if (r)
->> +            r = -EINVAL;
->> +        break;
->> +    }
->>       default:
->>           r = -ENOTTY;
->>           break;
->> @@ -97,6 +205,8 @@ static int gh_vm_release(struct inode *inode, 
->> struct file *filp)
->>       struct gunyah_vm *ghvm = filp->private_data;
->>       struct gunyah_vm_memory_mapping *mapping, *tmp;
->> +    gh_vm_stop(ghvm);
->> +
->>       list_for_each_entry_safe(mapping, tmp, &ghvm->memory_mappings, 
->> list) {
->>           gh_vm_mem_mapping_reclaim(ghvm, mapping);
->>           kfree(mapping);
->> diff --git a/drivers/virt/gunyah/vm_mgr.h b/drivers/virt/gunyah/vm_mgr.h
->> index 6b38bf780f76..5c02fb305893 100644
->> --- a/drivers/virt/gunyah/vm_mgr.h
->> +++ b/drivers/virt/gunyah/vm_mgr.h
->> @@ -10,6 +10,7 @@
->>   #include <linux/list.h>
->>   #include <linux/miscdevice.h>
->>   #include <linux/mutex.h>
->> +#include <linux/rwsem.h>
->>   #include <uapi/linux/gunyah.h>
->> @@ -34,6 +35,12 @@ struct gunyah_vm {
->>       u16 vmid;
->>       struct gh_rm *rm;
->> +    enum gh_rm_vm_auth_mechanism auth;
->> +    struct gh_vm_dtb_config dtb_config;
->> +
->> +    enum gh_rm_vm_status vm_status;
->> +    struct rw_semaphore status_lock;
->> +
->>       struct mutex mm_lock;
->>       struct list_head memory_mappings;
->>   };
->> @@ -42,5 +49,7 @@ struct gunyah_vm_memory_mapping 
->> *gh_vm_mem_mapping_alloc(struct gunyah_vm *ghvm,
->>                               struct gh_userspace_memory_region *region);
->>   void gh_vm_mem_mapping_reclaim(struct gunyah_vm *ghvm, struct 
->> gunyah_vm_memory_mapping *mapping);
->>   struct gunyah_vm_memory_mapping *gh_vm_mem_mapping_find(struct 
->> gunyah_vm *ghvm, u32 label);
->> +struct gunyah_vm_memory_mapping 
->> *gh_vm_mem_mapping_find_mapping(struct gunyah_vm *ghvm,
->> +                                u64 gpa, u32 size);
->>   #endif
->> diff --git a/drivers/virt/gunyah/vm_mgr_mm.c 
->> b/drivers/virt/gunyah/vm_mgr_mm.c
->> index f2dbdb4ee8ab..7fcb9f8a29bf 100644
->> --- a/drivers/virt/gunyah/vm_mgr_mm.c
->> +++ b/drivers/virt/gunyah/vm_mgr_mm.c
->> @@ -53,6 +53,30 @@ void gh_vm_mem_mapping_reclaim(struct gunyah_vm 
->> *ghvm, struct gunyah_vm_memory_m
->>       mutex_unlock(&ghvm->mm_lock);
->>   }
->> +struct gunyah_vm_memory_mapping 
->> *gh_vm_mem_mapping_find_mapping(struct gunyah_vm *ghvm,
->> +                                u64 gpa, u32 size)
->> +{
->> +    struct gunyah_vm_memory_mapping *mapping = NULL;
->> +    int ret;
->> +
->> +    ret = mutex_lock_interruptible(&ghvm->mm_lock);
->> +    if (ret)
->> +        return ERR_PTR(ret);
->> +
->> +    list_for_each_entry(mapping, &ghvm->memory_mappings, list) {
->> +        if (gpa >= mapping->guest_phys_addr &&
->> +            (gpa + size <= mapping->guest_phys_addr +
->> +            (mapping->npages << PAGE_SHIFT))) {
->> +            goto unlock;
->> +        }
->> +    }
->> +
->> +    mapping = NULL;
->> +unlock:
->> +    mutex_unlock(&ghvm->mm_lock);
->> +    return mapping;
->> +}
->> +
->>   struct gunyah_vm_memory_mapping *gh_vm_mem_mapping_find(struct 
->> gunyah_vm *ghvm, u32 label)
->>   {
->>       struct gunyah_vm_memory_mapping *mapping;
->> diff --git a/include/uapi/linux/gunyah.h b/include/uapi/linux/gunyah.h
->> index 574f33b198d0..36359ad2175e 100644
->> --- a/include/uapi/linux/gunyah.h
->> +++ b/include/uapi/linux/gunyah.h
->> @@ -42,4 +42,12 @@ struct gh_userspace_memory_region {
->>   #define GH_VM_SET_USER_MEM_REGION    _IOW(GH_IOCTL_TYPE, 0x1, \
->>                           struct gh_userspace_memory_region)
->> +struct gh_vm_dtb_config {
->> +    __u64 gpa;
+> +
+> +out:
+> +	kfree_skb(skb);
+> +	return err;
+> +}
+> +
+> +
+>  int qca_send_pre_shutdown_cmd(struct hci_dev *hdev)
+>  {
+>  	struct sk_buff *skb;
+> @@ -574,6 +623,32 @@ int qca_set_bdaddr_rome(struct hci_dev *hdev, const bdaddr_t *bdaddr)
+>  }
+>  EXPORT_SYMBOL_GPL(qca_set_bdaddr_rome);
+>  
+> +static void qca_generate_nvm_name(struct hci_dev *hdev, char *fwname,
+> +		   size_t max_size, struct qca_btsoc_version ver, u8 *bid)
+> +{
+> +	u8 rom_ver = 0;
+> +	u32 soc_ver;
+> +	const char *variant;
+> +
+> +	soc_ver = get_soc_ver(ver.soc_id, ver.rom_ver);
+> +	rom_ver = ((soc_ver & 0x00000f00) >> 0x04) | (soc_ver & 0x0000000f);
+> +	bt_dev_info(hdev, "bid == 0x%02x 0x%02x", bid[0], bid[1]);
+
+Is this really useful information to put in the log every time the
+device comes up?
+
+> +
+> +	if ((ver.soc_id & 0x0000ff00) == 0x1200) /*hsp gf chip*/
+> +		variant = "g";
+> +	else
+> +		variant = "";
+> +
+> +	if (bid[0] == 0 && bid[1] == 0) {
+> +		snprintf(fwname, max_size, "qca/hpnv%02x%s.bin", rom_ver, variant);
+> +	} else {
+> +		snprintf(fwname, max_size, "qca/hpnv%02x%s.%x%02x",
+> +			rom_ver, variant, bid[0], bid[1]);
+> +	}
+> +	bt_dev_info(hdev, "%s:  %s", __func__, fwname);
+
+Please write proper and useful informational prints in the log.
+
+> +
+> +}
+> +
+>  int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+>  		   enum qca_btsoc_type soc_type, struct qca_btsoc_version ver,
+>  		   const char *firmware_name)
+> @@ -582,6 +657,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+>  	int err;
+>  	u8 rom_ver = 0;
+>  	u32 soc_ver;
+> +	u8 bid[2] = {0};
+
+Seems that storing this as a u16 would make the patch cleaner.
+
+>  
+>  	bt_dev_dbg(hdev, "QCA setup on UART");
+>  
+> @@ -607,6 +683,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+>  	} else if (soc_type == QCA_QCA6390) {
+>  		snprintf(config.fwname, sizeof(config.fwname),
+>  			 "qca/htbtfw%02x.tlv", rom_ver);
+> +	} else if (soc_type == QCA_QCA2066) {
+> +		snprintf(config.fwname, sizeof(config.fwname),
+> +			 "qca/hpbtfw%02x.tlv", rom_ver);
+>  	} else if (soc_type == QCA_WCN6750) {
+>  		/* Choose mbn file by default.If mbn file is not found
+>  		 * then choose tlv file
+> @@ -628,6 +707,10 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+>  	/* Give the controller some time to get ready to receive the NVM */
+>  	msleep(10);
+>  
+> +	if (soc_type == QCA_QCA2066)
+> +		qca_read_fw_board_id(hdev, bid);
+> +
+> +
+
+Double empty lines...
+
+>  	/* Download NVM configuration */
+>  	config.type = TLV_TYPE_NVM;
+>  	if (firmware_name)
+> @@ -645,6 +728,8 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+>  	else if (soc_type == QCA_QCA6390)
+>  		snprintf(config.fwname, sizeof(config.fwname),
+>  			 "qca/htnv%02x.bin", rom_ver);
+> +	else if (soc_type == QCA_QCA2066)
+> +		qca_generate_nvm_name(hdev, config.fwname, sizeof(config.fwname), ver, bid);
+>  	else if (soc_type == QCA_WCN6750)
+>  		snprintf(config.fwname, sizeof(config.fwname),
+>  			 "qca/msnv%02x.bin", rom_ver);
+> diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
+> index 61e9a50e66ae..e762c403284a 100644
+> --- a/drivers/bluetooth/btqca.h
+> +++ b/drivers/bluetooth/btqca.h
+> @@ -13,6 +13,7 @@
+>  #define EDL_PATCH_TLV_REQ_CMD		(0x1E)
+>  #define EDL_GET_BUILD_INFO_CMD		(0x20)
+>  #define EDL_NVM_ACCESS_SET_REQ_CMD	(0x01)
+> +#define EDL_GET_BID_REQ_CMD		(0x23)
+>  #define EDL_PATCH_CONFIG_CMD		(0x28)
+>  #define MAX_SIZE_PER_TLV_SEGMENT	(243)
+>  #define QCA_PRE_SHUTDOWN_CMD		(0xFC08)
+> @@ -147,6 +148,7 @@ enum qca_btsoc_type {
+>  	QCA_WCN3991,
+>  	QCA_QCA6390,
+>  	QCA_WCN6750,
+> +	QCA_QCA2066,
+>  };
+>  
+>  #if IS_ENABLED(CONFIG_BT_QCA)
+> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+> index 3df9e692756a..596f730ff375 100644
+> --- a/drivers/bluetooth/hci_qca.c
+> +++ b/drivers/bluetooth/hci_qca.c
+> @@ -1859,6 +1859,11 @@ static const struct qca_device_data qca_soc_data_qca6390 = {
+>  	.num_vregs = 0,
+>  };
+>  
+> +static const struct qca_device_data qca_soc_data_qca2066 = {
+> +	.soc_type = QCA_QCA2066,
+> +	.num_vregs = 0,
+> +};
+> +
+>  static const struct qca_device_data qca_soc_data_wcn6750 = {
+>  	.soc_type = QCA_WCN6750,
+>  	.vregs = (struct qca_vreg []) {
+> @@ -2316,6 +2321,7 @@ static SIMPLE_DEV_PM_OPS(qca_pm_ops, qca_suspend, qca_resume);
+>  static const struct of_device_id qca_bluetooth_of_match[] = {
+>  	{ .compatible = "qcom,qca6174-bt" },
+>  	{ .compatible = "qcom,qca6390-bt", .data = &qca_soc_data_qca6390},
+> +	{ .compatible = "qcom,qca2066-bt", .data = &qca_soc_data_qca2066},
+
+These entries seems alphabetically sorted, please maintain that.
+
+Regards,
+Bjorn
+
+>  	{ .compatible = "qcom,qca9377-bt" },
+>  	{ .compatible = "qcom,wcn3990-bt", .data = &qca_soc_data_wcn3990},
+>  	{ .compatible = "qcom,wcn3991-bt", .data = &qca_soc_data_wcn3991},
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
 > 
-> need kernedoc, what is gpa?
-> 
-
-Added. It's the address of the VM's devicetree in guest memory.
-
->> +    __u64 size;
->> +};
->> +#define GH_VM_SET_DTB_CONFIG    _IOW(GH_IOCTL_TYPE, 0x2, struct 
->> gh_vm_dtb_config)
->> +
->> +#define GH_VM_START        _IO(GH_IOCTL_TYPE, 0x3)
->> +
->>   #endif
