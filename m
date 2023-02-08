@@ -2,120 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C2A7068E4D1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 01:15:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BF90568E502
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 01:36:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229589AbjBHAPH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Feb 2023 19:15:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48078 "EHLO
+        id S229745AbjBHAgl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Feb 2023 19:36:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229490AbjBHAPG (ORCPT
+        with ESMTP id S229457AbjBHAgk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Feb 2023 19:15:06 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BEDE30B1B;
-        Tue,  7 Feb 2023 16:15:00 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id m16-20020a05600c3b1000b003dc4050c94aso285539wms.4;
-        Tue, 07 Feb 2023 16:15:00 -0800 (PST)
+        Tue, 7 Feb 2023 19:36:40 -0500
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A4B83C2A3
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 16:36:39 -0800 (PST)
+Received: by mail-pl1-x62e.google.com with SMTP id k13so17551011plg.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 16:36:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=V+RaIQchGCjUg8WOksp5jBJckUUbTckJoGWe5pG0GSY=;
-        b=Waz6OqmEiKR5LaLEL73seaMZYDb3R+RIHxMX1QVtxmKviO3+QhuE892RvE37lHcV7k
-         d9nMa8MNVCqwZsku3FsPqi1DUMC5fKMylmfO93WDPLL80RUErx4CsdrEopCyFGVvPrSQ
-         mfEm18Nq60gVXCGwJykxUMe1Lq74MstkD6omCgh2r8U7qxHPspHvjYouTD76v5Dk7WxO
-         NDF4oiOxxfwZV4byhtxutwN3Fw3S9/C0ST/Fmx1qzBlWJV6zLlZKNSHQrnKkiP3qE5DK
-         ElODprlEOzwW9IiJG3MAGJIaJ/7tIWxszGvRxqMsru6kv2aEn7yYfc8NCzIUJUQBf4Lm
-         eNQQ==
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=3+bGG7y1kbAherXT7mYVUYA30E1TcsSU+mggkUydAXQ=;
+        b=W0H+U6Xyltr8ry9759aXuP7XI6Cq91ihJz3Ntu5eOQAPIEOYj+efFdkyyKMaz1LHHv
+         tIymg18AO+wSjCICvCicEcYJ0arWdC7ENofw9kDSwrujcPp9mCpjxzf6YOkJvKsZRGBd
+         TcDcgnRB7Ri0pBQ1fUGrnOG7h+mvjjbS5O0ZE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=V+RaIQchGCjUg8WOksp5jBJckUUbTckJoGWe5pG0GSY=;
-        b=ZKwbQS0k5yyjJQ1MEKGC29MDbQMzlgtHnU1i2wAeO03ni469eWB/X7CR16gT5uGveU
-         vK0fp2d4wgodmt+aOxFcekpVrF9Uciw5UaNLKGXdMg0wfk1fyzk7ts5MhqZx0gyLB6Qs
-         13XrcyTo0h2q/dvEGgPRkFxX6PbDJ2h4wams9gL8yFF1MO8rvQ8oItAyiZjq3HOtND/X
-         3iQOL1CLav6OauA4ns54XgAPlALVp9Ld5bkjBXBqdvktToNskyDStY35CGOFu/pZefpU
-         qR1XTtGkL6y2DhWNCqNXIlYLmbz/LsVHnHfIz+iwefDdgTTDrUnzg9evMtWqO/GJfZku
-         K8tQ==
-X-Gm-Message-State: AO0yUKVD7wAfeIwp2vyZNoIEw2OA77QoFE+L6Xz6aAO7ChhtpOxNlLWj
-        QxrtqTc2bm9YIj13vnp/K8I=
-X-Google-Smtp-Source: AK7set+DvXgzYGfzr9DxS7yBBi4l5d+iWP8nM85ZN7MeY3yjIT7d8SO4oFjZnehOLLA51e6OgGRVkg==
-X-Received: by 2002:a05:600c:4d21:b0:3dc:3398:cf87 with SMTP id u33-20020a05600c4d2100b003dc3398cf87mr4660731wmp.11.1675815298358;
-        Tue, 07 Feb 2023 16:14:58 -0800 (PST)
-Received: from Ansuel-xps. (93-34-91-73.ip49.fastwebnet.it. [93.34.91.73])
-        by smtp.gmail.com with ESMTPSA id k12-20020a7bc40c000000b003dfe549da4fsm274023wmi.18.2023.02.07.16.14.57
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3+bGG7y1kbAherXT7mYVUYA30E1TcsSU+mggkUydAXQ=;
+        b=qimhkIknNWvLLIDZ+VDkA4hab1UtAgw/WnnPQpFP6TbA/p8EDqm2sJdC+Qu94fY3U+
+         4fXV2owKX7GXkEDuLjQLzPLuISaRMUAYwDCdGzmt4l6Hq19LvBwUdcs9BwIdahudHs5X
+         UMnzWgkfB7OADMeVy8hUp0MKgxtWqmhRs15l4UNLl4txXkd3nmtI7y7LMh+Zty7XjJgN
+         maoo5fdPFzvTj+D5fFhOd++kAgAhiq6RY3Gzh4ohOMYX87MgVxM2Z7PDPQjHo+EyAu+a
+         tQAuvr3MdK4x5ECH/kQJVuF8tGeMeEwzuZWPgpL+AsXNdysOGNgt3X9zr2DptqFpROY2
+         JNxQ==
+X-Gm-Message-State: AO0yUKUPlOod2Jw3qBJ+nGRA3vd7uU2XJZ7y51ImbQz70choy7IOTv6L
+        0poWdViPFBJFnN1+wqWV6tRlEQ==
+X-Google-Smtp-Source: AK7set/OsauGFkzcwNzAZcFZa1CdBVmUh8z09FXo6FmacJR+rgDUlKD7NfyRNyqmnfKK5gBUY+eFdg==
+X-Received: by 2002:a17:903:1386:b0:198:e63d:9a3d with SMTP id jx6-20020a170903138600b00198e63d9a3dmr470298plb.26.1675816598865;
+        Tue, 07 Feb 2023 16:36:38 -0800 (PST)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:9d:2:8f31:e721:5c9:1d71])
+        by smtp.gmail.com with ESMTPSA id jg21-20020a17090326d500b0019907bfd26fsm5676738plb.178.2023.02.07.16.36.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Feb 2023 16:14:58 -0800 (PST)
-Message-ID: <63e2e982.7b0a0220.ff24d.1315@mx.google.com>
-X-Google-Original-Message-ID: <Y+LpgLTT/buvJLJy@Ansuel-xps.>
-Date:   Wed, 8 Feb 2023 01:14:56 +0100
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Tue, 07 Feb 2023 16:36:38 -0800 (PST)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     mka@chromium.org, Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 1/3] dt-bindings: cpufreq: qcom-cpufreq-nvmem: specify
- supported opp tables
-References: <20230131151819.16612-1-ansuelsmth@gmail.com>
- <44d94a1d-47d6-f93e-4a20-d9d83375398d@linaro.org>
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sc7280: Power herobrine's 3.3 eDP/TS rail more properly
+Date:   Tue,  7 Feb 2023 16:36:10 -0800
+Message-Id: <20230207163550.1.I5ff72b7746d5fca8f10ea61351bde4150ed1a7f8@changeid>
+X-Mailer: git-send-email 2.39.1.519.gcb327c4b5f-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <44d94a1d-47d6-f93e-4a20-d9d83375398d@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 01, 2023 at 09:19:42AM +0100, Krzysztof Kozlowski wrote:
-> On 31/01/2023 16:18, Christian Marangi wrote:
-> > Add additional info on what opp tables the defined devices in this schema
-> > supports (operating-points-v2-kryo-cpu and operating-points-v2-qcom-level)
-> > and reference them.
-> > 
-> > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> > ---
-> > Changes v5:
-> > - Swap patch 1 and patch 2 to fix dt_check_warning on single
-> >   patch bisecting 
-> > Changes v4:
-> > - Add patch split from patch 1
-> > 
-> >  .../bindings/cpufreq/qcom-cpufreq-nvmem.yaml  | 35 ++++++++++++++-----
-> 
-> This patch causes new warnings:
-> 
-> arch/arm64/boot/dts/qcom/apq8096-ifc6640.dtb: /: opp-table-cluster0:
-> Unevaluated properties are not allowed ('compatible', 'nvmem-cells',
-> 'opp-1036800000', 'opp-1113600000', 'opp-1190400000', 'opp-1228800000',
-> 'opp-1324800000', 'opp-1363200000', 'opp-1401600000', 'opp-1478400000',
-> 'opp-1497600000', 'opp-1593600000', 'opp-307200000', 'opp-422400000',
-> 'opp-480000000', 'opp-556800000', 'opp-652800000', 'opp-729600000',
-> 'opp-844800000', 'opp-960000000', 'opp-shared' were unexpected)
-> 
+This is the equivalent of commit f5b4811e8758 ("arm64: dts: qcom:
+sc7180: Add trogdor eDP/touchscreen regulator off-on-time") and commit
+23ff866987de ("arm64: dts: qcom: sc7180: Start the trogdor
+eDP/touchscreen regulator on"), but for herobrine instead of trogdor.
 
-Hi, this is fixed by the third patch and caused by
+The motivations for herobrine are the same as for trogdor.
 
-opp-supported-hw:0:0: 16 is greater than the maximum of 7
+NOTES:
+* Currently for herobrine all boards are eDP, not MIPI. If/when we
+  have herobrine derivatives that are MIPI they we can evaluate
+  whether the same off-on-delay makes sense for them. For trogdor we
+  didn't add the delay to MIPI panels because the problem was found
+  late and nobody had complained about it. For herobrine defaulting to
+  assuming the same 500ms makes sense and if we find we need to
+  optimize later we can.
+* Currently there are no oddball herobrine boards like homestar where
+  the panel really likes to be power cycled. If we have an oddball
+  board it will need to split the eDP and touchscreen rail anyway
+  (like homestar did) and we'll have to delete the "regulator-boot-on"
+  from that board.
 
-that is fixed by documenting the new bits.
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
+This patch should be applied atop my recent series adjusting the
+herobrine touchscreen rails [1]. If I need to send a v2 of that series
+I will add this at the end of it as patch #8.
 
+[1] https://lore.kernel.org/all/20230207024816.525938-1-dianders@chromium.org/
+
+ arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+index ded36b5d28c7..312cc0e1cbc7 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+@@ -110,6 +110,22 @@ pp3300_left_in_mlb: pp3300-left-in-mlb-regulator {
+ 
+ 		regulator-enable-ramp-delay = <3000>;
+ 
++		/*
++		 * eDP panel specs nearly always have a spec that says you
++		 * shouldn't turn them off an on again without waiting 500ms.
++		 * Add this as a board constraint since this rail is shared
++		 * between the panel and touchscreen.
++		 */
++		off-on-delay-us = <500000>;
++
++		/*
++		 * Stat the regulator on. This has the advantage of starting
++		 * the slow process of powering the panel on as soon as we
++		 * probe the regulator. It also avoids tripping the
++		 * off-on-delay immediately on every bootup.
++		 */
++		regulator-boot-on;
++
+ 		vin-supply = <&pp3300_z1>;
+ 	};
+ 
 -- 
-	Ansuel
+2.39.1.519.gcb327c4b5f-goog
+
