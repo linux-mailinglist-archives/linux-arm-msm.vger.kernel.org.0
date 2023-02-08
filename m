@@ -2,110 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DC1C468E80B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 07:09:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B51D68E95F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 08:56:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229731AbjBHGJX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Feb 2023 01:09:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46448 "EHLO
+        id S230504AbjBHH4Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Feb 2023 02:56:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229519AbjBHGJX (ORCPT
+        with ESMTP id S230182AbjBHH4W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Feb 2023 01:09:23 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 440063C2AC;
-        Tue,  7 Feb 2023 22:09:22 -0800 (PST)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3185dvVc032726;
-        Wed, 8 Feb 2023 06:09:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=C876TZIIxAKzAAhsnriSnxWWg4V33lQLM2PjsHjnBiA=;
- b=OkdK1e9L0jAp/S5SztO2WXJyrsbIQjXsQmbjQCB/VzUB65rbN97vS1L6VdAsxmJgSD6M
- tM/yjfX/96fupbuzqfLBKjw6fzabylE/+vTwzx4AOI3atWqQTh8qqgO3xQCeW8VLMQ5r
- OhLloBtr26x7dgUcMTjg4u0/WZKwM6RofP1P9883wwoNI0VV8ufBibUCFKCzcGkVzgAY
- /Tu4n70rOYlSohCPxI8v0+jsKCug764Z0kUtwbsRKNonAbuvt5G1dF4Hv1u6gmFJLtNE
- q8bUmVBhl9pflkAxHHzs4bMRG0iVYmMwK5qmuD5B4/eMx4QsscgMvM1ROxdtxaUto2k9 zg== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nkfesbeep-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 08 Feb 2023 06:09:18 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31869Hfd029968
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 8 Feb 2023 06:09:17 GMT
-Received: from [10.50.23.208] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 7 Feb 2023
- 22:09:12 -0800
-Message-ID: <df04b28e-3f2b-cac8-0990-55c7026b0fae@quicinc.com>
-Date:   Wed, 8 Feb 2023 11:39:02 +0530
+        Wed, 8 Feb 2023 02:56:22 -0500
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7413A212B7
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 23:56:21 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id u10so9647407wmj.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 23:56:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ETxDvVj98k7PU9AtIH67/6OJT7NKyjfCHV6l1l+MNQQ=;
+        b=JYXVjCxpNpr225kycoOKCpYUv9d7TUOsBrEU89nBfVKya6Dua1U16VPiPJ+uJfN4en
+         AWSKutDat+UFJUxzYXSE8VwBtHCFQB4TTMYKrLFcfpluBgJmKU+RFFJ7UpvgtzC+iajr
+         JIvfz50BvS4N8o3NNxc4LZ3Ml6IWlJqgxTn9GfkuL8Rpvz+OarEcBGjAtGa7hPh3lrit
+         3Cv+S2ov7vm80nv+NmAjxTaUJ+u/lv1h5az4msh01dBrx6HDpPtavEXy9jod1UgboOdK
+         LSdREKHCZFuacyIbvWoUOHSJwpvioc1k2jFMC5f/d+53erhNUTHyiAA1uZ5X2YM6tE/X
+         oeXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ETxDvVj98k7PU9AtIH67/6OJT7NKyjfCHV6l1l+MNQQ=;
+        b=fX6fT/c6Qwloq4YnIaA3JgW+85QQ2sQ8W1mRk1KqE27fzHuU4HF1FLhXrNaVf8dVRe
+         rM/31WxBzu4wKsTqKxH0uqD0T4c5SAljvbGts059BQlfRBFmBxV241DXasPtNDD+UHoX
+         PCOKBKKvwKmlma3cz3HX3X7i5XtrzLHKUNBq01QhyQebx8YsU+R6bgbjd3AUzP64Hov2
+         Uv/wrmcdxjpYsKC/LNypH7Z3AKpxhKrmCYCGLcrURUI0oTZ1+i68R/Ivg+tsPXd4exkh
+         +9TpK5NJWcxJARgMqaIa1rHFWp54AIPD54fAPQHSigujPCfT34FXZEROOFjZaifJP6F4
+         6BTQ==
+X-Gm-Message-State: AO0yUKUAF0M51xLWJy9MpTrh4NJkXh+lncuD0F9hTbiP5G2n/XqKrbdN
+        APfiLmTeYP136fWedwHV8UYgwA==
+X-Google-Smtp-Source: AK7set/nmPCad66nOdzB/ATnH2t6UekYKNilUC2JCRegAFqTQjcMwBcwNJH1PAkPH6wxUnVbqd+KHg==
+X-Received: by 2002:a05:600c:2e96:b0:3df:7948:886b with SMTP id p22-20020a05600c2e9600b003df7948886bmr5383344wmn.31.1675842980005;
+        Tue, 07 Feb 2023 23:56:20 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id j22-20020a05600c485600b003dc521f336esm1062428wmo.14.2023.02.07.23.56.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Feb 2023 23:56:19 -0800 (PST)
+Message-ID: <f80c617c-f595-bdc3-44d0-d29b3fff989e@linaro.org>
+Date:   Wed, 8 Feb 2023 08:56:17 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: (subset) [PATCH 0/6] Add regulator support for IPQ9574 SoC
-To:     Bjorn Andersson <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <agross@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <lgirdwood@gmail.com>,
-        <konrad.dybcio@linaro.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <broonie@kernel.org>, <devicetree@vger.kernel.org>
-CC:     <quic_kathirav@quicinc.com>, <quic_sjaganat@quicinc.com>,
-        <quic_arajkuma@quicinc.com>, <quic_gokulsri@quicinc.com>,
-        <quic_poovendh@quicinc.com>, <quic_srichara@quicinc.com>,
-        <quic_anusha@quicinc.com>
-References: <20230113150310.29709-1-quic_devipriy@quicinc.com>
- <167572263442.3569822.4527590282812934469.b4-ty@kernel.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH v5 2/3] dt-bindings: cpufreq: qcom-cpufreq-nvmem: make cpr
+ bindings optional
+To:     Christian Marangi <ansuelsmth@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>,
+        Yassine Oudjana <y.oudjana@protonmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230131151819.16612-1-ansuelsmth@gmail.com>
+ <20230131151819.16612-2-ansuelsmth@gmail.com>
+ <1670489b-e4f0-7328-3dbb-d849d1d6bd7e@linaro.org>
+ <63e2e854.df0a0220.52915.56aa@mx.google.com>
 Content-Language: en-US
-From:   Devi Priya <quic_devipriy@quicinc.com>
-In-Reply-To: <167572263442.3569822.4527590282812934469.b4-ty@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <63e2e854.df0a0220.52915.56aa@mx.google.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Lym2p6nNKShWn54W0OLsArNKfTKlJoIE
-X-Proofpoint-ORIG-GUID: Lym2p6nNKShWn54W0OLsArNKfTKlJoIE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-02-08_02,2023-02-06_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- adultscore=0 suspectscore=0 mlxlogscore=895 impostorscore=0 mlxscore=0
- malwarescore=0 spamscore=0 lowpriorityscore=0 clxscore=1015 phishscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302080054
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 2/7/2023 4:00 AM, Bjorn Andersson wrote:
-> On Fri, 13 Jan 2023 20:33:04 +0530, devi priya wrote:
->> IPQ9574 SoC uses the PMIC MP5496 and SMPA1 regulator is used for
->> APSS voltage scaling.
->> This patch series adds the support for the same.
->> Also enables the RPM communication over the RPMSG framework
+On 08/02/2023 01:09, Christian Marangi wrote:
+> On Wed, Feb 01, 2023 at 09:20:39AM +0100, Krzysztof Kozlowski wrote:
+>> On 31/01/2023 16:18, Christian Marangi wrote:
+>>> The qcom-cpufreq-nvmem driver supports 2 kind of devices:
+>>> - pre-cpr that doesn't have power-domains and base everything on nvmem
+>>>   cells and multiple named microvolt bindings.
+>>>   Doesn't need required-opp binding in the opp nodes as they are only
+>>>   used for genpd based devices.
+>>> - cpr-based that require power-domain in the cpu nodes and use various
+>>>   source to decide the correct voltage and freq
+>>>   Require required-opp binding since they need to be linked to the
+>>>   related opp-level.
+>>>
+>>> When the schema was introduced, it was wrongly set to always require these
+>>> binding but this is not the case for pre-cpr devices.
+>>>
+>>> Make the power-domain and the required-opp optional and set them required
+>>> only for qcs404 based devices.
+>>>
+>>> Fixes: ec24d1d55469 ("dt-bindings: opp: Convert qcom-nvmem-cpufreq to DT schema")
 >>
->> This series depends on the below patchset
->> https://lore.kernel.org/linux-arm-msm/20230113143647.14961-1-quic_devipriy@quicinc.com/
+>> Fixes go as first patches in the series.
 >>
->> [...]
 > 
-> Applied, thanks!
+> Hi,
+> this is problematic. This documentation is a bit special.
 > 
-Thanks Bjorn!
+> v4 had this patch as first but this cause error with make
+> dt_binding_check as the schema will be effectively empty (as it will
+> have only if condition)
+> 
+> This is why I pushed v5 that swap this with the second patch and first
+> add non conditional stuff to the schema and only with the second patch
+> makes them conditional.
+> 
+> Any hint to handle this corner case? I'm having some diffiulties due to
+> how special this is but we really need this fix since it's blocking the
+> introduction of opp table for ipq806x and ipq807x (as the schema is
+> currently flawed)
 
-> [1/6] soc: qcom: smd-rpm: Add IPQ9574 compatible
->        commit: 64dc69f3f36a71a95bfed8054d49600a7872415e
-> 
-> Best regards,
-Regards,
-Devi Priya
+Let's then drop fixes tag, because it will only confuse any backporters.
+
+Best regards,
+Krzysztof
+
