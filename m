@@ -2,191 +2,265 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C41868F2CC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 17:05:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DF0C368F302
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 17:17:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231392AbjBHQF3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Feb 2023 11:05:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50338 "EHLO
+        id S231367AbjBHQRh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Feb 2023 11:17:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230203AbjBHQFX (ORCPT
+        with ESMTP id S231344AbjBHQRb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Feb 2023 11:05:23 -0500
-Received: from NAM02-BN1-obe.outbound.protection.outlook.com (mail-bn1nam02on2047.outbound.protection.outlook.com [40.107.212.47])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A89934C0FD;
-        Wed,  8 Feb 2023 08:05:14 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=h+zsKli8gIIhv9EZepNkKBF+jDrKQiPZhoxw8e9K/6nXT3ky2BT4t/FJQOV72AxGzAwcGNhM4fqvZPRS8KqxRc6QuFxZGiipy41ubXCjo7k0e0kgRhPOyDf06rMzRrdApQXyhsbvIAQonq6g4WJABJpG7SCY1r0GPlmSQBV2ycR3jvDky2PUBRPPfxs/9i8v44ViYwEj2yF9wSe2Y6vmbzW3ZxQIEkQQVgnr9NDNSwj4lca8GTMYqyTD99X3w4rFAW/wOtsW++g6VLxvADQiS7ojchQTWH34McQByRZT0h2flNW0zBP+2xljJXT1yzYXxDLVzbJezerynbIgqS6qCg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=hL8ooqB3FGsWwxnszSNFMg3wodsGaUMHcg3sQe4IaLI=;
- b=UCUZa4vk8b27zk2Ms1hWK7xuUCvuQ7w/Bd4mEsEQYMd6x7b69oxW6B0cqArtlHSbiqM8gFrvDZiBhruJIpY54Ggc7Qnit6yqvwZ8BY2DlsIinEB8CBRN7XtFL50nbxYpyTxWNYbzHdi6J7+EnJSvBamPbd3sLI/6cS1GlofM5vnnqyXyIXVSGhIMe0A5Var4Z/onmXTo1ZejOixi5wL3woMkhbR8eui2n+3/c+k1m33Dr6MilimFqGBKvLMrEaHnT7bEYT1lftM6NfMUGiEA3h1+9Wug3mgY8B7gJpmd0OD5ak0sDFH6ggY3mYyuMoW5177Jzs8ur6U3O6Ebx70OAw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=hL8ooqB3FGsWwxnszSNFMg3wodsGaUMHcg3sQe4IaLI=;
- b=biJKnB4RQrrxPJ9O1eyvg8GITVlYXtw2YnDRwraooqK4IJ51y9urStIICvGRSa9FwU2AtGzvoFi7xpksrBonpUXfyjzhZwozOtg6MAZgWMV6ynZpCicBGKrCtHqsFVxgj/l10H8nm5bVokV2PUjS3PqUrMtFCDP3GM3snZZz+hk=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from BY5PR12MB3876.namprd12.prod.outlook.com (2603:10b6:a03:1a7::26)
- by PH8PR12MB6962.namprd12.prod.outlook.com (2603:10b6:510:1bd::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6086.17; Wed, 8 Feb
- 2023 16:05:12 +0000
-Received: from BY5PR12MB3876.namprd12.prod.outlook.com
- ([fe80::4ac9:c4f8:b0f:a863]) by BY5PR12MB3876.namprd12.prod.outlook.com
- ([fe80::4ac9:c4f8:b0f:a863%7]) with mapi id 15.20.6064.034; Wed, 8 Feb 2023
- 16:05:12 +0000
-Date:   Wed, 8 Feb 2023 16:04:57 +0000
-From:   Wyes Karny <wyes.karny@amd.com>
-To:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
-        iresh Kumar <viresh.kumar@linaro.org>,
-        Markus Mayer <mmayer@broadcom.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Kevin Hilman <khilman@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-omap@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, kernel@pengutronix.de
-Subject: Re: [PATCH] cpufreq: Make cpufreq_unregister_driver() return void
-Message-ID: <20230208160457.ouh2kg36s4kqpahe@beas>
-References: <20230207195909.474953-1-u.kleine-koenig@pengutronix.de>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230207195909.474953-1-u.kleine-koenig@pengutronix.de>
-X-ClientProxiedBy: PN2PR01CA0017.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:25::22) To BY5PR12MB3876.namprd12.prod.outlook.com
- (2603:10b6:a03:1a7::26)
+        Wed, 8 Feb 2023 11:17:31 -0500
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C1424DE1A
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Feb 2023 08:17:08 -0800 (PST)
+Received: by mail-pl1-x629.google.com with SMTP id m2so19862913plg.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Feb 2023 08:17:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=VtStxbDlv9BIEgeROEEUhW1VlT6VpQik7/+FSOLhuHQ=;
+        b=xddZb9VszVX77kSSA+W9Zny20S5flI1egsRdjg7QmtTawVwVRFhpGLMSmSVpoV4lAW
+         ii41mAuSjvpkxlvGl9Z5oPMnvnH0NBfBo5cZ8kPe3KkYmh0KQDJI7nFZ/sq7Wr+4E95b
+         vz5+Gjovd05BsIDghjp7aVowE+AYRayXI5ZRMzWxWUVtHRh8XMjdFlEFMAhrP2xP+lWR
+         UNobktvm2s++EzwNv/NHA4QWTdMMTLHTxA9tl+/mfj1e47M/gc2BKT3xONU+HGeT8X4g
+         NzWDWnVFDwFH2qis9Hqs/mqLnmVV6mInJ9iM7hYPs8USrEC8pDac48af1VAvpnVNUquv
+         L9JQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VtStxbDlv9BIEgeROEEUhW1VlT6VpQik7/+FSOLhuHQ=;
+        b=PK2f270Gr1ZdS0zpbf0ZtaWmPrg87FV4hc2lAKS+cDScn3acn1Bn78AxPP3tHr9Is9
+         IF6jveg1g6FPX339XUdQZXu+xM3xZtrpiqFgHkLkWa5Dgv8vH/fVsgdeoStEoBLBuqow
+         1Toq11xpqi20IgDm4JYh7g+9uoWmAfSpb0fzSmv3tiKobTZzv+AsKBNQgLDpWV0S3zlF
+         p3mQ9v1RpvoIiaCe50OU6QZRbkBmig8b0gYqLjGAHPdVGO5IMrC54ngPl55S0hTER8EL
+         lWyDq1kC4T1NKfhbXkPuXEk6KmzJrN28XSaKcRrhDX1Kfs/7yuyfR696wIY3sdeSCr/S
+         j9ZA==
+X-Gm-Message-State: AO0yUKXBelKJetOeCDHKSIuveP+zDxnBXT+t4YwCKJhDrc/+131WE3wo
+        HVP9gStXP9aE100zfDd00NDmgNcniJySwMgKFKD2fw==
+X-Google-Smtp-Source: AK7set+v5cFZTu9K2iveiLOsQcYikW2XLnB4+6qmSThMMoL4p1PWQnloVuMATKDa63NrLFkmnjrPHHE06eWqkvT0oOg=
+X-Received: by 2002:a17:902:6b88:b0:199:1458:6c67 with SMTP id
+ p8-20020a1709026b8800b0019914586c67mr2130741plk.28.1675873027675; Wed, 08 Feb
+ 2023 08:17:07 -0800 (PST)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BY5PR12MB3876:EE_|PH8PR12MB6962:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4b138900-e5ec-40b4-0796-08db09ee41f0
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: o9p/HFmH4NCjM+13sCOuHtPCOcP7ouS4/VeLSbj394MwcVrg5J+/UKNwEgMMjgHTCOLMIjaG9PVizeDQ7WaakFmuB9V2k3ZiFlPAUlTM8eIaQiEKJZ4h1gISW7b/Diqi0vm5aX4h1TUkBLVwYRMqxuDCTY4m4fQ1hM//n8iyQCUIjVmfoPU+5kNm2zjuQbTp5GA4vA24MlDb0UXmMmho9e/joLYxUgqs6/wjZzsdZAoial89q1LfpqVVbTd55gIQYLzkOMzbuI4vy+fv5zcNcIojtPVOz9LG6r8yJ2f2WF+/lQlMBlismX7SsnFJclve6QiIP08JKgFSpn9QzOuVOAoWw39yVmiuoDAmDQCodgvBUmv8EUv0r67ueuph9qMRw/DbZDKb/OdoYYDi0B6WtseZJQeday43wpi+2NFchVvMr2K8FTtqxQ4q6Uvw3nB1bMtnJeM82/stGTgtTtFRiNPcDwLzuQ6majB+/CUgILvCrL7C21kRkfDAQKmwPZHCmXXUvD1Gf0JiNbu+t9xJncHo+NSHFZRXzNjTbc3O7Qx/YqgjWhpHtDnrtvW/cDh91GdijVpQMLFavc45JnKmDHYQmXCL6Y8SfhrAADFLNjrMtgiRvcUILVJa6kT7tznZilY1DyJWPiVJ29igEIqcmCcOrbmwK/Pu5YJSohmgZbM217x8vDGf/T4Ilp8I+f4+
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BY5PR12MB3876.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(7916004)(4636009)(396003)(39860400002)(376002)(136003)(366004)(346002)(451199018)(5660300002)(7416002)(44832011)(2906002)(66574015)(83380400001)(38100700002)(8676002)(33716001)(4326008)(66946007)(54906003)(6916009)(66476007)(8936002)(6666004)(66556008)(41300700001)(6512007)(1076003)(186003)(6506007)(9686003)(26005)(316002)(966005)(86362001)(6486002)(478600001);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?yIKY2yBmGnTJtQr7cZm9HS2oQIB6j2/aVuOyPbkkF3/p9bY5Kj6ETMFulz?=
- =?iso-8859-1?Q?SAHESfKJhIvcuhbAn3Tcgvj952w9RhrVB4XRpxLf9rfNTq/H8Z2pLyepiT?=
- =?iso-8859-1?Q?FPcxWaIRU2U1aXQOHCKW9oW/oY7KYtJf4Rau64dHFayBPcyboa92Wcu0S5?=
- =?iso-8859-1?Q?QQLSBybHclc29k+UdWe/hTJ9CYPeZhBedOaamhuuexSLOd1zWEyAAksMkV?=
- =?iso-8859-1?Q?Gz/jhYIWj2XkrtE6Ajy5ZT3jTA0TYpYDvPM4RluRaHZtu01PlG/9vTks27?=
- =?iso-8859-1?Q?EYFvXx7RgaowqboXhqB7EhuB0w2apcrs4GnBG6SFo+dLx7yhEQciNv6Orv?=
- =?iso-8859-1?Q?fmc7sQMzHoC3YlyFB1FghNznfR2L9jXlQHoolsgn1W6f3A9KTaFWEq6MmA?=
- =?iso-8859-1?Q?Kfo1C6kkRTQJKv14bKtOB4r+oBJdKPDhvxdOdnLSIFk9x1RmF4d+M1H0qh?=
- =?iso-8859-1?Q?5VCW0i8/Giq+HbUuvzWKQ1PjcRKpJ7B0fMINmXV7RkHBIgjFA/It8Lfup2?=
- =?iso-8859-1?Q?e4RafZzipXllUTiq2trh8hIfLTwV4fEadAh77E8nD46TU6utMCtipzirHh?=
- =?iso-8859-1?Q?9IMjf7Yt8SIAL9AmyoXgEgGx6qKYwFTWtPzAdrZuAojdN3xDjxKXRjXv4K?=
- =?iso-8859-1?Q?6T8Zi8p6Ih9tb516kiyA4iKvg0Rb6+Nsyr/1zVJIXwlvW7cYRPQA+Q+jgO?=
- =?iso-8859-1?Q?dubvHsiC9k9XDn276MRdRuCzXeIWDdxrdjjNZQIVIWX59nEC1+iQqHntR/?=
- =?iso-8859-1?Q?FGOwfX8dbWAQdXHFprgYZjpEtUClUN79yai5huACW2azi4looTnl71fP3r?=
- =?iso-8859-1?Q?EKQNWqa2yWjklYVvdmerBLvY5lMrRitdKdXu9Pxfp/n6ieS9OqMSQAKWgl?=
- =?iso-8859-1?Q?vo2NSgyM4jqUC6e+Cwz/Uhra5AQNwGfuXuMY6jMwj/F2JFv01G73YWwem7?=
- =?iso-8859-1?Q?Xzy54eIfIvtuuzV9XiBfEjE98ul6uaXk9MCJESK/HfuDqBGQ4HG0nLbRxt?=
- =?iso-8859-1?Q?IYKizyz+FFG0gvleeJZWDJl3J1TxU1LO2+UlpdnREclUcBK18vSpvQqB8q?=
- =?iso-8859-1?Q?wOL1rVGKjR7V8rvoD9TocgXBiBdop0oiKQR1RwZTt502hXGVHRuQkbHu0u?=
- =?iso-8859-1?Q?kBXLkXRmr0CVEw+sELf5vp/c3yMuipH7PLnstlav1ww6K4f130onMDtchx?=
- =?iso-8859-1?Q?xoacFZOcZKpgbafJdERjudNJHcqA/Av9PfxKd0JS7wuiU3l1+Grhnh0sEC?=
- =?iso-8859-1?Q?7Ob8WRqOaxvsAcTi4Jzvpd2MO6mmdmiRqIEI1eskiIy1Bvej2IXCaPJ2Mn?=
- =?iso-8859-1?Q?jeLwhfOznA+ZSPOsQJiBN55elVPWTP5yYStzE15R6P/cGn3cCeP+Q0GcA/?=
- =?iso-8859-1?Q?pQZbwcUcJ0vmqb8iiMmHRekr9Z6iUDCyXwDA29deveCYo9gSWe7pjwT7vH?=
- =?iso-8859-1?Q?Jo5CJ13sqKARTwGoEZdY1PtNWorSEMomo7OpaHEN8N9gFKgFbdI1OkHiOp?=
- =?iso-8859-1?Q?HJrUFeczncxLx/jYoc6XRb66VSoUvIkV0BnoeJztc4HCRxvcAXLKpvh+bq?=
- =?iso-8859-1?Q?zI2IbcU1pfUuy6gxh0CPREWWsitvgly8qgQdOviBFHa6bZCNcb4lkJ7qYH?=
- =?iso-8859-1?Q?97Yvw8wizjao03fYuUVUukAqa3K6uCyI8K?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4b138900-e5ec-40b4-0796-08db09ee41f0
-X-MS-Exchange-CrossTenant-AuthSource: BY5PR12MB3876.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Feb 2023 16:05:11.9141
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 6A+h36ieD7es75BXW3tXSeJz8J6xoTwvnpEKBNHQ8D+hWahR488QVc1Vny5q+vK7rHnX/03g9NTEvtzYo5SKJg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB6962
-X-Spam-Status: No, score=-0.7 required=5.0 tests=BAYES_00,DKIM_INVALID,
-        DKIM_SIGNED,FORGED_SPF_HELO,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_PASS,SPF_NONE autolearn=no autolearn_force=no version=3.4.6
+References: <20230208111630.20132-1-quic_jinlmao@quicinc.com>
+In-Reply-To: <20230208111630.20132-1-quic_jinlmao@quicinc.com>
+From:   Mike Leach <mike.leach@linaro.org>
+Date:   Wed, 8 Feb 2023 16:16:56 +0000
+Message-ID: <CAJ9a7ViBS9K6cKsOi3btw1b5cM9VTSb-q8s6W3WUAgeW3-T2Sg@mail.gmail.com>
+Subject: Re: [PATCH] coresight: core: Add sysfs node to reset all sources and sinks
+To:     Mao Jinlong <quic_jinlmao@quicinc.com>
+Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Uwe Kleine-König,
+Hi
 
-On 07 Feb 20:59, Uwe Kleine-König wrote:
-> All but a few drivers ignore the return value of
-> cpufreq_unregister_driver(). Those few that don't only call it after
-> cpufreq_register_driver() succeeded, in which case the call doesn't
-> fail.
-> 
-> Make the function return no value and add a WARN_ON for the case that
-> the function is called in an invalid situation (i.e. without a previous
-> successful call to cpufreq_register_driver()).
-> 
-> Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+As this is a sysfs only update - would it not be easier to simply use
+a shell script to iterate through coresight/devices/ looking for
+disable_source / disable_sink files and setting those accordingly?
+
+See tools/perf/tests/shell/test_arm_coresight.sh for an example of a
+script that does similar iteration to test coresight in perf
+
+Regards
+
+Mike
+
+On Wed, 8 Feb 2023 at 11:16, Mao Jinlong <quic_jinlmao@quicinc.com> wrote:
+>
+> Add sysfs node to reset all the sources and sinks. When mltiple
+> sources are enabled, write 1 to reset_source_sink node to disable
+> all sources and sinks.
+>
+> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
 > ---
->  drivers/cpufreq/brcmstb-avs-cpufreq.c | 5 +----
->  drivers/cpufreq/cpufreq.c             | 8 +++-----
->  drivers/cpufreq/davinci-cpufreq.c     | 4 +++-
->  drivers/cpufreq/mediatek-cpufreq-hw.c | 4 +++-
->  drivers/cpufreq/omap-cpufreq.c        | 4 +++-
->  drivers/cpufreq/qcom-cpufreq-hw.c     | 4 +++-
->  include/linux/cpufreq.h               | 2 +-
->  7 files changed, 17 insertions(+), 14 deletions(-)
-
-> base-commit: 05ecb680708a1dbe6554d6fc17e5d9a8a7cb5e6a
-
-You may have to rebase it on top of this [1].
-Recently this patch series was picked up by Rafael.
-You have to add the below hunk in your patch.
-
-diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
-index 168a28bed6ee..70debd5a9f40 100644
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -831,7 +831,7 @@ static void amd_pstate_driver_cleanup(void)
-
- static int amd_pstate_update_status(const char *buf, size_t size)
- {
--       int ret;
-+       int ret = 0;
-        int mode_idx;
-
-        if (size > 7 || size < 6)
-@@ -844,7 +844,7 @@ static int amd_pstate_update_status(const char *buf,
-size_t size)
-                        return -EINVAL;
-                if (cppc_state == AMD_PSTATE_ACTIVE)
-                        return -EBUSY;
--               ret = cpufreq_unregister_driver(current_pstate_driver);
-+               cpufreq_unregister_driver(current_pstate_driver);
-                amd_pstate_driver_cleanup();
-                break;
-        case AMD_PSTATE_PASSIVE:
-
-
-Otherwise the patch looks good to me.
-
-[1]: https://lore.kernel.org/linux-pm/20230131090016.3970625-1-perry.yuan@amd.com/#t
-
-Thanks,
-Wyes
-> -- 
+>  drivers/hwtracing/coresight/coresight-core.c | 106 +++++++++++++++++--
+>  1 file changed, 99 insertions(+), 7 deletions(-)
+>
+> diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/hwtracing/coresight/coresight-core.c
+> index d3bf82c0de1d..06741ed2dee7 100644
+> --- a/drivers/hwtracing/coresight/coresight-core.c
+> +++ b/drivers/hwtracing/coresight/coresight-core.c
+> @@ -458,6 +458,28 @@ static bool coresight_disable_source(struct coresight_device *csdev)
+>         return !csdev->enable;
+>  }
+>
+> +/**
+> + * coresight_get_source - Get the source from the path
+> + *
+> + * @path: The list of devices.
+> + *
+> + * Returns the soruce csdev.
+> + *
+> + */
+> +static struct coresight_device *coresight_get_source(struct list_head *path)
+> +{
+> +       struct coresight_device *csdev;
+> +
+> +       if (!path)
+> +               return NULL;
+> +
+> +       csdev = list_first_entry(path, struct coresight_node, link)->csdev;
+> +       if (csdev->type != CORESIGHT_DEV_TYPE_SOURCE)
+> +               return NULL;
+> +
+> +       return csdev;
+> +}
+> +
+>  /*
+>   * coresight_disable_path_from : Disable components in the given path beyond
+>   * @nd in the list. If @nd is NULL, all the components, except the SOURCE are
+> @@ -1159,20 +1181,18 @@ int coresight_enable(struct coresight_device *csdev)
+>  }
+>  EXPORT_SYMBOL_GPL(coresight_enable);
+>
+> -void coresight_disable(struct coresight_device *csdev)
+> +static void _coresight_disable(struct coresight_device *csdev)
+>  {
+>         int cpu, ret;
+>         struct list_head *path = NULL;
+>         u32 hash;
+>
+> -       mutex_lock(&coresight_mutex);
+> -
+>         ret = coresight_validate_source(csdev, __func__);
+>         if (ret)
+> -               goto out;
+> +               return;
+>
+>         if (!csdev->enable || !coresight_disable_source(csdev))
+> -               goto out;
+> +               return;
+>
+>         switch (csdev->subtype.source_subtype) {
+>         case CORESIGHT_DEV_SUBTYPE_SOURCE_PROC:
+> @@ -1187,7 +1207,7 @@ void coresight_disable(struct coresight_device *csdev)
+>                 path = idr_find(&path_idr, hash);
+>                 if (path == NULL) {
+>                         pr_err("Path is not found for %s\n", dev_name(&csdev->dev));
+> -                       goto out;
+> +                       return;
+>                 }
+>                 idr_remove(&path_idr, hash);
+>                 break;
+> @@ -1198,8 +1218,12 @@ void coresight_disable(struct coresight_device *csdev)
+>
+>         coresight_disable_path(path);
+>         coresight_release_path(path);
+> +}
+>
+> -out:
+> +void coresight_disable(struct coresight_device *csdev)
+> +{
+> +       mutex_lock(&coresight_mutex);
+> +       _coresight_disable(csdev);
+>         mutex_unlock(&coresight_mutex);
+>  }
+>  EXPORT_SYMBOL_GPL(coresight_disable);
+> @@ -1761,8 +1785,76 @@ char *coresight_alloc_device_name(struct coresight_dev_list *dict,
+>  }
+>  EXPORT_SYMBOL_GPL(coresight_alloc_device_name);
+>
+> +/*
+> + * Set the sink active status to false.
+> + */
+> +static int coresight_reset_sink(struct device *dev, void *data)
+> +{
+> +       struct coresight_device *csdev = to_coresight_device(dev);
+> +
+> +       if ((csdev->type == CORESIGHT_DEV_TYPE_SINK ||
+> +               csdev->type == CORESIGHT_DEV_TYPE_LINKSINK) &&
+> +               csdev->activated)
+> +               csdev->activated = false;
+> +
+> +       return 0;
+> +}
+> +
+> +static void coresight_reset_all_sink(void)
+> +{
+> +       bus_for_each_dev(&coresight_bustype, NULL, NULL, coresight_reset_sink);
+> +}
+> +
+> +static ssize_t reset_source_sink_store(struct bus_type *bus,
+> +                                      const char *buf, size_t size)
+> +{
+> +       int id, cpu, ret = 0;
+> +       unsigned long val;
+> +       struct coresight_device *csdev;
+> +       struct list_head *path = NULL;
+> +
+> +       ret = kstrtoul(buf, 10, &val);
+> +       if (ret)
+> +               return ret;
+> +
+> +       mutex_lock(&coresight_mutex);
+> +
+> +       /* Disable all per cpu sources */
+> +       for_each_present_cpu(cpu) {
+> +               path = per_cpu(tracer_path, cpu);
+> +               if (path) {
+> +                       csdev = coresight_get_source(path);
+> +                       if (!csdev)
+> +                               continue;
+> +               }
+> +               _coresight_disable(csdev);
+> +       }
+> +
+> +       /* Disable all sources which aren't associated with CPU */
+> +       idr_for_each_entry (&path_idr, path, id) {
+> +               csdev = coresight_get_source(path);
+> +               if (!csdev)
+> +                       continue;
+> +
+> +               _coresight_disable(csdev);
+> +       }
+> +       /* Reset all activated sinks */
+> +       coresight_reset_all_sink();
+> +
+> +       mutex_unlock(&coresight_mutex);
+> +       return size;
+> +}
+> +static BUS_ATTR_WO(reset_source_sink);
+> +
+> +static struct attribute *coresight_reset_source_sink_attrs[] = {
+> +       &bus_attr_reset_source_sink.attr,
+> +       NULL,
+> +};
+> +ATTRIBUTE_GROUPS(coresight_reset_source_sink);
+> +
+>  struct bus_type coresight_bustype = {
+>         .name   = "coresight",
+> +       .bus_groups     = coresight_reset_source_sink_groups,
+>  };
+>
+>  static int __init coresight_init(void)
+> --
 > 2.39.0
-> 
+>
+
+
+-- 
+Mike Leach
+Principal Engineer, ARM Ltd.
+Manchester Design Centre. UK
