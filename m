@@ -2,254 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DFAC568EE37
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 12:46:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F80668EEF5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 13:27:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229930AbjBHLqD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Feb 2023 06:46:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38996 "EHLO
+        id S229739AbjBHM1l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Feb 2023 07:27:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230445AbjBHLqB (ORCPT
+        with ESMTP id S231143AbjBHM1g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Feb 2023 06:46:01 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 568B249024;
-        Wed,  8 Feb 2023 03:46:00 -0800 (PST)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 318BENio005774;
-        Wed, 8 Feb 2023 11:16:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=qcppdkim1;
- bh=KPGYDqcDrr8XsolksFSl7StuBWFEXS8GKvS6LELY/So=;
- b=LVMepOWrh5gj12B/KwX7q1fzF4f9vQV84RDZVWyNOaO4wRxraDqgpM8A6vqxW3ZyNNH4
- iLJWfBVgR4syHwJpjIkUOFO+ptozKEy4KkEWdt6o6OGQt0bVXfFhhnsgpVsYECBNTKHl
- H5T4cMLXZu+b/+FSbTyv2SdxcWbxXm8zLfFMSWVMnaPCBK0tF4YPZukQiWumtNDG8qvm
- 3lbHdWQOFYh4kfjhSVWsxrDiHygObWO6+U7elMvbfMQA12G97QViNvzTU7iZGKYWEbWp
- 6virG01MN5UQ7FyIaiKRqh7VXUErzrMn8F+L4l/FoJ97siMKektis22pb0OMAhMsNRVu 1Q== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nkk0dkch7-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 08 Feb 2023 11:16:46 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 318BGjjp025145
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 8 Feb 2023 11:16:45 GMT
-Received: from hu-jinlmao-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Wed, 8 Feb 2023 03:16:44 -0800
-From:   Mao Jinlong <quic_jinlmao@quicinc.com>
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Leo Yan <leo.yan@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>
-CC:     Mao Jinlong <quic_jinlmao@quicinc.com>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>
-Subject: [PATCH] coresight: core: Add sysfs node to reset all sources and sinks
-Date:   Wed, 8 Feb 2023 03:16:30 -0800
-Message-ID: <20230208111630.20132-1-quic_jinlmao@quicinc.com>
-X-Mailer: git-send-email 2.39.0
+        Wed, 8 Feb 2023 07:27:36 -0500
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18B0228D2E
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Feb 2023 04:27:35 -0800 (PST)
+Received: by mail-pj1-x1033.google.com with SMTP id n20-20020a17090aab9400b00229ca6a4636so2306505pjq.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Feb 2023 04:27:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=b3pZYKYfkdSQT68SJNCftLQUT8dA3bIPuHLgF4x+0BQ=;
+        b=eq7qxSBzge3b5OUiBBoHYkNnBBuhl1834PkVvMDIKLtdfoKGbdd2ABIFHVDNbdM6P1
+         V4+jZV7yalvVafWmhYJiwYEym70qSx5kSseejBwBkoISzOzgPbosW9+jXXtYApQVd8fT
+         +IAJ2nm4ALaSV7k9KDd2moyrybb5VbRC1ig61kwmrAhhnd2ZgZVPwMD42xIR+l5Nh/wH
+         upHICVogu/Kj8t2Fvuv2+kgiRdHh5GrTHkDALZ1BpR0IpfdfiW28C41QEL0tx9vzu4HR
+         2JsltAWvcXvhOjqx8p2ywxr+hyo+dMdLB/E4RDxN57/RnseiN7Yy2Gm/veOgUA++c8rR
+         YN6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=b3pZYKYfkdSQT68SJNCftLQUT8dA3bIPuHLgF4x+0BQ=;
+        b=z/a1ALSB9pMYbvIhYLc29qN+zFXzENBAqGROvkfarhu5BaGjCNGzUn5U8YZiaXVRRT
+         Ica2oY/1QfYUAFPkPpXIhf9jZFunr3BEchGQYnzAqkGjrRiyQlt6JLa7k6GHJMzPepgV
+         pMSps8UVF2kBlHHOt2Xkcq9vHCL0EQ6ZvZYMGH9zc1e4aKGFeqPxiJXQyOLJ3Z8gumI6
+         6Ci7TtQ+DbwrTBZWu2h4bEipsNAV4q+JYrfU7Z7Ez13czUw17kxh3u63jPK6/zE/nEvq
+         MjDMXb19ZEHc/eAxVtMeKEYyl0OjOgiZuY9++aQl3NQYkOsBER+S7Q+/Fg4K094MP4IP
+         crxQ==
+X-Gm-Message-State: AO0yUKVJDVCpkPiaABfx4ok62vuYaW9n8QEqU1RIHg8qtOnZWVJoJ1h/
+        wBlNN+wFV8RiBFPaxOC7rLvyKkYk1mxuUuDo
+X-Google-Smtp-Source: AK7set/kTlTLW1jcI345R/bAzrSsgmJj8RuFZzJ86G7lKYbVI+rX1YXb68COYhPoZs5wpxzDuntA8g==
+X-Received: by 2002:a17:90b:4a0f:b0:230:d387:8bbb with SMTP id kk15-20020a17090b4a0f00b00230d3878bbbmr8999731pjb.5.1675859254139;
+        Wed, 08 Feb 2023 04:27:34 -0800 (PST)
+Received: from localhost.localdomain ([2402:3a80:4214:7b1c:f777:96cb:1db4:73e6])
+        by smtp.gmail.com with ESMTPSA id r16-20020a638f50000000b004eca54eab50sm9664468pgn.28.2023.02.08.04.27.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Feb 2023 04:27:33 -0800 (PST)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
+        bhupesh.sharma@linaro.org, robh+dt@kernel.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH v2] arm64: dts: qcom: sm6115: Add geni debug uart node for qup0
+Date:   Wed,  8 Feb 2023 17:57:18 +0530
+Message-Id: <20230208122718.338545-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 8JFFtk4EW_OHV7RssK6N495__mAiXY9t
-X-Proofpoint-ORIG-GUID: 8JFFtk4EW_OHV7RssK6N495__mAiXY9t
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-02-08_04,2023-02-08_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 clxscore=1015
- suspectscore=0 phishscore=0 priorityscore=1501 mlxlogscore=999
- adultscore=0 impostorscore=0 mlxscore=0 spamscore=0 lowpriorityscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302080102
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add sysfs node to reset all the sources and sinks. When mltiple
-sources are enabled, write 1 to reset_source_sink node to disable
-all sources and sinks.
+qup0 on sm6115 / sm4250 has 6 SEs, with SE4 as debug uart.
+Add the debug uart node in sm6115 dtsi file.
 
-Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>
+Cc: Rob Herring <robh+dt@kernel.org>
+Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 ---
- drivers/hwtracing/coresight/coresight-core.c | 106 +++++++++++++++++--
- 1 file changed, 99 insertions(+), 7 deletions(-)
+ Changes since v1:
+  - v1 can be viewed here: https://lore.kernel.org/linux-arm-msm/20221128171215.1768745-1-bhupesh.sharma@linaro.org/
+  - Addressed Konrad's review comments on v1.
+  - Rebased againt latest linux-next/master which now has the 'qupv3_id_0' node
+    already in the dtsi file, so just add the debug uart node in v2.
 
-diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/hwtracing/coresight/coresight-core.c
-index d3bf82c0de1d..06741ed2dee7 100644
---- a/drivers/hwtracing/coresight/coresight-core.c
-+++ b/drivers/hwtracing/coresight/coresight-core.c
-@@ -458,6 +458,28 @@ static bool coresight_disable_source(struct coresight_device *csdev)
- 	return !csdev->enable;
- }
+ arch/arm64/boot/dts/qcom/sm6115.dtsi | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+index 50cb8a82ecd5..3eccfb8c16ce 100644
+--- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+@@ -963,6 +963,15 @@ spi4: spi@4a90000 {
+ 				status = "disabled";
+ 			};
  
-+/**
-+ * coresight_get_source - Get the source from the path
-+ *
-+ * @path: The list of devices.
-+ *
-+ * Returns the soruce csdev.
-+ *
-+ */
-+static struct coresight_device *coresight_get_source(struct list_head *path)
-+{
-+	struct coresight_device *csdev;
++			uart4: serial@4a90000 {
++				compatible = "qcom,geni-debug-uart";
++				reg = <0x04a90000 0x4000>;
++				clock-names = "se";
++				clocks = <&gcc GCC_QUPV3_WRAP0_S4_CLK>;
++				interrupts = <GIC_SPI 331 IRQ_TYPE_LEVEL_HIGH>;
++				status = "disabled";
++			};
 +
-+	if (!path)
-+		return NULL;
-+
-+	csdev = list_first_entry(path, struct coresight_node, link)->csdev;
-+	if (csdev->type != CORESIGHT_DEV_TYPE_SOURCE)
-+		return NULL;
-+
-+	return csdev;
-+}
-+
- /*
-  * coresight_disable_path_from : Disable components in the given path beyond
-  * @nd in the list. If @nd is NULL, all the components, except the SOURCE are
-@@ -1159,20 +1181,18 @@ int coresight_enable(struct coresight_device *csdev)
- }
- EXPORT_SYMBOL_GPL(coresight_enable);
+ 			i2c5: i2c@4a94000 {
+ 				compatible = "qcom,geni-i2c";
+ 				reg = <0x04a94000 0x4000>;
+@@ -992,7 +1001,6 @@ spi5: spi@4a94000 {
+ 				dma-names = "tx", "rx";
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
+-				status = "disabled";
+ 			};
+ 		};
  
--void coresight_disable(struct coresight_device *csdev)
-+static void _coresight_disable(struct coresight_device *csdev)
- {
- 	int cpu, ret;
- 	struct list_head *path = NULL;
- 	u32 hash;
- 
--	mutex_lock(&coresight_mutex);
--
- 	ret = coresight_validate_source(csdev, __func__);
- 	if (ret)
--		goto out;
-+		return;
- 
- 	if (!csdev->enable || !coresight_disable_source(csdev))
--		goto out;
-+		return;
- 
- 	switch (csdev->subtype.source_subtype) {
- 	case CORESIGHT_DEV_SUBTYPE_SOURCE_PROC:
-@@ -1187,7 +1207,7 @@ void coresight_disable(struct coresight_device *csdev)
- 		path = idr_find(&path_idr, hash);
- 		if (path == NULL) {
- 			pr_err("Path is not found for %s\n", dev_name(&csdev->dev));
--			goto out;
-+			return;
- 		}
- 		idr_remove(&path_idr, hash);
- 		break;
-@@ -1198,8 +1218,12 @@ void coresight_disable(struct coresight_device *csdev)
- 
- 	coresight_disable_path(path);
- 	coresight_release_path(path);
-+}
- 
--out:
-+void coresight_disable(struct coresight_device *csdev)
-+{
-+	mutex_lock(&coresight_mutex);
-+	_coresight_disable(csdev);
- 	mutex_unlock(&coresight_mutex);
- }
- EXPORT_SYMBOL_GPL(coresight_disable);
-@@ -1761,8 +1785,76 @@ char *coresight_alloc_device_name(struct coresight_dev_list *dict,
- }
- EXPORT_SYMBOL_GPL(coresight_alloc_device_name);
- 
-+/*
-+ * Set the sink active status to false.
-+ */
-+static int coresight_reset_sink(struct device *dev, void *data)
-+{
-+	struct coresight_device *csdev = to_coresight_device(dev);
-+
-+	if ((csdev->type == CORESIGHT_DEV_TYPE_SINK ||
-+		csdev->type == CORESIGHT_DEV_TYPE_LINKSINK) &&
-+		csdev->activated)
-+		csdev->activated = false;
-+
-+	return 0;
-+}
-+
-+static void coresight_reset_all_sink(void)
-+{
-+	bus_for_each_dev(&coresight_bustype, NULL, NULL, coresight_reset_sink);
-+}
-+
-+static ssize_t reset_source_sink_store(struct bus_type *bus,
-+				       const char *buf, size_t size)
-+{
-+	int id, cpu, ret = 0;
-+	unsigned long val;
-+	struct coresight_device *csdev;
-+	struct list_head *path = NULL;
-+
-+	ret = kstrtoul(buf, 10, &val);
-+	if (ret)
-+		return ret;
-+
-+	mutex_lock(&coresight_mutex);
-+
-+	/* Disable all per cpu sources */
-+	for_each_present_cpu(cpu) {
-+		path = per_cpu(tracer_path, cpu);
-+		if (path) {
-+			csdev = coresight_get_source(path);
-+			if (!csdev)
-+				continue;
-+		}
-+		_coresight_disable(csdev);
-+	}
-+
-+	/* Disable all sources which aren't associated with CPU */
-+	idr_for_each_entry (&path_idr, path, id) {
-+		csdev = coresight_get_source(path);
-+		if (!csdev)
-+			continue;
-+
-+		_coresight_disable(csdev);
-+	}
-+	/* Reset all activated sinks */
-+	coresight_reset_all_sink();
-+
-+	mutex_unlock(&coresight_mutex);
-+	return size;
-+}
-+static BUS_ATTR_WO(reset_source_sink);
-+
-+static struct attribute *coresight_reset_source_sink_attrs[] = {
-+	&bus_attr_reset_source_sink.attr,
-+	NULL,
-+};
-+ATTRIBUTE_GROUPS(coresight_reset_source_sink);
-+
- struct bus_type coresight_bustype = {
- 	.name	= "coresight",
-+	.bus_groups	= coresight_reset_source_sink_groups,
- };
- 
- static int __init coresight_init(void)
 -- 
-2.39.0
+2.38.1
 
