@@ -2,113 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3CFCA68EC93
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 11:16:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AA83468ED82
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 12:08:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229755AbjBHKQM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Feb 2023 05:16:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55656 "EHLO
+        id S229589AbjBHLII (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Feb 2023 06:08:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231280AbjBHKQD (ORCPT
+        with ESMTP id S229457AbjBHLIH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Feb 2023 05:16:03 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15A17442F8
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Feb 2023 02:16:02 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id l37-20020a05600c1d2500b003dfe46a9801so1083849wms.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Feb 2023 02:16:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QIP8R/xQ7Af6ETfQwAtdNDiVKk4oUEjwkSgHlIW4k74=;
-        b=xf5P1mZEQ/f8xsXxbbauz7U4oW97zmEDzPAR0GIA0F5EDCDkpZUY+iw2NzZnbALPST
-         TVc6K+bd2QnughBFtQjAMZgZm7kKlhkxxvJ39ct/UqN4rfbYPLfZ17F5zd9cMq8WmqyB
-         iIEStiLAR467EaRWFZIL2D26DlCk/x1W6S4AWVmxfgq/N6jxGI6Bhov/30Ozk1ekxdoK
-         +AIAhD8xo6sEo/W4CgDu0iXlpBOHfDcZqAGFQJ3Kj+5DUFa0VpWWFn3q3XGRrD7FqGXg
-         jIAv9a8SvAaUUYlm9kIal6+y1sYhHU4VEISUeAAAH7Xb9FBAN6eZPMHpur7FJfMtcwqe
-         Lv2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QIP8R/xQ7Af6ETfQwAtdNDiVKk4oUEjwkSgHlIW4k74=;
-        b=A3Zht+3sbRv79auKIa2uyHFIEzzzofNOI9qauEIRVSWhYTCJI8Alunsn89Hme0U9/R
-         Xk7xHfwsecYePP82CHfWgaCWDKK/yF26yo7PDs0yuTg5cxpNnS+JlSCBQuH7yYE3t3BJ
-         oF97j88V3hIgHWvKC569xWVVmnkCDf8YWjIy0QMXTdwvW+yCVz8BRxIny6mT/fnkyiaq
-         IHsEzQZpn5lfPyjD2x7zZsn+UT0LnSOSblZ2VBETslnWQgBbCG2K2Fow9SchcqTibCZE
-         IrLEOKJiMwkWILX7Eur6LECrfa7IzsVChGigL0MJDmnznSHPY+jUKg1GIJaUQvBnD2tI
-         oa0w==
-X-Gm-Message-State: AO0yUKXRaW6CB17gk/N11aDuGxR6RBg1RmcenY135C460B+WUNkLIiS6
-        i20QK7Hy3KSbRT/4NGcIHGVxyA==
-X-Google-Smtp-Source: AK7set+f5AbP6DO1p1Rfbv0AhFB9vPMBJ9BONhfBuIOjQDgrlQaXszTkx7Bz9W4uMCB6M3CKPbrG9g==
-X-Received: by 2002:a05:600c:3c9c:b0:3dc:d5b:5f6a with SMTP id bg28-20020a05600c3c9c00b003dc0d5b5f6amr6011165wmb.30.1675851361711;
-        Wed, 08 Feb 2023 02:16:01 -0800 (PST)
-Received: from krzk-bin.. ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id t14-20020a05600c198e00b003dc4ecfc4d7sm1496328wmq.29.2023.02.08.02.15.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Feb 2023 02:16:01 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, alsa-devel@alsa-project.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v2 7/7] dt-bindings: remoteproc: qcom,glink-edge: correct label description
-Date:   Wed,  8 Feb 2023 11:15:45 +0100
-Message-Id: <20230208101545.45711-7-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230208101545.45711-1-krzysztof.kozlowski@linaro.org>
-References: <20230208101545.45711-1-krzysztof.kozlowski@linaro.org>
+        Wed, 8 Feb 2023 06:08:07 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99B584483;
+        Wed,  8 Feb 2023 03:08:06 -0800 (PST)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 318Aax8E021576;
+        Wed, 8 Feb 2023 11:07:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=Sb7zAkRR2CPMYF37C7epY1KD9UDtT1p3N6QhMn2OlVk=;
+ b=L8/Y3JLaXR+To0L6ufS/o63EjQFoejIQ0gH5P93mTV4vSwC8ez3l1n7/14ThpKd/BZWU
+ xfYZ8pSUJmkFqeEhAVVo8iIaWRm4FxBNnWGWHxl2dQid5tBzNEG5Za5ix/rWxWUHMClb
+ KmQqlVL+3ADN2L0N5X0MEOrsQaYzAFmu9ipggXEe21hTbzShEe/Aq9oLx2sCFl8mE+dV
+ e7oacoxZnTw45TqRd5SIo1QSkA2cJfmeLS3l2g6YjSF1A1M/V5/ZZKMp7YsXmKYwAoT9
+ Zw/mW0XMPWdOagzY4yvurTBjhls0QbAVtTIh90SXfWpz2lFYTAXspH9h252Seh4i/1O7 yw== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nkgafkvy9-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 08 Feb 2023 11:07:34 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 318B7Xvv015324
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 8 Feb 2023 11:07:33 GMT
+Received: from hu-jinlmao-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Wed, 8 Feb 2023 03:07:32 -0800
+From:   Mao Jinlong <quic_jinlmao@quicinc.com>
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Leo Yan <leo.yan@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>
+CC:     Mao Jinlong <quic_jinlmao@quicinc.com>,
+        <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>
+Subject: [PATCH] coresight: core: Add coresight name support
+Date:   Wed, 8 Feb 2023 03:07:16 -0800
+Message-ID: <20230208110716.18321-1-quic_jinlmao@quicinc.com>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: zCGaZ7m6sdCM-TRSKtyx8TUcQk_y6Jkw
+X-Proofpoint-ORIG-GUID: zCGaZ7m6sdCM-TRSKtyx8TUcQk_y6Jkw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-02-08_04,2023-02-08_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ malwarescore=0 adultscore=0 clxscore=1011 bulkscore=0 spamscore=0
+ mlxlogscore=801 mlxscore=0 priorityscore=1501 suspectscore=0
+ impostorscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2212070000 definitions=main-2302080101
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Correct the description of 'label' property.
+Apart from STM and ETM sources, there will be more sources added to
+coresight components. For example, there are over 10 TPDM sources.
+Add coresight name support for custom names which will be
+easy to identify the source.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
+Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
 ---
+ drivers/hwtracing/coresight/coresight-core.c | 34 +++++++++++---------
+ 1 file changed, 19 insertions(+), 15 deletions(-)
 
-Changes since v1:
-1. None
----
- .../devicetree/bindings/remoteproc/qcom,glink-edge.yaml       | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,glink-edge.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,glink-edge.yaml
-index 8e133ab55ff3..15e6851e1ff8 100644
---- a/Documentation/devicetree/bindings/remoteproc/qcom,glink-edge.yaml
-+++ b/Documentation/devicetree/bindings/remoteproc/qcom,glink-edge.yaml
-@@ -42,7 +42,9 @@ properties:
-     maxItems: 1
+diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/hwtracing/coresight/coresight-core.c
+index d3bf82c0de1d..5e95d9c7f256 100644
+--- a/drivers/hwtracing/coresight/coresight-core.c
++++ b/drivers/hwtracing/coresight/coresight-core.c
+@@ -1733,28 +1733,32 @@ char *coresight_alloc_device_name(struct coresight_dev_list *dict,
+ {
+ 	int idx;
+ 	char *name = NULL;
++	const char *coresight_name = NULL;
+ 	struct fwnode_handle **list;
++	struct device_node *node = dev->of_node;
  
-   label:
--    description: The names of the state bits used for SMP2P output
-+    description:
-+      Name of the edge, used for debugging and identification purposes. The
-+      node name will be used if this is not present.
+ 	mutex_lock(&coresight_mutex);
  
-   mboxes:
-     maxItems: 1
+-	idx = coresight_search_device_idx(dict, dev_fwnode(dev));
+-	if (idx < 0) {
+-		/* Make space for the new entry */
+-		idx = dict->nr_idx;
+-		list = krealloc_array(dict->fwnode_list,
+-				      idx + 1, sizeof(*dict->fwnode_list),
+-				      GFP_KERNEL);
+-		if (ZERO_OR_NULL_PTR(list)) {
+-			idx = -ENOMEM;
+-			goto done;
++	if (!of_property_read_string(node, "coresight-name", &coresight_name))
++		name = devm_kasprintf(dev, GFP_KERNEL, "%s", coresight_name);
++	else {
++		idx = coresight_search_device_idx(dict, dev_fwnode(dev));
++		if (idx < 0) {
++			/* Make space for the new entry */
++			idx = dict->nr_idx;
++			list = krealloc_array(dict->fwnode_list,
++					      idx + 1, sizeof(*dict->fwnode_list),
++					      GFP_KERNEL);
++			if (ZERO_OR_NULL_PTR(list))
++				goto done;
++
++			list[idx] = dev_fwnode(dev);
++			dict->fwnode_list = list;
++			dict->nr_idx = idx + 1;
+ 		}
+ 
+-		list[idx] = dev_fwnode(dev);
+-		dict->fwnode_list = list;
+-		dict->nr_idx = idx + 1;
++		name = devm_kasprintf(dev, GFP_KERNEL, "%s%d", dict->pfx, idx);
+ 	}
+-
+-	name = devm_kasprintf(dev, GFP_KERNEL, "%s%d", dict->pfx, idx);
+ done:
+ 	mutex_unlock(&coresight_mutex);
+ 	return name;
 -- 
-2.34.1
+2.39.0
 
