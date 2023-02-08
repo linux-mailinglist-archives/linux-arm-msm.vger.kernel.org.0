@@ -2,154 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A472E68F415
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 18:14:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D8EF768F640
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 19:00:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230433AbjBHROB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Feb 2023 12:14:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43678 "EHLO
+        id S230335AbjBHSAZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Feb 2023 13:00:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229732AbjBHROA (ORCPT
+        with ESMTP id S229630AbjBHSAY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Feb 2023 12:14:00 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5ED913D52;
-        Wed,  8 Feb 2023 09:13:59 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 7D889B81F02;
-        Wed,  8 Feb 2023 17:13:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22341C433EF;
-        Wed,  8 Feb 2023 17:13:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1675876437;
-        bh=uIn14lKQnE4MQMzWpMduYFj1ngI5uQm7hYWdO129A20=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=RN8YOLUV8gEKc+AyiCT/ftGUAoXNDT0DJ5CuGmHCjLmYz6q2zJx9NqcKNV+F9Q6//
-         XYXRPH8Jf9yxUbCsJCrU0a570yg7EtEfoxiDm0ZwLcxEg4x+1J3Xz/P557zioileje
-         EcSmxfxsZHFuzgVVy5RNrvZe00FE7rK9MHWWi+x461gN1RHEzoCg6QUIBfaOE02h2H
-         ox4gMmAtd5YvB+9JxT6k9vd5Kmoaz7Obj9l4CoGZjF78CPFFwzSH265At2annbgD3u
-         HvaG0ZdKKB1rOxTlagS/AU3vHagQoCDRiaWRYPVjQ4rRJUSe71LnQlTcWQINaSc/+8
-         A/y+n8r+/cUJA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1pPo1h-00068l-QX; Wed, 08 Feb 2023 18:14:33 +0100
-Date:   Wed, 8 Feb 2023 18:14:33 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Wed, 8 Feb 2023 13:00:24 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1C42EF96;
+        Wed,  8 Feb 2023 10:00:23 -0800 (PST)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 318EjhmN004961;
+        Wed, 8 Feb 2023 18:00:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=YgH90xYls+5ogdomkQXAoILbQ22fA82j/oeKiSbJVIQ=;
+ b=SBRSpml5Jc9Y9e7RsXynhjvZfRTMpH2VKWaCd4bG9gReIPruqrvYLZt521vhcPuGchzI
+ XHRQ41Xsvy2LDWLs6orgbSSQd6S4Y3+EuQG3NKJwr1iXsgTh1GtYXQZTs+yPvTno/13x
+ Wx0elHO26mu9b4NnktDLWpJlLlAauN0/hZSATTiqKdzWOkCUSy5ruidisuBsYWUdpoKt
+ IBna+dkjC5SkffdQeDKZgVqXidDSY3DpKNy8L5ZPWniUJ5hJ8E+ufG0B38uq9ecmskYW
+ 54W/m0HJKLLOwoavpLzyphOiQcNFhl0Y13H8d7UhOg7DAibn4LqNAMo81MofRGG/Qsf5 MQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nmb8js0n6-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 08 Feb 2023 18:00:10 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 318I09d5029565
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 8 Feb 2023 18:00:09 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Wed, 8 Feb 2023 10:00:09 -0800
+Date:   Wed, 8 Feb 2023 10:00:07 -0800
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+CC:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        "vkoul@kernel.org" <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v7 10/12] PCI: qcom: Add SM8550 PCIe support
-Message-ID: <Y+PYeRo8X8ugXyoi@hovoldconsulting.com>
-References: <20230203081807.2248625-1-abel.vesa@linaro.org>
- <20230203081807.2248625-11-abel.vesa@linaro.org>
- <Y9zYpE/GnxUqnIyq@hovoldconsulting.com>
- <Y+EYhe/xYSFpI1Yn@linaro.org>
- <Y+PQYxh4t/ytOe3+@hovoldconsulting.com>
- <Y+PXeYrBBL3QaznM@linaro.org>
- <Y+PXrFxobTf/+X+U@linaro.org>
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+Subject: Re: [PATCH 2/4] arm64: dts: qcom: sc8280xp-crd: Introduce pmic_glink
+Message-ID: <20230208180007.GB2397622@hu-bjorande-lv.qualcomm.com>
+References: <20230208034620.2048744-1-quic_bjorande@quicinc.com>
+ <20230208034620.2048744-3-quic_bjorande@quicinc.com>
+ <229edfec-736f-d94d-23ba-2a0649639556@linaro.org>
+ <20230208155720.GA2397622@hu-bjorande-lv.qualcomm.com>
+ <e9b6cdcc-079d-497a-6e8b-c2d69a393597@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <Y+PXrFxobTf/+X+U@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <e9b6cdcc-079d-497a-6e8b-c2d69a393597@linaro.org>
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Mp8R0hDq61p70J6e2ER-9h-AvXeRWIDE
+X-Proofpoint-GUID: Mp8R0hDq61p70J6e2ER-9h-AvXeRWIDE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-02-08_08,2023-02-08_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
+ mlxscore=0 spamscore=0 suspectscore=0 malwarescore=0 lowpriorityscore=0
+ phishscore=0 bulkscore=0 priorityscore=1501 mlxlogscore=765
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302080158
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 08, 2023 at 07:11:08PM +0200, Abel Vesa wrote:
-> On 23-02-08 19:10:17, Abel Vesa wrote:
-> > On 23-02-08 17:40:03, Johan Hovold wrote:
-> > > On Mon, Feb 06, 2023 at 05:11:01PM +0200, Abel Vesa wrote:
-> > > > On 23-02-03 10:49:24, Johan Hovold wrote:
-> > > > > On Fri, Feb 03, 2023 at 10:18:05AM +0200, Abel Vesa wrote:
-> > > > > > Add compatible for both PCIe found on SM8550.
-> > > > > > Also add the cnoc_pcie_sf_axi clock needed by the SM8550.
-> > > > > 
-> > > > > nit: You're now also adding 'noc_aggr'
-> > > > > 
-> > > > > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > > > > > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > > > > > Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-> > > > > > ---
-> > > 
-> > > > > > @@ -182,10 +182,10 @@ struct qcom_pcie_resources_2_3_3 {
-> > > > > >  
-> > > > > >  /* 6 clocks typically, 7 for sm8250 */
-> > > > > >  struct qcom_pcie_resources_2_7_0 {
-> > > > > > -	struct clk_bulk_data clks[12];
-> > > > > > +	struct clk_bulk_data clks[14];
-> > > > > >  	int num_clks;
-> > > > > >  	struct regulator_bulk_data supplies[2];
-> > > > > > -	struct reset_control *pci_reset;
-> > > > > > +	struct reset_control *rst;
-> > > > > 
-> > > > > Please name this one 'reset' or 'resets' (e.g. to avoid hard to parse
-> > > > > things like res->rst below).
-> > > > 
-> > > > Well, it would then be inconsitent with 2_3_3 and 2_9_0, which both use
-> > > > rst.
-> > > 
-> > > Yeah, I saw that. Fortunately these resources are completely
-> > > independent, but whatever.
+On Wed, Feb 08, 2023 at 05:40:44PM +0100, Konrad Dybcio wrote:
+> On 8.02.2023 16:57, Bjorn Andersson wrote:
+> > On Wed, Feb 08, 2023 at 09:14:46AM +0100, Konrad Dybcio wrote:
+> >> On 8.02.2023 04:46, Bjorn Andersson wrote:
+[..]
+> >>>  &usb_0_dwc3 {
+> >>> -	/* TODO: Define USB-C connector properly */
+> >>>  	dr_mode = "host";
+> >>> +
+> >>> +	port {
+> >>> +		usb_0_role_switch: endpoint {
+> >>> +			remote-endpoint = <&pmic_glink_con0_hs>;
+> >>> +		};
+> >> This should be defined in the SoC DTSI, it's a standard dwc3 binding
+> >> with usb HS / SS / SBU ports. Especially since we can feed the endpoint
+> >> from any device now, as pmic-glink should work everywhere.
+> >>
 > > 
-> > Will do it in the next version then.
-
-Or just leave it as is.
-
-> > > > > >  };
-> > > > > >  
-> > > > > >  struct qcom_pcie_resources_2_9_0 {
-> > > > > > @@ -1177,9 +1177,9 @@ static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
-> > > > > >  	unsigned int idx;
-> > > > > >  	int ret;
-> > > > > >  
-> > > > > > -	res->pci_reset = devm_reset_control_get_exclusive(dev, "pci");
-> > > > > > -	if (IS_ERR(res->pci_reset))
-> > > > > > -		return PTR_ERR(res->pci_reset);
-> > > > > > +	res->rst = devm_reset_control_array_get_exclusive(dev);
-> > > > > > +	if (IS_ERR(res->rst))
-> > > > > > +		return PTR_ERR(res->rst);
-> > > > > 
-> > > > > So the reset array implementation apparently both asserts and deasserts
-> > > > > the resets in the order specified in DT (i.e. does not deassert in
-> > > > > reverse order).
-> > > > > 
-> > > > > Is that ok also for the new "pci" and "link_down" resets?
-> > > > 
-> > > > According to the HPG, yes, this is perfectly fine. It specifically says
-> > > > to assert the pcie reset and then continues saying to assert the
-> > > > link_down reset.
-> > > 
-> > > Ok, but that doesn't really say anything about whether it's ok to
-> > > *deassert* them in the same order, which was what I asked about.
+> > The sa8295p/sa8540p boards, derived from sc8280xp does not implement
+> > pmic_glink, so it seems moving this to the soc.dtsi would be messy.
 > > 
-> > Actually, what I wanted to say is that the HPG says something like this:
+> >> Or /omit-if-no-ref/, I suppose.
+> >>
 > > 
-> > "assert pcie reset, then assert link_down"
-> > 
-> > and then at the end it literaly repeats the same phrase.
+> > Or you're saying I should put the skeleton of the port definition in the
+> > soc.dtsi and then fill it out the remote-endpoint here; and mark it
+> > omit-if-no-ref to avoid binding warnings?
+> I thought omit-if-no-ref actually omits the node before resolving phandles
+> that it references, but it seems to not be the case.. Still, we can define
+> the ports in the SoC DTSI and assign endpoints per-device (like we do with
+> DSI for example).
 > 
-> but uses deassert instead of assert ...
 
-Ok, then it seems to match the implementation. Thanks for clarifying.
+You mean move the lines:
 
-Johan
+port {
+	usb_0_role_switch: endpoint {
+	};
+};
+
+to sc8280xp.dtsi and then do:
+
+&usb_0_role_switch {
+	remote-endpoint = <&pmic_glink_con0_hs>;
+};
+
+here?
+
+Regards,
+Bjorn
