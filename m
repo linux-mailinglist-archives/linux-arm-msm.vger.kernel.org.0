@@ -2,119 +2,242 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F80668EEF5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 13:27:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B23768EF35
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 13:41:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229739AbjBHM1l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Feb 2023 07:27:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34376 "EHLO
+        id S230356AbjBHMlj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Feb 2023 07:41:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231143AbjBHM1g (ORCPT
+        with ESMTP id S230351AbjBHMlj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Feb 2023 07:27:36 -0500
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18B0228D2E
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Feb 2023 04:27:35 -0800 (PST)
-Received: by mail-pj1-x1033.google.com with SMTP id n20-20020a17090aab9400b00229ca6a4636so2306505pjq.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Feb 2023 04:27:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=b3pZYKYfkdSQT68SJNCftLQUT8dA3bIPuHLgF4x+0BQ=;
-        b=eq7qxSBzge3b5OUiBBoHYkNnBBuhl1834PkVvMDIKLtdfoKGbdd2ABIFHVDNbdM6P1
-         V4+jZV7yalvVafWmhYJiwYEym70qSx5kSseejBwBkoISzOzgPbosW9+jXXtYApQVd8fT
-         +IAJ2nm4ALaSV7k9KDd2moyrybb5VbRC1ig61kwmrAhhnd2ZgZVPwMD42xIR+l5Nh/wH
-         upHICVogu/Kj8t2Fvuv2+kgiRdHh5GrTHkDALZ1BpR0IpfdfiW28C41QEL0tx9vzu4HR
-         2JsltAWvcXvhOjqx8p2ywxr+hyo+dMdLB/E4RDxN57/RnseiN7Yy2Gm/veOgUA++c8rR
-         YN6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=b3pZYKYfkdSQT68SJNCftLQUT8dA3bIPuHLgF4x+0BQ=;
-        b=z/a1ALSB9pMYbvIhYLc29qN+zFXzENBAqGROvkfarhu5BaGjCNGzUn5U8YZiaXVRRT
-         Ica2oY/1QfYUAFPkPpXIhf9jZFunr3BEchGQYnzAqkGjrRiyQlt6JLa7k6GHJMzPepgV
-         pMSps8UVF2kBlHHOt2Xkcq9vHCL0EQ6ZvZYMGH9zc1e4aKGFeqPxiJXQyOLJ3Z8gumI6
-         6Ci7TtQ+DbwrTBZWu2h4bEipsNAV4q+JYrfU7Z7Ez13czUw17kxh3u63jPK6/zE/nEvq
-         MjDMXb19ZEHc/eAxVtMeKEYyl0OjOgiZuY9++aQl3NQYkOsBER+S7Q+/Fg4K094MP4IP
-         crxQ==
-X-Gm-Message-State: AO0yUKVJDVCpkPiaABfx4ok62vuYaW9n8QEqU1RIHg8qtOnZWVJoJ1h/
-        wBlNN+wFV8RiBFPaxOC7rLvyKkYk1mxuUuDo
-X-Google-Smtp-Source: AK7set/kTlTLW1jcI345R/bAzrSsgmJj8RuFZzJ86G7lKYbVI+rX1YXb68COYhPoZs5wpxzDuntA8g==
-X-Received: by 2002:a17:90b:4a0f:b0:230:d387:8bbb with SMTP id kk15-20020a17090b4a0f00b00230d3878bbbmr8999731pjb.5.1675859254139;
-        Wed, 08 Feb 2023 04:27:34 -0800 (PST)
-Received: from localhost.localdomain ([2402:3a80:4214:7b1c:f777:96cb:1db4:73e6])
-        by smtp.gmail.com with ESMTPSA id r16-20020a638f50000000b004eca54eab50sm9664468pgn.28.2023.02.08.04.27.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Feb 2023 04:27:33 -0800 (PST)
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
-        bhupesh.sharma@linaro.org, robh+dt@kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH v2] arm64: dts: qcom: sm6115: Add geni debug uart node for qup0
-Date:   Wed,  8 Feb 2023 17:57:18 +0530
-Message-Id: <20230208122718.338545-1-bhupesh.sharma@linaro.org>
-X-Mailer: git-send-email 2.38.1
+        Wed, 8 Feb 2023 07:41:39 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D49B748A25;
+        Wed,  8 Feb 2023 04:41:36 -0800 (PST)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 318Bhm9K022985;
+        Wed, 8 Feb 2023 12:41:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=RnyquygMV6RL9lpIAcJihukRnFxLLlbA1AaqdIttOSI=;
+ b=HK7lodvHQQMdqmnJ6U0m/WiAJqzaNePDT9sb3xmx6vmyjggclMyQUbC4V7G8C6pm84jC
+ 78tuSdpmaZPluJ55KDCGrtMeS5eMpIxZC+4LDTTrAE8GXuz0f+09LRxbqotcjReMoT6X
+ uokODdObbYkgb0sbhNRulT6KPwaa96ctVq586l4RqTviItS5cyyeJE+102xKLgGmN/8r
+ b5PFSQ1xL0fF+jgV1t1WOeRYeb7aQWAI6ak5Gaqpt3qN38EHokOX7YiqTk4CFxJHfCSV
+ EPvA7mNhRw+bb7Qpvs3lE05G+GRjz/OnNrL1TU37BmI5kZNghKxIetxHM9dLhQcT7U3W pg== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nkga2v33t-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 08 Feb 2023 12:41:08 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 318Cf7ZQ031847
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 8 Feb 2023 12:41:07 GMT
+Received: from hu-jinlmao-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Wed, 8 Feb 2023 04:41:07 -0800
+From:   Mao Jinlong <quic_jinlmao@quicinc.com>
+To:     Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>
+CC:     Mao Jinlong <quic_jinlmao@quicinc.com>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-arm-kernel@lists.infradead.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        "Tao Zhang" <quic_taozha@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>
+Subject: [PATCH] stm: class: Add MIPI OST protocol support
+Date:   Wed, 8 Feb 2023 04:40:53 -0800
+Message-ID: <20230208124053.18533-1-quic_jinlmao@quicinc.com>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ztnzml8Ig5I07g2-QZzIhZvS9kKwdp-5
+X-Proofpoint-ORIG-GUID: ztnzml8Ig5I07g2-QZzIhZvS9kKwdp-5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-02-08_04,2023-02-08_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
+ priorityscore=1501 lowpriorityscore=0 impostorscore=0 malwarescore=0
+ adultscore=0 mlxlogscore=999 clxscore=1011 suspectscore=0 mlxscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302080113
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-qup0 on sm6115 / sm4250 has 6 SEs, with SE4 as debug uart.
-Add the debug uart node in sm6115 dtsi file.
+Add MIPI OST protocol support for stm to format the traces.
+Framework copied from drivers/hwtracing/stm.p-sys-t.c as of
+commit d69d5e83110f ("stm class: Add MIPI SyS-T protocol
+support").
 
-Cc: Bjorn Andersson <andersson@kernel.org>
-Cc: Rob Herring <robh+dt@kernel.org>
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Signed-off-by: Tingwei Zhang <quic_tingweiz@quicinc.com>
+Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
 ---
- Changes since v1:
-  - v1 can be viewed here: https://lore.kernel.org/linux-arm-msm/20221128171215.1768745-1-bhupesh.sharma@linaro.org/
-  - Addressed Konrad's review comments on v1.
-  - Rebased againt latest linux-next/master which now has the 'qupv3_id_0' node
-    already in the dtsi file, so just add the debug uart node in v2.
+ drivers/hwtracing/stm/Kconfig  | 14 +++++
+ drivers/hwtracing/stm/Makefile |  2 +
+ drivers/hwtracing/stm/p_ost.c  | 95 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 111 insertions(+)
+ create mode 100644 drivers/hwtracing/stm/p_ost.c
 
- arch/arm64/boot/dts/qcom/sm6115.dtsi | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-index 50cb8a82ecd5..3eccfb8c16ce 100644
---- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-@@ -963,6 +963,15 @@ spi4: spi@4a90000 {
- 				status = "disabled";
- 			};
+diff --git a/drivers/hwtracing/stm/Kconfig b/drivers/hwtracing/stm/Kconfig
+index aad594fe79cc..0b52901125f7 100644
+--- a/drivers/hwtracing/stm/Kconfig
++++ b/drivers/hwtracing/stm/Kconfig
+@@ -41,6 +41,20 @@ config STM_PROTO_SYS_T
  
-+			uart4: serial@4a90000 {
-+				compatible = "qcom,geni-debug-uart";
-+				reg = <0x04a90000 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP0_S4_CLK>;
-+				interrupts = <GIC_SPI 331 IRQ_TYPE_LEVEL_HIGH>;
-+				status = "disabled";
-+			};
+ 	  If you don't know what this is, say N.
+ 
++config STM_PROTO_OST
++	tristate "MIPI OST STM framing protocol driver"
++	default CONFIG_STM
++	help
++	  This is an implementation of MIPI OST protocol to be used
++	  over the STP transport. In addition to the data payload, it
++	  also carries additional metadata for entity, better
++	  means of trace source identification, etc.
 +
- 			i2c5: i2c@4a94000 {
- 				compatible = "qcom,geni-i2c";
- 				reg = <0x04a94000 0x4000>;
-@@ -992,7 +1001,6 @@ spi5: spi@4a94000 {
- 				dma-names = "tx", "rx";
- 				#address-cells = <1>;
- 				#size-cells = <0>;
--				status = "disabled";
- 			};
- 		};
++	  The receiving side must be able to decode this protocol in
++	  addition to the MIPI STP, in order to extract the data.
++
++	  If you don't know what this is, say N.
++
+ config STM_DUMMY
+ 	tristate "Dummy STM driver"
+ 	help
+diff --git a/drivers/hwtracing/stm/Makefile b/drivers/hwtracing/stm/Makefile
+index 1692fcd29277..715fc721891e 100644
+--- a/drivers/hwtracing/stm/Makefile
++++ b/drivers/hwtracing/stm/Makefile
+@@ -5,9 +5,11 @@ stm_core-y		:= core.o policy.o
  
+ obj-$(CONFIG_STM_PROTO_BASIC) += stm_p_basic.o
+ obj-$(CONFIG_STM_PROTO_SYS_T) += stm_p_sys-t.o
++obj-$(CONFIG_STM_PROTO_OST) += stm_p_ost.o
+ 
+ stm_p_basic-y		:= p_basic.o
+ stm_p_sys-t-y		:= p_sys-t.o
++stm_p_ost-y		:= p_ost.o
+ 
+ obj-$(CONFIG_STM_DUMMY)	+= dummy_stm.o
+ 
+diff --git a/drivers/hwtracing/stm/p_ost.c b/drivers/hwtracing/stm/p_ost.c
+new file mode 100644
+index 000000000000..2ca1a3fda57f
+--- /dev/null
++++ b/drivers/hwtracing/stm/p_ost.c
+@@ -0,0 +1,95 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * Copied from drivers/hwtracing/stm.p-sys-t.c as of commit d69d5e83110f
++ * ("stm class: Add MIPI SyS-T protocol support").
++ *
++ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) 2020 The Linux Foundation. All rights reserved.
++ * Copyright (c) 2018, Intel Corporation.
++ *
++ * MIPI OST framing protocol for STM devices.
++ */
++
++#include <linux/configfs.h>
++#include <linux/module.h>
++#include <linux/device.h>
++#include <linux/slab.h>
++#include <linux/stm.h>
++#include <linux/sched/clock.h>
++#include "stm.h"
++
++#define OST_TOKEN_STARTSIMPLE		(0x10)
++#define OST_VERSION_MIPI1		(0x10 << 8)
++#define OST_ENTITY_FTRACE		(0x01 << 16)
++#define OST_CONTROL_PROTOCOL		(0x0 << 24)
++
++#define DATA_HEADER (OST_TOKEN_STARTSIMPLE | OST_VERSION_MIPI1 | \
++			OST_ENTITY_FTRACE | OST_CONTROL_PROTOCOL)
++
++#define STM_MAKE_VERSION(ma, mi)	((ma << 8) | mi)
++#define STM_HEADER_MAGIC		(0x5953)
++
++static ssize_t notrace ost_write(struct stm_data *data,
++		struct stm_output *output, unsigned int chan,
++		const char *buf, size_t count)
++{
++	unsigned int c = output->channel + chan;
++	unsigned int m = output->master;
++	const unsigned char nil = 0;
++	u32 header = DATA_HEADER;
++	u8 trc_hdr[24];
++	ssize_t sz;
++
++	/*
++	 * STP framing rules for OST frames:
++	 *   * the first packet of the OST frame is marked;
++	 *   * the last packet is a FLAG.
++	 */
++	/* Message layout: HEADER / DATA / TAIL */
++	/* HEADER */
++
++	sz = data->packet(data, m, c, STP_PACKET_DATA, STP_PACKET_MARKED,
++			  4, (u8 *)&header);
++	if (sz <= 0)
++		return sz;
++	*(uint16_t *)(trc_hdr) = STM_MAKE_VERSION(0, 3);
++	*(uint16_t *)(trc_hdr + 2) = STM_HEADER_MAGIC;
++	*(uint32_t *)(trc_hdr + 4) = raw_smp_processor_id();
++	*(uint64_t *)(trc_hdr + 8) = sched_clock();
++	*(uint64_t *)(trc_hdr + 16) = task_tgid_nr(get_current());
++	sz = stm_data_write(data, m, c, false, trc_hdr, sizeof(trc_hdr));
++	if (sz <= 0)
++		return sz;
++
++	/* DATA */
++	sz = stm_data_write(data, m, c, false, buf, count);
++
++	/* TAIL */
++	if (sz > 0)
++		data->packet(data, m, c, STP_PACKET_FLAG,
++			STP_PACKET_TIMESTAMPED, 0, &nil);
++
++	return sz;
++}
++
++static const struct stm_protocol_driver ost_pdrv = {
++	.owner			= THIS_MODULE,
++	.name			= "p_ost",
++	.write			= ost_write,
++};
++
++static int ost_stm_init(void)
++{
++	return stm_register_protocol(&ost_pdrv);
++}
++
++static void ost_stm_exit(void)
++{
++	stm_unregister_protocol(&ost_pdrv);
++}
++
++module_init(ost_stm_init);
++module_exit(ost_stm_exit);
++
++MODULE_LICENSE("GPL");
++MODULE_DESCRIPTION("MIPI Open System Trace STM framing protocol driver");
 -- 
-2.38.1
+2.39.0
 
