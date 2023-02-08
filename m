@@ -2,116 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5AC5F68EC3F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 11:02:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B156C68EC7E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 11:15:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229755AbjBHKCP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Feb 2023 05:02:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46386 "EHLO
+        id S230242AbjBHKP4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Feb 2023 05:15:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231309AbjBHKCH (ORCPT
+        with ESMTP id S229517AbjBHKPw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Feb 2023 05:02:07 -0500
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3BDD21A02
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Feb 2023 02:02:05 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id m2so49878851ejb.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Feb 2023 02:02:05 -0800 (PST)
+        Wed, 8 Feb 2023 05:15:52 -0500
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4585F38002
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Feb 2023 02:15:51 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id az4-20020a05600c600400b003dff767a1f1so1063013wmb.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Feb 2023 02:15:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6iRFBlMEYvn5uCQ8+IbFT1rdcbrh/NWARIU6RnFdQ5s=;
-        b=BSlroPySQeG7GYEfe3SCe0SLI7y48GoYASx9xINHtFhxUDhnZl+IT+5JlvLjCG+mnZ
-         YxJbj1t/Mpher2GxrNuFFIqE+Kksnp8UYbUbMxkbG1Dcw1Bgp4Edwq9Ix7RgTuCXUpOv
-         esetcY7aaExA3NI8CLZVaAiK8sYNtuJlVQ4WwaHPeas6N0RHWbwi+6qbr8YtnHsGDd/H
-         QTrAq5kBBTQl+TwDbR38gHmmT5qZ1hSwVD8SvcPdfgIWCfBoeFd8EIdvnVGUM+a7dXgf
-         wYR723k/97z0+CG9TD6sZRzxuXAhZh1PT4HLGEPlRbPrhHhD0lAlBeIQqoAasx0k3sHI
-         sEdA==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=eU6t5S19qfP9S/338lMbvl6syTeQ25IZRs/UFhzDsMA=;
+        b=xAgJOQTtwNrVJrNTfT5OsEjumUulgPcqd+hkTlkBCkq9Q+8fyumZqYT004/fo9KeZh
+         4eES/ylqvkP/Qmcw06wqlaSFqo1tUgkzzuLQYBPy2zokiaeNOfH3p9ecuGTWTfpLUQtd
+         imQJCyYsIi1gQCM+J7YBsfjFFZpMPPlvIMCaKL+p3SKujBtA0TW6b4qR9awJM97r6vcB
+         BFE8gtZz9Dripy1Y0sNQvMrC+v+j5f0KmnBbibWGDUV0YBtfpm+LvEtpk8XlaAZvmqe2
+         QDTdxqjvhDWl0wH1djTencI1QckLv7cmcUVLDl8VTk8hdO1QabwL2IefQ77N1sRL8SjI
+         l5Dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6iRFBlMEYvn5uCQ8+IbFT1rdcbrh/NWARIU6RnFdQ5s=;
-        b=gwoT/fkKZyDNyLq72PSjIl6mJf8Qc0ZuDShGLmurp3xQ7XJLpip80QVPEqs+CzvpUP
-         9F+GkuS1OuQ7JL9lv+cTM6bg88R9JygeKEqphP5w7csLcNhzhsUVAp7CD0uapraFqDBM
-         rQLdjgOaFEI7HJHolE+auJqCFl6n9WX+kloL6UBO1yP/ZIi8YtzgV5Emj50m41Qd0eWp
-         D7NeF/kdnchfhR8tist+jOqQuR08OUAMagrbFWRUUYbUFL3pEYbgPYoNZ/fCx4VPDeUG
-         cOJZ7yIXERWaMaa+aRPu7bV/sBXTSRgQgkK4Mb4roRbB8ZrJJpqVSnbT9PxicMTno+2a
-         4yvg==
-X-Gm-Message-State: AO0yUKXobdXxA+8xmCzpu3gDBdMzb3rFgHCYuS6WWQjje4jCIeWBwEZx
-        p7T5X7mdligo/YZNJK8rF3x68Q==
-X-Google-Smtp-Source: AK7set8U8P6nxSEV42tswzNmkWxQyomyKQu0bmz1W7EOI0sNg/vcwnW8tQ+WE4j70GLHCfm4Rc8oAg==
-X-Received: by 2002:a17:906:ca0f:b0:8a6:93a4:c897 with SMTP id jt15-20020a170906ca0f00b008a693a4c897mr7376883ejb.33.1675850524242;
-        Wed, 08 Feb 2023 02:02:04 -0800 (PST)
-Received: from [192.168.1.101] (abxh117.neoplus.adsl.tpnet.pl. [83.9.1.117])
-        by smtp.gmail.com with ESMTPSA id j21-20020a17090686d500b008a9e37ca37fsm1924423ejy.166.2023.02.08.02.02.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Feb 2023 02:02:03 -0800 (PST)
-Message-ID: <5d6c0f50-da59-8f4f-a04f-d24e3c0c2992@linaro.org>
-Date:   Wed, 8 Feb 2023 11:02:02 +0100
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eU6t5S19qfP9S/338lMbvl6syTeQ25IZRs/UFhzDsMA=;
+        b=CAvR1Yy8L042PUpxJWP1tTXl9LvzHDCQHYS1t75pavw4taHUZw61s2ouhMf3oX9RY7
+         5euUDB8ER8XZtTMG8llPezDAlQvucxFBtVwga1e6iE214Z9IxK/zSrfqVlblBVDcJU+F
+         v7r/Ufg/1xNqWfIr8la1YoRoM2HjqVYKyHL0TvcwHSLqNAvJFlc/5nM6wyOfzks+dyS7
+         adQ5ChCjCJcr8OOCzKKg6M7/6bk1cDcgm+rEgCOX0JjYDJQJd6qioEBP1eDJDaRb4OsM
+         Ib/MitlDBqcnhEx4KvXKhKLbRN6y8STssaqHS5kad79NitH4eYqCFWhmy/4F7DUFHI41
+         5p8g==
+X-Gm-Message-State: AO0yUKWtiuPUQzMV1wfeMrwu7xWGSo4jnL8XSDQbIgeI6+X71Cx7HHEw
+        HKkSGci5wC3NogLtSzjTgEr8PQ==
+X-Google-Smtp-Source: AK7set+3SMFP2OpvNgvLeXy7mER86UTqQJAVe/mbVxWgJzDl3CcIVKEZEMzUr63nz3N38oChbUWJ2w==
+X-Received: by 2002:a05:600c:230f:b0:3da:f665:5b66 with SMTP id 15-20020a05600c230f00b003daf6655b66mr8239345wmo.6.1675851349867;
+        Wed, 08 Feb 2023 02:15:49 -0800 (PST)
+Received: from krzk-bin.. ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id t14-20020a05600c198e00b003dc4ecfc4d7sm1496328wmq.29.2023.02.08.02.15.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Feb 2023 02:15:49 -0800 (PST)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, alsa-devel@alsa-project.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 1/7] arm64: dts: qcom: ipq6018: align RPM G-Link node with bindings
+Date:   Wed,  8 Feb 2023 11:15:39 +0100
+Message-Id: <20230208101545.45711-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH] mfd: qcom_rpm: use
- devm_platform_get_and_ioremap_resource()
-Content-Language: en-US
-To:     ye.xingchen@zte.com.cn, lee@kernel.org
-Cc:     agross@kernel.org, andersson@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <202302081734511884545@zte.com.cn>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <202302081734511884545@zte.com.cn>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Bindings expect (and most of DTS use) the RPM G-Link node name to be
+"rpm-requests".
 
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-On 8.02.2023 10:34, ye.xingchen@zte.com.cn wrote:
-> From: Ye Xingchen <ye.xingchen@zte.com.cn>
-> 
-> Convert platform_get_resource(), devm_ioremap_resource() to a single
-> call to devm_platform_get_and_ioremap_resource(), as this is exactly
-> what this function does.
-> 
-> Signed-off-by: Ye Xingchen <ye.xingchen@zte.com.cn>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
 
-Konrad
->  drivers/mfd/qcom_rpm.c | 4 +---
->  1 file changed, 1 insertion(+), 3 deletions(-)
-> 
-> diff --git a/drivers/mfd/qcom_rpm.c b/drivers/mfd/qcom_rpm.c
-> index 8fea0e511550..086611322874 100644
-> --- a/drivers/mfd/qcom_rpm.c
-> +++ b/drivers/mfd/qcom_rpm.c
-> @@ -530,7 +530,6 @@ static int qcom_rpm_probe(struct platform_device *pdev)
->  {
->  	const struct of_device_id *match;
->  	struct device_node *syscon_np;
-> -	struct resource *res;
->  	struct qcom_rpm *rpm;
->  	u32 fw_version[3];
->  	int irq_wakeup;
-> @@ -576,8 +575,7 @@ static int qcom_rpm_probe(struct platform_device *pdev)
->  		return -ENODEV;
->  	rpm->data = match->data;
-> 
-> -	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> -	rpm->status_regs = devm_ioremap_resource(&pdev->dev, res);
-> +	rpm->status_regs = devm_platform_get_and_ioremap_resource(pdev, 0, NULL);
->  	if (IS_ERR(rpm->status_regs))
->  		return PTR_ERR(rpm->status_regs);
->  	rpm->ctrl_regs = rpm->status_regs + 0x400;
+Changes since v1:
+1. Add Rb tag.
+---
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+index d32c9b2515ee..bbd94025ff5d 100644
+--- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+@@ -176,7 +176,7 @@ rpm-glink {
+ 		qcom,rpm-msg-ram = <&rpm_msg_ram>;
+ 		mboxes = <&apcs_glb 0>;
+ 
+-		rpm_requests: glink-channel {
++		rpm_requests: rpm-requests {
+ 			compatible = "qcom,rpm-ipq6018";
+ 			qcom,glink-channels = "rpm_requests";
+ 
+-- 
+2.34.1
+
