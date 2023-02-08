@@ -2,139 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A4F9468EA84
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 10:08:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BFCF268EAC7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 10:15:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230353AbjBHJI0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Feb 2023 04:08:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54162 "EHLO
+        id S231312AbjBHJPj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Feb 2023 04:15:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230393AbjBHJI0 (ORCPT
+        with ESMTP id S231565AbjBHJPJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Feb 2023 04:08:26 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C42F823C6B
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Feb 2023 01:08:23 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id j32-20020a05600c1c2000b003dc4fd6e61dso902773wms.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Feb 2023 01:08:23 -0800 (PST)
+        Wed, 8 Feb 2023 04:15:09 -0500
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91BF8298E3
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Feb 2023 01:13:48 -0800 (PST)
+Received: by mail-ej1-x62e.google.com with SMTP id ml19so49742566ejb.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Feb 2023 01:13:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=kg1370fRBchS4WrEOTujrg8ris+XQj/VhMGMuCTcwW8=;
-        b=pPQG+jDQYHZ95sDMn/BcNeoc1ETpv/ZRHt41VzKrZwWvI7hBAjuNkrDzXiVbLRKKbs
-         QXM8f4KBh/HZ3ORPNHXykrU7c/Jo3l6294t/5no1dy8N03B4KT/IS2HbstiPnx8fQbco
-         cT+KPaRIVbz1963QZz+ySyXNwiS2edQnbDe4WrL7RU5ryGTlYMVrzTt8qKOwnSOIOiJS
-         2Ui68DXdPUxstsPIxnvbMRq9vWJAA7cg66/tbuRs2qpQ0mJma5FCCtaD1gM8YvxyH1uX
-         k/hsjyeYowvvXbX613hBICmfcCU5ChtGkwOUV6ZaArv7AWzDBFpGMIL1W8ASg6MEuWdF
-         b+Fg==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ESZ5sYzsSuLis2Ic+bLQcSGEAiegZhd+ptLkHkRxs1U=;
+        b=hH1AZHKBPbBOCA2o8mvrJbRyZt63UxlvnIaKHB56Ek5LyyvH1a7vwK+wfSpkWVmO86
+         ER8wk0XPAQbIEIIQFj/AoEpVsmZJlmK5pVhiJNvKRb5NWXOkL2nNxTPkGWpiRufzNTeQ
+         SsNQEWwUDjGphTbgBKuAp2cqeigKims8/6bi3F+oT8ohhIUeJNMR23Segmazw0OFEXIZ
+         KWCZALUxiZ3GSa3V1fobGylBRcwN8z7WHlhqzxVzMmwY10ltT5f7GQmR9gZWdRnw7zH6
+         gqLSf2HZFOoSbHdIY+fRMBPFFshkR42Z3dikkJSbd4d+oCU0WF3SthkzVm86QH9TLrtC
+         P4UQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=kg1370fRBchS4WrEOTujrg8ris+XQj/VhMGMuCTcwW8=;
-        b=l029Dhln03VP4i9HtmTebvD42SB9VV+s3Gjf8lp71YNUQXPj3P2DfRc/dRh6rBJmoC
-         mBsRGgbTMcM/D76foWIIenU90YaYgzdykEYUxNg1Qx5aJDS+XpdQjd5XIVBk83Ss8y8j
-         ABxUnPVNdURr9W6K5KyQMxWSjv7KvIjv8Z36ucG9NGlQIJQhvT66oXews/QIzRxgmvaQ
-         bO96TJSJxpDdX7qvWJD60dJmJVy5k/MwbP8iXzUdpTDjhnbmn1abKXIWYddd2pq6GIQa
-         i/MgKyS1uIVylilcLwsdJemJV09iWyMzu1w0iKfLjpE6or28R6Y2z6syY9NDy6VHDw69
-         1dcA==
-X-Gm-Message-State: AO0yUKXqlSRJAjXE5hm2Co4qUK5tSZp63Sz2HWzyqQqIEKJIq8r/aOXG
-        PNHccpi72fDU99qyK3csei1n7Q==
-X-Google-Smtp-Source: AK7set+AYnvRmL1dv14cgDGjUaKdaMYNStm6sTBm7TRXSEltSyQkAfWzIzwnarIGtooSsIpK3r9j1w==
-X-Received: by 2002:a05:600c:601a:b0:3dc:42e7:f626 with SMTP id az26-20020a05600c601a00b003dc42e7f626mr5851274wmb.26.1675847302371;
-        Wed, 08 Feb 2023 01:08:22 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:fea4:bc29:4ea9:97a? ([2a01:e0a:982:cbb0:fea4:bc29:4ea9:97a])
-        by smtp.gmail.com with ESMTPSA id j14-20020a05600c190e00b003dcc82ce53fsm1317774wmq.38.2023.02.08.01.08.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Feb 2023 01:08:21 -0800 (PST)
-Message-ID: <0f16d63f-3bb0-54aa-bcb4-4c666d4b2846@linaro.org>
-Date:   Wed, 8 Feb 2023 10:08:20 +0100
+        bh=ESZ5sYzsSuLis2Ic+bLQcSGEAiegZhd+ptLkHkRxs1U=;
+        b=W7coXAjFP9CQ+/E63ue+lpUV/w7qOQZx0wbxIGQqOzaVSZiIBw/gPTq4bEx1W343zS
+         h2/EED3BlFI7H90xmN2sohuiuBklNbX6xLZUklAPjqmb2vYJBjRl4po+W+1sxCrWbCkZ
+         XtnOyXDkdzh+4ngxHtglNhAweIRbE4sxkAhoojr/UdMICU/hglNrxRxgmHdSmGehcMlh
+         QZbKLrYVvZ/GcDDsEp6p4wet258vkUyimiPFkMV+aA6RrkQQA2N/ClQ37cGTvYGlod+3
+         teu/xJl/smcveXVs8okV63ZRk0IXiX4HM48pp7Dx6N8NEDw8w/oQd8yl2c49gSfMh7t1
+         iC4g==
+X-Gm-Message-State: AO0yUKWf6IBrShs0XrTqH5PAHo/TyXPvmsS0w+ilbnQzahSWrviGmV4e
+        on7ZRV3y1K/Vf87/T4nQZXr3Iz3rgoXF0s7d
+X-Google-Smtp-Source: AK7set+Q66uCA4UPwZ/J3zciYGLWd4HvH8H8WemPPYittLZMS9RJdcHxrPpe2v9q5udwiSn/Jl7dGQ==
+X-Received: by 2002:a17:907:3f93:b0:8ae:b083:6ceb with SMTP id hr19-20020a1709073f9300b008aeb0836cebmr1041263ejc.72.1675847624560;
+        Wed, 08 Feb 2023 01:13:44 -0800 (PST)
+Received: from localhost.localdomain (abxh117.neoplus.adsl.tpnet.pl. [83.9.1.117])
+        by smtp.gmail.com with ESMTPSA id z2-20020a1709064e0200b00887a23bab85sm7987279eju.220.2023.02.08.01.13.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Feb 2023 01:13:44 -0800 (PST)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     marijn.suijten@somainline.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH v6 00/10] SM6(11|12|37)5 GPUCC
+Date:   Wed,  8 Feb 2023 10:13:30 +0100
+Message-Id: <20230208091340.124641-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-From:   neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH] dt-bindings: dma: qcom,bam-dma: add optional memory
- interconnect properties
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230207-topic-sm8550-upstream-bam-dma-bindings-fix-v1-1-57dba71e8727@linaro.org>
- <a188a52e-6327-f0ea-a54e-a23b88bca82f@linaro.org>
- <a8112f61-f8d3-c1e0-9549-a9036a7e7894@linaro.org>
- <88c31e71-55b6-a20d-1fcf-07804eace54b@linaro.org>
- <eda179e1-4cd1-0d1b-4e27-2fe92e959cf2@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <eda179e1-4cd1-0d1b-4e27-2fe92e959cf2@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/02/2023 10:03, Krzysztof Kozlowski wrote:
-> On 07/02/2023 16:27, Dmitry Baryshkov wrote:
->> On 07/02/2023 15:35, Neil Armstrong wrote:
->>> On 07/02/2023 11:32, Dmitry Baryshkov wrote:
->>>> On 07/02/2023 12:03, Neil Armstrong wrote:
->>>>> Recents SoCs like the SM8450 or SM8550 requires memory interconnect
->>>>> in order to have functional DMA.
->>>>>
->>>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->>>>> ---
->>>>>    Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml | 6 ++++++
->>>>>    1 file changed, 6 insertions(+)
->>>>
->>>> I suspect this will not work without a change for a driver.
->>>>
->>>
->>> I had the impression single interconnect entries would be taken in account
->>> by the platform core, but it doesn't seem to be the case, anyway I can;t
->>> find
->>> any code doing that.
->>
->> Probably you mixed interconnects and power-domains here.
->>
-> 
-> The driver change was submitted some time ago:
-> https://lore.kernel.org/all/20210505213731.538612-10-bhupesh.sharma@linaro.org/
-> 
-> There is already DTS user of it and we expect driver to be resubmitted
-> at some point.
-> 
-> What I don't really get is that crypto driver sets bandwidth for
-> interconnects, not the BAM. Why BAM needs interconnect? Usually you do
-> not need to initialize some middle paths. Getting the final interconnect
-> path (e.g. crypto-memory) is enough, because it includes everything in
-> between.
+This series brings GPUCC support and the correlated bindings for
+three midrange SoCs, all of which host a GMU-less A6xx GPU.
 
-Indeed the interconnect on BAM may be redundant since QCE sets the BW,
-I'll investigate to understand if it's also necessary on BAM.
+v6 includes bitfield.h for arm32 builds and fixes the kconfig display name (6115 != 6125, heh) in [10/10]
 
-Neil
+v5: https://lore.kernel.org/linux-arm-msm/20230201183626.351211-1-konrad.dybcio@linaro.org/
 
-> 
-> Maybe my review tag was a bit premature...
-> 
-> Best regards,
-> Krzysztof
-> 
+v5 fixes some issues pointed out by Dmitry and picks up tags
+
+v4: https://lore.kernel.org/linux-arm-msm/20230130235926.2419776-1-konrad.dybcio@linaro.org/
+
+v4 only brings a tiny bindings amend to [7/8].. I thought I could
+fix it without running dt_binding_check but oh was I humbled again..
+
+v3: https://lore.kernel.org/linux-arm-msm/20230130153252.2310882-1-konrad.dybcio@linaro.org/T/#t
+
+Konrad Dybcio (10):
+  clk: qcom: branch: Add helper functions for setting retain bits
+  clk: qcom: branch: Add helper functions for setting SLEEP/WAKE bits
+  clk: qcom: branch: Move CBCR bits definitions to the header file
+  clk: qcom: branch: Clean up branch enable registers
+  dt-bindings: clock: Add Qcom SM6125 GPUCC
+  clk: qcom: Add GPU clock controller driver for SM6125
+  dt-bindings: clock: Add Qcom SM6375 GPUCC
+  clk: qcom: Add GPU clock controller driver for SM6375
+  dt-bindings: clock: Add Qcom SM6115 GPUCC
+  clk: qcom: Add GPU clock controller driver for SM6115
+
+ .../bindings/clock/qcom,sm6115-gpucc.yaml     |  58 ++
+ .../bindings/clock/qcom,sm6125-gpucc.yaml     |  64 +++
+ .../bindings/clock/qcom,sm6375-gpucc.yaml     |  60 +++
+ drivers/clk/qcom/Kconfig                      |  27 +
+ drivers/clk/qcom/Makefile                     |   3 +
+ drivers/clk/qcom/clk-branch.c                 |  15 +-
+ drivers/clk/qcom/clk-branch.h                 |  44 ++
+ drivers/clk/qcom/gpucc-sm6115.c               | 503 ++++++++++++++++++
+ drivers/clk/qcom/gpucc-sm6125.c               | 424 +++++++++++++++
+ drivers/clk/qcom/gpucc-sm6375.c               | 469 ++++++++++++++++
+ include/dt-bindings/clock/qcom,sm6115-gpucc.h |  36 ++
+ include/dt-bindings/clock/qcom,sm6125-gpucc.h |  31 ++
+ include/dt-bindings/clock/qcom,sm6375-gpucc.h |  36 ++
+ 13 files changed, 1760 insertions(+), 10 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm6115-gpucc.yaml
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm6125-gpucc.yaml
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm6375-gpucc.yaml
+ create mode 100644 drivers/clk/qcom/gpucc-sm6115.c
+ create mode 100644 drivers/clk/qcom/gpucc-sm6125.c
+ create mode 100644 drivers/clk/qcom/gpucc-sm6375.c
+ create mode 100644 include/dt-bindings/clock/qcom,sm6115-gpucc.h
+ create mode 100644 include/dt-bindings/clock/qcom,sm6125-gpucc.h
+ create mode 100644 include/dt-bindings/clock/qcom,sm6375-gpucc.h
+
+-- 
+2.39.1
 
