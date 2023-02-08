@@ -2,130 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F94168EAE1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 10:16:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3925868EAF2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 10:16:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231441AbjBHJQT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Feb 2023 04:16:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34064 "EHLO
+        id S231478AbjBHJQw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Feb 2023 04:16:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231265AbjBHJPi (ORCPT
+        with ESMTP id S231430AbjBHJQI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Feb 2023 04:15:38 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47DE346157
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Feb 2023 01:14:08 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id q8so12836068wmo.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Feb 2023 01:14:08 -0800 (PST)
+        Wed, 8 Feb 2023 04:16:08 -0500
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB67F36FCF
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Feb 2023 01:14:28 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id j25so12503682wrc.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Feb 2023 01:14:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q76atrdN5lNwUwTtNAyAzZW0HpZ1rC669DXhgQBSxwI=;
-        b=RosM4Al94Jk84W6iyIuxHUm7Wd5ahYanI2QOHuYq+G2pGhsHsw6v7ZtzN+Gg8kO/1R
-         +OGT8RB0/mpQIIY4m2ez1shWnrkVbuyHv7guAtKG/HbKn2Lf/BKeVEumLXxmOPzUkUCU
-         l+OBNdQ8SljpOvhioGBlQaORWe5BfSljLT0vcVHyu1t8kjWyiUfv3J5X4YYj5oyQLXZd
-         KzRZyAGnZN04IKgWwnYxCNM4sU3Q2mpRUih1TptD0BinJ/9JiyGPcMLCW2gLHFHZeSds
-         yUbwQIs/rMBNt9biGpAVSY+Hsdxt9mDNXFGRfixe9u73dCefdMoug8R1AKbz+zJkpyV7
-         Fwcw==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=LyYzirLtdl5bQvkAtHWV4AUpLzLISEB7q8alQocWH0M=;
+        b=Age1qi/MrnoOSTVBuTseOWxpqJ4SJ1AEIXVNba85paHhHXxng8wBAS+9c9Do9HIail
+         JfZ3vBZxSt2Ta2by6pbHVJM1TcclWhvjVPRK2MmSn9OPc44PLExVTKEtZ/n05D2Ro5oA
+         mGczTfMN06lyP2Xc8/h/Dh/Ktl9KXjuivUSKwZNnQq2FEpuihvKw2dFpLsJlslpyYf7j
+         Ca6HmNu3oyMHKH+MLEhMWa2bZayMdDrJY0KfIVyTTAU3hAQHuH8yBoMk/j0uhXgH8vX6
+         VEwVe6lf7OB9i8EX7UuVUIJNAzwkrKdLgwv+0IdsSb2FqbuSkbFW9pkqepwXKsjnrVBc
+         bqcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Q76atrdN5lNwUwTtNAyAzZW0HpZ1rC669DXhgQBSxwI=;
-        b=6foDSuPecRz1Dxnuy00iIxFDD5EhgYxlsopdCOsG1n8kkPFLFrmD05d0QNAUxd42nh
-         SgmouRVgXHLfyvjyBPOXXeqT68Zg/b8egIxYGX7e/9IWcuaQ1DUYhIlv+dSECmE+UEft
-         gbwR7lfFYACTGb//6N4DrqsJXJUw17CpGRouk746SAJ21CqVup8v2ZA4JAwKdB34hziD
-         tNcbWlYl8f2rp79ZSasf93AO7RwOouKngqwdUXlS71pwSHWmMt2qdx8wW4JlBbVlfuQS
-         fQoic49zcuQealw5LZOcNNNPiHq57JJgrOcEDFS5iVpnIu5RQes7fDfYTvG3V117kfUD
-         vHGg==
-X-Gm-Message-State: AO0yUKUZu0f/+a9OSXZJaT3N/+FXvIKNwNmQq9Phmi0ZVNse0glYQ7bm
-        ouslMYJRS/cFt0YpQhtHkk5vTQ==
-X-Google-Smtp-Source: AK7set8+Y1xlrHgX7u++XnrCn/m0vu/iF9trmAFnUp+17Ry1FRzvYrHj5dkZ+bTIjkLApx9XWAoLkA==
-X-Received: by 2002:a05:600c:319d:b0:3dc:5950:b358 with SMTP id s29-20020a05600c319d00b003dc5950b358mr6431731wmp.14.1675847639714;
-        Wed, 08 Feb 2023 01:13:59 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id f24-20020a05600c491800b003df245cd853sm1213939wmp.44.2023.02.08.01.13.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Feb 2023 01:13:59 -0800 (PST)
-From:   neil.armstrong@linaro.org
-Date:   Wed, 08 Feb 2023 10:13:58 +0100
-Subject: [PATCH v3] dt-bindings: arm-smmu: Add compatible for SM8550 SoC
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=LyYzirLtdl5bQvkAtHWV4AUpLzLISEB7q8alQocWH0M=;
+        b=BwnP3uwTPC5FDB0AMtzlG2XLtqdJ9xcLA3Fd/q0ZnCqRrC8wG56Yep3DwTGnw1Nsgt
+         f8wjpjXSLBCljCmVPhTOcMgxImtysvX9Bs9fiG03gZvpdx6AzZO2XUcalVC2jDOscF/m
+         apLudsQf8br/v5V0ZSFyIce3wvoi/VR6/8f624KayXSKsz4igxYOMF8+S/uSAFbB0zp6
+         PzjNzB3K5kfxWXnWOCWQKN61KzLxfX37b8JEt1YZ6cSBVb8vSXunJgSXnRi9fVVOg9Av
+         PLoXOv3Jshm+P/CRozNX1TCDAO6O9InfyfOn/TpiFngvko4X/yPH/1oIYpf4aEMI4uZm
+         dOcg==
+X-Gm-Message-State: AO0yUKXx/Rdyp4WpR7cRGowY7FDR+WB/7Q8f0sDtguQdr2UrTSuY4rGV
+        kC8Z31MueEPq3hb5zWNlWPzA4A==
+X-Google-Smtp-Source: AK7set9X1dUmFONyLvjJaMqkHhahmv6ypd+loT6WfcjkNNvaYBE9AxbkLLkTHvrJifRelZnxVSnQvQ==
+X-Received: by 2002:adf:fa10:0:b0:2bf:ad43:8f08 with SMTP id m16-20020adffa10000000b002bfad438f08mr6151651wrr.14.1675847666563;
+        Wed, 08 Feb 2023 01:14:26 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id p4-20020a5d68c4000000b002c3e4f2ffdbsm8219442wrw.58.2023.02.08.01.14.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Feb 2023 01:14:26 -0800 (PST)
+Message-ID: <70311755-d599-39aa-192e-5957e736eadd@linaro.org>
+Date:   Wed, 8 Feb 2023 10:14:24 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230207-topic-sm8550-upstream-smmu-bindings-v3-1-cb15a7123cfe@linaro.org>
-X-B4-Tracking: v=1; b=H4sIANVn42MC/5WOTQ6CMBBGr2K6dkxpBdGV9zAs+gdMAi2ZAaIh3
- N3KDVy+t/jetwkOhIHF47QJCisypphBn0/C9SZ2AdBnFkoqLZW8wZwmdMBjXZYSlolnCmbMPC5
- gMXqMHYO37V1dlXO60CIvWcMBLJno+rwVl2HIcqLQ4vtIv5rMPfKc6HM8WdXP/hddFRRQ1dLZ1
- oTKG/ccMBpKl0SdaPZ9/wJ6/ard7AAAAA==
-To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH v3] dt-bindings: arm-smmu: Add compatible for SM8550 SoC
+Content-Language: en-US
+To:     neil.armstrong@linaro.org, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
         Joerg Roedel <joro@8bytes.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
 Cc:     linux-arm-kernel@lists.infradead.org,
         linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Abel Vesa <abel.vesa@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.12.0
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Abel Vesa <abel.vesa@linaro.org>
+References: <20230207-topic-sm8550-upstream-smmu-bindings-v3-1-cb15a7123cfe@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230207-topic-sm8550-upstream-smmu-bindings-v3-1-cb15a7123cfe@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Abel Vesa <abel.vesa@linaro.org>
+On 08/02/2023 10:13, neil.armstrong@linaro.org wrote:
+> From: Abel Vesa <abel.vesa@linaro.org>
+> 
+> Add the SoC specific compatible for SM8550 implementing
+> arm,mmu-500.
+> 
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 
-Add the SoC specific compatible for SM8550 implementing
-arm,mmu-500.
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
-Changes in v3:
-- update allOf:if: for disallowing clocks
-- Link to v2: https://lore.kernel.org/r/20230207-topic-sm8550-upstream-smmu-bindings-v2-1-680cbfae6dac@linaro.org
-
-Changes in v2:
-- Rebased on new bindings using qcom,smmu-500 & arm,mmu-500
-- Dropped driver changes since we rely on qcom,smmu-500 fallback
-- Link to v1: https://lore.kernel.org/all/20221116114001.2669003-1-abel.vesa@linaro.org/
----
- Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-index 807cb511fe18..ea81e9b1860c 100644
---- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-+++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-@@ -53,6 +53,7 @@ properties:
-               - qcom,sm8250-smmu-500
-               - qcom,sm8350-smmu-500
-               - qcom,sm8450-smmu-500
-+              - qcom,sm8550-smmu-500
-           - const: qcom,smmu-500
-           - const: arm,mmu-500
- 
-@@ -389,6 +390,7 @@ allOf:
-               - qcom,sm6375-smmu-500
-               - qcom,sm8350-smmu-500
-               - qcom,sm8450-smmu-500
-+              - qcom,sm8550-smmu-500
-     then:
-       properties:
-         clock-names: false
-
----
-base-commit: 49a8133221c71b935f36a7c340c0271c2a9ee2db
-change-id: 20230207-topic-sm8550-upstream-smmu-bindings-dbf9242cc313
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
--- 
-Neil Armstrong <neil.armstrong@linaro.org>
+Krzysztof
 
