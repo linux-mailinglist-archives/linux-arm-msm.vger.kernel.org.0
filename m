@@ -2,135 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3FC3468EC16
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 10:49:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8254C68EC26
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 10:52:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230290AbjBHJti (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Feb 2023 04:49:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38660 "EHLO
+        id S230456AbjBHJvf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Feb 2023 04:51:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230194AbjBHJth (ORCPT
+        with ESMTP id S230092AbjBHJve (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Feb 2023 04:49:37 -0500
-Received: from mx.socionext.com (mx.socionext.com [202.248.49.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 0834B166C5;
-        Wed,  8 Feb 2023 01:49:33 -0800 (PST)
-Received: from unknown (HELO kinkan2-ex.css.socionext.com) ([172.31.9.52])
-  by mx.socionext.com with ESMTP; 08 Feb 2023 18:49:32 +0900
-Received: from mail.mfilter.local (m-filter-2 [10.213.24.62])
-        by kinkan2-ex.css.socionext.com (Postfix) with ESMTP id 8C54E2083D75;
-        Wed,  8 Feb 2023 18:49:32 +0900 (JST)
-Received: from 172.31.9.51 (172.31.9.51) by m-FILTER with ESMTP; Wed, 8 Feb 2023 18:49:25 +0900
-Received: from [10.212.242.61] (unknown [10.212.242.61])
-        by kinkan2.css.socionext.com (Postfix) with ESMTP id 414167361;
-        Wed,  8 Feb 2023 18:49:31 +0900 (JST)
-Message-ID: <e54ea691-f312-5a72-4ac6-defa6945c972@socionext.com>
-Date:   Wed, 8 Feb 2023 18:49:30 +0900
+        Wed, 8 Feb 2023 04:51:34 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7A274392E
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Feb 2023 01:51:15 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id g6so8155871wrv.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Feb 2023 01:51:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cyRYvJyCWI/JC6w1OyETD6RGehTmuMlsiaeC8jqJRf8=;
+        b=HhhpXjGkga91Ht/Or9neGo0HwbyHY5UY8vw4lWSBuKPkFt/WMkA1uBS1G9oXVPciP4
+         Snowf8jEYyA+8WBNB7R52KUhURGgOnBOiC9SNQSnDCl2f/5gpF0wFp4I7aUDw9KfF/Bh
+         Fx5jx+ghwoXotQ3XWbV2Edq9h/mF0jzr+dvbM2TAZk/tNj35TNLc8uCEbXRJ3CtD8Mrw
+         EO2ovRiDVJ80O64LQMT/G0WC+/gIaDD8PX/d296uy7swyGKh+MU/aKZ+vAsk1g9XCEEg
+         ewnSDivSI51CNW1aw3+2NE4qfzDHjRrPCPuAqH/vSDor3M/cknhkRh1JZma8bbMX2EGm
+         JltA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cyRYvJyCWI/JC6w1OyETD6RGehTmuMlsiaeC8jqJRf8=;
+        b=5leOfBsDPOv/lMpUCN6/FdpCzb2x5pWoRzdSFVO8pNkuOqyWCJI3zHDCmI9N/OpZh1
+         fjGF8+Em4J8L/kxOXPtrdhMXUuf1BMtLnLJ/ZFHjQNzHJodPTx9+nMnbsj87LdQ15LDy
+         IuUmbh0F3tVoNsdsBjMtfmYiIdEOr4xGzF1v28IMxTJxixJIik/kIF9KGuKcogVO/bA7
+         hkkF7kqzAmYK4fOzH8by/l/2oarDHKHW9HqfVvW6arlyjNNbbHkMkKIn1DraodkYJsd1
+         oPflhagsaSmaGJ13qqVNtjeBL1MtqSCU5RCF1JxjTrJ9eLA/2XMA+kYLUAr4NJDqonu9
+         VD1w==
+X-Gm-Message-State: AO0yUKVgUGmwp7dwHCvqDlGLXWTNyS1uBzLWu3HUlpOGuUzi3hjVY1ur
+        6m81lmkBKy7jNU+k8za208zIdw==
+X-Google-Smtp-Source: AK7set++Unt7Q/QYP1bYshyjzJ08uYUUK2mlbfn9Zedzo8Q1sGp65Kt0qdP9N/93pqakSbATQXV2ng==
+X-Received: by 2002:a5d:6885:0:b0:2c3:f038:f38b with SMTP id h5-20020a5d6885000000b002c3f038f38bmr6682705wru.24.1675849874388;
+        Wed, 08 Feb 2023 01:51:14 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id s21-20020a1cf215000000b003e001119927sm1362996wmc.24.2023.02.08.01.51.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Feb 2023 01:51:14 -0800 (PST)
+Message-ID: <7b71af71-ebb3-7339-2ae8-0c5d0148bdb5@linaro.org>
+Date:   Wed, 8 Feb 2023 10:51:12 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH] thermal: Remove core header inclusion from drivers
-To:     Daniel Lezcano <daniel.lezcano@linaro.org>
-Cc:     rafael.j.wysocki@intel.com, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Guillaume La Roque <glaroque@baylibre.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH 4/5] dt-bindings: remoteproc: qcom,glink-rpm-edge: convert
+ to DT schema
+Content-Language: en-US
+To:     Rob Herring <robh@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        =?UTF-8?Q?Niklas_S=c3=b6derlund?= <niklas.soderlund@ragnatech.se>,
-        Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        ye xingchen <ye.xingchen@zte.com.cn>,
-        Ricardo Neri <ricardo.neri-calderon@linux.intel.com>,
-        Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-        Haowen Bai <baihaowen@meizu.com>,
-        Minghao Chi <chi.minghao@zte.com.cn>,
-        "open list:THERMAL DRIVER FOR AMLOGIC SOCS" 
-        <linux-amlogic@lists.infradead.org>,
-        "moderated list:BROADCOM BCM2711/BCM2835 ARM ARCHITECTURE" 
-        <linux-rpi-kernel@lists.infradead.org>,
-        "moderated list:BROADCOM BCM2711/BCM2835 ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        "open list:RENESAS R-CAR THERMAL DRIVERS" 
-        <linux-renesas-soc@vger.kernel.org>,
-        "open list:SAMSUNG THERMAL DRIVER" 
-        <linux-samsung-soc@vger.kernel.org>,
-        "moderated list:ARM/STM32 ARCHITECTURE" 
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        "open list:TEGRA ARCHITECTURE SUPPORT" <linux-tegra@vger.kernel.org>
-References: <20230206153432.1017282-1-daniel.lezcano@linaro.org>
-Content-Language: en-US
-From:   Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
-In-Reply-To: <20230206153432.1017282-1-daniel.lezcano@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230207090852.28421-1-krzysztof.kozlowski@linaro.org>
+ <20230207090852.28421-4-krzysztof.kozlowski@linaro.org>
+ <20230207184230.GA3950598-robh@kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230207184230.GA3950598-robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.0 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Daniel,
+On 07/02/2023 19:42, Rob Herring wrote:
+> On Tue, Feb 07, 2023 at 10:08:51AM +0100, Krzysztof Kozlowski wrote:
+>> Convert Qualcomm G-Link RPM edge binding to DT schema.  Move it to
+>> remoteproc as it better suits the purpose - communication channel with
+>> remote processor.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>  .../remoteproc/qcom,glink-rpm-edge.yaml       | 92 ++++++++++++++++++
+>>  .../bindings/soc/qcom/qcom,glink.txt          | 94 -------------------
+>>  2 files changed, 92 insertions(+), 94 deletions(-)
+>>  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,glink-rpm-edge.yaml
+>>  delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,glink.txt
+>>
+>> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,glink-rpm-edge.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,glink-rpm-edge.yaml
+>> new file mode 100644
+>> index 000000000000..07cd67ec97c1
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,glink-rpm-edge.yaml
+>> @@ -0,0 +1,92 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/remoteproc/qcom,glink-rpm-edge.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm G-Link RPM edge
+>> +
+>> +description: |
+>> +  Qualcomm G-Link edge, a FIFO based mechanism for communication with Resource
+>> +  Power Manager (RPM) on various Qualcomm platforms.
+>> +
+>> +maintainers:
+>> +  - Bjorn Andersson <andersson@kernel.org>
+>> +
+>> +properties:
+>> +  compatible:
+>> +    const: qcom,glink-rpm
+>> +
+>> +  label:
+>> +    $ref: /schemas/types.yaml#/definitions/string
+>> +    description:
+>> +      Name of the edge, used for debugging and identification purposes. The
+>> +      node name will be used if this is not present.
+>> +
+>> +  interrupts:
+>> +    maxItems: 1
+>> +
+>> +  mboxes:
+>> +    items:
+>> +      - description: rpm_hlos mailbox in APCS
+>> +
+>> +  qcom,remote-pid:
+>> +    $ref: /schemas/types.yaml#/definitions/uint32
+>> +    description:
+>> +      The identifier for the remote processor as known by the rest of the
+>> +      system.
+>> +
+>> +  qcom,rpm-msg-ram:
+>> +    $ref: /schemas/types.yaml#/definitions/phandle
+>> +    description: |
+>> +      RPM message memory resource (compatible:: qcom,rpm-msg-ram).
+> 
+> '::' is not a thing in YAML.
 
-On 2023/02/07 0:34, Daniel Lezcano wrote:
-> As the name states "thermal_core.h" is the header file for the core
-> components of the thermal framework.
-> 
-> Too many drivers are including it. Hopefully the recent cleanups
-> helped to self encapsulate the code a bit more and prevented the
-> drivers to need this header.
-> 
-> Remove this inclusion in every place where it is possible.
-> 
-> Some other drivers did a confusion with the core header and the one
-> exported in linux/thermal.h. They include the former instead of the
-> latter. The changes also fix this.
-> 
-> The tegra/soctherm driver still remains as it uses an internal
-> function which need to be replaced.
-> 
-> The Intel HFI driver uses the netlink internal framework core and
-> should be changed to prevent to deal with the internals.
-> 
-> No functional changes
-> 
-> [ Applies to thermal/linux-next or linux-pm/linux-next ]
-> 
-> Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-> ---
+ack
 
->   drivers/thermal/uniphier_thermal.c          | 2 --
+> 
+>> +
+>> +  rpm-requests:
+>> +    type: object
+>> +    $ref: /schemas/soc/qcom/qcom,smd-rpm.yaml#
+>> +    unevaluatedProperties: false
+>> +    description:
+>> +      Qualcomm Resource Power Manager (RPM) over G-Link
+>> +
+>> +    properties:
+>> +      qcom,intents:
+>> +        $ref: /schemas/types.yaml#/definitions/uint32-array
+>> +        description:
+>> +          List of (size, amount) pairs describing what intents should be
+> 
+> pairs? Sounds like a matrix then.
 
-For UniPhier:
+I'll fix also second appearance of this property
+(bindings/soc/qcom/qcom,apr.yaml)
 
-Reviewed-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+Best regards,
+Krzysztof
 
-Thank you,
-
----
-Best Regards
-Kunihiko Hayashi
