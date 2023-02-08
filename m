@@ -2,225 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 81A5F68FA30
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 23:18:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C890C68FA4A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 23:35:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232284AbjBHWSR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Feb 2023 17:18:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43228 "EHLO
+        id S230289AbjBHWfm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Feb 2023 17:35:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232394AbjBHWSP (ORCPT
+        with ESMTP id S229827AbjBHWfl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Feb 2023 17:18:15 -0500
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BA6B22DD6
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Feb 2023 14:18:14 -0800 (PST)
-Received: by mail-ej1-x631.google.com with SMTP id m2so1095582ejb.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Feb 2023 14:18:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=U+j6KFfx3Qmji48Cg2CDZ+WAkdPyel9k/170nDiJ78M=;
-        b=yjjwHJecKsnyrg8KPmSqiXjjFu98Uu2LRvMN+REP94WD9IEggEzD9t0Cd5M7EHC9DK
-         zbxuE7uh/LUmtv+EJxvgaOGw+/a9xq3YTPtr/P/4MHaSMTPkvRWmmkDjXGpbr59YlL5v
-         qLkhOmLNlDiJX8Dd0UYSu0MCYIyeUeoRg/vPtCGuFiLdAGzeUJeZgUSf0IYCow4FzI5Z
-         sJSaQjEOKJJbq06HlrU/EizpM4dx09aADyIp2M/3Lg6p39w2AbZpW5a10KEGocCq9z+0
-         bNyBbIqrXiPBpQS+xVQXPgpLrl2e0LW5lBDMWV1VJpRBHwIqHQbHrRW5KkohheflL/aF
-         WNsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=U+j6KFfx3Qmji48Cg2CDZ+WAkdPyel9k/170nDiJ78M=;
-        b=PqMehEeNWpO5CfU/s7dQrl04EZY9U3CH+nzV+6ZptajYUmJ2yXuuK1u/s0m8CTWFn7
-         lPRr5jw7/R7/7z+TUA0kN0xYz734N0BTkNk0aupDlUH2SPFCsl/hDMivzlTBqILopq75
-         oyiLnsazcU+0H+uFpKX9cWWwP7kicNHRJpKPVL4HL1WA3pHCQc8Xkh6KihiVorvoIMuW
-         HzOOVEEcEmKda7yTSr3wiv5RIzLOpc/pqdH92GMpQV72iKDKMe1d2YRCKwAKpb4r/syq
-         HXHsjAXOPFOk4oiALsqdwwoOO+RWEwv1KqiZK1Wot+BsmXOdVeVUG6tTVxdYojxdgk0Q
-         QJqw==
-X-Gm-Message-State: AO0yUKVEZEfZE6xuDg46hvjlHDzIyz4/jWBTrSFFqJNvypF0AVTQhAIF
-        y4kFPfIRP25d/x8Ub6t0PlAJtw==
-X-Google-Smtp-Source: AK7set+S1W2pAxZxf43mLeE36cu3JKEoD8I483Ygu7n6ijkNwN48EBk193sZSV5rlHbyvl6slS1QVg==
-X-Received: by 2002:a17:906:c9d2:b0:8aa:9831:6eb6 with SMTP id hk18-20020a170906c9d200b008aa98316eb6mr6806195ejb.18.1675894692495;
-        Wed, 08 Feb 2023 14:18:12 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id ko3-20020a170907986300b0088b93bfa782sm13274ejc.176.2023.02.08.14.18.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Feb 2023 14:18:12 -0800 (PST)
-Message-ID: <884097ab-41c7-2889-5b11-91451e2f994a@linaro.org>
-Date:   Thu, 9 Feb 2023 00:18:11 +0200
+        Wed, 8 Feb 2023 17:35:41 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9967E83E6
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Feb 2023 14:35:37 -0800 (PST)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 318MU3SZ012711;
+        Wed, 8 Feb 2023 22:35:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=kXpdI4DDnp11YwZz0R3Imjuvk4mNgQsQonYUU31yIJM=;
+ b=hAXBMX9NdINC+JnHOsToPHeATHT1X/7PQnVDzjR4GStGh2SCSmij0SZUomKSUFP2C93H
+ FcMsyATBByjenK7Wf2ovMcewvnjsZqCZxm1Ocn6q1xIsBiDONLnQvEGJ0FHwJDLzBaRr
+ j07kUMt+FunvWvNoCZl7yjSuJxIoZYo/tBVM4AE+q7t7ZyEXGUhSunMmbe2AJvsZAwEy
+ s6P0WCg8orLK/HFAkt4kxyEhwiEA2UNgg/cVjBhuh/Vw7YSpugfzaxLO9Zi2zTjk13S2
+ GpcrQN5xN5yMBhGdGRZd0G7zt4L8/SSHburLJNJIDog5FWXBiysxwaD5/VD3v7uCCR0+ Ug== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nm1yf2uhv-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 08 Feb 2023 22:35:30 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 318MZPBJ014741
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 8 Feb 2023 22:35:25 GMT
+Received: from [10.110.17.125] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 8 Feb 2023
+ 14:34:52 -0800
+Message-ID: <ef6b0227-1ac9-331e-1c8e-beb6ce8a0aff@quicinc.com>
+Date:   Wed, 8 Feb 2023 14:34:52 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [RFC PATCH] drm/msm/dpu: Move TE setup to prepare_for_kickoff()
-Content-Language: en-GB
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        freedreno@lists.freedesktop.org
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
-        quic_abhinavk@quicinc.com, marijn.suijten@somainline.org
-References: <20230208213713.1330-1-quic_jesszhan@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230208213713.1330-1-quic_jesszhan@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH v3 25/27] drm/msm/dpu: rework static color fill code
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230203182132.1307834-1-dmitry.baryshkov@linaro.org>
+ <20230203182132.1307834-26-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20230203182132.1307834-26-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: YGSrhXwYyX_FM8bsEF3E0Agdu8H-QNxS
+X-Proofpoint-GUID: YGSrhXwYyX_FM8bsEF3E0Agdu8H-QNxS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-02-08_09,2023-02-08_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ adultscore=0 impostorscore=0 mlxscore=0 phishscore=0 clxscore=1015
+ mlxlogscore=999 suspectscore=0 malwarescore=0 bulkscore=0
+ priorityscore=1501 spamscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2212070000 definitions=main-2302080191
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/02/2023 23:37, Jessica Zhang wrote:
-> Currently, DPU will enable TE during prepare_commit(). However, this
-> will cause issues when trying to read/write to register in
-> get_autorefresh_config(), because the core clock rates aren't set at
-> that time.
+
+
+On 2/3/2023 10:21 AM, Dmitry Baryshkov wrote:
+> Rework static color fill code to separate the pipe / pipe_cfg handling.
+> This is a preparation for the r_pipe support.
 > 
-> This used to work because phys_enc->hw_pp is only initialized in mode
-> set [1], so the first prepare_commit() will return before any register
-> read/write as hw_pp would be NULL.
-> 
-> However, when we try to implement support for INTF TE, we will run into
-> the clock issue described above as hw_intf will *not* be NULL on the
-> first prepare_commit(). This is because the initialization of
-> dpu_enc->hw_intf has been moved to dpu_encoder_setup() [2].
-> 
-> To avoid this issue, let's enable TE during prepare_for_kickoff()
-> instead as the core clock rates are guaranteed to be set then.
-> 
-> Depends on: "Implement tearcheck support on INTF block" [3]
-> 
-> [1] https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c#L1109
-> [2] https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c#L2339
-> [3] https://patchwork.freedesktop.org/series/112332/
-> 
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->   .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  | 78 ++++++++++---------
->   1 file changed, 43 insertions(+), 35 deletions(-)
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 70 +++++++++++++----------
+>   1 file changed, 41 insertions(+), 29 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> index 279a0b7015ce..746250bce3d1 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> @@ -587,39 +587,6 @@ static void dpu_encoder_phys_cmd_destroy(struct dpu_encoder_phys *phys_enc)
->   	kfree(cmd_enc);
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index 05047192cb37..e2e85688ed3c 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -639,20 +639,54 @@ static void _dpu_plane_setup_scaler(struct dpu_sw_pipe *pipe,
+>   				fmt);
 >   }
 >   
-> -static void dpu_encoder_phys_cmd_prepare_for_kickoff(
-> -		struct dpu_encoder_phys *phys_enc)
-> -{
-> -	struct dpu_encoder_phys_cmd *cmd_enc =
-> -			to_dpu_encoder_phys_cmd(phys_enc);
-> -	int ret;
-> -
-> -	if (!phys_enc->hw_pp) {
-> -		DPU_ERROR("invalid encoder\n");
-> -		return;
-> -	}
-> -	DRM_DEBUG_KMS("id:%u pp:%d pending_cnt:%d\n", DRMID(phys_enc->parent),
-> -		      phys_enc->hw_pp->idx - PINGPONG_0,
-> -		      atomic_read(&phys_enc->pending_kickoff_cnt));
-> -
-> -	/*
-> -	 * Mark kickoff request as outstanding. If there are more than one,
-> -	 * outstanding, then we have to wait for the previous one to complete
-> -	 */
-> -	ret = _dpu_encoder_phys_cmd_wait_for_idle(phys_enc);
-> -	if (ret) {
-> -		/* force pending_kickoff_cnt 0 to discard failed kickoff */
-> -		atomic_set(&phys_enc->pending_kickoff_cnt, 0);
-> -		DRM_ERROR("failed wait_for_idle: id:%u ret:%d pp:%d\n",
-> -			  DRMID(phys_enc->parent), ret,
-> -			  phys_enc->hw_pp->idx - PINGPONG_0);
-> -	}
-> -
-> -	DPU_DEBUG_CMDENC(cmd_enc, "pp:%d pending_cnt %d\n",
-> -			phys_enc->hw_pp->idx - PINGPONG_0,
-> -			atomic_read(&phys_enc->pending_kickoff_cnt));
-> -}
-> -
->   static bool dpu_encoder_phys_cmd_is_ongoing_pptx(
->   		struct dpu_encoder_phys *phys_enc)
->   {
-> @@ -645,8 +612,7 @@ static bool dpu_encoder_phys_cmd_is_ongoing_pptx(
->   	return false;
->   }
->   
-> -static void dpu_encoder_phys_cmd_prepare_commit(
-> -		struct dpu_encoder_phys *phys_enc)
-> +static void dpu_encoder_phys_cmd_enable_te(struct dpu_encoder_phys *phys_enc)
->   {
->   	struct dpu_encoder_phys_cmd *cmd_enc =
->   		to_dpu_encoder_phys_cmd(phys_enc);
-> @@ -704,6 +670,48 @@ static void dpu_encoder_phys_cmd_prepare_commit(
->   			 "disabled autorefresh\n");
->   }
->   
-> +static void dpu_encoder_phys_cmd_prepare_for_kickoff(
-> +		struct dpu_encoder_phys *phys_enc)
+> +static int _dpu_plane_color_fill_pipe(struct dpu_plane_state *pstate,
+> +		struct dpu_sw_pipe *pipe,
+> +		struct dpu_hw_sspp_cfg *old_pipe_cfg,
 
-Could you please move the function back to the place, so that we can see 
-the actual difference?
+Why is this called old_pipe_cfg instead of just pipe_cfg?
 
+
+> +		u32 fill_color,
+> +		const struct dpu_format *fmt)
 > +{
-> +	struct dpu_encoder_phys_cmd *cmd_enc =
-> +			to_dpu_encoder_phys_cmd(phys_enc);
-> +	int ret;
+> +	struct dpu_hw_sspp_cfg pipe_cfg;
 > +
-> +	if (!phys_enc->hw_pp) {
-> +		DPU_ERROR("invalid encoder\n");
+> +	/* update sspp */
+> +	if (!pipe->sspp->ops.setup_solidfill)
+> +		return 0;
+
+You can just return from here and make this function void?
+
+> +
+> +	pipe->sspp->ops.setup_solidfill(pipe, fill_color);
+> +
+> +	/* override scaler/decimation if solid fill */
+> +	pipe_cfg.dst_rect = old_pipe_cfg->dst_rect;
+> +
+> +	pipe_cfg.src_rect.x1 = 0;
+> +	pipe_cfg.src_rect.y1 = 0;
+> +	pipe_cfg.src_rect.x2 =
+> +		drm_rect_width(&pipe_cfg.dst_rect);
+> +	pipe_cfg.src_rect.y2 =
+> +		drm_rect_height(&pipe_cfg.dst_rect);
+> +
+> +	if (pipe->sspp->ops.setup_format)
+> +		pipe->sspp->ops.setup_format(pipe, fmt, DPU_SSPP_SOLID_FILL);
+> +
+> +	if (pipe->sspp->ops.setup_rects)
+> +		pipe->sspp->ops.setup_rects(pipe, &pipe_cfg);
+> +
+> +	_dpu_plane_setup_scaler(pipe, fmt, true, &pipe_cfg, pstate->rotation);
+> +
+> +	return 0;
+> +}
+> +
+>   /**
+>    * _dpu_plane_color_fill - enables color fill on plane
+>    * @pdpu:   Pointer to DPU plane object
+>    * @color:  RGB fill color value, [23..16] Blue, [15..8] Green, [7..0] Red
+>    * @alpha:  8-bit fill alpha value, 255 selects 100% alpha
+> - * Returns: 0 on success
+>    */
+> -static int _dpu_plane_color_fill(struct dpu_plane *pdpu,
+> +static void _dpu_plane_color_fill(struct dpu_plane *pdpu,
+>   		uint32_t color, uint32_t alpha)
+>   {
+>   	const struct dpu_format *fmt;
+>   	const struct drm_plane *plane = &pdpu->base;
+>   	struct dpu_plane_state *pstate = to_dpu_plane_state(plane->state);
+> -	struct dpu_hw_sspp_cfg pipe_cfg;
+> +	u32 fill_color = (color & 0xFFFFFF) | ((alpha & 0xFF) << 24);
+>   
+>   	DPU_DEBUG_PLANE(pdpu, "\n");
+>   
+> @@ -661,34 +695,12 @@ static int _dpu_plane_color_fill(struct dpu_plane *pdpu,
+>   	 * h/w only supports RGB variants
+>   	 */
+>   	fmt = dpu_get_dpu_format(DRM_FORMAT_ABGR8888);
+> +	/* should not happen ever */
+> +	if (!fmt)
 > +		return;
-> +	}
-> +
-> +
-> +	DRM_DEBUG_KMS("id:%u pp:%d pending_cnt:%d\n", DRMID(phys_enc->parent),
-> +		      phys_enc->hw_pp->idx - PINGPONG_0,
-> +		      atomic_read(&phys_enc->pending_kickoff_cnt));
-> +
-> +	/*
-> +	 * Mark kickoff request as outstanding. If there are more than one,
-> +	 * outstanding, then we have to wait for the previous one to complete
-> +	 */
-> +	ret = _dpu_encoder_phys_cmd_wait_for_idle(phys_enc);
-> +	if (ret) {
-> +		/* force pending_kickoff_cnt 0 to discard failed kickoff */
-> +		atomic_set(&phys_enc->pending_kickoff_cnt, 0);
-> +		DRM_ERROR("failed wait_for_idle: id:%u ret:%d pp:%d\n",
-> +			  DRMID(phys_enc->parent), ret,
-> +			  phys_enc->hw_pp->idx - PINGPONG_0);
-> +	}
-> +
-> +	dpu_encoder_phys_cmd_enable_te(phys_enc);
-> +
-> +	DPU_DEBUG_CMDENC(cmd_enc, "pp:%d pending_cnt %d\n",
-> +			phys_enc->hw_pp->idx - PINGPONG_0,
-> +			atomic_read(&phys_enc->pending_kickoff_cnt));
-> +}
-> +
-> +static void dpu_encoder_phys_cmd_prepare_commit(
-> +		struct dpu_encoder_phys *phys_enc)
-> +{
-> +}
-
-There is no need to have the empty callback, you can skip it completely. 
-Actually, if it is not needed anymore for the cmd encoders, you can drop 
-the .prepare_commit from struct dpu_encoder_phys_ops. And then, by 
-extension, dpu_encoder_prepare_commit(), dpu_kms_prepare_commit(). This 
-sounds like a nice second patch for this rfc.
-
-> +
->   static int _dpu_encoder_phys_cmd_wait_for_ctl_start(
->   		struct dpu_encoder_phys *phys_enc)
->   {
-
--- 
-With best wishes
-Dmitry
-
+>   
+>   	/* update sspp */
+> -	if (fmt && pstate->pipe.sspp->ops.setup_solidfill) {
+> -		pstate->pipe.sspp->ops.setup_solidfill(&pstate->pipe,
+> -				(color & 0xFFFFFF) | ((alpha & 0xFF) << 24));
+> -
+> -		/* override scaler/decimation if solid fill */
+> -		pipe_cfg.dst_rect = pstate->base.dst;
+> -
+> -		pipe_cfg.src_rect.x1 = 0;
+> -		pipe_cfg.src_rect.y1 = 0;
+> -		pipe_cfg.src_rect.x2 =
+> -			drm_rect_width(&pipe_cfg.dst_rect);
+> -		pipe_cfg.src_rect.y2 =
+> -			drm_rect_height(&pipe_cfg.dst_rect);
+> -
+> -		if (pstate->pipe.sspp->ops.setup_format)
+> -			pstate->pipe.sspp->ops.setup_format(&pstate->pipe,
+> -					fmt, DPU_SSPP_SOLID_FILL);
+> -
+> -		if (pstate->pipe.sspp->ops.setup_rects)
+> -			pstate->pipe.sspp->ops.setup_rects(&pstate->pipe,
+> -					&pipe_cfg);
+> -
+> -		_dpu_plane_setup_scaler(&pstate->pipe, fmt, true, &pipe_cfg, pstate->rotation);
+> -	}
+> -
+> -	return 0;
+> +	_dpu_plane_color_fill_pipe(pstate, &pstate->pipe, &pstate->pipe_cfg, fill_color, fmt);
+>   }
+>   
+>   int dpu_plane_validate_multirect_v2(struct dpu_multirect_plane_states *plane)
