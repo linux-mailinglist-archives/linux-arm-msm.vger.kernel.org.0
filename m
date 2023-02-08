@@ -2,62 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EDCB368FAF0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Feb 2023 00:12:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BC83C68FB1C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Feb 2023 00:24:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229487AbjBHXMG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Feb 2023 18:12:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37694 "EHLO
+        id S229701AbjBHXYe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Feb 2023 18:24:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229447AbjBHXMF (ORCPT
+        with ESMTP id S229662AbjBHXYe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Feb 2023 18:12:05 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A32D18E;
-        Wed,  8 Feb 2023 15:12:04 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id F2774B81FA2;
-        Wed,  8 Feb 2023 23:12:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9807C433EF;
-        Wed,  8 Feb 2023 23:11:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1675897921;
-        bh=gufkRKfxWieX6HKMKArJihwskH/QJRSmt/NO9zfWLT8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=hBN8j/fttWOPC34Cxzc6MS1JwPv/SldB1DaPlkbchtqv3Lkya5gpnQ/qRjxiyco0M
-         qEdmTzcSrJH0eVKpoRwks3hVFNliY8AuoGZG72PJnOEx2bglI6LGe4lK0eW6muftQG
-         9osNQpAJUTqE3CmZVOZyT4rga+U2FHZJalbkx6pG2fpNxChcqsyG9WsKPWiHO0VmJH
-         VyzYnuW5eerHDtkXf9hj9xL5hkMQNRcEgAbj+bSE5lLGH3scp8FRS5jM9KNJTTLVVQ
-         qLVSDJ2dvwA89lE1zfz0k/GcM1bxkE7YVqasU3seN0SSl7YkzT9SD9sib0qMFZR7dY
-         LE3dX4FzKlpOA==
-Date:   Wed, 8 Feb 2023 15:14:12 -0800
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     devi priya <quic_devipriy@quicinc.com>
-Cc:     agross@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
-        sboyd@kernel.org, linus.walleij@linaro.org,
-        catalin.marinas@arm.com, will@kernel.org, p.zabel@pengutronix.de,
-        shawnguo@kernel.org, arnd@arndb.de, marcel.ziswiler@toradex.com,
-        dmitry.baryshkov@linaro.org, nfraprado@collabora.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
-        quic_poovendh@quicinc.com
-Subject: Re: [PATCH V3 4/7] pinctrl: qcom: Add IPQ9574 pinctrl driver
-Message-ID: <20230208231412.yqp3rvokvmbb7ixi@ripper>
-References: <20230130125528.11509-1-quic_devipriy@quicinc.com>
- <20230130125528.11509-5-quic_devipriy@quicinc.com>
+        Wed, 8 Feb 2023 18:24:34 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C34D12F09
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Feb 2023 15:24:30 -0800 (PST)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 318Lm2Rl013016;
+        Wed, 8 Feb 2023 23:24:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=pf/LsDz8BXqn+GomjcrfK3rhN/0BpL/8g9RKK3dGq6g=;
+ b=FDOmspoTRIh5L905f+iJZKZGES83HpsU/9KWA+NSQWNNZKadEivcdpoCrA26UBDPGS5g
+ +EL1oEVsUKUiom6T8B5cN6sGbDa1fW+ra2yurECSdGzD2PY3mHwSTr87G3Etoi2pTzc1
+ SLm68U/ezv4ZZKXaCCpbsA17etVkRSwqAJDIRgry9gQCLTRbHA3ctzXlF9CauBPfPIOI
+ jMNGyFY+h+f0HepfsEceYNOulvECxKhnascJjT918rpicUXJ4+DqNmlITgqtofhxIkg+
+ b4D1cAXjMy7F38aZsYP+ry0kmc1TbdLtOBDiBpVn6Ag2st1caEll70F0mejW04Hj38Kk Sg== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nm86mt2vs-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 08 Feb 2023 23:24:23 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 318NOMbc002443
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 8 Feb 2023 23:24:22 GMT
+Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 8 Feb 2023
+ 15:24:21 -0800
+Message-ID: <2693b8be-f565-e6c8-f503-4ea1cbb573b4@quicinc.com>
+Date:   Wed, 8 Feb 2023 15:24:21 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230130125528.11509-5-quic_devipriy@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [RFC PATCH] drm/msm/dpu: Move TE setup to prepare_for_kickoff()
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        <freedreno@lists.freedesktop.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <robdclark@gmail.com>, <seanpaul@chromium.org>,
+        <swboyd@chromium.org>, <quic_abhinavk@quicinc.com>,
+        <marijn.suijten@somainline.org>
+References: <20230208213713.1330-1-quic_jesszhan@quicinc.com>
+ <884097ab-41c7-2889-5b11-91451e2f994a@linaro.org>
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <884097ab-41c7-2889-5b11-91451e2f994a@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Pr7AXfWcjSiGMrl0FqJ-8jH3C1XFgN1J
+X-Proofpoint-ORIG-GUID: Pr7AXfWcjSiGMrl0FqJ-8jH3C1XFgN1J
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-02-08_09,2023-02-08_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
+ malwarescore=0 phishscore=0 bulkscore=0 clxscore=1015 priorityscore=1501
+ adultscore=0 mlxscore=0 mlxlogscore=999 lowpriorityscore=0 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2302080199
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -65,25 +82,181 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 30, 2023 at 06:25:25PM +0530, devi priya wrote:
-> +static const struct msm_pingroup ipq9574_groups[] = {
-> +	PINGROUP(0, sdc_data, qspi_data, qdss_traceclk_b, _, _, _, _, _, _),
-> +	PINGROUP(1, sdc_data, qspi_data, qdss_tracectl_b, _, _, _, _, _, _),
-> +	PINGROUP(2, sdc_data, qspi_data, qdss_tracedata_b, _, _, _, _, _, _),
-> +	PINGROUP(3, sdc_data, qspi_data, qdss_tracedata_b, _, _, _, _, _, _),
-> +	PINGROUP(4, sdc_cmd, qspi_cs, qdss_tracedata_b, _, _, _, _, _, _),
-> +	PINGROUP(5, sdc_clk, qspi_clk, qdss_tracedata_b, _, _, _, _, _,
-> +		 _),
 
-Please avoid line wrapping these, it just makes it hard to read.
 
-[..]
-> +};
-> +
-> +/* Reserving GPIO59 for controlling the QFPROM LDO regulator */
+On 2/8/2023 2:18 PM, Dmitry Baryshkov wrote:
+> On 08/02/2023 23:37, Jessica Zhang wrote:
+>> Currently, DPU will enable TE during prepare_commit(). However, this
+>> will cause issues when trying to read/write to register in
+>> get_autorefresh_config(), because the core clock rates aren't set at
+>> that time.
+>>
+>> This used to work because phys_enc->hw_pp is only initialized in mode
+>> set [1], so the first prepare_commit() will return before any register
+>> read/write as hw_pp would be NULL.
+>>
+>> However, when we try to implement support for INTF TE, we will run into
+>> the clock issue described above as hw_intf will *not* be NULL on the
+>> first prepare_commit(). This is because the initialization of
+>> dpu_enc->hw_intf has been moved to dpu_encoder_setup() [2].
+>>
+>> To avoid this issue, let's enable TE during prepare_for_kickoff()
+>> instead as the core clock rates are guaranteed to be set then.
+>>
+>> Depends on: "Implement tearcheck support on INTF block" [3]
+>>
+>> [1] 
+>> https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c#L1109
+>> [2] 
+>> https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c#L2339
+>> [3] https://patchwork.freedesktop.org/series/112332/
+>>
+>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>> ---
+>>   .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  | 78 ++++++++++---------
+>>   1 file changed, 43 insertions(+), 35 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c 
+>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+>> index 279a0b7015ce..746250bce3d1 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+>> @@ -587,39 +587,6 @@ static void dpu_encoder_phys_cmd_destroy(struct 
+>> dpu_encoder_phys *phys_enc)
+>>       kfree(cmd_enc);
+>>   }
+>> -static void dpu_encoder_phys_cmd_prepare_for_kickoff(
+>> -        struct dpu_encoder_phys *phys_enc)
+>> -{
+>> -    struct dpu_encoder_phys_cmd *cmd_enc =
+>> -            to_dpu_encoder_phys_cmd(phys_enc);
+>> -    int ret;
+>> -
+>> -    if (!phys_enc->hw_pp) {
+>> -        DPU_ERROR("invalid encoder\n");
+>> -        return;
+>> -    }
+>> -    DRM_DEBUG_KMS("id:%u pp:%d pending_cnt:%d\n", 
+>> DRMID(phys_enc->parent),
+>> -              phys_enc->hw_pp->idx - PINGPONG_0,
+>> -              atomic_read(&phys_enc->pending_kickoff_cnt));
+>> -
+>> -    /*
+>> -     * Mark kickoff request as outstanding. If there are more than one,
+>> -     * outstanding, then we have to wait for the previous one to 
+>> complete
+>> -     */
+>> -    ret = _dpu_encoder_phys_cmd_wait_for_idle(phys_enc);
+>> -    if (ret) {
+>> -        /* force pending_kickoff_cnt 0 to discard failed kickoff */
+>> -        atomic_set(&phys_enc->pending_kickoff_cnt, 0);
+>> -        DRM_ERROR("failed wait_for_idle: id:%u ret:%d pp:%d\n",
+>> -              DRMID(phys_enc->parent), ret,
+>> -              phys_enc->hw_pp->idx - PINGPONG_0);
+>> -    }
+>> -
+>> -    DPU_DEBUG_CMDENC(cmd_enc, "pp:%d pending_cnt %d\n",
+>> -            phys_enc->hw_pp->idx - PINGPONG_0,
+>> -            atomic_read(&phys_enc->pending_kickoff_cnt));
+>> -}
+>> -
+>>   static bool dpu_encoder_phys_cmd_is_ongoing_pptx(
+>>           struct dpu_encoder_phys *phys_enc)
+>>   {
+>> @@ -645,8 +612,7 @@ static bool dpu_encoder_phys_cmd_is_ongoing_pptx(
+>>       return false;
+>>   }
+>> -static void dpu_encoder_phys_cmd_prepare_commit(
+>> -        struct dpu_encoder_phys *phys_enc)
+>> +static void dpu_encoder_phys_cmd_enable_te(struct dpu_encoder_phys 
+>> *phys_enc)
+>>   {
+>>       struct dpu_encoder_phys_cmd *cmd_enc =
+>>           to_dpu_encoder_phys_cmd(phys_enc);
+>> @@ -704,6 +670,48 @@ static void dpu_encoder_phys_cmd_prepare_commit(
+>>                "disabled autorefresh\n");
+>>   }
+>> +static void dpu_encoder_phys_cmd_prepare_for_kickoff(
+>> +        struct dpu_encoder_phys *phys_enc)
+> 
+> Could you please move the function back to the place, so that we can see 
+> the actual difference?
 
-This seems like a property of the board, please use gpio-reserved-ranges
-in the DT node instead.
+Hi Dmitry,
+
+This function was moved because prepare_commit() and is_ongoing_pptx() 
+(which is called in prepare_commit()) were originally defined later in 
+the file.
+
+> 
+>> +{
+>> +    struct dpu_encoder_phys_cmd *cmd_enc =
+>> +            to_dpu_encoder_phys_cmd(phys_enc);
+>> +    int ret;
+>> +
+>> +    if (!phys_enc->hw_pp) {
+>> +        DPU_ERROR("invalid encoder\n");
+>> +        return;
+>> +    }
+>> +
+>> +
+>> +    DRM_DEBUG_KMS("id:%u pp:%d pending_cnt:%d\n", 
+>> DRMID(phys_enc->parent),
+>> +              phys_enc->hw_pp->idx - PINGPONG_0,
+>> +              atomic_read(&phys_enc->pending_kickoff_cnt));
+>> +
+>> +    /*
+>> +     * Mark kickoff request as outstanding. If there are more than one,
+>> +     * outstanding, then we have to wait for the previous one to 
+>> complete
+>> +     */
+>> +    ret = _dpu_encoder_phys_cmd_wait_for_idle(phys_enc);
+>> +    if (ret) {
+>> +        /* force pending_kickoff_cnt 0 to discard failed kickoff */
+>> +        atomic_set(&phys_enc->pending_kickoff_cnt, 0);
+>> +        DRM_ERROR("failed wait_for_idle: id:%u ret:%d pp:%d\n",
+>> +              DRMID(phys_enc->parent), ret,
+>> +              phys_enc->hw_pp->idx - PINGPONG_0);
+>> +    }
+>> +
+>> +    dpu_encoder_phys_cmd_enable_te(phys_enc);
+>> +
+>> +    DPU_DEBUG_CMDENC(cmd_enc, "pp:%d pending_cnt %d\n",
+>> +            phys_enc->hw_pp->idx - PINGPONG_0,
+>> +            atomic_read(&phys_enc->pending_kickoff_cnt));
+>> +}
+>> +
+>> +static void dpu_encoder_phys_cmd_prepare_commit(
+>> +        struct dpu_encoder_phys *phys_enc)
+>> +{
+>> +}
+> 
+> There is no need to have the empty callback, you can skip it completely. 
+> Actually, if it is not needed anymore for the cmd encoders, you can drop 
+> the .prepare_commit from struct dpu_encoder_phys_ops. And then, by 
+> extension, dpu_encoder_prepare_commit(), dpu_kms_prepare_commit(). This 
+> sounds like a nice second patch for this rfc.
+
+Got it.
+
+FWIW I kept this as an empty method to match mdp4_prepare_commit() [1], 
+but I can just add a NULL check in msm_atomic_commit_tail() and remove 
+both instances of empty callbacks if that's preferable.
+
+[1] 
+https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c#L87
 
 Thanks,
-Bjorn
+
+Jessica Zhang
+
+> 
+>> +
+>>   static int _dpu_encoder_phys_cmd_wait_for_ctl_start(
+>>           struct dpu_encoder_phys *phys_enc)
+>>   {
+> 
+> -- 
+> With best wishes
+> Dmitry
+> 
