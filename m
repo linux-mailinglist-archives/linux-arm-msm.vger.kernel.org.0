@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 85D7B68F406
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 18:10:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 960D368F408
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 18:11:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231338AbjBHRK1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Feb 2023 12:10:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41630 "EHLO
+        id S231373AbjBHRLP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Feb 2023 12:11:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231175AbjBHRKX (ORCPT
+        with ESMTP id S230516AbjBHRLO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Feb 2023 12:10:23 -0500
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F39D64DE1F
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Feb 2023 09:10:21 -0800 (PST)
-Received: by mail-wm1-x32d.google.com with SMTP id k8-20020a05600c1c8800b003dc57ea0dfeso1993863wms.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Feb 2023 09:10:21 -0800 (PST)
+        Wed, 8 Feb 2023 12:11:14 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02DDA4C6C3
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Feb 2023 09:11:13 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id a2so17199804wrd.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Feb 2023 09:11:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=1D1Ag8MO1IvClr0BjaK5b1WugeUzwnrmVL7oJc6jsA0=;
-        b=kAtPIUPgvdziEt7VHoHQ1gs5hP9ESwAb2Hxtv6fJkt7tFShzFKwjfqhkb2X4V3B577
-         2QI2hFhGQEV1nGRFXTP4Yt07NwG/1EKzhkqjMTrSEeamPXgcQHtWK+EZAkyuzj9XMpBP
-         MhLGa4189VrfJ0t5IT2bS/xsRrGIY+L7JVb3Jp/XO42w4GR0fXdkYUNTJo1/NULt60lQ
-         ZGtI5q9bP3kb0gN5asQ6eu48kqyJx7hiIpqu7THOvH+Wzxv+oYtWxOlEeuQz5oe5qFwN
-         i1ozjNDwbz9ClcF1JzE8X1amK2uA9c3jF3oy+KogQl8cX6YLFLQealxhPf607nklWEuk
-         M6Iw==
+        bh=7cLeU01iMrKTQSb7NiGqblMUa6KGJs2t7KVkHL7EHQk=;
+        b=h9Xh6ZADnvzoyAa4lzuNJ3dunqiN989gqbGwMrwuADfAobTQVl8ZYv5sh4VK+jNP48
+         l4io5Pze8UM1YrFr2W9Cd+/5tgsPnwQor6///gucqpUtAB4CEQ1H45+pFC7O8O8NWC9U
+         QWA09EwiCNs1El6NxGqC5tnHvfVbTUtSidx1f/wfOYib0Sqmv7MWBL8qqeFGEYPDX2Ra
+         vu45b+L13CyUIGYQAYWef8h0zpj4qWJKkTHO+McEwWm9JXNWJ7WoiQ7IJSjiMhpbZ67I
+         GozeHwl0TxaS61gTmWyTULXMHdGQek0xN+RfIz0BZZfyl41ywHHwgRf48J7RdJtfDkDc
+         nlaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=1D1Ag8MO1IvClr0BjaK5b1WugeUzwnrmVL7oJc6jsA0=;
-        b=JV6TZ+elxGNVEU+/NA1gr6NVQudIw1nxUyr24JwSmf4OqQ5OJZPw2JQ4g4lEFdeEx/
-         1G8UID+O5GGAN7CcBmQKH9zS+VlMbpBonM9dvN5SFFRpZO/B/7I+B9bdrRhRlnYvZs08
-         f5Cu3nypGXo7cwq+Uv6eZleKSfNShWBAxMvuFg3G0Fqij0/qRcM3YcO18fW5jAjKbsx8
-         pw6XKMIDtVGAfKQDYIcXhFK5yDqZDtXJzd5UT0UdIBnqGso6uXgSiozXU7NwYfgL4ESb
-         d9/e+/uVUw+OTWPOn70iBqTtXzKiMPp+DFSKoAnbHc+vY+QzvUR8KwmZW1k+AeHBtfJD
-         mGhg==
-X-Gm-Message-State: AO0yUKUfVSwgL9gqV3bfXwnlmg7qrsX/VBmszMGyC90D1KI7ZetpeLMe
-        gnjRzI1mMP4Ud762kwzHrmbAsQ==
-X-Google-Smtp-Source: AK7set8NZX4/q32/lsqz333FW7EvHSm0qAXd5rLJzsc55ZB27URLnTqIFBn7EamftvRWCRxoP/rpxg==
-X-Received: by 2002:a05:600c:992:b0:3df:ed95:d757 with SMTP id w18-20020a05600c099200b003dfed95d757mr7302974wmp.34.1675876220467;
-        Wed, 08 Feb 2023 09:10:20 -0800 (PST)
+        bh=7cLeU01iMrKTQSb7NiGqblMUa6KGJs2t7KVkHL7EHQk=;
+        b=Nle/BoJZhvhfiKkYzfrgaaTUZvPUSv5f8AybrYGjeiEIaXn+r0c6QLFRXsUxFwFo8+
+         q943D79gPR60E0QvuKLW62fB2teYdZzxQQ0lHo3rSBJEh+SITyZUPbSJMpMWg3kdNhNb
+         CLiT1VZnOlq/w8oWwWH7y+B6MTtCjnYMOEji2hwXcCAZpmvQsRoU86AlkafTnESt200D
+         nfe5tmsgczJ695zPOFxbBklX1UvQaj8GqjoiVX/JWHsFjHk2kytX9nKRNzTUaYWOM4vA
+         hTA09lxfs2YI5ebojhQNMr75bD+WLhyx9B5H3+h7DY9V9VQBTlpVBLaRSrD60o5CZPpw
+         JqMg==
+X-Gm-Message-State: AO0yUKU/zubnQcG95aJWMhRKQ/roUueQrjRwEt3g8Vf/pxFuLiV4U3qZ
+        I9VYVWeyCprRik6+astueXc2kw==
+X-Google-Smtp-Source: AK7set98jhEGSGk80D+eEr7eD6Owem9Ck1coSHfJWvUYUEw5nAybGY8DOyPTrpJ/86nlYwAYwgU+gw==
+X-Received: by 2002:a5d:6ac5:0:b0:2c3:ea7e:be24 with SMTP id u5-20020a5d6ac5000000b002c3ea7ebe24mr7723349wrw.28.1675876271530;
+        Wed, 08 Feb 2023 09:11:11 -0800 (PST)
 Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id a3-20020a05600c224300b003db01178b62sm2499300wmm.40.2023.02.08.09.10.18
+        by smtp.gmail.com with ESMTPSA id l11-20020a05600002ab00b002bfb5ebf8cfsm14879545wry.21.2023.02.08.09.11.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Feb 2023 09:10:19 -0800 (PST)
-Date:   Wed, 8 Feb 2023 19:10:17 +0200
+        Wed, 08 Feb 2023 09:11:10 -0800 (PST)
+Date:   Wed, 8 Feb 2023 19:11:08 +0200
 From:   Abel Vesa <abel.vesa@linaro.org>
 To:     Johan Hovold <johan@kernel.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -68,99 +68,103 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 Subject: Re: [PATCH v7 10/12] PCI: qcom: Add SM8550 PCIe support
-Message-ID: <Y+PXeYrBBL3QaznM@linaro.org>
+Message-ID: <Y+PXrFxobTf/+X+U@linaro.org>
 References: <20230203081807.2248625-1-abel.vesa@linaro.org>
  <20230203081807.2248625-11-abel.vesa@linaro.org>
  <Y9zYpE/GnxUqnIyq@hovoldconsulting.com>
  <Y+EYhe/xYSFpI1Yn@linaro.org>
  <Y+PQYxh4t/ytOe3+@hovoldconsulting.com>
+ <Y+PXeYrBBL3QaznM@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Y+PQYxh4t/ytOe3+@hovoldconsulting.com>
+In-Reply-To: <Y+PXeYrBBL3QaznM@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23-02-08 17:40:03, Johan Hovold wrote:
-> On Mon, Feb 06, 2023 at 05:11:01PM +0200, Abel Vesa wrote:
-> > On 23-02-03 10:49:24, Johan Hovold wrote:
-> > > On Fri, Feb 03, 2023 at 10:18:05AM +0200, Abel Vesa wrote:
-> > > > Add compatible for both PCIe found on SM8550.
-> > > > Also add the cnoc_pcie_sf_axi clock needed by the SM8550.
-> > > 
-> > > nit: You're now also adding 'noc_aggr'
-> > > 
-> > > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > > > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > > > Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-> > > > ---
-> 
-> > > > @@ -182,10 +182,10 @@ struct qcom_pcie_resources_2_3_3 {
-> > > >  
-> > > >  /* 6 clocks typically, 7 for sm8250 */
-> > > >  struct qcom_pcie_resources_2_7_0 {
-> > > > -	struct clk_bulk_data clks[12];
-> > > > +	struct clk_bulk_data clks[14];
-> > > >  	int num_clks;
-> > > >  	struct regulator_bulk_data supplies[2];
-> > > > -	struct reset_control *pci_reset;
-> > > > +	struct reset_control *rst;
-> > > 
-> > > Please name this one 'reset' or 'resets' (e.g. to avoid hard to parse
-> > > things like res->rst below).
+On 23-02-08 19:10:17, Abel Vesa wrote:
+> On 23-02-08 17:40:03, Johan Hovold wrote:
+> > On Mon, Feb 06, 2023 at 05:11:01PM +0200, Abel Vesa wrote:
+> > > On 23-02-03 10:49:24, Johan Hovold wrote:
+> > > > On Fri, Feb 03, 2023 at 10:18:05AM +0200, Abel Vesa wrote:
+> > > > > Add compatible for both PCIe found on SM8550.
+> > > > > Also add the cnoc_pcie_sf_axi clock needed by the SM8550.
+> > > > 
+> > > > nit: You're now also adding 'noc_aggr'
+> > > > 
+> > > > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > > > > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> > > > > Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+> > > > > ---
 > > 
-> > Well, it would then be inconsitent with 2_3_3 and 2_9_0, which both use
-> > rst.
-> 
-> Yeah, I saw that. Fortunately these resources are completely
-> independent, but whatever.
-
-Will do it in the next version then.
-
->  
-> > > >  };
-> > > >  
-> > > >  struct qcom_pcie_resources_2_9_0 {
-> > > > @@ -1177,9 +1177,9 @@ static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
-> > > >  	unsigned int idx;
-> > > >  	int ret;
-> > > >  
-> > > > -	res->pci_reset = devm_reset_control_get_exclusive(dev, "pci");
-> > > > -	if (IS_ERR(res->pci_reset))
-> > > > -		return PTR_ERR(res->pci_reset);
-> > > > +	res->rst = devm_reset_control_array_get_exclusive(dev);
-> > > > +	if (IS_ERR(res->rst))
-> > > > +		return PTR_ERR(res->rst);
+> > > > > @@ -182,10 +182,10 @@ struct qcom_pcie_resources_2_3_3 {
+> > > > >  
+> > > > >  /* 6 clocks typically, 7 for sm8250 */
+> > > > >  struct qcom_pcie_resources_2_7_0 {
+> > > > > -	struct clk_bulk_data clks[12];
+> > > > > +	struct clk_bulk_data clks[14];
+> > > > >  	int num_clks;
+> > > > >  	struct regulator_bulk_data supplies[2];
+> > > > > -	struct reset_control *pci_reset;
+> > > > > +	struct reset_control *rst;
+> > > > 
+> > > > Please name this one 'reset' or 'resets' (e.g. to avoid hard to parse
+> > > > things like res->rst below).
 > > > 
-> > > So the reset array implementation apparently both asserts and deasserts
-> > > the resets in the order specified in DT (i.e. does not deassert in
-> > > reverse order).
-> > > 
-> > > Is that ok also for the new "pci" and "link_down" resets?
+> > > Well, it would then be inconsitent with 2_3_3 and 2_9_0, which both use
+> > > rst.
 > > 
-> > According to the HPG, yes, this is perfectly fine. It specifically says
-> > to assert the pcie reset and then continues saying to assert the
-> > link_down reset.
+> > Yeah, I saw that. Fortunately these resources are completely
+> > independent, but whatever.
 > 
-> Ok, but that doesn't really say anything about whether it's ok to
-> *deassert* them in the same order, which was what I asked about.
+> Will do it in the next version then.
+> 
+> >  
+> > > > >  };
+> > > > >  
+> > > > >  struct qcom_pcie_resources_2_9_0 {
+> > > > > @@ -1177,9 +1177,9 @@ static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
+> > > > >  	unsigned int idx;
+> > > > >  	int ret;
+> > > > >  
+> > > > > -	res->pci_reset = devm_reset_control_get_exclusive(dev, "pci");
+> > > > > -	if (IS_ERR(res->pci_reset))
+> > > > > -		return PTR_ERR(res->pci_reset);
+> > > > > +	res->rst = devm_reset_control_array_get_exclusive(dev);
+> > > > > +	if (IS_ERR(res->rst))
+> > > > > +		return PTR_ERR(res->rst);
+> > > > 
+> > > > So the reset array implementation apparently both asserts and deasserts
+> > > > the resets in the order specified in DT (i.e. does not deassert in
+> > > > reverse order).
+> > > > 
+> > > > Is that ok also for the new "pci" and "link_down" resets?
+> > > 
+> > > According to the HPG, yes, this is perfectly fine. It specifically says
+> > > to assert the pcie reset and then continues saying to assert the
+> > > link_down reset.
+> > 
+> > Ok, but that doesn't really say anything about whether it's ok to
+> > *deassert* them in the same order, which was what I asked about.
+> 
+> Actually, what I wanted to say is that the HPG says something like this:
+> 
+> "assert pcie reset, then assert link_down"
+> 
+> and then at the end it literaly repeats the same phrase.
 
-Actually, what I wanted to say is that the HPG says something like this:
-
-"assert pcie reset, then assert link_down"
-
-and then at the end it literaly repeats the same phrase.
-
-
-
-
+but uses deassert instead of assert ...
 
 > 
-> Johan
+> 
+> 
+> 
+> 
+> > 
+> > Johan
