@@ -2,185 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B2D6A68E71F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 05:30:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C81668E74C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 06:05:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230469AbjBHEaO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Feb 2023 23:30:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36184 "EHLO
+        id S230263AbjBHFF2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Feb 2023 00:05:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230283AbjBHEaA (ORCPT
+        with ESMTP id S229796AbjBHFF0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Feb 2023 23:30:00 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 929B43CE05;
-        Tue,  7 Feb 2023 20:29:37 -0800 (PST)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3183rC28016240;
-        Wed, 8 Feb 2023 04:29:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=RbfsH6iSGWhosmAEQuAfOZivNbN/NeS0bDzsoeM9XV0=;
- b=oKe7Iwgk1I23+u9IWpCNgR11XkRrwNTfV86ScPppqc/IP26xHPqPyqC1ONV8REOXWojh
- rNjXgotJE3MmZHMgmv9vP4YCkrRcUnz0Bx5JzaTVxARJvJqFjJF3HM+AVGzfInaAsweT
- gP7v1Y49OnL5G9fnI6dzRU2zBPS+KiuyoHdpao/XTQvJW1I2dEEbs6euesK3giRzqY1j
- 9OVozH4cvBW5wrh8KF1jwPc9VPy/50SubZo6DM+S4BbOyTDCcS+fefG+cT5d56wQS868
- ilOTa2MkET+EB22Y+44DO2aGvsqKGXg+H0B/mnbUWs2eyhwaBqHXZaZIOBwUN5FV41ID VA== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nkeny33rs-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 08 Feb 2023 04:29:33 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3184TWDm015325
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 8 Feb 2023 04:29:32 GMT
-Received: from kathirav-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Tue, 7 Feb 2023 20:29:27 -0800
-From:   Kathiravan T <quic_kathirav@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <jassisinghbrar@gmail.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-CC:     <quic_varada@quicinc.com>, <quic_srichara@quicinc.com>,
-        Kathiravan T <quic_kathirav@quicinc.com>
-Subject: [PATCH V2 5/5] arm64: dts: qcom: ipq5332: enable the CPUFreq support
-Date:   Wed, 8 Feb 2023 09:58:50 +0530
-Message-ID: <20230208042850.1687-6-quic_kathirav@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230208042850.1687-1-quic_kathirav@quicinc.com>
-References: <20230208042850.1687-1-quic_kathirav@quicinc.com>
+        Wed, 8 Feb 2023 00:05:26 -0500
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33B891E9D8
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 21:05:26 -0800 (PST)
+Received: by mail-pg1-x530.google.com with SMTP id n3so6421639pgr.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 21:05:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ya5gJFL+sholpFu2gVvhEQXkb61wVgNoGrsK8xi1Z7M=;
+        b=YjTsp9kdEz13Y1GNS0O5pGEyWSuzSogMDi4e7ZZ7iv+IZANa948+CJPU+/06uYdiuI
+         Gghb9yPK7hJNXzFNQ8ZfboZrNIcDAIhcUwDk3RZYsxZsLFbj9LctlgfufzZINBRdA8Xb
+         SFapInnCj+0ungZBt7qV71G0MxFzBnw4U6krmO22nfdS7qe1F9BjFw3E5IXM7Aiyb3a1
+         VW0Nd6hy1INXQ8Sx3iNmy7sGVZ2LxS8Oq4s+Dudnzi6YcZIab79I78dHNFYysALOEQ/j
+         1sVe9PHlgzBQz1mAJURvaLQ5wJRIrFz6NP/d/9Q+cHPwjZVTkdIhguBLPi3UtOJy/ul1
+         CukQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ya5gJFL+sholpFu2gVvhEQXkb61wVgNoGrsK8xi1Z7M=;
+        b=VJxbskwRsWcLjiU5f68CmDzz2G5PvSZlSdavW6ukF5Rk/G21C7iDZOvtR1G/eF1XN3
+         YFgJsneiMBe38gIhmSKvOl+HvOgpGKohka6gpzLNHWe46Zn76WjDBhb2ZAkJaHI7AJ7G
+         Q52uiobHDK+9FuJGqtqcOqHDJTmAHorTtOd6EypzdU1f9c4x3C1JGzXa2AWRDdTxqm31
+         rhNIHvIWf02lBNdxmvemvVvtcjzyycbYk2/LESr+MPhcGgmGItC/+tHyU/siKwGAziqw
+         4HbD495ZqIo7gyuTYzwO20GSXynjBLLhxBsJZRAScOOxdrbHIk0y7OAzWta5qtvR+67f
+         GG/A==
+X-Gm-Message-State: AO0yUKVDoaZDTL3mUhwrCYMR+WW6hNinxK2TciGhopAFnyqZZ7XE69aj
+        5fP67yQUjABCOr6CF7deNuKeFA==
+X-Google-Smtp-Source: AK7set9UuA7k0BjdlRO0q39ZKPIN4H6BAK2nzgdoKHGELVuwsO4MfgZ2/oEHq4b2N3zB9KZnbyJYyQ==
+X-Received: by 2002:a62:1a89:0:b0:594:26a7:cbd2 with SMTP id a131-20020a621a89000000b0059426a7cbd2mr875118pfa.8.1675832725646;
+        Tue, 07 Feb 2023 21:05:25 -0800 (PST)
+Received: from localhost ([122.172.83.155])
+        by smtp.gmail.com with ESMTPSA id x14-20020aa793ae000000b005a6cb51f240sm2867924pff.109.2023.02.07.21.05.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Feb 2023 21:05:25 -0800 (PST)
+Date:   Wed, 8 Feb 2023 10:35:23 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
+        Markus Mayer <mmayer@broadcom.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Kevin Hilman <khilman@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-omap@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, kernel@pengutronix.de
+Subject: Re: [PATCH] cpufreq: Make cpufreq_unregister_driver() return void
+Message-ID: <20230208050523.p6437bes6cmpd33k@vireshk-i7>
+References: <20230207195909.474953-1-u.kleine-koenig@pengutronix.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: UIZJNuPVnFXafDlTEFSeJ8J9DflKrBwe
-X-Proofpoint-ORIG-GUID: UIZJNuPVnFXafDlTEFSeJ8J9DflKrBwe
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-02-07_15,2023-02-06_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
- clxscore=1015 phishscore=0 spamscore=0 lowpriorityscore=0 suspectscore=0
- impostorscore=0 priorityscore=1501 malwarescore=0 mlxlogscore=999
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302080040
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230207195909.474953-1-u.kleine-koenig@pengutronix.de>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the APCS, A53 PLL, cpu-opp-table nodes to bump the CPU frequency
-above 800MHz.
+On 07-02-23, 20:59, Uwe Kleine-König wrote:
+> All but a few drivers ignore the return value of
+> cpufreq_unregister_driver(). Those few that don't only call it after
+> cpufreq_register_driver() succeeded, in which case the call doesn't
+> fail.
+> 
+> Make the function return no value and add a WARN_ON for the case that
+> the function is called in an invalid situation (i.e. without a previous
+> successful call to cpufreq_register_driver()).
+> 
+> Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+> ---
+>  drivers/cpufreq/brcmstb-avs-cpufreq.c | 5 +----
+>  drivers/cpufreq/cpufreq.c             | 8 +++-----
+>  drivers/cpufreq/davinci-cpufreq.c     | 4 +++-
+>  drivers/cpufreq/mediatek-cpufreq-hw.c | 4 +++-
+>  drivers/cpufreq/omap-cpufreq.c        | 4 +++-
+>  drivers/cpufreq/qcom-cpufreq-hw.c     | 4 +++-
+>  include/linux/cpufreq.h               | 2 +-
+>  7 files changed, 17 insertions(+), 14 deletions(-)
 
-Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
----
-Changes in V2:
-	- No changes
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
 
- arch/arm64/boot/dts/qcom/ipq5332.dtsi | 37 +++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-index bdf33ef30e10..cec2828c51f8 100644
---- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-@@ -5,6 +5,7 @@
-  * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
-+#include <dt-bindings/clock/qcom,apss-ipq.h>
- #include <dt-bindings/clock/qcom,ipq5332-gcc.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- 
-@@ -35,6 +36,8 @@
- 			reg = <0x0>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
-+			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
-+			operating-points-v2 = <&cpu_opp_table>;
- 		};
- 
- 		CPU1: cpu@1 {
-@@ -43,6 +46,8 @@
- 			reg = <0x1>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
-+			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
-+			operating-points-v2 = <&cpu_opp_table>;
- 		};
- 
- 		CPU2: cpu@2 {
-@@ -51,6 +56,8 @@
- 			reg = <0x2>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
-+			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
-+			operating-points-v2 = <&cpu_opp_table>;
- 		};
- 
- 		CPU3: cpu@3 {
-@@ -59,6 +66,8 @@
- 			reg = <0x3>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
-+			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
-+			operating-points-v2 = <&cpu_opp_table>;
- 		};
- 
- 		L2_0: l2-cache {
-@@ -67,6 +76,16 @@
- 		};
- 	};
- 
-+	cpu_opp_table: opp-table-cpu{
-+		compatible = "operating-points-v2";
-+		opp-shared;
-+
-+		opp-1488000000 {
-+			opp-hz = /bits/ 64 <1488000000>;
-+			clock-latency-ns = <200000>;
-+		};
-+	};
-+
- 	firmware {
- 		scm {
- 			compatible = "qcom,scm-ipq5332", "qcom,scm";
-@@ -199,6 +218,24 @@
- 			};
- 		};
- 
-+		apcs_glb: mailbox@b111000 {
-+			compatible = "qcom,ipq5332-apcs-apps-global",
-+				     "qcom,ipq6018-apcs-apps-global";
-+			reg = <0x0b111000 0x1000>;
-+			#clock-cells = <1>;
-+			clocks = <&a53pll>, <&xo_board>;
-+			clock-names = "pll", "xo";
-+			#mbox-cells = <1>;
-+		};
-+
-+		a53pll: clock@b116000 {
-+			compatible = "qcom,ipq5332-a53pll";
-+			reg = <0x0b116000 0x40>;
-+			#clock-cells = <0>;
-+			clocks = <&xo_board>;
-+			clock-names = "xo";
-+		};
-+
- 		timer@b120000 {
- 			compatible = "arm,armv7-timer-mem";
- 			reg = <0x0b120000 0x1000>;
 -- 
-2.17.1
-
+viresh
