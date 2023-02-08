@@ -2,81 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B51D68E95F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 08:56:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C7B968E96B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 08:57:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230504AbjBHH4Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Feb 2023 02:56:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43006 "EHLO
+        id S231146AbjBHH5h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Feb 2023 02:57:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230182AbjBHH4W (ORCPT
+        with ESMTP id S231182AbjBHH5d (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Feb 2023 02:56:22 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7413A212B7
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 23:56:21 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id u10so9647407wmj.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 23:56:21 -0800 (PST)
+        Wed, 8 Feb 2023 02:57:33 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB58F3A866
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Feb 2023 23:57:26 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id bg26so12728499wmb.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Feb 2023 23:57:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ETxDvVj98k7PU9AtIH67/6OJT7NKyjfCHV6l1l+MNQQ=;
-        b=JYXVjCxpNpr225kycoOKCpYUv9d7TUOsBrEU89nBfVKya6Dua1U16VPiPJ+uJfN4en
-         AWSKutDat+UFJUxzYXSE8VwBtHCFQB4TTMYKrLFcfpluBgJmKU+RFFJ7UpvgtzC+iajr
-         JIvfz50BvS4N8o3NNxc4LZ3Ml6IWlJqgxTn9GfkuL8Rpvz+OarEcBGjAtGa7hPh3lrit
-         3Cv+S2ov7vm80nv+NmAjxTaUJ+u/lv1h5az4msh01dBrx6HDpPtavEXy9jod1UgboOdK
-         LSdREKHCZFuacyIbvWoUOHSJwpvioc1k2jFMC5f/d+53erhNUTHyiAA1uZ5X2YM6tE/X
-         oeXg==
+        bh=kHdEEbuiyGXuJqK27P1PHI1QnjGoBHWfXyeeEoL3wJI=;
+        b=x4VrFGbpQ7JNGyMEjjdjc7T/aI00idY8uUvx7sfMbsZ4nY/jrODkSzgV9f49HUJj5Z
+         IPw2SbvHardpk1eDcHP5zKYFFnvckblxQZQEMtDUsGAxGGOAjKEFk5IISv2vsFxN3T5a
+         gAjtWfZCVaeEaATUXT2XyJZoswJHu3R4x10odU/IwY6wVVp73Aee/YZ7gk41TnK/jA94
+         V3J3WzJhaBqMxDk0HV5u9j1T/5h6yJjD1UOLKm1lbhd7kuO5xe6foUmC2xaDtYF9V3p3
+         j8dOsN8j2afm0GjfcIR2SxugvpHi2CvDfolkB3mJ6V3CKEw5osmRybRXpWhnbeu3iHcY
+         3Cwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ETxDvVj98k7PU9AtIH67/6OJT7NKyjfCHV6l1l+MNQQ=;
-        b=fX6fT/c6Qwloq4YnIaA3JgW+85QQ2sQ8W1mRk1KqE27fzHuU4HF1FLhXrNaVf8dVRe
-         rM/31WxBzu4wKsTqKxH0uqD0T4c5SAljvbGts059BQlfRBFmBxV241DXasPtNDD+UHoX
-         PCOKBKKvwKmlma3cz3HX3X7i5XtrzLHKUNBq01QhyQebx8YsU+R6bgbjd3AUzP64Hov2
-         Uv/wrmcdxjpYsKC/LNypH7Z3AKpxhKrmCYCGLcrURUI0oTZ1+i68R/Ivg+tsPXd4exkh
-         +9TpK5NJWcxJARgMqaIa1rHFWp54AIPD54fAPQHSigujPCfT34FXZEROOFjZaifJP6F4
-         6BTQ==
-X-Gm-Message-State: AO0yUKUAF0M51xLWJy9MpTrh4NJkXh+lncuD0F9hTbiP5G2n/XqKrbdN
-        APfiLmTeYP136fWedwHV8UYgwA==
-X-Google-Smtp-Source: AK7set/nmPCad66nOdzB/ATnH2t6UekYKNilUC2JCRegAFqTQjcMwBcwNJH1PAkPH6wxUnVbqd+KHg==
-X-Received: by 2002:a05:600c:2e96:b0:3df:7948:886b with SMTP id p22-20020a05600c2e9600b003df7948886bmr5383344wmn.31.1675842980005;
-        Tue, 07 Feb 2023 23:56:20 -0800 (PST)
+        bh=kHdEEbuiyGXuJqK27P1PHI1QnjGoBHWfXyeeEoL3wJI=;
+        b=fbVvyX3U4sm2292UL2/kf2yCh7hVUaLzLfHUb0pZJAeGGKVbJgSd9232ZrbBUEKpHy
+         5rRKu5IRVXO0aKI/x+xCXjqYXyyrYzz2Enf42c7mCwYzqmWVsTkJihNgfVHYt1iXOjfE
+         sQeU95XJTPr4rCZbAtYFAc/sP/bNRMiTkvVRSGxxjM57QBNvDsnxMS1sQ4m3l31oNl5F
+         2OnwTJK76S0w8PIwWpU8RI/Wcm8ni4xZOTARCqCqpDhks4Uc+87iHm3ppwgNU4y3tSUZ
+         zFcxz+UCvLddnfwFac9ZVNFE4++KJCtQORD5SMdxgDW4X8sksOitpwKEVaWLkhWV6Asn
+         o8cA==
+X-Gm-Message-State: AO0yUKXw56mfugsh3+qZshVUoBfMelLXdn+rS6bWz/QLqYM3+hzeaIZ1
+        jecYToDmk8j1u95lx+WYqdfSIw==
+X-Google-Smtp-Source: AK7set9iIl4e8crahaQ2Zidc4dX7xZdna97uQblzvc3bl/bCN832Jk/IdpxvpEl+xXlVRXsYXGJc1w==
+X-Received: by 2002:a05:600c:a287:b0:3df:fff4:5f6f with SMTP id hu7-20020a05600ca28700b003dffff45f6fmr5697696wmb.36.1675843045484;
+        Tue, 07 Feb 2023 23:57:25 -0800 (PST)
 Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id j22-20020a05600c485600b003dc521f336esm1062428wmo.14.2023.02.07.23.56.18
+        by smtp.gmail.com with ESMTPSA id bi5-20020a05600c3d8500b003d9aa76dc6asm1228421wmb.0.2023.02.07.23.57.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Feb 2023 23:56:19 -0800 (PST)
-Message-ID: <f80c617c-f595-bdc3-44d0-d29b3fff989e@linaro.org>
-Date:   Wed, 8 Feb 2023 08:56:17 +0100
+        Tue, 07 Feb 2023 23:57:24 -0800 (PST)
+Message-ID: <de5505aa-ce6c-1164-ff67-ac883268ad72@linaro.org>
+Date:   Wed, 8 Feb 2023 08:57:22 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [PATCH v5 2/3] dt-bindings: cpufreq: qcom-cpufreq-nvmem: make cpr
- bindings optional
-To:     Christian Marangi <ansuelsmth@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230131151819.16612-1-ansuelsmth@gmail.com>
- <20230131151819.16612-2-ansuelsmth@gmail.com>
- <1670489b-e4f0-7328-3dbb-d849d1d6bd7e@linaro.org>
- <63e2e854.df0a0220.52915.56aa@mx.google.com>
+Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom,ids: Add IDs for IPQ5332 and
+ its variant
 Content-Language: en-US
+To:     Kathiravan T <quic_kathirav@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     quic_varada@quicinc.com, quic_srichara@quicinc.com
+References: <20230208055709.13162-1-quic_kathirav@quicinc.com>
+ <20230208055709.13162-2-quic_kathirav@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <63e2e854.df0a0220.52915.56aa@mx.google.com>
+In-Reply-To: <20230208055709.13162-2-quic_kathirav@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -89,47 +79,14 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/02/2023 01:09, Christian Marangi wrote:
-> On Wed, Feb 01, 2023 at 09:20:39AM +0100, Krzysztof Kozlowski wrote:
->> On 31/01/2023 16:18, Christian Marangi wrote:
->>> The qcom-cpufreq-nvmem driver supports 2 kind of devices:
->>> - pre-cpr that doesn't have power-domains and base everything on nvmem
->>>   cells and multiple named microvolt bindings.
->>>   Doesn't need required-opp binding in the opp nodes as they are only
->>>   used for genpd based devices.
->>> - cpr-based that require power-domain in the cpu nodes and use various
->>>   source to decide the correct voltage and freq
->>>   Require required-opp binding since they need to be linked to the
->>>   related opp-level.
->>>
->>> When the schema was introduced, it was wrongly set to always require these
->>> binding but this is not the case for pre-cpr devices.
->>>
->>> Make the power-domain and the required-opp optional and set them required
->>> only for qcs404 based devices.
->>>
->>> Fixes: ec24d1d55469 ("dt-bindings: opp: Convert qcom-nvmem-cpufreq to DT schema")
->>
->> Fixes go as first patches in the series.
->>
+On 08/02/2023 06:57, Kathiravan T wrote:
+> Add SOC ID for Qualcomm IPQ5332 and IPQ5322 variants.
 > 
-> Hi,
-> this is problematic. This documentation is a bit special.
-> 
-> v4 had this patch as first but this cause error with make
-> dt_binding_check as the schema will be effectively empty (as it will
-> have only if condition)
-> 
-> This is why I pushed v5 that swap this with the second patch and first
-> add non conditional stuff to the schema and only with the second patch
-> makes them conditional.
-> 
-> Any hint to handle this corner case? I'm having some diffiulties due to
-> how special this is but we really need this fix since it's blocking the
-> introduction of opp table for ipq806x and ipq807x (as the schema is
-> currently flawed)
+> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+> ---
 
-Let's then drop fixes tag, because it will only confuse any backporters.
+
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
