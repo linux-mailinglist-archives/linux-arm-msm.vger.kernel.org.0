@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E0AA968EB86
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 10:35:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C0A468EB8F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 10:36:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230134AbjBHJfU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Feb 2023 04:35:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54722 "EHLO
+        id S230135AbjBHJgK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Feb 2023 04:36:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229834AbjBHJfO (ORCPT
+        with ESMTP id S230207AbjBHJgI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Feb 2023 04:35:14 -0500
+        Wed, 8 Feb 2023 04:36:08 -0500
 Received: from mxhk.zte.com.cn (mxhk.zte.com.cn [63.216.63.35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEF34FF05;
-        Wed,  8 Feb 2023 01:34:57 -0800 (PST)
-Received: from mse-fl2.zte.com.cn (unknown [10.5.228.133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E69F545BE6;
+        Wed,  8 Feb 2023 01:35:54 -0800 (PST)
+Received: from mse-fl1.zte.com.cn (unknown [10.5.228.132])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mxhk.zte.com.cn (FangMail) with ESMTPS id 4PBZbN2knBz6FK2Q;
-        Wed,  8 Feb 2023 17:34:56 +0800 (CST)
-Received: from xaxapp03.zte.com.cn ([10.88.97.17])
-        by mse-fl2.zte.com.cn with SMTP id 3189YmNA096551;
-        Wed, 8 Feb 2023 17:34:48 +0800 (+08)
+        by mxhk.zte.com.cn (FangMail) with ESMTPS id 4PBZcT41mLz6FK2d;
+        Wed,  8 Feb 2023 17:35:53 +0800 (CST)
+Received: from xaxapp02.zte.com.cn ([10.88.97.241])
+        by mse-fl1.zte.com.cn with SMTP id 3189ZfZF079195;
+        Wed, 8 Feb 2023 17:35:41 +0800 (+08)
         (envelope-from ye.xingchen@zte.com.cn)
 Received: from mapi (xaxapp01[null])
         by mapi (Zmail) with MAPI id mid31;
-        Wed, 8 Feb 2023 17:34:51 +0800 (CST)
-Date:   Wed, 8 Feb 2023 17:34:51 +0800 (CST)
-X-Zmail-TransId: 2af963e36cbb2606f377
+        Wed, 8 Feb 2023 17:35:44 +0800 (CST)
+Date:   Wed, 8 Feb 2023 17:35:44 +0800 (CST)
+X-Zmail-TransId: 2af963e36cf01197122e
 X-Mailer: Zmail v1.0
-Message-ID: <202302081734511884545@zte.com.cn>
+Message-ID: <202302081735440864562@zte.com.cn>
 Mime-Version: 1.0
 From:   <ye.xingchen@zte.com.cn>
 To:     <lee@kernel.org>
 Cc:     <agross@kernel.org>, <andersson@kernel.org>,
         <konrad.dybcio@linaro.org>, <linux-arm-msm@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>
-Subject: =?UTF-8?B?W1BBVENIXSBtZmQ6IHFjb21fcnBtOiB1c2UgZGV2bV9wbGF0Zm9ybV9nZXRfYW5kX2lvcmVtYXBfcmVzb3VyY2UoKQ==?=
+Subject: =?UTF-8?B?W1BBVENIXSBtZmQ6IHNzYmk6IHVzZSBkZXZtX3BsYXRmb3JtX2dldF9hbmRfaW9yZW1hcF9yZXNvdXJjZSgp?=
 Content-Type: text/plain;
         charset="UTF-8"
-X-MAIL: mse-fl2.zte.com.cn 3189YmNA096551
+X-MAIL: mse-fl1.zte.com.cn 3189ZfZF079195
 X-Fangmail-Gw-Spam-Type: 0
-X-FangMail-Miltered: at cgslv5.04-192.168.250.138.novalocal with ID 63E36CC0.000 by FangMail milter!
-X-FangMail-Envelope: 1675848896/4PBZbN2knBz6FK2Q/63E36CC0.000/10.5.228.133/[10.5.228.133]/mse-fl2.zte.com.cn/<ye.xingchen@zte.com.cn>
+X-FangMail-Miltered: at cgslv5.04-192.168.250.138.novalocal with ID 63E36CF9.002 by FangMail milter!
+X-FangMail-Envelope: 1675848953/4PBZcT41mLz6FK2d/63E36CF9.002/10.5.228.132/[10.5.228.132]/mse-fl1.zte.com.cn/<ye.xingchen@zte.com.cn>
 X-Fangmail-Anti-Spam-Filtered: true
-X-Fangmail-MID-QID: 63E36CC0.000/4PBZbN2knBz6FK2Q
+X-Fangmail-MID-QID: 63E36CF9.002/4PBZcT41mLz6FK2d
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
         SPF_PASS,UNPARSEABLE_RELAY autolearn=ham autolearn_force=no
         version=3.4.6
@@ -63,30 +63,30 @@ what this function does.
 
 Signed-off-by: Ye Xingchen <ye.xingchen@zte.com.cn>
 ---
- drivers/mfd/qcom_rpm.c | 4 +---
+ drivers/mfd/ssbi.c | 4 +---
  1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/mfd/qcom_rpm.c b/drivers/mfd/qcom_rpm.c
-index 8fea0e511550..086611322874 100644
---- a/drivers/mfd/qcom_rpm.c
-+++ b/drivers/mfd/qcom_rpm.c
-@@ -530,7 +530,6 @@ static int qcom_rpm_probe(struct platform_device *pdev)
+diff --git a/drivers/mfd/ssbi.c b/drivers/mfd/ssbi.c
+index 94f60df0decd..dee89db3471d 100644
+--- a/drivers/mfd/ssbi.c
++++ b/drivers/mfd/ssbi.c
+@@ -262,7 +262,6 @@ EXPORT_SYMBOL_GPL(ssbi_write);
+ static int ssbi_probe(struct platform_device *pdev)
  {
- 	const struct of_device_id *match;
- 	struct device_node *syscon_np;
--	struct resource *res;
- 	struct qcom_rpm *rpm;
- 	u32 fw_version[3];
- 	int irq_wakeup;
-@@ -576,8 +575,7 @@ static int qcom_rpm_probe(struct platform_device *pdev)
- 		return -ENODEV;
- 	rpm->data = match->data;
+ 	struct device_node *np = pdev->dev.of_node;
+-	struct resource *mem_res;
+ 	struct ssbi *ssbi;
+ 	const char *type;
 
--	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
--	rpm->status_regs = devm_ioremap_resource(&pdev->dev, res);
-+	rpm->status_regs = devm_platform_get_and_ioremap_resource(pdev, 0, NULL);
- 	if (IS_ERR(rpm->status_regs))
- 		return PTR_ERR(rpm->status_regs);
- 	rpm->ctrl_regs = rpm->status_regs + 0x400;
+@@ -270,8 +269,7 @@ static int ssbi_probe(struct platform_device *pdev)
+ 	if (!ssbi)
+ 		return -ENOMEM;
+
+-	mem_res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+-	ssbi->base = devm_ioremap_resource(&pdev->dev, mem_res);
++	ssbi->base = devm_platform_get_and_ioremap_resource(pdev, 0, NULL);
+ 	if (IS_ERR(ssbi->base))
+ 		return PTR_ERR(ssbi->base);
+
 -- 
 2.25.1
