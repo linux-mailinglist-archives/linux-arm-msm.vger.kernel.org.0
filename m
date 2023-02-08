@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 37D3C68F710
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 19:38:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C7BF68F712
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Feb 2023 19:38:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230403AbjBHSiW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Feb 2023 13:38:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39612 "EHLO
+        id S229740AbjBHSit (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Feb 2023 13:38:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229740AbjBHSiV (ORCPT
+        with ESMTP id S229679AbjBHSiV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Wed, 8 Feb 2023 13:38:21 -0500
-Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F54B1A945
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Feb 2023 10:38:10 -0800 (PST)
-Received: by mail-ej1-x643.google.com with SMTP id jg8so13758990ejc.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Feb 2023 10:38:10 -0800 (PST)
+Received: from mail-ed1-x543.google.com (mail-ed1-x543.google.com [IPv6:2a00:1450:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E88072BECB
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Feb 2023 10:38:11 -0800 (PST)
+Received: by mail-ed1-x543.google.com with SMTP id m8so21723131edd.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Feb 2023 10:38:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ITYwvQKOh1EHW+/stMcAlY0XUScWUl1QlZHx90l/TYw=;
-        b=OpSPzq2XkHHy09BppC3vzCg4uFSGXrbQbunpO1o+TcH0OlSBlkIrRi+dFpa+EholoB
-         UPA5wsguCk2P3165vybbPmT4DfWDFeP4UgHK5oeU1c8p8mvmsldOY20bLV0j8ducU0bv
-         n0AdRj9Ikm6vVwqdh+C8eLsFur8ECMHdG6HR8SGwd6XHeAZ9vX2U45+eCLk/B03Q9uRT
-         QXDuHtpE/gHGRhNQZsv38JGSIaRsh1ajoVBFw5nsaf3L3l5fc4BdaItcKK4UGyM1Rccz
-         3Bb69rA1jPRiYFWpOPrcZY+LYNIi70SlOrnkC7L2pedMmQgu4kq8LM87I8kVXJBR6V+D
-         wvMQ==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Rf0VgEByS+dEGqCN3splXKV9KTkduOfaE2qRRkUgcps=;
+        b=otfIg0lMcA0LiEEexjKctTDxFiwun8LBerKGA2G07WULFCmFiExXjVN36Ni+f1DCAi
+         uovh1uNcC+v1RwwFjkokwxalcQ3W9NZLczb8O8uwwzBNT86burdXkGfXtThYQMNWDy7T
+         y+DpdwySYoqrG0rymffiV0H3khIY6UFLR/5qO6zdx1gEgHOhWOi12swFUpMBSl+M9k9+
+         hatGrfocdXqfAbohZclNnQ94sQqpT6lCIENh9kWsZd8m/KdtJD4XHFWG5H0k7UEqA567
+         PLNwtEOHeTHtrgP5tamJ0EwwbA1MXEMDc480/tUtaOXy9RXuuOGLj697ffiq9eUvsTIO
+         InFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ITYwvQKOh1EHW+/stMcAlY0XUScWUl1QlZHx90l/TYw=;
-        b=ObvQg5Mlxe53rO5FfU1WIAgyCOjRmNX8DAaGcMPpfVnXT1ulC7K4dmdR1iLjvSqXCl
-         sDtx8Dnk8wTEW5Z3W319Ql8lCNQWun4EYeiO+5efalWMo83VpgmyHGU8/y9eCpErXtHU
-         NF9m5hQ/ywoXmUf8Z0Jv1etgNrG1CVcssta9jjnd6GymD9M9s6hv4yQXIRMz/dukfuAy
-         0nHeQql6J9hU4uKsuA54AX6aqc/nBbHnJFkRfDaV8HdKQ6N/IyW3+jd5reXFEjdux2zi
-         Wi5pf8FJlRP8gci8QZXNI8v5MprmWn+XLbhf5yiij0syi6u9NJee8zYEt4QwHr6HID8I
-         ZxqA==
-X-Gm-Message-State: AO0yUKUAie+RztPdOXdc1xhgNDqY6eB6jP90XyMCja+nnU6Ux4R1gf6m
-        8tg4AAng4fngJTK6xZ+ywiajmw==
-X-Google-Smtp-Source: AK7set8DKCReVwHT9EMd9k0fgLQH/HefKLeTt92hYll39OEPFsA7rFjPN02mBMvHDBMke/kBetdHSw==
-X-Received: by 2002:a17:906:2085:b0:8aa:a9df:b7f0 with SMTP id 5-20020a170906208500b008aaa9dfb7f0mr7026593ejq.7.1675881488728;
-        Wed, 08 Feb 2023 10:38:08 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Rf0VgEByS+dEGqCN3splXKV9KTkduOfaE2qRRkUgcps=;
+        b=Oeoah4kSvEgIg2QOgYIKPx1idc94B154hLIpXNfiRs04xR9t1oKpSTT9MJ3vAtTsbs
+         h3iBNU81WhKGzFi1jGf8tow/c6+p5agj2dfgYA0eu94ByCljO59EcRP61gCwdeptJSUG
+         PE+DFBj6Ed/q8ba+i+rRYNja/W4ui9pbVr4u9cddOq49DJuO7fkBcB5XQATO8AjtPpHs
+         X772PgLf8FwkyxfvTXnasSfa2SqdsH3nJEp9oitJYHHX4GNAXwd+EgXkWgofQcoUX7R0
+         n139Ta2vbFzO9V8RKdZVZwDN8QBXZU415WeSazG7J2atv2OjNMhuezF8ft1n8OYgXcFx
+         +jPw==
+X-Gm-Message-State: AO0yUKVeyt2jogLGksSVoEV95GhOaunmr2k7YfcGYq6gwdxZm+mjSI3f
+        TSLQ26gM9uWnempUM/6vxtqUlA==
+X-Google-Smtp-Source: AK7set+Q6k8e3Qkz/CA4VS2kB34Azo854Lo4l8KjuohfIBc46OuJ76vovKvUhG5n/f9vvR54+m1kPQ==
+X-Received: by 2002:a05:6402:5205:b0:4aa:a501:9bce with SMTP id s5-20020a056402520500b004aaa5019bcemr10596363edd.0.1675881490559;
+        Wed, 08 Feb 2023 10:38:10 -0800 (PST)
 Received: from localhost.localdomain (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id d22-20020a50cd56000000b004aaa8e65d0esm5179663edj.84.2023.02.08.10.38.07
+        by smtp.gmail.com with ESMTPSA id d22-20020a50cd56000000b004aaa8e65d0esm5179663edj.84.2023.02.08.10.38.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Feb 2023 10:38:08 -0800 (PST)
+        Wed, 08 Feb 2023 10:38:09 -0800 (PST)
 From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -60,161 +61,145 @@ Cc:     Rob Herring <robh+dt@kernel.org>,
         Andy Gross <agross@kernel.org>,
         "David S. Miller" <davem@davemloft.net>,
         devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-crypto@vger.kernel.org
-Subject: [PATCH v9 00/14] crypto: qcom-qce: Add YAML bindings & support for newer SoCs
-Date:   Wed,  8 Feb 2023 20:37:41 +0200
-Message-Id: <20230208183755.2907771-1-vladimir.zapolskiy@linaro.org>
+        linux-crypto@vger.kernel.org, Rob Herring <robh@kernel.org>,
+        Jordan Crouse <jorcrous@amazon.com>
+Subject: [PATCH v9 01/14] dt-bindings: qcom-qce: Convert bindings to yaml
+Date:   Wed,  8 Feb 2023 20:37:42 +0200
+Message-Id: <20230208183755.2907771-2-vladimir.zapolskiy@linaro.org>
 X-Mailer: git-send-email 2.33.0
+In-Reply-To: <20230208183755.2907771-1-vladimir.zapolskiy@linaro.org>
+References: <20230208183755.2907771-1-vladimir.zapolskiy@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The series contains Qualcomm Crypto Engine dts and driver changes,
-which modify a set of accepted compatible property values, this is
-needed to provide a unified and fine-grained support of the driver
-on old and new platforms. In addition due to QCE IP changes on new
-Qualcomm platforms, it is reflected in updates to valid device tree
-properties, namely added iommu, interconnects and optional clocks.
+From: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 
-Changes since v8:
-=================
-- v8 can be found here: https://lore.kernel.org/all/20230202135036.2635376-1-vladimir.zapolskiy@linaro.org/
-- Rebased the series on top of linux-next, sm8550 qce support is already
-  found in the tree,
-- Reduced the list of QCE IP compatibles in the driver, added one more
-  compatible for backward DTB ABI compatibility,
-- Replaced a documentation change from Neil Armstrong by a more advanced
-  version of it per review comments from Krzysztof Kozlowski about clock
-  and clock-names properties,
-- Added changes to all relevant Qualcomm platform dtsi files according to
-  the changes in the scheme file,
-- Added QCE support on SM8250 platform.
+Convert Qualcomm QCE crypto devicetree binding to YAML.
 
-Changes since v7:
-=================
-- v7 can be found here: https://lore.kernel.org/linux-arm-msm/20220920114051.1116441-1-bhupesh.sharma@linaro.org
-- Added a change by Neil Armstrong to document clocks and clock-names
-  properties as optional,
-- At the moment do not add Bhupesh as a new QCE driver maintainer,
-- Minor updates to device tree binding documentation and qce driver,
-  in particular added more compatibles and fixed lesser issues.
-
-Changes since v6:
-=================
-- v6 can be seen here: https://lore.kernel.org/linux-arm-msm/30756e6f-952f-ccf2-b493-e515ba4f0a64@linaro.org/
-- As per Krzysztof's suggestion on v6, clubbed the crypto driver and
-  dt-bindings changes together. Now the overall v5 patchset into 3
-  separate patchsets, one each for the following areas to allow easier
-  review and handling from the maintainer:
-	arm-msm, crypto and dma
-
-Changes since v5:
-=================
-- v5 can be seen here: https://lore.kernel.org/lkml/20211110105922.217895-1-bhupesh.sharma@linaro.org/
-- As per Bjorn's suggestion on irc, broke down the patchset into 4
-  separate patchsets, one each for the following areas to allow easier
-  review and handling from the maintainer:
-	arm-msm, crypto, dma and devicetree
-- Addressed Rob's, Vladimir's and Bjorn's review comments received on
-  v5.
-- Added Tested-by from Jordan received on the v5.
-
-Changes since v4:
-=================
-- v4 for sm8250 can be seen here: https://lore.kernel.org/linux-arm-msm/20211013105541.68045-1-bhupesh.sharma@linaro.org/
-- v1 for sm8150 qce enablement can be seen here: https://lore.kernel.org/linux-arm-msm/20211013165823.88123-1-bhupesh.sharma@linaro.org/
-- Merged the sm8150 and sm8250 enablement patches in the same patchset,
-  as per suggestions from Bjorn.
-- Dropped a couple of patches from v4, as these have been picked by
-  Bjorn already via his tree.
-- Addressed review comments from Vladimir, Thara and Rob.
-- Collect Reviewed-by from Rob and Thara on some of the patches from the
-  v4 patchset.
-
-Changes since v3:
-=================
-- v3 can be seen here: https://lore.kernel.org/linux-arm-msm/20210519143700.27392-1-bhupesh.sharma@linaro.org/
-- Dropped a couple of patches from v3, on basis of the review comments:
-   ~ [PATCH 13/17] crypto: qce: core: Make clocks optional
-   ~ [PATCH 15/17] crypto: qce: Convert the device found dev_dbg() to dev_info()
-- Addressed review comments from Thara, Rob and Stephan Gerhold.
-- Collect Reviewed-by from Rob and Thara on some of the patches from the
-  v3 patchset.
-
-Changes since v2:
-=================
-- v2 can be seen here: https://lore.kernel.org/dmaengine/20210505213731.538612-1-bhupesh.sharma@linaro.org/
-- Drop a couple of patches from v1, which tried to address the defered
-  probing of qce driver in case bam dma driver is not yet probed.
-  Replace it instead with a single (simpler) patch [PATCH 16/17].
-- Convert bam dma and qce crypto dt-bindings to YAML.
-- Addressed review comments from Thara, Bjorn, Vinod and Rob.
-
-Changes since v1:
-=================
-- v1 can be seen here: https://lore.kernel.org/linux-arm-msm/20210310052503.3618486-1-bhupesh.sharma@linaro.org/
-- v1 did not work well as reported earlier by Dmitry, so v2 contains the following
-  changes/fixes:
-  ~ Enable the interconnect path b/w BAM DMA and main memory first
-    before trying to access the BAM DMA registers.
-  ~ Enable the interconnect path b/w qce crytpo and main memory first
-    before trying to access the qce crypto registers.
-  ~ Make sure to document the required and optional properties for both
-    BAM DMA and qce crypto drivers.
-  ~ Add a few debug related print messages in case the qce crypto driver
-    passes or fails to probe.
-  ~ Convert the qce crypto driver probe to a defered one in case the BAM DMA
-    or the interconnect driver(s) (needed on specific Qualcomm parts) are not
-    yet probed.
-
-Qualcomm crypto engine (qce) is available on several Snapdragon SoCs.
-The qce block supports hardware accelerated algorithms for encryption
-and authentication. It also provides support for aes, des, 3des
-encryption algorithms and sha1, sha256, hmac(sha1), hmac(sha256)
-authentication algorithms.
-
-Bhupesh Sharma (4):
-  dt-bindings: qcom-qce: Convert bindings to yaml
-  MAINTAINERS: Add qcom-qce dt-binding file to QUALCOMM CRYPTO DRIVERS section
-  dt-bindings: qcom-qce: Add 'interconnects' and 'interconnect-names'
-  dt-bindings: qcom-qce: Add 'iommus' to optional properties
-
-Thara Gopinath (2):
-  crypto: qce: core: Add support to initialize interconnect path
-  crypto: qce: core: Make clocks optional
-
-Vladimir Zapolskiy (8):
-  dt-bindings: qcom-qce: Add new SoC compatible strings for qcom-qce
-  dt-bindings: qcom-qce: document optional clocks and clock-names properties
-  arm: dts: qcom: ipq4019: update a compatible for QCE IP on IPQ4019 SoC
-  arm64: dts: qcom: msm8996: update QCE compatible according to a new scheme
-  arm64: dts: qcom: sdm845: update QCE compatible according to a new scheme
-  arm64: dts: qcom: sm8550: add a family compatible for QCE IP
-  arm64: dts: qcom: sm8250: add description of Qualcomm Crypto Engine IP
-  crypto: qce: core: Add a compatible based on a SoC name
-
- .../devicetree/bindings/crypto/qcom-qce.txt   |  25 ----
- .../devicetree/bindings/crypto/qcom-qce.yaml  | 116 ++++++++++++++++++
- MAINTAINERS                                   |   1 +
- arch/arm/boot/dts/qcom-ipq4019.dtsi           |   2 +-
- arch/arm64/boot/dts/qcom/msm8996.dtsi         |   2 +-
- arch/arm64/boot/dts/qcom/sdm845.dtsi          |   2 +-
- arch/arm64/boot/dts/qcom/sm8250.dtsi          |  24 ++++
- arch/arm64/boot/dts/qcom/sm8550.dtsi          |   2 +-
- drivers/crypto/qce/core.c                     |  24 +++-
- drivers/crypto/qce/core.h                     |   1 +
- 10 files changed, 166 insertions(+), 33 deletions(-)
+Reviewed-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Tested-by: Jordan Crouse <jorcrous@amazon.com>
+Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+---
+ .../devicetree/bindings/crypto/qcom-qce.txt   | 25 -------
+ .../devicetree/bindings/crypto/qcom-qce.yaml  | 67 +++++++++++++++++++
+ 2 files changed, 67 insertions(+), 25 deletions(-)
  delete mode 100644 Documentation/devicetree/bindings/crypto/qcom-qce.txt
  create mode 100644 Documentation/devicetree/bindings/crypto/qcom-qce.yaml
 
+diff --git a/Documentation/devicetree/bindings/crypto/qcom-qce.txt b/Documentation/devicetree/bindings/crypto/qcom-qce.txt
+deleted file mode 100644
+index fdd53b184ba8..000000000000
+--- a/Documentation/devicetree/bindings/crypto/qcom-qce.txt
++++ /dev/null
+@@ -1,25 +0,0 @@
+-Qualcomm crypto engine driver
+-
+-Required properties:
+-
+-- compatible  : should be "qcom,crypto-v5.1"
+-- reg         : specifies base physical address and size of the registers map
+-- clocks      : phandle to clock-controller plus clock-specifier pair
+-- clock-names : "iface" clocks register interface
+-                "bus" clocks data transfer interface
+-                "core" clocks rest of the crypto block
+-- dmas        : DMA specifiers for tx and rx dma channels. For more see
+-                Documentation/devicetree/bindings/dma/dma.txt
+-- dma-names   : DMA request names should be "rx" and "tx"
+-
+-Example:
+-	crypto@fd45a000 {
+-		compatible = "qcom,crypto-v5.1";
+-		reg = <0xfd45a000 0x6000>;
+-		clocks = <&gcc GCC_CE2_AHB_CLK>,
+-			 <&gcc GCC_CE2_AXI_CLK>,
+-			 <&gcc GCC_CE2_CLK>;
+-		clock-names = "iface", "bus", "core";
+-		dmas = <&cryptobam 2>, <&cryptobam 3>;
+-		dma-names = "rx", "tx";
+-	};
+diff --git a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
+new file mode 100644
+index 000000000000..8df47e8513b8
+--- /dev/null
++++ b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
+@@ -0,0 +1,67 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/crypto/qcom-qce.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm crypto engine driver
++
++maintainers:
++  - Bhupesh Sharma <bhupesh.sharma@linaro.org>
++
++description:
++  This document defines the binding for the QCE crypto
++  controller found on Qualcomm parts.
++
++properties:
++  compatible:
++    const: qcom,crypto-v5.1
++
++  reg:
++    maxItems: 1
++
++  clocks:
++    items:
++      - description: iface clocks register interface.
++      - description: bus clocks data transfer interface.
++      - description: core clocks rest of the crypto block.
++
++  clock-names:
++    items:
++      - const: iface
++      - const: bus
++      - const: core
++
++  dmas:
++    items:
++      - description: DMA specifiers for rx dma channel.
++      - description: DMA specifiers for tx dma channel.
++
++  dma-names:
++    items:
++      - const: rx
++      - const: tx
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - clock-names
++  - dmas
++  - dma-names
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,gcc-apq8084.h>
++    crypto-engine@fd45a000 {
++        compatible = "qcom,crypto-v5.1";
++        reg = <0xfd45a000 0x6000>;
++        clocks = <&gcc GCC_CE2_AHB_CLK>,
++                 <&gcc GCC_CE2_AXI_CLK>,
++                 <&gcc GCC_CE2_CLK>;
++        clock-names = "iface", "bus", "core";
++        dmas = <&cryptobam 2>, <&cryptobam 3>;
++        dma-names = "rx", "tx";
++    };
 -- 
 2.33.0
 
