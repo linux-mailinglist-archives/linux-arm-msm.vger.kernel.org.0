@@ -2,63 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A28569021A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Feb 2023 09:26:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 45EE7690221
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Feb 2023 09:27:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229538AbjBIIZ5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Feb 2023 03:25:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41548 "EHLO
+        id S229692AbjBII13 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Feb 2023 03:27:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229643AbjBIIZz (ORCPT
+        with ESMTP id S229665AbjBII10 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Feb 2023 03:25:55 -0500
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F3EA4902D
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Feb 2023 00:25:51 -0800 (PST)
-Received: by mail-pj1-x1033.google.com with SMTP id on9-20020a17090b1d0900b002300a96b358so1604804pjb.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Feb 2023 00:25:51 -0800 (PST)
+        Thu, 9 Feb 2023 03:27:26 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1938F4345A
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Feb 2023 00:27:23 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id bu23so935919wrb.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Feb 2023 00:27:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WWHfrncAO0fNEEl3cNIkJHh2nBhIpt0IcwJOPSV0vP8=;
-        b=raBLAs5bGi3stjIdz6i9KJUeJgI81pjHlztiBEcT+0RElRcALFmQDpEkVidXVUXGT2
-         /Tycp+/kCxDqt80huMS0blh06ZcwMPbo8FguNLhWvHzT7af9x+fiOBTRLZ4Zb1TnfPH/
-         SBgNYwxtDBNZ1NBcPOcVFjy6rXDS1xQGq4aDwuXmBD/P4RZZoZaWpdoy97jNPWlor6Q7
-         0AFCtjp6kcjtDKTOz/rQ6w3C+YaDrafPP13CDioi4qOKtevA/Hr2nbxTXtyKSgK3DDck
-         azYf0EbGei6ICydovGkGXLbnF+NTPeRm8wqnPV+KvdDPNRPq62CQpaValElJ70b2gwFC
-         fAsg==
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=DMSjPOiPerJSq8T/YtMIAgTUoaGtgoLM9j3d2rTLbWk=;
+        b=yUlt6Qh9ILGQGhNd3pjJztI6cUdSoWgqJoUTtNGkI+96Gy4ZayQju+Xlzc9C3BmtA6
+         ijL1XWbUI89Gn8S6fD6ok442NrqDfy85/cdMaxW3EtVQVwDUtf/ogABLsQYk/k9tIiXs
+         eoIKa/Xu8tS6p8wAwANEuZHfBL9SaTSChPGe08LWpv/i1vge4QyyZq4e9Gj7iFZJv5ee
+         dIpVb5UPJsqiuwiRc9jui3mYBpDyXtqQEGF0OKIYdigtORTegzWgigNLjumNS71HGFq4
+         IEz0CpAzkV2i/ABiTVsLbF5NNqGhLuxprKfuiQQ7WlirPwdO36cuGYy0GS/9x6OxzAKF
+         +ndQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WWHfrncAO0fNEEl3cNIkJHh2nBhIpt0IcwJOPSV0vP8=;
-        b=zf2Fn/UAVtoN4F/VbgRW9HaQpNqW7qF7C8LdAyPUQdm+8hD0ymGk1BOmgZdhkeqabD
-         +DOSOTDbcGbAzFGcdpHX6dkKSPwc4/zre1FQ8oGxABTrH00Gu9XfnpgGogTDe1PRa52H
-         7d+B7yMQzdB1VheEDxTM/clwPEQtEeTABJCOAyW/NyF3n3AWTD0ZQYdrunYWtiB+Pl3L
-         4ztf4r4xIIQCsB2hujcZpNaWTsJ4V3ldZ5hNbsSI8NF/XYUyofi4BDVJR+O+jG0/q/7V
-         Mu6ngLghMwL5Iy1+V64nUVqaDHQ0oun0IMw5z6q4Ibi2soeMCXVpMNelh5/YLrM+icbl
-         2Ljw==
-X-Gm-Message-State: AO0yUKXSUeNjPJvJeHV47es3fIQxWMSDjfHljvt5/mAFlS03FiBSaz9a
-        Kazkks2lkrVtDRnUqvAN4wAvWg==
-X-Google-Smtp-Source: AK7set+MQ/qgI81XBrcGunla1TWkQiw9offCfb1mAWCZzIwQDkFhjjSXSPu+VCRkEDsWSUiGFoDeGw==
-X-Received: by 2002:a17:90b:3904:b0:22c:b2bf:e462 with SMTP id ob4-20020a17090b390400b0022cb2bfe462mr12062988pjb.34.1675931151006;
-        Thu, 09 Feb 2023 00:25:51 -0800 (PST)
-Received: from ?IPV6:2401:4900:1c5f:7a7d:9c44:b2ee:ae34:5374? ([2401:4900:1c5f:7a7d:9c44:b2ee:ae34:5374])
-        by smtp.gmail.com with ESMTPSA id o11-20020a17090a744b00b002311f887aeasm1992634pjk.1.2023.02.09.00.25.46
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DMSjPOiPerJSq8T/YtMIAgTUoaGtgoLM9j3d2rTLbWk=;
+        b=wgviKOcT3e7G0Hn3LRIUzjs1NMeMqd5i8s68M8Zkh8zNbuAUroGXAy1j6YQTbdO6x1
+         MT4402RMc3yl9KXtpInM5RBONj1m3KFjUucG3XZhD532vvRzLhCVUkxVzgwjfFsnylXU
+         H60MwHtFqeKONC9H3WZ9cDkl59RkTZyRzVFFoumMDmWBJiNNUMSQw2YLsYpR8645C2O/
+         /oY09+8W5a4vPIKlHIozgAerEewNno/SaYzKUEdTx/RtIIWf5ReExm3rNGQ04UidaG3Q
+         RWTk4NgX6pXL+sSh+v84vMBOzY/ni0mMPuKl0hDD2WzbgC2kRuF+aKzg+7viGWo63WLX
+         YtDg==
+X-Gm-Message-State: AO0yUKUFsYggrRSlxBVsGz3Icm5G0Wq5rKEGHZ+MbheNQsUW7ZtnQeVj
+        Ge++ZJXaOwkku+0pah2+Y14f7A==
+X-Google-Smtp-Source: AK7set9ItuomxBH8KrAbd3rm7yTuNjdmsHJ33bxgWjaUhBAqeprTJ95lkWwZouzRvd2rSZbfWbYmpg==
+X-Received: by 2002:adf:fb82:0:b0:2bf:dab7:8f9f with SMTP id a2-20020adffb82000000b002bfdab78f9fmr8295211wrr.65.1675931241616;
+        Thu, 09 Feb 2023 00:27:21 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:5431:990b:7117:b75e? ([2a01:e0a:982:cbb0:5431:990b:7117:b75e])
+        by smtp.gmail.com with ESMTPSA id n10-20020adffe0a000000b002c3ec35f360sm625255wrr.56.2023.02.09.00.27.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Feb 2023 00:25:50 -0800 (PST)
-Message-ID: <32153a4b-9974-a42a-ef30-c0bd8cbc732b@linaro.org>
-Date:   Thu, 9 Feb 2023 13:55:44 +0530
+        Thu, 09 Feb 2023 00:27:21 -0800 (PST)
+Message-ID: <0fc54210-8e94-5901-f02f-7a2b110e32ec@linaro.org>
+Date:   Thu, 9 Feb 2023 09:27:20 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.1
+ Thunderbird/102.7.1
+From:   neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
 Subject: Re: [PATCH] dt-bindings: dma: qcom,bam-dma: add optional memory
  interconnect properties
 Content-Language: en-US
-To:     neil.armstrong@linaro.org,
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -75,8 +78,9 @@ References: <20230207-topic-sm8550-upstream-bam-dma-bindings-fix-v1-1-57dba71e87
  <88c31e71-55b6-a20d-1fcf-07804eace54b@linaro.org>
  <eda179e1-4cd1-0d1b-4e27-2fe92e959cf2@linaro.org>
  <0f16d63f-3bb0-54aa-bcb4-4c666d4b2846@linaro.org>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-In-Reply-To: <0f16d63f-3bb0-54aa-bcb4-4c666d4b2846@linaro.org>
+ <32153a4b-9974-a42a-ef30-c0bd8cbc732b@linaro.org>
+Organization: Linaro Developer Services
+In-Reply-To: <32153a4b-9974-a42a-ef30-c0bd8cbc732b@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -89,54 +93,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2/8/23 2:38 PM, neil.armstrong@linaro.org wrote:
-> On 08/02/2023 10:03, Krzysztof Kozlowski wrote:
->> On 07/02/2023 16:27, Dmitry Baryshkov wrote:
->>> On 07/02/2023 15:35, Neil Armstrong wrote:
->>>> On 07/02/2023 11:32, Dmitry Baryshkov wrote:
->>>>> On 07/02/2023 12:03, Neil Armstrong wrote:
->>>>>> Recents SoCs like the SM8450 or SM8550 requires memory interconnect
->>>>>> in order to have functional DMA.
+On 09/02/2023 09:25, Bhupesh Sharma wrote:
+> On 2/8/23 2:38 PM, neil.armstrong@linaro.org wrote:
+>> On 08/02/2023 10:03, Krzysztof Kozlowski wrote:
+>>> On 07/02/2023 16:27, Dmitry Baryshkov wrote:
+>>>> On 07/02/2023 15:35, Neil Armstrong wrote:
+>>>>> On 07/02/2023 11:32, Dmitry Baryshkov wrote:
+>>>>>> On 07/02/2023 12:03, Neil Armstrong wrote:
+>>>>>>> Recents SoCs like the SM8450 or SM8550 requires memory interconnect
+>>>>>>> in order to have functional DMA.
+>>>>>>>
+>>>>>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>>>>>>> ---
+>>>>>>>    Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml | 6 ++++++
+>>>>>>>    1 file changed, 6 insertions(+)
 >>>>>>
->>>>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->>>>>> ---
->>>>>>    Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml | 6 ++++++
->>>>>>    1 file changed, 6 insertions(+)
+>>>>>> I suspect this will not work without a change for a driver.
+>>>>>>
 >>>>>
->>>>> I suspect this will not work without a change for a driver.
->>>>>
+>>>>> I had the impression single interconnect entries would be taken in account
+>>>>> by the platform core, but it doesn't seem to be the case, anyway I can;t
+>>>>> find
+>>>>> any code doing that.
 >>>>
->>>> I had the impression single interconnect entries would be taken in 
->>>> account
->>>> by the platform core, but it doesn't seem to be the case, anyway I 
->>>> can;t
->>>> find
->>>> any code doing that.
+>>>> Probably you mixed interconnects and power-domains here.
+>>>>
 >>>
->>> Probably you mixed interconnects and power-domains here.
+>>> The driver change was submitted some time ago:
+>>> https://lore.kernel.org/all/20210505213731.538612-10-bhupesh.sharma@linaro.org/
 >>>
+>>> There is already DTS user of it and we expect driver to be resubmitted
+>>> at some point.
+>>>
+>>> What I don't really get is that crypto driver sets bandwidth for
+>>> interconnects, not the BAM. Why BAM needs interconnect? Usually you do
+>>> not need to initialize some middle paths. Getting the final interconnect
+>>> path (e.g. crypto-memory) is enough, because it includes everything in
+>>> between.
 >>
->> The driver change was submitted some time ago:
->> https://lore.kernel.org/all/20210505213731.538612-10-bhupesh.sharma@linaro.org/
->>
->> There is already DTS user of it and we expect driver to be resubmitted
->> at some point.
->>
->> What I don't really get is that crypto driver sets bandwidth for
->> interconnects, not the BAM. Why BAM needs interconnect? Usually you do
->> not need to initialize some middle paths. Getting the final interconnect
->> path (e.g. crypto-memory) is enough, because it includes everything in
->> between.
+>> Indeed the interconnect on BAM may be redundant since QCE sets the BW,
+>> I'll investigate to understand if it's also necessary on BAM.
 > 
-> Indeed the interconnect on BAM may be redundant since QCE sets the BW,
-> I'll investigate to understand if it's also necessary on BAM.
+> Since we are already doing this via QCE driver (since crypto block on qcom SoCs employs BAM DMA services) via [1], this change is not needed for sm8150, sm8250, sm8350 and subsequent qcom SoCs (available presently), so this patch can be dropped.
 
-Since we are already doing this via QCE driver (since crypto block on 
-qcom SoCs employs BAM DMA services) via [1], this change is not needed 
-for sm8150, sm8250, sm8350 and subsequent qcom SoCs (available 
-presently), so this patch can be dropped.
+Ack, I'll push a patch to remove the interconnect properties from the BAM node in sm8550.
 
-[1]. https://www.spinics.net/lists/linux-arm-msm/msg142957.html
+Neil
 
-Thanks,
-Bhupesh
+> 
+> [1]. https://www.spinics.net/lists/linux-arm-msm/msg142957.html
+> 
+> Thanks,
+> Bhupesh
+
