@@ -2,323 +2,512 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 47F6969081E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Feb 2023 13:02:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 086806907DE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Feb 2023 12:56:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230246AbjBIMCg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Feb 2023 07:02:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36410 "EHLO
+        id S229776AbjBIL4X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Feb 2023 06:56:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229764AbjBIMCF (ORCPT
+        with ESMTP id S229843AbjBILzw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Feb 2023 07:02:05 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53D0E93FF;
-        Thu,  9 Feb 2023 03:51:50 -0800 (PST)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 319AeEaH013752;
-        Thu, 9 Feb 2023 11:26:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=from : to : cc :
- subject : date : message-id : references : in-reply-to : content-type :
- mime-version; s=qcppdkim1;
- bh=pMrPTlIjBPVWsAYd9KrtrSop80r1Lp2/j26ftjP32HA=;
- b=UDddhQ09Az7MBQRYMeKuexYbjgx4UNGpKLqZ9CCWFAYt2560Dkq+6+mlDjBD/cLDmiEj
- Dr5To9fveKPeN+xl0/qTuB1y00h8Pmss+rT+e3kEOXrkkhiekaCW896L/EEooCm7mMwR
- a1AbQzXHNGFYn/J7fy99RrPuvcsLnrOfvicNyZfI2JcuhE2LlbIU3WhlQEcKOpCpAl0X
- 0t47HHyxyqpI8Ih4vsF5m3oXcjT3zAX+VeuqOxFPvQCaRkcoRBXpjfaA9DTLW5yS7P20
- a8E13wXfQbTvfezB2o8OJJ7h0As4CArOvi4Pi1LznRHBj0z4PVOUzCB+5zmAvnBheYFi 5Q== 
-Received: from nam04-bn8-obe.outbound.protection.outlook.com (mail-bn8nam04lp2043.outbound.protection.outlook.com [104.47.74.43])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nmpte15x7-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 09 Feb 2023 11:26:03 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=n2+xeEQQeQt130Y6EvOAhh/FqK9poty6yF0gjnPNqPALIgUJQT/f8+V33h6Kx9m0gM7DsJJMpdQTYl25XcVdP6x9BPsaHlapVXD+DqzKL0y9w1rjFUfvLj1r9PtaLkohUtYT8SqEdN/qZJedS1Tcf0yTsbKaI6lOCdjybwP1RF05Nh1yISTwim+XeLmHIZScjGKrNVBVxzWVxLH1iDmPxQVXtFn5vYqvC+yCg67B3f7KjaWBWd/qWno6h242MG6RTbtqGg4oyqTMbT8IcM7vZ7FJPd3NkkQ5UbyWCxREtXfr0k/Pfoe9EOBat1HXGQwynxXGqdoS4y+9O8aUQQwQUQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pMrPTlIjBPVWsAYd9KrtrSop80r1Lp2/j26ftjP32HA=;
- b=FQaMgSNeeY4he8QurE6z0ik7LtMjU9XDb+YA7BTELohf9v+p+IZMzs0o40dScSDIdgZqFQWAB2RtxTVbWbZURXk3RhV05AbV3RU7AZp9kH3iuRK66a1dOUq0SyYS7V05h4hvkYL0ESkfMmG3tTIizNbEXh+WYuhNA9cT4fx6RCvrVx6unBLXXMchnze21GszFMGs6zm325Myw4xdFRKkXmahnlMgPmrhOJFT7rfkdIx7WM1q973fikOrthN/+Jev1gtfEXrg+KSZgITGzRpgzpSwi/U0p7pVKHfHIlJRwYLPBbp4/3EJoiJv9KDcJ1AGinOE7ZOoDPra6vYWYJWGrQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=qti.qualcomm.com; dmarc=pass action=none
- header.from=qti.qualcomm.com; dkim=pass header.d=qti.qualcomm.com; arc=none
-Received: from BN0PR02MB8142.namprd02.prod.outlook.com (2603:10b6:408:16a::19)
- by CO1PR02MB8362.namprd02.prod.outlook.com (2603:10b6:303:151::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6064.35; Thu, 9 Feb
- 2023 11:26:00 +0000
-Received: from BN0PR02MB8142.namprd02.prod.outlook.com
- ([fe80::e9e3:11bd:9ddd:e198]) by BN0PR02MB8142.namprd02.prod.outlook.com
- ([fe80::e9e3:11bd:9ddd:e198%7]) with mapi id 15.20.6086.017; Thu, 9 Feb 2023
- 11:26:00 +0000
-From:   Kalyan Thota <kalyant@qti.qualcomm.com>
-To:     Doug Anderson <dianders@chromium.org>
-CC:     "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "robdclark@chromium.org" <robdclark@chromium.org>,
-        "swboyd@chromium.org" <swboyd@chromium.org>,
-        "Vinod Polimera (QUIC)" <quic_vpolimer@quicinc.com>,
-        "dmitry.baryshkov@linaro.org" <dmitry.baryshkov@linaro.org>,
-        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
-        "marijn.suijten@somainline.org" <marijn.suijten@somainline.org>
-Subject: RE: [PATCH v3 0/4] Reserve DSPPs based on user request
-Thread-Topic: [PATCH v3 0/4] Reserve DSPPs based on user request
-Thread-Index: AQHZO8MvBZ22uu2IEE2YKKYZ3iP3aK7FSd2AgAC4yECAAEbRkA==
-Date:   Thu, 9 Feb 2023 11:26:00 +0000
-Message-ID: <BN0PR02MB81426F878B10DDF4AD2F95A896D99@BN0PR02MB8142.namprd02.prod.outlook.com>
-References: <1675863724-28412-1-git-send-email-quic_kalyant@quicinc.com>
- <CAD=FV=WbzmF_Jkwrcm27eqXaqNhGq_D=8yfCKqELET+=+EaLAA@mail.gmail.com>
- <BN0PR02MB8142207261497BE76A6EA07096D99@BN0PR02MB8142.namprd02.prod.outlook.com>
-In-Reply-To: <BN0PR02MB8142207261497BE76A6EA07096D99@BN0PR02MB8142.namprd02.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: BN0PR02MB8142:EE_|CO1PR02MB8362:EE_
-x-ms-office365-filtering-correlation-id: 2a65e934-db75-4578-2714-08db0a906be1
-x-ld-processed: 98e9ba89-e1a1-4e38-9007-8bdabc25de1d,ExtAddr
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: KEQyWjXV3APc3/nrJQlEw30ki9KPu5QvL0nZ7VjXTvzLH4glalmTjInC+mne64psr2kFiGmt8zkcVzWkcsAB12BT8O44QXJ6KiVdDOqSHcj8eHTfiXTGrTPzekbbpkjrvUkYRzXy404D5Ng0Igi9kquT1F9FL+XYrBpX3HwCNBgxY3VTkk/5KTM03aVboxq5rPIwYMQh1d8iywPyca816ekpkXNLJo/hDOsRJLgACOYv3mx8XA8nde8EON1TzmJ1ACWKEJ77AQTvxxs1ooXCjqyuYLyklw7rd/ziYNa7tqzrkUAsBxP2rnAPLiPUF1MPGH6MVS9cwS5Ata2oWQ2vA5fkF3Y1/HyNRuEIBBxsZj+qyUsRLRJGupoN697FXsTJsYKeEiIVOFCoZ2a25CuUwIoaQbF4PFCQRhKdfI+a+xE5Gcg+B9aAHSj/2uAqlZEP64j30+ogSyX5rILHj1miZAewExUV0onEyMy4nfjLHnZaDmSpeoTKcy7daZd3cgW6G3FLrhDtSYtrrdO53ab6gdgFnp3+piT4+9CGqratcqPQkKn5cvkiYJFX9XXNSFTpX4TODRZjg7vOMA0Gmy5Iox4UIeE9EW69g1QaeOw/99i3QYhpHpyuJbUMMVCcDQh1p1NxitQjefS8QBHeR8Lujfa6Mc0vk2zE/Iw8OmHq1wRB2Y/JfQznMcxLAve0bLy6vYdeFDW5PjUgFUdcWL24GB9ONMfw5rAbbuOWJJHXkEc0elklvJfhYJXbrMLQ6GTMwk2OKOrcSwKmXNNvzHDZUw==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN0PR02MB8142.namprd02.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(4636009)(346002)(376002)(39860400002)(396003)(366004)(136003)(451199018)(2906002)(66446008)(38070700005)(966005)(7416002)(5660300002)(122000001)(38100700002)(99936003)(71200400001)(7696005)(2940100002)(86362001)(66574015)(33656002)(478600001)(6506007)(26005)(9686003)(6916009)(55016003)(64756008)(66476007)(8676002)(66556008)(76116006)(66946007)(52536014)(8936002)(41300700001)(4326008)(83380400001)(316002)(186003)(54906003);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?d2ptSlRpOGRjb29qUEcwcGhXQzRTYzMyWkcvQlVKYmlaRllRVUV4azlkQWpj?=
- =?utf-8?B?cjlYMldZT29qM2F3aTN5eDArRXVPODBWVmNKejdtalRCUE81ZHhubjZNYUNL?=
- =?utf-8?B?TkdWeDZjbGVTU05iNDlteVNUa0pubFVsbjlkakN3S2hyMlVPc040VFdlKzU0?=
- =?utf-8?B?dG1LUXNUMi9zK0N3Q1czNXdJRTZ0VW96YXpWWStJaFFYOTlZaUFYczg0MTlR?=
- =?utf-8?B?NlZWTDB3SG5KRU9iaVAzRTRqQjVtK0hLWWJxbmhybnNSRndPdVdhSTBFOGo1?=
- =?utf-8?B?STJmQjg1Y3RhTmxXVEVXcEcxandjNVRzZ0E0a2FJMjA5cTRmM0xWZ0JNWldW?=
- =?utf-8?B?WHpmMDlyNmx2TWJ5QVB6Y0xJTDMvclhSN1ozMDlhbWQ2OEFxdjFmRDhsbXA3?=
- =?utf-8?B?QVZnWlNFdEFBRE1XREFPYnEyVlg2Y2kyQlQ2dFU5V2ZnSU5BVDNaTzNRZ1BH?=
- =?utf-8?B?a3RYYm5uVm1uVzh4ck5RbnN0a1ExNjREV1luYzZXT0poVUk4SmdYeHdGYnhX?=
- =?utf-8?B?Q0R6NGtmT283RFB0TnZhSWVhdHYrdTZSSzZldFIxY2dwaCtmbEpLcEJkK3VK?=
- =?utf-8?B?VVJpalhUV0RLc1NjVDY0ZHRhRkkzb1M1QmFpMmZnSUxxVUxFUmZHY3NnQnBD?=
- =?utf-8?B?RjBnR25sMzFaMW9VbXI0N3ljdTB3R29DZ1NsZnlNbmhsMGwzOVFyREQwZ1Vx?=
- =?utf-8?B?YkhjTHJzMWJCYkJQNC9jbkRnYTA2WElsdDV5c1QrNENIUnViZUhZSngxbmhs?=
- =?utf-8?B?NTEvUVNBZHQ0Qmw5MTdxTk9xVWVrZGZTcmtzckowOVVWek9OblZOeWtmdnJr?=
- =?utf-8?B?dWpaeEJ0eHZyZVpkQTZtTWhZRENUVWdxLzJMZ0FOaWg2bUk2NU0rV1pSZzJW?=
- =?utf-8?B?UmpiUjBuZWEySFhJamFrcTNDZVppRTA3TlhTYzFBZ3dPMFEybmoyWGxVVS9V?=
- =?utf-8?B?VzJsN01FV3ZiWm1ra0Q1clhkdTFUNEtpcXEyVWlrZFgrUlppd0NKdlpaWGlv?=
- =?utf-8?B?c0Y5QzhUTEpWZ3g5SFkvbVp3eGNpcUtlbnVQbW1SVVc2WWIwVnArVjc1cDRw?=
- =?utf-8?B?U2pBNjhqY25INUc5OVpodkxJdXVWVll4djBFdFFjcmgrMDY2a3NONnB5NmNB?=
- =?utf-8?B?UlBNK2ZQdjV0dmVXaFYzWkl6OUw3SzZHeklPdk5PbnRMbG1qdnZHcUJMQUE5?=
- =?utf-8?B?NXR5VGc3WHNINnlTR1QvZ0VBZTBvdHN1WmNZNnZxN2VyZDFGd0RrVnNTUXR4?=
- =?utf-8?B?TEdYdnVzTndzaWZNOU5UNzcvdXhUNis5YVZCZWhRSHVqdzl1TWFMc3RCUjVx?=
- =?utf-8?B?TzVGZXdvK0txNzRMTkdqalFaT2lJRmxNaGxEZVpYMTdMNUVFcHJKaWlXRTNI?=
- =?utf-8?B?T0RURk9GTElaelZzWlJTWk5uejNUeUp5VG1XVGsrZ1ZOSU41b3hyWWZER1lt?=
- =?utf-8?B?Ync4ZEs2UHdibGdtc3A2SWd0VkI2eXpKcmtMSUwzV0JNNTBwV0RxSlVPNHRw?=
- =?utf-8?B?b0tobzd1ZEY4OWFuMm9LajUxUFBYV1o1VmsxUkE5MHFyTjNkQlcvVDNER3g5?=
- =?utf-8?B?YU1SWDJ5OEZqR0I0Yk91d3V0RlFieTl2MVRxOE9qNnB2Zm0vZUZOY083TVRr?=
- =?utf-8?B?YjlqUjYrWW9WRXk1SzhkVzFjR3Z6aDMwbDA3Vkt5cEhoZ256cTlsdmZ5QzVX?=
- =?utf-8?B?d05vMWRHaFc5WmJ5RmxMby9xNXgyVThQUDEyV2RGVmNoV3R6b3Q1ZDRrOFpK?=
- =?utf-8?B?MHpQZjZ2Mjk4V3Foa2RSR1NpWUw5YzU2VTJPOURESEdGY1QrUGZXK0NMV2JY?=
- =?utf-8?B?Y1pVQkhNN1BuNllXNFdQbkhxMVlYWnZ4aWlnRDNHbldKeGxNUFU0OTVtbUhn?=
- =?utf-8?B?RXVzdXBKUS8zSi9PYVlwVXFtZW5lUjc5TlV3KzIrVHNZcjFMSEtLUzV3aGRY?=
- =?utf-8?B?MGxwOG9lVEFEU010cTBSamk5TU04eS8vYzlIWWlHWE1PbzlxVFF6SUtSTTI1?=
- =?utf-8?B?VTQ3eERJWG13ZW5OTDhrUnltSlIvc2NoajB6Mjh1bkxMRll5aDNYQzFDSWNY?=
- =?utf-8?B?WFBwQ3ZlNTFNcVFTQXAwN005Y0RSU3JEbzFWaHA1NUlNa0o1aDF6dXRnZFc3?=
- =?utf-8?Q?45ECCfwVm1v7vZPUngs0k7+gv?=
-Content-Type: multipart/mixed;
-        boundary="_002_BN0PR02MB81426F878B10DDF4AD2F95A896D99BN0PR02MB8142namp_"
+        Thu, 9 Feb 2023 06:55:52 -0500
+Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6071259E7B
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Feb 2023 03:45:14 -0800 (PST)
+Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-52bed2ce9bdso21023347b3.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Feb 2023 03:45:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=1Dpxep27GI6mS7lbMVKnhNov0c74EduC+eDFF4l8QKo=;
+        b=JaiVGaTWM1TOQp0sn9CG0PHxTrkkqmIzTNbXRRLMENR93DO0EERtO+QqxdnxT2+rz2
+         Pz0Svwm4v14xiybyKrK+uJfUbsc8z9yKY0QsDdmkwPU3SF6o8Ly93cBBu1/uo14ypwLJ
+         i4Ix0WeFb9KAyR+XelRI1yMwBAKGGBz0W1gzir6Fon5cqKGyu9uSuqpOYSGn5uR/oYUF
+         qSw1uuiLnUh9vOL9yJPgOIuVKUwAV8/XYvlIOcG1GECX6DR4JhGiylyzcwh4NHcA9dnK
+         5l41uW2R6ftvTehxwyRgbngEZGd4x67478koJYzHChEIX7JvhZmtDChSrEMjbQi4jt6L
+         3pTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1Dpxep27GI6mS7lbMVKnhNov0c74EduC+eDFF4l8QKo=;
+        b=TUYMmPsCOUGNyOULjXYno6XezJz93AeH0l7/CUlnfkE9vmXe8TNr5iEsV8xxiiL08G
+         PkLuGSB53MaEv2S5osbQjQsFaqoI6fXFeg45cDswn0atqJdYmqnR2qOvnOrXw/sNAM+C
+         sp8kUh0zAW6hqGuZ5wqT+YrePmtcWsigMkAis6rbh1einl8xvpceETYrgsuRyICm93aL
+         N+uibAfYG/ZVFgqK/mna1zltK1mHW/uDk7hW6Yy8s/7IxriK+vP9YvrtulRIiL0WT1Fv
+         G3LUDECgnxlMYF9U6yoRylLauqtWbQ6h7hO9NEyynSxues4dHhbTNejAABcUiepEIzJP
+         Cagg==
+X-Gm-Message-State: AO0yUKWnXflagXefB4aq1qfF6bRz4Clh4aPGViHd9jzmSw27gLSNmzon
+        vgBEnqRG3KxGpNugINtzIyLQlX136kTl1Nruip8jRA==
+X-Google-Smtp-Source: AK7set9wSqlkBVFtjhindvNq34ZnlroJihED6vQLci0/yNQN48kMpfdf8JCeyllUcK9Ph3bs+66Ph3WXjuZ0wRfZZVw=
+X-Received: by 2002:a0d:ea09:0:b0:52e:c4d8:53ee with SMTP id
+ t9-20020a0dea09000000b0052ec4d853eemr17576ywe.378.1675943113385; Thu, 09 Feb
+ 2023 03:45:13 -0800 (PST)
 MIME-Version: 1.0
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: =?utf-8?B?UHVqTDJmUXB6QlZnbWt5U0k2VnYxQ01FZytZUGlZU0t1d0l0a0Q0YW9GWnJi?=
- =?utf-8?B?d3dkbVdiemtIYXVRN0wraG51TGlCY2xIM1o3UkE3YVpLZFpYRStuK0JWWUJQ?=
- =?utf-8?B?M3NzMXZ6bGM0YnlUZ0tNVEhqdjdueCs1b2ZVaXZhdW13TjJPNDRqNE83Wnhz?=
- =?utf-8?B?WWhuMUd5Mi9HTHRKeHlqSkcwNUplNGRJS3QwMjNLQ0dpNUgzOFRaNXdPeUU0?=
- =?utf-8?B?bDNmZHZJbzZsTmZlZm1GSHpyb2JQa3BsVE43WWx6N3BYYnVtQ1U1ZHpyaHpE?=
- =?utf-8?B?RW9Ud1FCQ29idGRGTVpBdHI4eERaMzNlMzhmem5HM0Q1MyswMUpEWUxGZHlH?=
- =?utf-8?B?VGhzTEVFWlR5bVUxOGtkdmhrMTc3S25MZEowMDc4S1A1SFFrS2Z5Y3paa3Ru?=
- =?utf-8?B?QkVnRU1kTjVqTHZNZENCeTg2aDI2bjVQOEtOeTZBYlkxbDhoWkl0WGFtbTJp?=
- =?utf-8?B?Y09MOUFUSHF4UktXUGt5V0YveW1Ba3Y3NTlWR0h1Ni9Lb21oTVhkbXc4bzVC?=
- =?utf-8?B?bVVyeTVabzBOUnN0bUwyU0ZnTE4zbXBiNlVLNVdWUk4yS2hFc0RIKzlyVlNL?=
- =?utf-8?B?N2N1c0xrL3g2QUdzVFdYOW80TlRLWTJlZ3pRRXlCK1gzT28zaDM4SkhzNy9S?=
- =?utf-8?B?YkE2Y3c4UFpSZW9nWVk4Ky9qSXlZL0hVUzREd2xrRE9rOWg5U3A2Ni9yMUZv?=
- =?utf-8?B?RUVOYnIrVjlEQVliakxLUjJRSXB2YXVONEZyMWtlcDBaTzJOd0FTTURsK0Zj?=
- =?utf-8?B?eDZKbzNsQlJtbEd5N2lPcXRKMlJGUUM5azhuMm9WckpDUVF1WmF6bEVNMFpU?=
- =?utf-8?B?TVRBMkx0S1BTdDh2L2t2WjROcVdZekw5N1pKUzJ1MlQ5d1pXMkpxVUFuMEtz?=
- =?utf-8?B?UitiVzBhYVRIWlBUenZCOUF2ZkwvQ1FZQnJvRE1yampnN1FHelJ1dDVJTmZh?=
- =?utf-8?B?biswdFV5bitDd24vdXNVa1FxWCtaalNPT0d1MXVRdGE3VkVWRXBlVmRCSk5W?=
- =?utf-8?B?ekJnYmxJdVlMc3lHWE9IZzFpUmI3TmZNZWUwQjNCaDlTNFpWT04xL2k2L09l?=
- =?utf-8?B?V2NvVHhQRjlSUG1XeW43WmhjK0ZSVFN1VWJLSXN2dkl5QTVNdUhBNWRiTGRM?=
- =?utf-8?B?OGsycEVYcGd3Wlh5cjdXRFJiandEY1laK0VFZDVrNkcrVitaWExhbE5mekFx?=
- =?utf-8?B?dTFpYUNDRWdhYnBJMTFmeHpZaWdaQ1JMVHlHQnJTZUtDNEhyUkFSSVl1RHNJ?=
- =?utf-8?Q?lKJlDfsXtoTwn2D?=
-X-OriginatorOrg: qti.qualcomm.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BN0PR02MB8142.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2a65e934-db75-4578-2714-08db0a906be1
-X-MS-Exchange-CrossTenant-originalarrivaltime: 09 Feb 2023 11:26:00.4074
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 98e9ba89-e1a1-4e38-9007-8bdabc25de1d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: qvZqV62li8yBiMdLOaENWoTy0sygU6VL6gAwxwZMgmtcrRMT8x/XY6y7VzFttzI6n2NBrAf4PGMCdB2XeV2b15UiH9rnAn+B4Tald+JlkRI=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR02MB8362
-X-Proofpoint-GUID: waSOA7AMb_nbq64I_LN2UJn44sNtam7x
-X-Proofpoint-ORIG-GUID: waSOA7AMb_nbq64I_LN2UJn44sNtam7x
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-02-09_07,2023-02-08_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
- mlxlogscore=999 malwarescore=0 spamscore=0 adultscore=0 impostorscore=0
- priorityscore=1501 bulkscore=0 lowpriorityscore=0 clxscore=1015
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302090109
-X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20230203182132.1307834-1-dmitry.baryshkov@linaro.org>
+ <20230203182132.1307834-28-dmitry.baryshkov@linaro.org> <fd654e2e-4cc0-29bf-374d-beed0bada0bc@quicinc.com>
+In-Reply-To: <fd654e2e-4cc0-29bf-374d-beed0bada0bc@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 9 Feb 2023 13:45:02 +0200
+Message-ID: <CAA8EJpocfk2bY0fGaGrzcho-NmHyam3NR-=W3L0E9M7nrY_wVw@mail.gmail.com>
+Subject: Re: [PATCH v3 27/27] drm/msm/dpu: add support for wide planes
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
+        Kalyan Thota <quic_kalyant@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---_002_BN0PR02MB81426F878B10DDF4AD2F95A896D99BN0PR02MB8142namp_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+On Thu, 9 Feb 2023 at 04:19, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>
+>
+>
+> On 2/3/2023 10:21 AM, Dmitry Baryshkov wrote:
+> > Typically SSPP can support rectangle with width up to 2560. However it's
+>
+> Not always 2560. Depends on the chipset.
 
-S2luZGx5IGlnbm9yZSBteSBwcmV2aW91cyBlbWFpbC4gU2VudCB0b28gZWFybHkgISENCg0KV2Ug
-aGF2ZSB0ZXN0ZWQgdGhlIGNoYW5nZXMgb24gdG9wIG9mIHRpcDogaHR0cHM6Ly9jaHJvbWl1bS5n
-b29nbGVzb3VyY2UuY29tL2Nocm9taXVtb3MvdGhpcmRfcGFydHkva2VybmVsLytsb2cvcmVmcy9o
-ZWFkcy9jaHJvbWVvcy01LjE1ICsgNSBDVE0gcGF0Y2hlcyAoIHRoYXQgeW91IGhhdmUgcXVvdGVk
-ICkNCldlIGRpZG7igJl0IHNlZSB0aGUgaXNzdWUgdGhhdCB5b3UgaGF2ZSByZXBvcnRlZCBvbiBo
-ZXJvYnJpbmUuIE5pZ2h0IGxpZ2h0IGFsd2F5cyBjYW1lIHVwIG9uIHByaW1hcnkgZGlzcGxheSBh
-cyB0aGUgcmVzZXJ2YXRpb24gd2l0aCBkc3BwIHdhcyBzdWNjZXNzZnVsLiAgQXJlIHlvdSBzZWVp
-bmcgYW55IHJlc2VydmF0aW9uIGZhaWx1cmVzIGZvciBwcmltYXJ5IGRpc3BsYXkgPw0KDQpBdHRh
-Y2hlZCBhIGRlYnVnIHBhdGNoLCBjYW4geW91IHNoYXJlIHRoZSBsb2dzIHdoZW4geW91IHNlZSB0
-aGUgaXNzdWUuDQoNClRoYW5rcywNCkthbHlhbg0KDQo+LS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0t
-LS0NCj5Gcm9tOiBLYWx5YW4gVGhvdGENCj5TZW50OiBUaHVyc2RheSwgRmVicnVhcnkgOSwgMjAy
-MyA5OjQ3IEFNDQo+VG86IERvdWcgQW5kZXJzb24gPGRpYW5kZXJzQGNocm9taXVtLm9yZz47IEth
-bHlhbiBUaG90YSAoUVVJQykNCj48cXVpY19rYWx5YW50QHF1aWNpbmMuY29tPg0KPkNjOiBkcmkt
-ZGV2ZWxAbGlzdHMuZnJlZWRlc2t0b3Aub3JnOyBsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9y
-ZzsNCj5mcmVlZHJlbm9AbGlzdHMuZnJlZWRlc2t0b3Aub3JnOyBkZXZpY2V0cmVlQHZnZXIua2Vy
-bmVsLm9yZzsgbGludXgtDQo+a2VybmVsQHZnZXIua2VybmVsLm9yZzsgcm9iZGNsYXJrQGNocm9t
-aXVtLm9yZzsgc3dib3lkQGNocm9taXVtLm9yZzsNCj5WaW5vZCBQb2xpbWVyYSAoUVVJQykgPHF1
-aWNfdnBvbGltZXJAcXVpY2luYy5jb20+Ow0KPmRtaXRyeS5iYXJ5c2hrb3ZAbGluYXJvLm9yZzsg
-QWJoaW5hdiBLdW1hciAoUVVJQykNCj48cXVpY19hYmhpbmF2a0BxdWljaW5jLmNvbT47IG1hcmlq
-bi5zdWlqdGVuQHNvbWFpbmxpbmUub3JnDQo+U3ViamVjdDogUkU6IFtQQVRDSCB2MyAwLzRdIFJl
-c2VydmUgRFNQUHMgYmFzZWQgb24gdXNlciByZXF1ZXN0DQo+DQo+SGkgRG91ZywNCj4NCj5IYXZl
-IHlvdSBwaWNrZWQgdGhlIGNvcmUgY2hhbmdlIHRvIHByb2dyYW0gZHNwcCdzICAoYmVsb3cpID8g
-dGhlIGN1cnJlbnQgc2VyaWVzDQo+d2lsbCBnbyBvbiB0b3Agb2YgaXQuDQo+aHR0cHM6Ly9wYXRj
-aHdvcmsua2VybmVsLm9yZy9wcm9qZWN0L2xpbnV4LWFybS1tc20vcGF0Y2gvMTY3MTU0MjcxOS0x
-MjY1NS0NCj4xLWdpdC1zZW5kLWVtYWlsLXF1aWNfa2FseWFudEBxdWljaW5jLmNvbS8NCj4NCj5U
-aGFua3MsDQo+S2FseWFuDQo+DQo+Pi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+PkZyb206
-IERvdWcgQW5kZXJzb24gPGRpYW5kZXJzQGNocm9taXVtLm9yZz4NCj4+U2VudDogV2VkbmVzZGF5
-LCBGZWJydWFyeSA4LCAyMDIzIDEwOjQ0IFBNDQo+PlRvOiBLYWx5YW4gVGhvdGEgKFFVSUMpIDxx
-dWljX2thbHlhbnRAcXVpY2luYy5jb20+DQo+PkNjOiBkcmktZGV2ZWxAbGlzdHMuZnJlZWRlc2t0
-b3Aub3JnOyBsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZzsNCj4+ZnJlZWRyZW5vQGxpc3Rz
-LmZyZWVkZXNrdG9wLm9yZzsgZGV2aWNldHJlZUB2Z2VyLmtlcm5lbC5vcmc7IGxpbnV4LQ0KPj5r
-ZXJuZWxAdmdlci5rZXJuZWwub3JnOyByb2JkY2xhcmtAY2hyb21pdW0ub3JnOyBzd2JveWRAY2hy
-b21pdW0ub3JnOw0KPj5WaW5vZCBQb2xpbWVyYSAoUVVJQykgPHF1aWNfdnBvbGltZXJAcXVpY2lu
-Yy5jb20+Ow0KPj5kbWl0cnkuYmFyeXNoa292QGxpbmFyby5vcmc7IEFiaGluYXYgS3VtYXIgKFFV
-SUMpDQo+PjxxdWljX2FiaGluYXZrQHF1aWNpbmMuY29tPjsgbWFyaWpuLnN1aWp0ZW5Ac29tYWlu
-bGluZS5vcmcNCj4+U3ViamVjdDogUmU6IFtQQVRDSCB2MyAwLzRdIFJlc2VydmUgRFNQUHMgYmFz
-ZWQgb24gdXNlciByZXF1ZXN0DQo+Pg0KPj5XQVJOSU5HOiBUaGlzIGVtYWlsIG9yaWdpbmF0ZWQg
-ZnJvbSBvdXRzaWRlIG9mIFF1YWxjb21tLiBQbGVhc2UgYmUgd2FyeQ0KPj5vZiBhbnkgbGlua3Mg
-b3IgYXR0YWNobWVudHMsIGFuZCBkbyBub3QgZW5hYmxlIG1hY3Jvcy4NCj4+DQo+PkhpLA0KPj4N
-Cj4+T24gV2VkLCBGZWIgOCwgMjAyMyBhdCA1OjQyIEFNIEthbHlhbiBUaG90YSA8cXVpY19rYWx5
-YW50QHF1aWNpbmMuY29tPg0KPj53cm90ZToNCj4+Pg0KPj4+IFRoaXMgc2VyaWVzIHdpbGwgZW5h
-YmxlIGNvbG9yIGZlYXR1cmVzIG9uIHNjNzI4MCB0YXJnZXQgd2hpY2ggaGFzDQo+Pj4gcHJpbWFy
-eSBwYW5lbCBhcyBlRFANCj4+Pg0KPj4+IFRoZSBzZXJpZXMgcmVtb3ZlcyBEU1BQIGFsbG9jYXRp
-b24gYmFzZWQgb24gZW5jb2RlciB0eXBlIGFuZCBhbGxvd3MNCj4+PiB0aGUgRFNQUCByZXNlcnZh
-dGlvbiBiYXNlZCBvbiB1c2VyIHJlcXVlc3QgdmlhIENUTS4NCj4+Pg0KPj4+IFRoZSBzZXJpZXMg
-d2lsbCByZWxlYXNlL3Jlc2VydmUgdGhlIGRwdSByZXNvdXJjZXMgd2hlbiBldmVyIHRoZXJlIGlz
-DQo+Pj4gYSB0b3BvbG9neSBjaGFuZ2UgdG8gc3VpdCB0aGUgbmV3IHJlcXVpcmVtZW50cy4NCj4+
-Pg0KPj4+IEthbHlhbiBUaG90YSAoNCk6DQo+Pj4gICBkcm0vbXNtL2RwdTogY2xlYXIgRFNQUCBy
-ZXNlcnZhdGlvbnMgaW4gcm0gcmVsZWFzZQ0KPj4+ICAgZHJtL21zbS9kcHU6IGFkZCBEU1BQcyBp
-bnRvIHJlc2VydmF0aW9uIHVwb24gYSBDVE0gcmVxdWVzdA0KPj4+ICAgZHJtL21zbS9kcHU6IGF2
-b2lkIHVubmVjZXNzYXJ5IGNoZWNrIGluIERQVSByZXNlcnZhdGlvbnMNCj4+PiAgIGRybS9tc20v
-ZHB1OiByZXNlcnZlIHRoZSByZXNvdXJjZXMgb24gdG9wb2xvZ3kgY2hhbmdlDQo+Pj4NCj4+PiAg
-ZHJpdmVycy9ncHUvZHJtL21zbS9kaXNwL2RwdTEvZHB1X2NydGMuaCAgICB8ICAyICsNCj4+PiAg
-ZHJpdmVycy9ncHUvZHJtL21zbS9kaXNwL2RwdTEvZHB1X2VuY29kZXIuYyB8IDU4DQo+Pj4gKysr
-KysrKysrKysrKysrKy0tLS0tLQ0KPj4tLS0tLS0tDQo+Pj4gIGRyaXZlcnMvZ3B1L2RybS9tc20v
-ZGlzcC9kcHUxL2RwdV9ybS5jICAgICAgfCAgMiArDQo+Pj4gIDMgZmlsZXMgY2hhbmdlZCwgMzcg
-aW5zZXJ0aW9ucygrKSwgMjUgZGVsZXRpb25zKC0pDQo+Pg0KPj5JIHRyaWVkIG91dCB5b3VyIGNo
-YW5nZXMsIGJ1dCB1bmZvcnR1bmF0ZWx5IGl0IHNlZW1zIGxpa2UgdGhlcmUncyBzb21ldGhpbmcN
-Cj53cm9uZy4NCj4+OiggSSBkaWQgdGhpczoNCj4+DQo+PjEuIFBpY2tlZCB5b3VyIDUgcGF0Y2hl
-cyB0byB0aGUgY2hyb21lb3MtNS4xNSB0cmVlICh0aGlzIHNlcmllcyBwbHVzDQo+PlsxXSkNCj4+
-DQo+PjIuIFB1dCB0aGVtIG9uIGhlcm9icmluZSB2aWxsYWdlci4NCj4+DQo+PjMuIEJvb3RlZCB1
-cCB3aXRoIG5vIGV4dGVybmFsIGRpc3BsYXkgcGx1Z2dlZCBpbi4NCj4+DQo+PjQuIFRyaWVkIHRv
-IGVuYWJsZSBuaWdodCBsaWdodCBpbiB0aGUgQ2hyb21lT1MgVUkuDQo+Pg0KPj41LiBOaWdodCBs
-aWdodCBkaWRuJ3QgdHVybiBvbiBmb3IgdGhlIGludGVybmFsIGRpc3BsYXkuDQo+Pg0KPj4NCj4+
-SSBhbHNvIHRyaWVkIGFwcGx5aW5nIHRoZW0gdG8gdGhlIHRvcCBvZiBtc20tbmV4dCAoaGFkIHRv
-IHJlc29sdmUgc29tZQ0KPj5zbWFsbCBjb25mbGljdHMpLiBTYW1lIHRoaW5nLCBuaWdodCBsaWdo
-dCBkaWRuJ3Qgd29yay4NCj4+DQo+Pg0KPj5JIHRob3VnaHQgbWF5YmUgdGhpcyB3YXMgYmVjYXVz
-ZSB0aGUgQ2hyb21lIGJyb3dzZXIgaGFzbid0IGJlZW4gdXBkYXRlZA0KPj50byBwcm9wZXJseSB1
-c2UgYXRvbWljX2NoZWNrIGZvciB0ZXN0aW5nIGZvciBuaWdodCBsaWdodCwgc28gSSBoYWNrZWQN
-Cj4+bXkgaGVyb2JyaW5lIGRldmljZSB0cmVlIHRvIG5vdCBtYXJrICJtZHNzX2RwIiBhcyAib2th
-eSIuIE5vdyB0aGVyZSdzIF9vbmx5Xw0KPmFuIGVEUCBkaXNwbGF5Lg0KPj5TYW1lIHRoaW5nLCBu
-aWdodCBsaWdodCBkaWRuJ3Qgd29yay4NCj4+DQo+Pg0KPj5JIGNvdWxkIG9ubHkgZ2V0IG5pZ2h0
-IGxpZ2h0IHRvIHdvcmsgZm9yIHRoZSBpbnRlcm5hbCBkaXNwbGF5IGlmIEkNCj4+cGx1Z2dlZCBh
-bmQgdW5wbHVnZ2VkIGFuIGV4dGVybmFsIGRpc3BsYXkgaW4uDQo+Pg0KPj4NCj4+SXMgdGhlIGFi
-b3ZlIHRoZSBiZWhhdmlvciB0aGF0J3MgZXhwZWN0ZWQgcmlnaHQgbm93Pw0KPj4NCj4+DQo+Plsx
-XSBodHRwczovL2xvcmUua2VybmVsLm9yZy9hbGwvMTY3NDgxNDQ4Ny0yMTEyLTEtZ2l0LXNlbmQt
-ZW1haWwtDQo+PnF1aWNfa2FseWFudEBxdWljaW5jLmNvbS8NCg==
+_typically_
 
---_002_BN0PR02MB81426F878B10DDF4AD2F95A896D99BN0PR02MB8142namp_
-Content-Type: application/octet-stream; name="nightlight_debug.patch"
-Content-Description: nightlight_debug.patch
-Content-Disposition: attachment; filename="nightlight_debug.patch"; size=2945;
-	creation-date="Thu, 09 Feb 2023 11:25:10 GMT";
-	modification-date="Thu, 09 Feb 2023 11:25:59 GMT"
-Content-Transfer-Encoding: base64
+>
+> > possible to use multirect feature and split source to use the SSPP to
+> > output two consecutive rectangles. This commit brings in this capability
+> > to support wider screen resolutions.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |   6 ++
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 116 +++++++++++++++++++---
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h |   4 +
+> >   3 files changed, 114 insertions(+), 12 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > index 0ca3bc38ff7e..867832a752b2 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > @@ -485,6 +485,12 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
+> >                                          fetch_active,
+> >                                          &pstate->pipe);
+> >
+> > +             _dpu_crtc_blend_setup_pipe(crtc, plane,
+> > +                                        mixer, cstate->num_mixers,
+> > +                                        stage_cfg, pstate->stage, 1,
+> > +                                        fetch_active,
+> > +                                        &pstate->r_pipe);
+> > +
+> >               /* blend config update */
+> >               for (lm_idx = 0; lm_idx < cstate->num_mixers; lm_idx++) {
+> >                       _dpu_crtc_setup_blend_cfg(mixer + lm_idx, pstate, format);
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> > index e2e85688ed3c..401ead64c6bd 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> > @@ -365,6 +365,9 @@ static void _dpu_plane_set_qos_ctrl(struct drm_plane *plane,
+> >       struct dpu_plane *pdpu = to_dpu_plane(plane);
+> >       struct dpu_hw_pipe_qos_cfg pipe_qos_cfg;
+> >
+> > +     if (!pipe->sspp)
+> > +             return;
+> > +
+> >       memset(&pipe_qos_cfg, 0, sizeof(pipe_qos_cfg));
+> >
+> >       if (flags & DPU_PLANE_QOS_VBLANK_CTRL) {
+> > @@ -647,6 +650,9 @@ static int _dpu_plane_color_fill_pipe(struct dpu_plane_state *pstate,
+> >   {
+> >       struct dpu_hw_sspp_cfg pipe_cfg;
+> >
+> > +     if (!pipe->sspp)
+> > +             return 0;
+>
+> instead of checking if sspp was present, is it not better for the caller
+> to check if the rpipe is valid before calling this?
+>
+> > +
+> >       /* update sspp */
+> >       if (!pipe->sspp->ops.setup_solidfill)
+> >               return 0;
+> > @@ -701,6 +707,8 @@ static void _dpu_plane_color_fill(struct dpu_plane *pdpu,
+> >
+> >       /* update sspp */
+> >       _dpu_plane_color_fill_pipe(pstate, &pstate->pipe, &pstate->pipe_cfg, fill_color, fmt);
+> > +
+> > +     _dpu_plane_color_fill_pipe(pstate, &pstate->r_pipe, &pstate->r_pipe_cfg, fill_color, fmt);
+> >   }
+>
+> So cant we do
+>
+> if (pstate->r_pipe.sspp)
+>         _dpu_plane_color_fill_pipe(pstate, &pstate->r_pipe,
+>                 &pstate->r_pipe_cfg, fill_color, fmt);
+>
+> It just seems better to me as the caller would already know if the sspp
+> was assigned.
 
-ZGlmZiAtLWdpdCBhL2RyaXZlcnMvZ3B1L2RybS9tc20vZGlzcC9kcHUxL2RwdV9jcnRjLmMgYi9k
-cml2ZXJzL2dwdS9kcm0vbXNtL2Rpc3AvZHB1MS9kcHVfY3J0Yy5jCmluZGV4IDM2YmRjYWEuLmEy
-NDc2NDkgMTAwNjQ0Ci0tLSBhL2RyaXZlcnMvZ3B1L2RybS9tc20vZGlzcC9kcHUxL2RwdV9jcnRj
-LmMKKysrIGIvZHJpdmVycy9ncHUvZHJtL21zbS9kaXNwL2RwdTEvZHB1X2NydGMuYwpAQCAtNzYy
-LDYgKzc2Miw3IEBAIHN0YXRpYyB2b2lkIF9kcHVfY3J0Y19zZXR1cF9jcF9ibG9ja3Moc3RydWN0
-IGRybV9jcnRjICpjcnRjKQogCQkJZHNwcC0+b3BzLnNldHVwX3BjYyhkc3BwLCBOVUxMKTsKIAkJ
-fSBlbHNlIHsKIAkJCV9kcHVfY3J0Y19nZXRfcGNjX2NvZWZmKHN0YXRlLCAmY2ZnKTsKKwkJCXBy
-X2VycigiXG4iKTsKIAkJCWRzcHAtPm9wcy5zZXR1cF9wY2MoZHNwcCwgJmNmZyk7CiAJCX0KIApk
-aWZmIC0tZ2l0IGEvZHJpdmVycy9ncHUvZHJtL21zbS9kaXNwL2RwdTEvZHB1X2VuY29kZXIuYyBi
-L2RyaXZlcnMvZ3B1L2RybS9tc20vZGlzcC9kcHUxL2RwdV9lbmNvZGVyLmMKaW5kZXggMDM4ZTA3
-Ny4uNGJhN2VlOCAxMDA2NDQKLS0tIGEvZHJpdmVycy9ncHUvZHJtL21zbS9kaXNwL2RwdTEvZHB1
-X2VuY29kZXIuYworKysgYi9kcml2ZXJzL2dwdS9kcm0vbXNtL2Rpc3AvZHB1MS9kcHVfZW5jb2Rl
-ci5jCkBAIC0yMjEsNyArMjIxLDcgQEAgc3RhdGljIGJvb2wgX2RwdV9lbmNfaXNfZHNwcF9jaGFu
-Z2VkKHN0cnVjdCBkcm1fY3J0Y19zdGF0ZSAqY3J0Y19zdGF0ZSwKIAlzdHJ1Y3QgbXNtX2Rpc3Bs
-YXlfdG9wb2xvZ3kgdG9wb2xvZ3kpCiB7CiAJc3RydWN0IGRwdV9jcnRjX3N0YXRlICpjc3RhdGUg
-PSB0b19kcHVfY3J0Y19zdGF0ZShjcnRjX3N0YXRlKTsKLQorCXByX2VycigiY3N0YXRlIGN0bSBl
-bmFibGUgOiVkIHRvcGxvZ3kgZHNwcG51bTolZFxuIiwgY3N0YXRlLT5jdG1fZW5hYmxlZCwgdG9w
-b2xvZ3kubnVtX2RzcHApOwogCWlmICgoY3N0YXRlLT5jdG1fZW5hYmxlZCAmJiAhdG9wb2xvZ3ku
-bnVtX2RzcHApIHx8CiAJICAgICghY3N0YXRlLT5jdG1fZW5hYmxlZCAmJiB0b3BvbG9neS5udW1f
-ZHNwcCkpIHsKIAkJY3J0Y19zdGF0ZS0+bW9kZV9jaGFuZ2VkID0gdHJ1ZTsKQEAgLTYwMyw3ICs2
-MDMsNyBAQCBzdGF0aWMgc3RydWN0IG1zbV9kaXNwbGF5X3RvcG9sb2d5IGRwdV9lbmNvZGVyX2dl
-dF90b3BvbG9neSgKIAkJdG9wb2xvZ3kubnVtX2ludGYgPSAxOwogCQl0b3BvbG9neS5udW1fbG0g
-PSAyOwogCX0KLQorCXByX2VycigiY3RtIDogJXAgdG9wb2xvZ3kgbnVtX2RzcHA6ICVkIHRvcG9s
-b2d5IG51bV9sbTolZFxuIixjcnRjX3N0YXRlLT5jdG0sIHRvcG9sb2d5Lm51bV9kc3BwLCB0b3Bv
-bG9neS5udW1fbG0pOwogCXJldHVybiB0b3BvbG9neTsKIH0KIApAQCAtNjI2LDcgKzYyNiw3IEBA
-IHN0YXRpYyBpbnQgZHB1X2VuY29kZXJfdmlydF9hdG9taWNfY2hlY2soCiAJCQkJZHJtX2VuYyAh
-PSBOVUxMLCBjcnRjX3N0YXRlICE9IE5VTEwsIGNvbm5fc3RhdGUgIT0gTlVMTCk7CiAJCXJldHVy
-biAtRUlOVkFMOwogCX0KLQorCXByX2VycigiXG4iKTsKIAlkcHVfZW5jID0gdG9fZHB1X2VuY29k
-ZXJfdmlydChkcm1fZW5jKTsKIAlEUFVfREVCVUdfRU5DKGRwdV9lbmMsICJcbiIpOwogCkBAIC02
-NTcsMTIgKzY1NywxMyBAQCBzdGF0aWMgaW50IGRwdV9lbmNvZGVyX3ZpcnRfYXRvbWljX2NoZWNr
-KAogCiAJX2RwdV9lbmNfaXNfZHNwcF9jaGFuZ2VkKGNydGNfc3RhdGUsIHRvcG9sb2d5KTsKIAor
-CXByX2VycigiY3J0YyBzdGF0ZSBlbmFibGU6JWQgbmVlZHNfbW9kZXNldDogJWRcbiIsIGNydGNf
-c3RhdGUtPmVuYWJsZSwgZHJtX2F0b21pY19jcnRjX25lZWRzX21vZGVzZXQoY3J0Y19zdGF0ZSkp
-OworCiAJLyoKIAkgKiBSZWxlYXNlIGFuZCBBbGxvY2F0ZSByZXNvdXJjZXMgb24gZXZlcnkgbW9k
-ZXNldAogCSAqLwogCWlmIChkcm1fYXRvbWljX2NydGNfbmVlZHNfbW9kZXNldChjcnRjX3N0YXRl
-KSkgewogCQlkcHVfcm1fcmVsZWFzZShnbG9iYWxfc3RhdGUsIGRybV9lbmMpOwotCiAJCWlmIChj
-cnRjX3N0YXRlLT5lbmFibGUpCiAJCQlyZXQgPSBkcHVfcm1fcmVzZXJ2ZSgmZHB1X2ttcy0+cm0s
-IGdsb2JhbF9zdGF0ZSwKIAkJCQkJZHJtX2VuYywgY3J0Y19zdGF0ZSwgdG9wb2xvZ3kpOwpAQCAt
-MTA5OSw2ICsxMTAwLDcgQEAgc3RhdGljIHZvaWQgZHB1X2VuY29kZXJfdmlydF9hdG9taWNfbW9k
-ZV9zZXQoc3RydWN0IGRybV9lbmNvZGVyICpkcm1fZW5jLAogCiAJY3N0YXRlLT5udW1fbWl4ZXJz
-ID0gbnVtX2xtOwogCWNzdGF0ZS0+Y3RtX2VuYWJsZWQgPSAhIW51bV9kc3BwOworCXByX2Vycigi
-Y3RtX2VuYWJsZWQ6ICVkXG4iLCBjc3RhdGUtPmN0bV9lbmFibGVkKTsKIAlkcHVfZW5jLT5jb25u
-ZWN0b3IgPSBjb25uX3N0YXRlLT5jb25uZWN0b3I7CiAKIAlmb3IgKGkgPSAwOyBpIDwgZHB1X2Vu
-Yy0+bnVtX3BoeXNfZW5jczsgaSsrKSB7CmRpZmYgLS1naXQgYS9kcml2ZXJzL2dwdS9kcm0vbXNt
-L2Rpc3AvZHB1MS9kcHVfcm0uYyBiL2RyaXZlcnMvZ3B1L2RybS9tc20vZGlzcC9kcHUxL2RwdV9y
-bS5jCmluZGV4IDcxOGVhMGEuLmEwZTI0OTYgMTAwNjQ0Ci0tLSBhL2RyaXZlcnMvZ3B1L2RybS9t
-c20vZGlzcC9kcHUxL2RwdV9ybS5jCisrKyBiL2RyaXZlcnMvZ3B1L2RybS9tc20vZGlzcC9kcHUx
-L2RwdV9ybS5jCkBAIC00MjgsNiArNDI4LDcgQEAgc3RhdGljIGludCBfZHB1X3JtX3Jlc2VydmVf
-bG1zKHN0cnVjdCBkcHVfcm0gKnJtLAogCiAJCXRyYWNlX2RwdV9ybV9yZXNlcnZlX2xtcyhsbV9p
-ZHhbaV0gKyBMTV8wLCBlbmNfaWQsCiAJCQkJCSBwcF9pZHhbaV0gKyBQSU5HUE9OR18wKTsKKwkJ
-cHJfZXJyKCJlbmNpZCA6ICVkICBlbmNfdG9fZHNwcGlkIDogJWRcbiIsIGVuY19pZCwgcmVxcy0+
-dG9wb2xvZ3kubnVtX2RzcHApOwogCX0KIAogCXJldHVybiAwOwo=
+ I think I had this kind of code earlier, but then I found it more
+logical to move the check to the called function. I'll move it back.
 
---_002_BN0PR02MB81426F878B10DDF4AD2F95A896D99BN0PR02MB8142namp_--
+>
+> >
+> >   int dpu_plane_validate_multirect_v2(struct dpu_multirect_plane_states *plane)
+> > @@ -911,6 +919,9 @@ static int dpu_plane_atomic_check_pipe(struct dpu_plane *pdpu,
+> >   {
+> >       uint32_t min_src_size;
+> >
+> > +     if (!pipe->sspp)
+> > +             return 0;
+> > +
+> >       min_src_size = DPU_FORMAT_IS_YUV(fmt) ? 2 : 1;
+> >
+> >       if (DPU_FORMAT_IS_YUV(fmt) &&
+> > @@ -957,9 +968,12 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+> >       int ret = 0, min_scale;
+> >       struct dpu_plane *pdpu = to_dpu_plane(plane);
+> >       struct dpu_plane_state *pstate = to_dpu_plane_state(new_plane_state);
+> > +     struct dpu_sw_pipe *pipe = &pstate->pipe;
+> > +     struct dpu_sw_pipe *r_pipe = &pstate->r_pipe;
+> >       const struct drm_crtc_state *crtc_state = NULL;
+> >       const struct dpu_format *fmt;
+> >       struct dpu_hw_sspp_cfg *pipe_cfg = &pstate->pipe_cfg;
+> > +     struct dpu_hw_sspp_cfg *r_pipe_cfg = &pstate->r_pipe_cfg;
+> >       struct drm_rect fb_rect = { 0 };
+> >       uint32_t max_linewidth;
+> >       unsigned int rotation;
+> > @@ -983,8 +997,11 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+> >       if (!new_plane_state->visible)
+> >               return 0;
+> >
+> > -     pstate->pipe.multirect_index = DPU_SSPP_RECT_SOLO;
+> > -     pstate->pipe.multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+> > +     pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+> > +     pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+> > +     r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+> > +     r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+> > +     r_pipe->sspp = NULL;
+> >
+> >       pstate->stage = DPU_STAGE_0 + pstate->base.normalized_zpos;
+> >       if (pstate->stage >= pdpu->catalog->caps->max_mixer_blendstages) {
+> > @@ -1016,16 +1033,53 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+> >
+> >       max_linewidth = pdpu->catalog->caps->max_linewidth;
+> >
+> > -     /* check decimated source width */
+> >       if (drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) {
+> > -             DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u\n",
+> > -                             DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
+> > -             return -E2BIG;
+> > +             /* struct dpu_crtc_state *cstate = to_dpu_crtc_state(crtc_state); */
+> > +
+> > +             if (drm_rect_width(&pipe_cfg->src_rect) > 2 * max_linewidth) {
+> > +                     DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u\n",
+> > +                                     DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
+> > +                     return -E2BIG;
+> > +             }
+>
+> This is where I am a bit concerned enabling it for all chipsets in one go.
+
+As I wrote earlier, I'd prefer the opt-out rather than opt-in here. It
+is much easier to handle the reports "I have a device with sm6543,
+where the display worked before 6.4, but started failing afterwards"
+rather than trying to find a person with sm6543 and asking him if he
+can enable this and that on his device. And even a lower chance of a
+person with sm6543 coming up with a patch 'hey, I enabled this for my
+phone and it works!'.
+
+If we find any issues during or close to the end of the development
+cycle, we can add a 'don't enable wide plane here' switch and enable
+it for failing platforms. But each enablement of this switch should
+come with a reason (wide planes not working here because ....). In the
+end this switch should be gone and transformed into proper HW
+limitation checks.
+
+> As you are aware,  we have an open bug today that we do not filter out
+> the modes which we do not support.
+>
+> https://gitlab.freedesktop.org/drm/msm/-/issues/21
+
+I thought that with the link-frequencies in place and with the DSI
+checking the OPP tables this issue is mostly handled. Isn't it?
+Is a mode check in the DPU driver itself the last missing piece?
+
+>
+> Due to this, on all chipsets we will end up trying to do a 4K on
+> external display which we dont know what bugs it will expose.
+
+If we do not expose bugs, we do not have a way to fix them. And I
+definitely think that all the bugs should be listed as early as
+possible, while both of us still remember the code under the question.
+
+>
+> So lets say if we test it on sc7280 fully but not on sc7180, we will
+> still hit this condition on sc7180 too but on that chipset we did not
+> advertise 4K as a capability in the product spec.
+
+Is it 'not advertised' or 'not supported by hw'?
+
+>
+> With the max_linewidth check relaxed nothing prevents us from doing 4K
+> on a chipset which doesnt support 4K.
+
+What prevents sc7180 from supporting 4k? Does it support Smart DMA?
+Does it support having two LMs per INTF/CRTC? Is there a limitation on
+the linewidth of two LMs or two SSPPs?
+
+I see that sm7125 (which has the same DPU revision) even contains
+"qcom,sde-vig-sspp-linewidth = <4096>;" in the DTS, despite official
+'product brief' advertising only 2520x1080 output resolution.
+
+>
+> > +
+> > +             /*
+> > +              * FIXME: it's not possible to check if sourcesplit is supported,
+> > +              * LMs is not assigned yet. It happens in dpu_encoder_virt_mode_set
+> > +              */
+> > +             if (drm_rect_width(&pipe_cfg->src_rect) != drm_rect_width(&pipe_cfg->dst_rect) ||
+> > +                        drm_rect_height(&pipe_cfg->src_rect) != drm_rect_height(&pipe_cfg->dst_rect) ||
+> > +                        (!test_bit(DPU_SSPP_SMART_DMA_V1, &pipe->sspp->cap->features) &&
+> > +                         !test_bit(DPU_SSPP_SMART_DMA_V2, &pipe->sspp->cap->features)) ||
+> > +                        /* cstate->num_mixers < 2 ||
+> > +                        !test_bit(DPU_MIXER_SOURCESPLIT, &cstate->mixers[0].hw_lm->cap->features) || */
+> > +                        DPU_FORMAT_IS_YUV(fmt)) {
+> > +                     DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u, can't use split source\n",
+> > +                                     DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
+> > +                     return -E2BIG;
+> > +             }
+> > +
+> > +             /* Use multirect for wide plane. We do not support dynamic assignment of SSPPs, so we know the configuration. */
+> > +             pipe->multirect_index = DPU_SSPP_RECT_0;
+> > +             pipe->multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
+> > +
+> > +             r_pipe->sspp = pipe->sspp;
+> > +             r_pipe->multirect_index = DPU_SSPP_RECT_1;
+> > +             r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
+>
+>
+> > +
+> > +             *r_pipe_cfg = *pipe_cfg;
+> > +             pipe_cfg->src_rect.x2 = (pipe_cfg->src_rect.x1 + pipe_cfg->src_rect.x2) >> 1;
+> > +             pipe_cfg->dst_rect.x2 = (pipe_cfg->dst_rect.x1 + pipe_cfg->dst_rect.x2) >> 1;
+> > +             r_pipe_cfg->src_rect.x1 = pipe_cfg->src_rect.x2;
+> > +             r_pipe_cfg->dst_rect.x1 = pipe_cfg->dst_rect.x2;
+> >       }
+> >
+>
+> As you requested just wanted to summarize the condition in the email.
+>
+> In parallel fetch mode, the downstream driver for UBWC formats, we check
+> whether the src width of each rectangle is > maxlinewidth/2
+>
+> https://git.codelinaro.org/clo/la/platform/vendor/opensource/display-drivers/-/blob/DISPLAY.LA.2.0.r3-00500-WAIPIO.0/msm/sde/sde_plane.c#L1835
+
+Thanks. Please double check my understanding: If the rectangle is used
+for the tiled format, then it's max_linewidth is effectively halved.
+So we can use rect_solo with full width, but for rect_0/rect_1 we
+should halve it, even if two rectangles are used in the time split?
+
+>
+> For sc7280, maxlinewidth is 2400
+>
+> static const struct dpu_caps sc7280_dpu_caps = {
+>          .max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
+>          .max_mixer_blendstages = 0x7,
+>          .qseed_type = DPU_SSPP_SCALER_QSEED4,
+>          .smart_dma_rev = DPU_SSPP_SMART_DMA_V2,
+>          .ubwc_version = DPU_HW_UBWC_VER_30,
+>          .has_dim_layer = true,
+>          .has_idle_pc = true,
+>          .max_linewidth = 2400,
+>          .pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+> };
+>
+> Hence for UBWC formats which are by default used on the sc7280
+> chromebook, each rectangle should be < 1200
+>
+> SmartDMA is therefore not enough to support 4K on sc7280 and we need
+> true virtual planes ( using two SSPPs to display the 4K layer )
+>
+> Also, probably worth commenting that time multiplex mode support is not
+> added in this series.
+
+Ack.
+
+>
+> >       fmt = to_dpu_format(msm_framebuffer_format(new_plane_state->fb));
+> >
+> > -     ret = dpu_plane_atomic_check_pipe(pdpu, &pstate->pipe, pipe_cfg, fmt);
+> > +     ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg, fmt);
+> > +     if (ret)
+> > +             return ret;
+> > +
+> > +     ret = dpu_plane_atomic_check_pipe(pdpu, r_pipe, r_pipe_cfg, fmt);
+> >       if (ret)
+> >               return ret;
+> >
+> > @@ -1094,8 +1148,10 @@ void dpu_plane_flush(struct drm_plane *plane)
+> >       else if (pdpu->color_fill & DPU_PLANE_COLOR_FILL_FLAG)
+> >               /* force 100% alpha */
+> >               _dpu_plane_color_fill(pdpu, pdpu->color_fill, 0xFF);
+> > -     else
+> > +     else {
+> >               dpu_plane_flush_csc(pdpu, &pstate->pipe);
+> > +             dpu_plane_flush_csc(pdpu, &pstate->r_pipe);
+> > +     }
+> >
+> >       /* flag h/w flush complete */
+> >       if (plane->state)
+> > @@ -1130,6 +1186,9 @@ static void dpu_plane_sspp_update_pipe(struct drm_plane *plane,
+> >       struct drm_plane_state *state = plane->state;
+> >       struct dpu_plane_state *pstate = to_dpu_plane_state(state);
+> >
+> > +     if (!pipe->sspp)
+> > +             return;
+> > +
+> >       if (layout && pipe->sspp->ops.setup_sourceaddress) {
+> >               trace_dpu_plane_set_scanout(pipe, layout);
+> >               pipe->sspp->ops.setup_sourceaddress(pipe, layout);
+> > @@ -1207,13 +1266,14 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
+> >       struct drm_plane_state *state = plane->state;
+> >       struct dpu_plane_state *pstate = to_dpu_plane_state(state);
+> >       struct dpu_sw_pipe *pipe = &pstate->pipe;
+> > +     struct dpu_sw_pipe *r_pipe = &pstate->r_pipe;
+> >       struct drm_crtc *crtc = state->crtc;
+> >       struct drm_framebuffer *fb = state->fb;
+> >       bool is_rt_pipe;
+> >       const struct dpu_format *fmt =
+> >               to_dpu_format(msm_framebuffer_format(fb));
+> >       struct dpu_hw_sspp_cfg *pipe_cfg = &pstate->pipe_cfg;
+> > -
+> > +     struct dpu_hw_sspp_cfg *r_pipe_cfg = &pstate->r_pipe_cfg;
+> >       struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
+> >       struct msm_gem_address_space *aspace = kms->base.aspace;
+> >       struct dpu_hw_fmt_layout layout;
+> > @@ -1241,12 +1301,22 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
+> >                                  drm_mode_vrefresh(&crtc->mode),
+> >                                  layout_valid ? &layout: NULL);
+> >
+> > +     dpu_plane_sspp_update_pipe(plane, r_pipe, r_pipe_cfg, fmt,
+> > +                                drm_mode_vrefresh(&crtc->mode),
+> > +                                layout_valid ? &layout: NULL);
+> > +
+> >       if (pstate->needs_qos_remap)
+> >               pstate->needs_qos_remap = false;
+> >
+> >       pstate->plane_fetch_bw = _dpu_plane_calc_bw(pdpu->catalog, fmt, &crtc->mode, pipe_cfg);
+> >
+> >       pstate->plane_clk = _dpu_plane_calc_clk(&crtc->mode, pipe_cfg);
+> > +
+> > +     if (r_pipe->sspp) {
+> > +             pstate->plane_fetch_bw += _dpu_plane_calc_bw(pdpu->catalog, fmt, &crtc->mode, r_pipe_cfg);
+> > +
+> > +             pstate->plane_clk = max(pstate->plane_clk, _dpu_plane_calc_clk(&crtc->mode, r_pipe_cfg));
+> > +     }
+> >   }
+> >
+> >   static void _dpu_plane_atomic_disable(struct drm_plane *plane)
+> > @@ -1289,6 +1359,8 @@ static void dpu_plane_destroy(struct drm_plane *plane)
+> >               pstate = to_dpu_plane_state(plane->state);
+> >               _dpu_plane_set_qos_ctrl(plane, &pstate->pipe, false, DPU_PLANE_QOS_PANIC_CTRL);
+> >
+> > +             _dpu_plane_set_qos_ctrl(plane, &pstate->r_pipe, false, DPU_PLANE_QOS_PANIC_CTRL);
+> > +
+> >               mutex_destroy(&pdpu->lock);
+> >
+> >               /* this will destroy the states as well */
+> > @@ -1369,11 +1441,26 @@ static void dpu_plane_atomic_print_state(struct drm_printer *p,
+> >               const struct drm_plane_state *state)
+> >   {
+> >       const struct dpu_plane_state *pstate = to_dpu_plane_state(state);
+> > +     const struct dpu_sw_pipe *pipe = &pstate->pipe;
+> > +     const struct dpu_hw_sspp_cfg *pipe_cfg = &pstate->pipe_cfg;
+> > +     const struct dpu_sw_pipe *r_pipe = &pstate->r_pipe;
+> > +     const struct dpu_hw_sspp_cfg *r_pipe_cfg = &pstate->r_pipe_cfg;
+> >
+> >       drm_printf(p, "\tstage=%d\n", pstate->stage);
+> > -     drm_printf(p, "\tsspp=%s\n", pstate->pipe.sspp->cap->name);
+> > -     drm_printf(p, "\tmultirect_mode=%s\n", dpu_get_multirect_mode(pstate->pipe.multirect_mode));
+> > -     drm_printf(p, "\tmultirect_index=%s\n", dpu_get_multirect_index(pstate->pipe.multirect_index));
+> > +
+> > +     drm_printf(p, "\tsspp[0]=%s\n", pipe->sspp->cap->name);
+> > +     drm_printf(p, "\tmultirect_mode[0]=%s\n", dpu_get_multirect_mode(pipe->multirect_mode));
+> > +     drm_printf(p, "\tmultirect_index[0]=%s\n", dpu_get_multirect_index(pipe->multirect_index));
+> > +     drm_printf(p, "\tsrc[0]=" DRM_RECT_FMT "\n", DRM_RECT_ARG(&pipe_cfg->src_rect));
+> > +     drm_printf(p, "\tdst[0]=" DRM_RECT_FMT "\n", DRM_RECT_ARG(&pipe_cfg->dst_rect));
+> > +
+> > +     if (r_pipe->sspp) {
+> > +             drm_printf(p, "\tsspp[1]=%s\n", r_pipe->sspp->cap->name);
+> > +             drm_printf(p, "\tmultirect_mode[1]=%s\n", dpu_get_multirect_mode(r_pipe->multirect_mode));
+> > +             drm_printf(p, "\tmultirect_index[1]=%s\n", dpu_get_multirect_index(r_pipe->multirect_index));
+> > +             drm_printf(p, "\tsrc[1]=" DRM_RECT_FMT "\n", DRM_RECT_ARG(&r_pipe_cfg->src_rect));
+> > +             drm_printf(p, "\tdst[1]=" DRM_RECT_FMT "\n", DRM_RECT_ARG(&r_pipe_cfg->dst_rect));
+> > +     }
+> >   }
+>
+> Do you think that changing the atomic_print_state to print the r_pipe
+> sspp can be moved to a separate patch? So that way we only keep the core
+> logic of atomic check of smartDMA in this patch.
+>
+> >
+> >   static void dpu_plane_reset(struct drm_plane *plane)
+> > @@ -1407,6 +1494,10 @@ static void dpu_plane_reset(struct drm_plane *plane)
+> >        * This is the place where the state is allocated, so fill it fully.
+> >        */
+> >       pstate->pipe.sspp = dpu_rm_get_sspp(&dpu_kms->rm, pdpu->pipe);
+> > +     pstate->pipe.multirect_index = DPU_SSPP_RECT_SOLO;
+> > +     pstate->pipe.multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+> > +
+> > +     pstate->r_pipe.sspp = NULL;
+> >
+> >       __drm_atomic_helper_plane_reset(plane, &pstate->base);
+> >   }
+> > @@ -1423,6 +1514,7 @@ void dpu_plane_danger_signal_ctrl(struct drm_plane *plane, bool enable)
+> >
+> >       pm_runtime_get_sync(&dpu_kms->pdev->dev);
+> >       _dpu_plane_set_qos_ctrl(plane, &pstate->pipe, enable, DPU_PLANE_QOS_PANIC_CTRL);
+> > +     _dpu_plane_set_qos_ctrl(plane, &pstate->r_pipe, enable, DPU_PLANE_QOS_PANIC_CTRL);
+> >       pm_runtime_put_sync(&dpu_kms->pdev->dev);
+> >   }
+> >   #endif
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+> > index 079dad83eb37..183c95949885 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+> > @@ -19,7 +19,9 @@
+> >    * @base:   base drm plane state object
+> >    * @aspace: pointer to address space for input/output buffers
+> >    * @pipe:   software pipe description
+> > + * @r_pipe:  software pipe description of the second pipe
+> >    * @pipe_cfg:       software pipe configuration
+> > + * @r_pipe_cfg:      software pipe configuration for the second pipe
+> >    * @stage:  assigned by crtc blender
+> >    * @needs_qos_remap: qos remap settings need to be updated
+> >    * @multirect_index: index of the rectangle of SSPP
+> > @@ -34,7 +36,9 @@ struct dpu_plane_state {
+> >       struct drm_plane_state base;
+> >       struct msm_gem_address_space *aspace;
+> >       struct dpu_sw_pipe pipe;
+> > +     struct dpu_sw_pipe r_pipe;
+> >       struct dpu_hw_sspp_cfg pipe_cfg;
+> > +     struct dpu_hw_sspp_cfg r_pipe_cfg;
+> >       enum dpu_stage stage;
+> >       bool needs_qos_remap;
+> >       bool pending;
+
+
+
+-- 
+With best wishes
+Dmitry
