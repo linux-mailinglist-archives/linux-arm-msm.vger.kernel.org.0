@@ -2,93 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 94959690ADF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Feb 2023 14:51:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 04DE0690AEC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Feb 2023 14:55:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230239AbjBINvq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Feb 2023 08:51:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51912 "EHLO
+        id S230303AbjBINzC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Feb 2023 08:55:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230105AbjBINvp (ORCPT
+        with ESMTP id S230030AbjBINy6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Feb 2023 08:51:45 -0500
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B448B9033
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Feb 2023 05:50:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1675950658;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=x5tQrzwoV3t9Ch/0Dq/FO83jB00+J9QP6+xd5wU9EE4=;
-        b=AnyzubdbR4fY2TWAa3yE9JvHaN0FokvhixGf5bA4dWrOqDOT/QKnNif1fkaiaZWV4szktO
-        xVC7KbUPXt9aWRwb8GSgSFIw6a8id3R2Eb2szFppUEKedvv2rL3fFh2J+2T2lMDu9d7VGZ
-        6AVDSvNc1L9XVZ5sU7srG41KeaHd2xU=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-410-FOXoZO4LNpGpzHTxFg9kVg-1; Thu, 09 Feb 2023 08:50:56 -0500
-X-MC-Unique: FOXoZO4LNpGpzHTxFg9kVg-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com [10.11.54.1])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 01482803520;
-        Thu,  9 Feb 2023 13:50:54 +0000 (UTC)
-Received: from plouf.local (ovpn-192-232.brq.redhat.com [10.40.192.232])
-        by smtp.corp.redhat.com (Postfix) with ESMTP id 81B19400DB1E;
-        Thu,  9 Feb 2023 13:50:51 +0000 (UTC)
-From:   Benjamin Tissoires <benjamin.tissoires@redhat.com>
-To:     Bjorn Andersson <andersson@kernel.org>,
+        Thu, 9 Feb 2023 08:54:58 -0500
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F0BFD539
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Feb 2023 05:54:57 -0800 (PST)
+Received: by mail-ed1-x531.google.com with SMTP id a10so2146777edu.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Feb 2023 05:54:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2zniVv2S4UvTl9S4r8Pw4LFfVImEUqJM9devi4IDHcY=;
+        b=CcPWCKZUBUexm6pe/qDYFmtoSsAtsDr/UgWHK9QB1eE6wLk71s5STBmiPGG7VI+Vsr
+         yh07JTQXbpzWHdjt43SHnsfHhUOojFqlwtfDrCcv1jKU7xuiK962SAaQZhZUica65Qpv
+         iw2Eue+/1jE6x4ZO3p532xp9yV9SepmOtZpc5Bx9imqobd6cQzMYhnp7aynN6g1tQ/Tk
+         nhlO0OJCYvguenOPcWa7GPGd7ZzHSRqzEcF29E2HHUXu/xGwZYZuP5LaZ4iov0SE4k73
+         CeN97mW0Art+RaYz3P8vmWIJkSFFe9By2+ztvf6SUhHxTUGWCROA1kuzn2VcyxMj5nGq
+         w0YA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2zniVv2S4UvTl9S4r8Pw4LFfVImEUqJM9devi4IDHcY=;
+        b=aBtuwB7s3JuTMyBrcKYDg562iKGvTZuXO4TBFxlxQSVa3fp+x0tYkt4NaUuQWe3gFX
+         pDnrbb1QNrCYZ4cbYHT2b2mbx2xgAI05e9PA03Bpdf/ZEH772R7+/O4HBKz5sD+I7F6P
+         XhZ9lgefuYD4V2TSfYwjKjAPQbt0Pf41Sc3aDG3CJ/EsCqnO7PZcy0MK4vjkboF3GgJI
+         gzHzmeSgqk1zQAj0u1nxBoxCvU/wfNs00MPLHW1QTJD3+k53u+v0qTwJaQHCpLhGMNpt
+         z4nhKoI6q2mHRhJeLrm+7I3fRCY81EefEWzqr/cNpt7/NGoB7ukC8OVlSwMk70eJFuFe
+         w3YA==
+X-Gm-Message-State: AO0yUKVq223QRXuEZKAN3c/L62IKeG6e64WDDqnWSa2/thvrLYuGJ/PG
+        PKIibFZhaVjKqUZSWCs231sldg==
+X-Google-Smtp-Source: AK7set8TNilu2XAjEiupey83kpcRjHP7zJSpXkVnUnyK91cl3pYySa3DB2BPn9OBaSa770JjP19XAQ==
+X-Received: by 2002:a50:ccd1:0:b0:486:ecd3:15f8 with SMTP id b17-20020a50ccd1000000b00486ecd315f8mr12188454edj.6.1675950895639;
+        Thu, 09 Feb 2023 05:54:55 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id j9-20020aa7ca49000000b0045ce419ecffsm780531edt.58.2023.02.09.05.54.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 09 Feb 2023 05:54:54 -0800 (PST)
+Message-ID: <dfcc8baa-c0a3-c554-a8cf-75702a1c4cad@linaro.org>
+Date:   Thu, 9 Feb 2023 15:54:53 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH] arm64: dts: qcom: sdm845-db845c: Mark cont splash memory
+ region as reserved
+Content-Language: en-GB
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Amit Pundir <amit.pundir@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jiri Kosina <jikos@kernel.org>,
-        Douglas Anderson <dianders@chromium.org>
-Cc:     linux-input@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        devicetree@vger.kernel.org, Stephen Kitt <steve@sk2.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org
-In-Reply-To: <20230207024816.525938-1-dianders@chromium.org>
-References: <20230207024816.525938-1-dianders@chromium.org>
-Subject: Re: (subset) [PATCH 0/7] arm: qcom: Fix touchscreen voltage for
- sc7280-herobrine boards
-Message-Id: <167595065101.337240.12878703764198132712.b4-ty@redhat.com>
-Date:   Thu, 09 Feb 2023 14:50:51 +0100
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dt <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+References: <20230124182857.1524912-1-amit.pundir@linaro.org>
+ <39751511-3f06-7c39-9c21-208d4c272113@linaro.org>
+ <CAA8EJppLBuA08hkqTrZx_wwbtCxK9sAjv48c9_DxgPENgo7a8Q@mail.gmail.com>
+ <1a840d88-e5b1-711c-b980-f57620c54472@linaro.org>
+ <8508e3d5-7468-0b2f-5a43-7c439ecf2d8b@linaro.org>
+ <CAMi1Hd2UNxXHUVWO-=sWh=-bVnrqE3UdLguFOq+62SfvUiEs0A@mail.gmail.com>
+ <b2307e91-3373-539a-ecfb-e2542b9f83db@linaro.org>
+ <ed737e67-eabc-6f29-b734-f4698767ca8e@linaro.org>
+ <fa2e0db7-5b27-5a41-920b-b786dc4e521c@linaro.org>
+ <027268b7-4b04-f52e-06a8-9d924dc6efe4@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <027268b7-4b04-f52e-06a8-9d924dc6efe4@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.1 on 10.11.54.1
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 06 Feb 2023 18:48:09 -0800, Douglas Anderson wrote:
-> Trying to figure out how to talk to the touchscreen properly on
-> sc7280-herobrine boards was a long and difficult process. Many
-> Engineering hours were spent deciding how exactly one should talk over
-> i2c to a peripheral. In the end, a solution has been found and this
-> patch series attempts to implement it in a way that will work for all
-> herobrine-based boards.
+On 09/02/2023 14:22, Bryan O'Donoghue wrote:
+> On 09/02/2023 12:11, Bryan O'Donoghue wrote:
+>>> If the bootloader splash is enabled then this memory is used until the
+>>> DPU driver instructs MDP5 pipes to suck data from a newly assigned 
+>>> address,
+>>> so there's a short window where it is.
+>>
+>> It seems a shame to reserve 30 something megabytes of memory for 
+>> continuous splash unless we are actually using it is my point.
+>>
+>> If I'm running headless its just wasted memory.
 > 
-> [...]
+> Couldn't we
+> 
+> 1. Find reserved continuous splash memory
+> 2. Fee it in the MDP when we make the transition
 
-Applied to hid/hid.git (for-6.3/i2c-hid), thanks!
+Qualcomm has investigated freeing the MDP/DPU cont_splash memory, but I 
+fear that the end result was that it is not _that_ easy to free it. It 
+is marked as reserved/no-map, so the kernel doesn't think about it as a 
+memory region. Adding it back required hacking around that.
 
-[4/7] HID: i2c-hid: goodix: Stop tying the reset line to the regulator
-      https://git.kernel.org/hid/hid/c/557e05fa9fdd
-[5/7] dt-bindings: HID: i2c-hid: goodix: Add mainboard-vddio-supply
-      https://git.kernel.org/hid/hid/c/1d18c1f3b7d9
-[6/7] HID: i2c-hid: goodix: Add mainboard-vddio-supply
-      https://git.kernel.org/hid/hid/c/eb16f59e8e58
-
-Cheers,
 -- 
-Benjamin Tissoires <benjamin.tissoires@redhat.com>
+With best wishes
+Dmitry
 
