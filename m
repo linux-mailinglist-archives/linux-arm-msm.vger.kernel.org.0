@@ -2,129 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AE804690BDF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Feb 2023 15:35:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C6CDB690C41
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Feb 2023 15:56:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231143AbjBIOfA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Feb 2023 09:35:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57506 "EHLO
+        id S230480AbjBIO4T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Feb 2023 09:56:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231133AbjBIOew (ORCPT
+        with ESMTP id S230422AbjBIO4S (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Feb 2023 09:34:52 -0500
-Received: from amity.mint.lgbt (vmi888983.contaboserver.net [149.102.157.145])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6E7E1284E
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Feb 2023 06:34:50 -0800 (PST)
-Received: from amity.mint.lgbt (mx.mint.lgbt [127.0.0.1])
-        by amity.mint.lgbt (Postfix) with ESMTP id 4PCKBx1H0dz1S5HG
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Feb 2023 09:34:49 -0500 (EST)
-Authentication-Results: amity.mint.lgbt (amavisd-new);
-        dkim=pass (2048-bit key) reason="pass (just generated, assumed good)"
-        header.d=mint.lgbt
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mint.lgbt; h=
-        content-transfer-encoding:content-type:in-reply-to:from
-        :references:to:content-language:subject:user-agent:mime-version
-        :date:message-id; s=dkim; t=1675953288; x=1676817289; bh=OtwHaQd
-        43ev0CTnwqIm/FUCsnnqbo5VRlxBW82fmyng=; b=H45rGLKnOkvzxImDk3fnZ7B
-        PaQmSau8WRULXMxDKa2GyRi0GarWzEdFJm6F234o6B1a1pSKi/NGa8vap4goDoQG
-        RoLr4F4qpmeWfor/YEdkU8RqEdgt/rh5I0FnuYt1af0u0bp4/WRXvdI3/qkF+bQT
-        RGIrEs/k5zE2wbVid1TkcQFJ0aPmuuWo+K0J03jhijsN5U0UC5AM79z3PC019cN0
-        FReRT4iwjQyZax9lEdnIZggVjpt42L1vum6bewMifqlXBdUgm9ByVRFuRIXiLVgd
-        QyI+LReM82T+ip68VXqcbtDFig+3Nk66rfLhHi3VSIcDOEwS3ZIQnjJ98UVyvAg=
-        =
-X-Virus-Scanned: amavisd-new at amity.mint.lgbt
-Received: from amity.mint.lgbt ([127.0.0.1])
-        by amity.mint.lgbt (amity.mint.lgbt [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id pvIsSvBavdv0 for <linux-arm-msm@vger.kernel.org>;
-        Thu,  9 Feb 2023 09:34:48 -0500 (EST)
-Received: from [192.168.4.25] (unknown [190.196.95.28])
-        by amity.mint.lgbt (Postfix) with ESMTPSA id 4PCKBY4Xnbz1S5Gh;
-        Thu,  9 Feb 2023 09:34:21 -0500 (EST)
-Message-ID: <bb6f8a51-cec8-02cc-8ac1-3cd714a2e59a@mint.lgbt>
-Date:   Thu, 9 Feb 2023 11:34:17 -0300
+        Thu, 9 Feb 2023 09:56:18 -0500
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42F1520D26
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Feb 2023 06:56:17 -0800 (PST)
+Received: by mail-pj1-x102e.google.com with SMTP id d13-20020a17090ad3cd00b0023127b2d602so2595798pjw.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Feb 2023 06:56:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=G4Gp3Q22MwnvaJXPkKM1GJ/Tl/PCqCy3cqgkx9gfG6Y=;
+        b=zOXq1UwwC+EDJ1QfiH+UOdM+sLNNPgty2xMn4E/1mrGb4wL4NV1pCfhEJYzQoC6wiK
+         swk7upAGOO1VnExEwqUMuMrLz8ndRKBTRac72LeJzSe0sFFqCqPipMN42XsjnL4T4lih
+         /QlmUTs+WR2XfRvcbQ3uIukv8rdgqoLqfdHQFYkKWsbohYawCo1zhFg6UoA/GRjvFV8s
+         RpqBul/0+REXFE9xut2eQ4obAp/l//22M+BUlHupHGeH9VxXTlBn+RTb3AX/gPHhCwkd
+         Ql5oKqRhFnERtAnOsRsorr7ydWCIy/AjOiV2WEXD/UpMcMl1Vvzk0VHtz0ClOOsIbrZQ
+         n6jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=G4Gp3Q22MwnvaJXPkKM1GJ/Tl/PCqCy3cqgkx9gfG6Y=;
+        b=JGxO0vNlRv/cVS30wHaHukC2QIO3u00Oe75CdXTh+gRwK7VjBbvWOOXa7l7Sbgs1Tu
+         SWnVkJbFZkXwULrcFdZV8MUJA0AK80hV5MJtFlxyZcAXDc2mfahbQtLtltv0nS6gnaY1
+         vZjyQiyZ1lyFL10G8sYKlOfxPbxG75Zdy7NSlnn8O52ovPW2CmLsW0mHKca5VPaYmiLg
+         XNky5NLkcBgjXdEu/3TVMJ1MYMzzlI25jtEG0H0EnDAG6qvcoOglOWIrIcXMap1bTZVW
+         jxXyR+HCdDNr5Dfp2CnGzfcA/OBzF1R5J5+2PCTrKMtJFQwTkLvH0pHqnIBWQJZec03J
+         U6Ew==
+X-Gm-Message-State: AO0yUKWlRJiaHMhi/uuEcuWX7finIWxokURmaIQ/vqs1jl1yrmNA2r7u
+        kRDKENUt6mov1fJcBGrgedwyZfw7dmh0J9mtn/n61w==
+X-Google-Smtp-Source: AK7set+W88ZhrEcQgq+tAvGlvM7yfbjbvfaALfrOks+QWKsl32L+9dhneGI/1Aux+WTL4q2HP2CtXOr83M7PLBGXJzY=
+X-Received: by 2002:a17:90a:684d:b0:22c:789:d60d with SMTP id
+ e13-20020a17090a684d00b0022c0789d60dmr1785209pjm.62.1675954576643; Thu, 09
+ Feb 2023 06:56:16 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH v6 3/6] phy: qcom-qmp: Add SM6125 UFS PHY support
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        vkoul@kernel.org, kishon@kernel.org, alim.akhtar@samsung.com,
-        avri.altman@wdc.com, bvanassche@acm.org, keescook@chromium.org,
-        tony.luck@intel.com, gpiccoli@igalia.com,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-scsi@vger.kernel.org, linux-hardening@vger.kernel.org,
-        phone-devel@vger.kernel.org, martin.botka@somainline.org,
-        marijn.suijten@somainline.org
-References: <20230108195336.388349-1-they@mint.lgbt>
- <20230108195336.388349-4-they@mint.lgbt>
- <CAA8EJpp-RwPOv61MtoXYb3Tuy5LDWWBCvYSrGUOvg8vWhid_tw@mail.gmail.com>
-From:   Lux Aliaga <they@mint.lgbt>
-In-Reply-To: <CAA8EJpp-RwPOv61MtoXYb3Tuy5LDWWBCvYSrGUOvg8vWhid_tw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20230208111630.20132-1-quic_jinlmao@quicinc.com>
+ <CAJ9a7ViBS9K6cKsOi3btw1b5cM9VTSb-q8s6W3WUAgeW3-T2Sg@mail.gmail.com>
+ <CAJ9a7ViA5BsbLjRWMsttmpmcPh1yUXK8J79k-pqYybVZkMQHXQ@mail.gmail.com>
+ <bb6c9df9-af9b-873e-85bd-a29d00bb39d7@arm.com> <1d9b8ee8-c3f2-99bc-cd4e-8c2dd0f04b2b@quicinc.com>
+In-Reply-To: <1d9b8ee8-c3f2-99bc-cd4e-8c2dd0f04b2b@quicinc.com>
+From:   Mike Leach <mike.leach@linaro.org>
+Date:   Thu, 9 Feb 2023 14:56:05 +0000
+Message-ID: <CAJ9a7Vh08A8b7YLF=pYPudB0CZ0XjEpF=4YHrNNd7xo_JQGYaA@mail.gmail.com>
+Subject: Re: [PATCH] coresight: core: Add sysfs node to reset all sources and sinks
+To:     Jinlong Mao <quic_jinlmao@quicinc.com>
+Cc:     Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Leo Yan <leo.yan@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/01/2023 16:31, Dmitry Baryshkov wrote:
+Hi,
 
-> On Sun, 8 Jan 2023 at 21:54, Lux Aliaga <they@mint.lgbt> wrote:
->> The SM6125 UFS PHY is compatible with the one from SM6115. Add a
->> compatible for it and modify the config from SM6115 to make them
->> compatible with the SC8280XP binding
->>
->> Signed-off-by: Lux Aliaga <they@mint.lgbt>
->> Reviewed-by: Martin Botka <martin.botka@somainline.org>
->> ---
->>   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 5 +++++
->>   1 file changed, 5 insertions(+)
->>
->> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
->> index 318eea35b972..f33c84578940 100644
->> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
->> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
->> @@ -693,6 +693,8 @@ static const struct qmp_phy_cfg sdm845_ufsphy_cfg = {
->>   static const struct qmp_phy_cfg sm6115_ufsphy_cfg = {
->>          .lanes                  = 1,
->>
->> +       .offsets                = &qmp_ufs_offsets_v5,
-> Please don't randomly reuse generation-specific structures. This
-> structure is clearly related to v5, while the PHY is from the v2
-> generation.
-
-I'm a bit confused here. When referencing back to downstream the driver 
-used has the suffix "v3-660". Should I use that suffix to name these 
-offsets? Because I'm not too sure if this is from the v2 generation due 
-to how it's named there.
-
->> +
->>          .serdes_tbl             = sm6115_ufsphy_serdes_tbl,
->>          .serdes_tbl_num         = ARRAY_SIZE(sm6115_ufsphy_serdes_tbl),
->>          .tx_tbl                 = sm6115_ufsphy_tx_tbl,
->> @@ -1172,6 +1174,9 @@ static const struct of_device_id qmp_ufs_of_match_table[] = {
->>          }, {
->>                  .compatible = "qcom,sm6115-qmp-ufs-phy",
->>                  .data = &sm6115_ufsphy_cfg,
->> +       }, {
->> +               .compatible = "qcom,sm6125-qmp-ufs-phy",
->> +               .data = &sm6115_ufsphy_cfg,
->>          }, {
->>                  .compatible = "qcom,sm6350-qmp-ufs-phy",
->>                  .data = &sdm845_ufsphy_cfg,
->> --
->> 2.39.0
->>
+On Thu, 9 Feb 2023 at 03:02, Jinlong Mao <quic_jinlmao@quicinc.com> wrote:
 >
--- 
-Lux Aliaga
-https://nixgoat.me/
+>
+> On 2/9/2023 12:36 AM, Suzuki K Poulose wrote:
+> > On 08/02/2023 16:20, Mike Leach wrote:
+> >> Quick correction - you need to look for enable_source  / enable_sink
+> >> files and disable those that are currently '1'
+> >>
+> >> Mike
+> >>
+> >> On Wed, 8 Feb 2023 at 16:16, Mike Leach <mike.leach@linaro.org> wrote:
+> >>>
+> >>> Hi
+> >>>
+> >>> As this is a sysfs only update - would it not be easier to simply use
+> >>> a shell script to iterate through coresight/devices/ looking for
+> >>> disable_source / disable_sink files and setting those accordingly?
+> >>>
+> >>> See tools/perf/tests/shell/test_arm_coresight.sh for an example of a
+> >>> script that does similar iteration to test coresight in perf
+> >>>
+> >
+> > +1
+> >
+> > Suzuki
+>
+> Hi Mike & Suzuki,
+>
+> Sometimes user just want to have some quick test from PC with adb commands.
+> It is very easy to reset all sources and sinks' status by command below.
+> echo 1 > /sys/bus/coresight/reset_source_sink
+>
 
+Users of coresight via sysfs will have to know how to use the
+coresight infrastructure in order to enable the sources and sinks in
+the first place -
+e.g
+echo 1 > /sys/bus/coresight/devices/tmc_etr0/enable_sink
+echo 1 > /sys/bus/coresight/devices/etm0/enable_source
+
+Given that they are aware of which sources and sinks they enabled -
+disabling them should be simple.
+
+
+> Preparing the script for test is not easy for users who are not familiar
+> with the coresight framework.
+>
+If there is a genuine use case were a user has opened so many sources
+on the command line that they need a simpler way of closing them than
+repeating the enabled commands with an
+echo 0 > ...
+then any script could be shipped as part of kernel/tools/coresight or
+kernel/samples/coresight - they would not have to write it themselves,
+and just run it from the command line - for example :-
+./kernel/tools/coresight/scripts/sysfs_disable_sources_and_sinks.sh
+
+Realistically users will only try out a couple of devices as the
+usefulness of the sysfs interface is really limited to testing or
+board bring up.
+Any complex use with sysfs - as in the coresight tests I mentioned
+earlier is really going to be done by scripting.
+
+
+Regards
+
+Mike
+
+> Thanks
+> Jinlong Mao
+>
+> >
+> >
+
+
+
+-- 
+Mike Leach
+Principal Engineer, ARM Ltd.
+Manchester Design Centre. UK
