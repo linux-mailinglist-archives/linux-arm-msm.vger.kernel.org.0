@@ -2,131 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5FB5C691019
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Feb 2023 19:12:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 40B69691057
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Feb 2023 19:36:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229819AbjBISMX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Feb 2023 13:12:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57690 "EHLO
+        id S229691AbjBISgW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Feb 2023 13:36:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229665AbjBISMW (ORCPT
+        with ESMTP id S229643AbjBISgV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Feb 2023 13:12:22 -0500
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3064F6A31A
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Feb 2023 10:11:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1675966278;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=LZy+J+rcrOSfXTsdoDz1dXzhYCRm1QK50PABySNIrxc=;
-        b=RSEjxD6QUTfnwL/fVwbKj1ipmjmnW5lco7nEAcOP5IoTOGj61LmnW/PT6QHr7Q3Du60JOD
-        tbrhzWSV/ZD+X0F76x/dsRciijLP84wP2m8QtnCiBahpAytKVKmpn6X5eheNp+C+3L3Q8W
-        HfVe/QcjqTlfjGxWakJg7I3oRRqE22E=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-595-9PbVCqfyM9aMRq-8AYLdyw-1; Thu, 09 Feb 2023 13:11:17 -0500
-X-MC-Unique: 9PbVCqfyM9aMRq-8AYLdyw-1
-Received: by mail-qv1-f70.google.com with SMTP id ly4-20020a0562145c0400b0054d2629a759so1683281qvb.16
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Feb 2023 10:11:17 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LZy+J+rcrOSfXTsdoDz1dXzhYCRm1QK50PABySNIrxc=;
-        b=bQaF5wqauNyLyHu/qmevOa7Gl3iSKglTwzMEkMcPtgH0BU5hZlxOu2i4l2NqXlVJin
-         2Yc+ErE2sTz2+SdNPsbBR9nGzZ84Y4cUx0w8FtAyjxQLaV5OD4lvEuBdp6/RtuLBlGxx
-         LZIf6dR1G9mNyoyae/2AtfK87OOyLHEUEkQFkGdfYYoKrYz7u0nGU4M3Clup9YNMj/s/
-         pDRUZPo1N7CDz1Vz38NaiqzbE71tSTG9psLddllifCiwEWmAFb9106zBgM7Tn7JUB/pB
-         2Dm9hKVhXKgNvxE1SnDHg07Htpq2iJ8vrqUQegL9Ul5daK3LozL1vySdD3nc5Qrkarwq
-         4vZw==
-X-Gm-Message-State: AO0yUKXeZQ864gQvytKlWzOvteuB/ITIYc/ybWqayNhGYxu59WLWgIe9
-        uFU/jSVsuXfdQyfzxA7kZ+UX2HjAHFWvnrVSVkEOeKB+HtUV4HaAf6vsgGmJk1TLw6ZkMlZHACp
-        cyL5rIgwlf3nYeIFf66UmF3SVgQ==
-X-Received: by 2002:a05:622a:349:b0:3b8:58d0:b4e4 with SMTP id r9-20020a05622a034900b003b858d0b4e4mr21727863qtw.33.1675966276649;
-        Thu, 09 Feb 2023 10:11:16 -0800 (PST)
-X-Google-Smtp-Source: AK7set+OtThhRwwq7+xgc2rtsbWPWeQFKBLmPTMOot/fBAxyKrqK+AJlVuJgSX3ij9R9UMJ/37TyrQ==
-X-Received: by 2002:a05:622a:349:b0:3b8:58d0:b4e4 with SMTP id r9-20020a05622a034900b003b858d0b4e4mr21727825qtw.33.1675966276384;
-        Thu, 09 Feb 2023 10:11:16 -0800 (PST)
-Received: from localhost (pool-71-184-142-128.bstnma.fios.verizon.net. [71.184.142.128])
-        by smtp.gmail.com with ESMTPSA id ca16-20020a05622a1f1000b003a7e38055c9sm1698977qtb.63.2023.02.09.10.11.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Feb 2023 10:11:15 -0800 (PST)
-Date:   Thu, 9 Feb 2023 13:11:15 -0500
-From:   Eric Chanudet <echanude@redhat.com>
-To:     Bartosz Golaszewski <brgl@bgdev.pl>
-Cc:     Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Shawn Guo <shawnguo@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [RESEND PATCH] arm64: defconfig: enable drivers required by the
- Qualcomm SA8775P platform
-Message-ID: <20230209181115.t5lhtdewe2k2zh7i@echanude>
-References: <20230209103531.469809-1-brgl@bgdev.pl>
+        Thu, 9 Feb 2023 13:36:21 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 014045AB3B;
+        Thu,  9 Feb 2023 10:36:20 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 8F37F61B80;
+        Thu,  9 Feb 2023 18:36:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A6F5C433D2;
+        Thu,  9 Feb 2023 18:36:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1675967780;
+        bh=PYzwfwbt25AUIPUiQXcfnToLFsGRS71rob+5nQm8OG0=;
+        h=From:To:In-Reply-To:References:Subject:Date:From;
+        b=TJlLYevrQyb2Tdd1yL0Ev60Lni+wpyJG39vDWW1WjG7Rer1/Of9l4pAKwsQtZd3dR
+         mY5XL7sc3bMKuTyOd+XT1rWtb61xAcgnm5ukOxQb27rqx48akqZVr16xjrXIgDj989
+         ZoHlUn8Bo0xqk7TgIXDpx5LLkTHJIpTP7vqGkP0CX3x3kdaW1murrDOqWNwwlM3mnX
+         BgNri4bmCk/QHQZ4E77NlTkzLfJWEHywccGrGHOjzWZ2Z3PiQRL5T2sDPnIc8b6WTu
+         //GVfBxIcLIqLUe2ltcn/cgEF9GL+iZE4DmE8SHu/0Teudsm1C+JV+tiMnh9vkQKuR
+         jqM5lKfty3lww==
+From:   Mark Brown <broonie@kernel.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230206150532.513468-1-krzysztof.kozlowski@linaro.org>
+References: <20230206150532.513468-1-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH] ASoC: dt-bindings: qcom,q6apm-dai: adjust iommus for
+ SM8550 ADSP
+Message-Id: <167596777728.879652.15119522144585944550.b4-ty@kernel.org>
+Date:   Thu, 09 Feb 2023 18:36:17 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230209103531.469809-1-brgl@bgdev.pl>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.12.0
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Feb 09, 2023 at 11:35:31AM +0100, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Mon, 06 Feb 2023 16:05:32 +0100, Krzysztof Kozlowski wrote:
+> It seems that SM8550 ADSP remote processor uses two IOMMUs.
 > 
-> Enable the pinctrl, GCC clock and interconnect drivers in order to allow
-> booting SA8775P boards. The drivers need to be built-in for QUPv3 and
-> subsequently UART console to work.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-> Resending with tags collected and this time Cc'ing linux-arm-msm
-> 
->  arch/arm64/configs/defconfig | 2 ++
->  1 file changed, 2 insertions(+)
-
-Reviewed-by: Eric Chanudet <echanude@redhat.com>
-
-> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> index 695c4e44d241..8e0ce9915f01 100644
-> --- a/arch/arm64/configs/defconfig
-> +++ b/arch/arm64/configs/defconfig
-> @@ -566,6 +566,7 @@ CONFIG_PINCTRL_QCM2290=y
->  CONFIG_PINCTRL_QCS404=y
->  CONFIG_PINCTRL_QDF2XXX=y
->  CONFIG_PINCTRL_QCOM_SPMI_PMIC=y
-> +CONFIG_PINCTRL_SA8775P=y
->  CONFIG_PINCTRL_SC7180=y
->  CONFIG_PINCTRL_SC7280=y
->  CONFIG_PINCTRL_SC8180X=y
-> @@ -1378,6 +1379,7 @@ CONFIG_INTERCONNECT_QCOM_MSM8916=m
->  CONFIG_INTERCONNECT_QCOM_MSM8996=m
->  CONFIG_INTERCONNECT_QCOM_OSM_L3=m
->  CONFIG_INTERCONNECT_QCOM_QCS404=m
-> +CONFIG_INTERCONNECT_QCOM_SA8775P=y
->  CONFIG_INTERCONNECT_QCOM_SC7180=y
->  CONFIG_INTERCONNECT_QCOM_SC7280=y
->  CONFIG_INTERCONNECT_QCOM_SC8180X=y
-> -- 
-> 2.37.2
 > 
 
--- 
-Eric Chanudet
+Applied to
+
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+
+Thanks!
+
+[1/1] ASoC: dt-bindings: qcom,q6apm-dai: adjust iommus for SM8550 ADSP
+      commit: b2c0c45d9255b4444df65c5f69b4939835fee019
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
 
