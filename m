@@ -2,82 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E016368FCE1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Feb 2023 03:09:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E93A68FD04
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Feb 2023 03:20:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231515AbjBICJe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Feb 2023 21:09:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44940 "EHLO
+        id S231793AbjBICUD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Feb 2023 21:20:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231557AbjBICJb (ORCPT
+        with ESMTP id S231812AbjBICTu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Feb 2023 21:09:31 -0500
-Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A574418A8E
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Feb 2023 18:09:24 -0800 (PST)
-Received: by mail-qv1-xf29.google.com with SMTP id k28so487000qve.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Feb 2023 18:09:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ErEfS9bjsXHZf8zW3eSPIlB6x60rqZJ+hhTJR6OvqGc=;
-        b=fjZV9pIdx9EwPU6LiQEp4Di0RywW13a19YPevr0FjfutfFo/SyYbOvgwAmrwEpSiRj
-         9kP3ZmTRPSd4sx8NhzFFoLZd7p/bKBzxYwOhPpJfsu9YXpXecb/ohtQwE80BsHvutrBC
-         bYl22uNLgi58lw/P/IPyoMcsw4RmbHrJ/bbnMuSyt8axKjfcFcH5KkWBJpBFTIBeIUak
-         JfQql1C4u8VBaHzgAUxaFDPNLjafXir4BKMWi9uQ/jZxqTDu/d73ra7suflOvSnKo2X+
-         DdnwMiP+LDzFrHeXV4hyeAPbdg3JZYrgm6UuB6CL9HK71MuPOzV320Cw9chxlQ3SHiO2
-         MW0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ErEfS9bjsXHZf8zW3eSPIlB6x60rqZJ+hhTJR6OvqGc=;
-        b=BaJJBxTorR4fcUMw1LAJiL+9vXf0XpdvivBCnV2ygm1H8K1gqFJzmb2pp4Zd8vz8dN
-         8WoQdKl2BNBr0MMsiEp5ic53v0/+VyCxLTTKL6nYYom3DU8O5oHfRutIklLdKOvFf4o9
-         81S/JgIq6Es+L6x0Jh1NypX7WeiM7AbA3qo7YwoU3+mXiPuyaA4MBprKi4hMRJTwj8vD
-         omLAtCYuAvNPuOLCvSt0zj2pv9S+jxbeG5MjpSxGTxX9ImysV8cZ9aZOmb0mV9uCBLcR
-         DZPSAjWMZB5mqVgxzDdxFHT6413EgC4yr+bq2lTac0MyeBAVz1sWwd5oB53hqUcM82tE
-         +BwA==
-X-Gm-Message-State: AO0yUKXRKKObneq9LiBl/Gghq3C6knTIUGfLkr27b0Jj22q+MQTTFydz
-        3WR7Z1FkWa9bbduQVGVDn1Uv1w==
-X-Google-Smtp-Source: AK7set8hh8Lu1pnPRIR1M8xWEO62IR7mHbVlghjQdpH418aIHEOCN0LcujGzRFyAhy5HaEClqjiINQ==
-X-Received: by 2002:ad4:5b87:0:b0:545:fe7f:437a with SMTP id 7-20020ad45b87000000b00545fe7f437amr13502008qvp.0.1675908564289;
-        Wed, 08 Feb 2023 18:09:24 -0800 (PST)
-Received: from localhost (23-118-233-243.lightspeed.snantx.sbcglobal.net. [23.118.233.243])
-        by smtp.gmail.com with ESMTPSA id o186-20020a37bec3000000b007208a81e11esm398544qkf.41.2023.02.08.18.09.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Feb 2023 18:09:23 -0800 (PST)
-From:   Steev Klimaszewski <steev@kali.org>
-To:     Steev Klimaszewski <steev@kali.org>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Sven Peter <sven@svenpeter.dev>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        Mark Pearson <markpearson@lenovo.com>
-Subject: [PATCH v5 4/4] arm64: dts: qcom: thinkpad-x13s: Add bluetooth
-Date:   Wed,  8 Feb 2023 20:09:16 -0600
-Message-Id: <20230209020916.6475-5-steev@kali.org>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230209020916.6475-1-steev@kali.org>
-References: <20230209020916.6475-1-steev@kali.org>
+        Wed, 8 Feb 2023 21:19:50 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A523233F8;
+        Wed,  8 Feb 2023 18:19:48 -0800 (PST)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3191LpZZ013465;
+        Thu, 9 Feb 2023 02:19:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=G0Wct4skFZ4mzDC58ftjaj74vgAs7Tbd+XhwQZLGwV4=;
+ b=JGOkTg0eF8jILRhFqY6u8uyouIVRdVz6+I9yD+e9+fGrYF+Su0OY5vx++eFmZABPVrst
+ vEj9BaysglkyhGFA958f378YFm8yBxNpBy5nzs8B9ffP6s5DCg0UydGq+dMAfJkv6VuB
+ eR1bDyxxQneX2S4LqGRgTxJIIaKfZgAUofN1Jy+UIqfZRXjnxh96a4zbTp+dTJ0D81Be
+ T6j0y+hfnFmD8Rp7SwC972GzCZTqZo1HDTIzKEr4J8ArWxTBrtijOnnk2sW43SARQzTQ
+ AIL764cm+WlkwEzn7eR6D7kvvxdak4XhSed9SpKDk/hDWlJVZdQ555BXYI4JbvSxRsCj sA== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nkga2wyah-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 09 Feb 2023 02:19:11 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3192JASZ029508
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 9 Feb 2023 02:19:10 GMT
+Received: from [10.239.133.9] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 8 Feb 2023
+ 18:19:06 -0800
+Message-ID: <180a66b1-6996-c705-5d8a-0a69ce0353d7@quicinc.com>
+Date:   Thu, 9 Feb 2023 10:16:57 +0800
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.1
+Subject: Re: [PATCH] coresight: core: Add coresight name support
+Content-Language: en-US
+To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Mike Leach <mike.leach@linaro.org>,
+        Leo Yan <leo.yan@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>
+CC:     <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        "Tingwei Zhang" <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>
+References: <20230208110716.18321-1-quic_jinlmao@quicinc.com>
+ <3c105c79-f523-653e-5154-7ba641e51a96@arm.com>
+From:   Jinlong Mao <quic_jinlmao@quicinc.com>
+In-Reply-To: <3c105c79-f523-653e-5154-7ba641e51a96@arm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: XjYfMfdIuh0kTJWqikxNjd3m9KHHSBnS
+X-Proofpoint-ORIG-GUID: XjYfMfdIuh0kTJWqikxNjd3m9KHHSBnS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-02-08_11,2023-02-08_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
+ priorityscore=1501 lowpriorityscore=0 impostorscore=0 malwarescore=0
+ adultscore=0 mlxlogscore=887 clxscore=1015 suspectscore=0 mlxscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302090019
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,148 +88,84 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Lenovo Thinkpad X13s has a WCN6855 Bluetooth controller on uart2,
-add this.
 
-Signed-off-by: Steev Klimaszewski <steev@kali.org>
-Link: https://lore.kernel.org/r/20230207052829.3996-5-steev@kali.org
----
-Changes since v4:
- * Address Konrad's review comments.
+On 2/8/2023 10:26 PM, Suzuki K Poulose wrote:
+> On 08/02/2023 11:07, Mao Jinlong wrote:
+>> Apart from STM and ETM sources, there will be more sources added to
+>> coresight components. For example, there are over 10 TPDM sources.
+>> Add coresight name support for custom names which will be
+>> easy to identify the source.
+>>
+>
+> As we have previously discussed, please don't make this a generic
+> code change. If your device has a "specifici" name, use that for
+> allocating in the driver and leave the core code alone.
+>
+> Suzuki
+>
+Hi Suzuki,
 
-Changes since v3:
- * Add vreg_s1c
- * Add regulators and not dead code
- * Fix commit message changelog
+Not only for TPDMs. There could be dozens of CTI devices.
+It is hard for user to know which CTI device it is with current names.
 
-Changes since v2:
- * Remove dead code and add TODO comment
- * Make dtbs_check happy with the pin definitions
- .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 76 +++++++++++++++++++
- 1 file changed, 76 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-index f936b020a71d..ad20cfb3a830 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -24,6 +24,8 @@ / {
- 	aliases {
- 		i2c4 = &i2c4;
- 		i2c21 = &i2c21;
-+		serial0 = &uart17;
-+		serial1 = &uart2;
- 	};
- 
- 	wcd938x: audio-codec {
-@@ -297,6 +299,15 @@ pmc8280c-rpmh-regulators {
- 		qcom,pmic-id = "c";
- 		vdd-bob-supply = <&vreg_vph_pwr>;
- 
-+		vreg_s1c: smps1 {
-+			regulator-name = "vreg_s1c";
-+			regulator-min-microvolt = <1880000>;
-+			regulator-max-microvolt = <1900000>;
-+			regulator-allowed-modes = <RPMH_REGULATOR_MODE_AUTO>,
-+						  <RPMH_REGULATOR_MODE_RET>;
-+			regulator-allow-set-load;
-+		};
-+
- 		vreg_l1c: ldo1 {
- 			regulator-name = "vreg_l1c";
- 			regulator-min-microvolt = <1800000>;
-@@ -712,6 +723,32 @@ &qup0 {
- 	status = "okay";
- };
- 
-+&uart2 {
-+	pinctrl-0 = <&uart2_state>;
-+	pinctrl-names = "default";
-+
-+	status = "okay";
-+
-+	bluetooth {
-+		compatible = "qcom,wcn6855-bt";
-+
-+		vddio-supply = <&vreg_s10b>;
-+		vddbtcxmx-supply = <&vreg_s12b>;
-+		vddrfacmn-supply = <&vreg_s12b>;
-+		vddrfa0p8-supply = <&vreg_s12b>;
-+		vddrfa1p2-supply = <&vreg_s11b>;
-+		vddrfa1p7-supply = <&vreg_s1c>;
-+
-+		max-speed = <3200000>;
-+
-+		enable-gpios = <&tlmm 133 GPIO_ACTIVE_HIGH>;
-+		swctrl-gpios = <&tlmm 132 GPIO_ACTIVE_HIGH>;
-+
-+		pinctrl-0 = <&bt_en>;
-+		pinctrl-names = "default";
-+	};
-+};
-+
- &qup1 {
- 	status = "okay";
- };
-@@ -720,6 +757,11 @@ &qup2 {
- 	status = "okay";
- };
- 
-+&uart17 {
-+	compatible = "qcom,geni-debug-uart";
-+	status = "okay";
-+};
-+
- &remoteproc_adsp {
- 	firmware-name = "qcom/sc8280xp/LENOVO/21BX/qcadsp8280.mbn";
- 
-@@ -980,6 +1022,19 @@ hastings_reg_en: hastings-reg-en-state {
- &tlmm {
- 	gpio-reserved-ranges = <70 2>, <74 6>, <83 4>, <125 2>, <128 2>, <154 7>;
- 
-+	bt_en: bt-en-state {
-+		hstp-sw-ctrl-pins {
-+			pins = "gpio132";
-+			function = "gpio";
-+		};
-+
-+		hstp-bt-en-pins {
-+			pins = "gpio133";
-+			function = "gpio";
-+			drive-strength = <16>;
-+		};
-+	};
-+
- 	edp_reg_en: edp-reg-en-state {
- 		pins = "gpio25";
- 		function = "gpio";
-@@ -1001,6 +1056,27 @@ i2c4_default: i2c4-default-state {
- 		bias-disable;
- 	};
- 
-+	uart2_state: uart2-state {
-+		cts-pins {
-+			pins = "gpio122";
-+			function = "qup2";
-+			bias-disable;
-+		};
-+
-+		rts-tx-pins {
-+			pins = "gpio122", "gpio123";
-+			function = "qup2";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+
-+		rx-pins {
-+			pins = "gpio124";
-+			function = "qup2";
-+			bias-pull-up;
-+		};
-+	};
-+
- 	i2c21_default: i2c21-default-state {
- 		pins = "gpio81", "gpio82";
- 		function = "qup21";
--- 
-2.39.1
-
+Thanks
+Jinlong Mao
+>
+>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+>> ---
+>>   drivers/hwtracing/coresight/coresight-core.c | 34 +++++++++++---------
+>>   1 file changed, 19 insertions(+), 15 deletions(-)
+>>
+>> diff --git a/drivers/hwtracing/coresight/coresight-core.c 
+>> b/drivers/hwtracing/coresight/coresight-core.c
+>> index d3bf82c0de1d..5e95d9c7f256 100644
+>> --- a/drivers/hwtracing/coresight/coresight-core.c
+>> +++ b/drivers/hwtracing/coresight/coresight-core.c
+>> @@ -1733,28 +1733,32 @@ char *coresight_alloc_device_name(struct 
+>> coresight_dev_list *dict,
+>>   {
+>>       int idx;
+>>       char *name = NULL;
+>> +    const char *coresight_name = NULL;
+>>       struct fwnode_handle **list;
+>> +    struct device_node *node = dev->of_node;
+>>         mutex_lock(&coresight_mutex);
+>>   -    idx = coresight_search_device_idx(dict, dev_fwnode(dev));
+>> -    if (idx < 0) {
+>> -        /* Make space for the new entry */
+>> -        idx = dict->nr_idx;
+>> -        list = krealloc_array(dict->fwnode_list,
+>> -                      idx + 1, sizeof(*dict->fwnode_list),
+>> -                      GFP_KERNEL);
+>> -        if (ZERO_OR_NULL_PTR(list)) {
+>> -            idx = -ENOMEM;
+>> -            goto done;
+>> +    if (!of_property_read_string(node, "coresight-name", 
+>> &coresight_name))
+>> +        name = devm_kasprintf(dev, GFP_KERNEL, "%s", coresight_name);
+>> +    else {
+>> +        idx = coresight_search_device_idx(dict, dev_fwnode(dev));
+>> +        if (idx < 0) {
+>> +            /* Make space for the new entry */
+>> +            idx = dict->nr_idx;
+>> +            list = krealloc_array(dict->fwnode_list,
+>> +                          idx + 1, sizeof(*dict->fwnode_list),
+>> +                          GFP_KERNEL);
+>> +            if (ZERO_OR_NULL_PTR(list))
+>> +                goto done;
+>> +
+>> +            list[idx] = dev_fwnode(dev);
+>> +            dict->fwnode_list = list;
+>> +            dict->nr_idx = idx + 1;
+>>           }
+>>   -        list[idx] = dev_fwnode(dev);
+>> -        dict->fwnode_list = list;
+>> -        dict->nr_idx = idx + 1;
+>> +        name = devm_kasprintf(dev, GFP_KERNEL, "%s%d", dict->pfx, idx);
+>>       }
+>> -
+>> -    name = devm_kasprintf(dev, GFP_KERNEL, "%s%d", dict->pfx, idx);
+>>   done:
+>>       mutex_unlock(&coresight_mutex);
+>>       return name;
+>
