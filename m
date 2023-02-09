@@ -2,235 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3766B690182
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Feb 2023 08:45:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0EBCC6901AB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Feb 2023 09:00:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229655AbjBIHp2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Feb 2023 02:45:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52120 "EHLO
+        id S229569AbjBIIAz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Feb 2023 03:00:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229567AbjBIHp0 (ORCPT
+        with ESMTP id S229535AbjBIIAy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Feb 2023 02:45:26 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B08D310E9
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Feb 2023 23:45:24 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id f47-20020a05600c492f00b003dc584a7b7eso3218378wmp.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Feb 2023 23:45:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gsTN9eojGczStqv1TPLZ5iFIwejDPHD4ltG8erMzZvE=;
-        b=AEVmme3hAlOXspoKKosGhZO2q1YxYiewjqxj+Ww51AVDwiM0/0kBoBIOeHYiTSxzDW
-         1Jhns8X6i3SbAOP3noSNLAgololWlshKzRpbDA1EAZj+HwiECCo5DZ/wRtgpFfH2Ai66
-         TzrrjaSRSu6zSGtfJqPSZmi1fTEVjcUZHU0pV0vgW79V9jOKMw1ufoLjn6snXLWcjXaE
-         tdi9ke0d5C/ifs5P/klf0UwCUWoANJhpaoD0tAxdySL4/VhDFQ21MLOtku4RHx2Zt67L
-         FAyVnuIN/TnXCI9Pbdi9I1fv8ZJUkJPXa8qEvCHmbt3ZvnCFM7qty6nNgVeFPY+l1SD7
-         uKSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gsTN9eojGczStqv1TPLZ5iFIwejDPHD4ltG8erMzZvE=;
-        b=OCT4YI7T8Zf+g3c5DeDT/CoYVpSkMjc5litvnP/zwnfzC42JON0xFt0TaEJdl8atKu
-         UWPlMVlnS5IalM66IDvjXqG/FeDi9tFmZIPEQfHoDWi6lAfQGmfG9Hv0c783RUoS3Moj
-         vgUFwj8gyEGmNG9DG74r9WPrSZvhORYUXHO4IQKG3tVqAvnLR56v9zR6szhZUCVJp2P7
-         +/qDm6iZQDgXsavrzQijuaEW6wPoCTxdeeUpLxXCNG50MacvdtwcLhUsAt0q5dxS9ZHB
-         wN13JBg6foK+wIWk77CGEmP/aK1lIx4LJaisK46pFpcbbdnSBfEFVO6OW5nz+j2EsPCW
-         QUPQ==
-X-Gm-Message-State: AO0yUKV9+QvdXu0R7kU+xT+HKYmIS/RseFuKN/YB6hvVTDIaGHr2OsYa
-        Rbkk2+7Q5PhBdnWxNnvAIreAjvuau5Am0/2L
-X-Google-Smtp-Source: AK7set8C6ruKRM9txpLcVKF635TZ3HNJWJPX/zRC5mAxoAbFRHXEQzg1+M4EiuR4UFtdJJ3J+f2ZLQ==
-X-Received: by 2002:a05:600c:807:b0:3dc:eaef:c1bb with SMTP id k7-20020a05600c080700b003dceaefc1bbmr8916773wmp.35.1675928723289;
-        Wed, 08 Feb 2023 23:45:23 -0800 (PST)
-Received: from hackbox.lan ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id f8-20020a05600c4e8800b003da28dfdedcsm1115472wmq.5.2023.02.08.23.45.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Feb 2023 23:45:22 -0800 (PST)
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Thu, 9 Feb 2023 03:00:54 -0500
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A552925946
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Feb 2023 00:00:52 -0800 (PST)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by smtp-out2.suse.de (Postfix) with ESMTPS id 66FE45C306;
+        Thu,  9 Feb 2023 08:00:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+        t=1675929651;
+        h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
+         cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=W5GRwHVSlmQ/jRNfErdbyyKqPQQH8qHhlRncp9AJkco=;
+        b=kHFlHgzgBAE5+3koaZKvZ9+wSI1S+/NLwPIBNXgy6EIPgKZpxyk8lC5+9Es0vXuanmMjFs
+        KkTrHkpSEXBqqvMZ8E9WnA2pmMYzGuv4trs22jW7w8qxHHb5u8uYj/2mJ1QJIsLFICYba/
+        oyPMkRsEL8UAG9uRiFVF2UGXqLfTDxc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+        s=susede2_ed25519; t=1675929651;
+        h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
+         cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=W5GRwHVSlmQ/jRNfErdbyyKqPQQH8qHhlRncp9AJkco=;
+        b=hgQ9OIWppuH7QNGG0Y1QFCY/QoJ6YYCnX0H7WNHy0bCUibzE7zx1ikqJdW5a1Ah7elEg0S
+        zvfHsdCk6mx2HXCA==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 154F313A1F;
+        Thu,  9 Feb 2023 08:00:51 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap2.suse-dmz.suse.de with ESMTPSA
+        id DuCJAzOo5GMACAAAMHmgww
+        (envelope-from <pvorel@suse.cz>); Thu, 09 Feb 2023 08:00:51 +0000
+Date:   Thu, 9 Feb 2023 09:00:49 +0100
+From:   Petr Vorel <pvorel@suse.cz>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-gpio@vger.kernel.org
-Subject: [PATCH v4 2/2] arm64: dts: qcom: sm8550: Add bias pull up value to tlmm i2c data clk states
-Date:   Thu,  9 Feb 2023 09:45:10 +0200
-Message-Id: <20230209074510.4153294-2-abel.vesa@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230209074510.4153294-1-abel.vesa@linaro.org>
-References: <20230209074510.4153294-1-abel.vesa@linaro.org>
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Dominik Kobinski <dominikkobinski314@gmail.com>,
+        Jamie Douglass <jamiemdouglass@gmail.com>
+Subject: Re: [PATCH 1/1] arm64: defconfig: Enable qcom msm8994 clk drivers
+Message-ID: <Y+SoMVW3Ea49p4pk@pevik>
+Reply-To: Petr Vorel <pvorel@suse.cz>
+References: <20230130111014.27980-1-pvorel@suse.cz>
+ <20230130152758.f5hh7zydyca22ipu@builder.lan>
+ <Y9gWsWuDt10fUL5i@pevik>
+ <20230208230628.xoaqt4hby5ec4s6t@ripper>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230208230628.xoaqt4hby5ec4s6t@ripper>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The default bias pull up value for the tlmm i2c data clk states is
-2.2kOhms. Add this value to make sure the driver factors in the i2c pull
-up bit when writing the config register.
+> On Mon, Jan 30, 2023 at 08:12:49PM +0100, Petr Vorel wrote:
+> > > On Mon, Jan 30, 2023 at 12:10:14PM +0100, Petr Vorel wrote:
+> > > > Enabling the clk drivers on msm8994 allows to boot and test most device
+> > > > drivers on this SoC.
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
+> > > > Signed-off-by: Petr Vorel <pvorel@suse.cz>
 
-The v3 of this specific patch is here:
-https://lore.kernel.org/all/20230208081836.984673-2-abel.vesa@linaro.org/
+> > > Now that we can handle probe defer on the power-domains, can this be
+> > > made =m instead?
 
-Changes since v3:
- * none
+> > Out of curiosity may I know what commit implemented handling probe defer on
+> > power-domains?
 
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 30 ++++++++++++++--------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index 1dea055a6815..6e60afc748cf 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -2695,7 +2695,7 @@ qup_i2c0_data_clk: qup-i2c0-data-clk-state {
- 				pins = "gpio28", "gpio29";
- 				function = "qup1_se0";
- 				drive-strength = <2>;
--				bias-pull-up;
-+				bias-pull-up = <2200>;
- 			};
- 
- 			qup_i2c1_data_clk: qup-i2c1-data-clk-state {
-@@ -2703,7 +2703,7 @@ qup_i2c1_data_clk: qup-i2c1-data-clk-state {
- 				pins = "gpio32", "gpio33";
- 				function = "qup1_se1";
- 				drive-strength = <2>;
--				bias-pull-up;
-+				bias-pull-up = <2200>;
- 			};
- 
- 			qup_i2c2_data_clk: qup-i2c2-data-clk-state {
-@@ -2711,7 +2711,7 @@ qup_i2c2_data_clk: qup-i2c2-data-clk-state {
- 				pins = "gpio36", "gpio37";
- 				function = "qup1_se2";
- 				drive-strength = <2>;
--				bias-pull-up;
-+				bias-pull-up = <2200>;
- 			};
- 
- 			qup_i2c3_data_clk: qup-i2c3-data-clk-state {
-@@ -2719,7 +2719,7 @@ qup_i2c3_data_clk: qup-i2c3-data-clk-state {
- 				pins = "gpio40", "gpio41";
- 				function = "qup1_se3";
- 				drive-strength = <2>;
--				bias-pull-up;
-+				bias-pull-up = <2200>;
- 			};
- 
- 			qup_i2c4_data_clk: qup-i2c4-data-clk-state {
-@@ -2727,7 +2727,7 @@ qup_i2c4_data_clk: qup-i2c4-data-clk-state {
- 				pins = "gpio44", "gpio45";
- 				function = "qup1_se4";
- 				drive-strength = <2>;
--				bias-pull-up;
-+				bias-pull-up = <2200>;
- 			};
- 
- 			qup_i2c5_data_clk: qup-i2c5-data-clk-state {
-@@ -2735,7 +2735,7 @@ qup_i2c5_data_clk: qup-i2c5-data-clk-state {
- 				pins = "gpio52", "gpio53";
- 				function = "qup1_se5";
- 				drive-strength = <2>;
--				bias-pull-up;
-+				bias-pull-up = <2200>;
- 			};
- 
- 			qup_i2c6_data_clk: qup-i2c6-data-clk-state {
-@@ -2743,7 +2743,7 @@ qup_i2c6_data_clk: qup-i2c6-data-clk-state {
- 				pins = "gpio48", "gpio49";
- 				function = "qup1_se6";
- 				drive-strength = <2>;
--				bias-pull-up;
-+				bias-pull-up = <2200>;
- 			};
- 
- 			qup_i2c8_data_clk: qup-i2c8-data-clk-state {
-@@ -2751,14 +2751,14 @@ scl-pins {
- 					pins = "gpio57";
- 					function = "qup2_se0_l1_mira";
- 					drive-strength = <2>;
--					bias-pull-up;
-+					bias-pull-up = <2200>;
- 				};
- 
- 				sda-pins {
- 					pins = "gpio56";
- 					function = "qup2_se0_l0_mira";
- 					drive-strength = <2>;
--					bias-pull-up;
-+					bias-pull-up = <2200>;
- 				};
- 			};
- 
-@@ -2767,7 +2767,7 @@ qup_i2c9_data_clk: qup-i2c9-data-clk-state {
- 				pins = "gpio60", "gpio61";
- 				function = "qup2_se1";
- 				drive-strength = <2>;
--				bias-pull-up;
-+				bias-pull-up = <2200>;
- 			};
- 
- 			qup_i2c10_data_clk: qup-i2c10-data-clk-state {
-@@ -2775,7 +2775,7 @@ qup_i2c10_data_clk: qup-i2c10-data-clk-state {
- 				pins = "gpio64", "gpio65";
- 				function = "qup2_se2";
- 				drive-strength = <2>;
--				bias-pull-up;
-+				bias-pull-up = <2200>;
- 			};
- 
- 			qup_i2c11_data_clk: qup-i2c11-data-clk-state {
-@@ -2783,7 +2783,7 @@ qup_i2c11_data_clk: qup-i2c11-data-clk-state {
- 				pins = "gpio68", "gpio69";
- 				function = "qup2_se3";
- 				drive-strength = <2>;
--				bias-pull-up;
-+				bias-pull-up = <2200>;
- 			};
- 
- 			qup_i2c12_data_clk: qup-i2c12-data-clk-state {
-@@ -2791,7 +2791,7 @@ qup_i2c12_data_clk: qup-i2c12-data-clk-state {
- 				pins = "gpio2", "gpio3";
- 				function = "qup2_se4";
- 				drive-strength = <2>;
--				bias-pull-up;
-+				bias-pull-up = <2200>;
- 			};
- 
- 			qup_i2c13_data_clk: qup-i2c13-data-clk-state {
-@@ -2799,7 +2799,7 @@ qup_i2c13_data_clk: qup-i2c13-data-clk-state {
- 				pins = "gpio80", "gpio81";
- 				function = "qup2_se5";
- 				drive-strength = <2>;
--				bias-pull-up;
-+				bias-pull-up = <2200>;
- 			};
- 
- 			qup_i2c15_data_clk: qup-i2c15-data-clk-state {
-@@ -2807,7 +2807,7 @@ qup_i2c15_data_clk: qup-i2c15-data-clk-state {
- 				pins = "gpio72", "gpio106";
- 				function = "qup2_se7";
- 				drive-strength = <2>;
--				bias-pull-up;
-+				bias-pull-up = <2200>;
- 			};
- 
- 			qup_spi0_cs: qup-spi0-cs-state {
--- 
-2.34.1
+> Probe defer support has been there for a long time, but it was not
+> reliable after late_initcall.
 
+> I believe 2b28a1a84a0e ("driver core: Extend deferred probe timeout on
+> driver registration") is the change that altered the behavior, so we can
+> now use it for kernel modules as well.
+
+Thanks for info! I have v2 prepared, but I'd prefer to test it, thus I'll send
+it next week after I get time to test it.
+
+Kind regards,
+Petr
+
+> Regards,
+> Bjorn
