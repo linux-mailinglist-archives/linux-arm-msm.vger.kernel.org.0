@@ -2,179 +2,211 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E65BB68FEA6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Feb 2023 05:26:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D42A968FFD7
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Feb 2023 06:20:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229804AbjBIE0F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Feb 2023 23:26:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39886 "EHLO
+        id S229787AbjBIFUu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Feb 2023 00:20:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229803AbjBIEZx (ORCPT
+        with ESMTP id S229743AbjBIFUt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Feb 2023 23:25:53 -0500
-Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42DA732E7E
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Feb 2023 20:25:21 -0800 (PST)
-Received: by mail-io1-xd2b.google.com with SMTP id e2so239209iot.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Feb 2023 20:25:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=X3JCdbvKeiUcH/OkexvFMP8KnMjvRlzLquNMe2eJDPM=;
-        b=YbUbDyPLqiPzWst58OZ6HfyZTQdO47nm+/kxW34nvPdgReGLE8CZKTkEAsRznj1YyQ
-         Jo+m685SMmEizOIuzU3KvveGYv2W8fURphN+KyHUCLe4XS+I7UPupca2pJiRF0aZ7TYT
-         glzF7jMl7nHOvLmU1nRcYvPKovPfoTljGDOPU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=X3JCdbvKeiUcH/OkexvFMP8KnMjvRlzLquNMe2eJDPM=;
-        b=Wp36hqRjp2bMeoJHpQ06DPNz11i5jZS3awfC3ReFWQjrFpBjlhPPn+q7p7bUc4Xsek
-         HlvnnRbcurfgEecECDd6lPNmo3RKdUeW6ZLKitEQt2vu914gkN/0xpwzhYTQhQfX6jeN
-         nwMUNiZ2L5FFUx83JsZ2oGpIXyDPo1aoTV6j5JWFMtvnZv3TETt1q2n7o7TMlaOEbgqI
-         T58wzkc3oN56fkzotGG9KJEO4n8ZHQvjAsyw7cPHnLTMxp3G6wF32rNOeXMTCxu0bhbG
-         7rpD66iFCka2mps/zterK5zmG8AwSfrStNQFBapd2KeWT79eqPQ2sXq2JSgACyjhG0TN
-         3y1Q==
-X-Gm-Message-State: AO0yUKWjhvitG3UUFfmOk2Xmjg054n/4IKVU4/SCOan7vOkKeVfN0UuR
-        ZXnTigxEPawekSzmq82EWlQweAAit+8uIvVZFzY=
-X-Google-Smtp-Source: AK7set9pBARAk/ZocP1NlBfnI5WPPzgUWtujXXoZX1AYWpfSJ/gT0kp75C8E42O8hvRZXiGkokXjvA==
-X-Received: by 2002:a5d:9acc:0:b0:72a:ef32:38fc with SMTP id x12-20020a5d9acc000000b0072aef3238fcmr3173455ion.8.1675916666293;
-        Wed, 08 Feb 2023 20:24:26 -0800 (PST)
-Received: from mail-il1-f177.google.com (mail-il1-f177.google.com. [209.85.166.177])
-        by smtp.gmail.com with ESMTPSA id b26-20020a029a1a000000b0038a3b8aaf11sm127338jal.37.2023.02.08.20.24.24
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Feb 2023 20:24:24 -0800 (PST)
-Received: by mail-il1-f177.google.com with SMTP id v15so388410ilc.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Feb 2023 20:24:24 -0800 (PST)
-X-Received: by 2002:a92:b513:0:b0:310:9276:5d29 with SMTP id
- f19-20020a92b513000000b0031092765d29mr5213990ile.76.1675916663704; Wed, 08
- Feb 2023 20:24:23 -0800 (PST)
+        Thu, 9 Feb 2023 00:20:49 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF0EE2DE7C;
+        Wed,  8 Feb 2023 21:20:46 -0800 (PST)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31949Kx0030005;
+        Thu, 9 Feb 2023 05:20:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=Qi01A4DARysTADEqiJHBihKXJUpLwxjlAn34mXKmldc=;
+ b=NhT1YVbMzr9TdxYQwid6J53k1TQC/tPCZEfcSh54k7mPzi5sCkI1/QKTRZKL1hpo9U8I
+ TspzPshhpnlXLtYVBOItyGALSeuUcwYrvJ72+3g38tijAMDGVc3WYurfh+FspfnDgHk3
+ Z9cjwofYv2SFi2mCf5oF7Q/DeagW2uwnyIK2RS4R6exsI++5EUchcg37ECJeu3kFK2Bt
+ QcuknbCHlwOB4lrEDLX9nU9uF5VNzReU5247xlGlIT/eWaN3divkg4Upi8vL15+8KWat
+ oLNtfdaZTUXjeu8vq1XFFtvmg3lOipCjOWLpwUfQE/3C7bK6nrFRqajKa1CPFiqA77gX PQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nm86mtnyq-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 09 Feb 2023 05:20:41 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3195KeTQ010936
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 9 Feb 2023 05:20:40 GMT
+Received: from [10.201.2.96] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 8 Feb 2023
+ 21:20:36 -0800
+Message-ID: <e40b3122-30e6-4619-57db-085d480deef1@quicinc.com>
+Date:   Thu, 9 Feb 2023 10:50:33 +0530
 MIME-Version: 1.0
-References: <1675863724-28412-1-git-send-email-quic_kalyant@quicinc.com>
- <CAD=FV=WbzmF_Jkwrcm27eqXaqNhGq_D=8yfCKqELET+=+EaLAA@mail.gmail.com> <BN0PR02MB8142207261497BE76A6EA07096D99@BN0PR02MB8142.namprd02.prod.outlook.com>
-In-Reply-To: <BN0PR02MB8142207261497BE76A6EA07096D99@BN0PR02MB8142.namprd02.prod.outlook.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 8 Feb 2023 20:24:08 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=XVaEzyZybZ3JmFnPQkSZyw-3UfD0Mupt_adnnJcYy_iQ@mail.gmail.com>
-Message-ID: <CAD=FV=XVaEzyZybZ3JmFnPQkSZyw-3UfD0Mupt_adnnJcYy_iQ@mail.gmail.com>
-Subject: Re: [PATCH v3 0/4] Reserve DSPPs based on user request
-To:     Kalyan Thota <kalyant@qti.qualcomm.com>
-Cc:     "Kalyan Thota (QUIC)" <quic_kalyant@quicinc.com>,
-        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "robdclark@chromium.org" <robdclark@chromium.org>,
-        "swboyd@chromium.org" <swboyd@chromium.org>,
-        "Vinod Polimera (QUIC)" <quic_vpolimer@quicinc.com>,
-        "dmitry.baryshkov@linaro.org" <dmitry.baryshkov@linaro.org>,
-        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
-        "marijn.suijten@somainline.org" <marijn.suijten@somainline.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH V2 5/5] arm64: dts: qcom: ipq5332: enable the CPUFreq
+ support
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <jassisinghbrar@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+CC:     <quic_varada@quicinc.com>, <quic_srichara@quicinc.com>
+References: <20230208042850.1687-1-quic_kathirav@quicinc.com>
+ <20230208042850.1687-6-quic_kathirav@quicinc.com>
+ <61ca391d-05d4-d02b-f57e-5dd0297feceb@linaro.org>
+Content-Language: en-US
+From:   Kathiravan T <quic_kathirav@quicinc.com>
+In-Reply-To: <61ca391d-05d4-d02b-f57e-5dd0297feceb@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Vd3Oo-h3ibUXmvFWTMj3sSMw-h0tc5Pe
+X-Proofpoint-ORIG-GUID: Vd3Oo-h3ibUXmvFWTMj3sSMw-h0tc5Pe
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
+ definitions=2023-02-09_02,2023-02-08_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
+ malwarescore=0 phishscore=0 bulkscore=0 clxscore=1015 priorityscore=1501
+ adultscore=0 mlxscore=0 mlxlogscore=999 lowpriorityscore=0 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2302090048
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
 
-On Wed, Feb 8, 2023 at 8:16 PM Kalyan Thota <kalyant@qti.qualcomm.com> wrote:
+On 2/8/2023 2:11 PM, Konrad Dybcio wrote:
 >
-> Hi Doug,
+> On 8.02.2023 05:28, Kathiravan T wrote:
+>> Add the APCS, A53 PLL, cpu-opp-table nodes to bump the CPU frequency
+>> above 800MHz.
+>>
+>> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+>> ---
+>> Changes in V2:
+>> 	- No changes
+>>
+>>   arch/arm64/boot/dts/qcom/ipq5332.dtsi | 37 +++++++++++++++++++++++++++
+>>   1 file changed, 37 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+>> index bdf33ef30e10..cec2828c51f8 100644
+>> --- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+>> @@ -5,6 +5,7 @@
+>>    * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
+>>    */
+>>   
+>> +#include <dt-bindings/clock/qcom,apss-ipq.h>
+>>   #include <dt-bindings/clock/qcom,ipq5332-gcc.h>
+>>   #include <dt-bindings/interrupt-controller/arm-gic.h>
+>>   
+>> @@ -35,6 +36,8 @@
+>>   			reg = <0x0>;
+>>   			enable-method = "psci";
+>>   			next-level-cache = <&L2_0>;
+>> +			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
+>> +			operating-points-v2 = <&cpu_opp_table>;
+>>   		};
+>>   
+>>   		CPU1: cpu@1 {
+>> @@ -43,6 +46,8 @@
+>>   			reg = <0x1>;
+>>   			enable-method = "psci";
+>>   			next-level-cache = <&L2_0>;
+>> +			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
+>> +			operating-points-v2 = <&cpu_opp_table>;
+>>   		};
+>>   
+>>   		CPU2: cpu@2 {
+>> @@ -51,6 +56,8 @@
+>>   			reg = <0x2>;
+>>   			enable-method = "psci";
+>>   			next-level-cache = <&L2_0>;
+>> +			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
+>> +			operating-points-v2 = <&cpu_opp_table>;
+>>   		};
+>>   
+>>   		CPU3: cpu@3 {
+>> @@ -59,6 +66,8 @@
+>>   			reg = <0x3>;
+>>   			enable-method = "psci";
+>>   			next-level-cache = <&L2_0>;
+>> +			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
+>> +			operating-points-v2 = <&cpu_opp_table>;
+>>   		};
+>>   
+>>   		L2_0: l2-cache {
+>> @@ -67,6 +76,16 @@
+>>   		};
+>>   	};
+>>   
+>> +	cpu_opp_table: opp-table-cpu{
+> opp-table-cpu {
+> + sort this properly (by node name, not label), please
+
+
+ahh, missed this. Will fix it in next spin.
+
+
 >
-> Have you picked the core change to program dspp's  (below) ? the current series will go on top of it.
-> https://patchwork.kernel.org/project/linux-arm-msm/patch/1671542719-12655-1-git-send-email-quic_kalyant@quicinc.com/
+>> +		compatible = "operating-points-v2";
+>> +		opp-shared;
+>> +
+>> +		opp-1488000000 {
+> Why only one (presumably FMAX) target? This sounds
+> very destructive to power consumption, and by extension
+> heat output.
 
-I didn't pick v11 of it like you link, but I did pick v12 of the same
-patch. In my response I said that I picked 5 patches, this series plus
-[1] where [1] is:
 
-[1] https://lore.kernel.org/all/1674814487-2112-1-git-send-email-quic_kalyant@quicinc.com/
+SKU is designed to operate on 1.48GHz only.
 
 
-> Thanks,
-> Kalyan
 >
-> >-----Original Message-----
-> >From: Doug Anderson <dianders@chromium.org>
-> >Sent: Wednesday, February 8, 2023 10:44 PM
-> >To: Kalyan Thota (QUIC) <quic_kalyant@quicinc.com>
-> >Cc: dri-devel@lists.freedesktop.org; linux-arm-msm@vger.kernel.org;
-> >freedreno@lists.freedesktop.org; devicetree@vger.kernel.org; linux-
-> >kernel@vger.kernel.org; robdclark@chromium.org; swboyd@chromium.org;
-> >Vinod Polimera (QUIC) <quic_vpolimer@quicinc.com>;
-> >dmitry.baryshkov@linaro.org; Abhinav Kumar (QUIC)
-> ><quic_abhinavk@quicinc.com>; marijn.suijten@somainline.org
-> >Subject: Re: [PATCH v3 0/4] Reserve DSPPs based on user request
-> >
-> >WARNING: This email originated from outside of Qualcomm. Please be wary of
-> >any links or attachments, and do not enable macros.
-> >
-> >Hi,
-> >
-> >On Wed, Feb 8, 2023 at 5:42 AM Kalyan Thota <quic_kalyant@quicinc.com>
-> >wrote:
-> >>
-> >> This series will enable color features on sc7280 target which has
-> >> primary panel as eDP
-> >>
-> >> The series removes DSPP allocation based on encoder type and allows
-> >> the DSPP reservation based on user request via CTM.
-> >>
-> >> The series will release/reserve the dpu resources when ever there is a
-> >> topology change to suit the new requirements.
-> >>
-> >> Kalyan Thota (4):
-> >>   drm/msm/dpu: clear DSPP reservations in rm release
-> >>   drm/msm/dpu: add DSPPs into reservation upon a CTM request
-> >>   drm/msm/dpu: avoid unnecessary check in DPU reservations
-> >>   drm/msm/dpu: reserve the resources on topology change
-> >>
-> >>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h    |  2 +
-> >>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 58 ++++++++++++++++------
-> >-------
-> >>  drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c      |  2 +
-> >>  3 files changed, 37 insertions(+), 25 deletions(-)
-> >
-> >I tried out your changes, but unfortunately it seems like there's something wrong.
-> >:( I did this:
-> >
-> >1. Picked your 5 patches to the chromeos-5.15 tree (this series plus [1])
-> >
-> >2. Put them on herobrine villager.
-> >
-> >3. Booted up with no external display plugged in.
-> >
-> >4. Tried to enable night light in the ChromeOS UI.
-> >
-> >5. Night light didn't turn on for the internal display.
-> >
-> >
-> >I also tried applying them to the top of msm-next (had to resolve some small
-> >conflicts). Same thing, night light didn't work.
-> >
-> >
-> >I thought maybe this was because the Chrome browser hasn't been updated to
-> >properly use atomic_check for testing for night light, so I hacked my herobrine
-> >device tree to not mark "mdss_dp" as "okay". Now there's _only_ an eDP display.
-> >Same thing, night light didn't work.
-> >
-> >
-> >I could only get night light to work for the internal display if I plugged and
-> >unplugged an external display in.
-> >
-> >
-> >Is the above the behavior that's expected right now?
-> >
-> >
-> >[1] https://lore.kernel.org/all/1674814487-2112-1-git-send-email-
-> >quic_kalyant@quicinc.com/
+> The other changes generally look good fwiw.
+>
+> Konrad
+>> +			opp-hz = /bits/ 64 <1488000000>;
+>> +			clock-latency-ns = <200000>;
+>> +		};
+>> +	};
+>> +
+>>   	firmware {
+>>   		scm {
+>>   			compatible = "qcom,scm-ipq5332", "qcom,scm";
+>> @@ -199,6 +218,24 @@
+>>   			};
+>>   		};
+>>   
+>> +		apcs_glb: mailbox@b111000 {
+>> +			compatible = "qcom,ipq5332-apcs-apps-global",
+>> +				     "qcom,ipq6018-apcs-apps-global";
+>> +			reg = <0x0b111000 0x1000>;
+>> +			#clock-cells = <1>;
+>> +			clocks = <&a53pll>, <&xo_board>;
+>> +			clock-names = "pll", "xo";
+>> +			#mbox-cells = <1>;
+>> +		};
+>> +
+>> +		a53pll: clock@b116000 {
+>> +			compatible = "qcom,ipq5332-a53pll";
+>> +			reg = <0x0b116000 0x40>;
+>> +			#clock-cells = <0>;
+>> +			clocks = <&xo_board>;
+>> +			clock-names = "xo";
+>> +		};
+>> +
+>>   		timer@b120000 {
+>>   			compatible = "arm,armv7-timer-mem";
+>>   			reg = <0x0b120000 0x1000>;
