@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E60B6913C9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Feb 2023 23:56:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2EB7C6913E7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 00:00:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230340AbjBIW4C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Feb 2023 17:56:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52920 "EHLO
+        id S230314AbjBIXAR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Feb 2023 18:00:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229450AbjBIW4B (ORCPT
+        with ESMTP id S230311AbjBIXAQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Feb 2023 17:56:01 -0500
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 409E05B766
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Feb 2023 14:55:59 -0800 (PST)
-Received: by mail-lj1-x232.google.com with SMTP id o5so3951963ljj.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Feb 2023 14:55:59 -0800 (PST)
+        Thu, 9 Feb 2023 18:00:16 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA44F59EB
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Feb 2023 15:00:14 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id d34so1241788lfv.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Feb 2023 15:00:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=to:subject:message-id:date:user-agent:from:references:in-reply-to
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=+/3WdsTnQdOHde9msyQKMoio/ECH8a5tpAu+T/cYiEY=;
-        b=aRzGLdiNL3eF8phfIt/X7mZWoYj/8IzoLLTcAaXgn7QP0njSJYpssKCVpXQg9rIbDg
-         kk/kyO3fWq0ZDRcQmQGXPqMLHMkvxIP+PCrcQz5fxtiWTx3IQjcqBqCTK68551Dgyz88
-         Lww+qF8HyOkYhI4VNqfUUfdRZEZFaM0SFtpvU=
+        bh=WiBOVyBS3jxeOLS5jdRWtNyu3Pp242/H876fIFzKAmk=;
+        b=G363oTKWPd7OTAHTVIlAF1tmSPBZQHap1zu0Q/66JuLHllBgp162JDmob+GrbeJWvw
+         ATZsHySDeaefJ24LX9yL8F2nwjMTK2RoCVMhMuDtbFBbGbhF0q6y/MujRxfDJIVDh4Xv
+         Z6dFnWw8K1MjPATYPV7WAQz9dbhfP1IwX76JE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=to:subject:message-id:date:user-agent:from:references:in-reply-to
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=+/3WdsTnQdOHde9msyQKMoio/ECH8a5tpAu+T/cYiEY=;
-        b=RiutEhGS+BTr2Xl7VPHA+mph/KUYvTi29vQu7rgWEH1Slz9pia5e+Xk5x28MHBL8cu
-         pD5+fj3B3Znw3MXlPjBDYx6xXbn2I7VF4gmVjTka+/PMryKGsSCzmOvbBIc4mzsuYQzx
-         RfxOK02YNo2mKWHCD1BfeGf61bTGNE1BCpqhv/Icto2diRnenQQ65Og92ns6aJLlaQ9z
-         cBX2ZO+hl5vpF3cTrMXxM37KN40XitkzjqDwovfP0IJQ6RzlYEcNozdpjysNXkm3E+o2
-         waBeAE4JnAFBXmLNR7NdSqINSOhzNijbHqutcwrh+z4oAA3XMbi3cw4vAsIVGO2St+NF
-         evig==
-X-Gm-Message-State: AO0yUKUzi017ZwiL6TJqNYYbRyqXrQJfaM7OvjkSQ2ZZYMmcFhtS1ouR
-        tSOI98MZKrCcX5X792DedELYy3HhuSwU+SdS7dJnHA==
-X-Google-Smtp-Source: AK7set+i6F2muyublkl3zPHwaGKHmip/aE9IKN/2NWtEl3MCsCwksdVhnIOPhSnHD2GYLH1+A2DsbkPPT6t5/4vraiE=
-X-Received: by 2002:a2e:8206:0:b0:290:5b9d:e97 with SMTP id
- w6-20020a2e8206000000b002905b9d0e97mr2076244ljg.187.1675983357541; Thu, 09
- Feb 2023 14:55:57 -0800 (PST)
+        bh=WiBOVyBS3jxeOLS5jdRWtNyu3Pp242/H876fIFzKAmk=;
+        b=DGXtdS+PcQ/7Ku1A/+b87hHnGIeZ02oJZmVMwT89ZdXKoG5210pGukaB44SmtGxcAw
+         mH8TeX9DcJUur1O5f+kphaR43OGlHJ19f4GQqJOhHsvxKpY2qxQBwK9SNZZxJGZJXbVO
+         /+ue4hiidIRbnW9u2E9sNioCL2vZUcJZkXVHKF4ip6SXQJB25fPux25shfLFcvdpnQX1
+         FJULCHHaRc3QMp9JgfXOWFmpxiO9WDSg2vTWsn6CYFdFxosVTvk2kbQp6XMZ667MhzG2
+         UR28A4e23mlkYhyN8qnlxhVTJegaBVTTfSnBgRRiMAvtfVRWWJAeZoNw6Qlco/9l3R0l
+         WnXw==
+X-Gm-Message-State: AO0yUKUocDEu9VrYNbEuZPLEcWJzoV/13givstJEbjtPkNBjgJvjR6aT
+        3rl4IezYglOzXq1dbJcmGHYlGbENoUczp+EU9PJWJA==
+X-Google-Smtp-Source: AK7set8dexKAwHHiOYh04Zt8+CurymxnjylH7GZAEI7nXBU47Y+sRGF7NTh0elgledqS7DrUFTzuJJ3IfScVOz2V7Wc=
+X-Received: by 2002:ac2:4c8f:0:b0:4d9:8773:7d73 with SMTP id
+ d15-20020ac24c8f000000b004d987737d73mr2492274lfl.52.1675983613047; Thu, 09
+ Feb 2023 15:00:13 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 9 Feb 2023 17:55:56 -0500
+ HTTPREST; Thu, 9 Feb 2023 18:00:12 -0500
 MIME-Version: 1.0
-In-Reply-To: <1675700201-12890-4-git-send-email-quic_srivasam@quicinc.com>
-References: <1675700201-12890-1-git-send-email-quic_srivasam@quicinc.com> <1675700201-12890-4-git-send-email-quic_srivasam@quicinc.com>
+In-Reply-To: <1675700201-12890-8-git-send-email-quic_srivasam@quicinc.com>
+References: <1675700201-12890-1-git-send-email-quic_srivasam@quicinc.com> <1675700201-12890-8-git-send-email-quic_srivasam@quicinc.com>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date:   Thu, 9 Feb 2023 17:55:56 -0500
-Message-ID: <CAE-0n53uReg41RrHrBDaNt+BgaPem_JO-2Wwq8e_g0NeNCvgXg@mail.gmail.com>
-Subject: Re: [PATCH v5 3/8] arm64: dts: qcom: sc7280: Add LPASS PIL node
+Date:   Thu, 9 Feb 2023 18:00:12 -0500
+Message-ID: <CAE-0n51nr9MAVptYuNd3KJYVfbKnE1PiG29e8xS7S0gpuhTjXA@mail.gmail.com>
+Subject: Re: [PATCH v5 7/8] arm64: dts: qcom: sc7280: Modify lpasscc node name
 To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
         agross@kernel.org, alsa-devel@alsa-project.org,
         andersson@kernel.org, broonie@kernel.org,
@@ -73,137 +73,11 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Srinivasa Rao Mandadapu (2023-02-06 08:16:36)
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
-> index 1810a36..5e99f49 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
-> @@ -107,3 +107,7 @@
->                 };
->         };
->  };
-> +
-> +&remoteproc_adsp {
-> +       status = "okay";
-> +};
-
-Sort this file by phandle alphabetically?
-
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index 6908bca..27ab992 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -3439,6 +3441,97 @@
->                         status = "disabled";
->                 };
+Quoting Srinivasa Rao Mandadapu (2023-02-06 08:16:40)
+> Modify lpasscc clock controller node name to generic name,
+> that is from lpasscc to clock-controller.
 >
-> +               remoteproc_adsp: remoteproc@3000000 {
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> ---
 
-This should be sorted on physical address. I think the node above is
-spi@88dc000 so this is in the wrong place.
-
-> +                       compatible = "qcom,sc7280-adsp-pil";
-> +                       reg = <0 0x03000000 0 0x5000>, <0 0x0355b000 0 0x10>;
-> +                       reg-names = "qdsp6ss_base", "lpass_efuse";
-> +
-> +                       interrupts-extended = <&pdc 6 IRQ_TYPE_LEVEL_HIGH>,
-> +                                             <&adsp_smp2p_in 0 IRQ_TYPE_NONE>,
-
-Can these have proper irq flags? Doubtful they're IRQ_TYPE_NONE.
-
-> +                                             <&adsp_smp2p_in 1 IRQ_TYPE_NONE>,
-> +                                             <&adsp_smp2p_in 2 IRQ_TYPE_NONE>,
-> +                                             <&adsp_smp2p_in 3 IRQ_TYPE_NONE>,
-> +                                             <&adsp_smp2p_in 7 IRQ_TYPE_NONE>;
-> +
-> +                       interrupt-names = "wdog", "fatal", "ready",
-> +                                         "handover", "stop-ack",
-> +                                         "shutdown-ack";
-> +
-> +                       qcom,qmp = <&aoss_qmp>;
-> +
-> +                       clocks = <&rpmhcc RPMH_CXO_CLK>,
-> +                                <&gcc GCC_CFG_NOC_LPASS_CLK>;
-> +
-
-Drop newline so clocks properties are together please.
-
-> +                       clock-names = "xo", "gcc_cfg_noc_lpass";
-> +
-> +                       iommus = <&apps_smmu 0x1800 0x0>;
-> +
-> +                       power-domains = <&rpmhpd SC7280_CX>;
-> +                       power-domain-names = "cx";
-> +
-> +                       required-opps = <&rpmhpd_opp_nom>;
-> +
-> +                       resets = <&pdc_reset PDC_AUDIO_SYNC_RESET>,
-> +                                <&aoss_reset AOSS_CC_LPASS_RESTART>;
-> +
-
-Drop newline so reset properties are together please.
-
-> +                       reset-names =  "pdc_sync", "cc_lpass";
-> +                       qcom,halt-regs = <&tcsr_1 0x3000 0x5000 0x8000 0x13000>;
-> +
-> +                       memory-region = <&adsp_mem>;
-> +
-> +                       qcom,smem-states = <&adsp_smp2p_out 0>;
-> +                       qcom,smem-state-names = "stop";
-> +
-> +                       status = "disabled";
-> +
-> +                       glink-edge {
-> +                               interrupts-extended = <&ipcc IPCC_CLIENT_LPASS
-> +                                                      IPCC_MPROC_SIGNAL_GLINK_QMP
-> +                                                      IRQ_TYPE_EDGE_RISING>;
-> +
-> +                               mboxes = <&ipcc IPCC_CLIENT_LPASS
-> +                                        IPCC_MPROC_SIGNAL_GLINK_QMP>;
-> +
-> +                               label = "lpass";
-> +                               qcom,remote-pid = <2>;
-> +
-> +                               gpr {
-
-This node name should be apr per the qcom,glink-edge.yaml binding?
-
-> +                                       compatible = "qcom,gpr";
-> +                                       qcom,glink-channels = "adsp_apps";
-> +                                       qcom,domain = <GPR_DOMAIN_ID_ADSP>;
-> +                                       qcom,intents = <512 20>;
-> +                                       #address-cells = <1>;
-> +                                       #size-cells = <0>;
-> +
-> +                                       q6apm: service@1 {
-> +                                               compatible = "qcom,q6apm";
-> +                                               reg = <GPR_APM_MODULE_IID>;
-> +                                               #sound-dai-cells = <0>;
-> +
-> +                                               q6apmdai: dais {
-> +                                                       compatible = "qcom,q6apm-dais";
-> +                                                       iommus = <&apps_smmu 0x1801 0x0>;
-> +                                               };
-> +
-> +                                               q6apmbedai: bedais {
-> +                                                       compatible = "qcom,q6apm-lpass-dais";
-> +                                                       #sound-dai-cells = <1>;
-> +                                               };
-> +                                       };
-> +
-> +                                       q6prm: service@2 {
-> +                                               compatible = "qcom,q6prm";
-> +                                               reg = <GPR_PRM_MODULE_IID>;
-> +
-> +                                               q6prmcc: clock-controller {
-> +                                                       compatible = "qcom,q6prm-lpass-clocks";
-
-This is clk binding but not a clk driver? I'll look away now.
-
-> +                                                       #clock-cells = <2>;
-> +                                               };
-> +                                       };
-> +                               };
-> +                       };
-> +               };
-> +
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
