@@ -2,57 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DC4286908B2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Feb 2023 13:27:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 699D26908EB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Feb 2023 13:33:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229727AbjBIM1i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Feb 2023 07:27:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38654 "EHLO
+        id S229759AbjBIMc5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Feb 2023 07:32:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229567AbjBIM1h (ORCPT
+        with ESMTP id S229764AbjBIMcf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Feb 2023 07:27:37 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F1CE2D6D;
-        Thu,  9 Feb 2023 04:27:36 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id C7CA2B8164F;
-        Thu,  9 Feb 2023 12:27:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEECFC433D2;
-        Thu,  9 Feb 2023 12:27:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1675945653;
-        bh=D+nGnWzczf+mcGc087BP9v6X7kdlHtQOfrzRsw8KHUY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=wnhBsLWELkudMkbnGpP+vqDJIEiLLygGEbdZCHbKO5wL7nGpO8cAiKW1Vqe0NfE55
-         mxFCARMiHekcT/gvuaBCLgpc/UMcOUn6EtC9kTt4S8j9VkiEQ32VsHeDetktt9w9m4
-         Fu9WY8auL5zROXDX2O/84GzanYdXGr7AFfUY2spY=
-Date:   Thu, 9 Feb 2023 13:27:30 +0100
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Elliot Berman <quic_eberman@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mark Brown <broonie@kernel.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        Visweswara Tanuku <quic_vtanuku@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org,
-        linux-serial@vger.kernel.org
-Subject: Re: [PATCH] soc: qcom: geni-se: Move qcom-geni-se.h to
- linux/soc/qcom/geni-se.h
-Message-ID: <Y+TmsqQZvX/rJW2U@kroah.com>
-References: <20230203210133.3552796-1-quic_eberman@quicinc.com>
- <Y94On1PIUQw4/qX2@kroah.com>
- <20230209031440.yu3mentazf6gk4m7@ripper>
+        Thu, 9 Feb 2023 07:32:35 -0500
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F396448A
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Feb 2023 04:32:34 -0800 (PST)
+Received: by mail-ej1-x635.google.com with SMTP id jg8so5862330ejc.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Feb 2023 04:32:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mI4A2A/YRcpk0KsG7+KaCv38yTM/sk8ZRuS5AtlWkYQ=;
+        b=uEXiZv8uI0iDjLIXc1PYXiwS+u0Nq9dfXCD6Kn9rWyF6pARLTEka8Na+KXb6kyU/wH
+         loK4kq5BGZ7L5nIzKb1x2/BuIm+O1WkvAo3MFaOS3oEguw7Dv2/rrSiNszsCgQ9gCmkk
+         0qDdt6jwfXk01cQLM/1V3PC+lVRtmV2LxcthQlya0+mYJl4oI5ywb8ZywhM9bxnkaH0T
+         9H6SdIp/b48DaKWM5uP3SWo8OfXbowTo5jyrWOuClwLu7xtHYKfcC28lP1Z5HsCrjCjx
+         SwQXvkAS0Cmg+5bBOPivh8bW+2Nhb24MgqDj8dmlMkYOwMi3kagpd5ZMpBKgD8yX3lwc
+         qs2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=mI4A2A/YRcpk0KsG7+KaCv38yTM/sk8ZRuS5AtlWkYQ=;
+        b=RlFPk5Oi/If2IbDv8Gjm6u+cGc9UbKt1ZtHs2FHIT13YytgCh7oxwVLLdO9wMDpwXm
+         gZxAqYtkV7OCo9Cdnz5m4c4REzKnxy4ELWD8+bXr8Ce09hjkfo0o47ioUlHjXPva0qE1
+         wPWgMdRsERlhFdo7fAQmEUnj/kg2sVPRNoAeHmtpWP8/2Tf4jugncLYGxD1cq/7VT6/k
+         tKTYjcJMVz1YvrIdwESQhVm4PeB0cY6rnLgWeIpHheJxxxOCco8sEoNVTB4vi5kOqozJ
+         7NSlwQj0y7TrOLaGnJm0dfR7rWILSmfLkD2TpGH/kJ2jOMOHT2Q+u3+cLY16iqSbdRPy
+         Rwdw==
+X-Gm-Message-State: AO0yUKV1hgmgm3PMf84y34uBS7paX+Hxyn3tqqB9y/B5hkAGkAb4ID30
+        7A8a1mqg5M1fJZUDS9fjH71ezQ==
+X-Google-Smtp-Source: AK7set8nWM/OSDeX2zOKTTybXG+LAP0FSQqgfmkdWfTQ2Cc0RIYIPycfvojWDhMZq00YKJq9jdxrRQ==
+X-Received: by 2002:a17:907:20ac:b0:7c9:6e0e:1427 with SMTP id pw12-20020a17090720ac00b007c96e0e1427mr11740156ejb.6.1675945952630;
+        Thu, 09 Feb 2023 04:32:32 -0800 (PST)
+Received: from [192.168.1.101] (abxh117.neoplus.adsl.tpnet.pl. [83.9.1.117])
+        by smtp.gmail.com with ESMTPSA id a12-20020a17090640cc00b008a47ee398a9sm819738ejk.47.2023.02.09.04.32.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 09 Feb 2023 04:32:32 -0800 (PST)
+Message-ID: <76311e72-0e18-d6b7-6dfc-a312e930e095@linaro.org>
+Date:   Thu, 9 Feb 2023 13:32:30 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230209031440.yu3mentazf6gk4m7@ripper>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH] arm64: dts: qcom: sdm845-db845c: Mark cont splash memory
+ region as reserved
+Content-Language: en-US
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dt <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+References: <20230124182857.1524912-1-amit.pundir@linaro.org>
+ <39751511-3f06-7c39-9c21-208d4c272113@linaro.org>
+ <CAA8EJppLBuA08hkqTrZx_wwbtCxK9sAjv48c9_DxgPENgo7a8Q@mail.gmail.com>
+ <1a840d88-e5b1-711c-b980-f57620c54472@linaro.org>
+ <8508e3d5-7468-0b2f-5a43-7c439ecf2d8b@linaro.org>
+ <CAMi1Hd2UNxXHUVWO-=sWh=-bVnrqE3UdLguFOq+62SfvUiEs0A@mail.gmail.com>
+ <b2307e91-3373-539a-ecfb-e2542b9f83db@linaro.org>
+ <ed737e67-eabc-6f29-b734-f4698767ca8e@linaro.org>
+ <fa2e0db7-5b27-5a41-920b-b786dc4e521c@linaro.org>
+ <027268b7-4b04-f52e-06a8-9d924dc6efe4@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <027268b7-4b04-f52e-06a8-9d924dc6efe4@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -60,32 +92,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 08, 2023 at 07:14:40PM -0800, Bjorn Andersson wrote:
-> On Sat, Feb 04, 2023 at 08:51:59AM +0100, Greg Kroah-Hartman wrote:
-> > On Fri, Feb 03, 2023 at 01:01:32PM -0800, Elliot Berman wrote:
-> > > Move include/linux/qcom-geni-se.h to include/linux/soc/qcom/geni-se.h.
-> > > This removes 1 of a few remaining Qualcomm-specific headers into a more
-> > > approciate subdirectory under include/.
-> > > 
-> > > Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> > > ---
-> > >  drivers/i2c/busses/i2c-qcom-geni.c                   | 2 +-
-> > >  drivers/soc/qcom/qcom-geni-se.c                      | 2 +-
-> > >  drivers/spi/spi-geni-qcom.c                          | 2 +-
-> > >  drivers/tty/serial/qcom_geni_serial.c                | 2 +-
-> > >  include/linux/{qcom-geni-se.h => soc/qcom/geni-se.h} | 0
-> > >  5 files changed, 4 insertions(+), 4 deletions(-)
-> > >  rename include/linux/{qcom-geni-se.h => soc/qcom/geni-se.h} (100%)
-> > 
-> > Who do you want to take this patch?  Through what tree?  I can take it
-> > through the tty tree if no one objects, otherwise if someone else is:
-> > 
-> > Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> 
-> I'm happy with that, please go ahead Greg.
-> 
-> Acked-by: Bjorn Andersson <andersson@kernel.org>
 
-Great, now queued up, thanks.
 
-greg k-h
+On 9.02.2023 13:22, Bryan O'Donoghue wrote:
+> On 09/02/2023 12:11, Bryan O'Donoghue wrote:
+>>> If the bootloader splash is enabled then this memory is used until the
+>>> DPU driver instructs MDP5 pipes to suck data from a newly assigned address,
+>>> so there's a short window where it is.
+>>
+>> It seems a shame to reserve 30 something megabytes of memory for continuous splash unless we are actually using it is my point.
+>>
+>> If I'm running headless its just wasted memory.
+> 
+> Couldn't we
+> 
+> 1. Find reserved continuous splash memory
+> 2. Fee it in the MDP when we make the transition
+> 
+> It must be possible
+I suppose we could mark it as shared-dma-pool, pass it to
+MDSS, reserve it from there (by occupying the whole thing)
+and either use it or free it before jumping to the newly
+allocated region.
+
+The MDSS driver can already accept it through memory-region = <>
+IIRC, but *nobody* uses that, so I'm not sure it even still works..
+
+Konrad
+> 
+> ---
+> bod
