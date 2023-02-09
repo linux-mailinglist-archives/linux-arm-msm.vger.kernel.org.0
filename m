@@ -2,125 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AEFE5690E42
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Feb 2023 17:21:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ABEFB690E6E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Feb 2023 17:37:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229623AbjBIQVR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Feb 2023 11:21:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38164 "EHLO
+        id S229728AbjBIQh2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Feb 2023 11:37:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229586AbjBIQVQ (ORCPT
+        with ESMTP id S229676AbjBIQh2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Feb 2023 11:21:16 -0500
-Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 076833F2AF
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Feb 2023 08:21:16 -0800 (PST)
-Received: by mail-il1-x132.google.com with SMTP id f10so1034678ilc.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Feb 2023 08:21:16 -0800 (PST)
+        Thu, 9 Feb 2023 11:37:28 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 057B35D1C8
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Feb 2023 08:37:27 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id ba1so2372131wrb.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Feb 2023 08:37:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=UKngE7ngQXAHNLalqbKKmwc136Q0QfwqqYmXJMalfRU=;
-        b=JHU9uTfXweyjbybwxNuRKLwHCy7ZW3Xaw4yrp+nEN1I3UQMTsiDfcqyF8JPAxqPnFM
-         vX/xbJGWcmn4LBLVwRRaHlflnK68kh9QJbY8yxHHXbtd6xwIeRb4jOaOoO5CciWJ2I0F
-         WP18JJ8KK7s/hAyIXgeM2yS1Ie5ScReIGnSZQ=
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+6IMHM6bYOKutk0YdNvntbL0y2XtMlW6qRW152/MzxA=;
+        b=Wfn6Ir6i0SB6/k4FLWKx+lzycFZDfN9jz9YWijUMfx50xkhrtGhUlk1SF3X980iKGd
+         mfURqJO113X6jF9cgsffnZbYxxC4SUCiVBpg0zIOIUotmi/6n2otDHjH9cIeFLi1W80+
+         l8x+KtQbgn5OzYc9hMkQk7Z5EqwWZZhttYiy/yXCWyAEdkAGn7qWrVyVYSTOXD5Q8pP0
+         UwCvie7MbnY2HptWoM7VZZBvCoUGFiR17OzNy++/CHJFE/qVjK+h0PYZuO5VhsvJXRtf
+         G5GGqR5HUzmfcx44oior+/N9kRMpAQ8z+OMAcZGL6j9U5XsglMxtDl28FeMca87UGPcU
+         j89Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UKngE7ngQXAHNLalqbKKmwc136Q0QfwqqYmXJMalfRU=;
-        b=3Z9Pr7u8RPyMpPVhkda5tzt6xiEf2Jr4Ug1LkDoCk+1GPBE16LqnxmU/zuD4M/0DPb
-         QorP2tCT5x07hEE9lTBh6MiJXUsWQpebCTvJaKkvisSpzx99f6KKEjS4SL6iocPlOi5A
-         d/rprzRO4ZnL6VHPZh3sH4bieXIag7lm8ZVHOH5k5uFuQq3zUtdC3uCGa2FyyUDcvVox
-         +/2SytbOpjgIDzG/j6kh0vRnf0tBW6VSKY3Wpr8TS9G6xFV17eaieHjPch4ZCJnM2Gzh
-         4Y0sVZAp8loSsTi4Ae4MBQzkzfJWT5yHXjRyvgwuaj9ItFU5/pdVkDdwEEGZRoPuoA0h
-         rmuA==
-X-Gm-Message-State: AO0yUKVaxLOc9MHr3kvdJCxsqCd0veVIhYsxsYE+HTiUBMuHbXUs5ZF2
-        AgpjGjsZweteYcSlXsrAbzSfdg==
-X-Google-Smtp-Source: AK7set87dIrlO4+nZUuMC6eIx+SM5Upnj0kqBRD592ICoZZYE8vdX3uKGWNFHW600n7ClXSu/S70xQ==
-X-Received: by 2002:a05:6e02:1b09:b0:310:f912:5a68 with SMTP id i9-20020a056e021b0900b00310f9125a68mr5337170ilv.3.1675959675409;
-        Thu, 09 Feb 2023 08:21:15 -0800 (PST)
-Received: from localhost (30.23.70.34.bc.googleusercontent.com. [34.70.23.30])
-        by smtp.gmail.com with UTF8SMTPSA id h8-20020a92c268000000b0030da1d0c348sm536362ild.87.2023.02.09.08.21.14
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+6IMHM6bYOKutk0YdNvntbL0y2XtMlW6qRW152/MzxA=;
+        b=7G8S/SBfN3dvrltbnw3X5O2BJ8egbCct50Zo4I7GIGi6u/ym6ZzXnoZcQ/C8kxR2oc
+         Hc1PQbJBS+5XyEiWD79V1ug0wIzs4ldgtxRfdusz35aKXu7pgjVgLTazsTi+LsydzSBd
+         bIzlV7c4rEvyklskHGPvOQZ7db0yU7GVFSM2fn8Cz4XVpemmTKRMEwyeHLfzJQ3CQK/B
+         YbuxRADqzex+q2+hj34h1D19YSUQ8GiVKLneQvof48OGGewSg1oG8OSMLxGsZZIjMx45
+         feQ+eEFq6XImYdlQpSyulFS6SbbPB2BBsowZ+J1akzz2W8bk5NzFkp92gxQSQ7Y227MJ
+         q2Eg==
+X-Gm-Message-State: AO0yUKVuNZpHxb7wC9QwVD2TIiMzStNo6Mr8+7BcbQ+3WKRrRDVV50gR
+        iaKedUjgxXQHxe0Hn8r5Z6c3fw==
+X-Google-Smtp-Source: AK7set9dfFDigYwrxwbkMbGuhq64PcoLZzpYnYkNJPQHYcVgPOBa6CwZp19qG1Oih9nJ1ZdvR6GGMg==
+X-Received: by 2002:a5d:488b:0:b0:2c3:db9e:4b07 with SMTP id g11-20020a5d488b000000b002c3db9e4b07mr10571081wrq.64.1675960645624;
+        Thu, 09 Feb 2023 08:37:25 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id n7-20020a5d4207000000b002c3ce97ec38sm1668525wrq.115.2023.02.09.08.37.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Feb 2023 08:21:15 -0800 (PST)
-Date:   Thu, 9 Feb 2023 16:21:14 +0000
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
-        robh+dt@kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v2] arm64: dts: qcom: sm6115: Add geni debug uart node
- for qup0
-Message-ID: <Y+UdetQklamQUehi@google.com>
-References: <20230208122718.338545-1-bhupesh.sharma@linaro.org>
+        Thu, 09 Feb 2023 08:37:25 -0800 (PST)
+Message-ID: <6729433e-9560-4a09-e0b5-badc2542e6ca@linaro.org>
+Date:   Thu, 9 Feb 2023 17:37:23 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20230208122718.338545-1-bhupesh.sharma@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH v5 1/8] arm64: dts: qcom: sc7280: Extract audio nodes from
+ common idp dtsi file
+Content-Language: en-US
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org,
+        agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
+        broonie@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_rohkumar@quicinc.com, srinivas.kandagatla@linaro.org,
+        dianders@chromium.org, swboyd@chromium.org, judyhsiao@chromium.org,
+        alsa-devel@alsa-project.org, quic_rjendra@quicinc.com,
+        konrad.dybcio@somainline.org, mka@chromium.org,
+        quic_mohs@quicinc.com
+References: <1675700201-12890-1-git-send-email-quic_srivasam@quicinc.com>
+ <1675700201-12890-2-git-send-email-quic_srivasam@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <1675700201-12890-2-git-send-email-quic_srivasam@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 08, 2023 at 05:57:18PM +0530, Bhupesh Sharma wrote:
-> qup0 on sm6115 / sm4250 has 6 SEs, with SE4 as debug uart.
-> Add the debug uart node in sm6115 dtsi file.
-
-Is there anything special about SE4 that makes it *the* debug
-UART or does it just happen to be the UART that is used by the
-reference board? I suspect the latter, in which case the
-"qcom,geni-debug-uart" string should be set/overwritten in the
-board file as in sc7280-qcard.dtsi or sc8280xp-crd.dts.
-
-> Cc: Bjorn Andersson <andersson@kernel.org>
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+On 06/02/2023 17:16, Srinivasa Rao Mandadapu wrote:
+> Split common idp dtsi file into audio specific dtsi and common
+> idp dtsi file.
+> 
+> It is required to isolate idp and crd-rev3 platform device tree nodes
+> and convert crd-rev3 platform device tree nodes into audioreach specific
+> device tree nodes.
+> 
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Tested-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
 > ---
->  Changes since v1:
->   - v1 can be viewed here: https://lore.kernel.org/linux-arm-msm/20221128171215.1768745-1-bhupesh.sharma@linaro.org/
->   - Addressed Konrad's review comments on v1.
->   - Rebased againt latest linux-next/master which now has the 'qupv3_id_0' node
->     already in the dtsi file, so just add the debug uart node in v2.
-> 
->  arch/arm64/boot/dts/qcom/sm6115.dtsi | 10 +++++++++-
->  1 file changed, 9 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> index 50cb8a82ecd5..3eccfb8c16ce 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> @@ -963,6 +963,15 @@ spi4: spi@4a90000 {
->  				status = "disabled";
->  			};
->  
-> +			uart4: serial@4a90000 {
-> +				compatible = "qcom,geni-debug-uart";
-> +				reg = <0x04a90000 0x4000>;
-> +				clock-names = "se";
-> +				clocks = <&gcc GCC_QUPV3_WRAP0_S4_CLK>;
-> +				interrupts = <GIC_SPI 331 IRQ_TYPE_LEVEL_HIGH>;
-> +				status = "disabled";
-> +			};
-> +
->  			i2c5: i2c@4a94000 {
->  				compatible = "qcom,geni-i2c";
->  				reg = <0x04a94000 0x4000>;
-> @@ -992,7 +1001,6 @@ spi5: spi@4a94000 {
->  				dma-names = "tx", "rx";
->  				#address-cells = <1>;
->  				#size-cells = <0>;
-> -				status = "disabled";
->  			};
->  		};
->  
-> -- 
-> 2.38.1
-> 
+
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
+
