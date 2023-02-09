@@ -2,98 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB3F56902A1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Feb 2023 09:57:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A6276902CE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Feb 2023 10:05:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229612AbjBII5O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Feb 2023 03:57:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34510 "EHLO
+        id S229763AbjBIJFq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Feb 2023 04:05:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229634AbjBII5N (ORCPT
+        with ESMTP id S229574AbjBIJFq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Feb 2023 03:57:13 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 012A94EF1
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Feb 2023 00:57:01 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id l37-20020a05600c1d2500b003dfe46a9801so985679wms.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Feb 2023 00:57:01 -0800 (PST)
+        Thu, 9 Feb 2023 04:05:46 -0500
+Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 022021717F
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Feb 2023 01:05:45 -0800 (PST)
+Received: by mail-qt1-x82f.google.com with SMTP id g18so1187286qtb.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Feb 2023 01:05:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=KxcDeblWBlPqK8JS1qDFxpdeF2zE8l20BO6ADXYKdwY=;
-        b=p6U2c7IFPSaJesuLiq4+FOrL/cAjTMx+7oIjujJt3G4i/U+sT6k2XGLW8lsgj1Cc2K
-         uhi7LiBJ6tA5SQKwuXJTL32dfeDPU7mGPVaog66g68Py0nMU4mhjCB6rL2IobnDiVKoM
-         9ZrqL6jLrMXPPVOZvro8R/QmOMbgOuUgoneO6RFF1seW276E6biixZpdKRdRd+1pwpcS
-         t5Q7HJpkAHrMltbSDIZxXosMf5JpWIqFwOyV1iD1RBgEDC3mzNm8xvNDTpVYHupJfBiC
-         nXEmG4lGpaUelhm2pntwbVsP6lZoi0GUu09jvYjb088UzYmYoXgIs/WgVc9ajIM6wjCx
-         z0Uw==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=g6COeyPGMXf7U7lGKG1YayluAHCueh6BFLzJHyo0CpI=;
+        b=NAvo6+k/InUrLzFKPDcv7XK88ILDJg3zbxr+6QIXKdqXACWk9YTFTZtZp1WMLj+7Ft
+         n6FtPkxpsKuGyLdP9O1cNuVb437Yr59eycUih2mnYbsBwVzDuC3H5Uug8ZByvHrfVl1G
+         1tEk3H0oENr/DlKlis1zVBNIABBMc+FxkBMZj5npBK7OfGSNRn04MYoth25gIJRypN9i
+         ZLDFWZQvfSXrEttGKHfmhrZxn1Hqm4C53mlRG5JBr69lCgoO7mS3sw3fj0HOiQwgTiuB
+         gSQHVB66kvBtau9PKEayhj8xBn6D4G+J6x/lVye7jToUpAwgdI0OCzCbO0TlRZgAjZCm
+         gosQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KxcDeblWBlPqK8JS1qDFxpdeF2zE8l20BO6ADXYKdwY=;
-        b=Wux5QFJ0isOaZwL9+4P6cLjpFng5ps+7QKNK3DovuaIitHsy2C5ObsW4QSU4hjw9zv
-         qXKYL4GQS82yFBIKzZc3hKLhXwAm+xw2WdD+XpB5J4wZ+WBL8MJgHgsTNRp2cKswWmEi
-         r8/f0LFzhRodNCkJvEg5ABtEXKGOBw3T8xqu4o1eE+IoBvZ++zt3QBCWWEjClS2fy8JG
-         FTbK46W7M8mnNEtPZCa40PHRM0xu94funeZxi+xsmAbHgxRcM7pSlwD/LtRAuip7YONI
-         YwcCLmtjcZKDVnSGgVC315NdY2ZV0340N0h+J54qifjW8Qnp2o/Zdwpc0QBqh4helgh9
-         AE6A==
-X-Gm-Message-State: AO0yUKXcAcM4ydr8cJp17LY2yFNP3IbPmz026c0SGMwKgiPXA3Jb00aC
-        WRGCn8obihNu7LjRNurF16E4uQ==
-X-Google-Smtp-Source: AK7set8WgAoSUt5mCuBuGbr/bh3r1tW54Gpm7EV6mAcJ4Jb6+FaYWjaTHFPayCBIP9niXr88/hEVlA==
-X-Received: by 2002:a05:600c:3197:b0:3db:2858:db84 with SMTP id s23-20020a05600c319700b003db2858db84mr9424861wmp.34.1675933020585;
-        Thu, 09 Feb 2023 00:57:00 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id z5-20020a05600c0a0500b003dc43a10fa5sm1298698wmp.13.2023.02.09.00.56.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Feb 2023 00:57:00 -0800 (PST)
-Message-ID: <c2901ace-144a-6576-d5b6-939b994d7a03@linaro.org>
-Date:   Thu, 9 Feb 2023 09:56:58 +0100
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=g6COeyPGMXf7U7lGKG1YayluAHCueh6BFLzJHyo0CpI=;
+        b=hUsoVhOlChbgMr0tVZnLDyhhY0WRamyz8ZGizKh7ewK4FG5krRNKSQSyAZtgmsdhLs
+         fbL28ZWC1c6z4vZMhjyQRUwJCp63B6H5W7g4oUA92NQAWQA+aU4S1E4LUJBDC9sbjomM
+         1Y8WF2Sh4qEy+dKHtPDnI7VPRJ2gwMHDY/nqQFgsMP/LCEsmszdfXCF8UWvSpFYQAkXj
+         wAIQP6VX2o6kvPXjbrAM/aCzAvO9HY1bsoRHlaUOubpCDI/vGw8Po+5QZeuuHw533PmM
+         QlI0QWK9mu39dOkAwqgwXPvXZY9FZod9DH7nHssZy4fJ/LkFAyLrcZN2PzirQHhsC/d6
+         TNjw==
+X-Gm-Message-State: AO0yUKUG9VQTnw9ah8wSmxX1hbMQUQg6CoNApaiJ53bRWLOVXdmDZP60
+        wpcuSyurHMQyBctlHwj2aMW8C3L2Ul44LFXgDHMoNg==
+X-Google-Smtp-Source: AK7set98BmFRfRbWA4HYK3suSqo8xIlNgU19F+J1543PBuObgKzeMLFN9+wEEGAOqsIed6lAMzglCbfL1p3tV0c9s1Y=
+X-Received: by 2002:ac8:5c49:0:b0:3b6:2e70:d0ba with SMTP id
+ j9-20020ac85c49000000b003b62e70d0bamr1843244qtj.124.1675933544040; Thu, 09
+ Feb 2023 01:05:44 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH] arm64: dts: qcom: sm8550: remove invalid interconnect
- property from cryptobam
-Content-Language: en-US
-To:     Neil Armstrong <neil.armstrong@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+References: <20230124182857.1524912-1-amit.pundir@linaro.org>
+ <39751511-3f06-7c39-9c21-208d4c272113@linaro.org> <CAA8EJppLBuA08hkqTrZx_wwbtCxK9sAjv48c9_DxgPENgo7a8Q@mail.gmail.com>
+ <1a840d88-e5b1-711c-b980-f57620c54472@linaro.org> <8508e3d5-7468-0b2f-5a43-7c439ecf2d8b@linaro.org>
+In-Reply-To: <8508e3d5-7468-0b2f-5a43-7c439ecf2d8b@linaro.org>
+From:   Amit Pundir <amit.pundir@linaro.org>
+Date:   Thu, 9 Feb 2023 14:35:07 +0530
+Message-ID: <CAMi1Hd2UNxXHUVWO-=sWh=-bVnrqE3UdLguFOq+62SfvUiEs0A@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sdm845-db845c: Mark cont splash memory
+ region as reserved
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>
-References: <20230209-topic-sm8550-upstream-cryptobam-remove-interconnect-v1-1-84587c7bad0f@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230209-topic-sm8550-upstream-cryptobam-remove-interconnect-v1-1-84587c7bad0f@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dt <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/02/2023 09:44, Neil Armstrong wrote:
-> The interconnect property is already present in the qce node, which
-> is the consumer of the cryptobam, so no need for an interconnect property
-> as documented by the bindings.
-> 
-> Fixes: 433477c3bf0b ("arm64: dts: qcom: sm8550: add QCrypto nodes")
-> Suggested-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+On Tue, 31 Jan 2023 at 19:03, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On 31/01/2023 14:45, Konrad Dybcio wrote:
+> >
+> >
+> > On 31.01.2023 12:06, Dmitry Baryshkov wrote:
+> >> On Tue, 31 Jan 2023 at 12:54, Bryan O'Donoghue
+> >> <bryan.odonoghue@linaro.org> wrote:
+> >>>
+> >>> On 24/01/2023 18:28, Amit Pundir wrote:
+> >>>> Put cont splash memory region under the reserved-memory
+> >>>> as confirmed by the downstream code as well.
+> >>>>
+> >>>> Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+> >>>> ---
+> >>>>    arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 8 ++++++++
+> >>>>    1 file changed, 8 insertions(+)
+> >>>>
+> >>>> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+> >>>> index f41c6d600ea8..2ae59432cbda 100644
+> >>>> --- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+> >>>> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+> >>>> @@ -100,6 +100,14 @@ hdmi_con: endpoint {
+> >>>>                };
+> >>>>        };
+> >>>>
+> >>>> +     reserved-memory {
+> >>>> +             /* Cont splash region set up by the bootloader */
+> >>>> +             cont_splash_mem: framebuffer@9d400000 {
+> >>>> +                     reg = <0x0 0x9d400000 0x0 0x2400000>;
+> >>>> +                     no-map;
+> >>>> +             };
+> >>>> +     };
+> >>>> +
+> >>>>        lt9611_1v8: lt9611-vdd18-regulator {
+> >>>>                compatible = "regulator-fixed";
+> >>>>                regulator-name = "LT9611_1V8";
+> >>>
+> >>> Doesn't this mean we loose 0x2400000 of DRAM for all rb3 platforms
+> >>> though ? About what 37 megabytes.. ?
+> >>
+> >> I think this memory is further used for display memory allocation. So
+> >> we are not loosing it, but dedicating it to the framebuffer memory.
+> > Not exactly, to do so, you'd have to use the memory-region property
+> > with mdss, which nobody does. Otherwise it's just a hole for Linux.
+>
+> Then maybe it's time to start using that property?
 
+Hi, So what is the verdict on this patch?
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+I submitted this fix to make sure UFS don't map and crash on it, which
+I have seen happening occassionaly on db845c and Caleb reported
+similar issues on his sdm845 device iirc. I should have probably put
+that in my commit message as well.
 
-Best regards,
-Krzysztof
+Regards,
+Amit Pundir
 
+>
+> >
+> > Konrad
+> >>
+> >>
+>
+> --
+> With best wishes
+> Dmitry
+>
