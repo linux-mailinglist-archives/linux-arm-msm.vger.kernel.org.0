@@ -2,110 +2,319 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A9D3690A90
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Feb 2023 14:40:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 46863690ACC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Feb 2023 14:47:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229457AbjBINkc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Feb 2023 08:40:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41464 "EHLO
+        id S229586AbjBINro (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Feb 2023 08:47:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230248AbjBINkY (ORCPT
+        with ESMTP id S229793AbjBINrn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Feb 2023 08:40:24 -0500
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E50B47413
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Feb 2023 05:40:23 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id p26so6344994ejx.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Feb 2023 05:40:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=G/9XwFYeUJst3WJ5sHdQjwXF4qwQvevEf5WU7yUqIXY=;
-        b=OMw/A+V2/U2vAN546ixC6VrsB9usPnMiYZ1EGlPxuAOxWOMjTiKzuwiUruCmZ+0HlE
-         5Sp63S1ZpYZVQTOqaN6t6gUA9o3xy9nImsCREWI5h3iMStvajaS1JjKUqPM6JkYgBpDE
-         3+mnH2e1S1uHxCl553jXTY8nl0pus4Iln/TAoKk9arW14IzuDP4UvjXFPbUF/Pzn89id
-         I8d/W49sVknCcIiL9D3riigh6YM0A6B/IjMwxl0l5IIhVgen/+gv8HChuEeE6vZI6rOV
-         TnZmKKE8Ubb9EQcOZ1R5lTkJprUk20Ju7BsDrM92K7bamJBLiPFipfOn9InyaQ2UjivK
-         IK/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=G/9XwFYeUJst3WJ5sHdQjwXF4qwQvevEf5WU7yUqIXY=;
-        b=And9m4KmXv0vlpW2v2GyyeoKJ8SAFm8+zR/fKWg8nYjMy6hmrDPlbcdy4FscORjfeo
-         LL9kGSaIu4XD+OYRWIbJhC676/R+bOHSbG46EKGoftEnW4hccxqQtvkP8OYd9uO8dNzK
-         1jv15y1ITSZmuZgykXXhgnzi2hBKEIGb/wUwHOyIVJRcJqkoimrvZVGMvCIQO/rwa4os
-         zH5MXutVOHMFrwGPWsdL5kRv7p7nZMvsayIAi98rJKR4buBy8z+5aOU5FN9k8sv+fNJS
-         ZdXppVhdlzwEdcVC8pdy0+zjj1rOXjCdX4PVSS4c0EBLejHe+uk2qXD1P6ac0hbjDWuj
-         ykiQ==
-X-Gm-Message-State: AO0yUKVBq9jmoafIIhyyfkKFi77R/utsZejfHOGvV6yNZl1KWd4tPzIj
-        dO35+lvbp9zO3Od5S4zTmDXKXA==
-X-Google-Smtp-Source: AK7set/izK6rzb2b5i3ycv/Vv8MsWMV7WDdfIFo7kARlIFT3ylMk6KZs8PsO+wT3uFrG2bxHo8cvmw==
-X-Received: by 2002:a17:906:4f99:b0:887:981:5f7c with SMTP id o25-20020a1709064f9900b0088709815f7cmr11967561eju.11.1675950021723;
-        Thu, 09 Feb 2023 05:40:21 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id b5-20020a170906d10500b008784bc1dd05sm877502ejz.76.2023.02.09.05.40.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Feb 2023 05:40:20 -0800 (PST)
-Message-ID: <dea3c40e-bdd8-1276-409d-3ddb35b004bc@linaro.org>
-Date:   Thu, 9 Feb 2023 15:40:19 +0200
+        Thu, 9 Feb 2023 08:47:43 -0500
+Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [85.215.255.80])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CDBC19F2F;
+        Thu,  9 Feb 2023 05:47:40 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1675950457; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=dcaDta66ZUyr4xZTMKopwnnbdTVVbGV1apxTvGrXpQKc5CIo6RMlrIrL2GzJffnlRq
+    CQHtlLVr877kBoXyH7Lyr635+Z62OcPiebukMKfZwEkkn/03h3R+ecweSt0lUkzp/2qS
+    wULXIHeKSZ/qf43nkUuiIbZ8N7B9qXVPDziOJsj+WHBMRWowZrg5x30G1zwKEIgcFjKM
+    rh85dcoabvDS8sFY3GNgON6Y76A1mvv8g69eHIaYB7JC8Dtju6Or9pBz7lNwL3XFMNQi
+    k3kqWcXa5DtH4JDgxB00dW9mnQ+81Jx5l+7vjMoeAN32E5aWvFZm0d8WMuZZ4v4HiNPe
+    d4Wg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1675950457;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=IY2gJ2JdUD9X1qj48Ay5XBdVhmse5lzzITzrG+rllWU=;
+    b=MsuatPmmBrx1YjoToipwFFOD84ldbeBiJ4mUECj/tml8RxaUH4oLrz0UduI+DOiq4A
+    kaqaFD2qBezC9XdGvGgWwtA48xpCYDrnkLZwVagvbC3TvHHXMsaCp4wiD3n2hI7F+UCl
+    56WLuFWNHcjcwFnRB4Em8m2nQceOtiEyHgCj20WDUWTyGzXqXYfy90QOaaIZuWYGTtsQ
+    7ik2lwOuuL6wMpsbvxbTFpLRG/t8s6VKDtjL04Deqq0bpAwx/Z8i/NAxJDqqpBlXsVSe
+    jThQbj0qDptUeG/yU7W6Ltq05q2sroaq8Lxxdl3Oltdo369zW/IeCfZm0KOUM5NrPZT/
+    2Lbw==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo02
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1675950457;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=IY2gJ2JdUD9X1qj48Ay5XBdVhmse5lzzITzrG+rllWU=;
+    b=Gb1rPPdlOTsIOJVciDIA8+2tAm9U9tVKgcsgQeLx8ay4Au34l47Wc+xj1jrDiHYCqq
+    O5GqN+Yxd18mMwE6RDbnGKkZ6CnfpXhFXdU08pZ5YuxA93MgitBs22n7fBE46FIWYJSZ
+    3fjrZNwTMW+CdIV9cxk8/YlYfJGXncdpunZ2vxviLhQ4cxOWJwnhWZyrxEbQtgPuBNPK
+    pIEnc6IG9E0bJUsgtF9tObAt3TW5f7O0ZRTZ0pHLbI49hN/qbiiWSHxPLhYZ3oGZPHza
+    P7O+SvYOEDwq8o1tJSzDP8RZ2sJwjx3CB8zj3L8MHvoPdOQNE3EQE0AHj8r3Xjsx42f+
+    TgFg==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267EpF+OQRc4obTF5+Uw3E="
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 49.3.0 DYNA|AUTH)
+    with ESMTPSA id K7ac91z19DlbAQz
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Thu, 9 Feb 2023 14:47:37 +0100 (CET)
+Date:   Thu, 9 Feb 2023 14:47:28 +0100
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        djakov@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, benl@squareup.com,
+        shawn.guo@linaro.org, fabien.parent@linaro.org, leo.yan@linaro.org,
+        dmitry.baryshkov@linaro.org, Jun Nie <jun.nie@linaro.org>,
+        James Willcox <jwillcox@squareup.com>,
+        Joseph Gates <jgates@squareup.com>,
+        Max Chen <mchen@squareup.com>, Zac Crosby <zac@squareup.com>,
+        Vincent Knecht <vincent.knecht@mailoo.org>
+Subject: Re: [PATCH v5 2/5] arm64: dts: qcom: Add msm8939 SoC
+Message-ID: <Y+T5cF4d667RhrJp@gerhold.net>
+References: <20230206012336.2130341-1-bryan.odonoghue@linaro.org>
+ <20230206012336.2130341-3-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH v2 4/8] arm64: dts: qcom: sm8350: reorder device nodes
-Content-Language: en-GB
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-References: <20230206145707.122937-1-dmitry.baryshkov@linaro.org>
- <20230206145707.122937-5-dmitry.baryshkov@linaro.org>
- <20230209032841.ybqveepeyjqo63ql@ripper>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230209032841.ybqveepeyjqo63ql@ripper>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230206012336.2130341-3-bryan.odonoghue@linaro.org>
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_PASS,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/02/2023 05:28, Bjorn Andersson wrote:
-> On Mon, Feb 06, 2023 at 04:57:03PM +0200, Dmitry Baryshkov wrote:
->> Start ordering DT nodes according to agreed order. Move apps SMMU, GIC,
->> timer, apps RSC, cpufreq ADSP and cDSP nodes to the end to the proper
->> position at the end of /soc/.
->>
+On Mon, Feb 06, 2023 at 01:23:33AM +0000, Bryan O'Donoghue wrote:
+> Add msm8939 a derivative SoC of msm8916. This SoC contains a number of key
+> differences to msm8916.
 > 
-> I think "according to agreed order" means "sorted by address", but it
-> would be nice to have that expressed in the message. If nothing else for
-> others to know what such agreed order might be.
+> - big.LITTLE Octa Core - quad 1.5GHz + quad 1.0GHz
+> - DRAM 1x800 LPDDR3
+> - Camera 4+4 lane CSI
+> - Venus @ 1080p60 HEVC
+> - DSI x 2
+> - Adreno A405
+> - WiFi wcn3660/wcn3680b 802.11ac
 > 
+> Co-developed-by: Shawn Guo <shawn.guo@linaro.org>
+> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> Co-developed-by: Jun Nie <jun.nie@linaro.org>
+> Signed-off-by: Jun Nie <jun.nie@linaro.org>
+> Co-developed-by: Benjamin Li <benl@squareup.com>
+> Signed-off-by: Benjamin Li <benl@squareup.com>
+> Co-developed-by: James Willcox <jwillcox@squareup.com>
+> Signed-off-by: James Willcox <jwillcox@squareup.com>
+> Co-developed-by: Leo Yan <leo.yan@linaro.org>
+> Signed-off-by: Leo Yan <leo.yan@linaro.org>
+> Co-developed-by: Joseph Gates <jgates@squareup.com>
+> Signed-off-by: Joseph Gates <jgates@squareup.com>
+> Co-developed-by: Max Chen <mchen@squareup.com>
+> Signed-off-by: Max Chen <mchen@squareup.com>
+> Co-developed-by: Zac Crosby <zac@squareup.com>
+> Signed-off-by: Zac Crosby <zac@squareup.com>
+> Co-developed-by: Vincent Knecht <vincent.knecht@mailoo.org>
+> Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
+> Co-developed-by: Stephan Gerhold <stephan@gerhold.net>
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/msm8939.dtsi | 2344 +++++++++++++++++++++++++
+>  1 file changed, 2344 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/msm8939.dtsi
 > 
-> Unfortunately this doesn't apply to my tree, and it's not clear where it
-> failed. Could you please rebase this?
+> diff --git a/arch/arm64/boot/dts/qcom/msm8939.dtsi b/arch/arm64/boot/dts/qcom/msm8939.dtsi
+> new file mode 100644
+> index 0000000000000..17327513a5698
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/msm8939.dtsi
+> @@ -0,0 +1,2344 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2013-2015, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2020-2023, Linaro Limited
+> + */
+> +
+> +#include <dt-bindings/clock/qcom,gcc-msm8939.h>
+> +#include <dt-bindings/clock/qcom,rpmcc.h>
+> +#include <dt-bindings/interconnect/qcom,msm8939.h>
+> +#include <dt-bindings/interrupt-controller/arm-gic.h>
+> +#include <dt-bindings/power/qcom-rpmpd.h>
+> +#include <dt-bindings/reset/qcom,gcc-msm8939.h>
+> +#include <dt-bindings/thermal/thermal.h>
+> +
+> +/ {
+> +	interrupt-parent = <&intc>;
+> +
+> +	/*
+> +	 * Stock LK wants address-cells/size-cells = 2
+> +	 * A number of our drivers want address/size cells = 1
+> +	 * hence the disparity between top-level and /soc below.
+> +	 */
+> +	#address-cells = <2>;
+> +	#size-cells = <2>;
+> +
+> +	clocks {
+> +		xo_board: xo-board {
+> +			compatible = "fixed-clock";
+> +			#clock-cells = <0>;
+> +			clock-frequency = <19200000>;
+> +		};
+> +
+> +		sleep_clk: sleep-clk {
+> +			compatible = "fixed-clock";
+> +			#clock-cells = <0>;
+> +			clock-frequency = <32768>;
+> +		};
+> +	};
+> +
+> +	cpus {
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		CPU0: cpu@100 {
+> +			compatible = "arm,cortex-a53";
+> +			device_type = "cpu";
+> +			enable-method = "spin-table";
+> +			reg = <0x100>;
+> +			next-level-cache = <&L2_1>;
+> +			power-domains = <&vreg_cpr_stub>;
+> +			power-domain-names = "cpr";
 
-Done
+IMHO there are still no compelling arguments for adding this dummy stub
+here, aside from fixing a non-critical DT schema warning that is
+obviously wrong and is being fixed in [1]. But I guess I have made my
+point and you have made yours so I'll leave it up to Bjorn to decide.
 
--- 
-With best wishes
-Dmitry
+[1]: https://lore.kernel.org/linux-arm-msm/20230208153913.24436-2-ansuelsmth@gmail.com/
 
+Otherwise I just have some more nitpicks and one critical issue:
+The timer interrupt numbers are still wrong.
+
+> + [...]
+> +		tsens: thermal-sensor@4a9000 {
+> +			compatible = "qcom,msm8939-tsens", "qcom,tsens-v0_1";
+> +			reg = <0x004a9000 0x1000>, /* TM */
+> +			      <0x004a8000 0x1000>; /* SROT */
+> +			nvmem-cells = <&tsens_caldata>;
+> +			nvmem-cell-names = "calib";
+> +			#qcom,sensors = <10>;
+> +			interrupts = <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "uplow";
+> +			#thermal-sensor-cells = <1>;
+> +		};
+
+"thermal/drivers/tsens: Drop single-cell code for msm8939" [2] is in
+linux-next now so you need to convert this to use multiple nvmem-cells.
+
+[2]: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=dfadb4599ab0206935d5f14975b5e8112492b29c
+
+> + [...]
+> +		mdss: display-subsystem@1a00000 {
+> +			compatible = "qcom,mdss";
+> +			reg = <0x01a00000 0x1000>,
+> +			      <0x01ac8000 0x3000>;
+> +			reg-names = "mdss_phys", "vbif_phys";
+> +
+> +			interrupts = <GIC_SPI 72 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-controller;
+> +
+> +			clocks = <&gcc GCC_MDSS_AHB_CLK>,
+> +				 <&gcc GCC_MDSS_AXI_CLK>,
+> +				 <&gcc GCC_MDSS_VSYNC_CLK>;
+> +			clock-names = "iface",
+> +				      "bus",
+> +				      "vsync";
+> +
+> +			power-domains = <&gcc MDSS_GDSC>;
+> +
+> +			#address-cells = <1>;
+> +			#size-cells = <1>;
+> +			#interrupt-cells = <1>;
+> +			ranges;
+
+Please disable this by default similar to 5f36d633c214 ("arm64: dts:
+qcom: Disable MDSS by default for 8916/8016 devices") for consistency
+with MSM8916.
+
+> + [...]
+> +		apps_iommu: iommu@1ef0000 {
+> +			compatible = "qcom,msm8916-iommu", "qcom,msm-iommu-v1";
+> +			reg = <0x01ef0000 0x3000>;
+> +			ranges = <0 0x1e20000 0x40000>;
+
+0x01e20000 (pad to 8 digits)
+
+> + [...]
+> +		usb: usb@78d9000 {
+> +			compatible = "qcom,ci-hdrc";
+> +			reg = <0x078d9000 0x200>,
+> +			      <0x078d9200 0x200>;
+> +			interrupts = <GIC_SPI 134 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks = <&gcc GCC_USB_HS_AHB_CLK>,
+> +				 <&gcc GCC_USB_HS_SYSTEM_CLK>;
+> +			clock-names = "iface", "core";
+> +			assigned-clocks = <&gcc GCC_USB_HS_SYSTEM_CLK>;
+> +			assigned-clock-rates = <80000000>;
+> +			resets = <&gcc GCC_USB_HS_BCR>;
+> +			reset-names = "core";
+> +			#reset-cells = <1>;
+> +			phy_type = "ulpi";
+> +			dr_mode = "otg";
+> +			ahb-burst-config = <0>;
+> +			phy-names = "usb-phy";
+> +			phys = <&usb_hs_phy>;
+> +			status = "disabled";
+> +
+> +			ulpi {
+> +				usb_hs_phy: phy {
+> +					compatible = "qcom,usb-hs-phy-msm8916",
+> +						     "qcom,usb-hs-phy";
+> +					clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>, <&gcc GCC_USB2A_PHY_SLEEP_CLK>;
+> +					clock-names = "ref", "sleep";
+> +					resets = <&gcc GCC_USB2A_PHY_BCR>, <&usb 0>;
+> +					reset-names = "phy", "por";
+> +					#phy-cells = <0>;
+> +					qcom,init-seq = /bits/ 8 <0x0 0x44
+> +						0x1 0x6b 0x2 0x24 0x3 0x13>;
+
+Should be formatted in pairs, see commit 640e71aac554c ("arm64: dts:
+qcom: msm8916: improve usb hs node formating").
+
+> + [...]
+> +		timer@b020000 {
+> +			compatible = "arm,armv7-timer-mem";
+> +			reg = <0x0b020000 0x1000>;
+> +			#address-cells = <1>;
+> +			#size-cells = <1>;
+> +			ranges;
+> +
+> +			frame@b021000 {
+> +				reg = <0x0b021000 0x1000>,
+> +				      <0x0b022000 0x1000>;
+> +				interrupts = <GIC_SPI 8 IRQ_TYPE_LEVEL_HIGH>,
+> +					     <GIC_SPI 7 IRQ_TYPE_LEVEL_HIGH>;
+> +				frame-number = <0>;
+> +			};
+
+These timer interrupts are still wrong like mentioned in v3:
+https://lore.kernel.org/linux-arm-msm/Y8fC%2FGCHfENQmBNC@gerhold.net/
+
+> + [...]
+> +		pronto: remoteproc@a204000 {
+> +			compatible = "qcom,pronto-v2-pil", "qcom,pronto";
+> +			reg = <0x0a204000 0x2000>,
+> +			      <0x0a202000 0x1000>,
+> +			      <0x0a21b000 0x3000>;
+> +			reg-names = "ccu", "dxe", "pmu";
+> +
+> +			interrupts-extended = <&intc 0 149 IRQ_TYPE_EDGE_RISING>,
+
+&intc GIC_SPI 149
+
+Thanks,
+Stephan
