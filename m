@@ -2,82 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D42A968FFD7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Feb 2023 06:20:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E37469017D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Feb 2023 08:45:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229787AbjBIFUu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Feb 2023 00:20:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34592 "EHLO
+        id S229602AbjBIHpZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Feb 2023 02:45:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229743AbjBIFUt (ORCPT
+        with ESMTP id S229498AbjBIHpY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Feb 2023 00:20:49 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF0EE2DE7C;
-        Wed,  8 Feb 2023 21:20:46 -0800 (PST)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31949Kx0030005;
-        Thu, 9 Feb 2023 05:20:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Qi01A4DARysTADEqiJHBihKXJUpLwxjlAn34mXKmldc=;
- b=NhT1YVbMzr9TdxYQwid6J53k1TQC/tPCZEfcSh54k7mPzi5sCkI1/QKTRZKL1hpo9U8I
- TspzPshhpnlXLtYVBOItyGALSeuUcwYrvJ72+3g38tijAMDGVc3WYurfh+FspfnDgHk3
- Z9cjwofYv2SFi2mCf5oF7Q/DeagW2uwnyIK2RS4R6exsI++5EUchcg37ECJeu3kFK2Bt
- QcuknbCHlwOB4lrEDLX9nU9uF5VNzReU5247xlGlIT/eWaN3divkg4Upi8vL15+8KWat
- oLNtfdaZTUXjeu8vq1XFFtvmg3lOipCjOWLpwUfQE/3C7bK6nrFRqajKa1CPFiqA77gX PQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nm86mtnyq-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 09 Feb 2023 05:20:41 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3195KeTQ010936
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 9 Feb 2023 05:20:40 GMT
-Received: from [10.201.2.96] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 8 Feb 2023
- 21:20:36 -0800
-Message-ID: <e40b3122-30e6-4619-57db-085d480deef1@quicinc.com>
-Date:   Thu, 9 Feb 2023 10:50:33 +0530
+        Thu, 9 Feb 2023 02:45:24 -0500
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7C9210E9
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Feb 2023 23:45:22 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id z13so813655wmp.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Feb 2023 23:45:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=9TkylMnx0XQBQew9nKf+BKJgpUdEs2B8pdYOfjTDzfQ=;
+        b=mJGpNRd/F4LQdfBYXiJpWkXwj8GEt0IjRpQBjZOnO6dLb5qFtcfi83WQg2Wa5Whl85
+         dDKrubK9L1NpoG9AO6o+buLCb7grKDImJPolYmnr/gX1Fgf71D0P2sYwfumBUECYDi7p
+         FH2blYdNjoGH/bstRynqbsF/ZFeSnPLQXDOXRhDNDUFckjgACFk/adDbUeH4A1bu1tl1
+         tRPY0oiLluOn3zF8H8izL6h9uUo7TdiO/0wrzovumlXjIsTAcxyKyhPcewzApejP0R/C
+         LrsfGESibzYe8+5zaMxm+/S2gOeieI+fP3XM6OC8lG5bdNKtuLdd6sRLueBYQwng1BYh
+         9x0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9TkylMnx0XQBQew9nKf+BKJgpUdEs2B8pdYOfjTDzfQ=;
+        b=f0JrxYV5Z1ukYhRMBC7XYw8piK+YMgPR7l676dyS4L/lBnX+DMkkD4hihq4lOsAmMG
+         arhXAUkH+SvtBvGuRX8b+8lGBufWZ0ddO183DN4CE4PsDh91Lp2I18tQuGiiLSlJJWMt
+         xsw+0dHXDVHVsUM++dbsAZT8+bXhfxcPfPID2wtMmdIRzU+3AcWLK+nUTg93WDU4iPBd
+         sCoq2pxFR/PtEEJm1HPoszAtkDt4G7dNUpOmqO0Dq0GIV7wlQm7Ubn16Z0qXsADGzKTD
+         fnZce3awCmnQtsMw5yPWtONgibtY23/oFeNOA+3UN8vbcfhH4wi+xUSApUpDx8ZC1d//
+         UuPA==
+X-Gm-Message-State: AO0yUKXiq10sz6amrBom5Yq0kLT4Vm/KpAItVf7rV3IhQPp7fk7bNp7o
+        VB0wVVL0VTCduB7nelyS5ufpK7Np7T1qSA3/
+X-Google-Smtp-Source: AK7set89HhsrBhTriSqbmLeEi21fPXSAahsF5YD1NGqBEG7pnypTG60x39SPE6byhfuwbIloSUNjtw==
+X-Received: by 2002:a05:600c:491c:b0:3dc:1687:9ba2 with SMTP id f28-20020a05600c491c00b003dc16879ba2mr8734012wmp.35.1675928721190;
+        Wed, 08 Feb 2023 23:45:21 -0800 (PST)
+Received: from hackbox.lan ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id f8-20020a05600c4e8800b003da28dfdedcsm1115472wmq.5.2023.02.08.23.45.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Feb 2023 23:45:19 -0800 (PST)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-gpio@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH v4 1/2] pinctrl: qcom: Add support for i2c specific pull feature
+Date:   Thu,  9 Feb 2023 09:45:09 +0200
+Message-Id: <20230209074510.4153294-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH V2 5/5] arm64: dts: qcom: ipq5332: enable the CPUFreq
- support
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <jassisinghbrar@gmail.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-CC:     <quic_varada@quicinc.com>, <quic_srichara@quicinc.com>
-References: <20230208042850.1687-1-quic_kathirav@quicinc.com>
- <20230208042850.1687-6-quic_kathirav@quicinc.com>
- <61ca391d-05d4-d02b-f57e-5dd0297feceb@linaro.org>
-Content-Language: en-US
-From:   Kathiravan T <quic_kathirav@quicinc.com>
-In-Reply-To: <61ca391d-05d4-d02b-f57e-5dd0297feceb@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Vd3Oo-h3ibUXmvFWTMj3sSMw-h0tc5Pe
-X-Proofpoint-ORIG-GUID: Vd3Oo-h3ibUXmvFWTMj3sSMw-h0tc5Pe
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-02-09_02,2023-02-08_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
- malwarescore=0 phishscore=0 bulkscore=0 clxscore=1015 priorityscore=1501
- adultscore=0 mlxscore=0 mlxlogscore=999 lowpriorityscore=0 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2302090048
-X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,128 +75,97 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add support for the new i2c_pull property introduced for SM8550 setting
+a I2C specific pull mode on I2C able pins. Add the bit to the SM8550
+specific driver while at it.
 
-On 2/8/2023 2:11 PM, Konrad Dybcio wrote:
->
-> On 8.02.2023 05:28, Kathiravan T wrote:
->> Add the APCS, A53 PLL, cpu-opp-table nodes to bump the CPU frequency
->> above 800MHz.
->>
->> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
->> ---
->> Changes in V2:
->> 	- No changes
->>
->>   arch/arm64/boot/dts/qcom/ipq5332.dtsi | 37 +++++++++++++++++++++++++++
->>   1 file changed, 37 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
->> index bdf33ef30e10..cec2828c51f8 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
->> @@ -5,6 +5,7 @@
->>    * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
->>    */
->>   
->> +#include <dt-bindings/clock/qcom,apss-ipq.h>
->>   #include <dt-bindings/clock/qcom,ipq5332-gcc.h>
->>   #include <dt-bindings/interrupt-controller/arm-gic.h>
->>   
->> @@ -35,6 +36,8 @@
->>   			reg = <0x0>;
->>   			enable-method = "psci";
->>   			next-level-cache = <&L2_0>;
->> +			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
->> +			operating-points-v2 = <&cpu_opp_table>;
->>   		};
->>   
->>   		CPU1: cpu@1 {
->> @@ -43,6 +46,8 @@
->>   			reg = <0x1>;
->>   			enable-method = "psci";
->>   			next-level-cache = <&L2_0>;
->> +			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
->> +			operating-points-v2 = <&cpu_opp_table>;
->>   		};
->>   
->>   		CPU2: cpu@2 {
->> @@ -51,6 +56,8 @@
->>   			reg = <0x2>;
->>   			enable-method = "psci";
->>   			next-level-cache = <&L2_0>;
->> +			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
->> +			operating-points-v2 = <&cpu_opp_table>;
->>   		};
->>   
->>   		CPU3: cpu@3 {
->> @@ -59,6 +66,8 @@
->>   			reg = <0x3>;
->>   			enable-method = "psci";
->>   			next-level-cache = <&L2_0>;
->> +			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
->> +			operating-points-v2 = <&cpu_opp_table>;
->>   		};
->>   
->>   		L2_0: l2-cache {
->> @@ -67,6 +76,16 @@
->>   		};
->>   	};
->>   
->> +	cpu_opp_table: opp-table-cpu{
-> opp-table-cpu {
-> + sort this properly (by node name, not label), please
+Co-developed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
 
+The v3 of this specific patch is here:
+https://lore.kernel.org/all/20230208081836.984673-1-abel.vesa@linaro.org/
 
-ahh, missed this. Will fix it in next spin.
+Changes since v3:
+ * changed the condition in msm_config_group_set to "arg == MSM_I2C_STRONG_PULL_UP"
+   as Bjorn suggested
 
+Changes since v2:
+ * This time, this patch is sent separate w.r.t. SM8550 pinctrl driver
+ * The qcom,i2c-pull is dropped, bias-pull-up with value is used instead
+ * Default value for i2c pull up is 2.2kOhms and since SM8550 is the
+   first one to use it, we hard code it for now
+ * changed the authorship as the implementation looks entirely different now
 
->
->> +		compatible = "operating-points-v2";
->> +		opp-shared;
->> +
->> +		opp-1488000000 {
-> Why only one (presumably FMAX) target? This sounds
-> very destructive to power consumption, and by extension
-> heat output.
+ drivers/pinctrl/qcom/pinctrl-msm.c    | 7 +++++++
+ drivers/pinctrl/qcom/pinctrl-msm.h    | 1 +
+ drivers/pinctrl/qcom/pinctrl-sm8550.c | 1 +
+ 3 files changed, 9 insertions(+)
 
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+index 5142c363480a..a69f93e74435 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.c
++++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+@@ -310,6 +310,8 @@ static int msm_config_reg(struct msm_pinctrl *pctrl,
+ 	case PIN_CONFIG_BIAS_PULL_UP:
+ 		*bit = g->pull_bit;
+ 		*mask = 3;
++		if (g->i2c_pull_bit)
++			*mask |= BIT(g->i2c_pull_bit) >> *bit;
+ 		break;
+ 	case PIN_CONFIG_DRIVE_OPEN_DRAIN:
+ 		*bit = g->od_bit;
+@@ -336,6 +338,7 @@ static int msm_config_reg(struct msm_pinctrl *pctrl,
+ #define MSM_KEEPER		2
+ #define MSM_PULL_UP_NO_KEEPER	2
+ #define MSM_PULL_UP		3
++#define MSM_I2C_STRONG_PULL_UP	2200
+ 
+ static unsigned msm_regval_to_drive(u32 val)
+ {
+@@ -387,6 +390,8 @@ static int msm_config_group_get(struct pinctrl_dev *pctldev,
+ 	case PIN_CONFIG_BIAS_PULL_UP:
+ 		if (pctrl->soc->pull_no_keeper)
+ 			arg = arg == MSM_PULL_UP_NO_KEEPER;
++		else if (arg & BIT(g->i2c_pull_bit))
++			arg = MSM_I2C_STRONG_PULL_UP;
+ 		else
+ 			arg = arg == MSM_PULL_UP;
+ 		if (!arg)
+@@ -467,6 +472,8 @@ static int msm_config_group_set(struct pinctrl_dev *pctldev,
+ 		case PIN_CONFIG_BIAS_PULL_UP:
+ 			if (pctrl->soc->pull_no_keeper)
+ 				arg = MSM_PULL_UP_NO_KEEPER;
++			else if (g->i2c_pull_bit && arg == MSM_I2C_STRONG_PULL_UP)
++				arg = BIT(g->i2c_pull_bit) | MSM_PULL_UP;
+ 			else
+ 				arg = MSM_PULL_UP;
+ 			break;
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.h b/drivers/pinctrl/qcom/pinctrl-msm.h
+index 05a1209bf9ae..985eceda2517 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.h
++++ b/drivers/pinctrl/qcom/pinctrl-msm.h
+@@ -80,6 +80,7 @@ struct msm_pingroup {
+ 
+ 	unsigned pull_bit:5;
+ 	unsigned drv_bit:5;
++	unsigned i2c_pull_bit:5;
+ 
+ 	unsigned od_bit:5;
+ 	unsigned egpio_enable:5;
+diff --git a/drivers/pinctrl/qcom/pinctrl-sm8550.c b/drivers/pinctrl/qcom/pinctrl-sm8550.c
+index 0b7db7d4054a..c9d038098f2c 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sm8550.c
++++ b/drivers/pinctrl/qcom/pinctrl-sm8550.c
+@@ -47,6 +47,7 @@
+ 		.mux_bit = 2,			\
+ 		.pull_bit = 0,			\
+ 		.drv_bit = 6,			\
++		.i2c_pull_bit = 13,		\
+ 		.egpio_enable = 12,		\
+ 		.egpio_present = 11,		\
+ 		.oe_bit = 9,			\
+-- 
+2.34.1
 
-SKU is designed to operate on 1.48GHz only.
-
-
->
-> The other changes generally look good fwiw.
->
-> Konrad
->> +			opp-hz = /bits/ 64 <1488000000>;
->> +			clock-latency-ns = <200000>;
->> +		};
->> +	};
->> +
->>   	firmware {
->>   		scm {
->>   			compatible = "qcom,scm-ipq5332", "qcom,scm";
->> @@ -199,6 +218,24 @@
->>   			};
->>   		};
->>   
->> +		apcs_glb: mailbox@b111000 {
->> +			compatible = "qcom,ipq5332-apcs-apps-global",
->> +				     "qcom,ipq6018-apcs-apps-global";
->> +			reg = <0x0b111000 0x1000>;
->> +			#clock-cells = <1>;
->> +			clocks = <&a53pll>, <&xo_board>;
->> +			clock-names = "pll", "xo";
->> +			#mbox-cells = <1>;
->> +		};
->> +
->> +		a53pll: clock@b116000 {
->> +			compatible = "qcom,ipq5332-a53pll";
->> +			reg = <0x0b116000 0x40>;
->> +			#clock-cells = <0>;
->> +			clocks = <&xo_board>;
->> +			clock-names = "xo";
->> +		};
->> +
->>   		timer@b120000 {
->>   			compatible = "arm,armv7-timer-mem";
->>   			reg = <0x0b120000 0x1000>;
