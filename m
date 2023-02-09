@@ -2,166 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 20C436901EA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Feb 2023 09:12:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A28569021A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Feb 2023 09:26:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229596AbjBIIMU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Feb 2023 03:12:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34968 "EHLO
+        id S229538AbjBIIZ5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Feb 2023 03:25:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41548 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229557AbjBIIMT (ORCPT
+        with ESMTP id S229643AbjBIIZz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Feb 2023 03:12:19 -0500
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7EF738015
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Feb 2023 00:12:17 -0800 (PST)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by smtp-out2.suse.de (Postfix) with ESMTPS id 9003E5C356;
-        Thu,  9 Feb 2023 08:12:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-        t=1675930336;
-        h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
-         cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=HeOa4z+Tzl85CEC3GiUqPtdYNg6Sjc1LHcp1U07fYwM=;
-        b=eKdNPB3Gy+CypuiLdpq27HAkJ8jqdU6ukRnby7CwWoZHLLm6nHylHt2VYhCSSofKRrh/ds
-        ZNKhkP58/TQMzz4xfQFP+ssygFYtPsVMwVIq+mn2kma0ccpaSx3n6CfzQ4Of90RtmmtoUK
-        1V8yV/KzQye/idF2mVCSA1y+ebw6oQA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-        s=susede2_ed25519; t=1675930336;
-        h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
-         cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=HeOa4z+Tzl85CEC3GiUqPtdYNg6Sjc1LHcp1U07fYwM=;
-        b=JmlbBkUtPS4BkBdoCezvr/TLSN/YfhgYlSKy9IWSPNzldToDTJsW+QWUrbcneGtsqBxL5V
-        ZJJvZnzHphdR2QAA==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 5BAB413A1F;
-        Thu,  9 Feb 2023 08:12:16 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id r4EOFeCq5GMhDAAAMHmgww
-        (envelope-from <pvorel@suse.cz>); Thu, 09 Feb 2023 08:12:16 +0000
-Date:   Thu, 9 Feb 2023 09:12:14 +0100
-From:   Petr Vorel <pvorel@suse.cz>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Dominik Kobinski <dominikkobinski314@gmail.com>,
-        Jamie Douglass <jamiemdouglass@gmail.com>
-Subject: Re: [PATCH 2/2] arm64: dts: msm8994-angler: removed clash with
- smem_region
-Message-ID: <Y+Sq3sEfSYYcm1C+@pevik>
-Reply-To: Petr Vorel <pvorel@suse.cz>
-References: <20230131200414.24373-1-pvorel@suse.cz>
- <20230131200414.24373-3-pvorel@suse.cz>
- <20230208234717.gums2uqipzzbkhwn@ripper>
+        Thu, 9 Feb 2023 03:25:55 -0500
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F3EA4902D
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Feb 2023 00:25:51 -0800 (PST)
+Received: by mail-pj1-x1033.google.com with SMTP id on9-20020a17090b1d0900b002300a96b358so1604804pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Feb 2023 00:25:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=WWHfrncAO0fNEEl3cNIkJHh2nBhIpt0IcwJOPSV0vP8=;
+        b=raBLAs5bGi3stjIdz6i9KJUeJgI81pjHlztiBEcT+0RElRcALFmQDpEkVidXVUXGT2
+         /Tycp+/kCxDqt80huMS0blh06ZcwMPbo8FguNLhWvHzT7af9x+fiOBTRLZ4Zb1TnfPH/
+         SBgNYwxtDBNZ1NBcPOcVFjy6rXDS1xQGq4aDwuXmBD/P4RZZoZaWpdoy97jNPWlor6Q7
+         0AFCtjp6kcjtDKTOz/rQ6w3C+YaDrafPP13CDioi4qOKtevA/Hr2nbxTXtyKSgK3DDck
+         azYf0EbGei6ICydovGkGXLbnF+NTPeRm8wqnPV+KvdDPNRPq62CQpaValElJ70b2gwFC
+         fAsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WWHfrncAO0fNEEl3cNIkJHh2nBhIpt0IcwJOPSV0vP8=;
+        b=zf2Fn/UAVtoN4F/VbgRW9HaQpNqW7qF7C8LdAyPUQdm+8hD0ymGk1BOmgZdhkeqabD
+         +DOSOTDbcGbAzFGcdpHX6dkKSPwc4/zre1FQ8oGxABTrH00Gu9XfnpgGogTDe1PRa52H
+         7d+B7yMQzdB1VheEDxTM/clwPEQtEeTABJCOAyW/NyF3n3AWTD0ZQYdrunYWtiB+Pl3L
+         4ztf4r4xIIQCsB2hujcZpNaWTsJ4V3ldZ5hNbsSI8NF/XYUyofi4BDVJR+O+jG0/q/7V
+         Mu6ngLghMwL5Iy1+V64nUVqaDHQ0oun0IMw5z6q4Ibi2soeMCXVpMNelh5/YLrM+icbl
+         2Ljw==
+X-Gm-Message-State: AO0yUKXSUeNjPJvJeHV47es3fIQxWMSDjfHljvt5/mAFlS03FiBSaz9a
+        Kazkks2lkrVtDRnUqvAN4wAvWg==
+X-Google-Smtp-Source: AK7set+MQ/qgI81XBrcGunla1TWkQiw9offCfb1mAWCZzIwQDkFhjjSXSPu+VCRkEDsWSUiGFoDeGw==
+X-Received: by 2002:a17:90b:3904:b0:22c:b2bf:e462 with SMTP id ob4-20020a17090b390400b0022cb2bfe462mr12062988pjb.34.1675931151006;
+        Thu, 09 Feb 2023 00:25:51 -0800 (PST)
+Received: from ?IPV6:2401:4900:1c5f:7a7d:9c44:b2ee:ae34:5374? ([2401:4900:1c5f:7a7d:9c44:b2ee:ae34:5374])
+        by smtp.gmail.com with ESMTPSA id o11-20020a17090a744b00b002311f887aeasm1992634pjk.1.2023.02.09.00.25.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 09 Feb 2023 00:25:50 -0800 (PST)
+Message-ID: <32153a4b-9974-a42a-ef30-c0bd8cbc732b@linaro.org>
+Date:   Thu, 9 Feb 2023 13:55:44 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230208234717.gums2uqipzzbkhwn@ripper>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.1
+Subject: Re: [PATCH] dt-bindings: dma: qcom,bam-dma: add optional memory
+ interconnect properties
+Content-Language: en-US
+To:     neil.armstrong@linaro.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230207-topic-sm8550-upstream-bam-dma-bindings-fix-v1-1-57dba71e8727@linaro.org>
+ <a188a52e-6327-f0ea-a54e-a23b88bca82f@linaro.org>
+ <a8112f61-f8d3-c1e0-9549-a9036a7e7894@linaro.org>
+ <88c31e71-55b6-a20d-1fcf-07804eace54b@linaro.org>
+ <eda179e1-4cd1-0d1b-4e27-2fe92e959cf2@linaro.org>
+ <0f16d63f-3bb0-54aa-bcb4-4c666d4b2846@linaro.org>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+In-Reply-To: <0f16d63f-3bb0-54aa-bcb4-4c666d4b2846@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> On Tue, Jan 31, 2023 at 09:04:14PM +0100, Petr Vorel wrote:
-> > This fixes memory overlap error:
-> > [    0.000000] reserved@6300000 (0x0000000006300000--0x0000000007000000) overlaps with smem_region@6a00000 (0x0000000006a00000--0x0000000006c00000)
+On 2/8/23 2:38 PM, neil.armstrong@linaro.org wrote:
+> On 08/02/2023 10:03, Krzysztof Kozlowski wrote:
+>> On 07/02/2023 16:27, Dmitry Baryshkov wrote:
+>>> On 07/02/2023 15:35, Neil Armstrong wrote:
+>>>> On 07/02/2023 11:32, Dmitry Baryshkov wrote:
+>>>>> On 07/02/2023 12:03, Neil Armstrong wrote:
+>>>>>> Recents SoCs like the SM8450 or SM8550 requires memory interconnect
+>>>>>> in order to have functional DMA.
+>>>>>>
+>>>>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>>>>>> ---
+>>>>>>    Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml | 6 ++++++
+>>>>>>    1 file changed, 6 insertions(+)
+>>>>>
+>>>>> I suspect this will not work without a change for a driver.
+>>>>>
+>>>>
+>>>> I had the impression single interconnect entries would be taken in 
+>>>> account
+>>>> by the platform core, but it doesn't seem to be the case, anyway I 
+>>>> can;t
+>>>> find
+>>>> any code doing that.
+>>>
+>>> Probably you mixed interconnects and power-domains here.
+>>>
+>>
+>> The driver change was submitted some time ago:
+>> https://lore.kernel.org/all/20210505213731.538612-10-bhupesh.sharma@linaro.org/
+>>
+>> There is already DTS user of it and we expect driver to be resubmitted
+>> at some point.
+>>
+>> What I don't really get is that crypto driver sets bandwidth for
+>> interconnects, not the BAM. Why BAM needs interconnect? Usually you do
+>> not need to initialize some middle paths. Getting the final interconnect
+>> path (e.g. crypto-memory) is enough, because it includes everything in
+>> between.
+> 
+> Indeed the interconnect on BAM may be redundant since QCE sets the BW,
+> I'll investigate to understand if it's also necessary on BAM.
 
-> > smem_region is the same as in downstream (qcom,smem) [1], therefore
-> > split reserved memory into two sections on either side of smem_region.
+Since we are already doing this via QCE driver (since crypto block on 
+qcom SoCs employs BAM DMA services) via [1], this change is not needed 
+for sm8150, sm8250, sm8350 and subsequent qcom SoCs (available 
+presently), so this patch can be dropped.
 
-> > Not adding labels as it's not expected to be used.
+[1]. https://www.spinics.net/lists/linux-arm-msm/msg142957.html
 
-> > [1] https://android.googlesource.com/kernel/msm/+/refs/heads/android-msm-angler-3.10-marshmallow-mr1/arch/arm/boot/dts/qcom/msm8994.dtsi#948
-
-> > Fixes: 380cd3a34b7f ("arm64: dts: msm8994-angler: fix the memory map")
-
-> > Signed-off-by: Petr Vorel <pvorel@suse.cz>
-> > ---
-> >  arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi          | 5 -----
-> >  arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts | 4 ++--
-> >  arch/arm64/boot/dts/qcom/msm8994.dtsi                      | 5 +++++
-> >  3 files changed, 7 insertions(+), 7 deletions(-)
-
-> > diff --git a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
-> > index cdd796040703..a100b05abf56 100644
-> > --- a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
-> > @@ -60,11 +60,6 @@ reserved@5000000 {
-> >  			reg = <0x0 0x05000000 0x0 0x1a00000>;
-> >  			no-map;
-> >  		};
-> > -
-> > -		reserved@6c00000 {
-> > -			reg = <0x0 0x06c00000 0x0 0x400000>;
-> > -			no-map;
-> > -		};
-
-> I've not picked up the change that introduces this, and it seems that
-> there's some request for changes on that thread.
-
-> Please try to sync up with Jamie to get the patch updated, or let me
-> know how you would like me to proceed.
-
-You merged v2 [1] as cd451939fdda ("arm64: dts: msm8994-angler: removed clash
-with smem_region"), therefore my patchset is applicable the current
-qcom/for-next. Can you please merge it? Or am I missing something?
-
-Kind regards,
-Petr
-
-[1] https://lore.kernel.org/linux-arm-msm/167591660371.1230100.18259207897974955566.b4-ty@kernel.org/
-
-> Thanks,
-> Bjorn
-
-> >  	};
-> >  };
-
-> > diff --git a/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts b/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts
-> > index 59b9ed78cf0c..29e79ae0849d 100644
-> > --- a/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts
-> > +++ b/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts
-> > @@ -41,8 +41,8 @@ tzapp_mem: tzapp@4800000 {
-> >  			no-map;
-> >  		};
-
-> > -		removed_region: reserved@6300000 {
-> > -			reg = <0 0x06300000 0 0xD00000>;
-> > +		reserved@6300000 {
-> > +			reg = <0 0x06300000 0 0x700000>;
-> >  			no-map;
-> >  		};
-> >  	};
-> > diff --git a/arch/arm64/boot/dts/qcom/msm8994.dtsi b/arch/arm64/boot/dts/qcom/msm8994.dtsi
-> > index 9ff9d35496d2..24c3fced8df7 100644
-> > --- a/arch/arm64/boot/dts/qcom/msm8994.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/msm8994.dtsi
-> > @@ -228,6 +228,11 @@ adsp_mem: memory@c9400000 {
-> >  			reg = <0 0xc9400000 0 0x3f00000>;
-> >  			no-map;
-> >  		};
-> > +
-> > +		reserved@6c00000 {
-> > +			reg = <0 0x06c00000 0 0x400000>;
-> > +			no-map;
-> > +		};
-> >  	};
-
-> >  	smd {
-> > -- 
-> > 2.39.1
-
+Thanks,
+Bhupesh
