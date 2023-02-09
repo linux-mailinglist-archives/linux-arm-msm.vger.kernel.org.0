@@ -2,51 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6636068FEA9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Feb 2023 05:26:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E9BDC68FEE1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Feb 2023 05:31:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229808AbjBIE0J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Feb 2023 23:26:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40128 "EHLO
+        id S229967AbjBIEbc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Feb 2023 23:31:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229836AbjBIEZ6 (ORCPT
+        with ESMTP id S229752AbjBIEbO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Feb 2023 23:25:58 -0500
+        Wed, 8 Feb 2023 23:31:14 -0500
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E649D10244;
-        Wed,  8 Feb 2023 20:25:27 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F9EC41B64;
+        Wed,  8 Feb 2023 20:30:37 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 0BAC561862;
-        Thu,  9 Feb 2023 04:22:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3B39C433D2;
-        Thu,  9 Feb 2023 04:22:02 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 151276181D;
+        Thu,  9 Feb 2023 04:22:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A777AC433A4;
+        Thu,  9 Feb 2023 04:22:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1675916523;
-        bh=pWb8srnh/6vP1j3+hB5jTwb5AWP4bjdEHn9lWhsOAq0=;
+        s=k20201202; t=1675916524;
+        bh=6a8IHCccFNXAqRbdKPys5PCrGXhM//ox9j3YLmVPDYY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=PGyTZ26y8cjh7KRB63lq+yCCZqed60OYJbCn4nPVvgULAFu+dESYsJ98fjj33YL5I
-         bPu70g0kKVA3tloYesrxIfVlzjwWpBf7FUNKebkqcJvg1FA7OdEN7G3gHHAb/VE3c5
-         OjUgWiQ8DLYeja1+6BsQCT0OxAp74664jDepKGZipqJBCmFWD5Ld+oRa3e92EsH3kS
-         BubUFFksLCnPF1+kbLKIsEgM1sBKom8KtKQ06EDbdvnJ8IMFpe3ijk6zihX2bgm4W7
-         IihVlCDuavhsxZH36Ds7q3CtgMSUz8tM9hj43NAYjY7MV7UBy5MkQarYZMP36XxHsI
-         LbGXtSje4BUjQ==
+        b=lbFOz4zaaTcQ19ymnxXHyCOL2Kx6Md/2lqVLvfsCZy2Y49Mdy2REkslp2kf57ZnJ+
+         qY+Ej7GN+1O+l+DhggGB20on1OgfTy4senOqv1+egENUEWASMRYjiMuYt0tDsnc/TG
+         d3E+8tjeE8q1Stl0XOpwhSetg8keMws7DDOPUyAYmZi3zptb3pHh8Blo8KAz5OwdSu
+         NSHYxYVPh3ZU+D52EP5weulVuLpwCnjsE1hBaeOqNytE7b41gT64BUewuOmwEGqgKI
+         JWbLF3DTaZKmaYrDSU0oBMa5UE9OzvftqrH1jYM0girzhUiarxzI3FgOyPD3Mrn90O
+         FKOnjUk9VATMQ==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        devicetree@vger.kernel.org,
-        Richard Acayan <mailingradian@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Cc:     Odelu Kukatla <quic_okukatla@quicinc.com>,
-        Luca Weiss <luca@z3ntu.xyz>
-Subject: Re: [PATCH v4 0/2] SDM670 Interconnects (now with dts patches only)
-Date:   Wed,  8 Feb 2023 20:23:19 -0800
-Message-Id: <167591660369.1230100.10064457807508339752.b4-ty@kernel.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        robh+dt@kernel.org, joro@8bytes.org,
+        krzysztof.kozlowski+dt@linaro.org, will@kernel.org
+Cc:     konrad.dybcio@linaro.org, devicetree@vger.kernel.org,
+        dmitry.baryshkov@linaro.org, iommu@lists.linux.dev,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: (subset) [PATCH 0/3] Fix SMMU on SDX55 and SDX65
+Date:   Wed,  8 Feb 2023 20:23:20 -0800
+Message-Id: <167591660366.1230100.12722515257767815828.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230201010020.84586-1-mailingradian@gmail.com>
-References: <20230201010020.84586-1-mailingradian@gmail.com>
+In-Reply-To: <20230123131931.263024-1-manivannan.sadhasivam@linaro.org>
+References: <20230123131931.263024-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -59,27 +57,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 31 Jan 2023 20:00:18 -0500, Richard Acayan wrote:
-> Changes since v4 (20230111005155.50452-1-mailingradian@gmail.com):
->  - drop applied bindings and driver patches (previously 1-2/4)
+On Mon, 23 Jan 2023 18:49:28 +0530, Manivannan Sadhasivam wrote:
+> Both SDX55 and SDX65 SoCs are using the Qcom version of the ARM SMMU-500
+> IP. Even though the SoC specfic compatibles were being used in devicetree,
+> the compatibles were not added to the arm-smmu-qcom driver. So they end up
+> using the generic ARM SMMU-500 driver instead.
 > 
-> Changes since v3:
->  - fix a merge conflict on linux-next (1/4)
-> 
-> Changes since v2:
->  - change qcom,sdm670.h to qcom,sdm670-rpmh.h (2/4)
->  - use SPDX v3 license identifiers (1/4, 2/4)
->  - accumulate ack tag (1/4)
->  - format changelog (0/4)
+> Spotting this discrepancy, the recent arm,smmu bindings change moved these
+> SoCs under the non-qcom implementation of the SMMU.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/2] arm64: dts: qcom: sdm670: add interconnects
-      commit: 0daef104e4b1d945ac81cb10e35c29f82695b10a
-[2/2] arm64: dts: qcom: sdm670: add opps for peripherals
-      (no commit info)
+[2/3] ARM: dts: qcom: sdx55: Add Qcom SMMU-500 as the fallback for IOMMU node
+      commit: af4ab377543853b690cc85b4c46cf976ab560dc2
+[3/3] ARM: dts: qcom: sdx65: Add Qcom SMMU-500 as the fallback for IOMMU node
+      commit: 157178a7912e00a0aa0371dc9041952c1a21d112
 
 Best regards,
 -- 
