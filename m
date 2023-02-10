@@ -2,135 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 38D50691E47
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 12:30:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 728AC691E5E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 12:34:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231710AbjBJLaN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Feb 2023 06:30:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43102 "EHLO
+        id S232014AbjBJLeB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Feb 2023 06:34:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232156AbjBJLaI (ORCPT
+        with ESMTP id S231830AbjBJLeA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Feb 2023 06:30:08 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AE8D6CC65
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 03:30:07 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id bg5-20020a05600c3c8500b003e00c739ce4so3820117wmb.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 03:30:07 -0800 (PST)
+        Fri, 10 Feb 2023 06:34:00 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6723772DD0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 03:33:46 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id bk16so4748492wrb.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 03:33:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=jlEJ/WfDgVsG5Jb5+gK1awECrjW76DF3jnb3j/ziMb0=;
-        b=cW0o0oQZSWAA3U2o7l1kIz3vFte0XTNZ/TMisF+941/AjmgwA+Y7FAPEKcbhFnjRWi
-         hb2u80wFItn3QQtrY2Q3exVol8MK6L2M43NGzl6lWkYuSqMAs9kwFwU8NKLp3KY2XmfI
-         Q65Xn2z0efUwBibWo/p5oAOLqbnBw0aUAWp4IO8HJ7aTujoo7d+osMPWzNi9xeiUM01B
-         r4HvujFSoh0yq1E51+uSvolsI5+j5tuy3xl94I/rpjd4QoDV+iCMelcbLYZsbuHF9QLf
-         doy5sDhcN6yJzKx5KReTj8ZhuyE5ATpFPqngNGYe+jP8xKUJ/JdZskTw07hpKAnqroi7
-         388w==
+        bh=L24ZYQXVUaFcxVZjnJ4h/yK6UJ8A4vFjYSvIAf+wKNo=;
+        b=FTcH6VwikNtTRT5l1ycXuunT71/9B1P0kYVP741ljPnx4rR3IjD58WeoSRura4RH+9
+         7KjIHJmAFk1ISxjrBtNxJ4P4rezuOXmNrW1gFWetK3KYTukBHozP4xxite+6eLgRIUj5
+         pdYkpBFq4Ahp1apaPJQryi84MQE4UeBSWPjaYDcIS5X4T6JqobAGeiQ/eEWm+Sx9GyTx
+         DDaOlt9XLfSfpiA+SDTsvo+Vk5RyF6AXqxKrKDrl+xu+v65MUBNR+H755joPc5U0388J
+         4Ddypl4z19Y2JK+nVHWsrBq6L3Ha3vUVNNX3mlOM0gyCZ93uEcEmeKc1CAwz0Qm+QddY
+         7hlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jlEJ/WfDgVsG5Jb5+gK1awECrjW76DF3jnb3j/ziMb0=;
-        b=LAX0lrmdhhuDbl7qTYzd91fnnuxziaok4Ali8vkdr2VaYE6XfNENvh51ZyEYbqDoZw
-         GFuiY2W6ocQf4DvGhnI/roS6kyogoa2BBK/ZMod5tk+JFZm3ffxHzIWFGn5jAN1x5xoh
-         NaW5PK5u/EOlKM4oCZm6MSUBlEekk3FQfW7f0hcIWSoawD8Ti70FmWcjOVzQ+Zfqv3GT
-         IxuQtemm/BlfwB7OS9KdRtpXTsIRaFzvg6/KFBa4EhUGnRYK+TJIoEVjIouUnAHyn5WP
-         Crxv8oWPtlGd1Zzg1cck+yxxwlaqpTRV1Kjfiro5I1dH545+KcOUmyFHTDcLGOO5OCN6
-         bgyg==
-X-Gm-Message-State: AO0yUKWQJywHvNWMMYR7kRIBgxumBfBGlyPXU55qgr8pQ0Am3RR4jF24
-        ArIGTwmk2wWIf+m7Am7fV3C6Qw==
-X-Google-Smtp-Source: AK7set8xtx+hZ40vxoTceinSRqg/H4ZPYcEgJV2IHxmtnqjkAb1898qYQiF9lMN+sNISWqnJM848TA==
-X-Received: by 2002:a05:600c:43d5:b0:3d9:e5d3:bf with SMTP id f21-20020a05600c43d500b003d9e5d300bfmr12841619wmn.32.1676028605783;
-        Fri, 10 Feb 2023 03:30:05 -0800 (PST)
+        bh=L24ZYQXVUaFcxVZjnJ4h/yK6UJ8A4vFjYSvIAf+wKNo=;
+        b=RHmFN7Qc2LLBwL5GM6g9ekJejSRlX/EBEkzVoQTxhFc9s44RwFE2tRSPkPEyHbczzx
+         ZZ9Zi5m6zco3AjRIMqrMBbFUG+OjI9WWBHbXzWyt/7xn/cHwpsAfDn3xsz/+7iTms77N
+         LWoTcGR6X7L5J/ddYYznrfeYykA3JXrhsy9hxeWdyesTWLFcVfc+iuJh+6F1qehz7CDA
+         VrXEfPeeuAlYzDEVRXQLD0hD2MWn6AWwyGZI2tlOSQUb0zmvvlut6J+F5AupPYiDfcsb
+         om5l92c6k+hU3ORm0vx/G/KNrOK1YdtnjJbgn0OX3mbQbab1vnjJH6SANBIEQb0jv9Sy
+         wRIA==
+X-Gm-Message-State: AO0yUKUmOb0005UZoNl+2j2aEHGa/V3n3bxC+wxTOxN//YfsyKydY0zF
+        F9vbI0gUYtCdGClffy08W4qOZg==
+X-Google-Smtp-Source: AK7set/HaqsvPluiOKrBX5uvMfObqaydOBTJS3Q4mwFA4S735gUUTGtca0BfR0u4UUvsxuOrqdinyA==
+X-Received: by 2002:a05:6000:1803:b0:2bf:afaf:9d71 with SMTP id m3-20020a056000180300b002bfafaf9d71mr13338512wrh.48.1676028824975;
+        Fri, 10 Feb 2023 03:33:44 -0800 (PST)
 Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id f21-20020a05600c43d500b003dc522dd25esm4570298wmn.30.2023.02.10.03.30.04
+        by smtp.gmail.com with ESMTPSA id n10-20020adffe0a000000b002c3ec35f360sm3321345wrr.56.2023.02.10.03.33.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Feb 2023 03:30:05 -0800 (PST)
-Message-ID: <bee0e5be-6092-3656-72d2-ff9602563435@linaro.org>
-Date:   Fri, 10 Feb 2023 12:30:04 +0100
+        Fri, 10 Feb 2023 03:33:44 -0800 (PST)
+Message-ID: <dd77a886-5ab4-c6d3-bb84-5849c411aa7b@linaro.org>
+Date:   Fri, 10 Feb 2023 12:33:42 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [PATCH v9 06/14] dt-bindings: qcom-qce: document optional clocks
- and clock-names properties
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: sdm845-oneplus: add
+ tri-state-key
 Content-Language: en-US
-To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+To:     Gergo Koteles <soyer@irl.hu>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
         Andy Gross <agross@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-crypto@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-References: <20230208183755.2907771-1-vladimir.zapolskiy@linaro.org>
- <20230208183755.2907771-7-vladimir.zapolskiy@linaro.org>
- <b2d75c0a-a9f3-3d28-5e05-25fe3a18dcfb@linaro.org>
- <5e419feb-8219-61d5-8e4b-f96c5f382a64@linaro.org>
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jiri Kosina <jikos@kernel.org>,
+        Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Cc:     linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Caleb Connolly <caleb@connolly.tech>
+References: <20230209232556.91554-1-soyer@irl.hu>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <5e419feb-8219-61d5-8e4b-f96c5f382a64@linaro.org>
+In-Reply-To: <20230209232556.91554-1-soyer@irl.hu>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/02/2023 12:17, Vladimir Zapolskiy wrote:
-> On 2/9/23 11:20, Krzysztof Kozlowski wrote:
->> On 08/02/2023 19:37, Vladimir Zapolskiy wrote:
->>> On newer Qualcomm SoCs the crypto engine clocks are enabled by default
->>> by security firmware. To drop clocks and clock-names from the list of
->>> required properties use 'qcom,sm8150-qce' compatible name.
->>>
->>> The change is based on Neil Armstrong's observation and an original change.
->>>
->>> Cc: Neil Armstrong <neil.armstrong@linaro.org>
->>> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
->>> ---
->>>   .../devicetree/bindings/crypto/qcom-qce.yaml      | 15 +++++++++++++--
->>>   1 file changed, 13 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
->>> index f6f1759a2f6e..d0f6b830a5dd 100644
->>> --- a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
->>> +++ b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
->>> @@ -79,11 +79,22 @@ properties:
->>>   required:
->>>     - compatible
->>>     - reg
->>> -  - clocks
->>> -  - clock-names
->>>     - dmas
->>>     - dma-names
->>>   
->>> +if:
->>
->> This should be in allOf, like I wrote in last discussion.
+On 10/02/2023 00:25, Gergo Koteles wrote:
+> The tri-state-key is a sound profile switch found on the OnePlus 6,
+> Android maps the states to "mute", "vibrate" and "ring". Expose them as
+> ABS_SND_PROFILE events.
+> The previous GPIO numbers were wrong. Update them to the correct
+> ones.
 > 
-> In the last discussion you shared two options, and I got an impression
-> that adding a new "non-clock-requiring" compatible is a better option,
-> in this series it is "qcom,sm8150-qce".
+> Co-developed-by: Caleb Connolly <caleb@connolly.tech>
+> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
+> Signed-off-by: Gergo Koteles <soyer@irl.hu>
 
-It's unrelated topic. What compatibles you use in what setup is one
-thing. The syntax is second.
+Where are other patches? I got only 3/3.
 
+> ---
+>  .../boot/dts/qcom/sdm845-oneplus-common.dtsi  | 39 ++++++++++++++++++-
+>  1 file changed, 38 insertions(+), 1 deletion(-)
 > 
-> So, do you wish to see an added allOf: on top of a single if: anyway?
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+> index 64638ea94db7..e45d4fdead82 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+> @@ -52,6 +52,43 @@ key-vol-up {
+>  		};
+>  	};
+>  
+> +	tri-state-key {
+> +		compatible = "gpio-keys";
+> +		label = "Tri-state key";
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&tri_state_key_default>;
 
-Yes, because it will grow and then you have useless reindent.
+Missing blank line.
+
+> +		state-top {
+
+Does not look like you tested the DTS against bindings. Please run `make
+dtbs_check` (see Documentation/devicetree/bindings/writing-schema.rst
+for instructions).
 
 
 Best regards,
