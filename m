@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 800E6692072
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 15:05:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1831E692079
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 15:06:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232400AbjBJOFt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Feb 2023 09:05:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47330 "EHLO
+        id S232413AbjBJOGW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Feb 2023 09:06:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231954AbjBJOFs (ORCPT
+        with ESMTP id S232416AbjBJOGV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Feb 2023 09:05:48 -0500
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9D966A72F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 06:05:46 -0800 (PST)
-Received: by mail-ej1-x62c.google.com with SMTP id qb15so14067257ejc.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 06:05:46 -0800 (PST)
+        Fri, 10 Feb 2023 09:06:21 -0500
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB1B37B381
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 06:06:06 -0800 (PST)
+Received: by mail-ej1-x630.google.com with SMTP id gr7so16136177ejb.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 06:06:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=TwKpGyM1pObrC/t9G4svXAPUOoXfqNddF+FqrKvmVCk=;
-        b=ZO355nCgFGmvmUoWG4xUBXdCaheWwro/F54tNyxIVMeGc9xG68K+63g3Fgre/5Akul
-         M3xo2Mo0ZQLZCRIxgpb+Tz2LfaD1SRr4yAizvjAV8MJajMqe+gcwnY8BonljQDbvxWxk
-         IzBbxFEclWTsSXFxWlOSGGYcHJtrHf5jK/iEKp71bNVXxNA7/volEaD2ZTo7mIw1BMk5
-         glneXFmNx/fI56FvGzJ0Iw1U+TNfALRqPG2huVsLlF2KVysre+YaERgbU9xT8F43uRU3
-         uLZ16sqToKlxsvmVh6A96UIiAFQsoBub4Kmn+XivgaRLDx69uAdFk7J8FRDv8QPJeezw
-         7jrA==
+        bh=C84/0iEsdS/Ah8zV8cW8b6xnMEQGwqyDnz0IHNRwxD4=;
+        b=LptNiSGFmvY0/qCTeQhV/hLeFslQ9zJIhRnqPjjlxQYg914PSqWtNG/bvtgWErOR7U
+         /5gsUCFM9mwAIzbVKCagSISEpBuXHgmZuxsaHFACfBedDq75WoJdFYONhqGB+3WAsVOd
+         4T4wcEkNfzCo+yqctzAnbr+6M83hKe9qY9y2rdSGmSXvm35MwMCv716L/e8Zrwyu7cjg
+         Xl6qR9hVCpamGCaKZNo+D3Jt+tf0jzPcWATNl4tbDx+ijIEacKWgudUUX96/7KQ0vsyN
+         1wksJtWZH1N/jpidjXYgd2WcaBNJG+s1JYRCPCP7pJ5XUQ/gYxcoCAAYBNDW+iuB2MjJ
+         dRrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TwKpGyM1pObrC/t9G4svXAPUOoXfqNddF+FqrKvmVCk=;
-        b=lgRTyV3bw5LV2KSYYPNO69AGqjSXjQYaHDQUktXhB6I7UPI39ccm4T8QiRvedypI/K
-         d7ynO/gbg6APK6FNmnQRku8j6u4y58838GrHk0H6b3u9/hBc6aP3yHqAamtWNiHd8uCF
-         Awh5/XvqTVg4DM/4hV7Bk5hfK403vtusgklEV6If1+lpKILLIUGZ+JmgaWhHZj+lv/uk
-         CwcREeSHkWh6pobpzW38N2l2ZzL2gx9MV9FXSmdFYn18XAV+H8kWC7gEcr/u4xYc6ppK
-         BynfwJVAdWi8USvo/6gxBjMLhaIJt16HcbJmzmgr3dGLHzLicCkv9xf5di8nCuXC5OVl
-         7CCg==
-X-Gm-Message-State: AO0yUKX/poe03iV5JwBi1EsY7ooim7hFZzO8RjyHNk0Tgh/SbSH5kI3z
-        VQq9wPvSYTWvzzDKfr6X9+xMVA==
-X-Google-Smtp-Source: AK7set+hI41nrLZFE5W4UIlEZ20TSZ5xr2x9EktLcKCNuo4V+sJ7NVaEd+kVMdjgiJk9RJcRGW5oRg==
-X-Received: by 2002:a17:906:1182:b0:86f:e30c:72c1 with SMTP id n2-20020a170906118200b0086fe30c72c1mr14069728eja.8.1676037945384;
-        Fri, 10 Feb 2023 06:05:45 -0800 (PST)
+        bh=C84/0iEsdS/Ah8zV8cW8b6xnMEQGwqyDnz0IHNRwxD4=;
+        b=cyS8TDNjXz70Cves5Adtcmt288ZcWt4FvmEqoclTmGw5Gd8n79H/0CWqCXeOG/X2RY
+         lK9n0GmFn96LNxnDHqndJ6kZu4kDhpChY5Xm9EZ1vK8K04uXatx620BcxzDiTyRMlbLN
+         sjKv55BE94cwTFK9i6p/4ppag0EAcQ89cf47kHdlO482O6xAtwVktetiZTucub1r5ITi
+         sh9s3nFdHvJoN5h19kPahka6XT5LTPy8z5DukGHIKee29sNj4ThAJoklnjfNSbldGF9E
+         fp7mI36BNBMQsyb8t4oEibl+f6eHiM6kZbMiW+ZTJ5B167sIAdtBMYZ7yGI25W03VfPg
+         gxmA==
+X-Gm-Message-State: AO0yUKUVO6sQpORFebNVJNGCcgtXJos65xWzAiJ62JZRizymlxWfhx94
+        EX9RFusV0HMxxrNtTRq71hV95g==
+X-Google-Smtp-Source: AK7set9EKHy19EA9gCXPxfSM91T49eokdUAjpyCvDc6i2Cyg6vRFysSAuBD5wjrh6nM+JhwcSmL6Iw==
+X-Received: by 2002:a17:906:ecb0:b0:84d:4325:7f7a with SMTP id qh16-20020a170906ecb000b0084d43257f7amr15275528ejb.65.1676037965157;
+        Fri, 10 Feb 2023 06:06:05 -0800 (PST)
 Received: from [192.168.1.101] (abxh117.neoplus.adsl.tpnet.pl. [83.9.1.117])
-        by smtp.gmail.com with ESMTPSA id y16-20020a170906071000b0086dd8f20a6asm2415520ejb.77.2023.02.10.06.05.43
+        by smtp.gmail.com with ESMTPSA id i3-20020a170906698300b00878775876c5sm2413756ejr.73.2023.02.10.06.06.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Feb 2023 06:05:45 -0800 (PST)
-Message-ID: <62053e82-5e92-b552-3f31-132df7adcd72@linaro.org>
-Date:   Fri, 10 Feb 2023 15:05:42 +0100
+        Fri, 10 Feb 2023 06:06:04 -0800 (PST)
+Message-ID: <16e6a11e-e6ba-966d-1011-1085527b84c7@linaro.org>
+Date:   Fri, 10 Feb 2023 15:06:02 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [PATCH v2 3/4] arm64: dts: qcom: sc8280xp-x13s: Enable external
- display
+Subject: Re: [PATCH v2 4/4] arm64: defconfig: Enable DisplayPort on SC8280XP
+ laptops
 Content-Language: en-US
 To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
         Andy Gross <agross@kernel.org>,
@@ -68,14 +68,15 @@ Cc:     Rob Herring <robh+dt@kernel.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org
 References: <20230209011325.2603663-1-quic_bjorande@quicinc.com>
- <20230209011325.2603663-4-quic_bjorande@quicinc.com>
+ <20230209011325.2603663-5-quic_bjorande@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230209011325.2603663-4-quic_bjorande@quicinc.com>
+In-Reply-To: <20230209011325.2603663-5-quic_bjorande@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -85,260 +86,41 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 9.02.2023 02:13, Bjorn Andersson wrote:
-> Like on the CRD, add the necessary nodes to enable USB Type-C
-> altmode-based external display on the Lenovo ThinkPad X13s.
+> The QCOM_PMIC_GLINK implements the parts of a TCPM necessary for
+> negotiating DP altmode and the TYPEC_MUX_GPIO_SBU driver is used for
+> controlling connection and orientation switching of the SBU lanes in the
+> USB-C connector  Enable these to enable USB Type-C DisplayPort on
+> SC8280XP laptops.
 > 
 > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 > ---
-> 
-> Changes since v1:
-> - Fixed style and property sort issues
-> - Moved dwc3/port to sc8280xp.dtsi, override remote-endpoint here
-Excuse me, but I don't see that change..
-
-
-> - Added pinconf properties to SBU control pins
-> - Dropped unused mode-pins
-> 
->  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 188 +++++++++++++++++-
->  1 file changed, 186 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> index f936b020a71d..923972e54eb1 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> @@ -77,6 +77,78 @@ switch-lid {
->  		};
->  	};
->  
-> +	pmic-glink {
-> +		compatible = "qcom,sc8280xp-pmic-glink", "qcom,pmic-glink";
-> +
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		connector@0 {
-> +			compatible = "usb-c-connector";
-> +			reg = <0>;
-> +			power-role = "dual";
-> +			data-role = "dual";
-> +
-> +			ports {
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +
-> +				port@0 {
-> +					reg = <0>;
-Add a newline before the child nodes, please.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
-> +					pmic_glink_con0_hs: endpoint {
-> +						remote-endpoint = <&usb_0_role_switch>;
-> +					};
-> +				};
-> +
-> +				port@1 {
-> +					reg = <1>;
-> +					pmic_glink_con0_ss: endpoint {
-> +						remote-endpoint = <&mdss0_dp0_out>;
-> +					};
-> +				};
-> +
-> +				port@2 {
-> +					reg = <2>;
-> +					pmic_glink_con0_sbu: endpoint {
-> +						remote-endpoint = <&usb0_sbu_mux>;
-> +					};
-> +				};
-> +			};
-> +		};
-> +
-> +		connector@1 {
-> +			compatible = "usb-c-connector";
-> +			reg = <1>;
-> +			power-role = "dual";
-> +			data-role = "dual";
-> +
-> +			ports {
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +				port@0 {
-> +					reg = <0>;
-> +					pmic_glink_con1_hs: endpoint {
-> +						remote-endpoint = <&usb_1_role_switch>;
-> +					};
-> +				};
-> +
-> +				port@1 {
-> +					reg = <1>;
-> +					pmic_glink_con1_ss: endpoint {
-> +						remote-endpoint = <&mdss0_dp1_out>;
-> +					};
-> +				};
-> +
-> +				port@2 {
-> +					reg = <2>;
-> +					pmic_glink_con1_sbu: endpoint {
-> +						remote-endpoint = <&usb1_sbu_mux>;
-> +					};
-> +				};
-> +			};
-> +		};
-> +	};
-> +
->  	vreg_edp_3p3: regulator-edp-3p3 {
->  		compatible = "regulator-fixed";
->  
-> @@ -238,6 +310,46 @@ map1 {
->  			};
->  		};
->  	};
-> +
-> +	usb0-sbu-mux {
-> +		compatible = "pericom,pi3usb102", "gpio-sbu-mux";
-> +
-> +		enable-gpios = <&tlmm 101 GPIO_ACTIVE_LOW>;
-> +		select-gpios = <&tlmm 164 GPIO_ACTIVE_HIGH>;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&usb0_sbu_default>;
-> +
-> +		mode-switch;
-> +		orientation-switch;
-> +		svid = /bits/ 16 <0xff01>;
-> +
-> +		port {
-> +			usb0_sbu_mux: endpoint {
-> +				remote-endpoint = <&pmic_glink_con0_sbu>;
-> +			};
-> +		};
-> +	};
-> +
-> +	usb1-sbu-mux {
-> +		compatible = "pericom,pi3usb102", "gpio-sbu-mux";
-> +
-> +		enable-gpios = <&tlmm 48 GPIO_ACTIVE_LOW>;
-> +		select-gpios = <&tlmm 47 GPIO_ACTIVE_HIGH>;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&usb1_sbu_default>;
-> +
-> +		mode-switch;
-> +		orientation-switch;
-> +		svid = /bits/ 16 <0xff01>;
-> +
-> +		port {
-> +			usb1_sbu_mux: endpoint {
-> +				remote-endpoint = <&pmic_glink_con1_sbu>;
-> +			};
-> +		};
-> +	};
->  };
->  
->  &apps_rsc {
-> @@ -377,6 +489,34 @@ &mdss0 {
->  	status = "okay";
->  };
->  
-> +&mdss0_dp0 {
-> +	data-lanes = <0 1>;
-> +	status = "okay";
-> +
-> +	ports {
-> +		port@1 {
-> +			reg = <1>;
-> +			mdss0_dp0_out: endpoint {
-> +				remote-endpoint = <&pmic_glink_con0_ss>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +&mdss0_dp1 {
-> +	data-lanes = <0 1>;
-> +	status = "okay";
-> +
-> +	ports {
-> +		port@1 {
-> +			reg = <1>;
-> +			mdss0_dp1_out: endpoint {
-> +				remote-endpoint = <&pmic_glink_con1_ss>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
->  &mdss0_dp3 {
->  	compatible = "qcom,sc8280xp-edp";
->  
-> @@ -871,8 +1011,13 @@ &usb_0 {
->  };
->  
->  &usb_0_dwc3 {
-> -	/* TODO: Define USB-C connector properly */
->  	dr_mode = "host";
-> +
-> +	port {
-> +		usb_0_role_switch: endpoint {
-> +			remote-endpoint = <&pmic_glink_con0_hs>;
-> +		};
-> +	};
->  };
->  
->  &usb_0_hsphy {
-> @@ -895,8 +1040,13 @@ &usb_1 {
->  };
->  
->  &usb_1_dwc3 {
-> -	/* TODO: Define USB-C connector properly */
->  	dr_mode = "host";
-> +
-> +	port {
-> +		usb_1_role_switch: endpoint {
-> +			remote-endpoint = <&pmic_glink_con1_hs>;
-> +		};
-> +	};
->  };
->  
->  &usb_1_hsphy {
-> @@ -1147,6 +1297,40 @@ reset-n-pins {
->  		};
->  	};
->  
-> +	usb0_sbu_default: usb0-sbu-state {
-> +		oe-n-pins {
-> +			pins = "gpio101";
-> +			function = "gpio";
-> +			bias-disable;
-> +			drive-strengh = <16>;
-> +			output-high;
-> +		};
-> +
-> +		sel-pins {
-> +			pins = "gpio164";
-> +			function = "gpio";
-> +			bias-disable;
-> +			drive-strength = <16>;
-> +		};
-> +	};
-> +
-> +	usb1_sbu_default: usb1-sbu-state {
-> +		oe-n-pins {
-> +			pins = "gpio48";
-> +			function = "gpio";
-> +			bias-disable;
-> +			drive-strengh = <16>;
-> +			output-high;
-> +		};
-> +
-> +		sel-pins {
-> +			pins = "gpio47";
-> +			function = "gpio";
-> +			bias-disable;
-> +			drive-strength = <16>;
-> +		};
-> +	};
-> +
->  	wcd_default: wcd-default-state {
->  		reset-pins {
->  			pins = "gpio106";
+> 
+> Changes since v1:
+> - None
+> 
+>  arch/arm64/configs/defconfig | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+> index 695c4e44d241..edafb5c4b9a1 100644
+> --- a/arch/arm64/configs/defconfig
+> +++ b/arch/arm64/configs/defconfig
+> @@ -972,6 +972,7 @@ CONFIG_TYPEC_TPS6598X=m
+>  CONFIG_TYPEC_HD3SS3220=m
+>  CONFIG_TYPEC_UCSI=m
+>  CONFIG_UCSI_CCG=m
+> +CONFIG_TYPEC_MUX_GPIO_SBU=m
+>  CONFIG_MMC=y
+>  CONFIG_MMC_BLOCK_MINORS=32
+>  CONFIG_MMC_ARMMMCI=y
+> @@ -1207,6 +1208,7 @@ CONFIG_QCOM_CPR=y
+>  CONFIG_QCOM_GENI_SE=y
+>  CONFIG_QCOM_LLCC=m
+>  CONFIG_QCOM_OCMEM=m
+> +CONFIG_QCOM_PMIC_GLINK=m
+>  CONFIG_QCOM_RMTFS_MEM=m
+>  CONFIG_QCOM_RPMH=y
+>  CONFIG_QCOM_RPMHPD=y
