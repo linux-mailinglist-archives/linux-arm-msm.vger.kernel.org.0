@@ -2,143 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 25534691E26
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 12:26:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 38D50691E47
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 12:30:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231993AbjBJL0I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Feb 2023 06:26:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37382 "EHLO
+        id S231710AbjBJLaN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Feb 2023 06:30:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231789AbjBJL0H (ORCPT
+        with ESMTP id S232156AbjBJLaI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Feb 2023 06:26:07 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70D066C7E7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 03:26:05 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id a2so4750259wrd.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 03:26:05 -0800 (PST)
+        Fri, 10 Feb 2023 06:30:08 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AE8D6CC65
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 03:30:07 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id bg5-20020a05600c3c8500b003e00c739ce4so3820117wmb.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 03:30:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=WRHSFsNOEYBISqhGh46fkzy2/I3EFBvJZ7Wz7NvqRXQ=;
-        b=NeJo0PnwsECgbdy5WyE4eGvbwndSnXKWfe+n61S1v7tprEwDEGrNOgmeZnYwEgFJFF
-         Zj3Yh+xupgf4Vm+5obFefSe52BnG6FRtcCVDHJoyLqizDKgSFSUrpvEGEMJxa+t3gSmp
-         nTLAxBDQOYv+76exd4E/CozZsvxdShWJGBZRaZLS+Va1f6erT1CGTC+/OBjvKv089Tb5
-         R5eMQO/Yjg3jtUA8kJcNJg3mByR0R6yI6hCVDo/9vuTZ+hHtJf+exbhmok3XJtzXb8ic
-         IblGclnoEru1Oq20FmcYMBp4uXg2C6hwYjwjQ40QXMLE4WfaQApzE14/nX7wWBJP//V6
-         VqZg==
+        bh=jlEJ/WfDgVsG5Jb5+gK1awECrjW76DF3jnb3j/ziMb0=;
+        b=cW0o0oQZSWAA3U2o7l1kIz3vFte0XTNZ/TMisF+941/AjmgwA+Y7FAPEKcbhFnjRWi
+         hb2u80wFItn3QQtrY2Q3exVol8MK6L2M43NGzl6lWkYuSqMAs9kwFwU8NKLp3KY2XmfI
+         Q65Xn2z0efUwBibWo/p5oAOLqbnBw0aUAWp4IO8HJ7aTujoo7d+osMPWzNi9xeiUM01B
+         r4HvujFSoh0yq1E51+uSvolsI5+j5tuy3xl94I/rpjd4QoDV+iCMelcbLYZsbuHF9QLf
+         doy5sDhcN6yJzKx5KReTj8ZhuyE5ATpFPqngNGYe+jP8xKUJ/JdZskTw07hpKAnqroi7
+         388w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WRHSFsNOEYBISqhGh46fkzy2/I3EFBvJZ7Wz7NvqRXQ=;
-        b=Kqp3n0M1uMhiKlql2HmO5yTps4YiN3AEYg+ol+BDqbCTS6pNgIe7pQgRKYI8Qpvakz
-         QunZPns0J2lUoI7QTlQTDWY7wvKEIzdcV9ECs01Mxw3ajiRBKjh8cUEtgvNmW0mvAgWN
-         MYoKLl5zCvaW8cqjbG4BpkwlZBSpIvl44cWFDa5kEzMOYdr6DimPp0GyHxlc4aFPoW5R
-         Kc9+SNIm1Wu3tRFuWRF6U/t+FgcZbZ3gijE5POghUIrC7AnRnoevYsD0aQ27xGuujvoV
-         limFOy58xYO0+pbb7JO2JdVaRHQbFO5GPU0O1FqbyOaqbkW5RNnC9obRd4azMQgHA4vj
-         gKgQ==
-X-Gm-Message-State: AO0yUKWrbQF+6rl3F7gMEmpKJSwX5KeM5wTXH/7odiHsESwqTqi1eSf0
-        c/yiYfAwv4Vff+frSBdgu7iAgw==
-X-Google-Smtp-Source: AK7set8j79x7B9ONqDBzqjQdMb3p8qwjDAXiyqF80JMwAjyuLznTOPi4CX/fXoOm/BNc8+pxppwfPA==
-X-Received: by 2002:adf:eb41:0:b0:2c3:ff6c:82e with SMTP id u1-20020adfeb41000000b002c3ff6c082emr8658873wrn.22.1676028364005;
-        Fri, 10 Feb 2023 03:26:04 -0800 (PST)
+        bh=jlEJ/WfDgVsG5Jb5+gK1awECrjW76DF3jnb3j/ziMb0=;
+        b=LAX0lrmdhhuDbl7qTYzd91fnnuxziaok4Ali8vkdr2VaYE6XfNENvh51ZyEYbqDoZw
+         GFuiY2W6ocQf4DvGhnI/roS6kyogoa2BBK/ZMod5tk+JFZm3ffxHzIWFGn5jAN1x5xoh
+         NaW5PK5u/EOlKM4oCZm6MSUBlEekk3FQfW7f0hcIWSoawD8Ti70FmWcjOVzQ+Zfqv3GT
+         IxuQtemm/BlfwB7OS9KdRtpXTsIRaFzvg6/KFBa4EhUGnRYK+TJIoEVjIouUnAHyn5WP
+         Crxv8oWPtlGd1Zzg1cck+yxxwlaqpTRV1Kjfiro5I1dH545+KcOUmyFHTDcLGOO5OCN6
+         bgyg==
+X-Gm-Message-State: AO0yUKWQJywHvNWMMYR7kRIBgxumBfBGlyPXU55qgr8pQ0Am3RR4jF24
+        ArIGTwmk2wWIf+m7Am7fV3C6Qw==
+X-Google-Smtp-Source: AK7set8xtx+hZ40vxoTceinSRqg/H4ZPYcEgJV2IHxmtnqjkAb1898qYQiF9lMN+sNISWqnJM848TA==
+X-Received: by 2002:a05:600c:43d5:b0:3d9:e5d3:bf with SMTP id f21-20020a05600c43d500b003d9e5d300bfmr12841619wmn.32.1676028605783;
+        Fri, 10 Feb 2023 03:30:05 -0800 (PST)
 Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id g12-20020a5d540c000000b002bff1de8d4bsm3429258wrv.49.2023.02.10.03.26.02
+        by smtp.gmail.com with ESMTPSA id f21-20020a05600c43d500b003dc522dd25esm4570298wmn.30.2023.02.10.03.30.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Feb 2023 03:26:03 -0800 (PST)
-Message-ID: <8c7584b2-60e0-27c8-a7c3-845cf5640d77@linaro.org>
-Date:   Fri, 10 Feb 2023 12:26:01 +0100
+        Fri, 10 Feb 2023 03:30:05 -0800 (PST)
+Message-ID: <bee0e5be-6092-3656-72d2-ff9602563435@linaro.org>
+Date:   Fri, 10 Feb 2023 12:30:04 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [PATCH v5 3/8] arm64: dts: qcom: sc7280: Add LPASS PIL node
+Subject: Re: [PATCH v9 06/14] dt-bindings: qcom-qce: document optional clocks
+ and clock-names properties
 Content-Language: en-US
-To:     Stephen Boyd <swboyd@chromium.org>,
-        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        agross@kernel.org, alsa-devel@alsa-project.org,
-        andersson@kernel.org, broonie@kernel.org,
-        devicetree@vger.kernel.org, dianders@chromium.org,
-        judyhsiao@chromium.org, konrad.dybcio@somainline.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mka@chromium.org,
-        quic_mohs@quicinc.com, quic_rjendra@quicinc.com,
-        quic_rohkumar@quicinc.com, robh+dt@kernel.org,
-        srinivas.kandagatla@linaro.org, vkoul@kernel.org
-References: <1675700201-12890-1-git-send-email-quic_srivasam@quicinc.com>
- <1675700201-12890-4-git-send-email-quic_srivasam@quicinc.com>
- <CAE-0n53uReg41RrHrBDaNt+BgaPem_JO-2Wwq8e_g0NeNCvgXg@mail.gmail.com>
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-crypto@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+References: <20230208183755.2907771-1-vladimir.zapolskiy@linaro.org>
+ <20230208183755.2907771-7-vladimir.zapolskiy@linaro.org>
+ <b2d75c0a-a9f3-3d28-5e05-25fe3a18dcfb@linaro.org>
+ <5e419feb-8219-61d5-8e4b-f96c5f382a64@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAE-0n53uReg41RrHrBDaNt+BgaPem_JO-2Wwq8e_g0NeNCvgXg@mail.gmail.com>
+In-Reply-To: <5e419feb-8219-61d5-8e4b-f96c5f382a64@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/02/2023 23:55, Stephen Boyd wrote:
->> +
->> +                       glink-edge {
->> +                               interrupts-extended = <&ipcc IPCC_CLIENT_LPASS
->> +                                                      IPCC_MPROC_SIGNAL_GLINK_QMP
->> +                                                      IRQ_TYPE_EDGE_RISING>;
->> +
->> +                               mboxes = <&ipcc IPCC_CLIENT_LPASS
->> +                                        IPCC_MPROC_SIGNAL_GLINK_QMP>;
->> +
->> +                               label = "lpass";
->> +                               qcom,remote-pid = <2>;
->> +
->> +                               gpr {
+On 10/02/2023 12:17, Vladimir Zapolskiy wrote:
+> On 2/9/23 11:20, Krzysztof Kozlowski wrote:
+>> On 08/02/2023 19:37, Vladimir Zapolskiy wrote:
+>>> On newer Qualcomm SoCs the crypto engine clocks are enabled by default
+>>> by security firmware. To drop clocks and clock-names from the list of
+>>> required properties use 'qcom,sm8150-qce' compatible name.
+>>>
+>>> The change is based on Neil Armstrong's observation and an original change.
+>>>
+>>> Cc: Neil Armstrong <neil.armstrong@linaro.org>
+>>> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+>>> ---
+>>>   .../devicetree/bindings/crypto/qcom-qce.yaml      | 15 +++++++++++++--
+>>>   1 file changed, 13 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
+>>> index f6f1759a2f6e..d0f6b830a5dd 100644
+>>> --- a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
+>>> +++ b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
+>>> @@ -79,11 +79,22 @@ properties:
+>>>   required:
+>>>     - compatible
+>>>     - reg
+>>> -  - clocks
+>>> -  - clock-names
+>>>     - dmas
+>>>     - dma-names
+>>>   
+>>> +if:
+>>
+>> This should be in allOf, like I wrote in last discussion.
 > 
-> This node name should be apr per the qcom,glink-edge.yaml binding?
+> In the last discussion you shared two options, and I got an impression
+> that adding a new "non-clock-requiring" compatible is a better option,
+> in this series it is "qcom,sm8150-qce".
 
-No, this is correct. I fixed the glink-edge binding last year.
+It's unrelated topic. What compatibles you use in what setup is one
+thing. The syntax is second.
 
 > 
->> +                                       compatible = "qcom,gpr";
->> +                                       qcom,glink-channels = "adsp_apps";
->> +                                       qcom,domain = <GPR_DOMAIN_ID_ADSP>;
->> +                                       qcom,intents = <512 20>;
->> +                                       #address-cells = <1>;
->> +                                       #size-cells = <0>;
->> +
->> +                                       q6apm: service@1 {
->> +                                               compatible = "qcom,q6apm";
->> +                                               reg = <GPR_APM_MODULE_IID>;
->> +                                               #sound-dai-cells = <0>;
->> +
->> +                                               q6apmdai: dais {
->> +                                                       compatible = "qcom,q6apm-dais";
->> +                                                       iommus = <&apps_smmu 0x1801 0x0>;
->> +                                               };
->> +
->> +                                               q6apmbedai: bedais {
->> +                                                       compatible = "qcom,q6apm-lpass-dais";
->> +                                                       #sound-dai-cells = <1>;
->> +                                               };
->> +                                       };
->> +
->> +                                       q6prm: service@2 {
->> +                                               compatible = "qcom,q6prm";
->> +                                               reg = <GPR_PRM_MODULE_IID>;
->> +
->> +                                               q6prmcc: clock-controller {
->> +                                                       compatible = "qcom,q6prm-lpass-clocks";
-> 
-> This is clk binding but not a clk driver? I'll look away now.
+> So, do you wish to see an added allOf: on top of a single if: anyway?
 
-It is a clock driver which was not put into clk. Maybe because it is
-tightly tied to entire QDSP platform.
+Yes, because it will grow and then you have useless reindent.
+
 
 Best regards,
 Krzysztof
