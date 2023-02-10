@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 16E7A6921CD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 16:18:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CC7246921D5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 16:18:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232397AbjBJPSJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Feb 2023 10:18:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45218 "EHLO
+        id S232609AbjBJPSy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Feb 2023 10:18:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232244AbjBJPSI (ORCPT
+        with ESMTP id S232578AbjBJPSx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Feb 2023 10:18:08 -0500
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B92B173970
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 07:18:07 -0800 (PST)
-Received: by mail-ed1-x530.google.com with SMTP id a10so4971214edu.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 07:18:07 -0800 (PST)
+        Fri, 10 Feb 2023 10:18:53 -0500
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25B157534D
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 07:18:48 -0800 (PST)
+Received: by mail-ej1-x632.google.com with SMTP id rp23so16710299ejb.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 07:18:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=02mVlAKKl5whYqnP1fhbv+HUroK8DSxLT6KvxX0YmEU=;
-        b=d80SCFeeuXdzM2sc0gNhKexwi2OYpwvllAanBCtNQFUACaIKCwzcTKOlDp5lYf6Y14
-         9WlT9bOY6ck+OsK9+bCwE60vkbmunWSO574f8WHJ1DqQ1vMXo8CaF2gY5N6v09fqENiC
-         GNbW4T/3/0y33GHxS+cTuQgMJ/vp+xjDMmASxek7TaDBgADIXZk9M+6mlryf7wel7PJZ
-         5TrwR9vpEmiNb/teZs7Rjz7uwYqVuouZWPsTRD8U/NivqPjlvXDE8KW6Z/wmNbvTobvm
-         9bxRSX7pACBLWedpPQ6HxhEu45bBq3hRPibIpdUm3vGbJ4P7nHhbHxBEBXIjDmsgeTbL
-         ms4Q==
+        bh=tTrO0+Hb16Dwx8dCNpH5NI+RsYPIYieTzZZe10P29jw=;
+        b=ySY7RxpaqV2HY9FGqcE2zcSd+PgtI475d+BgkR5T6WcjQdYq77wgt4IQfz4ADfeeNR
+         +d3iiSH+Ukt5Htj8Ij/E7xAStZNVEvTQYKJr2dNBAQQDOgWwmvbXeoOa6y5Z6zdnvAcn
+         2utD1WW/rSGvhEiJP1tpUZbaaxfL0vNaC4kxukx3MJ5e/Ys5dHJkN2KTvaQVdZCPh+iO
+         54hgQYe7XfY67Cv7Ld7xnDm6SBxhWgoLoWev+s4+4yJ3EWV+2b/TAHRglaD3G+oa4FX2
+         27Z7Jnq7Jyw36KB8sTLvuLbPxaplzYiHlPpHzktEdKTYTMgmVgmcJgKJulqjMJjJjT5I
+         JUDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=02mVlAKKl5whYqnP1fhbv+HUroK8DSxLT6KvxX0YmEU=;
-        b=ZSS1ZDsKOYX39S/fAE8iR7XZ+OumAvrfnm93ReDgl5J2unE/UpicpeCRRvaBW+JDSW
-         WVyhaIXMuZk6MHhxuKPzJDtv3inrSX7MZ6KgFvAXjbr7XyRQcGx8Nsi8ThMK291Aj2uS
-         TTihn+hLvlPih5tt2rBPO6LJwJ/hu8+qyGW3/x4OPmXXm9GXWDPaCD1ZiYRDEG7FRk+Y
-         VIuFHnCwTJfR0VgsdMwQ9aPKjwpaBTWo+H+fl56fu4UfH/LQOF03cXL6S/ebA3zzzJj5
-         n4hqKquUZ3YFjaMH3vTggtKHkEA7vvXT5MPv+kgk/4Lj2dpZB9ISgncyuwS9hquAk94T
-         JQPg==
-X-Gm-Message-State: AO0yUKVXNzknnKSy6k8QjQtoIjFAeyhoCGNoc+EzlGqt+Bd4E1O0F0KQ
-        CtZLCwzfg7Yk5Um2TbOe4en82w==
-X-Google-Smtp-Source: AK7set/iNkirutTUnbExRgezrYds0gZeyGu3ozG/ELlq3e0A3uK/LBqaiqxq4aGczsJNKJv1AGSCrQ==
-X-Received: by 2002:a50:ce41:0:b0:4ab:4b85:a69f with SMTP id k1-20020a50ce41000000b004ab4b85a69fmr2491931edj.1.1676042286235;
-        Fri, 10 Feb 2023 07:18:06 -0800 (PST)
+        bh=tTrO0+Hb16Dwx8dCNpH5NI+RsYPIYieTzZZe10P29jw=;
+        b=TPr/RiiD3oT+2cYNemWdpU7hfkEPbM9zHM8TcDIusyFnk1uF+R0chh/ZIcVlYUDjbm
+         bFwLWVePTmlUtiMwZ7wsYj3vVkfuAvBCeLNDFWcS38GIFCc0omJ0Kc/fJ9jVauq3KAh4
+         auqWZJEoqSN/yrxRGt63MuUeFpsPkvSllDDjRF6LT0H5orVFk7wEx7BMpQw2+EmE8g6d
+         aAExCmqOa1+R4kWcrQz7Pmz8vucq7uLsAHHYw9gYYTOIobEB2pYi5EVd0InStP78Rvfm
+         5mOl3AJ6pHbxmTB1aA5wbDE2UtNiB60s1MD0kyH3cicIwXYxjonIHHf8ejDKFWHIeAEW
+         IQ9Q==
+X-Gm-Message-State: AO0yUKXWMVgmsAcxXlpGui+mlHP3S5BC/p3OoosvGgT/N/i2NgcuQkZV
+        lP9D+aB0RCbVSTveW+sctGfTyA==
+X-Google-Smtp-Source: AK7set+wB2F1D1yafXt73sb47xKeVWVy5imjwfiTNYit/QK0pZoxEzn7pYyun3egopr92hzm3yYD7g==
+X-Received: by 2002:a17:906:1614:b0:87b:dba1:1bf3 with SMTP id m20-20020a170906161400b0087bdba11bf3mr15955265ejd.30.1676042326666;
+        Fri, 10 Feb 2023 07:18:46 -0800 (PST)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id t18-20020a50c252000000b0049148f6461dsm2321942edf.65.2023.02.10.07.18.05
+        by smtp.gmail.com with ESMTPSA id hf27-20020a1709072c5b00b0088cdb05f1d5sm2524339ejc.113.2023.02.10.07.18.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Feb 2023 07:18:05 -0800 (PST)
-Message-ID: <44fa957a-b47d-d913-917c-a614884d62ca@linaro.org>
-Date:   Fri, 10 Feb 2023 17:18:04 +0200
+        Fri, 10 Feb 2023 07:18:46 -0800 (PST)
+Message-ID: <d5dd4982-af33-6f9e-afd9-61d632df7c8a@linaro.org>
+Date:   Fri, 10 Feb 2023 17:18:44 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [PATCH v3 3/5] arm64: dts: qcom: sm8350: add dp controller
+Subject: Re: [PATCH v3 4/5] arm64: dts: qcom: sm8450: switch to usb3/dp combo
+ phy
 Content-Language: en-GB
 To:     Neil Armstrong <neil.armstrong@linaro.org>,
         Rob Clark <robdclark@gmail.com>,
@@ -72,14 +73,15 @@ Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20230206-topic-sm8450-upstream-dp-controller-v3-0-636ef9e99932@linaro.org>
- <20230206-topic-sm8450-upstream-dp-controller-v3-3-636ef9e99932@linaro.org>
+ <20230206-topic-sm8450-upstream-dp-controller-v3-4-636ef9e99932@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230206-topic-sm8450-upstream-dp-controller-v3-3-636ef9e99932@linaro.org>
+In-Reply-To: <20230206-topic-sm8450-upstream-dp-controller-v3-4-636ef9e99932@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -87,13 +89,14 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 10/02/2023 16:44, Neil Armstrong wrote:
-> Add the Display Port controller subnode to the MDSS node.
+> The QMP PHY is a USB3/DP combo phy, switch to the newly
+> documented bindings and register the clocks to the GCC
+> and DISPCC controllers.
 > 
-> Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> #SM8350-HDK
 > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 > ---
->   arch/arm64/boot/dts/qcom/sm8350.dtsi | 79 ++++++++++++++++++++++++++++++++++++
->   1 file changed, 79 insertions(+)
+>   arch/arm64/boot/dts/qcom/sm8450.dtsi | 42 +++++++++++++-----------------------
+>   1 file changed, 15 insertions(+), 27 deletions(-)
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
