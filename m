@@ -2,104 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1ABCD691A7A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 09:58:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3407D691AB7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 10:05:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231661AbjBJI6f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Feb 2023 03:58:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57916 "EHLO
+        id S231821AbjBJJFH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Feb 2023 04:05:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231653AbjBJI6e (ORCPT
+        with ESMTP id S231882AbjBJJEt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Feb 2023 03:58:34 -0500
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08423AD08
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 00:58:33 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id l37-20020a05600c1d2500b003dfe46a9801so3559123wms.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 00:58:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Ef2U5c6HeqEw6s0y4iUYPmBBD++bKxShMuYw351drKo=;
-        b=CmYSJWFtRLMqTRalC5Jt/GNXUu8cHnMEtFuC3I31jOku5857/RbxNzvYNWkg99QVbU
-         Hc337k+3oI4rC/1MnDLqeptmNfuhSmpQr/tP6Qsi8GGJqzBzSWtGO6Fx3V3mryP1Qtqd
-         Xncu7ZFmtT1Za3b8ImUoCFMw/usgQd+w8AyecSFgN8Xe9hXVvpAIeHJ3nuZXFpbjWfoA
-         cf2qmNt8CR0+UqzVVSnSPBmRLqh0jbjXtw0XvE7EIO2/gkLNRf4tdztuBgh9tvTNk9v+
-         T4j+9Pn5SamHLColFrzEyBEg8iDEyGAXsXgacD60cozCyD+GLdEpT+41x9AL/GVw9Y3c
-         sesg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ef2U5c6HeqEw6s0y4iUYPmBBD++bKxShMuYw351drKo=;
-        b=0B14yct9amCiwd732hTKACqsqqa5KFuQ0LSXuoTHRuV+RDoXxm3P30MslPnce1/6Qu
-         BcITyHSqIMkNEf3hnUJApSEBpufDyhXFD67NgrxbZiwJ6JqAtchhyUftq5nCyn8eg7PM
-         RQzQt/lJe4Vb39Nt0jilEsntgt8fT3X9IHVlE2zZjNi/sa4XmN5ALMPX3e1IAptf1mJH
-         +TfX+X074F5tqTcqY/FHF4pwkl4tSYsBQ2jnVUQPuyk4ZUzIYb19UGq8WKtySNYr0LLz
-         68yDlju65fF+TBxhj0NFoK/ARxNiiRi64KEIufHCGtLgeE7ZbOmT4PmrydmsYvsN/LQv
-         PmvA==
-X-Gm-Message-State: AO0yUKV8zzyhnXssKjcfoRfLVBreNzShCVj2w44oH0wPrUn9HDcFDpP5
-        7wU7rGpQvrsx2ON36FE43IviNQ==
-X-Google-Smtp-Source: AK7set9oHBwJIydgEflq2gjHcx3YTMuNejy5r36OyrU8wx4e+xazuE/z63QBBU8eT62nkcUjUCLvow==
-X-Received: by 2002:a05:600c:91e:b0:3db:331b:bd57 with SMTP id m30-20020a05600c091e00b003db331bbd57mr12299188wmp.23.1676019511594;
-        Fri, 10 Feb 2023 00:58:31 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id c10-20020a05600c170a00b003df241f52e8sm3989001wmn.42.2023.02.10.00.58.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Feb 2023 00:58:31 -0800 (PST)
-Message-ID: <d1d1bd4e-0205-24d1-9589-6d6b57b6d477@linaro.org>
-Date:   Fri, 10 Feb 2023 09:58:29 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH v2 2/3] dt-bindings: arm: qcom: add the SoC ID for SA8775P
-Content-Language: en-US
-To:     Eric Chanudet <echanude@redhat.com>,
-        Bartosz Golaszewski <brgl@bgdev.pl>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Fri, 10 Feb 2023 04:04:49 -0500
+Received: from relay6-d.mail.gandi.net (relay6-d.mail.gandi.net [217.70.183.198])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93FA95FF4;
+        Fri, 10 Feb 2023 01:04:08 -0800 (PST)
+Received: (Authenticated sender: alexandre.belloni@bootlin.com)
+        by mail.gandi.net (Postfix) with ESMTPSA id 95261C001B;
+        Fri, 10 Feb 2023 09:04:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+        t=1676019847;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=AqdLlt/yCxFcNnbtgPacPBPi521WDlbKJ6hpLfV74Q4=;
+        b=OpIPOGRwvaiqSl3xNLvY16H7qTrFnIKwryAreVLhA94xhK8eb3tlxNsnnr+3cMQZ38uTIl
+        ntFAXnfcyJMqP6bJmRhHQxO6Cn0vK0pN5E9yJqLAWzs3wvxxN4p3Ly0F9wRRcrWYntG7t8
+        fBiD6CHWXluansXjj6jSJCOeSum5NsxDU8XFoXoYocjokmXCbRtQmRtiYAfTOZObI8WBkL
+        wklOU2eQd3pm9KRvIysmu4+Ji00xf1cUL5jL8V8eK6HkrEzNOmcUSan3MITAPctjq7ZHhK
+        thvNRIacs6UNJLoY3ZD1hbU98tz0vIxTEc24HFaL04hQjz7TLQKv45B3Ah1aCw==
+Date:   Fri, 10 Feb 2023 10:04:03 +0100
+From:   Alexandre Belloni <alexandre.belloni@bootlin.com>
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Alessandro Zummo <a.zummo@towertech.it>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20230209095753.447347-1-brgl@bgdev.pl>
- <20230209095753.447347-3-brgl@bgdev.pl>
- <20230209175515.xrebz5edmsi4xkzv@echanude>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230209175515.xrebz5edmsi4xkzv@echanude>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-rtc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: (subset) [PATCH v2 00/22] rtc: pm8xxx: add support for setting
+ time using nvmem
+Message-ID: <Y+YIg9Yp3Sy7n4Pb@mail.local>
+References: <20230202155448.6715-1-johan+linaro@kernel.org>
+ <167598144775.1655758.2122287458672785227.b4-ty@bootlin.com>
+ <Y+X4EBACJ/AYvtOw@hovoldconsulting.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y+X4EBACJ/AYvtOw@hovoldconsulting.com>
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/02/2023 18:55, Eric Chanudet wrote:
-> On Thu, Feb 09, 2023 at 10:57:52AM +0100, Bartosz Golaszewski wrote:
->> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>
->> Add the SoC ID entry for SA8775P.
->>
->> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
->>  include/dt-bindings/arm/qcom,ids.h | 1 +
->>  1 file changed, 1 insertion(+)
+On 10/02/2023 08:53:52+0100, Johan Hovold wrote:
+> On Thu, Feb 09, 2023 at 11:25:34PM +0100, Alexandre Belloni wrote:
+> > 
+> > On Thu, 02 Feb 2023 16:54:26 +0100, Johan Hovold wrote:
+> > > This series adds support for setting the RTC time on Qualcomm platforms
+> > > where the PMIC RTC time registers are read-only by instead storing an
+> > > offset in some other non-volatile memory. This is used to enable the RTC
+> > > in the SC8280XP Compute Reference Design (CRD) and Lenovo Thinkpad X13s
+> > > laptop.
+> > > 
+> > > The RTCs in many Qualcomm devices are effectively broken due to the time
+> > > registers being read-only. Instead some other non-volatile memory can be
+> > > used to store and offset which a driver can take into account. On
+> > > machines like the X13s, the UEFI firmware (and Windows) use a UEFI
+> > > variable for storing such an offset, but not all Qualcomm systems use
+> > > UEFI.
+> > > 
+> > > [...]
+> > 
+> > Applied, thanks!
+> > 
+> > [01/22] rtc: pm8xxx: fix set-alarm race
+> >         commit: c88db0eff9722fc2b6c4d172a50471d20e08ecc6
 > 
-> Reviewed-by: Eric Chanudet <echanude@redhat.com>
-> Tested-by: Eric Chanudet <echanude@redhat.com>
+> ...
+> 
+> > [15/22] rtc: pm8xxx: drop error messages
+> >         commit: c94fb939e65155bc889e62396f83ef4317d643ac
+> 
+> I noticed that you did not apply patches 16 and 17 that add support for
+> the nvmem offset. Was that on purpose or a mistake?
 
-How can you test a header? What type of testing Redhat does on the headers?
+This was on purpose, I'll handle them tonight.
 
-Best regards,
-Krzysztof
-
+-- 
+Alexandre Belloni, co-owner and COO, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
