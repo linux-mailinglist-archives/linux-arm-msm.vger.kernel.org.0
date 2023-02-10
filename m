@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7ABD4691DA2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 12:09:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 87531691DB7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 12:11:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231929AbjBJLJN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Feb 2023 06:09:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48492 "EHLO
+        id S232329AbjBJLLN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Feb 2023 06:11:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232332AbjBJLJL (ORCPT
+        with ESMTP id S232060AbjBJLLF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Feb 2023 06:09:11 -0500
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C14B871012
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 03:09:07 -0800 (PST)
-Received: by mail-ej1-x62c.google.com with SMTP id qw12so14920324ejc.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 03:09:07 -0800 (PST)
+        Fri, 10 Feb 2023 06:11:05 -0500
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2C7B70CC5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 03:11:02 -0800 (PST)
+Received: by mail-ej1-x632.google.com with SMTP id ml19so15043796ejb.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 03:11:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=RCNLlZNbq0af8em4NGdiPJLnjWJLq3RloIQVA1vNkuU=;
-        b=XGFH2mPS9zSjWAMEJCNcR1G4jikKVaTlc/ALFCHB/t2yK5daA1syqkT73o4M4Yi7aa
-         EWp7V7TKW4DU9C4EafPZsjC2y1T4Yu2X7s277uLdAjsmKnWvElZEXgmeBp/Av9JePFE4
-         JHQvGJTwf6Lpehb2A5V1bH8eY0nZInEygCxwmPxgJMVv83GnO1RtPTZBV9Da55L5dckU
-         mpRfmWf00T14NT0eUU7S6FhmS6zRRNj9x/xRWf3jmhN04sWvlzv/djv3XQ/aCpY9PYGL
-         pDAUGm2C8YceB0QYe1j7VSx8jO5zCCE6rMgRAG1OcI1BEEz6N4oY9TuMb1b1+V/goruX
-         iFBg==
+        bh=qgWJuGv7qAa+OIP5368ASPn0mZLCIxffBkoZw2ekc4M=;
+        b=p7UVbyLug+HSUYCDPAxCY6XUm8NXVFz4oKUOA1Jo6+eKKmBhExhPVRn3azE9HfjYKm
+         Od2cW3bJfmjcY4bEDBnwuXuhwmF+W+7n4bABeVrgxJYixvoqDn40Sm1yE5XkTqRGukXG
+         GFzu88it/EbeHZamm63Q3lr9BnbQBi74wD/s94FVk1wDCiniVQUshdam+TT3t2hgN/f/
+         cy29urmyssI5QzwigNSZFrFDrT4kabHqDgg6UmJkvdKNGKDfJdzOuizXZv7HWKWp7b6n
+         9bl95BGbJY7cjZWBh0Okkr0yuP6dKnwQPcftfDByL/oE1R/hSOvKG8Tdvc8sdnBzMYIZ
+         nA1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RCNLlZNbq0af8em4NGdiPJLnjWJLq3RloIQVA1vNkuU=;
-        b=ro9B/kPW7S54kg4kR34NL6d03kizgyQsG/4n/SdmcO3mExEG36nb2J4Cmx20LQ+zzU
-         kJZiWQeW9WjoFrmYCnWcveBuieKjNSAXBOzSq2GS/Z58IWhaHT5wXhbxN+8GlaM9Za6q
-         BSJrC1524EVc+ocrRjyXF66sWFL6/Mb9I5OKCWdwnmZQ8UKxoP03s2M+Gv3bfSCnj5JZ
-         QymlmHLhGhxKZvtjnl3vhMcTMQuBVfswLGPz2IxiNsam0hDdu3y37U0bCWNnXR/tiGFX
-         K7gEDbhTQfRCznkpc6MC+JoMXbVovppcFkAjt/K8WvCdM6Ck/5fb91kSaXjZ+GxLkVYZ
-         BZtw==
-X-Gm-Message-State: AO0yUKUgZRwM+kMdnWj9pwywdv/75cSHaQOnCFqq7ghO0n/UDRxQ9P5d
-        4/iKofaZnsrLlBzZvuBKbGqwcA==
-X-Google-Smtp-Source: AK7set+ENOFkTBIOQyxihdzqybS5kJnd7Jqms4otHG4vgA6p2gUTXZycXHM9ad0gQvDwpBPIbd+7DQ==
-X-Received: by 2002:a17:906:46d3:b0:88d:ba89:183f with SMTP id k19-20020a17090646d300b0088dba89183fmr9165774ejs.16.1676027346249;
-        Fri, 10 Feb 2023 03:09:06 -0800 (PST)
+        bh=qgWJuGv7qAa+OIP5368ASPn0mZLCIxffBkoZw2ekc4M=;
+        b=qfMK0oYTB9gI6XcPf8Izd/J7EEXfzdRU2sOa+hnm7A4QyeYSWrHuAN7Okahs5X6SzY
+         STKeTK1F9ZcjGcGvxLAVplN/9pRopWXRf9JTp8RYwW5Dqg2oeXEPY/ow1dBxvY6IDY4V
+         oKmfgseOfymyqwUjy+Z/pmQzUR9FMzbRLI4awI8+RhFZ2VbfPC+A82nYb9sLMTO75Hcg
+         GNS2XULhWEZmLDYJrNhYYP3Yq9dtKdHGLip95yYDTP6wxp2LaOMKcmfZkMqgkaZ/1DLu
+         xA27k+KA4Dx6VzWpzKoU88PIbp470IIEYOC0y+ITdu+2jby8QezD6Z6nwwKmaBTMWcSx
+         krBQ==
+X-Gm-Message-State: AO0yUKWwo50e4pRsP321reDLc0vNvixa2k5icrQeNzsIs1LxOds7ttqF
+        zEFHQF9btCZ1F/koYRl1cVqSrHytBVqel8yK
+X-Google-Smtp-Source: AK7set/GQ7C/jQwOpemLr8TPGRW0K9nXeyCfDYiUhMk28h8kDUs2Ewh1yvWPA7JfUTeUqImAbZrS3g==
+X-Received: by 2002:a17:907:76d2:b0:88c:ea64:4ff0 with SMTP id kf18-20020a17090776d200b0088cea644ff0mr15213203ejc.19.1676027461379;
+        Fri, 10 Feb 2023 03:11:01 -0800 (PST)
 Received: from [192.168.1.101] (abxh117.neoplus.adsl.tpnet.pl. [83.9.1.117])
-        by smtp.gmail.com with ESMTPSA id fi9-20020a170906da0900b0084c6ec69a9dsm2210093ejb.124.2023.02.10.03.09.04
+        by smtp.gmail.com with ESMTPSA id 20-20020a170906025400b008841aa86484sm2219660ejl.211.2023.02.10.03.10.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Feb 2023 03:09:05 -0800 (PST)
-Message-ID: <a8bb4bf1-c4b6-ff02-d2e6-1407900bb006@linaro.org>
-Date:   Fri, 10 Feb 2023 12:09:03 +0100
+        Fri, 10 Feb 2023 03:11:00 -0800 (PST)
+Message-ID: <0ae75004-1cbb-4b72-0492-942becc401d6@linaro.org>
+Date:   Fri, 10 Feb 2023 12:10:58 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [PATCH v3 4/6] arm64: dts: qcom: sm8350: finish reordering nodes
+Subject: Re: [PATCH v3 5/6] arm64: dts: qcom: sm8350: add GPU, GMU, GPU CC and
+ SMMU nodes
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -70,9 +71,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
 References: <20230209133839.762631-1-dmitry.baryshkov@linaro.org>
- <20230209133839.762631-5-dmitry.baryshkov@linaro.org>
+ <20230209133839.762631-6-dmitry.baryshkov@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230209133839.762631-5-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230209133839.762631-6-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -87,485 +88,219 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 9.02.2023 14:38, Dmitry Baryshkov wrote:
-> Finish reordering DT nodes by their address. Move PDC, tsens, AOSS,
-> SRAM, SPMI and TLMM nodes to the proper position.
+> Add device nodes required to enable GPU on the SM8350 platform.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
-[...]
+>  arch/arm64/boot/dts/qcom/sm8350.dtsi | 178 +++++++++++++++++++++++++++
+>  1 file changed, 178 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> index 742e9dd17084..4c1a2f814b5c 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> @@ -7,6 +7,7 @@
+>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+>  #include <dt-bindings/clock/qcom,dispcc-sm8350.h>
+>  #include <dt-bindings/clock/qcom,gcc-sm8350.h>
+> +#include <dt-bindings/clock/qcom,gpucc-sm8350.h>
+>  #include <dt-bindings/clock/qcom,rpmh.h>
+>  #include <dt-bindings/dma/qcom-gpi.h>
+>  #include <dt-bindings/gpio/gpio.h>
+> @@ -1765,6 +1766,183 @@ tcsr_mutex: hwlock@1f40000 {
+>  			#hwlock-cells = <1>;
+>  		};
+>  
+> +		gpu: gpu@3d00000 {
+> +			compatible = "qcom,adreno-660.1", "qcom,adreno";
+> +
+The newlines between compatible and reg trigger my OCD..
 
-> +				phys = <&mdss_dsi1_phy>;
-> +
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +
-> +				status = "disabled";
-> +
-> +				dsi1_opp_table: opp-table {
-> +					compatible = "operating-points-v2";
-> +
-> +					/* TODO: opp-187500000 should work with
-> +					 * &rpmhpd_opp_low_svs, but one some of
-> +					 * sm8350_hdk boards reboot using this
-> +					 * opp.
-> +					 */
-It's not a part of this patch, but an idea came into my
-head.. could you check with socid that your HDK has an
-8350v2.1?
-
-As for the patch itself.. I *think* I don't see anything
-wrong..
+But the patch looks good!
 
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
 
-> +					opp-187500000 {
-> +						opp-hz = /bits/ 64 <187500000>;
-> +						required-opps = <&rpmhpd_opp_svs>;
-> +					};
+P.S I can add binning after the big GMUless series lands..
+And maybe I should also rework the binning code a bit to
+be cleaner..
+
+
+> +			reg = <0 0x03d00000 0 0x40000>,
+> +			      <0 0x03d9e000 0 0x1000>,
+> +			      <0 0x03d61000 0 0x800>;
+> +			reg-names = "kgsl_3d0_reg_memory",
+> +				    "cx_mem",
+> +				    "cx_dbgc";
 > +
-> +					opp-300000000 {
-> +						opp-hz = /bits/ 64 <300000000>;
-> +						required-opps = <&rpmhpd_opp_svs>;
-> +					};
+> +			interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
 > +
-> +					opp-358000000 {
-> +						opp-hz = /bits/ 64 <358000000>;
-> +						required-opps = <&rpmhpd_opp_svs_l1>;
-> +					};
-> +				};
+> +			iommus = <&adreno_smmu 0 0x400>, <&adreno_smmu 1 0x400>;
 > +
-> +				ports {
-> +					#address-cells = <1>;
-> +					#size-cells = <0>;
+> +			operating-points-v2 = <&gpu_opp_table>;
 > +
-> +					port@0 {
-> +						reg = <0>;
-> +						mdss_dsi1_in: endpoint {
-> +							remote-endpoint = <&dpu_intf2_out>;
-> +						};
-> +					};
+> +			qcom,gmu = <&gmu>;
 > +
-> +					port@1 {
-> +						reg = <1>;
-> +						mdss_dsi1_out: endpoint {
-> +						};
-> +					};
-> +				};
+> +			status = "disabled";
+> +
+> +			zap-shader {
+> +				memory-region = <&pil_gpu_mem>;
 > +			};
 > +
-> +			mdss_dsi1_phy: phy@ae96400 {
-> +				compatible = "qcom,sm8350-dsi-phy-5nm";
-> +				reg = <0 0x0ae96400 0 0x200>,
-> +				      <0 0x0ae96600 0 0x280>,
-> +				      <0 0x0ae96900 0 0x27c>;
-> +				reg-names = "dsi_phy",
-> +					    "dsi_phy_lane",
-> +					    "dsi_pll";
+> +			/* note: downstream checks gpu binning for 670 Mhz */
+> +			gpu_opp_table: opp-table {
+> +				compatible = "operating-points-v2";
 > +
-> +				#clock-cells = <1>;
-> +				#phy-cells = <0>;
+> +				opp-840000000 {
+> +					opp-hz = /bits/ 64 <840000000>;
+> +					opp-level = <RPMH_REGULATOR_LEVEL_TURBO_L1>;
+> +				};
 > +
-> +				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +					 <&rpmhcc RPMH_CXO_CLK>;
-> +				clock-names = "iface", "ref";
+> +				opp-778000000 {
+> +					opp-hz = /bits/ 64 <778000000>;
+> +					opp-level = <RPMH_REGULATOR_LEVEL_TURBO>;
+> +				};
 > +
-> +				status = "disabled";
+> +				opp-738000000 {
+> +					opp-hz = /bits/ 64 <738000000>;
+> +					opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
+> +				};
+> +
+> +				opp-676000000 {
+> +					opp-hz = /bits/ 64 <676000000>;
+> +					opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
+> +				};
+> +
+> +				opp-608000000 {
+> +					opp-hz = /bits/ 64 <608000000>;
+> +					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L2>;
+> +				};
+> +
+> +				opp-540000000 {
+> +					opp-hz = /bits/ 64 <540000000>;
+> +					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
+> +				};
+> +
+> +				opp-491000000 {
+> +					opp-hz = /bits/ 64 <491000000>;
+> +					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L0>;
+> +				};
+> +
+> +				opp-443000000 {
+> +					opp-hz = /bits/ 64 <443000000>;
+> +					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
+> +				};
+> +
+> +				opp-379000000 {
+> +					opp-hz = /bits/ 64 <379000000>;
+> +					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_L1>;
+> +				};
+> +
+> +				opp-315000000 {
+> +					opp-hz = /bits/ 64 <315000000>;
+> +					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
+> +				};
 > +			};
 > +		};
 > +
-> +		dispcc: clock-controller@af00000 {
-> +			compatible = "qcom,sm8350-dispcc";
-> +			reg = <0 0x0af00000 0 0x10000>;
+> +		gmu: gmu@3d6a000 {
+> +			compatible = "qcom,adreno-gmu-660.1", "qcom,adreno-gmu";
+> +
+> +			reg = <0 0x03d6a000 0 0x34000>,
+> +			      <0 0x03de0000 0 0x10000>,
+> +			      <0 0x0b290000 0 0x10000>;
+> +			reg-names = "gmu", "rscc", "gmu_pdc";
+> +
+> +			interrupts = <GIC_SPI 304 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 305 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "hfi", "gmu";
+> +
+> +			clocks = <&gpucc GPU_CC_CX_GMU_CLK>,
+> +				 <&gpucc GPU_CC_CXO_CLK>,
+> +				 <&gcc GCC_DDRSS_GPU_AXI_CLK>,
+> +				 <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
+> +				 <&gpucc GPU_CC_AHB_CLK>,
+> +				 <&gpucc GPU_CC_HUB_CX_INT_CLK>,
+> +				 <&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>;
+> +			clock-names = "gmu",
+> +				      "cxo",
+> +				      "axi",
+> +				      "memnoc",
+> +				      "ahb",
+> +				      "hub",
+> +				      "smmu_vote";
+> +
+> +			power-domains = <&gpucc GPU_CX_GDSC>,
+> +					<&gpucc GPU_GX_GDSC>;
+> +			power-domain-names = "cx",
+> +					     "gx";
+> +
+> +			iommus = <&adreno_smmu 5 0x400>;
+> +
+> +			operating-points-v2 = <&gmu_opp_table>;
+> +
+> +			gmu_opp_table: opp-table {
+> +				compatible = "operating-points-v2";
+> +
+> +				opp-200000000 {
+> +					opp-hz = /bits/ 64 <200000000>;
+> +					opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
+> +				};
+> +			};
+> +		};
+> +
+> +		gpucc: clock-controller@3d90000 {
+> +			compatible = "qcom,sm8350-gpucc";
+> +			reg = <0 0x03d90000 0 0x9000>;
 > +			clocks = <&rpmhcc RPMH_CXO_CLK>,
-> +				 <&mdss_dsi0_phy 0>, <&mdss_dsi0_phy 1>,
-> +				 <&mdss_dsi1_phy 0>, <&mdss_dsi1_phy 1>,
-> +				 <0>,
-> +				 <0>;
+> +				 <&gcc GCC_GPU_GPLL0_CLK_SRC>,
+> +				 <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
 > +			clock-names = "bi_tcxo",
-> +				      "dsi0_phy_pll_out_byteclk",
-> +				      "dsi0_phy_pll_out_dsiclk",
-> +				      "dsi1_phy_pll_out_byteclk",
-> +				      "dsi1_phy_pll_out_dsiclk",
-> +				      "dp_phy_pll_link_clk",
-> +				      "dp_phy_pll_vco_div_clk";
+> +				      "gcc_gpu_gpll0_clk_src",
+> +				      "gcc_gpu_gpll0_div_clk_src";
 > +			#clock-cells = <1>;
 > +			#reset-cells = <1>;
 > +			#power-domain-cells = <1>;
-> +
-> +			power-domains = <&rpmhpd SM8350_MMCX>;
 > +		};
 > +
-> +		pdc: interrupt-controller@b220000 {
-> +			compatible = "qcom,sm8350-pdc", "qcom,pdc";
-> +			reg = <0 0x0b220000 0 0x30000>, <0 0x17c000f0 0 0x60>;
-> +			qcom,pdc-ranges = <0 480 40>, <40 140 14>, <54 263 1>,   <55 306 4>,
-> +					  <59 312 3>, <62 374 2>,  <64 434 2>,   <66 438 3>,
-> +					  <69 86 1>,  <70 520 54>, <124 609 31>, <155 63 1>,
-> +					  <156 716 12>;
-> +			#interrupt-cells = <2>;
-> +			interrupt-parent = <&intc>;
-> +			interrupt-controller;
+> +		adreno_smmu: iommu@3da0000 {
+> +			compatible = "qcom,sm8350-smmu-500", "qcom,adreno-smmu", "arm,mmu-500";
+> +			reg = <0 0x03da0000 0 0x20000>;
+> +			#iommu-cells = <2>;
+> +			#global-interrupts = <2>;
+> +			interrupts = <GIC_SPI 672 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 673 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 678 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 679 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 680 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 681 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 682 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 683 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 684 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 685 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 686 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 687 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +			clocks = <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
+> +				 <&gcc GCC_GPU_SNOC_DVM_GFX_CLK>,
+> +				 <&gpucc GPU_CC_AHB_CLK>,
+> +				 <&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>,
+> +				 <&gpucc GPU_CC_CX_GMU_CLK>,
+> +				 <&gpucc GPU_CC_HUB_CX_INT_CLK>,
+> +				 <&gpucc GPU_CC_HUB_AON_CLK>;
+> +			clock-names = "bus",
+> +				      "iface",
+> +				      "ahb",
+> +				      "hlos1_vote_gpu_smmu",
+> +				      "cx_gmu",
+> +				      "hub_cx_int",
+> +				      "hub_aon";
+> +
+> +			power-domains = <&gpucc GPU_CX_GDSC>;
+> +			dma-coherent;
 > +		};
 > +
-> +		tsens0: thermal-sensor@c263000 {
-> +			compatible = "qcom,sm8350-tsens", "qcom,tsens-v2";
-> +			reg = <0 0x0c263000 0 0x1ff>, /* TM */
-> +			      <0 0x0c222000 0 0x8>; /* SROT */
-> +			#qcom,sensors = <15>;
-> +			interrupts-extended = <&pdc 26 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <&pdc 28 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "uplow", "critical";
-> +			#thermal-sensor-cells = <1>;
-> +		};
-> +
-> +		tsens1: thermal-sensor@c265000 {
-> +			compatible = "qcom,sm8350-tsens", "qcom,tsens-v2";
-> +			reg = <0 0x0c265000 0 0x1ff>, /* TM */
-> +			      <0 0x0c223000 0 0x8>; /* SROT */
-> +			#qcom,sensors = <14>;
-> +			interrupts-extended = <&pdc 27 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <&pdc 29 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "uplow", "critical";
-> +			#thermal-sensor-cells = <1>;
-> +		};
-> +
-> +		aoss_qmp: power-management@c300000 {
-> +			compatible = "qcom,sm8350-aoss-qmp", "qcom,aoss-qmp";
-> +			reg = <0 0x0c300000 0 0x400>;
-> +			interrupts-extended = <&ipcc IPCC_CLIENT_AOP IPCC_MPROC_SIGNAL_GLINK_QMP
-> +						     IRQ_TYPE_EDGE_RISING>;
-> +			mboxes = <&ipcc IPCC_CLIENT_AOP IPCC_MPROC_SIGNAL_GLINK_QMP>;
-> +
-> +			#clock-cells = <0>;
-> +		};
-> +
-> +		sram@c3f0000 {
-> +			compatible = "qcom,rpmh-stats";
-> +			reg = <0 0x0c3f0000 0 0x400>;
-> +		};
-> +
-> +		spmi_bus: spmi@c440000 {
-> +			compatible = "qcom,spmi-pmic-arb";
-> +			reg = <0x0 0x0c440000 0x0 0x1100>,
-> +			      <0x0 0x0c600000 0x0 0x2000000>,
-> +			      <0x0 0x0e600000 0x0 0x100000>,
-> +			      <0x0 0x0e700000 0x0 0xa0000>,
-> +			      <0x0 0x0c40a000 0x0 0x26000>;
-> +			reg-names = "core", "chnls", "obsrvr", "intr", "cnfg";
-> +			interrupt-names = "periph_irq";
-> +			interrupts-extended = <&pdc 1 IRQ_TYPE_LEVEL_HIGH>;
-> +			qcom,ee = <0>;
-> +			qcom,channel = <0>;
-> +			#address-cells = <2>;
-> +			#size-cells = <0>;
-> +			interrupt-controller;
-> +			#interrupt-cells = <4>;
-> +		};
-> +
-> +		tlmm: pinctrl@f100000 {
-> +			compatible = "qcom,sm8350-tlmm";
-> +			reg = <0 0x0f100000 0 0x300000>;
-> +			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
-> +			gpio-controller;
-> +			#gpio-cells = <2>;
-> +			interrupt-controller;
-> +			#interrupt-cells = <2>;
-> +			gpio-ranges = <&tlmm 0 0 204>;
-> +			wakeup-parent = <&pdc>;
-> +
-> +			sdc2_default_state: sdc2-default-state {
-> +				clk-pins {
-> +					pins = "sdc2_clk";
-> +					drive-strength = <16>;
-> +					bias-disable;
-> +				};
-> +
-> +				cmd-pins {
-> +					pins = "sdc2_cmd";
-> +					drive-strength = <16>;
-> +					bias-pull-up;
-> +				};
-> +
-> +				data-pins {
-> +					pins = "sdc2_data";
-> +					drive-strength = <16>;
-> +					bias-pull-up;
-> +				};
-> +			};
-> +
-> +			sdc2_sleep_state: sdc2-sleep-state {
-> +				clk-pins {
-> +					pins = "sdc2_clk";
-> +					drive-strength = <2>;
-> +					bias-disable;
-> +				};
->  
-> -				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> -					 <&rpmhcc RPMH_CXO_CLK>;
-> -				clock-names = "iface", "ref";
-> +				cmd-pins {
-> +					pins = "sdc2_cmd";
-> +					drive-strength = <2>;
-> +					bias-pull-up;
-> +				};
->  
-> -				status = "disabled";
-> +				data-pins {
-> +					pins = "sdc2_data";
-> +					drive-strength = <2>;
-> +					bias-pull-up;
-> +				};
->  			};
->  
-> -			mdss_dsi1: dsi@ae96000 {
-> -				compatible = "qcom,sm8350-dsi-ctrl", "qcom,mdss-dsi-ctrl";
-> -				reg = <0 0x0ae96000 0 0x400>;
-> -				reg-names = "dsi_ctrl";
-> +			qup_uart3_default_state: qup-uart3-default-state {
-> +				rx-pins {
-> +					pins = "gpio18";
-> +					function = "qup3";
-> +				};
-> +				tx-pins {
-> +					pins = "gpio19";
-> +					function = "qup3";
-> +				};
-> +			};
->  
-> -				interrupt-parent = <&mdss>;
-> -				interrupts = <5>;
-> +			qup_uart6_default: qup-uart6-default-state {
-> +				pins = "gpio30", "gpio31";
-> +				function = "qup6";
-> +				drive-strength = <2>;
-> +				bias-disable;
-> +			};
->  
-> -				clocks = <&dispcc DISP_CC_MDSS_BYTE1_CLK>,
-> -					 <&dispcc DISP_CC_MDSS_BYTE1_INTF_CLK>,
-> -					 <&dispcc DISP_CC_MDSS_PCLK1_CLK>,
-> -					 <&dispcc DISP_CC_MDSS_ESC1_CLK>,
-> -					 <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> -					 <&gcc GCC_DISP_HF_AXI_CLK>;
-> -				clock-names = "byte",
-> -					      "byte_intf",
-> -					      "pixel",
-> -					      "core",
-> -					      "iface",
-> -					      "bus";
-> +			qup_uart18_default: qup-uart18-default-state {
-> +				pins = "gpio58", "gpio59";
-> +				function = "qup18";
-> +				drive-strength = <2>;
-> +				bias-disable;
-> +			};
->  
-> -				assigned-clocks = <&dispcc DISP_CC_MDSS_BYTE1_CLK_SRC>,
-> -						  <&dispcc DISP_CC_MDSS_PCLK1_CLK_SRC>;
-> -				assigned-clock-parents = <&mdss_dsi1_phy 0>,
-> -							 <&mdss_dsi1_phy 1>;
-> +			qup_i2c0_default: qup-i2c0-default-state {
-> +				pins = "gpio4", "gpio5";
-> +				function = "qup0";
-> +				drive-strength = <2>;
-> +				bias-pull-up;
-> +			};
->  
-> -				operating-points-v2 = <&dsi1_opp_table>;
-> -				power-domains = <&rpmhpd SM8350_MMCX>;
-> +			qup_i2c1_default: qup-i2c1-default-state {
-> +				pins = "gpio8", "gpio9";
-> +				function = "qup1";
-> +				drive-strength = <2>;
-> +				bias-pull-up;
-> +			};
->  
-> -				phys = <&mdss_dsi1_phy>;
-> +			qup_i2c2_default: qup-i2c2-default-state {
-> +				pins = "gpio12", "gpio13";
-> +				function = "qup2";
-> +				drive-strength = <2>;
-> +				bias-pull-up;
-> +			};
->  
-> -				#address-cells = <1>;
-> -				#size-cells = <0>;
-> +			qup_i2c4_default: qup-i2c4-default-state {
-> +				pins = "gpio20", "gpio21";
-> +				function = "qup4";
-> +				drive-strength = <2>;
-> +				bias-pull-up;
-> +			};
->  
-> -				status = "disabled";
-> +			qup_i2c5_default: qup-i2c5-default-state {
-> +				pins = "gpio24", "gpio25";
-> +				function = "qup5";
-> +				drive-strength = <2>;
-> +				bias-pull-up;
-> +			};
->  
-> -				dsi1_opp_table: opp-table {
-> -					compatible = "operating-points-v2";
-> +			qup_i2c6_default: qup-i2c6-default-state {
-> +				pins = "gpio28", "gpio29";
-> +				function = "qup6";
-> +				drive-strength = <2>;
-> +				bias-pull-up;
-> +			};
->  
-> -					/* TODO: opp-187500000 should work with
-> -					 * &rpmhpd_opp_low_svs, but one some of
-> -					 * sm8350_hdk boards reboot using this
-> -					 * opp.
-> -					 */
-> -					opp-187500000 {
-> -						opp-hz = /bits/ 64 <187500000>;
-> -						required-opps = <&rpmhpd_opp_svs>;
-> -					};
-> +			qup_i2c7_default: qup-i2c7-default-state {
-> +				pins = "gpio32", "gpio33";
-> +				function = "qup7";
-> +				drive-strength = <2>;
-> +				bias-disable;
-> +			};
->  
-> -					opp-300000000 {
-> -						opp-hz = /bits/ 64 <300000000>;
-> -						required-opps = <&rpmhpd_opp_svs>;
-> -					};
-> +			qup_i2c8_default: qup-i2c8-default-state {
-> +				pins = "gpio36", "gpio37";
-> +				function = "qup8";
-> +				drive-strength = <2>;
-> +				bias-pull-up;
-> +			};
->  
-> -					opp-358000000 {
-> -						opp-hz = /bits/ 64 <358000000>;
-> -						required-opps = <&rpmhpd_opp_svs_l1>;
-> -					};
-> -				};
-> +			qup_i2c9_default: qup-i2c9-default-state {
-> +				pins = "gpio40", "gpio41";
-> +				function = "qup9";
-> +				drive-strength = <2>;
-> +				bias-pull-up;
-> +			};
->  
-> -				ports {
-> -					#address-cells = <1>;
-> -					#size-cells = <0>;
-> +			qup_i2c10_default: qup-i2c10-default-state {
-> +				pins = "gpio44", "gpio45";
-> +				function = "qup10";
-> +				drive-strength = <2>;
-> +				bias-pull-up;
-> +			};
->  
-> -					port@0 {
-> -						reg = <0>;
-> -						mdss_dsi1_in: endpoint {
-> -							remote-endpoint = <&dpu_intf2_out>;
-> -						};
-> -					};
-> +			qup_i2c11_default: qup-i2c11-default-state {
-> +				pins = "gpio48", "gpio49";
-> +				function = "qup11";
-> +				drive-strength = <2>;
-> +				bias-pull-up;
-> +			};
->  
-> -					port@1 {
-> -						reg = <1>;
-> -						mdss_dsi1_out: endpoint {
-> -						};
-> -					};
-> -				};
-> +			qup_i2c12_default: qup-i2c12-default-state {
-> +				pins = "gpio52", "gpio53";
-> +				function = "qup12";
-> +				drive-strength = <2>;
-> +				bias-pull-up;
->  			};
->  
-> -			mdss_dsi1_phy: phy@ae96400 {
-> -				compatible = "qcom,sm8350-dsi-phy-5nm";
-> -				reg = <0 0x0ae96400 0 0x200>,
-> -				      <0 0x0ae96600 0 0x280>,
-> -				      <0 0x0ae96900 0 0x27c>;
-> -				reg-names = "dsi_phy",
-> -					    "dsi_phy_lane",
-> -					    "dsi_pll";
-> +			qup_i2c13_default: qup-i2c13-default-state {
-> +				pins = "gpio0", "gpio1";
-> +				function = "qup13";
-> +				drive-strength = <2>;
-> +				bias-pull-up;
-> +			};
->  
-> -				#clock-cells = <1>;
-> -				#phy-cells = <0>;
-> +			qup_i2c14_default: qup-i2c14-default-state {
-> +				pins = "gpio56", "gpio57";
-> +				function = "qup14";
-> +				drive-strength = <2>;
-> +				bias-disable;
-> +			};
->  
-> -				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> -					 <&rpmhcc RPMH_CXO_CLK>;
-> -				clock-names = "iface", "ref";
-> +			qup_i2c15_default: qup-i2c15-default-state {
-> +				pins = "gpio60", "gpio61";
-> +				function = "qup15";
-> +				drive-strength = <2>;
-> +				bias-disable;
-> +			};
->  
-> -				status = "disabled";
-> +			qup_i2c16_default: qup-i2c16-default-state {
-> +				pins = "gpio64", "gpio65";
-> +				function = "qup16";
-> +				drive-strength = <2>;
-> +				bias-disable;
->  			};
-> -		};
->  
-> -		dispcc: clock-controller@af00000 {
-> -			compatible = "qcom,sm8350-dispcc";
-> -			reg = <0 0x0af00000 0 0x10000>;
-> -			clocks = <&rpmhcc RPMH_CXO_CLK>,
-> -				 <&mdss_dsi0_phy 0>, <&mdss_dsi0_phy 1>,
-> -				 <&mdss_dsi1_phy 0>, <&mdss_dsi1_phy 1>,
-> -				 <0>,
-> -				 <0>;
-> -			clock-names = "bi_tcxo",
-> -				      "dsi0_phy_pll_out_byteclk",
-> -				      "dsi0_phy_pll_out_dsiclk",
-> -				      "dsi1_phy_pll_out_byteclk",
-> -				      "dsi1_phy_pll_out_dsiclk",
-> -				      "dp_phy_pll_link_clk",
-> -				      "dp_phy_pll_vco_div_clk";
-> -			#clock-cells = <1>;
-> -			#reset-cells = <1>;
-> -			#power-domain-cells = <1>;
-> +			qup_i2c17_default: qup-i2c17-default-state {
-> +				pins = "gpio72", "gpio73";
-> +				function = "qup17";
-> +				drive-strength = <2>;
-> +				bias-disable;
-> +			};
->  
-> -			power-domains = <&rpmhpd SM8350_MMCX>;
-> +			qup_i2c19_default: qup-i2c19-default-state {
-> +				pins = "gpio76", "gpio77";
-> +				function = "qup19";
-> +				drive-strength = <2>;
-> +				bias-disable;
-> +			};
->  		};
->  
->  		apps_smmu: iommu@15000000 {
+>  		lpass_ag_noc: interconnect@3c40000 {
+>  			compatible = "qcom,sm8350-lpass-ag-noc";
+>  			reg = <0 0x03c40000 0 0xf080>;
