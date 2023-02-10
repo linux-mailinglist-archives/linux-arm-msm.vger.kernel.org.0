@@ -2,76 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C9FD1691E21
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 12:23:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 25534691E26
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 12:26:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232083AbjBJLXW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Feb 2023 06:23:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36696 "EHLO
+        id S231993AbjBJL0I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Feb 2023 06:26:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231609AbjBJLXV (ORCPT
+        with ESMTP id S231789AbjBJL0H (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Feb 2023 06:23:21 -0500
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 289D46E898
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 03:23:20 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id n28-20020a05600c3b9c00b003ddca7a2bcbso3812112wms.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 03:23:20 -0800 (PST)
+        Fri, 10 Feb 2023 06:26:07 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70D066C7E7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 03:26:05 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id a2so4750259wrd.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 03:26:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=xI9gYztVh8CUauySkPThsaIJ2I1/Wnh8PrWXbxjNzZ0=;
-        b=NRHJCgKQ2tlzZWl8sU4Ssukk4rUijhHHujOK7KFzcVRGnkKk/4V/UhLudq5HHKstUS
-         219eo6DzkvmGzmoQuv4mjeip6BcEcBe8Y97VSeJ+/OHpofacv4dXl6scozKw3Xag6IXG
-         sKF4y1hbrbQlG2V+P9uVn0Q2DWddNC94dwi70kmO6LGp87Fvysh/RWzZQMFe1TD+203C
-         0jHwbB4fgeMueG/VLFiur5ERomy/zCIUoHQbjcMVfcBD4ljzcO5yXE8MMl7Eo7NyuPRQ
-         jFUwF2GlprRII38nIlnalovb4+dKRzBQaOOoh8mbbipqcpkghTb87HG+jPq6E16dZQWQ
-         EXLg==
+        bh=WRHSFsNOEYBISqhGh46fkzy2/I3EFBvJZ7Wz7NvqRXQ=;
+        b=NeJo0PnwsECgbdy5WyE4eGvbwndSnXKWfe+n61S1v7tprEwDEGrNOgmeZnYwEgFJFF
+         Zj3Yh+xupgf4Vm+5obFefSe52BnG6FRtcCVDHJoyLqizDKgSFSUrpvEGEMJxa+t3gSmp
+         nTLAxBDQOYv+76exd4E/CozZsvxdShWJGBZRaZLS+Va1f6erT1CGTC+/OBjvKv089Tb5
+         R5eMQO/Yjg3jtUA8kJcNJg3mByR0R6yI6hCVDo/9vuTZ+hHtJf+exbhmok3XJtzXb8ic
+         IblGclnoEru1Oq20FmcYMBp4uXg2C6hwYjwjQ40QXMLE4WfaQApzE14/nX7wWBJP//V6
+         VqZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xI9gYztVh8CUauySkPThsaIJ2I1/Wnh8PrWXbxjNzZ0=;
-        b=Y2cR55LRgLzuu6IPgO2O/lGwvPT1jEEW/vfQqJpWEABNLtKBmKoV72HBv7tQEWJZMr
-         vbGhwEks4uL3VlWxquFdTJUSANtS6AioRZuLw49CV5kwkA5r8HkkGi3zY8xNunNp9zVh
-         Vpcwsl8hRrFz8S6/PbJwneB5yD9V4RJ4gYd74k8UMfA3KshrG78Lt2nyRv5S4CmyXMrn
-         H757t23zWH9OTKSJ2IiZsoVW9NyPOhc/KOILM8lX0ZWC8SYlDDqVXT5rMTHXHdyVpTb4
-         s53tTpR/IHefoCKJKs9K5UcGv2eo+9O7FOJbv3H40VL88KDjjdAKfoGd2/5KglLDhVbi
-         RK5Q==
-X-Gm-Message-State: AO0yUKWjL+1vLYfo4g2M1XNS3fSA8lYOVJHAwA7BVaDSn7K/SzKLT0f/
-        vkvpeiOX3O1eyRUp/Zt3BsMZ4g==
-X-Google-Smtp-Source: AK7set+legodxv6KBlkbkD44DJSD+6EChFSzBsO0IZtYTmpH0QN9n6LRbkTpKJ8iSAhd7hSblH2b8A==
-X-Received: by 2002:a05:600c:4393:b0:3de:1d31:1043 with SMTP id e19-20020a05600c439300b003de1d311043mr12023706wmn.21.1676028198740;
-        Fri, 10 Feb 2023 03:23:18 -0800 (PST)
+        bh=WRHSFsNOEYBISqhGh46fkzy2/I3EFBvJZ7Wz7NvqRXQ=;
+        b=Kqp3n0M1uMhiKlql2HmO5yTps4YiN3AEYg+ol+BDqbCTS6pNgIe7pQgRKYI8Qpvakz
+         QunZPns0J2lUoI7QTlQTDWY7wvKEIzdcV9ECs01Mxw3ajiRBKjh8cUEtgvNmW0mvAgWN
+         MYoKLl5zCvaW8cqjbG4BpkwlZBSpIvl44cWFDa5kEzMOYdr6DimPp0GyHxlc4aFPoW5R
+         Kc9+SNIm1Wu3tRFuWRF6U/t+FgcZbZ3gijE5POghUIrC7AnRnoevYsD0aQ27xGuujvoV
+         limFOy58xYO0+pbb7JO2JdVaRHQbFO5GPU0O1FqbyOaqbkW5RNnC9obRd4azMQgHA4vj
+         gKgQ==
+X-Gm-Message-State: AO0yUKWrbQF+6rl3F7gMEmpKJSwX5KeM5wTXH/7odiHsESwqTqi1eSf0
+        c/yiYfAwv4Vff+frSBdgu7iAgw==
+X-Google-Smtp-Source: AK7set8j79x7B9ONqDBzqjQdMb3p8qwjDAXiyqF80JMwAjyuLznTOPi4CX/fXoOm/BNc8+pxppwfPA==
+X-Received: by 2002:adf:eb41:0:b0:2c3:ff6c:82e with SMTP id u1-20020adfeb41000000b002c3ff6c082emr8658873wrn.22.1676028364005;
+        Fri, 10 Feb 2023 03:26:04 -0800 (PST)
 Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id o5-20020a1c7505000000b003dc48a2f997sm7816142wmc.17.2023.02.10.03.23.16
+        by smtp.gmail.com with ESMTPSA id g12-20020a5d540c000000b002bff1de8d4bsm3429258wrv.49.2023.02.10.03.26.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Feb 2023 03:23:18 -0800 (PST)
-Message-ID: <f8727f1c-c0e3-f14a-8d4d-8d0f294e480a@linaro.org>
-Date:   Fri, 10 Feb 2023 12:23:15 +0100
+        Fri, 10 Feb 2023 03:26:03 -0800 (PST)
+Message-ID: <8c7584b2-60e0-27c8-a7c3-845cf5640d77@linaro.org>
+Date:   Fri, 10 Feb 2023 12:26:01 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [PATCH v5 8/8] dt-bindings: remoteproc: qcom: sc7280-adsp-pil:
- Add missing properties
+Subject: Re: [PATCH v5 3/8] arm64: dts: qcom: sc7280: Add LPASS PIL node
 Content-Language: en-US
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org,
-        agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
-        broonie@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_rohkumar@quicinc.com, srinivas.kandagatla@linaro.org,
-        dianders@chromium.org, swboyd@chromium.org, judyhsiao@chromium.org,
-        alsa-devel@alsa-project.org, quic_rjendra@quicinc.com,
-        konrad.dybcio@somainline.org, mka@chromium.org,
-        quic_mohs@quicinc.com
+To:     Stephen Boyd <swboyd@chromium.org>,
+        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        agross@kernel.org, alsa-devel@alsa-project.org,
+        andersson@kernel.org, broonie@kernel.org,
+        devicetree@vger.kernel.org, dianders@chromium.org,
+        judyhsiao@chromium.org, konrad.dybcio@somainline.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mka@chromium.org,
+        quic_mohs@quicinc.com, quic_rjendra@quicinc.com,
+        quic_rohkumar@quicinc.com, robh+dt@kernel.org,
+        srinivas.kandagatla@linaro.org, vkoul@kernel.org
 References: <1675700201-12890-1-git-send-email-quic_srivasam@quicinc.com>
- <1675700201-12890-9-git-send-email-quic_srivasam@quicinc.com>
+ <1675700201-12890-4-git-send-email-quic_srivasam@quicinc.com>
+ <CAE-0n53uReg41RrHrBDaNt+BgaPem_JO-2Wwq8e_g0NeNCvgXg@mail.gmail.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1675700201-12890-9-git-send-email-quic_srivasam@quicinc.com>
+In-Reply-To: <CAE-0n53uReg41RrHrBDaNt+BgaPem_JO-2Wwq8e_g0NeNCvgXg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -84,52 +85,60 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/02/2023 17:16, Srinivasa Rao Mandadapu wrote:
-> Add reg-names and power-domain-names for remoteproc ADSP pheripheral
-
-typo: peripheral
-
-> loader. Add firmware-name property to distinguish and load different
-> firmware binaries of various vendors.
-> Change qcom,halt-regs property phandle to tcsr_1 from tcsr_mutex.
-> Also add required-opps property and change power domain from LCX to CX,
-> which is actual PD to be controlled, for setting appropriate
-> performance state.
-> This is to make compatible with remoteproc ADSP PIL driver and
-> latest device tree changes.
+On 09/02/2023 23:55, Stephen Boyd wrote:
+>> +
+>> +                       glink-edge {
+>> +                               interrupts-extended = <&ipcc IPCC_CLIENT_LPASS
+>> +                                                      IPCC_MPROC_SIGNAL_GLINK_QMP
+>> +                                                      IRQ_TYPE_EDGE_RISING>;
+>> +
+>> +                               mboxes = <&ipcc IPCC_CLIENT_LPASS
+>> +                                        IPCC_MPROC_SIGNAL_GLINK_QMP>;
+>> +
+>> +                               label = "lpass";
+>> +                               qcom,remote-pid = <2>;
+>> +
+>> +                               gpr {
 > 
-> Fixes: 8490a99586ab ("dt-bindings: remoteproc: qcom: Add SC7280 ADSP support")
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  .../bindings/remoteproc/qcom,sc7280-adsp-pil.yaml  | 30 +++++++++++++++++++---
->  1 file changed, 26 insertions(+), 4 deletions(-)
+> This node name should be apr per the qcom,glink-edge.yaml binding?
+
+No, this is correct. I fixed the glink-edge binding last year.
+
 > 
-> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml
-> index 94ca7a0..7addc7d 100644
-> --- a/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml
-> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-adsp-pil.yaml
-> @@ -23,6 +23,11 @@ properties:
->        - description: qdsp6ss register
->        - description: efuse q6ss register
->  
-> +  reg-names:
-> +    items:
-> +      - const: qdsp6ss_base
-> +      - const: lpass_efuse
+>> +                                       compatible = "qcom,gpr";
+>> +                                       qcom,glink-channels = "adsp_apps";
+>> +                                       qcom,domain = <GPR_DOMAIN_ID_ADSP>;
+>> +                                       qcom,intents = <512 20>;
+>> +                                       #address-cells = <1>;
+>> +                                       #size-cells = <0>;
+>> +
+>> +                                       q6apm: service@1 {
+>> +                                               compatible = "qcom,q6apm";
+>> +                                               reg = <GPR_APM_MODULE_IID>;
+>> +                                               #sound-dai-cells = <0>;
+>> +
+>> +                                               q6apmdai: dais {
+>> +                                                       compatible = "qcom,q6apm-dais";
+>> +                                                       iommus = <&apps_smmu 0x1801 0x0>;
+>> +                                               };
+>> +
+>> +                                               q6apmbedai: bedais {
+>> +                                                       compatible = "qcom,q6apm-lpass-dais";
+>> +                                                       #sound-dai-cells = <1>;
+>> +                                               };
+>> +                                       };
+>> +
+>> +                                       q6prm: service@2 {
+>> +                                               compatible = "qcom,q6prm";
+>> +                                               reg = <GPR_PRM_MODULE_IID>;
+>> +
+>> +                                               q6prmcc: clock-controller {
+>> +                                                       compatible = "qcom,q6prm-lpass-clocks";
+> 
+> This is clk binding but not a clk driver? I'll look away now.
 
-So your commit adding the bindings:
-https://lore.kernel.org/all/1664368073-13659-2-git-send-email-quic_srivasam@quicinc.com/
-
-was already incomplete because the same patchset added undocumented
-properties.
-
-I have no clue what is happening with AudioReach sound/ADSP code - it's
-like random set of changes here and there, without coordination. Drivers
-come without bindings, DTS comes before bindings...
-
-Is your DTS in this patches matching this binding? If so, usage cannot
-be before the binding is introduced.
+It is a clock driver which was not put into clk. Maybe because it is
+tightly tied to entire QDSP platform.
 
 Best regards,
 Krzysztof
