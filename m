@@ -2,197 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 197BF691B6A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 10:34:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 419D1691BAB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 10:41:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231696AbjBJJeJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Feb 2023 04:34:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33596 "EHLO
+        id S231538AbjBJJlH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Feb 2023 04:41:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38582 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231781AbjBJJeI (ORCPT
+        with ESMTP id S231420AbjBJJlG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Feb 2023 04:34:08 -0500
-Received: from bg4.exmail.qq.com (bg4.exmail.qq.com [43.155.67.158])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61AB059E6C;
-        Fri, 10 Feb 2023 01:34:05 -0800 (PST)
-X-QQ-mid: bizesmtp87t1676021563tehi0iwo
-Received: from pek-vx-bsp2.wrs.com ( [60.247.85.88])
-        by bizesmtp.qq.com (ESMTP) with 
-        id ; Fri, 10 Feb 2023 17:32:26 +0800 (CST)
-X-QQ-SSF: 01200000000000C0D000000A0000000
-X-QQ-FEAT: C46Rb8GPIEdQkAjuNEvzzL3Rs0nKkvh/PcSoaaqidTxeCkENSHSVqCDnM9GB/
-        XAuUnNnX4kQV3OC0mUVFEpblsXhHzLEmK3en5iTOceN0yf7sbHWJ6w6xugHFjWIDMc7R2r3
-        AjCdrD12AYijXVStARs9gE2mfuIrn4RfXlDpWudrH8dSp1b9a+oMcBTtOpH6RVO+KDD2h3H
-        wwkU1T4J27HPy1R5+re0qwyEyVByxzDNwPSU0tgyvWU4QseHWHezWCnhK3QJVtxL2cboTeA
-        B6XobgH1FIh1gVU2SK6auor/aNNvOwIj5E6CG7wmGDDtg4Tf98pJCjpfe9A0HGq3jOox+lv
-        ZmgAJi1bfAW++rLB5zXV0IAZ9gSBV33mVMwextL5L4cCXHXmSM=
-X-QQ-GoodBg: 0
-From:   Bin Meng <bmeng@tinylab.org>
-To:     linux-kernel@vger.kernel.org
-Cc:     Andrew Lunn <andrew@lunn.ch>, Andy Gross <agross@kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Chuck Lever <chuck.lever@oracle.com>,
-        Dinh Nguyen <dinguyen@kernel.org>,
-        Fabio Estevam <festevam@gmail.com>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Robert Elliott <elliott@hpe.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Fri, 10 Feb 2023 04:41:06 -0500
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC6C035268
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 01:41:04 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id n13so3349803wmr.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 01:41:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=FXtJIM3du57xUfV949O/wulNn8qW+AxKoWuOnlA8Zs8=;
+        b=Q4I+nSXtzNQtYSSBlK1tnkNWOBobkj//fQnII73nliusIFWbS4CyMXwv790TWVzaIR
+         XeJFKMr09KxD6VEIwh0GADzS0KBeXwSd/Z2PuYcBx5wrwvwYKnpwCDcrhxRlRw1DIemu
+         MShr1vbHI1OaKEdj393Dhbfx1croPFoH/IAHV4O1JI2sVfq1pnRj8CyYMXARz/VHSfkB
+         +G0O6Aj1djeAFoK6kGfSCNq92z0a1Be0RoRQsmFaFkAFFZi/8jacKoA+8TQepXSM+Kfj
+         3xzyBztnswh5ZMW2uGJwfNW1lkjNA2TL5EfxLYmohtuFUIh9ADwLNXuqvunAKu5Ksdr8
+         LJyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=FXtJIM3du57xUfV949O/wulNn8qW+AxKoWuOnlA8Zs8=;
+        b=lxhpSDg2oGUaSJcgESlxQqWiPGBV53AwunPIyC4IBhM5NQtlowOt5coLMXpPel5/jx
+         wz16agT2kWzOKDYHq6HmORSJsVeMzPLilXY72Q5N8bxV6j2HQhThH0gVq7JVHNyssVr2
+         DuMOVqZaZzyeq8QblY1E7uiIqSlW8YQvL19CleCqklfVctuevK+0dlm5MfCZR/3LmS8b
+         zpmaia4xfyIe3jSlhOoGP+xGQbRn1MlNAaxv3NqDOizkLir6D4YJm/xSGhGP2BvKXfq5
+         qT71+se/PTBLPtkGRNUCT2VX3cJSb7CleOJuQO+j/Qo7+lxBN0fydLj85FCGvhQblgKP
+         1GhQ==
+X-Gm-Message-State: AO0yUKUGcMqhsJu+pSefhKlKqZ48+KDVg4sfBiRfXAFD9ERoO37vTdx0
+        a1EOZNNGhtsdX/h02BLDWRqIEg==
+X-Google-Smtp-Source: AK7set9g8UOPh4E6E2LgZ5q7toZT7ywT9NslTSP9dH/BzqJlUMVqwQWZGYqb6Lx8fO9DrtqztHmmEQ==
+X-Received: by 2002:a05:600c:3317:b0:3e0:111:28a9 with SMTP id q23-20020a05600c331700b003e0011128a9mr12224837wmp.22.1676022063255;
+        Fri, 10 Feb 2023 01:41:03 -0800 (PST)
+Received: from linaro.org (wifi-eduroam-trans.univ-tlse3.fr. [195.220.58.237])
+        by smtp.gmail.com with ESMTPSA id f3-20020a056000128300b002c3e600d1a8sm3208693wrx.95.2023.02.10.01.40.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Feb 2023 01:41:02 -0800 (PST)
+Date:   Fri, 10 Feb 2023 10:40:56 +0100
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+To:     rafael.j.wysocki@intel.com
+Cc:     linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Guillaume La Roque <glaroque@baylibre.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
         Shawn Guo <shawnguo@kernel.org>,
-        Stefan Hansson <newbie13xd@gmail.com>,
-        Sudeep Holla <sudeep.holla@arm.com>, Zi Yan <ziy@nvidia.com>,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH] arm: Drop CONFIG_MTD_M25P80 in various defconfig files
-Date:   Fri, 10 Feb 2023 17:32:24 +0800
-Message-Id: <20230210093224.689990-1-bmeng@tinylab.org>
-X-Mailer: git-send-email 2.25.1
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Niklas =?iso-8859-1?Q?S=F6derlund?= 
+        <niklas.soderlund@ragnatech.se>,
+        Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        ye xingchen <ye.xingchen@zte.com.cn>,
+        Ricardo Neri <ricardo.neri-calderon@linux.intel.com>,
+        Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+        Haowen Bai <baihaowen@meizu.com>,
+        Minghao Chi <chi.minghao@zte.com.cn>,
+        "open list:THERMAL DRIVER FOR AMLOGIC SOCS" 
+        <linux-amlogic@lists.infradead.org>,
+        "moderated list:BROADCOM BCM2711/BCM2835 ARM ARCHITECTURE" 
+        <linux-rpi-kernel@lists.infradead.org>,
+        "moderated list:BROADCOM BCM2711/BCM2835 ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        "open list:RENESAS R-CAR THERMAL DRIVERS" 
+        <linux-renesas-soc@vger.kernel.org>,
+        "open list:SAMSUNG THERMAL DRIVER" 
+        <linux-samsung-soc@vger.kernel.org>,
+        "moderated list:ARM/STM32 ARCHITECTURE" 
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        "open list:TEGRA ARCHITECTURE SUPPORT" <linux-tegra@vger.kernel.org>
+Subject: Re: [PATCH] thermal: Remove core header inclusion from drivers
+Message-ID: <20230210094056.GC175687@linaro.org>
+References: <20230206153432.1017282-1-daniel.lezcano@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: bizesmtp:tinylab.org:qybglogicsvr:qybglogicsvr3
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20230206153432.1017282-1-daniel.lezcano@linaro.org>
+X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Drop CONFIG_MTD_M25P80 that was removed in
-commit b35b9a10362d ("mtd: spi-nor: Move m25p80 code in spi-nor.c")
+Hi Rafael,
 
-Signed-off-by: Bin Meng <bmeng@tinylab.org>
+On Mon, Feb 06, 2023 at 04:34:29PM +0100, Daniel Lezcano wrote:
+> As the name states "thermal_core.h" is the header file for the core
+> components of the thermal framework.
+> 
+> Too many drivers are including it. Hopefully the recent cleanups
+> helped to self encapsulate the code a bit more and prevented the
+> drivers to need this header.
+> 
+> Remove this inclusion in every place where it is possible.
+> 
+> Some other drivers did a confusion with the core header and the one
+> exported in linux/thermal.h. They include the former instead of the
+> latter. The changes also fix this.
+> 
+> The tegra/soctherm driver still remains as it uses an internal
+> function which need to be replaced.
+> 
+> The Intel HFI driver uses the netlink internal framework core and
+> should be changed to prevent to deal with the internals.
+> 
+> No functional changes
 
----
+Are you ok if I take this patch ?
 
- arch/arm/configs/axm55xx_defconfig     | 2 +-
- arch/arm/configs/davinci_all_defconfig | 1 -
- arch/arm/configs/dove_defconfig        | 1 -
- arch/arm/configs/keystone_defconfig    | 1 -
- arch/arm/configs/mvebu_v5_defconfig    | 1 -
- arch/arm/configs/mxs_defconfig         | 1 -
- arch/arm/configs/pxa_defconfig         | 1 -
- arch/arm/configs/qcom_defconfig        | 1 -
- arch/arm/configs/socfpga_defconfig     | 1 -
- 9 files changed, 1 insertion(+), 9 deletions(-)
+Thanks
 
-diff --git a/arch/arm/configs/axm55xx_defconfig b/arch/arm/configs/axm55xx_defconfig
-index bfbaa2df3be5..936aecbdc129 100644
---- a/arch/arm/configs/axm55xx_defconfig
-+++ b/arch/arm/configs/axm55xx_defconfig
-@@ -85,7 +85,7 @@ CONFIG_MTD_CFI_AMDSTD=y
- CONFIG_MTD_CFI_STAA=y
- CONFIG_MTD_PHYSMAP=y
- CONFIG_MTD_PHYSMAP_OF=y
--CONFIG_MTD_M25P80=y
-+CONFIG_MTD_SPI_NOR=y
- CONFIG_PROC_DEVICETREE=y
- CONFIG_BLK_DEV_LOOP=y
- CONFIG_BLK_DEV_RAM=y
-diff --git a/arch/arm/configs/davinci_all_defconfig b/arch/arm/configs/davinci_all_defconfig
-index 821d966c95a5..cb7a03bce291 100644
---- a/arch/arm/configs/davinci_all_defconfig
-+++ b/arch/arm/configs/davinci_all_defconfig
-@@ -63,7 +63,6 @@ CONFIG_MTD_CFI=m
- CONFIG_MTD_CFI_INTELEXT=m
- CONFIG_MTD_CFI_AMDSTD=m
- CONFIG_MTD_PHYSMAP=m
--CONFIG_MTD_M25P80=m
- CONFIG_MTD_RAW_NAND=m
- CONFIG_MTD_NAND_DAVINCI=m
- CONFIG_MTD_SPI_NOR=m
-diff --git a/arch/arm/configs/dove_defconfig b/arch/arm/configs/dove_defconfig
-index ff37f46c82fb..3f90b4b241a9 100644
---- a/arch/arm/configs/dove_defconfig
-+++ b/arch/arm/configs/dove_defconfig
-@@ -43,7 +43,6 @@ CONFIG_MTD_CFI_GEOMETRY=y
- CONFIG_MTD_CFI_INTELEXT=y
- CONFIG_MTD_CFI_STAA=y
- CONFIG_MTD_PHYSMAP=y
--CONFIG_MTD_M25P80=y
- CONFIG_MTD_SPI_NOR=y
- CONFIG_BLK_DEV_LOOP=y
- CONFIG_BLK_DEV_RAM=y
-diff --git a/arch/arm/configs/keystone_defconfig b/arch/arm/configs/keystone_defconfig
-index 4a5b9adbf2a1..36692143dd3d 100644
---- a/arch/arm/configs/keystone_defconfig
-+++ b/arch/arm/configs/keystone_defconfig
-@@ -118,7 +118,6 @@ CONFIG_MTD=y
- CONFIG_MTD_CMDLINE_PARTS=y
- CONFIG_MTD_BLOCK=y
- CONFIG_MTD_PLATRAM=y
--CONFIG_MTD_M25P80=y
- CONFIG_MTD_RAW_NAND=y
- CONFIG_MTD_NAND_DAVINCI=y
- CONFIG_MTD_SPI_NOR=y
-diff --git a/arch/arm/configs/mvebu_v5_defconfig b/arch/arm/configs/mvebu_v5_defconfig
-index 2467afd32146..26c5724c409d 100644
---- a/arch/arm/configs/mvebu_v5_defconfig
-+++ b/arch/arm/configs/mvebu_v5_defconfig
-@@ -63,7 +63,6 @@ CONFIG_MTD_CFI_GEOMETRY=y
- CONFIG_MTD_CFI_INTELEXT=y
- CONFIG_MTD_CFI_STAA=y
- CONFIG_MTD_PHYSMAP=y
--CONFIG_MTD_M25P80=y
- CONFIG_MTD_RAW_NAND=y
- CONFIG_MTD_NAND_ORION=y
- CONFIG_MTD_SPI_NOR=y
-diff --git a/arch/arm/configs/mxs_defconfig b/arch/arm/configs/mxs_defconfig
-index feb38a94c1a7..0eeef6402952 100644
---- a/arch/arm/configs/mxs_defconfig
-+++ b/arch/arm/configs/mxs_defconfig
-@@ -45,7 +45,6 @@ CONFIG_MTD=y
- CONFIG_MTD_CMDLINE_PARTS=y
- CONFIG_MTD_BLOCK=y
- CONFIG_MTD_DATAFLASH=y
--CONFIG_MTD_M25P80=y
- CONFIG_MTD_SST25L=y
- CONFIG_MTD_RAW_NAND=y
- CONFIG_MTD_NAND_GPMI_NAND=y
-diff --git a/arch/arm/configs/pxa_defconfig b/arch/arm/configs/pxa_defconfig
-index 0a0f12df40b5..851a817b52c0 100644
---- a/arch/arm/configs/pxa_defconfig
-+++ b/arch/arm/configs/pxa_defconfig
-@@ -130,7 +130,6 @@ CONFIG_MTD_ROM=m
- CONFIG_MTD_COMPLEX_MAPPINGS=y
- CONFIG_MTD_PHYSMAP=y
- CONFIG_MTD_PXA2XX=m
--CONFIG_MTD_M25P80=m
- CONFIG_MTD_BLOCK2MTD=y
- CONFIG_MTD_DOCG3=m
- CONFIG_MTD_ONENAND=m
-diff --git a/arch/arm/configs/qcom_defconfig b/arch/arm/configs/qcom_defconfig
-index b41716c1ec64..fd5581edc310 100644
---- a/arch/arm/configs/qcom_defconfig
-+++ b/arch/arm/configs/qcom_defconfig
-@@ -63,7 +63,6 @@ CONFIG_DEVTMPFS_MOUNT=y
- CONFIG_MTD=y
- CONFIG_MTD_QCOMSMEM_PARTS=y
- CONFIG_MTD_BLOCK=y
--CONFIG_MTD_M25P80=y
- CONFIG_MTD_RAW_NAND=y
- CONFIG_MTD_NAND_QCOM=y
- CONFIG_MTD_SPI_NOR=y
-diff --git a/arch/arm/configs/socfpga_defconfig b/arch/arm/configs/socfpga_defconfig
-index 70739e09d0f4..9591af0441dd 100644
---- a/arch/arm/configs/socfpga_defconfig
-+++ b/arch/arm/configs/socfpga_defconfig
-@@ -41,7 +41,6 @@ CONFIG_DEVTMPFS=y
- CONFIG_DEVTMPFS_MOUNT=y
- CONFIG_MTD=y
- CONFIG_MTD_BLOCK=y
--CONFIG_MTD_M25P80=y
- CONFIG_MTD_RAW_NAND=y
- CONFIG_MTD_NAND_DENALI_DT=y
- CONFIG_MTD_SPI_NOR=y
+  -- Daniel
+
+
 -- 
-2.25.1
 
+ <http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
