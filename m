@@ -2,81 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C2B0E692041
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 14:54:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2591B69206B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 15:04:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232101AbjBJNyA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Feb 2023 08:54:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39724 "EHLO
+        id S232344AbjBJOET (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Feb 2023 09:04:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231646AbjBJNx7 (ORCPT
+        with ESMTP id S231842AbjBJOES (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Feb 2023 08:53:59 -0500
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93C381C5BC
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 05:53:58 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id lu11so16055906ejb.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 05:53:58 -0800 (PST)
+        Fri, 10 Feb 2023 09:04:18 -0500
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB77F5BA65
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 06:04:15 -0800 (PST)
+Received: by mail-ed1-x52a.google.com with SMTP id eq11so4817204edb.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 06:04:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=wTgaNvNSBXacoigODkFGC4lM/nCnl6tx2W6/KFPue5E=;
-        b=TBP/5WZs44JJu17WijTEUoTCSiV5LffIEdKbnA5WkCSsQfMx0VH3DZxnPlU6+FoI3t
-         p23hA7dQE3PV/ry/MABbn05OvV0Uz8pja1+bIlySBJ0CEpt8gaJaaZMVLApXb/QwoLhz
-         +NEbXbVgowHFKwHtZ5MX5j1aUmBQU1uc9DWGxTsdXNlDNjfK9anQOEUbak9xqKSUZ8f3
-         Pm3rdVqhw2Yna8kXv6+R0eyuiWPE3C9Ih+MQfjKk8Qph+zDuEb/XCBBu/1gwA4ewISQX
-         uDwue6aDcz2HSCHLgh+0CFk6MlZPObsP6stfjFYRh8sQJi/zJ/ANI6ll8KMshUp3I+Ng
-         gshw==
+        bh=qReh4amMw5PfvkiwnDv2ICM+tFClbn0Zri7uBykIprY=;
+        b=iI27E+A+upQ0K9PmlzsGlQpVmdtpZW+6VZ3H1tdOJuFUBVrpdr9OlV7ApMAc6NGsQg
+         MbVwkia5LUkq7W6K9HN5yj/UCwaa4DpNeFhZ+fbd/kQD+ZHFVdn4tA4CiIBjETWf35BB
+         AycCruh6X5pfQuytq404rpUpSTBBThATIAM2GF3Q/wlfxn2seo8myX7PkcYpyXY3Fta5
+         gIw+6unY4khWrfx3E88Q/gdNJLHK8+eMLe81cs4j9gBzsojU+PJdrXKxeg7Gg2pCODkW
+         j4nk+qZjoHAFPdDkrHDtRZzoKX3KuHzzcAOdFs4spI3AUV5OVC1727zNCGh7tEMGXIMC
+         /pXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wTgaNvNSBXacoigODkFGC4lM/nCnl6tx2W6/KFPue5E=;
-        b=OnKdtqbWyH/jz+NRfzqPDoWslNxrapMpU66em52ce43qEr5bbaiUDkvDWZFBI/zp0f
-         wQOn96z6IRFgFrPsNQp2vx9AL/59i2GrFUXLMNoa0HYBhB5yHk/Jd3QZm3DdOEOkHao7
-         7z4tggndXU4U+zS78oE8BbJbToo5xQrKN2ydANKaRa3BNoQ9zzUj4h159HHvFSnrs236
-         0KPnvI9f5ho+/4l2sghxSWDpI9k94bxVaeFj9nU57FK67zIJT5YuwmDoyt37urstPp7o
-         KrE6spC2BZnNCQd2IqEp+tTSWbhwNtDAFZ4E6KIIrQ/y9sn5fATuBTGbE3KJqe1ZVGSh
-         4/cQ==
-X-Gm-Message-State: AO0yUKUg/1kFnG7GdrnovzRby8XgtaL1ZELkNyUeS5UdsES3HLl5YG8b
-        XnbAI9GrFhZQNnMS74324L4LhQ==
-X-Google-Smtp-Source: AK7set98zYl2amDorB/c04/44wkpCjMLbHA3ZdridMJU7kVz2p/YRsGqCL7LbTKESHSin/DPZKCPkQ==
-X-Received: by 2002:a17:906:1c90:b0:878:7291:d558 with SMTP id g16-20020a1709061c9000b008787291d558mr15473819ejh.34.1676037237153;
-        Fri, 10 Feb 2023 05:53:57 -0800 (PST)
+        bh=qReh4amMw5PfvkiwnDv2ICM+tFClbn0Zri7uBykIprY=;
+        b=xNqb5YriOJyGFsv4EH6ADJCVit/QRZAbIOa4Gr8f3xXguRBb+jLts5mVrHmGpU0bif
+         umK1ZJDOkVnrCw/qd0pE5iCef64zU16CMY6XsAt73VCZSSnkJC2iBIAr0qEk4700LbhW
+         eJdz2rgQsaBcjKvXjXwsZLD5rDJe5CiWoIwI9h3T8yt/O2QBQMBei41R43tgTk2VT5zp
+         e+9aZFe14/jTkzh3fRS7f6+RCfcE89rlosQ/TVYPTPif0I/btoojvL/kRAywpis7RF5J
+         HssSFwMDPrXzvjPgoSoUeLxP/LFl3hyLEMBo5DuIWuCqPo1Tdoi3VsZ6jdH6iMXQazpO
+         gxCQ==
+X-Gm-Message-State: AO0yUKU+YySmiabkf6OQS7S2Xvypq5/5ezTSa1DYFH9g4Sf71Mc3bvMo
+        fEWrEdD5WxoMOT4BTDYiRhpbGg==
+X-Google-Smtp-Source: AK7set9G9qlOr+y/KrQGdHpU03hYMn7ynYX8nh+VahFcw2Aqz1XL28XPdbvbVpLevgKb581DOj3lSQ==
+X-Received: by 2002:a50:c306:0:b0:4ab:4c36:463c with SMTP id a6-20020a50c306000000b004ab4c36463cmr1890828edb.16.1676037854453;
+        Fri, 10 Feb 2023 06:04:14 -0800 (PST)
 Received: from [192.168.1.101] (abxh117.neoplus.adsl.tpnet.pl. [83.9.1.117])
-        by smtp.gmail.com with ESMTPSA id y22-20020a170906449600b0084d35ffbc20sm2399729ejo.68.2023.02.10.05.53.55
+        by smtp.gmail.com with ESMTPSA id z36-20020a509e27000000b004ab1f97ca2csm2021939ede.60.2023.02.10.06.04.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Feb 2023 05:53:56 -0800 (PST)
-Message-ID: <6942b30a-3d97-c306-a3c5-6b5adae5e814@linaro.org>
-Date:   Fri, 10 Feb 2023 14:53:54 +0100
+        Fri, 10 Feb 2023 06:04:13 -0800 (PST)
+Message-ID: <771cba9d-6c88-b7fb-64a8-f560b1e19eba@linaro.org>
+Date:   Fri, 10 Feb 2023 15:04:09 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: sdm845-oneplus: add
- tri-state-key
+Subject: Re: [PATCH 1/4] arm64: dts: qcom: sc8280xp: Add USB-C-related DP
+ blocks
 Content-Language: en-US
-To:     Gergo Koteles <soyer@irl.hu>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jiri Kosina <jikos@kernel.org>,
-        Benjamin Tissoires <benjamin.tissoires@redhat.com>
-Cc:     linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Caleb Connolly <caleb@connolly.tech>
-References: <20230209232556.91554-1-soyer@irl.hu>
- <dd77a886-5ab4-c6d3-bb84-5849c411aa7b@linaro.org>
- <59ea3842-1c9d-11d1-8dd9-17d5d2308357@irl.hu>
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20230208034620.2048744-1-quic_bjorande@quicinc.com>
+ <20230208034620.2048744-2-quic_bjorande@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <59ea3842-1c9d-11d1-8dd9-17d5d2308357@irl.hu>
+In-Reply-To: <20230208034620.2048744-2-quic_bjorande@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -88,84 +84,221 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 10.02.2023 14:45, Gergo Koteles wrote:
-> On 2023. 02. 10. 12:33, Krzysztof Kozlowski wrote:
->> On 10/02/2023 00:25, Gergo Koteles wrote:
->>> The tri-state-key is a sound profile switch found on the OnePlus 6,
->>> Android maps the states to "mute", "vibrate" and "ring". Expose them as
->>> ABS_SND_PROFILE events.
->>> The previous GPIO numbers were wrong. Update them to the correct
->>> ones.
->>>
->>> Co-developed-by: Caleb Connolly <caleb@connolly.tech>
->>> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
->>> Signed-off-by: Gergo Koteles <soyer@irl.hu>
->>
->> Where are other patches? I got only 3/3.
->>
-> Hi Krzysztof,
+On 8.02.2023 04:46, Bjorn Andersson wrote:
+> From: Bjorn Andersson <bjorn.andersson@linaro.org>
 > 
-> Sorry, I missed the --thread option for git format-patch.
+> Add the two DisplayPort controllers that are attached to QMP phys for
+> providing display output on USB Type-C.
 > 
->>> ---
->>>   .../boot/dts/qcom/sdm845-oneplus-common.dtsi  | 39 ++++++++++++++++++-
->>>   1 file changed, 38 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
->>> index 64638ea94db7..e45d4fdead82 100644
->>> --- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
->>> @@ -52,6 +52,43 @@ key-vol-up {
->>>           };
->>>       };
->>>   +    tri-state-key {
->>> +        compatible = "gpio-keys";
->>> +        label = "Tri-state key";
->>> +        pinctrl-names = "default";
->>> +        pinctrl-0 = <&tri_state_key_default>;
->>
->> Missing blank line.
->>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 170 ++++++++++++++++++++++++-
+>  1 file changed, 166 insertions(+), 4 deletions(-)
 > 
-> I'll add it to v3.
-While at it, please put pinctrl-names after pinctrl-0.
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> index dceb7eb3106b..fcd393444f47 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> @@ -3155,6 +3155,20 @@ ports {
+>  					#address-cells = <1>;
+>  					#size-cells = <0>;
+>  
+> +					port@0 {
+> +						reg = <0>;
+Generally, there should be a newline between properties and child
+nodes.
 
-> 
->>> +        state-top {
->>
->> Does not look like you tested the DTS against bindings. Please run `make
->> dtbs_check` (see Documentation/devicetree/bindings/writing-schema.rst
->> for instructions).
->>
-> 
-> I ran dtbs_check with DT_SCHEMA_FILES=Documentation/devicetree/bindings/arm/qcom.yaml. It only shows warnings for msm8996-oneplus3, but not for sdm845-oneplus phones. Is there anything else I need to check?
-You're only checking against a schema file which validates msm-id and
-machine compatibles. The goal is to not introduce *any* new warnings.
+> +						mdss0_intf0_out: endpoint {
+> +							remote-endpoint = <&mdss0_dp0_in>;
+> +						};
+> +					};
+> +
+> +					port@4 {
+> +						reg = <4>;
+> +						mdss0_intf4_out: endpoint {
+> +							remote-endpoint = <&mdss0_dp1_in>;
+> +						};
+> +					};
+> +
+>  					port@5 {
+>  						reg = <5>;
+>  						mdss0_intf5_out: endpoint {
+> @@ -3199,6 +3213,154 @@ opp-600000000 {
+>  				};
+>  			};
+>  
+> +			mdss0_dp0: displayport-controller@ae90000 {
+> +				compatible = "qcom,sc8280xp-dp";
+> +				reg = <0 0xae90000 0 0x200>,
+> +				      <0 0xae90200 0 0x200>,
+> +				      <0 0xae90400 0 0x600>,
+> +				      <0 0xae91000 0 0x400>,
+> +				      <0 0xae91400 0 0x400>;
+> +				interrupt-parent = <&mdss0>;
+> +				interrupts = <12>;
+> +				clocks = <&dispcc0 DISP_CC_MDSS_AHB_CLK>,
+> +					 <&dispcc0 DISP_CC_MDSS_DPTX0_AUX_CLK>,
+> +					 <&dispcc0 DISP_CC_MDSS_DPTX0_LINK_CLK>,
+> +					 <&dispcc0 DISP_CC_MDSS_DPTX0_LINK_INTF_CLK>,
+> +					 <&dispcc0 DISP_CC_MDSS_DPTX0_PIXEL0_CLK>;
+> +				clock-names = "core_iface", "core_aux",
+> +					      "ctrl_link",
+> +					      "ctrl_link_iface", "stream_pixel";
+I overlooked this previously, but please turn this into a vertical list.
 
-You want to run:
+With these fixed:
 
-make (your make args) CHECK_DTBS=1 qcom/sdm845-oneplus-enchilada.dtb
-
-pre and post your patch.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
 
-> 
-> 
-> ...
-> arch/arm64/boot/dts/qcom/msm8996-oneplus3.dtb: /: qcom,board-id: 'oneOf' conditional failed, one must be fixed:
->     [8, 0, 15801, 15, 8, 0, 15801, 16] is too long
->     From schema: /Documentation/devicetree/bindings/arm/qcom.yaml
-> ...
->   DTC_CHK arch/arm64/boot/dts/qcom/sdm845-oneplus-enchilada.dtb
->   DTC_CHK arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dtb
-> 
-> 
-> Thanks,
-> Gergo
-> 
->>
->> Best regards,
->> Krzysztof
->>
-> 
+> +
+> +				assigned-clocks = <&dispcc0 DISP_CC_MDSS_DPTX0_LINK_CLK_SRC>,
+> +						  <&dispcc0 DISP_CC_MDSS_DPTX0_PIXEL0_CLK_SRC>;
+> +				assigned-clock-parents = <&usb_0_qmpphy QMP_USB43DP_DP_LINK_CLK>,
+> +							 <&usb_0_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>;
+> +
+> +				phys = <&usb_0_qmpphy QMP_USB43DP_DP_PHY>;
+> +				phy-names = "dp";
+> +
+> +				#sound-dai-cells = <0>;
+> +
+> +				operating-points-v2 = <&mdss0_dp0_opp_table>;
+> +				power-domains = <&rpmhpd SC8280XP_CX>;
+> +
+> +				status = "disabled";
+> +
+> +				ports {
+> +					#address-cells = <1>;
+> +					#size-cells = <0>;
+> +
+> +					port@0 {
+> +						reg = <0>;
+> +						mdss0_dp0_in: endpoint {
+> +							remote-endpoint = <&mdss0_intf0_out>;
+> +						};
+> +					};
+> +
+> +					port@1 {
+> +						reg = <1>;
+> +					};
+> +				};
+> +
+> +				mdss0_dp0_opp_table: opp-table {
+> +					compatible = "operating-points-v2";
+> +
+> +					opp-160000000 {
+> +						opp-hz = /bits/ 64 <160000000>;
+> +						required-opps = <&rpmhpd_opp_low_svs>;
+> +					};
+> +
+> +					opp-270000000 {
+> +						opp-hz = /bits/ 64 <270000000>;
+> +						required-opps = <&rpmhpd_opp_svs>;
+> +					};
+> +
+> +					opp-540000000 {
+> +						opp-hz = /bits/ 64 <540000000>;
+> +						required-opps = <&rpmhpd_opp_svs_l1>;
+> +					};
+> +
+> +					opp-810000000 {
+> +						opp-hz = /bits/ 64 <810000000>;
+> +						required-opps = <&rpmhpd_opp_nom>;
+> +					};
+> +				};
+> +			};
+> +
+> +			mdss0_dp1: displayport-controller@ae98000 {
+> +				compatible = "qcom,sc8280xp-dp";
+> +				reg = <0 0xae98000 0 0x200>,
+> +				      <0 0xae98200 0 0x200>,
+> +				      <0 0xae98400 0 0x600>,
+> +				      <0 0xae99000 0 0x400>,
+> +				      <0 0xae99400 0 0x400>;
+> +				interrupt-parent = <&mdss0>;
+> +				interrupts = <13>;
+> +				clocks = <&dispcc0 DISP_CC_MDSS_AHB_CLK>,
+> +					 <&dispcc0 DISP_CC_MDSS_DPTX1_AUX_CLK>,
+> +					 <&dispcc0 DISP_CC_MDSS_DPTX1_LINK_CLK>,
+> +					 <&dispcc0 DISP_CC_MDSS_DPTX1_LINK_INTF_CLK>,
+> +					 <&dispcc0 DISP_CC_MDSS_DPTX1_PIXEL0_CLK>;
+> +				clock-names = "core_iface", "core_aux",
+> +					      "ctrl_link",
+> +					      "ctrl_link_iface", "stream_pixel";
+> +
+> +				assigned-clocks = <&dispcc0 DISP_CC_MDSS_DPTX1_LINK_CLK_SRC>,
+> +						  <&dispcc0 DISP_CC_MDSS_DPTX1_PIXEL0_CLK_SRC>;
+> +				assigned-clock-parents = <&usb_1_qmpphy QMP_USB43DP_DP_LINK_CLK>,
+> +							 <&usb_1_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>;
+> +
+> +				phys = <&usb_1_qmpphy QMP_USB43DP_DP_PHY>;
+> +				phy-names = "dp";
+> +
+> +				#sound-dai-cells = <0>;
+> +
+> +				operating-points-v2 = <&mdss0_dp1_opp_table>;
+> +				power-domains = <&rpmhpd SC8280XP_CX>;
+> +
+> +				status = "disabled";
+> +
+> +				ports {
+> +					#address-cells = <1>;
+> +					#size-cells = <0>;
+> +
+> +					port@0 {
+> +						reg = <0>;
+> +						mdss0_dp1_in: endpoint {
+> +							remote-endpoint = <&mdss0_intf4_out>;
+> +						};
+> +					};
+> +
+> +					port@1 {
+> +						reg = <1>;
+> +					};
+> +				};
+> +
+> +				mdss0_dp1_opp_table: opp-table {
+> +					compatible = "operating-points-v2";
+> +
+> +					opp-160000000 {
+> +						opp-hz = /bits/ 64 <160000000>;
+> +						required-opps = <&rpmhpd_opp_low_svs>;
+> +					};
+> +
+> +					opp-270000000 {
+> +						opp-hz = /bits/ 64 <270000000>;
+> +						required-opps = <&rpmhpd_opp_svs>;
+> +					};
+> +
+> +					opp-540000000 {
+> +						opp-hz = /bits/ 64 <540000000>;
+> +						required-opps = <&rpmhpd_opp_svs_l1>;
+> +					};
+> +
+> +					opp-810000000 {
+> +						opp-hz = /bits/ 64 <810000000>;
+> +						required-opps = <&rpmhpd_opp_nom>;
+> +					};
+> +				};
+> +			};
+> +
+>  			mdss0_dp2: displayport-controller@ae9a000 {
+>  				compatible = "qcom,sc8280xp-dp";
+>  				reg = <0 0xae9a000 0 0x200>,
+> @@ -3387,10 +3549,10 @@ dispcc0: clock-controller@af00000 {
+>  			clocks = <&gcc GCC_DISP_AHB_CLK>,
+>  				 <&rpmhcc RPMH_CXO_CLK>,
+>  				 <&sleep_clk>,
+> -				 <0>,
+> -				 <0>,
+> -				 <0>,
+> -				 <0>,
+> +				 <&usb_0_qmpphy QMP_USB43DP_DP_LINK_CLK>,
+> +				 <&usb_0_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>,
+> +				 <&usb_1_qmpphy QMP_USB43DP_DP_LINK_CLK>,
+> +				 <&usb_1_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>,
+>  				 <&mdss0_dp2_phy 0>,
+>  				 <&mdss0_dp2_phy 1>,
+>  				 <&mdss0_dp3_phy 0>,
