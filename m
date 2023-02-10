@@ -2,207 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E1B4692288
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 16:44:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A49E86922AE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 16:54:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232283AbjBJPof (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Feb 2023 10:44:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42614 "EHLO
+        id S231980AbjBJPyS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Feb 2023 10:54:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232163AbjBJPoe (ORCPT
+        with ESMTP id S231954AbjBJPyR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Feb 2023 10:44:34 -0500
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84FA178D4F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 07:44:33 -0800 (PST)
-Received: by mail-ej1-x633.google.com with SMTP id lu11so16978941ejb.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 07:44:33 -0800 (PST)
+        Fri, 10 Feb 2023 10:54:17 -0500
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8926C721EF
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 07:54:15 -0800 (PST)
+Received: by mail-ed1-x52a.google.com with SMTP id r3so5015794edq.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 07:54:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=opBAKiJAaUbXJ8f0Fh0jXM9OPqOfnIFIHrb6jeC+I0c=;
-        b=VC2iGg+GzpJRixykUCYMZW0UfYHovv8kIa2ONla0Py2CwzwKrBta3tMIfxqZfbX1bT
-         5+zv35DUorBzkjOHUPF+ZTwx9awnL5X0zwwZR6OpGuWaHaldxvCliGQSefRgd1WRt+FH
-         wQ+LciuTNLxILi9M+af0w8uwGTY5kkjdKUZ1ARZ3rk0az0NZbb2tULwtEq+wzcWkhg0g
-         lunPMPVm7uPJZInfow9dfMMFrQiorpUmTuIi1Vi7aGxFUQBydxb4XrzKu55mSUUf/hmC
-         /z/xcQAba9SdSPr0wRxYD6e4f0o0hS5IMMUG2NrTKyGS4s25/xLqbTn8xcJCn57S4l/z
-         YHqA==
+        bh=RFOHltJDX4HqYupfofGUo17e9ZNMA+v0JnnvnsIGwB8=;
+        b=D47BwzV6CERtXj0Y2bEgghOqAC1KeNaqCp1FEqrMtuG5ePSCPK0yWzJdajxE47Xyml
+         2SBvHRTJ7EZfSSaBo1+tHARKTT/Esv68g6mDz0wGxnM0i8rf7+seOdLNKJD60nrq+SB9
+         W0ujkM+7Y47DIGu0spGqVhBcI57Zl7AbRNpdRuMy/35Q/7JBZXH8CRZGloRv2WFc75JF
+         BUYRE4vrZuiyY3NThL1lFD2WNN/z/fYPG0qi7+Op61CT4B4qlgo1z2b8ZkL5xbvCt/q7
+         k4FBFHCN6rZ2sr8xMmPBNSDwakvyc7MBjqN+VZDidDbVOab3Cfbv9GFnkYgptGuQKHps
+         jY3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=opBAKiJAaUbXJ8f0Fh0jXM9OPqOfnIFIHrb6jeC+I0c=;
-        b=xqVOJyGmHeSpwvQw+rceEE21r+ReFzA9/qyqV9v3fzbMxOmfbrwnLWYWpkx20r6roa
-         sMwR7n1KX+bNWxXdGXy+EX3Rd4V0c3wGCdm4ncAw/cW0m77h/3xKVldS+bEN/DDy/X9W
-         qM+4emACZTyfWKj84FX2E+eKDpUqsNmrbuOv4vM1/ig4F7gC2nZbVU9iL5clc+wgHDeo
-         zqs6v0g5hJ/3pPbK3DshN2wyqw2lQicecLzCnNYilsaIg/g5XmjcjbP2tRhQ2hj3JewQ
-         Fkhjj8msV6oZlzqRvDh93q4cmdAuvvYtkGSkq+pgQ41DBcrJrNrUle1JVTPuYtQEagUQ
-         0ChQ==
-X-Gm-Message-State: AO0yUKWu60iRMDyKuHOWiwwKkGgaSV03isAhYa6MN6pxPPCdxxgsVnvV
-        mi2mF1J2o3KfcIts3FaC1SxRNg==
-X-Google-Smtp-Source: AK7set9G2NFedcRvsqYyG2U+9/VJ93t/MwQNwlIRGUSVuLpenKc9AW+17f/c1lGphiIeWQp+GdJzdA==
-X-Received: by 2002:a17:907:6d8a:b0:88f:8a5:b4cd with SMTP id sb10-20020a1709076d8a00b0088f08a5b4cdmr21470525ejc.1.1676043872092;
-        Fri, 10 Feb 2023 07:44:32 -0800 (PST)
+        bh=RFOHltJDX4HqYupfofGUo17e9ZNMA+v0JnnvnsIGwB8=;
+        b=QhxIROyfBMVG2xnfN4pHIX9jrWBNia5thurwajJE4c6NR1OqWzHTfst/7FhM8NWXy+
+         wzpiMuLXUHAqJqVQ9iM91aUENcs8QQ0PtM0n6vRlLDC6plKGxJTSfn/T3fth4FMy0ls3
+         xU5g2tq6A76nowfcd6B2UcvuZ/xAEIFvBAfx2CM96TDyk9NvH6sdM6gY+WmjxLAaHeLo
+         x4knHvpozGx/zqHAO5kaj0FIgSYoDB/xymY9+sNVtnwNDo2BTn9jS9pu+GMlmgiFMhVB
+         Kz35r3Kc++17TPrV7/3Xo98+x7qEceWOfR8K9cPysYddJGfpo7cIRbeWVKoThTGP4EsL
+         eDSQ==
+X-Gm-Message-State: AO0yUKVSTMJm+ij80Exv+Rv9JvD/XPezkknP4NBGWZcrD1PKkISrPwXU
+        LLrVE9ImE6MWHNigOH+dOS+U+Q==
+X-Google-Smtp-Source: AK7set/TVcHbOGmvCIoayuAWCd9zPG2uIyMdoJSsxD8eiwCLiVSmf8ACzfIGl8PdaKvwB0WigJlacw==
+X-Received: by 2002:a50:9b18:0:b0:4ac:b31c:83d3 with SMTP id o24-20020a509b18000000b004acb31c83d3mr726693edi.14.1676044454141;
+        Fri, 10 Feb 2023 07:54:14 -0800 (PST)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id a11-20020a170906684b00b008aea5e0938esm2504211ejs.183.2023.02.10.07.44.30
+        by smtp.gmail.com with ESMTPSA id m2-20020a509302000000b004aad8d2158dsm2368436eda.66.2023.02.10.07.54.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Feb 2023 07:44:31 -0800 (PST)
-Message-ID: <e03d5698-65d2-41ae-3095-9ab374cb6b77@linaro.org>
-Date:   Fri, 10 Feb 2023 17:44:30 +0200
+        Fri, 10 Feb 2023 07:54:13 -0800 (PST)
+Message-ID: <880e691a-0512-6325-f27c-9be59abdd647@linaro.org>
+Date:   Fri, 10 Feb 2023 17:54:12 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [PATCH v2 08/11] arm64: dts: qcom: sm8350-hdk: add pmic glink
- node
+Subject: Re: [PATCH v3 5/5] arm64: dts: qcom: sm8450: add dp controller
 Content-Language: en-GB
-To:     Neil Armstrong <neil.armstrong@linaro.org>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+To:     neil.armstrong@linaro.org, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230130-topic-sm8450-upstream-pmic-glink-v2-0-71fea256474f@linaro.org>
- <20230130-topic-sm8450-upstream-pmic-glink-v2-8-71fea256474f@linaro.org>
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230206-topic-sm8450-upstream-dp-controller-v3-0-636ef9e99932@linaro.org>
+ <20230206-topic-sm8450-upstream-dp-controller-v3-5-636ef9e99932@linaro.org>
+ <347a5193-f7b1-7f8e-0c60-3d435bdf952c@linaro.org>
+ <f5a26fff-2dc2-2397-a80c-2477176a5864@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230130-topic-sm8450-upstream-pmic-glink-v2-8-71fea256474f@linaro.org>
+In-Reply-To: <f5a26fff-2dc2-2397-a80c-2477176a5864@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/02/2023 17:02, Neil Armstrong wrote:
-> Add the pmic glink node linked with the DWC3 USB controller
-> switched to OTG mode and tagged with usb-role-switch.
+On 10/02/2023 17:28, Neil Armstrong wrote:
+> On 10/02/2023 16:24, Dmitry Baryshkov wrote:
+>> On 10/02/2023 16:44, Neil Armstrong wrote:
+>>> Add the Display Port controller subnode to the MDSS node.
+>>>
+>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>>> ---
+>>>   arch/arm64/boot/dts/qcom/sm8450.dtsi | 79 
+>>> ++++++++++++++++++++++++++++++++++++
+>>>   1 file changed, 79 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi 
+>>> b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>> index 6caa2c8efb46..72d54beb7d7c 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>> @@ -2751,6 +2751,13 @@ dpu_intf2_out: endpoint {
+>>>                           };
+>>>                       };
+>>> +                    port@2 {
+>>> +                        reg = <2>;
+>>> +                        dpu_intf0_out: endpoint {
+>>> +                            remote-endpoint = <&mdss_dp0_in>;
+>>> +                        };
+>>> +                    };
+>>> +
+>>>                   };
+>>>                   mdp_opp_table: opp-table {
+>>> @@ -2783,6 +2790,78 @@ opp-500000000 {
+>>>                   };
+>>>               };
+>>> +            mdss_dp0: displayport-controller@ae90000 {
+>>> +                compatible = "qcom,sm8350-dp";
 > 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->   arch/arm64/boot/dts/qcom/sm8350-hdk.dts | 77 ++++++++++++++++++++++++++++-----
->   1 file changed, 65 insertions(+), 12 deletions(-)
+> Exact, must fix.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-> index 54654eb75c28..28fc9a835c5d 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-> @@ -31,6 +31,40 @@ hdmi_con: endpoint {
->   		};
->   	};
->   
-> +	pmic-glink {
-> +		compatible = "qcom,sm8350-pmic-glink", "qcom,pmic-glink";
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		connector@0 {
-> +			compatible = "usb-c-connector";
-> +			reg = <0>;
-> +			power-role = "dual";
-> +			data-role = "dual";
-> +
-> +			ports {
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +
-> +				port@0 {
-> +					reg = <0>;
-> +
-> +					pmic_glink_hs_in: endpoint {
-> +						remote-endpoint = <&usb_1_dwc3_hs>;
-> +					};
-> +				};
-> +
-> +				port@1 {
-> +					reg = <1>;
-> +
-> +					pmic_glink_ss_in: endpoint {
-> +						remote-endpoint = <&usb_1_dwc3_ss>;
-> +					};
-> +				};
-> +			};
-> +		};
-> +	};
-> +
->   	vph_pwr: vph-pwr-regulator {
->   		compatible = "regulator-fixed";
->   		regulator-name = "vph_pwr";
-> @@ -666,23 +700,42 @@ &usb_1 {
->   };
->   
->   &usb_1_dwc3 {
-> -	/* TODO: Define USB-C connector properly */
-> -	dr_mode = "peripheral";
-> -};
-> +	dr_mode = "otg";
-
-I could not verify UCSI / OTG on sm8350-HDK, see the GET_PDOS issue.
-Unless it is fixed, I suggest fixing this to "host" to get DP to work.
-
-> +	usb-role-switch;
->   
-> -&usb_1_hsphy {
-> -	status = "okay";
-> +	ports {
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
->   
-> -	vdda-pll-supply = <&vreg_l5b_0p88>;
-> -	vdda18-supply = <&vreg_l1c_1p8>;
-> -	vdda33-supply = <&vreg_l2b_3p07>;
-> +		port@0 {
-> +			reg = <0>;
-> +
-> +			usb_1_dwc3_hs: endpoint {
-> +				remote-endpoint = <&pmic_glink_hs_in>;
-> +			};
-> +		};
-> +
-> +		port@1 {
-> +			reg = <1>;
-> +
-> +			usb_1_dwc3_ss: endpoint {
-> +				remote-endpoint = <&pmic_glink_ss_in>;
-> +			};
-> +		};
-> +	};
->   };
->   
-> -&usb_1_qmpphy {
-> -	status = "okay";
-> +&usb_1_dwc3 {
-> +	dr_mode = "otg";
-> +	usb-role-switch;
-> +};
-
-Duplicate
-
->   
-> -	vdda-phy-supply = <&vreg_l6b_1p2>;
-> -	vdda-pll-supply = <&vreg_l1b_0p88>;
-> +&usb_1_dwc3_hs {
-> +	remote-endpoint = <&pmic_glink_hs_in>;
-> +};
-> +
-> +&usb_1_dwc3_ss {
-> +	remote-endpoint = <&pmic_glink_ss_in>;
->   };
->   
->   &usb_2 {
+>>
+>> Missing "qcom,sm8450-dp". As I wrote in the comment to patch 1, I'd 
+>> suggest having just a single entry here rather than keeping both 8350 
+>> and 8450 entries.
+>>
+>>> +                reg = <0 0xae90000 0 0xfc>,
+>>> +                      <0 0xae90200 0 0xc0>,
+>>> +                      <0 0xae90400 0 0x770>,
+>>> +                      <0 0xae91000 0 0x98>,
+>>> +                      <0 0xae91400 0 0x98>;
+>>
+>>
+>> While this sounds correct, usually we used the even size here (0x200, 
+>> 0x400, etc.). Can we please switch to it (especially since sm8350-dp 
+>> uses even sizes).
 > 
+> I don't have access to registers layout for HDK8450 but the system 
+> freezes when using even sizes, using
+> the exact register size works fine.
+
+Interesting. Could you please trace, what exactly makes it fail, since 
+specifying bigger region size should not cause such issues.
 
 -- 
 With best wishes
