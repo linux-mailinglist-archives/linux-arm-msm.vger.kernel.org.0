@@ -2,222 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A7676920A6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 15:18:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 415256920AB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 15:19:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232427AbjBJOSI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Feb 2023 09:18:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56538 "EHLO
+        id S232435AbjBJOTM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Feb 2023 09:19:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232395AbjBJOSH (ORCPT
+        with ESMTP id S232434AbjBJOTL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Feb 2023 09:18:07 -0500
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE879305E5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 06:18:04 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id az4-20020a05600c600400b003dff767a1f1so4176856wmb.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 06:18:04 -0800 (PST)
+        Fri, 10 Feb 2023 09:19:11 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E0D0302A1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 06:19:10 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id r2so5205940wrv.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 06:19:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=7gCIwjkW4mj7GEg4UX9SIJbxJsdVXdDoLdVX95U4ZAQ=;
-        b=M3meFAUZgc4u9VSgIMNLyini72JXil8R3ReEZy3l+Bsoz3c0UwpsB/hKm305UETshl
-         MFQBDze7HK6wxEUG3/dRu4ElC+I/uF/VMx85M6FQ+K7hIrO0Lz0zxK8YQR4mCn5anGM7
-         4hS/z/LBg0+KBiiBbqhBBvbBlQCQLkq6jNqKEGxoeOFy9FQl8s+vIzIcFL4L0rKP6wOb
-         COEn8tIf5vKXfMct526CvjCQJcmRUdgMV6NoLT8GlJSWdGmzfVEkWWdkSFp0UOTuck0P
-         17snSHuLRHQfzAvzxd2EKyT8S5OAmaLZjAFHzsoQsH/HeMZnRo6o6GRFdIZ3F3gTDleS
-         QoGg==
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:reply-to:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=1uTFfmvobksvpoGMelQsFMa0FYBiyHzYPIzwFP1iQCw=;
+        b=OTFNGu03iKhaysy/pY/1pl3FPBrTNkjUm6x5Sb/3sRJoxAE76OhyP0zP72fc2EtuOd
+         XJFePkwrYGy1yhpPYo7IsuNsHrqFTjin4aNNlpKZUIjYlmmI/UY/bJZV2UxN7iUGgLz5
+         8sUBB27Z7UZuzcsC4Ff9TyKOL/Lrrmj04YlIISU2RmoEXhJeTvWYAE9Hx3Fgk7K4Af7/
+         oOZ06FWW0NIdNCmw5fwGEDjItE1OSgZRAsyGeH2KUAUAnoeODq3E76ajy18qIckAkKsr
+         QMkByf81kU5S5vctaL5a5IAqkLmZepYEIedIdC7nPgcdaS75KzwO5STeMF6YlmXxDJ5y
+         9B0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7gCIwjkW4mj7GEg4UX9SIJbxJsdVXdDoLdVX95U4ZAQ=;
-        b=Gja1sSG0jRvLh1+zHXyXp7v1pamMQ7Rxc4/b5jtOopHaI/QHjxSfHsvNQjzLUieJI6
-         HP6zB8d1tCUJuNvJYSv6gSsm37vKTbrmGyTBQlXFduYtQSzA1PW8pxev5/eVU4hQHEo/
-         EWvoM3c+vKSdvN+IGNvJBoETxS19w8O3/6K3r1tmUqiFJhnE3sjnNVWFPR2mwUEQsoSk
-         9UIGKLpfU/4zcQktbPHYGn9VPhHy4ZhsE7NgvyRktc3G5EVzzoFUxWo2dzs6MgvAbZpW
-         TQUrN6dDWxK9PYeeii5VIzf3yfvgAXoz3KnLhrYrl4LsLOvBZngwRdkHSeeLO2aohhhM
-         /jrQ==
-X-Gm-Message-State: AO0yUKXMYuUM9p1Yr/E0fuybU21kxdTxW22526SvIBDVW8nWtCAmjseB
-        Myatpb3C6s+Uqu6ZEVZeOKmwbw==
-X-Google-Smtp-Source: AK7set+T/gE/eEuVsE9zQ3Jy0gI89TK3IKOAoZY4Znv+SjSwr9woOUaDXg3eq8Dj9gXBQxyJoubVBg==
-X-Received: by 2002:a05:600c:1684:b0:3dc:52fc:7f06 with SMTP id k4-20020a05600c168400b003dc52fc7f06mr12894199wmn.41.1676038683509;
-        Fri, 10 Feb 2023 06:18:03 -0800 (PST)
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:reply-to:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1uTFfmvobksvpoGMelQsFMa0FYBiyHzYPIzwFP1iQCw=;
+        b=zZxCkJ+IJj6wrpPp12KZ/CzsY8nMseUw4ZUptRiy/c7BEavnokKwajyjl3V1MOI9Jc
+         J9l3qbOoccbVycPTPsaxhx+G0tjhthP5sIQFNttKuXuAm4BHkpLAG27I/yKBPz+P71sb
+         40vrMG7psQO93eVcGgX3GZUqKu1NTZSBp0cHTNYze2RVIbd0OWH4/wFnj1Pnmg4XfiGD
+         eMoztom2HmS4fA39U0zK+9TEN6VsEvaEVWmumogsiPH2t36MISidYIqG0AMKj8WdSQbL
+         hUP66URBzKe2wFBiwu6T/6hACINcDc/zCfUgbY/l+i4NpNMJ6qkD96UvP0kdV+b3RpfS
+         ZRqg==
+X-Gm-Message-State: AO0yUKXnB0GY261BYnhj7vd0x0g1jH9LzrY23natSmAtqUQ1b+w1OoWS
+        CCgiGi3HTQic0QQwGiNA8KbgNA==
+X-Google-Smtp-Source: AK7set8E+f+ZV83w6B4IZTO9iq19ePvcHokwop+CDn+zBqZ/sctxhXM7i0ujcsYzlSt9Utc2g5ywwQ==
+X-Received: by 2002:a5d:464b:0:b0:2c3:f8b6:666b with SMTP id j11-20020a5d464b000000b002c3f8b6666bmr4591136wrs.26.1676038748717;
+        Fri, 10 Feb 2023 06:19:08 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:982:cbb0:5a65:5553:55cf:3027? ([2a01:e0a:982:cbb0:5a65:5553:55cf:3027])
-        by smtp.gmail.com with ESMTPSA id p24-20020a05600c1d9800b003dd1bd0b915sm8173477wms.22.2023.02.10.06.18.02
+        by smtp.gmail.com with ESMTPSA id u13-20020a5d468d000000b002c54c92e125sm584454wrq.46.2023.02.10.06.19.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Feb 2023 06:18:02 -0800 (PST)
-Message-ID: <37d23af4-7920-055f-76b0-87ad907896e2@linaro.org>
-Date:   Fri, 10 Feb 2023 15:18:01 +0100
+        Fri, 10 Feb 2023 06:19:08 -0800 (PST)
+Message-ID: <63ea4f1a-a9be-eef7-bfe9-acb5567b4107@linaro.org>
+Date:   Fri, 10 Feb 2023 15:19:06 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-From:   Neil Armstrong <neil.armstrong@linaro.org>
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v2 3/5] arm64: dts: qcom: sm8350: add dp controller
+Subject: Re: [PATCH] drm/msm/dpu: set DPU_MDP_PERIPH_0_REMOVED for sc8280xp
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230206-topic-sm8450-upstream-dp-controller-v2-0-529da2203659@linaro.org>
- <20230206-topic-sm8450-upstream-dp-controller-v2-3-529da2203659@linaro.org>
- <df068428-c086-4f6a-3cda-9ef6ce665f13@linaro.org>
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20230210141554.928883-1-dmitry.baryshkov@linaro.org>
+From:   Neil Armstrong <neil.armstrong@linaro.org>
 Organization: Linaro Developer Services
-In-Reply-To: <df068428-c086-4f6a-3cda-9ef6ce665f13@linaro.org>
+In-Reply-To: <20230210141554.928883-1-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/02/2023 12:08, Dmitry Baryshkov wrote:
-> On 10/02/2023 12:34, Neil Armstrong wrote:
->> Add the Display Port controller subnode to the MDSS node.
->>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
->>   arch/arm64/boot/dts/qcom/sm8350.dtsi | 82 +++++++++++++++++++++++++++++++++++-
->>   1 file changed, 80 insertions(+), 2 deletions(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
->> index d490ce84a022..eb636b7dffa7 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
->> @@ -2862,13 +2862,20 @@ ports {
->>                       port@0 {
->>                           reg = <0>;
->> -                        dpu_intf1_out: endpoint {
->> -                            remote-endpoint = <&mdss_dsi0_in>;
->> +                        dpu_intf0_out: endpoint {
->> +                            remote-endpoint = <&mdss_dp_in>;
+On 10/02/2023 15:15, Dmitry Baryshkov wrote:
+> The SC8280XP also has a black hole at the top of MDP_TOP region. Set
+> corresponding bit to disable access to that region.
 > 
-> No need to reorder these ports. Please add DP to the end.
+> Fixes: 4a352c2fc15a ("drm/msm/dpu: Introduce SC8280XP")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> index 3fa202da62fb..f792275dc48f 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> @@ -743,7 +743,7 @@ static const struct dpu_mdp_cfg sc8280xp_mdp[] = {
+>   	{
+>   	.name = "top_0", .id = MDP_TOP,
+>   	.base = 0x0, .len = 0x494,
+> -	.features = 0,
+> +	.features = BIT(DPU_MDP_PERIPH_0_REMOVED),
+>   	.clk_ctrls[DPU_CLK_CTRL_VIG0] = { .reg_off = 0x2ac, .bit_off = 0},
+>   	.clk_ctrls[DPU_CLK_CTRL_VIG1] = { .reg_off = 0x2b4, .bit_off = 0},
+>   	.clk_ctrls[DPU_CLK_CTRL_VIG2] = { .reg_off = 0x2bc, .bit_off = 0},
 
-Right, but I'll keep the dpu_intf0_out label for this port,
-but having dpu_intf1_out, dpu_intf2_out then dpu_intf0_out isn't very clean...
-
-> 
->>                           };
->>                       };
->>                       port@1 {
->>                           reg = <1>;
->> +                        dpu_intf1_out: endpoint {
->> +                            remote-endpoint = <&mdss_dsi0_in>;
->> +                        };
->> +                    };
->> +
->> +                    port@2 {
->> +                        reg = <2>;
->>                           dpu_intf2_out: endpoint {
->>                               remote-endpoint = <&mdss_dsi1_in>;
->>                           };
->> @@ -2876,6 +2883,77 @@ dpu_intf2_out: endpoint {
->>                   };
->>               };
->> +            mdss_dp: displayport-controller@ae90000 {
->> +                compatible = "qcom,sm8350-dp";
->> +                reg = <0 0xae90000 0 0x200>,
->> +                      <0 0xae90200 0 0x200>,
->> +                      <0 0xae90400 0 0x600>,
->> +                      <0 0xae91000 0 0x400>;
-> 
-> This will not validate against the schema. Please add p1 region at the end (I assume it is <0 0x0ae91400 0 0x400>).
-> 
->> +                interrupt-parent = <&mdss>;
->> +                interrupts = <12>;
->> +                clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
->> +                     <&dispcc DISP_CC_MDSS_DP_AUX_CLK>,
->> +                     <&dispcc DISP_CC_MDSS_DP_LINK_CLK>,
->> +                     <&dispcc DISP_CC_MDSS_DP_LINK_INTF_CLK>,
->> +                     <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK>;
->> +                clock-names = "core_iface",
->> +                          "core_aux",
->> +                          "ctrl_link",
->> +                                  "ctrl_link_iface",
->> +                          "stream_pixel";
->> +
->> +                assigned-clocks = <&dispcc DISP_CC_MDSS_DP_LINK_CLK_SRC>,
->> +                          <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK_SRC>;
->> +                assigned-clock-parents = <&usb_1_qmpphy 1>,
->> +                             <&usb_1_qmpphy 2>;
-> 
-> Please use defined names here and in the phys below
-
-Ack, will do in all the patches
-
-> 
->> +
->> +                phys = <&usb_1_qmpphy 1>;
->> +                    phy-names = "dp";
->> +
->> +                    #sound-dai-cells = <0>;
->> +
->> +                operating-points-v2 = <&dp_opp_table>;
->> +                power-domains = <&rpmhpd SM8350_MMCX>;
->> +
->> +                status = "disabled";
->> +
->> +                ports {
->> +                    #address-cells = <1>;
->> +                    #size-cells = <0>;
->> +
->> +                    port@0 {
->> +                        reg = <0>;
->> +                        mdss_dp_in: endpoint {
->> +                            remote-endpoint = <&dpu_intf0_out>;
->> +                        };
->> +                    };
->> +                };
->> +
->> +                dp_opp_table: opp-table {
->> +                    compatible = "operating-points-v2";
->> +
->> +                    opp-160000000 {
->> +                        opp-hz = /bits/ 64 <160000000>;
->> +                        required-opps = <&rpmhpd_opp_low_svs>;
->> +                    };
->> +
->> +                    opp-270000000 {
->> +                        opp-hz = /bits/ 64 <270000000>;
->> +                        required-opps = <&rpmhpd_opp_svs>;
->> +                    };
->> +
->> +                    opp-540000000 {
->> +                        opp-hz = /bits/ 64 <540000000>;
->> +                        required-opps = <&rpmhpd_opp_svs_l1>;
->> +                    };
->> +
->> +                    opp-810000000 {
->> +                        opp-hz = /bits/ 64 <810000000>;
->> +                        required-opps = <&rpmhpd_opp_nom>;
->> +                    };
->> +                };
->> +            };
->> +
->>               mdss_dsi0: dsi@ae94000 {
->>                   compatible = "qcom,sm8350-dsi-ctrl", "qcom,mdss-dsi-ctrl";
->>                   reg = <0 0x0ae94000 0 0x400>;
->>
-> 
-
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
