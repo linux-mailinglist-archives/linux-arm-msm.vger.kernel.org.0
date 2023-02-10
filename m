@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2591B69206B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 15:04:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 800E6692072
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 15:05:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232344AbjBJOET (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Feb 2023 09:04:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46280 "EHLO
+        id S232400AbjBJOFt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Feb 2023 09:05:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231842AbjBJOES (ORCPT
+        with ESMTP id S231954AbjBJOFs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Feb 2023 09:04:18 -0500
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB77F5BA65
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 06:04:15 -0800 (PST)
-Received: by mail-ed1-x52a.google.com with SMTP id eq11so4817204edb.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 06:04:15 -0800 (PST)
+        Fri, 10 Feb 2023 09:05:48 -0500
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9D966A72F
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 06:05:46 -0800 (PST)
+Received: by mail-ej1-x62c.google.com with SMTP id qb15so14067257ejc.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 06:05:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=qReh4amMw5PfvkiwnDv2ICM+tFClbn0Zri7uBykIprY=;
-        b=iI27E+A+upQ0K9PmlzsGlQpVmdtpZW+6VZ3H1tdOJuFUBVrpdr9OlV7ApMAc6NGsQg
-         MbVwkia5LUkq7W6K9HN5yj/UCwaa4DpNeFhZ+fbd/kQD+ZHFVdn4tA4CiIBjETWf35BB
-         AycCruh6X5pfQuytq404rpUpSTBBThATIAM2GF3Q/wlfxn2seo8myX7PkcYpyXY3Fta5
-         gIw+6unY4khWrfx3E88Q/gdNJLHK8+eMLe81cs4j9gBzsojU+PJdrXKxeg7Gg2pCODkW
-         j4nk+qZjoHAFPdDkrHDtRZzoKX3KuHzzcAOdFs4spI3AUV5OVC1727zNCGh7tEMGXIMC
-         /pXg==
+        bh=TwKpGyM1pObrC/t9G4svXAPUOoXfqNddF+FqrKvmVCk=;
+        b=ZO355nCgFGmvmUoWG4xUBXdCaheWwro/F54tNyxIVMeGc9xG68K+63g3Fgre/5Akul
+         M3xo2Mo0ZQLZCRIxgpb+Tz2LfaD1SRr4yAizvjAV8MJajMqe+gcwnY8BonljQDbvxWxk
+         IzBbxFEclWTsSXFxWlOSGGYcHJtrHf5jK/iEKp71bNVXxNA7/volEaD2ZTo7mIw1BMk5
+         glneXFmNx/fI56FvGzJ0Iw1U+TNfALRqPG2huVsLlF2KVysre+YaERgbU9xT8F43uRU3
+         uLZ16sqToKlxsvmVh6A96UIiAFQsoBub4Kmn+XivgaRLDx69uAdFk7J8FRDv8QPJeezw
+         7jrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qReh4amMw5PfvkiwnDv2ICM+tFClbn0Zri7uBykIprY=;
-        b=xNqb5YriOJyGFsv4EH6ADJCVit/QRZAbIOa4Gr8f3xXguRBb+jLts5mVrHmGpU0bif
-         umK1ZJDOkVnrCw/qd0pE5iCef64zU16CMY6XsAt73VCZSSnkJC2iBIAr0qEk4700LbhW
-         eJdz2rgQsaBcjKvXjXwsZLD5rDJe5CiWoIwI9h3T8yt/O2QBQMBei41R43tgTk2VT5zp
-         e+9aZFe14/jTkzh3fRS7f6+RCfcE89rlosQ/TVYPTPif0I/btoojvL/kRAywpis7RF5J
-         HssSFwMDPrXzvjPgoSoUeLxP/LFl3hyLEMBo5DuIWuCqPo1Tdoi3VsZ6jdH6iMXQazpO
-         gxCQ==
-X-Gm-Message-State: AO0yUKU+YySmiabkf6OQS7S2Xvypq5/5ezTSa1DYFH9g4Sf71Mc3bvMo
-        fEWrEdD5WxoMOT4BTDYiRhpbGg==
-X-Google-Smtp-Source: AK7set9G9qlOr+y/KrQGdHpU03hYMn7ynYX8nh+VahFcw2Aqz1XL28XPdbvbVpLevgKb581DOj3lSQ==
-X-Received: by 2002:a50:c306:0:b0:4ab:4c36:463c with SMTP id a6-20020a50c306000000b004ab4c36463cmr1890828edb.16.1676037854453;
-        Fri, 10 Feb 2023 06:04:14 -0800 (PST)
+        bh=TwKpGyM1pObrC/t9G4svXAPUOoXfqNddF+FqrKvmVCk=;
+        b=lgRTyV3bw5LV2KSYYPNO69AGqjSXjQYaHDQUktXhB6I7UPI39ccm4T8QiRvedypI/K
+         d7ynO/gbg6APK6FNmnQRku8j6u4y58838GrHk0H6b3u9/hBc6aP3yHqAamtWNiHd8uCF
+         Awh5/XvqTVg4DM/4hV7Bk5hfK403vtusgklEV6If1+lpKILLIUGZ+JmgaWhHZj+lv/uk
+         CwcREeSHkWh6pobpzW38N2l2ZzL2gx9MV9FXSmdFYn18XAV+H8kWC7gEcr/u4xYc6ppK
+         BynfwJVAdWi8USvo/6gxBjMLhaIJt16HcbJmzmgr3dGLHzLicCkv9xf5di8nCuXC5OVl
+         7CCg==
+X-Gm-Message-State: AO0yUKX/poe03iV5JwBi1EsY7ooim7hFZzO8RjyHNk0Tgh/SbSH5kI3z
+        VQq9wPvSYTWvzzDKfr6X9+xMVA==
+X-Google-Smtp-Source: AK7set+hI41nrLZFE5W4UIlEZ20TSZ5xr2x9EktLcKCNuo4V+sJ7NVaEd+kVMdjgiJk9RJcRGW5oRg==
+X-Received: by 2002:a17:906:1182:b0:86f:e30c:72c1 with SMTP id n2-20020a170906118200b0086fe30c72c1mr14069728eja.8.1676037945384;
+        Fri, 10 Feb 2023 06:05:45 -0800 (PST)
 Received: from [192.168.1.101] (abxh117.neoplus.adsl.tpnet.pl. [83.9.1.117])
-        by smtp.gmail.com with ESMTPSA id z36-20020a509e27000000b004ab1f97ca2csm2021939ede.60.2023.02.10.06.04.11
+        by smtp.gmail.com with ESMTPSA id y16-20020a170906071000b0086dd8f20a6asm2415520ejb.77.2023.02.10.06.05.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Feb 2023 06:04:13 -0800 (PST)
-Message-ID: <771cba9d-6c88-b7fb-64a8-f560b1e19eba@linaro.org>
-Date:   Fri, 10 Feb 2023 15:04:09 +0100
+        Fri, 10 Feb 2023 06:05:45 -0800 (PST)
+Message-ID: <62053e82-5e92-b552-3f31-132df7adcd72@linaro.org>
+Date:   Fri, 10 Feb 2023 15:05:42 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [PATCH 1/4] arm64: dts: qcom: sc8280xp: Add USB-C-related DP
- blocks
+Subject: Re: [PATCH v2 3/4] arm64: dts: qcom: sc8280xp-x13s: Enable external
+ display
 Content-Language: en-US
 To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
         Andy Gross <agross@kernel.org>,
@@ -67,10 +67,10 @@ Cc:     Rob Herring <robh+dt@kernel.org>,
         Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org
-References: <20230208034620.2048744-1-quic_bjorande@quicinc.com>
- <20230208034620.2048744-2-quic_bjorande@quicinc.com>
+References: <20230209011325.2603663-1-quic_bjorande@quicinc.com>
+ <20230209011325.2603663-4-quic_bjorande@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230208034620.2048744-2-quic_bjorande@quicinc.com>
+In-Reply-To: <20230209011325.2603663-4-quic_bjorande@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -84,221 +84,261 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 8.02.2023 04:46, Bjorn Andersson wrote:
-> From: Bjorn Andersson <bjorn.andersson@linaro.org>
+On 9.02.2023 02:13, Bjorn Andersson wrote:
+> Like on the CRD, add the necessary nodes to enable USB Type-C
+> altmode-based external display on the Lenovo ThinkPad X13s.
 > 
-> Add the two DisplayPort controllers that are attached to QMP phys for
-> providing display output on USB Type-C.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 170 ++++++++++++++++++++++++-
->  1 file changed, 166 insertions(+), 4 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> index dceb7eb3106b..fcd393444f47 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> @@ -3155,6 +3155,20 @@ ports {
->  					#address-cells = <1>;
->  					#size-cells = <0>;
+> Changes since v1:
+> - Fixed style and property sort issues
+> - Moved dwc3/port to sc8280xp.dtsi, override remote-endpoint here
+Excuse me, but I don't see that change..
+
+
+> - Added pinconf properties to SBU control pins
+> - Dropped unused mode-pins
+> 
+>  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 188 +++++++++++++++++-
+>  1 file changed, 186 insertions(+), 2 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> index f936b020a71d..923972e54eb1 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> @@ -77,6 +77,78 @@ switch-lid {
+>  		};
+>  	};
 >  
-> +					port@0 {
-> +						reg = <0>;
-Generally, there should be a newline between properties and child
-nodes.
-
-> +						mdss0_intf0_out: endpoint {
-> +							remote-endpoint = <&mdss0_dp0_in>;
-> +						};
-> +					};
+> +	pmic-glink {
+> +		compatible = "qcom,sc8280xp-pmic-glink", "qcom,pmic-glink";
 > +
-> +					port@4 {
-> +						reg = <4>;
-> +						mdss0_intf4_out: endpoint {
-> +							remote-endpoint = <&mdss0_dp1_in>;
-> +						};
-> +					};
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
 > +
->  					port@5 {
->  						reg = <5>;
->  						mdss0_intf5_out: endpoint {
-> @@ -3199,6 +3213,154 @@ opp-600000000 {
->  				};
->  			};
->  
-> +			mdss0_dp0: displayport-controller@ae90000 {
-> +				compatible = "qcom,sc8280xp-dp";
-> +				reg = <0 0xae90000 0 0x200>,
-> +				      <0 0xae90200 0 0x200>,
-> +				      <0 0xae90400 0 0x600>,
-> +				      <0 0xae91000 0 0x400>,
-> +				      <0 0xae91400 0 0x400>;
-> +				interrupt-parent = <&mdss0>;
-> +				interrupts = <12>;
-> +				clocks = <&dispcc0 DISP_CC_MDSS_AHB_CLK>,
-> +					 <&dispcc0 DISP_CC_MDSS_DPTX0_AUX_CLK>,
-> +					 <&dispcc0 DISP_CC_MDSS_DPTX0_LINK_CLK>,
-> +					 <&dispcc0 DISP_CC_MDSS_DPTX0_LINK_INTF_CLK>,
-> +					 <&dispcc0 DISP_CC_MDSS_DPTX0_PIXEL0_CLK>;
-> +				clock-names = "core_iface", "core_aux",
-> +					      "ctrl_link",
-> +					      "ctrl_link_iface", "stream_pixel";
-I overlooked this previously, but please turn this into a vertical list.
-
-With these fixed:
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> +		connector@0 {
+> +			compatible = "usb-c-connector";
+> +			reg = <0>;
+> +			power-role = "dual";
+> +			data-role = "dual";
+> +
+> +			ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +
+> +				port@0 {
+> +					reg = <0>;
+Add a newline before the child nodes, please.
 
 Konrad
-
-> +
-> +				assigned-clocks = <&dispcc0 DISP_CC_MDSS_DPTX0_LINK_CLK_SRC>,
-> +						  <&dispcc0 DISP_CC_MDSS_DPTX0_PIXEL0_CLK_SRC>;
-> +				assigned-clock-parents = <&usb_0_qmpphy QMP_USB43DP_DP_LINK_CLK>,
-> +							 <&usb_0_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>;
-> +
-> +				phys = <&usb_0_qmpphy QMP_USB43DP_DP_PHY>;
-> +				phy-names = "dp";
-> +
-> +				#sound-dai-cells = <0>;
-> +
-> +				operating-points-v2 = <&mdss0_dp0_opp_table>;
-> +				power-domains = <&rpmhpd SC8280XP_CX>;
-> +
-> +				status = "disabled";
-> +
-> +				ports {
-> +					#address-cells = <1>;
-> +					#size-cells = <0>;
-> +
-> +					port@0 {
-> +						reg = <0>;
-> +						mdss0_dp0_in: endpoint {
-> +							remote-endpoint = <&mdss0_intf0_out>;
-> +						};
-> +					};
-> +
-> +					port@1 {
-> +						reg = <1>;
+> +					pmic_glink_con0_hs: endpoint {
+> +						remote-endpoint = <&usb_0_role_switch>;
 > +					};
 > +				};
 > +
-> +				mdss0_dp0_opp_table: opp-table {
-> +					compatible = "operating-points-v2";
-> +
-> +					opp-160000000 {
-> +						opp-hz = /bits/ 64 <160000000>;
-> +						required-opps = <&rpmhpd_opp_low_svs>;
+> +				port@1 {
+> +					reg = <1>;
+> +					pmic_glink_con0_ss: endpoint {
+> +						remote-endpoint = <&mdss0_dp0_out>;
 > +					};
+> +				};
 > +
-> +					opp-270000000 {
-> +						opp-hz = /bits/ 64 <270000000>;
-> +						required-opps = <&rpmhpd_opp_svs>;
-> +					};
-> +
-> +					opp-540000000 {
-> +						opp-hz = /bits/ 64 <540000000>;
-> +						required-opps = <&rpmhpd_opp_svs_l1>;
-> +					};
-> +
-> +					opp-810000000 {
-> +						opp-hz = /bits/ 64 <810000000>;
-> +						required-opps = <&rpmhpd_opp_nom>;
+> +				port@2 {
+> +					reg = <2>;
+> +					pmic_glink_con0_sbu: endpoint {
+> +						remote-endpoint = <&usb0_sbu_mux>;
 > +					};
 > +				};
 > +			};
+> +		};
 > +
-> +			mdss0_dp1: displayport-controller@ae98000 {
-> +				compatible = "qcom,sc8280xp-dp";
-> +				reg = <0 0xae98000 0 0x200>,
-> +				      <0 0xae98200 0 0x200>,
-> +				      <0 0xae98400 0 0x600>,
-> +				      <0 0xae99000 0 0x400>,
-> +				      <0 0xae99400 0 0x400>;
-> +				interrupt-parent = <&mdss0>;
-> +				interrupts = <13>;
-> +				clocks = <&dispcc0 DISP_CC_MDSS_AHB_CLK>,
-> +					 <&dispcc0 DISP_CC_MDSS_DPTX1_AUX_CLK>,
-> +					 <&dispcc0 DISP_CC_MDSS_DPTX1_LINK_CLK>,
-> +					 <&dispcc0 DISP_CC_MDSS_DPTX1_LINK_INTF_CLK>,
-> +					 <&dispcc0 DISP_CC_MDSS_DPTX1_PIXEL0_CLK>;
-> +				clock-names = "core_iface", "core_aux",
-> +					      "ctrl_link",
-> +					      "ctrl_link_iface", "stream_pixel";
+> +		connector@1 {
+> +			compatible = "usb-c-connector";
+> +			reg = <1>;
+> +			power-role = "dual";
+> +			data-role = "dual";
 > +
-> +				assigned-clocks = <&dispcc0 DISP_CC_MDSS_DPTX1_LINK_CLK_SRC>,
-> +						  <&dispcc0 DISP_CC_MDSS_DPTX1_PIXEL0_CLK_SRC>;
-> +				assigned-clock-parents = <&usb_1_qmpphy QMP_USB43DP_DP_LINK_CLK>,
-> +							 <&usb_1_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>;
-> +
-> +				phys = <&usb_1_qmpphy QMP_USB43DP_DP_PHY>;
-> +				phy-names = "dp";
-> +
-> +				#sound-dai-cells = <0>;
-> +
-> +				operating-points-v2 = <&mdss0_dp1_opp_table>;
-> +				power-domains = <&rpmhpd SC8280XP_CX>;
-> +
-> +				status = "disabled";
-> +
-> +				ports {
-> +					#address-cells = <1>;
-> +					#size-cells = <0>;
-> +
-> +					port@0 {
-> +						reg = <0>;
-> +						mdss0_dp1_in: endpoint {
-> +							remote-endpoint = <&mdss0_intf4_out>;
-> +						};
-> +					};
-> +
-> +					port@1 {
-> +						reg = <1>;
+> +			ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +				port@0 {
+> +					reg = <0>;
+> +					pmic_glink_con1_hs: endpoint {
+> +						remote-endpoint = <&usb_1_role_switch>;
 > +					};
 > +				};
 > +
-> +				mdss0_dp1_opp_table: opp-table {
-> +					compatible = "operating-points-v2";
-> +
-> +					opp-160000000 {
-> +						opp-hz = /bits/ 64 <160000000>;
-> +						required-opps = <&rpmhpd_opp_low_svs>;
+> +				port@1 {
+> +					reg = <1>;
+> +					pmic_glink_con1_ss: endpoint {
+> +						remote-endpoint = <&mdss0_dp1_out>;
 > +					};
+> +				};
 > +
-> +					opp-270000000 {
-> +						opp-hz = /bits/ 64 <270000000>;
-> +						required-opps = <&rpmhpd_opp_svs>;
-> +					};
-> +
-> +					opp-540000000 {
-> +						opp-hz = /bits/ 64 <540000000>;
-> +						required-opps = <&rpmhpd_opp_svs_l1>;
-> +					};
-> +
-> +					opp-810000000 {
-> +						opp-hz = /bits/ 64 <810000000>;
-> +						required-opps = <&rpmhpd_opp_nom>;
+> +				port@2 {
+> +					reg = <2>;
+> +					pmic_glink_con1_sbu: endpoint {
+> +						remote-endpoint = <&usb1_sbu_mux>;
 > +					};
 > +				};
 > +			};
+> +		};
+> +	};
 > +
->  			mdss0_dp2: displayport-controller@ae9a000 {
->  				compatible = "qcom,sc8280xp-dp";
->  				reg = <0 0xae9a000 0 0x200>,
-> @@ -3387,10 +3549,10 @@ dispcc0: clock-controller@af00000 {
->  			clocks = <&gcc GCC_DISP_AHB_CLK>,
->  				 <&rpmhcc RPMH_CXO_CLK>,
->  				 <&sleep_clk>,
-> -				 <0>,
-> -				 <0>,
-> -				 <0>,
-> -				 <0>,
-> +				 <&usb_0_qmpphy QMP_USB43DP_DP_LINK_CLK>,
-> +				 <&usb_0_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>,
-> +				 <&usb_1_qmpphy QMP_USB43DP_DP_LINK_CLK>,
-> +				 <&usb_1_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>,
->  				 <&mdss0_dp2_phy 0>,
->  				 <&mdss0_dp2_phy 1>,
->  				 <&mdss0_dp3_phy 0>,
+>  	vreg_edp_3p3: regulator-edp-3p3 {
+>  		compatible = "regulator-fixed";
+>  
+> @@ -238,6 +310,46 @@ map1 {
+>  			};
+>  		};
+>  	};
+> +
+> +	usb0-sbu-mux {
+> +		compatible = "pericom,pi3usb102", "gpio-sbu-mux";
+> +
+> +		enable-gpios = <&tlmm 101 GPIO_ACTIVE_LOW>;
+> +		select-gpios = <&tlmm 164 GPIO_ACTIVE_HIGH>;
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&usb0_sbu_default>;
+> +
+> +		mode-switch;
+> +		orientation-switch;
+> +		svid = /bits/ 16 <0xff01>;
+> +
+> +		port {
+> +			usb0_sbu_mux: endpoint {
+> +				remote-endpoint = <&pmic_glink_con0_sbu>;
+> +			};
+> +		};
+> +	};
+> +
+> +	usb1-sbu-mux {
+> +		compatible = "pericom,pi3usb102", "gpio-sbu-mux";
+> +
+> +		enable-gpios = <&tlmm 48 GPIO_ACTIVE_LOW>;
+> +		select-gpios = <&tlmm 47 GPIO_ACTIVE_HIGH>;
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&usb1_sbu_default>;
+> +
+> +		mode-switch;
+> +		orientation-switch;
+> +		svid = /bits/ 16 <0xff01>;
+> +
+> +		port {
+> +			usb1_sbu_mux: endpoint {
+> +				remote-endpoint = <&pmic_glink_con1_sbu>;
+> +			};
+> +		};
+> +	};
+>  };
+>  
+>  &apps_rsc {
+> @@ -377,6 +489,34 @@ &mdss0 {
+>  	status = "okay";
+>  };
+>  
+> +&mdss0_dp0 {
+> +	data-lanes = <0 1>;
+> +	status = "okay";
+> +
+> +	ports {
+> +		port@1 {
+> +			reg = <1>;
+> +			mdss0_dp0_out: endpoint {
+> +				remote-endpoint = <&pmic_glink_con0_ss>;
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +&mdss0_dp1 {
+> +	data-lanes = <0 1>;
+> +	status = "okay";
+> +
+> +	ports {
+> +		port@1 {
+> +			reg = <1>;
+> +			mdss0_dp1_out: endpoint {
+> +				remote-endpoint = <&pmic_glink_con1_ss>;
+> +			};
+> +		};
+> +	};
+> +};
+> +
+>  &mdss0_dp3 {
+>  	compatible = "qcom,sc8280xp-edp";
+>  
+> @@ -871,8 +1011,13 @@ &usb_0 {
+>  };
+>  
+>  &usb_0_dwc3 {
+> -	/* TODO: Define USB-C connector properly */
+>  	dr_mode = "host";
+> +
+> +	port {
+> +		usb_0_role_switch: endpoint {
+> +			remote-endpoint = <&pmic_glink_con0_hs>;
+> +		};
+> +	};
+>  };
+>  
+>  &usb_0_hsphy {
+> @@ -895,8 +1040,13 @@ &usb_1 {
+>  };
+>  
+>  &usb_1_dwc3 {
+> -	/* TODO: Define USB-C connector properly */
+>  	dr_mode = "host";
+> +
+> +	port {
+> +		usb_1_role_switch: endpoint {
+> +			remote-endpoint = <&pmic_glink_con1_hs>;
+> +		};
+> +	};
+>  };
+>  
+>  &usb_1_hsphy {
+> @@ -1147,6 +1297,40 @@ reset-n-pins {
+>  		};
+>  	};
+>  
+> +	usb0_sbu_default: usb0-sbu-state {
+> +		oe-n-pins {
+> +			pins = "gpio101";
+> +			function = "gpio";
+> +			bias-disable;
+> +			drive-strengh = <16>;
+> +			output-high;
+> +		};
+> +
+> +		sel-pins {
+> +			pins = "gpio164";
+> +			function = "gpio";
+> +			bias-disable;
+> +			drive-strength = <16>;
+> +		};
+> +	};
+> +
+> +	usb1_sbu_default: usb1-sbu-state {
+> +		oe-n-pins {
+> +			pins = "gpio48";
+> +			function = "gpio";
+> +			bias-disable;
+> +			drive-strengh = <16>;
+> +			output-high;
+> +		};
+> +
+> +		sel-pins {
+> +			pins = "gpio47";
+> +			function = "gpio";
+> +			bias-disable;
+> +			drive-strength = <16>;
+> +		};
+> +	};
+> +
+>  	wcd_default: wcd-default-state {
+>  		reset-pins {
+>  			pins = "gpio106";
