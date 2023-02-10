@@ -2,152 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A49E86922AE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 16:54:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 123136922D4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 17:00:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231980AbjBJPyS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Feb 2023 10:54:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48016 "EHLO
+        id S232178AbjBJQAA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Feb 2023 11:00:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231954AbjBJPyR (ORCPT
+        with ESMTP id S232869AbjBJP76 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Feb 2023 10:54:17 -0500
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8926C721EF
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 07:54:15 -0800 (PST)
-Received: by mail-ed1-x52a.google.com with SMTP id r3so5015794edq.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 07:54:15 -0800 (PST)
+        Fri, 10 Feb 2023 10:59:58 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1618779B08
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 07:59:41 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id m14so5486674wrg.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 07:59:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RFOHltJDX4HqYupfofGUo17e9ZNMA+v0JnnvnsIGwB8=;
-        b=D47BwzV6CERtXj0Y2bEgghOqAC1KeNaqCp1FEqrMtuG5ePSCPK0yWzJdajxE47Xyml
-         2SBvHRTJ7EZfSSaBo1+tHARKTT/Esv68g6mDz0wGxnM0i8rf7+seOdLNKJD60nrq+SB9
-         W0ujkM+7Y47DIGu0spGqVhBcI57Zl7AbRNpdRuMy/35Q/7JBZXH8CRZGloRv2WFc75JF
-         BUYRE4vrZuiyY3NThL1lFD2WNN/z/fYPG0qi7+Op61CT4B4qlgo1z2b8ZkL5xbvCt/q7
-         k4FBFHCN6rZ2sr8xMmPBNSDwakvyc7MBjqN+VZDidDbVOab3Cfbv9GFnkYgptGuQKHps
-         jY3Q==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=IaOMp85DQqFK9FmSZWOrsKFZKbvOVr0dD/xHxXmrHrs=;
+        b=SjWmfQX6sZAmi8yrO5woKGzlHGfyeLaYU3uU2pZHqLtDuRvR3qS7Wf1AYTIBjfJzxc
+         xIPmwvUP8sNa6dtwEEa1qSe0JN4qkcni/qlbZbQlqgBxdiAYwpQwy4j2RNd8Gk0eg8uO
+         1FatZPD5mDyI3Emx2qODlEWv3KKO5b4IdaowAi0n9KM+Bry0UjbG+rU6iWVMq9SZ/4A4
+         dwelWtCi7HOGAeVfpmF/aPR/86oXn2Up0jTONEvvmToLOEJmaeyTYi1n4/ZjKkS0OWST
+         ACTAHP4UuPoMLmJIdthdxHTPkSCRwS/eruTB2xAAJXZfYlduBox4X8Xo1RclC6S68n15
+         PMVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RFOHltJDX4HqYupfofGUo17e9ZNMA+v0JnnvnsIGwB8=;
-        b=QhxIROyfBMVG2xnfN4pHIX9jrWBNia5thurwajJE4c6NR1OqWzHTfst/7FhM8NWXy+
-         wzpiMuLXUHAqJqVQ9iM91aUENcs8QQ0PtM0n6vRlLDC6plKGxJTSfn/T3fth4FMy0ls3
-         xU5g2tq6A76nowfcd6B2UcvuZ/xAEIFvBAfx2CM96TDyk9NvH6sdM6gY+WmjxLAaHeLo
-         x4knHvpozGx/zqHAO5kaj0FIgSYoDB/xymY9+sNVtnwNDo2BTn9jS9pu+GMlmgiFMhVB
-         Kz35r3Kc++17TPrV7/3Xo98+x7qEceWOfR8K9cPysYddJGfpo7cIRbeWVKoThTGP4EsL
-         eDSQ==
-X-Gm-Message-State: AO0yUKVSTMJm+ij80Exv+Rv9JvD/XPezkknP4NBGWZcrD1PKkISrPwXU
-        LLrVE9ImE6MWHNigOH+dOS+U+Q==
-X-Google-Smtp-Source: AK7set/TVcHbOGmvCIoayuAWCd9zPG2uIyMdoJSsxD8eiwCLiVSmf8ACzfIGl8PdaKvwB0WigJlacw==
-X-Received: by 2002:a50:9b18:0:b0:4ac:b31c:83d3 with SMTP id o24-20020a509b18000000b004acb31c83d3mr726693edi.14.1676044454141;
-        Fri, 10 Feb 2023 07:54:14 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id m2-20020a509302000000b004aad8d2158dsm2368436eda.66.2023.02.10.07.54.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Feb 2023 07:54:13 -0800 (PST)
-Message-ID: <880e691a-0512-6325-f27c-9be59abdd647@linaro.org>
-Date:   Fri, 10 Feb 2023 17:54:12 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH v3 5/5] arm64: dts: qcom: sm8450: add dp controller
-Content-Language: en-GB
-To:     neil.armstrong@linaro.org, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=IaOMp85DQqFK9FmSZWOrsKFZKbvOVr0dD/xHxXmrHrs=;
+        b=36WiCNqFIdfUdwoXujBtb7JfcwTQGy1imNGit3ljB/fhlQBwf6k+y0q/dY5wsHMDf/
+         64/09OxvrQltk2aIyijfupkkDCNbgwlxVxwwxtigHhRUTbTcBMqrr6TzdtWFB0XoYVhp
+         MOZvoNHSr7PlirOaE+TpUOV8LKERpx5X+xM2CAXxmrt6Sa6eSnuDO4p5F29VG2jwdGxO
+         MtQs28Nmk2x67YSex8gC4vcwvdxggphbOv1wZFK08P0ylzhEzTe5Tl7g6rjsPA0POPTI
+         xAwCOPzoxVL7ALtmZlzHog0AhefpgVL8iiL96A6eKtxM6lSo0YktALAXS/tfLMRjYUnE
+         +qJw==
+X-Gm-Message-State: AO0yUKV3jR8HeItypi1F6FPkNtP0XJGfHtJDvEGX0WE9++rsk/ziX8Uk
+        ILhXcJZHR9hHE0MMHD/Jsql1j6mEj35pqXK+
+X-Google-Smtp-Source: AK7set9/QCxdu8rngGkirm66tKQ8nUUlKQtouI7koQ5af8wv216xyvib2YyyphADqC/g5f0L14zomQ==
+X-Received: by 2002:a5d:4287:0:b0:2c5:4784:6f0c with SMTP id k7-20020a5d4287000000b002c547846f0cmr3551624wrq.15.1676044773888;
+        Fri, 10 Feb 2023 07:59:33 -0800 (PST)
+Received: from krzk-bin.. ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id y15-20020adfee0f000000b002c3efca57e1sm4078604wrn.110.2023.02.10.07.59.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Feb 2023 07:59:33 -0800 (PST)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230206-topic-sm8450-upstream-dp-controller-v3-0-636ef9e99932@linaro.org>
- <20230206-topic-sm8450-upstream-dp-controller-v3-5-636ef9e99932@linaro.org>
- <347a5193-f7b1-7f8e-0c60-3d435bdf952c@linaro.org>
- <f5a26fff-2dc2-2397-a80c-2477176a5864@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <f5a26fff-2dc2-2397-a80c-2477176a5864@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     Abel Vesa <abel.vesa@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] regulator: dt-bindings: qcom,rpmh: Correct PM8550 family supplies
+Date:   Fri, 10 Feb 2023 16:59:30 +0100
+Message-Id: <20230210155930.549082-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/02/2023 17:28, Neil Armstrong wrote:
-> On 10/02/2023 16:24, Dmitry Baryshkov wrote:
->> On 10/02/2023 16:44, Neil Armstrong wrote:
->>> Add the Display Port controller subnode to the MDSS node.
->>>
->>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->>> ---
->>>   arch/arm64/boot/dts/qcom/sm8450.dtsi | 79 
->>> ++++++++++++++++++++++++++++++++++++
->>>   1 file changed, 79 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi 
->>> b/arch/arm64/boot/dts/qcom/sm8450.dtsi
->>> index 6caa2c8efb46..72d54beb7d7c 100644
->>> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
->>> @@ -2751,6 +2751,13 @@ dpu_intf2_out: endpoint {
->>>                           };
->>>                       };
->>> +                    port@2 {
->>> +                        reg = <2>;
->>> +                        dpu_intf0_out: endpoint {
->>> +                            remote-endpoint = <&mdss_dp0_in>;
->>> +                        };
->>> +                    };
->>> +
->>>                   };
->>>                   mdp_opp_table: opp-table {
->>> @@ -2783,6 +2790,78 @@ opp-500000000 {
->>>                   };
->>>               };
->>> +            mdss_dp0: displayport-controller@ae90000 {
->>> +                compatible = "qcom,sm8350-dp";
-> 
-> Exact, must fix.
-> 
->>
->> Missing "qcom,sm8450-dp". As I wrote in the comment to patch 1, I'd 
->> suggest having just a single entry here rather than keeping both 8350 
->> and 8450 entries.
->>
->>> +                reg = <0 0xae90000 0 0xfc>,
->>> +                      <0 0xae90200 0 0xc0>,
->>> +                      <0 0xae90400 0 0x770>,
->>> +                      <0 0xae91000 0 0x98>,
->>> +                      <0 0xae91400 0 0x98>;
->>
->>
->> While this sounds correct, usually we used the even size here (0x200, 
->> 0x400, etc.). Can we please switch to it (especially since sm8350-dp 
->> uses even sizes).
-> 
-> I don't have access to registers layout for HDK8450 but the system 
-> freezes when using even sizes, using
-> the exact register size works fine.
+PM8550 is different than PM8550VE/VS, because the latter has much
+smaller amount of supplies (l1-3 and s1-6) and regulators.  The PM8550
+has on theh other hand one pin for vdd-l1-l4-l10 supplies.  Correct the
+if:then: clause with their supplies.
 
-Interesting. Could you please trace, what exactly makes it fail, since 
-specifying bigger region size should not cause such issues.
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ .../bindings/regulator/qcom,rpmh-regulator.yaml  | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
+diff --git a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
+index 297a75069f60..fb9621b4b4cd 100644
+--- a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
++++ b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
+@@ -308,19 +308,29 @@ allOf:
+         compatible:
+           enum:
+             - qcom,pm8550-rpmh-regulators
+-            - qcom,pm8550ve-rpmh-regulators
+-            - qcom,pm8550vs-rpmh-regulators
+     then:
+       properties:
++        vdd-l1-l4-l10-supply: true
+         vdd-l2-l13-l14-supply: true
+         vdd-l5-l16-supply: true
+         vdd-l6-l7-supply: true
+         vdd-l8-l9-supply: true
+       patternProperties:
+-        "^vdd-l([1-4]|1[0-7])-supply$": true
++        "^vdd-l(3|1[1-7])-supply$": true
+         "^vdd-s[1-6]-supply$": true
+         "^vdd-bob[1-2]-supply$": true
+ 
++  - if:
++      properties:
++        compatible:
++          enum:
++            - qcom,pm8550ve-rpmh-regulators
++            - qcom,pm8550vs-rpmh-regulators
++    then:
++      patternProperties:
++        "^vdd-l[1-3]-supply$": true
++        "^vdd-s[1-6]-supply$": true
++
+   - if:
+       properties:
+         compatible:
 -- 
-With best wishes
-Dmitry
+2.34.1
 
