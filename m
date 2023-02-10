@@ -2,129 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D8F9691C4A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 11:07:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 16AF5691CB9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 11:31:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231765AbjBJKHz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Feb 2023 05:07:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56810 "EHLO
+        id S232057AbjBJKbP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Feb 2023 05:31:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231656AbjBJKHy (ORCPT
+        with ESMTP id S232037AbjBJKbO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Feb 2023 05:07:54 -0500
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9979B4ECD
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 02:07:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1676023629;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=ntExVcX2zpshND9UNOnxaEMSIbbr4Th0LFPKOz+KlP0=;
-        b=h97JS9DKv168q3TaN/20ak3lKz3MBbNm3uIvytpDsctxKKU8YPuV2Q6g1/y+L3oBD4IRXD
-        hgN/V8gnpoZCovveXiQcPMkMsgYkp3T/3+9J3tyqEdmXHqgHJpAu6TSyBxub7QgPu7DkaH
-        WNXeUJ2r2za/JtB/MeDVbWXAsB00Z1U=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-307-s7OYZyTMOfOz_pXqM0PIeg-1; Fri, 10 Feb 2023 05:07:06 -0500
-X-MC-Unique: s7OYZyTMOfOz_pXqM0PIeg-1
-Received: by mail-wr1-f69.google.com with SMTP id n14-20020a5d598e000000b002c3f0a93825so1127430wri.15
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 02:07:06 -0800 (PST)
+        Fri, 10 Feb 2023 05:31:14 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BD446D637
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 02:31:11 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id j23so4639895wra.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 02:31:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=EoP3N0+HyfNxDRuzpcPoBnYi1M7DcjjI/H/2+p16pBQ=;
+        b=y53wZ1cyUbE2DR60T8dKx8BlNMPI4M6CzHQq2hL7tlvbpH1a3t5yBjcGd+7Piwlibs
+         rOGJSj20Jx0vmI4MN4IcVu7tIRPYIBVPi2sw99/K8fpi+ujYrXEvxmqjQKQobzNFNX5F
+         M7OfrvbUsyiZVUnQ9ZO4G1pjoB6LacQbfiRD9yPQ0eCkklQ/tOfgGLpcewnsPcaDa9nU
+         nMeT6QRwJpKHvvn3LNne3bgKQoD+Z4nB0RfTAuzDmBj2Bn1M+ba1UXct1iBBsYdnEJQw
+         aXCyWUSEiAQeP2+1klY5QzzKJD/HTnXN03/TaylEBDBVJ85DL7891MSXaFK+/ErwzaTD
+         cVRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ntExVcX2zpshND9UNOnxaEMSIbbr4Th0LFPKOz+KlP0=;
-        b=s+U7YVjDnLcRB9dH/QQiYHQvZ++pTJU5OoksUBCO+JQy/E8S/c1JTarooHJjW09JYT
-         H8f/ZUzC8BHWf2CTvSnh28OoGEHdH+IrDBpC4trkK2gHcZBpeYdKiIm4uVxSWs3Y0myA
-         B7ae4/DD0x/5CRdmxx1u0k/0grHmDkca76xAVtb/xyUphvW9uezkHg+PiZh9HjUXLsP9
-         X8qX3e0EygFYJSZje+d0ZaAkFHtgvfuaLWnp18dfeNf5tdXaYCLkpKgyWQ9WptvCJWy5
-         LH/m/AYnolON2EMgKI07CUaK65K+sylu2sEXxoG4lf/30YHbaeusSmwVEGwyUyJe+JRH
-         nkGQ==
-X-Gm-Message-State: AO0yUKWzRQDfa9R0u3bqeE1vi8anezDe//0EVX6Ks1yCX7TnyaEcbPji
-        l2pkQhHpxtzOWbBnDVv8t/v08q0F6RCYA7wpIJV6tn4RIifmEwxVC8mjM36/qNQIFpCV71POFaI
-        EVjNXayXqM1TVYmKvj9UUK1miqw==
-X-Received: by 2002:a5d:5341:0:b0:2c3:eaff:aaeb with SMTP id t1-20020a5d5341000000b002c3eaffaaebmr13577681wrv.21.1676023625115;
-        Fri, 10 Feb 2023 02:07:05 -0800 (PST)
-X-Google-Smtp-Source: AK7set8+Vork7W3EVzOtUBHjxqMsMetvc9V28TkbMVisNUCWK9d969tKv9WJXzwkmtJOkAieKxg+MQ==
-X-Received: by 2002:a5d:5341:0:b0:2c3:eaff:aaeb with SMTP id t1-20020a5d5341000000b002c3eaffaaebmr13577670wrv.21.1676023624944;
-        Fri, 10 Feb 2023 02:07:04 -0800 (PST)
-Received: from [192.168.1.130] (205.pool92-176-231.dynamic.orange.es. [92.176.231.205])
-        by smtp.gmail.com with ESMTPSA id u6-20020adfed46000000b002bf95500254sm3306658wro.64.2023.02.10.02.07.03
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EoP3N0+HyfNxDRuzpcPoBnYi1M7DcjjI/H/2+p16pBQ=;
+        b=vcN3dZLNP8UQoBnWy1FVsiNFI3OkMu+hOb7Y3E5VoF8yUebknz7X/Av3oXB/mkH3in
+         cey43eTtSnI5lvHi7AbRWJWp8EidewQWq0S483omA4cJnQENfSI4hWqdZOkfsg7gIDqd
+         UzXFpYAYKzvcXZEHiYg6SPzDphEUGVjD66JlkluRDxrldAdcndVQR+e4esjBREmRUk6L
+         OH1VpsPwfU8+4vXJ3yNK86Gn9tfxcj8tx7lpI73Zpeiy6DWF5OL1R6Y9vcs8YMM0bb+X
+         TGg0MKKNkCocl/zGVzUF1/UFASn4HRISFbU8m7Dzoaxe7bGHoCxFeGVRZ2o3dzxsKHvB
+         37bw==
+X-Gm-Message-State: AO0yUKU/zXfxjHdOvGpFXsyeeNP0H8Uv+DFH3+mE0Ez+nhusjroYmEQP
+        4uTRyrdOG1UjqILhbRkOvpjYJQ==
+X-Google-Smtp-Source: AK7set83bAYzbIOw3hqSGA3caGrA7n0CkMX9pgiGQddnRDcI///tWiZjqyHj7uimc9mqXiVcWn0E7A==
+X-Received: by 2002:a05:6000:4:b0:2bf:ae17:bf58 with SMTP id h4-20020a056000000400b002bfae17bf58mr13181044wrx.37.1676025069861;
+        Fri, 10 Feb 2023 02:31:09 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:5a65:5553:55cf:3027? ([2a01:e0a:982:cbb0:5a65:5553:55cf:3027])
+        by smtp.gmail.com with ESMTPSA id a1-20020a05600c348100b003db0ee277b2sm7854940wmq.5.2023.02.10.02.31.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Feb 2023 02:07:04 -0800 (PST)
-Message-ID: <e87344c6-acef-7f3f-5cac-24961dbd9401@redhat.com>
-Date:   Fri, 10 Feb 2023 11:07:03 +0100
+        Fri, 10 Feb 2023 02:31:09 -0800 (PST)
+Message-ID: <720aee1d-87e8-5291-c6a0-ef53e830a21d@linaro.org>
+Date:   Fri, 10 Feb 2023 11:31:08 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH] Revert "venus: firmware: Correct non-pix start and end
- addresses"
-To:     Vikash Garodia <vgarodia@qti.qualcomm.com>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "mka@chromium.org" <mka@chromium.org>
-Cc:     Albert Esteve <aesteve@redhat.com>,
-        "stanimir.varbanov@linaro.org" <stanimir.varbanov@linaro.org>,
-        Enric Balletbo i Serra <eballetb@redhat.com>,
+ Thunderbird/102.7.1
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 1/7] usb: typec: ucsi: add PMIC Glink UCSI driver
+Content-Language: en-US
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Heikki Krogerus <heikki.krogerus@linux.intel.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        "Vikash Garodia (QUIC)" <quic_vgarodia@quicinc.com>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
-        Fritz Koenig <frkoenig@google.com>,
-        "Dikshita Agarwal (QUIC)" <quic_dikshita@quicinc.com>,
-        "Rajeshwar Kurapaty (QUIC)" <quic_rkurapat@quicinc.com>
-References: <20230207102254.1446461-1-javierm@redhat.com>
- <DM8PR02MB8169809493BF2822E6C29EECF3DB9@DM8PR02MB8169.namprd02.prod.outlook.com>
- <ef09bc9f-d570-be11-238b-bd34063917fc@redhat.com>
- <70c01751-1dd7-c4bd-a96e-94dea437aa40@redhat.com>
- <DM8PR02MB81696369DBFE619E43F81EEFF3DE9@DM8PR02MB8169.namprd02.prod.outlook.com>
-Content-Language: en-US
-From:   Javier Martinez Canillas <javierm@redhat.com>
-In-Reply-To: <DM8PR02MB81696369DBFE619E43F81EEFF3DE9@DM8PR02MB8169.namprd02.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+References: <20230130-topic-sm8450-upstream-pmic-glink-v1-0-0b0acfad301e@linaro.org>
+ <20230130-topic-sm8450-upstream-pmic-glink-v1-1-0b0acfad301e@linaro.org>
+ <Y9jcYdc30G026/fs@kroah.com>
+Organization: Linaro Developer Services
+In-Reply-To: <Y9jcYdc30G026/fs@kroah.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello Vikash,
-
-On 2/10/23 10:22, Vikash Garodia wrote:
-
-[...]
-
+On 31/01/2023 10:16, Greg Kroah-Hartman wrote:
+> On Mon, Jan 30, 2023 at 10:54:32AM +0100, Neil Armstrong wrote:
+>> Introduce the UCSI PMIC Glink aux driver that communicates
+>> with the aDSP firmware with the UCSI protocol which handles
+>> the USB-C Port(s) Power Delivery.
 >>
->> So what should we do about this folks? Since not allowing the driver to probe on
->> at least SC7180 is a quite serious regression, can we revert for now until a proper
->> fix is figured out?
+>> The UCSI messaging is necessary on newer Qualcomm SoCs to
+>> provide USB role switch and altmode notifications.
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---
+>>   drivers/usb/typec/ucsi/Kconfig      |   7 +
+>>   drivers/usb/typec/ucsi/Makefile     |   1 +
+>>   drivers/usb/typec/ucsi/ucsi_glink.c | 321 ++++++++++++++++++++++++++++++++++++
+>>   3 files changed, 329 insertions(+)
+>>
+>> diff --git a/drivers/usb/typec/ucsi/Kconfig b/drivers/usb/typec/ucsi/Kconfig
+>> index 8f9c4b9f31f7..dee6069e46a2 100644
+>> --- a/drivers/usb/typec/ucsi/Kconfig
+>> +++ b/drivers/usb/typec/ucsi/Kconfig
+>> @@ -58,4 +58,11 @@ config UCSI_STM32G0
+>>   	  To compile the driver as a module, choose M here: the module will be
+>>   	  called ucsi_stm32g0.
+>>   
+>> +config UCSI_PMIC_GLINK
+>> +	tristate "UCSI Qualcomm PMIC GLINK Interface Driver"
+>> +	depends on QCOM_PMIC_GLINK
 > 
-> I am able to repro this issue on sc7180 and discussing with firmware team on the cause
-> of reset failure. The original patch was raised for fixing rare SMMU faults during warm
-> boot of video hardware. Hence looking to understand the regressing part before we
-> proceed to revert.
+> No way to test build this code without this option?
+
+Nop, the QCOM_PMIC_GLINK is a build dependency, this can't be removed
+
 > 
+>> +	help
+>> +	  This driver enables UCSI support on platforms that expose UCSI
+>> +	  interface as PMIC GLINK device.
+> 
+> Module name when built?
 
-Great, if you are working on a proper fix then that would be much better indeed.
+OK will add a follow-patch if needed
 
-Thanks for the follow-up!
+Thanks,
+Neil
 
--- 
-Best regards,
-
-Javier Martinez Canillas
-Core Platforms
-Red Hat
+> 
+> A follow-on patch can be sent, this is minor.
+> 
+> thanks,
+> 
+> greg k-h
 
