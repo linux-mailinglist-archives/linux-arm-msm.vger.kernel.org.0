@@ -2,91 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 71DEF6929E3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 23:14:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B9B64692A29
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 23:31:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232919AbjBJWOx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Feb 2023 17:14:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48830 "EHLO
+        id S233638AbjBJWbd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Feb 2023 17:31:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229624AbjBJWOw (ORCPT
+        with ESMTP id S233348AbjBJWbc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Feb 2023 17:14:52 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39BB168AD7;
-        Fri, 10 Feb 2023 14:14:51 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id BF26061EB5;
-        Fri, 10 Feb 2023 22:14:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 172AFC433EF;
-        Fri, 10 Feb 2023 22:14:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1676067290;
-        bh=ghsvSRGZgVlNPpv147xscv46Fev0smcGbeevNCTC204=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=tSuU+Zd/H8MpF+kyXmRqB2uMIvcVIqC0Ndnl3PE2XKAPIslHYIJ6XgpKdmv85VJoP
-         28o5Zfpsl/TXFnFeLau/GQ9rYkVNfFatuiiOu77m+2msROYPHZ5QdOA00wOv2z2f6y
-         fDHzUZDG9lvO+UCvN/SwWyl7BPuohLptcc06cZt4HGRhEf8se5M4fciivyQ0cqUz1Q
-         VYLanXCctALvihJkdiqIxgNjcETowoIm6dMXH8JQBy5T5zhicl6shdoJFZXcQiv9tm
-         lvJjpP48WA16sXyNf6XOhvRL3HcFjFesYvTjaQxPI1DeBVmTu+pGCNGb4XPkCABo9f
-         CctL9IETvPx6A==
-Message-ID: <6fa247b53740ca760a608e1446f95c95.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20230206073101.14796-1-quic_kathirav@quicinc.com>
-References: <20230206073101.14796-1-quic_kathirav@quicinc.com>
-Subject: Re: [PATCH V2] clk: qcom: ipq5332: mark GPLL4 as critical temporarily
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     quic_varada@quicinc.com, quic_srichara@quicinc.com,
-        Kathiravan T <quic_kathirav@quicinc.com>
-To:     Kathiravan T <quic_kathirav@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mturquette@baylibre.com
-Date:   Fri, 10 Feb 2023 14:14:47 -0800
-User-Agent: alot/0.10
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Fri, 10 Feb 2023 17:31:32 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78BE5812BB;
+        Fri, 10 Feb 2023 14:31:31 -0800 (PST)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31AMUrNN031176;
+        Fri, 10 Feb 2023 22:31:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=MkvI06wbF2iEoA2yQ+QE2V1EHCz/T8GM9ZHcPtuergA=;
+ b=jQYA57k2vHM6AfUiWj3u9TuNIl6H4MdZRymnHp4i2ccqb5Jsz4Vn+Gveu6tKOZxObwRM
+ mRVMwSFyh19tt4q9U/t02u5Yr0oXVHTLxFei7B6COeqomArewdel/NBz5RoKJOtbIXTQ
+ yrBoKp80sksJZWxrxAvbrDsj+/LZ8nT0CLj6PMkF4qG5ydiiPrN5YI7akQE0CPZE61+b
+ FtvmKeSOF6/kIVrILsZmqXZ9Q6kUnDqDDYulUVHplUl2eYgBBOhRW2v3Prd4bFI8KNw8
+ GpTcIjTWO3lu7R1DFzo6XE5wbq9p8lBIIllGRx/fiCSZ+aAKBLexaPi6MMDYJDb+vlOv 9A== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nnhcm9wxx-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 10 Feb 2023 22:31:07 +0000
+Received: from pps.filterd (NASANPPMTA03.qualcomm.com [127.0.0.1])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 31AMSXOW019892;
+        Fri, 10 Feb 2023 22:31:06 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by NASANPPMTA03.qualcomm.com (PPS) with ESMTP id 3nnw550ss6-1;
+        Fri, 10 Feb 2023 22:31:06 +0000
+Received: from NASANPPMTA03.qualcomm.com (NASANPPMTA03.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 31AMV6Zb023533;
+        Fri, 10 Feb 2023 22:31:06 GMT
+Received: from th-lint-014.qualcomm.com (th-lint-014.qualcomm.com [10.63.177.51])
+        by NASANPPMTA03.qualcomm.com (PPS) with ESMTP id 31AMV6rJ023532;
+        Fri, 10 Feb 2023 22:31:06 +0000
+Received: by th-lint-014.qualcomm.com (Postfix, from userid 455663)
+        id 305CCDA3; Fri, 10 Feb 2023 14:31:06 -0800 (PST)
+From:   Sudarshan Rajagopalan <quic_sudaraja@quicinc.com>
+To:     David Hildenbrand <david@redhat.com>,
+        Johannes Weiner <hannes@cmpxchg.org>,
+        Suren Baghdasaryan <surenb@google.com>,
+        Mike Rapoport <rppt@kernel.org>,
+        Oscar Salvador <osalvador@suse.de>,
+        Anshuman Khandual <anshuman.khandual@arm.com>,
+        mark.rutland@arm.com, will@kernel.org,
+        virtualization@lists.linux-foundation.org, linux-mm@kvack.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     Sudarshan Rajagopalan <quic_sudaraja@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Sukadev Bhattiprolu <quic_sukadev@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Patrick Daly <quic_pdaly@quicinc.com>
+Subject: [PATCH] psi: reduce min window size to 50ms
+Date:   Fri, 10 Feb 2023 14:31:01 -0800
+Message-Id: <cover.1676067791.git.quic_sudaraja@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: H8PxvFsviHo53Lls_jkNirmHDp0KRN1Q
+X-Proofpoint-ORIG-GUID: H8PxvFsviHo53Lls_jkNirmHDp0KRN1Q
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-10_15,2023-02-09_03,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ lowpriorityscore=0 impostorscore=0 phishscore=0 adultscore=0 bulkscore=0
+ mlxlogscore=613 clxscore=1011 mlxscore=0 malwarescore=0 spamscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302100193
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,SPF_HELO_NONE,
+        SPF_NONE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kathiravan T (2023-02-05 23:31:01)
-> diff --git a/drivers/clk/qcom/gcc-ipq5332.c b/drivers/clk/qcom/gcc-ipq533=
-2.c
-> index c8a5fa1bafca..2e043d2d0598 100644
-> --- a/drivers/clk/qcom/gcc-ipq5332.c
-> +++ b/drivers/clk/qcom/gcc-ipq5332.c
-> @@ -127,6 +127,16 @@ static struct clk_alpha_pll gpll4_main =3D {
->                         .parent_data =3D &gcc_parent_data_xo,
->                         .num_parents =3D 1,
->                         .ops =3D &clk_alpha_pll_stromer_ops,
-> +                       /*
-> +                        * There are no consumers for this GPLL in kernel=
- yet,
-> +                        * (will be added soon), so the clock framework
-> +                        * disables this source. But some of the clocks
-> +                        * initialized by boot loaders uses this source. =
-So we
-> +                        * need to keep this clock ON. Add the CRITICAL f=
-lag
-> +                        * so the clock will not be disabled. Once the co=
-nsumer
-> +                        * in kernel is added, we can get rid off this fl=
-ag.
+The PSI mechanism is useful tool to monitor pressure stall
+information in the system. Currently, the minimum window size
+is set to 500ms. May we know what is the rationale for this?
 
-s/off/of/
+For lightweight systems such as Linux Embedded Systems, PSI
+can be used to monitor and track memory pressure building up
+in the system and respond quickly to such memory demands.
+Example, the Linux Embedded Systems could be a secondary VM
+system which requests for memory from Primary host. With 500ms
+window size, the sampling period is 50ms (one-tenth of windwo
+size). So the minimum amount of time the process needs to stall,
+so that a PSI event can be generated and actions can be done
+is 50ms. This reaction time can be much reduced by reducing the
+sampling time (by reducing window size), so that responses to
+such memory pressures in system can be serviced much quicker.
 
-Does CLK_IGNORE_UNUSED work the same? It doesn't sound like a critical
-clk from the description of the comment.
+Please let us know your thoughts on reducing window size to 50ms.
 
-> +                        */
-> +                       .flags =3D CLK_IS_CRITICAL,
->                 },
->         },
+Sudarshan Rajagopalan (1):
+  psi: reduce min window size to 50ms
+
+ kernel/sched/psi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+-- 
+2.7.4
+
