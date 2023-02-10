@@ -2,152 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B3A416919E5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 09:19:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4DB48691A02
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 09:29:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231346AbjBJITc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Feb 2023 03:19:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33670 "EHLO
+        id S231432AbjBJI3K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Feb 2023 03:29:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230338AbjBJITb (ORCPT
+        with ESMTP id S231447AbjBJI3J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Feb 2023 03:19:31 -0500
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D5295775D
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 00:18:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1676017123;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=iVtYqaaQ7dSvGBX/UdCn76+kv/o4oHmMd0gDTcWP1xU=;
-        b=XBPhjvGPU062MqLRiT2rk64/V/rEkVY1o/LUi/67UQN9yHDkFWsfWPIui2h0z/31qLP3+0
-        bwyeQrne9iZS7BhvL+pnIQF3TBBYKTGb3Hu4T/cK1kmqmB1kr12mNHYB7JEBu6YjWWwmRm
-        sUb2iQT198aPkBTQXopieBDQmDAMaK0=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-623-Jkn2lB4nMsWRI7IttcHWKA-1; Fri, 10 Feb 2023 03:18:42 -0500
-X-MC-Unique: Jkn2lB4nMsWRI7IttcHWKA-1
-Received: by mail-wm1-f70.google.com with SMTP id h2-20020a1ccc02000000b003db1ded176dso2205285wmb.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 00:18:41 -0800 (PST)
+        Fri, 10 Feb 2023 03:29:09 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D72105775C
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 00:29:04 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id m14so4217746wrg.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 00:29:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:reply-to:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=6tE1c8DX1v8mq8zoUCAIlPkRHC7+cDeEHJZKSrjk8IA=;
+        b=hHm3T8b07r++hVJS3bQDQPb8kda5vBpkvDme6ZbXdLqhcM9fDX5oFyYu/n6qlFQcZ+
+         iYnatEhZBe2gJ2wPUQHlIp6tOWV+kFRO6IFOsML793dYvUdmykYe5h4kstTSQKQSctaj
+         oCGaxEXxiwEUGjY3YtXmK+ClIf4Wch7r5ypjWXB0RjDIg+HyfTeRc0RdO8FR6ncCp1f7
+         4anrFnVwmlc7tdaIo13VsLpIFr/SrIxAD/c8iMq7w5+CyAxHQnglEHkXJ9KBF4plk6Op
+         g4bpFy0zj4RO/xfYfqVNoZeBhIXZH0VdUI6o1Y50ypaAjEohACrSg5Y2ZZbr35Ta6Ymh
+         Rhvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=iVtYqaaQ7dSvGBX/UdCn76+kv/o4oHmMd0gDTcWP1xU=;
-        b=PDJl1uVAHkqaq/15CKyQ4YcQ8BtkbIKjQVgb1xEOBVf7q88dhmeT0n+c505+Fh+Rpn
-         Uie7Lo3GpRKRd4XgH26vmxgmutpkFqFA647dz/vI1cnQfkjPyOuOorj3MWaQDX6XKf4R
-         jTSv2wf0OX1U5jkKQZnDSJQ344tTKztIWpuvM7Pmex/kCNs59UmZVEF/0pFpuAdXuWu/
-         ypC5li3NQUCeXZlu9UEDUFE9GLqb1nTJ6d/f//Kekmf8HxrSb9gWzRY79jivun467dt5
-         5IrvXYwWLTrylQE9nXEg7BUT5xQ2Lfvca2YefFQq2HtQYUuirTSe9gl0h3vdEemqIffj
-         T6Hg==
-X-Gm-Message-State: AO0yUKUbMU9bJ4Re/Z7iJmXiGi4c8ZXPcHBCJi+cq8Fhh6IoBFMEVV0I
-        HIIBPQzEbpsYDCN+YT7XvQORnK2veFyx+lOL6h1KR+dbqZWOvk25oG94OYvELcapIPXAeSPWZeT
-        m7NidhJcq4AXqBE5kRT+ux1kfkA==
-X-Received: by 2002:a05:600c:2e95:b0:3dc:57e8:1d2f with SMTP id p21-20020a05600c2e9500b003dc57e81d2fmr12059796wmn.9.1676017120960;
-        Fri, 10 Feb 2023 00:18:40 -0800 (PST)
-X-Google-Smtp-Source: AK7set9Q3oBwvFntO43xljuvGD2h+gQvZoyDcaXC4CisWZmH4Hrr8bdy9JeF5Zs/6Zg1hnqFXvZoDQ==
-X-Received: by 2002:a05:600c:2e95:b0:3dc:57e8:1d2f with SMTP id p21-20020a05600c2e9500b003dc57e81d2fmr12059788wmn.9.1676017120804;
-        Fri, 10 Feb 2023 00:18:40 -0800 (PST)
-Received: from minerva.home (205.pool92-176-231.dynamic.orange.es. [92.176.231.205])
-        by smtp.gmail.com with ESMTPSA id t8-20020a05600c2f8800b003ddf2865aeasm7624944wmn.41.2023.02.10.00.18.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Feb 2023 00:18:40 -0800 (PST)
-From:   Javier Martinez Canillas <javierm@redhat.com>
-To:     linux-kernel@vger.kernel.org
-Cc:     Albert Esteve <aesteve@redhat.com>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Sergio Lopez <slp@redhat.com>,
-        Enric Balletbo i Serra <eballetb@redhat.com>,
-        Javier Martinez Canillas <javierm@redhat.com>,
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:reply-to:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6tE1c8DX1v8mq8zoUCAIlPkRHC7+cDeEHJZKSrjk8IA=;
+        b=Z6KO5KmZmlWVgInRt4nZvourvg35WyA+b8wMwiqhRwTVXtsuYPrKUxt/Aeap6WkQuW
+         VWZCvsQa0/7y6UyG2IoYpKTrsyiMb00K5X+e4ToJiEHfAB+FdbR+py/DHxpjMaupfIOc
+         19J9QYC6xEUSQlK6CneBzDuXH6mgsIiC9N8hS6isebS9mKLsMBwkDBXnUHv1OMvYCYHr
+         kU5MKPrSPWW58PkJNYwGpHojugrZSKtSvWAKg0orkRGfQUkfDWu9p7OsCkxK1Yqz0eOt
+         unwxC4vpnMBLb3mtsaTZvD7f0J3ENN+kmGymzc0BjxxY69qkd5YaX8e4/p8FpDeCDGp4
+         1/SQ==
+X-Gm-Message-State: AO0yUKX6/x7lR1asivgfaql0u0mAxM6W/Pn6RxkfJsdf7l8im0notleM
+        UCRFA5J72XGYmCJtJGTTXAwq8w==
+X-Google-Smtp-Source: AK7set8CXKm1YKEByQG/0WbPGVGfw7alomSEHGXKLAfAg83bzNQrVs9gDjx9S1V0J6uUMIHVjvhQXg==
+X-Received: by 2002:adf:f308:0:b0:2c4:242:1e09 with SMTP id i8-20020adff308000000b002c402421e09mr8851999wro.41.1676017743399;
+        Fri, 10 Feb 2023 00:29:03 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:5a65:5553:55cf:3027? ([2a01:e0a:982:cbb0:5a65:5553:55cf:3027])
+        by smtp.gmail.com with ESMTPSA id g16-20020adfe410000000b002bfae1398bbsm2965946wrm.42.2023.02.10.00.29.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 10 Feb 2023 00:29:02 -0800 (PST)
+Message-ID: <3fe5605e-de5a-53dc-0bf0-c6aff81f2453@linaro.org>
+Date:   Fri, 10 Feb 2023 09:29:02 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v3 0/6] arm64: dts: qcom: sm8350: enable GPU on the HDK
+ board
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org
-Subject: [PATCH] media: venus: dec: Fix capture formats enumeration order
-Date:   Fri, 10 Feb 2023 09:18:35 +0100
-Message-Id: <20230210081835.2054482-1-javierm@redhat.com>
-X-Mailer: git-send-email 2.39.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20230209133839.762631-1-dmitry.baryshkov@linaro.org>
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Organization: Linaro Developer Services
+In-Reply-To: <20230209133839.762631-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Commit 9593126dae3e ("media: venus: Add a handling of QC08C compressed
-format") and commit cef92b14e653 ("media: venus: Add a handling of QC10C
-compressed format") added support for the QC08C and QC10C compressed
-formats respectively.
+On 09/02/2023 14:38, Dmitry Baryshkov wrote:
+> Add A660 device to the Qualcomm SM8350 platform and enable it for the
+> sm8350-hdk board. Unfortunately while adding the GPU & related devices I
+> noticed that DT nodes on SM8350 are greatly out of the adress sorting
+> order, so patches 2-4 reorder DT nodes to follow the agreement.
+> 
+> Changes since v1:
+> - Dropped merged patches
+> - Expanded commit messages to mention the sort order (by the node
+>    address)
+> - Rebased on top of latest Bjorn's tree
 
-But these also caused a regression, because the new formats where added
-at the beginning of the vdec_formats[] array and the vdec_inst_init()
-function sets the default format output and capture using fixed indexes
-of that array:
+Can you specify which tree and commit ?
 
-static void vdec_inst_init(struct venus_inst *inst)
-{
+I tried next-20230207, next-20230208 & next-20230209 and patch 2 doesn't apply.
+
+On the 3 trees I have:
+d7133d6d25fb arm64: dts: qcom: sm8350: use qcom,sm8350-dsi-ctrl compatibles
+b904227a4b69 arm64: dts: qcom: sm8350: Hook up DSI1 to MDP
+2a07efb8c086 arm64: dts: qcom: sm8350: Add mdss_ prefix to DSIn out labels
+e3e654ced376 arm64: dts: qcom: sm8350: Fix DSI PLL size
+45cd807de143 arm64: dts: qcom: sm8350: Fix DSI PHY compatibles
+0af6a4012b38 arm64: dts: qcom: sm8350: Feed DSI1 PHY clocks to DISPCC
+1eed7995d9da arm64: dts: qcom: sm8350: Fix DSI1 interrupt
+6636818ecf0f arm64: dts: qcom: sm8350: Add missing #address/size-cells to DSIn
+f3c08ae6fea7 arm64: dts: qcom: sm8350: Pad addresses to 8 hex digits
+1ccad21aa996 Merge tag 'qcom-arm64-fixes-for-6.2' into arm64-for-6.3
 ...
-	inst->fmt_out = &vdec_formats[8];
-	inst->fmt_cap = &vdec_formats[0];
-...
-}
 
-Since now V4L2_PIX_FMT_NV12 is not the first entry in the array anymore,
-the default capture format is not set to that as it was done before.
+Can you use --base in format-patch (or use b4 prep !) ?
 
-Both commits changed the first index to keep inst->fmt_out default format
-set to V4L2_PIX_FMT_H264, but did not update the latter to keep .fmt_out
-default format set to V4L2_PIX_FMT_NV12.
+Thanks,
+Neil
 
-Rather than updating the index to the current V4L2_PIX_FMT_NV12 position,
-let's reorder the entries so that this format is the first entry again.
-
-This would also make VIDIOC_ENUM_FMT report the V4L2_PIX_FMT_NV12 format
-with an index 0 as it did before the QC08C and QC10C formats were added.
-
-Fixes: 9593126dae3e ("media: venus: Add a handling of QC08C compressed format")
-Fixes: cef92b14e653 ("media: venus: Add a handling of QC10C compressed format")
-Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
----
-
- drivers/media/platform/qcom/venus/vdec.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index 4ceaba37e2e5..bb14bea9fe09 100644
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -31,15 +31,15 @@
-  */
- static const struct venus_format vdec_formats[] = {
- 	{
--		.pixfmt = V4L2_PIX_FMT_QC08C,
-+		.pixfmt = V4L2_PIX_FMT_NV12,
- 		.num_planes = 1,
- 		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
- 	}, {
--		.pixfmt = V4L2_PIX_FMT_QC10C,
-+		.pixfmt = V4L2_PIX_FMT_QC08C,
- 		.num_planes = 1,
- 		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
--	},{
--		.pixfmt = V4L2_PIX_FMT_NV12,
-+	}, {
-+		.pixfmt = V4L2_PIX_FMT_QC10C,
- 		.num_planes = 1,
- 		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
- 	}, {
--- 
-2.39.1
+> 
+> Changes since v1:
+> - Fixed the subject and commit message for patch 1
+> - Fixed GMU's clocks to follow the vendor kernel
+> - Marked Adreno SMMU as dma-coherent
+> - Dropped comments targeting sm8350 v1, we do not support that chip
+>    revision.
+> 
+> Dmitry Baryshkov (6):
+>    dt-bindings: display/msm/gmu: add Adreno 660 support
+>    arm64: dts: qcom: sm8350: reorder device nodes
+>    arm64: dts: qcom: sm8350: move more nodes to correct place
+>    arm64: dts: qcom: sm8350: finish reordering nodes
+>    arm64: dts: qcom: sm8350: add GPU, GMU, GPU CC and SMMU nodes
+>    arm64: dts: qcom: sm8350-hdk: enable GPU
+> 
+>   .../devicetree/bindings/display/msm/gmu.yaml  |    1 +
+>   arch/arm64/boot/dts/qcom/sm8350-hdk.dts       |    8 +
+>   arch/arm64/boot/dts/qcom/sm8350.dtsi          | 2512 +++++++++--------
+>   3 files changed, 1354 insertions(+), 1167 deletions(-)
+> 
 
