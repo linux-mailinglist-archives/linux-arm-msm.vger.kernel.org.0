@@ -2,58 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ED51B691A4F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 09:50:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1ABCD691A7A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 09:58:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230525AbjBJIue (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Feb 2023 03:50:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50732 "EHLO
+        id S231661AbjBJI6f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Feb 2023 03:58:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231395AbjBJIuc (ORCPT
+        with ESMTP id S231653AbjBJI6e (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Feb 2023 03:50:32 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28CFB7B16D;
-        Fri, 10 Feb 2023 00:50:22 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id D128AB82408;
-        Fri, 10 Feb 2023 08:50:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 730ECC4339B;
-        Fri, 10 Feb 2023 08:50:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1676019019;
-        bh=zLx32N6ff4/WOW/b2VRCpc3Z7afbLUIgebvJtMlg5eo=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=Fsio/DMQ8j0nkzi3yZPDdFjI7OTgjTuqieq6V710sJZpUW2h4Z60Dmi1AKWXakSvP
-         1anUfEozsEuyChcZDMbwcAfjlxTq4ARocrH7QPj6NQgxgQI7F7U+a2xPam20xunPZn
-         LU6FmK82WEelv0WsaA0SD0eVGHfUawUMWcw3ECDo78NxljwenmB18uoIo+wRpdQYD0
-         TDDkduuPVvfTMtkUdKim/s1ebdc7kPTNQNmVLZyz6MHOdecSXHwYoQ0H8/Ugl+6tEM
-         ZMpRBNcQJUk9P66YAzhjGFc8zPOfTtsZRxCxfe31P88GNLXIGMKQqdsnrerl9TYmdU
-         JKPoXJs5WmZRA==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 545C0C41677;
-        Fri, 10 Feb 2023 08:50:19 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        Fri, 10 Feb 2023 03:58:34 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08423AD08
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 00:58:33 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id l37-20020a05600c1d2500b003dfe46a9801so3559123wms.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 00:58:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Ef2U5c6HeqEw6s0y4iUYPmBBD++bKxShMuYw351drKo=;
+        b=CmYSJWFtRLMqTRalC5Jt/GNXUu8cHnMEtFuC3I31jOku5857/RbxNzvYNWkg99QVbU
+         Hc337k+3oI4rC/1MnDLqeptmNfuhSmpQr/tP6Qsi8GGJqzBzSWtGO6Fx3V3mryP1Qtqd
+         Xncu7ZFmtT1Za3b8ImUoCFMw/usgQd+w8AyecSFgN8Xe9hXVvpAIeHJ3nuZXFpbjWfoA
+         cf2qmNt8CR0+UqzVVSnSPBmRLqh0jbjXtw0XvE7EIO2/gkLNRf4tdztuBgh9tvTNk9v+
+         T4j+9Pn5SamHLColFrzEyBEg8iDEyGAXsXgacD60cozCyD+GLdEpT+41x9AL/GVw9Y3c
+         sesg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ef2U5c6HeqEw6s0y4iUYPmBBD++bKxShMuYw351drKo=;
+        b=0B14yct9amCiwd732hTKACqsqqa5KFuQ0LSXuoTHRuV+RDoXxm3P30MslPnce1/6Qu
+         BcITyHSqIMkNEf3hnUJApSEBpufDyhXFD67NgrxbZiwJ6JqAtchhyUftq5nCyn8eg7PM
+         RQzQt/lJe4Vb39Nt0jilEsntgt8fT3X9IHVlE2zZjNi/sa4XmN5ALMPX3e1IAptf1mJH
+         +TfX+X074F5tqTcqY/FHF4pwkl4tSYsBQ2jnVUQPuyk4ZUzIYb19UGq8WKtySNYr0LLz
+         68yDlju65fF+TBxhj0NFoK/ARxNiiRi64KEIufHCGtLgeE7ZbOmT4PmrydmsYvsN/LQv
+         PmvA==
+X-Gm-Message-State: AO0yUKV8zzyhnXssKjcfoRfLVBreNzShCVj2w44oH0wPrUn9HDcFDpP5
+        7wU7rGpQvrsx2ON36FE43IviNQ==
+X-Google-Smtp-Source: AK7set9oHBwJIydgEflq2gjHcx3YTMuNejy5r36OyrU8wx4e+xazuE/z63QBBU8eT62nkcUjUCLvow==
+X-Received: by 2002:a05:600c:91e:b0:3db:331b:bd57 with SMTP id m30-20020a05600c091e00b003db331bbd57mr12299188wmp.23.1676019511594;
+        Fri, 10 Feb 2023 00:58:31 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id c10-20020a05600c170a00b003df241f52e8sm3989001wmn.42.2023.02.10.00.58.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 10 Feb 2023 00:58:31 -0800 (PST)
+Message-ID: <d1d1bd4e-0205-24d1-9589-6d6b57b6d477@linaro.org>
+Date:   Fri, 10 Feb 2023 09:58:29 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net-next 0/9] net: ipa: prepare for GSI register updtaes
-From:   patchwork-bot+netdevbpf@kernel.org
-Message-Id: <167601901934.32230.173851279004955737.git-patchwork-notify@kernel.org>
-Date:   Fri, 10 Feb 2023 08:50:19 +0000
-References: <20230208205653.177700-1-elder@linaro.org>
-In-Reply-To: <20230208205653.177700-1-elder@linaro.org>
-To:     Alex Elder <elder@linaro.org>
-Cc:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, caleb.connolly@linaro.org, mka@chromium.org,
-        evgreen@chromium.org, andersson@kernel.org,
-        quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
-        quic_jponduru@quicinc.com, quic_subashab@quicinc.com,
-        elder@kernel.org, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH v2 2/3] dt-bindings: arm: qcom: add the SoC ID for SA8775P
+Content-Language: en-US
+To:     Eric Chanudet <echanude@redhat.com>,
+        Bartosz Golaszewski <brgl@bgdev.pl>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20230209095753.447347-1-brgl@bgdev.pl>
+ <20230209095753.447347-3-brgl@bgdev.pl>
+ <20230209175515.xrebz5edmsi4xkzv@echanude>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230209175515.xrebz5edmsi4xkzv@echanude>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -61,50 +83,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello:
-
-This series was applied to netdev/net-next.git (master)
-by David S. Miller <davem@davemloft.net>:
-
-On Wed,  8 Feb 2023 14:56:44 -0600 you wrote:
-> An upcoming series (or two) will convert the definitions of GSI
-> registers used by IPA so they use the "IPA reg" mechanism to specify
-> register offsets and their fields.  This will simplify implementing
-> the fairly large number of changes required in GSI registers to
-> support more than 32 GSI channels (introduced in IPA v5.0).
+On 09/02/2023 18:55, Eric Chanudet wrote:
+> On Thu, Feb 09, 2023 at 10:57:52AM +0100, Bartosz Golaszewski wrote:
+>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>>
+>> Add the SoC ID entry for SA8775P.
+>>
+>> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>  include/dt-bindings/arm/qcom,ids.h | 1 +
+>>  1 file changed, 1 insertion(+)
 > 
-> A few minor problems and inconsistencies were found, and they're
-> fixed here.  The last three patches in this series change the
-> "ipa_reg" code to separate the IPA-specific part (the base virtual
-> address, basically) from the generic register part, and the now-
-> generic code is renamed to use just "reg_" or "REG_" as a prefix
-> rather than "ipa_reg" or "IPA_REG_".
-> 
-> [...]
+> Reviewed-by: Eric Chanudet <echanude@redhat.com>
+> Tested-by: Eric Chanudet <echanude@redhat.com>
 
-Here is the summary with links:
-  - [net-next,1/9] net: ipa: generic command param fix
-    https://git.kernel.org/netdev/net-next/c/2df181f09c96
-  - [net-next,2/9] net: ipa: get rid of ipa->reg_addr
-    https://git.kernel.org/netdev/net-next/c/38028e6f3923
-  - [net-next,3/9] net: ipa: add some new IPA versions
-    https://git.kernel.org/netdev/net-next/c/3aac8ec1c028
-  - [net-next,4/9] net: ipa: tighten up IPA register validity checking
-    https://git.kernel.org/netdev/net-next/c/d86603e940ae
-  - [net-next,5/9] net: ipa: use bitmasks for GSI IRQ values
-    https://git.kernel.org/netdev/net-next/c/c5ebba75c762
-  - [net-next,6/9] net: ipa: GSI register cleanup
-    https://git.kernel.org/netdev/net-next/c/0ec573ef2a1b
-  - [net-next,7/9] net: ipa: start generalizing "ipa_reg"
-    (no matching commit)
-  - [net-next,8/9] net: ipa: generalize register offset functions
-    https://git.kernel.org/netdev/net-next/c/fc4cecf70675
-  - [net-next,9/9] net: ipa: generalize register field functions
-    https://git.kernel.org/netdev/net-next/c/f1470fd790b0
+How can you test a header? What type of testing Redhat does on the headers?
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+Best regards,
+Krzysztof
 
