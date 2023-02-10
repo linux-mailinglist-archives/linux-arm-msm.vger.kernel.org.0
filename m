@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D318692684
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 20:37:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 28813692686
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 20:37:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233030AbjBJThO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Feb 2023 14:37:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43022 "EHLO
+        id S232965AbjBJThQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Feb 2023 14:37:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233355AbjBJThK (ORCPT
+        with ESMTP id S233320AbjBJThM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Feb 2023 14:37:10 -0500
-Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com [IPv6:2607:f8b0:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51F2834F61
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 11:37:01 -0800 (PST)
-Received: by mail-il1-x12b.google.com with SMTP id t7so970875ilq.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 11:37:01 -0800 (PST)
+        Fri, 10 Feb 2023 14:37:12 -0500
+Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46D9861D06
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 11:37:03 -0800 (PST)
+Received: by mail-il1-x12e.google.com with SMTP id l4so2313583ils.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 11:37:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=07TRpjGJThNbRpil8R+GJhtN3IR78ky5A4wnbYV6tl0=;
-        b=NXiAVz5tAANFIWUttw1fVhf07y5Gyv86EWH30F86zdMSRtWbMyolApo9MLj9c5EQb5
-         TvXssifezqkdxxrUd9Ich0ZvF5AfiUEO9gSq7vMnrMAtKO49lkYiQ2QmrHIQZUB/UMWH
-         rdwzrrfs0BquaANOsS5wJ2abuNi7gIBVR7V8EMk/89z41v8BJmeyhEkK1iO7VJZhI17M
-         KzQPgkie15+Hn0HsY/Pzr0DZNdJ/GqslCZQSKr0SO5YAkwUedfsuAJ49MbjQc+JhHYQV
-         ZOQWm8HKZhi5PYpi3sJwzWk1BKyEjB9zqIkoRjPUM8xROJkfE8sKRjYjsfyUNo5MH5f9
-         NmIg==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Q71kN7DKuvE5v7PX+0KQ0YA3932U6ixJa8pWY1BA5+0=;
+        b=jB7lvO8z9a0JJ3/7NUYBFScQqTBsgmFRDII1bc8vlVZT0Z6MCF+iS83nZ5t75qXLx6
+         q1+CWbtezq9tSvvDhe3F/400fkJ12cPQ+i84olM0eugRoUHyms+gj0yuv8Wf/L3N5iW4
+         USnM7DCcOtG/eiOkQ1X5780rWJma0wPTSDx9YMWX7GoPm2sn00O/h0JOkA9Ji0+Qe8BD
+         C7g1dcykaHPuXzBRyQ9OIR52UfC7pq3sRTufB+R/mtxUppYY811ZjAFZ1j+MgKcmeCzi
+         dk5wB1lUVJZtGMRDCDSUWaeJm3DIEBzzzsGxJVTNLoh0VJhPAIpozDa7mFiKJzRrbkt+
+         7XDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=07TRpjGJThNbRpil8R+GJhtN3IR78ky5A4wnbYV6tl0=;
-        b=iQgQbZhpZ0V0fP/uu1u0KcHGe855Xmo87kzcEoM9SzSsOdN+EkGZslWUh01o/11tPd
-         zpyHqEB/Uv2ZrqUG6X/wTKE7EzfXUsv5p97vPkvWEVA8pKFXTVx+gwaUNQBQBNEh2cX2
-         ybp4SZXexJMUYQ+Irv7crKEwsLXxHqyJRrjyaeP9oDXsgMIqVYb6AR7vKQqd/pWfGMqO
-         9jmYh8h/MMqkkFMzZV1N2uNA9353z39AEsN8UpmFLfdvLMTGH00ANNA3ibm5Pybm8xWZ
-         uGgXGytAU+J9Rii3fm7jILzJzp7xMYFNoWm8nRpPQydmaTWgvfiKkFfDycdv5MYE8v5w
-         wDuQ==
-X-Gm-Message-State: AO0yUKVhNYkmv2/oXces8ja5Y67L6WAO34RGddgB333N6SuQLdjZy6ba
-        kmbZkKKj5+qWknGHqQ6Hn2ry2A==
-X-Google-Smtp-Source: AK7set/LjN4QJ20d/heuJpxnfenyYxaCrvc/owc8IxFsHA7ILV7tQYn+2NZJqhsJurRgWGykqxrn/A==
-X-Received: by 2002:a05:6e02:1a88:b0:313:ffc5:3dec with SMTP id k8-20020a056e021a8800b00313ffc53decmr10477910ilv.6.1676057821255;
-        Fri, 10 Feb 2023 11:37:01 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Q71kN7DKuvE5v7PX+0KQ0YA3932U6ixJa8pWY1BA5+0=;
+        b=AMiNrhLBXPErNMS7QYZ0lxd+PnLmhNwFLsYzpPyNGvJfQtRosi8W5UJMhFLTPFEoz7
+         vYL3z8/TtAhrIVWvQ8sMg9AxWhhwHAfAweH8P8/bRDpYkaopgCoPBMJs6kRXCDBZOBy9
+         qAAVsC3bzRghrSYRQW6BDF6indEBkBiKyvE2UZDlvnAJlcqu29q8Vhb29cofsW+SMjDb
+         QwLaQyk7rJOZkoeyasNzYQEl+DMhqgLCUStvscJBG7FA34jHL1cwfQHPW+GDFyTuwVeR
+         6aZntk/NLoom0fWF4qFs6d/tM1Ny5+Gx/kP5oMOefhir54SV0rzQRjM2Kw+CkgUzA94o
+         rKUQ==
+X-Gm-Message-State: AO0yUKWXVKAIu8s3dM1z8twMOtY2sXD91Zrhim6g3tmhrb27GPnXn4I4
+        Yo/sNa8YrsM4dTYLZ+gyGuoOoA==
+X-Google-Smtp-Source: AK7set/hISm5O0da5KI3k1dvKSNeBnsj5pfKVrNTR4V6mvw4B04G9QJpNRDdYrLHSkRdLwN4Bx5EWA==
+X-Received: by 2002:a92:6d05:0:b0:314:1d62:25cc with SMTP id i5-20020a926d05000000b003141d6225ccmr2201115ilc.0.1676057822479;
+        Fri, 10 Feb 2023 11:37:02 -0800 (PST)
 Received: from presto.localdomain ([98.61.227.136])
-        by smtp.gmail.com with ESMTPSA id 14-20020a056e020cae00b00304ae88ebebsm1530692ilg.88.2023.02.10.11.36.57
+        by smtp.gmail.com with ESMTPSA id 14-20020a056e020cae00b00304ae88ebebsm1530692ilg.88.2023.02.10.11.37.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Feb 2023 11:36:58 -0800 (PST)
+        Fri, 10 Feb 2023 11:37:02 -0800 (PST)
 From:   Alex Elder <elder@linaro.org>
 To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
         pabeni@redhat.com
@@ -58,62 +59,292 @@ Cc:     caleb.connolly@linaro.org, mka@chromium.org, evgreen@chromium.org,
         quic_subashab@quicinc.com, elder@kernel.org,
         netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH net-next 0/8] net: ipa: determine GSI register offsets differently
-Date:   Fri, 10 Feb 2023 13:36:47 -0600
-Message-Id: <20230210193655.460225-1-elder@linaro.org>
+Subject: [PATCH net-next 1/8] net: ipa: introduce gsi_reg_init()
+Date:   Fri, 10 Feb 2023 13:36:48 -0600
+Message-Id: <20230210193655.460225-2-elder@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20230210193655.460225-1-elder@linaro.org>
+References: <20230210193655.460225-1-elder@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series changes the way GSI register offset are specified, using
-the "reg" mechanism currently used for IPA registers.  A follow-on
-series will extend this work so fields within GSI registers are also
-specified this way.
+Create a new source file "gsi_reg.c", and in it, introduce a new
+function to encapsulate initializing GSI registers, including
+looking up and I/O mapping their memory.
 
-The first patch rearranges the GSI register initialization code so
-it is similar to the way it's done for the IPA registers.  The
-second identifies all the GSI registers in an enumerated type.
-The third introduces "gsi_reg-v3.1.c" and uses the "reg" code to
-define one GSI register offset.  The second-to-last patch just
-adds "gsi_reg-v3.5.1.c", because that version introduces a new
-register not previously defined.  All the rest just define the
-rest of the GSI register offsets using the "reg" mechanism.
+Create gsi_reg_exit() as the inverse of the init function.
 
-Note that, to have continued lines align with an open parenthesis,
-new files created in this series cause some checkpatch warnings.
-
-					-Alex
-
-Alex Elder (8):
-  net: ipa: introduce gsi_reg_init()
-  net: ipa: introduce GSI register IDs
-  net: ipa: start creating GSI register definitions
-  net: ipa: add more GSI register definitions
-  net: ipa: define IPA v3.1 GSI event ring register offsets
-  net: ipa: define IPA v3.1 GSI interrupt register offsets
-  net: ipa: add "gsi_v3.5.1.c"
-  net: ipa: define IPA remaining GSI register offsets
-
- drivers/net/ipa/Makefile             |   9 +-
- drivers/net/ipa/gsi.c                | 340 ++++++++++++++++++---------
- drivers/net/ipa/gsi.h                |   4 +-
- drivers/net/ipa/gsi_reg.c            | 168 +++++++++++++
- drivers/net/ipa/gsi_reg.h            | 258 ++++++++------------
- drivers/net/ipa/reg/gsi_reg-v3.1.c   | 201 ++++++++++++++++
- drivers/net/ipa/reg/gsi_reg-v3.5.1.c | 204 ++++++++++++++++
- 7 files changed, 903 insertions(+), 281 deletions(-)
+Signed-off-by: Alex Elder <elder@linaro.org>
+---
+ drivers/net/ipa/Makefile  |  4 +--
+ drivers/net/ipa/gsi.c     | 52 ++++++----------------------
+ drivers/net/ipa/gsi_reg.c | 71 +++++++++++++++++++++++++++++++++++++++
+ drivers/net/ipa/gsi_reg.h | 35 ++++++++++---------
+ 4 files changed, 103 insertions(+), 59 deletions(-)
  create mode 100644 drivers/net/ipa/gsi_reg.c
- create mode 100644 drivers/net/ipa/reg/gsi_reg-v3.1.c
- create mode 100644 drivers/net/ipa/reg/gsi_reg-v3.5.1.c
 
+diff --git a/drivers/net/ipa/Makefile b/drivers/net/ipa/Makefile
+index 8cdcaaf58ae34..166ef86f7ad3f 100644
+--- a/drivers/net/ipa/Makefile
++++ b/drivers/net/ipa/Makefile
+@@ -7,8 +7,8 @@ IPA_VERSIONS		:=	3.1 3.5.1 4.2 4.5 4.7 4.9 4.11
+ obj-$(CONFIG_QCOM_IPA)	+=	ipa.o
+ 
+ ipa-y			:=	ipa_main.o ipa_power.o ipa_reg.o ipa_mem.o \
+-				ipa_table.o ipa_interrupt.o gsi.o gsi_trans.o \
+-				ipa_gsi.o ipa_smp2p.o ipa_uc.o \
++				ipa_table.o ipa_interrupt.o gsi.o gsi_reg.o \
++				gsi_trans.o ipa_gsi.o ipa_smp2p.o ipa_uc.o \
+ 				ipa_endpoint.o ipa_cmd.o ipa_modem.o \
+ 				ipa_resource.o ipa_qmi.o ipa_qmi_msg.o \
+ 				ipa_sysfs.o
+diff --git a/drivers/net/ipa/gsi.c b/drivers/net/ipa/gsi.c
+index 2cb1710f6ac3f..a000bef49f8e5 100644
+--- a/drivers/net/ipa/gsi.c
++++ b/drivers/net/ipa/gsi.c
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0
+ 
+ /* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
+- * Copyright (C) 2018-2022 Linaro Ltd.
++ * Copyright (C) 2018-2023 Linaro Ltd.
+  */
+ 
+ #include <linux/types.h>
+@@ -2241,67 +2241,37 @@ int gsi_init(struct gsi *gsi, struct platform_device *pdev,
+ 	     enum ipa_version version, u32 count,
+ 	     const struct ipa_gsi_endpoint_data *data)
+ {
+-	struct device *dev = &pdev->dev;
+-	struct resource *res;
+-	resource_size_t size;
+-	u32 adjust;
+ 	int ret;
+ 
+ 	gsi_validate_build();
+ 
+-	gsi->dev = dev;
++	gsi->dev = &pdev->dev;
+ 	gsi->version = version;
+ 
+ 	/* GSI uses NAPI on all channels.  Create a dummy network device
+ 	 * for the channel NAPI contexts to be associated with.
+ 	 */
+ 	init_dummy_netdev(&gsi->dummy_dev);
+-
+-	/* Get GSI memory range and map it */
+-	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "gsi");
+-	if (!res) {
+-		dev_err(dev, "DT error getting \"gsi\" memory property\n");
+-		return -ENODEV;
+-	}
+-
+-	size = resource_size(res);
+-	if (res->start > U32_MAX || size > U32_MAX - res->start) {
+-		dev_err(dev, "DT memory resource \"gsi\" out of range\n");
+-		return -EINVAL;
+-	}
+-
+-	/* Make sure we can make our pointer adjustment if necessary */
+-	adjust = gsi->version < IPA_VERSION_4_5 ? 0 : GSI_EE_REG_ADJUST;
+-	if (res->start < adjust) {
+-		dev_err(dev, "DT memory resource \"gsi\" too low (< %u)\n",
+-			adjust);
+-		return -EINVAL;
+-	}
+-
+-	gsi->virt_raw = ioremap(res->start, size);
+-	if (!gsi->virt_raw) {
+-		dev_err(dev, "unable to remap \"gsi\" memory\n");
+-		return -ENOMEM;
+-	}
+-	/* Most registers are accessed using an adjusted register range */
+-	gsi->virt = gsi->virt_raw - adjust;
+-
+ 	init_completion(&gsi->completion);
+ 
++	ret = gsi_reg_init(gsi, pdev);
++	if (ret)
++		return ret;
++
+ 	ret = gsi_irq_init(gsi, pdev);	/* No matching exit required */
+ 	if (ret)
+-		goto err_iounmap;
++		goto err_reg_exit;
+ 
+ 	ret = gsi_channel_init(gsi, count, data);
+ 	if (ret)
+-		goto err_iounmap;
++		goto err_reg_exit;
+ 
+ 	mutex_init(&gsi->mutex);
+ 
+ 	return 0;
+ 
+-err_iounmap:
+-	iounmap(gsi->virt_raw);
++err_reg_exit:
++	gsi_reg_exit(gsi);
+ 
+ 	return ret;
+ }
+@@ -2311,7 +2281,7 @@ void gsi_exit(struct gsi *gsi)
+ {
+ 	mutex_destroy(&gsi->mutex);
+ 	gsi_channel_exit(gsi);
+-	iounmap(gsi->virt_raw);
++	gsi_reg_exit(gsi);
+ }
+ 
+ /* The maximum number of outstanding TREs on a channel.  This limits
+diff --git a/drivers/net/ipa/gsi_reg.c b/drivers/net/ipa/gsi_reg.c
+new file mode 100644
+index 0000000000000..48f81fc24f39d
+--- /dev/null
++++ b/drivers/net/ipa/gsi_reg.c
+@@ -0,0 +1,71 @@
++// SPDX-License-Identifier: GPL-2.0
++
++/* Copyright (C) 2023 Linaro Ltd. */
++
++#include <linux/platform_device.h>
++#include <linux/io.h>
++
++#include "gsi.h"
++#include "gsi_reg.h"
++
++/* GSI EE registers as a group are shifted downward by a fixed constant amount
++ * for IPA versions 4.5 and beyond.  This applies to all GSI registers we use
++ * *except* the ones that disable inter-EE interrupts for channels and event
++ * channels.
++ *
++ * The "raw" (not adjusted) GSI register range is mapped, and a pointer to
++ * the mapped range is held in gsi->virt_raw.  The inter-EE interrupt
++ * registers are accessed using that pointer.
++ *
++ * Most registers are accessed using gsi->virt, which is a copy of the "raw"
++ * pointer, adjusted downward by the fixed amount.
++ */
++#define GSI_EE_REG_ADJUST	0x0000d000			/* IPA v4.5+ */
++
++/* Sets gsi->virt_raw and gsi->virt, and I/O maps the "gsi" memory range */
++int gsi_reg_init(struct gsi *gsi, struct platform_device *pdev)
++{
++	struct device *dev = &pdev->dev;
++	struct resource *res;
++	resource_size_t size;
++	u32 adjust;
++
++	/* Get GSI memory range and map it */
++	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "gsi");
++	if (!res) {
++		dev_err(dev, "DT error getting \"gsi\" memory property\n");
++		return -ENODEV;
++	}
++
++	size = resource_size(res);
++	if (res->start > U32_MAX || size > U32_MAX - res->start) {
++		dev_err(dev, "DT memory resource \"gsi\" out of range\n");
++		return -EINVAL;
++	}
++
++	/* Make sure we can make our pointer adjustment if necessary */
++	adjust = gsi->version < IPA_VERSION_4_5 ? 0 : GSI_EE_REG_ADJUST;
++	if (res->start < adjust) {
++		dev_err(dev, "DT memory resource \"gsi\" too low (< %u)\n",
++			adjust);
++		return -EINVAL;
++	}
++
++	gsi->virt_raw = ioremap(res->start, size);
++	if (!gsi->virt_raw) {
++		dev_err(dev, "unable to remap \"gsi\" memory\n");
++		return -ENOMEM;
++	}
++	/* Most registers are accessed using an adjusted register range */
++	gsi->virt = gsi->virt_raw - adjust;
++
++	return 0;
++}
++
++/* Inverse of gsi_reg_init() */
++void gsi_reg_exit(struct gsi *gsi)
++{
++	gsi->virt = NULL;
++	iounmap(gsi->virt_raw);
++	gsi->virt_raw = NULL;
++}
+diff --git a/drivers/net/ipa/gsi_reg.h b/drivers/net/ipa/gsi_reg.h
+index d171f65d41983..60071b6a4d32e 100644
+--- a/drivers/net/ipa/gsi_reg.h
++++ b/drivers/net/ipa/gsi_reg.h
+@@ -1,12 +1,12 @@
+ /* SPDX-License-Identifier: GPL-2.0 */
+ 
+ /* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
+- * Copyright (C) 2018-2022 Linaro Ltd.
++ * Copyright (C) 2018-2023 Linaro Ltd.
+  */
+ #ifndef _GSI_REG_H_
+ #define _GSI_REG_H_
+ 
+-/* === Only "gsi.c" should include this file === */
++/* === Only "gsi.c" and "gsi_reg.c" should include this file === */
+ 
+ #include <linux/bits.h>
+ 
+@@ -38,20 +38,6 @@
+  * (though the actual limit is hardware-dependent).
+  */
+ 
+-/* GSI EE registers as a group are shifted downward by a fixed constant amount
+- * for IPA versions 4.5 and beyond.  This applies to all GSI registers we use
+- * *except* the ones that disable inter-EE interrupts for channels and event
+- * channels.
+- *
+- * The "raw" (not adjusted) GSI register range is mapped, and a pointer to
+- * the mapped range is held in gsi->virt_raw.  The inter-EE interrupt
+- * registers are accessed using that pointer.
+- *
+- * Most registers are accessed using gsi->virt, which is a copy of the "raw"
+- * pointer, adjusted downward by the fixed amount.
+- */
+-#define GSI_EE_REG_ADJUST			0x0000d000	/* IPA v4.5+ */
+-
+ /* The inter-EE IRQ registers are relative to gsi->virt_raw (IPA v3.5+) */
+ 
+ #define GSI_INTER_EE_SRC_CH_IRQ_MSK_OFFSET \
+@@ -400,4 +386,21 @@ enum gsi_generic_ee_result {
+ 	GENERIC_EE_NO_RESOURCES			= 0x7,
+ };
+ 
++/**
++ * gsi_reg_init() - Perform GSI register initialization
++ * @gsi:	GSI pointer
++ * @pdev:	GSI (IPA) platform device
++ *
++ * Initialize GSI registers, including looking up and I/O mapping
++ * the "gsi" memory space.  This function sets gsi->virt_raw and
++ * gsi->virt.
++ */
++int gsi_reg_init(struct gsi *gsi, struct platform_device *pdev);
++
++/**
++ * gsi_reg_exit() - Inverse of gsi_reg_init()
++ * @gsi:	GSI pointer
++ */
++void gsi_reg_exit(struct gsi *gsi);
++
+ #endif	/* _GSI_REG_H_ */
 -- 
 2.34.1
 
