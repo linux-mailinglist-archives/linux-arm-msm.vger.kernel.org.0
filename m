@@ -2,84 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 16AF5691CB9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 11:31:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E0A5691CC2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 11:33:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232057AbjBJKbP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Feb 2023 05:31:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46062 "EHLO
+        id S232035AbjBJKc7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Feb 2023 05:32:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232037AbjBJKbO (ORCPT
+        with ESMTP id S232000AbjBJKc6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Feb 2023 05:31:14 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BD446D637
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 02:31:11 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id j23so4639895wra.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 02:31:11 -0800 (PST)
+        Fri, 10 Feb 2023 05:32:58 -0500
+Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78AAF6D608
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 02:32:57 -0800 (PST)
+Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-51ba4b1b9feso61620457b3.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 02:32:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=EoP3N0+HyfNxDRuzpcPoBnYi1M7DcjjI/H/2+p16pBQ=;
-        b=y53wZ1cyUbE2DR60T8dKx8BlNMPI4M6CzHQq2hL7tlvbpH1a3t5yBjcGd+7Piwlibs
-         rOGJSj20Jx0vmI4MN4IcVu7tIRPYIBVPi2sw99/K8fpi+ujYrXEvxmqjQKQobzNFNX5F
-         M7OfrvbUsyiZVUnQ9ZO4G1pjoB6LacQbfiRD9yPQ0eCkklQ/tOfgGLpcewnsPcaDa9nU
-         nMeT6QRwJpKHvvn3LNne3bgKQoD+Z4nB0RfTAuzDmBj2Bn1M+ba1UXct1iBBsYdnEJQw
-         aXCyWUSEiAQeP2+1klY5QzzKJD/HTnXN03/TaylEBDBVJ85DL7891MSXaFK+/ErwzaTD
-         cVRw==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=T1MawgD5LNBGzOmeVRwqtAYkl3sDhmQa4D6GTdWIOGM=;
+        b=DG9/ACm943ayV14N7GO9Kglp2CJZguAFiwBJtEWgbvAIM94k8oD0hn3M/RYo+kEnFd
+         VaHGe4PzJD08j1j6Mnjcce0iDAMZ+Hlf88WWeChh1GiBcXcRLaWgzAdxwuNHD6rGEg7a
+         ck+6iCh/rO5qW8xJBYlO1wgJOx1a6q4ofawz53BTDZ6w6SoiH/BowN5OO0LDKKpqXtys
+         TjMhQccSGSwS+XDNuQIpBU+yu5XX9C7HTtb5QTSNxOX4uwCkA7Th+LcNqUJrpTym4deR
+         PRkHOsy761yd0Z9oELZwsetJX5ua/1PtEjqp84DY/jJBUjBvj4fZNWFMUS4wVGwgicsC
+         mtZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=EoP3N0+HyfNxDRuzpcPoBnYi1M7DcjjI/H/2+p16pBQ=;
-        b=vcN3dZLNP8UQoBnWy1FVsiNFI3OkMu+hOb7Y3E5VoF8yUebknz7X/Av3oXB/mkH3in
-         cey43eTtSnI5lvHi7AbRWJWp8EidewQWq0S483omA4cJnQENfSI4hWqdZOkfsg7gIDqd
-         UzXFpYAYKzvcXZEHiYg6SPzDphEUGVjD66JlkluRDxrldAdcndVQR+e4esjBREmRUk6L
-         OH1VpsPwfU8+4vXJ3yNK86Gn9tfxcj8tx7lpI73Zpeiy6DWF5OL1R6Y9vcs8YMM0bb+X
-         TGg0MKKNkCocl/zGVzUF1/UFASn4HRISFbU8m7Dzoaxe7bGHoCxFeGVRZ2o3dzxsKHvB
-         37bw==
-X-Gm-Message-State: AO0yUKU/zXfxjHdOvGpFXsyeeNP0H8Uv+DFH3+mE0Ez+nhusjroYmEQP
-        4uTRyrdOG1UjqILhbRkOvpjYJQ==
-X-Google-Smtp-Source: AK7set83bAYzbIOw3hqSGA3caGrA7n0CkMX9pgiGQddnRDcI///tWiZjqyHj7uimc9mqXiVcWn0E7A==
-X-Received: by 2002:a05:6000:4:b0:2bf:ae17:bf58 with SMTP id h4-20020a056000000400b002bfae17bf58mr13181044wrx.37.1676025069861;
-        Fri, 10 Feb 2023 02:31:09 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:5a65:5553:55cf:3027? ([2a01:e0a:982:cbb0:5a65:5553:55cf:3027])
-        by smtp.gmail.com with ESMTPSA id a1-20020a05600c348100b003db0ee277b2sm7854940wmq.5.2023.02.10.02.31.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Feb 2023 02:31:09 -0800 (PST)
-Message-ID: <720aee1d-87e8-5291-c6a0-ef53e830a21d@linaro.org>
-Date:   Fri, 10 Feb 2023 11:31:08 +0100
+        bh=T1MawgD5LNBGzOmeVRwqtAYkl3sDhmQa4D6GTdWIOGM=;
+        b=DM3w9fFAbPpjJpPMVKXEddrSQmns0FEH60HwXLMzWsoJIJXeDZq6H3j0oq+Er7QM5Z
+         QZK2DmKqI0ouyxBg9If5fwfaWlZz7VB7AmhTmAeUiGwl9TsigtbBxjUrppCeJ1FWImfs
+         k7Um5/2n+ICgg4ZKqp/jDoNZqRP6S21afI0w8Nmnvhutq7SDEqIPZWHE6Mgh7NCDiwLj
+         gUTxxlpaDRjRMfMd8c/BoJfHGUCYdEjUziXu9CZONpUMuVPPV1pdmdYzk7M1TBPHC87c
+         TJk1Rq4Yxqg242e6iPCzP61I39gXGlRWUtqZS+d7e4gpPRVDwyynjZMWZaQbpwrteRCr
+         dOwQ==
+X-Gm-Message-State: AO0yUKUVBadyv+XhhtdutkYF2elFIkGizWafg+kfyYDlDh5HtHprxA0V
+        4n5hc4mWV741J6BSPFssGMxL7Q9VkLq1Q4Tn+KF0zA==
+X-Google-Smtp-Source: AK7set+yHiwZIUkgKfyIp0RgEEYwOLV5C6zFmOqExHmj2S2WWZXngZCB6wlaPcHpfPh3Dytgvp9+GxR7KmPD3b+wz08=
+X-Received: by 2002:a81:62c2:0:b0:506:79fc:3df6 with SMTP id
+ w185-20020a8162c2000000b0050679fc3df6mr1413118ywb.127.1676025176713; Fri, 10
+ Feb 2023 02:32:56 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 1/7] usb: typec: ucsi: add PMIC Glink UCSI driver
-Content-Language: en-US
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Andy Gross <agross@kernel.org>,
+References: <20230209133839.762631-1-dmitry.baryshkov@linaro.org> <3fe5605e-de5a-53dc-0bf0-c6aff81f2453@linaro.org>
+In-Reply-To: <3fe5605e-de5a-53dc-0bf0-c6aff81f2453@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 10 Feb 2023 12:32:45 +0200
+Message-ID: <CAA8EJpoj3xepq032n1q2UmKGAk5k0q5DJPe15UcJz+tkrwNWNg@mail.gmail.com>
+Subject: Re: [PATCH v3 0/6] arm64: dts: qcom: sm8350: enable GPU on the HDK board
+To:     neil.armstrong@linaro.org
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-References: <20230130-topic-sm8450-upstream-pmic-glink-v1-0-0b0acfad301e@linaro.org>
- <20230130-topic-sm8450-upstream-pmic-glink-v1-1-0b0acfad301e@linaro.org>
- <Y9jcYdc30G026/fs@kroah.com>
-Organization: Linaro Developer Services
-In-Reply-To: <Y9jcYdc30G026/fs@kroah.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -87,54 +76,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31/01/2023 10:16, Greg Kroah-Hartman wrote:
-> On Mon, Jan 30, 2023 at 10:54:32AM +0100, Neil Armstrong wrote:
->> Introduce the UCSI PMIC Glink aux driver that communicates
->> with the aDSP firmware with the UCSI protocol which handles
->> the USB-C Port(s) Power Delivery.
->>
->> The UCSI messaging is necessary on newer Qualcomm SoCs to
->> provide USB role switch and altmode notifications.
->>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
->>   drivers/usb/typec/ucsi/Kconfig      |   7 +
->>   drivers/usb/typec/ucsi/Makefile     |   1 +
->>   drivers/usb/typec/ucsi/ucsi_glink.c | 321 ++++++++++++++++++++++++++++++++++++
->>   3 files changed, 329 insertions(+)
->>
->> diff --git a/drivers/usb/typec/ucsi/Kconfig b/drivers/usb/typec/ucsi/Kconfig
->> index 8f9c4b9f31f7..dee6069e46a2 100644
->> --- a/drivers/usb/typec/ucsi/Kconfig
->> +++ b/drivers/usb/typec/ucsi/Kconfig
->> @@ -58,4 +58,11 @@ config UCSI_STM32G0
->>   	  To compile the driver as a module, choose M here: the module will be
->>   	  called ucsi_stm32g0.
->>   
->> +config UCSI_PMIC_GLINK
->> +	tristate "UCSI Qualcomm PMIC GLINK Interface Driver"
->> +	depends on QCOM_PMIC_GLINK
-> 
-> No way to test build this code without this option?
+On Fri, 10 Feb 2023 at 10:29, Neil Armstrong <neil.armstrong@linaro.org> wrote:
+>
+> On 09/02/2023 14:38, Dmitry Baryshkov wrote:
+> > Add A660 device to the Qualcomm SM8350 platform and enable it for the
+> > sm8350-hdk board. Unfortunately while adding the GPU & related devices I
+> > noticed that DT nodes on SM8350 are greatly out of the adress sorting
+> > order, so patches 2-4 reorder DT nodes to follow the agreement.
+> >
+> > Changes since v1:
+> > - Dropped merged patches
+> > - Expanded commit messages to mention the sort order (by the node
+> >    address)
+> > - Rebased on top of latest Bjorn's tree
+>
+> Can you specify which tree and commit ?
+>
+> I tried next-20230207, next-20230208 & next-20230209 and patch 2 doesn't apply.
 
-Nop, the QCOM_PMIC_GLINK is a build dependency, this can't be removed
+It was crafted on top of Bjorn's tree and as such it applies on top of
+20230210 without any issues.
 
-> 
->> +	help
->> +	  This driver enables UCSI support on platforms that expose UCSI
->> +	  interface as PMIC GLINK device.
-> 
-> Module name when built?
+>
+> On the 3 trees I have:
+> d7133d6d25fb arm64: dts: qcom: sm8350: use qcom,sm8350-dsi-ctrl compatibles
+> b904227a4b69 arm64: dts: qcom: sm8350: Hook up DSI1 to MDP
+> 2a07efb8c086 arm64: dts: qcom: sm8350: Add mdss_ prefix to DSIn out labels
+> e3e654ced376 arm64: dts: qcom: sm8350: Fix DSI PLL size
+> 45cd807de143 arm64: dts: qcom: sm8350: Fix DSI PHY compatibles
+> 0af6a4012b38 arm64: dts: qcom: sm8350: Feed DSI1 PHY clocks to DISPCC
+> 1eed7995d9da arm64: dts: qcom: sm8350: Fix DSI1 interrupt
+> 6636818ecf0f arm64: dts: qcom: sm8350: Add missing #address/size-cells to DSIn
+> f3c08ae6fea7 arm64: dts: qcom: sm8350: Pad addresses to 8 hex digits
+> 1ccad21aa996 Merge tag 'qcom-arm64-fixes-for-6.2' into arm64-for-6.3
+> ...
+>
+> Can you use --base in format-patch (or use b4 prep !) ?
+>
+> Thanks,
+> Neil
+>
+> >
+> > Changes since v1:
+> > - Fixed the subject and commit message for patch 1
+> > - Fixed GMU's clocks to follow the vendor kernel
+> > - Marked Adreno SMMU as dma-coherent
+> > - Dropped comments targeting sm8350 v1, we do not support that chip
+> >    revision.
+> >
+> > Dmitry Baryshkov (6):
+> >    dt-bindings: display/msm/gmu: add Adreno 660 support
+> >    arm64: dts: qcom: sm8350: reorder device nodes
+> >    arm64: dts: qcom: sm8350: move more nodes to correct place
+> >    arm64: dts: qcom: sm8350: finish reordering nodes
+> >    arm64: dts: qcom: sm8350: add GPU, GMU, GPU CC and SMMU nodes
+> >    arm64: dts: qcom: sm8350-hdk: enable GPU
+> >
+> >   .../devicetree/bindings/display/msm/gmu.yaml  |    1 +
+> >   arch/arm64/boot/dts/qcom/sm8350-hdk.dts       |    8 +
+> >   arch/arm64/boot/dts/qcom/sm8350.dtsi          | 2512 +++++++++--------
+> >   3 files changed, 1354 insertions(+), 1167 deletions(-)
+> >
+>
 
-OK will add a follow-patch if needed
 
-Thanks,
-Neil
-
-> 
-> A follow-on patch can be sent, this is minor.
-> 
-> thanks,
-> 
-> greg k-h
-
+-- 
+With best wishes
+Dmitry
