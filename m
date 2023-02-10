@@ -2,113 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C573D69212A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 15:53:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A038B692153
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 16:01:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232351AbjBJOxh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Feb 2023 09:53:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47510 "EHLO
+        id S231881AbjBJPBA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Feb 2023 10:01:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232296AbjBJOxh (ORCPT
+        with ESMTP id S232290AbjBJPA7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Feb 2023 09:53:37 -0500
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFCBE6C7C1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 06:52:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1676040770;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=W1qMoGyZitDLtPNourhoy8BxIjCzMdWzl566A9X9xVk=;
-        b=NiA48VHoVx4X7yRWb1xhES97aB4KPj9awwx3emXVlcp79KbKphDr8RLdbb1r0FvJuDy3+1
-        oiDu0j/d4GtNL1/YttNj/uDoetEoWMCiuOEnKbSfr1pCUKyH912+3qmoL2eSegN89JMTVm
-        LB//rmyLb6zAqIlesXUBmOI2JWEQl0s=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_128_GCM_SHA256) id
- us-mta-52-RJ_tSkDQMLOQsqexqgvRdw-1; Fri, 10 Feb 2023 09:52:47 -0500
-X-MC-Unique: RJ_tSkDQMLOQsqexqgvRdw-1
-Received: by mail-qv1-f71.google.com with SMTP id k15-20020a0cd68f000000b00535261af1b1so3276086qvi.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 06:52:47 -0800 (PST)
+        Fri, 10 Feb 2023 10:00:59 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A30857758
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 07:00:50 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id j25so5349638wrc.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 07:00:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=K3+P+KUFXvw1apoaL31HXOu2YL3RmY3Kb2P1uEHJDNc=;
+        b=alUpfBodLxY9kFtV/M3kwZoV13ak/JNqddq/STESMZYMiaKWURdGqY90Iewy/098VT
+         p5QEet9/3knhYcsJ2/CjIQ2xq1UTXLtPTcbviPDN/WF7qeXsU5R8F+tbz/5DcE21CgpV
+         Mx9AFyn5YrEQbE17Th5ZYjo7dK94E63vnYRYxPGnQjV2K+Cb+MllAC2+Q6G8aCqE1L8A
+         AGEzqQDxQt0jybY/Lx9ScPEMPILzAz4ch/bMtPAzwHVUC+WCau2kjVz0ygU1f19/gWSj
+         i7wYIovR4u9cQJJ6JJnuCFWEuPqNsQdxKWSD5JyxnPp4uXavTZQE6Tb5Uk+XicxXr6xw
+         pqhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=W1qMoGyZitDLtPNourhoy8BxIjCzMdWzl566A9X9xVk=;
-        b=ebsWU2OwFj8xpg7AVogwY6mJxjU5X5rfNR5dnvZHzltjhv97oDLRHhjwzsG6J3PGpx
-         tgnRPrP0z2B6LcvB8URTBMLI0ilsyfCeKNBDz4KuDk0/cF3mMtVTX7tjbeX7hqbHBA5P
-         +1kayqSC7o9OFR4CI0PsdsXMtqpHSAsAAWsm0fvtWBZfaW6YPOfIUEpnVDyY6zkXvHWX
-         0R8F2Alb5ctApDW5wXUDs2gZOz13zvGAVaskuFlFU89VFh3oBUJT8rswJoIsCorsCQB+
-         ryOMtkL0y8fYItjwcthhfdOqK/nul2Ae257V7hsSUdlNQoMVYPrVwRdEryoJITToPehm
-         4SfA==
-X-Gm-Message-State: AO0yUKU6aa5X1cTGHhGG7orvxa66uUIXV6lYYvyzT5dzSnjJZTbHQUDi
-        KMHiYPDiImuNdn+zD0GXfo10Z9avuyUR6WjAQ6HxptdKCdihVhHPYhY7yMQoQwVBEYpAH1uBI1j
-        vkXUCqlGb6r4Zf+BasVMKdNZbOQ==
-X-Received: by 2002:ad4:5be9:0:b0:56c:14a1:b751 with SMTP id k9-20020ad45be9000000b0056c14a1b751mr19283561qvc.8.1676040767453;
-        Fri, 10 Feb 2023 06:52:47 -0800 (PST)
-X-Google-Smtp-Source: AK7set/0E8zBTwg/UC/GsP0b0P/sbs7EikwLvTC+cGGNrrA3jEg1RBwChVEkVmdpw7sOGcdiM3HM2w==
-X-Received: by 2002:ad4:5be9:0:b0:56c:14a1:b751 with SMTP id k9-20020ad45be9000000b0056c14a1b751mr19283526qvc.8.1676040767235;
-        Fri, 10 Feb 2023 06:52:47 -0800 (PST)
-Received: from localhost (pool-71-184-142-128.bstnma.fios.verizon.net. [71.184.142.128])
-        by smtp.gmail.com with ESMTPSA id 145-20020a370697000000b007195af894e7sm3644010qkg.76.2023.02.10.06.52.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Feb 2023 06:52:46 -0800 (PST)
-Date:   Fri, 10 Feb 2023 09:52:45 -0500
-From:   Eric Chanudet <echanude@redhat.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Bartosz Golaszewski <brgl@bgdev.pl>,
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=K3+P+KUFXvw1apoaL31HXOu2YL3RmY3Kb2P1uEHJDNc=;
+        b=67fex8PL1jua+bQYSO7VCjcWH5+HNnhKNhAvs3QXc3PTUAu2lz1YLgJ/Z9REvlY+zV
+         qHc8UKPQ4GPqFeZWn4U6Z+pCz+RwtixP/Y43duH/JDkobWv4tJjyJMvqqiLFcW1PyO5b
+         2mmxapV9Kf0ksb3zQrMQYvW1rnVWpreghIXhrcGlcifoRj3v3k2vWrejt8ytJjlqFNtf
+         zvbQVTpwr8koGRXMkvJmKAF7wZuOtNfh1KLQaSKNJuAVs036avVOgry0uXdJ7BnDjqYf
+         yRExJmP18vIjl3begW/hHJ5eSkvQXbfu//hvhes1H44XRBnf4sztjz9jy+bqghRgYTgK
+         DwVw==
+X-Gm-Message-State: AO0yUKXcXp4bxh+lvPMhr5pUS4GXGvw1mH/gMp1L5vQl7KBAYx9AlUYJ
+        GiUL0eGL5yo2990lkyrB4Z09kA==
+X-Google-Smtp-Source: AK7set+zJKGiSqj5eqPg+UEcnSf7H71aMVHQPkkvM154artPj3Ez+65Mh8QBqfERGqYAgN/a5FUqog==
+X-Received: by 2002:adf:f5c8:0:b0:2c3:ed14:8319 with SMTP id k8-20020adff5c8000000b002c3ed148319mr15222290wrp.14.1676041248911;
+        Fri, 10 Feb 2023 07:00:48 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:5a65:5553:55cf:3027? ([2a01:e0a:982:cbb0:5a65:5553:55cf:3027])
+        by smtp.gmail.com with ESMTPSA id e29-20020a5d595d000000b002c53cc7504csm3603457wri.78.2023.02.10.07.00.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 10 Feb 2023 07:00:48 -0800 (PST)
+Message-ID: <62ede719-e7f8-4d7e-883e-a4b8eb47f987@linaro.org>
+Date:   Fri, 10 Feb 2023 16:00:47 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 1/7] usb: typec: ucsi: add PMIC Glink UCSI driver
+Content-Language: en-US
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Heikki Krogerus <heikki.krogerus@linux.intel.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v2 2/3] dt-bindings: arm: qcom: add the SoC ID for SA8775P
-Message-ID: <20230210145245.jyqir6odnkyr5zdl@echanude>
-References: <20230209095753.447347-1-brgl@bgdev.pl>
- <20230209095753.447347-3-brgl@bgdev.pl>
- <20230209175515.xrebz5edmsi4xkzv@echanude>
- <d1d1bd4e-0205-24d1-9589-6d6b57b6d477@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d1d1bd4e-0205-24d1-9589-6d6b57b6d477@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+References: <20230130-topic-sm8450-upstream-pmic-glink-v1-0-0b0acfad301e@linaro.org>
+ <20230130-topic-sm8450-upstream-pmic-glink-v1-1-0b0acfad301e@linaro.org>
+ <Y9jcYdc30G026/fs@kroah.com>
+ <720aee1d-87e8-5291-c6a0-ef53e830a21d@linaro.org>
+ <Y+YerQrfWgmwTErM@kroah.com>
+ <06670a10-c8e9-6f87-9c16-e88a90a74469@linaro.org>
+ <Y+YkHZASzN97QtUY@kroah.com>
+Organization: Linaro Developer Services
+In-Reply-To: <Y+YkHZASzN97QtUY@kroah.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Feb 10, 2023 at 09:58:29AM +0100, Krzysztof Kozlowski wrote:
-> On 09/02/2023 18:55, Eric Chanudet wrote:
-> > On Thu, Feb 09, 2023 at 10:57:52AM +0100, Bartosz Golaszewski wrote:
-> >> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >>
-> >> Add the SoC ID entry for SA8775P.
-> >>
-> >> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> >> ---
-> >>  include/dt-bindings/arm/qcom,ids.h | 1 +
-> >>  1 file changed, 1 insertion(+)
-> > 
-> > Reviewed-by: Eric Chanudet <echanude@redhat.com>
-> > Tested-by: Eric Chanudet <echanude@redhat.com>
+On 10/02/2023 12:01, Greg Kroah-Hartman wrote:
+> On Fri, Feb 10, 2023 at 11:44:22AM +0100, Neil Armstrong wrote:
+>> On 10/02/2023 11:38, Greg Kroah-Hartman wrote:
+>>> On Fri, Feb 10, 2023 at 11:31:08AM +0100, Neil Armstrong wrote:
+>>>> On 31/01/2023 10:16, Greg Kroah-Hartman wrote:
+>>>>> On Mon, Jan 30, 2023 at 10:54:32AM +0100, Neil Armstrong wrote:
+>>>>>> Introduce the UCSI PMIC Glink aux driver that communicates
+>>>>>> with the aDSP firmware with the UCSI protocol which handles
+>>>>>> the USB-C Port(s) Power Delivery.
+>>>>>>
+>>>>>> The UCSI messaging is necessary on newer Qualcomm SoCs to
+>>>>>> provide USB role switch and altmode notifications.
+>>>>>>
+>>>>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>>>>>> ---
+>>>>>>     drivers/usb/typec/ucsi/Kconfig      |   7 +
+>>>>>>     drivers/usb/typec/ucsi/Makefile     |   1 +
+>>>>>>     drivers/usb/typec/ucsi/ucsi_glink.c | 321 ++++++++++++++++++++++++++++++++++++
+>>>>>>     3 files changed, 329 insertions(+)
+>>>>>>
+>>>>>> diff --git a/drivers/usb/typec/ucsi/Kconfig b/drivers/usb/typec/ucsi/Kconfig
+>>>>>> index 8f9c4b9f31f7..dee6069e46a2 100644
+>>>>>> --- a/drivers/usb/typec/ucsi/Kconfig
+>>>>>> +++ b/drivers/usb/typec/ucsi/Kconfig
+>>>>>> @@ -58,4 +58,11 @@ config UCSI_STM32G0
+>>>>>>     	  To compile the driver as a module, choose M here: the module will be
+>>>>>>     	  called ucsi_stm32g0.
+>>>>>> +config UCSI_PMIC_GLINK
+>>>>>> +	tristate "UCSI Qualcomm PMIC GLINK Interface Driver"
+>>>>>> +	depends on QCOM_PMIC_GLINK
+>>>>>
+>>>>> No way to test build this code without this option?
+>>>>
+>>>> Nop, the QCOM_PMIC_GLINK is a build dependency, this can't be removed
+>>>
+>>> Then perhaps the QCOM_PMIC_GLINK code needs to be fixed up to allow for
+>>> it to be built on all platforms properly?  Otherwise you are
+>>> guaranteeing you will not get much, if any, build coverage and api
+>>> changes will cause this code to stagnate over time :(
+>>
+>> The QCOM_PMIC_GLINK deps are:
+>>          depends on RPMSG
+>>          depends on TYPEC
+>>          depends on DRM
+>>          depends on NET
+>>          depends on OF
+>>          select AUXILIARY_BUS
+>>          select QCOM_PDR_HELPERS
+>>
+>> What would be the changes needed here ?
 > 
-> How can you test a header? What type of testing Redhat does on the headers?
+> I do not know, try unwinding it and maybe just adding a COMPILE_TEST
+> build option in a few places is all that is needed?
 
-IIUC that ID is compared against the one read from SMEM by the socinfo
-driver. I meant to confirm it matched the number the board I have
-returned. My apologies in advance if that was inappropriate.
+Sure, I'll investigate and send a separate patch for that.
 
--- 
-Eric Chanudet
+Thanks,
+Neil
+
+> 
+> thanks,
+> 
+> greg k-h
 
