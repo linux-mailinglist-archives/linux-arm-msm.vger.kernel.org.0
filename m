@@ -2,124 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 694336921D8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 16:19:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A35F6921DD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 16:19:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232608AbjBJPTF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Feb 2023 10:19:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46206 "EHLO
+        id S232635AbjBJPTP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Feb 2023 10:19:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232588AbjBJPTE (ORCPT
+        with ESMTP id S232618AbjBJPTO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Feb 2023 10:19:04 -0500
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 970B575346
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 07:18:59 -0800 (PST)
-Received: by mail-pf1-x435.google.com with SMTP id b1so3678050pft.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 07:18:59 -0800 (PST)
+        Fri, 10 Feb 2023 10:19:14 -0500
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1ABC275344
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 07:19:12 -0800 (PST)
+Received: by mail-ej1-x635.google.com with SMTP id jg8so16749517ejc.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 07:19:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=semihalf.com; s=google; t=1676042339;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SZJPND2s+zQTcPg0lTRjGcQ6VAXJSBe+ETxukqXx6TY=;
-        b=GLwRV7JINjFYIBK9wuwB1hc8Kov9Yd0NsyeednjqlZ2UWz4RvxDL+u9g1yvu1x7F48
-         Dmu3hQ5gsj1doi2QDE89d92lI0O4h21YzjH55lbPzuF73Bfc3e1Fh45iLp6Ho6oBtd5S
-         AXR1WVstTrnWSsa3FK5WMO6vfZIWog2Rscdbr0kI8J5CqlTd7PZDLpQxjL5XADaH5jhb
-         8nLI6qsffcMXhLdCXNB0DujC7UfWqJCbAz4mRaCHT/f79LIFQPo3dnBNCgZb0Os9HrtX
-         NVrU6pxJMwv0e8FOR6H7JdK3RtB1vM2shDelPBbLqvD8SCFZsNIOCWunr1xJ7HWviOIn
-         xXCQ==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=KMOuSrFwNSQJToHyKbXZ5i5g/s5Gsc1rzby/p9WcP1U=;
+        b=KnWqk0u1nE2SN7HnvxefE8FjJKe2I12SdPUp2NYouv2yTJDhli06JVLt8/kzYR10d7
+         S085Jq0KlYAkm+Ttp+xtuIUKHKWkYiEDW3yvs3Pfuk6P3IVdW1CHj0QYGFqwtdVA/qgd
+         fck05sqdeFRnjl+IeDOp9xYCJM08DH5d6FgPKJUyyIe8TXeJ+vz8lGGIf6tjdvE0kCEw
+         9+WyxdRaHQtMssmgATegD7hLSDTdCmWEUETC3reoR3ZrFw6J35dp0z2Zo0HrY5hFLJe4
+         5zBiW59D36ci7uP1YMuh/RK1ezUDnsoxsbJQka6aVIjqBRSlbDHyA6QVnblU+uYjRNqc
+         3iZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1676042339;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SZJPND2s+zQTcPg0lTRjGcQ6VAXJSBe+ETxukqXx6TY=;
-        b=YGDvoAAVN8nWa8Oh49ChtW9PrnlR9jXipXBjfKRDwnhNugNaQaXFxxXoYwXoJCopt3
-         Z4jlQjupcaKV29pEOUU6LM6a6RpcIDGEIQVDDTzF6qzMwT47Yi13j689q4/yp5VY14DT
-         66+b0JNJQ9YL6IUZDwBKoAQgCCPsSMbRe5EE0vjQSxeol6rJ6PFBvvIxUO+NQEqQc0dZ
-         X2ZJs+krdr1aJEBkDZ+DYP/mXkzXqza9ecubtSFUE3K+U95ZfzOyhX5E9n1iAm09SSZx
-         wJUYcgtISUN7ZPSVsl+Q/9uOqpb+BRMMNszNMxxokI7C4VE9ghxXWJh7uQ7Y2LGuRU7m
-         3Wpg==
-X-Gm-Message-State: AO0yUKVKatmZJaYaa7WTYOgMUl/z7A85iCa/G3UOY05KAj8wQHpG1D79
-        lJBkOFPfV+TOqOmvBgHwGs67coqJKPYou5Hq5qjvHQ==
-X-Google-Smtp-Source: AK7set/0kOMUQDxFWMfAfr5O5VlT67Hlh3gmf7QVZEcin3wKEVNgleV6xMqGCZwpG4zHOmc5o2TOk7skFNIJI9Mbb0s=
-X-Received: by 2002:aa7:9d9e:0:b0:5a8:5351:81d0 with SMTP id
- f30-20020aa79d9e000000b005a8535181d0mr1280424pfq.42.1676042338996; Fri, 10
- Feb 2023 07:18:58 -0800 (PST)
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=KMOuSrFwNSQJToHyKbXZ5i5g/s5Gsc1rzby/p9WcP1U=;
+        b=OCEDeba+JdrHasCzQ5/j0q6xaoMf4Q3W4Owru7s0nEKvDqZhyY/TvST5HRRKzs1JvX
+         50PzIXSQg/tYocIpCaIKrIGYSnSyYgZohmkYvqMzSd4Hu8a7+nehT+IKIZHvH+0eO1wF
+         s6nijkAFccRxpBqjeG+uBkbh4tldooYqoz6i+qkpfo2FK11wSdtGz2/Qt4+gY5dium21
+         pU9iK1Af8bU0potG3QaqkWD7BoiylvU9qXDFKgrdSHWoeNCmIP2P42bh2pwRpPkaN/Nd
+         eYlYno7817R+dmUmimCMcIHWR0iAILfTCHsxTESGueW02cyjbsXVRN3tgaJBFpVCdta1
+         Nu2A==
+X-Gm-Message-State: AO0yUKUVCMzB6PePyVWln5xNjazhpJ2XahE+FZxxbxqiXGrylu4bFr+M
+        27K+XUTrDa1Q4YOGIg0lO8xg7g==
+X-Google-Smtp-Source: AK7set+rjlQgPokRWh3kjiNIpg6kLzEU9l19ISqEBfDaxKgt2SmuxPZRxDT7zisDwbi5/EpuDsO7iQ==
+X-Received: by 2002:a17:907:a45:b0:8af:1a8c:f13f with SMTP id be5-20020a1709070a4500b008af1a8cf13fmr12172031ejc.71.1676042350721;
+        Fri, 10 Feb 2023 07:19:10 -0800 (PST)
+Received: from [192.168.1.101] (abxh117.neoplus.adsl.tpnet.pl. [83.9.1.117])
+        by smtp.gmail.com with ESMTPSA id ch9-20020a170906c2c900b0088dc98e4510sm2504428ejb.112.2023.02.10.07.19.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 10 Feb 2023 07:19:10 -0800 (PST)
+Message-ID: <68078baa-5fca-9a28-604f-81313ba286cf@linaro.org>
+Date:   Fri, 10 Feb 2023 16:19:08 +0100
 MIME-Version: 1.0
-References: <20230130105423.1338554-1-mk@semmihalf.com> <20230130135418.1604455-1-mk@semmihalf.com>
- <CAJMMOfNJV+eOqTgUoLLWKQe2MJ=6fXL3aaP6d=YrSBQvfhOXiA@mail.gmail.com>
- <DM8PR02MB8169B2AC8918F8E31628F61AF3DB9@DM8PR02MB8169.namprd02.prod.outlook.com>
- <CAJMMOfN-6fgN0VohA5ViwVXmNWtA13ycfZFoO4ys9_CLes0feA@mail.gmail.com>
-In-Reply-To: <CAJMMOfN-6fgN0VohA5ViwVXmNWtA13ycfZFoO4ys9_CLes0feA@mail.gmail.com>
-From:   =?UTF-8?Q?Micha=C5=82_Krawczyk?= <mk@semihalf.com>
-Date:   Fri, 10 Feb 2023 16:18:47 +0100
-Message-ID: <CAJMMOfM41dfqx0NoiHGE=8X5hoRHo1=qPEp4KXLP1kygestEJQ@mail.gmail.com>
-Subject: Re: [PATCH v2] media: venus: dec: Fix handling of the start cmd
-To:     Vikash Garodia <vgarodia@qti.qualcomm.com>
-Cc:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        "Vikash Garodia (QUIC)" <quic_vgarodia@quicinc.com>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH v2 05/11] arm64: dts: qcom: sm8350: add port subnodes in
+ dwc3 node
+Content-Language: en-US
+To:     Neil Armstrong <neil.armstrong@linaro.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "mw@semihalf.com" <mw@semihalf.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20230130-topic-sm8450-upstream-pmic-glink-v2-0-71fea256474f@linaro.org>
+ <20230130-topic-sm8450-upstream-pmic-glink-v2-5-71fea256474f@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230130-topic-sm8450-upstream-pmic-glink-v2-5-71fea256474f@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
 
-I'm wondering if there are any more comments for this patch? I would
-be happy to clarify anything that's unclear or improve the code if
-needed.
 
-I know it's pretty late, but it would be really great if this fix
-could land before v6.2 is released, so I'd appreciate your help and
-review.
+On 10.02.2023 16:02, Neil Armstrong wrote:
+> Add ports subnodes in dwc3 node to avoid repeating the
+> same description in each board DT.
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Thank you,
-Micha=C5=82
-
-wt., 7 lut 2023 o 12:15 Micha=C5=82 Krawczyk <mk@semihalf.com> napisa=C5=82=
-(a):
->
-> wt., 7 lut 2023 o 10:54 Vikash Garodia <vgarodia@qti.qualcomm.com> napisa=
-=C5=82(a):
-> > I have reviewed the patch, and the drain sequence handling looks good t=
-o me.
-> > Could you share some details on the test client which you are using to =
-catch this issue ?
->
-> Hi Vikash,
->
-> Thank you for looking at the code!
->
-> I've been testing it using the Chromium implementation of the V4L2
-> codec [1]. Meanwhile, we were running a test suite which changes the
-> encryption method in the middle of the video decoding. This triggers
-> the flush behavior and the Chromium sends the stop/start cmd to the
-> V4L2 kernel component, and the test expects the video to continue the
-> playback normally. Unfortunately, it was causing a stall of the video
-> at the same time.
->
-> [1] https://source.chromium.org/chromium/chromium/src/+/main:media/gpu/v4=
-l2/
->
-> >
-> > > Thank you,
-> > > Micha=C5=82
-> >
-> > Thanks,
-> > Vikash
+Konrad
+>  arch/arm64/boot/dts/qcom/sm8350.dtsi | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> index 0a422637b61f..3f4631e06187 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> @@ -2727,6 +2727,25 @@ usb_1_dwc3: usb@a600000 {
+>  				snps,dis_enblslpm_quirk;
+>  				phys = <&usb_1_hsphy>, <&usb_1_ssphy>;
+>  				phy-names = "usb2-phy", "usb3-phy";
+> +
+> +				ports {
+> +					#address-cells = <1>;
+> +					#size-cells = <0>;
+> +
+> +					port@0 {
+> +						reg = <0>;
+> +
+> +						usb_1_dwc3_hs: endpoint {
+> +						};
+> +					};
+> +
+> +					port@1 {
+> +						reg = <1>;
+> +
+> +						usb_1_dwc3_ss: endpoint {
+> +						};
+> +					};
+> +				};
+>  			};
+>  		};
+>  
+> 
