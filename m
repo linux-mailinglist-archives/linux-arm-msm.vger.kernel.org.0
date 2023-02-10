@@ -2,148 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D8CA4692A85
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 23:50:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 47AAC692AF2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Feb 2023 00:03:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233563AbjBJWt7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Feb 2023 17:49:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44510 "EHLO
+        id S229545AbjBJXDO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Feb 2023 18:03:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234039AbjBJWt4 (ORCPT
+        with ESMTP id S229482AbjBJXDN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Feb 2023 17:49:56 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FDE632CFA;
-        Fri, 10 Feb 2023 14:49:52 -0800 (PST)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31AKPovC017965;
-        Fri, 10 Feb 2023 22:49:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=h/mAMXh5kCQ0g0Z52GBqF6hgV9P8cj6Rm/BSDQE6EcI=;
- b=iVT51v3MpI7xwvFkLZ7xjf/UAguX6WRR1W6VobLi8lW4kI5d6s/TIi31B32T9CYH/c1+
- hzrolbNQQxBfnOJg2QzsZzuOSMsWeRNwG6GLGatW3BC4mqO638k+nTQXvo/HIU+sYYLI
- RB7Fj7lUGiw9lrCd2MHSHErQsu+gUU6EG4vApH04Ecklk/r9hSJJ+vaXMvexr0uzObSn
- G2raS7muJ3+BOsroTZKWyn5IprOSfrNX1o45ZtYkv4ff7EUpA6UbPPCaHjELFyFPMmoy
- vZ9TlJJFG447zpyJzfpsELgFyjgQhOQhp/fPULPKzELM6PvUHfB2J0S5qsS7tGtNa3Cb BQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nndu5ac2c-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 10 Feb 2023 22:49:37 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31AMna0V032756
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 10 Feb 2023 22:49:36 GMT
-Received: from [10.110.21.35] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Fri, 10 Feb
- 2023 14:49:35 -0800
-Message-ID: <2c062ab0-905c-f1fe-eca2-02e23cc9fa6f@quicinc.com>
-Date:   Fri, 10 Feb 2023 14:49:35 -0800
+        Fri, 10 Feb 2023 18:03:13 -0500
+Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2C0B4DBE8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 15:03:12 -0800 (PST)
+Received: by mail-yb1-xb32.google.com with SMTP id o66so2247797ybc.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 15:03:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=qZekMNkTFFpTMCpqgivsUFbIubuqug2kR1ofGLk4G1g=;
+        b=Y/D45cI+CurTJE1dfs9zdSP830MfQ+qW4OXDd9NqQLSSL8NcXbp1WdDqTvWJikXwWR
+         ZMlluzDaaZCkub0UGsu7DwM5wEYf9bL2dkG10Taqdlq+U8ss5oBzUUHKcCvJKNJAIQE5
+         9L8+3E27tpuZCgw0vIYJGUyTqb+WOpeMRJcEgRWlsb/40N333Qe5a/c5U04hS7NdpIkY
+         wJc4BJsoOKJQnl4FCzGg8KaV7yWI123uvBWbAsIzs699tW3j8kHnaz1Z+jBXV+kXZGbY
+         vjN3LPEa1tdlO+qTIt/GmLapuQgloNDjHc3942zHGs5h6vjbmg+kJIl1xeL94YAdElDM
+         eZkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qZekMNkTFFpTMCpqgivsUFbIubuqug2kR1ofGLk4G1g=;
+        b=5RepH6hTNhage8X/o04wt3w/og8wtikKEz6iJ44zs/VmDjrNT9/8JNKcwPOs3cKY1L
+         MN7kYGlu6IC5HQo7RD4Q4qiK+hjtSEeS+MoOpJ/kuifLhW4Orawh3vCYLmBRHu9899/s
+         J1xxZbLw2gOcVZOU1RvJAacDOv32Pf0XXJkWijQmJ8Y0QJoo5WiQm9/j8J420qHbXdyy
+         OrJpXvfGaD2a8Ml26katKFFajUEePJ83iJG2f8YnfCIrRE9zn1Wxzfd91RTwEeT5GmJb
+         xA4m54sYNf7qVhx8LDw1UfhWJMvVjofcCc+Vr8DEIZeUBofKvMIegkhWIFEpPy9KAsqz
+         zo0A==
+X-Gm-Message-State: AO0yUKWgEvu+uO68+/e++Y/htjtRE/siIBJJ43VCvXzQhVpxFThYKTx6
+        7Amb25IeVzy6ctXJRmkdJ7aHiy8XFq+Y7EBYunBRSw==
+X-Google-Smtp-Source: AK7set9IQUHzQV9y9dl6uH80Cy02KpZyGSHXJ/bJtXVB1EL2imKDfAEyqBuFVJnQHIKXhllunXtD9NrVxql2iIP1PQw=
+X-Received: by 2002:a5b:707:0:b0:8bc:56a2:49d8 with SMTP id
+ g7-20020a5b0707000000b008bc56a249d8mr1070849ybq.428.1676070191832; Fri, 10
+ Feb 2023 15:03:11 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [RFC PATCH v2 12/22] sound: usb: card: Introduce USB SND platform
- op callbacks
-Content-Language: en-US
-To:     Greg KH <gregkh@linuxfoundation.org>
-CC:     <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <lgirdwood@gmail.com>, <andersson@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <Thinh.Nguyen@synopsys.com>,
-        <broonie@kernel.org>, <bgoswami@quicinc.com>, <tiwai@suse.com>,
-        <robh+dt@kernel.org>, <agross@kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <quic_jackp@quicinc.com>,
-        <quic_plai@quicinc.com>
-References: <20230126031424.14582-1-quic_wcheng@quicinc.com>
- <20230126031424.14582-13-quic_wcheng@quicinc.com>
- <Y9Ui82OaI54Qx8Ft@kroah.com>
-From:   Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <Y9Ui82OaI54Qx8Ft@kroah.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: oGpCI2pZrg6hVncDv50aU6L1diE3-Q0s
-X-Proofpoint-GUID: oGpCI2pZrg6hVncDv50aU6L1diE3-Q0s
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-10_15,2023-02-09_03,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 spamscore=0
- phishscore=0 mlxlogscore=993 clxscore=1015 malwarescore=0 suspectscore=0
- impostorscore=0 mlxscore=0 bulkscore=0 lowpriorityscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302100195
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <cover.1676067791.git.quic_sudaraja@quicinc.com>
+In-Reply-To: <cover.1676067791.git.quic_sudaraja@quicinc.com>
+From:   Suren Baghdasaryan <surenb@google.com>
+Date:   Fri, 10 Feb 2023 15:03:00 -0800
+Message-ID: <CAJuCfpHWQ8NV=iR3BN+pt1c8FynCnRqyyriHb1gLxFgiNVrwjA@mail.gmail.com>
+Subject: Re: [PATCH] psi: reduce min window size to 50ms
+To:     Sudarshan Rajagopalan <quic_sudaraja@quicinc.com>
+Cc:     David Hildenbrand <david@redhat.com>,
+        Johannes Weiner <hannes@cmpxchg.org>,
+        Mike Rapoport <rppt@kernel.org>,
+        Oscar Salvador <osalvador@suse.de>,
+        Anshuman Khandual <anshuman.khandual@arm.com>,
+        mark.rutland@arm.com, will@kernel.org,
+        virtualization@lists.linux-foundation.org, linux-mm@kvack.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Sukadev Bhattiprolu <quic_sukadev@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Patrick Daly <quic_pdaly@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-17.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        ENV_AND_HDR_SPF_MATCH,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Greg,
+On Fri, Feb 10, 2023 at 2:31 PM Sudarshan Rajagopalan
+<quic_sudaraja@quicinc.com> wrote:
+>
+> The PSI mechanism is useful tool to monitor pressure stall
+> information in the system. Currently, the minimum window size
+> is set to 500ms. May we know what is the rationale for this?
 
-On 1/28/2023 5:28 AM, Greg KH wrote:
-> On Wed, Jan 25, 2023 at 07:14:14PM -0800, Wesley Cheng wrote:
->> Allow for different platforms to be notified on USB SND connect/disconnect
->> seqeunces.  This allows for platform USB SND modules to properly initialize
->> and populate internal structures with references to the USB SND chip
->> device.
->>
->> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
->> ---
->>   sound/usb/card.c | 28 ++++++++++++++++++++++++++++
->>   sound/usb/card.h | 20 ++++++++++++++++++++
->>   2 files changed, 48 insertions(+)
->>
->> diff --git a/sound/usb/card.c b/sound/usb/card.c
->> index 26268ffb8274..803230343c16 100644
->> --- a/sound/usb/card.c
->> +++ b/sound/usb/card.c
->> @@ -117,6 +117,24 @@ MODULE_PARM_DESC(skip_validation, "Skip unit descriptor validation (default: no)
->>   static DEFINE_MUTEX(register_mutex);
->>   static struct snd_usb_audio *usb_chip[SNDRV_CARDS];
->>   static struct usb_driver usb_audio_driver;
->> +static struct snd_usb_platform_ops *platform_ops;
-> 
-> You can not have a single "platform_ops" pointer, this HAS to be
-> per-bus.
-> 
+The limit was set to avoid regressions in performance and power
+consumption if the window is set too small and the system ends up
+polling too frequently. That said, the limit was chosen based on
+results of specific experiments which might not represent all
+usecases. If you want to change this limit, you would need to describe
+why the new limit is inherently better than the current one (why not
+higher, why not lower).
+Thanks,
+Suren.
 
-Agreed.
-
-> And what is a "platform operations" anyway?  Shouldn't this be a driver
-> type or something like that?  "offload_operations"?
-> 
-
-The reason for going with platform operations is because every platform 
-may implement the offloading differently.  The offload operations term 
-is more direct though in terms of explaining what the ops are going to 
-be used for, so I can see the incentive of moving to that phrase.
-
->> +
->> +int snd_usb_register_platform_ops(struct snd_usb_platform_ops *ops)
->> +{
->> +	if (platform_ops)
->> +		return -EEXIST;
->> +
->> +	platform_ops = ops;
->> +	return 0;
-> 
-> No locking?  not good.
-> 
-> But again, this has to be per-USB-bus, it can NOT be system wide for
-> obvious reasons.
-> 
-
-Sure, will change that when moving to per USB bus.
-
-Thanks
-Wesley Cheng
+>
+> For lightweight systems such as Linux Embedded Systems, PSI
+> can be used to monitor and track memory pressure building up
+> in the system and respond quickly to such memory demands.
+> Example, the Linux Embedded Systems could be a secondary VM
+> system which requests for memory from Primary host. With 500ms
+> window size, the sampling period is 50ms (one-tenth of windwo
+> size). So the minimum amount of time the process needs to stall,
+> so that a PSI event can be generated and actions can be done
+> is 50ms. This reaction time can be much reduced by reducing the
+> sampling time (by reducing window size), so that responses to
+> such memory pressures in system can be serviced much quicker.
+>
+> Please let us know your thoughts on reducing window size to 50ms.
+>
+> Sudarshan Rajagopalan (1):
+>   psi: reduce min window size to 50ms
+>
+>  kernel/sched/psi.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> --
+> 2.7.4
+>
