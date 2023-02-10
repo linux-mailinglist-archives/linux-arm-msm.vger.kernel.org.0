@@ -2,113 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 987A8691DF0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 12:15:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 545B9691E05
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 12:17:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231948AbjBJLPw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Feb 2023 06:15:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56392 "EHLO
+        id S232308AbjBJLRv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Feb 2023 06:17:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231613AbjBJLPv (ORCPT
+        with ESMTP id S232378AbjBJLRm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Feb 2023 06:15:51 -0500
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F085A5CB
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 03:15:33 -0800 (PST)
-Received: by mail-ed1-x530.google.com with SMTP id d40so3211233eda.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 03:15:33 -0800 (PST)
+        Fri, 10 Feb 2023 06:17:42 -0500
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E3AC3BDAE
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 03:17:26 -0800 (PST)
+Received: by mail-ej1-x632.google.com with SMTP id lu11so14956546ejb.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 03:17:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=linaro.org; s=google; t=1676027840;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=/nDb+1G2Hg9ewX5c0k1gBGf1XvvZ5lw8Ee/MhP2h9Cg=;
-        b=pNKkrpGnRE83xoilG6x1lSfsQg6AT0DobI+raAUTKAuKnWrgF5ZMcBuew5tnzjxMLb
-         cPmYMviudekgs3aF481XV/78W8aTUKZQhGrZi5OaMidtNYrnCWG22dSy27odUNE6mok7
-         sCEfGEmwEHUrQRCcK89x/NqLjzPdhV0hKS2gm42Nb0MHIlcvg9a7dTu2ClB7lPl1Sass
-         2xJSyA41p5uG+5Y/41j6zGXYaRtzi2sTxY3jh0+1VxpoTwsrXGkr3YNuB3rdFKmbAnDc
-         j9B9TCTQI2TQWqIVkdvSXLZ5q0025i0xirDIfv4dGTiOxvIOCevx6PSQhtO4oFBXFZln
-         kQRg==
+        bh=aezVSxJ46OjzjaqgPkeYoeGbwBe2zO4fLCrZB2BY/og=;
+        b=ooO7l0hGVnz/F4hX+nsq/R15dmokH73APhqZAa7eFE6+UR+mEm0lSteXP+VzV1mkul
+         NqbT799XeR2F26VyAX4CwYVrqJIn5rs5Gxtc0Tgf9hNN8cM16ikWY8q7sAccD0ZNyHUv
+         qlJI2WzqpPkhrQ52oTsqupvrzn7T+luyQV2mcdStVEnbNGz5Iajc1wErji6ot2JHLbBB
+         rOWok2ABJPiYNxsDjwBOxBhPlK09hXDVithExTM8z5MPT9Zy5qI7k9BhKMVMAWnnszXn
+         0GFDr0j7uQWxzmpO9EPx2BqbRLKQw5zFs1g+utM1bN7kl+ncw+m78UMy3izOjqBQyCuE
+         FBWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
+        d=1e100.net; s=20210112; t=1676027840;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/nDb+1G2Hg9ewX5c0k1gBGf1XvvZ5lw8Ee/MhP2h9Cg=;
-        b=6/5lErtQQfU0GCabsqJ9nFDQlQm4Z/hP6Tu66yKbgI9eH4YzKwTHlJfDwwJhhgS/W8
-         5oH4GI7HWrHBjIDRYNjJJMxAhmPwI2n2bHZdx22WjygzLSAPK73mWUovJHGYQ30ZAmmN
-         RrHX1FPqAptdhFlot75Y2RSOP71TaUrrBtatcEgMZhsgZGqBoDbgvWg/K24fKE4u+eaT
-         FQjSiejiUEv+EM2ZNRxX3YKGwSTfaQ4qSFsh1fOJ8T4kwEGvD4DkKniTL5nFMrkwPA/G
-         rG2hSRTzUV4FgQvk9jntsh9pEHydeUOTeDKc2/lGbRg0uOV8sN1xF0lqm0H2txjZi6cq
-         cDiQ==
-X-Gm-Message-State: AO0yUKVOfV/UbN7RE93JoHCHzdTNItbDCpImI2bodKRKtljMRc/v4sIZ
-        7rzrn6H8RNDMZen4L/jshsvV2Q==
-X-Google-Smtp-Source: AK7set9xjSG768re8CoHosg4OZZK6xmT196MPSG7VNm6tq6VOHCf7sBGUuq17NJ1ujjwzfnn1QD0NA==
-X-Received: by 2002:a50:d08c:0:b0:4ab:15d4:4e0d with SMTP id v12-20020a50d08c000000b004ab15d44e0dmr10721172edd.31.1676027731851;
-        Fri, 10 Feb 2023 03:15:31 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id r23-20020a50aad7000000b0049f29a7c0d6sm2069263edc.34.2023.02.10.03.15.30
+        bh=aezVSxJ46OjzjaqgPkeYoeGbwBe2zO4fLCrZB2BY/og=;
+        b=gb6O4gkaU8xIDBqTVbgPtuRr09sgD7yF1Rxk0dOZVIZDt1GkY/SOmatl1TM988bsnr
+         Mf3mkqvekGgd8fFN2RpjfFoHFp8te54X0h8qSHjrJZsXIqM0fjlyglz9gQ6H9PLt18t2
+         sG1pH5coctFrKKDTkL7owqOpz2NSkQM1KebkYv91dPfvsOOwmernnPXrcU+/y74JKVhC
+         47r/ojGnkZEwRJlnEORbjsGw7dBGLlrl/jzE4QRu2nNEIjnudiVdRuAy6PtpH5G+W9pL
+         AcTZdkwP1Dj08UnndIf0roynYxbLUTU+08cv4TjxXQSQA+xvy/S7VgnpbBIcPpv6+fFg
+         UuwA==
+X-Gm-Message-State: AO0yUKWOX8jbbjA3Yzf4EETTq0pwajXGk157JiPqZnAx+ZZNu4EL4zpW
+        1dwHQHHcg5MMQxVk+dvu8g8flQ==
+X-Google-Smtp-Source: AK7set8NkHKvtt8ANyqJ3Y2tcUCj/pPJEHc8nsiYaAnl2rX6HI9NEO85ZQo3APey5JONQ5qv3hErcA==
+X-Received: by 2002:a17:906:5349:b0:889:d24e:6017 with SMTP id j9-20020a170906534900b00889d24e6017mr13083721ejo.3.1676027840433;
+        Fri, 10 Feb 2023 03:17:20 -0800 (PST)
+Received: from [192.168.1.102] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id f13-20020a170906c08d00b00878003adeeesm2250686ejz.23.2023.02.10.03.17.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Feb 2023 03:15:31 -0800 (PST)
-Message-ID: <3af85f94-0de6-35dd-dbcd-5c01a4d3b3ce@linaro.org>
-Date:   Fri, 10 Feb 2023 13:15:30 +0200
+        Fri, 10 Feb 2023 03:17:19 -0800 (PST)
+Message-ID: <5e419feb-8219-61d5-8e4b-f96c5f382a64@linaro.org>
+Date:   Fri, 10 Feb 2023 13:17:18 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH v2 0/5] arm64: dts: qcom: add DP Controller to SM8350 &
- SM8450 DTS
-Content-Language: en-GB
-To:     Neil Armstrong <neil.armstrong@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
+ Thunderbird/102.0.2
+Subject: Re: [PATCH v9 06/14] dt-bindings: qcom-qce: document optional clocks
+ and clock-names properties
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230206-topic-sm8450-upstream-dp-controller-v2-0-529da2203659@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230206-topic-sm8450-upstream-dp-controller-v2-0-529da2203659@linaro.org>
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-crypto@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+References: <20230208183755.2907771-1-vladimir.zapolskiy@linaro.org>
+ <20230208183755.2907771-7-vladimir.zapolskiy@linaro.org>
+ <b2d75c0a-a9f3-3d28-5e05-25fe3a18dcfb@linaro.org>
+From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <b2d75c0a-a9f3-3d28-5e05-25fe3a18dcfb@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/02/2023 12:34, Neil Armstrong wrote:
-> Switch the QMP PHY to the newly documented USB3/DP Combo PHY
-> bindings at [1] and add the DP controller nodes.
+On 2/9/23 11:20, Krzysztof Kozlowski wrote:
+> On 08/02/2023 19:37, Vladimir Zapolskiy wrote:
+>> On newer Qualcomm SoCs the crypto engine clocks are enabled by default
+>> by security firmware. To drop clocks and clock-names from the list of
+>> required properties use 'qcom,sm8150-qce' compatible name.
+>>
+>> The change is based on Neil Armstrong's observation and an original change.
+>>
+>> Cc: Neil Armstrong <neil.armstrong@linaro.org>
+>> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+>> ---
+>>   .../devicetree/bindings/crypto/qcom-qce.yaml      | 15 +++++++++++++--
+>>   1 file changed, 13 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
+>> index f6f1759a2f6e..d0f6b830a5dd 100644
+>> --- a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
+>> +++ b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
+>> @@ -79,11 +79,22 @@ properties:
+>>   required:
+>>     - compatible
+>>     - reg
+>> -  - clocks
+>> -  - clock-names
+>>     - dmas
+>>     - dma-names
+>>   
+>> +if:
 > 
-> The DP output is shared with the USB3 SuperSpeed lanes and is
-> usually connected to an USB-C port which Altmode is controlled
-> by the PMIC Glink infrastructure in discution at [2] & [3].
-> 
-> DT changes tying the DP controller to the USB-C port on the HDK
-> boards will be sent later.
-> 
-> Bindings dependencies at [1]
-> 
-> [1] https://lore.kernel.org/all/20230206-topic-sm8350-upstream-usb-dp-combo-phy-v1-1-ed849ae6b849@linaro.org/
-> [2] https://lore.kernel.org/all/20230201041853.1934355-1-quic_bjorande@quicinc.com/
-> [3] https://lore.kernel.org/all/20230130-topic-sm8450-upstream-pmic-glink-v1-0-0b0acfad301e@linaro.org/
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> This should be in allOf, like I wrote in last discussion.
 
-Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> #SM8350-HDK
+In the last discussion you shared two options, and I got an impression
+that adding a new "non-clock-requiring" compatible is a better option,
+in this series it is "qcom,sm8150-qce".
 
--- 
-With best wishes
-Dmitry
+So, do you wish to see an added allOf: on top of a single if: anyway?
 
+--
+Best wishes,
+Vladimir
