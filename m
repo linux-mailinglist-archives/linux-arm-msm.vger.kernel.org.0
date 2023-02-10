@@ -2,223 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 41921691DCF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 12:13:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D07E691DD8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Feb 2023 12:13:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231557AbjBJLNH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Feb 2023 06:13:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53258 "EHLO
+        id S232362AbjBJLNZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Feb 2023 06:13:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231518AbjBJLNG (ORCPT
+        with ESMTP id S232042AbjBJLNX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Feb 2023 06:13:06 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BFCB72DC1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 03:12:25 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id n28-20020a05600c3b9c00b003ddca7a2bcbso3790864wms.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 03:12:25 -0800 (PST)
+        Fri, 10 Feb 2023 06:13:23 -0500
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C5E472DE3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 03:12:43 -0800 (PST)
+Received: by mail-ed1-x52e.google.com with SMTP id m8so4422982edd.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 03:12:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=lLMV0ncNMrg+f3xjJTtqNXJ3S4bBrDbONW259RzPBmM=;
-        b=Vjl8AteQYrT0PDERakIkSf0gc3kzBhuX2I8XN/z+mrcuAIbJ6zRLHwvfAZUCRrXvBH
-         B6gLztzfSuqg7VtfH0UHOeDNcKrVF0isBpXVuBwatsHz8E7BXF/vXPPKpcY4uVJmrccn
-         jkubfOlYq+vrVatrsO+QsObw+KKKP9YirrjATORvNihyAeQOqwdoTcvWFsfPas0ODU8+
-         VMdyWazMlLVm9Ow23YjgYaOJxAAiQHyYNRm2vVjCQu8MPZ9nagnz6tuIvRGJGOwe1F51
-         7fp/mLYvgtk362jA8d68S+nn7NsrKGi1H5MAyR7G7N/6QnoHqCR7gPQ96fvUuEWV2eed
-         zrPg==
+        bh=MqqdeGeSDOP29ts8ZSXxn8P/fMFUJG2jOdDCPZL2sFU=;
+        b=rSv7YC1f5xTpNXRb4obgqDngu8l3anLhPNDYGIcR/vrl82EmfI22S5ymgED6jT9Shk
+         jFTryOaFC7CgsrzJP/gpPA7G9fwrczGjbWrBcGMEV3tJLybMQw6bRzknqjT7R0lTLPF1
+         +y6ubtyU1BTi1h6YORk41jwU9CLuWtFNUSklPaI+eIMthz3gTMnrLgDi/gG9qkZACeGT
+         +evGaU5UROzgcCLrodO3QkhpUxK6WwiyPTSra9eTriGwSO2wvx+gdfDuq/A0NJ7ncIdC
+         fB1XPSsqZ/e+9Q9+++gAcGpHfJz6nSbAPvFDl+kUuf5H9Yl6K9tssHfHRnQ9IlBbJYK+
+         lN/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lLMV0ncNMrg+f3xjJTtqNXJ3S4bBrDbONW259RzPBmM=;
-        b=X2kn+RFmMuVjObG+zyfNPE0bTFJ42+1Rta0/QWjCcnJcPHtc2/XoPzcpRPIThO17LM
-         0H5otOfsL9frUIf5u+G2hEmsA6WXP8EjAP7UvGIzDS+qVfttkpXOYHWAv1oDMpyRysDg
-         OVfPg9UITk65Qr5Bajhg6WgJizEeLiryWmikrCxRnhgYlN3i52b+eayKHQn0N5rd5ytq
-         jhPgnuAE+1Z7VO/jFa44Xi5CFHYbAM1KWmn84mZ8BBJRXVevlMcA2I3/m/y/SdopaBA6
-         ke8uIkQk43eaKFfzlg+Ki31yj+araMb0mzRLphMYgO1cVq5Zjm0rCgNZ9OJmbXdX+QMw
-         f49A==
-X-Gm-Message-State: AO0yUKW6KSWre4NaajbINrbg9/eXd3fNls7nhIVe+tBMzh6ihjP4OhWT
-        lHnhMH2mvllQoDP85aWzHT+0eQ==
-X-Google-Smtp-Source: AK7set+dZbv/MVOBEnEyByUWoFxBo0mZdtkh1BPQhH0fmQdg3RNpSeSLHcaf2uo8PzHzQC9CQsoEOA==
-X-Received: by 2002:a05:600c:a292:b0:3df:ee44:e45a with SMTP id hu18-20020a05600ca29200b003dfee44e45amr12801996wmb.15.1676027539910;
-        Fri, 10 Feb 2023 03:12:19 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id g9-20020a05600c308900b003dc3f195abesm4544610wmn.39.2023.02.10.03.12.17
+        bh=MqqdeGeSDOP29ts8ZSXxn8P/fMFUJG2jOdDCPZL2sFU=;
+        b=6CKz0/XXjarjsBgiyqLSH0q82pzyzC32FmK+kayEIo7xn50EjzK6l5t3q7YwgXJB9J
+         /KVBo0nuVFrljgDJ1TvVnh23qBgJezRna6MCrLfi0VaqBGUWuW6YuwdB2myaOitdK6/x
+         /LYJu6OhcEvAbgW2gzxWnBHDmD0IaUxXkBejlTuDm4j6ZHfgTO6ix5G8NzGs9dzGeDXa
+         WcTTtnPW14eZ8TSojP2pr/o0v2zLuV0IXdGOuQugGNEy2NMfa2cZoz6WLT57z6ey/Xbc
+         lIZLsRy3dQ+5yPU0rohGVtYSiKuYyD7ZZJK/ampHHYk2wrwBsjRpttKk3vz6DuKqmkE0
+         TGKA==
+X-Gm-Message-State: AO0yUKWScmO2K61H34CTzPMPQjAWbIg/OPucut67pIR+tKj8wHmWR9SJ
+        CfYdzJDQc6IKQHLK7mHYggbUrg==
+X-Google-Smtp-Source: AK7set9QQ46UipbOQC1YYnmQvsAOXxecYxPv0DaiSHoq0lAeBY4V2HJNguMpMqEOMApNZnJF+mWipA==
+X-Received: by 2002:a50:8e57:0:b0:499:8849:5fac with SMTP id 23-20020a508e57000000b0049988495facmr15849783edx.40.1676027556681;
+        Fri, 10 Feb 2023 03:12:36 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id 18-20020a508e12000000b004aacac472f7sm2037849edw.27.2023.02.10.03.12.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Feb 2023 03:12:19 -0800 (PST)
-Message-ID: <de4b7af2-8918-6c3a-5fb5-cad6c8980d45@linaro.org>
-Date:   Fri, 10 Feb 2023 12:12:17 +0100
+        Fri, 10 Feb 2023 03:12:36 -0800 (PST)
+Message-ID: <7f85af25-efc5-6907-70ac-b264f110918d@linaro.org>
+Date:   Fri, 10 Feb 2023 13:12:35 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [PATCH v5 3/8] arm64: dts: qcom: sc7280: Add LPASS PIL node
-Content-Language: en-US
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org,
-        agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
-        broonie@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_rohkumar@quicinc.com, srinivas.kandagatla@linaro.org,
-        dianders@chromium.org, swboyd@chromium.org, judyhsiao@chromium.org,
-        alsa-devel@alsa-project.org, quic_rjendra@quicinc.com,
-        konrad.dybcio@somainline.org, mka@chromium.org,
-        quic_mohs@quicinc.com
-References: <1675700201-12890-1-git-send-email-quic_srivasam@quicinc.com>
- <1675700201-12890-4-git-send-email-quic_srivasam@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1675700201-12890-4-git-send-email-quic_srivasam@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH v3 4/6] arm64: dts: qcom: sm8350: finish reordering nodes
+Content-Language: en-GB
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20230209133839.762631-1-dmitry.baryshkov@linaro.org>
+ <20230209133839.762631-5-dmitry.baryshkov@linaro.org>
+ <a8bb4bf1-c4b6-ff02-d2e6-1407900bb006@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <a8bb4bf1-c4b6-ff02-d2e6-1407900bb006@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/02/2023 17:16, Srinivasa Rao Mandadapu wrote:
-> Add LPASS PIL node for sc7280 based audioreach platforms.
+On 10/02/2023 13:09, Konrad Dybcio wrote:
 > 
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Tested-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-> ---
->  .../qcom/sc7280-herobrine-audioreach-wcd9385.dtsi  |  4 +
->  arch/arm64/boot/dts/qcom/sc7280.dtsi               | 93 ++++++++++++++++++++++
->  2 files changed, 97 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
-> index 1810a36..5e99f49 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-audioreach-wcd9385.dtsi
-> @@ -107,3 +107,7 @@
->  		};
->  	};
->  };
-> +
-> +&remoteproc_adsp {
+> On 9.02.2023 14:38, Dmitry Baryshkov wrote:
+>> Finish reordering DT nodes by their address. Move PDC, tsens, AOSS,
+>> SRAM, SPMI and TLMM nodes to the proper position.
+>>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+> [...]
+> 
+>> +				phys = <&mdss_dsi1_phy>;
+>> +
+>> +				#address-cells = <1>;
+>> +				#size-cells = <0>;
+>> +
+>> +				status = "disabled";
+>> +
+>> +				dsi1_opp_table: opp-table {
+>> +					compatible = "operating-points-v2";
+>> +
+>> +					/* TODO: opp-187500000 should work with
+>> +					 * &rpmhpd_opp_low_svs, but one some of
+>> +					 * sm8350_hdk boards reboot using this
+>> +					 * opp.
+>> +					 */
+> It's not a part of this patch, but an idea came into my
+> head.. could you check with socid that your HDK has an
+> 8350v2.1?
 
-Are you sure this is ordered by name?
+I checked with the bootloader instead, if you don't mind:
 
-> +	status = "okay";
-> +};
+Platform Init  [ 2701] BDS
+UEFI Ver   : 6.0.210914.BOOT.MXF.1.0-00848-LAHAINA-1
+Platform           : HDK
+Subtype            : 0
+Boot Device        : UFS
+Chip Name          : SMP_LAHAINA
+Chip Ver           : 2.1
 
-There is lpasscc@3000000 so aren't you now enabling two nodes for the
-same address?
-
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index 6908bca..27ab992 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -8,6 +8,7 @@
->  #include <dt-bindings/clock/qcom,dispcc-sc7280.h>
->  #include <dt-bindings/clock/qcom,gcc-sc7280.h>
->  #include <dt-bindings/clock/qcom,gpucc-sc7280.h>
-> +#include <dt-bindings/clock/qcom,lpass-sc7280.h>
->  #include <dt-bindings/clock/qcom,lpassaudiocc-sc7280.h>
->  #include <dt-bindings/clock/qcom,lpasscorecc-sc7280.h>
->  #include <dt-bindings/clock/qcom,rpmh.h>
-> @@ -21,6 +22,7 @@
->  #include <dt-bindings/power/qcom-rpmpd.h>
->  #include <dt-bindings/reset/qcom,sdm845-aoss.h>
->  #include <dt-bindings/reset/qcom,sdm845-pdc.h>
-> +#include <dt-bindings/soc/qcom,gpr.h>
->  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
->  #include <dt-bindings/sound/qcom,lpass.h>
->  #include <dt-bindings/thermal/thermal.h>
-> @@ -3439,6 +3441,97 @@
->  			status = "disabled";
->  		};
->  
-> +		remoteproc_adsp: remoteproc@3000000 {
-> +			compatible = "qcom,sc7280-adsp-pil";
-> +			reg = <0 0x03000000 0 0x5000>, <0 0x0355b000 0 0x10>;
-> +			reg-names = "qdsp6ss_base", "lpass_efuse";
-
-Does not look like you tested the DTS against bindings. Please run `make
-dtbs_check` (see Documentation/devicetree/bindings/writing-schema.rst
-for instructions).
-
-You can test against specific schema with DT_SCHEMA_FILES
-
-> +
-> +			interrupts-extended = <&pdc 6 IRQ_TYPE_LEVEL_HIGH>,
-> +					      <&adsp_smp2p_in 0 IRQ_TYPE_NONE>,
-> +					      <&adsp_smp2p_in 1 IRQ_TYPE_NONE>,
-> +					      <&adsp_smp2p_in 2 IRQ_TYPE_NONE>,
-> +					      <&adsp_smp2p_in 3 IRQ_TYPE_NONE>,
-> +					      <&adsp_smp2p_in 7 IRQ_TYPE_NONE>;
-> +
-> +			interrupt-names = "wdog", "fatal", "ready",
-> +					  "handover", "stop-ack",
-> +					  "shutdown-ack";
-> +
-> +			qcom,qmp = <&aoss_qmp>;
-> +
-> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
-> +				 <&gcc GCC_CFG_NOC_LPASS_CLK>;
-> +
-> +			clock-names = "xo", "gcc_cfg_noc_lpass";
-> +
-> +			iommus = <&apps_smmu 0x1800 0x0>;
-> +
-> +			power-domains =	<&rpmhpd SC7280_CX>;
-> +			power-domain-names = "cx";
-
-Here as well. Binding says it is LCX domain.
-
-> +
-> +			required-opps = <&rpmhpd_opp_nom>;
-
-This should also fail... please send code for review only if there are
-no warnings.
-
-> +
-> +			resets = <&pdc_reset PDC_AUDIO_SYNC_RESET>,
-> +				 <&aoss_reset AOSS_CC_LPASS_RESTART>;
-> +
-> +			reset-names =  "pdc_sync", "cc_lpass";
-> +			qcom,halt-regs = <&tcsr_1 0x3000 0x5000 0x8000 0x13000>;
-> +
-> +			memory-region = <&adsp_mem>;
-> +
-> +			qcom,smem-states = <&adsp_smp2p_out 0>;
-> +			qcom,smem-state-names = "stop";
-> +
-> +			status = "disabled";
-> +
-> +			glink-edge {
-> +				interrupts-extended = <&ipcc IPCC_CLIENT_LPASS
-> +						       IPCC_MPROC_SIGNAL_GLINK_QMP
-> +						       IRQ_TYPE_EDGE_RISING>;
-> +
-> +				mboxes = <&ipcc IPCC_CLIENT_LPASS
-> +					 IPCC_MPROC_SIGNAL_GLINK_QMP>;
-> +
-> +				label = "lpass";
-> +				qcom,remote-pid = <2>;
-> +
-> +				gpr {
-> +					compatible = "qcom,gpr";
-> +					qcom,glink-channels = "adsp_apps";
-> +					qcom,domain = <GPR_DOMAIN_ID_ADSP>;
-> +					qcom,intents = <512 20>;
-> +					#address-cells = <1>;
-> +					#size-cells = <0>;
-> +
-> +					q6apm: service@1 {
-> +						compatible = "qcom,q6apm";
-> +						reg = <GPR_APM_MODULE_IID>;
-> +						#sound-dai-cells = <0>;
-
-That's also wrong and test would point the issue.
-
-
-Best regards,
-Krzysztof
+-- 
+With best wishes
+Dmitry
 
