@@ -2,206 +2,250 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8CE76692D47
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Feb 2023 03:13:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 47873692D4D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Feb 2023 03:15:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229487AbjBKCNw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Feb 2023 21:13:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40916 "EHLO
+        id S229455AbjBKCPA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Feb 2023 21:15:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41340 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229479AbjBKCNv (ORCPT
+        with ESMTP id S229437AbjBKCO7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Feb 2023 21:13:51 -0500
-Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5D9B749A5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 18:13:50 -0800 (PST)
-Received: by mail-yb1-xb34.google.com with SMTP id q4so8453805ybu.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 18:13:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=AVP4LC3gxGWSgfBKADHFIlAxBAsTci144FYv9y485hg=;
-        b=NPI837DV4EdaoeNJsQeGxGiORVPx5kAQoNueJgiD1XlDEvkL9LVfAu7g3ZGGyS2doo
-         9Bq1oBX5y/YPpS9ZrpUunYyN+Xf8nMnvZ2NizCyftSOeC5K86feu6z58rTOc/+fowTIQ
-         vhFpdKzZ8TEHx+/CEj1PuP1piN8qezpPEWCjcrLJjkOqDZi4I9ECxLWeilbpYRv9DrbX
-         +2CLc7jkXjeuF4sSaZGeDFLtLIHb3eFqaC5BoEOP4RUEoS8nMtDxR9kByfgXTEtRa7PV
-         qYAcc1DMFmNJX9QkrCx1RTtCFSWIKDVZw7YwjPaB3LKXHZI/2WI82Ahf9j5iT45u0pET
-         /v8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=AVP4LC3gxGWSgfBKADHFIlAxBAsTci144FYv9y485hg=;
-        b=iSnJxR75bY1ySdzNTRfZZQd6R2rgKcA28+Q+WaziEAjGqdSOvg1JV71QvREg+X/B/s
-         T/pR7TwLyjY/NxtlCSZAH7Z6Csn1/0Ky9ivQsNg+JnuRmdxEPqbg9jjo9jOTY6HGIExN
-         yViqIxE6hgeom4vc7Q+s0HiRPg3W9jDPoQP4prEB9jFm/8fQ8sSl5rdMpQmCHeOzDmVf
-         TqIvmE9CN8l+Xb1kL03/bWWeFBuM6RJtSd1XJ1HxGjGrCGZsoVfILtaMDDi54S5apE8R
-         BM75avyiIB25TqldjFV/pN1bKYh2yD7XtDs7oVKE4x03RehwypYTzFKw3Q5ZT6xiwVLk
-         gWLg==
-X-Gm-Message-State: AO0yUKWNoiyyo3idsCaz0DgT5/uUSnYFOTrKJ5toDvWUdzySIsDGWrkA
-        HMHRDMKSoen19210YJhdSOjchtHdYIvOunIcZm1QyQ==
-X-Google-Smtp-Source: AK7set+3gfrSyBe2ekI0j3jHxJx6O06Jkj6lGbli3p2gDEex73DfaLxJS9IdJnjitOuP+Gh+sLvcheeC4VLot30O7pM=
-X-Received: by 2002:a25:eb0f:0:b0:8ef:c897:33aa with SMTP id
- d15-20020a25eb0f000000b008efc89733aamr373455ybs.288.1676081629619; Fri, 10
- Feb 2023 18:13:49 -0800 (PST)
+        Fri, 10 Feb 2023 21:14:59 -0500
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11D0674990;
+        Fri, 10 Feb 2023 18:14:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1676081698; x=1707617698;
+  h=date:from:to:cc:subject:message-id:mime-version:
+   content-transfer-encoding;
+  bh=AFH7pAzH8z3MkAsbKr3xo6FcBDF2BLc1KAFzqHwB5bs=;
+  b=iaOyw950XhTEXZnHQmzPxwxShOGfoqYKmq1odEQ1fz6PdXhIo5I+AH71
+   WlbWu7O6CEAi9aCg9ljAD7mwcDpu2WusYoug7T+9bkpWsu15+ZuWmx7Ew
+   k1n62CFi+dsVid0s5iS3+1TA64rQB84mJPAtWllHBWuFIuJ64l0YR1avf
+   QFnOSVLUcEaJLzFB5FWrvkboUPsaxtiBWMGkYkYyr0avBG97Hi3snBzaH
+   y3DBTaUYaJiCJ1fRctAqAQ/QOtcodYGOwyeikXJHNS/sgC1u5rf0iQ9YA
+   8UsepKmaangeYUOJEAxLUJTW4ohQi9WvNxThBD9+WZmKbBt9oGKED/1ep
+   g==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10617"; a="330582016"
+X-IronPort-AV: E=Sophos;i="5.97,287,1669104000"; 
+   d="scan'208";a="330582016"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Feb 2023 18:14:57 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10617"; a="842213075"
+X-IronPort-AV: E=Sophos;i="5.97,287,1669104000"; 
+   d="scan'208";a="842213075"
+Received: from lkp-server01.sh.intel.com (HELO 4455601a8d94) ([10.239.97.150])
+  by orsmga005.jf.intel.com with ESMTP; 10 Feb 2023 18:14:53 -0800
+Received: from kbuild by 4455601a8d94 with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1pQfPg-0006B7-2O;
+        Sat, 11 Feb 2023 02:14:52 +0000
+Date:   Sat, 11 Feb 2023 10:14:31 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Andrew Morton <akpm@linux-foundation.org>
+Cc:     linux-usb@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
+        linux-mips@vger.kernel.org, linux-media@vger.kernel.org,
+        linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        intel-gfx@lists.freedesktop.org, fsverity@lists.linux.dev,
+        asahi@lists.linux.dev, amd-gfx@lists.freedesktop.org,
+        Linux Memory Management List <linux-mm@kvack.org>
+Subject: [linux-next:master] BUILD REGRESSION
+ 6ba8a227fd19d19779005fb66ad7562608e1df83
+Message-ID: <63e6fa07.0LOPaAs7kdy2KqZw%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-References: <cover.1676067791.git.quic_sudaraja@quicinc.com>
- <CAJuCfpHWQ8NV=iR3BN+pt1c8FynCnRqyyriHb1gLxFgiNVrwjA@mail.gmail.com>
- <e944536f-a04c-5528-601e-d7f505a761e8@quicinc.com> <CAJuCfpGLkkS2yx0d9+2nYtEtxANSH5H3EgCmWZax4N-ieEBG7g@mail.gmail.com>
- <15cd8816-b474-0535-d854-41982d3bbe5c@quicinc.com>
-In-Reply-To: <15cd8816-b474-0535-d854-41982d3bbe5c@quicinc.com>
-From:   Suren Baghdasaryan <surenb@google.com>
-Date:   Fri, 10 Feb 2023 18:13:38 -0800
-Message-ID: <CAJuCfpHihLgHCcsAqMJ_o2u7Ux9B5HFGsV2y_L2_5GXYAGYLnw@mail.gmail.com>
-Subject: Re: [PATCH] psi: reduce min window size to 50ms
-To:     Sudarshan Rajagopalan <quic_sudaraja@quicinc.com>
-Cc:     David Hildenbrand <david@redhat.com>,
-        Johannes Weiner <hannes@cmpxchg.org>,
-        Mike Rapoport <rppt@kernel.org>,
-        Oscar Salvador <osalvador@suse.de>,
-        Anshuman Khandual <anshuman.khandual@arm.com>,
-        mark.rutland@arm.com, will@kernel.org,
-        virtualization@lists.linux-foundation.org, linux-mm@kvack.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Sukadev Bhattiprolu <quic_sukadev@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Patrick Daly <quic_pdaly@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-17.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        ENV_AND_HDR_SPF_MATCH,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Feb 10, 2023 at 5:46 PM Sudarshan Rajagopalan
-<quic_sudaraja@quicinc.com> wrote:
->
->
-> On 2/10/2023 5:09 PM, Suren Baghdasaryan wrote:
-> > On Fri, Feb 10, 2023 at 4:45 PM Sudarshan Rajagopalan
-> > <quic_sudaraja@quicinc.com> wrote:
-> >>
-> >> On 2/10/2023 3:03 PM, Suren Baghdasaryan wrote:
-> >>> On Fri, Feb 10, 2023 at 2:31 PM Sudarshan Rajagopalan
-> >>> <quic_sudaraja@quicinc.com> wrote:
-> >>>> The PSI mechanism is useful tool to monitor pressure stall
-> >>>> information in the system. Currently, the minimum window size
-> >>>> is set to 500ms. May we know what is the rationale for this?
-> >>> The limit was set to avoid regressions in performance and power
-> >>> consumption if the window is set too small and the system ends up
-> >>> polling too frequently. That said, the limit was chosen based on
-> >>> results of specific experiments which might not represent all
-> >> Rightly as you said, the effect on power and performance depends on type
-> >> of the system - embedded systems, or Android mobile, or commercial VMs
-> >> or servers. With higher PSI sampling, it may not be much of power impact
-> >> to embedded systems with low-tier chipsets or performance impact to
-> >> powerful servers.
-> >>
-> >>> usecases. If you want to change this limit, you would need to describe
-> >>> why the new limit is inherently better than the current one (why not
-> >>> higher, why not lower).
-> >> This is in regards to the userspace daemon [1] that we are working on,
-> >> that dynamically resizes the VM memory based on PSI memory pressure
-> >> events. With current min window size of 500ms, the PSI monitor sampling
-> >> period would be 50ms. So to detect increase in memory demand in system
-> >> and plug-in memory into VM when pressure goes up, the minimum time the
-> >> process needs to stall for is 50ms before a event can be generated and
-> >> sent out to userspace and the daemon can do actions.
-> >>
-> >> This again I'm talking w.r.t. lightweight embedded systems, where even
-> >> background kswapd/kcompd (which I'm calling it as natural memory
-> >> pressure) in the system would be less than 5-10ms stall. So any stall
-> >> more than 5-10ms would "hint" us that a memory consuming usecase has
-> >> ranB  and memory may need to be plugged in.
-> >>
-> >> So in these cases, having as low as 5ms psimon sampling time would give
-> >> us faster reaction time and daemon can be responsive more quickly. In
-> >> general, this will reduce the malloc latencies significantly.
-> >>
-> >> Pasting here the same excerpt I mentioned in [1].
-> > My question is: why do you think 5ms is the optimal limit here? I want
-> > to avoid a race to the bottom where next time someone can argue that
-> > they would like to detect a stall within a lower period than 5ms.
-> > Technically the limit can be as small as one wants but at some point I
-> > think we should consider the possibility of this being used for a DoS
-> > attack.
->
-> Well the optimal limit should be something which is least destructive? I
-> do understand about possibility of DoS attacks, but wouldn't that still
-> be possible with 500ms window today? Which will atleast be 1/10th less
-> severe compared to 50ms window. The way I see it is - min pressure
-> sampling should be such that even the least pressure stall which we
-> think is significant should be captured (this could be 5ms or 50ms at
-> present) while balancing the power and performance impact across all
-> usecases.
->
-> At present, Android's LMKD sets 1000ms as window for which it considers
-> 100ms sampling to be significant. And here, with psi_daemon usecase we
-> are saying 5ms sampling would be significant. So there's no actual
-> optimal limit, but we must limit as much possible without effecting
-> power or performance as a whole. Also, this is just the "minimum
-> allowable" window, and system admins can configure it as per the system
-> type/requirement.
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git master
+branch HEAD: 6ba8a227fd19d19779005fb66ad7562608e1df83  Add linux-next specific files for 20230210
 
-Ok, let me ask you another way which might be more productive. What
-caused you to choose 5ms as the time you care to react to a stall
-buildup?
+Error/Warning reports:
 
->
-> Also, about possible DoS attacks - file permissions for
-> /proc/pressure/... can be set such that not any random user can register
-> to psi events right?
+https://lore.kernel.org/oe-kbuild-all/202301302110.mEtNwkBD-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202301310939.TAgCOEZb-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202302061911.C7xvHX9v-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202302062224.ByzeTXh1-lkp@intel.com
+https://lore.kernel.org/oe-kbuild-all/202302092211.54EYDhYH-lkp@intel.com
 
-True. We have a CAP_SYS_RESOURCE check for the writers of these files.
+Error/Warning: (recently discovered and may have been fixed)
 
->
-> >
-> >> "
-> >>
-> >> 4. Detecting increase in memory demand b   when a certain usecase starts
-> >> in VM that does memory allocations, it will stall causing PSI mechanism
-> >> to generate a memory pressure event to userspace. To simply put, when
-> >> pressure increases certain set threshold, it can make educated guess
-> >> that a memory requiring usecase has ran and VM system needs memory to be
-> >> added.
-> >>
-> >> "
-> >>
-> >> [1]
-> >> https://lore.kernel.org/linux-arm-kernel/1bf30145-22a5-cc46-e583-25053460b105@redhat.com/T/#m95ccf038c568271e759a277a08b8e44e51e8f90b
-> >>
-> >>> Thanks,
-> >>> Suren.
-> >>>
-> >>>> For lightweight systems such as Linux Embedded Systems, PSI
-> >>>> can be used to monitor and track memory pressure building up
-> >>>> in the system and respond quickly to such memory demands.
-> >>>> Example, the Linux Embedded Systems could be a secondary VM
-> >>>> system which requests for memory from Primary host. With 500ms
-> >>>> window size, the sampling period is 50ms (one-tenth of windwo
-> >>>> size). So the minimum amount of time the process needs to stall,
-> >>>> so that a PSI event can be generated and actions can be done
-> >>>> is 50ms. This reaction time can be much reduced by reducing the
-> >>>> sampling time (by reducing window size), so that responses to
-> >>>> such memory pressures in system can be serviced much quicker.
-> >>>>
-> >>>> Please let us know your thoughts on reducing window size to 50ms.
-> >>>>
-> >>>> Sudarshan Rajagopalan (1):
-> >>>>     psi: reduce min window size to 50ms
-> >>>>
-> >>>>    kernel/sched/psi.c | 2 +-
-> >>>>    1 file changed, 1 insertion(+), 1 deletion(-)
-> >>>>
-> >>>> --
-> >>>> 2.7.4
-> >>>>
+Documentation/sphinx/templates/kernel-toc.html: 1:36 Invalid token: #}
+ERROR: modpost: "devm_platform_ioremap_resource" [drivers/dma/fsl-edma.ko] undefined!
+ERROR: modpost: "devm_platform_ioremap_resource" [drivers/dma/idma64.ko] undefined!
+drivers/gpu/drm/amd/amdgpu/../display/dc/dcn31/dcn31_hubbub.c:1011:6: warning: no previous prototype for 'hubbub31_init' [-Wmissing-prototypes]
+drivers/gpu/drm/amd/amdgpu/../display/dc/dcn32/dcn32_hubbub.c:948:6: warning: no previous prototype for 'hubbub32_init' [-Wmissing-prototypes]
+drivers/gpu/drm/amd/amdgpu/../display/dc/dcn32/dcn32_hubp.c:158:6: warning: no previous prototype for 'hubp32_init' [-Wmissing-prototypes]
+drivers/gpu/drm/amd/amdgpu/../display/dc/dcn32/dcn32_resource_helpers.c:62:18: warning: variable 'cursor_bpp' set but not used [-Wunused-but-set-variable]
+drivers/gpu/drm/amd/amdgpu/../display/dc/link/protocols/link_dp_capability.c:1296:32: warning: variable 'result_write_min_hblank' set but not used [-Wunused-but-set-variable]
+drivers/gpu/drm/amd/amdgpu/../display/dc/link/protocols/link_dp_capability.c:280:42: warning: variable 'ds_port' set but not used [-Wunused-but-set-variable]
+drivers/gpu/drm/amd/amdgpu/../display/dc/link/protocols/link_dp_training.c:1586:38: warning: variable 'result' set but not used [-Wunused-but-set-variable]
+ftrace-ops.c:(.init.text+0x2c3): undefined reference to `__udivdi3'
+
+Unverified Error/Warning (likely false positive, please contact us if interested):
+
+drivers/clk/ingenic/jz4760-cgu.c:80 jz4760_cgu_calc_m_n_od() error: uninitialized symbol 'od'.
+drivers/iommu/apple-dart.c:1281:1: sparse: sparse: symbol 'apple_dart_pm_ops' was not declared. Should it be static?
+drivers/media/i2c/max9286.c:802 max9286_s_stream() error: buffer overflow 'priv->fmt' 4 <= 32
+drivers/thermal/qcom/tsens-v0_1.c:106:40: sparse: sparse: symbol 'tsens_9607_nvmem' was not declared. Should it be static?
+drivers/thermal/qcom/tsens-v0_1.c:26:40: sparse: sparse: symbol 'tsens_8916_nvmem' was not declared. Should it be static?
+drivers/thermal/qcom/tsens-v0_1.c:42:40: sparse: sparse: symbol 'tsens_8939_nvmem' was not declared. Should it be static?
+drivers/thermal/qcom/tsens-v0_1.c:62:40: sparse: sparse: symbol 'tsens_8974_nvmem' was not declared. Should it be static?
+drivers/thermal/qcom/tsens-v0_1.c:84:40: sparse: sparse: symbol 'tsens_8974_backup_nvmem' was not declared. Should it be static?
+drivers/thermal/qcom/tsens-v1.c:24:40: sparse: sparse: symbol 'tsens_qcs404_nvmem' was not declared. Should it be static?
+drivers/thermal/qcom/tsens-v1.c:45:40: sparse: sparse: symbol 'tsens_8976_nvmem' was not declared. Should it be static?
+drivers/usb/gadget/composite.c:2082:33: sparse: sparse: restricted __le16 degrades to integer
+fs/verity/enable.c:29:2: warning: Null pointer passed as 1st argument to memory set function [clang-analyzer-unix.cstring.NullArg]
+
+Error/Warning ids grouped by kconfigs:
+
+gcc_recent_errors
+|-- alpha-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-protocols-link_dp_capability.c:warning:variable-ds_port-set-but-not-used
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-protocols-link_dp_capability.c:warning:variable-result_write_min_hblank-set-but-not-used
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-protocols-link_dp_training.c:warning:variable-result-set-but-not-used
+|-- alpha-buildonly-randconfig-r006-20230210
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-protocols-link_dp_capability.c:warning:variable-ds_port-set-but-not-used
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-protocols-link_dp_capability.c:warning:variable-result_write_min_hblank-set-but-not-used
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-protocols-link_dp_training.c:warning:variable-result-set-but-not-used
+|-- arc-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-protocols-link_dp_capability.c:warning:variable-ds_port-set-but-not-used
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-protocols-link_dp_capability.c:warning:variable-result_write_min_hblank-set-but-not-used
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-protocols-link_dp_training.c:warning:variable-result-set-but-not-used
+|-- arm-allmodconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-protocols-link_dp_capability.c:warning:variable-ds_port-set-but-not-used
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-protocols-link_dp_capability.c:warning:variable-result_write_min_hblank-set-but-not-used
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-protocols-link_dp_training.c:warning:variable-result-set-but-not-used
+|-- arm-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-protocols-link_dp_capability.c:warning:variable-ds_port-set-but-not-used
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-protocols-link_dp_capability.c:warning:variable-result_write_min_hblank-set-but-not-used
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-protocols-link_dp_training.c:warning:variable-result-set-but-not-used
+|-- arm64-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-dcn31-dcn31_hubbub.c:warning:no-previous-prototype-for-hubbub31_init
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-dcn32-dcn32_hubbub.c:warning:no-previous-prototype-for-hubbub32_init
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-dcn32-dcn32_hubp.c:warning:no-previous-prototype-for-hubp32_init
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-dcn32-dcn32_resource_helpers.c:warning:variable-cursor_bpp-set-but-not-used
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-protocols-link_dp_capability.c:warning:variable-ds_port-set-but-not-used
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-protocols-link_dp_capability.c:warning:variable-result_write_min_hblank-set-but-not-used
+|   `-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-protocols-link_dp_training.c:warning:variable-result-set-but-not-used
+|-- arm64-randconfig-m041-20230210
+|   |-- drivers-clk-ingenic-jz4760-cgu.c-jz4760_cgu_calc_m_n_od()-error:uninitialized-symbol-od-.
+|   `-- drivers-media-i2c-max9286.c-max9286_s_stream()-error:buffer-overflow-priv-fmt
+|-- arm64-randconfig-s042-20230210
+|   `-- drivers-iommu-apple-dart.c:sparse:sparse:symbol-apple_dart_pm_ops-was-not-declared.-Should-it-be-static
+|-- i386-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-dcn31-dcn31_hubbub.c:warning:no-previous-prototype-for-hubbub31_init
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-dcn32-dcn32_hubbub.c:warning:no-previous-prototype-for-hubbub32_init
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-dcn32-dcn32_hubp.c:warning:no-previous-prototype-for-hubp32_init
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-dcn32-dcn32_resource_helpers.c:warning:variable-cursor_bpp-set-but-not-used
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-protocols-link_dp_capability.c:warning:variable-ds_port-set-but-not-used
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-protocols-link_dp_capability.c:warning:variable-result_write_min_hblank-set-but-not-used
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-link-protocols-link_dp_training.c:warning:variable-result-set-but-not-used
+|   `-- ftrace-ops.c:(.init.text):undefined-reference-to-__udivdi3
+|-- i386-randconfig-m021
+|   `-- kernel-trace-trace_events_synth.c-trace_event_raw_event_synth()-warn:inconsistent-indenting
+|-- i386-randconfig-s001
+|   |-- drivers-gpu-drm-i915-gem-i915_gem_ttm.c:sparse:sparse:incorrect-type-in-assignment-(different-base-types)-expected-restricted-vm_fault_t-assigned-usertype-ret-got-int
+|   `-- drivers-usb-gadget-composite.c:sparse:sparse:restricted-__le16-degrades-to-integer
+|-- i386-randconfig-s002
+|   `-- drivers-gpu-drm-i915-gem-i915_gem_ttm.c:sparse:sparse:incorrect-type-in-assignment-(different-base-types)-expected-restricted-vm_fault_t-assigned-usertype-ret-got-int
+|-- i386-randconfig-s003
+clang_recent_errors
+`-- s390-randconfig-c005-20230210
+    `-- fs-verity-enable.c:warning:Null-pointer-passed-as-1st-argument-to-memory-set-function-clang-analyzer-unix.cstring.NullArg
+
+elapsed time: 1238m
+
+configs tested: 71
+configs skipped: 8
+
+gcc tested configs:
+alpha                            allyesconfig
+alpha                               defconfig
+arc                              allyesconfig
+arc                                 defconfig
+arc                        nsimosci_defconfig
+arm                              allmodconfig
+arm                              allyesconfig
+arm                                 defconfig
+arm                      footbridge_defconfig
+arm                            qcom_defconfig
+arm                           sunxi_defconfig
+arm64                            allyesconfig
+arm64                               defconfig
+csky                                defconfig
+i386                             allyesconfig
+i386                              debian-10.3
+i386                                defconfig
+i386                          randconfig-a016
+i386                          randconfig-c001
+ia64                             allmodconfig
+ia64                                defconfig
+loongarch                        allmodconfig
+loongarch                         allnoconfig
+loongarch                           defconfig
+m68k                             allmodconfig
+m68k                                defconfig
+m68k                        m5272c3_defconfig
+m68k                       m5275evb_defconfig
+mips                             allmodconfig
+mips                             allyesconfig
+mips                       bmips_be_defconfig
+mips                         db1xxx_defconfig
+nios2                               defconfig
+parisc                              defconfig
+parisc64                            defconfig
+powerpc                          allmodconfig
+powerpc                           allnoconfig
+riscv                            allmodconfig
+riscv                               defconfig
+s390                             allmodconfig
+s390                             allyesconfig
+s390                                defconfig
+sh                               allmodconfig
+sh                        edosk7760_defconfig
+sh                          sdk7786_defconfig
+sh                           se7343_defconfig
+sh                     sh7710voipgw_defconfig
+sparc                             allnoconfig
+sparc                               defconfig
+um                             i386_defconfig
+um                           x86_64_defconfig
+x86_64                            allnoconfig
+x86_64                           allyesconfig
+x86_64                              defconfig
+x86_64                                  kexec
+x86_64                        randconfig-a006
+x86_64                               rhel-8.3
+x86_64                          rhel-8.3-func
+
+clang tested configs:
+i386                              allnoconfig
+i386                          randconfig-a006
+mips                        qi_lb60_defconfig
+powerpc                     mpc5200_defconfig
+powerpc                    mvme5100_defconfig
+powerpc                      ppc64e_defconfig
+powerpc              randconfig-c003-20230210
+riscv                randconfig-c006-20230210
+s390                 randconfig-c005-20230210
+s390                 randconfig-r044-20230210
+x86_64                        randconfig-a005
+x86_64                        randconfig-a016
+x86_64                          rhel-8.3-rust
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests
