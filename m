@@ -2,92 +2,276 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EF33269317B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Feb 2023 15:27:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F93869321E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Feb 2023 16:52:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229657AbjBKO1f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 11 Feb 2023 09:27:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38738 "EHLO
+        id S229481AbjBKPwX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 11 Feb 2023 10:52:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229447AbjBKO1e (ORCPT
+        with ESMTP id S229472AbjBKPwW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 11 Feb 2023 09:27:34 -0500
-Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [80.237.130.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECD232799A;
-        Sat, 11 Feb 2023 06:27:32 -0800 (PST)
-Received: from [2a02:8108:8980:2478:8cde:aa2c:f324:937e]; authenticated
-        by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        id 1pQqqg-0003jd-CB; Sat, 11 Feb 2023 15:27:30 +0100
-Message-ID: <6f97a117-0d9c-e21b-9adf-50f2233ba9e3@leemhuis.info>
-Date:   Sat, 11 Feb 2023 15:27:29 +0100
+        Sat, 11 Feb 2023 10:52:22 -0500
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7BF52940A
+        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Feb 2023 07:52:20 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id hx15so22478199ejc.11
+        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Feb 2023 07:52:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=X/CBZGFwxvsxz1KF+BMnclxJtqObB1aSM34Xtri/K84=;
+        b=SZ6/oJM29QaSwLJxKkL572VuSipP5WvS9TWNyVDin/Jbu3hU9VW9ffZuJfre5tsd4O
+         BlnAzbgPE8unrFETJZoQ6JI/2wzVUVnz8bw6uUxz3HuJ36k43q5rZagQYSWhShKVneJu
+         dD9KWQYhhGSQ1oiuvPOsOEoJAFdynklEMXrgdmQuVHL3C0WVg4HDZz0YGlXfcSb4uC4e
+         d5fLBDzIDfy3S6oyaJwrN80PC7uqZKyXG2loyJeo/XyHjBLSSeNTS6YdipO0nIebUDat
+         32U8KApsCMgl39ZBvRJltc/mRz4JdmHDbR8PIzE0k51EjhFDVYp7N+Yny2Am+OSntmme
+         Gbqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=X/CBZGFwxvsxz1KF+BMnclxJtqObB1aSM34Xtri/K84=;
+        b=6xEz9+Qomfn0IxA2PqkGJqwPXfUayJOnVkEA4M8ppNmI8ujUE8+vvBz0PO8b1bdFyj
+         27bVFCgAlm7VYDz7zBqhIkN/I8KR+R6ek+o/sKQroKyPigdgGE4bVvyJ62cuxUCieYFP
+         CZwIw5TqpuBNMyRdz+9IdHkixLNjocjZGhn3sW8D5bITrqj65fkTgO1HRK/dCGYtR09x
+         YFu0Wr6Ab4c1fJOvrKjhf+pWvjTyRIWdszyvFzk5cOJlVNB9bVpFsXvNk+6akK3Jvzr4
+         MdY29sjtKI4LFrYYZ4I6Wj2kREpbvrqszGcg0lyZnU1IVWECWkboLgGA6X/Ho1Eonut7
+         kSDA==
+X-Gm-Message-State: AO0yUKWg/ODzlRcrtyAwfoQzinrci9Irv790eVyUw/PfVyLumsk3YmRR
+        k2XijSywBZxmcIj75T88xEPwZQ==
+X-Google-Smtp-Source: AK7set+pNxXblClsex3EZH3sUAnVDSU7NEuLDctsJGUWMlH3Q7l6qPTWBbmo3srYP4i7WdH1i59bZg==
+X-Received: by 2002:a17:907:94ca:b0:8aa:be1a:c4bf with SMTP id dn10-20020a17090794ca00b008aabe1ac4bfmr22547966ejc.16.1676130739227;
+        Sat, 11 Feb 2023 07:52:19 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id n8-20020a1709065e0800b0087fa83790d8sm4051582eju.13.2023.02.11.07.52.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 11 Feb 2023 07:52:18 -0800 (PST)
+Message-ID: <fc29d13c-28bf-5090-bfaa-52ec6b3860e1@linaro.org>
+Date:   Sat, 11 Feb 2023 17:52:17 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [PATCH] Revert "venus: firmware: Correct non-pix start and end
- addresses"
-Content-Language: en-US, de-DE
-To:     Javier Martinez Canillas <javierm@redhat.com>,
-        Vikash Garodia <vgarodia@qti.qualcomm.com>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "mka@chromium.org" <mka@chromium.org>
-Cc:     Albert Esteve <aesteve@redhat.com>,
-        "stanimir.varbanov@linaro.org" <stanimir.varbanov@linaro.org>,
-        Enric Balletbo i Serra <eballetb@redhat.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        "Vikash Garodia (QUIC)" <quic_vgarodia@quicinc.com>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
-        Fritz Koenig <frkoenig@google.com>,
-        "Dikshita Agarwal (QUIC)" <quic_dikshita@quicinc.com>,
-        "Rajeshwar Kurapaty (QUIC)" <quic_rkurapat@quicinc.com>
-References: <20230207102254.1446461-1-javierm@redhat.com>
- <DM8PR02MB8169809493BF2822E6C29EECF3DB9@DM8PR02MB8169.namprd02.prod.outlook.com>
- <ef09bc9f-d570-be11-238b-bd34063917fc@redhat.com>
- <70c01751-1dd7-c4bd-a96e-94dea437aa40@redhat.com>
- <DM8PR02MB81696369DBFE619E43F81EEFF3DE9@DM8PR02MB8169.namprd02.prod.outlook.com>
- <e87344c6-acef-7f3f-5cac-24961dbd9401@redhat.com>
-From:   "Linux regression tracking (Thorsten Leemhuis)" 
-        <regressions@leemhuis.info>
-Reply-To: Linux regressions mailing list <regressions@lists.linux.dev>
-In-Reply-To: <e87344c6-acef-7f3f-5cac-24961dbd9401@redhat.com>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH 05/10] drm/msm/dsi: dsi_cfg: Deduplicate identical structs
+Content-Language: en-GB
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Douglas Anderson <dianders@chromium.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Archit Taneja <architt@codeaurora.org>,
+        Harigovindan P <harigovi@codeaurora.org>,
+        Rajeev Nandan <quic_rajeevny@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+References: <20230211115110.1462920-1-konrad.dybcio@linaro.org>
+ <20230211115110.1462920-6-konrad.dybcio@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230211115110.1462920-6-konrad.dybcio@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-bounce-key: webpack.hosteurope.de;regressions@leemhuis.info;1676125653;fccb2c5e;
-X-HE-SMSGID: 1pQqqg-0003jd-CB
-X-Spam-Status: No, score=-3.0 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10.02.23 11:07, Javier Martinez Canillas wrote:
-> On 2/10/23 10:22, Vikash Garodia wrote:
->
->>> So what should we do about this folks? Since not allowing the driver to probe on
->>> at least SC7180 is a quite serious regression, can we revert for now until a proper
->>> fix is figured out?
->>
->> I am able to repro this issue on sc7180 and discussing with firmware team on the cause
->> of reset failure. The original patch was raised for fixing rare SMMU faults during warm
->> boot of video hardware. Hence looking to understand the regressing part before we
->> proceed to revert.
+On 11/02/2023 13:51, Konrad Dybcio wrote:
+> Some structs were defined multiple times for no apparent reason.
+> Deduplicate them.
 > 
-> Great, if you are working on a proper fix then that would be much better indeed.
+> Fixes: 3f3c8aff1f8f ("drm/msm/dsi: Add configuration for 8x76")
+> Fixes: 3a3ff88a0fc1 ("drm/msm/dsi: Add 8x96 info in dsi_cfg")
+> Fixes: 6125bd327e16 ("drm/msm: add DSI support for sc7180")
+> Fixes: 65c391b31994 ("drm/msm/dsi: Add DSI support for SC7280")
 
-Yeah, that's great, but OTOH: there is almost certainly just one week
-before 6.2 will be released. Ideally this should be fixed by then.
-Vikash, do you think that's in the cards? If not: why not revert this
-now to make sure 6.2 works fine?
+I think we should drop these Fixes headers. There are no issues to be 
+fixed in those versions. The code was inefficient and resulted in 
+duplication of data, but that's all.
 
-Ciao, Thorsten (wearing his 'the Linux kernel's regression tracker' hat)
---
-Everything you wanna know about Linux kernel regression tracking:
-https://linux-regtracking.leemhuis.info/about/#tldr
-If I did something stupid, please tell me, as explained on that page.
+Other than that:
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/dsi/dsi_cfg.c | 77 +++++++++++--------------------
+>   1 file changed, 26 insertions(+), 51 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.c b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+> index 5f62c563bd1c..860681bfc084 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+> @@ -47,41 +47,32 @@ static const struct msm_dsi_config msm8974_apq8084_dsi_cfg = {
+>   	},
+>   };
+>   
+> -static const char * const dsi_8916_bus_clk_names[] = {
+> +static const char * const dsi_v1_3_1_clk_names[] = {
+>   	"mdp_core", "iface", "bus",
+>   };
+>   
+> -static const struct regulator_bulk_data msm8916_dsi_regulators[] = {
+> +static const struct regulator_bulk_data dsi_v1_3_1_regulators[] = {
+>   	{ .supply = "vdda", .init_load_uA = 100000 },	/* 1.2 V */
+>   	{ .supply = "vddio", .init_load_uA = 100000 },	/* 1.8 V */
+>   };
+>   
+>   static const struct msm_dsi_config msm8916_dsi_cfg = {
+>   	.io_offset = DSI_6G_REG_SHIFT,
+> -	.regulator_data = msm8916_dsi_regulators,
+> -	.num_regulators = ARRAY_SIZE(msm8916_dsi_regulators),
+> -	.bus_clk_names = dsi_8916_bus_clk_names,
+> -	.num_bus_clks = ARRAY_SIZE(dsi_8916_bus_clk_names),
+> +	.regulator_data = dsi_v1_3_1_regulators,
+> +	.num_regulators = ARRAY_SIZE(dsi_v1_3_1_regulators),
+> +	.bus_clk_names = dsi_v1_3_1_clk_names,
+> +	.num_bus_clks = ARRAY_SIZE(dsi_v1_3_1_clk_names),
+>   	.io_start = {
+>   		{ 0x1a98000, 0 },
+>   	},
+>   };
+>   
+> -static const char * const dsi_8976_bus_clk_names[] = {
+> -	"mdp_core", "iface", "bus",
+> -};
+> -
+> -static const struct regulator_bulk_data msm8976_dsi_regulators[] = {
+> -	{ .supply = "vdda", .init_load_uA = 100000 },	/* 1.2 V */
+> -	{ .supply = "vddio", .init_load_uA = 100000 },	/* 1.8 V */
+> -};
+> -
+>   static const struct msm_dsi_config msm8976_dsi_cfg = {
+>   	.io_offset = DSI_6G_REG_SHIFT,
+> -	.regulator_data = msm8976_dsi_regulators,
+> -	.num_regulators = ARRAY_SIZE(msm8976_dsi_regulators),
+> -	.bus_clk_names = dsi_8976_bus_clk_names,
+> -	.num_bus_clks = ARRAY_SIZE(dsi_8976_bus_clk_names),
+> +	.regulator_data = dsi_v1_3_1_regulators,
+> +	.num_regulators = ARRAY_SIZE(dsi_v1_3_1_regulators),
+> +	.bus_clk_names = dsi_v1_3_1_clk_names,
+> +	.num_bus_clks = ARRAY_SIZE(dsi_v1_3_1_clk_names),
+>   	.io_start = {
+>   		{ 0x1a94000, 0x1a96000, 0 },
+>   	},
+> @@ -107,10 +98,6 @@ static const struct msm_dsi_config msm8994_dsi_cfg = {
+>   	},
+>   };
+>   
+> -static const char * const dsi_8996_bus_clk_names[] = {
+> -	"mdp_core", "iface", "bus", "core_mmss",
+> -};
+> -
+>   static const struct regulator_bulk_data msm8996_dsi_regulators[] = {
+>   	{ .supply = "vdda", .init_load_uA = 18160 },	/* 1.25 V */
+>   	{ .supply = "vcca", .init_load_uA = 17000 },	/* 0.925 V */
+> @@ -121,8 +108,8 @@ static const struct msm_dsi_config msm8996_dsi_cfg = {
+>   	.io_offset = DSI_6G_REG_SHIFT,
+>   	.regulator_data = msm8996_dsi_regulators,
+>   	.num_regulators = ARRAY_SIZE(msm8996_dsi_regulators),
+> -	.bus_clk_names = dsi_8996_bus_clk_names,
+> -	.num_bus_clks = ARRAY_SIZE(dsi_8996_bus_clk_names),
+> +	.bus_clk_names = dsi_6g_bus_clk_names,
+> +	.num_bus_clks = ARRAY_SIZE(dsi_6g_bus_clk_names),
+>   	.io_start = {
+>   		{ 0x994000, 0x996000, 0 },
+>   	},
+> @@ -167,24 +154,20 @@ static const struct msm_dsi_config sdm660_dsi_cfg = {
+>   	},
+>   };
+>   
+> -static const char * const dsi_sdm845_bus_clk_names[] = {
+> +static const char * const dsi_v2_4_clk_names[] = {
+>   	"iface", "bus",
+>   };
+>   
+> -static const char * const dsi_sc7180_bus_clk_names[] = {
+> -	"iface", "bus",
+> -};
+> -
+> -static const struct regulator_bulk_data sdm845_dsi_regulators[] = {
+> +static const struct regulator_bulk_data dsi_v2_4_regulators[] = {
+>   	{ .supply = "vdda", .init_load_uA = 21800 },	/* 1.2 V */
+>   };
+>   
+>   static const struct msm_dsi_config sdm845_dsi_cfg = {
+>   	.io_offset = DSI_6G_REG_SHIFT,
+> -	.regulator_data = sdm845_dsi_regulators,
+> -	.num_regulators = ARRAY_SIZE(sdm845_dsi_regulators),
+> -	.bus_clk_names = dsi_sdm845_bus_clk_names,
+> -	.num_bus_clks = ARRAY_SIZE(dsi_sdm845_bus_clk_names),
+> +	.regulator_data = dsi_v2_4_regulators,
+> +	.num_regulators = ARRAY_SIZE(dsi_v2_4_regulators),
+> +	.bus_clk_names = dsi_v2_4_clk_names,
+> +	.num_bus_clks = ARRAY_SIZE(dsi_v2_4_clk_names),
+>   	.io_start = {
+>   		{ 0xae94000, 0xae96000, 0 },
+>   	},
+> @@ -198,32 +181,24 @@ static const struct msm_dsi_config sm8550_dsi_cfg = {
+>   	.io_offset = DSI_6G_REG_SHIFT,
+>   	.regulator_data = sm8550_dsi_regulators,
+>   	.num_regulators = ARRAY_SIZE(sm8550_dsi_regulators),
+> -	.bus_clk_names = dsi_sdm845_bus_clk_names,
+> -	.num_bus_clks = ARRAY_SIZE(dsi_sdm845_bus_clk_names),
+> +	.bus_clk_names = dsi_v2_4_clk_names,
+> +	.num_bus_clks = ARRAY_SIZE(dsi_v2_4_clk_names),
+>   	.io_start = {
+>   		{ 0xae94000, 0xae96000, 0 },
+>   	},
+>   };
+>   
+> -static const struct regulator_bulk_data sc7180_dsi_regulators[] = {
+> -	{ .supply = "vdda", .init_load_uA = 21800 },	/* 1.2 V */
+> -};
+> -
+>   static const struct msm_dsi_config sc7180_dsi_cfg = {
+>   	.io_offset = DSI_6G_REG_SHIFT,
+> -	.regulator_data = sc7180_dsi_regulators,
+> -	.num_regulators = ARRAY_SIZE(sc7180_dsi_regulators),
+> -	.bus_clk_names = dsi_sc7180_bus_clk_names,
+> -	.num_bus_clks = ARRAY_SIZE(dsi_sc7180_bus_clk_names),
+> +	.regulator_data = dsi_v2_4_regulators,
+> +	.num_regulators = ARRAY_SIZE(dsi_v2_4_regulators),
+> +	.bus_clk_names = dsi_v2_4_clk_names,
+> +	.num_bus_clks = ARRAY_SIZE(dsi_v2_4_clk_names),
+>   	.io_start = {
+>   		{ 0xae94000, 0 },
+>   	},
+>   };
+>   
+> -static const char * const dsi_sc7280_bus_clk_names[] = {
+> -	"iface", "bus",
+> -};
+> -
+>   static const struct regulator_bulk_data sc7280_dsi_regulators[] = {
+>   	{ .supply = "vdda", .init_load_uA = 8350 },	/* 1.2 V */
+>   };
+> @@ -232,8 +207,8 @@ static const struct msm_dsi_config sc7280_dsi_cfg = {
+>   	.io_offset = DSI_6G_REG_SHIFT,
+>   	.regulator_data = sc7280_dsi_regulators,
+>   	.num_regulators = ARRAY_SIZE(sc7280_dsi_regulators),
+> -	.bus_clk_names = dsi_sc7280_bus_clk_names,
+> -	.num_bus_clks = ARRAY_SIZE(dsi_sc7280_bus_clk_names),
+> +	.bus_clk_names = dsi_v2_4_clk_names,
+> +	.num_bus_clks = ARRAY_SIZE(dsi_v2_4_clk_names),
+>   	.io_start = {
+>   		{ 0xae94000, 0xae96000, 0 },
+>   	},
+
+-- 
+With best wishes
+Dmitry
+
