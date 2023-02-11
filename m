@@ -2,110 +2,206 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AD6A9692D0E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Feb 2023 03:11:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8CE76692D47
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Feb 2023 03:13:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229491AbjBKCLm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Feb 2023 21:11:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40398 "EHLO
+        id S229487AbjBKCNw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Feb 2023 21:13:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229601AbjBKCLl (ORCPT
+        with ESMTP id S229479AbjBKCNv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Feb 2023 21:11:41 -0500
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1CC875357
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 18:11:40 -0800 (PST)
-Received: by mail-ej1-x633.google.com with SMTP id ml19so20366910ejb.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 18:11:40 -0800 (PST)
+        Fri, 10 Feb 2023 21:13:51 -0500
+Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5D9B749A5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 18:13:50 -0800 (PST)
+Received: by mail-yb1-xb34.google.com with SMTP id q4so8453805ybu.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 18:13:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zXrZAAMcbS02VPRHpSg/5kqN0f51nQe0BfxjseY+MyU=;
-        b=xOPVhIK4At5K2KcDfwmPHUW+vbHPihQk6RZhUjO/6rX5wKORB+EnoDrNyLoWnuCIwx
-         loDlYZe+E50vDrbCDgYKEdTwXtFUBUS1K/Q+8lMVJbga/k329eb0Joyg3na3RgDyoOsF
-         N6paWNmxD+EeLv2lRFMFEzBImwaUbohsNL5j+8sbu7x3fk+6BrIgYJQbgZCp5+62WfWM
-         z1ugm2PKfzU0e/1LNCf+Gjtte/5ijYeTT75XwNW7CeRtTrN5GPOy2rXuXvHkIB81yk0v
-         ydsJZle+9CzdAKN0qZDR0usswYk7d1WgZdiqGwz45SbotZoJ6G+QEE36V26HM+FqsSuD
-         fxmQ==
+        d=google.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=AVP4LC3gxGWSgfBKADHFIlAxBAsTci144FYv9y485hg=;
+        b=NPI837DV4EdaoeNJsQeGxGiORVPx5kAQoNueJgiD1XlDEvkL9LVfAu7g3ZGGyS2doo
+         9Bq1oBX5y/YPpS9ZrpUunYyN+Xf8nMnvZ2NizCyftSOeC5K86feu6z58rTOc/+fowTIQ
+         vhFpdKzZ8TEHx+/CEj1PuP1piN8qezpPEWCjcrLJjkOqDZi4I9ECxLWeilbpYRv9DrbX
+         +2CLc7jkXjeuF4sSaZGeDFLtLIHb3eFqaC5BoEOP4RUEoS8nMtDxR9kByfgXTEtRa7PV
+         qYAcc1DMFmNJX9QkrCx1RTtCFSWIKDVZw7YwjPaB3LKXHZI/2WI82Ahf9j5iT45u0pET
+         /v8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zXrZAAMcbS02VPRHpSg/5kqN0f51nQe0BfxjseY+MyU=;
-        b=knUTqHDnziruRhphuYrFO19MJzXjR6jA/mLdP+x0RkgmmthacvNnm+rNBZPdcGXn0E
-         gYACOWj3vHvkJM1+iP189/PRTWLNO36p539g5J2OjfhO0FBmRNUSNjJnd08ljskaUtLI
-         Hjlp5NwEDKBwc50qI+Ja3Ev7w0BrplEw+XZsWxKVzQ1S7bsGsBfZB9hSVwH28jV1szKa
-         tpaX20fnilJ+DzS5BSwb6qHUiGyiDxXd4Oj6kPS2Hd+PkIvsfvoN4m78nfUYjjX54QQA
-         vaq43rfaGS5BbnzKL9I83xL0kFRaOjKHb2OtZwGgMDAZSv//7tCff8FDmywsCYrham4I
-         /agA==
-X-Gm-Message-State: AO0yUKWCyUMAh7UnhRQKwdKUIcc+N82E0noQMhKM/bqNz9P6CEOlRf9n
-        kwz3+CEXPoIk+FhM9R8+zxeWezTA/dpu75TC
-X-Google-Smtp-Source: AK7set/WWCG0Y19dBysdVZMG8J7kAJ3fT3s4OMXvHdfKLy502BLRGMbQhEoWIcN1F4+XTrcfWuul+Q==
-X-Received: by 2002:a17:907:208c:b0:878:8249:bef6 with SMTP id pv12-20020a170907208c00b008788249bef6mr15641953ejb.59.1676081500334;
-        Fri, 10 Feb 2023 18:11:40 -0800 (PST)
-Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id e20-20020a170906c01400b008ae3324c8adsm3180831ejz.214.2023.02.10.18.11.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Feb 2023 18:11:40 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH 43/43] drm/msm/dpu: rename MERGE_3D_foo_MASK to contain major DPU version
-Date:   Sat, 11 Feb 2023 04:10:53 +0200
-Message-Id: <20230211021053.1078648-44-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230211021053.1078648-1-dmitry.baryshkov@linaro.org>
-References: <20230211021053.1078648-1-dmitry.baryshkov@linaro.org>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=AVP4LC3gxGWSgfBKADHFIlAxBAsTci144FYv9y485hg=;
+        b=iSnJxR75bY1ySdzNTRfZZQd6R2rgKcA28+Q+WaziEAjGqdSOvg1JV71QvREg+X/B/s
+         T/pR7TwLyjY/NxtlCSZAH7Z6Csn1/0Ky9ivQsNg+JnuRmdxEPqbg9jjo9jOTY6HGIExN
+         yViqIxE6hgeom4vc7Q+s0HiRPg3W9jDPoQP4prEB9jFm/8fQ8sSl5rdMpQmCHeOzDmVf
+         TqIvmE9CN8l+Xb1kL03/bWWeFBuM6RJtSd1XJ1HxGjGrCGZsoVfILtaMDDi54S5apE8R
+         BM75avyiIB25TqldjFV/pN1bKYh2yD7XtDs7oVKE4x03RehwypYTzFKw3Q5ZT6xiwVLk
+         gWLg==
+X-Gm-Message-State: AO0yUKWNoiyyo3idsCaz0DgT5/uUSnYFOTrKJ5toDvWUdzySIsDGWrkA
+        HMHRDMKSoen19210YJhdSOjchtHdYIvOunIcZm1QyQ==
+X-Google-Smtp-Source: AK7set+3gfrSyBe2ekI0j3jHxJx6O06Jkj6lGbli3p2gDEex73DfaLxJS9IdJnjitOuP+Gh+sLvcheeC4VLot30O7pM=
+X-Received: by 2002:a25:eb0f:0:b0:8ef:c897:33aa with SMTP id
+ d15-20020a25eb0f000000b008efc89733aamr373455ybs.288.1676081629619; Fri, 10
+ Feb 2023 18:13:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <cover.1676067791.git.quic_sudaraja@quicinc.com>
+ <CAJuCfpHWQ8NV=iR3BN+pt1c8FynCnRqyyriHb1gLxFgiNVrwjA@mail.gmail.com>
+ <e944536f-a04c-5528-601e-d7f505a761e8@quicinc.com> <CAJuCfpGLkkS2yx0d9+2nYtEtxANSH5H3EgCmWZax4N-ieEBG7g@mail.gmail.com>
+ <15cd8816-b474-0535-d854-41982d3bbe5c@quicinc.com>
+In-Reply-To: <15cd8816-b474-0535-d854-41982d3bbe5c@quicinc.com>
+From:   Suren Baghdasaryan <surenb@google.com>
+Date:   Fri, 10 Feb 2023 18:13:38 -0800
+Message-ID: <CAJuCfpHihLgHCcsAqMJ_o2u7Ux9B5HFGsV2y_L2_5GXYAGYLnw@mail.gmail.com>
+Subject: Re: [PATCH] psi: reduce min window size to 50ms
+To:     Sudarshan Rajagopalan <quic_sudaraja@quicinc.com>
+Cc:     David Hildenbrand <david@redhat.com>,
+        Johannes Weiner <hannes@cmpxchg.org>,
+        Mike Rapoport <rppt@kernel.org>,
+        Oscar Salvador <osalvador@suse.de>,
+        Anshuman Khandual <anshuman.khandual@arm.com>,
+        mark.rutland@arm.com, will@kernel.org,
+        virtualization@lists.linux-foundation.org, linux-mm@kvack.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Sukadev Bhattiprolu <quic_sukadev@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Patrick Daly <quic_pdaly@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-17.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        ENV_AND_HDR_SPF_MATCH,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-To ease review and reuse rename MERGE_3D feature masks to contain base
-DPU version since which this mask is used.
+On Fri, Feb 10, 2023 at 5:46 PM Sudarshan Rajagopalan
+<quic_sudaraja@quicinc.com> wrote:
+>
+>
+> On 2/10/2023 5:09 PM, Suren Baghdasaryan wrote:
+> > On Fri, Feb 10, 2023 at 4:45 PM Sudarshan Rajagopalan
+> > <quic_sudaraja@quicinc.com> wrote:
+> >>
+> >> On 2/10/2023 3:03 PM, Suren Baghdasaryan wrote:
+> >>> On Fri, Feb 10, 2023 at 2:31 PM Sudarshan Rajagopalan
+> >>> <quic_sudaraja@quicinc.com> wrote:
+> >>>> The PSI mechanism is useful tool to monitor pressure stall
+> >>>> information in the system. Currently, the minimum window size
+> >>>> is set to 500ms. May we know what is the rationale for this?
+> >>> The limit was set to avoid regressions in performance and power
+> >>> consumption if the window is set too small and the system ends up
+> >>> polling too frequently. That said, the limit was chosen based on
+> >>> results of specific experiments which might not represent all
+> >> Rightly as you said, the effect on power and performance depends on type
+> >> of the system - embedded systems, or Android mobile, or commercial VMs
+> >> or servers. With higher PSI sampling, it may not be much of power impact
+> >> to embedded systems with low-tier chipsets or performance impact to
+> >> powerful servers.
+> >>
+> >>> usecases. If you want to change this limit, you would need to describe
+> >>> why the new limit is inherently better than the current one (why not
+> >>> higher, why not lower).
+> >> This is in regards to the userspace daemon [1] that we are working on,
+> >> that dynamically resizes the VM memory based on PSI memory pressure
+> >> events. With current min window size of 500ms, the PSI monitor sampling
+> >> period would be 50ms. So to detect increase in memory demand in system
+> >> and plug-in memory into VM when pressure goes up, the minimum time the
+> >> process needs to stall for is 50ms before a event can be generated and
+> >> sent out to userspace and the daemon can do actions.
+> >>
+> >> This again I'm talking w.r.t. lightweight embedded systems, where even
+> >> background kswapd/kcompd (which I'm calling it as natural memory
+> >> pressure) in the system would be less than 5-10ms stall. So any stall
+> >> more than 5-10ms would "hint" us that a memory consuming usecase has
+> >> ranB  and memory may need to be plugged in.
+> >>
+> >> So in these cases, having as low as 5ms psimon sampling time would give
+> >> us faster reaction time and daemon can be responsive more quickly. In
+> >> general, this will reduce the malloc latencies significantly.
+> >>
+> >> Pasting here the same excerpt I mentioned in [1].
+> > My question is: why do you think 5ms is the optimal limit here? I want
+> > to avoid a race to the bottom where next time someone can argue that
+> > they would like to detect a stall within a lower period than 5ms.
+> > Technically the limit can be as small as one wants but at some point I
+> > think we should consider the possibility of this being used for a DoS
+> > attack.
+>
+> Well the optimal limit should be something which is least destructive? I
+> do understand about possibility of DoS attacks, but wouldn't that still
+> be possible with 500ms window today? Which will atleast be 1/10th less
+> severe compared to 50ms window. The way I see it is - min pressure
+> sampling should be such that even the least pressure stall which we
+> think is significant should be captured (this could be 5ms or 50ms at
+> present) while balancing the power and performance impact across all
+> usecases.
+>
+> At present, Android's LMKD sets 1000ms as window for which it considers
+> 100ms sampling to be significant. And here, with psi_daemon usecase we
+> are saying 5ms sampling would be significant. So there's no actual
+> optimal limit, but we must limit as much possible without effecting
+> power or performance as a whole. Also, this is just the "minimum
+> allowable" window, and system admins can configure it as per the system
+> type/requirement.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Ok, let me ask you another way which might be more productive. What
+caused you to choose 5ms as the time you care to react to a stall
+buildup?
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index 45f9be9665ae..f377598c75ce 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -70,7 +70,7 @@
- #define CTL_DPU_9_MASK \
- 	(CTL_DPU_7_MASK | BIT(DPU_CTL_HAS_LAYER_EXT4))
- 
--#define MERGE_3D_SM8150_MASK (0)
-+#define MERGE_3D_DPU_5_MASK (0)
- 
- #define DSPP_MSM8998_MASK BIT(DPU_DSPP_PCC) | BIT(DPU_DSPP_GC)
- 
-@@ -507,7 +507,7 @@ static const struct dpu_pingpong_sub_blks sc7280_pp_sblk = {
- 	{\
- 	.name = _name, .id = _id, \
- 	.base = _base, .len = 0x100, \
--	.features = MERGE_3D_SM8150_MASK, \
-+	.features = MERGE_3D_DPU_5_MASK, \
- 	.sblk = NULL \
- 	}
- 
--- 
-2.39.1
+>
+> Also, about possible DoS attacks - file permissions for
+> /proc/pressure/... can be set such that not any random user can register
+> to psi events right?
 
+True. We have a CAP_SYS_RESOURCE check for the writers of these files.
+
+>
+> >
+> >> "
+> >>
+> >> 4. Detecting increase in memory demand b   when a certain usecase starts
+> >> in VM that does memory allocations, it will stall causing PSI mechanism
+> >> to generate a memory pressure event to userspace. To simply put, when
+> >> pressure increases certain set threshold, it can make educated guess
+> >> that a memory requiring usecase has ran and VM system needs memory to be
+> >> added.
+> >>
+> >> "
+> >>
+> >> [1]
+> >> https://lore.kernel.org/linux-arm-kernel/1bf30145-22a5-cc46-e583-25053460b105@redhat.com/T/#m95ccf038c568271e759a277a08b8e44e51e8f90b
+> >>
+> >>> Thanks,
+> >>> Suren.
+> >>>
+> >>>> For lightweight systems such as Linux Embedded Systems, PSI
+> >>>> can be used to monitor and track memory pressure building up
+> >>>> in the system and respond quickly to such memory demands.
+> >>>> Example, the Linux Embedded Systems could be a secondary VM
+> >>>> system which requests for memory from Primary host. With 500ms
+> >>>> window size, the sampling period is 50ms (one-tenth of windwo
+> >>>> size). So the minimum amount of time the process needs to stall,
+> >>>> so that a PSI event can be generated and actions can be done
+> >>>> is 50ms. This reaction time can be much reduced by reducing the
+> >>>> sampling time (by reducing window size), so that responses to
+> >>>> such memory pressures in system can be serviced much quicker.
+> >>>>
+> >>>> Please let us know your thoughts on reducing window size to 50ms.
+> >>>>
+> >>>> Sudarshan Rajagopalan (1):
+> >>>>     psi: reduce min window size to 50ms
+> >>>>
+> >>>>    kernel/sched/psi.c | 2 +-
+> >>>>    1 file changed, 1 insertion(+), 1 deletion(-)
+> >>>>
+> >>>> --
+> >>>> 2.7.4
+> >>>>
