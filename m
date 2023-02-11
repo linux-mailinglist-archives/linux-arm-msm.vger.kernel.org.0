@@ -2,559 +2,203 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0AA3469331D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Feb 2023 19:55:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F9D66934A2
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Feb 2023 00:13:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229609AbjBKSzG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 11 Feb 2023 13:55:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42060 "EHLO
+        id S229455AbjBKXNG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 11 Feb 2023 18:13:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229568AbjBKSzF (ORCPT
+        with ESMTP id S229447AbjBKXNF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 11 Feb 2023 13:55:05 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2368B193EE
-        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Feb 2023 10:55:02 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id j25so8347556wrc.4
-        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Feb 2023 10:55:02 -0800 (PST)
+        Sat, 11 Feb 2023 18:13:05 -0500
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A56931114D
+        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Feb 2023 15:13:03 -0800 (PST)
+Received: by mail-ej1-x634.google.com with SMTP id sa10so23911875ejc.9
+        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Feb 2023 15:13:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ij1y01yn3C78vrRH+kSZSIyMqD+0JyDpVdQ+2wk3B9c=;
-        b=Zokr1RIWMk5TqBTt1WOuAh5RVLmb2SYoKN1OfGrBT2DpvKT0R1RRrOnziwT8Q3MhGK
-         IdFguK0gtCvnpRi5eYmKjjNN6taFrQXqAg/1S7cZBo5EKtyCtN80BgprVx1fOMNwQVFo
-         gV9VJrjhlsfzcZ3UD5h8Oxf6XMODQnxCva20cBKUDihVdPmn5DIIAh/j+rPPctdKl+A9
-         /A1i7Q3Vp04MPb4gnVfuZvsF/KaZQpqHYlLUO6ewoSOCRpM4PgXJgxKrszRDlNIG6IkY
-         9ZsyX6vlwuroabFgRjv32pPeqAaQmdTnLGOAaiCKl58FO+A6lY3eIfU1TNYyDuQlRk/3
-         RMSA==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=klX8Gu05uLxUPMLxAWhxmZEz4L07M9aHLS/sF2xndig=;
+        b=yTjTqElq2EUEZpj+6zF0Ez5GDHZQmtAeitEULYW+eK/kvyPLP/R7lfdLvJKg5hnU0Q
+         YVCeNOOUGT4Q1wvYTrBH2soGxJta4OywoBfksUcWWrLbWy1qBg9CNEq6Yuj/cFelyhPT
+         tx4znnDEfolU7YCiVncIveIEWIOrcqzY1STQ0n17mxpl1WLSBGfaL306exS3s7+I3mWF
+         kmrF4vypwcIBPv0LqrYAlqBcCNM8SviXr5hvhS0YG7vHKAdjmf53ADXVQXiZZtQk4P9A
+         z3bS7OrDR5tBBt+mdUUNSEKlEDI1ZOKUzmavgDyMVtjKbRABPPJpoMeE/d7Sy+VqFFTY
+         R2Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ij1y01yn3C78vrRH+kSZSIyMqD+0JyDpVdQ+2wk3B9c=;
-        b=B0OyrqSuklTvnay8j8pik3x9xkJQJ4Ffrj3Tc/0Do8TkTHnhdMS5pl1I0ZURgAY3bL
-         nto/S4nmmewSIStb4Llx6zG3Jnr6/71RQkzjKZ/nxxkEgUjnnZAc8ZYt2NfJ+2N7TpsH
-         5cgH63qzrcZVDxlHtPzGUKo+IpLQ6Yeuc7P25lnPS6FW/NlQitocPqcT0x9thpXS2QWr
-         2g5epHb9dKyWTKGlSttOETT+8Kdg5rixl7yTLb7VQzbAEucRjYzfb3fDza6czICuAUqn
-         v4PWXkI6phU/xdyaS/pUBzIK655pXzTpMnxb7p1WDsjmEc1a0KmXNUeIsXc4MuuCOFQ5
-         IiJA==
-X-Gm-Message-State: AO0yUKXE0In3RsWH4+K107IlzLWG/cSBomrvcNVU5n1X4pyK+fpeSMsa
-        9VHf7u8wwl/gvqZ1J8LkTtGqGg==
-X-Google-Smtp-Source: AK7set/H8VB5OT+If7vVAokqpNc4ciMCqSuPNxv+Fl5zFVgPpLeRWgsiqmatVGrAmjPVcYcIa0oPSw==
-X-Received: by 2002:a5d:56cd:0:b0:2c5:4c5c:fd08 with SMTP id m13-20020a5d56cd000000b002c54c5cfd08mr4170911wrw.37.1676141700629;
-        Sat, 11 Feb 2023 10:55:00 -0800 (PST)
-Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id y1-20020a5d6201000000b002c3ea5ebc73sm6532053wru.101.2023.02.11.10.54.59
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=klX8Gu05uLxUPMLxAWhxmZEz4L07M9aHLS/sF2xndig=;
+        b=6Gvk0enWc+yCamNYLVAdIPodTlq465O++lHKl6fUYeHnlgq17uV1xC6UQZj4bbRWit
+         4NMYKK4IaybMcVi0vgotust5POtZGT+bXrElOspXf6vM/tqx+z+Rs4E95HFm9hIvbrg2
+         1XGKfzNdT1HEUd/D7SPJ/5P0bLDkIi99IdF/9JA1R8lJu6gu4N8ikb4jokxOahmMQLBj
+         fSnGyxNxQ0dt+QTU10wnYVQa8adO2MblK/6eeoAIFNmRaA75P1xF5LiDdBLw1hWU11kD
+         4UcDY10CuudMM5EEHa1I80vSKDTBfGbaep/qbxNgBf+XPv8oCWGVDUx0rItdEBqdppI8
+         vkuQ==
+X-Gm-Message-State: AO0yUKU4yNeKR2gnspdlf+dkivECQYgvidmFHD/v1rxlnOhyforMwHZ0
+        vFZUPXu2DXePgRYMhIfhZw8b0g==
+X-Google-Smtp-Source: AK7set+Ur2ylNzOrSh351MIcPuUw7NVZcr6iYgGcFFvHSXOmHpQrHpwcRmJQOxgXRCsVwiAvNBOlbQ==
+X-Received: by 2002:a17:906:7097:b0:86f:5636:4712 with SMTP id b23-20020a170906709700b0086f56364712mr23478649ejk.7.1676157182224;
+        Sat, 11 Feb 2023 15:13:02 -0800 (PST)
+Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id k20-20020a1709061c1400b00871390a3b74sm4517149ejg.177.2023.02.11.15.13.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Feb 2023 10:55:00 -0800 (PST)
-Date:   Sat, 11 Feb 2023 20:54:58 +0200
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Sat, 11 Feb 2023 15:13:01 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8550-qrd: add QRD8550
-Message-ID: <Y+fkgvBIuYi+IXVV@linaro.org>
-References: <20230210163844.765074-1-krzysztof.kozlowski@linaro.org>
- <20230210163844.765074-2-krzysztof.kozlowski@linaro.org>
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v2 00/50] drm/msm/dpu: rework HW catalog
+Date:   Sun, 12 Feb 2023 01:12:09 +0200
+Message-Id: <20230211231259.1308718-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230210163844.765074-2-krzysztof.kozlowski@linaro.org>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23-02-10 17:38:44, Krzysztof Kozlowski wrote:
-> Add a minimal DTS for the new QRD8550 board - a mobile-like development
-> board with SM8550.  Serial, UFS and USB should be working.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+This huge series attempts to restructure the DPU HW catalog into a
+manageable and reviewable data set. In order to ease review and testing
+I merged all the necessary fixes into this series. Also I cherry-picked
+& slightly fixed Konrad's patch adding size to the SSPP and INTF macros.
 
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+First 12 patches are catalog fixes, which can be probably picked into
+the msm-fixes.
 
-> 
-> ---
-> 
-> UFS should be working the same as on MTP8550, but both fail on next and
-> patches from lists are needed (same as on MTP8550).
+Next 5 patches clean up the catalog a bit in order to make it more
+suitable for refactoring.
 
-I believe it should be working fine on next-20230210, since both the
-HC and the PHY drivers updates have been merged.
+Then the next batch of 13 + 5 patches split the hw catalog entries into
+per-SoC files.
 
-> ---
->  arch/arm64/boot/dts/qcom/Makefile       |   1 +
->  arch/arm64/boot/dts/qcom/sm8550-qrd.dts | 439 ++++++++++++++++++++++++
->  2 files changed, 440 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sm8550-qrd.dts
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 359e428e49b3..29d5bb0403de 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -197,3 +197,4 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8450-qrd.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm8450-sony-xperia-nagara-pdx223.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm8450-sony-xperia-nagara-pdx224.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-mtp.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-qrd.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
-> new file mode 100644
-> index 000000000000..d5a645ee2a61
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
-> @@ -0,0 +1,439 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2023 Linaro Limited
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> +#include "sm8550.dtsi"
-> +#include "pm8010.dtsi"
-> +#include "pm8550.dtsi"
-> +#include "pm8550b.dtsi"
-> +#include "pm8550ve.dtsi"
-> +#include "pm8550vs.dtsi"
-> +#include "pmk8550.dtsi"
-> +#include "pmr735d.dtsi"
-> +
-> +/ {
-> +	model = "Qualcomm Technologies, Inc. SM8550 QRD";
-> +	compatible = "qcom,sm8550-qrd", "qcom,sm8550";
-> +
-> +	aliases {
-> +		serial0 = &uart7;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = "serial0:115200n8";
-> +	};
-> +
-> +	vph_pwr: vph-pwr-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vph_pwr";
-> +		regulator-min-microvolt = <3700000>;
-> +		regulator-max-microvolt = <3700000>;
-> +
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +	};
-> +};
-> +
-> +&apps_rsc {
-> +	regulators-0 {
-> +		compatible = "qcom,pm8550-rpmh-regulators";
-> +		qcom,pmic-id = "b";
-> +
-> +		vdd-bob1-supply = <&vph_pwr>;
-> +		vdd-bob2-supply = <&vph_pwr>;
-> +		vdd-l1-l4-l10-supply = <&vreg_s6g_1p86>;
-> +		vdd-l2-l13-l14-supply = <&vreg_bob1>;
-> +		vdd-l3-supply = <&vreg_s4g_1p25>;
-> +		vdd-l5-l16-supply = <&vreg_bob1>;
-> +		vdd-l6-l7-supply = <&vreg_bob1>;
-> +		vdd-l8-l9-supply = <&vreg_bob1>;
-> +		vdd-l11-supply = <&vreg_s4g_1p25>;
-> +		vdd-l12-supply = <&vreg_s6g_1p86>;
-> +		vdd-l15-supply = <&vreg_s6g_1p86>;
-> +		vdd-l17-supply = <&vreg_bob2>;
-> +
-> +		vreg_bob1: bob1 {
-> +			regulator-name = "vreg_bob1";
-> +			regulator-min-microvolt = <3296000>;
-> +			regulator-max-microvolt = <3960000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_bob2: bob2 {
-> +			regulator-name = "vreg_bob2";
-> +			regulator-min-microvolt = <2720000>;
-> +			regulator-max-microvolt = <3960000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l1b_1p8: ldo1 {
-> +			regulator-name = "vreg_l1b_1p8";
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l2b_3p0: ldo2 {
-> +			regulator-name = "vreg_l2b_3p0";
-> +			regulator-min-microvolt = <3008000>;
-> +			regulator-max-microvolt = <3008000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l5b_3p1: ldo5 {
-> +			regulator-name = "vreg_l5b_3p1";
-> +			regulator-min-microvolt = <3104000>;
-> +			regulator-max-microvolt = <3104000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l6b_1p8: ldo6 {
-> +			regulator-name = "vreg_l6b_1p8";
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <3008000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l7b_1p8: ldo7 {
-> +			regulator-name = "vreg_l7b_1p8";
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <3008000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l8b_1p8: ldo8 {
-> +			regulator-name = "vreg_l8b_1p8";
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <3008000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l9b_2p9: ldo9 {
-> +			regulator-name = "vreg_l9b_2p9";
-> +			regulator-min-microvolt = <2960000>;
-> +			regulator-max-microvolt = <3008000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l11b_1p2: ldo11 {
-> +			regulator-name = "vreg_l11b_1p2";
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1504000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l12b_1p8: ldo12 {
-> +			regulator-name = "vreg_l12b_1p8";
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l13b_3p0: ldo13 {
-> +			regulator-name = "vreg_l13b_3p0";
-> +			regulator-min-microvolt = <3000000>;
-> +			regulator-max-microvolt = <3000000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l14b_3p2: ldo14 {
-> +			regulator-name = "vreg_l14b_3p2";
-> +			regulator-min-microvolt = <3200000>;
-> +			regulator-max-microvolt = <3200000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l15b_1p8: ldo15 {
-> +			regulator-name = "vreg_l15b_1p8";
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l16b_2p8: ldo16 {
-> +			regulator-name = "vreg_l16b_2p8";
-> +			regulator-min-microvolt = <2800000>;
-> +			regulator-max-microvolt = <2800000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l17b_2p5: ldo17 {
-> +			regulator-name = "vreg_l17b_2p5";
-> +			regulator-min-microvolt = <2504000>;
-> +			regulator-max-microvolt = <2504000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +	};
-> +
-> +	regulators-1 {
-> +		compatible = "qcom,pm8550vs-rpmh-regulators";
-> +		qcom,pmic-id = "c";
-> +
-> +		vdd-l1-supply = <&vreg_s4g_1p25>;
-> +		vdd-l2-supply = <&vreg_s4e_0p95>;
-> +		vdd-l3-supply = <&vreg_s4e_0p95>;
-> +
-> +		vreg_l3c_0p9: ldo3 {
-> +			regulator-name = "vreg_l3c_0p9";
-> +			regulator-min-microvolt = <880000>;
-> +			regulator-max-microvolt = <912000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +	};
-> +
-> +	regulators-2 {
-> +		compatible = "qcom,pm8550vs-rpmh-regulators";
-> +		qcom,pmic-id = "d";
-> +
-> +		vdd-l1-supply = <&vreg_s4e_0p95>;
-> +		vdd-l2-supply = <&vreg_s4e_0p95>;
-> +		vdd-l3-supply = <&vreg_s4e_0p95>;
-> +
-> +		vreg_l1d_0p88: ldo1 {
-> +			regulator-name = "vreg_l1d_0p88";
-> +			regulator-min-microvolt = <880000>;
-> +			regulator-max-microvolt = <920000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		/* ldo2 supplies SM8550 VDD_LPI_MX */
-> +	};
-> +
-> +	regulators-3 {
-> +		compatible = "qcom,pm8550vs-rpmh-regulators";
-> +		qcom,pmic-id = "e";
-> +
-> +		vdd-l1-supply = <&vreg_s4e_0p95>;
-> +		vdd-l2-supply = <&vreg_s4e_0p95>;
-> +		vdd-l3-supply = <&vreg_s4g_1p25>;
-> +		vdd-s4-supply = <&vph_pwr>;
-> +		vdd-s5-supply = <&vph_pwr>;
-> +
-> +		vreg_s4e_0p95: smps4 {
-> +			regulator-name = "vreg_s4e_0p95";
-> +			regulator-min-microvolt = <904000>;
-> +			regulator-max-microvolt = <984000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_s5e_1p08: smps5 {
-> +			regulator-name = "vreg_s5e_1p08";
-> +			regulator-min-microvolt = <1080000>;
-> +			regulator-max-microvolt = <1120000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l1e_0p88: ldo1 {
-> +			regulator-name = "vreg_l1e_0p88";
-> +			regulator-min-microvolt = <880000>;
-> +			regulator-max-microvolt = <880000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l2e_0p9: ldo2 {
-> +			regulator-name = "vreg_l2e_0p9";
-> +			regulator-min-microvolt = <904000>;
-> +			regulator-max-microvolt = <970000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l3e_1p2: ldo3 {
-> +			regulator-name = "vreg_l3e_1p2";
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1200000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +	};
-> +
-> +	regulators-4 {
-> +		compatible = "qcom,pm8550ve-rpmh-regulators";
-> +		qcom,pmic-id = "f";
-> +
-> +		vdd-l1-supply = <&vreg_s4e_0p95>;
-> +		vdd-l2-supply = <&vreg_s4e_0p95>;
-> +		vdd-l3-supply = <&vreg_s4e_0p95>;
-> +		vdd-s4-supply = <&vph_pwr>;
-> +
-> +		vreg_s4f_0p5: smps4 {
-> +			regulator-name = "vreg_s4f_0p5";
-> +			regulator-min-microvolt = <500000>;
-> +			regulator-max-microvolt = <700000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l1f_0p9: ldo1 {
-> +			regulator-name = "vreg_l1f_0p9";
-> +			regulator-min-microvolt = <912000>;
-> +			regulator-max-microvolt = <912000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l2f_0p88: ldo2 {
-> +			regulator-name = "vreg_l2f_0p88";
-> +			regulator-min-microvolt = <880000>;
-> +			regulator-max-microvolt = <912000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l3f_0p88: ldo3 {
-> +			regulator-name = "vreg_l3f_0p88";
-> +			regulator-min-microvolt = <880000>;
-> +			regulator-max-microvolt = <912000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +	};
-> +
-> +	regulators-5 {
-> +		compatible = "qcom,pm8550vs-rpmh-regulators";
-> +		qcom,pmic-id = "g";
-> +
-> +		vdd-l1-supply = <&vreg_s4g_1p25>;
-> +		vdd-l2-supply = <&vreg_s4g_1p25>;
-> +		vdd-l3-supply = <&vreg_s4g_1p25>;
-> +		vdd-s1-supply = <&vph_pwr>;
-> +		vdd-s2-supply = <&vph_pwr>;
-> +		vdd-s3-supply = <&vph_pwr>;
-> +		vdd-s4-supply = <&vph_pwr>;
-> +		vdd-s5-supply = <&vph_pwr>;
-> +		vdd-s6-supply = <&vph_pwr>;
-> +
-> +		vreg_s1g_1p25: smps1 {
-> +			regulator-name = "vreg_s1g_1p25";
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1300000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_s2g_0p85: smps2 {
-> +			regulator-name = "vreg_s2g_0p85";
-> +			regulator-min-microvolt = <800000>;
-> +			regulator-max-microvolt = <1000000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_s3g_0p8: smps3 {
-> +			regulator-name = "vreg_s3g_0p8";
-> +			regulator-min-microvolt = <300000>;
-> +			regulator-max-microvolt = <1004000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_s4g_1p25: smps4 {
-> +			regulator-name = "vreg_s4g_1p25";
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1352000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_s5g_0p85: smps5 {
-> +			regulator-name = "vreg_s5g_0p85";
-> +			regulator-min-microvolt = <500000>;
-> +			regulator-max-microvolt = <1004000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_s6g_1p86: smps6 {
-> +			regulator-name = "vreg_s6g_1p86";
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <2000000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l1g_1p2: ldo1 {
-> +			regulator-name = "vreg_l1g_1p2";
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1200000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l3g_1p2: ldo3 {
-> +			regulator-name = "vreg_l3g_1p2";
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1200000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +	};
-> +};
-> +
-> +&qupv3_id_0 {
-> +	status = "okay";
-> +};
-> +
-> +&remoteproc_adsp {
-> +	firmware-name = "qcom/sm8550/adsp.mbn",
-> +			"qcom/sm8550/adsp_dtb.mbn";
-> +	status = "okay";
-> +};
-> +
-> +&remoteproc_cdsp {
-> +	firmware-name = "qcom/sm8550/cdsp.mbn",
-> +			"qcom/sm8550/cdsp_dtb.mbn";
-> +	status = "okay";
-> +};
-> +
-> +&remoteproc_mpss {
-> +	firmware-name = "qcom/sm8550/modem.mbn",
-> +			"qcom/sm8550/modem_dtb.mbn";
-> +	status = "okay";
-> +};
-> +
-> +&sleep_clk {
-> +	clock-frequency = <32000>;
-> +};
-> +
-> +&tlmm {
-> +	gpio-reserved-ranges = <32 8>;
-> +};
-> +
-> +&uart7 {
-> +	status = "okay";
-> +};
-> +
-> +&ufs_mem_hc {
-> +	reset-gpios = <&tlmm 210 GPIO_ACTIVE_LOW>;
-> +	vcc-supply = <&vreg_l17b_2p5>;
-> +	vcc-max-microamp = <1300000>;
-> +	vccq-supply = <&vreg_l1g_1p2>;
-> +	vccq-max-microamp = <1200000>;
-> +	vccq2-supply = <&vreg_l3g_1p2>;
-> +	vccq2-max-microamp = <100>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&ufs_mem_phy {
-> +	vdda-phy-supply = <&vreg_l1d_0p88>;
-> +	vdda-pll-supply = <&vreg_l3e_1p2>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&usb_1 {
-> +	status = "okay";
-> +};
-> +
-> +&usb_1_dwc3 {
-> +	dr_mode = "peripheral";
-> +};
-> +
-> +&usb_1_hsphy {
-> +	vdd-supply = <&vreg_l1e_0p88>;
-> +	vdda12-supply = <&vreg_l3e_1p2>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&usb_dp_qmpphy {
-> +	vdda-phy-supply = <&vreg_l3e_1p2>;
-> +	vdda-pll-supply = <&vreg_l3f_0p88>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&xo_board {
-> +	clock-frequency = <76800000>;
-> +};
-> -- 
-> 2.34.1
-> 
+Next 8 patches rework catalog entries, mostly targeting QSEED cleanup
+and deduplication of data used by several platforms. At this moment only
+three pairs (out of 13 devices supported by DPU) are merged. However
+this part lays out the ground to ease adding support for new platforms,
+some of which use the same configuration as the existing platforms
+
+Last batch of 7 patches renames existing macros to ease using them while
+adding support for new devices.
+
+This pile of patches is submitted in a sinle batch to allow one to
+observe the final goal of the cleanup which otherwise might be hard to
+assess.
+
+Changes since v1:
+- Picked up Konrad's patch
+- Picked up dependencies into the main series
+- Moved qseed3lite vs qseed4 patches into the fixes part
+- Fixed sm6115 in a similar manner.
+
+Dmitry Baryshkov (49):
+  drm/msm/dpu: set DPU_MDP_PERIPH_0_REMOVED for sc8280xp
+  drm/msm/dpu: disable features unsupported by QCM2290
+  drm/msm/dpu: fix typo in in sm8550's dma_sblk_5
+  drm/msm/dpu: fix len of sc7180 ctl blocks
+  drm/msm/dpu: fix sm6115 and qcm2290 mixer width limits
+  drm/msm/dpu: correct sm8550 scaler
+  drm/msm/dpu: correct sc8280xp scaler
+  drm/msm/dpu: correct sm8450 scaler
+  drm/msm/dpu: correct sm8250 and sm8350 scaler
+  drm/msm/dpu: correct sm6115 scaler
+  drm/msm/dpu: drop DPU_DIM_LAYER from MIXER_MSM8998_MASK
+  drm/msm/dpu: fix clocks settings for msm8998 SSPP blocks
+  drm/msm/dpu: don't use DPU_CLK_CTRL_CURSORn for DMA SSPP clocks
+  drm/msm/dpu: constify DSC data structures
+  drm/msm/dpu: mark remaining pp data as const
+  drm/msm/dpu: move UBWC/memory configuration to separate struct
+  drm/msm/dpu: split SM8550 catalog entry to the separate file
+  drm/msm/dpu: split SM8450 catalog entry to the separate file
+  drm/msm/dpu: split SC8280XP catalog entry to the separate file
+  drm/msm/dpu: split SC7280 catalog entry to the separate file
+  drm/msm/dpu: split SM8350 catalog entry to the separate file
+  drm/msm/dpu: split SM6115 catalog entry to the separate file
+  drm/msm/dpu: split QCM2290 catalog entry to the separate file
+  drm/msm/dpu: split SC7180 catalog entry to the separate file
+  drm/msm/dpu: split SM8250 catalog entry to the separate file
+  drm/msm/dpu: split SC8180X catalog entry to the separate file
+  drm/msm/dpu: split SM8150 catalog entry to the separate file
+  drm/msm/dpu: split MSM8998 catalog entry to the separate file
+  drm/msm/dpu: split SDM845 catalog entry to the separate file
+  drm/msm/dpu: duplicate sdm845 catalog entries
+  drm/msm/dpu: duplicate sc7180 catalog entries
+  drm/msm/dpu: duplicate sm8150 catalog entries
+  drm/msm/dpu: duplicate sm8250 catalog entries
+  drm/msm/dpu: duplicate sm8350 catalog entries
+  drm/msm/dpu: use defined symbol for sc8280xp's maxwidth
+  drm/msm/dpu: enable DPU_CTL_SPLIT_DISPLAY for sc8280xp
+  drm/msm/dpu: enable DSPP_2/3 for LM_2/3 on sm8450
+  drm/msm/dpu: drop duplicate vig_sblk instances
+  drm/msm/dpu: enable DSPP on sc8180x
+  drm/msm/dpu: deduplicate sc8180x with sm8150
+  drm/msm/dpu: deduplicate sm6115 with qcm2290
+  drm/msm/dpu: deduplicate sc8280xp with sm8450
+  drm/msm/dpu: drop unused macros from hw catalog
+  drm/msm/dpu: inline IRQ_n_MASK defines
+  drm/msm/dpu: rename INTF_foo_MASK to contain major DPU version
+  drm/msm/dpu: rename CTL_foo_MASK to contain major DPU version
+  drm/msm/dpu: rename VIG and DMA_foo_MASK to contain major DPU version
+  drm/msm/dpu: rename MIXER_foo_MASK to contain major DPU version
+  drm/msm/dpu: rename MERGE_3D_foo_MASK to contain major DPU version
+
+Konrad Dybcio (1):
+  drm/msm/dpu: Allow variable SSPP/INTF_BLK size
+
+ .../msm/disp/dpu1/catalog/dpu_3_0_msm8998.h   |  211 ++
+ .../msm/disp/dpu1/catalog/dpu_4_0_sdm845.h    |  211 ++
+ .../msm/disp/dpu1/catalog/dpu_5_0_sm8150.h    |   97 +
+ .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   |   91 +
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_lm6.h |  152 ++
+ .../msm/disp/dpu1/catalog/dpu_6_0_sm8250.h    |  244 ++
+ .../msm/disp/dpu1/catalog/dpu_6_2_sc7180.h    |  152 ++
+ .../msm/disp/dpu1/catalog/dpu_6_3_sm6115.h    |   92 +
+ .../msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h   |   84 +
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_lm1.h |   54 +
+ .../msm/disp/dpu1/catalog/dpu_7_0_sm8350.h    |  226 ++
+ .../msm/disp/dpu1/catalog/dpu_7_2_sc7280.h    |  159 ++
+ .../msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h  |  117 +
+ .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    |  123 +
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_lm6.h |  118 +
+ .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    |  209 ++
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 2193 +----------------
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   39 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c    |    4 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c   |   18 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h   |    4 +-
+ 21 files changed, 2434 insertions(+), 2164 deletions(-)
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_lm6.h
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_lm1.h
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_lm6.h
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+
+-- 
+2.39.1
+
