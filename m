@@ -2,99 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BEBD7693288
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Feb 2023 17:40:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A3CB69328E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Feb 2023 17:44:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229485AbjBKQkT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 11 Feb 2023 11:40:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44060 "EHLO
+        id S229532AbjBKQop (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 11 Feb 2023 11:44:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229463AbjBKQkS (ORCPT
+        with ESMTP id S229479AbjBKQop (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 11 Feb 2023 11:40:18 -0500
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 504D52116;
-        Sat, 11 Feb 2023 08:40:17 -0800 (PST)
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-        id 270C31C0AB3; Sat, 11 Feb 2023 17:40:16 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ucw.cz; s=gen1;
-        t=1676133616;
+        Sat, 11 Feb 2023 11:44:45 -0500
+Received: from relay11.mail.gandi.net (relay11.mail.gandi.net [IPv6:2001:4b98:dc4:8::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED4AC1E1FA;
+        Sat, 11 Feb 2023 08:44:42 -0800 (PST)
+Received: (Authenticated sender: alexandre.belloni@bootlin.com)
+        by mail.gandi.net (Postfix) with ESMTPSA id 52B06100002;
+        Sat, 11 Feb 2023 16:44:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+        t=1676133881;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:content-type:content-type:
          in-reply-to:in-reply-to:references:references;
-        bh=3h0VX5bASt3ctXi2byYNb7ypoULGRSu0WCTdkOgs5uk=;
-        b=eXUhmpyCBHnZ2ZK6rh74BL1hESFgCe5Bca+vyIaoveiTyFI8Vrkz930LnxtFEXCkvYQTzP
-        Sq7j0w1nZWJdUzmKXl7KAMmO15CTbInQOplCIim0sGTrSa3bHMKvSzmLPbkCIt77Ze4yj1
-        rS3CY0Ks9RRntSDbq0VWmnJ2NmagZt0=
-Date:   Sat, 11 Feb 2023 17:40:14 +0100
-From:   Pavel Machek <pavel@ucw.cz>
-To:     Gergo Koteles <soyer@irl.hu>
-Cc:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Andy Gross <agross@kernel.org>,
+        bh=M+0DC+ETxm+24yPbZcgcwTKulTh6wEH0nAaak4Rv5+s=;
+        b=geR+dOxyvNCD8U3nIQqUf9YODnmp6BJmOOwyPFXZL6w260h+RbQ4kVyeKwoHc0XPzZT3h5
+        sYF48Ix3xTygNLn72UC/y8PPBm/1rhfyZw2l23g+2V4p5WVhh+/P5PDOwz+VrHyk4Wj2CK
+        sSWpdg2R6HEVyyKEIv1bDAhCXoDAEnLVpwm4oJE60ZTglsQoEsgObXLd5jAI7q/4YmZXT4
+        Lq4sXQ7sFn12X3pPtvU0sFdCi22q1X0OPO58+F33n3ntBvZscNEkGIBMk1RzVBKtVlMTcb
+        jsU+5uZ7w3RUmpsAzx8QZzc6pSenTAbHncuSwUallZ0C5ZuVwcJ+jqx6Vn7gWw==
+Date:   Sat, 11 Feb 2023 17:44:39 +0100
+From:   Alexandre Belloni <alexandre.belloni@bootlin.com>
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Alessandro Zummo <a.zummo@towertech.it>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jiri Kosina <jikos@kernel.org>,
-        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-        linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Caleb Connolly <caleb@connolly.tech>
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: sdm845-oneplus: add
- tri-state-key
-Message-ID: <Y+fE7gIMD4BDCffy@duo.ucw.cz>
-References: <20230209232556.91554-1-soyer@irl.hu>
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-rtc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v2 16/22] dt-bindings: rtc: qcom-pm8xxx: add nvmem-cell
+ offset
+Message-ID: <Y+fF94EOkUuMq9Fc@mail.local>
+References: <20230202155448.6715-1-johan+linaro@kernel.org>
+ <20230202155448.6715-17-johan+linaro@kernel.org>
+ <Y+bJqIpgZ0fbzL2b@mail.local>
+ <Y+dQXlABqc/uzIXc@hovoldconsulting.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-        protocol="application/pgp-signature"; boundary="QtnDXKWpFdENi7Om"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230209232556.91554-1-soyer@irl.hu>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <Y+dQXlABqc/uzIXc@hovoldconsulting.com>
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 11/02/2023 09:22:54+0100, Johan Hovold wrote:
+> On Fri, Feb 10, 2023 at 11:48:08PM +0100, Alexandre Belloni wrote:
+> > On 02/02/2023 16:54:42+0100, Johan Hovold wrote:
+> > > On many Qualcomm platforms the PMIC RTC control and time registers are
+> > > read-only so that the RTC time can not be updated. Instead an offset
+> > > needs be stored in some machine-specific non-volatile memory, which a
+> > > driver can take into account.
+> > > 
+> > > Add an 'offset' nvmem cell which can be used to store a 32-bit offset
+> > > from the Unix epoch so that the RTC time can be updated on such
+> > > platforms.
+> > > 
+> > > Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> > > ---
+> > >  .../devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml     | 12 ++++++++++++
+> > >  1 file changed, 12 insertions(+)
+> > > 
+> > > diff --git a/Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml b/Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
+> > > index 21c8ea08ff0a..b95a69cc9ae0 100644
+> > > --- a/Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
+> > > +++ b/Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
+> > > @@ -40,6 +40,16 @@ properties:
+> > >      description:
+> > >        Indicates that the setting of RTC time is allowed by the host CPU.
+> > >  
+> > > +  nvmem-cells:
+> > > +    items:
+> > > +      - description:
+> > > +          four-byte nvmem cell holding a little-endian offset from the Unix
+> > > +          epoch representing the time when the RTC timer was last reset
+> > > +
+> > > +  nvmem-cell-names:
+> > > +    items:
+> > > +      - const: offset
+> > > +
+> > >    wakeup-source: true
+> > 
+> > The patch doesn't apply because this part of the context is not
+> > upstream. Can you rebase?
+> 
+> Ah, sorry about that. That's because of commit 51b3802e7960
+> ("dt-bindings: rtc: qcom-pm8xxx: allow 'wakeup-source' property") which
+> is now in Linus's tree (and your rtc-fixes branch).
+> 
+> Do you still want me to rebase or do you prefer to handle the conflict
+> some other way?
 
---QtnDXKWpFdENi7Om
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Ah yes, my bad, I'll merge rtc-fixes in rtc-next before applying
 
-Hi!
 
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-> @@ -52,6 +52,43 @@ key-vol-up {
->  		};
->  	};
-> =20
-> +	tri-state-key {
-> +		compatible =3D "gpio-keys";
-> +		label =3D "Tri-state key";
-> +		pinctrl-names =3D "default";
-> +		pinctrl-0 =3D <&tri_state_key_default>;
-> +		state-top {
-> +			label =3D "Tri-state key top";
-
-"top/middle" is not too useful. Do we need the label at all? If so,
-should it say "loud/vibrations only/mute"?
-
-BR,
-								Pavel
---=20
-People of Russia, stop Putin before his war on Ukraine escalates.
-
---QtnDXKWpFdENi7Om
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCY+fE7gAKCRAw5/Bqldv6
-8qazAJ4tTbEaN/jTDm/HvuDKLvkjqEsbigCgjyR3Jf17uJg1F3quUSWtJIkQgV0=
-=mHMW
------END PGP SIGNATURE-----
-
---QtnDXKWpFdENi7Om--
+-- 
+Alexandre Belloni, co-owner and COO, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
