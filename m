@@ -2,165 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A7BF692F48
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Feb 2023 08:53:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AB283692F58
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Feb 2023 09:22:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229523AbjBKHx2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 11 Feb 2023 02:53:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50246 "EHLO
+        id S229655AbjBKIWP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 11 Feb 2023 03:22:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229588AbjBKHx1 (ORCPT
+        with ESMTP id S229455AbjBKIWP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 11 Feb 2023 02:53:27 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC62E900A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 23:53:24 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id bk16so7314936wrb.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Feb 2023 23:53:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=JdyJlJsLe7UYj3HkIh5IqELvu3xeVrpcZYgePszZnTM=;
-        b=GLB3/AzmYk9r6d1M8HG+Xa6zUYiLBVeTfksz30BKXtFLjMOZAJt3SBE6RyR0tbn5MS
-         DD4H3wi9V/SDQuDV3tGPPSl8qpypTSQsfCfK9egDFUGuj9TX5Bg/7M3aEj2dHPApTycE
-         iVMMPBpYzZd0VtnU+lA9CnOYU9IA+UskmGMUMP/allk6UxbMwLl0hBxkiWxnQmmDhNk0
-         Bz8WSmwAI5ueU77V8JEpyzEs5FhACjZuwfsvwtP+cMXV+L1AwI+vifHHRly2zvJG0jsk
-         5IC2zBZPyhqDHEfyrpQvPJ1em2+wFTVJbqpatXgKrf7ezzHV/rk2Pm3qw34jJSH51cPz
-         XCmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JdyJlJsLe7UYj3HkIh5IqELvu3xeVrpcZYgePszZnTM=;
-        b=fna7+DOA8Iin6SsCgvpJBOZRE3FGDdbrTIF2ACAyvy0TZsbhBs1zs4YXeJDpJenmdx
-         Lli/wnJdOy4eQzgh8FLd/1675fX1eoSxR78ZaexsHpug+J9kmjK748xMc2srDhom/2JZ
-         0R1fPruFWk75FqQz28HViypBRhL08KRYUUGdhBq9s+edjYfLhV/bNCWgkuyK9XJApH0f
-         KbFgNStmRcw7x5mvOWImkgDoRf/OvuHf1QnV4EaUCgAoqdePUyfNtaXdHpCf5g84MCa6
-         AHxMfSYVHG+mTaRO1OVSAs2AGBnf6YI231cAoE3RHYg3LS7zEi7bvNDyDnalN5eQul1b
-         CRDA==
-X-Gm-Message-State: AO0yUKWI/lYqltn3VtLzGx+gYoFQXR3H62NIzLO074StCql09uFqUQyR
-        tBv8o55aiAEnfCqXLPz3mjweyA==
-X-Google-Smtp-Source: AK7set8ejeEopWyNZYhHew3TugHJmthNV0eduJzyC9rqBpPCVupmvHmzId1Mb4lViYTHg0iv3ePIXA==
-X-Received: by 2002:a05:6000:8:b0:2bf:b5e4:cd63 with SMTP id h8-20020a056000000800b002bfb5e4cd63mr15123447wrx.8.1676102003159;
-        Fri, 10 Feb 2023 23:53:23 -0800 (PST)
-Received: from [192.168.10.46] (146725694.box.freepro.com. [130.180.211.218])
-        by smtp.googlemail.com with ESMTPSA id q4-20020a05600000c400b002c54737e908sm3787502wrx.91.2023.02.10.23.53.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Feb 2023 23:53:22 -0800 (PST)
-Message-ID: <9a121d43-b6d9-fe99-1e4c-498dac2e6b17@linaro.org>
-Date:   Sat, 11 Feb 2023 08:53:19 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH] thermal: Remove core header inclusion from drivers
-Content-Language: en-US
-To:     Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
-Cc:     rafael.j.wysocki@intel.com, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Guillaume La Roque <glaroque@baylibre.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Andy Gross <agross@kernel.org>,
+        Sat, 11 Feb 2023 03:22:15 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B6EA32CEE;
+        Sat, 11 Feb 2023 00:22:12 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 3728CB826F4;
+        Sat, 11 Feb 2023 08:22:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1353C433EF;
+        Sat, 11 Feb 2023 08:22:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1676103730;
+        bh=VjfrVywhWVOc5qMWdRaXTWEa/MMiNLZ2RP3B/Cr/ZZ8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=fY5aqVl7vQVZVnOp8lIDN6/ocu+bSewgkrQ1/o8JvR+ABBIE4ATjlGRbOppoqfe2m
+         uNIam/wqV7edBftZniiRcpOwAziS3EW0z1Vy63mgrq9UIT59efM+eFHQlyTN1SDbO7
+         v7tCd/aFQbOMdIIp/r0H/u3MzTgKfarQ9g/MsxoFj1VK90uXVRz5f2gUjK9Uma6CIr
+         AjsAtPXMP3hAJbGS6rlT76QWLp1uYuImishE2ChQ9MCzY70ZpdJYhT5/kmYgoqR9Pq
+         g+TgK1+mgIjch+xX+nyEQYJJrluWG/zMVYANVdOBEq5T91MKpszKlnoM/h0RHVPm2w
+         WeBO0sYvHhDLA==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pQl9q-0007GT-3R; Sat, 11 Feb 2023 09:22:54 +0100
+Date:   Sat, 11 Feb 2023 09:22:54 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Alexandre Belloni <alexandre.belloni@bootlin.com>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        =?UTF-8?Q?Niklas_S=c3=b6derlund?= <niklas.soderlund@ragnatech.se>,
-        Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        ye xingchen <ye.xingchen@zte.com.cn>,
-        Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-        Haowen Bai <baihaowen@meizu.com>,
-        Minghao Chi <chi.minghao@zte.com.cn>,
-        "open list:THERMAL DRIVER FOR AMLOGIC SOCS" 
-        <linux-amlogic@lists.infradead.org>,
-        "moderated list:BROADCOM BCM2711/BCM2835 ARM ARCHITECTURE" 
-        <linux-rpi-kernel@lists.infradead.org>,
-        "moderated list:BROADCOM BCM2711/BCM2835 ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        "open list:RENESAS R-CAR THERMAL DRIVERS" 
-        <linux-renesas-soc@vger.kernel.org>,
-        "open list:SAMSUNG THERMAL DRIVER" 
-        <linux-samsung-soc@vger.kernel.org>,
-        "moderated list:ARM/STM32 ARCHITECTURE" 
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        "open list:TEGRA ARCHITECTURE SUPPORT" <linux-tegra@vger.kernel.org>
-References: <20230206153432.1017282-1-daniel.lezcano@linaro.org>
- <20230211021023.GA13306@ranerica-svr.sc.intel.com>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-In-Reply-To: <20230211021023.GA13306@ranerica-svr.sc.intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Alessandro Zummo <a.zummo@towertech.it>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-rtc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v2 16/22] dt-bindings: rtc: qcom-pm8xxx: add nvmem-cell
+ offset
+Message-ID: <Y+dQXlABqc/uzIXc@hovoldconsulting.com>
+References: <20230202155448.6715-1-johan+linaro@kernel.org>
+ <20230202155448.6715-17-johan+linaro@kernel.org>
+ <Y+bJqIpgZ0fbzL2b@mail.local>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y+bJqIpgZ0fbzL2b@mail.local>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/02/2023 03:10, Ricardo Neri wrote:
-> On Mon, Feb 06, 2023 at 04:34:29PM +0100, Daniel Lezcano wrote:
->> As the name states "thermal_core.h" is the header file for the core
->> components of the thermal framework.
->>
->> Too many drivers are including it. Hopefully the recent cleanups
->> helped to self encapsulate the code a bit more and prevented the
->> drivers to need this header.
->>
->> Remove this inclusion in every place where it is possible.
->>
->> Some other drivers did a confusion with the core header and the one
->> exported in linux/thermal.h. They include the former instead of the
->> latter. The changes also fix this.
->>
->> The tegra/soctherm driver still remains as it uses an internal
->> function which need to be replaced.
->>
->> The Intel HFI driver uses the netlink internal framework core and
->> should be changed to prevent to deal with the internals.
+On Fri, Feb 10, 2023 at 11:48:08PM +0100, Alexandre Belloni wrote:
+> On 02/02/2023 16:54:42+0100, Johan Hovold wrote:
+> > On many Qualcomm platforms the PMIC RTC control and time registers are
+> > read-only so that the RTC time can not be updated. Instead an offset
+> > needs be stored in some machine-specific non-volatile memory, which a
+> > driver can take into account.
+> > 
+> > Add an 'offset' nvmem cell which can be used to store a 32-bit offset
+> > from the Unix epoch so that the RTC time can be updated on such
+> > platforms.
+> > 
+> > Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> > ---
+> >  .../devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml     | 12 ++++++++++++
+> >  1 file changed, 12 insertions(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml b/Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
+> > index 21c8ea08ff0a..b95a69cc9ae0 100644
+> > --- a/Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
+> > +++ b/Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
+> > @@ -40,6 +40,16 @@ properties:
+> >      description:
+> >        Indicates that the setting of RTC time is allowed by the host CPU.
+> >  
+> > +  nvmem-cells:
+> > +    items:
+> > +      - description:
+> > +          four-byte nvmem cell holding a little-endian offset from the Unix
+> > +          epoch representing the time when the RTC timer was last reset
+> > +
+> > +  nvmem-cell-names:
+> > +    items:
+> > +      - const: offset
+> > +
+> >    wakeup-source: true
 > 
-> I don't see any of the thermal netlink functionality exposed. Is
-> there any work in progress?
+> The patch doesn't apply because this part of the context is not
+> upstream. Can you rebase?
 
-commit bd30cdfd9bd73b68e4977ce7c5540aa7b14c25cd
-Author: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Ah, sorry about that. That's because of commit 51b3802e7960
+("dt-bindings: rtc: qcom-pm8xxx: allow 'wakeup-source' property") which
+is now in Linus's tree (and your rtc-fixes branch).
 
-     thermal: intel: hfi: Notify user space for HFI events
+Do you still want me to rebase or do you prefer to handle the conflict
+some other way?
 
-
-> FWIW, Acked-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
-
-Thanks!
-
--- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
-
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
-
+Johan
