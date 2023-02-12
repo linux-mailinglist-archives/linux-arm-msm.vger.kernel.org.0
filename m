@@ -2,124 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AAA3C6937B3
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Feb 2023 15:12:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 76C0E693850
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Feb 2023 17:11:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229627AbjBLOMD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 12 Feb 2023 09:12:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41386 "EHLO
+        id S229503AbjBLQLY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 12 Feb 2023 11:11:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229496AbjBLOMC (ORCPT
+        with ESMTP id S229477AbjBLQLX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 12 Feb 2023 09:12:02 -0500
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 056B6F77D;
-        Sun, 12 Feb 2023 06:12:02 -0800 (PST)
-Received: from [192.168.178.23] (unknown [62.108.10.64])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 3BA1DD38CF;
-        Sun, 12 Feb 2023 14:11:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1676211090; bh=qFK6KiGkL2Ya37v4r7g08gVdvQ3WQ3Zqy1iFF42jPdE=;
-        h=From:Date:Subject:References:In-Reply-To:To:Cc;
-        b=HC5VzDU/7oVhktaUl5K/8a0J1ijbpNVD36QUZjlqGNHwGD5jKpZujIwxf1Bm3V+Xu
-         GsF/PYnLzj0JrFvC4NC6wGuSi60h48B5/brIGiOhitoBxifK911M4jgenPxFp/jabf
-         t+mcd1cC4pC0WiAL9t5FyqGwG3YzGAFprjPoCMe4=
-From:   Luca Weiss <luca@z3ntu.xyz>
-Date:   Sun, 12 Feb 2023 15:11:09 +0100
-Subject: [PATCH 2/2] clk: qcom: clk-hfpll: switch to .determine_rate
+        Sun, 12 Feb 2023 11:11:23 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C92DE057;
+        Sun, 12 Feb 2023 08:11:21 -0800 (PST)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31CFuDg2013216;
+        Sun, 12 Feb 2023 16:11:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=kNfy5wQpkTtMURp5286Q1lemGeJhipGcema3XxTJtTM=;
+ b=SdTH73ESKze4zGF28B1YpZVicy6PJ3NIgPySNZmz8rourvujkOzBpRuIJAj9WMtEkLcf
+ ZmSlCbKFHmU1U4y/NlpME/HXzDHnXHDTZ8M0qfr9LIumpRJYx+77fIIbZU0rWd+jP2S9
+ KnqebHl9N/cwKvpQapbA2XPCCdjBjQJLW2n140D/mSZ10pQRcL/UsnYLfVSgEV3xIB5J
+ Ynovg5mRcG6YHcNp8uv5qodOcUc3hrvW8vHcmF+d9R0cF1Ni7di92LhPqyG6HAla+NrA
+ tuIfNvzvD8CAJsbjuSdY4YnUejyvKZBt1xsMCYe7FMF8PSchBHD+53tPgfVNEQOSs6uZ 4w== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3np21ftc9w-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 12 Feb 2023 16:11:11 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31CGBA0e017390
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 12 Feb 2023 16:11:10 GMT
+Received: from [10.216.50.155] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Sun, 12 Feb
+ 2023 08:11:07 -0800
+Message-ID: <73474906-8376-9328-16c2-370a87477c6a@quicinc.com>
+Date:   Sun, 12 Feb 2023 21:41:04 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH] remoteproc: qcom: fix sparse warnings
+Content-Language: en-US
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <mathieu.poirier@linaro.org>, <konrad.dybcio@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <1675180866-16695-1-git-send-email-quic_mojha@quicinc.com>
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <1675180866-16695-1-git-send-email-quic_mojha@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230212-clk-qcom-determine_rate-v1-2-b4e447d4926e@z3ntu.xyz>
-References: <20230212-clk-qcom-determine_rate-v1-0-b4e447d4926e@z3ntu.xyz>
-In-Reply-To: <20230212-clk-qcom-determine_rate-v1-0-b4e447d4926e@z3ntu.xyz>
-To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Christian Marangi <ansuelsmth@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Luca Weiss <luca@z3ntu.xyz>
-X-Mailer: b4 0.12.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1899; i=luca@z3ntu.xyz;
- h=from:subject:message-id; bh=qFK6KiGkL2Ya37v4r7g08gVdvQ3WQ3Zqy1iFF42jPdE=;
- b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBj6POQHw2eHpO2tucbsPLIsE0wWtIoMbeD9jIxo
- SytZgYbKcOJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCY+jzkAAKCRBy2EO4nU3X
- Vi4rD/9aHBRishQyFuZrmzfeCFOYgln9UKcBbsJrygK4Vbwnqb4xslopUl9KlyBR58kEWbD0Xc/
- RKvsoc9Szll8iLmYrEvsiJsLTiDHwqQFXjvyq54Sawq7W40gTPKeI4ziM0SPr5TBrDpEVT+1aDj
- FMbOXk0KpnkFdCcnxvmz6kYx/Q47Afqnd73nwJsIqd64CEZhPtSzKbIXOuOgkRZiY8BzCsYSHA4
- hmguo8kbjK86zg3qia6SEPKX0QnwuV+fL1LCLhk2RORfA0zA0BU2h8xkJt0JVRYTvw5xOscoOES
- Xniy6uLAWFETt9e5kr5npADuAJYGjYWHcc22nc9a0To5vR+EnqwR9ipLW8TCC3ol0V5H1ueyWyX
- 7itGwlOR9WKAJgwAKvlUUHZN4hu1+XMkDu53gFPXl0zJLUcr4mt9Zz7iEouhqykV+lK347Y0gFZ
- +Zm83dRyrn6PmHg2pMgJP/eusBBOwWeREVPz3qurX2QRXcMKS1Fpr7KDWACeTa8xX1H/CVD9AVq
- c9ALLqnTW5SyUfPNuuc8bKFYWQPGxfteAAgEmfFmFyapK4Av+UNO8r7IJiT3YCOCsgrK2LUA1Hw
- s2WIT5czzWQqvIzHbtWyqNuA3g5YBEnxoUW8vOdQkkshCVUfPyfaS8szTNerLFtAzt6Xbv9+A2I
- c05/x4oM7rXP0Nw==
-X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
- fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
-X-Spam-Status: No, score=-0.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLACK autolearn=no autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: WQXkNJfG5GrisyZVmNMJZfMHAJahg4WG
+X-Proofpoint-ORIG-GUID: WQXkNJfG5GrisyZVmNMJZfMHAJahg4WG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-12_06,2023-02-09_03,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 phishscore=0
+ priorityscore=1501 bulkscore=0 impostorscore=0 malwarescore=0 mlxscore=0
+ adultscore=0 spamscore=0 mlxlogscore=831 lowpriorityscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2302120145
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-.determine_rate is meant to replace .round_rate. The former comes with a
-benefit which is especially relevant on 32-bit systems: since
-.determine_rate uses an "unsigned long" (compared to a "signed long"
-which is used by .round_rate) the maximum value on 32-bit systems
-increases from 2^31 (or approx. 2.14GHz) to 2^32 (or approx. 4.29GHz).
+Friendly reminder.
 
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
----
- drivers/clk/qcom/clk-hfpll.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+-Mukesh
 
-diff --git a/drivers/clk/qcom/clk-hfpll.c b/drivers/clk/qcom/clk-hfpll.c
-index 7dd17c184b69..86f728dc69e5 100644
---- a/drivers/clk/qcom/clk-hfpll.c
-+++ b/drivers/clk/qcom/clk-hfpll.c
-@@ -128,20 +128,20 @@ static void clk_hfpll_disable(struct clk_hw *hw)
- 	spin_unlock_irqrestore(&h->lock, flags);
- }
- 
--static long clk_hfpll_round_rate(struct clk_hw *hw, unsigned long rate,
--				 unsigned long *parent_rate)
-+static int clk_hfpll_determine_rate(struct clk_hw *hw, struct clk_rate_request *req)
- {
- 	struct clk_hfpll *h = to_clk_hfpll(hw);
- 	struct hfpll_data const *hd = h->d;
- 	unsigned long rrate;
- 
--	rate = clamp(rate, hd->min_rate, hd->max_rate);
-+	req->rate = clamp(req->rate, hd->min_rate, hd->max_rate);
- 
--	rrate = DIV_ROUND_UP(rate, *parent_rate) * *parent_rate;
-+	rrate = DIV_ROUND_UP(req->rate, req->best_parent_rate) * req->best_parent_rate;
- 	if (rrate > hd->max_rate)
--		rrate -= *parent_rate;
-+		rrate -= req->best_parent_rate;
- 
--	return rrate;
-+	req->rate = rrate;
-+	return 0;
- }
- 
- /*
-@@ -241,7 +241,7 @@ const struct clk_ops clk_ops_hfpll = {
- 	.enable = clk_hfpll_enable,
- 	.disable = clk_hfpll_disable,
- 	.is_enabled = hfpll_is_enabled,
--	.round_rate = clk_hfpll_round_rate,
-+	.determine_rate = clk_hfpll_determine_rate,
- 	.set_rate = clk_hfpll_set_rate,
- 	.recalc_rate = clk_hfpll_recalc_rate,
- 	.init = clk_hfpll_init,
-
--- 
-2.39.1
-
+On 1/31/2023 9:31 PM, Mukesh Ojha wrote:
+> This patch try to address below sparse warnings.
+> 
+> drivers/remoteproc/qcom_common.c:126:27: warning: restricted __le32 degrades to integer
+> drivers/remoteproc/qcom_common.c:133:32: warning: cast to restricted __le32
+> drivers/remoteproc/qcom_common.c:133:32: warning: cast from restricted __le64
+> 
+> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+> ---
+>   drivers/remoteproc/qcom_common.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
+> index 020349f..7133c1f 100644
+> --- a/drivers/remoteproc/qcom_common.c
+> +++ b/drivers/remoteproc/qcom_common.c
+> @@ -123,14 +123,14 @@ static int qcom_add_minidump_segments(struct rproc *rproc, struct minidump_subsy
+>   
+>   	for (i = 0; i < seg_cnt; i++) {
+>   		memcpy_fromio(&region, ptr + i, sizeof(region));
+> -		if (region.valid == MD_REGION_VALID) {
+> +		if (le32_to_cpu(region.valid) == MD_REGION_VALID) {
+>   			name = kstrdup(region.name, GFP_KERNEL);
+>   			if (!name) {
+>   				iounmap(ptr);
+>   				return -ENOMEM;
+>   			}
+>   			da = le64_to_cpu(region.address);
+> -			size = le32_to_cpu(region.size);
+> +			size = le64_to_cpu(region.size);
+>   			rproc_coredump_add_custom_segment(rproc, da, size, NULL, name);
+>   		}
+>   	}
