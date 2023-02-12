@@ -2,117 +2,195 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 76C0E693850
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Feb 2023 17:11:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C6344693885
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Feb 2023 17:29:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229503AbjBLQLY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 12 Feb 2023 11:11:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33794 "EHLO
+        id S229625AbjBLQ3U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 12 Feb 2023 11:29:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229477AbjBLQLX (ORCPT
+        with ESMTP id S229496AbjBLQ3U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 12 Feb 2023 11:11:23 -0500
+        Sun, 12 Feb 2023 11:29:20 -0500
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C92DE057;
-        Sun, 12 Feb 2023 08:11:21 -0800 (PST)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31CFuDg2013216;
-        Sun, 12 Feb 2023 16:11:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=kNfy5wQpkTtMURp5286Q1lemGeJhipGcema3XxTJtTM=;
- b=SdTH73ESKze4zGF28B1YpZVicy6PJ3NIgPySNZmz8rourvujkOzBpRuIJAj9WMtEkLcf
- ZmSlCbKFHmU1U4y/NlpME/HXzDHnXHDTZ8M0qfr9LIumpRJYx+77fIIbZU0rWd+jP2S9
- KnqebHl9N/cwKvpQapbA2XPCCdjBjQJLW2n140D/mSZ10pQRcL/UsnYLfVSgEV3xIB5J
- Ynovg5mRcG6YHcNp8uv5qodOcUc3hrvW8vHcmF+d9R0cF1Ni7di92LhPqyG6HAla+NrA
- tuIfNvzvD8CAJsbjuSdY4YnUejyvKZBt1xsMCYe7FMF8PSchBHD+53tPgfVNEQOSs6uZ 4w== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3np21ftc9w-1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B423128;
+        Sun, 12 Feb 2023 08:29:19 -0800 (PST)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31CGS6Q5017504;
+        Sun, 12 Feb 2023 16:29:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=YtvVyCXvhC7flf4SlPrjETNk1bKCbrtbdP+fhKLzN8I=;
+ b=X8hFsZfBpc1R+Ezsk2jFKmmvG1HkP6cTyF4vc4vpr1iNo5WLCp42YJEeG97dsrm0hqYW
+ GTXgZ51AdA6zfAcBcmORXBn7d0wWBOcTvMcc4SkOu2xHwZrVp8WPwukf8mKDdJqfWpBR
+ QwSW08nZ9bLzOJVRZE3lcj+4VjRb/jDE77QdCJ3GiDWLqiKLhQiQhUwqJ2xx4667EWGp
+ p8R33qqiEGEeu3kMYbJK577W/xVEFWGQX0Ybfk/ePxBuWPcmWxwRIGRbHipMn/grXRez
+ Ob9p6w/Y9DL6Q4v0Fp4f5+ilFsnd9LlhX83E5sg7pdNaSiuNcjYQgiP6f1Bdvw/9VLzl +A== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3np3deta85-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sun, 12 Feb 2023 16:11:11 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31CGBA0e017390
+        Sun, 12 Feb 2023 16:29:15 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31CGTEcp009665
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sun, 12 Feb 2023 16:11:10 GMT
-Received: from [10.216.50.155] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Sun, 12 Feb
- 2023 08:11:07 -0800
-Message-ID: <73474906-8376-9328-16c2-370a87477c6a@quicinc.com>
-Date:   Sun, 12 Feb 2023 21:41:04 +0530
+        Sun, 12 Feb 2023 16:29:14 GMT
+Received: from vpolimer-linux.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Sun, 12 Feb 2023 08:29:09 -0800
+From:   Vinod Polimera <quic_vpolimer@quicinc.com>
+To:     <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>
+CC:     Vinod Polimera <quic_vpolimer@quicinc.com>,
+        <linux-kernel@vger.kernel.org>, <robdclark@gmail.com>,
+        <dianders@chromium.org>, <swboyd@chromium.org>,
+        <quic_kalyant@quicinc.com>, <dmitry.baryshkov@linaro.org>,
+        <quic_khsieh@quicinc.com>, <quic_vproddut@quicinc.com>,
+        <quic_bjorande@quicinc.com>, <quic_abhinavk@quicinc.com>,
+        <quic_sbillaka@quicinc.com>
+Subject: [PATCH v13 00/13] Add PSR support for eDP
+Date:   Sun, 12 Feb 2023 21:58:44 +0530
+Message-ID: <1676219337-6526-1-git-send-email-quic_vpolimer@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH] remoteproc: qcom: fix sparse warnings
-Content-Language: en-US
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <mathieu.poirier@linaro.org>, <konrad.dybcio@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <1675180866-16695-1-git-send-email-quic_mojha@quicinc.com>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <1675180866-16695-1-git-send-email-quic_mojha@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: WQXkNJfG5GrisyZVmNMJZfMHAJahg4WG
-X-Proofpoint-ORIG-GUID: WQXkNJfG5GrisyZVmNMJZfMHAJahg4WG
+X-Proofpoint-GUID: tFfzbGH6l2P04HGznyeyOsU8TPx7ZX7U
+X-Proofpoint-ORIG-GUID: tFfzbGH6l2P04HGznyeyOsU8TPx7ZX7U
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
  definitions=2023-02-12_06,2023-02-09_03,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 phishscore=0
- priorityscore=1501 bulkscore=0 impostorscore=0 malwarescore=0 mlxscore=0
- adultscore=0 spamscore=0 mlxlogscore=831 lowpriorityscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2302120145
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxscore=0
+ clxscore=1015 adultscore=0 mlxlogscore=999 malwarescore=0 phishscore=0
+ lowpriorityscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302120147
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Friendly reminder.
+Changes in v2:
+  - Use dp bridge to set psr entry/exit instead of dpu_enocder.
+  - Don't modify whitespaces.
+  - Set self refresh aware from atomic_check.
+  - Set self refresh aware only if psr is supported.
+  - Provide a stub for msm_dp_display_set_psr.
+  - Move dp functions to bridge code.
 
--Mukesh
+Changes in v3:
+  - Change callback names to reflect atomic interfaces.
+  - Move bridge callback change to separate patch as suggested by Dmitry.
+  - Remove psr function declaration from msm_drv.h.
+  - Set self_refresh_aware flag only if psr is supported.
+  - Modify the variable names to simpler form.
+  - Define bit fields for PSR settings.
+  - Add comments explaining the steps to enter/exit psr.
+  - Change DRM_INFO to drm_dbg_db. 
 
-On 1/31/2023 9:31 PM, Mukesh Ojha wrote:
-> This patch try to address below sparse warnings.
-> 
-> drivers/remoteproc/qcom_common.c:126:27: warning: restricted __le32 degrades to integer
-> drivers/remoteproc/qcom_common.c:133:32: warning: cast to restricted __le32
-> drivers/remoteproc/qcom_common.c:133:32: warning: cast from restricted __le64
-> 
-> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-> ---
->   drivers/remoteproc/qcom_common.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
-> index 020349f..7133c1f 100644
-> --- a/drivers/remoteproc/qcom_common.c
-> +++ b/drivers/remoteproc/qcom_common.c
-> @@ -123,14 +123,14 @@ static int qcom_add_minidump_segments(struct rproc *rproc, struct minidump_subsy
->   
->   	for (i = 0; i < seg_cnt; i++) {
->   		memcpy_fromio(&region, ptr + i, sizeof(region));
-> -		if (region.valid == MD_REGION_VALID) {
-> +		if (le32_to_cpu(region.valid) == MD_REGION_VALID) {
->   			name = kstrdup(region.name, GFP_KERNEL);
->   			if (!name) {
->   				iounmap(ptr);
->   				return -ENOMEM;
->   			}
->   			da = le64_to_cpu(region.address);
-> -			size = le32_to_cpu(region.size);
-> +			size = le64_to_cpu(region.size);
->   			rproc_coredump_add_custom_segment(rproc, da, size, NULL, name);
->   		}
->   	}
+Changes in v4:
+  - Move the get crtc functions to drm_atomic.
+  - Add atomic functions for DP bridge too.
+  - Add ternary operator to choose eDP or DP ops.
+  - Return true/false instead of 1/0.
+  - mode_valid missing in the eDP bridge ops.
+  - Move the functions to get crtc into drm_atomic.c.
+  - Fix compilation issues.
+  - Remove dpu_assign_crtc and get crtc from drm_enc instead of dpu_enc.
+  - Check for crtc state enable while reserving resources.
+
+Changes in v5:
+  - Move the mode_valid changes into a different patch.
+  - Complete psr_op_comp only when isr is set.
+  - Move the DP atomic callback changes to a different patch.
+  - Get crtc from drm connector state crtc.
+  - Move to separate patch for check for crtc state enable while
+reserving resources.
+
+Changes in v6:
+  - Remove crtc from dpu_encoder_virt struct.
+  - fix crtc check during vblank toggle crtc.
+  - Misc changes. 
+
+Changes in v7:
+  - Add fix for underrun issue on kasan build.
+
+Changes in v8:
+  - Drop the enc spinlock as it won't serve any purpose in
+protetcing conn state.(Dmitry/Doug)
+
+Changes in v9:
+  - Update commit message and fix alignment using spaces.(Marijn)
+  - Misc changes.(Marijn)
+
+Changes in v10:
+  - Get crtc cached in dpu_enc during obj init.(Dmitry)
+
+Changes in v11:
+  - Remove crtc cached in dpu_enc during obj init.
+  - Update dpu_enc crtc state on crtc enable/disable during self refresh.
+
+Changes in v12:
+  - Update sc7180 intf mask to get intf timing gen status
+based on DPU_INTF_STATUS_SUPPORTED bit.(Dmitry)
+  - Remove "clear active interface in the datapath cleanup" change
+as it is already included.
+
+Changes in v13:
+  - Move core changes to top of the series.(Dmitry)
+  - Drop self refresh aware disable change after psr entry.(Dmitry)
+
+Vinod Polimera (13):
+  drm: add helper functions to retrieve old and new crtc
+  drm/bridge: use atomic enable/disable callbacks for panel bridge
+  drm/bridge: add psr support for panel bridge callbacks
+  drm/msm/disp/dpu: check for crtc enable rather than crtc active to
+    release shared resources
+  drm/msm/disp/dpu: get timing engine status from intf status register
+  drm/msm/disp/dpu: wait for extra vsync till timing engine status is
+    disabled
+  drm/msm/disp/dpu: reset the datapath after timing engine disable
+  drm/msm/dp: use atomic callbacks for DP bridge ops
+  drm/msm/dp: Add basic PSR support for eDP
+  drm/msm/dp: use the eDP bridge ops to validate eDP modes
+  drm/msm/disp/dpu: use atomic enable/disable callbacks for encoder
+    functions
+  drm/msm/disp/dpu: add PSR support for eDP interface in dpu driver
+  drm/msm/disp/dpu: update dpu_enc crtc state on crtc enable/disable
+    during self refresh
+
+ drivers/gpu/drm/bridge/panel.c                     |  68 +++++++-
+ drivers/gpu/drm/drm_atomic.c                       |  60 ++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c           |  40 ++++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |  26 +++-
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   |  22 +++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |   3 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |  12 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c        |   8 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   2 +-
+ drivers/gpu/drm/msm/dp/dp_catalog.c                |  80 ++++++++++
+ drivers/gpu/drm/msm/dp/dp_catalog.h                |   4 +
+ drivers/gpu/drm/msm/dp/dp_ctrl.c                   |  80 ++++++++++
+ drivers/gpu/drm/msm/dp/dp_ctrl.h                   |   3 +
+ drivers/gpu/drm/msm/dp/dp_display.c                |  36 +++--
+ drivers/gpu/drm/msm/dp/dp_display.h                |   2 +
+ drivers/gpu/drm/msm/dp/dp_drm.c                    | 171 ++++++++++++++++++++-
+ drivers/gpu/drm/msm/dp/dp_drm.h                    |   9 +-
+ drivers/gpu/drm/msm/dp/dp_link.c                   |  36 +++++
+ drivers/gpu/drm/msm/dp/dp_panel.c                  |  22 +++
+ drivers/gpu/drm/msm/dp/dp_panel.h                  |   6 +
+ drivers/gpu/drm/msm/dp/dp_reg.h                    |  27 ++++
+ include/drm/drm_atomic.h                           |   7 +
+ 22 files changed, 681 insertions(+), 43 deletions(-)
+
+-- 
+2.7.4
+
