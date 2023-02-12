@@ -2,110 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D675969351B
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Feb 2023 00:14:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ABD0369358A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Feb 2023 02:58:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229629AbjBKXOT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 11 Feb 2023 18:14:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43674 "EHLO
+        id S229513AbjBLB6u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 11 Feb 2023 20:58:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229493AbjBKXOS (ORCPT
+        with ESMTP id S229477AbjBLB6u (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 11 Feb 2023 18:14:18 -0500
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53178126F7
-        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Feb 2023 15:14:17 -0800 (PST)
-Received: by mail-ej1-x62f.google.com with SMTP id sb24so212ejb.8
-        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Feb 2023 15:14:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mA0wapugSIYwzJjh8QQpFZojK1Cf6nHUnMysknsiTI0=;
-        b=u84Xb8jNF5JMSsHyPt8MkUuDdTr2c4CP4algLWN19zIEqrB1q0+zvL6YaCdjsFlDCd
-         UoJPxb6Qd/iqJ8Gt48+YDkk5WPzTsZ2prf8xpLaO6OorKzxjRYknWfLQuE6KeW8i65Bs
-         VftDo/d4mfadIwNCHMa0FSDclmcbN3ogWfM2tfczf8flwJIRfZcazOir1vMBzvvPgiPF
-         LylJIDVd2ZDIlAmkq65TnGm/pKk/tk6drqkx9WrbZZKSTruTJoU9Iodhj2P5uPZoZDmW
-         brtKKneU+DSmCHMSktm2c/yUJB/Ef9qLToTQJoC7Of6LhmcBBz81UF3npd+pbM5oFjK/
-         QvUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mA0wapugSIYwzJjh8QQpFZojK1Cf6nHUnMysknsiTI0=;
-        b=FW+xQXboZlbedWmirH3FjSG+Kwk1ZlUumdC9fQQ99KhEVm2fCHuBd37sWnJBLGsP+/
-         rVyu6T5EMBucRmtRiyg2Jxkw4oqpEWo+sPZIubfeSmdQuNWpNy/WDQ0mqKw7xHHcAMMD
-         e8A4BuenZ6Mmc9vdYnngaAwKVi5FNeAAnnVSPCqeL+WO5WlHqqkKntgklabDu6y9I06H
-         9FwpplK6JAToMffridFb9NJoteGxNLsrKd01Nw0l/5h5O97UZ6V2qoG0wXVJ/WR8s22l
-         bIVnTua/eK+3lL3OHRdfu491sQOYUOJguHA7v4p3fV9YPlnGctID0uQRDdnqUIcK9swP
-         G1ow==
-X-Gm-Message-State: AO0yUKXw/rrRSLosCg7IehSWH0xoit5Dd/JHRI5cZ//ZUEiEgLPNbcIZ
-        c4PSfGNZU+ZikOWUmkVSBhBYcA==
-X-Google-Smtp-Source: AK7set/3wadk7OzNoC9pIppF6oVoYWkP4Mlv4UbuwYA9P375LIa7pocOp1Gb7v8509k7wWyOIFz0Zw==
-X-Received: by 2002:a17:906:4bd0:b0:882:cdd4:14d9 with SMTP id x16-20020a1709064bd000b00882cdd414d9mr17524049ejv.46.1676157240433;
-        Sat, 11 Feb 2023 15:14:00 -0800 (PST)
-Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id k20-20020a1709061c1400b00871390a3b74sm4517149ejg.177.2023.02.11.15.13.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Feb 2023 15:13:59 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        Sat, 11 Feb 2023 20:58:50 -0500
+Received: from mail-4323.proton.ch (mail-4323.proton.ch [185.70.43.23])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEF3615CAD
+        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Feb 2023 17:58:46 -0800 (PST)
+Date:   Sun, 12 Feb 2023 01:58:33 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
+        s=protonmail; t=1676167124; x=1676426324;
+        bh=+Dqy/SLq6BVO3zqJNfQOnEGQobIgzLztHrmlEA53WfM=;
+        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+         Message-ID:BIMI-Selector;
+        b=efcIyWs10UZZAn/KOimOH28tdACJw6QJJ9sQTM/UxzBu17BqOy4YpS34Y8UZdC93h
+         afs4+MrHsJsH4SEhYfef0D6X91dWnBp+aIyTbvPXbDbmpxt9QCt+TNZoTWsAXnaLCR
+         GR0j8GgdtPa3WDtLvyjA5Zzw8kX3dmnMSx+1l5ME=
+To:     Pavel Machek <pavel@ucw.cz>, Gergo Koteles <soyer@irl.hu>
+From:   Caleb Connolly <caleb@connolly.tech>
+Cc:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH v2 50/50] drm/msm/dpu: rename MERGE_3D_foo_MASK to contain major DPU version
-Date:   Sun, 12 Feb 2023 01:12:59 +0200
-Message-Id: <20230211231259.1308718-51-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230211231259.1308718-1-dmitry.baryshkov@linaro.org>
-References: <20230211231259.1308718-1-dmitry.baryshkov@linaro.org>
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jiri Kosina <jikos@kernel.org>,
+        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+        linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: sdm845-oneplus: add tri-state-key
+Message-ID: <d1959211-bf33-f4fd-01a8-91dcd247aa70@connolly.tech>
+In-Reply-To: <Y+fE7gIMD4BDCffy@duo.ucw.cz>
+References: <20230209232556.91554-1-soyer@irl.hu> <Y+fE7gIMD4BDCffy@duo.ucw.cz>
+Feedback-ID: 10753939:user:proton
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-To ease review and reuse rename MERGE_3D feature masks to contain base
-DPU version since which this mask is used.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index b8143a3c35b0..6f907992866b 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -70,7 +70,7 @@
- #define CTL_DPU_9_MASK \
- 	(CTL_DPU_7_MASK | BIT(DPU_CTL_HAS_LAYER_EXT4))
- 
--#define MERGE_3D_SM8150_MASK (0)
-+#define MERGE_3D_DPU_5_MASK (0)
- 
- #define DSPP_MSM8998_MASK BIT(DPU_DSPP_PCC) | BIT(DPU_DSPP_GC)
- 
-@@ -507,7 +507,7 @@ static const struct dpu_pingpong_sub_blks sc7280_pp_sblk = {
- 	{\
- 	.name = _name, .id = _id, \
- 	.base = _base, .len = 0x100, \
--	.features = MERGE_3D_SM8150_MASK, \
-+	.features = MERGE_3D_DPU_5_MASK, \
- 	.sblk = NULL \
- 	}
- 
--- 
-2.39.1
+On 11/02/2023 16:40, Pavel Machek wrote:
+> Hi!
+>
+>> +++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+>> @@ -52,6 +52,43 @@ key-vol-up {
+>>  =09=09};
+>>  =09};
+>>
+>> +=09tri-state-key {
+>> +=09=09compatible =3D "gpio-keys";
+>> +=09=09label =3D "Tri-state key";
+>> +=09=09pinctrl-names =3D "default";
+>> +=09=09pinctrl-0 =3D <&tri_state_key_default>;
+>> +=09=09state-top {
+>> +=09=09=09label =3D "Tri-state key top";
+>
+> "top/middle" is not too useful. Do we need the label at all? If so,
+> should it say "loud/vibrations only/mute"?
+
+"mute", "vibrate" and "ring" sound good to me.
+
+Although it would be nice if users can easily map the physical key
+position to the action when viewing the input device or remapping the
+key in userspace.
+
+Do you have any ideas or recommendations on how to do this?
+>
+> BR,
+> =09=09=09=09=09=09=09=09Pavel
+
+--
+Kind Regards,
+Caleb
 
