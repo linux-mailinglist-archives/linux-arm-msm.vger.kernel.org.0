@@ -2,71 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CD83693F47
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 09:04:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6EF34693F57
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 09:11:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229584AbjBMID6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Feb 2023 03:03:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49942 "EHLO
+        id S229552AbjBMILp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Feb 2023 03:11:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229477AbjBMID5 (ORCPT
+        with ESMTP id S229477AbjBMILp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Feb 2023 03:03:57 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35798BBAF;
-        Mon, 13 Feb 2023 00:03:57 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id E46E9B80D2F;
-        Mon, 13 Feb 2023 08:03:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 326D2C433D2;
-        Mon, 13 Feb 2023 08:03:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1676275434;
-        bh=G8JZCVHBVv5OOpt9S16JA4H4MUeT37bgecZOL4vtXR8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=AVCImKmiHFuEQ/EAwANllCGM/Y6ZT1FB73MMCrTk30dBl9JtWCIttb3gJqJwMvDH4
-         copSDR1misku9lGp45uTp7kF0KdrQToEdyQkUSqaPua8eavVykSsr51ZoUMiyi932f
-         eF5FAmF0I6ymjBl8K1mRU+AQP1Gw47l2sWB0KY1LzC0Gg3wyvR/U/A2LsokTbIf9O0
-         /8pY/O0Am8hbfqXCoV8HIFpYpC0VDn8Dk7rfEgcG07aft7tMz0Gud2swVwzQFkqT0C
-         LtqJ4k1KSjHPjETDeaAGN6JQfkK53YzhkeFlnLDDRqihK6lTKoMpKZiRk5MKnTnKtt
-         AEZgWCjEyCfDw==
-Date:   Mon, 13 Feb 2023 10:03:50 +0200
-From:   Leon Romanovsky <leon@kernel.org>
-To:     Neeraj Upadhyay <quic_neeraju@quicinc.com>
-Cc:     mst@redhat.com, jasowang@redhat.com, kvm@vger.kernel.org,
-        virtualization@lists.linux-foundation.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        quic_sramana@quicinc.com, quic_tsoni@quicinc.com,
-        sudeep.holla@arm.com, vincent.guittot@linaro.org,
-        Souvik.Chakravarty@arm.com, cristian.marussi@arm.com
-Subject: Re: [PATCH] vhost: Add uAPI for Vhost SCMI backend
-Message-ID: <Y+nu5pQs5a/MhriH@unreal>
-References: <20230213043417.20249-1-quic_neeraju@quicinc.com>
+        Mon, 13 Feb 2023 03:11:45 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0347AEC54;
+        Mon, 13 Feb 2023 00:11:43 -0800 (PST)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31D5Ki0N021659;
+        Mon, 13 Feb 2023 08:11:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : reply-to : references : mime-version :
+ content-type : in-reply-to; s=qcppdkim1;
+ bh=Z6gmndh7hn35T25vfiaxGtwhAK87i7V4DUFpij/Ezfk=;
+ b=oTo65ptqbe5EtAw+hvPnc9jYCbtZlKcApP5zq1QoMIUgEhy+CXkqiPRIPlhspcHkKkn7
+ UN8HlI+SzFYddcLh1KNOz4wjWQ9mZb3OjskZhuNSa/OPRKpa8nyM8ADAnO9ecNHU9ZWD
+ bNxtHS3AaztiWFNMBRF5pvhWXhlMb6SxXdBYcNHJ//kJDVZc5I06zeP6ntQZhRrBFFbj
+ C4FZzvAjxFS4JmYXORN2EN8ovVni7wSpX4MHzK4ksspP4eOBbH7fJ7Q+hyQmFId3eVI5
+ 8Z+5ontMK1ltXsWspwdSXnalP2XhQ3XqK27C8EF8w7cH7JnSTtrRjByu5HEUHIMRFaLd 6A== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3np3deujgw-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 13 Feb 2023 08:11:16 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31D8BE0w006582
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 13 Feb 2023 08:11:14 GMT
+Received: from quicinc.com (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 13 Feb
+ 2023 00:11:07 -0800
+Date:   Mon, 13 Feb 2023 13:41:03 +0530
+From:   Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
+To:     Elliot Berman <quic_eberman@quicinc.com>
+CC:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Alex Elder <elder@linaro.org>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        "Jonathan Corbet" <corbet@lwn.net>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        "Carl van Schaik" <quic_cvanscha@quicinc.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        "Will Deacon" <will@kernel.org>, Marc Zyngier <maz@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+Subject: Re: [PATCH v9 26/27] virt: gunyah: Add irqfd interface
+Message-ID: <20230213081103.GL332@quicinc.com>
+Reply-To: Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>
+References: <20230120224627.4053418-1-quic_eberman@quicinc.com>
+ <20230120224627.4053418-27-quic_eberman@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="iso-8859-1"
 Content-Disposition: inline
-In-Reply-To: <20230213043417.20249-1-quic_neeraju@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20230120224627.4053418-27-quic_eberman@quicinc.com>
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: FYSiYlOz-rpXG8-Xzk1DuHHq665gAgG8
+X-Proofpoint-ORIG-GUID: FYSiYlOz-rpXG8-Xzk1DuHHq665gAgG8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-13_04,2023-02-09_03,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxscore=0
+ clxscore=1015 adultscore=0 mlxlogscore=574 malwarescore=0 phishscore=0
+ lowpriorityscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302130072
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Feb 13, 2023 at 10:04:17AM +0530, Neeraj Upadhyay wrote:
-> Add a uAPI for starting and stopping a SCMI vhost based
-> backend.
-> 
-> Signed-off-by: Neeraj Upadhyay <quic_neeraju@quicinc.com>
-> ---
-> 
-> SCMI Vhost backend implementation is work in progress: https://lore.kernel.org/linux-arm-kernel/20220609071956.5183-1-quic_neeraju@quicinc.com/
+* Elliot Berman <quic_eberman@quicinc.com> [2023-01-20 14:46:25]:
 
-Excellent, and this UAPI patch should come together with kernel code
-which needs this new define.
+> +static int gunyah_irqfd_populate(struct gunyah_vm_resource_ticket *ticket,
+> +				struct gunyah_resource *ghrsc)
+> +{
+> +	struct gunyah_irqfd *irqfd = container_of(ticket, struct gunyah_irqfd, ticket);
+> +	u64 enable_mask = GH_DBL_NONBLOCK;
+> +	u64 ack_mask = ~0;
+> +	int ret = 0;
+> +
+> +	irqfd->ghrsc = ghrsc;
+> +	if (irqfd->level) {
+> +		ret = gh_hypercall_dbl_set_mask(irqfd->ghrsc->capid, enable_mask, ack_mask);
 
-Thanks
+We probably want this mask set for both level and edge interrupts.
+
+> +		if (ret)
+> +			pr_warn("irq %d couldn't be set as level triggered. Might cause IRQ storm if asserted\n",
+> +				irqfd->f->fn.irqfd.label);
+> +	}
+> +	kref_get(&irqfd->kref);
+
+Is this kref_get() really needed?
+
+> +
+> +	return 0;
+> +}
+> +
