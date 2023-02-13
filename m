@@ -2,96 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 41AB96945FD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 13:37:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 487CA694606
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 13:39:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229684AbjBMMh2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Feb 2023 07:37:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50250 "EHLO
+        id S229756AbjBMMjJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Feb 2023 07:39:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229815AbjBMMh1 (ORCPT
+        with ESMTP id S230040AbjBMMjH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Feb 2023 07:37:27 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 104DF1ADF7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 04:36:55 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id u21so12687961edv.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 04:36:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=svG3qOblCEczVA7iX7XiFSJ5qWi1zMeK7HLoSLmNMAU=;
-        b=Ks6OVlBQnr7WR171CYw9PDJGkbJJgUPsNjb9snDU6sQ6i74WR8mrMp8cQgSOJ5MC4j
-         kvj9LLKxD6Gsf7LaVUzD+CdVx+BztBb27BAxX51EuLOxUtVsbu5e3ttVG9sUaJnYaIV/
-         ZPIB6mSTzrzh3NWKrnVYt9/CnjTLdI22Fr73ARuhgWWZjFW4xvVDBt+aR5ThpQUXZeYF
-         tOiZC6f/gAa6AlyqnVo0Va1b1NtSdewcgCxtE+Bav9+HYLaeq7CnQnFIY0Z9xxSqZwth
-         VGmjO8bnYXCFNL1hZCwLwi0R5MefEqdi1cfgVPBVkFTtBM5b8iDFN5nGUroDJKYV8CCu
-         9ZRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=svG3qOblCEczVA7iX7XiFSJ5qWi1zMeK7HLoSLmNMAU=;
-        b=vllrbMnJiYi4gh06fiohRFu4XMoX1mMkFV9dnQhSSnPR8mA6wLZsFlrfcPwACP93MJ
-         boDhtymYLvbJxG8RWsXs1Q8sSAhCgiFG3QaDRXFytNHP4m18GRRggoUH2GSSp56RhF1j
-         E61+cCv5aje/J7qODKkFL0fkt1rX3HOiWS0+MsmNOnHYa81bG/pXFe5MFE0J+Wn/XlkR
-         F38iBthK44wz8PjEZg323jk/4eK6X6i4OrRWvlrCLOVoFOa1/UFyxU+nDYIEvRbQoce2
-         2QkjVIuygSfRNl7lrsOFl6842S9Y5vJ/O6ChSAlS8Gh65KTYXNluC4QQx3PseBKghrUu
-         HMZA==
-X-Gm-Message-State: AO0yUKWbPFyE8/mj+3EGvo0KNKnhVT73Nt8HTmPEYU7LZPjWF4rpwCu7
-        gi7AQvGfOx8Fa3pHWDCguqkjEa/iLoI3zGLD
-X-Google-Smtp-Source: AK7set9FGCYPUGQaqEZnTk+e5QfFkg1/C32FR37rlhcdz7VgbgQSRbTe1TG3UatRAK67pPU8Ms7loQ==
-X-Received: by 2002:a50:ce44:0:b0:4aa:cb67:2a63 with SMTP id k4-20020a50ce44000000b004aacb672a63mr23611026edj.16.1676291814126;
-        Mon, 13 Feb 2023 04:36:54 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id a66-20020a509ec8000000b004acb832856dsm3605692edf.64.2023.02.13.04.36.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Feb 2023 04:36:53 -0800 (PST)
-Message-ID: <e176acf2-6ef0-c1d4-ac91-92b2e4d8702e@linaro.org>
-Date:   Mon, 13 Feb 2023 14:36:52 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH v2 9/9] arm64: dts: qcom: sm6115: Use the correct DSI
- compatible
-Content-Language: en-GB
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org, Rob Herring <robh+dt@kernel.org>,
+        Mon, 13 Feb 2023 07:39:07 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D94B91BE2;
+        Mon, 13 Feb 2023 04:39:06 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 8C18CB811B1;
+        Mon, 13 Feb 2023 12:39:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FE98C433D2;
+        Mon, 13 Feb 2023 12:39:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1676291944;
+        bh=epz9p7oE3Yaw0AKI3I7gdt9KCzgEQvhn444XGIHRtuk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=NjKebC9ToVjErn3KdrjkHdz/8PQarmJMlYCSR7KURgEESMnOB56e627CagWQoqm5/
+         j7EoqapGGT9ciuECShtxAXe8Bg3QcUcIhz4IEZJeTujYHadGbFZ6xEIAATVDz7EvjZ
+         blWmNjlx1Z9SDIsJ1X4j1BECg0q4hWy0XyvVax9G+UmrEe7D+LtSwifJ7tJGzEiYPX
+         LApRvwPGf4uMD0gCNs5kKay8NcEcWRSK4UlzgT7jNGHu3BUtdHvcpQk2iFnnTYUwzh
+         //lugEgN4FxmFjVRLhFUpkDZB70Rh9lOKE2aIocT0e5LWrc6auTFjtrGgHBt9NsBf/
+         a3zkp7upRjUQw==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pRY7e-0002cC-VN; Mon, 13 Feb 2023 13:39:55 +0100
+Date:   Mon, 13 Feb 2023 13:39:54 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230213121012.1768296-1-konrad.dybcio@linaro.org>
- <20230213121012.1768296-10-konrad.dybcio@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230213121012.1768296-10-konrad.dybcio@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v2 2/4] arm64: dts: qcom: sc8280xp-crd: Introduce
+ pmic_glink
+Message-ID: <Y+ovmtdRU83A+M5W@hovoldconsulting.com>
+References: <20230209011325.2603663-1-quic_bjorande@quicinc.com>
+ <20230209011325.2603663-3-quic_bjorande@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230209011325.2603663-3-quic_bjorande@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/02/2023 14:10, Konrad Dybcio wrote:
-> Use the non-deprecated, SoC-specific DSI compatible.
+On Wed, Feb 08, 2023 at 05:13:23PM -0800, Bjorn Andersson wrote:
+> From: Bjorn Andersson <bjorn.andersson@linaro.org>
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> The SC8280XP CRD control over battery management and its two USB Type-C
+> port using pmic_glink and two GPIO-based SBU muxes.
+> 
+> Enable the two DisplayPort instances, GPIO SBU mux instance and
+> pmic_glink with the two connectors on the CRD.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 > ---
->   arch/arm64/boot/dts/qcom/sm6115.dtsi | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> Changes since v1:
+> - Fixed style and property sort issues
+> - Moved dwc3/port to sc8280xp.dtsi, override remote-endpoint here
+> - Added pinconf properties to SBU control pins
+> 
+>  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 200 +++++++++++++++++++++-
+>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi    |   9 +
+>  2 files changed, 207 insertions(+), 2 deletions(-)
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> index fcd393444f47..0495361fc0fd 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> @@ -3040,6 +3040,11 @@ usb_0_dwc3: usb@a600000 {
+>  				iommus = <&apps_smmu 0x820 0x0>;
+>  				phys = <&usb_0_hsphy>, <&usb_0_qmpphy QMP_USB43DP_USB3_PHY>;
+>  				phy-names = "usb2-phy", "usb3-phy";
+> +
+> +				port {
+> +					usb_0_role_switch: endpoint {
+> +					};
+> +				};
+>  			};
+>  		};
+>  
+> @@ -3095,6 +3100,10 @@ usb_1_dwc3: usb@a800000 {
+>  				iommus = <&apps_smmu 0x860 0x0>;
+>  				phys = <&usb_1_hsphy>, <&usb_1_qmpphy QMP_USB43DP_USB3_PHY>;
+>  				phy-names = "usb2-phy", "usb3-phy";
 
+Nit: Add a newline before the child node here.
 
--- 
-With best wishes
-Dmitry
+> +				port {
+> +					usb_1_role_switch: endpoint {
+> +					};
+> +				};
+>  			};
+>  		};
 
+Johan
