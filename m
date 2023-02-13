@@ -2,125 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2EDCF69540C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 23:45:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 69DFB6954C0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 00:26:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229887AbjBMWpq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Feb 2023 17:45:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49434 "EHLO
+        id S230416AbjBMX0U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Feb 2023 18:26:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229489AbjBMWpp (ORCPT
+        with ESMTP id S230367AbjBMX0U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Feb 2023 17:45:45 -0500
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C95BB1D91C;
-        Mon, 13 Feb 2023 14:45:44 -0800 (PST)
-Received: from mercury (unknown [185.209.196.162])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: sre)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 3B7786602154;
-        Mon, 13 Feb 2023 22:45:43 +0000 (GMT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1676328343;
-        bh=9ZqLO7u9wSSWylBMnQo4JHT+AC8VOGxAaq9hFglbWFM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=IzeZKCYvRlFrs4yVkPEm6idXIx3tSARIcMt/ufUhergxwEaz2ZyIWysC+2kLsveaW
-         8z9Q/nw6zNKgZAaEViw93IzBdu47AaZ48TETC7JsrqYp9/y+aa4gLz6wMaq0YZKKch
-         zw7SO167/TQE86+q2RnXpnQmbxcLbYG3cUHQegJ1nRn/ys2JWHYvxc8Zo3MMCcEQOw
-         mHMQXhBnRcpi/DoedRVO+lE3wbahIooUVGAq0H27aChZiR2sd6x9ylNrYpuZ+F8MJd
-         YVt7irvYZMy3kkw6ekTuVw0JvpBlAkHVqWeLcr2qUkRfV0iLcYb0a6tl6c7MHFyekg
-         lzkzJUmZsxoHA==
-Received: by mercury (Postfix, from userid 1000)
-        id 8E28F10603FE; Mon, 13 Feb 2023 23:45:40 +0100 (CET)
-Date:   Mon, 13 Feb 2023 23:45:40 +0100
-From:   Sebastian Reichel <sebastian.reichel@collabora.com>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org,
-        marijn.suijten@somainline.org, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/3] dt-bindings: power: supply: pm8941-coincell: Don't
- require charging properties
-Message-ID: <20230213224540.o4fd554ippzdej7a@mercury.elektranox.org>
-References: <20230213204950.2100538-1-konrad.dybcio@linaro.org>
- <20230213204950.2100538-2-konrad.dybcio@linaro.org>
- <20230213212733.rhvuzrshfrvzgo4a@mercury.elektranox.org>
- <83637cc7-21ae-7778-37b3-4522cc0a06c9@linaro.org>
+        Mon, 13 Feb 2023 18:26:20 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B03D9D;
+        Mon, 13 Feb 2023 15:26:19 -0800 (PST)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31DMXXEo006618;
+        Mon, 13 Feb 2023 23:26:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=9zOsI7wDgUioyr1LYFvU/oJQKYz2SyKvRYNSma0iYpQ=;
+ b=dt0UaPjUxGFQVPgKkEB/KKbQB/rInofyOQz5ph0A2DspCfXW0TahZyP0xV0O5SxYPuV6
+ WfAxfvHqspt+XiO56cP+HlhaPMfg/bqvXBlksKO5amUDtffpW/NE/29i8CF3R2IyHc4d
+ DXxxce4WRC4kp4eduDBL1ViKTx38Xv43TfTTAFLsDSHiYscEgvdtxemBL/dTHaMuIkwF
+ CkhgXIlX6Plm9VXRfZABPxSn9GECSmBMsXxRfNniZ8pRNL0rnPUZDgtRyRBegOvuCOQp
+ QSV9jIWEjCOyM4QpfVzeQ9D9e6duqfZlGPzFB6bAev1e9FqYY6m3FP1xyD+tgVf0WQgQ AQ== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nqpmmh4y5-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 13 Feb 2023 23:26:15 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31DNQEe7015102
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 13 Feb 2023 23:26:14 GMT
+Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Mon, 13 Feb 2023 15:26:13 -0800
+From:   Elliot Berman <quic_eberman@quicinc.com>
+To:     Jassi Brar <jassisinghbrar@gmail.com>
+CC:     Elliot Berman <quic_eberman@quicinc.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        <linux-kernel@vger.kernel.org>, <linux-acpi@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+Subject: [PATCH 0/3] mailbox: Allow direct registration to a channel
+Date:   Mon, 13 Feb 2023 15:25:34 -0800
+Message-ID: <20230213232537.2040976-1-quic_eberman@quicinc.com>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="hvdkk6p6no65upka"
-Content-Disposition: inline
-In-Reply-To: <83637cc7-21ae-7778-37b3-4522cc0a06c9@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: qe4rdIla3ZIoRo8CM9jeNAGxf6fWRCgt
+X-Proofpoint-GUID: qe4rdIla3ZIoRo8CM9jeNAGxf6fWRCgt
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-13_12,2023-02-13_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ spamscore=0 priorityscore=1501 suspectscore=0 adultscore=0 impostorscore=0
+ bulkscore=0 clxscore=1011 mlxscore=0 mlxlogscore=651 phishscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302130205
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Two mailbox controllers have channel/client binding mechanisms that are
+controller-specific and not using the devicetree binding mechanisms. Mailbox
+channel/client is conceptually done in two steps: selecting the channel
+and binding the selected to channel to a client. Channel selection is sometimes
+controller specific (pcc and omap are examples). The channel/client binding
+code is all the same.
 
---hvdkk6p6no65upka
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This small series de-duplicates and refactors the channel/client binding
+into a common framework function: "mbox_bind_client" which all of the
+channel selection mechanisms can use.
 
-Hi,
+I found this duplicate code while working on the support for Gunyah hypervisor
+message queues [1]. I've only been able to compile-test omap-maiblox and pcc,
+however it is a straightforward conversion here.
 
-On Mon, Feb 13, 2023 at 10:41:10PM +0100, Konrad Dybcio wrote:
-> On 13.02.2023 22:27, Sebastian Reichel wrote:
-> > On Mon, Feb 13, 2023 at 09:49:49PM +0100, Konrad Dybcio wrote:
-> >> It's fine for these properties to be absent, as the driver doesn't fail
-> >> without them and functions with settings inherited from the reset/prev=
-ious
-> >> stage bootloader state.
-> >>
-> >> Fixes: 6c463222a21d ("dt-bindings: power: supply: pm8941-coincell: Con=
-vert to DT schema format")
-> >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> >> ---
-> > Please update the description of these properties to describe the
-> > default behaviour.
-> Not sure if there's any default behavior other than "go with
-> whatever was there previously, no matter how it got there".
+[1]: https://lore.kernel.org/all/20230120224627.4053418-9-quic_eberman@quicinc.com/
 
-I got that from the patch description, but that behaviour should be
-described in the binding.
+Elliot Berman (3):
+  mailbox: Allow direct registration to a channel
+  mailbox: omap: Use mbox_bind_client
+  mailbox: pcc: Use mbox_bind_client
 
-> Is it okay if I just add:
->=20
-> "If unspecified, inherit the bootloader configuration"
+ drivers/mailbox/mailbox.c      | 96 ++++++++++++++++++++++++----------
+ drivers/mailbox/omap-mailbox.c | 22 ++------
+ drivers/mailbox/pcc.c          | 82 ++++++++++++++++-------------
+ include/linux/mailbox_client.h |  1 +
+ 4 files changed, 118 insertions(+), 83 deletions(-)
 
-Technically the bindings are also for bootloaders. I suggest:
 
-If unspecified, inherit the previous configuration (e.g. from
-bootloader or hardware default value).
+base-commit: 09e41676e35ab06e4bce8870ea3bf1f191c3cb90
+-- 
+2.39.1
 
--- Sebastian
-
---hvdkk6p6no65upka
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmPqvZAACgkQ2O7X88g7
-+pqK5A/7B+mt+IoHQ+S5V1ix2613TjN9+JjnUr/fmRmVvPNtac+u6oukLqgGngwp
-UwtnP34uerWTYzIQAeNXIa287PbBuDpYwSh+CL9QrRtR+7Bp9olslee+dHz4bv+n
-rXuxQifQ8FroUZhtXfaNBL3g/y+fQKHN3HXrXLjwpM4ZZ+mW8vVpHc4alejCvDQx
-mjAYsRh/TZDgS8bsUoxndVcmO26o3pBV0ockEdj4vTfvwMmTUQncejUyGAJcoWJv
-eC92EgWj5+ldaCx1E0Sgc+3LHtlZljU49FNEkXzppXZxBdoYF/TVggvrLdrGjX/8
-Oh17YsJ2cE0Lyu1nf37jEGqJDZNGICLOrJ0nnC3UlH3CXfGyEB9h/C4BrbVYdtuh
-BWXvZbYTjT5k2PEc8exAyigfGNIZ8plHEyVDP2Ra+yNXGG/3N474iUQV8Z7nQKPu
-jotzhZKxFr8ecOr6B6XCBLV0UljIRqTEUqqWSmQs7J1M/hwW1Ad9mOYTdjeRTU7+
-SucSyhXRNSlB6D5ASFXk9ggiQvOdtGBCyCRMzuXDq8qRfSc1auPSsInat4O2bKQO
-82DdM41izrDX4ZTkxYl7PhZMROl13MKLy1kSOp4YrolXN6pzeLpEvu1gHn3t7XR+
-kxGP+ie/ZL4JluGRmLJ8kKDBpU1DVSCECOhQT2RRvsbmmy2Ct2s=
-=G77K
------END PGP SIGNATURE-----
-
---hvdkk6p6no65upka--
