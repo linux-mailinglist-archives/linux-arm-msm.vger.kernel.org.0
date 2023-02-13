@@ -2,69 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AFBB1694042
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 10:01:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A3238694099
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 10:16:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230043AbjBMJBl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Feb 2023 04:01:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34242 "EHLO
+        id S230057AbjBMJQo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Feb 2023 04:16:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229472AbjBMJBk (ORCPT
+        with ESMTP id S229902AbjBMJQm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Feb 2023 04:01:40 -0500
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32AE83C08
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 01:01:39 -0800 (PST)
-Received: by mail-pl1-x635.google.com with SMTP id w5so12803686plg.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 01:01:39 -0800 (PST)
+        Mon, 13 Feb 2023 04:16:42 -0500
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66D4F144A1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 01:16:34 -0800 (PST)
+Received: by mail-ej1-x635.google.com with SMTP id c26so25364803ejz.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 01:16:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=knZk8UU+gILKuGNRfB7GT0O6VmEC+8WJYZQJqqmgOU0=;
-        b=KNEceGhov0dwIzDFqRccLblZBmNCS12Y+7pw2sezMNDnTZkMcE1yexx71pOlAdF9Zk
-         EGnJXkH0JkzRvWgutMCejHyyA4OtlPi65jEh6B/3/8eW50MEz8Fc0Tx5XEd4woZP/E0C
-         mHkTHAyg7maQNuNgiHDForqvujhi3a1CRUNVwah0ohtAbcOvKsLAWytGLEDv9z08D2zD
-         76O29qVsBldSfiRN1oZOp0yObO6pY7U/Cemp4NzONI3USI+tS4FoIJ4dl7F+TDomjg4H
-         lWAvTC4ZgB0o1Jd7gshnH3tgNQm4jlTJ5WuuTH2u51LPNvZ63VaNuGJFvDoasQefa17X
-         rSUw==
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ffU8sGbKz0z2ElJbTbQMzwUheG9ZFBNUT9R2bnCT9fc=;
+        b=W2VHDevE2E8btW8qR/+w4xDl0AnPm7BODAW9vrKHhMCjiyITjk44rpRbOJyoZtbqlo
+         ReOz3ukHokW9wsj/rZQSAEuF5+dJwY1MXbajSaG3Q9+Fc9c+l+qnlsYiI5NUbQ5skHep
+         sJigXpIZthXkxiN2JtAaDCBJK2+LdiTEE1Cl8TW32mw0QMm//3SRAl/WH6j+PiyYaA4b
+         mcs69PaOYCWIjRTHyqM0fTCf7RMokBIOtaMsZv7lK1sG5LwYYCTn5UlD8LYLfuBgmp7T
+         gwILAx0j/hQ8F8+Fg0MttExIJc3+Q7Zk1U3uHBWi7/7vf8E5NJp47bJA1WoQqGAAXTmi
+         R6Vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=knZk8UU+gILKuGNRfB7GT0O6VmEC+8WJYZQJqqmgOU0=;
-        b=nbbLjlT9ZOqFAH+5KSdFCCmM1h+Otd3pkCf3tvaBN9XzQP3dJj1krEToVwa186Vtdw
-         A1OHiTAE4VMru7jNolic06+KcJTwdRYl1XL4Qgpalkk9nUaI0OrwThoiroYJdsL6gzhZ
-         i5KrfRGwbhiaBo/w+nw74nL8pnRl8Esj90EhufZNov/D2rDnNQCbBDmgJMgMAVgo+Rah
-         kOmr5pZg02aFX166/nIdHSOtpUZ6x2u9433U96kXVheAm+nTQUlp/mmL3Mr7e8FW6DKq
-         X6R6g5RSkSaHtmq8sYaNIOtAMHlqfurC8/tRU/D/jKAHJgv/hBmZTwY+bdQH9ndra9LX
-         cPRw==
-X-Gm-Message-State: AO0yUKV//q5KZALDQIV3dP5lBNjaHt4ekmOYkjt73cZIDrIGKCFHmdDe
-        XZNREZLrdHlsBQ53yUpprtBD
-X-Google-Smtp-Source: AK7set/09d393s5gixpvWGjjSLjuwgH5lvWqLfMrJsru5MwM0BE1bIBxx1IfXj2obI5BB0vLe8KJiQ==
-X-Received: by 2002:a17:902:9a42:b0:199:1804:48aa with SMTP id x2-20020a1709029a4200b00199180448aamr23251087plv.13.1676278898566;
-        Mon, 13 Feb 2023 01:01:38 -0800 (PST)
-Received: from localhost.localdomain ([117.217.182.252])
-        by smtp.gmail.com with ESMTPSA id jb14-20020a170903258e00b001964c8164aasm7677963plb.129.2023.02.13.01.01.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Feb 2023 01:01:38 -0800 (PST)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org
-Cc:     konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Patrick Wildt <patrick@blueri.se>
-Subject: [PATCH] arm64: dts: qcom: sc8280xp-pmics: Specify interrupt parent explicitly
-Date:   Mon, 13 Feb 2023 14:31:18 +0530
-Message-Id: <20230213090118.11527-1-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ffU8sGbKz0z2ElJbTbQMzwUheG9ZFBNUT9R2bnCT9fc=;
+        b=HDvVRk3frGe523zS66Vryw4K291x12sgWHnon/YjmK5VO2/6iUhKda9bPhu94dGbWO
+         A9F4G3txe8FZVg+a/E0L0wdSqR+rmB1WU9F77n/cU0d0CRfMzIN6WoU+dX9jjhjHGGfs
+         l1qnGJjnpm3frn2ww6siseeoEGnidpXganp2+RdvBT0ngay1dRxxWmmo1m9ZNAWUEnn5
+         9WJNUZY/TsCe1RaOqujhCvFmqTvWfS7tJx2KQKrlCbrcQnBeXOQbBr9XCjS22xFNA56i
+         adNt3e4k3snBtLtgaWcpvANzGXLxNpVyyzuIaLFNSHuaRc59ZySdMeJy200VXEdpqg5w
+         85FQ==
+X-Gm-Message-State: AO0yUKXKE7NUBlQmsLifo+EHfsGbKOdDwmXnI3q7O1SzUqGXavMxWbSw
+        e8MaVwTPL9Tazq+vFWWDJzvopg==
+X-Google-Smtp-Source: AK7set+dSF1gp8nSjaSbYMMdwmLbhN8OinauvAHBHeVZb26gkGLvNQgREzqzx4icab8vlZ38BS4Saw==
+X-Received: by 2002:a17:906:3391:b0:877:5938:6f6d with SMTP id v17-20020a170906339100b0087759386f6dmr27538914eja.56.1676279792830;
+        Mon, 13 Feb 2023 01:16:32 -0800 (PST)
+Received: from [192.168.1.101] (abxh117.neoplus.adsl.tpnet.pl. [83.9.1.117])
+        by smtp.gmail.com with ESMTPSA id qk8-20020a170906d9c800b008a654ade18csm6533721ejb.78.2023.02.13.01.16.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 13 Feb 2023 01:16:32 -0800 (PST)
+Message-ID: <6dfb39f9-cdc7-62a0-6ba7-dd8fa33d4d44@linaro.org>
+Date:   Mon, 13 Feb 2023 10:16:30 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH 02/10] drm/msm/dsi: Turn msm_dsi_config::io_start into a
+ 2d array
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Douglas Anderson <dianders@chromium.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+References: <20230211115110.1462920-1-konrad.dybcio@linaro.org>
+ <20230211115110.1462920-3-konrad.dybcio@linaro.org>
+ <4748cb49-0a17-2839-f99b-7578c0a4354b@linaro.org>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <4748cb49-0a17-2839-f99b-7578c0a4354b@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -73,111 +89,202 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Nodes like pwrkey, resin, iadc, adc-tm, temp-alarm which are the grand
-children of spmi_bus node represent the interrupt generating devices but
-don't have "interrupt-parent" property.
 
-As per the devicetree spec v0.3, section 2.4:
 
-"The physical wiring of an interrupt source to an interrupt controller is
-represented in the devicetree with the interrupt-parent property. Nodes
-that represent interrupt-generating devices contain an interrupt-parent
-property which has a phandle value that points to the device to which the
-device’s interrupts are routed, typically an interrupt controller. If an
-interrupt-generating device does not have an interrupt-parent property,
-its interrupt parent is assumed to be its devicetree parent."
+On 11.02.2023 14:17, Dmitry Baryshkov wrote:
+> On 11/02/2023 13:51, Konrad Dybcio wrote:
+>> Currently, we allow for MAX_DSI entries in io_start to facilitate for
+>> MAX_DSI number of DSI hosts at different addresses. The configuration
+>> is matched against the DSI CTRL hardware revision read back from the
+>> component. We need a way to resolve situations where multiple SoCs
+>> with different register maps may use the same version of DSI CTRL. In
+>> preparation to do so, make msm_dsi_config a 2d array where each entry
+>> represents a set of configurations adequate for a given SoC.
+>>
+>> This is totally fine to do, as the only differentiating factors
+>> between same-version-different-SoCs configurations are the number of
+>> DSI hosts (1 or 2, at least as of today) and the set of registers.
+> 
+> s/set of registers/starting address/ ?
+Well, *technically* they both are accurate, as having the same DSI
+HW at the same base address implies the entire DSI host address space
+is the same.. But I can clean this up.
 
-This clearly says that if the "interrupt-parent" property is absent, then
-the immediate devicetree parent will be assumed as the interrupt parent.
-But the immediate parents of these nodes are not interrupt controllers
-themselves.
-
-This may lead to failure while wiring the interrupt for these nodes by an
-operating system. But a few operating systems like Linux, workaround this
-issue by walking up the parent nodes until it finds the "interrupt-cells"
-property. Then the node that has the "interrupt-cells" property will be
-used as the interrupt parent.
-
-But this workaround is not as per the DT spec and is not being implemented
-by other operating systems such as OpenBSD.
-
-Hence, fix this issue by adding the "interrupts-extended" property that
-explicitly specifies the spmi_bus node as the interrupt parent. Note that
-the "interrupts-extended" property is chosen over "interrupt-parent" as it
-allows specifying both interrupt parent phandle and interrupt specifiers in
-a single property.
-
-Reported-by: Patrick Wildt <patrick@blueri.se>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
-
-I just fixed one dtsi since wanted to make sure that everyone agrees to
-this implementation, otherwise I'll end up wasting too much time fixing
-every other DTs making use of these nodes.
-
-Next step would be to fix the bindings of these nodes to include interrupt-
-parent or interrupts-extended properties and affected DTs.
-
- arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
-index f2c0b71b5d8e..df7d28f7ae60 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
-@@ -64,14 +64,14 @@ pmk8280_pon: pon@1300 {
- 
- 			pmk8280_pon_pwrkey: pwrkey {
- 				compatible = "qcom,pmk8350-pwrkey";
--				interrupts = <0x0 0x13 0x7 IRQ_TYPE_EDGE_BOTH>;
-+				interrupts-extended = <&spmi_bus 0x0 0x13 0x7 IRQ_TYPE_EDGE_BOTH>;
- 				linux,code = <KEY_POWER>;
- 				status = "disabled";
- 			};
- 
- 			pmk8280_pon_resin: resin {
- 				compatible = "qcom,pmk8350-resin";
--				interrupts = <0x0 0x13 0x6 IRQ_TYPE_EDGE_BOTH>;
-+				interrupts-extended = <&spmi_bus 0x0 0x13 0x6 IRQ_TYPE_EDGE_BOTH>;
- 				status = "disabled";
- 			};
- 		};
-@@ -79,7 +79,7 @@ pmk8280_pon_resin: resin {
- 		pmk8280_vadc: adc@3100 {
- 			compatible = "qcom,spmi-adc7";
- 			reg = <0x3100>;
--			interrupts = <0x0 0x31 0x0 IRQ_TYPE_EDGE_RISING>;
-+			interrupts-extended = <&spmi_bus 0x0 0x31 0x0 IRQ_TYPE_EDGE_RISING>;
- 			#address-cells = <1>;
- 			#size-cells = <0>;
- 			#io-channel-cells = <1>;
-@@ -89,7 +89,7 @@ pmk8280_vadc: adc@3100 {
- 		pmk8280_adc_tm: adc-tm@3400 {
- 			compatible = "qcom,spmi-adc-tm5-gen2";
- 			reg = <0x3400>;
--			interrupts = <0x0 0x34 0x0 IRQ_TYPE_EDGE_RISING>;
-+			interrupts-extended = <&spmi_bus 0x0 0x34 0x0 IRQ_TYPE_EDGE_RISING>;
- 			#address-cells = <1>;
- 			#size-cells = <0>;
- 			#thermal-sensor-cells = <1>;
-@@ -106,7 +106,7 @@ pmc8280_1: pmic@1 {
- 		pm8280_1_temp_alarm: temp-alarm@a00 {
- 			compatible = "qcom,spmi-temp-alarm";
- 			reg = <0xa00>;
--			interrupts = <0x1 0xa 0x0 IRQ_TYPE_EDGE_BOTH>;
-+			interrupts-extended = <&spmi_bus 0x1 0xa 0x0 IRQ_TYPE_EDGE_BOTH>;
- 			#thermal-sensor-cells = <0>;
- 		};
- 
-@@ -158,7 +158,7 @@ pmc8280_2: pmic@3 {
- 		pm8280_2_temp_alarm: temp-alarm@a00 {
- 			compatible = "qcom,spmi-temp-alarm";
- 			reg = <0xa00>;
--			interrupts = <0x2 0xa 0x0 IRQ_TYPE_EDGE_BOTH>;
-+			interrupts-extended = <&spmi_bus 0x2 0xa 0x0 IRQ_TYPE_EDGE_BOTH>;
- 			#thermal-sensor-cells = <0>;
- 		};
- 
--- 
-2.25.1
-
+Konrad
+> 
+>> The regulator setup is the same, because the DSI hardware is the same,
+>> regardless of the SoC it was implemented in.
+>>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+>>   drivers/gpu/drm/msm/dsi/dsi_cfg.c  | 52 ++++++++++++++++++++++--------
+>>   drivers/gpu/drm/msm/dsi/dsi_cfg.h  |  5 ++-
+>>   drivers/gpu/drm/msm/dsi/dsi_host.c |  2 +-
+>>   3 files changed, 44 insertions(+), 15 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.c b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+>> index 6d21f0b33411..068d45b3a8f0 100644
+>> --- a/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+>> +++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+>> @@ -21,7 +21,9 @@ static const struct msm_dsi_config apq8064_dsi_cfg = {
+>>       .num_regulators = ARRAY_SIZE(apq8064_dsi_regulators),
+>>       .bus_clk_names = dsi_v2_bus_clk_names,
+>>       .num_bus_clks = ARRAY_SIZE(dsi_v2_bus_clk_names),
+>> -    .io_start = { 0x4700000, 0x5800000 },
+>> +    .io_start = {
+>> +        { 0x4700000, 0x5800000 },
+>> +    },
+>>       .num_dsi = 2,
+>>   };
+>>   @@ -41,7 +43,9 @@ static const struct msm_dsi_config msm8974_apq8084_dsi_cfg = {
+>>       .num_regulators = ARRAY_SIZE(msm8974_apq8084_regulators),
+>>       .bus_clk_names = dsi_6g_bus_clk_names,
+>>       .num_bus_clks = ARRAY_SIZE(dsi_6g_bus_clk_names),
+>> -    .io_start = { 0xfd922800, 0xfd922b00 },
+>> +    .io_start = {
+>> +        { 0xfd922800, 0xfd922b00 },
+>> +    },
+>>       .num_dsi = 2,
+>>   };
+>>   @@ -60,7 +64,9 @@ static const struct msm_dsi_config msm8916_dsi_cfg = {
+>>       .num_regulators = ARRAY_SIZE(msm8916_dsi_regulators),
+>>       .bus_clk_names = dsi_8916_bus_clk_names,
+>>       .num_bus_clks = ARRAY_SIZE(dsi_8916_bus_clk_names),
+>> -    .io_start = { 0x1a98000 },
+>> +    .io_start = {
+>> +        { 0x1a98000 },
+>> +    },
+>>       .num_dsi = 1,
+>>   };
+>>   @@ -79,7 +85,9 @@ static const struct msm_dsi_config msm8976_dsi_cfg = {
+>>       .num_regulators = ARRAY_SIZE(msm8976_dsi_regulators),
+>>       .bus_clk_names = dsi_8976_bus_clk_names,
+>>       .num_bus_clks = ARRAY_SIZE(dsi_8976_bus_clk_names),
+>> -    .io_start = { 0x1a94000, 0x1a96000 },
+>> +    .io_start = {
+>> +        { 0x1a94000, 0x1a96000 },
+>> +    },
+>>       .num_dsi = 2,
+>>   };
+>>   @@ -98,7 +106,9 @@ static const struct msm_dsi_config msm8994_dsi_cfg = {
+>>       .num_regulators = ARRAY_SIZE(msm8994_dsi_regulators),
+>>       .bus_clk_names = dsi_6g_bus_clk_names,
+>>       .num_bus_clks = ARRAY_SIZE(dsi_6g_bus_clk_names),
+>> -    .io_start = { 0xfd998000, 0xfd9a0000 },
+>> +    .io_start = {
+>> +        { 0xfd998000, 0xfd9a0000 },
+>> +    },
+>>       .num_dsi = 2,
+>>   };
+>>   @@ -118,7 +128,9 @@ static const struct msm_dsi_config msm8996_dsi_cfg = {
+>>       .num_regulators = ARRAY_SIZE(msm8996_dsi_regulators),
+>>       .bus_clk_names = dsi_8996_bus_clk_names,
+>>       .num_bus_clks = ARRAY_SIZE(dsi_8996_bus_clk_names),
+>> -    .io_start = { 0x994000, 0x996000 },
+>> +    .io_start = {
+>> +        { 0x994000, 0x996000 },
+>> +    },
+>>       .num_dsi = 2,
+>>   };
+>>   @@ -137,7 +149,9 @@ static const struct msm_dsi_config msm8998_dsi_cfg = {
+>>       .num_regulators = ARRAY_SIZE(msm8998_dsi_regulators),
+>>       .bus_clk_names = dsi_msm8998_bus_clk_names,
+>>       .num_bus_clks = ARRAY_SIZE(dsi_msm8998_bus_clk_names),
+>> -    .io_start = { 0xc994000, 0xc996000 },
+>> +    .io_start = {
+>> +        { 0xc994000, 0xc996000 },
+>> +    },
+>>       .num_dsi = 2,
+>>   };
+>>   @@ -155,7 +169,9 @@ static const struct msm_dsi_config sdm660_dsi_cfg = {
+>>       .num_regulators = ARRAY_SIZE(sdm660_dsi_regulators),
+>>       .bus_clk_names = dsi_sdm660_bus_clk_names,
+>>       .num_bus_clks = ARRAY_SIZE(dsi_sdm660_bus_clk_names),
+>> -    .io_start = { 0xc994000, 0xc996000 },
+>> +    .io_start = {
+>> +        { 0xc994000, 0xc996000 },
+>> +    },
+>>       .num_dsi = 2,
+>>   };
+>>   @@ -177,7 +193,9 @@ static const struct msm_dsi_config sdm845_dsi_cfg = {
+>>       .num_regulators = ARRAY_SIZE(sdm845_dsi_regulators),
+>>       .bus_clk_names = dsi_sdm845_bus_clk_names,
+>>       .num_bus_clks = ARRAY_SIZE(dsi_sdm845_bus_clk_names),
+>> -    .io_start = { 0xae94000, 0xae96000 },
+>> +    .io_start = {
+>> +        { 0xae94000, 0xae96000 },
+>> +    },
+>>       .num_dsi = 2,
+>>   };
+>>   @@ -191,7 +209,9 @@ static const struct msm_dsi_config sm8550_dsi_cfg = {
+>>       .num_regulators = ARRAY_SIZE(sm8550_dsi_regulators),
+>>       .bus_clk_names = dsi_sdm845_bus_clk_names,
+>>       .num_bus_clks = ARRAY_SIZE(dsi_sdm845_bus_clk_names),
+>> -    .io_start = { 0xae94000, 0xae96000 },
+>> +    .io_start = {
+>> +        { 0xae94000, 0xae96000 },
+>> +    },
+>>       .num_dsi = 2,
+>>   };
+>>   @@ -205,7 +225,9 @@ static const struct msm_dsi_config sc7180_dsi_cfg = {
+>>       .num_regulators = ARRAY_SIZE(sc7180_dsi_regulators),
+>>       .bus_clk_names = dsi_sc7180_bus_clk_names,
+>>       .num_bus_clks = ARRAY_SIZE(dsi_sc7180_bus_clk_names),
+>> -    .io_start = { 0xae94000 },
+>> +    .io_start = {
+>> +        { 0xae94000 },
+>> +    },
+>>       .num_dsi = 1,
+>>   };
+>>   @@ -223,7 +245,9 @@ static const struct msm_dsi_config sc7280_dsi_cfg = {
+>>       .num_regulators = ARRAY_SIZE(sc7280_dsi_regulators),
+>>       .bus_clk_names = dsi_sc7280_bus_clk_names,
+>>       .num_bus_clks = ARRAY_SIZE(dsi_sc7280_bus_clk_names),
+>> -    .io_start = { 0xae94000, 0xae96000 },
+>> +    .io_start = {
+>> +        { 0xae94000, 0xae96000 },
+>> +    },
+>>       .num_dsi = 2,
+>>   };
+>>   @@ -241,7 +265,9 @@ static const struct msm_dsi_config qcm2290_dsi_cfg = {
+>>       .num_regulators = ARRAY_SIZE(qcm2290_dsi_cfg_regulators),
+>>       .bus_clk_names = dsi_qcm2290_bus_clk_names,
+>>       .num_bus_clks = ARRAY_SIZE(dsi_qcm2290_bus_clk_names),
+>> -    .io_start = { 0x5e94000 },
+>> +    .io_start = {
+>> +        { 0x5e94000 },
+>> +    },
+>>       .num_dsi = 1,
+>>   };
+>>   diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.h b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+>> index 44be4a88aa83..df9f09876ccb 100644
+>> --- a/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+>> +++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+>> @@ -32,13 +32,16 @@
+>>     #define DSI_6G_REG_SHIFT    4
+>>   +/* Maximum number of configurations matched against the same hw revision */
+>> +#define VARIANTS_MAX            2
+>> +
+>>   struct msm_dsi_config {
+>>       u32 io_offset;
+>>       const struct regulator_bulk_data *regulator_data;
+>>       int num_regulators;
+>>       const char * const *bus_clk_names;
+>>       const int num_bus_clks;
+>> -    const resource_size_t io_start[DSI_MAX];
+>> +    const resource_size_t io_start[VARIANTS_MAX][DSI_MAX];
+>>       const int num_dsi;
+>>   };
+>>   diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+>> index 18fa30e1e858..22ba8726b0ea 100644
+>> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+>> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+>> @@ -1869,7 +1869,7 @@ static int dsi_host_get_id(struct msm_dsi_host *msm_host)
+>>           return -EINVAL;
+>>         for (i = 0; i < cfg->num_dsi; i++) {
+>> -        if (cfg->io_start[i] == res->start)
+>> +        if (cfg->io_start[0][i] == res->start)
+>>               return i;
+>>       }
+>>   
+> 
