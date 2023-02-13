@@ -2,135 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F9EA694BB3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 16:52:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EA953694C69
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 17:22:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230303AbjBMPwa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Feb 2023 10:52:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39416 "EHLO
+        id S229652AbjBMQWg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Feb 2023 11:22:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230207AbjBMPw1 (ORCPT
+        with ESMTP id S229520AbjBMQWe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Feb 2023 10:52:27 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B21691A665;
-        Mon, 13 Feb 2023 07:52:26 -0800 (PST)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31DERs62001670;
-        Mon, 13 Feb 2023 15:52:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=np/Fh/isAkZqVk4IGvOaJu01AVx1Edn4bZ3eEoznThM=;
- b=CILJ3Plmnsa89OEgsZQZFaeSmgyAexUlueFuRDTvgXyznbSHgkZRa/Kt3C5qpMwJd2/4
- 5nSanxtYk7Xkn1/HuQWvaUaExoB3nC55huTSfg/xpR655fJtnfulo40VVYrd9BKLkGBS
- B9vY6QXGRkq7h8+lIHhTU5fDIlsTwpsUacoqxQF06uZhMSUSKZSypu6i0kLzOGSS3KBY
- zdqYTZaoUD5PWvy1hI4hggpB8lSu5RKPr9U1anYCm6j5U3LIdOc4BKVDD1ItEM3GRg2S
- Z84sZrby2kpwkExbdiUoLG9oNMqQtcs6gEtFb+Dz5bagu2vcvzN8MZWFaOYKUhs6VbhE Ig== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3np0qpvgs4-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 13 Feb 2023 15:52:23 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31DFqM5V021292
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 13 Feb 2023 15:52:22 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Mon, 13 Feb 2023 07:52:22 -0800
-From:   Bjorn Andersson <quic_bjorande@quicinc.com>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Chris Lew <quic_clew@quicinc.com>
-CC:     <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v2 6/6] rpmsg: glink: Cancel pending intent requests at removal
-Date:   Mon, 13 Feb 2023 07:52:15 -0800
-Message-ID: <20230213155215.1237059-7-quic_bjorande@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230213155215.1237059-1-quic_bjorande@quicinc.com>
-References: <20230213155215.1237059-1-quic_bjorande@quicinc.com>
+        Mon, 13 Feb 2023 11:22:34 -0500
+Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F628BB89
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 08:22:33 -0800 (PST)
+Received: by mail-il1-x131.google.com with SMTP id v6so444331ilc.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 08:22:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=SUt5NV4yj8XYVUt8WynYB+klBAVCk9zqRje/Z1D5fhU=;
+        b=wtEdxbzSqcVF2HVNhDhT/bpFtFdaXTbvlKq/2gOsDhUrNOrqeAKeCs87W88NEU0mna
+         Qj1EFF4VzZhb1ggLJ3QfJ8ZJfzZ/Q/5S1hKcKhQ077Evvucs4t3Vl6PHI4amxgOmd1vn
+         DkxqTyQS4R5hhYIguf02Bo1Ew6B6nyemI+70XGyG9Nvc4tPmWXXx3xnJrhvic3v6mL9Z
+         fCnqREa+CpsOXZiGE/S2o/CtxZJ7Vk9KkjBn8BYhbir2zspZXL0pooaY5ZD71V3rDrx+
+         KKeDFHfNuGdUqHGtyRGIofhBTlRxUT2W1ww87ydm0a8bx6zCRgbgNBzAbUrZzVBng/SL
+         7IuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=SUt5NV4yj8XYVUt8WynYB+klBAVCk9zqRje/Z1D5fhU=;
+        b=J2+OgId9vVo539hWxyZFwV5VIGBA0bBBHImWlxbeAv4WFYbUsrpRR2gueuV5A2H8jE
+         Tw4Ml2Q1JtHZ3+76NLBYhakoeA5hNoZ8axatGxs2Zc1LBQDUGmzyworW8/he25HaR5WZ
+         yCkvw43K/xV4geabKOk15nfVsqImrHRlvH06FSjzCzft9+YoiHYrg0mVZjpgooKtpT2V
+         ZhMSB30ozq7JLLE18X9ey9Tk3PfHOAl3z2TMPG/rsk+ZJX4sD3CEt9Z5Mg8wGwMkAC4C
+         +hsW9ZjJZjbXl2+rbMFp9IWscKkvgPMKtm+zJtfUo37I1LwG6WuS7O6EGvHFicABxrO6
+         d4DQ==
+X-Gm-Message-State: AO0yUKVH5VHwO7eUXePIWieo8tPfNnTsIwkLBuXJuqIaxJxouKsa3IvA
+        EOfs2KK2o1EWAxT41V/FXQe1Fg==
+X-Google-Smtp-Source: AK7set8cGRM+7lBnkSPNTOL/nDXk2bgM94zZgZAvy0mKkAGLHnpxmtA3xRmV6hidAMQwxoAiZxD7fQ==
+X-Received: by 2002:a05:6e02:20c2:b0:315:519c:87ee with SMTP id 2-20020a056e0220c200b00315519c87eemr1587682ilq.23.1676305352783;
+        Mon, 13 Feb 2023 08:22:32 -0800 (PST)
+Received: from presto.localdomain ([98.61.227.136])
+        by smtp.gmail.com with ESMTPSA id x17-20020a92dc51000000b00313cbba0455sm1457831ilq.8.2023.02.13.08.22.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Feb 2023 08:22:32 -0800 (PST)
+From:   Alex Elder <elder@linaro.org>
+To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com
+Cc:     caleb.connolly@linaro.org, mka@chromium.org, evgreen@chromium.org,
+        andersson@kernel.org, quic_cpratapa@quicinc.com,
+        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
+        quic_subashab@quicinc.com, elder@kernel.org,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH net-next 0/6] net: ipa: define GSI register fields differently
+Date:   Mon, 13 Feb 2023 10:22:23 -0600
+Message-Id: <20230213162229.604438-1-elder@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 8-3SoyprBJlUMxkUWbNgAHOG3qokxnBO
-X-Proofpoint-ORIG-GUID: 8-3SoyprBJlUMxkUWbNgAHOG3qokxnBO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-13_10,2023-02-13_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
- malwarescore=0 phishscore=0 adultscore=0 suspectscore=0 spamscore=0
- lowpriorityscore=0 clxscore=1015 bulkscore=0 mlxlogscore=848
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302130143
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-During removal of the glink edge interrupts are disabled and no more
-incoming messages are being serviced. In addition to the remote endpoint
-being defunct that means that any outstanding requests for intents will
-not be serviced, and qcom_glink_request_intent() will blindly wait for
-up to 10 seconds.
+Now that we have "reg" definitions in place to define GSI register
+offsets, add the definitions for the fields of GSI registers that
+have them.
 
-Mark the intent request as not granted and complete the intent request
-completion to fail the waiting client immediately.
+There aren't many differences between versions, but a few fields are
+present only in some versions of IPA, so additional "gsi_reg-vX.Y.c"
+files are created to capture such differences.  As in the previous
+series, these files are created as near-copies of existing files
+just before they're needed to represent these differences.  The
+first patch adds files for IPA v4.0, v4.5, and v4.9; the fifth patch
+adds a file for IPA v4.11.
 
-Once the current intent request is failed, any potential clients waiting
-for the intent request mutex will not enter the same wait, as the
-qcom_glink_tx() call will fail fast.
+Note that the first and fifth patch cause some checkpatch warnings
+because they align some continued lines with an open parenthesis
+that at the fourth column.
 
-Reviewed-by: Chris Lew <quic_clew@quicinc.com>
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
----
+					-Alex
 
-Changes since v1:
-- None
+Alex Elder (6):
+  net: ipa: populate more GSI register files
+  net: ipa: define GSI CH_C_QOS register fields
+  net: ipa: define more fields for GSI registers
+  net: ipa: define fields for event-ring related registers
+  net: ipa: add "gsi_v4.11.c"
+  net: ipa: define fields for remaining GSI registers
 
- drivers/rpmsg/qcom_glink_native.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/net/ipa/Makefile                      |   2 +-
+ drivers/net/ipa/gsi.c                         | 110 ++++++------
+ drivers/net/ipa/gsi_reg.c                     |  10 +-
+ drivers/net/ipa/gsi_reg.h                     | 156 ++++++++++--------
+ drivers/net/ipa/reg/gsi_reg-v3.1.c            | 116 +++++++++++--
+ drivers/net/ipa/reg/gsi_reg-v3.5.1.c          | 127 ++++++++++++--
+ .../reg/{gsi_reg-v3.5.1.c => gsi_reg-v4.0.c}  | 134 +++++++++++++--
+ .../reg/{gsi_reg-v3.5.1.c => gsi_reg-v4.11.c} | 139 ++++++++++++++--
+ .../reg/{gsi_reg-v3.5.1.c => gsi_reg-v4.5.c}  | 137 +++++++++++++--
+ .../reg/{gsi_reg-v3.5.1.c => gsi_reg-v4.9.c}  | 138 ++++++++++++++--
+ 10 files changed, 848 insertions(+), 221 deletions(-)
+ copy drivers/net/ipa/reg/{gsi_reg-v3.5.1.c => gsi_reg-v4.0.c} (62%)
+ copy drivers/net/ipa/reg/{gsi_reg-v3.5.1.c => gsi_reg-v4.11.c} (60%)
+ copy drivers/net/ipa/reg/{gsi_reg-v3.5.1.c => gsi_reg-v4.5.c} (61%)
+ copy drivers/net/ipa/reg/{gsi_reg-v3.5.1.c => gsi_reg-v4.9.c} (61%)
 
-diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-index 946128c343f3..324c75d59a6f 100644
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -423,6 +423,12 @@ static void qcom_glink_handle_intent_req_ack(struct qcom_glink *glink,
- 	complete(&channel->intent_req_comp);
- }
- 
-+static void qcom_glink_intent_req_abort(struct glink_channel *channel)
-+{
-+	channel->intent_req_result = 0;
-+	complete(&channel->intent_req_comp);
-+}
-+
- /**
-  * qcom_glink_send_open_req() - send a RPM_CMD_OPEN request to the remote
-  * @glink: Ptr to the glink edge
-@@ -1788,6 +1794,12 @@ void qcom_glink_native_remove(struct qcom_glink *glink)
- 	wake_up_all(&glink->tx_avail_notify);
- 	spin_unlock_irqrestore(&glink->tx_lock, flags);
- 
-+	/* Abort any senders waiting for intent requests */
-+	spin_lock_irqsave(&glink->idr_lock, flags);
-+	idr_for_each_entry(&glink->lcids, channel, cid)
-+		qcom_glink_intent_req_abort(channel);
-+	spin_unlock_irqrestore(&glink->idr_lock, flags);
-+
- 	ret = device_for_each_child(glink->dev, NULL, qcom_glink_remove_device);
- 	if (ret)
- 		dev_warn(glink->dev, "Can't remove GLINK devices: %d\n", ret);
 -- 
-2.25.1
+2.34.1
 
