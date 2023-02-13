@@ -2,75 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D7D6F694717
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 14:33:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 860BD694781
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 14:56:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230292AbjBMNdJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Feb 2023 08:33:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38954 "EHLO
+        id S229683AbjBMN4M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Feb 2023 08:56:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230281AbjBMNdE (ORCPT
+        with ESMTP id S229567AbjBMN4L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Feb 2023 08:33:04 -0500
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07C5F1ABD0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 05:33:01 -0800 (PST)
-Received: by mail-ej1-x632.google.com with SMTP id qb15so29819126ejc.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 05:33:00 -0800 (PST)
+        Mon, 13 Feb 2023 08:56:11 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8BF055BE
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 05:56:08 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id by3so11004005wrb.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 05:56:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=70OvqASv0mjZllhMqhkKWtUGVSAnAQUMLpze65KxTCo=;
-        b=Ufl0lz+8F8Gv68rGLtMmMpLGiOD4XsDVpokfoh54YtWrD1I3E5ID3zwxHISNMtvnSG
-         7f4w7Q/14y/OoJWeCcQVAqO2sG7qHSLroGKk0QB9fCiciT1+Ik7IJfuug5j5HRK7139c
-         3L+vrW4qKEA7NO6x1gI5kIDAMYL2khBaDfnwiZGxqnRQ+6dn7fqmZ+eGUJYPZWPiYUtm
-         EaGn0nzdsrnOu5pXxw0XJUwYmCPS6ZW1FzFNoryGCtwvhpNS4hb2YYQ7kqXy1vl9Ab+I
-         n+Gz/oKbWEvZP8b0LDlzhqh6BSP4rV/i7x1F8gmNdq9ZhNsr2+btyvZRx0ygZNIc+qXi
-         R+ZA==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :from:content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=1Uy5CSnBerGct98JAqbVYGF95fZTgd+o15YjTkcuIPk=;
+        b=xZJT6Spjz5YhxcyphM9ApKsAYqrAbbXecAiawIW5K2Flh9rnsQ8qDatufAylRsgoki
+         ++yrs+wwnD3MuoQarcAugWmIIqSDY0AaiDd1NiQzVxNQS/sQUqFU5YrtEbaxdJQ3BS/M
+         NWAxYNH73CvXqqzp5BbXuN7fHKbyy3mG9EoS3DYshvTymcoVgCNPde3dvMRuj27aLeOM
+         ui6UJzcSabTiHtaRUOW/xeUoEoToFsqP5KSbTMz8hwlgyZ1nLEqOctDKSNb+Gus8KYoL
+         p0SeR4LyIjc+UAmtI4TeCEfXdzdgp7f8ZrY8u2g4RHCEEqNBk6eFbYLVQIznT2pt0rVX
+         RFtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=70OvqASv0mjZllhMqhkKWtUGVSAnAQUMLpze65KxTCo=;
-        b=a4r9Hr6fo+Jlsri/skn6k8kh6VD417HrP78KqgzQ+H38uVrmFdxTF8Gxk9SWnWHNAt
-         Se6vy0Aj4iNr5iO3LPgo7wxntkblbJ+Ibo4xIWuSzukkDJjYMxhhueLniqgOwka1b7EG
-         LGY1N/KwFA37K0BvdxAnB+5LoeGy07aJrRe+jZaUQpZGaq0AlFx5928HhmxHMyjrBioF
-         LvH6hQ95YJDFRAdUwQeTr/PiO2SLc4hAz2u1HAnFRhN2GaJvi3t0fVJfJoZYdtnRvKXz
-         nnmBsKL/f9hOu4i65eIJeqejtsLBmVlO/3J1rQd6Ws4Z5UskusTgLkk/8mQxeMRQFdV+
-         A/ow==
-X-Gm-Message-State: AO0yUKUg5Y3CLoLxteZIo8j+aRvz7RMZoRmMgJ/2cq9JLA14IP4Fe2+R
-        31kPd2fjW8AcQps2EV3Oji4+6w==
-X-Google-Smtp-Source: AK7set+nssou59xHVmaH/Q4nYYZy5U3YjvGk2efyx7dTUsVP2Q+dP5FCZEMqrN2EgxHoC3ZiaboTcQ==
-X-Received: by 2002:a17:906:2a0b:b0:887:d0e6:fa24 with SMTP id j11-20020a1709062a0b00b00887d0e6fa24mr23836713eje.76.1676295179311;
-        Mon, 13 Feb 2023 05:32:59 -0800 (PST)
-Received: from [172.16.220.87] (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id h24-20020a170906829800b008aa0305dbe8sm6661180ejx.80.2023.02.13.05.32.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Feb 2023 05:32:59 -0800 (PST)
-From:   Luca Weiss <luca.weiss@fairphone.com>
-Date:   Mon, 13 Feb 2023 14:26:50 +0100
-Subject: [PATCH 2/2] arm64: dts: qcom: sm7225-fairphone-fp4: enable
- remaining i2c busses
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :from:content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1Uy5CSnBerGct98JAqbVYGF95fZTgd+o15YjTkcuIPk=;
+        b=C6fWybs/CLC+aCHQZK+3fbIXe8pv0nWAn8hupQ7dMjwdDj34nfTyVa31qrsIALrUP4
+         5bBhjpfZ9NqsJPatKdTWJPTyjhON+qGj/ok8wiVK8xyHog8p8HVaDXcj+mP8yxIVT4xX
+         8+ubWqlyBSDOcWQTIIPFE7oy0pjco30cDso8zL3tWAi5AaufIsO6AMriZN4nrnzv35YI
+         ygKHDxxX3TYRWrq/e79vM1MCtcWcRsQbwe/zaGp6bHtNfIcUXXTmW1DS1cyRwWeZyDFn
+         mr3mNT/1sRlGmiclALAIRuZ/N45FLGiKBLL3yyl3mknysqMHADFeGhYYFacGrXtUdni3
+         tAFQ==
+X-Gm-Message-State: AO0yUKXEFZ70Sx3hmR5cQ2y18u2/hwoLmmXXRnoAvKCDxHcvTDs5GQkY
+        nIrfcOFtRwIFWTdMq7wV+NOBjA==
+X-Google-Smtp-Source: AK7set+D3CHlBRertMGZvD1SZZYSxdyV0jk07kZ5xiDaPn1MIZfSnQEaX9uZIv7om6WSAzxFky7u9Q==
+X-Received: by 2002:a5d:6210:0:b0:2be:c41:4758 with SMTP id y16-20020a5d6210000000b002be0c414758mr20399555wru.38.1676296567433;
+        Mon, 13 Feb 2023 05:56:07 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:915c:811a:b081:f099? ([2a01:e0a:982:cbb0:915c:811a:b081:f099])
+        by smtp.gmail.com with ESMTPSA id d15-20020a5d6dcf000000b002c3f9404c45sm10917766wrz.7.2023.02.13.05.56.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 13 Feb 2023 05:56:06 -0800 (PST)
+Message-ID: <83603bc5-4b32-b759-5e5c-a590c2952039@linaro.org>
+Date:   Mon, 13 Feb 2023 14:56:05 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230213-fp4-more-i2c-v1-2-5be09dbb5ce6@fairphone.com>
-References: <20230213-fp4-more-i2c-v1-0-5be09dbb5ce6@fairphone.com>
-In-Reply-To: <20230213-fp4-more-i2c-v1-0-5be09dbb5ce6@fairphone.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v3 5/5] arm64: dts: qcom: sm8450: add dp controller
+Content-Language: en-US
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
-X-Mailer: b4 0.12.1
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230206-topic-sm8450-upstream-dp-controller-v3-0-636ef9e99932@linaro.org>
+ <20230206-topic-sm8450-upstream-dp-controller-v3-5-636ef9e99932@linaro.org>
+ <347a5193-f7b1-7f8e-0c60-3d435bdf952c@linaro.org>
+ <f5a26fff-2dc2-2397-a80c-2477176a5864@linaro.org>
+ <880e691a-0512-6325-f27c-9be59abdd647@linaro.org>
+ <b43179c4-bbf5-1d38-6ff0-8ddd0356d6d1@linaro.org>
+Organization: Linaro Developer Services
+In-Reply-To: <b43179c4-bbf5-1d38-6ff0-8ddd0356d6d1@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,62 +93,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable all i2c busses where something is connected on this phone. Add
-comments as placeholders for which components are still missing.
+On 13/02/2023 13:32, neil.armstrong@linaro.org wrote:
+> On 10/02/2023 16:54, Dmitry Baryshkov wrote:
+>> On 10/02/2023 17:28, Neil Armstrong wrote:
+>>> On 10/02/2023 16:24, Dmitry Baryshkov wrote:
+>>>> On 10/02/2023 16:44, Neil Armstrong wrote:
+>>>>> Add the Display Port controller subnode to the MDSS node.
+>>>>>
+>>>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>>>>> ---
+>>>>>   arch/arm64/boot/dts/qcom/sm8450.dtsi | 79 ++++++++++++++++++++++++++++++++++++
+>>>>>   1 file changed, 79 insertions(+)
+>>>>>
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>>>> index 6caa2c8efb46..72d54beb7d7c 100644
+>>>>> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>>>> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>>>> @@ -2751,6 +2751,13 @@ dpu_intf2_out: endpoint {
+>>>>>                           };
+>>>>>                       };
+>>>>> +                    port@2 {
+>>>>> +                        reg = <2>;
+>>>>> +                        dpu_intf0_out: endpoint {
+>>>>> +                            remote-endpoint = <&mdss_dp0_in>;
+>>>>> +                        };
+>>>>> +                    };
+>>>>> +
+>>>>>                   };
+>>>>>                   mdp_opp_table: opp-table {
+>>>>> @@ -2783,6 +2790,78 @@ opp-500000000 {
+>>>>>                   };
+>>>>>               };
+>>>>> +            mdss_dp0: displayport-controller@ae90000 {
+>>>>> +                compatible = "qcom,sm8350-dp";
+>>>
+>>> Exact, must fix.
+>>>
+>>>>
+>>>> Missing "qcom,sm8450-dp". As I wrote in the comment to patch 1, I'd suggest having just a single entry here rather than keeping both 8350 and 8450 entries.
+>>>>
+>>>>> +                reg = <0 0xae90000 0 0xfc>,
+>>>>> +                      <0 0xae90200 0 0xc0>,
+>>>>> +                      <0 0xae90400 0 0x770>,
+>>>>> +                      <0 0xae91000 0 0x98>,
+>>>>> +                      <0 0xae91400 0 0x98>;
+>>>>
+>>>>
+>>>> While this sounds correct, usually we used the even size here (0x200, 0x400, etc.). Can we please switch to it (especially since sm8350-dp uses even sizes).
+>>>
+>>> I don't have access to registers layout for HDK8450 but the system freezes when using even sizes, using
+>>> the exact register size works fine.
+>>
+>> Interesting. Could you please trace, what exactly makes it fail, since specifying bigger region size should not cause such issues.
+> 
+> Yep I'll trace what's happening.
 
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
- arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts | 25 +++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+OK weird, I tried with the same sizes as sm8350, and it works fine.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-index 86114dd2c0c4..d0f08b42592f 100644
---- a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-+++ b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-@@ -359,10 +359,31 @@ &cdsp {
- 	status = "okay";
- };
- 
-+&i2c0 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+	/* ST21NFCD NFC @ 8 */
-+	/* VL53L3 ToF @ 29 */
-+	/* AW88264A amplifier @ 34 */
-+	/* AW88264A amplifier @ 35 */
-+};
-+
-+&i2c8 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+	/* HX83112A touchscreen @ 48 */
-+};
-+
- &i2c10 {
- 	clock-frequency = <400000>;
- 	status = "okay";
- 
-+	/* PM8008 PMIC @ 8 and 9 */
-+	/* PX8618 @ 26 */
-+	/* SMB1395 PMIC @ 34 */
-+
- 	haptics@5a {
- 		compatible = "awinic,aw8695";
- 		reg = <0x5a>;
-@@ -495,6 +516,10 @@ adc-chan@644 {
- 	};
- };
- 
-+&qupv3_id_0 {
-+	status = "okay";
-+};
-+
- &qupv3_id_1 {
- 	status = "okay";
- };
+Will resend with this fixed.
 
--- 
-2.39.1
+Neil
+
+> 
+> Neil
+> 
+>>
+> 
 
