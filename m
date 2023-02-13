@@ -2,109 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 93147693CB9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 04:00:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E5593693D77
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 05:34:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229644AbjBMDAp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 12 Feb 2023 22:00:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33556 "EHLO
+        id S229472AbjBMEek (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 12 Feb 2023 23:34:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229479AbjBMDAo (ORCPT
+        with ESMTP id S229468AbjBMEej (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 12 Feb 2023 22:00:44 -0500
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D851E1726;
-        Sun, 12 Feb 2023 19:00:43 -0800 (PST)
-Received: by mail-pg1-x52f.google.com with SMTP id x31so7255186pgl.6;
-        Sun, 12 Feb 2023 19:00:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mZSnWC0uJdlBiSLLAHhgUe7rf4dqkdvbgl/BZlGtmEc=;
-        b=ozkUKNNAbVNKMKeYlZDf5+qj/R+p2TzeR1ULFsjzQL1T3wOAZ8NvMrehM9/fMZOMoX
-         GCbyBsz0kH2ovTVI9aqI20Ui1NFN+iTrfq2yuFlV7IvCi4B8whSAD3EcPJR9dwFFQUdD
-         A1r31X4Ux9Ac5KgzwqBfQvurBRngq7dKZ2FL+YXtARMccmRh3fuWnMLssO2boDhasBRC
-         xiwR117n3J6MF79i/O5z+9TiWQvxuBHy7is+beNfC5MK7ZUVHCJK+esDdM2BoQjZmI+r
-         YYncjS7iWKJ0lnZs+yRNOpar/L/5I808jUinY/gCer85QAk79whZgs3WSsczUK3wm6Ji
-         lv4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mZSnWC0uJdlBiSLLAHhgUe7rf4dqkdvbgl/BZlGtmEc=;
-        b=DLKNlWRqlmpy641XTom+75qe9Izh2BlEMN8DHp/peYfy38AsIVHW9IUxAes7N2Tbzc
-         VcBWMm6zcw7vhGM3lAs9v70mcFKXZKFeHUBpM0ZXdnNwTKaIxCOaG/gN4hpqSlnKl1+S
-         JhoP/i7pc8vqo/A8LZczaKXT/WfZidt4ZwAFJuTE5jUrW8B0TNym9iNmCGwHNAuH9GW4
-         CDzwnBGH4bl3tmgC0hCS8x3UdDEpvuCtgFdwrH5sKky3tqn+Srrn5Zq29TVLLTwWy3JL
-         /2ZR14Db6T+vImN7rLJM1H4ZdOAxf0ac0LJlyZ2B/TbKRsIgVV8R9ya5h+AwgVB4bqTa
-         MmnA==
-X-Gm-Message-State: AO0yUKU6w0cV5ybTSSs1nwT0Zngj6PbDXoEehyUGQ89Tro0iYT7smU4f
-        Xx/Ovlz//A9e25XY/i2OTOiL1kEyGwk=
-X-Google-Smtp-Source: AK7set+IjqrsfUXysoQAsc4WoJue6Mfrq48KGLSgBG3d8+aOqGWTV9312xw187j2/KFlTwQ0gtcZgg==
-X-Received: by 2002:aa7:9e1b:0:b0:5a8:ab78:639f with SMTP id y27-20020aa79e1b000000b005a8ab78639fmr3411184pfq.7.1676257242913;
-        Sun, 12 Feb 2023 19:00:42 -0800 (PST)
-Received: from localhost.localdomain (2001-b400-e2dc-bf16-9d1f-462f-83db-04dc.emome-ip6.hinet.net. [2001:b400:e2dc:bf16:9d1f:462f:83db:4dc])
-        by smtp.gmail.com with ESMTPSA id j7-20020aa783c7000000b005938bd2bfd3sm6776981pfn.120.2023.02.12.19.00.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Feb 2023 19:00:42 -0800 (PST)
-From:   Owen Yang <ecs.taipeikernel@gmail.com>
-To:     LKML <linux-kernel@vger.kernel.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Abner Yen <abner.yen@ecs.com.tw>, Harvey <hunge@google.com>,
-        Matthias Kaehlcke <mka@google.com>,
-        Doug Anderson <dianders@chromium.org>,
-        Bob Moragues <moragues@google.com>,
-        Gavin Lee <gavin.lee@ecs.com.tw>,
-        Owen Yang <ecs.taipeikernel@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2] arm64: dts: qcom: sc7280: Adjust zombie PWM frequency
-Date:   Mon, 13 Feb 2023 10:59:05 +0800
-Message-Id: <20230213105803.v2.1.I610cef0ead2d5df1f7bd18bc0e0ae040b03725d0@changeid>
+        Sun, 12 Feb 2023 23:34:39 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4139AD0D;
+        Sun, 12 Feb 2023 20:34:38 -0800 (PST)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31D3gpYa023941;
+        Mon, 13 Feb 2023 04:34:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=qX0JS5W/1suHDx3spw91V512mgHnNNSyitwv18V84oQ=;
+ b=LFSIToEN2rpQXYfXUzFqHC+i1Q0nO3CKMkH3t1xB963/4qgKjAhtJiCMXeBE49BJuOMl
+ nUSg+a1DVVDQ0v+8yRlQOnpooF7Z4oxaN/IZAX8TYl5gVxfK75VcL4ufPdY8e/ZI8+2S
+ lPAp9Z+bDImqAP9kMjcKgSV1gKq18Pza759Wo1/OVA3cNui/uU0ltAfKqFxgQYtwpFo1
+ QVI7d/ZCqc8r1Luox/+w7O+W7vqrulOWlvUSHOlzuaL9QMB4dJRFy4Eoq1CyQf02NlNz
+ TFEEq2D6PdbMTf2c9QP7nw0+v8OYdeleSdHggU4tKmXKXWrmVUb8TTiNRaQMEFl1hwJ5 rA== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3np3sptxk9-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 13 Feb 2023 04:34:30 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31D4YT8h032289
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 13 Feb 2023 04:34:29 GMT
+Received: from localhost (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Sun, 12 Feb
+ 2023 20:34:28 -0800
+From:   Neeraj Upadhyay <quic_neeraju@quicinc.com>
+To:     <mst@redhat.com>, <jasowang@redhat.com>
+CC:     <kvm@vger.kernel.org>, <virtualization@lists.linux-foundation.org>,
+        <netdev@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <quic_sramana@quicinc.com>,
+        <quic_tsoni@quicinc.com>, <sudeep.holla@arm.com>,
+        <vincent.guittot@linaro.org>, <Souvik.Chakravarty@arm.com>,
+        <cristian.marussi@arm.com>,
+        Neeraj Upadhyay <quic_neeraju@quicinc.com>
+Subject: [PATCH] vhost: Add uAPI for Vhost SCMI backend
+Date:   Mon, 13 Feb 2023 10:04:17 +0530
+Message-ID: <20230213043417.20249-1-quic_neeraju@quicinc.com>
 X-Mailer: git-send-email 2.17.1
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: D0SpYjSnsBmf96EZy7QnlPdDmFeW1hED
+X-Proofpoint-ORIG-GUID: D0SpYjSnsBmf96EZy7QnlPdDmFeW1hED
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-13_01,2023-02-09_03,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1011
+ suspectscore=0 spamscore=0 malwarescore=0 phishscore=0 adultscore=0
+ mlxlogscore=383 lowpriorityscore=0 priorityscore=1501 mlxscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302130042
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Tune the PWM to solve screen flashing issue and high frequency noise.
-While at it, the comment for the PWM settings incorrectly said we were using a 5kHz duty cycle. It should have said "period", not "duty cycle".
-Correct this while updating the values.
+Add a uAPI for starting and stopping a SCMI vhost based
+backend.
 
-Signed-off-by: Owen Yang <ecs.taipeikernel@gmail.com>
+Signed-off-by: Neeraj Upadhyay <quic_neeraju@quicinc.com>
 ---
 
-Changes in v2:
--Correct unit and update values in comment.
+SCMI Vhost backend implementation is work in progress: https://lore.kernel.org/linux-arm-kernel/20220609071956.5183-1-quic_neeraju@quicinc.com/
 
- arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/uapi/linux/vhost.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie.dtsi
-index 64deaaabac0f..a4fde22e3355 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-zombie.dtsi
-@@ -61,8 +61,8 @@ ap_tp_i2c: &i2c0 {
- };
+diff --git a/include/uapi/linux/vhost.h b/include/uapi/linux/vhost.h
+index 92e1b700b51c..80f589f35295 100644
+--- a/include/uapi/linux/vhost.h
++++ b/include/uapi/linux/vhost.h
+@@ -188,4 +188,7 @@
+  */
+ #define VHOST_VDPA_RESUME		_IO(VHOST_VIRTIO, 0x7E)
  
- &pm8350c_pwm_backlight {
--	/* Set the PWM period to 200 microseconds (5kHz duty cycle) */
--	pwms = <&pm8350c_pwm 3 200000>;
-+	/* Set the PWM period to 320 microseconds (3.125kHz frequency) */
-+	pwms = <&pm8350c_pwm 3 320000>;
- };
- 
- &pwmleds {
++/* VHOST_SCMI specific defines */
++#define VHOST_SCMI_SET_RUNNING          _IOW(VHOST_VIRTIO, 0x90, int)
++
+ #endif
 -- 
 2.17.1
 
