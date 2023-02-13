@@ -2,104 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E5593693D77
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 05:34:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B04E693DB1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 06:04:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229472AbjBMEek (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 12 Feb 2023 23:34:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42528 "EHLO
+        id S229679AbjBMFEg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Feb 2023 00:04:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33058 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229468AbjBMEej (ORCPT
+        with ESMTP id S229484AbjBMFEf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 12 Feb 2023 23:34:39 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4139AD0D;
-        Sun, 12 Feb 2023 20:34:38 -0800 (PST)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31D3gpYa023941;
-        Mon, 13 Feb 2023 04:34:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=qX0JS5W/1suHDx3spw91V512mgHnNNSyitwv18V84oQ=;
- b=LFSIToEN2rpQXYfXUzFqHC+i1Q0nO3CKMkH3t1xB963/4qgKjAhtJiCMXeBE49BJuOMl
- nUSg+a1DVVDQ0v+8yRlQOnpooF7Z4oxaN/IZAX8TYl5gVxfK75VcL4ufPdY8e/ZI8+2S
- lPAp9Z+bDImqAP9kMjcKgSV1gKq18Pza759Wo1/OVA3cNui/uU0ltAfKqFxgQYtwpFo1
- QVI7d/ZCqc8r1Luox/+w7O+W7vqrulOWlvUSHOlzuaL9QMB4dJRFy4Eoq1CyQf02NlNz
- TFEEq2D6PdbMTf2c9QP7nw0+v8OYdeleSdHggU4tKmXKXWrmVUb8TTiNRaQMEFl1hwJ5 rA== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3np3sptxk9-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 13 Feb 2023 04:34:30 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31D4YT8h032289
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 13 Feb 2023 04:34:29 GMT
-Received: from localhost (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Sun, 12 Feb
- 2023 20:34:28 -0800
-From:   Neeraj Upadhyay <quic_neeraju@quicinc.com>
-To:     <mst@redhat.com>, <jasowang@redhat.com>
-CC:     <kvm@vger.kernel.org>, <virtualization@lists.linux-foundation.org>,
-        <netdev@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <quic_sramana@quicinc.com>,
-        <quic_tsoni@quicinc.com>, <sudeep.holla@arm.com>,
-        <vincent.guittot@linaro.org>, <Souvik.Chakravarty@arm.com>,
-        <cristian.marussi@arm.com>,
-        Neeraj Upadhyay <quic_neeraju@quicinc.com>
-Subject: [PATCH] vhost: Add uAPI for Vhost SCMI backend
-Date:   Mon, 13 Feb 2023 10:04:17 +0530
-Message-ID: <20230213043417.20249-1-quic_neeraju@quicinc.com>
-X-Mailer: git-send-email 2.17.1
+        Mon, 13 Feb 2023 00:04:35 -0500
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE571BDFA
+        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Feb 2023 21:04:33 -0800 (PST)
+Received: by mail-pj1-x1032.google.com with SMTP id d13-20020a17090ad3cd00b0023127b2d602so11031546pjw.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Feb 2023 21:04:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Cq2Mt5IgFuRz+Dg5gGVSgc7JNioKJ+vyevcaRsQ8/Dk=;
+        b=XQFAOmcKsL4NUry+FgCLYWfIbnAckIpsc1e7WWxGHgHqqFqO4P5vKOLnSfjotm6Km1
+         ywVZDGwQQ4OrzN2MD9V1rf9GIgGFB3e0Qfb4ZA8UYdYjUYhrDmVEm5vgiOsKGAJd8+ww
+         m28Mbh/GrkyujfyM4Zh/SQItW4jlfW41cQe7NgcMiUfVullRSuRGmy6TLrYCf4hTkLOG
+         odqFB3BliehB0/1uO70gIdw3DsY+9C0s4AqDQ3wrVxcWFygVg1X1GVZuTnnIeQiLjWja
+         R9zj34VJjCQFspS72+plj00FjepJNId3N1xHUlOvi2NKp6x4dHJvQIfp4TdCKX9MdTpo
+         e+CQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Cq2Mt5IgFuRz+Dg5gGVSgc7JNioKJ+vyevcaRsQ8/Dk=;
+        b=YEYhdhM1HjWAMkd7rdKz84aLfhwZRCQhe50Xd1quegwA8MR+6NWVwMj9qIybTPttkU
+         08kXy3bGyBfkcfPho4XGLlLip5jthkxfys7GMW1HRle4/PifuLr3rrlmBKMDjTQ77OAY
+         4PlMZEKvp5SbTvtIIDLek2EkfFZAQfhxVObBsgzzL0vvkspHiCIo2hDhEThmEkFBwOv7
+         mVHIVf9qdKfyCxcMYAXsqAwUUWj+Wq1bHiLvxggCTNkAsMgaRpow/Tf1B7zrUTJpAbO5
+         aikhrPoIPB0yDRH8Wt65qKCCC2yHTiEwP1Qj6aiOoTkXhU6nPHpyprHUifYP5fH6OcVg
+         yMEg==
+X-Gm-Message-State: AO0yUKV1wz/WD/hWcNPs+gK05p2X4P/SVJSkk9qGhzzUctxYy1+ZQFax
+        JY7oIm2mh46lYpb5Qfx7EepVrg==
+X-Google-Smtp-Source: AK7set9XiywEdoa+M+ipPblxIE9rdVgmOumuyiq6YmdkUUvHhebrgJDfig+6A2CZ+j9f/fMtfSRVPw==
+X-Received: by 2002:a17:902:e5d2:b0:19a:7f4b:3ed4 with SMTP id u18-20020a170902e5d200b0019a7f4b3ed4mr8883064plf.30.1676264673461;
+        Sun, 12 Feb 2023 21:04:33 -0800 (PST)
+Received: from localhost ([122.172.83.155])
+        by smtp.gmail.com with ESMTPSA id r10-20020a170902be0a00b00199524dc67bsm7149422pls.163.2023.02.12.21.04.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 12 Feb 2023 21:04:32 -0800 (PST)
+Date:   Mon, 13 Feb 2023 10:34:30 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Christian Marangi <ansuelsmth@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v6 1/3] dt-bindings: cpufreq: qcom-cpufreq-nvmem: specify
+ supported opp tables
+Message-ID: <20230213050430.n3wszmi5kslvhdtl@vireshk-i7>
+References: <20230208153913.24436-1-ansuelsmth@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: D0SpYjSnsBmf96EZy7QnlPdDmFeW1hED
-X-Proofpoint-ORIG-GUID: D0SpYjSnsBmf96EZy7QnlPdDmFeW1hED
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-13_01,2023-02-09_03,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1011
- suspectscore=0 spamscore=0 malwarescore=0 phishscore=0 adultscore=0
- mlxlogscore=383 lowpriorityscore=0 priorityscore=1501 mlxscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302130042
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230208153913.24436-1-ansuelsmth@gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a uAPI for starting and stopping a SCMI vhost based
-backend.
+On 08-02-23, 16:39, Christian Marangi wrote:
+> Add additional info on what opp tables the defined devices in this schema
+> supports (operating-points-v2-kryo-cpu and operating-points-v2-qcom-level)
+> and reference them.
+> 
+> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> ---
+> Changes v6:
+> - No change
+> Changes v5:
+> - Swap patch 1 and patch 2 to fix dt_check_warning on single
+>   patch bisecting 
+> Changes v4:
+> - Add patch split from patch 1
 
-Signed-off-by: Neeraj Upadhyay <quic_neeraju@quicinc.com>
----
+Rob / Krzysztof,
 
-SCMI Vhost backend implementation is work in progress: https://lore.kernel.org/linux-arm-kernel/20220609071956.5183-1-quic_neeraju@quicinc.com/
+I am looking to apply this patchset for next release if it is ready, are you
+comfortable giving your Acks for the entire series yet ?
 
- include/uapi/linux/vhost.h | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/include/uapi/linux/vhost.h b/include/uapi/linux/vhost.h
-index 92e1b700b51c..80f589f35295 100644
---- a/include/uapi/linux/vhost.h
-+++ b/include/uapi/linux/vhost.h
-@@ -188,4 +188,7 @@
-  */
- #define VHOST_VDPA_RESUME		_IO(VHOST_VIRTIO, 0x7E)
- 
-+/* VHOST_SCMI specific defines */
-+#define VHOST_SCMI_SET_RUNNING          _IOW(VHOST_VIRTIO, 0x90, int)
-+
- #endif
 -- 
-2.17.1
-
+viresh
