@@ -2,138 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6BE93694EE5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 19:10:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B4DD7694EF2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 19:12:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230495AbjBMSKN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Feb 2023 13:10:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57610 "EHLO
+        id S230497AbjBMSMG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Feb 2023 13:12:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231451AbjBMSKJ (ORCPT
+        with ESMTP id S231207AbjBMSME (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Feb 2023 13:10:09 -0500
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34DF23C2D
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 10:09:42 -0800 (PST)
-Received: by mail-ed1-x52e.google.com with SMTP id c1so10332293edt.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 10:09:42 -0800 (PST)
+        Mon, 13 Feb 2023 13:12:04 -0500
+Received: from mail-vs1-xe29.google.com (mail-vs1-xe29.google.com [IPv6:2607:f8b0:4864:20::e29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 156B459C1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 10:11:33 -0800 (PST)
+Received: by mail-vs1-xe29.google.com with SMTP id cz15so13955218vsb.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 10:11:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=OrFNz/cjsowXwlETtP+kH6cs7rMkGd9pIsymtXm93iQ=;
-        b=ASyqHv5ovC0LjAt2DWkMvKUt04iRjs6rRLP4ccLJGnP77wwpfmJ1GIgQ0iU9cHeXBe
-         /eHCYl0v74p/8L9G1SxvtJMii0G3uRmdTzmW9dEfzxnTkM5KajK0H3WD/5bRy6d/LWc0
-         EgfH4bNeCLaZWQNX8Kn8+apeQsjJrfrjr1q76u6MFcSv5jHmELOvc+B/BZM9txqFuxft
-         636odzY5r5dOlnQDNZbI2k64cl2nO+ZwsrUN7xm/vzNv6aaUABnM+rT/3mPhyYVeNjs/
-         +smyO7VDlDCpPgh7jgreWa4h8xJULv5TBvhSGE27BcsiiQoJGQ0FoB6P0OflMu4eLc03
-         pclA==
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=YhyueGm0rbJoXfAMuP4ME9y20a+9vEsRucr9LaCFZhw=;
+        b=SVjPeLrC97MbzGve1F6WSqRht948tpI14Bwxv9/AJydgcsAhw641XoEX6j3j67NsS1
+         IqGHj2wxZY9CTt0ZEHwT/6H31umeLxUHTwMStANUidaIIJWsfVUYlK1ANPNyXd78J+2/
+         3mTe11CYF/HJ2JZj2tLKeCcpP4i6yRbjk1wMw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OrFNz/cjsowXwlETtP+kH6cs7rMkGd9pIsymtXm93iQ=;
-        b=yjIldL6p4fiScKZyrExSNknerWQI8tSxhZ+WSODEjxNXsgs2q01DXVn4ivdcr937uY
-         s4xlaEGyzXgSI9ns1x75c2aIKdJPbvkS4tLGQZBQMf0wjwqoXS59T/v7ep0ixioSf5Mo
-         urDw039Lts4VF8u7u/0Onqg9FEWWyViCpH8DeuhTpHDAHc8HXlL/A7ov8PXpCoxkv41O
-         apGLsAnzag1wj1zQjeBPbFNEZEWMxwWEud+GYUdpTb/X3hvLet7EEBQXB8SYkiXJp/sZ
-         XlyUrMK/mWTkuF+Xbpu4D9r7DMFZh05s1YAf9nFjnAf3cciHLNtgGJzJs0Afev+cm++o
-         zbdA==
-X-Gm-Message-State: AO0yUKXRNmZzBIFYsygGtWSL/Ud8XfQzFWtW3EGAShInGCG+IW+772FX
-        XbDmoONqAA4N/ko7l9zMNwxwAQ==
-X-Google-Smtp-Source: AK7set9mcIeXp16D0D3cqp+JoeU1B51F5RlGG7CPB1h5PDRD0O528l6eKI/rurYDyjp1eZ2rn+kPcw==
-X-Received: by 2002:a50:8ace:0:b0:4aa:a4e6:249b with SMTP id k14-20020a508ace000000b004aaa4e6249bmr26014988edk.7.1676311778917;
-        Mon, 13 Feb 2023 10:09:38 -0800 (PST)
-Received: from [192.168.1.101] (abxh117.neoplus.adsl.tpnet.pl. [83.9.1.117])
-        by smtp.gmail.com with ESMTPSA id v23-20020a50d597000000b004acb7f05589sm4037935edi.94.2023.02.13.10.09.37
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=YhyueGm0rbJoXfAMuP4ME9y20a+9vEsRucr9LaCFZhw=;
+        b=kxIXnTeqVqeU9hB5S6bhrjLeS1q0PRLIGyhYPUcxc/l/0aVFNTJhNDMqYS1CKySinn
+         XFSl9xrHYDEPDDUWmFgqHnEojB9YqlXoIBhi1ySJ7Gr5lJK1M/aADd7Gvb/QHelL9rug
+         5LhOtOK7rE2FhGMxGzYUsW/RPbr2R+X8gZvvlQ7rwftUz8k7t4ueMHClS/ezIMO/Yv/L
+         5/AhcguWqZSugRKYPOTH3q9/S+o3yWKsOZ3DwI5s8BZQNVZ/+1teHakv18ABNy8ELbRn
+         WcckM7J+JXVXWa0LXrIkVOxCWxuUSDsGlJOqPLEguOfsG7kKdV3dzapNCPgrWUEMpIBy
+         IHVQ==
+X-Gm-Message-State: AO0yUKVoBwoTlEPuxANQpzqBx29+xhpO9BEJfbdPf0qo6XydWZrz7VGi
+        Gqd/4P6X9WnUSYscYzEfeQnofrmRMJKQg5T0
+X-Google-Smtp-Source: AK7set9cn5BO+d//1tdhG5o9/L+aleIB2llC4eCNmVS0D9KXyY5j9tdBgFrEz8cy3bPnXbJQQ9vHOg==
+X-Received: by 2002:a05:6102:4420:b0:412:a5b:4c81 with SMTP id df32-20020a056102442000b004120a5b4c81mr4092523vsb.14.1676311890269;
+        Mon, 13 Feb 2023 10:11:30 -0800 (PST)
+Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com. [209.85.221.174])
+        by smtp.gmail.com with ESMTPSA id o128-20020a678c86000000b0040e5de1bdf2sm720294vsd.12.2023.02.13.10.11.28
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Feb 2023 10:09:38 -0800 (PST)
-Message-ID: <6131c8bb-6d21-60a6-14f9-dd7a2642a1cf@linaro.org>
-Date:   Mon, 13 Feb 2023 19:09:36 +0100
+        Mon, 13 Feb 2023 10:11:29 -0800 (PST)
+Received: by mail-vk1-f174.google.com with SMTP id f17so4141509vkm.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 10:11:28 -0800 (PST)
+X-Received: by 2002:a05:6122:243:b0:401:4f4b:22c2 with SMTP id
+ t3-20020a056122024300b004014f4b22c2mr967178vko.28.1676311888469; Mon, 13 Feb
+ 2023 10:11:28 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH v3 1/4] dt-bindings: remoteproc: qcom,sm6375-pas: Document
- remoteprocs
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>
-Cc:     linux-remoteproc@vger.kernel.org, andersson@kernel.org,
-        Rob Herring <robh+dt@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        marijn.suijten@somainline.org, linux-arm-msm@vger.kernel.org,
-        agross@kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        krzysztof.kozlowski@linaro.org,
-        Manivannan Sadhasivam <mani@kernel.org>
-References: <20230109135647.339224-1-konrad.dybcio@linaro.org>
- <20230109135647.339224-2-konrad.dybcio@linaro.org>
- <167328555792.1012753.8015526796598804432.robh@kernel.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <167328555792.1012753.8015526796598804432.robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+References: <1674814487-2112-1-git-send-email-quic_kalyant@quicinc.com>
+In-Reply-To: <1674814487-2112-1-git-send-email-quic_kalyant@quicinc.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 13 Feb 2023 10:11:15 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=XKOm1zLH+grTMD33QX_uX67AQ1ZUoyCYoAfUpqktCshg@mail.gmail.com>
+Message-ID: <CAD=FV=XKOm1zLH+grTMD33QX_uX67AQ1ZUoyCYoAfUpqktCshg@mail.gmail.com>
+Subject: Re: [v12] drm/msm/disp/dpu1: add support for dspp sub block flush in sc7280
+To:     Kalyan Thota <quic_kalyant@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, robdclark@chromium.org,
+        swboyd@chromium.org, quic_vpolimer@quicinc.com,
+        dmitry.baryshkov@linaro.org, quic_abhinavk@quicinc.com,
+        marijn.suijten@somainline.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
+
+On Fri, Jan 27, 2023 at 2:15 AM Kalyan Thota <quic_kalyant@quicinc.com> wrote:
+>
+> Flush mechanism for DSPP blocks has changed in sc7280 family, it
+> allows individual sub blocks to be flushed in coordination with
+> master flush control.
+>
+> Representation: master_flush && (PCC_flush | IGC_flush .. etc )
+>
+> This change adds necessary support for the above design.
+>
+> Changes in v1:
+> - Few nits (Doug, Dmitry)
+> - Restrict sub-block flush programming to dpu_hw_ctl file (Dmitry)
+>
+> Changes in v2:
+> - Move the address offset to flush macro (Dmitry)
+> - Separate ops for the sub block flush (Dmitry)
+>
+> Changes in v3:
+> - Reuse the DPU_DSPP_xx enum instead of a new one (Dmitry)
+>
+> Changes in v4:
+> - Use shorter version for unsigned int (Stephen)
+>
+> Changes in v5:
+> - Spurious patch please ignore.
+>
+> Changes in v6:
+> - Add SOB tag (Doug, Dmitry)
+>
+> Changes in v7:
+> - Cache flush mask per dspp (Dmitry)
+> - Few nits (Marijn)
+>
+> Changes in v8:
+> - Few nits (Marijn)
+>
+> Changes in v9:
+> - Use DSPP enum while accessing flush mask to make it readable (Dmitry)
+> - Few nits (Dmitry)
+>
+> Changes in v10:
+> - Fix white spaces in a separate patch (Dmitry)
+>
+> Changes in v11:
+> - Define a macro for dspp flush selection (Marijn)
+> - Few nits (Marijn)
+>
+> Changes in v12:
+> - Minor comments (reorder macros and a condition) (Marijn)
+>
+> Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c       |  2 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  5 ++-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |  4 +++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c     | 49 +++++++++++++++++++++++---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h     |  5 ++-
+>  5 files changed, 58 insertions(+), 7 deletions(-)
+
+There's a (trivial to resolve) merge conflict when applying this patch
+against msm-next. I dunno if that means you should send a v13?
+
+In any case, when using this patch together with the DSPP series [1]
+the internal night light works on sc7280-herobrine based boards. Thus:
+
+Tested-by: Douglas Anderson <dianders@chromium.org>
 
 
-On 9.01.2023 18:32, Rob Herring wrote:
-> 
-> On Mon, 09 Jan 2023 14:56:44 +0100, Konrad Dybcio wrote:
->> SM6375 hosts an ADSP, CDSP and modem as remote processors. Create
->> related bindings.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
-Could you take another look, Rob? I think it errored out because of
-me not having specified a dependency (which is in -next since Nov,
-but not in -rc), which I should have noted..
-
-Konrad
->> v2 -> v3:
->> - Separate out 6375 bindings
->>
->>  .../bindings/remoteproc/qcom,sm6375-pas.yaml  | 137 ++++++++++++++++++
->>  1 file changed, 137 insertions(+)
->>  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,sm6375-pas.yaml
->>
-> 
-> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> on your patch (DT_CHECKER_FLAGS is new in v5.13):
-> 
-> yamllint warnings/errors:
-> 
-> dtschema/dtc warnings/errors:
-> ./Documentation/devicetree/bindings/remoteproc/qcom,sm6375-pas.yaml: Unable to find schema file matching $id: http://devicetree.org/schemas/remoteproc/qcom,pas-common.yaml
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,sm6375-pas.example.dtb: remoteproc@a400000: False schema does not allow {'compatible': ['qcom,sm6375-adsp-pas'], 'reg': [[171966464, 256]], 'interrupts-extended': [[4294967295, 0, 282, 4], [4294967295, 0, 1], [4294967295, 1, 1], [4294967295, 2, 1], [4294967295, 3, 1]], 'interrupt-names': ['wdog', 'fatal', 'ready', 'handover', 'stop-ack'], 'clocks': [[4294967295, 0]], 'clock-names': ['xo'], 'power-domains': [[4294967295, 8], [4294967295, 9]], 'power-domain-names': ['lcx', 'lmx'], 'memory-region': [[4294967295]], 'qcom,smem-states': [[4294967295, 0]], 'qcom,smem-state-names': ['stop'], 'glink-edge': {'interrupts-extended': [[4294967295, 3, 0, 1]], 'mboxes': [[4294967295, 3, 0]], 'label': ['lpass'], 'qcom,remote-pid': [[2]]}, '$nodename': ['remoteproc@a400000']}
-> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,sm6375-pas.yaml
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,sm6375-pas.example.dtb: remoteproc@a400000: Unevaluated properties are not allowed ('glink-edge', 'memory-region', 'qcom,smem-state-names', 'qcom,smem-states' were unexpected)
-> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,sm6375-pas.yaml
-> 
-> doc reference errors (make refcheckdocs):
-> 
-> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230109135647.339224-2-konrad.dybcio@linaro.org
-> 
-> The base for the series is generally the latest rc1. A different dependency
-> should be noted in *this* patch.
-> 
-> If you already ran 'make dt_binding_check' and didn't see the above
-> error(s), then make sure 'yamllint' is installed and dt-schema is up to
-> date:
-> 
-> pip3 install dtschema --upgrade
-> 
-> Please check and re-submit after running the above command yourself. Note
-> that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-> your schema. However, it must be unset to test all examples with your schema.
-> 
+[1] https://lore.kernel.org/r/1676286704-818-1-git-send-email-quic_kalyant@quicinc.com/
