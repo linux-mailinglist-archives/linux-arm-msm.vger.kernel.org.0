@@ -2,118 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 691C8694E30
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 18:37:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 61A28694E92
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 19:00:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230124AbjBMRh4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Feb 2023 12:37:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51148 "EHLO
+        id S230447AbjBMR7o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Feb 2023 12:59:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230037AbjBMRhy (ORCPT
+        with ESMTP id S230444AbjBMR7j (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Feb 2023 12:37:54 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F17D526D
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 09:37:52 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id o18so13092970wrj.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 09:37:52 -0800 (PST)
+        Mon, 13 Feb 2023 12:59:39 -0500
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3EED2004F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 09:59:34 -0800 (PST)
+Received: by mail-ej1-x62b.google.com with SMTP id rp23so33881814ejb.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 09:59:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:from:references
-         :cc:to:content-language:subject:reply-to:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Lm+nS8Gg8zNsJOeniVA8BF4O8dai6Uu2xhyHNn6AZp4=;
-        b=qGq1QCag4qvKIbeV2URGx845jQQNrAsNE7/t8mft4MhTsu9ZbU8ugiTi5lUMDxNYxP
-         BqHoGYc633QgSywg7CrslRA1oU0yvhytYL9fsjY0PVSOp6OEnBJSVjQ6HUWlMgrr0g/X
-         ygQutKQae7oNQvhWUEyagVI5sBp50cFL+mRMV2PB8wbmpQZMXIHoOChE98bKR7cffw4X
-         QK4QcX1V10sJSLy8Fg8OEFiS2gehrh+/kwr3KRzZEYadELRrBYIJcKnHwGh3YTSLy9nW
-         6MmE8Ep7dznhB7yLGXWFXmGle6TBeJJ4kD7dZ/NYeU4Oilkq8f0usbyvsqnX1SR06K3L
-         azxA==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=HD5L0OzAE4T1VnHQ4734G2vgLjw/5WBq54Z8hcfCrhE=;
+        b=ZA7IiFd34saI3SzeE2KVXbK1Puclk9kUuZOSWK8vlqd/O6QUgLEIngbVXek2dPaTaI
+         k0pLVz642K8D+NwhplatifYkZ8T82r1Jc3kbF8PUfhEZ9y3PhtrVVt3ETpomyk0MQdm3
+         etJs8SyboBFRXuFkUFUR5oD1L5z6cAJt17538zSvHLuFOp9+Qe10hRNJMFTPSYr1/7Dk
+         N4FcMbklrQ4mt7Dko8B7XwZEBhO81Ed7blg5ltLbS9wyyY0iGGtRckvCgVDnSr2rwFp/
+         oWgMwdhCKBgkVrBgAshevcsik3B9pP043EW+IvBBf/r+i22qK1JmwOuDwDn1HFx0cNu9
+         iGWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:from:references
-         :cc:to:content-language:subject:reply-to:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Lm+nS8Gg8zNsJOeniVA8BF4O8dai6Uu2xhyHNn6AZp4=;
-        b=LqCW/pyc4hynoA4kXVW60ovveEW3s02KSEAV/wb0yXYAP162OQd4GObYc7/gvsVQRq
-         sUqHXUqv/lUaAxrejvf0MmKC1VMFV0Ug5OrtRUALGtzpjBBic5u2x173y9paKdMrsXOF
-         bAGxwqBB5GYPIGFXAMZEb0LOXaINOrVEt2psVpxi+NkLfSor/vlXgD0TWPsQp0QuA5lG
-         KUFVS2B/jyITg/OLKcEUe5043UjXGTlZf/CcN2VJ4QkwN+BJkBl8dOsg9+MV+/qsPKu7
-         ETb6xEO31JEGZJ1Nf1z66TtdfAIbbzhqbtQprQoOyaM67cvNl6nvfxIV+TS/hY7iQh7w
-         uXrg==
-X-Gm-Message-State: AO0yUKWd+n595LFftZVbrr+Selihj+Si93ZLd0fHi1x9pr+s/5FQXVAd
-        Lqt8GbadpgtWBmw/0xDRdWAyeA==
-X-Google-Smtp-Source: AK7set+wfm9Wu6RZwRDIjW5aqZ6Def93fJ8BzWh4HA3WKGaWSH+d4r3QTVYCqzv0sYj4mVyUnNjGNA==
-X-Received: by 2002:a5d:4690:0:b0:2c5:4659:3e76 with SMTP id u16-20020a5d4690000000b002c546593e76mr8641780wrq.18.1676309871115;
-        Mon, 13 Feb 2023 09:37:51 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:915c:811a:b081:f099? ([2a01:e0a:982:cbb0:915c:811a:b081:f099])
-        by smtp.gmail.com with ESMTPSA id i14-20020adff30e000000b00241fab5a296sm11084142wro.40.2023.02.13.09.37.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Feb 2023 09:37:50 -0800 (PST)
-Message-ID: <fd8985d1-4eb6-3d69-230a-485aa8bc66dc@linaro.org>
-Date:   Mon, 13 Feb 2023 18:37:49 +0100
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=HD5L0OzAE4T1VnHQ4734G2vgLjw/5WBq54Z8hcfCrhE=;
+        b=ryrzoKymJLMl0ezqdbpypZKkzLp4noj7aWUDTs+NNoHcCu80m/M7snIBG6p8qfw5+m
+         JFJbemjZx395wTt7JinK0/Eyn0MG4JXnx6OD3ZNf0MiylE9PDlCC3/HwqpZbFjahwCTu
+         xQCPTUrg6c9oHFMN6PngCV9lEG246Z7Si4ch4Gf5IQH/i96oyCOOhdpyoVfeNgm5Ast5
+         hLEaAPii84CvepPZ/aee0xMs+1DCOA2XLrO3BWC7NHy3dKR6hHogTPtCEnTAhXkL1/QZ
+         n3pfesj/Q1qsMO4Nc7MwXu4FYxWJBq5MexSkTsXi7Mg/r+C4ry47d7524U8x0NhgNr/j
+         S/JQ==
+X-Gm-Message-State: AO0yUKW9KKOGQkwsuY92PHGlyIOQyZ5Z5OIU6dvUqRzxr8weBVGbQ4G+
+        BzWqToZ+aQmRIqQGkm+RqjiLIRcZPBbeHIZo
+X-Google-Smtp-Source: AK7set+aEw/jx9c3aPqnoOKU5elwDHNeGgjIExg/5B0AjW8znvgeCOVyS+e0pR5Q0byixiaAS/H0pw==
+X-Received: by 2002:a17:907:80e:b0:8af:447a:ff8e with SMTP id wv14-20020a170907080e00b008af447aff8emr17167815ejb.20.1676311173155;
+        Mon, 13 Feb 2023 09:59:33 -0800 (PST)
+Received: from localhost.localdomain (abxh117.neoplus.adsl.tpnet.pl. [83.9.1.117])
+        by smtp.gmail.com with ESMTPSA id kq15-20020a170906abcf00b0086ffe8a00fdsm7074309ejb.84.2023.02.13.09.59.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Feb 2023 09:59:32 -0800 (PST)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     marijn.suijten@somainline.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sm6375: Add RMTFS
+Date:   Mon, 13 Feb 2023 18:59:28 +0100
+Message-Id: <20230213175928.1979637-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v2 03/50] drm/msm/dpu: fix typo in in sm8550's dma_sblk_5
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20230211231259.1308718-1-dmitry.baryshkov@linaro.org>
- <20230211231259.1308718-4-dmitry.baryshkov@linaro.org>
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <20230211231259.1308718-4-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/02/2023 00:12, Dmitry Baryshkov wrote:
-> Fix typo if the name of the sblk structure for the sm8550's dma_sblk_5.
-> 
-> Fixes: efcd0107727c ("drm/msm/dpu: add support for SM8550")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> index eea026cf3ac2..e8b12788dc94 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> @@ -1309,7 +1309,7 @@ static const struct dpu_sspp_sub_blks sm8550_vig_sblk_2 =
->   static const struct dpu_sspp_sub_blks sm8550_vig_sblk_3 =
->   				_VIG_SBLK("3", 10, DPU_SSPP_SCALER_QSEED3LITE);
->   static const struct dpu_sspp_sub_blks sm8550_dma_sblk_4 = _DMA_SBLK("12", 5);
-> -static const struct dpu_sspp_sub_blks sd8550_dma_sblk_5 = _DMA_SBLK("13", 6);
-> +static const struct dpu_sspp_sub_blks sm8550_dma_sblk_5 = _DMA_SBLK("13", 6);
->   
->   static const struct dpu_sspp_cfg sm8550_sspp[] = {
->   	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_SC7180_MASK,
-> @@ -1331,7 +1331,7 @@ static const struct dpu_sspp_cfg sm8550_sspp[] = {
->   	SSPP_BLK("sspp_12", SSPP_DMA4, 0x2c000,  DMA_CURSOR_SDM845_MASK,
->   		sm8550_dma_sblk_4, 14, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR0),
->   	SSPP_BLK("sspp_13", SSPP_DMA5, 0x2e000,  DMA_CURSOR_SDM845_MASK,
-> -		sd8550_dma_sblk_5, 15, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR1),
-> +		sm8550_dma_sblk_5, 15, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR1),
->   };
->   
->   static const struct dpu_sspp_cfg sc7280_sspp[] = {
+Add a node for RMTFS on SM6375.
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sm6375.dtsi | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm6375.dtsi b/arch/arm64/boot/dts/qcom/sm6375.dtsi
+index 5795c6cb7364..404aeae0033f 100644
+--- a/arch/arm64/boot/dts/qcom/sm6375.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6375.dtsi
+@@ -7,6 +7,7 @@
+ #include <dt-bindings/clock/qcom,sm6375-dispcc.h>
+ #include <dt-bindings/clock/qcom,sm6375-gcc.h>
+ #include <dt-bindings/dma/qcom-gpi.h>
++#include <dt-bindings/firmware/qcom,scm.h>
+ #include <dt-bindings/interconnect/qcom,sm6375.h>
+ #include <dt-bindings/interrupt-controller/arm-gic.h>
+ #include <dt-bindings/mailbox/qcom-ipcc.h>
+@@ -426,6 +427,15 @@ removed_mem: removed@c0000000 {
+ 			no-map;
+ 		};
+ 
++		rmtfs_mem: rmtfs@f3900000 {
++			compatible = "qcom,rmtfs-mem";
++			reg = <0 0xf3900000 0 0x280000>;
++			no-map;
++
++			qcom,client-id = <1>;
++			qcom,vmid = <QCOM_SCM_VMID_MSS_MSA QCOM_SCM_VMID_NAV>;
++		};
++
+ 		debug_mem: debug@ffb00000 {
+ 			reg = <0 0xffb00000 0 0xc0000>;
+ 			no-map;
+-- 
+2.39.1
+
