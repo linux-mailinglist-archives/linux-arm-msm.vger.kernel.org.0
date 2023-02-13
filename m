@@ -2,246 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 212B7695356
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 22:46:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BB07F695360
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 22:49:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229798AbjBMVqS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Feb 2023 16:46:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37968 "EHLO
+        id S229489AbjBMVtl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Feb 2023 16:49:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231159AbjBMVqQ (ORCPT
+        with ESMTP id S229622AbjBMVtk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Feb 2023 16:46:16 -0500
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D20171554C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 13:46:13 -0800 (PST)
-Received: by mail-ej1-x631.google.com with SMTP id a3so1293477ejb.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 13:46:13 -0800 (PST)
+        Mon, 13 Feb 2023 16:49:40 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 721FFEB6D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 13:49:39 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id p12so7675556edc.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 13:49:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=cLqbD4GL7wGt7wb5qOSWcpBX+EUA83fR85j9v5NAA80=;
-        b=yHlIZp5ficXr4X8XRD0YbnUlgk9MpuTsDUbZ9rqtE2SXrhMeI7NHGFo4bCZ1uACMtR
-         V3ho3QqXsAl0JxMknz4NE8nNturALTlkGsji1a5ONcfjxDFxo5p0FfGgc7V3LuatrsIp
-         TGxUbn7AqxoyyVxBGk+MBaP11Pmc/37SmSEPQtSbd3D69W8IxGxlFlgCk9urHd10wj76
-         6UehSRgHmFBBR1SwRmpV4vzHL9u2q7TbeGXB5hzCUhBkkO8q6reUyOziIk/rxyJRBDC3
-         gBqcQj08hFkpwGQ833GLdDyVO0BKvDPHyf+dLFxsCcrEkF3Lu59I9N63cH5aeAvLHwea
-         s+Ng==
+        bh=HgFJ7WP5/aQ3NluuT93tSKXCSYsdZX4LGCi7cSWevq8=;
+        b=xmd72FGQOLvdnEriWfOGMMya7fd9XHpHh1fJDUIaKxAACBQk/GqDJrvUOlEZV7QdBe
+         xM3UUh/Nqa5rm/jgcI6PIrZUK0AC3qILfm6mp76DBZ0buGPu1nQioAOJRdGQfxEnlwFR
+         VhAV/8/r39OXG8UEBv4HOck0NMjMYBLktb6s7v+u0eyQ58p38zMV5jVya36QFk4PktOB
+         Oel0paMAUXdfmU7B+qUcoGkyEG69LFxpEXYAHs0qWUtVe8NWXAPZWyB2eKpRh/rPTeF4
+         e03BCwoJ/gwuFa/WcMq3pcLksN5w9h1kkoocGw7FmhXP7rmyzFcZ4e3NA46o7am5WUAd
+         eReQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cLqbD4GL7wGt7wb5qOSWcpBX+EUA83fR85j9v5NAA80=;
-        b=cB95kLIf97mfNri2wAGgfB1S8Haacn070b1LSJgRz2HvVGLC5FXsfdtIX8vmwDd3Cg
-         c9nQP5Kpu6eZpqxmgjqUsLuZSrzyVgE4shY0NYeQLxtrkgbiY42MhgI/87qkelNQKl03
-         ydKujl3DGDKE4ilHqVN0TIRqOyaQRkhYndLw4BYUoQd0HFcgrSrUQ9Xdp53SUSAopw0f
-         c7Wfkd6/KIesA1cy/anzEt8MmRAduGb2804igVMlrNWYLD7mklCp5gJIRNmOK2cNmu61
-         UN83CNd3XsudF8GUpME37pacQdxawHQp3HvFJ5wxj17oS265NMezViOR0jvgefR57L3T
-         bUNA==
-X-Gm-Message-State: AO0yUKXiGrp5kYrnWL3yBoTCZZw/f9QiMr7OT8+DEzDcw/1Hvth5TJik
-        Kn+5tJ6WgJVoBOr06QMVQktYXw==
-X-Google-Smtp-Source: AK7set9aAcUj8MPJa0hpm1RoqSyPXeXAENwlb572NSMRk8UGq6YFqH3lfDUTDPiGMw1iZzQiQnH4rQ==
-X-Received: by 2002:a17:906:d7b3:b0:8a4:e0a2:e774 with SMTP id pk19-20020a170906d7b300b008a4e0a2e774mr411473ejb.29.1676324772363;
-        Mon, 13 Feb 2023 13:46:12 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id gh2-20020a1709073c0200b008b124134fb4sm554895ejc.115.2023.02.13.13.46.10
+        bh=HgFJ7WP5/aQ3NluuT93tSKXCSYsdZX4LGCi7cSWevq8=;
+        b=eBrP5lS1MPZlRpnes3o/jy7PHFZR4WXZnoZuM/2dGZh9KzNnC8fKiMN/xUVZgIEV4D
+         nuNqDnHWKsagEKSaou/yafCRbR2HSFV+YNIMMxST9nE3vbyqCBOijTobrSpeoxkEWCr+
+         3bMoSBIFJyjYNM6SHrNgEfsj/wVWggbNcZuA8bjyRocKtvrQCikPnvXtWv8JZsH4XUkH
+         9uY1LPwPmWYyrYk0n94XdDuc/r6e/GNfFcau1ugGP/rIUKQ5DZdRgW8l/0dAGBRb/Z02
+         TAkpKKKYt7v6YRHU4crOp4Jt3jGwxKjewIEYY4k6BA8njeVPLLdrDHxfayNZ/RZz3HBc
+         FNaA==
+X-Gm-Message-State: AO0yUKUGPgAQjZvktmoOhixxSsURSxRji3uqoo8mtXLdNv9GtbX/ibVL
+        9y/c0LVAydMrDqXZU2R4LKoC6A==
+X-Google-Smtp-Source: AK7set8d4SLsjD+XttY8D3PsH66Er6RGiL4rUP4KCx34brMmzTgCNpL16KvuvhhFV2zNv6DJapCg3w==
+X-Received: by 2002:a50:9e23:0:b0:4a2:6573:5c35 with SMTP id z32-20020a509e23000000b004a265735c35mr158012ede.21.1676324978032;
+        Mon, 13 Feb 2023 13:49:38 -0800 (PST)
+Received: from [192.168.1.101] (abxh117.neoplus.adsl.tpnet.pl. [83.9.1.117])
+        by smtp.gmail.com with ESMTPSA id r30-20020a50aade000000b004acbe846b8fsm3270242edc.34.2023.02.13.13.49.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Feb 2023 13:46:11 -0800 (PST)
-Message-ID: <1051d6bd-eb3c-6293-0bd2-3f4ea28fa3f8@linaro.org>
-Date:   Mon, 13 Feb 2023 23:46:09 +0200
+        Mon, 13 Feb 2023 13:49:37 -0800 (PST)
+Message-ID: <d34d8851-fd73-9b87-9340-df25b64e96bb@linaro.org>
+Date:   Mon, 13 Feb 2023 22:49:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [RFC PATCH 5/7] drm/msm/dpu: Document and enable TEAR interrupts
- on DSI interfaces
-Content-Language: en-GB
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        phone-devel@vger.kernel.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Vinod Polimera <quic_vpolimer@quicinc.com>,
-        Adam Skladowski <a39.skl@gmail.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20221231215006.211860-1-marijn.suijten@somainline.org>
- <20221231215006.211860-6-marijn.suijten@somainline.org>
- <773cd72b-a766-1764-e25f-0af1174f0e51@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <773cd72b-a766-1764-e25f-0af1174f0e51@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH] arm64: dts: qcom: msm8996: Add missing property for
+ OnePlus 3T
+Content-Language: en-US
+To:     "Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+        linux-arm-msm@vger.kernel.org
+Cc:     devicetree@vger.kernel.org, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@somainline.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        kernel-dev@igalia.com, kernel@gpiccoli.net,
+        Harry Austen <hpausten@protonmail.com>,
+        Yassine Oudjana <y.oudjana@protonmail.com>
+References: <20230213201651.1902323-1-gpiccoli@igalia.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230213201651.1902323-1-gpiccoli@igalia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/02/2023 21:37, Jessica Zhang wrote:
-> 
-> 
-> On 12/31/2022 1:50 PM, Marijn Suijten wrote:
->> All SoCs since DPU 5.0.0 (and seemingly up until and including 6.0.0,
->> but excluding 7.x.x) have the tear interrupt and control registers moved
->> out of the PINGPONG block and into the INTF block.  Wire up the
->> necessary interrupts and IRQ masks on all supported hardware.
-> 
-> Hi Marijn,
-> 
-> Thanks for the patch.
-> 
-> I saw that in your commit msg, you mentioned that 7.x doesn't have 
-> tearcheck in the INTF block -- can you double check that this is correct?
-> 
-> I'm working on SM8350 (DPU v7) and I'm seeing that it does have 
-> tearcheck in INTF block.
 
-I confirm, according to the vendor drivers INTF TE should be used for 
-all DPU >= 5.0, including 7.x and 8.x
 
-However I think I know what Marijn meant here. For 5.x and 6.x these 
-IRQs are handled at the address MDSS + 0x6e800 / + 0x6e900 (which means 
-offset here should 0x6d800 and 0x6d900) for INTF_1 and INTF_2. Since DPU 
-7.x these IRQ registers were moved close to the main INTF block (0x36800 
-and 0x37800 = INTF + 0x800).
-
+On 13.02.2023 21:16, Guilherme G. Piccoli wrote:
+> Commit 5a134c940cd3 ("arm64: dts: qcom: msm8996: add support for oneplus3(t)")
+> added support for OnePlus 3T device, but missed the "qcom,msm-id"
+> property - without that, skales-dtbtool fails to build the device tree
+> image. Let's hereby add it, mimic'ing OnePlus 3.
 > 
->>
->> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
->> ---
->>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 78 +++++++++++--------
->>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  6 +-
->>   .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 12 +++
->>   .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h |  2 +
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h      |  3 +
->>   5 files changed, 68 insertions(+), 33 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->> index 1cfe94494135..b9b9b5b0b615 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->> @@ -86,6 +86,15 @@
->>   #define INTF_SC7280_MASK INTF_SC7180_MASK | BIT(DPU_DATA_HCTL_EN)
->> +#define IRQ_MSM8998_MASK (BIT(MDP_SSPP_TOP0_INTR) | \
->> +             BIT(MDP_SSPP_TOP0_INTR2) | \
->> +             BIT(MDP_SSPP_TOP0_HIST_INTR) | \
->> +             BIT(MDP_INTF0_INTR) | \
->> +             BIT(MDP_INTF1_INTR) | \
->> +             BIT(MDP_INTF2_INTR) | \
->> +             BIT(MDP_INTF3_INTR) | \
->> +             BIT(MDP_INTF4_INTR))
->> +
->>   #define IRQ_SDM845_MASK (BIT(MDP_SSPP_TOP0_INTR) | \
->>                BIT(MDP_SSPP_TOP0_INTR2) | \
->>                BIT(MDP_SSPP_TOP0_HIST_INTR) | \
->> @@ -100,13 +109,15 @@
->>   #define IRQ_QCM2290_MASK (BIT(MDP_SSPP_TOP0_INTR) | \
->>                BIT(MDP_SSPP_TOP0_INTR2) | \
->>                BIT(MDP_SSPP_TOP0_HIST_INTR) | \
->> -             BIT(MDP_INTF1_INTR))
->> +             BIT(MDP_INTF1_INTR) | \
->> +             BIT(MDP_INTF1_TEAR_INTR))
->>   #define IRQ_SC7180_MASK (BIT(MDP_SSPP_TOP0_INTR) | \
->>                BIT(MDP_SSPP_TOP0_INTR2) | \
->>                BIT(MDP_SSPP_TOP0_HIST_INTR) | \
->>                BIT(MDP_INTF0_INTR) | \
->> -             BIT(MDP_INTF1_INTR))
->> +             BIT(MDP_INTF1_INTR) | \
->> +             BIT(MDP_INTF1_TEAR_INTR))
->>   #define IRQ_SC7280_MASK (BIT(MDP_SSPP_TOP0_INTR) | \
->>                BIT(MDP_SSPP_TOP0_INTR2) | \
->> @@ -120,7 +131,9 @@
->>                BIT(MDP_SSPP_TOP0_HIST_INTR) | \
->>                BIT(MDP_INTF0_INTR) | \
->>                BIT(MDP_INTF1_INTR) | \
->> +             BIT(MDP_INTF1_TEAR_INTR) | \
->>                BIT(MDP_INTF2_INTR) | \
->> +             BIT(MDP_INTF2_TEAR_INTR) | \
->>                BIT(MDP_INTF3_INTR) | \
->>                BIT(MDP_INTF4_INTR))
->> @@ -129,7 +142,9 @@
->>                 BIT(MDP_SSPP_TOP0_HIST_INTR) | \
->>                 BIT(MDP_INTF0_INTR) | \
->>                 BIT(MDP_INTF1_INTR) | \
->> +              BIT(MDP_INTF1_TEAR_INTR) | \
->>                 BIT(MDP_INTF2_INTR) | \
->> +              BIT(MDP_INTF2_TEAR_INTR) | \
->>                 BIT(MDP_INTF3_INTR) | \
->>                 BIT(MDP_INTF4_INTR) | \
->>                 BIT(MDP_INTF5_INTR) | \
->> @@ -1300,63 +1315,64 @@ static struct dpu_dsc_cfg sdm845_dsc[] = {
->>   /*************************************************************
->>    * INTF sub blocks config
->>    *************************************************************/
->> -#define INTF_BLK(_name, _id, _base, _type, _ctrl_id, _progfetch, 
->> _features, _reg, _underrun_bit, _vsync_bit) \
->> +#define INTF_BLK(_name, _id, _base, _len, _type, _ctrl_id, 
->> _progfetch, _features, _reg, _underrun_bit, _vsync_bit, _tear_reg, 
->> _tear_rd_ptr_bit) \
->>       {\
->>       .name = _name, .id = _id, \
->> -    .base = _base, .len = 0x280, \
->> +    .base = _base, .len = _len, \
->>       .features = _features, \
->>       .type = _type, \
->>       .controller_id = _ctrl_id, \
->>       .prog_fetch_lines_worst_case = _progfetch, \
->>       .intr_underrun = DPU_IRQ_IDX(_reg, _underrun_bit), \
->>       .intr_vsync = DPU_IRQ_IDX(_reg, _vsync_bit), \
->> +    .intr_tear_rd_ptr = DPU_IRQ_IDX(_tear_reg, _tear_rd_ptr_bit), \
->>       }
->>   static const struct dpu_intf_cfg msm8998_intf[] = {
->> -    INTF_BLK("intf_0", INTF_0, 0x6A000, INTF_DP, 0, 25, 
->> INTF_SDM845_MASK, MDP_SSPP_TOP0_INTR, 24, 25),
->> -    INTF_BLK("intf_1", INTF_1, 0x6A800, INTF_DSI, 0, 25, 
->> INTF_SDM845_MASK, MDP_SSPP_TOP0_INTR, 26, 27),
->> -    INTF_BLK("intf_2", INTF_2, 0x6B000, INTF_DSI, 1, 25, 
->> INTF_SDM845_MASK, MDP_SSPP_TOP0_INTR, 28, 29),
->> -    INTF_BLK("intf_3", INTF_3, 0x6B800, INTF_HDMI, 0, 25, 
->> INTF_SDM845_MASK, MDP_SSPP_TOP0_INTR, 30, 31),
->> +    INTF_BLK("intf_0", INTF_0, 0x6A000, 0x268, INTF_DP, 0, 25, 
->> INTF_SDM845_MASK, MDP_SSPP_TOP0_INTR, 24, 25, -1, -1),
+> Fixes: 5a134c940cd3 ("arm64: dts: qcom: msm8996: add support for oneplus3(t)")
+> Cc: Harry Austen <hpausten@protonmail.com>
+> Cc: Yassine Oudjana <y.oudjana@protonmail.com>
+> Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
+> ---
+>  arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dts | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> Just wondering, how were the lengths calculated for the INTF blocks? The 
-> values in general seem a little off to me.
-> 
-> For example, I'm looking downstream and it seems to me that the length 
-> for the INTF_0 on MSM8998 should be 0x280. Similarly for SC7280, I'm 
-> seeing that length for INTF + tearcheck should be 0x2c4.
+> diff --git a/arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dts b/arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dts
+> index 34f837dd0c12..5dc8f0adab30 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dts
+> +++ b/arch/arm64/boot/dts/qcom/msm8996-oneplus3t.dts
+> @@ -14,6 +14,7 @@ / {
+>  	qcom,board-id = <8 0 15811 26>,
+>  			<8 0 15811 27>,
+>  			<8 0 15811 28>;
+> +	qcom,msm-id = <246 0x30001>;
+Hm, this doesn't sound right.. Internet says 3T has 8996Pro..
+Could you check:
 
-We have discussed INTF lengths in [1]. The current understanding of the 
-block lengths can be found at [2]. Please comment there if any of the 
-fixed lengths sounds incorrect to you.
+/sys/bus/soc/devices/soc0/soc_id  # reg[0]
+/sys/bus/soc/devices/soc0/revision # reg[1] after some shifting
 
-[1] https://patchwork.freedesktop.org/patch/522187/
-[2] https://patchwork.freedesktop.org/patch/522227/
+Also, please include include/dt-bindings/arm/qcom,ids.h and use
+the preprocessor constant from there instead of a magic number in
+the first part of the reg value.
 
-[skipped the rest]
-
--- 
-With best wishes
-Dmitry
-
+Konrad
+>  };
+>  
+>  &adsp_pil {
