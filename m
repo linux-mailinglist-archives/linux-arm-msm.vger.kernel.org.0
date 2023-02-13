@@ -2,116 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9903D695366
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 22:51:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4748969536E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 22:55:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229637AbjBMVvg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Feb 2023 16:51:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41572 "EHLO
+        id S230044AbjBMVzG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Feb 2023 16:55:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229622AbjBMVvf (ORCPT
+        with ESMTP id S230319AbjBMVzF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Feb 2023 16:51:35 -0500
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1858B17162
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 13:51:33 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id sa10so35280293ejc.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 13:51:33 -0800 (PST)
+        Mon, 13 Feb 2023 16:55:05 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73C5B17162
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 13:55:04 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id bt8so9063309edb.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 13:55:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=vUpjCT580eIamS7QEB/Hj5fWMwSgSVQG6uKwdpnGJwo=;
-        b=S+sOkd0b6eN7z3Ur5MTQ7tVd+PEnlrg4GQlMZjXGjwZ3bIwh8ntLN6LyTo4kWlk8cD
-         iWgZxT6zetryWitgM1p5Hln517yd+J6QkNL/5/390W2PcpqLaiTRAY2/pWMknpGeB1CD
-         ifz34yh1uLSXIH1fwz8yY7TvcyNmgS4Y2T+mkB4tm3kM7zHxpNmzRnry4KB6XKVHDqKc
-         eA4uV5Qi+7mrnDmH3368PDO/cQfPioOzxSmy2OLN8fmDDdNnqfLtkCFuKGVlLiFg3QYe
-         LGfpEy1vaX72mlGI2GfFxlFyWg5xl83n4+uc177UFJEct2HizO0+F9cSBl4eQNSwlmzv
-         dBWw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=iKAZgUcGAsaoUrTcrozzl66DRQFN/kA73HojvdU9gsg=;
+        b=szI7X+aMLGgxPmWUyoGnyXn4Yt1POMEP3p3aGLtUiGc5iphf+mRgubAJfWazo/wDaU
+         8DFT9D300PJEfNjz3vZxyG1juL6h63NYIjQQvkeeXCNxaa+zHaLMX2v+po918HiaiXyX
+         t2cEaWP67YWuZT/O8CRGk7Eo5KleivU2DHxkMyb3BDlYOyFf3E382OdItG+/BFcxZR3c
+         3DR0+/Er7CNTgK9buimgwUvQXJ9bmQ0LSxzg0vHb0WmPa3x3w/uaHfR3XD1zjRVHFNpF
+         BCQJaP8eP4tKyohoBMX50Tq1akPjS3kLvhIplq0LPgxNHwKMSOu/OVXosK/+6HS3yZKf
+         WOdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vUpjCT580eIamS7QEB/Hj5fWMwSgSVQG6uKwdpnGJwo=;
-        b=ehl0bhbCi864eYatiK7anvuavDcRrTseH39fV6b+pK8Cg8ZGl7DJ7LEmrdb0b3UgOU
-         CHbgbcZzO9P7cXHsaaN8ss4THd4+jwTq+qYA2wbR9PtcLpj40CZVUS0iTyqLnTSZGAT0
-         vff7Jb7Nye7m9/+Zn2oieaLRNPOxmXYx66FSNGUWWP2WYc+hckrF6n5sOwLr2RHBwB+B
-         B9acPQWsn5NYEbT7CCVbpRAkJ2C7Evdy6uAiiJqx5wGLInvCoKI1mZ/2cRyi8EdwFvNX
-         PugpCYI63zFwczj65K6pKoUE97tAVTTLnLXxCzK+tvFNZ0pYsU63+iEQlKvvKyghqzAP
-         ysLg==
-X-Gm-Message-State: AO0yUKVpTkvuXXPU35Psh1eKFHagcSqnB9L7KB5zKnodTV22eMpRGPCU
-        AY0iQw3biw0TxP1l/0AsCdtb/igEz7dRZhRo
-X-Google-Smtp-Source: AK7set9qLV84uDx5VeuBXVeINqKPVKCp3FzJQJDsXdvkFLe6k7HBV8fW5OJ5TgIWROtz7o3hn2kUbw==
-X-Received: by 2002:a17:906:87d1:b0:889:1eb1:7517 with SMTP id zb17-20020a17090687d100b008891eb17517mr413130ejb.30.1676325091616;
-        Mon, 13 Feb 2023 13:51:31 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id o13-20020a17090611cd00b008b12c368ba0sm66995eja.45.2023.02.13.13.51.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Feb 2023 13:51:31 -0800 (PST)
-Message-ID: <af5679a4-93b9-fb9b-cc5f-8669da57b7cf@linaro.org>
-Date:   Mon, 13 Feb 2023 23:51:30 +0200
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iKAZgUcGAsaoUrTcrozzl66DRQFN/kA73HojvdU9gsg=;
+        b=M+HykktHsIq+fPEl+wcKrPeJX2mVKejfltKjmApjMEcuIN+rgZDpS0vQ0RFV6UQNFc
+         7/aGz59r2tJCMRWUVmjOjjIKzD7xtnK3DgolFWNu7RD1vb1G3N2NKNJOJVcR00R2C08P
+         M9apZzISdmBXTCU2C+cLbdW5MBmWLm9GJJBShNY5Xx1PymmL+hb3SUrR/ZkaZVj3uCFv
+         lAX/MXrMLm7SRkDOWStByoFrCLThMdagbz8eSluP2S50fRE3SdRacq2gkMAfPOGUACb5
+         4Rd/wKpxE5qZx7lneCqZgr/+L6B47jF80xJwm7og1bryROqUEi2/04A45FfRWy07r943
+         O5rA==
+X-Gm-Message-State: AO0yUKUqLLoDaTXVfIgGtqBE8l6v4eMAYdMvwSO3BgAvOJnVkeF6C6Gb
+        yak7vAnv5H8wkaCYs4YtuU68UTAXBgiWylyK
+X-Google-Smtp-Source: AK7set+XiO3jhyEoqEcNDS8/GqYdwfxwar+RJoB/bnqwf9vqOyws+WWcliUiOPxv2CKvSL/BLfifxQ==
+X-Received: by 2002:a05:6402:320a:b0:4ab:1db8:df45 with SMTP id g10-20020a056402320a00b004ab1db8df45mr10635503eda.8.1676325302829;
+        Mon, 13 Feb 2023 13:55:02 -0800 (PST)
+Received: from localhost.localdomain (abxh117.neoplus.adsl.tpnet.pl. [83.9.1.117])
+        by smtp.gmail.com with ESMTPSA id v1-20020a50a441000000b004aab66d34c7sm7264837edb.7.2023.02.13.13.55.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Feb 2023 13:55:02 -0800 (PST)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     marijn.suijten@somainline.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] soc: qcom: socinfo: Add some PMICs
+Date:   Mon, 13 Feb 2023 22:55:00 +0100
+Message-Id: <20230213215500.2131511-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [RFC PATCH v3 0/4] Move TE setup to prepare_for_kickoff()
-Content-Language: en-GB
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        freedreno@lists.freedesktop.org
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
-        quic_abhinavk@quicinc.com, marijn.suijten@somainline.org
-References: <20230213194819.608-1-quic_jesszhan@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230213194819.608-1-quic_jesszhan@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/02/2023 21:48, Jessica Zhang wrote:
-> Move TE setup to prepare_for_kickoff() and remove empty prepare_commit()
-> functions in both MDP4 and DPU drivers.
-> 
-> Changes in V2:
-> - Added changes to remove empty prepare_commit() functions
-> 
-> Changes in V3:
-> - Reordered "drm/msm/dpu: Move TE setup to prepare_for_kickoff()" for
->    clarity
-> - Fixed spelling mistakes and wording issues
-> - Picked up "Reviewed-by" tags for patches [2/4] and [4/4]
+Add some missing PMICs based on the _SUBTYPE defines in
+include/soc/qcom/qcom-spmi-pmic.h
 
-Is it just me or patch 4/4 is missing? Patchwork also hasn't seen it:
-https://patchwork.freedesktop.org/series/113967/
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ drivers/soc/qcom/socinfo.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-If you can send it with the proper in-reply-to (set to 
-20230213194819.608-1-quic_jesszhan@quicinc.com), that would be great.
-
-> 
-> Jessica Zhang (4):
->    drm/msm/dpu: Move TE setup to prepare_for_kickoff()
->    drm/msm: Check for NULL before calling prepare_commit()
->    drm/msm/dpu: Remove empty prepare_commit() function
->    drm/msm/mdp4: Remove empty prepare_commit() function
-> 
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 19 -----------------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h   |  7 -------
->   .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  | 10 ++++++---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       | 21 -------------------
->   drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c      |  5 -----
->   drivers/gpu/drm/msm/msm_atomic.c              |  3 ++-
->   6 files changed, 9 insertions(+), 56 deletions(-)
-> 
-
+diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
+index e9012ca1a87b..b9d58b6ed6b4 100644
+--- a/drivers/soc/qcom/socinfo.c
++++ b/drivers/soc/qcom/socinfo.c
+@@ -109,15 +109,20 @@ static const char *const pmic_models[] = {
+ 	[32] = "PM8150B",
+ 	[33] = "PMK8002",
+ 	[36] = "PM8009",
++	[37] = "PMI632",
+ 	[38] = "PM8150C",
++	[40] = "PM6150",
+ 	[41] = "SMB2351",
++	[44] = "PM8008",
+ 	[45] = "PM6125",
++	[46] = "PM7250B",
+ 	[47] = "PMK8350",
+ 	[48] = "PM8350",
+ 	[49] = "PM8350C",
+ 	[50] = "PM8350B",
+ 	[51] = "PMR735A",
+ 	[52] = "PMR735B",
++	[55] = "PM2250",
+ 	[58] = "PM8450",
+ 	[65] = "PM8010",
+ };
 -- 
-With best wishes
-Dmitry
+2.39.1
 
