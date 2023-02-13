@@ -2,301 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2BB97695384
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 22:58:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D40D5695388
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 23:00:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229715AbjBMV65 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Feb 2023 16:58:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47640 "EHLO
+        id S229489AbjBMWAv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Feb 2023 17:00:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229584AbjBMV64 (ORCPT
+        with ESMTP id S229485AbjBMWAv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Feb 2023 16:58:56 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 321075B89;
-        Mon, 13 Feb 2023 13:58:55 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31DKJPcB026967;
-        Mon, 13 Feb 2023 21:58:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=Mjk0/1iKPD0KOdoFhc789rALdju1bfj/uDkzDhz83Wc=;
- b=moptY7fZSKgUX5/Md/kBgvnhJkHHinAA9y0IQF/MnbXofxuk+CzM8Wwk6OBxxuje1xKM
- z4+1nsZtj7DjQFwNbp3C/avtzrSU35/5VLCMLy49JgVR3R2nn7Zs5PSULHfef7jJ+2Rh
- BcgsvXqsTdPLSCYJV2oSNDT6ikpIse6c8tj8JCCS0dvQhTeTcRTNNWZQdLF+WD/1YTTJ
- r53gQqYFI1Z97vblY6PYjRhOtWu8NEUA/abhcptqcCptA25M8N6l0T7zuLNkh7p3r5Vi
- dvjU6f4LgOvnLsqPf+ZbShuKJNhkLiCC6931cq0ZdM+BkU3M5Kyed4xugyFhrdKW+aAA aw== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3np389w40q-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 13 Feb 2023 21:58:47 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31DLwlSb013322
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 13 Feb 2023 21:58:47 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Mon, 13 Feb 2023 13:58:46 -0800
-Date:   Mon, 13 Feb 2023 13:58:45 -0800
-From:   Bjorn Andersson <quic_bjorande@quicinc.com>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-CC:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-Subject: Re: [PATCH v3 2/4] arm64: dts: qcom: sc8280xp-crd: Introduce
- pmic_glink
-Message-ID: <20230213215845.GA1332049@hu-bjorande-lv.qualcomm.com>
-References: <20230213162821.1253831-1-quic_bjorande@quicinc.com>
- <20230213162821.1253831-3-quic_bjorande@quicinc.com>
- <4a3964c8-8824-cb4e-9262-58b6a1cedc7c@linaro.org>
+        Mon, 13 Feb 2023 17:00:51 -0500
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 352AB5258
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 14:00:49 -0800 (PST)
+Received: by mail-ej1-x629.google.com with SMTP id ml19so35538900ejb.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 14:00:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jfMz92HNte4OxYOZHBs0G2ecQ/enNd85Ii98wdoFnJ8=;
+        b=ma0Qeuh75j2DffOMVHcLWMPg09xQN9m2Y46fkJ1gtOCPuH/tWPGCqS+EuN/xHJLbQ9
+         1WCDW7c05cH+fbu/r2Lu8zdyPWQrstunz3wMlgAP2bFWueuh2PXAC8XKqoPohL0kktjq
+         QgKnLXPqkHwM6qDfk7Vp4QH4N9Psw4jDI+AaECtRyZSz+p57UEC4UvdgdUuNdLauj6WX
+         ltE4fDPHDk6RyZOZI3F5b+Q2F4AfuQzz/tEE4g6lDNv0dd+qoSC1LuwUPiVvLH75NKZW
+         lTQIRIeoPNs8wMFKrQPYqM8LSB/DRBTQWQVGakKRKAJ88Qv+4pOvezsBhXBM8DaEV2zd
+         QYmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jfMz92HNte4OxYOZHBs0G2ecQ/enNd85Ii98wdoFnJ8=;
+        b=0UI5JEiOS9JKd5YHJz0YrkcrK+qFomcOmIwEVPWmuJeXhG/kqrMLVfvckHtlxbMAvd
+         ZuAOaQApVNqTqSW9QZTtEr5wqUAEJJcv6Of/397lXOx52xA24zE//Kg1D5rU310irpZV
+         Ubc0FOxgmDzVP1cEGeCAVRF4IdM97pVSF2TOkIsv8dqY1hiMyks5F6c9qmOe5jBjhKky
+         V/UqBV7DO+RFRATIsx35AFyu9zS6QXfM/q5saprYsY0Th2qTVDn7DWV2xVPPbrZRUJ3Y
+         ExOZFFj95O3rr2K/S52SwVLRk0YzpVGcFUZuiRMNwBhclTHir9DikDN6D22Xv6J7UbJU
+         Lmfg==
+X-Gm-Message-State: AO0yUKUJEIP+OaUepizkegZCo718fkJsfRbUHUU3V8KXrgpLhw6UGuJW
+        NJof7r5oNyJvt6Eo81glBlJUYGGxAzlRJni5
+X-Google-Smtp-Source: AK7set8u37sCkq/3IKGC9gHoChsI2qDVUV1alQ2l0JwZ/lZCteDhdjAGGQXXIATnvlHrXMc9BEuukw==
+X-Received: by 2002:a17:906:f9ca:b0:8b1:16b3:303f with SMTP id lj10-20020a170906f9ca00b008b116b3303fmr463054ejb.8.1676325647734;
+        Mon, 13 Feb 2023 14:00:47 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id t21-20020a170906179500b0088a9e083318sm7319016eje.168.2023.02.13.14.00.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 13 Feb 2023 14:00:47 -0800 (PST)
+Message-ID: <40c72da1-18b3-3858-479d-fb149d423e66@linaro.org>
+Date:   Tue, 14 Feb 2023 00:00:46 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <4a3964c8-8824-cb4e-9262-58b6a1cedc7c@linaro.org>
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: tXxnFlNSE6coH12dz_A6Yk0EFsD7QW5I
-X-Proofpoint-GUID: tXxnFlNSE6coH12dz_A6Yk0EFsD7QW5I
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-13_12,2023-02-13_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 clxscore=1015
- bulkscore=0 lowpriorityscore=0 spamscore=0 malwarescore=0 impostorscore=0
- adultscore=0 priorityscore=1501 mlxscore=0 mlxlogscore=999 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2302130190
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [RFC PATCH v3 1/4] drm/msm/dpu: Move TE setup to
+ prepare_for_kickoff()
+Content-Language: en-GB
+To:     Jessica Zhang <quic_jesszhan@quicinc.com>,
+        freedreno@lists.freedesktop.org
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
+        quic_abhinavk@quicinc.com, marijn.suijten@somainline.org
+References: <20230213194819.608-1-quic_jesszhan@quicinc.com>
+ <20230213194819.608-2-quic_jesszhan@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230213194819.608-2-quic_jesszhan@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Feb 13, 2023 at 09:44:14PM +0100, Konrad Dybcio wrote:
-> 
-> 
-> On 13.02.2023 17:28, Bjorn Andersson wrote:
-> > From: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > 
-> > The SC8280XP CRD control over battery management and its two USB Type-C
-> > port using pmic_glink and two GPIO-based SBU muxes.
-> > 
-> > Enable the two DisplayPort instances, GPIO SBU mux instance and
-> > pmic_glink with the two connectors on the CRD.
-> > 
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> > ---
-> > 
-> [...]
-> 
-> > +&mdss0_dp0 {
-> > +	data-lanes = <0 1>;
-> > +	status = "okay";
-> > +
-> > +	ports {
-> > +		port@1 {
-> > +			reg = <1>;
-> > +
-> > +			mdss0_dp0_out: endpoint {
-> > +				remote-endpoint = <&pmic_glink_con0_ss>;
-> > +			};
-> > +		};
-> > +	};
-> > +};
-> > +
-> > +&mdss0_dp1 {
-> > +	data-lanes = <0 1>;
-> > +	status = "okay";
-> > +
-> > +	ports {
-> > +		port@1 {
-> > +			reg = <1>;
-> This way you're redefining this node.. I suppose going with
-> something like:
-> 
-> 8280:
-> mdss0_dp1 {
-> 	compatible
-> 	blahblah
-> 
-> 	ports {
-> 		[..]
-> 
-> 		port@1 {
-> 		reg = <1>;
-> 
-> 			mdss0_dp1_out : endpoint {
-> 			};
-> 		};
-> 	}
-> }
-> 
-> crd:
-> &mdss0_dp1_out {
-> 	//btw data-lanes should be there and not in mdss_dp, I think
-> 	remote-endpoint = <&pmic_glink_...>
-> }
-> 
-> would be better, and that's what we're already doing for DSI..
-> 
+On 13/02/2023 21:48, Jessica Zhang wrote:
+> Currently, DPU will enable TE during prepare_commit(). However, this
+> will cause issues when trying to read/write to register in
 
-To summarize our private discussion about this; by aiming for not
-repeating the structure from the dtsi we avoid a class of bugs caused by
-typos between the two files. As such I agree that this is a good thing,
-and have adjusted the structure accordingly in v4.
+Nit: what issues? SError? reboot to the sahara? board reset?
 
-> I think I missed all this during the 8[34]50 review too..
+> get_autorefresh_config(), because the core clock rates aren't set at
+> that time.
 > 
-> With that addressed, for both crd and x13s (as the patch is essentially
-> identical)
+> This used to work because phys_enc->hw_pp is only initialized in mode
+> set [1], so the first prepare_commit() will return before any register
+> read/write as hw_pp would be NULL.
 > 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> However, when we try to implement support for INTF TE, we will run into
+> the clock issue described above as hw_intf will *not* be NULL on the
+> first prepare_commit(). This is because the initialization of
+> dpu_enc->hw_intf has been moved to dpu_encoder_setup() [2].
 > 
+> To avoid this issue, let's enable TE during prepare_for_kickoff()
+> instead as the core clock rates are guaranteed to be set then.
+> 
+> Depends on: "Implement tearcheck support on INTF block" [3]
+> 
+> Changes in V3:
+> - Added function prototypes
+> - Reordered function definitions to make change more legible
+> - Removed prepare_commit() function from dpu_encoder_phys_cmd
+> 
+> [1] https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c#L1109
+> [2] https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c#L2339
+> [3] https://patchwork.freedesktop.org/series/112332/
+> 
+> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 10 +++++++---
+>   1 file changed, 7 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> index cb05036f2916..c6feffafa13f 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> @@ -40,6 +40,10 @@
+>   
+>   #define DPU_ENC_MAX_POLL_TIMEOUT_US	2000
+>   
+> +static bool dpu_encoder_phys_cmd_is_ongoing_pptx(
+> +		struct dpu_encoder_phys *phys_enc);
 
-Thanks,
-Bjorn
+This should not be necessary.
 
-> Konrad
-> 
-> > +
-> > +			mdss0_dp1_out: endpoint {
-> > +				remote-endpoint = <&pmic_glink_con1_ss>;
-> > +			};
-> > +		};
-> > +	};
-> > +};
-> > +
-> >  &mdss0_dp3 {
-> >  	compatible = "qcom,sc8280xp-edp";
-> >  	/delete-property/ #sound-dai-cells;
-> > @@ -480,7 +628,6 @@ &usb_0 {
-> >  };
-> >  
-> >  &usb_0_dwc3 {
-> > -	/* TODO: Define USB-C connector properly */
-> >  	dr_mode = "host";
-> >  };
-> >  
-> > @@ -499,12 +646,15 @@ &usb_0_qmpphy {
-> >  	status = "okay";
-> >  };
-> >  
-> > +&usb_0_role_switch {
-> > +	remote-endpoint = <&pmic_glink_con0_hs>;
-> > +};
-> > +
-> >  &usb_1 {
-> >  	status = "okay";
-> >  };
-> >  
-> >  &usb_1_dwc3 {
-> > -	/* TODO: Define USB-C connector properly */
-> >  	dr_mode = "host";
-> >  };
-> >  
-> > @@ -523,6 +673,10 @@ &usb_1_qmpphy {
-> >  	status = "okay";
-> >  };
-> >  
-> > +&usb_1_role_switch {
-> > +	remote-endpoint = <&pmic_glink_con1_hs>;
-> > +};
-> > +
-> >  &xo_board_clk {
-> >  	clock-frequency = <38400000>;
-> >  };
-> > @@ -709,4 +863,54 @@ reset-n-pins {
-> >  			drive-strength = <16>;
-> >  		};
-> >  	};
-> > +
-> > +	usb0_sbu_default: usb0-sbu-state {
-> > +		oe-n-pins {
-> > +			pins = "gpio101";
-> > +			function = "gpio";
-> > +			bias-disable;
-> > +			drive-strengh = <16>;
-> > +			output-high;
-> > +		};
-> > +
-> > +		sel-pins {
-> > +			pins = "gpio164";
-> > +			function = "gpio";
-> > +			bias-disable;
-> > +			drive-strength = <16>;
-> > +		};
-> > +
-> > +		mode-pins {
-> > +			pins = "gpio167";
-> > +			function = "gpio";
-> > +			bias-disable;
-> > +			drive-strength = <16>;
-> > +			output-high;
-> > +		};
-> > +	};
-> > +
-> > +	usb1_sbu_default: usb1-sbu-state {
-> > +		oe-n-pins {
-> > +			pins = "gpio48";
-> > +			function = "gpio";
-> > +			bias-disable;
-> > +			drive-strengh = <16>;
-> > +			output-high;
-> > +		};
-> > +
-> > +		sel-pins {
-> > +			pins = "gpio47";
-> > +			function = "gpio";
-> > +			bias-disable;
-> > +			drive-strength = <16>;
-> > +		};
-> > +
-> > +		mode-pins {
-> > +			pins = "gpio50";
-> > +			function = "gpio";
-> > +			bias-disable;
-> > +			drive-strength = <16>;
-> > +			output-high;
-> > +		};
-> > +	};
-> >  };
-> > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> > index 92d5b5e21e50..7897d33f1416 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> > @@ -3040,6 +3040,11 @@ usb_0_dwc3: usb@a600000 {
-> >  				iommus = <&apps_smmu 0x820 0x0>;
-> >  				phys = <&usb_0_hsphy>, <&usb_0_qmpphy QMP_USB43DP_USB3_PHY>;
-> >  				phy-names = "usb2-phy", "usb3-phy";
-> > +
-> > +				port {
-> > +					usb_0_role_switch: endpoint {
-> > +					};
-> > +				};
-> >  			};
-> >  		};
-> >  
-> > @@ -3095,6 +3100,11 @@ usb_1_dwc3: usb@a800000 {
-> >  				iommus = <&apps_smmu 0x860 0x0>;
-> >  				phys = <&usb_1_hsphy>, <&usb_1_qmpphy QMP_USB43DP_USB3_PHY>;
-> >  				phy-names = "usb2-phy", "usb3-phy";
-> > +
-> > +				port {
-> > +					usb_1_role_switch: endpoint {
-> > +					};
-> > +				};
-> >  			};
-> >  		};
-> >  
+
+> +static void dpu_encoder_phys_cmd_enable_te(struct dpu_encoder_phys *phys_enc);
+> +
+>   static bool dpu_encoder_phys_cmd_is_master(struct dpu_encoder_phys *phys_enc)
+>   {
+>   	return (phys_enc->split_role != ENC_ROLE_SLAVE);
+> @@ -611,6 +615,8 @@ static void dpu_encoder_phys_cmd_prepare_for_kickoff(
+>   			  phys_enc->hw_pp->idx - PINGPONG_0);
+>   	}
+>   
+> +	dpu_encoder_phys_cmd_enable_te(phys_enc);
+> +
+
+And this is much cleaner and easier to spot the difference than it was 
+in the previous patch. Thank you!
+
+With the dpu_encoder_phys_cmd_is_ongoing_pptx() prototype removed it LGTM.
+
+>   	DPU_DEBUG_CMDENC(cmd_enc, "pp:%d pending_cnt %d\n",
+>   			phys_enc->hw_pp->idx - PINGPONG_0,
+>   			atomic_read(&phys_enc->pending_kickoff_cnt));
+> @@ -641,8 +647,7 @@ static bool dpu_encoder_phys_cmd_is_ongoing_pptx(
+>   	return false;
+>   }
+>   
+> -static void dpu_encoder_phys_cmd_prepare_commit(
+> -		struct dpu_encoder_phys *phys_enc)
+> +static void dpu_encoder_phys_cmd_enable_te(struct dpu_encoder_phys *phys_enc)
+>   {
+>   	struct dpu_encoder_phys_cmd *cmd_enc =
+>   		to_dpu_encoder_phys_cmd(phys_enc);
+> @@ -799,7 +804,6 @@ static void dpu_encoder_phys_cmd_trigger_start(
+>   static void dpu_encoder_phys_cmd_init_ops(
+>   		struct dpu_encoder_phys_ops *ops)
+>   {
+> -	ops->prepare_commit = dpu_encoder_phys_cmd_prepare_commit;
+>   	ops->is_master = dpu_encoder_phys_cmd_is_master;
+>   	ops->atomic_mode_set = dpu_encoder_phys_cmd_atomic_mode_set;
+>   	ops->enable = dpu_encoder_phys_cmd_enable;
+
+-- 
+With best wishes
+Dmitry
+
