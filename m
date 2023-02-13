@@ -2,77 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 334696945AD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 13:20:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 863036945D0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 13:33:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230292AbjBMMU3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Feb 2023 07:20:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35950 "EHLO
+        id S230463AbjBMMc7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Feb 2023 07:32:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230319AbjBMMU2 (ORCPT
+        with ESMTP id S230131AbjBMMc7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Feb 2023 07:20:28 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 848E86A71
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 04:20:27 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id j23so12025088wra.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 04:20:27 -0800 (PST)
+        Mon, 13 Feb 2023 07:32:59 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79C36272B
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 04:32:57 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id j23so12071503wra.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 04:32:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1RUiDD3BHhlqCpOjKjv9whKB2P06JmlcSFZbd1kJnhM=;
-        b=KhuztlcTg/PMm11aZvBlHcjpnHotQ9xLJ0zvA3pdempjme4Cs9VrJ39GH/ZONlRhOZ
-         YGn2xod2W6mNkXqUbxLTAgm9yl/vnbk9tr0HoSt2+szHVad7q3fC3JORUEzQlwV3R2zz
-         NwY+Yb+V7MHbDwg8YLg5Ut1gQ3CNyn1Povpw3MaGNMnw/joRIOylGnAnAWHRamvRmUKn
-         IQh0Uiint3viHFDkBgmV8k4pXle1gJVvRFKPSVNJMssvu5u2Iz+Yzqyv2nfVmFmBgHdn
-         PRc2aK3ynQJIG4lGPW5MsXrXmfajX9t/R3YL/IGR78FVs4NGmbbpsMzRW/fw9krJqrCa
-         DVDA==
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=YSNp7daxwzg9PeQCPBa7S3ruVaUwF/8x5X2sPmkYUbU=;
+        b=UJ+/6SZI81VVEoKozzQ8GO9TuQJj64Lx/5i1dgvMZq4FHlNxsaXl7v2SDKZTuTap/a
+         iaoA/L7ADyxppRF4ZvN5wuc9coUMPnf/w/SIfR2WqMwJbi/+uOmgWOVzUNNq41lHAprJ
+         e9KWQ5LLMYAlwi/f/UdrUMsYLYLHVVdME/U6700osLFKwFk+9u+Y0Jtli20NehbMhq2m
+         D2u2T8l/w30CR7IwlA4lF9TuU58WkXYuvqC/WcW9D3CwaJSg06KbpS5JhJr/1hMCJKFX
+         6pFqwsTnwO6e5t2IvExKEQzpN2Jsb+Tz/yRapICQzwU6hRPeM7wGZEcfvDcvJyCAcM+P
+         SXNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1RUiDD3BHhlqCpOjKjv9whKB2P06JmlcSFZbd1kJnhM=;
-        b=hwE2CRSLzd0CC1uJILMDo5H5RghhlAcLdhek8VDF/uUq68VPcIDB0VPXJv9xGubiBt
-         WDoMZh308iqHvBDA6ve4cPK/Y58bHOADTHfn/22QkYJJpWGriGj15OApJPx96e/RTsek
-         dC5r8fGy2t/0cJinkarUzGyTon87ITelUZnuQjt1Co+SFtxpDleqDVqlIqbjyXFeOv6V
-         fOu0oQxK/xPPGN6I4xbgJsafqy9S3fofiRxwxs7iWQG1zas7Bwuy9hZbGN6WZzw5Zt23
-         hJPdpf8lYDTs8li/GhmthxHL8ZGF9l0bDcFNjqr3nXd+XYN41j91dAud+/FmS+SEnGUz
-         zvfQ==
-X-Gm-Message-State: AO0yUKUUKHFbjCXoHlgDWFJOgFBx1kUPcvYMmFadS9qPsWGb7KhBISe9
-        TmHcWqYdeVXlo1uV+85OLF98/w==
-X-Google-Smtp-Source: AK7set89FkNhiCPxpnkK76tQM5xvvbrWbUVea99QXLeZbhluUfzetqGrin/ar/FHc4nSnKUMHRV/Fw==
-X-Received: by 2002:a5d:624a:0:b0:2c3:f8b8:87 with SMTP id m10-20020a5d624a000000b002c3f8b80087mr18069188wrv.25.1676290826133;
-        Mon, 13 Feb 2023 04:20:26 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id l22-20020a05600c089600b003dc59081603sm12856722wmp.48.2023.02.13.04.20.24
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=YSNp7daxwzg9PeQCPBa7S3ruVaUwF/8x5X2sPmkYUbU=;
+        b=FaiDcfqBY4TbJREJrAMQ+CsmoDEy2ZCfgXHay1+4Mi65RlYhPLrUZS1QyZRqVnYVCP
+         Ns66eIlmHUEJQCpb74M5psuPYV06zNOey/rAbS8yYE1Ykx0mQUtdAEUEwWEnlAeX2r/T
+         jauj8h3WdWHbNb3XqdUoIb1GCiH9fX1GhQ48z6u33lqqDGktYDWzia8dzsZ+jGX0p4pE
+         mjXrv/kfgdofcF8xsC/hxf/3g2eg/N5BTvQY+2YYb94/2w5097ezNtYXqPjyN6pC5Fm9
+         f/1P4p05rdeVOGIlTllTtgBtEXx0K+fCav2yS1eIOLbgp8xo8V+FZVKfVBkdunYNXZE+
+         AFIQ==
+X-Gm-Message-State: AO0yUKWbWjEUf0YlPcEpI8Kms9dxouG1m1E2ysElMEEFjReXdxbMkVkR
+        +V16IVklKAWvERvubn8ZvZfnMA==
+X-Google-Smtp-Source: AK7set98VgOl5yQKfPXnOp7+BQ9mmm+DHvJB09+5pQ0i8QwnCQ1+3pJs7gj3hbgfxxu+zV4TJyspBA==
+X-Received: by 2002:a5d:6e8d:0:b0:2c5:4c5e:412b with SMTP id k13-20020a5d6e8d000000b002c54c5e412bmr7191875wrz.23.1676291575920;
+        Mon, 13 Feb 2023 04:32:55 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:6e1e:131f:8bc1:aad8? ([2a01:e0a:982:cbb0:6e1e:131f:8bc1:aad8])
+        by smtp.gmail.com with ESMTPSA id j4-20020adff544000000b002c54fb024b2sm5497068wrp.61.2023.02.13.04.32.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Feb 2023 04:20:25 -0800 (PST)
-Message-ID: <4e13868d-4263-9e30-e832-6dff25900fce@linaro.org>
-Date:   Mon, 13 Feb 2023 13:20:24 +0100
+        Mon, 13 Feb 2023 04:32:55 -0800 (PST)
+Message-ID: <b43179c4-bbf5-1d38-6ff0-8ddd0356d6d1@linaro.org>
+Date:   Mon, 13 Feb 2023 13:32:54 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [PATCH v8 1/5] dt-bindings: clock: qcom,sc7280-lpasscc: Add
- qcom,adsp-pil-mode property
+From:   neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v3 5/5] arm64: dts: qcom: sm8450: add dp controller
 Content-Language: en-US
-To:     Mohammad Rafi Shaik <quic_mohs@quicinc.com>, swboyd@chromium.org,
-        krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org, broonie@kernel.org,
-        quic_plai@quicinc.com, konrad.dybcio@somainline.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com,
-        quic_visr@quicinc.com
-Cc:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-References: <20230213094528.3733509-1-quic_mohs@quicinc.com>
- <20230213094528.3733509-2-quic_mohs@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230213094528.3733509-2-quic_mohs@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230206-topic-sm8450-upstream-dp-controller-v3-0-636ef9e99932@linaro.org>
+ <20230206-topic-sm8450-upstream-dp-controller-v3-5-636ef9e99932@linaro.org>
+ <347a5193-f7b1-7f8e-0c60-3d435bdf952c@linaro.org>
+ <f5a26fff-2dc2-2397-a80c-2477176a5864@linaro.org>
+ <880e691a-0512-6325-f27c-9be59abdd647@linaro.org>
+Organization: Linaro Developer Services
+In-Reply-To: <880e691a-0512-6325-f27c-9be59abdd647@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -82,23 +92,61 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/02/2023 10:45, Mohammad Rafi Shaik wrote:
-> From: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+On 10/02/2023 16:54, Dmitry Baryshkov wrote:
+> On 10/02/2023 17:28, Neil Armstrong wrote:
+>> On 10/02/2023 16:24, Dmitry Baryshkov wrote:
+>>> On 10/02/2023 16:44, Neil Armstrong wrote:
+>>>> Add the Display Port controller subnode to the MDSS node.
+>>>>
+>>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>>>> ---
+>>>>   arch/arm64/boot/dts/qcom/sm8450.dtsi | 79 ++++++++++++++++++++++++++++++++++++
+>>>>   1 file changed, 79 insertions(+)
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>>> index 6caa2c8efb46..72d54beb7d7c 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>>> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>>> @@ -2751,6 +2751,13 @@ dpu_intf2_out: endpoint {
+>>>>                           };
+>>>>                       };
+>>>> +                    port@2 {
+>>>> +                        reg = <2>;
+>>>> +                        dpu_intf0_out: endpoint {
+>>>> +                            remote-endpoint = <&mdss_dp0_in>;
+>>>> +                        };
+>>>> +                    };
+>>>> +
+>>>>                   };
+>>>>                   mdp_opp_table: opp-table {
+>>>> @@ -2783,6 +2790,78 @@ opp-500000000 {
+>>>>                   };
+>>>>               };
+>>>> +            mdss_dp0: displayport-controller@ae90000 {
+>>>> +                compatible = "qcom,sm8350-dp";
+>>
+>> Exact, must fix.
+>>
+>>>
+>>> Missing "qcom,sm8450-dp". As I wrote in the comment to patch 1, I'd suggest having just a single entry here rather than keeping both 8350 and 8450 entries.
+>>>
+>>>> +                reg = <0 0xae90000 0 0xfc>,
+>>>> +                      <0 0xae90200 0 0xc0>,
+>>>> +                      <0 0xae90400 0 0x770>,
+>>>> +                      <0 0xae91000 0 0x98>,
+>>>> +                      <0 0xae91400 0 0x98>;
+>>>
+>>>
+>>> While this sounds correct, usually we used the even size here (0x200, 0x400, etc.). Can we please switch to it (especially since sm8350-dp uses even sizes).
+>>
+>> I don't have access to registers layout for HDK8450 but the system freezes when using even sizes, using
+>> the exact register size works fine.
 > 
-> When this property is set, the remoteproc is used to boot the
-> LPASS and therefore qdsp6ss clocks would be used to bring LPASS
-> out of reset, hence they are directly controlled by the remoteproc.
+> Interesting. Could you please trace, what exactly makes it fail, since specifying bigger region size should not cause such issues.
+
+Yep I'll trace what's happening.
+
+Neil
+
 > 
-> This is a cleanup done to handle overlap of regmap of lpasscc
-> and adsp remoteproc blocks.
-> 
-> Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-
-SoB chain looks not correct. Your should be after Srinivasa.
-
-
-
-Best regards,
-Krzysztof
 
