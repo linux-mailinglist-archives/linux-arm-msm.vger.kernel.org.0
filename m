@@ -2,69 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 61A28694E92
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 19:00:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BE93694EE5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 19:10:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230447AbjBMR7o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Feb 2023 12:59:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43084 "EHLO
+        id S230495AbjBMSKN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Feb 2023 13:10:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230444AbjBMR7j (ORCPT
+        with ESMTP id S231451AbjBMSKJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Feb 2023 12:59:39 -0500
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3EED2004F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 09:59:34 -0800 (PST)
-Received: by mail-ej1-x62b.google.com with SMTP id rp23so33881814ejb.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 09:59:34 -0800 (PST)
+        Mon, 13 Feb 2023 13:10:09 -0500
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34DF23C2D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 10:09:42 -0800 (PST)
+Received: by mail-ed1-x52e.google.com with SMTP id c1so10332293edt.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 10:09:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=HD5L0OzAE4T1VnHQ4734G2vgLjw/5WBq54Z8hcfCrhE=;
-        b=ZA7IiFd34saI3SzeE2KVXbK1Puclk9kUuZOSWK8vlqd/O6QUgLEIngbVXek2dPaTaI
-         k0pLVz642K8D+NwhplatifYkZ8T82r1Jc3kbF8PUfhEZ9y3PhtrVVt3ETpomyk0MQdm3
-         etJs8SyboBFRXuFkUFUR5oD1L5z6cAJt17538zSvHLuFOp9+Qe10hRNJMFTPSYr1/7Dk
-         N4FcMbklrQ4mt7Dko8B7XwZEBhO81Ed7blg5ltLbS9wyyY0iGGtRckvCgVDnSr2rwFp/
-         oWgMwdhCKBgkVrBgAshevcsik3B9pP043EW+IvBBf/r+i22qK1JmwOuDwDn1HFx0cNu9
-         iGWQ==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OrFNz/cjsowXwlETtP+kH6cs7rMkGd9pIsymtXm93iQ=;
+        b=ASyqHv5ovC0LjAt2DWkMvKUt04iRjs6rRLP4ccLJGnP77wwpfmJ1GIgQ0iU9cHeXBe
+         /eHCYl0v74p/8L9G1SxvtJMii0G3uRmdTzmW9dEfzxnTkM5KajK0H3WD/5bRy6d/LWc0
+         EgfH4bNeCLaZWQNX8Kn8+apeQsjJrfrjr1q76u6MFcSv5jHmELOvc+B/BZM9txqFuxft
+         636odzY5r5dOlnQDNZbI2k64cl2nO+ZwsrUN7xm/vzNv6aaUABnM+rT/3mPhyYVeNjs/
+         +smyO7VDlDCpPgh7jgreWa4h8xJULv5TBvhSGE27BcsiiQoJGQ0FoB6P0OflMu4eLc03
+         pclA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=HD5L0OzAE4T1VnHQ4734G2vgLjw/5WBq54Z8hcfCrhE=;
-        b=ryrzoKymJLMl0ezqdbpypZKkzLp4noj7aWUDTs+NNoHcCu80m/M7snIBG6p8qfw5+m
-         JFJbemjZx395wTt7JinK0/Eyn0MG4JXnx6OD3ZNf0MiylE9PDlCC3/HwqpZbFjahwCTu
-         xQCPTUrg6c9oHFMN6PngCV9lEG246Z7Si4ch4Gf5IQH/i96oyCOOhdpyoVfeNgm5Ast5
-         hLEaAPii84CvepPZ/aee0xMs+1DCOA2XLrO3BWC7NHy3dKR6hHogTPtCEnTAhXkL1/QZ
-         n3pfesj/Q1qsMO4Nc7MwXu4FYxWJBq5MexSkTsXi7Mg/r+C4ry47d7524U8x0NhgNr/j
-         S/JQ==
-X-Gm-Message-State: AO0yUKW9KKOGQkwsuY92PHGlyIOQyZ5Z5OIU6dvUqRzxr8weBVGbQ4G+
-        BzWqToZ+aQmRIqQGkm+RqjiLIRcZPBbeHIZo
-X-Google-Smtp-Source: AK7set+aEw/jx9c3aPqnoOKU5elwDHNeGgjIExg/5B0AjW8znvgeCOVyS+e0pR5Q0byixiaAS/H0pw==
-X-Received: by 2002:a17:907:80e:b0:8af:447a:ff8e with SMTP id wv14-20020a170907080e00b008af447aff8emr17167815ejb.20.1676311173155;
-        Mon, 13 Feb 2023 09:59:33 -0800 (PST)
-Received: from localhost.localdomain (abxh117.neoplus.adsl.tpnet.pl. [83.9.1.117])
-        by smtp.gmail.com with ESMTPSA id kq15-20020a170906abcf00b0086ffe8a00fdsm7074309ejb.84.2023.02.13.09.59.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Feb 2023 09:59:32 -0800 (PST)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org
-Cc:     marijn.suijten@somainline.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: sm6375: Add RMTFS
-Date:   Mon, 13 Feb 2023 18:59:28 +0100
-Message-Id: <20230213175928.1979637-1-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.39.1
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OrFNz/cjsowXwlETtP+kH6cs7rMkGd9pIsymtXm93iQ=;
+        b=yjIldL6p4fiScKZyrExSNknerWQI8tSxhZ+WSODEjxNXsgs2q01DXVn4ivdcr937uY
+         s4xlaEGyzXgSI9ns1x75c2aIKdJPbvkS4tLGQZBQMf0wjwqoXS59T/v7ep0ixioSf5Mo
+         urDw039Lts4VF8u7u/0Onqg9FEWWyViCpH8DeuhTpHDAHc8HXlL/A7ov8PXpCoxkv41O
+         apGLsAnzag1wj1zQjeBPbFNEZEWMxwWEud+GYUdpTb/X3hvLet7EEBQXB8SYkiXJp/sZ
+         XlyUrMK/mWTkuF+Xbpu4D9r7DMFZh05s1YAf9nFjnAf3cciHLNtgGJzJs0Afev+cm++o
+         zbdA==
+X-Gm-Message-State: AO0yUKXRNmZzBIFYsygGtWSL/Ud8XfQzFWtW3EGAShInGCG+IW+772FX
+        XbDmoONqAA4N/ko7l9zMNwxwAQ==
+X-Google-Smtp-Source: AK7set9mcIeXp16D0D3cqp+JoeU1B51F5RlGG7CPB1h5PDRD0O528l6eKI/rurYDyjp1eZ2rn+kPcw==
+X-Received: by 2002:a50:8ace:0:b0:4aa:a4e6:249b with SMTP id k14-20020a508ace000000b004aaa4e6249bmr26014988edk.7.1676311778917;
+        Mon, 13 Feb 2023 10:09:38 -0800 (PST)
+Received: from [192.168.1.101] (abxh117.neoplus.adsl.tpnet.pl. [83.9.1.117])
+        by smtp.gmail.com with ESMTPSA id v23-20020a50d597000000b004acb7f05589sm4037935edi.94.2023.02.13.10.09.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 13 Feb 2023 10:09:38 -0800 (PST)
+Message-ID: <6131c8bb-6d21-60a6-14f9-dd7a2642a1cf@linaro.org>
+Date:   Mon, 13 Feb 2023 19:09:36 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH v3 1/4] dt-bindings: remoteproc: qcom,sm6375-pas: Document
+ remoteprocs
+Content-Language: en-US
+To:     Rob Herring <robh@kernel.org>
+Cc:     linux-remoteproc@vger.kernel.org, andersson@kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        marijn.suijten@somainline.org, linux-arm-msm@vger.kernel.org,
+        agross@kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        krzysztof.kozlowski@linaro.org,
+        Manivannan Sadhasivam <mani@kernel.org>
+References: <20230109135647.339224-1-konrad.dybcio@linaro.org>
+ <20230109135647.339224-2-konrad.dybcio@linaro.org>
+ <167328555792.1012753.8015526796598804432.robh@kernel.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <167328555792.1012753.8015526796598804432.robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -73,41 +85,55 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a node for RMTFS on SM6375.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm6375.dtsi | 10 ++++++++++
- 1 file changed, 10 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6375.dtsi b/arch/arm64/boot/dts/qcom/sm6375.dtsi
-index 5795c6cb7364..404aeae0033f 100644
---- a/arch/arm64/boot/dts/qcom/sm6375.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6375.dtsi
-@@ -7,6 +7,7 @@
- #include <dt-bindings/clock/qcom,sm6375-dispcc.h>
- #include <dt-bindings/clock/qcom,sm6375-gcc.h>
- #include <dt-bindings/dma/qcom-gpi.h>
-+#include <dt-bindings/firmware/qcom,scm.h>
- #include <dt-bindings/interconnect/qcom,sm6375.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/mailbox/qcom-ipcc.h>
-@@ -426,6 +427,15 @@ removed_mem: removed@c0000000 {
- 			no-map;
- 		};
- 
-+		rmtfs_mem: rmtfs@f3900000 {
-+			compatible = "qcom,rmtfs-mem";
-+			reg = <0 0xf3900000 0 0x280000>;
-+			no-map;
-+
-+			qcom,client-id = <1>;
-+			qcom,vmid = <QCOM_SCM_VMID_MSS_MSA QCOM_SCM_VMID_NAV>;
-+		};
-+
- 		debug_mem: debug@ffb00000 {
- 			reg = <0 0xffb00000 0 0xc0000>;
- 			no-map;
--- 
-2.39.1
+On 9.01.2023 18:32, Rob Herring wrote:
+> 
+> On Mon, 09 Jan 2023 14:56:44 +0100, Konrad Dybcio wrote:
+>> SM6375 hosts an ADSP, CDSP and modem as remote processors. Create
+>> related bindings.
+>>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+Could you take another look, Rob? I think it errored out because of
+me not having specified a dependency (which is in -next since Nov,
+but not in -rc), which I should have noted..
 
+Konrad
+>> v2 -> v3:
+>> - Separate out 6375 bindings
+>>
+>>  .../bindings/remoteproc/qcom,sm6375-pas.yaml  | 137 ++++++++++++++++++
+>>  1 file changed, 137 insertions(+)
+>>  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,sm6375-pas.yaml
+>>
+> 
+> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+> on your patch (DT_CHECKER_FLAGS is new in v5.13):
+> 
+> yamllint warnings/errors:
+> 
+> dtschema/dtc warnings/errors:
+> ./Documentation/devicetree/bindings/remoteproc/qcom,sm6375-pas.yaml: Unable to find schema file matching $id: http://devicetree.org/schemas/remoteproc/qcom,pas-common.yaml
+> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,sm6375-pas.example.dtb: remoteproc@a400000: False schema does not allow {'compatible': ['qcom,sm6375-adsp-pas'], 'reg': [[171966464, 256]], 'interrupts-extended': [[4294967295, 0, 282, 4], [4294967295, 0, 1], [4294967295, 1, 1], [4294967295, 2, 1], [4294967295, 3, 1]], 'interrupt-names': ['wdog', 'fatal', 'ready', 'handover', 'stop-ack'], 'clocks': [[4294967295, 0]], 'clock-names': ['xo'], 'power-domains': [[4294967295, 8], [4294967295, 9]], 'power-domain-names': ['lcx', 'lmx'], 'memory-region': [[4294967295]], 'qcom,smem-states': [[4294967295, 0]], 'qcom,smem-state-names': ['stop'], 'glink-edge': {'interrupts-extended': [[4294967295, 3, 0, 1]], 'mboxes': [[4294967295, 3, 0]], 'label': ['lpass'], 'qcom,remote-pid': [[2]]}, '$nodename': ['remoteproc@a400000']}
+> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,sm6375-pas.yaml
+> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,sm6375-pas.example.dtb: remoteproc@a400000: Unevaluated properties are not allowed ('glink-edge', 'memory-region', 'qcom,smem-state-names', 'qcom,smem-states' were unexpected)
+> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,sm6375-pas.yaml
+> 
+> doc reference errors (make refcheckdocs):
+> 
+> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230109135647.339224-2-konrad.dybcio@linaro.org
+> 
+> The base for the series is generally the latest rc1. A different dependency
+> should be noted in *this* patch.
+> 
+> If you already ran 'make dt_binding_check' and didn't see the above
+> error(s), then make sure 'yamllint' is installed and dt-schema is up to
+> date:
+> 
+> pip3 install dtschema --upgrade
+> 
+> Please check and re-submit after running the above command yourself. Note
+> that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+> your schema. However, it must be unset to test all examples with your schema.
+> 
