@@ -2,168 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 15879693FE8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 09:46:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AFBB1694042
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 10:01:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229607AbjBMIqP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Feb 2023 03:46:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50482 "EHLO
+        id S230043AbjBMJBl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Feb 2023 04:01:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34242 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229704AbjBMIqO (ORCPT
+        with ESMTP id S229472AbjBMJBk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Feb 2023 03:46:14 -0500
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 051F3CC19
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 00:46:13 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id u21so11822899edv.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 00:46:12 -0800 (PST)
+        Mon, 13 Feb 2023 04:01:40 -0500
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32AE83C08
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 01:01:39 -0800 (PST)
+Received: by mail-pl1-x635.google.com with SMTP id w5so12803686plg.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 01:01:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aIgYnkRqE95yz5AU0J8xpkq6tSZZZ239ZiNg9NKJsOQ=;
-        b=edUWzbfhupqK2ITIOdrgOh3txyi1/YLjjJ63x2GD+0nTSY3mmoFh1yeuEIxJfET/nT
-         KU4pHK3XPgwLKhVHfdjvgZBHHOnNfWXnyf4Omzo250nvN+wnsNnJlWgki3WFMxjXHKZX
-         cslGK8Iohax64kLq36pMovjcVdjxmZVWicTA3WY/wcjTFodFjmt7epA9pYCWVnj3lxsr
-         fyzfR/eoxyvoRdvlw2SdqagYD2L9tgVglLN8zLzhZyxThupIMcArR9Ah3pTXy4Hkt2An
-         ugjJjgXVFBaKozxDQnF/Ty5urjJa4NGPIJwHXXPOIJjT4MlXdzDttAn//n/0hQCRvXVR
-         Kmng==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=knZk8UU+gILKuGNRfB7GT0O6VmEC+8WJYZQJqqmgOU0=;
+        b=KNEceGhov0dwIzDFqRccLblZBmNCS12Y+7pw2sezMNDnTZkMcE1yexx71pOlAdF9Zk
+         EGnJXkH0JkzRvWgutMCejHyyA4OtlPi65jEh6B/3/8eW50MEz8Fc0Tx5XEd4woZP/E0C
+         mHkTHAyg7maQNuNgiHDForqvujhi3a1CRUNVwah0ohtAbcOvKsLAWytGLEDv9z08D2zD
+         76O29qVsBldSfiRN1oZOp0yObO6pY7U/Cemp4NzONI3USI+tS4FoIJ4dl7F+TDomjg4H
+         lWAvTC4ZgB0o1Jd7gshnH3tgNQm4jlTJ5WuuTH2u51LPNvZ63VaNuGJFvDoasQefa17X
+         rSUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=aIgYnkRqE95yz5AU0J8xpkq6tSZZZ239ZiNg9NKJsOQ=;
-        b=V6mDelzWieDbe8x7P5ulpGYMCuRelI+v4HMpBDKgTupIOA9hgeT/edTcVgYtyyAAFJ
-         wPYrY1kYCzHxMyLV2P3HR5DAQ/htJhwRg3HXB9RIQphwNUftJC6xs2i9gacNzawsA0re
-         8J8+7SNLdBNhdmb/Q+8n7j8OxRt3hKBjlxRt7ks504JBWWi0fVcT1YeOzn4VE4aPmFIL
-         fx5KyQr0xWVvSb2Bx27dKbQAPWyTZGvNwKkizj79MlmGDe4dsDU2JmpqlBMbPkJZAS8r
-         J/eiH5UyGuXzvyPRwme/NDBRZlbA+pHtDakqfQWaeacQl9PH0xm8aOLpmGYT6TcBr1Q3
-         SJJQ==
-X-Gm-Message-State: AO0yUKURGpH5G2BZzWf41+crlM6eaTLvUy4ZjqwAPiiqNgYoJRGl56Pc
-        K+GA7dhO3jJTcOC9xgLlgJbCdg==
-X-Google-Smtp-Source: AK7set/moXJc7VDWLXdWvatj0NCmR7myiege10enZj6hGFtwtxlFvjaj+UElAuEchNhWUST4Aadqow==
-X-Received: by 2002:a50:c048:0:b0:4ac:b5db:f3b3 with SMTP id u8-20020a50c048000000b004acb5dbf3b3mr6981942edd.18.1676277971578;
-        Mon, 13 Feb 2023 00:46:11 -0800 (PST)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id l6-20020a50d6c6000000b004ab0e9e396bsm6285931edj.87.2023.02.13.00.46.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Feb 2023 00:46:11 -0800 (PST)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=knZk8UU+gILKuGNRfB7GT0O6VmEC+8WJYZQJqqmgOU0=;
+        b=nbbLjlT9ZOqFAH+5KSdFCCmM1h+Otd3pkCf3tvaBN9XzQP3dJj1krEToVwa186Vtdw
+         A1OHiTAE4VMru7jNolic06+KcJTwdRYl1XL4Qgpalkk9nUaI0OrwThoiroYJdsL6gzhZ
+         i5KrfRGwbhiaBo/w+nw74nL8pnRl8Esj90EhufZNov/D2rDnNQCbBDmgJMgMAVgo+Rah
+         kOmr5pZg02aFX166/nIdHSOtpUZ6x2u9433U96kXVheAm+nTQUlp/mmL3Mr7e8FW6DKq
+         X6R6g5RSkSaHtmq8sYaNIOtAMHlqfurC8/tRU/D/jKAHJgv/hBmZTwY+bdQH9ndra9LX
+         cPRw==
+X-Gm-Message-State: AO0yUKV//q5KZALDQIV3dP5lBNjaHt4ekmOYkjt73cZIDrIGKCFHmdDe
+        XZNREZLrdHlsBQ53yUpprtBD
+X-Google-Smtp-Source: AK7set/09d393s5gixpvWGjjSLjuwgH5lvWqLfMrJsru5MwM0BE1bIBxx1IfXj2obI5BB0vLe8KJiQ==
+X-Received: by 2002:a17:902:9a42:b0:199:1804:48aa with SMTP id x2-20020a1709029a4200b00199180448aamr23251087plv.13.1676278898566;
+        Mon, 13 Feb 2023 01:01:38 -0800 (PST)
+Received: from localhost.localdomain ([117.217.182.252])
+        by smtp.gmail.com with ESMTPSA id jb14-20020a170903258e00b001964c8164aasm7677963plb.129.2023.02.13.01.01.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Feb 2023 01:01:38 -0800 (PST)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+Cc:     konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Patrick Wildt <patrick@blueri.se>
+Subject: [PATCH] arm64: dts: qcom: sc8280xp-pmics: Specify interrupt parent explicitly
+Date:   Mon, 13 Feb 2023 14:31:18 +0530
+Message-Id: <20230213090118.11527-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Date:   Mon, 13 Feb 2023 09:46:11 +0100
-Message-Id: <CQHAY4Z0W4HZ.18W214TYCYNUK@otso>
-Cc:     <tglx@linutronix.de>, <bjorn.andersson@linaro.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH 3/3] genirq: Check for trigger type mismatch in
- __setup_irq()
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Luca Weiss" <luca.weiss@fairphone.com>,
-        "Marc Zyngier" <maz@kernel.org>,
-        "Manivannan Sadhasivam" <manivannan.sadhasivam@linaro.org>
-X-Mailer: aerc 0.14.0
-References: <20220530080842.37024-1-manivannan.sadhasivam@linaro.org>
- <20220530080842.37024-4-manivannan.sadhasivam@linaro.org>
- <8735gi5g7s.wl-maz@kernel.org> <CO9EJJ4E661K.21S3LVYWH9HMM@otso>
-In-Reply-To: <CO9EJJ4E661K.21S3LVYWH9HMM@otso>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri Nov 11, 2022 at 11:41 AM CET, Luca Weiss wrote:
-> Hi Marc,
->
-> On Mon Jun 6, 2022 at 10:49 AM CEST, Marc Zyngier wrote:
-> > On Mon, 30 May 2022 09:08:42 +0100,
-> > Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> wrote:
-> > >=20
-> > > Currently, if the trigger type defined by the platform like DT does n=
-ot
-> > > match the driver requested trigger type, the below warning is shown
-> > > during platform_get_irq() but only during the second time of the driv=
-e
-> > > probe (due to probe deferral or module unload/load).
-> > >=20
-> > > irq: type mismatch, failed to map hwirq-9 for interrupt-controller@b2=
-20000!
-> > >=20
-> > > Consider a typical usecase of requesting an IRQ in a driver:
-> > >=20
-> > > ```
-> > > 	/* Assume DT has set the trigger type to IRQF_TYPE_LEVEL_HIGH */
-> > >=20
-> > > 	q6v5->wdog_irq =3D platform_get_irq_byname(pdev, "wdog");
-> > > 	if (q6v5->wdog_irq <=3D 0)
-> > > 		return q6v5->wdog_irq;
-> > >=20
-> > > 	ret =3D devm_request_threaded_irq(&pdev->dev, q6v5->wdog_irq,
-> > > 					NULL, q6v5_wdog_interrupt,
-> > > 					IRQF_TRIGGER_RISING | IRQF_ONESHOT,
-> > > 					"q6v5 wdog", q6v5);
-> > > 	if (ret) {
-> > > 		dev_err(&pdev->dev, "failed to acquire wdog IRQ\n");
-> > > 		return ret;
-> > > 	}
-> > > ```
-> > >=20
-> > > For the first time probe of a driver, platform_get_irq_byname() does =
-not
-> > > return an error and it sets the platform requested trigger type. Then=
-,
-> > > request_irq() also does not check for the trigger type mismatch and s=
-ets
-> > > the driver requested trigger type. Later if the driver gets probed ag=
-ain,
-> > > platform_get_irq() throws the "type mismatch" warning and fails.
-> > >=20
-> > > Ideally, request_irq() should throw the error during the first time i=
-tself,
-> > > when it detects the trigger type mismatch. So let's add a check in
-> > > __setup_irq() for checking the trigger type mismatch.
-> >
-> > No, that's wrong. The whole point is to be able to *override* the
-> > default that is exposed by the device tree or ACPI. We have countless
-> > examples of that, and they cannot be broken.
-> >
-> > If the issue exists after an unload, then it is a unload time that the
-> > previous behaviour should be restored.
->
-> So you're saying something like that the drivers where this issue
-> appears don't free the irq properly? I've seen a very similar issue now
-> on qcom-sm6350 platform with dwc3-qcom and qcom_q6v5_pas drivers.
->
-> Temporarily I've adjusted dts to match the IRQ flags requested in the
-> driver to avoid these "failed to map hwirq-" errors. I'd be happy to fix
-> those drivers (if they should be) but I need some pointers here what
-> needs to be done as from my understanding if an irq is requested with
-> devm_request_threaded_irq (e.g. dwc3-qcom.c) then it should be freed
-> automatically on EPROBE_DEFER because of devm?
->
-> All commits in mainline that mention "failed to map hwirq" seem to just
-> remove the hardcoded IRQ type from the driver instead.
+Nodes like pwrkey, resin, iadc, adc-tm, temp-alarm which are the grand
+children of spmi_bus node represent the interrupt generating devices but
+don't have "interrupt-parent" property.
 
-I'm still interested in a way to fix this since I'm carrying a patch in
-my own tree to adjust the dts. Please let me know how to proceed here.
+As per the devicetree spec v0.3, section 2.4:
 
-Regards
-Luca
+"The physical wiring of an interrupt source to an interrupt controller is
+represented in the devicetree with the interrupt-parent property. Nodes
+that represent interrupt-generating devices contain an interrupt-parent
+property which has a phandle value that points to the device to which the
+device’s interrupts are routed, typically an interrupt controller. If an
+interrupt-generating device does not have an interrupt-parent property,
+its interrupt parent is assumed to be its devicetree parent."
 
->
-> Regards
-> Luca
->
-> >
-> > Thanks,
-> >
-> > 	M.
-> >
-> > --=20
-> > Without deviation from the norm, progress is not possible.
+This clearly says that if the "interrupt-parent" property is absent, then
+the immediate devicetree parent will be assumed as the interrupt parent.
+But the immediate parents of these nodes are not interrupt controllers
+themselves.
+
+This may lead to failure while wiring the interrupt for these nodes by an
+operating system. But a few operating systems like Linux, workaround this
+issue by walking up the parent nodes until it finds the "interrupt-cells"
+property. Then the node that has the "interrupt-cells" property will be
+used as the interrupt parent.
+
+But this workaround is not as per the DT spec and is not being implemented
+by other operating systems such as OpenBSD.
+
+Hence, fix this issue by adding the "interrupts-extended" property that
+explicitly specifies the spmi_bus node as the interrupt parent. Note that
+the "interrupts-extended" property is chosen over "interrupt-parent" as it
+allows specifying both interrupt parent phandle and interrupt specifiers in
+a single property.
+
+Reported-by: Patrick Wildt <patrick@blueri.se>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+
+I just fixed one dtsi since wanted to make sure that everyone agrees to
+this implementation, otherwise I'll end up wasting too much time fixing
+every other DTs making use of these nodes.
+
+Next step would be to fix the bindings of these nodes to include interrupt-
+parent or interrupts-extended properties and affected DTs.
+
+ arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
+index f2c0b71b5d8e..df7d28f7ae60 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
+@@ -64,14 +64,14 @@ pmk8280_pon: pon@1300 {
+ 
+ 			pmk8280_pon_pwrkey: pwrkey {
+ 				compatible = "qcom,pmk8350-pwrkey";
+-				interrupts = <0x0 0x13 0x7 IRQ_TYPE_EDGE_BOTH>;
++				interrupts-extended = <&spmi_bus 0x0 0x13 0x7 IRQ_TYPE_EDGE_BOTH>;
+ 				linux,code = <KEY_POWER>;
+ 				status = "disabled";
+ 			};
+ 
+ 			pmk8280_pon_resin: resin {
+ 				compatible = "qcom,pmk8350-resin";
+-				interrupts = <0x0 0x13 0x6 IRQ_TYPE_EDGE_BOTH>;
++				interrupts-extended = <&spmi_bus 0x0 0x13 0x6 IRQ_TYPE_EDGE_BOTH>;
+ 				status = "disabled";
+ 			};
+ 		};
+@@ -79,7 +79,7 @@ pmk8280_pon_resin: resin {
+ 		pmk8280_vadc: adc@3100 {
+ 			compatible = "qcom,spmi-adc7";
+ 			reg = <0x3100>;
+-			interrupts = <0x0 0x31 0x0 IRQ_TYPE_EDGE_RISING>;
++			interrupts-extended = <&spmi_bus 0x0 0x31 0x0 IRQ_TYPE_EDGE_RISING>;
+ 			#address-cells = <1>;
+ 			#size-cells = <0>;
+ 			#io-channel-cells = <1>;
+@@ -89,7 +89,7 @@ pmk8280_vadc: adc@3100 {
+ 		pmk8280_adc_tm: adc-tm@3400 {
+ 			compatible = "qcom,spmi-adc-tm5-gen2";
+ 			reg = <0x3400>;
+-			interrupts = <0x0 0x34 0x0 IRQ_TYPE_EDGE_RISING>;
++			interrupts-extended = <&spmi_bus 0x0 0x34 0x0 IRQ_TYPE_EDGE_RISING>;
+ 			#address-cells = <1>;
+ 			#size-cells = <0>;
+ 			#thermal-sensor-cells = <1>;
+@@ -106,7 +106,7 @@ pmc8280_1: pmic@1 {
+ 		pm8280_1_temp_alarm: temp-alarm@a00 {
+ 			compatible = "qcom,spmi-temp-alarm";
+ 			reg = <0xa00>;
+-			interrupts = <0x1 0xa 0x0 IRQ_TYPE_EDGE_BOTH>;
++			interrupts-extended = <&spmi_bus 0x1 0xa 0x0 IRQ_TYPE_EDGE_BOTH>;
+ 			#thermal-sensor-cells = <0>;
+ 		};
+ 
+@@ -158,7 +158,7 @@ pmc8280_2: pmic@3 {
+ 		pm8280_2_temp_alarm: temp-alarm@a00 {
+ 			compatible = "qcom,spmi-temp-alarm";
+ 			reg = <0xa00>;
+-			interrupts = <0x2 0xa 0x0 IRQ_TYPE_EDGE_BOTH>;
++			interrupts-extended = <&spmi_bus 0x2 0xa 0x0 IRQ_TYPE_EDGE_BOTH>;
+ 			#thermal-sensor-cells = <0>;
+ 		};
+ 
+-- 
+2.25.1
 
