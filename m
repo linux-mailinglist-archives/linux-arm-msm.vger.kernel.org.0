@@ -2,90 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 860BD694781
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 14:56:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E90E6947DA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 15:19:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229683AbjBMN4M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Feb 2023 08:56:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57238 "EHLO
+        id S230230AbjBMOTv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Feb 2023 09:19:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229567AbjBMN4L (ORCPT
+        with ESMTP id S229743AbjBMOTo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Feb 2023 08:56:11 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8BF055BE
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 05:56:08 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id by3so11004005wrb.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 05:56:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :from:content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=1Uy5CSnBerGct98JAqbVYGF95fZTgd+o15YjTkcuIPk=;
-        b=xZJT6Spjz5YhxcyphM9ApKsAYqrAbbXecAiawIW5K2Flh9rnsQ8qDatufAylRsgoki
-         ++yrs+wwnD3MuoQarcAugWmIIqSDY0AaiDd1NiQzVxNQS/sQUqFU5YrtEbaxdJQ3BS/M
-         NWAxYNH73CvXqqzp5BbXuN7fHKbyy3mG9EoS3DYshvTymcoVgCNPde3dvMRuj27aLeOM
-         ui6UJzcSabTiHtaRUOW/xeUoEoToFsqP5KSbTMz8hwlgyZ1nLEqOctDKSNb+Gus8KYoL
-         p0SeR4LyIjc+UAmtI4TeCEfXdzdgp7f8ZrY8u2g4RHCEEqNBk6eFbYLVQIznT2pt0rVX
-         RFtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :from:content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=1Uy5CSnBerGct98JAqbVYGF95fZTgd+o15YjTkcuIPk=;
-        b=C6fWybs/CLC+aCHQZK+3fbIXe8pv0nWAn8hupQ7dMjwdDj34nfTyVa31qrsIALrUP4
-         5bBhjpfZ9NqsJPatKdTWJPTyjhON+qGj/ok8wiVK8xyHog8p8HVaDXcj+mP8yxIVT4xX
-         8+ubWqlyBSDOcWQTIIPFE7oy0pjco30cDso8zL3tWAi5AaufIsO6AMriZN4nrnzv35YI
-         ygKHDxxX3TYRWrq/e79vM1MCtcWcRsQbwe/zaGp6bHtNfIcUXXTmW1DS1cyRwWeZyDFn
-         mr3mNT/1sRlGmiclALAIRuZ/N45FLGiKBLL3yyl3mknysqMHADFeGhYYFacGrXtUdni3
-         tAFQ==
-X-Gm-Message-State: AO0yUKXEFZ70Sx3hmR5cQ2y18u2/hwoLmmXXRnoAvKCDxHcvTDs5GQkY
-        nIrfcOFtRwIFWTdMq7wV+NOBjA==
-X-Google-Smtp-Source: AK7set+D3CHlBRertMGZvD1SZZYSxdyV0jk07kZ5xiDaPn1MIZfSnQEaX9uZIv7om6WSAzxFky7u9Q==
-X-Received: by 2002:a5d:6210:0:b0:2be:c41:4758 with SMTP id y16-20020a5d6210000000b002be0c414758mr20399555wru.38.1676296567433;
-        Mon, 13 Feb 2023 05:56:07 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:915c:811a:b081:f099? ([2a01:e0a:982:cbb0:915c:811a:b081:f099])
-        by smtp.gmail.com with ESMTPSA id d15-20020a5d6dcf000000b002c3f9404c45sm10917766wrz.7.2023.02.13.05.56.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Feb 2023 05:56:06 -0800 (PST)
-Message-ID: <83603bc5-4b32-b759-5e5c-a590c2952039@linaro.org>
-Date:   Mon, 13 Feb 2023 14:56:05 +0100
+        Mon, 13 Feb 2023 09:19:44 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F307BBA0;
+        Mon, 13 Feb 2023 06:19:43 -0800 (PST)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31DE3CMn017464;
+        Mon, 13 Feb 2023 14:19:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=1afekj1atS6B7HHZ4RVIl8IvPNbTbmPEAs1NhaFYRLM=;
+ b=S6zEKUguj8+EXZUxYQDBgvSB9dGCEe5CnaQPFFt/NrNLaovcGyi/9oBqXrFK48mw04Jy
+ nVRIJ87P7GLabD5rBnUDetzijCmwN421neKvQxI8J/zMF0dfQR/Nn0ZUceXVm+iWqlQv
+ LPr7/qRVu5+vOmev520NNFuOzikKVAIWHLHrkr0SvNbUuSJ25MG21if6nzNoOyLp6OzD
+ 9GgOAxeL8EIC/g+auLaQpeGF6cpCV5XoEF5OtHrEG9kujgDNVZyRa0y4qtiyixu3iI8r
+ oJwvPNNTAjrXFs7wvOA7kZYAvmhddSC4S8ZpekHHfCJF0fgHxH7CC5t3bGRxzQiKRgYO hg== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nqpmmg11w-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 13 Feb 2023 14:19:12 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31DEJBI5012083
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 13 Feb 2023 14:19:11 GMT
+Received: from [10.50.58.188] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 13 Feb
+ 2023 06:19:02 -0800
+Message-ID: <ed3637e4-7a5a-55be-be49-cdb0ec978752@quicinc.com>
+Date:   Mon, 13 Feb 2023 19:48:54 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v3 5/5] arm64: dts: qcom: sm8450: add dp controller
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH V3 4/7] pinctrl: qcom: Add IPQ9574 pinctrl driver
+To:     Bjorn Andersson <andersson@kernel.org>
+CC:     <agross@kernel.org>, <konrad.dybcio@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <linus.walleij@linaro.org>, <catalin.marinas@arm.com>,
+        <will@kernel.org>, <p.zabel@pengutronix.de>, <shawnguo@kernel.org>,
+        <arnd@arndb.de>, <marcel.ziswiler@toradex.com>,
+        <dmitry.baryshkov@linaro.org>, <nfraprado@collabora.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
+        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
+        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_poovendh@quicinc.com>
+References: <20230130125528.11509-1-quic_devipriy@quicinc.com>
+ <20230130125528.11509-5-quic_devipriy@quicinc.com>
+ <20230208231412.yqp3rvokvmbb7ixi@ripper>
 Content-Language: en-US
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230206-topic-sm8450-upstream-dp-controller-v3-0-636ef9e99932@linaro.org>
- <20230206-topic-sm8450-upstream-dp-controller-v3-5-636ef9e99932@linaro.org>
- <347a5193-f7b1-7f8e-0c60-3d435bdf952c@linaro.org>
- <f5a26fff-2dc2-2397-a80c-2477176a5864@linaro.org>
- <880e691a-0512-6325-f27c-9be59abdd647@linaro.org>
- <b43179c4-bbf5-1d38-6ff0-8ddd0356d6d1@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <b43179c4-bbf5-1d38-6ff0-8ddd0356d6d1@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+From:   Devi Priya <quic_devipriy@quicinc.com>
+In-Reply-To: <20230208231412.yqp3rvokvmbb7ixi@ripper>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: kGUNY5cHUYA7GmZTQqdqsb8JBsXsBBvo
+X-Proofpoint-GUID: kGUNY5cHUYA7GmZTQqdqsb8JBsXsBBvo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-13_09,2023-02-13_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ spamscore=0 priorityscore=1501 suspectscore=0 adultscore=0 impostorscore=0
+ bulkscore=0 clxscore=1015 mlxscore=0 mlxlogscore=606 phishscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302130129
+X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -93,70 +93,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/02/2023 13:32, neil.armstrong@linaro.org wrote:
-> On 10/02/2023 16:54, Dmitry Baryshkov wrote:
->> On 10/02/2023 17:28, Neil Armstrong wrote:
->>> On 10/02/2023 16:24, Dmitry Baryshkov wrote:
->>>> On 10/02/2023 16:44, Neil Armstrong wrote:
->>>>> Add the Display Port controller subnode to the MDSS node.
->>>>>
->>>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->>>>> ---
->>>>>   arch/arm64/boot/dts/qcom/sm8450.dtsi | 79 ++++++++++++++++++++++++++++++++++++
->>>>>   1 file changed, 79 insertions(+)
->>>>>
->>>>> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
->>>>> index 6caa2c8efb46..72d54beb7d7c 100644
->>>>> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
->>>>> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
->>>>> @@ -2751,6 +2751,13 @@ dpu_intf2_out: endpoint {
->>>>>                           };
->>>>>                       };
->>>>> +                    port@2 {
->>>>> +                        reg = <2>;
->>>>> +                        dpu_intf0_out: endpoint {
->>>>> +                            remote-endpoint = <&mdss_dp0_in>;
->>>>> +                        };
->>>>> +                    };
->>>>> +
->>>>>                   };
->>>>>                   mdp_opp_table: opp-table {
->>>>> @@ -2783,6 +2790,78 @@ opp-500000000 {
->>>>>                   };
->>>>>               };
->>>>> +            mdss_dp0: displayport-controller@ae90000 {
->>>>> +                compatible = "qcom,sm8350-dp";
->>>
->>> Exact, must fix.
->>>
->>>>
->>>> Missing "qcom,sm8450-dp". As I wrote in the comment to patch 1, I'd suggest having just a single entry here rather than keeping both 8350 and 8450 entries.
->>>>
->>>>> +                reg = <0 0xae90000 0 0xfc>,
->>>>> +                      <0 0xae90200 0 0xc0>,
->>>>> +                      <0 0xae90400 0 0x770>,
->>>>> +                      <0 0xae91000 0 0x98>,
->>>>> +                      <0 0xae91400 0 0x98>;
->>>>
->>>>
->>>> While this sounds correct, usually we used the even size here (0x200, 0x400, etc.). Can we please switch to it (especially since sm8350-dp uses even sizes).
->>>
->>> I don't have access to registers layout for HDK8450 but the system freezes when using even sizes, using
->>> the exact register size works fine.
->>
->> Interesting. Could you please trace, what exactly makes it fail, since specifying bigger region size should not cause such issues.
+Thanks Bjorn for taking time to review the patch
+
+On 2/9/2023 4:44 AM, Bjorn Andersson wrote:
+> On Mon, Jan 30, 2023 at 06:25:25PM +0530, devi priya wrote:
+>> +static const struct msm_pingroup ipq9574_groups[] = {
+>> +	PINGROUP(0, sdc_data, qspi_data, qdss_traceclk_b, _, _, _, _, _, _),
+>> +	PINGROUP(1, sdc_data, qspi_data, qdss_tracectl_b, _, _, _, _, _, _),
+>> +	PINGROUP(2, sdc_data, qspi_data, qdss_tracedata_b, _, _, _, _, _, _),
+>> +	PINGROUP(3, sdc_data, qspi_data, qdss_tracedata_b, _, _, _, _, _, _),
+>> +	PINGROUP(4, sdc_cmd, qspi_cs, qdss_tracedata_b, _, _, _, _, _, _),
+>> +	PINGROUP(5, sdc_clk, qspi_clk, qdss_tracedata_b, _, _, _, _, _,
+>> +		 _),
 > 
-> Yep I'll trace what's happening.
-
-OK weird, I tried with the same sizes as sm8350, and it works fine.
-
-Will resend with this fixed.
-
-Neil
-
+> Please avoid line wrapping these, it just makes it hard to read.
+Yes, we have addressed this comment part of V7 series
+https://lore.kernel.org/linux-arm-kernel/20230206103337.21000-5-quic_devipriy@quicinc.com/
 > 
-> Neil
+> [..]
+>> +};
+>> +
+>> +/* Reserving GPIO59 for controlling the QFPROM LDO regulator */
 > 
->>
+> This seems like a property of the board, please use gpio-reserved-ranges
+> in the DT node instead.
+As the GPIO is forbidden on SoC IPQ9574,
+we have moved it to the pinctrl driver based on the suggestions received
+in V1 series
+https://lore.kernel.org/linux-arm-kernel/675ed9f7-da31-6206-5089-1db22025ef4b@linaro.org/
 > 
-
+> Thanks,
+> Bjorn
+Best Regards,
+Devi Priya
