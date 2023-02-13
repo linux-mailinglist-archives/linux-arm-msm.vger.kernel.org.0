@@ -2,49 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E73736953E8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 23:31:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2EDCF69540C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 23:45:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230044AbjBMWbJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Feb 2023 17:31:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41406 "EHLO
+        id S229887AbjBMWpq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Feb 2023 17:45:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229978AbjBMWbI (ORCPT
+        with ESMTP id S229489AbjBMWpp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Feb 2023 17:31:08 -0500
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBD1C1CF7C;
-        Mon, 13 Feb 2023 14:31:00 -0800 (PST)
-Received: from g550jk.localnet (unknown [62.108.10.64])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id B93E1CDFDF;
-        Mon, 13 Feb 2023 22:30:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1676327428; bh=W5e6SYUWX17zrMB98W//q9HU+zE0DKgEBiyUmTDCQWo=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=KU+C4uBtvCf7rgcT20qCwmxXtxu8zgGNHy3EKJ1DQiSulaQIKrqnk82aM79i9n/7C
-         uKY3XYez7l8aY/5Rfj1ZFKgLZK41EA0ahbCPgxZdCR9N11/M4hBjhj5Tph6hi2Rc1F
-         o85Xk6aza9AHxMVOT+L0589qUlC51FciJ0xoKG1I=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Mon, 13 Feb 2023 17:45:45 -0500
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C95BB1D91C;
+        Mon, 13 Feb 2023 14:45:44 -0800 (PST)
+Received: from mercury (unknown [185.209.196.162])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: sre)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 3B7786602154;
+        Mon, 13 Feb 2023 22:45:43 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1676328343;
+        bh=9ZqLO7u9wSSWylBMnQo4JHT+AC8VOGxAaq9hFglbWFM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=IzeZKCYvRlFrs4yVkPEm6idXIx3tSARIcMt/ufUhergxwEaz2ZyIWysC+2kLsveaW
+         8z9Q/nw6zNKgZAaEViw93IzBdu47AaZ48TETC7JsrqYp9/y+aa4gLz6wMaq0YZKKch
+         zw7SO167/TQE86+q2RnXpnQmbxcLbYG3cUHQegJ1nRn/ys2JWHYvxc8Zo3MMCcEQOw
+         mHMQXhBnRcpi/DoedRVO+lE3wbahIooUVGAq0H27aChZiR2sd6x9ylNrYpuZ+F8MJd
+         YVt7irvYZMy3kkw6ekTuVw0JvpBlAkHVqWeLcr2qUkRfV0iLcYb0a6tl6c7MHFyekg
+         lzkzJUmZsxoHA==
+Received: by mercury (Postfix, from userid 1000)
+        id 8E28F10603FE; Mon, 13 Feb 2023 23:45:40 +0100 (CET)
+Date:   Mon, 13 Feb 2023 23:45:40 +0100
+From:   Sebastian Reichel <sebastian.reichel@collabora.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org,
+        marijn.suijten@somainline.org, Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Luca Weiss <luca.weiss@fairphone.com>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] clk: qcom: camcc-sm6350: add pm_runtime support
-Date:   Mon, 13 Feb 2023 23:30:27 +0100
-Message-ID: <4777254.GXAFRqVoOG@z3ntu.xyz>
-In-Reply-To: <20230213-sm6350-camcc-runtime_pm-v2-1-60a507bf3e68@z3ntu.xyz>
-References: <20230213-sm6350-camcc-runtime_pm-v2-0-60a507bf3e68@z3ntu.xyz>
- <20230213-sm6350-camcc-runtime_pm-v2-1-60a507bf3e68@z3ntu.xyz>
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/3] dt-bindings: power: supply: pm8941-coincell: Don't
+ require charging properties
+Message-ID: <20230213224540.o4fd554ippzdej7a@mercury.elektranox.org>
+References: <20230213204950.2100538-1-konrad.dybcio@linaro.org>
+ <20230213204950.2100538-2-konrad.dybcio@linaro.org>
+ <20230213212733.rhvuzrshfrvzgo4a@mercury.elektranox.org>
+ <83637cc7-21ae-7778-37b3-4522cc0a06c9@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="hvdkk6p6no65upka"
+Content-Disposition: inline
+In-Reply-To: <83637cc7-21ae-7778-37b3-4522cc0a06c9@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
         autolearn=ham autolearn_force=no version=3.4.6
@@ -54,81 +64,63 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Montag, 13. Februar 2023 14:08:06 CET Luca Weiss wrote:
-> Make sure that we can enable and disable the power domains used for
-> camcc when the clocks are and aren't used.
-> 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 
-Apparently I messed up v2 too and had the wrong email in my git config. Will 
-send a v3 to fix that as well...
+--hvdkk6p6no65upka
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> ---
->  drivers/clk/qcom/camcc-sm6350.c | 29 ++++++++++++++++++++++++++++-
->  1 file changed, 28 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/clk/qcom/camcc-sm6350.c
-> b/drivers/clk/qcom/camcc-sm6350.c index acba9f99d960..dd65f3ef0857 100644
-> --- a/drivers/clk/qcom/camcc-sm6350.c
-> +++ b/drivers/clk/qcom/camcc-sm6350.c
-> @@ -7,6 +7,8 @@
->  #include <linux/clk-provider.h>
->  #include <linux/module.h>
->  #include <linux/platform_device.h>
-> +#include <linux/pm_clock.h>
-> +#include <linux/pm_runtime.h>
->  #include <linux/regmap.h>
-> 
->  #include <dt-bindings/clock/qcom,sm6350-camcc.h>
-> @@ -1869,6 +1871,19 @@ MODULE_DEVICE_TABLE(of, camcc_sm6350_match_table);
->  static int camcc_sm6350_probe(struct platform_device *pdev)
->  {
->  	struct regmap *regmap;
-> +	int ret;
-> +
-> +	ret = devm_pm_runtime_enable(&pdev->dev);
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	ret = devm_pm_clk_create(&pdev->dev);
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	ret = pm_runtime_get(&pdev->dev);
-> +	if (ret)
-> +		return ret;
-> 
->  	regmap = qcom_cc_map(pdev, &camcc_sm6350_desc);
->  	if (IS_ERR(regmap))
-> @@ -1879,14 +1894,26 @@ static int camcc_sm6350_probe(struct platform_device
-> *pdev) clk_agera_pll_configure(&camcc_pll2, regmap, &camcc_pll2_config);
-> clk_fabia_pll_configure(&camcc_pll3, regmap, &camcc_pll3_config);
-> 
-> -	return qcom_cc_really_probe(pdev, &camcc_sm6350_desc, regmap);
-> +	ret = qcom_cc_really_probe(pdev, &camcc_sm6350_desc, regmap);
-> +	pm_runtime_put(&pdev->dev);
-> +	if (ret < 0) {
-> +		dev_err(&pdev->dev, "Failed to register CAM CC 
-clocks\n");
-> +		return ret;
-> +	}
-> +
-> +	return 0;
->  }
-> 
-> +static const struct dev_pm_ops camcc_pm_ops = {
-> +	SET_RUNTIME_PM_OPS(pm_clk_suspend, pm_clk_resume, NULL)
-> +};
-> +
->  static struct platform_driver camcc_sm6350_driver = {
->  	.probe = camcc_sm6350_probe,
->  	.driver = {
->  		.name = "sm6350-camcc",
->  		.of_match_table = camcc_sm6350_match_table,
-> +		.pm = &camcc_pm_ops,
->  	},
->  };
+Hi,
 
+On Mon, Feb 13, 2023 at 10:41:10PM +0100, Konrad Dybcio wrote:
+> On 13.02.2023 22:27, Sebastian Reichel wrote:
+> > On Mon, Feb 13, 2023 at 09:49:49PM +0100, Konrad Dybcio wrote:
+> >> It's fine for these properties to be absent, as the driver doesn't fail
+> >> without them and functions with settings inherited from the reset/prev=
+ious
+> >> stage bootloader state.
+> >>
+> >> Fixes: 6c463222a21d ("dt-bindings: power: supply: pm8941-coincell: Con=
+vert to DT schema format")
+> >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> >> ---
+> > Please update the description of these properties to describe the
+> > default behaviour.
+> Not sure if there's any default behavior other than "go with
+> whatever was there previously, no matter how it got there".
 
+I got that from the patch description, but that behaviour should be
+described in the binding.
 
+> Is it okay if I just add:
+>=20
+> "If unspecified, inherit the bootloader configuration"
 
+Technically the bindings are also for bootloaders. I suggest:
+
+If unspecified, inherit the previous configuration (e.g. from
+bootloader or hardware default value).
+
+-- Sebastian
+
+--hvdkk6p6no65upka
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmPqvZAACgkQ2O7X88g7
++pqK5A/7B+mt+IoHQ+S5V1ix2613TjN9+JjnUr/fmRmVvPNtac+u6oukLqgGngwp
+UwtnP34uerWTYzIQAeNXIa287PbBuDpYwSh+CL9QrRtR+7Bp9olslee+dHz4bv+n
+rXuxQifQ8FroUZhtXfaNBL3g/y+fQKHN3HXrXLjwpM4ZZ+mW8vVpHc4alejCvDQx
+mjAYsRh/TZDgS8bsUoxndVcmO26o3pBV0ockEdj4vTfvwMmTUQncejUyGAJcoWJv
+eC92EgWj5+ldaCx1E0Sgc+3LHtlZljU49FNEkXzppXZxBdoYF/TVggvrLdrGjX/8
+Oh17YsJ2cE0Lyu1nf37jEGqJDZNGICLOrJ0nnC3UlH3CXfGyEB9h/C4BrbVYdtuh
+BWXvZbYTjT5k2PEc8exAyigfGNIZ8plHEyVDP2Ra+yNXGG/3N474iUQV8Z7nQKPu
+jotzhZKxFr8ecOr6B6XCBLV0UljIRqTEUqqWSmQs7J1M/hwW1Ad9mOYTdjeRTU7+
+SucSyhXRNSlB6D5ASFXk9ggiQvOdtGBCyCRMzuXDq8qRfSc1auPSsInat4O2bKQO
+82DdM41izrDX4ZTkxYl7PhZMROl13MKLy1kSOp4YrolXN6pzeLpEvu1gHn3t7XR+
+kxGP+ie/ZL4JluGRmLJ8kKDBpU1DVSCECOhQT2RRvsbmmy2Ct2s=
+=G77K
+-----END PGP SIGNATURE-----
+
+--hvdkk6p6no65upka--
