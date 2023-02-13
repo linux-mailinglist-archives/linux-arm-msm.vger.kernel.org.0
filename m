@@ -2,244 +2,246 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7DF6B69534B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 22:42:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 212B7695356
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 22:46:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230199AbjBMVmQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Feb 2023 16:42:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35238 "EHLO
+        id S229798AbjBMVqS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Feb 2023 16:46:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229891AbjBMVmQ (ORCPT
+        with ESMTP id S231159AbjBMVqQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Feb 2023 16:42:16 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6064E468F;
-        Mon, 13 Feb 2023 13:42:14 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id EBE1E612CF;
-        Mon, 13 Feb 2023 21:42:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8F44C433EF;
-        Mon, 13 Feb 2023 21:42:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1676324533;
-        bh=rOYvHJNGXd8NF4EsktaSRa4f4jOwg6EFR8VVJBsgOnY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=gZAFwyR0kPgpL78DYHN7WwQkqLUVCFmMCHQxD58hm3QOE6g5EVhMvUGA1uAh51DRz
-         Qmt5SvdI8kAfyWAkrBYFd/9mijv5DE7ibxs+wvI8e/DzHHNEZnsmijf7Nc2GaoMlIn
-         Vs7coBIa6L7JfVFY96ysmtOctoy9hm1HSmSXKeUhEuuFRPmLBg5nU50Vyv16/1KL/Q
-         fSQiNJEw2s+GK8QUWwkMs2sweurepH6mnYE3YH9/5miDYCAQqiarZuIKapZOGt3yF3
-         xBlnInJVfre/aX54H4v5HquYoHT8KUnQbb8OicAyIczGdq8xXIiK4GWk76YKc/N6fL
-         t4HKK2/Z1ziKg==
-Date:   Mon, 13 Feb 2023 13:44:17 -0800
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Elliot Berman <quic_eberman@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Arnd Bergmann <arnd@arndb.de>, Kalle Valo <kvalo@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
-        netdev@vger.kernel.org, linux-remoteproc@vger.kernel.org
-Subject: Re: [PATCH] firmware: qcom_scm: Use fixed width src vm bitmap
-Message-ID: <20230213214417.mtcpeultvynyls6s@ripper>
-References: <20230213181832.3489174-1-quic_eberman@quicinc.com>
+        Mon, 13 Feb 2023 16:46:16 -0500
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D20171554C
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 13:46:13 -0800 (PST)
+Received: by mail-ej1-x631.google.com with SMTP id a3so1293477ejb.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 13:46:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cLqbD4GL7wGt7wb5qOSWcpBX+EUA83fR85j9v5NAA80=;
+        b=yHlIZp5ficXr4X8XRD0YbnUlgk9MpuTsDUbZ9rqtE2SXrhMeI7NHGFo4bCZ1uACMtR
+         V3ho3QqXsAl0JxMknz4NE8nNturALTlkGsji1a5ONcfjxDFxo5p0FfGgc7V3LuatrsIp
+         TGxUbn7AqxoyyVxBGk+MBaP11Pmc/37SmSEPQtSbd3D69W8IxGxlFlgCk9urHd10wj76
+         6UehSRgHmFBBR1SwRmpV4vzHL9u2q7TbeGXB5hzCUhBkkO8q6reUyOziIk/rxyJRBDC3
+         gBqcQj08hFkpwGQ833GLdDyVO0BKvDPHyf+dLFxsCcrEkF3Lu59I9N63cH5aeAvLHwea
+         s+Ng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cLqbD4GL7wGt7wb5qOSWcpBX+EUA83fR85j9v5NAA80=;
+        b=cB95kLIf97mfNri2wAGgfB1S8Haacn070b1LSJgRz2HvVGLC5FXsfdtIX8vmwDd3Cg
+         c9nQP5Kpu6eZpqxmgjqUsLuZSrzyVgE4shY0NYeQLxtrkgbiY42MhgI/87qkelNQKl03
+         ydKujl3DGDKE4ilHqVN0TIRqOyaQRkhYndLw4BYUoQd0HFcgrSrUQ9Xdp53SUSAopw0f
+         c7Wfkd6/KIesA1cy/anzEt8MmRAduGb2804igVMlrNWYLD7mklCp5gJIRNmOK2cNmu61
+         UN83CNd3XsudF8GUpME37pacQdxawHQp3HvFJ5wxj17oS265NMezViOR0jvgefR57L3T
+         bUNA==
+X-Gm-Message-State: AO0yUKXiGrp5kYrnWL3yBoTCZZw/f9QiMr7OT8+DEzDcw/1Hvth5TJik
+        Kn+5tJ6WgJVoBOr06QMVQktYXw==
+X-Google-Smtp-Source: AK7set9aAcUj8MPJa0hpm1RoqSyPXeXAENwlb572NSMRk8UGq6YFqH3lfDUTDPiGMw1iZzQiQnH4rQ==
+X-Received: by 2002:a17:906:d7b3:b0:8a4:e0a2:e774 with SMTP id pk19-20020a170906d7b300b008a4e0a2e774mr411473ejb.29.1676324772363;
+        Mon, 13 Feb 2023 13:46:12 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id gh2-20020a1709073c0200b008b124134fb4sm554895ejc.115.2023.02.13.13.46.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 13 Feb 2023 13:46:11 -0800 (PST)
+Message-ID: <1051d6bd-eb3c-6293-0bd2-3f4ea28fa3f8@linaro.org>
+Date:   Mon, 13 Feb 2023 23:46:09 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230213181832.3489174-1-quic_eberman@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [RFC PATCH 5/7] drm/msm/dpu: Document and enable TEAR interrupts
+ on DSI interfaces
+Content-Language: en-GB
+To:     Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        phone-devel@vger.kernel.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        Adam Skladowski <a39.skl@gmail.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20221231215006.211860-1-marijn.suijten@somainline.org>
+ <20221231215006.211860-6-marijn.suijten@somainline.org>
+ <773cd72b-a766-1764-e25f-0af1174f0e51@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <773cd72b-a766-1764-e25f-0af1174f0e51@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Feb 13, 2023 at 10:18:29AM -0800, Elliot Berman wrote:
-> The maximum VMID for assign_mem is 63. Use a u64 to represent this
-> bitmap instead of architecture-dependent "unsigned int" which varies in
-> size on 32-bit and 64-bit platforms.
+On 13/02/2023 21:37, Jessica Zhang wrote:
 > 
-> Acked-by: Kalle Valo <kvalo@kernel.org> (ath10k)
-> Tested-by: Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-
-@Greg, would you mind taking this through your tree for v6.3, you
-already have a related change in fastrpc.c in your tree...
-
-Regards,
-Bjorn
-
-> ---
->  drivers/firmware/qcom_scm.c            | 12 +++++++-----
->  drivers/misc/fastrpc.c                 |  2 +-
->  drivers/net/wireless/ath/ath10k/qmi.c  |  4 ++--
->  drivers/remoteproc/qcom_q6v5_mss.c     |  8 ++++----
->  drivers/remoteproc/qcom_q6v5_pas.c     |  2 +-
->  drivers/soc/qcom/rmtfs_mem.c           |  2 +-
->  include/linux/firmware/qcom/qcom_scm.h |  2 +-
->  7 files changed, 17 insertions(+), 15 deletions(-)
 > 
-> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-> index 468d4d5ab550..b95616b35bff 100644
-> --- a/drivers/firmware/qcom_scm.c
-> +++ b/drivers/firmware/qcom_scm.c
-> @@ -905,7 +905,7 @@ static int __qcom_scm_assign_mem(struct device *dev, phys_addr_t mem_region,
->   * Return negative errno on failure or 0 on success with @srcvm updated.
->   */
->  int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
-> -			unsigned int *srcvm,
-> +			u64 *srcvm,
->  			const struct qcom_scm_vmperm *newvm,
->  			unsigned int dest_cnt)
->  {
-> @@ -922,9 +922,9 @@ int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
->  	__le32 *src;
->  	void *ptr;
->  	int ret, i, b;
-> -	unsigned long srcvm_bits = *srcvm;
-> +	u64 srcvm_bits = *srcvm;
->  
-> -	src_sz = hweight_long(srcvm_bits) * sizeof(*src);
-> +	src_sz = hweight64(srcvm_bits) * sizeof(*src);
->  	mem_to_map_sz = sizeof(*mem_to_map);
->  	dest_sz = dest_cnt * sizeof(*destvm);
->  	ptr_sz = ALIGN(src_sz, SZ_64) + ALIGN(mem_to_map_sz, SZ_64) +
-> @@ -937,8 +937,10 @@ int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
->  	/* Fill source vmid detail */
->  	src = ptr;
->  	i = 0;
-> -	for_each_set_bit(b, &srcvm_bits, BITS_PER_LONG)
-> -		src[i++] = cpu_to_le32(b);
-> +	for (b = 0; b < BITS_PER_TYPE(u64); b++) {
-> +		if (srcvm_bits & BIT(b))
-> +			src[i++] = cpu_to_le32(b);
-> +	}
->  
->  	/* Fill details of mem buff to map */
->  	mem_to_map = ptr + ALIGN(src_sz, SZ_64);
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index a701132638cf..f48466960f1b 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -262,7 +262,7 @@ struct fastrpc_channel_ctx {
->  	int domain_id;
->  	int sesscount;
->  	int vmcount;
-> -	u32 perms;
-> +	u64 perms;
->  	struct qcom_scm_vmperm vmperms[FASTRPC_MAX_VMIDS];
->  	struct rpmsg_device *rpdev;
->  	struct fastrpc_session_ctx session[FASTRPC_MAX_SESSIONS];
-> diff --git a/drivers/net/wireless/ath/ath10k/qmi.c b/drivers/net/wireless/ath/ath10k/qmi.c
-> index 90f457b8e1fe..038c5903c0dc 100644
-> --- a/drivers/net/wireless/ath/ath10k/qmi.c
-> +++ b/drivers/net/wireless/ath/ath10k/qmi.c
-> @@ -33,7 +33,7 @@ static int ath10k_qmi_map_msa_permission(struct ath10k_qmi *qmi,
->  {
->  	struct qcom_scm_vmperm dst_perms[3];
->  	struct ath10k *ar = qmi->ar;
-> -	unsigned int src_perms;
-> +	u64 src_perms;
->  	u32 perm_count;
->  	int ret;
->  
-> @@ -65,7 +65,7 @@ static int ath10k_qmi_unmap_msa_permission(struct ath10k_qmi *qmi,
->  {
->  	struct qcom_scm_vmperm dst_perms;
->  	struct ath10k *ar = qmi->ar;
-> -	unsigned int src_perms;
-> +	u64 src_perms;
->  	int ret;
->  
->  	src_perms = BIT(QCOM_SCM_VMID_MSS_MSA) | BIT(QCOM_SCM_VMID_WLAN);
-> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-> index ab053084f7a2..1ba711bc0100 100644
-> --- a/drivers/remoteproc/qcom_q6v5_mss.c
-> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
-> @@ -235,8 +235,8 @@ struct q6v5 {
->  	bool has_qaccept_regs;
->  	bool has_ext_cntl_regs;
->  	bool has_vq6;
-> -	int mpss_perm;
-> -	int mba_perm;
-> +	u64 mpss_perm;
-> +	u64 mba_perm;
->  	const char *hexagon_mdt_image;
->  	int version;
->  };
-> @@ -414,7 +414,7 @@ static void q6v5_pds_disable(struct q6v5 *qproc, struct device **pds,
->  	}
->  }
->  
-> -static int q6v5_xfer_mem_ownership(struct q6v5 *qproc, int *current_perm,
-> +static int q6v5_xfer_mem_ownership(struct q6v5 *qproc, u64 *current_perm,
->  				   bool local, bool remote, phys_addr_t addr,
->  				   size_t size)
->  {
-> @@ -967,7 +967,7 @@ static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw,
->  	unsigned long dma_attrs = DMA_ATTR_FORCE_CONTIGUOUS;
->  	dma_addr_t phys;
->  	void *metadata;
-> -	int mdata_perm;
-> +	u64 mdata_perm;
->  	int xferop_ret;
->  	size_t size;
->  	void *ptr;
-> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-> index 1e14ae4d233a..a0fa7176fde7 100644
-> --- a/drivers/remoteproc/qcom_q6v5_pas.c
-> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
-> @@ -94,7 +94,7 @@ struct qcom_adsp {
->  	size_t region_assign_size;
->  
->  	int region_assign_idx;
-> -	int region_assign_perms;
-> +	u64 region_assign_perms;
->  
->  	struct qcom_rproc_glink glink_subdev;
->  	struct qcom_rproc_subdev smd_subdev;
-> diff --git a/drivers/soc/qcom/rmtfs_mem.c b/drivers/soc/qcom/rmtfs_mem.c
-> index 2d3ee22b9249..2657c6105bb7 100644
-> --- a/drivers/soc/qcom/rmtfs_mem.c
-> +++ b/drivers/soc/qcom/rmtfs_mem.c
-> @@ -31,7 +31,7 @@ struct qcom_rmtfs_mem {
->  
->  	unsigned int client_id;
->  
-> -	unsigned int perms;
-> +	u64 perms;
->  };
->  
->  static ssize_t qcom_rmtfs_mem_show(struct device *dev,
-> diff --git a/include/linux/firmware/qcom/qcom_scm.h b/include/linux/firmware/qcom/qcom_scm.h
-> index 1e449a5d7f5c..250ea4efb7cb 100644
-> --- a/include/linux/firmware/qcom/qcom_scm.h
-> +++ b/include/linux/firmware/qcom/qcom_scm.h
-> @@ -94,7 +94,7 @@ extern int qcom_scm_mem_protect_video_var(u32 cp_start, u32 cp_size,
->  					  u32 cp_nonpixel_start,
->  					  u32 cp_nonpixel_size);
->  extern int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
-> -			       unsigned int *src,
-> +			       u64 *src,
->  			       const struct qcom_scm_vmperm *newvm,
->  			       unsigned int dest_cnt);
->  
+> On 12/31/2022 1:50 PM, Marijn Suijten wrote:
+>> All SoCs since DPU 5.0.0 (and seemingly up until and including 6.0.0,
+>> but excluding 7.x.x) have the tear interrupt and control registers moved
+>> out of the PINGPONG block and into the INTF block.  Wire up the
+>> necessary interrupts and IRQ masks on all supported hardware.
 > 
-> base-commit: 09e41676e35ab06e4bce8870ea3bf1f191c3cb90
-> -- 
-> 2.39.1
+> Hi Marijn,
 > 
+> Thanks for the patch.
+> 
+> I saw that in your commit msg, you mentioned that 7.x doesn't have 
+> tearcheck in the INTF block -- can you double check that this is correct?
+> 
+> I'm working on SM8350 (DPU v7) and I'm seeing that it does have 
+> tearcheck in INTF block.
+
+I confirm, according to the vendor drivers INTF TE should be used for 
+all DPU >= 5.0, including 7.x and 8.x
+
+However I think I know what Marijn meant here. For 5.x and 6.x these 
+IRQs are handled at the address MDSS + 0x6e800 / + 0x6e900 (which means 
+offset here should 0x6d800 and 0x6d900) for INTF_1 and INTF_2. Since DPU 
+7.x these IRQ registers were moved close to the main INTF block (0x36800 
+and 0x37800 = INTF + 0x800).
+
+> 
+>>
+>> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+>> ---
+>>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 78 +++++++++++--------
+>>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  6 +-
+>>   .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 12 +++
+>>   .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h |  2 +
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h      |  3 +
+>>   5 files changed, 68 insertions(+), 33 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c 
+>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>> index 1cfe94494135..b9b9b5b0b615 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>> @@ -86,6 +86,15 @@
+>>   #define INTF_SC7280_MASK INTF_SC7180_MASK | BIT(DPU_DATA_HCTL_EN)
+>> +#define IRQ_MSM8998_MASK (BIT(MDP_SSPP_TOP0_INTR) | \
+>> +             BIT(MDP_SSPP_TOP0_INTR2) | \
+>> +             BIT(MDP_SSPP_TOP0_HIST_INTR) | \
+>> +             BIT(MDP_INTF0_INTR) | \
+>> +             BIT(MDP_INTF1_INTR) | \
+>> +             BIT(MDP_INTF2_INTR) | \
+>> +             BIT(MDP_INTF3_INTR) | \
+>> +             BIT(MDP_INTF4_INTR))
+>> +
+>>   #define IRQ_SDM845_MASK (BIT(MDP_SSPP_TOP0_INTR) | \
+>>                BIT(MDP_SSPP_TOP0_INTR2) | \
+>>                BIT(MDP_SSPP_TOP0_HIST_INTR) | \
+>> @@ -100,13 +109,15 @@
+>>   #define IRQ_QCM2290_MASK (BIT(MDP_SSPP_TOP0_INTR) | \
+>>                BIT(MDP_SSPP_TOP0_INTR2) | \
+>>                BIT(MDP_SSPP_TOP0_HIST_INTR) | \
+>> -             BIT(MDP_INTF1_INTR))
+>> +             BIT(MDP_INTF1_INTR) | \
+>> +             BIT(MDP_INTF1_TEAR_INTR))
+>>   #define IRQ_SC7180_MASK (BIT(MDP_SSPP_TOP0_INTR) | \
+>>                BIT(MDP_SSPP_TOP0_INTR2) | \
+>>                BIT(MDP_SSPP_TOP0_HIST_INTR) | \
+>>                BIT(MDP_INTF0_INTR) | \
+>> -             BIT(MDP_INTF1_INTR))
+>> +             BIT(MDP_INTF1_INTR) | \
+>> +             BIT(MDP_INTF1_TEAR_INTR))
+>>   #define IRQ_SC7280_MASK (BIT(MDP_SSPP_TOP0_INTR) | \
+>>                BIT(MDP_SSPP_TOP0_INTR2) | \
+>> @@ -120,7 +131,9 @@
+>>                BIT(MDP_SSPP_TOP0_HIST_INTR) | \
+>>                BIT(MDP_INTF0_INTR) | \
+>>                BIT(MDP_INTF1_INTR) | \
+>> +             BIT(MDP_INTF1_TEAR_INTR) | \
+>>                BIT(MDP_INTF2_INTR) | \
+>> +             BIT(MDP_INTF2_TEAR_INTR) | \
+>>                BIT(MDP_INTF3_INTR) | \
+>>                BIT(MDP_INTF4_INTR))
+>> @@ -129,7 +142,9 @@
+>>                 BIT(MDP_SSPP_TOP0_HIST_INTR) | \
+>>                 BIT(MDP_INTF0_INTR) | \
+>>                 BIT(MDP_INTF1_INTR) | \
+>> +              BIT(MDP_INTF1_TEAR_INTR) | \
+>>                 BIT(MDP_INTF2_INTR) | \
+>> +              BIT(MDP_INTF2_TEAR_INTR) | \
+>>                 BIT(MDP_INTF3_INTR) | \
+>>                 BIT(MDP_INTF4_INTR) | \
+>>                 BIT(MDP_INTF5_INTR) | \
+>> @@ -1300,63 +1315,64 @@ static struct dpu_dsc_cfg sdm845_dsc[] = {
+>>   /*************************************************************
+>>    * INTF sub blocks config
+>>    *************************************************************/
+>> -#define INTF_BLK(_name, _id, _base, _type, _ctrl_id, _progfetch, 
+>> _features, _reg, _underrun_bit, _vsync_bit) \
+>> +#define INTF_BLK(_name, _id, _base, _len, _type, _ctrl_id, 
+>> _progfetch, _features, _reg, _underrun_bit, _vsync_bit, _tear_reg, 
+>> _tear_rd_ptr_bit) \
+>>       {\
+>>       .name = _name, .id = _id, \
+>> -    .base = _base, .len = 0x280, \
+>> +    .base = _base, .len = _len, \
+>>       .features = _features, \
+>>       .type = _type, \
+>>       .controller_id = _ctrl_id, \
+>>       .prog_fetch_lines_worst_case = _progfetch, \
+>>       .intr_underrun = DPU_IRQ_IDX(_reg, _underrun_bit), \
+>>       .intr_vsync = DPU_IRQ_IDX(_reg, _vsync_bit), \
+>> +    .intr_tear_rd_ptr = DPU_IRQ_IDX(_tear_reg, _tear_rd_ptr_bit), \
+>>       }
+>>   static const struct dpu_intf_cfg msm8998_intf[] = {
+>> -    INTF_BLK("intf_0", INTF_0, 0x6A000, INTF_DP, 0, 25, 
+>> INTF_SDM845_MASK, MDP_SSPP_TOP0_INTR, 24, 25),
+>> -    INTF_BLK("intf_1", INTF_1, 0x6A800, INTF_DSI, 0, 25, 
+>> INTF_SDM845_MASK, MDP_SSPP_TOP0_INTR, 26, 27),
+>> -    INTF_BLK("intf_2", INTF_2, 0x6B000, INTF_DSI, 1, 25, 
+>> INTF_SDM845_MASK, MDP_SSPP_TOP0_INTR, 28, 29),
+>> -    INTF_BLK("intf_3", INTF_3, 0x6B800, INTF_HDMI, 0, 25, 
+>> INTF_SDM845_MASK, MDP_SSPP_TOP0_INTR, 30, 31),
+>> +    INTF_BLK("intf_0", INTF_0, 0x6A000, 0x268, INTF_DP, 0, 25, 
+>> INTF_SDM845_MASK, MDP_SSPP_TOP0_INTR, 24, 25, -1, -1),
+> 
+> Just wondering, how were the lengths calculated for the INTF blocks? The 
+> values in general seem a little off to me.
+> 
+> For example, I'm looking downstream and it seems to me that the length 
+> for the INTF_0 on MSM8998 should be 0x280. Similarly for SC7280, I'm 
+> seeing that length for INTF + tearcheck should be 0x2c4.
+
+We have discussed INTF lengths in [1]. The current understanding of the 
+block lengths can be found at [2]. Please comment there if any of the 
+fixed lengths sounds incorrect to you.
+
+[1] https://patchwork.freedesktop.org/patch/522187/
+[2] https://patchwork.freedesktop.org/patch/522227/
+
+[skipped the rest]
+
+-- 
+With best wishes
+Dmitry
+
