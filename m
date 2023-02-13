@@ -2,144 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 13E80694C9C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 17:25:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 21314694CB6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Feb 2023 17:28:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229834AbjBMQZv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Feb 2023 11:25:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46716 "EHLO
+        id S230156AbjBMQ2v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Feb 2023 11:28:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229869AbjBMQZu (ORCPT
+        with ESMTP id S230078AbjBMQ2u (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Feb 2023 11:25:50 -0500
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25D1B1B541
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 08:25:26 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id p26so33164822ejx.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 08:25:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=eWFr1CwZvMY5/EN0vu8t/Vj+LDxEJAQErVcpCjqVbII=;
-        b=oUUfDS770cSTzQ+Zst5e/kfjkax8DHMQvYXxccdwc0dMN3GliHUDJxG6T2ZaP7YTR8
-         jdFWlcGRBlGRccBQNkWLmQtXBGZQTefa6O9eOHp1A1HNW6m12xNuQ9ys6UrhlXeBjvsE
-         04kcceD/awx0pgM/VzIyOjbK1yEWzustl7WTzzxA8cJIg79gqqQYeTedR2elW6fI0Xvl
-         b+ymiN4Y2YnilSNvSXG9Gz5XbThGIuuOjdDMT9+LUN9C52JxNRq8E3qTZQ9cHz3JJzmu
-         NWEJvzNE79Skg1l2HQLM0Qt7R8LWbsDiFOtm+l089E/7pr8GPln12yWnSE8d8D+Eh04p
-         Kntg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eWFr1CwZvMY5/EN0vu8t/Vj+LDxEJAQErVcpCjqVbII=;
-        b=7nY+u3dhghb0W5KcapPqziq8CC6tcTbM06j1W4NWqrwCJZu02wcSVwnOYWWxRJCu9C
-         WdLqTBKRUe8j+SWLF4LM6gxq7lCLeGulbmo4FJItHvKpwQ2kY1AjpCSbXJGAWOkBVwd6
-         2iKtUR+X2DDylHB/+L4LI5viczojjbDcLcsFXppC4cM8wegoEn6yYEfdYoGwZuEpsUSk
-         hwot5yO8QSJWggKty3t+WedP2oOGa4suErG1Uy+baUGrReaONno2MkzotW+OErIbEUy3
-         IdDw4WIGIC+CfF16gQcV7Ai38ImpuYWJWq6N9fsxvi+zqGjWShM11b8h5NEvY7f9C3jH
-         4wwg==
-X-Gm-Message-State: AO0yUKUoVB8YusYteGWaaQPPFf1XKcGEJMV5PBHNiT7q0ot4TVGlXNTN
-        rQiuUg4D2dEolKbMQHlZlN76OFLcrePbF5bi
-X-Google-Smtp-Source: AK7set/WZntuEziXN2YaI/cS4O20orw4Yw3GpGUOrBGyNYo6PuwOs635uCnb9R3l1O3CyZKM0lIQqQ==
-X-Received: by 2002:a17:906:1511:b0:88d:d304:3432 with SMTP id b17-20020a170906151100b0088dd3043432mr25472687ejd.60.1676305524040;
-        Mon, 13 Feb 2023 08:25:24 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id lu19-20020a170906fad300b007a9c3831409sm6915447ejb.137.2023.02.13.08.25.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Feb 2023 08:25:23 -0800 (PST)
-Message-ID: <56281f37-2c7f-5f70-6c9e-87e950f06b0e@linaro.org>
-Date:   Mon, 13 Feb 2023 18:25:21 +0200
+        Mon, 13 Feb 2023 11:28:50 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8DC9CC29;
+        Mon, 13 Feb 2023 08:28:48 -0800 (PST)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31D8tdsj020574;
+        Mon, 13 Feb 2023 16:28:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=UpJ30top4ueNQZ7rf9BD/EvTZUzNMW3Z0t2hHclSDcg=;
+ b=fbxEPGj0+XkHbcwlsY5xv9wusDLBr0M7p9l8Tx6RkoMGjcQ/NS4lIIH+FfnjhXWG6Xrs
+ Lw2SHpwvuBMg9hIkRJuggtuN1kfcMzyG6q3PAp7DX/4LtuyhTyFKLsuSspgYrHut/5RN
+ FNCoIewhapxAGTfo19hC91QgtRDrcUQt09NnL6rwGBNdrQmpPDSNMA6m1cTQyCg/rw99
+ e2Dc55oMmi8nS/GRookZG/nSEJqHDXLfx433JQ7sG4Zn5EbVWycclYHFQ2xFefZU8A9k
+ oQCFVuNwJzSPsl3q2OvVdTRkLDXUa++/vpQp8YyRifF7N/aaQfYZLgktus9Kaf0OZFmv QQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3np21fvsk9-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 13 Feb 2023 16:28:28 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31DGSR4Q022173
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 13 Feb 2023 16:28:27 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Mon, 13 Feb 2023 08:28:26 -0800
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+CC:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+Subject: [PATCH v3 0/4] arm64: dts: qcom: sc8280xp: Enable external display
+Date:   Mon, 13 Feb 2023 08:28:17 -0800
+Message-ID: <20230213162821.1253831-1-quic_bjorande@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH 06/10] drm/msm/dpu: Add SM6350 support
-Content-Language: en-GB
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski@linaro.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Robert Foss <rfoss@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Vinod Polimera <quic_vpolimer@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Liu Shixin <liushixin2@huawei.com>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-References: <20230211122656.1479141-1-konrad.dybcio@linaro.org>
- <20230211122656.1479141-7-konrad.dybcio@linaro.org>
- <a18cf663-115d-edc8-5e4b-3d19fcd9a02c@linaro.org>
- <cc364658-478a-f239-5d17-5ca2b7f7df8b@linaro.org>
- <20230213113008.ih7ii5m3cz4w3lmz@SoMainline.org>
- <8560b69f-8d42-995d-2f4d-11d6a64afef0@linaro.org>
- <20230213142831.hbzfp2chekshsqyy@SoMainline.org>
- <28c9ea04-fedb-16cf-f874-f4c965fbc445@linaro.org>
- <20230213151413.qhpzzcz4c6m6rynk@SoMainline.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230213151413.qhpzzcz4c6m6rynk@SoMainline.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 0Xkyv3UlCyP6B4_r5VCJwJO6tO36P_Sp
+X-Proofpoint-ORIG-GUID: 0Xkyv3UlCyP6B4_r5VCJwJO6tO36P_Sp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-13_11,2023-02-13_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 phishscore=0
+ priorityscore=1501 bulkscore=0 impostorscore=0 malwarescore=0 mlxscore=0
+ adultscore=0 spamscore=0 mlxlogscore=726 lowpriorityscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
+ definitions=main-2302130149
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/02/2023 17:14, Marijn Suijten wrote:
-> On 2023-02-13 16:58:00, Dmitry Baryshkov wrote:
->> So, *possible* the merge order is the following:
->> - fixes from https://patchwork.freedesktop.org/series/113910/ go to
->> msm-fixes
->> - fixes from your intf-te go to msm-fixes
->> - https://patchwork.freedesktop.org/series/111751/
->> - the rest of intf-te and catalog (*see below)
->> - DPU features
->> - new DPU platforms (might go together with DPU features)
->>
->> * That really depends on the availability of the patchsets. Most
->> probably, as your patchset also contains several fixups, it would be
->> easier to land it before catalog split/rework.
->>
->> So, if you have the available timeslot, could you please finish & send
->> intf te on top of msm-next.
-> 
-> Ack, I'll get to that immediately.  You might even pull in the
-> intermediate patches linked above (that touch the catalog) to see how it
-> integrates, if I remember correctly (it has been a while) the catalog
-> changes should now be independent of driver changes...?
+This introduces support for external display on the SC8280XP laptops.
 
-I'll check and if it goes well, I'll just cherry-pick them into my branch.
+Support for swapping orientation and changing the mode of the SuperSpeed
+lanes is being implemented in the QMP driver, so at this point in time
+this is not supported.
 
-> 
->>> Sure, I will at least start looking at your 50-patch as part of catching
->>> back up.  Do you want to process that on the mailing list or via
->>> https://gitlab.freedesktop.org/drm/msm/-/merge_requests/44?
->>
->> I'd prefer to use email. The MR was open to doublecheck that nothing got
->> broken on sc7180.
-> 
-> Ack; will try providing feedback on the 50-patch series via email in
-> parallel to getting INTF TE v2 out ASAP.  As discussed before I should
-> probably add myself as reviewer to the drm/msm subsystem to have these
-> patches in my inbox from the get-go though...
+Bjorn Andersson (4):
+  arm64: dts: qcom: sc8280xp: Add USB-C-related DP blocks
+  arm64: dts: qcom: sc8280xp-crd: Introduce pmic_glink
+  arm64: dts: qcom: sc8280xp-x13s: Enable external display
+  arm64: defconfig: Enable DisplayPort on SC8280XP laptops
 
-I'd support this.
-
+ arch/arm64/boot/dts/qcom/sc8280xp-crd.dts     | 208 +++++++++++++++++-
+ .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 192 +++++++++++++++-
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi        | 182 ++++++++++++++-
+ arch/arm64/configs/defconfig                  |   2 +
+ 4 files changed, 576 insertions(+), 8 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.25.1
 
