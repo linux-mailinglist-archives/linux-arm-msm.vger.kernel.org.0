@@ -2,347 +2,222 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 62290697102
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 23:59:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 223246971A3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Feb 2023 00:14:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229881AbjBNW7p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Feb 2023 17:59:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60674 "EHLO
+        id S231276AbjBNXOW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Feb 2023 18:14:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231689AbjBNW7o (ORCPT
+        with ESMTP id S229933AbjBNXOV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Feb 2023 17:59:44 -0500
+        Tue, 14 Feb 2023 18:14:21 -0500
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3819D193F8;
-        Tue, 14 Feb 2023 14:59:43 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEDCCA26F;
+        Tue, 14 Feb 2023 15:14:20 -0800 (PST)
 Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31EMSvLo003690;
-        Tue, 14 Feb 2023 22:59:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=qcppdkim1;
- bh=g0KAfRPDU09h7PFjKWmTyVpcBmCzVh0aZEt2hooyYaw=;
- b=KL+m+fMklp2nclN6LOaXinIWQDgL8HH01zD6scoZzpHp6kGM/PwLSIiy2zwYPLCk0B4i
- c7LL+A6OoB7Occf81VITzVMCDNl/BkIfV9bHeb+HAia6Bn+zDKcP4aAe3142C5jmatmV
- 25eNYV5ye9JdOVAMVu5Ohgdhr2f/IkOIbr9G0i9jRhrv6i+6krP/sN6p/Rey45yjxVyh
- U1BumfDnsxP6aZGo1Amnn18+X/O7jOkYYVn2rle3u87/0U2BQQ4Cg7mmMLdNreOMHigg
- IWYpVJDRXwQcb9lUrVMSLIwIVjXkIXwL8PO5ZdAM5jb9QIA9I3jnIMfN388OQDKxgnIN bQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nqpmmm8ff-1
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31EGUAsO008732;
+        Tue, 14 Feb 2023 23:14:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=BFjOj0iAZj0jpbxYxNKUBJKv1Zdoc7mNQv09Ov/bF4M=;
+ b=HT5lAB4SZ5O9RDDVAon5LCMrnHe8o2fPLGrxEDkGCHbYMQKlLZxRJogcIRa1yV7/Gpt/
+ yBYjTTfP+J6Zxv5AGd/TkmbpI3sIxounODt+ziCPmeeTTW6UPMwcPdMhzhLqBMCaut9t
+ qo6COW5wwuxT+NgJgKFoR+kguR6kOguummSYEI5wFb3pC4teUc0s58+lt3QoC5nXrXNr
+ 85GnvnL869h5sJXKevtb+1KAyberhdrv6Y745MEzxbUaX2ZPZ40gu8MqjccD9zjcZoem
+ wM99qpvtmbkAlh9OLuBivR6Inn1hlAv/zPN9IenplfZQ3GfO4bGB8YyJtzcopPytr+qi /A== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nqpmmm9fb-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 14 Feb 2023 22:59:39 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31EMxdKs022629
+        Tue, 14 Feb 2023 23:14:17 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31ENEGvK005900
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 14 Feb 2023 22:59:39 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.36; Tue, 14 Feb 2023 14:59:38 -0800
-From:   Bjorn Andersson <quic_bjorande@quicinc.com>
-To:     Andy Gross <agross@kernel.org>,
+        Tue, 14 Feb 2023 23:14:16 GMT
+Received: from [192.168.142.6] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 14 Feb
+ 2023 15:14:16 -0800
+Subject: Re: [PATCH] rpmsg: glink: Fix spelling of peek
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Chris Lew <quic_clew@quicinc.com>
+        Mathieu Poirier <mathieu.poirier@linaro.org>
 CC:     <linux-arm-msm@vger.kernel.org>,
         <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH] rpmsg: glink: Fix GLINK command prefix
-Date:   Tue, 14 Feb 2023 14:59:33 -0800
-Message-ID: <20230214225933.2025595-1-quic_bjorande@quicinc.com>
-X-Mailer: git-send-email 2.25.1
+References: <20230214224746.1996130-1-quic_bjorande@quicinc.com>
+From:   Chris Lew <quic_clew@quicinc.com>
+Message-ID: <0d90b7d9-977a-6aa6-6654-0fc239346c63@quicinc.com>
+Date:   Tue, 14 Feb 2023 15:14:15 -0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+In-Reply-To: <20230214224746.1996130-1-quic_bjorande@quicinc.com>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: IQhwav_SEI_oTPOAqc-aobixam3oe54z
-X-Proofpoint-GUID: IQhwav_SEI_oTPOAqc-aobixam3oe54z
+X-Proofpoint-ORIG-GUID: b5Mujf9q35WGPs7G2TK_gijF3PfahyA0
+X-Proofpoint-GUID: b5Mujf9q35WGPs7G2TK_gijF3PfahyA0
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
  definitions=2023-02-14_15,2023-02-14_01,2023-02-09_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
  spamscore=0 priorityscore=1501 suspectscore=0 adultscore=0 impostorscore=0
- bulkscore=0 clxscore=1015 mlxscore=0 mlxlogscore=999 phishscore=0
+ bulkscore=0 clxscore=1011 mlxscore=0 mlxlogscore=999 phishscore=0
  malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302140197
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+ engine=8.12.0-2212070000 definitions=main-2302140200
+X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The upstream GLINK driver was first introduced to communicate with the
-RPM on MSM8996, presumably as an artifact from that era the command
-defines was prefixed RPM_CMD, while they actually are GLINK_CMDs.
 
-Let's rename these, to keep things tidy. No functional change.
 
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
----
- drivers/rpmsg/qcom_glink_native.c | 98 +++++++++++++++----------------
- 1 file changed, 49 insertions(+), 49 deletions(-)
+On 2/14/2023 2:47 PM, Bjorn Andersson wrote:
+> The code is peeking into the buffers, not peaking. Fix this throughout
+> the glink drivers.
+> 
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-index 7a3cac62ecfa..89c3381f06c3 100644
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -183,20 +183,20 @@ struct glink_channel {
- 
- static const struct rpmsg_endpoint_ops glink_endpoint_ops;
- 
--#define RPM_CMD_VERSION			0
--#define RPM_CMD_VERSION_ACK		1
--#define RPM_CMD_OPEN			2
--#define RPM_CMD_CLOSE			3
--#define RPM_CMD_OPEN_ACK		4
--#define RPM_CMD_INTENT			5
--#define RPM_CMD_RX_DONE			6
--#define RPM_CMD_RX_INTENT_REQ		7
--#define RPM_CMD_RX_INTENT_REQ_ACK	8
--#define RPM_CMD_TX_DATA			9
--#define RPM_CMD_CLOSE_ACK		11
--#define RPM_CMD_TX_DATA_CONT		12
--#define RPM_CMD_READ_NOTIF		13
--#define RPM_CMD_RX_DONE_W_REUSE		14
-+#define GLINK_CMD_VERSION		0
-+#define GLINK_CMD_VERSION_ACK		1
-+#define GLINK_CMD_OPEN			2
-+#define GLINK_CMD_CLOSE			3
-+#define GLINK_CMD_OPEN_ACK		4
-+#define GLINK_CMD_INTENT		5
-+#define GLINK_CMD_RX_DONE		6
-+#define GLINK_CMD_RX_INTENT_REQ		7
-+#define GLINK_CMD_RX_INTENT_REQ_ACK	8
-+#define GLINK_CMD_TX_DATA		9
-+#define GLINK_CMD_CLOSE_ACK		11
-+#define GLINK_CMD_TX_DATA_CONT		12
-+#define GLINK_CMD_READ_NOTIF		13
-+#define GLINK_CMD_RX_DONE_W_REUSE	14
- 
- #define GLINK_FEATURE_INTENTLESS	BIT(1)
- 
-@@ -306,7 +306,7 @@ static void qcom_glink_send_read_notify(struct qcom_glink *glink)
- {
- 	struct glink_msg msg;
- 
--	msg.cmd = cpu_to_le16(RPM_CMD_READ_NOTIF);
-+	msg.cmd = cpu_to_le16(GLINK_CMD_READ_NOTIF);
- 	msg.param1 = 0;
- 	msg.param2 = 0;
- 
-@@ -375,7 +375,7 @@ static int qcom_glink_send_version(struct qcom_glink *glink)
- {
- 	struct glink_msg msg;
- 
--	msg.cmd = cpu_to_le16(RPM_CMD_VERSION);
-+	msg.cmd = cpu_to_le16(GLINK_CMD_VERSION);
- 	msg.param1 = cpu_to_le16(GLINK_VERSION_1);
- 	msg.param2 = cpu_to_le32(glink->features);
- 
-@@ -386,7 +386,7 @@ static void qcom_glink_send_version_ack(struct qcom_glink *glink)
- {
- 	struct glink_msg msg;
- 
--	msg.cmd = cpu_to_le16(RPM_CMD_VERSION_ACK);
-+	msg.cmd = cpu_to_le16(GLINK_CMD_VERSION_ACK);
- 	msg.param1 = cpu_to_le16(GLINK_VERSION_1);
- 	msg.param2 = cpu_to_le32(glink->features);
- 
-@@ -398,7 +398,7 @@ static void qcom_glink_send_open_ack(struct qcom_glink *glink,
- {
- 	struct glink_msg msg;
- 
--	msg.cmd = cpu_to_le16(RPM_CMD_OPEN_ACK);
-+	msg.cmd = cpu_to_le16(GLINK_CMD_OPEN_ACK);
- 	msg.param1 = cpu_to_le16(channel->rcid);
- 	msg.param2 = cpu_to_le32(0);
- 
-@@ -430,11 +430,11 @@ static void qcom_glink_intent_req_abort(struct glink_channel *channel)
- }
- 
- /**
-- * qcom_glink_send_open_req() - send a RPM_CMD_OPEN request to the remote
-+ * qcom_glink_send_open_req() - send a GLINK_CMD_OPEN request to the remote
-  * @glink: Ptr to the glink edge
-  * @channel: Ptr to the channel that the open req is sent
-  *
-- * Allocates a local channel id and sends a RPM_CMD_OPEN message to the remote.
-+ * Allocates a local channel id and sends a GLINK_CMD_OPEN message to the remote.
-  * Will return with refcount held, regardless of outcome.
-  *
-  * Return: 0 on success, negative errno otherwise.
-@@ -463,7 +463,7 @@ static int qcom_glink_send_open_req(struct qcom_glink *glink,
- 
- 	channel->lcid = ret;
- 
--	req.msg.cmd = cpu_to_le16(RPM_CMD_OPEN);
-+	req.msg.cmd = cpu_to_le16(GLINK_CMD_OPEN);
- 	req.msg.param1 = cpu_to_le16(channel->lcid);
- 	req.msg.param2 = cpu_to_le32(name_len);
- 	strcpy(req.name, channel->name);
-@@ -488,7 +488,7 @@ static void qcom_glink_send_close_req(struct qcom_glink *glink,
- {
- 	struct glink_msg req;
- 
--	req.cmd = cpu_to_le16(RPM_CMD_CLOSE);
-+	req.cmd = cpu_to_le16(GLINK_CMD_CLOSE);
- 	req.param1 = cpu_to_le16(channel->lcid);
- 	req.param2 = 0;
- 
-@@ -500,7 +500,7 @@ static void qcom_glink_send_close_ack(struct qcom_glink *glink,
- {
- 	struct glink_msg req;
- 
--	req.cmd = cpu_to_le16(RPM_CMD_CLOSE_ACK);
-+	req.cmd = cpu_to_le16(GLINK_CMD_CLOSE_ACK);
- 	req.param1 = cpu_to_le16(rcid);
- 	req.param2 = 0;
- 
-@@ -531,7 +531,7 @@ static void qcom_glink_rx_done_work(struct work_struct *work)
- 		iid = intent->id;
- 		reuse = intent->reuse;
- 
--		cmd.id = reuse ? RPM_CMD_RX_DONE_W_REUSE : RPM_CMD_RX_DONE;
-+		cmd.id = reuse ? GLINK_CMD_RX_DONE_W_REUSE : GLINK_CMD_RX_DONE;
- 		cmd.lcid = cid;
- 		cmd.liid = iid;
- 
-@@ -643,7 +643,7 @@ static int qcom_glink_send_intent_req_ack(struct qcom_glink *glink,
- {
- 	struct glink_msg msg;
- 
--	msg.cmd = cpu_to_le16(RPM_CMD_RX_INTENT_REQ_ACK);
-+	msg.cmd = cpu_to_le16(GLINK_CMD_RX_INTENT_REQ_ACK);
- 	msg.param1 = cpu_to_le16(channel->lcid);
- 	msg.param2 = cpu_to_le32(granted);
- 
-@@ -674,7 +674,7 @@ static int qcom_glink_advertise_intent(struct qcom_glink *glink,
- 	} __packed;
- 	struct command cmd;
- 
--	cmd.id = cpu_to_le16(RPM_CMD_INTENT);
-+	cmd.id = cpu_to_le16(GLINK_CMD_INTENT);
- 	cmd.lcid = cpu_to_le16(channel->lcid);
- 	cmd.count = cpu_to_le32(1);
- 	cmd.size = cpu_to_le32(intent->size);
-@@ -1037,40 +1037,40 @@ void qcom_glink_native_rx(struct qcom_glink *glink)
- 		param2 = le32_to_cpu(msg.param2);
- 
- 		switch (cmd) {
--		case RPM_CMD_VERSION:
--		case RPM_CMD_VERSION_ACK:
--		case RPM_CMD_CLOSE:
--		case RPM_CMD_CLOSE_ACK:
--		case RPM_CMD_RX_INTENT_REQ:
-+		case GLINK_CMD_VERSION:
-+		case GLINK_CMD_VERSION_ACK:
-+		case GLINK_CMD_CLOSE:
-+		case GLINK_CMD_CLOSE_ACK:
-+		case GLINK_CMD_RX_INTENT_REQ:
- 			ret = qcom_glink_rx_defer(glink, 0);
- 			break;
--		case RPM_CMD_OPEN_ACK:
-+		case GLINK_CMD_OPEN_ACK:
- 			ret = qcom_glink_rx_open_ack(glink, param1);
- 			qcom_glink_rx_advance(glink, ALIGN(sizeof(msg), 8));
- 			break;
--		case RPM_CMD_OPEN:
-+		case GLINK_CMD_OPEN:
- 			ret = qcom_glink_rx_defer(glink, param2);
- 			break;
--		case RPM_CMD_TX_DATA:
--		case RPM_CMD_TX_DATA_CONT:
-+		case GLINK_CMD_TX_DATA:
-+		case GLINK_CMD_TX_DATA_CONT:
- 			ret = qcom_glink_rx_data(glink, avail);
- 			break;
--		case RPM_CMD_READ_NOTIF:
-+		case GLINK_CMD_READ_NOTIF:
- 			qcom_glink_rx_advance(glink, ALIGN(sizeof(msg), 8));
- 			qcom_glink_tx_kick(glink);
- 			break;
--		case RPM_CMD_INTENT:
-+		case GLINK_CMD_INTENT:
- 			qcom_glink_handle_intent(glink, param1, param2, avail);
- 			break;
--		case RPM_CMD_RX_DONE:
-+		case GLINK_CMD_RX_DONE:
- 			qcom_glink_handle_rx_done(glink, param1, param2, false);
- 			qcom_glink_rx_advance(glink, ALIGN(sizeof(msg), 8));
- 			break;
--		case RPM_CMD_RX_DONE_W_REUSE:
-+		case GLINK_CMD_RX_DONE_W_REUSE:
- 			qcom_glink_handle_rx_done(glink, param1, param2, true);
- 			qcom_glink_rx_advance(glink, ALIGN(sizeof(msg), 8));
- 			break;
--		case RPM_CMD_RX_INTENT_REQ_ACK:
-+		case GLINK_CMD_RX_INTENT_REQ_ACK:
- 			qcom_glink_handle_intent_req_ack(glink, param1, param2);
- 			qcom_glink_rx_advance(glink, ALIGN(sizeof(msg), 8));
- 			break;
-@@ -1272,7 +1272,7 @@ static int qcom_glink_request_intent(struct qcom_glink *glink,
- 
- 	reinit_completion(&channel->intent_req_comp);
- 
--	cmd.id = RPM_CMD_RX_INTENT_REQ;
-+	cmd.id = GLINK_CMD_RX_INTENT_REQ;
- 	cmd.cid = channel->lcid;
- 	cmd.size = size;
- 
-@@ -1346,7 +1346,7 @@ static int __qcom_glink_send(struct glink_channel *channel,
- 		chunk_size = SZ_8K;
- 		left_size = len - chunk_size;
- 	}
--	req.msg.cmd = cpu_to_le16(RPM_CMD_TX_DATA);
-+	req.msg.cmd = cpu_to_le16(GLINK_CMD_TX_DATA);
- 	req.msg.param1 = cpu_to_le16(channel->lcid);
- 	req.msg.param2 = cpu_to_le32(iid);
- 	req.chunk_size = cpu_to_le32(chunk_size);
-@@ -1367,7 +1367,7 @@ static int __qcom_glink_send(struct glink_channel *channel,
- 			chunk_size = SZ_8K;
- 		left_size -= chunk_size;
- 
--		req.msg.cmd = cpu_to_le16(RPM_CMD_TX_DATA_CONT);
-+		req.msg.cmd = cpu_to_le16(GLINK_CMD_TX_DATA_CONT);
- 		req.msg.param1 = cpu_to_le16(channel->lcid);
- 		req.msg.param2 = cpu_to_le32(iid);
- 		req.chunk_size = cpu_to_le32(chunk_size);
-@@ -1631,22 +1631,22 @@ static void qcom_glink_work(struct work_struct *work)
- 		param2 = le32_to_cpu(msg->param2);
- 
- 		switch (cmd) {
--		case RPM_CMD_VERSION:
-+		case GLINK_CMD_VERSION:
- 			qcom_glink_receive_version(glink, param1, param2);
- 			break;
--		case RPM_CMD_VERSION_ACK:
-+		case GLINK_CMD_VERSION_ACK:
- 			qcom_glink_receive_version_ack(glink, param1, param2);
- 			break;
--		case RPM_CMD_OPEN:
-+		case GLINK_CMD_OPEN:
- 			qcom_glink_rx_open(glink, param1, msg->data);
- 			break;
--		case RPM_CMD_CLOSE:
-+		case GLINK_CMD_CLOSE:
- 			qcom_glink_rx_close(glink, param1);
- 			break;
--		case RPM_CMD_CLOSE_ACK:
-+		case GLINK_CMD_CLOSE_ACK:
- 			qcom_glink_rx_close_ack(glink, param1);
- 			break;
--		case RPM_CMD_RX_INTENT_REQ:
-+		case GLINK_CMD_RX_INTENT_REQ:
- 			qcom_glink_handle_intent_req(glink, param1, param2);
- 			break;
- 		default:
--- 
-2.25.1
+Can't believe we didn't catch this earlier :)
 
+Reviewed-by: Chris Lew <quic_clew@quicinc.com>
+
+> ---
+>   drivers/rpmsg/qcom_glink_native.c | 14 +++++++-------
+>   drivers/rpmsg/qcom_glink_native.h |  2 +-
+>   drivers/rpmsg/qcom_glink_rpm.c    |  4 ++--
+>   drivers/rpmsg/qcom_glink_smem.c   |  4 ++--
+>   4 files changed, 12 insertions(+), 12 deletions(-)
+> 
+> diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
+> index 324c75d59a6f..7a3cac62ecfa 100644
+> --- a/drivers/rpmsg/qcom_glink_native.c
+> +++ b/drivers/rpmsg/qcom_glink_native.c
+> @@ -274,10 +274,10 @@ static size_t qcom_glink_rx_avail(struct qcom_glink *glink)
+>   	return glink->rx_pipe->avail(glink->rx_pipe);
+>   }
+>   
+> -static void qcom_glink_rx_peak(struct qcom_glink *glink,
+> +static void qcom_glink_rx_peek(struct qcom_glink *glink,
+>   			       void *data, unsigned int offset, size_t count)
+>   {
+> -	glink->rx_pipe->peak(glink->rx_pipe, data, offset, count);
+> +	glink->rx_pipe->peek(glink->rx_pipe, data, offset, count);
+>   }
+>   
+>   static void qcom_glink_rx_advance(struct qcom_glink *glink, size_t count)
+> @@ -808,7 +808,7 @@ static int qcom_glink_rx_defer(struct qcom_glink *glink, size_t extra)
+>   
+>   	INIT_LIST_HEAD(&dcmd->node);
+>   
+> -	qcom_glink_rx_peak(glink, &dcmd->msg, 0, sizeof(dcmd->msg) + extra);
+> +	qcom_glink_rx_peek(glink, &dcmd->msg, 0, sizeof(dcmd->msg) + extra);
+>   
+>   	spin_lock(&glink->rx_lock);
+>   	list_add_tail(&dcmd->node, &glink->rx_queue);
+> @@ -841,7 +841,7 @@ static int qcom_glink_rx_data(struct qcom_glink *glink, size_t avail)
+>   		return -EAGAIN;
+>   	}
+>   
+> -	qcom_glink_rx_peak(glink, &hdr, 0, sizeof(hdr));
+> +	qcom_glink_rx_peek(glink, &hdr, 0, sizeof(hdr));
+>   	chunk_size = le32_to_cpu(hdr.chunk_size);
+>   	left_size = le32_to_cpu(hdr.left_size);
+>   
+> @@ -906,7 +906,7 @@ static int qcom_glink_rx_data(struct qcom_glink *glink, size_t avail)
+>   		goto advance_rx;
+>   	}
+>   
+> -	qcom_glink_rx_peak(glink, intent->data + intent->offset,
+> +	qcom_glink_rx_peek(glink, intent->data + intent->offset,
+>   			   sizeof(hdr), chunk_size);
+>   	intent->offset += chunk_size;
+>   
+> @@ -973,7 +973,7 @@ static void qcom_glink_handle_intent(struct qcom_glink *glink,
+>   	if (!msg)
+>   		return;
+>   
+> -	qcom_glink_rx_peak(glink, msg, 0, msglen);
+> +	qcom_glink_rx_peek(glink, msg, 0, msglen);
+>   
+>   	for (i = 0; i < count; ++i) {
+>   		intent = kzalloc(sizeof(*intent), GFP_ATOMIC);
+> @@ -1030,7 +1030,7 @@ void qcom_glink_native_rx(struct qcom_glink *glink)
+>   		if (avail < sizeof(msg))
+>   			break;
+>   
+> -		qcom_glink_rx_peak(glink, &msg, 0, sizeof(msg));
+> +		qcom_glink_rx_peek(glink, &msg, 0, sizeof(msg));
+>   
+>   		cmd = le16_to_cpu(msg.cmd);
+>   		param1 = le16_to_cpu(msg.param1);
+> diff --git a/drivers/rpmsg/qcom_glink_native.h b/drivers/rpmsg/qcom_glink_native.h
+> index 9462b37eccee..8dbec24de23e 100644
+> --- a/drivers/rpmsg/qcom_glink_native.h
+> +++ b/drivers/rpmsg/qcom_glink_native.h
+> @@ -17,7 +17,7 @@ struct qcom_glink_pipe {
+>   
+>   	size_t (*avail)(struct qcom_glink_pipe *glink_pipe);
+>   
+> -	void (*peak)(struct qcom_glink_pipe *glink_pipe, void *data,
+> +	void (*peek)(struct qcom_glink_pipe *glink_pipe, void *data,
+>   		     unsigned int offset, size_t count);
+>   	void (*advance)(struct qcom_glink_pipe *glink_pipe, size_t count);
+>   
+> diff --git a/drivers/rpmsg/qcom_glink_rpm.c b/drivers/rpmsg/qcom_glink_rpm.c
+> index 5179f834a10f..f94bb7d4f1ec 100644
+> --- a/drivers/rpmsg/qcom_glink_rpm.c
+> +++ b/drivers/rpmsg/qcom_glink_rpm.c
+> @@ -81,7 +81,7 @@ static size_t glink_rpm_rx_avail(struct qcom_glink_pipe *glink_pipe)
+>   		return head - tail;
+>   }
+>   
+> -static void glink_rpm_rx_peak(struct qcom_glink_pipe *glink_pipe,
+> +static void glink_rpm_rx_peek(struct qcom_glink_pipe *glink_pipe,
+>   			      void *data, unsigned int offset, size_t count)
+>   {
+>   	struct glink_rpm_pipe *pipe = to_rpm_pipe(glink_pipe);
+> @@ -333,7 +333,7 @@ static int glink_rpm_probe(struct platform_device *pdev)
+>   
+>   	/* Pipe specific accessors */
+>   	rpm->rx_pipe.native.avail = glink_rpm_rx_avail;
+> -	rpm->rx_pipe.native.peak = glink_rpm_rx_peak;
+> +	rpm->rx_pipe.native.peek = glink_rpm_rx_peek;
+>   	rpm->rx_pipe.native.advance = glink_rpm_rx_advance;
+>   	rpm->tx_pipe.native.avail = glink_rpm_tx_avail;
+>   	rpm->tx_pipe.native.write = glink_rpm_tx_write;
+> diff --git a/drivers/rpmsg/qcom_glink_smem.c b/drivers/rpmsg/qcom_glink_smem.c
+> index 05b4fe0a7387..7a982c60a8dd 100644
+> --- a/drivers/rpmsg/qcom_glink_smem.c
+> +++ b/drivers/rpmsg/qcom_glink_smem.c
+> @@ -91,7 +91,7 @@ static size_t glink_smem_rx_avail(struct qcom_glink_pipe *np)
+>   		return head - tail;
+>   }
+>   
+> -static void glink_smem_rx_peak(struct qcom_glink_pipe *np,
+> +static void glink_smem_rx_peek(struct qcom_glink_pipe *np,
+>   			       void *data, unsigned int offset, size_t count)
+>   {
+>   	struct glink_smem_pipe *pipe = to_smem_pipe(np);
+> @@ -324,7 +324,7 @@ struct qcom_glink_smem *qcom_glink_smem_register(struct device *parent,
+>   
+>   	rx_pipe->smem = smem;
+>   	rx_pipe->native.avail = glink_smem_rx_avail;
+> -	rx_pipe->native.peak = glink_smem_rx_peak;
+> +	rx_pipe->native.peek = glink_smem_rx_peek;
+>   	rx_pipe->native.advance = glink_smem_rx_advance;
+>   
+>   	tx_pipe->smem = smem;
+> 
