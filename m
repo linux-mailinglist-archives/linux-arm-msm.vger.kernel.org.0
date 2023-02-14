@@ -2,132 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0600069551E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 01:02:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B3316955AB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 02:00:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230302AbjBNACQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Feb 2023 19:02:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34548 "EHLO
+        id S229975AbjBNBAe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Feb 2023 20:00:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229745AbjBNACF (ORCPT
+        with ESMTP id S229645AbjBNBAd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Feb 2023 19:02:05 -0500
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6054214236
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 16:02:04 -0800 (PST)
-Received: by mail-ej1-x634.google.com with SMTP id k16so4540992ejv.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 16:02:04 -0800 (PST)
+        Mon, 13 Feb 2023 20:00:33 -0500
+Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83FB714487
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 17:00:32 -0800 (PST)
+Received: by mail-pg1-x531.google.com with SMTP id u75so9251786pgc.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 17:00:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/GwxUMyhcUkJOiEorsMtvT9Ot73fs4DVHuCKy2ae0LY=;
-        b=r3ccNo6x99wERibYLaLh8KMX4VXb/ZZBnUZE7LUZDRU1a/M/w5NxRJER/CBnlDnp7y
-         2pYRR2Bvyq2Pfmb2m0eMcyaNy25SsVt2GHLu336RnSfp5R8KeWhHT9bdxVqHg7SZtwI2
-         BHHXJtaHgTsnwcW6WSLJxVDgvWp/oO00DUnECWcZWYRjEBqU1OQFlvyeBF14nkcEUDYt
-         +2blSe2DfP8f1z9b2/SUgbn1a9bqYerhVVoz87bdxvz3+1bEpSeB+dHLDd0K0UfQDDo1
-         7V/QvL8eVTFb1Z2QKtXcHn/zQrTM+kq1LhXtJ3BHogFDMfuwFOQKUo38UbUzdhikjKyM
-         ukiw==
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=jhxllVnbI2AwFWPN2tKYS/gPDBTeZyTnINmF5vnAF9s=;
+        b=jiksO25M1xbJMh+TgDf925qz1OI33yVXPFpT+lYue4N/aK/2EjPChZIbJ4iopZfMH9
+         qL3CQlp3Q9OGs9elRk+awGd4bmSX4oldimJ+cw6T7pzAirT+A7PkIorWfcbglVMNxmcY
+         x/zEMdVvjkjXDnoH1Sfjv0OboADk5n9MAOyyI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/GwxUMyhcUkJOiEorsMtvT9Ot73fs4DVHuCKy2ae0LY=;
-        b=sFhIIu42bk1wolN9fagdHk/+EXpQyES0rr/Yxa2hVqu0OQvOzo0IWPqUQJiY82ast7
-         9PATWyBOgqOv/jB4hfu/q2wtW/KdNWehg9xW6+a6p9JqzJmo0qF3uewhoSSszlvEvCKQ
-         zZH0wor2saQYWBw1R5mgZRhrVKItqD/ogEXJGvYpZyA++SrMSJJ88yGQ/RR7mDeHhTBD
-         IG8A81GFGNMy+wF9jOe32V5S8EuKYUNO7TiAlQHy7UIAa1+O9LKMSC89UJOqEEI4zZQt
-         ynbVTMFKzDpILSgRiAl4XZ8wg+2uwkBIXIbWH7tTadUyn/CVbP0eCZAaTnmnF0cE5R+V
-         AZEA==
-X-Gm-Message-State: AO0yUKXttu4o/E7SUmRJnxEQI9DeVleBxA6j2vPVf/8y45E6XzlOrUl3
-        cfWJJ/jyjqbB1mDlB/d4XWtrXw==
-X-Google-Smtp-Source: AK7set+371Z/D13l7sLxPSFeRr5/XAP+3WH8iylALqE6KobEx9r/yJQflQy7b77mflN5NZEguX7k5A==
-X-Received: by 2002:a17:906:8248:b0:8b1:264d:6187 with SMTP id f8-20020a170906824800b008b1264d6187mr821891ejx.46.1676332922931;
-        Mon, 13 Feb 2023 16:02:02 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id mf6-20020a170906cb8600b00878803d4049sm7548982ejb.93.2023.02.13.16.02.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Feb 2023 16:02:02 -0800 (PST)
-Message-ID: <c5c22875-29c6-971c-da61-bd70db3c3880@linaro.org>
-Date:   Tue, 14 Feb 2023 02:02:01 +0200
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jhxllVnbI2AwFWPN2tKYS/gPDBTeZyTnINmF5vnAF9s=;
+        b=06dZwUIRfmq2hV/uWWIoTDTrR+o96vc8GXP6tPhRtrvMXY5RDPIIwjxlkc69vXa0gA
+         UnbnZtvwLVnYMSsrnu8roPzlnzObwWkZmlzarb/+bhOd2brtw8BARXIp4E2iLDMlPG9O
+         tuZ/QehMZQdqvUmALx5zrlDk6EPKEzuMMpH470R+Z1YoDz9cMrG3eb1irbP/nx9UnCRq
+         Mu4cJbo2nxbkqdM1Upf/jNfScjsu8RgLV40Ia6neImopQHO7/gjBbNH7dznplMN4HkCX
+         8pQXb3vl+SCnzmd40wOsrPiNPI4QTWLLTN40uB/b7uzcdkiOgVqK/BP+qpcEOToSbzNJ
+         Bqkg==
+X-Gm-Message-State: AO0yUKU7Gz2xT27Gcj5M232IYF7Y6QyBBApcirCppF1VuBTxOcbiJgIM
+        p9SMB+hbamsvRCTl4iNw+pZ1Xw==
+X-Google-Smtp-Source: AK7set8iW4DJ4L1yxyeqR9ZgfBeGOdNmdI6N6GwghbcLJ89R3Z2O7NX985VWqNSUx6RrQj83e5E4xg==
+X-Received: by 2002:a62:17d2:0:b0:5a8:49c8:8533 with SMTP id 201-20020a6217d2000000b005a849c88533mr397121pfx.8.1676336432029;
+        Mon, 13 Feb 2023 17:00:32 -0800 (PST)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:9d:2:af55:a232:a032:95ff])
+        by smtp.gmail.com with ESMTPSA id e22-20020aa78256000000b00592626fe48csm8482914pfn.122.2023.02.13.17.00.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Feb 2023 17:00:31 -0800 (PST)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     amstan@chromium.org, swboyd@chromium.org, mka@chromium.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 1/2] arm64: dts: qcom: sc7180: Fix trogdor qspi pull direction
+Date:   Mon, 13 Feb 2023 16:57:51 -0800
+Message-Id: <20230213165743.1.I6f03f86546e6ce9abb1d24fd9ece663c3a5b950c@changeid>
+X-Mailer: git-send-email 2.39.1.581.gbfd45094c4-goog
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [RFC PATCH v3 0/4] Move TE setup to prepare_for_kickoff()
-Content-Language: en-GB
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        freedreno@lists.freedesktop.org
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
-        marijn.suijten@somainline.org
-References: <20230213194819.608-1-quic_jesszhan@quicinc.com>
- <af5679a4-93b9-fb9b-cc5f-8669da57b7cf@linaro.org>
- <4c23d2d5-fa6b-7548-d189-5b7a1913e266@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <4c23d2d5-fa6b-7548-d189-5b7a1913e266@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/02/2023 02:01, Abhinav Kumar wrote:
-> 
-> 
-> On 2/13/2023 1:51 PM, Dmitry Baryshkov wrote:
->> On 13/02/2023 21:48, Jessica Zhang wrote:
->>> Move TE setup to prepare_for_kickoff() and remove empty prepare_commit()
->>> functions in both MDP4 and DPU drivers.
->>>
->>> Changes in V2:
->>> - Added changes to remove empty prepare_commit() functions
->>>
->>> Changes in V3:
->>> - Reordered "drm/msm/dpu: Move TE setup to prepare_for_kickoff()" for
->>>    clarity
->>> - Fixed spelling mistakes and wording issues
->>> - Picked up "Reviewed-by" tags for patches [2/4] and [4/4]
->>
->> Is it just me or patch 4/4 is missing? Patchwork also hasn't seen it:
->> https://patchwork.freedesktop.org/series/113967/
->>
-> 
-> Yes, not sure what happened there. Even i couldnt see it.
-> 
-> We have posted in-reply-to now.
+Though it shouldn't matter very much, we've decided that it's slightly
+better to park the qspi lines for trogdor with an internal pulldown
+instead of an internal pullup. There was a footnote that Cr50 (which
+connects to these lines too) may have pulldowns configured on one of
+the data lines and we don't want to have fighting pulls. This also
+means that if the pulls somehow get left powered in S3 (which I'm
+uncertain about) that they won't be pulling up lines on an unpowered
+SPI part.
 
-It was received properly now, thank you!.
+Originally the pullup was picked because SPI transfers are active low
+and thus the high state is somewhat more "idle", but that really isn't
+that important because the chip select won't be asserted when the bus
+is idle. The chip select has a nice external pullup on it that's
+powered by the same power rail as the SPI flash.
 
-> 
->> If you can send it with the proper in-reply-to (set to 
->> 20230213194819.608-1-quic_jesszhan@quicinc.com), that would be great.
->>
->>>
->>> Jessica Zhang (4):
->>>    drm/msm/dpu: Move TE setup to prepare_for_kickoff()
->>>    drm/msm: Check for NULL before calling prepare_commit()
->>>    drm/msm/dpu: Remove empty prepare_commit() function
->>>    drm/msm/mdp4: Remove empty prepare_commit() function
->>>
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 19 -----------------
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h   |  7 -------
->>>   .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  | 10 ++++++---
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       | 21 -------------------
->>>   drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c      |  5 -----
->>>   drivers/gpu/drm/msm/msm_atomic.c              |  3 ++-
->>>   6 files changed, 9 insertions(+), 56 deletions(-)
->>>
->>
+This shouldn't have any functionality impact w/ reading/writing the
+SPI since the lines are always push-pull when SPI transfers are
+actually taking place.
 
+Fixes: 7ec3e67307f8 ("arm64: dts: qcom: sc7180-trogdor: add initial trogdor and lazor dt")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
+
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+index 423630c4d02c..de40abcd18db 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+@@ -1054,7 +1054,7 @@ &qspi_clk {
+ 
+ &qspi_data01 {
+ 	/* High-Z when no transfers; nice to park the lines */
+-	bias-pull-up;
++	bias-pull-down;
+ };
+ 
+ &qup_i2c2_default {
 -- 
-With best wishes
-Dmitry
+2.39.1.581.gbfd45094c4-goog
 
