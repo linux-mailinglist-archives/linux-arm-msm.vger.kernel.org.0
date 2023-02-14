@@ -2,63 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AA99E696B54
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 18:21:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E4FA8696B71
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 18:28:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229827AbjBNRVp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Feb 2023 12:21:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48682 "EHLO
+        id S231845AbjBNR2X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Feb 2023 12:28:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230171AbjBNRV2 (ORCPT
+        with ESMTP id S232655AbjBNR2V (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Feb 2023 12:21:28 -0500
+        Tue, 14 Feb 2023 12:28:21 -0500
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C4C1E3;
-        Tue, 14 Feb 2023 09:21:23 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 931711724;
+        Tue, 14 Feb 2023 09:28:15 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 9D2AB61779;
-        Tue, 14 Feb 2023 17:21:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5362C433EF;
-        Tue, 14 Feb 2023 17:21:20 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 3780E617C9;
+        Tue, 14 Feb 2023 17:28:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE52AC4339B;
+        Tue, 14 Feb 2023 17:28:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1676395282;
-        bh=PqGwx2dYT6XLwA/BD+6gzTUQqPBIcR94mqfkmP5SHjU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=bWFtBcpAwOCoI2UGwpVx7yeWqM768vkfp0VCzVWKa0QyqGW14iJFwovPhiW5v3avR
-         SZp0Ls/sziy7Gc9Sz35ffictb+hZ8u+FjSV20nA9gi3OkhbryERqI4Z9FJ64TBSgZ2
-         bsf7rbsuBdJaGCKKqOr4+Xb4kZn27d+X3M/Qv2+2Muip0+ueICVVTXnnS1alg0RUxs
-         DOfWrTBU5YYLHPUEfpUcyhO+3CrhO5+P+3IGIArTK7QeK1wA+eY6CwAuk/NHVtLAAB
-         +2ce18ol06uxO4HHiKu9SeZHNxkxVgKlPZVO1gu8kd0aNMZ8esV3oyrPhNCjWdg4QR
-         Vf3NZ+lkmPqGA==
-Date:   Tue, 14 Feb 2023 09:23:25 -0800
+        s=k20201202; t=1676395694;
+        bh=zKjlEd5LXtP7osVRyYIIf4E0FaZu9JjAP6fZGjn6fQA=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=m80QhsH7Yu+XveX+yu1YKrI+NeDkD/TbnKPWnxSRKJdCFx7sJ73T9H9q7ZspfSYRo
+         rU6d0bLAvJdAG1RfMsJ1aXPdNubHKJ7y+KFbyOAx7PB0zrBLGvKi1YyEy4kGYbeeKa
+         iVR4MbseocB+JKz+wEsb9aSRc+rDgmolWygUA/s7FWuoxDdKwij8yr3Nwd7DJp9DPe
+         YBsgqowTZZ4uErYUVCkpwZdXXoG74pB0+BSbRG7t2JIoqp69lPkN7L4NWU/I9iiny2
+         oaZXehZnvOCOxYV/XCnbGPSGajiIbcb6qKpdcWshxFpbEs2izzBd6YXMaNqkq0lFkG
+         w0mfU2sxnkPyg==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Elliot Berman <quic_eberman@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Arnd Bergmann <arnd@arndb.de>, Kalle Valo <kvalo@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
-        netdev@vger.kernel.org, linux-remoteproc@vger.kernel.org
-Subject: Re: [PATCH] firmware: qcom_scm: Use fixed width src vm bitmap
-Message-ID: <20230214172325.lplxgbprhj3bzvr3@ripper>
-References: <20230213181832.3489174-1-quic_eberman@quicinc.com>
- <20230213214417.mtcpeultvynyls6s@ripper>
- <Y+tNRPf0PGdShf5l@kroah.com>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        devicetree@vger.kernel.org, linux-remoteproc@vger.kernel.org
+Cc:     mathieu.poirier@linaro.org, bhupesh.linux@gmail.com,
+        mani@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        agross@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org
+Subject: Re: (subset) [PATCH 1/2] remoteproc: qcom: pas: Add sm6115 remoteprocs
+Date:   Tue, 14 Feb 2023 09:30:13 -0800
+Message-Id: <167639581473.996065.17789960687528392732.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20230128053504.2099620-1-bhupesh.sharma@linaro.org>
+References: <20230128053504.2099620-1-bhupesh.sharma@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y+tNRPf0PGdShf5l@kroah.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -68,56 +57,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Feb 14, 2023 at 09:58:44AM +0100, Greg Kroah-Hartman wrote:
-> On Mon, Feb 13, 2023 at 01:44:17PM -0800, Bjorn Andersson wrote:
-> > On Mon, Feb 13, 2023 at 10:18:29AM -0800, Elliot Berman wrote:
-> > > The maximum VMID for assign_mem is 63. Use a u64 to represent this
-> > > bitmap instead of architecture-dependent "unsigned int" which varies in
-> > > size on 32-bit and 64-bit platforms.
-> > > 
-> > > Acked-by: Kalle Valo <kvalo@kernel.org> (ath10k)
-> > > Tested-by: Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
-> > > Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> > 
-> > Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-> > 
-> > @Greg, would you mind taking this through your tree for v6.3, you
-> > already have a related change in fastrpc.c in your tree...
+On Sat, 28 Jan 2023 11:05:03 +0530, Bhupesh Sharma wrote:
+> Among the subsystems in the Qualcomm sm6115 platform we find
+> audio, compute and modem DSPs.
 > 
-> I tried, but it doesn't apply to my char-misc tree at all:
+> Add support for controlling these using the peripheral
+> authentication service (PAS) remoteproc driver.
 > 
-> checking file drivers/firmware/qcom_scm.c
-> Hunk #1 succeeded at 898 (offset -7 lines).
-> Hunk #2 succeeded at 915 (offset -7 lines).
-> Hunk #3 succeeded at 930 (offset -7 lines).
-> checking file drivers/misc/fastrpc.c
-> checking file drivers/net/wireless/ath/ath10k/qmi.c
-> checking file drivers/remoteproc/qcom_q6v5_mss.c
-> Hunk #1 succeeded at 227 (offset -8 lines).
-> Hunk #2 succeeded at 404 (offset -10 lines).
-> Hunk #3 succeeded at 939 with fuzz 1 (offset -28 lines).
-> checking file drivers/remoteproc/qcom_q6v5_pas.c
-> Hunk #1 FAILED at 94.
-> 1 out of 1 hunk FAILED
-> checking file drivers/soc/qcom/rmtfs_mem.c
-> Hunk #1 succeeded at 30 (offset -1 lines).
-> can't find file to patch at input line 167
-> Perhaps you used the wrong -p or --strip option?
-> The text leading up to this was:
-> --------------------------
-> |diff --git a/include/linux/firmware/qcom/qcom_scm.h
-> b/include/linux/firmware/qcom/qcom_scm.h
-> |index 1e449a5d7f5c..250ea4efb7cb 100644
-> |--- a/include/linux/firmware/qcom/qcom_scm.h
-> |+++ b/include/linux/firmware/qcom/qcom_scm.h
-> --------------------------
 > 
-> What tree is this patch made against?
-> 
+> [...]
 
-Sorry about that, I missed the previous changes in qcom_q6v5_pas in the
-remoteproc tree. Elliot said he based it on linux-next, so I expect that
-it will merge fine on top of -rc1, once that arrives.
+Applied, thanks!
 
-Regards,
-Bjorn
+[1/2] remoteproc: qcom: pas: Add sm6115 remoteprocs
+      commit: 3c7306589dddbcc0ac53ec6b2c3a14875879e20c
+[2/2] dt-bindings: remoteproc: qcom: Add sm6115 pas yaml file
+      commit: 838c558bb8bc3a9a4de840fd25c6ad0ebc4d1ed7
+
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
