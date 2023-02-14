@@ -2,78 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 90C89696666
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 15:18:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 820046966D3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 15:28:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233330AbjBNOSX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Feb 2023 09:18:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37596 "EHLO
+        id S231680AbjBNO2p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Feb 2023 09:28:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233355AbjBNOSI (ORCPT
+        with ESMTP id S231580AbjBNO2n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Feb 2023 09:18:08 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2774772A1;
-        Tue, 14 Feb 2023 06:17:46 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31E8KCHK015473;
-        Tue, 14 Feb 2023 14:12:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=/nCTd7pBuvatiw5+3uUxEm27G6Sx1tzD9Hft3j7OtVM=;
- b=BEBpJwvu+8pjT12u5xgfS1yulu+6V0NzfOX1iZLQjfx70YM1P1OZ66wxfkatDQsIYDlQ
- 6iDKinAzSIQ3JSRJtPIy4jTX4U3TdCzra957lvyoeAEZ+WwsRNUPOGPF6vT9qkos2P7p
- pu5j3aNP0DFccYPuBshXJrCAguexYbrDRNFpIHq9K/RUq8EAcXT4cXrb/Z+B4WhG8kRv
- LYruVIr/DgkNuF/pK3FPOS8eKK0oKk0jZ5s5IfwX5TofGR2y8emTrlS3D33RTdI4ncIe
- d4QbOP8yFyLu9bDX1vvbMNXC6Em6iF6r1FV18IDmH3B6FzS5UP6LdgYDCb+dHybIU7NS Tw== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nr6ps0t72-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 14 Feb 2023 14:12:31 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31EECUhb005371
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 14 Feb 2023 14:12:30 GMT
-Received: from [10.216.50.155] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 14 Feb
- 2023 06:12:27 -0800
-Message-ID: <62ffa065-bc85-09bf-0492-7de0bd45ae13@quicinc.com>
-Date:   Tue, 14 Feb 2023 19:42:23 +0530
+        Tue, 14 Feb 2023 09:28:43 -0500
+Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7144459CE
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 06:28:26 -0800 (PST)
+Received: by mail-il1-x130.google.com with SMTP id h5so473445ilq.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 06:28:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OC7OLIEjLzwlnn+8IHiaJZmpnrxZO4YxhVGP3rMedHI=;
+        b=qYxzyY2kErVbwyTWu/K6QEyKHIO3/dlMlcNYDO4AlI6KhfZGzNipBtlwSRLdCzl/RB
+         XiP6NsG2rpVCazElWSwD3tOamJXBZSNquGZg7bf45dCQ0L0BM3PcLysgdzp2akmV/Ct/
+         jCPQ6Rmjsu+S5tqklRwmcQzmPLuBlwhdA/ZLe+N2smKioUC7ptl9wJT3X1r4rZC5z83M
+         RNwAK42FLRr3vc1aNFgQeZb2WqOL7upnBWD5dsozoSVFk37toN3ayqFLq+MOaMDYgzfy
+         3HPexZxyuQrWptf+geTqtb1HHCS51X2FwbJ3xxfaYdnBEm0g91jFp2crX5pzb683NVEs
+         nUbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OC7OLIEjLzwlnn+8IHiaJZmpnrxZO4YxhVGP3rMedHI=;
+        b=qYK7tprEi61TZvNIRBV+doEjL7sZ/pdRPz/q/LfBH/aRtmllytfZPEXP/3ET+qPVKn
+         ZNYdtUpFlD2P/Eklrww4Va3/wNRqbkwODnvT8z6tQ4beUOfrahq1XnCzohhMwcMwhVGo
+         E4utbGCFVX7HdJDOQIhSm8IEuqgnpFpMlBwRe5iLqp2xGnumw7TiaLGv27BBc0vjQhge
+         j+bbEjg6ltLZKoen5rw/god+dYerPrrXfJg5PZTxwrdZQrgCtEEI+LueokDKXLEYv3SV
+         8iJDuPlUN60idfs8XX1QRXgSXVwunls5mY+50wSMPYEnqnc1IIcASkjbvcWiyqVLjJo+
+         v9BQ==
+X-Gm-Message-State: AO0yUKWOcKDI0t9px2+uJV7g/OoS7+qWOeUDWnwkpoARirbAyg/i+niM
+        nv3X6i6jSqRPO5XcftytEj+kTj1Aw/RUoCIu
+X-Google-Smtp-Source: AK7set++Rn0Fp5zH216z7M0t4anw+bCYk5cH+cbnFchQuoKPGQZKwWBPd9XzqxYZBAA0DXp2h8O+pg==
+X-Received: by 2002:a05:6e02:1a22:b0:315:29ff:da85 with SMTP id g2-20020a056e021a2200b0031529ffda85mr2455232ile.6.1676384905752;
+        Tue, 14 Feb 2023 06:28:25 -0800 (PST)
+Received: from [172.22.22.4] ([98.61.227.136])
+        by smtp.googlemail.com with ESMTPSA id t3-20020a92c903000000b0031535804125sm2524047ilp.88.2023.02.14.06.28.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 14 Feb 2023 06:28:25 -0800 (PST)
+Message-ID: <a139f921-0f82-4d4b-6407-e0ad6807bb55@linaro.org>
+Date:   Tue, 14 Feb 2023 08:28:24 -0600
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH] remoteproc: qcom: fix sparse warnings
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8450: Add IMEM and PIL info
+ region
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <mathieu.poirier@linaro.org>, <konrad.dybcio@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <1675180866-16695-1-git-send-email-quic_mojha@quicinc.com>
- <bba9e244-0a02-4d46-8ba8-bc8b11ddf6b4@linaro.org>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <bba9e244-0a02-4d46-8ba8-bc8b11ddf6b4@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Mukesh Ojha <quic_mojha@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>, agross@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <1675443891-31709-1-git-send-email-quic_mojha@quicinc.com>
+ <1675443891-31709-2-git-send-email-quic_mojha@quicinc.com>
+ <cc30f686-dec7-db85-cf0d-c6c685a623ce@linaro.org>
+ <d1dc0c9b-eab2-0287-d0a2-ead44ecee5ce@quicinc.com>
+ <20230206210455.xgrvtvknkor4nllx@ripper>
+ <aac2b313-e4af-dc93-f177-0d0be9620e1b@quicinc.com>
+From:   Alex Elder <elder@linaro.org>
+In-Reply-To: <aac2b313-e4af-dc93-f177-0d0be9620e1b@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: UsWmiX7zLmzlaEVb20jXGkip6SY7Mcyn
-X-Proofpoint-GUID: UsWmiX7zLmzlaEVb20jXGkip6SY7Mcyn
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-14_07,2023-02-14_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
- impostorscore=0 adultscore=0 mlxlogscore=947 malwarescore=0
- priorityscore=1501 bulkscore=0 suspectscore=0 lowpriorityscore=0
- mlxscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302140121
-X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,60 +83,107 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 2/14/23 6:34 AM, Mukesh Ojha wrote:
+> +@alex,
+> 
+> Please comment.
+> 
+> -Mukesh
+> 
+> On 2/7/2023 2:34 AM, Bjorn Andersson wrote:
+>> On Mon, Feb 06, 2023 at 08:06:13PM +0530, Mukesh Ojha wrote:
+>>>
+>>>
+>>> On 2/4/2023 3:07 AM, Konrad Dybcio wrote:
+>>>>
+>>>>
+>>>> On 3.02.2023 18:04, Mukesh Ojha wrote:
+>>>>> Add a simple-mfd representing IMEM on SM8450 and define the PIL
+>>>>> relocation info region, so that post mortem tools will be able
+>>>>> to locate the loaded remoteprocs.
+>>>>>
+>>>>> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+>>>>> ---
+>>>>   From XBL:
+>>>>
+>>>> 0x14680000, 0x0002A000, "IMEM Base"
+>>>>
+>>>> Is there anything in that wider address range that would interest
+>>>> us? I recall Alex once dug into that when diving into IPA, but
+>>>> I can not recall the conclusion..
+
+So you're saying a boot loader defines "IMEM Base" as
+a range of memory, size 0x2a000.
+
+>>> Spec-wise, yes IPA do own these 0x146A8000 - 0x146AA000 .
+>>> But, not sure what they use it for.
+
+And a subset of that range (at offset 0x28000, size 0x2000) is
+set aside for use by IPA.  IPA *does* use this memory area as
+"fast" memory to hold certain frequently-accessed tables.
+Details of that are under the modem's control, and I don't
+have knowledge of that.
+
+The IPA driver currently maps it's portion of this memory,
+but does *not* reflect that use in DT.  (This is something
+that will be corrected at some point, possibly soon.)
 
 
-On 2/13/2023 6:25 AM, Dmitry Baryshkov wrote:
-> On 31/01/2023 18:01, Mukesh Ojha wrote:
->> This patch try to address below sparse warnings.
+>> The DT should not reflect the organization structure. Let's see if Alex
+>> have any input on this.
+
+As I understand it there's an "imem" node in DT defined, but
+it just defines the range of memory, and is something referred
+to by other drivers (or other nodes in a DTS file).  This seems
+reasonable, and it kind of matches the view I've seen in
+documents.  IPA does *not* follow that pattern, and should.
+
+I don't really have any strong input either way.  I can help
+define the "problem" but I don't claim to know the correct
+way to represent this.
+
+It's a contiguous block of special memory.  By convention
+(design) its range divided up, with portions intended to be
+used for different purposes, by different hardware.  IPA is
+one of the users.
+
+					-Alex
+
+
 >>
->> drivers/remoteproc/qcom_common.c:126:27: warning: restricted __le32 
->> degrades to integer
->> drivers/remoteproc/qcom_common.c:133:32: warning: cast to restricted 
->> __le32
->> drivers/remoteproc/qcom_common.c:133:32: warning: cast from restricted 
->> __le64
+>> Thanks,
+>> Bjorn
 >>
->> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-> 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
+>>> -Mukesh
+>>>>
+>>>> Konrad
+>>>>>    arch/arm64/boot/dts/qcom/sm8450.dtsi | 15 +++++++++++++++
+>>>>>    1 file changed, 15 insertions(+)
+>>>>>
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi 
+>>>>> b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>>>> index 5704750..474ea1b 100644
+>>>>> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>>>> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>>>> @@ -3536,6 +3536,21 @@
+>>>>>                };
+>>>>>            };
+>>>>> +        sram@146aa000 {
+>>>>> +            compatible = "qcom,sm8450-imem", "syscon", "simple-mfd";
+>>>>> +            reg = <0 0x146aa000 0 0x1000>;
+>>>>> +
+>>>>> +            #address-cells = <1>;
+>>>>> +            #size-cells = <1>;
+>>>>> +
+>>>>> +            ranges = <0 0 0x146aa000 0x1000>;
+>>>>> +
+>>>>> +            pil-reloc@94c {
+>>>>> +                compatible = "qcom,pil-reloc-info";
+>>>>> +                reg = <0x94c 0xc8>;
+>>>>> +            };
+>>>>> +        };
+>>>>> +
+>>>>>            apps_rsc: rsc@17a00000 {
+>>>>>                label = "apps_rsc";
+>>>>>                compatible = "qcom,rpmh-rsc";
 
-Thanks for the review.
-
-> Also see below.
-> 
->> ---
->>   drivers/remoteproc/qcom_common.c | 4 ++--
->>   1 file changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/remoteproc/qcom_common.c 
->> b/drivers/remoteproc/qcom_common.c
->> index 020349f..7133c1f 100644
->> --- a/drivers/remoteproc/qcom_common.c
->> +++ b/drivers/remoteproc/qcom_common.c
->> @@ -123,14 +123,14 @@ static int qcom_add_minidump_segments(struct 
->> rproc *rproc, struct minidump_subsy
->>       for (i = 0; i < seg_cnt; i++) {
->>           memcpy_fromio(&region, ptr + i, sizeof(region));
->> -        if (region.valid == MD_REGION_VALID) {
->> +        if (le32_to_cpu(region.valid) == MD_REGION_VALID) {
->>               name = kstrdup(region.name, GFP_KERNEL);
-> 
-> While you are at it, please replace this kstrdup() with kstrndup(). 
-> There is no guarantee that region.name will be 0-terminated.
-
-Kept it as separate patch in this mail thread itself.
-
--Mukesh
->>               if (!name) {
->>                   iounmap(ptr);
->>                   return -ENOMEM;
->>               }
->>               da = le64_to_cpu(region.address);
->> -            size = le32_to_cpu(region.size);
->> +            size = le64_to_cpu(region.size);
->>               rproc_coredump_add_custom_segment(rproc, da, size, NULL, 
->> name);
->>           }
->>       }
-> 
