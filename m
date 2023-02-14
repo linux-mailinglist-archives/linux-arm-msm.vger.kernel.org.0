@@ -2,96 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0263B6965F5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 15:09:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 21BCE6966A6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 15:23:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233215AbjBNOJq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Feb 2023 09:09:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54386 "EHLO
+        id S232731AbjBNOXg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Feb 2023 09:23:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233160AbjBNOJo (ORCPT
+        with ESMTP id S231784AbjBNOXa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Feb 2023 09:09:44 -0500
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6276E2203C;
-        Tue, 14 Feb 2023 06:09:07 -0800 (PST)
-Received: by mail-ej1-f53.google.com with SMTP id dr8so40272796ejc.12;
-        Tue, 14 Feb 2023 06:09:07 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=p7hlSNqIh/Sna2kEiZvGWoB1aXxpevaYTwBOmCsTko4=;
-        b=VQhEXrJCClXlTMVNlCv6k10DCH92MxLpaMSlvWwbjtVae3qS3cNwQgeAVYBviuU7Yn
-         CVrJCkXVIcdcLCGmqRbZkFaQhvVuEr5hxzmM0tZN0sDNKarno1aQs2/9x2Caimp5KZVt
-         62wU+p9URpngfpXIJnTaO5usOM03PsVEyse9ne86RnZCb9ZcEBA0RgmWWR4ROEZYjSH4
-         IyVk/TEIdorq44jWadIQ9iydvdZ1NYndc5VSj1F2IAuaGyyrzy0LaCMtPoyBKy4lPboZ
-         2oFkMEQQcfKw8dqVddV42X2WUXPOEzEvolkkocsynZHRjCK89y/kOghpFRu2eABZ2mwY
-         3TSg==
-X-Gm-Message-State: AO0yUKWM3g51Zo0twbdNTwVK1WD3xqSiM0BEEbeVQgracy+Vt6g7sl0J
-        +s0Hq4jmLZvy77ZspNuBDoE1aFD0abtqatNPCuw=
-X-Google-Smtp-Source: AK7set+1uGQfF1O93l4l2QxjShVpBRHJC5I5JTqL8wOB2fyUeCuafm+Tc+pvZllJxQbEAbLdUrPoB0rt+WbmOkOKcl8=
-X-Received: by 2002:a17:906:b310:b0:8b1:2d36:a58e with SMTP id
- n16-20020a170906b31000b008b12d36a58emr1154572ejz.2.1676383662806; Tue, 14 Feb
- 2023 06:07:42 -0800 (PST)
+        Tue, 14 Feb 2023 09:23:30 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FD4430D3;
+        Tue, 14 Feb 2023 06:22:50 -0800 (PST)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31E4rDH9017289;
+        Tue, 14 Feb 2023 14:08:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : in-reply-to : references : mime-version :
+ content-type; s=qcppdkim1;
+ bh=8mygu5FXiy1g7uRE+cixCgfveLY0wc4wOwNgZ8bqBWM=;
+ b=PqZ9PZHGKsBH+Ty2L1JlrcQNIeOGxidzrsdZWuAJtnu0qm9CzckL9O38Sm1QhwY3T1yb
+ GJ/YryoRZ1RscKamhZiV6X7HcTY/F1Bj+JZS9Ha7sunzeZnTO4tLHfWCVFIHVV7nQaPe
+ bo+UiGwFFKfFNsCMlYCF/L2DJqPVydrqgw3RwRqEeqMHp0B1Gpvx4jsosTNFfedJNgJp
+ FCAv4uAz2QC5Lpw8sxvPQlDk/piEB7IziV0AukhLm178IMKclat4GaXiBq+7YLMvVzHJ
+ FEivoAXL6s9jvTAmI2mIcIWbpg81q0LTkK8jOEhTlhnx/7ziwRo/RyYnWgZc1kTi1zvO XQ== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nqyygsnu7-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 14 Feb 2023 14:08:24 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31EE8Nll018775
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 14 Feb 2023 14:08:23 GMT
+Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Tue, 14 Feb 2023 06:08:20 -0800
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+To:     <dmitry.baryshkov@linaro.org>, <agross@kernel.org>,
+        <mathieu.poirier@linaro.org>, <konrad.dybcio@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Mukesh Ojha <quic_mojha@quicinc.com>
+Subject: [PATCH] remoteproc: qcom: replace kstrdup with kstrndup
+Date:   Tue, 14 Feb 2023 19:38:11 +0530
+Message-ID: <1676383691-29738-1-git-send-email-quic_mojha@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1675180866-16695-1-git-send-email-quic_mojha@quicinc.com>
+References: <1675180866-16695-1-git-send-email-quic_mojha@quicinc.com>
 MIME-Version: 1.0
-References: <20230214094115.23338-1-manivannan.sadhasivam@linaro.org> <20230214095300.pv3e73r36poth5w4@vireshk-i7>
-In-Reply-To: <20230214095300.pv3e73r36poth5w4@vireshk-i7>
-From:   "Rafael J. Wysocki" <rafael@kernel.org>
-Date:   Tue, 14 Feb 2023 15:07:31 +0100
-Message-ID: <CAJZ5v0ip_OHkSjQwNh5o+p2T2utXozH7DV6DFVp23bw5tzShtQ@mail.gmail.com>
-Subject: Re: [PATCH] cpufreq: qcom-hw: Add missing null pointer check
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     rafael@kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
-        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: sPUWClOX--ZR6Pl94Bq1N4QhwQs6NIpD
+X-Proofpoint-GUID: sPUWClOX--ZR6Pl94Bq1N4QhwQs6NIpD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-14_07,2023-02-14_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
+ impostorscore=0 malwarescore=0 adultscore=0 mlxlogscore=866 mlxscore=0
+ priorityscore=1501 lowpriorityscore=0 spamscore=0 bulkscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302140120
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Feb 14, 2023 at 10:53 AM Viresh Kumar <viresh.kumar@linaro.org> wrote:
->
-> On 14-02-23, 15:11, Manivannan Sadhasivam wrote:
-> > of_device_get_match_data() may return NULL, so add a check to prevent
-> > potential null pointer dereference.
-> >
-> > Issue reported by Qualcomm's internal static analysis tool.
-> >
-> > Cc: stable@vger.kernel.org # v6.2
-> > Fixes: 4f7961706c63 ("cpufreq: qcom-hw: Move soc_data to struct qcom_cpufreq")
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >  drivers/cpufreq/qcom-cpufreq-hw.c | 2 ++
-> >  1 file changed, 2 insertions(+)
-> >
-> > diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-> > index 340fed35e45d..6425c6b6e393 100644
-> > --- a/drivers/cpufreq/qcom-cpufreq-hw.c
-> > +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-> > @@ -689,6 +689,8 @@ static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
-> >               return -ENOMEM;
-> >
-> >       qcom_cpufreq.soc_data = of_device_get_match_data(dev);
-> > +     if (!qcom_cpufreq.soc_data)
-> > +             return -ENODEV;
-> >
-> >       clk_data = devm_kzalloc(dev, struct_size(clk_data, hws, num_domains), GFP_KERNEL);
-> >       if (!clk_data)
->
-> Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
->
-> Rafael,
->
-> Can you still send this for 6.2 ?
+Since, there is no guarantee that region.name will be 0-terminated
+from the firmware side, replace kstrdup with kstrndup.
 
-Yes, I can.
+Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+---
+ drivers/remoteproc/qcom_common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
+index 020349f..7810f91 100644
+--- a/drivers/remoteproc/qcom_common.c
++++ b/drivers/remoteproc/qcom_common.c
+@@ -124,7 +124,7 @@ static int qcom_add_minidump_segments(struct rproc *rproc, struct minidump_subsy
+ 	for (i = 0; i < seg_cnt; i++) {
+ 		memcpy_fromio(&region, ptr + i, sizeof(region));
+ 		if (region.valid == MD_REGION_VALID) {
+-			name = kstrdup(region.name, GFP_KERNEL);
++			name = kstrndup(region.name, MAX_REGION_NAME_LENGTH - 1, GFP_KERNEL);
+ 			if (!name) {
+ 				iounmap(ptr);
+ 				return -ENOMEM;
+-- 
+2.7.4
+
