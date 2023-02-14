@@ -2,124 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E3F6696A36
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 17:48:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 76B69696A6F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 17:57:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231710AbjBNQsT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Feb 2023 11:48:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41162 "EHLO
+        id S232785AbjBNQ5y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Feb 2023 11:57:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229765AbjBNQsS (ORCPT
+        with ESMTP id S232735AbjBNQ5w (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Feb 2023 11:48:18 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24CE53AAE;
-        Tue, 14 Feb 2023 08:48:14 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 9B03DB81BF9;
-        Tue, 14 Feb 2023 16:48:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3F89C433EF;
-        Tue, 14 Feb 2023 16:48:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1676393292;
-        bh=pIGfIUyELnj1r2C49mieQLwNusabnsLyOs47P3KXPeY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=hsLd7sab/dP2RG1Pz26VDBcWibqcVpaT1tF6jRx0V50LaGHdqEm2Np7ZsPkd88UUW
-         iqyCGDk908fqDScRlH9julU5+ZOWipd1CfWqStaGT+kDdkOD9vPhNoLBXdbl5QsyjD
-         YabVD8VkJhZf36QMa9xlBLk8OP/yHzpvU5cLtNBhlLOjvhlO/tchaLLblYafV+cGyf
-         u7xbGv44ZIPh5pwZR2WfAOXE8kkJ0kfOYn082Ca94D0s+TkUfUTkIUpWRL5Kn0T7s+
-         mWn6h+x0N5GPBDzWnAMEG8K/4TpLTheWNezIFCn2YNEcC6dUXTnuwT15AlrIThrv3Q
-         f2l1m7dd2HTug==
-Date:   Tue, 14 Feb 2023 08:50:16 -0800
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>
-Cc:     mathieu.poirier@linaro.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2] remoteproc: sysfs/debugfs: fix race while updating
- recovery flag
-Message-ID: <20230214165016.fteeddbwjjyiwxwb@ripper>
-References: <20230201054609.14575-1-quic_satyap@quicinc.com>
+        Tue, 14 Feb 2023 11:57:52 -0500
+Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2B815BB3;
+        Tue, 14 Feb 2023 08:57:51 -0800 (PST)
+Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
+        by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31EGXnJi018990;
+        Tue, 14 Feb 2023 16:57:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : to : cc :
+ subject : date : message-id : in-reply-to : references : mime-version :
+ content-type : content-transfer-encoding; s=corp-2022-7-12;
+ bh=dz81OhsNO6aG2TXXZVXYeGU00TuEu+Wx+1CJuDXwkc0=;
+ b=lojJrtpfrq3UMSWB+ypaBVRgGsKQhZ+me8O/jwd6k8FAOGX+MD8K7PZPEJoOengEDC9N
+ Qn/UUTy2+IU52B35vbkUgrl08zcUSW5VLfqxefC2eSMGlPQSWJO/1JaxF3ZASIeO1cYX
+ V7j4zzcH0KA/Oc7+pM6Bwi5z65+ozCaJbYQMGDuESNLTp1hu5Z8LKwrbVIwxrKyDf4DD
+ JIFCtlYoLuhzB6r5Qj8KBT+0hxfoBsw8bMhz43Ql+Q4wyKQQDlL7fWzhIkNYjKzLzVJD
+ oIXQEdaKrxKrkL+eOW7RJHqXaU9AXK9YR2j2U9sdFkvAhOYht1EaqaIo5rQiZOB+pRuc 5g== 
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
+        by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3np1t3dxmh-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Tue, 14 Feb 2023 16:57:42 +0000
+Received: from pps.filterd (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+        by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.5/8.17.1.5) with ESMTP id 31EGr8Bd009572;
+        Tue, 14 Feb 2023 16:57:41 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 3np1f5uuft-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Tue, 14 Feb 2023 16:57:41 +0000
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 31EGuHob039739;
+        Tue, 14 Feb 2023 16:57:40 GMT
+Received: from ca-mkp2.ca.oracle.com.com (mpeterse-ol9.allregionaliads.osdevelopmeniad.oraclevcn.com [100.100.251.135])
+        by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id 3np1f5uuff-1;
+        Tue, 14 Feb 2023 16:57:40 +0000
+From:   "Martin K. Petersen" <martin.petersen@oracle.com>
+To:     Manivannan Sadhasivam <mani@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        "James E . J . Bottomley" <jejb@linux.ibm.com>,
+        Abel Vesa <abel.vesa@linaro.org>
+Cc:     "Martin K . Petersen" <martin.petersen@oracle.com>,
+        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 0/2] ufs: host: ufs-qcom: Add support for SM8550
+Date:   Tue, 14 Feb 2023 11:57:27 -0500
+Message-Id: <167639371072.486235.1047022414059999681.b4-ty@oracle.com>
+X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20230119151406.4168685-1-abel.vesa@linaro.org>
+References: <20230119151406.4168685-1-abel.vesa@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230201054609.14575-1-quic_satyap@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-14_11,2023-02-14_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0 phishscore=0
+ suspectscore=0 mlxscore=0 spamscore=0 mlxlogscore=854 adultscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302140144
+X-Proofpoint-GUID: r0qb58Ac7h194BwyVh0X3fL_401ZDmc5
+X-Proofpoint-ORIG-GUID: r0qb58Ac7h194BwyVh0X3fL_401ZDmc5
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jan 31, 2023 at 09:46:08PM -0800, Satya Durga Srinivasu Prabhala wrote:
-> When multiple clients try to update the recovery flag, it is
-> possible that, race condition would lead to undesired results
-> as updates to recovery flag isn't protected by any mechanism
-> today. To avoid such issues, take remoteproc mutex lock before
-> updating recovery flag and release the lock once done.
-> 
+On Thu, 19 Jan 2023 17:14:04 +0200, Abel Vesa wrote:
 
-The only query of recovery_disabled that I can see is in
-rproc_crash_handler_work(), outside of any lock. So I'm not able to see
-the issue you're referring to.
-
-Can you please help me understand better?
-
-Thanks,
-Bjorn
-
-> Signed-off-by: Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>
-> ---
-> v1 -> v2:
-> - addressed comments from Mukesh Ojha
->   1. take & release lock only while updating recovery flag
->   2. update debugfs
+> This patchset adds UFS HC support for the new Qualcomm SM8550 SoC.
 > 
->  drivers/remoteproc/remoteproc_debugfs.c | 4 ++++
->  drivers/remoteproc/remoteproc_sysfs.c   | 4 ++++
->  2 files changed, 8 insertions(+)
+> The v1 was here:
+> https://lore.kernel.org/all/20221116121732.2731448-1-abel.vesa@linaro.org/
 > 
-> diff --git a/drivers/remoteproc/remoteproc_debugfs.c b/drivers/remoteproc/remoteproc_debugfs.c
-> index b86c1d09c70c..2c44d375024e 100644
-> --- a/drivers/remoteproc/remoteproc_debugfs.c
-> +++ b/drivers/remoteproc/remoteproc_debugfs.c
-> @@ -226,10 +226,14 @@ rproc_recovery_write(struct file *filp, const char __user *user_buf,
->  
->  	if (!strncmp(buf, "enabled", count)) {
->  		/* change the flag and begin the recovery process if needed */
-> +		mutex_lock(&rproc->lock);
->  		rproc->recovery_disabled = false;
-> +		mutex_unlock(&rproc->lock);
->  		rproc_trigger_recovery(rproc);
->  	} else if (!strncmp(buf, "disabled", count)) {
-> +		mutex_lock(&rproc->lock);
->  		rproc->recovery_disabled = true;
-> +		mutex_unlock(&rproc->lock);
->  	} else if (!strncmp(buf, "recover", count)) {
->  		/* begin the recovery process without changing the flag */
->  		rproc_trigger_recovery(rproc);
-> diff --git a/drivers/remoteproc/remoteproc_sysfs.c b/drivers/remoteproc/remoteproc_sysfs.c
-> index 8c7ea8922638..628e0de9a132 100644
-> --- a/drivers/remoteproc/remoteproc_sysfs.c
-> +++ b/drivers/remoteproc/remoteproc_sysfs.c
-> @@ -50,10 +50,14 @@ static ssize_t recovery_store(struct device *dev,
->  
->  	if (sysfs_streq(buf, "enabled")) {
->  		/* change the flag and begin the recovery process if needed */
-> +		mutex_lock(&rproc->lock);
->  		rproc->recovery_disabled = false;
-> +		mutex_unlock(&rproc->lock);
->  		rproc_trigger_recovery(rproc);
->  	} else if (sysfs_streq(buf, "disabled")) {
-> +		mutex_lock(&rproc->lock);
->  		rproc->recovery_disabled = true;
-> +		mutex_unlock(&rproc->lock);
->  	} else if (sysfs_streq(buf, "recover")) {
->  		/* begin the recovery process without changing the flag */
->  		rproc_trigger_recovery(rproc);
-> -- 
-> 2.38.1
+> Changes since v1:
+>  * replaced REG_UFS_PA_LINK_STARTUP_TIMER with REG_UFS_CFG0 and added a
+>    comment saying that the older version use the first name as reg name
+>  * moved QUNIPRO_G4_SEL in a separate section dedicated to CFG0 bits
+>  * forces the update_link_startup_timer condition to be skipped in case
+>    of HW version 5.x
 > 
+> [...]
+
+Applied to 6.3/scsi-queue, thanks!
+
+[1/2] scsi: ufs: ufs-qcom: Clear qunipro_g4_sel for HW version major 5
+      https://git.kernel.org/mkp/scsi/c/9c02aa24bf40
+[2/2] dt-bindings: ufs: qcom: Add SM8550 compatible string
+      https://git.kernel.org/mkp/scsi/c/b8c203891121
+
+-- 
+Martin K. Petersen	Oracle Linux Engineering
