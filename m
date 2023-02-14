@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BD1BE695CDB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 09:25:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D328695CEF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 09:28:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231776AbjBNIZK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Feb 2023 03:25:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60138 "EHLO
+        id S232006AbjBNI2m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Feb 2023 03:28:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231615AbjBNIZJ (ORCPT
+        with ESMTP id S232008AbjBNI2l (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Feb 2023 03:25:09 -0500
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37498BB86
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 00:25:06 -0800 (PST)
-Received: by mail-wm1-x32d.google.com with SMTP id g6-20020a05600c310600b003e1f6dff952so424531wmo.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 00:25:06 -0800 (PST)
+        Tue, 14 Feb 2023 03:28:41 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9CD6A26E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 00:28:38 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id s13-20020a05600c45cd00b003ddca7a2bcbso5551635wmo.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 00:28:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=m6YzbHeijVYRLJ+k+ysFkY3qZGUT24eM/SXq0u2hpl0=;
-        b=zc3a2TNGE5lhWMT6/1egKMP6QQC2JoaLrNPh92Zha2FwXDhNacfwKU59fU8R2y4MB5
-         9OdCjIWcp8QrBrI3BVPkpYGGXRs7zoiQdAXhyjG4gxcQx0SFTbQgDd1UVJyoJHONINW9
-         21kKq89dLVQnfZAnvTIIGmESqyo0B0n1bf2FCz+fBumOznrCl6cEcWyLLXDlz0dSe9Fb
-         /7HENpCmmQ1Co5WvRFl6lku18FYGRwMnGX31VyikC1YHLydfJI3yRjvR4SfrZ0QDr+8e
-         GavwIr5tCzr5jJ07YU5JpMxoLkNO/nRPx9dGIwTKNNHZbTcVIYyqJehz9TZLdEIXaIMO
-         Mfpw==
+        bh=J4OTbvAyDNRuQNPpEdEO/ch9kURlca8zCvaPs3Ht8yY=;
+        b=regc07LLlR85Obo2IjGB3+meMxxtgoUllAqj+sEICOZyRttPY0h7P89DTb2Sweosi5
+         hKUTEv35w3u+OQ4OLRDbfNAJtR5pq76Mj8wmlaoRxZmtFLmXcmk3jTmFNWZjcMKTL62m
+         c2dPGkg1oED/zjQUWvN1WDgP6GDl2G+l++PisckTBEoL/pXAPyDIm+6Omka4ujh14EBg
+         skJFgD89pOURxOP/Ry2aehXmlCkxus4NW8bmDEr5uiabfqXv3UgDhYJriHCYNvgE09lr
+         e43H1Sd5EoWkHRBCfs1n6C2IlpFj53Z91wuoztI8tgo6OYOlUaH178/FKwpK6krh3uKg
+         kVzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=m6YzbHeijVYRLJ+k+ysFkY3qZGUT24eM/SXq0u2hpl0=;
-        b=eyJ1dnSbKEzR/fYFUkcgFXygD0f4XLoAmWrtUvH+1YzLy/pLb0/hV/On87xe9fVCQq
-         qqu3ezbITHd8pv1fDCq2kJka1bRIYv1VM9bYxN5pibNBXSR2MGyC4qktiuPGvhjlLFOe
-         q2bsosxC0OdJ9fzbiGM86oxF6Wk87Lukf2Qrspr+DVdQM75Udw+IbeoJCDMwCQ7OvUuR
-         i2IzoBmFhVy0V6fPNE/VsvXkVfM5NsiHUXHUyZ/LexAQkWm1JrErvAYaa9Cwb9Rf9RRW
-         itA6RgOXy5Eca/5J1VSXfPf8UXGypuf1ceXY12WwNcbJV/zvpIbKhWoVzsdLoJahtxST
-         pzGQ==
-X-Gm-Message-State: AO0yUKWenKzfUuJO0ZgCd+V0ju4EoXN3a328C8s/KclLr+Jq39o9BDsD
-        7mXB/dDtEumwdlaCTNJNjwdOLA==
-X-Google-Smtp-Source: AK7set8ke1aM1nENCGqcij6HydhlyUcWM8+QrxYrQ+b6qRNZCSEisG5R7jEMFjOeoDhgNTaHgB7QAw==
-X-Received: by 2002:a05:600c:4b17:b0:3df:eb5d:c583 with SMTP id i23-20020a05600c4b1700b003dfeb5dc583mr1389270wmp.17.1676363104749;
-        Tue, 14 Feb 2023 00:25:04 -0800 (PST)
+        bh=J4OTbvAyDNRuQNPpEdEO/ch9kURlca8zCvaPs3Ht8yY=;
+        b=pa8zw080RCQiyokMqwJeNZdNPM2WiRT12CdFK0n97knE+vj5jJOBhuB9mhlYdpZq51
+         laJEbi9hRqdoV0mNh7k+g9rF4BGUXjVfKpL4Wnk5TNL7x3VIS7fSS0y2eJWV860blGyV
+         K4G+aOiM9/8ZzuwjD11lu+5/Li65Q88KkfwkABOEw7c3lrQxDv8ftH/5Uk/hUyCq9laz
+         wZQyRYbS26RxtrI9K2CxeoHRA+G2IPDniZ9p5/leQuzjDu/qG6y34pk2ykh8o9rlDxDR
+         4maudnY72GStxbWhZ3GMxa8JMh3V6RK+foFAwHoPdPjJQBDVkmeB21JkDJ/EEYKGrDM5
+         wVgw==
+X-Gm-Message-State: AO0yUKXC7h5ReJ8kquzgMIZF9n+hOlrRHvrspxARYQP3df2RraYQhD4A
+        WRqIPjOrispQDHvUm+x06TAkXA==
+X-Google-Smtp-Source: AK7set/+0Q9mSK4x5OCo4ro65AiB0eTqg69bnbvds4LDkrWCfEonZr+/Syx4ot9MC8pY52xE99sgMA==
+X-Received: by 2002:a05:600c:3acd:b0:3d3:4f99:bb32 with SMTP id d13-20020a05600c3acd00b003d34f99bb32mr1209415wms.36.1676363317183;
+        Tue, 14 Feb 2023 00:28:37 -0800 (PST)
 Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id hg8-20020a05600c538800b003e1202744f2sm13504837wmb.31.2023.02.14.00.25.03
+        by smtp.gmail.com with ESMTPSA id bg30-20020a05600c3c9e00b003db012d49b7sm2232707wmb.2.2023.02.14.00.28.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Feb 2023 00:25:04 -0800 (PST)
-Message-ID: <86f5121c-d9de-250d-b845-fee70f28c1c6@linaro.org>
-Date:   Tue, 14 Feb 2023 09:25:02 +0100
+        Tue, 14 Feb 2023 00:28:36 -0800 (PST)
+Message-ID: <aba45ae9-8558-50c1-e5ad-dd910dacdbb3@linaro.org>
+Date:   Tue, 14 Feb 2023 09:28:34 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [PATCH 3/9] dt-bindings: soc: qcom: aoss: Document
- power-domain-cells for aoss
+Subject: Re: [PATCH 5/9] dt-bindings: remoteproc: mpss: Document
+ QDU1000/QRU1000 mpss devices
 Content-Language: en-US
 To:     Melody Olvera <quic_molvera@quicinc.com>,
         Andy Gross <agross@kernel.org>,
@@ -72,9 +72,9 @@ Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org
 References: <20230213185218.166520-1-quic_molvera@quicinc.com>
- <20230213185218.166520-4-quic_molvera@quicinc.com>
+ <20230213185218.166520-6-quic_molvera@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230213185218.166520-4-quic_molvera@quicinc.com>
+In-Reply-To: <20230213185218.166520-6-quic_molvera@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -88,20 +88,162 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 13/02/2023 19:52, Melody Olvera wrote:
-> Document "#-power-domain-cells" field for aoss devices as required
-> by power-controller bindings.
-
-The power domain cells are for power domain providers. The reason to add
-them is because it is a power domain provider. Power-controller bindings
-do not require drivers which are not power controllers to become such...
-and this driver is not power domain provider / power controller, is it?
-
+> This documents the compatible for the component used to boot the
+> MPSS on the QDU1000 and QRU1000 SoCs.
+> 
+> The QDU1000 and QRU1000 mpss boot process now requires the specification
+> of an RMB register space to complete the handshake needed to start or
+> attach the mpss.
 > 
 > Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
 > ---
->  Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.yaml | 4 ++++
->  1 file changed, 4 insertions(+)
+>  .../bindings/remoteproc/qcom,qdu1000-pas.yaml | 127 ++++++++++++++++++
+>  1 file changed, 127 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,qdu1000-pas.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,qdu1000-pas.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,qdu1000-pas.yaml
+> new file mode 100644
+> index 000000000000..eb6ade984778
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,qdu1000-pas.yaml
+> @@ -0,0 +1,127 @@
+> +# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/remoteproc/qcom,qdu1000-pas.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm QDU1000 Peripheral Authentication Service
+> +
+> +maintainers:
+> +  - Melody Olvera <quic_molvera@quicinc.com>
+> +
+> +description:
+> +  Qualcomm QDU1000 SoC Peripheral Authentication Service loads and boots firmware
+> +  on the Qualcomm DSP Hexagon cores.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,qdu1000-mpss-pas
 
+What about other remote processors? The subject prefix suggests it is
+only for mpss, but filename is different.
+
+> +
+> +  reg:
+> +    maxItems: 2
+> +
+> +  clocks:
+> +    items:
+> +      - description: XO clock
+> +
+> +  clock-names:
+> +    items:
+> +      - const: xo
+> +
+> +  qcom,qmp:
+> +    $ref: /schemas/types.yaml#/definitions/phandle
+> +    description: Reference to the AOSS side-channel message RAM.
+> +
+> +  smd-edge: false
+> +
+> +  firmware-name:
+> +    $ref: /schemas/types.yaml#/definitions/string-array
+> +    items:
+> +      - description: Firmware name of the Hexagon core
+> +      - description: Firmware name of the Hexagon Devicetree
+> +
+> +  memory-region:
+> +    items:
+> +      - description: Memory region for main Firmware authentication
+> +      - description: Memory region for Devicetree Firmware authentication
+> +      - description: DSM Memory region
+> +
+> +  interrupts:
+> +    minItems: 6
+> +
+> +  interrupt-names:
+> +    minItems: 6
+> +
+> +  interconnects:
+> +    minItems: 1
+
+You can drop the property. It's coming from qcom,pas-common.yaml
+
+> +
+> +  power-domains:
+> +    items:
+> +      - description: CX power domain
+> +      - description: MSS power domain
+> +
+> +  power-domain-names:
+> +    items:
+> +      - const: cx
+> +      - const: mss
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +
+> +allOf:
+> +  - $ref: /schemas/remoteproc/qcom,pas-common.yaml#
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,rpmh.h>
+> +    #include <dt-bindings/interrupt-controller/irq.h>
+> +    #include <dt-bindings/mailbox/qcom-ipcc.h>
+> +
+> +    remoteproc@4080000 {
+> +        compatible = "qcom,qdu1000-mpss-pas";
+> +        reg = <0x4080000 0x4040>,
+> +              <0x4180000 0x1000>;
+> +
+> +        clocks = <&rpmhcc RPMH_CXO_CLK>;
+> +        clock-names = "xo";
+> +
+> +        interrupts-extended = <&intc GIC_SPI 264 IRQ_TYPE_EDGE_RISING>,
+> +                              <&smp2p_modem_in 0 IRQ_TYPE_EDGE_RISING>,
+> +                              <&smp2p_modem_in 1 IRQ_TYPE_EDGE_RISING>,
+> +                              <&smp2p_modem_in 2 IRQ_TYPE_EDGE_RISING>,
+> +                              <&smp2p_modem_in 3 IRQ_TYPE_EDGE_RISING>
+> +                              <&smp2p_modem_in 7 IRQ_TYPE_EDGE_RISING>;
+> +        interrupt-names = "wdog", "fatal", "ready", "handover",
+> +                          "stop-ack", "shutdown-ack";
+> +
+> +        memory-region = <&mpss_mem>, <&dtb_mpss_mem>, <&mpss_dsm_mem>;
+> +
+> +        firmware-name = "modem.mdt",
+> +                        "modem_dtb.mdt";
+> +
+> +        power-domains = <&rpmhpd QDU1000_CX>,
+> +                        <&rpmhpd QDU1000_MSS>;
+> +        power-domain-names = "cx", "mss";
+> +
+> +        interconnects = <&mc_virt MASTER_LLCC &mc_virt SLAVE_EBI1>;
+> +
+> +        qcom,qmp = <&aoss_qmp>;
+> +
+> +        qcom,smem-states = <&smp2p_adsp_out 0>;
+> +        qcom,smem-state-names = "stop";
+> +
+> +        glink-edge {
+> +            interrupts-extended = <&ipcc IPCC_CLIENT_MPSS
+> +                                         IPCC_MPROC_SIGNAL_GLINK_QMP
+> +                                         IRQ_TYPE_EDGE_RISING>;
+> +            mboxes = <&ipcc IPCC_CLIENT_MPSS IPCC_MPROC_SIGNAL_GLINK_QMP>;
+> +
+> +            label = "modem";
+> +            qcom,remote-pid = <2>;
+> +
+
+Drop blank line
+
+> +        };
+> +    };
 
 Best regards,
 Krzysztof
