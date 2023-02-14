@@ -2,106 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 12249695FAF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 10:48:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 02AD8695FD0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 10:53:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232585AbjBNJsM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Feb 2023 04:48:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56240 "EHLO
+        id S231599AbjBNJxO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Feb 2023 04:53:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229731AbjBNJrq (ORCPT
+        with ESMTP id S231465AbjBNJxF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Feb 2023 04:47:46 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA432233C6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 01:47:45 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id j32-20020a05600c1c2000b003dc4fd6e61dso13216795wms.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 01:47:45 -0800 (PST)
+        Tue, 14 Feb 2023 04:53:05 -0500
+Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7D69E38D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 01:53:03 -0800 (PST)
+Received: by mail-pl1-x633.google.com with SMTP id h4so8662986pll.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 01:53:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=u3RPTKzuRFOyVfeP8KPrGZy3f2PFRah932ztv2gi7LM=;
-        b=Ehku01k+/yYEpZOWuGKz0Y+qBe4tXs89e0TgnDttDvcXQLfmTURvkF+aIZ0D8Ir0H+
-         zA4p6oKaZlt1fYFPagiJJdemDa78ClAug+gB8/j2h3DE/1RRfcnEAQotOBD0VXa/7jXS
-         SGxrwTZaJ1fcLUfrIBzbCOg5MB3YoronJsb2zgF0Jrvk654aLZ02dj7u8JKjSn6DjJUK
-         /BAMkSdpGQlrnczXrXb2f9cJ73YvEp3AwZQNxwvpclWFRBj8A/fvSwgVpdwsSsOj5lNq
-         eNwIZVNa0lnMFvKzQFvYIdKZ5XblEKjXNURoGKKtn0Ir/WdgOtnLJ9/Q6pzEahbosPUO
-         JbAw==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=jmGdV1IpnhMsjWRrEzJObpGK30861bOEZaqYcgKiLho=;
+        b=z615CfoeIqg2nU1qmrBUE/g7MILlMrvYNwvhNOd2hqm/4BGooq0b3YoqSFDjVHHyGO
+         ynyOQEYgr8jCaVcHpAHdt+j5ukYaC64xyfp2unMa2IAwX697fDYL1+qoZIyz9qL2hysL
+         EDjzsA6Gs3o8jn3NdaU9z2k/84KWVVrMr1a5DzJtTFMrvijLgUeEm4YmODNHxFRWkE88
+         hK3jgL+cho30jL3AFmyJJ21Een1N/K3XHXa/S/26xW2Czw8d8N+B7WfU/EjzJ4r1qPtI
+         J8pt7arBVNrIf6y/a6CB4Y+FrE8kzs20p9ZkPYQp/WpvgOywBZ1Qe8xoJa90LYdAXKaK
+         sJVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=u3RPTKzuRFOyVfeP8KPrGZy3f2PFRah932ztv2gi7LM=;
-        b=ZYNMbr1yxNob1V0OTSA3BqtrE89jVUHqEsLhjo7QMeRxspHbJHJ0Is62A5xeAzoZ8L
-         3XvgmaG8gqvq6D64QINysV3CdODwGwPKw5ydj4ake3HbAiyRxnCdFG0Pa1K8V3EjPHWX
-         5AkL1E0K4QrcRwCIvC+VMTgaZMaZlpI1U1iy1xrm9ZFyqvcDDG2i3YeUZyzdaRYWQvfG
-         yK/XIfE2GivjNdpoOUce4ZnKPqUhvK6pL8e9ej4hfHX3wW7T1NE4woKUls0X227see9q
-         sNSN4vDDUYBRLh8/S2WrfgqNAOg7Vl1m8nei/4suSzms0eG4RdatV1eQ8kqTyYLwEyNx
-         qeJw==
-X-Gm-Message-State: AO0yUKWWNtAxYkMB5FGCoUUoqH6iFP26yKSvuRQKKh8buP6kj4BDG5HX
-        xQVr4eSPpGNBsJLEUKDHqCEvZkm5PK/5hoYf
-X-Google-Smtp-Source: AK7set/SHwwA36oOl1cfZ9Xajv6+FBR32/vaHlEdMYk0ojT9JelNUuP5y02Qh9FKx+tIMw4D9nhTAg==
-X-Received: by 2002:a05:600c:1695:b0:3dc:561a:79e7 with SMTP id k21-20020a05600c169500b003dc561a79e7mr1473755wmn.2.1676368064265;
-        Tue, 14 Feb 2023 01:47:44 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id l40-20020a05600c1d2800b003dd1b00bd9asm18386329wms.32.2023.02.14.01.47.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Feb 2023 01:47:43 -0800 (PST)
-Message-ID: <7336923b-e322-1211-0c1d-7ad70c7bfef7@linaro.org>
-Date:   Tue, 14 Feb 2023 10:47:42 +0100
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jmGdV1IpnhMsjWRrEzJObpGK30861bOEZaqYcgKiLho=;
+        b=7IYrZlKD8ut9P51uWjd/cb3yI88KJ6vTSw+sAdMRqTKIkId3v9oa1ZPhztSmFT5R6y
+         gHJ+urJWb2XPZqcf0mpJMFOmFRt+bEV7+ast3R4H0qJRfR+zj9kgdRkJF+1ayaNzyRgs
+         C0Z1j8YC4AZt6H3Qq1vg3v97UyTGiBYku/KWX2LuQbcGOmSEmzyJZgHNre6fnjw+AVhe
+         nYrBAuHoFJ/wmgeKVPDg1Hi2PE4Ap4Vc6U5YOFUx6zLuVbBUnwua+at2PMGyYytUMCT7
+         1uQceBuPovnw++DXwUaLZpB/dqAmI0Er9RhuAMCbv06P8mu3L3d9zP5z7tz8IOtVOGdL
+         yu9Q==
+X-Gm-Message-State: AO0yUKXgbAMoqQ0QYAB6Gtx3Z8pdIe3FUqzwH98AEdMMipc22+20dmnv
+        6TqYQ5yd7sIg+TBCKRRr7ijMVw==
+X-Google-Smtp-Source: AK7set/cAOHYyECZofoGhGcncjfSOUlz1tBZrGmCkXK4RB6MFAgefrCg6UyXrZt2jE2Jd7ZS/ADsbg==
+X-Received: by 2002:a05:6a20:3d82:b0:bf:ae32:5ed0 with SMTP id s2-20020a056a203d8200b000bfae325ed0mr1878163pzi.13.1676368383314;
+        Tue, 14 Feb 2023 01:53:03 -0800 (PST)
+Received: from localhost ([122.172.83.155])
+        by smtp.gmail.com with ESMTPSA id c188-20020a6335c5000000b004fbd91d9716sm681936pga.15.2023.02.14.01.53.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Feb 2023 01:53:02 -0800 (PST)
+Date:   Tue, 14 Feb 2023 15:23:00 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     rafael@kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH] cpufreq: qcom-hw: Add missing null pointer check
+Message-ID: <20230214095300.pv3e73r36poth5w4@vireshk-i7>
+References: <20230214094115.23338-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH 1/3] arm64: dts: qcom: qdu1000: Add IPCC, MPSS, AOSS nodes
-Content-Language: en-US
-To:     Melody Olvera <quic_molvera@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230213190122.178501-1-quic_molvera@quicinc.com>
- <20230213190122.178501-2-quic_molvera@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230213190122.178501-2-quic_molvera@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230214094115.23338-1-manivannan.sadhasivam@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/02/2023 20:01, Melody Olvera wrote:
-> Add nodes for IPCC, MPSS, and AOSS drivers. Also update
-> the scm node to include its interconnect.
+On 14-02-23, 15:11, Manivannan Sadhasivam wrote:
+> of_device_get_match_data() may return NULL, so add a check to prevent
+> potential null pointer dereference.
 > 
-> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+> Issue reported by Qualcomm's internal static analysis tool.
+> 
+> Cc: stable@vger.kernel.org # v6.2
+> Fixes: 4f7961706c63 ("cpufreq: qcom-hw: Move soc_data to struct qcom_cpufreq")
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
-
-
+>  drivers/cpufreq/qcom-cpufreq-hw.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+> index 340fed35e45d..6425c6b6e393 100644
+> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
+> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+> @@ -689,6 +689,8 @@ static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
+>  		return -ENOMEM;
 >  
-> +		aoss_qmp: power-controller@c300000 {
-> +			compatible = "qcom,qdu1000-aoss-qmp", "qcom,aoss-qmp";
-> +			reg = <0x0 0xc300000 0x0 0x400>;
-> +			interrupts-extended = <&ipcc IPCC_CLIENT_AOP
-> +						     IPCC_MPROC_SIGNAL_GLINK_QMP
-> +						     IRQ_TYPE_EDGE_RISING>;
-> +			mboxes = <&ipcc IPCC_CLIENT_AOP IPCC_MPROC_SIGNAL_GLINK_QMP>;
-> +
-> +			#clock-cells = <0>;
-> +			#power-domain-cells = <1>;
+>  	qcom_cpufreq.soc_data = of_device_get_match_data(dev);
+> +	if (!qcom_cpufreq.soc_data)
+> +		return -ENODEV;
+>  
+>  	clk_data = devm_kzalloc(dev, struct_size(clk_data, hws, num_domains), GFP_KERNEL);
+>  	if (!clk_data)
 
-This does not look right. Which part of aoss-qmp registers power domains?
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
 
-Best regards,
-Krzysztof
+Rafael,
 
+Can you still send this for 6.2 ?
+
+-- 
+viresh
