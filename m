@@ -2,165 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 72E1A696409
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 13:57:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FFCD696427
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 14:03:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231998AbjBNM5q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Feb 2023 07:57:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41820 "EHLO
+        id S231593AbjBNNDu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Feb 2023 08:03:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231442AbjBNM5p (ORCPT
+        with ESMTP id S229938AbjBNNDt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Feb 2023 07:57:45 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADCD8222CB
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 04:57:42 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id o18so15563721wrj.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 04:57:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=O1iX/bRjubyY8icLKwkxEeosnt7C5yf2ACUDqg5rTDE=;
-        b=esQrMFAYjAFxun7TNMECOXXoswmBWLNkD4VZvgXwJLZv9B9dC6O/boUaxl0G3y4JhJ
-         qyYz5+Xx6xwagnAkDjVSXoJpCSLVqOh4DDKSc2Oji8q8G5+d8VI9UIpPKyF65eQbaMDp
-         FgXD6/todPzvwTR25ZHo+QOiLnyozCwVXJ5DIPvBNFSAx5UMLu6Sv497sH7mvLQg1Yoy
-         ao7GdPCmGP4b3QxAIuSKQNBHcWdtn60IMFIKzE5zptCd2ZHFcyXIDrZsSvw7E3MIVzmZ
-         JrRvefgCI9Yxe46bZOfXmVrL+XkkitSS7lhc7XHpOO66FHU3N+beyfgJRpfkeNEREODa
-         2wNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=O1iX/bRjubyY8icLKwkxEeosnt7C5yf2ACUDqg5rTDE=;
-        b=CbM44HoXvFBslVAKpRcJcpE6KuRqLbA4fsseqN4bDpL9uKDZpH7G/Z4BQVDs0Jw6Jf
-         ZWzw0OzYzGgTYQfg7JPAlbfLXvike4Sm1AtctdgDhZXfg33swW9M/1Ez+4n0xnlo0gvy
-         SZLKH6osvcLg4zJWGB4HMXowPsVl9Y2lhgsWHM0CSDj2oPm7CvLv7Q0cjFTfKjKeb2qL
-         XGH4xE9FOlXWbrifbKtY/qofg7matUlX1jLlj/ERmjdGMJgxDY7tA9pGobiU5fjcQls3
-         0zYvXMGUdZXCr7AjMzUEswYbZgMvAjSv73JX3Y1MnXfyq8c4AstZCKoi92JusNekl6A5
-         ysGg==
-X-Gm-Message-State: AO0yUKVSAZOXvRipAICom3JBv/5dEL1mlAhnBefoEu0Bf2pt8Z5CKlJo
-        iY5P8q7LlqwO4YQhFPQcSds/rg==
-X-Google-Smtp-Source: AK7set/UjSDcHRoAgTRcvJa1W636nGs1OeuTPzOc0E3YkcnrM795r2mKtZkyHB2LFc+TC0Zd423IHQ==
-X-Received: by 2002:a5d:4148:0:b0:2c5:4c7f:c91 with SMTP id c8-20020a5d4148000000b002c54c7f0c91mr2090318wrq.66.1676379461126;
-        Tue, 14 Feb 2023 04:57:41 -0800 (PST)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id q2-20020a5d5742000000b002c560e6ea57sm2628077wrw.47.2023.02.14.04.57.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Feb 2023 04:57:40 -0800 (PST)
-Message-ID: <ffeff1f8-ebf6-3115-38d1-fa318549baa0@linaro.org>
-Date:   Tue, 14 Feb 2023 12:57:39 +0000
+        Tue, 14 Feb 2023 08:03:49 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93C1223874;
+        Tue, 14 Feb 2023 05:03:48 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id ED85A61636;
+        Tue, 14 Feb 2023 13:03:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2758C433EF;
+        Tue, 14 Feb 2023 13:03:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1676379827;
+        bh=Ah31oBpDRFH3gj+Pln1eAvPNgbibR+8IhW3nJlNAJ/4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=NOnVnOwjkpHpAEh8YY2F2IoXstPQmHwo79yS0DQZ4IbaqB/LgigG1rEgwVQkzxWIY
+         Th1VZfzyUjR8t+Tv/TJu4yew37NJpTWae0jts3JYg1dh3kmpYDIsoKfctXJBXLYKDY
+         gDFo7gbiDpjEulu4m/3FSEtRYS53+v2viHmKEnjqCB0YD95Szq6VHprYJ+TGCzqvPP
+         rIMXf5QnK6jTHp9yuwm6T11fBQHX/uoaBoWzGyr6QuTNHyCymsFj5YsubQIPz5SWGG
+         GiNGELjww7tAB5x9qlKSlidWC2RQdEZW5IZ+r8I8VJsEObt5Phka6/3iutFwRh/yQK
+         ZFQ+jTvhVWKAQ==
+Date:   Tue, 14 Feb 2023 18:33:29 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Vidya Sagar <vidyas@nvidia.com>
+Cc:     jingoohan1@gmail.com, gustavo.pimentel@synopsys.com,
+        lpieralisi@kernel.org, robh@kernel.org, kw@linux.com,
+        bhelgaas@google.com, mani@kernel.org,
+        Sergey.Semin@baikalelectronics.ru, dmitry.baryshkov@linaro.org,
+        linmq006@gmail.com, ffclaire1224@gmail.com,
+        thierry.reding@gmail.com, jonathanh@nvidia.com,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kthota@nvidia.com,
+        mmaddireddy@nvidia.com, sagar.tv@gmail.com
+Subject: Re: [PATCH V5 0/3] PCI: designware-ep: Fix DBI access before core
+ init
+Message-ID: <20230214130329.GC4981@thinkpad>
+References: <20221013175712.7539-1-vidyas@nvidia.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH V4 5/5] firmware: scm: Modify only the DLOAD bit in TCSR
- register for download mode
-Content-Language: en-US
-To:     Poovendhan Selvaraj <quic_poovendh@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, lee@kernel.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        jassisinghbrar@gmail.com, catalin.marinas@arm.com, will@kernel.org,
-        shawnguo@kernel.org, arnd@arndb.de, marcel.ziswiler@toradex.com,
-        robimarko@gmail.com, dmitry.baryshkov@linaro.org,
-        nfraprado@collabora.com, broonie@kernel.org,
-        quic_gurus@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
-        quic_devipriy@quicinc.com
-References: <20230214051414.10740-1-quic_poovendh@quicinc.com>
- <20230214051414.10740-6-quic_poovendh@quicinc.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20230214051414.10740-6-quic_poovendh@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20221013175712.7539-1-vidyas@nvidia.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 14/02/2023 05:14, Poovendhan Selvaraj wrote:
-> CrashDump collection is based on the DLOAD bit of TCSR register.
-> To retain other bits, we read the register and modify only the DLOAD bit as
-> the other bits have their own significance.
+On Thu, Oct 13, 2022 at 11:27:09PM +0530, Vidya Sagar wrote:
+> This series attempts to fix the issue with core register (Ex:- DBI) accesses
+> causing system hang issues in platforms where there is a dependency on the
+> availability of PCIe Reference clock from the host for their core
+> initialization.
+> This series is verified on Tegra194 & Tegra234 platforms.
 > 
-> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
-> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
-> Co-developed-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-> Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-> Signed-off-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
-> ---
->   Changes in V4:
-> 	- retain the orginal value of tcsr register when download mode
-> 	  is not set
+> Manivannan, could you please verify on qcom platforms?
 > 
->   drivers/firmware/qcom_scm.c | 15 ++++++++++-----
->   1 file changed, 10 insertions(+), 5 deletions(-)
+
+Vidya, any plan to respin this series? The EPC rework series is now merged for
+v6.3.
+
+Thanks,
+Mani
+
+> V5:
+> * Addressed review comments from Bjorn
+> * Changed dw_pcie_ep_init_complete() to dw_pcie_ep_init_late()
+> * Skipped memory allocation if done already. This is to avoid freeing and then
+>   allocating again during PERST# toggles from the host.
 > 
-> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-> index 468d4d5ab550..8a34b386ac3a 100644
-> --- a/drivers/firmware/qcom_scm.c
-> +++ b/drivers/firmware/qcom_scm.c
-> @@ -407,7 +407,7 @@ int qcom_scm_set_remote_state(u32 state, u32 id)
->   }
->   EXPORT_SYMBOL(qcom_scm_set_remote_state);
->   
-> -static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
-> +static int __qcom_scm_set_dload_mode(struct device *dev, u32 val, bool enable)
->   {
->   	struct qcom_scm_desc desc = {
->   		.svc = QCOM_SCM_SVC_BOOT,
-> @@ -417,7 +417,8 @@ static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
->   		.owner = ARM_SMCCC_OWNER_SIP,
->   	};
->   
-> -	desc.args[1] = enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0;
-> +	desc.args[1] = enable ? val | QCOM_SCM_BOOT_SET_DLOAD_MODE :
-> +				val & ~(QCOM_SCM_BOOT_SET_DLOAD_MODE);
+> V4:
+> * Addressed review comments from Bjorn and Manivannan
+> * Added .ep_init_late() ops
+> * Added patches to refactor code in qcom and tegra platforms
+> 
+> Vidya Sagar (3):
+>   PCI: designware-ep: Fix DBI access before core init
+>   PCI: qcom-ep: Refactor EP initialization completion
+>   PCI: tegra194: Refactor EP initialization completion
+> 
+>  .../pci/controller/dwc/pcie-designware-ep.c   | 125 +++++++++++-------
+>  drivers/pci/controller/dwc/pcie-designware.h  |  10 +-
+>  drivers/pci/controller/dwc/pcie-qcom-ep.c     |  27 ++--
+>  drivers/pci/controller/dwc/pcie-tegra194.c    |   4 +-
+>  4 files changed, 97 insertions(+), 69 deletions(-)
+> 
+> -- 
+> 2.17.1
+> 
 
-why not read the value here before setting the DLOAD Mode instead of 
-doing it in qcom_scm_set_download_mode()?
-that would make the code simple and readable.
-
-
-
->   
->   	return qcom_scm_call_atomic(__scm->dev, &desc, NULL);
->   }
-> @@ -426,15 +427,19 @@ static void qcom_scm_set_download_mode(bool enable)
->   {
->   	bool avail;
->   	int ret = 0;
-> +	u32 dload_addr_val;
->   
->   	avail = __qcom_scm_is_call_available(__scm->dev,
->   					     QCOM_SCM_SVC_BOOT,
->   					     QCOM_SCM_BOOT_SET_DLOAD_MODE);
-> +	ret = qcom_scm_io_readl(__scm->dload_mode_addr, &dload_addr_val);
-> +
-not checking ret value here before proceeding?
-
->   	if (avail) {
-> -		ret = __qcom_scm_set_dload_mode(__scm->dev, enable);
-> +		ret = __qcom_scm_set_dload_mode(__scm->dev, dload_addr_val, enable);
->   	} else if (__scm->dload_mode_addr) {
-> -		ret = qcom_scm_io_writel(__scm->dload_mode_addr,
-> -				enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0);
-> +		ret = qcom_scm_io_writel(__scm->dload_mode_addr, enable ?
-> +				dload_addr_val | QCOM_SCM_BOOT_SET_DLOAD_MODE :
-> +				dload_addr_val & ~(QCOM_SCM_BOOT_SET_DLOAD_MODE));
->   	} else {
->   		dev_err(__scm->dev,
->   			"No available mechanism for setting download mode\n");
+-- 
+மணிவண்ணன் சதாசிவம்
