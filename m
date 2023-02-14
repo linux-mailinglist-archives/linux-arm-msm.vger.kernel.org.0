@@ -2,205 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 48F5E6969BB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 17:35:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CB4BE6969CE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 17:37:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231689AbjBNQfQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Feb 2023 11:35:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51620 "EHLO
+        id S232065AbjBNQhn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Feb 2023 11:37:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229633AbjBNQfP (ORCPT
+        with ESMTP id S232135AbjBNQhm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Feb 2023 11:35:15 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B88D2311D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 08:34:34 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id co8so12533259wrb.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 08:34:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:organization:from:references
-         :cc:to:content-language:subject:reply-to:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=sPPHKOJ8BbxBRItJGDJFEQbo+vowRlUP9MhQo5yyu6U=;
-        b=WndG3+R/WLWXsLCVrKYQq3f5S1JhiHK6YEppgJ2JzpKDs4+/5KzPfLFMJR69/cw4B/
-         uy5mrHDfLJW+EoGhAj45FPfDkVj8J5WMrjsmX1HTVd5wdtDwhBCreTdcnOBdhQI+9NL9
-         t0NyERmhK2jC8Epu4L2jDoM2EDK+8XnPf/fOp+SqLY8tZvGUyIxk3U9I7qkyXULUgRKs
-         3wEINpbftIWMs1L6WbSxUU1DPSu2owjFrzWcQjWxjxzpGFnm1LZxrabudv2dSdU1OPtf
-         ytvZRYN+70PSGLTR+tGjrVk3hgniIrKW859aLi5hJSQ8FKrRS4qimHXrHCab8zHTw+VH
-         HXFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:organization:from:references
-         :cc:to:content-language:subject:reply-to:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sPPHKOJ8BbxBRItJGDJFEQbo+vowRlUP9MhQo5yyu6U=;
-        b=PHbzzAWV7l47TxUau47bJCAKkOSw381kvMz3yHG2o+0ASVtRoTLtvCjjrK5O8RVTeS
-         ikyVbaTgSPuM0s4LfjvUFWMpzuPoQt+Tnlz38LNLByYM7khN00oNpPbyAF7RgVRaKK98
-         NL5Gg4fTWxDM3xYR5122RPwaq0Ak4ZjJfYk3qP3BAaFb1ceqFDbQwj5Vel8IVZUiQX84
-         yuYnqUJj41f+2JeeeDfn8Iak3GWIWq0UMZkvTzE5zn3UO9vVyY6DuMhR7lsYxCjNMD6l
-         1Lw82HGA2hUMaMr71/jokIDtJQKEiDiPhJBQQ7Psty+dKN2XM2hzIIxy6KHryLpzcD8g
-         P06g==
-X-Gm-Message-State: AO0yUKXJ8RLuFLbrc1Ftw1p1/1cpHtw8nCbnf/VBEWnaDrC28PofQ/79
-        RrGZ3foxL14Ld+SG/RijDeO7Jw==
-X-Google-Smtp-Source: AK7set9H2cOo3A5cs8oyFfTGJahxgcDiip0YMdeLybuqMzhVfp65ixaIXgXCNSuKOPJU7NTtVq8aUg==
-X-Received: by 2002:a5d:6ac5:0:b0:2c5:586b:f53d with SMTP id u5-20020a5d6ac5000000b002c5586bf53dmr2616133wrw.48.1676392472426;
-        Tue, 14 Feb 2023 08:34:32 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:4bc0:b2ae:1d81:afec? ([2a01:e0a:982:cbb0:4bc0:b2ae:1d81:afec])
-        by smtp.gmail.com with ESMTPSA id b4-20020a5d4d84000000b002c5621263e3sm2451359wru.19.2023.02.14.08.34.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Feb 2023 08:34:31 -0800 (PST)
-Message-ID: <9841fd7d-861c-4b5c-51cf-7b8da53a06c9@linaro.org>
-Date:   Tue, 14 Feb 2023 17:34:30 +0100
+        Tue, 14 Feb 2023 11:37:42 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCEF84215;
+        Tue, 14 Feb 2023 08:37:41 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 800B06179F;
+        Tue, 14 Feb 2023 16:37:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35D41C433EF;
+        Tue, 14 Feb 2023 16:37:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1676392660;
+        bh=zA3qxRQiZVHeCuSPcpD8NkDwG9B4B15GfeTYUiCpIik=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=mkeGiHLhcgLfZ6ClM6LEdZL0M78Ovh27GTlfAZVvbKzjSKBQlM7qUCdE5f8vDfadl
+         AfBb5P7YJLot41yNGNdJJWEK+XeY1dAo1/yotiSkCthXjZnibVccmzVvIywoY9fn0b
+         wQdIdwctsmBx67We9tw5gePhjicXBkElD7d5btyufMOICE3OMLUd9S2jw18Kd5qnYD
+         YcA7f9MvnLNC7xLDmKjFn3h7/KagavHny5xbaaKiv12RNIfDB2rGyATnPYwiKzEeIs
+         aO5llr+fic9wh2aFwQ1n2pHkTnVlnz9iFvX1mlYoUB0UXOApbQOkBX6r7Vnm3ynz4g
+         Zg0bcxP6YaRew==
+Date:   Tue, 14 Feb 2023 08:39:44 -0800
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Mukesh Ojha <quic_mojha@quicinc.com>
+Cc:     dmitry.baryshkov@linaro.org, agross@kernel.org,
+        mathieu.poirier@linaro.org, konrad.dybcio@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] remoteproc: qcom: replace kstrdup with kstrndup
+Message-ID: <20230214163944.y5tkgdfmsycmpg7p@ripper>
+References: <1675180866-16695-1-git-send-email-quic_mojha@quicinc.com>
+ <1676383691-29738-1-git-send-email-quic_mojha@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v4 00/12] The great interconnecification fixation
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org
-Cc:     marijn.suijten@somainline.org, Georgi Djakov <djakov@kernel.org>,
-        linux-pm@vger.kernel.org, lkml <linux-kernel@vger.kernel.org>
-References: <20230214143720.2416762-1-konrad.dybcio@linaro.org>
- <e4760caa-2904-7645-920d-cbd07daf657e@linaro.org>
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <e4760caa-2904-7645-920d-cbd07daf657e@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1676383691-29738-1-git-send-email-quic_mojha@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/02/2023 17:27, Konrad Dybcio wrote:
-> +CC Georgi, linux-pm, linux-kernel (thanks git send-email for not including these)
-
-Time to switch to b4 prep ;-)
-
+On Tue, Feb 14, 2023 at 07:38:11PM +0530, Mukesh Ojha wrote:
+> Since, there is no guarantee that region.name will be 0-terminated
+> from the firmware side, replace kstrdup with kstrndup.
 > 
-> On 14.02.2023 15:37, Konrad Dybcio wrote:
->> Hi!
->>
->> v3 -> v4 changelog:
->> - Drop "Always set QoS params on QNoC", it only causes issues.. this
->>    can be investigated another day, as it's not necessary for operation
->>
->> - Drop "Add a way to always set QoS registers", same as /\
->>
->> - Add a way (and use it) to have no bus_clocks (the ones we set rate on),
->>    as at least msm8996 has a bus (A0NoC) that doesn't have any and does
->>    all the scaling through RPM requests
->>
->> - Promote 8996 icc to core_initcall
->>
->> - Introduce keep_alive (see patch [11/12]) (important!, will be used by at least 6375)
->>
->> - Allow negative QoS offsets in preparation for introducing 8998 icc [12/12]
->>
->> Link to v3: https://lore.kernel.org/linux-arm-msm/20230116132152.405535-1-konrad.dybcio@linaro.org/
->>
->> v2 -> v3 changelog:
->> - Drop "Don't set QoS params before non-zero bw is requested"
->>
->> - Rebase on next
->>
->> - [1/9] ("..make QoS INVALID default.."): remove unused define for
->>    MODE_INVALID_VAL
->>
->> - Pick up tags
->>
->> v1 -> v2 changelog:
->> - reorder "make QoS INVALID default", makes more sense to have it
->>    before "Always set QoS params on QNoC"
->>
->> - Limit ap_owned-independent QoS setting to QNoC only
->>
->> - Add new patches for handling the 8996-and-friends clocks situation
->>    and optional BIMC regardless-of-ap_owned QoS programming
->>
->>
->> [1] https://lore.kernel.org/linux-arm-msm/14e06574-f95e-8960-0243-8c95a1c294e9@linaro.org/T/#m056692bea71d4c272968d5e07afbd9eb07a88123
->> [2] https://lore.kernel.org/linux-arm-msm/20230110132202.956619-1-konrad.dybcio@linaro.org/
->>
->> This series grew quite a bit bigger than the previous [1] attempt, so
->> I decided to also add a cover letter.
->>
->> Link to v2: [2]
->>
->> It addresses a few things that were not quite right:
->>
->> - Setting QoS params before a "real" (non-zero) bandwidth request
->>    makes little sense (since there's no data supposed to flow through
->>    the bus, why would the QoS matter) and (at least newer) downstream
->>    prevents that from happening. Do the same in Patch 1.
->>
->> - QNoC type buses expect to always have their QoS registers set as long
->>    as there's a non-INVALID QoS mode set; ap_owned is not really a thing
->>    on these anymore, Patch 3 handles that.
->>
->> - The recent MSM8996 boot fix was done quickly and not quite properly,
->>    leading to possibly setting the aggregate bus rate on "normal"
->>    hardware interface clocks; this series handles that by limiting the
->>    number of bus_clocks to 2 (which is the maximum that makes sense,
->>    anyway) and handling the rest as "intf_clocks", which are required
->>    to access the   hardware at the other end. Patches 5-8 take care of
->>    that and Patch 10 reverts the _optional moniker in clk_get_ to make
->>    sure we always have the bus scaling clocks, as they're well, kind
->>    of important ;)
->>
->> - Similarly to QNoC, BIMC on "newer" (which can be loosely approximated
->>    by "new enough" == "has only BIMC and QNoC hosts") SoCs expects to
->>    always receive QoS programming, whereas BIMC on "older" SoCs cries
->>    like a wild boar and crashes the platform when trying to do so
->>    unconditionally. Patch 9 adds a way to take care of that for newer
->>    SoCs (like SM6375)
->>
->> - QoS mode INVALID was assumed by developers before to be the default
->>    ("I didn't specify any QoS settings, so the driver can't assume I
->>    did.. right? right!?" - wrong, partial struct initialization led to
->>    0 being set and 0 corresponded to QoS mode FIXED). Make it so, as
->>    that's the logical choice. This allows the "Always set QoS params
->>    on QNoC" patch to work without setting tons of what-should-
->>    -obviously-be-the-default values everywhere, as well as fixes older
->>    drivers that set ap_owned = true but left the QoS mode field unset.
->>    Patch 2 cleans that up.
->>
->> - Some nodes are physically connected over more than one channel
->>    (usually DDR or other high-throughput paths). Patch 4 allows that
->>    to be reflected in calculations. This will be required for at least
->>    MSM8998 and SM6375 (which will be submitted soon after this lands)
->>
->>
->> Konrad Dybcio (12):
->>    interconnect: qcom: rpm: make QoS INVALID default, separate out driver
->>      data
->>    interconnect: qcom: rpm: Add support for specifying channel num
->>    interconnect: qcom: Sort kerneldoc entries
->>    interconnect: qcom: rpm: Rename icc desc clocks to bus_blocks
->>    interconnect: qcom: rpm: Rename icc provider num_clocks to
->>      num_bus_clocks
->>    interconnect: qcom: rpm: Handle interface clocks
->>    interconnect: qcom: icc-rpm: Allow negative num_bus_clocks
->>    interconnect: qcom: msm8996: Specify no bus clock scaling on A0NoC
->>    interconnect: qcom: rpm: Don't use clk_get_optional for bus clocks
->>      anymore
->>    interconnect: qcom: msm8996: Promote to core_initcall
->>    interconnect: qcom: icc-rpm: Introduce keep_alive
->>    interconnect: qcom: icc-rpm: Allow negative QoS offset
->>
->>   drivers/interconnect/qcom/icc-rpm.c | 101 ++++++++++++++++++++--------
->>   drivers/interconnect/qcom/icc-rpm.h |  41 +++++++----
->>   drivers/interconnect/qcom/msm8996.c |  35 ++++++----
->>   drivers/interconnect/qcom/sdm660.c  |  16 ++---
->>   4 files changed, 126 insertions(+), 67 deletions(-)
->>
+> Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
 
+Please don't send additional patches in-reply-to another patch, it makes
+it impossible to use b4 to pick up the first patch.
+
+And please don't send two patches which clearly will conflict with
+each other. Now I had to manually apply the first patch...
+
+Regards,
+Bjorn
+
+> ---
+>  drivers/remoteproc/qcom_common.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
+> index 020349f..7810f91 100644
+> --- a/drivers/remoteproc/qcom_common.c
+> +++ b/drivers/remoteproc/qcom_common.c
+> @@ -124,7 +124,7 @@ static int qcom_add_minidump_segments(struct rproc *rproc, struct minidump_subsy
+>  	for (i = 0; i < seg_cnt; i++) {
+>  		memcpy_fromio(&region, ptr + i, sizeof(region));
+>  		if (region.valid == MD_REGION_VALID) {
+> -			name = kstrdup(region.name, GFP_KERNEL);
+> +			name = kstrndup(region.name, MAX_REGION_NAME_LENGTH - 1, GFP_KERNEL);
+>  			if (!name) {
+>  				iounmap(ptr);
+>  				return -ENOMEM;
+> -- 
+> 2.7.4
+> 
