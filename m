@@ -2,96 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 84C3A695BA8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 09:00:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C9C57695BE7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 09:04:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231642AbjBNH7o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Feb 2023 02:59:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58654 "EHLO
+        id S231866AbjBNIEa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Feb 2023 03:04:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38760 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229853AbjBNH7c (ORCPT
+        with ESMTP id S231756AbjBNIEI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Feb 2023 02:59:32 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EC5321945
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 23:59:23 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id y1so14714681wru.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 23:59:23 -0800 (PST)
+        Tue, 14 Feb 2023 03:04:08 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8935B23304
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 00:03:43 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id f47-20020a05600c492f00b003dc584a7b7eso13024069wmp.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 00:03:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=/JB9QIrDQG4CfUwnJnmJHURss8n6y5r0NU4FF1ybcOY=;
-        b=qAqxgSODzxDyTtcq/4YzRq+cGiwOq537sThYsXbWUrr5I5oLLGPfz4qdc80jwI47/n
-         gQP6Bm5uNsOcBxgWjtvFBotw6uphu74pfr63/o2XibHhrdxbxZFpZ4mzPLQ/z/gyeZ7d
-         2m4NLSl1vE6Dea1RQnILnVM/71nYhLyQ/JkQP0rhqhxhMkS72pFADqFLyd3kGes7tEg/
-         Vb1/NtOebPktNHxCvT9ncSlx/4RcJIMsbsEfWT74GiiSmejvt4OAb76vsjeNz0jbnTwO
-         XtJZHz+t4YlkaWX6+ZRG1RF4kiKwZEFLwtNas416NVqVDPVKU7Fsr3NpizAAVgGn7aiw
-         JH3A==
+        bh=iGNWcmAM88M6KREf6/IAbDZQfYxLySeTC5zMfiqh/ws=;
+        b=z8x2+hjMMR9HKtn7j7HYopRZn1jx6Ra8gZkekcLWCk6kO8AoIUCOeUKJjmvSiqdJgN
+         ujFZRkhDNiiiessYpn5pWqRcsB/sQkVDFSMozmscs/jHpHkUZlnBSRb2YmTRxkc+1OGG
+         Z7gLqbqi3kjhXbcLY9aJrmZvWFZ5t1/dzCr8vomreAJxXj/DHhbmQIq0iHxZoLr/fIPk
+         cXdP1sbk0WuGwomGKddvF3F9j+4IV4AJNBTCoPYerewzjO7B0aulgmMuR65YxiwJMuBZ
+         OKQDvaukIedAX0MhoVpJaEc/H9V5Ysjilnq7JZWy/jkQve4kW3DkgQ0COYj8LNEKgC6e
+         aiuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/JB9QIrDQG4CfUwnJnmJHURss8n6y5r0NU4FF1ybcOY=;
-        b=R6/87sckcv+ulCzSfpJ0PUPaaNOTaQT2oDvOTHF3rEGXefboatNBJKP5u5iLBkiDzk
-         Wd/i0cbKnHyEKCh8NvJYlsprwNXBLqilzPyNaXRpZa8SBaKjICHgAC//k0x6awx31ABm
-         Bnqe1JdYTYpaBcuraO0gnFp2LWzKEuFfO1tRDsAVsag7xwPVRbTg1ydu3DRx3Zzho7RX
-         gm/I4Cvxx1pkRJwkjf0fh9aMNW+rRzqauxP6TA1GsZNJ30d6WFOhfcwhK2DpaNfgMpzK
-         4MY85S0pmhE9MsNRuTNs/ILfsWpQ4QH7MuhDdXHDEnpImMyXPISxXJ6t7xEAzKjt9Txn
-         ECXA==
-X-Gm-Message-State: AO0yUKUk9ncm9n3DxsEs/hu7/O4Ok+XyZY2aNOJomcV6e777KFKrUJqU
-        SdseshqwYgNiHruqcupVHG4ebw==
-X-Google-Smtp-Source: AK7set+98H5eySUi1t645pCzonFEeQEPFX4XngrbFuT3irGY+a2DKk2pDb3xXXSGM8p4h3E3VbzrSw==
-X-Received: by 2002:adf:f744:0:b0:2c5:5521:a79d with SMTP id z4-20020adff744000000b002c55521a79dmr2105691wrp.67.1676361562026;
-        Mon, 13 Feb 2023 23:59:22 -0800 (PST)
+        bh=iGNWcmAM88M6KREf6/IAbDZQfYxLySeTC5zMfiqh/ws=;
+        b=fUZRxT8c5Y08TqVq5osf/aCugV8vyK+YYi4G7Eyeul/RlU7oRG6msC/C+uTngxyxED
+         hOzDsdvxgZ7WO2Nvs0R7gh2XrMveDt9z3RuKzCkLlNg9m6gX5s+/YHMSLBb9dsnyrFYk
+         GMLxMp0H+E+vq68pJ/mgTvEQ0jUkuPgvOQmgK6Gj6K0jnHlmo/O65wkQavCRrR4XJFFj
+         sdB1Q2hOJkrt0IUc6OmBxsjbfup/WHOrwiQRC9GB6429w/vT4vbWxFhfpaCKEQR5VAw0
+         xd2il/DxeBcAsup2YY9Iz+ONtL4LtuSwdWwODvUfAgebESWv5BPm33oNfvNJi20adA7W
+         xD8Q==
+X-Gm-Message-State: AO0yUKW+UNFtObwRjEbyP1D6wUd4vNg/lGAEabiMiAR8iOTj+ug8YSDb
+        r612nxVsR32TECLnhCVqoAQC7Q==
+X-Google-Smtp-Source: AK7set8yPbvAjOPrn+mvoE+ucQsjRUHjnp1s/S0Hemf6uKWv+Ehiz+nfD1o/HyXbjbl76kzOEsPdog==
+X-Received: by 2002:a05:600c:1616:b0:3dc:53a2:2690 with SMTP id m22-20020a05600c161600b003dc53a22690mr1225644wmn.7.1676361822167;
+        Tue, 14 Feb 2023 00:03:42 -0800 (PST)
 Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id d12-20020adfe84c000000b002c3f03d8851sm552777wrn.16.2023.02.13.23.59.18
+        by smtp.gmail.com with ESMTPSA id p21-20020a05600c359500b003db06224953sm17449455wmq.41.2023.02.14.00.03.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Feb 2023 23:59:21 -0800 (PST)
-Message-ID: <95318688-fee7-25e3-6614-16d03aea5ce5@linaro.org>
-Date:   Tue, 14 Feb 2023 08:59:18 +0100
+        Tue, 14 Feb 2023 00:03:41 -0800 (PST)
+Message-ID: <ccf12f9e-e95b-c3c2-508c-bb7b9b3c1581@linaro.org>
+Date:   Tue, 14 Feb 2023 09:03:39 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [PATCH] dt-bindings: PCI: qcom: Fix msm8998-specific compatible
+Subject: Re: [PATCH v3 1/4] dt-bindings: remoteproc: qcom,sm6375-pas: Document
+ remoteprocs
 Content-Language: en-US
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         linux-arm-msm@vger.kernel.org, andersson@kernel.org,
         agross@kernel.org
-Cc:     marijn.suijten@somainline.org, Bjorn Helgaas <bhelgaas@google.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Rob Herring <robh@kernel.org>,
+Cc:     marijn.suijten@somainline.org,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20230213211408.2110702-1-konrad.dybcio@linaro.org>
+References: <20230109135647.339224-1-konrad.dybcio@linaro.org>
+ <20230109135647.339224-2-konrad.dybcio@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230213211408.2110702-1-konrad.dybcio@linaro.org>
+In-Reply-To: <20230109135647.339224-2-konrad.dybcio@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/02/2023 22:14, Konrad Dybcio wrote:
-> In the commit mentioned in the fixes tag, everything went well except
-> the fallback and the specific compatible got swapped and the 8998 DTSI
-> began failing the dtbs check. Fix it.
+On 09/01/2023 14:56, Konrad Dybcio wrote:
+> SM6375 hosts an ADSP, CDSP and modem as remote processors. Create
+> related bindings.
 > 
-> Fixes: 7d1780d023ca ("dt-bindings: PCI: qcom: Unify MSM8996 and MSM8998 clock order")
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
 
-I don't see compatibles being touched at all in this commit. This is not
-correct commit to fix.
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
