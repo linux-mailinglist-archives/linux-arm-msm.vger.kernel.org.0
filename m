@@ -2,158 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 13895696388
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 13:33:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F0D369638E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 13:35:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229763AbjBNMdX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Feb 2023 07:33:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52630 "EHLO
+        id S231824AbjBNMfB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Feb 2023 07:35:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231934AbjBNMc4 (ORCPT
+        with ESMTP id S232240AbjBNMee (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Feb 2023 07:32:56 -0500
-Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 230C5728C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 04:32:52 -0800 (PST)
-Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-4a263c4ddbaso204857257b3.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 04:32:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=oxKCQRN8kliMAds7bxWTjhzMHLjHvEjXGywgi7rr6WQ=;
-        b=rDAO2a38P7zgbx3Y2kJ3cH2rJGvgmDUtI0kxkXaLWSE8wUnGuoVNMk75UaizZ0MRld
-         2lKNqohuKqTYlQYOylf9VEZNma/yc1FDnQhDCTvnsZML7p7u9hndmVlWZ/wP6rRAjSoF
-         q8H20DJI5ndfFdULUU0WdpatDZ5pHlaXTwNGzNW3qrN6IXTGcQffw+NM/NlbX8HRa+CM
-         rAQVSEKkV436220SmU1TeyciTKg/oWERjAVwqME1oSH9J0Iv5CSouGCqlzhrnk/OTEGp
-         i93wmZTWZxLze5M+/EYeLpggNjjGY9wKL9uQZudgpHzUETAMxL6kW/dGmF45egSLKLnH
-         +QIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=oxKCQRN8kliMAds7bxWTjhzMHLjHvEjXGywgi7rr6WQ=;
-        b=LQjFrAbCkFHtHF7DImlLKfQC9NboDh7vD1W0viA8otB57oe5pdI3YMSbGJYrzgiwmm
-         NdQqtjyrWnwUErtg+cXmgbfsEm/y3TcR11WOJYFfyI7r3tBD9o9pPX6ABXhH5KtZHsuO
-         4Gbs6TJKJ2vRvGvYi/AIP80h7fyIZKWZQJ6IDjvlELkkHLE3NY4QE3Uk0d1oY70RxJwl
-         p9oZuLI5js/SXjZRV1/KHt7rGKwGPnkYFdwAehjZ0Z5uCvK+clP8ThmJ//DTlJYud1GF
-         sw724J54tZVMfoIU5BXAS/CndzEd9VkDBOcDAxNYPHMMavULKtIyiU6nGNF1vBmbsviW
-         u6aQ==
-X-Gm-Message-State: AO0yUKWHHYFadb1mXc6bQpiPiNh3TUcB81WStSUU7uS45QdhN6ugZHeM
-        I9sm38tJRma0C5wZXpTH70VN8vvOmR59tyRl8sIc3+vA34puBnZX
-X-Google-Smtp-Source: AK7set+00u4h+tFkq8Glzv8b9Z3L7I7jdWbbm+6ltv7HBmZJJqJvtilmdl7vCzM+yNUvcFDoJrAKD3a0h3t/rRZSoMU=
-X-Received: by 2002:a0d:cc8c:0:b0:52f:3c7:e64c with SMTP id
- o134-20020a0dcc8c000000b0052f03c7e64cmr236460ywd.503.1676377971221; Tue, 14
- Feb 2023 04:32:51 -0800 (PST)
+        Tue, 14 Feb 2023 07:34:34 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 686C0B754;
+        Tue, 14 Feb 2023 04:34:33 -0800 (PST)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31E4b9gm017277;
+        Tue, 14 Feb 2023 12:34:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=xy5IIT6giUXnOkp3eRt/jKuYY3S9QEps7lthlfLekRU=;
+ b=VF8+MKDM7ljQbEg3J7BU0B4DTBzTDKsEY4iYAOr6AKX3OclwZrvtsbw5E0BD70M91yZ0
+ fqQx+ff02Cu8R1FhSp322Rg+y8mVFk/0ZtBYnTPqYxXj6q9350pm5vWFAFEB/Prp9Cak
+ NT4DNQPufm+Hcx4/VCnAryYHHfno3EekycY/RfHxvHZXYLHrQOrDZqcaXd8Cuj/QE4NR
+ mmZaWV59CIc3Lqo2iy+7OrRgbzvVHFCAZ4gRwfRkK2pPOILVB4Gmj+tNLIf58i2yDLNm
+ QBh0QjEENQPGOyXos8H0WDjOqOSQbiy/4dKYpVpB/pCHC91diJ0RA2lbAY6KMmTz7IN3 1Q== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nr26u16m1-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 14 Feb 2023 12:34:30 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31ECYTSL006216
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 14 Feb 2023 12:34:29 GMT
+Received: from [10.216.50.155] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 14 Feb
+ 2023 04:34:26 -0800
+Message-ID: <aac2b313-e4af-dc93-f177-0d0be9620e1b@quicinc.com>
+Date:   Tue, 14 Feb 2023 18:04:22 +0530
 MIME-Version: 1.0
-References: <20230213-sm6350-camcc-runtime_pm-v3-0-d35e0d833cc4@fairphone.com> <20230213-sm6350-camcc-runtime_pm-v3-1-d35e0d833cc4@fairphone.com>
-In-Reply-To: <20230213-sm6350-camcc-runtime_pm-v3-1-d35e0d833cc4@fairphone.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 14 Feb 2023 14:32:40 +0200
-Message-ID: <CAA8EJprzOLuLU8_tvRtQ9bX8M9xOqMFFnjuj-DwGz+24XPAQFg@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] clk: qcom: camcc-sm6350: add pm_runtime support
-To:     Luca Weiss <luca.weiss@fairphone.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8450: Add IMEM and PIL info
+ region
+Content-Language: en-US
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Alex Elder <elder@linaro.org>
+CC:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1675443891-31709-1-git-send-email-quic_mojha@quicinc.com>
+ <1675443891-31709-2-git-send-email-quic_mojha@quicinc.com>
+ <cc30f686-dec7-db85-cf0d-c6c685a623ce@linaro.org>
+ <d1dc0c9b-eab2-0287-d0a2-ead44ecee5ce@quicinc.com>
+ <20230206210455.xgrvtvknkor4nllx@ripper>
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <20230206210455.xgrvtvknkor4nllx@ripper>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: A6PB5OAt51BMwmeNyryUBrnINZt1Sa7q
+X-Proofpoint-ORIG-GUID: A6PB5OAt51BMwmeNyryUBrnINZt1Sa7q
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-14_07,2023-02-14_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ adultscore=0 mlxscore=0 spamscore=0 impostorscore=0 malwarescore=0
+ mlxlogscore=958 clxscore=1011 lowpriorityscore=0 bulkscore=0 phishscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302140109
+X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 14 Feb 2023 at 13:01, Luca Weiss <luca.weiss@fairphone.com> wrote:
->
-> Make sure that we can enable and disable the power domains used for
-> camcc when the clocks are and aren't used.
->
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
->  drivers/clk/qcom/camcc-sm6350.c | 25 ++++++++++++++++++++++++-
->  1 file changed, 24 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/clk/qcom/camcc-sm6350.c b/drivers/clk/qcom/camcc-sm6350.c
-> index acba9f99d960..fc5532e2ee5b 100644
-> --- a/drivers/clk/qcom/camcc-sm6350.c
-> +++ b/drivers/clk/qcom/camcc-sm6350.c
-> @@ -7,6 +7,8 @@
->  #include <linux/clk-provider.h>
->  #include <linux/module.h>
->  #include <linux/platform_device.h>
-> +#include <linux/pm_clock.h>
-> +#include <linux/pm_runtime.h>
->  #include <linux/regmap.h>
->
->  #include <dt-bindings/clock/qcom,sm6350-camcc.h>
-> @@ -1869,6 +1871,19 @@ MODULE_DEVICE_TABLE(of, camcc_sm6350_match_table);
->  static int camcc_sm6350_probe(struct platform_device *pdev)
->  {
->         struct regmap *regmap;
-> +       int ret;
-> +
-> +       ret = devm_pm_runtime_enable(&pdev->dev);
-> +       if (ret < 0)
-> +               return ret;
-> +
-> +       ret = devm_pm_clk_create(&pdev->dev);
-> +       if (ret < 0)
-> +               return ret;
++@alex,
 
-This makes me wonder, what is the use for the pm_clk in your case? The
-driver doesn't seem to use of_pm_clk_add_clk(), of_pm_clk_add_clks()
-or pm_clk_add_clk(). So pm_clk_suspend() and pm_clk_resume() do
-nothing.
+Please comment.
 
-> +
-> +       ret = pm_runtime_get(&pdev->dev);
-> +       if (ret)
-> +               return ret;
->
->         regmap = qcom_cc_map(pdev, &camcc_sm6350_desc);
->         if (IS_ERR(regmap))
-> @@ -1879,14 +1894,22 @@ static int camcc_sm6350_probe(struct platform_device *pdev)
->         clk_agera_pll_configure(&camcc_pll2, regmap, &camcc_pll2_config);
->         clk_fabia_pll_configure(&camcc_pll3, regmap, &camcc_pll3_config);
->
-> -       return qcom_cc_really_probe(pdev, &camcc_sm6350_desc, regmap);
-> +       ret = qcom_cc_really_probe(pdev, &camcc_sm6350_desc, regmap);
-> +       pm_runtime_put(&pdev->dev);
-> +
-> +       return ret;
->  }
->
-> +static const struct dev_pm_ops camcc_pm_ops = {
-> +       SET_RUNTIME_PM_OPS(pm_clk_suspend, pm_clk_resume, NULL)
-> +};
-> +
->  static struct platform_driver camcc_sm6350_driver = {
->         .probe = camcc_sm6350_probe,
->         .driver = {
->                 .name = "sm6350-camcc",
->                 .of_match_table = camcc_sm6350_match_table,
-> +               .pm = &camcc_pm_ops,
->         },
->  };
->
->
-> --
-> 2.39.1
->
+-Mukesh
 
-
--- 
-With best wishes
-Dmitry
+On 2/7/2023 2:34 AM, Bjorn Andersson wrote:
+> On Mon, Feb 06, 2023 at 08:06:13PM +0530, Mukesh Ojha wrote:
+>>
+>>
+>> On 2/4/2023 3:07 AM, Konrad Dybcio wrote:
+>>>
+>>>
+>>> On 3.02.2023 18:04, Mukesh Ojha wrote:
+>>>> Add a simple-mfd representing IMEM on SM8450 and define the PIL
+>>>> relocation info region, so that post mortem tools will be able
+>>>> to locate the loaded remoteprocs.
+>>>>
+>>>> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+>>>> ---
+>>>   From XBL:
+>>>
+>>> 0x14680000, 0x0002A000, "IMEM Base"
+>>>
+>>> Is there anything in that wider address range that would interest
+>>> us? I recall Alex once dug into that when diving into IPA, but
+>>> I can not recall the conclusion..
+>> Spec-wise, yes IPA do own these 0x146A8000 - 0x146AA000 .
+>> But, not sure what they use it for.
+>>
+> 
+> The DT should not reflect the organization structure. Let's see if Alex
+> have any input on this.
+> 
+> Thanks,
+> Bjorn
+> 
+>> -Mukesh
+>>>
+>>> Konrad
+>>>>    arch/arm64/boot/dts/qcom/sm8450.dtsi | 15 +++++++++++++++
+>>>>    1 file changed, 15 insertions(+)
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>>> index 5704750..474ea1b 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>>> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>>> @@ -3536,6 +3536,21 @@
+>>>>    			};
+>>>>    		};
+>>>> +		sram@146aa000 {
+>>>> +			compatible = "qcom,sm8450-imem", "syscon", "simple-mfd";
+>>>> +			reg = <0 0x146aa000 0 0x1000>;
+>>>> +
+>>>> +			#address-cells = <1>;
+>>>> +			#size-cells = <1>;
+>>>> +
+>>>> +			ranges = <0 0 0x146aa000 0x1000>;
+>>>> +
+>>>> +			pil-reloc@94c {
+>>>> +				compatible = "qcom,pil-reloc-info";
+>>>> +				reg = <0x94c 0xc8>;
+>>>> +			};
+>>>> +		};
+>>>> +
+>>>>    		apps_rsc: rsc@17a00000 {
+>>>>    			label = "apps_rsc";
+>>>>    			compatible = "qcom,rpmh-rsc";
