@@ -2,52 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C1DFF696B7C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 18:28:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3ABCC696B89
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 18:31:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229878AbjBNR21 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Feb 2023 12:28:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58394 "EHLO
+        id S229487AbjBNRb4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Feb 2023 12:31:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232911AbjBNR2Z (ORCPT
+        with ESMTP id S229473AbjBNRbz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Feb 2023 12:28:25 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C4C51B9;
-        Tue, 14 Feb 2023 09:28:22 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 3EDDFB81E52;
-        Tue, 14 Feb 2023 17:28:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65457C433D2;
-        Tue, 14 Feb 2023 17:28:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1676395699;
-        bh=WsygXz6hKASDW3Ap1NIU8e4tgT2emY5wCqe3iy7hUsw=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=GYn6KlmaqNTFsnLmqBfbjk6SnOVp549jQskpDnVfTqkExTZG/rFFIiVyc3kmPY7iU
-         nm1ADmEbsZWG73dki3u4oGvK8nip/1RHE+uQWNfebEXvbfe7U96smY1gJlfq9yKFFU
-         C0PpBJ2wLF2DPtvtzKKTevSt1VZQjH8xqui3Kn2gPJT4uwVr9tPqEHnTisvxO7x+ul
-         Os8/+wM+nyQmSjfYB1UjBmdlDs3tbBFxsuJxtydFhEhqfRbQ66j76kRhCGpQ5oHKXS
-         ffe86ZDuFceQDYrwevao5050e/3yHaFQ0RQPvc6TeFJikEPs7MVmcsnH7PBy/ebufy
-         PxprJYh2NXeCQ==
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     bjorn.andersson@linaro.org, quic_sibis@quicinc.com,
-        Yogesh Lal <quic_ylal@quicinc.com>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org
-Subject: Re: [PATCH V3] remoteproc: qcom: pas: Adjust the phys addr wrt the mem region
-Date:   Tue, 14 Feb 2023 09:30:19 -0800
-Message-Id: <167639581473.996065.8150646315410727656.b4-ty@kernel.org>
+        Tue, 14 Feb 2023 12:31:55 -0500
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F02011B9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 09:31:53 -0800 (PST)
+Received: by mail-ed1-x532.google.com with SMTP id s11so10762663edd.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 09:31:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=x3eQEZV6QiZa+hDM1b2NqnB6hs+XTHoWjEMCUlgNBE8=;
+        b=WY/E8W5KbJNCENZ4Q5HGFL5YIBJAz4dkhZgKwcYl9yCp0zo7JvmGFb7Z9Tagr8gZY0
+         hWwGUK5tCo+uQP0f/+sk4brqPYAZRdnKsvLE29zcyzGVB4ZK4YGMtP73+CxxmUELlVwe
+         cObNBvGWrxO/l+DBpgIDF6Srd/kN5Bt/cfP/RQvSBWa0e6Bo1yZYRDE1YKwfh8aanvym
+         cAaAkbrtyrUan44/P1z8PmPAfa8B8CUVnSaIr3uCGSpmLnicAv02KYTti8/S7OCoCVOb
+         rwWis5Jop+MCR9c00UGPE4xHV7bTBY4XieUiOxov9KQQqUvzh8iFL+VOr6ixhWlXqKyy
+         i0Mg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=x3eQEZV6QiZa+hDM1b2NqnB6hs+XTHoWjEMCUlgNBE8=;
+        b=kkfv3iHCraRzLb7zjDqUZhENdzJjE7RVaKq8u2ZyZ9xMsloEak0a9HvKvrXVdpRc0V
+         jW7lBTeGWrRBfrBiVZBC7INfqhT4ZsCReHPe8ChrFuJgO4obcGrtg4vFAIvXiDtsE6ii
+         8/zo1ZyNIrBZpzuGg5nYtPU+Fpys9gCx5cYHRGycz4tde1/aEpU1hCevadr7DcCTgpqq
+         1j24cAAkCRgM6TJx9QkGBE1ohIkyf1XFFYRn1XCH5hkghxxaWuEtQiZVdq8CqElpZn5D
+         U6yQ6Yxe1WqIV4Nk8hKhIlPsw8x3KeaFFDnSeczI2RpAxWFP4uO2nnuXTmA+PFmhmr5e
+         VVhA==
+X-Gm-Message-State: AO0yUKV1wz6W5hUbcFRWgpn11t2M0z7zBwuSpjQEzu83E2SFwIHtC/oe
+        hQF8zPRBJFr8qFBiKLdP+ATHdnF98dBMN++y
+X-Google-Smtp-Source: AK7set8fX0vccCadQYOeFjxq34Gr4FY9PCvLkvH31NcKREI6tlA0G/qvsaxwARgzXeCdBkl5y+XsIQ==
+X-Received: by 2002:a50:931d:0:b0:4ac:c029:ea72 with SMTP id m29-20020a50931d000000b004acc029ea72mr3246927eda.36.1676395912272;
+        Tue, 14 Feb 2023 09:31:52 -0800 (PST)
+Received: from localhost.localdomain (abxh117.neoplus.adsl.tpnet.pl. [83.9.1.117])
+        by smtp.gmail.com with ESMTPSA id w8-20020a50c448000000b0049668426aa6sm8325787edf.24.2023.02.14.09.31.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Feb 2023 09:31:51 -0800 (PST)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     marijn.suijten@somainline.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH v2 00/14] GMU-less A6xx support (A610, A619_holi)
+Date:   Tue, 14 Feb 2023 18:31:31 +0100
+Message-Id: <20230214173145.2482651-1-konrad.dybcio@linaro.org>
 X-Mailer: git-send-email 2.39.1
-In-Reply-To: <1667409129-6254-1-git-send-email-quic_ylal@quicinc.com>
-References: <1667409129-6254-1-git-send-email-quic_ylal@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -55,21 +69,75 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 2 Nov 2022 22:42:09 +0530, Yogesh Lal wrote:
-> The minidump table in the toc contains physical addresses that may lie
-> before the physical address of the first elf segment in relocatable
-> images. This change adds a custom dump function for minidumps which
-> calculates the offset into the carveout region using the start of
-> the physical address instead of the start of the first elf segment.
-> 
-> 
-> [...]
+v1 -> v2:
+- Fix A630 values in [2/14]
+- Fix [6/14] for GMU-equipped GPUs
 
-Applied, thanks!
+Link to v1: https://lore.kernel.org/linux-arm-msm/20230126151618.225127-1-konrad.dybcio@linaro.org/
 
-[1/1] remoteproc: qcom: pas: Adjust the phys addr wrt the mem region
-      commit: a376c10d45a8e6ee5ea55791193f90625b35e156
+This series concludes my couple-weeks-long suffering of figuring out
+the ins and outs of the "non-standard" A6xx GPUs which feature no GMU.
 
-Best regards,
+The GMU functionality is essentially emulated by parting out a
+"GMU wrapper" region, which is essentially just a register space
+within the GPU. It's modeled to be as similar to the actual GMU
+as possible while staying as unnecessary as we can make it - there's
+no IRQs, communicating with a microcontroller, no RPMh communication
+etc. etc. I tried to reuse as much code as possible without making
+a mess where every even line is used for GMU and every odd line is
+used for GMU wrapper..
+
+This series contains:
+- plumbing for non-GMU operation, if-ing out GMU calls based on
+  GMU presence
+- GMU wrapper support
+- A610 support (w/ speedbin)
+- A619 support (w/ speedbin)
+- couple of minor fixes and improvements
+- VDDCX/VDDGX scaling fix for non-GMU GPUs (concerns more than just
+  A6xx)
+- Enablement of opp interconnect properties
+
+A619_holi works perfectly fine using the already-present A619 support
+in mesa. A610 needs more work on that front, but can already replay
+command traces captures on downstream.
+
+NOTE: the "drm/msm/a6xx: Add support for A619_holi" patch contains
+two occurences of 0x18 used in place of a register #define, as it's
+supposed to be RBBM_GPR0_CNTL, but that will only be present after
+mesa-side changes are merged and headers are synced from there.
+
+Speedbin patches depend on:
+https://lore.kernel.org/linux-arm-msm/20230120172233.1905761-1-konrad.dybcio@linaro.org/
+
+
+Konrad Dybcio (14):
+  drm/msm/a6xx: De-staticize sptprac en/disable functions
+  drm/msm/a6xx: Extend UBWC config
+  drm/msm/a6xx: Introduce GMU wrapper support
+  drm/msm/a6xx: Remove both GBIF and RBBM GBIF halt on hw init
+  drm/msm/adreno: Disable has_cached_coherent for A610/A619_holi
+  drm/msm/gpu: Use dev_pm_opp_set_rate for non-GMU GPUs
+  drm/msm/a6xx: Add support for A619_holi
+  drm/msm/a6xx: Add A610 support
+  drm/msm/a6xx: Fix some A619 tunables
+  drm/msm/a6xx: Fix up A6XX protected registers
+  drm/msm/a6xx: Enable optional icc voting from OPP tables
+  drm/msm/a6xx: Use "else if" in GPU speedbin rev matching
+  drm/msm/a6xx: Add A619_holi speedbin support
+  drm/msm/a6xx: Add A610 speedbin support
+
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c       |  55 ++-
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.h       |   2 +
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c       | 427 +++++++++++++++++---
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.h       |   1 +
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c |  14 +-
+ drivers/gpu/drm/msm/adreno/adreno_device.c  |  34 +-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c     |   4 +
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h     |  19 +-
+ drivers/gpu/drm/msm/msm_gpu_devfreq.c       |   2 +-
+ 9 files changed, 492 insertions(+), 66 deletions(-)
+
 -- 
-Bjorn Andersson <andersson@kernel.org>
+2.39.1
+
