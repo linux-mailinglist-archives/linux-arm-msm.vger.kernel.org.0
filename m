@@ -2,80 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 820046966D3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 15:28:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DA36D6966FB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 15:38:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231680AbjBNO2p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Feb 2023 09:28:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53112 "EHLO
+        id S230340AbjBNOiC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Feb 2023 09:38:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231580AbjBNO2n (ORCPT
+        with ESMTP id S229648AbjBNOiC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Feb 2023 09:28:43 -0500
-Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7144459CE
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 06:28:26 -0800 (PST)
-Received: by mail-il1-x130.google.com with SMTP id h5so473445ilq.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 06:28:26 -0800 (PST)
+        Tue, 14 Feb 2023 09:38:02 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57911B76D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 06:38:00 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id c1so13900222edt.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 06:38:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=OC7OLIEjLzwlnn+8IHiaJZmpnrxZO4YxhVGP3rMedHI=;
-        b=qYxzyY2kErVbwyTWu/K6QEyKHIO3/dlMlcNYDO4AlI6KhfZGzNipBtlwSRLdCzl/RB
-         XiP6NsG2rpVCazElWSwD3tOamJXBZSNquGZg7bf45dCQ0L0BM3PcLysgdzp2akmV/Ct/
-         jCPQ6Rmjsu+S5tqklRwmcQzmPLuBlwhdA/ZLe+N2smKioUC7ptl9wJT3X1r4rZC5z83M
-         RNwAK42FLRr3vc1aNFgQeZb2WqOL7upnBWD5dsozoSVFk37toN3ayqFLq+MOaMDYgzfy
-         3HPexZxyuQrWptf+geTqtb1HHCS51X2FwbJ3xxfaYdnBEm0g91jFp2crX5pzb683NVEs
-         nUbQ==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZTjCd+BTBOwE9sDOQS36SxqvJ+2iHM2C+hW+sfEZawE=;
+        b=vvOmweQMYzoq4BXNjdktUTzAIyY46UzgPGmTdSy2tbn2plLKKg1RbxoQrgNvysG8dg
+         Rq64tpyDAKJS3bTgoNjhHCshiRgHbfQEsN51qXxuT39BoLdOwtzYzRvsIuWoBIag0uca
+         u3jp1mLVdY+5NIdTjFzOLOXGYnNeiC53jR3iJKfAH+UQJ/8+CfOO+cEuAFcd54SOXLAq
+         RhtBMkq7BNwzsZnENqnBT6on/itYIKoHRBK4D+Q5BJMZiy3RE0VQ1tCU+W/Qmi+Tj2NG
+         eWmzEi3SAinGdugjA75bkuKA2vlcM/DPXka9lpXvcoLes7PBiOsM0PSpTsbVY4dQ/hvH
+         j0wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OC7OLIEjLzwlnn+8IHiaJZmpnrxZO4YxhVGP3rMedHI=;
-        b=qYK7tprEi61TZvNIRBV+doEjL7sZ/pdRPz/q/LfBH/aRtmllytfZPEXP/3ET+qPVKn
-         ZNYdtUpFlD2P/Eklrww4Va3/wNRqbkwODnvT8z6tQ4beUOfrahq1XnCzohhMwcMwhVGo
-         E4utbGCFVX7HdJDOQIhSm8IEuqgnpFpMlBwRe5iLqp2xGnumw7TiaLGv27BBc0vjQhge
-         j+bbEjg6ltLZKoen5rw/god+dYerPrrXfJg5PZTxwrdZQrgCtEEI+LueokDKXLEYv3SV
-         8iJDuPlUN60idfs8XX1QRXgSXVwunls5mY+50wSMPYEnqnc1IIcASkjbvcWiyqVLjJo+
-         v9BQ==
-X-Gm-Message-State: AO0yUKWOcKDI0t9px2+uJV7g/OoS7+qWOeUDWnwkpoARirbAyg/i+niM
-        nv3X6i6jSqRPO5XcftytEj+kTj1Aw/RUoCIu
-X-Google-Smtp-Source: AK7set++Rn0Fp5zH216z7M0t4anw+bCYk5cH+cbnFchQuoKPGQZKwWBPd9XzqxYZBAA0DXp2h8O+pg==
-X-Received: by 2002:a05:6e02:1a22:b0:315:29ff:da85 with SMTP id g2-20020a056e021a2200b0031529ffda85mr2455232ile.6.1676384905752;
-        Tue, 14 Feb 2023 06:28:25 -0800 (PST)
-Received: from [172.22.22.4] ([98.61.227.136])
-        by smtp.googlemail.com with ESMTPSA id t3-20020a92c903000000b0031535804125sm2524047ilp.88.2023.02.14.06.28.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Feb 2023 06:28:25 -0800 (PST)
-Message-ID: <a139f921-0f82-4d4b-6407-e0ad6807bb55@linaro.org>
-Date:   Tue, 14 Feb 2023 08:28:24 -0600
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZTjCd+BTBOwE9sDOQS36SxqvJ+2iHM2C+hW+sfEZawE=;
+        b=pi4FmL98IMFF/0VY2mngypO7yAKY9BlOWSAIg/bDmEQ6SNbNx3S+kjhsCLlLbFUq1t
+         mqGFsXqqGCX85SyiH6ihA6l6TUmGLXfDdhvdMJ97oHGZEUb/kw+eDQ7fG3rucICuibjM
+         LtO0u/fmWw1TyAJ21A3JZntT8mOJQBOYEd6yUx92Gd/HdCRpoyqxjdb8/JMjjbUU/moF
+         8TfpNu80cNqzNK524KsRD3DxRw5CujWJguwaYQom4ZB+5KgLVKjzNWYSAodOGkRoCFXR
+         JoNTQiIt9F4T3u9AEG2NKcFNGaNCESsO5GClPvAROwyBCynwfMxeUYs5QR+b+krVZkIa
+         untQ==
+X-Gm-Message-State: AO0yUKU/hA/38gnVJ6MWLCM9ai/qN9vkgfVAlB7hFJG3ezmhAXvKjNCO
+        FQ9Wfnc+kL0f7mXnBAJFEnUsmC+IBWsIBtzn
+X-Google-Smtp-Source: AK7set8RuMXSbsdnu5ic6aRgU032HXW3lzR5nMfMHi4xxe1H8wY9vijWER2mos8AgLjO6z7ilaHrbw==
+X-Received: by 2002:a50:a455:0:b0:4aa:b7ac:e0d2 with SMTP id v21-20020a50a455000000b004aab7ace0d2mr2681199edb.19.1676385478490;
+        Tue, 14 Feb 2023 06:37:58 -0800 (PST)
+Received: from localhost.localdomain (abxh117.neoplus.adsl.tpnet.pl. [83.9.1.117])
+        by smtp.gmail.com with ESMTPSA id eg21-20020a056402289500b004acb6189693sm5378052edb.83.2023.02.14.06.37.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Feb 2023 06:37:58 -0800 (PST)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     marijn.suijten@somainline.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH v4 00/12] The great interconnecification fixation
+Date:   Tue, 14 Feb 2023 15:37:08 +0100
+Message-Id: <20230214143720.2416762-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8450: Add IMEM and PIL info
- region
-Content-Language: en-US
-To:     Mukesh Ojha <quic_mojha@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>, agross@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <1675443891-31709-1-git-send-email-quic_mojha@quicinc.com>
- <1675443891-31709-2-git-send-email-quic_mojha@quicinc.com>
- <cc30f686-dec7-db85-cf0d-c6c685a623ce@linaro.org>
- <d1dc0c9b-eab2-0287-d0a2-ead44ecee5ce@quicinc.com>
- <20230206210455.xgrvtvknkor4nllx@ripper>
- <aac2b313-e4af-dc93-f177-0d0be9620e1b@quicinc.com>
-From:   Alex Elder <elder@linaro.org>
-In-Reply-To: <aac2b313-e4af-dc93-f177-0d0be9620e1b@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,107 +69,121 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2/14/23 6:34 AM, Mukesh Ojha wrote:
-> +@alex,
-> 
-> Please comment.
-> 
-> -Mukesh
-> 
-> On 2/7/2023 2:34 AM, Bjorn Andersson wrote:
->> On Mon, Feb 06, 2023 at 08:06:13PM +0530, Mukesh Ojha wrote:
->>>
->>>
->>> On 2/4/2023 3:07 AM, Konrad Dybcio wrote:
->>>>
->>>>
->>>> On 3.02.2023 18:04, Mukesh Ojha wrote:
->>>>> Add a simple-mfd representing IMEM on SM8450 and define the PIL
->>>>> relocation info region, so that post mortem tools will be able
->>>>> to locate the loaded remoteprocs.
->>>>>
->>>>> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
->>>>> ---
->>>>   From XBL:
->>>>
->>>> 0x14680000, 0x0002A000, "IMEM Base"
->>>>
->>>> Is there anything in that wider address range that would interest
->>>> us? I recall Alex once dug into that when diving into IPA, but
->>>> I can not recall the conclusion..
+Hi!
 
-So you're saying a boot loader defines "IMEM Base" as
-a range of memory, size 0x2a000.
+v3 -> v4 changelog:
+- Drop "Always set QoS params on QNoC", it only causes issues.. this
+  can be investigated another day, as it's not necessary for operation
 
->>> Spec-wise, yes IPA do own these 0x146A8000 - 0x146AA000 .
->>> But, not sure what they use it for.
+- Drop "Add a way to always set QoS registers", same as /\
 
-And a subset of that range (at offset 0x28000, size 0x2000) is
-set aside for use by IPA.  IPA *does* use this memory area as
-"fast" memory to hold certain frequently-accessed tables.
-Details of that are under the modem's control, and I don't
-have knowledge of that.
+- Add a way (and use it) to have no bus_clocks (the ones we set rate on),
+  as at least msm8996 has a bus (A0NoC) that doesn't have any and does
+  all the scaling through RPM requests
 
-The IPA driver currently maps it's portion of this memory,
-but does *not* reflect that use in DT.  (This is something
-that will be corrected at some point, possibly soon.)
+- Promote 8996 icc to core_initcall
+
+- Introduce keep_alive (see patch [11/12]) (important!, will be used by at least 6375)
+
+- Allow negative QoS offsets in preparation for introducing 8998 icc [12/12]
+
+Link to v3: https://lore.kernel.org/linux-arm-msm/20230116132152.405535-1-konrad.dybcio@linaro.org/
+
+v2 -> v3 changelog:
+- Drop "Don't set QoS params before non-zero bw is requested"
+
+- Rebase on next
+
+- [1/9] ("..make QoS INVALID default.."): remove unused define for
+  MODE_INVALID_VAL
+
+- Pick up tags
+
+v1 -> v2 changelog:
+- reorder "make QoS INVALID default", makes more sense to have it
+  before "Always set QoS params on QNoC"
+
+- Limit ap_owned-independent QoS setting to QNoC only
+
+- Add new patches for handling the 8996-and-friends clocks situation
+  and optional BIMC regardless-of-ap_owned QoS programming
 
 
->> The DT should not reflect the organization structure. Let's see if Alex
->> have any input on this.
+[1] https://lore.kernel.org/linux-arm-msm/14e06574-f95e-8960-0243-8c95a1c294e9@linaro.org/T/#m056692bea71d4c272968d5e07afbd9eb07a88123
+[2] https://lore.kernel.org/linux-arm-msm/20230110132202.956619-1-konrad.dybcio@linaro.org/
 
-As I understand it there's an "imem" node in DT defined, but
-it just defines the range of memory, and is something referred
-to by other drivers (or other nodes in a DTS file).  This seems
-reasonable, and it kind of matches the view I've seen in
-documents.  IPA does *not* follow that pattern, and should.
+This series grew quite a bit bigger than the previous [1] attempt, so
+I decided to also add a cover letter.
 
-I don't really have any strong input either way.  I can help
-define the "problem" but I don't claim to know the correct
-way to represent this.
+Link to v2: [2]
 
-It's a contiguous block of special memory.  By convention
-(design) its range divided up, with portions intended to be
-used for different purposes, by different hardware.  IPA is
-one of the users.
+It addresses a few things that were not quite right:
 
-					-Alex
+- Setting QoS params before a "real" (non-zero) bandwidth request
+  makes little sense (since there's no data supposed to flow through
+  the bus, why would the QoS matter) and (at least newer) downstream
+  prevents that from happening. Do the same in Patch 1.
+
+- QNoC type buses expect to always have their QoS registers set as long
+  as there's a non-INVALID QoS mode set; ap_owned is not really a thing
+  on these anymore, Patch 3 handles that.
+
+- The recent MSM8996 boot fix was done quickly and not quite properly,
+  leading to possibly setting the aggregate bus rate on "normal"
+  hardware interface clocks; this series handles that by limiting the
+  number of bus_clocks to 2 (which is the maximum that makes sense,
+  anyway) and handling the rest as "intf_clocks", which are required
+  to access the   hardware at the other end. Patches 5-8 take care of
+  that and Patch 10 reverts the _optional moniker in clk_get_ to make
+  sure we always have the bus scaling clocks, as they're well, kind
+  of important ;)
+
+- Similarly to QNoC, BIMC on "newer" (which can be loosely approximated
+  by "new enough" == "has only BIMC and QNoC hosts") SoCs expects to
+  always receive QoS programming, whereas BIMC on "older" SoCs cries
+  like a wild boar and crashes the platform when trying to do so
+  unconditionally. Patch 9 adds a way to take care of that for newer
+  SoCs (like SM6375)
+
+- QoS mode INVALID was assumed by developers before to be the default
+  ("I didn't specify any QoS settings, so the driver can't assume I
+  did.. right? right!?" - wrong, partial struct initialization led to
+  0 being set and 0 corresponded to QoS mode FIXED). Make it so, as
+  that's the logical choice. This allows the "Always set QoS params
+  on QNoC" patch to work without setting tons of what-should-
+  -obviously-be-the-default values everywhere, as well as fixes older
+  drivers that set ap_owned = true but left the QoS mode field unset.
+  Patch 2 cleans that up.
+
+- Some nodes are physically connected over more than one channel
+  (usually DDR or other high-throughput paths). Patch 4 allows that
+  to be reflected in calculations. This will be required for at least
+  MSM8998 and SM6375 (which will be submitted soon after this lands)
 
 
->>
->> Thanks,
->> Bjorn
->>
->>> -Mukesh
->>>>
->>>> Konrad
->>>>>    arch/arm64/boot/dts/qcom/sm8450.dtsi | 15 +++++++++++++++
->>>>>    1 file changed, 15 insertions(+)
->>>>>
->>>>> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi 
->>>>> b/arch/arm64/boot/dts/qcom/sm8450.dtsi
->>>>> index 5704750..474ea1b 100644
->>>>> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
->>>>> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
->>>>> @@ -3536,6 +3536,21 @@
->>>>>                };
->>>>>            };
->>>>> +        sram@146aa000 {
->>>>> +            compatible = "qcom,sm8450-imem", "syscon", "simple-mfd";
->>>>> +            reg = <0 0x146aa000 0 0x1000>;
->>>>> +
->>>>> +            #address-cells = <1>;
->>>>> +            #size-cells = <1>;
->>>>> +
->>>>> +            ranges = <0 0 0x146aa000 0x1000>;
->>>>> +
->>>>> +            pil-reloc@94c {
->>>>> +                compatible = "qcom,pil-reloc-info";
->>>>> +                reg = <0x94c 0xc8>;
->>>>> +            };
->>>>> +        };
->>>>> +
->>>>>            apps_rsc: rsc@17a00000 {
->>>>>                label = "apps_rsc";
->>>>>                compatible = "qcom,rpmh-rsc";
+Konrad Dybcio (12):
+  interconnect: qcom: rpm: make QoS INVALID default, separate out driver
+    data
+  interconnect: qcom: rpm: Add support for specifying channel num
+  interconnect: qcom: Sort kerneldoc entries
+  interconnect: qcom: rpm: Rename icc desc clocks to bus_blocks
+  interconnect: qcom: rpm: Rename icc provider num_clocks to
+    num_bus_clocks
+  interconnect: qcom: rpm: Handle interface clocks
+  interconnect: qcom: icc-rpm: Allow negative num_bus_clocks
+  interconnect: qcom: msm8996: Specify no bus clock scaling on A0NoC
+  interconnect: qcom: rpm: Don't use clk_get_optional for bus clocks
+    anymore
+  interconnect: qcom: msm8996: Promote to core_initcall
+  interconnect: qcom: icc-rpm: Introduce keep_alive
+  interconnect: qcom: icc-rpm: Allow negative QoS offset
+
+ drivers/interconnect/qcom/icc-rpm.c | 101 ++++++++++++++++++++--------
+ drivers/interconnect/qcom/icc-rpm.h |  41 +++++++----
+ drivers/interconnect/qcom/msm8996.c |  35 ++++++----
+ drivers/interconnect/qcom/sdm660.c  |  16 ++---
+ 4 files changed, 126 insertions(+), 67 deletions(-)
+
+-- 
+2.39.1
 
