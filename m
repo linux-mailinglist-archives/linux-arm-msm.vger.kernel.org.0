@@ -2,71 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EACB9695E6C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 10:10:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 50278695EAF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 10:15:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232294AbjBNJKZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Feb 2023 04:10:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46010 "EHLO
+        id S231286AbjBNJPE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Feb 2023 04:15:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232449AbjBNJKF (ORCPT
+        with ESMTP id S232361AbjBNJOg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Feb 2023 04:10:05 -0500
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8AD3244B5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 01:08:57 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id qw12so38432514ejc.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 01:08:57 -0800 (PST)
+        Tue, 14 Feb 2023 04:14:36 -0500
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69C2411EB3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 01:12:09 -0800 (PST)
+Received: by mail-ej1-x635.google.com with SMTP id k16so6862607ejv.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 01:12:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nnnkKXnJ9t7DnYEPY2SUMLg12Ga3VeSpmXZ/jSFU5FM=;
-        b=W3Ep99yjBrO0M2WZ0wqaBiqXJWEFGiAIHSmgjvuBwuct05BR3rFver3b5LQUD9oS30
-         tAyc1PIMr9CC1t7bECdoowfEkHAtwbkA2sUVdnotInDNwtgG+yH7lX5evgsD8z4FSKJk
-         SFvAZJFGEKu43IavWdALapoFI323+sSabcSbbBdMVYbq96neEpOtQLu9K9R/RWXbqrGH
-         zQtLycXgrDLP7lzzMtzpJcLdM0s9XlOSCB2F8ybXMt0axFSL7IjPN1UE+3+G2EQT59i2
-         yFTSzdFAcpHARD2L+w4sfBrJWgEeMJRjx9NzkgTNziluED3WUXrhaoEmqWgSWbxt/uSd
-         JRXw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=BpI7lJpz9IKYSko58dc/btZymelWFdQOcnxveP1xg7I=;
+        b=dD2jB4Fsd3SIPlFoFZzG7Y0uZBgUHbB3eiCoJslbjVc9DBX313snP6H9+VUyfuPAdh
+         DgIIJBQ6iTIwRdnGynm1bNLubaYb1EV98zHn8Ywg5XK1oFG5ASNAXy3FWl1aLGpfSi6H
+         lJ0x5GZBga78HX2l7twvr9oMIYPtbqnn4NbFRbuHWuYRTFv9eROSagd70iCAGprWDkfx
+         wJ8ydsLdSXuZdgnTu9vfj+dLPZs+UtuEaMAc1t8OoyvoFlVecXrMxaZW/t23Aq1nRmYO
+         hIeF2qMqOUuWztPv+noflahkOflT1p+pRj9zI23zGIS24MNGitPxOVklNQY4TbxnKhye
+         YgyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nnnkKXnJ9t7DnYEPY2SUMLg12Ga3VeSpmXZ/jSFU5FM=;
-        b=DrWSQv0gH86bpP1Iu5qOM1DJ7tMxQ2IRjpb6rqPuzpZfw0lGbpossucQmVhC4UpjHt
-         mm0exB+fEm9tqUQyuHl+iSUY/jzNagQykJkFi8Tp+nS58B9tCnfoxtuoWd+PNawyID+i
-         WIW17a+v6KLx3sDiYFES7zIj1gSLJBN5FFR+0Lm5FeaxglRVMtLvoJ2i+93H1dmL3U9o
-         l6w+ZCkRlAGG/NJ3c9YlYxszpoNGx44g8KBDnuIDp23AqvAZl01AW/cWce+zao7phcbf
-         mDVTW/1OhcjcBuRcf8U6x/m1PKyFnNmxzKkJyG9D9eg9eb9bfChHAyUi6fJkqrKNwUYz
-         BMwQ==
-X-Gm-Message-State: AO0yUKW8XO71YyEyC+QJzm3SnsKSMPQa30BkFA0TgxCYNpU7tWN2CCje
-        /FL8fKmj+7SEB3ie7qcLPJWkpP9ZQB9XasgJ
-X-Google-Smtp-Source: AK7set/MbAJYS0NXNV9i7Pc5fr00kHKW4gsDjwFLUqHIx6jwT/ngrM5IolsPOgn2vHN4SNISxQtjjA==
-X-Received: by 2002:a17:907:910a:b0:872:82d3:4162 with SMTP id p10-20020a170907910a00b0087282d34162mr1688022ejq.44.1676365736187;
-        Tue, 14 Feb 2023 01:08:56 -0800 (PST)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BpI7lJpz9IKYSko58dc/btZymelWFdQOcnxveP1xg7I=;
+        b=7X564vwmOzqc/xCNI8+ZSQjS/l4PXitkLbyNk2sxfwh7V+1gcDpr5R4scDHpdV1bSc
+         YTjGFUXgvxkmWsSy6bkzsTb843xltnqwFkCbibfJ52oaBZF6mVxuqdmaG3/SjLqtfy7F
+         2DHSKYL2agPvG6N7YHDFF2aT/nw4/hEgezaW1n3f1G8dUJJFvgjDcDUXtl7tm4KIxvOO
+         A9uNES9kZsNnrk+6QTchQ4Swsf7SJkkcxrUuK4Ix+aeOhFmeyLnQQD2SsX0T1Np3Fldf
+         cn8kKM2Ao5xD7uQob/qb9Oen9p8raY4hslq9vQ1WFyPJKUYoFIVRjCythVPeeGQMozLV
+         mf2w==
+X-Gm-Message-State: AO0yUKU0i9h35FjYtlql1rPV5NDMwIIMGwtgf7w6cLzVNI+g1OwkGF2m
+        +/rX5/Uh++4+MbL1lHsRMHtZ7p6GFD7m198m
+X-Google-Smtp-Source: AK7set+te8laFy8cWhZo7mQQMHGl64Fub1y53xPaJoVyUEJtB9MBk7YBkP8AFinVGRa6+PskmqlovA==
+X-Received: by 2002:a17:907:7210:b0:8b1:2998:6474 with SMTP id dr16-20020a170907721000b008b129986474mr3134749ejc.16.1676365925662;
+        Tue, 14 Feb 2023 01:12:05 -0800 (PST)
 Received: from localhost.localdomain (abxh117.neoplus.adsl.tpnet.pl. [83.9.1.117])
-        by smtp.gmail.com with ESMTPSA id d6-20020a170906040600b008838b040454sm7998110eja.95.2023.02.14.01.08.54
+        by smtp.gmail.com with ESMTPSA id e6-20020a170906c00600b008b0fbcf4b11sm3677282ejz.66.2023.02.14.01.12.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Feb 2023 01:08:55 -0800 (PST)
+        Tue, 14 Feb 2023 01:12:05 -0800 (PST)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
 Cc:     marijn.suijten@somainline.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Sebastian Reichel <sre@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v2 3/3] arm64: dts: qcom: pm8998: Add a specific compatible for coincell chg
-Date:   Tue, 14 Feb 2023 10:08:49 +0100
-Message-Id: <20230214090849.2186370-3-konrad.dybcio@linaro.org>
+Subject: [PATCH v2] dt-bindings: PCI: qcom: Fix msm8998-specific compatible
+Date:   Tue, 14 Feb 2023 10:12:02 +0100
+Message-Id: <20230214091202.2187321-1-konrad.dybcio@linaro.org>
 X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230214090849.2186370-1-konrad.dybcio@linaro.org>
-References: <20230214090849.2186370-1-konrad.dybcio@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -79,31 +78,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a PM8998-specific compatibel to the coincell charger and keep the
-PM8941 one as fallback.
+In the commit mentioned in the fixes tag, everything went well except
+the fallback and the specific compatible got swapped and the 8998 DTSI
+began failing the dtbs check. Fix it.
 
+Fixes: f86fe08ef00f ("dt-bindings: PCI: qcom: Add MSM8998 specific compatible")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
-v1 -> v2:
+v1 - > v2:
 
-No changes
+- Use the correct commit in fixes
 
- arch/arm64/boot/dts/qcom/pm8998.dtsi | 2 +-
+ Documentation/devicetree/bindings/pci/qcom,pcie.yaml | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/pm8998.dtsi b/arch/arm64/boot/dts/qcom/pm8998.dtsi
-index adbba9f4089a..340033ac3186 100644
---- a/arch/arm64/boot/dts/qcom/pm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pm8998.dtsi
-@@ -72,7 +72,7 @@ pm8998_temp: temp-alarm@2400 {
- 		};
+diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+index 872817d6d2bd..fb32c43dd12d 100644
+--- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
++++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+@@ -39,8 +39,8 @@ properties:
+           - qcom,pcie-sm8450-pcie0
+           - qcom,pcie-sm8450-pcie1
+       - items:
+-          - const: qcom,pcie-msm8996
+           - const: qcom,pcie-msm8998
++          - const: qcom,pcie-msm8996
  
- 		pm8998_coincell: charger@2800 {
--			compatible = "qcom,pm8941-coincell";
-+			compatible = "qcom,pm8998-coincell", "qcom,pm8941-coincell";
- 			reg = <0x2800>;
- 
- 			status = "disabled";
+   reg:
+     minItems: 4
 -- 
 2.39.1
 
