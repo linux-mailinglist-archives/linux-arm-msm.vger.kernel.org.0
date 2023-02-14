@@ -2,80 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BAF856963DB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 13:48:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 72E1A696409
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 13:57:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231629AbjBNMsJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Feb 2023 07:48:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34536 "EHLO
+        id S231998AbjBNM5q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Feb 2023 07:57:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232507AbjBNMsB (ORCPT
+        with ESMTP id S231442AbjBNM5p (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Feb 2023 07:48:01 -0500
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2593F1D90C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 04:47:56 -0800 (PST)
-Received: by mail-ej1-x62f.google.com with SMTP id qb15so37678647ejc.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 04:47:55 -0800 (PST)
+        Tue, 14 Feb 2023 07:57:45 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADCD8222CB
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 04:57:42 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id o18so15563721wrj.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 04:57:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=jsROFjprG4Xl36pcS1K66/aOat/B9AhxJ+NImNDHdwc=;
-        b=PdHbf38Wvl91YA+1E2a/l7nsc552pJ9qYn2fLvbEGIde+eE23STmcpYhOuE04Nlc0Q
-         WsWLmSiv2nZ84zyYw+Qq6bI9mm193UJdmzRhTbc73jOo24zL5BK1jZThVTAyeYxVI3q6
-         lFm0oU/GsHFRVt/FyrGghBe0qP3CkGsSRlsnwWNDPh1Psnp1PNsOhWbCaE1TllxdkqM/
-         3q46+ONn2aX/RdEbrt1NKDcobU6nI1Lewa5hVzwG6rk/ddie88lDgzxjY2CxxW1uv0Ii
-         sdxLnY6VaTrN1ziEp7nDHItrMIwFQIkyn6oesjr54ruio9W4ni1H0rrb9njOxV214gOW
-         8Www==
+        bh=O1iX/bRjubyY8icLKwkxEeosnt7C5yf2ACUDqg5rTDE=;
+        b=esQrMFAYjAFxun7TNMECOXXoswmBWLNkD4VZvgXwJLZv9B9dC6O/boUaxl0G3y4JhJ
+         qyYz5+Xx6xwagnAkDjVSXoJpCSLVqOh4DDKSc2Oji8q8G5+d8VI9UIpPKyF65eQbaMDp
+         FgXD6/todPzvwTR25ZHo+QOiLnyozCwVXJ5DIPvBNFSAx5UMLu6Sv497sH7mvLQg1Yoy
+         ao7GdPCmGP4b3QxAIuSKQNBHcWdtn60IMFIKzE5zptCd2ZHFcyXIDrZsSvw7E3MIVzmZ
+         JrRvefgCI9Yxe46bZOfXmVrL+XkkitSS7lhc7XHpOO66FHU3N+beyfgJRpfkeNEREODa
+         2wNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jsROFjprG4Xl36pcS1K66/aOat/B9AhxJ+NImNDHdwc=;
-        b=VPHjBsFmoQ4b0G3nmRjZ3opIU6iuBG6jaierQLu0iW0zqlileCuaMzQ4IBBHTpKbvY
-         Ky8zsQyAqHyYVmh9zV6fLy7WCfQpfhCAhkEzkzyDY4Vh9feoN7RJd98ayGkM1B8XqmiA
-         HRJFYsjFs8aok7XodxG2k7e7T+xFIIgO39qSyDHVjZ8N6DZCKu8tlbTi1JbhndffW1AB
-         77T1AP9VxyXh560JVZvA8VcJDMhQj0rQQp2Qs2q8dwJ615wFqg38/H7dOVTam/cKFd4x
-         tYewFoY6Bzt/NjtKsKVQl9Lpuv06GsvLTc+PeUqLjoOJf3uhACZDf9bnboQXIIPbpozk
-         pXxw==
-X-Gm-Message-State: AO0yUKUoNS8FIDsauS6ZtzbgnLERNlI2ihEseo5XNUfCPjp1q5+makQ1
-        6WPLxB55yYm5oTFSba/BN9Cuqg==
-X-Google-Smtp-Source: AK7set9jyGp94y8TyLok1fks1vM7ImjaNQoGtaKpAIMbLu0entXzsVRmdjkYuvWZKOJiD7A+habAuA==
-X-Received: by 2002:a17:907:75c3:b0:8aa:502c:44d3 with SMTP id jl3-20020a17090775c300b008aa502c44d3mr2498124ejc.41.1676378874618;
-        Tue, 14 Feb 2023 04:47:54 -0800 (PST)
-Received: from [192.168.1.101] (abxh117.neoplus.adsl.tpnet.pl. [83.9.1.117])
-        by smtp.gmail.com with ESMTPSA id le3-20020a170907170300b0087be1055f83sm8173782ejc.206.2023.02.14.04.47.53
+        bh=O1iX/bRjubyY8icLKwkxEeosnt7C5yf2ACUDqg5rTDE=;
+        b=CbM44HoXvFBslVAKpRcJcpE6KuRqLbA4fsseqN4bDpL9uKDZpH7G/Z4BQVDs0Jw6Jf
+         ZWzw0OzYzGgTYQfg7JPAlbfLXvike4Sm1AtctdgDhZXfg33swW9M/1Ez+4n0xnlo0gvy
+         SZLKH6osvcLg4zJWGB4HMXowPsVl9Y2lhgsWHM0CSDj2oPm7CvLv7Q0cjFTfKjKeb2qL
+         XGH4xE9FOlXWbrifbKtY/qofg7matUlX1jLlj/ERmjdGMJgxDY7tA9pGobiU5fjcQls3
+         0zYvXMGUdZXCr7AjMzUEswYbZgMvAjSv73JX3Y1MnXfyq8c4AstZCKoi92JusNekl6A5
+         ysGg==
+X-Gm-Message-State: AO0yUKVSAZOXvRipAICom3JBv/5dEL1mlAhnBefoEu0Bf2pt8Z5CKlJo
+        iY5P8q7LlqwO4YQhFPQcSds/rg==
+X-Google-Smtp-Source: AK7set/UjSDcHRoAgTRcvJa1W636nGs1OeuTPzOc0E3YkcnrM795r2mKtZkyHB2LFc+TC0Zd423IHQ==
+X-Received: by 2002:a5d:4148:0:b0:2c5:4c7f:c91 with SMTP id c8-20020a5d4148000000b002c54c7f0c91mr2090318wrq.66.1676379461126;
+        Tue, 14 Feb 2023 04:57:41 -0800 (PST)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id q2-20020a5d5742000000b002c560e6ea57sm2628077wrw.47.2023.02.14.04.57.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Feb 2023 04:47:54 -0800 (PST)
-Message-ID: <3b746166-e165-23c4-fc90-a6ba77ac4d7a@linaro.org>
-Date:   Tue, 14 Feb 2023 13:47:52 +0100
+        Tue, 14 Feb 2023 04:57:40 -0800 (PST)
+Message-ID: <ffeff1f8-ebf6-3115-38d1-fa318549baa0@linaro.org>
+Date:   Tue, 14 Feb 2023 12:57:39 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [RFC PATCH 2/5] arm64: dts: qcom: sm8450: Add the Inline Crypto
- Engine node
+ Thunderbird/102.4.2
+Subject: Re: [PATCH V4 5/5] firmware: scm: Modify only the DLOAD bit in TCSR
+ register for download mode
 Content-Language: en-US
-To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        "James E . J . Bottomley" <jejb@linux.ibm.com>,
-        "Martin K . Petersen" <martin.petersen@oracle.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Eric Biggers <ebiggers@google.com>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-mmc@vger.kernel.org, linux-scsi@vger.kernel.org
-References: <20230214120253.1098426-1-abel.vesa@linaro.org>
- <20230214120253.1098426-3-abel.vesa@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230214120253.1098426-3-abel.vesa@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+To:     Poovendhan Selvaraj <quic_poovendh@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, lee@kernel.org,
+        mturquette@baylibre.com, sboyd@kernel.org,
+        jassisinghbrar@gmail.com, catalin.marinas@arm.com, will@kernel.org,
+        shawnguo@kernel.org, arnd@arndb.de, marcel.ziswiler@toradex.com,
+        robimarko@gmail.com, dmitry.baryshkov@linaro.org,
+        nfraprado@collabora.com, broonie@kernel.org,
+        quic_gurus@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
+        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
+        quic_devipriy@quicinc.com
+References: <20230214051414.10740-1-quic_poovendh@quicinc.com>
+ <20230214051414.10740-6-quic_poovendh@quicinc.com>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20230214051414.10740-6-quic_poovendh@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -89,87 +91,76 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 14.02.2023 13:02, Abel Vesa wrote:
-> Drop all values related to the ICE from the UFS HC node and add a
-> dedicated ICE node. Also enable it in HDK board dts.
+On 14/02/2023 05:14, Poovendhan Selvaraj wrote:
+> CrashDump collection is based on the DLOAD bit of TCSR register.
+> To retain other bits, we read the register and modify only the DLOAD bit as
+> the other bits have their own significance.
 > 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
+> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
+> Co-developed-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+> Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+> Signed-off-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/sm8450-hdk.dts |  4 ++++
->  arch/arm64/boot/dts/qcom/sm8450.dtsi    | 24 +++++++++++++++---------
->  2 files changed, 19 insertions(+), 9 deletions(-)
+>   Changes in V4:
+> 	- retain the orginal value of tcsr register when download mode
+> 	  is not set
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-> index feef3837e4cd..de631deef1e8 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-> @@ -461,6 +461,10 @@ lt9611_out: endpoint {
->  	};
->  };
->  
-> +&ice {
-> +	status = "okay";
-> +};
-> +
->  &mdss {
->  	status = "okay";
->  };
-> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> index 1a744a33bcf4..34d569f6c239 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> @@ -3989,9 +3989,8 @@ system-cache-controller@19200000 {
->  		ufs_mem_hc: ufshc@1d84000 {
->  			compatible = "qcom,sm8450-ufshc", "qcom,ufshc",
->  				     "jedec,ufs-2.0";
-> -			reg = <0 0x01d84000 0 0x3000>,
-> -			      <0 0x01d88000 0 0x8000>;
-> -			reg-names = "std", "ice";
-> +			reg = <0 0x01d84000 0 0x3000>;
-> +			reg-names = "std";
->  			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
->  			phys = <&ufs_mem_phy_lanes>;
->  			phy-names = "ufsphy";
-> @@ -4015,8 +4014,7 @@ ufs_mem_hc: ufshc@1d84000 {
->  				"ref_clk",
->  				"tx_lane0_sync_clk",
->  				"rx_lane0_sync_clk",
-> -				"rx_lane1_sync_clk",
-> -				"ice_core_clk";
-> +				"rx_lane1_sync_clk";
->  			clocks =
->  				<&gcc GCC_UFS_PHY_AXI_CLK>,
->  				<&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
-> @@ -4025,8 +4023,7 @@ ufs_mem_hc: ufshc@1d84000 {
->  				<&rpmhcc RPMH_CXO_CLK>,
->  				<&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
->  				<&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
-> -				<&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>,
-> -				<&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
-> +				<&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
->  			freq-table-hz =
->  				<75000000 300000000>,
->  				<0 0>,
-> @@ -4035,8 +4032,17 @@ ufs_mem_hc: ufshc@1d84000 {
->  				<75000000 300000000>,
->  				<0 0>,
->  				<0 0>,
-> -				<0 0>,
-> -				<75000000 300000000>;
-> +				<0 0>;
-> +			qcom,ice = <&ice>;
-> +
-> +			status = "disabled";
-> +		};
-> +
-> +		ice: inline-crypto-engine {
-> +			compatible = "qcom,inline-crypto-engine";
-> +			reg = <0 0x01d88000 0 0x8000>;
-> +			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
-> +
->  			status = "disabled";
-Any reason for this guy to be disabled?
+>   drivers/firmware/qcom_scm.c | 15 ++++++++++-----
+>   1 file changed, 10 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> index 468d4d5ab550..8a34b386ac3a 100644
+> --- a/drivers/firmware/qcom_scm.c
+> +++ b/drivers/firmware/qcom_scm.c
+> @@ -407,7 +407,7 @@ int qcom_scm_set_remote_state(u32 state, u32 id)
+>   }
+>   EXPORT_SYMBOL(qcom_scm_set_remote_state);
+>   
+> -static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
+> +static int __qcom_scm_set_dload_mode(struct device *dev, u32 val, bool enable)
+>   {
+>   	struct qcom_scm_desc desc = {
+>   		.svc = QCOM_SCM_SVC_BOOT,
+> @@ -417,7 +417,8 @@ static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
+>   		.owner = ARM_SMCCC_OWNER_SIP,
+>   	};
+>   
+> -	desc.args[1] = enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0;
+> +	desc.args[1] = enable ? val | QCOM_SCM_BOOT_SET_DLOAD_MODE :
+> +				val & ~(QCOM_SCM_BOOT_SET_DLOAD_MODE);
 
-Konrad
->  		};
->  
+why not read the value here before setting the DLOAD Mode instead of 
+doing it in qcom_scm_set_download_mode()?
+that would make the code simple and readable.
+
+
+
+>   
+>   	return qcom_scm_call_atomic(__scm->dev, &desc, NULL);
+>   }
+> @@ -426,15 +427,19 @@ static void qcom_scm_set_download_mode(bool enable)
+>   {
+>   	bool avail;
+>   	int ret = 0;
+> +	u32 dload_addr_val;
+>   
+>   	avail = __qcom_scm_is_call_available(__scm->dev,
+>   					     QCOM_SCM_SVC_BOOT,
+>   					     QCOM_SCM_BOOT_SET_DLOAD_MODE);
+> +	ret = qcom_scm_io_readl(__scm->dload_mode_addr, &dload_addr_val);
+> +
+not checking ret value here before proceeding?
+
+>   	if (avail) {
+> -		ret = __qcom_scm_set_dload_mode(__scm->dev, enable);
+> +		ret = __qcom_scm_set_dload_mode(__scm->dev, dload_addr_val, enable);
+>   	} else if (__scm->dload_mode_addr) {
+> -		ret = qcom_scm_io_writel(__scm->dload_mode_addr,
+> -				enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0);
+> +		ret = qcom_scm_io_writel(__scm->dload_mode_addr, enable ?
+> +				dload_addr_val | QCOM_SCM_BOOT_SET_DLOAD_MODE :
+> +				dload_addr_val & ~(QCOM_SCM_BOOT_SET_DLOAD_MODE));
+>   	} else {
+>   		dev_err(__scm->dev,
+>   			"No available mechanism for setting download mode\n");
