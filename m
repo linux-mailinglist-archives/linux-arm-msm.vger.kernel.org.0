@@ -2,94 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AD76B695677
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 03:12:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 395266956BB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 03:36:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229729AbjBNCMl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Feb 2023 21:12:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37054 "EHLO
+        id S231343AbjBNCgw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Feb 2023 21:36:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229603AbjBNCMj (ORCPT
+        with ESMTP id S229539AbjBNCgv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Feb 2023 21:12:39 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51F8B13D73;
-        Mon, 13 Feb 2023 18:12:38 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31E01ABr006116;
-        Tue, 14 Feb 2023 02:12:14 GMT
+        Mon, 13 Feb 2023 21:36:51 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA0E312045;
+        Mon, 13 Feb 2023 18:36:49 -0800 (PST)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31DMb7c1015784;
+        Tue, 14 Feb 2023 02:36:45 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Lyk9ZAmAdxpE1HIFfBYI5WS1Y655+FJVtSWgkKqzYn4=;
- b=R5NriELaX15ot6qIOcI3CLE1b1+3BzqS3jaCDN+2Csppv/PXOX4zLm4pEz2jdQt7wiOc
- oWjq/+spNw8CxYX6g/f8cc2lpw0s5olmDxR9XpuQ8L6Connbj6DJETMnkOColnaFq8jx
- GSg/3JabuOQTt3da7gF1amTE/6L3XoSicIBDSyF7gd2Px8mVxUL6Rt7sgK1Ds99QQe+J
- 9HE98wPDlrfCXkuGjSfp4sla9y4fX4gumtUM+FRv+hGeWX6Zw4dkTRnBMPmfCdrSCZMf
- pYlBUOd8evJYk7Ulttr0AM1ekBj2zzWKUNNmYmNnyb6lvRdfiCTe6Ax2AuPiiiqZyl5m qg== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3np389whxd-1
+ bh=7/aakhHw6jmY23Ry7x9srwxzX1saJqqEf70DwHYKcOs=;
+ b=bF8BS8VHyWbFs0T+AWP25OzB1/dsOmG0ON2l2WffnyHmabGWty9dwaw7/ShcdxkeGneu
+ BjIxeAx2F4vT36UGKa3+JNP0yjH8oE7tdY5WD7tg5oLrVrEdIgrfZ65kkIFvqgoo1gba
+ Ai5Gvn00C73Fo8qMGrZys3s+SGLjVF9h430//MaCCfU+M6QDHRxEfWt/RvxQ6Mo7tbDQ
+ tYCWxKZGLHE03PHI/HhyngB6xWbrYXZELJHd0PEupvyRFW0j0eYF1lNJZSHtl7r2iqZT
+ K1++R86alG4bUrXxbcuYF2wMo/6ZnAjjocuRgkSXxSKZHIfJqvdgntRzUHp/EfUdM6Jv HQ== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3np3dewuk3-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 14 Feb 2023 02:12:13 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31E2CC4H022926
+        Tue, 14 Feb 2023 02:36:45 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31E2aiKt019149
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 14 Feb 2023 02:12:12 GMT
-Received: from [10.110.106.148] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+        Tue, 14 Feb 2023 02:36:44 GMT
+Received: from [10.110.6.173] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 13 Feb
- 2023 18:12:11 -0800
-Message-ID: <82406da2-799e-f0b4-bce0-7d47486030d4@quicinc.com>
-Date:   Mon, 13 Feb 2023 18:12:11 -0800
+ 2023 18:36:43 -0800
+Message-ID: <2ad6c912-69fe-9c2e-146d-cdca9b8b1c7b@quicinc.com>
+Date:   Mon, 13 Feb 2023 18:36:39 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.1.1
-Subject: Re: [PATCH] psi: reduce min window size to 50ms
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v2 2/6] rpmsg: glink: smem: Wrap driver context
 Content-Language: en-US
-To:     Suren Baghdasaryan <surenb@google.com>
-CC:     David Hildenbrand <david@redhat.com>,
-        Johannes Weiner <hannes@cmpxchg.org>,
-        Mike Rapoport <rppt@kernel.org>,
-        Oscar Salvador <osalvador@suse.de>,
-        Anshuman Khandual <anshuman.khandual@arm.com>,
-        <mark.rutland@arm.com>, <will@kernel.org>,
-        <virtualization@lists.linux-foundation.org>, <linux-mm@kvack.org>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Sukadev Bhattiprolu <quic_sukadev@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Patrick Daly <quic_pdaly@quicinc.com>,
-        "Sudarshan Rajagopalan" <quic_sudaraja@quicinc.com>
-References: <cover.1676067791.git.quic_sudaraja@quicinc.com>
- <CAJuCfpHWQ8NV=iR3BN+pt1c8FynCnRqyyriHb1gLxFgiNVrwjA@mail.gmail.com>
- <e944536f-a04c-5528-601e-d7f505a761e8@quicinc.com>
- <CAJuCfpGLkkS2yx0d9+2nYtEtxANSH5H3EgCmWZax4N-ieEBG7g@mail.gmail.com>
- <15cd8816-b474-0535-d854-41982d3bbe5c@quicinc.com>
- <CAJuCfpHihLgHCcsAqMJ_o2u7Ux9B5HFGsV2y_L2_5GXYAGYLnw@mail.gmail.com>
-From:   Sudarshan Rajagopalan <quic_sudaraja@quicinc.com>
-In-Reply-To: <CAJuCfpHihLgHCcsAqMJ_o2u7Ux9B5HFGsV2y_L2_5GXYAGYLnw@mail.gmail.com>
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20230213155215.1237059-1-quic_bjorande@quicinc.com>
+ <20230213155215.1237059-3-quic_bjorande@quicinc.com>
+From:   Chris Lew <quic_clew@quicinc.com>
+In-Reply-To: <20230213155215.1237059-3-quic_bjorande@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: HRDZ6_d9dYn4E3fyaNrxBEOfa9C3R19i
-X-Proofpoint-GUID: HRDZ6_d9dYn4E3fyaNrxBEOfa9C3R19i
+X-Proofpoint-GUID: OIPzMpvG_sorgmQnHBeZlMOQc7SP8nys
+X-Proofpoint-ORIG-GUID: OIPzMpvG_sorgmQnHBeZlMOQc7SP8nys
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
  definitions=2023-02-14_01,2023-02-13_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 clxscore=1015
- bulkscore=0 lowpriorityscore=0 spamscore=0 malwarescore=0 impostorscore=0
- adultscore=0 priorityscore=1501 mlxscore=0 mlxlogscore=999 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2302140015
-X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxscore=0
+ clxscore=1011 adultscore=0 mlxlogscore=999 malwarescore=0 phishscore=0
+ lowpriorityscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302140019
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -97,175 +82,222 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 2/10/2023 6:13 PM, Suren Baghdasaryan wrote:
-> On Fri, Feb 10, 2023 at 5:46 PM Sudarshan Rajagopalan
-> <quic_sudaraja@quicinc.com> wrote:
->>
->> On 2/10/2023 5:09 PM, Suren Baghdasaryan wrote:
->>> On Fri, Feb 10, 2023 at 4:45 PM Sudarshan Rajagopalan
->>> <quic_sudaraja@quicinc.com> wrote:
->>>> On 2/10/2023 3:03 PM, Suren Baghdasaryan wrote:
->>>>> On Fri, Feb 10, 2023 at 2:31 PM Sudarshan Rajagopalan
->>>>> <quic_sudaraja@quicinc.com> wrote:
->>>>>> The PSI mechanism is useful tool to monitor pressure stall
->>>>>> information in the system. Currently, the minimum window size
->>>>>> is set to 500ms. May we know what is the rationale for this?
->>>>> The limit was set to avoid regressions in performance and power
->>>>> consumption if the window is set too small and the system ends up
->>>>> polling too frequently. That said, the limit was chosen based on
->>>>> results of specific experiments which might not represent all
->>>> Rightly as you said, the effect on power and performance depends on type
->>>> of the system - embedded systems, or Android mobile, or commercial VMs
->>>> or servers. With higher PSI sampling, it may not be much of power impact
->>>> to embedded systems with low-tier chipsets or performance impact to
->>>> powerful servers.
->>>>
->>>>> usecases. If you want to change this limit, you would need to describe
->>>>> why the new limit is inherently better than the current one (why not
->>>>> higher, why not lower).
->>>> This is in regards to the userspace daemon [1] that we are working on,
->>>> that dynamically resizes the VM memory based on PSI memory pressure
->>>> events. With current min window size of 500ms, the PSI monitor sampling
->>>> period would be 50ms. So to detect increase in memory demand in system
->>>> and plug-in memory into VM when pressure goes up, the minimum time the
->>>> process needs to stall for is 50ms before a event can be generated and
->>>> sent out to userspace and the daemon can do actions.
->>>>
->>>> This again I'm talking w.r.t. lightweight embedded systems, where even
->>>> background kswapd/kcompd (which I'm calling it as natural memory
->>>> pressure) in the system would be less than 5-10ms stall. So any stall
->>>> more than 5-10ms would "hint" us that a memory consuming usecase has
->>>> ranB  and memory may need to be plugged in.
->>>>
->>>> So in these cases, having as low as 5ms psimon sampling time would give
->>>> us faster reaction time and daemon can be responsive more quickly. In
->>>> general, this will reduce the malloc latencies significantly.
->>>>
->>>> Pasting here the same excerpt I mentioned in [1].
->>> My question is: why do you think 5ms is the optimal limit here? I want
->>> to avoid a race to the bottom where next time someone can argue that
->>> they would like to detect a stall within a lower period than 5ms.
->>> Technically the limit can be as small as one wants but at some point I
->>> think we should consider the possibility of this being used for a DoS
->>> attack.
->> Well the optimal limit should be something which is least destructive? I
->> do understand about possibility of DoS attacks, but wouldn't that still
->> be possible with 500ms window today? Which will atleast be 1/10th less
->> severe compared to 50ms window. The way I see it is - min pressure
->> sampling should be such that even the least pressure stall which we
->> think is significant should be captured (this could be 5ms or 50ms at
->> present) while balancing the power and performance impact across all
->> usecases.
->>
->> At present, Android's LMKD sets 1000ms as window for which it considers
->> 100ms sampling to be significant. And here, with psi_daemon usecase we
->> are saying 5ms sampling would be significant. So there's no actual
->> optimal limit, but we must limit as much possible without effecting
->> power or performance as a whole. Also, this is just the "minimum
->> allowable" window, and system admins can configure it as per the system
->> type/requirement.
-> Ok, let me ask you another way which might be more productive. What
-> caused you to choose 5ms as the time you care to react to a stall
-> buildup?
 
-We basically want to capture any stalls caused by direct reclaim. And 
-ignore any stalls caused by indirect reclaim and alloc retries. Stalls 
-due to direct reclaim is what indicates that memory pressure is building 
-up in system and memory needs to be free'd (by oom-killer or LMKD 
-killing apps) or made available (by plugin-in any available memory or 
-requesting memory from Primary host). We see that any stalls above 5ms 
-is significant enough that alloc request would've invoked direct 
-reclaim, hinting that
-memory pressure is starting to build up.
+On 2/13/2023 7:52 AM, Bjorn Andersson wrote:
+> The Glink SMEM driver allocates a struct device and hangs two
+> devres-allocated pipe objects thereon. To facilitate the move of
+> interrupt and mailbox handling to the driver, introduce a wrapper object
+> capturing the device, glink reference and remote processor id.
+> 
+> The type of the remoteproc reference is updated, as these are
+> specifically targeting the SMEM implementation.
+> 
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> ---
+> 
+> Changes since v1:
+> - Revert back to use a local struct device * in register, to reduce size of
+>    diff.
+> - Reverse xmas tree of variables in register
+> - Fix spelling of targeting in commit message.
+> 
+>   drivers/remoteproc/qcom_common.h |  3 ++-
+>   drivers/rpmsg/qcom_glink_smem.c  | 43 ++++++++++++++++++++++++--------
+>   include/linux/rpmsg/qcom_glink.h | 12 ++++-----
+>   3 files changed, 40 insertions(+), 18 deletions(-)
+> 
 
-Keeping the 5ms and other numbers aside, lets see what is smallest 
-pressure that is of significance to be captured.
+Thanks for the changes, LGTM.
 
-A PSI memory stall is wholly comprised of: compaction (kcompactd), 
-thrashing, kswapd, direct compaction and direct reclaim. Out of these, 
-compaction, thrashing and kswapd stalls may not necessarily give 
-significance towards memory demand building up (i.e. system is in need 
-of more memory). Direct compaction stall would indicate memory is 
-fragmented. But a significant direct reclaim stall would indicate that 
-system is in memory pressure. Usually, direct compaction and direct 
-reclaim are the smallest in an aggregated PSI memory stall.
+Reviewed-by: Chris Lew <quic_clew@quicinc.com>
 
-So now the question - what is the smallest direct reclaim stall that we 
-should capture, which would be significant to us? Now this depends on 
-system type and configuration and the nature of work loads. For Android 
-mobile maybe 100ms (lmkd), and for servers maybe 1s (because max window 
-is 10s?). For Linux Embedded Systems, this would be even smaller. From 
-our experiments, we observed that 5ms stall would be significant to 
-capture direct reclaim stalls that would indicate pressure build up.
-
-I think the min window size should be set such that even the smallest 
-pressure stall that we think is significant should be be captured. 
-Rather than hard-coding min window to 500ms, let the system admin choose 
-what's best? We anyway have bigger cap set for max window of 10s (though 
-I hardly doubt one would think 1s is the least pressure that they care 
-of for cpu/io/memory). Also these window thresholds have never changed 
-since psi monitor was introduced in kernel.org, and are based on 
-previous experiments which may not have represented all workloads.
-
-Finding the true bottom of the well would be hard. But to keep things in 
-ms range, we can define range 1ms-500ms in Kconfig:
-
---- a/init/Kconfig
-+++ b/init/Kconfig
-
-+config PSI_MIN_WINDOW_MS
-+B B B B B B  int "Minimum PSI window (ms)"
-+B B B B B B  range 1 500
-+B B B B B B  default 500
-+
-+
-
-With PSI mechanism finding more of its uses, the same requirement might 
-be applicable for io and cpu as well. Giving more flexibility in setting 
-window size and sampling period would be beneficial.
-
->> Also, about possible DoS attacks - file permissions for
->> /proc/pressure/... can be set such that not any random user can register
->> to psi events right?
-> True. We have a CAP_SYS_RESOURCE check for the writers of these files.
->
->>>> "
->>>>
->>>> 4. Detecting increase in memory demand b   when a certain usecase starts
->>>> in VM that does memory allocations, it will stall causing PSI mechanism
->>>> to generate a memory pressure event to userspace. To simply put, when
->>>> pressure increases certain set threshold, it can make educated guess
->>>> that a memory requiring usecase has ran and VM system needs memory to be
->>>> added.
->>>>
->>>> "
->>>>
->>>> [1]
->>>> https://lore.kernel.org/linux-arm-kernel/1bf30145-22a5-cc46-e583-25053460b105@redhat.com/T/#m95ccf038c568271e759a277a08b8e44e51e8f90b
->>>>
->>>>> Thanks,
->>>>> Suren.
->>>>>
->>>>>> For lightweight systems such as Linux Embedded Systems, PSI
->>>>>> can be used to monitor and track memory pressure building up
->>>>>> in the system and respond quickly to such memory demands.
->>>>>> Example, the Linux Embedded Systems could be a secondary VM
->>>>>> system which requests for memory from Primary host. With 500ms
->>>>>> window size, the sampling period is 50ms (one-tenth of windwo
->>>>>> size). So the minimum amount of time the process needs to stall,
->>>>>> so that a PSI event can be generated and actions can be done
->>>>>> is 50ms. This reaction time can be much reduced by reducing the
->>>>>> sampling time (by reducing window size), so that responses to
->>>>>> such memory pressures in system can be serviced much quicker.
->>>>>>
->>>>>> Please let us know your thoughts on reducing window size to 50ms.
->>>>>>
->>>>>> Sudarshan Rajagopalan (1):
->>>>>>      psi: reduce min window size to 50ms
->>>>>>
->>>>>>     kernel/sched/psi.c | 2 +-
->>>>>>     1 file changed, 1 insertion(+), 1 deletion(-)
->>>>>>
->>>>>> --
->>>>>> 2.7.4
->>>>>>
+> diff --git a/drivers/remoteproc/qcom_common.h b/drivers/remoteproc/qcom_common.h
+> index c35adf730be0..2747c7d9ba44 100644
+> --- a/drivers/remoteproc/qcom_common.h
+> +++ b/drivers/remoteproc/qcom_common.h
+> @@ -6,6 +6,7 @@
+>   #include "remoteproc_internal.h"
+>   #include <linux/soc/qcom/qmi.h>
+>   
+> +struct qcom_glink_smem;
+>   struct qcom_sysmon;
+>   
+>   struct qcom_rproc_glink {
+> @@ -15,7 +16,7 @@ struct qcom_rproc_glink {
+>   
+>   	struct device *dev;
+>   	struct device_node *node;
+> -	struct qcom_glink *edge;
+> +	struct qcom_glink_smem *edge;
+>   };
+>   
+>   struct qcom_rproc_subdev {
+> diff --git a/drivers/rpmsg/qcom_glink_smem.c b/drivers/rpmsg/qcom_glink_smem.c
+> index 579bc4443f6d..a9c477df4d68 100644
+> --- a/drivers/rpmsg/qcom_glink_smem.c
+> +++ b/drivers/rpmsg/qcom_glink_smem.c
+> @@ -33,6 +33,14 @@
+>   #define SMEM_GLINK_NATIVE_XPRT_FIFO_0		479
+>   #define SMEM_GLINK_NATIVE_XPRT_FIFO_1		480
+>   
+> +struct qcom_glink_smem {
+> +	struct device dev;
+> +
+> +	struct qcom_glink *glink;
+> +
+> +	u32 remote_pid;
+> +};
+> +
+>   struct glink_smem_pipe {
+>   	struct qcom_glink_pipe native;
+>   
+> @@ -41,7 +49,7 @@ struct glink_smem_pipe {
+>   
+>   	void *fifo;
+>   
+> -	int remote_pid;
+> +	struct qcom_glink_smem *smem;
+>   };
+>   
+>   #define to_smem_pipe(p) container_of(p, struct glink_smem_pipe, native)
+> @@ -49,13 +57,14 @@ struct glink_smem_pipe {
+>   static size_t glink_smem_rx_avail(struct qcom_glink_pipe *np)
+>   {
+>   	struct glink_smem_pipe *pipe = to_smem_pipe(np);
+> +	struct qcom_glink_smem *smem = pipe->smem;
+>   	size_t len;
+>   	void *fifo;
+>   	u32 head;
+>   	u32 tail;
+>   
+>   	if (!pipe->fifo) {
+> -		fifo = qcom_smem_get(pipe->remote_pid,
+> +		fifo = qcom_smem_get(smem->remote_pid,
+>   				     SMEM_GLINK_NATIVE_XPRT_FIFO_1, &len);
+>   		if (IS_ERR(fifo)) {
+>   			pr_err("failed to acquire RX fifo handle: %ld\n",
+> @@ -179,14 +188,17 @@ static void glink_smem_tx_write(struct qcom_glink_pipe *glink_pipe,
+>   
+>   static void qcom_glink_smem_release(struct device *dev)
+>   {
+> -	kfree(dev);
+> +	struct qcom_glink_smem *smem = container_of(dev, struct qcom_glink_smem, dev);
+> +
+> +	kfree(smem);
+>   }
+>   
+> -struct qcom_glink *qcom_glink_smem_register(struct device *parent,
+> -					    struct device_node *node)
+> +struct qcom_glink_smem *qcom_glink_smem_register(struct device *parent,
+> +						 struct device_node *node)
+>   {
+>   	struct glink_smem_pipe *rx_pipe;
+>   	struct glink_smem_pipe *tx_pipe;
+> +	struct qcom_glink_smem *smem;
+>   	struct qcom_glink *glink;
+>   	struct device *dev;
+>   	u32 remote_pid;
+> @@ -194,10 +206,12 @@ struct qcom_glink *qcom_glink_smem_register(struct device *parent,
+>   	size_t size;
+>   	int ret;
+>   
+> -	dev = kzalloc(sizeof(*dev), GFP_KERNEL);
+> -	if (!dev)
+> +	smem = kzalloc(sizeof(*smem), GFP_KERNEL);
+> +	if (!smem)
+>   		return ERR_PTR(-ENOMEM);
+>   
+> +	dev = &smem->dev;
+> +
+>   	dev->parent = parent;
+>   	dev->of_node = node;
+>   	dev->release = qcom_glink_smem_release;
+> @@ -216,6 +230,8 @@ struct qcom_glink *qcom_glink_smem_register(struct device *parent,
+>   		goto err_put_dev;
+>   	}
+>   
+> +	smem->remote_pid = remote_pid;
+> +
+>   	rx_pipe = devm_kzalloc(dev, sizeof(*rx_pipe), GFP_KERNEL);
+>   	tx_pipe = devm_kzalloc(dev, sizeof(*tx_pipe), GFP_KERNEL);
+>   	if (!rx_pipe || !tx_pipe) {
+> @@ -264,14 +280,14 @@ struct qcom_glink *qcom_glink_smem_register(struct device *parent,
+>   		goto err_put_dev;
+>   	}
+>   
+> +	rx_pipe->smem = smem;
+>   	rx_pipe->native.avail = glink_smem_rx_avail;
+>   	rx_pipe->native.peak = glink_smem_rx_peak;
+>   	rx_pipe->native.advance = glink_smem_rx_advance;
+> -	rx_pipe->remote_pid = remote_pid;
+>   
+> +	tx_pipe->smem = smem;
+>   	tx_pipe->native.avail = glink_smem_tx_avail;
+>   	tx_pipe->native.write = glink_smem_tx_write;
+> -	tx_pipe->remote_pid = remote_pid;
+>   
+>   	*rx_pipe->tail = 0;
+>   	*tx_pipe->head = 0;
+> @@ -285,7 +301,10 @@ struct qcom_glink *qcom_glink_smem_register(struct device *parent,
+>   		goto err_put_dev;
+>   	}
+>   
+> -	return glink;
+> +	smem->glink = glink;
+> +
+> +	return smem;
+> +
+>   
+>   err_put_dev:
+>   	device_unregister(dev);
+> @@ -294,8 +313,10 @@ struct qcom_glink *qcom_glink_smem_register(struct device *parent,
+>   }
+>   EXPORT_SYMBOL_GPL(qcom_glink_smem_register);
+>   
+> -void qcom_glink_smem_unregister(struct qcom_glink *glink)
+> +void qcom_glink_smem_unregister(struct qcom_glink_smem *smem)
+>   {
+> +	struct qcom_glink *glink = smem->glink;
+> +
+>   	qcom_glink_native_remove(glink);
+>   	qcom_glink_native_unregister(glink);
+>   }
+> diff --git a/include/linux/rpmsg/qcom_glink.h b/include/linux/rpmsg/qcom_glink.h
+> index 22fc3a69b683..bfbd48f435fa 100644
+> --- a/include/linux/rpmsg/qcom_glink.h
+> +++ b/include/linux/rpmsg/qcom_glink.h
+> @@ -5,7 +5,7 @@
+>   
+>   #include <linux/device.h>
+>   
+> -struct qcom_glink;
+> +struct qcom_glink_smem;
+>   
+>   #if IS_ENABLED(CONFIG_RPMSG_QCOM_GLINK)
+>   void qcom_glink_ssr_notify(const char *ssr_name);
+> @@ -15,20 +15,20 @@ static inline void qcom_glink_ssr_notify(const char *ssr_name) {}
+>   
+>   #if IS_ENABLED(CONFIG_RPMSG_QCOM_GLINK_SMEM)
+>   
+> -struct qcom_glink *qcom_glink_smem_register(struct device *parent,
+> -					    struct device_node *node);
+> -void qcom_glink_smem_unregister(struct qcom_glink *glink);
+> +struct qcom_glink_smem *qcom_glink_smem_register(struct device *parent,
+> +						 struct device_node *node);
+> +void qcom_glink_smem_unregister(struct qcom_glink_smem *glink);
+>   
+>   #else
+>   
+> -static inline struct qcom_glink *
+> +static inline struct qcom_glink_smem *
+>   qcom_glink_smem_register(struct device *parent,
+>   			 struct device_node *node)
+>   {
+>   	return NULL;
+>   }
+>   
+> -static inline void qcom_glink_smem_unregister(struct qcom_glink *glink) {}
+> +static inline void qcom_glink_smem_unregister(struct qcom_glink_smem *glink) {}
+>   #endif
+>   
+>   #endif
