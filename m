@@ -2,195 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C091C696974
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 17:27:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C1503696986
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 17:32:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229956AbjBNQ16 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Feb 2023 11:27:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45044 "EHLO
+        id S231147AbjBNQcF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Feb 2023 11:32:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229923AbjBNQ15 (ORCPT
+        with ESMTP id S229642AbjBNQcE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Feb 2023 11:27:57 -0500
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38D2BCC0B
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 08:27:54 -0800 (PST)
-Received: by mail-ej1-x62a.google.com with SMTP id sa10so41414989ejc.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 08:27:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fvNHQRlfXDnwN7/aozLZXMLlUQIZLqbXP/Yn1Rtm2eI=;
-        b=DeEMDg2dlwqcy+oZi20ihpgqzr5qkR8phwgck4GlvbMhS3jOnC9PjN78z6N68T6Tiv
-         WAsKXcfJNYjZdi8IQ9u8QmXHfzWLb1GPforuCOv5D7qYJOJ5s9Qx16HpqNd2Q4HpSLl5
-         ZJszlcznEEKrNTRqV4bmtuw/FeYDh77SmimqvLF1KbA0hH2WN+Fqr5/1q9BJpzj+Wdfb
-         TtAZgufQKkxplCzeBjF/9PAmmu2uoN7qEZ8URZ9Hs66mBJ99t15/VQHEI2BkOOmMpJWj
-         lePNteSv+cOaidUY5xLYxn3swJ7KSQY9Ae6d8JfGqRp3miRAnIpW69Qw8fhpaBOUpKqY
-         eEeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fvNHQRlfXDnwN7/aozLZXMLlUQIZLqbXP/Yn1Rtm2eI=;
-        b=33BeczYgBh82GHfPUYooazS/lQBS1EZcuoncRDPAFVYg98salnnaVWUs0yDegyZslN
-         vaMuPxsJfwtHWSS9X7NGGZ9Rly5WV6FpHaq0IzVyST9Uptqvi0C+2y16bgisizTZwxJF
-         ZVzFpbOOcHRducAfWmfQYSXYMexqFvum7zY2NsKY2dkNHu6lRoo7iLKCQhDbdM4z0rPS
-         iKNPJFwZDys8YvoKFz39F8zrXxV7K6GaS3IkzRub0kGXOO4jrCshjtbZKV/qOH8n9mWg
-         XAaLxkUiZsmloUWn/OXEZxtZU5GIvWe2vsIEZBfZmILt+bP6Qo5WwBrM9zpaIN44crmM
-         xltA==
-X-Gm-Message-State: AO0yUKXp4LyqGyvIJfbpsIlTk/Bn98cqqDZVI0X79nUNNe6TwZA3j5FI
-        AT6y6DTzIz0vaw06P7iKP4yF/xX7Gzb2Oing
-X-Google-Smtp-Source: AK7set/BAV4TZmiXAFRIXk8igD4wwJ7rJ9t/fiQLbdJ8E/KSeSl+5/e4kFNdvIYXEl92r4d745nreA==
-X-Received: by 2002:a17:906:616:b0:878:4a5e:3a56 with SMTP id s22-20020a170906061600b008784a5e3a56mr3387532ejb.15.1676392072613;
-        Tue, 14 Feb 2023 08:27:52 -0800 (PST)
-Received: from [192.168.1.101] (abxh117.neoplus.adsl.tpnet.pl. [83.9.1.117])
-        by smtp.gmail.com with ESMTPSA id p18-20020a170906839200b008b112db78f9sm2725072ejx.51.2023.02.14.08.27.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Feb 2023 08:27:52 -0800 (PST)
-Message-ID: <e4760caa-2904-7645-920d-cbd07daf657e@linaro.org>
-Date:   Tue, 14 Feb 2023 17:27:50 +0100
+        Tue, 14 Feb 2023 11:32:04 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B45685267;
+        Tue, 14 Feb 2023 08:32:03 -0800 (PST)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31EDYEBV018675;
+        Tue, 14 Feb 2023 16:31:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=a8nZi9u0n1eIFJcXzdA48iqS00QsanwQRwBvLTEtuWg=;
+ b=EniuooVaW40Bscngyik7w6im3HElYj9tuJhe/zH/F7Y1uvtIUCLy/66t8fY2ha2X0j7T
+ 73lB63riviDW80jQKQMeMhNRxK3gWwHTazTCLU0Z3WCDdSsUQDzmmBV5L3QkSEGtPZrE
+ 39YOl8RDIay4hYeJxpJuhJZ8hNbQagnuRaH2iNf6aqCyCqRsSfEeBFe0dQWij/3jUvdo
+ LgBEUz/glkhllZC1rfpj1SW14fJvxkFSp9HhQITOgyVTRGl3wHARxuEitnWg90MBeBph
+ vVy8+CSkSe6TMaSZqF9v1MtTCPtEJqFsI0g3b4X9VWTWd4+GalolYTXhBUCqSynVJaib ag== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nqyygt33m-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 14 Feb 2023 16:31:39 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31EGVcII010403
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 14 Feb 2023 16:31:38 GMT
+Received: from devipriy-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Tue, 14 Feb 2023 08:31:29 -0800
+From:   Devi Priya <quic_devipriy@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <linus.walleij@linaro.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <p.zabel@pengutronix.de>, <shawnguo@kernel.org>, <arnd@arndb.de>,
+        <marcel.ziswiler@toradex.com>, <dmitry.baryshkov@linaro.org>,
+        <nfraprado@collabora.com>, <broonie@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
+        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
+        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_poovendh@quicinc.com>
+Subject: [PATCH V8 0/7] Add minimal boot support for IPQ9574
+Date:   Tue, 14 Feb 2023 22:01:09 +0530
+Message-ID: <20230214163116.9924-1-quic_devipriy@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH v4 00/12] The great interconnecification fixation
-Content-Language: en-US
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org
-Cc:     marijn.suijten@somainline.org, Georgi Djakov <djakov@kernel.org>,
-        linux-pm@vger.kernel.org, lkml <linux-kernel@vger.kernel.org>
-References: <20230214143720.2416762-1-konrad.dybcio@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230214143720.2416762-1-konrad.dybcio@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: mHQVGoCqSHY32sMG7HE0Hq2P19aLNOzm
+X-Proofpoint-GUID: mHQVGoCqSHY32sMG7HE0Hq2P19aLNOzm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-14_11,2023-02-14_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
+ impostorscore=0 malwarescore=0 adultscore=0 mlxlogscore=705 mlxscore=0
+ priorityscore=1501 lowpriorityscore=0 spamscore=0 bulkscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302140140
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-+CC Georgi, linux-pm, linux-kernel (thanks git send-email for not including these)
+The IPQ9574 is Qualcomm's 802.11ax SoC for Routers,
+Gateways and Access Points
 
-On 14.02.2023 15:37, Konrad Dybcio wrote:
-> Hi!
-> 
-> v3 -> v4 changelog:
-> - Drop "Always set QoS params on QNoC", it only causes issues.. this
->   can be investigated another day, as it's not necessary for operation
-> 
-> - Drop "Add a way to always set QoS registers", same as /\
-> 
-> - Add a way (and use it) to have no bus_clocks (the ones we set rate on),
->   as at least msm8996 has a bus (A0NoC) that doesn't have any and does
->   all the scaling through RPM requests
-> 
-> - Promote 8996 icc to core_initcall
-> 
-> - Introduce keep_alive (see patch [11/12]) (important!, will be used by at least 6375)
-> 
-> - Allow negative QoS offsets in preparation for introducing 8998 icc [12/12]
-> 
-> Link to v3: https://lore.kernel.org/linux-arm-msm/20230116132152.405535-1-konrad.dybcio@linaro.org/
-> 
-> v2 -> v3 changelog:
-> - Drop "Don't set QoS params before non-zero bw is requested"
-> 
-> - Rebase on next
-> 
-> - [1/9] ("..make QoS INVALID default.."): remove unused define for
->   MODE_INVALID_VAL
-> 
-> - Pick up tags
-> 
-> v1 -> v2 changelog:
-> - reorder "make QoS INVALID default", makes more sense to have it
->   before "Always set QoS params on QNoC"
-> 
-> - Limit ap_owned-independent QoS setting to QNoC only
-> 
-> - Add new patches for handling the 8996-and-friends clocks situation
->   and optional BIMC regardless-of-ap_owned QoS programming
-> 
-> 
-> [1] https://lore.kernel.org/linux-arm-msm/14e06574-f95e-8960-0243-8c95a1c294e9@linaro.org/T/#m056692bea71d4c272968d5e07afbd9eb07a88123
-> [2] https://lore.kernel.org/linux-arm-msm/20230110132202.956619-1-konrad.dybcio@linaro.org/
-> 
-> This series grew quite a bit bigger than the previous [1] attempt, so
-> I decided to also add a cover letter.
-> 
-> Link to v2: [2]
-> 
-> It addresses a few things that were not quite right:
-> 
-> - Setting QoS params before a "real" (non-zero) bandwidth request
->   makes little sense (since there's no data supposed to flow through
->   the bus, why would the QoS matter) and (at least newer) downstream
->   prevents that from happening. Do the same in Patch 1.
-> 
-> - QNoC type buses expect to always have their QoS registers set as long
->   as there's a non-INVALID QoS mode set; ap_owned is not really a thing
->   on these anymore, Patch 3 handles that.
-> 
-> - The recent MSM8996 boot fix was done quickly and not quite properly,
->   leading to possibly setting the aggregate bus rate on "normal"
->   hardware interface clocks; this series handles that by limiting the
->   number of bus_clocks to 2 (which is the maximum that makes sense,
->   anyway) and handling the rest as "intf_clocks", which are required
->   to access the   hardware at the other end. Patches 5-8 take care of
->   that and Patch 10 reverts the _optional moniker in clk_get_ to make
->   sure we always have the bus scaling clocks, as they're well, kind
->   of important ;)
-> 
-> - Similarly to QNoC, BIMC on "newer" (which can be loosely approximated
->   by "new enough" == "has only BIMC and QNoC hosts") SoCs expects to
->   always receive QoS programming, whereas BIMC on "older" SoCs cries
->   like a wild boar and crashes the platform when trying to do so
->   unconditionally. Patch 9 adds a way to take care of that for newer
->   SoCs (like SM6375)
-> 
-> - QoS mode INVALID was assumed by developers before to be the default
->   ("I didn't specify any QoS settings, so the driver can't assume I
->   did.. right? right!?" - wrong, partial struct initialization led to
->   0 being set and 0 corresponded to QoS mode FIXED). Make it so, as
->   that's the logical choice. This allows the "Always set QoS params
->   on QNoC" patch to work without setting tons of what-should-
->   -obviously-be-the-default values everywhere, as well as fixes older
->   drivers that set ap_owned = true but left the QoS mode field unset.
->   Patch 2 cleans that up.
-> 
-> - Some nodes are physically connected over more than one channel
->   (usually DDR or other high-throughput paths). Patch 4 allows that
->   to be reflected in calculations. This will be required for at least
->   MSM8998 and SM6375 (which will be submitted soon after this lands)
-> 
-> 
-> Konrad Dybcio (12):
->   interconnect: qcom: rpm: make QoS INVALID default, separate out driver
->     data
->   interconnect: qcom: rpm: Add support for specifying channel num
->   interconnect: qcom: Sort kerneldoc entries
->   interconnect: qcom: rpm: Rename icc desc clocks to bus_blocks
->   interconnect: qcom: rpm: Rename icc provider num_clocks to
->     num_bus_clocks
->   interconnect: qcom: rpm: Handle interface clocks
->   interconnect: qcom: icc-rpm: Allow negative num_bus_clocks
->   interconnect: qcom: msm8996: Specify no bus clock scaling on A0NoC
->   interconnect: qcom: rpm: Don't use clk_get_optional for bus clocks
->     anymore
->   interconnect: qcom: msm8996: Promote to core_initcall
->   interconnect: qcom: icc-rpm: Introduce keep_alive
->   interconnect: qcom: icc-rpm: Allow negative QoS offset
-> 
->  drivers/interconnect/qcom/icc-rpm.c | 101 ++++++++++++++++++++--------
->  drivers/interconnect/qcom/icc-rpm.h |  41 +++++++----
->  drivers/interconnect/qcom/msm8996.c |  35 ++++++----
->  drivers/interconnect/qcom/sdm660.c  |  16 ++---
->  4 files changed, 126 insertions(+), 67 deletions(-)
-> 
+This series adds minimal board boot support for ipq9574-al02-c7 board
+
+V7 can be found at:
+https://lore.kernel.org/linux-arm-kernel/20230206103337.21000-1-quic_devipriy@quicinc.com/
+
+Change logs are added to the respective patches
+
+Devi Priya (7):
+  dt-bindings: clock: Add ipq9574 clock and reset definitions
+  clk: qcom: Add Global Clock Controller driver for IPQ9574
+  dt-bindings: pinctrl: qcom: Add support for IPQ9574
+  pinctrl: qcom: Add IPQ9574 pinctrl driver
+  dt-bindings: arm: qcom: Add ipq9574 compatible
+  arm64: dts: qcom: Add ipq9574 SoC and AL02 board support
+  arm64: defconfig: Enable IPQ9574 SoC base configs
+
+ .../devicetree/bindings/arm/qcom.yaml         |    7 +
+ .../bindings/clock/qcom,ipq9574-gcc.yaml      |   61 +
+ .../bindings/pinctrl/qcom,ipq9574-tlmm.yaml   |  130 +
+ arch/arm64/boot/dts/qcom/Makefile             |    1 +
+ arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dts  |   84 +
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi         |  270 ++
+ arch/arm64/configs/defconfig                  |    2 +
+ drivers/clk/qcom/Kconfig                      |    8 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/gcc-ipq9574.c                | 4248 +++++++++++++++++
+ drivers/pinctrl/qcom/Kconfig                  |   11 +
+ drivers/pinctrl/qcom/Makefile                 |    1 +
+ drivers/pinctrl/qcom/pinctrl-ipq9574.c        |  828 ++++
+ include/dt-bindings/clock/qcom,ipq9574-gcc.h  |  213 +
+ include/dt-bindings/reset/qcom,ipq9574-gcc.h  |  164 +
+ 15 files changed, 6029 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,ipq9574-gcc.yaml
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,ipq9574-tlmm.yaml
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq9574.dtsi
+ create mode 100644 drivers/clk/qcom/gcc-ipq9574.c
+ create mode 100644 drivers/pinctrl/qcom/pinctrl-ipq9574.c
+ create mode 100644 include/dt-bindings/clock/qcom,ipq9574-gcc.h
+ create mode 100644 include/dt-bindings/reset/qcom,ipq9574-gcc.h
+
+
+base-commit: 3ebb0ac55efaf1d0fb1b106f852c114e5021f7eb
+-- 
+2.17.1
+
