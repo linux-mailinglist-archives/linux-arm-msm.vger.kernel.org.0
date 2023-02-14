@@ -2,114 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 76B69696A6F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 17:57:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AA99E696B54
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 18:21:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232785AbjBNQ5y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Feb 2023 11:57:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49252 "EHLO
+        id S229827AbjBNRVp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Feb 2023 12:21:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48682 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232735AbjBNQ5w (ORCPT
+        with ESMTP id S230171AbjBNRV2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Feb 2023 11:57:52 -0500
-Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2B815BB3;
-        Tue, 14 Feb 2023 08:57:51 -0800 (PST)
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
-        by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31EGXnJi018990;
-        Tue, 14 Feb 2023 16:57:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type : content-transfer-encoding; s=corp-2022-7-12;
- bh=dz81OhsNO6aG2TXXZVXYeGU00TuEu+Wx+1CJuDXwkc0=;
- b=lojJrtpfrq3UMSWB+ypaBVRgGsKQhZ+me8O/jwd6k8FAOGX+MD8K7PZPEJoOengEDC9N
- Qn/UUTy2+IU52B35vbkUgrl08zcUSW5VLfqxefC2eSMGlPQSWJO/1JaxF3ZASIeO1cYX
- V7j4zzcH0KA/Oc7+pM6Bwi5z65+ozCaJbYQMGDuESNLTp1hu5Z8LKwrbVIwxrKyDf4DD
- JIFCtlYoLuhzB6r5Qj8KBT+0hxfoBsw8bMhz43Ql+Q4wyKQQDlL7fWzhIkNYjKzLzVJD
- oIXQEdaKrxKrkL+eOW7RJHqXaU9AXK9YR2j2U9sdFkvAhOYht1EaqaIo5rQiZOB+pRuc 5g== 
-Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
-        by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3np1t3dxmh-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Tue, 14 Feb 2023 16:57:42 +0000
-Received: from pps.filterd (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
-        by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.5/8.17.1.5) with ESMTP id 31EGr8Bd009572;
-        Tue, 14 Feb 2023 16:57:41 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 3np1f5uuft-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Tue, 14 Feb 2023 16:57:41 +0000
-Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 31EGuHob039739;
-        Tue, 14 Feb 2023 16:57:40 GMT
-Received: from ca-mkp2.ca.oracle.com.com (mpeterse-ol9.allregionaliads.osdevelopmeniad.oraclevcn.com [100.100.251.135])
-        by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id 3np1f5uuff-1;
-        Tue, 14 Feb 2023 16:57:40 +0000
-From:   "Martin K. Petersen" <martin.petersen@oracle.com>
-To:     Manivannan Sadhasivam <mani@kernel.org>,
+        Tue, 14 Feb 2023 12:21:28 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C4C1E3;
+        Tue, 14 Feb 2023 09:21:23 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 9D2AB61779;
+        Tue, 14 Feb 2023 17:21:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5362C433EF;
+        Tue, 14 Feb 2023 17:21:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1676395282;
+        bh=PqGwx2dYT6XLwA/BD+6gzTUQqPBIcR94mqfkmP5SHjU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=bWFtBcpAwOCoI2UGwpVx7yeWqM768vkfp0VCzVWKa0QyqGW14iJFwovPhiW5v3avR
+         SZp0Ls/sziy7Gc9Sz35ffictb+hZ8u+FjSV20nA9gi3OkhbryERqI4Z9FJ64TBSgZ2
+         bsf7rbsuBdJaGCKKqOr4+Xb4kZn27d+X3M/Qv2+2Muip0+ueICVVTXnnS1alg0RUxs
+         DOfWrTBU5YYLHPUEfpUcyhO+3CrhO5+P+3IGIArTK7QeK1wA+eY6CwAuk/NHVtLAAB
+         +2ce18ol06uxO4HHiKu9SeZHNxkxVgKlPZVO1gu8kd0aNMZ8esV3oyrPhNCjWdg4QR
+         Vf3NZ+lkmPqGA==
+Date:   Tue, 14 Feb 2023 09:23:25 -0800
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Elliot Berman <quic_eberman@quicinc.com>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        "James E . J . Bottomley" <jejb@linux.ibm.com>,
-        Abel Vesa <abel.vesa@linaro.org>
-Cc:     "Martin K . Petersen" <martin.petersen@oracle.com>,
-        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2 0/2] ufs: host: ufs-qcom: Add support for SM8550
-Date:   Tue, 14 Feb 2023 11:57:27 -0500
-Message-Id: <167639371072.486235.1047022414059999681.b4-ty@oracle.com>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230119151406.4168685-1-abel.vesa@linaro.org>
-References: <20230119151406.4168685-1-abel.vesa@linaro.org>
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Arnd Bergmann <arnd@arndb.de>, Kalle Valo <kvalo@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
+        netdev@vger.kernel.org, linux-remoteproc@vger.kernel.org
+Subject: Re: [PATCH] firmware: qcom_scm: Use fixed width src vm bitmap
+Message-ID: <20230214172325.lplxgbprhj3bzvr3@ripper>
+References: <20230213181832.3489174-1-quic_eberman@quicinc.com>
+ <20230213214417.mtcpeultvynyls6s@ripper>
+ <Y+tNRPf0PGdShf5l@kroah.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-14_11,2023-02-14_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0 phishscore=0
- suspectscore=0 mlxscore=0 spamscore=0 mlxlogscore=854 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302140144
-X-Proofpoint-GUID: r0qb58Ac7h194BwyVh0X3fL_401ZDmc5
-X-Proofpoint-ORIG-GUID: r0qb58Ac7h194BwyVh0X3fL_401ZDmc5
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y+tNRPf0PGdShf5l@kroah.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 19 Jan 2023 17:14:04 +0200, Abel Vesa wrote:
-
-> This patchset adds UFS HC support for the new Qualcomm SM8550 SoC.
+On Tue, Feb 14, 2023 at 09:58:44AM +0100, Greg Kroah-Hartman wrote:
+> On Mon, Feb 13, 2023 at 01:44:17PM -0800, Bjorn Andersson wrote:
+> > On Mon, Feb 13, 2023 at 10:18:29AM -0800, Elliot Berman wrote:
+> > > The maximum VMID for assign_mem is 63. Use a u64 to represent this
+> > > bitmap instead of architecture-dependent "unsigned int" which varies in
+> > > size on 32-bit and 64-bit platforms.
+> > > 
+> > > Acked-by: Kalle Valo <kvalo@kernel.org> (ath10k)
+> > > Tested-by: Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
+> > > Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> > 
+> > Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+> > 
+> > @Greg, would you mind taking this through your tree for v6.3, you
+> > already have a related change in fastrpc.c in your tree...
 > 
-> The v1 was here:
-> https://lore.kernel.org/all/20221116121732.2731448-1-abel.vesa@linaro.org/
+> I tried, but it doesn't apply to my char-misc tree at all:
 > 
-> Changes since v1:
->  * replaced REG_UFS_PA_LINK_STARTUP_TIMER with REG_UFS_CFG0 and added a
->    comment saying that the older version use the first name as reg name
->  * moved QUNIPRO_G4_SEL in a separate section dedicated to CFG0 bits
->  * forces the update_link_startup_timer condition to be skipped in case
->    of HW version 5.x
+> checking file drivers/firmware/qcom_scm.c
+> Hunk #1 succeeded at 898 (offset -7 lines).
+> Hunk #2 succeeded at 915 (offset -7 lines).
+> Hunk #3 succeeded at 930 (offset -7 lines).
+> checking file drivers/misc/fastrpc.c
+> checking file drivers/net/wireless/ath/ath10k/qmi.c
+> checking file drivers/remoteproc/qcom_q6v5_mss.c
+> Hunk #1 succeeded at 227 (offset -8 lines).
+> Hunk #2 succeeded at 404 (offset -10 lines).
+> Hunk #3 succeeded at 939 with fuzz 1 (offset -28 lines).
+> checking file drivers/remoteproc/qcom_q6v5_pas.c
+> Hunk #1 FAILED at 94.
+> 1 out of 1 hunk FAILED
+> checking file drivers/soc/qcom/rmtfs_mem.c
+> Hunk #1 succeeded at 30 (offset -1 lines).
+> can't find file to patch at input line 167
+> Perhaps you used the wrong -p or --strip option?
+> The text leading up to this was:
+> --------------------------
+> |diff --git a/include/linux/firmware/qcom/qcom_scm.h
+> b/include/linux/firmware/qcom/qcom_scm.h
+> |index 1e449a5d7f5c..250ea4efb7cb 100644
+> |--- a/include/linux/firmware/qcom/qcom_scm.h
+> |+++ b/include/linux/firmware/qcom/qcom_scm.h
+> --------------------------
 > 
-> [...]
+> What tree is this patch made against?
+> 
 
-Applied to 6.3/scsi-queue, thanks!
+Sorry about that, I missed the previous changes in qcom_q6v5_pas in the
+remoteproc tree. Elliot said he based it on linux-next, so I expect that
+it will merge fine on top of -rc1, once that arrives.
 
-[1/2] scsi: ufs: ufs-qcom: Clear qunipro_g4_sel for HW version major 5
-      https://git.kernel.org/mkp/scsi/c/9c02aa24bf40
-[2/2] dt-bindings: ufs: qcom: Add SM8550 compatible string
-      https://git.kernel.org/mkp/scsi/c/b8c203891121
-
--- 
-Martin K. Petersen	Oracle Linux Engineering
+Regards,
+Bjorn
