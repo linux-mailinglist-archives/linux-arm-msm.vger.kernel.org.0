@@ -2,249 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D328695CEF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 09:28:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 756E8695DBF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 09:58:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232006AbjBNI2m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Feb 2023 03:28:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35688 "EHLO
+        id S231833AbjBNI6u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Feb 2023 03:58:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232008AbjBNI2l (ORCPT
+        with ESMTP id S231768AbjBNI6t (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Feb 2023 03:28:41 -0500
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9CD6A26E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 00:28:38 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id s13-20020a05600c45cd00b003ddca7a2bcbso5551635wmo.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 00:28:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=J4OTbvAyDNRuQNPpEdEO/ch9kURlca8zCvaPs3Ht8yY=;
-        b=regc07LLlR85Obo2IjGB3+meMxxtgoUllAqj+sEICOZyRttPY0h7P89DTb2Sweosi5
-         hKUTEv35w3u+OQ4OLRDbfNAJtR5pq76Mj8wmlaoRxZmtFLmXcmk3jTmFNWZjcMKTL62m
-         c2dPGkg1oED/zjQUWvN1WDgP6GDl2G+l++PisckTBEoL/pXAPyDIm+6Omka4ujh14EBg
-         skJFgD89pOURxOP/Ry2aehXmlCkxus4NW8bmDEr5uiabfqXv3UgDhYJriHCYNvgE09lr
-         e43H1Sd5EoWkHRBCfs1n6C2IlpFj53Z91wuoztI8tgo6OYOlUaH178/FKwpK6krh3uKg
-         kVzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=J4OTbvAyDNRuQNPpEdEO/ch9kURlca8zCvaPs3Ht8yY=;
-        b=pa8zw080RCQiyokMqwJeNZdNPM2WiRT12CdFK0n97knE+vj5jJOBhuB9mhlYdpZq51
-         laJEbi9hRqdoV0mNh7k+g9rF4BGUXjVfKpL4Wnk5TNL7x3VIS7fSS0y2eJWV860blGyV
-         K4G+aOiM9/8ZzuwjD11lu+5/Li65Q88KkfwkABOEw7c3lrQxDv8ftH/5Uk/hUyCq9laz
-         wZQyRYbS26RxtrI9K2CxeoHRA+G2IPDniZ9p5/leQuzjDu/qG6y34pk2ykh8o9rlDxDR
-         4maudnY72GStxbWhZ3GMxa8JMh3V6RK+foFAwHoPdPjJQBDVkmeB21JkDJ/EEYKGrDM5
-         wVgw==
-X-Gm-Message-State: AO0yUKXC7h5ReJ8kquzgMIZF9n+hOlrRHvrspxARYQP3df2RraYQhD4A
-        WRqIPjOrispQDHvUm+x06TAkXA==
-X-Google-Smtp-Source: AK7set/+0Q9mSK4x5OCo4ro65AiB0eTqg69bnbvds4LDkrWCfEonZr+/Syx4ot9MC8pY52xE99sgMA==
-X-Received: by 2002:a05:600c:3acd:b0:3d3:4f99:bb32 with SMTP id d13-20020a05600c3acd00b003d34f99bb32mr1209415wms.36.1676363317183;
-        Tue, 14 Feb 2023 00:28:37 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id bg30-20020a05600c3c9e00b003db012d49b7sm2232707wmb.2.2023.02.14.00.28.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Feb 2023 00:28:36 -0800 (PST)
-Message-ID: <aba45ae9-8558-50c1-e5ad-dd910dacdbb3@linaro.org>
-Date:   Tue, 14 Feb 2023 09:28:34 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH 5/9] dt-bindings: remoteproc: mpss: Document
- QDU1000/QRU1000 mpss devices
-Content-Language: en-US
-To:     Melody Olvera <quic_molvera@quicinc.com>,
+        Tue, 14 Feb 2023 03:58:49 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7AB7126D8;
+        Tue, 14 Feb 2023 00:58:47 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4A987614B5;
+        Tue, 14 Feb 2023 08:58:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52427C433EF;
+        Tue, 14 Feb 2023 08:58:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1676365126;
+        bh=2Mx33+vREW0hBWChvR3fhbCd1ACURr0Cnsk5gvIAps8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=MFW/w0XIdOIS1xNdLpuQS1+t4sw4dF5SJ4dUA1yOgIw+87cFeBAm1ycOmkgBbrkqD
+         Va2135tatjWfeTK3GAmD3M2I+BFrG7cYzuB4bWjAdMCC+WLDe0ElhDbboV0iaXjB+K
+         USC5sF/TgKzw5dYvLQ+vQoVpKl9fWJInENMtDnEY=
+Date:   Tue, 14 Feb 2023 09:58:44 +0100
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Elliot Berman <quic_eberman@quicinc.com>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Arnd Bergmann <arnd@arndb.de>, Kalle Valo <kvalo@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
         Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Robert Marko <robimarko@gmail.com>,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org
-References: <20230213185218.166520-1-quic_molvera@quicinc.com>
- <20230213185218.166520-6-quic_molvera@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230213185218.166520-6-quic_molvera@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
+        netdev@vger.kernel.org, linux-remoteproc@vger.kernel.org
+Subject: Re: [PATCH] firmware: qcom_scm: Use fixed width src vm bitmap
+Message-ID: <Y+tNRPf0PGdShf5l@kroah.com>
+References: <20230213181832.3489174-1-quic_eberman@quicinc.com>
+ <20230213214417.mtcpeultvynyls6s@ripper>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230213214417.mtcpeultvynyls6s@ripper>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/02/2023 19:52, Melody Olvera wrote:
-> This documents the compatible for the component used to boot the
-> MPSS on the QDU1000 and QRU1000 SoCs.
+On Mon, Feb 13, 2023 at 01:44:17PM -0800, Bjorn Andersson wrote:
+> On Mon, Feb 13, 2023 at 10:18:29AM -0800, Elliot Berman wrote:
+> > The maximum VMID for assign_mem is 63. Use a u64 to represent this
+> > bitmap instead of architecture-dependent "unsigned int" which varies in
+> > size on 32-bit and 64-bit platforms.
+> > 
+> > Acked-by: Kalle Valo <kvalo@kernel.org> (ath10k)
+> > Tested-by: Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
+> > Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 > 
-> The QDU1000 and QRU1000 mpss boot process now requires the specification
-> of an RMB register space to complete the handshake needed to start or
-> attach the mpss.
+> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 > 
-> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
-> ---
->  .../bindings/remoteproc/qcom,qdu1000-pas.yaml | 127 ++++++++++++++++++
->  1 file changed, 127 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,qdu1000-pas.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,qdu1000-pas.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,qdu1000-pas.yaml
-> new file mode 100644
-> index 000000000000..eb6ade984778
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,qdu1000-pas.yaml
-> @@ -0,0 +1,127 @@
-> +# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/remoteproc/qcom,qdu1000-pas.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm QDU1000 Peripheral Authentication Service
-> +
-> +maintainers:
-> +  - Melody Olvera <quic_molvera@quicinc.com>
-> +
-> +description:
-> +  Qualcomm QDU1000 SoC Peripheral Authentication Service loads and boots firmware
-> +  on the Qualcomm DSP Hexagon cores.
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,qdu1000-mpss-pas
+> @Greg, would you mind taking this through your tree for v6.3, you
+> already have a related change in fastrpc.c in your tree...
 
-What about other remote processors? The subject prefix suggests it is
-only for mpss, but filename is different.
+I tried, but it doesn't apply to my char-misc tree at all:
 
-> +
-> +  reg:
-> +    maxItems: 2
-> +
-> +  clocks:
-> +    items:
-> +      - description: XO clock
-> +
-> +  clock-names:
-> +    items:
-> +      - const: xo
-> +
-> +  qcom,qmp:
-> +    $ref: /schemas/types.yaml#/definitions/phandle
-> +    description: Reference to the AOSS side-channel message RAM.
-> +
-> +  smd-edge: false
-> +
-> +  firmware-name:
-> +    $ref: /schemas/types.yaml#/definitions/string-array
-> +    items:
-> +      - description: Firmware name of the Hexagon core
-> +      - description: Firmware name of the Hexagon Devicetree
-> +
-> +  memory-region:
-> +    items:
-> +      - description: Memory region for main Firmware authentication
-> +      - description: Memory region for Devicetree Firmware authentication
-> +      - description: DSM Memory region
-> +
-> +  interrupts:
-> +    minItems: 6
-> +
-> +  interrupt-names:
-> +    minItems: 6
-> +
-> +  interconnects:
-> +    minItems: 1
+checking file drivers/firmware/qcom_scm.c
+Hunk #1 succeeded at 898 (offset -7 lines).
+Hunk #2 succeeded at 915 (offset -7 lines).
+Hunk #3 succeeded at 930 (offset -7 lines).
+checking file drivers/misc/fastrpc.c
+checking file drivers/net/wireless/ath/ath10k/qmi.c
+checking file drivers/remoteproc/qcom_q6v5_mss.c
+Hunk #1 succeeded at 227 (offset -8 lines).
+Hunk #2 succeeded at 404 (offset -10 lines).
+Hunk #3 succeeded at 939 with fuzz 1 (offset -28 lines).
+checking file drivers/remoteproc/qcom_q6v5_pas.c
+Hunk #1 FAILED at 94.
+1 out of 1 hunk FAILED
+checking file drivers/soc/qcom/rmtfs_mem.c
+Hunk #1 succeeded at 30 (offset -1 lines).
+can't find file to patch at input line 167
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/include/linux/firmware/qcom/qcom_scm.h
+b/include/linux/firmware/qcom/qcom_scm.h
+|index 1e449a5d7f5c..250ea4efb7cb 100644
+|--- a/include/linux/firmware/qcom/qcom_scm.h
+|+++ b/include/linux/firmware/qcom/qcom_scm.h
+--------------------------
 
-You can drop the property. It's coming from qcom,pas-common.yaml
+What tree is this patch made against?
 
-> +
-> +  power-domains:
-> +    items:
-> +      - description: CX power domain
-> +      - description: MSS power domain
-> +
-> +  power-domain-names:
-> +    items:
-> +      - const: cx
-> +      - const: mss
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +
-> +allOf:
-> +  - $ref: /schemas/remoteproc/qcom,pas-common.yaml#
-> +
-> +unevaluatedProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,rpmh.h>
-> +    #include <dt-bindings/interrupt-controller/irq.h>
-> +    #include <dt-bindings/mailbox/qcom-ipcc.h>
-> +
-> +    remoteproc@4080000 {
-> +        compatible = "qcom,qdu1000-mpss-pas";
-> +        reg = <0x4080000 0x4040>,
-> +              <0x4180000 0x1000>;
-> +
-> +        clocks = <&rpmhcc RPMH_CXO_CLK>;
-> +        clock-names = "xo";
-> +
-> +        interrupts-extended = <&intc GIC_SPI 264 IRQ_TYPE_EDGE_RISING>,
-> +                              <&smp2p_modem_in 0 IRQ_TYPE_EDGE_RISING>,
-> +                              <&smp2p_modem_in 1 IRQ_TYPE_EDGE_RISING>,
-> +                              <&smp2p_modem_in 2 IRQ_TYPE_EDGE_RISING>,
-> +                              <&smp2p_modem_in 3 IRQ_TYPE_EDGE_RISING>
-> +                              <&smp2p_modem_in 7 IRQ_TYPE_EDGE_RISING>;
-> +        interrupt-names = "wdog", "fatal", "ready", "handover",
-> +                          "stop-ack", "shutdown-ack";
-> +
-> +        memory-region = <&mpss_mem>, <&dtb_mpss_mem>, <&mpss_dsm_mem>;
-> +
-> +        firmware-name = "modem.mdt",
-> +                        "modem_dtb.mdt";
-> +
-> +        power-domains = <&rpmhpd QDU1000_CX>,
-> +                        <&rpmhpd QDU1000_MSS>;
-> +        power-domain-names = "cx", "mss";
-> +
-> +        interconnects = <&mc_virt MASTER_LLCC &mc_virt SLAVE_EBI1>;
-> +
-> +        qcom,qmp = <&aoss_qmp>;
-> +
-> +        qcom,smem-states = <&smp2p_adsp_out 0>;
-> +        qcom,smem-state-names = "stop";
-> +
-> +        glink-edge {
-> +            interrupts-extended = <&ipcc IPCC_CLIENT_MPSS
-> +                                         IPCC_MPROC_SIGNAL_GLINK_QMP
-> +                                         IRQ_TYPE_EDGE_RISING>;
-> +            mboxes = <&ipcc IPCC_CLIENT_MPSS IPCC_MPROC_SIGNAL_GLINK_QMP>;
-> +
-> +            label = "modem";
-> +            qcom,remote-pid = <2>;
-> +
+thanks,
 
-Drop blank line
-
-> +        };
-> +    };
-
-Best regards,
-Krzysztof
-
+greg k-h
