@@ -2,80 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0FD5E6957C6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 05:12:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 352B6695855
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 06:15:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231567AbjBNEMj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Feb 2023 23:12:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47280 "EHLO
+        id S231344AbjBNFPW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Feb 2023 00:15:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231543AbjBNEMi (ORCPT
+        with ESMTP id S231781AbjBNFPI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Feb 2023 23:12:38 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 032F1193E9;
-        Mon, 13 Feb 2023 20:12:36 -0800 (PST)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31DMXDV7021046;
-        Tue, 14 Feb 2023 04:12:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : from : to : cc : references : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=kLd+/Xj3vG3ZXa0ORXHsNiBzfre06yH3VV2BY5VrgyY=;
- b=SXpNIo3k2MjblCKAfHiUU5eXFImRGRshgrXv8eayIKmgFQHx5yiiujfr4YnQimGyn0pt
- Fsx0p4bKhV/hS1Hx0jbEtzsjOsKuFRaQt/Fq6HXKqLLmscyCf6Xf0szw7E04LVUekoXI
- tUcw+6Zq26V6/UDkCbS4M6tF9bmQWeLzEpFO9UX/h/Maqk0QMYnFEaDtVbpfN3bwu5jQ
- 7QTx93AEHoNTgQ7WvK68oqvTIRaFOFqIXcNTL6LkhiuhSTgiExcRX+w9PsjNvLLCvLST
- kS1Q95kc+Qu+WjiUXCV0/kZVtOXC017LBaOOlVUrI3WV5Q1dPrBG3zhIbBqVCiOfTpdb xQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3np0cw69ts-1
+        Tue, 14 Feb 2023 00:15:08 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F85BC3;
+        Mon, 13 Feb 2023 21:15:07 -0800 (PST)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31E3d1xg026852;
+        Tue, 14 Feb 2023 05:14:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=fd2UEzMOvF59hx01J91ct4H3+bj7xNH6Mn+xRBEHyEA=;
+ b=LLfePAb41OkI0DYTIXr3YN+1xYG4JlMExGOH2UapKtJwZLCI6S+SL3erBAJsJHw6Hx24
+ ZP1KTfdTG1oHN2piDN7Ix1xbvEC79wPtD6QN7uQ+vIgbnTtT6SSy2KrwHYh7LcZytxAD
+ 7AkcrONz1T0l66Y0d5JZnCVGOedL2Xn/1m36zf3SLka8Sgk6tu+JX1sEPm9tsF14IvHj
+ C186ywwscMIffGZwEEEVBbiLTpAaEmfHVFYam+n2KS2yGdAIt+bTk4lOxkmw7I2+WvVd
+ 2vvnbxpnUgyd+RwFEqVLXF9yFJ72jHZ9rp1fs7TH7hw3gUmNOVjbL8XLVQCFdaLAA9zY 7A== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3np0qpx1jq-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 14 Feb 2023 04:12:33 +0000
+        Tue, 14 Feb 2023 05:14:41 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31E4CV5M028212
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31E5EeUT017671
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 14 Feb 2023 04:12:31 GMT
-Received: from [10.201.2.96] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Mon, 13 Feb
- 2023 20:12:28 -0800
-Message-ID: <a0bfd20c-4f3e-b4e1-bdf4-3b84f75262ab@quicinc.com>
-Date:   Tue, 14 Feb 2023 09:42:25 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH V5] clk: qcom: clk-alpha-pll: Add support for Stromer PLLs
-From:   Kathiravan T <quic_kathirav@quicinc.com>
-To:     Stephen Boyd <sboyd@kernel.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        Tue, 14 Feb 2023 05:14:40 GMT
+Received: from poovendh-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Mon, 13 Feb 2023 21:14:30 -0800
+From:   Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <lee@kernel.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <jassisinghbrar@gmail.com>, <catalin.marinas@arm.com>,
+        <will@kernel.org>, <shawnguo@kernel.org>, <arnd@arndb.de>,
+        <marcel.ziswiler@toradex.com>, <robimarko@gmail.com>,
+        <dmitry.baryshkov@linaro.org>, <nfraprado@collabora.com>,
+        <broonie@kernel.org>, <quic_gurus@quicinc.com>,
         <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <mturquette@baylibre.com>
-CC:     Varadarajan Narayanan <quic_varada@quicinc.com>,
-        Sricharan R <quic_srichara@quicinc.com>
-References: <20230120082631.22053-1-quic_kathirav@quicinc.com>
- <2987f2ce9377bd17d1cd85fce4bd3c28.sboyd@kernel.org>
- <99c91609-61ce-fa30-96b1-ba45e9fe1e1e@quicinc.com>
-Content-Language: en-US
-In-Reply-To: <99c91609-61ce-fa30-96b1-ba45e9fe1e1e@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
+        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
+        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_devipriy@quicinc.com>
+Subject: [PATCH V4 0/5] Enable crashdump collection support for IPQ9574
+Date:   Tue, 14 Feb 2023 10:44:09 +0530
+Message-ID: <20230214051414.10740-1-quic_poovendh@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+MIME-Version: 1.0
+Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: RswkWzJRoXGrRkl6BuFbjmOwPOLdPGit
-X-Proofpoint-ORIG-GUID: RswkWzJRoXGrRkl6BuFbjmOwPOLdPGit
+X-Proofpoint-GUID: bjw5tdUVZ_bwDYRKmAu2kM0fLSLu3wOQ
+X-Proofpoint-ORIG-GUID: bjw5tdUVZ_bwDYRKmAu2kM0fLSLu3wOQ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-14_01,2023-02-13_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- lowpriorityscore=0 priorityscore=1501 adultscore=0 phishscore=0
- mlxlogscore=740 clxscore=1015 suspectscore=0 mlxscore=0 impostorscore=0
- malwarescore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302140031
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+ definitions=2023-02-14_02,2023-02-13_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
+ malwarescore=0 phishscore=0 adultscore=0 suspectscore=0 spamscore=0
+ lowpriorityscore=0 clxscore=1015 bulkscore=0 mlxlogscore=974
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302140043
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
         SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,30 +85,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Crashdump collection is enabled based on the DLOAD bit in the TCSR register.
+This bit is set during bootup and clearing during shutdown. During crash,
+dload bit is not cleared, due to which uboot starts crashdump collection.
 
-On 1/31/2023 10:22 AM, Kathiravan Thirumoorthy wrote:
->
-> On 1/26/2023 2:59 AM, Stephen Boyd wrote:
->> Quoting Kathiravan Thirumoorthy (2023-01-20 00:26:31)
->>> From: Varadarajan Narayanan <quic_varada@quicinc.com>
->>>
->>> Add programming sequence support for managing the Stromer
->>> PLLs.
->>>
->>> Co-developed-by: Sricharan R <quic_srichara@quicinc.com>
->>> Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
->>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
->>> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
->>> ---
->> Reviewed-by: Stephen Boyd <sboyd@kernel.org>
->
-> Thanks Stephen. Bjorn, is it possible to pick up this patch for v6.3?
->
-> Thanks, Kathiravan T.
+Enable the support for download mode to collect the crashdumps if
+system crashes, to debug crashes extensively.
 
-Hi Bjorn,
+During the bootup, bootloaders initialize the SMEM. However the bootup
+after crash, SMEM will not be initialized again. If the memory for the
+SMEM is not reserved, linux consumes that region, which leads to the
+loss of SMEM data. So, during the next bootup after crash, bootloaders
+will hang due to invalid data present in the SMEM region. Due to this,
+added the SMEM support along with crashdump collection series.
 
-Gentle Ping!
+This patch series adds the support for crashdump collection.
 
-Thanks,
+DTS patch depends on the IPQ9574 baseport series
+	https://lore.kernel.org/linux-arm-msm/20230206103337.21000-1-quic_devipriy@quicinc.com/
+
+V4:
+	- change logs are added to the respective patches.
+
+V3 can be found at
+	https://lore.kernel.org/linux-arm-msm/20230208053332.16537-1-quic_poovendh@quicinc.com/
+
+Changes in V2:
+	- rebased on linux-next/master
+	- dropped co-developed by tag wherever applicable
+	- V1 can be found at
+	  https://lore.kernel.org/linux-arm-kernel/20230113160012.14893-1-quic_poovendh@quicinc.com/
+
+Poovendhan Selvaraj (5):
+  dt-bindings: scm: Add compatible for IPQ9574
+  dt-bindings: mfd: Add the tcsr compatible for IPQ9574
+  arm64: dts: qcom: ipq9574: Enable the download mode support
+  arm64: dts: qcom: ipq9574: Add SMEM support
+  firmware: scm: Modify only the DLOAD bit in TCSR register for download
+    mode
+
+ .../bindings/firmware/qcom,scm.yaml           |  1 +
+ .../devicetree/bindings/mfd/qcom,tcsr.yaml    |  1 +
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi         | 26 ++++++++++++++++++-
+ drivers/firmware/qcom_scm.c                   | 15 +++++++----
+ 4 files changed, 37 insertions(+), 6 deletions(-)
+
+
+base-commit: 09e41676e35ab06e4bce8870ea3bf1f191c3cb90
+-- 
+2.17.1
 
