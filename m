@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C928695B48
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 08:54:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F1111695B50
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 08:55:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229575AbjBNHyj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Feb 2023 02:54:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54050 "EHLO
+        id S230354AbjBNHzM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Feb 2023 02:55:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231566AbjBNHy1 (ORCPT
+        with ESMTP id S231608AbjBNHzA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Feb 2023 02:54:27 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E24920D0C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 23:54:22 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id n13so10345310wmr.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 23:54:22 -0800 (PST)
+        Tue, 14 Feb 2023 02:55:00 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 027153584
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 23:54:59 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id az4-20020a05600c600400b003dff767a1f1so10858322wmb.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 23:54:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=tQVMiDYj6VHqiwpV0vk9HcyevZPUbbSIuYpuK9GmPOk=;
-        b=u+3j8wWqpuQIkbYy2J245eUonM8O9BEhkH0ZRVfU+b+sdk8BITz5S07E6zc3eV9iZE
-         H73UXLspPT5rKeVRivE+8M9J/AFxmFz+tW6/Deon4OeeQrznXHMLSJA4zcir1Mv9c91n
-         2WHG4Gs08H80aOTPvBqfbxBEBarC0jINEGTpNypqeHlKknuhUSE4P/qU9/R6PdHoz1mg
-         l+kf7yhAlN7E8PhpCrZthkbNW/s5ZRswCKW4k2WZLY31n6zeYs5O5+QxKgCCcyEk4cAN
-         wMeldQx3CJ4W1c36fwq2zXL+N4JBV7oyGVBojSgIexTVJEXxeY2+/1DKtLxZ1ecGVIzT
-         ZzEw==
+        bh=rASM4GtwEv6A6VC897FWRddFEUTP7URyGdCEO2oh+gY=;
+        b=f16GTHa/pdOIC9J9vcbdM0BjaRiBKE+1kjIHvWRG3nQp9xiBHSkbFw9ROQMfSFCUrC
+         oQqL2MwNucZOa4gTgYl7gI5UslkZLoVipX6C6QFeBed6gZuy+MX1RDGZxC8dScZqP/Uc
+         It/uB9ip2aGFSa3KzYL1gBmMVOytNaImhFWpoyfp23oIWl4e8ytc7dsJstpo8sj54ybE
+         tJfw2JYzNoZ+sZEoifmPiV/qNsNRFXFKW0/+PD740w8SIF5UBM/HIpqcwQ5Yf6Y097VX
+         IQY4RlmZKliTB75/An5AAXU7VNXQ1Lb9SZ4bh+FyJsNteXOsRVHJeuKl1oFGxDmuBObS
+         zcfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tQVMiDYj6VHqiwpV0vk9HcyevZPUbbSIuYpuK9GmPOk=;
-        b=BhkGswibrZSEZe2gEr7cW03jYiGDiq1/fZNYd4Dk7vYWzvv4xqaqE0CvQF8zDfKPvm
-         sVJGpewpVYc6ULg4/HcsC10C6mItWL0BN2SAXZuH3j0vg8zCzi50SwsTJojcHZjfCmnW
-         vVPtSP03zBACrTIY8tAqLnKvc+aE8pmIpMmc/KJFpzvnyMIxdG4HXx3Ll9VCbAJdq4Sh
-         xLnKRtD7/J0DRcpsmvCapFYWdVHcmwIK9UdablmJg+Qa8ktnmJaC5nn10BahxwKtU5el
-         5VduzxAJ5NtjulqcnevHNUYGMlmcd3sl7Bpbs+1WnIY5Z/tJ9gGMRe1JetJjUeYanmGy
-         gwgw==
-X-Gm-Message-State: AO0yUKWEqT9AmS01ynHRX9ru2dUtkeiWqvbt5GCBZwOMVvx6NgTK8OAp
-        UnPiEQSoy+TPUEQavlHr0DkGcg==
-X-Google-Smtp-Source: AK7set9IaFVy9GIKzDBtvP5fAYA/+Dg2dPQSwqTwKfZixH3h/5R04F80WiIvHfYdCx40OWZlgwVbQA==
-X-Received: by 2002:a05:600c:44d2:b0:3df:f7f9:7bc6 with SMTP id f18-20020a05600c44d200b003dff7f97bc6mr1244122wmo.20.1676361260789;
-        Mon, 13 Feb 2023 23:54:20 -0800 (PST)
+        bh=rASM4GtwEv6A6VC897FWRddFEUTP7URyGdCEO2oh+gY=;
+        b=fHn/cTB6Wr/nTg7hB2QUqd7wGJfzUwVvUXY0IguYFf2ICBh70jPN8YlTsheqEZDWEI
+         zuOKz/UyMh5DItFCSD0Y+VefbuSlkA3MPtnZ9+q7KKa8LH//OqrD75PcOqKB64MIxulG
+         hHPSNVGt2JraHY4SWUk3REUKGuV3Gj+tPOVm8zgGoOf346d02ln8sI1NOf03lSrVul9o
+         rWQ7AhrJz21esS4EewWOzZ3vo+lDA5T3yJ9fk5nzQ/vJaaaoXN9RueVdvnFv7YF7byla
+         wQy8/cOjEhI9aDfXlwiuBvW9xDHdhMzKQ4e7FbsWCW+LAomfRrVjYhmMZgh/Eni+C5BS
+         o/jA==
+X-Gm-Message-State: AO0yUKXhImEfjGiQaBfStOcYbfUV1kFVVlBFaxRG0YxGfB05EDKOagH1
+        nMvbcn83CPcAHgKd/Q4tAccZ+g==
+X-Google-Smtp-Source: AK7set/E+wgr6jNBV7zNI1uHEzBj/wkAR39oQT+JK97s+nvlCKeNm4Zuck24OnT9MRDBKOdTBHpSeg==
+X-Received: by 2002:a05:600c:329a:b0:3dd:1c46:b92 with SMTP id t26-20020a05600c329a00b003dd1c460b92mr1812419wmp.16.1676361297605;
+        Mon, 13 Feb 2023 23:54:57 -0800 (PST)
 Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id z13-20020adfe54d000000b002c567e3808bsm544307wrm.40.2023.02.13.23.54.17
+        by smtp.gmail.com with ESMTPSA id g10-20020a05600c310a00b003e1e8d794e1sm7701538wmo.13.2023.02.13.23.54.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Feb 2023 23:54:20 -0800 (PST)
-Message-ID: <732e0d0a-86ee-a636-62b0-ee3af75d00a2@linaro.org>
-Date:   Tue, 14 Feb 2023 08:54:17 +0100
+        Mon, 13 Feb 2023 23:54:57 -0800 (PST)
+Message-ID: <b6f4041d-5c1d-bf1b-1ddd-055576447c33@linaro.org>
+Date:   Tue, 14 Feb 2023 08:54:54 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [PATCH V4 4/5] arm64: dts: qcom: ipq9574: Add SMEM support
+Subject: Re: [PATCH V4 1/5] dt-bindings: scm: Add compatible for IPQ9574
 Content-Language: en-US
 To:     Poovendhan Selvaraj <quic_poovendh@quicinc.com>, agross@kernel.org,
         andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
@@ -73,15 +73,14 @@ Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
         quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
         quic_devipriy@quicinc.com
 References: <20230214051414.10740-1-quic_poovendh@quicinc.com>
- <20230214051414.10740-5-quic_poovendh@quicinc.com>
+ <20230214051414.10740-2-quic_poovendh@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230214051414.10740-5-quic_poovendh@quicinc.com>
+In-Reply-To: <20230214051414.10740-2-quic_poovendh@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -89,36 +88,12 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 14/02/2023 06:14, Poovendhan Selvaraj wrote:
-> Add the required nodes to support SMEM
-> 
->  Changes in V4:
-> 	- Added required nodes for smem support
+> Add the scm compatible string for IPQ9574 SoC
 > 
 > Signed-off-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/ipq9574.dtsi | 14 +++++++++++++-
->  1 file changed, 13 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> index 898d7ce3f28d..2b41416d7f91 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> @@ -102,11 +102,17 @@
->  		#address-cells = <2>;
->  		#size-cells = <2>;
->  		ranges;
-> -
 
-No improvements here. For the third time.
 
-This is a friendly reminder during the review process.
-
-It seems my previous comments were not fully addressed. Maybe my
-feedback got lost between the quotes, maybe you just forgot to apply it.
-Please go back to the previous discussion and either implement all
-requested changes or keep discussing them.
-
-Thank you.
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
