@@ -2,72 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 995776968F5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 17:13:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5DE8169692C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 17:20:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232381AbjBNQNT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Feb 2023 11:13:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54850 "EHLO
+        id S232128AbjBNQTt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Feb 2023 11:19:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232056AbjBNQNH (ORCPT
+        with ESMTP id S232148AbjBNQTp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Feb 2023 11:13:07 -0500
-Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76ED72C641;
-        Tue, 14 Feb 2023 08:12:44 -0800 (PST)
-Received: by mail-io1-f50.google.com with SMTP id w24so6025877iow.13;
-        Tue, 14 Feb 2023 08:12:44 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=+2vu6++k15JRjDVyxJeQBID+s0KpNc7BuTyubwrhgk8=;
-        b=UozGMPlHJ1dBs72PULnVlL6Y9qZOVyA0ZzgSBWEKrv9ADM0REreKZ4Kts+81heHlNe
-         Ug5ycxKDK2hgdbPcQR1g+iH4yLvtGzXdcX3ykWBICmZdbM8c7CHkrs+OVz5DosgBIGAw
-         FSAZDDpQ9mAmR/gKadZz7C94/0juGGeD3cKuJUMLnzmIOGCd+XE25nc3IVGdHKctrJVa
-         L2kfJKDq52j3PJ66wIhgxazwtSc4lbzL0aZ+AZPh9M7Yrr3VqyAX1Ci10u9F81BT8QE/
-         VIVUbVVkoHeSayI7WIRl6Km3KmgYXABO+p4NWikZoMyr3v5oo+5LE5TbCT4dtk7lc10t
-         ktpA==
-X-Gm-Message-State: AO0yUKXAzjuzCVisfw94Go5qBZfT7L1w91rTz0t7wGFIy6EGmQASQNB6
-        nolc/aXYTqS/hl5O5SUNPQ==
-X-Google-Smtp-Source: AK7set/TIbQAsjZdAFRtix/0r6pkMddVS7Y1kwUPBuJ2pOziGWg/0QKgjzEYIxATQaZHiYFyGgDJxQ==
-X-Received: by 2002:a5e:dc4d:0:b0:734:1c67:5d39 with SMTP id s13-20020a5edc4d000000b007341c675d39mr2071637iop.7.1676391163700;
-        Tue, 14 Feb 2023 08:12:43 -0800 (PST)
-Received: from robh_at_kernel.org (c-73-14-99-67.hsd1.co.comcast.net. [73.14.99.67])
-        by smtp.gmail.com with ESMTPSA id z6-20020a05660217c600b007046e9e138esm5231492iox.22.2023.02.14.08.12.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Feb 2023 08:12:43 -0800 (PST)
-Received: (nullmailer pid 76708 invoked by uid 1000);
-        Tue, 14 Feb 2023 16:12:34 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+        Tue, 14 Feb 2023 11:19:45 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 655AF20D14;
+        Tue, 14 Feb 2023 08:19:31 -0800 (PST)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31EDjOxm022845;
+        Tue, 14 Feb 2023 16:19:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=XdKgDDanY3q/UeLlA80gCU43iHWPPgGJXgFxI4JN8RQ=;
+ b=LnN8mJEyWEECR8gzj3T6IIWQWEmk7s5+ACNcm2PJNqopLlbYwkaeCHXhbkMgAKpzw1wd
+ ztkbesCnh4PWWKE4oslVrcFipm2RwuqOockOhqC1ksGGbiIJNS447Vb9wmOxbkBwfaPW
+ lU/CypFpA/yXC06W9K21QgMALWtZlt+MSvMvVsqmnkqk42HZl+IzM2ENAzzBhYsjozt3
+ nsXcf/zyyvpSA7INYx2J+ai4P2CuqjSbmO+qkE4fgzxLSNmmWgzVYJMbrVmxVFbldIXo
+ BXk3DM4x5B5Apzl4mH9MHWdAxnWqHYqPaOy5co3rqyuAqqtXI5wrElRxoddztHqeRz2T FA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nqtv0ap8d-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 14 Feb 2023 16:19:27 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31EGJQkd010675
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 14 Feb 2023 16:19:26 GMT
+Received: from [10.50.22.76] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 14 Feb
+ 2023 08:19:22 -0800
+Message-ID: <faaecb6c-4710-d26d-b992-388ae29907f7@quicinc.com>
+Date:   Tue, 14 Feb 2023 21:49:17 +0530
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Melody Olvera <quic_molvera@quicinc.com>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org,
-        Robert Marko <robimarko@gmail.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>
-In-Reply-To: <20230213185218.166520-6-quic_molvera@quicinc.com>
-References: <20230213185218.166520-1-quic_molvera@quicinc.com>
- <20230213185218.166520-6-quic_molvera@quicinc.com>
-Message-Id: <167638944280.3633.8663576140863665969.robh@kernel.org>
-Subject: Re: [PATCH 5/9] dt-bindings: remoteproc: mpss: Document
- QDU1000/QRU1000 mpss devices
-Date:   Tue, 14 Feb 2023 10:12:34 -0600
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH V2] clk: qcom: ipq5332: mark GPLL4 as critical temporarily
+To:     Stephen Boyd <sboyd@kernel.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <mturquette@baylibre.com>
+CC:     <quic_varada@quicinc.com>, <quic_srichara@quicinc.com>
+References: <20230206073101.14796-1-quic_kathirav@quicinc.com>
+ <6fa247b53740ca760a608e1446f95c95.sboyd@kernel.org>
+Content-Language: en-US
+From:   Kathiravan T <quic_kathirav@quicinc.com>
+In-Reply-To: <6fa247b53740ca760a608e1446f95c95.sboyd@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: cr8Hdl27YA357zHAed2BUlOjouR2SJH7
+X-Proofpoint-ORIG-GUID: cr8Hdl27YA357zHAed2BUlOjouR2SJH7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-14_11,2023-02-14_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1015
+ impostorscore=0 bulkscore=0 priorityscore=1501 phishscore=0
+ lowpriorityscore=0 spamscore=0 malwarescore=0 mlxlogscore=952 adultscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302140139
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -75,48 +82,35 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Mon, 13 Feb 2023 10:52:14 -0800, Melody Olvera wrote:
-> This documents the compatible for the component used to boot the
-> MPSS on the QDU1000 and QRU1000 SoCs.
-> 
-> The QDU1000 and QRU1000 mpss boot process now requires the specification
-> of an RMB register space to complete the handshake needed to start or
-> attach the mpss.
-> 
-> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
-> ---
->  .../bindings/remoteproc/qcom,qdu1000-pas.yaml | 127 ++++++++++++++++++
->  1 file changed, 127 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,qdu1000-pas.yaml
-> 
+On 2/11/2023 3:44 AM, Stephen Boyd wrote:
+> Quoting Kathiravan T (2023-02-05 23:31:01)
+>> diff --git a/drivers/clk/qcom/gcc-ipq5332.c b/drivers/clk/qcom/gcc-ipq5332.c
+>> index c8a5fa1bafca..2e043d2d0598 100644
+>> --- a/drivers/clk/qcom/gcc-ipq5332.c
+>> +++ b/drivers/clk/qcom/gcc-ipq5332.c
+>> @@ -127,6 +127,16 @@ static struct clk_alpha_pll gpll4_main = {
+>>                          .parent_data = &gcc_parent_data_xo,
+>>                          .num_parents = 1,
+>>                          .ops = &clk_alpha_pll_stromer_ops,
+>> +                       /*
+>> +                        * There are no consumers for this GPLL in kernel yet,
+>> +                        * (will be added soon), so the clock framework
+>> +                        * disables this source. But some of the clocks
+>> +                        * initialized by boot loaders uses this source. So we
+>> +                        * need to keep this clock ON. Add the CRITICAL flag
+>> +                        * so the clock will not be disabled. Once the consumer
+>> +                        * in kernel is added, we can get rid off this flag.
+> s/off/of/
+>
+> Does CLK_IGNORE_UNUSED work the same? It doesn't sound like a critical
+> clk from the description of the comment.
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-yamllint warnings/errors:
+Sorry, somehow I missed this response. Will update to CLK_IGNORE_UNUSED 
+in V3.
 
-dtschema/dtc warnings/errors:
-./Documentation/devicetree/bindings/remoteproc/qcom,qdu1000-pas.yaml: Unable to find schema file matching $id: http://devicetree.org/schemas/remoteproc/qcom,pas-common.yaml
-Error: Documentation/devicetree/bindings/remoteproc/qcom,qdu1000-pas.example.dts:30.42-43 syntax error
-FATAL ERROR: Unable to parse input tree
-make[1]: *** [scripts/Makefile.lib:434: Documentation/devicetree/bindings/remoteproc/qcom,qdu1000-pas.example.dtb] Error 1
-make[1]: *** Waiting for unfinished jobs....
-make: *** [Makefile:1508: dt_binding_check] Error 2
 
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230213185218.166520-6-quic_molvera@quicinc.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+>> +                        */
+>> +                       .flags = CLK_IS_CRITICAL,
+>>                  },
+>>          },
