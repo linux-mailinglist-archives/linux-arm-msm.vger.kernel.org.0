@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 27BC6695665
+	by mail.lfdr.de (Postfix) with ESMTP id 7360A695666
 	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 03:10:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230045AbjBNCKC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Feb 2023 21:10:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36450 "EHLO
+        id S229462AbjBNCKD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Feb 2023 21:10:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229545AbjBNCKB (ORCPT
+        with ESMTP id S229729AbjBNCKC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Feb 2023 21:10:01 -0500
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9643E1B31C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 18:09:59 -0800 (PST)
-Received: by mail-lj1-x235.google.com with SMTP id u27so16828886ljo.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 18:09:59 -0800 (PST)
+        Mon, 13 Feb 2023 21:10:02 -0500
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 122541BAFA
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 18:10:00 -0800 (PST)
+Received: by mail-lf1-x136.google.com with SMTP id x40so21506389lfu.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Feb 2023 18:10:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=NUZxia39KmOd95/1X/mi4qtVDn1DxbEw4iWrgdt25uI=;
-        b=D884lBTIs+xeTiJamcskBqMMshJVklBckHxzHVJxhoDR4+M994/O9OxtVHJEN+i9bR
-         /9gFPB+SnSUvedKTMQH3YalhfCiY/CB01RrF120YLcEHn/HKeMmLCmfGyHQIwSh86bSv
-         1icvXTgLruDkuPJ+GW6/9ZevCu+F6Ouh1tkBjaOJgnk3aNDxYJ22Zd5XluzKQJpf/1op
-         HJgRqTz5lQF7H6lPsUKqVfOq1meXrYabA9JfyibStLrKCiVmG5zv4Lh7BROKOrzvfU4W
-         TCtLm0Ds8wesAkHC/pkQomKL+FftX9nIHyQXVEksO3EPfW2kyoM9roeOm3SLvAEfYqU6
-         C//A==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ac3xQ5ZUoVSKxTI11AHh9uZyaZAnwe6vnehDNppWK68=;
+        b=trrt6/rzH5bHCCxtVqo0krY9ns1kGhbfaJh9zTU677RQ5y1eGUkCSE2QbdQWQj6FyE
+         atxz4ErFcYGGXmWkdzf9fe7Xvc51BA+sQTv/ArTafUfpRYcMJWUEjX1BKvjSdy29xAnN
+         pfBwX7vzKSzLnnPIeQkQ3vyYAJUWHTwsMcIOkLUSA+sRj7IqVG+jAgvPRYmDUTpNY9AG
+         7CsD70KHC2OuPa2pAGwBmSNQJOwdvAepGjJ2jGs9Cj1AXpq6ayZ6T4MfFYnGRYW/fEi7
+         sBK1/2SjhGLo1XRyMz0TnBn/YYekI4M4WqDxtg3ph+7LCm+bLBSpRnYH12BPnfMI/f6Q
+         hNpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NUZxia39KmOd95/1X/mi4qtVDn1DxbEw4iWrgdt25uI=;
-        b=0CkNMyKs64daimVL4KjNfAIW4XEGY2PHVZszdFHfO62FC7RqAYFdYYzWW5ooJVCzXO
-         aVzzVhJDKu5qj7UdhSJ/SO57FlOEVykTrj7xADA4UyDRA98UQiZJX6hAcliw10DAtFX2
-         qZngk5GRbwMqiMKJBEYQQ0Unyb/qIbQ+eQ2J/ZLKxaleQ10MqYwVMPjcq5CTsSisQj+c
-         XxmyQ0rmHbqEW0DQsr6Tw1M0lhJR9gt4q+qa0lGdxlMcumE240InhOfYtN2AlwJcnxBk
-         3tKvi+crV0SLPTUQqy8ByULmJ88Mf13irYxGV1LOorlxE1FoGT82nGAz/Y5RfHSlBvaz
-         7kHg==
-X-Gm-Message-State: AO0yUKWyyIG0tYldT9US0mBXVHs/e7XFOy//nUEEHwbvGM6DNKB9EygS
-        v9RWAcqUEvvKEmQZcvUNvF2+GZWlqXg5siY5
-X-Google-Smtp-Source: AK7set/UWLb5Lkz55p0NgV+9IoDwUsfA2RFxX3Vl1on0pxk2ofkmeDEDDcfWuFkHvYwooh4eknAC1A==
-X-Received: by 2002:a2e:6a08:0:b0:293:4b59:52a3 with SMTP id f8-20020a2e6a08000000b002934b5952a3mr97952ljc.2.1676340597847;
-        Mon, 13 Feb 2023 18:09:57 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Ac3xQ5ZUoVSKxTI11AHh9uZyaZAnwe6vnehDNppWK68=;
+        b=jBJEu/NRPVboPjFkhWFhIi/JnLKLktIq/dt+DuLO1d95cCEsRtbdfafUEr+OzEHC5L
+         fZAMhBGCM38pPpwwbP1ck81cSK7/mhhUHZy39Girhro2poREy9yxYeCDY5IZAfdQiTcc
+         rCQtPsOTGBjfyqgIaD5ahbA4wOG8PY2akyOIGqR5rdasHwWDfMJBb1l8NmDEt3AjUAQB
+         Lj+xmuSpxW4H6aaY55mKmFLjfTqlfwkL0+b0VE0nglqJbZeQ0VMktqs2Ssl6Nq7etawF
+         ZnJwlYKQ99wTtZDjtRH6TAqDry4d8x04bT1yhL7l1Jayu1sgpoIBl5eJBW8NBeBYgCmb
+         SWHw==
+X-Gm-Message-State: AO0yUKWrgQ6jZFQihc7iCtTePiiBKmL6alYzd0GQWK8rdL+dXEeJ4km4
+        7DzCX54sQTQi5DNBV0vv3G7TcHqZay9h2vWc
+X-Google-Smtp-Source: AK7set959ogo8tDxOu4t+CSiHvfxWQJKZfjF2fsph3mmtEVLZirFn08L0gODw8a6jK2UBm8OogMFFw==
+X-Received: by 2002:ac2:5df2:0:b0:4d8:584c:a6e0 with SMTP id z18-20020ac25df2000000b004d8584ca6e0mr138279lfq.14.1676340599157;
+        Mon, 13 Feb 2023 18:09:59 -0800 (PST)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id j17-20020a2eb711000000b0029066c8906dsm2239518ljo.23.2023.02.13.18.09.56
+        by smtp.gmail.com with ESMTPSA id j17-20020a2eb711000000b0029066c8906dsm2239518ljo.23.2023.02.13.18.09.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Feb 2023 18:09:57 -0800 (PST)
+        Mon, 13 Feb 2023 18:09:58 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>
@@ -60,10 +61,12 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         freedreno@lists.freedesktop.org,
         Yassine Oudjana <y.oudjana@protonmail.com>,
         Jami Kettunen <jami.kettunen@protonmail.com>
-Subject: [PATCH 0/4] drm/msm/a5xx: make it work with the latest Mesa
-Date:   Tue, 14 Feb 2023 05:09:52 +0300
-Message-Id: <20230214020956.164473-1-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 1/4] drm/msm/a5xx: fix setting of the CP_PREEMPT_ENABLE_LOCAL register
+Date:   Tue, 14 Feb 2023 05:09:53 +0300
+Message-Id: <20230214020956.164473-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20230214020956.164473-1-dmitry.baryshkov@linaro.org>
+References: <20230214020956.164473-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -75,21 +78,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Mesa 22.3.x changed the priorities used for the GPU contexts, making
-kernel switch between different ring buffers. This uncovered several
-issues in the A5xx preemption code, which are now being resolved by this
-patchset.
+Rather than writing CP_PREEMPT_ENABLE_GLOBAL twice, follow the vendor
+kernel and set CP_PREEMPT_ENABLE_LOCAL register instead. a5xx_submit()
+will override it during submission, but let's get the sequence correct.
 
-Dmitry Baryshkov (4):
-  drm/msm/a5xx: fix setting of the CP_PREEMPT_ENABLE_LOCAL register
-  drm/msm/a5xx: fix highest bank bit for a530
-  drm/msm/a5xx: fix the emptyness check in the preempt code
-  drm/msm/a5xx: fix context faults during ring switch
+Fixes: b1fc2839d2f9 ("drm/msm: Implement preemption for A5XX targets")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c     | 6 +++---
- drivers/gpu/drm/msm/adreno/a5xx_preempt.c | 4 ++--
- 2 files changed, 5 insertions(+), 5 deletions(-)
-
+diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+index 660ba0db8900..8b2df12d8681 100644
+--- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+@@ -151,8 +151,8 @@ static void a5xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+ 	OUT_RING(ring, 1);
+ 
+ 	/* Enable local preemption for finegrain preemption */
+-	OUT_PKT7(ring, CP_PREEMPT_ENABLE_GLOBAL, 1);
+-	OUT_RING(ring, 0x02);
++	OUT_PKT7(ring, CP_PREEMPT_ENABLE_LOCAL, 1);
++	OUT_RING(ring, 0x1);
+ 
+ 	/* Allow CP_CONTEXT_SWITCH_YIELD packets in the IB2 */
+ 	OUT_PKT7(ring, CP_YIELD_ENABLE, 1);
 -- 
 2.30.2
 
