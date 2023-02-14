@@ -2,115 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5DE8169692C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 17:20:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 671AA696942
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 17:23:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232128AbjBNQTt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Feb 2023 11:19:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35678 "EHLO
+        id S230073AbjBNQXg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Feb 2023 11:23:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232148AbjBNQTp (ORCPT
+        with ESMTP id S229660AbjBNQXf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Feb 2023 11:19:45 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 655AF20D14;
-        Tue, 14 Feb 2023 08:19:31 -0800 (PST)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31EDjOxm022845;
-        Tue, 14 Feb 2023 16:19:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=XdKgDDanY3q/UeLlA80gCU43iHWPPgGJXgFxI4JN8RQ=;
- b=LnN8mJEyWEECR8gzj3T6IIWQWEmk7s5+ACNcm2PJNqopLlbYwkaeCHXhbkMgAKpzw1wd
- ztkbesCnh4PWWKE4oslVrcFipm2RwuqOockOhqC1ksGGbiIJNS447Vb9wmOxbkBwfaPW
- lU/CypFpA/yXC06W9K21QgMALWtZlt+MSvMvVsqmnkqk42HZl+IzM2ENAzzBhYsjozt3
- nsXcf/zyyvpSA7INYx2J+ai4P2CuqjSbmO+qkE4fgzxLSNmmWgzVYJMbrVmxVFbldIXo
- BXk3DM4x5B5Apzl4mH9MHWdAxnWqHYqPaOy5co3rqyuAqqtXI5wrElRxoddztHqeRz2T FA== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nqtv0ap8d-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 14 Feb 2023 16:19:27 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31EGJQkd010675
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 14 Feb 2023 16:19:26 GMT
-Received: from [10.50.22.76] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 14 Feb
- 2023 08:19:22 -0800
-Message-ID: <faaecb6c-4710-d26d-b992-388ae29907f7@quicinc.com>
-Date:   Tue, 14 Feb 2023 21:49:17 +0530
+        Tue, 14 Feb 2023 11:23:35 -0500
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E7E8222E9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 08:23:29 -0800 (PST)
+Received: by mail-ej1-x630.google.com with SMTP id dr8so41347720ejc.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 08:23:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sartura.hr; s=sartura;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ho3W5bzFPULTUWzadsK5pu3BzadwOuUIPmOvHHDXQeo=;
+        b=giXtfREYAqOOutYXBXceTYvikLUhStzroO5RV1ME2JC4qcOZvI5aIJ2NAS7A2jSdLq
+         /5F1IWf6HQJL5EKIt7ZKju7oHlHhl4E/0N2B4M5fbcjUpcBQ/PjYQPpc1GLH2t7mJNcP
+         ApCiHEd1hvmXTHkbeTm4TE6lM9oOO7R6q2ldLDj80NvDXPw/38128vD8HjGI/kidNOXD
+         JOpsGD9RSuprwVxC8uoifM2XcvAwwsAloIUr/VR/RwkYPNKB0JaJddqk9ePktG6lmEp7
+         5efEK1stbx7Rlwxi0l93t2DbF3C+CYS6xd77b3YnXqs2OG1TE/rQhwSAsChFTFPsKQLF
+         n1Wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ho3W5bzFPULTUWzadsK5pu3BzadwOuUIPmOvHHDXQeo=;
+        b=hTgiFwfx7KS16g5c5KcYwHjs+N5zXjptoDQzR2o//5TWQ0DJd3T0GiR98F+L1qY5jx
+         A1y+gfT1mx3/LKJaW0XACTroRhaXR7bZYu/3PObhbkBTO4ZygzNFOj2GfNJBiq10KyHT
+         lIr35HFy8O5yazz4gtDEAtbXXV9mmzqb1Mtj+pTg4e7azi0vhrXmP/ZVq5fw0+jzqGHv
+         /nbvUqkzJI0dh+MjHFCklLRiG4fw+PU29s9mljBXSy01U5eCvIu44+S/VqbmoXWrM9jQ
+         a0t4GlNxVHjxM3m417LQjDYQPZ5CU2BRES3tyJFTZXaxEzSSIQSBsFuOh2ttfk2Pz6ZT
+         9cwg==
+X-Gm-Message-State: AO0yUKU83IbsyZZBCSAsHxhEB7Cd6MWbY1kxH4dps/2u98ztREHBhQnI
+        ufMS6FdhW5nSDScMrOgnrs9PMQ==
+X-Google-Smtp-Source: AK7set8+7D22lJZ4bzs8ZV904jT3DvukWZwVtXIDVgJ1bizVPlfd0MknPDf5B1eGeOnE+Tscypb+PA==
+X-Received: by 2002:a17:906:2a15:b0:877:a2d1:7560 with SMTP id j21-20020a1709062a1500b00877a2d17560mr3495407eje.27.1676391807816;
+        Tue, 14 Feb 2023 08:23:27 -0800 (PST)
+Received: from fedora.. (cpezg-94-253-130-165-cbl.xnet.hr. [94.253.130.165])
+        by smtp.googlemail.com with ESMTPSA id bp8-20020a170907918800b008806a3c22c5sm1318027ejb.25.2023.02.14.08.23.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Feb 2023 08:23:27 -0800 (PST)
+From:   Robert Marko <robert.marko@sartura.hr>
+To:     andersson@kernel.org, agross@kernel.org, konrad.dybcio@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     luka.perkov@sartura.hr, Robert Marko <robert.marko@sartura.hr>
+Subject: [PATCH 1/7] dt-bindings: clock: split qcom,gcc-ipq4019 to separate file
+Date:   Tue, 14 Feb 2023 17:23:19 +0100
+Message-Id: <20230214162325.312057-1-robert.marko@sartura.hr>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH V2] clk: qcom: ipq5332: mark GPLL4 as critical temporarily
-To:     Stephen Boyd <sboyd@kernel.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <mturquette@baylibre.com>
-CC:     <quic_varada@quicinc.com>, <quic_srichara@quicinc.com>
-References: <20230206073101.14796-1-quic_kathirav@quicinc.com>
- <6fa247b53740ca760a608e1446f95c95.sboyd@kernel.org>
-Content-Language: en-US
-From:   Kathiravan T <quic_kathirav@quicinc.com>
-In-Reply-To: <6fa247b53740ca760a608e1446f95c95.sboyd@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: cr8Hdl27YA357zHAed2BUlOjouR2SJH7
-X-Proofpoint-ORIG-GUID: cr8Hdl27YA357zHAed2BUlOjouR2SJH7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-14_11,2023-02-14_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1015
- impostorscore=0 bulkscore=0 priorityscore=1501 phishscore=0
- lowpriorityscore=0 spamscore=0 malwarescore=0 mlxlogscore=952 adultscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302140139
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Move schema for the GCC on IPQ4019 platform to a separate file to be able
+to allow passing XO and sleep clks directly to GCC.
 
-On 2/11/2023 3:44 AM, Stephen Boyd wrote:
-> Quoting Kathiravan T (2023-02-05 23:31:01)
->> diff --git a/drivers/clk/qcom/gcc-ipq5332.c b/drivers/clk/qcom/gcc-ipq5332.c
->> index c8a5fa1bafca..2e043d2d0598 100644
->> --- a/drivers/clk/qcom/gcc-ipq5332.c
->> +++ b/drivers/clk/qcom/gcc-ipq5332.c
->> @@ -127,6 +127,16 @@ static struct clk_alpha_pll gpll4_main = {
->>                          .parent_data = &gcc_parent_data_xo,
->>                          .num_parents = 1,
->>                          .ops = &clk_alpha_pll_stromer_ops,
->> +                       /*
->> +                        * There are no consumers for this GPLL in kernel yet,
->> +                        * (will be added soon), so the clock framework
->> +                        * disables this source. But some of the clocks
->> +                        * initialized by boot loaders uses this source. So we
->> +                        * need to keep this clock ON. Add the CRITICAL flag
->> +                        * so the clock will not be disabled. Once the consumer
->> +                        * in kernel is added, we can get rid off this flag.
-> s/off/of/
->
-> Does CLK_IGNORE_UNUSED work the same? It doesn't sound like a critical
-> clk from the description of the comment.
+Signed-off-by: Robert Marko <robert.marko@sartura.hr>
+---
+ .../bindings/clock/qcom,gcc-ipq4019.yaml      | 53 +++++++++++++++++++
+ .../bindings/clock/qcom,gcc-other.yaml        |  2 -
+ 2 files changed, 53 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-ipq4019.yaml
 
+diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-ipq4019.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-ipq4019.yaml
+new file mode 100644
+index 0000000000000..6ebaef2288fa3
+--- /dev/null
++++ b/Documentation/devicetree/bindings/clock/qcom,gcc-ipq4019.yaml
+@@ -0,0 +1,53 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/clock/qcom,gcc-ipq4019.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Global Clock & Reset Controller on IPQ4019
++
++maintainers:
++  - Stephen Boyd <sboyd@kernel.org>
++  - Taniya Das <tdas@codeaurora.org>
++  - Robert Marko <robert.markoo@sartura.hr>
++
++description: |
++  Qualcomm global clock control module provides the clocks, resets and power
++  domains on IPQ4019.
++
++  See also:: include/dt-bindings/clock/qcom,gcc-ipq4019.h
++
++allOf:
++  - $ref: qcom,gcc.yaml#
++
++properties:
++  compatible:
++    const: qcom,gcc-ipq4019
++
++  clocks:
++    items:
++      - description: board XO clock
++      - description: sleep clock
++
++  clock-names:
++    items:
++      - const: xo
++      - const: sleep_clk
++
++required:
++  - compatible
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    clock-controller@1800000 {
++      compatible = "qcom,gcc-ipq4019";
++      reg = <0x1800000 0x60000>;
++      #clock-cells = <1>;
++      #power-domain-cells = <1>;
++      #reset-cells = <1>;
++      clocks = <&xo>, <&sleep_clk>;
++      clock-names = "xo", "sleep_clk";
++    };
++...
+diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
+index 2e8acca64af1c..ae01e77495342 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
+@@ -15,7 +15,6 @@ description: |
+   domains.
+ 
+   See also::
+-    include/dt-bindings/clock/qcom,gcc-ipq4019.h
+     include/dt-bindings/clock/qcom,gcc-ipq6018.h
+     include/dt-bindings/reset/qcom,gcc-ipq6018.h
+     include/dt-bindings/clock/qcom,gcc-msm8953.h
+@@ -29,7 +28,6 @@ allOf:
+ properties:
+   compatible:
+     enum:
+-      - qcom,gcc-ipq4019
+       - qcom,gcc-ipq6018
+       - qcom,gcc-mdm9607
+       - qcom,gcc-msm8953
+-- 
+2.39.1
 
-Sorry, somehow I missed this response. Will update to CLK_IGNORE_UNUSED 
-in V3.
-
-
->> +                        */
->> +                       .flags = CLK_IS_CRITICAL,
->>                  },
->>          },
