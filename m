@@ -2,118 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B16E696BCF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 18:35:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 64A9D696BD2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 18:36:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229514AbjBNRfQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Feb 2023 12:35:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39006 "EHLO
+        id S232446AbjBNRgL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Feb 2023 12:36:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231575AbjBNRfP (ORCPT
+        with ESMTP id S232181AbjBNRgK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Feb 2023 12:35:15 -0500
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A75B7EE9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 09:34:48 -0800 (PST)
-Received: by mail-ot1-x32b.google.com with SMTP id n25-20020a9d7119000000b0068bd8c1e836so4866437otj.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 09:34:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=quw4WERq0qtsQq8yz2KJlgOpPpt3pCQr7AJgZ9gs9bs=;
-        b=bAXZ/atYkTz7tSYeqI6xy/QoS/duSLwMmMA9ve5lqoV/KKLzbv7kN44Pmy1DN/RO91
-         t3qr5gD+5mh/aKbciaun41iUX1V27VRbm8ntkE5vcZvYVC4gfQzOK/pwwwvQink2b54m
-         aLEoX/Ns6L1r5Yb8YDmVrZ4vrwqOK5ElVtYDE9S0yt3eIq3Jt4a8Voftn/T1F2GjEDm7
-         yu1jYTGkRLIwK6kTBVnf7OBugIQrgf40cFAe0cWfovvM0OahMWgdlt+r35JCaIQTv/JP
-         KN+JyAafeUJJhi6D6yA1omEvTNl6CX+bAUQ5ZSLbPKlHo77RmexBC9sGLLw72MLiCdVD
-         MctQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=quw4WERq0qtsQq8yz2KJlgOpPpt3pCQr7AJgZ9gs9bs=;
-        b=mK8eaU0ObA2xLMhUIdycmoM3iGptOfqavoWMblGyqnQobL/+Twm4weOCxcC0qCRL0+
-         vtC2XW1tTPWzZ1Xif2CasLlyWkP9yq7mXwW+Uf6n3SWJHHUs8MCLLct/eXfeqj3HXV7G
-         SeLQMym+XcCOXaIMq6vugr+kpQZTrdTZ64dKtAWgqoYwibbkgUDt5h6Q8pa1DevMLwdN
-         sQZ6o+xWq+K/hE8P3foFfKM2UhSXkWaBtCRFvnr1e4WL57OlH9b9eEJ4vDmZs+FoKFlU
-         o/5WtuJ0PfZsWw4hDx06L/3hP0+qrCyhRKxlaCm08XNS/jCfr2lC2YToQ1wgPDgKQyzw
-         E68g==
-X-Gm-Message-State: AO0yUKWJ8Udk/scf4Sygrsa7D23zi37YHnMv8oNfnmuQzBDbxjByj93Y
-        k41egJ/hCzyI3EnFShFAPOiuWdD7kLQrQXL0t1w=
-X-Google-Smtp-Source: AK7set+vDYIH90pdNzC/mL976gQIxoSspEFrcyzWfPMG3tzTnF1uXRIxi7C3oM70Jt3grRiebofLGoAPVamFDDOqh+c=
-X-Received: by 2002:a9d:6f83:0:b0:66c:5685:5415 with SMTP id
- h3-20020a9d6f83000000b0066c56855415mr146769otq.125.1676396087727; Tue, 14 Feb
- 2023 09:34:47 -0800 (PST)
+        Tue, 14 Feb 2023 12:36:10 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1977691;
+        Tue, 14 Feb 2023 09:35:49 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 7D2CEB81E4A;
+        Tue, 14 Feb 2023 17:35:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19D7CC433D2;
+        Tue, 14 Feb 2023 17:35:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1676396130;
+        bh=K1W1HGSXCSxK2eoAED25PPugOTUwn8WQ87nD6VmP/yQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ZaaQrlK0npdqyxSvU7pyWMYMj2dzeRI8TeeCawqLypJpfl0AfXq7afSZPRBcxcsIx
+         2TFMnH/m1dl9mlrhApUP4yOkSOefS+sDsboFcaqB+m3pSRUsE9J7VET4R0IbIvByNs
+         a6nF5DpIXJOmR+E1ifdI5bdAbN7uhmJxMkEZ5Pn911QfV6egwmZ79ZWFotR+YSrPlA
+         9WZE9Czgiu7fl+n+MFHIQerIbDERz1SAvr6yCtx7gjswT0fbl2kpD5cnAzUW0dVi3v
+         3Mhxc2O/X+y4HITU4Sfu/GYxpzXBzr4ltQGUnT6Gp8qBbKl5mEFy7ao4AJzaRF8gJl
+         dyRq6EfkXYDCA==
+Date:   Tue, 14 Feb 2023 09:37:33 -0800
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Melody Olvera <quic_molvera@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Robert Marko <robimarko@gmail.com>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        Gokul Krishna Krishnakumar <quic_gokukris@quicinc.com>
+Subject: Re: [PATCH 6/9] soc: qcom: mdt_loader: Enhance split binary detection
+Message-ID: <20230214173733.ykgry7td33sbr3o5@ripper>
+References: <20230213185218.166520-1-quic_molvera@quicinc.com>
+ <20230213185218.166520-7-quic_molvera@quicinc.com>
 MIME-Version: 1.0
-References: <20230214020956.164473-1-dmitry.baryshkov@linaro.org> <20230214020956.164473-5-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230214020956.164473-5-dmitry.baryshkov@linaro.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 14 Feb 2023 09:35:02 -0800
-Message-ID: <CAF6AEGvW5qJ1q83a7Ny-BMq9BOt88h9+Kfs6DGEBPnO+1iQazA@mail.gmail.com>
-Subject: Re: [PATCH 4/4] drm/msm/a5xx: fix context faults during ring switch
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        Jami Kettunen <jami.kettunen@protonmail.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230213185218.166520-7-quic_molvera@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Feb 13, 2023 at 6:10 PM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> The rptr_addr is set in the preempt_init_ring(), which is called from
-> a5xx_gpu_init(). It uses shadowptr() to set the address, however the
-> shadow_iova is not yet initialized at that time. Move the rptr_addr
-> setting to the a5xx_preempt_hw_init() which is called after setting the
-> shadow_iova, getting the correct value for the address.
->
-> Fixes: 8907afb476ac ("drm/msm: Allow a5xx to mark the RPTR shadow as privileged")
+On Mon, Feb 13, 2023 at 10:52:15AM -0800, Melody Olvera wrote:
+> From: Gokul Krishna Krishnakumar <quic_gokukris@quicinc.com>
+> 
+> When booting with split binaries, it is possible that the
+> mdt loader misdetects if a binary is split and only loads
+> one of the segments, so enhance the detection of the split
+> binaries to ensure the entirety of the firmware is loaded.
 
-Closes: https://gitlab.freedesktop.org/mesa/mesa/-/issues/7555
+Please describe in detail what it is that is being "misdetected", and
+why, so other users can correlate their experience to the changes in the
+git log and that reviewers doesn't have to guess what problem is being
+corrected.
 
-> Suggested-by: Rob Clark <robdclark@gmail.com>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Thanks,
+Bjorn
+
+> 
+> Signed-off-by: Gokul Krishna Krishnakumar <quic_gokukris@quicinc.com>
+> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
 > ---
->  drivers/gpu/drm/msm/adreno/a5xx_preempt.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
-> index 7e0affd60993..f58dd564d122 100644
-> --- a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
-> +++ b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
-> @@ -207,6 +207,7 @@ void a5xx_preempt_hw_init(struct msm_gpu *gpu)
->                 a5xx_gpu->preempt[i]->wptr = 0;
->                 a5xx_gpu->preempt[i]->rptr = 0;
->                 a5xx_gpu->preempt[i]->rbase = gpu->rb[i]->iova;
-> +               a5xx_gpu->preempt[i]->rptr_addr = shadowptr(a5xx_gpu, gpu->rb[i]);
->         }
->
->         /* Write a 0 to signal that we aren't switching pagetables */
-> @@ -257,7 +258,6 @@ static int preempt_init_ring(struct a5xx_gpu *a5xx_gpu,
->         ptr->data = 0;
->         ptr->cntl = MSM_GPU_RB_CNTL_DEFAULT | AXXX_CP_RB_CNTL_NO_UPDATE;
->
-> -       ptr->rptr_addr = shadowptr(a5xx_gpu, ring);
->         ptr->counter = counters_iova;
->
->         return 0;
-> --
-> 2.30.2
->
+>  drivers/soc/qcom/mdt_loader.c | 64 +++++++++++++++++++----------------
+>  1 file changed, 35 insertions(+), 29 deletions(-)
+> 
+> diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
+> index 33dd8c315eb7..3aadce299c02 100644
+> --- a/drivers/soc/qcom/mdt_loader.c
+> +++ b/drivers/soc/qcom/mdt_loader.c
+> @@ -31,6 +31,26 @@ static bool mdt_phdr_valid(const struct elf32_phdr *phdr)
+>  	return true;
+>  }
+>  
+> +static bool qcom_mdt_bins_are_split(const struct firmware *fw)
+> +{
+> +	const struct elf32_phdr *phdrs;
+> +	const struct elf32_hdr *ehdr;
+> +	uint64_t seg_start, seg_end;
+> +	int i;
+> +
+> +	ehdr = (struct elf32_hdr *)fw->data;
+> +	phdrs = (struct elf32_phdr *)(ehdr + 1);
+> +
+> +	for (i = 0; i < ehdr->e_phnum; i++) {
+> +		seg_start = phdrs[i].p_offset;
+> +		seg_end = phdrs[i].p_offset + phdrs[i].p_filesz;
+> +		if (seg_start > fw->size || seg_end > fw->size)
+> +			return true;
+> +	}
+> +
+> +	return false;
+> +}
+> +
+>  static ssize_t mdt_load_split_segment(void *ptr, const struct elf32_phdr *phdrs,
+>  				      unsigned int segment, const char *fw_name,
+>  				      struct device *dev)
+> @@ -167,23 +187,13 @@ void *qcom_mdt_read_metadata(const struct firmware *fw, size_t *data_len,
+>  	/* Copy ELF header */
+>  	memcpy(data, fw->data, ehdr_size);
+>  
+> -	if (ehdr_size + hash_size == fw->size) {
+> -		/* Firmware is split and hash is packed following the ELF header */
+> -		hash_offset = phdrs[0].p_filesz;
+> -		memcpy(data + ehdr_size, fw->data + hash_offset, hash_size);
+> -	} else if (phdrs[hash_segment].p_offset + hash_size <= fw->size) {
+> -		/* Hash is in its own segment, but within the loaded file */
+> +
+> +	if (qcom_mdt_bins_are_split(fw)) {
+> +		ret = mdt_load_split_segment(data + ehdr_size, phdrs, hash_segment, fw_name, dev);
+> +	} else {
+>  		hash_offset = phdrs[hash_segment].p_offset;
+>  		memcpy(data + ehdr_size, fw->data + hash_offset, hash_size);
+> -	} else {
+> -		/* Hash is in its own segment, beyond the loaded file */
+> -		ret = mdt_load_split_segment(data + ehdr_size, phdrs, hash_segment, fw_name, dev);
+> -		if (ret) {
+> -			kfree(data);
+> -			return ERR_PTR(ret);
+> -		}
+>  	}
+> -
+>  	*data_len = ehdr_size + hash_size;
+>  
+>  	return data;
+> @@ -270,6 +280,7 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
+>  	phys_addr_t min_addr = PHYS_ADDR_MAX;
+>  	ssize_t offset;
+>  	bool relocate = false;
+> +	bool is_split;
+>  	void *ptr;
+>  	int ret = 0;
+>  	int i;
+> @@ -277,6 +288,7 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
+>  	if (!fw || !mem_region || !mem_phys || !mem_size)
+>  		return -EINVAL;
+>  
+> +	is_split = qcom_mdt_bins_are_split(fw);
+>  	ehdr = (struct elf32_hdr *)fw->data;
+>  	phdrs = (struct elf32_phdr *)(ehdr + 1);
+>  
+> @@ -330,22 +342,16 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
+>  
+>  		ptr = mem_region + offset;
+>  
+> -		if (phdr->p_filesz && phdr->p_offset < fw->size &&
+> -		    phdr->p_offset + phdr->p_filesz <= fw->size) {
+> -			/* Firmware is large enough to be non-split */
+> -			if (phdr->p_offset + phdr->p_filesz > fw->size) {
+> -				dev_err(dev, "file %s segment %d would be truncated\n",
+> -					fw_name, i);
+> -				ret = -EINVAL;
+> -				break;
+> +		if (phdr->p_filesz) {
+> +			if (!is_split) {
+> +				/* Firmware is large enough to be non-split */
+> +				memcpy(ptr, fw->data + phdr->p_offset, phdr->p_filesz);
+> +			} else {
+> +				/* Firmware not large enough, load split-out segments */
+> +				ret = mdt_load_split_segment(ptr, phdrs, i, fw_name, dev);
+> +				if (ret)
+> +					break;
+>  			}
+> -
+> -			memcpy(ptr, fw->data + phdr->p_offset, phdr->p_filesz);
+> -		} else if (phdr->p_filesz) {
+> -			/* Firmware not large enough, load split-out segments */
+> -			ret = mdt_load_split_segment(ptr, phdrs, i, fw_name, dev);
+> -			if (ret)
+> -				break;
+>  		}
+>  
+>  		if (phdr->p_memsz > phdr->p_filesz)
+> -- 
+> 2.25.1
+> 
