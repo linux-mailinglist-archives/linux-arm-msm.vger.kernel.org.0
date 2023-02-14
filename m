@@ -2,102 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A2D3B695EE9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 10:25:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D10E7695F22
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Feb 2023 10:28:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231834AbjBNJZB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Feb 2023 04:25:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59568 "EHLO
+        id S232123AbjBNJ2R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Feb 2023 04:28:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231740AbjBNJZA (ORCPT
+        with ESMTP id S232263AbjBNJ2B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Feb 2023 04:25:00 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6FFF23305
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 01:24:58 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id bu23so14900552wrb.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 01:24:58 -0800 (PST)
+        Tue, 14 Feb 2023 04:28:01 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4A1725289
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 01:27:21 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id a2so14927586wrd.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 01:27:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=u8KakO0m99ack6WtkcRo8QC9fAx9EZec2nxXq+nRpV8=;
-        b=XnkRv8qcJgXS8YBUYXFr3msPkyWSuAK7Xwx3teh9Q0AMx2x3w1TmzQ4QaN2BFQUsm2
-         dAkbt2lgSE8azsW+GIYDqBUszigYr4JXpwL9t55zGb6hko0SNNNZ0CU591nyIEh3hrkX
-         3sIMsRJkpU3r2i3rHqHbG4Ba9RLNQwldJxMnJ4zTPU5zV2FKlhLmnBdlOFyfBU0pZkRU
-         jY+tqaUlCNUw5VjcJTmsD0Q23FEDvYpHCnCEyD6Dt3vKHMFJi5gyj1vxWFtHYC2wfCTA
-         aaE3jNFLfHlnXZNOUbMo7pb+raS6UQBsEaAd91iI0L+vQCAayILyCKYkXNnfejlshzTz
-         iN7g==
+        d=bgdev-pl.20210112.gappssmtp.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=/B47bE8TEfIlwi0qudqXOToGhOOwF+9/IKyL/OBYwwM=;
+        b=HtB+4uy0R7dSoCt090raVGS7qvZQvx5WrbILkZZ7CvFAhcke1jWlvYFE5RWmLJwMpO
+         t4nwDEdKSNv4rDaJmARvtEOFimeuZFq4V2siLywcwJexjfFxeW6nNajv95w6js9sS0QO
+         bFepuDxhqsvTjvYsN44TOI3YzPWr70DS7WdQMMu4XE1GuryMWVUWrrGC4aoSFgz10qfl
+         y8u8B7/UGL3lG+OGaWropHipixel0L/E6bBtq8lDK5wI5qrh+xg90YcQMka9PAxQsykB
+         t/3WpwtTobfW5lxNSypVaJHEq+XVte43EDbt2y7YSnvnwrbhyEYPyysdZQvBzzHwAJfU
+         Ec8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=u8KakO0m99ack6WtkcRo8QC9fAx9EZec2nxXq+nRpV8=;
-        b=3rrBpr6xjwnEWPuGGLwt8sE3nSbKC3k7BCboltsNrWKrbM3mddtKJSkFAAD46aowCH
-         Ke6UVV90F2DXPk8O2xdQ0ban/nAmn4J1YXwfP4gLWH4/z1+J2vVkKtJ5DjcKGH3QnCxB
-         X6tma01vx9Dc+1popXq9oj3hbnPUntpIEskhhysiNALznupHVaQlsCKzBCccdkBS8+r5
-         LUDpLW4QhR8ZeDZvoaXD2q7lY00fp9pEmiOPa9VjsBf5ANw17Dvd97ZkVA/XPgLiRLTi
-         1u6go/z6i7zXX7mc5yrXm8M5QYbacbidvU1PmlI81tYeqbeGdzEL/x9wWuH+zAXVa0D/
-         h+KQ==
-X-Gm-Message-State: AO0yUKUesfGOIcNAnZtUPfendXLv/kzyJ9KEx82nxZUB/emUmKF9EErn
-        qBcEkpM5xZNe59kydP4xx+6Yww==
-X-Google-Smtp-Source: AK7set/D6I/qxlSfxlRbpbzUy5a6qP8a6fLo8xCBJzYuz2JnEbfY9w2P98SqeCbjjCL59H93Va0T8w==
-X-Received: by 2002:a5d:6352:0:b0:2c5:5308:859c with SMTP id b18-20020a5d6352000000b002c55308859cmr1628694wrw.18.1676366697533;
-        Tue, 14 Feb 2023 01:24:57 -0800 (PST)
-Received: from [192.168.1.109] ([178.197.216.144])
-        by smtp.gmail.com with ESMTPSA id y16-20020adff6d0000000b002c55521903bsm5679255wrp.51.2023.02.14.01.24.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Feb 2023 01:24:57 -0800 (PST)
-Message-ID: <0a815e82-0c4b-cc94-7143-6fbbc2d62347@linaro.org>
-Date:   Tue, 14 Feb 2023 10:24:55 +0100
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/B47bE8TEfIlwi0qudqXOToGhOOwF+9/IKyL/OBYwwM=;
+        b=Kmqu4A57Eudw0/UpuLbeGNK2T0eOu8xrIrjnTd1WKe8elqFfquZz2w/9Kkw7ezGyh7
+         G36LRzjFOnbBzEN3bcvIN0VaRvF2fGV1Go1LBtGmWgZjwkh9z7fxi1BDqSZ481mgUcoP
+         DMGYVnOj7pFxbhQjjJyRUcBEd64w0ACGThAfneCAwB3uKSfvx2zldWlCAynHPtinTg5V
+         BpIlOvh5WubfPCFJzGU9tKExxzdGXufT26ial1o9yxun4eEF0QNfv6rp/EK+kixMV1ZV
+         P0MeTZzlnqD3qLyi9/iHi4PUJRCCUiYcw/LGff0QYraRtW2dbWXOeG8L0xLpq8bad00M
+         +WfQ==
+X-Gm-Message-State: AO0yUKVhbYMHZegPSeDGYOwPmBe7wOr0uru9iw2k+AFk/iRtUKfDunHC
+        XIfJhFnY67oOQcRKafkHeJk8SA==
+X-Google-Smtp-Source: AK7set/4H2SVEASkO1eQtPPR2W2rsKOI0syaJ8qp8ORtqLlai90YCKXoISxAgAZt/UopwFfDxi5NmA==
+X-Received: by 2002:a5d:6182:0:b0:2c5:48bd:d494 with SMTP id j2-20020a5d6182000000b002c548bdd494mr10170683wru.29.1676366838305;
+        Tue, 14 Feb 2023 01:27:18 -0800 (PST)
+Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:6e4b:bef:7edd:1af1])
+        by smtp.gmail.com with ESMTPSA id k2-20020a5d6d42000000b002c4061a687bsm12687602wri.31.2023.02.14.01.27.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Feb 2023 01:27:17 -0800 (PST)
+From:   Bartosz Golaszewski <brgl@bgdev.pl>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH v4 0/2] arm64: qcom: add initial support for qcom sa8775p-ride
+Date:   Tue, 14 Feb 2023 10:27:11 +0100
+Message-Id: <20230214092713.211054-1-brgl@bgdev.pl>
+X-Mailer: git-send-email 2.37.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH v2] dt-bindings: PCI: qcom: Fix msm8998-specific
- compatible
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org
-Cc:     marijn.suijten@somainline.org,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Rob Herring <robh@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230214091202.2187321-1-konrad.dybcio@linaro.org>
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230214091202.2187321-1-konrad.dybcio@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/02/2023 10:12, Konrad Dybcio wrote:
-> In the commit mentioned in the fixes tag, everything went well except
-> the fallback and the specific compatible got swapped and the 8998 DTSI
-> began failing the dtbs check. Fix it.
-> 
-> Fixes: f86fe08ef00f ("dt-bindings: PCI: qcom: Add MSM8998 specific compatible")
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[bhelgaas: sort msm8996 before msm8998]
-yes... I love amends by maintainers.
+Bjorn,
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+I'm resending this because it's been discussed with Qualcomm that we need to
+drop the watchdog node from the DT. Please don't apply the previous version.
 
-Best regards,
-Krzysztof
+I've also dropped the patches you already have in your tree so these are the
+two remaining.
+
+v3 -> v4:
+- drop the watchdog node from DT
+- drop the watchdog dt-bindings patch
+- drop the patches already in Bjorn's tree
+- collect tags
+
+v2 -> v3:
+- reorder properties (reg always first, etc.)
+- tweak node names
+- remove properties filled in by the firmware
+
+v1 -> v2:
+- lots of improvements all around the place to make the dts pass dtbs_check
+  (with some additional patches fixing bugs in existing dt bindings),
+  make dtbs W=1 and checkpatch.pl
+- move board-specific properties to the board .dts file
+- ordered top-level nodes alphabetically and sub-nodes by the reg property
+- fixed licensing
+- set #address-cells and #size-cells to <2> in the soc node and update sub-nodes
+
+Bartosz Golaszewski (2):
+  dt-bindings: mailbox: qcom-ipcc: document the sa8775p platform
+  arm64: dts: qcom: add initial support for qcom sa8775p-ride
+
+ .../bindings/mailbox/qcom-ipcc.yaml           |   1 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ arch/arm64/boot/dts/qcom/sa8775p-ride.dts     |  47 +
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi         | 805 ++++++++++++++++++
+ 4 files changed, 854 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sa8775p-ride.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sa8775p.dtsi
+
+-- 
+2.37.2
 
