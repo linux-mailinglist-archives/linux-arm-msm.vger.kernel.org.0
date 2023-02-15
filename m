@@ -2,97 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 061DA69789D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Feb 2023 10:06:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B20746978F2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Feb 2023 10:26:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233329AbjBOJGB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Feb 2023 04:06:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52676 "EHLO
+        id S233312AbjBOJ0i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Feb 2023 04:26:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232750AbjBOJF6 (ORCPT
+        with ESMTP id S233900AbjBOJ0Y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Feb 2023 04:05:58 -0500
-Received: from mail-ua1-x92a.google.com (mail-ua1-x92a.google.com [IPv6:2607:f8b0:4864:20::92a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 827DD29E12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Feb 2023 01:05:57 -0800 (PST)
-Received: by mail-ua1-x92a.google.com with SMTP id bx25so2017578uab.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Feb 2023 01:05:57 -0800 (PST)
+        Wed, 15 Feb 2023 04:26:24 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B3AA37573
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Feb 2023 01:25:43 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id f18-20020a7bcd12000000b003e206711347so28144wmj.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Feb 2023 01:25:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20210112.gappssmtp.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=OK/Q/phuym1TfWPA1EBQC/91tXucWH+AbkqODxHd+vc=;
-        b=Ydmn7Xt5AYbZObMFlW/egeupY8qPMzmU1xlPaTedIdTaL5Ez0/yWJhFZIZ3aZXVvBg
-         nrdrAeik9VNFA7h2ki1EPQFikgu49LxPMUrmcd9F3sk+RrseVz/RFPOZ+kBo7dNxht+x
-         rDzU1+l1Utv8dlBbRI7I4zC/8valm/1auAciZ3SPUXpkbG4qqTC2zryrFlsI30ZyDoNb
-         wwfQYAEcjhFIVA+gSJqxHHOAiXNw1CeHIVi+0x9ECY46y7uQgA+OE+de9whr1yFj55dx
-         VDtys2BsD8LgZj4BWBOZZp5NWoxwPD7vM9EtdzOp1NkeWr8TEGQ6+9w9SkdQgovZef92
-         GU7Q==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:reply-to:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=lRaz9F2ndu1/Zzg0HAXs4+stqA3VUbDuTuUhJDAoGm0=;
+        b=oZDj+NVqsSmEJ5xdIf2TEYmmgUNCK6zQP03WEdPsHXYTmzbEg77rO75MQ1ymaqHtkK
+         u8t7eOltDCyuMAndy09UOb2WYFu/beEnNT8JcnvuZUiUFH50NYqbyeP4SOqqPxqLFPtr
+         IzWTR0DZderEsuIHzDLvEZcJl2Plcb6Y8URrctPSeIWS4qZ+AuvbiDspjn9Npj8am/dQ
+         XhOHi3ZKE/MqOnYhlSMkvRh7MGGJLHmiet+xq6zgt4/rWbSMSRCfpnIiC/48goxqgG7W
+         mTYQKQ59JXmjtSzXXr43XG6lAc65VQ7YBm16Qd7peAQDfaI+vhC9OiAiE025LZn5L8fS
+         t2pA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=OK/Q/phuym1TfWPA1EBQC/91tXucWH+AbkqODxHd+vc=;
-        b=wiBMJF4cEB7CDCwT8OmKdhf2LL5Foc+JrKyNY58NZpEcYCV1l8l1HSyKUvy4CNf7+w
-         lhzP7zwm1+QduUvcRhl6FX4R+B59jqngbHsB1J6mXK0VWRgukTWB43R84b6T72/lQQ8L
-         MohPyTN4IHm57BghXyDBGM0ClAx94wLZL/UQwEy2QnVw8nlYUXJzX/KCd4TyxHXXUYix
-         FNt+USablv73q/j3/5daYl5nLB8PT2smNtY91O9qT4Up61KyiCCvit8TqIgwJ6FWCSRn
-         YB26WXhxKnBuW9QLrjP2jYS8RgNTpSltXSBMgORKXjk3tjey2CKcdB9xbriy0DbOHba7
-         exdg==
-X-Gm-Message-State: AO0yUKXIlPNGWoy7K844ZT1oqDTXWYHNaQOTqG6+xPS8dc0ydVs7lAo3
-        0UgYJA2V2OP1Gs64wyCuen6FAXUFSsgVhYJX5otiCA==
-X-Google-Smtp-Source: AK7set/IPQ3wITuV5FFkFXqZdGFftAn+e/QA1ZQpZsxkd41HqT4E0+lCOoPrmpxpG6MkxmVXzPQcZEQxKrYNFzi4IsE=
-X-Received: by 2002:ab0:654d:0:b0:68a:7054:58a6 with SMTP id
- x13-20020ab0654d000000b0068a705458a6mr184058uap.22.1676451956432; Wed, 15 Feb
- 2023 01:05:56 -0800 (PST)
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:reply-to:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lRaz9F2ndu1/Zzg0HAXs4+stqA3VUbDuTuUhJDAoGm0=;
+        b=BJILw17rdAqg/AoLbbabof4qIibAywNsjZPfKpIAFtLvRgmMp4RuMZHGf/JTTFrPN0
+         6JtW/LzuKGq3VXEyWx0kTFz5l1XhILTHOWjz/mL2kXICv/irJOYKViVGJQ+8FDYKxVLF
+         /fC6OrVkziuda/tWcyre4sE5AXP2VYliBFu7lskBgEpbtIZCpWvoq2MLV+/o+68ZL1YU
+         bvNlt+cwjiLc0SY98JardUcjoSdtZ/w2SC1nLSW07+8b+S4ryQ5Sta/bhoOmF5REHZeo
+         02mJp8DpsOt8zyhcZq+QonI5nm8O03rl9BgK77gBRzk/cjH91/Zz3l2sUiuNcQJbPA4q
+         in3g==
+X-Gm-Message-State: AO0yUKWo4g2pW0QA7HeW8+n/ZLwvZHzpoKjT4O1r7b8Vz38rzDz5Vw8G
+        cKtzeL+A7v5+354FZImTud0J3Q==
+X-Google-Smtp-Source: AK7set+MPgZiuLq/e8s82IBTD7f+ZJIhVUc3Y4h6gzu5gjWm0PGQysGvJd756SDP8P0/8jSvtDzwcg==
+X-Received: by 2002:a05:600c:4d15:b0:3cf:7197:e68a with SMTP id u21-20020a05600c4d1500b003cf7197e68amr1675557wmp.18.1676453139517;
+        Wed, 15 Feb 2023 01:25:39 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:7fda:5fd:df14:bb65? ([2a01:e0a:982:cbb0:7fda:5fd:df14:bb65])
+        by smtp.gmail.com with ESMTPSA id b15-20020a5d550f000000b002c55ebe37ddsm5674783wrv.115.2023.02.15.01.25.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Feb 2023 01:25:38 -0800 (PST)
+Message-ID: <f6f81af2-00ec-a75b-0e9e-a1eaf649edf5@linaro.org>
+Date:   Wed, 15 Feb 2023 10:25:37 +0100
 MIME-Version: 1.0
-References: <20230214155715.451130-1-brgl@bgdev.pl> <602b1c64-db73-b6e3-020c-f2b24085a986@quicinc.com>
-In-Reply-To: <602b1c64-db73-b6e3-020c-f2b24085a986@quicinc.com>
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-Date:   Wed, 15 Feb 2023 10:05:45 +0100
-Message-ID: <CAMRc=McUOSZiW8nRO-o32y0XL4i+LCF2Z380QX0uDgv2J=cuZA@mail.gmail.com>
-Subject: Re: [PATCH 0/3] arm64: dts: qcom: sa8775p-ride: enable relevant QUPv3 IPs
-To:     Shazad Hussain <quic_shazhuss@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v2] dt-bindings: qcom,pdc: Add compatible for SM8550
+Content-Language: en-US
+To:     Marc Zyngier <maz@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>, Abel Vesa <abel.vesa@linaro.org>,
+        devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Thomas Gleixner <tglx@linutronix.de>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+References: <20230127132558.1176730-1-abel.vesa@linaro.org>
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Organization: Linaro Developer Services
+In-Reply-To: <20230127132558.1176730-1-abel.vesa@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 15, 2023 at 8:06 AM Shazad Hussain
-<quic_shazhuss@quicinc.com> wrote:
->
->
->
-> On 2/14/2023 9:27 PM, Bartosz Golaszewski wrote:
-> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >
-> > This enables the QUPv3 interfaces that are exposed on the sa8775p-ride
-> > board: I2C, SPI and the GNSS UART.
-> >
-> > Bartosz Golaszewski (3):
-> >    arm64: dts: qcom: sa8775p: add the i2c node for sa8775p-ride
-> >    arm64: dts: qcom: sa8775p: add the SPI node for sa8775p-ride
-> >    arm64: dts: qcom: sa8775p: add the GNSS high-speed UART for
->
-> Hi Bartosz,
-> This instance is for BT HS UART , not for GNSS.
-> For GNSS we have uart12 (0x00A94000).
->
+Hi Mark,
 
-Thanks, I'll rectify it in v2.
+On 27/01/2023 14:25, Abel Vesa wrote:
+> Document the compatible for SM8550 PDC.
+> 
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+> 
+> The v1 is here:
+> https://lore.kernel.org/all/20221116114210.2673902-1-abel.vesa@linaro.org/
+> 
+> Changes since v1:
+>   * rebased on next-20230125
+>   * added Krzysztof's R-b tag
+> 
+>   .../devicetree/bindings/interrupt-controller/qcom,pdc.yaml       | 1 +
+>   1 file changed, 1 insertion(+)
 
-Bart
+Do you think you can pick it for v6.3 ?
+
+Thanks,
+Neil
+
+> 
+> diff --git a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
+> index 94791e261c42..5a733bd76b57 100644
+> --- a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
+> +++ b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
+> @@ -37,6 +37,7 @@ properties:
+>             - qcom,sm8250-pdc
+>             - qcom,sm8350-pdc
+>             - qcom,sm8450-pdc
+> +          - qcom,sm8550-pdc
+>         - const: qcom,pdc
+>   
+>     reg:
+
