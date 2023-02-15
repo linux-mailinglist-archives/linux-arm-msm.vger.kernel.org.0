@@ -2,73 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 71BDD69850F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Feb 2023 20:55:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 14C7769856E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Feb 2023 21:20:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229514AbjBOTzC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Feb 2023 14:55:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52786 "EHLO
+        id S229584AbjBOUUd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Feb 2023 15:20:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229711AbjBOTyN (ORCPT
+        with ESMTP id S229493AbjBOUUd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Feb 2023 14:54:13 -0500
-Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E78DD410B6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Feb 2023 11:54:03 -0800 (PST)
-Received: by mail-io1-xd32.google.com with SMTP id l128so7573246iof.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Feb 2023 11:54:03 -0800 (PST)
+        Wed, 15 Feb 2023 15:20:33 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E9CE2CC67
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Feb 2023 12:20:31 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id l21-20020a05600c1d1500b003dfe462b7e4so3125795wms.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Feb 2023 12:20:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DnQVuU/Ffb7XPwxK0/WH5HNHpB1TwhXFIR6r6WJiun4=;
-        b=x+Q0WBgev0z4PqEyJQ3bCk7BlTMK7Ki8p3sxaZmBftko/MoaOJg8JSabbd5vSSUtT/
-         ZYW6N1GMAXDZfRbg+DTpK0LL36G8/VaosDPr4R2YCJ2zyVdBP54gko0Q91KtH+GkNbrs
-         AI5GUENdZLj6Fc8tNzBt+9Vh8uNY2lvLqXyKPFjL4sU3RvawBf6Se0sojbWPjlWIDrlt
-         bifZXCMH9HrL3OklY0cKnMY8xLtT05K6N1Hw9OYKsWgoAWI0KpIuJ6fuoVIUxMFQTq4X
-         MZKiY9Oq/ZyH1BrPn3IT9HcrRfgTEgR4lOZjeZPHDkXEOVkMhTAzXJYdcm5X35af887/
-         8BCA==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=kNzCuF6BCyXsL2yh1ARNBckVMji8pzlET6deYgUkxoE=;
+        b=XSFpJ/VevZDFan5kWJUyXz9WwmiflZO3DOFhA4+AF8vqE6RUr6/iCVk8JQzqwhaEeZ
+         t6gERriMHefRcBZ3gW87YjfyQDjXuAwfEcdWu/6LmiwCRELo5LT0bglwGFgMLRWv9UVr
+         2oA3KjvI0qlohDfKpzUWIV1YceyqPCAj4WkCuRFYmeFC8EAQ3yjVAFK79iGopxCSqX98
+         XEPh5IUPqDXeJKqb+R5CHwg8CGotNyxYgFiEQPLyXLvAh+ldKo4oWWNwhfn2+EBnO6G9
+         iZP2ObgDXL31cnnyrgPsnHPqLoq5xN62QODC8H7oVyv4Q/Tf/t330v9HlX8jiFgI5UGs
+         wVPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DnQVuU/Ffb7XPwxK0/WH5HNHpB1TwhXFIR6r6WJiun4=;
-        b=E8gBiORFr1sOTQVecFIbRYE9mRBNWzbJYlQpj6NMAGAXwgbsN4Rq9nqTaMpIj05r53
-         kE4J4eafcM0uOoMvbtYuh+d2M6fRwVaeGcPOAPm1g728u+bdbS31470fNFeAgt1+MOIA
-         cN4EmizeftpajU+ZXhPuBnHshVX68Z9cAaLyK09iSVwgS5xitOsQ5mWGiDkKGbYD1KqY
-         ieKwiJVod//eYuTNC/mwTJBfrxxHDLLCB/11VIm99j2DLAjYwml7DiHWp/FP2j0puB6D
-         YJ4bfkxZS0OH1YFvnmWo0/dmNDQLoqAvNGOWLUi5qRdeIF1sBvaShL/XmLZDvsmXhJYu
-         Owtw==
-X-Gm-Message-State: AO0yUKUrHKeemioPxXxKfBqLKqaWDQ/2EbFsriO1vXLHmRgGuaG+qRtj
-        eDawbvryHd96EEM+CO+745F2jA==
-X-Google-Smtp-Source: AK7set8WIZc3ACpPQBhxeJQ5Gpuvyw0OTYHuYjJ/L9+UaDtUaM741BR7R5+D6Afq0mQFYuOBnuZGwQ==
-X-Received: by 2002:a05:6602:27c8:b0:73c:eadf:c6fb with SMTP id l8-20020a05660227c800b0073ceadfc6fbmr444018ios.6.1676490843263;
-        Wed, 15 Feb 2023 11:54:03 -0800 (PST)
-Received: from presto.localdomain ([98.61.227.136])
-        by smtp.gmail.com with ESMTPSA id n10-20020a5ed90a000000b0073a312aaae5sm6291847iop.36.2023.02.15.11.54.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Feb 2023 11:54:02 -0800 (PST)
-From:   Alex Elder <elder@linaro.org>
-To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com
-Cc:     caleb.connolly@linaro.org, mka@chromium.org, evgreen@chromium.org,
-        andersson@kernel.org, quic_cpratapa@quicinc.com,
-        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
-        quic_subashab@quicinc.com, elder@kernel.org,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH net-next 6/6] net: ipa: add HW_PARAM_4 GSI register
-Date:   Wed, 15 Feb 2023 13:53:52 -0600
-Message-Id: <20230215195352.755744-7-elder@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230215195352.755744-1-elder@linaro.org>
-References: <20230215195352.755744-1-elder@linaro.org>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=kNzCuF6BCyXsL2yh1ARNBckVMji8pzlET6deYgUkxoE=;
+        b=v7XyYVirrEpqwZFN21QkQjw07q/10/D2YSkKubhPbHCQsSw73sxFTOw5XEn50fCfRd
+         knn3xs9o9jaOkolPet2F/Y5VJVK+8jUVqVNsy8itWUrmDmePgUn1L6LKTKJ9nx2CT7GX
+         SRnau7uerUCIwp7q1CLIVBzQnxgr8isUEZK7d1KY8y5hCw/P0/YU/m6NsSgW163iw61m
+         0sl/F3YhCTRAIL+bCh3u7OxjSe+yTo+4C2RdUMdGnlfyw79Ktj9hcZcQgxDHdSxvQB1p
+         BH4BwIlCa3hw00cLI+ebqsYj/XsS2GGVZt/8klJ0PwS65nwWk5jdgDi0N1tvMzdO8PeK
+         npKw==
+X-Gm-Message-State: AO0yUKUn0dBdyO6W2Q2g+UDCougWBB9z8pDvQMwzteZEGJVmrH2R0fqM
+        DDAlu4gwNKsWvHucR84PtyuSCQ==
+X-Google-Smtp-Source: AK7set9HivnC5lM/33lGnpMP4+zfEdLK/YWpE4+Ki+SgmylRZwxipc7gomV24OC7lBQFZ7fBot4O1Q==
+X-Received: by 2002:a05:600c:130f:b0:3dc:198c:dde with SMTP id j15-20020a05600c130f00b003dc198c0ddemr2710643wmf.41.1676492429680;
+        Wed, 15 Feb 2023 12:20:29 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id k21-20020a05600c1c9500b003dc492e4430sm3163621wms.28.2023.02.15.12.20.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Feb 2023 12:20:29 -0800 (PST)
+Message-ID: <865420b3-6afe-7f91-7a89-f9fbf831c2ab@linaro.org>
+Date:   Wed, 15 Feb 2023 21:20:27 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH 5/9] dt-bindings: remoteproc: mpss: Document
+ QDU1000/QRU1000 mpss devices
+Content-Language: en-US
+To:     Melody Olvera <quic_molvera@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Robert Marko <robimarko@gmail.com>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org
+References: <20230213185218.166520-1-quic_molvera@quicinc.com>
+ <20230213185218.166520-6-quic_molvera@quicinc.com>
+ <aba45ae9-8558-50c1-e5ad-dd910dacdbb3@linaro.org>
+ <0cb9dcb8-130e-7ad2-1f58-3d2f1bb48a49@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <0cb9dcb8-130e-7ad2-1f58-3d2f1bb48a49@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -77,70 +89,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Starting at IPA v5.0, the number of event rings per EE is defined
-in a field in a new HW_PARAM_4 GSI register rather than HW_PARAM_2.
-Define this new register and its fields, and update the code that
-checks the number of rings supported by hardware to use the proper
-field based on IPA version.
+On 14/02/2023 22:23, Melody Olvera wrote:
+> 
+> 
+> On 2/14/2023 12:28 AM, Krzysztof Kozlowski wrote:
+>> On 13/02/2023 19:52, Melody Olvera wrote:
+>>> This documents the compatible for the component used to boot the
+>>> MPSS on the QDU1000 and QRU1000 SoCs.
+>>>
+>>> The QDU1000 and QRU1000 mpss boot process now requires the specification
+>>> of an RMB register space to complete the handshake needed to start or
+>>> attach the mpss.
+>>>
+>>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+>>> ---
+>>>  .../bindings/remoteproc/qcom,qdu1000-pas.yaml | 127 ++++++++++++++++++
+>>>  1 file changed, 127 insertions(+)
+>>>  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,qdu1000-pas.yaml
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,qdu1000-pas.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,qdu1000-pas.yaml
+>>> new file mode 100644
+>>> index 000000000000..eb6ade984778
+>>> --- /dev/null
+>>> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,qdu1000-pas.yaml
+>>> @@ -0,0 +1,127 @@
+>>> +# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
+>>> +%YAML 1.2
+>>> +---
+>>> +$id: http://devicetree.org/schemas/remoteproc/qcom,qdu1000-pas.yaml#
+>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>> +
+>>> +title: Qualcomm QDU1000 Peripheral Authentication Service
+>>> +
+>>> +maintainers:
+>>> +  - Melody Olvera <quic_molvera@quicinc.com>
+>>> +
+>>> +description:
+>>> +  Qualcomm QDU1000 SoC Peripheral Authentication Service loads and boots firmware
+>>> +  on the Qualcomm DSP Hexagon cores.
+>>> +
+>>> +properties:
+>>> +  compatible:
+>>> +    enum:
+>>> +      - qcom,qdu1000-mpss-pas
+>> What about other remote processors? The subject prefix suggests it is
+>> only for mpss, but filename is different.
+> 
+> Yeah so QDU1000 and QRU1000 only have mpss; there are no other remote processors.
+> However, it uses the same PAS driver as the other remote processors on other SoCs.
+> I can rename to Modem Peripheral Authentication Service.
 
-Signed-off-by: Alex Elder <elder@linaro.org>
----
- drivers/net/ipa/gsi.c     | 7 ++++++-
- drivers/net/ipa/gsi_reg.h | 9 ++++++++-
- 2 files changed, 14 insertions(+), 2 deletions(-)
+Yes, please rename the title. Also please rename the file (and $id) to
+be based on compatible:
+qcom,qdu1000-mpss-pas.yaml
 
-diff --git a/drivers/net/ipa/gsi.c b/drivers/net/ipa/gsi.c
-index f128d5bd6956e..9a0b1fe4a93a8 100644
---- a/drivers/net/ipa/gsi.c
-+++ b/drivers/net/ipa/gsi.c
-@@ -2042,7 +2042,12 @@ static int gsi_ring_setup(struct gsi *gsi)
- 	}
- 	gsi->channel_count = count;
- 
--	count = reg_decode(reg, NUM_EV_PER_EE, val);
-+	if (gsi->version < IPA_VERSION_5_0) {
-+		count = reg_decode(reg, NUM_EV_PER_EE, val);
-+	} else {
-+		reg = gsi_reg(gsi, HW_PARAM_4);
-+		count = reg_decode(reg, EV_PER_EE, val);
-+	}
- 	if (!count) {
- 		dev_err(dev, "GSI reports zero event rings supported\n");
- 		return -EINVAL;
-diff --git a/drivers/net/ipa/gsi_reg.h b/drivers/net/ipa/gsi_reg.h
-index 2a19d9e34a10a..f62f0a5c653d1 100644
---- a/drivers/net/ipa/gsi_reg.h
-+++ b/drivers/net/ipa/gsi_reg.h
-@@ -71,6 +71,7 @@ enum gsi_reg_id {
- 	EV_CH_CMD,
- 	GENERIC_CMD,
- 	HW_PARAM_2,					/* IPA v3.5.1+ */
-+	HW_PARAM_4,					/* IPA v5.0+ */
- 	CNTXT_TYPE_IRQ,
- 	CNTXT_TYPE_IRQ_MSK,
- 	CNTXT_SRC_CH_IRQ,
-@@ -224,7 +225,7 @@ enum gsi_generic_cmd_opcode {
- enum gsi_hw_param_2_field_id {
- 	IRAM_SIZE,
- 	NUM_CH_PER_EE,
--	NUM_EV_PER_EE,
-+	NUM_EV_PER_EE,					/* Not IPA v5.0+ */
- 	GSI_CH_PEND_TRANSLATE,
- 	GSI_CH_FULL_LOGIC,
- 	GSI_USE_SDMA,					/* IPA v4.0+ */
-@@ -247,6 +248,12 @@ enum gsi_iram_size {
- 	IRAM_SIZE_FOUR_KB			= 0x5,
- };
- 
-+/* HW_PARAM_4 register */				/* IPA v5.0+ */
-+enum gsi_hw_param_4_field_id {
-+	EV_PER_EE,
-+	IRAM_PROTOCOL_COUNT,
-+};
-+
- /**
-  * enum gsi_irq_type_id: GSI IRQ types
-  * @GSI_CH_CTRL:		Channel allocation, deallocation, etc.
--- 
-2.34.1
+
+
+Best regards,
+Krzysztof
 
