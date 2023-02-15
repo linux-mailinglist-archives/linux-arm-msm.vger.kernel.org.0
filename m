@@ -2,58 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 69823698121
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Feb 2023 17:45:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F721698146
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Feb 2023 17:50:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229716AbjBOQpy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Feb 2023 11:45:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53954 "EHLO
+        id S229849AbjBOQua (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Feb 2023 11:50:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229686AbjBOQpx (ORCPT
+        with ESMTP id S229825AbjBOQu2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Feb 2023 11:45:53 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0195B1F488;
-        Wed, 15 Feb 2023 08:45:53 -0800 (PST)
+        Wed, 15 Feb 2023 11:50:28 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 636FC32E6D;
+        Wed, 15 Feb 2023 08:50:26 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 92DD161CDE;
-        Wed, 15 Feb 2023 16:45:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB88FC4339B;
-        Wed, 15 Feb 2023 16:45:51 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 19250B82315;
+        Wed, 15 Feb 2023 16:50:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C867BC433EF;
+        Wed, 15 Feb 2023 16:50:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1676479552;
-        bh=4hSk3iQocpfOE/qEG5dsksQoLFfjipAko9fOMasZXic=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=udKiLjkWTK002xyuosj56bqlyJCbbe+/cYbLVe/mbuEfoz1EHQtWVJwsgKrJcdtEg
-         WEqHtZEaA/vRCNXsGemp0QeSL+gpPBSY1vUpxSWEEgJ5O4tjTYRzm+DY+cyeTZD8hI
-         vdxQhpEW1KV0T7Ik0LuOQhLYZ8IslzXhVOnbIz8cKiRKh6YjtBzzymC69yPWfRgG0m
-         l0FuR9cbm6RrQgvMQgVTUjmsbMFiYap+QVuSWIPt6Boaa6Vn3dSslkQgVBn4xwzPAg
-         f1iUK/sG21guXbgzE+xE/EDDAo32/MUWbJ6iMITXiAjPxVl3xW/lqvvmaL8hxaFWrG
-         3pPTGJRZtN/0g==
+        s=k20201202; t=1676479823;
+        bh=uLarJKzg3GuQJ0dY2bl5m5RJLzCC31PglWJs+3lcu4s=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=hr5FzDtcqvXY60ppMmVSJoNwwexR29uuUJCiZGW74prZxlpjp9kb6Dd2fI2w7ROqY
+         TfltEnCuc/m8bayGoV0hzBXoIgfJxEKbTvrbmFpQ3YH+WNmsZkYX8kzgJu5FOxausV
+         /2N6GmnUwqmFQhTn3ptmgyIkzgl3Oqbgy0Nbhbtb8uYmWdgm82PFZ5sSgRRgqHnu0E
+         adLMIDPKbWUW2CrgQIhvmslvx41Fkd7ooszYK4MEInBb2xTn1AbDM5Eld7PXHW9iuH
+         7JUiD1/VR6UST5X/aCqBsfDBp2q4jGplemtO/wG5/vMu7j7G3VlhpardK9NBXRXKOF
+         K/ylOtQ3ITRvA==
 Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1pSKvg-0000Mx-UO; Wed, 15 Feb 2023 17:46:48 +0100
-From:   Johan Hovold <johan+linaro@kernel.org>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        (envelope-from <johan@kernel.org>)
+        id 1pSL04-0000Py-TM; Wed, 15 Feb 2023 17:51:20 +0100
+Date:   Wed, 15 Feb 2023 17:51:20 +0100
+From:   Johan Hovold <johan@kernel.org>
+To:     Alexandre Belloni <alexandre.belloni@bootlin.com>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Alessandro Zummo <a.zummo@towertech.it>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 2/2] arm64: dts: sc8280xp-x13s: fix external display 'data-lanes'
-Date:   Wed, 15 Feb 2023 17:45:24 +0100
-Message-Id: <20230215164524.1335-2-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230215164524.1335-1-johan+linaro@kernel.org>
-References: <20230215164524.1335-1-johan+linaro@kernel.org>
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-rtc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v2 16/22] dt-bindings: rtc: qcom-pm8xxx: add nvmem-cell
+ offset
+Message-ID: <Y+0NiJsp4JjeyrqH@hovoldconsulting.com>
+References: <20230202155448.6715-1-johan+linaro@kernel.org>
+ <20230202155448.6715-17-johan+linaro@kernel.org>
+ <Y+bJqIpgZ0fbzL2b@mail.local>
+ <Y+dQXlABqc/uzIXc@hovoldconsulting.com>
+ <Y+fF94EOkUuMq9Fc@mail.local>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y+fF94EOkUuMq9Fc@mail.local>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -61,47 +70,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The 'data-lanes' property belongs in the controller node but was
-erroneously moved to the endpoint nodes in the last revision of the
-external display series:
+On Sat, Feb 11, 2023 at 05:44:39PM +0100, Alexandre Belloni wrote:
+> On 11/02/2023 09:22:54+0100, Johan Hovold wrote:
+> > On Fri, Feb 10, 2023 at 11:48:08PM +0100, Alexandre Belloni wrote:
+> > > On 02/02/2023 16:54:42+0100, Johan Hovold wrote:
+> > > > On many Qualcomm platforms the PMIC RTC control and time registers are
+> > > > read-only so that the RTC time can not be updated. Instead an offset
+> > > > needs be stored in some machine-specific non-volatile memory, which a
+> > > > driver can take into account.
+> > > > 
+> > > > Add an 'offset' nvmem cell which can be used to store a 32-bit offset
+> > > > from the Unix epoch so that the RTC time can be updated on such
+> > > > platforms.
+> > > > 
+> > > > Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
-	[drm] Invalid property "data-lanes", default max DP lanes = 4
+> > > The patch doesn't apply because this part of the context is not
+> > > upstream. Can you rebase?
+> > 
+> > Ah, sorry about that. That's because of commit 51b3802e7960
+> > ("dt-bindings: rtc: qcom-pm8xxx: allow 'wakeup-source' property") which
+> > is now in Linus's tree (and your rtc-fixes branch).
+> > 
+> > Do you still want me to rebase or do you prefer to handle the conflict
+> > some other way?
+> 
+> Ah yes, my bad, I'll merge rtc-fixes in rtc-next before applying
 
-Fixes: 8fcff430faee ("arm64: dts: qcom: sc8280xp-x13s: Enable external display")
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+Sorry about reminding so soon, but with the merge window approaching
+fast, will you be able to get this merged for 6.3?
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-index 918be6728baa..d52d49a82ada 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -491,20 +491,22 @@ &mdss0 {
- };
- 
- &mdss0_dp0 {
-+	data-lanes = <0 1>;
-+
- 	status = "okay";
- };
- 
- &mdss0_dp0_out {
--	data-lanes = <0 1>;
- 	remote-endpoint = <&pmic_glink_con0_ss>;
- };
- 
- &mdss0_dp1 {
-+	data-lanes = <0 1>;
-+
- 	status = "okay";
- };
- 
- &mdss0_dp1_out {
--	data-lanes = <0 1>;
- 	remote-endpoint = <&pmic_glink_con1_ss>;
- };
- 
--- 
-2.39.2
-
+Johan
