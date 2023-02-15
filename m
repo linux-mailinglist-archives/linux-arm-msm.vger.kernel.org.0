@@ -2,103 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F721698146
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Feb 2023 17:50:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2ABD569816F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Feb 2023 17:58:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229849AbjBOQua (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Feb 2023 11:50:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59000 "EHLO
+        id S229826AbjBOQ6W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Feb 2023 11:58:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229825AbjBOQu2 (ORCPT
+        with ESMTP id S229505AbjBOQ6W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Feb 2023 11:50:28 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 636FC32E6D;
-        Wed, 15 Feb 2023 08:50:26 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 19250B82315;
-        Wed, 15 Feb 2023 16:50:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C867BC433EF;
-        Wed, 15 Feb 2023 16:50:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1676479823;
-        bh=uLarJKzg3GuQJ0dY2bl5m5RJLzCC31PglWJs+3lcu4s=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=hr5FzDtcqvXY60ppMmVSJoNwwexR29uuUJCiZGW74prZxlpjp9kb6Dd2fI2w7ROqY
-         TfltEnCuc/m8bayGoV0hzBXoIgfJxEKbTvrbmFpQ3YH+WNmsZkYX8kzgJu5FOxausV
-         /2N6GmnUwqmFQhTn3ptmgyIkzgl3Oqbgy0Nbhbtb8uYmWdgm82PFZ5sSgRRgqHnu0E
-         adLMIDPKbWUW2CrgQIhvmslvx41Fkd7ooszYK4MEInBb2xTn1AbDM5Eld7PXHW9iuH
-         7JUiD1/VR6UST5X/aCqBsfDBp2q4jGplemtO/wG5/vMu7j7G3VlhpardK9NBXRXKOF
-         K/ylOtQ3ITRvA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1pSL04-0000Py-TM; Wed, 15 Feb 2023 17:51:20 +0100
-Date:   Wed, 15 Feb 2023 17:51:20 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Alexandre Belloni <alexandre.belloni@bootlin.com>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Alessandro Zummo <a.zummo@towertech.it>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Maximilian Luz <luzmaximilian@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-rtc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v2 16/22] dt-bindings: rtc: qcom-pm8xxx: add nvmem-cell
- offset
-Message-ID: <Y+0NiJsp4JjeyrqH@hovoldconsulting.com>
-References: <20230202155448.6715-1-johan+linaro@kernel.org>
- <20230202155448.6715-17-johan+linaro@kernel.org>
- <Y+bJqIpgZ0fbzL2b@mail.local>
- <Y+dQXlABqc/uzIXc@hovoldconsulting.com>
- <Y+fF94EOkUuMq9Fc@mail.local>
+        Wed, 15 Feb 2023 11:58:22 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D8EB233DB;
+        Wed, 15 Feb 2023 08:58:16 -0800 (PST)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31FG6oCw002832;
+        Wed, 15 Feb 2023 16:58:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=0Z6Gjb5kPHb3KDCWYT0wsNV5ujNln5w12ihJdPAd5k0=;
+ b=gd1FHh2gEXNeQ34L/PYtJ7fpN+3Ucn+AucdfcN0U2g5WWoBxTE23RK95s7YEvXBaRj+J
+ 1AFKXP8qwWgg37/CipxFtqov0bBSK/Jl21ulkJ+F1nHQI79wfn4+j663sgXUxU6iM9OT
+ o3/vbwaxY49FrbS07dGLgEg/x6ekp674X5ra/8l9M+LAcVFPD/gOwM5a9oEg+o4jSBel
+ a+eioLVJUobhMGVehHRfLgGP4oC5/wqx8O5tu/rcxg5wKQFfnLiBxmfrlMgOjfZ8MbDb
+ oEtgQr7brDReh+ky+42g4cgB64FxGiBj+ElhJeoIe3GIrERTk2rA6JrbbmNsETCk3Sqd ow== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nr6qkmje4-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 15 Feb 2023 16:58:12 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31FGwBhW004211
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 15 Feb 2023 16:58:11 GMT
+Received: from [10.134.67.48] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Wed, 15 Feb
+ 2023 08:58:10 -0800
+Message-ID: <d35633ea-4049-6f51-3a3a-2a258a4af037@quicinc.com>
+Date:   Wed, 15 Feb 2023 08:58:10 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y+fF94EOkUuMq9Fc@mail.local>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH 0/3] mailbox: Allow direct registration to a channel
+To:     Sudeep Holla <sudeep.holla@arm.com>
+CC:     Jassi Brar <jassisinghbrar@gmail.com>,
+        <linux-kernel@vger.kernel.org>, <linux-acpi@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20230213232537.2040976-1-quic_eberman@quicinc.com>
+ <20230215101732.pbpom3ub3yh75n4w@bogus>
+Content-Language: en-US
+From:   Elliot Berman <quic_eberman@quicinc.com>
+In-Reply-To: <20230215101732.pbpom3ub3yh75n4w@bogus>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: uHz88WbATykub5Nxeey4JWl_YL45w4n0
+X-Proofpoint-ORIG-GUID: uHz88WbATykub5Nxeey4JWl_YL45w4n0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-15_06,2023-02-15_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
+ clxscore=1015 bulkscore=0 impostorscore=0 suspectscore=0
+ lowpriorityscore=0 spamscore=0 priorityscore=1501 mlxscore=0 phishscore=0
+ mlxlogscore=756 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302150152
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Feb 11, 2023 at 05:44:39PM +0100, Alexandre Belloni wrote:
-> On 11/02/2023 09:22:54+0100, Johan Hovold wrote:
-> > On Fri, Feb 10, 2023 at 11:48:08PM +0100, Alexandre Belloni wrote:
-> > > On 02/02/2023 16:54:42+0100, Johan Hovold wrote:
-> > > > On many Qualcomm platforms the PMIC RTC control and time registers are
-> > > > read-only so that the RTC time can not be updated. Instead an offset
-> > > > needs be stored in some machine-specific non-volatile memory, which a
-> > > > driver can take into account.
-> > > > 
-> > > > Add an 'offset' nvmem cell which can be used to store a 32-bit offset
-> > > > from the Unix epoch so that the RTC time can be updated on such
-> > > > platforms.
-> > > > 
-> > > > Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> > > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
-> > > The patch doesn't apply because this part of the context is not
-> > > upstream. Can you rebase?
-> > 
-> > Ah, sorry about that. That's because of commit 51b3802e7960
-> > ("dt-bindings: rtc: qcom-pm8xxx: allow 'wakeup-source' property") which
-> > is now in Linus's tree (and your rtc-fixes branch).
-> > 
-> > Do you still want me to rebase or do you prefer to handle the conflict
-> > some other way?
+
+On 2/15/2023 2:17 AM, Sudeep Holla wrote:
+> On Mon, Feb 13, 2023 at 03:25:34PM -0800, Elliot Berman wrote:
+>> Two mailbox controllers have channel/client binding mechanisms that are
+>> controller-specific and not using the devicetree binding mechanisms. Mailbox
+>> channel/client is conceptually done in two steps: selecting the channel
+>> and binding the selected to channel to a client. Channel selection is sometimes
+>> controller specific (pcc and omap are examples). The channel/client binding
+>> code is all the same.
+>>
+>> This small series de-duplicates and refactors the channel/client binding
+>> into a common framework function: "mbox_bind_client" which all of the
+>> channel selection mechanisms can use.
+>>
+>> I found this duplicate code while working on the support for Gunyah hypervisor
+>> message queues [1]. I've only been able to compile-test omap-maiblox and pcc,
+>> however it is a straightforward conversion here.
+>>
+>> [1]: https://lore.kernel.org/all/20230120224627.4053418-9-quic_eberman@quicinc.com/
+>>
+>> Elliot Berman (3):
+>>    mailbox: Allow direct registration to a channel
 > 
-> Ah yes, my bad, I'll merge rtc-fixes in rtc-next before applying
+> I am unable to find the above patch either in my inbox or in lore[1].
+> Can you please repost the same ? I would like to test/review w.r.t PCC
+> driver.
+> 
 
-Sorry about reminding so soon, but with the merge window approaching
-fast, will you be able to get this merged for 6.3?
+Hi Sudeep,
 
-Johan
+Not sure why the patch didn't end up your inbox; lore seems to have 
+linked it correctly and indicates you were in To:. If I missed 
+something, let me know and I'll make sure you're properly included if 
+future versions needed.
+
+https://lore.kernel.org/all/20230213232537.2040976-4-quic_eberman@quicinc.com/
+
+Thanks,
+Elliot
+
+> --
+> Regards,
+> Sudeep
+> 
+> [1] https://lore.kernel.org/all/20230213232537.2040976-1-quic_eberman@quicinc.com/
+> 
