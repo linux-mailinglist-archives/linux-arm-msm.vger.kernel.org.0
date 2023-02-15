@@ -2,190 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C71CD6975AA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Feb 2023 06:05:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A64BE6975BD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Feb 2023 06:17:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229809AbjBOFFs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Feb 2023 00:05:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40988 "EHLO
+        id S233141AbjBOFRL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Feb 2023 00:17:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229520AbjBOFFr (ORCPT
+        with ESMTP id S230212AbjBOFRK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Feb 2023 00:05:47 -0500
+        Wed, 15 Feb 2023 00:17:10 -0500
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A9BA28221;
-        Tue, 14 Feb 2023 21:05:46 -0800 (PST)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31F4G0E2014845;
-        Wed, 15 Feb 2023 05:05:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id; s=qcppdkim1;
- bh=z16GGCBpKwEvBuB2oLs3wE4UgR+zoXFcFzJ50HDfsTo=;
- b=UjMtutp15otkFySrkeFZ+3s9i0NV7Rt3bbSccaBHKtq9J+uModsaosy5kmjbVs9Zf/bX
- /zUXqDQljaElM/Aj1Mr7g5szoY0thPU2EykQHVaQTHxv8d5qOLnvgwIBgmnGEDC03p+3
- VOsBncAqEzbQx5ZcH/Luc2TwSj+ms3syMDh03Q2ylKZ9hkeTUQcmDdA0Gc2SumHkCJU5
- KnSkk9wV10voMulIaMv7LobL8DAYfh/1A764kR5zeD510YCLC2fXBWrlEwUtbg4BpN78
- n4PG5r5VCDjQIs1lzW0RSVBiFh9LhGf7hnBpgohffkylnkFyJ8FmMR6UUzdcfkIsr2uw 1A== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nqts7vdp3-1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89D106E80;
+        Tue, 14 Feb 2023 21:17:09 -0800 (PST)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31F1hgf7018371;
+        Wed, 15 Feb 2023 05:17:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=oGCT/5IFWwFCKLzPtnIq0Q+X/5HAUDivyeTJBKdWj6k=;
+ b=f3c/TU25ZSEFeTr9eUhy2sma03vAshydzKIYpVyUACaOXPNE0NwX9hjARWew7Ugk7rps
+ rMSxBl3F0SuSEKofZIPeyxZhJW3hzhXhDzklQmiRoZNucT9UEygzPs68K225IQmI3xBh
+ cdf9Sjzu3jFFTs6JKXWY+sHUznps4pEXTSevy91eH3I0EVzNPK67iVqBvPF/sf4FzkeY
+ dJ3qsKTzOxvppjc449e3Y6T0eeq7hgj+mchDfLw9r3g6oy3mr4o7zaFjyAUbjC6vWXxI
+ nzDWiXUMSqQIUookx86BqVexrFzJ1+n6xgz7LtUFZy1lYHlFOqyWVYhU1GL8DHffaTtU 9g== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nr6qkjwe5-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 15 Feb 2023 05:05:42 +0000
-Received: from pps.filterd (NALASPPMTA04.qualcomm.com [127.0.0.1])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 31F55fug018995;
-        Wed, 15 Feb 2023 05:05:41 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by NALASPPMTA04.qualcomm.com (PPS) with ESMTPS id 3np43n406e-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Wed, 15 Feb 2023 05:05:41 +0000
-Received: from NALASPPMTA04.qualcomm.com (NALASPPMTA04.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 31F55eHh018981;
-        Wed, 15 Feb 2023 05:05:40 GMT
-Received: from hu-devc-lv-u18-c.qualcomm.com (hu-vtanuku-lv.qualcomm.com [10.47.206.121])
-        by NALASPPMTA04.qualcomm.com (PPS) with ESMTP id 31F55eCp018980;
-        Wed, 15 Feb 2023 05:05:40 +0000
-Received: by hu-devc-lv-u18-c.qualcomm.com (Postfix, from userid 410733)
-        id 83B2E5000A7; Tue, 14 Feb 2023 21:05:40 -0800 (PST)
-From:   Visweswara Tanuku <quic_vtanuku@quicinc.com>
-To:     agross@kernel.org, andersson@kernel.org,
-        gregkh@linuxfoundation.org, konrad.dybcio@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_eberman@quicinc.com, quic_satyap@quicinc.com,
-        quic_msavaliy@quicinc.com, quic_vnivarth@quicinc.com,
-        Visweswara Tanuku <quic_vtanuku@quicinc.com>
-Subject: [PATCH] soc: qcom: geni-se: Update Tx and Rx fifo depth based on QUP HW version
-Date:   Tue, 14 Feb 2023 21:05:28 -0800
-Message-Id: <20230215050528.9507-1-quic_vtanuku@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-X-QCInternal: smtphost
+        Wed, 15 Feb 2023 05:17:05 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31F5H42T027026
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 15 Feb 2023 05:17:04 GMT
+Received: from [10.216.8.213] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 14 Feb
+ 2023 21:17:01 -0800
+Message-ID: <8aeea3f5-7b90-f384-33ab-ba7b4afb5317@quicinc.com>
+Date:   Wed, 15 Feb 2023 10:46:58 +0530
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH] remoteproc: qcom: replace kstrdup with kstrndup
+Content-Language: en-US
+To:     Bjorn Andersson <andersson@kernel.org>
+CC:     <dmitry.baryshkov@linaro.org>, <agross@kernel.org>,
+        <mathieu.poirier@linaro.org>, <konrad.dybcio@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <1675180866-16695-1-git-send-email-quic_mojha@quicinc.com>
+ <1676383691-29738-1-git-send-email-quic_mojha@quicinc.com>
+ <20230214163944.y5tkgdfmsycmpg7p@ripper>
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <20230214163944.y5tkgdfmsycmpg7p@ripper>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: b2zfzd_rlakrp4I6WdhWi3GmLZWvcLH5
-X-Proofpoint-ORIG-GUID: b2zfzd_rlakrp4I6WdhWi3GmLZWvcLH5
+X-Proofpoint-GUID: 9PlTnfRyFABlGgXrF7iH0q31QJ30WOon
+X-Proofpoint-ORIG-GUID: 9PlTnfRyFABlGgXrF7iH0q31QJ30WOon
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
  definitions=2023-02-15_02,2023-02-14_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- priorityscore=1501 bulkscore=0 lowpriorityscore=0 suspectscore=0
- mlxlogscore=417 mlxscore=0 impostorscore=0 spamscore=0 phishscore=0
- clxscore=1011 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302150045
-X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,SPF_HELO_NONE,
-        SPF_NONE autolearn=no autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
+ clxscore=1015 bulkscore=0 impostorscore=0 suspectscore=0
+ lowpriorityscore=0 spamscore=0 priorityscore=1501 mlxscore=0 phishscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302150047
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From QUP HW Version 3.10 and above the Tx and Rx
-fifo depth bits are increased to 23:16 bits from
-21:16 bits in SE_HW_PARAM registers accomodating
-256bytes of fifo depth.
 
-Updated geni_se_get_tx_fifo_depth and
-geni_se_get_rx_fifo_depth to retrieve right fifo
-depth based on QUP HW version.
 
-Signed-off-by: Visweswara Tanuku <quic_vtanuku@quicinc.com>
----
- include/linux/soc/qcom/geni-se.h | 42 +++++++++++++++++++++++++++-----
- 1 file changed, 36 insertions(+), 6 deletions(-)
+On 2/14/2023 10:09 PM, Bjorn Andersson wrote:
+> On Tue, Feb 14, 2023 at 07:38:11PM +0530, Mukesh Ojha wrote:
+>> Since, there is no guarantee that region.name will be 0-terminated
+>> from the firmware side, replace kstrdup with kstrndup.
+>>
+>> Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+> 
+> Please don't send additional patches in-reply-to another patch, it makes
+> it impossible to use b4 to pick up the first patch.
+> 
+> And please don't send two patches which clearly will conflict with
+> each other. Now I had to manually apply the first patch...
+> 
 
-diff --git a/include/linux/soc/qcom/geni-se.h b/include/linux/soc/qcom/geni-se.h
-index 400213daa461..c55a0bc8cb0e 100644
---- a/include/linux/soc/qcom/geni-se.h
-+++ b/include/linux/soc/qcom/geni-se.h
-@@ -245,12 +245,22 @@ struct geni_se {
- /* SE_HW_PARAM_0 fields */
- #define TX_FIFO_WIDTH_MSK		GENMASK(29, 24)
- #define TX_FIFO_WIDTH_SHFT		24
-+/*
-+ * For QUP HW Version >= 3.10 Tx fifo depth support is increased
-+ * to 256bytes and corresponding bits are 16 to 23
-+ */
-+#define TX_FIFO_DEPTH_MSK_256_BYTES	GENMASK(23, 16)
- #define TX_FIFO_DEPTH_MSK		GENMASK(21, 16)
- #define TX_FIFO_DEPTH_SHFT		16
- 
- /* SE_HW_PARAM_1 fields */
- #define RX_FIFO_WIDTH_MSK		GENMASK(29, 24)
- #define RX_FIFO_WIDTH_SHFT		24
-+/*
-+ * For QUP HW Version >= 3.10 Rx fifo depth support is increased
-+ * to 256bytes and corresponding bits are 16 to 23
-+ */
-+#define RX_FIFO_DEPTH_MSK_256_BYTES	GENMASK(23, 16)
- #define RX_FIFO_DEPTH_MSK		GENMASK(21, 16)
- #define RX_FIFO_DEPTH_SHFT		16
- 
-@@ -391,7 +401,8 @@ static inline void geni_se_abort_s_cmd(struct geni_se *se)
- 
- /**
-  * geni_se_get_tx_fifo_depth() - Get the TX fifo depth of the serial engine
-- * @se:	Pointer to the concerned serial engine.
-+ * based on QUP HW version
-+ * @se: Pointer to the concerned serial engine.
-  *
-  * This function is used to get the depth i.e. number of elements in the
-  * TX fifo of the serial engine.
-@@ -400,11 +411,20 @@ static inline void geni_se_abort_s_cmd(struct geni_se *se)
-  */
- static inline u32 geni_se_get_tx_fifo_depth(struct geni_se *se)
- {
--	u32 val;
-+	u32 val, hw_version, hw_major, hw_minor, tx_fifo_depth_mask;
-+
-+	hw_version = geni_se_get_qup_hw_version(se);
-+	hw_major = GENI_SE_VERSION_MAJOR(hw_version);
-+	hw_minor = GENI_SE_VERSION_MINOR(hw_version);
-+
-+	if ((hw_major == 3 && hw_minor >= 10) || hw_major > 3)
-+		tx_fifo_depth_mask = TX_FIFO_DEPTH_MSK_256_BYTES;
-+	else
-+		tx_fifo_depth_mask = TX_FIFO_DEPTH_MSK;
- 
- 	val = readl_relaxed(se->base + SE_HW_PARAM_0);
- 
--	return (val & TX_FIFO_DEPTH_MSK) >> TX_FIFO_DEPTH_SHFT;
-+	return (val & tx_fifo_depth_mask) >> TX_FIFO_DEPTH_SHFT;
- }
- 
- /**
-@@ -427,7 +447,8 @@ static inline u32 geni_se_get_tx_fifo_width(struct geni_se *se)
- 
- /**
-  * geni_se_get_rx_fifo_depth() - Get the RX fifo depth of the serial engine
-- * @se:	Pointer to the concerned serial engine.
-+ * based on QUP HW version
-+ * @se: Pointer to the concerned serial engine.
-  *
-  * This function is used to get the depth i.e. number of elements in the
-  * RX fifo of the serial engine.
-@@ -436,11 +457,20 @@ static inline u32 geni_se_get_tx_fifo_width(struct geni_se *se)
-  */
- static inline u32 geni_se_get_rx_fifo_depth(struct geni_se *se)
- {
--	u32 val;
-+	u32 val, hw_version, hw_major, hw_minor, rx_fifo_depth_mask;
-+
-+	hw_version = geni_se_get_qup_hw_version(se);
-+	hw_major = GENI_SE_VERSION_MAJOR(hw_version);
-+	hw_minor = GENI_SE_VERSION_MINOR(hw_version);
-+
-+	if ((hw_major == 3 && hw_minor >= 10) || hw_major > 3)
-+		rx_fifo_depth_mask = RX_FIFO_DEPTH_MSK_256_BYTES;
-+	else
-+		rx_fifo_depth_mask = RX_FIFO_DEPTH_MSK;
- 
- 	val = readl_relaxed(se->base + SE_HW_PARAM_1);
- 
--	return (val & RX_FIFO_DEPTH_MSK) >> RX_FIFO_DEPTH_SHFT;
-+	return (val & rx_fifo_depth_mask) >> RX_FIFO_DEPTH_SHFT;
- }
- 
- void geni_se_init(struct geni_se *se, u32 rx_wm, u32 rx_rfr);
--- 
-2.17.1
+Really sorry, for the inconvenience.
+will keep in mind.
 
+Thanks,
+-Mukesh
+
+> Regards,
+> Bjorn
+> 
+>> ---
+>>   drivers/remoteproc/qcom_common.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
+>> index 020349f..7810f91 100644
+>> --- a/drivers/remoteproc/qcom_common.c
+>> +++ b/drivers/remoteproc/qcom_common.c
+>> @@ -124,7 +124,7 @@ static int qcom_add_minidump_segments(struct rproc *rproc, struct minidump_subsy
+>>   	for (i = 0; i < seg_cnt; i++) {
+>>   		memcpy_fromio(&region, ptr + i, sizeof(region));
+>>   		if (region.valid == MD_REGION_VALID) {
+>> -			name = kstrdup(region.name, GFP_KERNEL);
+>> +			name = kstrndup(region.name, MAX_REGION_NAME_LENGTH - 1, GFP_KERNEL);
+>>   			if (!name) {
+>>   				iounmap(ptr);
+>>   				return -ENOMEM;
+>> -- 
+>> 2.7.4
+>>
