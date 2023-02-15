@@ -2,129 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A64BE6975BD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Feb 2023 06:17:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5CE316976B1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Feb 2023 07:55:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233141AbjBOFRL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Feb 2023 00:17:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44374 "EHLO
+        id S233532AbjBOGzd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Feb 2023 01:55:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230212AbjBOFRK (ORCPT
+        with ESMTP id S233525AbjBOGzc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Feb 2023 00:17:10 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89D106E80;
-        Tue, 14 Feb 2023 21:17:09 -0800 (PST)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31F1hgf7018371;
-        Wed, 15 Feb 2023 05:17:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=oGCT/5IFWwFCKLzPtnIq0Q+X/5HAUDivyeTJBKdWj6k=;
- b=f3c/TU25ZSEFeTr9eUhy2sma03vAshydzKIYpVyUACaOXPNE0NwX9hjARWew7Ugk7rps
- rMSxBl3F0SuSEKofZIPeyxZhJW3hzhXhDzklQmiRoZNucT9UEygzPs68K225IQmI3xBh
- cdf9Sjzu3jFFTs6JKXWY+sHUznps4pEXTSevy91eH3I0EVzNPK67iVqBvPF/sf4FzkeY
- dJ3qsKTzOxvppjc449e3Y6T0eeq7hgj+mchDfLw9r3g6oy3mr4o7zaFjyAUbjC6vWXxI
- nzDWiXUMSqQIUookx86BqVexrFzJ1+n6xgz7LtUFZy1lYHlFOqyWVYhU1GL8DHffaTtU 9g== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nr6qkjwe5-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 15 Feb 2023 05:17:05 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31F5H42T027026
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 15 Feb 2023 05:17:04 GMT
-Received: from [10.216.8.213] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 14 Feb
- 2023 21:17:01 -0800
-Message-ID: <8aeea3f5-7b90-f384-33ab-ba7b4afb5317@quicinc.com>
-Date:   Wed, 15 Feb 2023 10:46:58 +0530
+        Wed, 15 Feb 2023 01:55:32 -0500
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A22BA34C23
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 22:55:31 -0800 (PST)
+Received: by mail-pl1-x632.google.com with SMTP id b5so19368335plz.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 22:55:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=dSwftWU2F5+UTSHoENK8S8rRksgligsrF8ZnqH0Z/+c=;
+        b=r0GU0FrgvuWSrTHQzfjG7T0NncxujdbQ0vayQzl0RG+iWcYm0XQ1pCGHOUElYwhpOD
+         BVGEiAy4SXWES9OG+dMRSUqiBXwOInbJ469hf8UCS0RffRJa/U/2rT15mwyWZh1V3fIT
+         4/5luP93WoWkGiyFGEcJYGqgK+CWV9DzCREtoDuKwxdp1KZF1cpJdWpiSIpQiU4umUds
+         ce4d3eJ+A715kaFGInuplLDo5LGUr1uCEHyJM+6ubsuL/sxvOmz6rbvy7V3b1d5rTmZb
+         euBzUxJS6ETOOV/5N2Ej1o5Rfx7VmEPRSJufWZw+xUENqfGDB4nG3eqbgpKfa9pjz+Kd
+         kPsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dSwftWU2F5+UTSHoENK8S8rRksgligsrF8ZnqH0Z/+c=;
+        b=az/umitiHpRW3ld5KAPlCeUhHoeMFVAmzE+Y9UZbWSwvgT5iqR9IjpgauuDcKJWgta
+         4JLI6SeKQfhb9N9EjM/a5GBI7qCJq2XCP6uRtDM8sAx59hNa9l2nDheHbifnK7X+2dKr
+         PiQgKhfTK6kagzAEDZ9Haz7dI8U0DnjR7P3SAZlgwtnWRwrC8Z6Kcpy8wvbu1PeNCyiO
+         B3hI0m+qkGUmVdDkFEILekHiK4mdOLioGitRAFYzwxGV7qJjNQOaevBBLZx84vFDylUe
+         L6Sybw5VTowiSDaUljprbqTJ1nz7WdU3wNYnJf5XcnyJx9ae6gqR8Um+aorgUgu6MHVm
+         y/4g==
+X-Gm-Message-State: AO0yUKV0Ev2KFMGgS43NgTN3QKLfym3lihSVPjUfr/SGbXllGzkeN7GI
+        wUzsta/hDEsEeOen7EOPOhgC
+X-Google-Smtp-Source: AK7set9Y7ILgoFMCWGJJivuvjVaAZrV3BSCh8WD3upABWi2XyyCj6MlwbToqBqhkCzTY5DEe3y813g==
+X-Received: by 2002:a17:903:5cb:b0:199:bcb:3dae with SMTP id kf11-20020a17090305cb00b001990bcb3daemr1023260plb.56.1676444131115;
+        Tue, 14 Feb 2023 22:55:31 -0800 (PST)
+Received: from localhost.localdomain ([117.217.179.87])
+        by smtp.gmail.com with ESMTPSA id d23-20020a170902b71700b001933b4b1a49sm10276870pls.183.2023.02.14.22.55.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Feb 2023 22:55:30 -0800 (PST)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     andersson@kernel.org
+Cc:     konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        viresh.kumar@linaro.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 00/12] arm64: dts: qcom: Supply clock from cpufreq node to CPUs
+Date:   Wed, 15 Feb 2023 12:25:11 +0530
+Message-Id: <20230215065520.5535-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH] remoteproc: qcom: replace kstrdup with kstrndup
-Content-Language: en-US
-To:     Bjorn Andersson <andersson@kernel.org>
-CC:     <dmitry.baryshkov@linaro.org>, <agross@kernel.org>,
-        <mathieu.poirier@linaro.org>, <konrad.dybcio@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <1675180866-16695-1-git-send-email-quic_mojha@quicinc.com>
- <1676383691-29738-1-git-send-email-quic_mojha@quicinc.com>
- <20230214163944.y5tkgdfmsycmpg7p@ripper>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <20230214163944.y5tkgdfmsycmpg7p@ripper>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 9PlTnfRyFABlGgXrF7iH0q31QJ30WOon
-X-Proofpoint-ORIG-GUID: 9PlTnfRyFABlGgXrF7iH0q31QJ30WOon
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-15_02,2023-02-14_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
- clxscore=1015 bulkscore=0 impostorscore=0 suspectscore=0
- lowpriorityscore=0 spamscore=0 priorityscore=1501 mlxscore=0 phishscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302150047
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
+As a follow-up of [1], this series adds support for supplying clock from
+cpufreq node to CPUs for rest of the SoCs.
 
-On 2/14/2023 10:09 PM, Bjorn Andersson wrote:
-> On Tue, Feb 14, 2023 at 07:38:11PM +0530, Mukesh Ojha wrote:
->> Since, there is no guarantee that region.name will be 0-terminated
->> from the firmware side, replace kstrdup with kstrndup.
->>
->> Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-> 
-> Please don't send additional patches in-reply-to another patch, it makes
-> it impossible to use b4 to pick up the first patch.
-> 
-> And please don't send two patches which clearly will conflict with
-> each other. Now I had to manually apply the first patch...
-> 
-
-Really sorry, for the inconvenience.
-will keep in mind.
+This series has been tested on SDM845, SM8450 and SC8280XP based boards.
 
 Thanks,
--Mukesh
+Mani
 
-> Regards,
-> Bjorn
-> 
->> ---
->>   drivers/remoteproc/qcom_common.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
->> index 020349f..7810f91 100644
->> --- a/drivers/remoteproc/qcom_common.c
->> +++ b/drivers/remoteproc/qcom_common.c
->> @@ -124,7 +124,7 @@ static int qcom_add_minidump_segments(struct rproc *rproc, struct minidump_subsy
->>   	for (i = 0; i < seg_cnt; i++) {
->>   		memcpy_fromio(&region, ptr + i, sizeof(region));
->>   		if (region.valid == MD_REGION_VALID) {
->> -			name = kstrdup(region.name, GFP_KERNEL);
->> +			name = kstrndup(region.name, MAX_REGION_NAME_LENGTH - 1, GFP_KERNEL);
->>   			if (!name) {
->>   				iounmap(ptr);
->>   				return -ENOMEM;
->> -- 
->> 2.7.4
->>
+[1] https://lore.kernel.org/linux-arm-msm/20221117053145.10409-1-manivannan.sadhasivam@linaro.org/
+
+Manivannan Sadhasivam (12):
+  arm64: dts: qcom: sdm845: Supply clock from cpufreq node to CPUs
+  arm64: dts: qcom: sc7280: Supply clock from cpufreq node to CPUs
+  arm64: dts: qcom: sm6350: Supply clock from cpufreq node to CPUs
+  arm64: dts: qcom: sm8550: Supply clock from cpufreq node to CPUs
+  arm64: dts: qcom: sm8250: Supply clock from cpufreq node to CPUs
+  arm64: dts: qcom: qdu1000: Supply clock from cpufreq node to CPUs
+  arm64: dts: qcom: sc7180: Supply clock from cpufreq node to CPUs
+  arm64: dts: qcom: sm8150: Supply clock from cpufreq node to CPUs
+  arm64: dts: qcom: sm8350: Supply clock from cpufreq node to CPUs
+  arm64: dts: qcom: sc8280xp: Supply clock from cpufreq node to CPUs
+  arm64: dts: qcom: sm6375: Supply clock from cpufreq node to CPUs
+  arm64: dts: qcom: sm6115: Supply clock from cpufreq node to CPUs
+
+ arch/arm64/boot/dts/qcom/qdu1000.dtsi  | 5 +++++
+ arch/arm64/boot/dts/qcom/sc7180.dtsi   | 9 +++++++++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi   | 9 +++++++++
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 9 +++++++++
+ arch/arm64/boot/dts/qcom/sdm845.dtsi   | 9 +++++++++
+ arch/arm64/boot/dts/qcom/sm6115.dtsi   | 9 +++++++++
+ arch/arm64/boot/dts/qcom/sm6350.dtsi   | 9 +++++++++
+ arch/arm64/boot/dts/qcom/sm6375.dtsi   | 9 +++++++++
+ arch/arm64/boot/dts/qcom/sm8150.dtsi   | 9 +++++++++
+ arch/arm64/boot/dts/qcom/sm8250.dtsi   | 9 +++++++++
+ arch/arm64/boot/dts/qcom/sm8350.dtsi   | 9 +++++++++
+ arch/arm64/boot/dts/qcom/sm8550.dtsi   | 9 +++++++++
+ 12 files changed, 104 insertions(+)
+
+-- 
+2.25.1
+
