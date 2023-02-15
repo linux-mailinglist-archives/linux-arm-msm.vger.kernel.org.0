@@ -2,138 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 572CE6972B7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Feb 2023 01:40:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E6719697357
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Feb 2023 02:17:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231859AbjBOAjA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Feb 2023 19:39:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36672 "EHLO
+        id S233403AbjBOBRM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Feb 2023 20:17:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231564AbjBOAi6 (ORCPT
+        with ESMTP id S233345AbjBOBRL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Feb 2023 19:38:58 -0500
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 047472D14D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 16:38:53 -0800 (PST)
-Received: by mail-ej1-x634.google.com with SMTP id dr8so44235317ejc.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 16:38:52 -0800 (PST)
+        Tue, 14 Feb 2023 20:17:11 -0500
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B339532CFA
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 17:16:44 -0800 (PST)
+Received: by mail-ej1-x631.google.com with SMTP id jg8so44508342ejc.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 17:16:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=DErVdwsy+3xw2GwkFW/1jP8o0hXZca4+3mMVdiVqO0g=;
-        b=FtXlYQuaQwjPUMXlRr1vGDA6uOOxl2acYjEpOiX8O/IfY6xybcVCbrja3quEX5WEtd
-         tDeHcLl8KhQYNZrbaTtNmsbzAQ4RBqoLp0MotI/yT9Kfipkz8hYuXBrebCSzfsz22qn0
-         gFyBBO3m9/akpjE25FysCAPzriP3+giUaD1ygSDLT7ppawyVwSnBAPfwCDK25AP5CSXg
-         uR6zBQ/9/OQ+XFliSIdq/akdqN5t4K8LaBOE/EZVCpVOIh2GvDA7ohK69oPswRLu77fu
-         FBCqnyckT1YSX6gRK1yvLk5viF97Zt2QxjlYRWH3k8VItf/0WGHY8NPK6hdbu5fhcele
-         fFVQ==
+        bh=tsL0JC0jIYt1eWNNiISDr2Crkn4kE3SVi+fK75Pa3h4=;
+        b=GjVSRVTxL3vlFqiY/wo5OhPhh49iB7o0pspEj3sIXwfqzv0eVeSNeNQT3VR21+koAs
+         Tcb3DyVsM6psoRlMf7dmOj52ItH7Bmt6gHCpKpDwSekX0zSkdb351ptRQEUsMW0TlxpV
+         6dlYbFhMCovT+1RjUXMKl1qJM3yx3sbtr8LApXiDINjpRBmrII+DqD24+b8MgRPflSqc
+         NBTuSvw/bOO4i4GFGW5NtNzOZuh8x6jPQysPYON6HSkimxcibn1UyhDJpqiiNI3XQPmh
+         eQeFvuJTx1Va8XIEcnRHlXauS/vDucUUpB37U8CYLxfKDJVEJWGmKWKwMzvqI0i783sr
+         3TcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DErVdwsy+3xw2GwkFW/1jP8o0hXZca4+3mMVdiVqO0g=;
-        b=A3OvL043gvgO1fYfm8vrEcWPnz/2J78DxQ8ikxWGqWirGYQFAlV1kua+HTOlEpWnhQ
-         uMEePmDQ8h9VA54hOCvEP5ZuDNBx1tTr3CJpaj7JCYfE+HyXH5QDW5i6L0xsvksYVRvK
-         IVkMMnlPMpUOi97oa8/rU5ilbSOc8dFWyi35otD3VPcOYYkDF9BizTdXvi7a/IvHjKfG
-         mNsmhNvzx0kQusTKscDMFQP/+vzvhClOlmPDjx6IljKHwDTdPb/d2XbghCm/n3yxMeNt
-         62AQ/kClN/VKA+V8ocd+fFq4tq54LGK88JkPP0fvpVPbZMmCtd5Lsy9Uc6lbX5I4rlwE
-         eIFg==
-X-Gm-Message-State: AO0yUKUCVlcb5ZULYudmUJUAKhTF6GkpzR/IIDFHAvhZrmgfMt2kjXoH
-        thgDmnhgfJAudXTY/jPqDAuo5Q==
-X-Google-Smtp-Source: AK7set/Pf8YmPNmxd7Fuo6gurGgDxLsWDmYD262e9PepNFs42+X34FypQ04DMvhoJpnxOin0grMz2A==
-X-Received: by 2002:a17:907:2c65:b0:883:b1b4:e798 with SMTP id ib5-20020a1709072c6500b00883b1b4e798mr391411ejc.10.1676421531499;
-        Tue, 14 Feb 2023 16:38:51 -0800 (PST)
-Received: from [192.168.1.101] (abxh117.neoplus.adsl.tpnet.pl. [83.9.1.117])
-        by smtp.gmail.com with ESMTPSA id ci4-20020a170906c34400b0087873afb1b4sm8888438ejb.41.2023.02.14.16.38.49
+        bh=tsL0JC0jIYt1eWNNiISDr2Crkn4kE3SVi+fK75Pa3h4=;
+        b=TxNoYjbCRvkKPIOLlLd5JmN47CqolqXYTOxADh+2q+UlrNod2F8HlThedUc3VznAIt
+         lYc3XNUhQoVPTmfjIpPjEw8M9Fj2kyaIiltNgXVUXfQ2xGgbVIB1Xtpg/nhFtYB49cHO
+         fXGam5SGQQOH/WgWs2mdU4xMCKZwD+LdIRvIDtqOQsDsE42zm879VzpCyZa2mrm+1ZKK
+         RcvwmnZmmuEKupkbQrUbuBiuA81nWz2ju/JWrtnwmeJQHqBUETU/Y+8FyYDA1oVNjloS
+         OJvpd/UxQAjEFm1fRtbq0/E/Pah/zvgu5u7Bdvxztj7/KKj8agyIW5vRaLhA73b7npS/
+         px+w==
+X-Gm-Message-State: AO0yUKUbWhvL9a7FJrMoUukz5l+6QP9K5PMeCvgTnZuuJqBVnsqER7nM
+        OzmLiecIoU+BjDUU165ITjnJJg==
+X-Google-Smtp-Source: AK7set8dv/Ef8OZSTCONkuQ4/DT0CAVesD4kalNwB/6MnwOT3jAt2lMmDUNw7jsC8nfbPmpGCDJKJg==
+X-Received: by 2002:a17:906:868a:b0:878:5917:601 with SMTP id g10-20020a170906868a00b0087859170601mr382784ejx.58.1676423802326;
+        Tue, 14 Feb 2023 17:16:42 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id bl4-20020a170906c24400b00880dbd4b6d4sm8941429ejb.136.2023.02.14.17.16.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Feb 2023 16:38:51 -0800 (PST)
-Message-ID: <1c57fcfd-8e94-649b-df6f-655626f94454@linaro.org>
-Date:   Wed, 15 Feb 2023 01:38:48 +0100
+        Tue, 14 Feb 2023 17:16:41 -0800 (PST)
+Message-ID: <24167f9e-328c-0201-7eea-de201bed4b6a@linaro.org>
+Date:   Wed, 15 Feb 2023 03:16:40 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.2
-Subject: Re: [PATCH v2 10/14] drm/msm/a6xx: Fix up A6XX protected registers
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, marijn.suijten@somainline.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Chia-I Wu <olvaffe@gmail.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-References: <20230214173145.2482651-1-konrad.dybcio@linaro.org>
- <20230214173145.2482651-11-konrad.dybcio@linaro.org>
- <CAF6AEGva3ecxTOx3Yb+Wh-1K=jYA3tDo_aXg09jS9pzJupYExQ@mail.gmail.com>
- <a4627ca5-46e6-2f32-c0e2-a85990e02f54@linaro.org>
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <a4627ca5-46e6-2f32-c0e2-a85990e02f54@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+ Thunderbird/102.7.1
+Subject: Re: [PATCH v4 12/12] interconnect: qcom: icc-rpm: Allow negative QoS
+ offset
+Content-Language: en-GB
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     marijn.suijten@somainline.org, Georgi Djakov <djakov@kernel.org>,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230214143720.2416762-1-konrad.dybcio@linaro.org>
+ <20230214143720.2416762-13-konrad.dybcio@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230214143720.2416762-13-konrad.dybcio@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 15.02.2023 01:10, Dmitry Baryshkov wrote:
-> On 14/02/2023 23:56, Rob Clark wrote:
->> On Tue, Feb 14, 2023 at 9:32 AM Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>>
->>> One of the protected ranges was too small (compared to the data we
->>> have downstream). Fix it.
->>>
->>> Fixes: 408434036958 ("drm/msm/a6xx: update/fix CP_PROTECT initialization")
->>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>> ---
->>>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 2 +-
->>>   1 file changed, 1 insertion(+), 1 deletion(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->>> index 503c750216e6..d6b38bfdb3b4 100644
->>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->>> @@ -690,7 +690,7 @@ static const u32 a6xx_protect[] = {
->>>          A6XX_PROTECT_NORDWR(0x00800, 0x0082),
->>>          A6XX_PROTECT_NORDWR(0x008a0, 0x0008),
->>>          A6XX_PROTECT_NORDWR(0x008ab, 0x0024),
->>> -       A6XX_PROTECT_RDONLY(0x008de, 0x00ae),
->>> +       A6XX_PROTECT_RDONLY(0x008d0, 0x00bc),
->>
->> Nak, this is intentional, we need userspace to be able to configure
->> the CP counters.  Otherwise this would break fdperf, perfetto, etc
->>
->> (although maybe we should comment where we diverge from downstream)
+On 14/02/2023 16:37, Konrad Dybcio wrote:
+> In some very very very very unfortunate cases, the correct offset of
+> the QoS registers will be.. negative. One such case is MSM8998, where
+> The DDR BWMON occupies what-would-be-the-BIMC-base which we usually
+> take into account with the register calculation, making the actual
+> BIMC node start at what-would-be-the-BIMC-base+0x300.
 > 
-> Yes, please. Otherwise it is extremely hard to understand the reason for diversion between the vendor driver and our one.
-+1
+> In order to keep the calculation code sane, the simplest - however
+> ugly it may be - solution is to allow the offset to be negative.
 
-I am content with dropping this patch from this series, so long
-as you leave a clue for others to not scratch their heads on this!
+I'm not sure how does this work, as e.g. qcom_icc_set_qnoc_qos() will 
+try to access an address before the first register. Most probably this 
+patch should go together with the rest of msm8998 patches.
 
-Konrad
+A slightly better solution to making qos_offset negative might be to 
+make bwmon a child node of the icc.
+
 > 
->>
->> BR,
->> -R
->>
->>>          A6XX_PROTECT_NORDWR(0x00900, 0x004d),
->>>          A6XX_PROTECT_NORDWR(0x0098d, 0x0272),
->>>          A6XX_PROTECT_NORDWR(0x00e00, 0x0001),
->>> -- 
->>> 2.39.1
->>>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>   drivers/interconnect/qcom/icc-rpm.h | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 > 
+> diff --git a/drivers/interconnect/qcom/icc-rpm.h b/drivers/interconnect/qcom/icc-rpm.h
+> index 77e263b93c27..5e4215f25c2e 100644
+> --- a/drivers/interconnect/qcom/icc-rpm.h
+> +++ b/drivers/interconnect/qcom/icc-rpm.h
+> @@ -39,7 +39,7 @@ struct qcom_icc_provider {
+>   	int num_intf_clks;
+>   	enum qcom_icc_type type;
+>   	struct regmap *regmap;
+> -	unsigned int qos_offset;
+> +	int qos_offset;
+>   	u64 bus_clk_rate[2];
+>   	bool keep_alive;
+>   	struct clk_bulk_data bus_clks[2];
+> @@ -105,7 +105,7 @@ struct qcom_icc_desc {
+>   	bool keep_alive;
+>   	enum qcom_icc_type type;
+>   	const struct regmap_config *regmap_cfg;
+> -	unsigned int qos_offset;
+> +	int qos_offset;
+>   };
+>   
+>   /* Valid for all bus types */
+
+-- 
+With best wishes
+Dmitry
+
