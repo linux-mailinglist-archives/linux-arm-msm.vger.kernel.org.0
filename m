@@ -2,111 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 84E3E697CFC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Feb 2023 14:18:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A127697E01
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Feb 2023 15:08:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234153AbjBONSf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Feb 2023 08:18:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33336 "EHLO
+        id S229510AbjBOOIl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Feb 2023 09:08:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232055AbjBONSe (ORCPT
+        with ESMTP id S229468AbjBOOIk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Feb 2023 08:18:34 -0500
-Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [80.237.130.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C25DB93CB;
-        Wed, 15 Feb 2023 05:18:33 -0800 (PST)
-Received: from [2a02:8108:8980:2478:8cde:aa2c:f324:937e]; authenticated
-        by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        id 1pSHg6-0001fQ-LV; Wed, 15 Feb 2023 14:18:30 +0100
-Message-ID: <b548da46-bf91-6f1c-4b63-4002109056bc@leemhuis.info>
-Date:   Wed, 15 Feb 2023 14:18:29 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.2
-Subject: Re: [PATCH] Revert "venus: firmware: Correct non-pix start and end
- addresses"
-To:     Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc:     Vikash Garodia <vgarodia@qti.qualcomm.com>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "mka@chromium.org" <mka@chromium.org>,
-        Albert Esteve <aesteve@redhat.com>,
-        "stanimir.varbanov@linaro.org" <stanimir.varbanov@linaro.org>,
-        Enric Balletbo i Serra <eballetb@redhat.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        "Vikash Garodia (QUIC)" <quic_vgarodia@quicinc.com>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
-        Fritz Koenig <frkoenig@google.com>,
-        "Dikshita Agarwal (QUIC)" <quic_dikshita@quicinc.com>,
-        "Rajeshwar Kurapaty (QUIC)" <quic_rkurapat@quicinc.com>,
-        Javier Martinez Canillas <javierm@redhat.com>,
-        Linux regressions mailing list <regressions@lists.linux.dev>
-References: <20230207102254.1446461-1-javierm@redhat.com>
- <DM8PR02MB8169809493BF2822E6C29EECF3DB9@DM8PR02MB8169.namprd02.prod.outlook.com>
- <ef09bc9f-d570-be11-238b-bd34063917fc@redhat.com>
- <70c01751-1dd7-c4bd-a96e-94dea437aa40@redhat.com>
- <DM8PR02MB81696369DBFE619E43F81EEFF3DE9@DM8PR02MB8169.namprd02.prod.outlook.com>
- <e87344c6-acef-7f3f-5cac-24961dbd9401@redhat.com>
- <6f97a117-0d9c-e21b-9adf-50f2233ba9e3@leemhuis.info>
- <ea283f0a-ca72-447e-ce87-68c1bbee793e@leemhuis.info>
- <CAFOAJEdBbzqkGVqw+vgNYNxyaTHwvjFyskTwjycP820L2tOctA@mail.gmail.com>
-Content-Language: en-US, de-DE
-From:   "Linux regression tracking (Thorsten Leemhuis)" 
-        <regressions@leemhuis.info>
-Reply-To: Linux regressions mailing list <regressions@lists.linux.dev>
-In-Reply-To: <CAFOAJEdBbzqkGVqw+vgNYNxyaTHwvjFyskTwjycP820L2tOctA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-bounce-key: webpack.hosteurope.de;regressions@leemhuis.info;1676467113;d1d0c92f;
-X-HE-SMSGID: 1pSHg6-0001fQ-LV
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        Wed, 15 Feb 2023 09:08:40 -0500
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24D20B45C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Feb 2023 06:08:39 -0800 (PST)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+        by mailout.nyi.internal (Postfix) with ESMTP id 92C955C019C;
+        Wed, 15 Feb 2023 09:08:38 -0500 (EST)
+Received: from imap51 ([10.202.2.101])
+  by compute6.internal (MEProxy); Wed, 15 Feb 2023 09:08:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+        :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to; s=fm3; t=1676470118; x=1676556518; bh=Gu/FcsOCUV
+        TpChSiU1zhnNc7VSd0HRY/lqaNja2+QQU=; b=cXHG5Pkanno7CQ4Sx/U0V+6xeH
+        iXuwIt4KsfokXuvUJSjDhwkvrzH/RQRBl7H6+gCeNKzEvX5bv5I3MZN5oPjGKJZn
+        Qglle7XFqpu7y11TlxMN9Wcz1/dzl/NnXIbAM2NvAvye+h/8AoBxg8o42kzs6Dy3
+        PQCOywl579TkwvrEg0ErejW/9Vr5kVLTUl50vznZ094VUZ0zf8Ube/N+QLoHa5hp
+        eXrTMnDA/v5pNdlO+uE8WGeTp3Ohi6gkAppbODhJIA4vjboCcjxR0dJ03isN+lPK
+        nvGlbUtggG9gnBirQYQ+O2wEqT62GeBbZBXhek41C+qsNLn9iAF3I8Xo37mA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to
+        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+        fm1; t=1676470118; x=1676556518; bh=Gu/FcsOCUVTpChSiU1zhnNc7VSd0
+        HRY/lqaNja2+QQU=; b=iuhEKVK5bncac6vb7t89QGZ/BLCSmGUPpHr0zhue2aeH
+        QSvwYLU8eIhZ9Fg9qj7Yk4OWAVqKUGHkzeRFNDFHxzim6osrj43IpXZaGaO9wiqp
+        m6ob+Ca66ea5C31A4wEnnde9AWmIU8X1XWDJieyKbtc9CcB1nzYWtNff55TYVD/M
+        3ANuET80JtGEFMfDlE6YAgzxsRpP/2Say9aKpnBvzAHdhqnIh/OjcK9gbqrK3xe5
+        uNg8IrD91BnoXgmE/b1lpmohYTqS+/5BdNbp5L1s8e7qcIoqIoM9Fl58JtiOwDq7
+        amupWm2heQ7VZvwDRmoAoP5Orwj75dEAJ5Bbmlg8gg==
+X-ME-Sender: <xms:ZufsY48gw1vF3VLN_ogIZrDN7VjnpIUQfj9eiZW__1MJFDaGliudwg>
+    <xme:ZufsYwtzH6-KEE4VLCSPS25Yvfp_HoXm5sJzDeXBM40HVYDXwrskMKq1XWE1T-lmK
+    9EXGXo31uTys-VhSNs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrudeihedgheefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehr
+    nhguuceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrth
+    htvghrnhepffehueegteeihfegtefhjefgtdeugfegjeelheejueethfefgeeghfektdek
+    teffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprg
+    hrnhgusegrrhhnuggsrdguvg
+X-ME-Proxy: <xmx:ZufsY-A1RGHNspw1Ee57Td-Vd5F-Gpna3w9rIsBMe9PpJcyBys36PQ>
+    <xmx:ZufsY4ec1eHQGS-fCgCCd4aDLrBa1J0b4HjPUleeOuIsh5cPmELfXw>
+    <xmx:ZufsY9OzTK3lFjGS_RHQz7SmPSYig7p41Kk-t5CA032SjabrS-SAlQ>
+    <xmx:ZufsYw0XMIjNi4Hjy3gM4TGBdGHUgX3CLvrPn4_TUOTWdyOfvXzG8A>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id 4D8ECB60086; Wed, 15 Feb 2023 09:08:38 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-156-g081acc5ed5-fm-20230206.001-g081acc5e
+Mime-Version: 1.0
+Message-Id: <f7b1ea7d-18cd-49b7-9972-aa40f334d038@app.fastmail.com>
+In-Reply-To: <20230215043658.1156472-1-andersson@kernel.org>
+References: <20230215043658.1156472-1-andersson@kernel.org>
+Date:   Wed, 15 Feb 2023 15:08:06 +0100
+From:   "Arnd Bergmann" <arnd@arndb.de>
+To:     "Bjorn Andersson" <andersson@kernel.org>, arm <arm@kernel.org>,
+        soc@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        "Andy Gross" <agross@kernel.org>,
+        "Olof Johansson" <olof@lixom.net>,
+        "Kevin Hilman" <khilman@baylibre.com>
+Subject: Re: [GIT PULL] One more Qualcomm driver update for 6.3
+Content-Type: text/plain
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15.02.23 11:57, Javier Martinez Canillas wrote:
-> On Wed, Feb 15, 2023 at 11:53 AM Linux regression tracking (Thorsten
-> Leemhuis) <regressions@leemhuis.info> wrote:
->> On 11.02.23 15:27, Linux regression tracking (Thorsten Leemhuis) wrote:
->>> On 10.02.23 11:07, Javier Martinez Canillas wrote:
->>>> On 2/10/23 10:22, Vikash Garodia wrote:
->>>>
->>>>>> So what should we do about this folks? Since not allowing the driver to probe on
->>>>>> at least SC7180 is a quite serious regression, can we revert for now until a proper
->>>>>> fix is figured out?
->>>>> I am able to repro this issue on sc7180 and discussing with firmware team on the cause
->>>>> of reset failure. The original patch was raised for fixing rare SMMU faults during warm
->>>>> boot of video hardware. Hence looking to understand the regressing part before we
->>>>> proceed to revert.
->>>> Great, if you are working on a proper fix then that would be much better indeed.
->>> Yeah, that's great, but OTOH: there is almost certainly just one week
->>> before 6.2 will be released. Ideally this should be fixed by then.
->>> Vikash, do you think that's in the cards? If not: why not revert this
->>> now to make sure 6.2 works fine?
->> Hmm, no reply. And we meanwhile have Wednesday and 6.2 is almost
->> certainly going to be out on Sunday. And the problem was called "a quite
->> serious regression" above. So why not quickly fix this with the revert,
->> as proposed earlier?
->> Vikash? Javier?
->
-> I agree with you, that we should land this revert and then properly
-> fix the page fault issue in v6.3.
-> 
-> But it's not my call, the v4l2/media folks have to decide that.
+On Wed, Feb 15, 2023, at 05:36, Bjorn Andersson wrote:
+> Arnd, I hope you're okay with a few more last minute updates for v6.3; bringing
+> battery support and, in the DTS patches, support for USB Type-C based external
+> displays on the 8cx Gen3 laptops.
 
-In that case: Mauro, what's your opinion here?
+No problem, as these are all smaller follow-ups to earlier
+patches and nothing controversial.
 
-Thread starts here:
-https://lore.kernel.org/lkml/20230207102254.1446461-1-javierm@redhat.com/
-
-Regression report:
-https://lore.kernel.org/lkml/Y9LSMap%2BjRxbtpC8@google.com/
-
-Ciao, Thorsten
+  Arnd
