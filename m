@@ -2,80 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FD0869821F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Feb 2023 18:33:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EDD386983A5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Feb 2023 19:44:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229919AbjBORdL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Feb 2023 12:33:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39228 "EHLO
+        id S229609AbjBOSoC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Feb 2023 13:44:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229602AbjBORdK (ORCPT
+        with ESMTP id S229640AbjBOSoB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Feb 2023 12:33:10 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E6673A85E;
-        Wed, 15 Feb 2023 09:32:41 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 5F7DA61CED;
-        Wed, 15 Feb 2023 17:32:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1879C433D2;
-        Wed, 15 Feb 2023 17:32:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1676482360;
-        bh=btHN4KPeGDnP6GeQ9Z4p/qE9+1w96seQZaYeYz1UuNM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=qebiRtbolcZkB6GqgWSUxjyB5o1EZPO0kOeNVFRFNCiA5AKDbf4fd2jKj6izRWh0K
-         OInfG5Baz/pCYNS/lVDVNk0AExvZLCDhQvisk/yFTo/D/uZ/6dyzzUhUI6bN67OqoZ
-         OYE5AKeWF4rk6VKd/DWVUHsnxTM+5OuyUtviRIBBFKYEZmNU0DZBQg5gX/m5OHq8oI
-         Yvk7uT8Z72EMCCADQQeS74Ws65UT+Qd11FG9+isLKOoriT1pFgZHWlthIxga0W430N
-         C/aki0rb3aJ+sgGGjXQ4ets9sf/WnZaljR2Z25+5KBj58S49GJf16VX0KQ0XGsJm1m
-         dDOP5FdDeXoHA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1pSLez-0002wN-SO; Wed, 15 Feb 2023 18:33:37 +0100
-Date:   Wed, 15 Feb 2023 18:33:37 +0100
-From:   Johan Hovold <johan@kernel.org>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] arm64: dts: sc8280xp-crd: fix external display
- 'data-lanes'
-Message-ID: <Y+0XcU3xZA2w06o4@hovoldconsulting.com>
-References: <20230215164524.1335-1-johan+linaro@kernel.org>
+        Wed, 15 Feb 2023 13:44:01 -0500
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A86B740CE;
+        Wed, 15 Feb 2023 10:43:25 -0800 (PST)
+Received: by mail-pj1-f48.google.com with SMTP id r9-20020a17090a2e8900b00233ba727724so4127586pjd.1;
+        Wed, 15 Feb 2023 10:43:25 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=upzzaOYHVMOiSh2W0MdocuQzyFziZ8qGn/UeRPfAQVI=;
+        b=NTG8tH5gBhkkEWrvBykmVJTM2OsGXLhBXGPvwyJy595QeCCd67kwiFhzU2+d24zNzb
+         6xSwu1GEVbSUJDzkSWphwRRj3BaP4cYPxUJCoojTY7UBmDZzJQlFFVYnogZOZki56eby
+         P5CiSGig2E5BDWDiZziSv5Syw+PcMVrbv77+Tq1DzqFc+YYMArT5DorsOeHlk6kxSkAb
+         MW0lfRrHEOWhsFU35eBrcKgMvIcd9VHAAj5+TtLpwsJwQ4zQNXn+4vJMw1IYUfvFJsaz
+         E91tmtwFUgsoLOu/dyGHn+vau/C9VwUUGH94ZKTSxGpMOJVT/HQZjDih32oTT4Qs5aIH
+         IdeA==
+X-Gm-Message-State: AO0yUKUT6seuB6zQpm+ZIhMitFJZtiCX6gAkBuSjGfMQozY6ZjWpq/T6
+        3WkxofKL7h9/Qtq/4Sj8SgE=
+X-Google-Smtp-Source: AK7set/LXHHDfN4gwzkO5CUp+FYEq1ZaxhCyLTWes+S+B4v5VF40uiT4MDOEx9nsP9jKhoYnApIdUg==
+X-Received: by 2002:a17:90b:3eca:b0:234:721e:51e5 with SMTP id rm10-20020a17090b3eca00b00234721e51e5mr840255pjb.10.1676486544333;
+        Wed, 15 Feb 2023 10:42:24 -0800 (PST)
+Received: from ?IPV6:2620:15c:211:201:f2b7:9a62:c95d:fb83? ([2620:15c:211:201:f2b7:9a62:c95d:fb83])
+        by smtp.gmail.com with ESMTPSA id ku12-20020a17090b218c00b0022c326ad011sm1792371pjb.46.2023.02.15.10.42.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Feb 2023 10:42:23 -0800 (PST)
+Message-ID: <5b2a364e-0a8d-ffa6-139b-3e3e46a0213d@acm.org>
+Date:   Wed, 15 Feb 2023 10:42:20 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230215164524.1335-1-johan+linaro@kernel.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH v1 1/1] ufs: mcq: fix incorrectly set queue depth
+Content-Language: en-US
+To:     Asutosh Das <quic_asutoshd@quicinc.com>, quic_cang@quicinc.com,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
+Cc:     quic_nguyenb@quicinc.com, quic_xiaosenh@quicinc.com,
+        stanley.chu@mediatek.com, adrian.hunter@intel.com,
+        avri.altman@wdc.com, mani@kernel.org, beanhuo@micron.com,
+        linux-arm-msm@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Jinyoung Choi <j-young.choi@samsung.com>,
+        open list <linux-kernel@vger.kernel.org>
+References: <da085383bec5c08bf34220ec6cc577f7a1b49ba8.1676396928.git.quic_asutoshd@quicinc.com>
+From:   Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <da085383bec5c08bf34220ec6cc577f7a1b49ba8.1676396928.git.quic_asutoshd@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 15, 2023 at 05:45:23PM +0100, Johan Hovold wrote:
-> The 'data-lanes' property belongs in the controller node but was
-> erroneously moved to the endpoint nodes in the last revision of the
-> external display series:
+On 2/14/23 09:50, Asutosh Das wrote:
+> ufshcd_config_mcq() may change the can_queue value.
+> The current code invokes scsi_add_host() before ufshcd_config_mcq().
+> So the tags are limited to the old can_queue value.
 > 
-> 	[drm] Invalid property "data-lanes", default max DP lanes = 4
-> 
-> Fixes: bc9a747ae91f ("arm64: dts: qcom: sc8280xp-crd: Introduce pmic_glink")
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
+> Fix this by invoking scsi_add_host() after ufshcd_config_mcq().
 
-Please disregard these patches which are only needed for 6.2 backports
-of the above mentioned series.
+Please add a Fixes: tag.
 
-Sorry about the noise.
+> diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+> index 3b3cf78..04e42b2 100644
+> --- a/drivers/ufs/core/ufshcd.c
+> +++ b/drivers/ufs/core/ufshcd.c
+> @@ -8535,6 +8535,8 @@ static int ufshcd_device_init(struct ufs_hba *hba, bool init_dev_params)
+>   				use_mcq_mode = false;
+>   				dev_err(hba->dev, "MCQ mode is disabled, err=%d\n",
+>   					 ret);
+> +			} else {
+> +				ufshcd_config_mcq(hba);
+>   			}
 
-Johan
+Please rework this code such that the success case (ret == 0) is handled 
+first. That is the approach followed elsewhere in the Linux kernel.
+
+Otherwise this patch looks good to me.
+
+Thanks,
+
+Bart.
+
