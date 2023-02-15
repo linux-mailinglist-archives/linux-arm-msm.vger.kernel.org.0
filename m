@@ -2,72 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B66CA697B3B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Feb 2023 12:58:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A9ABF697B7F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Feb 2023 13:10:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230008AbjBOL6f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Feb 2023 06:58:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55392 "EHLO
+        id S233718AbjBOMKa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Feb 2023 07:10:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233197AbjBOL6e (ORCPT
+        with ESMTP id S231824AbjBOMK3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Feb 2023 06:58:34 -0500
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0ED5F3525F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Feb 2023 03:58:31 -0800 (PST)
-Received: by mail-pf1-x436.google.com with SMTP id n2so12485407pfo.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Feb 2023 03:58:31 -0800 (PST)
+        Wed, 15 Feb 2023 07:10:29 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59F712B0AE
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Feb 2023 04:10:24 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id co8so15170084wrb.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Feb 2023 04:10:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1676462310;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Iyovd/Dha7A89L4EPh+Q/qSsUwAvTTMJN53nXu7zGys=;
-        b=XTpqPwh3gWAnki95S8puPpl0H0S0gBF60yF3WHrqCBqLn0o+VDDhANTe9lHwTNjcMS
-         7WJiiyT+RY9khmZWAwK1F6+wJxO8Sx3qJm5M1O+4Inn5H3161J41uSCJzfUqmcNO+CcK
-         wNWfo8z3D4uUytw+O2ZoWUR9Mwvc/5vUgqX3NBQdGBQkzG863+c2psSxVIibpLhuyGeV
-         vTy2mh9WlZVbwpZv0HurX0fZ83el9A0coEEILUs45wzM5Mpq2RALS5knxVMMMP7bZJj1
-         0d02Fz7jz8ERWhpIZXeioDf9qPmjW021HHBGYoexFMUhCW3KwiZggzeY/gdPNMfWfiH9
-         FFMA==
+        d=linaro.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=B88sRzH49NkKCIicSP4fo6lIj4LfSxlZhgeAIzbft1s=;
+        b=T8ISws1Qojl5kqPrr/5KFCLc99U5ay4mkoqR09aGtORtKk3YrmPsFAv30dXkJnB4Px
+         ya5aBKsXKP7u/qO2+RZT9jUc8CdLgpcvzBCh5E4ETP7g1wAEozqqncUK+1n+DMJtF7bZ
+         ZJZ452ihxoNMgLH3Ob5/BaCGk+Po+dOCwgNets9cQjxTEn6zd+nvOb57sRBp/RDoybNI
+         M0+1fZ/dwFIOBT4IMFcleDsVj9A1W0RQ/2IMxbY9XT2cD88HF5xgAABNWEaaAnAc1N4S
+         mdWQGdZvc/p4Wdm/GV+24PM1D1JVbSZMAmYVeTvVl6QftWr+K1Twne6T1bMQB6czZ2ee
+         ccLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1676462310;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Iyovd/Dha7A89L4EPh+Q/qSsUwAvTTMJN53nXu7zGys=;
-        b=pxCS6NGqvglvMgYHWV7a0me9+8yEEHm+jsHyDeLuGCvetJ+lHmQocYCwYgAZuEEl7F
-         CXjyGHyzcgnbA7kjLZehpZTwWISRO6MBTydBELeZpw/v372lA/R185vnRIpE7ttC89b8
-         /QcXKvhx7ZG5bPHcCFothqghIWsJGzmn/jz5F6KrUUNzwBHtPDYOXboNxD+xG01Af6mh
-         ANu4kDb4zzZ/tpFHow11EvlztEiMyZ/tY2+t0Ozbvs1dpoKhRJ0kTRDx8CCBmMg+zC+Z
-         2ZNfNK/nvciKqhVItW7OYRdJK1ttmUJbxJmYovXxGL0lp8p+yYFph02rM7EsaCv4jy48
-         eAxw==
-X-Gm-Message-State: AO0yUKXfXHZViNvdIAVac3ZMQMQZVNn7Jq/lYfFTBVSKQ5m2jRYIVQ5W
-        tqxpDJeZhTDSzXKYzVyC7/SIrcxQuQKsqXEgdRV3xg==
-X-Google-Smtp-Source: AK7set/Za4Jn0WPzezUn7SAUozXl4zWfHmxQz0ZodvbDSjFH2tNr7+Xm6nfUZRG6LQdURmj8BSJSj7zwQGERdeBpaOw=
-X-Received: by 2002:aa7:95a9:0:b0:5a8:ba5b:575 with SMTP id
- a9-20020aa795a9000000b005a8ba5b0575mr279345pfk.40.1676462310487; Wed, 15 Feb
- 2023 03:58:30 -0800 (PST)
-MIME-Version: 1.0
-References: <20230127104054.895129-1-abel.vesa@linaro.org>
-In-Reply-To: <20230127104054.895129-1-abel.vesa@linaro.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Wed, 15 Feb 2023 12:57:54 +0100
-Message-ID: <CAPDyKFon35wcQ+5kx3QZb-awN_S_q8y1Sir-G+GoxkCvpN=iiA@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 1/2] PM: domains: Skip disabling unused domains if
- provider has sync_state
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     "Rafael J . Wysocki" <rafael@kernel.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=B88sRzH49NkKCIicSP4fo6lIj4LfSxlZhgeAIzbft1s=;
+        b=KQTh6nRnMi2TOK6H0y/Brtg74j7bcC+WfbsXmq7IbNEDNqvCeZGhH+IfaRsf1ut8w9
+         jYAWpNMxoP6ciZM+uZdyRRPQwmIDZwUo+A6C6xGHqsrry14Y25oeNG5SU+W7GZeY5a7X
+         kUFKV04fUPObcEJ3F4IZnjhsqfRs/KoqIVoPdnq23OZhWItfd23cIyVC/J0XsjZZgz5N
+         XYylmcO+KXkf/QPPgLNwPLtf7ssixtTxgU2YXipaB3qlRvao9tDvDMI/lFUpjLzcaiOm
+         I36wbPUvO5ZQVq8i6E2qCU7f8khpdwJtW6GLJQpnPu+/EGq8aXNp9o6SqDuH6/7bN1jt
+         u7eg==
+X-Gm-Message-State: AO0yUKUK3Q4ArFZz/ggRsd8kTqk5v9jNFjZbAQUA9vqxcpLQOHiVmFBw
+        9d/1BQMHRcMKBQ9n7PvSgm19OA==
+X-Google-Smtp-Source: AK7set99jj8objQ4uMIB7cUxdbUtE4aJnQuKjEF7GKvRvcGb2mUkzOk/bW78+lKB0A6h4fOPPoYfqQ==
+X-Received: by 2002:a5d:518b:0:b0:2c5:5237:3b21 with SMTP id k11-20020a5d518b000000b002c552373b21mr1230962wrv.69.1676463022903;
+        Wed, 15 Feb 2023 04:10:22 -0800 (PST)
+Received: from linaro.org ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id w19-20020a05600c099300b003db03725e86sm1923947wmp.8.2023.02.15.04.10.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Feb 2023 04:10:22 -0800 (PST)
+Date:   Wed, 15 Feb 2023 14:10:21 +0200
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-pm@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>
+Cc:     devicetree@vger.kernel.org,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         linux-arm-msm@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v2] dt-bindings: qcom,pdc: Add compatible for SM8550
+Message-ID: <Y+zLrQYBC5HQ7lJD@linaro.org>
+References: <20230127132558.1176730-1-abel.vesa@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230127132558.1176730-1-abel.vesa@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -78,130 +79,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 27 Jan 2023 at 11:40, Abel Vesa <abel.vesa@linaro.org> wrote:
->
-> Currently, there are cases when a domain needs to remain enabled until
-> the consumer driver probes. Sometimes such consumer drivers may be built
-> as modules. Since the genpd_power_off_unused is called too early for
-> such consumer driver modules to get a chance to probe, the domain, since
-> it is unused, will get disabled. On the other hand, the best time for
-> an unused domain to be disabled is on the provider's sync_state
-> callback. So, if the provider has registered a sync_state callback,
-> assume the unused domains for that provider will be disabled on its
-> sync_state callback. Also provide a generic sync_state callback which
-> disables all the domains unused for the provider that registers it.
->
+On 23-01-27 15:25:58, Abel Vesa wrote:
+> Document the compatible for SM8550 PDC.
+> 
 > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->
-> This approach has been applied for unused clocks as well.
-> With this patch merged in, all the providers that have sync_state
-> callback registered will leave the domains enabled unless the provider's
-> sync_state callback explicitly disables them. So those providers will
-> need to add the disabling part to their sync_state callback. On the
-> other hand, the platforms that have cases where domains need to remain
-> enabled (even if unused) until the consumer driver probes, will be able,
-> with this patch in, to run without the pd_ignore_unused kernel argument,
-> which seems to be the case for most Qualcomm platforms, at this moment.
 
-My apologies for the somewhat late reply. Please see my comments below.
+Rob, will you pick this up yourself?
 
->
+Thanks.
+
+> 
 > The v1 is here:
-> https://lore.kernel.org/all/20230126234013.3638425-1-abel.vesa@linaro.org/
->
+> https://lore.kernel.org/all/20221116114210.2673902-1-abel.vesa@linaro.org/
+> 
 > Changes since v1:
->  * added a generic sync state callback to be registered by providers in
->    order to disable the unused domains on their sync state. Also
->    mentioned this in the commit message.
->
->  drivers/base/power/domain.c | 17 ++++++++++++++++-
->  include/linux/pm_domain.h   |  3 +++
->  2 files changed, 19 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
-> index 84662d338188..c2a5f77c01f3 100644
-> --- a/drivers/base/power/domain.c
-> +++ b/drivers/base/power/domain.c
-> @@ -1099,7 +1099,8 @@ static int __init genpd_power_off_unused(void)
->         mutex_lock(&gpd_list_lock);
->
->         list_for_each_entry(genpd, &gpd_list, gpd_list_node)
-> -               genpd_queue_power_off_work(genpd);
-> +               if (!dev_has_sync_state(genpd->provider->dev))
-
-Unfortunately, this doesn't really help, due to the fact that a
-genpd's ->power_off() callback may get called anyway. At power off,
-the genpd core only cares about those consumers that are currently
-attached, not those that might get attached at some point later in
-time.
-
-In other words, it's the responsibility for each specific genpd
-provider to cope with the condition that its ->sync_state() callback
-may *not* have been called, while its ->power_off() callback is being
-called.
-
-In these cases, the genpd provider should probably make the
-->power_off() callback to return -EBUSY. This is what we do in
-psci_pd_power_off(), for example.
-
-> +                       genpd_queue_power_off_work(genpd);
->
->         mutex_unlock(&gpd_list_lock);
->
-> @@ -1107,6 +1108,20 @@ static int __init genpd_power_off_unused(void)
->  }
->  late_initcall(genpd_power_off_unused);
->
-> +void genpd_power_off_unused_sync_state(struct device *dev)
-> +{
-> +       struct generic_pm_domain *genpd;
-> +
-> +       mutex_lock(&gpd_list_lock);
-> +
-> +       list_for_each_entry(genpd, &gpd_list, gpd_list_node)
-> +               if (genpd->provider->dev == dev)
-> +                       genpd_queue_power_off_work(genpd);
-> +
-> +       mutex_unlock(&gpd_list_lock);
-> +}
-> +EXPORT_SYMBOL_GPL(genpd_power_off_unused_sync_state);
-
-I don't think this function is needed at all.
-
-In fact, this part of the problem that you are trying to solve should
-already be managed by the driver core, as it calls
-dev->pm_domain->sync() (which is assigned to genpd_dev_pm_sync()) , in
-really_probe(). Or isn't that taking care of the problem for you?
-
-> +
->  #ifdef CONFIG_PM_SLEEP
->
->  /**
-> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
-> index f776fb93eaa0..1fd5aa500c81 100644
-> --- a/include/linux/pm_domain.h
-> +++ b/include/linux/pm_domain.h
-> @@ -351,6 +351,7 @@ struct device *genpd_dev_pm_attach_by_id(struct device *dev,
->                                          unsigned int index);
->  struct device *genpd_dev_pm_attach_by_name(struct device *dev,
->                                            const char *name);
-> +void genpd_power_off_unused_sync_state(struct device *dev);
->  #else /* !CONFIG_PM_GENERIC_DOMAINS_OF */
->  static inline int of_genpd_add_provider_simple(struct device_node *np,
->                                         struct generic_pm_domain *genpd)
-> @@ -419,6 +420,8 @@ struct generic_pm_domain *of_genpd_remove_last(struct device_node *np)
->  {
->         return ERR_PTR(-EOPNOTSUPP);
->  }
-> +
-> +static inline genpd_power_off_unused_sync_state(struct device *dev) {}
->  #endif /* CONFIG_PM_GENERIC_DOMAINS_OF */
->
->  #ifdef CONFIG_PM
-> --
+>  * rebased on next-20230125
+>  * added Krzysztof's R-b tag
+> 
+>  .../devicetree/bindings/interrupt-controller/qcom,pdc.yaml       | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
+> index 94791e261c42..5a733bd76b57 100644
+> --- a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
+> +++ b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
+> @@ -37,6 +37,7 @@ properties:
+>            - qcom,sm8250-pdc
+>            - qcom,sm8350-pdc
+>            - qcom,sm8450-pdc
+> +          - qcom,sm8550-pdc
+>        - const: qcom,pdc
+>  
+>    reg:
+> -- 
 > 2.34.1
->
-
-Kind regards
-Uffe
+> 
