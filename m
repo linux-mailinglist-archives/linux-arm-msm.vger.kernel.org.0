@@ -2,167 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 481E7697719
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Feb 2023 08:06:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4011B697727
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Feb 2023 08:08:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233801AbjBOHGH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Feb 2023 02:06:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38118 "EHLO
+        id S232690AbjBOHID (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Feb 2023 02:08:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233651AbjBOHFo (ORCPT
+        with ESMTP id S230320AbjBOHIA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Feb 2023 02:05:44 -0500
-Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B159534F58
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 23:04:59 -0800 (PST)
-Received: by mail-pg1-x52b.google.com with SMTP id z6so7922418pgk.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Feb 2023 23:04:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=E9SZVljqrUgZ+rONZA9P+4NVWoVxjLglMoeDTNYtK/s=;
-        b=vGsvj9+7E+fcbpEsGcJbRqZHNGK+vVQReuooTnh1mGB0auT9rze2W+v1+qeDstnQA6
-         UM57R8zIw9S4EBoKoQCcInBerSxDuyK3F9AT0OwMdNQZICFQ+pWjHXRhM7xKNNtHdBr+
-         oL1EMjGwN7nY7xZYYyAN58svbOvgYAicDpXSbSBMdxvoAq6XYqxg+r+dYrO98TKnW2Td
-         qnjoiv2MZ1gZafOq6lJoaqVtwuuZXWE+jX+J9EhvqIfaEh7nPn7XOcmZ2xXXEOrUC0Kx
-         3NXXVwdJkxwxneTJJ3bu0xfX6OEGUSxnHB0BewHoAKWLHxbqmuaHLddcunPy2tPRGuzL
-         Ylsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=E9SZVljqrUgZ+rONZA9P+4NVWoVxjLglMoeDTNYtK/s=;
-        b=AMwv84ZuadO1UwVGgL7XQ+nN5reFi8C4S5hdqzv3eaWQiyH8QS2WbHpUQQ4BCctbk/
-         LFdMVEJjvXZTIgv7fHZ39SwTAmAEbzW0tsRK45JBoLBshZSOrBzCoJ3Eqt8owkCQc7ai
-         gDlJuXYlaZqwsuRHP/oggghb3fL9VAWKyvI3qCzLmRj2uvNxg1ZcEv7pxLbhYXHi6/Jx
-         lgET6qJBQ5E7xI30kozse1swpZG9Stcl1xhvOagYKVwxjzfxJQdguCPdJueFT3uNEQ3U
-         5fiYvuR5/ulWZF9u7SkLLwfQE1icWbGmG01UEI9/pns5d03d3gixNV5h0HmMYwn0UUH5
-         7pbg==
-X-Gm-Message-State: AO0yUKVNHssLFmKMTgYRS8g0KhNHECh7xLvmj7CynOqve8wmywSveQaQ
-        lHHB0OthaN9oh6V18DT4gP0w
-X-Google-Smtp-Source: AK7set/ms4duETp2wCsPmCbgGWdXj6W212ASa08LIZGeYWuk+vsPdwsUdZ+MSTHKVbW7RJAt+nUrgg==
-X-Received: by 2002:a05:6a00:42:b0:598:b178:a3a9 with SMTP id i2-20020a056a00004200b00598b178a3a9mr909696pfk.6.1676444699140;
-        Tue, 14 Feb 2023 23:04:59 -0800 (PST)
-Received: from localhost.localdomain ([117.217.179.87])
-        by smtp.gmail.com with ESMTPSA id e23-20020a63db17000000b004fb26a80875sm9953795pgg.22.2023.02.14.23.04.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Feb 2023 23:04:58 -0800 (PST)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     andersson@kernel.org
-Cc:     konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        viresh.kumar@linaro.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [RESEND PATCH 12/12] arm64: dts: qcom: sm6115: Supply clock from cpufreq node to CPUs
-Date:   Wed, 15 Feb 2023 12:34:00 +0530
-Message-Id: <20230215070400.5901-13-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230215070400.5901-1-manivannan.sadhasivam@linaro.org>
-References: <20230215070400.5901-1-manivannan.sadhasivam@linaro.org>
+        Wed, 15 Feb 2023 02:08:00 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AB33367D3;
+        Tue, 14 Feb 2023 23:07:27 -0800 (PST)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31F0S267030152;
+        Wed, 15 Feb 2023 07:06:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=qXP9cB/Tot7OCsfbeCQM+UaSm9j9mh8KwilwPLACQdc=;
+ b=AUrsFbz1i7kXHaAOlPTWBQzwi2z/kjV72RznELQFYpqZOra0jG8rwC1zghDXgHJ5y6z/
+ dSpZps047bGq5sVgpqY/91uZeYOI87BboNpR8N6rm5t0jqhV1CehC8pet4vuPKXvhp/Y
+ 8LArX25Jc7d0OgWypynUFdcDKRZhZZUh4XfYDPxxsPSfw3opSzuTg27/0ZracF0unQYC
+ MsTZMoHIefJpHHm1NxkFYR0zVX5MgjE8mztMYXPbToyQaYHU2A20QFFpUlAFmRdICSs0
+ /qs+xgPchqn6ooXMbWVbhaLVK58skk8Lb8kLa0dp05m2sPzdT32rWo/HISeHg45UodeY 0w== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nqts7vngc-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 15 Feb 2023 07:06:39 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31F76blc015280
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 15 Feb 2023 07:06:37 GMT
+Received: from [10.216.30.120] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 14 Feb
+ 2023 23:06:33 -0800
+Message-ID: <602b1c64-db73-b6e3-020c-f2b24085a986@quicinc.com>
+Date:   Wed, 15 Feb 2023 12:36:21 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH 0/3] arm64: dts: qcom: sa8775p-ride: enable relevant QUPv3
+ IPs
+Content-Language: en-US
+To:     Bartosz Golaszewski <brgl@bgdev.pl>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20230214155715.451130-1-brgl@bgdev.pl>
+From:   Shazad Hussain <quic_shazhuss@quicinc.com>
+In-Reply-To: <20230214155715.451130-1-brgl@bgdev.pl>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Bfg-7E4lFtRRccGRRsryvdxBkMwQus2z
+X-Proofpoint-ORIG-GUID: Bfg-7E4lFtRRccGRRsryvdxBkMwQus2z
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-15_02,2023-02-14_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ priorityscore=1501 bulkscore=0 lowpriorityscore=0 suspectscore=0
+ mlxlogscore=590 mlxscore=0 impostorscore=0 spamscore=0 phishscore=0
+ clxscore=1011 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302150061
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Qualcomm platforms making use of CPUFreq HW Engine (EPSS/OSM) supply clocks
-to the CPU cores. But this relationship is not represented in DTS so far.
 
-So let's make cpufreq node as the clock provider and CPU nodes as the
-consumers. The clock index for each CPU node is based on the frequency
-domain index.
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm6115.dtsi | 9 +++++++++
- 1 file changed, 9 insertions(+)
+On 2/14/2023 9:27 PM, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> 
+> This enables the QUPv3 interfaces that are exposed on the sa8775p-ride
+> board: I2C, SPI and the GNSS UART.
+> 
+> Bartosz Golaszewski (3):
+>    arm64: dts: qcom: sa8775p: add the i2c node for sa8775p-ride
+>    arm64: dts: qcom: sa8775p: add the SPI node for sa8775p-ride
+>    arm64: dts: qcom: sa8775p: add the GNSS high-speed UART for
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-index 4d6ec815b78b..f55b193139bf 100644
---- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-@@ -39,6 +39,7 @@ CPU0: cpu@0 {
- 			device_type = "cpu";
- 			compatible = "qcom,kryo260";
- 			reg = <0x0 0x0>;
-+			clocks = <&cpufreq_hw 0>;
- 			capacity-dmips-mhz = <1024>;
- 			dynamic-power-coefficient = <100>;
- 			enable-method = "psci";
-@@ -54,6 +55,7 @@ CPU1: cpu@1 {
- 			device_type = "cpu";
- 			compatible = "qcom,kryo260";
- 			reg = <0x0 0x1>;
-+			clocks = <&cpufreq_hw 0>;
- 			capacity-dmips-mhz = <1024>;
- 			dynamic-power-coefficient = <100>;
- 			enable-method = "psci";
-@@ -65,6 +67,7 @@ CPU2: cpu@2 {
- 			device_type = "cpu";
- 			compatible = "qcom,kryo260";
- 			reg = <0x0 0x2>;
-+			clocks = <&cpufreq_hw 0>;
- 			capacity-dmips-mhz = <1024>;
- 			dynamic-power-coefficient = <100>;
- 			enable-method = "psci";
-@@ -76,6 +79,7 @@ CPU3: cpu@3 {
- 			device_type = "cpu";
- 			compatible = "qcom,kryo260";
- 			reg = <0x0 0x3>;
-+			clocks = <&cpufreq_hw 0>;
- 			capacity-dmips-mhz = <1024>;
- 			dynamic-power-coefficient = <100>;
- 			enable-method = "psci";
-@@ -87,6 +91,7 @@ CPU4: cpu@100 {
- 			device_type = "cpu";
- 			compatible = "qcom,kryo260";
- 			reg = <0x0 0x100>;
-+			clocks = <&cpufreq_hw 1>;
- 			enable-method = "psci";
- 			capacity-dmips-mhz = <1638>;
- 			dynamic-power-coefficient = <282>;
-@@ -102,6 +107,7 @@ CPU5: cpu@101 {
- 			device_type = "cpu";
- 			compatible = "qcom,kryo260";
- 			reg = <0x0 0x101>;
-+			clocks = <&cpufreq_hw 1>;
- 			capacity-dmips-mhz = <1638>;
- 			dynamic-power-coefficient = <282>;
- 			enable-method = "psci";
-@@ -113,6 +119,7 @@ CPU6: cpu@102 {
- 			device_type = "cpu";
- 			compatible = "qcom,kryo260";
- 			reg = <0x0 0x102>;
-+			clocks = <&cpufreq_hw 1>;
- 			capacity-dmips-mhz = <1638>;
- 			dynamic-power-coefficient = <282>;
- 			enable-method = "psci";
-@@ -124,6 +131,7 @@ CPU7: cpu@103 {
- 			device_type = "cpu";
- 			compatible = "qcom,kryo260";
- 			reg = <0x0 0x103>;
-+			clocks = <&cpufreq_hw 1>;
- 			capacity-dmips-mhz = <1638>;
- 			dynamic-power-coefficient = <282>;
- 			enable-method = "psci";
-@@ -2123,6 +2131,7 @@ cpufreq_hw: cpufreq@f521000 {
- 			clock-names = "xo", "alternate";
- 
- 			#freq-domain-cells = <1>;
-+			#clock-cells = <1>;
- 		};
- 	};
- 
--- 
-2.25.1
+Hi Bartosz,
+This instance is for BT HS UART , not for GNSS.
+For GNSS we have uart12 (0x00A94000).
 
+-Shazad
+
+>      sa8775p-ride
+> 
+>   arch/arm64/boot/dts/qcom/sa8775p-ride.dts | 67 +++++++++++++++++++++
+>   arch/arm64/boot/dts/qcom/sa8775p.dtsi     | 72 +++++++++++++++++++++++
+>   2 files changed, 139 insertions(+)
+> 
