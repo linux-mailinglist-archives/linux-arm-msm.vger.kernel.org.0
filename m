@@ -2,89 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 557096984F3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Feb 2023 20:49:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C1BED6984FC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Feb 2023 20:54:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229485AbjBOTtt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Feb 2023 14:49:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46962 "EHLO
+        id S229748AbjBOTyA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Feb 2023 14:54:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229602AbjBOTtt (ORCPT
+        with ESMTP id S229585AbjBOTx6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Feb 2023 14:49:49 -0500
-Received: from mail-oa1-x32.google.com (mail-oa1-x32.google.com [IPv6:2001:4860:4864:20::32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C5C241B6E;
-        Wed, 15 Feb 2023 11:49:15 -0800 (PST)
-Received: by mail-oa1-x32.google.com with SMTP id 586e51a60fabf-16a7f5b6882so24272590fac.10;
-        Wed, 15 Feb 2023 11:49:15 -0800 (PST)
+        Wed, 15 Feb 2023 14:53:58 -0500
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DC5C658C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Feb 2023 11:53:57 -0800 (PST)
+Received: by mail-io1-xd36.google.com with SMTP id j17so7548766ioa.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Feb 2023 11:53:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=sT4ClNB23fZFU4XjrijJ0dWtSiTxl6Nd7yW2gogV88A=;
+        b=kOoXHaENCqaveZbRVos/KoMjQEYUTTe+cDvD6aZOVB4UUm+9O4E2ELQjImfT8ouZ0J
+         iELDS2mImUI4RYworlFqM7oaHyim/HvO25dDpiSyr7dtNtV+o8xuJalkoo5wJWQ5rTUg
+         +oDPdVMW56ZFzB1vW6+zCXGc+1wVSE96+kk52Q3f59Nf2L77oqW0yzuiC3HydTBOqKIc
+         MT7Qd14E5trSIKIU7J1kY2G2PdW2y4BYh+4O/dZPIz49zPNJmWGCH8JBD7pne/j3bIiB
+         OLQH70fIPNS+3xkyvdwHrUz4SUmR57AeqVf91aJC2bVurGUT0evfT6K4C6eFkgZu/Cnu
+         RAuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PCKB1GmkGqKzi3qlguY0d4xIlc4o+GKLU2+qn3OriIQ=;
-        b=JsVXGYe89FWDhFzoYu2R0nlvULS3wIcDQ2/xt5VU6C7QJzWlZuMnmseaCYbC/Jy+XB
-         ERzZklESPNZ8ZwFMY45XavEfwDEXRCR+PWEmH5TbYSfgj6PEKVLUbd0flzL7HAxcCGEi
-         ihewc2wJEER0Q2VG1T3ZdvXwqT2k1nTAPlHOhDeFoybPiGPXKi38cQAk9iqvkjdM3Yy7
-         FlsoZNRXn/HYrw5wXLATrSo1XBnKixEf2athMy6Dl9P6p4/QPN5ZFCkmHjuAeZUt/Kpu
-         rHwKfQKxHn2W5krkcVnkGFxxXPxjfLL9Z9FdqTRiOtYxvvVEaeLbhHnKwZGO6dapne3H
-         Ng2A==
-X-Gm-Message-State: AO0yUKUh995DpA9ajoiB2gHHlKhH8FkLl0FLn73kH5lCTPZfCiyJC30p
-        YMm/KOMqxtqrQWAslNVtWHpYT/UBHA==
-X-Google-Smtp-Source: AK7set/45g0dj5NpkqKQXm1LuueV/uADXZWsrn5BZINkMVUBQzApudSM6llLVEsgK+O7dxyuyZrhUg==
-X-Received: by 2002:a05:6870:80cb:b0:16d:d644:fadf with SMTP id r11-20020a05687080cb00b0016dd644fadfmr1729552oab.43.1676490435121;
-        Wed, 15 Feb 2023 11:47:15 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id dw43-20020a056870772b00b0016e0779de32sm3538928oab.1.2023.02.15.11.47.14
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=sT4ClNB23fZFU4XjrijJ0dWtSiTxl6Nd7yW2gogV88A=;
+        b=GgQ4JhSiciywf8oOhgsXbSZSOBaa2eN9OtnIfwYjH9ep7bwuFr05dcDOOs9vOK3uYQ
+         oSg6Ko2GTWo/36oJC6pCZJpg0cjuSKEoIf6g1fKj5TeXoEi8NIPeTNZr1wWuSEYLf26e
+         fgr+kRRfWpApT4MUVXLnPYoywSTaqKQ6Graz0qEJEpsZfGkOB6vDfUjLMXyGYuupu3tH
+         guTAmC2nzjMPkrr3m9Jo6lw3A0gF+vBjsIAmy1Ou+9U02wMCLUVhJeWjvRMPwoMUrxFw
+         fGyoY3FhWpBlrhRp4qweP1kVwShqpa81us81H5+a+88ovMvYdHoeOWCOupc/tbJglePI
+         ffFA==
+X-Gm-Message-State: AO0yUKVkmSUUmqtDT8mNKmYVvFU033JcpfgWu1RPuaP9RNPF+WPthZw/
+        dCdbzTnkATnleP3+51dxlU2D5w==
+X-Google-Smtp-Source: AK7set8XLttl8lPSv2+iEOKoX0074zNwcBjXiQgyM56kXujYOubNht4kSI2UhSZzQoeaE5M2qpr1/g==
+X-Received: by 2002:a05:6602:370a:b0:734:ac8a:65d6 with SMTP id bh10-20020a056602370a00b00734ac8a65d6mr348465iob.10.1676490836388;
+        Wed, 15 Feb 2023 11:53:56 -0800 (PST)
+Received: from presto.localdomain ([98.61.227.136])
+        by smtp.gmail.com with ESMTPSA id n10-20020a5ed90a000000b0073a312aaae5sm6291847iop.36.2023.02.15.11.53.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Feb 2023 11:47:14 -0800 (PST)
-Received: (nullmailer pid 458641 invoked by uid 1000);
-        Wed, 15 Feb 2023 19:47:13 -0000
-Date:   Wed, 15 Feb 2023 13:47:13 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     andersson@kernel.org, David Airlie <airlied@gmail.com>,
-        agross@kernel.org, marijn.suijten@somainline.org,
-        Rob Clark <robdclark@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, krzysztof.kozlowski@linaro.org,
-        dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        freedreno@lists.freedesktop.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Subject: Re: [PATCH v2 8/9] dt-bindings: display/msm: dsi-controller-main:
- Add SM6115
-Message-ID: <167649043339.458588.13199640844936490270.robh@kernel.org>
-References: <20230213121012.1768296-1-konrad.dybcio@linaro.org>
- <20230213121012.1768296-9-konrad.dybcio@linaro.org>
+        Wed, 15 Feb 2023 11:53:55 -0800 (PST)
+From:   Alex Elder <elder@linaro.org>
+To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com
+Cc:     caleb.connolly@linaro.org, mka@chromium.org, evgreen@chromium.org,
+        andersson@kernel.org, quic_cpratapa@quicinc.com,
+        quic_avuyyuru@quicinc.com, quic_jponduru@quicinc.com,
+        quic_subashab@quicinc.com, elder@kernel.org,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH net-next 0/6] net: final GSI register updates
+Date:   Wed, 15 Feb 2023 13:53:46 -0600
+Message-Id: <20230215195352.755744-1-elder@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230213121012.1768296-9-konrad.dybcio@linaro.org>
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
-        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+I believe this is the last set of changes required to allow IPA v5.0
+to be supported.  There is a little cleanup work remaining, but that
+can happen in the next Linux release cycle.  Otherwise we just need
+config data and register definitions for IPA v5.0 (and DTS updates).
+These are ready but won't be posted without further testing.
 
-On Mon, 13 Feb 2023 13:10:11 +0100, Konrad Dybcio wrote:
-> Add a compatible for the DSI on SM6115.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  .../devicetree/bindings/display/msm/dsi-controller-main.yaml    | 2 ++
->  1 file changed, 2 insertions(+)
-> 
+The first patch in this series fixes a minor bug in a patch just
+posted, which I found too late.  The second eliminates the GSI
+memory "adjustment"; this was done previously to avoid/delay the
+need to implement a more general way to define GSI register offsets.
+Note that this patch causes "checkpatch" warnings due to indentation
+that aligns with an open parenthesis.
 
-Acked-by: Rob Herring <robh@kernel.org>
+The third patch makes use of the newly-defined register offsets, to
+eliminate the need for a function that hid a few details.  The next
+modifies a different helper function to work properly for IPA v5.0+.
+The fifth patch changes the way the event ring size is specified
+based on how it's now done for IPA v5.0+.  And the last defines a
+new register required for IPA v5.0+.
+
+					-Alex
+
+Alex Elder (6):
+  net: ipa: fix an incorrect assignment
+  net: ipa: kill gsi->virt_raw
+  net: ipa: kill ev_ch_e_cntxt_1_length_encode()
+  net: ipa: avoid setting an undefined field
+  net: ipa: support different event ring encoding
+  net: ipa: add HW_PARAM_4 GSI register
+
+ drivers/net/ipa/gsi.c                |  36 ++++-----
+ drivers/net/ipa/gsi.h                |   3 +-
+ drivers/net/ipa/gsi_reg.c            |  35 ++------
+ drivers/net/ipa/gsi_reg.h            |  23 ++++--
+ drivers/net/ipa/reg/gsi_reg-v3.1.c   |  22 ++---
+ drivers/net/ipa/reg/gsi_reg-v3.5.1.c |  22 ++---
+ drivers/net/ipa/reg/gsi_reg-v4.0.c   |  22 ++---
+ drivers/net/ipa/reg/gsi_reg-v4.11.c  | 116 ++++++++++++++-------------
+ drivers/net/ipa/reg/gsi_reg-v4.5.c   |  64 ++++++++-------
+ drivers/net/ipa/reg/gsi_reg-v4.9.c   |  74 ++++++++---------
+ 10 files changed, 205 insertions(+), 212 deletions(-)
+
+-- 
+2.34.1
 
