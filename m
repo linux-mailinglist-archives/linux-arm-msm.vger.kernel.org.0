@@ -2,107 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 16919697E31
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Feb 2023 15:19:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7311C697EAC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Feb 2023 15:46:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229553AbjBOOTX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Feb 2023 09:19:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53974 "EHLO
+        id S229885AbjBOOqp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Feb 2023 09:46:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229462AbjBOOTW (ORCPT
+        with ESMTP id S229800AbjBOOqo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Feb 2023 09:19:22 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 610FB6181;
-        Wed, 15 Feb 2023 06:19:21 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id EE53961C33;
-        Wed, 15 Feb 2023 14:19:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E56C4C4339B;
-        Wed, 15 Feb 2023 14:19:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1676470760;
-        bh=gQEel9EdWJL6nindAVV89iHXQOyC9ETUfqvkvbtD2gg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=PEGQwrEr7+4WeFzY/RpUMkgnLnkz3fghVF7WJBwbfnBSFv/l/K9ykEmLj7kWn6gss
-         boN+28fkVXq2qh9YXa3j66y4Hj/kpEL9EYG3AiTTfxOrke1JcvDKQydudVbzQ17IGH
-         ZL4MG5W5BmvBAd6rx1y4zhrf/hs2iovXQ0Y1T2Z28UEqyKBjNDQkO60YWp04Z15os0
-         LITBxJhiNSW/UvxDu/uH5bdF9unqvUhGcL4wXv6m2shBXdbZI7J9XcZ3STxeTl72a0
-         U4bJYIhivyPi3krbtjRY1d/s/g+7MAdiLn1pDItsS9gGz71pmYvlLxV6SmGbJp+ikl
-         VT4QJaIeWDiZw==
-Date:   Wed, 15 Feb 2023 14:19:16 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>
-Cc:     miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
-        jic23@kernel.org, tudor.ambarus@microchip.com, pratyush@kernel.org,
-        sanju.mehta@amd.com, chin-ting_kuo@aspeedtech.com, clg@kaod.org,
-        kdasu.kdev@gmail.com, f.fainelli@gmail.com, rjui@broadcom.com,
-        sbranden@broadcom.com, eajames@linux.ibm.com, olteanv@gmail.com,
-        han.xu@nxp.com, john.garry@huawei.com, shawnguo@kernel.org,
-        s.hauer@pengutronix.de, narmstrong@baylibre.com,
-        khilman@baylibre.com, matthias.bgg@gmail.com, haibo.chen@nxp.com,
-        linus.walleij@linaro.org, daniel@zonque.org,
-        haojian.zhuang@gmail.com, robert.jarzmik@free.fr,
-        agross@kernel.org, bjorn.andersson@linaro.org, heiko@sntech.de,
-        krzysztof.kozlowski@linaro.org, andi@etezian.org,
-        mcoquelin.stm32@gmail.com, alexandre.torgue@foss.st.com,
-        wens@csie.org, jernej.skrabec@gmail.com, samuel@sholland.org,
-        masahisa.kojima@linaro.org, jaswinder.singh@linaro.org,
-        rostedt@goodmis.org, mingo@redhat.com, l.stelmach@samsung.com,
-        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, alex.aring@gmail.com, stefan@datenfreihafen.org,
-        kvalo@kernel.org, james.schulman@cirrus.com,
-        david.rhodes@cirrus.com, tanureal@opensource.cirrus.com,
-        rf@opensource.cirrus.com, perex@perex.cz, tiwai@suse.com,
-        npiggin@gmail.com, christophe.leroy@csgroup.eu, mpe@ellerman.id.au,
-        oss@buserror.net, windhl@126.com, yangyingliang@huawei.com,
-        git@amd.com, linux-spi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, joel@jms.id.au, andrew@aj.id.au,
-        radu_nicolae.pirea@upb.ro, nicolas.ferre@microchip.com,
-        alexandre.belloni@bootlin.com, claudiu.beznea@microchip.com,
-        bcm-kernel-feedback-list@broadcom.com, fancer.lancer@gmail.com,
-        kernel@pengutronix.de, festevam@gmail.com, linux-imx@nxp.com,
-        jbrunet@baylibre.com, martin.blumenstingl@googlemail.com,
-        avifishman70@gmail.com, tmaimon77@gmail.com, tali.perry1@gmail.com,
-        venture@google.com, yuenn@google.com, benjaminfair@google.com,
-        yogeshgaur.83@gmail.com, konrad.dybcio@somainline.org,
-        alim.akhtar@samsung.com, ldewangan@nvidia.com,
-        thierry.reding@gmail.com, jonathanh@nvidia.com,
-        michal.simek@amd.com, linux-aspeed@lists.ozlabs.org,
-        openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org,
-        linux-rpi-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-        netdev@vger.kernel.org, linux-wpan@vger.kernel.org,
-        libertas-dev@lists.infradead.org, linux-wireless@vger.kernel.org,
-        linux-mtd@lists.infradead.org, lars@metafoo.de,
-        Michael.Hennerich@analog.com, linux-iio@vger.kernel.org,
-        michael@walle.cc, palmer@dabbelt.com,
-        linux-riscv@lists.infradead.org, alsa-devel@alsa-project.org,
-        patches@opensource.cirrus.com, linuxppc-dev@lists.ozlabs.org,
-        amitrkcian2002@gmail.com, Dhruva Gole <d-gole@ti.com>,
-        Patrice Chotard <patrice.chotard@foss.st.com>,
-        William Zhang <william.zhang@broadcom.com>
-Subject: Re: [PATCH v4 01/15] spi: Replace all spi->chip_select and
- spi->cs_gpiod references with function call
-Message-ID: <Y+zp5F2l8pffEEvN@sirena.org.uk>
-References: <20230210193647.4159467-1-amit.kumar-mahapatra@amd.com>
- <20230210193647.4159467-2-amit.kumar-mahapatra@amd.com>
+        Wed, 15 Feb 2023 09:46:44 -0500
+Received: from mail-oo1-f45.google.com (mail-oo1-f45.google.com [209.85.161.45])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3511392AA;
+        Wed, 15 Feb 2023 06:46:37 -0800 (PST)
+Received: by mail-oo1-f45.google.com with SMTP id y17-20020a4ade11000000b0051762fdf955so1920763oot.3;
+        Wed, 15 Feb 2023 06:46:37 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rBEXT/3oqd86oxSyfqYLg0yKXT/8DtJ6xnwvUSvOxQA=;
+        b=nwBdgSbQAxYNe6c+6rFk+4+hqmSyuPczecYrJVdqRDrMjuWBLZtI+1n5kOjDzR0MKT
+         gS4aBq7aQN6rxNeh3riz070+HpUYar77MCavTQAceSxhTfUs7bbOuePQBKyhAAJoOS7e
+         4bLdeNwp0t06fDzH4nuI7LgYz2jxULytopF7BFXgiTm7D9e8C5fdZBURqpJDiVH5nO46
+         YPYysYEp9Cna3RgFENqwm8M8Q8ngd4F+rRxo6NWDV66dGveA3kRW1hAoLhjm+jKz8F3S
+         8HU9rtUH5JGsk8dBm15DUwdst+/+vTdw9+HeZsQAoxKAFxuCx4+xhLf0QL411Xilf597
+         7k1w==
+X-Gm-Message-State: AO0yUKXgxTugT1G0nF/Yu9MucBZKmfJAa8KW6a5S0UZo3TdA7uB31wqv
+        l/WZ9KpXt9DwMzfnUPef/g==
+X-Google-Smtp-Source: AK7set+nN7gkSQK+tRLQHH367Wqkb9kKJmX6EWSzGmfUhKKFWebxk59RzxP5ZE1l3qKxhAHmuKo+EA==
+X-Received: by 2002:a4a:45d8:0:b0:502:a732:f8f5 with SMTP id y207-20020a4a45d8000000b00502a732f8f5mr1315351ooa.5.1676472397168;
+        Wed, 15 Feb 2023 06:46:37 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id b18-20020a4aba12000000b004f2b4891329sm7011448oop.23.2023.02.15.06.46.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Feb 2023 06:46:36 -0800 (PST)
+Received: (nullmailer pid 125959 invoked by uid 1000);
+        Wed, 15 Feb 2023 14:46:35 -0000
+Date:   Wed, 15 Feb 2023 08:46:35 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Lorenzo Pieralisi <lpieralisi@kernel.org>, andersson@kernel.org,
+        Bjorn Helgaas <bhelgaas@google.com>, agross@kernel.org,
+        marijn.suijten@somainline.org,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        krzysztof.kozlowski@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>
+Subject: Re: [PATCH v2] dt-bindings: PCI: qcom: Fix msm8998-specific
+ compatible
+Message-ID: <167647239530.125903.1170051353603969134.robh@kernel.org>
+References: <20230214091202.2187321-1-konrad.dybcio@linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="mHMK7QDQWaz9I52Q"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230210193647.4159467-2-amit.kumar-mahapatra@amd.com>
-X-Cookie: Serving suggestion.
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20230214091202.2187321-1-konrad.dybcio@linaro.org>
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -110,37 +72,21 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---mHMK7QDQWaz9I52Q
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On Tue, 14 Feb 2023 10:12:02 +0100, Konrad Dybcio wrote:
+> In the commit mentioned in the fixes tag, everything went well except
+> the fallback and the specific compatible got swapped and the 8998 DTSI
+> began failing the dtbs check. Fix it.
+> 
+> Fixes: f86fe08ef00f ("dt-bindings: PCI: qcom: Add MSM8998 specific compatible")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+> v1 - > v2:
+> 
+> - Use the correct commit in fixes
+> 
+>  Documentation/devicetree/bindings/pci/qcom,pcie.yaml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
 
-On Sat, Feb 11, 2023 at 01:06:32AM +0530, Amit Kumar Mahapatra wrote:
-> Supporting multi-cs in spi drivers would require the chip_select & cs_gpiod
-> members of struct spi_device to be an array. But changing the type of these
-> members to array would break the spi driver functionality. To make the
-> transition smoother introduced four new APIs to get/set the
-> spi->chip_select & spi->cs_gpiod and replaced all spi->chip_select and
+Acked-by: Rob Herring <robh@kernel.org>
 
-This again doesn't apply against my current code - I think the
-best thing to do here is going to be to rebase against -rc1 when
-it comes out and resend then, that will also make the issues
-integrating with other trees easier as then I can make a clean
-branch against -rc1 that other trees will be able to merge as
-needed.
-
---mHMK7QDQWaz9I52Q
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmPs6eMACgkQJNaLcl1U
-h9DMTQf7BClrpZ6y6mPa14iVbIWKtokY4RW9qSMUPLjIFwC9eRXAa0tO9cEn7yie
-Dhg3Nh0HQil5b3ETrpYSZcezEkC0LjXhOcrQL2AaNPnYqp8rwD3n4tFQXOY7hA9R
-fhdZQcSulOPdvy2GDwF7fvgenpxkVDIZM0OyEYKr5amWKxjhGICMWTBjvHmWJWo5
-Kh34j6KD6URlG9Rlf2b8CSTbJrwj5bREjrjMOvUNQWTt775APe+cKcZF6Jp3IhOC
-q8wYya1VrWoegeXxgG6IJW/I5BYCmloUtbj8BTpW9CIHMuOTdeqMduuExe3cWHOx
-xEsHIS5meBbApEDmthwKyZw5q9xE6w==
-=3UQL
------END PGP SIGNATURE-----
-
---mHMK7QDQWaz9I52Q--
