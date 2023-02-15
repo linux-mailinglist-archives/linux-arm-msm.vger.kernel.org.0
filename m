@@ -2,219 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C407697BA0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Feb 2023 13:22:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 84E3E697CFC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Feb 2023 14:18:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232736AbjBOMV6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Feb 2023 07:21:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43662 "EHLO
+        id S234153AbjBONSf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Feb 2023 08:18:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230299AbjBOMV6 (ORCPT
+        with ESMTP id S232055AbjBONSe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Feb 2023 07:21:58 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B81BD166D5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Feb 2023 04:21:56 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id n33so7188251wms.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Feb 2023 04:21:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=RELpCW/oZXrkZpYRibECyc3kJCsC+qy7Qi3hEX89e/E=;
-        b=w9OOW1XfvuTdpRcmAU7mVA29OsEzVzK+7kQZyb3OfU9XrdxZtGDKMmmy1LCfbjh/vo
-         82PuAPYaemBlpXFWh2h56hdL+XgmAYbZyVHny7dT03oik0W6REGN+AEsrD8g1tPtSgWU
-         wLU4ad+jykFcQogkFHtCDM9JDZvgJ+If5TQ8CP/I6RUAwO9LZw55arZ6YLA1cP1NBygY
-         O+i3bL8hL6XXtJzRQ0pKVqUJqY9evvPbsmsP+asaROcgb68BzT0Uz0siflfzIT/CMuXV
-         8FjGZo0v7hqwmrv+iC6pHcxBx4GPpvYmNGQ3f7eLI9Ng53kjTJHtZNa80u+16B6ilvqq
-         pEtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RELpCW/oZXrkZpYRibECyc3kJCsC+qy7Qi3hEX89e/E=;
-        b=RkJoaisYNd3+Q/uvOPpiWPr5KH4BQ0JlWq5/DnLCIxZgrsGE+iNPu9y9NSwbjfSIap
-         8MauOtkFeReBmFEe5wMZmzZB/8hPRpoBqeqN+0JqyeJh/KsiULHtK10z7VpeM4MET33r
-         3iMIxe3vDqJqRNZ6/zENPJhVV4qmAdtDz4er/kqReRIQ73BarXaEA1z8+xiuU2kowOpm
-         Msc+fCAu+txYeRBvL+IRfTmKWMNSMqvrIR/cUDAKLoFU+ug8ywfYnctKnJz2kXL315cf
-         o5K48J0cwO71kxDQ07W2wZxvawKSk/Tj+RhrFMdV8YN6gHzEev4zVAzM6WmUAiLEPeGc
-         gXaw==
-X-Gm-Message-State: AO0yUKWBbLdYYTMSlwN22Pjtx9HVd44NnWF/MrOmFQLVRyy4ng2C2jvn
-        Jcvau2hh9Rp8xAo0G/NZy2OtUw==
-X-Google-Smtp-Source: AK7set/+tejIXJKfChexrtS8e4HURhrM7vZydB2uOd6HpyijLy3lPggZbrucOFHYgjS/skYe3YDPsg==
-X-Received: by 2002:a05:600c:329a:b0:3db:15b1:fb28 with SMTP id t26-20020a05600c329a00b003db15b1fb28mr1771329wmp.19.1676463715219;
-        Wed, 15 Feb 2023 04:21:55 -0800 (PST)
-Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id u15-20020a05600c19cf00b003dc53217e07sm2105310wmq.16.2023.02.15.04.21.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Feb 2023 04:21:54 -0800 (PST)
-Date:   Wed, 15 Feb 2023 14:21:53 +0200
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     "Rafael J . Wysocki" <rafael@kernel.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-pm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>
-Subject: Re: [RFC PATCH v2 1/2] PM: domains: Skip disabling unused domains if
- provider has sync_state
-Message-ID: <Y+zOYfSI7Zq5sll1@linaro.org>
-References: <20230127104054.895129-1-abel.vesa@linaro.org>
- <CAPDyKFon35wcQ+5kx3QZb-awN_S_q8y1Sir-G+GoxkCvpN=iiA@mail.gmail.com>
+        Wed, 15 Feb 2023 08:18:34 -0500
+Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [80.237.130.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C25DB93CB;
+        Wed, 15 Feb 2023 05:18:33 -0800 (PST)
+Received: from [2a02:8108:8980:2478:8cde:aa2c:f324:937e]; authenticated
+        by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        id 1pSHg6-0001fQ-LV; Wed, 15 Feb 2023 14:18:30 +0100
+Message-ID: <b548da46-bf91-6f1c-4b63-4002109056bc@leemhuis.info>
+Date:   Wed, 15 Feb 2023 14:18:29 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPDyKFon35wcQ+5kx3QZb-awN_S_q8y1Sir-G+GoxkCvpN=iiA@mail.gmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.2
+Subject: Re: [PATCH] Revert "venus: firmware: Correct non-pix start and end
+ addresses"
+To:     Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc:     Vikash Garodia <vgarodia@qti.qualcomm.com>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "mka@chromium.org" <mka@chromium.org>,
+        Albert Esteve <aesteve@redhat.com>,
+        "stanimir.varbanov@linaro.org" <stanimir.varbanov@linaro.org>,
+        Enric Balletbo i Serra <eballetb@redhat.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        "Vikash Garodia (QUIC)" <quic_vgarodia@quicinc.com>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
+        Fritz Koenig <frkoenig@google.com>,
+        "Dikshita Agarwal (QUIC)" <quic_dikshita@quicinc.com>,
+        "Rajeshwar Kurapaty (QUIC)" <quic_rkurapat@quicinc.com>,
+        Javier Martinez Canillas <javierm@redhat.com>,
+        Linux regressions mailing list <regressions@lists.linux.dev>
+References: <20230207102254.1446461-1-javierm@redhat.com>
+ <DM8PR02MB8169809493BF2822E6C29EECF3DB9@DM8PR02MB8169.namprd02.prod.outlook.com>
+ <ef09bc9f-d570-be11-238b-bd34063917fc@redhat.com>
+ <70c01751-1dd7-c4bd-a96e-94dea437aa40@redhat.com>
+ <DM8PR02MB81696369DBFE619E43F81EEFF3DE9@DM8PR02MB8169.namprd02.prod.outlook.com>
+ <e87344c6-acef-7f3f-5cac-24961dbd9401@redhat.com>
+ <6f97a117-0d9c-e21b-9adf-50f2233ba9e3@leemhuis.info>
+ <ea283f0a-ca72-447e-ce87-68c1bbee793e@leemhuis.info>
+ <CAFOAJEdBbzqkGVqw+vgNYNxyaTHwvjFyskTwjycP820L2tOctA@mail.gmail.com>
+Content-Language: en-US, de-DE
+From:   "Linux regression tracking (Thorsten Leemhuis)" 
+        <regressions@leemhuis.info>
+Reply-To: Linux regressions mailing list <regressions@lists.linux.dev>
+In-Reply-To: <CAFOAJEdBbzqkGVqw+vgNYNxyaTHwvjFyskTwjycP820L2tOctA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-bounce-key: webpack.hosteurope.de;regressions@leemhuis.info;1676467113;d1d0c92f;
+X-HE-SMSGID: 1pSHg6-0001fQ-LV
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23-02-15 12:57:54, Ulf Hansson wrote:
-> On Fri, 27 Jan 2023 at 11:40, Abel Vesa <abel.vesa@linaro.org> wrote:
-> >
-> > Currently, there are cases when a domain needs to remain enabled until
-> > the consumer driver probes. Sometimes such consumer drivers may be built
-> > as modules. Since the genpd_power_off_unused is called too early for
-> > such consumer driver modules to get a chance to probe, the domain, since
-> > it is unused, will get disabled. On the other hand, the best time for
-> > an unused domain to be disabled is on the provider's sync_state
-> > callback. So, if the provider has registered a sync_state callback,
-> > assume the unused domains for that provider will be disabled on its
-> > sync_state callback. Also provide a generic sync_state callback which
-> > disables all the domains unused for the provider that registers it.
-> >
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > ---
-> >
-> > This approach has been applied for unused clocks as well.
-> > With this patch merged in, all the providers that have sync_state
-> > callback registered will leave the domains enabled unless the provider's
-> > sync_state callback explicitly disables them. So those providers will
-> > need to add the disabling part to their sync_state callback. On the
-> > other hand, the platforms that have cases where domains need to remain
-> > enabled (even if unused) until the consumer driver probes, will be able,
-> > with this patch in, to run without the pd_ignore_unused kernel argument,
-> > which seems to be the case for most Qualcomm platforms, at this moment.
+On 15.02.23 11:57, Javier Martinez Canillas wrote:
+> On Wed, Feb 15, 2023 at 11:53 AM Linux regression tracking (Thorsten
+> Leemhuis) <regressions@leemhuis.info> wrote:
+>> On 11.02.23 15:27, Linux regression tracking (Thorsten Leemhuis) wrote:
+>>> On 10.02.23 11:07, Javier Martinez Canillas wrote:
+>>>> On 2/10/23 10:22, Vikash Garodia wrote:
+>>>>
+>>>>>> So what should we do about this folks? Since not allowing the driver to probe on
+>>>>>> at least SC7180 is a quite serious regression, can we revert for now until a proper
+>>>>>> fix is figured out?
+>>>>> I am able to repro this issue on sc7180 and discussing with firmware team on the cause
+>>>>> of reset failure. The original patch was raised for fixing rare SMMU faults during warm
+>>>>> boot of video hardware. Hence looking to understand the regressing part before we
+>>>>> proceed to revert.
+>>>> Great, if you are working on a proper fix then that would be much better indeed.
+>>> Yeah, that's great, but OTOH: there is almost certainly just one week
+>>> before 6.2 will be released. Ideally this should be fixed by then.
+>>> Vikash, do you think that's in the cards? If not: why not revert this
+>>> now to make sure 6.2 works fine?
+>> Hmm, no reply. And we meanwhile have Wednesday and 6.2 is almost
+>> certainly going to be out on Sunday. And the problem was called "a quite
+>> serious regression" above. So why not quickly fix this with the revert,
+>> as proposed earlier?
+>> Vikash? Javier?
+>
+> I agree with you, that we should land this revert and then properly
+> fix the page fault issue in v6.3.
 > 
-> My apologies for the somewhat late reply. Please see my comments below.
-> 
-> >
-> > The v1 is here:
-> > https://lore.kernel.org/all/20230126234013.3638425-1-abel.vesa@linaro.org/
-> >
-> > Changes since v1:
-> >  * added a generic sync state callback to be registered by providers in
-> >    order to disable the unused domains on their sync state. Also
-> >    mentioned this in the commit message.
-> >
-> >  drivers/base/power/domain.c | 17 ++++++++++++++++-
-> >  include/linux/pm_domain.h   |  3 +++
-> >  2 files changed, 19 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
-> > index 84662d338188..c2a5f77c01f3 100644
-> > --- a/drivers/base/power/domain.c
-> > +++ b/drivers/base/power/domain.c
-> > @@ -1099,7 +1099,8 @@ static int __init genpd_power_off_unused(void)
-> >         mutex_lock(&gpd_list_lock);
-> >
-> >         list_for_each_entry(genpd, &gpd_list, gpd_list_node)
-> > -               genpd_queue_power_off_work(genpd);
-> > +               if (!dev_has_sync_state(genpd->provider->dev))
-> 
-> Unfortunately, this doesn't really help, due to the fact that a
-> genpd's ->power_off() callback may get called anyway. At power off,
-> the genpd core only cares about those consumers that are currently
-> attached, not those that might get attached at some point later in
-> time.
-> 
-> In other words, it's the responsibility for each specific genpd
-> provider to cope with the condition that its ->sync_state() callback
-> may *not* have been called, while its ->power_off() callback is being
-> called.
-> 
-> In these cases, the genpd provider should probably make the
-> ->power_off() callback to return -EBUSY. This is what we do in
-> psci_pd_power_off(), for example.
-> 
+> But it's not my call, the v4l2/media folks have to decide that.
 
-Hmm, this might actually be a better idea. Bjorn, do you agree?
+In that case: Mauro, what's your opinion here?
 
-> > +                       genpd_queue_power_off_work(genpd);
-> >
-> >         mutex_unlock(&gpd_list_lock);
-> >
-> > @@ -1107,6 +1108,20 @@ static int __init genpd_power_off_unused(void)
-> >  }
-> >  late_initcall(genpd_power_off_unused);
-> >
-> > +void genpd_power_off_unused_sync_state(struct device *dev)
-> > +{
-> > +       struct generic_pm_domain *genpd;
-> > +
-> > +       mutex_lock(&gpd_list_lock);
-> > +
-> > +       list_for_each_entry(genpd, &gpd_list, gpd_list_node)
-> > +               if (genpd->provider->dev == dev)
-> > +                       genpd_queue_power_off_work(genpd);
-> > +
-> > +       mutex_unlock(&gpd_list_lock);
-> > +}
-> > +EXPORT_SYMBOL_GPL(genpd_power_off_unused_sync_state);
-> 
-> I don't think this function is needed at all.
-> 
-> In fact, this part of the problem that you are trying to solve should
-> already be managed by the driver core, as it calls
-> dev->pm_domain->sync() (which is assigned to genpd_dev_pm_sync()) , in
-> really_probe(). Or isn't that taking care of the problem for you?
+Thread starts here:
+https://lore.kernel.org/lkml/20230207102254.1446461-1-javierm@redhat.com/
 
-Hmm, I missed the genpd_dev_pm_sync scenario entirely. Yes, that is
-actually what is needed, and yes, this function I added here is useless
-in this case.
+Regression report:
+https://lore.kernel.org/lkml/Y9LSMap%2BjRxbtpC8@google.com/
 
-> 
-> > +
-> >  #ifdef CONFIG_PM_SLEEP
-> >
-> >  /**
-> > diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
-> > index f776fb93eaa0..1fd5aa500c81 100644
-> > --- a/include/linux/pm_domain.h
-> > +++ b/include/linux/pm_domain.h
-> > @@ -351,6 +351,7 @@ struct device *genpd_dev_pm_attach_by_id(struct device *dev,
-> >                                          unsigned int index);
-> >  struct device *genpd_dev_pm_attach_by_name(struct device *dev,
-> >                                            const char *name);
-> > +void genpd_power_off_unused_sync_state(struct device *dev);
-> >  #else /* !CONFIG_PM_GENERIC_DOMAINS_OF */
-> >  static inline int of_genpd_add_provider_simple(struct device_node *np,
-> >                                         struct generic_pm_domain *genpd)
-> > @@ -419,6 +420,8 @@ struct generic_pm_domain *of_genpd_remove_last(struct device_node *np)
-> >  {
-> >         return ERR_PTR(-EOPNOTSUPP);
-> >  }
-> > +
-> > +static inline genpd_power_off_unused_sync_state(struct device *dev) {}
-> >  #endif /* CONFIG_PM_GENERIC_DOMAINS_OF */
-> >
-> >  #ifdef CONFIG_PM
-> > --
-> > 2.34.1
-> >
-> 
-> Kind regards
-> Uffe
+Ciao, Thorsten
