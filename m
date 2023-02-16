@@ -2,194 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF0E7699F23
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 22:47:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C144699FA4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 23:22:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229927AbjBPVrF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Feb 2023 16:47:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34240 "EHLO
+        id S230015AbjBPWWm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Feb 2023 17:22:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229850AbjBPVrD (ORCPT
+        with ESMTP id S229793AbjBPWWl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Feb 2023 16:47:03 -0500
-Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 186713D0B6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 13:47:00 -0800 (PST)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 911AC3F623;
-        Thu, 16 Feb 2023 22:46:57 +0100 (CET)
-Date:   Thu, 16 Feb 2023 22:46:55 +0100
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Archit Taneja <architt@codeaurora.org>,
-        Chandan Uddaraju <chandanu@codeaurora.org>,
-        Sravanthi Kollukuduru <skolluku@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        phone-devel@vger.kernel.org
-Subject: Re: [PATCH 1/3] drm/msm/dpu: Read previously-uninitialized SSPP
- scaler version from hw
-Message-ID: <20230216214655.a3ajtegqwattn2rt@SoMainline.org>
-Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Archit Taneja <architt@codeaurora.org>,
-        Chandan Uddaraju <chandanu@codeaurora.org>,
-        Sravanthi Kollukuduru <skolluku@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        phone-devel@vger.kernel.org
-References: <20230215-sspp-scaler-version-v1-0-416b1500b85b@somainline.org>
- <20230215-sspp-scaler-version-v1-1-416b1500b85b@somainline.org>
- <CAA8EJpq1L32VQ1eQEk2YQWqCwHgdFQfuWPhQx=PmhzXvazLgPA@mail.gmail.com>
- <20230216083119.6ispk2xhahhzn5sx@SoMainline.org>
- <305a468a-d792-4f51-5a7a-bf38b9c685eb@linaro.org>
+        Thu, 16 Feb 2023 17:22:41 -0500
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB8CD4BE9F;
+        Thu, 16 Feb 2023 14:22:40 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id p5so2664925wmg.4;
+        Thu, 16 Feb 2023 14:22:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=djRJcRnLz3UuMeAMlpIwsfFMBrpOvHwci8jrszcMSY8=;
+        b=fyHOewIQvLHx4+njac7ZkzJh0/fSovezrBM9rXs5qpIA4BvNRlvPUJ7FTRQmr5d2nZ
+         5jLTJBZ3dhtBkNbs0PouT1rc0evpJd/t+tyVd0N+ehqMprwaUE/I0MvjPR0IXd+ibcXe
+         y54lUSpYnfV2ah6hUrNMXY9bz8XKZnLw4fqs563OInOqt/jfwS6xw9ZrxUi3nIrd79ds
+         33K5eINfZ/grEoDqU6iqwMkFALIW8hLRvZGVWIRiJf2fF1zYBeILi4RLlRxezOAxjxp4
+         Dkb7Y43VIKUPZ/QtoCJQbsDJktRww6JwARbBUc3C5ChP2m2ERDd9nIaIYbsQ3hxMJtkE
+         EeLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=djRJcRnLz3UuMeAMlpIwsfFMBrpOvHwci8jrszcMSY8=;
+        b=ajXEpmoc/f/AdvNpKmLV2gSEhYANWkcu6B7xOYcNJdWEfLoOWepvnFOsVgPQLDxZeK
+         xMnCWiLNzQXOAooPw7HYVgYRsQh/g64mVkQ1sM+Yb3Y8fWjLPpYcrR9p3W1VEYOFV2Pu
+         Dqz+YRMkhF1J72xIDJN+PzBZoun10br6T9T9MUDWiVVDFm0MnhcKwGdUR5XijIFiihrI
+         3fJKyETU+0JKElft2OpWYDqoXIDATd0ONVdVmHBPkUtOH7kSo4wigwTW/wH8yun6xCsn
+         dcera8O7EnbwfMZNbr+eyDvOl0mOvaJsAHHZFEF68rRF2mZN/g6a/eI6R5DnqoDSsEyi
+         pwtg==
+X-Gm-Message-State: AO0yUKWQEGj8IPRAYMYoqQLOw1+AkIrqYetVy1vTHMcf7TiDgEaeg+GX
+        w3QE3DF7FbaeR/XL4hb7Tk4QGXs3tFE=
+X-Google-Smtp-Source: AK7set83tB465CK6rJgc6xdek950Rl89agO+ZAkochDkCTDkIH0ggFUao8WDm1O/dc6fzieiy0NskA==
+X-Received: by 2002:a05:600c:1c11:b0:3dc:576c:ab07 with SMTP id j17-20020a05600c1c1100b003dc576cab07mr5884435wms.14.1676586159269;
+        Thu, 16 Feb 2023 14:22:39 -0800 (PST)
+Received: from localhost (94.197.187.145.threembb.co.uk. [94.197.187.145])
+        by smtp.gmail.com with ESMTPSA id t14-20020a05600c198e00b003db0ee277b2sm6875402wmq.5.2023.02.16.14.22.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Feb 2023 14:22:38 -0800 (PST)
+From:   Aidan MacDonald <aidanmacdonald.0x0@gmail.com>
+To:     agross@kernel.org, andersson@kernel.org, lee@kernel.org
+Cc:     konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v1 0/4] regmap-irq fixes for qcom-pm8008
+Date:   Thu, 16 Feb 2023 22:22:10 +0000
+Message-Id: <20230216222214.138671-1-aidanmacdonald.0x0@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <305a468a-d792-4f51-5a7a-bf38b9c685eb@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-02-16 18:34:43, Dmitry Baryshkov wrote:
-> On 16/02/2023 10:31, Marijn Suijten wrote:
-> > On 2023-02-16 04:22:13, Dmitry Baryshkov wrote:
-> >> On Thu, 16 Feb 2023 at 01:02, Marijn Suijten
-> >> <marijn.suijten@somainline.org> wrote:
-> >>>
-> >>> DPU's catalog never assigned dpu_scaler_blk::version leading to
-> >>> initialization code in dpu_hw_setup_scaler3 to wander the wrong
-> >>> codepaths.  Instead of hardcoding the correct QSEED algorithm version,
-> >>> read it back from a hardware register.
-> >>>
-> >>> Note that this register is only available starting with QSEED3, where
-> >>> 0x1002 corresponds to QSEED3, 0x2004 to QSEED3LITE and 0x3000 to QSEED4.
-> >>
-> >> This is not purely accurate. 0x1003 (sdm845) also corresponds to QSEED3.
-> >> I'd say instead that there are several variations of QSEED3 scalers,
-> >> where starting from 0x2004 it is called QSEED3LITE and starting from
-> >> 0x3000 it is called QSEED4.
-> > 
-> > Good catch, I'll update that.
-> > 
-> >>> Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
-> >>> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> >>> ---
-> >>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 2 --
-> >>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c    | 8 +++++++-
-> >>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h    | 3 +++
-> >>>   3 files changed, 10 insertions(+), 3 deletions(-)
-> >>>
-> >>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> >>> index ddab9caebb18..96ce1766f4a1 100644
-> >>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> >>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> >>> @@ -324,11 +324,9 @@ struct dpu_src_blk {
-> >>>   /**
-> >>>    * struct dpu_scaler_blk: Scaler information
-> >>>    * @info:   HW register and features supported by this sub-blk
-> >>> - * @version: qseed block revision
-> >>>    */
-> >>>   struct dpu_scaler_blk {
-> >>>          DPU_HW_SUBBLK_INFO;
-> >>> -       u32 version;
-> >>
-> >> No. Please keep the version in the scaler subblk.  It is a version of
-> >> the QSEED (scaler block), not the SSPP's version.
-> > 
-> > You are right that the new variable in the parent (SSPP) block is
-> > nondescriptive and should have been named scaler_version.
-> > 
-> > However.
-> > 
-> > dpu_scaler_blk is only used as a const static struct in the catalog,
-> > meaning we cannot (should not!) store a runtime-read register value
-> > here.  Instead I followed your IRC suggestion to read the register in
-> > dpu_hw_sspp_init, but my original implementation called
-> > dpu_hw_get_scaler3_ver in _dpu_hw_sspp_setup_scaler3 where we already
-> > have access to the subblk_offset, allowing us to delete
-> > _dpu_hw_sspp_get_scaler3_ver.  Would you rather have that?  We don't
-> > need the register value anywhere else.
-> 
-> After giving it another thought, let's follow the vendor's approach and 
-> store the predefined scaler_version in hw catalog (in dpu_scaler_blk, as 
-> it currently is). This way we can still drop all QSEED3/3LITE/4 
-> crazyness, while keeping the data sane.
+The PM8008 driver is the last one using a bunch of deprecated features
+in regmap-irq. Replace these with more generally useful equivalents so
+the deprecated stuff can finally be removed.
 
-You want to drop the descriptive #define's, and replace them with magic
-0x1002/0x2004/0x3000 and whatever other values we know?  That seems
-impossible to port without reading back the register value, which we've
-only done for a handful of SoCs.  I hope I'm misunderstanding you?
-After all the vendor approach (in a random 4.14 kernel I have open now)
-is to read the register value at runtime but their catalog is also
-dynamic and built at runtime based on version ranges and register reads,
-which sometimes is more sensible.  Ours is const.
+Note, I have not tested any of these patches.
 
-> Then _dpu_hw_sspp_get_scaler3_ver() can also be dropped (or you can use 
-> it as a safety guard while doing dpu_hw_sspp init).
+Aidan MacDonald (4):
+  mfd: qcom-pm8008: Fix swapped mask/unmask in irq chip
+  mfd: qcom-pm8008: Convert irq chip to config regs
+  mfd: qcom-pm8008: Use .get_irq_reg() for irq chip
+  mfd: qcom-pm8008: Remove workaround for a regmap-irq quirk
 
-That (safety guard) is exactly what Abhinav requested against, since the
-kernel (and our catalog) should be trustworthy.  I'll let you two fight
-this out and come to a consensus before sending v2.
+ drivers/mfd/qcom-pm8008.c | 131 ++++++++++++++------------------------
+ 1 file changed, 48 insertions(+), 83 deletions(-)
 
-> >> There is a block called DS (destination scaler), which can be used to
-> >> scale the resulting image after the LM. This block also uses the
-> >> QSEED3(,LITE,4) scaler block.
-> > 
-> > Is this already supported in mainline, and is it the reason for
-> > previously having qseed_type globally available?  Is my understanding
-> > correct that this scaler subblk in the SSPP is merely an interface to
-> > it, allowing the same hardware to be used from the SSPP for intputs and
-> > after the LM for outputs?
-> 
-> No, I think qseed_type is a leftover from having the same thing 
-> implemented in three different ways. Maybe because of NIH syndrome?
+-- 
+2.39.2
 
-Could be, downstream uses it to steer its catalog logic for example
-(which happens before later reading the version register).
-
-> DS is not supported, it was removed in the commit 
-> b033def8741aab3fb58e4bf6c1d5cd73b3beb357. I do not have a clear usecase 
-> for this block and of course we don't have uABI for it.
-
-Is there no common DRM property to composite at a lower resolution and
-upscale the final displayed image to match a CRTC/encoder?  I wish I
-understood the commit message better :)
-
-> It would still be nice to keep it in the picture though. It was the main 
-> reason for moving scaler code from dpu_hw_sspp to dpu_hw_util.
-
-Downstream SDE already has this code moved to sde_hw_util as far as I
-can see (and SSPP and DS call into it).  But I fully agree as a
-mostly-oblivious-outsider: it seems like there are a lot of features,
-hardware blocks and optimizations not implemented, things which I still
-have no knowledge/experience/understanding of/about.  Let's first focus
-on making it work _on all relevant SoCs and boards_ though :)
-
-- Marijn
