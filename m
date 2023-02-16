@@ -2,275 +2,270 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E760E699347
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 12:38:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A13B699353
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 12:39:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230241AbjBPLiH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Feb 2023 06:38:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55870 "EHLO
+        id S229694AbjBPLjl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Feb 2023 06:39:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229642AbjBPLiG (ORCPT
+        with ESMTP id S229477AbjBPLjk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Feb 2023 06:38:06 -0500
-Received: from mx3.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B467A1A4B3;
-        Thu, 16 Feb 2023 03:37:52 -0800 (PST)
-Received: from [141.14.13.65] (g320.RadioFreeInternet.molgen.mpg.de [141.14.13.65])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        (Authenticated sender: pmenzel)
-        by mx.molgen.mpg.de (Postfix) with ESMTPSA id B8E7060027FD7;
-        Thu, 16 Feb 2023 12:37:43 +0100 (CET)
-Message-ID: <44ac5699-c42f-bb22-b92d-c0d0a54cced4@molgen.mpg.de>
-Date:   Thu, 16 Feb 2023 12:37:43 +0100
+        Thu, 16 Feb 2023 06:39:40 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2843C659D;
+        Thu, 16 Feb 2023 03:39:32 -0800 (PST)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31G8cWKG021972;
+        Thu, 16 Feb 2023 11:39:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=uVOo0wi1aHKMoaXZgIN5GZV7uFyg9xnchXiFYkyFCdI=;
+ b=GCQjX6a9WKQn70jzXJSRUdTNWoEjTYnkaTfBGgngwTzMSmsr50iGsY05BmkyEz4eWMPE
+ cuYdQG/yVvDQF5B7X9WZEmUmeRPVxgBpTjDNdQk5NQPEknuImyY1tYJNyn3vfeejfU8k
+ XZqjJx3zGECzkQMJaI4TwBfHW8ofEMowksm+x3KE+tp+y53qWoFr4fyoCBAh0pHR3/mI
+ 4qrMu9q8NL4+LHCgG9mnbcClAi0UqbRh0IZQORk74UIXWXjAv+0KaSs2G2xZE/duGkVA
+ FuH/RZl1MP2iYjLQeOXr++SZ1o3QmPobVtBq90nhohJiXIWQjt6qja++tCK5yt1mHrQK 2Q== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ns0hkjwrg-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 16 Feb 2023 11:39:07 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31GBd5Xe031736
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 16 Feb 2023 11:39:05 GMT
+Received: from [10.242.242.255] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Thu, 16 Feb
+ 2023 03:38:56 -0800
+Message-ID: <6ea43d8d-7b9c-5a11-097f-906e10ac3627@quicinc.com>
+Date:   Thu, 16 Feb 2023 17:08:52 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.2
-Subject: Re: [PATCH v2] Bluetooth: hci_qca: Add support for Qualcomm Bluetooth
- SoC QCA2066
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH 2/7] PCI: qcom: Add IPQ9574 PCIe support
 Content-Language: en-US
-To:     Tim Jiang <quic_tjiang@quicinc.com>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, quic_bgodavar@quicinc.com,
-        quic_hbandi@quicinc.com, quic_hemantg@quicinc.com, mka@chromium.org
-References: <20230216092236.26720-1-quic_tjiang@quicinc.com>
-From:   Paul Menzel <pmenzel@molgen.mpg.de>
-In-Reply-To: <20230216092236.26720-1-quic_tjiang@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+To:     Devi Priya <quic_devipriy@quicinc.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <lpieralisi@kernel.org>, <kw@linux.com>, <robh@kernel.org>,
+        <bhelgaas@google.com>, <krzysztof.kozlowski+dt@linaro.org>,
+        <vkoul@kernel.org>, <kishon@kernel.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <mani@kernel.org>, <p.zabel@pengutronix.de>,
+        <svarbanov@mm-sol.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <linux-clk@vger.kernel.org>
+CC:     <quic_gokulsri@quicinc.com>, <quic_sjaganat@quicinc.com>,
+        <quic_kathirav@quicinc.com>, <quic_arajkuma@quicinc.com>,
+        <quic_anusha@quicinc.com>
+References: <20230214164135.17039-1-quic_devipriy@quicinc.com>
+ <20230214164135.17039-3-quic_devipriy@quicinc.com>
+From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
+In-Reply-To: <20230214164135.17039-3-quic_devipriy@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: sGl2UNFWHiU0g3pN-jS9I8SkIK4q0k2T
+X-Proofpoint-GUID: sGl2UNFWHiU0g3pN-jS9I8SkIK4q0k2T
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-16_08,2023-02-16_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ lowpriorityscore=0 spamscore=0 clxscore=1011 impostorscore=0 adultscore=0
+ mlxscore=0 priorityscore=1501 suspectscore=0 phishscore=0 mlxlogscore=999
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302160099
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dear Tim,
+Hi Devi,
 
-
-Thank you for the patch.
-
-Am 16.02.23 um 10:22 schrieb Tim Jiang:
-> This patch adds support for QCA2066 firmware patch and nvm downloading.
-
-(Nit: Imperative mood with *Add support …* would make it shorter, and is 
-recommended.)
-
-Please elaborate a little. Please mention the datasheet name and 
-revision, and how it was tested.
-
-> Signed-off-by: Tim Jiang <quic_tjiang@quicinc.com>
-> ---
->   drivers/bluetooth/btqca.c   | 78 +++++++++++++++++++++++++++++++++++++
->   drivers/bluetooth/btqca.h   |  2 +
->   drivers/bluetooth/hci_qca.c |  6 +++
->   3 files changed, 86 insertions(+)
+On 2/14/2023 10:11 PM, Devi Priya wrote:
+> Adding PCIe support for IPQ9574 SoC
 > 
-> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-> index c9064d34d830..e1127532c5a8 100644
-> --- a/drivers/bluetooth/btqca.c
-> +++ b/drivers/bluetooth/btqca.c
-> @@ -205,6 +205,50 @@ static int qca_send_reset(struct hci_dev *hdev)
+> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
+> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
+> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+> ---
+>   drivers/pci/controller/dwc/pcie-qcom.c | 119 +++++++++++++++++++++++++
+>   1 file changed, 119 insertions(+)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index a232b04af048..57606c113d45 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -193,6 +193,12 @@ struct qcom_pcie_resources_2_9_0 {
+>   	struct reset_control *rst;
+>   };
+>   
+> +struct qcom_pcie_resources_1_27_0 {
+> +	struct clk_bulk_data *clks;
+> +	struct reset_control *rst;
+> +	int num_clks;
+> +};
+> +
+>   union qcom_pcie_resources {
+>   	struct qcom_pcie_resources_1_0_0 v1_0_0;
+>   	struct qcom_pcie_resources_2_1_0 v2_1_0;
+> @@ -201,6 +207,7 @@ union qcom_pcie_resources {
+>   	struct qcom_pcie_resources_2_4_0 v2_4_0;
+>   	struct qcom_pcie_resources_2_7_0 v2_7_0;
+>   	struct qcom_pcie_resources_2_9_0 v2_9_0;
+> +	struct qcom_pcie_resources_1_27_0 v1_27_0;
+>   };
+>   
+>   struct qcom_pcie;
+> @@ -1409,6 +1416,104 @@ static int qcom_pcie_post_init_2_9_0(struct qcom_pcie *pcie)
 >   	return 0;
 >   }
 >   
-> +static int qca_read_fw_board_id(struct hci_dev *hdev, u16 *bid)
+> +static int qcom_pcie_get_resources_1_27_0(struct qcom_pcie *pcie)
 > +{
-> +	u8 cmd;
-> +	struct sk_buff *skb;
-> +	struct edl_event_hdr *edl;
-> +	int err = 0;
-> +	int bid_len;
+> +	struct qcom_pcie_resources_1_27_0 *res = &pcie->res.v1_27_0;
+> +	struct dw_pcie *pci = pcie->pci;
+> +	struct device *dev = pci->dev;
 > +
-> +	bt_dev_dbg(hdev, "QCA read board ID");
+> +	res->num_clks = devm_clk_bulk_get_all(dev, &res->clks);
+> +	if (res->clks < 0)
+> +		return res->num_clks;
 > +
-> +	cmd = EDL_GET_BID_REQ_CMD;
-> +	skb = __hci_cmd_sync_ev(hdev, EDL_PATCH_CMD_OPCODE, EDL_PATCH_CMD_LEN,
-> +				&cmd, 0, HCI_INIT_TIMEOUT);
-> +	if (IS_ERR(skb)) {
-> +		err = PTR_ERR(skb);
-> +		bt_dev_err(hdev, "Reading QCA board ID failed (%d)",
-> +			   err);
-
-Should fit in one line?
-
-> +		return err;
-> +	}
+> +	res->rst = devm_reset_control_array_get_exclusive(dev);
+> +	if (IS_ERR(res->rst))
+> +		return PTR_ERR(res->rst);
 > +
-> +	edl = skb_pull_data(skb, sizeof(*edl));
-> +	if (!edl) {
-> +		bt_dev_err(hdev, "QCA read board ID with no header");
-
-Please phrase these errors more user understandable. Maybe even with a 
-suggestion, how to fix it.
-
-> +		err = -EILSEQ;
-> +		goto out;
-> +	}
-> +
-> +	if (edl->cresp != EDL_CMD_REQ_RES_EVT ||
-> +	    edl->rtype != EDL_GET_BID_REQ_CMD) {
-> +		bt_dev_err(hdev, "QCA Wrong packet received %d %d", edl->cresp,
-> +			   edl->rtype);
-
-Same.
-
-> +		err = -EIO;
-> +		goto out;
-> +	}
-> +
-> +	bid_len = edl->data[0];
-> +	*bid = (edl->data[1] << 8) + edl->data[2];
-> +	bt_dev_info(hdev, "%s: bid len = %x, bid = %x", __func__, bid_len, *bid);
-> +
-> +out:
-> +	kfree_skb(skb);
-> +	return err;
+> +	return 0;
 > +}
 > +
->   int qca_send_pre_shutdown_cmd(struct hci_dev *hdev)
+> +static void qcom_pcie_deinit_1_27_0(struct qcom_pcie *pcie)
+> +{
+> +	struct qcom_pcie_resources_1_27_0 *res = &pcie->res.v1_27_0;
+> +
+> +	clk_bulk_disable_unprepare(res->num_clks, res->clks);
+> +}
+> +
+> +static int qcom_pcie_init_1_27_0(struct qcom_pcie *pcie)
+> +{
+> +	struct qcom_pcie_resources_1_27_0 *res = &pcie->res.v1_27_0;
+> +	struct device *dev = pcie->pci->dev;
+> +	int ret;
+> +
+> +	ret = reset_control_assert(res->rst);
+> +	if (ret) {
+> +		dev_err(dev, "reset assert failed (%d)\n", ret);
+> +		return ret;
+> +	}
+> +
+> +	/*
+> +	 * Delay periods before and after reset deassert are working values
+> +	 * from downstream Codeaurora kernel
+> +	 */
+> +	usleep_range(2000, 2500);
+> +
+> +	ret = reset_control_deassert(res->rst);
+> +	if (ret) {
+> +		dev_err(dev, "reset deassert failed (%d)\n", ret);
+> +		return ret;
+> +	}
+> +
+> +	usleep_range(2000, 2500);
+> +
+> +	return clk_bulk_prepare_enable(res->num_clks, res->clks);
+> +}
+> +
+> +static int qcom_pcie_post_init_1_27_0(struct qcom_pcie *pcie)
+> +{
+> +	struct dw_pcie *pci = pcie->pci;
+> +	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+> +	u32 val;
+> +	int i;
+> +
+> +	writel(0x8000000, pcie->parf + PCIE20_v3_PARF_SLV_ADDR_SPACE_SIZE);
+> +
+> +	val = readl(pcie->parf + PCIE20_PARF_PHY_CTRL);
+> +	val &= ~BIT(0);
+> +	writel(val, pcie->parf + PCIE20_PARF_PHY_CTRL);
+> +
+> +	writel(0, pcie->parf + PCIE20_PARF_DBI_BASE_ADDR);
+> +
+> +	writel(DEVICE_TYPE_RC, pcie->parf + PCIE20_PARF_DEVICE_TYPE);
+> +	writel(BYPASS | MSTR_AXI_CLK_EN | AHB_CLK_EN,
+> +	       pcie->parf + PCIE20_PARF_MHI_CLOCK_RESET_CTRL);
+> +	writel(GEN3_RELATED_OFF_RXEQ_RGRDLESS_RXTS |
+> +	       GEN3_RELATED_OFF_GEN3_ZRXDC_NONCOMPL,
+> +	       pci->dbi_base + GEN3_RELATED_OFF);
+> +
+> +	writel(MST_WAKEUP_EN | SLV_WAKEUP_EN | MSTR_ACLK_CGC_DIS |
+> +	       SLV_ACLK_CGC_DIS | CORE_CLK_CGC_DIS |
+> +	       AUX_PWR_DET | L23_CLK_RMV_DIS | L1_CLK_RMV_DIS,
+> +	       pcie->parf + PCIE20_PARF_SYS_CTRL);
+> +
+> +	writel(0, pcie->parf + PCIE20_PARF_Q2A_FLUSH);
+> +
+> +	dw_pcie_dbi_ro_wr_en(pci);
+> +	writel(PCIE_CAP_SLOT_VAL, pci->dbi_base + offset + PCI_EXP_SLTCAP);
+> +
+> +	val = readl(pci->dbi_base + offset + PCI_EXP_LNKCAP);
+> +	val &= ~PCI_EXP_LNKCAP_ASPMS;
+> +	writel(val, pci->dbi_base + offset + PCI_EXP_LNKCAP);
+> +
+> +	writel(PCI_EXP_DEVCTL2_COMP_TMOUT_DIS, pci->dbi_base + offset +
+> +	       PCI_EXP_DEVCTL2);
+> +
+> +	for (i = 0; i < 256; i++)
+> +		writel(0, pcie->parf + PCIE20_PARF_BDF_TO_SID_TABLE_N + (4 * i));
+> +
+> +	return 0;
+> +}
+> +
+>   static int qcom_pcie_link_up(struct dw_pcie *pci)
 >   {
->   	struct sk_buff *skb;
-> @@ -574,6 +618,31 @@ int qca_set_bdaddr_rome(struct hci_dev *hdev, const bdaddr_t *bdaddr)
->   }
->   EXPORT_SYMBOL_GPL(qca_set_bdaddr_rome);
->   
-> +static void qca_generate_nvm_name(struct hci_dev *hdev, char *fwname,
-> +		   size_t max_size, struct qca_btsoc_version ver, u16 bid)
-> +{
-> +	u8 rom_ver = 0;
-> +	u32 soc_ver;
-> +	const char *variant;
-> +
-> +	soc_ver = get_soc_ver(ver.soc_id, ver.rom_ver);
-> +	rom_ver = ((soc_ver & 0x00000f00) >> 0x04) | (soc_ver & 0x0000000f);
-> +
-> +	if ((ver.soc_id & 0x0000ff00) == 0x1200) /*hsp gf chip*/
-
-Missing spaces in the comment. Can macros/enums be used?
-
-> +		variant = "g";
-> +	else
-> +		variant = "";
-> +
-> +	if (bid == 0x0) {
-> +		snprintf(fwname, max_size, "qca/hpnv%02x%s.bin", rom_ver, variant);
-> +	} else {
-> +		snprintf(fwname, max_size, "qca/hpnv%02x%s.%x",
-> +			rom_ver, variant, bid);
-> +	}
-
-The coding style requires no spaces for oneline bodies.
-
-> +
-> +	bt_dev_info(hdev, "%s: nvm name is %s", __func__, fwname);
-> +}
-> +
->   int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
->   		   enum qca_btsoc_type soc_type, struct qca_btsoc_version ver,
->   		   const char *firmware_name)
-> @@ -582,6 +651,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
->   	int err;
->   	u8 rom_ver = 0;
->   	u32 soc_ver;
-> +	u16 bid = 0;
-
-Use boardid as name?
-
->   
->   	bt_dev_dbg(hdev, "QCA setup on UART");
->   
-> @@ -607,6 +677,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
->   	} else if (soc_type == QCA_QCA6390) {
->   		snprintf(config.fwname, sizeof(config.fwname),
->   			 "qca/htbtfw%02x.tlv", rom_ver);
-> +	} else if (soc_type == QCA_QCA2066) {
-> +		snprintf(config.fwname, sizeof(config.fwname),
-> +			 "qca/hpbtfw%02x.tlv", rom_ver);
->   	} else if (soc_type == QCA_WCN6750) {
->   		/* Choose mbn file by default.If mbn file is not found
-
-Missing space after dot/period.
-
->   		 * then choose tlv file
-> @@ -628,6 +701,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
->   	/* Give the controller some time to get ready to receive the NVM */
->   	msleep(10);
->   
-> +	if (soc_type == QCA_QCA2066)
-> +		qca_read_fw_board_id(hdev, &bid);
-> +
->   	/* Download NVM configuration */
->   	config.type = TLV_TYPE_NVM;
->   	if (firmware_name)
-> @@ -645,6 +721,8 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
->   	else if (soc_type == QCA_QCA6390)
->   		snprintf(config.fwname, sizeof(config.fwname),
->   			 "qca/htnv%02x.bin", rom_ver);
-> +	else if (soc_type == QCA_QCA2066)
-> +		qca_generate_nvm_name(hdev, config.fwname, sizeof(config.fwname), ver, bid);
-
-Sort the branches lexicographically?
-
->   	else if (soc_type == QCA_WCN6750)
->   		snprintf(config.fwname, sizeof(config.fwname),
->   			 "qca/msnv%02x.bin", rom_ver);
-> diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
-> index 61e9a50e66ae..e762c403284a 100644
-> --- a/drivers/bluetooth/btqca.h
-> +++ b/drivers/bluetooth/btqca.h
-> @@ -13,6 +13,7 @@
->   #define EDL_PATCH_TLV_REQ_CMD		(0x1E)
->   #define EDL_GET_BUILD_INFO_CMD		(0x20)
->   #define EDL_NVM_ACCESS_SET_REQ_CMD	(0x01)
-> +#define EDL_GET_BID_REQ_CMD		(0x23)
->   #define EDL_PATCH_CONFIG_CMD		(0x28)
->   #define MAX_SIZE_PER_TLV_SEGMENT	(243)
->   #define QCA_PRE_SHUTDOWN_CMD		(0xFC08)
-> @@ -147,6 +148,7 @@ enum qca_btsoc_type {
->   	QCA_WCN3991,
->   	QCA_QCA6390,
->   	QCA_WCN6750,
-> +	QCA_QCA2066,
-
-Sort it?
-
+>   	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+> @@ -1620,6 +1725,15 @@ static const struct qcom_pcie_ops ops_2_9_0 = {
+>   	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
 >   };
 >   
->   #if IS_ENABLED(CONFIG_BT_QCA)
-> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-> index 3df8c3606e93..84769089ddff 100644
-> --- a/drivers/bluetooth/hci_qca.c
-> +++ b/drivers/bluetooth/hci_qca.c
-> @@ -1866,6 +1866,11 @@ static const struct qca_device_data qca_soc_data_qca6390 = {
->   	.num_vregs = 0,
->   };
->   
-> +static const struct qca_device_data qca_soc_data_qca2066 = {
-> +	.soc_type = QCA_QCA2066,
-> +	.num_vregs = 0,
+> +/* Qcom IP rev.: 1.27.0 Synopsys IP rev.: 5.80a */
+> +static const struct qcom_pcie_ops ops_1_27_0 = {
+> +	.get_resources = qcom_pcie_get_resources_1_27_0,
+> +	.init = qcom_pcie_init_1_27_0,
+> +	.post_init = qcom_pcie_post_init_1_27_0,
+> +	.deinit = qcom_pcie_deinit_1_27_0,
+> +	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
 > +};
 > +
->   static const struct qca_device_data qca_soc_data_wcn6750 = {
->   	.soc_type = QCA_WCN6750,
->   	.vregs = (struct qca_vreg []) {
-> @@ -2335,6 +2340,7 @@ static const struct of_device_id qca_bluetooth_of_match[] = {
->   	{ .compatible = "qcom,wcn3991-bt", .data = &qca_soc_data_wcn3991},
->   	{ .compatible = "qcom,wcn3998-bt", .data = &qca_soc_data_wcn3998},
->   	{ .compatible = "qcom,wcn6750-bt", .data = &qca_soc_data_wcn6750},
-> +	{ .compatible = "qcom,qca2066-bt", .data = &qca_soc_data_qca2066},
-
-Sort it?
-
->   	{ /* sentinel */ }
+>   static const struct qcom_pcie_cfg cfg_1_0_0 = {
+>   	.ops = &ops_1_0_0,
 >   };
->   MODULE_DEVICE_TABLE(of, qca_bluetooth_of_match);
+> @@ -1652,6 +1766,10 @@ static const struct qcom_pcie_cfg cfg_2_9_0 = {
+>   	.ops = &ops_2_9_0,
+>   };
+>   
+> +static const struct qcom_pcie_cfg cfg_1_27_0 = {
+> +	.ops = &ops_1_27_0,
+> +};
+> +
+>   static const struct dw_pcie_ops dw_pcie_ops = {
+>   	.link_up = qcom_pcie_link_up,
+>   	.start_link = qcom_pcie_start_link,
+> @@ -1829,6 +1947,7 @@ static const struct of_device_id qcom_pcie_match[] = {
+>   	{ .compatible = "qcom,pcie-ipq8064-v2", .data = &cfg_2_1_0 },
+>   	{ .compatible = "qcom,pcie-ipq8074", .data = &cfg_2_3_3 },
+>   	{ .compatible = "qcom,pcie-ipq8074-gen3", .data = &cfg_2_9_0 },
+> +	{ .compatible = "qcom,pcie-ipq9574", .data = &cfg_1_27_0 },
 
+   I do not see much difference between 2_9_0 and 1_27_0. Is this patch
+   really required. Can you check if it works with 2_9_0 itself ?
 
-Kind regards,
-
-Paul
+Regards,
+  Sricharan
