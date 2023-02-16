@@ -2,69 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BFE40698EF0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 09:44:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C47E4698F3C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 10:04:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229980AbjBPIow (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Feb 2023 03:44:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36932 "EHLO
+        id S229629AbjBPJEO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Feb 2023 04:04:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229975AbjBPIos (ORCPT
+        with ESMTP id S229573AbjBPJEN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Feb 2023 03:44:48 -0500
-X-Greylist: delayed 563 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 16 Feb 2023 00:44:47 PST
-Received: from mail.surechiers.com (mail.surechiers.com [80.211.239.236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D02F38E85
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 00:44:46 -0800 (PST)
-Received: by mail.surechiers.com (Postfix, from userid 1002)
-        id 915B5821FA; Thu, 16 Feb 2023 09:35:19 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=surechiers.com;
-        s=mail; t=1676536520;
-        bh=xg3VVY9SU+I+f+ynMyY8e0Lum0EY/KrTvpy5BYTg7yw=;
-        h=Date:From:To:Subject:From;
-        b=SakCSfbtNr/QCxZmOc6jvyhxnFQNOBgLhqlnrI3Voz/buopDc1zv15iFI5GgyMJC5
-         cIgOj2K8RIa/z1XEPWeABpLJ9yHzXTUUHEhW+r3qyZuzUTeZZSiYHegpuIrzlXqTGj
-         qBJtDfWjVnsdGVpJ8/qOhbi+0hYx3gkW/DtO4N1sXUrldrCXk2X1RmhXkBgrBaq47w
-         b4mfs7dEObE4J7EM91YjpvMVfuHcbjOVDBAgIH8GRke2+o8EHpUHqgi1yCSFQGPwB5
-         f+kzikJTKkB4F5DHsTE1fTiG7nJWA6gB7FIkbetRAA/6QD/3LsVQ1jbhw3cTu9xjA7
-         UVkCSpKh03p/w==
-Received: by mail.surechiers.com for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 08:35:18 GMT
-Message-ID: <20230216083000-0.1.6.1c8.0.8199n26c83@surechiers.com>
-Date:   Thu, 16 Feb 2023 08:35:18 GMT
-From:   =?UTF-8?Q? "J=C3=A1chym_Zdr=C3=A1hal" ?= 
-        <jachym.zdrahal@surechiers.com>
-To:     <linux-arm-msm@vger.kernel.org>
-Subject: Renovace podlahy
-X-Mailer: mail.surechiers.com
+        Thu, 16 Feb 2023 04:04:13 -0500
+Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2695EF95
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 01:04:11 -0800 (PST)
+Received: from SoMainline.org (D57D4C6E.static.ziggozakelijk.nl [213.125.76.110])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 7E2D220417;
+        Thu, 16 Feb 2023 10:04:09 +0100 (CET)
+Date:   Thu, 16 Feb 2023 10:04:08 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Archit Taneja <architt@codeaurora.org>,
+        Chandan Uddaraju <chandanu@codeaurora.org>,
+        Sravanthi Kollukuduru <skolluku@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        phone-devel@vger.kernel.org
+Subject: Re: [PATCH 0/3] drm/msm/dpu: Initialize SSPP scaler version (from
+ register read)
+Message-ID: <20230216090408.caekj2t2x6asb2jk@SoMainline.org>
+References: <20230215-sspp-scaler-version-v1-0-416b1500b85b@somainline.org>
+ <CAA8EJpqL-Vsq7dbK7tfJAGgg2_nV463QYv5zgvRLx_8T2bsXxA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=4.0 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_SBL_CSS,SPF_HELO_NONE,
-        SPF_PASS,URIBL_CSS_A autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: ****
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAA8EJpqL-Vsq7dbK7tfJAGgg2_nV463QYv5zgvRLx_8T2bsXxA@mail.gmail.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dobr=C3=A9 r=C3=A1no,
+On 2023-02-16 05:02:32, Dmitry Baryshkov wrote:
+> On Thu, 16 Feb 2023 at 01:02, Marijn Suijten
+> <marijn.suijten@somainline.org> wrote:
+> >
+> > Random inspection of the SSPP code surfaced that the version field of
+> > dpu_scaler_blk was never assigned in the catalog, resulting in wrong
+> > codepaths to be taken within dpu_hw_setup_scaler3 based on a 0 version.
+> > Rectify this by reading an accurate value from a register (that is not
+> > equal to the values represented by DPU_SSPP_SCALER_QSEEDx enum
+> > variants) and deleting dead code around QSEED versioning.
+> >
+> > Future changes should likely get rid of the distinction between QSEED3
+> > and up, as these are now purely determined from the register value.
+> > Furthermore implementations could look at the scaler subblk .id field
+> > rather than the SSPP feature bits, which currently hold redundant
+> > information.
+> >
+> > ---
+> > Marijn Suijten (3):
+> >       drm/msm/dpu: Read previously-uninitialized SSPP scaler version from hw
+> >       drm/msm/dpu: Drop unused get_scaler_ver callback from SSPP
+> >       drm/msm/dpu: Drop unused qseed_type from catalog dpu_caps
+> 
+> The cleanup looks good. However as you are on it, maybe you can also
+> add patch 4, dropping DPU_SSPP_SCALER_QSEED3LITE and
+> DPU_SSPP_SCALER_QSEED4 in favour of using QSEED3 for all these
+> scalers?
 
-m=C4=9Bli byste z=C3=A1jem o beze=C5=A1v=C3=A9, chemicky, n=C3=A1razu a o=
-t=C4=9Bru odoln=C3=A9 podlahy?
+I surely can!  Do you mind if I rename it to QSEED3_AND_UP for clarity?
+How about the second question, dropping this redundant information from
+the SSPP feature flags and only looking at the scaler_blk.id?
 
-Zaji=C5=A1=C5=A5uj=C3=AD spolehlivost bez ohledu na to, zda je pou=C5=BE=C3=
-=ADv=C3=A1te v n=C3=A1ro=C4=8Dn=C3=BDch v=C3=BDrobn=C3=ADch prostorech, s=
-kladech, komunika=C4=8Dn=C3=ADch tras=C3=A1ch nebo komer=C4=8Dn=C3=ADch p=
-rostor=C3=A1ch.
+> As we are going to use scaler_version to distinguish between
+> them, it would be logical not to duplicate that bit of information
+> (not to mention all the possible troubles if scaler_version disagrees
+> with the sblk->scaler_blk.id).
 
-Navrhli jsme snadno =C4=8Distiteln=C3=A9, hygienick=C3=A9 a protiskluzov=C3=
-=A9 podlahy pro pr=C5=AFmyslov=C3=A9 i komer=C4=8Dn=C3=AD pou=C5=BEit=C3=AD=
-=2E
+Note that we had a similar discussion for UBWC HW decoder version and it
+was decided to go the opposite route [1].  That may have been for
+technical reasons (unclocked register access), but it's an inconsistent
+approach to say the least.
 
-Mohu nab=C3=ADdnout bezplatn=C3=BD audit va=C5=A1ich podlah spolu s kompl=
-exn=C3=AD anal=C3=BDzou podkladu. Mohu o tomhle zavolat?
+[1]: https://lore.kernel.org/linux-arm-msm/71f96910-e7b1-92f9-ae15-79bd1da40a0d@quicinc.com/
 
-
-J=C3=A1chym Zdr=C3=A1hal
+- Marijn
