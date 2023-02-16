@@ -2,154 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7317A699239
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 11:51:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 972C069927B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 11:59:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230215AbjBPKvw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Feb 2023 05:51:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42086 "EHLO
+        id S230180AbjBPK7h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Feb 2023 05:59:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230171AbjBPKvu (ORCPT
+        with ESMTP id S229798AbjBPK7h (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Feb 2023 05:51:50 -0500
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F222ACA3D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 02:51:45 -0800 (PST)
-Received: by mail-lf1-x12e.google.com with SMTP id w11so2217999lfu.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 02:51:45 -0800 (PST)
+        Thu, 16 Feb 2023 05:59:37 -0500
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C87213504
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 02:59:29 -0800 (PST)
+Received: by mail-pf1-x42a.google.com with SMTP id r17so1185591pff.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 02:59:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=2skU52xYnO88MOQQej9qwovXl4uCZ1SRLC9dCn0g3F0=;
-        b=w35RlwJY2q7CwCKYoYX3G+msGQGtbKbMqI6BWxsXKZOGy3eVZykH2f3iwb9JWOyPlU
-         l7ilUC6Jks3WOTF9IbdFRzMIEEcY2jVFKGQAk+RWcOwn7aLdJZw0YKVnqNH5US6kYoiw
-         pQi/lIlaOv0B+Vf3gHz6ygAF3nUndhuevp6uFIpys9g9sl25ejx6YVrFNwRLUgo0w6vW
-         d4Xleh7jeFpITMQzYisytdhcpOMInRDlX224/9e0umOrXUJ54Xn0rleYfuYLPj0A1BNC
-         28IB9om7hBCuK6ZVuVwPVf8+LlvVRTVpxnRed0rDERzNniYNzQyGNKUCsidke5yEwi1s
-         w5pg==
+        d=sartura.hr; s=sartura;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=wUwtxTNrGxdg9BYsoTpYW1OupabW0YeM169NaiVjmL4=;
+        b=gclcawT1st6EiwSqGAnIkgbaoTQmWUFxODnJlpPrHqBwEas8neXbswcWc4IMPZNlba
+         uEPJguMOBFHlRQtqM3t9xjLbbapn5naV29bODLtWgbFFNtXijhme93FoJflfeXclEIT1
+         WR+8gPiYt9xNNSpb4zF5ziZ0GP9QxnT/WBMTpBEZU5yGMYe5KgMLkJklQ3iN7rvLNgT8
+         xJUZemi4pufnNBBlL8FzuAqlYEktXW7fvA+NtF8x+HvrNSkNVmqcVrKAB7YWFwIPFXjY
+         9VMJrtx4JVT9GC90boj1FJLEoO8LmZnb28avOiuH99/Rop+dLqLnrHItPFeDfIIadrJp
+         D3VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=2skU52xYnO88MOQQej9qwovXl4uCZ1SRLC9dCn0g3F0=;
-        b=FsgQMngP8ZjEBeW79gCpcugE/L2KDyXfupEFWeMwoab68DgGLl+K4v9yD+V1Vdhckt
-         VlyXWzFAiEPatU7Ton7EzLWe6Bz/wMvpSrvE8Ni5obuR8jy/R9aA/2bXqOuVLRBU4GV0
-         U8S9RSUedFmGyJAq5oPsvbG2h4+XFy1AoEtPSMmOzWUG1qQJt2YpHYha8+CLmpPCeFty
-         PpnPOr7hSwAG8ofDicmLT2aCNPTrnvcOnX1iYBRpSkMa9nUAOmpEA7AsjPL6OY1/IUw2
-         9wgA9aK3Q63TjoYgdApE7ZRcJMIzpjmwCCkjdjB/lLOAY77K3Qm4UaU6LPZjcoa5rr0t
-         2b/Q==
-X-Gm-Message-State: AO0yUKXY4ti/bWawf2W9D/BaH1NW9X4b+QKGiaz5wSpIMP40LJnOI9GD
-        FGGyrMv+mGvrZQ40E10OIXALTFZLdiZws+ET
-X-Google-Smtp-Source: AK7set/Z1Pba3KSZc9/U8jKXhZy2f7jCxjKs2RBVTce+cckvI4cRhoYJ9ifcwsZbJO5kJy/uehXRqg==
-X-Received: by 2002:ac2:4855:0:b0:4d6:d0c5:5c57 with SMTP id 21-20020ac24855000000b004d6d0c55c57mr1606852lfy.62.1676544704074;
-        Thu, 16 Feb 2023 02:51:44 -0800 (PST)
-Received: from localhost.localdomain (abxh117.neoplus.adsl.tpnet.pl. [83.9.1.117])
-        by smtp.gmail.com with ESMTPSA id m11-20020a19520b000000b004cb34b81150sm249903lfb.282.2023.02.16.02.51.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Feb 2023 02:51:43 -0800 (PST)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org
-Cc:     marijn.suijten@somainline.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2] cpufreq: qcom-hw: Simplify counting frequency domains
-Date:   Thu, 16 Feb 2023 11:51:40 +0100
-Message-Id: <20230216105140.3938749-1-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.39.1
+        bh=wUwtxTNrGxdg9BYsoTpYW1OupabW0YeM169NaiVjmL4=;
+        b=b+XpOauJ7SHT9pJgCoCw6brrufv6pLgClD8a+N0qE8c/P2wj1cnsAgOrtk6UKjc3J3
+         Ps7OpQS0/ncXZ5A+TG9e/OyK6DEHZHoi4zi9TvZ8CrZ+flX9f04YS/O62MS52LW7dWZE
+         Qdcyy0Zp/isL7/0Y6NM5jL6sFvwd4yf5Af+A41DSVvhaHYWW3rOAUq4rJvuIu2xgsaAb
+         XnUJ7R4O4m2X74CTWuKu4TpkmjchJvLxXv4cPWGYbCYUPAgkXYsK6GhXyJny6fTNgmGQ
+         q+t95oJ+N0gYVvnWVvdjHij3Zt+2AFontU5aGmNfOUQb83HhGzVCc2Hc630r25Z9jt5j
+         tDIQ==
+X-Gm-Message-State: AO0yUKWn24Nho7dNmQPV/7UqevzljNzYa7Zfezr2A8SxSBxs+voB4SdA
+        hoYGdJdaEsVTVeco5jTwQIh3lXdPHfGapr0AFzvQEg==
+X-Google-Smtp-Source: AK7set9TBhxKZy2kQoKauQhNJYoNrdjcISmxAqqPLdN9X3hfahISDWjjgxuL5aVg/UEu7YkqH+r7vQqRiVvBPBZmAY4=
+X-Received: by 2002:a63:3dc4:0:b0:4ce:e113:5e32 with SMTP id
+ k187-20020a633dc4000000b004cee1135e32mr788869pga.10.1676545168884; Thu, 16
+ Feb 2023 02:59:28 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230214161211.306462-1-robert.marko@sartura.hr>
+ <20230214161211.306462-2-robert.marko@sartura.hr> <c55a17fb-3c49-6e7e-f22e-95917daf97c0@linaro.org>
+In-Reply-To: <c55a17fb-3c49-6e7e-f22e-95917daf97c0@linaro.org>
+From:   Robert Marko <robert.marko@sartura.hr>
+Date:   Thu, 16 Feb 2023 11:59:17 +0100
+Message-ID: <CA+HBbNHTGX1BBhQuOSfwo=j-+dY9KgDpYn4Ty9m0fU5aiMV-Zw@mail.gmail.com>
+Subject: Re: [PATCH 2/4] ARM: dts: qcom: ipq4018-ap120c-ac: align GPIO hog
+ with DT schema
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        luka.perkov@sartura.hr
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-For quite some time, this driver has been performing some quite
-low-level DT operations. Simplify that using platform_get_resource.
+On Thu, Feb 16, 2023 at 11:48 AM Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+>
+>
+> On 14.02.2023 17:12, Robert Marko wrote:
+> > Align USB power GPIO hog node to DT schema.
+> >
+> > Signed-off-by: Robert Marko <robert.marko@sartura.hr>
+> > ---
+> Unless you submitted a separate patch for this, I only see
+> hog being allowed in 845 TLMM.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
-v1 -> v2:
-- remove stray newline near probe return
-- s/doing performing/performing/
+No, cause there is a gpio-hog schema in dtschema and I did not
+even look into the pinctrl bindings and dtbs_check is not throwing
+a warning.
 
-v1: https://lore.kernel.org/linux-arm-msm/20230216102956.3933639-1-konrad.dybcio@linaro.org/T/#u
+I dont really see a point further allowing it in pinctrl bindings.
 
- drivers/cpufreq/qcom-cpufreq-hw.c | 29 ++++++-----------------------
- 1 file changed, 6 insertions(+), 23 deletions(-)
+Regards,
+Robert
+>
+> Konrad
+> >  arch/arm/boot/dts/qcom-ipq4018-ap120c-ac.dtsi | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/arch/arm/boot/dts/qcom-ipq4018-ap120c-ac.dtsi b/arch/arm/boot/dts/qcom-ipq4018-ap120c-ac.dtsi
+> > index 38efd45433da5..cd2a32d0d5548 100644
+> > --- a/arch/arm/boot/dts/qcom-ipq4018-ap120c-ac.dtsi
+> > +++ b/arch/arm/boot/dts/qcom-ipq4018-ap120c-ac.dtsi
+> > @@ -76,7 +76,7 @@ mux_cs {
+> >               };
+> >       };
+> >
+> > -     usb-power {
+> > +     usb-power-hog {
+> >               line-name = "USB-power";
+> >               gpios = <1 GPIO_ACTIVE_HIGH>;
+> >               gpio-hog;
 
-diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-index 2f581d2d617d..575a4461c25a 100644
---- a/drivers/cpufreq/qcom-cpufreq-hw.c
-+++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-@@ -29,6 +29,8 @@
- 
- #define GT_IRQ_STATUS			BIT(2)
- 
-+#define MAX_FREQ_DOMAINS		3
-+
- struct qcom_cpufreq_soc_data {
- 	u32 reg_enable;
- 	u32 reg_domain_state;
-@@ -651,10 +653,9 @@ static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
- {
- 	struct clk_hw_onecell_data *clk_data;
- 	struct device *dev = &pdev->dev;
--	struct device_node *soc_node;
- 	struct device *cpu_dev;
- 	struct clk *clk;
--	int ret, i, num_domains, reg_sz;
-+	int ret, i, num_domains;
- 
- 	clk = clk_get(dev, "xo");
- 	if (IS_ERR(clk))
-@@ -681,24 +682,9 @@ static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
- 
--	/* Allocate qcom_cpufreq_data based on the available frequency domains in DT */
--	soc_node = of_get_parent(dev->of_node);
--	if (!soc_node)
--		return -EINVAL;
--
--	ret = of_property_read_u32(soc_node, "#address-cells", &reg_sz);
--	if (ret)
--		goto of_exit;
--
--	ret = of_property_read_u32(soc_node, "#size-cells", &i);
--	if (ret)
--		goto of_exit;
--
--	reg_sz += i;
--
--	num_domains = of_property_count_elems_of_size(dev->of_node, "reg", sizeof(u32) * reg_sz);
--	if (num_domains <= 0)
--		return num_domains;
-+	for (num_domains = 0; num_domains < MAX_FREQ_DOMAINS; num_domains++)
-+		if (!platform_get_resource(pdev, IORESOURCE_MEM, num_domains))
-+			break;
- 
- 	qcom_cpufreq.data = devm_kzalloc(dev, sizeof(struct qcom_cpufreq_data) * num_domains,
- 					 GFP_KERNEL);
-@@ -762,9 +748,6 @@ static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
- 	else
- 		dev_dbg(dev, "QCOM CPUFreq HW driver initialized\n");
- 
--of_exit:
--	of_node_put(soc_node);
--
- 	return ret;
- }
- 
+
+
 -- 
-2.39.1
-
+Robert Marko
+Staff Embedded Linux Engineer
+Sartura Ltd.
+Lendavska ulica 16a
+10000 Zagreb, Croatia
+Email: robert.marko@sartura.hr
+Web: www.sartura.hr
