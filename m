@@ -2,257 +2,275 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E33306992DC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 12:12:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E760E699347
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 12:38:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230338AbjBPLMX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Feb 2023 06:12:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37254 "EHLO
+        id S230241AbjBPLiH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Feb 2023 06:38:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230316AbjBPLMW (ORCPT
+        with ESMTP id S229642AbjBPLiG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Feb 2023 06:12:22 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2D194224
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 03:12:19 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id bk16so1450734wrb.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 03:12:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google; t=1676545938;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=/9p5YKUpDfB/VIccEe/gl5TXkWsNme3I0Rd/ZJSwPZE=;
-        b=daprNBF2cioSkaV/LaHMvRsLzymaFwYTfmNpbtoHjKT7Sk7wu0MquSVBUXgz7PQnnc
-         PrwSpTRvCwpgn/+bHmTCXmQId048ksqxzkl9YY8RcymgN5s2s5Lg5cbLlWtekPM1P35W
-         osp8BS7+ZJFdMfWCjabnAp+Ta0+ZH+PNIjT1I=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1676545938;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/9p5YKUpDfB/VIccEe/gl5TXkWsNme3I0Rd/ZJSwPZE=;
-        b=Uy0bwHntOYn4qFwVpcRuw8NO5035zsgb0PBEhjrhK1R/hZAKZsNjGmZBFmZVCfw0BQ
-         DgRTmi6B8utb+WFZpDaXxId7D/2NBo7vz5fuyYT38z9wfrVHGa1SggtHGZCpjHloGg46
-         6OfkdOuoYWUvWRA2TOXytqCgYyseEiZ4EJksW5TELq9Tnn3uJCoDHJ3ZwBH2emSYezdg
-         4IGMZ2liM3dsiIvRouOYcdYEdHryTrA0qHba+DESeXpMGv8EJjyAnBfP+/x0Igt2oFQd
-         yC2l9cA7TJ6AdRrJZyLhgMGb/b8skxnIa4/zlVk7nTuJQBvvpjuB2c3jNsrJWL8ptU8T
-         0eVA==
-X-Gm-Message-State: AO0yUKX6M/EPQX6auLQ6WF1tXYA6PFz1Ij3cNiv6L1ej8jzzmltqJDEG
-        T7Cj6dX6qJpZ2ZdgbGbewsOQ4A==
-X-Google-Smtp-Source: AK7set/V0HgKdwJ6CfD3OOAKl1s05e2DIcRxjV++t26IPN2C/xks2eE9SyhLBLK2KpcVGucfai4f8w==
-X-Received: by 2002:adf:dd82:0:b0:2c3:d296:7a94 with SMTP id x2-20020adfdd82000000b002c3d2967a94mr3158589wrl.3.1676545938440;
-        Thu, 16 Feb 2023 03:12:18 -0800 (PST)
-Received: from phenom.ffwll.local (212-51-149-33.fiber7.init7.net. [212.51.149.33])
-        by smtp.gmail.com with ESMTPSA id y12-20020adfe6cc000000b002c3dc4131f5sm1206658wrm.18.2023.02.16.03.12.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Feb 2023 03:12:18 -0800 (PST)
-From:   Daniel Vetter <daniel.vetter@ffwll.ch>
-To:     DRI Development <dri-devel@lists.freedesktop.org>
-Cc:     Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Maxime Ripard <maxime@cerno.tech>, mikita.lipski@amd.com,
-        =?UTF-8?q?Michel=20D=C3=A4nzer?= <michel@daenzer.net>,
-        harry.wentland@amd.com, Rob Clark <robdclark@gmail.com>,
-        "Kazlauskas, Nicholas" <nicholas.kazlauskas@amd.com>,
-        Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        =?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= 
-        <ville.syrjala@linux.intel.com>,
-        Jani Nikula <jani.nikula@intel.com>,
-        Lucas De Marchi <lucas.demarchi@intel.com>,
-        Imre Deak <imre.deak@intel.com>,
-        Manasi Navare <manasi.d.navare@intel.com>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org,
-        Daniel Vetter <daniel.vetter@intel.com>
-Subject: [PATCH] drm/atomic-helpers: remove legacy_cursor_update hacks
-Date:   Thu, 16 Feb 2023 12:12:13 +0100
-Message-Id: <20230216111214.3489223-1-daniel.vetter@ffwll.ch>
-X-Mailer: git-send-email 2.39.0
+        Thu, 16 Feb 2023 06:38:06 -0500
+Received: from mx3.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B467A1A4B3;
+        Thu, 16 Feb 2023 03:37:52 -0800 (PST)
+Received: from [141.14.13.65] (g320.RadioFreeInternet.molgen.mpg.de [141.14.13.65])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        (Authenticated sender: pmenzel)
+        by mx.molgen.mpg.de (Postfix) with ESMTPSA id B8E7060027FD7;
+        Thu, 16 Feb 2023 12:37:43 +0100 (CET)
+Message-ID: <44ac5699-c42f-bb22-b92d-c0d0a54cced4@molgen.mpg.de>
+Date:   Thu, 16 Feb 2023 12:37:43 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.2
+Subject: Re: [PATCH v2] Bluetooth: hci_qca: Add support for Qualcomm Bluetooth
+ SoC QCA2066
+Content-Language: en-US
+To:     Tim Jiang <quic_tjiang@quicinc.com>
+Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
+        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, quic_bgodavar@quicinc.com,
+        quic_hbandi@quicinc.com, quic_hemantg@quicinc.com, mka@chromium.org
+References: <20230216092236.26720-1-quic_tjiang@quicinc.com>
+From:   Paul Menzel <pmenzel@molgen.mpg.de>
+In-Reply-To: <20230216092236.26720-1-quic_tjiang@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The stuff never really worked, and leads to lots of fun because it
-out-of-order frees atomic states. Which upsets KASAN, among other
-things.
+Dear Tim,
 
-For async updates we now have a more solid solution with the
-->atomic_async_check and ->atomic_async_commit hooks. Support for that
-for msm and vc4 landed. nouveau and i915 have their own commit
-routines, doing something similar.
 
-For everyone else it's probably better to remove the use-after-free
-bug, and encourage folks to use the async support instead. The
-affected drivers which register a legacy cursor plane and don't either
-use the new async stuff or their own commit routine are: amdgpu,
-atmel, mediatek, qxl, rockchip, sti, sun4i, tegra, virtio, and vmwgfx.
+Thank you for the patch.
 
-Inspired by an amdgpu bug report.
+Am 16.02.23 um 10:22 schrieb Tim Jiang:
+> This patch adds support for QCA2066 firmware patch and nvm downloading.
 
-v2: Drop RFC, I think with amdgpu converted over to use
-atomic_async_check/commit done in
+(Nit: Imperative mood with *Add support …* would make it shorter, and is 
+recommended.)
 
-commit 674e78acae0dfb4beb56132e41cbae5b60f7d662
-Author: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Date:   Wed Dec 5 14:59:07 2018 -0500
+Please elaborate a little. Please mention the datasheet name and 
+revision, and how it was tested.
 
-    drm/amd/display: Add fast path for cursor plane updates
+> Signed-off-by: Tim Jiang <quic_tjiang@quicinc.com>
+> ---
+>   drivers/bluetooth/btqca.c   | 78 +++++++++++++++++++++++++++++++++++++
+>   drivers/bluetooth/btqca.h   |  2 +
+>   drivers/bluetooth/hci_qca.c |  6 +++
+>   3 files changed, 86 insertions(+)
+> 
+> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+> index c9064d34d830..e1127532c5a8 100644
+> --- a/drivers/bluetooth/btqca.c
+> +++ b/drivers/bluetooth/btqca.c
+> @@ -205,6 +205,50 @@ static int qca_send_reset(struct hci_dev *hdev)
+>   	return 0;
+>   }
+>   
+> +static int qca_read_fw_board_id(struct hci_dev *hdev, u16 *bid)
+> +{
+> +	u8 cmd;
+> +	struct sk_buff *skb;
+> +	struct edl_event_hdr *edl;
+> +	int err = 0;
+> +	int bid_len;
+> +
+> +	bt_dev_dbg(hdev, "QCA read board ID");
+> +
+> +	cmd = EDL_GET_BID_REQ_CMD;
+> +	skb = __hci_cmd_sync_ev(hdev, EDL_PATCH_CMD_OPCODE, EDL_PATCH_CMD_LEN,
+> +				&cmd, 0, HCI_INIT_TIMEOUT);
+> +	if (IS_ERR(skb)) {
+> +		err = PTR_ERR(skb);
+> +		bt_dev_err(hdev, "Reading QCA board ID failed (%d)",
+> +			   err);
 
-we don't have any driver anymore where we have userspace expecting
-solid legacy cursor support _and_ they are using the atomic helpers in
-their fully glory. So we can retire this.
+Should fit in one line?
 
-v3: Paper over msm and i915 regression. The complete_all is the only
-thing missing afaict.
+> +		return err;
+> +	}
+> +
+> +	edl = skb_pull_data(skb, sizeof(*edl));
+> +	if (!edl) {
+> +		bt_dev_err(hdev, "QCA read board ID with no header");
 
-v4: Fixup i915 fixup ...
+Please phrase these errors more user understandable. Maybe even with a 
+suggestion, how to fix it.
 
-v5: Unallocate the crtc->event in msm to avoid hitting a WARN_ON in
-dpu_crtc_atomic_flush(). This is a bit a hack, but simplest way to
-untangle this all. Thanks to Abhinav Kumar for the debug help.
+> +		err = -EILSEQ;
+> +		goto out;
+> +	}
+> +
+> +	if (edl->cresp != EDL_CMD_REQ_RES_EVT ||
+> +	    edl->rtype != EDL_GET_BID_REQ_CMD) {
+> +		bt_dev_err(hdev, "QCA Wrong packet received %d %d", edl->cresp,
+> +			   edl->rtype);
 
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Maxime Ripard <maxime@cerno.tech>
-References: https://bugzilla.kernel.org/show_bug.cgi?id=199425
-References: https://lore.kernel.org/all/20220221134155.125447-9-maxime@cerno.tech/
-References: https://bugzilla.kernel.org/show_bug.cgi?id=199425
-Cc: Maxime Ripard <maxime@cerno.tech>
-Tested-by: Maxime Ripard <maxime@cerno.tech>
-Cc: mikita.lipski@amd.com
-Cc: Michel Dänzer <michel@daenzer.net>
-Cc: harry.wentland@amd.com
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: "Kazlauskas, Nicholas" <nicholas.kazlauskas@amd.com>
-Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Sean Paul <sean@poorly.run>
-Cc: Matthias Brugger <matthias.bgg@gmail.com>
-Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Cc: "Ville Syrjälä" <ville.syrjala@linux.intel.com>
-Cc: Jani Nikula <jani.nikula@intel.com>
-Cc: Lucas De Marchi <lucas.demarchi@intel.com>
-Cc: Imre Deak <imre.deak@intel.com>
-Cc: Manasi Navare <manasi.d.navare@intel.com>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: freedreno@lists.freedesktop.org
-Cc: linux-kernel@vger.kernel.org
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linux-mediatek@lists.infradead.org
-Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
----
- drivers/gpu/drm/drm_atomic_helper.c          | 13 -------------
- drivers/gpu/drm/i915/display/intel_display.c | 14 ++++++++++++++
- drivers/gpu/drm/msm/msm_atomic.c             | 15 +++++++++++++++
- 3 files changed, 29 insertions(+), 13 deletions(-)
+Same.
 
-diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_atomic_helper.c
-index d579fd8f7cb8..f6b4c3a00684 100644
---- a/drivers/gpu/drm/drm_atomic_helper.c
-+++ b/drivers/gpu/drm/drm_atomic_helper.c
-@@ -1587,13 +1587,6 @@ drm_atomic_helper_wait_for_vblanks(struct drm_device *dev,
- 	int i, ret;
- 	unsigned int crtc_mask = 0;
- 
--	 /*
--	  * Legacy cursor ioctls are completely unsynced, and userspace
--	  * relies on that (by doing tons of cursor updates).
--	  */
--	if (old_state->legacy_cursor_update)
--		return;
--
- 	for_each_oldnew_crtc_in_state(old_state, crtc, old_crtc_state, new_crtc_state, i) {
- 		if (!new_crtc_state->active)
- 			continue;
-@@ -2244,12 +2237,6 @@ int drm_atomic_helper_setup_commit(struct drm_atomic_state *state,
- 			continue;
- 		}
- 
--		/* Legacy cursor updates are fully unsynced. */
--		if (state->legacy_cursor_update) {
--			complete_all(&commit->flip_done);
--			continue;
--		}
--
- 		if (!new_crtc_state->event) {
- 			commit->event = kzalloc(sizeof(*commit->event),
- 						GFP_KERNEL);
-diff --git a/drivers/gpu/drm/i915/display/intel_display.c b/drivers/gpu/drm/i915/display/intel_display.c
-index 3479125fbda6..2454451fcf95 100644
---- a/drivers/gpu/drm/i915/display/intel_display.c
-+++ b/drivers/gpu/drm/i915/display/intel_display.c
-@@ -7651,6 +7651,20 @@ static int intel_atomic_commit(struct drm_device *dev,
- 		intel_runtime_pm_put(&dev_priv->runtime_pm, state->wakeref);
- 		return ret;
- 	}
-+
-+	/*
-+	 * FIXME: Cut over to (async) commit helpers instead of hand-rolling
-+	 * everything.
-+	 */
-+	if (state->base.legacy_cursor_update) {
-+		struct intel_crtc_state *new_crtc_state;
-+		struct intel_crtc *crtc;
-+		int i;
-+
-+		for_each_new_intel_crtc_in_state(state, crtc, new_crtc_state, i)
-+			complete_all(&new_crtc_state->uapi.commit->flip_done);
-+	}
-+
- 	intel_shared_dpll_swap_state(state);
- 	intel_atomic_track_fbs(state);
- 
-diff --git a/drivers/gpu/drm/msm/msm_atomic.c b/drivers/gpu/drm/msm/msm_atomic.c
-index 1686fbb611fd..b7151767b567 100644
---- a/drivers/gpu/drm/msm/msm_atomic.c
-+++ b/drivers/gpu/drm/msm/msm_atomic.c
-@@ -189,6 +189,19 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
- 	bool async = kms->funcs->vsync_time &&
- 			can_do_async(state, &async_crtc);
- 
-+	/*
-+	 * FIXME: Convert to async plane helpers and remove the various hacks to
-+	 * keep the old legacy_cursor_way of doing async commits working for the
-+	 * dpu code, like the expectation that these don't have a crtc->event.
-+	 */
-+	if (async) {
-+		/* both ->event itself and the pointer hold a reference! */
-+		drm_crtc_commit_put(async_crtc->state->commit);
-+		drm_crtc_commit_put(async_crtc->state->commit);
-+		kfree(async_crtc->state->event);
-+		async_crtc->state->event = NULL;
-+	}
-+
- 	trace_msm_atomic_commit_tail_start(async, crtc_mask);
- 
- 	kms->funcs->enable_commit(kms);
-@@ -222,6 +235,8 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
- 		/* async updates are limited to single-crtc updates: */
- 		WARN_ON(crtc_mask != drm_crtc_mask(async_crtc));
- 
-+		complete_all(&async_crtc->state->commit->flip_done);
-+
- 		/*
- 		 * Start timer if we don't already have an update pending
- 		 * on this crtc:
--- 
-2.39.0
+> +		err = -EIO;
+> +		goto out;
+> +	}
+> +
+> +	bid_len = edl->data[0];
+> +	*bid = (edl->data[1] << 8) + edl->data[2];
+> +	bt_dev_info(hdev, "%s: bid len = %x, bid = %x", __func__, bid_len, *bid);
+> +
+> +out:
+> +	kfree_skb(skb);
+> +	return err;
+> +}
+> +
+>   int qca_send_pre_shutdown_cmd(struct hci_dev *hdev)
+>   {
+>   	struct sk_buff *skb;
+> @@ -574,6 +618,31 @@ int qca_set_bdaddr_rome(struct hci_dev *hdev, const bdaddr_t *bdaddr)
+>   }
+>   EXPORT_SYMBOL_GPL(qca_set_bdaddr_rome);
+>   
+> +static void qca_generate_nvm_name(struct hci_dev *hdev, char *fwname,
+> +		   size_t max_size, struct qca_btsoc_version ver, u16 bid)
+> +{
+> +	u8 rom_ver = 0;
+> +	u32 soc_ver;
+> +	const char *variant;
+> +
+> +	soc_ver = get_soc_ver(ver.soc_id, ver.rom_ver);
+> +	rom_ver = ((soc_ver & 0x00000f00) >> 0x04) | (soc_ver & 0x0000000f);
+> +
+> +	if ((ver.soc_id & 0x0000ff00) == 0x1200) /*hsp gf chip*/
 
+Missing spaces in the comment. Can macros/enums be used?
+
+> +		variant = "g";
+> +	else
+> +		variant = "";
+> +
+> +	if (bid == 0x0) {
+> +		snprintf(fwname, max_size, "qca/hpnv%02x%s.bin", rom_ver, variant);
+> +	} else {
+> +		snprintf(fwname, max_size, "qca/hpnv%02x%s.%x",
+> +			rom_ver, variant, bid);
+> +	}
+
+The coding style requires no spaces for oneline bodies.
+
+> +
+> +	bt_dev_info(hdev, "%s: nvm name is %s", __func__, fwname);
+> +}
+> +
+>   int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+>   		   enum qca_btsoc_type soc_type, struct qca_btsoc_version ver,
+>   		   const char *firmware_name)
+> @@ -582,6 +651,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+>   	int err;
+>   	u8 rom_ver = 0;
+>   	u32 soc_ver;
+> +	u16 bid = 0;
+
+Use boardid as name?
+
+>   
+>   	bt_dev_dbg(hdev, "QCA setup on UART");
+>   
+> @@ -607,6 +677,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+>   	} else if (soc_type == QCA_QCA6390) {
+>   		snprintf(config.fwname, sizeof(config.fwname),
+>   			 "qca/htbtfw%02x.tlv", rom_ver);
+> +	} else if (soc_type == QCA_QCA2066) {
+> +		snprintf(config.fwname, sizeof(config.fwname),
+> +			 "qca/hpbtfw%02x.tlv", rom_ver);
+>   	} else if (soc_type == QCA_WCN6750) {
+>   		/* Choose mbn file by default.If mbn file is not found
+
+Missing space after dot/period.
+
+>   		 * then choose tlv file
+> @@ -628,6 +701,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+>   	/* Give the controller some time to get ready to receive the NVM */
+>   	msleep(10);
+>   
+> +	if (soc_type == QCA_QCA2066)
+> +		qca_read_fw_board_id(hdev, &bid);
+> +
+>   	/* Download NVM configuration */
+>   	config.type = TLV_TYPE_NVM;
+>   	if (firmware_name)
+> @@ -645,6 +721,8 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+>   	else if (soc_type == QCA_QCA6390)
+>   		snprintf(config.fwname, sizeof(config.fwname),
+>   			 "qca/htnv%02x.bin", rom_ver);
+> +	else if (soc_type == QCA_QCA2066)
+> +		qca_generate_nvm_name(hdev, config.fwname, sizeof(config.fwname), ver, bid);
+
+Sort the branches lexicographically?
+
+>   	else if (soc_type == QCA_WCN6750)
+>   		snprintf(config.fwname, sizeof(config.fwname),
+>   			 "qca/msnv%02x.bin", rom_ver);
+> diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
+> index 61e9a50e66ae..e762c403284a 100644
+> --- a/drivers/bluetooth/btqca.h
+> +++ b/drivers/bluetooth/btqca.h
+> @@ -13,6 +13,7 @@
+>   #define EDL_PATCH_TLV_REQ_CMD		(0x1E)
+>   #define EDL_GET_BUILD_INFO_CMD		(0x20)
+>   #define EDL_NVM_ACCESS_SET_REQ_CMD	(0x01)
+> +#define EDL_GET_BID_REQ_CMD		(0x23)
+>   #define EDL_PATCH_CONFIG_CMD		(0x28)
+>   #define MAX_SIZE_PER_TLV_SEGMENT	(243)
+>   #define QCA_PRE_SHUTDOWN_CMD		(0xFC08)
+> @@ -147,6 +148,7 @@ enum qca_btsoc_type {
+>   	QCA_WCN3991,
+>   	QCA_QCA6390,
+>   	QCA_WCN6750,
+> +	QCA_QCA2066,
+
+Sort it?
+
+>   };
+>   
+>   #if IS_ENABLED(CONFIG_BT_QCA)
+> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+> index 3df8c3606e93..84769089ddff 100644
+> --- a/drivers/bluetooth/hci_qca.c
+> +++ b/drivers/bluetooth/hci_qca.c
+> @@ -1866,6 +1866,11 @@ static const struct qca_device_data qca_soc_data_qca6390 = {
+>   	.num_vregs = 0,
+>   };
+>   
+> +static const struct qca_device_data qca_soc_data_qca2066 = {
+> +	.soc_type = QCA_QCA2066,
+> +	.num_vregs = 0,
+> +};
+> +
+>   static const struct qca_device_data qca_soc_data_wcn6750 = {
+>   	.soc_type = QCA_WCN6750,
+>   	.vregs = (struct qca_vreg []) {
+> @@ -2335,6 +2340,7 @@ static const struct of_device_id qca_bluetooth_of_match[] = {
+>   	{ .compatible = "qcom,wcn3991-bt", .data = &qca_soc_data_wcn3991},
+>   	{ .compatible = "qcom,wcn3998-bt", .data = &qca_soc_data_wcn3998},
+>   	{ .compatible = "qcom,wcn6750-bt", .data = &qca_soc_data_wcn6750},
+> +	{ .compatible = "qcom,qca2066-bt", .data = &qca_soc_data_qca2066},
+
+Sort it?
+
+>   	{ /* sentinel */ }
+>   };
+>   MODULE_DEVICE_TABLE(of, qca_bluetooth_of_match);
+
+
+Kind regards,
+
+Paul
