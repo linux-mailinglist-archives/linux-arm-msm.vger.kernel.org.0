@@ -2,144 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E5AB6698F54
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 10:06:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6AB3E698FA0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 10:21:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229957AbjBPJGr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Feb 2023 04:06:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50658 "EHLO
+        id S229609AbjBPJVI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Feb 2023 04:21:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229914AbjBPJGq (ORCPT
+        with ESMTP id S229599AbjBPJVH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Feb 2023 04:06:46 -0500
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A30B41097;
-        Thu, 16 Feb 2023 01:06:41 -0800 (PST)
-Received: from pps.filterd (m0098419.ppops.net [127.0.0.1])
-        by mx0b-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31G7kTpT012454;
-        Thu, 16 Feb 2023 09:06:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : subject :
- from : to : cc : date : in-reply-to : references : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=oDZWguDzkkgUlhjTXniQgW8NbcX0l1LLI9MK2woh0/c=;
- b=OfTlQqnfR1j1VbZx81MZOPaYaTTHadETCEakTHA9nTCaDpB3fjAkVgY5bC0izpVGq0BB
- 0TFwNP2unVsoIGUz4yZe8QWF9pkodruFYaTVgr4kBvY0AEcVsknXsJ/bm/ZTUzuCTl9r
- vMvoYZOyF2kgHhF3g3FEsd6GKFvoKeyOVSFFdtFGJY0bP5b2QYCbrFQ0AVsjE0mkZLa8
- R5HvpbZQuAqDIKJkzCZkcaz8unYHeenJLpu9iNzwtKLCQl7q5ffbSY5dj/VwEvXRqYcK
- ABhEyMgdz1BsSKZnUnw/USRcSAei9yCoAfnoKnfnt4MLWL9sJeVd2fw6Ezxvg5gU6/pL 8Q== 
-Received: from pps.reinject (localhost [127.0.0.1])
-        by mx0b-001b2d01.pphosted.com (PPS) with ESMTPS id 3nsf973h6c-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 16 Feb 2023 09:06:34 +0000
-Received: from m0098419.ppops.net (m0098419.ppops.net [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 31G8pZN6002683;
-        Thu, 16 Feb 2023 09:06:33 GMT
-Received: from ppma04ams.nl.ibm.com (63.31.33a9.ip4.static.sl-reverse.com [169.51.49.99])
-        by mx0b-001b2d01.pphosted.com (PPS) with ESMTPS id 3nsf973h5f-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 16 Feb 2023 09:06:33 +0000
-Received: from pps.filterd (ppma04ams.nl.ibm.com [127.0.0.1])
-        by ppma04ams.nl.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 31G4JYkl010684;
-        Thu, 16 Feb 2023 09:06:32 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
-        by ppma04ams.nl.ibm.com (PPS) with ESMTPS id 3np2n6xe4t-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 16 Feb 2023 09:06:31 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com [10.20.54.105])
-        by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 31G96THf48300430
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Thu, 16 Feb 2023 09:06:29 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
-        by IMSVA (Postfix) with ESMTP id 62F4F20049;
-        Thu, 16 Feb 2023 09:06:29 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
-        by IMSVA (Postfix) with ESMTP id B58E820043;
-        Thu, 16 Feb 2023 09:06:28 +0000 (GMT)
-Received: from [9.179.9.244] (unknown [9.179.9.244])
-        by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
-        Thu, 16 Feb 2023 09:06:28 +0000 (GMT)
-Message-ID: <f479ae76754c5e3b1a9d435e6d1435ea9d293e54.camel@linux.ibm.com>
-Subject: Re: [PATCH 2/2] dmaengine: make QCOM_HIDMA depend on HAS_IOMEM
-From:   Niklas Schnelle <schnelle@linux.ibm.com>
-To:     Baoquan He <bhe@redhat.com>, linux-kernel@vger.kernel.org
-Cc:     linux-mm@kvack.org, linux-s390@vger.kernel.org,
+        Thu, 16 Feb 2023 04:21:07 -0500
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D9C01C7E7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 01:21:05 -0800 (PST)
+Received: by mail-ed1-x531.google.com with SMTP id c1so1888578edt.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 01:21:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QICcZD+PgFsGFoOEwt7J2Od7jkS4WHo0ZTXSjNqBbTc=;
+        b=mfpHDB8Oy6XWEJRnuYg0wHDj4hNxQ7QE770q5mLgqIOHo65Pspkhpct8QewFldFv4v
+         3R6v6Zfzrp42R17ah1Ef8ki3OAAraUtNfpzfAMRyqk/fjnIa94kOzwedskNG9JVUOGDR
+         JUEOCbG6EDUguPOCVeHFNLN9auDkEjW5ELjrMjcqvSA4iG8NfkJELki0aMUf2j/mCOcj
+         v8E7OQxBHS8b2KwESqZluTj9ybEaX4OLiXA/KedEhqnVrE7/PoIBs+SPh0kRuPoPctc3
+         P/D6jL9/CrcUMQI15rwz5ZUVjUEP3hqziE+y/IO/7QpXoBQxmf6mG8OKI6edmd4YIODF
+         uq7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QICcZD+PgFsGFoOEwt7J2Od7jkS4WHo0ZTXSjNqBbTc=;
+        b=UQrel35GKv1bgaI34oMfV4FXDZgv8oKiJrMOLwYiCpT2kAN+102GWrVv364+eojQRk
+         8ks8CODzGTAdAbHSh6oXs7KWjrSPga6GFs2Wfs4Y6YmGbcqi0omOhyTAdH2qtRAdkFp7
+         C+YEAZF9rKDE+7r8k/qSTDk0o4RmyPFBs/o8ZAfcLiBttLRZuErY5LYWMn8e5wHCxr4j
+         PeDPGNoXLF9SNkPy2gySilRGD5B+7WZHrlZ2sJar8jzE+5/FHDNAm+6upcnaIuAhpwaO
+         zU2HIf1Yo9dsNoiMGeFJeT1TuRUr98a1qC86dk4rZ526AoPY+eJlKWPEU9Ym6NMS1e0D
+         fRHg==
+X-Gm-Message-State: AO0yUKUA6EqsPZqHfPEIFI2tQg1Lso2SS2/qGjxU+KNIqyUkkZZCShUV
+        CR3HXctPfcYakTQJEgE5aaVb8w==
+X-Google-Smtp-Source: AK7set9STcXussFDXouuPm3WzxGdJij6lEuQJwj8KfQn4K+7Yi2MLpesEfjeb9R8T/OKd77L0RkYFg==
+X-Received: by 2002:aa7:c981:0:b0:4ab:16a8:bc64 with SMTP id c1-20020aa7c981000000b004ab16a8bc64mr5324123edt.24.1676539263978;
+        Thu, 16 Feb 2023 01:21:03 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id v9-20020a509549000000b004acc6cbc451sm552809eda.36.2023.02.16.01.21.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 16 Feb 2023 01:21:03 -0800 (PST)
+Message-ID: <568d585c-0f89-0b0b-3cbe-d3025208cdea@linaro.org>
+Date:   Thu, 16 Feb 2023 10:21:01 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: sa8775p: add the GNSS high-speed
+ UART for sa8775p-ride
+Content-Language: en-US
+To:     Bartosz Golaszewski <brgl@bgdev.pl>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dmaengine@vger.kernel.org
-Date:   Thu, 16 Feb 2023 10:06:28 +0100
-In-Reply-To: <20230216073403.451455-2-bhe@redhat.com>
-References: <20230216073403.451455-1-bhe@redhat.com>
-         <20230216073403.451455-2-bhe@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.46.3 (3.46.3-1.fc37) 
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: jft_d8iaQoMDqmwl8QUaAms192uLi51l
-X-Proofpoint-GUID: ufE62dfTdphCQlr0y9mr8FaQKnSSoo71
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
-MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-16_06,2023-02-15_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- priorityscore=1501 malwarescore=0 spamscore=0 phishscore=0 mlxlogscore=999
- adultscore=0 mlxscore=0 impostorscore=0 clxscore=1011 bulkscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302160075
-X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_EF,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20230214155715.451130-1-brgl@bgdev.pl>
+ <20230214155715.451130-4-brgl@bgdev.pl>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230214155715.451130-4-brgl@bgdev.pl>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 2023-02-16 at 15:34 +0800, Baoquan He wrote:
-> On s390 systems (aka mainframes), it has classic channel devices for
-> networking and permanent storage that are currently even more common
-> than PCI devices. Hence it could have a fully functional s390 kernel
-> with CONFIG_PCI=3Dn, then the relevant iomem mapping functions
-> [including ioremap(), devm_ioremap(), etc.] are not available.
->=20
-> Here let QCOM_HIDMA depend on HAS_IOMEM so that it won't be built to
-> cause below compiling error if PCI is unset.
->=20
-> --------------------------------------------------------
-> ld: drivers/dma/qcom/hidma.o: in function `hidma_probe':
-> hidma.c:(.text+0x4b46): undefined reference to `devm_ioremap_resource'
-> ld: hidma.c:(.text+0x4b9e): undefined reference to `devm_ioremap_resource'
-> make[1]: *** [scripts/Makefile.vmlinux:35: vmlinux] Error 1
-> make: *** [Makefile:1264: vmlinux] Error 2
->=20
-> Link: https://lore.kernel.org/all/Y0TcaZD4nB1w+mAQ@MiWiFi-R3L-srv/T/#u
-> Signed-off-by: Baoquan He <bhe@redhat.com>
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Bjorn Andersson <andersson@kernel.org>
-> Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Cc: Vinod Koul <vkoul@kernel.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: dmaengine@vger.kernel.org
+On 14/02/2023 16:57, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> 
+> Add the serial port connected to the GNSS on sa8775p-ride.
+> 
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > ---
->  drivers/dma/qcom/Kconfig | 1 +
->  1 file changed, 1 insertion(+)
->=20
-> diff --git a/drivers/dma/qcom/Kconfig b/drivers/dma/qcom/Kconfig
-> index 3f926a653bd8..ace75d7b835a 100644
-> --- a/drivers/dma/qcom/Kconfig
-> +++ b/drivers/dma/qcom/Kconfig
-> @@ -45,6 +45,7 @@ config QCOM_HIDMA_MGMT
->=20=20
->  config QCOM_HIDMA
->  	tristate "Qualcomm Technologies HIDMA Channel support"
-> +	depends on HAS_IOMEM
->  	select DMA_ENGINE
->  	help
->  	  Enable support for the Qualcomm Technologies HIDMA controller.
+>  arch/arm64/boot/dts/qcom/sa8775p-ride.dts | 34 +++++++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/sa8775p.dtsi     | 17 ++++++++++++
+>  2 files changed, 51 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
+> index d01ca3a9ee37..9aee6e4c1ba1 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
+> +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
+> @@ -13,6 +13,7 @@ / {
+>  
+>  	aliases {
+>  		serial0 = &uart10;
+> +		serial1 = &uart17;
+>  		i2c18 = &i2c18;
+>  		spi16 = &spi16;
+>  	};
+> @@ -66,6 +67,30 @@ qup_i2c18_default: qup-i2c18-state {
+>  		drive-strength = <2>;
+>  		bias-pull-up;
+>  	};
+> +
+> +	qup_uart17_cts: qup-uart17-cts-state {
+> +		pins = "gpio91";
+> +		function = "qup2_se3";
+> +		bias-disable;
+> +	};
+> +
+> +	qup_uart17_rts: qup0_uart17_rts-state {
 
-Thanks for the patch!
+No underscores in node names.
 
-Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com?
+Does not look like you tested the DTS against bindings. Please run `make
+dtbs_check` (see Documentation/devicetree/bindings/writing-schema.rst
+for instructions).
+
+Best regards,
+Krzysztof
 
