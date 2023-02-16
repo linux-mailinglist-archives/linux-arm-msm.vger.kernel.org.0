@@ -2,180 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 109FA699049
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 10:43:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B223A699094
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 10:58:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229508AbjBPJnT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Feb 2023 04:43:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55900 "EHLO
+        id S229603AbjBPJ6Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Feb 2023 04:58:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229553AbjBPJnO (ORCPT
+        with ESMTP id S229462AbjBPJ6X (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Feb 2023 04:43:14 -0500
-Received: from mail-ua1-x92a.google.com (mail-ua1-x92a.google.com [IPv6:2607:f8b0:4864:20::92a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0E409762
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 01:43:12 -0800 (PST)
-Received: by mail-ua1-x92a.google.com with SMTP id i2so299400ual.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 01:43:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20210112.gappssmtp.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=k+IcP9JZ9x1kcivgUFdu74is1jTxITNl/hwmvZ5y5f8=;
-        b=m7QKamtB4nlsz/kEd9OvsoPEHumtXSdhtUbRm4tQ0On6c+9PjP2yH0/5/9K2zfxYZ4
-         WpWELkjr+vDA/keD2bO/gcC1hvebLE5sG+WBfdZX/b++2xFRtUbCZ4niFU32eqoaVeko
-         CXy/jsYQtF9+NNrkbUn3Bl1jIA4gpjJWLCbaDW305DS8+ii4Mz7BkcFZ1a35T6jfOzDI
-         Thelr5sBigU6ftwkb9DbJN+hYZbYfpfGqKFhpdkNe7LhtMhgdsApygg9Qj5lsjSxPL0q
-         cZBPMc+ghaAFCJcB5Z8NbwglLP2RXcAPoKPSZXL3gn1ABvc0Jq3X+YXFmIQoAgqOoGPu
-         1bhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=k+IcP9JZ9x1kcivgUFdu74is1jTxITNl/hwmvZ5y5f8=;
-        b=1MuNiVEEbm2+tVQlUBbCH47YgkePIDBU9seXVPd7ypym4/EM1ZBCLzToTNszSqx/Ub
-         W8uazIAHVjzXPrFhgrM1Zvhv71T4nfvh5jMKQZ79e6IRIXwu9O0bPJR78LCaXyJaV0pZ
-         VLw+RViHaSMtLZXQFQHHtkJw/ADqS41MBBlmnl9nQ56CNvZk0h6IV8gUyu7YIH7Hyn9b
-         aUG+rlLnSl73dcjXAMkfIewGMSnlNi5Ap3aRhzOvpNHC+ikWGcv5KsMXteWvn9ttYKC6
-         GMqSDIBbKCiffJyhvPkJsAg3HplBf6sif6/oe88g0FawUQsWpWdLyW84s3RMPdoVNn4L
-         RQeA==
-X-Gm-Message-State: AO0yUKUb46K3mvZ8XjapV76Rr1I0ZEnpYRhrqGdH4YrNmCv4SqDm+Vvq
-        yuXvyXFu+hqG2LN7OT71UETaWQwXHXHQdwmRR1hxMbuA3OaCnA==
-X-Google-Smtp-Source: AK7set/HBL5bYW7gxs8bV8MFxYe2tMQUs1boWXh8ugz4WqDDq0aDUuMmiKXQPGsPd1LWO/To14TY6DEuDhNA5e1Rcdo=
-X-Received: by 2002:ab0:549e:0:b0:68a:8f33:9567 with SMTP id
- p30-20020ab0549e000000b0068a8f339567mr817107uaa.2.1676540592009; Thu, 16 Feb
- 2023 01:43:12 -0800 (PST)
+        Thu, 16 Feb 2023 04:58:23 -0500
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 3A59061BB;
+        Thu, 16 Feb 2023 01:58:22 -0800 (PST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 84AA81042;
+        Thu, 16 Feb 2023 01:59:04 -0800 (PST)
+Received: from bogus (unknown [10.57.10.143])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 86AD93F703;
+        Thu, 16 Feb 2023 01:58:20 -0800 (PST)
+Date:   Thu, 16 Feb 2023 09:58:16 +0000
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Elliot Berman <quic_eberman@quicinc.com>
+Cc:     Jassi Brar <jassisinghbrar@gmail.com>,
+        linux-kernel@vger.kernel.org, linux-acpi@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 0/3] mailbox: Allow direct registration to a channel
+Message-ID: <20230216095816.rzhxa2qdexy3ulrz@bogus>
+References: <20230213232537.2040976-1-quic_eberman@quicinc.com>
+ <20230215101732.pbpom3ub3yh75n4w@bogus>
+ <d35633ea-4049-6f51-3a3a-2a258a4af037@quicinc.com>
 MIME-Version: 1.0
-References: <20230215154002.446808-1-brgl@bgdev.pl> <20230215154002.446808-4-brgl@bgdev.pl>
-In-Reply-To: <20230215154002.446808-4-brgl@bgdev.pl>
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-Date:   Thu, 16 Feb 2023 10:43:01 +0100
-Message-ID: <CAMRc=MdH7yxof63V2icesypGTFSssziaA5sCOZP_Gby-3ciLKA@mail.gmail.com>
-Subject: Re: [PATCH v2 3/4] arm64: dts: qcom: sa8775p: add the GNSS high-speed
- UART for sa8775p-ride
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d35633ea-4049-6f51-3a3a-2a258a4af037@quicinc.com>
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 15, 2023 at 4:40 PM Bartosz Golaszewski <brgl@bgdev.pl> wrote:
->
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->
-> Add the serial port connected to the GNSS on sa8775p-ride.
->
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sa8775p-ride.dts | 34 +++++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/sa8775p.dtsi     | 15 ++++++++++
->  2 files changed, 49 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-> index d01ca3a9ee37..47cf26ea49e8 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-> @@ -13,6 +13,7 @@ / {
->
->         aliases {
->                 serial0 = &uart10;
-> +               serial1 = &uart12;
->                 i2c18 = &i2c18;
->                 spi16 = &spi16;
->         };
-> @@ -66,6 +67,30 @@ qup_i2c18_default: qup-i2c18-state {
->                 drive-strength = <2>;
->                 bias-pull-up;
->         };
-> +
-> +       qup_uart12_cts: qup-uart12-cts-state {
-> +               pins = "gpio52";
-> +               function = "qup1_se5";
-> +               bias-disable;
-> +       };
-> +
-> +       qup_uart12_rts: qup_uart12_rts-state {
-> +               pins = "gpio53";
-> +               function = "qup1_se5";
-> +               bias-pull-down;
-> +       };
-> +
-> +       qup_uart12_tx: qup_uart12_tx-state {
-> +               pins = "gpio54";
-> +               function = "qup1_se5";
-> +               bias-pull-up;
-> +       };
-> +
-> +       qup_uart12_rx: qup_uart12_rx-state {
-> +               pins = "gpio55";
-> +               function = "qup1_se5";
-> +               bias-pull-down;
-> +       };
->  };
->
->  &uart10 {
-> @@ -75,6 +100,15 @@ &uart10 {
->         status = "okay";
->  };
->
-> +&uart12 {
-> +       pinctrl-0 = <&qup_uart12_cts>,
-> +                   <&qup_uart12_rts>,
-> +                   <&qup_uart12_tx>,
-> +                   <&qup_uart12_rx>;
-> +       pinctrl-names = "default";
-> +       status = "okay";
-> +};
-> +
->  &xo_board_clk {
->         clock-frequency = <38400000>;
->  };
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> index 1abb545ff4f4..8b8931ea739d 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> @@ -489,6 +489,21 @@ &clk_virt SLAVE_QUP_CORE_1 0>,
->                                 operating-points-v2 = <&qup_opp_table_100mhz>;
->                                 status = "disabled";
->                         };
-> +
-> +                       uart12: serial@a94000 {
-> +                               compatible = "qcom,geni-uart";
-> +                               reg = <0x0 0xa94000 0x0 0x4000>;
-> +                               interrupts = <GIC_SPI 585 IRQ_TYPE_LEVEL_HIGH>;
+On Wed, Feb 15, 2023 at 08:58:10AM -0800, Elliot Berman wrote:
+> 
+> 
+> On 2/15/2023 2:17 AM, Sudeep Holla wrote:
+> > On Mon, Feb 13, 2023 at 03:25:34PM -0800, Elliot Berman wrote:
+> > > Two mailbox controllers have channel/client binding mechanisms that are
+> > > controller-specific and not using the devicetree binding mechanisms. Mailbox
+> > > channel/client is conceptually done in two steps: selecting the channel
+> > > and binding the selected to channel to a client. Channel selection is sometimes
+> > > controller specific (pcc and omap are examples). The channel/client binding
+> > > code is all the same.
+> > > 
+> > > This small series de-duplicates and refactors the channel/client binding
+> > > into a common framework function: "mbox_bind_client" which all of the
+> > > channel selection mechanisms can use.
+> > > 
+> > > I found this duplicate code while working on the support for Gunyah hypervisor
+> > > message queues [1]. I've only been able to compile-test omap-maiblox and pcc,
+> > > however it is a straightforward conversion here.
+> > > 
+> > > [1]: https://lore.kernel.org/all/20230120224627.4053418-9-quic_eberman@quicinc.com/
+> > > 
+> > > Elliot Berman (3):
+> > >    mailbox: Allow direct registration to a channel
+> > 
+> > I am unable to find the above patch either in my inbox or in lore[1].
+> > Can you please repost the same ? I would like to test/review w.r.t PCC
+> > driver.
+> > 
+> 
+> Hi Sudeep,
+> 
+> Not sure why the patch didn't end up your inbox; lore seems to have linked
+> it correctly and indicates you were in To:. If I missed something, let me
+> know and I'll make sure you're properly included if future versions needed.
+> 
+> https://lore.kernel.org/all/20230213232537.2040976-4-quic_eberman@quicinc.com/
 
-Please disregard this series, I've just noticed I didn't stage the
-change to the interrupt number here which is wrong. And I need to fix
-the underscores in node names too.
+No, I do have patch 2/3 and 3/3 in my inbox along with the cover letter.
+Patch 1/3 is missing in both my inbox and lore. Can you send me the lore
+link for patch 1/3 if you are able to find it ? Or just repost the series
+if you can't.
 
-Bart
-
-> +                               clocks = <&gcc GCC_QUPV3_WRAP1_S5_CLK>;
-> +                               clock-names = "se";
-> +                               interconnects = <&clk_virt MASTER_QUP_CORE_1 0
-> +                                                &clk_virt SLAVE_QUP_CORE_1 0>,
-> +                                               <&gem_noc MASTER_APPSS_PROC 0
-> +                                                &config_noc SLAVE_QUP_1 0>;
-> +                               interconnect-names = "qup-core", "qup-config";
-> +                               power-domains = <&rpmhpd SA8775P_CX>;
-> +                               status = "disabled";
-> +                       };
->                 };
->
->                 qupv3_id_2: geniqup@8c0000 {
-> --
-> 2.37.2
->
+-- 
+Regards,
+Sudeep
