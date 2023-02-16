@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 55ECA699B39
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 18:25:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EEB43699B6A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 18:41:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230134AbjBPRZC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Feb 2023 12:25:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45836 "EHLO
+        id S229793AbjBPRlQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Feb 2023 12:41:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229902AbjBPRZB (ORCPT
+        with ESMTP id S229748AbjBPRlP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Feb 2023 12:25:01 -0500
+        Thu, 16 Feb 2023 12:41:15 -0500
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 902E02A149;
-        Thu, 16 Feb 2023 09:25:00 -0800 (PST)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31GDV6AU011765;
-        Thu, 16 Feb 2023 17:24:48 GMT
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 976B33B855;
+        Thu, 16 Feb 2023 09:41:13 -0800 (PST)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31G47P9d017065;
+        Thu, 16 Feb 2023 17:40:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Owu4kKEVZG2ZOvUONe24jGcyp2Oqr3f4CtmNiGV/rtE=;
- b=eRziNPAHlxkvN6EYvQm4FFE/WuU9rOZAf0ZGwb/iJZcaVj6XrRQnqaKnvECmuqm22EbI
- lP8PigIVcyK0r8LpBBOwFdOAdlLDYV+AvUon4rVbXnyzVoE0Win4hvrRzViMlSldBgh+
- PbLVAPKo5yKnwlo0NCM6VjJezMvI4fVVLyKcj3poQaYL/ZJGjxqFqVmYt3JDpl0O0jg9
- IjzBifyk93l6l/jYmKler6CRgmsoi2YmkxoOrlW1J5BOLGbMos5PtMB+SrnjZfypOdB2
- HHogu6ZqYf85cMLlMC+ajEDroihoNUcCyAdYRfDk2tlNc8Ti9ulbDIr2KUSWAtn+jRml sQ== 
+ bh=2qzEUuV7n8pAGi2RGWf50M997hHG2Iw8kV9N8cxf5BY=;
+ b=m3PLxpH6b+QaWZSgqV9wc7WiRw7pEK9qez0K8X0TalKmtaZpKJqYOqZOYr6YRtQAUruF
+ PC5xJd2tRl7ENQO7EQjaMDGdTluzTYtKSQ2GhFOvGwmVbceOaF1ObqEUlU65Q1Mlw99F
+ 13oVmOwLXDu41Wpxu7+61BRNtiLa7NFrcYipcSfwetV5UT1OlF/wFdB7f2nbn4t2R83D
+ kRPzYk4DehEYpb/CwRnsJL/0Lcup/Pa+bQmFDfBJ7sbZ+9gtCyWaGBHChtHJRrhUZmcd
+ ogVSukOPo72BqiyFyr5bQbyKG6fJBqJ+ivx9y+IoPWmxbxl5ZMqwtPqDhr6FEZqWEZv3 ww== 
 Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nrwcs481d-1
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ns343bbb6-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 16 Feb 2023 17:24:48 +0000
+        Thu, 16 Feb 2023 17:40:55 +0000
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31GHOl3M014778
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31GHesgZ009492
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 16 Feb 2023 17:24:47 GMT
+        Thu, 16 Feb 2023 17:40:54 GMT
 Received: from [10.110.95.168] (10.80.80.8) by nasanex01b.na.qualcomm.com
  (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Thu, 16 Feb
- 2023 09:24:46 -0800
-Message-ID: <94992117-2cab-71e6-f38c-bded109171d2@quicinc.com>
-Date:   Thu, 16 Feb 2023 09:24:45 -0800
+ 2023 09:40:53 -0800
+Message-ID: <b04aef26-ee0d-af01-3aa1-a0c77d9cbaf3@quicinc.com>
+Date:   Thu, 16 Feb 2023 09:40:52 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
-Subject: Re: [PATCH v10 12/26] gunyah: vm_mgr: Add/remove user memory regions
+Subject: Re: [PATCH v10 08/26] gunyah: rsc_mgr: Add resource manager RPC core
 Content-Language: en-US
 To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 CC:     Alex Elder <elder@linaro.org>,
@@ -67,10 +67,10 @@ CC:     Alex Elder <elder@linaro.org>,
         <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
         <linux-arm-kernel@lists.infradead.org>
 References: <20230214211229.3239350-1-quic_eberman@quicinc.com>
- <20230214212417.3315422-1-quic_eberman@quicinc.com>
- <Y+3PXRdbVFz/ErxW@kroah.com>
+ <20230214212327.3310128-1-quic_eberman@quicinc.com>
+ <Y+3QqdQVH5BTbnaP@kroah.com>
 From:   Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <Y+3PXRdbVFz/ErxW@kroah.com>
+In-Reply-To: <Y+3QqdQVH5BTbnaP@kroah.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
@@ -78,16 +78,16 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: jxja4lDOlj973SIyiXrrOef7lSsK6Wjo
-X-Proofpoint-ORIG-GUID: jxja4lDOlj973SIyiXrrOef7lSsK6Wjo
+X-Proofpoint-ORIG-GUID: PF4GoKGtM-5nQH14pMTEY9-9Gnxe-O_V
+X-Proofpoint-GUID: PF4GoKGtM-5nQH14pMTEY9-9Gnxe-O_V
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
  definitions=2023-02-16_14,2023-02-16_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
- phishscore=0 adultscore=0 mlxlogscore=999 spamscore=0 lowpriorityscore=0
- priorityscore=1501 bulkscore=0 impostorscore=0 suspectscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302160151
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ lowpriorityscore=0 mlxlogscore=859 malwarescore=0 spamscore=0 phishscore=0
+ adultscore=0 mlxscore=0 priorityscore=1501 bulkscore=0 suspectscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302160152
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -99,47 +99,47 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 2/15/2023 10:38 PM, Greg Kroah-Hartman wrote:
-> On Tue, Feb 14, 2023 at 01:24:16PM -0800, Elliot Berman wrote:
->>
->> When launching a virtual machine, Gunyah userspace allocates memory for
->> the guest and informs Gunyah about these memory regions through
->> SET_USER_MEMORY_REGION ioctl.
+On 2/15/2023 10:43 PM, Greg Kroah-Hartman wrote:
+> On Tue, Feb 14, 2023 at 01:23:25PM -0800, Elliot Berman wrote:
+>> +struct gh_rm {
+>> +	struct device *dev;
 > 
-> It also frees memory, see below.  Why not document that?
+> What device does this point to?
 > 
 
-I can mention in commit text, too.
+The platform device.
 
->> +	case GH_VM_SET_USER_MEM_REGION: {
->> +		struct gh_userspace_memory_region region;
+>> +	struct gunyah_resource tx_ghrsc, rx_ghrsc;
+>> +	struct gh_msgq msgq;
+>> +	struct mbox_client msgq_client;
+>> +	struct gh_rm_connection *active_rx_connection;
+>> +	int last_tx_ret;
 >> +
->> +		if (copy_from_user(&region, argp, sizeof(region)))
->> +			return -EFAULT;
+>> +	struct idr call_idr;
+>> +	struct mutex call_idr_lock;
 >> +
->> +		/* All other flag bits are reserved for future use */
->> +		if (region.flags & ~(GH_MEM_ALLOW_READ | GH_MEM_ALLOW_WRITE | GH_MEM_ALLOW_EXEC |
->> +			GH_MEM_LENT))
->> +			return -EINVAL;
+>> +	struct kmem_cache *cache;
+>> +	struct mutex send_lock;
+>> +	struct blocking_notifier_head nh;
+>> +};
 > 
-> Nice, thanks for validating that.
+> This obviously is the "device" that your system works on, so what are
+> the lifetime rules of it?  Why isn't is just a real 'struct device' in
+> the system instead of a random memory blob with a pointer to a device?
 > 
+> What controls the lifetime of this structure and where is the reference
+> counting logic for it?
 > 
->> +
->> +
-> 
-> Nit, 2 blank lines are not needed :(
-> 
-> 
->> +		if (region.memory_size)
->> +			r = gh_vm_mem_alloc(ghvm, &region);
->> +		else
->> +			r = gh_vm_mem_free(ghvm, region.label);
-> 
-> So if you set the size to 0 it is freed?  Wouldn't a separate ioctl make
-> more sense?  Where is this logic documented to userspace? >
 
-We're following KVM convention here. The logic is documented in patch 17/26.
+The lifetime of the structure is bound by the platform device that above 
+struct device *dev points to. get_gh_rm and put_gh_rm increments the 
+device ref counter and ensures lifetime of the struct is also extended.
 
-Thanks,
-Elliot
+> And why no documentation for this core structure?
+> 
+
+Sure, I will add.
+
+> thanks,
+> 
+> greg k-h
