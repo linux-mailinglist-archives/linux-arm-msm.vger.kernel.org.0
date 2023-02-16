@@ -2,76 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D5F7699AF5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 18:14:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B8447699B0C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 18:16:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229448AbjBPROb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Feb 2023 12:14:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35696 "EHLO
+        id S229606AbjBPRQQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Feb 2023 12:16:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229454AbjBPROb (ORCPT
+        with ESMTP id S229896AbjBPRQP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Feb 2023 12:14:31 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 148393346A;
-        Thu, 16 Feb 2023 09:14:30 -0800 (PST)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31GEx63f003817;
-        Thu, 16 Feb 2023 17:14:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=PxPkRJZzc4JHU9m0FVL3OCsRRck3AX4/UIm6ZPgmGyI=;
- b=dqCh6u5AzRFZ5yRDu6FJIOHzCF7TBybioPbVc5Kw+6PDsrPSwIzltPkDDJLsyPxwUcLZ
- tOlLFcS/hribn3wu7c4Cb8nB9EBLGLkE8ycbuYx1wykN3BcCYdWV/plSxcXhJOsodJhc
- /n0X2S/Q9fLomuwBsrXNB9gXtLWLRskC5+4YtEwUJpA0nfNuWKg5x3/P3D2AaJXHn1Qc
- ukxj+23BWqem8IqyJ0At4+27knozZCPapGqQnHKuZdXdFIUFSpKz4HHdj0Uc1gt0Xp4X
- AU/zJitVmXxWVGgR2nLeV1UlijKT0DUdqnvg7QnAfaffiXmlDekaVOpkDMh+V6Y8F2MD iA== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nse3d1qa2-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 16 Feb 2023 17:14:09 +0000
-Received: from nasanex01a.na.qualcomm.com ([10.52.223.231])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31GHE9PT022019
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 16 Feb 2023 17:14:09 GMT
-Received: from asutoshd-linux1.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.41; Thu, 16 Feb 2023 09:14:08 -0800
-From:   Asutosh Das <quic_asutoshd@quicinc.com>
-To:     <quic_cang@quicinc.com>, <martin.petersen@oracle.com>,
-        <linux-scsi@vger.kernel.org>
-CC:     <quic_nguyenb@quicinc.com>, <quic_xiaosenh@quicinc.com>,
-        <stanley.chu@mediatek.com>, <adrian.hunter@intel.com>,
-        <bvanassche@acm.org>, <avri.altman@wdc.com>, <mani@kernel.org>,
-        <beanhuo@micron.com>, Asutosh Das <quic_asutoshd@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "open list" <linux-kernel@vger.kernel.org>
-Subject: [PATCH v2 1/1] ufs: mcq: fix incorrectly set queue depth
-Date:   Thu, 16 Feb 2023 09:13:46 -0800
-Message-ID: <8840cea4a57b46dabce18acc39afc50ab826330f.1676567593.git.quic_asutoshd@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        Thu, 16 Feb 2023 12:16:15 -0500
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 722D843443;
+        Thu, 16 Feb 2023 09:16:06 -0800 (PST)
+Received: from [192.168.2.109] (unknown [109.252.117.89])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: dmitry.osipenko)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 00D3F6602116;
+        Thu, 16 Feb 2023 17:16:03 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1676567765;
+        bh=8RfT/ATOYpAaq4kgh8A+t+VldumzcvpydtSOWpN9s9M=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=kT50sYEOQAK1eeuhcAYSgT3kb57q77fBt3kN8DmvPwjRchCyjR3BfehrnYGaQ8D6x
+         e19DXEQVqZe2bueNDF2NC6FdO+L/luHFywCzxgw4c4idCFqbOu9Egeismn2s2ljpff
+         hly6ZmBfXM8AFJT6acOFRJTMfR6gStqfdM3xVR56zg0DyUQ9YLXhg5MJzJfl4n3wG+
+         HrZOVQP+oqboCeMXiZeLLmVTWZEo6BJvQoZzb6MyjHEqGpm0vp9OGSdx7M2q8bPY/E
+         +SJLneCCZsBb8evAwCSLVUXUzASwaaF8BZWeHRk2EgJ3zljJECbE4jcM28VOJxKLn9
+         ykLOjm4SpJEZw==
+Message-ID: <fca1d6ee-552c-2d8a-2558-2932de453304@collabora.com>
+Date:   Thu, 16 Feb 2023 20:16:00 +0300
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 6ILm0250VvaxEv178_pMJUTq5WNSwrfR
-X-Proofpoint-ORIG-GUID: 6ILm0250VvaxEv178_pMJUTq5WNSwrfR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-16_13,2023-02-16_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxlogscore=999
- mlxscore=0 impostorscore=0 priorityscore=1501 adultscore=0 phishscore=0
- malwarescore=0 clxscore=1015 lowpriorityscore=0 bulkscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2302160150
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH] drm/msm: Fix potential invalid ptr free
+Content-Language: en-US
+To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
+Cc:     Rob Clark <robdclark@chromium.org>, linux-arm-msm@vger.kernel.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Sean Paul <sean@poorly.run>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        freedreno@lists.freedesktop.org,
+        open list <linux-kernel@vger.kernel.org>
+References: <20230215235048.1166484-1-robdclark@gmail.com>
+From:   Dmitry Osipenko <dmitry.osipenko@collabora.com>
+In-Reply-To: <20230215235048.1166484-1-robdclark@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
         SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,52 +61,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-ufshcd_config_mcq() may change the can_queue value.
-The current code invokes scsi_add_host() before ufshcd_config_mcq().
-So the tags are limited to the old can_queue value.
+On 2/16/23 02:50, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
+> 
+> The error path cleanup expects that chain and syncobj are either NULL or
+> valid pointers.  But post_deps was not allocated with __GFP_ZERO.
+> 
+> Fixes: ab723b7a992a ("drm/msm: Add syncobj support.")
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
+>  drivers/gpu/drm/msm/msm_gem_submit.c | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+> index 6503220e5a4b..e4d13540300e 100644
+> --- a/drivers/gpu/drm/msm/msm_gem_submit.c
+> +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+> @@ -640,8 +640,8 @@ static struct msm_submit_post_dep *msm_parse_post_deps(struct drm_device *dev,
+>  	int ret = 0;
+>  	uint32_t i, j;
+>  
+> -	post_deps = kmalloc_array(nr_syncobjs, sizeof(*post_deps),
+> -	                          GFP_KERNEL | __GFP_NOWARN | __GFP_NORETRY);
+> +	post_deps = kcalloc(nr_syncobjs, sizeof(*post_deps),
+> +			    GFP_KERNEL | __GFP_NOWARN | __GFP_NORETRY);
+>  	if (!post_deps)
+>  		return ERR_PTR(-ENOMEM);
+>  
+> @@ -656,7 +656,6 @@ static struct msm_submit_post_dep *msm_parse_post_deps(struct drm_device *dev,
+>  		}
+>  
+>  		post_deps[i].point = syncobj_desc.point;
+> -		post_deps[i].chain = NULL;
+>  
+>  		if (syncobj_desc.flags) {
+>  			ret = -EINVAL;
 
-Fix this by invoking scsi_add_host() after ufshcd_config_mcq().
+Good catch!
 
-Fixes: 2468da61ea09 ("scsi: ufs: core: mcq: Configure operation and runtime interface")
-Signed-off-by: Asutosh Das <quic_asutoshd@quicinc.com>
+Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-----
-v1 -> v2:
-  - Added Fixes tag
-  - Reworked to handle success case first
----
- drivers/ufs/core/ufshcd.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 3b3cf78d3b10..3891183897f0 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -8530,7 +8530,9 @@ static int ufshcd_device_init(struct ufs_hba *hba, bool init_dev_params)
- 			return ret;
- 		if (is_mcq_supported(hba) && !hba->scsi_host_added) {
- 			ret = ufshcd_alloc_mcq(hba);
--			if (ret) {
-+			if (!ret) {
-+				ufshcd_config_mcq(hba);
-+			} else {
- 				/* Continue with SDB mode */
- 				use_mcq_mode = false;
- 				dev_err(hba->dev, "MCQ mode is disabled, err=%d\n",
-@@ -8542,10 +8544,10 @@ static int ufshcd_device_init(struct ufs_hba *hba, bool init_dev_params)
- 				return ret;
- 			}
- 			hba->scsi_host_added = true;
--		}
--		/* MCQ may be disabled if ufshcd_alloc_mcq() fails */
--		if (is_mcq_supported(hba) && use_mcq_mode)
-+		} else if (is_mcq_supported(hba)) {
-+			/* UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH is set */
- 			ufshcd_config_mcq(hba);
-+		}
- 	}
- 
- 	ufshcd_tune_unipro_params(hba);
 -- 
-2.7.4
+Best regards,
+Dmitry
 
