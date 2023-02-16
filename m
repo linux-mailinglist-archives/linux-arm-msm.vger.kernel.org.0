@@ -2,115 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 83C026988E7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 00:50:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E0EE9698910
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 01:06:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229551AbjBOXud (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Feb 2023 18:50:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46858 "EHLO
+        id S229678AbjBPAGh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Feb 2023 19:06:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229614AbjBOXud (ORCPT
+        with ESMTP id S229554AbjBPAGg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Feb 2023 18:50:33 -0500
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E6A92ED45;
-        Wed, 15 Feb 2023 15:50:32 -0800 (PST)
-Received: by mail-pf1-x432.google.com with SMTP id r3so363428pfh.4;
-        Wed, 15 Feb 2023 15:50:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=zeIoX4RDWl3f+nhG+Pkar8Woaq/FoxjOB1t6jgPazJQ=;
-        b=l5qD+x9Nq6Q8eFXBnLD2JP5DpZJ5D0HO0afceUtRjxa8Z+s7yb/ay9AlicklsmlEEw
-         3e4Rj36HY8jLFGQGubTa5jW8tNGAI0hR46V9Chl+bP0tALpancQEy8IHLrrcSKDtjIg2
-         kd6Llo+VeClFPVTTcEKTtD2bMvCfInlONN/36JtjfpQbZ7BwFlCJCIR4rPy2hYbwUsZK
-         zHBOTJlZm2GcXslUCSf4XusKH4awMsXWYun5YQ8smTpEXzovscwAWdc6PYw8DLjWoLIs
-         aezpJuj+RbLreYYAy63wF/LsmoxdyWkKskghzUhBMuKDs2ueRq7s1huiAayMldfdHjZw
-         N9ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zeIoX4RDWl3f+nhG+Pkar8Woaq/FoxjOB1t6jgPazJQ=;
-        b=MLiU+8cjJoGqN7b7gBfX33RrBVYQQyQdXBy/5aL0k/i+eeg/8nJ2mWBdNJVlePEAyO
-         m7gLQPYTmoDOrxAHdBleubqcsRA30GnaEEYmcWIZbEHOFKvnkbnnKL5o+LDIlhkwlXQy
-         I+2/GNAtsW2MO2wxrYegJUiFAPaSIopFKhurNNASEzONhmcCKML2RGzTBxui6mIJ6jyS
-         jUeTDyVv1fky9T0DWRlOui61OfRvF8RwLM+a0zOQDAJINRHl7Nydbq2h3B6gAnlmNDn3
-         lCPo9jOQlREpU3Eiq0zkd0E0ZzSAKazukp9Zvm5UrWcJNKcRVE8jSn4yQoGvmAf2bdSh
-         /XjQ==
-X-Gm-Message-State: AO0yUKUaF3fp7PwrsOU3YVBOSd9WrU6a/ibiC9iuQcWlkOGHIYCgQ9X0
-        YXcHaMiuLvr2ceCbevqN98Ve26p93S4=
-X-Google-Smtp-Source: AK7set+S1yWm3qNcB1PUzuuK7xDX0SA6y0sMOop00NqJPMGuJW2NkOnni+n/RHRe/RWoADbNnOcE1A==
-X-Received: by 2002:aa7:973d:0:b0:5a8:be36:65a8 with SMTP id k29-20020aa7973d000000b005a8be3665a8mr3307802pfg.27.1676505031706;
-        Wed, 15 Feb 2023 15:50:31 -0800 (PST)
-Received: from localhost ([2a00:79e1:abd:4a00:2703:3c72:eb1a:cffd])
-        by smtp.gmail.com with ESMTPSA id j14-20020aa7928e000000b0058d8db0e4adsm12628278pfa.171.2023.02.15.15.50.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Feb 2023 15:50:31 -0800 (PST)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm: Fix potential invalid ptr free
-Date:   Wed, 15 Feb 2023 15:50:48 -0800
-Message-Id: <20230215235048.1166484-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.39.1
+        Wed, 15 Feb 2023 19:06:36 -0500
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 055443AAC;
+        Wed, 15 Feb 2023 16:06:36 -0800 (PST)
+Received: from mercury (unknown [185.209.196.162])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits))
+        (No client certificate requested)
+        (Authenticated sender: sre)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id C5130660206C;
+        Thu, 16 Feb 2023 00:06:34 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1676505994;
+        bh=ilI/10v5PJHrttNszyQv4HKgv/kX2fQrPAogzLEUmLo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=CGhhDI3X55N6XQ6XTTyAKis7UV7HjrOviPyti7t5sgqYMgxWv/uUFTVvfmdyPxmaA
+         0siYj9OwOfBSViwYAhc9QuZghkCQVt0KGv20LaTbhxcQuwNYGXtv8MMow7PGdifBgn
+         aPtSTDH/qiHtZd2b40CSV4l9oAntETrWEOSOSm0OTdRluCaBTgEFVYdKFawn7J6nSd
+         6fPQlQ/5SHUeELuNRas8YSIqumiT68MjyDHeNmJz7O4+Ndy9lHzDKQmlC20S+kcfCn
+         EKhnIF6XYblCLJLpm3I8+mOR/tP0GY6CHPjK8v846WI+w06jCs/v3PK1iolb68LSWJ
+         b3nJAQS2R6MmQ==
+Received: by mercury (Postfix, from userid 1000)
+        id B779B10603FE; Thu, 16 Feb 2023 01:06:31 +0100 (CET)
+Date:   Thu, 16 Feb 2023 01:06:31 +0100
+From:   Sebastian Reichel <sebastian.reichel@collabora.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, marijn.suijten@somainline.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] dt-bindings: power: supply: pm8941-coincell: Add
+ PM8998 compatible
+Message-ID: <20230216000631.2vpwbgajr7u5ysnc@mercury.elektranox.org>
+References: <20230214090849.2186370-1-konrad.dybcio@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="vsxp4rzne67m5cq4"
+Content-Disposition: inline
+In-Reply-To: <20230214090849.2186370-1-konrad.dybcio@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
 
-The error path cleanup expects that chain and syncobj are either NULL or
-valid pointers.  But post_deps was not allocated with __GFP_ZERO.
+--vsxp4rzne67m5cq4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Fixes: ab723b7a992a ("drm/msm: Add syncobj support.")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/msm_gem_submit.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+Hi,
 
-diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index 6503220e5a4b..e4d13540300e 100644
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -640,8 +640,8 @@ static struct msm_submit_post_dep *msm_parse_post_deps(struct drm_device *dev,
- 	int ret = 0;
- 	uint32_t i, j;
- 
--	post_deps = kmalloc_array(nr_syncobjs, sizeof(*post_deps),
--	                          GFP_KERNEL | __GFP_NOWARN | __GFP_NORETRY);
-+	post_deps = kcalloc(nr_syncobjs, sizeof(*post_deps),
-+			    GFP_KERNEL | __GFP_NOWARN | __GFP_NORETRY);
- 	if (!post_deps)
- 		return ERR_PTR(-ENOMEM);
- 
-@@ -656,7 +656,6 @@ static struct msm_submit_post_dep *msm_parse_post_deps(struct drm_device *dev,
- 		}
- 
- 		post_deps[i].point = syncobj_desc.point;
--		post_deps[i].chain = NULL;
- 
- 		if (syncobj_desc.flags) {
- 			ret = -EINVAL;
--- 
-2.39.1
+On Tue, Feb 14, 2023 at 10:08:47AM +0100, Konrad Dybcio wrote:
+> Add a specific compatible for the coincell charger present on PM8998.
+>=20
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
 
+Thanks, queued.
+
+-- Sebastian
+
+> v1 -> v2:
+>=20
+> - Pick up ab
+>=20
+>  .../bindings/power/supply/qcom,pm8941-coincell.yaml       | 8 +++++++-
+>  1 file changed, 7 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/Documentation/devicetree/bindings/power/supply/qcom,pm8941-c=
+oincell.yaml b/Documentation/devicetree/bindings/power/supply/qcom,pm8941-c=
+oincell.yaml
+> index 0450f4dd4e51..b7b58aed3f3c 100644
+> --- a/Documentation/devicetree/bindings/power/supply/qcom,pm8941-coincell=
+=2Eyaml
+> +++ b/Documentation/devicetree/bindings/power/supply/qcom,pm8941-coincell=
+=2Eyaml
+> @@ -16,7 +16,13 @@ maintainers:
+> =20
+>  properties:
+>    compatible:
+> -    const: qcom,pm8941-coincell
+> +    oneOf:
+> +      - items:
+> +          - enum:
+> +              - qcom,pm8998-coincell
+> +          - const: qcom,pm8941-coincell
+> +
+> +      - const: qcom,pm8941-coincell
+> =20
+>    reg:
+>      maxItems: 1
+> --=20
+> 2.39.1
+>=20
+
+--vsxp4rzne67m5cq4
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmPtc4cACgkQ2O7X88g7
++ppwjg/+OflPejHjoX4Jx2r0sgHANAq5wme+KIdm/jJxHIIbzG8XS54rTp82vbP7
+UCBL4S8tEn6AJuvembTJmIcw89EWwZydOipaWFLWKOqX38rtvG0VyRHg8W18901c
+JYsuFguR/xpJRCaK118e40ZWJHCOvAibu+3WU4/euJAe4yMbP+ljZPu5/l1DvSDi
+05eSNlinA36XgswvFvLpESSS/PW5loCr/F1S5iZxd10aAMe0eDeM+qZn8aSvQcH4
+kZybBqw4ED+SZ4ZpzR9cpfR2CcRTpZYN+ZQ6FcIqpv7crpxMnqTnP/k1dTxG8TH/
+HreQN6SyAOCQbYEROdz60TENNR116EWpCAJtLQsGUiiFZD83+g5vekPEy7kap1sX
+3sDqtnkH6mLu5ZQKsnwIz9/YSeBOl2YFOiD0+qyVqx12xIpLSSQHSsNqnvKdlzAZ
+nExfMfpJtRM94xvROwFfFDhjmSh12DFEI+MUfz+rPwAe9vKJcbbVNMufQzzKTsrQ
+39SLnsNX1y6WLnJ+GY9ov6NojlWmx7C/hOBim9Pac3VbIW1mGdF2guF4a/I1cFqj
+QYqKtwkY7KX6ZuFHNLRJnMQKSRju0vIEW3CLukKrhc9390//jprIm4iiLuaqnfvB
+UXinkYvJ9IaOM+yJFmDbaDNSybO/a7Ml34DxkyLWAkvt4ogA9bc=
+=9WL4
+-----END PGP SIGNATURE-----
+
+--vsxp4rzne67m5cq4--
