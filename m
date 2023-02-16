@@ -2,84 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E12416992D0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 12:10:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E33306992DC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 12:12:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230403AbjBPLKl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Feb 2023 06:10:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35584 "EHLO
+        id S230338AbjBPLMX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Feb 2023 06:12:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230407AbjBPLKi (ORCPT
+        with ESMTP id S230316AbjBPLMW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Feb 2023 06:10:38 -0500
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D66956ECC;
-        Thu, 16 Feb 2023 03:10:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1676545833; x=1708081833;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=J6BNHHswTkDcX5jOI5ShWTSFAJ7P3SXfiqTD8tl74ZA=;
-  b=HclVVJpJ1L8+UNiq0TyJU+4RP4WTMDaTFv1KPej9mxZMT/PeaUTbB8ex
-   V3HzSv0M+aWvD2mznhj4IGllgpIZ66Od4XBzgbR09kDpweHTPJJ/pf/Nx
-   O0wVGaZIVDeE+s8LM63BW8i2fLCb4Qd+n+t6SDfP7V/6DAL5QdvWH6qy+
-   ofJo7fPT669r/BvPs9WwYHt7pRF/socml9GzPCxeWHars3G9VD9LvhAVh
-   ztFYVFHNllLoFZ5qAayXK/4tgfsULMP1vnhgjD1y9IvF0ouwNzyAB5TmY
-   Gnp29YKF8jM6aGkMlbSnwyCkoyOfioKm7nYvBqL7l4kyPJqq5ieIF7BN3
-   w==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10622"; a="417913088"
-X-IronPort-AV: E=Sophos;i="5.97,302,1669104000"; 
-   d="scan'208";a="417913088"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Feb 2023 03:10:32 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10622"; a="670089954"
-X-IronPort-AV: E=Sophos;i="5.97,302,1669104000"; 
-   d="scan'208";a="670089954"
-Received: from lkp-server01.sh.intel.com (HELO 4455601a8d94) ([10.239.97.150])
-  by orsmga002.jf.intel.com with ESMTP; 16 Feb 2023 03:10:25 -0800
-Received: from kbuild by 4455601a8d94 with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1pSc9g-000ADR-1N;
-        Thu, 16 Feb 2023 11:10:24 +0000
-Date:   Thu, 16 Feb 2023 19:09:45 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Elliot Berman <quic_eberman@quicinc.com>,
-        Alex Elder <elder@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Thu, 16 Feb 2023 06:12:22 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2D194224
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 03:12:19 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id bk16so1450734wrb.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 03:12:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google; t=1676545938;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=/9p5YKUpDfB/VIccEe/gl5TXkWsNme3I0Rd/ZJSwPZE=;
+        b=daprNBF2cioSkaV/LaHMvRsLzymaFwYTfmNpbtoHjKT7Sk7wu0MquSVBUXgz7PQnnc
+         PrwSpTRvCwpgn/+bHmTCXmQId048ksqxzkl9YY8RcymgN5s2s5Lg5cbLlWtekPM1P35W
+         osp8BS7+ZJFdMfWCjabnAp+Ta0+ZH+PNIjT1I=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1676545938;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/9p5YKUpDfB/VIccEe/gl5TXkWsNme3I0Rd/ZJSwPZE=;
+        b=Uy0bwHntOYn4qFwVpcRuw8NO5035zsgb0PBEhjrhK1R/hZAKZsNjGmZBFmZVCfw0BQ
+         DgRTmi6B8utb+WFZpDaXxId7D/2NBo7vz5fuyYT38z9wfrVHGa1SggtHGZCpjHloGg46
+         6OfkdOuoYWUvWRA2TOXytqCgYyseEiZ4EJksW5TELq9Tnn3uJCoDHJ3ZwBH2emSYezdg
+         4IGMZ2liM3dsiIvRouOYcdYEdHryTrA0qHba+DESeXpMGv8EJjyAnBfP+/x0Igt2oFQd
+         yC2l9cA7TJ6AdRrJZyLhgMGb/b8skxnIa4/zlVk7nTuJQBvvpjuB2c3jNsrJWL8ptU8T
+         0eVA==
+X-Gm-Message-State: AO0yUKX6M/EPQX6auLQ6WF1tXYA6PFz1Ij3cNiv6L1ej8jzzmltqJDEG
+        T7Cj6dX6qJpZ2ZdgbGbewsOQ4A==
+X-Google-Smtp-Source: AK7set/V0HgKdwJ6CfD3OOAKl1s05e2DIcRxjV++t26IPN2C/xks2eE9SyhLBLK2KpcVGucfai4f8w==
+X-Received: by 2002:adf:dd82:0:b0:2c3:d296:7a94 with SMTP id x2-20020adfdd82000000b002c3d2967a94mr3158589wrl.3.1676545938440;
+        Thu, 16 Feb 2023 03:12:18 -0800 (PST)
+Received: from phenom.ffwll.local (212-51-149-33.fiber7.init7.net. [212.51.149.33])
+        by smtp.gmail.com with ESMTPSA id y12-20020adfe6cc000000b002c3dc4131f5sm1206658wrm.18.2023.02.16.03.12.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Feb 2023 03:12:18 -0800 (PST)
+From:   Daniel Vetter <daniel.vetter@ffwll.ch>
+To:     DRI Development <dri-devel@lists.freedesktop.org>
+Cc:     Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Maxime Ripard <maxime@cerno.tech>, mikita.lipski@amd.com,
+        =?UTF-8?q?Michel=20D=C3=A4nzer?= <michel@daenzer.net>,
+        harry.wentland@amd.com, Rob Clark <robdclark@gmail.com>,
+        "Kazlauskas, Nicholas" <nicholas.kazlauskas@amd.com>,
+        Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v10 16/26] firmware: qcom_scm: Register Gunyah platform
- ops
-Message-ID: <202302161942.xItsHIi1-lkp@intel.com>
-References: <20230214212457.3319814-1-quic_eberman@quicinc.com>
+        Sean Paul <sean@poorly.run>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        =?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= 
+        <ville.syrjala@linux.intel.com>,
+        Jani Nikula <jani.nikula@intel.com>,
+        Lucas De Marchi <lucas.demarchi@intel.com>,
+        Imre Deak <imre.deak@intel.com>,
+        Manasi Navare <manasi.d.navare@intel.com>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org,
+        Daniel Vetter <daniel.vetter@intel.com>
+Subject: [PATCH] drm/atomic-helpers: remove legacy_cursor_update hacks
+Date:   Thu, 16 Feb 2023 12:12:13 +0100
+Message-Id: <20230216111214.3489223-1-daniel.vetter@ffwll.ch>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230214212457.3319814-1-quic_eberman@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -87,174 +89,170 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Elliot,
+The stuff never really worked, and leads to lots of fun because it
+out-of-order frees atomic states. Which upsets KASAN, among other
+things.
 
-Thank you for the patch! Yet something to improve:
+For async updates we now have a more solid solution with the
+->atomic_async_check and ->atomic_async_commit hooks. Support for that
+for msm and vc4 landed. nouveau and i915 have their own commit
+routines, doing something similar.
 
-[auto build test ERROR on 3ebb0ac55efaf1d0fb1b106f852c114e5021f7eb]
+For everyone else it's probably better to remove the use-after-free
+bug, and encourage folks to use the async support instead. The
+affected drivers which register a legacy cursor plane and don't either
+use the new async stuff or their own commit routine are: amdgpu,
+atmel, mediatek, qxl, rockchip, sti, sun4i, tegra, virtio, and vmwgfx.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Elliot-Berman/docs-gunyah-Introduce-Gunyah-Hypervisor/20230215-055721
-base:   3ebb0ac55efaf1d0fb1b106f852c114e5021f7eb
-patch link:    https://lore.kernel.org/r/20230214212457.3319814-1-quic_eberman%40quicinc.com
-patch subject: [PATCH v10 16/26] firmware: qcom_scm: Register Gunyah platform ops
-config: hexagon-randconfig-r041-20230212 (https://download.01.org/0day-ci/archive/20230216/202302161942.xItsHIi1-lkp@intel.com/config)
-compiler: clang version 17.0.0 (https://github.com/llvm/llvm-project db89896bbbd2251fff457699635acbbedeead27f)
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/33f0c4b130c7b249a1524da8076dd12333aa7cde
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Elliot-Berman/docs-gunyah-Introduce-Gunyah-Hypervisor/20230215-055721
-        git checkout 33f0c4b130c7b249a1524da8076dd12333aa7cde
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=hexagon olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=hexagon SHELL=/bin/bash drivers/firmware/
+Inspired by an amdgpu bug report.
 
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
-| Link: https://lore.kernel.org/oe-kbuild-all/202302161942.xItsHIi1-lkp@intel.com/
+v2: Drop RFC, I think with amdgpu converted over to use
+atomic_async_check/commit done in
 
-All errors (new ones prefixed by >>):
+commit 674e78acae0dfb4beb56132e41cbae5b60f7d662
+Author: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Date:   Wed Dec 5 14:59:07 2018 -0500
 
-   In file included from drivers/firmware/qcom_scm.c:7:
-   In file included from include/linux/interrupt.h:11:
-   In file included from include/linux/hardirq.h:11:
-   In file included from ./arch/hexagon/include/generated/asm/hardirq.h:1:
-   In file included from include/asm-generic/hardirq.h:17:
-   In file included from include/linux/irq.h:20:
-   In file included from include/linux/io.h:13:
-   In file included from arch/hexagon/include/asm/io.h:334:
-   include/asm-generic/io.h:547:31: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-           val = __raw_readb(PCI_IOBASE + addr);
-                             ~~~~~~~~~~ ^
-   include/asm-generic/io.h:560:61: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-           val = __le16_to_cpu((__le16 __force)__raw_readw(PCI_IOBASE + addr));
-                                                           ~~~~~~~~~~ ^
-   include/uapi/linux/byteorder/little_endian.h:37:51: note: expanded from macro '__le16_to_cpu'
-   #define __le16_to_cpu(x) ((__force __u16)(__le16)(x))
-                                                     ^
-   In file included from drivers/firmware/qcom_scm.c:7:
-   In file included from include/linux/interrupt.h:11:
-   In file included from include/linux/hardirq.h:11:
-   In file included from ./arch/hexagon/include/generated/asm/hardirq.h:1:
-   In file included from include/asm-generic/hardirq.h:17:
-   In file included from include/linux/irq.h:20:
-   In file included from include/linux/io.h:13:
-   In file included from arch/hexagon/include/asm/io.h:334:
-   include/asm-generic/io.h:573:61: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-           val = __le32_to_cpu((__le32 __force)__raw_readl(PCI_IOBASE + addr));
-                                                           ~~~~~~~~~~ ^
-   include/uapi/linux/byteorder/little_endian.h:35:51: note: expanded from macro '__le32_to_cpu'
-   #define __le32_to_cpu(x) ((__force __u32)(__le32)(x))
-                                                     ^
-   In file included from drivers/firmware/qcom_scm.c:7:
-   In file included from include/linux/interrupt.h:11:
-   In file included from include/linux/hardirq.h:11:
-   In file included from ./arch/hexagon/include/generated/asm/hardirq.h:1:
-   In file included from include/asm-generic/hardirq.h:17:
-   In file included from include/linux/irq.h:20:
-   In file included from include/linux/io.h:13:
-   In file included from arch/hexagon/include/asm/io.h:334:
-   include/asm-generic/io.h:584:33: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-           __raw_writeb(value, PCI_IOBASE + addr);
-                               ~~~~~~~~~~ ^
-   include/asm-generic/io.h:594:59: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-           __raw_writew((u16 __force)cpu_to_le16(value), PCI_IOBASE + addr);
-                                                         ~~~~~~~~~~ ^
-   include/asm-generic/io.h:604:59: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-           __raw_writel((u32 __force)cpu_to_le32(value), PCI_IOBASE + addr);
-                                                         ~~~~~~~~~~ ^
->> drivers/firmware/qcom_scm.c:1335:7: error: incompatible pointer types passing 'u64 *' (aka 'unsigned long long *') to parameter of type 'unsigned int *' [-Werror,-Wincompatible-pointer-types]
-                                                   &src_cpy, new_perms, mem_parcel->n_acl_entries);
-                                                   ^~~~~~~~
-   drivers/firmware/qcom_scm.c:912:18: note: passing argument to parameter 'srcvm' here
-                           unsigned int *srcvm,
-                                         ^
-   drivers/firmware/qcom_scm.c:1353:7: error: incompatible pointer types passing 'u64 *' (aka 'unsigned long long *') to parameter of type 'unsigned int *' [-Werror,-Wincompatible-pointer-types]
-                                                   &src_cpy, new_perms, 1));
-                                                   ^~~~~~~~
-   include/asm-generic/bug.h:147:18: note: expanded from macro 'WARN_ON_ONCE'
-           DO_ONCE_LITE_IF(condition, WARN_ON, 1)
-                           ^~~~~~~~~
-   include/linux/once_lite.h:28:27: note: expanded from macro 'DO_ONCE_LITE_IF'
-                   bool __ret_do_once = !!(condition);                     \
-                                           ^~~~~~~~~
-   drivers/firmware/qcom_scm.c:912:18: note: passing argument to parameter 'srcvm' here
-                           unsigned int *srcvm,
-                                         ^
-   drivers/firmware/qcom_scm.c:1385:7: error: incompatible pointer types passing 'u64 *' (aka 'unsigned long long *') to parameter of type 'unsigned int *' [-Werror,-Wincompatible-pointer-types]
-                                                   &src_cpy, &new_perms, 1);
-                                                   ^~~~~~~~
-   drivers/firmware/qcom_scm.c:912:18: note: passing argument to parameter 'srcvm' here
-                           unsigned int *srcvm,
-                                         ^
-   6 warnings and 3 errors generated.
+    drm/amd/display: Add fast path for cursor plane updates
 
+we don't have any driver anymore where we have userspace expecting
+solid legacy cursor support _and_ they are using the atomic helpers in
+their fully glory. So we can retire this.
 
-vim +1335 drivers/firmware/qcom_scm.c
+v3: Paper over msm and i915 regression. The complete_all is the only
+thing missing afaict.
 
-  1303	
-  1304	static int qcom_scm_gh_rm_pre_mem_share(struct gh_rm *rm, struct gh_rm_mem_parcel *mem_parcel)
-  1305	{
-  1306		struct qcom_scm_vmperm *new_perms;
-  1307		u64 src, src_cpy;
-  1308		int ret = 0, i, n;
-  1309		u16 vmid;
-  1310	
-  1311		new_perms = kcalloc(mem_parcel->n_acl_entries, sizeof(*new_perms), GFP_KERNEL);
-  1312		if (!new_perms)
-  1313			return -ENOMEM;
-  1314	
-  1315		for (n = 0; n < mem_parcel->n_acl_entries; n++) {
-  1316			vmid = le16_to_cpu(mem_parcel->acl_entries[n].vmid);
-  1317			if (vmid <= QCOM_SCM_MAX_MANAGED_VMID)
-  1318				new_perms[n].vmid = vmid;
-  1319			else
-  1320				new_perms[n].vmid = QCOM_SCM_RM_MANAGED_VMID;
-  1321			if (mem_parcel->acl_entries[n].perms & GH_RM_ACL_X)
-  1322				new_perms[n].perm |= QCOM_SCM_PERM_EXEC;
-  1323			if (mem_parcel->acl_entries[n].perms & GH_RM_ACL_W)
-  1324				new_perms[n].perm |= QCOM_SCM_PERM_WRITE;
-  1325			if (mem_parcel->acl_entries[n].perms & GH_RM_ACL_R)
-  1326				new_perms[n].perm |= QCOM_SCM_PERM_READ;
-  1327		}
-  1328	
-  1329		src = (1ull << QCOM_SCM_VMID_HLOS);
-  1330	
-  1331		for (i = 0; i < mem_parcel->n_mem_entries; i++) {
-  1332			src_cpy = src;
-  1333			ret = qcom_scm_assign_mem(le64_to_cpu(mem_parcel->mem_entries[i].ipa_base),
-  1334							le64_to_cpu(mem_parcel->mem_entries[i].size),
-> 1335							&src_cpy, new_perms, mem_parcel->n_acl_entries);
-  1336			if (ret) {
-  1337				src = 0;
-  1338				for (n = 0; n < mem_parcel->n_acl_entries; n++) {
-  1339					vmid = le16_to_cpu(mem_parcel->acl_entries[n].vmid);
-  1340					if (vmid <= QCOM_SCM_MAX_MANAGED_VMID)
-  1341						src |= (1ull << vmid);
-  1342					else
-  1343						src |= (1ull << QCOM_SCM_RM_MANAGED_VMID);
-  1344				}
-  1345	
-  1346				new_perms[0].vmid = QCOM_SCM_VMID_HLOS;
-  1347	
-  1348				for (i--; i >= 0; i--) {
-  1349					src_cpy = src;
-  1350					WARN_ON_ONCE(qcom_scm_assign_mem(
-  1351							le64_to_cpu(mem_parcel->mem_entries[i].ipa_base),
-  1352							le64_to_cpu(mem_parcel->mem_entries[i].size),
-  1353							&src_cpy, new_perms, 1));
-  1354				}
-  1355				break;
-  1356			}
-  1357		}
-  1358	
-  1359		kfree(new_perms);
-  1360		return ret;
-  1361	}
-  1362	
+v4: Fixup i915 fixup ...
 
+v5: Unallocate the crtc->event in msm to avoid hitting a WARN_ON in
+dpu_crtc_atomic_flush(). This is a bit a hack, but simplest way to
+untangle this all. Thanks to Abhinav Kumar for the debug help.
+
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Maxime Ripard <maxime@cerno.tech>
+References: https://bugzilla.kernel.org/show_bug.cgi?id=199425
+References: https://lore.kernel.org/all/20220221134155.125447-9-maxime@cerno.tech/
+References: https://bugzilla.kernel.org/show_bug.cgi?id=199425
+Cc: Maxime Ripard <maxime@cerno.tech>
+Tested-by: Maxime Ripard <maxime@cerno.tech>
+Cc: mikita.lipski@amd.com
+Cc: Michel Dänzer <michel@daenzer.net>
+Cc: harry.wentland@amd.com
+Cc: Rob Clark <robdclark@gmail.com>
+Cc: "Kazlauskas, Nicholas" <nicholas.kazlauskas@amd.com>
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Sean Paul <sean@poorly.run>
+Cc: Matthias Brugger <matthias.bgg@gmail.com>
+Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: "Ville Syrjälä" <ville.syrjala@linux.intel.com>
+Cc: Jani Nikula <jani.nikula@intel.com>
+Cc: Lucas De Marchi <lucas.demarchi@intel.com>
+Cc: Imre Deak <imre.deak@intel.com>
+Cc: Manasi Navare <manasi.d.navare@intel.com>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: freedreno@lists.freedesktop.org
+Cc: linux-kernel@vger.kernel.org
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-mediatek@lists.infradead.org
+Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
+---
+ drivers/gpu/drm/drm_atomic_helper.c          | 13 -------------
+ drivers/gpu/drm/i915/display/intel_display.c | 14 ++++++++++++++
+ drivers/gpu/drm/msm/msm_atomic.c             | 15 +++++++++++++++
+ 3 files changed, 29 insertions(+), 13 deletions(-)
+
+diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_atomic_helper.c
+index d579fd8f7cb8..f6b4c3a00684 100644
+--- a/drivers/gpu/drm/drm_atomic_helper.c
++++ b/drivers/gpu/drm/drm_atomic_helper.c
+@@ -1587,13 +1587,6 @@ drm_atomic_helper_wait_for_vblanks(struct drm_device *dev,
+ 	int i, ret;
+ 	unsigned int crtc_mask = 0;
+ 
+-	 /*
+-	  * Legacy cursor ioctls are completely unsynced, and userspace
+-	  * relies on that (by doing tons of cursor updates).
+-	  */
+-	if (old_state->legacy_cursor_update)
+-		return;
+-
+ 	for_each_oldnew_crtc_in_state(old_state, crtc, old_crtc_state, new_crtc_state, i) {
+ 		if (!new_crtc_state->active)
+ 			continue;
+@@ -2244,12 +2237,6 @@ int drm_atomic_helper_setup_commit(struct drm_atomic_state *state,
+ 			continue;
+ 		}
+ 
+-		/* Legacy cursor updates are fully unsynced. */
+-		if (state->legacy_cursor_update) {
+-			complete_all(&commit->flip_done);
+-			continue;
+-		}
+-
+ 		if (!new_crtc_state->event) {
+ 			commit->event = kzalloc(sizeof(*commit->event),
+ 						GFP_KERNEL);
+diff --git a/drivers/gpu/drm/i915/display/intel_display.c b/drivers/gpu/drm/i915/display/intel_display.c
+index 3479125fbda6..2454451fcf95 100644
+--- a/drivers/gpu/drm/i915/display/intel_display.c
++++ b/drivers/gpu/drm/i915/display/intel_display.c
+@@ -7651,6 +7651,20 @@ static int intel_atomic_commit(struct drm_device *dev,
+ 		intel_runtime_pm_put(&dev_priv->runtime_pm, state->wakeref);
+ 		return ret;
+ 	}
++
++	/*
++	 * FIXME: Cut over to (async) commit helpers instead of hand-rolling
++	 * everything.
++	 */
++	if (state->base.legacy_cursor_update) {
++		struct intel_crtc_state *new_crtc_state;
++		struct intel_crtc *crtc;
++		int i;
++
++		for_each_new_intel_crtc_in_state(state, crtc, new_crtc_state, i)
++			complete_all(&new_crtc_state->uapi.commit->flip_done);
++	}
++
+ 	intel_shared_dpll_swap_state(state);
+ 	intel_atomic_track_fbs(state);
+ 
+diff --git a/drivers/gpu/drm/msm/msm_atomic.c b/drivers/gpu/drm/msm/msm_atomic.c
+index 1686fbb611fd..b7151767b567 100644
+--- a/drivers/gpu/drm/msm/msm_atomic.c
++++ b/drivers/gpu/drm/msm/msm_atomic.c
+@@ -189,6 +189,19 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
+ 	bool async = kms->funcs->vsync_time &&
+ 			can_do_async(state, &async_crtc);
+ 
++	/*
++	 * FIXME: Convert to async plane helpers and remove the various hacks to
++	 * keep the old legacy_cursor_way of doing async commits working for the
++	 * dpu code, like the expectation that these don't have a crtc->event.
++	 */
++	if (async) {
++		/* both ->event itself and the pointer hold a reference! */
++		drm_crtc_commit_put(async_crtc->state->commit);
++		drm_crtc_commit_put(async_crtc->state->commit);
++		kfree(async_crtc->state->event);
++		async_crtc->state->event = NULL;
++	}
++
+ 	trace_msm_atomic_commit_tail_start(async, crtc_mask);
+ 
+ 	kms->funcs->enable_commit(kms);
+@@ -222,6 +235,8 @@ void msm_atomic_commit_tail(struct drm_atomic_state *state)
+ 		/* async updates are limited to single-crtc updates: */
+ 		WARN_ON(crtc_mask != drm_crtc_mask(async_crtc));
+ 
++		complete_all(&async_crtc->state->commit->flip_done);
++
+ 		/*
+ 		 * Start timer if we don't already have an update pending
+ 		 * on this crtc:
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
+2.39.0
+
