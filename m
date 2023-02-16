@@ -2,84 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 94F29698C01
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 06:31:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F77C698C4C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 06:46:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229783AbjBPFbS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Feb 2023 00:31:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33714 "EHLO
+        id S229796AbjBPFq6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Feb 2023 00:46:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229759AbjBPFbR (ORCPT
+        with ESMTP id S229536AbjBPFq5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Feb 2023 00:31:17 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E92D3170D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Feb 2023 21:31:07 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id bp15so1371642lfb.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Feb 2023 21:31:07 -0800 (PST)
+        Thu, 16 Feb 2023 00:46:57 -0500
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C51927988
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Feb 2023 21:46:54 -0800 (PST)
+Received: by mail-lf1-x12e.google.com with SMTP id bi36so1439484lfb.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Feb 2023 21:46:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=cc:to:subject:message-id:date:user-agent:from:references
          :in-reply-to:mime-version:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=lFQCMoGRAPH6dehjVG/yBE9xvAz6XsP3o4px0fSg/AM=;
-        b=VwmWqxzsNj9sHR7iN7HlMKc//rExG1U9GW4iut0f8hvW3evoQRmPOFxjMUT1tymqv3
-         XQmq3KR1NUtc24ypeu2MCrJv00KF9uXWf1N6QQ5iToqoyZDQd1KuOxFsN01xIbMbj+To
-         k49ZaioWZ4sQyn83Mw5B+y2wv/gG0BmyXcyX8=
+        bh=AXnpNrsFLRDRV5H6+heFUubgTFXomAt3idt+/hXx6hk=;
+        b=DR5HTzIRcGCfsQZrTk3dPz403ec4zkZ7v2QGxwWTqW4brRantS4Q8hbkgcqIPGDnZS
+         beeohWGG8lv6h/Eaw0k9W4ezb2NlcjU1wrTKlGBQ126PtulC+7xJHPBmlJBQy0gWzNN7
+         LKKa59sNKBZIwArta868ZHgo1AHIxCgFw63Mk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:user-agent:from:references
          :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lFQCMoGRAPH6dehjVG/yBE9xvAz6XsP3o4px0fSg/AM=;
-        b=n+wsJi9UBNXAyXyvsUIARzkjAciW6cHl2I0kGo6X4zWvyISvDavnJQO72znlg4pgl3
-         XO31ssGT0u7KLybZKTrAZ82i1vRI7OTM8P2NlxH9PKlkex301bvhHUiW3KXOlBN1uTwv
-         zhJkEYCIsQNQ4RY+qmsosr73DM9ZZjREucPu7+1qIsvWjmO0U4+5aLZLon7t4QIzcVC7
-         /ZvOiXptVXqqAmS9dPjbA8g08m+E5a2bIAvLuM6uJIdk/Qus+Vxbvtnh6nYANsxH9JQd
-         LJGbi6MWAmIfv+8/D6Y5RQUbYGn279gDHDeHkx/k40zx50cLqwuo07CKDFr7lkfEaApt
-         YLwg==
-X-Gm-Message-State: AO0yUKVul1tj0db+yFU3cJ9tFv5a79vYeH5SjQCK+f5wcYcAS0X0W9QI
-        Md/gdyCG6Sx27+T7Y4ZFERUHx+VkHmukDSlqBBr0lRErWnUSqQ==
-X-Google-Smtp-Source: AK7set9zOf0Nj+96wPZzv/vZ3f7zQsOYTb0J2vm25mrASaWg6smR9eD6/ZCsK+Fc2IYoEm/MvAwwsI/20Ivhbdf/C/0=
-X-Received: by 2002:a05:6512:96b:b0:4d5:ca43:704a with SMTP id
- v11-20020a056512096b00b004d5ca43704amr1294568lft.13.1676525466138; Wed, 15
- Feb 2023 21:31:06 -0800 (PST)
+        bh=AXnpNrsFLRDRV5H6+heFUubgTFXomAt3idt+/hXx6hk=;
+        b=bN9MDo3Nl5313sYXQoGb2YXE89wGaXAlInP48xuaqO0MqL1DBQDpRsQwuqsGLcc3eV
+         WzgSPAawcY/HjCctByhFTJ+fhhG45hjxuk8AXUfAfW1D8WMkIAholpAEjViJG8RLiGjc
+         PmAwvqpZmFcPikAnbtDKJaThZvBlvhTu9yocCe/d6q8s6oxnmMqnArrVe444zcSubHGd
+         gDVGZaJwn/WmpiTElHSacx6EdLhM4H+TDA5uRJkR5oJW7xa2a9UnUjOniRIo7Ffx5i/E
+         i5emGJ5+4hesRbJyk//ko+RIV9c8rjZ0HIok2sZNDjHvTeQWoAgnrUOBi4FiumA7imyp
+         nQRg==
+X-Gm-Message-State: AO0yUKWwt24UEPRmedQyTaLD8YtQGitA5X0QFbIpoy6KXNrClCVOcVGL
+        sUe1dhqQnRosvk88RAUsCxNCD5DDd+aSLPsihXruPA==
+X-Google-Smtp-Source: AK7set8f23g7p+AR/YkqBF1Ux4RWNPz/KaYIccAQgKR03jXTvlUKhYKx543msIPep5T6lNeGd07g3VsILIOSERAdQrc=
+X-Received: by 2002:a05:6512:239a:b0:4db:1809:29a1 with SMTP id
+ c26-20020a056512239a00b004db180929a1mr565281lfv.2.1676526412762; Wed, 15 Feb
+ 2023 21:46:52 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 15 Feb 2023 21:31:05 -0800
+ HTTPREST; Wed, 15 Feb 2023 21:46:52 -0800
 MIME-Version: 1.0
-In-Reply-To: <20230215151330.539885-5-quic_mohs@quicinc.com>
-References: <20230215151330.539885-1-quic_mohs@quicinc.com> <20230215151330.539885-5-quic_mohs@quicinc.com>
+In-Reply-To: <20230213165743.1.I6f03f86546e6ce9abb1d24fd9ece663c3a5b950c@changeid>
+References: <20230213165743.1.I6f03f86546e6ce9abb1d24fd9ece663c3a5b950c@changeid>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date:   Wed, 15 Feb 2023 21:31:05 -0800
-Message-ID: <CAE-0n53mDzqua47jEqrJwQBhcQcyBjJAtNvH2J-tCPhkvV9JtA@mail.gmail.com>
-Subject: Re: [RESEND v8 4/5] clk: qcom: lpassaudiocc-sc7280: Merge AHB clocks
- into lpass_aon
-To:     Mohammad Rafi Shaik <quic_mohs@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, broonie@kernel.org,
-        konrad.dybcio@somainline.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mturquette@baylibre.com,
-        quic_plai@quicinc.com, quic_rohkumar@quicinc.com,
-        quic_visr@quicinc.com, robh+dt@kernel.org
-Cc:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Date:   Wed, 15 Feb 2023 21:46:52 -0800
+Message-ID: <CAE-0n51OSS=Nh2pZmPO3mg4QCvqGZsJ+AFBTAUGr-TZBHCPLCw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sc7180: Fix trogdor qspi pull direction
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Douglas Anderson <dianders@chromium.org>
+Cc:     amstan@chromium.org, mka@chromium.org,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Mohammad Rafi Shaik (2023-02-15 07:13:29)
-> @@ -828,8 +830,9 @@ static int lpass_aon_cc_sc7280_probe(struct platform_device *pdev)
->         if (of_property_read_bool(pdev->dev.of_node, "qcom,adsp-pil-mode")) {
->                 lpass_audio_cc_sc7280_regmap_config.name = "cc";
->                 desc = &lpass_cc_sc7280_desc;
-> -               ret = qcom_cc_probe(pdev, desc);
-> -               goto exit;
-> +               ret = qcom_cc_probe_by_index(pdev, 1, desc);
+Quoting Douglas Anderson (2023-02-13 16:57:51)
+> Though it shouldn't matter very much, we've decided that it's slightly
+> better to park the qspi lines for trogdor with an internal pulldown
+> instead of an internal pullup. There was a footnote that Cr50 (which
+> connects to these lines too) may have pulldowns configured on one of
+> the data lines and we don't want to have fighting pulls.
 
-Where is the patch to the binding yaml file?
+Ok.
+
+> This also
+> means that if the pulls somehow get left powered in S3 (which I'm
+> uncertain about) that they won't be pulling up lines on an unpowered
+> SPI part.
+
+As far as I know, the pulls are maintained in S3. There's verbage about
+"keeper" on the pins.
+
+The SPI part is powered in S3 though. I believe it only loses power in
+S5. Can you reword this statement?
+
+The fighting pulls should be resolved though. Or maybe it is better to
+simply not put any pull on the line? Presumably the pull is there to
+avoid seeing 0->1 transitions on the data lines when inactive, but I'm
+not really convinced that is going to happen because the SPI chip itself
+would have to be doing that driving, and the chip select isn't changing.
+
+>
+> Originally the pullup was picked because SPI transfers are active low
+> and thus the high state is somewhat more "idle", but that really isn't
+> that important because the chip select won't be asserted when the bus
+> is idle. The chip select has a nice external pullup on it that's
+> powered by the same power rail as the SPI flash.
+>
+> This shouldn't have any functionality impact w/ reading/writing the
+> SPI since the lines are always push-pull when SPI transfers are
+> actually taking place.
+>
+
+Right.
