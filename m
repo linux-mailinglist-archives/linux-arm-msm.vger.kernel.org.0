@@ -2,175 +2,289 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F19D5699689
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 15:01:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CBE7D69969A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 15:06:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229550AbjBPOBe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Feb 2023 09:01:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38584 "EHLO
+        id S229700AbjBPOGZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Feb 2023 09:06:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229504AbjBPOBd (ORCPT
+        with ESMTP id S229485AbjBPOGZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Feb 2023 09:01:33 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2B6326AF;
-        Thu, 16 Feb 2023 06:01:32 -0800 (PST)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31GArWdL013797;
-        Thu, 16 Feb 2023 14:01:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=3IATf/n2gVdgnP0wM+657JvVHnwtpkGHrGuCmG1Wmsk=;
- b=fESsklKUlmz2EDYTlklM3uKlMD7yrP+myH/sAkYamDRT/9kXDs8jsdcdp4htbbCtsmN8
- VOaKP+9j/93iEiajwCCpLz+yEEfgtIaUicypteD4PxXycDNrlKfDsabeODy+UJUOV9sH
- 6g30MNh9FvVauyIFkohTlqoznhAN/0jMuCmhYCFRdg2KJ8qNZxWbLJQuQJHz2nZlBrlC
- oM+SUs5NSyX/gB8xNozEDGVHT722Nid/+bbHf60q3QbHgmK+wEbxgQ4CqDuGRP76JtiR
- Hf8hj91LZq7oqaPwHHSqwWj0uC7lOUX1QqiJaafCNLU+IktE4T2YdHRzZAe5TOKt3u6s OQ== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3nsja90h31-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 16 Feb 2023 14:01:07 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 31GE1680017414
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 16 Feb 2023 14:01:06 GMT
-Received: from [10.216.54.159] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Thu, 16 Feb
- 2023 06:00:56 -0800
-Message-ID: <51bd93be-f8d3-a33c-18ad-ba4a331f2bcf@quicinc.com>
-Date:   Thu, 16 Feb 2023 19:30:53 +0530
+        Thu, 16 Feb 2023 09:06:25 -0500
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82A80CDE9;
+        Thu, 16 Feb 2023 06:06:23 -0800 (PST)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by smtp-out1.suse.de (Postfix) with ESMTPS id 3670122365;
+        Thu, 16 Feb 2023 14:06:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1676556382; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+        bh=hS7qvXtpo1Ba5h/0QjOYVZ9usgy4SFdpWrd3thmWU3k=;
+        b=KshOud0Skj64WdBjDXfEMuJMKWxD7vsQCDmy5ZGfPoHNepAk6MR3RXeggbMmi/e8/PGno2
+        2iIIz3JyMT1juA8s3xIyRFqMSM+RkFmRzn0lQ5kw8/6N9A6rndGx0UajUrfcwy+8Mn+Vhh
+        4i50+MCwWPbLXDxWJ1GimsUaZQsIMOM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1676556382;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+        bh=hS7qvXtpo1Ba5h/0QjOYVZ9usgy4SFdpWrd3thmWU3k=;
+        b=Fy7nhs8Ft4rIvOcjGQgTOq/TIU5lZU+9eeaNgXWZURSuEj/Qjr6j5kvtJiTk46lqgYiFou
+        ZJ27DUX6IXXW73DQ==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id E4C51131FD;
+        Thu, 16 Feb 2023 14:06:21 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap2.suse-dmz.suse.de with ESMTPSA
+        id 1aEYN1047mMGbQAAMHmgww
+        (envelope-from <tzimmermann@suse.de>); Thu, 16 Feb 2023 14:06:21 +0000
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+To:     javierm@redhat.com, airlied@gmail.com, daniel@ffwll.ch,
+        maarten.lankhorst@linux.intel.com, mripard@kernel.org
+Cc:     dri-devel@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        amd-gfx@lists.freedesktop.org, linux-tegra@vger.kernel.org,
+        Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH] drm/fb-helper: Remove drm_fb_helper_unprepare() from drm_fb_helper_fini()
+Date:   Thu, 16 Feb 2023 15:06:20 +0100
+Message-Id: <20230216140620.17699-1-tzimmermann@suse.de>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH V5 5/5] firmware: scm: Modify only the DLOAD bit in TCSR
- register for download mode
-Content-Language: en-US
-To:     Poovendhan Selvaraj <quic_poovendh@quicinc.com>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <lee@kernel.org>,
-        <catalin.marinas@arm.com>, <will@kernel.org>,
-        <shawnguo@kernel.org>, <arnd@arndb.de>,
-        <marcel.ziswiler@toradex.com>, <robimarko@gmail.com>,
-        <dmitry.baryshkov@linaro.org>, <nfraprado@collabora.com>,
-        <broonie@kernel.org>, <quic_gurus@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
-        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
-        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
-        <quic_devipriy@quicinc.com>
-References: <20230216120012.28357-1-quic_poovendh@quicinc.com>
- <20230216120012.28357-6-quic_poovendh@quicinc.com>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <20230216120012.28357-6-quic_poovendh@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: kUFx6QUrIQ5HGL-ouXwHrXrP8Rf7V14s
-X-Proofpoint-ORIG-GUID: kUFx6QUrIQ5HGL-ouXwHrXrP8Rf7V14s
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
- definitions=2023-02-16_10,2023-02-16_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=999
- adultscore=0 malwarescore=0 clxscore=1011 impostorscore=0
- lowpriorityscore=0 mlxscore=0 bulkscore=0 priorityscore=1501 spamscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2302160121
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Move drm_fb_helper_unprepare() from drm_fb_helper_fini() into the
+calling fbdev implementation. Avoids a possible stale mutex with
+generic fbdev code.
 
+As indicated by its name, drm_fb_helper_prepare() prepares struct
+drm_fb_helper before setting up the fbdev support with a call to
+drm_fb_helper_init(). In legacy fbdev emulation, this happens next
+to each other. If successful, drm_fb_helper_fini() later tear down
+the fbdev device and also unprepare via drm_fb_helper_unprepare().
 
-On 2/16/2023 5:30 PM, Poovendhan Selvaraj wrote:
-> CrashDump collection is based on the DLOAD bit of TCSR register.
-> To retain other bits, we read the register and modify only the DLOAD bit as
-> the other bits have their own significance.
-> 
-> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
-> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
-> Co-developed-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-> Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-> Signed-off-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
-> ---
->   Changes in V5:
-> 	- checking the return value in qcom_scm_set_download_mode function as
-> 	  suggested by Srinivas Kandagatla
-> 
->   Changes in V4:
-> 	- retain the orginal value of tcsr register when download mode
-> 	  is not set
-> 
->   drivers/firmware/qcom_scm.c | 21 ++++++++++++++++-----
->   1 file changed, 16 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-> index 468d4d5ab550..d88c5f14bd54 100644
-> --- a/drivers/firmware/qcom_scm.c
-> +++ b/drivers/firmware/qcom_scm.c
-> @@ -407,7 +407,7 @@ int qcom_scm_set_remote_state(u32 state, u32 id)
->   }
->   EXPORT_SYMBOL(qcom_scm_set_remote_state);
->   
-> -static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
-> +static int __qcom_scm_set_dload_mode(struct device *dev, u32 val, bool enable)
->   {
->   	struct qcom_scm_desc desc = {
->   		.svc = QCOM_SCM_SVC_BOOT,
-> @@ -417,7 +417,8 @@ static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
->   		.owner = ARM_SMCCC_OWNER_SIP,
->   	};
->   
-> -	desc.args[1] = enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0;
-> +	desc.args[1] = enable ? val | QCOM_SCM_BOOT_SET_DLOAD_MODE :
-> +				val & ~(QCOM_SCM_BOOT_SET_DLOAD_MODE);
->   
->   	return qcom_scm_call_atomic(__scm->dev, &desc, NULL);
->   }
-> @@ -426,15 +427,25 @@ static void qcom_scm_set_download_mode(bool enable)
->   {
->   	bool avail;
->   	int ret = 0;
-> +	u32 dload_addr_val;
->   
->   	avail = __qcom_scm_is_call_available(__scm->dev,
->   					     QCOM_SCM_SVC_BOOT,
->   					     QCOM_SCM_BOOT_SET_DLOAD_MODE);
-> +	ret = qcom_scm_io_readl(__scm->dload_mode_addr, &dload_addr_val);
-> +
-> +	if (ret) {
-> +		dev_err(__scm->dev,
-> +			"failed to read dload mode address value: %d\n", ret);
-> +		return;
-> +	}
-> +
->   	if (avail) {
-> -		ret = __qcom_scm_set_dload_mode(__scm->dev, enable);
-> +		ret = __qcom_scm_set_dload_mode(__scm->dev, dload_addr_val, enable);
+Generic fbdev emulation prepares struct drm_fb_helper immediately
+after allocating the instance. It only calls drm_fb_helper_init()
+as part of processing a hotplug event. If the hotplug-handling fails,
+it runs drm_fb_helper_fini(). This unprepares the fb-helper instance
+and the next hotplug event runs on stale data.
 
-Did you test this on a target where it comes under this if statement? 
-does it really need to know dload_mode_addr for this target ?
+Solve this by moving drm_fb_helper_unprepare() from drm_fb_helper_fini()
+into the fbdev implementations. Call it right before freeing the
+fb-helper instance.
 
--Mukesh
->   	} else if (__scm->dload_mode_addr) {
-> -		ret = qcom_scm_io_writel(__scm->dload_mode_addr,
-> -				enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0);
-> +		ret = qcom_scm_io_writel(__scm->dload_mode_addr, enable ?
-> +				dload_addr_val | QCOM_SCM_BOOT_SET_DLOAD_MODE :
-> +				dload_addr_val & ~(QCOM_SCM_BOOT_SET_DLOAD_MODE));
->   	} else {
->   		dev_err(__scm->dev,
->   			"No available mechanism for setting download mode\n");
+Fixes: 4825797c36da ("drm/fb-helper: Introduce drm_fb_helper_unprepare()")
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Javier Martinez Canillas <javierm@redhat.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: David Airlie <airlied@gmail.com>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: dri-devel@lists.freedesktop.org
+
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+---
+ drivers/gpu/drm/armada/armada_fbdev.c      | 3 +++
+ drivers/gpu/drm/drm_fb_helper.c            | 2 --
+ drivers/gpu/drm/drm_fbdev_generic.c        | 2 ++
+ drivers/gpu/drm/exynos/exynos_drm_fbdev.c  | 3 ++-
+ drivers/gpu/drm/gma500/framebuffer.c       | 2 ++
+ drivers/gpu/drm/i915/display/intel_fbdev.c | 1 +
+ drivers/gpu/drm/msm/msm_fbdev.c            | 2 ++
+ drivers/gpu/drm/omapdrm/omap_fbdev.c       | 2 ++
+ drivers/gpu/drm/radeon/radeon_fb.c         | 2 ++
+ drivers/gpu/drm/tegra/fb.c                 | 1 +
+ 10 files changed, 17 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/gpu/drm/armada/armada_fbdev.c b/drivers/gpu/drm/armada/armada_fbdev.c
+index 07e410c62b7a..0e44f53e9fa4 100644
+--- a/drivers/gpu/drm/armada/armada_fbdev.c
++++ b/drivers/gpu/drm/armada/armada_fbdev.c
+@@ -147,6 +147,7 @@ int armada_fbdev_init(struct drm_device *dev)
+  err_fb_setup:
+ 	drm_fb_helper_fini(fbh);
+  err_fb_helper:
++	drm_fb_helper_unprepare(fbh);
+ 	priv->fbdev = NULL;
+ 	return ret;
+ }
+@@ -164,6 +165,8 @@ void armada_fbdev_fini(struct drm_device *dev)
+ 		if (fbh->fb)
+ 			fbh->fb->funcs->destroy(fbh->fb);
+ 
++		drm_fb_helper_unprepare(fbh);
++
+ 		priv->fbdev = NULL;
+ 	}
+ }
+diff --git a/drivers/gpu/drm/drm_fb_helper.c b/drivers/gpu/drm/drm_fb_helper.c
+index 28c428e9c530..a39998047f8a 100644
+--- a/drivers/gpu/drm/drm_fb_helper.c
++++ b/drivers/gpu/drm/drm_fb_helper.c
+@@ -590,8 +590,6 @@ void drm_fb_helper_fini(struct drm_fb_helper *fb_helper)
+ 	}
+ 	mutex_unlock(&kernel_fb_helper_lock);
+ 
+-	drm_fb_helper_unprepare(fb_helper);
+-
+ 	if (!fb_helper->client.funcs)
+ 		drm_client_release(&fb_helper->client);
+ }
+diff --git a/drivers/gpu/drm/drm_fbdev_generic.c b/drivers/gpu/drm/drm_fbdev_generic.c
+index 365f80717fa1..4d6325e91565 100644
+--- a/drivers/gpu/drm/drm_fbdev_generic.c
++++ b/drivers/gpu/drm/drm_fbdev_generic.c
+@@ -65,6 +65,8 @@ static void drm_fbdev_fb_destroy(struct fb_info *info)
+ 
+ 	drm_client_framebuffer_delete(fb_helper->buffer);
+ 	drm_client_release(&fb_helper->client);
++
++	drm_fb_helper_unprepare(fb_helper);
+ 	kfree(fb_helper);
+ }
+ 
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_fbdev.c b/drivers/gpu/drm/exynos/exynos_drm_fbdev.c
+index b89e33af8da8..4929ffe5a09a 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_fbdev.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_fbdev.c
+@@ -183,8 +183,8 @@ int exynos_drm_fbdev_init(struct drm_device *dev)
+ 
+ err_setup:
+ 	drm_fb_helper_fini(helper);
+-
+ err_init:
++	drm_fb_helper_unprepare(helper);
+ 	private->fb_helper = NULL;
+ 	kfree(fbdev);
+ 
+@@ -219,6 +219,7 @@ void exynos_drm_fbdev_fini(struct drm_device *dev)
+ 	fbdev = to_exynos_fbdev(private->fb_helper);
+ 
+ 	exynos_drm_fbdev_destroy(dev, private->fb_helper);
++	drm_fb_helper_unprepare(private->fb_helper);
+ 	kfree(fbdev);
+ 	private->fb_helper = NULL;
+ }
+diff --git a/drivers/gpu/drm/gma500/framebuffer.c b/drivers/gpu/drm/gma500/framebuffer.c
+index 1f04c07ee180..f471e0cb7298 100644
+--- a/drivers/gpu/drm/gma500/framebuffer.c
++++ b/drivers/gpu/drm/gma500/framebuffer.c
+@@ -427,6 +427,7 @@ int psb_fbdev_init(struct drm_device *dev)
+ fini:
+ 	drm_fb_helper_fini(fb_helper);
+ free:
++	drm_fb_helper_unprepare(fb_helper);
+ 	kfree(fb_helper);
+ 	return ret;
+ }
+@@ -439,6 +440,7 @@ static void psb_fbdev_fini(struct drm_device *dev)
+ 		return;
+ 
+ 	psb_fbdev_destroy(dev, dev_priv->fb_helper);
++	drm_fb_helper_unprepare(dev_priv->fb_helper);
+ 	kfree(dev_priv->fb_helper);
+ 	dev_priv->fb_helper = NULL;
+ }
+diff --git a/drivers/gpu/drm/i915/display/intel_fbdev.c b/drivers/gpu/drm/i915/display/intel_fbdev.c
+index 6113d7627d45..98029059f701 100644
+--- a/drivers/gpu/drm/i915/display/intel_fbdev.c
++++ b/drivers/gpu/drm/i915/display/intel_fbdev.c
+@@ -352,6 +352,7 @@ static void intel_fbdev_destroy(struct intel_fbdev *ifbdev)
+ 	if (ifbdev->fb)
+ 		drm_framebuffer_remove(&ifbdev->fb->base);
+ 
++	drm_fb_helper_unprepare(&ifbdev->helper);
+ 	kfree(ifbdev);
+ }
+ 
+diff --git a/drivers/gpu/drm/msm/msm_fbdev.c b/drivers/gpu/drm/msm/msm_fbdev.c
+index 915b213f3a5c..c804e5ba682a 100644
+--- a/drivers/gpu/drm/msm/msm_fbdev.c
++++ b/drivers/gpu/drm/msm/msm_fbdev.c
+@@ -170,6 +170,7 @@ struct drm_fb_helper *msm_fbdev_init(struct drm_device *dev)
+ fini:
+ 	drm_fb_helper_fini(helper);
+ fail:
++	drm_fb_helper_unprepare(helper);
+ 	kfree(fbdev);
+ 	return NULL;
+ }
+@@ -196,6 +197,7 @@ void msm_fbdev_free(struct drm_device *dev)
+ 		drm_framebuffer_remove(fbdev->fb);
+ 	}
+ 
++	drm_fb_helper_unprepare(helper);
+ 	kfree(fbdev);
+ 
+ 	priv->fbdev = NULL;
+diff --git a/drivers/gpu/drm/omapdrm/omap_fbdev.c b/drivers/gpu/drm/omapdrm/omap_fbdev.c
+index fc5f52d567c6..84429728347f 100644
+--- a/drivers/gpu/drm/omapdrm/omap_fbdev.c
++++ b/drivers/gpu/drm/omapdrm/omap_fbdev.c
+@@ -256,6 +256,7 @@ void omap_fbdev_init(struct drm_device *dev)
+ fini:
+ 	drm_fb_helper_fini(helper);
+ fail:
++	drm_fb_helper_unprepare(helper);
+ 	kfree(fbdev);
+ 
+ 	dev_warn(dev->dev, "omap_fbdev_init failed\n");
+@@ -286,6 +287,7 @@ void omap_fbdev_fini(struct drm_device *dev)
+ 	if (fbdev->fb)
+ 		drm_framebuffer_remove(fbdev->fb);
+ 
++	drm_fb_helper_unprepare(helper);
+ 	kfree(fbdev);
+ 
+ 	priv->fbdev = NULL;
+diff --git a/drivers/gpu/drm/radeon/radeon_fb.c b/drivers/gpu/drm/radeon/radeon_fb.c
+index 6e5eed0e157c..c4807f0c43bc 100644
+--- a/drivers/gpu/drm/radeon/radeon_fb.c
++++ b/drivers/gpu/drm/radeon/radeon_fb.c
+@@ -367,6 +367,7 @@ int radeon_fbdev_init(struct radeon_device *rdev)
+ fini:
+ 	drm_fb_helper_fini(&rfbdev->helper);
+ free:
++	drm_fb_helper_unprepare(&rfbdev->helper);
+ 	kfree(rfbdev);
+ 	return ret;
+ }
+@@ -377,6 +378,7 @@ void radeon_fbdev_fini(struct radeon_device *rdev)
+ 		return;
+ 
+ 	radeon_fbdev_destroy(rdev->ddev, rdev->mode_info.rfbdev);
++	drm_fb_helper_unprepare(&rdev->mode_info.rfbdev->helper);
+ 	kfree(rdev->mode_info.rfbdev);
+ 	rdev->mode_info.rfbdev = NULL;
+ }
+diff --git a/drivers/gpu/drm/tegra/fb.c b/drivers/gpu/drm/tegra/fb.c
+index 153c39c32c71..bfebe2786d61 100644
+--- a/drivers/gpu/drm/tegra/fb.c
++++ b/drivers/gpu/drm/tegra/fb.c
+@@ -315,6 +315,7 @@ static struct tegra_fbdev *tegra_fbdev_create(struct drm_device *drm)
+ 
+ static void tegra_fbdev_free(struct tegra_fbdev *fbdev)
+ {
++	drm_fb_helper_unprepare(&fbdev->base);
+ 	kfree(fbdev);
+ }
+ 
+-- 
+2.39.1
+
