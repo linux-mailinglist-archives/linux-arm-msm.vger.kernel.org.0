@@ -2,91 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B223A699094
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 10:58:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 10EC86990E3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Feb 2023 11:16:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229603AbjBPJ6Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Feb 2023 04:58:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39762 "EHLO
+        id S229889AbjBPKQm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Feb 2023 05:16:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229462AbjBPJ6X (ORCPT
+        with ESMTP id S229783AbjBPKQl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Feb 2023 04:58:23 -0500
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 3A59061BB;
-        Thu, 16 Feb 2023 01:58:22 -0800 (PST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 84AA81042;
-        Thu, 16 Feb 2023 01:59:04 -0800 (PST)
-Received: from bogus (unknown [10.57.10.143])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 86AD93F703;
-        Thu, 16 Feb 2023 01:58:20 -0800 (PST)
-Date:   Thu, 16 Feb 2023 09:58:16 +0000
-From:   Sudeep Holla <sudeep.holla@arm.com>
-To:     Elliot Berman <quic_eberman@quicinc.com>
-Cc:     Jassi Brar <jassisinghbrar@gmail.com>,
-        linux-kernel@vger.kernel.org, linux-acpi@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 0/3] mailbox: Allow direct registration to a channel
-Message-ID: <20230216095816.rzhxa2qdexy3ulrz@bogus>
-References: <20230213232537.2040976-1-quic_eberman@quicinc.com>
- <20230215101732.pbpom3ub3yh75n4w@bogus>
- <d35633ea-4049-6f51-3a3a-2a258a4af037@quicinc.com>
+        Thu, 16 Feb 2023 05:16:41 -0500
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2E101449D
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 02:16:33 -0800 (PST)
+Received: by mail-ej1-x631.google.com with SMTP id a3so3979287ejb.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Feb 2023 02:16:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=1PGfu87n+hgkCIk36FgbHQSfTL8/6kgTjaQ8jrg0Ats=;
+        b=bdq663wbjD24ghnHeXgGD6EGbUp7AIvfKEgI9DQRcRH9gTESHtdCEP7mLV0Ity05FG
+         w4FGwXA2AAgNlrGpqx3XsQ1Iuu6NLZ9JARLR0TeN7DeieQkn+O7X8um2FVzK7ef1/gD3
+         15VJYoAEyMSeiyIXTT19pDbBA+N7uD3S6qtoEFuwCyBaUzcqdUdEc63fR4znfYZ3GE/L
+         2UU2hdnfjLZ8nL+Qc95XLLi5pBpPPWst/bs1yqMGdxuhHVKKJnBwcmaxqpBKdBKZVINj
+         Ry9w0T2HiIqLe66BDEdLRgnJUea1IlHr72mauDYUMNbH6yoVa7js5VulW79HDZyzkfne
+         ydEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=1PGfu87n+hgkCIk36FgbHQSfTL8/6kgTjaQ8jrg0Ats=;
+        b=eAxilXffgBxXauEBu4X4CffoRbMo50MXE1N9HRhI6M/4B6hTAZPfH1FwvIAnQAkfDq
+         aJLDSMSFRPCDo4npE12PmZr2C/Covk9+2ECVc8HfRTTxc9cqU3mnSL0GAcjWGglR7Hsh
+         qVsrncLA7HUr8fgsuI+nNcVenrwU2dOV0GaGBQPDn+qWdEr9PVDoPIaZd1ApQdFE9lni
+         PTn8PY8t1TtBNFQk9PQp0vgEkS8j6m+ibX2gGugV10/U2l4l+Oc/y+p5xlHd2pjpNLfj
+         kyYC1EmSTcIxkOHDbLHn22rVlH55kW/8SQDscfgRROpOx4r2nPj2bkIkBjLglEkzgwvG
+         C8JA==
+X-Gm-Message-State: AO0yUKWfAq/NDhdQu41vE/n+nt3HiacqR2IX8dCO3FuigOpOUqoSpvPB
+        /fCPd3F7ITeLziQHGrJ7A7sgAA==
+X-Google-Smtp-Source: AK7set+Oth8dBTqhGPae0wFBpF8ml/E+UZSUs8kHq7UOo5kVGdEYYpxh2OC2JupksHXkw09jWLt+Vw==
+X-Received: by 2002:a17:906:3659:b0:888:94d3:37f5 with SMTP id r25-20020a170906365900b0088894d337f5mr4915515ejb.63.1676542592391;
+        Thu, 16 Feb 2023 02:16:32 -0800 (PST)
+Received: from [192.168.1.109] ([178.197.216.144])
+        by smtp.gmail.com with ESMTPSA id k2-20020a50ce42000000b004acbecf091esm624327edj.17.2023.02.16.02.16.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 16 Feb 2023 02:16:32 -0800 (PST)
+Message-ID: <dcdd0a62-8d1f-d9b1-6137-34d9e68313a1@linaro.org>
+Date:   Thu, 16 Feb 2023 11:16:30 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d35633ea-4049-6f51-3a3a-2a258a4af037@quicinc.com>
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH 1/7] dt-bindings: clock: split qcom,gcc-ipq4019 to
+ separate file
+Content-Language: en-US
+To:     Robert Marko <robert.marko@sartura.hr>, andersson@kernel.org,
+        agross@kernel.org, konrad.dybcio@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     luka.perkov@sartura.hr
+References: <20230214162325.312057-1-robert.marko@sartura.hr>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230214162325.312057-1-robert.marko@sartura.hr>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 15, 2023 at 08:58:10AM -0800, Elliot Berman wrote:
+On 14/02/2023 17:23, Robert Marko wrote:
+> Move schema for the GCC on IPQ4019 platform to a separate file to be able
+> to allow passing XO and sleep clks directly to GCC.
 > 
+> Signed-off-by: Robert Marko <robert.marko@sartura.hr>
+> ---
+>  .../bindings/clock/qcom,gcc-ipq4019.yaml      | 53 +++++++++++++++++++
+>  .../bindings/clock/qcom,gcc-other.yaml        |  2 -
+>  2 files changed, 53 insertions(+), 2 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-ipq4019.yaml
 > 
-> On 2/15/2023 2:17 AM, Sudeep Holla wrote:
-> > On Mon, Feb 13, 2023 at 03:25:34PM -0800, Elliot Berman wrote:
-> > > Two mailbox controllers have channel/client binding mechanisms that are
-> > > controller-specific and not using the devicetree binding mechanisms. Mailbox
-> > > channel/client is conceptually done in two steps: selecting the channel
-> > > and binding the selected to channel to a client. Channel selection is sometimes
-> > > controller specific (pcc and omap are examples). The channel/client binding
-> > > code is all the same.
-> > > 
-> > > This small series de-duplicates and refactors the channel/client binding
-> > > into a common framework function: "mbox_bind_client" which all of the
-> > > channel selection mechanisms can use.
-> > > 
-> > > I found this duplicate code while working on the support for Gunyah hypervisor
-> > > message queues [1]. I've only been able to compile-test omap-maiblox and pcc,
-> > > however it is a straightforward conversion here.
-> > > 
-> > > [1]: https://lore.kernel.org/all/20230120224627.4053418-9-quic_eberman@quicinc.com/
-> > > 
-> > > Elliot Berman (3):
-> > >    mailbox: Allow direct registration to a channel
-> > 
-> > I am unable to find the above patch either in my inbox or in lore[1].
-> > Can you please repost the same ? I would like to test/review w.r.t PCC
-> > driver.
-> > 
-> 
-> Hi Sudeep,
-> 
-> Not sure why the patch didn't end up your inbox; lore seems to have linked
-> it correctly and indicates you were in To:. If I missed something, let me
-> know and I'll make sure you're properly included if future versions needed.
-> 
-> https://lore.kernel.org/all/20230213232537.2040976-4-quic_eberman@quicinc.com/
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-ipq4019.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-ipq4019.yaml
+> new file mode 100644
+> index 0000000000000..6ebaef2288fa3
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-ipq4019.yaml
+> @@ -0,0 +1,53 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/clock/qcom,gcc-ipq4019.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Global Clock & Reset Controller on IPQ4019
+> +
+> +maintainers:
+> +  - Stephen Boyd <sboyd@kernel.org>
+> +  - Taniya Das <tdas@codeaurora.org>
+> +  - Robert Marko <robert.markoo@sartura.hr>
+> +
+> +description: |
+> +  Qualcomm global clock control module provides the clocks, resets and power
+> +  domains on IPQ4019.
+> +
+> +  See also:: include/dt-bindings/clock/qcom,gcc-ipq4019.h
+> +
+> +allOf:
+> +  - $ref: qcom,gcc.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,gcc-ipq4019
+> +
+> +  clocks:
+> +    items:
+> +      - description: board XO clock
+> +      - description: sleep clock
+> +
+> +  clock-names:
+> +    items:
+> +      - const: xo
+> +      - const: sleep_clk
+> +
+> +required:
+> +  - compatible
 
-No, I do have patch 2/3 and 3/3 in my inbox along with the cover letter.
-Patch 1/3 is missing in both my inbox and lore. Can you send me the lore
-link for patch 1/3 if you are able to find it ? Or just repost the series
-if you can't.
+Aren't the clocks now required? Will it keep working without them?
 
--- 
-Regards,
-Sudeep
+Best regards,
+Krzysztof
+
